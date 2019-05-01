@@ -2,49 +2,51 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 354B01067E
+	by mail.lfdr.de (Postfix) with ESMTP id A57091067F
 	for <lists+kvmarm@lfdr.de>; Wed,  1 May 2019 11:48:23 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2E24E4A4F5;
-	Wed,  1 May 2019 05:48:22 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4A1994A4FC;
+	Wed,  1 May 2019 05:48:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+	SPF_HELO_PASS=-0.001] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id n1mEGERMERkD; Wed,  1 May 2019 05:48:22 -0400 (EDT)
+	with ESMTP id G46S8H4Mo1pg; Wed,  1 May 2019 05:48:22 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 15B1D4A4AD;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2A1C44A502;
 	Wed,  1 May 2019 05:48:21 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2C81B4A4F0
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2E6F64A4F5
  for <kvmarm@lists.cs.columbia.edu>; Wed,  1 May 2019 05:48:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id iIhkj4KZQahL for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id 9iijdCnx1Z8X for <kvmarm@lists.cs.columbia.edu>;
  Wed,  1 May 2019 05:48:17 -0400 (EDT)
 Received: from huawei.com (szxga07-in.huawei.com [45.249.212.35])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9689A4A4AD
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9970B4A4DE
  for <kvmarm@lists.cs.columbia.edu>; Wed,  1 May 2019 05:48:17 -0400 (EDT)
 Received: from DGGEMS412-HUB.china.huawei.com (unknown [172.30.72.59])
- by Forcepoint Email with ESMTP id BC752D90602CEF28528A;
+ by Forcepoint Email with ESMTP id C4F005DC777B751C2BF8;
  Wed,  1 May 2019 17:48:14 +0800 (CST)
 Received: from HGHY2Y004646261.china.huawei.com (10.184.12.158) by
  DGGEMS412-HUB.china.huawei.com (10.3.19.212) with Microsoft SMTP Server id
- 14.3.439.0; Wed, 1 May 2019 17:48:06 +0800
+ 14.3.439.0; Wed, 1 May 2019 17:48:07 +0800
 From: Zenghui Yu <yuzenghui@huawei.com>
 To: <linux-arm-kernel@lists.infradead.org>, <kvmarm@lists.cs.columbia.edu>,
  <linux-kernel@vger.kernel.org>, <kvm@vger.kernel.org>
-Subject: [RFC PATCH 0/5] KVM: arm64: Add support for contiguous PTE/PMD
- hugepages at stage2
-Date: Wed, 1 May 2019 09:44:22 +0000
-Message-ID: <1556703867-22396-1-git-send-email-yuzenghui@huawei.com>
+Subject: [PATCH 1/5] KVM: arm/arm64: Introduce helpers for page table enties
+ with contiguous bit
+Date: Wed, 1 May 2019 09:44:23 +0000
+Message-ID: <1556703867-22396-2-git-send-email-yuzenghui@huawei.com>
 X-Mailer: git-send-email 2.6.4.windows.1
+In-Reply-To: <1556703867-22396-1-git-send-email-yuzenghui@huawei.com>
+References: <1556703867-22396-1-git-send-email-yuzenghui@huawei.com>
 MIME-Version: 1.0
 X-Originating-IP: [10.184.12.158]
 X-CFilter-Loop: Reflected
@@ -66,51 +68,82 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Currently, we support the following page sizes at stage2:
+Introduce helpers to manipulate stage2 page table entries - set contiguous
+bit in the entry and say whether this entry points to a contiguous block.
 
-                PTE     PMD     PUD
-               -----   -----   -----
- 4K granule:     4K      2M      1G
-16K granule:    16K     32M
-64K granule:    64K    512M
+The helpers are introduced in preparation for supporting contiguous
+hugepages at stage2.
 
-And we have Contiguous bit[52] in stage2 VMSAv8-64 block and page
-descriptors. As ARM ARM said, when the value of the Contiguous bit
-is 1, it indicates that the entry is one of a number of adjacent
-translation table entries that point to a contiguous output address
-range.
+Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
+---
+ arch/arm/include/asm/kvm_mmu.h   | 22 ++++++++++++++++++++++
+ arch/arm64/include/asm/kvm_mmu.h | 20 ++++++++++++++++++++
+ 2 files changed, 42 insertions(+)
 
-This series add support for contiguous PTE/PMD hugepages at stage2
-and then we can create huge mappings with following additional
-sizes:
-
-                CONT PTE     CONT PMD
-                --------     --------
- 4K granule:      64K          32M
-16K granule:       2M           1G
-64K granule:       2M          16G
-
-These patches are based on v5.1.0-rc7 and have been tested on
-Taishan 2280 server (D05) with 4K and 64K granule.
-
-Any comments will be appreciated, thanks!
-
-Zenghui Yu (5):
-  KVM: arm/arm64: Introduce helpers for page table enties with
-    contiguous bit
-  KVM: arm/arm64: Re-factor building the stage2 page table entries
-  KVM: arm/arm64: Support dirty page tracking for contiguous hugepages
-  KVM: arm/arm64: Add support for creating PTE contiguous hugepages at
-    stage2
-  KVM: arm/arm64: Add support for creating PMD contiguous hugepages at
-    stage2
-
- arch/arm/include/asm/kvm_mmu.h       |  22 +++
- arch/arm/include/asm/pgtable-hwdef.h |   8 +
- arch/arm64/include/asm/kvm_mmu.h     |  20 +++
- virt/kvm/arm/mmu.c                   | 299 ++++++++++++++++++++++++++++++-----
- 4 files changed, 312 insertions(+), 37 deletions(-)
-
+diff --git a/arch/arm/include/asm/kvm_mmu.h b/arch/arm/include/asm/kvm_mmu.h
+index 31de4ab..80d73ae 100644
+--- a/arch/arm/include/asm/kvm_mmu.h
++++ b/arch/arm/include/asm/kvm_mmu.h
+@@ -143,6 +143,28 @@ static inline bool kvm_s2pud_young(pud_t pud)
+ 	return false;
+ }
+ 
++static inline pte_t kvm_s2pte_mkcont(pte_t pte)
++{
++	BUG();
++	return pte;
++}
++
++static inline bool kvm_s2pte_cont(pte_t pte)
++{
++	return false;
++}
++
++static inline pmd_t kvm_s2pmd_mkcont(pmd_t pmd)
++{
++	BUG();
++	return pmd;
++}
++
++static inline bool kvm_s2pmd_cont(pmd_t pmd)
++{
++	return false;
++}
++
+ static inline pte_t kvm_s2pte_mkwrite(pte_t pte)
+ {
+ 	pte_val(pte) |= L_PTE_S2_RDWR;
+diff --git a/arch/arm64/include/asm/kvm_mmu.h b/arch/arm64/include/asm/kvm_mmu.h
+index ebeefcf..4afdad9 100644
+--- a/arch/arm64/include/asm/kvm_mmu.h
++++ b/arch/arm64/include/asm/kvm_mmu.h
+@@ -295,6 +295,26 @@ static inline bool kvm_s2pud_young(pud_t pud)
+ 	return pud_young(pud);
+ }
+ 
++static inline pte_t kvm_s2pte_mkcont(pte_t pte)
++{
++	return pte_mkcont(pte);
++}
++
++static inline bool kvm_s2pte_cont(pte_t pte)
++{
++	return pte_cont(pte);
++}
++
++static inline pmd_t kvm_s2pmd_mkcont(pmd_t pmd)
++{
++	return pmd_mkcont(pmd);
++}
++
++static inline bool kvm_s2pmd_cont(pmd_t pmd)
++{
++	return !!(pmd_val(pmd) & PMD_SECT_CONT);
++}
++
+ #define hyp_pte_table_empty(ptep) kvm_page_empty(ptep)
+ 
+ #ifdef __PAGETABLE_PMD_FOLDED
 -- 
 1.8.3.1
 
