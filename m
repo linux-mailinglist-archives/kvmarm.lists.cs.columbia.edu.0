@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A0BB713F1B
-	for <lists+kvmarm@lfdr.de>; Sun,  5 May 2019 13:07:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B90E13F21
+	for <lists+kvmarm@lfdr.de>; Sun,  5 May 2019 13:16:10 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 170E14A3BB;
-	Sun,  5 May 2019 07:07:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F0AAE4A4B6;
+	Sun,  5 May 2019 07:16:09 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.098
@@ -16,34 +16,34 @@ X-Spam-Status: No, score=0.098 required=6.1 tests=[BAYES_00=-1.9,
 	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KT-NYBC3adi2; Sun,  5 May 2019 07:07:18 -0400 (EDT)
+	with ESMTP id 6fn2gETTFUNv; Sun,  5 May 2019 07:16:09 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 65A464A4C4;
-	Sun,  5 May 2019 07:07:17 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 51FCF4A4A3;
+	Sun,  5 May 2019 07:16:08 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 555364A3A5
- for <kvmarm@lists.cs.columbia.edu>; Sun,  5 May 2019 07:07:16 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 551D54A34E
+ for <kvmarm@lists.cs.columbia.edu>; Sun,  5 May 2019 07:16:07 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id lZMDVHTbK0sG for <kvmarm@lists.cs.columbia.edu>;
- Sun,  5 May 2019 07:07:14 -0400 (EDT)
+ with ESMTP id KYjpeExhYGuT for <kvmarm@lists.cs.columbia.edu>;
+ Sun,  5 May 2019 07:16:06 -0400 (EDT)
 Received: from huawei.com (szxga05-in.huawei.com [45.249.212.191])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5BAA04A331
- for <kvmarm@lists.cs.columbia.edu>; Sun,  5 May 2019 07:07:14 -0400 (EDT)
-Received: from DGGEMS410-HUB.china.huawei.com (unknown [172.30.72.60])
- by Forcepoint Email with ESMTP id 526279D4F40EBE4B8746;
- Sun,  5 May 2019 19:07:10 +0800 (CST)
-Received: from [127.0.0.1] (10.177.31.55) by DGGEMS410-HUB.china.huawei.com
- (10.3.19.210) with Microsoft SMTP Server id 14.3.439.0; Sun, 5 May 2019
- 19:07:02 +0800
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 981A84005D
+ for <kvmarm@lists.cs.columbia.edu>; Sun,  5 May 2019 07:16:05 -0400 (EDT)
+Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.60])
+ by Forcepoint Email with ESMTP id D86C79973F6A558DD068;
+ Sun,  5 May 2019 19:16:02 +0800 (CST)
+Received: from [127.0.0.1] (10.177.31.55) by DGGEMS407-HUB.china.huawei.com
+ (10.3.19.207) with Microsoft SMTP Server id 14.3.439.0; Sun, 5 May 2019
+ 19:15:52 +0800
 Subject: Re: ARM/gic-v4: deadlock occurred
 To: Marc Zyngier <marc.zyngier@arm.com>
 References: <9efe0260-4a84-7489-ecdd-2e9561599320@huawei.com>
  <86lfzl9ofe.wl-marc.zyngier@arm.com>
 From: Heyi Guo <guoheyi@huawei.com>
-Message-ID: <0b413592-7d98-ebe8-35c5-da330f800326@huawei.com>
-Date: Sun, 5 May 2019 19:07:02 +0800
+Message-ID: <db3bb9c1-8b3a-760d-057f-b8fb6914809b@huawei.com>
+Date: Sun, 5 May 2019 19:15:51 +0800
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.7.1
 MIME-Version: 1.0
@@ -67,9 +67,9 @@ Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Marc,
+BTW since its_irq_set_vcpu_affinity() is already in atomic context, do we really need a separate lock its_dev->event_map.vlpi_lock? I didn't find anywhere outside its_irq_set_vcpu_affinity() call chain acquires this lock.
 
-Appreciate your quick patch :) We'll test it and let you know the result.
+Thanks,
 
 Heyi
 
