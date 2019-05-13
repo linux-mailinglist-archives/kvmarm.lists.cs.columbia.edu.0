@@ -2,74 +2,56 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A1FD71B31B
-	for <lists+kvmarm@lfdr.de>; Mon, 13 May 2019 11:44:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45BEC1B3CA
+	for <lists+kvmarm@lfdr.de>; Mon, 13 May 2019 12:20:43 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1B9994A4F3;
-	Mon, 13 May 2019 05:44:22 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 901A14A4E1;
+	Mon, 13 May 2019 06:20:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@linaro.org
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id aASgD3hq20lR; Mon, 13 May 2019 05:44:21 -0400 (EDT)
+	with ESMTP id gMb20Qv06HpD; Mon, 13 May 2019 06:20:42 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 19E904A4EB;
-	Mon, 13 May 2019 05:44:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5985D4A4EA;
+	Mon, 13 May 2019 06:20:41 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C3F24A4E0
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 May 2019 05:44:19 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CB3804A4E1
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 13 May 2019 06:20:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id z-Vld5nTw+PR for <kvmarm@lists.cs.columbia.edu>;
- Mon, 13 May 2019 05:44:17 -0400 (EDT)
-Received: from mail-ot1-f68.google.com (mail-ot1-f68.google.com
- [209.85.210.68])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 886514A477
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 May 2019 05:44:17 -0400 (EDT)
-Received: by mail-ot1-f68.google.com with SMTP id u11so711511otq.7
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 May 2019 02:44:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=TXYVyM1elY/e/gwr441pJoxadHFYtIz0EH7uksaUA00=;
- b=GQawiz8mlWxh/yf7/DiecVKQmIl48uHHnfbDs6NwSWdi9y+D4Kf5bCLwsxaGnEIUZf
- nrUE6T/lrxJFWLvhe10ToW17PX+6WZ7PWEf4xSPOXb8k1DSLt7O2Juet2Lgt5lC759eq
- g1/2yARQtJwd9CIw7tB136d5woqAAOHI8bNZLOCKr92a6YDS5/J3WlNpe+gEZ05/VpR8
- xBK5t6xm5FLjWabkFaYeqqAUPHhVrHYsN5daplbQKzmXrU6omOOpWIp9oBDSDKGEQLEE
- NVXTCZ3tJt/VjAwmPbgBz0t9AjLNN3OsPpyEBbIDeOrWVTKi2ZQkX7y2xbus1kqxTGmq
- bnZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=TXYVyM1elY/e/gwr441pJoxadHFYtIz0EH7uksaUA00=;
- b=WuDy+5gabG+2g+Wwribi23IxSSu9xdjF8lDV9roxpxP3n8cxOKAlq8UF9x8lR0pRML
- 6GWxPrgZNt9LlERTv3SaNugNK3yOGUlLjOPatHMjEjFpACxeEph52BIvXwHG6lKm/7nN
- /E2jN3hYXCUfw/DwjaYvZLHqlg9qCMU32uvSPwlhzQzQvRGR2vaNbSA6kNfXO4DM/Yup
- xnqKVic+xmjay2int1/j6ojAJxnQ4LeMUtxCLz1fo/Jobqq39g1K7dGALxmfkA4/STQU
- hXX1JypDSAAWsDBmL+Z8ZcVGHjnKebC5hmKTa9rXGxarVmpal9PBmx36ToJkRZn3d8vI
- w3Rg==
-X-Gm-Message-State: APjAAAU87KSmnVxCxQfr3KUshUNlwGi7ySP1G1Rm5Zkshsy+PinK1T6e
- JCgaVkce01Ws+drzZq1RXspADpSHtveAdJbi3Km2Ow==
-X-Google-Smtp-Source: APXvYqzaNT+TgVDjenXnFHOeex93upzugiVccOLalDaA6Ieg0c7UGMs4NUZH4TszrKklUoDkyyO8dIHeKn7h76sHRXU=
-X-Received: by 2002:a9d:6855:: with SMTP id c21mr14592075oto.151.1557740656833; 
- Mon, 13 May 2019 02:44:16 -0700 (PDT)
-MIME-Version: 1.0
-References: <1557728917-49079-1-git-send-email-gengdongjiu@huawei.com>
-In-Reply-To: <1557728917-49079-1-git-send-email-gengdongjiu@huawei.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 13 May 2019 10:44:05 +0100
-Message-ID: <CAFEAcA-S6Kh8yUqVZVA8gtDdRscgVaTfC4CwxngoS2ZPt6K9ww@mail.gmail.com>
+ with ESMTP id KofUVHZfwg+C for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 13 May 2019 06:20:39 -0400 (EDT)
+Received: from huawei.com (szxga07-in.huawei.com [45.249.212.35])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0E1AA4A3A5
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 13 May 2019 06:20:39 -0400 (EDT)
+Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.59])
+ by Forcepoint Email with ESMTP id B2A51795AEB80AF6238C;
+ Mon, 13 May 2019 18:20:35 +0800 (CST)
+Received: from [127.0.0.1] (10.142.68.147) by DGGEMS406-HUB.china.huawei.com
+ (10.3.19.206) with Microsoft SMTP Server id 14.3.439.0; Mon, 13 May 2019
+ 18:20:24 +0800
 Subject: Re: [RFC PATCH V2] kvm: arm64: export memory error recovery
  capability to user space
-To: Dongjiu Geng <gengdongjiu@huawei.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+References: <1557728917-49079-1-git-send-email-gengdongjiu@huawei.com>
+ <CAFEAcA-S6Kh8yUqVZVA8gtDdRscgVaTfC4CwxngoS2ZPt6K9ww@mail.gmail.com>
+From: gengdongjiu <gengdongjiu@huawei.com>
+Message-ID: <da887bd0-75db-4ad8-cc7a-fa5df26c88fd@huawei.com>
+Date: Mon, 13 May 2019 18:20:14 +0800
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.3.0
+MIME-Version: 1.0
+In-Reply-To: <CAFEAcA-S6Kh8yUqVZVA8gtDdRscgVaTfC4CwxngoS2ZPt6K9ww@mail.gmail.com>
+Content-Language: en-US
+X-Originating-IP: [10.142.68.147]
+X-CFilter-Loop: Reflected
 Cc: "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
  kvm-devel <kvm@vger.kernel.org>, Jonathan Corbet <corbet@lwn.net>,
  Marc Zyngier <marc.zyngier@arm.com>, Catalin Marinas <catalin.marinas@arm.com>,
@@ -93,36 +75,47 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, 13 May 2019 at 07:32, Dongjiu Geng <gengdongjiu@huawei.com> wrote:
->
-> When user space do memory recovery, it will check whether KVM and
-> guest support the error recovery, only when both of them support,
-> user space will do the error recovery. This patch exports this
-> capability of KVM to user space.
->
-> Cc: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Dongjiu Geng <gengdongjiu@huawei.com>
-> ---
-> v1->v2:
-> 1. check whether host support memory failure instead of RAS capability
->    https://patchwork.kernel.org/patch/10730827/
->
-> v1:
-> 1. User space needs to check this capability of host is suggested by Peter[1],
-> this patch as RFC tag because user space patches are still under review,
-> so this kernel patch is firstly sent out for review.
->
-> [1]: https://patchwork.codeaurora.org/patch/652261/
-> ---
+On 2019/5/13 17:44, Peter Maydell wrote:
+> On Mon, 13 May 2019 at 07:32, Dongjiu Geng <gengdongjiu@huawei.com> wrote:
+>>
+>> When user space do memory recovery, it will check whether KVM and
+>> guest support the error recovery, only when both of them support,
+>> user space will do the error recovery. This patch exports this
+>> capability of KVM to user space.
+>>
+>> Cc: Peter Maydell <peter.maydell@linaro.org>
+>> Signed-off-by: Dongjiu Geng <gengdongjiu@huawei.com>
+>> ---
+>> v1->v2:
+>> 1. check whether host support memory failure instead of RAS capability
+>>    https://patchwork.kernel.org/patch/10730827/
+>>
+>> v1:
+>> 1. User space needs to check this capability of host is suggested by Peter[1],
+>> this patch as RFC tag because user space patches are still under review,
+>> so this kernel patch is firstly sent out for review.
+>>
+>> [1]: https://patchwork.codeaurora.org/patch/652261/
+>> ---
+> 
+> I thought the conclusion of the thread on the v1 patch was that
+> userspace doesn't need to specifically ask the host kernel if
+> it has support for this -- if it does not, then the host kernel
+> will just never deliver userspace any SIGBUS with MCEERR code,
+> which is fine. Or am I still confused?
 
-I thought the conclusion of the thread on the v1 patch was that
-userspace doesn't need to specifically ask the host kernel if
-it has support for this -- if it does not, then the host kernel
-will just never deliver userspace any SIGBUS with MCEERR code,
-which is fine. Or am I still confused?
+thanks Peter's quick reply.
+yes, I think so, if it does not support,  then the host kernel
+will just never deliver userspace any SIGBUS with MCEERR code.
 
-thanks
--- PMM
+so maybe we do not need this patch.
+
+> 
+> thanks
+> -- PMM
+> .
+> 
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
