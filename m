@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F7EC204D2
-	for <lists+kvmarm@lfdr.de>; Thu, 16 May 2019 13:40:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C211204D6
+	for <lists+kvmarm@lfdr.de>; Thu, 16 May 2019 13:40:52 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 98B304A420;
-	Thu, 16 May 2019 07:40:02 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DDCA64A4DD;
+	Thu, 16 May 2019 07:40:51 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,44 +18,44 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id pNEMzysG6eik; Thu, 16 May 2019 07:40:02 -0400 (EDT)
+	with ESMTP id tmJMNvQDj3Hr; Thu, 16 May 2019 07:40:51 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7CCE14A4DA;
-	Thu, 16 May 2019 07:40:01 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B06934A4A3;
+	Thu, 16 May 2019 07:40:50 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id BD6294A4C6
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 May 2019 07:40:00 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E46CF4A417
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 16 May 2019 07:40:49 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id XQpHBFp9Hkg6 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 16 May 2019 07:39:59 -0400 (EDT)
+ with ESMTP id T1U6RvZN5aQv for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 16 May 2019 07:40:48 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6F50A4A369
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 May 2019 07:39:59 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D546C4A369
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 16 May 2019 07:40:48 -0400 (EDT)
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net
  [73.47.72.35])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 7970320862;
- Thu, 16 May 2019 11:39:57 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 609C12087E;
+ Thu, 16 May 2019 11:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1558006798;
- bh=CF5+kLRFNxDfWRKm3e7Wn+rgcDaHbU6jyhlCwi/ZtrM=;
+ s=default; t=1558006848;
+ bh=OA6R3iu7JBUXC9yXdeUmfUgtGcgdbZm40IF8v11gb0Q=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=whVd+GPSv+oRmFk9phUWD1DSKTWXK+KEbZ5uLiHobr3sZzXtZ0EheIjJnT3JmTxMw
- iUyHpwLv2lpNqJ7Nb72dBr16EJGPWLtoqehizCqBAx4CI9+nKA1xW3Y9N+XNvuM3W9
- 549e5BexC8S6mDrgP47J1yJz4dWkAQTCZ8O+/wbM=
+ b=FIXB/naSHEYe9Maib831LdZDmNonX+xKO3dmXAXqrP1vw91uVm3oVZ8HLzf4Do9P7
+ kE8yz5kuuc76QT+Q8TEKQCHakLez3PcGe6+N77C+3YxVpTC/SrDZOgGdQxkkbHn80D
+ XRWH6qDiVnwQfAsP93/pmKkmy55hb3qtmXFwS0sM=
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.0 20/34] KVM: arm/arm64: Ensure vcpu target is unset
- on reset failure
-Date: Thu, 16 May 2019 07:39:17 -0400
-Message-Id: <20190516113932.8348-20-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 16/25] KVM: arm/arm64: Ensure vcpu target is
+ unset on reset failure
+Date: Thu, 16 May 2019 07:40:19 -0400
+Message-Id: <20190516114029.8682-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190516113932.8348-1-sashal@kernel.org>
-References: <20190516113932.8348-1-sashal@kernel.org>
+In-Reply-To: <20190516114029.8682-1-sashal@kernel.org>
+References: <20190516114029.8682-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -97,7 +97,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/virt/kvm/arm/arm.c b/virt/kvm/arm/arm.c
-index 9c486fad3f9f8..6202b4f718cea 100644
+index 1415e36fed3db..fef3527af3bd7 100644
 --- a/virt/kvm/arm/arm.c
 +++ b/virt/kvm/arm/arm.c
 @@ -949,7 +949,7 @@ int kvm_vm_ioctl_irq_line(struct kvm *kvm, struct kvm_irq_level *irq_level,
