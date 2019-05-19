@@ -2,65 +2,52 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A0ED1204E0
-	for <lists+kvmarm@lfdr.de>; Thu, 16 May 2019 13:41:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CFF7A2268F
+	for <lists+kvmarm@lfdr.de>; Sun, 19 May 2019 12:08:01 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4FBED4A4F0;
-	Thu, 16 May 2019 07:41:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BBD684A508;
+	Sun, 19 May 2019 06:08:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id S2xnNwbrfVCB; Thu, 16 May 2019 07:41:57 -0400 (EDT)
+	with ESMTP id Yy7FP2O319Py; Sun, 19 May 2019 06:08:00 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2A5004A4E3;
-	Thu, 16 May 2019 07:41:56 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 81EF14A4FD;
+	Sun, 19 May 2019 06:07:59 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0873F4A47A
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 May 2019 07:41:55 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E4DAE4A4E8
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 19 May 2019 06:07:57 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id DaG7yM9gyKIG for <kvmarm@lists.cs.columbia.edu>;
- Thu, 16 May 2019 07:41:54 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 050AA4A4CD
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 May 2019 07:41:54 -0400 (EDT)
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net
- [73.47.72.35])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 861DB21726;
- Thu, 16 May 2019 11:41:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1558006913;
- bh=GihUZHHOUvUd205m/aDQTZ+c7w93ExmPloBlqKXwQF4=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=PJoBTdER2z9o3otIenOO9urX27DKzpteQMSCuDEzDVDJK9Wq6Y4kOupsjDGFAZxj4
- 0zf/YlXRvFF9/WE6HAduZoQrxb8P43Ryc40Ztkmpxtszg29IVJoR0Uyqjbt5zIsxCW
- sBgzki/QKQMyE2M49lqFuezj9ekh03IrNkiE2AfU=
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.4 5/8] KVM: arm/arm64: Ensure vcpu target is unset
- on reset failure
-Date: Thu, 16 May 2019 07:41:43 -0400
-Message-Id: <20190516114146.9267-5-sashal@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190516114146.9267-1-sashal@kernel.org>
-References: <20190516114146.9267-1-sashal@kernel.org>
+ with ESMTP id 74SFOO5-7scj for <kvmarm@lists.cs.columbia.edu>;
+ Sun, 19 May 2019 06:07:56 -0400 (EDT)
+Received: from huawei.com (szxga07-in.huawei.com [45.249.212.35])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5F73E4A4E5
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 19 May 2019 06:07:56 -0400 (EDT)
+Received: from DGGEMS410-HUB.china.huawei.com (unknown [172.30.72.58])
+ by Forcepoint Email with ESMTP id 2FE1C505548047439AB4;
+ Sun, 19 May 2019 18:07:38 +0800 (CST)
+Received: from HGHY1z004218071.china.huawei.com (10.177.29.32) by
+ DGGEMS410-HUB.china.huawei.com (10.3.19.210) with Microsoft SMTP Server id
+ 14.3.439.0; Sun, 19 May 2019 18:07:29 +0800
+From: Xiang Zheng <zhengxiang9@huawei.com>
+To: <linux-arm-kernel@lists.infradead.org>, <kvmarm@lists.cs.columbia.edu>,
+ <linux-kernel@vger.kernel.org>
+Subject: [PATCH] KVM: ARM64: Update perf event when setting PMU count value
+Date: Sun, 19 May 2019 18:05:59 +0800
+Message-ID: <20190519100559.7188-1-zhengxiang9@huawei.com>
+X-Mailer: git-send-email 2.15.1.windows.2
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Cc: Marc Zyngier <marc.zyngier@arm.com>, Sasha Levin <sashal@kernel.org>,
- kvmarm@lists.cs.columbia.edu
+X-Originating-IP: [10.177.29.32]
+X-CFilter-Loop: Reflected
+Cc: marc.zyngier@arm.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -77,57 +64,116 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Andrew Jones <drjones@redhat.com>
+Guest will adjust the sample period and set PMU counter value when
+it takes a long time to handle the PMU interrupts.
 
-[ Upstream commit 811328fc3222f7b55846de0cd0404339e2e1e6d7 ]
+However, we don't have a corresponding change on the virtual PMU
+which is emulated via a perf event. It could cause a large number
+of PMU interrupts injected to guest. Then guest will get hang for
+handling these interrupts.
 
-A failed KVM_ARM_VCPU_INIT should not set the vcpu target,
-as the vcpu target is used by kvm_vcpu_initialized() to
-determine if other vcpu ioctls may proceed. We need to set
-the target before calling kvm_reset_vcpu(), but if that call
-fails, we should then unset it and clear the feature bitmap
-while we're at it.
+So update the sample_period of perf event if the counter value is
+changed to avoid this case.
 
-Signed-off-by: Andrew Jones <drjones@redhat.com>
-[maz: Simplified patch, completed commit message]
-Signed-off-by: Marc Zyngier <marc.zyngier@arm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Xiang Zheng <zhengxiang9@huawei.com>
 ---
- arch/arm/kvm/arm.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ virt/kvm/arm/pmu.c | 54 +++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 45 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm/kvm/arm.c b/arch/arm/kvm/arm.c
-index d7bef2144760c..e96ddc599c303 100644
---- a/arch/arm/kvm/arm.c
-+++ b/arch/arm/kvm/arm.c
-@@ -744,7 +744,7 @@ int kvm_vm_ioctl_irq_line(struct kvm *kvm, struct kvm_irq_level *irq_level,
- static int kvm_vcpu_set_target(struct kvm_vcpu *vcpu,
- 			       const struct kvm_vcpu_init *init)
+diff --git a/virt/kvm/arm/pmu.c b/virt/kvm/arm/pmu.c
+index 1c5b76c..cbad3ec 100644
+--- a/virt/kvm/arm/pmu.c
++++ b/virt/kvm/arm/pmu.c
+@@ -24,6 +24,11 @@
+ #include <kvm/arm_pmu.h>
+ #include <kvm/arm_vgic.h>
+ 
++static void kvm_pmu_stop_counter(struct kvm_vcpu *vcpu, struct kvm_pmc *pmc);
++static struct perf_event *kvm_pmu_create_perf_event(struct kvm_vcpu *vcpu,
++						    struct kvm_pmc *pmc,
++						    struct perf_event_attr *attr);
++
+ /**
+  * kvm_pmu_get_counter_value - get PMU counter value
+  * @vcpu: The vcpu pointer
+@@ -57,11 +62,29 @@ u64 kvm_pmu_get_counter_value(struct kvm_vcpu *vcpu, u64 select_idx)
+  */
+ void kvm_pmu_set_counter_value(struct kvm_vcpu *vcpu, u64 select_idx, u64 val)
  {
--	unsigned int i;
-+	unsigned int i, ret;
- 	int phys_target = kvm_target_cpu();
+-	u64 reg;
++	u64 reg, counter, old_sample_period;
++	struct kvm_pmu *pmu = &vcpu->arch.pmu;
++	struct kvm_pmc *pmc = &pmu->pmc[select_idx];
++	struct perf_event *event;
++	struct perf_event_attr attr;
  
- 	if (init->target != phys_target)
-@@ -779,9 +779,14 @@ static int kvm_vcpu_set_target(struct kvm_vcpu *vcpu,
- 	vcpu->arch.target = phys_target;
- 
- 	/* Now we know what it is, we can reset it. */
--	return kvm_reset_vcpu(vcpu);
--}
-+	ret = kvm_reset_vcpu(vcpu);
-+	if (ret) {
-+		vcpu->arch.target = -1;
-+		bitmap_zero(vcpu->arch.features, KVM_VCPU_MAX_FEATURES);
+ 	reg = (select_idx == ARMV8_PMU_CYCLE_IDX)
+ 	      ? PMCCNTR_EL0 : PMEVCNTR0_EL0 + select_idx;
+ 	__vcpu_sys_reg(vcpu, reg) += (s64)val - kvm_pmu_get_counter_value(vcpu, select_idx);
++
++	if (pmc->perf_event) {
++		attr = pmc->perf_event->attr;
++		old_sample_period = attr.sample_period;
++		counter = kvm_pmu_get_counter_value(vcpu, select_idx);
++		attr.sample_period = (-counter) & pmc->bitmask;
++		if (attr.sample_period == old_sample_period)
++			return;
++
++		kvm_pmu_stop_counter(vcpu, pmc);
++		event = kvm_pmu_create_perf_event(vcpu, pmc, &attr);
++		if (event)
++			pmc->perf_event = event;
 +	}
+ }
  
-+	return ret;
+ /**
+@@ -303,6 +326,24 @@ static void kvm_pmu_perf_overflow(struct perf_event *perf_event,
+ 	}
+ }
+ 
++static struct perf_event *kvm_pmu_create_perf_event(struct kvm_vcpu *vcpu,
++						    struct kvm_pmc *pmc,
++						    struct perf_event_attr *attr)
++{
++	struct perf_event *event;
++
++	event = perf_event_create_kernel_counter(attr, -1, current,
++						 kvm_pmu_perf_overflow, pmc);
++
++	if (IS_ERR(event)) {
++		pr_err_once("kvm: pmu event creation failed %ld\n",
++			    PTR_ERR(event));
++		return NULL;
++	}
++
++	return event;
 +}
++
+ /**
+  * kvm_pmu_software_increment - do software increment
+  * @vcpu: The vcpu pointer
+@@ -416,15 +457,10 @@ void kvm_pmu_set_counter_event_type(struct kvm_vcpu *vcpu, u64 data,
+ 	/* The initial sample period (overflow count) of an event. */
+ 	attr.sample_period = (-counter) & pmc->bitmask;
  
- static int kvm_arch_vcpu_ioctl_vcpu_init(struct kvm_vcpu *vcpu,
- 					 struct kvm_vcpu_init *init)
+-	event = perf_event_create_kernel_counter(&attr, -1, current,
+-						 kvm_pmu_perf_overflow, pmc);
+-	if (IS_ERR(event)) {
+-		pr_err_once("kvm: pmu event creation failed %ld\n",
+-			    PTR_ERR(event));
+-		return;
+-	}
++	event = kvm_pmu_create_perf_event(vcpu, pmc, &attr);
+ 
+-	pmc->perf_event = event;
++	if (event)
++		pmc->perf_event = event;
+ }
+ 
+ bool kvm_arm_support_pmu_v3(void)
 -- 
-2.20.1
+1.8.3.1
+
 
 _______________________________________________
 kvmarm mailing list
