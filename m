@@ -2,74 +2,60 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7630F29F00
-	for <lists+kvmarm@lfdr.de>; Fri, 24 May 2019 21:22:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4428B2AAA3
+	for <lists+kvmarm@lfdr.de>; Sun, 26 May 2019 18:10:24 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 785624A4F1;
-	Fri, 24 May 2019 15:22:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DA3BF4A4F3;
+	Sun, 26 May 2019 12:10:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.799
+X-Spam-Score: -4.202
 X-Spam-Level: 
-X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001]
+X-Spam-Status: No, score=-4.202 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5, SPF_HELO_PASS=-0.001]
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jvHAyYHZDUkX; Fri, 24 May 2019 15:22:57 -0400 (EDT)
+	with ESMTP id vRDEe54+JJEC; Sun, 26 May 2019 12:10:22 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 70B254A4E5;
-	Fri, 24 May 2019 15:22:56 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5D1694A49F;
+	Sun, 26 May 2019 12:10:21 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AB6254A477
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 May 2019 15:22:55 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3A9C64A32E
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 26 May 2019 12:10:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 1WxJhq25MnQn for <kvmarm@lists.cs.columbia.edu>;
- Fri, 24 May 2019 15:22:53 -0400 (EDT)
-Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com
- [209.85.221.65])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5011A4A389
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 May 2019 15:22:53 -0400 (EDT)
-Received: by mail-wr1-f65.google.com with SMTP id t4so2775670wrx.7
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 May 2019 12:22:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=Ug4Bl3el14wpTnYvRfqXJCkiW+ZQVz0A+SEzks8ca+c=;
- b=a+KESVXTZqC0nlDtZ1lynsSPNOQkSbbwsAseWhcZ9EWqga/LgKDbeoMatXkoPAhmHO
- qd4qIWdttsonVkU9qvQe/2pbV8jP0NbUev6t0oYf5kHM/SvVDTkVizzvt0BQ9CVH5RHq
- 6U1anq68ycBuyuo3WOhrRi0G1o7SoFzsVdo2lMPcbdlSnayY5yNBqvvaTUKiU6pWP48E
- MycvRkj1L1DsR6HDt5rQwydPAoJeDZg3Yw9lZEBR4FDMiM1T6VD8G6ZpCxu2C8IKs0zq
- Mwvn2eG9dgMMFBPgx8kIfigaBa52KhNvsF2jm6hNOCuvecGy/P0MPYt+IYS3zqebSESM
- 2a3Q==
-X-Gm-Message-State: APjAAAV1MpPwMX3XGObiigb1JcrllaVEyN/Y9bSWQicO4lLwfW0ZgAgt
- bUqs1H7mCfDUHjfzczlsb3dJFw==
-X-Google-Smtp-Source: APXvYqxc9I/gqPCwUGGqH4wF3p5c19c142inhBUwCyjvflRF3Erk2N54jSOBP2OotGkbtC4HE70Ugw==
-X-Received: by 2002:a5d:4b81:: with SMTP id b1mr39369544wrt.217.1558725772192; 
- Fri, 24 May 2019 12:22:52 -0700 (PDT)
-Received: from [192.168.10.150] ([93.56.166.5])
- by smtp.gmail.com with ESMTPSA id n5sm4642955wrj.27.2019.05.24.12.22.51
- (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
- Fri, 24 May 2019 12:22:51 -0700 (PDT)
-Subject: Re: [PATCH 1/3] MAINTAINERS: KVM: arm/arm64: Remove myself as
- maintainer
-To: Christoffer Dall <christoffer.dall@arm.com>
-References: <20190524144745.227242-1-marc.zyngier@arm.com>
- <20190524144745.227242-2-marc.zyngier@arm.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <1adc9268-438e-6c24-7883-690960d1c060@redhat.com>
-Date: Fri, 24 May 2019 21:22:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+ with ESMTP id jPxRYweU+89K for <kvmarm@lists.cs.columbia.edu>;
+ Sun, 26 May 2019 12:10:18 -0400 (EDT)
+Received: from mx1.redhat.com (mx1.redhat.com [209.132.183.28])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8F4F340217
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 26 May 2019 12:10:18 -0400 (EDT)
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com
+ [10.5.11.14])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mx1.redhat.com (Postfix) with ESMTPS id C9FA23086209;
+ Sun, 26 May 2019 16:10:16 +0000 (UTC)
+Received: from laptop.redhat.com (ovpn-116-67.ams2.redhat.com [10.36.116.67])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 8607B5D72A;
+ Sun, 26 May 2019 16:10:07 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com,
+ iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+ kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu, joro@8bytes.org,
+ alex.williamson@redhat.com, jacob.jun.pan@linux.intel.com,
+ yi.l.liu@intel.com, jean-philippe.brucker@arm.com, will.deacon@arm.com,
+ robin.murphy@arm.com
+Subject: [PATCH v8 00/29] SMMUv3 Nested Stage Setup
+Date: Sun, 26 May 2019 18:09:35 +0200
+Message-Id: <20190526161004.25232-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <20190524144745.227242-2-marc.zyngier@arm.com>
-Content-Language: en-US
-Cc: kvm@vger.kernel.org, Marc Zyngier <marc.zyngier@arm.com>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16
+ (mx1.redhat.com [10.5.110.42]); Sun, 26 May 2019 16:10:17 +0000 (UTC)
+Cc: marc.zyngier@arm.com, kevin.tian@intel.com, vincent.stehle@arm.com,
+ ashok.raj@intel.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -86,49 +72,185 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 24/05/19 16:47, Marc Zyngier wrote:
-> From: Christoffer Dall <christoffer.dall@arm.com>
-> 
-> I no longer have time to actively review patches and manage the tree and
-> it's time to make that official.
+This series allows a virtualizer to program the nested stage mode.
+This is useful when both the host and the guest are exposed with
+an SMMUv3 and a PCI device is assigned to the guest using VFIO.
 
-Thanks Christopher for your work, I hope to meet you anyway at KVM Forum!
+In this mode, the physical IOMMU must be programmed to translate
+the two stages: the one set up by the guest (IOVA -> GPA) and the
+one set up by the host VFIO driver as part of the assignment process
+(GPA -> HPA).
 
-Paolo
+On Intel, this is traditionnaly achieved by combining the 2 stages
+into a single physical stage. However this relies on the capability
+to trap on each guest translation structure update. This is possible
+by using the VTD Caching Mode. Unfortunately the ARM SMMUv3 does
+not offer a similar mechanism.
 
-> Huge thanks to the incredible Linux community and all the contributors
-> who have put up with me over the past years.
-> 
-> I also take this opportunity to remove the website link to the Columbia
-> web page, as that information is no longer up to date and I don't know
-> who manages that anymore.
-> 
-> Signed-off-by: Christoffer Dall <christoffer.dall@arm.com>
-> Signed-off-by: Marc Zyngier <marc.zyngier@arm.com>
-> ---
->  MAINTAINERS | 2 --
->  1 file changed, 2 deletions(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 5cfbea4ce575..4ba271a8e0ef 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -8611,14 +8611,12 @@ F:	arch/x86/include/asm/svm.h
->  F:	arch/x86/kvm/svm.c
->  
->  KERNEL VIRTUAL MACHINE FOR ARM/ARM64 (KVM/arm, KVM/arm64)
-> -M:	Christoffer Dall <christoffer.dall@arm.com>
->  M:	Marc Zyngier <marc.zyngier@arm.com>
->  R:	James Morse <james.morse@arm.com>
->  R:	Julien Thierry <julien.thierry@arm.com>
->  R:	Suzuki K Pouloze <suzuki.poulose@arm.com>
->  L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
->  L:	kvmarm@lists.cs.columbia.edu
-> -W:	http://systems.cs.columbia.edu/projects/kvm-arm
->  T:	git git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git
->  S:	Maintained
->  F:	arch/arm/include/uapi/asm/kvm*
-> 
+However, the ARM SMMUv3 architecture supports 2 physical stages! Those
+were devised exactly with that use case in mind. Assuming the HW
+implements both stages (optional), the guest now can use stage 1
+while the host uses stage 2.
+
+This assumes the virtualizer has means to propagate guest settings
+to the host SMMUv3 driver. This series brings this VFIO/IOMMU
+infrastructure.  Those services are:
+- bind the guest stage 1 configuration to the stream table entry
+- propagate guest TLB invalidations
+- bind MSI IOVAs
+- propagate faults collected at physical level up to the virtualizer
+
+This series depends on the shared SVA user api originally contributed
+by Jacob, Yi Liu, Tianyu in [1-2] and Jean-Philippe [3-4] and
+progressively matured up to the state found in Jean-Philippe's
+sva/api branch (git://linux-arm.org/linux-jpb.git). I guess we will
+try to get this upstreamed first in separate series so please
+consider this actual series starts at:
+"iommu: Introduce bind/unbind_guest_msi".
+
+Also I reordered the patches to split the series into an iommu/smmuv3
+part and a VFIO part. Those two parts may be considered to be upstreamed
+separately.
+
+Best Regards
+
+Eric
+
+This series can be found at:
+https://github.com/eauger/linux/tree/v5.2-rc1-2stage-v8
+
+References:
+[1] [PATCH v5 00/23] IOMMU and VT-d driver support for Shared Virtual
+    Address (SVA)
+    https://lwn.net/Articles/754331/
+[2] [RFC PATCH 0/8] Shared Virtual Memory virtualization for VT-d
+    (VFIO part)
+    https://lists.linuxfoundation.org/pipermail/iommu/2017-April/021475.html
+[3] [v2,00/40] Shared Virtual Addressing for the IOMMU
+    https://patchwork.ozlabs.org/cover/912129/
+[4] [PATCH v3 00/10] Shared Virtual Addressing for the IOMMU
+    https://patchwork.kernel.org/cover/10608299/
+
+History:
+
+v7 -> v8:
+- rebase on top of v5.2-rc1 and especially
+  8be39a1a04c1  iommu/arm-smmu-v3: Add a master->domain pointer
+- dynamic alloc of s1_cfg/s2_cfg
+- __arm_smmu_tlb_inv_asid/s1_range_nosync
+- check there is no HW MSI regions
+- asid invalidation using pasid extended struct (change in the uapi)
+- add s1_live/s2_live checks
+- move check about support of nested stages in domain finalise
+- fixes in error reporting according to the discussion with Robin
+- reordered the patches to have first iommu/smmuv3 patches and then
+  VFIO patches
+
+v6 -> v7:
+- removed device handle from bind/unbind_guest_msi
+- added "iommu/smmuv3: Nested mode single MSI doorbell per domain
+  enforcement"
+- added few uapi comments as suggested by Jean, Jacop and Alex
+
+v5 -> v6:
+- Fix compilation issue when CONFIG_IOMMU_API is unset
+
+v4 -> v5:
+- fix bug reported by Vincent: fault handler unregistration now happens in
+  vfio_pci_release
+- IOMMU_FAULT_PERM_* moved outside of struct definition + small
+  uapi changes suggested by Kean-Philippe (except fetch_addr)
+- iommu: introduce device fault report API: removed the PRI part.
+- see individual logs for more details
+- reset the ste abort flag on detach
+
+v3 -> v4:
+- took into account Alex, jean-Philippe and Robin's comments on v3
+- rework of the smmuv3 driver integration
+- add tear down ops for msi binding and PASID table binding
+- fix S1 fault propagation
+- put fault reporting patches at the beginning of the series following
+  Jean-Philippe's request
+- update of the cache invalidate and fault API uapis
+- VFIO fault reporting rework with 2 separate regions and one mmappable
+  segment for the fault queue
+- moved to PATCH
+
+v2 -> v3:
+- When registering the S1 MSI binding we now store the device handle. This
+  addresses Robin's comment about discimination of devices beonging to
+  different S1 groups and using different physical MSI doorbells.
+- Change the fault reporting API: use VFIO_PCI_DMA_FAULT_IRQ_INDEX to
+  set the eventfd and expose the faults through an mmappable fault region
+
+v1 -> v2:
+- Added the fault reporting capability
+- asid properly passed on invalidation (fix assignment of multiple
+  devices)
+- see individual change logs for more info
+
+
+Eric Auger (17):
+  iommu: Introduce bind/unbind_guest_msi
+  iommu/smmuv3: Dynamically allocate s1_cfg and s2_cfg
+  iommu/smmuv3: Get prepared for nested stage support
+  iommu/smmuv3: Implement attach/detach_pasid_table
+  iommu/smmuv3: Introduce __arm_smmu_tlb_inv_asid/s1_range_nosync
+  iommu/smmuv3: Implement cache_invalidate
+  dma-iommu: Implement NESTED_MSI cookie
+  iommu/smmuv3: Nested mode single MSI doorbell per domain enforcement
+  iommu/smmuv3: Enforce incompatibility between nested mode and HW MSI
+    regions
+  iommu/smmuv3: Implement bind/unbind_guest_msi
+  iommu/smmuv3: Report non recoverable faults
+  vfio: VFIO_IOMMU_BIND/UNBIND_MSI
+  vfio-pci: Add a new VFIO_REGION_TYPE_NESTED region type
+  vfio-pci: Register an iommu fault handler
+  vfio_pci: Allow to mmap the fault queue
+  vfio-pci: Add VFIO_PCI_DMA_FAULT_IRQ_INDEX
+  vfio: Document nested stage control
+
+Jacob Pan (6):
+  driver core: Add per device iommu param
+  iommu: Introduce device fault data
+  iommu: Introduce device fault report API
+  iommu: Add a timeout parameter for PRQ response
+  iommu: Use device fault trace event
+  iommu: Introduce attach/detach_pasid_table API
+
+Jean-Philippe Brucker (3):
+  iommu: Add recoverable fault reporting
+  trace/iommu: Add sva trace events
+  iommu/arm-smmu-v3: Maintain a SID->device structure
+
+Liu, Yi L (2):
+  vfio: VFIO_IOMMU_ATTACH/DETACH_PASID_TABLE
+  vfio: VFIO_IOMMU_CACHE_INVALIDATE
+
+Yi L Liu (1):
+  iommu: Introduce cache_invalidate API
+
+ .../admin-guide/kernel-parameters.txt         |   8 +
+ Documentation/vfio.txt                        |  83 ++
+ drivers/iommu/arm-smmu-v3.c                   | 817 ++++++++++++++++--
+ drivers/iommu/dma-iommu.c                     | 139 ++-
+ drivers/iommu/iommu.c                         | 299 ++++++-
+ drivers/vfio/pci/vfio_pci.c                   | 214 +++++
+ drivers/vfio/pci/vfio_pci_intrs.c             |  19 +
+ drivers/vfio/pci/vfio_pci_private.h           |  18 +
+ drivers/vfio/pci/vfio_pci_rdwr.c              |  73 ++
+ drivers/vfio/vfio_iommu_type1.c               | 172 ++++
+ include/linux/device.h                        |   3 +
+ include/linux/dma-iommu.h                     |  16 +
+ include/linux/iommu.h                         | 176 ++++
+ include/trace/events/iommu.h                  |  87 ++
+ include/uapi/linux/iommu.h                    | 280 ++++++
+ include/uapi/linux/vfio.h                     | 107 +++
+ 16 files changed, 2421 insertions(+), 90 deletions(-)
+ create mode 100644 include/uapi/linux/iommu.h
+
+-- 
+2.20.1
 
 _______________________________________________
 kvmarm mailing list
