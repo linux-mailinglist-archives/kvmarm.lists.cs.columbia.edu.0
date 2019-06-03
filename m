@@ -2,60 +2,66 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 10AFA32E89
-	for <lists+kvmarm@lfdr.de>; Mon,  3 Jun 2019 13:23:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CC4E32F54
+	for <lists+kvmarm@lfdr.de>; Mon,  3 Jun 2019 14:15:00 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8BAC34A4EB;
-	Mon,  3 Jun 2019 07:23:11 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 687D54A4C0;
+	Mon,  3 Jun 2019 08:14:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: -4.202
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=-4.202 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5, SPF_HELO_PASS=-0.001]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id q0DvWGPvX3ve; Mon,  3 Jun 2019 07:23:11 -0400 (EDT)
+	with ESMTP id Mv5-cWqhYvaY; Mon,  3 Jun 2019 08:14:59 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3E09D4A4C9;
-	Mon,  3 Jun 2019 07:23:10 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EE7684A483;
+	Mon,  3 Jun 2019 08:14:57 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 590084A3B2
- for <kvmarm@lists.cs.columbia.edu>; Mon,  3 Jun 2019 07:23:09 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D03424A36B
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  3 Jun 2019 08:14:55 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id pUfDUPXaaN-j for <kvmarm@lists.cs.columbia.edu>;
- Mon,  3 Jun 2019 07:23:07 -0400 (EDT)
-Received: from foss.arm.com (usa-sjc-mx-foss1.foss.arm.com [217.140.101.70])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B7B954A319
- for <kvmarm@lists.cs.columbia.edu>; Mon,  3 Jun 2019 07:23:07 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.72.51.249])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2B817A78;
- Mon,  3 Jun 2019 04:23:07 -0700 (PDT)
-Received: from e103592.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com
- [10.72.51.249])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7E43B3F5AF;
- Mon,  3 Jun 2019 04:23:05 -0700 (PDT)
-Date: Mon, 3 Jun 2019 12:23:03 +0100
-From: Dave Martin <Dave.Martin@arm.com>
-To: Andre Przywara <andre.przywara@arm.com>
-Subject: Re: [PATCH kvmtool v3 5/9] KVM: arm/arm64: Add a vcpu feature for
- pointer authentication
-Message-ID: <20190603112302.GN28398@e103592.cambridge.arm.com>
-References: <1559229194-3036-1-git-send-email-Dave.Martin@arm.com>
- <1559229194-3036-6-git-send-email-Dave.Martin@arm.com>
- <20190531180416.3e87f5ad@donnerap.cambridge.arm.com>
+ with ESMTP id JPrV+CKwbHu1 for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  3 Jun 2019 08:14:54 -0400 (EDT)
+Received: from mx1.redhat.com (mx1.redhat.com [209.132.183.28])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 72A5B4A369
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  3 Jun 2019 08:14:54 -0400 (EDT)
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com
+ [10.5.11.13])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mx1.redhat.com (Postfix) with ESMTPS id A67873086228;
+ Mon,  3 Jun 2019 12:14:45 +0000 (UTC)
+Received: from kamzik.brq.redhat.com (unknown [10.43.2.160])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 54BC14E6A9;
+ Mon,  3 Jun 2019 12:14:43 +0000 (UTC)
+Date: Mon, 3 Jun 2019 14:14:40 +0200
+From: Andrew Jones <drjones@redhat.com>
+To: Christoffer Dall <christoffer.dall@arm.com>
+Subject: Re: [PATCH] KVM: arm/arm64: fix emulated ptimer irq injection
+Message-ID: <20190603121440.dsmmv3b55lzmjsqa@kamzik.brq.redhat.com>
+References: <20190527114619.16252-1-drjones@redhat.com>
+ <20190528110152.GA6775@e113682-lin.lund.arm.com>
+ <3f9d398b-3be2-5988-d3f9-01b28c4ccb1c@arm.com>
+ <20190528131215.GB6775@e113682-lin.lund.arm.com>
+ <20190528134044.olzox3c5xdhf3b4l@kamzik.brq.redhat.com>
+ <b76516f8-0d28-4683-ea25-28bfc2ccce62@arm.com>
+ <20190529090849.GC6775@e113682-lin.lund.arm.com>
+ <058e239f-c29b-eec2-c599-f6fe03f76174@arm.com>
+ <20190529100310.GD6775@e113682-lin.lund.arm.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20190531180416.3e87f5ad@donnerap.cambridge.arm.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: Christoffer Dall <cdall@kernel.org>, Marc Zyngier <marc.zyngier@arm.com>,
- Will Deacon <will.deacon@arm.com>,
- Kristina Martsenko <kristina.martsenko@arm.com>,
- Zhang Lei <zhang.lei@jp.fujitsu.com>,
- Amit Daniel Kachhap <amit.kachhap@arm.com>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+In-Reply-To: <20190529100310.GD6775@e113682-lin.lund.arm.com>
+User-Agent: NeoMutt/20180716
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16
+ (mx1.redhat.com [10.5.110.42]); Mon, 03 Jun 2019 12:14:53 +0000 (UTC)
+Cc: Marc Zyngier <marc.zyngier@arm.com>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -72,66 +78,175 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, May 31, 2019 at 06:04:16PM +0100, Andre Przywara wrote:
-> On Thu, 30 May 2019 16:13:10 +0100
-> Dave Martin <Dave.Martin@arm.com> wrote:
-> 
-> > From: Amit Daniel Kachhap <amit.kachhap@arm.com>
+On Wed, May 29, 2019 at 12:03:11PM +0200, Christoffer Dall wrote:
+> On Wed, May 29, 2019 at 10:13:21AM +0100, Marc Zyngier wrote:
+> > On 29/05/2019 10:08, Christoffer Dall wrote:
+> > > On Tue, May 28, 2019 at 05:08:53PM +0100, Marc Zyngier wrote:
+> > >> On 28/05/2019 14:40, Andrew Jones wrote:
+> > >>> On Tue, May 28, 2019 at 03:12:15PM +0200, Christoffer Dall wrote:
+> > >>>> On Tue, May 28, 2019 at 01:25:52PM +0100, Marc Zyngier wrote:
+> > >>>>> On 28/05/2019 12:01, Christoffer Dall wrote:
+> > >>>>>> On Mon, May 27, 2019 at 01:46:19PM +0200, Andrew Jones wrote:
+> > >>>>>>> The emulated ptimer needs to track the level changes, otherwise the
+> > >>>>>>> the interrupt will never get deasserted, resulting in the guest getting
+> > >>>>>>> stuck in an interrupt storm if it enables ptimer interrupts. This was
+> > >>>>>>> found with kvm-unit-tests; the ptimer tests hung as soon as interrupts
+> > >>>>>>> were enabled. Typical Linux guests don't have a problem as they prefer
+> > >>>>>>> using the virtual timer.
+> > >>>>>>>
+> > >>>>>>> Fixes: bee038a674875 ("KVM: arm/arm64: Rework the timer code to use a timer_map")
+> > >>>>>>> Signed-off-by: Andrew Jones <drjones@redhat.com>
+> > >>>>>>> ---
+> > >>>>>>>  virt/kvm/arm/arch_timer.c | 7 ++++++-
+> > >>>>>>>  1 file changed, 6 insertions(+), 1 deletion(-)
+> > >>>>>>>
+> > >>>>>>> diff --git a/virt/kvm/arm/arch_timer.c b/virt/kvm/arm/arch_timer.c
+> > >>>>>>> index 7fc272ecae16..9f5d8cc8b5e5 100644
+> > >>>>>>> --- a/virt/kvm/arm/arch_timer.c
+> > >>>>>>> +++ b/virt/kvm/arm/arch_timer.c
+> > >>>>>>> @@ -324,10 +324,15 @@ static void kvm_timer_update_irq(struct kvm_vcpu *vcpu, bool new_level,
+> > >>>>>>>  static void timer_emulate(struct arch_timer_context *ctx)
+> > >>>>>>>  {
+> > >>>>>>>  	bool should_fire = kvm_timer_should_fire(ctx);
+> > >>>>>>> +	struct timer_map map;
+> > >>>>>>> +
+> > >>>>>>> +	get_timer_map(ctx->vcpu, &map);
+> > >>>>>>>  
+> > >>>>>>>  	trace_kvm_timer_emulate(ctx, should_fire);
+> > >>>>>>>  
+> > >>>>>>> -	if (should_fire) {
+> > >>>>>>> +	if (ctx == map.emul_ptimer && should_fire != ctx->irq.level) {
+> > >>>>>>> +		kvm_timer_update_irq(ctx->vcpu, !ctx->irq.level, ctx);
+> > >>>>>>> +	} else if (should_fire) {
+> > >>>>>>>  		kvm_timer_update_irq(ctx->vcpu, true, ctx);
+> > >>>>>>>  		return;
+> > >>>>>>>  	}
+> > >>>>>>
+> > >>>>>> Hmm, this doesn't feel completely right.
+> > >>>
+> > >>> I won't try to argue that this is the right fix, as I haven't fully
+> > >>> grasped how all this code works, but, afaict, this is how it worked
+> > >>> prior to bee038a6.
+> > >>>
+> > >>>>>>
+> > >>>>>> Lowering the line of an emulated timer should only ever happen when the
+> > >>>>>> guest (or user space) writes to one of the system registers for that
+> > >>>>>> timer, which should be trapped and that should cause an update of the
+> > >>>>>> line.
+> > >>>>>>
+> > >>>>>> Are we missing a call to kvm_timer_update_irq() from
+> > >>>>>> kvm_arm_timer_set_reg() ?
+> > >>>>>
+> > >>>>> Which is exactly what we removed in 6bc210003dff, for good reasons.
+> > >>>>>
+> > >>>>
+> > >>>> Ah well, I can be wrong twice.  Or even three times.
+> > >>>>
+> > >>>>> Looking at kvm_arm_timer_write_sysreg(), we end-up calling kvm_timer_vcpu_load, but not updating the irq status.
+> > >>>>>
+> > >>>>> How about something like this instead (untested):
+> > >>>>>
+> > >>>>> diff --git a/virt/kvm/arm/arch_timer.c b/virt/kvm/arm/arch_timer.c
+> > >>>>> index 7fc272ecae16..6a418dcc5433 100644
+> > >>>>> --- a/virt/kvm/arm/arch_timer.c
+> > >>>>> +++ b/virt/kvm/arm/arch_timer.c
+> > >>>>> @@ -882,10 +882,14 @@ void kvm_arm_timer_write_sysreg(struct kvm_vcpu *vcpu,
+> > >>>>>  				enum kvm_arch_timer_regs treg,
+> > >>>>>  				u64 val)
+> > >>>>>  {
+> > >>>>> +	struct arch_timer_context *timer;
+> > >>>>> +
+> > >>>>>  	preempt_disable();
+> > >>>>>  	kvm_timer_vcpu_put(vcpu);
+> > >>>>>  
+> > >>>>> -	kvm_arm_timer_write(vcpu, vcpu_get_timer(vcpu, tmr), treg, val);
+> > >>>>> +	timer = vcpu_get_timer(vcpu, tmr);
+> > >>>>> +	kvm_arm_timer_write(vcpu, timer, treg, val);
+> > >>>>> +	kvm_timer_update_irq(vcpu, kvm_timer_should_fire(timer), timer);
+> > >>>>>  
+> > >>>>>  	kvm_timer_vcpu_load(vcpu);
+> > >>>>>  	preempt_enable();
+> > >>>>>
+> > >>>
+> > >>> Marc, I've tested this and it resolves the issue for me. If/when you post
+> > >>> it you can add a t-b from me if you like.
+> > >>>
+> > >>>>
+> > >>>> Yes, that looks reasonable.  Basically, in 6bc210003dff we should have
+> > >>>> only removed the call to timer_emulate, and not messed around with
+> > >>>> kvm_timer_update_irq()?
+> > >>>>
+> > >>>> After this patch, we'll have moved the call to kvm_timer_update_irq()
+> > >>>> from kvm_arm_timer_set_reg() to kvm_arm_timer_write_sysreg().  I can't
+> > >>>> seem to decide if clearly belongs in one place or the other.
+> > >>>>
+> > >>>
+> > >>> Isn't kvm_arm_timer_set_reg() only for userspace setting of the register?
+> > >>> In this test case I don't think userspace is involved at that point.
+> > >>
+> > >> It still remains that userspace writing to any of the registers has an
+> > >> effect on the interrupt line. Or rather that it should.
+> > >>
+> > >> And the more I look at this, the more I have the feeling this thing
+> > >> should happen on kvm_timer_vcpu_load(), wherever the writes comes from.
+> > >> It'd have slightly more overhead than doing it from every register
+> > >> access path, but at least it'd be clearer... Untested, again.
+> > >>
+> > >> diff --git a/virt/kvm/arm/arch_timer.c b/virt/kvm/arm/arch_timer.c
+> > >> index 7fc272ecae16..8244e40af196 100644
+> > >> --- a/virt/kvm/arm/arch_timer.c
+> > >> +++ b/virt/kvm/arm/arch_timer.c
+> > >> @@ -557,8 +557,12 @@ void kvm_timer_vcpu_load(struct kvm_vcpu *vcpu)
+> > >>  	if (map.direct_ptimer)
+> > >>  		timer_restore_state(map.direct_ptimer);
+> > >>  
+> > >> -	if (map.emul_ptimer)
+> > >> +	if (map.emul_ptimer) {
+> > >> +		kvm_timer_update_irq(vcpu,
+> > >> +				     kvm_timer_should_fire(map.emul_ptimer),
+> > >> +				     map.emul_ptimer);
+> > >>  		timer_emulate(map.emul_ptimer);
+> > >> +	}
+> > >>  }
+> > >>  
+> > >>  bool kvm_timer_should_notify_user(struct kvm_vcpu *vcpu)
+> > >>
+> > > 
+> > > But do we do the put/load dance when we trap a write to a register from
+> > > the VM ?
 > > 
-> > This patch adds a runtime capabality for KVM tool to enable Arm64 8.3
-> > Pointer Authentication in guest kernel. Two vcpu features
-> > KVM_ARM_VCPU_PTRAUTH_[ADDRESS/GENERIC] are supplied together to enable
-> > Pointer Authentication in KVM guest after checking the capability.
+> > Yup, that's what kvm_arm_timer_write_sysreg() does:
 > > 
-> > Command line options --enable-ptrauth and --disable-ptrauth are added
-> > to use this feature. However, if those options are not provided then
-> > also this feature is enabled if host supports this capability.
+> > 	preempt_disable();
+> > 	kvm_timer_vcpu_put(vcpu);
+> > 
+> > 	kvm_arm_timer_write(vcpu, vcpu_get_timer(vcpu, tmr), treg, val);
+> > 
+> > 	kvm_timer_vcpu_load(vcpu);
+> > 	preempt_enable();
+> > 
 > 
-> I don't really get the purpose of two options, I think that's quite
-> confusing. Should the first one either be dropped at all or called
-> something with "force"?
+> Ah, I missed that.  In that case, fair enough.  The only question then
+> is if we should unconditionally do this in timer_emulate (almost Drew's
+> original patch) or do it here in vcpu_load ?
 > 
-> I guess the idea is to fail if pointer auth isn't available, but the
-> option is supplied?
+> I don't remember how the nesting code looks like, but when it will start
+> to use emul_vtimer, we now need to do this for both, which would be an
+> argument for doing it in timer_emulate, I believe.
 > 
-> Or maybe have one option with parameters?
-> --ptrauth[,=enable,=disable]
+> Also, a nice comment in there why this is necessary (i.e. for handling
+> proper emulation when trapping sysreg changes) would probably be
+> worthwhile.
+>
 
-So, I was following two principles here, either or both of which may be
-bogus:
+Any more thoughts on how to proceed with this? FWIW, I found a commit[*]
+that indicates kvm_timer_vcpu_load() was at least once the correct place.
 
-1) There should be a way to determine whether KVM turns a given feature
-on or off (instead of magically defaulting to something).
+[*] 245715cbe83c ("KVM: arm/arm64: Fix lost IRQs from emulated physcial timer
+when blocked", 2018-07-25)
 
-2) To a first approaximation, kvmtool should allow each major KVM ABI
-feature to be exercised.
-
-3) By default, kvmtool should offer the maximum feature set possible to
-the guest.
-
-
-(3) is well established, but (1) and (2) may be open to question?
-
-If we hold to both principles, it makes sense to have options
-functionally equivalent to what I suggested (where KVM provides the
-control in the first place), but there may be more convenient ways
-to respell the options.
-
-If we really can't decide, maybe it's better to drop the options
-altogether until we have a real use case.
-
-I've found the options very useful for testing and debugging on the SVE
-side, but I can't comment on ptrauth.  Maybe someone else has a view?
-
-> > The macros defined in the headers are not in sync and should be replaced
-> > from the upstream.
-> 
-> This is no longer true, I guess?
-
-Ah yes, that comment can go.
-
-Cheers
----Dave
+Thanks,
+drew
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
