@@ -2,62 +2,49 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 33F1C36791
-	for <lists+kvmarm@lfdr.de>; Thu,  6 Jun 2019 00:42:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00BDA37239
+	for <lists+kvmarm@lfdr.de>; Thu,  6 Jun 2019 12:58:22 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5F2C34A4E6;
-	Wed,  5 Jun 2019 18:42:54 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 283F74A4C0;
+	Thu,  6 Jun 2019 06:58:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id J2kDeAufiJ9A; Wed,  5 Jun 2019 18:42:54 -0400 (EDT)
+	with ESMTP id FtDul1HKD5AP; Thu,  6 Jun 2019 06:58:20 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1C0554A4E1;
-	Wed,  5 Jun 2019 18:42:53 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E36F44A4EA;
+	Thu,  6 Jun 2019 06:58:18 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B18764A3A3
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Jun 2019 18:42:51 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B89824A4C0
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  6 Jun 2019 06:58:17 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id FoT0exlcjlYq for <kvmarm@lists.cs.columbia.edu>;
- Wed,  5 Jun 2019 18:42:50 -0400 (EDT)
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 091034A36B
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Jun 2019 18:42:49 -0400 (EDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 05 Jun 2019 15:42:48 -0700
-X-ExtLoop1: 1
-Received: from jacob-builder.jf.intel.com (HELO jacob-builder) ([10.7.199.155])
- by orsmga002.jf.intel.com with ESMTP; 05 Jun 2019 15:42:48 -0700
-Date: Wed, 5 Jun 2019 15:45:53 -0700
-From: Jacob Pan <jacob.jun.pan@linux.intel.com>
-To: Auger Eric <eric.auger@redhat.com>
-Subject: Re: [PATCH v8 26/29] vfio-pci: Register an iommu fault handler
-Message-ID: <20190605154553.0d00ad8d@jacob-builder>
-In-Reply-To: <10dd60d9-4af0-c0eb-08c9-a0db7ee1925e@redhat.com>
-References: <20190526161004.25232-1-eric.auger@redhat.com>
- <20190526161004.25232-27-eric.auger@redhat.com>
- <20190603163139.70fe8839@x1.home>
- <10dd60d9-4af0-c0eb-08c9-a0db7ee1925e@redhat.com>
-Organization: OTC
-X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Cc: jacob.jun.pan@linux.intel.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- ashok.raj@intel.com, kvm@vger.kernel.org, joro@8bytes.org, will.deacon@arm.com,
- linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
- marc.zyngier@arm.com, Alex Williamson <alex.williamson@redhat.com>,
- vincent.stehle@arm.com, robin.murphy@arm.com, kvmarm@lists.cs.columbia.edu,
- eric.auger.pro@gmail.com
+ with ESMTP id 899hCSg75JIG for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  6 Jun 2019 06:58:16 -0400 (EDT)
+Received: from foss.arm.com (usa-sjc-mx-foss1.foss.arm.com [217.140.101.70])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 52CF54A331
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  6 Jun 2019 06:58:16 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.72.51.249])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9BCF4A78;
+ Thu,  6 Jun 2019 03:58:15 -0700 (PDT)
+Received: from e103592.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com
+ [10.72.51.249])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 8108F3F690;
+ Thu,  6 Jun 2019 03:58:14 -0700 (PDT)
+From: Dave Martin <Dave.Martin@arm.com>
+To: kvmarm@lists.cs.columbia.edu
+Subject: [PATCH 0/2] KVM: arm/arm64: vgic: A couple of memory leak fixes
+Date: Thu,  6 Jun 2019 11:58:06 +0100
+Message-Id: <1559818688-20638-1-git-send-email-Dave.Martin@arm.com>
+X-Mailer: git-send-email 2.1.4
+Cc: Marc Zyngier <marc.zyngier@arm.com>,
+ Andre Przywara <andre.przywara@arm.com>, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -69,139 +56,35 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, 4 Jun 2019 18:11:08 +0200
-Auger Eric <eric.auger@redhat.com> wrote:
+While using kmemleak to verify that the KVM SVE series wasn't
+contributing any new memory leaks, I hit a couple of existing leaks to
+do with vGIC irqs and the vGIC ITS that appear to have been there for
+a while.
 
-> Hi Alex,
-> 
-> On 6/4/19 12:31 AM, Alex Williamson wrote:
-> > On Sun, 26 May 2019 18:10:01 +0200
-> > Eric Auger <eric.auger@redhat.com> wrote:
-> >   
-> >> This patch registers a fault handler which records faults in
-> >> a circular buffer and then signals an eventfd. This buffer is
-> >> exposed within the fault region.
-> >>
-> >> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> >>
-> >> ---
-> >>
-> >> v3 -> v4:
-> >> - move iommu_unregister_device_fault_handler to vfio_pci_release
-> >> ---
-> >>  drivers/vfio/pci/vfio_pci.c         | 49
-> >> +++++++++++++++++++++++++++++ drivers/vfio/pci/vfio_pci_private.h
-> >> |  1 + 2 files changed, 50 insertions(+)
-> >>
-> >> diff --git a/drivers/vfio/pci/vfio_pci.c
-> >> b/drivers/vfio/pci/vfio_pci.c index f75f61127277..520999994ba8
-> >> 100644 --- a/drivers/vfio/pci/vfio_pci.c
-> >> +++ b/drivers/vfio/pci/vfio_pci.c
-> >> @@ -30,6 +30,7 @@
-> >>  #include <linux/vfio.h>
-> >>  #include <linux/vgaarb.h>
-> >>  #include <linux/nospec.h>
-> >> +#include <linux/circ_buf.h>
-> >>  
-> >>  #include "vfio_pci_private.h"
-> >>  
-> >> @@ -296,6 +297,46 @@ static const struct vfio_pci_regops
-> >> vfio_pci_fault_prod_regops = { .add_capability =
-> >> vfio_pci_fault_prod_add_capability, };
-> >>  
-> >> +int vfio_pci_iommu_dev_fault_handler(struct iommu_fault_event
-> >> *evt, void *data) +{
-> >> +	struct vfio_pci_device *vdev = (struct vfio_pci_device *)
-> >> data;
-> >> +	struct vfio_region_fault_prod *prod_region =
-> >> +		(struct vfio_region_fault_prod
-> >> *)vdev->fault_pages;
-> >> +	struct vfio_region_fault_cons *cons_region =
-> >> +		(struct vfio_region_fault_cons
-> >> *)(vdev->fault_pages + 2 * PAGE_SIZE);
-> >> +	struct iommu_fault *new =
-> >> +		(struct iommu_fault *)(vdev->fault_pages +
-> >> prod_region->offset +
-> >> +			prod_region->prod *
-> >> prod_region->entry_size);
-> >> +	int prod, cons, size;
-> >> +
-> >> +	mutex_lock(&vdev->fault_queue_lock);
-> >> +
-> >> +	if (!vdev->fault_abi)
-> >> +		goto unlock;
-> >> +
-> >> +	prod = prod_region->prod;
-> >> +	cons = cons_region->cons;
-> >> +	size = prod_region->nb_entries;
-> >> +
-> >> +	if (CIRC_SPACE(prod, cons, size) < 1)
-> >> +		goto unlock;
-> >> +
-> >> +	*new = evt->fault;
-> >> +	prod = (prod + 1) % size;
-> >> +	prod_region->prod = prod;
-> >> +	mutex_unlock(&vdev->fault_queue_lock);
-> >> +
-> >> +	mutex_lock(&vdev->igate);
-> >> +	if (vdev->dma_fault_trigger)
-> >> +		eventfd_signal(vdev->dma_fault_trigger, 1);
-> >> +	mutex_unlock(&vdev->igate);
-> >> +	return 0;
-> >> +
-> >> +unlock:
-> >> +	mutex_unlock(&vdev->fault_queue_lock);
-> >> +	return -EINVAL;
-> >> +}
-> >> +
-> >>  static int vfio_pci_init_fault_region(struct vfio_pci_device
-> >> *vdev) {
-> >>  	struct vfio_region_fault_prod *header;
-> >> @@ -328,6 +369,13 @@ static int vfio_pci_init_fault_region(struct
-> >> vfio_pci_device *vdev) header = (struct vfio_region_fault_prod
-> >> *)vdev->fault_pages; header->version = -1;
-> >>  	header->offset = PAGE_SIZE;
-> >> +
-> >> +	ret =
-> >> iommu_register_device_fault_handler(&vdev->pdev->dev,
-> >> +
-> >> vfio_pci_iommu_dev_fault_handler,
-> >> +					vdev);
-> >> +	if (ret)
-> >> +		goto out;
-> >> +
-> >>  	return 0;
-> >>  out:
-> >>  	kfree(vdev->fault_pages);
-> >> @@ -570,6 +618,7 @@ static void vfio_pci_release(void *device_data)
-> >>  	if (!(--vdev->refcnt)) {
-> >>  		vfio_spapr_pci_eeh_release(vdev->pdev);
-> >>  		vfio_pci_disable(vdev);
-> >> +
-> >> iommu_unregister_device_fault_handler(&vdev->pdev->dev);  
-> > 
-> > 
-> > But this can fail if there are pending faults which leaves a device
-> > reference and then the system is broken :(  
-> This series only features unrecoverable errors and for those the
-> unregistration cannot fail. Now unrecoverable errors were added I
-> admit this is confusing. We need to sort this out or clean the
-> dependencies.
-As Alex pointed out in 4/29, we can make
-iommu_unregister_device_fault_handler() never fail and clean up all the
-pending faults in the host IOMMU belong to that device. But the problem
-is that if a fault, such as PRQ, has already been injected into the
-guest, the page response may come back after handler is unregistered
-and registered again. We need a way to reject such page response belong
-to the previous life of the handler. Perhaps a sync call to the guest
-with your fault queue eventfd? I am not sure.
+See the individual patches for details.
 
-Jacob
+I'm not familiar with the affected code, so I may have overlooked
+something.
+
+Tested with qemu on ThunderX2.
+
+Dave Martin (2):
+  KVM: arm/arm64: vgic: Fix kvm_device leak in vgic_its_destroy
+  KVM: arm/arm64: vgic: Fix irq refcount leak in kvm_vgic_set_owner()
+
+ virt/kvm/arm/vgic/vgic-its.c | 1 +
+ virt/kvm/arm/vgic/vgic.c     | 1 +
+ 2 files changed, 2 insertions(+)
+
+-- 
+2.1.4
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
