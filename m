@@ -2,86 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 53659383F7
-	for <lists+kvmarm@lfdr.de>; Fri,  7 Jun 2019 08:00:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22BC0384B2
+	for <lists+kvmarm@lfdr.de>; Fri,  7 Jun 2019 09:03:18 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 720934A4F4;
-	Fri,  7 Jun 2019 02:00:46 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 74B4F4A4CD;
+	Fri,  7 Jun 2019 03:03:17 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -4.202
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@linaro.org
+X-Spam-Status: No, score=-4.202 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5, SPF_HELO_PASS=-0.001]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id F6fF-isO6ohl; Fri,  7 Jun 2019 02:00:46 -0400 (EDT)
+	with ESMTP id ARKz9o5NlKAS; Fri,  7 Jun 2019 03:03:17 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 384384A4E9;
-	Fri,  7 Jun 2019 02:00:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DFCD64A4E5;
+	Fri,  7 Jun 2019 03:03:15 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D88F44A4DF
- for <kvmarm@lists.cs.columbia.edu>; Fri,  7 Jun 2019 02:00:43 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3EB7A4A4BE
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  7 Jun 2019 03:03:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id UByEq5qOKXuG for <kvmarm@lists.cs.columbia.edu>;
- Fri,  7 Jun 2019 02:00:42 -0400 (EDT)
-Received: from mail-pl1-f195.google.com (mail-pl1-f195.google.com
- [209.85.214.195])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id AFA874A380
- for <kvmarm@lists.cs.columbia.edu>; Fri,  7 Jun 2019 02:00:42 -0400 (EDT)
-Received: by mail-pl1-f195.google.com with SMTP id s24so393530plr.8
- for <kvmarm@lists.cs.columbia.edu>; Thu, 06 Jun 2019 23:00:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=sNeYqqj7A5jsZjI23KJv1FicJVOUSHOJooPoBup8FeM=;
- b=I+DO+bXX3/U0c5/tJe9YZdOfd9awmUKsKrvLQ6RM5e7ZPbpVdNQ6p467NhbVoMoarQ
- ZTrXnuYi/GBo+EETAJBGN7Pbc4eyxedjJgINnFW2Ljv5sN9z7vOHs6OG+Gfjx+nUFata
- r/SNJ3fb38yconRfVgfs5zO505iUUyDV4G/jHwXknqC1Y7Z1U8rC0v+rvDJyZqa/2SDY
- dFJFBnKgq948wzi26ZcXJ+LY/RNrc3C7DV8bcYap3C5SQTdSlGOwcqCDiElfo5zU+Fni
- UXim+fepv1U8X+0j4guVpm6nZtJBCDBnu6scNE5hLkz6jskKt97gH5ftrO8QkfNEvFqD
- KgJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=sNeYqqj7A5jsZjI23KJv1FicJVOUSHOJooPoBup8FeM=;
- b=ArK6EcQk65+wuJTyyZ3GFCmoY159yJA7aH9S6ZAeu3OiKJ521bnAk5HJwY3D58YXWO
- U7AGXoJE18thyKAkDL2HH1JrVpDKhkVcAYGnHX/TJdHE8EldzDkXZNIfKNG2wzSm3B1E
- wOQBy9BGMz5L5rnT0i5HNib3DARB9fJMNf83ZHft5W3aGR8JRcvVcuPE5H8Win3bKjj+
- 0XmAfXux79ZOhGd36zKmnUdx/QXoNVf6lBm3TerEMSPUxqUn6mkgv8PMACzW9lTYkpst
- CH3ScZPFRELVlWzlYyB5lyxPHgD9ViM3ldsYuxbe+UkJE0WHpYdOuGzhvhWHlrn6BFMp
- ItXg==
-X-Gm-Message-State: APjAAAWC/MzykSMXh9h3bnYDNm47p4yf76rTbzQiso1BbxFJM1f9rekj
- KbOG8ftcBeLVHNaJlTBlmzSU3A==
-X-Google-Smtp-Source: APXvYqxOAWcArkn2cVZZlioTLt/qQbVmliWaDP7qBUla76loZRkDUMwoTY7MzTYQenlQtRiEFq12yQ==
-X-Received: by 2002:a17:902:6a4:: with SMTP id
- 33mr53039518plh.338.1559887241528; 
- Thu, 06 Jun 2019 23:00:41 -0700 (PDT)
-Received: from localhost ([122.172.66.84])
- by smtp.gmail.com with ESMTPSA id s42sm1593160pjc.5.2019.06.06.23.00.39
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 06 Jun 2019 23:00:40 -0700 (PDT)
-Date: Fri, 7 Jun 2019 11:30:37 +0530
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: Dave Martin <Dave.Martin@arm.com>
-Subject: Re: [PATCH] KVM: arm64: Drop 'const' from argument of vq_present()
-Message-ID: <20190607060037.eaof3hllyombxlhc@vireshk-i7>
-References: <699121e5c938c6f4b7b14a7e2648fa15af590a4a.1559623368.git.viresh.kumar@linaro.org>
- <20190604095915.GW28398@e103592.cambridge.arm.com>
+ with ESMTP id MlMCgfDLB0dr for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  7 Jun 2019 03:03:11 -0400 (EDT)
+Received: from mx1.redhat.com (mx1.redhat.com [209.132.183.28])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 290074A380
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  7 Jun 2019 03:03:11 -0400 (EDT)
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com
+ [10.5.11.13])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mx1.redhat.com (Postfix) with ESMTPS id 1DFC6C1EB214;
+ Fri,  7 Jun 2019 07:02:52 +0000 (UTC)
+Received: from [10.36.116.67] (ovpn-116-67.ams2.redhat.com [10.36.116.67])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id ECBA9783A4;
+ Fri,  7 Jun 2019 07:02:41 +0000 (UTC)
+Subject: Re: [PATCH v8 26/29] vfio-pci: Register an iommu fault handler
+To: Jacob Pan <jacob.jun.pan@linux.intel.com>,
+ Jean-Philippe Brucker <jean-philippe.brucker@arm.com>
+References: <20190526161004.25232-1-eric.auger@redhat.com>
+ <20190526161004.25232-27-eric.auger@redhat.com>
+ <20190603163139.70fe8839@x1.home>
+ <10dd60d9-4af0-c0eb-08c9-a0db7ee1925e@redhat.com>
+ <20190605154553.0d00ad8d@jacob-builder>
+ <2753d192-1c46-d78e-c425-0c828e48cde2@arm.com>
+ <20190606132903.064f7ac4@jacob-builder>
+From: Auger Eric <eric.auger@redhat.com>
+Message-ID: <10905d2d-16a5-7d6f-2db3-9cca10c3bde0@redhat.com>
+Date: Fri, 7 Jun 2019 09:02:35 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20190604095915.GW28398@e103592.cambridge.arm.com>
-User-Agent: NeoMutt/20180716-391-311a52
-Cc: Marc Zyngier <marc.zyngier@arm.com>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will.deacon@arm.com>,
- linux-kernel@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+In-Reply-To: <20190606132903.064f7ac4@jacob-builder>
+Content-Language: en-US
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16
+ (mx1.redhat.com [10.5.110.32]); Fri, 07 Jun 2019 07:03:06 +0000 (UTC)
+Cc: "kevin.tian@intel.com" <kevin.tian@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
+ "ashok.raj@intel.com" <ashok.raj@intel.com>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+ Marc Zyngier <Marc.Zyngier@arm.com>, "joro@8bytes.org" <joro@8bytes.org>,
+ Will Deacon <Will.Deacon@arm.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Vincent Stehle <Vincent.Stehle@arm.com>, Robin Murphy <Robin.Murphy@arm.com>,
+ "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
+ "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -98,45 +89,202 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 04-06-19, 10:59, Dave Martin wrote:
-> On Tue, Jun 04, 2019 at 10:13:19AM +0530, Viresh Kumar wrote:
-> > We currently get following compilation warning:
-> > 
-> > arch/arm64/kvm/guest.c: In function 'set_sve_vls':
-> > arch/arm64/kvm/guest.c:262:18: warning: passing argument 1 of 'vq_present' from incompatible pointer type
-> > arch/arm64/kvm/guest.c:212:13: note: expected 'const u64 (* const)[8]' but argument is of type 'u64 (*)[8]'
-> > 
-> > The argument can't be const, as it is copied at runtime using
-> > copy_from_user(). Drop const from the prototype of vq_present().
-> > 
-> > Fixes: 9033bba4b535 ("KVM: arm64/sve: Add pseudo-register for the guest's vector lengths")
-> > Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-> > ---
-> >  arch/arm64/kvm/guest.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/arch/arm64/kvm/guest.c b/arch/arm64/kvm/guest.c
-> > index 3ae2f82fca46..78f5a4f45e0a 100644
-> > --- a/arch/arm64/kvm/guest.c
-> > +++ b/arch/arm64/kvm/guest.c
-> > @@ -209,7 +209,7 @@ static int set_core_reg(struct kvm_vcpu *vcpu, const struct kvm_one_reg *reg)
-> >  #define vq_mask(vq) ((u64)1 << ((vq) - SVE_VQ_MIN) % 64)
-> >  
-> >  static bool vq_present(
-> > -	const u64 (*const vqs)[KVM_ARM64_SVE_VLS_WORDS],
-> > +	u64 (*const vqs)[KVM_ARM64_SVE_VLS_WORDS],
-> >  	unsigned int vq)
-> >  {
-> >  	return (*vqs)[vq_word(vq)] & vq_mask(vq);
+Hi Jean, Jacob,
+
+On 6/6/19 10:29 PM, Jacob Pan wrote:
+> On Thu, 6 Jun 2019 19:54:05 +0100
+> Jean-Philippe Brucker <jean-philippe.brucker@arm.com> wrote:
 > 
-> Ack, but maybe this should just be converted to a macro?
+>> On 05/06/2019 23:45, Jacob Pan wrote:
+>>> On Tue, 4 Jun 2019 18:11:08 +0200
+>>> Auger Eric <eric.auger@redhat.com> wrote:
+>>>   
+>>>> Hi Alex,
+>>>>
+>>>> On 6/4/19 12:31 AM, Alex Williamson wrote:  
+>>>>> On Sun, 26 May 2019 18:10:01 +0200
+>>>>> Eric Auger <eric.auger@redhat.com> wrote:
+>>>>>     
+>>>>>> This patch registers a fault handler which records faults in
+>>>>>> a circular buffer and then signals an eventfd. This buffer is
+>>>>>> exposed within the fault region.
+>>>>>>
+>>>>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>>>>>>
+>>>>>> ---
+>>>>>>
+>>>>>> v3 -> v4:
+>>>>>> - move iommu_unregister_device_fault_handler to vfio_pci_release
+>>>>>> ---
+>>>>>>  drivers/vfio/pci/vfio_pci.c         | 49
+>>>>>> +++++++++++++++++++++++++++++ drivers/vfio/pci/vfio_pci_private.h
+>>>>>> |  1 + 2 files changed, 50 insertions(+)
+>>>>>>
+>>>>>> diff --git a/drivers/vfio/pci/vfio_pci.c
+>>>>>> b/drivers/vfio/pci/vfio_pci.c index f75f61127277..520999994ba8
+>>>>>> 100644 --- a/drivers/vfio/pci/vfio_pci.c
+>>>>>> +++ b/drivers/vfio/pci/vfio_pci.c
+>>>>>> @@ -30,6 +30,7 @@
+>>>>>>  #include <linux/vfio.h>
+>>>>>>  #include <linux/vgaarb.h>
+>>>>>>  #include <linux/nospec.h>
+>>>>>> +#include <linux/circ_buf.h>
+>>>>>>  
+>>>>>>  #include "vfio_pci_private.h"
+>>>>>>  
+>>>>>> @@ -296,6 +297,46 @@ static const struct vfio_pci_regops
+>>>>>> vfio_pci_fault_prod_regops = { .add_capability =
+>>>>>> vfio_pci_fault_prod_add_capability, };
+>>>>>>  
+>>>>>> +int vfio_pci_iommu_dev_fault_handler(struct iommu_fault_event
+>>>>>> *evt, void *data) +{
+>>>>>> +	struct vfio_pci_device *vdev = (struct vfio_pci_device
+>>>>>> *) data;
+>>>>>> +	struct vfio_region_fault_prod *prod_region =
+>>>>>> +		(struct vfio_region_fault_prod
+>>>>>> *)vdev->fault_pages;
+>>>>>> +	struct vfio_region_fault_cons *cons_region =
+>>>>>> +		(struct vfio_region_fault_cons
+>>>>>> *)(vdev->fault_pages + 2 * PAGE_SIZE);
+>>>>>> +	struct iommu_fault *new =
+>>>>>> +		(struct iommu_fault *)(vdev->fault_pages +
+>>>>>> prod_region->offset +
+>>>>>> +			prod_region->prod *
+>>>>>> prod_region->entry_size);
+>>>>>> +	int prod, cons, size;
+>>>>>> +
+>>>>>> +	mutex_lock(&vdev->fault_queue_lock);
+>>>>>> +
+>>>>>> +	if (!vdev->fault_abi)
+>>>>>> +		goto unlock;
+>>>>>> +
+>>>>>> +	prod = prod_region->prod;
+>>>>>> +	cons = cons_region->cons;
+>>>>>> +	size = prod_region->nb_entries;
+>>>>>> +
+>>>>>> +	if (CIRC_SPACE(prod, cons, size) < 1)
+>>>>>> +		goto unlock;
+>>>>>> +
+>>>>>> +	*new = evt->fault;
+>>>>>> +	prod = (prod + 1) % size;
+>>>>>> +	prod_region->prod = prod;
+>>>>>> +	mutex_unlock(&vdev->fault_queue_lock);
+>>>>>> +
+>>>>>> +	mutex_lock(&vdev->igate);
+>>>>>> +	if (vdev->dma_fault_trigger)
+>>>>>> +		eventfd_signal(vdev->dma_fault_trigger, 1);
+>>>>>> +	mutex_unlock(&vdev->igate);
+>>>>>> +	return 0;
+>>>>>> +
+>>>>>> +unlock:
+>>>>>> +	mutex_unlock(&vdev->fault_queue_lock);
+>>>>>> +	return -EINVAL;
+>>>>>> +}
+>>>>>> +
+>>>>>>  static int vfio_pci_init_fault_region(struct vfio_pci_device
+>>>>>> *vdev) {
+>>>>>>  	struct vfio_region_fault_prod *header;
+>>>>>> @@ -328,6 +369,13 @@ static int vfio_pci_init_fault_region(struct
+>>>>>> vfio_pci_device *vdev) header = (struct vfio_region_fault_prod
+>>>>>> *)vdev->fault_pages; header->version = -1;
+>>>>>>  	header->offset = PAGE_SIZE;
+>>>>>> +
+>>>>>> +	ret =
+>>>>>> iommu_register_device_fault_handler(&vdev->pdev->dev,
+>>>>>> +
+>>>>>> vfio_pci_iommu_dev_fault_handler,
+>>>>>> +					vdev);
+>>>>>> +	if (ret)
+>>>>>> +		goto out;
+>>>>>> +
+>>>>>>  	return 0;
+>>>>>>  out:
+>>>>>>  	kfree(vdev->fault_pages);
+>>>>>> @@ -570,6 +618,7 @@ static void vfio_pci_release(void
+>>>>>> *device_data) if (!(--vdev->refcnt)) {
+>>>>>>  		vfio_spapr_pci_eeh_release(vdev->pdev);
+>>>>>>  		vfio_pci_disable(vdev);
+>>>>>> +
+>>>>>> iommu_unregister_device_fault_handler(&vdev->pdev->dev);    
+>>>>>
+>>>>>
+>>>>> But this can fail if there are pending faults which leaves a
+>>>>> device reference and then the system is broken :(    
+>>>> This series only features unrecoverable errors and for those the
+>>>> unregistration cannot fail. Now unrecoverable errors were added I
+>>>> admit this is confusing. We need to sort this out or clean the
+>>>> dependencies.  
+>>> As Alex pointed out in 4/29, we can make
+>>> iommu_unregister_device_fault_handler() never fail and clean up all
+>>> the pending faults in the host IOMMU belong to that device. But the
+>>> problem is that if a fault, such as PRQ, has already been injected
+>>> into the guest, the page response may come back after handler is
+>>> unregistered and registered again.  
+>>
+>> I'm trying to figure out if that would be harmful in any way. I guess
+>> it can be a bit nasty if we handle the page response right after
+>> having injected a new page request that uses the same PRGI. In any
+>> other case we discard the page response, but here we forward it to
+>> the endpoint and:
+>>
+>> * If the response status is success, endpoint retries the
+>> translation. The guest probably hasn't had time to handle the new
+>> page request and translation will fail, which may lead the endpoint
+>> to give up (two unsuccessful translation requests). Or send a new
+>> request
+>>
+> Good point, there shouldn't be any harm if the page response is a
+> "fake" success. In fact it could happen in the normal operation when
+> PRQs to two devices share the same non-leaf translation structure. The
+> worst case is just a retry. I am not aware of the retry limit, is it in
+> the PCIe spec? I cannot find it.
+> 
+> I think we should just document it, similar to having a spurious
+> interrupt. The PRQ trace event should capture that as well.
+> 
+>> * otherwise the endpoint won't retry the access, and could also
+>> disable PRI if the status is failure.
+>>
+> That would be true regardless this race condition with handler
+> registration. So should be fine.
+> 
+>>> We need a way to reject such page response belong
+>>> to the previous life of the handler. Perhaps a sync call to the
+>>> guest with your fault queue eventfd? I am not sure.  
+>>
+>> We could simply expect the device driver not to send any page response
+>> after unregistering the fault handler. Is there any reason VFIO would
+>> need to unregister and re-register the fault handler on a live guest?
+>>
+> There is no reason for VFIO to unregister and register again, I was
+> just thinking from security perspective. Someone could write a VFIO app
+> do this attack. But I agree the damage is within the device, may get
+> PRI disabled as a result.
 
-I will send a patch with that if that's what you want.
+At the moment the handler unregistration is done on the vfio-pci release
+function() when the last reference is released so I am not sure this can
+even be achieved.
+> 
+> So it seems we agree on the following:
+> - iommu_unregister_device_fault_handler() will never fail
+> - iommu driver cleans up all pending faults when handler is unregistered
+> - assume device driver or guest not sending more page response _after_
+>   handler is unregistered.
+> - system will tolerate rare spurious response
+> 
+> Sounds right?
 
-Thanks.
+sounds good for me
 
--- 
-viresh
+Thanks
+
+Eric
+> 
+>> Thanks,
+>> Jean
+> 
+> [Jacob Pan]
+> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
