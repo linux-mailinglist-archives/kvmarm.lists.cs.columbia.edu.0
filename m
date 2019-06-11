@@ -2,51 +2,73 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id AC3773C9E8
-	for <lists+kvmarm@lfdr.de>; Tue, 11 Jun 2019 13:22:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 365333C9FE
+	for <lists+kvmarm@lfdr.de>; Tue, 11 Jun 2019 13:29:51 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 01E8A4A522;
-	Tue, 11 Jun 2019 07:22:04 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A74514A51B;
+	Tue, 11 Jun 2019 07:29:50 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
 X-Spam-Level: 
 X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id kiY+aj179MQs; Tue, 11 Jun 2019 07:22:03 -0400 (EDT)
+	with ESMTP id tCHwIUXuiQwr; Tue, 11 Jun 2019 07:29:50 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C60E84A511;
-	Tue, 11 Jun 2019 07:22:02 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 956514A511;
+	Tue, 11 Jun 2019 07:29:49 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4DA1F4A4E9
- for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Jun 2019 07:22:02 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9BB0C4A4E9
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Jun 2019 07:29:48 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id NuiZYo2P3Uec for <kvmarm@lists.cs.columbia.edu>;
- Tue, 11 Jun 2019 07:22:00 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E456D4A4DF
- for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Jun 2019 07:22:00 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3EDEC344;
- Tue, 11 Jun 2019 04:22:00 -0700 (PDT)
-Received: from localhost (e113682-lin.copenhagen.arm.com [10.32.144.41])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 28CEC3F557;
- Tue, 11 Jun 2019 04:23:42 -0700 (PDT)
-Date: Tue, 11 Jun 2019 13:21:58 +0200
-From: Christoffer Dall <christoffer.dall@arm.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
+ with ESMTP id HyUtPBHQOWau for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 11 Jun 2019 07:29:47 -0400 (EDT)
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com
+ [209.85.221.41])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A3ACD4A4E1
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Jun 2019 07:29:47 -0400 (EDT)
+Received: by mail-wr1-f41.google.com with SMTP id n4so12637984wrs.3
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Jun 2019 04:29:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=8qwW4QLFfBtKgDafCW+DM4bjjPQdr1v0w8rEMFQF8Nc=;
+ b=HcTfq69eBg3z2TW0giURI6XZFgxObG9Q8V8equlCpu+NAl5+e87tAYInQB5cgrkOOa
+ TzocHCN8Cel3alT86Bl29I3b+gkGmYbcZ8Sqg8fqAiNCsQg+g2FnkR5yzFQjHu57zOLg
+ R46lRrRYBIK309j/gFDrnKogwIJcWxZHIkiwnH6edwMqMRY6GmWwqWERLMBVAizlp1BB
+ jXLsyz7RmSjQyeVb1rsi9iMj+oU0g76GSd0mcj2wDRHVODAdU0NQ2MaRxeowtkSwGG4/
+ e+8HlxIfKVbDM+pJUBNrS26iQvxu88hvu6L5w3XojKCpdYpOCtoRvMg/JMkL0OM9wjcS
+ cV5w==
+X-Gm-Message-State: APjAAAUoD2bUvvibVTBMrVha9r21ylfbz1+WWRZNhzipajLdWqG5QMSI
+ cOVWmF9ebDDUAKMoN466YswsjSVcZ+I=
+X-Google-Smtp-Source: APXvYqxRkhZhFVuzHilj+D+oNIN0jm/MbCPNStvK6j2mqgYSwuEvx4QZFVySkwECNpCx/N73T3wteA==
+X-Received: by 2002:adf:e9cc:: with SMTP id l12mr1943923wrn.29.1560252586574; 
+ Tue, 11 Jun 2019 04:29:46 -0700 (PDT)
+Received: from ?IPv6:2001:b07:6468:f312:8cc3:8abd:4519:2cd6?
+ ([2001:b07:6468:f312:8cc3:8abd:4519:2cd6])
+ by smtp.gmail.com with ESMTPSA id n1sm13073990wrx.39.2019.06.11.04.29.45
+ (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
+ Tue, 11 Jun 2019 04:29:45 -0700 (PDT)
 Subject: Re: Reference count on pages held in secondary MMUs
-Message-ID: <20190611112158.GA5318@e113682-lin.lund.arm.com>
+To: Christoffer Dall <christoffer.dall@arm.com>
 References: <20190609081805.GC21798@e113682-lin.lund.arm.com>
  <3ca445bb-0f48-3e39-c371-dd197375c966@redhat.com>
+ <20190611112158.GA5318@e113682-lin.lund.arm.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <bb04c637-24a6-220e-e596-299be5b1c503@redhat.com>
+Date: Tue, 11 Jun 2019 13:29:44 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <3ca445bb-0f48-3e39-c371-dd197375c966@redhat.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20190611112158.GA5318@e113682-lin.lund.arm.com>
+Content-Language: en-US
 Cc: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -64,35 +86,18 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Sun, Jun 09, 2019 at 11:37:19AM +0200, Paolo Bonzini wrote:
-> On 09/06/19 10:18, Christoffer Dall wrote:
-> > In some sense, we are thus maintaining a 'hidden', or internal,
-> > reference to the page, which is not counted anywhere.
-> > 
-> > I am wondering if it would be equally valid to take a reference on the
-> > page, and remove that reference when unmapping via MMU notifiers, and if
-> > so, if there would be any advantages/drawbacks in doing so?
-> 
-> If I understand correctly, I think the MMU notifier would not fire if
-> you took an actual reference; the page would be pinned in memory and
-> could not be swapped out.
-> 
+On 11/06/19 13:21, Christoffer Dall wrote:
+>> If I understand correctly, I think the MMU notifier would not fire if
+>> you took an actual reference; the page would be pinned in memory and
+>> could not be swapped out.
+>>
+> That was my understanding too, but I can't find the code path that would
+> support this theory.
 
-That was my understanding too, but I can't find the code path that would
-support this theory.
+Yeah, as Andrea said you could drop the reference in the invalidate
+callback too.
 
-The closest thing I could find was is_page_cache_freeable(), and as far
-as I'm able to understand that code, that is called (via pageout()) later in
-shrink_page_list() than try_to_unmap() which fires the MMU notifiers
-through the rmap code.
-
-It is entirely possible that I'm looking at the wrong place and missing
-something overall though?
-
-
-Thanks,
-
-    Christoffer
+Paolo
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
