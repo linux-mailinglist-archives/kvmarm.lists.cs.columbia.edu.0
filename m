@@ -2,49 +2,51 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 118D442060
-	for <lists+kvmarm@lfdr.de>; Wed, 12 Jun 2019 11:15:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3AA34205C
+	for <lists+kvmarm@lfdr.de>; Wed, 12 Jun 2019 11:15:05 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AA41C4A53A;
-	Wed, 12 Jun 2019 05:15:09 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7191D4A52A;
+	Wed, 12 Jun 2019 05:15:05 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+	SPF_HELO_PASS=-0.001] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id H5i2Ck9apZfJ; Wed, 12 Jun 2019 05:15:09 -0400 (EDT)
+	with ESMTP id 7sdJsgOlUZvC; Wed, 12 Jun 2019 05:15:04 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B29304A523;
-	Wed, 12 Jun 2019 05:15:06 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 508724A529;
+	Wed, 12 Jun 2019 05:15:04 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id BF6D54A4EE
- for <kvmarm@lists.cs.columbia.edu>; Wed, 12 Jun 2019 05:15:04 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D727A4A521
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 12 Jun 2019 05:15:02 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id I0eHrIGAszL7 for <kvmarm@lists.cs.columbia.edu>;
- Wed, 12 Jun 2019 05:15:03 -0400 (EDT)
+ with ESMTP id FPA9C4hIT25j for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 12 Jun 2019 05:15:02 -0400 (EDT)
 Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1B5FD4A4FF
- for <kvmarm@lists.cs.columbia.edu>; Wed, 12 Jun 2019 05:15:03 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 458774A512
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 12 Jun 2019 05:15:01 -0400 (EDT)
 Received: from DGGEMS409-HUB.china.huawei.com (unknown [172.30.72.59])
- by Forcepoint Email with ESMTP id EF3EA12D63526C173D19;
- Wed, 12 Jun 2019 17:11:50 +0800 (CST)
+ by Forcepoint Email with ESMTP id 0785F7029CD80C359046;
+ Wed, 12 Jun 2019 17:11:51 +0800 (CST)
 Received: from HGHY2Y004646261.china.huawei.com (10.184.12.158) by
  DGGEMS409-HUB.china.huawei.com (10.3.19.209) with Microsoft SMTP Server id
- 14.3.439.0; Wed, 12 Jun 2019 17:11:42 +0800
+ 14.3.439.0; Wed, 12 Jun 2019 17:11:44 +0800
 From: Zenghui Yu <yuzenghui@huawei.com>
 To: <linux-arm-kernel@lists.infradead.org>, <kvmarm@lists.cs.columbia.edu>,
  <kvm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
  <linux-perf-users@vger.kernel.org>
-Subject: [PATCH v1 0/5] perf kvm: Add stat support on arm64
-Date: Wed, 12 Jun 2019 09:08:41 +0000
-Message-ID: <1560330526-15468-1-git-send-email-yuzenghui@huawei.com>
+Subject: [PATCH v1 1/5] KVM: arm/arm64: Remove kvm_mmio_emulate tracepoint
+Date: Wed, 12 Jun 2019 09:08:42 +0000
+Message-ID: <1560330526-15468-2-git-send-email-yuzenghui@huawei.com>
 X-Mailer: git-send-email 2.6.4.windows.1
+In-Reply-To: <1560330526-15468-1-git-send-email-yuzenghui@huawei.com>
+References: <1560330526-15468-1-git-send-email-yuzenghui@huawei.com>
 MIME-Version: 1.0
 X-Originating-IP: [10.184.12.158]
 X-CFilter-Loop: Reflected
@@ -69,61 +71,48 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-'perf kvm stat report/record' generates a statistical analysis of KVM
-events and can be used to analyze guest exit reasons. This series tries
-to add stat support on arm64 (Port perf-kvm-stat to arm64 - this is
-already supported on x86).
+In current KVM/ARM code, no one will invoke trace_kvm_mmio_emulate().
+Remove this TRACE_EVENT definition.
 
-"record" enables recording of two pair of tracepoints:
- - "kvm:kvm_entry" and "kvm:kvm_exit"
- - "kvm:kvm_trap_enter" and "kvm:kvm_trap_exit"
-"report" reports statistical analysis of guest exit&trap events.
-
-To record kvm events on the host:
- # perf kvm stat record -a
-
-To report kvm VM EXIT events:
- # perf kvm stat report --event=vmexit
-
-To report kvm VM TRAP (synchronous exceptions) events:
- # perf kvm stat report --event=trap
-
-More information can be found at tools/perf/Documentation/perf-kvm.txt.
-
-* Patch 1-2 touch KVM/ARM side, with #1 is cleanup and #2 is preparation
-  for perf-kvm-stat support.
-* Patch 3-5 touch perf side.
-* Patch 3 adds support for get_cpuid() function on arm64. *RFC!*
-* Patch 4 adds support for perf-kvm-stat on arm64, with VM-EXIT events.
-* Patch 5 adds support to report TRAP-EVENT events.
-
-Any suggestions, comments and test results will be appreciated.
-
-Thanks,
-zenghui
-
+Cc: Christoffer Dall <christoffer.dall@arm.com>
+Cc: Marc Zyngier <marc.zyngier@arm.com>
+Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
 ---
+ virt/kvm/arm/trace.h | 21 ---------------------
+ 1 file changed, 21 deletions(-)
 
-Zenghui Yu (5):
-  KVM: arm/arm64: Remove kvm_mmio_emulate tracepoint
-  KVM: arm/arm64: Adjust entry/exit and trap related tracepoints
-  perf tools arm64: Add support for get_cpuid() function
-  perf,kvm/arm64: Add stat support on arm64
-  perf,kvm/arm64: perf-kvm-stat to report VM TRAP
-
- arch/arm64/kvm/handle_exit.c                     |   3 +
- arch/arm64/kvm/trace.h                           |  35 +++++++
- tools/perf/arch/arm64/Makefile                   |   2 +
- tools/perf/arch/arm64/util/Build                 |   1 +
- tools/perf/arch/arm64/util/aarch64_guest_exits.h |  91 +++++++++++++++++
- tools/perf/arch/arm64/util/header.c              |  74 +++++++++-----
- tools/perf/arch/arm64/util/kvm-stat.c            | 125 +++++++++++++++++++++++
- virt/kvm/arm/arm.c                               |   4 +-
- virt/kvm/arm/trace.h                             |  42 ++------
- 9 files changed, 317 insertions(+), 60 deletions(-)
- create mode 100644 tools/perf/arch/arm64/util/aarch64_guest_exits.h
- create mode 100644 tools/perf/arch/arm64/util/kvm-stat.c
-
+diff --git a/virt/kvm/arm/trace.h b/virt/kvm/arm/trace.h
+index 204d210..8b7dff2 100644
+--- a/virt/kvm/arm/trace.h
++++ b/virt/kvm/arm/trace.h
+@@ -114,27 +114,6 @@
+ 		  __entry->type, __entry->vcpu_idx, __entry->irq_num, __entry->level)
+ );
+ 
+-TRACE_EVENT(kvm_mmio_emulate,
+-	TP_PROTO(unsigned long vcpu_pc, unsigned long instr,
+-		 unsigned long cpsr),
+-	TP_ARGS(vcpu_pc, instr, cpsr),
+-
+-	TP_STRUCT__entry(
+-		__field(	unsigned long,	vcpu_pc		)
+-		__field(	unsigned long,	instr		)
+-		__field(	unsigned long,	cpsr		)
+-	),
+-
+-	TP_fast_assign(
+-		__entry->vcpu_pc		= vcpu_pc;
+-		__entry->instr			= instr;
+-		__entry->cpsr			= cpsr;
+-	),
+-
+-	TP_printk("Emulate MMIO at: 0x%08lx (instr: %08lx, cpsr: %08lx)",
+-		  __entry->vcpu_pc, __entry->instr, __entry->cpsr)
+-);
+-
+ TRACE_EVENT(kvm_unmap_hva_range,
+ 	TP_PROTO(unsigned long start, unsigned long end),
+ 	TP_ARGS(start, end),
 -- 
 1.8.3.1
 
