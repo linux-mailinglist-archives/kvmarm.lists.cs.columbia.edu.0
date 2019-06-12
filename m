@@ -2,59 +2,58 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 78D014205E
-	for <lists+kvmarm@lfdr.de>; Wed, 12 Jun 2019 11:15:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3B5A42172
+	for <lists+kvmarm@lfdr.de>; Wed, 12 Jun 2019 11:53:12 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2D0654A52A;
-	Wed, 12 Jun 2019 05:15:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 87D144A51B;
+	Wed, 12 Jun 2019 05:53:12 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.502
+X-Spam-Score: 0.799
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=no
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9U42xNOmFH64; Wed, 12 Jun 2019 05:15:06 -0400 (EDT)
+	with ESMTP id fhOkN1ZtXEPO; Wed, 12 Jun 2019 05:53:12 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 853684A537;
-	Wed, 12 Jun 2019 05:15:05 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 10C574A519;
+	Wed, 12 Jun 2019 05:53:11 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 30D1F4A525
- for <kvmarm@lists.cs.columbia.edu>; Wed, 12 Jun 2019 05:15:04 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4445A4A4EE
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 12 Jun 2019 05:53:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 1JFSI3Cp-EdQ for <kvmarm@lists.cs.columbia.edu>;
- Wed, 12 Jun 2019 05:15:02 -0400 (EDT)
-Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 659D34A520
- for <kvmarm@lists.cs.columbia.edu>; Wed, 12 Jun 2019 05:15:02 -0400 (EDT)
-Received: from DGGEMS409-HUB.china.huawei.com (unknown [172.30.72.59])
- by Forcepoint Email with ESMTP id 1DA3161A477AB224809E;
- Wed, 12 Jun 2019 17:11:56 +0800 (CST)
-Received: from HGHY2Y004646261.china.huawei.com (10.184.12.158) by
- DGGEMS409-HUB.china.huawei.com (10.3.19.209) with Microsoft SMTP Server id
- 14.3.439.0; Wed, 12 Jun 2019 17:11:48 +0800
-From: Zenghui Yu <yuzenghui@huawei.com>
-To: <linux-arm-kernel@lists.infradead.org>, <kvmarm@lists.cs.columbia.edu>,
- <kvm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-perf-users@vger.kernel.org>
-Subject: [PATCH v1 5/5] perf,kvm/arm64: perf-kvm-stat to report VM TRAP
-Date: Wed, 12 Jun 2019 09:08:46 +0000
-Message-ID: <1560330526-15468-6-git-send-email-yuzenghui@huawei.com>
-X-Mailer: git-send-email 2.6.4.windows.1
-In-Reply-To: <1560330526-15468-1-git-send-email-yuzenghui@huawei.com>
-References: <1560330526-15468-1-git-send-email-yuzenghui@huawei.com>
-MIME-Version: 1.0
-X-Originating-IP: [10.184.12.158]
-X-CFilter-Loop: Reflected
-Cc: marc.zyngier@arm.com, catalin.marinas@arm.com, will.deacon@arm.com,
- acme@kernel.org, linuxarm@huawei.com, acme@redhat.com, peterz@infradead.org,
- alexander.shishkin@linux.intel.com, mingo@redhat.com,
- ganapatrao.kulkarni@cavium.com, namhyung@kernel.org, jolsa@redhat.com,
- xiexiangyou@huawei.com
+ with ESMTP id 28Nef-4vEe7k for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 12 Jun 2019 05:52:36 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B8BE04A4E6
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 12 Jun 2019 05:52:36 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3A76B28;
+ Wed, 12 Jun 2019 02:52:36 -0700 (PDT)
+Received: from big-swifty.misterjones.org (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CDC4C3F246;
+ Wed, 12 Jun 2019 02:54:15 -0700 (PDT)
+Date: Wed, 12 Jun 2019 10:52:25 +0100
+Message-ID: <86ef3zgmg6.wl-marc.zyngier@arm.com>
+From: Marc Zyngier <marc.zyngier@arm.com>
+To: Julien Thierry <julien.thierry@arm.com>
+Subject: Re: [PATCH v2 1/9] KVM: arm/arm64: vgic: Add LPI translation cache
+ definition
+In-Reply-To: <54c8547a-51fb-8ae5-975f-261d3934221a@arm.com>
+References: <20190611170336.121706-1-marc.zyngier@arm.com>
+ <20190611170336.121706-2-marc.zyngier@arm.com>
+ <54c8547a-51fb-8ae5-975f-261d3934221a@arm.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL/10.8 EasyPG/1.0.0 Emacs/26
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+Organization: ARM Ltd
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Cc: kvm@vger.kernel.org, "Raslan,
+ KarimAllah" <karahmed@amazon.de>, "Saidi, Ali" <alisaidi@amazon.com>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -71,230 +70,164 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-When guest exits due to "TRAP", we can analyze the guest exit reasons
-deeplier. Enhance perf-kvm-stat to record and analyze VM TRAP events.
+Hi Julien,
 
-There is a mapping between guest's "trap_code" (ESR_ELx's bits[31:26])
-and "trap_reason" - kvm_arm_exception_class. Copy it from kernel to
-aarch64_guest_exits.h, export it to userspace.
+On Wed, 12 Jun 2019 09:16:21 +0100,
+Julien Thierry <julien.thierry@arm.com> wrote:
+> 
+> Hi Marc,
+> 
+> On 11/06/2019 18:03, Marc Zyngier wrote:
+> > Add the basic data structure that expresses an MSI to LPI
+> > translation as well as the allocation/release hooks.
+> > 
+> > THe size of the cache is arbitrarily defined as 4*nr_vcpus.
+> >
+> 
+> The size has been arbitrarily changed to 16*nr_vcpus :) .
 
-This patch records two new KVM tracepoints: "kvm:kvm_trap_enter" and
-"kvm:kvm_trap_exit", and reports statistical data between these two
-tracepoints.
+Well spotted! ;-)
 
-A simple test go below:
+> 
+> Nit: The*
 
- # ./tools/perf/perf kvm stat record -p 20763
-[ perf record: Woken up 92 times to write data ]
-[ perf record: Captured and wrote 203.727 MB perf.data.guest (2601786 samples) ]
+Ah, usual lazy finger on the Shift key... One day I'll learn to type.
 
- # ./tools/perf/perf kvm stat report --event=vmexit
+> 
+> > Signed-off-by: Marc Zyngier <marc.zyngier@arm.com>
+> > ---
+> >  include/kvm/arm_vgic.h        |  3 +++
+> >  virt/kvm/arm/vgic/vgic-init.c |  5 ++++
+> >  virt/kvm/arm/vgic/vgic-its.c  | 49 +++++++++++++++++++++++++++++++++++
+> >  virt/kvm/arm/vgic/vgic.h      |  2 ++
+> >  4 files changed, 59 insertions(+)
+> > 
+> > diff --git a/include/kvm/arm_vgic.h b/include/kvm/arm_vgic.h
+> > index c36c86f1ec9a..ca7bcf52dc85 100644
+> > --- a/include/kvm/arm_vgic.h
+> > +++ b/include/kvm/arm_vgic.h
+> > @@ -260,6 +260,9 @@ struct vgic_dist {
+> >  	struct list_head	lpi_list_head;
+> >  	int			lpi_list_count;
+> >  
+> > +	/* LPI translation cache */
+> > +	struct list_head	lpi_translation_cache;
+> > +
+> >  	/* used by vgic-debug */
+> >  	struct vgic_state_iter *iter;
+> >  
+> > diff --git a/virt/kvm/arm/vgic/vgic-init.c b/virt/kvm/arm/vgic/vgic-init.c
+> > index 3bdb31eaed64..c7c4c77dd430 100644
+> > --- a/virt/kvm/arm/vgic/vgic-init.c
+> > +++ b/virt/kvm/arm/vgic/vgic-init.c
+> > @@ -64,6 +64,7 @@ void kvm_vgic_early_init(struct kvm *kvm)
+> >  	struct vgic_dist *dist = &kvm->arch.vgic;
+> >  
+> >  	INIT_LIST_HEAD(&dist->lpi_list_head);
+> > +	INIT_LIST_HEAD(&dist->lpi_translation_cache);
+> >  	raw_spin_lock_init(&dist->lpi_list_lock);
+> >  }
+> >  
+> > @@ -305,6 +306,7 @@ int vgic_init(struct kvm *kvm)
+> >  	}
+> >  
+> >  	if (vgic_has_its(kvm)) {
+> > +		vgic_lpi_translation_cache_init(kvm);
+> >  		ret = vgic_v4_init(kvm);
+> >  		if (ret)
+> >  			goto out;
+> > @@ -346,6 +348,9 @@ static void kvm_vgic_dist_destroy(struct kvm *kvm)
+> >  		INIT_LIST_HEAD(&dist->rd_regions);
+> >  	}
+> >  
+> > +	if (vgic_has_its(kvm))
+> > +		vgic_lpi_translation_cache_destroy(kvm);
+> > +
+> >  	if (vgic_supports_direct_msis(kvm))
+> >  		vgic_v4_teardown(kvm);
+> >  }
+> > diff --git a/virt/kvm/arm/vgic/vgic-its.c b/virt/kvm/arm/vgic/vgic-its.c
+> > index 44ceaccb18cf..ce9bcddeb7f1 100644
+> > --- a/virt/kvm/arm/vgic/vgic-its.c
+> > +++ b/virt/kvm/arm/vgic/vgic-its.c
+> > @@ -149,6 +149,14 @@ struct its_ite {
+> >  	u32 event_id;
+> >  };
+> >  
+> > +struct vgic_translation_cache_entry {
+> > +	struct list_head	entry;
+> > +	phys_addr_t		db;
+> > +	u32			devid;
+> > +	u32			eventid;
+> > +	struct vgic_irq		*irq;
+> > +};
+> > +
+> >  /**
+> >   * struct vgic_its_abi - ITS abi ops and settings
+> >   * @cte_esz: collection table entry size
+> > @@ -1668,6 +1676,45 @@ static int vgic_register_its_iodev(struct kvm *kvm, struct vgic_its *its,
+> >  	return ret;
+> >  }
+> >  
+> > +/* Default is 16 cached LPIs per vcpu */
+> > +#define LPI_DEFAULT_PCPU_CACHE_SIZE	16
+> > +
+> > +void vgic_lpi_translation_cache_init(struct kvm *kvm)
+> > +{
+> > +	struct vgic_dist *dist = &kvm->arch.vgic;
+> > +	unsigned int sz;
+> > +	int i;
+> > +
+> > +	if (!list_empty(&dist->lpi_translation_cache))
+> > +		return;
+> > +
+> > +	sz = atomic_read(&kvm->online_vcpus) * LPI_DEFAULT_PCPU_CACHE_SIZE;
+> > +
+> > +	for (i = 0; i < sz; i++) {
+> > +		struct vgic_translation_cache_entry *cte;
+> > +
+> > +		/* An allocation failure is not fatal */
+> > +		cte = kzalloc(sizeof(*cte), GFP_KERNEL);
+> > +		if (WARN_ON(!cte))
+> > +			break;
+> > +
+> > +		INIT_LIST_HEAD(&cte->entry);
+> > +		list_add(&cte->entry, &dist->lpi_translation_cache);
+> 
+> Going through the series, it looks like this list is either empty
+> (before the cache init) or has a fixed number
+> (LPI_DEFAULT_PCPU_CACHE_SIZE * nr_cpus) of entries.
 
-Analyze events for all VMs, all VCPUs:
+Well, it could also fail when allocating one of the entry, meaning we
+can have an allocation ranging from 0 to (LPI_DEFAULT_PCPU_CACHE_SIZE
+* nr_cpus) entries.
 
-             VM-EXIT    Samples  Samples%     Time%    Min Time    Max Time         Avg time
+> And the list never grows nor shrinks throughout the series, so it
+> seems odd to be using a list here.
+> 
+> Is there a reason for not using a dynamically allocated array instead of
+> the list? (does list_move() provide a big perf advantage over swapping
+> the data from one array entry to another? Or is there some other
+> facility I am missing?
 
-                TRAP     640931    97.12%   100.00%      2.44us  14683.86us   3446.49us ( +-   0.05% )
-                 IRQ      19019     2.88%     0.00%      0.90us    461.94us      2.12us ( +-   2.09% )
+The idea was to make the LRU policy cheap, on the assumption that
+list_move (which is only a couple of pointer updates) is cheaper than
+a memmove if you want to keep the array ordered. If we exclude the
+list head, we end-up with 24 bytes per entry to move down to make room
+for the new entry at the head of the array. For large caches that miss
+very often, this will hurt badly. But is that really a problem? I
+don't know.
 
-Total Samples:659950, Total events handled time:2209005391.30us.
+We could allocate an array as you suggest, and use a linked list
+inside the array. Or something else. I'm definitely open to
+suggestion!
 
- # ./tools/perf/perf kvm stat report --event=trap
+Thanks,
 
-Analyze events for all VMs, all VCPUs:
+	M.
 
-          TRAP-EVENT    Samples  Samples%     Time%    Min Time    Max Time         Avg time
-
-                 WFx     601194    93.80%    99.98%      0.90us   4294.04us   3671.01us ( +-   0.03% )
-               SYS64      33714     5.26%     0.01%      1.10us     41.34us      5.68us ( +-   0.18% )
-            DABT_LOW       6014     0.94%     0.00%      1.12us     18.04us      2.57us ( +-   0.91% )
-            IABT_LOW         12     0.00%     0.01%  12597.76us  14679.96us  12893.61us ( +-   1.34% )
-
-Total Samples:640934, Total events handled time:2207353434.56us.
-
-Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Christoffer Dall <christoffer.dall@arm.com>
-Cc: Marc Zyngier <marc.zyngier@arm.com>
-Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
----
- tools/perf/arch/arm64/util/aarch64_guest_exits.h | 68 ++++++++++++++++++++++++
- tools/perf/arch/arm64/util/kvm-stat.c            | 65 ++++++++++++++++++++++
- 2 files changed, 133 insertions(+)
-
-diff --git a/tools/perf/arch/arm64/util/aarch64_guest_exits.h b/tools/perf/arch/arm64/util/aarch64_guest_exits.h
-index a8ca4b8..0dbbd87 100644
---- a/tools/perf/arch/arm64/util/aarch64_guest_exits.h
-+++ b/tools/perf/arch/arm64/util/aarch64_guest_exits.h
-@@ -20,4 +20,72 @@
- 	{ARM_EXCEPTION_TRAP,		"TRAP"		},	\
- 	{ARM_EXCEPTION_HYP_GONE,	"HYP_GONE"	}
- 
-+/* esr.h */
-+#define ESR_ELx_EC_UNKNOWN	(0x00)
-+#define ESR_ELx_EC_WFx		(0x01)
-+/* Unallocated EC: 0x02 */
-+#define ESR_ELx_EC_CP15_32	(0x03)
-+#define ESR_ELx_EC_CP15_64	(0x04)
-+#define ESR_ELx_EC_CP14_MR	(0x05)
-+#define ESR_ELx_EC_CP14_LS	(0x06)
-+#define ESR_ELx_EC_FP_ASIMD	(0x07)
-+#define ESR_ELx_EC_CP10_ID	(0x08) /* EL2 only */
-+#define ESR_ELx_EC_PAC		(0x09) /* EL2 and above */
-+/* Unallocated EC: 0x0A - 0x0B */
-+#define ESR_ELx_EC_CP14_64	(0x0C)
-+/* Unallocated EC: 0x0d */
-+#define ESR_ELx_EC_ILL		(0x0E)
-+/* Unallocated EC: 0x0F - 0x10 */
-+#define ESR_ELx_EC_SVC32	(0x11)
-+#define ESR_ELx_EC_HVC32	(0x12) /* EL2 only */
-+#define ESR_ELx_EC_SMC32	(0x13) /* EL2 and above */
-+/* Unallocated EC: 0x14 */
-+#define ESR_ELx_EC_SVC64	(0x15)
-+#define ESR_ELx_EC_HVC64	(0x16) /* EL2 and above */
-+#define ESR_ELx_EC_SMC64	(0x17) /* EL2 and above */
-+#define ESR_ELx_EC_SYS64	(0x18)
-+#define ESR_ELx_EC_SVE		(0x19)
-+/* Unallocated EC: 0x1A - 0x1E */
-+#define ESR_ELx_EC_IMP_DEF	(0x1f) /* EL3 only */
-+#define ESR_ELx_EC_IABT_LOW	(0x20)
-+#define ESR_ELx_EC_IABT_CUR	(0x21)
-+#define ESR_ELx_EC_PC_ALIGN	(0x22)
-+/* Unallocated EC: 0x23 */
-+#define ESR_ELx_EC_DABT_LOW	(0x24)
-+#define ESR_ELx_EC_DABT_CUR	(0x25)
-+#define ESR_ELx_EC_SP_ALIGN	(0x26)
-+/* Unallocated EC: 0x27 */
-+#define ESR_ELx_EC_FP_EXC32	(0x28)
-+/* Unallocated EC: 0x29 - 0x2B */
-+#define ESR_ELx_EC_FP_EXC64	(0x2C)
-+/* Unallocated EC: 0x2D - 0x2E */
-+#define ESR_ELx_EC_SERROR	(0x2F)
-+#define ESR_ELx_EC_BREAKPT_LOW	(0x30)
-+#define ESR_ELx_EC_BREAKPT_CUR	(0x31)
-+#define ESR_ELx_EC_SOFTSTP_LOW	(0x32)
-+#define ESR_ELx_EC_SOFTSTP_CUR	(0x33)
-+#define ESR_ELx_EC_WATCHPT_LOW	(0x34)
-+#define ESR_ELx_EC_WATCHPT_CUR	(0x35)
-+/* Unallocated EC: 0x36 - 0x37 */
-+#define ESR_ELx_EC_BKPT32	(0x38)
-+/* Unallocated EC: 0x39 */
-+#define ESR_ELx_EC_VECTOR32	(0x3A) /* EL2 only */
-+/* Unallocted EC: 0x3B */
-+#define ESR_ELx_EC_BRK64	(0x3C)
-+/* Unallocated EC: 0x3D - 0x3F */
-+#define ESR_ELx_EC_MAX		(0x3F)
-+
-+/* kvm_arm.h */
-+#define ECN(x) { ESR_ELx_EC_##x, #x }
-+
-+#define kvm_arm_exception_class \
-+	ECN(UNKNOWN), ECN(WFx), ECN(CP15_32), ECN(CP15_64), ECN(CP14_MR), \
-+	ECN(CP14_LS), ECN(FP_ASIMD), ECN(CP10_ID), ECN(CP14_64), ECN(SVC64), \
-+	ECN(HVC64), ECN(SMC64), ECN(SYS64), ECN(IMP_DEF), ECN(IABT_LOW), \
-+	ECN(IABT_CUR), ECN(PC_ALIGN), ECN(DABT_LOW), ECN(DABT_CUR), \
-+	ECN(SP_ALIGN), ECN(FP_EXC32), ECN(FP_EXC64), ECN(SERROR), \
-+	ECN(BREAKPT_LOW), ECN(BREAKPT_CUR), ECN(SOFTSTP_LOW), \
-+	ECN(SOFTSTP_CUR), ECN(WATCHPT_LOW), ECN(WATCHPT_CUR), \
-+	ECN(BKPT32), ECN(VECTOR32), ECN(BRK64)
-+
- #endif
-diff --git a/tools/perf/arch/arm64/util/kvm-stat.c b/tools/perf/arch/arm64/util/kvm-stat.c
-index 5804bc2..afa0fc5 100644
---- a/tools/perf/arch/arm64/util/kvm-stat.c
-+++ b/tools/perf/arch/arm64/util/kvm-stat.c
-@@ -22,6 +22,7 @@
- #include "aarch64_guest_exits.h"
- 
- define_exit_reasons_table(arm64_exit_reasons, kvm_arm_exception_type);
-+define_exit_reasons_table(arm64_trap_reasons, kvm_arm_exception_class);
- 
- static struct kvm_events_ops exit_events = {
- 	.is_begin_event = exit_event_begin,
-@@ -36,14 +37,78 @@
- const char *kvm_entry_trace = "kvm:kvm_entry";
- const char *kvm_exit_trace = "kvm:kvm_exit";
- 
-+const char *kvm_trap_reason = "esr_ec";
-+const char *kvm_trap_enter_trace = "kvm:kvm_trap_enter";
-+const char *kvm_trap_exit_trace = "kvm:kvm_trap_exit";
-+
-+static void trap_event_get_key(struct perf_evsel *evsel,
-+			       struct perf_sample *sample,
-+			       struct event_key *key)
-+{
-+	key->info = 0;
-+	key->key = perf_evsel__intval(evsel, sample, kvm_trap_reason);
-+}
-+
-+static const char *get_trap_reason(u64 exit_code)
-+{
-+	struct exit_reasons_table *tbl = arm64_trap_reasons;
-+
-+	while (tbl->reason != NULL) {
-+		if (tbl->exit_code == exit_code)
-+			return tbl->reason;
-+		tbl++;
-+	}
-+
-+	pr_err("Unknown kvm trap exit code: %lld on aarch64\n",
-+	       (unsigned long long)exit_code);
-+	return "UNKNOWN";
-+}
-+
-+static bool trap_event_begin(struct perf_evsel *evsel,
-+			     struct perf_sample *sample, struct event_key *key)
-+{
-+	if (!strcmp(evsel->name, kvm_trap_enter_trace)) {
-+		trap_event_get_key(evsel, sample, key);
-+		return true;
-+	}
-+
-+	return false;
-+}
-+
-+static bool trap_event_end(struct perf_evsel *evsel,
-+			   struct perf_sample *sample __maybe_unused,
-+			   struct event_key *key __maybe_unused)
-+{
-+	return (!strcmp(evsel->name, kvm_trap_exit_trace));
-+}
-+
-+static void trap_event_decode_key(struct perf_kvm_stat *kvm __maybe_unused,
-+				  struct event_key *key,
-+				  char *decode)
-+{
-+	const char *trap_reason = get_trap_reason(key->key);
-+
-+	scnprintf(decode, decode_str_len, "%s", trap_reason);
-+}
-+
-+static struct kvm_events_ops trap_events = {
-+	.is_begin_event = trap_event_begin,
-+	.is_end_event = trap_event_end,
-+	.decode_key = trap_event_decode_key,
-+	.name = "TRAP-EVENT",
-+};
-+
- const char *kvm_events_tp[] = {
- 	"kvm:kvm_entry",
- 	"kvm:kvm_exit",
-+	"kvm:kvm_trap_enter",
-+	"kvm:kvm_trap_exit",
- 	NULL,
- };
- 
- struct kvm_reg_events_ops kvm_reg_events_ops[] = {
- 	{ .name = "vmexit", .ops = &exit_events },
-+	{ .name = "trap", .ops = &trap_events },
- 	{ NULL, NULL },
- };
- 
 -- 
-1.8.3.1
-
-
+Jazz is not dead, it just smells funny.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
