@@ -2,58 +2,57 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A945241FA1
-	for <lists+kvmarm@lfdr.de>; Wed, 12 Jun 2019 10:50:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 118D442060
+	for <lists+kvmarm@lfdr.de>; Wed, 12 Jun 2019 11:15:10 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 437284A520;
-	Wed, 12 Jun 2019 04:50:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AA41C4A53A;
+	Wed, 12 Jun 2019 05:15:09 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.799
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IRWWPJwyzg0j; Wed, 12 Jun 2019 04:50:00 -0400 (EDT)
+	with ESMTP id H5i2Ck9apZfJ; Wed, 12 Jun 2019 05:15:09 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D3D844A51F;
-	Wed, 12 Jun 2019 04:49:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B29304A523;
+	Wed, 12 Jun 2019 05:15:06 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8F0484A4EE
- for <kvmarm@lists.cs.columbia.edu>; Wed, 12 Jun 2019 04:49:57 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BF6D54A4EE
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 12 Jun 2019 05:15:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 6U2Scs1MhPU8 for <kvmarm@lists.cs.columbia.edu>;
- Wed, 12 Jun 2019 04:49:56 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 259944A4DF
- for <kvmarm@lists.cs.columbia.edu>; Wed, 12 Jun 2019 04:49:56 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AE6E82B;
- Wed, 12 Jun 2019 01:49:55 -0700 (PDT)
-Received: from [10.1.197.45] (e112298-lin.cambridge.arm.com [10.1.197.45])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8BC543F246;
- Wed, 12 Jun 2019 01:49:54 -0700 (PDT)
-Subject: Re: [PATCH v2 1/9] KVM: arm/arm64: vgic: Add LPI translation cache
- definition
-From: Julien Thierry <julien.thierry@arm.com>
-To: Marc Zyngier <marc.zyngier@arm.com>,
- linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- kvm@vger.kernel.org
-References: <20190611170336.121706-1-marc.zyngier@arm.com>
- <20190611170336.121706-2-marc.zyngier@arm.com>
- <54c8547a-51fb-8ae5-975f-261d3934221a@arm.com>
-Message-ID: <37a7411c-e7e0-e601-b88b-c12e8ebf9861@arm.com>
-Date: Wed, 12 Jun 2019 09:49:53 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+ with ESMTP id I0eHrIGAszL7 for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 12 Jun 2019 05:15:03 -0400 (EDT)
+Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1B5FD4A4FF
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 12 Jun 2019 05:15:03 -0400 (EDT)
+Received: from DGGEMS409-HUB.china.huawei.com (unknown [172.30.72.59])
+ by Forcepoint Email with ESMTP id EF3EA12D63526C173D19;
+ Wed, 12 Jun 2019 17:11:50 +0800 (CST)
+Received: from HGHY2Y004646261.china.huawei.com (10.184.12.158) by
+ DGGEMS409-HUB.china.huawei.com (10.3.19.209) with Microsoft SMTP Server id
+ 14.3.439.0; Wed, 12 Jun 2019 17:11:42 +0800
+From: Zenghui Yu <yuzenghui@huawei.com>
+To: <linux-arm-kernel@lists.infradead.org>, <kvmarm@lists.cs.columbia.edu>,
+ <kvm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-perf-users@vger.kernel.org>
+Subject: [PATCH v1 0/5] perf kvm: Add stat support on arm64
+Date: Wed, 12 Jun 2019 09:08:41 +0000
+Message-ID: <1560330526-15468-1-git-send-email-yuzenghui@huawei.com>
+X-Mailer: git-send-email 2.6.4.windows.1
 MIME-Version: 1.0
-In-Reply-To: <54c8547a-51fb-8ae5-975f-261d3934221a@arm.com>
-Content-Language: en-US
-Cc: "Raslan, KarimAllah" <karahmed@amazon.de>, "Saidi,
- Ali" <alisaidi@amazon.com>
+X-Originating-IP: [10.184.12.158]
+X-CFilter-Loop: Reflected
+Cc: marc.zyngier@arm.com, catalin.marinas@arm.com, will.deacon@arm.com,
+ acme@kernel.org, linuxarm@huawei.com, acme@redhat.com, peterz@infradead.org,
+ alexander.shishkin@linux.intel.com, mingo@redhat.com,
+ ganapatrao.kulkarni@cavium.com, namhyung@kernel.org, jolsa@redhat.com,
+ xiexiangyou@huawei.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -70,55 +69,65 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+'perf kvm stat report/record' generates a statistical analysis of KVM
+events and can be used to analyze guest exit reasons. This series tries
+to add stat support on arm64 (Port perf-kvm-stat to arm64 - this is
+already supported on x86).
 
+"record" enables recording of two pair of tracepoints:
+ - "kvm:kvm_entry" and "kvm:kvm_exit"
+ - "kvm:kvm_trap_enter" and "kvm:kvm_trap_exit"
+"report" reports statistical analysis of guest exit&trap events.
 
-On 12/06/2019 09:16, Julien Thierry wrote:
-> Hi Marc,
-> 
-> On 11/06/2019 18:03, Marc Zyngier wrote:
+To record kvm events on the host:
+ # perf kvm stat record -a
 
-[...]
+To report kvm VM EXIT events:
+ # perf kvm stat report --event=vmexit
 
->> +
->> +void vgic_lpi_translation_cache_init(struct kvm *kvm)
->> +{
->> +	struct vgic_dist *dist = &kvm->arch.vgic;
->> +	unsigned int sz;
->> +	int i;
->> +
->> +	if (!list_empty(&dist->lpi_translation_cache))
->> +		return;
->> +
->> +	sz = atomic_read(&kvm->online_vcpus) * LPI_DEFAULT_PCPU_CACHE_SIZE;
->> +
->> +	for (i = 0; i < sz; i++) {
->> +		struct vgic_translation_cache_entry *cte;
->> +
->> +		/* An allocation failure is not fatal */
->> +		cte = kzalloc(sizeof(*cte), GFP_KERNEL);
->> +		if (WARN_ON(!cte))
->> +			break;
->> +
->> +		INIT_LIST_HEAD(&cte->entry);
->> +		list_add(&cte->entry, &dist->lpi_translation_cache);
-> 
-> Going through the series, it looks like this list is either empty
-> (before the cache init) or has a fixed number
-> (LPI_DEFAULT_PCPU_CACHE_SIZE * nr_cpus) of entries. And the list never
-> grows nor shrinks throughout the series, so it seems odd to be using a
-> list here.
-> 
-> Is there a reason for not using a dynamically allocated array instead of
-> the list? (does list_move() provide a big perf advantage over swapping
-> the data from one array entry to another? Or is there some other
-> facility I am missing?
-> 
+To report kvm VM TRAP (synchronous exceptions) events:
+ # perf kvm stat report --event=trap
 
-Scratch that, I realized having the list makes it easier to implement
-the LRU policy later in the series.
+More information can be found at tools/perf/Documentation/perf-kvm.txt.
+
+* Patch 1-2 touch KVM/ARM side, with #1 is cleanup and #2 is preparation
+  for perf-kvm-stat support.
+* Patch 3-5 touch perf side.
+* Patch 3 adds support for get_cpuid() function on arm64. *RFC!*
+* Patch 4 adds support for perf-kvm-stat on arm64, with VM-EXIT events.
+* Patch 5 adds support to report TRAP-EVENT events.
+
+Any suggestions, comments and test results will be appreciated.
+
+Thanks,
+zenghui
+
+---
+
+Zenghui Yu (5):
+  KVM: arm/arm64: Remove kvm_mmio_emulate tracepoint
+  KVM: arm/arm64: Adjust entry/exit and trap related tracepoints
+  perf tools arm64: Add support for get_cpuid() function
+  perf,kvm/arm64: Add stat support on arm64
+  perf,kvm/arm64: perf-kvm-stat to report VM TRAP
+
+ arch/arm64/kvm/handle_exit.c                     |   3 +
+ arch/arm64/kvm/trace.h                           |  35 +++++++
+ tools/perf/arch/arm64/Makefile                   |   2 +
+ tools/perf/arch/arm64/util/Build                 |   1 +
+ tools/perf/arch/arm64/util/aarch64_guest_exits.h |  91 +++++++++++++++++
+ tools/perf/arch/arm64/util/header.c              |  74 +++++++++-----
+ tools/perf/arch/arm64/util/kvm-stat.c            | 125 +++++++++++++++++++++++
+ virt/kvm/arm/arm.c                               |   4 +-
+ virt/kvm/arm/trace.h                             |  42 ++------
+ 9 files changed, 317 insertions(+), 60 deletions(-)
+ create mode 100644 tools/perf/arch/arm64/util/aarch64_guest_exits.h
+ create mode 100644 tools/perf/arch/arm64/util/kvm-stat.c
 
 -- 
-Julien Thierry
+1.8.3.1
+
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
