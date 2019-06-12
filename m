@@ -2,52 +2,55 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D40C73D34C
-	for <lists+kvmarm@lfdr.de>; Tue, 11 Jun 2019 19:04:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B8EC41ED1
+	for <lists+kvmarm@lfdr.de>; Wed, 12 Jun 2019 10:16:36 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 820D94A545;
-	Tue, 11 Jun 2019 13:04:06 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4CC7F4A4E9;
+	Wed, 12 Jun 2019 04:16:35 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
 X-Spam-Level: 
 X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=no
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2MK24HiF96qX; Tue, 11 Jun 2019 13:04:05 -0400 (EDT)
+	with ESMTP id YxqCGsss-GA5; Wed, 12 Jun 2019 04:16:35 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 55C2B4A53E;
-	Tue, 11 Jun 2019 13:04:05 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DBF2A4A511;
+	Wed, 12 Jun 2019 04:16:33 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 881184A507
- for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Jun 2019 13:04:04 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9C5774A4A4
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 12 Jun 2019 04:16:32 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 0GDSxeXwz1uG for <kvmarm@lists.cs.columbia.edu>;
- Tue, 11 Jun 2019 13:04:03 -0400 (EDT)
+ with ESMTP id LSiq32OVbpuR for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 12 Jun 2019 04:16:31 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 14C7E4A505
- for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Jun 2019 13:04:03 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 05BF94A4A3
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 12 Jun 2019 04:16:30 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C54CC11B3;
- Tue, 11 Jun 2019 10:04:02 -0700 (PDT)
-Received: from filthy-habits.cambridge.arm.com
- (filthy-habits.cambridge.arm.com [10.1.197.61])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 56A513F73C;
- Tue, 11 Jun 2019 10:04:01 -0700 (PDT)
-From: Marc Zyngier <marc.zyngier@arm.com>
-To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6309B2B;
+ Wed, 12 Jun 2019 01:16:30 -0700 (PDT)
+Received: from [10.1.197.45] (e112298-lin.cambridge.arm.com [10.1.197.45])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 83E803F246;
+ Wed, 12 Jun 2019 01:16:24 -0700 (PDT)
+Subject: Re: [PATCH v2 1/9] KVM: arm/arm64: vgic: Add LPI translation cache
+ definition
+To: Marc Zyngier <marc.zyngier@arm.com>,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH v2 9/9] KVM: arm/arm64: vgic-irqfd: Implement
- kvm_arch_set_irq_inatomic
-Date: Tue, 11 Jun 2019 18:03:36 +0100
-Message-Id: <20190611170336.121706-10-marc.zyngier@arm.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190611170336.121706-1-marc.zyngier@arm.com>
 References: <20190611170336.121706-1-marc.zyngier@arm.com>
+ <20190611170336.121706-2-marc.zyngier@arm.com>
+From: Julien Thierry <julien.thierry@arm.com>
+Message-ID: <54c8547a-51fb-8ae5-975f-261d3934221a@arm.com>
+Date: Wed, 12 Jun 2019 09:16:21 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
+In-Reply-To: <20190611170336.121706-2-marc.zyngier@arm.com>
+Content-Language: en-US
 Cc: "Raslan, KarimAllah" <karahmed@amazon.de>, "Saidi,
  Ali" <alisaidi@amazon.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
@@ -66,83 +69,134 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Now that we have a cache of MSI->LPI translations, it is pretty
-easy to implement kvm_arch_set_irq_inatomic (this cache can be
-parsed without sleeping).
+Hi Marc,
 
-Hopefully, this will improve some LPI-heavy workloads.
+On 11/06/2019 18:03, Marc Zyngier wrote:
+> Add the basic data structure that expresses an MSI to LPI
+> translation as well as the allocation/release hooks.
+> 
+> THe size of the cache is arbitrarily defined as 4*nr_vcpus.
+>
 
-Signed-off-by: Marc Zyngier <marc.zyngier@arm.com>
----
- virt/kvm/arm/vgic/vgic-irqfd.c | 36 ++++++++++++++++++++++++++++------
- 1 file changed, 30 insertions(+), 6 deletions(-)
+The size has been arbitrarily changed to 16*nr_vcpus :) .
 
-diff --git a/virt/kvm/arm/vgic/vgic-irqfd.c b/virt/kvm/arm/vgic/vgic-irqfd.c
-index 99e026d2dade..9f203ed8c8f3 100644
---- a/virt/kvm/arm/vgic/vgic-irqfd.c
-+++ b/virt/kvm/arm/vgic/vgic-irqfd.c
-@@ -77,6 +77,15 @@ int kvm_set_routing_entry(struct kvm *kvm,
- 	return r;
- }
- 
-+static void kvm_populate_msi(struct kvm_kernel_irq_routing_entry *e,
-+			     struct kvm_msi *msi)
-+{
-+	msi->address_lo = e->msi.address_lo;
-+	msi->address_hi = e->msi.address_hi;
-+	msi->data = e->msi.data;
-+	msi->flags = e->msi.flags;
-+	msi->devid = e->msi.devid;
-+}
- /**
-  * kvm_set_msi: inject the MSI corresponding to the
-  * MSI routing entry
-@@ -90,21 +99,36 @@ int kvm_set_msi(struct kvm_kernel_irq_routing_entry *e,
- {
- 	struct kvm_msi msi;
- 
--	msi.address_lo = e->msi.address_lo;
--	msi.address_hi = e->msi.address_hi;
--	msi.data = e->msi.data;
--	msi.flags = e->msi.flags;
--	msi.devid = e->msi.devid;
--
- 	if (!vgic_has_its(kvm))
- 		return -ENODEV;
- 
- 	if (!level)
- 		return -1;
- 
-+	kvm_populate_msi(e, &msi);
- 	return vgic_its_inject_msi(kvm, &msi);
- }
- 
-+/**
-+ * kvm_arch_set_irq_inatomic: fast-path for irqfd injection
-+ *
-+ * Currently only direct MSI injecton is supported.
-+ */
-+int kvm_arch_set_irq_inatomic(struct kvm_kernel_irq_routing_entry *e,
-+			      struct kvm *kvm, int irq_source_id, int level,
-+			      bool line_status)
-+{
-+	if (e->type == KVM_IRQ_ROUTING_MSI && vgic_has_its(kvm) && level) {
-+		struct kvm_msi msi;
-+
-+		kvm_populate_msi(e, &msi);
-+		if (!vgic_its_inject_cached_translation(kvm, &msi))
-+			return 0;
-+	}
-+
-+	return -EWOULDBLOCK;
-+}
-+
- int kvm_vgic_setup_default_irq_routing(struct kvm *kvm)
- {
- 	struct kvm_irq_routing_entry *entries;
+Nit: The*
+
+> Signed-off-by: Marc Zyngier <marc.zyngier@arm.com>
+> ---
+>  include/kvm/arm_vgic.h        |  3 +++
+>  virt/kvm/arm/vgic/vgic-init.c |  5 ++++
+>  virt/kvm/arm/vgic/vgic-its.c  | 49 +++++++++++++++++++++++++++++++++++
+>  virt/kvm/arm/vgic/vgic.h      |  2 ++
+>  4 files changed, 59 insertions(+)
+> 
+> diff --git a/include/kvm/arm_vgic.h b/include/kvm/arm_vgic.h
+> index c36c86f1ec9a..ca7bcf52dc85 100644
+> --- a/include/kvm/arm_vgic.h
+> +++ b/include/kvm/arm_vgic.h
+> @@ -260,6 +260,9 @@ struct vgic_dist {
+>  	struct list_head	lpi_list_head;
+>  	int			lpi_list_count;
+>  
+> +	/* LPI translation cache */
+> +	struct list_head	lpi_translation_cache;
+> +
+>  	/* used by vgic-debug */
+>  	struct vgic_state_iter *iter;
+>  
+> diff --git a/virt/kvm/arm/vgic/vgic-init.c b/virt/kvm/arm/vgic/vgic-init.c
+> index 3bdb31eaed64..c7c4c77dd430 100644
+> --- a/virt/kvm/arm/vgic/vgic-init.c
+> +++ b/virt/kvm/arm/vgic/vgic-init.c
+> @@ -64,6 +64,7 @@ void kvm_vgic_early_init(struct kvm *kvm)
+>  	struct vgic_dist *dist = &kvm->arch.vgic;
+>  
+>  	INIT_LIST_HEAD(&dist->lpi_list_head);
+> +	INIT_LIST_HEAD(&dist->lpi_translation_cache);
+>  	raw_spin_lock_init(&dist->lpi_list_lock);
+>  }
+>  
+> @@ -305,6 +306,7 @@ int vgic_init(struct kvm *kvm)
+>  	}
+>  
+>  	if (vgic_has_its(kvm)) {
+> +		vgic_lpi_translation_cache_init(kvm);
+>  		ret = vgic_v4_init(kvm);
+>  		if (ret)
+>  			goto out;
+> @@ -346,6 +348,9 @@ static void kvm_vgic_dist_destroy(struct kvm *kvm)
+>  		INIT_LIST_HEAD(&dist->rd_regions);
+>  	}
+>  
+> +	if (vgic_has_its(kvm))
+> +		vgic_lpi_translation_cache_destroy(kvm);
+> +
+>  	if (vgic_supports_direct_msis(kvm))
+>  		vgic_v4_teardown(kvm);
+>  }
+> diff --git a/virt/kvm/arm/vgic/vgic-its.c b/virt/kvm/arm/vgic/vgic-its.c
+> index 44ceaccb18cf..ce9bcddeb7f1 100644
+> --- a/virt/kvm/arm/vgic/vgic-its.c
+> +++ b/virt/kvm/arm/vgic/vgic-its.c
+> @@ -149,6 +149,14 @@ struct its_ite {
+>  	u32 event_id;
+>  };
+>  
+> +struct vgic_translation_cache_entry {
+> +	struct list_head	entry;
+> +	phys_addr_t		db;
+> +	u32			devid;
+> +	u32			eventid;
+> +	struct vgic_irq		*irq;
+> +};
+> +
+>  /**
+>   * struct vgic_its_abi - ITS abi ops and settings
+>   * @cte_esz: collection table entry size
+> @@ -1668,6 +1676,45 @@ static int vgic_register_its_iodev(struct kvm *kvm, struct vgic_its *its,
+>  	return ret;
+>  }
+>  
+> +/* Default is 16 cached LPIs per vcpu */
+> +#define LPI_DEFAULT_PCPU_CACHE_SIZE	16
+> +
+> +void vgic_lpi_translation_cache_init(struct kvm *kvm)
+> +{
+> +	struct vgic_dist *dist = &kvm->arch.vgic;
+> +	unsigned int sz;
+> +	int i;
+> +
+> +	if (!list_empty(&dist->lpi_translation_cache))
+> +		return;
+> +
+> +	sz = atomic_read(&kvm->online_vcpus) * LPI_DEFAULT_PCPU_CACHE_SIZE;
+> +
+> +	for (i = 0; i < sz; i++) {
+> +		struct vgic_translation_cache_entry *cte;
+> +
+> +		/* An allocation failure is not fatal */
+> +		cte = kzalloc(sizeof(*cte), GFP_KERNEL);
+> +		if (WARN_ON(!cte))
+> +			break;
+> +
+> +		INIT_LIST_HEAD(&cte->entry);
+> +		list_add(&cte->entry, &dist->lpi_translation_cache);
+
+Going through the series, it looks like this list is either empty
+(before the cache init) or has a fixed number
+(LPI_DEFAULT_PCPU_CACHE_SIZE * nr_cpus) of entries. And the list never
+grows nor shrinks throughout the series, so it seems odd to be using a
+list here.
+
+Is there a reason for not using a dynamically allocated array instead of
+the list? (does list_move() provide a big perf advantage over swapping
+the data from one array entry to another? Or is there some other
+facility I am missing?
+
+Cheers,
+
 -- 
-2.20.1
-
+Julien Thierry
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
