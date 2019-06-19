@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 052B24B4B6
-	for <lists+kvmarm@lfdr.de>; Wed, 19 Jun 2019 11:12:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCD514B74D
+	for <lists+kvmarm@lfdr.de>; Wed, 19 Jun 2019 13:45:00 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 960A84A4F7;
-	Wed, 19 Jun 2019 05:12:28 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 33FC14A4FD;
+	Wed, 19 Jun 2019 07:45:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
@@ -15,50 +15,63 @@ X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id fozIjfuajvTh; Wed, 19 Jun 2019 05:12:28 -0400 (EDT)
+	with ESMTP id SvB4hcS5rpHn; Wed, 19 Jun 2019 07:45:00 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C5B564A4F3;
-	Wed, 19 Jun 2019 05:12:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C07CC4A4F3;
+	Wed, 19 Jun 2019 07:44:58 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 77DF74A4EC
- for <kvmarm@lists.cs.columbia.edu>; Wed, 19 Jun 2019 05:12:25 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1CECB4A409
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 19 Jun 2019 07:44:57 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id negOtYzjoR5p for <kvmarm@lists.cs.columbia.edu>;
- Wed, 19 Jun 2019 05:12:24 -0400 (EDT)
+ with ESMTP id C3TyEeNC5e1s for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 19 Jun 2019 07:44:55 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 243EA4A47A
- for <kvmarm@lists.cs.columbia.edu>; Wed, 19 Jun 2019 05:12:24 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A50E64A369
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 19 Jun 2019 07:44:55 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C1292344;
- Wed, 19 Jun 2019 02:12:23 -0700 (PDT)
-Received: from fuggles.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com
- [10.121.207.14])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 523053F738;
- Wed, 19 Jun 2019 02:12:21 -0700 (PDT)
-Date: Wed, 19 Jun 2019 10:12:19 +0100
-From: Will Deacon <will.deacon@arm.com>
-To: Julien Grall <julien.grall@arm.com>
-Subject: Re: [PATCH RFC 11/14] arm64: Move the ASID allocator code in a
- separate file
-Message-ID: <20190619091219.GB7767@fuggles.cambridge.arm.com>
-References: <20190321163623.20219-1-julien.grall@arm.com>
- <20190321163623.20219-12-julien.grall@arm.com>
- <0dfe120b-066a-2ac8-13bc-3f5a29e2caa3@arm.com>
- <CAJF2gTTXHHgDboaexdHA284y6kNZVSjLis5-Q2rDnXCxr4RSmA@mail.gmail.com>
- <c871a5ae-914f-a8bb-9474-1dcfec5d45bf@arm.com>
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 284C7360;
+ Wed, 19 Jun 2019 04:44:55 -0700 (PDT)
+Received: from [10.1.196.129] (ostrya.cambridge.arm.com [10.1.196.129])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A30193F738;
+ Wed, 19 Jun 2019 04:46:39 -0700 (PDT)
+Subject: Re: [PATCH v8 26/29] vfio-pci: Register an iommu fault handler
+To: Jacob Pan <jacob.jun.pan@linux.intel.com>
+References: <20190526161004.25232-1-eric.auger@redhat.com>
+ <20190526161004.25232-27-eric.auger@redhat.com>
+ <20190603163139.70fe8839@x1.home>
+ <10dd60d9-4af0-c0eb-08c9-a0db7ee1925e@redhat.com>
+ <20190605154553.0d00ad8d@jacob-builder>
+ <2753d192-1c46-d78e-c425-0c828e48cde2@arm.com>
+ <20190606132903.064f7ac4@jacob-builder>
+ <dc051424-67d7-02ff-9b8e-0d7a8a4e59eb@arm.com>
+ <20190607104301.6b1bbd74@jacob-builder>
+ <e02b024f-6ebc-e8fa-c30c-5bf3f4b164d6@arm.com>
+ <20190610143134.7bff96e9@jacob-builder>
+ <905f130b-02dc-6971-8d5b-ce87d9bc96a4@arm.com>
+ <20190612115358.0d90b322@jacob-builder>
+ <77405d39-81a4-d9a8-5d35-27602199867a@arm.com>
+ <20190618171908.76284cd7@jacob-builder>
+From: Jean-Philippe Brucker <jean-philippe.brucker@arm.com>
+Message-ID: <138f6a16-d2ee-d7b8-7bfb-ac08b6cfb9da@arm.com>
+Date: Wed, 19 Jun 2019 12:44:24 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <c871a5ae-914f-a8bb-9474-1dcfec5d45bf@arm.com>
-User-Agent: Mutt/1.11.1+86 (6f28e57d73f2) ()
-Cc: aou@eecs.berkeley.edu, Marc Zyngier <marc.zyngier@arm.com>,
- catalin.marinas@arm.com, Anup Patel <anup.Patel@wdc.com>,
- Palmer Dabbelt <palmer@sifive.com>, linux-kernel@vger.kernel.org,
- rppt@linux.ibm.com, hch@infradead.org, Atish.Patra@wdc.com,
- Guo Ren <guoren@kernel.org>, gary@garyguo.net, paul.walmsley@sifive.com,
- linux-riscv@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+In-Reply-To: <20190618171908.76284cd7@jacob-builder>
+Content-Language: en-US
+Cc: "kevin.tian@intel.com" <kevin.tian@intel.com>,
+ Vincent Stehle <Vincent.Stehle@arm.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ "ashok.raj@intel.com" <ashok.raj@intel.com>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+ Marc Zyngier <Marc.Zyngier@arm.com>, Will Deacon <Will.Deacon@arm.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>, "Liu,
+ Yi L" <yi.l.liu@intel.com>, Robin Murphy <Robin.Murphy@arm.com>,
+ "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
+ "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -75,34 +88,72 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Jun 19, 2019 at 09:54:21AM +0100, Julien Grall wrote:
-> On 6/19/19 9:07 AM, Guo Ren wrote:
-> > You forgot CCing C-SKY folks :P
+On 19/06/2019 01:19, Jacob Pan wrote:
+>>> I see this as a future extension due to limited testing,   
+>>
+>> I'm wondering how we deal with:
+>> (1) old userspace that won't fill the new private_data field in
+>> page_response. A new kernel still has to support it.
+>> (2) old kernel that won't recognize the new PRIVATE_DATA flag.
+>> Currently iommu_page_response() rejects page responses with unknown
+>> flags.
+>>
+>> I guess we'll need a two-way negotiation, where userspace queries
+>> whether the kernel supports the flag (2), and the kernel learns
+>> whether it should expect the private data to come back (1).
+>>
+> I am not sure case (1) exist in that there is no existing user space
+> supports PRQ w/o private data. Am I missing something?
 > 
-> I wasn't aware you could be interested :).
+> For VT-d emulation, private data is always part of the scalable mode
+> PASID capability. If vIOMMU query host supports PASID and scalable
+> mode, it will always support private data once PRQ is enabled.
+
+Right if VT-d won't ever support page_response without private data then
+I don't think we have to worry about (1).
+
+> So I think we only need to negotiate (2) which should be covered by
+> VT-d PASID cap.
 > 
-> > Move arm asid allocator code in a generic one is a agood idea, I've
-> > made a patchset for C-SKY and test is on processing, See:
-> > https://lore.kernel.org/linux-csky/1560930553-26502-1-git-send-email-guoren@kernel.org/
-> > 
-> > If you plan to seperate it into generic one, I could co-work with you.
+>>> perhaps for
+>>> now, can you add paddings similar to page request? Make it 64B as
+>>> well.  
+>>
+>> I don't think padding is necessary, because iommu_page_response is
+>> sent by userspace to the kernel, unlike iommu_fault which is
+>> allocated by userspace and filled by the kernel.
+>>
+>> Page response looks a lot more like existing VFIO mechanisms, so I
+>> suppose we'll wrap the iommu_page_response structure and include an
+>> argsz parameter at the top:
+>>
+>> 	struct vfio_iommu_page_response {
+>> 		u32 argsz;
+>> 		struct iommu_page_response pr;
+>> 	};
+>>
+>> 	struct vfio_iommu_page_response vpr = {
+>> 		.argsz = sizeof(vpr),
+>> 		.pr = ...
+>> 		...
+>> 	};
+>>
+>> 	ioctl(devfd, VFIO_IOMMU_PAGE_RESPONSE, &vpr);
+>>
+>> In that case supporting private data can be done by simply appending a
+>> field at the end (plus the negotiation above).
+>>
+> Do you mean at the end of struct vfio_iommu_page_response{}? or at
+> the end of that seems struct iommu_page_response{}?
 > 
-> Was the ASID allocator work out of box on C-Sky? If so, I can easily move
-> the code in a generic place (maybe lib/asid.c).
+> The consumer of the private data is iommu driver not vfio. So I think
+> you want to add the new field at the end of struct iommu_page_response,
+> right?
 
-This is one place where I'd actually prefer not to go down the route of
-making the code generic. Context-switching and low-level TLB management
-is deeply architecture-specific and I worry that by trying to make this
-code common, we run the real risk of introducing subtle bugs on some
-architecture every time it is changed. Furthermore, the algorithm we use
-on arm64 is designed to scale to large systems using DVM and may well be
-too complex and/or sub-optimal for architectures with different system
-topologies or TLB invalidation mechanisms.
+Yes that's what I meant
 
-It's not a lot of code, so I don't see that it's a big deal to keep it
-under arch/arm64.
-
-Will
+Thanks,
+Jean
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
