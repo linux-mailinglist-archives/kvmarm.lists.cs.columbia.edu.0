@@ -2,48 +2,48 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B83694CCCF
-	for <lists+kvmarm@lfdr.de>; Thu, 20 Jun 2019 13:23:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02F8D4CCD0
+	for <lists+kvmarm@lfdr.de>; Thu, 20 Jun 2019 13:23:22 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 654D34A4E1;
-	Thu, 20 Jun 2019 07:23:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A60ED4A4CD;
+	Thu, 20 Jun 2019 07:23:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
 X-Spam-Level: 
 X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id V5fb83MK8npv; Thu, 20 Jun 2019 07:23:20 -0400 (EDT)
+	with ESMTP id Yk-qnHqOjqZQ; Thu, 20 Jun 2019 07:23:20 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4A1AE4A4F8;
-	Thu, 20 Jun 2019 07:23:18 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6B0D04A50A;
+	Thu, 20 Jun 2019 07:23:20 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 69AE14A4C1
- for <kvmarm@lists.cs.columbia.edu>; Thu, 20 Jun 2019 07:23:16 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A59004A4EC
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 20 Jun 2019 07:23:17 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id zUPzfeTF1DDG for <kvmarm@lists.cs.columbia.edu>;
- Thu, 20 Jun 2019 07:23:15 -0400 (EDT)
+ with ESMTP id KenS+INMCr7i for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 20 Jun 2019 07:23:16 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C7EF74A4F0
- for <kvmarm@lists.cs.columbia.edu>; Thu, 20 Jun 2019 07:23:14 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9CCB64A4C1
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 20 Jun 2019 07:23:16 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7A2EF11B3;
- Thu, 20 Jun 2019 04:23:14 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3033F142F;
+ Thu, 20 Jun 2019 04:23:16 -0700 (PDT)
 Received: from filthy-habits.cambridge.arm.com
  (filthy-habits.cambridge.arm.com [10.1.197.61])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 082F73F718;
- Thu, 20 Jun 2019 04:23:12 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AE9A83F718;
+ Thu, 20 Jun 2019 04:23:14 -0700 (PDT)
 From: Marc Zyngier <marc.zyngier@arm.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@redhat.com>
-Subject: [PATCH 2/4] KVM: arm64: Filter out invalid core register IDs in
- KVM_GET_REG_LIST
-Date: Thu, 20 Jun 2019 12:22:59 +0100
-Message-Id: <20190620112301.138137-3-marc.zyngier@arm.com>
+Subject: [PATCH 3/4] KVM: arm/arm64: vgic: Fix kvm_device leak in
+ vgic_its_destroy
+Date: Thu, 20 Jun 2019 12:23:00 +0100
+Message-Id: <20190620112301.138137-4-marc.zyngier@arm.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190620112301.138137-1-marc.zyngier@arm.com>
 References: <20190620112301.138137-1-marc.zyngier@arm.com>
@@ -69,132 +69,40 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: Dave Martin <Dave.Martin@arm.com>
 
-Since commit d26c25a9d19b ("arm64: KVM: Tighten guest core register
-access from userspace"), KVM_{GET,SET}_ONE_REG rejects register IDs
-that do not correspond to a single underlying architectural register.
+kvm_device->destroy() seems to be supposed to free its kvm_device
+struct, but vgic_its_destroy() is not currently doing this,
+resulting in a memory leak, resulting in kmemleak reports such as
+the following:
 
-KVM_GET_REG_LIST was not changed to match however: instead, it
-simply yields a list of 32-bit register IDs that together cover the
-whole kvm_regs struct.  This means that if userspace tries to use
-the resulting list of IDs directly to drive calls to KVM_*_ONE_REG,
-some of those calls will now fail.
+unreferenced object 0xffff800aeddfe280 (size 128):
+  comm "qemu-system-aar", pid 13799, jiffies 4299827317 (age 1569.844s)
+  [...]
+  backtrace:
+    [<00000000a08b80e2>] kmem_cache_alloc+0x178/0x208
+    [<00000000dcad2bd3>] kvm_vm_ioctl+0x350/0xbc0
 
-This was not the intention.  Instead, iterating KVM_*_ONE_REG over
-the list of IDs returned by KVM_GET_REG_LIST should be guaranteed
-to work.
+Fix it.
 
-This patch fixes the problem by splitting validate_core_offset()
-into a backend core_reg_size_from_offset() which does all of the
-work except for checking that the size field in the register ID
-matches, and kvm_arm_copy_reg_indices() and num_core_regs() are
-converted to use this to enumerate the valid offsets.
-
-kvm_arm_copy_reg_indices() now also sets the register ID size field
-appropriately based on the value returned, so the register ID
-supplied to userspace is fully qualified for use with the register
-access ioctls.
-
-Cc: stable@vger.kernel.org
-Fixes: d26c25a9d19b ("arm64: KVM: Tighten guest core register access from userspace")
+Cc: Andre Przywara <andre.przywara@arm.com>
+Fixes: 1085fdc68c60 ("KVM: arm64: vgic-its: Introduce new KVM ITS device")
 Signed-off-by: Dave Martin <Dave.Martin@arm.com>
-Reviewed-by: Andrew Jones <drjones@redhat.com>
-Tested-by: Andrew Jones <drjones@redhat.com>
 Signed-off-by: Marc Zyngier <marc.zyngier@arm.com>
 ---
- arch/arm64/kvm/guest.c | 53 +++++++++++++++++++++++++++++++-----------
- 1 file changed, 40 insertions(+), 13 deletions(-)
+ virt/kvm/arm/vgic/vgic-its.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/kvm/guest.c b/arch/arm64/kvm/guest.c
-index ae734fcfd4ea..c8aa00179363 100644
---- a/arch/arm64/kvm/guest.c
-+++ b/arch/arm64/kvm/guest.c
-@@ -70,10 +70,8 @@ static u64 core_reg_offset_from_id(u64 id)
- 	return id & ~(KVM_REG_ARCH_MASK | KVM_REG_SIZE_MASK | KVM_REG_ARM_CORE);
+diff --git a/virt/kvm/arm/vgic/vgic-its.c b/virt/kvm/arm/vgic/vgic-its.c
+index 44ceaccb18cf..8c9fe831bce4 100644
+--- a/virt/kvm/arm/vgic/vgic-its.c
++++ b/virt/kvm/arm/vgic/vgic-its.c
+@@ -1734,6 +1734,7 @@ static void vgic_its_destroy(struct kvm_device *kvm_dev)
+ 
+ 	mutex_unlock(&its->its_lock);
+ 	kfree(its);
++	kfree(kvm_dev);/* alloc by kvm_ioctl_create_device, free by .destroy */
  }
  
--static int validate_core_offset(const struct kvm_vcpu *vcpu,
--				const struct kvm_one_reg *reg)
-+static int core_reg_size_from_offset(const struct kvm_vcpu *vcpu, u64 off)
- {
--	u64 off = core_reg_offset_from_id(reg->id);
- 	int size;
- 
- 	switch (off) {
-@@ -103,8 +101,7 @@ static int validate_core_offset(const struct kvm_vcpu *vcpu,
- 		return -EINVAL;
- 	}
- 
--	if (KVM_REG_SIZE(reg->id) != size ||
--	    !IS_ALIGNED(off, size / sizeof(__u32)))
-+	if (!IS_ALIGNED(off, size / sizeof(__u32)))
- 		return -EINVAL;
- 
- 	/*
-@@ -115,6 +112,21 @@ static int validate_core_offset(const struct kvm_vcpu *vcpu,
- 	if (vcpu_has_sve(vcpu) && core_reg_offset_is_vreg(off))
- 		return -EINVAL;
- 
-+	return size;
-+}
-+
-+static int validate_core_offset(const struct kvm_vcpu *vcpu,
-+				const struct kvm_one_reg *reg)
-+{
-+	u64 off = core_reg_offset_from_id(reg->id);
-+	int size = core_reg_size_from_offset(vcpu, off);
-+
-+	if (size < 0)
-+		return -EINVAL;
-+
-+	if (KVM_REG_SIZE(reg->id) != size)
-+		return -EINVAL;
-+
- 	return 0;
- }
- 
-@@ -447,19 +459,34 @@ static int copy_core_reg_indices(const struct kvm_vcpu *vcpu,
- {
- 	unsigned int i;
- 	int n = 0;
--	const u64 core_reg = KVM_REG_ARM64 | KVM_REG_SIZE_U64 | KVM_REG_ARM_CORE;
- 
- 	for (i = 0; i < sizeof(struct kvm_regs) / sizeof(__u32); i++) {
--		/*
--		 * The KVM_REG_ARM64_SVE regs must be used instead of
--		 * KVM_REG_ARM_CORE for accessing the FPSIMD V-registers on
--		 * SVE-enabled vcpus:
--		 */
--		if (vcpu_has_sve(vcpu) && core_reg_offset_is_vreg(i))
-+		u64 reg = KVM_REG_ARM64 | KVM_REG_ARM_CORE | i;
-+		int size = core_reg_size_from_offset(vcpu, i);
-+
-+		if (size < 0)
-+			continue;
-+
-+		switch (size) {
-+		case sizeof(__u32):
-+			reg |= KVM_REG_SIZE_U32;
-+			break;
-+
-+		case sizeof(__u64):
-+			reg |= KVM_REG_SIZE_U64;
-+			break;
-+
-+		case sizeof(__uint128_t):
-+			reg |= KVM_REG_SIZE_U128;
-+			break;
-+
-+		default:
-+			WARN_ON(1);
- 			continue;
-+		}
- 
- 		if (uindices) {
--			if (put_user(core_reg | i, uindices))
-+			if (put_user(reg, uindices))
- 				return -EFAULT;
- 			uindices++;
- 		}
+ static int vgic_its_has_attr_regs(struct kvm_device *dev,
 -- 
 2.20.1
 
