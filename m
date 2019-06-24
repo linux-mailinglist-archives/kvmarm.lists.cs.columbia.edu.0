@@ -2,55 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 29AE850882
-	for <lists+kvmarm@lfdr.de>; Mon, 24 Jun 2019 12:19:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6E0F509A2
+	for <lists+kvmarm@lfdr.de>; Mon, 24 Jun 2019 13:20:21 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5BE2A4A4E1;
-	Mon, 24 Jun 2019 06:19:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 230C74A50F;
+	Mon, 24 Jun 2019 07:20:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.799
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id PKkdGnnN9xM2; Mon, 24 Jun 2019 06:19:12 -0400 (EDT)
+	with ESMTP id YS9vWDkcu6Zu; Mon, 24 Jun 2019 07:20:11 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 29BD64A4F0;
-	Mon, 24 Jun 2019 06:19:11 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F3FD14A500;
+	Mon, 24 Jun 2019 07:20:09 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 081EF4A4E1
- for <kvmarm@lists.cs.columbia.edu>; Mon, 24 Jun 2019 06:19:10 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1DD944A4E1
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 24 Jun 2019 06:22:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id R8x3aEIZF7IH for <kvmarm@lists.cs.columbia.edu>;
- Mon, 24 Jun 2019 06:19:08 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B8BE64A418
- for <kvmarm@lists.cs.columbia.edu>; Mon, 24 Jun 2019 06:19:08 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3E7952B;
- Mon, 24 Jun 2019 03:19:08 -0700 (PDT)
-Received: from [10.1.196.93] (en101.cambridge.arm.com [10.1.196.93])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 023573F718;
- Mon, 24 Jun 2019 03:19:06 -0700 (PDT)
-Subject: Re: [PATCH 05/59] KVM: arm64: nv: Reset VCPU to EL2 registers if VCPU
- nested virt is set
-To: marc.zyngier@arm.com, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
-References: <20190621093843.220980-1-marc.zyngier@arm.com>
- <20190621093843.220980-6-marc.zyngier@arm.com>
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-Message-ID: <8f545b5a-ceb6-a5c9-ad21-485f0e63f6e5@arm.com>
-Date: Mon, 24 Jun 2019 11:19:05 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.1
+ with ESMTP id DwzyIJEIuaV6 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 24 Jun 2019 06:22:17 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BFE1B4A4CD
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 24 Jun 2019 06:22:17 -0400 (EDT)
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
+ bits)) (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 691F9208E4;
+ Mon, 24 Jun 2019 10:22:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1561371736;
+ bh=d4H3ytDN4+6bzOFsrB7H72D5xnyH2d7DzxF9eKjN0sY=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=JwiHHdW7tU89KwjK81T7yWoMzvqANGQZczB5UCgT2eBTMTSj/2WtBXwPLu9Bm31O5
+ r/b9kyNOheWOPU6eueHBoKQB11SLCVWYnVhoKTq/4mVb1bd1PgiaqOudYcyxSqF2PT
+ S4tMcKDxPqFg/3U3pumEBb3BDhOvWlvqmdZEXn2I=
+Date: Mon, 24 Jun 2019 11:22:10 +0100
+From: Will Deacon <will@kernel.org>
+To: Guo Ren <guoren@kernel.org>
+Subject: Re: [PATCH RFC 11/14] arm64: Move the ASID allocator code in a
+ separate file
+Message-ID: <20190624102209.ngwtosgr5fvp3ler@willie-the-truck>
+References: <20190321163623.20219-1-julien.grall@arm.com>
+ <20190321163623.20219-12-julien.grall@arm.com>
+ <0dfe120b-066a-2ac8-13bc-3f5a29e2caa3@arm.com>
+ <CAJF2gTTXHHgDboaexdHA284y6kNZVSjLis5-Q2rDnXCxr4RSmA@mail.gmail.com>
+ <c871a5ae-914f-a8bb-9474-1dcfec5d45bf@arm.com>
+ <CAJF2gTStSR7Jmu7=HaO5Wxz=Zn8A5-RD8ktori3oKEhM9vozAA@mail.gmail.com>
+ <20190621141606.GF18954@arrakis.emea.arm.com>
+ <CAJF2gTTVUToRkRtxTmtWDotMGXy5YQCpL1h_2neTBuN3e6oz1w@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20190621093843.220980-6-marc.zyngier@arm.com>
-Content-Language: en-US
-Cc: andre.przywara@arm.com, dave.martin@arm.com
+Content-Disposition: inline
+In-Reply-To: <CAJF2gTTVUToRkRtxTmtWDotMGXy5YQCpL1h_2neTBuN3e6oz1w@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Mailman-Approved-At: Mon, 24 Jun 2019 07:20:08 -0400
+Cc: Julien Grall <julien.grall@arm.com>, aou@eecs.berkeley.edu,
+ Marc Zyngier <marc.zyngier@arm.com>, Catalin Marinas <catalin.marinas@arm.com>,
+ Will Deacon <will.deacon@arm.com>, linux-kernel@vger.kernel.org,
+ rppt@linux.ibm.com, hch@infradead.org, Atish Patra <Atish.Patra@wdc.com>,
+ Anup Patel <anup.Patel@wdc.com>, gary@garyguo.net,
+ Palmer Dabbelt <palmer@sifive.com>, paul.walmsley@sifive.com,
+ linux-riscv@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -62,52 +83,55 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+On Mon, Jun 24, 2019 at 12:35:35AM +0800, Guo Ren wrote:
+> On Fri, Jun 21, 2019 at 10:16 PM Catalin Marinas
+> <catalin.marinas@arm.com> wrote:
+> >
+> > On Wed, Jun 19, 2019 at 07:51:03PM +0800, Guo Ren wrote:
+> > > On Wed, Jun 19, 2019 at 4:54 PM Julien Grall <julien.grall@arm.com> wrote:
+> > > > On 6/19/19 9:07 AM, Guo Ren wrote:
+> > > > > Move arm asid allocator code in a generic one is a agood idea, I've
+> > > > > made a patchset for C-SKY and test is on processing, See:
+> > > > > https://lore.kernel.org/linux-csky/1560930553-26502-1-git-send-email-guoren@kernel.org/
+> > > > >
+> > > > > If you plan to seperate it into generic one, I could co-work with you.
+> > > >
+> > > > Was the ASID allocator work out of box on C-Sky?
+> > >
+> > > Almost done, but one question:
+> > > arm64 remove the code in switch_mm:
+> > >   cpumask_clear_cpu(cpu, mm_cpumask(prev));
+> > >   cpumask_set_cpu(cpu, mm_cpumask(next));
+> > >
+> > > Why? Although arm64 cache operations could affect all harts with CTC
+> > > method of interconnect, I think we should keep these code for
+> > > primitive integrity in linux. Because cpu_bitmap is in mm_struct
+> > > instead of mm->context.
+> >
+> > We didn't have a use for this in the arm64 code, so no point in
+> > maintaining the mm_cpumask. On some arm32 systems (ARMv6) with no
+> > hardware broadcast of some TLB/cache operations, we use it to track
+> > where the task has run to issue IPI for TLB invalidation or some
+> > deferred I-cache invalidation.
+> The operation of set/clear mm_cpumask was removed in arm64 compared to
+> arm32. It seems no side effect on current arm64 system, but from
+> software meaning it's wrong.
+> I think we should keep mm_cpumask just like arm32.
 
+It was a while ago now, but I remember the atomic update of the mm_cpumask
+being quite expensive when I was profiling this stuff, so I removed it
+because we don't need it for arm64 (at least, it doesn't allow us to
+optimise our shootdowns in practice).
 
-On 21/06/2019 10:37, Marc Zyngier wrote:
-> From: Christoffer Dall <christoffer.dall@arm.com>
-> 
-> Reset the VCPU with PSTATE.M = EL2h when the nested virtualization
-> feature is enabled on the VCPU.
-> 
-> Signed-off-by: Christoffer Dall <christoffer.dall@arm.com>
-> Signed-off-by: Marc Zyngier <marc.zyngier@arm.com>
-> ---
->   arch/arm64/kvm/reset.c | 7 +++++++
->   1 file changed, 7 insertions(+)
-> 
-> diff --git a/arch/arm64/kvm/reset.c b/arch/arm64/kvm/reset.c
-> index 1140b4485575..675ca07dbb05 100644
-> --- a/arch/arm64/kvm/reset.c
-> +++ b/arch/arm64/kvm/reset.c
-> @@ -52,6 +52,11 @@ static const struct kvm_regs default_regs_reset = {
->   			PSR_F_BIT | PSR_D_BIT),
->   };
->   
-> +static const struct kvm_regs default_regs_reset_el2 = {
-> +	.regs.pstate = (PSR_MODE_EL2h | PSR_A_BIT | PSR_I_BIT |
-> +			PSR_F_BIT | PSR_D_BIT),
-> +};
-> +
->   static const struct kvm_regs default_regs_reset32 = {
->   	.regs.pstate = (PSR_AA32_MODE_SVC | PSR_AA32_A_BIT |
->   			PSR_AA32_I_BIT | PSR_AA32_F_BIT),
-> @@ -302,6 +307,8 @@ int kvm_reset_vcpu(struct kvm_vcpu *vcpu)
->   			if (!cpu_has_32bit_el1())
->   				goto out;
->   			cpu_reset = &default_regs_reset32;
-> +		} else if (test_bit(KVM_ARM_VCPU_NESTED_VIRT, vcpu->arch.features)) {
+I still think this is over-engineered for what you want on c-sky and making
+this code generic is a mistake.
 
-minor nit: "else if nested_virt_in_use(vcpu)" ?
-
-Either ways:
-
-Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Will
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
