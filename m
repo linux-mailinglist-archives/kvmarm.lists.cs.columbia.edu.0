@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 509D454F64
-	for <lists+kvmarm@lfdr.de>; Tue, 25 Jun 2019 14:55:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B83554FF3
+	for <lists+kvmarm@lfdr.de>; Tue, 25 Jun 2019 15:13:25 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9215A4A379;
-	Tue, 25 Jun 2019 08:55:30 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CB3804A4C0;
+	Tue, 25 Jun 2019 09:13:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
@@ -15,41 +15,41 @@ X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id eOaSJ-acjElE; Tue, 25 Jun 2019 08:55:30 -0400 (EDT)
+	with ESMTP id 7JgTe9SUDXtS; Tue, 25 Jun 2019 09:13:24 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3A3244A483;
-	Tue, 25 Jun 2019 08:55:29 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7FE0D4A4E6;
+	Tue, 25 Jun 2019 09:13:23 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2955A4A379
- for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Jun 2019 08:55:27 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 284AB4A3B4
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Jun 2019 09:13:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Rgrn5ZdGcn-i for <kvmarm@lists.cs.columbia.edu>;
- Tue, 25 Jun 2019 08:55:25 -0400 (EDT)
+ with ESMTP id KtVSBggTR1WZ for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 25 Jun 2019 09:13:20 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 863CC4A331
- for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Jun 2019 08:55:25 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CB6444A36B
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Jun 2019 09:13:20 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 165B42B;
- Tue, 25 Jun 2019 05:55:25 -0700 (PDT)
-Received: from [10.37.8.194] (unknown [10.37.8.194])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 49DD23F71E;
- Tue, 25 Jun 2019 05:55:23 -0700 (PDT)
-Subject: Re: [PATCH 21/59] KVM: arm64: nv: Set a handler for the system
- instruction traps
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7002F2B;
+ Tue, 25 Jun 2019 06:13:20 -0700 (PDT)
+Received: from [10.1.215.72] (e121566-lin.cambridge.arm.com [10.1.215.72])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9A4A43F718;
+ Tue, 25 Jun 2019 06:13:19 -0700 (PDT)
+Subject: Re: [PATCH 11/59] KVM: arm64: nv: Inject HVC exceptions to the
+ virtual EL2
 To: Marc Zyngier <marc.zyngier@arm.com>,
  linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
 References: <20190621093843.220980-1-marc.zyngier@arm.com>
- <20190621093843.220980-22-marc.zyngier@arm.com>
-From: Julien Thierry <julien.thierry@arm.com>
-Message-ID: <880f9a31-10bb-0fbd-987a-03dabf536f2f@arm.com>
-Date: Tue, 25 Jun 2019 13:55:21 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+ <20190621093843.220980-12-marc.zyngier@arm.com>
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+Message-ID: <c83d9421-a027-9edf-021b-5d41a7a1884b@arm.com>
+Date: Tue, 25 Jun 2019 14:13:18 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-In-Reply-To: <20190621093843.220980-22-marc.zyngier@arm.com>
+In-Reply-To: <20190621093843.220980-12-marc.zyngier@arm.com>
 Content-Language: en-US
 Cc: Andre Przywara <andre.przywara@arm.com>, Dave Martin <Dave.Martin@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
@@ -68,107 +68,50 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-
-
-On 06/21/2019 10:38 AM, Marc Zyngier wrote:
+On 6/21/19 10:37 AM, Marc Zyngier wrote:
 > From: Jintack Lim <jintack.lim@linaro.org>
-> 
-> When HCR.NV bit is set, execution of the EL2 translation regime address
-> aranslation instructions and TLB maintenance instructions are trapped to
-> EL2. In addition, execution of the EL1 translation regime address
-> aranslation instructions and TLB maintenance instructions that are only
-
-What's "translation regime address aranslation" ? I would guess
-"aranslation" should be removed, but since the same pattern appears
-twice in the commit doubt took over me :) .
-
-> accessible from EL2 and above are trapped to EL2. In these cases,
-> ESR_EL2.EC will be set to 0x18.
-> 
-> Change the existing handler to handle those system instructions as well
-> as MRS/MSR instructions.  Emulation of each system instructions will be
-> done in separate patches.
-> 
+>
+> Now that the psci call is done by the smc instruction when nested
+This suggests that we have support for PSCI calls using SMC as the conduit, but
+that is not the case, as the handle_smc function is not changed by this commit,
+and support for PSCI via SMC is added later in patch 22/59 "KVM: arm64: nv:
+Handle PSCI call via smc from the guest". Perhaps the commit message should be
+reworded to reflect that?
+> virtualization is enabled, it is clear that all hvc instruction from the
+> VM (including from the virtual EL2) are supposed to handled in the
+> virtual EL2.
+>
 > Signed-off-by: Jintack Lim <jintack.lim@linaro.org>
 > Signed-off-by: Marc Zyngier <marc.zyngier@arm.com>
 > ---
->  arch/arm64/include/asm/kvm_coproc.h |  2 +-
->  arch/arm64/kvm/handle_exit.c        |  2 +-
->  arch/arm64/kvm/sys_regs.c           | 53 +++++++++++++++++++++++++----
->  arch/arm64/kvm/trace.h              |  2 +-
->  4 files changed, 50 insertions(+), 9 deletions(-)
-> 
-> diff --git a/arch/arm64/include/asm/kvm_coproc.h b/arch/arm64/include/asm/kvm_coproc.h
-> index 0b52377a6c11..1b3d21bd8adb 100644
-> --- a/arch/arm64/include/asm/kvm_coproc.h
-> +++ b/arch/arm64/include/asm/kvm_coproc.h
-> @@ -43,7 +43,7 @@ int kvm_handle_cp14_32(struct kvm_vcpu *vcpu, struct kvm_run *run);
->  int kvm_handle_cp14_64(struct kvm_vcpu *vcpu, struct kvm_run *run);
->  int kvm_handle_cp15_32(struct kvm_vcpu *vcpu, struct kvm_run *run);
->  int kvm_handle_cp15_64(struct kvm_vcpu *vcpu, struct kvm_run *run);
-> -int kvm_handle_sys_reg(struct kvm_vcpu *vcpu, struct kvm_run *run);
-> +int kvm_handle_sys(struct kvm_vcpu *vcpu, struct kvm_run *run);
->  
->  #define kvm_coproc_table_init kvm_sys_reg_table_init
->  void kvm_sys_reg_table_init(void);
+>  arch/arm64/kvm/handle_exit.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
 > diff --git a/arch/arm64/kvm/handle_exit.c b/arch/arm64/kvm/handle_exit.c
-> index 2517711f034f..e662f23b63a1 100644
+> index 516aead3c2a9..6c0ac52b34cc 100644
 > --- a/arch/arm64/kvm/handle_exit.c
 > +++ b/arch/arm64/kvm/handle_exit.c
-> @@ -236,7 +236,7 @@ static exit_handle_fn arm_exit_handlers[] = {
->  	[ESR_ELx_EC_SMC32]	= handle_smc,
->  	[ESR_ELx_EC_HVC64]	= handle_hvc,
->  	[ESR_ELx_EC_SMC64]	= handle_smc,
-> -	[ESR_ELx_EC_SYS64]	= kvm_handle_sys_reg,
-> +	[ESR_ELx_EC_SYS64]	= kvm_handle_sys,
->  	[ESR_ELx_EC_SVE]	= handle_sve,
->  	[ESR_ELx_EC_ERET]	= kvm_handle_eret,
->  	[ESR_ELx_EC_IABT_LOW]	= kvm_handle_guest_abort,
-> diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-> index 1d1312425cf2..e711dde4511c 100644
-> --- a/arch/arm64/kvm/sys_regs.c
-> +++ b/arch/arm64/kvm/sys_regs.c
-> @@ -2597,6 +2597,40 @@ static int emulate_sys_reg(struct kvm_vcpu *vcpu,
->  	return 1;
->  }
+> @@ -30,6 +30,7 @@
+>  #include <asm/kvm_coproc.h>
+>  #include <asm/kvm_emulate.h>
+>  #include <asm/kvm_mmu.h>
+> +#include <asm/kvm_nested.h>
+>  #include <asm/debug-monitors.h>
+>  #include <asm/traps.h>
 >  
-> +static int emulate_tlbi(struct kvm_vcpu *vcpu,
-> +			     struct sys_reg_params *params)
-> +{
-> +	/* TODO: support tlbi instruction emulation*/
-> +	kvm_inject_undefined(vcpu);
-> +	return 1;
-> +}
+> @@ -52,6 +53,12 @@ static int handle_hvc(struct kvm_vcpu *vcpu, struct kvm_run *run)
+>  			    kvm_vcpu_hvc_get_imm(vcpu));
+>  	vcpu->stat.hvc_exit_stat++;
+>  
+> +	/* Forward hvc instructions to the virtual EL2 if the guest has EL2. */
+> +	if (nested_virt_in_use(vcpu)) {
+> +		kvm_inject_nested_sync(vcpu, kvm_vcpu_get_hsr(vcpu));
+> +		return 1;
+> +	}
 > +
-> +static int emulate_at(struct kvm_vcpu *vcpu,
-> +			     struct sys_reg_params *params)
-> +{
-> +	/* TODO: support address translation instruction emulation */
-> +	kvm_inject_undefined(vcpu);
-> +	return 1;
-> +}
-> +
-> +static int emulate_sys_instr(struct kvm_vcpu *vcpu,
-> +			     struct sys_reg_params *params)
-> +{
-> +	int ret = 0;
-> +
-> +	/* TLB maintenance instructions*/
-> +	if (params->CRn == 0b1000)
-> +		ret = emulate_tlbi(vcpu, params);
-> +	/* Address Translation instructions */
-> +	else if (params->CRn == 0b0111 && params->CRm == 0b1000)
-> +		ret = emulate_at(vcpu, params);
-> +
-
-So, in theory the NV bit shouldn't trap other Op0 == 1 instructions.
-Would it be worth adding a WARN() or BUG() in an "else" branch here,
-just in case?
-
-Thanks,
-
--- 
-Julien Thierry
+>  	ret = kvm_hvc_call_handler(vcpu);
+>  	if (ret < 0) {
+>  		vcpu_set_reg(vcpu, 0, ~0UL);
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
