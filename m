@@ -2,10 +2,10 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C89795DEE1
-	for <lists+kvmarm@lfdr.de>; Wed,  3 Jul 2019 09:27:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04B3A5DEE2
+	for <lists+kvmarm@lfdr.de>; Wed,  3 Jul 2019 09:27:57 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 722BE4A4F6;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8AF024A4F7;
 	Wed,  3 Jul 2019 03:27:56 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
@@ -13,61 +13,62 @@ X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@linaro.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id uSXnzGEs2o+F; Wed,  3 Jul 2019 03:27:55 -0400 (EDT)
+	with ESMTP id R2xQXQzzINXM; Wed,  3 Jul 2019 03:27:56 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 48C0C4A4F4;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 642484A4FA;
 	Wed,  3 Jul 2019 03:27:54 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EB8DC4A4CD
- for <kvmarm@lists.cs.columbia.edu>; Tue,  2 Jul 2019 17:06:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A31414A445
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  2 Jul 2019 17:56:52 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id rARdXCKrRCIk for <kvmarm@lists.cs.columbia.edu>;
- Tue,  2 Jul 2019 17:06:29 -0400 (EDT)
-Received: from mail-lj1-f194.google.com (mail-lj1-f194.google.com
- [209.85.208.194])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B34934A2E5
- for <kvmarm@lists.cs.columbia.edu>; Tue,  2 Jul 2019 17:06:29 -0400 (EDT)
-Received: by mail-lj1-f194.google.com with SMTP id 16so5672ljv.10
- for <kvmarm@lists.cs.columbia.edu>; Tue, 02 Jul 2019 14:06:29 -0700 (PDT)
+ with ESMTP id oBqOQ4aYC3pG for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  2 Jul 2019 17:56:51 -0400 (EDT)
+Received: from mail-lj1-f193.google.com (mail-lj1-f193.google.com
+ [209.85.208.193])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7312F4A2E5
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  2 Jul 2019 17:56:51 -0400 (EDT)
+Received: by mail-lj1-f193.google.com with SMTP id 16so129090ljv.10
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 02 Jul 2019 14:56:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=16juguPwtTD1vWpUNQpyIYEAEOADqNOzx5F+yEENpfM=;
- b=S/9wjNxzHSQ44lx7QK89mdaRsjoKX1ZHgfg3NuCejeCzRPPew2tWGQF+4K7vlloGvm
- tyN6KUOOcr3VvGxxqoNTkXQVxwWSdgw6rRxyFAtqS2wmE4uIzfvXER5NQaV0WvTgDSO/
- G7CftJYBPlUxgiiZGrDHr7XemlK99J37xqC6ZOicBwBXGmkzZiihRX4yIIpvZp2yFexg
- a7FQYsjQ7dRg4vmj1VZqWbV5+hptW5EvSKIt7hNJxWmqz6RxXpQcQrlL4oP+c+fXuPnm
- JcF2i68p+gi5kx0i/DM9PMGUD2oVxl7Rs4ZjGSg8mLnFJjXxbx6vHt20X8U5l6/jqpk/
- XrvQ==
+ :cc; bh=uy9P4Bv7MoU15f1hxa9HUk41ddeWB4vxhHhX7nu5AF8=;
+ b=chfL2Y+vcu0HLio56W5yCpYcO12fzccTTuvBbkGhkNe/aF5ZgcfKOE24xS40HsFMlc
+ Ut8Bz0uCuff4zpfBt474goph+OPSk+NhNQVgLSimuL3/Ah0v11JGh/8rGaKti0yddSiM
+ q/0fOfoab+9/DUCSuDVGXRkPBEodmSnVOEGRZxSGePAp5QYIi/4446bzXKyWwa+Z9QVU
+ JorSbzfYLEjhFTeRYS7/jv30gSLerU7/hW/VDodF7UL5D3eT6ZP0fWQXg/OaUFUv2/fn
+ GcIo0P7LqaWgUcqGlOiipgnrK233+5QeGPJ94GG6q7nHRhDMqNxm2bzPhj2Qys7AxdxL
+ UO4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=16juguPwtTD1vWpUNQpyIYEAEOADqNOzx5F+yEENpfM=;
- b=PYvmR+B6dNGrLJ4105QcE6jIJuIbNrTRyrVF1dcE+zcpctvEv/L7SttCkjlvQ5r94i
- ZR4GRjTOlP+mLQGHAg0CLgycU8DaWpnCV1f8nP6SozEGaMP1wSDqpKu5pned75PRAmpX
- aKIh+boyanahGKiWfxf+McZ/74c+D5kk+qz6atdGxcsxiOwUXnpAHim8XyLNZ4LCzDsO
- DYbfSjetEAOeRA4lcEb2bsan1s5U8TNhklnDy3YJuXONcDHsvJTWMzj0L222RTMxU7m3
- WHaTIwzTXsZdgqX1mIzl2q8qWhnYx41NVO/Abcd9gSA/HMudlytFkytzsny/rXvIcgfA
- wtWA==
-X-Gm-Message-State: APjAAAVT2r3SXd4t8OWwe5PGoGipSQcqO/6AlS2zTmJH6wMpuYlGV4jG
- bwUA9D61nolx7spsvL0OSILDqQ9qLiBDAoEVMrbBKg==
-X-Google-Smtp-Source: APXvYqzqBXDeMKmpI7HFc6XkzadQ68osH+Li6FhgxXGtJx4NhJW7ZyaamzfpJOk299AcYNEfRxB1ATHZc5WRU8OT9jg=
-X-Received: by 2002:a2e:a0cf:: with SMTP id f15mr18775412ljm.180.1562101588459; 
- Tue, 02 Jul 2019 14:06:28 -0700 (PDT)
+ bh=uy9P4Bv7MoU15f1hxa9HUk41ddeWB4vxhHhX7nu5AF8=;
+ b=HasTvhL4+y6kZn9kiXAGx0HxkyNYIw+haD4jEwoK9Y3qh+PzyDzq9UX/21vfrJ4s68
+ VdTQXWiars6wMsnCwfrIOcl2wpzkdH2rdRNI2tB3AL+7bbGLZiMihYSEJHcBhglrrbAJ
+ 8SCmuQ0Yaxi8uVP2ETLZw16YUUuwukqgod774MAf9FwtI4eKzpgoittpZz56twRq/Bte
+ GyF/2iYZ9IDyZumywgM2N3mLo85OMkwrEC7sMfEepj0O83AEMS1gKd63F6aOB/ySSFlM
+ v3kOL0lKp7SYsYEIJVg98xP1txjhx+1mI7KLIkUnZ7iCu9IwstLCh+QJ1ga+4wqjtHoo
+ 4HhQ==
+X-Gm-Message-State: APjAAAX/JS5PcGMRe9bjDkIbFU4XGnHP/UG+YXfew7BL2GnM1TJFCA5I
+ 0U43PKGZvPfqrdkIo4pFYxgePWn53p1Dd+lOsc03og==
+X-Google-Smtp-Source: APXvYqybYGFXeKm3HudJJDld+RvqFOCnrMTby4Ii2vx9EH9qEyc7WekPspTFOFMLIfLcDmLdtXWyHbCAfNQSt4Z3QxE=
+X-Received: by 2002:a2e:8195:: with SMTP id e21mr167967ljg.62.1562104610089;
+ Tue, 02 Jul 2019 14:56:50 -0700 (PDT)
 MIME-Version: 1.0
 References: <20190617221134.9930-1-f.fainelli@gmail.com>
-In-Reply-To: <20190617221134.9930-1-f.fainelli@gmail.com>
+ <20190617221134.9930-3-f.fainelli@gmail.com>
+In-Reply-To: <20190617221134.9930-3-f.fainelli@gmail.com>
 From: Linus Walleij <linus.walleij@linaro.org>
-Date: Tue, 2 Jul 2019 23:06:16 +0200
-Message-ID: <CACRpkdbqW2kJNdPi6JPupaHA_qRTWG-MsUxeCz0c38MRujOSSA@mail.gmail.com>
-Subject: Re: [PATCH v6 0/6] KASan for arm
+Date: Tue, 2 Jul 2019 23:56:38 +0200
+Message-ID: <CACRpkdb3P6oQTK9FGUkMj4kax8us3rKH6c36pX=HD1_wMqcoJQ@mail.gmail.com>
+Subject: Re: [PATCH v6 2/6] ARM: Disable instrumentation for some code
 To: Florian Fainelli <f.fainelli@gmail.com>
 X-Mailman-Approved-At: Wed, 03 Jul 2019 03:27:53 -0400
 Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>, mhocko@suse.com,
@@ -77,11 +78,11 @@ Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>, mhocko@suse.com,
  Masahiro Yamada <yamada.masahiro@socionext.com>,
  Andrey Ryabinin <ryabinin.a.a@gmail.com>,
  Alexander Potapenko <glider@google.com>, kvmarm@lists.cs.columbia.edu,
- Jonathan Corbet <corbet@lwn.net>, liuwenliang@huawei.com,
+ Jonathan Corbet <corbet@lwn.net>, Abbott Liu <liuwenliang@huawei.com>,
  Daniel Lezcano <daniel.lezcano@linaro.org>,
  Russell King <linux@armlinux.org.uk>, kasan-dev@googlegroups.com,
  bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
- Dmitry Vyukov <dvyukov@google.com>, Geert Uytterhoeven <geert@linux-m68k.org>,
+ Dmitry Vyukov <dvyukov@google.com>, Andrey Ryabinin <aryabinin@virtuozzo.com>,
  Kees Cook <keescook@chromium.org>, Arnd Bergmann <arnd@arndb.de>,
  Marc Zyngier <marc.zyngier@arm.com>, Andre Przywara <andre.przywara@arm.com>,
  philip@cog.systems, jinb.park7@gmail.com, Thomas Gleixner <tglx@linutronix.de>,
@@ -89,7 +90,8 @@ Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>, mhocko@suse.com,
  Nicolas Pitre <nico@fluxnic.net>, Greg KH <gregkh@linuxfoundation.org>,
  Ard Biesheuvel <ard.biesheuvel@linaro.org>,
  Linux Doc Mailing List <linux-doc@vger.kernel.org>,
- Rob Landley <rob@landley.net>, Philippe Ombredanne <pombredanne@nexb.com>,
+ Geert Uytterhoeven <geert@linux-m68k.org>, Rob Landley <rob@landley.net>,
+ Philippe Ombredanne <pombredanne@nexb.com>,
  Andrew Morton <akpm@linux-foundation.org>, thgarnie@google.com,
  kirill.shutemov@linux.intel.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
@@ -108,33 +110,22 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Florian,
-
 On Tue, Jun 18, 2019 at 12:11 AM Florian Fainelli <f.fainelli@gmail.com> wrote:
 
-> Abbott submitted a v5 about a year ago here:
+> @@ -236,7 +236,8 @@ static int unwind_pop_register(struct unwind_ctrl_block *ctrl,
+>                 if (*vsp >= (unsigned long *)ctrl->sp_high)
+>                         return -URC_FAILURE;
 >
-> and the series was not picked up since then, so I rebased it against
-> v5.2-rc4 and re-tested it on a Brahma-B53 (ARMv8 running AArch32 mode)
-> and Brahma-B15, both LPAE and test-kasan is consistent with the ARM64
-> counter part.
->
-> We were in a fairly good shape last time with a few different people
-> having tested it, so I am hoping we can get that included for 5.4 if
-> everything goes well.
+> -       ctrl->vrs[reg] = *(*vsp)++;
+> +       ctrl->vrs[reg] = READ_ONCE_NOCHECK(*(*vsp));
+> +       (*vsp)++;
 
-Thanks for picking this up. I was trying out KASan in the past,
-got sidetracked and honestly lost interest a bit because it was
-boring. But I do realize that it is really neat, so I will try to help
-out with some review and test on a bunch of hardware I have.
+I would probably even put in a comment here so it is clear why we
+do this. Passers-by may not know that READ_ONCE_NOCHECK() is
+even related to KASan.
 
-At one point I even had this running on the ARMv4 SA1100
-(no joke!) and if I recall correctly, I got stuck because of things
-that might very well have been related to using a very fragile
-Arm testchip that later broke down completely in the l2cache
-when we added the spectre/meltdown fixes.
-
-I start reviewing and testing.
+Other than that,
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
 Yours,
 Linus Walleij
