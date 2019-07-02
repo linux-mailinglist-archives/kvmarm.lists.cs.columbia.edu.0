@@ -2,56 +2,99 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E90AF5D446
-	for <lists+kvmarm@lfdr.de>; Tue,  2 Jul 2019 18:32:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D7F05DEE0
+	for <lists+kvmarm@lfdr.de>; Wed,  3 Jul 2019 09:27:56 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 62BEB4A1FA;
-	Tue,  2 Jul 2019 12:32:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5B2824A4FD;
+	Wed,  3 Jul 2019 03:27:55 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.799
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@linaro.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id NdjC3E+kNmqT; Tue,  2 Jul 2019 12:32:20 -0400 (EDT)
+	with ESMTP id vi+Ja7ilayuP; Wed,  3 Jul 2019 03:27:55 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D53AE4A4E5;
-	Tue,  2 Jul 2019 12:32:18 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3035A4A4E9;
+	Wed,  3 Jul 2019 03:27:54 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CC4774A4CD
- for <kvmarm@lists.cs.columbia.edu>; Tue,  2 Jul 2019 12:32:17 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 562224A4CD
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  2 Jul 2019 17:04:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Y7Jl5o+WvZb3 for <kvmarm@lists.cs.columbia.edu>;
- Tue,  2 Jul 2019 12:32:16 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 56F084A1FA
- for <kvmarm@lists.cs.columbia.edu>; Tue,  2 Jul 2019 12:32:16 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CAB4D28;
- Tue,  2 Jul 2019 09:32:15 -0700 (PDT)
-Received: from [10.1.31.185] (unknown [10.1.31.185])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 42B273F246;
- Tue,  2 Jul 2019 09:32:14 -0700 (PDT)
-Subject: Re: [PATCH 28/59] KVM: arm64: nv: Respect the virtual HCR_EL2.NV1 bit
- setting
-To: Marc Zyngier <marc.zyngier@arm.com>,
- linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- kvm@vger.kernel.org
-References: <20190621093843.220980-1-marc.zyngier@arm.com>
- <20190621093843.220980-29-marc.zyngier@arm.com>
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-Message-ID: <f19e36aa-2468-899c-6f7c-bc215e4128eb@arm.com>
-Date: Tue, 2 Jul 2019 17:32:12 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+ with ESMTP id oDoM0FiLVn5l for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  2 Jul 2019 17:04:03 -0400 (EDT)
+Received: from mail-lf1-f65.google.com (mail-lf1-f65.google.com
+ [209.85.167.65])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 24C784A2E5
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  2 Jul 2019 17:04:03 -0400 (EDT)
+Received: by mail-lf1-f65.google.com with SMTP id 62so117394lfa.8
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 02 Jul 2019 14:04:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=BWuzzOxwUVGbMCvFD/kQRaZgbqg2U0ttqAGoU0tIxDc=;
+ b=WU9xE1VaEDXdGOfDOaQ8eCNlTBcxHe1uPjWOXfL0akhUDkfR9pYxvy2vkEDfni+c8h
+ WMVK/5ptG9BAQJtthbU9xhXp41aX/dRI7O6DGRbzSic+KQYV4r79fr3F33IPwBk4A9/w
+ GB0kyYoceOYaI2Zwrbm6QbIM8AP0naUmdNCuQ2tAPmooOIqjVKYIIcMIkgONM7r947bm
+ Rcb/3dBlykiu3KSgumMs5axcfx87QLCZKcPVy2M8OzJauDqJh5Z1Bo7FTS75GRY0iu0+
+ IdLBkAJI8wJkTgpnoj96Ri0vBe8IfwgD2+EBl9ikgM/r7w39QRdydkoW0ChmAqm5YMzc
+ LsVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=BWuzzOxwUVGbMCvFD/kQRaZgbqg2U0ttqAGoU0tIxDc=;
+ b=ixapQrAeELynVa2ecmkwHJC1OI4K8zPzITe94ZLkrRF38NNFCTqYsMFUj2lD9+nCJA
+ 4Gvt4QZmZntMuMYkZ2DB0A2uhS1CQMHX4VxnEg3MIFVXIPvnq2uaVCme7dqR9XCL5zBh
+ 7hqERrmUZo+W712D7iTI+J0jobKwJRI5RgpXdieX9O1NpMLdrnODydN8VvKGyq4taIsY
+ 0H9A6emI9svytusFx01EEiMfoV5+Q3OGsbASOJajmU611gtODN4cvnSCBWxdnBk85Cg9
+ Omsm+FFA6pUIwJ8JQL8VM0Ee3Vm7YmYv7m/Ovx1ZfDqS3JQ2V7U/vnUrtkqI8gHtKniG
+ cfog==
+X-Gm-Message-State: APjAAAViReJ/Kxtm5vDkPli78tPuwrxPUAOzb9ZG7hRpZuqLSrohK4e1
+ 4YhgFaYXXEI6dgF67BsODDcPU2+o5sSVg2n77wBa6A==
+X-Google-Smtp-Source: APXvYqxPy3MzRImB1p5uGBTXdcSHdB32SVAS4jpsrlLbMd+boV/5IuiNLeQxCDIw30/585vq93owljYh5YviaC4jL+c=
+X-Received: by 2002:a19:dc0d:: with SMTP id t13mr1324771lfg.152.1562101441838; 
+ Tue, 02 Jul 2019 14:04:01 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190621093843.220980-29-marc.zyngier@arm.com>
-Content-Language: en-US
-Cc: Andre Przywara <andre.przywara@arm.com>, Dave Martin <Dave.Martin@arm.com>
+References: <20190617221134.9930-1-f.fainelli@gmail.com>
+ <20190617221134.9930-2-f.fainelli@gmail.com>
+In-Reply-To: <20190617221134.9930-2-f.fainelli@gmail.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Tue, 2 Jul 2019 23:03:50 +0200
+Message-ID: <CACRpkdZGqiiax2m5L1y3=Enw0Q5cLc-idAQNae34uenf-drHDw@mail.gmail.com>
+Subject: Re: [PATCH v6 1/6] ARM: Add TTBR operator for kasan_init
+To: Florian Fainelli <f.fainelli@gmail.com>,
+ Russell King <rmk+kernel@armlinux.org.uk>
+X-Mailman-Approved-At: Wed, 03 Jul 2019 03:27:53 -0400
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>, mhocko@suse.com,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ David Howells <dhowells@redhat.com>,
+ Masahiro Yamada <yamada.masahiro@socionext.com>,
+ Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+ Alexander Potapenko <glider@google.com>, kvmarm@lists.cs.columbia.edu,
+ Jonathan Corbet <corbet@lwn.net>, Abbott Liu <liuwenliang@huawei.com>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Russell King <linux@armlinux.org.uk>, kasan-dev@googlegroups.com,
+ bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
+ Dmitry Vyukov <dvyukov@google.com>, Andrey Ryabinin <aryabinin@virtuozzo.com>,
+ Kees Cook <keescook@chromium.org>, Arnd Bergmann <arnd@arndb.de>,
+ Marc Zyngier <marc.zyngier@arm.com>, Andre Przywara <andre.przywara@arm.com>,
+ philip@cog.systems, jinb.park7@gmail.com, Thomas Gleixner <tglx@linutronix.de>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>,
+ Nicolas Pitre <nico@fluxnic.net>, Greg KH <gregkh@linuxfoundation.org>,
+ Ard Biesheuvel <ard.biesheuvel@linaro.org>,
+ Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+ Geert Uytterhoeven <geert@linux-m68k.org>, Rob Landley <rob@landley.net>,
+ Philippe Ombredanne <pombredanne@nexb.com>,
+ Andrew Morton <akpm@linux-foundation.org>, thgarnie@google.com,
+ kirill.shutemov@linux.intel.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -63,91 +106,50 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Ck9uIDYvMjEvMTkgMTA6MzggQU0sIE1hcmMgWnluZ2llciB3cm90ZToKPiBGcm9tOiBKaW50YWNr
-IExpbSA8amludGFja0Bjcy5jb2x1bWJpYS5lZHU+Cj4KPiBGb3J3YXJkIEVMUl9FTDEsIFNQU1Jf
-RUwxIGFuZCBWQkFSX0VMMSB0cmFwcyB0byB0aGUgdmlydHVhbCBFTDIgaWYgdGhlCj4gdmlydHVh
-bCBIQ1JfRUwyLk5WIGJpdCBpcyBzZXQuCkhDUl9FTDIuTlYxPwo+Cj4gVGhpcyBpcyBmb3IgcmVj
-dXJzaXZlIG5lc3RlZCB2aXJ0dWFsaXphdGlvbi4KPgo+IFNpZ25lZC1vZmYtYnk6IEppbnRhY2sg
-TGltIDxqaW50YWNrQGNzLmNvbHVtYmlhLmVkdT4KPiBTaWduZWQtb2ZmLWJ5OiBNYXJjIFp5bmdp
-ZXIgPG1hcmMuenluZ2llckBhcm0uY29tPgo+IC0tLQo+ICBhcmNoL2FybTY0L2luY2x1ZGUvYXNt
-L2t2bV9hcm0uaCB8ICAxICsKPiAgYXJjaC9hcm02NC9rdm0vc3lzX3JlZ3MuYyAgICAgICAgfCAx
-OSArKysrKysrKysrKysrKysrKy0tCj4gIDIgZmlsZXMgY2hhbmdlZCwgMTggaW5zZXJ0aW9ucygr
-KSwgMiBkZWxldGlvbnMoLSkKPgo+IGRpZmYgLS1naXQgYS9hcmNoL2FybTY0L2luY2x1ZGUvYXNt
-L2t2bV9hcm0uaCBiL2FyY2gvYXJtNjQvaW5jbHVkZS9hc20va3ZtX2FybS5oCj4gaW5kZXggZDIx
-NDg2Mjc0ZWViLi41NWY0NTI1YzExMmMgMTAwNjQ0Cj4gLS0tIGEvYXJjaC9hcm02NC9pbmNsdWRl
-L2FzbS9rdm1fYXJtLmgKPiArKysgYi9hcmNoL2FybTY0L2luY2x1ZGUvYXNtL2t2bV9hcm0uaAo+
-IEBAIC0yNCw2ICsyNCw3IEBACj4gIAo+ICAvKiBIeXAgQ29uZmlndXJhdGlvbiBSZWdpc3RlciAo
-SENSKSBiaXRzICovCj4gICNkZWZpbmUgSENSX0ZXQgkJKFVMKDEpIDw8IDQ2KQo+ICsjZGVmaW5l
-IEhDUl9OVjEJCShVTCgxKSA8PCA0MykKPiAgI2RlZmluZSBIQ1JfTlYJCShVTCgxKSA8PCA0MikK
-PiAgI2RlZmluZSBIQ1JfQVBJCQkoVUwoMSkgPDwgNDEpCj4gICNkZWZpbmUgSENSX0FQSwkJKFVM
-KDEpIDw8IDQwKQo+IGRpZmYgLS1naXQgYS9hcmNoL2FybTY0L2t2bS9zeXNfcmVncy5jIGIvYXJj
-aC9hcm02NC9rdm0vc3lzX3JlZ3MuYwo+IGluZGV4IDBmNzRiOTI3N2E4Ni4uYmVhZGViY2ZjODg4
-IDEwMDY0NAo+IC0tLSBhL2FyY2gvYXJtNjQva3ZtL3N5c19yZWdzLmMKPiArKysgYi9hcmNoL2Fy
-bTY0L2t2bS9zeXNfcmVncy5jCj4gQEAgLTQ3Myw4ICs0NzMsMTAgQEAgc3RhdGljIGJvb2wgYWNj
-ZXNzX3ZtX3JlZyhzdHJ1Y3Qga3ZtX3ZjcHUgKnZjcHUsCj4gIAlpZiAoZWwxMl9yZWcocCkgJiYg
-Zm9yd2FyZF9udl90cmFwcyh2Y3B1KSkKPiAgCQlyZXR1cm4gZmFsc2U7Cj4gIAo+IC0JaWYgKCFl
-bDEyX3JlZyhwKSAmJiBmb3J3YXJkX3ZtX3RyYXBzKHZjcHUsIHApKQo+IC0JCXJldHVybiBrdm1f
-aW5qZWN0X25lc3RlZF9zeW5jKHZjcHUsIGt2bV92Y3B1X2dldF9oc3IodmNwdSkpOwo+ICsJaWYg
-KCFlbDEyX3JlZyhwKSAmJiBmb3J3YXJkX3ZtX3RyYXBzKHZjcHUsIHApKSB7Cj4gKwkJa3ZtX2lu
-amVjdF9uZXN0ZWRfc3luYyh2Y3B1LCBrdm1fdmNwdV9nZXRfaHNyKHZjcHUpKTsKPiArCQlyZXR1
-cm4gZmFsc2U7Cj4gKwl9Cj4gIAo+ICAJQlVHX09OKCF2Y3B1X21vZGVfZWwyKHZjcHUpICYmICFw
-LT5pc193cml0ZSk7Cj4gIAo+IEBAIC0xNjQzLDYgKzE2NDUsMTMgQEAgc3RhdGljIGJvb2wgYWNj
-ZXNzX3NwX2VsMShzdHJ1Y3Qga3ZtX3ZjcHUgKnZjcHUsCj4gIAlyZXR1cm4gdHJ1ZTsKPiAgfQo+
-ICAKPiArCj4gKy8qIFRoaXMgZnVuY3Rpb24gaXMgdG8gc3VwcG9ydCB0aGUgcmVjdXJzaXZlIG5l
-c3RlZCB2aXJ0dWFsaXphdGlvbiAqLwo+ICtzdGF0aWMgYm9vbCBmb3J3YXJkX252MV90cmFwcyhz
-dHJ1Y3Qga3ZtX3ZjcHUgKnZjcHUsIHN0cnVjdCBzeXNfcmVnX3BhcmFtcyAqcCkKV2h5IHRoZSBz
-dHJ1Y3Qgc3lzX3JlZ19wYXJhbXMgKnAgYXJndW1lbnQ/IEl0IGlzbid0IHVzZWQgYnkgdGhlIGZ1
-bmN0aW9uLgo+ICt7Cj4gKwlyZXR1cm4gZm9yd2FyZF90cmFwcyh2Y3B1LCBIQ1JfTlYxKTsKPiAr
-fQo+ICsKPiAgc3RhdGljIGJvb2wgYWNjZXNzX2VscihzdHJ1Y3Qga3ZtX3ZjcHUgKnZjcHUsCj4g
-IAkJICAgICAgIHN0cnVjdCBzeXNfcmVnX3BhcmFtcyAqcCwKPiAgCQkgICAgICAgY29uc3Qgc3Ry
-dWN0IHN5c19yZWdfZGVzYyAqcikKPiBAQCAtMTY1MCw2ICsxNjU5LDkgQEAgc3RhdGljIGJvb2wg
-YWNjZXNzX2VscihzdHJ1Y3Qga3ZtX3ZjcHUgKnZjcHUsCj4gIAlpZiAoZWwxMl9yZWcocCkgJiYg
-Zm9yd2FyZF9udl90cmFwcyh2Y3B1KSkKPiAgCQlyZXR1cm4gZmFsc2U7Cj4gIAo+ICsJaWYgKCFl
-bDEyX3JlZyhwKSAmJiBmb3J3YXJkX252MV90cmFwcyh2Y3B1LCBwKSkKPiArCQlyZXR1cm4gZmFs
-c2U7Cj4gKwo+ICAJaWYgKHAtPmlzX3dyaXRlKQo+ICAJCXZjcHUtPmFyY2guY3R4dC5ncF9yZWdz
-LmVscl9lbDEgPSBwLT5yZWd2YWw7Cj4gIAllbHNlCj4gQEAgLTE2NjUsNiArMTY3Nyw5IEBAIHN0
-YXRpYyBib29sIGFjY2Vzc19zcHNyKHN0cnVjdCBrdm1fdmNwdSAqdmNwdSwKPiAgCWlmIChlbDEy
-X3JlZyhwKSAmJiBmb3J3YXJkX252X3RyYXBzKHZjcHUpKQo+ICAJCXJldHVybiBmYWxzZTsKPiAg
-Cj4gKwlpZiAoIWVsMTJfcmVnKHApICYmIGZvcndhcmRfbnYxX3RyYXBzKHZjcHUsIHApKQo+ICsJ
-CXJldHVybiBmYWxzZTsKPiArCj4gIAlpZiAocC0+aXNfd3JpdGUpCj4gIAkJdmNwdS0+YXJjaC5j
-dHh0LmdwX3JlZ3Muc3BzcltLVk1fU1BTUl9FTDFdID0gcC0+cmVndmFsOwo+ICAJZWxzZQoKVGhl
-IGNvbW1pdCBtZXNzYWdlIG1lbnRpb25zIFZCQVJfRUwxLCBidXQgdGhlcmUncyBubyBjaGFuZ2Ug
-cmVsYXRlZCB0byBpdC4KUGFyaGFwcyB5b3UncmUgbWlzc2luZyB0aGlzIChidWlsZCB0ZXN0ZWQg
-b25seSk6CgpkaWZmIC0tZ2l0IGEvYXJjaC9hcm02NC9rdm0vc3lzX3JlZ3MuYyBiL2FyY2gvYXJt
-NjQva3ZtL3N5c19yZWdzLmMKaW5kZXggYmQyMWYwZjQ1YTg2Li4wODJkYzMxZmY1MzMgMTAwNjQ0
-Ci0tLSBhL2FyY2gvYXJtNjQva3ZtL3N5c19yZWdzLmMKKysrIGIvYXJjaC9hcm02NC9rdm0vc3lz
-X3JlZ3MuYwpAQCAtNDAxLDYgKzQwMSwxMiBAQCBzdGF0aWMgYm9vbCBlbDEyX3JlZyhzdHJ1Y3Qg
-c3lzX3JlZ19wYXJhbXMgKnApCsKgwqDCoMKgwqDCoMKgIHJldHVybiAocC0+T3AxID09IDUpOwrC
-oH0KwqAKKy8qIFRoaXMgZnVuY3Rpb24gaXMgdG8gc3VwcG9ydCB0aGUgcmVjdXJzaXZlIG5lc3Rl
-ZCB2aXJ0dWFsaXphdGlvbiAqLworc3RhdGljIGJvb2wgZm9yd2FyZF9udjFfdHJhcHMoc3RydWN0
-IGt2bV92Y3B1ICp2Y3B1LCBzdHJ1Y3Qgc3lzX3JlZ19wYXJhbXMgKnApCit7CivCoMKgwqDCoMKg
-wqAgcmV0dXJuIGZvcndhcmRfdHJhcHModmNwdSwgSENSX05WMSk7Cit9CisKwqBzdGF0aWMgYm9v
-bCBhY2Nlc3Nfcncoc3RydWN0IGt2bV92Y3B1ICp2Y3B1LArCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqAgc3RydWN0IHN5c19yZWdfcGFyYW1zICpwLArCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY29uc3Qgc3RydWN0IHN5c19yZWdfZGVz
-YyAqcikKQEAgLTQwOCw2ICs0MTQsMTAgQEAgc3RhdGljIGJvb2wgYWNjZXNzX3J3KHN0cnVjdCBr
-dm1fdmNwdSAqdmNwdSwKwqDCoMKgwqDCoMKgwqAgaWYgKGVsMTJfcmVnKHApICYmIGZvcndhcmRf
-bnZfdHJhcHModmNwdSkpCsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCByZXR1cm4gZmFs
-c2U7CsKgCivCoMKgwqDCoMKgwqAgaWYgKHN5c19yZWcocC0+T3AwLCBwLT5PcDEsIHAtPkNSbiwg
-cC0+Q1JtLCBwLT5PcDIpID09IFNZU19WQkFSX0VMMSAmJgorwqDCoMKgwqDCoMKgwqDCoMKgwqAg
-Zm9yd2FyZF9udjFfdHJhcHModmNwdSwgcCkpCivCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-IHJldHVybiBmYWxzZTsKKwrCoMKgwqDCoMKgwqDCoCBpZiAocC0+aXNfd3JpdGUpCsKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB2Y3B1X3dyaXRlX3N5c19yZWcodmNwdSwgcC0+cmVndmFs
-LCByLT5yZWcpOwrCoMKgwqDCoMKgwqDCoCBlbHNlCkBAIC0xNzk0LDEyICsxODA0LDYgQEAgc3Rh
-dGljIGJvb2wgZm9yd2FyZF90dGxiX3RyYXBzKHN0cnVjdCBrdm1fdmNwdSAqdmNwdSkKwqDCoMKg
-wqDCoMKgwqAgcmV0dXJuIGZvcndhcmRfdHJhcHModmNwdSwgSENSX1RUTEIpOwrCoH0KwqAKLS8q
-IFRoaXMgZnVuY3Rpb24gaXMgdG8gc3VwcG9ydCB0aGUgcmVjdXJzaXZlIG5lc3RlZCB2aXJ0dWFs
-aXphdGlvbiAqLwotc3RhdGljIGJvb2wgZm9yd2FyZF9udjFfdHJhcHMoc3RydWN0IGt2bV92Y3B1
-ICp2Y3B1LCBzdHJ1Y3Qgc3lzX3JlZ19wYXJhbXMgKnApCi17Ci3CoMKgwqDCoMKgwqAgcmV0dXJu
-IGZvcndhcmRfdHJhcHModmNwdSwgSENSX05WMSk7Ci19Ci0KwqBzdGF0aWMgYm9vbCBhY2Nlc3Nf
-ZWxyKHN0cnVjdCBrdm1fdmNwdSAqdmNwdSwKwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqAgc3RydWN0IHN5c19yZWdfcGFyYW1zICpwLArCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBjb25zdCBzdHJ1Y3Qgc3lzX3JlZ19kZXNjICpy
-KQoKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18Ka3ZtYXJt
-IG1haWxpbmcgbGlzdAprdm1hcm1AbGlzdHMuY3MuY29sdW1iaWEuZWR1Cmh0dHBzOi8vbGlzdHMu
-Y3MuY29sdW1iaWEuZWR1L21haWxtYW4vbGlzdGluZm8va3ZtYXJtCg==
+Hi Florian!
+
+thanks for your patch!
+
+On Tue, Jun 18, 2019 at 12:11 AM Florian Fainelli <f.fainelli@gmail.com> wrote:
+
+> From: Abbott Liu <liuwenliang@huawei.com>
+>
+> The purpose of this patch is to provide set_ttbr0/get_ttbr0 to
+> kasan_init function. The definitions of cp15 registers should be in
+> arch/arm/include/asm/cp15.h rather than arch/arm/include/asm/kvm_hyp.h,
+> so move them.
+>
+> Cc: Andrey Ryabinin <aryabinin@virtuozzo.com>
+> Reported-by: Marc Zyngier <marc.zyngier@arm.com>
+> Signed-off-by: Abbott Liu <liuwenliang@huawei.com>
+> Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+
+> +#include <linux/stringify.h>
+
+What is this for? I think it can be dropped.
+
+This stuff adding a whole bunch of accessors:
+
+> +static inline void set_par(u64 val)
+> +{
+> +       if (IS_ENABLED(CONFIG_ARM_LPAE))
+> +               write_sysreg(val, PAR_64);
+> +       else
+> +               write_sysreg(val, PAR_32);
+> +}
+
+Can we put that in a separate patch since it is not
+adding any users, so this is a pure refactoring patch for
+the current code?
+
+Yours,
+Linus Walleij
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
