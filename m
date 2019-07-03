@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 638235E882
-	for <lists+kvmarm@lfdr.de>; Wed,  3 Jul 2019 18:14:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4E3B5E8B2
+	for <lists+kvmarm@lfdr.de>; Wed,  3 Jul 2019 18:24:20 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EC3F04A51F;
-	Wed,  3 Jul 2019 12:13:59 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 26A464A518;
+	Wed,  3 Jul 2019 12:24:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
@@ -15,40 +15,41 @@ X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id b2Skag9An91i; Wed,  3 Jul 2019 12:13:59 -0400 (EDT)
+	with ESMTP id I02AKonREPLr; Wed,  3 Jul 2019 12:24:20 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B6FA14A4CD;
-	Wed,  3 Jul 2019 12:13:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B78454A512;
+	Wed,  3 Jul 2019 12:24:18 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C95444A4CD
- for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Jul 2019 12:13:57 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9F0614A501
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Jul 2019 12:24:17 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ttIng-A9dXnW for <kvmarm@lists.cs.columbia.edu>;
- Wed,  3 Jul 2019 12:13:56 -0400 (EDT)
+ with ESMTP id NwBQTqgwJpx1 for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  3 Jul 2019 12:24:16 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 847384A4A4
- for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Jul 2019 12:13:56 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 476B54A4EB
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Jul 2019 12:24:16 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2DB5B344;
- Wed,  3 Jul 2019 09:13:56 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AF569344;
+ Wed,  3 Jul 2019 09:24:15 -0700 (PDT)
 Received: from e103592.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com
  [10.121.207.14])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5FEE63F718;
- Wed,  3 Jul 2019 09:13:55 -0700 (PDT)
-Date: Wed, 3 Jul 2019 17:13:53 +0100
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E0EFF3F718;
+ Wed,  3 Jul 2019 09:24:14 -0700 (PDT)
+Date: Wed, 3 Jul 2019 17:24:12 +0100
 From: Dave Martin <Dave.Martin@arm.com>
 To: Marc Zyngier <marc.zyngier@arm.com>
-Subject: Re: [PATCH 02/59] KVM: arm64: Move __load_guest_stage2 to kvm_mmu.h
-Message-ID: <20190703161353.GT2790@e103592.cambridge.arm.com>
+Subject: Re: [PATCH 04/59] KVM: arm64: nv: Introduce nested virtualization
+ VCPU feature
+Message-ID: <20190703162412.GU2790@e103592.cambridge.arm.com>
 References: <20190621093843.220980-1-marc.zyngier@arm.com>
- <20190621093843.220980-3-marc.zyngier@arm.com>
- <20190624111924.GK2790@e103592.cambridge.arm.com>
- <bf4e43db-a0ea-9489-1a8c-280a72950cad@arm.com>
+ <20190621093843.220980-5-marc.zyngier@arm.com>
+ <20190624114329.GO2790@e103592.cambridge.arm.com>
+ <5bd65cc0-89a1-0849-2041-b6016d58e4f2@arm.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <bf4e43db-a0ea-9489-1a8c-280a72950cad@arm.com>
+In-Reply-To: <5bd65cc0-89a1-0849-2041-b6016d58e4f2@arm.com>
 User-Agent: Mutt/1.5.23 (2014-03-12)
 Cc: linux-arm-kernel@lists.infradead.org,
  Andre Przywara <andre.przywara@arm.com>, kvmarm@lists.cs.columbia.edu,
@@ -69,34 +70,57 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Jul 03, 2019 at 10:30:03AM +0100, Marc Zyngier wrote:
-> On 24/06/2019 12:19, Dave Martin wrote:
-> > On Fri, Jun 21, 2019 at 10:37:46AM +0100, Marc Zyngier wrote:
-> >> Having __load_guest_stage2 in kvm_hyp.h is quickly going to trigger
-> >> a circular include problem. In order to avoid this, let's move
-> >> it to kvm_mmu.h, where it will be a better fit anyway.
+On Wed, Jul 03, 2019 at 12:56:51PM +0100, Marc Zyngier wrote:
+> On 24/06/2019 12:43, Dave Martin wrote:
+> > On Fri, Jun 21, 2019 at 10:37:48AM +0100, Marc Zyngier wrote:
+> >> From: Christoffer Dall <christoffer.dall@arm.com>
 > >>
-> >> In the process, drop the __hyp_text annotation, which doesn't help
-> >> as the function is marked as __always_inline.
+> >> Introduce the feature bit and a primitive that checks if the feature is
+> >> set behind a static key check based on the cpus_have_const_cap check.
+> >>
+> >> Checking nested_virt_in_use() on systems without nested virt enabled
+> >> should have neglgible overhead.
+> >>
+> >> We don't yet allow userspace to actually set this feature.
+> >>
+> >> Signed-off-by: Christoffer Dall <christoffer.dall@arm.com>
+> >> Signed-off-by: Marc Zyngier <marc.zyngier@arm.com>
+> >> ---
 > > 
-> > Does GCC always inline things marked __always_inline?
+> > [...]
 > > 
-> > I seem to remember some gotchas in this area, but I may be being
-> > paranoid.
-> 
-> Yes, this is a strong guarantee. Things like static keys rely on that,
-> for example.
-> 
+> >> diff --git a/arch/arm64/include/asm/kvm_nested.h b/arch/arm64/include/asm/kvm_nested.h
+> >> new file mode 100644
+> >> index 000000000000..8a3d121a0b42
+> >> --- /dev/null
+> >> +++ b/arch/arm64/include/asm/kvm_nested.h
+> >> @@ -0,0 +1,13 @@
+> >> +/* SPDX-License-Identifier: GPL-2.0 */
+> >> +#ifndef __ARM64_KVM_NESTED_H
+> >> +#define __ARM64_KVM_NESTED_H
+> >> +
+> >> +#include <linux/kvm_host.h>
+> >> +
+> >> +static inline bool nested_virt_in_use(const struct kvm_vcpu *vcpu)
+> >> +{
+> >> +	return cpus_have_const_cap(ARM64_HAS_NESTED_VIRT) &&
+> >> +		test_bit(KVM_ARM_VCPU_NESTED_VIRT, vcpu->arch.features);
+> >> +}
 > > 
-> > If this still only called from hyp, I'd be tempted to heep the
-> > __hyp_text annotation just to be on the safe side.
+> > Also, is it worth having a vcpu->arch.flags flag for this, similarly to
+> > SVE and ptrauth?
 > 
-> The trouble with that is that re-introduces the circular dependency with
-> kvm_hyp.h that this patch is trying to break...
+> What would we expose through this flag?
 
-Ah, right.
+Nothing new, put possibly more efficient to access.
 
-I guess it's easier to put up with this, then.
+AFAIK, test_bit() always results in an explicit load, whereas
+vcpu->arch.flags is just a variable, which we already access on some hot
+paths.  So the compiler can read it once and cache it, with a bit of
+luck.
+
+For flags that are fixed after vcpu init, or flags that are only read/
+written by the vcpu thread itself, this should work fine.
 
 Cheers
 ---Dave
