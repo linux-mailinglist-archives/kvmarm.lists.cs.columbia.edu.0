@@ -2,64 +2,53 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 30AC56B6DB
-	for <lists+kvmarm@lfdr.de>; Wed, 17 Jul 2019 08:43:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91A1E6B7FD
+	for <lists+kvmarm@lfdr.de>; Wed, 17 Jul 2019 10:17:37 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9C9604A567;
-	Wed, 17 Jul 2019 02:43:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C6C5B4A572;
+	Wed, 17 Jul 2019 04:17:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: 0.799
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id wa6Muk6E02pR; Wed, 17 Jul 2019 02:43:26 -0400 (EDT)
+	with ESMTP id 2CYW+USSHqvw; Wed, 17 Jul 2019 04:17:36 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 789B44A564;
-	Wed, 17 Jul 2019 02:43:25 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 707F94A564;
+	Wed, 17 Jul 2019 04:17:35 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id BD3BB4A561
- for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Jul 2019 02:43:23 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1E6224A53C
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Jul 2019 04:17:34 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Nnbs+fycnXqt for <kvmarm@lists.cs.columbia.edu>;
- Wed, 17 Jul 2019 02:43:22 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8E79C4A530
- for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Jul 2019 02:43:22 -0400 (EDT)
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
- bits)) (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id DE6B120651;
- Wed, 17 Jul 2019 06:43:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1563345801;
- bh=rpX3FlNAUKO8GVGTnuVeNc+iCU/DRSE4jAZjnlhh6/U=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=1Vhrd6HEP6Ym1QpvFRVB2pgGZDP5qGRMoJkZYzXkAT27BZk5SUBotZROwJh1ayhnO
- A8zUaGmoGJ/E0pJrpvM2gBtZDwuJMN8OGYggKcdz90mSOXoLd7PbT1rTrWua8/6X2p
- Za0+sksAuoM3znqHViWu2lp7dyiSu2O3GUGD4ajs=
-Date: Wed, 17 Jul 2019 07:43:15 +0100
-From: Will Deacon <will@kernel.org>
-To: Marc Zyngier <marc.zyngier@arm.com>
-Subject: Re: [PATCH] MAINTAINERS: Update my email address to @kernel.org
-Message-ID: <20190717064315.tn26dss343iv33oj@willie-the-truck>
-References: <20190716174308.17147-1-marc.zyngier@arm.com>
-MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20190716174308.17147-1-marc.zyngier@arm.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-Cc: Jason Cooper <jason@lakedaemon.net>, kvm@vger.kernel.org,
- Catalin Marinas <catalin.marinas@arm.com>, linux-kernel@vger.kernel.org,
- Russell King <linux@arm.linux.org.uk>, maz@kernel.org,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Gleixner <tglx@linutronix.de>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+ with ESMTP id d1zugtTyLegG for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 17 Jul 2019 04:17:32 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 943D44A51F
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Jul 2019 04:17:32 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1711F1516;
+ Wed, 17 Jul 2019 01:17:32 -0700 (PDT)
+Received: from e112298-lin.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com
+ [10.121.207.14])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id EAA223F71A;
+ Wed, 17 Jul 2019 01:19:29 -0700 (PDT)
+From: Julien Thierry <julien.thierry@arm.com>
+To: linux-arm-kernel@lists.infradead.org
+Subject: [PATCH v4 7/9] arm/arm64: kvm: pmu: Make overflow handler NMI safe
+Date: Wed, 17 Jul 2019 09:17:10 +0100
+Message-Id: <1563351432-55652-8-git-send-email-julien.thierry@arm.com>
+X-Mailer: git-send-email 1.9.1
+In-Reply-To: <1563351432-55652-1-git-send-email-julien.thierry@arm.com>
+References: <1563351432-55652-1-git-send-email-julien.thierry@arm.com>
+Cc: peterz@infradead.org, jolsa@redhat.com, will.deacon@arm.com,
+ acme@kernel.org, alexander.shishkin@linux.intel.com, mingo@redhat.com,
+ Marc Zyngier <marc.zyngier@arm.com>, namhyung@kernel.org, sthotton@marvell.com,
+ liwei391@huawei.com, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -71,37 +60,96 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, Jul 16, 2019 at 06:43:08PM +0100, Marc Zyngier wrote:
-> I will soon lose access to my @arm.com email address, so let's
-> update the MAINTAINERS file to point to my @kernel.org address,
-> as well as .mailmap for good measure.
-> 
-> Note that my @arm.com address will still work, but someone else
-> will be reading whatever is sent there. Don't say you didn't know!
-> 
-> Signed-off-by: Marc Zyngier <marc.zyngier@arm.com>
-> ---
-> 
-> Notes:
->     Yes, I'm sending this from my ARM address. That's intentional.
->     I'll probably send it as part of a pull request later in the
->     cycle, but that's just so that people know what is coming.
-> 
->  .mailmap    | 1 +
->  MAINTAINERS | 8 ++++----
->  2 files changed, 5 insertions(+), 4 deletions(-)
+When using an NMI for the PMU interrupt, taking any lock might cause a
+deadlock. The current PMU overflow handler in KVM takes locks when
+trying to wake up a vcpu.
 
-Let's see if you manage a better job of getting people to use your new
-address than I have:
+When overflow handler is called by an NMI, defer the vcpu waking in an
+irq_work queue.
 
-Acked-by: Will Deacon <will@kernel.org>
+Signed-off-by: Julien Thierry <julien.thierry@arm.com>
+Cc: Christoffer Dall <christoffer.dall@arm.com>
+Cc: Marc Zyngier <marc.zyngier@arm.com>
+Cc: Will Deacon <will.deacon@arm.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Suzuki K Pouloze <suzuki.poulose@arm.com>
+Cc: kvmarm@lists.cs.columbia.edu
+---
+ include/kvm/arm_pmu.h |  1 +
+ virt/kvm/arm/pmu.c    | 25 ++++++++++++++++++++++++-
+ 2 files changed, 25 insertions(+), 1 deletion(-)
 
-Will
+diff --git a/include/kvm/arm_pmu.h b/include/kvm/arm_pmu.h
+index 16c769a..8202ed7 100644
+--- a/include/kvm/arm_pmu.h
++++ b/include/kvm/arm_pmu.h
+@@ -27,6 +27,7 @@ struct kvm_pmu {
+ 	bool ready;
+ 	bool created;
+ 	bool irq_level;
++	struct irq_work overflow_work;
+ };
+
+ #define kvm_arm_pmu_v3_ready(v)		((v)->arch.pmu.ready)
+diff --git a/virt/kvm/arm/pmu.c b/virt/kvm/arm/pmu.c
+index 3dd8238..deed8fb 100644
+--- a/virt/kvm/arm/pmu.c
++++ b/virt/kvm/arm/pmu.c
+@@ -421,6 +421,22 @@ void kvm_pmu_sync_hwstate(struct kvm_vcpu *vcpu)
+ }
+
+ /**
++ * When perf interrupt is an NMI, we cannot safely notify the vcpu corresponding
++ * to the event.
++ * This is why we need a callback to do it once outside of the NMI context.
++ */
++static void kvm_pmu_perf_overflow_notify_vcpu(struct irq_work *work)
++{
++	struct kvm_vcpu *vcpu;
++	struct kvm_pmu *pmu;
++
++	pmu = container_of(work, struct kvm_pmu, overflow_work);
++	vcpu = kvm_pmc_to_vcpu(&pmu->pmc[0]);
++
++	kvm_vcpu_kick(vcpu);
++}
++
++/**
+  * When the perf event overflows, set the overflow status and inform the vcpu.
+  */
+ static void kvm_pmu_perf_overflow(struct perf_event *perf_event,
+@@ -435,7 +451,11 @@ static void kvm_pmu_perf_overflow(struct perf_event *perf_event,
+
+ 	if (kvm_pmu_overflow_status(vcpu)) {
+ 		kvm_make_request(KVM_REQ_IRQ_PENDING, vcpu);
+-		kvm_vcpu_kick(vcpu);
++
++		if (!in_nmi())
++			kvm_vcpu_kick(vcpu);
++		else
++			irq_work_queue(&vcpu->arch.pmu.overflow_work);
+ 	}
+ }
+
+@@ -706,6 +726,9 @@ static int kvm_arm_pmu_v3_init(struct kvm_vcpu *vcpu)
+ 			return ret;
+ 	}
+
++	init_irq_work(&vcpu->arch.pmu.overflow_work,
++		      kvm_pmu_perf_overflow_notify_vcpu);
++
+ 	vcpu->arch.pmu.created = true;
+ 	return 0;
+ }
+--
+1.9.1
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
