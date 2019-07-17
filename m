@@ -2,52 +2,55 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FD986BC33
-	for <lists+kvmarm@lfdr.de>; Wed, 17 Jul 2019 14:22:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93D516BC67
+	for <lists+kvmarm@lfdr.de>; Wed, 17 Jul 2019 14:32:36 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DA16F4A56D;
-	Wed, 17 Jul 2019 08:22:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 267A24A569;
+	Wed, 17 Jul 2019 08:32:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.502
+X-Spam-Score: 0.799
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id oWdoyRa02A-l; Wed, 17 Jul 2019 08:22:45 -0400 (EDT)
+	with ESMTP id X+HUvwhf4eDj; Wed, 17 Jul 2019 08:32:36 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BA8A24A565;
-	Wed, 17 Jul 2019 08:22:44 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EC5584A565;
+	Wed, 17 Jul 2019 08:32:34 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B05744A53C
- for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Jul 2019 08:22:43 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A1C524A54C
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Jul 2019 07:36:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id YoINlN4jVSzf for <kvmarm@lists.cs.columbia.edu>;
- Wed, 17 Jul 2019 08:22:42 -0400 (EDT)
-Received: from huawei.com (szxga07-in.huawei.com [45.249.212.35])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id EDBF24A528
- for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Jul 2019 08:22:41 -0400 (EDT)
-Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.59])
- by Forcepoint Email with ESMTP id C6F9858E1C3A77E076A8;
- Wed, 17 Jul 2019 20:22:38 +0800 (CST)
-Received: from HGHY2Y004646261.china.huawei.com (10.184.12.158) by
- DGGEMS406-HUB.china.huawei.com (10.3.19.206) with Microsoft SMTP Server id
- 14.3.439.0; Wed, 17 Jul 2019 20:22:31 +0800
-From: Zenghui Yu <yuzenghui@huawei.com>
-To: <maz@kernel.org>, <kvmarm@lists.cs.columbia.edu>,
- <linux-arm-kernel@lists.infradead.org>
-Subject: [PATCH] KVM: arm/arm64: Assign pmc->idx before kvm_pmu_stop_counter()
-Date: Wed, 17 Jul 2019 12:20:19 +0000
-Message-ID: <1563366019-31200-1-git-send-email-yuzenghui@huawei.com>
-X-Mailer: git-send-email 2.6.4.windows.1
+ with ESMTP id 6v1d56YcQ0Rl for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 17 Jul 2019 07:36:58 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 90E2A4A541
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Jul 2019 07:36:58 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 13985337;
+ Wed, 17 Jul 2019 04:36:58 -0700 (PDT)
+Received: from [10.1.197.61] (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id
+ CC7D43F71F; Wed, 17 Jul 2019 04:36:56 -0700 (PDT)
+Subject: Re: [PATCH] MAINTAINERS: Update my email address
+To: Julien Thierry <julien.thierry@arm.com>, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu
+References: <1563359535-2762-1-git-send-email-julien.thierry@arm.com>
+From: Marc Zyngier <maz@kernel.org>
+Organization: Approximate
+Message-ID: <8c908dbc-41f5-ea62-80a9-4d2e91fb17f5@kernel.org>
+Date: Wed, 17 Jul 2019 12:36:55 +0100
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.2
 MIME-Version: 1.0
-X-Originating-IP: [10.184.12.158]
-X-CFilter-Loop: Reflected
-Cc: marc.zyngier@arm.com, linux-kernel@vger.kernel.org
+In-Reply-To: <1563359535-2762-1-git-send-email-julien.thierry@arm.com>
+Content-Language: en-US
+X-Mailman-Approved-At: Wed, 17 Jul 2019 08:32:33 -0400
+Cc: catalin.marinas@arm.com, will@kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -64,42 +67,17 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-We use "pmc->idx" and the "chained" bitmap to determine if the pmc is
-chained, in kvm_pmu_pmc_is_chained().  But idx might be uninitialized
-(and random) when we doing this decision, through a KVM_ARM_VCPU_INIT
-ioctl -> kvm_pmu_vcpu_reset(). And the test_bit() against this random
-idx will potentially hit a KASAN BUG [1].
+On 17/07/2019 11:32, Julien Thierry wrote:
+> My @arm.com address will stop working in a couple of weeks. Update
+> MAINTAINERS and .mailmap files with an address I'll have access to.
+> 
+> Signed-off-by: Julien Thierry <julien.thierry@arm.com>
 
-Fix it by moving the assignment of idx before kvm_pmu_stop_counter().
+Acked-by: Marc Zyngier <maz@kernel.org>
 
-[1] https://www.spinics.net/lists/kvm-arm/msg36700.html
-
-Fixes: 80f393a23be6 ("KVM: arm/arm64: Support chained PMU counters")
-Suggested-by: Andrew Murray <andrew.murray@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
----
- virt/kvm/arm/pmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/virt/kvm/arm/pmu.c b/virt/kvm/arm/pmu.c
-index 3dd8238..521bfdd 100644
---- a/virt/kvm/arm/pmu.c
-+++ b/virt/kvm/arm/pmu.c
-@@ -225,8 +225,8 @@ void kvm_pmu_vcpu_reset(struct kvm_vcpu *vcpu)
- 	struct kvm_pmu *pmu = &vcpu->arch.pmu;
- 
- 	for (i = 0; i < ARMV8_PMU_MAX_COUNTERS; i++) {
--		kvm_pmu_stop_counter(vcpu, &pmu->pmc[i]);
- 		pmu->pmc[i].idx = i;
-+		kvm_pmu_stop_counter(vcpu, &pmu->pmc[i]);
- 	}
- 
- 	bitmap_zero(vcpu->arch.pmu.chained, ARMV8_PMU_MAX_COUNTER_PAIRS);
+	M.
 -- 
-1.8.3.1
-
-
+Jazz is not dead, it just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
