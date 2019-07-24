@@ -2,47 +2,47 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FBDD733BD
-	for <lists+kvmarm@lfdr.de>; Wed, 24 Jul 2019 18:26:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A932D733BF
+	for <lists+kvmarm@lfdr.de>; Wed, 24 Jul 2019 18:26:06 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4439A4A5D0;
-	Wed, 24 Jul 2019 12:26:03 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5E0CB4A60A;
+	Wed, 24 Jul 2019 12:26:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
 X-Spam-Level: 
 X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=no
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id wf7D9ReRSzux; Wed, 24 Jul 2019 12:26:02 -0400 (EDT)
+	with ESMTP id Uou-EPrb6o6e; Wed, 24 Jul 2019 12:26:06 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2DE2B4A5C1;
-	Wed, 24 Jul 2019 12:26:02 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 668BB4A606;
+	Wed, 24 Jul 2019 12:26:05 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 786A14A5CD
- for <kvmarm@lists.cs.columbia.edu>; Wed, 24 Jul 2019 12:26:00 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 20B1F4A5E0
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 24 Jul 2019 12:26:02 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id BieDByekLClm for <kvmarm@lists.cs.columbia.edu>;
- Wed, 24 Jul 2019 12:25:59 -0400 (EDT)
+ with ESMTP id W4r1SRE9VqBa for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 24 Jul 2019 12:26:00 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 58DBD4A5C6
- for <kvmarm@lists.cs.columbia.edu>; Wed, 24 Jul 2019 12:25:58 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D7ACA4A5C1
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 24 Jul 2019 12:25:59 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 198EF15A1;
- Wed, 24 Jul 2019 09:25:58 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A2BBB28;
+ Wed, 24 Jul 2019 09:25:59 -0700 (PDT)
 Received: from e108454-lin.cambridge.arm.com (e108454-lin.cambridge.arm.com
  [10.1.196.50])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id BA34C3F71F;
- Wed, 24 Jul 2019 09:25:56 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4DC6E3F71F;
+ Wed, 24 Jul 2019 09:25:58 -0700 (PDT)
 From: Julien Grall <julien.grall@arm.com>
 To: linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v3 07/15] arm64/mm: Introduce NUM_ASIDS
-Date: Wed, 24 Jul 2019 17:25:26 +0100
-Message-Id: <20190724162534.7390-8-julien.grall@arm.com>
+Subject: [PATCH v3 08/15] arm64/mm: Split asid_inits in 2 parts
+Date: Wed, 24 Jul 2019 17:25:27 +0100
+Message-Id: <20190724162534.7390-9-julien.grall@arm.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20190724162534.7390-1-julien.grall@arm.com>
 References: <20190724162534.7390-1-julien.grall@arm.com>
@@ -65,41 +65,86 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-At the moment ASID_FIRST_VERSION is used to know the number of ASIDs
-supported. As we are going to move the ASID allocator in a separate, it
-would be better to use a different name for external users.
-
-This patch adds NUM_ASIDS and implements ASID_FIRST_VERSION using it.
+Move out the common initialization of the ASID allocator in a separate
+function.
 
 Signed-off-by: Julien Grall <julien.grall@arm.com>
+
 ---
- arch/arm64/mm/context.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+    Changes in v3:
+        - Allow bisection (asid_allocator_init() return 0 on success not
+          error!).
+---
+ arch/arm64/mm/context.c | 43 +++++++++++++++++++++++++++++++------------
+ 1 file changed, 31 insertions(+), 12 deletions(-)
 
 diff --git a/arch/arm64/mm/context.c b/arch/arm64/mm/context.c
-index 2e1e495cd1d8..3b40ac4a2541 100644
+index 3b40ac4a2541..27e328fffdb1 100644
 --- a/arch/arm64/mm/context.c
 +++ b/arch/arm64/mm/context.c
-@@ -37,7 +37,9 @@ static DEFINE_PER_CPU(atomic64_t, active_asids);
- static DEFINE_PER_CPU(u64, reserved_asids);
+@@ -260,31 +260,50 @@ asmlinkage void post_ttbr_update_workaround(void)
+ 			CONFIG_CAVIUM_ERRATUM_27456));
+ }
  
- #define ASID_MASK(info)			(~GENMASK((info)->bits - 1, 0))
--#define ASID_FIRST_VERSION(info)	(1UL << ((info)->bits))
-+#define NUM_ASIDS(info)			(1UL << ((info)->bits))
+-static int asids_init(void)
++/*
++ * Initialize the ASID allocator
++ *
++ * @info: Pointer to the asid allocator structure
++ * @bits: Number of ASIDs available
++ * @asid_per_ctxt: Number of ASIDs to allocate per-context. ASIDs are
++ * allocated contiguously for a given context. This value should be a power of
++ * 2.
++ */
++static int asid_allocator_init(struct asid_info *info,
++			       u32 bits, unsigned int asid_per_ctxt)
+ {
+-	struct asid_info *info = &asid_info;
+-
+-	info->bits = get_cpu_asid_bits();
+-	info->ctxt_shift = ilog2(ASID_PER_CONTEXT);
++	info->bits = bits;
++	info->ctxt_shift = ilog2(asid_per_ctxt);
+ 	/*
+ 	 * Expect allocation after rollover to fail if we don't have at least
+-	 * one more ASID than CPUs. ASID #0 is reserved for init_mm.
++	 * one more ASID than CPUs. ASID #0 is always reserved.
+ 	 */
+ 	WARN_ON(NUM_CTXT_ASIDS(info) - 1 <= num_possible_cpus());
+ 	atomic64_set(&info->generation, ASID_FIRST_VERSION(info));
+ 	info->map = kcalloc(BITS_TO_LONGS(NUM_CTXT_ASIDS(info)),
+ 			    sizeof(*info->map), GFP_KERNEL);
+ 	if (!info->map)
+-		panic("Failed to allocate bitmap for %lu ASIDs\n",
+-		      NUM_CTXT_ASIDS(info));
+-
+-	info->active = &active_asids;
+-	info->reserved = &reserved_asids;
++		return -ENOMEM;
+ 
+ 	raw_spin_lock_init(&info->lock);
+ 
++	return 0;
++}
 +
-+#define ASID_FIRST_VERSION(info)	NUM_ASIDS(info)
- 
- #ifdef CONFIG_UNMAP_KERNEL_AT_EL0
- #define ASID_PER_CONTEXT		2
-@@ -45,7 +47,7 @@ static DEFINE_PER_CPU(u64, reserved_asids);
- #define ASID_PER_CONTEXT		1
- #endif
- 
--#define NUM_CTXT_ASIDS(info)		(ASID_FIRST_VERSION(info) >> (info)->ctxt_shift)
-+#define NUM_CTXT_ASIDS(info)		(NUM_ASIDS(info) >> (info)->ctxt_shift)
- #define asid2idx(info, asid)		(((asid) & ~ASID_MASK(info)) >> (info)->ctxt_shift)
- #define idx2asid(info, idx)		(((idx) << (info)->ctxt_shift) & ~ASID_MASK(info))
- 
++static int asids_init(void)
++{
++	u32 bits = get_cpu_asid_bits();
++
++	if (asid_allocator_init(&asid_info, bits, ASID_PER_CONTEXT))
++		panic("Unable to initialize ASID allocator for %lu ASIDs\n",
++		      1UL << bits);
++
++	asid_info.active = &active_asids;
++	asid_info.reserved = &reserved_asids;
++
+ 	pr_info("ASID allocator initialised with %lu entries\n",
+-		NUM_CTXT_ASIDS(info));
++		NUM_CTXT_ASIDS(&asid_info));
++
+ 	return 0;
+ }
+ early_initcall(asids_init);
 -- 
 2.11.0
 
