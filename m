@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 79DA97FC42
-	for <lists+kvmarm@lfdr.de>; Fri,  2 Aug 2019 16:32:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 459767FC8E
+	for <lists+kvmarm@lfdr.de>; Fri,  2 Aug 2019 16:50:34 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D60364A553;
-	Fri,  2 Aug 2019 10:32:32 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C9EE34A558;
+	Fri,  2 Aug 2019 10:50:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
@@ -15,41 +15,41 @@ X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id iTcN1oInpc37; Fri,  2 Aug 2019 10:32:32 -0400 (EDT)
+	with ESMTP id Zk7k+UWBtn88; Fri,  2 Aug 2019 10:50:33 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B2E234A545;
-	Fri,  2 Aug 2019 10:32:31 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6FA944A541;
+	Fri,  2 Aug 2019 10:50:32 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3F8554A52E
- for <kvmarm@lists.cs.columbia.edu>; Fri,  2 Aug 2019 10:32:31 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C99824A532
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  2 Aug 2019 10:50:31 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id wNnW4Bzisiy6 for <kvmarm@lists.cs.columbia.edu>;
- Fri,  2 Aug 2019 10:32:30 -0400 (EDT)
+ with ESMTP id sp4WCah0R604 for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  2 Aug 2019 10:50:30 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 465EA4A4FD
- for <kvmarm@lists.cs.columbia.edu>; Fri,  2 Aug 2019 10:32:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2BE864A4FD
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  2 Aug 2019 10:50:30 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B82AF1570;
- Fri,  2 Aug 2019 07:32:29 -0700 (PDT)
-Received: from [10.1.197.61] (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id
- 4FE283F575; Fri,  2 Aug 2019 07:32:28 -0700 (PDT)
-Subject: Re: [PATCH] arm64/kvm: fix -Wimplicit-fallthrough warnings
-To: Qian Cai <cai@lca.pw>
-References: <1564755788-28485-1-git-send-email-cai@lca.pw>
-From: Marc Zyngier <maz@kernel.org>
-Organization: Approximate
-Message-ID: <0361d2e8-e57c-5cac-f0ff-5e56675ba71d@kernel.org>
-Date: Fri, 2 Aug 2019 15:32:26 +0100
-User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C9FD11596;
+ Fri,  2 Aug 2019 07:50:29 -0700 (PDT)
+Received: from e112269-lin.arm.com (e112269-lin.cambridge.arm.com
+ [10.1.196.133])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E2E0B3F575;
+ Fri,  2 Aug 2019 07:50:27 -0700 (PDT)
+From: Steven Price <steven.price@arm.com>
+To: 
+Subject: [PATCH 0/9] arm64: Stolen time support
+Date: Fri,  2 Aug 2019 15:50:08 +0100
+Message-Id: <20190802145017.42543-1-steven.price@arm.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <1564755788-28485-1-git-send-email-cai@lca.pw>
-Content-Language: en-US
-Cc: linux-kernel@vger.kernel.org, christoffer.dall@linaro.org,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org, kvm@vger.kernel.org,
+ Catalin Marinas <catalin.marinas@arm.com>, linux-doc@vger.kernel.org,
+ Russell King <linux@armlinux.org.uk>, Steven Price <steven.price@arm.com>,
+ linux-arm-kernel@lists.infradead.org, Marc Zyngier <maz@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -66,23 +66,75 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 02/08/2019 15:23, Qian Cai wrote:
-> The commit a892819560c4 ("KVM: arm64: Prepare to handle deferred
-> save/restore of 32-bit registers") introduced vcpu_write_spsr32() but
-> seems forgot to add "break" between the switch statements and generates
-> compilation warnings below. Also, adding a default statement as in
-> vcpu_read_spsr32().
+This series add support for paravirtualized time for arm64 guests and
+KVM hosts following the specification in Arm's document DEN 0057A:
 
-See
-https://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git/commit/?id=3d584a3c85d6fe2cf878f220d4ad7145e7f89218
+https://developer.arm.com/docs/den0057/a
 
-The default statement is pretty pointless by construction.
+It implements support for stolen time, allowing the guest to
+identify time when it is forcibly not executing.
 
-Thanks,
+It doesn't implement support for Live Physical Time (LPT) as there are
+some concerns about the overheads and approach in the above
+specification, and I expect an updated version of the specification to
+be released soon with just the stolen time parts.
 
-	M.
+I previously posted a series including LPT (as well as stolen time):
+https://lore.kernel.org/kvmarm/20181212150226.38051-1-steven.price@arm.com/
+
+Patches 2, 5, 7 and 8 are cleanup patches and could be taken separately.
+
+Christoffer Dall (1):
+  KVM: arm/arm64: Factor out hypercall handling from PSCI code
+
+Steven Price (8):
+  KVM: arm64: Document PV-time interface
+  KVM: arm64: Implement PV_FEATURES call
+  KVM: arm64: Support stolen time reporting via shared structure
+  KVM: Allow kvm_device_ops to be const
+  KVM: arm64: Provide a PV_TIME device to user space
+  arm/arm64: Provide a wrapper for SMCCC 1.1 calls
+  arm/arm64: Make use of the SMCCC 1.1 wrapper
+  arm64: Retrieve stolen time as paravirtualized guest
+
+ Documentation/virtual/kvm/arm/pvtime.txt | 107 +++++++++++++
+ arch/arm/kvm/Makefile                    |   2 +-
+ arch/arm/kvm/handle_exit.c               |   2 +-
+ arch/arm/mm/proc-v7-bugs.c               |  13 +-
+ arch/arm64/include/asm/kvm_host.h        |  13 +-
+ arch/arm64/include/asm/kvm_mmu.h         |   2 +
+ arch/arm64/include/asm/pvclock-abi.h     |  20 +++
+ arch/arm64/include/uapi/asm/kvm.h        |   6 +
+ arch/arm64/kernel/Makefile               |   1 +
+ arch/arm64/kernel/cpu_errata.c           |  80 ++++------
+ arch/arm64/kernel/kvm.c                  | 155 ++++++++++++++++++
+ arch/arm64/kvm/Kconfig                   |   1 +
+ arch/arm64/kvm/Makefile                  |   2 +
+ arch/arm64/kvm/handle_exit.c             |   4 +-
+ include/kvm/arm_hypercalls.h             |  44 ++++++
+ include/kvm/arm_psci.h                   |   2 +-
+ include/linux/arm-smccc.h                |  58 +++++++
+ include/linux/cpuhotplug.h               |   1 +
+ include/linux/kvm_host.h                 |   4 +-
+ include/linux/kvm_types.h                |   2 +
+ include/uapi/linux/kvm.h                 |   2 +
+ virt/kvm/arm/arm.c                       |  18 +++
+ virt/kvm/arm/hypercalls.c                | 138 ++++++++++++++++
+ virt/kvm/arm/mmu.c                       |  44 ++++++
+ virt/kvm/arm/psci.c                      |  84 +---------
+ virt/kvm/arm/pvtime.c                    | 190 +++++++++++++++++++++++
+ virt/kvm/kvm_main.c                      |   6 +-
+ 27 files changed, 848 insertions(+), 153 deletions(-)
+ create mode 100644 Documentation/virtual/kvm/arm/pvtime.txt
+ create mode 100644 arch/arm64/include/asm/pvclock-abi.h
+ create mode 100644 arch/arm64/kernel/kvm.c
+ create mode 100644 include/kvm/arm_hypercalls.h
+ create mode 100644 virt/kvm/arm/hypercalls.c
+ create mode 100644 virt/kvm/arm/pvtime.c
+
 -- 
-Jazz is not dead, it just smells funny...
+2.20.1
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
