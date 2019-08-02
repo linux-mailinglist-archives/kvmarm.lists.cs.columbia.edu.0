@@ -2,80 +2,56 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id ED6487F56C
-	for <lists+kvmarm@lfdr.de>; Fri,  2 Aug 2019 12:46:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 698907F59E
+	for <lists+kvmarm@lfdr.de>; Fri,  2 Aug 2019 13:00:12 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8052B4A55D;
-	Fri,  2 Aug 2019 06:46:38 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E23E24A555;
+	Fri,  2 Aug 2019 07:00:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.799
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id HwhEwtRwjMlT; Fri,  2 Aug 2019 06:46:38 -0400 (EDT)
+	with ESMTP id IXy2o3+++sT9; Fri,  2 Aug 2019 07:00:11 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6454E4A547;
-	Fri,  2 Aug 2019 06:46:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BC4274A52F;
+	Fri,  2 Aug 2019 07:00:10 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AB4774A52B
- for <kvmarm@lists.cs.columbia.edu>; Fri,  2 Aug 2019 06:46:35 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 98CF64A51E
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  2 Aug 2019 07:00:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id za+y-O+i+ZbJ for <kvmarm@lists.cs.columbia.edu>;
- Fri,  2 Aug 2019 06:46:34 -0400 (EDT)
-Received: from mail-wr1-f66.google.com (mail-wr1-f66.google.com
- [209.85.221.66])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A541F4A4CD
- for <kvmarm@lists.cs.columbia.edu>; Fri,  2 Aug 2019 06:46:34 -0400 (EDT)
-Received: by mail-wr1-f66.google.com with SMTP id p17so76664537wrf.11
- for <kvmarm@lists.cs.columbia.edu>; Fri, 02 Aug 2019 03:46:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
- :date:user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=8nHVa+8uGKdtX3pSY7JjerDZijsdBHPkAyPWVC/nVmk=;
- b=ALl5DaHlTnBKPvXfedp3HOfwTRJnIQIDus9kjgvA8VUBTOv+Ba1oPR1/P+Fkm32mpv
- 7yQKc+3UhH0yMksyBFelHcWtrHBDh1cRA93x4P01M427S4iwmsiLuvK0Wlj60eGy5ECO
- A3nkB1GTMXBWjhUVOIhpdhPs5hqBPRW23kGt8VRiubaXbLI54WS11JZMQVGg8e2IHUL1
- rkqvAHrCkQwDGFIMw0ThFPJLpwMgcn8KKXd9fZ4pCtqGN61ZihCk07A4UWr2LEMh24B4
- HguJcowtskfBtL4lDx5m0DxCKxqvlBzx4rO2pWqhGLrFYWO0WTPoXuhe7cTBZ3SvNI3X
- iDEA==
-X-Gm-Message-State: APjAAAXNgbFHPuEiEagxV3kcw+cUX/inAlJDnQbtk862JFb8EhWtilTb
- eLIujnxNrQ+iaSU1W2RemQg/x1OSb3g=
-X-Google-Smtp-Source: APXvYqweacgUco11b5+iiklsZr3HnubI3sddSf7PjrsWTggPB1b/KH1PZW2FxQ0WyAeTEVE3WuJUPQ==
-X-Received: by 2002:a5d:4484:: with SMTP id j4mr3719539wrq.143.1564742793492; 
- Fri, 02 Aug 2019 03:46:33 -0700 (PDT)
-Received: from ?IPv6:2001:b07:6468:f312:4013:e920:9388:c3ff?
- ([2001:b07:6468:f312:4013:e920:9388:c3ff])
- by smtp.gmail.com with ESMTPSA id l9sm58540760wmh.36.2019.08.02.03.46.32
- (version=TLS1_3 cipher=AEAD-AES128-GCM-SHA256 bits=128/128);
- Fri, 02 Aug 2019 03:46:32 -0700 (PDT)
-Subject: Re: [PATCH 2/2] KVM: Call kvm_arch_vcpu_blocking early into the
- blocking sequence
-To: Marc Zyngier <maz@kernel.org>, =?UTF-8?B?UmFkaW0gS3LEjW3DocWZ?=
- <rkrcmar@redhat.com>, Julien Thierry <julien.thierry.kdev@gmail.com>,
- Suzuki K Poulose <suzuki.poulose@arm.com>, James Morse
- <james.morse@arm.com>, Joerg Roedel <joro@8bytes.org>,
- Suravee Suthikulpanit <Suravee.Suthikulpanit@amd.com>,
- Tangnianyao <tangnianyao@huawei.com>
-References: <20190802103709.70148-1-maz@kernel.org>
- <20190802103709.70148-3-maz@kernel.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Openpgp: preference=signencrypt
-Message-ID: <a7250b9a-60e9-b04c-5515-e506aea46515@redhat.com>
-Date: Fri, 2 Aug 2019 12:46:33 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ with ESMTP id PzZnm6rhCmtx for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  2 Aug 2019 07:00:07 -0400 (EDT)
+Received: from huawei.com (szxga06-in.huawei.com [45.249.212.32])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 025F74A4E5
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  2 Aug 2019 07:00:06 -0400 (EDT)
+Received: from DGGEMS410-HUB.china.huawei.com (unknown [172.30.72.58])
+ by Forcepoint Email with ESMTP id 0CA50E7A5A43691467DE;
+ Fri,  2 Aug 2019 19:00:03 +0800 (CST)
+Received: from [127.0.0.1] (10.184.12.158) by DGGEMS410-HUB.china.huawei.com
+ (10.3.19.210) with Microsoft SMTP Server id 14.3.439.0; Fri, 2 Aug 2019
+ 18:59:56 +0800
+From: Zenghui Yu <yuzenghui@huawei.com>
+Subject: kvm-unit-tests: psci_cpu_on_test FAILed
+To: Marc Zyngier <maz@kernel.org>, <drjones@redhat.com>, James Morse
+ <james.morse@arm.com>, <julien.thierry.kdev@gmail.com>,
+ <suzuki.poulose@arm.com>
+Message-ID: <3ddf8766-6f02-b655-1b80-d8a7fd016509@huawei.com>
+Date: Fri, 2 Aug 2019 18:56:51 +0800
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:64.0) Gecko/20100101
+ Thunderbird/64.0
 MIME-Version: 1.0
-In-Reply-To: <20190802103709.70148-3-maz@kernel.org>
 Content-Language: en-US
-Cc: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
+X-Originating-IP: [10.184.12.158]
+X-CFilter-Loop: Reflected
+Cc: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -87,83 +63,44 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 02/08/19 12:37, Marc Zyngier wrote:
-> When a vpcu is about to block by calling kvm_vcpu_block, we call
-> back into the arch code to allow any form of synchronization that
-> may be required at this point (SVN stops the AVIC, ARM synchronises
-> the VMCR and enables GICv4 doorbells). But this synchronization
-> comes in quite late, as we've potentially waited for halt_poll_ns
-> to expire.
-> 
-> Instead, let's move kvm_arch_vcpu_blocking() to the beginning of
-> kvm_vcpu_block(), which on ARM has several benefits:
-> 
-> - VMCR gets synchronised early, meaning that any interrupt delivered
->   during the polling window will be evaluated with the correct guest
->   PMR
-> - GICv4 doorbells are enabled, which means that any guest interrupt
->   directly injected during that window will be immediately recognised
-> 
-> Tang Nianyao ran some tests on a GICv4 machine to evaluate such
-> change, and reported up to a 10% improvement for netperf:
-> 
-> <quote>
-> 	netperf result:
-> 	D06 as server, intel 8180 server as client
-> 	with change:
-> 	package 512 bytes - 5500 Mbits/s
-> 	package 64 bytes - 760 Mbits/s
-> 	without change:
-> 	package 512 bytes - 5000 Mbits/s
-> 	package 64 bytes - 710 Mbits/s
-> </quote>
-> 
-> Signed-off-by: Marc Zyngier <maz@kernel.org>
-> ---
->  virt/kvm/kvm_main.c | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
-> 
-> diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-> index 887f3b0c2b60..90d429c703cb 100644
-> --- a/virt/kvm/kvm_main.c
-> +++ b/virt/kvm/kvm_main.c
-> @@ -2322,6 +2322,8 @@ void kvm_vcpu_block(struct kvm_vcpu *vcpu)
->  	bool waited = false;
->  	u64 block_ns;
->  
-> +	kvm_arch_vcpu_blocking(vcpu);
-> +
->  	start = cur = ktime_get();
->  	if (vcpu->halt_poll_ns && !kvm_arch_no_poll(vcpu)) {
->  		ktime_t stop = ktime_add_ns(ktime_get(), vcpu->halt_poll_ns);
-> @@ -2342,8 +2344,6 @@ void kvm_vcpu_block(struct kvm_vcpu *vcpu)
->  		} while (single_task_running() && ktime_before(cur, stop));
->  	}
->  
-> -	kvm_arch_vcpu_blocking(vcpu);
-> -
->  	for (;;) {
->  		prepare_to_swait_exclusive(&vcpu->wq, &wait, TASK_INTERRUPTIBLE);
->  
-> @@ -2356,9 +2356,8 @@ void kvm_vcpu_block(struct kvm_vcpu *vcpu)
->  
->  	finish_swait(&vcpu->wq, &wait);
->  	cur = ktime_get();
-> -
-> -	kvm_arch_vcpu_unblocking(vcpu);
->  out:
-> +	kvm_arch_vcpu_unblocking(vcpu);
->  	block_ns = ktime_to_ns(cur) - ktime_to_ns(start);
->  
->  	if (!vcpu_valid_wakeup(vcpu))
-> 
+Hi folks,
 
-Acked-by: Paolo Bonzini <pbonzini@redhat.com>
+Running kvm-unit-tests with Linux 5.3.0-rc2 on Kunpeng 920, we will get
+the following fail info:
+
+	[...]
+	FAIL psci (4 tests, 1 unexpected failures)
+	[...]
+and
+	[...]
+	INFO: unexpected cpu_on return value: caller=CPU9, ret=-2
+	FAIL: cpu-on
+	SUMMARY: 4 tests, 1 unexpected failures
+
+
+I think this is an issue had been fixed once by commit 6c7a5dce22b3
+("KVM: arm/arm64: fix races in kvm_psci_vcpu_on"), which makes use of
+kvm->lock mutex to fix the race between two PSCI_CPU_ON calls - one
+does reset on the MPIDR register whilst another reads it.
+
+But commit 358b28f09f0 ("arm/arm64: KVM: Allow a VCPU to fully reset
+itself") later moves the reset work into check_vcpu_requests(), by
+making a KVM_REQ_VCPU_RESET request in PSCI code. Thus the reset work
+has not been protected by kvm->lock mutex anymore, and the race shows up
+again...
+
+Do we need a fix for this issue? At least achieve a mutex execution
+between the reset of MPIDR and kvm_mpidr_to_vcpu()?
+
+
+Thanks,
+zenghui
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
