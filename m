@@ -2,51 +2,57 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D784818FC
-	for <lists+kvmarm@lfdr.de>; Mon,  5 Aug 2019 14:16:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFFEC81A6D
+	for <lists+kvmarm@lfdr.de>; Mon,  5 Aug 2019 15:06:19 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0AF124A56D;
-	Mon,  5 Aug 2019 08:16:25 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6D79A4A4F7;
+	Mon,  5 Aug 2019 09:06:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
 X-Spam-Level: 
 X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id x5e0jpjTqcqL; Mon,  5 Aug 2019 08:16:24 -0400 (EDT)
+	with ESMTP id DDwY4gRVge+z; Mon,  5 Aug 2019 09:06:18 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 564B04A4E6;
-	Mon,  5 Aug 2019 08:16:23 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0FD204A55E;
+	Mon,  5 Aug 2019 09:06:17 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 32A7A4A4E6
- for <kvmarm@lists.cs.columbia.edu>; Mon,  5 Aug 2019 08:16:22 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B8BE74A525
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  5 Aug 2019 09:06:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ZZPTppG7Vn9x for <kvmarm@lists.cs.columbia.edu>;
- Mon,  5 Aug 2019 08:16:21 -0400 (EDT)
+ with ESMTP id nV-VrNR3L4xT for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  5 Aug 2019 09:06:09 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 41D0A4A540
- for <kvmarm@lists.cs.columbia.edu>; Mon,  5 Aug 2019 08:16:20 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 702284A4FB
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  5 Aug 2019 09:06:09 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D94B21597;
- Mon,  5 Aug 2019 05:16:19 -0700 (PDT)
-Received: from filthy-habits.cambridge.arm.com
- (filthy-habits.cambridge.arm.com [10.1.197.61])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id BC6473F77D;
- Mon,  5 Aug 2019 05:16:18 -0700 (PDT)
-From: Marc Zyngier <maz@kernel.org>
-To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 2/2] KVM: arm: Don't write junk to CP15 registers on reset
-Date: Mon,  5 Aug 2019 13:15:55 +0100
-Message-Id: <20190805121555.130897-3-maz@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190805121555.130897-1-maz@kernel.org>
-References: <20190805121555.130897-1-maz@kernel.org>
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 06BD41570;
+ Mon,  5 Aug 2019 06:06:09 -0700 (PDT)
+Received: from [10.1.196.133] (e112269-lin.cambridge.arm.com [10.1.196.133])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 15F153F706;
+ Mon,  5 Aug 2019 06:06:06 -0700 (PDT)
+Subject: Re: [PATCH 0/9] arm64: Stolen time support
+To: Marc Zyngier <maz@kernel.org>
+References: <20190802145017.42543-1-steven.price@arm.com>
+ <20190803190522.5fec8f7d@why>
+From: Steven Price <steven.price@arm.com>
+Message-ID: <6789f477-8ab5-cc54-1ad2-8627917b07c9@arm.com>
+Date: Mon, 5 Aug 2019 14:06:05 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <20190803190522.5fec8f7d@why>
+Content-Language: en-GB
+Cc: kvm@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
+ linux-doc@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+ linux-kernel@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -63,81 +69,76 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-At the moment, the way we reset CP15 registers is mildly insane:
-We write junk to them, call the reset functions, and then check that
-we have something else in them.
+On 03/08/2019 19:05, Marc Zyngier wrote:
+> On Fri,  2 Aug 2019 15:50:08 +0100
+> Steven Price <steven.price@arm.com> wrote:
+> 
+> Hi Steven,
+> 
+>> This series add support for paravirtualized time for arm64 guests and
+>> KVM hosts following the specification in Arm's document DEN 0057A:
+>>
+>> https://developer.arm.com/docs/den0057/a
+>>
+>> It implements support for stolen time, allowing the guest to
+>> identify time when it is forcibly not executing.
+>>
+>> It doesn't implement support for Live Physical Time (LPT) as there are
+>> some concerns about the overheads and approach in the above
+>> specification, and I expect an updated version of the specification to
+>> be released soon with just the stolen time parts.
+> 
+> Thanks for posting this.
+> 
+> My current concern with this series is around the fact that we allocate
+> memory from the kernel on behalf of the guest. It is the first example
+> of such thing in the ARM port, and I can't really say I'm fond of it.
+> 
+> x86 seems to get away with it by having the memory allocated from
+> userspace, why I tend to like more. Yes, put_user is more
+> expensive than a straight store, but this isn't done too often either.
+> 
+> What is the rational for your current approach?
 
-The "fun" thing is that this can happen while the guest is running
-(PSCI, for example). If anything in KVM has to evaluate the state
-of a CP15 register while junk is in there, bad thing may happen.
+As I see it there are 3 approaches that can be taken here:
 
-Let's stop doing that. Instead, we track that we have called a
-reset function for that register, and assume that the reset
-function has done something.
+1. Hypervisor allocates memory and adds it to the virtual machine. This
+means that everything to do with the 'device' is encapsulated behind the
+KVM_CREATE_DEVICE / KVM_[GS]ET_DEVICE_ATTR ioctls. But since we want the
+stolen time structure to be fast it cannot be a trapping region and has
+to be backed by real memory - in this case allocated by the host kernel.
 
-In the end, the very need of this reset check is pretty dubious,
-as it doesn't check everything (a lot of the CP15 reg leave outside
-of the cp15_regs[] array). It may well be axed in the near future.
+2. Host user space allocates memory. Similar to above, but this time
+user space needs to manage the memory region as well as the usual
+KVM_CREATE_DEVICE dance. I've no objection to this, but it means
+kvmtool/QEMU needs to be much more aware of what is going on (e.g. how
+to size the memory region).
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm/kvm/coproc.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+3. Guest kernel "donates" the memory to the hypervisor for the
+structure. As far as I'm aware this is what x86 does. The problems I see
+this approach are:
 
-diff --git a/arch/arm/kvm/coproc.c b/arch/arm/kvm/coproc.c
-index d2806bcff8bb..07745ee022a1 100644
---- a/arch/arm/kvm/coproc.c
-+++ b/arch/arm/kvm/coproc.c
-@@ -651,13 +651,22 @@ int kvm_handle_cp14_64(struct kvm_vcpu *vcpu, struct kvm_run *run)
- }
- 
- static void reset_coproc_regs(struct kvm_vcpu *vcpu,
--			      const struct coproc_reg *table, size_t num)
-+			      const struct coproc_reg *table, size_t num,
-+			      unsigned long *bmap)
- {
- 	unsigned long i;
- 
- 	for (i = 0; i < num; i++)
--		if (table[i].reset)
-+		if (table[i].reset) {
-+			int reg = table[i].reg;
-+
- 			table[i].reset(vcpu, &table[i]);
-+			if (reg > 0 && reg < NR_CP15_REGS) {
-+				set_bit(reg, bmap);
-+				if (table[i].is_64bit)
-+					set_bit(reg + 1, bmap);
-+			}
-+		}
- }
- 
- static struct coproc_params decode_32bit_hsr(struct kvm_vcpu *vcpu)
-@@ -1432,17 +1441,15 @@ void kvm_reset_coprocs(struct kvm_vcpu *vcpu)
- {
- 	size_t num;
- 	const struct coproc_reg *table;
--
--	/* Catch someone adding a register without putting in reset entry. */
--	memset(vcpu->arch.ctxt.cp15, 0x42, sizeof(vcpu->arch.ctxt.cp15));
-+	DECLARE_BITMAP(bmap, NR_CP15_REGS) = { 0, };
- 
- 	/* Generic chip reset first (so target could override). */
--	reset_coproc_regs(vcpu, cp15_regs, ARRAY_SIZE(cp15_regs));
-+	reset_coproc_regs(vcpu, cp15_regs, ARRAY_SIZE(cp15_regs), bmap);
- 
- 	table = get_target_table(vcpu->arch.target, &num);
--	reset_coproc_regs(vcpu, table, num);
-+	reset_coproc_regs(vcpu, table, num, bmap);
- 
- 	for (num = 1; num < NR_CP15_REGS; num++)
--		WARN(vcpu_cp15(vcpu, num) == 0x42424242,
-+		WARN(!test_bit(num, bmap),
- 		     "Didn't reset vcpu_cp15(vcpu, %zi)", num);
- }
--- 
-2.20.1
+ a) kexec becomes much more tricky - there needs to be a disabling
+mechanism for the guest to stop the hypervisor scribbling on memory
+before starting the new kernel.
 
+ b) If there is more than one entity that is interested in the
+information (e.g. firmware and kernel) then this requires some form of
+arbitration in the guest because the hypervisor doesn't want to have to
+track an arbitrary number of regions to update.
+
+ c) Performance can suffer if the host kernel doesn't have a suitably
+aligned/sized area to use. As you say - put_user() is more expensive.
+The structure is updated on every return to the VM.
+
+
+Of course x86 does prove the third approach can work, but I'm not sure
+which is actually better. Avoid the kexec cancellation requirements was
+the main driver of the current approach. Although many of the
+conversations about this were also tied up with Live Physical Time which
+adds its own complications.
+
+Steve
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
