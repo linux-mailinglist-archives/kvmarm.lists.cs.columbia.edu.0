@@ -2,143 +2,56 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C6558501B
-	for <lists+kvmarm@lfdr.de>; Wed,  7 Aug 2019 17:40:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B93C985E8C
+	for <lists+kvmarm@lfdr.de>; Thu,  8 Aug 2019 11:34:42 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 19E044A548;
-	Wed,  7 Aug 2019 11:40:30 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2DB684A582;
+	Thu,  8 Aug 2019 05:34:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 2.807
-X-Spam-Level: **
-X-Spam-Status: No, score=2.807 required=6.1 tests=[BAYES_40=-0.001,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01]
-	autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@embeddedor.com
+X-Spam-Score: 0.799
+X-Spam-Level: 
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5Gsw2JoLAygj; Wed,  7 Aug 2019 11:40:29 -0400 (EDT)
+	with ESMTP id o0mxbHmFl4o1; Thu,  8 Aug 2019 05:34:42 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 12DCB4A531;
-	Wed,  7 Aug 2019 11:40:29 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BEDD84A561;
+	Thu,  8 Aug 2019 05:34:40 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 98A4F4A418
- for <kvmarm@lists.cs.columbia.edu>; Wed,  7 Aug 2019 11:40:27 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 20EBA4A54A
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  8 Aug 2019 05:34:39 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id mzyWsqHUsi1t for <kvmarm@lists.cs.columbia.edu>;
- Wed,  7 Aug 2019 11:40:26 -0400 (EDT)
-Received: from gateway23.websitewelcome.com (gateway23.websitewelcome.com
- [192.185.49.219])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B49C64A32E
- for <kvmarm@lists.cs.columbia.edu>; Wed,  7 Aug 2019 11:40:26 -0400 (EDT)
-Received: from cm17.websitewelcome.com (cm17.websitewelcome.com [100.42.49.20])
- by gateway23.websitewelcome.com (Postfix) with ESMTP id 48C6ED7E2
- for <kvmarm@lists.cs.columbia.edu>; Wed,  7 Aug 2019 10:40:26 -0500 (CDT)
-Received: from gator4166.hostgator.com ([108.167.133.22]) by cmsmtp with SMTP
- id vO38hPBMP90onvO38hF5NM; Wed, 07 Aug 2019 10:40:26 -0500
-X-Authority-Reason: nr=8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
- In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject:Sender
- :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=lueU+opXHzLjdjK1ms1P6rbYLeTw0Zgy9Rkh+ZkHbn4=; b=pVTRdCSEIsfwP+ugwbT6LDP+U7
- SDMMgzgmOWKR8d18iEpDdpT+WXKjD7yRpDHGJh3nZmuEqSHZv7dR/TYogK0Dos9NJ28mOFMiOJA8E
- 086wqigig3+bWI2xgVMp9XGD5xw2BqSMD62ahDatsf+um0isX6JWUKbEHPQqgMR3274fWtUcJyd67
- 9dtC862liZy1PR093J9TI0CujU0ebAk5dQcnagn4vE9dTb0fKGLNlr5qLtCWE0AxIyPqGAh87+WDP
- 8vOo332JtRj1c5DXicDayI4OieihYn1x1+/B2reKqpWOk/aIYOFOx9T22Yrgs4XzAggAlSV2amICI
- YG4bFdJg==;
-Received: from 187-162-252-62.static.axtel.net ([187.162.252.62]:43918
- helo=[192.168.0.128]) by gator4166.hostgator.com with esmtpsa
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128) (Exim 4.92)
- (envelope-from <gustavo@embeddedor.com>)
- id 1hvO37-000Jew-QV; Wed, 07 Aug 2019 10:40:25 -0500
-Subject: Re: [PATCH] arm64: KVM: hyp: debug-sr: Mark expected switch
- fall-throughs
-To: Marc Zyngier <maz@kernel.org>, James Morse <james.morse@arm.com>,
- Julien Thierry <julien.thierry.kdev@gmail.com>,
- Suzuki K Poulose <suzuki.poulose@arm.com>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
-References: <20190807141857.GA4198@embeddedor>
- <b0b04024-9568-7b51-1bef-7030dd66f727@kernel.org>
-From: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=gustavo@embeddedor.com; keydata=
- mQINBFssHAwBEADIy3ZoPq3z5UpsUknd2v+IQud4TMJnJLTeXgTf4biSDSrXn73JQgsISBwG
- 2Pm4wnOyEgYUyJd5tRWcIbsURAgei918mck3tugT7AQiTUN3/5aAzqe/4ApDUC+uWNkpNnSV
- tjOx1hBpla0ifywy4bvFobwSh5/I3qohxDx+c1obd8Bp/B/iaOtnq0inli/8rlvKO9hp6Z4e
- DXL3PlD0QsLSc27AkwzLEc/D3ZaqBq7ItvT9Pyg0z3Q+2dtLF00f9+663HVC2EUgP25J3xDd
- 496SIeYDTkEgbJ7WYR0HYm9uirSET3lDqOVh1xPqoy+U9zTtuA9NQHVGk+hPcoazSqEtLGBk
- YE2mm2wzX5q2uoyptseSNceJ+HE9L+z1KlWW63HhddgtRGhbP8pj42bKaUSrrfDUsicfeJf6
- m1iJRu0SXYVlMruGUB1PvZQ3O7TsVfAGCv85pFipdgk8KQnlRFkYhUjLft0u7CL1rDGZWDDr
- NaNj54q2CX9zuSxBn9XDXvGKyzKEZ4NY1Jfw+TAMPCp4buawuOsjONi2X0DfivFY+ZsjAIcx
- qQMglPtKk/wBs7q2lvJ+pHpgvLhLZyGqzAvKM1sVtRJ5j+ARKA0w4pYs5a5ufqcfT7dN6TBk
- LXZeD9xlVic93Ju08JSUx2ozlcfxq+BVNyA+dtv7elXUZ2DrYwARAQABtCxHdXN0YXZvIEEu
- IFIuIFNpbHZhIDxndXN0YXZvQGVtYmVkZGVkb3IuY29tPokCPQQTAQgAJwUCWywcDAIbIwUJ
- CWYBgAULCQgHAgYVCAkKCwIEFgIDAQIeAQIXgAAKCRBHBbTLRwbbMZ6tEACk0hmmZ2FWL1Xi
- l/bPqDGFhzzexrdkXSfTTZjBV3a+4hIOe+jl6Rci/CvRicNW4H9yJHKBrqwwWm9fvKqOBAg9
- obq753jydVmLwlXO7xjcfyfcMWyx9QdYLERTeQfDAfRqxir3xMeOiZwgQ6dzX3JjOXs6jHBP
- cgry90aWbaMpQRRhaAKeAS14EEe9TSIly5JepaHoVdASuxklvOC0VB0OwNblVSR2S5i5hSsh
- ewbOJtwSlonsYEj4EW1noQNSxnN/vKuvUNegMe+LTtnbbocFQ7dGMsT3kbYNIyIsp42B5eCu
- JXnyKLih7rSGBtPgJ540CjoPBkw2mCfhj2p5fElRJn1tcX2McsjzLFY5jK9RYFDavez5w3lx
- JFgFkla6sQHcrxH62gTkb9sUtNfXKucAfjjCMJ0iuQIHRbMYCa9v2YEymc0k0RvYr43GkA3N
- PJYd/vf9vU7VtZXaY4a/dz1d9dwIpyQARFQpSyvt++R74S78eY/+lX8wEznQdmRQ27kq7BJS
- R20KI/8knhUNUJR3epJu2YFT/JwHbRYC4BoIqWl+uNvDf+lUlI/D1wP+lCBSGr2LTkQRoU8U
- 64iK28BmjJh2K3WHmInC1hbUucWT7Swz/+6+FCuHzap/cjuzRN04Z3Fdj084oeUNpP6+b9yW
- e5YnLxF8ctRAp7K4yVlvA7kCDQRbLBwMARAAsHCE31Ffrm6uig1BQplxMV8WnRBiZqbbsVJB
- H1AAh8tq2ULl7udfQo1bsPLGGQboJSVN9rckQQNahvHAIK8ZGfU4Qj8+CER+fYPp/MDZj+t0
- DbnWSOrG7z9HIZo6PR9z4JZza3Hn/35jFggaqBtuydHwwBANZ7A6DVY+W0COEU4of7CAahQo
- 5NwYiwS0lGisLTqks5R0Vh+QpvDVfuaF6I8LUgQR/cSgLkR//V1uCEQYzhsoiJ3zc1HSRyOP
- otJTApqGBq80X0aCVj1LOiOF4rrdvQnj6iIlXQssdb+WhSYHeuJj1wD0ZlC7ds5zovXh+FfF
- l5qH5RFY/qVn3mNIVxeO987WSF0jh+T5ZlvUNdhedGndRmwFTxq2Li6GNMaolgnpO/CPcFpD
- jKxY/HBUSmaE9rNdAa1fCd4RsKLlhXda+IWpJZMHlmIKY8dlUybP+2qDzP2lY7kdFgPZRU+e
- zS/pzC/YTzAvCWM3tDgwoSl17vnZCr8wn2/1rKkcLvTDgiJLPCevqpTb6KFtZosQ02EGMuHQ
- I6Zk91jbx96nrdsSdBLGH3hbvLvjZm3C+fNlVb9uvWbdznObqcJxSH3SGOZ7kCHuVmXUcqoz
- ol6ioMHMb+InrHPP16aVDTBTPEGwgxXI38f7SUEn+NpbizWdLNz2hc907DvoPm6HEGCanpcA
- EQEAAYkCJQQYAQgADwUCWywcDAIbDAUJCWYBgAAKCRBHBbTLRwbbMdsZEACUjmsJx2CAY+QS
- UMebQRFjKavwXB/xE7fTt2ahuhHT8qQ/lWuRQedg4baInw9nhoPE+VenOzhGeGlsJ0Ys52sd
- XvUjUocKgUQq6ekOHbcw919nO5L9J2ejMf/VC/quN3r3xijgRtmuuwZjmmi8ct24TpGeoBK4
- WrZGh/1hAYw4ieARvKvgjXRstcEqM5thUNkOOIheud/VpY+48QcccPKbngy//zNJWKbRbeVn
- imua0OpqRXhCrEVm/xomeOvl1WK1BVO7z8DjSdEBGzbV76sPDJb/fw+y+VWrkEiddD/9CSfg
- fBNOb1p1jVnT2mFgGneIWbU0zdDGhleI9UoQTr0e0b/7TU+Jo6TqwosP9nbk5hXw6uR5k5PF
- 8ieyHVq3qatJ9K1jPkBr8YWtI5uNwJJjTKIA1jHlj8McROroxMdI6qZ/wZ1ImuylpJuJwCDC
- ORYf5kW61fcrHEDlIvGc371OOvw6ejF8ksX5+L2zwh43l/pKkSVGFpxtMV6d6J3eqwTafL86
- YJWH93PN+ZUh6i6Rd2U/i8jH5WvzR57UeWxE4P8bQc0hNGrUsHQH6bpHV2lbuhDdqo+cM9eh
- GZEO3+gCDFmKrjspZjkJbB5Gadzvts5fcWGOXEvuT8uQSvl+vEL0g6vczsyPBtqoBLa9SNrS
- VtSixD1uOgytAP7RWS474w==
-Message-ID: <faae83d0-bc4b-b141-4cad-60448f86de4a@embeddedor.com>
-Date: Wed, 7 Aug 2019 10:40:23 -0500
+ with ESMTP id qtoJuVFjQg3Y for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  8 Aug 2019 05:34:37 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 98A414A53D
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  8 Aug 2019 05:34:37 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1F5F11576;
+ Thu,  8 Aug 2019 02:34:37 -0700 (PDT)
+Received: from [10.1.196.217] (e121566-lin.cambridge.arm.com [10.1.196.217])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 50FAA3F706;
+ Thu,  8 Aug 2019 02:34:36 -0700 (PDT)
+Subject: Re: [PATCH 47/59] KVM: arm64: nv: Propagate CNTVOFF_EL2 to the
+ virtual EL1 timer
+To: Marc Zyngier <marc.zyngier@arm.com>,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
+References: <20190621093843.220980-1-marc.zyngier@arm.com>
+ <20190621093843.220980-48-marc.zyngier@arm.com>
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+Message-ID: <95edbe3a-bd6c-11b5-cfa9-6d5252dbb50c@arm.com>
+Date: Thu, 8 Aug 2019 10:34:35 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ Thunderbird/60.7.2
 MIME-Version: 1.0
-In-Reply-To: <b0b04024-9568-7b51-1bef-7030dd66f727@kernel.org>
+In-Reply-To: <20190621093843.220980-48-marc.zyngier@arm.com>
 Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse,
- please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
-X-AntiAbuse: Original Domain - lists.cs.columbia.edu
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - embeddedor.com
-X-BWhitelist: no
-X-Source-IP: 187.162.252.62
-X-Source-L: No
-X-Exim-ID: 1hvO37-000Jew-QV
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: 187-162-252-62.static.axtel.net ([192.168.0.128])
- [187.162.252.62]:43918
-X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 8
-X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
-X-Local-Domain: yes
-Cc: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org
+Cc: Andre Przywara <andre.przywara@arm.com>, Dave Martin <Dave.Martin@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -155,20 +68,123 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+On 6/21/19 10:38 AM, Marc Zyngier wrote:
+> We need to allow a guest hypervisor to virtualize the virtual timer.
+> FOr that, let's propagate CNTVOFF_EL2 to the guest's view of that
+> timer.
+>
+> Signed-off-by: Marc Zyngier <marc.zyngier@arm.com>
+> ---
+>  arch/arm64/include/asm/kvm_host.h |  1 -
+>  arch/arm64/kvm/sys_regs.c         |  8 ++++++--
+>  include/kvm/arm_arch_timer.h      |  1 +
+>  virt/kvm/arm/arch_timer.c         | 12 ++++++++++++
+>  4 files changed, 19 insertions(+), 3 deletions(-)
+>
+> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+> index b7c44adcdbf3..e0fe9acb46bf 100644
+> --- a/arch/arm64/include/asm/kvm_host.h
+> +++ b/arch/arm64/include/asm/kvm_host.h
+> @@ -252,7 +252,6 @@ enum vcpu_sysreg {
+>  	RMR_EL2,	/* Reset Management Register */
+>  	CONTEXTIDR_EL2,	/* Context ID Register (EL2) */
+>  	TPIDR_EL2,	/* EL2 Software Thread ID Register */
+> -	CNTVOFF_EL2,	/* Counter-timer Virtual Offset register */
+>  	CNTHCTL_EL2,	/* Counter-timer Hypervisor Control register */
+>  	SP_EL2,		/* EL2 Stack Pointer */
+>  
+> diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+> index 1b8016330a19..2031a59fcf49 100644
+> --- a/arch/arm64/kvm/sys_regs.c
+> +++ b/arch/arm64/kvm/sys_regs.c
+> @@ -150,7 +150,6 @@ struct el2_sysreg_map {
+>  	PURE_EL2_SYSREG( RVBAR_EL2 ),
+>  	PURE_EL2_SYSREG( RMR_EL2 ),
+>  	PURE_EL2_SYSREG( TPIDR_EL2 ),
+> -	PURE_EL2_SYSREG( CNTVOFF_EL2 ),
+>  	PURE_EL2_SYSREG( CNTHCTL_EL2 ),
+>  	PURE_EL2_SYSREG( HPFAR_EL2 ),
+>  	EL2_SYSREG(      SCTLR_EL2,  SCTLR_EL1,      translate_sctlr ),
+> @@ -1351,6 +1350,11 @@ static bool access_arch_timer(struct kvm_vcpu *vcpu,
+>  		tmr = TIMER_PTIMER;
+>  		treg = TIMER_REG_CVAL;
+>  		break;
+> +	case SYS_CNTVOFF_EL2:
+> +		tmr = TIMER_VTIMER;
+> +		treg = TIMER_REG_VOFF;
+> +		break;
+> +
+>  	default:
+>  		BUG();
+>  	}
+> @@ -2122,7 +2126,7 @@ static const struct sys_reg_desc sys_reg_descs[] = {
+>  	{ SYS_DESC(SYS_CONTEXTIDR_EL2), access_rw, reset_val, CONTEXTIDR_EL2, 0 },
+>  	{ SYS_DESC(SYS_TPIDR_EL2), access_rw, reset_val, TPIDR_EL2, 0 },
+>  
+> -	{ SYS_DESC(SYS_CNTVOFF_EL2), access_rw, reset_val, CNTVOFF_EL2, 0 },
+> +	{ SYS_DESC(SYS_CNTVOFF_EL2), access_arch_timer },
+>  	{ SYS_DESC(SYS_CNTHCTL_EL2), access_rw, reset_val, CNTHCTL_EL2, 0 },
+>  
+>  	{ SYS_DESC(SYS_CNTHP_TVAL_EL2), access_arch_timer },
+> diff --git a/include/kvm/arm_arch_timer.h b/include/kvm/arm_arch_timer.h
+> index 3a5d9255120e..3389606f3029 100644
+> --- a/include/kvm/arm_arch_timer.h
+> +++ b/include/kvm/arm_arch_timer.h
+> @@ -23,6 +23,7 @@ enum kvm_arch_timer_regs {
+>  	TIMER_REG_CVAL,
+>  	TIMER_REG_TVAL,
+>  	TIMER_REG_CTL,
+> +	TIMER_REG_VOFF,
+>  };
+>  
+>  struct arch_timer_context {
+> diff --git a/virt/kvm/arm/arch_timer.c b/virt/kvm/arm/arch_timer.c
+> index 3d84c240071d..1d53352c7d97 100644
+> --- a/virt/kvm/arm/arch_timer.c
+> +++ b/virt/kvm/arm/arch_timer.c
+> @@ -913,6 +913,10 @@ static u64 kvm_arm_timer_read(struct kvm_vcpu *vcpu,
+>  		val = kvm_phys_timer_read() - timer->cntvoff;
+>  		break;
+>  
+> +	case TIMER_REG_VOFF:
+> +		val = timer->cntvoff;
+> +		break;
+> +
+>  	default:
+>  		BUG();
+>  	}
+> @@ -955,6 +959,10 @@ static void kvm_arm_timer_write(struct kvm_vcpu *vcpu,
+>  		timer->cnt_cval = val;
+>  		break;
+>  
+> +	case TIMER_REG_VOFF:
+> +		timer->cntvoff = val;
+> +		break;
+> +
+>  	default:
+>  		BUG();
+>  	}
+> @@ -1166,6 +1174,10 @@ int kvm_timer_enable(struct kvm_vcpu *vcpu)
+>  		return -EINVAL;
+>  	}
+>  
+> +	/* Nested virtualization requires zero offset for virtual EL2 */
+> +	if (nested_virt_in_use(vcpu))
+> +		vcpu_vtimer(vcpu)->cntvoff = 0;
 
+I think this is related to the fact that the virtual offset is treated as 0 when
+reading CNTVCT_EL0 from EL2, or from from EL2 and EL0 if E2H, TGE are set
+(please correct me if I'm wrong).
 
-On 8/7/19 10:11 AM, Marc Zyngier wrote:
+However, when the guest runs in virtual EL2, the direct_vtimer is the hvtimer,
+so the value that ends up in CNTVOFF_EL2 is vcpu_hvtimer(vcpu)->cntvoff.
 
-> 
-> Already fixed (together with all the other KVM/arm warnings/bugs), and
-> pull request sent to Paolo.
-> 
-
-Awesome. :)
-
-Thanks, Marc.
---
-Gustavo
+Thanks,
+Alex
+> +
+>  	get_timer_map(vcpu, &map);
+>  
+>  	ret = kvm_vgic_map_phys_irq(vcpu,
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
