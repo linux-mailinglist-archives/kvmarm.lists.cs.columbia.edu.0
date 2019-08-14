@@ -2,61 +2,65 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B8178C3E7
-	for <lists+kvmarm@lfdr.de>; Tue, 13 Aug 2019 23:45:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 656598C651
+	for <lists+kvmarm@lfdr.de>; Wed, 14 Aug 2019 04:14:50 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D8D44A4F6;
-	Tue, 13 Aug 2019 17:45:35 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 125C44A50F;
+	Tue, 13 Aug 2019 22:14:50 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.202
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.202 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5, SPF_HELO_PASS=-0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id seVm4WkBz2vH; Tue, 13 Aug 2019 17:45:35 -0400 (EDT)
+	with ESMTP id OmFZgSGn+xXA; Tue, 13 Aug 2019 22:14:48 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D41034A539;
-	Tue, 13 Aug 2019 17:45:33 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E09D44A54B;
+	Tue, 13 Aug 2019 22:14:46 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DE3BA4A4E9
- for <kvmarm@lists.cs.columbia.edu>; Tue, 13 Aug 2019 17:45:32 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0DA2D4A4C1
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 13 Aug 2019 22:14:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id C-lDEQLKtCbJ for <kvmarm@lists.cs.columbia.edu>;
- Tue, 13 Aug 2019 17:45:31 -0400 (EDT)
-Received: from mx1.redhat.com (mx1.redhat.com [209.132.183.28])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9F16A4A4D5
- for <kvmarm@lists.cs.columbia.edu>; Tue, 13 Aug 2019 17:45:31 -0400 (EDT)
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com
- [10.5.11.14])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ with ESMTP id 2JtD8ITc9dP9 for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 13 Aug 2019 22:14:43 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5752D4A4AA
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 13 Aug 2019 22:14:43 -0400 (EDT)
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net
+ [73.47.72.35])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mx1.redhat.com (Postfix) with ESMTPS id 9449C44BCF;
- Tue, 13 Aug 2019 21:45:30 +0000 (UTC)
-Received: from [10.36.116.22] (ovpn-116-22.ams2.redhat.com [10.36.116.22])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id B26D382AEF;
- Tue, 13 Aug 2019 21:45:12 +0000 (UTC)
-Subject: Re: Can we boot a 512U kvm guest?
-To: Marc Zyngier <marc.zyngier@arm.com>, Zenghui Yu <yuzenghui@huawei.com>
-References: <86aa9609-7dc9-1461-ae47-f50897cd0875@huawei.com>
- <86d0h9no9j.wl-marc.zyngier@arm.com>
-From: Auger Eric <eric.auger@redhat.com>
-Message-ID: <a2b12b81-29a8-4ef4-b3ec-e4635e93dc7b@redhat.com>
-Date: Tue, 13 Aug 2019 23:44:54 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+ by mail.kernel.org (Postfix) with ESMTPSA id 92DBB20842;
+ Wed, 14 Aug 2019 02:14:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1565748882;
+ bh=RNghUMKCpKpoJDpZkH0sTm1zmZQ1jLShJyORzDEDmQ0=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=Qo8iQqcqOv+aRWP8Ap2/1r7cYC+7rxAkip7LmHLOSzGHrk9XCAHIvGfvWCQYM88Sw
+ G3xrEpkYgAZj9ky2o+DTuzOynX7LozpMhgd6W+QBw83P9lUaRJY4hIWo15ci8fKZOX
+ L5Ose7py5brCOXL81K/PqjQFDF8WNIB+yVbyGmXU=
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.2 121/123] KVM: arm64: Don't write junk to sysregs
+ on reset
+Date: Tue, 13 Aug 2019 22:10:45 -0400
+Message-Id: <20190814021047.14828-121-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190814021047.14828-1-sashal@kernel.org>
+References: <20190814021047.14828-1-sashal@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <86d0h9no9j.wl-marc.zyngier@arm.com>
-Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16
- (mx1.redhat.com [10.5.110.30]); Tue, 13 Aug 2019 21:45:30 +0000 (UTC)
-Cc: zhang.zhanghailiang@huawei.com, kvm@vger.kernel.org, qemu-arm@nongnu.org,
- kvmarm@lists.cs.columbia.edu
+X-stable: review
+X-Patchwork-Hint: Ignore
+Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ Sasha Levin <sashal@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -73,158 +77,122 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi,
+From: Marc Zyngier <maz@kernel.org>
 
-On 8/13/19 4:17 PM, Marc Zyngier wrote:
-> On Tue, 13 Aug 2019 09:50:27 +0100,
-> Zenghui Yu <yuzenghui@huawei.com> wrote:
-> 
-> Hi Zenghui,
-> 
->>
->> Hi folks,
->>
->> Since commit e25028c8ded0 ("KVM: arm/arm64: Bump VGIC_V3_MAX_CPUS to
->> 512"), we seemed to be allowed to boot a 512U guest.  But I failed to
->> start it up with the latest QEMU.  I guess there are at least *two*
->> reasons (limitations).
->>
->> First I got a QEMU abort:
->> 	"kvm_set_irq: Invalid argument"
->>
->> Enable the trace_kvm_irq_line() under debugfs, when it comed with
->> vcpu-256, I got:
->> 	"Inject UNKNOWN interrupt (3), vcpu->idx: 0, num: 23, level: 0"
->> and kvm_vm_ioctl_irq_line() returns -EINVAL to user-space...
->>
->> So the thing is that we only have 8 bits for vcpu_index field ([23:16])
->> in KVM_IRQ_LINE ioctl.  irq_type field will be corrupted if we inject a
->> PPI to vcpu-256, whose vcpu_index will take 9 bits.
-> 
-> Irk. Not great indeed. Clearly, we have a couple of holes in the way
-> we test these ABI changes (/me eyes Eric...).
+[ Upstream commit 03fdfb2690099c19160a3f2c5b77db60b3afeded ]
 
-My bad. At that time I was able to test with 224 vcpus with QEMU (256
-vcpus were tested as well) and I failed to see those other limitations,
-thinking the only limitation left was the number of redistributor
-regions we could register.
-> 
->>
->> I temporarily patched the KVM and QEMU with the following diff:
->>
->> ---8<---
->> diff --git a/arch/arm64/include/uapi/asm/kvm.h
->> b/arch/arm64/include/uapi/asm/kvm.h
->> index 95516a4..39a0fb1 100644
->> --- a/arch/arm64/include/uapi/asm/kvm.h
->> +++ b/arch/arm64/include/uapi/asm/kvm.h
->> @@ -325,10 +325,10 @@ struct kvm_vcpu_events {
->>  #define   KVM_ARM_VCPU_TIMER_IRQ_PTIMER		1
->>
->>  /* KVM_IRQ_LINE irq field index values */
->> -#define KVM_ARM_IRQ_TYPE_SHIFT		24
->> -#define KVM_ARM_IRQ_TYPE_MASK		0xff
->> +#define KVM_ARM_IRQ_TYPE_SHIFT		28
->> +#define KVM_ARM_IRQ_TYPE_MASK		0xf
->>  #define KVM_ARM_IRQ_VCPU_SHIFT		16
->> -#define KVM_ARM_IRQ_VCPU_MASK		0xff
->> +#define KVM_ARM_IRQ_VCPU_MASK		0xfff
->>  #define KVM_ARM_IRQ_NUM_SHIFT		0
->>  #define KVM_ARM_IRQ_NUM_MASK		0xffff
->>
->> ---8<---
->>
->> It makes things a bit better, it also immediately BREAKs the api with
->> old versions.
-> 
-> Yes, and we can't have that (specially if you consider that this API
-> is shared between 32 and 64bit). One "get out of jail card" is to
-> steal a few bits from the top of the word, and encode things there:
-> 
-> diff --git a/arch/arm/include/uapi/asm/kvm.h b/arch/arm/include/uapi/asm/kvm.h
-> index 4602464ebdfb..86db092e4c2f 100644
-> --- a/arch/arm/include/uapi/asm/kvm.h
-> +++ b/arch/arm/include/uapi/asm/kvm.h
-> @@ -254,8 +254,10 @@ struct kvm_vcpu_events {
->  #define   KVM_DEV_ARM_ITS_CTRL_RESET		4
->  
->  /* KVM_IRQ_LINE irq field index values */
-> +#define KVM_ARM_IRQ_VCPU2_SHIFT		28
-> +#define KVM_ARM_IRQ_VCPU2_MASK		0xf
->  #define KVM_ARM_IRQ_TYPE_SHIFT		24
-> -#define KVM_ARM_IRQ_TYPE_MASK		0xff
-> +#define KVM_ARM_IRQ_TYPE_MASK		0xf
->  #define KVM_ARM_IRQ_VCPU_SHIFT		16
->  #define KVM_ARM_IRQ_VCPU_MASK		0xff
->  #define KVM_ARM_IRQ_NUM_SHIFT		0
-> diff --git a/arch/arm64/include/uapi/asm/kvm.h b/arch/arm64/include/uapi/asm/kvm.h
-> index 7b7ac0f6cec9..44cb25bfc95e 100644
-> --- a/arch/arm64/include/uapi/asm/kvm.h
-> +++ b/arch/arm64/include/uapi/asm/kvm.h
-> @@ -308,8 +308,10 @@ struct kvm_vcpu_events {
->  #define   KVM_ARM_VCPU_TIMER_IRQ_PTIMER		1
->  
->  /* KVM_IRQ_LINE irq field index values */
-> +#define KVM_ARM_IRQ_VCPU2_SHIFT		28
-> +#define KVM_ARM_IRQ_VCPU2_MASK		0xf
->  #define KVM_ARM_IRQ_TYPE_SHIFT		24
-> -#define KVM_ARM_IRQ_TYPE_MASK		0xff
-> +#define KVM_ARM_IRQ_TYPE_MASK		0xf
->  #define KVM_ARM_IRQ_VCPU_SHIFT		16
->  #define KVM_ARM_IRQ_VCPU_MASK		0xff
->  #define KVM_ARM_IRQ_NUM_SHIFT		0
-> diff --git a/virt/kvm/arm/arm.c b/virt/kvm/arm/arm.c
-> index 90cedebaeb94..fb685c1c0514 100644
-> --- a/virt/kvm/arm/arm.c
-> +++ b/virt/kvm/arm/arm.c
-> @@ -889,6 +889,7 @@ int kvm_vm_ioctl_irq_line(struct kvm *kvm, struct kvm_irq_level *irq_level,
->  
->  	irq_type = (irq >> KVM_ARM_IRQ_TYPE_SHIFT) & KVM_ARM_IRQ_TYPE_MASK;
->  	vcpu_idx = (irq >> KVM_ARM_IRQ_VCPU_SHIFT) & KVM_ARM_IRQ_VCPU_MASK;
-> +	vcpu_idx += ((irq >> KVM_ARM_IRQ_VCPU2_SHIFT) & KVM_ARM_IRQ_VCPU2_MASK) * (KVM_ARM_IRQ_VCPU_MASK + 1);
->  	irq_num = (irq >> KVM_ARM_IRQ_NUM_SHIFT) & KVM_ARM_IRQ_NUM_MASK;
->  
->  	trace_kvm_irq_line(irq_type, vcpu_idx, irq_num, irq_level->level);
-> 
-> It should work because we've been careful not to allow value outside
-> of {0, 1, 2} for irq_type. I don't like it, but I really don't feel
-> like adding another IRQ related ioctl. We still have 16 irq types
-> (which is already a waste of space), and we can go up to 4096 vcpu.
+At the moment, the way we reset system registers is mildly insane:
+We write junk to them, call the reset functions, and then check that
+we have something else in them.
 
-> 
-> Peter, what do you think?
-> 
->> Next comes one more QEMU abort (with the "fix" above):
->> 	"Failed to set device address: No space left on device"
->>
->> We register two io devices (rd_dev and sgi_dev) on KVM_MMIO_BUS for
->> each redistributor. 512 vcpus take 1024 io devices, which is beyond the
->> maximum limitation of the current kernel - NR_IOBUS_DEVS (1000).
->> So we get a ENOSPC error here.
-> 
-> I can reproduce that issue here ("499 vcpus on my Chromebook,
-> baby"). Not an ABI problem though, and we can bump it up if that's
-> needed.
-> 
->> I don't know if the similar problems have been discussed before in ML.
->> Is it time to really support the 512U guest?
-> 
-> The real question is "why the hell would you want to do that?" ;-)
-> Seriously, I'm very interested in finding out what is the use case for
-> these gigantic VMs, other than debugging the kernel for big machines.
+The "fun" thing is that this can happen while the guest is running
+(PSCI, for example). If anything in KVM has to evaluate the state
+of a system register while junk is in there, bad thing may happen.
 
-The initial goal was to keep up with the HPC physical cpu count increase
-and allow similar numbers as x86 supports.
+Let's stop doing that. Instead, we track that we have called a
+reset function for that register, and assume that the reset
+function has done something. This requires fixing a couple of
+sysreg refinition in the trap table.
 
-Thanks
+In the end, the very need of this reset check is pretty dubious,
+as it doesn't check everything (a lot of the sysregs leave outside of
+the sys_regs[] array). It may well be axed in the near future.
 
-Eric (with limited internet access atm)
+Tested-by: Zenghui Yu <yuzenghui@huawei.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/arm64/kvm/sys_regs.c | 32 ++++++++++++++++++--------------
+ 1 file changed, 18 insertions(+), 14 deletions(-)
 
-> 
-> Thanks,
-> 
-> 	M.
-> 
+diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+index ce933f2960496..5b7085ca213df 100644
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -632,7 +632,7 @@ static void reset_pmcr(struct kvm_vcpu *vcpu, const struct sys_reg_desc *r)
+ 	 */
+ 	val = ((pmcr & ~ARMV8_PMU_PMCR_MASK)
+ 	       | (ARMV8_PMU_PMCR_MASK & 0xdecafbad)) & (~ARMV8_PMU_PMCR_E);
+-	__vcpu_sys_reg(vcpu, PMCR_EL0) = val;
++	__vcpu_sys_reg(vcpu, r->reg) = val;
+ }
+ 
+ static bool check_pmu_access_disabled(struct kvm_vcpu *vcpu, u64 flags)
+@@ -981,13 +981,13 @@ static bool access_pmuserenr(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
+ /* Silly macro to expand the DBG{BCR,BVR,WVR,WCR}n_EL1 registers in one go */
+ #define DBG_BCR_BVR_WCR_WVR_EL1(n)					\
+ 	{ SYS_DESC(SYS_DBGBVRn_EL1(n)),					\
+-	  trap_bvr, reset_bvr, n, 0, get_bvr, set_bvr },		\
++	  trap_bvr, reset_bvr, 0, 0, get_bvr, set_bvr },		\
+ 	{ SYS_DESC(SYS_DBGBCRn_EL1(n)),					\
+-	  trap_bcr, reset_bcr, n, 0, get_bcr, set_bcr },		\
++	  trap_bcr, reset_bcr, 0, 0, get_bcr, set_bcr },		\
+ 	{ SYS_DESC(SYS_DBGWVRn_EL1(n)),					\
+-	  trap_wvr, reset_wvr, n, 0,  get_wvr, set_wvr },		\
++	  trap_wvr, reset_wvr, 0, 0,  get_wvr, set_wvr },		\
+ 	{ SYS_DESC(SYS_DBGWCRn_EL1(n)),					\
+-	  trap_wcr, reset_wcr, n, 0,  get_wcr, set_wcr }
++	  trap_wcr, reset_wcr, 0, 0,  get_wcr, set_wcr }
+ 
+ /* Macro to expand the PMEVCNTRn_EL0 register */
+ #define PMU_PMEVCNTR_EL0(n)						\
+@@ -1540,7 +1540,7 @@ static const struct sys_reg_desc sys_reg_descs[] = {
+ 	{ SYS_DESC(SYS_CSSELR_EL1), access_csselr, reset_unknown, CSSELR_EL1 },
+ 	{ SYS_DESC(SYS_CTR_EL0), access_ctr },
+ 
+-	{ SYS_DESC(SYS_PMCR_EL0), access_pmcr, reset_pmcr, },
++	{ SYS_DESC(SYS_PMCR_EL0), access_pmcr, reset_pmcr, PMCR_EL0 },
+ 	{ SYS_DESC(SYS_PMCNTENSET_EL0), access_pmcnten, reset_unknown, PMCNTENSET_EL0 },
+ 	{ SYS_DESC(SYS_PMCNTENCLR_EL0), access_pmcnten, NULL, PMCNTENSET_EL0 },
+ 	{ SYS_DESC(SYS_PMOVSCLR_EL0), access_pmovs, NULL, PMOVSSET_EL0 },
+@@ -2254,13 +2254,19 @@ static int emulate_sys_reg(struct kvm_vcpu *vcpu,
+ }
+ 
+ static void reset_sys_reg_descs(struct kvm_vcpu *vcpu,
+-			      const struct sys_reg_desc *table, size_t num)
++				const struct sys_reg_desc *table, size_t num,
++				unsigned long *bmap)
+ {
+ 	unsigned long i;
+ 
+ 	for (i = 0; i < num; i++)
+-		if (table[i].reset)
++		if (table[i].reset) {
++			int reg = table[i].reg;
++
+ 			table[i].reset(vcpu, &table[i]);
++			if (reg > 0 && reg < NR_SYS_REGS)
++				set_bit(reg, bmap);
++		}
+ }
+ 
+ /**
+@@ -2774,18 +2780,16 @@ void kvm_reset_sys_regs(struct kvm_vcpu *vcpu)
+ {
+ 	size_t num;
+ 	const struct sys_reg_desc *table;
+-
+-	/* Catch someone adding a register without putting in reset entry. */
+-	memset(&vcpu->arch.ctxt.sys_regs, 0x42, sizeof(vcpu->arch.ctxt.sys_regs));
++	DECLARE_BITMAP(bmap, NR_SYS_REGS) = { 0, };
+ 
+ 	/* Generic chip reset first (so target could override). */
+-	reset_sys_reg_descs(vcpu, sys_reg_descs, ARRAY_SIZE(sys_reg_descs));
++	reset_sys_reg_descs(vcpu, sys_reg_descs, ARRAY_SIZE(sys_reg_descs), bmap);
+ 
+ 	table = get_target_table(vcpu->arch.target, true, &num);
+-	reset_sys_reg_descs(vcpu, table, num);
++	reset_sys_reg_descs(vcpu, table, num, bmap);
+ 
+ 	for (num = 1; num < NR_SYS_REGS; num++) {
+-		if (WARN(__vcpu_sys_reg(vcpu, num) == 0x4242424242424242,
++		if (WARN(!test_bit(num, bmap),
+ 			 "Didn't reset __vcpu_sys_reg(%zi)\n", num))
+ 			break;
+ 	}
+-- 
+2.20.1
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
