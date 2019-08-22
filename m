@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 35B3398EC6
-	for <lists+kvmarm@lfdr.de>; Thu, 22 Aug 2019 11:08:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF2BB98F3D
+	for <lists+kvmarm@lfdr.de>; Thu, 22 Aug 2019 11:25:22 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B16084A580;
-	Thu, 22 Aug 2019 05:08:52 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 41AC94A570;
+	Thu, 22 Aug 2019 05:25:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.202
@@ -16,47 +16,45 @@ X-Spam-Status: No, score=-4.202 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id umB5iFjFx6XR; Thu, 22 Aug 2019 05:08:52 -0400 (EDT)
+	with ESMTP id Oxw8lA4JUSiU; Thu, 22 Aug 2019 05:25:22 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 69B294A53B;
-	Thu, 22 Aug 2019 05:08:51 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0BB904A561;
+	Thu, 22 Aug 2019 05:25:21 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 46E3A4A52B
- for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Aug 2019 05:08:50 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A2AC14A556
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Aug 2019 05:25:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 1mybpyebtnw5 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 22 Aug 2019 05:08:49 -0400 (EDT)
+ with ESMTP id w0iwcnmX1jAW for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 22 Aug 2019 05:25:18 -0400 (EDT)
 Received: from mx1.redhat.com (mx1.redhat.com [209.132.183.28])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3C0E94A4DF
- for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Aug 2019 05:08:49 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8C7074A553
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Aug 2019 05:25:18 -0400 (EDT)
 Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com
  [10.5.11.22])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mx1.redhat.com (Postfix) with ESMTPS id 77D0E308403B;
- Thu, 22 Aug 2019 09:08:48 +0000 (UTC)
-Received: from [10.36.116.105] (ovpn-116-105.ams2.redhat.com [10.36.116.105])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 9F88210016F3;
- Thu, 22 Aug 2019 09:08:45 +0000 (UTC)
-Subject: Re: Can we boot a 512U kvm guest?
-To: Zenghui Yu <yuzenghui@huawei.com>, kvmarm@lists.cs.columbia.edu,
- qemu-arm@nongnu.org
-References: <86aa9609-7dc9-1461-ae47-f50897cd0875@huawei.com>
-From: Auger Eric <eric.auger@redhat.com>
-Message-ID: <da5c87d6-8b66-75f9-e720-9f1d80a76d7d@redhat.com>
-Date: Thu, 22 Aug 2019 11:08:44 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+ by mx1.redhat.com (Postfix) with ESMTPS id BFFFD85539;
+ Thu, 22 Aug 2019 09:25:17 +0000 (UTC)
+Received: from kamzik.brq.redhat.com (unknown [10.43.2.160])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id A91A61001B36;
+ Thu, 22 Aug 2019 09:25:16 +0000 (UTC)
+Date: Thu, 22 Aug 2019 11:25:14 +0200
+From: Andrew Jones <drjones@redhat.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH] arm64: KVM: Only skip MMIO insn once
+Message-ID: <20190822092514.5opwahkjjpqbbayd@kamzik.brq.redhat.com>
+References: <20190821195030.2569-1-drjones@redhat.com>
+ <177091d5-2d2c-6a75-472c-92702ee98e86@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <86aa9609-7dc9-1461-ae47-f50897cd0875@huawei.com>
-Content-Language: en-US
+Content-Disposition: inline
+In-Reply-To: <177091d5-2d2c-6a75-472c-92702ee98e86@kernel.org>
+User-Agent: NeoMutt/20180716
 X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
 X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16
- (mx1.redhat.com [10.5.110.40]); Thu, 22 Aug 2019 09:08:48 +0000 (UTC)
-Cc: zhang.zhanghailiang@huawei.com, kvm@vger.kernel.org,
- Marc Zyngier <maz@kernel.org>
+ (mx1.redhat.com [10.5.110.28]); Thu, 22 Aug 2019 09:25:17 +0000 (UTC)
+Cc: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -68,57 +66,111 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-SGkgWmVuZ2h1aSwKCk9uIDgvMTMvMTkgMTA6NTAgQU0sIFplbmdodWkgWXUgd3JvdGU6Cj4gSGkg
-Zm9sa3MsCj4gCj4gU2luY2UgY29tbWl0IGUyNTAyOGM4ZGVkMCAoIktWTTogYXJtL2FybTY0OiBC
-dW1wIFZHSUNfVjNfTUFYX0NQVVMgdG8KPiA1MTIiKSwgd2Ugc2VlbWVkIHRvIGJlIGFsbG93ZWQg
-dG8gYm9vdCBhIDUxMlUgZ3Vlc3QuwqAgQnV0IEkgZmFpbGVkIHRvCj4gc3RhcnQgaXQgdXAgd2l0
-aCB0aGUgbGF0ZXN0IFFFTVUuwqAgSSBndWVzcyB0aGVyZSBhcmUgYXQgbGVhc3QgKnR3byoKPiBy
-ZWFzb25zIChsaW1pdGF0aW9ucykuCj4gCj4gRmlyc3QgSSBnb3QgYSBRRU1VIGFib3J0Ogo+IMKg
-wqDCoMKgImt2bV9zZXRfaXJxOiBJbnZhbGlkIGFyZ3VtZW50Igo+IAo+IEVuYWJsZSB0aGUgdHJh
-Y2Vfa3ZtX2lycV9saW5lKCkgdW5kZXIgZGVidWdmcywgd2hlbiBpdCBjb21lZCB3aXRoCj4gdmNw
-dS0yNTYsIEkgZ290Ogo+IMKgwqDCoMKgIkluamVjdCBVTktOT1dOIGludGVycnVwdCAoMyksIHZj
-cHUtPmlkeDogMCwgbnVtOiAyMywgbGV2ZWw6IDAiCj4gYW5kIGt2bV92bV9pb2N0bF9pcnFfbGlu
-ZSgpIHJldHVybnMgLUVJTlZBTCB0byB1c2VyLXNwYWNlLi4uCj4gCj4gU28gdGhlIHRoaW5nIGlz
-IHRoYXQgd2Ugb25seSBoYXZlIDggYml0cyBmb3IgdmNwdV9pbmRleCBmaWVsZCAoWzIzOjE2XSkK
-PiBpbiBLVk1fSVJRX0xJTkUgaW9jdGwuwqAgaXJxX3R5cGUgZmllbGQgd2lsbCBiZSBjb3JydXB0
-ZWQgaWYgd2UgaW5qZWN0IGEKPiBQUEkgdG8gdmNwdS0yNTYsIHdob3NlIHZjcHVfaW5kZXggd2ls
-bCB0YWtlIDkgYml0cy4KPiAKPiBJIHRlbXBvcmFyaWx5IHBhdGNoZWQgdGhlIEtWTSBhbmQgUUVN
-VSB3aXRoIHRoZSBmb2xsb3dpbmcgZGlmZjoKPiAKPiAtLS04PC0tLQo+IGRpZmYgLS1naXQgYS9h
-cmNoL2FybTY0L2luY2x1ZGUvdWFwaS9hc20va3ZtLmgKPiBiL2FyY2gvYXJtNjQvaW5jbHVkZS91
-YXBpL2FzbS9rdm0uaAo+IGluZGV4IDk1NTE2YTQuLjM5YTBmYjEgMTAwNjQ0Cj4gLS0tIGEvYXJj
-aC9hcm02NC9pbmNsdWRlL3VhcGkvYXNtL2t2bS5oCj4gKysrIGIvYXJjaC9hcm02NC9pbmNsdWRl
-L3VhcGkvYXNtL2t2bS5oCj4gQEAgLTMyNSwxMCArMzI1LDEwIEBAIHN0cnVjdCBrdm1fdmNwdV9l
-dmVudHMgewo+IMKgI2RlZmluZcKgwqAgS1ZNX0FSTV9WQ1BVX1RJTUVSX0lSUV9QVElNRVLCoMKg
-wqDCoMKgwqDCoCAxCj4gCj4gwqAvKiBLVk1fSVJRX0xJTkUgaXJxIGZpZWxkIGluZGV4IHZhbHVl
-cyAqLwo+IC0jZGVmaW5lIEtWTV9BUk1fSVJRX1RZUEVfU0hJRlTCoMKgwqDCoMKgwqDCoCAyNAo+
-IC0jZGVmaW5lIEtWTV9BUk1fSVJRX1RZUEVfTUFTS8KgwqDCoMKgwqDCoMKgIDB4ZmYKPiArI2Rl
-ZmluZSBLVk1fQVJNX0lSUV9UWVBFX1NISUZUwqDCoMKgwqDCoMKgwqAgMjgKPiArI2RlZmluZSBL
-Vk1fQVJNX0lSUV9UWVBFX01BU0vCoMKgwqDCoMKgwqDCoCAweGYKPiDCoCNkZWZpbmUgS1ZNX0FS
-TV9JUlFfVkNQVV9TSElGVMKgwqDCoMKgwqDCoMKgIDE2Cj4gLSNkZWZpbmUgS1ZNX0FSTV9JUlFf
-VkNQVV9NQVNLwqDCoMKgwqDCoMKgwqAgMHhmZgo+ICsjZGVmaW5lIEtWTV9BUk1fSVJRX1ZDUFVf
-TUFTS8KgwqDCoMKgwqDCoMKgIDB4ZmZmCj4gwqAjZGVmaW5lIEtWTV9BUk1fSVJRX05VTV9TSElG
-VMKgwqDCoMKgwqDCoMKgIDAKPiDCoCNkZWZpbmUgS1ZNX0FSTV9JUlFfTlVNX01BU0vCoMKgwqDC
-oMKgwqDCoCAweGZmZmYKPiAKPiAtLS04PC0tLQo+IAo+IEl0IG1ha2VzIHRoaW5ncyBhIGJpdCBi
-ZXR0ZXIsIGl0IGFsc28gaW1tZWRpYXRlbHkgQlJFQUtzIHRoZSBhcGkgd2l0aAo+IG9sZCB2ZXJz
-aW9ucy4KPiAKPiAKPiBOZXh0IGNvbWVzIG9uZSBtb3JlIFFFTVUgYWJvcnQgKHdpdGggdGhlICJm
-aXgiIGFib3ZlKToKPiDCoMKgwqDCoCJGYWlsZWQgdG8gc2V0IGRldmljZSBhZGRyZXNzOiBObyBz
-cGFjZSBsZWZ0IG9uIGRldmljZSIKPiAKPiBXZSByZWdpc3RlciB0d28gaW8gZGV2aWNlcyAocmRf
-ZGV2IGFuZCBzZ2lfZGV2KSBvbiBLVk1fTU1JT19CVVMgZm9yCj4gZWFjaCByZWRpc3RyaWJ1dG9y
-LiA1MTIgdmNwdXMgdGFrZSAxMDI0IGlvIGRldmljZXMsIHdoaWNoIGlzIGJleW9uZCB0aGUKPiBt
-YXhpbXVtIGxpbWl0YXRpb24gb2YgdGhlIGN1cnJlbnQga2VybmVsIC0gTlJfSU9CVVNfREVWUyAo
-MTAwMCkuCj4gU28gd2UgZ2V0IGEgRU5PU1BDIGVycm9yIGhlcmUuCgpEbyB5b3UgcGxhbiB0byBz
-ZW5kIGEgcGF0Y2ggZm9yIGluY3JlYXNpbmcgdGhlIE5SX0lPQlVTX0RFVlM/IE90aGVyd2lzZQpJ
-IGNhbiBkbyBpdC4KCllvdSBtZW50aW9uZWQgeW91IHN0YXJ0ZWQgd29ya2luZyBvbiB0aGUgUUVN
-VSBmaXguIERvIHlvdSBwbGFuIHRvIHN1Ym1pdApwYXRjaGVzIHRvIHRoZSBNTCBvciBkbyB5b3Ug
-d2FudCBtZSB0byBhdHRlbXB0IHRvIGZpeCB0aGUgc2l0dWF0aW9uIG9uCnVzZXJzcGFjZT8KClRo
-YW5rcwoKRXJpYwo+IAo+IAo+IEkgZG9uJ3Qga25vdyBpZiB0aGUgc2ltaWxhciBwcm9ibGVtcyBo
-YXZlIGJlZW4gZGlzY3Vzc2VkIGJlZm9yZSBpbiBNTC4KPiBJcyBpdCB0aW1lIHRvIHJlYWxseSBz
-dXBwb3J0IHRoZSA1MTJVIGd1ZXN0Pwo+IAo+IAo+IFRoYW5rcywKPiB6ZW5naHVpCj4gCl9fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCmt2bWFybSBtYWlsaW5n
-IGxpc3QKa3ZtYXJtQGxpc3RzLmNzLmNvbHVtYmlhLmVkdQpodHRwczovL2xpc3RzLmNzLmNvbHVt
-YmlhLmVkdS9tYWlsbWFuL2xpc3RpbmZvL2t2bWFybQo=
+On Thu, Aug 22, 2019 at 09:30:44AM +0100, Marc Zyngier wrote:
+> Hi Drew,
+> 
+> On 21/08/2019 20:50, Andrew Jones wrote:
+> > If after an MMIO exit to userspace a VCPU is immediately run with an
+> > immediate_exit request, such as when a signal is delivered or an MMIO
+> > emulation completion is needed, then the VCPU completes the MMIO
+> > emulation and immediately returns to userspace. As the exit_reason
+> > does not get changed from KVM_EXIT_MMIO in these cases we have to
+> > be careful not to complete the MMIO emulation again, when the VCPU is
+> > eventually run again, because the emulation does an instruction skip
+> > (and doing too many skips would be a waste of guest code :-) We need
+> > to use additional VCPU state to track if the emulation is complete.
+> > As luck would have it, we already have 'mmio_needed', which even
+> > appears to be used in this way by other architectures already.
+> > 
+> > Fixes: 0d640732dbeb ("arm64: KVM: Skip MMIO insn after emulation")
+> > Signed-off-by: Andrew Jones <drjones@redhat.com>
+> > ---
+> >  virt/kvm/arm/arm.c  | 3 ++-
+> >  virt/kvm/arm/mmio.c | 1 +
+> >  2 files changed, 3 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/virt/kvm/arm/arm.c b/virt/kvm/arm/arm.c
+> > index 35a069815baf..322cf9030bbe 100644
+> > --- a/virt/kvm/arm/arm.c
+> > +++ b/virt/kvm/arm/arm.c
+> > @@ -669,7 +669,8 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu, struct kvm_run *run)
+> >  	if (ret)
+> >  		return ret;
+> >  
+> > -	if (run->exit_reason == KVM_EXIT_MMIO) {
+> > +	if (vcpu->mmio_needed) {
+> > +		vcpu->mmio_needed = 0;
+> >  		ret = kvm_handle_mmio_return(vcpu, vcpu->run);
+> >  		if (ret)
+> >  			return ret;
+> > diff --git a/virt/kvm/arm/mmio.c b/virt/kvm/arm/mmio.c
+> > index a8a6a0c883f1..2d9b5e064ae0 100644
+> > --- a/virt/kvm/arm/mmio.c
+> > +++ b/virt/kvm/arm/mmio.c
+> > @@ -201,6 +201,7 @@ int io_mem_abort(struct kvm_vcpu *vcpu, struct kvm_run *run,
+> >  	if (is_write)
+> >  		memcpy(run->mmio.data, data_buf, len);
+> >  	vcpu->stat.mmio_exit_user++;
+> > +	vcpu->mmio_needed	= 1;
+> >  	run->exit_reason	= KVM_EXIT_MMIO;
+> >  	return 0;
+> >  }
+> > 
+> 
+> Thanks for this. That's quite embarrassing. Out of curiosity,
+> how was this spotted?
+
+avocado has a guest execution state snapshotting feature. The feature
+simply periodically uses QEMU's 'info registers' monitor command while
+a guest is running. The monitor command kicks the vcpu to userspace with
+a signal, and since avocado's snapshot rate was set relatively high that
+increased the probability of causing a noticeable (weird things / guest
+crashes) event during guest boot (when MMIO activity is also high). The
+signals correlated with guest crashes lead me to this code.
+
+> 
+> Patch wise, I'd have a small preference for the following (untested)
+> patch, as it keeps the mmio_needed accesses close together, making
+> it easier to read (at least for me). What do you think?
+> 
+> 	M.
+> 
+> diff --git a/virt/kvm/arm/mmio.c b/virt/kvm/arm/mmio.c
+> index a8a6a0c883f1..6af5c91337f2 100644
+> --- a/virt/kvm/arm/mmio.c
+> +++ b/virt/kvm/arm/mmio.c
+> @@ -86,6 +86,12 @@ int kvm_handle_mmio_return(struct kvm_vcpu *vcpu, struct kvm_run *run)
+>  	unsigned int len;
+>  	int mask;
+>  
+> +	/* Detect an already handled MMIO return */
+> +	if (unlikely(!vcpu->mmio_needed))
+> +		return 0;
+> +
+> +	vcpu->mmio_needed = 0;
+> +
+>  	if (!run->mmio.is_write) {
+>  		len = run->mmio.len;
+>  		if (len > sizeof(unsigned long))
+> @@ -188,6 +194,7 @@ int io_mem_abort(struct kvm_vcpu *vcpu, struct kvm_run *run,
+>  	run->mmio.is_write	= is_write;
+>  	run->mmio.phys_addr	= fault_ipa;
+>  	run->mmio.len		= len;
+> +	vcpu->mmio_needed	= 1;
+>  
+>  	if (!ret) {
+>  		/* We handled the access successfully in the kernel. */
+
+That looks good to me. Should I repost?
+
+Thanks,
+drew
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
