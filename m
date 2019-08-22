@@ -2,57 +2,59 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 23402990A4
-	for <lists+kvmarm@lfdr.de>; Thu, 22 Aug 2019 12:23:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA373990D4
+	for <lists+kvmarm@lfdr.de>; Thu, 22 Aug 2019 12:29:58 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9F6704A598;
-	Thu, 22 Aug 2019 06:23:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 670CF4A59A;
+	Thu, 22 Aug 2019 06:29:58 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.799
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KDPFgD2KYkFY; Thu, 22 Aug 2019 06:23:12 -0400 (EDT)
+	with ESMTP id 7EQurhLbKvBa; Thu, 22 Aug 2019 06:29:58 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5E6714A597;
-	Thu, 22 Aug 2019 06:23:11 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 35D5C4A597;
+	Thu, 22 Aug 2019 06:29:57 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0FCEF4A58D
- for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Aug 2019 06:23:10 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DFF814A58E
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Aug 2019 06:29:55 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id D+EP8SgvffsI for <kvmarm@lists.cs.columbia.edu>;
- Thu, 22 Aug 2019 06:23:08 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D69034A563
- for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Aug 2019 06:23:08 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 71380337;
- Thu, 22 Aug 2019 03:23:08 -0700 (PDT)
-Received: from [10.1.197.61] (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id
- 41E723F246; Thu, 22 Aug 2019 03:23:06 -0700 (PDT)
-Subject: Re: Can we boot a 512U kvm guest?
-To: Auger Eric <eric.auger@redhat.com>, Zenghui Yu <yuzenghui@huawei.com>,
- kvmarm@lists.cs.columbia.edu, qemu-arm@nongnu.org
-References: <86aa9609-7dc9-1461-ae47-f50897cd0875@huawei.com>
- <da5c87d6-8b66-75f9-e720-9f1d80a76d7d@redhat.com>
- <fbeb47df-7ea2-04ce-5fe3-a6a6a4751b8b@kernel.org>
- <681f59e8-a193-6d3e-0bcc-5e52f4203868@redhat.com>
-From: Marc Zyngier <maz@kernel.org>
-Organization: Approximate
-Message-ID: <dc78b8af-e761-dc87-982e-1885cfb98100@kernel.org>
-Date: Thu, 22 Aug 2019 11:23:05 +0100
-User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ with ESMTP id GsHorHDUj4Ii for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 22 Aug 2019 06:29:54 -0400 (EDT)
+Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id CF7EE4A58D
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Aug 2019 06:29:53 -0400 (EDT)
+Received: from DGGEMS405-HUB.china.huawei.com (unknown [172.30.72.60])
+ by Forcepoint Email with ESMTP id B334BCD1D3E5D29EB50F;
+ Thu, 22 Aug 2019 18:29:50 +0800 (CST)
+Received: from localhost (10.202.226.61) by DGGEMS405-HUB.china.huawei.com
+ (10.3.19.205) with Microsoft SMTP Server id 14.3.439.0; Thu, 22 Aug 2019
+ 18:29:44 +0800
+Date: Thu, 22 Aug 2019 11:29:30 +0100
+From: Jonathan Cameron <jonathan.cameron@huawei.com>
+To: Steven Price <steven.price@arm.com>
+Subject: Re: [PATCH v3 04/10] KVM: Implement kvm_put_guest()
+Message-ID: <20190822112930.000052db@huawei.com>
+In-Reply-To: <20190821153656.33429-5-steven.price@arm.com>
+References: <20190821153656.33429-1-steven.price@arm.com>
+ <20190821153656.33429-5-steven.price@arm.com>
+Organization: Huawei
+X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; i686-w64-mingw32)
 MIME-Version: 1.0
-In-Reply-To: <681f59e8-a193-6d3e-0bcc-5e52f4203868@redhat.com>
-Content-Language: en-US
-Cc: zhang.zhanghailiang@huawei.com, kvm@vger.kernel.org
+X-Originating-IP: [10.202.226.61]
+X-CFilter-Loop: Reflected
+Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+ linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, Russell
+ King <linux@armlinux.org.uk>, Catalin Marinas <catalin.marinas@arm.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -64,73 +66,64 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-T24gMjIvMDgvMjAxOSAxMDo1MCwgQXVnZXIgRXJpYyB3cm90ZToKPiBIaSBNYXJjLAo+IAo+IE9u
-IDgvMjIvMTkgMTE6MjkgQU0sIE1hcmMgWnluZ2llciB3cm90ZToKPj4gSGkgRXJpYywKPj4KPj4g
-T24gMjIvMDgvMjAxOSAxMDowOCwgQXVnZXIgRXJpYyB3cm90ZToKPj4+IEhpIFplbmdodWksCj4+
-Pgo+Pj4gT24gOC8xMy8xOSAxMDo1MCBBTSwgWmVuZ2h1aSBZdSB3cm90ZToKPj4+PiBIaSBmb2xr
-cywKPj4+Pgo+Pj4+IFNpbmNlIGNvbW1pdCBlMjUwMjhjOGRlZDAgKCJLVk06IGFybS9hcm02NDog
-QnVtcCBWR0lDX1YzX01BWF9DUFVTIHRvCj4+Pj4gNTEyIiksIHdlIHNlZW1lZCB0byBiZSBhbGxv
-d2VkIHRvIGJvb3QgYSA1MTJVIGd1ZXN0LsKgIEJ1dCBJIGZhaWxlZCB0bwo+Pj4+IHN0YXJ0IGl0
-IHVwIHdpdGggdGhlIGxhdGVzdCBRRU1VLsKgIEkgZ3Vlc3MgdGhlcmUgYXJlIGF0IGxlYXN0ICp0
-d28qCj4+Pj4gcmVhc29ucyAobGltaXRhdGlvbnMpLgo+Pj4+Cj4+Pj4gRmlyc3QgSSBnb3QgYSBR
-RU1VIGFib3J0Ogo+Pj4+IMKgwqDCoMKgImt2bV9zZXRfaXJxOiBJbnZhbGlkIGFyZ3VtZW50Igo+
-Pj4+Cj4+Pj4gRW5hYmxlIHRoZSB0cmFjZV9rdm1faXJxX2xpbmUoKSB1bmRlciBkZWJ1Z2ZzLCB3
-aGVuIGl0IGNvbWVkIHdpdGgKPj4+PiB2Y3B1LTI1NiwgSSBnb3Q6Cj4+Pj4gwqDCoMKgwqAiSW5q
-ZWN0IFVOS05PV04gaW50ZXJydXB0ICgzKSwgdmNwdS0+aWR4OiAwLCBudW06IDIzLCBsZXZlbDog
-MCIKPj4+PiBhbmQga3ZtX3ZtX2lvY3RsX2lycV9saW5lKCkgcmV0dXJucyAtRUlOVkFMIHRvIHVz
-ZXItc3BhY2UuLi4KPj4+Pgo+Pj4+IFNvIHRoZSB0aGluZyBpcyB0aGF0IHdlIG9ubHkgaGF2ZSA4
-IGJpdHMgZm9yIHZjcHVfaW5kZXggZmllbGQgKFsyMzoxNl0pCj4+Pj4gaW4gS1ZNX0lSUV9MSU5F
-IGlvY3RsLsKgIGlycV90eXBlIGZpZWxkIHdpbGwgYmUgY29ycnVwdGVkIGlmIHdlIGluamVjdCBh
-Cj4+Pj4gUFBJIHRvIHZjcHUtMjU2LCB3aG9zZSB2Y3B1X2luZGV4IHdpbGwgdGFrZSA5IGJpdHMu
-Cj4+Pj4KPj4+PiBJIHRlbXBvcmFyaWx5IHBhdGNoZWQgdGhlIEtWTSBhbmQgUUVNVSB3aXRoIHRo
-ZSBmb2xsb3dpbmcgZGlmZjoKPj4+Pgo+Pj4+IC0tLTg8LS0tCj4+Pj4gZGlmZiAtLWdpdCBhL2Fy
-Y2gvYXJtNjQvaW5jbHVkZS91YXBpL2FzbS9rdm0uaAo+Pj4+IGIvYXJjaC9hcm02NC9pbmNsdWRl
-L3VhcGkvYXNtL2t2bS5oCj4+Pj4gaW5kZXggOTU1MTZhNC4uMzlhMGZiMSAxMDA2NDQKPj4+PiAt
-LS0gYS9hcmNoL2FybTY0L2luY2x1ZGUvdWFwaS9hc20va3ZtLmgKPj4+PiArKysgYi9hcmNoL2Fy
-bTY0L2luY2x1ZGUvdWFwaS9hc20va3ZtLmgKPj4+PiBAQCAtMzI1LDEwICszMjUsMTAgQEAgc3Ry
-dWN0IGt2bV92Y3B1X2V2ZW50cyB7Cj4+Pj4gwqAjZGVmaW5lwqDCoCBLVk1fQVJNX1ZDUFVfVElN
-RVJfSVJRX1BUSU1FUsKgwqDCoMKgwqDCoMKgIDEKPj4+Pgo+Pj4+IMKgLyogS1ZNX0lSUV9MSU5F
-IGlycSBmaWVsZCBpbmRleCB2YWx1ZXMgKi8KPj4+PiAtI2RlZmluZSBLVk1fQVJNX0lSUV9UWVBF
-X1NISUZUwqDCoMKgwqDCoMKgwqAgMjQKPj4+PiAtI2RlZmluZSBLVk1fQVJNX0lSUV9UWVBFX01B
-U0vCoMKgwqDCoMKgwqDCoCAweGZmCj4+Pj4gKyNkZWZpbmUgS1ZNX0FSTV9JUlFfVFlQRV9TSElG
-VMKgwqDCoMKgwqDCoMKgIDI4Cj4+Pj4gKyNkZWZpbmUgS1ZNX0FSTV9JUlFfVFlQRV9NQVNLwqDC
-oMKgwqDCoMKgwqAgMHhmCj4+Pj4gwqAjZGVmaW5lIEtWTV9BUk1fSVJRX1ZDUFVfU0hJRlTCoMKg
-wqDCoMKgwqDCoCAxNgo+Pj4+IC0jZGVmaW5lIEtWTV9BUk1fSVJRX1ZDUFVfTUFTS8KgwqDCoMKg
-wqDCoMKgIDB4ZmYKPj4+PiArI2RlZmluZSBLVk1fQVJNX0lSUV9WQ1BVX01BU0vCoMKgwqDCoMKg
-wqDCoCAweGZmZgo+Pj4+IMKgI2RlZmluZSBLVk1fQVJNX0lSUV9OVU1fU0hJRlTCoMKgwqDCoMKg
-wqDCoCAwCj4+Pj4gwqAjZGVmaW5lIEtWTV9BUk1fSVJRX05VTV9NQVNLwqDCoMKgwqDCoMKgwqAg
-MHhmZmZmCj4+Pj4KPj4+PiAtLS04PC0tLQo+Pj4+Cj4+Pj4gSXQgbWFrZXMgdGhpbmdzIGEgYml0
-IGJldHRlciwgaXQgYWxzbyBpbW1lZGlhdGVseSBCUkVBS3MgdGhlIGFwaSB3aXRoCj4+Pj4gb2xk
-IHZlcnNpb25zLgo+Pj4+Cj4+Pj4KPj4+PiBOZXh0IGNvbWVzIG9uZSBtb3JlIFFFTVUgYWJvcnQg
-KHdpdGggdGhlICJmaXgiIGFib3ZlKToKPj4+PiDCoMKgwqDCoCJGYWlsZWQgdG8gc2V0IGRldmlj
-ZSBhZGRyZXNzOiBObyBzcGFjZSBsZWZ0IG9uIGRldmljZSIKPj4+Pgo+Pj4+IFdlIHJlZ2lzdGVy
-IHR3byBpbyBkZXZpY2VzIChyZF9kZXYgYW5kIHNnaV9kZXYpIG9uIEtWTV9NTUlPX0JVUyBmb3IK
-Pj4+PiBlYWNoIHJlZGlzdHJpYnV0b3IuIDUxMiB2Y3B1cyB0YWtlIDEwMjQgaW8gZGV2aWNlcywg
-d2hpY2ggaXMgYmV5b25kIHRoZQo+Pj4+IG1heGltdW0gbGltaXRhdGlvbiBvZiB0aGUgY3VycmVu
-dCBrZXJuZWwgLSBOUl9JT0JVU19ERVZTICgxMDAwKS4KPj4+PiBTbyB3ZSBnZXQgYSBFTk9TUEMg
-ZXJyb3IgaGVyZS4KPj4+Cj4+PiBEbyB5b3UgcGxhbiB0byBzZW5kIGEgcGF0Y2ggZm9yIGluY3Jl
-YXNpbmcgdGhlIE5SX0lPQlVTX0RFVlM/IE90aGVyd2lzZQo+Pj4gSSBjYW4gZG8gaXQuCj4+Cj4+
-IEkgcmVhbGx5IHdvbmRlciB3aGV0aGVyIHRoYXQncyBhIHNlbnNpYmxlIHRoaW5nIHRvIGRvIG9u
-IGl0cyBvd24uCj4+Cj4+IExvb2tpbmcgYXQgdGhlIGltcGxlbWVudGF0aW9uIG9mIGt2bV9pb19i
-dXNfcmVnaXN0ZXJfZGV2ICh3aGljaCBjb3BpZXMKPj4gdGhlIHdob2xlIGFycmF5IGVhY2ggdGlt
-ZSB3ZSBpbnNlcnQgYSBkZXZpY2UpLCB3ZSBoYXZlIGFuIG9idmlvdXMgaXNzdWUKPj4gd2l0aCBz
-eXN0ZW1zIHRoYXQgY3JlYXRlIGEgbGFyZ2UgbnVtYmVyIG9mIGRldmljZSBzdHJ1Y3R1cmVzLCBs
-ZWFkaW5nIHRvCj4+IGxhcmdlIHRyYW5zaWVudCBtZW1vcnkgdXNhZ2UgYW5kIHNsb3cgZ3Vlc3Qg
-c3RhcnQuCj4+Cj4+IFdlIGNvdWxkIGFsc28gdHJ5IGFuZCByZWR1Y2UgdGhlIG51bWJlciBvZiBk
-ZXZpY2VzIHdlIGluc2VydCBieSBtYWtpbmcKPj4gdGhlIHJlZGlzdHJpYnV0b3IgYSBzaW5nbGUg
-ZGV2aWNlICh3aGljaCBpdCBpcyBpbiByZWFsaXR5KS4gSXQgcHJvYmFibHkKPj4gbWVhbnMgd2Ug
-bmVlZCB0byBtYWtlIHRoZSBNTUlPIGRlY29kaW5nIG1vcmUgZmxleGlibGUuCj4gCj4gWWVzIGl0
-IG1ha2VzIHNlbnNlLiBJZiBubyBvYmplY3Rpb24sIEkgY2FuIHdvcmsgb24gdGhpcyBhcyBJIGFt
-IHRoZQo+IHNvdXJjZSBvZiB0aGUgbWVzcyA7LSkKClN1cmUsIGlmIHlvdSBoYXZlIHNvbWUgc3Bh
-cmUgYmFuZHdpZHRoLCBmZWVsIGZyZWUgdG8gZ2l2ZSBpdCBhIGdvLiBJJ2QKY2VydGFpbmx5IGxp
-a2UgdG8gc2VlIHRoZSB1c2Vyc3BhY2UgY291bnRlcnBhcnQgdG8gbXkgZWFybGllciBwYXRjaCwg
-YW5kCnNvbWUgYWdyZWVtZW50IG9uIHRoZSBBQkkgY2hhbmdlLgoKVGhhbmtzLAoKCU0uCi0tIApK
-YXp6IGlzIG5vdCBkZWFkLCBpdCBqdXN0IHNtZWxscyBmdW5ueS4uLgpfX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFy
-bUBsaXN0cy5jcy5jb2x1bWJpYS5lZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFp
-bG1hbi9saXN0aW5mby9rdm1hcm0K
+On Wed, 21 Aug 2019 16:36:50 +0100
+Steven Price <steven.price@arm.com> wrote:
+
+> kvm_put_guest() is analogous to put_user() - it writes a single value to
+> the guest physical address. The implementation is built upon put_user()
+> and so it has the same single copy atomic properties.
+> 
+> Signed-off-by: Steven Price <steven.price@arm.com>
+> ---
+>  include/linux/kvm_host.h | 24 ++++++++++++++++++++++++
+>  1 file changed, 24 insertions(+)
+> 
+> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+> index fcb46b3374c6..e154a1897e20 100644
+> --- a/include/linux/kvm_host.h
+> +++ b/include/linux/kvm_host.h
+> @@ -746,6 +746,30 @@ int kvm_write_guest_offset_cached(struct kvm *kvm, struct gfn_to_hva_cache *ghc,
+>  				  unsigned long len);
+>  int kvm_gfn_to_hva_cache_init(struct kvm *kvm, struct gfn_to_hva_cache *ghc,
+>  			      gpa_t gpa, unsigned long len);
+> +
+> +#define __kvm_put_guest(kvm, gfn, offset, value, type)			\
+> +({									\
+> +	unsigned long __addr = gfn_to_hva(kvm, gfn);			\
+> +	type __user *__uaddr = (type __user *)(__addr + offset);	\
+> +	int __ret = 0;							\
+
+Why initialize __ret?
+
+> +									\
+> +	if (kvm_is_error_hva(__addr))					\
+> +		__ret = -EFAULT;					\
+> +	else								\
+> +		__ret = put_user(value, __uaddr);			\
+> +	if (!__ret)							\
+> +		mark_page_dirty(kvm, gfn);				\
+> +	__ret;								\
+> +})
+> +
+> +#define kvm_put_guest(kvm, gpa, value, type)				\
+> +({									\
+> +	gpa_t __gpa = gpa;						\
+> +	struct kvm *__kvm = kvm;					\
+> +	__kvm_put_guest(__kvm, __gpa >> PAGE_SHIFT,			\
+> +			offset_in_page(__gpa), (value), type);		\
+> +})
+> +
+>  int kvm_clear_guest_page(struct kvm *kvm, gfn_t gfn, int offset, int len);
+>  int kvm_clear_guest(struct kvm *kvm, gpa_t gpa, unsigned long len);
+>  struct kvm_memory_slot *gfn_to_memslot(struct kvm *kvm, gfn_t gfn);
+
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
