@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CD8F1A239A
-	for <lists+kvmarm@lfdr.de>; Thu, 29 Aug 2019 20:17:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0971CA239D
+	for <lists+kvmarm@lfdr.de>; Thu, 29 Aug 2019 20:18:06 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 82DB94A57F;
-	Thu, 29 Aug 2019 14:17:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9DE0D4A58E;
+	Thu, 29 Aug 2019 14:18:05 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,43 +18,43 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yB2awir+dGK7; Thu, 29 Aug 2019 14:17:36 -0400 (EDT)
+	with ESMTP id 2aAV4dYfvkG5; Thu, 29 Aug 2019 14:18:05 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 57A944A57E;
-	Thu, 29 Aug 2019 14:17:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 84DDF4A57F;
+	Thu, 29 Aug 2019 14:18:04 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D8D2A4A55E
- for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Aug 2019 14:17:34 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E35864A531
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Aug 2019 14:18:02 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id vwMdZzlgjHee for <kvmarm@lists.cs.columbia.edu>;
- Thu, 29 Aug 2019 14:17:34 -0400 (EDT)
+ with ESMTP id J+IHNQ8KPHLy for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 29 Aug 2019 14:18:02 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id AF8584A551
- for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Aug 2019 14:17:34 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id F33994A52F
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Aug 2019 14:18:01 -0400 (EDT)
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net
  [73.47.72.35])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 2FFF92339E;
- Thu, 29 Aug 2019 18:17:33 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 3A1ED2189D;
+ Thu, 29 Aug 2019 18:18:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1567102653;
- bh=7pQ3zLdVbcKZHrcATLCC4qK5jFKHe/pZSZMuUtpgVME=;
+ s=default; t=1567102681;
+ bh=TRr3eqjeN9vKj8xC4jj12Yb6FOLAm7jqEyir9I4h9EI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=LE/PZcZTFtVXBPqQ6+AF1MLGKn5V82eTj9oyuxRfXBbeFOHbU1PRYCdwU7Uqk7SiM
- lGIEqfJuEkZD8Cd4Wb7PiYDscow05khz/6gbDOcIFCoG2gufDcXk6InQsuofLMreXH
- 2xR5AGBZGKoR0M0wA9Wxh8BFfR8NyoAXPRe2hCzk=
+ b=vQdvdYVhbEQ1G6TCn+lISry9MJ6Xe1QtuftWk7a9MKHkUrgyQFTLTbnBc6qJUQKfj
+ 9cusz36Ef+xP2pL7Wni4MPgzUa31W2NDgL+V4Dx9Wd9nO6iK9xNvUBmIDn8UYdAUgA
+ 7H+W5HLfucGH+C7b2nDUr7Vpft9cf/XSRnXvLjBk=
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 27/27] KVM: arm/arm64: Only skip MMIO insn once
-Date: Thu, 29 Aug 2019 14:16:53 -0400
-Message-Id: <20190829181655.8741-27-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.9 16/16] KVM: arm/arm64: Only skip MMIO insn once
+Date: Thu, 29 Aug 2019 14:17:34 -0400
+Message-Id: <20190829181736.9040-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190829181655.8741-1-sashal@kernel.org>
-References: <20190829181655.8741-1-sashal@kernel.org>
+In-Reply-To: <20190829181736.9040-1-sashal@kernel.org>
+References: <20190829181736.9040-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -98,13 +98,13 @@ Signed-off-by: Andrew Jones <drjones@redhat.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- virt/kvm/arm/mmio.c | 7 +++++++
+ arch/arm/kvm/mmio.c | 7 +++++++
  1 file changed, 7 insertions(+)
 
-diff --git a/virt/kvm/arm/mmio.c b/virt/kvm/arm/mmio.c
+diff --git a/arch/arm/kvm/mmio.c b/arch/arm/kvm/mmio.c
 index 08443a15e6be8..3caee91bca089 100644
---- a/virt/kvm/arm/mmio.c
-+++ b/virt/kvm/arm/mmio.c
+--- a/arch/arm/kvm/mmio.c
++++ b/arch/arm/kvm/mmio.c
 @@ -98,6 +98,12 @@ int kvm_handle_mmio_return(struct kvm_vcpu *vcpu, struct kvm_run *run)
  	unsigned int len;
  	int mask;
