@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9608DA16AC
-	for <lists+kvmarm@lfdr.de>; Thu, 29 Aug 2019 12:50:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD95EA16C1
+	for <lists+kvmarm@lfdr.de>; Thu, 29 Aug 2019 12:51:00 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 27A494A56E;
-	Thu, 29 Aug 2019 06:50:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5D1004A57C;
+	Thu, 29 Aug 2019 06:51:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,43 +18,43 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id sHoYcWLn3Na9; Thu, 29 Aug 2019 06:50:37 -0400 (EDT)
+	with ESMTP id tUndNg0nciIx; Thu, 29 Aug 2019 06:51:00 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 081034A57B;
-	Thu, 29 Aug 2019 06:50:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2FC354A578;
+	Thu, 29 Aug 2019 06:51:00 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 39DF64A561
- for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Aug 2019 06:50:35 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0E6724A546
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Aug 2019 06:50:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id HcO9p11tuYUM for <kvmarm@lists.cs.columbia.edu>;
- Thu, 29 Aug 2019 06:50:34 -0400 (EDT)
+ with ESMTP id R2RASklPHmrX for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 29 Aug 2019 06:50:58 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0D8A34A4F4
- for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Aug 2019 06:50:33 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D3B684A4F4
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Aug 2019 06:50:58 -0400 (EDT)
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net
  [73.47.72.35])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 207282173E;
- Thu, 29 Aug 2019 10:50:32 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 4530423405;
+ Thu, 29 Aug 2019 10:50:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1567075832;
+ s=default; t=1567075858;
  bh=7pQ3zLdVbcKZHrcATLCC4qK5jFKHe/pZSZMuUtpgVME=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=1po/dyOi0EAVgH/Z2L8NrMSjReJSLZonpI5Hzp74vqamTX4ee+1yXkVz6GIqe08cK
- WNpTEWIp5nRyEbPALXsf/EpfvZozo+8mQcuJUk0LTAoz+QHSIrXauBHn0YuDDn8g5S
- 99jG0DLFK+afvp/5Q7/LiEL/Q9htU+g1cPRbPBRo=
+ b=LS0OrBMniI5ZW6KaQ7Z50/ruYA3WNhzSgJ4qO64bSSGSPb0H/JoUEwfSMuOZBFxwx
+ FENuDEVJS21N2hV1u8UghgKpGGX1894q6/UOhXyGExcIypoEugjAGQB3KQiHr0p3z1
+ sCst3y/cyZR7YT+JBMpXUwa1il3NyTckvQeFFYpw=
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 20/29] KVM: arm/arm64: Only skip MMIO insn once
-Date: Thu, 29 Aug 2019 06:50:00 -0400
-Message-Id: <20190829105009.2265-20-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.14 12/14] KVM: arm/arm64: Only skip MMIO insn once
+Date: Thu, 29 Aug 2019 06:50:41 -0400
+Message-Id: <20190829105043.2508-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190829105009.2265-1-sashal@kernel.org>
-References: <20190829105009.2265-1-sashal@kernel.org>
+In-Reply-To: <20190829105043.2508-1-sashal@kernel.org>
+References: <20190829105043.2508-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
