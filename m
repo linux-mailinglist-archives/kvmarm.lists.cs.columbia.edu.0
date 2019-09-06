@@ -2,47 +2,68 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 419F5AB988
-	for <lists+kvmarm@lfdr.de>; Fri,  6 Sep 2019 15:44:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B28FAAB9C3
+	for <lists+kvmarm@lfdr.de>; Fri,  6 Sep 2019 15:50:49 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C976F4A59C;
-	Fri,  6 Sep 2019 09:44:47 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4827E4A5AB;
+	Fri,  6 Sep 2019 09:50:49 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.799
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@linaro.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TWpx5sHkkwzW; Fri,  6 Sep 2019 09:44:47 -0400 (EDT)
+	with ESMTP id CKzb8YjcbvsC; Fri,  6 Sep 2019 09:50:49 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 768F44A58E;
-	Fri,  6 Sep 2019 09:44:46 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4B5304A551;
+	Fri,  6 Sep 2019 09:50:48 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B23C04A536
- for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Sep 2019 09:44:45 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0AD5A4A535
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Sep 2019 09:50:47 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id vF6Cu4KoBOKR for <kvmarm@lists.cs.columbia.edu>;
- Fri,  6 Sep 2019 09:44:42 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3827C4A533
- for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Sep 2019 09:44:42 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C0D5028;
- Fri,  6 Sep 2019 06:44:41 -0700 (PDT)
-Received: from localhost (e113682-lin.copenhagen.arm.com [10.32.144.41])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 54DB43F718;
- Fri,  6 Sep 2019 06:44:41 -0700 (PDT)
-Date: Fri, 6 Sep 2019 15:44:40 +0200
-From: Christoffer Dall <christoffer.dall@arm.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 1/1] KVM: inject data abort if instruction cannot be
- decoded
-Message-ID: <20190906134440.GH4320@e113682-lin.lund.arm.com>
-References: <86r24vrwyh.wl-maz@kernel.org>
+ with ESMTP id Wv2UOj6kcBFz for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  6 Sep 2019 09:50:46 -0400 (EDT)
+Received: from mail-oi1-f196.google.com (mail-oi1-f196.google.com
+ [209.85.167.196])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2825D4A4F4
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Sep 2019 09:50:46 -0400 (EDT)
+Received: by mail-oi1-f196.google.com with SMTP id 7so4981614oip.5
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 06 Sep 2019 06:50:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=M3zKBTNhIg8D+FIn0RZewf6I27LDWwbXRyiB+RiFIt4=;
+ b=QJLxdzCmNOBoOEJcJvHLBetbvlrq02aheoBREc7Fpa35nydqJO0APfx6nad3lCVm28
+ lJ1ZUe0/fJeQUUFgiMPPj6/fbcM9e7OjKrEc1QrYxG5ClkOdWLBjZFFcMIApdjWbuChA
+ GwWqFB90O/OmPDWZFtpAJd0+ch2CJJJrMPGfYnCy8OENP1wN2b8V+IZ2aaVx5mHzHYo+
+ C0QkvjyNgA22hfWbRziRRoMC+Uw8bf7qwZa9iRMstY4NRjAsqoN/eAs29FaHED5FZO7H
+ 9y7wj4KZNLMXXLh1zyjnoa+6KX/HQ1RXmCmVcjWUoO1zek/YPUj/3Er41Lu+SUg8DZJ2
+ YJBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=M3zKBTNhIg8D+FIn0RZewf6I27LDWwbXRyiB+RiFIt4=;
+ b=ax5Hiw5j1u1SfaV/zV1GgjPNoKohcyfadmlPf8jlnsjBTmD5OsUeg4evfclZh1YVBL
+ sCWu2Z0ighBDq/a58hHPTaOKYFXAB5bD9YIQu8dr0Y2MMOjyN6tkhN8vntsIh1FOQOMG
+ mBWvG4s5eYnEZ43xCF4n82cBk4Fu6mCKN9dQ47/4dKgPOHYdaGrmx3vxtZ1UjiZ6qajM
+ lVV2Zf0pjOvHx4FsmyN2QFYbPWW7HmVlPmJIHtLjuf1sMw4VW3nq3EndaM+jqQgYzldY
+ xhQ0oSkRZg/iJrKXG/pH6+Ke16AcjXKFhQGM4gWgA0vHiXhVciHueG0n9QwdgzuHMkvy
+ RqaQ==
+X-Gm-Message-State: APjAAAUqjy+AmE1lq9q8XCbI4UCtnJcBsfwMQTGuz7zVD53i7jwqMo/i
+ Cc5bJ8YMPR7t45Iy2eC3TVtgqMUovDu4P2BkiB6sNg==
+X-Google-Smtp-Source: APXvYqxmXHWpUWZdq9c0hrTTVJDwQytlmXVaK7yqoJ7V8pIYxhd7z8W2/IAM32BufSMj7tAhgV/7VotgrBEcuRvwPrQ=
+X-Received: by 2002:aca:50d8:: with SMTP id e207mr6690938oib.48.1567777845580; 
+ Fri, 06 Sep 2019 06:50:45 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190904180736.29009-1-xypron.glpk@gmx.de>
+ <86r24vrwyh.wl-maz@kernel.org>
  <CAFEAcA-mc6cLmRGdGNOBR0PC1f_VBjvTdAL6xYtKjApx3NoPgQ@mail.gmail.com>
  <86mufjrup7.wl-maz@kernel.org>
  <CAFEAcA9qkqkOTqSVrhTpt-NkZSNXomSBNiWo_D6Kr=QKYRRf=w@mail.gmail.com>
@@ -52,11 +73,15 @@ References: <86r24vrwyh.wl-maz@kernel.org>
  <a58c5f76-641a-8381-2cf3-e52d139c4236@amazon.com>
  <20190906131252.GG4320@e113682-lin.lund.arm.com>
  <CAFEAcA9vwyhAN8uO8=PpaBkBXb0Of4G0jEij7nMrYcnJjSRVjg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA9vwyhAN8uO8=PpaBkBXb0Of4G0jEij7nMrYcnJjSRVjg@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ <28c5c021-7cb0-616b-4215-dd75242c16e6@amazon.com>
+In-Reply-To: <28c5c021-7cb0-616b-4215-dd75242c16e6@amazon.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 6 Sep 2019 14:50:34 +0100
+Message-ID: <CAFEAcA8HH-JeMLZ29h6GidDcLpb_oUHqoyEMJ0buo3hyTBj5jA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] KVM: inject data abort if instruction cannot be
+ decoded
+To: Alexander Graf <graf@amazon.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Heinrich Schuchardt <xypron.glpk@gmx.de>,
  lkml - Kernel Mailing List <linux-kernel@vger.kernel.org>,
  Stefan Hajnoczi <stefanha@redhat.com>, Marc Zyngier <maz@kernel.org>,
@@ -78,54 +103,22 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Sep 06, 2019 at 02:31:42PM +0100, Peter Maydell wrote:
-> On Fri, 6 Sep 2019 at 14:13, Christoffer Dall <christoffer.dall@arm.com> wrote:
-> > I'd prefer leaving it to userspace to worry about, but I thought Peter
-> > said that had been problematic historically, which I took at face value,
-> > but I could have misunderstood.
-> >
-> > If QEMU, kvmtool, and whatever the crazy^H cool kids are using in
-> > userspace these days are happy emulating the exception, then that's a
-> > viable approach.  The main concern I have with that is whether they'll
-> > all get it right, and since we already have the code in the kernel to do
-> > this, it might make sense to re-use the kernel logic for it.
-> 
-> Well, for QEMU we've had code that in theory might do this but
-> in practice it's never been tested. Essentially the problem is
-> that nobody ever wants to inject an exception from userspace
-> except in incredibly rare cases like "trying to use h/w breakpoints
-> simultaneously inside the VM and also to debug the VM from outside"
-> or "we're running on RAS hardware that just told us that the VM's
-> RAM was faulty". There's no even vaguely commonly-used usecase
-> for it today; and this ABI suggestion adds another "this is in
-> practice almost never going to happen" case to the pile. The
-> codepath is unreliable in QEMU because (a) it requires getting
-> syncing of sysreg values to and from the kernel right -- this is
-> about the only situation where userspace wants to modify sysregs
-> during execution of the VM, as opposed to just reading them -- and
-> (b) we try to reuse the code we already have that does TCG exception
-> injection, which might or might not be a design mistake, and
-> (c) as noted above it's a never-actually-used untested codepath...
-> 
-> So I think if I were you I wouldn't commit to the kernel ABI until
-> somebody had at least written some RFC-quality patches for QEMU and
-> tested that they work and the ABI is OK in that sense. (For the
-> avoidance of doubt, I'm not volunteering to do that myself.)
-> I don't object to the idea in principle, though.
-> 
-> PS: the other "injecting exceptions to the guest" oddity is that
-> if the kernel *does* find the ISV information and returns to userspace
-> for it to handle the MMIO, there's no way for userspace to say
-> "actually that address is supposed to generate a data abort".
-> 
+On Fri, 6 Sep 2019 at 14:41, Alexander Graf <graf@amazon.com> wrote:
+> On 06.09.19 15:31, Peter Maydell wrote:
+> > (b) we try to reuse the code we already have that does TCG exception
+> > injection, which might or might not be a design mistake, and
+>
+> That's probably a design mistake, correct :)
 
-That's a good point.  A synchronous interface with a separate mechanism
-to ask the kernel to inject an exception might be a good solution, if
-there's an elegant way to do the latter.  I'll have a look at that.
+Well, conceptually it's not necessarily a bad idea, because
+in both cases what we're doing is "change the system register
+state (PC, ESR_EL1, ELR_EL1 etc) so that the CPU looks like
+it's just taken an exception"; but some of what the
+TCG code needs to do isn't necessary for KVM and all of it
+was not written with the idea of KVM in mind at all...
 
-Thanks,
-
-    Christoffer
+thanks
+-- PMM
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
