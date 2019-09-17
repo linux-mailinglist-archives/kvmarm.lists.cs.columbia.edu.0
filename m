@@ -2,89 +2,52 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id F02E7B404D
-	for <lists+kvmarm@lfdr.de>; Mon, 16 Sep 2019 20:29:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40267B4576
+	for <lists+kvmarm@lfdr.de>; Tue, 17 Sep 2019 04:15:57 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 804784A5A9;
-	Mon, 16 Sep 2019 14:29:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E53F14A68D;
+	Mon, 16 Sep 2019 22:15:55 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@sifive.com
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id U3h+kKH9OAM5; Mon, 16 Sep 2019 14:29:08 -0400 (EDT)
+	with ESMTP id 8BuWjv8ml+Tx; Mon, 16 Sep 2019 22:15:55 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8F9BB4A5D5;
-	Mon, 16 Sep 2019 14:29:05 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DC5524A665;
+	Mon, 16 Sep 2019 22:15:54 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 15CA94A597
- for <kvmarm@lists.cs.columbia.edu>; Mon, 16 Sep 2019 14:29:04 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id F1B8A4A5CF
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 16 Sep 2019 22:15:53 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id fBFLr8RuMOpM for <kvmarm@lists.cs.columbia.edu>;
- Mon, 16 Sep 2019 14:29:00 -0400 (EDT)
-Received: from mail-pl1-f193.google.com (mail-pl1-f193.google.com
- [209.85.214.193])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3DA1B4A588
- for <kvmarm@lists.cs.columbia.edu>; Mon, 16 Sep 2019 14:29:00 -0400 (EDT)
-Received: by mail-pl1-f193.google.com with SMTP id d22so270351pll.7
- for <kvmarm@lists.cs.columbia.edu>; Mon, 16 Sep 2019 11:29:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sifive.com; s=google;
- h=date:subject:in-reply-to:cc:from:to:message-id:mime-version
- :content-transfer-encoding;
- bh=Jp6I/WhdjgXBrLm8XFTV/W2CbBlPUTPrifY9W91dfHI=;
- b=SgPNHmHUI3s6Y5U+Q0BVqT7wuZAahYN9Sp7bvK/WkhmSDCYSm5A+2HKPWAwtkqtGXp
- 9J3gPqcUCHFjkPsRUuU3/KOZR1hYBqyd/MNpI1ipdxi9pUvmGf4l8CrTHsTBzP2tIBQ8
- hFmy5Ft2frUue4ny34BBNvYMvx8XYRjMj04QJzEGKwueGRY2SpndnAROT9qoBFdw5EJm
- pmSgIzCOb60ekhNb5wLkLoTTOYA6xXYpqBLK5btuPldjQ2T2RWcShbymrS2g+P20jTDk
- J+EEppal95vaxj+HdoxekXNZMooOdG9AHCiBegMOADmYTE4Cj6LN4ZjAIM8hUT2YUY+H
- p7Sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:subject:in-reply-to:cc:from:to:message-id
- :mime-version:content-transfer-encoding;
- bh=Jp6I/WhdjgXBrLm8XFTV/W2CbBlPUTPrifY9W91dfHI=;
- b=QFQTIyHHhanqoZXt4Hdlc1QLPbyoVzcPobMwJ+g7+eJC7ZN0TOax9zXIdC6dYygZcq
- i1JeqW83KRIIbz7y0Yde6Fv19+yfTBYm3+nCooZxp9ybUMt+qTTV5iSyIdDeWi0sfxlE
- o46cbtmRJ5mYnee3QB72mZsS05JTbaRFhZv+4V42D4RQWehWb5BDIuhDekxSehhSXePy
- DwRE7/cGMuYWSlbMW09aDxFaFIOQPsQD5dc/jZAVPFjwua1LTVmBz7XZd704EigpTKWe
- VxnyV+lliKWMymOq1rnn17J9djXdkCKOBszhlQKy22Wh2QjnLsG8tp9ofizXKgL1eaFo
- dG0w==
-X-Gm-Message-State: APjAAAXk6Z2Z2UlWQNA/cz8kEjClLyxJekpKq644ZUqOYHKefkq9qrEL
- QViMLOPgCwi200yENGKzl9WjGQ==
-X-Google-Smtp-Source: APXvYqyPLzCNMj7vNHvNiodpwn0FVuHbfPgpqBsoZRBBK2pBoeehbEWH1qRowZP5cnYDV+iwsY1UPQ==
-X-Received: by 2002:a17:902:5a44:: with SMTP id
- f4mr1093510plm.31.1568658539014; 
- Mon, 16 Sep 2019 11:28:59 -0700 (PDT)
-Received: from localhost ([12.206.222.5])
- by smtp.gmail.com with ESMTPSA id a4sm12595350pfn.110.2019.09.16.11.28.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Sep 2019 11:28:58 -0700 (PDT)
-Date: Mon, 16 Sep 2019 11:28:58 -0700 (PDT)
-X-Google-Original-Date: Mon, 16 Sep 2019 11:28:52 PDT (-0700)
-Subject: Re: [PATCH RFC 11/14] arm64: Move the ASID allocator code in a
- separate file
-In-Reply-To: <20190916181800.7lfpt3t627byoomt@willie-the-truck>
-From: Palmer Dabbelt <palmer@sifive.com>
-To: will@kernel.org
-Message-ID: <mhng-11e0cc7f-264b-4412-9424-2357bc27dcb3@palmer-si-x1c4>
-Mime-Version: 1.0 (MHng)
-Cc: catalin.marinas@arm.com, Will Deacon <will.deacon@arm.com>,
- Atish Patra <Atish.Patra@wdc.com>, julien.grall@arm.com, guoren@kernel.org,
- gary@garyguo.net, linux-riscv@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, rppt@linux.ibm.com,
- Christoph Hellwig <hch@infradead.org>, aou@eecs.berkeley.edu,
- Arnd Bergmann <arnd@arndb.de>, marc.zyngier@arm.com,
- Paul Walmsley <paul.walmsley@sifive.com>, linux-arm-kernel@lists.infradead.org,
- Anup Patel <Anup.Patel@wdc.com>, linux-kernel@vger.kernel.org,
- iommu@lists.linux-foundation.org
+ with ESMTP id DXarSt17tLzd for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 16 Sep 2019 22:15:52 -0400 (EDT)
+Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 65C084A5C4
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 16 Sep 2019 22:15:52 -0400 (EDT)
+Received: from DGGEMS404-HUB.china.huawei.com (unknown [172.30.72.59])
+ by Forcepoint Email with ESMTP id 5B4ADCE8CECF440A3F7E;
+ Tue, 17 Sep 2019 10:15:49 +0800 (CST)
+Received: from [127.0.0.1] (10.74.221.148) by DGGEMS404-HUB.china.huawei.com
+ (10.3.19.204) with Microsoft SMTP Server id 14.3.439.0; Tue, 17 Sep 2019
+ 10:15:42 +0800
+To: <linux-arm-kernel@lists.infradead.org>, <kvmarm@lists.cs.columbia.edu>
+From: Shaokun Zhang <zhangshaokun@hisilicon.com>
+Subject: [Question-GIC-v4.1] Plan on GIC-v4.1 driver development
+Message-ID: <40d7276c-54a3-0cca-a207-217459850c21@hisilicon.com>
+Date: Tue, 17 Sep 2019 10:15:41 +0800
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.1
+MIME-Version: 1.0
+X-Originating-IP: [10.74.221.148]
+X-CFilter-Loop: Reflected
+Cc: Marc Zyngier <maz@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -96,87 +59,22 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, 16 Sep 2019 11:18:00 PDT (-0700), will@kernel.org wrote:
-> On Sun, Sep 15, 2019 at 05:03:38AM +0000, Anup Patel wrote:
->>
->>
->> > -----Original Message-----
->> > From: linux-kernel-owner@vger.kernel.org <linux-kernel-
->> > owner@vger.kernel.org> On Behalf Of Palmer Dabbelt
->> > Sent: Saturday, September 14, 2019 7:31 PM
->> > To: will@kernel.org
->> > Cc: guoren@kernel.org; Will Deacon <will.deacon@arm.com>;
->> > julien.thierry@arm.com; aou@eecs.berkeley.edu; james.morse@arm.com;
->> > Arnd Bergmann <arnd@arndb.de>; suzuki.poulose@arm.com;
->> > marc.zyngier@arm.com; catalin.marinas@arm.com; Anup Patel
->> > <Anup.Patel@wdc.com>; linux-kernel@vger.kernel.org;
->> > rppt@linux.ibm.com; Christoph Hellwig <hch@infradead.org>; Atish Patra
->> > <Atish.Patra@wdc.com>; julien.grall@arm.com; gary@garyguo.net; Paul
->> > Walmsley <paul.walmsley@sifive.com>; christoffer.dall@arm.com; linux-
->> > riscv@lists.infradead.org; kvmarm@lists.cs.columbia.edu; linux-arm-
->> > kernel@lists.infradead.org; iommu@lists.linux-foundation.org
->> > Subject: Re: [PATCH RFC 11/14] arm64: Move the ASID allocator code in a
->> > separate file
->> >
->> > On Thu, 12 Sep 2019 07:02:56 PDT (-0700), will@kernel.org wrote:
->> > > On Sun, Sep 08, 2019 at 07:52:55AM +0800, Guo Ren wrote:
->> > >> On Mon, Jun 24, 2019 at 6:40 PM Will Deacon <will@kernel.org> wrote:
->> > >> > > I'll keep my system use the same ASID for SMP + IOMMU :P
->> > >> >
->> > >> > You will want a separate allocator for that:
->> > >> >
->> > >> > https://lkml.kernel.org/r/20190610184714.6786-2-jean-philippe.bruck
->> > >> > er@arm.com
->> > >>
->> > >> Yes, it is hard to maintain ASID between IOMMU and CPUMMU or
->> > >> different system, because it's difficult to synchronize the IO_ASID
->> > >> when the CPU ASID is rollover.
->> > >> But we could still use hardware broadcast TLB invalidation
->> > >> instruction to uniformly manage the ASID and IO_ASID, or OTHER_ASID in
->> > our IOMMU.
->> > >
->> > > That's probably a bad idea, because you'll likely stall execution on
->> > > the CPU until the IOTLB has completed invalidation. In the case of
->> > > ATS, I think an endpoint ATC is permitted to take over a minute to
->> > > respond. In reality, I suspect the worst you'll ever see would be in
->> > > the msec range, but that's still an unacceptable period of time to hold a
->> > CPU.
->> > >
->> > >> Welcome to join our disscusion:
->> > >> "Introduce an implementation of IOMMU in linux-riscv"
->> > >> 9 Sep 2019, 10:45 Jade-room-I&II (Corinthia Hotel Lisbon) RISC-V MC
->> > >
->> > > I attended this session, but it unfortunately raised many more
->> > > questions than it answered.
->> >
->> > Ya, we're a long way from figuring this out.
->>
->> For everyone's reference, here is our first attempt at RISC-V ASID allocator:
->> http://archive.lwn.net:8080/linux-kernel/20190329045111.14040-1-anup.patel@wdc.com/T/#u
->
-> With a reply stating that the patch "absolutely does not work" ;)
->
-> What exactly do you want people to do with that? It's an awful lot of effort
-> to review this sort of stuff and given that Guo Ren is talking about sharing
-> page tables between the CPU and an accelerator, maybe you're better off
-> stabilising Linux for the platforms that you can actually test rather than
-> getting so far ahead of yourselves that you end up with a bunch of wasted
-> work on patches that probably won't get merged any time soon.
->
-> Seriously, they say "walk before you can run", but this is more "crawl
-> before you can fly". What's the rush?
+Hi Marc,
 
-I agree, and I think I've been pretty clear here: we're not merging this ASID 
-stuff until we have a platform we can test on, particularly as the platforms we 
-have now already need some wacky hacks around TLB flushing that we haven't 
-gotten to the bottom of.
+This is from Nianyao Tang.
 
-> Will
+I'm planning to do some verification on our GIC-v4.1 implement. I would like some
+information about linux GIC-v4.1 driver. When will linux support GIC-v4.1 or what's
+the plan on developing GIC-v4.1 driver?
+
+Thanks,
+Nianyao.
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
