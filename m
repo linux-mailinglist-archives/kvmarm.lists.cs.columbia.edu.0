@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DCF9B700A
-	for <lists+kvmarm@lfdr.de>; Thu, 19 Sep 2019 02:23:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 829E6B7009
+	for <lists+kvmarm@lfdr.de>; Thu, 19 Sep 2019 02:23:44 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DD8B64A693;
-	Wed, 18 Sep 2019 20:23:44 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BF1684A688;
+	Wed, 18 Sep 2019 20:23:43 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.908
@@ -14,48 +14,48 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.908 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
 	RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01]
-	autolearn=no
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@ozlabs.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8FIgW9kBRVLX; Wed, 18 Sep 2019 20:23:43 -0400 (EDT)
+	with ESMTP id bPPr+fmGRxBz; Wed, 18 Sep 2019 20:23:43 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CF7374A6A3;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B78EB4A685;
 	Wed, 18 Sep 2019 20:23:42 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D3C4A4A67A
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D53104A67B
  for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Sep 2019 20:23:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id wBej4gfj6CuG for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id tLyq4TlooYS7 for <kvmarm@lists.cs.columbia.edu>;
  Wed, 18 Sep 2019 20:23:38 -0400 (EDT)
-Received: from ozlabs.org (ozlabs.org [203.11.71.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id CB0214A5FF
+Received: from ozlabs.org (bilbo.ozlabs.org [203.11.71.1])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E2E084A679
  for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Sep 2019 20:23:37 -0400 (EDT)
 Received: by ozlabs.org (Postfix, from userid 1003)
- id 46YcyX5cBKz9sNf; Thu, 19 Sep 2019 10:23:32 +1000 (AEST)
+ id 46YcyX6FPFz9sNF; Thu, 19 Sep 2019 10:23:32 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ozlabs.org; s=201707;
- t=1568852612; bh=cu6MqzQ+Jjg6jBgAMHqPfsdtuEEEpXwelfg4ezvXdsY=;
+ t=1568852612; bh=cw3bVSIKyGLl8fd6W8ykuEcHQm9lvtEQ4ISh1Suv21A=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Nt4NYXLQPNaOq5EaXwA6J6CUQqtE4sYHQnvkHZSOhCjqqWJ01CdAB4tfDaD7elmpm
- n8+n+jy0vrYBX7bhjUejT61fggDfeR0cgCIUnTuqNkpIC0IXNlLj5BQyxdJITIPcBR
- mnSFYsZrVTQqPYzswqowK1En17cvpVKAST5slijgNdV7bpZykh7hDKsvP4WJVNLb/9
- Ol1XIqjO/OL2LCmIx/vGzkgBlQMKHpTE8RacF1q2tw33WNlisVf3Zmdf+cisE74bOX
- ghUTBd1CuYuzqzcB8Zaw4KJe2JcyTf9IC7kOu6x2wrhVjXAyrW69MyKAvq+7wse73h
- GRj1zPawfFkIQ==
-Date: Thu, 19 Sep 2019 10:22:42 +1000
+ b=R3NvO9RHRrBeHenKeGVQwRwaNzl90QJKU91Oh5UtKsnjPccYcuWsO/+sjMOyqwX7L
+ qXGlMsp052mihy0ZJJ2eIVJLqlRGa9kQM/LgVKA7ED5dZy2xxDU0F7hWJ5Tp54i1Oj
+ k55td7N92nS1j9aJa2rikaxwZ/Rett3ejrVCl2Y6XgJzt/d7qDn+ismHBncyRTAYV+
+ hS8OCe+151b9IycINykjKDkPYC/8MG9vZUkPbnlESnKeZ09ZuP4shL0f/tklBl/8Uc
+ RZALg8LGgjsbVJ+XmBlldREITO6j39TWleHK6T7JSCMg1LLpCOuW1Dvvlzw9Z/mO8v
+ uxbb98hT109Jg==
+Date: Thu, 19 Sep 2019 10:23:28 +1000
 From: Paul Mackerras <paulus@ozlabs.org>
 To: Sean Christopherson <sean.j.christopherson@intel.com>
-Subject: Re: [PATCH 10/13] KVM: Provide common implementation for generic
- dirty log functions
-Message-ID: <20190919002242.GA19503@blackberry>
+Subject: Re: [PATCH 02/13] KVM: PPC: Move memslot memory allocation into
+ prepare_memory_region()
+Message-ID: <20190919002328.GB19503@blackberry>
 References: <20190911185038.24341-1-sean.j.christopherson@intel.com>
- <20190911185038.24341-11-sean.j.christopherson@intel.com>
+ <20190911185038.24341-3-sean.j.christopherson@intel.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20190911185038.24341-11-sean.j.christopherson@intel.com>
+In-Reply-To: <20190911185038.24341-3-sean.j.christopherson@intel.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Cc: Cornelia Huck <cohuck@redhat.com>, Wanpeng Li <wanpengli@tencent.com>,
  Janosch Frank <frankja@linux.ibm.com>, kvm@vger.kernel.org,
@@ -82,26 +82,19 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Sep 11, 2019 at 11:50:35AM -0700, Sean Christopherson wrote:
-> Move the implementations of KVM_GET_DIRTY_LOG and KVM_CLEAR_DIRTY_LOG
-> for CONFIG_KVM_GENERIC_DIRTYLOG_READ_PROTECT into common KVM code.
-> The arch specific implemenations are extremely similar, differing
-> only in whether the dirty log needs to be sync'd from hardware (x86)
-> and how the TLBs are flushed.  Add new arch hooks to handle sync
-> and TLB flush; the sync will also be used for non-generic dirty log
-> support in a future patch (s390).
+On Wed, Sep 11, 2019 at 11:50:27AM -0700, Sean Christopherson wrote:
+> Allocate the rmap array during kvm_arch_prepare_memory_region() to pave
+> the way for removing kvm_arch_create_memslot() altogether.  Moving PPC's
+> memory allocation only changes the order of kernel memory allocations
+> between PPC and common KVM code.
 > 
-> The ulterior motive for providing a common implementation is to
-> eliminate the dependency between arch and common code with respect to
-> the memslot referenced by the dirty log, i.e. to make it obvious in the
-> code that the validity of the memslot is guaranteed, as a future patch
-> will rework memslot handling such that id_to_memslot() can return NULL.
+> No functional change intended.
+> 
+> Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
 
-I notice you add empty definitions of kvm_arch_sync_dirty_log() for
-PPC, both Book E and Book 3S.  Given that PPC doesn't select
-CONFIG_KVM_GENERIC_DIRTYLOG_READ_PROTECT, why is this necessary?
+Seems OK.
 
-Paul.
+Acked-by: Paul Mackerras <paulus@ozlabs.org>
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
