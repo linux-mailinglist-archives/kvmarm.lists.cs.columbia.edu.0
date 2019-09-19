@@ -2,70 +2,56 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 829E6B7009
-	for <lists+kvmarm@lfdr.de>; Thu, 19 Sep 2019 02:23:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DB28B711D
+	for <lists+kvmarm@lfdr.de>; Thu, 19 Sep 2019 03:32:27 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BF1684A688;
-	Wed, 18 Sep 2019 20:23:43 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1D01F4A6B2;
+	Wed, 18 Sep 2019 21:32:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.908
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=0.908 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01]
-	autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@ozlabs.org
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bPPr+fmGRxBz; Wed, 18 Sep 2019 20:23:43 -0400 (EDT)
+	with ESMTP id pHUBUTeE76e8; Wed, 18 Sep 2019 21:32:27 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B78EB4A685;
-	Wed, 18 Sep 2019 20:23:42 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2027B4A698;
+	Wed, 18 Sep 2019 21:32:26 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D53104A67B
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Sep 2019 20:23:40 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EA7F54A60A
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Sep 2019 21:32:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id tLyq4TlooYS7 for <kvmarm@lists.cs.columbia.edu>;
- Wed, 18 Sep 2019 20:23:38 -0400 (EDT)
-Received: from ozlabs.org (bilbo.ozlabs.org [203.11.71.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E2E084A679
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Sep 2019 20:23:37 -0400 (EDT)
-Received: by ozlabs.org (Postfix, from userid 1003)
- id 46YcyX6FPFz9sNF; Thu, 19 Sep 2019 10:23:32 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ozlabs.org; s=201707;
- t=1568852612; bh=cw3bVSIKyGLl8fd6W8ykuEcHQm9lvtEQ4ISh1Suv21A=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=R3NvO9RHRrBeHenKeGVQwRwaNzl90QJKU91Oh5UtKsnjPccYcuWsO/+sjMOyqwX7L
- qXGlMsp052mihy0ZJJ2eIVJLqlRGa9kQM/LgVKA7ED5dZy2xxDU0F7hWJ5Tp54i1Oj
- k55td7N92nS1j9aJa2rikaxwZ/Rett3ejrVCl2Y6XgJzt/d7qDn+ismHBncyRTAYV+
- hS8OCe+151b9IycINykjKDkPYC/8MG9vZUkPbnlESnKeZ09ZuP4shL0f/tklBl/8Uc
- RZALg8LGgjsbVJ+XmBlldREITO6j39TWleHK6T7JSCMg1LLpCOuW1Dvvlzw9Z/mO8v
- uxbb98hT109Jg==
-Date: Thu, 19 Sep 2019 10:23:28 +1000
-From: Paul Mackerras <paulus@ozlabs.org>
-To: Sean Christopherson <sean.j.christopherson@intel.com>
-Subject: Re: [PATCH 02/13] KVM: PPC: Move memslot memory allocation into
- prepare_memory_region()
-Message-ID: <20190919002328.GB19503@blackberry>
-References: <20190911185038.24341-1-sean.j.christopherson@intel.com>
- <20190911185038.24341-3-sean.j.christopherson@intel.com>
+ with ESMTP id 6roZCWZiJRdx for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 18 Sep 2019 21:32:23 -0400 (EDT)
+Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 35A104A5D5
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Sep 2019 21:32:23 -0400 (EDT)
+Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.59])
+ by Forcepoint Email with ESMTP id 3E865353E65584EF064B;
+ Thu, 19 Sep 2019 09:32:20 +0800 (CST)
+Received: from [127.0.0.1] (10.74.221.148) by DGGEMS406-HUB.china.huawei.com
+ (10.3.19.206) with Microsoft SMTP Server id 14.3.439.0; Thu, 19 Sep 2019
+ 09:32:12 +0800
+Subject: Re: [Question-GIC-v4.1] Plan on GIC-v4.1 driver development
+To: Marc Zyngier <maz@kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <kvmarm@lists.cs.columbia.edu>
+References: <40d7276c-54a3-0cca-a207-217459850c21@hisilicon.com>
+ <0501c049-67a6-9a63-e0d9-e043573e1211@kernel.org>
+ <c9bdf5bc-4787-2f09-9e8b-60d69aa8754b@kernel.org>
+From: Shaokun Zhang <zhangshaokun@hisilicon.com>
+Message-ID: <2d1b3d11-1f90-40c1-8f88-45532111c53c@hisilicon.com>
+Date: Thu, 19 Sep 2019 09:32:12 +0800
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.1.1
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20190911185038.24341-3-sean.j.christopherson@intel.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: Cornelia Huck <cohuck@redhat.com>, Wanpeng Li <wanpengli@tencent.com>,
- Janosch Frank <frankja@linux.ibm.com>, kvm@vger.kernel.org,
- Marc Zyngier <marc.zyngier@arm.com>, James Hogan <jhogan@kernel.org>,
- Joerg Roedel <joro@8bytes.org>, David Hildenbrand <david@redhat.com>,
- linux-mips@vger.kernel.org, kvm-ppc@vger.kernel.org,
- linux-kernel@vger.kernel.org, Christian Borntraeger <borntraeger@de.ibm.com>,
- linux-arm-kernel@lists.infradead.org, Paolo Bonzini <pbonzini@redhat.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, kvmarm@lists.cs.columbia.edu,
- Jim Mattson <jmattson@google.com>
+In-Reply-To: <c9bdf5bc-4787-2f09-9e8b-60d69aa8754b@kernel.org>
+X-Originating-IP: [10.74.221.148]
+X-CFilter-Loop: Reflected
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -82,19 +68,45 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Sep 11, 2019 at 11:50:27AM -0700, Sean Christopherson wrote:
-> Allocate the rmap array during kvm_arch_prepare_memory_region() to pave
-> the way for removing kvm_arch_create_memslot() altogether.  Moving PPC's
-> memory allocation only changes the order of kernel memory allocations
-> between PPC and common KVM code.
-> 
-> No functional change intended.
-> 
-> Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
+Hi Marc,
 
-Seems OK.
+On 2019/9/18 17:58, Marc Zyngier wrote:
+> On 17/09/2019 10:23, Marc Zyngier wrote:
+>> On 17/09/2019 03:15, Shaokun Zhang wrote:
+>>> Hi Marc,
+>>>
+>>> This is from Nianyao Tang.
+>>>
+>>> I'm planning to do some verification on our GIC-v4.1 implement. I would like some
+>>> information about linux GIC-v4.1 driver. When will linux support GIC-v4.1 or what's
+>>> the plan on developing GIC-v4.1 driver?
+>>
+>> The easy answer is that yes, there is a plan. There is some code, even,
+>> just not quite in a usable state yet. I'll try to push something out
+>> once I get a chance.
+> 
+> FWIW, I've pushed out a branch containing the current state of this work
+> at [1]. It doesn't really work at the moment (Doorbells and SGIs are
+> unreliable), but hopefully that will give you an idea of what is going on.
+> 
 
-Acked-by: Paul Mackerras <paulus@ozlabs.org>
+Thank you, it is really helpful. I will check on this code first. If have any doubt,
+I will 'noise' you again ;-)
+
+Thanks in advance,
+Shaokun
+
+> Being a work in progress, it is unstable, subject to being changed,
+> rebased and deleted without warning.
+> 
+> Thanks,
+> 
+> 	M.
+> 
+> [1]
+> https://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git/log/?h=irq/gic-v4.1-devel
+> 
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
