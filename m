@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E411ABBB85
-	for <lists+kvmarm@lfdr.de>; Mon, 23 Sep 2019 20:28:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21969BBB86
+	for <lists+kvmarm@lfdr.de>; Mon, 23 Sep 2019 20:28:25 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9978E4A67D;
-	Mon, 23 Sep 2019 14:28:21 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C48724A68D;
+	Mon, 23 Sep 2019 14:28:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
@@ -15,33 +15,33 @@ X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XKIyti7DzMkJ; Mon, 23 Sep 2019 14:28:21 -0400 (EDT)
+	with ESMTP id mSyYbhngbwHG; Mon, 23 Sep 2019 14:28:24 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9BD864A654;
-	Mon, 23 Sep 2019 14:28:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B71654A68A;
+	Mon, 23 Sep 2019 14:28:23 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A167A4A5AC
- for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Sep 2019 14:28:19 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A267D4A4FE
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Sep 2019 14:28:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id uVq4oV57y2fE for <kvmarm@lists.cs.columbia.edu>;
- Mon, 23 Sep 2019 14:28:18 -0400 (EDT)
+ with ESMTP id n-0tWv+eNUl8 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 23 Sep 2019 14:28:21 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 543044A68E
- for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Sep 2019 14:28:18 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9BD014A657
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Sep 2019 14:28:21 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 09DEF2972;
- Mon, 23 Sep 2019 11:28:18 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 668392A68;
+ Mon, 23 Sep 2019 11:28:21 -0700 (PDT)
 Received: from big-swifty.lan (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0E8623F694;
- Mon, 23 Sep 2019 11:28:14 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9DD6E3F694;
+ Mon, 23 Sep 2019 11:28:18 -0700 (PDT)
 From: Marc Zyngier <maz@kernel.org>
 To: kvmarm@lists.cs.columbia.edu,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 30/35] irqchip/gic-v4.1: Add VSGI property setup
-Date: Mon, 23 Sep 2019 19:26:01 +0100
-Message-Id: <20190923182606.32100-31-maz@kernel.org>
+Subject: [PATCH 31/35] irqchip/gic-v4.1: Eagerly vmap vPEs
+Date: Mon, 23 Sep 2019 19:26:02 +0100
+Message-Id: <20190923182606.32100-32-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190923182606.32100-1-maz@kernel.org>
 References: <20190923182606.32100-1-maz@kernel.org>
@@ -64,50 +64,92 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add the SGI configuration entry point for KVM to use.
+Now that we have HW-accelerated SGIs being delivered to VPEs, it
+becomes required to map the VPEs on all ITSs instead of relying
+on the lazy approach that we would use when using the ITS-list
+mechanism.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- drivers/irqchip/irq-gic-v4.c       | 13 +++++++++++++
- include/linux/irqchip/arm-gic-v4.h |  1 +
- 2 files changed, 14 insertions(+)
+ drivers/irqchip/irq-gic-v3-its.c | 39 +++++++++++++++++++++++++-------
+ 1 file changed, 31 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-v4.c b/drivers/irqchip/irq-gic-v4.c
-index a29a063861bc..b937e51a9178 100644
---- a/drivers/irqchip/irq-gic-v4.c
-+++ b/drivers/irqchip/irq-gic-v4.c
-@@ -324,6 +324,19 @@ int its_prop_update_vlpi(int irq, u8 config, bool inv)
- 	return irq_set_vcpu_affinity(irq, &info);
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index 4aae9582182b..a1e8c4c2598a 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -1417,12 +1417,31 @@ static int its_irq_set_irqchip_state(struct irq_data *d,
+ 	return 0;
  }
  
-+int its_prop_update_vsgi(int irq, u8 priority, bool group)
++/*
++ * Two favourable cases:
++ *
++ * (a) Either we have a GICv4.1, and all vPEs have to be mapped at all times
++ *     for vSGI delivery
++ *
++ * (b) Or the ITSs do not use a list map, meaning that VMOVP is cheap enough
++ *     and we're better off mapping all VPEs always
++ *
++ * If neither (a) nor (b) is true, then we map VLPIs on demand.
++ *
++ */
++static bool gic_requires_eager_mapping(void)
 +{
-+	struct its_cmd_info info = {
-+		.cmd_type = PROP_UPDATE_SGI,
-+		{
-+			.priority	= priority,
-+			.group		= group,
-+		},
-+	};
++	if (!its_list_map || gic_rdists->has_rvpeid)
++		return true;
 +
-+	return irq_set_vcpu_affinity(irq, &info);
++	return false;
 +}
 +
- int its_init_v4(struct irq_domain *domain,
- 		const struct irq_domain_ops *vpe_ops,
- 		const struct irq_domain_ops *sgi_ops)
-diff --git a/include/linux/irqchip/arm-gic-v4.h b/include/linux/irqchip/arm-gic-v4.h
-index 5578cbe7430b..b894796df9ab 100644
---- a/include/linux/irqchip/arm-gic-v4.h
-+++ b/include/linux/irqchip/arm-gic-v4.h
-@@ -127,6 +127,7 @@ int its_map_vlpi(int irq, struct its_vlpi_map *map);
- int its_get_vlpi(int irq, struct its_vlpi_map *map);
- int its_unmap_vlpi(int irq);
- int its_prop_update_vlpi(int irq, u8 config, bool inv);
-+int its_prop_update_vsgi(int irq, u8 priority, bool group);
+ static void its_map_vm(struct its_node *its, struct its_vm *vm)
+ {
+ 	unsigned long flags;
  
- struct irq_domain_ops;
- int its_init_v4(struct irq_domain *domain,
+-	/* Not using the ITS list? Everything is always mapped. */
+-	if (!its_list_map)
++	if (gic_requires_eager_mapping())
+ 		return;
+ 
+ 	raw_spin_lock_irqsave(&vmovp_lock, flags);
+@@ -1456,7 +1475,7 @@ static void its_unmap_vm(struct its_node *its, struct its_vm *vm)
+ 	unsigned long flags;
+ 
+ 	/* Not using the ITS list? Everything is always mapped. */
+-	if (!its_list_map)
++	if (gic_requires_eager_mapping())
+ 		return;
+ 
+ 	raw_spin_lock_irqsave(&vmovp_lock, flags);
+@@ -3957,8 +3976,12 @@ static int its_vpe_irq_domain_activate(struct irq_domain *domain,
+ 	struct its_vpe *vpe = irq_data_get_irq_chip_data(d);
+ 	struct its_node *its;
+ 
+-	/* If we use the list map, we issue VMAPP on demand... */
+-	if (its_list_map)
++	/*
++	 * If we use the list map, we issue VMAPP on demand... Unless
++	 * we're on a GICv4.1 and we eagerly map the VPE on all ITSs
++	 * so that VSGIs can work.
++	 */
++	if (!gic_requires_eager_mapping())
+ 		return 0;
+ 
+ 	/* Map the VPE to the first possible CPU */
+@@ -3984,10 +4007,10 @@ static void its_vpe_irq_domain_deactivate(struct irq_domain *domain,
+ 	struct its_node *its;
+ 
+ 	/*
+-	 * If we use the list map, we unmap the VPE once no VLPIs are
+-	 * associated with the VM.
++	 * If we use the list map on GICv4.0, we unmap the VPE once no
++	 * VLPIs are associated with the VM.
+ 	 */
+-	if (its_list_map)
++	if (!gic_requires_eager_mapping())
+ 		return;
+ 
+ 	list_for_each_entry(its, &its_nodes, entry) {
 -- 
 2.20.1
 
