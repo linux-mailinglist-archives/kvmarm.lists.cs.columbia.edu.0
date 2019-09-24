@@ -2,53 +2,56 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B217BCB41
-	for <lists+kvmarm@lfdr.de>; Tue, 24 Sep 2019 17:24:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 94A9BBCB33
+	for <lists+kvmarm@lfdr.de>; Tue, 24 Sep 2019 17:23:39 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 18C334A65D;
-	Tue, 24 Sep 2019 11:24:56 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 42C8F4A6A5;
+	Tue, 24 Sep 2019 11:23:39 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.502
+X-Spam-Score: -1.494
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+X-Spam-Status: No, score=-1.494 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+	SPF_HELO_PASS=-0.001, UPPERCASE_50_75=0.008] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tzRq92YH6Fq7; Tue, 24 Sep 2019 11:24:55 -0400 (EDT)
+	with ESMTP id U3snhhUXCRUN; Tue, 24 Sep 2019 11:23:38 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DB6DA4A686;
-	Tue, 24 Sep 2019 11:24:54 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6CFA04A6DD;
+	Tue, 24 Sep 2019 11:23:35 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 760504A64A
- for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Sep 2019 11:24:53 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 54D504A67B
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Sep 2019 11:23:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id HApQj5OAuuFA for <kvmarm@lists.cs.columbia.edu>;
- Tue, 24 Sep 2019 11:24:52 -0400 (EDT)
+ with ESMTP id EmfGf1rR1DMl for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 24 Sep 2019 11:23:32 -0400 (EDT)
 Received: from huawei.com (szxga05-in.huawei.com [45.249.212.191])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id CE6ED4A567
- for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Sep 2019 11:24:49 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A540A4A688
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Sep 2019 11:23:31 -0400 (EDT)
 Received: from DGGEMS409-HUB.china.huawei.com (unknown [172.30.72.59])
- by Forcepoint Email with ESMTP id 4C7D13C505E55FB75118;
+ by Forcepoint Email with ESMTP id 532B4BCC54BC3747BF23;
  Tue, 24 Sep 2019 23:23:22 +0800 (CST)
 Received: from linux-Bxxcye.huawei.com (10.175.104.222) by
  DGGEMS409-HUB.china.huawei.com (10.3.19.209) with Microsoft SMTP Server id
- 14.3.439.0; Tue, 24 Sep 2019 23:23:13 +0800
+ 14.3.439.0; Tue, 24 Sep 2019 23:23:14 +0800
 From: Heyi Guo <guoheyi@huawei.com>
 To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>,
  <linux-arm-kernel@lists.infradead.org>, <kvmarm@lists.cs.columbia.edu>
-Subject: [RFC PATCH 00/12] Add SDEI support for arm64
-Date: Tue, 24 Sep 2019 23:21:39 +0800
-Message-ID: <1569338511-3572-1-git-send-email-guoheyi@huawei.com>
+Subject: [RFC PATCH 01/12] linux-headers: import arm_sdei.h
+Date: Tue, 24 Sep 2019 23:21:40 +0800
+Message-ID: <1569338511-3572-2-git-send-email-guoheyi@huawei.com>
 X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1569338511-3572-1-git-send-email-guoheyi@huawei.com>
+References: <1569338511-3572-1-git-send-email-guoheyi@huawei.com>
 MIME-Version: 1.0
 X-Originating-IP: [10.175.104.222]
 X-CFilter-Loop: Reflected
-Cc: Marc Zyngier <marc.zyngier@arm.com>, Heyi Guo <guoheyi@huawei.com>,
- Dave Martin <Dave.Martin@arm.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Marc Zyngier <marc.zyngier@arm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Heyi Guo <guoheyi@huawei.com>, Dave Martin <Dave.Martin@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -65,76 +68,104 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-As promised, this is the first RFC patch set for arm64 SDEI support.
-Key points:
-- We propose to only support kvm enabled arm64 virtual machines, for
-  non-kvm VMs can emulate EL3 and have Trusted Firmware run on it,
-  which has a builtin SDEI dispatcher.
-- New kvm capability KVM_CAP_FORWARD_HYPERCALL is added to probe if
-  kvm supports forwarding hypercalls, and the capability should be
-  enabled explicitly. PSCI can be set as exception for backward
-  compatibility.
-- We make the dispatcher as a logical device, to save the states
-  during migration or save/restore operation; only one instance is
-  allowed in one VM.
-- We use qemu_irq as the bridge for other qemu modules to switch from
-  irq injection to SDEI event trigger after VM binds the interrupt to
-  SDEI event. We use qemu_irq_intercept_in() to override qemu_irq
-  handler with SDEI event trigger, and a new interface
-  qemu_irq_remove_intercept() is added to restore the handler to
-  default one (i.e. ARM GIC).
+Import Linux header file include/uapi/linux/arm_sdei.h from kernel
+v5.3 release.
 
-More details are in the commit message of each patch.
+This is to prepare for qemu SDEI emulation.
 
-Basic tests are done by emulating a watchdog timer and triggering SDEI
-event in every 10s.
-
-As this is the first rough RFC, please focus on the interfaces and
-framework first. We can refine the code for several rounds after the
-big things have been determined.
-
-Please give your comments and suggestions.
-
-Thanks,
-HG
-
+Signed-off-by: Heyi Guo <guoheyi@huawei.com>
 Cc: Peter Maydell <peter.maydell@linaro.org>
 Cc: Dave Martin <Dave.Martin@arm.com>
 Cc: Marc Zyngier <marc.zyngier@arm.com>
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: James Morse <james.morse@arm.com>
-
-Heyi Guo (12):
-  linux-headers: import arm_sdei.h
-  arm/sdei: add virtual device framework
-  arm/sdei: add support to handle SDEI requests from guest
-  arm/sdei: add system reset callback
-  arm/sdei: add support to trigger event by GIC interrupt ID
-  core/irq: add qemu_irq_remove_intercept interface
-  arm/sdei: override qemu_irq handler when binding interrupt
-  arm/sdei: add support to register interrupt bind notifier
-  linux-headers/kvm.h: add capability to forward hypercall
-  arm/sdei: check KVM cap and enable SDEI
-  arm/kvm: handle guest exit of hypercall
-  virt/acpi: add SDEI table if SDEI is enabled
-
- hw/arm/virt-acpi-build.c       |   16 +
- hw/core/irq.c                  |   11 +
- include/hw/acpi/acpi-defs.h    |    5 +
- include/hw/irq.h               |    8 +-
- linux-headers/linux/arm_sdei.h |   73 ++
- linux-headers/linux/kvm.h      |    3 +
- target/arm/Makefile.objs       |    1 +
- target/arm/kvm.c               |   17 +
- target/arm/sdei.c              | 1518 ++++++++++++++++++++++++++++++++++++++++
- target/arm/sdei.h              |   60 ++
- target/arm/sdei_int.h          |  109 +++
- 11 files changed, 1819 insertions(+), 2 deletions(-)
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Cornelia Huck <cohuck@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+---
+ linux-headers/linux/arm_sdei.h | 73 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 73 insertions(+)
  create mode 100644 linux-headers/linux/arm_sdei.h
- create mode 100644 target/arm/sdei.c
- create mode 100644 target/arm/sdei.h
- create mode 100644 target/arm/sdei_int.h
 
+diff --git a/linux-headers/linux/arm_sdei.h b/linux-headers/linux/arm_sdei.h
+new file mode 100644
+index 0000000..af0630b
+--- /dev/null
++++ b/linux-headers/linux/arm_sdei.h
+@@ -0,0 +1,73 @@
++/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
++/* Copyright (C) 2017 Arm Ltd. */
++#ifndef _UAPI_LINUX_ARM_SDEI_H
++#define _UAPI_LINUX_ARM_SDEI_H
++
++#define SDEI_1_0_FN_BASE			0xC4000020
++#define SDEI_1_0_MASK				0xFFFFFFE0
++#define SDEI_1_0_FN(n)				(SDEI_1_0_FN_BASE + (n))
++
++#define SDEI_1_0_FN_SDEI_VERSION			SDEI_1_0_FN(0x00)
++#define SDEI_1_0_FN_SDEI_EVENT_REGISTER			SDEI_1_0_FN(0x01)
++#define SDEI_1_0_FN_SDEI_EVENT_ENABLE			SDEI_1_0_FN(0x02)
++#define SDEI_1_0_FN_SDEI_EVENT_DISABLE			SDEI_1_0_FN(0x03)
++#define SDEI_1_0_FN_SDEI_EVENT_CONTEXT			SDEI_1_0_FN(0x04)
++#define SDEI_1_0_FN_SDEI_EVENT_COMPLETE			SDEI_1_0_FN(0x05)
++#define SDEI_1_0_FN_SDEI_EVENT_COMPLETE_AND_RESUME	SDEI_1_0_FN(0x06)
++#define SDEI_1_0_FN_SDEI_EVENT_UNREGISTER		SDEI_1_0_FN(0x07)
++#define SDEI_1_0_FN_SDEI_EVENT_STATUS			SDEI_1_0_FN(0x08)
++#define SDEI_1_0_FN_SDEI_EVENT_GET_INFO			SDEI_1_0_FN(0x09)
++#define SDEI_1_0_FN_SDEI_EVENT_ROUTING_SET		SDEI_1_0_FN(0x0A)
++#define SDEI_1_0_FN_SDEI_PE_MASK			SDEI_1_0_FN(0x0B)
++#define SDEI_1_0_FN_SDEI_PE_UNMASK			SDEI_1_0_FN(0x0C)
++#define SDEI_1_0_FN_SDEI_INTERRUPT_BIND			SDEI_1_0_FN(0x0D)
++#define SDEI_1_0_FN_SDEI_INTERRUPT_RELEASE		SDEI_1_0_FN(0x0E)
++#define SDEI_1_0_FN_SDEI_PRIVATE_RESET			SDEI_1_0_FN(0x11)
++#define SDEI_1_0_FN_SDEI_SHARED_RESET			SDEI_1_0_FN(0x12)
++
++#define SDEI_VERSION_MAJOR_SHIFT			48
++#define SDEI_VERSION_MAJOR_MASK				0x7fff
++#define SDEI_VERSION_MINOR_SHIFT			32
++#define SDEI_VERSION_MINOR_MASK				0xffff
++#define SDEI_VERSION_VENDOR_SHIFT			0
++#define SDEI_VERSION_VENDOR_MASK			0xffffffff
++
++#define SDEI_VERSION_MAJOR(x)	(x>>SDEI_VERSION_MAJOR_SHIFT & SDEI_VERSION_MAJOR_MASK)
++#define SDEI_VERSION_MINOR(x)	(x>>SDEI_VERSION_MINOR_SHIFT & SDEI_VERSION_MINOR_MASK)
++#define SDEI_VERSION_VENDOR(x)	(x>>SDEI_VERSION_VENDOR_SHIFT & SDEI_VERSION_VENDOR_MASK)
++
++/* SDEI return values */
++#define SDEI_SUCCESS		0
++#define SDEI_NOT_SUPPORTED	-1
++#define SDEI_INVALID_PARAMETERS	-2
++#define SDEI_DENIED		-3
++#define SDEI_PENDING		-5
++#define SDEI_OUT_OF_RESOURCE	-10
++
++/* EVENT_REGISTER flags */
++#define SDEI_EVENT_REGISTER_RM_ANY	0
++#define SDEI_EVENT_REGISTER_RM_PE	1
++
++/* EVENT_STATUS return value bits */
++#define SDEI_EVENT_STATUS_RUNNING	2
++#define SDEI_EVENT_STATUS_ENABLED	1
++#define SDEI_EVENT_STATUS_REGISTERED	0
++
++/* EVENT_COMPLETE status values */
++#define SDEI_EV_HANDLED	0
++#define SDEI_EV_FAILED	1
++
++/* GET_INFO values */
++#define SDEI_EVENT_INFO_EV_TYPE			0
++#define SDEI_EVENT_INFO_EV_SIGNALED		1
++#define SDEI_EVENT_INFO_EV_PRIORITY		2
++#define SDEI_EVENT_INFO_EV_ROUTING_MODE		3
++#define SDEI_EVENT_INFO_EV_ROUTING_AFF		4
++
++/* and their results */
++#define SDEI_EVENT_TYPE_PRIVATE			0
++#define SDEI_EVENT_TYPE_SHARED			1
++#define SDEI_EVENT_PRIORITY_NORMAL		0
++#define SDEI_EVENT_PRIORITY_CRITICAL		1
++
++#endif /* _UAPI_LINUX_ARM_SDEI_H */
 -- 
 1.8.3.1
 
