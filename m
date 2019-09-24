@@ -2,52 +2,55 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C5C15BBB8A
-	for <lists+kvmarm@lfdr.de>; Mon, 23 Sep 2019 20:28:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B709FBC45C
+	for <lists+kvmarm@lfdr.de>; Tue, 24 Sep 2019 10:59:02 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 79E764A66A;
-	Mon, 23 Sep 2019 14:28:39 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 178864A67B;
+	Tue, 24 Sep 2019 04:59:02 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
 X-Spam-Level: 
 X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=no
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LPeXaaD-Wo57; Mon, 23 Sep 2019 14:28:38 -0400 (EDT)
+	with ESMTP id XbfHpnW5ffn0; Tue, 24 Sep 2019 04:59:01 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3007F4A657;
-	Mon, 23 Sep 2019 14:28:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DB0224A67E;
+	Tue, 24 Sep 2019 04:59:00 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D314C4A5AC
- for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Sep 2019 14:28:35 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3308E4A66A
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Sep 2019 04:59:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id zgWc9xwQ9SAw for <kvmarm@lists.cs.columbia.edu>;
- Mon, 23 Sep 2019 14:28:35 -0400 (EDT)
+ with ESMTP id gmTStEpRjFYs for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 24 Sep 2019 04:58:59 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 046244A685
- for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Sep 2019 14:28:35 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0DD914A650
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Sep 2019 04:58:59 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CC37E2E8E;
- Mon, 23 Sep 2019 11:28:34 -0700 (PDT)
-Received: from big-swifty.lan (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 58AFD3F694;
- Mon, 23 Sep 2019 11:28:32 -0700 (PDT)
-From: Marc Zyngier <maz@kernel.org>
-To: kvmarm@lists.cs.columbia.edu,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 35/35] KVM: arm64: GICv4.1: Expose HW-based SGIs in debugfs
-Date: Mon, 23 Sep 2019 19:26:06 +0100
-Message-Id: <20190923182606.32100-36-maz@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190923182606.32100-1-maz@kernel.org>
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 73F87142F;
+ Tue, 24 Sep 2019 01:58:58 -0700 (PDT)
+Received: from localhost (unknown [10.37.6.20])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DF0E23F59C;
+ Tue, 24 Sep 2019 01:58:57 -0700 (PDT)
+Date: Tue, 24 Sep 2019 09:58:56 +0100
+From: Andrew Murray <andrew.murray@arm.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH 02/35] irqchip/gic-v3-its: Factor out wait_for_syncr
+ primitive
+Message-ID: <20190924085855.GM9720@e119886-lin.cambridge.arm.com>
 References: <20190923182606.32100-1-maz@kernel.org>
+ <20190923182606.32100-3-maz@kernel.org>
 MIME-Version: 1.0
+Content-Disposition: inline
+In-Reply-To: <20190923182606.32100-3-maz@kernel.org>
+User-Agent: Mutt/1.10.1+81 (426a6c1) (2018-08-26)
 Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
- Jason Cooper <jason@lakedaemon.net>, Thomas Gleixner <tglx@linutronix.de>
+ Jason Cooper <jason@lakedaemon.net>, linux-kernel@vger.kernel.org,
+ Thomas Gleixner <tglx@linutronix.de>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -64,56 +67,70 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The vgic-state debugfs file could do with showing the pending state
-of the HW-backed SGIs. Plug it into the low-level code.
+On Mon, Sep 23, 2019 at 07:25:33PM +0100, Marc Zyngier wrote:
+> Waiting for a redistributor to have performed an operation is a
+> common thing to do, and the idiom is already spread around.
+> As we're going to make even more use of this, let's have a primitive
+> that does just that.
+> 
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- virt/kvm/arm/vgic/vgic-debug.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+Reviewed-by: Andrew Murray <andrew.murray@arm.com>
 
-diff --git a/virt/kvm/arm/vgic/vgic-debug.c b/virt/kvm/arm/vgic/vgic-debug.c
-index cc12fe9b2df3..98f3242a34a6 100644
---- a/virt/kvm/arm/vgic/vgic-debug.c
-+++ b/virt/kvm/arm/vgic/vgic-debug.c
-@@ -178,6 +178,8 @@ static void print_irq_state(struct seq_file *s, struct vgic_irq *irq,
- 			    struct kvm_vcpu *vcpu)
- {
- 	char *type;
-+	bool pending;
-+
- 	if (irq->intid < VGIC_NR_SGIS)
- 		type = "SGI";
- 	else if (irq->intid < VGIC_NR_PRIVATE_IRQS)
-@@ -190,6 +192,16 @@ static void print_irq_state(struct seq_file *s, struct vgic_irq *irq,
- 	if (irq->intid ==0 || irq->intid == VGIC_NR_PRIVATE_IRQS)
- 		print_header(s, irq, vcpu);
- 
-+	pending = irq->pending_latch;
-+	if (irq->hw && vgic_irq_is_sgi(irq->intid)) {
-+		int err;
-+
-+		err = irq_get_irqchip_state(irq->host_irq,
-+					    IRQCHIP_STATE_PENDING,
-+					    &pending);
-+		WARN_ON_ONCE(err);
-+	}
-+		
- 	seq_printf(s, "       %s %4d "
- 		      "    %2d "
- 		      "%d%d%d%d%d%d%d "
-@@ -201,7 +213,7 @@ static void print_irq_state(struct seq_file *s, struct vgic_irq *irq,
- 		      "\n",
- 			type, irq->intid,
- 			(irq->target_vcpu) ? irq->target_vcpu->vcpu_id : -1,
--			irq->pending_latch,
-+		   	pending,
- 			irq->line_level,
- 			irq->active,
- 			irq->enabled,
--- 
-2.20.1
-
+> ---
+>  drivers/irqchip/irq-gic-v3-its.c | 15 +++++++++------
+>  1 file changed, 9 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+> index 62e54f1a248b..58cb233cf138 100644
+> --- a/drivers/irqchip/irq-gic-v3-its.c
+> +++ b/drivers/irqchip/irq-gic-v3-its.c
+> @@ -1075,6 +1075,12 @@ static void lpi_write_config(struct irq_data *d, u8 clr, u8 set)
+>  		dsb(ishst);
+>  }
+>  
+> +static void wait_for_syncr(void __iomem *rdbase)
+> +{
+> +	while (gic_read_lpir(rdbase + GICR_SYNCR) & 1)
+> +		cpu_relax();
+> +}
+> +
+>  static void lpi_update_config(struct irq_data *d, u8 clr, u8 set)
+>  {
+>  	struct its_device *its_dev = irq_data_get_irq_chip_data(d);
+> @@ -2757,8 +2763,7 @@ static void its_vpe_db_proxy_move(struct its_vpe *vpe, int from, int to)
+>  
+>  		rdbase = per_cpu_ptr(gic_rdists->rdist, from)->rd_base;
+>  		gic_write_lpir(vpe->vpe_db_lpi, rdbase + GICR_CLRLPIR);
+> -		while (gic_read_lpir(rdbase + GICR_SYNCR) & 1)
+> -			cpu_relax();
+> +		wait_for_syncr(rdbase);
+>  
+>  		return;
+>  	}
+> @@ -2914,8 +2919,7 @@ static void its_vpe_send_inv(struct irq_data *d)
+>  
+>  		rdbase = per_cpu_ptr(gic_rdists->rdist, vpe->col_idx)->rd_base;
+>  		gic_write_lpir(vpe->vpe_db_lpi, rdbase + GICR_INVLPIR);
+> -		while (gic_read_lpir(rdbase + GICR_SYNCR) & 1)
+> -			cpu_relax();
+> +		wait_for_syncr(rdbase);
+>  	} else {
+>  		its_vpe_send_cmd(vpe, its_send_inv);
+>  	}
+> @@ -2957,8 +2961,7 @@ static int its_vpe_set_irqchip_state(struct irq_data *d,
+>  			gic_write_lpir(vpe->vpe_db_lpi, rdbase + GICR_SETLPIR);
+>  		} else {
+>  			gic_write_lpir(vpe->vpe_db_lpi, rdbase + GICR_CLRLPIR);
+> -			while (gic_read_lpir(rdbase + GICR_SYNCR) & 1)
+> -				cpu_relax();
+> +			wait_for_syncr(rdbase);
+>  		}
+>  	} else {
+>  		if (state)
+> -- 
+> 2.20.1
+> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
