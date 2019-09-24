@@ -2,56 +2,52 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0395CBCB22
-	for <lists+kvmarm@lfdr.de>; Tue, 24 Sep 2019 17:22:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B217BCB41
+	for <lists+kvmarm@lfdr.de>; Tue, 24 Sep 2019 17:24:56 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A4E9A4A6AA;
-	Tue, 24 Sep 2019 11:22:39 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 18C334A65D;
+	Tue, 24 Sep 2019 11:24:56 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=no
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4jfa9Um-defu; Tue, 24 Sep 2019 11:22:38 -0400 (EDT)
+	with ESMTP id tzRq92YH6Fq7; Tue, 24 Sep 2019 11:24:55 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A7E644A64A;
-	Tue, 24 Sep 2019 11:22:38 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DB6DA4A686;
+	Tue, 24 Sep 2019 11:24:54 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 592714A672
- for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Sep 2019 11:22:37 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 760504A64A
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Sep 2019 11:24:53 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id IT3go8tfdxnn for <kvmarm@lists.cs.columbia.edu>;
- Tue, 24 Sep 2019 11:22:36 -0400 (EDT)
-Received: from huawei.com (szxga06-in.huawei.com [45.249.212.32])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 211C34A5A3
- for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Sep 2019 11:22:36 -0400 (EDT)
-Received: from DGGEMS401-HUB.china.huawei.com (unknown [172.30.72.60])
- by Forcepoint Email with ESMTP id 4F6A85461CE3B3AB5C3B;
- Tue, 24 Sep 2019 23:22:34 +0800 (CST)
+ with ESMTP id HApQj5OAuuFA for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 24 Sep 2019 11:24:52 -0400 (EDT)
+Received: from huawei.com (szxga05-in.huawei.com [45.249.212.191])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id CE6ED4A567
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Sep 2019 11:24:49 -0400 (EDT)
+Received: from DGGEMS409-HUB.china.huawei.com (unknown [172.30.72.59])
+ by Forcepoint Email with ESMTP id 4C7D13C505E55FB75118;
+ Tue, 24 Sep 2019 23:23:22 +0800 (CST)
 Received: from linux-Bxxcye.huawei.com (10.175.104.222) by
- DGGEMS401-HUB.china.huawei.com (10.3.19.201) with Microsoft SMTP Server id
- 14.3.439.0; Tue, 24 Sep 2019 23:22:24 +0800
+ DGGEMS409-HUB.china.huawei.com (10.3.19.209) with Microsoft SMTP Server id
+ 14.3.439.0; Tue, 24 Sep 2019 23:23:13 +0800
 From: Heyi Guo <guoheyi@huawei.com>
-To: <linux-arm-kernel@lists.infradead.org>, <kvmarm@lists.cs.columbia.edu>,
- <linux-kernel@vger.kernel.org>, <kvm@vger.kernel.org>, <qemu-arm@nongnu.org>
-Subject: [RFC PATCH 2/2] kvm/arm64: expose hypercall_forwarding capability
-Date: Tue, 24 Sep 2019 23:20:54 +0800
-Message-ID: <1569338454-26202-3-git-send-email-guoheyi@huawei.com>
+To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>,
+ <linux-arm-kernel@lists.infradead.org>, <kvmarm@lists.cs.columbia.edu>
+Subject: [RFC PATCH 00/12] Add SDEI support for arm64
+Date: Tue, 24 Sep 2019 23:21:39 +0800
+Message-ID: <1569338511-3572-1-git-send-email-guoheyi@huawei.com>
 X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1569338454-26202-1-git-send-email-guoheyi@huawei.com>
-References: <1569338454-26202-1-git-send-email-guoheyi@huawei.com>
 MIME-Version: 1.0
 X-Originating-IP: [10.175.104.222]
 X-CFilter-Loop: Reflected
-Cc: Marc Zyngier <marc.zyngier@arm.com>,
- Catalin Marinas <catalin.marinas@arm.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Heyi Guo <guoheyi@huawei.com>, Will Deacon <will@kernel.org>,
+Cc: Marc Zyngier <marc.zyngier@arm.com>, Heyi Guo <guoheyi@huawei.com>,
  Dave Martin <Dave.Martin@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -64,62 +60,85 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-QWRkIG5ldyBLVk0gY2FwYWJpbGl0eSAiS1ZNX0NBUF9GT1JXQVJEX0hZUEVSQ0FMTCIgZm9yIHVz
-ZXIgc3BhY2UgdG8KcHJvYmUgd2hldGhlciBLVk0gc3VwcG9ydHMgZm9yd2FyZGluZyBoeXBlcmNh
-bGwuCgpUaGUgY2FwYWJpbGl0eSBzaG91bGQgYmUgZW5hYmxlZCBieSB1c2VyIHNwYWNlIGV4cGxp
-Y2l0bHksIGZvciB3ZQpkb24ndCB3YW50IHVzZXIgc3BhY2UgYXBwbGljYXRpb24gdG8gZGVhbCB3
-aXRoIHVuZXhwZWN0ZWQgaHlwZXJjYWxsCmV4aXRzLiBXZSBhbHNvIHVzZSBhbiBhZGRpdGlvbmFs
-IGFyZ3VtZW50IHRvIHBhc3MgZXhjZXB0aW9uIGJpdCBtYXNrLAp0byByZXF1ZXN0IEtWTSB0byBm
-b3J3YXJkIGFsbCBoeXBlcmNhbGxzIGV4Y2VwdCB0aGUgY2xhc3NlcyBzcGVjaWZpZWQKaW4gdGhl
-IGJpdCBtYXNrLgoKQ3VycmVudGx5IG9ubHkgUFNDSSBjYW4gYmUgc2V0IGFzIGV4Y2VwdGlvbiwg
-c28gdGhhdCB3ZSBjYW4gc3RpbGwga2VlcApjb25zaXN0ZW50IHdpdGggdGhlIG9sZCBQU0NJIHBy
-b2Nlc3NpbmcgZmxvdy4KClNpZ25lZC1vZmYtYnk6IEhleWkgR3VvIDxndW9oZXlpQGh1YXdlaS5j
-b20+CkNjOiBQZXRlciBNYXlkZWxsIDxwZXRlci5tYXlkZWxsQGxpbmFyby5vcmc+CkNjOiBEYXZl
-IE1hcnRpbiA8RGF2ZS5NYXJ0aW5AYXJtLmNvbT4KQ2M6IE1hcmMgWnluZ2llciA8bWFyYy56eW5n
-aWVyQGFybS5jb20+CkNjOiBNYXJrIFJ1dGxhbmQgPG1hcmsucnV0bGFuZEBhcm0uY29tPgpDYzog
-SmFtZXMgTW9yc2UgPGphbWVzLm1vcnNlQGFybS5jb20+CkNjOiBKdWxpZW4gVGhpZXJyeSA8anVs
-aWVuLnRoaWVycnkua2RldkBnbWFpbC5jb20+CkNjOiBTdXp1a2kgSyBQb3Vsb3NlIDxzdXp1a2ku
-cG91bG9zZUBhcm0uY29tPgpDYzogQ2F0YWxpbiBNYXJpbmFzIDxjYXRhbGluLm1hcmluYXNAYXJt
-LmNvbT4KQ2M6IFdpbGwgRGVhY29uIDx3aWxsQGtlcm5lbC5vcmc+CkNjOiBQYW9sbyBCb256aW5p
-IDxwYm9uemluaUByZWRoYXQuY29tPgpDYzogIlJhZGltIEtyxI1tw6HFmSIgPHJrcmNtYXJAcmVk
-aGF0LmNvbT4KLS0tCiBhcmNoL2FybTY0L2t2bS9yZXNldC5jICAgfCAyNSArKysrKysrKysrKysr
-KysrKysrKysrKysrCiBpbmNsdWRlL3VhcGkvbGludXgva3ZtLmggfCAgMyArKysKIDIgZmlsZXMg
-Y2hhbmdlZCwgMjggaW5zZXJ0aW9ucygrKQoKZGlmZiAtLWdpdCBhL2FyY2gvYXJtNjQva3ZtL3Jl
-c2V0LmMgYi9hcmNoL2FybTY0L2t2bS9yZXNldC5jCmluZGV4IGY0YThhZTkuLjIyMDFiNjIgMTAw
-NjQ0Ci0tLSBhL2FyY2gvYXJtNjQva3ZtL3Jlc2V0LmMKKysrIGIvYXJjaC9hcm02NC9rdm0vcmVz
-ZXQuYwpAQCAtOTUsNiArOTUsOSBAQCBpbnQga3ZtX2FyY2hfdm1faW9jdGxfY2hlY2tfZXh0ZW5z
-aW9uKHN0cnVjdCBrdm0gKmt2bSwgbG9uZyBleHQpCiAJCXIgPSBoYXNfdmhlKCkgJiYgc3lzdGVt
-X3N1cHBvcnRzX2FkZHJlc3NfYXV0aCgpICYmCiAJCQkJIHN5c3RlbV9zdXBwb3J0c19nZW5lcmlj
-X2F1dGgoKTsKIAkJYnJlYWs7CisJY2FzZSBLVk1fQ0FQX0ZPUldBUkRfSFlQRVJDQUxMOgorCQly
-ID0gMTsKKwkJYnJlYWs7CiAJZGVmYXVsdDoKIAkJciA9IDA7CiAJfQpAQCAtMTAyLDYgKzEwNSwy
-OCBAQCBpbnQga3ZtX2FyY2hfdm1faW9jdGxfY2hlY2tfZXh0ZW5zaW9uKHN0cnVjdCBrdm0gKmt2
-bSwgbG9uZyBleHQpCiAJcmV0dXJuIHI7CiB9CiAKK2ludCBrdm1fdm1faW9jdGxfZW5hYmxlX2Nh
-cChzdHJ1Y3Qga3ZtICprdm0sCisJCQkgICAgc3RydWN0IGt2bV9lbmFibGVfY2FwICpjYXApCit7
-CisJaWYgKGNhcC0+ZmxhZ3MpCisJCXJldHVybiAtRUlOVkFMOworCisJc3dpdGNoIChjYXAtPmNh
-cCkgeworCWNhc2UgS1ZNX0NBUF9GT1JXQVJEX0hZUEVSQ0FMTDogeworCQlfX3U2NCBleGNsdWRl
-X2ZsYWdzID0gY2FwLT5hcmdzWzBdOworCQkvKiBPbmx5IHN1cHBvcnQgZXhjbHVkaW5nIFBTQ0kg
-cmlnaHQgbm93ICovCisJCWlmIChleGNsdWRlX2ZsYWdzICYgfktWTV9DQVBfRk9SV0FSRF9IWVBF
-UkNBTExfRVhDTF9QU0NJKQorCQkJcmV0dXJuIC1FSU5WQUw7CisJCWt2bS0+YXJjaC5oeXBlcmNh
-bGxfZm9yd2FyZCA9IHRydWU7CisJCWlmIChleGNsdWRlX2ZsYWdzICYgS1ZNX0NBUF9GT1JXQVJE
-X0hZUEVSQ0FMTF9FWENMX1BTQ0kpCisJCQlrdm0tPmFyY2guaHlwZXJjYWxsX2V4Y2xfcHNjaSA9
-IHRydWU7CisJCXJldHVybiAwOworCX0KKwl9CisKKwlyZXR1cm4gLUVJTlZBTDsKK30KKwogdW5z
-aWduZWQgaW50IGt2bV9zdmVfbWF4X3ZsOwogCiBpbnQga3ZtX2FybV9pbml0X3N2ZSh2b2lkKQpk
-aWZmIC0tZ2l0IGEvaW5jbHVkZS91YXBpL2xpbnV4L2t2bS5oIGIvaW5jbHVkZS91YXBpL2xpbnV4
-L2t2bS5oCmluZGV4IDVlM2YxMmQuLmUzZTU3ODcgMTAwNjQ0Ci0tLSBhL2luY2x1ZGUvdWFwaS9s
-aW51eC9rdm0uaAorKysgYi9pbmNsdWRlL3VhcGkvbGludXgva3ZtLmgKQEAgLTcxMSw2ICs3MTEs
-OCBAQCBzdHJ1Y3Qga3ZtX2VuYWJsZV9jYXAgewogCV9fdTggIHBhZFs2NF07CiB9OwogCisjZGVm
-aW5lIEtWTV9DQVBfRk9SV0FSRF9IWVBFUkNBTExfRVhDTF9QU0NJCSgxIDw8IDApCisKIC8qIGZv
-ciBLVk1fUFBDX0dFVF9QVklORk8gKi8KIAogI2RlZmluZSBLVk1fUFBDX1BWSU5GT19GTEFHU19F
-Vl9JRExFICAgKDE8PDApCkBAIC05OTYsNiArOTk4LDcgQEAgc3RydWN0IGt2bV9wcGNfcmVzaXpl
-X2hwdCB7CiAjZGVmaW5lIEtWTV9DQVBfQVJNX1BUUkFVVEhfQUREUkVTUyAxNzEKICNkZWZpbmUg
-S1ZNX0NBUF9BUk1fUFRSQVVUSF9HRU5FUklDIDE3MgogI2RlZmluZSBLVk1fQ0FQX1BNVV9FVkVO
-VF9GSUxURVIgMTczCisjZGVmaW5lIEtWTV9DQVBfRk9SV0FSRF9IWVBFUkNBTEwgMTc0CiAKICNp
-ZmRlZiBLVk1fQ0FQX0lSUV9ST1VUSU5HCiAKLS0gCjEuOC4zLjEKCl9fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCmt2bWFybSBtYWlsaW5nIGxpc3QKa3ZtYXJt
-QGxpc3RzLmNzLmNvbHVtYmlhLmVkdQpodHRwczovL2xpc3RzLmNzLmNvbHVtYmlhLmVkdS9tYWls
-bWFuL2xpc3RpbmZvL2t2bWFybQo=
+As promised, this is the first RFC patch set for arm64 SDEI support.
+Key points:
+- We propose to only support kvm enabled arm64 virtual machines, for
+  non-kvm VMs can emulate EL3 and have Trusted Firmware run on it,
+  which has a builtin SDEI dispatcher.
+- New kvm capability KVM_CAP_FORWARD_HYPERCALL is added to probe if
+  kvm supports forwarding hypercalls, and the capability should be
+  enabled explicitly. PSCI can be set as exception for backward
+  compatibility.
+- We make the dispatcher as a logical device, to save the states
+  during migration or save/restore operation; only one instance is
+  allowed in one VM.
+- We use qemu_irq as the bridge for other qemu modules to switch from
+  irq injection to SDEI event trigger after VM binds the interrupt to
+  SDEI event. We use qemu_irq_intercept_in() to override qemu_irq
+  handler with SDEI event trigger, and a new interface
+  qemu_irq_remove_intercept() is added to restore the handler to
+  default one (i.e. ARM GIC).
+
+More details are in the commit message of each patch.
+
+Basic tests are done by emulating a watchdog timer and triggering SDEI
+event in every 10s.
+
+As this is the first rough RFC, please focus on the interfaces and
+framework first. We can refine the code for several rounds after the
+big things have been determined.
+
+Please give your comments and suggestions.
+
+Thanks,
+HG
+
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Cc: Dave Martin <Dave.Martin@arm.com>
+Cc: Marc Zyngier <marc.zyngier@arm.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: James Morse <james.morse@arm.com>
+
+Heyi Guo (12):
+  linux-headers: import arm_sdei.h
+  arm/sdei: add virtual device framework
+  arm/sdei: add support to handle SDEI requests from guest
+  arm/sdei: add system reset callback
+  arm/sdei: add support to trigger event by GIC interrupt ID
+  core/irq: add qemu_irq_remove_intercept interface
+  arm/sdei: override qemu_irq handler when binding interrupt
+  arm/sdei: add support to register interrupt bind notifier
+  linux-headers/kvm.h: add capability to forward hypercall
+  arm/sdei: check KVM cap and enable SDEI
+  arm/kvm: handle guest exit of hypercall
+  virt/acpi: add SDEI table if SDEI is enabled
+
+ hw/arm/virt-acpi-build.c       |   16 +
+ hw/core/irq.c                  |   11 +
+ include/hw/acpi/acpi-defs.h    |    5 +
+ include/hw/irq.h               |    8 +-
+ linux-headers/linux/arm_sdei.h |   73 ++
+ linux-headers/linux/kvm.h      |    3 +
+ target/arm/Makefile.objs       |    1 +
+ target/arm/kvm.c               |   17 +
+ target/arm/sdei.c              | 1518 ++++++++++++++++++++++++++++++++++++++++
+ target/arm/sdei.h              |   60 ++
+ target/arm/sdei_int.h          |  109 +++
+ 11 files changed, 1819 insertions(+), 2 deletions(-)
+ create mode 100644 linux-headers/linux/arm_sdei.h
+ create mode 100644 target/arm/sdei.c
+ create mode 100644 target/arm/sdei.h
+ create mode 100644 target/arm/sdei_int.h
+
+-- 
+1.8.3.1
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
