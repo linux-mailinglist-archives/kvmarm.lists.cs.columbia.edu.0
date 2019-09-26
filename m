@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5291ABF3B2
-	for <lists+kvmarm@lfdr.de>; Thu, 26 Sep 2019 15:06:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B372BF3B3
+	for <lists+kvmarm@lfdr.de>; Thu, 26 Sep 2019 15:06:28 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 06CC64A72B;
-	Thu, 26 Sep 2019 09:06:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C39A34A743;
+	Thu, 26 Sep 2019 09:06:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
@@ -15,37 +15,36 @@ X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id d2aiDpQQZZrK; Thu, 26 Sep 2019 09:06:25 -0400 (EDT)
+	with ESMTP id izrJJOfkMNMN; Thu, 26 Sep 2019 09:06:27 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D75274A749;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EDECB4A731;
 	Thu, 26 Sep 2019 09:06:22 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 721F94A64D
- for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Sep 2019 07:42:35 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0CD964A64D
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Sep 2019 07:42:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id rChWX2UtBWDg for <kvmarm@lists.cs.columbia.edu>;
- Thu, 26 Sep 2019 07:42:33 -0400 (EDT)
+ with ESMTP id ayuWkYMyevzq for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 26 Sep 2019 07:42:38 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DDD884A657
- for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Sep 2019 07:42:33 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CC3E44A657
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Sep 2019 07:42:38 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8992A1596;
- Thu, 26 Sep 2019 04:42:33 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8954F142F;
+ Thu, 26 Sep 2019 04:42:38 -0700 (PDT)
 Received: from entos-d05.shanghai.arm.com (entos-d05.shanghai.arm.com
  [10.169.40.35])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 00ECF3F67D;
- Thu, 26 Sep 2019 04:42:28 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id EE0D73F67D;
+ Thu, 26 Sep 2019 04:42:33 -0700 (PDT)
 From: Jianyong Wu <jianyong.wu@arm.com>
 To: netdev@vger.kernel.org, yangbo.lu@nxp.com, john.stultz@linaro.org,
  tglx@linutronix.de, pbonzini@redhat.com, sean.j.christopherson@intel.com,
  maz@kernel.org, richardcochran@gmail.com, Mark.Rutland@arm.com,
  Will.Deacon@arm.com, suzuki.poulose@arm.com
-Subject: [RFC PATCH v4 2/5] ptp: Reorganize ptp_kvm modules to make it
- arch-independent.
-Date: Thu, 26 Sep 2019 19:42:09 +0800
-Message-Id: <20190926114212.5322-3-jianyong.wu@arm.com>
+Subject: [RFC PATCH v4 3/5] psci: Add hvc call service for ptp_kvm.
+Date: Thu, 26 Sep 2019 19:42:10 +0800
+Message-Id: <20190926114212.5322-4-jianyong.wu@arm.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20190926114212.5322-1-jianyong.wu@arm.com>
 References: <20190926114212.5322-1-jianyong.wu@arm.com>
@@ -70,279 +69,82 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Currently, ptp_kvm modules implementation is only for x86 which includs
-large part of arch-specific code.  This patch move all of those code
-into new arch related file in the same directory.
+This patch is the base of ptp_kvm for arm64.
+ptp_kvm modules will call hvc to get this service.
+The service offers real time and counter cycle of host for guest.
 
 Signed-off-by: Jianyong Wu <jianyong.wu@arm.com>
 ---
- drivers/ptp/Makefile                 |  1 +
- drivers/ptp/{ptp_kvm.c => kvm_ptp.c} | 77 ++++++------------------
- drivers/ptp/ptp_kvm_x86.c            | 87 ++++++++++++++++++++++++++++
- include/asm-generic/ptp_kvm.h        | 12 ++++
- 4 files changed, 118 insertions(+), 59 deletions(-)
- rename drivers/ptp/{ptp_kvm.c => kvm_ptp.c} (63%)
- create mode 100644 drivers/ptp/ptp_kvm_x86.c
- create mode 100644 include/asm-generic/ptp_kvm.h
+ include/linux/arm-smccc.h | 12 ++++++++++++
+ virt/kvm/arm/psci.c       | 18 ++++++++++++++++++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/drivers/ptp/Makefile b/drivers/ptp/Makefile
-index 677d1d178a3e..8f27ba302e31 100644
---- a/drivers/ptp/Makefile
-+++ b/drivers/ptp/Makefile
-@@ -4,6 +4,7 @@
- #
+diff --git a/include/linux/arm-smccc.h b/include/linux/arm-smccc.h
+index a6e4d3e3d10a..bc0cdad10f35 100644
+--- a/include/linux/arm-smccc.h
++++ b/include/linux/arm-smccc.h
+@@ -94,6 +94,7 @@
  
- ptp-y					:= ptp_clock.o ptp_chardev.o ptp_sysfs.o
-+ptp_kvm-y				:= ptp_kvm_$(ARCH).o kvm_ptp.o
- obj-$(CONFIG_PTP_1588_CLOCK)		+= ptp.o
- obj-$(CONFIG_PTP_1588_CLOCK_DTE)	+= ptp_dte.o
- obj-$(CONFIG_PTP_1588_CLOCK_IXP46X)	+= ptp_ixp46x.o
-diff --git a/drivers/ptp/ptp_kvm.c b/drivers/ptp/kvm_ptp.c
-similarity index 63%
-rename from drivers/ptp/ptp_kvm.c
-rename to drivers/ptp/kvm_ptp.c
-index fc7d0b77e118..d8f215186904 100644
---- a/drivers/ptp/ptp_kvm.c
-+++ b/drivers/ptp/kvm_ptp.c
-@@ -8,12 +8,12 @@
- #include <linux/err.h>
- #include <linux/init.h>
- #include <linux/kernel.h>
-+#include <linux/slab.h>
- #include <linux/module.h>
- #include <uapi/linux/kvm_para.h>
- #include <asm/kvm_para.h>
--#include <asm/pvclock.h>
--#include <asm/kvmclock.h>
- #include <uapi/asm/kvm_para.h>
-+#include <asm-generic/ptp_kvm.h>
+ /* KVM "vendor specific" services */
+ #define ARM_SMCCC_KVM_FUNC_FEATURES		0
++#define ARM_SMCCC_KVM_PTP			1
+ #define ARM_SMCCC_KVM_FUNC_FEATURES_2		127
+ #define ARM_SMCCC_KVM_NUM_FUNCS			128
  
- #include <linux/ptp_clock_kernel.h>
+@@ -103,6 +104,17 @@
+ 			   ARM_SMCCC_OWNER_VENDOR_HYP,			\
+ 			   ARM_SMCCC_KVM_FUNC_FEATURES)
  
-@@ -24,56 +24,29 @@ struct kvm_ptp_clock {
++/*
++ * This ID used for virtual ptp kvm clock and it will pass second value
++ * and nanosecond value of host real time and system counter by vcpu
++ * register to guest.
++ */
++#define ARM_SMCCC_VENDOR_HYP_KVM_PTP_FUNC_ID				\
++	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,				\
++			   ARM_SMCCC_SMC_32,				\
++			   ARM_SMCCC_OWNER_VENDOR_HYP,			\
++			   ARM_SMCCC_KVM_PTP)
++
+ #ifndef __ASSEMBLY__
  
- DEFINE_SPINLOCK(kvm_ptp_lock);
+ #include <linux/linkage.h>
+diff --git a/virt/kvm/arm/psci.c b/virt/kvm/arm/psci.c
+index 0debf49bf259..3f30fc42a5ca 100644
+--- a/virt/kvm/arm/psci.c
++++ b/virt/kvm/arm/psci.c
+@@ -392,6 +392,8 @@ int kvm_hvc_call_handler(struct kvm_vcpu *vcpu)
+ 	u32 func_id = smccc_get_function(vcpu);
+ 	u32 val[4] = {};
+ 	u32 option;
++	u64 cycles;
++	struct system_time_snapshot systime_snapshot;
  
--static struct pvclock_vsyscall_time_info *hv_clock;
--
--static struct kvm_clock_pairing clock_pair;
--static phys_addr_t clock_pair_gpa;
--
- static int ptp_kvm_get_time_fn(ktime_t *device_time,
- 			       struct system_counterval_t *system_counter,
- 			       void *ctx)
- {
--	unsigned long ret;
-+	unsigned long ret, cycle;
- 	struct timespec64 tspec;
--	unsigned version;
--	int cpu;
--	struct pvclock_vcpu_time_info *src;
-+	struct clocksource *cs;
+ 	val[0] = SMCCC_RET_NOT_SUPPORTED;
  
- 	spin_lock(&kvm_ptp_lock);
- 
- 	preempt_disable_notrace();
--	cpu = smp_processor_id();
--	src = &hv_clock[cpu].pvti;
--
--	do {
--		/*
--		 * We are using a TSC value read in the hosts
--		 * kvm_hc_clock_pairing handling.
--		 * So any changes to tsc_to_system_mul
--		 * and tsc_shift or any other pvclock
--		 * data invalidate that measurement.
--		 */
--		version = pvclock_read_begin(src);
--
--		ret = kvm_hypercall2(KVM_HC_CLOCK_PAIRING,
--				     clock_pair_gpa,
--				     KVM_CLOCK_PAIRING_WALLCLOCK);
--		if (ret != 0) {
--			pr_err_ratelimited("clock pairing hypercall ret %lu\n", ret);
--			spin_unlock(&kvm_ptp_lock);
--			preempt_enable_notrace();
--			return -EOPNOTSUPP;
--		}
--
--		tspec.tv_sec = clock_pair.sec;
--		tspec.tv_nsec = clock_pair.nsec;
--		ret = __pvclock_read_cycles(src, clock_pair.tsc);
--	} while (pvclock_read_retry(src, version));
-+	ret = kvm_arch_ptp_get_clock_fn(&cycle, &tspec, &cs);
-+	if (ret != 0) {
-+		pr_err_ratelimited("clock pairing hypercall ret %lu\n", ret);
-+		spin_unlock(&kvm_ptp_lock);
-+		preempt_enable_notrace();
-+		return -EOPNOTSUPP;
-+	}
- 
- 	preempt_enable_notrace();
- 
--	system_counter->cycles = ret;
--	system_counter->cs = &kvm_clock;
-+	system_counter->cycles = cycle;
-+	system_counter->cs = cs;
- 
- 	*device_time = timespec64_to_ktime(tspec);
- 
-@@ -116,17 +89,13 @@ static int ptp_kvm_gettime(struct ptp_clock_info *ptp, struct timespec64 *ts)
- 
- 	spin_lock(&kvm_ptp_lock);
- 
--	ret = kvm_hypercall2(KVM_HC_CLOCK_PAIRING,
--			     clock_pair_gpa,
--			     KVM_CLOCK_PAIRING_WALLCLOCK);
-+	ret = kvm_arch_ptp_get_clock(&tspec);
- 	if (ret != 0) {
- 		pr_err_ratelimited("clock offset hypercall ret %lu\n", ret);
- 		spin_unlock(&kvm_ptp_lock);
- 		return -EOPNOTSUPP;
+@@ -431,6 +433,22 @@ int kvm_hvc_call_handler(struct kvm_vcpu *vcpu)
+ 	case ARM_SMCCC_VENDOR_HYP_KVM_FEATURES_FUNC_ID:
+ 		val[0] = BIT(ARM_SMCCC_KVM_FUNC_FEATURES);
+ 		break;
++	/*
++	 * This will used for virtual ptp kvm clock. three
++	 * values will be passed back.
++	 * reg0 stores high 32-bit host ktime;
++	 * reg1 stores low 32-bit host ktime;
++	 * reg2 stores high 32-bit difference of host cycles and cntvoff;
++	 * reg3 stores low 32-bit difference of host cycles and cntvoff.
++	 */
++	case ARM_SMCCC_VENDOR_HYP_KVM_PTP_FUNC_ID:
++		ktime_get_snapshot(&systime_snapshot);
++		val[0] = systime_snapshot.real >> 32;
++		val[1] = systime_snapshot.real << 32 >> 32;
++		cycles = systime_snapshot.cycles - vcpu_vtimer(vcpu)->cntvoff;
++		val[2] = cycles >> 32;
++		val[3] = cycles << 32 >> 32;
++		break;
+ 	default:
+ 		return kvm_psci_call(vcpu);
  	}
- 
--	tspec.tv_sec = clock_pair.sec;
--	tspec.tv_nsec = clock_pair.nsec;
- 	spin_unlock(&kvm_ptp_lock);
- 
- 	memcpy(ts, &tspec, sizeof(struct timespec64));
-@@ -166,21 +135,11 @@ static void __exit ptp_kvm_exit(void)
- 
- static int __init ptp_kvm_init(void)
- {
--	long ret;
--
--	if (!kvm_para_available())
--		return -ENODEV;
--
--	clock_pair_gpa = slow_virt_to_phys(&clock_pair);
--	hv_clock = pvclock_get_pvti_cpu0_va();
-+	int ret;
- 
--	if (!hv_clock)
--		return -ENODEV;
--
--	ret = kvm_hypercall2(KVM_HC_CLOCK_PAIRING, clock_pair_gpa,
--			KVM_CLOCK_PAIRING_WALLCLOCK);
--	if (ret == -KVM_ENOSYS || ret == -KVM_EOPNOTSUPP)
--		return -ENODEV;
-+	ret = kvm_arch_ptp_init();
-+	if (!ret)
-+		return -EOPNOTSUPP;
- 
- 	kvm_ptp_clock.caps = ptp_kvm_caps;
- 
-diff --git a/drivers/ptp/ptp_kvm_x86.c b/drivers/ptp/ptp_kvm_x86.c
-new file mode 100644
-index 000000000000..a52cf1c2990c
---- /dev/null
-+++ b/drivers/ptp/ptp_kvm_x86.c
-@@ -0,0 +1,87 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * Virtual PTP 1588 clock for use with KVM guests
-+ *
-+ * Copyright (C) 2017 Red Hat Inc.
-+ */
-+
-+#include <asm/pvclock.h>
-+#include <asm/kvmclock.h>
-+#include <linux/module.h>
-+#include <uapi/asm/kvm_para.h>
-+#include <uapi/linux/kvm_para.h>
-+#include <linux/ptp_clock_kernel.h>
-+
-+phys_addr_t clock_pair_gpa;
-+struct kvm_clock_pairing clock_pair;
-+struct pvclock_vsyscall_time_info *hv_clock;
-+
-+int kvm_arch_ptp_init(void)
-+{
-+	int ret;
-+
-+	if (!kvm_para_available())
-+		return -ENODEV;
-+
-+	clock_pair_gpa = slow_virt_to_phys(&clock_pair);
-+	hv_clock = pvclock_get_pvti_cpu0_va();
-+	if (!hv_clock)
-+		return -ENODEV;
-+
-+	ret = kvm_hypercall2(KVM_HC_CLOCK_PAIRING, clock_pair_gpa,
-+			     KVM_CLOCK_PAIRING_WALLCLOCK);
-+	if (ret == -KVM_ENOSYS || ret == -KVM_EOPNOTSUPP)
-+		return -ENODEV;
-+
-+	return 0;
-+}
-+
-+int kvm_arch_ptp_get_clock(struct timespec64 *ts)
-+{
-+	long ret;
-+
-+	ret = kvm_hypercall2(KVM_HC_CLOCK_PAIRING,
-+			     clock_pair_gpa,
-+			     KVM_CLOCK_PAIRING_WALLCLOCK);
-+	if (ret != 0)
-+		return -EOPNOTSUPP;
-+
-+	ts->tv_sec = clock_pair.sec;
-+	ts->tv_nsec = clock_pair.nsec;
-+
-+	return 0;
-+}
-+
-+int kvm_arch_ptp_get_clock_fn(unsigned long *cycle, struct timespec64 *tspec,
-+			      struct clocksource **cs)
-+{
-+	unsigned long ret;
-+	unsigned int version;
-+	int cpu;
-+	struct pvclock_vcpu_time_info *src;
-+
-+	cpu = smp_processor_id();
-+	src = &hv_clock[cpu].pvti;
-+
-+	do {
-+		/*
-+		 * We are using a TSC value read in the hosts
-+		 * kvm_hc_clock_pairing handling.
-+		 * So any changes to tsc_to_system_mul
-+		 * and tsc_shift or any other pvclock
-+		 * data invalidate that measurement.
-+		 */
-+		version = pvclock_read_begin(src);
-+
-+		ret = kvm_hypercall2(KVM_HC_CLOCK_PAIRING,
-+				     clock_pair_gpa,
-+				     KVM_CLOCK_PAIRING_WALLCLOCK);
-+		tspec->tv_sec = clock_pair.sec;
-+		tspec->tv_nsec = clock_pair.nsec;
-+		*cycle = __pvclock_read_cycles(src, clock_pair.tsc);
-+	} while (pvclock_read_retry(src, version));
-+
-+	*cs = &kvm_clock;
-+
-+	return 0;
-+}
-diff --git a/include/asm-generic/ptp_kvm.h b/include/asm-generic/ptp_kvm.h
-new file mode 100644
-index 000000000000..208e842bfa64
---- /dev/null
-+++ b/include/asm-generic/ptp_kvm.h
-@@ -0,0 +1,12 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ *  Virtual PTP 1588 clock for use with KVM guests
-+ *
-+ *  Copyright (C) 2019 ARM Ltd.
-+ *  All Rights Reserved
-+ */
-+
-+int kvm_arch_ptp_init(void);
-+int kvm_arch_ptp_get_clock(struct timespec64 *ts);
-+int kvm_arch_ptp_get_clock_fn(long *cycle,
-+		struct timespec64 *tspec, void *cs);
 -- 
 2.17.1
 
