@@ -2,59 +2,61 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 76DB6C0F6F
-	for <lists+kvmarm@lfdr.de>; Sat, 28 Sep 2019 05:13:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52F63C1DCD
+	for <lists+kvmarm@lfdr.de>; Mon, 30 Sep 2019 11:20:14 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 024E34A71C;
-	Fri, 27 Sep 2019 23:13:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 974CD4A70A;
+	Mon, 30 Sep 2019 05:20:13 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.502
+X-Spam-Score: 0.799
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id I+XLKCRTtOlF; Fri, 27 Sep 2019 23:13:26 -0400 (EDT)
+	with ESMTP id aewkL76CFw5g; Mon, 30 Sep 2019 05:20:13 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E6EE34A720;
-	Fri, 27 Sep 2019 23:13:25 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 86F3A4A705;
+	Mon, 30 Sep 2019 05:20:12 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AD6D24A70B
- for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Sep 2019 23:13:24 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 282344A6B0
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 30 Sep 2019 05:20:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ETia6btTNRzp for <kvmarm@lists.cs.columbia.edu>;
- Fri, 27 Sep 2019 23:13:23 -0400 (EDT)
-Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7DDC54A703
- for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Sep 2019 23:13:23 -0400 (EDT)
-Received: from DGGEMS401-HUB.china.huawei.com (unknown [172.30.72.59])
- by Forcepoint Email with ESMTP id 55649E13E901CAD785BF;
- Sat, 28 Sep 2019 11:13:19 +0800 (CST)
-Received: from [127.0.0.1] (10.184.12.158) by DGGEMS401-HUB.china.huawei.com
- (10.3.19.201) with Microsoft SMTP Server id 14.3.439.0; Sat, 28 Sep 2019
- 11:13:10 +0800
-Subject: Re: [PATCH 31/35] irqchip/gic-v4.1: Eagerly vmap vPEs
-To: Marc Zyngier <maz@kernel.org>, <kvmarm@lists.cs.columbia.edu>,
- <linux-kernel@vger.kernel.org>
-References: <20190923182606.32100-1-maz@kernel.org>
- <20190923182606.32100-32-maz@kernel.org>
-From: Zenghui Yu <yuzenghui@huawei.com>
-Message-ID: <82576f6e-3736-8069-bbf2-7744fbea9ed2@huawei.com>
-Date: Sat, 28 Sep 2019 11:11:42 +0800
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:64.0) Gecko/20100101
- Thunderbird/64.0
+ with ESMTP id gM71xT4QW6+t for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 30 Sep 2019 05:20:09 -0400 (EDT)
+Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
+ [213.251.177.50])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id DB1E14A69D
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 30 Sep 2019 05:20:09 -0400 (EDT)
+Received: from www-data by cheepnis.misterjones.org with local (Exim 4.80)
+ (envelope-from <maz@kernel.org>)
+ id 1iErqf-0001rF-5T; Mon, 30 Sep 2019 11:20:05 +0200
+To: Zenghui Yu <yuzenghui@huawei.com>
+Subject: Re: [PATCH 20/35] irqchip/gic-v4.1: Allow direct invalidation of VLPIs
+X-PHP-Originating-Script: 0:main.inc
 MIME-Version: 1.0
-In-Reply-To: <20190923182606.32100-32-maz@kernel.org>
-Content-Language: en-US
-X-Originating-IP: [10.184.12.158]
-X-CFilter-Loop: Reflected
+Date: Mon, 30 Sep 2019 10:20:05 +0100
+From: Marc Zyngier <maz@kernel.org>
+In-Reply-To: <db01f956-bc53-b8a5-9406-15b889d717f0@huawei.com>
+References: <20190923182606.32100-1-maz@kernel.org>
+ <20190923182606.32100-21-maz@kernel.org>
+ <db01f956-bc53-b8a5-9406-15b889d717f0@huawei.com>
+Message-ID: <1c96d38da22a97b1fda94a940b60e345@www.loen.fr>
+X-Sender: maz@kernel.org
+User-Agent: Roundcube Webmail/0.7.2
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Rcpt-To: yuzenghui@huawei.com, kvmarm@lists.cs.columbia.edu,
+ linux-kernel@vger.kernel.org, lorenzo.pieralisi@arm.com, jason@lakedaemon.net,
+ tglx@linutronix.de
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on cheepnis.misterjones.org);
+ SAEximRunCond expanded to false
 Cc: Thomas Gleixner <tglx@linutronix.de>,
- Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
- Jason Cooper <jason@lakedaemon.net>
+ Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>, kvmarm@lists.cs.columbia.edu,
+ Jason Cooper <jason@lakedaemon.net>, linux-kernel@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -71,102 +73,79 @@ Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2019/9/24 2:26, Marc Zyngier wrote:
-> Now that we have HW-accelerated SGIs being delivered to VPEs, it
-> becomes required to map the VPEs on all ITSs instead of relying
-> on the lazy approach that we would use when using the ITS-list
-> mechanism.
-> 
-> Signed-off-by: Marc Zyngier <maz@kernel.org>
-> ---
->   drivers/irqchip/irq-gic-v3-its.c | 39 +++++++++++++++++++++++++-------
->   1 file changed, 31 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-> index 4aae9582182b..a1e8c4c2598a 100644
-> --- a/drivers/irqchip/irq-gic-v3-its.c
-> +++ b/drivers/irqchip/irq-gic-v3-its.c
-> @@ -1417,12 +1417,31 @@ static int its_irq_set_irqchip_state(struct irq_data *d,
->   	return 0;
->   }
->   
-> +/*
-> + * Two favourable cases:
-> + *
-> + * (a) Either we have a GICv4.1, and all vPEs have to be mapped at all times
-> + *     for vSGI delivery
-> + *
-> + * (b) Or the ITSs do not use a list map, meaning that VMOVP is cheap enough
-> + *     and we're better off mapping all VPEs always
-> + *
-> + * If neither (a) nor (b) is true, then we map VLPIs on demand.
-                                                  ^^^^^
-vPEs
+On 2019-09-28 03:02, Zenghui Yu wrote:
+> On 2019/9/24 2:25, Marc Zyngier wrote:
+>> Just like for INVALL, GICv4.1 has grown a VPE-aware INVLPI register.
+>> Let's plumb it in and make use of the DirectLPI code in that case.
+>> Signed-off-by: Marc Zyngier <maz@kernel.org>
+>> ---
+>>   drivers/irqchip/irq-gic-v3-its.c   | 19 +++++++++++++++++--
+>>   include/linux/irqchip/arm-gic-v3.h |  1 +
+>>   2 files changed, 18 insertions(+), 2 deletions(-)
+>> diff --git a/drivers/irqchip/irq-gic-v3-its.c 
+>> b/drivers/irqchip/irq-gic-v3-its.c
+>> index b791c9beddf2..34595a7fcccb 100644
+>> --- a/drivers/irqchip/irq-gic-v3-its.c
+>> +++ b/drivers/irqchip/irq-gic-v3-its.c
+>> @@ -1200,13 +1200,27 @@ static void wait_for_syncr(void __iomem 
+>> *rdbase)
+>>   static void direct_lpi_inv(struct irq_data *d)
+>>   {
+>> +	struct its_vlpi_map *map = get_vlpi_map(d);
+>>   	struct its_collection *col;
+>>   	void __iomem *rdbase;
+>> +	u64 val;
+>> +
+>> +	if (map) {
+>> +		struct its_device *its_dev = irq_data_get_irq_chip_data(d);
+>> +
+>> +		WARN_ON(!is_v4_1(its_dev->its));
+>> +
+>> +		val  = GICR_INVLPIR_V;
+>> +		val |= FIELD_PREP(GICR_INVLPIR_VPEID, map->vpe->vpe_id);
+>> +		val |= FIELD_PREP(GICR_INVLPIR_INTID, map->vintid);
+>> +	} else {
+>> +		val = d->hwirq;
+>> +	}
+>>
+>>   	/* Target the redistributor this LPI is currently routed to */
+>>   	col = irq_to_col(d);
+>
+> I think irq_to_col() may not work when GICv4.1 VLPIs are involved in.
+>
+> irq_to_col() gives us col_map[event] as the target redistributor,
+> but the correct one for VLPIs should be 
+> vlpi_maps[event]->vpe->col_idx.
+> These two are not always pointing to the same physical RD.
+> For example, if guest issues a MOVI against a VLPI, we will update 
+> the
+> corresponding vlpi_map->vpe and issue a VMOVI on ITS... but leave the
+> col_map[event] unchanged.
+>
+> col_map[event] usually describes the physical LPI's CPU affinity, but
+> when this physical LPI serves as something which the VLPI is backed 
+> by,
+> we take really little care of it.  Did I miss something here?
 
-> + *
-> + */
-> +static bool gic_requires_eager_mapping(void)
-> +{
-> +	if (!its_list_map || gic_rdists->has_rvpeid)
-> +		return true;
-> +
-> +	return false;
-> +}
-> +
->   static void its_map_vm(struct its_node *its, struct its_vm *vm)
->   {
->   	unsigned long flags;
->   
-> -	/* Not using the ITS list? Everything is always mapped. */
-> -	if (!its_list_map)
-> +	if (gic_requires_eager_mapping())
->   		return;
->   
->   	raw_spin_lock_irqsave(&vmovp_lock, flags);
-> @@ -1456,7 +1475,7 @@ static void its_unmap_vm(struct its_node *its, struct its_vm *vm)
->   	unsigned long flags;
->   
->   	/* Not using the ITS list? Everything is always mapped. */
-> -	if (!its_list_map)
-> +	if (gic_requires_eager_mapping())
->   		return;
->   
->   	raw_spin_lock_irqsave(&vmovp_lock, flags);
-> @@ -3957,8 +3976,12 @@ static int its_vpe_irq_domain_activate(struct irq_domain *domain,
->   	struct its_vpe *vpe = irq_data_get_irq_chip_data(d);
->   	struct its_node *its;
->   
-> -	/* If we use the list map, we issue VMAPP on demand... */
-> -	if (its_list_map)
-> +	/*
-> +	 * If we use the list map, we issue VMAPP on demand... Unless
-> +	 * we're on a GICv4.1 and we eagerly map the VPE on all ITSs
-> +	 * so that VSGIs can work.
-> +	 */
-> +	if (!gic_requires_eager_mapping())
->   		return 0;
->   
->   	/* Map the VPE to the first possible CPU */
-> @@ -3984,10 +4007,10 @@ static void its_vpe_irq_domain_deactivate(struct irq_domain *domain,
->   	struct its_node *its;
->   
->   	/*
-> -	 * If we use the list map, we unmap the VPE once no VLPIs are
-> -	 * associated with the VM.
-> +	 * If we use the list map on GICv4.0, we unmap the VPE once no
-> +	 * VLPIs are associated with the VM.
->   	 */
-> -	if (its_list_map)
-> +	if (!gic_requires_eager_mapping())
->   		return;
->   
->   	list_for_each_entry(its, &its_nodes, entry) {
-> 
+You didn't miss anything, and this is indeed another pretty bad bug.
+The collection mapping is completely unused when the LPI becomes a
+VLPI, and it is only the vpe->col_id that matters (which gets updated
+on VMOVP).
 
+This shows that irq_to_col() is the wrong abstraction, and what we're
+interested is something that is more like 'irq to cpuid', allowing us
+to directly point to the right distributor.
+
+Please see the patch I just pushed[1], which does that.
 
 Thanks,
-zenghui
 
+         M.
+
+[1] 
+https://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git/commit/?h=irq/gic-v4.1-devel&id=aff363113eb26b6840136b69c2c7db2ea691db20
+-- 
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
