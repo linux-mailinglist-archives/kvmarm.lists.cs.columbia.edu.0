@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 52078C3000
-	for <lists+kvmarm@lfdr.de>; Tue,  1 Oct 2019 11:21:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66B65C3005
+	for <lists+kvmarm@lfdr.de>; Tue,  1 Oct 2019 11:21:17 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F13B84A69C;
-	Tue,  1 Oct 2019 05:21:14 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1160A4A6B7;
+	Tue,  1 Oct 2019 05:21:17 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
@@ -15,33 +15,34 @@ X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Zcf9Wh1XZN1v; Tue,  1 Oct 2019 05:21:13 -0400 (EDT)
+	with ESMTP id IxNNnzUif3qO; Tue,  1 Oct 2019 05:21:16 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 958E14A698;
-	Tue,  1 Oct 2019 05:21:13 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EB01A4A6C8;
+	Tue,  1 Oct 2019 05:21:15 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 28AEE4A69A
- for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Oct 2019 05:21:12 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8CEC94A6C7
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Oct 2019 05:21:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id xhdKwDT59rsG for <kvmarm@lists.cs.columbia.edu>;
- Tue,  1 Oct 2019 05:21:11 -0400 (EDT)
+ with ESMTP id zKgt4PrnodAr for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  1 Oct 2019 05:21:13 -0400 (EDT)
 Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
  [213.251.177.50])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 40E8E4A698
- for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Oct 2019 05:21:11 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 71B2E4A6A3
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Oct 2019 05:21:12 -0400 (EDT)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by cheepnis.misterjones.org with esmtpsa
  (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128) (Exim 4.80)
  (envelope-from <maz@kernel.org>)
- id 1iFEL7-00019A-44; Tue, 01 Oct 2019 11:21:01 +0200
+ id 1iFEL7-00019A-Vi; Tue, 01 Oct 2019 11:21:02 +0200
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@redhat.com>
-Subject: [PATCH 3/4] arm64: KVM: Kill hyp_alternate_select()
-Date: Tue,  1 Oct 2019 10:20:37 +0100
-Message-Id: <20191001092038.17097-4-maz@kernel.org>
+Subject: [PATCH 4/4] KVM: arm/arm64: vgic: Use the appropriate
+ TRACE_INCLUDE_PATH
+Date: Tue,  1 Oct 2019 10:20:38 +0100
+Message-Id: <20191001092038.17097-5-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191001092038.17097-1-maz@kernel.org>
 References: <20191001092038.17097-1-maz@kernel.org>
@@ -73,50 +74,34 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-hyp_alternate_select() is now completely unused. Goodbye.
+From: Zenghui Yu <yuzenghui@huawei.com>
 
+Commit 49dfe94fe5ad ("KVM: arm/arm64: Fix TRACE_INCLUDE_PATH") fixes
+TRACE_INCLUDE_PATH to the correct relative path to the define_trace.h
+and explains why did the old one work.
+
+The same fix should be applied to virt/kvm/arm/vgic/trace.h.
+
+Reviewed-by: Masahiro Yamada <yamada.masahiro@socionext.com>
+Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Christoffer Dall <christoffer.dall@arm.com>
-Reviewed-by: Andrew Jones <drjones@redhat.com>
 ---
- arch/arm64/include/asm/kvm_hyp.h | 24 ------------------------
- 1 file changed, 24 deletions(-)
+ virt/kvm/arm/vgic/trace.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/kvm_hyp.h b/arch/arm64/include/asm/kvm_hyp.h
-index 86825aa20852..97f21cc66657 100644
---- a/arch/arm64/include/asm/kvm_hyp.h
-+++ b/arch/arm64/include/asm/kvm_hyp.h
-@@ -47,30 +47,6 @@
- #define read_sysreg_el2(r)	read_sysreg_elx(r, _EL2, _EL1)
- #define write_sysreg_el2(v,r)	write_sysreg_elx(v, r, _EL2, _EL1)
+diff --git a/virt/kvm/arm/vgic/trace.h b/virt/kvm/arm/vgic/trace.h
+index 55fed77a9f73..4fd4f6db181b 100644
+--- a/virt/kvm/arm/vgic/trace.h
++++ b/virt/kvm/arm/vgic/trace.h
+@@ -30,7 +30,7 @@ TRACE_EVENT(vgic_update_irq_pending,
+ #endif /* _TRACE_VGIC_H */
  
--/**
-- * hyp_alternate_select - Generates patchable code sequences that are
-- * used to switch between two implementations of a function, depending
-- * on the availability of a feature.
-- *
-- * @fname: a symbol name that will be defined as a function returning a
-- * function pointer whose type will match @orig and @alt
-- * @orig: A pointer to the default function, as returned by @fname when
-- * @cond doesn't hold
-- * @alt: A pointer to the alternate function, as returned by @fname
-- * when @cond holds
-- * @cond: a CPU feature (as described in asm/cpufeature.h)
-- */
--#define hyp_alternate_select(fname, orig, alt, cond)			\
--typeof(orig) * __hyp_text fname(void)					\
--{									\
--	typeof(alt) *val = orig;					\
--	asm volatile(ALTERNATIVE("nop		\n",			\
--				 "mov	%0, %1	\n",			\
--				 cond)					\
--		     : "+r" (val) : "r" (alt));				\
--	return val;							\
--}
--
- int __vgic_v2_perform_cpuif_access(struct kvm_vcpu *vcpu);
+ #undef TRACE_INCLUDE_PATH
+-#define TRACE_INCLUDE_PATH ../../../virt/kvm/arm/vgic
++#define TRACE_INCLUDE_PATH ../../virt/kvm/arm/vgic
+ #undef TRACE_INCLUDE_FILE
+ #define TRACE_INCLUDE_FILE trace
  
- void __vgic_v3_save_state(struct kvm_vcpu *vcpu);
 -- 
 2.20.1
 
