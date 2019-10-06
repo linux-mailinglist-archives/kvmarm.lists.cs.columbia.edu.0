@@ -2,61 +2,58 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DC36CC112
-	for <lists+kvmarm@lfdr.de>; Fri,  4 Oct 2019 18:51:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DB0DCD162
+	for <lists+kvmarm@lfdr.de>; Sun,  6 Oct 2019 12:47:04 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1D0FB4A669;
-	Fri,  4 Oct 2019 12:51:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 542974A668;
+	Sun,  6 Oct 2019 06:47:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.202
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.202 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5, SPF_HELO_PASS=-0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0uHJx7LrmgNw; Fri,  4 Oct 2019 12:51:36 -0400 (EDT)
+	with ESMTP id aRhBm+lk5Sy1; Sun,  6 Oct 2019 06:47:03 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C1D3E4A5C6;
-	Fri,  4 Oct 2019 12:51:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 131664A7F3;
+	Sun,  6 Oct 2019 06:47:02 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7E40F4A591
- for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Oct 2019 12:51:34 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6CBC14A52B
+ for <kvmarm@lists.cs.columbia.edu>; Sun,  6 Oct 2019 06:47:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id TerNBDSdVeQW for <kvmarm@lists.cs.columbia.edu>;
- Fri,  4 Oct 2019 12:51:33 -0400 (EDT)
-Received: from mx1.redhat.com (mx1.redhat.com [209.132.183.28])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 791F44A590
- for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Oct 2019 12:51:33 -0400 (EDT)
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com
- [10.5.11.14])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ with ESMTP id 5MRgr307EhXs for <kvmarm@lists.cs.columbia.edu>;
+ Sun,  6 Oct 2019 06:46:59 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 74D6C4A529
+ for <kvmarm@lists.cs.columbia.edu>; Sun,  6 Oct 2019 06:46:59 -0400 (EDT)
+Received: from localhost.localdomain (82-132-217-85.dab.02.net [82.132.217.85])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mx1.redhat.com (Postfix) with ESMTPS id C50D1308219E;
- Fri,  4 Oct 2019 16:51:32 +0000 (UTC)
-Received: from kamzik.brq.redhat.com (unknown [10.43.2.160])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id B4E4C5D9DC;
- Fri,  4 Oct 2019 16:51:31 +0000 (UTC)
-Date: Fri, 4 Oct 2019 18:51:29 +0200
-From: Andrew Jones <drjones@redhat.com>
-To: Andre Przywara <andre.przywara@arm.com>
-Subject: Re: [kvm-unit-tests PATCH v2 2/6] arm: gic: Split variable output
- data from test name
-Message-ID: <20191004165129.ocqn37t5gaq66wxf@kamzik.brq.redhat.com>
-References: <20191004141829.87135-1-andre.przywara@arm.com>
- <20191004141829.87135-3-andre.przywara@arm.com>
-MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20191004141829.87135-3-andre.przywara@arm.com>
-User-Agent: NeoMutt/20180716
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16
- (mx1.redhat.com [10.5.110.47]); Fri, 04 Oct 2019 16:51:32 +0000 (UTC)
-Cc: Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu,
+ by mail.kernel.org (Postfix) with ESMTPSA id 66D232084D;
+ Sun,  6 Oct 2019 10:46:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1570358818;
+ bh=5F1vOMzribkWPxS/i0/IDvYHGJESKxSllK/Tnob7QXY=;
+ h=From:To:Cc:Subject:Date:From;
+ b=xQlAvOWUndDfG+W9cFUCIMRr1I1Cp8uID0IDvLC6gmS8Y6pIi8kJYXLoYh7HYL3cD
+ LC8H8dKP2tMYEGIMPAwrR/ssMZxpyd0ctFBtf+TbFXMYaCjl6nDMp1RD77NchJx70P
+ V78sQp7xBgsYCEjDFcg62KQhDwSESd5erSE+aY44=
+From: maz@kernel.org
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
+Subject: [PATCH 0/3] KVM: arm64: Assorted PMU emulation fixes
+Date: Sun,  6 Oct 2019 11:46:33 +0100
+Message-Id: <20191006104636.11194-1-maz@kernel.org>
+X-Mailer: git-send-email 2.20.1
+MIME-Version: 1.0
+Cc: Marc Zyngier <maz@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -73,21 +70,29 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Oct 04, 2019 at 03:18:25PM +0100, Andre Przywara wrote:
-> For some tests we mix variable diagnostic output with the test name,
-> which leads to variable test line, confusing some higher level
-> frameworks.
-> 
-> Split the output to always use the same test name for a certain test,
-> and put diagnostic output on a separate line using the INFO: tag.
-> 
-> Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-> ---
->  arm/gic.c | 45 ++++++++++++++++++++++++++-------------------
->  1 file changed, 26 insertions(+), 19 deletions(-)
->
+From: Marc Zyngier <maz@kernel.org>
 
-Reviewed-by: Andrew Jones <drjones@redhat.com>
+I recently came across a number of PMU emulation bugs, all which can
+result in unexpected behaviours in an unsuspecting guest. The first
+two patches already have been discussed on the list, but I'm including
+them here as part of a slightly longer series. The last patch fixes an
+issue that has been here from day one, where we confuse architectural
+overflow of a counter and perf sampling period.
+
+If nobody disagrees, I'll send them upstream shortly.
+
+Marc Zyngier (3):
+  KVM: arm64: pmu: Fix cycle counter truncation
+  arm64: KVM: Handle PMCR_EL0.LC as RES1 on pure AArch64 systems
+  KVM: arm64: pmu: Reset sample period on overflow handling
+
+ arch/arm64/kvm/sys_regs.c |  4 ++++
+ virt/kvm/arm/pmu.c        | 34 ++++++++++++++++++++++++----------
+ 2 files changed, 28 insertions(+), 10 deletions(-)
+
+-- 
+2.20.1
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
