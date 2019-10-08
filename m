@@ -2,83 +2,60 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 60ED8CF91E
-	for <lists+kvmarm@lfdr.de>; Tue,  8 Oct 2019 14:04:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 99B12CFE5D
+	for <lists+kvmarm@lfdr.de>; Tue,  8 Oct 2019 18:02:01 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0CF064A911;
-	Tue,  8 Oct 2019 08:04:10 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4DF544A838;
+	Tue,  8 Oct 2019 12:02:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -3.291
+X-Spam-Score: 0.799
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.291 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_ALL=0.8, DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_HI=-5, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@amazon.com
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3STl+eDZrIPT; Tue,  8 Oct 2019 08:04:09 -0400 (EDT)
+	with ESMTP id tGqqTLWx1dqZ; Tue,  8 Oct 2019 12:02:00 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id ACCEE4A8FF;
-	Tue,  8 Oct 2019 08:04:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C33E24A8F2;
+	Tue,  8 Oct 2019 12:01:57 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 062684A8C0
- for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Oct 2019 08:04:08 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5051C4A8CB
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Oct 2019 12:01:56 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id me2rw4ZHHHHR for <kvmarm@lists.cs.columbia.edu>;
- Tue,  8 Oct 2019 08:04:03 -0400 (EDT)
-Received: from smtp-fw-4101.amazon.com (smtp-fw-4101.amazon.com [72.21.198.25])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 00C394A8BB
- for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Oct 2019 08:04:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1570536242; x=1602072242;
- h=subject:to:cc:references:from:message-id:date:
- mime-version:in-reply-to:content-transfer-encoding;
- bh=qOiNgtO/sVW6L11wtzZylE/HYq5xG4Py3mmZco6FqFk=;
- b=H2N0z2tHtI9WYRCjoVH91hXfEdcCGTVWVbzc9hmsxK/rIJN97Yk9y7Cy
- xsKcb52WqgVV0upUm8mvDobhkdVf9A4+pyB64tvLA1MPaqN+XGUpP9vmB
- oFjJ7K1mKBs961mr1JjCt37pTZwe3yPSob2E1Y0gvKDD0QxJQcbC0H6Br w=;
-X-IronPort-AV: E=Sophos;i="5.67,270,1566864000"; d="scan'208";a="790658646"
-Received: from iad6-co-svc-p1-lb1-vlan3.amazon.com (HELO
- email-inbound-relay-1a-e34f1ddc.us-east-1.amazon.com) ([10.124.125.6])
- by smtp-border-fw-out-4101.iad4.amazon.com with ESMTP;
- 08 Oct 2019 12:04:02 +0000
-Received: from EX13MTAUWC001.ant.amazon.com
- (iad55-ws-svc-p15-lb9-vlan2.iad.amazon.com [10.40.159.162])
- by email-inbound-relay-1a-e34f1ddc.us-east-1.amazon.com (Postfix) with ESMTPS
- id AF416A1C3A; Tue,  8 Oct 2019 12:03:32 +0000 (UTC)
-Received: from EX13D20UWC001.ant.amazon.com (10.43.162.244) by
- EX13MTAUWC001.ant.amazon.com (10.43.162.135) with Microsoft SMTP Server (TLS)
- id 15.0.1367.3; Tue, 8 Oct 2019 12:03:32 +0000
-Received: from 38f9d3867b82.ant.amazon.com (10.43.162.30) by
- EX13D20UWC001.ant.amazon.com (10.43.162.244) with Microsoft SMTP Server (TLS)
- id 15.0.1367.3; Tue, 8 Oct 2019 12:03:28 +0000
-Subject: Re: [PATCH v2 1/2] KVM: arm/arm64: Allow reporting non-ISV data
- aborts to userspace
-To: Christoffer Dall <christoffer.dall@arm.com>, <kvmarm@lists.cs.columbia.edu>
-References: <20191008093640.26519-1-christoffer.dall@arm.com>
- <20191008093640.26519-2-christoffer.dall@arm.com>
-From: Alexander Graf <graf@amazon.com>
-Message-ID: <eb25aac5-e773-ca8b-0782-7b05b211bac6@amazon.com>
-Date: Tue, 8 Oct 2019 14:03:25 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.0
+ with ESMTP id 9DIpqWF1Wp3q for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  8 Oct 2019 12:01:55 -0400 (EDT)
+Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
+ [213.251.177.50])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3DFC14A81C
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Oct 2019 12:01:55 -0400 (EDT)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by cheepnis.misterjones.org with esmtpsa
+ (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128) (Exim 4.80)
+ (envelope-from <maz@kernel.org>)
+ id 1iHrvs-0001rs-DQ; Tue, 08 Oct 2019 18:01:52 +0200
+From: Marc Zyngier <maz@kernel.org>
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
+Subject: [PATCH v2 0/5] KVM: arm64: Assorted PMU emulation fixes
+Date: Tue,  8 Oct 2019 17:01:23 +0100
+Message-Id: <20191008160128.8872-1-maz@kernel.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <20191008093640.26519-2-christoffer.dall@arm.com>
-Content-Language: en-US
-X-Originating-IP: [10.43.162.30]
-X-ClientProxiedBy: EX13D06UWA004.ant.amazon.com (10.43.160.164) To
- EX13D20UWC001.ant.amazon.com (10.43.162.244)
-Precedence: Bulk
-Cc: =?UTF-8?Q?Daniel_P=2e_Berrang=c3=a9?= <berrange@redhat.com>,
- Marc Zyngier <maz@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>, Heinrich
- Schuchardt <xypron.glpk@gmx.de>, linux-arm-kernel@lists.infradead.org
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, will@kernel.org,
+ mark.rutland@arm.com, james.morse@arm.com, julien.thierry.kdev@gmail.com,
+ suzuki.poulose@arm.com, andrew.murray@arm.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on cheepnis.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Will Deacon <will@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
+Precedence: list
 List-Id: Where KVM/ARM decisions are made <kvmarm.lists.cs.columbia.edu>
 List-Unsubscribe: <https://lists.cs.columbia.edu/mailman/options/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=unsubscribe>
@@ -87,71 +64,46 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+I recently came across a number of PMU emulation bugs, all which can
+result in unexpected behaviours in an unsuspecting guest. The first
+two patches already have been discussed on the list, but I'm including
+them here as part of a slightly longer series.
 
+The third patch is new as of v2, and fixes a bug preventing chained
+events from ever being used.
 
-On 08.10.19 11:36, Christoffer Dall wrote:
-> For a long time, if a guest accessed memory outside of a memslot using
-> any of the load/store instructions in the architecture which doesn't
-> supply decoding information in the ESR_EL2 (the ISV bit is not set), the
-> kernel would print the following message and terminate the VM as a
-> result of returning -ENOSYS to userspace:
-> 
->    load/store instruction decoding not implemented
-> 
-> The reason behind this message is that KVM assumes that all accesses
-> outside a memslot is an MMIO access which should be handled by
-> userspace, and we originally expected to eventually implement some sort
-> of decoding of load/store instructions where the ISV bit was not set.
-> 
-> However, it turns out that many of the instructions which don't provide
-> decoding information on abort are not safe to use for MMIO accesses, and
-> the remaining few that would potentially make sense to use on MMIO
-> accesses, such as those with register writeback, are not used in
-> practice.  It also turns out that fetching an instruction from guest
-> memory can be a pretty horrible affair, involving stopping all CPUs on
-> SMP systems, handling multiple corner cases of address translation in
-> software, and more.  It doesn't appear likely that we'll ever implement
-> this in the kernel.
-> 
-> What is much more common is that a user has misconfigured his/her guest
-> and is actually not accessing an MMIO region, but just hitting some
-> random hole in the IPA space.  In this scenario, the error message above
-> is almost misleading and has led to a great deal of confusion over the
-> years.
-> 
-> It is, nevertheless, ABI to userspace, and we therefore need to
-> introduce a new capability that userspace explicitly enables to change
-> behavior.
-> 
-> This patch introduces KVM_CAP_ARM_NISV_TO_USER (NISV meaning Non-ISV)
-> which does exactly that, and introduces a new exit reason to report the
-> event to userspace.  User space can then emulate an exception to the
-> guest, restart the guest, suspend the guest, or take any other
-> appropriate action as per the policy of the running system.
-> 
-> Reported-by: Heinrich Schuchardt <xypron.glpk@gmx.de>
-> Signed-off-by: Christoffer Dall <christoffer.dall@arm.com>
+The fourth patch is also new as of v2, and is an arm64 PMU change for
+which I clearly don't know what I'm doing. I'd appreciate some
+guidance from Will or Mark.
 
-Reviewed-by: Alexander Graf <graf@amazon.com>
+The last patch fixes an issue that has been here from day one, where
+we confuse architectural overflow of a counter and perf sampling
+period, and uses patch #4 to fix the issue.
 
+I'l planning to send patches 1 through to 3 as fixes shortly, but I
+expect the last two patches to require more discussions.
 
-Alex
+Marc Zyngier (5):
+  KVM: arm64: pmu: Fix cycle counter truncation
+  arm64: KVM: Handle PMCR_EL0.LC as RES1 on pure AArch64 systems
+  KVM: arm64: pmu: Set the CHAINED attribute before creating the
+    in-kernel event
+  arm64: perf: Add reload-on-overflow capability
+  KVM: arm64: pmu: Reset sample period on overflow handling
 
+ arch/arm64/include/asm/perf_event.h |  4 +++
+ arch/arm64/kernel/perf_event.c      |  8 ++++-
+ arch/arm64/kvm/sys_regs.c           |  4 +++
+ virt/kvm/arm/pmu.c                  | 45 +++++++++++++++++++----------
+ 4 files changed, 45 insertions(+), 16 deletions(-)
 
-
-Amazon Development Center Germany GmbH
-Krausenstr. 38
-10117 Berlin
-Geschaeftsfuehrung: Christian Schlaeger, Ralf Herbrich
-Eingetragen am Amtsgericht Charlottenburg unter HRB 149173 B
-Sitz: Berlin
-Ust-ID: DE 289 237 879
-
+-- 
+2.20.1
 
 _______________________________________________
 kvmarm mailing list
