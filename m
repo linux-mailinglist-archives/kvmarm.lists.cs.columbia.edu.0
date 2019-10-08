@@ -2,103 +2,50 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B0F6CF613
-	for <lists+kvmarm@lfdr.de>; Tue,  8 Oct 2019 11:33:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23834CF627
+	for <lists+kvmarm@lfdr.de>; Tue,  8 Oct 2019 11:36:47 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2AF734A919;
-	Tue,  8 Oct 2019 05:33:13 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AB11A4A910;
+	Tue,  8 Oct 2019 05:36:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: 0.799
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@linaro.org
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qWRyVkbgQpQR; Tue,  8 Oct 2019 05:33:13 -0400 (EDT)
+	with ESMTP id uSI9m97EKraB; Tue,  8 Oct 2019 05:36:46 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0BB024A90A;
-	Tue,  8 Oct 2019 05:33:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 743724A90A;
+	Tue,  8 Oct 2019 05:36:45 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1BAA84A8FC
- for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Oct 2019 04:47:22 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 761F84A849
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Oct 2019 05:36:44 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 0eswweT7iNgi for <kvmarm@lists.cs.columbia.edu>;
- Tue,  8 Oct 2019 04:47:18 -0400 (EDT)
-Received: from mail-lj1-f196.google.com (mail-lj1-f196.google.com
- [209.85.208.196])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 705E04A8F2
- for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Oct 2019 04:47:18 -0400 (EDT)
-Received: by mail-lj1-f196.google.com with SMTP id y23so16608796lje.9
- for <kvmarm@lists.cs.columbia.edu>; Tue, 08 Oct 2019 01:47:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=l8gpydJYA0YDgp2JmqFlI7k3M5woSWANVYThPnzBSyg=;
- b=BkRMuuut74Tg4ql3czpGBiGETKQ47t0yfFGj9qUtoNECtFLrPq7patqxRQTIKUPosJ
- e5ij5XG6gLCR9aH2tMBlyg4nicWRgSUUeguPdBLCGj5e+fmO4WBOWHqbIrjN23GcV9X+
- 9UiM5zuZ8kUOjmbmakyLfk3DNm7gDqehMEcBVhaBie4GaVJqRz5rpcUAluJLllJOF3Mf
- +y7BzcB/eQ1ZrGH8gN2u8Rxxi+fzSaghOC5xViRMArZNRSxn2csNz/W1bUfwb6lH8tnt
- yTgKoyASrJ8JwI3YQxZpWYMIBXyHXAIoXg2BD9qf9M9BjKJeDzu0rw7W+YgoKaSJzGqP
- eNYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=l8gpydJYA0YDgp2JmqFlI7k3M5woSWANVYThPnzBSyg=;
- b=EY9UWQL58xx4b+8Yk9u5ebd8r1jaTeZ6J1hT53Bf3fEV1cNXDjl+SjXsDG9Mtcub/I
- l7BveAhJzpDkP5te0AWJBamSjmjrLOoK5GYT7ymuwhn+aQhi7u6oCQHDKavGVcYA+pLi
- qCS0acxNgyXLULFmLyTzKXlKa7GiOTI9WMfgrLK+UKuF964DU+FbNnZcFMm28uM06ZOg
- dys/5gcqDF3xqD4NEO/TO4fqBVPp/6grE5nSoXyB0DpJhz3xAvfnAg49tzOfmVpmkp/l
- xgpnmrtRVYagIHKGdSJ8srrehEwdit86keXaFdRbbBgSrC6OfiGyklVvszZ2/t4A5Pfj
- rhoA==
-X-Gm-Message-State: APjAAAVfGzEhQiAP47otr/CjvvlnEZFm3nq6frAie45SfVV8yheS1Tpv
- dF6+m83w+7d0Z0Lsrq6qPeUAwfcxxhDQzzluRt98nA==
-X-Google-Smtp-Source: APXvYqxbNM71HM7CPR6QRsIgEbU3UU9U/CSiMXaA2SIbIfrQl+rWLBRuuYXoBIaSEvilchXKRH21ww7tus0XXj0qkXw=
-X-Received: by 2002:a2e:63da:: with SMTP id s87mr20899729lje.79.1570524436968; 
- Tue, 08 Oct 2019 01:47:16 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190617221134.9930-1-f.fainelli@gmail.com>
- <CACRpkdbqW2kJNdPi6JPupaHA_qRTWG-MsUxeCz0c38MRujOSSA@mail.gmail.com>
- <0ba50ae2-be09-f633-ab1f-860e8b053882@broadcom.com>
- <CAK8P3a2QBQrBU+bBBL20kR+qJfmspCNjiw05jHTa-q6EDfodMg@mail.gmail.com>
- <fbdc3788-3a24-2885-b61b-8480e8464a51@gmail.com>
- <CAK8P3a1E_1=_+eJXvcFMLd=a=YW_WGwjm3nzRZV7SzzZqovzRw@mail.gmail.com>
-In-Reply-To: <CAK8P3a1E_1=_+eJXvcFMLd=a=YW_WGwjm3nzRZV7SzzZqovzRw@mail.gmail.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Tue, 8 Oct 2019 10:47:05 +0200
-Message-ID: <CACRpkdbuwn-YBYd324OsfC4efBU_1pfnyS+N=+3DmrYOEKKFJw@mail.gmail.com>
-Subject: Re: [PATCH v6 0/6] KASan for arm
-To: Arnd Bergmann <arnd@arndb.de>
-X-Mailman-Approved-At: Tue, 08 Oct 2019 05:33:11 -0400
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>,
- Michal Hocko <mhocko@suse.com>, Catalin Marinas <catalin.marinas@arm.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- David Howells <dhowells@redhat.com>,
- Masahiro Yamada <yamada.masahiro@socionext.com>,
- Andrey Ryabinin <ryabinin.a.a@gmail.com>,
- Alexander Potapenko <glider@google.com>, kvmarm@lists.cs.columbia.edu,
- Florian Fainelli <f.fainelli@gmail.com>, Jonathan Corbet <corbet@lwn.net>,
- Abbott Liu <liuwenliang@huawei.com>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- Russell King <linux@armlinux.org.uk>, kasan-dev <kasan-dev@googlegroups.com>,
- bcm-kernel-feedback-list <bcm-kernel-feedback-list@broadcom.com>,
- Dmitry Vyukov <dvyukov@google.com>, Geert Uytterhoeven <geert@linux-m68k.org>,
- Kees Cook <keescook@chromium.org>, Marc Zyngier <marc.zyngier@arm.com>,
- Andre Przywara <andre.przywara@arm.com>, philip@cog.systems,
- Jinbum Park <jinb.park7@gmail.com>, Thomas Gleixner <tglx@linutronix.de>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>,
- Nicolas Pitre <nico@fluxnic.net>, Greg KH <gregkh@linuxfoundation.org>,
- Ard Biesheuvel <ard.biesheuvel@linaro.org>,
- Linux Doc Mailing List <linux-doc@vger.kernel.org>,
- Rob Landley <rob@landley.net>, Philippe Ombredanne <pombredanne@nexb.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- Thomas Garnier <thgarnie@google.com>,
- "Kirill A . Shutemov" <kirill.shutemov@linux.intel.com>
+ with ESMTP id ARHY5+UjVkBz for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  8 Oct 2019 05:36:43 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4294C4A7D8
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Oct 2019 05:36:43 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C7D241570;
+ Tue,  8 Oct 2019 02:36:42 -0700 (PDT)
+Received: from localhost (e113682-lin.copenhagen.arm.com [10.32.145.14])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5AE7C3F6C4;
+ Tue,  8 Oct 2019 02:36:42 -0700 (PDT)
+From: Christoffer Dall <christoffer.dall@arm.com>
+To: kvmarm@lists.cs.columbia.edu
+Subject: [PATCH v2 0/2] Improve handling of stage 2 aborts without instruction
+ decode
+Date: Tue,  8 Oct 2019 11:36:35 +0200
+Message-Id: <20191008093640.26519-1-christoffer.dall@arm.com>
+X-Mailer: git-send-email 2.18.0
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Marc Zyngier <maz@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Heinrich Schuchardt <xypron.glpk@gmx.de>, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -110,29 +57,61 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, Oct 8, 2019 at 12:10 AM Arnd Bergmann <arnd@arndb.de> wrote:
-> On Mon, Oct 7, 2019 at 11:35 PM Florian Fainelli <f.fainelli@gmail.com> wrote:
+When a guest accesses memory outside the memory slots, KVM usually
+bounces the access back to userspace with KVM_EXIT_MMIO.  However, on
+arm/arm64 systems, certain load/store instructions did not provide
+decoding info for the hypervisor to emulate the instruction, and in this
+case KVM has rather rudely returned -ENOSYS and printed a not overly
+helpful error message:
 
-> > > 053555034bdf kasan: disable CONFIG_KASAN_STACK with clang on arm32
-> >
-> > This one I did not take based on Linus' feedback that is breaks booting
-> > on his RealView board.
->
-> That likely means that there is still a bigger problem somewhere.
+  load/store instruction decoding not implemented
 
-I will try to look into it. I got pretty puzzled by this, it makes no sense.
+This patch series improves the error message and allows userspace to be
+notified of this event instead of receiving -ENOSYS, and also allows
+userspace to ask KVM to inject an external abort to the guest, which it
+can use for any memory access that it either cannot handle.
 
-One possible problem is that some of the test chips on the RealViews
-are not that stable, especially with caches. The plan is to test in QEMU
-and hardware in parallel.
+One remaining case which this patch set does not address is if the guest
+accesses an in-kernel emulated device, such as the VGIC, but using a
+load/store instruction which doesn't provide decode info.  With these
+patches, this will return to userspace for it to handle, but there's no
+way for userspace to return the decoding information to KVM and have KVM
+complete the access to the in-kernel emulated device.  I have no plans
+to address this limitation.
 
-Yours,
-Linus Walleij
+Changes since v1:
+ - Rebased on v5.4-rc2
+ - Fixed some documentation and coding nit in review of v1
+
+Christoffer Dall (2):
+  KVM: arm/arm64: Allow reporting non-ISV data aborts to userspace
+  KVM: arm/arm64: Allow user injection of external data aborts
+
+ Documentation/virt/kvm/api.txt       | 51 +++++++++++++++++++++++++++-
+ arch/arm/include/asm/kvm_arm.h       |  1 +
+ arch/arm/include/asm/kvm_emulate.h   |  5 +++
+ arch/arm/include/asm/kvm_host.h      |  8 +++++
+ arch/arm/include/uapi/asm/kvm.h      |  3 +-
+ arch/arm/kvm/guest.c                 |  3 ++
+ arch/arm64/include/asm/kvm_emulate.h |  5 +++
+ arch/arm64/include/asm/kvm_host.h    |  8 +++++
+ arch/arm64/include/uapi/asm/kvm.h    |  3 +-
+ arch/arm64/kvm/guest.c               |  3 ++
+ arch/arm64/kvm/inject_fault.c        |  4 +--
+ include/uapi/linux/kvm.h             |  8 +++++
+ virt/kvm/arm/arm.c                   | 22 ++++++++++++
+ virt/kvm/arm/mmio.c                  |  9 ++++-
+ 14 files changed, 127 insertions(+), 6 deletions(-)
+
+-- 
+2.18.0
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
