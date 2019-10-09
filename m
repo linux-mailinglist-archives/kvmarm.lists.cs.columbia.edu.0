@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C6850D157E
-	for <lists+kvmarm@lfdr.de>; Wed,  9 Oct 2019 19:23:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2D59D1580
+	for <lists+kvmarm@lfdr.de>; Wed,  9 Oct 2019 19:24:05 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 142FA4A8C6;
-	Wed,  9 Oct 2019 13:23:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5802C4A8B7;
+	Wed,  9 Oct 2019 13:24:05 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,47 +18,47 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id e-58MPS6jOHl; Wed,  9 Oct 2019 13:23:56 -0400 (EDT)
+	with ESMTP id 9AXLq7P6T1FK; Wed,  9 Oct 2019 13:24:05 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0323D4A8BD;
-	Wed,  9 Oct 2019 13:23:56 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2B4394A8C1;
+	Wed,  9 Oct 2019 13:24:05 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 83EAD4A8A8
- for <kvmarm@lists.cs.columbia.edu>; Wed,  9 Oct 2019 13:23:55 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7646B4A885
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  9 Oct 2019 13:24:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id S4AJGNxe3AAt for <kvmarm@lists.cs.columbia.edu>;
- Wed,  9 Oct 2019 13:23:54 -0400 (EDT)
+ with ESMTP id w+5DHIm7I-e5 for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  9 Oct 2019 13:24:04 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4D5944A87C
- for <kvmarm@lists.cs.columbia.edu>; Wed,  9 Oct 2019 13:23:54 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4CA5F4A87C
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  9 Oct 2019 13:24:04 -0400 (EDT)
 Received: from sasha-vm.mshome.net (unknown [167.220.2.234])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 126CA206BB;
- Wed,  9 Oct 2019 17:23:53 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 78752206BB;
+ Wed,  9 Oct 2019 17:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1570641833;
+ s=default; t=1570641843;
  bh=BnNP/S94t0ycyVIws48GAEBsgOMeY35JYl69u3+93fc=;
  h=From:To:Cc:Subject:Date:From;
- b=kU6CQGlrQqr5rwGxHL3NP8rtMt8jQRFHeJcBGjHpZkp9ry50kUKJs9rL2p3hWTihu
- tT+/xZgCS1iO/FqE8mKljpiJju3puOerUBhhuY13uy3st7nM9WHd00Nt5XyneaES2/
- 4khjHPm+/pgHD9XJkm77SZiL+hpfjr9WMHEoMuNU=
+ b=2K95rJMeoMxMEN3j4dvRQ/3zglAiNfgn35uBRtZzX3SsdVnZKSiXnq25C9eM/ZU12
+ oT1pYff8dT66YjCYyPeppFpiO9kkKpNfN2tJH40dAQeOzRcP1IUIQ1zvnlpOD0O68X
+ Lgk/1E6he3a7wrJwuDhUGnh7zcJsMR85AwtRq+W4=
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.3 01/68] KVM: arm/arm64: vgic: Use the appropriate
+Subject: [PATCH AUTOSEL 4.19 01/26] KVM: arm/arm64: vgic: Use the appropriate
  TRACE_INCLUDE_PATH
-Date: Wed,  9 Oct 2019 13:04:40 -0400
-Message-Id: <20191009170547.32204-1-sashal@kernel.org>
+Date: Wed,  9 Oct 2019 13:05:33 -0400
+Message-Id: <20191009170558.32517-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-Cc: Sasha Levin <sashal@kernel.org>, kvm@vger.kernel.org,
- Marc Zyngier <maz@kernel.org>, Masahiro Yamada <yamada.masahiro@socionext.com>,
- kvmarm@lists.cs.columbia.edu
+Cc: Masahiro Yamada <yamada.masahiro@socionext.com>,
+ kvmarm@lists.cs.columbia.edu, Sasha Levin <sashal@kernel.org>,
+ Marc Zyngier <maz@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
