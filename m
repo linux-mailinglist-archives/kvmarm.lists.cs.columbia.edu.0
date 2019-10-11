@@ -2,47 +2,47 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 04873D3FB8
-	for <lists+kvmarm@lfdr.de>; Fri, 11 Oct 2019 14:40:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85317D3FBB
+	for <lists+kvmarm@lfdr.de>; Fri, 11 Oct 2019 14:40:23 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A882C4A8BF;
-	Fri, 11 Oct 2019 08:40:21 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F3F664A8F6;
+	Fri, 11 Oct 2019 08:40:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
 X-Spam-Level: 
 X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=no
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SVDtzfwfPn8Z; Fri, 11 Oct 2019 08:40:20 -0400 (EDT)
+	with ESMTP id JwGrwvuc5Id3; Fri, 11 Oct 2019 08:40:22 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 770484A8D1;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B5ACC4A886;
 	Fri, 11 Oct 2019 08:40:19 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EF0664A8CB
- for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Oct 2019 08:40:17 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 954D74A886
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Oct 2019 08:40:18 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id NwHE-34rkpw3 for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id rpQZEuHGFhkB for <kvmarm@lists.cs.columbia.edu>;
  Fri, 11 Oct 2019 08:40:17 -0400 (EDT)
 Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
  [213.251.177.50])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0FC5E4A891
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9B6A34A8C1
  for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Oct 2019 08:40:17 -0400 (EDT)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by cheepnis.misterjones.org with esmtpsa
  (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128) (Exim 4.80)
  (envelope-from <maz@kernel.org>)
- id 1iIuDQ-00062U-2g; Fri, 11 Oct 2019 14:40:16 +0200
+ id 1iIuDQ-00062U-LF; Fri, 11 Oct 2019 14:40:16 +0200
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH v3 3/4] KVM: arm64: pmu: Set the CHAINED attribute before
- creating the in-kernel event
-Date: Fri, 11 Oct 2019 13:39:53 +0100
-Message-Id: <20191011123954.31378-4-maz@kernel.org>
+Subject: [PATCH v3 4/4] KVM: arm64: pmu: Reset sample period on overflow
+ handling
+Date: Fri, 11 Oct 2019 13:39:54 +0100
+Message-Id: <20191011123954.31378-5-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191011123954.31378-1-maz@kernel.org>
 References: <20191011123954.31378-1-maz@kernel.org>
@@ -72,41 +72,76 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The current convention for KVM to request a chained event from the
-host PMU is to set bit[0] in attr.config1 (PERF_ATTR_CFG1_KVM_PMU_CHAINED).
+The PMU emulation code uses the perf event sample period to trigger
+the overflow detection. This works fine  for the *first* overflow
+handling, but results in a huge number of interrupts on the host,
+unrelated to the number of interrupts handled in the guest (a x20
+factor is pretty common for the cycle counter). On a slow system
+(such as a SW model), this can result in the guest only making
+forward progress at a glacial pace.
 
-But as it turns out, this bit gets set *after* we create the kernel
-event that backs our virtual counter, meaning that we never get
-a 64bit counter.
+It turns out that the clue is in the name. The sample period is
+exactly that: a period. And once the an overflow has occured,
+the following period should be the full width of the associated
+counter, instead of whatever the guest had initially programed.
 
-Moving the setting to an earlier point solves the problem.
+Reset the sample period to the architected value in the overflow
+handler, which now results in a number of host interrupts that is
+much closer to the number of interrupts in the guest.
 
-Fixes: 80f393a23be6 ("KVM: arm/arm64: Support chained PMU counters")
+Fixes: b02386eb7dac ("arm64: KVM: Add PMU overflow interrupt routing")
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- virt/kvm/arm/pmu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ virt/kvm/arm/pmu.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
 diff --git a/virt/kvm/arm/pmu.c b/virt/kvm/arm/pmu.c
-index c30c3a74fc7f..f291d4ac3519 100644
+index f291d4ac3519..8731dfeced8b 100644
 --- a/virt/kvm/arm/pmu.c
 +++ b/virt/kvm/arm/pmu.c
-@@ -569,12 +569,12 @@ static void kvm_pmu_create_perf_event(struct kvm_vcpu *vcpu, u64 select_idx)
- 		 * high counter.
- 		 */
- 		attr.sample_period = (-counter) & GENMASK(63, 0);
-+		if (kvm_pmu_counter_is_enabled(vcpu, pmc->idx + 1))
-+			attr.config1 |= PERF_ATTR_CFG1_KVM_PMU_CHAINED;
+@@ -8,6 +8,7 @@
+ #include <linux/kvm.h>
+ #include <linux/kvm_host.h>
+ #include <linux/perf_event.h>
++#include <linux/perf/arm_pmu.h>
+ #include <linux/uaccess.h>
+ #include <asm/kvm_emulate.h>
+ #include <kvm/arm_pmu.h>
+@@ -442,8 +443,25 @@ static void kvm_pmu_perf_overflow(struct perf_event *perf_event,
+ 				  struct pt_regs *regs)
+ {
+ 	struct kvm_pmc *pmc = perf_event->overflow_handler_context;
++	struct arm_pmu *cpu_pmu = to_arm_pmu(perf_event->pmu);
+ 	struct kvm_vcpu *vcpu = kvm_pmc_to_vcpu(pmc);
+ 	int idx = pmc->idx;
++	u64 period;
 +
- 		event = perf_event_create_kernel_counter(&attr, -1, current,
- 							 kvm_pmu_perf_overflow,
- 							 pmc + 1);
--
--		if (kvm_pmu_counter_is_enabled(vcpu, pmc->idx + 1))
--			attr.config1 |= PERF_ATTR_CFG1_KVM_PMU_CHAINED;
- 	} else {
- 		/* The initial sample period (overflow count) of an event. */
- 		if (kvm_pmu_idx_is_64bit(vcpu, pmc->idx))
++	cpu_pmu->pmu.stop(perf_event, PERF_EF_UPDATE);
++
++	/*
++	 * Reset the sample period to the architectural limit,
++	 * i.e. the point where the counter overflows.
++	 */
++	period = -(local64_read(&perf_event->count));
++
++	if (!kvm_pmu_idx_is_64bit(vcpu, pmc->idx))
++		period &= GENMASK(31, 0);
++
++	local64_set(&perf_event->hw.period_left, 0);
++	perf_event->attr.sample_period = period;
++	perf_event->hw.sample_period = period;
+ 
+ 	__vcpu_sys_reg(vcpu, PMOVSSET_EL0) |= BIT(idx);
+ 
+@@ -451,6 +469,8 @@ static void kvm_pmu_perf_overflow(struct perf_event *perf_event,
+ 		kvm_make_request(KVM_REQ_IRQ_PENDING, vcpu);
+ 		kvm_vcpu_kick(vcpu);
+ 	}
++
++	cpu_pmu->pmu.start(perf_event, PERF_EF_RELOAD);
+ }
+ 
+ /**
 -- 
 2.20.1
 
