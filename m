@@ -2,55 +2,60 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 76F1ADB394
-	for <lists+kvmarm@lfdr.de>; Thu, 17 Oct 2019 19:42:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3FC9DD7C6
+	for <lists+kvmarm@lfdr.de>; Sat, 19 Oct 2019 11:55:32 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C79CC4A94A;
-	Thu, 17 Oct 2019 13:42:02 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CB5274AA5F;
+	Sat, 19 Oct 2019 05:55:31 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 1.592
-X-Spam-Level: *
-X-Spam-Status: No, score=1.592 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RDNS_NONE=0.793] autolearn=unavailable
+X-Spam-Score: -4.091
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bm2UdA3L+uPl; Thu, 17 Oct 2019 13:42:02 -0400 (EDT)
+	with ESMTP id 9jfX1vsFdYbX; Sat, 19 Oct 2019 05:55:31 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 850794A8EB;
-	Thu, 17 Oct 2019 13:42:01 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 908C74AA63;
+	Sat, 19 Oct 2019 05:55:30 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6FB094A898
- for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Oct 2019 13:42:00 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5A9AF4A896
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 19 Oct 2019 05:55:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id PB1OhZhinOrW for <kvmarm@lists.cs.columbia.edu>;
- Thu, 17 Oct 2019 13:41:59 -0400 (EDT)
-Received: from foss.arm.com (unknown [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 31A784A87D
- for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Oct 2019 13:41:59 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7A68E329;
- Thu, 17 Oct 2019 10:41:38 -0700 (PDT)
-Received: from [10.1.196.105] (unknown [10.1.196.105])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 597AF3F718;
- Thu, 17 Oct 2019 10:41:37 -0700 (PDT)
-Subject: Re: [PATCH] arm64: KVM: Invoke compute_layout() before alternatives
- are applied
-To: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
-References: <20191016165953.o6ogh4fdmsjmd2sw@linutronix.de>
-From: James Morse <james.morse@arm.com>
-Message-ID: <ecfbb413-e97e-c3eb-e051-1f218b387edd@arm.com>
-Date: Thu, 17 Oct 2019 18:41:35 +0100
-User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+ with ESMTP id U75n1FyzK57c for <kvmarm@lists.cs.columbia.edu>;
+ Sat, 19 Oct 2019 05:55:28 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 54E3D4A847
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 19 Oct 2019 05:55:28 -0400 (EDT)
+Received: from big-swifty.lan (78.163-31-62.static.virginmediabusiness.co.uk
+ [62.31.163.78])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id E2AD2222BD;
+ Sat, 19 Oct 2019 09:55:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1571478927;
+ bh=N9Z0vUut0qPCNXvusFnCmmykyf3NqqvywC9U3wgaJ8A=;
+ h=From:To:Cc:Subject:Date:From;
+ b=iwRQbDJLsLS02h0MbcugXlJQkxWnxa+MGT0Kw2YwxaVrq6WI/99bX9SeBccY9+F63
+ gM0+5fS5rfMhmh6ovbTkM6ZowJrola1sXlMN1n9ORzu8AJI+FJNp2K0LPv4PSb+puR
+ IQSOeby8p0kdiBV3pTVtGYUzsVm6mw2sxJJ48iaM=
+From: Marc Zyngier <maz@kernel.org>
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
+Subject: [PATCH v2 0/5] arm64: KVM: Add workaround for errata 1319367 and
+ 1319537
+Date: Sat, 19 Oct 2019 10:55:16 +0100
+Message-Id: <20191019095521.31722-1-maz@kernel.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <20191016165953.o6ogh4fdmsjmd2sw@linutronix.de>
-Content-Language: en-GB
-Cc: Catalin Marinas <catalin.marinas@arm.com>, Marc Zyngier <maz@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>, Will Deacon <will@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -67,77 +72,51 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Sebastian,
+Similarily to erratum 1165522 that affects Cortex-A76, our good old
+friends A57 and A72 respectively suffer from errata 1319537 and
+1319367, potentially resulting in TLB corruption if the CPU speculates
+an AT instruction while switching guests.
 
-On 16/10/2019 17:59, Sebastian Andrzej Siewior wrote:
-> compute_layout() is invoked as part of an alternative fixup under
-> stop_machine(). This function invokes get_random_long() which acquires a
-> sleeping lock on -RT which can not be acquired in this context.
+The fix is slightly more involved since we don't have VHE to help us
+here, but the idea is the same: When switching a guest in, we must
+prevent any speculated AT from being able to parse the page tables
+until S2 is up and running. Only at this stage can we allow AT to take
+place.
 
-> Rename compute_layout() to kvm_compute_layout() and invoke it before
-> stop_machines() invokes the fixups.
+For this, we always restore the guest sysregs first, except for its
+SCTLR and TCR registers, which must be set with SCTLR.M=1 and
+TCR.EPD{0,1} = {1, 1}, effectively disabling the PTW and TLB
+allocation. Once S2 is setup, we restore the guest's SCTLR and
+TCR. Similar things must be done on TLB invalidation... Fun.
 
-Nit: stop_machine() applies the alternatives.
+This has been tested on an AMD Seattle box.
 
+* From v1 [1]:
+  - Reworked patch 4 to close the speculation window on the host
+  - Fixed comments
+  - Collected ABs/RBs
 
-> Add a __init prefix to
-> kvm_compute_layout() because the caller has it, too (and so the code can
-> be discarded after boot).
+[1] https://lore.kernel.org/kvmarm/20190925111941.88103-1-maz@kernel.org/
 
+Marc Zyngier (5):
+  arm64: Add ARM64_WORKAROUND_1319367 for all A57 and A72 versions
+  arm64: KVM: Reorder system register restoration and stage-2 activation
+  arm64: KVM: Disable EL1 PTW when invalidating S2 TLBs
+  arm64: KVM: Prevent speculative S1 PTW when restoring vcpu context
+  arm64: Enable and document ARM errata 1319367 and 1319537
 
-> diff --git a/arch/arm64/include/asm/alternative.h b/arch/arm64/include/asm/alternative.h
-> index b9f8d787eea9f..7532f044d713b 100644
-> --- a/arch/arm64/include/asm/alternative.h
-> +++ b/arch/arm64/include/asm/alternative.h
-> @@ -35,6 +35,12 @@ void apply_alternatives_module(void *start, size_t length);
->  static inline void apply_alternatives_module(void *start, size_t length) { }
->  #endif
->  
-> +#ifdef CONFIG_KVM_ARM_HOST
-> +void kvm_compute_layout(void);
-> +#else
-> +static inline void kvm_compute_layout(void) { }
-> +#endif
+ Documentation/arm64/silicon-errata.rst |  4 +++
+ arch/arm64/Kconfig                     | 10 ++++++
+ arch/arm64/include/asm/cpucaps.h       |  3 +-
+ arch/arm64/kernel/cpu_errata.c         | 13 +++++--
+ arch/arm64/kvm/hyp/switch.c            | 48 ++++++++++++++++++++++----
+ arch/arm64/kvm/hyp/sysreg-sr.c         | 35 +++++++++++++++++--
+ arch/arm64/kvm/hyp/tlb.c               | 23 ++++++++++++
+ 7 files changed, 124 insertions(+), 12 deletions(-)
 
-I don't think alternative.h is where this belongs... Could you move it to kvm_mmu.h, which
-is where the kvm_update_va_mask macro that depends on it lives.
+-- 
+2.20.1
 
-You can avoid the #ifdef if you use if(IS_ENABLED()) in the caller.
-This has the advantage that the compiler will catch invalid C regardless of the build
-options. (and its easier on the eye)
-
-
-> diff --git a/arch/arm64/kernel/alternative.c b/arch/arm64/kernel/alternative.c
-> index d1757ef1b1e74..c28652ee06f64 100644
-> --- a/arch/arm64/kernel/alternative.c
-> +++ b/arch/arm64/kernel/alternative.c
-> @@ -238,6 +238,7 @@ static int __apply_alternatives_multi_stop(void *unused)
->  void __init apply_alternatives_all(void)
->  {
->  	/* better not try code patching on a live SMP system */
-> +	kvm_compute_layout();
->  	stop_machine(__apply_alternatives_multi_stop, NULL, cpu_online_mask);
->  }
-
-This is a funny place to do this kvm check, its not needed to apply the alternatives.
-
-apply_alternatives_all() is only called from smp_cpus_done(), immediately before it calls
-hyp_mode_check(), could we move it there to live with the 'started at EL2' message?
-
-(to save you battling the header-jungle: To include asm/kvm_mmu.h, you need to include
-linux/kvm_host.h first)
-
-
-We end up calling it unconditionally, but I don't think that matters, both callers do the
-right thing.
-
-With that:
-Reviewed-by: James Morse <james.morse@arm.com>
-
-
-Thanks,
-
-James
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
