@@ -2,47 +2,47 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E05C0DF168
-	for <lists+kvmarm@lfdr.de>; Mon, 21 Oct 2019 17:29:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78C81DF16E
+	for <lists+kvmarm@lfdr.de>; Mon, 21 Oct 2019 17:29:24 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8E0254A9D8;
-	Mon, 21 Oct 2019 11:29:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2D9664A4E5;
+	Mon, 21 Oct 2019 11:29:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 1.592
 X-Spam-Level: *
 X-Spam-Status: No, score=1.592 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RDNS_NONE=0.793] autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RDNS_NONE=0.793] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Vu0IpQYKzPID; Mon, 21 Oct 2019 11:29:20 -0400 (EDT)
+	with ESMTP id 5GKqSJZcsmLT; Mon, 21 Oct 2019 11:29:22 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D68FF4AC2F;
-	Mon, 21 Oct 2019 11:29:18 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0EAD74AC11;
+	Mon, 21 Oct 2019 11:29:22 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 98C994A987
- for <kvmarm@lists.cs.columbia.edu>; Mon, 21 Oct 2019 11:29:17 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8FB4A4AC10
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 21 Oct 2019 11:29:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id rxsLBv8HJ2Ex for <kvmarm@lists.cs.columbia.edu>;
- Mon, 21 Oct 2019 11:29:16 -0400 (EDT)
+ with ESMTP id gnAovoUsMmZJ for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 21 Oct 2019 11:29:19 -0400 (EDT)
 Received: from foss.arm.com (unknown [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7C1544A9D7
- for <kvmarm@lists.cs.columbia.edu>; Mon, 21 Oct 2019 11:29:16 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B0C334AA03
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 21 Oct 2019 11:29:17 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A5F2B1692;
- Mon, 21 Oct 2019 08:28:51 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DE20416F8;
+ Mon, 21 Oct 2019 08:28:53 -0700 (PDT)
 Received: from e112269-lin.cambridge.arm.com (e112269-lin.cambridge.arm.com
  [10.1.194.43])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A2B763F71F;
- Mon, 21 Oct 2019 08:28:49 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DAF493F71F;
+ Mon, 21 Oct 2019 08:28:51 -0700 (PDT)
 From: Steven Price <steven.price@arm.com>
 To: Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>,
  linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v7 08/10] arm/arm64: Provide a wrapper for SMCCC 1.1 calls
-Date: Mon, 21 Oct 2019 16:28:21 +0100
-Message-Id: <20191021152823.14882-9-steven.price@arm.com>
+Subject: [PATCH v7 09/10] arm/arm64: Make use of the SMCCC 1.1 wrapper
+Date: Mon, 21 Oct 2019 16:28:22 +0100
+Message-Id: <20191021152823.14882-10-steven.price@arm.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191021152823.14882-1-steven.price@arm.com>
 References: <20191021152823.14882-1-steven.price@arm.com>
@@ -67,77 +67,180 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-SMCCC 1.1 calls may use either HVC or SMC depending on the PSCI
-conduit. Rather than coding this in every call site, provide a macro
-which uses the correct instruction. The macro also handles the case
-where no conduit is configured/available returning a not supported error
-in res, along with returning the conduit used for the call.
+Rather than directly choosing which function to use based on
+psci_ops.conduit, use the new arm_smccc_1_1 wrapper instead.
 
-This allow us to remove some duplicated code and will be useful later
-when adding paravirtualized time hypervisor calls.
+In some cases we still need to do some operations based on the
+conduit, but the code duplication is removed.
+
+No functional change.
 
 Signed-off-by: Steven Price <steven.price@arm.com>
-Acked-by: Will Deacon <will@kernel.org>
 ---
- include/linux/arm-smccc.h | 45 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+ arch/arm/mm/proc-v7-bugs.c     | 13 +++---
+ arch/arm64/kernel/cpu_errata.c | 81 ++++++++++++----------------------
+ 2 files changed, 34 insertions(+), 60 deletions(-)
 
-diff --git a/include/linux/arm-smccc.h b/include/linux/arm-smccc.h
-index 92e0046ce7a7..59494df0f55b 100644
---- a/include/linux/arm-smccc.h
-+++ b/include/linux/arm-smccc.h
-@@ -319,6 +319,51 @@ asmlinkage void __arm_smccc_hvc(unsigned long a0, unsigned long a1,
- #define SMCCC_RET_NOT_SUPPORTED			-1
- #define SMCCC_RET_NOT_REQUIRED			-2
+diff --git a/arch/arm/mm/proc-v7-bugs.c b/arch/arm/mm/proc-v7-bugs.c
+index 54d87506d3b5..7c90b4c615a5 100644
+--- a/arch/arm/mm/proc-v7-bugs.c
++++ b/arch/arm/mm/proc-v7-bugs.c
+@@ -74,12 +74,13 @@ static void cpu_v7_spectre_init(void)
+ 	case ARM_CPU_PART_CORTEX_A72: {
+ 		struct arm_smccc_res res;
  
-+/*
-+ * Like arm_smccc_1_1* but always returns SMCCC_RET_NOT_SUPPORTED.
-+ * Used when the SMCCC conduit is not defined. The empty asm statement
-+ * avoids compiler warnings about unused variables.
-+ */
-+#define __fail_smccc_1_1(...)						\
-+	do {								\
-+		__declare_args(__count_args(__VA_ARGS__), __VA_ARGS__);	\
-+		asm ("" __constraints(__count_args(__VA_ARGS__)));	\
-+		if (___res)						\
-+			___res->a0 = SMCCC_RET_NOT_SUPPORTED;		\
-+	} while (0)
++		arm_smccc_1_1_invoke(ARM_SMCCC_ARCH_FEATURES_FUNC_ID,
++				     ARM_SMCCC_ARCH_WORKAROUND_1, &res);
++		if ((int)res.a0 != 0)
++			return;
 +
-+/*
-+ * arm_smccc_1_1_invoke() - make an SMCCC v1.1 compliant call
-+ *
-+ * This is a variadic macro taking one to eight source arguments, and
-+ * an optional return structure.
-+ *
-+ * @a0-a7: arguments passed in registers 0 to 7
-+ * @res: result values from registers 0 to 3
-+ *
-+ * This macro will make either an HVC call or an SMC call depending on the
-+ * current SMCCC conduit. If no valid conduit is available then -1
-+ * (SMCCC_RET_NOT_SUPPORTED) is returned in @res.a0 (if supplied).
-+ *
-+ * The return value also provides the conduit that was used.
-+ */
-+#define arm_smccc_1_1_invoke(...) ({					\
-+		int method = arm_smccc_1_1_get_conduit();		\
-+		switch (method) {					\
-+		case SMCCC_CONDUIT_HVC:					\
-+			arm_smccc_1_1_hvc(__VA_ARGS__);			\
-+			break;						\
-+		case SMCCC_CONDUIT_SMC:					\
-+			arm_smccc_1_1_smc(__VA_ARGS__);			\
-+			break;						\
-+		default:						\
-+			__fail_smccc_1_1(__VA_ARGS__);			\
-+			method = SMCCC_CONDUIT_NONE;			\
-+			break;						\
-+		}							\
-+		method;							\
-+	})
+ 		switch (arm_smccc_1_1_get_conduit()) {
+ 		case SMCCC_CONDUIT_HVC:
+-			arm_smccc_1_1_hvc(ARM_SMCCC_ARCH_FEATURES_FUNC_ID,
+-					  ARM_SMCCC_ARCH_WORKAROUND_1, &res);
+-			if ((int)res.a0 != 0)
+-				break;
+ 			per_cpu(harden_branch_predictor_fn, cpu) =
+ 				call_hvc_arch_workaround_1;
+ 			cpu_do_switch_mm = cpu_v7_hvc_switch_mm;
+@@ -87,10 +88,6 @@ static void cpu_v7_spectre_init(void)
+ 			break;
+ 
+ 		case SMCCC_CONDUIT_SMC:
+-			arm_smccc_1_1_smc(ARM_SMCCC_ARCH_FEATURES_FUNC_ID,
+-					  ARM_SMCCC_ARCH_WORKAROUND_1, &res);
+-			if ((int)res.a0 != 0)
+-				break;
+ 			per_cpu(harden_branch_predictor_fn, cpu) =
+ 				call_smc_arch_workaround_1;
+ 			cpu_do_switch_mm = cpu_v7_smc_switch_mm;
+diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
+index 9c0b011eee20..401246e095e7 100644
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -209,40 +209,31 @@ static int detect_harden_bp_fw(void)
+ 	struct arm_smccc_res res;
+ 	u32 midr = read_cpuid_id();
+ 
++	arm_smccc_1_1_invoke(ARM_SMCCC_ARCH_FEATURES_FUNC_ID,
++			     ARM_SMCCC_ARCH_WORKAROUND_1, &res);
 +
- /* Paravirtualised time calls (defined by ARM DEN0057A) */
- #define ARM_SMCCC_HV_PV_TIME_FEATURES				\
- 	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,			\
++	switch ((int)res.a0) {
++	case 1:
++		/* Firmware says we're just fine */
++		return 0;
++	case 0:
++		break;
++	default:
++		return -1;
++	}
++
+ 	switch (arm_smccc_1_1_get_conduit()) {
+ 	case SMCCC_CONDUIT_HVC:
+-		arm_smccc_1_1_hvc(ARM_SMCCC_ARCH_FEATURES_FUNC_ID,
+-				  ARM_SMCCC_ARCH_WORKAROUND_1, &res);
+-		switch ((int)res.a0) {
+-		case 1:
+-			/* Firmware says we're just fine */
+-			return 0;
+-		case 0:
+-			cb = call_hvc_arch_workaround_1;
+-			/* This is a guest, no need to patch KVM vectors */
+-			smccc_start = NULL;
+-			smccc_end = NULL;
+-			break;
+-		default:
+-			return -1;
+-		}
++		cb = call_hvc_arch_workaround_1;
++		/* This is a guest, no need to patch KVM vectors */
++		smccc_start = NULL;
++		smccc_end = NULL;
+ 		break;
+ 
+ 	case SMCCC_CONDUIT_SMC:
+-		arm_smccc_1_1_smc(ARM_SMCCC_ARCH_FEATURES_FUNC_ID,
+-				  ARM_SMCCC_ARCH_WORKAROUND_1, &res);
+-		switch ((int)res.a0) {
+-		case 1:
+-			/* Firmware says we're just fine */
+-			return 0;
+-		case 0:
+-			cb = call_smc_arch_workaround_1;
+-			smccc_start = __smccc_workaround_1_smc_start;
+-			smccc_end = __smccc_workaround_1_smc_end;
+-			break;
+-		default:
+-			return -1;
+-		}
++		cb = call_smc_arch_workaround_1;
++		smccc_start = __smccc_workaround_1_smc_start;
++		smccc_end = __smccc_workaround_1_smc_end;
+ 		break;
+ 
+ 	default:
+@@ -332,6 +323,8 @@ void __init arm64_enable_wa2_handling(struct alt_instr *alt,
+ 
+ void arm64_set_ssbd_mitigation(bool state)
+ {
++	int conduit;
++
+ 	if (!IS_ENABLED(CONFIG_ARM64_SSBD)) {
+ 		pr_info_once("SSBD disabled by kernel configuration\n");
+ 		return;
+@@ -345,19 +338,10 @@ void arm64_set_ssbd_mitigation(bool state)
+ 		return;
+ 	}
+ 
+-	switch (arm_smccc_1_1_get_conduit()) {
+-	case SMCCC_CONDUIT_HVC:
+-		arm_smccc_1_1_hvc(ARM_SMCCC_ARCH_WORKAROUND_2, state, NULL);
+-		break;
+-
+-	case SMCCC_CONDUIT_SMC:
+-		arm_smccc_1_1_smc(ARM_SMCCC_ARCH_WORKAROUND_2, state, NULL);
+-		break;
++	conduit = arm_smccc_1_1_invoke(ARM_SMCCC_ARCH_WORKAROUND_2, state,
++				       NULL);
+ 
+-	default:
+-		WARN_ON_ONCE(1);
+-		break;
+-	}
++	WARN_ON_ONCE(conduit == SMCCC_CONDUIT_NONE);
+ }
+ 
+ static bool has_ssbd_mitigation(const struct arm64_cpu_capabilities *entry,
+@@ -367,6 +351,7 @@ static bool has_ssbd_mitigation(const struct arm64_cpu_capabilities *entry,
+ 	bool required = true;
+ 	s32 val;
+ 	bool this_cpu_safe = false;
++	int conduit;
+ 
+ 	WARN_ON(scope != SCOPE_LOCAL_CPU || preemptible());
+ 
+@@ -384,18 +369,10 @@ static bool has_ssbd_mitigation(const struct arm64_cpu_capabilities *entry,
+ 		goto out_printmsg;
+ 	}
+ 
+-	switch (arm_smccc_1_1_get_conduit()) {
+-	case SMCCC_CONDUIT_HVC:
+-		arm_smccc_1_1_hvc(ARM_SMCCC_ARCH_FEATURES_FUNC_ID,
+-				  ARM_SMCCC_ARCH_WORKAROUND_2, &res);
+-		break;
++	conduit = arm_smccc_1_1_invoke(ARM_SMCCC_ARCH_FEATURES_FUNC_ID,
++				       ARM_SMCCC_ARCH_WORKAROUND_2, &res);
+ 
+-	case SMCCC_CONDUIT_SMC:
+-		arm_smccc_1_1_smc(ARM_SMCCC_ARCH_FEATURES_FUNC_ID,
+-				  ARM_SMCCC_ARCH_WORKAROUND_2, &res);
+-		break;
+-
+-	default:
++	if (conduit == SMCCC_CONDUIT_NONE) {
+ 		ssbd_state = ARM64_SSBD_UNKNOWN;
+ 		if (!this_cpu_safe)
+ 			__ssb_safe = false;
 -- 
 2.20.1
 
