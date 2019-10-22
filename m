@@ -2,10 +2,10 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CE08EDFA89
+	by mail.lfdr.de (Postfix) with ESMTP id 9D458DFA87
 	for <lists+kvmarm@lfdr.de>; Tue, 22 Oct 2019 04:00:22 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7815C4AC5B;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 50E094A9A9;
 	Mon, 21 Oct 2019 22:00:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
@@ -15,20 +15,20 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id M1Vqkjuqksth; Mon, 21 Oct 2019 22:00:20 -0400 (EDT)
+	with ESMTP id AdMylgBC8ruI; Mon, 21 Oct 2019 22:00:22 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D0C6F4AC39;
-	Mon, 21 Oct 2019 22:00:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1134D4AC0A;
+	Mon, 21 Oct 2019 22:00:09 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 624034AC3F
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B06B54A9C8
  for <kvmarm@lists.cs.columbia.edu>; Mon, 21 Oct 2019 22:00:07 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id GQZJ4vIJf1Jy for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id i+ypaOHjQRTh for <kvmarm@lists.cs.columbia.edu>;
  Mon, 21 Oct 2019 22:00:06 -0400 (EDT)
 Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 492D24AC31
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E3CE54AC41
  for <kvmarm@lists.cs.columbia.edu>; Mon, 21 Oct 2019 21:59:57 -0400 (EDT)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
@@ -36,19 +36,19 @@ Received: from fmsmga008.fm.intel.com ([10.253.24.58])
  by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
  21 Oct 2019 18:59:57 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.67,325,1566889200"; d="scan'208";a="196293886"
+X-IronPort-AV: E=Sophos;i="5.67,325,1566889200"; d="scan'208";a="196293889"
 Received: from sjchrist-coffee.jf.intel.com ([10.54.74.41])
- by fmsmga008.fm.intel.com with ESMTP; 21 Oct 2019 18:59:56 -0700
+ by fmsmga008.fm.intel.com with ESMTP; 21 Oct 2019 18:59:57 -0700
 From: Sean Christopherson <sean.j.christopherson@intel.com>
 To: Marc Zyngier <maz@kernel.org>, James Hogan <jhogan@kernel.org>,
  Paul Mackerras <paulus@ozlabs.org>,
  Christian Borntraeger <borntraeger@de.ibm.com>,
  Janosch Frank <frankja@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@redhat.com>
-Subject: [PATCH 34/45] KVM: MIPS: Move .vcpu_setup() call to
+Subject: [PATCH 35/45] KVM: s390: Manually invoke vcpu setup during
  kvm_arch_vcpu_create()
-Date: Mon, 21 Oct 2019 18:59:14 -0700
-Message-Id: <20191022015925.31916-35-sean.j.christopherson@intel.com>
+Date: Mon, 21 Oct 2019 18:59:15 -0700
+Message-Id: <20191022015925.31916-36-sean.j.christopherson@intel.com>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20191022015925.31916-1-sean.j.christopherson@intel.com>
 References: <20191022015925.31916-1-sean.j.christopherson@intel.com>
@@ -77,50 +77,55 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Fold setup() into create() now that the two are called back-to-back by
-common KVM code.  This paves the way for removing kvm_arch_vcpu_setup().
-Note, there is no unwind function associated with kvm_arch_vcpu_setup(),
-i.e. no teardown path that also needs to be moved.
+Rename kvm_arch_vcpu_setup() to kvm_s390_vcpu_setup() and manually call
+the new function during kvm_arch_vcpu_create().  Define an empty
+kvm_arch_vcpu_setup() as it's still required for compilation.  This
+is effectively a nop as kvm_arch_vcpu_create() and kvm_arch_vcpu_setup()
+are called back-to-back by common KVM code.  Obsoleting
+kvm_arch_vcpu_setup() paves the way for its removal.
+
+Note, gmap_remove() is now called if setup fails, as s390 was previously
+freeing it via kvm_arch_vcpu_destroy(), which is called by common KVM
+code if kvm_arch_vcpu_setup() fails.
 
 No functional change intended.
 
 Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
 ---
- arch/mips/kvm/mips.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/s390/kvm/kvm-s390.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/arch/mips/kvm/mips.c b/arch/mips/kvm/mips.c
-index 92c9321b3f95..b3a4435af66b 100644
---- a/arch/mips/kvm/mips.c
-+++ b/arch/mips/kvm/mips.c
-@@ -386,8 +386,15 @@ int kvm_arch_vcpu_create(struct kvm_vcpu *vcpu)
- 	vcpu->arch.last_sched_cpu = -1;
- 	vcpu->arch.last_exec_cpu = -1;
- 
-+	/* Initial guest state */
-+	err = kvm_mips_callbacks->vcpu_setup(vcpu);
-+	if (err)
-+		goto out_free_commpage;
-+
- 	return 0;
- 
-+out_free_commpage:
-+	kfree(vcpu->arch.kseg0_commpage);
- out_free_gebase:
- 	kfree(gebase);
- out:
-@@ -1237,10 +1244,9 @@ int kvm_arch_vcpu_ioctl_translate(struct kvm_vcpu *vcpu,
- 	return 0;
+diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
+index 1e4f3b9ad031..3e3d242d6630 100644
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -2935,6 +2935,11 @@ static void kvm_s390_vcpu_setup_model(struct kvm_vcpu *vcpu)
  }
  
--/* Initial guest state */
  int kvm_arch_vcpu_setup(struct kvm_vcpu *vcpu)
- {
--	return kvm_mips_callbacks->vcpu_setup(vcpu);
++{
 +	return 0;
- }
++}
++
++static int kvm_s390_vcpu_setup(struct kvm_vcpu *vcpu)
+ {
+ 	int rc = 0;
  
- static void kvm_mips_set_c0_status(void)
+@@ -3073,8 +3078,14 @@ int kvm_arch_vcpu_create(struct kvm_vcpu *vcpu)
+ 		 vcpu->arch.sie_block);
+ 	trace_kvm_s390_create_vcpu(id, vcpu, vcpu->arch.sie_block);
+ 
++	rc = kvm_s390_vcpu_setup(vcpu);
++	if (rc)
++		goto out_ucontrol_uninit;
+ 	return 0;
+ 
++out_ucontrol_uninit:
++	if (kvm_is_ucontrol(vcpu->kvm))
++		gmap_remove(vcpu->arch.gmap);
+ out_free_sie_block:
+ 	free_page((unsigned long)(vcpu->arch.sie_block));
+ 	return rc;
 -- 
 2.22.0
 
