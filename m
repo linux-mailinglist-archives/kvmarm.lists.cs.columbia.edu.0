@@ -2,64 +2,60 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A2079DF98A
-	for <lists+kvmarm@lfdr.de>; Tue, 22 Oct 2019 02:35:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55268DFA51
+	for <lists+kvmarm@lfdr.de>; Tue, 22 Oct 2019 03:59:41 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4FF544A9E0;
-	Mon, 21 Oct 2019 20:35:52 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 07F234A9C2;
+	Mon, 21 Oct 2019 21:59:41 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.502
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=no
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id nh7rLRlqSCdt; Mon, 21 Oct 2019 20:35:51 -0400 (EDT)
+	with ESMTP id uYEZs1AbvJyu; Mon, 21 Oct 2019 21:59:38 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 426274A9B6;
-	Mon, 21 Oct 2019 20:35:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4F6E34A9F8;
+	Mon, 21 Oct 2019 21:59:38 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 27D924A993
- for <kvmarm@lists.cs.columbia.edu>; Mon, 21 Oct 2019 20:35:44 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C72624A98E
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 21 Oct 2019 21:59:35 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id n1zIf82pRTbj for <kvmarm@lists.cs.columbia.edu>;
- Mon, 21 Oct 2019 20:35:43 -0400 (EDT)
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5067A4A9D5
- for <kvmarm@lists.cs.columbia.edu>; Mon, 21 Oct 2019 20:35:42 -0400 (EDT)
+ with ESMTP id HHI80EhyEt0j for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 21 Oct 2019 21:59:33 -0400 (EDT)
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 697A64A5ED
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 21 Oct 2019 21:59:33 -0400 (EDT)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
- by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 21 Oct 2019 17:35:40 -0700
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+ by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 21 Oct 2019 18:59:31 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.67,325,1566889200"; d="scan'208";a="348897241"
+X-IronPort-AV: E=Sophos;i="5.67,325,1566889200"; d="scan'208";a="196293739"
 Received: from sjchrist-coffee.jf.intel.com ([10.54.74.41])
- by orsmga004.jf.intel.com with ESMTP; 21 Oct 2019 17:35:39 -0700
+ by fmsmga008.fm.intel.com with ESMTP; 21 Oct 2019 18:59:30 -0700
 From: Sean Christopherson <sean.j.christopherson@intel.com>
-To: James Hogan <jhogan@kernel.org>, Paul Mackerras <paulus@ozlabs.org>,
+To: Marc Zyngier <maz@kernel.org>, James Hogan <jhogan@kernel.org>,
+ Paul Mackerras <paulus@ozlabs.org>,
  Christian Borntraeger <borntraeger@de.ibm.com>,
  Janosch Frank <frankja@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@redhat.com>,
- Marc Zyngier <maz@kernel.org>
-Subject: [PATCH v2 15/15] KVM: Dynamically size memslot array based on number
- of used slots
-Date: Mon, 21 Oct 2019 17:35:37 -0700
-Message-Id: <20191022003537.13013-16-sean.j.christopherson@intel.com>
+ =?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@redhat.com>
+Subject: [PATCH 00/45] KVM: Refactor vCPU creation
+Date: Mon, 21 Oct 2019 18:58:40 -0700
+Message-Id: <20191022015925.31916-1-sean.j.christopherson@intel.com>
 X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20191022003537.13013-1-sean.j.christopherson@intel.com>
-References: <20191022003537.13013-1-sean.j.christopherson@intel.com>
 MIME-Version: 1.0
-Cc: linux-arm-kernel@lists.infradead.org, Wanpeng Li <wanpengli@tencent.com>,
+Cc: kvm-ppc@vger.kernel.org, Wanpeng Li <wanpengli@tencent.com>,
  kvm@vger.kernel.org, David Hildenbrand <david@redhat.com>,
  Joerg Roedel <joro@8bytes.org>, Cornelia Huck <cohuck@redhat.com>,
  linux-mips@vger.kernel.org,
  Sean Christopherson <sean.j.christopherson@intel.com>,
- linux-kernel@vger.kernel.org, kvm-ppc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  Vitaly Kuznetsov <vkuznets@redhat.com>, kvmarm@lists.cs.columbia.edu,
  Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
@@ -78,99 +74,176 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Now that the memslot logic doesn't assume memslots are always non-NULL,
-dynamically size the array of memslots instead of unconditionally
-allocating memory for the maximum number of memslots.
+*************************** DISCLAIMER **********************************
+The non-x86 arch specific patches are completely untested.  Although the
+changes are conceptually straightforward, I'm not remotely confident that
+the patches are bug free, e.g. checkpatch caught several blatant typos
+that would break compilation.
+*************************************************************************
 
-Note, because a to-be-deleted memslot must first be invalidated, the
-array size cannot be immediately reduced when deleting a memslot.
-However, consecutive deletions will realize the memory savings, i.e.
-a second deletion will trim the entry.
+The end goal of this series is to strip down the interface between common
+KVM code and arch specific code so that there is precisely one arch hook
+for creating a vCPU and one hook for destroying a vCPU.  In addition to
+cleaning up the code base, simplifying the interface gives architectures
+more freedom to organize their vCPU creation code.
 
-Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
----
- include/linux/kvm_host.h |  5 ++++-
- virt/kvm/kvm_main.c      | 31 ++++++++++++++++++++++++++++---
- 2 files changed, 32 insertions(+), 4 deletions(-)
+KVM's vCPU creation code is comically messy.  kvm_vm_ioctl_create_vcpu()
+calls three separate arch hooks: init(), create() and setup().  The init()
+call is especially nasty as it's hidden away in a common KVM function,
+kvm_init_vcpu(), that for all intents and purposes must be immediately
+invoked after the vcpu object is allocated.
 
-diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-index 3f8a7760bb79..9e3a68257e80 100644
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -433,11 +433,14 @@ static inline int kvm_arch_vcpu_memslots_id(struct kvm_vcpu *vcpu)
-  */
- struct kvm_memslots {
- 	u64 generation;
--	struct kvm_memory_slot memslots[KVM_MEM_SLOTS_NUM];
- 	/* The mapping table from slot id to the index in memslots[]. */
- 	short id_to_index[KVM_MEM_SLOTS_NUM];
- 	atomic_t lru_slot;
- 	int used_slots;
-+	struct kvm_memory_slot memslots[];
-+	/*
-+	 * WARNING: 'memslots' is dynamically-sized.  It *MUST* be at the end.
-+	 */
- };
- 
- struct kvm {
-diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-index 177caac395de..131b2dd7db72 100644
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -535,7 +535,7 @@ static struct kvm_memslots *kvm_alloc_memslots(void)
- 		return NULL;
- 
- 	for (i = 0; i < KVM_MEM_SLOTS_NUM; i++)
--		slots->id_to_index[i] = slots->memslots[i].id = -1;
-+		slots->id_to_index[i] = -1;
- 
- 	return slots;
- }
-@@ -934,6 +934,32 @@ static struct kvm_memslots *install_new_memslots(struct kvm *kvm,
- 	return old_memslots;
- }
- 
-+/*
-+ * Note, at a minimum, the current number of used slots must be allocated, even
-+ * when deleting a memslot, as we need a complete duplicate of the memslots for
-+ * use when invalidating a memslot prior to deleting/moving the memslot.
-+ */
-+static struct kvm_memslots *kvm_dup_memslots(struct kvm_memslots *old,
-+					     enum kvm_mr_change change)
-+{
-+	struct kvm_memslots *slots;
-+	size_t old_size, new_size;
-+
-+	old_size = sizeof(struct kvm_memslots) +
-+		   (sizeof(struct kvm_memory_slot) * old->used_slots);
-+
-+	if (change == KVM_MR_CREATE)
-+		new_size = old_size + sizeof(struct kvm_memory_slot);
-+	else
-+		new_size = old_size;
-+
-+	slots = kvzalloc(new_size, GFP_KERNEL_ACCOUNT);
-+	if (likely(slots))
-+		memcpy(slots, old, old_size);
-+
-+	return slots;
-+}
-+
- static int kvm_set_memslot(struct kvm *kvm,
- 			   const struct kvm_userspace_memory_region *mem,
- 			   const struct kvm_memory_slot *old,
-@@ -944,10 +970,9 @@ static int kvm_set_memslot(struct kvm *kvm,
- 	struct kvm_memslots *slots;
- 	int r;
- 
--	slots = kvzalloc(sizeof(struct kvm_memslots), GFP_KERNEL_ACCOUNT);
-+	slots = kvm_dup_memslots(__kvm_memslots(kvm, as_id), change);
- 	if (!slots)
- 		return -ENOMEM;
--	memcpy(slots, __kvm_memslots(kvm, as_id), sizeof(struct kvm_memslots));
- 
- 	if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
- 		/*
+Not to be outdone, vCPU destruction also has three arch hooks: uninit(),
+destroy() and free(), the latter of which isn't actually invoked by common
+KVM code, but the hook declaration still exists because architectures are
+relying on its forward declaration.
+
+Eliminating the extra arch hooks is relatively straightforward, just
+tedious.  For the most part, there is no fundamental constraint that
+necessitated the proliferation of arch hooks, rather they crept in over
+time, usually when x86-centric code was moved out of generic KVM and into
+x86 code.
+
+E.g. kvm_arch_vcpu_setup() was added to allow x86 to do vcpu_load(), which
+can only be done after preempt_notifier initialization, but adding setup()
+overlooked the fact that the preempt_notifier was only initialized after
+kvm_arch_vcpu_create() because preemption support was added when x86's MMU
+setup (the vcpu_load() user) was called from common KVM code.
+
+For all intents and purposes, there is no true functional change in this
+series.  The order of some allocations will change, and a few memory leaks
+are fixed, but the actual functionality of a guest should be unaffected.
+
+Patches 01-03 are bug fixes in error handling paths that were found by
+inspection when refactoring the associated code.
+
+Patches 04-43 refactor each arch implementation so that the unwanted arch
+hooks can be dropped without a functional change, e.g. move code out of
+kvm_arch_vcpu_setup() so that all implementations are empty, then drop the
+functions and caller.
+
+Patches 44-45 are minor clean up to eliminate kvm_vcpu_uninit().
+
+
+The net result is to go from this:
+
+        vcpu = kvm_arch_vcpu_create(kvm, id);
+               |
+               |-> kvm_vcpu_init()
+                   |
+                   |-> kvm_arch_vcpu_init()
+
+        if (IS_ERR(vcpu)) {
+                r = PTR_ERR(vcpu);
+                goto vcpu_decrement;
+        }
+
+        preempt_notifier_init(&vcpu->preempt_notifier, &kvm_preempt_ops);
+
+        r = kvm_arch_vcpu_setup(vcpu);
+        if (r)
+                goto vcpu_destroy;
+
+to this:
+
+        r = kvm_arch_vcpu_precreate(kvm, id);
+        if (r)
+                goto vcpu_decrement;
+
+        vcpu = kmem_cache_zalloc(kvm_vcpu_cache, GFP_KERNEL);
+        if (!vcpu) {
+                r = -ENOMEM;
+                goto vcpu_decrement;
+        }
+
+        page = alloc_page(GFP_KERNEL | __GFP_ZERO);
+        if (!page) {
+                r = -ENOMEM;
+                goto vcpu_free;
+        }
+        vcpu->run = page_address(page);
+
+        kvm_vcpu_init(vcpu, kvm, id);
+
+        r = kvm_arch_vcpu_create(vcpu);
+        if (r)
+                goto vcpu_free_run_page;
+
+
+Sean Christopherson (45):
+  KVM: PPC: Book3S HV: Uninit vCPU if vcore creation fails
+  KVM: PPC: Book3S PR: Free shared page if mmu initialization fails
+  KVM: x86: Free wbinvd_dirty_mask if vCPU creation fails
+  KVM: VMX: Allocate VPID after initializing VCPU
+  KVM: VMX: Use direct vcpu pointer during vCPU create/free
+  KVM: SVM: Use direct vcpu pointer during vCPU create/free
+  KVM: x86: Allocate vcpu struct in common x86 code
+  KVM: x86: Move FPU allocation to common x86 code
+  KVM: x86: Move allocation of pio_data page down a few lines
+  KVM: x86: Move kvm_vcpu_init() invocation to common code
+  KVM: PPC: e500mc: Add build-time assert that vcpu is at offset 0
+  KVM: PPC: Allocate vcpu struct in common PPC code
+  KVM: PPC: Book3S PR: Allocate book3s and shadow vcpu after common init
+  KVM: PPC: e500mc: Move reset of oldpir below call to kvm_vcpu_init()
+  KVM: PPC: Move kvm_vcpu_init() invocation to common code
+  KVM: MIPS: Use kvm_vcpu_cache to allocate vCPUs
+  KVM: MIPS: Drop kvm_arch_vcpu_free()
+  KVM: PPC: Drop kvm_arch_vcpu_free()
+  KVM: arm: Drop kvm_arch_vcpu_free()
+  KVM: x86: Remove spurious kvm_mmu_unload() from vcpu destruction path
+  KVM: x86: Remove spurious clearing of async #PF MSR
+  KVM: x86: Drop kvm_arch_vcpu_free()
+  KVM: Remove kvm_arch_vcpu_free() declaration
+  KVM: Add kvm_arch_vcpu_precreate() to handle pre-allocation issues
+  KVM: s390: Move guts of kvm_arch_vcpu_init() into
+    kvm_arch_vcpu_create()
+  KVM: s390: Invoke kvm_vcpu_init() before allocating sie_page
+  KVM: MIPS: Invoke kvm_vcpu_uninit() immediately prior to freeing vcpu
+  KVM: x86: Invoke kvm_vcpu_uninit() immediately prior to freeing vcpu
+  KVM: Introduce kvm_vcpu_destroy()
+  KVM: Move vcpu alloc and init invocation to common code
+  KVM: Unexport kvm_vcpu_cache and kvm_{un}init_vcpu()
+  KVM: Move initialization of preempt notifier to kvm_vcpu_init()
+  KVM: x86: Move guts of kvm_arch_vcpu_setup() into
+    kvm_arch_vcpu_create()
+  KVM: MIPS: Move .vcpu_setup() call to kvm_arch_vcpu_create()
+  KVM: s390: Manually invoke vcpu setup during kvm_arch_vcpu_create()
+  KVM: PPC: BookE: Setup vcpu during kvmppc_core_vcpu_create()
+  KVM: Drop kvm_arch_vcpu_setup()
+  KVM: x86: Move all vcpu init code into kvm_arch_vcpu_create()
+  KVM: MIPS: Move all vcpu init code into kvm_arch_vcpu_create()
+  KVM: ARM: Move all vcpu init code into kvm_arch_vcpu_create()
+  KVM: PPC: Move all vcpu init code into kvm_arch_vcpu_create()
+  KVM: arm64: Free sve_state via arm specific hook
+  KVM: Drop kvm_arch_vcpu_init() and kvm_arch_vcpu_uninit()
+  KVM: Move putting of vcpu->pid to kvm_vcpu_destroy()
+  KVM: Move vcpu->run page allocation out of kvm_vcpu_init()
+
+ arch/arm/include/asm/kvm_host.h    |   2 +-
+ arch/arm/kvm/guest.c               |   5 -
+ arch/arm64/include/asm/kvm_host.h  |   2 +-
+ arch/arm64/kvm/guest.c             |   5 -
+ arch/arm64/kvm/reset.c             |   2 +-
+ arch/mips/kvm/mips.c               |  84 ++++-------
+ arch/powerpc/include/asm/kvm_ppc.h |   6 +-
+ arch/powerpc/kvm/book3s.c          |   9 +-
+ arch/powerpc/kvm/book3s_hv.c       |  27 +---
+ arch/powerpc/kvm/book3s_pr.c       |  33 ++---
+ arch/powerpc/kvm/booke.c           |  65 ++++----
+ arch/powerpc/kvm/e500.c            |  34 +----
+ arch/powerpc/kvm/e500mc.c          |  32 ++--
+ arch/powerpc/kvm/powerpc.c         |  70 ++++-----
+ arch/s390/include/asm/kvm_host.h   |   1 -
+ arch/s390/kvm/kvm-s390.c           | 110 +++++++-------
+ arch/x86/include/asm/kvm_host.h    |   2 +-
+ arch/x86/kvm/svm.c                 |  52 +------
+ arch/x86/kvm/vmx/vmx.c             |  72 +++------
+ arch/x86/kvm/x86.c                 | 230 ++++++++++++++---------------
+ include/linux/kvm_host.h           |  13 +-
+ virt/kvm/arm/arm.c                 |  76 ++++------
+ virt/kvm/kvm_main.c                |  71 +++++----
+ 23 files changed, 387 insertions(+), 616 deletions(-)
+
 -- 
 2.22.0
 
