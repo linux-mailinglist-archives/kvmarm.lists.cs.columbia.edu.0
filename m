@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B1B7E05D2
-	for <lists+kvmarm@lfdr.de>; Tue, 22 Oct 2019 16:04:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 726B4E05E3
+	for <lists+kvmarm@lfdr.de>; Tue, 22 Oct 2019 16:05:07 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id ADEC34A99B;
-	Tue, 22 Oct 2019 10:04:29 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 201814A97C;
+	Tue, 22 Oct 2019 10:05:07 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.202
@@ -16,71 +16,69 @@ X-Spam-Status: No, score=-4.202 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QP7cRtfrDMxD; Tue, 22 Oct 2019 10:04:28 -0400 (EDT)
+	with ESMTP id 6PTrm78N0UM5; Tue, 22 Oct 2019 10:05:07 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9AC754A995;
-	Tue, 22 Oct 2019 10:04:28 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C98084A98E;
+	Tue, 22 Oct 2019 10:05:05 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 49E2A4A97C
- for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Oct 2019 10:04:27 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EC0604A981
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Oct 2019 10:05:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id FaDFSqDJRCec for <kvmarm@lists.cs.columbia.edu>;
- Tue, 22 Oct 2019 10:04:26 -0400 (EDT)
+ with ESMTP id JuG1shvqGHDP for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 22 Oct 2019 10:04:59 -0400 (EDT)
 Received: from mx1.redhat.com (mx1.redhat.com [209.132.183.28])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 521A24A981
- for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Oct 2019 10:04:26 -0400 (EDT)
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0FE8E4A97C
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Oct 2019 10:04:59 -0400 (EDT)
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mx1.redhat.com (Postfix) with ESMTPS id 9F56081F19
- for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Oct 2019 14:04:25 +0000 (UTC)
-Received: by mail-wr1-f69.google.com with SMTP id e25so8649493wra.9
- for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Oct 2019 07:04:25 -0700 (PDT)
+ by mx1.redhat.com (Postfix) with ESMTPS id 6EBC985546
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Oct 2019 14:04:58 +0000 (UTC)
+Received: by mail-wm1-f71.google.com with SMTP id g67so5959311wmg.4
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Oct 2019 07:04:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
  :date:user-agent:mime-version:in-reply-to:content-language
  :content-transfer-encoding;
- bh=3vKquIIhS417Xcv3ef04W52oBIikgSSCS3LfBkCoIDs=;
- b=U2g3pKZtHb0DAtjzaklZCNsXZcWqh9vX8i1I0vgISYA2dymX7TqkePxa/SAKzIowW8
- s9xPn1o4gaNOzX1pMgswsRindTA7qcuXge5DCzWLQTgeNV03wpdK4d2W5frQuonJz/WS
- eVB+oeVV8lO6XoYI7M7NYopccmGNWCLMA1addjWf5x14sB5WDA4g8EkYz+N/nY4Pjrju
- ooRwSNXI7m+IlhMoifNa1N52IgYLH8jfTIiQPs/SIX0NheznD1/ZdkoTVNv1cK0Loask
- eAGVS/+2QlE7xmi+jEEzOJ2gUFNgPqEWmQPh/mFLwduTe/j359SDlRAz6dugApwqGKvC
- FYpA==
-X-Gm-Message-State: APjAAAV+JcHrLRSJ7hy0/XQSRpLVjD3jpxGQF7Lf3rfqVh1/BwDpRSYd
- O4tcISL1fgPUl0anBppElcWfz4OVff7TFUoIUDrvQfTs3JToJxqjykCGT/wdVSCMqHdVTu244Sj
- sDpu/hPbf/8DSl71wZDv3LyK8
-X-Received: by 2002:a7b:c049:: with SMTP id u9mr3176819wmc.12.1571753064233;
- Tue, 22 Oct 2019 07:04:24 -0700 (PDT)
-X-Google-Smtp-Source: APXvYqxd12WGZ28CK/g1W21d1r/6V7p9tDfXwdcdM4EXY3TusWKTyDA7mRoL7a/JX5NzrrGKErwrww==
-X-Received: by 2002:a7b:c049:: with SMTP id u9mr3176775wmc.12.1571753063926;
- Tue, 22 Oct 2019 07:04:23 -0700 (PDT)
+ bh=GRXx0prZyWf8Ie3WBmFM/bIRv9+8DKKzcw/xRf9RZ/k=;
+ b=iLWuloZvEECNFILrwUbCwofcy14J5Mn2BYWjSsY451qwu1Hp1opuWh8v+qsVDgd11/
+ G4iGQw6+dpjvI3hbRQe2ujlK+KxrcNtRLnfIcMrjynCwjKI7LF0sAM6KiC5wCOywpZc7
+ fdSW23dPIuDKtbD4zn1BZfoJETcv6UOH4K5CbhrbSyFWEppWygo/nM4Eh6KHIKj5yW5M
+ 9sWF5sh3O1gvQahO4+gcMpsiHT6vzD0ehFTtcrARlqQ9RB/WgG6JMk3YAUcLnKhpx21B
+ ep7H2g9QHtS9PqhHulEIrBfc6ekupFiSze9bYgbg+RwOo11zFHr+Hrieed5YMfSCLRGp
+ uOLA==
+X-Gm-Message-State: APjAAAWq7zYLNj9D4wvbXZwvJKaS5uSzESFJ6cZOt3YO589xINbmCzAt
+ Ob0DRFGuYZF1n8OKTafmcKY4yfPsjNrl5k0wROX/hie/qm587Rf98Pdaiou8aETOU+EpvkSoeTR
+ m6PSytGCFwCwcYIZPuJtblk4D
+X-Received: by 2002:a1c:7e57:: with SMTP id z84mr3319627wmc.84.1571753096493; 
+ Tue, 22 Oct 2019 07:04:56 -0700 (PDT)
+X-Google-Smtp-Source: APXvYqwWqRcFVSe00YfZqVULXyrnOBOt0DAtwntm2KhRrr6N6A/cSYud38QIAc8/I73DEBmlFbuFZw==
+X-Received: by 2002:a1c:7e57:: with SMTP id z84mr3319555wmc.84.1571753095982; 
+ Tue, 22 Oct 2019 07:04:55 -0700 (PDT)
 Received: from ?IPv6:2001:b07:6468:f312:c0e4:dcf4:b543:ce19?
  ([2001:b07:6468:f312:c0e4:dcf4:b543:ce19])
- by smtp.gmail.com with ESMTPSA id n11sm903226wmd.26.2019.10.22.07.04.21
+ by smtp.gmail.com with ESMTPSA id b196sm11755492wmd.24.2019.10.22.07.04.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Oct 2019 07:04:23 -0700 (PDT)
-Subject: Re: [PATCH v2 15/15] KVM: Dynamically size memslot array based on
- number of used slots
+ Tue, 22 Oct 2019 07:04:55 -0700 (PDT)
+Subject: Re: [PATCH v2 00/15] KVM: Dynamically size memslot arrays
 To: Sean Christopherson <sean.j.christopherson@intel.com>,
  James Hogan <jhogan@kernel.org>, Paul Mackerras <paulus@ozlabs.org>,
  Christian Borntraeger <borntraeger@de.ibm.com>,
  Janosch Frank <frankja@linux.ibm.com>, =?UTF-8?B?UmFkaW0gS3LEjW3DocWZ?=
  <rkrcmar@redhat.com>, Marc Zyngier <maz@kernel.org>
 References: <20191022003537.13013-1-sean.j.christopherson@intel.com>
- <20191022003537.13013-16-sean.j.christopherson@intel.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Openpgp: preference=signencrypt
-Message-ID: <2609aedc-4fc9-ab92-8877-55c64cf19165@redhat.com>
-Date: Tue, 22 Oct 2019 16:04:21 +0200
+Message-ID: <129444cc-5211-5b60-15fc-0f0fe998f023@redhat.com>
+Date: Tue, 22 Oct 2019 16:04:54 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20191022003537.13013-16-sean.j.christopherson@intel.com>
+In-Reply-To: <20191022003537.13013-1-sean.j.christopherson@intel.com>
 Content-Language: en-US
 Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
  David Hildenbrand <david@redhat.com>, Joerg Roedel <joro@8bytes.org>,
@@ -105,12 +103,36 @@ Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 On 22/10/19 02:35, Sean Christopherson wrote:
-> +	struct kvm_memory_slot memslots[];
-> +	/*
-> +	 * WARNING: 'memslots' is dynamically-sized.  It *MUST* be at the end.
-> +	 */
+> The end goal of this series is to dynamically size the memslot array so
+> that KVM allocates memory based on the number of memslots in use, as
+> opposed to unconditionally allocating memory for the maximum number of
+> memslots.  On x86, each memslot consumes 88 bytes, and so with 2 address
+> spaces of 512 memslots, each VM consumes ~90k bytes for the memslots.
+> E.g. given a VM that uses a total of 30 memslots, dynamic sizing reduces
+> the memory footprint from 90k to ~2.6k bytes.
+> 
+> The changes required to support dynamic sizing are relatively small,
+> e.g. are essentially contained in patches 12/13 and 13/13.  Patches 1-11
+> clean up the memslot code, which has gotten quite crusy, especially
+> __kvm_set_memory_region().  The clean up is likely not strictly necessary
+> to switch to dynamic sizing, but I didn't have a remotely reasonable
+> level of confidence in the correctness of the dynamic sizing without first
+> doing the clean up.
+> 
+> Testing, especially non-x86 platforms, would be greatly appreciated.  The
+> non-x86 changes are for all intents and purposes untested, e.g. I compile
+> tested pieces of the code by copying them into x86, but that's it.  In
+> theory, the vast majority of the functional changes are arch agnostic, in
+> theory...
+> 
+> v2:
+>   - Split "Drop kvm_arch_create_memslot()" into three patches to move
+>     minor functional changes to standalone patches [Janosch].
+>   - Rebase to latest kvm/queue (f0574a1cea5b, "KVM: x86: fix ...")
+>   - Collect an Acked-by and a Reviewed-by
 
-Isn't that obvious from the flexible array member?
+I only have some cosmetic changes on patches 14-15.  Let's wait for
+testing results.
 
 Paolo
 _______________________________________________
