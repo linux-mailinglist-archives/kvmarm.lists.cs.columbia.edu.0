@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CE3FBE10AA
-	for <lists+kvmarm@lfdr.de>; Wed, 23 Oct 2019 05:47:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90086E1311
+	for <lists+kvmarm@lfdr.de>; Wed, 23 Oct 2019 09:25:49 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E28334A971;
-	Tue, 22 Oct 2019 23:47:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 618BE4A980;
+	Wed, 23 Oct 2019 03:25:48 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
@@ -16,38 +16,42 @@ X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id GwmUDOhkHb6u; Tue, 22 Oct 2019 23:47:12 -0400 (EDT)
+	with ESMTP id jt0i8zeZMKdP; Wed, 23 Oct 2019 03:25:48 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BCC404A947;
-	Tue, 22 Oct 2019 23:47:11 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 414C94A96C;
+	Wed, 23 Oct 2019 03:25:46 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E8FFF4A8AF
- for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Oct 2019 23:47:10 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 65BAD4A746
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Oct 2019 23:23:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id dmsTwCrXxEBl for <kvmarm@lists.cs.columbia.edu>;
- Tue, 22 Oct 2019 23:47:09 -0400 (EDT)
-Received: from huawei.com (szxga06-in.huawei.com [45.249.212.32])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8D48A4A854
- for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Oct 2019 23:47:08 -0400 (EDT)
-Received: from DGGEMS404-HUB.china.huawei.com (unknown [172.30.72.60])
- by Forcepoint Email with ESMTP id 11F378013A1F00FE87B2;
- Wed, 23 Oct 2019 11:46:58 +0800 (CST)
-Received: from HGHY2Y004646261.china.huawei.com (10.184.12.158) by
- DGGEMS404-HUB.china.huawei.com (10.3.19.204) with Microsoft SMTP Server id
- 14.3.439.0; Wed, 23 Oct 2019 11:46:51 +0800
-From: Zenghui Yu <yuzenghui@huawei.com>
-To: <maz@kernel.org>
-Subject: [PATCH v2] irqchip/gic-v3-its: Use the exact ITSList for VMOVP
-Date: Wed, 23 Oct 2019 03:46:26 +0000
-Message-ID: <1571802386-2680-1-git-send-email-yuzenghui@huawei.com>
-X-Mailer: git-send-email 2.6.4.windows.1
+ with ESMTP id nyNXDkNLB9Zs for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 22 Oct 2019 23:23:09 -0400 (EDT)
+Received: from huawei.com (szxga07-in.huawei.com [45.249.212.35])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0C9554A669
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Oct 2019 23:23:09 -0400 (EDT)
+Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.58])
+ by Forcepoint Email with ESMTP id 962BE2CD66F9CF476FA8;
+ Wed, 23 Oct 2019 11:23:05 +0800 (CST)
+Received: from localhost.localdomain.localdomain (10.175.113.25) by
+ DGGEMS407-HUB.china.huawei.com (10.3.19.207) with Microsoft SMTP Server id
+ 14.3.439.0; Wed, 23 Oct 2019 11:22:59 +0800
+From: Mao Wenan <maowenan@huawei.com>
+To: <maz@kernel.org>, <james.morse@arm.com>, <julien.thierry.kdev@gmail.com>, 
+ <suzuki.poulose@arm.com>, <catalin.marinas@arm.com>, <will@kernel.org>,
+ <steven.price@arm.com>
+Subject: [PATCH] KVM: arm64: Select SCHED_INFO before SCHEDSTATS
+Date: Wed, 23 Oct 2019 11:22:54 +0800
+Message-ID: <20191023032254.159510-1-maowenan@huawei.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-X-Originating-IP: [10.184.12.158]
+X-Originating-IP: [10.175.113.25]
 X-CFilter-Loop: Reflected
-Cc: jason@lakedaemon.net, jiayanlei@huawei.com, tglx@linutronix.de,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+X-Mailman-Approved-At: Wed, 23 Oct 2019 03:25:45 -0400
+Cc: Mao Wenan <maowenan@huawei.com>, kernel-janitors@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -64,94 +68,45 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On a system without Single VMOVP support (say GITS_TYPER.VMOVP == 0),
-we will map vPEs only on ITSs that will actually control interrupts
-for the given VM.  And when moving a vPE, the VMOVP command will be
-issued only for those ITSs.
+If KVM=y, it will select SCHEDSTATS, below erros can
+be seen:
+kernel/sched/stats.h: In function rq_sched_info_arrive:
+kernel/sched/stats.h:12:20: error: struct sched_info
+has no member named run_delay
+   rq->rq_sched_info.run_delay += delta;
+                    ^
+kernel/sched/stats.h:13:20: error: struct sched_info
+has no member named pcount
+   rq->rq_sched_info.pcount++;
+                    ^
+kernel/sched/stats.h: In function rq_sched_info_dequeued:
+kernel/sched/stats.h:31:20: error: struct sched_info has
+no member named run_delay
+   rq->rq_sched_info.run_delay += delta;
 
-But when issuing VMOVPs we seemed fail to present the exact ITSList
-to ITSs who are actually included in the synchronization operation.
-The its_list_map we're currently using includes all ITSs in the system,
-even though some of them don't have the corresponding vPE mapping at all.
+These are because CONFIG_SCHED_INFO is not set, This patch 
+is to select SCHED_INFO before SCHEDSTATS.
 
-Introduce get_its_list() to get the per-VM its_list_map, to indicate
-which ITSs have vPE mappings for the given VM, and use this map as
-the expected ITSList when building VMOVP. This is hopefully a performance
-gain not to do some synchronization with those unsuspecting ITSs.
-And initialize the whole command descriptor to zero at beginning, since
-the seq_num and its_list should be RES0 when GITS_TYPER.VMOVP == 1.
-
-Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
+Fixes: 8564d6372a7d ("KVM: arm64: Support stolen time reporting via shared structure")
+Signed-off-by: Mao Wenan <maowenan@huawei.com>
 ---
+ arch/arm64/kvm/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-Changes since v1:
- - Initialize the whole VMOVP command descriptor to zero at beginning,
-   since the seq_num and its_list fields should be RES0 when
-   GITS_TYPER.VMOVP == 1.
- - Initialize "its_list" to zero in get_its_list().
- - Skip non v4 ITSs when computing the per-VM its_list_map.
- - Other cleanups.
-
- drivers/irqchip/irq-gic-v3-its.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index c81da27044bf..0b35fcb71203 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -175,6 +175,22 @@ static DEFINE_IDA(its_vpeid_ida);
- #define gic_data_rdist_rd_base()	(gic_data_rdist()->rd_base)
- #define gic_data_rdist_vlpi_base()	(gic_data_rdist_rd_base() + SZ_128K)
- 
-+static u16 get_its_list(struct its_vm *vm)
-+{
-+	struct its_node *its;
-+	unsigned long its_list = 0;
-+
-+	list_for_each_entry(its, &its_nodes, entry) {
-+		if (!its->is_v4)
-+			continue;
-+
-+		if (vm->vlpi_count[its->list_nr])
-+			__set_bit(its->list_nr, &its_list);
-+	}
-+
-+	return (u16)its_list;
-+}
-+
- static struct its_collection *dev_event_to_col(struct its_device *its_dev,
- 					       u32 event)
- {
-@@ -976,17 +992,15 @@ static void its_send_vmapp(struct its_node *its,
- 
- static void its_send_vmovp(struct its_vpe *vpe)
- {
--	struct its_cmd_desc desc;
-+	struct its_cmd_desc desc = {};
- 	struct its_node *its;
- 	unsigned long flags;
- 	int col_id = vpe->col_idx;
- 
- 	desc.its_vmovp_cmd.vpe = vpe;
--	desc.its_vmovp_cmd.its_list = (u16)its_list_map;
- 
- 	if (!its_list_map) {
- 		its = list_first_entry(&its_nodes, struct its_node, entry);
--		desc.its_vmovp_cmd.seq_num = 0;
- 		desc.its_vmovp_cmd.col = &its->collections[col_id];
- 		its_send_single_vcommand(its, its_build_vmovp_cmd, &desc);
- 		return;
-@@ -1003,6 +1017,7 @@ static void its_send_vmovp(struct its_vpe *vpe)
- 	raw_spin_lock_irqsave(&vmovp_lock, flags);
- 
- 	desc.its_vmovp_cmd.seq_num = vmovp_seq_num++;
-+	desc.its_vmovp_cmd.its_list = get_its_list(vpe->its_vm);
- 
- 	/* Emit VMOVPs */
- 	list_for_each_entry(its, &its_nodes, entry) {
+diff --git a/arch/arm64/kvm/Kconfig b/arch/arm64/kvm/Kconfig
+index d8b88e4..3c46eac 100644
+--- a/arch/arm64/kvm/Kconfig
++++ b/arch/arm64/kvm/Kconfig
+@@ -39,6 +39,7 @@ config KVM
+ 	select IRQ_BYPASS_MANAGER
+ 	select HAVE_KVM_IRQ_BYPASS
+ 	select HAVE_KVM_VCPU_RUN_PID_CHANGE
++	select SCHED_INFO
+ 	select SCHEDSTATS
+ 	---help---
+ 	  Support hosting virtualized guest machines.
 -- 
-2.19.1
-
+2.7.4
 
 _______________________________________________
 kvmarm mailing list
