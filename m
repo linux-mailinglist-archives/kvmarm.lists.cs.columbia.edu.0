@@ -2,71 +2,61 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 72E9CE3D83
-	for <lists+kvmarm@lfdr.de>; Thu, 24 Oct 2019 22:48:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26E96E3FEA
+	for <lists+kvmarm@lfdr.de>; Fri, 25 Oct 2019 01:07:56 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E3DEB4A655;
-	Thu, 24 Oct 2019 16:48:32 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BEC354A98C;
+	Thu, 24 Oct 2019 19:07:55 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ycWg1XkOjUJR; Thu, 24 Oct 2019 16:48:32 -0400 (EDT)
+	with ESMTP id R3jaAHWwYt9D; Thu, 24 Oct 2019 19:07:54 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 962D74A59B;
-	Thu, 24 Oct 2019 16:48:31 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2463A4A87D;
+	Thu, 24 Oct 2019 19:07:51 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 829B54A578
- for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Oct 2019 16:48:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0412C4A81D
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Oct 2019 19:07:50 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id rgtiRcaTlycI for <kvmarm@lists.cs.columbia.edu>;
- Thu, 24 Oct 2019 16:48:29 -0400 (EDT)
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E9F9F4A4A0
- for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Oct 2019 16:48:28 -0400 (EDT)
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
+ with ESMTP id yH-kzctXieZt for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 24 Oct 2019 19:07:48 -0400 (EDT)
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1D99C4A53F
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Oct 2019 19:07:48 -0400 (EDT)
+X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 24 Oct 2019 13:48:27 -0700
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+ by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 24 Oct 2019 16:07:46 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.68,226,1569308400"; d="scan'208";a="201596808"
-Received: from sjchrist-coffee.jf.intel.com (HELO linux.intel.com)
- ([10.54.74.41])
- by orsmga003.jf.intel.com with ESMTP; 24 Oct 2019 13:48:26 -0700
-Date: Thu, 24 Oct 2019 13:48:26 -0700
+X-IronPort-AV: E=Sophos;i="5.68,226,1569308400"; d="scan'208";a="202445828"
+Received: from sjchrist-coffee.jf.intel.com ([10.54.74.41])
+ by orsmga006.jf.intel.com with ESMTP; 24 Oct 2019 16:07:45 -0700
 From: Sean Christopherson <sean.j.christopherson@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 14/15] KVM: Terminate memslot walks via used_slots
-Message-ID: <20191024204826.GE28043@linux.intel.com>
-References: <20191022003537.13013-1-sean.j.christopherson@intel.com>
- <20191022003537.13013-15-sean.j.christopherson@intel.com>
- <642f73ee-9425-0149-f4f4-f56be9ae5713@redhat.com>
- <20191022152827.GC2343@linux.intel.com>
- <625e511f-bd35-3b92-0c6d-550c10fc5827@redhat.com>
- <20191022155220.GD2343@linux.intel.com>
- <5c61c094-ee32-4dcf-b3ae-092eba0159c5@redhat.com>
- <20191024193856.GA28043@linux.intel.com>
- <5320341c-1abb-610b-8f5e-090a6726a9b1@redhat.com>
-MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <5320341c-1abb-610b-8f5e-090a6726a9b1@redhat.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: Cornelia Huck <cohuck@redhat.com>, Wanpeng Li <wanpengli@tencent.com>,
- Janosch Frank <frankja@linux.ibm.com>, kvm@vger.kernel.org,
- James Hogan <jhogan@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- David Hildenbrand <david@redhat.com>, linux-mips@vger.kernel.org,
- kvm-ppc@vger.kernel.org, linux-kernel@vger.kernel.org,
- Paul Mackerras <paulus@ozlabs.org>,
+To: James Hogan <jhogan@kernel.org>, Paul Mackerras <paulus@ozlabs.org>,
  Christian Borntraeger <borntraeger@de.ibm.com>,
- linux-arm-kernel@lists.infradead.org, Marc Zyngier <maz@kernel.org>,
+ Janosch Frank <frankja@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@redhat.com>,
+ Marc Zyngier <maz@kernel.org>
+Subject: [PATCH v3 00/15] KVM: Dynamically size memslot arrays
+Date: Thu, 24 Oct 2019 16:07:29 -0700
+Message-Id: <20191024230744.14543-1-sean.j.christopherson@intel.com>
+X-Mailer: git-send-email 2.22.0
+MIME-Version: 1.0
+Cc: linux-arm-kernel@lists.infradead.org, Wanpeng Li <wanpengli@tencent.com>,
+ kvm@vger.kernel.org, David Hildenbrand <david@redhat.com>,
+ Joerg Roedel <joro@8bytes.org>, Cornelia Huck <cohuck@redhat.com>,
+ linux-mips@vger.kernel.org,
+ Sean Christopherson <sean.j.christopherson@intel.com>,
+ linux-kernel@vger.kernel.org, kvm-ppc@vger.kernel.org,
  Vitaly Kuznetsov <vkuznets@redhat.com>, kvmarm@lists.cs.columbia.edu,
  Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
@@ -85,68 +75,82 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Oct 24, 2019 at 10:24:09PM +0200, Paolo Bonzini wrote:
-> On 24/10/19 21:38, Sean Christopherson wrote:
-> > only
-> >  * its new index into the array is update.
-> 
-> s/update/tracked/?
+The end goal of this series is to dynamically size the memslot array so
+that KVM allocates memory based on the number of memslots in use, as
+opposed to unconditionally allocating memory for the maximum number of
+memslots.  On x86, each memslot consumes 88 bytes, and so with 2 address
+spaces of 512 memslots, each VM consumes ~90k bytes for the memslots.
+E.g. given a VM that uses a total of 30 memslots, dynamic sizing reduces
+the memory footprint from 90k to ~2.6k bytes.
 
-Ya, tracked is better.  Waffled between updated and tracked, chose poorly :-)
+The changes required to support dynamic sizing are relatively small,
+e.g. are essentially contained in patches 14/15 and 15/15.  Patches 1-13
+clean up the memslot code, which has gotten quite crusty, especially
+__kvm_set_memory_region().  The clean up is likely not strictly necessary
+to switch to dynamic sizing, but I didn't have a remotely reasonable
+level of confidence in the correctness of the dynamic sizing without first
+doing the clean up.
 
->   Returns the changed memslot's
-> >  * current index into the memslots array.
-> >  */
-> > static inline int kvm_memslot_move_backward(struct kvm_memslots *slots,
-> > 					    struct kvm_memory_slot *memslot)
-> > {
-> > 	struct kvm_memory_slot *mslots = slots->memslots;
-> > 	int i;
-> > 
-> > 	if (WARN_ON_ONCE(slots->id_to_index[memslot->id] == -1) ||
-> > 	    WARN_ON_ONCE(!slots->used_slots))
-> > 		return -1;
-> > 
-> > 	for (i = slots->id_to_index[memslot->id]; i < slots->used_slots - 1; i++) {
-> > 		if (memslot->base_gfn > mslots[i + 1].base_gfn)
-> > 			break;
-> > 
-> > 		WARN_ON_ONCE(memslot->base_gfn == mslots[i + 1].base_gfn);
-> > 
-> > 		/* Shift the next memslot forward one and update its index. */
-> > 		mslots[i] = mslots[i + 1];
-> > 		slots->id_to_index[mslots[i].id] = i;
-> > 	}
-> > 	return i;
-> > }
-> > 
-> > /*
-> >  * Move a changed memslot forwards in the array by shifting existing slots with
-> >  * a lower GFN toward the back of the array.  Note, the changed memslot itself
-> >  * is not preserved in the array, i.e. not swapped at this time, only its new
-> >  * index into the array is updated
-> 
-> Same here?
-> 
-> >  * Note, slots are sorted from highest->lowest instead of lowest->highest for
-> >  * historical reasons.
-> 
-> Not just that, the largest slot (with all RAM above 4GB) is also often
-> at the highest address at least on x86.
+Christoffer, I added your Tested-by to the patches that I was confident
+would be fully tested based on the desription of what you tested.  Let me
+know if you disagree with any of 'em.
 
-Ah, increasing the odds of a quick hit on lookup...but only when using a
-linear search.  The binary search starts in the middle, so that
-optimization is also historical :-)
+v3:
+  - Fix build errors on PPC and MIPS due to missed params during
+    refactoring [kbuild test robot].
+  - Rename the helpers for update_memslots() and add comments describing
+    the new algorithm and how it interacts with searching [Paolo].
+  - Remove the unnecessary and obnoxious warning regarding memslots being
+    a flexible array [Paolo].
+  - Fix typos in the changelog of patch 09/15 [Christoffer].
+  - Collect tags [Christoffer].
 
-> But we could sort them by size now, so I agree to call these historical
-> reasons.
+v2:
+  - Split "Drop kvm_arch_create_memslot()" into three patches to move
+    minor functional changes to standalone patches [Janosch].
+  - Rebase to latest kvm/queue (f0574a1cea5b, "KVM: x86: fix ...")
+  - Collect an Acked-by and a Reviewed-by
 
-That wouldn't work with the binary search though.
 
-> The code itself is fine, thanks for the work on documenting it.
-> 
-> Paolo
-> 
+Sean Christopherson (15):
+  KVM: Reinstall old memslots if arch preparation fails
+  KVM: Don't free new memslot if allocation of said memslot fails
+  KVM: PPC: Move memslot memory allocation into prepare_memory_region()
+  KVM: x86: Allocate memslot resources during prepare_memory_region()
+  KVM: Drop kvm_arch_create_memslot()
+  KVM: Explicitly free allocated-but-unused dirty bitmap
+  KVM: Refactor error handling for setting memory region
+  KVM: Move setting of memslot into helper routine
+  KVM: Move memslot deletion to helper function
+  KVM: Simplify kvm_free_memslot() and all its descendents
+  KVM: Clean up local variable usage in __kvm_set_memory_region()
+  KVM: Provide common implementation for generic dirty log functions
+  KVM: Ensure validity of memslot with respect to kvm_get_dirty_log()
+  KVM: Terminate memslot walks via used_slots
+  KVM: Dynamically size memslot array based on number of used slots
+
+ arch/mips/include/asm/kvm_host.h      |   2 +-
+ arch/mips/kvm/mips.c                  |  69 +--
+ arch/powerpc/include/asm/kvm_ppc.h    |  17 +-
+ arch/powerpc/kvm/book3s.c             |  22 +-
+ arch/powerpc/kvm/book3s_hv.c          |  36 +-
+ arch/powerpc/kvm/book3s_pr.c          |  20 +-
+ arch/powerpc/kvm/booke.c              |  17 +-
+ arch/powerpc/kvm/powerpc.c            |  13 +-
+ arch/s390/include/asm/kvm_host.h      |   2 +-
+ arch/s390/kvm/kvm-s390.c              |  21 +-
+ arch/x86/include/asm/kvm_page_track.h |   3 +-
+ arch/x86/kvm/page_track.c             |  15 +-
+ arch/x86/kvm/x86.c                    | 101 +----
+ include/linux/kvm_host.h              |  46 +-
+ virt/kvm/arm/arm.c                    |  48 +-
+ virt/kvm/arm/mmu.c                    |  18 +-
+ virt/kvm/kvm_main.c                   | 621 +++++++++++++++++---------
+ 17 files changed, 542 insertions(+), 529 deletions(-)
+
+-- 
+2.22.0
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
