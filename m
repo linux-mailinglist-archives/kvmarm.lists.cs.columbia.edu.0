@@ -2,48 +2,48 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 584A4E323A
-	for <lists+kvmarm@lfdr.de>; Thu, 24 Oct 2019 14:25:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A962E323D
+	for <lists+kvmarm@lfdr.de>; Thu, 24 Oct 2019 14:25:15 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E9C354A94F;
-	Thu, 24 Oct 2019 08:25:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2F3ED4A853;
+	Thu, 24 Oct 2019 08:25:15 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.8
+X-Spam-Score: 0.1
 X-Spam-Level: 
-X-Spam-Status: No, score=0.8 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	UNPARSEABLE_RELAY=0.001] autolearn=unavailable
+X-Spam-Status: No, score=0.1 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	UNPARSEABLE_RELAY=0.001] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3TBEmAy38UyZ; Thu, 24 Oct 2019 08:25:12 -0400 (EDT)
+	with ESMTP id wxsrCm1vRaPU; Thu, 24 Oct 2019 08:25:14 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9E8C34A7D7;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id ED9D94A8C4;
 	Thu, 24 Oct 2019 08:25:10 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 07B164A65C
- for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Oct 2019 06:27:51 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 00B684A523
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Oct 2019 06:27:57 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 4j7vBD6jC5Jn for <kvmarm@lists.cs.columbia.edu>;
- Thu, 24 Oct 2019 06:27:50 -0400 (EDT)
-Received: from out30-133.freemail.mail.aliyun.com
- (out30-133.freemail.mail.aliyun.com [115.124.30.133])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A8B3B4A5D5
- for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Oct 2019 06:27:49 -0400 (EDT)
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R451e4; CH=green; DM=||false|;
- FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01e07417; MF=shannon.zhao@linux.alibaba.com;
- NM=1; PH=DS; RN=8; SR=0; TI=SMTPD_---0Tg32PEs_1571912865; 
+ with ESMTP id eK75cRTCHl7u for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 24 Oct 2019 06:27:56 -0400 (EDT)
+Received: from out4436.biz.mail.alibaba.com (out4436.biz.mail.alibaba.com
+ [47.88.44.36])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C87EC4A60D
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Oct 2019 06:27:55 -0400 (EDT)
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R211e4; CH=green; DM=||false|;
+ FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01e01419; MF=shannon.zhao@linux.alibaba.com;
+ NM=1; PH=DS; RN=8; SR=0; TI=SMTPD_---0Tg31GPL_1571912867; 
 Received: from localhost(mailfrom:shannon.zhao@linux.alibaba.com
- fp:SMTPD_---0Tg32PEs_1571912865) by smtp.aliyun-inc.com(127.0.0.1);
- Thu, 24 Oct 2019 18:27:46 +0800
+ fp:SMTPD_---0Tg31GPL_1571912867) by smtp.aliyun-inc.com(127.0.0.1);
+ Thu, 24 Oct 2019 18:27:49 +0800
 From: Shannon Zhao <shannon.zhao@linux.alibaba.com>
 To: kvmarm@lists.cs.columbia.edu, maz@kernel.org, james.morse@arm.com,
  suzuki.poulose@arm.com, christoffer.dall@arm.com
-Subject: [PATCH RFC 2/7] KVM: arch_timer: Fix resource leak on error path
-Date: Thu, 24 Oct 2019 18:27:45 +0800
-Message-Id: <1571912870-18471-3-git-send-email-shannon.zhao@linux.alibaba.com>
+Subject: [PATCH RFC 3/7] KVM: vgic: make vgic parameters work well for module
+Date: Thu, 24 Oct 2019 18:27:46 +0800
+Message-Id: <1571912870-18471-4-git-send-email-shannon.zhao@linux.alibaba.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1571912870-18471-1-git-send-email-shannon.zhao@linux.alibaba.com>
 References: <1571912870-18471-1-git-send-email-shannon.zhao@linux.alibaba.com>
@@ -66,48 +66,36 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-It needs to cleanup irq setup for host_vtimer_irq when
-request_percpu_irq fails for host_ptimer_irq. It needs to cleanup irq
-setup for both host_vtimer_irq and host_ptimer_irq when seeting vcpu
-affinity error as well.
-
-Fixes: 9e01dc76be6a ("KVM: arm/arm64: arch_timer: Assign the phys timer on VHE systems")
 Signed-off-by: Shannon Zhao <shannon.zhao@linux.alibaba.com>
 ---
- virt/kvm/arm/arch_timer.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ virt/kvm/arm/vgic/vgic-v3.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/virt/kvm/arm/arch_timer.c b/virt/kvm/arm/arch_timer.c
-index e2bb5bd..f5a5d51 100644
---- a/virt/kvm/arm/arch_timer.c
-+++ b/virt/kvm/arm/arch_timer.c
-@@ -960,7 +960,7 @@ int kvm_timer_hyp_init(bool has_gic)
- 		if (err) {
- 			kvm_err("kvm_arch_timer: can't request ptimer interrupt %d (%d)\n",
- 				host_ptimer_irq, err);
--			return err;
-+			goto out_free_irq;
- 		}
+diff --git a/virt/kvm/arm/vgic/vgic-v3.c b/virt/kvm/arm/vgic/vgic-v3.c
+index 8d69f00..228cfeb 100644
+--- a/virt/kvm/arm/vgic/vgic-v3.c
++++ b/virt/kvm/arm/vgic/vgic-v3.c
+@@ -548,6 +548,12 @@ int vgic_v3_map_resources(struct kvm *kvm)
  
- 		if (has_gic) {
-@@ -968,7 +968,7 @@ int kvm_timer_hyp_init(bool has_gic)
- 						    kvm_get_running_vcpus());
- 			if (err) {
- 				kvm_err("kvm_arch_timer: error setting vcpu affinity\n");
--				goto out_free_irq;
-+				goto out_free_pirq;
- 			}
- 		}
+ DEFINE_STATIC_KEY_FALSE(vgic_v3_cpuif_trap);
  
-@@ -984,6 +984,8 @@ int kvm_timer_hyp_init(bool has_gic)
- 			  "kvm/arm/timer:starting", kvm_timer_starting_cpu,
- 			  kvm_timer_dying_cpu);
- 	return 0;
-+out_free_pirq:
-+	free_percpu_irq(host_ptimer_irq, kvm_get_running_vcpus());
- out_free_irq:
- 	free_percpu_irq(host_vtimer_irq, kvm_get_running_vcpus());
- 	return err;
++#ifdef MODULE
++module_param_named(vgic_v3_group0_trap, group0_trap, bool, S_IRUGO);
++module_param_named(vgic_v3_group1_trap, group1_trap, bool, S_IRUGO);
++module_param_named(vgic_v3_common_trap, common_trap, bool, S_IRUGO);
++module_param_named(vgic_v4_enable, gicv4_enable, bool, S_IRUGO);
++#else
+ static int __init early_group0_trap_cfg(char *buf)
+ {
+ 	return strtobool(buf, &group0_trap);
+@@ -571,6 +577,7 @@ static int __init early_gicv4_enable(char *buf)
+ 	return strtobool(buf, &gicv4_enable);
+ }
+ early_param("kvm-arm.vgic_v4_enable", early_gicv4_enable);
++#endif
+ 
+ /**
+  * vgic_v3_probe - probe for a VGICv3 compatible interrupt controller
 -- 
 1.8.3.1
 
