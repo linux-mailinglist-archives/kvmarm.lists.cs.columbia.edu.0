@@ -2,55 +2,53 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E73C6E7758
-	for <lists+kvmarm@lfdr.de>; Mon, 28 Oct 2019 18:09:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 39066E81F7
+	for <lists+kvmarm@lfdr.de>; Tue, 29 Oct 2019 08:20:32 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 770454AC82;
-	Mon, 28 Oct 2019 13:09:53 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 750F04A95E;
+	Tue, 29 Oct 2019 03:20:31 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.799
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qKoC7tjHLsT6; Mon, 28 Oct 2019 13:09:53 -0400 (EDT)
+	with ESMTP id Rp06XaMXc67i; Tue, 29 Oct 2019 03:20:31 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1F9B74AC7D;
-	Mon, 28 Oct 2019 13:09:52 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 65F024A5C3;
+	Tue, 29 Oct 2019 03:20:30 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 61CBE4A59D
- for <kvmarm@lists.cs.columbia.edu>; Mon, 28 Oct 2019 13:09:51 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B87784A535
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 29 Oct 2019 03:20:28 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id EWM0FbsoKxMw for <kvmarm@lists.cs.columbia.edu>;
- Mon, 28 Oct 2019 13:09:50 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 445644A597
- for <kvmarm@lists.cs.columbia.edu>; Mon, 28 Oct 2019 13:09:50 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C62111FB;
- Mon, 28 Oct 2019 10:09:49 -0700 (PDT)
-Received: from lakrids.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com
- [10.121.207.14])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1F99E3F71F;
- Mon, 28 Oct 2019 10:09:49 -0700 (PDT)
-Date: Mon, 28 Oct 2019 17:09:47 +0000
-From: Mark Rutland <mark.rutland@arm.com>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v2] KVM: arm64: Don't set HCR_EL2.TVM when S2FWB is
- supported
-Message-ID: <20191028170946.GB52213@lakrids.cambridge.arm.com>
-References: <20191028130541.30536-1-christoffer.dall@arm.com>
- <0c3291a7-18dc-1ae5-e706-8b04c9ab8a9e@arm.com>
- <86pnigyh90.wl-maz@kernel.org>
+ with ESMTP id mFhHMuSa--IZ for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 29 Oct 2019 03:20:26 -0400 (EDT)
+Received: from huawei.com (szxga07-in.huawei.com [45.249.212.35])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 90D7C4A49C
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 29 Oct 2019 03:20:26 -0400 (EDT)
+Received: from DGGEMS414-HUB.china.huawei.com (unknown [172.30.72.58])
+ by Forcepoint Email with ESMTP id 369BCB063877C594D3FB;
+ Tue, 29 Oct 2019 15:20:22 +0800 (CST)
+Received: from DESKTOP-8RFUVS3.china.huawei.com (10.173.222.27) by
+ DGGEMS414-HUB.china.huawei.com (10.3.19.214) with Microsoft SMTP Server id
+ 14.3.439.0; Tue, 29 Oct 2019 15:20:15 +0800
+From: Zenghui Yu <yuzenghui@huawei.com>
+To: <maz@kernel.org>, <eric.auger@redhat.com>, <james.morse@arm.com>,
+ <julien.thierry.kdev@gmail.com>, <suzuki.poulose@arm.com>
+Subject: [PATCH 0/3] KVM: arm/arm64: vgic: Some cleanups and fixes
+Date: Tue, 29 Oct 2019 15:19:16 +0800
+Message-ID: <20191029071919.177-1-yuzenghui@huawei.com>
+X-Mailer: git-send-email 2.23.0.windows.1
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <86pnigyh90.wl-maz@kernel.org>
-User-Agent: Mutt/1.11.1+11 (2f07cb52) (2018-12-01)
-Cc: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+X-Originating-IP: [10.173.222.27]
+X-CFilter-Loop: Reflected
+Cc: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -67,53 +65,29 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Oct 28, 2019 at 04:19:55PM +0000, Marc Zyngier wrote:
-> On Mon, 28 Oct 2019 15:12:39 +0000,
-> Alexandru Elisei <alexandru.elisei@arm.com> wrote:
-> > On 10/28/19 1:05 PM, Christoffer Dall wrote:
-> > > diff --git a/arch/arm64/include/asm/kvm_emulate.h b/arch/arm64/include/asm/kvm_emulate.h
-> > > index d69c1efc63e7..70509799a2a9 100644
-> > > --- a/arch/arm64/include/asm/kvm_emulate.h
-> > > +++ b/arch/arm64/include/asm/kvm_emulate.h
-> > > @@ -53,8 +53,18 @@ static inline void vcpu_reset_hcr(struct kvm_vcpu *vcpu)
-> > >  		/* trap error record accesses */
-> > >  		vcpu->arch.hcr_el2 |= HCR_TERR;
-> > >  	}
-> > > -	if (cpus_have_const_cap(ARM64_HAS_STAGE2_FWB))
-> > > +
-> > > +	if (cpus_have_const_cap(ARM64_HAS_STAGE2_FWB)) {
-> > >  		vcpu->arch.hcr_el2 |= HCR_FWB;
-> > > +	} else {
-> > > +		/*
-> > > +		 * For non-FWB CPUs, we trap VM ops (HCR_EL2.TVM) until M+C
-> > > +		 * get set in SCTLR_EL1 such that we can detect when the guest
-> > > +		 * MMU gets turned off and do the necessary cache maintenance
-> > > +		 * then.
-> > > +		 */
-> > > +		vcpu->arch.hcr_el2 &= ~HCR_TVM;
-> > 
-> > Don't we want to set the bit here, so we're consistent with the
-> > previous behaviour and the comment? Because with this patch, we
-> > never set HCR_EL2.TVM...
-> 
-> Of course you're right. This is how I plan to fix it:
-> 
-> diff --git a/arch/arm64/include/asm/kvm_emulate.h b/arch/arm64/include/asm/kvm_emulate.h
-> index 47c774c2d18b..7b835337f78b 100644
-> --- a/arch/arm64/include/asm/kvm_emulate.h
-> +++ b/arch/arm64/include/asm/kvm_emulate.h
-> @@ -63,7 +63,7 @@ static inline void vcpu_reset_hcr(struct kvm_vcpu *vcpu)
->  		 * MMU gets turned on and do the necessary cache maintenance
->  		 * then.
->  		 */
-> -		vcpu->arch.hcr_el2 &= ~HCR_TVM;
-> +		vcpu->arch.hcr_el2 |= HCR_TVM;
->  	}
+Hi KVM/ARM maintainers,
 
-Ouch, yes. That was as suggested for v1, and I missed it when saying my
-R-B held. :(
+This series contains three cleanups (fixes) I've collected when looking
+through the vgic code. Please consider taking them if you're happy with
+them.
 
-Mark.
+Thanks!
+
+Zenghui Yu (3):
+  KVM: arm/arm64: vgic: Remove the declaration of
+    kvm_send_userspace_msi()
+  KVM: arm/arm64: vgic: Fix some comments typo
+  KVM: arm/arm64: vgic: Don't rely on the wrong pending table
+
+ include/kvm/arm_vgic.h      | 4 +---
+ virt/kvm/arm/vgic/vgic-v3.c | 8 ++++----
+ virt/kvm/arm/vgic/vgic-v4.c | 2 +-
+ 3 files changed, 6 insertions(+), 8 deletions(-)
+
+-- 
+2.19.1
+
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
