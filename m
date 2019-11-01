@@ -2,54 +2,54 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E3274EC189
-	for <lists+kvmarm@lfdr.de>; Fri,  1 Nov 2019 12:06:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 749DAEC191
+	for <lists+kvmarm@lfdr.de>; Fri,  1 Nov 2019 12:10:59 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 73FC34ACD0;
-	Fri,  1 Nov 2019 07:06:15 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 073994ACEC;
+	Fri,  1 Nov 2019 07:10:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.502
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XUPhGIfrnlB6; Fri,  1 Nov 2019 07:06:15 -0400 (EDT)
+	with ESMTP id 9CzX-m2s+0DO; Fri,  1 Nov 2019 07:10:58 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 360664ACEE;
-	Fri,  1 Nov 2019 07:06:14 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0F99C4ACEF;
+	Fri,  1 Nov 2019 07:10:58 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D8AA4ACE9
- for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Nov 2019 07:06:13 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 17EF64ACEA
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Nov 2019 07:10:57 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ZOKAxLLsHZw2 for <kvmarm@lists.cs.columbia.edu>;
- Fri,  1 Nov 2019 07:06:12 -0400 (EDT)
-Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8A1D04ACD0
- for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Nov 2019 07:06:11 -0400 (EDT)
-Received: from DGGEMS408-HUB.china.huawei.com (unknown [172.30.72.60])
- by Forcepoint Email with ESMTP id BE556712A63643A18BCD;
- Fri,  1 Nov 2019 19:06:07 +0800 (CST)
-Received: from [127.0.0.1] (10.173.222.27) by DGGEMS408-HUB.china.huawei.com
- (10.3.19.208) with Microsoft SMTP Server id 14.3.439.0; Fri, 1 Nov 2019
- 19:05:57 +0800
-Subject: Re: [PATCH v2 13/36] irqchip/gic-v4.1: Don't use the VPE proxy if
- RVPEID is set
+ with ESMTP id F0JYkS3xvyBe for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  1 Nov 2019 07:10:56 -0400 (EDT)
+Received: from huawei.com (szxga07-in.huawei.com [45.249.212.35])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C79134A369
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Nov 2019 07:10:55 -0400 (EDT)
+Received: from DGGEMS405-HUB.china.huawei.com (unknown [172.30.72.59])
+ by Forcepoint Email with ESMTP id B7F6864B63363F51DE27;
+ Fri,  1 Nov 2019 19:10:52 +0800 (CST)
+Received: from [127.0.0.1] (10.173.222.27) by DGGEMS405-HUB.china.huawei.com
+ (10.3.19.205) with Microsoft SMTP Server id 14.3.439.0; Fri, 1 Nov 2019
+ 19:10:46 +0800
+Subject: Re: [PATCH v2 14/36] irqchip/gic-v4.1: Implement the v4.1 flavour of
+ VMOVP
 To: Marc Zyngier <maz@kernel.org>, <kvmarm@lists.cs.columbia.edu>,
  <linux-kernel@vger.kernel.org>
 References: <20191027144234.8395-1-maz@kernel.org>
- <20191027144234.8395-14-maz@kernel.org>
+ <20191027144234.8395-15-maz@kernel.org>
 From: Zenghui Yu <yuzenghui@huawei.com>
-Message-ID: <8514ccbe-814a-5bdd-3791-bdd65510ce68@huawei.com>
-Date: Fri, 1 Nov 2019 19:05:56 +0800
+Message-ID: <287222d4-5506-d252-c76a-88ecbcf84c87@huawei.com>
+Date: Fri, 1 Nov 2019 19:10:44 +0800
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.2.0
 MIME-Version: 1.0
-In-Reply-To: <20191027144234.8395-14-maz@kernel.org>
+In-Reply-To: <20191027144234.8395-15-maz@kernel.org>
 Content-Language: en-US
 X-Originating-IP: [10.173.222.27]
 X-CFilter-Loop: Reflected
@@ -75,96 +75,23 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 Hi Marc,
 
 On 2019/10/27 22:42, Marc Zyngier wrote:
-> The infamous VPE proxy device isn't used with GICv4.1 because:
-> - we can invalidate any LPI from the DirectLPI MMIO interface
-> - the ITS and redistributors understand the life cycle of
->    the doorbell, so we don't need to enable/disable it all
->    the time
+> With GICv4.1, VMOVP is extended to allow a default doorbell to be
+> specified, as well as a validity bit for this doorbell. As an added
+> bonus, VMOPVP isn't required anymore of moving a VPE between
+         ^^^^^^
+VMOVP
+
+> redistributors that share the same affinity.
 > 
-> So let's escape early from the proxy related functions.
+> Let's add this support to the VMOVP builder, and make sure we don't
+> issuer the command if we don't really need to.
+
+issue
+
 > 
 > Signed-off-by: Marc Zyngier <maz@kernel.org>
 
 Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
-
-> ---
->   drivers/irqchip/irq-gic-v3-its.c | 23 ++++++++++++++++++++++-
->   1 file changed, 22 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-> index 220d490d516e..999e61a9b2c3 100644
-> --- a/drivers/irqchip/irq-gic-v3-its.c
-> +++ b/drivers/irqchip/irq-gic-v3-its.c
-> @@ -3069,7 +3069,7 @@ static const struct irq_domain_ops its_domain_ops = {
->   /*
->    * This is insane.
->    *
-> - * If a GICv4 doesn't implement Direct LPIs (which is extremely
-> + * If a GICv4.0 doesn't implement Direct LPIs (which is extremely
->    * likely), the only way to perform an invalidate is to use a fake
->    * device to issue an INV command, implying that the LPI has first
->    * been mapped to some event on that device. Since this is not exactly
-> @@ -3077,9 +3077,18 @@ static const struct irq_domain_ops its_domain_ops = {
->    * only issue an UNMAP if we're short on available slots.
->    *
->    * Broken by design(tm).
-> + *
-> + * GICv4.1 actually mandates that we're able to invalidate by writing to a
-> + * MMIO register. It doesn't implement the whole of DirectLPI, but that's
-> + * good enough. And most of the time, we don't even have to invalidate
-> + * anything, so that's actually pretty good!
-
-I can't understand the meaning of this last sentence. May I ask for an
-explanation? :)
-
-
-Thanks,
-Zenghui
-
->    */
->   static void its_vpe_db_proxy_unmap_locked(struct its_vpe *vpe)
->   {
-> +	/* GICv4.1 doesn't use a proxy, so nothing to do here */
-> +	if (gic_rdists->has_rvpeid)
-> +		return;
-> +
->   	/* Already unmapped? */
->   	if (vpe->vpe_proxy_event == -1)
->   		return;
-> @@ -3102,6 +3111,10 @@ static void its_vpe_db_proxy_unmap_locked(struct its_vpe *vpe)
->   
->   static void its_vpe_db_proxy_unmap(struct its_vpe *vpe)
->   {
-> +	/* GICv4.1 doesn't use a proxy, so nothing to do here */
-> +	if (gic_rdists->has_rvpeid)
-> +		return;
-> +
->   	if (!gic_rdists->has_direct_lpi) {
->   		unsigned long flags;
->   
-> @@ -3113,6 +3126,10 @@ static void its_vpe_db_proxy_unmap(struct its_vpe *vpe)
->   
->   static void its_vpe_db_proxy_map_locked(struct its_vpe *vpe)
->   {
-> +	/* GICv4.1 doesn't use a proxy, so nothing to do here */
-> +	if (gic_rdists->has_rvpeid)
-> +		return;
-> +
->   	/* Already mapped? */
->   	if (vpe->vpe_proxy_event != -1)
->   		return;
-> @@ -3135,6 +3152,10 @@ static void its_vpe_db_proxy_move(struct its_vpe *vpe, int from, int to)
->   	unsigned long flags;
->   	struct its_collection *target_col;
->   
-> +	/* GICv4.1 doesn't use a proxy, so nothing to do here */
-> +	if (gic_rdists->has_rvpeid)
-> +		return;
-> +
->   	if (gic_rdists->has_direct_lpi) {
->   		void __iomem *rdbase;
->   
-> 
 
 _______________________________________________
 kvmarm mailing list
