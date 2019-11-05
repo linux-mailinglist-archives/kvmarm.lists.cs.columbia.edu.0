@@ -2,68 +2,54 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 28AFDEFCF6
-	for <lists+kvmarm@lfdr.de>; Tue,  5 Nov 2019 13:12:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B93ABF06E6
+	for <lists+kvmarm@lfdr.de>; Tue,  5 Nov 2019 21:30:02 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 554794AEAC;
-	Tue,  5 Nov 2019 07:12:21 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 66B754AECD;
+	Tue,  5 Nov 2019 15:30:02 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 2.056
-X-Spam-Level: **
-X-Spam-Status: No, score=2.056 required=6.1 tests=[BAYES_00=-1.9,
-	BUG6152_INVALID_DATE_TZ_ABSURD=0.766, DNS_FROM_AHBL_RHSBL=2.699,
-	INVALID_DATE_TZ_ABSURD=0.491] autolearn=unavailable
+X-Spam-Score: 0.799
+X-Spam-Level: 
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DXq9miMKw7tU; Tue,  5 Nov 2019 07:12:21 -0500 (EST)
+	with ESMTP id Nm1tiDMRk+Kx; Tue,  5 Nov 2019 15:30:01 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0DC864AEA4;
-	Tue,  5 Nov 2019 07:12:20 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F3D974AEA6;
+	Tue,  5 Nov 2019 15:29:59 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 684C34ACEF
- for <kvmarm@lists.cs.columbia.edu>; Tue,  5 Nov 2019 07:12:18 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6843B4AE87
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  5 Nov 2019 15:29:59 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id MqOIrFcx2mxw for <kvmarm@lists.cs.columbia.edu>;
- Tue,  5 Nov 2019 07:12:17 -0500 (EST)
-Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
- [213.251.177.50])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 01B614AC8E
- for <kvmarm@lists.cs.columbia.edu>; Tue,  5 Nov 2019 07:12:16 -0500 (EST)
-Received: from www-data by cheepnis.misterjones.org with local (Exim 4.80)
- (envelope-from <maz@kernel.org>)
- id 1iRxh0-0006tt-3v; Tue, 05 Nov 2019 13:12:14 +0100
-To: Zenghui Yu <yuzenghui@huawei.com>
-Subject: Re: [PATCH v2 03/36] irqchip/gic-v3-its: Allow LPI invalidation via
- the DirectLPI interface
-X-PHP-Originating-Script: 0:main.inc
-MIME-Version: 1.0
-Date: Tue, 05 Nov 2019 13:21:34 +0109
-From: Marc Zyngier <maz@kernel.org>
-In-Reply-To: <6d96dfc1-723a-be1e-d4ae-39c79e7fe080@huawei.com>
-References: <20191027144234.8395-1-maz@kernel.org>
- <20191027144234.8395-4-maz@kernel.org>
- <a263e264-298c-57cf-31b7-a781160a3929@huawei.com>
- <86ftj7ybg2.wl-maz@kernel.org>
- <6d96dfc1-723a-be1e-d4ae-39c79e7fe080@huawei.com>
-Message-ID: <796315fdd5a06cdce9e1546ff2c34433@www.loen.fr>
-X-Sender: maz@kernel.org
-User-Agent: Roundcube Webmail/0.7.2
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Rcpt-To: yuzenghui@huawei.com, kvmarm@lists.cs.columbia.edu,
- linux-kernel@vger.kernel.org, eric.auger@redhat.com, james.morse@arm.com,
- julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com, tglx@linutronix.de,
- jason@lakedaemon.net, lorenzo.pieralisi@arm.com, andrew.murray@arm.com,
- jnair@marvell.com, rrichter@marvell.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on cheepnis.misterjones.org);
- SAEximRunCond expanded to false
-Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
- Jason Cooper <jason@lakedaemon.net>, linux-kernel@vger.kernel.org,
- Robert Richter <rrichter@marvell.com>, Jayachandran C <jnair@marvell.com>,
- Thomas Gleixner <tglx@linutronix.de>, kvmarm@lists.cs.columbia.edu
+ with ESMTP id j2pdCXcT0+IA for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  5 Nov 2019 15:29:57 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1BDE34AC8D
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  5 Nov 2019 15:29:57 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9120064F;
+ Tue,  5 Nov 2019 12:29:56 -0800 (PST)
+Received: from localhost (e113682-lin.copenhagen.arm.com [10.32.145.14])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1C9EE3FE14;
+ Tue,  5 Nov 2019 03:04:00 -0800 (PST)
+From: Christoffer Dall <christoffer.dall@arm.com>
+To: kvm@vger.kernel.org
+Subject: [PATCH v4 0/5] KVM: Unify mmu_memory_cache functionality across
+ architectures
+Date: Tue,  5 Nov 2019 12:03:52 +0100
+Message-Id: <20191105110357.8607-1-christoffer.dall@arm.com>
+X-Mailer: git-send-email 2.18.0
+Cc: Wanpeng Li <wanpengli@tencent.com>, James Hogan <jhogan@kernel.org>,
+ Joerg Roedel <joro@8bytes.org>, Anshuman Khandual <anshuman.khandual@arm.com>,
+ Sean Christopherson <sean.j.christopherson@intel.com>,
+ Mike Rapoport <rppt@linux.ibm.com>, Paul Mackerras <paulus@ozlabs.org>,
+ Christian Borntraeger <borntraeger@de.ibm.com>, Marc Zyngier <maz@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ kvmarm@lists.cs.columbia.edu, Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -75,144 +61,85 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2019-11-05 11:39, Zenghui Yu wrote:
-> Hi Marc,
->
-> On 2019/11/1 21:26, Marc Zyngier wrote:
->> On Thu, 31 Oct 2019 08:49:32 +0000,
->> Zenghui Yu <yuzenghui@huawei.com> wrote:
->>>
->>> But this patch really drives me to look through all callsites of
->>> dev_event_to_col(), the abstraction which can be used _only_ with
->>> physical LPI mappings.
->>>
->>> I find that when building the INV command, we use 
->>> dev_event_to_col()
->>> to find the "sync_obj" and then pass it to the following SYNC 
->>> command.
->>> But the "INV+SYNC" will be performed both on physical LPI and 
->>> *VLPI*
->>> (lpi_update_config/its_send_inv).
->>> So I have two questions about the way we sending INV on VLPI:
->>>
->>> 1) Which "sync" command should be followed?  SYNC or VSYNC?
->>> (we currently use SYNC, while the spec says, SYNC "ensures all
->>> outstanding ITS operations associated with *physical* interrupts
->>> for the Redistributor are globally observed ...")
->>>
->>> 2) The "sync_obj" we are currently using seems to be wrong.
->> I think you're right on both counts (where were you when I wrote the
->> initial GICv4 support? ;-). I think the confusion stems from the 
->> fact
->
-> (I'm a bit late here :-).
->
->> that there is no 'VINV' command, and we simply overlooked the sync
->> object issue. It is quite likely that existing implementations don't
->> care much about the difference (otherwise we'd have seen the problem
->> before), but it doesn't hurt to do the right thing.
->> I have the following patch as part of a set of fixes that I'm about 
->> to
->> post (once I get a chance to test them), let me know what you think.
->>
->> 	M.
->> diff --git a/drivers/irqchip/irq-gic-v3-its.c 
->> b/drivers/irqchip/irq-gic-v3-its.c
->> index a47ed2ba2907..75ab3716a870 100644
->> --- a/drivers/irqchip/irq-gic-v3-its.c
->> +++ b/drivers/irqchip/irq-gic-v3-its.c
->> @@ -702,6 +702,24 @@ static struct its_vpe 
->> *its_build_vmovp_cmd(struct its_node *its,
->>   	return valid_vpe(its, desc->its_vmovp_cmd.vpe);
->>   }
->>   +static struct its_vpe *its_build_vinv_cmd(struct its_node *its,
->> +					  struct its_cmd_block *cmd,
->> +					  struct its_cmd_desc *desc)
->> +{
->> +	struct its_vlpi_map *map;
->> +
->> +	map = dev_event_to_vlpi_map(desc->its_inv_cmd.dev,
->> +				    desc->its_inv_cmd.event_id);
->
-> Indeed!  I think we need this kind of abstraction for VLPI.
+We currently have duplicated functionality for the mmu_memory_cache used
+to pre-allocate memory for the page table manipulation code which cannot
+allocate memory while holding spinlocks.  This functionality is
+duplicated across x86, arm/arm64, and mips.
 
-Yeah, I finally realised we'd needed something like that, and made
-it part of the get_vlpi_map() patch.
+This was motivated by a debate of modifying the arm code to be more in
+line with the x86 code and some discussions around changing the page
+flags used for allocation.  This series should make it easier to take a
+uniform approach across architectures.
 
->
->> +
->> +	its_encode_cmd(cmd, GITS_CMD_INV);
->> +	its_encode_devid(cmd, desc->its_inv_cmd.dev->device_id);
->> +	its_encode_event_id(cmd, desc->its_inv_cmd.event_id);
->> +
->> +	its_fixup_cmd(cmd);
->> +
->> +	return valid_vpe(its, map->vpe);
->> +}
->> +
->>   static u64 its_cmd_ptr_to_offset(struct its_node *its,
->>   				 struct its_cmd_block *ptr)
->>   {
->> @@ -1068,6 +1086,20 @@ static void its_send_vinvall(struct its_node 
->> *its, struct its_vpe *vpe)
->>   	its_send_single_vcommand(its, its_build_vinvall_cmd, &desc);
->>   }
->>   +static void its_send_vinv(struct its_device *dev, u32 event_id)
->> +{
->> +	struct its_cmd_desc desc;
->> +
->> +	/*
->> +	 * There is no real VINV command. This is just a normal INV,
->> +	 * with a VSYNC instead of a SYNC.
->> +	 */
->> +	desc.its_inv_cmd.dev = dev;
->> +	desc.its_inv_cmd.event_id = event_id;
->> +
->> +	its_send_single_vcommand(dev->its, its_build_vinv_cmd, &desc);
->> +}
->> +
->>   /*
->>    * irqchip functions - assumes MSI, mostly.
->>    */
->> @@ -1142,8 +1174,10 @@ static void lpi_update_config(struct irq_data 
->> *d, u8 clr, u8 set)
->>   	lpi_write_config(d, clr, set);
->>   	if (gic_rdists->has_direct_lpi && !irqd_is_forwarded_to_vcpu(d))
->>   		direct_lpi_inv(d);
->> -	else
->> +	else if (!irqd_is_forwarded_to_vcpu(d))
->>   		its_send_inv(its_dev, its_get_event_id(d));
->> +	else
->> +		its_send_vinv(its_dev, its_get_event_id(d));
->
-> Yeah, this is exactly what I was having in the mind when reporting 
-> this
-> problem - "maybe we should have a SW emulated VINV+VSYNC for VLPI".
-> So I think this patch has done the right thing.
->
-> And what about the INT and CLEAR?  In response to guest's INT/CLEAR
-> commands, hypervisor (I mean KVM) will bother the ITS driver to send
-> INT/CLEAR for VLPIs.  They're both followed by SYNC and might need 
-> the
-> same fixes?
+While there's not a huge amount of code sharing, we come out with a net
+gain, and the real win is in the consistency of how we allocate memory
+for page tables used by secondary MMUs driven by KVM in Linux.
 
-Yup. Please see this series[1], which has grown quite a few fixups,
-including some pretty old ones (I've just pushed an update, and should
-post it shortly).
+Only tested on arm/arm64, and only compile-tested on x86 and mips.  I'm
+especially curious on getting feedback on the change of GFP flags for
+x86 (patch 1) and on the use of __GFP_ACCOUNT for mips.
 
-Thanks,
+Changes since v3:
+ - Moved to common GFP_PGTABLE_USER definition for page allocations in
+   the MMU cache for all three architectures.  This follows recent work
+   which already did this for arm/arm64.
+ - Rebased on v5.4-rc4.
 
-         M.
+Changes since v2:
+ - Simplified kalloc flag definitions as per Paolo's review comment.
 
-[1] 
-https://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git/log/?h=irq/gic-5.5-wip
+Changes since v1:
+ - Split out rename from initial x86 patch to have separate patches to
+   move the logic to common code and to rename.
+ - Introduce KVM_ARCH_WANT_MMU_MEMCACHE to avoid compile breakage on
+   architectures that don't use this functionality.
+ - Rename KVM_NR_MEM_OBJS to KVM_MMU_NR_MEMCACHE_OBJS
+
+Christoffer Dall (5):
+  KVM: x86: Move memcache allocation to GFP_PGTABLE_USER
+  KVM: x86: Move mmu_memory_cache functions to common code
+  KVM: x86: Rename mmu_memory_cache to kvm_mmu_memcache
+  KVM: arm/arm64: Move to common kvm_mmu_memcache infrastructure
+  KVM: mips: Move to common kvm_mmu_memcache infrastructure
+
+ arch/arm/include/asm/kvm_host.h      | 13 +---
+ arch/arm/include/asm/kvm_mmu.h       |  2 +-
+ arch/arm/include/asm/kvm_types.h     |  9 +++
+ arch/arm64/include/asm/kvm_host.h    | 13 +---
+ arch/arm64/include/asm/kvm_mmu.h     |  2 +-
+ arch/arm64/include/asm/kvm_types.h   |  9 +++
+ arch/mips/include/asm/kvm_host.h     | 15 +----
+ arch/mips/include/asm/kvm_types.h    |  9 +++
+ arch/mips/kvm/mips.c                 |  2 +-
+ arch/mips/kvm/mmu.c                  | 54 +++-------------
+ arch/powerpc/include/asm/kvm_types.h |  5 ++
+ arch/s390/include/asm/kvm_types.h    |  5 ++
+ arch/x86/include/asm/kvm_host.h      | 17 +----
+ arch/x86/include/asm/kvm_types.h     |  9 +++
+ arch/x86/kvm/mmu.c                   | 97 ++++++----------------------
+ arch/x86/kvm/paging_tmpl.h           |  4 +-
+ include/linux/kvm_host.h             | 11 ++++
+ include/linux/kvm_types.h            | 13 ++++
+ virt/kvm/arm/arm.c                   |  2 +-
+ virt/kvm/arm/mmu.c                   | 68 +++++--------------
+ virt/kvm/kvm_main.c                  | 61 +++++++++++++++++
+ 21 files changed, 190 insertions(+), 230 deletions(-)
+ create mode 100644 arch/arm/include/asm/kvm_types.h
+ create mode 100644 arch/arm64/include/asm/kvm_types.h
+ create mode 100644 arch/mips/include/asm/kvm_types.h
+ create mode 100644 arch/powerpc/include/asm/kvm_types.h
+ create mode 100644 arch/s390/include/asm/kvm_types.h
+ create mode 100644 arch/x86/include/asm/kvm_types.h
+
 -- 
-Jazz is not dead. It just smells funny...
+2.18.0
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
