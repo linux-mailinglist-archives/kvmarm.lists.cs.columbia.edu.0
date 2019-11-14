@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id EE389FC510
-	for <lists+kvmarm@lfdr.de>; Thu, 14 Nov 2019 12:07:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 008A7FC52C
+	for <lists+kvmarm@lfdr.de>; Thu, 14 Nov 2019 12:17:00 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9F4314ACB9;
-	Thu, 14 Nov 2019 06:07:36 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8615F4AF94;
+	Thu, 14 Nov 2019 06:17:00 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
@@ -15,40 +15,47 @@ X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cHRqI6sEyJjs; Thu, 14 Nov 2019 06:07:36 -0500 (EST)
+	with ESMTP id tYzJx5WVBSJo; Thu, 14 Nov 2019 06:17:00 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A83AF4A2E7;
-	Thu, 14 Nov 2019 06:07:34 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0BE5D4AF9D;
+	Thu, 14 Nov 2019 06:16:59 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E05DB4AFAF
- for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Nov 2019 06:07:33 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 713A44AF90
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Nov 2019 06:16:58 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 09bB3YvLln5l for <kvmarm@lists.cs.columbia.edu>;
- Thu, 14 Nov 2019 06:07:32 -0500 (EST)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5577B4AF98
- for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Nov 2019 06:07:31 -0500 (EST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DB4E6328;
- Thu, 14 Nov 2019 03:07:30 -0800 (PST)
-Received: from e112269-lin.cambridge.arm.com (e112269-lin.cambridge.arm.com
- [10.1.194.43])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 84F063F6C4;
- Thu, 14 Nov 2019 03:07:29 -0800 (PST)
-From: Steven Price <steven.price@arm.com>
-To: Catalin Marinas <catalin.marinas@arm.com>, Marc Zyngier <maz@kernel.org>,
- Will Deacon <will@kernel.org>
-Subject: [PATCH v4 3/3] arm64: Workaround for Cortex-A55 erratum 1530923
-Date: Thu, 14 Nov 2019 11:06:58 +0000
-Message-Id: <20191114110658.20560-4-steven.price@arm.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191114110658.20560-1-steven.price@arm.com>
-References: <20191114110658.20560-1-steven.price@arm.com>
+ with ESMTP id FnY5bA--0PUA for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 14 Nov 2019 06:16:57 -0500 (EST)
+Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
+ [213.251.177.50])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 025A84AF8E
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Nov 2019 06:16:56 -0500 (EST)
+Received: from www-data by cheepnis.misterjones.org with local (Exim 4.80)
+ (envelope-from <maz@kernel.org>)
+ id 1iVD7P-0001vT-EV; Thu, 14 Nov 2019 12:16:55 +0100
+To: Andre Przywara <andre.przywara@arm.com>
+Subject: Re: [PATCH 2/3] kvm: arm: VGIC: Scan all IRQs when interrupt group
+ gets enabled
+X-PHP-Originating-Script: 0:main.inc
 MIME-Version: 1.0
-Cc: linux-kernel@vger.kernel.org, Steven Price <steven.price@arm.com>,
- linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu
+Date: Thu, 14 Nov 2019 11:16:55 +0000
+From: Marc Zyngier <maz@kernel.org>
+In-Reply-To: <20191112093658.08f248c5@donnerap.cambridge.arm.com>
+References: <20191108174952.740-1-andre.przywara@arm.com>
+ <20191108174952.740-3-andre.przywara@arm.com> <20191110142914.6ffdfdfa@why>
+ <20191112093658.08f248c5@donnerap.cambridge.arm.com>
+Message-ID: <9ddab86ca3959acbb8b7aad24be5f1ad@www.loen.fr>
+X-Sender: maz@kernel.org
+User-Agent: Roundcube Webmail/0.7.2
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Rcpt-To: andre.przywara@arm.com, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on cheepnis.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
+ kvm@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -60,140 +67,242 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Cortex-A55 erratum 1530923 allows TLB entries to be allocated as a
-result of a speculative AT instruction. This may happen in the middle of
-a guest world switch while the relevant VMSA configuration is in an
-inconsistent state, leading to erroneous content being allocated into
-TLBs.
+On 2019-11-12 09:36, Andre Przywara wrote:
+> On Sun, 10 Nov 2019 14:29:14 +0000
+> Marc Zyngier <maz@kernel.org> wrote:
+>
+> Hi Marc,
+>
+>> On Fri,  8 Nov 2019 17:49:51 +0000
+>> Andre Przywara <andre.przywara@arm.com> wrote:
+>>
+>> > Our current VGIC emulation code treats the "EnableGrpX" bits in 
+>> GICD_CTLR
+>> > as a single global interrupt delivery switch, where in fact the 
+>> GIC
+>> > architecture asks for this being separate for the two interrupt 
+>> groups.
+>> >
+>> > To implement this properly, we have to slightly adjust our design, 
+>> to
+>> > *not* let IRQs from a disabled interrupt group be added to the 
+>> ap_list.
+>> >
+>> > As a consequence, enabling one group requires us to re-evaluate 
+>> every
+>> > pending IRQ and potentially add it to its respective ap_list. 
+>> Similarly
+>> > disabling an interrupt group requires pending IRQs to be removed 
+>> from
+>> > the ap_list (as long as they have not been activated yet).
+>> >
+>> > Implement a rather simple, yet not terribly efficient algorithm to
+>> > achieve this: For each VCPU we iterate over all IRQs, checking for
+>> > pending ones and adding them to the list. We hold the ap_list_lock
+>> > for this, to make this atomic from a VCPU's point of view.
+>> >
+>> > When an interrupt group gets disabled, we can't directly remove 
+>> affected
+>> > IRQs from the ap_list, as a running VCPU might have already 
+>> activated
+>> > them, which wouldn't be immediately visible to the host.
+>> > Instead simply kick all VCPUs, so that they clean their ap_list's
+>> > automatically when running vgic_prune_ap_list().
+>> >
+>> > Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+>> > ---
+>> >  virt/kvm/arm/vgic/vgic.c | 88 
+>> ++++++++++++++++++++++++++++++++++++----
+>> >  1 file changed, 80 insertions(+), 8 deletions(-)
+>> >
+>> > diff --git a/virt/kvm/arm/vgic/vgic.c b/virt/kvm/arm/vgic/vgic.c
+>> > index 3b88e14d239f..28d9ff282017 100644
+>> > --- a/virt/kvm/arm/vgic/vgic.c
+>> > +++ b/virt/kvm/arm/vgic/vgic.c
+>> > @@ -339,6 +339,38 @@ int vgic_dist_enable_group(struct kvm *kvm, 
+>> int group, bool status)
+>> >  	return 0;
+>> >  }
+>> >
+>> > +/*
+>> > + * Check whether a given IRQs need to be queued to this ap_list, 
+>> and do
+>> > + * so if that's the case.
+>> > + * Requires the ap_list_lock to be held (but not the irq lock).
+>> > + *
+>> > + * Returns 1 if that IRQ has been added to the ap_list, and 0 if 
+>> not.
+>> > + */
+>> > +static int queue_enabled_irq(struct kvm *kvm, struct kvm_vcpu 
+>> *vcpu,
+>> > +			     int intid)
+>>
+>> true/false seems better than 1/0.
+>
+> Mmh, indeed. I think I had more in there in an earlier version.
+>
+>> > +{
+>> > +	struct vgic_irq *irq = vgic_get_irq(kvm, vcpu, intid);
+>> > +	int ret = 0;
+>> > +
+>> > +	raw_spin_lock(&irq->irq_lock);
+>> > +	if (!irq->vcpu && vcpu == vgic_target_oracle(irq)) {
+>> > +		/*
+>> > +		 * Grab a reference to the irq to reflect the
+>> > +		 * fact that it is now in the ap_list.
+>> > +		 */
+>> > +		vgic_get_irq_kref(irq);
+>> > +		list_add_tail(&irq->ap_list,
+>> > +			      &vcpu->arch.vgic_cpu.ap_list_head);
+>>
+>> Two things:
+>> - This should be the job of vgic_queue_irq_unlock. Why are you
+>>   open-coding it?
+>
+> I was *really* keen on reusing that, but couldn't  for two reasons:
+> a) the locking code inside vgic_queue_irq_unlock spoils that: It
+> requires the irq_lock to be held, but not the ap_list_lock. Then it
+> takes both locks, but returns with both of them dropped. We need to
+> hold the ap_list_lock all of the time, to prevent any VCPU returning
+> to the HV to interfere with this routine.
+> b) vgic_queue_irq_unlock() kicks the VCPU already, where I want to
+> just add all of them first, then kick the VCPU at the end.
 
-The same workaround as is used for Cortex-A76 erratum 1165522
-(WORKAROUND_SPECULATIVE_AT_VHE) can be used here. Note that this
-mandates the use of VHE on affected parts.
+Indeed, and that is why you need to change the way you queue these
+pending, enabled, group-disabled interrupts (see the LPI issue below).
 
-Signed-off-by: Steven Price <steven.price@arm.com>
----
- Documentation/arm64/silicon-errata.rst |  2 ++
- arch/arm64/Kconfig                     | 13 +++++++++++++
- arch/arm64/include/asm/kvm_hyp.h       |  4 ++--
- arch/arm64/kernel/cpu_errata.c         |  6 +++++-
- arch/arm64/kvm/hyp/switch.c            |  4 ++--
- arch/arm64/kvm/hyp/tlb.c               |  4 ++--
- 6 files changed, 26 insertions(+), 7 deletions(-)
+>
+> So I decided to go with the stripped-down version of it, because I
+> didn't dare to touch the original function. I could refactor this
+> "actually add to the list" part of vgic_queue_irq_unlock() into this
+> new function, then call it from both vgic_queue_irq_unlock() and from
+> the new users.
+>
+>> - What if the interrupt isn't pending? Non-pending, non-active
+>>   interrupts should not be on the AP list!
+>
+> That should be covered by vgic_target_oracle() already, shouldn't it?
 
-diff --git a/Documentation/arm64/silicon-errata.rst b/Documentation/arm64/silicon-errata.rst
-index 899a72570282..b40cb3e0634e 100644
---- a/Documentation/arm64/silicon-errata.rst
-+++ b/Documentation/arm64/silicon-errata.rst
-@@ -88,6 +88,8 @@ stable kernels.
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Cortex-A76      | #1463225        | ARM64_ERRATUM_1463225       |
- +----------------+-----------------+-----------------+-----------------------------+
-+| ARM            | Cortex-A55      | #1530923        | ARM64_ERRATUM_1530923       |
-++----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Neoverse-N1     | #1188873,1418040| ARM64_ERRATUM_1418040       |
- +----------------+-----------------+-----------------+-----------------------------+
- | ARM            | Neoverse-N1     | #1349291        | N/A                         |
-diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index defb68e45387..aa9b8a9a6910 100644
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -532,6 +532,19 @@ config ARM64_ERRATUM_1165522
- 
- 	  If unsure, say Y.
- 
-+config ARM64_ERRATUM_1530923
-+	bool "Cortex-A55: Speculative AT instruction using out-of-context translation regime could cause subsequent request to generate an incorrect translation"
-+	default y
-+	select ARM64_WORKAROUND_SPECULATIVE_AT_VHE
-+	help
-+	  This option adds a workaround for ARM Cortex-A55 erratum 1530923.
-+
-+	  Affected Cortex-A55 cores (r0p0, r0p1, r1p0, r2p0) could end-up with
-+	  corrupted TLBs by speculating an AT instruction during a guest
-+	  context switch.
-+
-+	  If unsure, say Y.
-+
- config ARM64_ERRATUM_1286807
- 	bool "Cortex-A76: Modification of the translation table for a virtual address might lead to read-after-read ordering violation"
- 	default y
-diff --git a/arch/arm64/include/asm/kvm_hyp.h b/arch/arm64/include/asm/kvm_hyp.h
-index 167a161dd596..a3a6a2ba9a63 100644
---- a/arch/arm64/include/asm/kvm_hyp.h
-+++ b/arch/arm64/include/asm/kvm_hyp.h
-@@ -91,8 +91,8 @@ static __always_inline void __hyp_text __load_guest_stage2(struct kvm *kvm)
- 	write_sysreg(kvm_get_vttbr(kvm), vttbr_el2);
- 
- 	/*
--	 * ARM erratum 1165522 requires the actual execution of the above
--	 * before we can switch to the EL1/EL0 translation regime used by
-+	 * ARM errata 1165522 and 1530923 require the actual execution of the
-+	 * above before we can switch to the EL1/EL0 translation regime used by
- 	 * the guest.
- 	 */
- 	asm(ALTERNATIVE("nop", "isb", ARM64_WORKAROUND_SPECULATIVE_AT_VHE));
-diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
-index c7f1f5398a44..c01e20317394 100644
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -749,6 +749,10 @@ static const struct midr_range erratum_speculative_at_vhe_list[] = {
- #ifdef CONFIG_ARM64_ERRATUM_1165522
- 	/* Cortex A76 r0p0 to r2p0 */
- 	MIDR_RANGE(MIDR_CORTEX_A76, 0, 0, 2, 0),
-+#endif
-+#ifdef CONFIG_ARM64_ERRATUM_1530923
-+	/* Cortex A55 r0p0 to r2p0 */
-+	MIDR_RANGE(MIDR_CORTEX_A55, 0, 0, 2, 0),
- #endif
- 	{},
- };
-@@ -880,7 +884,7 @@ const struct arm64_cpu_capabilities arm64_errata[] = {
- #endif
- #ifdef CONFIG_ARM64_WORKAROUND_SPECULATIVE_AT_VHE
- 	{
--		.desc = "ARM erratum 1165522",
-+		.desc = "ARM errata 1165522, 1530923",
- 		.capability = ARM64_WORKAROUND_SPECULATIVE_AT_VHE,
- 		ERRATA_MIDR_RANGE_LIST(erratum_speculative_at_vhe_list),
- 	},
-diff --git a/arch/arm64/kvm/hyp/switch.c b/arch/arm64/kvm/hyp/switch.c
-index 0fc824bdf258..eae08ba82e95 100644
---- a/arch/arm64/kvm/hyp/switch.c
-+++ b/arch/arm64/kvm/hyp/switch.c
-@@ -158,8 +158,8 @@ static void deactivate_traps_vhe(void)
- 	write_sysreg(HCR_HOST_VHE_FLAGS, hcr_el2);
- 
- 	/*
--	 * ARM erratum 1165522 requires the actual execution of the above
--	 * before we can switch to the EL2/EL0 translation regime used by
-+	 * ARM errata 1165522 and 1530923 require the actual execution of the
-+	 * above before we can switch to the EL2/EL0 translation regime used by
- 	 * the host.
- 	 */
- 	asm(ALTERNATIVE("nop", "isb", ARM64_WORKAROUND_SPECULATIVE_AT_VHE));
-diff --git a/arch/arm64/kvm/hyp/tlb.c b/arch/arm64/kvm/hyp/tlb.c
-index ff4e73c9bafc..92f560e3e1aa 100644
---- a/arch/arm64/kvm/hyp/tlb.c
-+++ b/arch/arm64/kvm/hyp/tlb.c
-@@ -25,8 +25,8 @@ static void __hyp_text __tlb_switch_to_guest_vhe(struct kvm *kvm,
- 
- 	if (cpus_have_const_cap(ARM64_WORKAROUND_SPECULATIVE_AT_VHE)) {
- 		/*
--		 * For CPUs that are affected by ARM erratum 1165522, we
--		 * cannot trust stage-1 to be in a correct state at that
-+		 * For CPUs that are affected by ARM errata 1165522 or 1530923,
-+		 * we cannot trust stage-1 to be in a correct state at that
- 		 * point. Since we do not want to force a full load of the
- 		 * vcpu state, we prevent the EL1 page-table walker to
- 		 * allocate new TLBs. This is done by setting the EPD bits
+Ah, yes, you're right.
+
+>
+>> > +		irq->vcpu = vcpu;
+>> > +
+>> > +		ret = 1;
+>> > +	}
+>> > +	raw_spin_unlock(&irq->irq_lock);
+>> > +	vgic_put_irq(kvm, irq);
+>> > +
+>> > +	return ret;
+>> > +}
+>> > +
+>> >  /*
+>> >   * The group enable status of at least one of the groups has 
+>> changed.
+>> >   * If enabled is true, at least one of the groups got enabled.
+>> > @@ -346,17 +378,57 @@ int vgic_dist_enable_group(struct kvm *kvm, 
+>> int group, bool status)
+>> >   */
+>> >  void vgic_rescan_pending_irqs(struct kvm *kvm, bool enabled)
+>> >  {
+>> > +	int cpuid;
+>> > +	struct kvm_vcpu *vcpu;
+>> > +
+>> >  	/*
+>> > -	 * TODO: actually scan *all* IRQs of the VM for pending IRQs.
+>> > -	 * If a pending IRQ's group is now enabled, add it to its 
+>> ap_list.
+>> > -	 * If a pending IRQ's group is now disabled, kick the VCPU to
+>> > -	 * let it remove this IRQ from its ap_list. We have to let the
+>> > -	 * VCPU do it itself, because we can't know the exact state of 
+>> an
+>> > -	 * IRQ pending on a running VCPU.
+>> > +	 * If no group got enabled, we only have to potentially remove
+>> > +	 * interrupts from ap_lists. We can't do this here, because a 
+>> running
+>> > +	 * VCPU might have ACKed an IRQ already, which wouldn't 
+>> immediately
+>> > +	 * be reflected in the ap_list.
+>> > +	 * So kick all VCPUs, which will let them re-evaluate their 
+>> ap_lists
+>> > +	 * by running vgic_prune_ap_list(), removing no longer enabled
+>> > +	 * IRQs.
+>> > +	 */
+>> > +	if (!enabled) {
+>> > +		vgic_kick_vcpus(kvm);
+>> > +
+>> > +		return;
+>> > +	}
+>> > +
+>> > +	/*
+>> > +	 * At least one group went from disabled to enabled. Now we need
+>> > +	 * to scan *all* IRQs of the VM for newly group-enabled IRQs.
+>> > +	 * If a pending IRQ's group is now enabled, add it to the 
+>> ap_list.
+>> > +	 *
+>> > +	 * For each VCPU this needs to be atomic, as we need *all* newly
+>> > +	 * enabled IRQs in be in the ap_list to determine the highest
+>> > +	 * priority one.
+>> > +	 * So grab the ap_list_lock, then iterate over all private IRQs 
+>> and
+>> > +	 * all SPIs. Once the ap_list is updated, kick that VCPU to
+>> > +	 * forward any new IRQs to the guest.
+>> >  	 */
+>> > +	kvm_for_each_vcpu(cpuid, vcpu, kvm) {
+>> > +		unsigned long flags;
+>> > +		int i;
+>> >
+>> > -	 /* For now just kick all VCPUs, as the old code did. */
+>> > -	vgic_kick_vcpus(kvm);
+>> > +		raw_spin_lock_irqsave(&vcpu->arch.vgic_cpu.ap_list_lock, 
+>> flags);
+>> > +
+>> > +		for (i = 0; i < VGIC_NR_PRIVATE_IRQS; i++)
+>> > +			queue_enabled_irq(kvm, vcpu, i);
+>> > +
+>> > +		for (i = VGIC_NR_PRIVATE_IRQS;
+>> > +		     i < kvm->arch.vgic.nr_spis + VGIC_NR_PRIVATE_IRQS; i++)
+>> > +			queue_enabled_irq(kvm, vcpu, i);
+>>
+>> On top of my questions above, what happens to LPIs?
+>
+> Oh dear. Looks like wishful thinking on my side ;-) Iterating over
+> all interrupts is probably not a good idea anymore.
+> Do you think this idea of having a list with group-disabled IRQs is a
+> better approach: In vgic_queue_irq_unlock, if a pending IRQ's group 
+> is
+> enabled, it goes into the ap_list, if not, it goes into another list
+> instead. Then we would only need to consult this other list when a
+> group gets enabled. Both lists protected by the same ap_list_lock.
+> Does that make sense?
+
+I think that could work. One queue for each group, holding pending,
+enabled, group-disabled interrupts. Pending, disabled interrupts are
+not queued anywhere, just like today.
+
+The only snag is per-cpu interrupts. On which queue do they live?
+Do you have per-CPU queues? or a global one?
+
+>> And if a group has
+>> been disabled, how do you retire these interrupts from the AP list?
+>
+> This is done above: we kick the respective VCPU and rely on
+> vgic_prune_ap_list() to remove them (that uses vgic_target_oracle(),
+> which in turn checks vgic_irq_is_grp_enabled()).
+
+But what if the CPU isn't running? Kicking it isn't going to do much,
+is it?
+
+Thanks,
+
+         M.
 -- 
-2.20.1
-
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
