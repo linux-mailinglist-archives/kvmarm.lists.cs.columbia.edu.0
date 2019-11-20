@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id EB905104155
-	for <lists+kvmarm@lfdr.de>; Wed, 20 Nov 2019 17:49:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF0BE104160
+	for <lists+kvmarm@lfdr.de>; Wed, 20 Nov 2019 17:50:49 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9B8D04AEDC;
-	Wed, 20 Nov 2019 11:49:58 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 728074AEBA;
+	Wed, 20 Nov 2019 11:50:49 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
@@ -15,34 +15,33 @@ X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id gNCoKq+pkNni; Wed, 20 Nov 2019 11:49:58 -0500 (EST)
+	with ESMTP id XIgfQGIvGZBe; Wed, 20 Nov 2019 11:50:49 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9390C4AEDB;
-	Wed, 20 Nov 2019 11:49:57 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 51F054AED2;
+	Wed, 20 Nov 2019 11:50:48 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 66ADC4AEAB
- for <kvmarm@lists.cs.columbia.edu>; Wed, 20 Nov 2019 11:49:56 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5B21B4AEBF
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 20 Nov 2019 11:50:47 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 0em0kNCfjZsO for <kvmarm@lists.cs.columbia.edu>;
- Wed, 20 Nov 2019 11:49:55 -0500 (EST)
+ with ESMTP id NomZqqdsymB9 for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 20 Nov 2019 11:50:46 -0500 (EST)
 Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
  [213.251.177.50])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6DD924AE8F
- for <kvmarm@lists.cs.columbia.edu>; Wed, 20 Nov 2019 11:49:55 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4DBB04AEBA
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 20 Nov 2019 11:50:46 -0500 (EST)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by cheepnis.misterjones.org with esmtpsa
  (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128) (Exim 4.80)
  (envelope-from <maz@kernel.org>)
- id 1iXT4O-0007RI-8K; Wed, 20 Nov 2019 17:43:08 +0100
+ id 1iXT4P-0007RI-2Q; Wed, 20 Nov 2019 17:43:09 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@redhat.com>
-Subject: [PATCH 17/22] KVM: arm/arm64: vgic: Remove the declaration of
- kvm_send_userspace_msi()
-Date: Wed, 20 Nov 2019 16:42:31 +0000
-Message-Id: <20191120164236.29359-18-maz@kernel.org>
+Subject: [PATCH 18/22] KVM: arm/arm64: vgic: Fix some comments typo
+Date: Wed, 20 Nov 2019 16:42:32 +0000
+Message-Id: <20191120164236.29359-19-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191120164236.29359-1-maz@kernel.org>
 References: <20191120164236.29359-1-maz@kernel.org>
@@ -84,33 +83,57 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: Zenghui Yu <yuzenghui@huawei.com>
 
-The callsite of kvm_send_userspace_msi() is currently arch agnostic.
-There seems no reason to keep an extra declaration of it in arm_vgic.h
-(we already have one in include/linux/kvm_host.h).
-
-Remove it.
+Fix various comments, including wrong function names, grammar mistakes
+and specification references.
 
 Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Link: https://lore.kernel.org/r/20191029071919.177-2-yuzenghui@huawei.com
+Link: https://lore.kernel.org/r/20191029071919.177-3-yuzenghui@huawei.com
 ---
- include/kvm/arm_vgic.h | 2 --
- 1 file changed, 2 deletions(-)
+ include/kvm/arm_vgic.h      | 2 +-
+ virt/kvm/arm/vgic/vgic-v3.c | 2 +-
+ virt/kvm/arm/vgic/vgic-v4.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/include/kvm/arm_vgic.h b/include/kvm/arm_vgic.h
-index 4dc58d7a0010..f66a02dac8b0 100644
+index f66a02dac8b0..9d53f545a3d5 100644
 --- a/include/kvm/arm_vgic.h
 +++ b/include/kvm/arm_vgic.h
-@@ -378,8 +378,6 @@ static inline int kvm_vgic_get_max_vcpus(void)
- 	return kvm_vgic_global_state.max_gic_vcpus;
+@@ -240,7 +240,7 @@ struct vgic_dist {
+ 	 * Contains the attributes and gpa of the LPI configuration table.
+ 	 * Since we report GICR_TYPER.CommonLPIAff as 0b00, we can share
+ 	 * one address across all redistributors.
+-	 * GICv3 spec: 6.1.2 "LPI Configuration tables"
++	 * GICv3 spec: IHI 0069E 6.1.1 "LPI Configuration tables"
+ 	 */
+ 	u64			propbaser;
+ 
+diff --git a/virt/kvm/arm/vgic/vgic-v3.c b/virt/kvm/arm/vgic/vgic-v3.c
+index 48307a9eb1d8..e69c538a24ca 100644
+--- a/virt/kvm/arm/vgic/vgic-v3.c
++++ b/virt/kvm/arm/vgic/vgic-v3.c
+@@ -357,7 +357,7 @@ int vgic_v3_lpi_sync_pending_status(struct kvm *kvm, struct vgic_irq *irq)
  }
  
--int kvm_send_userspace_msi(struct kvm *kvm, struct kvm_msi *msi);
--
  /**
-  * kvm_vgic_setup_default_irq_routing:
-  * Setup a default flat gsi routing table mapping all SPIs
+- * vgic_its_save_pending_tables - Save the pending tables into guest RAM
++ * vgic_v3_save_pending_tables - Save the pending tables into guest RAM
+  * kvm lock and all vcpu lock must be held
+  */
+ int vgic_v3_save_pending_tables(struct kvm *kvm)
+diff --git a/virt/kvm/arm/vgic/vgic-v4.c b/virt/kvm/arm/vgic/vgic-v4.c
+index 7e1f3202968a..0965fb0c427a 100644
+--- a/virt/kvm/arm/vgic/vgic-v4.c
++++ b/virt/kvm/arm/vgic/vgic-v4.c
+@@ -281,7 +281,7 @@ int kvm_vgic_v4_set_forwarding(struct kvm *kvm, int virq,
+ 
+ 	mutex_lock(&its->its_lock);
+ 
+-	/* Perform then actual DevID/EventID -> LPI translation. */
++	/* Perform the actual DevID/EventID -> LPI translation. */
+ 	ret = vgic_its_resolve_lpi(kvm, its, irq_entry->msi.devid,
+ 				   irq_entry->msi.data, &irq);
+ 	if (ret)
 -- 
 2.20.1
 
