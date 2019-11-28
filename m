@@ -2,72 +2,54 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F42910CC3E
-	for <lists+kvmarm@lfdr.de>; Thu, 28 Nov 2019 16:57:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C8BE610CC9E
+	for <lists+kvmarm@lfdr.de>; Thu, 28 Nov 2019 17:17:40 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D760D4ACD5;
-	Thu, 28 Nov 2019 10:57:28 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5DB214AE9E;
+	Thu, 28 Nov 2019 11:17:40 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.391
+X-Spam-Score: 0.799
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.391 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id fiCvFrSZDYLu; Thu, 28 Nov 2019 10:57:28 -0500 (EST)
+	with ESMTP id ShEiavMSwK1Q; Thu, 28 Nov 2019 11:17:40 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CB88D4ACBE;
-	Thu, 28 Nov 2019 10:57:27 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 45B714A7FE;
+	Thu, 28 Nov 2019 11:17:39 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3618A4AC6C
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Nov 2019 10:57:27 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 50B474ACC9
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Nov 2019 11:17:37 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id S+ezMvbhVHIP for <kvmarm@lists.cs.columbia.edu>;
- Thu, 28 Nov 2019 10:57:26 -0500 (EST)
-Received: from us-smtp-1.mimecast.com (us-smtp-2.mimecast.com [207.211.31.81])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 57FC94A51D
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Nov 2019 10:57:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1574956646;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NW048hDnyp9fl4jwyHIoarId6mDI31NPs3Sf5FRFpWk=;
- b=VD2uP5YQMLMg7F9G+ISx7FzUMbETgkyUsREBVNe1aLPxRIvd4mn/z4zQyaSBZKej7QAF0/
- 3BYdEPl4QQqnwrBn11dhTe2vB4tQJKHtQGJkR5IMTIUIRgS9JoEWsvVmxjlPiGnWQTn2AA
- 0KIohLV9G3uDoEbi0Y63oDTn5t8AWl4=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-337-5h1lpMfWOkGJOk2r2DQJwQ-1; Thu, 28 Nov 2019 10:57:24 -0500
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.phx2.redhat.com
- [10.5.11.16])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id EFCF580253C;
- Thu, 28 Nov 2019 15:57:22 +0000 (UTC)
-Received: from kamzik.brq.redhat.com (unknown [10.43.2.160])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id E75395C1B0;
- Thu, 28 Nov 2019 15:57:21 +0000 (UTC)
-Date: Thu, 28 Nov 2019 16:57:19 +0100
-From: Andrew Jones <drjones@redhat.com>
-To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
-Subject: Re: [PATCH kvm-unit-tests] arm/arm64: PL031: Fix check_rtc_irq
-Message-ID: <20191128155719.xqk6xjx6jbpy6ptv@kamzik.brq.redhat.com>
-References: <20191128155515.19013-1-drjones@redhat.com>
+ with ESMTP id OC23RMTont9W for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 28 Nov 2019 11:17:36 -0500 (EST)
+Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
+ [213.251.177.50])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 422C64A500
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Nov 2019 11:17:36 -0500 (EST)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by cheepnis.misterjones.org with esmtpsa
+ (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128) (Exim 4.80)
+ (envelope-from <maz@kernel.org>)
+ id 1iaMU2-0002vd-GD; Thu, 28 Nov 2019 17:17:34 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: qemu-devel@nongnu.org
+Subject: [PATCH 0/3] target/arm: More HCR_EL2.TIDx fixes
+Date: Thu, 28 Nov 2019 16:17:15 +0000
+Message-Id: <20191128161718.24361-1-maz@kernel.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <20191128155515.19013-1-drjones@redhat.com>
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-MC-Unique: 5h1lpMfWOkGJOk2r2DQJwQ-1
-X-Mimecast-Spam-Score: 0
-Content-Disposition: inline
-Cc: pbonzini@redhat.com
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: qemu-devel@nongnu.org, kvmarm@lists.cs.columbia.edu,
+ peter.maydell@linaro.org, richard.henderson@linaro.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on cheepnis.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: richard.henderson@linaro.org, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -84,41 +66,33 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Nov 28, 2019 at 04:55:15PM +0100, Andrew Jones wrote:
-> Since QEMU commit 83ad95957c7e ("pl031: Expose RTCICR as proper WC
-> register") the PL031 test gets into an infinite loop. Now we must
-> write bit zero of RTCICR to clear the IRQ status. Before, writing
-> anything to RTCICR would work. As '1' is a member of 'anything'
-> writing it should work for old QEMU as well.
-> 
-> Cc: Alexander Graf <graf@amazon.com>
-> Signed-off-by: Andrew Jones <drjones@redhat.com>
-> ---
->  arm/pl031.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+I started looking the rest of the missing TIDx handling,
+and this resulted in the following patches.
 
-Note, this is based on not yet merged "Switch the order of the
-parameters in report() and report_xfail()".
+There is still one thing I'm a bit puzzled by though:
 
-> 
-> diff --git a/arm/pl031.c b/arm/pl031.c
-> index 1f63ef13994f..3b75fd653e96 100644
-> --- a/arm/pl031.c
-> +++ b/arm/pl031.c
-> @@ -143,8 +143,8 @@ static void irq_handler(struct pt_regs *regs)
->  		report(readl(&pl031->ris) == 1, "  RTC RIS == 1");
->  		report(readl(&pl031->mis) == 1, "  RTC MIS == 1");
->  
-> -		/* Writing any value should clear IRQ status */
-> -		writel(0x80000000ULL, &pl031->icr);
-> +		/* Writing one to bit zero should clear IRQ status */
-> +		writel(1, &pl031->icr);
->  
->  		report(readl(&pl031->ris) == 0, "  RTC RIS == 0");
->  		report(readl(&pl031->mis) == 0, "  RTC MIS == 0");
-> -- 
-> 2.21.0
-> 
+HCR_EL2.TID0 mandates trapping of the AArch32 JIDR
+register, but I couldn't find a trace of it in the QEMU
+code, and trying to read it seems to generate an exception.
+
+It isn't like anyone is going to miss it, but I wonder if
+it should be implemented... It could also be that I'm missing
+the obvious and that my testing is broken! ;-)
+
+Marc Zyngier (3):
+  target/arm: Honor HCR_EL2.TID2 trapping requirements
+  target/arm: Honor HCR_EL2.TID1 trapping requirements
+  target/arm: Handle trapping to EL2 of AArch32 VMRS instructions
+
+ target/arm/helper-a64.h        |  2 ++
+ target/arm/helper.c            | 64 ++++++++++++++++++++++++++++++----
+ target/arm/internals.h         |  8 +++++
+ target/arm/translate-vfp.inc.c | 12 +++++--
+ target/arm/vfp_helper.c        | 27 ++++++++++++++
+ 5 files changed, 103 insertions(+), 10 deletions(-)
+
+-- 
+2.20.1
 
 _______________________________________________
 kvmarm mailing list
