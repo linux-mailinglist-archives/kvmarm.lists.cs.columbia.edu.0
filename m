@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D9E1810C2BE
-	for <lists+kvmarm@lfdr.de>; Thu, 28 Nov 2019 04:10:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EAB110C40B
+	for <lists+kvmarm@lfdr.de>; Thu, 28 Nov 2019 07:39:01 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 887004A598;
-	Wed, 27 Nov 2019 22:10:09 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BFFC44AD09;
+	Thu, 28 Nov 2019 01:39:00 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
@@ -16,27 +16,27 @@ X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WAApXf84dNQG; Wed, 27 Nov 2019 22:10:09 -0500 (EST)
+	with ESMTP id 0yI2ssKAzqAe; Thu, 28 Nov 2019 01:39:00 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 781544ACD6;
-	Wed, 27 Nov 2019 22:10:08 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id ACBF74ACC4;
+	Thu, 28 Nov 2019 01:38:59 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1BA794AC88
- for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Nov 2019 22:10:08 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4788B4AC86
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Nov 2019 01:38:58 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 3lF2Mx9uh2Id for <kvmarm@lists.cs.columbia.edu>;
- Wed, 27 Nov 2019 22:10:07 -0500 (EST)
-Received: from huawei.com (szxga06-in.huawei.com [45.249.212.32])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 000664A598
- for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Nov 2019 22:10:06 -0500 (EST)
-Received: from DGGEMS405-HUB.china.huawei.com (unknown [172.30.72.60])
- by Forcepoint Email with ESMTP id 351A96ADCDBDC841C9DC;
- Thu, 28 Nov 2019 11:10:05 +0800 (CST)
-Received: from huawei.com (10.175.105.18) by DGGEMS405-HUB.china.huawei.com
- (10.3.19.205) with Microsoft SMTP Server id 14.3.439.0; Thu, 28 Nov 2019
- 11:09:55 +0800
+ with ESMTP id 8WNpIYdKnYgj for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 28 Nov 2019 01:38:57 -0500 (EST)
+Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C07644A51F
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Nov 2019 01:38:56 -0500 (EST)
+Received: from DGGEMS403-HUB.china.huawei.com (unknown [172.30.72.58])
+ by Forcepoint Email with ESMTP id 697B7D7E59EC32DF0DB2;
+ Thu, 28 Nov 2019 14:38:53 +0800 (CST)
+Received: from huawei.com (10.175.105.18) by DGGEMS403-HUB.china.huawei.com
+ (10.3.19.203) with Microsoft SMTP Server id 14.3.439.0; Thu, 28 Nov 2019
+ 14:38:45 +0800
 From: linmiaohe <linmiaohe@huawei.com>
 To: <maz@kernel.org>, <pbonzini@redhat.com>, <rkrcmar@redhat.com>,
  <james.morse@arm.com>, <julien.thierry.kdev@gmail.com>,
@@ -44,10 +44,10 @@ To: <maz@kernel.org>, <pbonzini@redhat.com>, <rkrcmar@redhat.com>,
  <catalin.marinas@arm.com>, <eric.auger@redhat.com>,
  <gregkh@linuxfoundation.org>, <will@kernel.org>, <andre.przywara@arm.com>,
  <tglx@linutronix.de>
-Subject: [PATCH] KVM: arm64: eliminate unnecessary var err and jump label in
- set_core_reg()
-Date: Thu, 28 Nov 2019 11:09:58 +0800
-Message-ID: <1574910598-14468-1-git-send-email-linmiaohe@huawei.com>
+Subject: [PATCH] KVM: vgic: Fix potential double free dist->spis in
+ __kvm_vgic_destroy()
+Date: Thu, 28 Nov 2019 14:38:48 +0800
+Message-ID: <1574923128-19956-1-git-send-email-linmiaohe@huawei.com>
 X-Mailer: git-send-email 1.8.3.1
 MIME-Version: 1.0
 X-Originating-IP: [10.175.105.18]
@@ -72,55 +72,31 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: Miaohe Lin <linmiaohe@huawei.com>
 
-The var err and jump label out isn't really needed in
-set_core_reg(). Clean them up.
+In kvm_vgic_dist_init() called from kvm_vgic_map_resources(), if
+dist->vgic_model is invalid, dist->spis will be freed without set
+dist->spis = NULL. And in vgicv2 resources clean up path,
+__kvm_vgic_destroy() will be called to free allocated resources.
+And dist->spis will be freed again in clean up chain because we
+forget to set dist->spis = NULL in kvm_vgic_dist_init() failed
+path. So double free would happen.
+
 Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
 ---
- arch/arm64/kvm/guest.c | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ virt/kvm/arm/vgic/vgic-init.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/kvm/guest.c b/arch/arm64/kvm/guest.c
-index 3b836c91609e..88eb6e5399ed 100644
---- a/arch/arm64/kvm/guest.c
-+++ b/arch/arm64/kvm/guest.c
-@@ -159,7 +159,6 @@ static int set_core_reg(struct kvm_vcpu *vcpu, const struct kvm_one_reg *reg)
- 	__uint128_t tmp;
- 	void *valp = &tmp;
- 	u64 off;
--	int err = 0;
- 
- 	/* Our ID is an index into the kvm_regs struct. */
- 	off = core_reg_offset_from_id(reg->id);
-@@ -173,10 +172,8 @@ static int set_core_reg(struct kvm_vcpu *vcpu, const struct kvm_one_reg *reg)
- 	if (KVM_REG_SIZE(reg->id) > sizeof(tmp))
- 		return -EINVAL;
- 
--	if (copy_from_user(valp, uaddr, KVM_REG_SIZE(reg->id))) {
--		err = -EFAULT;
--		goto out;
--	}
-+	if (copy_from_user(valp, uaddr, KVM_REG_SIZE(reg->id)))
-+		return -EFAULT;
- 
- 	if (off == KVM_REG_ARM_CORE_REG(regs.pstate)) {
- 		u64 mode = (*(u64 *)valp) & PSR_AA32_MODE_MASK;
-@@ -200,14 +197,12 @@ static int set_core_reg(struct kvm_vcpu *vcpu, const struct kvm_one_reg *reg)
- 				return -EINVAL;
+diff --git a/virt/kvm/arm/vgic/vgic-init.c b/virt/kvm/arm/vgic/vgic-init.c
+index 53e3969dfb52..c17c29beeb72 100644
+--- a/virt/kvm/arm/vgic/vgic-init.c
++++ b/virt/kvm/arm/vgic/vgic-init.c
+@@ -171,6 +171,7 @@ static int kvm_vgic_dist_init(struct kvm *kvm, unsigned int nr_spis)
  			break;
  		default:
--			err = -EINVAL;
--			goto out;
-+			return -EINVAL;
+ 			kfree(dist->spis);
++			dist->spis = NULL;
+ 			return -EINVAL;
  		}
  	}
- 
- 	memcpy((u32 *)regs + off, valp, KVM_REG_SIZE(reg->id));
--out:
--	return err;
-+	return 0;
- }
- 
- #define vq_word(vq) (((vq) - SVE_VQ_MIN) / 64)
 -- 
 2.19.1
 
