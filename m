@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C8BE610CC9E
-	for <lists+kvmarm@lfdr.de>; Thu, 28 Nov 2019 17:17:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 023FA10CCA0
+	for <lists+kvmarm@lfdr.de>; Thu, 28 Nov 2019 17:17:41 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5DB214AE9E;
-	Thu, 28 Nov 2019 11:17:40 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9B01F4ACD5;
+	Thu, 28 Nov 2019 11:17:41 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
@@ -15,33 +15,35 @@ X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ShEiavMSwK1Q; Thu, 28 Nov 2019 11:17:40 -0500 (EST)
+	with ESMTP id JCpsvgmLaLv9; Thu, 28 Nov 2019 11:17:41 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 45B714A7FE;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 761984AE94;
 	Thu, 28 Nov 2019 11:17:39 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 50B474ACC9
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6CC6A4ACB7
  for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Nov 2019 11:17:37 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id OC23RMTont9W for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id e5+kJ6ZSfEEo for <kvmarm@lists.cs.columbia.edu>;
  Thu, 28 Nov 2019 11:17:36 -0500 (EST)
 Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
  [213.251.177.50])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 422C64A500
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 446794A8E0
  for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Nov 2019 11:17:36 -0500 (EST)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by cheepnis.misterjones.org with esmtpsa
  (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128) (Exim 4.80)
  (envelope-from <maz@kernel.org>)
- id 1iaMU2-0002vd-GD; Thu, 28 Nov 2019 17:17:34 +0100
+ id 1iaMU2-0002vd-SP; Thu, 28 Nov 2019 17:17:35 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 0/3] target/arm: More HCR_EL2.TIDx fixes
-Date: Thu, 28 Nov 2019 16:17:15 +0000
-Message-Id: <20191128161718.24361-1-maz@kernel.org>
+Subject: [PATCH 1/3] target/arm: Honor HCR_EL2.TID2 trapping requirements
+Date: Thu, 28 Nov 2019 16:17:16 +0000
+Message-Id: <20191128161718.24361-2-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20191128161718.24361-1-maz@kernel.org>
+References: <20191128161718.24361-1-maz@kernel.org>
 MIME-Version: 1.0
 X-SA-Exim-Connect-IP: 62.31.163.78
 X-SA-Exim-Rcpt-To: qemu-devel@nongnu.org, kvmarm@lists.cs.columbia.edu,
@@ -66,31 +68,80 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-I started looking the rest of the missing TIDx handling,
-and this resulted in the following patches.
+HCR_EL2.TID2 mandates that access from EL1 to CTR_EL0, CCSIDR_EL1,
+CCSIDR2_EL1, CLIDR_EL1, CSSELR_EL1 are trapped to EL2, and QEMU
+completely ignores it, making impossible for hypervisors to
+virtualize the cache hierarchy.
 
-There is still one thing I'm a bit puzzled by though:
+Do the right thing by trapping to EL2 if HCR_EL2.TID2 is set.
 
-HCR_EL2.TID0 mandates trapping of the AArch32 JIDR
-register, but I couldn't find a trace of it in the QEMU
-code, and trying to read it seems to generate an exception.
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+---
+ target/arm/helper.c | 28 +++++++++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
-It isn't like anyone is going to miss it, but I wonder if
-it should be implemented... It could also be that I'm missing
-the obvious and that my testing is broken! ;-)
-
-Marc Zyngier (3):
-  target/arm: Honor HCR_EL2.TID2 trapping requirements
-  target/arm: Honor HCR_EL2.TID1 trapping requirements
-  target/arm: Handle trapping to EL2 of AArch32 VMRS instructions
-
- target/arm/helper-a64.h        |  2 ++
- target/arm/helper.c            | 64 ++++++++++++++++++++++++++++++----
- target/arm/internals.h         |  8 +++++
- target/arm/translate-vfp.inc.c | 12 +++++--
- target/arm/vfp_helper.c        | 27 ++++++++++++++
- 5 files changed, 103 insertions(+), 10 deletions(-)
-
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 0bf8f53d4b..0b6887b100 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -1910,6 +1910,17 @@ static void scr_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
+     raw_write(env, ri, value);
+ }
+ 
++static CPAccessResult access_aa64_tid2(CPUARMState *env,
++                                       const ARMCPRegInfo *ri,
++                                       bool isread)
++{
++    if (arm_current_el(env) == 1 && (arm_hcr_el2_eff(env) & HCR_TID2)) {
++        return CP_ACCESS_TRAP_EL2;
++    }
++
++    return CP_ACCESS_OK;
++}
++
+ static uint64_t ccsidr_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ {
+     ARMCPU *cpu = env_archcpu(env);
+@@ -2110,10 +2121,14 @@ static const ARMCPRegInfo v7_cp_reginfo[] = {
+       .writefn = pmintenclr_write },
+     { .name = "CCSIDR", .state = ARM_CP_STATE_BOTH,
+       .opc0 = 3, .crn = 0, .crm = 0, .opc1 = 1, .opc2 = 0,
+-      .access = PL1_R, .readfn = ccsidr_read, .type = ARM_CP_NO_RAW },
++      .access = PL1_R,
++      .accessfn = access_aa64_tid2,
++      .readfn = ccsidr_read, .type = ARM_CP_NO_RAW },
+     { .name = "CSSELR", .state = ARM_CP_STATE_BOTH,
+       .opc0 = 3, .crn = 0, .crm = 0, .opc1 = 2, .opc2 = 0,
+-      .access = PL1_RW, .writefn = csselr_write, .resetvalue = 0,
++      .access = PL1_RW,
++      .accessfn = access_aa64_tid2,
++      .writefn = csselr_write, .resetvalue = 0,
+       .bank_fieldoffsets = { offsetof(CPUARMState, cp15.csselr_s),
+                              offsetof(CPUARMState, cp15.csselr_ns) } },
+     /* Auxiliary ID register: this actually has an IMPDEF value but for now
+@@ -5204,6 +5219,11 @@ static CPAccessResult ctr_el0_access(CPUARMState *env, const ARMCPRegInfo *ri,
+     if (arm_current_el(env) == 0 && !(env->cp15.sctlr_el[1] & SCTLR_UCT)) {
+         return CP_ACCESS_TRAP;
+     }
++
++    if (arm_hcr_el2_eff(env) & HCR_TID2) {
++        return CP_ACCESS_TRAP_EL2;
++    }
++
+     return CP_ACCESS_OK;
+ }
+ 
+@@ -6184,7 +6204,9 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+         ARMCPRegInfo clidr = {
+             .name = "CLIDR", .state = ARM_CP_STATE_BOTH,
+             .opc0 = 3, .crn = 0, .crm = 0, .opc1 = 1, .opc2 = 1,
+-            .access = PL1_R, .type = ARM_CP_CONST, .resetvalue = cpu->clidr
++            .access = PL1_R, .type = ARM_CP_CONST,
++            .accessfn = access_aa64_tid2,
++            .resetvalue = cpu->clidr
+         };
+         define_one_arm_cp_reg(cpu, &clidr);
+         define_arm_cp_regs(cpu, v7_cp_reginfo);
 -- 
 2.20.1
 
