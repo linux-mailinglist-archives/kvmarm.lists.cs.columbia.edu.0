@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C2AB10E1D7
-	for <lists+kvmarm@lfdr.de>; Sun,  1 Dec 2019 13:20:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D5BA10E1D9
+	for <lists+kvmarm@lfdr.de>; Sun,  1 Dec 2019 13:20:57 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E13404AEB8;
-	Sun,  1 Dec 2019 07:20:54 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0E4AA4AECC;
+	Sun,  1 Dec 2019 07:20:57 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
@@ -15,32 +15,33 @@ X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ueiFX8H1A6Dq; Sun,  1 Dec 2019 07:20:53 -0500 (EST)
+	with ESMTP id u5tXxHJkWKEF; Sun,  1 Dec 2019 07:20:56 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B05144AEDB;
-	Sun,  1 Dec 2019 07:20:51 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DFB194AEE6;
+	Sun,  1 Dec 2019 07:20:52 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id BCE024A959
- for <kvmarm@lists.cs.columbia.edu>; Sun,  1 Dec 2019 07:20:50 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8E23A4AECF
+ for <kvmarm@lists.cs.columbia.edu>; Sun,  1 Dec 2019 07:20:51 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id t4qw7J3lhehg for <kvmarm@lists.cs.columbia.edu>;
- Sun,  1 Dec 2019 07:20:49 -0500 (EST)
+ with ESMTP id GqtQy9vejUR3 for <kvmarm@lists.cs.columbia.edu>;
+ Sun,  1 Dec 2019 07:20:50 -0500 (EST)
 Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
  [213.251.177.50])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8DA844A968
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 929334AC80
  for <kvmarm@lists.cs.columbia.edu>; Sun,  1 Dec 2019 07:20:49 -0500 (EST)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by cheepnis.misterjones.org with esmtpsa
  (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128) (Exim 4.80)
  (envelope-from <maz@kernel.org>)
- id 1ibODX-0007WK-2B; Sun, 01 Dec 2019 13:20:47 +0100
+ id 1ibODX-0007WK-Hy; Sun, 01 Dec 2019 13:20:47 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 2/5] target/arm: Honor HCR_EL2.TID1 trapping requirements
-Date: Sun,  1 Dec 2019 12:20:15 +0000
-Message-Id: <20191201122018.25808-3-maz@kernel.org>
+Subject: [PATCH v2 3/5] target/arm: Handle trapping to EL2 of AArch32 VMRS
+ instructions
+Date: Sun,  1 Dec 2019 12:20:16 +0000
+Message-Id: <20191201122018.25808-4-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191201122018.25808-1-maz@kernel.org>
 References: <20191201122018.25808-1-maz@kernel.org>
@@ -70,94 +71,103 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-HCR_EL2.TID1 mandates that access from EL1 to REVIDR_EL1, AIDR_EL1
-(and their 32bit equivalents) as well as TCMTR, TLBTR are trapped
-to EL2. QEMU ignores it, making it harder for a hypervisor to
-virtualize the HW (though to be fair, no known hypervisor actually
-cares).
+HCR_EL2.TID3 requires that AArch32 reads of MVFR[012] are trapped to
+EL2, and HCR_EL2.TID0 does the same for reads of FPSID.
+In order to handle this, introduce a new TCG helper function that
+checks for these control bits before executing the VMRC instruction.
 
-Do the right thing by trapping to EL2 if HCR_EL2.TID1 is set.
+Tested with a hacked-up version of KVM/arm64 that sets the control
+bits for 32bit guests.
 
 Reviewed-by: Edgar E. Iglesias <edgar.iglesias@xilinx.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- target/arm/helper.c | 36 ++++++++++++++++++++++++++++++++----
- 1 file changed, 32 insertions(+), 4 deletions(-)
+ target/arm/helper-a64.h        |  2 ++
+ target/arm/translate-vfp.inc.c | 18 +++++++++++++++---
+ target/arm/vfp_helper.c        | 29 +++++++++++++++++++++++++++++
+ 3 files changed, 46 insertions(+), 3 deletions(-)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 1e546096b8..93ecab27c0 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -1973,6 +1973,26 @@ static uint64_t isr_read(CPUARMState *env, const ARMCPRegInfo *ri)
-     return ret;
+diff --git a/target/arm/helper-a64.h b/target/arm/helper-a64.h
+index a915c1247f..0af44dc814 100644
+--- a/target/arm/helper-a64.h
++++ b/target/arm/helper-a64.h
+@@ -102,3 +102,5 @@ DEF_HELPER_FLAGS_3(autda, TCG_CALL_NO_WG, i64, env, i64, i64)
+ DEF_HELPER_FLAGS_3(autdb, TCG_CALL_NO_WG, i64, env, i64, i64)
+ DEF_HELPER_FLAGS_2(xpaci, TCG_CALL_NO_RWG_SE, i64, env, i64)
+ DEF_HELPER_FLAGS_2(xpacd, TCG_CALL_NO_RWG_SE, i64, env, i64)
++
++DEF_HELPER_3(check_hcr_el2_trap, void, env, i32, i32)
+diff --git a/target/arm/translate-vfp.inc.c b/target/arm/translate-vfp.inc.c
+index 85c5ef897b..bf90ac0e5b 100644
+--- a/target/arm/translate-vfp.inc.c
++++ b/target/arm/translate-vfp.inc.c
+@@ -761,13 +761,25 @@ static bool trans_VMSR_VMRS(DisasContext *s, arg_VMSR_VMRS *a)
+     if (a->l) {
+         /* VMRS, move VFP special register to gp register */
+         switch (a->reg) {
++        case ARM_VFP_MVFR0:
++        case ARM_VFP_MVFR1:
++        case ARM_VFP_MVFR2:
+         case ARM_VFP_FPSID:
++            if (s->current_el == 1) {
++                TCGv_i32 tcg_reg, tcg_rt;
++
++                gen_set_condexec(s);
++                gen_set_pc_im(s, s->pc_curr);
++                tcg_reg = tcg_const_i32(a->reg);
++                tcg_rt = tcg_const_i32(a->rt);
++                gen_helper_check_hcr_el2_trap(cpu_env, tcg_rt, tcg_reg);
++                tcg_temp_free_i32(tcg_reg);
++                tcg_temp_free_i32(tcg_rt);
++            }
++            /* fall through */
+         case ARM_VFP_FPEXC:
+         case ARM_VFP_FPINST:
+         case ARM_VFP_FPINST2:
+-        case ARM_VFP_MVFR0:
+-        case ARM_VFP_MVFR1:
+-        case ARM_VFP_MVFR2:
+             tmp = load_cpu_field(vfp.xregs[a->reg]);
+             break;
+         case ARM_VFP_FPSCR:
+diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
+index 9710ef1c3e..0ae7d4f34a 100644
+--- a/target/arm/vfp_helper.c
++++ b/target/arm/vfp_helper.c
+@@ -1322,4 +1322,33 @@ float64 HELPER(frint64_d)(float64 f, void *fpst)
+     return frint_d(f, fpst, 64);
  }
  
-+static CPAccessResult access_aa64_tid1(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                       bool isread)
++void HELPER(check_hcr_el2_trap)(CPUARMState *env, uint32_t rt, uint32_t reg)
 +{
-+    if (arm_current_el(env) == 1 && (arm_hcr_el2_eff(env) & HCR_TID1)) {
-+        return CP_ACCESS_TRAP_EL2;
++    uint32_t syndrome;
++
++    switch (reg) {
++    case ARM_VFP_MVFR0:
++    case ARM_VFP_MVFR1:
++    case ARM_VFP_MVFR2:
++        if (!(arm_hcr_el2_eff(env) & HCR_TID3)) {
++            return;
++        }
++        break;
++    case ARM_VFP_FPSID:
++        if (!(arm_hcr_el2_eff(env) & HCR_TID0)) {
++            return;
++        }
++        break;
++    default:
++        g_assert_not_reached();
 +    }
 +
-+    return CP_ACCESS_OK;
++    syndrome = ((EC_FPIDTRAP << ARM_EL_EC_SHIFT)
++                | ARM_EL_IL
++                | (1 << 24) | (0xe << 20) | (7 << 14)
++                | (reg << 10) | (rt << 5) | 1);
++
++    raise_exception(env, EXCP_HYP_TRAP, syndrome, 2);
 +}
 +
-+static CPAccessResult access_aa32_tid1(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                       bool isread)
-+{
-+    if (arm_feature(env, ARM_FEATURE_V8)) {
-+        return access_aa64_tid1(env, ri, isread);
-+    }
-+
-+    return CP_ACCESS_OK;
-+}
-+
- static const ARMCPRegInfo v7_cp_reginfo[] = {
-     /* the old v6 WFI, UNPREDICTABLE in v7 but we choose to NOP */
-     { .name = "NOP", .cp = 15, .crn = 7, .crm = 0, .opc1 = 0, .opc2 = 4,
-@@ -2136,7 +2156,9 @@ static const ARMCPRegInfo v7_cp_reginfo[] = {
-      */
-     { .name = "AIDR", .state = ARM_CP_STATE_BOTH,
-       .opc0 = 3, .opc1 = 1, .crn = 0, .crm = 0, .opc2 = 7,
--      .access = PL1_R, .type = ARM_CP_CONST, .resetvalue = 0 },
-+      .access = PL1_R, .type = ARM_CP_CONST,
-+      .accessfn = access_aa64_tid1,
-+      .resetvalue = 0 },
-     /* Auxiliary fault status registers: these also are IMPDEF, and we
-      * choose to RAZ/WI for all cores.
-      */
-@@ -6732,7 +6754,9 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-               .access = PL1_R, .resetvalue = cpu->midr },
-             { .name = "REVIDR_EL1", .state = ARM_CP_STATE_BOTH,
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 0, .opc2 = 6,
--              .access = PL1_R, .type = ARM_CP_CONST, .resetvalue = cpu->revidr },
-+              .access = PL1_R,
-+              .accessfn = access_aa64_tid1,
-+              .type = ARM_CP_CONST, .resetvalue = cpu->revidr },
-             REGINFO_SENTINEL
-         };
-         ARMCPRegInfo id_cp_reginfo[] = {
-@@ -6748,14 +6772,18 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-             /* TCMTR and TLBTR exist in v8 but have no 64-bit versions */
-             { .name = "TCMTR",
-               .cp = 15, .crn = 0, .crm = 0, .opc1 = 0, .opc2 = 2,
--              .access = PL1_R, .type = ARM_CP_CONST, .resetvalue = 0 },
-+              .access = PL1_R,
-+              .accessfn = access_aa32_tid1,
-+              .type = ARM_CP_CONST, .resetvalue = 0 },
-             REGINFO_SENTINEL
-         };
-         /* TLBTR is specific to VMSA */
-         ARMCPRegInfo id_tlbtr_reginfo = {
-               .name = "TLBTR",
-               .cp = 15, .crn = 0, .crm = 0, .opc1 = 0, .opc2 = 3,
--              .access = PL1_R, .type = ARM_CP_CONST, .resetvalue = 0,
-+              .access = PL1_R,
-+              .accessfn = access_aa32_tid1,
-+              .type = ARM_CP_CONST, .resetvalue = 0,
-         };
-         /* MPUIR is specific to PMSA V6+ */
-         ARMCPRegInfo id_mpuir_reginfo = {
+ #endif
 -- 
 2.20.1
 
