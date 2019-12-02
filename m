@@ -2,59 +2,52 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5639D10E1D5
-	for <lists+kvmarm@lfdr.de>; Sun,  1 Dec 2019 13:20:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C5A4810E66F
+	for <lists+kvmarm@lfdr.de>; Mon,  2 Dec 2019 08:41:59 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AC1294AECA;
-	Sun,  1 Dec 2019 07:20:52 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 34B474AEF5;
+	Mon,  2 Dec 2019 02:41:59 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.799
+X-Spam-Score: 0.8
 X-Spam-Level: 
-X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
+X-Spam-Status: No, score=0.8 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	UNPARSEABLE_RELAY=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qtULWLIgWupY; Sun,  1 Dec 2019 07:20:52 -0500 (EST)
+	with ESMTP id h0LB67G6QHL1; Mon,  2 Dec 2019 02:41:59 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7FA524AED2;
-	Sun,  1 Dec 2019 07:20:51 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 29B4D4AEE8;
+	Mon,  2 Dec 2019 02:41:58 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A9C894AEC0
- for <kvmarm@lists.cs.columbia.edu>; Sun,  1 Dec 2019 07:20:50 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DBC634AEBC
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  2 Dec 2019 02:41:56 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id V+SAYUsPjo5K for <kvmarm@lists.cs.columbia.edu>;
- Sun,  1 Dec 2019 07:20:49 -0500 (EST)
-Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
- [213.251.177.50])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 914774AC7C
- for <kvmarm@lists.cs.columbia.edu>; Sun,  1 Dec 2019 07:20:49 -0500 (EST)
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.lan) by cheepnis.misterjones.org with esmtpsa
- (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128) (Exim 4.80)
- (envelope-from <maz@kernel.org>)
- id 1ibODY-0007WK-Fh; Sun, 01 Dec 2019 13:20:48 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH v2 5/5] target/arm: Add support for missing Jazelle system
- registers
-Date: Sun,  1 Dec 2019 12:20:18 +0000
-Message-Id: <20191201122018.25808-6-maz@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191201122018.25808-1-maz@kernel.org>
-References: <20191201122018.25808-1-maz@kernel.org>
-MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: qemu-devel@nongnu.org, kvmarm@lists.cs.columbia.edu,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- edgar.iglesias@xilinx.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on cheepnis.misterjones.org);
- SAEximRunCond expanded to false
-Cc: "Edgar E. Iglesias" <edgar.iglesias@xilinx.com>,
- Richard Henderson <richard.henderson@linaro.org>, kvmarm@lists.cs.columbia.edu
+ with ESMTP id WpAbWraIZ0yR for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  2 Dec 2019 02:41:56 -0500 (EST)
+Received: from out30-44.freemail.mail.aliyun.com
+ (out30-44.freemail.mail.aliyun.com [115.124.30.44])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B67214AE92
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  2 Dec 2019 02:41:54 -0500 (EST)
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R301e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01e04423;
+ MF=shannon.zhao@linux.alibaba.com; NM=1; PH=DS; RN=5; SR=0;
+ TI=SMTPD_---0TjfbfVy_1575272511; 
+Received: from localhost(mailfrom:shannon.zhao@linux.alibaba.com
+ fp:SMTPD_---0TjfbfVy_1575272511) by smtp.aliyun-inc.com(127.0.0.1);
+ Mon, 02 Dec 2019 15:41:51 +0800
+From: Shannon Zhao <shannon.zhao@linux.alibaba.com>
+To: kvmarm@lists.cs.columbia.edu,
+	maz@kernel.org,
+	suzuki.poulose@arm.com
+Subject: [PATCH] KVM: ARM: call hyp_cpu_pm_exit at the right place
+Date: Mon,  2 Dec 2019 15:42:11 +0800
+Message-Id: <1575272531-3204-1-git-send-email-shannon.zhao@linux.alibaba.com>
+X-Mailer: git-send-email 1.8.3.1
+Cc: linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -66,67 +59,44 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-QEMU lacks the minimum Jazelle implementation that is required
-by the architecture (everything is RAZ or RAZ/WI). Add it
-together with the HCR_EL2.TID0 trapping that goes with it.
+It doesn't needs to call hyp_cpu_pm_exit() in init_hyp_mode() when some
+error occurs. hyp_cpu_pm_exit() only needs to be called in
+kvm_arch_init() if init_subsystems() fails. So move hyp_cpu_pm_exit()
+out from teardown_hyp_mode() and call it directly in kvm_arch_init().
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Shannon Zhao <shannon.zhao@linux.alibaba.com>
 ---
- target/arm/helper.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ virt/kvm/arm/arm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 0ba08d550a..d6fc198a97 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6040,6 +6040,16 @@ static CPAccessResult access_aa32_tid3(CPUARMState *env, const ARMCPRegInfo *ri,
-     return CP_ACCESS_OK;
+diff --git a/virt/kvm/arm/arm.c b/virt/kvm/arm/arm.c
+index 12e0280..3b13ade 100644
+--- a/virt/kvm/arm/arm.c
++++ b/virt/kvm/arm/arm.c
+@@ -1537,7 +1537,6 @@ static void teardown_hyp_mode(void)
+ 	free_hyp_pgds();
+ 	for_each_possible_cpu(cpu)
+ 		free_page(per_cpu(kvm_arm_hyp_stack_page, cpu));
+-	hyp_cpu_pm_exit();
  }
  
-+static CPAccessResult access_jazelle(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                     bool isread)
-+{
-+    if (arm_current_el(env) == 1 && (arm_hcr_el2_eff(env) & HCR_TID0)) {
-+        return CP_ACCESS_TRAP_EL2;
-+    }
-+
-+    return CP_ACCESS_OK;
-+}
-+
- void register_cp_regs_for_features(ARMCPU *cpu)
- {
-     /* Register all the coprocessor registers based on feature bits */
-@@ -6057,6 +6067,23 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-         define_arm_cp_regs(cpu, not_v8_cp_reginfo);
-     }
+ /**
+@@ -1751,6 +1750,7 @@ int kvm_arch_init(void *opaque)
+ 	return 0;
  
-+    if (cpu_isar_feature(jazelle, cpu)) {
-+        ARMCPRegInfo jazelle_regs[] = {
-+            { .name = "JIDR",
-+              .cp = 14, .crn = 0, .crm = 0, .opc1 = 7, .opc2 = 0,
-+              .access = PL1_R, .accessfn = access_jazelle,
-+              .type = ARM_CP_CONST, .resetvalue = 0 },
-+            { .name = "JOSCR",
-+              .cp = 14, .crn = 1, .crm = 0, .opc1 = 7, .opc2 = 0,
-+              .access = PL1_RW, .type = ARM_CP_CONST, .resetvalue = 0 },
-+            { .name = "JMCR",
-+              .cp = 14, .crn = 2, .crm = 0, .opc1 = 7, .opc2 = 0,
-+              .access = PL1_RW, .type = ARM_CP_CONST, .resetvalue = 0 },
-+            REGINFO_SENTINEL
-+        };
-+
-+        define_arm_cp_regs(cpu, jazelle_regs);
-+    }
-     if (arm_feature(env, ARM_FEATURE_V6)) {
-         /* The ID registers all have impdef reset values */
-         ARMCPRegInfo v6_idregs[] = {
+ out_hyp:
++	hyp_cpu_pm_exit();
+ 	if (!in_hyp_mode)
+ 		teardown_hyp_mode();
+ out_err:
 -- 
-2.20.1
+1.8.3.1
 
 _______________________________________________
 kvmarm mailing list
