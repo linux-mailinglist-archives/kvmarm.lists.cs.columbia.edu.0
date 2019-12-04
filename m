@@ -2,66 +2,69 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 35A77111B75
-	for <lists+kvmarm@lfdr.de>; Tue,  3 Dec 2019 23:14:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E68191136A5
+	for <lists+kvmarm@lfdr.de>; Wed,  4 Dec 2019 21:44:47 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 507834AED3;
-	Tue,  3 Dec 2019 17:14:39 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3487B4AF03;
+	Wed,  4 Dec 2019 15:44:47 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -1.391
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.391 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id wuzIRSG-cauN; Tue,  3 Dec 2019 17:14:39 -0500 (EST)
+	with ESMTP id QvW7Tj7MSm81; Wed,  4 Dec 2019 15:44:47 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 220B74AEF7;
-	Tue,  3 Dec 2019 17:14:38 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 28F3B4AF00;
+	Wed,  4 Dec 2019 15:44:46 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D39A54ACE6
- for <kvmarm@lists.cs.columbia.edu>; Tue,  3 Dec 2019 17:14:36 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B6AF84AEDC
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  4 Dec 2019 15:44:44 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 3yshAFYpE8rk for <kvmarm@lists.cs.columbia.edu>;
- Tue,  3 Dec 2019 17:14:35 -0500 (EST)
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4A1134AC68
- for <kvmarm@lists.cs.columbia.edu>; Tue,  3 Dec 2019 17:14:35 -0500 (EST)
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
- by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 03 Dec 2019 14:14:33 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,275,1571727600"; d="scan'208";a="201159390"
-Received: from sjchrist-coffee.jf.intel.com (HELO linux.intel.com)
- ([10.54.74.41])
- by orsmga007.jf.intel.com with ESMTP; 03 Dec 2019 14:14:33 -0800
-Date: Tue, 3 Dec 2019 14:14:33 -0800
-From: Sean Christopherson <sean.j.christopherson@intel.com>
-To: James Hogan <jhogan@kernel.org>, Paul Mackerras <paulus@ozlabs.org>,
- Christian Borntraeger <borntraeger@de.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Radim =?utf-8?B?S3LEjW3DocWZ?= <rkrcmar@redhat.com>,
- Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v3 00/15] KVM: Dynamically size memslot arrays
-Message-ID: <20191203221433.GK19877@linux.intel.com>
-References: <20191024230744.14543-1-sean.j.christopherson@intel.com>
+ with ESMTP id UrrUyJeXoz9r for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  4 Dec 2019 15:44:43 -0500 (EST)
+Received: from us-smtp-1.mimecast.com (us-smtp-delivery-1.mimecast.com
+ [205.139.110.120])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D6F04AC07
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  4 Dec 2019 15:44:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1575492283;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=JalwGvumE/sV/vESkSXmSu1R1FZ9zcdLVGm8RXkwmcM=;
+ b=U/0yUxiZkwtg6oRY0EPhGcRplDUNemCU6KWPAiAco3Tb8mBlUE99fGOhwoYTAX5DYcVfaH
+ gsj5/cEfLoUhkSM0tektjfwb/tyJ6TaWNUqYE+bq4KAPr9IVPMMByW1552S6aqw3zcZ60U
+ 41CUmxYOu5J23Iks3aajgIyNHSV2lUg=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-6-A2O5sKfkP7um__t8PatHgw-1; Wed, 04 Dec 2019 15:44:41 -0500
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com
+ [10.5.11.13])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 9B75B800D5E;
+ Wed,  4 Dec 2019 20:44:39 +0000 (UTC)
+Received: from laptop.redhat.com (ovpn-116-117.ams2.redhat.com [10.36.116.117])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id DF055691B3;
+ Wed,  4 Dec 2019 20:44:33 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, maz@kernel.org,
+ linux-kernel@vger.kernel.org, kvmarm@lists.cs.columbia.edu
+Subject: [RFC 0/3] KVM/ARM: Misc PMU fixes
+Date: Wed,  4 Dec 2019 21:44:23 +0100
+Message-Id: <20191204204426.9628-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20191024230744.14543-1-sean.j.christopherson@intel.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- David Hildenbrand <david@redhat.com>, Joerg Roedel <joro@8bytes.org>,
- Cornelia Huck <cohuck@redhat.com>, linux-mips@vger.kernel.org,
- kvm-ppc@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, Vitaly Kuznetsov <vkuznets@redhat.com>,
- kvmarm@lists.cs.columbia.edu, Jim Mattson <jmattson@google.com>
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+X-MC-Unique: A2O5sKfkP7um__t8PatHgw-1
+X-Mimecast-Spam-Score: 0
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -78,44 +81,42 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Oct 24, 2019 at 04:07:29PM -0700, Sean Christopherson wrote:
-> The end goal of this series is to dynamically size the memslot array so
-> that KVM allocates memory based on the number of memslots in use, as
-> opposed to unconditionally allocating memory for the maximum number of
-> memslots.  On x86, each memslot consumes 88 bytes, and so with 2 address
-> spaces of 512 memslots, each VM consumes ~90k bytes for the memslots.
-> E.g. given a VM that uses a total of 30 memslots, dynamic sizing reduces
-> the memory footprint from 90k to ~2.6k bytes.
-> 
-> The changes required to support dynamic sizing are relatively small,
-> e.g. are essentially contained in patches 14/15 and 15/15.  Patches 1-13
-> clean up the memslot code, which has gotten quite crusty, especially
-> __kvm_set_memory_region().  The clean up is likely not strictly necessary
-> to switch to dynamic sizing, but I didn't have a remotely reasonable
-> level of confidence in the correctness of the dynamic sizing without first
-> doing the clean up.
-> 
-> Christoffer, I added your Tested-by to the patches that I was confident
-> would be fully tested based on the desription of what you tested.  Let me
-> know if you disagree with any of 'em.
-> 
-> v3:
->   - Fix build errors on PPC and MIPS due to missed params during
->     refactoring [kbuild test robot].
->   - Rename the helpers for update_memslots() and add comments describing
->     the new algorithm and how it interacts with searching [Paolo].
->   - Remove the unnecessary and obnoxious warning regarding memslots being
->     a flexible array [Paolo].
->   - Fix typos in the changelog of patch 09/15 [Christoffer].
->   - Collect tags [Christoffer].
-> 
-> v2:
->   - Split "Drop kvm_arch_create_memslot()" into three patches to move
->     minor functional changes to standalone patches [Janosch].
->   - Rebase to latest kvm/queue (f0574a1cea5b, "KVM: x86: fix ...")
->   - Collect an Acked-by and a Reviewed-by
+While writing new PMUv3 event counter KVM unit tests I found 3
+things that do not seem to comply with the specification and at
+least need to be confirmed.
 
-Paolo, do you want me to rebase this to the latest kvm/queue?
+Two are related to SW_INCR implementation: no check of the
+PMCR.E bit, no support of 64b (CHAIN). From the spec,
+I do not understand the SW_INCR behaves differently from
+other events but I may be wrong.
+
+The last minor thing is about the PMEVTYPER read-only bits.
+On Seattle we have an 8.0 implementation which I understand
+is supposed to implement only 10-bit evtCount field which is
+not enforced.
+
+Best Regards
+
+Eric
+
+This series can be found at:
+https://github.com/eauger/qemu/tree/v5.4-pmu-kut-fixes-v1
+
+Eric Auger (3):
+  KVM: arm64: pmu: Don't increment SW_INCR if PMCR.E is unset
+  KVM: arm64: pmu: Fix chained SW_INCR counters
+  KVM: arm64: pmu: Enforce PMEVTYPER evtCount size
+
+ arch/arm64/include/asm/perf_event.h |  5 ++++-
+ arch/arm64/include/asm/sysreg.h     |  5 +++++
+ arch/arm64/kernel/perf_event.c      |  2 +-
+ arch/arm64/kvm/sys_regs.c           | 14 ++++++++++----
+ virt/kvm/arm/pmu.c                  | 19 ++++++++++++++++++-
+ 5 files changed, 38 insertions(+), 7 deletions(-)
+
+-- 
+2.20.1
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
