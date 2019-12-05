@@ -2,71 +2,62 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3626C1136AB
-	for <lists+kvmarm@lfdr.de>; Wed,  4 Dec 2019 21:44:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CDAE2113D7E
+	for <lists+kvmarm@lfdr.de>; Thu,  5 Dec 2019 10:02:42 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CF27C4AF0B;
-	Wed,  4 Dec 2019 15:44:57 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4BBF04AEC5;
+	Thu,  5 Dec 2019 04:02:42 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.391
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.391 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZxHUo9B3alr3; Wed,  4 Dec 2019 15:44:57 -0500 (EST)
+	with ESMTP id OdfvkFaUDzc4; Thu,  5 Dec 2019 04:02:42 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 93A254AF03;
-	Wed,  4 Dec 2019 15:44:56 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2482A4AEA0;
+	Thu,  5 Dec 2019 04:02:41 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5F0034AC07
- for <kvmarm@lists.cs.columbia.edu>; Wed,  4 Dec 2019 15:44:54 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 844604AE8D
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  5 Dec 2019 04:02:39 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id XEv9RqaFpJlX for <kvmarm@lists.cs.columbia.edu>;
- Wed,  4 Dec 2019 15:44:53 -0500 (EST)
-Received: from us-smtp-1.mimecast.com (us-smtp-2.mimecast.com [205.139.110.61])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1D0864AF03
- for <kvmarm@lists.cs.columbia.edu>; Wed,  4 Dec 2019 15:44:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1575492292;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1HSSxylw+ml72S+tggNSNZjvCbGfb9EILB6DT2G4aGg=;
- b=HzLtdA3kQ49KuyG1St4386WLneAJXgpVdPDiBdlBJLTik8qk+nwlppIUXcDOynSgCkDy8m
- yj+RcsyZG/mWJsVnIio4orveN5m8KGFyGpxjny8HDOSeo546ew0dHL9YNHASZ7SzsvX/uG
- PnNXyjE+5rgQJGzkZhlYEYPaGUWpWVU=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-228-mZ8JF3-HOMaWnAVM9fm54Q-1; Wed, 04 Dec 2019 15:44:51 -0500
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com
- [10.5.11.13])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 54E4D1005502;
- Wed,  4 Dec 2019 20:44:50 +0000 (UTC)
-Received: from laptop.redhat.com (ovpn-116-117.ams2.redhat.com [10.36.116.117])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 9C9C869192;
- Wed,  4 Dec 2019 20:44:47 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, maz@kernel.org,
- linux-kernel@vger.kernel.org, kvmarm@lists.cs.columbia.edu
-Subject: [RFC 3/3] KVM: arm64: pmu: Enforce PMEVTYPER evtCount size
-Date: Wed,  4 Dec 2019 21:44:26 +0100
-Message-Id: <20191204204426.9628-4-eric.auger@redhat.com>
-In-Reply-To: <20191204204426.9628-1-eric.auger@redhat.com>
+ with ESMTP id SOxrmZRnqdgg for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  5 Dec 2019 04:02:38 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 87CBE4A982
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  5 Dec 2019 04:02:38 -0500 (EST)
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
+ bits)) (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id EA035205ED;
+ Thu,  5 Dec 2019 09:02:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1575536557;
+ bh=IegRoMB/1Q1fRaPPqw8Gvk6tJnrbo+VYNJkThGWkX78=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=hOAWg22NhSCrXMFC8ojXb8dJREu5nEV6aGcQg8f1YrwCh1LW7FM3d72d7RZ+mZHZa
+ /4soWC1ihRSIBsdfmQkz3s0YiLdUpgVzWWRHGdAhRWlyOK4GBRB0jKRiW6Pm6gRBq0
+ ZKiONXU6Fa+5gEsiYN/wqU8x/gAphf4z8YQjo2fc=
+Date: Thu, 5 Dec 2019 09:02:32 +0000
+From: Will Deacon <will@kernel.org>
+To: Eric Auger <eric.auger@redhat.com>
+Subject: Re: [RFC 3/3] KVM: arm64: pmu: Enforce PMEVTYPER evtCount size
+Message-ID: <20191205090232.GC8606@willie-the-truck>
 References: <20191204204426.9628-1-eric.auger@redhat.com>
+ <20191204204426.9628-4-eric.auger@redhat.com>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
-X-MC-Unique: mZ8JF3-HOMaWnAVM9fm54Q-1
-X-Mimecast-Spam-Score: 0
+Content-Disposition: inline
+In-Reply-To: <20191204204426.9628-4-eric.auger@redhat.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: maz@kernel.org, linux-kernel@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
+ eric.auger.pro@gmail.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -83,110 +74,18 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-ARMv8.1-PMU supports 16-bit evtCount whereas 8.0 only supports
-10 bits.
+On Wed, Dec 04, 2019 at 09:44:26PM +0100, Eric Auger wrote:
+> ARMv8.1-PMU supports 16-bit evtCount whereas 8.0 only supports
+> 10 bits.
+> 
+> On Seatlle which has an 8.0 PMU implementation, evtCount[15:10]
+> are not read as 0, as expected. Fix that by applying a mask on
+> the selected event that depends on the PMU version.
 
-On Seatlle which has an 8.0 PMU implementation, evtCount[15:10]
-are not read as 0, as expected. Fix that by applying a mask on
-the selected event that depends on the PMU version.
+Are you sure about that? These bits are RES0 in 8.0 afaict, so this would be
+a CPU erratum. Have you checked the SDEN document (I haven't)?
 
-Also remove a redundant __vcpu_sys_reg() assignment (already
-done in kvm_pmu_set_counter_even_type()).
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
----
- arch/arm64/include/asm/perf_event.h |  5 ++++-
- arch/arm64/include/asm/sysreg.h     |  5 +++++
- arch/arm64/kernel/perf_event.c      |  2 +-
- arch/arm64/kvm/sys_regs.c           | 14 ++++++++++----
- 4 files changed, 20 insertions(+), 6 deletions(-)
-
-diff --git a/arch/arm64/include/asm/perf_event.h b/arch/arm64/include/asm/perf_event.h
-index 2bdbc79bbd01..37ad1d654d2a 100644
---- a/arch/arm64/include/asm/perf_event.h
-+++ b/arch/arm64/include/asm/perf_event.h
-@@ -189,7 +189,10 @@
- /*
-  * PMXEVTYPER: Event selection reg
-  */
--#define	ARMV8_PMU_EVTYPE_MASK	0xc800ffff	/* Mask for writable bits */
-+/* Mask for writable bits featuring 10b evtCount (ARMv8.0-PMU)*/
-+#define	ARMV8_PMU_EVTYPE_MASK	0xc80003ff
-+/* Mask for writable bits featuring 16b evtCount (ARMv8.1-PMU)*/
-+#define ARMV8_1_PMU_EVTYPE_MASK	0xc800ffff
- #define	ARMV8_PMU_EVTYPE_EVENT	0xffff		/* Mask for EVENT bits */
- 
- /*
-diff --git a/arch/arm64/include/asm/sysreg.h b/arch/arm64/include/asm/sysreg.h
-index 6e919fafb43d..e01b3e3acdf6 100644
---- a/arch/arm64/include/asm/sysreg.h
-+++ b/arch/arm64/include/asm/sysreg.h
-@@ -672,6 +672,11 @@
- #define ID_AA64DFR0_TRACEVER_SHIFT	4
- #define ID_AA64DFR0_DEBUGVER_SHIFT	0
- 
-+#define ID_AA64DFR0_PMUVER_NOT_IMPL	0x0
-+#define ID_AA64DFR0_PMUVER_8_0		0x1
-+#define ID_AA64DFR0_PMUVER_8_1		0x4
-+#define ID_AA64DFR0_PMUVER_IMPL_DEF	0xF
-+
- #define ID_ISAR5_RDM_SHIFT		24
- #define ID_ISAR5_CRC32_SHIFT		16
- #define ID_ISAR5_SHA2_SHIFT		12
-diff --git a/arch/arm64/kernel/perf_event.c b/arch/arm64/kernel/perf_event.c
-index e40b65645c86..d5fe56190ad3 100644
---- a/arch/arm64/kernel/perf_event.c
-+++ b/arch/arm64/kernel/perf_event.c
-@@ -425,7 +425,7 @@ static void armv8pmu_write_counter(struct perf_event *event, u64 value)
- static inline void armv8pmu_write_evtype(int idx, u32 val)
- {
- 	armv8pmu_select_counter(idx);
--	val &= ARMV8_PMU_EVTYPE_MASK;
-+	val &= ARMV8_1_PMU_EVTYPE_MASK;
- 	write_sysreg(val, pmxevtyper_el0);
- }
- 
-diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index 46822afc57e0..8deb6485d605 100644
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -815,11 +815,17 @@ static bool access_pmu_evcntr(struct kvm_vcpu *vcpu,
- static bool access_pmu_evtyper(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
- 			       const struct sys_reg_desc *r)
- {
--	u64 idx, reg;
-+	unsigned int pmuver;
-+	u64 idx, reg, dfr0, evtype_mask;
- 
- 	if (!kvm_arm_pmu_v3_ready(vcpu))
- 		return trap_raz_wi(vcpu, p, r);
- 
-+	dfr0 = read_sanitised_ftr_reg(SYS_ID_AA64DFR0_EL1);
-+	pmuver = cpuid_feature_extract_unsigned_field(dfr0,
-+						      ID_AA64DFR0_PMUVER_SHIFT);
-+	evtype_mask = (pmuver == ID_AA64DFR0_PMUVER_8_0) ?
-+			ARMV8_PMU_EVTYPE_MASK : ARMV8_1_PMU_EVTYPE_MASK;
- 	if (pmu_access_el0_disabled(vcpu))
- 		return false;
- 
-@@ -842,11 +848,11 @@ static bool access_pmu_evtyper(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
- 		return false;
- 
- 	if (p->is_write) {
--		kvm_pmu_set_counter_event_type(vcpu, p->regval, idx);
--		__vcpu_sys_reg(vcpu, reg) = p->regval & ARMV8_PMU_EVTYPE_MASK;
-+		kvm_pmu_set_counter_event_type(vcpu,
-+					       p->regval & evtype_mask, idx);
- 		kvm_vcpu_pmu_restore_guest(vcpu);
- 	} else {
--		p->regval = __vcpu_sys_reg(vcpu, reg) & ARMV8_PMU_EVTYPE_MASK;
-+		p->regval = __vcpu_sys_reg(vcpu, reg) & evtype_mask;
- 	}
- 
- 	return true;
--- 
-2.20.1
-
+Will
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
