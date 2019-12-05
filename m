@@ -2,77 +2,60 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B2307113E1F
-	for <lists+kvmarm@lfdr.de>; Thu,  5 Dec 2019 10:37:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BA6C5113E66
+	for <lists+kvmarm@lfdr.de>; Thu,  5 Dec 2019 10:43:16 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4A2D84AEC8;
-	Thu,  5 Dec 2019 04:37:38 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 461634AEF9;
+	Thu,  5 Dec 2019 04:43:16 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.391
+X-Spam-Score: 0.799
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.391 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id RE2f5pV4xgfX; Thu,  5 Dec 2019 04:37:38 -0500 (EST)
+	with ESMTP id VDW0+Apqq-RX; Thu,  5 Dec 2019 04:43:16 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D1B14AE94;
-	Thu,  5 Dec 2019 04:37:37 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id ED59C4AE9C;
+	Thu,  5 Dec 2019 04:43:14 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EFD324AC87
- for <kvmarm@lists.cs.columbia.edu>; Thu,  5 Dec 2019 04:37:35 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E9AA94AC87
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  5 Dec 2019 04:43:12 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id oTNbGzfmpCf0 for <kvmarm@lists.cs.columbia.edu>;
- Thu,  5 Dec 2019 04:37:34 -0500 (EST)
-Received: from us-smtp-delivery-1.mimecast.com
- (us-smtp-delivery-1.mimecast.com [207.211.31.120])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E118A4A8E8
- for <kvmarm@lists.cs.columbia.edu>; Thu,  5 Dec 2019 04:37:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1575538654;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RgTZ0Y2VUw+Z4N1mKD1L2XaEnRTLuyDRai6jz97PnGk=;
- b=dDwKcV9Zx3Q5mEMc/LDYJ7bNkNwSmR52byGkqbjaxpmOoRBHuFrQL8Rn2ioJfo1pmPoSnh
- hJvyAOtkuJX/dUpnggM9AqOt8ti4+BhOQPJ4Q46/SLCKL7Ry8MTG1Coo8/BU+A6S1tocQv
- +mNQtbJJk/j5vpiaoo1fQG8sZgdibmA=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-79-4ieccuSzO8GpALfjAN5pKg-1; Thu, 05 Dec 2019 04:37:29 -0500
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com
- [10.5.11.12])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 571BF800D5A;
- Thu,  5 Dec 2019 09:37:28 +0000 (UTC)
-Received: from [10.36.116.117] (ovpn-116-117.ams2.redhat.com [10.36.116.117])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id D78A76E702;
- Thu,  5 Dec 2019 09:37:25 +0000 (UTC)
-Subject: Re: [RFC 3/3] KVM: arm64: pmu: Enforce PMEVTYPER evtCount size
-To: Will Deacon <will@kernel.org>
-References: <20191204204426.9628-1-eric.auger@redhat.com>
- <20191204204426.9628-4-eric.auger@redhat.com>
- <20191205090232.GC8606@willie-the-truck>
-From: Auger Eric <eric.auger@redhat.com>
-Message-ID: <c1a876be-49ab-0b5f-8ddd-1a47bcf89300@redhat.com>
-Date: Thu, 5 Dec 2019 10:37:24 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+ with ESMTP id m-pW6Exup3A2 for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  5 Dec 2019 04:43:11 -0500 (EST)
+Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
+ [213.251.177.50])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C41B54A588
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  5 Dec 2019 04:43:11 -0500 (EST)
+Received: from www-data by cheepnis.misterjones.org with local (Exim 4.80)
+ (envelope-from <maz@kernel.org>)
+ id 1icnfB-0003Vq-GN; Thu, 05 Dec 2019 10:43:09 +0100
+To: Eric Auger <eric.auger@redhat.com>
+Subject: Re: [RFC 2/3] KVM: arm64: pmu: Fix chained =?UTF-8?Q?SW=5FINCR=20?=
+ =?UTF-8?Q?counters?=
+X-PHP-Originating-Script: 0:main.inc
 MIME-Version: 1.0
-In-Reply-To: <20191205090232.GC8606@willie-the-truck>
-Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-X-MC-Unique: 4ieccuSzO8GpALfjAN5pKg-1
-X-Mimecast-Spam-Score: 0
-Cc: maz@kernel.org, linux-kernel@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
+Date: Thu, 05 Dec 2019 09:43:09 +0000
+From: Marc Zyngier <maz@kernel.org>
+In-Reply-To: <20191204204426.9628-3-eric.auger@redhat.com>
+References: <20191204204426.9628-1-eric.auger@redhat.com>
+ <20191204204426.9628-3-eric.auger@redhat.com>
+Message-ID: <561ac6df385e977cc51d51a8ab28ee49@www.loen.fr>
+X-Sender: maz@kernel.org
+User-Agent: Roundcube Webmail/0.7.2
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Rcpt-To: eric.auger@redhat.com, eric.auger.pro@gmail.com,
+ linux-kernel@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
+ james.morse@arm.com, andrew.murray@arm.com, suzuki.poulose@arm.com,
+ drjones@redhat.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on cheepnis.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: linux-kernel@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
  eric.auger.pro@gmail.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -85,34 +68,147 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Will,
+Hi Eric,
 
-On 12/5/19 10:02 AM, Will Deacon wrote:
-> On Wed, Dec 04, 2019 at 09:44:26PM +0100, Eric Auger wrote:
->> ARMv8.1-PMU supports 16-bit evtCount whereas 8.0 only supports
->> 10 bits.
->>
->> On Seatlle which has an 8.0 PMU implementation, evtCount[15:10]
->> are not read as 0, as expected. Fix that by applying a mask on
->> the selected event that depends on the PMU version.
-> 
-> Are you sure about that? These bits are RES0 in 8.0 afaict, so this would be
-> a CPU erratum. Have you checked the SDEN document (I haven't)?
+On 2019-12-04 20:44, Eric Auger wrote:
+> At the moment a SW_INCR counter always overflows on 32-bit
+> boundary, independently on whether the n+1th counter is
+> programmed as CHAIN.
+>
+> Check whether the SW_INCR counter is a 64b counter and if so,
+> implement the 64b logic.
+>
+> Fixes: 80f393a23be6 ("KVM: arm/arm64: Support chained PMU counters")
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> ---
+>  virt/kvm/arm/pmu.c | 16 +++++++++++++++-
+>  1 file changed, 15 insertions(+), 1 deletion(-)
+>
+> diff --git a/virt/kvm/arm/pmu.c b/virt/kvm/arm/pmu.c
+> index c3f8b059881e..7ab477db2f75 100644
+> --- a/virt/kvm/arm/pmu.c
+> +++ b/virt/kvm/arm/pmu.c
+> @@ -491,6 +491,8 @@ void kvm_pmu_software_increment(struct kvm_vcpu
+> *vcpu, u64 val)
+>
+>  	enable = __vcpu_sys_reg(vcpu, PMCNTENSET_EL0);
+>  	for (i = 0; i < ARMV8_PMU_CYCLE_IDX; i++) {
+> +		bool chained = test_bit(i >> 1, vcpu->arch.pmu.chained);
+> +
 
-You're right. It is RES0 and not RAZ. My mistake. Please ignore this patch.
+I'd rather you use kvm_pmu_pmc_is_chained() rather than open-coding
+this. But see below:
 
-Thank you for the feedback.
+>  		if (!(val & BIT(i)))
+>  			continue;
+>  		type = __vcpu_sys_reg(vcpu, PMEVTYPER0_EL0 + i)
+> @@ -500,8 +502,20 @@ void kvm_pmu_software_increment(struct kvm_vcpu
+> *vcpu, u64 val)
+>  			reg = __vcpu_sys_reg(vcpu, PMEVCNTR0_EL0 + i) + 1;
+>  			reg = lower_32_bits(reg);
+>  			__vcpu_sys_reg(vcpu, PMEVCNTR0_EL0 + i) = reg;
+> -			if (!reg)
+> +			if (reg) /* no overflow */
+> +				continue;
+> +			if (chained) {
+> +				reg = __vcpu_sys_reg(vcpu, PMEVCNTR0_EL0 + i + 1) + 1;
+> +				reg = lower_32_bits(reg);
+> +				__vcpu_sys_reg(vcpu, PMEVCNTR0_EL0 + i + 1) = reg;
+> +				if (reg)
+> +					continue;
+> +				/* mark an overflow on high counter */
+> +				__vcpu_sys_reg(vcpu, PMOVSSET_EL0) |= BIT(i + 1);
+> +			} else {
+> +				/* mark an overflow */
+>  				__vcpu_sys_reg(vcpu, PMOVSSET_EL0) |= BIT(i);
+> +			}
+>  		}
+>  	}
+>  }
 
-Eric
-> 
-> Will
-> 
+I think the whole function is a bit of a mess, and could be better
+structured to treat 64bit counters as a first class citizen.
 
+I'm suggesting something along those lines, which tries to
+streamline things a bit and keep the flow uniform between the
+two word sizes. IMHO, it helps reasonning about it and gives
+scope to the ARMv8.5 full 64bit counters... It is of course
+completely untested.
+
+Thoughts?
+
+         M.
+
+diff --git a/virt/kvm/arm/pmu.c b/virt/kvm/arm/pmu.c
+index 8731dfeced8b..cf371f643ade 100644
+--- a/virt/kvm/arm/pmu.c
++++ b/virt/kvm/arm/pmu.c
+@@ -480,26 +480,43 @@ static void kvm_pmu_perf_overflow(struct 
+perf_event *perf_event,
+   */
+  void kvm_pmu_software_increment(struct kvm_vcpu *vcpu, u64 val)
+  {
++	struct kvm_pmu *pmu = &vcpu->arch.pmu;
+  	int i;
+-	u64 type, enable, reg;
+
+-	if (val == 0)
+-		return;
++	/* Weed out disabled counters */
++	val &= __vcpu_sys_reg(vcpu, PMCNTENSET_EL0);
+
+-	enable = __vcpu_sys_reg(vcpu, PMCNTENSET_EL0);
+  	for (i = 0; i < ARMV8_PMU_CYCLE_IDX; i++) {
++		u64 type, reg;
++		int ovs = i;
++
+  		if (!(val & BIT(i)))
+  			continue;
+-		type = __vcpu_sys_reg(vcpu, PMEVTYPER0_EL0 + i)
+-		       & ARMV8_PMU_EVTYPE_EVENT;
+-		if ((type == ARMV8_PMUV3_PERFCTR_SW_INCR)
+-		    && (enable & BIT(i))) {
+-			reg = __vcpu_sys_reg(vcpu, PMEVCNTR0_EL0 + i) + 1;
+-			reg = lower_32_bits(reg);
+-			__vcpu_sys_reg(vcpu, PMEVCNTR0_EL0 + i) = reg;
+-			if (!reg)
+-				__vcpu_sys_reg(vcpu, PMOVSSET_EL0) |= BIT(i);
++
++		/* PMSWINC only applies to ... SW_INC! */
++		type = __vcpu_sys_reg(vcpu, PMEVTYPER0_EL0 + i);
++		type &= ARMV8_PMU_EVTYPE_EVENT;
++		if (type != ARMV8_PMUV3_PERFCTR_SW_INCR)
++			continue;
++
++		/* Potential 64bit value */
++		reg = kvm_pmu_get_counter_value(vcpu, i) + 1;
++
++		/* Start by writing back the low 32bits */
++		__vcpu_sys_reg(vcpu, PMEVCNTR0_EL0 + i) = lower_32_bits(reg);
++
++		/*
++		 * 64bit counter? Write back the upper bits and target
++		 * the overflow bit at the next counter
++		 */
++		if (kvm_pmu_pmc_is_chained(&pmu->pmc[i])) {
++			reg = upper_32_bits(reg);
++			__vcpu_sys_reg(vcpu, PMEVCNTR0_EL0 + i + 1) = reg;
++			ovs++;
+  		}
++
++		if (!lower_32_bits(reg))
++			__vcpu_sys_reg(vcpu, PMOVSSET_EL0) |= BIT(ovs);
+  	}
+  }
+
+
+-- 
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
