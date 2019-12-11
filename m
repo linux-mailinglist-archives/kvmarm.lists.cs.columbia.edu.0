@@ -2,59 +2,56 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D8D3511B955
-	for <lists+kvmarm@lfdr.de>; Wed, 11 Dec 2019 17:57:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 91EDE11BA47
+	for <lists+kvmarm@lfdr.de>; Wed, 11 Dec 2019 18:28:24 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 592374AEAC;
-	Wed, 11 Dec 2019 11:57:10 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2A0844AEBF;
+	Wed, 11 Dec 2019 12:28:24 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
 X-Spam-Level: 
 X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qCB-AnEuxKIW; Wed, 11 Dec 2019 11:57:10 -0500 (EST)
+	with ESMTP id ocPCtlPmF8oD; Wed, 11 Dec 2019 12:28:24 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4B5934AEE3;
-	Wed, 11 Dec 2019 11:57:09 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E120B4A319;
+	Wed, 11 Dec 2019 12:28:22 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E667F4AECD
- for <kvmarm@lists.cs.columbia.edu>; Wed, 11 Dec 2019 11:57:07 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E9BBF4ACF2
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 11 Dec 2019 12:28:21 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id xwGeFZCXwTjo for <kvmarm@lists.cs.columbia.edu>;
- Wed, 11 Dec 2019 11:57:06 -0500 (EST)
-Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
- [213.251.177.50])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id DD8934AEA7
- for <kvmarm@lists.cs.columbia.edu>; Wed, 11 Dec 2019 11:57:06 -0500 (EST)
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.lan) by cheepnis.misterjones.org with esmtpsa
- (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128) (Exim 4.80)
- (envelope-from <maz@kernel.org>)
- id 1if5IP-00076q-Nw; Wed, 11 Dec 2019 17:57:05 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 3/3] KVM: arm/arm64: Drop spurious message when faulting on a
- non-existent mapping
-Date: Wed, 11 Dec 2019 16:56:50 +0000
-Message-Id: <20191211165651.7889-4-maz@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191211165651.7889-1-maz@kernel.org>
-References: <20191211165651.7889-1-maz@kernel.org>
+ with ESMTP id 2KGaf-RH3AwL for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 11 Dec 2019 12:28:20 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BAD9B4A319
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 11 Dec 2019 12:28:20 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 25C7530E;
+ Wed, 11 Dec 2019 09:28:20 -0800 (PST)
+Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3C06A3F52E;
+ Wed, 11 Dec 2019 09:28:19 -0800 (PST)
+Subject: Re: [PATCH v2 2/3] KVM: arm64: limit PMU version to ARMv8.4
+To: Andrew Murray <andrew.murray@arm.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Marc Zyngier <maz@kernel.org>, Mark Rutland <mark.rutland@arm.com>
+References: <20191210120146.2942-1-andrew.murray@arm.com>
+ <20191210120146.2942-3-andrew.murray@arm.com>
+From: Suzuki Kuruppassery Poulose <suzuki.poulose@arm.com>
+Message-ID: <eed65824-bc8b-8342-731f-e5ac57f2a129@arm.com>
+Date: Wed, 11 Dec 2019 17:28:18 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org, james.morse@arm.com,
- julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
- Christoffer.Dall@arm.com, alexandru.elisei@arm.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on cheepnis.misterjones.org);
- SAEximRunCond expanded to false
+In-Reply-To: <20191210120146.2942-3-andrew.murray@arm.com>
+Content-Language: en-US
+Cc: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -66,36 +63,20 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Should userspace unmap memory whilst the guest is running, we exit
-with a -EFAULT, but also having spat a useless message on the console.
+On 10/12/2019 12:01, Andrew Murray wrote:
+> ARMv8.5-PMU introduces 64-bit event counters, however KVM doesn't yet
+> support this. Let's trap the Debug Feature Registers in order to limit
+> PMUVer/PerfMon in the Debug Feature Registers to PMUv3 for ARMv8.4.
+> 
+> Signed-off-by: Andrew Murray <andrew.murray@arm.com>
+> ---
 
-Get rid of it.
-
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- virt/kvm/arm/mmu.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
-index f73393f5ddb7..fbfdffb8fe8e 100644
---- a/virt/kvm/arm/mmu.c
-+++ b/virt/kvm/arm/mmu.c
-@@ -1696,7 +1696,6 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 	down_read(&current->mm->mmap_sem);
- 	vma = find_vma_intersection(current->mm, hva, hva + 1);
- 	if (unlikely(!vma)) {
--		kvm_err("Failed to find VMA for hva 0x%lx\n", hva);
- 		up_read(&current->mm->mmap_sem);
- 		return -EFAULT;
- 	}
--- 
-2.20.1
-
+Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
