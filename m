@@ -2,46 +2,47 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C0CD11B957
-	for <lists+kvmarm@lfdr.de>; Wed, 11 Dec 2019 17:57:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D8D3511B955
+	for <lists+kvmarm@lfdr.de>; Wed, 11 Dec 2019 17:57:10 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id ABC174AECD;
-	Wed, 11 Dec 2019 11:57:11 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 592374AEAC;
+	Wed, 11 Dec 2019 11:57:10 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
 X-Spam-Level: 
 X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=no
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 61PPdw1oM6-7; Wed, 11 Dec 2019 11:57:10 -0500 (EST)
+	with ESMTP id qCB-AnEuxKIW; Wed, 11 Dec 2019 11:57:10 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 68F794AEF0;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4B5934AEE3;
 	Wed, 11 Dec 2019 11:57:09 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E9FF94AEA7
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E667F4AECD
  for <kvmarm@lists.cs.columbia.edu>; Wed, 11 Dec 2019 11:57:07 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id wIVlLnlYSEhV for <kvmarm@lists.cs.columbia.edu>;
- Wed, 11 Dec 2019 11:57:07 -0500 (EST)
+ with ESMTP id xwGeFZCXwTjo for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 11 Dec 2019 11:57:06 -0500 (EST)
 Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
  [213.251.177.50])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E14CF4AEB2
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id DD8934AEA7
  for <kvmarm@lists.cs.columbia.edu>; Wed, 11 Dec 2019 11:57:06 -0500 (EST)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by cheepnis.misterjones.org with esmtpsa
  (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128) (Exim 4.80)
  (envelope-from <maz@kernel.org>)
- id 1if5IP-00076q-7X; Wed, 11 Dec 2019 17:57:05 +0100
+ id 1if5IP-00076q-Nw; Wed, 11 Dec 2019 17:57:05 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
  linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 2/3] KVM: arm/arm64: Re-check VMA on detecting a poisoned page
-Date: Wed, 11 Dec 2019 16:56:49 +0000
-Message-Id: <20191211165651.7889-3-maz@kernel.org>
+Subject: [PATCH 3/3] KVM: arm/arm64: Drop spurious message when faulting on a
+ non-existent mapping
+Date: Wed, 11 Dec 2019 16:56:50 +0000
+Message-Id: <20191211165651.7889-4-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191211165651.7889-1-maz@kernel.org>
 References: <20191211165651.7889-1-maz@kernel.org>
@@ -70,58 +71,28 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-When we check for a poisoned page, we use the VMA to tell userspace
-about the looming disaster. But we pass a pointer to this VMA
-after having released the mmap_sem, which isn't a good idea.
+Should userspace unmap memory whilst the guest is running, we exit
+with a -EFAULT, but also having spat a useless message on the console.
 
-Instead, re-check that we have still have a VMA, and that this
-VMA still points to a poisoned page. If the VMA isn't there,
-userspace is playing with our nerves, so lety's give it a -EFAULT
-(it deserves it). If the PFN isn't poisoned anymore, let's restart
-from the top and handle the fault again.
+Get rid of it.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- virt/kvm/arm/mmu.c | 25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+ virt/kvm/arm/mmu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
-index 0b32a904a1bb..f73393f5ddb7 100644
+index f73393f5ddb7..fbfdffb8fe8e 100644
 --- a/virt/kvm/arm/mmu.c
 +++ b/virt/kvm/arm/mmu.c
-@@ -1741,9 +1741,30 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 
- 	pfn = gfn_to_pfn_prot(kvm, gfn, write_fault, &writable);
- 	if (pfn == KVM_PFN_ERR_HWPOISON) {
--		kvm_send_hwpoison_signal(hva, vma);
--		return 0;
-+		/*
-+		 * Search for the VMA again, as it may have been
-+		 * removed in the interval...
-+		 */
-+		down_read(&current->mm->mmap_sem);
-+		vma = find_vma_intersection(current->mm, hva, hva + 1);
-+		if (vma) {
-+			/*
-+			 * Recheck for a poisoned page. If something changed
-+			 * behind our back, don't do a thing and take the
-+			 * fault again.
-+			 */
-+			pfn = gfn_to_pfn_prot(kvm, gfn, write_fault, &writable);
-+			if (pfn == KVM_PFN_ERR_HWPOISON)
-+				kvm_send_hwpoison_signal(hva, vma);
-+
-+			ret = 0;
-+		} else {
-+			ret = -EFAULT;
-+		}
-+		up_read(&current->mm->mmap_sem);
-+		return ret;
- 	}
-+
- 	if (is_error_noslot_pfn(pfn))
+@@ -1696,7 +1696,6 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 	down_read(&current->mm->mmap_sem);
+ 	vma = find_vma_intersection(current->mm, hva, hva + 1);
+ 	if (unlikely(!vma)) {
+-		kvm_err("Failed to find VMA for hva 0x%lx\n", hva);
+ 		up_read(&current->mm->mmap_sem);
  		return -EFAULT;
- 
+ 	}
 -- 
 2.20.1
 
