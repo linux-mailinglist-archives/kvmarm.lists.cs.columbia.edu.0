@@ -2,58 +2,63 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E04AF11D252
-	for <lists+kvmarm@lfdr.de>; Thu, 12 Dec 2019 17:31:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0110911D3D5
+	for <lists+kvmarm@lfdr.de>; Thu, 12 Dec 2019 18:28:50 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 53DF94AEA0;
-	Thu, 12 Dec 2019 11:31:28 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8A1E64A944;
+	Thu, 12 Dec 2019 12:28:49 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
 X-Spam-Level: 
 X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001]
-	autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zsYl+BZO1NrV; Thu, 12 Dec 2019 11:31:28 -0500 (EST)
+	with ESMTP id KM4IBW-TjzQM; Thu, 12 Dec 2019 12:28:48 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2CE0D4ACDB;
-	Thu, 12 Dec 2019 11:31:27 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 822E94ACBE;
+	Thu, 12 Dec 2019 12:28:48 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D355C4A955
- for <kvmarm@lists.cs.columbia.edu>; Thu, 12 Dec 2019 11:31:25 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C836A4ACFA
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 12 Dec 2019 12:28:47 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id OIvOAK8Cdzp5 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 12 Dec 2019 11:31:24 -0500 (EST)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8C0B54A551
- for <kvmarm@lists.cs.columbia.edu>; Thu, 12 Dec 2019 11:31:24 -0500 (EST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id F407B30E;
- Thu, 12 Dec 2019 08:31:23 -0800 (PST)
-Received: from lakrids.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com
- [10.121.207.14])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id BEEFD3F6CF;
- Thu, 12 Dec 2019 08:31:22 -0800 (PST)
-Date: Thu, 12 Dec 2019 16:31:20 +0000
-From: Mark Rutland <mark.rutland@arm.com>
-To: Suzuki Kuruppassery Poulose <suzuki.poulose@arm.com>
-Subject: Re: [PATCH] arm64: Introduce ISAR6 CPU ID register
-Message-ID: <20191212163120.GH46910@lakrids.cambridge.arm.com>
-References: <1576145663-9909-1-git-send-email-anshuman.khandual@arm.com>
- <20191212144633.GE46910@lakrids.cambridge.arm.com>
- <be707b09-6469-d12f-07d5-50d574dc7284@arm.com>
+ with ESMTP id Byh90-E-MKFS for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 12 Dec 2019 12:28:46 -0500 (EST)
+Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
+ [213.251.177.50])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B1F9B4A541
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 12 Dec 2019 12:28:46 -0500 (EST)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by cheepnis.misterjones.org with esmtpsa
+ (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128) (Exim 4.80)
+ (envelope-from <maz@kernel.org>)
+ id 1ifSGU-00069s-N1; Thu, 12 Dec 2019 18:28:38 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@redhat.com>
+Subject: [GIT PULL] KVM/arm updates for 5.5-rc2
+Date: Thu, 12 Dec 2019 17:28:16 +0000
+Message-Id: <20191212172824.11523-1-maz@kernel.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <be707b09-6469-d12f-07d5-50d574dc7284@arm.com>
-User-Agent: Mutt/1.11.1+11 (2f07cb52) (2018-12-01)
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>,
- Marc Zyngier <maz@kernel.org>, linux-kernel@vger.kernel.org,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: pbonzini@redhat.com, rkrcmar@redhat.com,
+ alexandru.elisei@arm.com, ard.biesheuvel@linaro.org, christoffer.dall@arm.com,
+ eric.auger@redhat.com, james.morse@arm.com, justin.he@arm.com,
+ mark.rutland@arm.com, linmiaohe@huawei.com, steven.price@arm.com,
+ will@kernel.org, kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, julien.thierry.kdev@gmail.com,
+ suzuki.poulose@arm.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on cheepnis.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Jia He <justin.he@arm.com>, kvm@vger.kernel.org,
+ Ard Biesheuvel <ard.biesheuvel@linaro.org>, Will Deacon <will@kernel.org>,
+ Steven Price <steven.price@arm.com>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -70,70 +75,62 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Dec 12, 2019 at 03:22:13PM +0000, Suzuki Kuruppassery Poulose wrote:
-> On 12/12/2019 14:46, Mark Rutland wrote:
-> > On Thu, Dec 12, 2019 at 03:44:23PM +0530, Anshuman Khandual wrote:
-> > > +#define ID_ISAR6_JSCVT_SHIFT		0
-> > > +#define ID_ISAR6_DP_SHIFT		4
-> > > +#define ID_ISAR6_FHM_SHIFT		8
-> > > +#define ID_ISAR6_SB_SHIFT		12
-> > > +#define ID_ISAR6_SPECRES_SHIFT		16
-> > > +#define ID_ISAR6_BF16_SHIFT		20
-> > > +#define ID_ISAR6_I8MM_SHIFT		24
-> > 
-> > > @@ -399,6 +399,7 @@ static const struct __ftr_reg_entry {
-> > >   	ARM64_FTR_REG(SYS_ID_ISAR4_EL1, ftr_generic_32bits),
-> > >   	ARM64_FTR_REG(SYS_ID_ISAR5_EL1, ftr_id_isar5),
-> > >   	ARM64_FTR_REG(SYS_ID_MMFR4_EL1, ftr_id_mmfr4),
-> > 
-> > > +	ARM64_FTR_REG(SYS_ID_ISAR6_EL1, ftr_generic_32bits),
-> > 
-> > Using ftr_generic_32bits exposes the lowest-common-denominator for all
-> > 4-bit fields in the register, and I don't think that's the right thing
-> > to do here, because:
-> > 
-> > * We have no idea what ID_ISAR6 bits [31:28] may mean in future.
-> > 
-> > * AFAICT, the instructions described by ID_ISAR6.SPECRES (from the
-> >    ARMv8.0-PredInv extension) operate on the local PE and are not
-> >    broadcast. To make those work as a guest expects, the host will need
-> >    to do additional things (e.g. to preserve that illusion when a vCPU is
-> >    migrated from one pCPU to another and back).
-> > 
-> > Given that, think we should add an explicit ftr_id_isar6 which only
-> > exposes the fields that we're certain are safe to expose to a guest
-> > (i.e. without SPECRES).
-> 
-> Agree. Thanks for pointing this out. I recommended the usage of
-> generic_32bits table without actually looking at the feature
-> definitions.
+Paolo, Radim,
 
-No worries; this is /really/ easy to miss!
+This is the first set of fixes for 5.5-rc2. This time around,
+a couple of MM fixes, a ONE_REG fix for an issue detected by
+GCC-10, and a handful of cleanups.
 
-Looking again, comparing to ARM DDI 0487E.a, there are a few other
-things we should probably sort out:
+Please pull,
 
-* ID_DFR0 fields need more thought; we should limit what we expose here.
-  I don't think it's valid for us to expose TraceFilt, and I suspect we
-  need to add capping for debug features we currently emulate.
+	M.
 
-* ID_ISAR0[31:28] are RES0 in ARMv8, Reserved/UNK in ARMv7.
-  We should probably ftr_id_isar0 so we can hide those bits.
+The following changes since commit cd7056ae34af0e9424da97bbc7d2b38246ba8a2c:
 
-* ID_ISAR5[23:10] are RES0
-  We handle this already! :)
+  Merge remote-tracking branch 'kvmarm/misc-5.5' into kvmarm/next (2019-11-08 11:27:29 +0000)
 
-* ID_MMFR4.SpecSEI should be trated as higher safe.
-  We should update ftr_id_mmfr4 to handle this and other fields.
+are available in the Git repository at:
 
-* ID_PFR0 is missing DIT and CSV2
-  We should probably add these (but neither RAS not AMU).
+  git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git tags/kvmarm-fixes-5.5-1
 
-* ID_PFR2 is missing
-  We should probably add this for SSBS and CSV3.
+for you to fetch changes up to 6d674e28f642e3ff676fbae2d8d1b872814d32b6:
 
-Thanks,
-Mark.
+  KVM: arm/arm64: Properly handle faulting of device mappings (2019-12-12 16:22:40 +0000)
+
+----------------------------------------------------------------
+KVM/arm fixes for .5.5, take #1
+
+- Fix uninitialised sysreg accessor
+- Fix handling of demand-paged device mappings
+- Stop spamming the console on IMPDEF sysregs
+- Relax mappings of writable memslots
+- Assorted cleanups
+
+----------------------------------------------------------------
+Jia He (1):
+      KVM: arm/arm64: Remove excessive permission check in kvm_arch_prepare_memory_region
+
+Marc Zyngier (1):
+      KVM: arm/arm64: Properly handle faulting of device mappings
+
+Mark Rutland (2):
+      KVM: arm64: Sanely ratelimit sysreg messages
+      KVM: arm64: Don't log IMP DEF sysreg traps
+
+Miaohe Lin (3):
+      KVM: arm/arm64: Get rid of unused arg in cpu_init_hyp_mode()
+      KVM: arm/arm64: vgic: Fix potential double free dist->spis in __kvm_vgic_destroy()
+      KVM: arm/arm64: vgic: Use wrapper function to lock/unlock all vcpus in kvm_vgic_create()
+
+Will Deacon (1):
+      KVM: arm64: Ensure 'params' is initialised when looking up sys register
+
+ arch/arm64/kvm/sys_regs.c     | 25 ++++++++++++++++++-------
+ arch/arm64/kvm/sys_regs.h     | 17 +++++++++++++++--
+ virt/kvm/arm/arm.c            |  4 ++--
+ virt/kvm/arm/mmu.c            | 30 +++++++++++++++++-------------
+ virt/kvm/arm/vgic/vgic-init.c | 20 +++++---------------
+ 5 files changed, 57 insertions(+), 39 deletions(-)
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
