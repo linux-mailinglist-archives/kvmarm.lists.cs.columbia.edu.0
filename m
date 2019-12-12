@@ -2,46 +2,47 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4760011D3E2
-	for <lists+kvmarm@lfdr.de>; Thu, 12 Dec 2019 18:28:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 88AB411D3E3
+	for <lists+kvmarm@lfdr.de>; Thu, 12 Dec 2019 18:28:57 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E11274AEB9;
-	Thu, 12 Dec 2019 12:28:55 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 372394AEB2;
+	Thu, 12 Dec 2019 12:28:57 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
 X-Spam-Level: 
 X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 72CitJYe8sUM; Thu, 12 Dec 2019 12:28:55 -0500 (EST)
+	with ESMTP id y4FpBslGlZZ4; Thu, 12 Dec 2019 12:28:56 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1D6854ACFA;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 31ACF4AED8;
 	Thu, 12 Dec 2019 12:28:52 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 773324AEA4
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id AB56E4AC88
  for <kvmarm@lists.cs.columbia.edu>; Thu, 12 Dec 2019 12:28:50 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id d9NHVP9MFxij for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id 741W9lu41qc4 for <kvmarm@lists.cs.columbia.edu>;
  Thu, 12 Dec 2019 12:28:49 -0500 (EST)
 Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
  [213.251.177.50])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7FD454AEAB
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id AA10D4A541
  for <kvmarm@lists.cs.columbia.edu>; Thu, 12 Dec 2019 12:28:48 -0500 (EST)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by cheepnis.misterjones.org with esmtpsa
  (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128) (Exim 4.80)
  (envelope-from <maz@kernel.org>)
- id 1ifSGY-00069s-Qa; Thu, 12 Dec 2019 18:28:43 +0100
+ id 1ifSGZ-00069s-LQ; Thu, 12 Dec 2019 18:28:43 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@redhat.com>
-Subject: [PATCH 5/8] KVM: arm64: Don't log IMP DEF sysreg traps
-Date: Thu, 12 Dec 2019 17:28:21 +0000
-Message-Id: <20191212172824.11523-6-maz@kernel.org>
+Subject: [PATCH 6/8] KVM: arm/arm64: Remove excessive permission check in
+ kvm_arch_prepare_memory_region
+Date: Thu, 12 Dec 2019 17:28:22 +0000
+Message-Id: <20191212172824.11523-7-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191212172824.11523-1-maz@kernel.org>
 References: <20191212172824.11523-1-maz@kernel.org>
@@ -77,46 +78,61 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Jia He <justin.he@arm.com>
 
-We don't intend to support IMPLEMENATION DEFINED system registers, but
-have to trap them (and emulate them as UNDEFINED). These traps aren't
-interesting to the system administrator or to the KVM developers, so
-let's not bother logging when we do so.
+In kvm_arch_prepare_memory_region, arm kvm regards the memory region as
+writable if the flag has no KVM_MEM_READONLY, and the vm is readonly if
+!VM_WRITE.
 
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+But there is common usage for setting kvm memory region as follows:
+e.g. qemu side (see the PROT_NONE flag)
+1. mmap(NULL, size, PROT_NONE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+   memory_region_init_ram_ptr()
+2. re mmap the above area with read/write authority.
+
+Such example is used in virtio-fs qemu codes which hasn't been upstreamed
+[1]. But seems we can't forbid this example.
+
+Without this patch, it will cause an EPERM during kvm_set_memory_region()
+and cause qemu boot crash.
+
+As told by Ard, "the underlying assumption is incorrect, i.e., that the
+value of vm_flags at this point in time defines how the VMA is used
+during its lifetime. There may be other cases where a VMA is created
+with VM_READ vm_flags that are changed to VM_READ|VM_WRITE later, and
+we are currently rejecting this use case as well."
+
+[1] https://gitlab.com/virtio-fs/qemu/blob/5a356e/hw/virtio/vhost-user-fs.c#L488
+
+Suggested-by: Ard Biesheuvel <ard.biesheuvel@linaro.org>
+Signed-off-by: Jia He <justin.he@arm.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20191205180652.18671-3-mark.rutland@arm.com
+Reviewed-by: Christoffer Dall <christoffer.dall@arm.com>
+Link: https://lore.kernel.org/r/20191206020802.196108-1-justin.he@arm.com
 ---
- arch/arm64/kvm/sys_regs.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ virt/kvm/arm/mmu.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index e8bf08e09f78..bd2ac3796d8d 100644
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -2229,6 +2229,12 @@ int kvm_handle_cp14_32(struct kvm_vcpu *vcpu, struct kvm_run *run)
- 				NULL, 0);
- }
+diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
+index 38b4c910b6c3..a48994af70b8 100644
+--- a/virt/kvm/arm/mmu.c
++++ b/virt/kvm/arm/mmu.c
+@@ -2301,15 +2301,6 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
+ 		if (!vma || vma->vm_start >= reg_end)
+ 			break;
  
-+static bool is_imp_def_sys_reg(struct sys_reg_params *params)
-+{
-+	// See ARM DDI 0487E.a, section D12.3.2
-+	return params->Op0 == 3 && (params->CRn & 0b1011) == 0b1011;
-+}
-+
- static int emulate_sys_reg(struct kvm_vcpu *vcpu,
- 			   struct sys_reg_params *params)
- {
-@@ -2244,6 +2250,8 @@ static int emulate_sys_reg(struct kvm_vcpu *vcpu,
- 
- 	if (likely(r)) {
- 		perform_access(vcpu, params, r);
-+	} else if (is_imp_def_sys_reg(params)) {
-+		kvm_inject_undefined(vcpu);
- 	} else {
- 		print_sys_reg_msg(params,
- 				  "Unsupported guest sys_reg access at: %lx [%08lx]\n",
+-		/*
+-		 * Mapping a read-only VMA is only allowed if the
+-		 * memory region is configured as read-only.
+-		 */
+-		if (writable && !(vma->vm_flags & VM_WRITE)) {
+-			ret = -EPERM;
+-			break;
+-		}
+-
+ 		/*
+ 		 * Take the intersection of this VMA with the memory region
+ 		 */
 -- 
 2.20.1
 
