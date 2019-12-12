@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 88AB411D3E3
-	for <lists+kvmarm@lfdr.de>; Thu, 12 Dec 2019 18:28:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1231911D3E1
+	for <lists+kvmarm@lfdr.de>; Thu, 12 Dec 2019 18:28:56 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 372394AEB2;
-	Thu, 12 Dec 2019 12:28:57 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B9D674A5A0;
+	Thu, 12 Dec 2019 12:28:55 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
@@ -15,34 +15,34 @@ X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id y4FpBslGlZZ4; Thu, 12 Dec 2019 12:28:56 -0500 (EST)
+	with ESMTP id 3hi7KNJgfJh4; Thu, 12 Dec 2019 12:28:54 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 31ACF4AED8;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0688B4AECF;
 	Thu, 12 Dec 2019 12:28:52 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AB56E4AC88
- for <kvmarm@lists.cs.columbia.edu>; Thu, 12 Dec 2019 12:28:50 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6E4424AEBC
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 12 Dec 2019 12:28:49 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 741W9lu41qc4 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 12 Dec 2019 12:28:49 -0500 (EST)
+ with ESMTP id NxsqvrRsQTDO for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 12 Dec 2019 12:28:48 -0500 (EST)
 Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
  [213.251.177.50])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id AA10D4A541
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 511A44AC88
  for <kvmarm@lists.cs.columbia.edu>; Thu, 12 Dec 2019 12:28:48 -0500 (EST)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by cheepnis.misterjones.org with esmtpsa
  (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128) (Exim 4.80)
  (envelope-from <maz@kernel.org>)
- id 1ifSGZ-00069s-LQ; Thu, 12 Dec 2019 18:28:43 +0100
+ id 1ifSGa-00069s-F9; Thu, 12 Dec 2019 18:28:44 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@redhat.com>
-Subject: [PATCH 6/8] KVM: arm/arm64: Remove excessive permission check in
- kvm_arch_prepare_memory_region
-Date: Thu, 12 Dec 2019 17:28:22 +0000
-Message-Id: <20191212172824.11523-7-maz@kernel.org>
+Subject: [PATCH 7/8] KVM: arm64: Ensure 'params' is initialised when looking
+ up sys register
+Date: Thu, 12 Dec 2019 17:28:23 +0000
+Message-Id: <20191212172824.11523-8-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191212172824.11523-1-maz@kernel.org>
 References: <20191212172824.11523-1-maz@kernel.org>
@@ -54,14 +54,14 @@ X-SA-Exim-Rcpt-To: pbonzini@redhat.com, rkrcmar@redhat.com,
  mark.rutland@arm.com, linmiaohe@huawei.com, steven.price@arm.com,
  will@kernel.org, kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
  linux-arm-kernel@lists.infradead.org, julien.thierry.kdev@gmail.com,
- suzuki.poulose@arm.com
+ suzuki.poulose@arm.com, stable@vger.kernel.org
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on cheepnis.misterjones.org);
  SAEximRunCond expanded to false
 Cc: Jia He <justin.he@arm.com>, kvm@vger.kernel.org,
  Ard Biesheuvel <ard.biesheuvel@linaro.org>, Will Deacon <will@kernel.org>,
- Steven Price <steven.price@arm.com>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+ stable@vger.kernel.org, Steven Price <steven.price@arm.com>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -73,70 +73,48 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Jia He <justin.he@arm.com>
-
-In kvm_arch_prepare_memory_region, arm kvm regards the memory region as
-writable if the flag has no KVM_MEM_READONLY, and the vm is readonly if
-!VM_WRITE.
-
-But there is common usage for setting kvm memory region as follows:
-e.g. qemu side (see the PROT_NONE flag)
-1. mmap(NULL, size, PROT_NONE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-   memory_region_init_ram_ptr()
-2. re mmap the above area with read/write authority.
-
-Such example is used in virtio-fs qemu codes which hasn't been upstreamed
-[1]. But seems we can't forbid this example.
-
-Without this patch, it will cause an EPERM during kvm_set_memory_region()
-and cause qemu boot crash.
-
-As told by Ard, "the underlying assumption is incorrect, i.e., that the
-value of vm_flags at this point in time defines how the VMA is used
-during its lifetime. There may be other cases where a VMA is created
-with VM_READ vm_flags that are changed to VM_READ|VM_WRITE later, and
-we are currently rejecting this use case as well."
-
-[1] https://gitlab.com/virtio-fs/qemu/blob/5a356e/hw/virtio/vhost-user-fs.c#L488
-
-Suggested-by: Ard Biesheuvel <ard.biesheuvel@linaro.org>
-Signed-off-by: Jia He <justin.he@arm.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Christoffer Dall <christoffer.dall@arm.com>
-Link: https://lore.kernel.org/r/20191206020802.196108-1-justin.he@arm.com
----
- virt/kvm/arm/mmu.c | 9 ---------
- 1 file changed, 9 deletions(-)
-
-diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
-index 38b4c910b6c3..a48994af70b8 100644
---- a/virt/kvm/arm/mmu.c
-+++ b/virt/kvm/arm/mmu.c
-@@ -2301,15 +2301,6 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
- 		if (!vma || vma->vm_start >= reg_end)
- 			break;
- 
--		/*
--		 * Mapping a read-only VMA is only allowed if the
--		 * memory region is configured as read-only.
--		 */
--		if (writable && !(vma->vm_flags & VM_WRITE)) {
--			ret = -EPERM;
--			break;
--		}
--
- 		/*
- 		 * Take the intersection of this VMA with the memory region
- 		 */
--- 
-2.20.1
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+RnJvbTogV2lsbCBEZWFjb24gPHdpbGxAa2VybmVsLm9yZz4KCkNvbW1pdCA0YjkyN2I5NGQ1ZGYg
+KCJLVk06IGFybS9hcm02NDogdmdpYzogSW50cm9kdWNlIGZpbmRfcmVnX2J5X2lkKCkiKQppbnRy
+b2R1Y2VkICdmaW5kX3JlZ19ieV9pZCgpJywgd2hpY2ggbG9va3MgdXAgYSBzeXN0ZW0gcmVnaXN0
+ZXIgb25seSBpZgp0aGUgJ2lkJyBpbmRleCBwYXJhbWV0ZXIgaWRlbnRpZmllcyBhIHZhbGlkIHN5
+c3RlbSByZWdpc3Rlci4gQXMgcGFydCBvZgp0aGUgcGF0Y2gsIGV4aXN0aW5nIGNhbGxlcnMgb2Yg
+J2ZpbmRfcmVnKCknIHdlcmUgcG9ydGVkIG92ZXIgdG8gdGhlIG5ldwppbnRlcmZhY2UsIGJ1dCB0
+aGlzIGJyZWFrcyAnaW5kZXhfdG9fc3lzX3JlZ19kZXNjKCknIGluIHRoZSBjYXNlIHRoYXQgdGhl
+CmluaXRpYWwgbG9va3VwIGluIHRoZSB2Q1BVIHRhcmdldCB0YWJsZSBmYWlscyBiZWNhdXNlIHdl
+IHdpbGwgdGhlbiBjYWxsCmludG8gJ2ZpbmRfcmVnKCknIGZvciB0aGUgc3lzdGVtIHJlZ2lzdGVy
+IHRhYmxlIHdpdGggYW4gdW5pbml0aWFsaXNlZAoncGFyYW0nIGFzIHRoZSBrZXkgdG8gdGhlIGxv
+b2t1cC4KCkdDQyAxMCBpcyBicmlnaHQgZW5vdWdoIHRvIHNwb3QgdGhpcyAoYW1vbmdzdCBhIHRv
+bm5lIG9mIGZhbHNlIHBvc2l0aXZlcywKYnV0IGhleSEpOgoKICB8IGFyY2gvYXJtNjQva3ZtL3N5
+c19yZWdzLmM6IEluIGZ1bmN0aW9uIOKAmGluZGV4X3RvX3N5c19yZWdfZGVzYy5wYXJ0LjAuaXNy
+YeKAmToKICB8IGFyY2gvYXJtNjQva3ZtL3N5c19yZWdzLmM6OTgzOjMzOiB3YXJuaW5nOiDigJhw
+YXJhbXMuT3Ay4oCZIG1heSBiZSB1c2VkIHVuaW5pdGlhbGl6ZWQgaW4gdGhpcyBmdW5jdGlvbiBb
+LVdtYXliZS11bmluaXRpYWxpemVkXQogIHwgICA5ODMgfCAgICh1MzIpKHgpLT5DUm4sICh1MzIp
+KHgpLT5DUm0sICh1MzIpKHgpLT5PcDIpOwogIHwgWy4uLl0KClJldmVydCB0aGUgaHVuayBvZiA0
+YjkyN2I5NGQ1ZGYgd2hpY2ggYnJlYWtzICdpbmRleF90b19zeXNfcmVnX2Rlc2MoKScgc28KdGhh
+dCB0aGUgb2xkIGJlaGF2aW91ciBvZiBjaGVja2luZyB0aGUgaW5kZXggdXBmcm9udCBpcyByZXN0
+b3JlZC4KCkZpeGVzOiA0YjkyN2I5NGQ1ZGYgKCJLVk06IGFybS9hcm02NDogdmdpYzogSW50cm9k
+dWNlIGZpbmRfcmVnX2J5X2lkKCkiKQpTaWduZWQtb2ZmLWJ5OiBXaWxsIERlYWNvbiA8d2lsbEBr
+ZXJuZWwub3JnPgpTaWduZWQtb2ZmLWJ5OiBNYXJjIFp5bmdpZXIgPG1hekBrZXJuZWwub3JnPgpD
+YzogPHN0YWJsZUB2Z2VyLmtlcm5lbC5vcmc+Ckxpbms6IGh0dHBzOi8vbG9yZS5rZXJuZWwub3Jn
+L3IvMjAxOTEyMTIwOTQwNDkuMTI0MzctMS13aWxsQGtlcm5lbC5vcmcKLS0tCiBhcmNoL2FybTY0
+L2t2bS9zeXNfcmVncy5jIHwgNSArKysrLQogMSBmaWxlIGNoYW5nZWQsIDQgaW5zZXJ0aW9ucygr
+KSwgMSBkZWxldGlvbigtKQoKZGlmZiAtLWdpdCBhL2FyY2gvYXJtNjQva3ZtL3N5c19yZWdzLmMg
+Yi9hcmNoL2FybTY0L2t2bS9zeXNfcmVncy5jCmluZGV4IGJkMmFjMzc5NmQ4ZC4uZDc4YjcyNmQ0
+NzIyIDEwMDY0NAotLS0gYS9hcmNoL2FybTY0L2t2bS9zeXNfcmVncy5jCisrKyBiL2FyY2gvYXJt
+NjQva3ZtL3N5c19yZWdzLmMKQEAgLTIzNjQsOCArMjM2NCwxMSBAQCBzdGF0aWMgY29uc3Qgc3Ry
+dWN0IHN5c19yZWdfZGVzYyAqaW5kZXhfdG9fc3lzX3JlZ19kZXNjKHN0cnVjdCBrdm1fdmNwdSAq
+dmNwdSwKIAlpZiAoKGlkICYgS1ZNX1JFR19BUk1fQ09QUk9DX01BU0spICE9IEtWTV9SRUdfQVJN
+NjRfU1lTUkVHKQogCQlyZXR1cm4gTlVMTDsKIAorCWlmICghaW5kZXhfdG9fcGFyYW1zKGlkLCAm
+cGFyYW1zKSkKKwkJcmV0dXJuIE5VTEw7CisKIAl0YWJsZSA9IGdldF90YXJnZXRfdGFibGUodmNw
+dS0+YXJjaC50YXJnZXQsIHRydWUsICZudW0pOwotCXIgPSBmaW5kX3JlZ19ieV9pZChpZCwgJnBh
+cmFtcywgdGFibGUsIG51bSk7CisJciA9IGZpbmRfcmVnKCZwYXJhbXMsIHRhYmxlLCBudW0pOwog
+CWlmICghcikKIAkJciA9IGZpbmRfcmVnKCZwYXJhbXMsIHN5c19yZWdfZGVzY3MsIEFSUkFZX1NJ
+WkUoc3lzX3JlZ19kZXNjcykpOwogCi0tIAoyLjIwLjEKCl9fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fCmt2bWFybSBtYWlsaW5nIGxpc3QKa3ZtYXJtQGxpc3Rz
+LmNzLmNvbHVtYmlhLmVkdQpodHRwczovL2xpc3RzLmNzLmNvbHVtYmlhLmVkdS9tYWlsbWFuL2xp
+c3RpbmZvL2t2bWFybQo=
