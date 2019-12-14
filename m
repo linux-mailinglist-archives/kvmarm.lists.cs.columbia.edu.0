@@ -2,66 +2,71 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B4B9911EB72
-	for <lists+kvmarm@lfdr.de>; Fri, 13 Dec 2019 21:01:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E6A811F16B
+	for <lists+kvmarm@lfdr.de>; Sat, 14 Dec 2019 11:37:39 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 19B704AEB8;
-	Fri, 13 Dec 2019 15:01:59 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1EBEA4AC7E;
+	Sat, 14 Dec 2019 05:37:39 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: 0.799
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cfzLj9Jd9uPi; Fri, 13 Dec 2019 15:01:59 -0500 (EST)
+	with ESMTP id EzzU7BoxWrfe; Sat, 14 Dec 2019 05:37:39 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DCBCC4AC83;
-	Fri, 13 Dec 2019 15:01:57 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C2FF4A4F6;
+	Sat, 14 Dec 2019 05:37:38 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 385C14A500
- for <kvmarm@lists.cs.columbia.edu>; Fri, 13 Dec 2019 15:01:56 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 950FF4A3B4
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 14 Dec 2019 05:37:36 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id YBnmCZI-0jv3 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 13 Dec 2019 15:01:54 -0500 (EST)
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 453AC4A4F6
- for <kvmarm@lists.cs.columbia.edu>; Fri, 13 Dec 2019 15:01:54 -0500 (EST)
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 13 Dec 2019 12:01:51 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,311,1571727600"; d="scan'208";a="208563026"
-Received: from sjchrist-coffee.jf.intel.com (HELO linux.intel.com)
- ([10.54.74.202])
- by orsmga008.jf.intel.com with ESMTP; 13 Dec 2019 12:01:51 -0800
-Date: Fri, 13 Dec 2019 12:01:51 -0800
-From: Sean Christopherson <sean.j.christopherson@intel.com>
-To: James Hogan <jhogan@kernel.org>, Paul Mackerras <paulus@ozlabs.org>,
- Christian Borntraeger <borntraeger@de.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Radim =?utf-8?B?S3LEjW3DocWZ?= <rkrcmar@redhat.com>,
- Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v3 00/15] KVM: Dynamically size memslot arrays
-Message-ID: <20191213200151.GF31552@linux.intel.com>
-References: <20191024230744.14543-1-sean.j.christopherson@intel.com>
- <20191203221433.GK19877@linux.intel.com>
-MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20191203221433.GK19877@linux.intel.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- David Hildenbrand <david@redhat.com>, Joerg Roedel <joro@8bytes.org>,
- Cornelia Huck <cohuck@redhat.com>, linux-mips@vger.kernel.org,
- kvm-ppc@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ with ESMTP id lsRIzRjeKR-I for <kvmarm@lists.cs.columbia.edu>;
+ Sat, 14 Dec 2019 05:37:35 -0500 (EST)
+Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
+ [213.251.177.50])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 781424A389
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 14 Dec 2019 05:37:35 -0500 (EST)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=big-swifty.misterjones.org)
+ by cheepnis.misterjones.org with esmtpsa (TLSv1.2:AES256-GCM-SHA384:256)
+ (Exim 4.80) (envelope-from <maz@kernel.org>)
+ id 1ig4nM-0004C7-WF; Sat, 14 Dec 2019 11:37:09 +0100
+Date: Sat, 14 Dec 2019 10:37:10 +0000
+Message-ID: <86fthni46h.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Suzuki Kuruppassery Poulose <suzuki.poulose@arm.com>
+Subject: Re: [PATCH 1/7] KVM: Pass mmu_notifier_range down to
+ kvm_unmap_hva_range()
+In-Reply-To: <c347df67-6cc3-9d5c-0dd9-72ebb8fa9712@arm.com>
+References: <20191213182503.14460-1-maz@kernel.org>
+ <20191213182503.14460-2-maz@kernel.org>
+ <c347df67-6cc3-9d5c-0dd9-72ebb8fa9712@arm.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL/10.8 EasyPG/1.0.0 Emacs/26
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: suzuki.poulose@arm.com, james.morse@arm.com,
+ julien.thierry.kdev@gmail.com, jhogan@kernel.org, paulus@ozlabs.org,
+ pbonzini@redhat.com, rkrcmar@redhat.com, sean.j.christopherson@intel.com,
+ vkuznets@redhat.com, wanpengli@tencent.com, jmattson@google.com,
+ joro@8bytes.org, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, linux-mips@vger.kernel.org,
+ kvm-ppc@vger.kernel.org, kvm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on cheepnis.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvm-ppc@vger.kernel.org, Wanpeng Li <wanpengli@tencent.com>,
+ kvm@vger.kernel.org, James Hogan <jhogan@kernel.org>,
+ Joerg Roedel <joro@8bytes.org>, linux-mips@vger.kernel.org,
+ Sean Christopherson <sean.j.christopherson@intel.com>,
+ Paul Mackerras <paulus@ozlabs.org>, linux-arm-kernel@lists.infradead.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
  kvmarm@lists.cs.columbia.edu, Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -79,50 +84,72 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, Dec 03, 2019 at 02:14:33PM -0800, Sean Christopherson wrote:
-> On Thu, Oct 24, 2019 at 04:07:29PM -0700, Sean Christopherson wrote:
-> > The end goal of this series is to dynamically size the memslot array so
-> > that KVM allocates memory based on the number of memslots in use, as
-> > opposed to unconditionally allocating memory for the maximum number of
-> > memslots.  On x86, each memslot consumes 88 bytes, and so with 2 address
-> > spaces of 512 memslots, each VM consumes ~90k bytes for the memslots.
-> > E.g. given a VM that uses a total of 30 memslots, dynamic sizing reduces
-> > the memory footprint from 90k to ~2.6k bytes.
-> > 
-> > The changes required to support dynamic sizing are relatively small,
-> > e.g. are essentially contained in patches 14/15 and 15/15.  Patches 1-13
-> > clean up the memslot code, which has gotten quite crusty, especially
-> > __kvm_set_memory_region().  The clean up is likely not strictly necessary
-> > to switch to dynamic sizing, but I didn't have a remotely reasonable
-> > level of confidence in the correctness of the dynamic sizing without first
-> > doing the clean up.
-> > 
-> > Christoffer, I added your Tested-by to the patches that I was confident
-> > would be fully tested based on the desription of what you tested.  Let me
-> > know if you disagree with any of 'em.
-> > 
-> > v3:
-> >   - Fix build errors on PPC and MIPS due to missed params during
-> >     refactoring [kbuild test robot].
-> >   - Rename the helpers for update_memslots() and add comments describing
-> >     the new algorithm and how it interacts with searching [Paolo].
-> >   - Remove the unnecessary and obnoxious warning regarding memslots being
-> >     a flexible array [Paolo].
-> >   - Fix typos in the changelog of patch 09/15 [Christoffer].
-> >   - Collect tags [Christoffer].
-> > 
-> > v2:
-> >   - Split "Drop kvm_arch_create_memslot()" into three patches to move
-> >     minor functional changes to standalone patches [Janosch].
-> >   - Rebase to latest kvm/queue (f0574a1cea5b, "KVM: x86: fix ...")
-> >   - Collect an Acked-by and a Reviewed-by
+Hi Suzuki,
+
+On Fri, 13 Dec 2019 18:59:32 +0000,
+Suzuki Kuruppassery Poulose <suzuki.poulose@arm.com> wrote:
 > 
-> Paolo, do you want me to rebase this to the latest kvm/queue?
+> Hi Marc,
+> 
+> 
+> On 13/12/2019 18:24, Marc Zyngier wrote:
+> > kvm_unmap_hva_range() is currently passed both start and end
+> > fields from the mmu_notifier_range structure. As this struct
+> > now contains important information about the reason of the
+> > unmap (the event field), replace the start/end parameters
+> > with the range struct, and update all architectures.
+> > 
+> > No functionnal change.
+> > 
+> > Signed-off-by: Marc Zyngier <maz@kernel.org>
+> 
+> 
+> > diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+> > index 00268290dcbd..7c3665ad1035 100644
+> > --- a/virt/kvm/kvm_main.c
+> > +++ b/virt/kvm/kvm_main.c
+> > @@ -158,7 +158,7 @@ static unsigned long long kvm_createvm_count;
+> >   static unsigned long long kvm_active_vms;
+> >     __weak int kvm_arch_mmu_notifier_invalidate_range(struct kvm
+> > *kvm,
+> > -		unsigned long start, unsigned long end, bool blockable)
+> > +		const struct mmu_notifier_range *range, bool blockable)
+> >   {
+> >   	return 0;
+> >   }
+> > @@ -415,7 +415,7 @@ static int kvm_mmu_notifier_invalidate_range_start(struct mmu_notifier *mn,
+> >   	 * count is also read inside the mmu_lock critical section.
+> >   	 */
+> >   	kvm->mmu_notifier_count++;
+> > -	need_tlb_flush = kvm_unmap_hva_range(kvm, range->start, range->end);
+> > +	need_tlb_flush = kvm_unmap_hva_range(kvm, range);
+> >   	need_tlb_flush |= kvm->tlbs_dirty;
+> >   	/* we've to flush the tlb before the pages can be freed */
+> >   	if (need_tlb_flush)
+> > @@ -423,8 +423,7 @@ static int kvm_mmu_notifier_invalidate_range_start(struct mmu_notifier *mn,
+> >     	spin_unlock(&kvm->mmu_lock);
+> >   -	ret = kvm_arch_mmu_notifier_invalidate_range(kvm,
+> > range->start,
+> > -					range->end,
+> > +	ret = kvm_arch_mmu_notifier_invalidate_range(kvm, range,
+> >   					mmu_notifier_range_blockable(range));
+> 
+> minor nit:
+> 
+> Since we now have the range passed on to the arch hooks, we could get
+> rid of the "blockable" too, as it is something you can deduce from the
+> range.
 
-Ping.
+Absolutely. That'd be a nice cleanup.
 
-Applies cleanly on the current kvm/queue and nothing caught fire in
-testing (though I only re-tested the series as a whole).
+> Otherwise looks good to me.
+
+Thanks,
+
+	M.
+
+-- 
+Jazz is not dead, it just smells funny.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
