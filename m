@@ -2,73 +2,50 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 35111121B28
-	for <lists+kvmarm@lfdr.de>; Mon, 16 Dec 2019 21:48:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 157E2122BCA
+	for <lists+kvmarm@lfdr.de>; Tue, 17 Dec 2019 13:38:21 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DD7AF4A3A3;
-	Mon, 16 Dec 2019 15:48:51 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 47D744A59B;
+	Tue, 17 Dec 2019 07:38:20 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.391
+X-Spam-Score: 0.799
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.391 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4uuh4q5gx35G; Mon, 16 Dec 2019 15:48:51 -0500 (EST)
+	with ESMTP id 9pXIdBffcZmB; Tue, 17 Dec 2019 07:38:20 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AAF924A541;
-	Mon, 16 Dec 2019 15:48:50 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1597A4A576;
+	Tue, 17 Dec 2019 07:38:19 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 979304A52C
- for <kvmarm@lists.cs.columbia.edu>; Mon, 16 Dec 2019 15:48:49 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 49D0F4A4C0
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Dec 2019 07:38:18 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id VzNnyJbNPjsi for <kvmarm@lists.cs.columbia.edu>;
- Mon, 16 Dec 2019 15:48:48 -0500 (EST)
-Received: from us-smtp-delivery-1.mimecast.com
- (us-smtp-delivery-1.mimecast.com [205.139.110.120])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8CA5B4A541
- for <kvmarm@lists.cs.columbia.edu>; Mon, 16 Dec 2019 15:48:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1576529328;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JVqCQEMGSyAN0RfyQhlZYKuYj1yMNsDA4gJwuQse6GI=;
- b=UvJJlG0COTddLdz4g05iniGoSgsEGi6rD9DO/Xsn+o5B9JEs81DZniSn6eYl63hCXQE7PQ
- KKnnOCY+cBs8+9T4K9r0KDuLI9Hv/j+pzGzsZ+y96iGCbjSsmk3yvmOeGbXeiXnNmGWaTa
- 8GM7YKKFZfsoCNeKiR6MNwzu/l8wPhs=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-324--XxOX5fLNpmjjCkVjiP1nw-1; Mon, 16 Dec 2019 15:48:47 -0500
-X-MC-Unique: -XxOX5fLNpmjjCkVjiP1nw-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com
- [10.5.11.14])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 5E67510B959E;
- Mon, 16 Dec 2019 20:48:45 +0000 (UTC)
-Received: from laptop.redhat.com (ovpn-116-117.ams2.redhat.com [10.36.116.117])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 6A8075D9C9;
- Mon, 16 Dec 2019 20:48:40 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, maz@kernel.org,
- kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org
-Subject: [kvm-unit-tests PATCH 10/10] arm: pmu: Test overflow interrupts
-Date: Mon, 16 Dec 2019 21:47:57 +0100
-Message-Id: <20191216204757.4020-11-eric.auger@redhat.com>
-In-Reply-To: <20191216204757.4020-1-eric.auger@redhat.com>
-References: <20191216204757.4020-1-eric.auger@redhat.com>
+ with ESMTP id 52rMx9FFETOc for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 17 Dec 2019 07:38:17 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EDA9F4A4A9
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Dec 2019 07:38:16 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 75CAE31B;
+ Tue, 17 Dec 2019 04:38:16 -0800 (PST)
+Received: from eglon.cambridge.arm.com (eglon.cambridge.arm.com [10.1.196.105])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 759903F718;
+ Tue, 17 Dec 2019 04:38:15 -0800 (PST)
+From: James Morse <james.morse@arm.com>
+To: kvmarm@lists.cs.columbia.edu,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH v2] KVM: arm/arm64: Re-check VMA on detecting a poisoned page
+Date: Tue, 17 Dec 2019 12:38:09 +0000
+Message-Id: <20191217123809.197392-1-james.morse@arm.com>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-Cc: andre.przywara@arm.com
+Cc: Marc Zyngier <maz@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -85,214 +62,78 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Test overflows for MEM_ACCESS and SW_INCR events. Also tests
-overflows with 64-bit events.
+When we check for a poisoned page, we use the VMA to tell userspace
+about the looming disaster. But we pass a pointer to this VMA
+after having released the mmap_sem, which isn't a good idea.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Instead, stash the shift value that goes with this pfn while
+we are holding the mmap_sem.
+
+Reported-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: James Morse <james.morse@arm.com>
 ---
- arm/pmu.c         | 134 ++++++++++++++++++++++++++++++++++++++++++++++
- arm/unittests.cfg |   6 +++
- 2 files changed, 140 insertions(+)
 
-diff --git a/arm/pmu.c b/arm/pmu.c
-index 8506544..9af9e42 100644
---- a/arm/pmu.c
-+++ b/arm/pmu.c
-@@ -45,6 +45,11 @@ struct pmu {
- 	uint32_t pmcr_ro;
- };
- 
-+struct pmu_stats {
-+	unsigned long bitmap;
-+	uint32_t interrupts[32];
-+};
-+
- static struct pmu pmu;
- 
- #if defined(__arm__)
-@@ -116,6 +121,7 @@ static void test_mem_access(void) {}
- static void test_chained_counters(void) {}
- static void test_chained_sw_incr(void) {}
- static void test_chain_promotion(void) {}
-+static void test_overflow_interrupt(void) {}
- 
- #elif defined(__aarch64__)
- #define ID_AA64DFR0_PERFMON_SHIFT 8
-@@ -263,6 +269,43 @@ asm volatile(
- 	: );
+Based on Marc's patch:
+Link: lore.kernel.org/r/20191211165651.7889-3-maz@kernel.org
+
+ virt/kvm/arm/mmu.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
+
+diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
+index 38b4c910b6c3..bb0f8d648678 100644
+--- a/virt/kvm/arm/mmu.c
++++ b/virt/kvm/arm/mmu.c
+@@ -1591,16 +1591,8 @@ static void invalidate_icache_guest_page(kvm_pfn_t pfn, unsigned long size)
+ 	__invalidate_icache_guest_page(pfn, size);
  }
  
-+static struct pmu_stats pmu_stats;
-+
-+static void irq_handler(struct pt_regs *regs)
-+{
-+	uint32_t irqstat, irqnr;
-+
-+	irqstat = gic_read_iar();
-+	irqnr = gic_iar_irqnr(irqstat);
-+	gic_write_eoir(irqstat);
-+
-+	if (irqnr == 23) {
-+		unsigned long overflows = read_sysreg(pmovsclr_el0);
-+		int i;
-+
-+		report_info("--> PMU overflow interrupt %d (counter bitmask 0x%lx)",
-+			    irqnr, overflows);
-+		for (i = 0; i < 32; i++) {
-+			if (test_and_clear_bit(i, &overflows)) {
-+				pmu_stats.interrupts[i]++;
-+				pmu_stats.bitmap |= 1 << i;
-+			}
-+		}
-+		write_sysreg(0xFFFFFFFF, pmovsclr_el0);
-+	} else {
-+		report_info("Unexpected interrupt: %d\n", irqnr);
-+	}
-+}
-+
-+static void pmu_reset_stats(void)
-+{
-+	int i;
-+
-+	for (i = 0; i < 32; i++)
-+		pmu_stats.interrupts[i] = 0;
-+
-+	pmu_stats.bitmap = 0;
-+}
- 
- static void pmu_reset(void)
+-static void kvm_send_hwpoison_signal(unsigned long address,
+-				     struct vm_area_struct *vma)
++static void kvm_send_hwpoison_signal(unsigned long address, short lsb)
  {
-@@ -274,6 +317,7 @@ static void pmu_reset(void)
- 	write_sysreg(0xFFFFFFFF, pmovsclr_el0);
- 	/* disable overflow interrupts on all counters */
- 	write_sysreg(0xFFFFFFFF, pmintenclr_el1);
-+	pmu_reset_stats();
- 	isb();
+-	short lsb;
+-
+-	if (is_vm_hugetlb_page(vma))
+-		lsb = huge_page_shift(hstate_vma(vma));
+-	else
+-		lsb = PAGE_SHIFT;
+-
+ 	send_sig_mceerr(BUS_MCEERR_AR, (void __user *)address, lsb, current);
  }
  
-@@ -713,6 +757,93 @@ static void test_chain_promotion(void)
- 			read_sysreg(pmovsclr_el0));
- }
- 
-+static bool expect_interrupts(uint32_t bitmap)
-+{
-+	int i;
-+
-+	if (pmu_stats.bitmap ^ bitmap)
-+		return false;
-+
-+	for (i = 0; i < 32; i++) {
-+		if (test_and_clear_bit(i, &pmu_stats.bitmap))
-+			if (pmu_stats.interrupts[i] != 1)
-+				return false;
-+	}
-+	return true;
-+}
-+
-+static void test_overflow_interrupt(void)
-+{
-+	uint32_t events[] = { 0x13 /* MEM_ACCESS */, 0x00 /* SW_INCR */};
-+	void *addr = malloc(PAGE_SIZE);
-+	int i;
-+
-+	if (!satisfy_prerequisites(events, ARRAY_SIZE(events)))
-+		return;
-+
-+	setup_irq(irq_handler);
-+	gic_enable_irq(23);
-+
-+	pmu_reset();
-+
-+	write_regn(pmevtyper, 0, events[0] | PMEVTYPER_EXCLUDE_EL0);
-+	write_regn(pmevtyper, 1, events[1] | PMEVTYPER_EXCLUDE_EL0);
-+	write_sysreg_s(0x3, PMCNTENSET_EL0);
-+	write_regn(pmevcntr, 0, 0xFFFFFFF0);
-+	write_regn(pmevcntr, 1, 0xFFFFFFF0);
-+	isb();
-+
-+	/* interrupts are disabled */
-+
-+	mem_access_loop(addr, 200, pmu.pmcr_ro | PMU_PMCR_E);
-+	report(expect_interrupts(0), "no overflow interrupt received");
-+
-+	set_pmcr(pmu.pmcr_ro | PMU_PMCR_E);
-+	for (i = 0; i < 100; i++)
-+		write_sysreg(0x2, pmswinc_el0);
-+
-+	set_pmcr(pmu.pmcr_ro);
-+	report(expect_interrupts(0), "no overflow interrupt received");
-+
-+	/* enable interrupts */
-+
-+	pmu_reset_stats();
-+
-+	write_regn(pmevcntr, 0, 0xFFFFFFF0);
-+	write_regn(pmevcntr, 1, 0xFFFFFFF0);
-+	write_sysreg(0xFFFFFFFF, pmintenset_el1);
-+	isb();
-+
-+	mem_access_loop(addr, 200, pmu.pmcr_ro | PMU_PMCR_E);
-+	for (i = 0; i < 100; i++)
-+		write_sysreg(0x3, pmswinc_el0);
-+
-+	mem_access_loop(addr, 200, pmu.pmcr_ro);
-+	report_info("overflow=0x%lx", read_sysreg(pmovsclr_el0));
-+	report(expect_interrupts(0x3),
-+		"overflow interrupts expected on #0 and #1");
-+
-+	/* promote to 64-b */
-+
-+	pmu_reset_stats();
-+
-+	events[1] = 0x1E /* CHAIN */;
-+	write_regn(pmevtyper, 1, events[1] | PMEVTYPER_EXCLUDE_EL0);
-+	write_regn(pmevcntr, 0, 0xFFFFFFF0);
-+	isb();
-+	mem_access_loop(addr, 200, pmu.pmcr_ro | PMU_PMCR_E);
-+	report(expect_interrupts(0),
-+		"no overflow interrupt expected on 32b boundary");
-+
-+	/* overflow on odd counter */
-+	pmu_reset_stats();
-+	write_regn(pmevcntr, 0, 0xFFFFFFF0);
-+	write_regn(pmevcntr, 1, 0xFFFFFFFF);
-+	isb();
-+	mem_access_loop(addr, 200, pmu.pmcr_ro | PMU_PMCR_E);
-+	report(expect_interrupts(0x2),
-+		"expect overflow interrupt on odd counter");
-+}
- #endif
- 
- /*
-@@ -921,6 +1052,9 @@ int main(int argc, char *argv[])
- 	} else if (strcmp(argv[1], "chain-promotion") == 0) {
- 		report_prefix_push(argv[1]);
- 		test_chain_promotion();
-+	} else if (strcmp(argv[1], "overflow-interrupt") == 0) {
-+		report_prefix_push(argv[1]);
-+		test_overflow_interrupt();
- 	} else {
- 		report_abort("Unknown sub-test '%s'", argv[1]);
+@@ -1673,6 +1665,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 	struct kvm *kvm = vcpu->kvm;
+ 	struct kvm_mmu_memory_cache *memcache = &vcpu->arch.mmu_page_cache;
+ 	struct vm_area_struct *vma;
++	short vma_shift;
+ 	kvm_pfn_t pfn;
+ 	pgprot_t mem_type = PAGE_S2;
+ 	bool logging_active = memslot_is_logging(memslot);
+@@ -1696,7 +1689,12 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 		return -EFAULT;
  	}
-diff --git a/arm/unittests.cfg b/arm/unittests.cfg
-index eb6e87e..1d1bc27 100644
---- a/arm/unittests.cfg
-+++ b/arm/unittests.cfg
-@@ -108,6 +108,12 @@ groups = pmu
- arch = arm64
- extra_params = -append 'chain-promotion'
  
-+[overflow-interrupt]
-+file = pmu.flat
-+groups = pmu
-+arch = arm64
-+extra_params = -append 'overflow-interrupt'
+-	vma_pagesize = vma_kernel_pagesize(vma);
++	if (is_vm_hugetlb_page(vma))
++		vma_shift = huge_page_shift(hstate_vma(vma));
++	else
++		vma_shift = PAGE_SHIFT;
 +
- # Test PMU support (TCG) with -icount IPC=1
- #[pmu-tcg-icount-1]
- #file = pmu.flat
++	vma_pagesize = 1ULL << vma_shift;
+ 	if (logging_active ||
+ 	    !fault_supports_stage2_huge_mapping(memslot, hva, vma_pagesize)) {
+ 		force_pte = true;
+@@ -1735,7 +1733,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 
+ 	pfn = gfn_to_pfn_prot(kvm, gfn, write_fault, &writable);
+ 	if (pfn == KVM_PFN_ERR_HWPOISON) {
+-		kvm_send_hwpoison_signal(hva, vma);
++		kvm_send_hwpoison_signal(hva, vma_shift);
+ 		return 0;
+ 	}
+ 	if (is_error_noslot_pfn(pfn))
 -- 
-2.20.1
+2.24.0
 
 _______________________________________________
 kvmarm mailing list
