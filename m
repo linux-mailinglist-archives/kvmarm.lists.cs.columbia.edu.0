@@ -2,50 +2,55 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 157E2122BCA
-	for <lists+kvmarm@lfdr.de>; Tue, 17 Dec 2019 13:38:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 641CD122D9C
+	for <lists+kvmarm@lfdr.de>; Tue, 17 Dec 2019 14:56:43 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 47D744A59B;
-	Tue, 17 Dec 2019 07:38:20 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 168CA4A65C;
+	Tue, 17 Dec 2019 08:56:43 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.799
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9pXIdBffcZmB; Tue, 17 Dec 2019 07:38:20 -0500 (EST)
+	with ESMTP id dnAEbaWm8B-0; Tue, 17 Dec 2019 08:56:42 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1597A4A576;
-	Tue, 17 Dec 2019 07:38:19 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 247CA4A800;
+	Tue, 17 Dec 2019 08:56:39 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 49D0F4A4C0
- for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Dec 2019 07:38:18 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 38BC74A4CD
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Dec 2019 08:56:37 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 52rMx9FFETOc for <kvmarm@lists.cs.columbia.edu>;
- Tue, 17 Dec 2019 07:38:17 -0500 (EST)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EDA9F4A4A9
- for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Dec 2019 07:38:16 -0500 (EST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 75CAE31B;
- Tue, 17 Dec 2019 04:38:16 -0800 (PST)
-Received: from eglon.cambridge.arm.com (eglon.cambridge.arm.com [10.1.196.105])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 759903F718;
- Tue, 17 Dec 2019 04:38:15 -0800 (PST)
-From: James Morse <james.morse@arm.com>
-To: kvmarm@lists.cs.columbia.edu,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2] KVM: arm/arm64: Re-check VMA on detecting a poisoned page
-Date: Tue, 17 Dec 2019 12:38:09 +0000
-Message-Id: <20191217123809.197392-1-james.morse@arm.com>
-X-Mailer: git-send-email 2.24.0
+ with ESMTP id tl+UNwsgAlF1 for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 17 Dec 2019 08:56:36 -0500 (EST)
+Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1A0584A5A8
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Dec 2019 08:56:36 -0500 (EST)
+Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.59])
+ by Forcepoint Email with ESMTP id 7104DDED043953C7AA42;
+ Tue, 17 Dec 2019 21:56:30 +0800 (CST)
+Received: from DESKTOP-1NISPDV.china.huawei.com (10.173.221.248) by
+ DGGEMS413-HUB.china.huawei.com (10.3.19.213) with Microsoft SMTP Server id
+ 14.3.439.0; Tue, 17 Dec 2019 21:56:21 +0800
+From: <yezengruan@huawei.com>
+To: <yezengruan@huawei.com>, <linux-kernel@vger.kernel.org>,
+ <linux-arm-kernel@lists.infradead.org>, <kvmarm@lists.cs.columbia.edu>,
+ <kvm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+ <virtualization@lists.linux-foundation.org>
+Subject: [PATCH 0/5] KVM: arm64: vcpu preempted check support
+Date: Tue, 17 Dec 2019 21:55:44 +0800
+Message-ID: <20191217135549.3240-1-yezengruan@huawei.com>
+X-Mailer: git-send-email 2.23.0.windows.1
 MIME-Version: 1.0
-Cc: Marc Zyngier <maz@kernel.org>
+X-Originating-IP: [10.173.221.248]
+X-CFilter-Loop: Reflected
+Cc: catalin.marinas@arm.com, daniel.lezcano@linaro.org, linux@armlinux.org.uk,
+ steven.price@arm.com, maz@kernel.org, will@kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -62,78 +67,70 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-When we check for a poisoned page, we use the VMA to tell userspace
-about the looming disaster. But we pass a pointer to this VMA
-after having released the mmap_sem, which isn't a good idea.
+From: Zengruan Ye <yezengruan@huawei.com>
 
-Instead, stash the shift value that goes with this pfn while
-we are holding the mmap_sem.
+This patch set aims to support the vcpu_is_preempted() functionality
+under KVM/arm64, which allowing the guest to obtain the vcpu is
+currently running or not. This will enhance lock performance on
+overcommitted hosts (more runnable vcpus than physical cpus in the
+system) as doing busy waits for preempted vcpus will hurt system
+performance far worse than early yielding.
 
-Reported-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: James Morse <james.morse@arm.com>
----
+We have observed some performace improvements in uninx benchmark tests.
 
-Based on Marc's patch:
-Link: lore.kernel.org/r/20191211165651.7889-3-maz@kernel.org
+unix benchmark result:
+  host:  kernel 5.5.0-rc1, HiSilicon Kunpeng920, 8 cpus
+  guest: kernel 5.5.0-rc1, 16 vcpus
 
- virt/kvm/arm/mmu.c | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+               test-case                |    after-patch    |   before-patch
+----------------------------------------+-------------------+------------------
+ Dhrystone 2 using register variables   | 334600751.0 lps   | 335319028.3 lps
+ Double-Precision Whetstone             |     32856.1 MWIPS |   32849.6 MWIPS
+ Execl Throughput                       |      3662.1 lps   |    2718.0 lps
+ File Copy 1024 bufsize 2000 maxblocks  |    432906.4 KBps  |  158011.8 KBps
+ File Copy 256 bufsize 500 maxblocks    |    116023.0 KBps  |   37664.0 KBps
+ File Copy 4096 bufsize 8000 maxblocks  |   1432769.8 KBps  |  441108.8 KBps
+ Pipe Throughput                        |   6405029.6 lps   | 6021457.6 lps
+ Pipe-based Context Switching           |    185872.7 lps   |  184255.3 lps
+ Process Creation                       |      4025.7 lps   |    3706.6 lps
+ Shell Scripts (1 concurrent)           |      6745.6 lpm   |    6436.1 lpm
+ Shell Scripts (8 concurrent)           |       998.7 lpm   |     931.1 lpm
+ System Call Overhead                   |   3913363.1 lps   | 3883287.8 lps
+----------------------------------------+-------------------+------------------
+ System Benchmarks Index Score          |      1835.1       |    1327.6
 
-diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
-index 38b4c910b6c3..bb0f8d648678 100644
---- a/virt/kvm/arm/mmu.c
-+++ b/virt/kvm/arm/mmu.c
-@@ -1591,16 +1591,8 @@ static void invalidate_icache_guest_page(kvm_pfn_t pfn, unsigned long size)
- 	__invalidate_icache_guest_page(pfn, size);
- }
- 
--static void kvm_send_hwpoison_signal(unsigned long address,
--				     struct vm_area_struct *vma)
-+static void kvm_send_hwpoison_signal(unsigned long address, short lsb)
- {
--	short lsb;
--
--	if (is_vm_hugetlb_page(vma))
--		lsb = huge_page_shift(hstate_vma(vma));
--	else
--		lsb = PAGE_SHIFT;
--
- 	send_sig_mceerr(BUS_MCEERR_AR, (void __user *)address, lsb, current);
- }
- 
-@@ -1673,6 +1665,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 	struct kvm *kvm = vcpu->kvm;
- 	struct kvm_mmu_memory_cache *memcache = &vcpu->arch.mmu_page_cache;
- 	struct vm_area_struct *vma;
-+	short vma_shift;
- 	kvm_pfn_t pfn;
- 	pgprot_t mem_type = PAGE_S2;
- 	bool logging_active = memslot_is_logging(memslot);
-@@ -1696,7 +1689,12 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 		return -EFAULT;
- 	}
- 
--	vma_pagesize = vma_kernel_pagesize(vma);
-+	if (is_vm_hugetlb_page(vma))
-+		vma_shift = huge_page_shift(hstate_vma(vma));
-+	else
-+		vma_shift = PAGE_SHIFT;
-+
-+	vma_pagesize = 1ULL << vma_shift;
- 	if (logging_active ||
- 	    !fault_supports_stage2_huge_mapping(memslot, hva, vma_pagesize)) {
- 		force_pte = true;
-@@ -1735,7 +1733,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 
- 	pfn = gfn_to_pfn_prot(kvm, gfn, write_fault, &writable);
- 	if (pfn == KVM_PFN_ERR_HWPOISON) {
--		kvm_send_hwpoison_signal(hva, vma);
-+		kvm_send_hwpoison_signal(hva, vma_shift);
- 		return 0;
- 	}
- 	if (is_error_noslot_pfn(pfn))
+Zengruan Ye (5):
+  KVM: arm64: Document PV-lock interface
+  KVM: arm64: Implement PV_LOCK_FEATURES call
+  KVM: arm64: Support pvlock preempted via shared structure
+  KVM: arm64: Add interface to support vcpu preempted check
+  KVM: arm64: Support the vcpu preemption check
+
+ Documentation/virt/kvm/arm/pvlock.rst  | 31 +++++++++
+ arch/arm/include/asm/kvm_host.h        | 13 ++++
+ arch/arm64/include/asm/kvm_host.h      | 17 +++++
+ arch/arm64/include/asm/paravirt.h      | 15 ++++
+ arch/arm64/include/asm/pvlock-abi.h    | 16 +++++
+ arch/arm64/include/asm/spinlock.h      |  7 ++
+ arch/arm64/kernel/Makefile             |  2 +-
+ arch/arm64/kernel/paravirt-spinlocks.c | 13 ++++
+ arch/arm64/kernel/paravirt.c           | 95 +++++++++++++++++++++++++-
+ arch/arm64/kernel/setup.c              |  2 +
+ arch/arm64/kvm/Makefile                |  1 +
+ include/linux/arm-smccc.h              | 13 ++++
+ include/linux/cpuhotplug.h             |  1 +
+ virt/kvm/arm/arm.c                     |  8 +++
+ virt/kvm/arm/hypercalls.c              |  7 ++
+ virt/kvm/arm/pvlock.c                  | 21 ++++++
+ 16 files changed, 260 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/virt/kvm/arm/pvlock.rst
+ create mode 100644 arch/arm64/include/asm/pvlock-abi.h
+ create mode 100644 arch/arm64/kernel/paravirt-spinlocks.c
+ create mode 100644 virt/kvm/arm/pvlock.c
+
 -- 
-2.24.0
+2.19.1
+
 
 _______________________________________________
 kvmarm mailing list
