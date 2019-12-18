@@ -2,10 +2,10 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id BAA12125548
+	by mail.lfdr.de (Postfix) with ESMTP id B9210125547
 	for <lists+kvmarm@lfdr.de>; Wed, 18 Dec 2019 22:56:08 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6B4A94AECF;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6D9654AF5B;
 	Wed, 18 Dec 2019 16:56:08 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
@@ -13,23 +13,23 @@ X-Spam-Score: -1.502
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=no
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id laftkohgmCSX; Wed, 18 Dec 2019 16:56:07 -0500 (EST)
+	with ESMTP id mXtrkogoWMXL; Wed, 18 Dec 2019 16:56:08 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E21FE4AF32;
-	Wed, 18 Dec 2019 16:55:57 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 05CF54AE94;
+	Wed, 18 Dec 2019 16:55:58 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 23FC34A49C
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9571F4AEF5
  for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Dec 2019 16:55:55 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Py6XhUzN01k8 for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id NENW3vQVaBvg for <kvmarm@lists.cs.columbia.edu>;
  Wed, 18 Dec 2019 16:55:54 -0500 (EST)
 Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 548314AC65
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BB9254A4A0
  for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Dec 2019 16:55:44 -0500 (EST)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
@@ -37,18 +37,18 @@ Received: from fmsmga001.fm.intel.com ([10.253.24.23])
  by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
  18 Dec 2019 13:55:44 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,330,1571727600"; d="scan'208";a="222108112"
+X-IronPort-AV: E=Sophos;i="5.69,330,1571727600"; d="scan'208";a="222108120"
 Received: from sjchrist-coffee.jf.intel.com ([10.54.74.202])
- by fmsmga001.fm.intel.com with ESMTP; 18 Dec 2019 13:55:43 -0800
+ by fmsmga001.fm.intel.com with ESMTP; 18 Dec 2019 13:55:44 -0800
 From: Sean Christopherson <sean.j.christopherson@intel.com>
 To: Marc Zyngier <maz@kernel.org>, James Hogan <jhogan@kernel.org>,
  Paul Mackerras <paulus@ozlabs.org>,
  Christian Borntraeger <borntraeger@de.ibm.com>,
  Janosch Frank <frankja@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 25/45] KVM: s390: Move guts of kvm_arch_vcpu_init() into
- kvm_arch_vcpu_create()
-Date: Wed, 18 Dec 2019 13:55:10 -0800
-Message-Id: <20191218215530.2280-26-sean.j.christopherson@intel.com>
+Subject: [PATCH v2 26/45] KVM: s390: Invoke kvm_vcpu_init() before allocating
+ sie_page
+Date: Wed, 18 Dec 2019 13:55:11 -0800
+Message-Id: <20191218215530.2280-27-sean.j.christopherson@intel.com>
 X-Mailer: git-send-email 2.24.1
 In-Reply-To: <20191218215530.2280-1-sean.j.christopherson@intel.com>
 References: <20191218215530.2280-1-sean.j.christopherson@intel.com>
@@ -77,104 +77,71 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Move all of kvm_arch_vcpu_init(), which is invoked at the very end of
-kvm_vcpu_init(), into kvm_arch_vcpu_create() in preparation of moving
-the call to kvm_vcpu_init().  Moving kvm_vcpu_init() is itself a
-preparatory step for moving allocation and initialization to common KVM
-code.
-
-No functional change inteded.
+Now that s390's implementation of kvm_arch_vcpu_init() is empty, move
+the call to kvm_vcpu_init() above the allocation of the sie_page.  This
+paves the way for moving vcpu allocation and initialization into common
+KVM code without any associated functional change.
 
 Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
 ---
- arch/s390/kvm/kvm-s390.c | 62 ++++++++++++++++++++++------------------
- 1 file changed, 34 insertions(+), 28 deletions(-)
+ arch/s390/kvm/kvm-s390.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
 diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
-index 57c6838dff37..0049b621e56a 100644
+index 0049b621e56a..1f8ba074cbd6 100644
 --- a/arch/s390/kvm/kvm-s390.c
 +++ b/arch/s390/kvm/kvm-s390.c
-@@ -2705,34 +2705,6 @@ static int sca_can_add_vcpu(struct kvm *kvm, unsigned int id)
+@@ -3027,10 +3027,16 @@ struct kvm_vcpu *kvm_arch_vcpu_create(struct kvm *kvm,
+ 	if (!vcpu)
+ 		goto out;
  
- int kvm_arch_vcpu_init(struct kvm_vcpu *vcpu)
- {
--	vcpu->arch.pfault_token = KVM_S390_PFAULT_TOKEN_INVALID;
--	kvm_clear_async_pf_completion_queue(vcpu);
--	vcpu->run->kvm_valid_regs = KVM_SYNC_PREFIX |
--				    KVM_SYNC_GPRS |
--				    KVM_SYNC_ACRS |
--				    KVM_SYNC_CRS |
--				    KVM_SYNC_ARCH0 |
--				    KVM_SYNC_PFAULT;
--	kvm_s390_set_prefix(vcpu, 0);
--	if (test_kvm_facility(vcpu->kvm, 64))
--		vcpu->run->kvm_valid_regs |= KVM_SYNC_RICCB;
--	if (test_kvm_facility(vcpu->kvm, 82))
--		vcpu->run->kvm_valid_regs |= KVM_SYNC_BPBC;
--	if (test_kvm_facility(vcpu->kvm, 133))
--		vcpu->run->kvm_valid_regs |= KVM_SYNC_GSCB;
--	if (test_kvm_facility(vcpu->kvm, 156))
--		vcpu->run->kvm_valid_regs |= KVM_SYNC_ETOKEN;
--	/* fprs can be synchronized via vrs, even if the guest has no vx. With
--	 * MACHINE_HAS_VX, (load|store)_fpu_regs() will work with vrs format.
--	 */
--	if (MACHINE_HAS_VX)
--		vcpu->run->kvm_valid_regs |= KVM_SYNC_VRS;
--	else
--		vcpu->run->kvm_valid_regs |= KVM_SYNC_FPRS;
--
--	if (kvm_is_ucontrol(vcpu->kvm))
--		return __kvm_ucontrol_vcpu_init(vcpu);
--
- 	return 0;
- }
++	rc = kvm_vcpu_init(vcpu, kvm, id);
++	if (rc)
++		goto out_free_cpu;
++
++	rc = -ENOMEM;
++
+ 	BUILD_BUG_ON(sizeof(struct sie_page) != 4096);
+ 	sie_page = (struct sie_page *) get_zeroed_page(GFP_KERNEL);
+ 	if (!sie_page)
+-		goto out_free_cpu;
++		goto out_uninit_vcpu;
  
-@@ -3077,11 +3049,45 @@ struct kvm_vcpu *kvm_arch_vcpu_create(struct kvm *kvm,
- 	rc = kvm_vcpu_init(vcpu, kvm, id);
- 	if (rc)
- 		goto out_free_sie_block;
-+
-+	vcpu->arch.pfault_token = KVM_S390_PFAULT_TOKEN_INVALID;
-+	kvm_clear_async_pf_completion_queue(vcpu);
-+	vcpu->run->kvm_valid_regs = KVM_SYNC_PREFIX |
-+				    KVM_SYNC_GPRS |
-+				    KVM_SYNC_ACRS |
-+				    KVM_SYNC_CRS |
-+				    KVM_SYNC_ARCH0 |
-+				    KVM_SYNC_PFAULT;
-+	kvm_s390_set_prefix(vcpu, 0);
-+	if (test_kvm_facility(vcpu->kvm, 64))
-+		vcpu->run->kvm_valid_regs |= KVM_SYNC_RICCB;
-+	if (test_kvm_facility(vcpu->kvm, 82))
-+		vcpu->run->kvm_valid_regs |= KVM_SYNC_BPBC;
-+	if (test_kvm_facility(vcpu->kvm, 133))
-+		vcpu->run->kvm_valid_regs |= KVM_SYNC_GSCB;
-+	if (test_kvm_facility(vcpu->kvm, 156))
-+		vcpu->run->kvm_valid_regs |= KVM_SYNC_ETOKEN;
-+	/* fprs can be synchronized via vrs, even if the guest has no vx. With
-+	 * MACHINE_HAS_VX, (load|store)_fpu_regs() will work with vrs format.
-+	 */
-+	if (MACHINE_HAS_VX)
-+		vcpu->run->kvm_valid_regs |= KVM_SYNC_VRS;
-+	else
-+		vcpu->run->kvm_valid_regs |= KVM_SYNC_FPRS;
-+
-+	if (kvm_is_ucontrol(vcpu->kvm)) {
-+		rc = __kvm_ucontrol_vcpu_init(vcpu);
-+		if (rc)
-+			goto out_uninit_vcpu;
-+	}
-+
+ 	vcpu->arch.sie_block = &sie_page->sie_block;
+ 	vcpu->arch.sie_block->itdba = (unsigned long) &sie_page->itdb;
+@@ -3046,10 +3052,6 @@ struct kvm_vcpu *kvm_arch_vcpu_create(struct kvm *kvm,
+ 		vcpu->arch.sie_block->gd |= GISA_FORMAT1;
+ 	seqcount_init(&vcpu->arch.cputm_seqcount);
+ 
+-	rc = kvm_vcpu_init(vcpu, kvm, id);
+-	if (rc)
+-		goto out_free_sie_block;
+-
+ 	vcpu->arch.pfault_token = KVM_S390_PFAULT_TOKEN_INVALID;
+ 	kvm_clear_async_pf_completion_queue(vcpu);
+ 	vcpu->run->kvm_valid_regs = KVM_SYNC_PREFIX |
+@@ -3078,7 +3080,7 @@ struct kvm_vcpu *kvm_arch_vcpu_create(struct kvm *kvm,
+ 	if (kvm_is_ucontrol(vcpu->kvm)) {
+ 		rc = __kvm_ucontrol_vcpu_init(vcpu);
+ 		if (rc)
+-			goto out_uninit_vcpu;
++			goto out_free_sie_block;
+ 	}
+ 
  	VM_EVENT(kvm, 3, "create cpu %d at 0x%pK, sie block at 0x%pK", id, vcpu,
- 		 vcpu->arch.sie_block);
+@@ -3086,10 +3088,10 @@ struct kvm_vcpu *kvm_arch_vcpu_create(struct kvm *kvm,
  	trace_kvm_s390_create_vcpu(id, vcpu, vcpu->arch.sie_block);
  
  	return vcpu;
-+out_uninit_vcpu:
-+	kvm_vcpu_uninit(vcpu);
+-out_uninit_vcpu:
+-	kvm_vcpu_uninit(vcpu);
  out_free_sie_block:
  	free_page((unsigned long)(vcpu->arch.sie_block));
++out_uninit_vcpu:
++	kvm_vcpu_uninit(vcpu);
  out_free_cpu:
+ 	kmem_cache_free(kvm_vcpu_cache, vcpu);
+ out:
 -- 
 2.24.1
 
