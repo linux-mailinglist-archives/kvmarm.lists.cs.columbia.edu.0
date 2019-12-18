@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C3721125544
-	for <lists+kvmarm@lfdr.de>; Wed, 18 Dec 2019 22:56:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC3EB125546
+	for <lists+kvmarm@lfdr.de>; Wed, 18 Dec 2019 22:56:06 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7529A4AF0F;
-	Wed, 18 Dec 2019 16:56:03 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6F3014AEDD;
+	Wed, 18 Dec 2019 16:56:06 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
@@ -16,28 +16,28 @@ X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Vg4A7D1hLjwx; Wed, 18 Dec 2019 16:56:03 -0500 (EST)
+	with ESMTP id DbvbmgrvNw2U; Wed, 18 Dec 2019 16:56:06 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8F1084AEFB;
-	Wed, 18 Dec 2019 16:55:49 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CAABB4AE9D;
+	Wed, 18 Dec 2019 16:55:57 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D1274AEE3
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Dec 2019 16:55:48 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BD9004AEF3
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Dec 2019 16:55:54 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Um1YgbN7fgEN for <kvmarm@lists.cs.columbia.edu>;
- Wed, 18 Dec 2019 16:55:47 -0500 (EST)
+ with ESMTP id pSysMjIFbrmG for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 18 Dec 2019 16:55:53 -0500 (EST)
 Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id DFFF94AECD
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Dec 2019 16:55:42 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id EE7D74AC86
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Dec 2019 16:55:43 -0500 (EST)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga001.fm.intel.com ([10.253.24.23])
  by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 18 Dec 2019 13:55:42 -0800
+ 18 Dec 2019 13:55:43 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,330,1571727600"; d="scan'208";a="222108102"
+X-IronPort-AV: E=Sophos;i="5.69,330,1571727600"; d="scan'208";a="222108106"
 Received: from sjchrist-coffee.jf.intel.com ([10.54.74.202])
  by fmsmga001.fm.intel.com with ESMTP; 18 Dec 2019 13:55:42 -0800
 From: Sean Christopherson <sean.j.christopherson@intel.com>
@@ -45,9 +45,9 @@ To: Marc Zyngier <maz@kernel.org>, James Hogan <jhogan@kernel.org>,
  Paul Mackerras <paulus@ozlabs.org>,
  Christian Borntraeger <borntraeger@de.ibm.com>,
  Janosch Frank <frankja@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 22/45] KVM: x86: Drop kvm_arch_vcpu_free()
-Date: Wed, 18 Dec 2019 13:55:07 -0800
-Message-Id: <20191218215530.2280-23-sean.j.christopherson@intel.com>
+Subject: [PATCH v2 23/45] KVM: Remove kvm_arch_vcpu_free() declaration
+Date: Wed, 18 Dec 2019 13:55:08 -0800
+Message-Id: <20191218215530.2280-24-sean.j.christopherson@intel.com>
 X-Mailer: git-send-email 2.24.1
 In-Reply-To: <20191218215530.2280-1-sean.j.christopherson@intel.com>
 References: <20191218215530.2280-1-sean.j.christopherson@intel.com>
@@ -76,68 +76,28 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Remove the superfluous kvm_arch_vcpu_free() as it is no longer called
-from commmon KVM code.  Note, kvm_arch_vcpu_destroy() *is* called from
-common code, i.e. choosing which function to whack is not completely
-arbitrary.
+Remove KVM's declaration of kvm_arch_vcpu_free() now that the function
+is gone from all architectures (several architectures were relying on
+the forward declaration).
 
+Acked-by: Christoffer Dall <christoffer.dall@arm.com>
 Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
 ---
- arch/x86/kvm/x86.c | 27 +++++++++++----------------
- 1 file changed, 11 insertions(+), 16 deletions(-)
+ include/linux/kvm_host.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 46626b52a4da..cf35169733cd 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -9089,20 +9089,6 @@ static void fx_init(struct kvm_vcpu *vcpu)
- 	vcpu->arch.cr0 |= X86_CR0_ET;
- }
+diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+index 339de08e5fa2..a3f7ab881846 100644
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -872,7 +872,6 @@ void kvm_arch_vcpu_uninit(struct kvm_vcpu *vcpu);
  
--void kvm_arch_vcpu_free(struct kvm_vcpu *vcpu)
--{
--	kvmclock_reset(vcpu);
--
--	kvm_x86_ops->vcpu_free(vcpu);
--
--	kvm_vcpu_uninit(vcpu);
--
--	free_cpumask_var(vcpu->arch.wbinvd_dirty_mask);
--	kmem_cache_free(x86_fpu_cache, vcpu->arch.user_fpu);
--	kmem_cache_free(x86_fpu_cache, vcpu->arch.guest_fpu);
--	kmem_cache_free(kvm_vcpu_cache, vcpu);
--}
--
- struct kvm_vcpu *kvm_arch_vcpu_create(struct kvm *kvm,
- 						unsigned int id)
- {
-@@ -9176,7 +9162,16 @@ void kvm_arch_vcpu_postcreate(struct kvm_vcpu *vcpu)
+ void kvm_arch_sched_in(struct kvm_vcpu *vcpu, int cpu);
  
- void kvm_arch_vcpu_destroy(struct kvm_vcpu *vcpu)
- {
--	kvm_arch_vcpu_free(vcpu);
-+	kvmclock_reset(vcpu);
-+
-+	kvm_x86_ops->vcpu_free(vcpu);
-+
-+	kvm_vcpu_uninit(vcpu);
-+
-+	free_cpumask_var(vcpu->arch.wbinvd_dirty_mask);
-+	kmem_cache_free(x86_fpu_cache, vcpu->arch.user_fpu);
-+	kmem_cache_free(x86_fpu_cache, vcpu->arch.guest_fpu);
-+	kmem_cache_free(kvm_vcpu_cache, vcpu);
- }
- 
- void kvm_vcpu_reset(struct kvm_vcpu *vcpu, bool init_event)
-@@ -9591,7 +9586,7 @@ static void kvm_free_vcpus(struct kvm *kvm)
- 		kvm_unload_vcpu_mmu(vcpu);
- 	}
- 	kvm_for_each_vcpu(i, vcpu, kvm)
--		kvm_arch_vcpu_free(vcpu);
-+		kvm_arch_vcpu_destroy(vcpu);
- 
- 	mutex_lock(&kvm->lock);
- 	for (i = 0; i < atomic_read(&kvm->online_vcpus); i++)
+-void kvm_arch_vcpu_free(struct kvm_vcpu *vcpu);
+ void kvm_arch_vcpu_load(struct kvm_vcpu *vcpu, int cpu);
+ void kvm_arch_vcpu_put(struct kvm_vcpu *vcpu);
+ struct kvm_vcpu *kvm_arch_vcpu_create(struct kvm *kvm, unsigned int id);
 -- 
 2.24.1
 
