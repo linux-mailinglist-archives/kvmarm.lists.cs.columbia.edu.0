@@ -2,34 +2,34 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E3C28125561
-	for <lists+kvmarm@lfdr.de>; Wed, 18 Dec 2019 22:56:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5672D125564
+	for <lists+kvmarm@lfdr.de>; Wed, 18 Dec 2019 22:56:22 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 964464A576;
-	Wed, 18 Dec 2019 16:56:18 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0B0224AF10;
+	Wed, 18 Dec 2019 16:56:22 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+	SPF_HELO_PASS=-0.001] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id PsEJW5UkBePM; Wed, 18 Dec 2019 16:56:18 -0500 (EST)
+	with ESMTP id CxW7Fmr20CRq; Wed, 18 Dec 2019 16:56:20 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 249584AEDC;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 70D5C4AEB2;
 	Wed, 18 Dec 2019 16:56:07 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2AE0B4AEB9
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Dec 2019 16:56:03 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6DC224AEFA
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Dec 2019 16:56:04 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id U55zsFYhRW7t for <kvmarm@lists.cs.columbia.edu>;
- Wed, 18 Dec 2019 16:56:02 -0500 (EST)
+ with ESMTP id g1mHWd2E+w34 for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 18 Dec 2019 16:56:03 -0500 (EST)
 Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 562C34AF17
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C67A84AC77
  for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Dec 2019 16:55:49 -0500 (EST)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
@@ -37,18 +37,17 @@ Received: from fmsmga001.fm.intel.com ([10.253.24.23])
  by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
  18 Dec 2019 13:55:49 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,330,1571727600"; d="scan'208";a="222108161"
+X-IronPort-AV: E=Sophos;i="5.69,330,1571727600"; d="scan'208";a="222108164"
 Received: from sjchrist-coffee.jf.intel.com ([10.54.74.202])
- by fmsmga001.fm.intel.com with ESMTP; 18 Dec 2019 13:55:48 -0800
+ by fmsmga001.fm.intel.com with ESMTP; 18 Dec 2019 13:55:49 -0800
 From: Sean Christopherson <sean.j.christopherson@intel.com>
 To: Marc Zyngier <maz@kernel.org>, James Hogan <jhogan@kernel.org>,
  Paul Mackerras <paulus@ozlabs.org>,
  Christian Borntraeger <borntraeger@de.ibm.com>,
  Janosch Frank <frankja@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 36/45] KVM: PPC: BookE: Setup vcpu during
- kvmppc_core_vcpu_create()
-Date: Wed, 18 Dec 2019 13:55:21 -0800
-Message-Id: <20191218215530.2280-37-sean.j.christopherson@intel.com>
+Subject: [PATCH v2 37/45] KVM: Drop kvm_arch_vcpu_setup()
+Date: Wed, 18 Dec 2019 13:55:22 -0800
+Message-Id: <20191218215530.2280-38-sean.j.christopherson@intel.com>
 X-Mailer: git-send-email 2.24.1
 In-Reply-To: <20191218215530.2280-1-sean.j.christopherson@intel.com>
 References: <20191218215530.2280-1-sean.j.christopherson@intel.com>
@@ -77,101 +76,170 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Fold setup() into create() now that the two are called back-to-back by
-common KVM code.  This paves the way for removing kvm_arch_vcpu_setup().
-Note, BookE directly implements kvm_arch_vcpu_setup() and PPC's common
-kvm_arch_vcpu_create() is responsible for its own cleanup, thus the only
-cleanup required when directly invoking kvmppc_core_vcpu_setup() is to
-call .vcpu_free(), which is the BookE specific portion of PPC's
-kvm_arch_vcpu_destroy() by way of kvmppc_core_vcpu_free().
+Remove kvm_arch_vcpu_setup() now that all arch specific implementations
+are nops.
 
-No functional change intended.
-
+Acked-by: Christoffer Dall <christoffer.dall@arm.com>
 Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
 ---
- arch/powerpc/kvm/booke.c | 60 ++++++++++++++++++++++------------------
- 1 file changed, 33 insertions(+), 27 deletions(-)
+ arch/arm/kvm/guest.c      | 5 -----
+ arch/arm64/kvm/guest.c    | 5 -----
+ arch/mips/kvm/mips.c      | 5 -----
+ arch/powerpc/kvm/book3s.c | 5 -----
+ arch/powerpc/kvm/booke.c  | 5 -----
+ arch/s390/kvm/kvm-s390.c  | 5 -----
+ arch/x86/kvm/x86.c        | 5 -----
+ include/linux/kvm_host.h  | 1 -
+ virt/kvm/kvm_main.c       | 5 -----
+ 9 files changed, 41 deletions(-)
 
+diff --git a/arch/arm/kvm/guest.c b/arch/arm/kvm/guest.c
+index 0e6f23504c26..9f7ae0d8690f 100644
+--- a/arch/arm/kvm/guest.c
++++ b/arch/arm/kvm/guest.c
+@@ -34,11 +34,6 @@ struct kvm_stats_debugfs_item debugfs_entries[] = {
+ 	{ NULL }
+ };
+ 
+-int kvm_arch_vcpu_setup(struct kvm_vcpu *vcpu)
+-{
+-	return 0;
+-}
+-
+ static u64 core_reg_offset_from_id(u64 id)
+ {
+ 	return id & ~(KVM_REG_ARCH_MASK | KVM_REG_SIZE_MASK | KVM_REG_ARM_CORE);
+diff --git a/arch/arm64/kvm/guest.c b/arch/arm64/kvm/guest.c
+index 2fff06114a8f..2bd92301d32f 100644
+--- a/arch/arm64/kvm/guest.c
++++ b/arch/arm64/kvm/guest.c
+@@ -47,11 +47,6 @@ struct kvm_stats_debugfs_item debugfs_entries[] = {
+ 	{ NULL }
+ };
+ 
+-int kvm_arch_vcpu_setup(struct kvm_vcpu *vcpu)
+-{
+-	return 0;
+-}
+-
+ static bool core_reg_offset_is_vreg(u64 off)
+ {
+ 	return off >= KVM_REG_ARM_CORE_REG(fp_regs.vregs) &&
+diff --git a/arch/mips/kvm/mips.c b/arch/mips/kvm/mips.c
+index b3a4435af66b..06366e2415a6 100644
+--- a/arch/mips/kvm/mips.c
++++ b/arch/mips/kvm/mips.c
+@@ -1244,11 +1244,6 @@ int kvm_arch_vcpu_ioctl_translate(struct kvm_vcpu *vcpu,
+ 	return 0;
+ }
+ 
+-int kvm_arch_vcpu_setup(struct kvm_vcpu *vcpu)
+-{
+-	return 0;
+-}
+-
+ static void kvm_mips_set_c0_status(void)
+ {
+ 	u32 status = read_c0_status();
+diff --git a/arch/powerpc/kvm/book3s.c b/arch/powerpc/kvm/book3s.c
+index 5ad20fc0c6a1..0d393f1a835b 100644
+--- a/arch/powerpc/kvm/book3s.c
++++ b/arch/powerpc/kvm/book3s.c
+@@ -471,11 +471,6 @@ int kvmppc_load_last_inst(struct kvm_vcpu *vcpu,
+ }
+ EXPORT_SYMBOL_GPL(kvmppc_load_last_inst);
+ 
+-int kvm_arch_vcpu_setup(struct kvm_vcpu *vcpu)
+-{
+-	return 0;
+-}
+-
+ int kvmppc_subarch_vcpu_init(struct kvm_vcpu *vcpu)
+ {
+ 	return 0;
 diff --git a/arch/powerpc/kvm/booke.c b/arch/powerpc/kvm/booke.c
-index dd7440e50c7a..b1b5073a22b1 100644
+index b1b5073a22b1..35b781775d3d 100644
 --- a/arch/powerpc/kvm/booke.c
 +++ b/arch/powerpc/kvm/booke.c
-@@ -1377,34 +1377,9 @@ static void kvmppc_set_tsr(struct kvm_vcpu *vcpu, u32 new_tsr)
+@@ -1377,11 +1377,6 @@ static void kvmppc_set_tsr(struct kvm_vcpu *vcpu, u32 new_tsr)
  	update_timer_ints(vcpu);
  }
  
--/* Initial guest state: 16MB mapping 0 -> 0, PC = 0, MSR = 0, R1 = 16MB */
- int kvm_arch_vcpu_setup(struct kvm_vcpu *vcpu)
- {
--	int i;
--	int r;
+-int kvm_arch_vcpu_setup(struct kvm_vcpu *vcpu)
+-{
+-	return 0;
+-}
 -
--	vcpu->arch.regs.nip = 0;
--	vcpu->arch.shared->pir = vcpu->vcpu_id;
--	kvmppc_set_gpr(vcpu, 1, (16<<20) - 8); /* -8 for the callee-save LR slot */
--	kvmppc_set_msr(vcpu, 0);
--
--#ifndef CONFIG_KVM_BOOKE_HV
--	vcpu->arch.shadow_msr = MSR_USER | MSR_IS | MSR_DS;
--	vcpu->arch.shadow_pid = 1;
--	vcpu->arch.shared->msr = 0;
--#endif
--
--	/* Eye-catching numbers so we know if the guest takes an interrupt
--	 * before it's programmed its own IVPR/IVORs. */
--	vcpu->arch.ivpr = 0x55550000;
--	for (i = 0; i < BOOKE_IRQPRIO_MAX; i++)
--		vcpu->arch.ivor[i] = 0x7700 | i * 4;
--
--	kvmppc_init_timing_stats(vcpu);
--
--	r = kvmppc_core_vcpu_setup(vcpu);
--	kvmppc_sanity_check(vcpu);
--	return r;
-+	return 0;
- }
- 
  int kvmppc_subarch_vcpu_init(struct kvm_vcpu *vcpu)
-@@ -2116,7 +2091,38 @@ int kvmppc_core_init_vm(struct kvm *kvm)
- 
- int kvmppc_core_vcpu_create(struct kvm_vcpu *vcpu)
  {
--	return kvm->arch.kvm_ops->vcpu_create(vcpu);
-+	int i;
-+	int r;
-+
-+	r = kvm->arch.kvm_ops->vcpu_create(vcpu);
-+	if (r)
-+		return r;
-+
-+	/* Initial guest state: 16MB mapping 0 -> 0, PC = 0, MSR = 0, R1 = 16MB */
-+	vcpu->arch.regs.nip = 0;
-+	vcpu->arch.shared->pir = vcpu->vcpu_id;
-+	kvmppc_set_gpr(vcpu, 1, (16<<20) - 8); /* -8 for the callee-save LR slot */
-+	kvmppc_set_msr(vcpu, 0);
-+
-+#ifndef CONFIG_KVM_BOOKE_HV
-+	vcpu->arch.shadow_msr = MSR_USER | MSR_IS | MSR_DS;
-+	vcpu->arch.shadow_pid = 1;
-+	vcpu->arch.shared->msr = 0;
-+#endif
-+
-+	/* Eye-catching numbers so we know if the guest takes an interrupt
-+	 * before it's programmed its own IVPR/IVORs. */
-+	vcpu->arch.ivpr = 0x55550000;
-+	for (i = 0; i < BOOKE_IRQPRIO_MAX; i++)
-+		vcpu->arch.ivor[i] = 0x7700 | i * 4;
-+
-+	kvmppc_init_timing_stats(vcpu);
-+
-+	r = kvmppc_core_vcpu_setup(vcpu);
-+	if (r)
-+		vcpu->kvm->arch.kvm_ops->vcpu_free(vcpu);
-+	kvmppc_sanity_check(vcpu);
-+	return r;
+ 	/* setup watchdog timer once */
+diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
+index 5cd92c9fc050..bcdd542b96a2 100644
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -2931,11 +2931,6 @@ static void kvm_s390_vcpu_setup_model(struct kvm_vcpu *vcpu)
+ 		vcpu->arch.sie_block->fac = (u32)(u64) model->fac_list;
  }
  
- void kvmppc_core_vcpu_free(struct kvm_vcpu *vcpu)
+-int kvm_arch_vcpu_setup(struct kvm_vcpu *vcpu)
+-{
+-	return 0;
+-}
+-
+ static int kvm_s390_vcpu_setup(struct kvm_vcpu *vcpu)
+ {
+ 	int rc = 0;
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 0ab96dc3dd08..20f8ac086824 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -9116,11 +9116,6 @@ int kvm_arch_vcpu_create(struct kvm_vcpu *vcpu)
+ 	return 0;
+ }
+ 
+-int kvm_arch_vcpu_setup(struct kvm_vcpu *vcpu)
+-{
+-	return 0;
+-}
+-
+ void kvm_arch_vcpu_postcreate(struct kvm_vcpu *vcpu)
+ {
+ 	struct msr_data msr;
+diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+index d24e6c134d15..792b122e44fa 100644
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -873,7 +873,6 @@ void kvm_arch_vcpu_load(struct kvm_vcpu *vcpu, int cpu);
+ void kvm_arch_vcpu_put(struct kvm_vcpu *vcpu);
+ int kvm_arch_vcpu_precreate(struct kvm *kvm, unsigned int id);
+ int kvm_arch_vcpu_create(struct kvm_vcpu *vcpu);
+-int kvm_arch_vcpu_setup(struct kvm_vcpu *vcpu);
+ void kvm_arch_vcpu_postcreate(struct kvm_vcpu *vcpu);
+ void kvm_arch_vcpu_destroy(struct kvm_vcpu *vcpu);
+ 
+diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+index 876cf3dd2c97..f76b2155dfee 100644
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -2753,10 +2753,6 @@ static int kvm_vm_ioctl_create_vcpu(struct kvm *kvm, u32 id)
+ 	if (r)
+ 		goto vcpu_uninit;
+ 
+-	r = kvm_arch_vcpu_setup(vcpu);
+-	if (r)
+-		goto vcpu_destroy;
+-
+ 	kvm_create_vcpu_debugfs(vcpu);
+ 
+ 	mutex_lock(&kvm->lock);
+@@ -2792,7 +2788,6 @@ static int kvm_vm_ioctl_create_vcpu(struct kvm *kvm, u32 id)
+ unlock_vcpu_destroy:
+ 	mutex_unlock(&kvm->lock);
+ 	debugfs_remove_recursive(vcpu->debugfs_dentry);
+-vcpu_destroy:
+ 	kvm_arch_vcpu_destroy(vcpu);
+ vcpu_uninit:
+ 	kvm_vcpu_uninit(vcpu);
 -- 
 2.24.1
 
