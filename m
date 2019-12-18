@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 805F5125558
-	for <lists+kvmarm@lfdr.de>; Wed, 18 Dec 2019 22:56:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C222412555D
+	for <lists+kvmarm@lfdr.de>; Wed, 18 Dec 2019 22:56:15 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 348524ACD6;
-	Wed, 18 Dec 2019 16:56:14 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 72F534AEFB;
+	Wed, 18 Dec 2019 16:56:15 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
@@ -16,28 +16,28 @@ X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	SPF_HELO_PASS=-0.001] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id wOYv2O+-z7DD; Wed, 18 Dec 2019 16:56:13 -0500 (EST)
+	with ESMTP id VA9entfs+qES; Wed, 18 Dec 2019 16:56:14 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 944854AF4C;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C250C4AF01;
 	Wed, 18 Dec 2019 16:56:03 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C46A14AED3
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DF0974AEC8
  for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Dec 2019 16:56:01 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id s-0kaURP+W2l for <kvmarm@lists.cs.columbia.edu>;
- Wed, 18 Dec 2019 16:56:00 -0500 (EST)
+ with ESMTP id c0cLrQ-ihRfF for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 18 Dec 2019 16:56:01 -0500 (EST)
 Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 08B664ACD6
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Dec 2019 16:55:46 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 73DF54AED8
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Dec 2019 16:55:47 -0500 (EST)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga001.fm.intel.com ([10.253.24.23])
  by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 18 Dec 2019 13:55:46 -0800
+ 18 Dec 2019 13:55:47 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,330,1571727600"; d="scan'208";a="222108141"
+X-IronPort-AV: E=Sophos;i="5.69,330,1571727600"; d="scan'208";a="222108144"
 Received: from sjchrist-coffee.jf.intel.com ([10.54.74.202])
  by fmsmga001.fm.intel.com with ESMTP; 18 Dec 2019 13:55:46 -0800
 From: Sean Christopherson <sean.j.christopherson@intel.com>
@@ -45,9 +45,10 @@ To: Marc Zyngier <maz@kernel.org>, James Hogan <jhogan@kernel.org>,
  Paul Mackerras <paulus@ozlabs.org>,
  Christian Borntraeger <borntraeger@de.ibm.com>,
  Janosch Frank <frankja@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 31/45] KVM: Unexport kvm_vcpu_cache and kvm_vcpu_{un}init()
-Date: Wed, 18 Dec 2019 13:55:16 -0800
-Message-Id: <20191218215530.2280-32-sean.j.christopherson@intel.com>
+Subject: [PATCH v2 32/45] KVM: Move initialization of preempt notifier to
+ kvm_vcpu_init()
+Date: Wed, 18 Dec 2019 13:55:17 -0800
+Message-Id: <20191218215530.2280-33-sean.j.christopherson@intel.com>
 X-Mailer: git-send-email 2.24.1
 In-Reply-To: <20191218215530.2280-1-sean.j.christopherson@intel.com>
 References: <20191218215530.2280-1-sean.j.christopherson@intel.com>
@@ -76,80 +77,61 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Unexport kvm_vcpu_cache and kvm_vcpu_{un}init() and make them static
-now that they are referenced only in kvm_main.c.
+Initialize the preempt notifier immediately in kvm_vcpu_init() to pave
+the way for removing kvm_arch_vcpu_setup(), i.e. to allow arch specific
+code to call vcpu_load() during kvm_arch_vcpu_create().
+
+Back when preemption support was added, the location of the call to init
+the preempt notifier was perfectly sane.  The overall vCPU creation flow
+featured a single arch specific hook and the preempt notifer was used
+immediately after its initialization (by vcpu_load()).  E.g.:
+
+        vcpu = kvm_arch_ops->vcpu_create(kvm, n);
+        if (IS_ERR(vcpu))
+                return PTR_ERR(vcpu);
+
+        preempt_notifier_init(&vcpu->preempt_notifier, &kvm_preempt_ops);
+
+        vcpu_load(vcpu);
+        r = kvm_mmu_setup(vcpu);
+        vcpu_put(vcpu);
+        if (r < 0)
+                goto free_vcpu;
+
+Today, the call to preempt_notifier_init() is sandwiched between two
+arch specific calls, kvm_arch_vcpu_create() and kvm_arch_vcpu_setup(),
+which needlessly forces x86 (and possibly others?) to split its vCPU
+creation flow.  Init the preempt notifier prior to any arch specific
+call so that each arch can independently decide how best to organize
+its creation flow.
 
 Acked-by: Christoffer Dall <christoffer.dall@arm.com>
 Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
 ---
- include/linux/kvm_host.h | 4 ----
- virt/kvm/kvm_main.c      | 9 +++------
- 2 files changed, 3 insertions(+), 10 deletions(-)
+ virt/kvm/kvm_main.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-index a9abd9e9f621..d24e6c134d15 100644
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -157,8 +157,6 @@ static inline bool is_error_page(struct page *page)
- #define KVM_USERSPACE_IRQ_SOURCE_ID		0
- #define KVM_IRQFD_RESAMPLE_IRQ_SOURCE_ID	1
- 
--extern struct kmem_cache *kvm_vcpu_cache;
--
- extern struct mutex kvm_lock;
- extern struct list_head vm_list;
- 
-@@ -579,8 +577,6 @@ static inline int kvm_vcpu_get_idx(struct kvm_vcpu *vcpu)
- 	      memslot < slots->memslots + KVM_MEM_SLOTS_NUM && memslot->npages;\
- 		memslot++)
- 
--int kvm_vcpu_init(struct kvm_vcpu *vcpu, struct kvm *kvm, unsigned id);
--void kvm_vcpu_uninit(struct kvm_vcpu *vcpu);
- void kvm_vcpu_destroy(struct kvm_vcpu *vcpu);
- 
- void vcpu_load(struct kvm_vcpu *vcpu);
 diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-index 1afffb0da7cc..fd8168b8c0e4 100644
+index fd8168b8c0e4..876cf3dd2c97 100644
 --- a/virt/kvm/kvm_main.c
 +++ b/virt/kvm/kvm_main.c
-@@ -104,8 +104,7 @@ static cpumask_var_t cpus_hardware_enabled;
- static int kvm_usage_count;
- static atomic_t hardware_enable_failed;
+@@ -348,6 +348,7 @@ static int kvm_vcpu_init(struct kvm_vcpu *vcpu, struct kvm *kvm, unsigned id)
+ 	kvm_vcpu_set_dy_eligible(vcpu, false);
+ 	vcpu->preempted = false;
+ 	vcpu->ready = false;
++	preempt_notifier_init(&vcpu->preempt_notifier, &kvm_preempt_ops);
  
--struct kmem_cache *kvm_vcpu_cache;
--EXPORT_SYMBOL_GPL(kvm_vcpu_cache);
-+static struct kmem_cache *kvm_vcpu_cache;
+ 	r = kvm_arch_vcpu_init(vcpu);
+ 	if (r < 0)
+@@ -2752,8 +2753,6 @@ static int kvm_vm_ioctl_create_vcpu(struct kvm *kvm, u32 id)
+ 	if (r)
+ 		goto vcpu_uninit;
  
- static __read_mostly struct preempt_ops kvm_preempt_ops;
- 
-@@ -322,7 +321,7 @@ void kvm_reload_remote_mmus(struct kvm *kvm)
- 	kvm_make_all_cpus_request(kvm, KVM_REQ_MMU_RELOAD);
- }
- 
--int kvm_vcpu_init(struct kvm_vcpu *vcpu, struct kvm *kvm, unsigned id)
-+static int kvm_vcpu_init(struct kvm_vcpu *vcpu, struct kvm *kvm, unsigned id)
- {
- 	struct page *page;
- 	int r;
-@@ -360,9 +359,8 @@ int kvm_vcpu_init(struct kvm_vcpu *vcpu, struct kvm *kvm, unsigned id)
- fail:
- 	return r;
- }
--EXPORT_SYMBOL_GPL(kvm_vcpu_init);
- 
--void kvm_vcpu_uninit(struct kvm_vcpu *vcpu)
-+static void kvm_vcpu_uninit(struct kvm_vcpu *vcpu)
- {
- 	/*
- 	 * no need for rcu_read_lock as VCPU_RUN is the only place that
-@@ -373,7 +371,6 @@ void kvm_vcpu_uninit(struct kvm_vcpu *vcpu)
- 	kvm_arch_vcpu_uninit(vcpu);
- 	free_page((unsigned long)vcpu->run);
- }
--EXPORT_SYMBOL_GPL(kvm_vcpu_uninit);
- 
- void kvm_vcpu_destroy(struct kvm_vcpu *vcpu)
- {
+-	preempt_notifier_init(&vcpu->preempt_notifier, &kvm_preempt_ops);
+-
+ 	r = kvm_arch_vcpu_setup(vcpu);
+ 	if (r)
+ 		goto vcpu_destroy;
 -- 
 2.24.1
 
