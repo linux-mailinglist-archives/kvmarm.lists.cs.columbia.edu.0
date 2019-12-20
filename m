@@ -2,47 +2,48 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 05202127CA6
-	for <lists+kvmarm@lfdr.de>; Fri, 20 Dec 2019 15:30:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7444D127CA8
+	for <lists+kvmarm@lfdr.de>; Fri, 20 Dec 2019 15:30:45 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AC5C34AEA3;
-	Fri, 20 Dec 2019 09:30:43 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 244454AE8D;
+	Fri, 20 Dec 2019 09:30:45 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
 X-Spam-Level: 
 X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001] autolearn=no
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8yLHQDVymD8j; Fri, 20 Dec 2019 09:30:42 -0500 (EST)
+	with ESMTP id d-XqQcVcoBxC; Fri, 20 Dec 2019 09:30:45 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7B0B24A7FF;
-	Fri, 20 Dec 2019 09:30:42 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A33684AEA1;
+	Fri, 20 Dec 2019 09:30:43 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8C2C64A968
- for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Dec 2019 09:30:41 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8424F4AC68
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Dec 2019 09:30:42 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id qzf6pgvjzl7f for <kvmarm@lists.cs.columbia.edu>;
- Fri, 20 Dec 2019 09:30:40 -0500 (EST)
+ with ESMTP id i4SmWZq0qIiT for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 20 Dec 2019 09:30:41 -0500 (EST)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 34FDE4AC65
- for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Dec 2019 09:30:39 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4DF6B4A531
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Dec 2019 09:30:41 -0500 (EST)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DF45611D4;
- Fri, 20 Dec 2019 06:30:38 -0800 (PST)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1304311FB;
+ Fri, 20 Dec 2019 06:30:41 -0800 (PST)
 Received: from e119886-lin.cambridge.arm.com (unknown [10.37.6.20])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1120D3F718;
- Fri, 20 Dec 2019 06:30:36 -0800 (PST)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 39E3A3F718;
+ Fri, 20 Dec 2019 06:30:39 -0800 (PST)
 From: Andrew Murray <andrew.murray@arm.com>
 To: Marc Zyngier <marc.zyngier@arm.com>,
  Catalin Marinas <catalin.marinas@arm.com>,
  Will Deacon <will.deacon@arm.com>
-Subject: [PATCH v2 03/18] arm64: KVM: define SPE data structure for each vcpu
-Date: Fri, 20 Dec 2019 14:30:10 +0000
-Message-Id: <20191220143025.33853-4-andrew.murray@arm.com>
+Subject: [PATCH v2 04/18] arm64: KVM: add SPE system registers to sys_reg_descs
+Date: Fri, 20 Dec 2019 14:30:11 +0000
+Message-Id: <20191220143025.33853-5-andrew.murray@arm.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20191220143025.33853-1-andrew.murray@arm.com>
 References: <20191220143025.33853-1-andrew.murray@arm.com>
@@ -68,92 +69,63 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: Sudeep Holla <sudeep.holla@arm.com>
 
-In order to support virtual SPE for guest, so define some basic structs.
-This features depends on host having hardware with SPE support.
-
-Since we can support this only on ARM64, add a separate config symbol
-for the same.
+Add the Statistical Profiling Extension(SPE) Profiling Buffer controls
+registers such that we can provide initial register values and use the
+sys_regs structure as a store for our SPE context.
 
 Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-[ Add irq_level, rename irq to irq_num for kvm_spe ]
+[ Reword commit, remove access/reset handlers, defer kvm_arm_support_spe_v1 ]
 Signed-off-by: Andrew Murray <andrew.murray@arm.com>
 ---
- arch/arm64/include/asm/kvm_host.h |  2 ++
- arch/arm64/kvm/Kconfig            |  7 +++++++
- include/kvm/arm_spe.h             | 19 +++++++++++++++++++
- 3 files changed, 28 insertions(+)
- create mode 100644 include/kvm/arm_spe.h
+ arch/arm64/include/asm/kvm_host.h | 12 ++++++++++++
+ arch/arm64/kvm/sys_regs.c         | 11 +++++++++++
+ 2 files changed, 23 insertions(+)
 
 diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index c61260cf63c5..f5dcff912645 100644
+index f5dcff912645..9eb85f14df90 100644
 --- a/arch/arm64/include/asm/kvm_host.h
 +++ b/arch/arm64/include/asm/kvm_host.h
-@@ -35,6 +35,7 @@
- #include <kvm/arm_vgic.h>
- #include <kvm/arm_arch_timer.h>
- #include <kvm/arm_pmu.h>
-+#include <kvm/arm_spe.h>
+@@ -145,6 +145,18 @@ enum vcpu_sysreg {
+ 	MDCCINT_EL1,	/* Monitor Debug Comms Channel Interrupt Enable Reg */
+ 	DISR_EL1,	/* Deferred Interrupt Status Register */
  
- #define KVM_MAX_VCPUS VGIC_V3_MAX_CPUS
++	/* Statistical Profiling Extension Registers */
++	PMSCR_EL1,
++	PMSICR_EL1,
++	PMSIRR_EL1,
++	PMSFCR_EL1,
++	PMSEVFR_EL1,
++	PMSLATFR_EL1,
++	PMSIDR_EL1,
++	PMBLIMITR_EL1,
++	PMBPTR_EL1,
++	PMBSR_EL1,
++
+ 	/* Performance Monitors Registers */
+ 	PMCR_EL0,	/* Control Register */
+ 	PMSELR_EL0,	/* Event Counter Selection Register */
+diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+index 46822afc57e0..955b157f9cc5 100644
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -1506,6 +1506,17 @@ static const struct sys_reg_desc sys_reg_descs[] = {
+ 	{ SYS_DESC(SYS_FAR_EL1), access_vm_reg, reset_unknown, FAR_EL1 },
+ 	{ SYS_DESC(SYS_PAR_EL1), NULL, reset_unknown, PAR_EL1 },
  
-@@ -302,6 +303,7 @@ struct kvm_vcpu_arch {
- 	struct vgic_cpu vgic_cpu;
- 	struct arch_timer_cpu timer_cpu;
- 	struct kvm_pmu pmu;
-+	struct kvm_spe spe;
++	{ SYS_DESC(SYS_PMSCR_EL1), NULL, reset_val, PMSCR_EL1, 0 },
++	{ SYS_DESC(SYS_PMSICR_EL1), NULL, reset_val, PMSICR_EL1, 0 },
++	{ SYS_DESC(SYS_PMSIRR_EL1), NULL, reset_val, PMSIRR_EL1, 0 },
++	{ SYS_DESC(SYS_PMSFCR_EL1), NULL, reset_val, PMSFCR_EL1, 0 },
++	{ SYS_DESC(SYS_PMSEVFR_EL1), NULL, reset_val, PMSEVFR_EL1, 0 },
++	{ SYS_DESC(SYS_PMSLATFR_EL1), NULL, reset_val, PMSLATFR_EL1, 0 },
++	{ SYS_DESC(SYS_PMSIDR_EL1), NULL, reset_val, PMSIDR_EL1, 0 },
++	{ SYS_DESC(SYS_PMBLIMITR_EL1), NULL, reset_val, PMBLIMITR_EL1, 0 },
++	{ SYS_DESC(SYS_PMBPTR_EL1), NULL, reset_val, PMBPTR_EL1, 0 },
++	{ SYS_DESC(SYS_PMBSR_EL1), NULL, reset_val, PMBSR_EL1, 0 },
++
+ 	{ SYS_DESC(SYS_PMINTENSET_EL1), access_pminten, reset_unknown, PMINTENSET_EL1 },
+ 	{ SYS_DESC(SYS_PMINTENCLR_EL1), access_pminten, NULL, PMINTENSET_EL1 },
  
- 	/*
- 	 * Anything that is not used directly from assembly code goes
-diff --git a/arch/arm64/kvm/Kconfig b/arch/arm64/kvm/Kconfig
-index a475c68cbfec..af5be2c57dcb 100644
---- a/arch/arm64/kvm/Kconfig
-+++ b/arch/arm64/kvm/Kconfig
-@@ -35,6 +35,7 @@ config KVM
- 	select HAVE_KVM_EVENTFD
- 	select HAVE_KVM_IRQFD
- 	select KVM_ARM_PMU if HW_PERF_EVENTS
-+	select KVM_ARM_SPE if (HW_PERF_EVENTS && ARM_SPE_PMU)
- 	select HAVE_KVM_MSI
- 	select HAVE_KVM_IRQCHIP
- 	select HAVE_KVM_IRQ_ROUTING
-@@ -61,6 +62,12 @@ config KVM_ARM_PMU
- 	  Adds support for a virtual Performance Monitoring Unit (PMU) in
- 	  virtual machines.
- 
-+config KVM_ARM_SPE
-+	bool
-+	---help---
-+	  Adds support for a virtual Statistical Profiling Extension(SPE) in
-+	  virtual machines.
-+
- config KVM_INDIRECT_VECTORS
-        def_bool KVM && (HARDEN_BRANCH_PREDICTOR || HARDEN_EL2_VECTORS)
- 
-diff --git a/include/kvm/arm_spe.h b/include/kvm/arm_spe.h
-new file mode 100644
-index 000000000000..48d118fdb174
---- /dev/null
-+++ b/include/kvm/arm_spe.h
-@@ -0,0 +1,19 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (C) 2019 ARM Ltd.
-+ */
-+
-+#ifndef __ASM_ARM_KVM_SPE_H
-+#define __ASM_ARM_KVM_SPE_H
-+
-+#include <uapi/linux/kvm.h>
-+#include <linux/kvm_host.h>
-+
-+struct kvm_spe {
-+	int irq_num;
-+	bool ready; /* indicates that SPE KVM instance is ready for use */
-+	bool created; /* SPE KVM instance is created, may not be ready yet */
-+	bool irq_level;
-+};
-+
-+#endif /* __ASM_ARM_KVM_SPE_H */
 -- 
 2.21.0
 
