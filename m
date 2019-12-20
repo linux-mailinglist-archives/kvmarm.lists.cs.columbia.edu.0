@@ -2,60 +2,53 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C983127B7C
-	for <lists+kvmarm@lfdr.de>; Fri, 20 Dec 2019 14:07:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E8834127CA3
+	for <lists+kvmarm@lfdr.de>; Fri, 20 Dec 2019 15:30:40 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E49554ACB8;
-	Fri, 20 Dec 2019 08:07:15 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D3864AC70;
+	Fri, 20 Dec 2019 09:30:40 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
 X-Spam-Level: 
 X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id L-iozktE+l2H; Fri, 20 Dec 2019 08:07:15 -0500 (EST)
+	with ESMTP id 5iyfUqOh320o; Fri, 20 Dec 2019 09:30:40 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A97624ACDB;
-	Fri, 20 Dec 2019 08:07:14 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 47E414A968;
+	Fri, 20 Dec 2019 09:30:39 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 188B64ACB8
- for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Dec 2019 08:07:13 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 197454A531
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Dec 2019 09:30:38 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 4mrPXRtm+k0t for <kvmarm@lists.cs.columbia.edu>;
- Fri, 20 Dec 2019 08:07:12 -0500 (EST)
-Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
- [213.251.177.50])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id EC9DA4AC89
- for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Dec 2019 08:07:11 -0500 (EST)
-Received: from www-data by cheepnis.misterjones.org with local (Exim 4.80)
- (envelope-from <maz@kernel.org>)
- id 1iiHzl-0005uV-GW; Fri, 20 Dec 2019 14:07:05 +0100
-To: Zenghui Yu <yuzenghui@huawei.com>
-Subject: Re: [PATCH] KVM: arm/arm64: vgic: Handle =?UTF-8?Q?GICR=5FPENDBAS?=
- =?UTF-8?Q?ER=2EPTZ=20filed=20as=20RAZ?=
-X-PHP-Originating-Script: 0:main.inc
+ with ESMTP id jqBJqpCayxJY for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 20 Dec 2019 09:30:33 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D8F784A3A3
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Dec 2019 09:30:32 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 648A130E;
+ Fri, 20 Dec 2019 06:30:32 -0800 (PST)
+Received: from e119886-lin.cambridge.arm.com (unknown [10.37.6.20])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8ABF43F718;
+ Fri, 20 Dec 2019 06:30:30 -0800 (PST)
+From: Andrew Murray <andrew.murray@arm.com>
+To: Marc Zyngier <marc.zyngier@arm.com>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ Will Deacon <will.deacon@arm.com>
+Subject: [PATCH v2 00/18] arm64: KVM: add SPE profiling support
+Date: Fri, 20 Dec 2019 14:30:07 +0000
+Message-Id: <20191220143025.33853-1-andrew.murray@arm.com>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Date: Fri, 20 Dec 2019 13:07:05 +0000
-From: Marc Zyngier <maz@kernel.org>
-In-Reply-To: <20191220111833.1422-1-yuzenghui@huawei.com>
-References: <20191220111833.1422-1-yuzenghui@huawei.com>
-Message-ID: <71e3dcc00ad5ab8dffd732bfe7381705@www.loen.fr>
-X-Sender: maz@kernel.org
-User-Agent: Roundcube Webmail/0.7.2
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Rcpt-To: yuzenghui@huawei.com, andre.przywara@arm.com,
- eric.auger@redhat.com, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org,
- wanghaibin.wang@huawei.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on cheepnis.misterjones.org);
- SAEximRunCond expanded to false
-Cc: andre.przywara@arm.com, linux-kernel@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Cc: kvm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Sudeep Holla <sudeep.holla@arm.com>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -67,71 +60,102 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2019-12-20 11:18, Zenghui Yu wrote:
-> Although guest will hardly read and use the PTZ (Pending Table Zero)
-> bit in GICR_PENDBASER, let us emulate the architecture strictly.
-> As per IHI 0069E 9.11.30, PTZ field is WO, and reads as 0.
->
-> Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
-> ---
->
-> Noticed when checking all fields of GICR_PENDBASER register.
-> But _not_ sure whether it's worth a fix, as Linux never sets
-> the PTZ bit before enabling LPI (set GICR_CTLR_ENABLE_LPIS).
->
-> And I wonder under which scenarios can this bit be written as 1.
-> It seems difficult for software to determine whether the pending
-> table contains all zeros when writing this bit.
+This series implements support for allowing KVM guests to use the Arm
+Statistical Profiling Extension (SPE).
 
-This is a useless HW optimization, where it can avoid reading the
-pending table the very first time you write to this register if
-it is told that it is all zero. A decent ITS implementation
-already has a mechanism to find out about the pending bits by
-looking into the IMPDEF area (the first 1kB) of the pending table.
-PTZ is just yet another way to do the same thing.
+It has been tested on a model to ensure that both host and guest can
+simultaneously use SPE with valid data. E.g.
 
-This can only happen once in the lifetime of the system (when 
-allocating
-the table), and Linux doesn't really care. As usual, the GIC is setting
-the level of useless complexity pretty high...
+$ perf record -e arm_spe/ts_enable=1,pa_enable=1,pct_enable=1/ \
+        dd if=/dev/zero of=/dev/null count=1000
+$ perf report --dump-raw-trace > spe_buf.txt
 
->
->  virt/kvm/arm/vgic/vgic-mmio-v3.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/virt/kvm/arm/vgic/vgic-mmio-v3.c
-> b/virt/kvm/arm/vgic/vgic-mmio-v3.c
-> index 7dfd15dbb308..ebc218840fc2 100644
-> --- a/virt/kvm/arm/vgic/vgic-mmio-v3.c
-> +++ b/virt/kvm/arm/vgic/vgic-mmio-v3.c
-> @@ -414,8 +414,11 @@ static unsigned long
-> vgic_mmio_read_pendbase(struct kvm_vcpu *vcpu,
->  					     gpa_t addr, unsigned int len)
->  {
->  	struct vgic_cpu *vgic_cpu = &vcpu->arch.vgic_cpu;
-> +	u64 value = vgic_cpu->pendbaser;
->
-> -	return extract_bytes(vgic_cpu->pendbaser, addr & 7, len);
-> +	value &= ~GICR_PENDBASER_PTZ;
-> +
-> +	return extract_bytes(value, addr & 7, len);
->  }
->
->  static void vgic_mmio_write_pendbase(struct kvm_vcpu *vcpu,
+As we save and restore the SPE context, the guest can access the SPE
+registers directly, thus in this version of the series we remove the
+trapping and emulation.
 
-Otherwise looks good. I'll queue it with Eric's correction
-to the subject line.
+In the previous series of this support, when KVM SPE isn't supported
+(e.g. via CONFIG_KVM_ARM_SPE) we were able to return a value of 0 to
+all reads of the SPE registers - as we can no longer do this there isn't
+a mechanism to prevent the guest from using SPE - thus I'm keen for
+feedback on the best way of resolving this.
 
-Thanks,
+It appears necessary to pin the entire guest memory in order to provide
+guest SPE access - otherwise it is possible for the guest to receive
+Stage-2 faults.
 
-         M.
+The last two extra patches are for the kvmtool if someone wants to play
+with it.
+
+Changes since v2:
+	- Rebased on v5.5-rc2
+	- Renamed kvm_spe structure 'irq' member to 'irq_num'
+	- Added irq_level to kvm_spe structure
+	- Clear PMBSR service bit on save to avoid spurious interrupts
+	- Update kvmtool headers to 5.4
+	- Enabled SPE in KVM init features
+	- No longer trap and emulate
+	- Add support for guest/host exclusion flags
+	- Fix virq support for SPE
+	- Adjusted sysreg_elx_s macros with merged clang build support
+
+Andrew Murray (4):
+  KVM: arm64: don't trap Statistical Profiling controls to EL2
+  perf: arm_spe: Add KVM structure for obtaining IRQ info
+  KVM: arm64: spe: Provide guest virtual interrupts for SPE
+  perf: arm_spe: Handle guest/host exclusion flags
+
+Sudeep Holla (12):
+  dt-bindings: ARM SPE: highlight the need for PPI partitions on
+    heterogeneous systems
+  arm64: KVM: reset E2PB correctly in MDCR_EL2 when exiting the
+    guest(VHE)
+  arm64: KVM: define SPE data structure for each vcpu
+  arm64: KVM: add SPE system registers to sys_reg_descs
+  arm64: KVM/VHE: enable the use PMSCR_EL12 on VHE systems
+  arm64: KVM: split debug save restore across vm/traps activation
+  arm64: KVM/debug: drop pmscr_el1 and use sys_regs[PMSCR_EL1] in
+    kvm_cpu_context
+  arm64: KVM: add support to save/restore SPE profiling buffer controls
+  arm64: KVM: enable conditional save/restore full SPE profiling buffer
+    controls
+  arm64: KVM/debug: use EL1&0 stage 1 translation regime
+  KVM: arm64: add a new vcpu device control group for SPEv1
+  KVM: arm64: enable SPE support
+  KVMTOOL: update_headers: Sync kvm UAPI headers with linux v5.5-rc2
+  KVMTOOL: kvm: add a vcpu feature for SPEv1 support
+
+ .../devicetree/bindings/arm/spe-pmu.txt       |   5 +-
+ Documentation/virt/kvm/devices/vcpu.txt       |  28 +++
+ arch/arm64/include/asm/kvm_host.h             |  18 +-
+ arch/arm64/include/asm/kvm_hyp.h              |   6 +-
+ arch/arm64/include/asm/sysreg.h               |   1 +
+ arch/arm64/include/uapi/asm/kvm.h             |   4 +
+ arch/arm64/kvm/Kconfig                        |   7 +
+ arch/arm64/kvm/Makefile                       |   1 +
+ arch/arm64/kvm/debug.c                        |   2 -
+ arch/arm64/kvm/guest.c                        |   6 +
+ arch/arm64/kvm/hyp/debug-sr.c                 | 105 +++++---
+ arch/arm64/kvm/hyp/switch.c                   |  18 +-
+ arch/arm64/kvm/reset.c                        |   3 +
+ arch/arm64/kvm/sys_regs.c                     |  11 +
+ drivers/perf/arm_spe_pmu.c                    |  26 ++
+ include/kvm/arm_spe.h                         |  82 ++++++
+ include/uapi/linux/kvm.h                      |   1 +
+ virt/kvm/arm/arm.c                            |  10 +-
+ virt/kvm/arm/spe.c                            | 234 ++++++++++++++++++
+ 19 files changed, 521 insertions(+), 47 deletions(-)
+ create mode 100644 include/kvm/arm_spe.h
+ create mode 100644 virt/kvm/arm/spe.c
+
 -- 
-Jazz is not dead. It just smells funny...
+2.21.0
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
