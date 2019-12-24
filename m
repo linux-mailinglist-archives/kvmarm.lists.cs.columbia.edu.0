@@ -2,58 +2,60 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DCE412A02F
-	for <lists+kvmarm@lfdr.de>; Tue, 24 Dec 2019 11:49:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C562312A04D
+	for <lists+kvmarm@lfdr.de>; Tue, 24 Dec 2019 12:11:21 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 94BF04AF55;
-	Tue, 24 Dec 2019 05:49:37 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 778074AF73;
+	Tue, 24 Dec 2019 06:11:21 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
 X-Spam-Level: 
 X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001]
-	autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ejfYlFT-RX7b; Tue, 24 Dec 2019 05:49:37 -0500 (EST)
+	with ESMTP id W7QJD644LGyV; Tue, 24 Dec 2019 06:11:20 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3A2294AF53;
-	Tue, 24 Dec 2019 05:49:36 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DE7AE4AF5D;
+	Tue, 24 Dec 2019 06:11:16 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4401C4AF4A
- for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Dec 2019 05:49:34 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 332404AF3A
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Dec 2019 06:11:15 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id oHEJvchEp8Z4 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 24 Dec 2019 05:49:33 -0500 (EST)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E1AEE4AECE
- for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Dec 2019 05:49:32 -0500 (EST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9018331B;
- Tue, 24 Dec 2019 02:49:32 -0800 (PST)
-Received: from localhost (unknown [10.37.6.20])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 046BC3F534;
- Tue, 24 Dec 2019 02:49:31 -0800 (PST)
-Date: Tue, 24 Dec 2019 10:49:30 +0000
-From: Andrew Murray <andrew.murray@arm.com>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v2 08/18] arm64: KVM: add support to save/restore SPE
- profiling buffer controls
-Message-ID: <20191224104929.GE42593@e119886-lin.cambridge.arm.com>
-References: <20191220143025.33853-1-andrew.murray@arm.com>
- <20191220143025.33853-9-andrew.murray@arm.com>
- <20191221135755.70a6e8df@why>
+ with ESMTP id 0mE++wDELyJH for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 24 Dec 2019 06:11:13 -0500 (EST)
+Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
+ [213.251.177.50])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D3E574AF5C
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Dec 2019 06:11:13 -0500 (EST)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by cheepnis.misterjones.org with esmtpsa
+ (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128) (Exim 4.80)
+ (envelope-from <maz@kernel.org>)
+ id 1iji5l-000169-Tz; Tue, 24 Dec 2019 12:11:10 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: kvmarm@lists.cs.columbia.edu,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v3 00/32] irqchip/gic-v4: GICv4.1 architecture support
+Date: Tue, 24 Dec 2019 11:10:23 +0000
+Message-Id: <20191224111055.11836-1-maz@kernel.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20191221135755.70a6e8df@why>
-User-Agent: Mutt/1.10.1+81 (426a6c1) (2018-08-26)
-Cc: kvm@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
- linux-kernel@vger.kernel.org, Sudeep Holla <sudeep.holla@arm.com>,
- Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org,
+ eric.auger@redhat.com, james.morse@arm.com, julien.thierry.kdev@gmail.com,
+ suzuki.poulose@arm.com, tglx@linutronix.de, jason@lakedaemon.net,
+ lorenzo.pieralisi@arm.com, Andrew.Murray@arm.com, yuzenghui@huawei.com,
+ rrichter@marvell.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on cheepnis.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+ Jason Cooper <jason@lakedaemon.net>, Robert Richter <rrichter@marvell.com>,
+ Thomas Gleixner <tglx@linutronix.de>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -70,195 +72,126 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Sat, Dec 21, 2019 at 01:57:55PM +0000, Marc Zyngier wrote:
-> On Fri, 20 Dec 2019 14:30:15 +0000
-> Andrew Murray <andrew.murray@arm.com> wrote:
-> 
-> > From: Sudeep Holla <sudeep.holla@arm.com>
-> > 
-> > Currently since we don't support profiling using SPE in the guests,
-> > we just save the PMSCR_EL1, flush the profiling buffers and disable
-> > sampling. However in order to support simultaneous sampling both in
-> 
-> Is the sampling actually simultaneous? I don't believe so (the whole
-> series would be much simpler if it was).
+[All I want for Christmas is... another monster GIC series!]
 
-No the SPE is used by either the guest or host at any one time. I guess
-the term simultaneous was used to refer to illusion given to both guest
-and host that they are able to use it whenever they like. I'll update
-the commit message to drop the magic.
- 
+This rather long series expands the existing GICv4 support to deal with the
+new GICv4.1 architecture, which comes with a set of major improvements
+compared to v4.0:
 
-> 
-> > the host and guests, we need to save and reatore the complete SPE
-> 
-> s/reatore/restore/
+- One architectural doorbell per vcpu, instead of one doorbell per VLPI
 
-Noted.
+- Doorbell entirely managed by the HW, with an "at most once" delivery
+  guarantee per non-residency phase and only when requested by the
+  hypervisor
 
+- A shared memory scheme between ITSs and redistributors, allowing for an
+  optimised residency sequence (the use of VMOVP becomes less frequent)
 
-> 
-> > profiling buffer controls' context.
-> > 
-> > Let's add the support for the same and keep it disabled for now.
-> > We can enable it conditionally only if guests are allowed to use
-> > SPE.
-> > 
-> > Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-> > [ Clear PMBSR bit when saving state to prevent spurious interrupts ]
-> > Signed-off-by: Andrew Murray <andrew.murray@arm.com>
-> > ---
-> >  arch/arm64/kvm/hyp/debug-sr.c | 51 +++++++++++++++++++++++++++++------
-> >  1 file changed, 43 insertions(+), 8 deletions(-)
-> > 
-> > diff --git a/arch/arm64/kvm/hyp/debug-sr.c b/arch/arm64/kvm/hyp/debug-sr.c
-> > index 8a70a493345e..12429b212a3a 100644
-> > --- a/arch/arm64/kvm/hyp/debug-sr.c
-> > +++ b/arch/arm64/kvm/hyp/debug-sr.c
-> > @@ -85,7 +85,8 @@
-> >  	default:	write_debug(ptr[0], reg, 0);			\
-> >  	}
-> >  
-> > -static void __hyp_text __debug_save_spe_nvhe(struct kvm_cpu_context *ctxt)
-> > +static void __hyp_text
-> > +__debug_save_spe_nvhe(struct kvm_cpu_context *ctxt, bool full_ctxt)
-> 
-> nit: don't split lines like this if you can avoid it. You can put the
-> full_ctxt parameter on a separate line instead.
+- Support for direct virtual SGI delivery (the injection path still involves
+  the hypervisor), at the cost of losing the active state on SGIs. It
+  shouldn't be a big deal, but some guest operating systems might notice
+  (Linux definitely won't care).
 
-Yes understood.
+On the other hand, public documentation is not available yet, so that's a
+bit annoying...
 
+The series is roughly organised in 5 parts:
 
-> 
-> >  {
-> >  	u64 reg;
-> >  
-> > @@ -102,22 +103,46 @@ static void __hyp_text __debug_save_spe_nvhe(struct kvm_cpu_context *ctxt)
-> >  	if (reg & BIT(SYS_PMBIDR_EL1_P_SHIFT))
-> >  		return;
-> >  
-> > -	/* No; is the host actually using the thing? */
-> > -	reg = read_sysreg_s(SYS_PMBLIMITR_EL1);
-> > -	if (!(reg & BIT(SYS_PMBLIMITR_EL1_E_SHIFT)))
-> > +	/* Save the control register and disable data generation */
-> > +	ctxt->sys_regs[PMSCR_EL1] = read_sysreg_el1(SYS_PMSCR);
-> > +
-> > +	if (!ctxt->sys_regs[PMSCR_EL1])
-> 
-> Shouldn't you check the enable bits instead of relying on the whole
-> thing being zero?
+(1) Feature detection, errata workaround for TX1
+(2) VPE table allocation, new flavours of VMAPP/VMOVP commands
+(3) v4.1 doorbell management
+(4) Virtual SGI support
+(5) Plumbing of virtual SGIs in KVM
 
-Yes that would make more sense (E1SPE and E0SPE).
+Ideally, I'd like to start merging some of this into 5.6.
 
-I feel that this check makes an assumption about the guest/host SPE
-driver... What happens if the SPE driver writes to some SPE registers
-but doesn't enable PMSCR? If the guest is also using SPE then those
-writes will be lost, when the host returns and the SPE driver enables
-SPE it won't work.
+Notes:
 
-With a quick look at the SPE driver I'm not sure this will happen, but
-even so it makes me nervous relying on these assumptions. I wonder if
-this risk is present in other devices?
+  - This series has uncovered a behaviour that looks like a HW bug on
+    the Cavium ThunderX (aka TX1) platform (see patch #3). I'd very
+    much welcome some clarification from the Marvell/Cavium folks on
+    Cc, as well as an official erratum number if this happens to be an
+    actual bug.
 
+    [v3 update]
+    People have ignored for two months now, and it is fairly obvious
+    that support for this machine is slowly bit-rotting. Maybe I'll
+    drop the patch and instead start the process of removing all TX1
+    support from the kernel (we'd certainly be better off without it).
 
-> 
-> >  		return;
-> >  
-> >  	/* Yes; save the control register and disable data generation */
-> > -	ctxt->sys_regs[PMSCR_EL1] = read_sysreg_el1(SYS_PMSCR);
-> 
-> You've already saved the control register...
+* From v2 [2]:
+  - Another bunch of fixes thanks to Zenghui Yu's very careful review
+  - HW-accelerated SGIs are now optional thanks to new architected
+    discovery/selection bits exposed by KVM and used by the guest kernel
+  - Rebased on v5.5-rc2
 
-I'll remove that.
+* From v1 [1]:
+  - A bunch of minor reworks after Zenghui Yu's review
+  - A workaround for what looks like a new and unexpected TX1 bug
+  - A subtle reorder of the series so that some patches can go in early
 
+[1] https://lore.kernel.org/lkml/20190923182606.32100-1-maz@kernel.org/
+[2] https://lore.kernel.org/lkml/20191027144234.8395-1-maz@kernel.org/
 
-> 
-> >  	write_sysreg_el1(0, SYS_PMSCR);
-> >  	isb();
-> >  
-> >  	/* Now drain all buffered data to memory */
-> >  	psb_csync();
-> >  	dsb(nsh);
-> > +
-> > +	if (!full_ctxt)
-> > +		return;
-> > +
-> > +	ctxt->sys_regs[PMBLIMITR_EL1] = read_sysreg_s(SYS_PMBLIMITR_EL1);
-> > +	write_sysreg_s(0, SYS_PMBLIMITR_EL1);
-> > +
-> > +	/*
-> > +	 * As PMBSR is conditionally restored when returning to the host we
-> > +	 * must ensure the service bit is unset here to prevent a spurious
-> > +	 * host SPE interrupt from being raised.
-> > +	 */
-> > +	ctxt->sys_regs[PMBSR_EL1] = read_sysreg_s(SYS_PMBSR_EL1);
-> > +	write_sysreg_s(0, SYS_PMBSR_EL1);
-> > +
-> > +	isb();
-> > +
-> > +	ctxt->sys_regs[PMSICR_EL1] = read_sysreg_s(SYS_PMSICR_EL1);
-> > +	ctxt->sys_regs[PMSIRR_EL1] = read_sysreg_s(SYS_PMSIRR_EL1);
-> > +	ctxt->sys_regs[PMSFCR_EL1] = read_sysreg_s(SYS_PMSFCR_EL1);
-> > +	ctxt->sys_regs[PMSEVFR_EL1] = read_sysreg_s(SYS_PMSEVFR_EL1);
-> > +	ctxt->sys_regs[PMSLATFR_EL1] = read_sysreg_s(SYS_PMSLATFR_EL1);
-> > +	ctxt->sys_regs[PMBPTR_EL1] = read_sysreg_s(SYS_PMBPTR_EL1);
-> >  }
-> >  
-> > -static void __hyp_text __debug_restore_spe_nvhe(struct kvm_cpu_context *ctxt)
-> > +static void __hyp_text
-> > +__debug_restore_spe_nvhe(struct kvm_cpu_context *ctxt, bool full_ctxt)
-> >  {
-> >  	if (!ctxt->sys_regs[PMSCR_EL1])
-> >  		return;
-> > @@ -126,6 +151,16 @@ static void __hyp_text __debug_restore_spe_nvhe(struct kvm_cpu_context *ctxt)
-> >  	isb();
-> >  
-> >  	/* Re-enable data generation */
-> > +	if (full_ctxt) {
-> > +		write_sysreg_s(ctxt->sys_regs[PMBPTR_EL1], SYS_PMBPTR_EL1);
-> > +		write_sysreg_s(ctxt->sys_regs[PMBLIMITR_EL1], SYS_PMBLIMITR_EL1);
-> > +		write_sysreg_s(ctxt->sys_regs[PMSFCR_EL1], SYS_PMSFCR_EL1);
-> > +		write_sysreg_s(ctxt->sys_regs[PMSEVFR_EL1], SYS_PMSEVFR_EL1);
-> > +		write_sysreg_s(ctxt->sys_regs[PMSLATFR_EL1], SYS_PMSLATFR_EL1);
-> > +		write_sysreg_s(ctxt->sys_regs[PMSIRR_EL1], SYS_PMSIRR_EL1);
-> > +		write_sysreg_s(ctxt->sys_regs[PMSICR_EL1], SYS_PMSICR_EL1);
-> > +		write_sysreg_s(ctxt->sys_regs[PMBSR_EL1], SYS_PMBSR_EL1);
-> > +	}
-> >  	write_sysreg_el1(ctxt->sys_regs[PMSCR_EL1], SYS_PMSCR);
-> >  }
-> >  
-> > @@ -198,7 +233,7 @@ void __hyp_text __debug_restore_host_context(struct kvm_vcpu *vcpu)
-> >  	guest_ctxt = &vcpu->arch.ctxt;
-> >  
-> >  	if (!has_vhe())
-> > -		__debug_restore_spe_nvhe(host_ctxt);
-> > +		__debug_restore_spe_nvhe(host_ctxt, false);
-> >  
-> >  	if (!(vcpu->arch.flags & KVM_ARM64_DEBUG_DIRTY))
-> >  		return;
-> > @@ -222,7 +257,7 @@ void __hyp_text __debug_save_host_context(struct kvm_vcpu *vcpu)
-> >  
-> >  	host_ctxt = kern_hyp_va(vcpu->arch.host_cpu_context);
-> >  	if (!has_vhe())
-> > -		__debug_save_spe_nvhe(host_ctxt);
-> > +		__debug_save_spe_nvhe(host_ctxt, false);
-> >  }
-> >  
-> >  void __hyp_text __debug_save_guest_context(struct kvm_vcpu *vcpu)
-> 
-> So all of this is for non-VHE. What happens in the VHE case?
+Marc Zyngier (32):
+  irqchip/gic-v3: Detect GICv4.1 supporting RVPEID
+  irqchip/gic-v3: Add GICv4.1 VPEID size discovery
+  irqchip/gic-v3: Workaround Cavium TX1 erratum when reading GICD_TYPER2
+  irqchip/gic-v3: Use SGIs without active state if offered
+  irqchip/gic-v4.1: VPE table (aka GICR_VPROPBASER) allocation
+  irqchip/gic-v4.1: Implement the v4.1 flavour of VMAPP
+  irqchip/gic-v4.1: Don't use the VPE proxy if RVPEID is set
+  irqchip/gic-v4.1: Implement the v4.1 flavour of VMOVP
+  irqchip/gic-v4.1: Plumb skeletal VPE irqchip
+  irqchip/gic-v4.1: Add mask/unmask doorbell callbacks
+  irqchip/gic-v4.1: Add VPE residency callback
+  irqchip/gic-v4.1: Add VPE eviction callback
+  irqchip/gic-v4.1: Add VPE INVALL callback
+  irqchip/gic-v4.1: Suppress per-VLPI doorbell
+  irqchip/gic-v4.1: Allow direct invalidation of VLPIs
+  irqchip/gic-v4.1: Advertise support v4.1 to KVM
+  irqchip/gic-v4.1: Map the ITS SGIR register page
+  irqchip/gic-v4.1: Plumb skeletal VSGI irqchip
+  irqchip/gic-v4.1: Add initial SGI configuration
+  irqchip/gic-v4.1: Plumb mask/unmask SGI callbacks
+  irqchip/gic-v4.1: Plumb get/set_irqchip_state SGI callbacks
+  irqchip/gic-v4.1: Plumb set_vcpu_affinity SGI callbacks
+  irqchip/gic-v4.1: Move doorbell management to the GICv4 abstraction
+    layer
+  irqchip/gic-v4.1: Add VSGI allocation/teardown
+  irqchip/gic-v4.1: Add VSGI property setup
+  irqchip/gic-v4.1: Eagerly vmap vPEs
+  KVM: arm64: GICv4.1: Let doorbells be auto-enabled
+  KVM: arm64: GICv4.1: Add direct injection capability to SGI registers
+  KVM: arm64: GICv4.1: Allow SGIs to switch between HW and SW interrupts
+  KVM: arm64: GICv4.1: Plumb SGI implementation selection in the
+    distributor
+  KVM: arm64: GICv4.1: Reload VLPI configuration on distributor
+    enable/disable
+  KVM: arm64: GICv4.1: Expose HW-based SGIs in debugfs
 
-By the end of the series this ends up in __debug_save_host_context which is
-called for both VHE/nVHE - on the re-spin I'll make it not look so confusing.
+ arch/arm/include/asm/arch_gicv3.h      |   2 +
+ arch/arm64/include/asm/arch_gicv3.h    |   1 +
+ arch/arm64/include/asm/kvm_host.h      |   1 +
+ drivers/irqchip/irq-gic-v3-its.c       | 996 +++++++++++++++++++++++--
+ drivers/irqchip/irq-gic-v3.c           |  57 +-
+ drivers/irqchip/irq-gic-v4.c           | 134 +++-
+ include/kvm/arm_vgic.h                 |   4 +
+ include/linux/irqchip/arm-gic-common.h |   2 +
+ include/linux/irqchip/arm-gic-v3.h     |  76 +-
+ include/linux/irqchip/arm-gic-v4.h     |  43 +-
+ virt/kvm/arm/arm.c                     |   8 +
+ virt/kvm/arm/vgic/vgic-debug.c         |  14 +-
+ virt/kvm/arm/vgic/vgic-mmio-v3.c       |  68 +-
+ virt/kvm/arm/vgic/vgic-mmio.c          |  88 ++-
+ virt/kvm/arm/vgic/vgic-v3.c            |   3 +
+ virt/kvm/arm/vgic/vgic-v4.c            | 139 +++-
+ virt/kvm/arm/vgic/vgic.h               |   1 +
+ 17 files changed, 1522 insertions(+), 115 deletions(-)
 
-Thanks,
+-- 
+2.20.1
 
-Andrew Murray
-
-> 
-> 	M.
-> -- 
-> Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
