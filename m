@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E1EE312A0A3
-	for <lists+kvmarm@lfdr.de>; Tue, 24 Dec 2019 12:40:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DE5B12A0C8
+	for <lists+kvmarm@lfdr.de>; Tue, 24 Dec 2019 12:43:10 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 93AD44AF5B;
-	Tue, 24 Dec 2019 06:40:24 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 001714AF28;
+	Tue, 24 Dec 2019 06:43:10 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
@@ -15,33 +15,33 @@ X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JIQWIqnTgOj4; Tue, 24 Dec 2019 06:40:24 -0500 (EST)
+	with ESMTP id Qa22yZr7BP8g; Tue, 24 Dec 2019 06:43:09 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 760654AF55;
-	Tue, 24 Dec 2019 06:40:23 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E52764AF45;
+	Tue, 24 Dec 2019 06:43:08 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A09034AF33
- for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Dec 2019 06:40:21 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DE6374AF2F
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Dec 2019 06:43:07 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id aZTH0EHScNTZ for <kvmarm@lists.cs.columbia.edu>;
- Tue, 24 Dec 2019 06:40:20 -0500 (EST)
+ with ESMTP id Yqn31w9MY9jc for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 24 Dec 2019 06:43:07 -0500 (EST)
 Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
  [213.251.177.50])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id BD84D4AF28
- for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Dec 2019 06:40:20 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id EAD9D4AF28
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Dec 2019 06:43:06 -0500 (EST)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by cheepnis.misterjones.org with esmtpsa
  (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128) (Exim 4.80)
  (envelope-from <maz@kernel.org>)
- id 1iji68-000169-NK; Tue, 24 Dec 2019 12:11:32 +0100
+ id 1iji69-000169-DW; Tue, 24 Dec 2019 12:11:34 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: kvmarm@lists.cs.columbia.edu,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v3 24/32] irqchip/gic-v4.1: Add VSGI allocation/teardown
-Date: Tue, 24 Dec 2019 11:10:47 +0000
-Message-Id: <20191224111055.11836-25-maz@kernel.org>
+Subject: [PATCH v3 25/32] irqchip/gic-v4.1: Add VSGI property setup
+Date: Tue, 24 Dec 2019 11:10:48 +0000
+Message-Id: <20191224111055.11836-26-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191224111055.11836-1-maz@kernel.org>
 References: <20191224111055.11836-1-maz@kernel.org>
@@ -74,124 +74,50 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Allocate per-VPE SGIs when initializing the GIC-specific part of the
-VPE data structure.
+Add the SGI configuration entry point for KVM to use.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- drivers/irqchip/irq-gic-v4.c       | 68 +++++++++++++++++++++++++++++-
- include/linux/irqchip/arm-gic-v4.h |  2 +
- 2 files changed, 69 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v4.c       | 13 +++++++++++++
+ include/linux/irqchip/arm-gic-v4.h |  1 +
+ 2 files changed, 14 insertions(+)
 
 diff --git a/drivers/irqchip/irq-gic-v4.c b/drivers/irqchip/irq-gic-v4.c
-index 117ba6db023d..99b33f60ac63 100644
+index 99b33f60ac63..f3f06c5c7e54 100644
 --- a/drivers/irqchip/irq-gic-v4.c
 +++ b/drivers/irqchip/irq-gic-v4.c
-@@ -92,6 +92,47 @@ static bool has_v4_1(void)
- 	return !!sgi_domain_ops;
+@@ -320,6 +320,19 @@ int its_prop_update_vlpi(int irq, u8 config, bool inv)
+ 	return irq_set_vcpu_affinity(irq, &info);
  }
  
-+static int its_alloc_vcpu_sgis(struct its_vpe *vpe, int idx)
++int its_prop_update_vsgi(int irq, u8 priority, bool group)
 +{
-+	char *name;
-+	int sgi_base;
++	struct its_cmd_info info = {
++		.cmd_type = PROP_UPDATE_SGI,
++		{
++			.priority	= priority,
++			.group		= group,
++		},
++	};
 +
-+	if (!has_v4_1())
-+		return 0;
-+
-+	name = kasprintf(GFP_KERNEL, "GICv4-sgi-%d", task_pid_nr(current));
-+	if (!name)
-+		goto err;
-+
-+	vpe->fwnode = irq_domain_alloc_named_id_fwnode(name, idx);
-+	if (!vpe->fwnode)
-+		goto err;
-+
-+	kfree(name);
-+	name = NULL;
-+
-+	vpe->sgi_domain = irq_domain_create_linear(vpe->fwnode, 16,
-+						   sgi_domain_ops, vpe);
-+	if (!vpe->sgi_domain)
-+		goto err;
-+
-+	sgi_base = __irq_domain_alloc_irqs(vpe->sgi_domain, -1, 16,
-+					       NUMA_NO_NODE, vpe,
-+					       false, NULL);
-+	if (sgi_base <= 0)
-+		goto err;
-+
-+	return 0;
-+
-+err:
-+	if (vpe->sgi_domain)
-+		irq_domain_remove(vpe->sgi_domain);
-+	if (vpe->fwnode)
-+		irq_domain_free_fwnode(vpe->fwnode);
-+	kfree(name);
-+	return -ENOMEM;
++	return irq_set_vcpu_affinity(irq, &info);
 +}
 +
- int its_alloc_vcpu_irqs(struct its_vm *vm)
- {
- 	int vpe_base_irq, i;
-@@ -118,8 +159,13 @@ int its_alloc_vcpu_irqs(struct its_vm *vm)
- 	if (vpe_base_irq <= 0)
- 		goto err;
- 
--	for (i = 0; i < vm->nr_vpes; i++)
-+	for (i = 0; i < vm->nr_vpes; i++) {
-+		int ret;
- 		vm->vpes[i]->irq = vpe_base_irq + i;
-+		ret = its_alloc_vcpu_sgis(vm->vpes[i], i);
-+		if (ret)
-+			goto err;
-+	}
- 
- 	return 0;
- 
-@@ -132,8 +178,28 @@ int its_alloc_vcpu_irqs(struct its_vm *vm)
- 	return -ENOMEM;
- }
- 
-+static void its_free_sgi_irqs(struct its_vm *vm)
-+{
-+	int i;
-+
-+	if (!has_v4_1())
-+		return;
-+
-+	for (i = 0; i < vm->nr_vpes; i++) {
-+		unsigned int irq = irq_find_mapping(vm->vpes[i]->sgi_domain, 0);
-+
-+		if (WARN_ON(!irq))
-+			continue;
-+
-+		irq_domain_free_irqs(irq, 16);
-+		irq_domain_remove(vm->vpes[i]->sgi_domain);
-+		irq_domain_free_fwnode(vm->vpes[i]->fwnode);
-+	}
-+}
-+
- void its_free_vcpu_irqs(struct its_vm *vm)
- {
-+	its_free_sgi_irqs(vm);
- 	irq_domain_free_irqs(vm->vpes[0]->irq, vm->nr_vpes);
- 	irq_domain_remove(vm->domain);
- 	irq_domain_free_fwnode(vm->fwnode);
+ int its_init_v4(struct irq_domain *domain,
+ 		const struct irq_domain_ops *vpe_ops,
+ 		const struct irq_domain_ops *sgi_ops)
 diff --git a/include/linux/irqchip/arm-gic-v4.h b/include/linux/irqchip/arm-gic-v4.h
-index cca4198fa1d5..9fbd0418f569 100644
+index 9fbd0418f569..46c167a6349f 100644
 --- a/include/linux/irqchip/arm-gic-v4.h
 +++ b/include/linux/irqchip/arm-gic-v4.h
-@@ -49,6 +49,8 @@ struct its_vpe {
- 		};
- 		/* GICv4.1 implementations */
- 		struct {
-+			struct fwnode_handle	*fwnode;
-+			struct irq_domain	*sgi_domain;
- 			struct {
- 				u8	priority;
- 				bool	enabled;
+@@ -129,6 +129,7 @@ int its_map_vlpi(int irq, struct its_vlpi_map *map);
+ int its_get_vlpi(int irq, struct its_vlpi_map *map);
+ int its_unmap_vlpi(int irq);
+ int its_prop_update_vlpi(int irq, u8 config, bool inv);
++int its_prop_update_vsgi(int irq, u8 priority, bool group);
+ 
+ struct irq_domain_ops;
+ int its_init_v4(struct irq_domain *domain,
 -- 
 2.20.1
 
