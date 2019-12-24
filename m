@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FF1112A0BC
-	for <lists+kvmarm@lfdr.de>; Tue, 24 Dec 2019 12:41:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D361012A0C3
+	for <lists+kvmarm@lfdr.de>; Tue, 24 Dec 2019 12:42:40 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 101E64AEFC;
-	Tue, 24 Dec 2019 06:41:47 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6A5664AF21;
+	Tue, 24 Dec 2019 06:42:40 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
@@ -15,33 +15,33 @@ X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vAitGrWN8V6e; Tue, 24 Dec 2019 06:41:46 -0500 (EST)
+	with ESMTP id M2ty--+-RiUZ; Tue, 24 Dec 2019 06:42:40 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0339B4AF4D;
-	Tue, 24 Dec 2019 06:41:46 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 542B54AF31;
+	Tue, 24 Dec 2019 06:42:39 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 59DA34AF22
- for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Dec 2019 06:41:44 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A6A794AF1F
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Dec 2019 06:42:37 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id grojkRuR7nGc for <kvmarm@lists.cs.columbia.edu>;
- Tue, 24 Dec 2019 06:41:43 -0500 (EST)
+ with ESMTP id R-PPA-DFem4u for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 24 Dec 2019 06:42:36 -0500 (EST)
 Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
  [213.251.177.50])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6C3D74AF21
- for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Dec 2019 06:41:43 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B50354AEFC
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Dec 2019 06:42:36 -0500 (EST)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by cheepnis.misterjones.org with esmtpsa
  (TLSv1.2:DHE-RSA-AES128-GCM-SHA256:128) (Exim 4.80)
  (envelope-from <maz@kernel.org>)
- id 1iji60-000169-9h; Tue, 24 Dec 2019 12:11:24 +0100
+ id 1iji61-000169-6D; Tue, 24 Dec 2019 12:11:26 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: kvmarm@lists.cs.columbia.edu,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v3 16/32] irqchip/gic-v4.1: Advertise support v4.1 to KVM
-Date: Tue, 24 Dec 2019 11:10:39 +0000
-Message-Id: <20191224111055.11836-17-maz@kernel.org>
+Subject: [PATCH v3 17/32] irqchip/gic-v4.1: Map the ITS SGIR register page
+Date: Tue, 24 Dec 2019 11:10:40 +0000
+Message-Id: <20191224111055.11836-18-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191224111055.11836-1-maz@kernel.org>
 References: <20191224111055.11836-1-maz@kernel.org>
@@ -74,76 +74,74 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Tell KVM that we support v4.1. Nothing uses this information so far.
+One of the new features of GICv4.1 is to allow virtual SGIs to be
+directly signaled to a VPE. For that, the ITS has grown a new
+64kB page containing only a single register that is used to
+signal a SGI to a given VPE.
+
+Add a second mapping covering this new 64kB range, and take this
+opportunity to limit the original mapping to 64kB, which is enough
+to cover the span of the ITS registers.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c       | 9 ++++++++-
- drivers/irqchip/irq-gic-v3.c           | 2 ++
- include/linux/irqchip/arm-gic-common.h | 2 ++
- 3 files changed, 12 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v3-its.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 360ca2c1533f..48d7ee443544 100644
+index 48d7ee443544..2f94fae67dfd 100644
 --- a/drivers/irqchip/irq-gic-v3-its.c
 +++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -4739,6 +4739,7 @@ int __init its_init(struct fwnode_handle *handle, struct rdists *rdists,
- 	struct device_node *of_node;
- 	struct its_node *its;
- 	bool has_v4 = false;
-+	bool has_v4_1 = false;
+@@ -97,6 +97,7 @@ struct its_node {
+ 	struct mutex		dev_alloc_lock;
+ 	struct list_head	entry;
+ 	void __iomem		*base;
++	void __iomem		*sgir_base;
+ 	phys_addr_t		phys_base;
+ 	struct its_cmd_block	*cmd_base;
+ 	struct its_cmd_block	*cmd_write;
+@@ -4325,7 +4326,7 @@ static int __init its_probe_one(struct resource *res,
+ 	struct page *page;
  	int err;
  
- 	gic_rdists = rdists;
-@@ -4759,8 +4760,14 @@ int __init its_init(struct fwnode_handle *handle, struct rdists *rdists,
- 	if (err)
- 		return err;
+-	its_base = ioremap(res->start, resource_size(res));
++	its_base = ioremap(res->start, SZ_64K);
+ 	if (!its_base) {
+ 		pr_warn("ITS@%pa: Unable to map ITS registers\n", &res->start);
+ 		return -ENOMEM;
+@@ -4376,6 +4377,13 @@ static int __init its_probe_one(struct resource *res,
  
--	list_for_each_entry(its, &its_nodes, entry)
-+	list_for_each_entry(its, &its_nodes, entry) {
- 		has_v4 |= is_v4(its);
-+		has_v4_1 |= is_v4_1(its);
-+	}
+ 		if (is_v4_1(its)) {
+ 			u32 svpet = FIELD_GET(GITS_TYPER_SVPET, typer);
 +
-+	/* Don't bother with inconsistent systems */
-+	if (WARN_ON(!has_v4_1 && rdists->has_rvpeid))
-+		rdists->has_rvpeid = false;
++			its->sgir_base = ioremap(res->start + SZ_128K, SZ_64K);
++			if (!its->sgir_base) {
++				err = -ENOMEM;
++				goto out_free_its;
++			}
++
+ 			its->mpidr = readl_relaxed(its_base + GITS_MPIDR);
  
- 	if (has_v4 & rdists->has_vlpis) {
- 		if (its_init_vpe_domain() ||
-diff --git a/drivers/irqchip/irq-gic-v3.c b/drivers/irqchip/irq-gic-v3.c
-index 624f351c0362..fcbd220c92b3 100644
---- a/drivers/irqchip/irq-gic-v3.c
-+++ b/drivers/irqchip/irq-gic-v3.c
-@@ -1784,6 +1784,7 @@ static void __init gic_of_setup_kvm_info(struct device_node *node)
- 		gic_v3_kvm_info.vcpu = r;
- 
- 	gic_v3_kvm_info.has_v4 = gic_data.rdists.has_vlpis;
-+	gic_v3_kvm_info.has_v4_1 = gic_data.rdists.has_rvpeid;
- 	gic_set_kvm_info(&gic_v3_kvm_info);
- }
- 
-@@ -2094,6 +2095,7 @@ static void __init gic_acpi_setup_kvm_info(void)
+ 			pr_info("ITS@%pa: Using GICv4.1 mode %08x %08x\n",
+@@ -4389,7 +4397,7 @@ static int __init its_probe_one(struct resource *res,
+ 				get_order(ITS_CMD_QUEUE_SZ));
+ 	if (!page) {
+ 		err = -ENOMEM;
+-		goto out_free_its;
++		goto out_unmap_sgir;
  	}
- 
- 	gic_v3_kvm_info.has_v4 = gic_data.rdists.has_vlpis;
-+	gic_v3_kvm_info.has_v4_1 = gic_data.rdists.has_rvpeid;
- 	gic_set_kvm_info(&gic_v3_kvm_info);
- }
- 
-diff --git a/include/linux/irqchip/arm-gic-common.h b/include/linux/irqchip/arm-gic-common.h
-index b9850f5f1906..fa8c0455c352 100644
---- a/include/linux/irqchip/arm-gic-common.h
-+++ b/include/linux/irqchip/arm-gic-common.h
-@@ -32,6 +32,8 @@ struct gic_kvm_info {
- 	struct resource vctrl;
- 	/* vlpi support */
- 	bool		has_v4;
-+	/* rvpeid support */
-+	bool		has_v4_1;
- };
- 
- const struct gic_kvm_info *gic_get_kvm_info(void);
+ 	its->cmd_base = (void *)page_address(page);
+ 	its->cmd_write = its->cmd_base;
+@@ -4456,6 +4464,9 @@ static int __init its_probe_one(struct resource *res,
+ 	its_free_tables(its);
+ out_free_cmd:
+ 	free_pages((unsigned long)its->cmd_base, get_order(ITS_CMD_QUEUE_SZ));
++out_unmap_sgir:
++	if (its->sgir_base)
++		iounmap(its->sgir_base);
+ out_free_its:
+ 	kfree(its);
+ out_unmap:
 -- 
 2.20.1
 
