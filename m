@@ -2,33 +2,34 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 10AE0134D55
-	for <lists+kvmarm@lfdr.de>; Wed,  8 Jan 2020 21:27:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1039134D51
+	for <lists+kvmarm@lfdr.de>; Wed,  8 Jan 2020 21:27:21 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B91C54B172;
-	Wed,  8 Jan 2020 15:27:22 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 82C144B15A;
+	Wed,  8 Jan 2020 15:27:21 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -0.497
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
+X-Spam-Status: No, score=-0.497 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	TVD_SUBJ_WIPE_DEBT=1.004] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WMl4r+zCWYVI; Wed,  8 Jan 2020 15:27:21 -0500 (EST)
+	with ESMTP id GCNzKh8Xg6Ax; Wed,  8 Jan 2020 15:27:21 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4EFA44B186;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 354214B138;
 	Wed,  8 Jan 2020 15:27:12 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DDD2F4B118
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C300E4B130
  for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Jan 2020 15:27:09 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 0EaD1J3woPiD for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id 20gNqWmB-s7s for <kvmarm@lists.cs.columbia.edu>;
  Wed,  8 Jan 2020 15:27:08 -0500 (EST)
 Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7F9224B141
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 808F94B127
  for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Jan 2020 15:27:08 -0500 (EST)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
@@ -36,15 +37,15 @@ Received: from orsmga007.jf.intel.com ([10.7.209.58])
  by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
  08 Jan 2020 12:27:07 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,411,1571727600"; d="scan'208";a="211658395"
+X-IronPort-AV: E=Sophos;i="5.69,411,1571727600"; d="scan'208";a="211658398"
 Received: from sjchrist-coffee.jf.intel.com ([10.54.74.202])
  by orsmga007.jf.intel.com with ESMTP; 08 Jan 2020 12:27:07 -0800
 From: Sean Christopherson <sean.j.christopherson@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 12/14] KVM: x86/mmu: Fold max_mapping_level() into
- kvm_mmu_hugepage_adjust()
-Date: Wed,  8 Jan 2020 12:24:46 -0800
-Message-Id: <20200108202448.9669-13-sean.j.christopherson@intel.com>
+Subject: [PATCH 13/14] KVM: x86/mmu: Remove lpage_is_disallowed() check from
+ set_spte()
+Date: Wed,  8 Jan 2020 12:24:47 -0800
+Message-Id: <20200108202448.9669-14-sean.j.christopherson@intel.com>
 X-Mailer: git-send-email 2.24.1
 In-Reply-To: <20200108202448.9669-1-sean.j.christopherson@intel.com>
 References: <20200108202448.9669-1-sean.j.christopherson@intel.com>
@@ -80,159 +81,93 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Fold max_mapping_level() into kvm_mmu_hugepage_adjust() now that HugeTLB
-mappings are handled in kvm_mmu_hugepage_adjust(), i.e. there isn't a
-need to pre-calculate the max mapping level.  Co-locating all hugepage
-checks eliminates a memslot lookup, at the cost of performing the
-__mmu_gfn_lpage_is_disallowed() checks while holding mmu_lock.
-
-The latency of lpage_is_disallowed() is likely negligible relative to
-the rest of the code run while holding mmu_lock, and can be offset to
-some extent by eliminating the mmu_gfn_lpage_is_disallowed() check in
-set_spte() in a future patch.  Eliminating the check in set_spte() is
-made possible by performing the initial lpage_is_disallowed() checks
-while holding mmu_lock.
+Remove the late "lpage is disallowed" check from set_spte() now that the
+initial check is performed after acquiring mmu_lock.  Fold the guts of
+the remaining helper, __mmu_gfn_lpage_is_disallowed(), into
+kvm_mmu_hugepage_adjust() to eliminate the unnecessary slot !NULL check.
 
 Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
 ---
- arch/x86/kvm/mmu/mmu.c         | 60 ++++++++++++++--------------------
- arch/x86/kvm/mmu/paging_tmpl.h |  2 --
- 2 files changed, 24 insertions(+), 38 deletions(-)
+ arch/x86/kvm/mmu/mmu.c | 39 +++------------------------------------
+ 1 file changed, 3 insertions(+), 36 deletions(-)
 
 diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index f93b0c5e4170..f2667fe0dc75 100644
+index f2667fe0dc75..1e4e0ac169a7 100644
 --- a/arch/x86/kvm/mmu/mmu.c
 +++ b/arch/x86/kvm/mmu/mmu.c
-@@ -1310,27 +1310,6 @@ gfn_to_memslot_dirty_bitmap(struct kvm_vcpu *vcpu, gfn_t gfn,
- 	return slot;
+@@ -1264,28 +1264,6 @@ static void unaccount_huge_nx_page(struct kvm *kvm, struct kvm_mmu_page *sp)
+ 	list_del(&sp->lpage_disallowed_link);
  }
  
--static int max_mapping_level(struct kvm_vcpu *vcpu, gfn_t gfn,
--			     int max_level)
+-static bool __mmu_gfn_lpage_is_disallowed(gfn_t gfn, int level,
+-					  struct kvm_memory_slot *slot)
+-{
+-	struct kvm_lpage_info *linfo;
+-
+-	if (slot) {
+-		linfo = lpage_info_slot(gfn, slot, level);
+-		return !!linfo->disallow_lpage;
+-	}
+-
+-	return true;
+-}
+-
+-static bool mmu_gfn_lpage_is_disallowed(struct kvm_vcpu *vcpu, gfn_t gfn,
+-					int level)
 -{
 -	struct kvm_memory_slot *slot;
 -
--	if (unlikely(max_level == PT_PAGE_TABLE_LEVEL))
--		return PT_PAGE_TABLE_LEVEL;
--
 -	slot = kvm_vcpu_gfn_to_memslot(vcpu, gfn);
--	if (!memslot_valid_for_gpte(slot, true))
--		return PT_PAGE_TABLE_LEVEL;
--
--	max_level = min(max_level, kvm_x86_ops->get_lpage_level());
--	for ( ; max_level > PT_PAGE_TABLE_LEVEL; max_level--) {
--		if (!__mmu_gfn_lpage_is_disallowed(gfn, max_level, slot))
--			break;
--	}
--
--	return max_level;
+-	return __mmu_gfn_lpage_is_disallowed(gfn, level, slot);
 -}
 -
- /*
-  * About rmap_head encoding:
-  *
-@@ -3101,10 +3080,11 @@ static int set_spte(struct kvm_vcpu *vcpu, u64 *sptep,
+ static inline bool memslot_valid_for_gpte(struct kvm_memory_slot *slot,
+ 					  bool no_dirty_log)
+ {
+@@ -3078,18 +3056,6 @@ static int set_spte(struct kvm_vcpu *vcpu, u64 *sptep,
+ 	spte |= (u64)pfn << PAGE_SHIFT;
+ 
  	if (pte_access & ACC_WRITE_MASK) {
+-
+-		/*
+-		 * Legacy code to handle an obsolete scenario where a different
+-		 * vcpu creates new sp in the window between this vcpu's query
+-		 * of lpage_is_disallowed() and acquiring mmu_lock.  No longer
+-		 * necessary now that lpage_is_disallowed() is called after
+-		 * acquiring mmu_lock.
+-		 */
+-		if (level > PT_PAGE_TABLE_LEVEL &&
+-		    mmu_gfn_lpage_is_disallowed(vcpu, gfn, level))
+-			goto done;
+-
+ 		spte |= PT_WRITABLE_MASK | SPTE_MMU_WRITEABLE;
  
  		/*
--		 * Other vcpu creates new sp in the window between
--		 * max_mapping_level() and acquiring mmu-lock. We can
--		 * allow guest to retry the access, the mapping can
--		 * be fixed if guest refault.
-+		 * Legacy code to handle an obsolete scenario where a different
-+		 * vcpu creates new sp in the window between this vcpu's query
-+		 * of lpage_is_disallowed() and acquiring mmu_lock.  No longer
-+		 * necessary now that lpage_is_disallowed() is called after
-+		 * acquiring mmu_lock.
- 		 */
- 		if (level > PT_PAGE_TABLE_LEVEL &&
- 		    mmu_gfn_lpage_is_disallowed(vcpu, gfn, level))
-@@ -3295,9 +3275,8 @@ static void direct_pte_prefetch(struct kvm_vcpu *vcpu, u64 *sptep)
+@@ -3121,7 +3087,6 @@ static int set_spte(struct kvm_vcpu *vcpu, u64 *sptep,
+ set_pte:
+ 	if (mmu_spte_update(sptep, spte))
+ 		ret |= SET_SPTE_NEED_REMOTE_TLB_FLUSH;
+-done:
+ 	return ret;
  }
  
- static int host_pfn_mapping_level(struct kvm_vcpu *vcpu, gfn_t gfn,
--				  kvm_pfn_t pfn)
-+				  kvm_pfn_t pfn, struct kvm_memory_slot *slot)
- {
--	struct kvm_memory_slot *slot;
- 	unsigned long hva;
- 	pte_t *pte;
- 	int level;
-@@ -3310,16 +3289,13 @@ static int host_pfn_mapping_level(struct kvm_vcpu *vcpu, gfn_t gfn,
- 		return PT_PAGE_TABLE_LEVEL;
- 
- 	/*
--	 * Manually do the equivalent of kvm_vcpu_gfn_to_hva() to avoid the
-+	 * Note, using the already-retrieved memslot and __gfn_to_hva_memslot()
-+	 * is not solely for performance, it's also necessary to avoid the
- 	 * "writable" check in __gfn_to_hva_many(), which will always fail on
- 	 * read-only memslots due to gfn_to_hva() assuming writes.  Earlier
- 	 * page fault steps have already verified the guest isn't writing a
- 	 * read-only memslot.
- 	 */
--	slot = kvm_vcpu_gfn_to_memslot(vcpu, gfn);
--	if (!memslot_valid_for_gpte(slot, true))
--		return PT_PAGE_TABLE_LEVEL;
--
- 	hva = __gfn_to_hva_memslot(slot, gfn);
- 
- 	pte = lookup_address_in_mm(vcpu->kvm->mm, hva, &level);
-@@ -3332,18 +3308,32 @@ static int host_pfn_mapping_level(struct kvm_vcpu *vcpu, gfn_t gfn,
- static int kvm_mmu_hugepage_adjust(struct kvm_vcpu *vcpu, gfn_t gfn,
+@@ -3309,6 +3274,7 @@ static int kvm_mmu_hugepage_adjust(struct kvm_vcpu *vcpu, gfn_t gfn,
  				   int max_level, kvm_pfn_t *pfnp)
  {
-+	struct kvm_memory_slot *slot;
+ 	struct kvm_memory_slot *slot;
++	struct kvm_lpage_info *linfo;
  	kvm_pfn_t pfn = *pfnp;
  	kvm_pfn_t mask;
  	int level;
+@@ -3326,7 +3292,8 @@ static int kvm_mmu_hugepage_adjust(struct kvm_vcpu *vcpu, gfn_t gfn,
  
--	if (max_level == PT_PAGE_TABLE_LEVEL)
-+	if (unlikely(max_level == PT_PAGE_TABLE_LEVEL))
- 		return PT_PAGE_TABLE_LEVEL;
- 
- 	if (is_error_noslot_pfn(pfn) || kvm_is_reserved_pfn(pfn) ||
- 	    kvm_is_zone_device_pfn(pfn))
- 		return PT_PAGE_TABLE_LEVEL;
- 
--	level = host_pfn_mapping_level(vcpu, gfn, pfn);
-+	slot = kvm_vcpu_gfn_to_memslot(vcpu, gfn);
-+	if (!memslot_valid_for_gpte(slot, true))
-+		return PT_PAGE_TABLE_LEVEL;
-+
-+	max_level = min(max_level, kvm_x86_ops->get_lpage_level());
-+	for ( ; max_level > PT_PAGE_TABLE_LEVEL; max_level--) {
-+		if (!__mmu_gfn_lpage_is_disallowed(gfn, max_level, slot))
-+			break;
-+	}
-+
-+	if (max_level == PT_PAGE_TABLE_LEVEL)
-+		return PT_PAGE_TABLE_LEVEL;
-+
-+	level = host_pfn_mapping_level(vcpu, gfn, pfn, slot);
- 	if (level == PT_PAGE_TABLE_LEVEL)
- 		return level;
- 
-@@ -4182,8 +4172,6 @@ static int direct_page_fault(struct kvm_vcpu *vcpu, gpa_t gpa, u32 error_code,
- 	if (lpage_disallowed)
- 		max_level = PT_PAGE_TABLE_LEVEL;
- 
--	max_level = max_mapping_level(vcpu, gfn, max_level);
--
- 	if (fast_page_fault(vcpu, gpa, error_code))
- 		return RET_PF_RETRY;
- 
-diff --git a/arch/x86/kvm/mmu/paging_tmpl.h b/arch/x86/kvm/mmu/paging_tmpl.h
-index 0560982eda8b..ea174d85700a 100644
---- a/arch/x86/kvm/mmu/paging_tmpl.h
-+++ b/arch/x86/kvm/mmu/paging_tmpl.h
-@@ -817,8 +817,6 @@ static int FNAME(page_fault)(struct kvm_vcpu *vcpu, gpa_t addr, u32 error_code,
- 	else
- 		max_level = walker.level;
- 
--	max_level = max_mapping_level(vcpu, walker.gfn, max_level);
--
- 	mmu_seq = vcpu->kvm->mmu_notifier_seq;
- 	smp_rmb();
+ 	max_level = min(max_level, kvm_x86_ops->get_lpage_level());
+ 	for ( ; max_level > PT_PAGE_TABLE_LEVEL; max_level--) {
+-		if (!__mmu_gfn_lpage_is_disallowed(gfn, max_level, slot))
++		linfo = lpage_info_slot(gfn, slot, max_level);
++		if (!linfo->disallow_lpage)
+ 			break;
+ 	}
  
 -- 
 2.24.1
