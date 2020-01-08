@@ -2,34 +2,33 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 86C7E134D44
-	for <lists+kvmarm@lfdr.de>; Wed,  8 Jan 2020 21:27:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 14264134D49
+	for <lists+kvmarm@lfdr.de>; Wed,  8 Jan 2020 21:27:19 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 389C14B15A;
-	Wed,  8 Jan 2020 15:27:15 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BA1E14B169;
+	Wed,  8 Jan 2020 15:27:18 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id EOUzCfkHLenW; Wed,  8 Jan 2020 15:27:15 -0500 (EST)
+	with ESMTP id HklybigNiWCD; Wed,  8 Jan 2020 15:27:17 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 824984B14E;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C9CD34B0DD;
 	Wed,  8 Jan 2020 15:27:11 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 72C614B12F
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C49784B12F
  for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Jan 2020 15:27:08 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Us7hIz0mfCJN for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id hV7qC5rv4iBD for <kvmarm@lists.cs.columbia.edu>;
  Wed,  8 Jan 2020 15:27:07 -0500 (EST)
 Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 384744B132
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 875A64B133
  for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Jan 2020 15:27:07 -0500 (EST)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
@@ -37,14 +36,15 @@ Received: from orsmga007.jf.intel.com ([10.7.209.58])
  by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
  08 Jan 2020 12:27:06 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,411,1571727600"; d="scan'208";a="211658370"
+X-IronPort-AV: E=Sophos;i="5.69,411,1571727600"; d="scan'208";a="211658374"
 Received: from sjchrist-coffee.jf.intel.com ([10.54.74.202])
  by orsmga007.jf.intel.com with ESMTP; 08 Jan 2020 12:27:06 -0800
 From: Sean Christopherson <sean.j.christopherson@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 05/14] x86/mm: Introduce lookup_address_in_mm()
-Date: Wed,  8 Jan 2020 12:24:39 -0800
-Message-Id: <20200108202448.9669-6-sean.j.christopherson@intel.com>
+Subject: [PATCH 06/14] KVM: x86/mmu: Refactor THP adjust to prep for changing
+ query
+Date: Wed,  8 Jan 2020 12:24:40 -0800
+Message-Id: <20200108202448.9669-7-sean.j.christopherson@intel.com>
 X-Mailer: git-send-email 2.24.1
 In-Reply-To: <20200108202448.9669-1-sean.j.christopherson@intel.com>
 References: <20200108202448.9669-1-sean.j.christopherson@intel.com>
@@ -80,57 +80,101 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add a helper, lookup_address_in_mm(), to traverse the page tables of a
-given mm struct.  KVM will use the helper to retrieve the host mapping
-level, e.g. 4k vs. 2mb vs. 1gb, of a compound (or DAX-backed) page
-without having to resort to implementation specific metadata.  E.g. KVM
-currently uses different logic for HugeTLB vs. THP, and would add a
-third variant for DAX-backed files.
+Refactor transparent_hugepage_adjust() in preparation for walking the
+host page tables to identify hugepage mappings, initially for THP pages,
+and eventualy for HugeTLB and DAX-backed pages as well.  The latter
+cases support 1gb pages, i.e. the adjustment logic needs access to the
+max allowed level.
 
-Cc: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
 ---
- arch/x86/include/asm/pgtable_types.h |  4 ++++
- arch/x86/mm/pageattr.c               | 11 +++++++++++
- 2 files changed, 15 insertions(+)
+ arch/x86/kvm/mmu/mmu.c         | 44 +++++++++++++++++-----------------
+ arch/x86/kvm/mmu/paging_tmpl.h |  3 +--
+ 2 files changed, 23 insertions(+), 24 deletions(-)
 
-diff --git a/arch/x86/include/asm/pgtable_types.h b/arch/x86/include/asm/pgtable_types.h
-index b5e49e6bac63..400ac8da75e8 100644
---- a/arch/x86/include/asm/pgtable_types.h
-+++ b/arch/x86/include/asm/pgtable_types.h
-@@ -561,6 +561,10 @@ static inline void update_page_count(int level, unsigned long pages) { }
- extern pte_t *lookup_address(unsigned long address, unsigned int *level);
- extern pte_t *lookup_address_in_pgd(pgd_t *pgd, unsigned long address,
- 				    unsigned int *level);
-+
-+struct mm_struct;
-+pte_t *lookup_address_in_mm(struct mm_struct *mm, unsigned long address,
-+			    unsigned int *level);
- extern pmd_t *lookup_pmd_address(unsigned long address);
- extern phys_addr_t slow_virt_to_phys(void *__address);
- extern int __init kernel_map_pages_in_pgd(pgd_t *pgd, u64 pfn,
-diff --git a/arch/x86/mm/pageattr.c b/arch/x86/mm/pageattr.c
-index 0d09cc5aad61..8787fec876e4 100644
---- a/arch/x86/mm/pageattr.c
-+++ b/arch/x86/mm/pageattr.c
-@@ -618,6 +618,17 @@ pte_t *lookup_address(unsigned long address, unsigned int *level)
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index 8ca6cd04cdf1..30836899be73 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -3329,33 +3329,34 @@ static void direct_pte_prefetch(struct kvm_vcpu *vcpu, u64 *sptep)
+ 	__direct_pte_prefetch(vcpu, sp, sptep);
  }
- EXPORT_SYMBOL_GPL(lookup_address);
  
-+/*
-+ * Lookup the page table entry for a virtual address in a given mm. Return a
-+ * pointer to the entry and the level of the mapping.
-+ */
-+pte_t *lookup_address_in_mm(struct mm_struct *mm, unsigned long address,
-+			    unsigned int *level)
-+{
-+	return lookup_address_in_pgd(pgd_offset(mm, address), address, level);
-+}
-+EXPORT_SYMBOL_GPL(lookup_address_in_mm);
-+
- static pte_t *_lookup_address_cpa(struct cpa_data *cpa, unsigned long address,
- 				  unsigned int *level)
+-static void transparent_hugepage_adjust(struct kvm_vcpu *vcpu,
+-					gfn_t gfn, kvm_pfn_t *pfnp,
++static void transparent_hugepage_adjust(struct kvm_vcpu *vcpu, gfn_t gfn,
++					int max_level, kvm_pfn_t *pfnp,
+ 					int *levelp)
  {
+ 	kvm_pfn_t pfn = *pfnp;
+ 	int level = *levelp;
++	kvm_pfn_t mask;
++
++	if (max_level == PT_PAGE_TABLE_LEVEL || level > PT_PAGE_TABLE_LEVEL)
++		return;
++
++	if (is_error_noslot_pfn(pfn) || kvm_is_reserved_pfn(pfn) ||
++	    kvm_is_zone_device_pfn(pfn))
++		return;
++
++	if (!kvm_is_transparent_hugepage(pfn))
++		return;
++
++	level = PT_DIRECTORY_LEVEL;
+ 
+ 	/*
+-	 * Check if it's a transparent hugepage. If this would be an
+-	 * hugetlbfs page, level wouldn't be set to
+-	 * PT_PAGE_TABLE_LEVEL and there would be no adjustment done
+-	 * here.
++	 * mmu_notifier_retry() was successful and mmu_lock is held, so
++	 * the pmd can't be split from under us.
+ 	 */
+-	if (!is_error_noslot_pfn(pfn) && !kvm_is_reserved_pfn(pfn) &&
+-	    !kvm_is_zone_device_pfn(pfn) && level == PT_PAGE_TABLE_LEVEL &&
+-	    kvm_is_transparent_hugepage(pfn)) {
+-		unsigned long mask;
+-
+-		/*
+-		 * mmu_notifier_retry() was successful and mmu_lock is held, so
+-		 * the pmd can't be split from under us.
+-		 */
+-		*levelp = level = PT_DIRECTORY_LEVEL;
+-		mask = KVM_PAGES_PER_HPAGE(level) - 1;
+-		VM_BUG_ON((gfn & mask) != (pfn & mask));
+-		*pfnp = pfn & ~mask;
+-	}
++	*levelp = level;
++	mask = KVM_PAGES_PER_HPAGE(level) - 1;
++	VM_BUG_ON((gfn & mask) != (pfn & mask));
++	*pfnp = pfn & ~mask;
+ }
+ 
+ static void disallowed_hugepage_adjust(struct kvm_shadow_walk_iterator it,
+@@ -3395,8 +3396,7 @@ static int __direct_map(struct kvm_vcpu *vcpu, gpa_t gpa, int write,
+ 	if (WARN_ON(!VALID_PAGE(vcpu->arch.mmu->root_hpa)))
+ 		return RET_PF_RETRY;
+ 
+-	if (likely(max_level > PT_PAGE_TABLE_LEVEL))
+-		transparent_hugepage_adjust(vcpu, gfn, &pfn, &level);
++	transparent_hugepage_adjust(vcpu, gfn, max_level, &pfn, &level);
+ 
+ 	trace_kvm_mmu_spte_requested(gpa, level, pfn);
+ 	for_each_shadow_entry(vcpu, gpa, it) {
+diff --git a/arch/x86/kvm/mmu/paging_tmpl.h b/arch/x86/kvm/mmu/paging_tmpl.h
+index b53bed3c901c..0029f7870865 100644
+--- a/arch/x86/kvm/mmu/paging_tmpl.h
++++ b/arch/x86/kvm/mmu/paging_tmpl.h
+@@ -673,8 +673,7 @@ static int FNAME(fetch)(struct kvm_vcpu *vcpu, gpa_t addr,
+ 	gfn = gw->gfn | ((addr & PT_LVL_OFFSET_MASK(gw->level)) >> PAGE_SHIFT);
+ 	base_gfn = gfn;
+ 
+-	if (max_level > PT_PAGE_TABLE_LEVEL)
+-		transparent_hugepage_adjust(vcpu, gw->gfn, &pfn, &hlevel);
++	transparent_hugepage_adjust(vcpu, gw->gfn, max_level, &pfn, &hlevel);
+ 
+ 	trace_kvm_mmu_spte_requested(addr, gw->level, pfn);
+ 
 -- 
 2.24.1
 
