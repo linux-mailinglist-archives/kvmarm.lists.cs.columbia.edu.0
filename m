@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9871C1351B7
-	for <lists+kvmarm@lfdr.de>; Thu,  9 Jan 2020 04:07:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 157941351E8
+	for <lists+kvmarm@lfdr.de>; Thu,  9 Jan 2020 04:25:06 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C8D64B19A;
-	Wed,  8 Jan 2020 22:07:51 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 949054B1CC;
+	Wed,  8 Jan 2020 22:25:05 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.799
@@ -16,37 +16,38 @@ X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bl14eJuCIQMc; Wed,  8 Jan 2020 22:07:50 -0500 (EST)
+	with ESMTP id qTgfVIcoB8Qi; Wed,  8 Jan 2020 22:25:05 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D77614B196;
-	Wed,  8 Jan 2020 22:07:49 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 37FEB4B1BA;
+	Wed,  8 Jan 2020 22:25:04 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 84D8A4B192
- for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Jan 2020 22:07:48 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7DA6C4B1AC
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Jan 2020 22:25:03 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id LW2PVPquO92Y for <kvmarm@lists.cs.columbia.edu>;
- Wed,  8 Jan 2020 22:07:47 -0500 (EST)
+ with ESMTP id eMJBkMnchGXV for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  8 Jan 2020 22:25:02 -0500 (EST)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 40F574B18E
- for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Jan 2020 22:07:47 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 323834B162
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Jan 2020 22:25:02 -0500 (EST)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id F353131B;
- Wed,  8 Jan 2020 19:07:45 -0800 (PST)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4613431B;
+ Wed,  8 Jan 2020 19:25:01 -0800 (PST)
 Received: from [10.162.40.138] (p8cg001049571a15.blr.arm.com [10.162.40.138])
  by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id
- B53F93F534; Wed,  8 Jan 2020 19:07:41 -0800 (PST)
-Subject: Re: [PATCH 0/1] arm/arm64: add support for folded p4d page tables
+ DE4BE3F534; Wed,  8 Jan 2020 19:24:56 -0800 (PST)
+Subject: Re: [PATCH 1/1] arm/arm64: add support for folded p4d page tables
 To: Mike Rapoport <rppt@kernel.org>, linux-arm-kernel@lists.infradead.org
 References: <20191230082734.28954-1-rppt@kernel.org>
+ <20191230082734.28954-2-rppt@kernel.org>
 From: Anshuman Khandual <anshuman.khandual@arm.com>
-Message-ID: <19fc0640-2b7e-a06f-a4c8-2736d54dd565@arm.com>
-Date: Thu, 9 Jan 2020 08:38:54 +0530
+Message-ID: <7f18fc35-3380-564b-b660-0c003d7d3107@arm.com>
+Date: Thu, 9 Jan 2020 08:56:10 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <20191230082734.28954-1-rppt@kernel.org>
+In-Reply-To: <20191230082734.28954-2-rppt@kernel.org>
 Content-Language: en-US
 Cc: Catalin Marinas <catalin.marinas@arm.com>,
  Russell King <linux@armlinux.org.uk>, linux-kernel@vger.kernel.org,
@@ -74,26 +75,122 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 On 12/30/2019 01:57 PM, Mike Rapoport wrote:
 > From: Mike Rapoport <rppt@linux.ibm.com>
 > 
-> Hi,
-
-Hello Mike,
-
+> Implement primitives necessary for the 4th level folding, add walks of p4d
+> level where appropriate, replace 5level-fixup.h with pgtable-nop4d.h and
+> remove __ARCH_USE_5LEVEL_HACK.
 > 
-> This is a part of clean up of the page table manipulation code that aims to
-> remove asm-generic/5level-fixup.h and asm-generic/pgtable-nop4d-hack.h
+> Since arm and arm64 share kvm memory management bits, make the conversion
+> for both variants at once to avoid breaking the builds in the middle.
 > 
-> There is a single patch for both arm and arm64 because doing the conversion
-> separately would mean breaking the shared mmu bits in virt/kvm/arm.
+> Signed-off-by: Mike Rapoport <rppt@linux.ibm.com>
+> ---
+>  arch/arm/include/asm/kvm_mmu.h          |   5 +-
+>  arch/arm/include/asm/pgtable.h          |   1 -
+>  arch/arm/include/asm/stage2_pgtable.h   |  15 +-
+>  arch/arm/lib/uaccess_with_memcpy.c      |   9 +-
+>  arch/arm/mach-sa1100/assabet.c          |   2 +-
+>  arch/arm/mm/dump.c                      |  29 +++-
+>  arch/arm/mm/fault-armv.c                |   7 +-
+>  arch/arm/mm/fault.c                     |  28 +++-
+>  arch/arm/mm/idmap.c                     |   3 +-
+>  arch/arm/mm/init.c                      |   2 +-
+>  arch/arm/mm/ioremap.c                   |  12 +-
+>  arch/arm/mm/mm.h                        |   2 +-
+>  arch/arm/mm/mmu.c                       |  35 +++-
+>  arch/arm/mm/pgd.c                       |  40 ++++-
+>  arch/arm64/include/asm/kvm_mmu.h        |  10 +-
+>  arch/arm64/include/asm/pgalloc.h        |  10 +-
+>  arch/arm64/include/asm/pgtable-types.h  |   5 +-
+>  arch/arm64/include/asm/pgtable.h        |  37 +++--
+>  arch/arm64/include/asm/stage2_pgtable.h |  48 ++++--
+>  arch/arm64/kernel/hibernate.c           |  46 +++++-
+>  arch/arm64/mm/dump.c                    |  29 +++-
+>  arch/arm64/mm/fault.c                   |   9 +-
+>  arch/arm64/mm/hugetlbpage.c             |  15 +-
+>  arch/arm64/mm/kasan_init.c              |  41 ++++-
+>  arch/arm64/mm/mmu.c                     |  52 ++++--
+>  arch/arm64/mm/pageattr.c                |   7 +-
+>  virt/kvm/arm/mmu.c                      | 209 ++++++++++++++++++++----
+>  27 files changed, 565 insertions(+), 143 deletions(-)
 > 
-> The patch is build tested and boot tested on qemu-system-{arm,aarch64}.
 
-There are lots of code changes here for a single patch but as you have
-mentioned shared KVM bits would have prevented splitting arm and arm64
-changes into separate patches. Just curious, are you planning to respin
-this patch sooner after fixing the reported build problems caused by
-missing p4d_offset_kimg() and p4d_sect() definitions ?
+^^^^^^
 
-- Anshuman
+> diff --git a/arch/arm64/mm/kasan_init.c b/arch/arm64/mm/kasan_init.c
+> index f87a32484ea8..fd6220508711 100644
+> --- a/arch/arm64/mm/kasan_init.c
+> +++ b/arch/arm64/mm/kasan_init.c
+> @@ -84,17 +84,32 @@ static pmd_t *__init kasan_pmd_offset(pud_t *pudp, unsigned long addr, int node,
+>  	return early ? pmd_offset_kimg(pudp, addr) : pmd_offset(pudp, addr);
+>  }
+>  
+> -static pud_t *__init kasan_pud_offset(pgd_t *pgdp, unsigned long addr, int node,
+> +static pud_t *__init kasan_pud_offset(p4d_t *p4dp, unsigned long addr, int node,
+>  				      bool early)
+>  {
+> -	if (pgd_none(READ_ONCE(*pgdp))) {
+> +	if (p4d_none(READ_ONCE(*p4dp))) {
+>  		phys_addr_t pud_phys = early ?
+>  				__pa_symbol(kasan_early_shadow_pud)
+>  					: kasan_alloc_zeroed_page(node);
+> -		__pgd_populate(pgdp, pud_phys, PMD_TYPE_TABLE);
+> +		__p4d_populate(p4dp, pud_phys, PMD_TYPE_TABLE);
+> +	}
+> +
+> +	return early ? pud_offset_kimg(p4dp, addr) : pud_offset(p4dp, addr);
+> +}
+> +
+> +static p4d_t *__init kasan_p4d_offset(pgd_t *pgdp, unsigned long addr, int node,
+> +				      bool early)
+> +{
+> +#ifndef __PAGETABLE_P4D_FOLDED
+> +	if (pgd_none(READ_ONCE(*pgdp))) {
+> +		phys_addr_t p4d_phys = early ?
+> +				__pa_symbol(kasan_early_shadow_p4d)
+> +					: kasan_alloc_zeroed_page(node);
+> +		__pgd_populate(pgdp, p4d_phys, PMD_TYPE_TABLE);
+
+We dont have __pgd_populate() definition any more. AFAICS __PAGETABLE_P4D_FOLDED
+is always defined because pgtable-nop4d.h gets pulled in for all configurations
+via pgtable-nopud.h and pgtable-nopmd.h headers.
+
+>  	}
+> +#endif
+>  
+> -	return early ? pud_offset_kimg(pgdp, addr) : pud_offset(pgdp, addr);
+> +	return early ? p4d_offset_kimg(pgdp, addr) : p4d_offset(pgdp, addr);
+>  }
+>  
+>  static void __init kasan_pte_populate(pmd_t *pmdp, unsigned long addr,
+> @@ -126,11 +141,11 @@ static void __init kasan_pmd_populate(pud_t *pudp, unsigned long addr,
+>  	} while (pmdp++, addr = next, addr != end && pmd_none(READ_ONCE(*pmdp)));
+>  }
+>  
+> -static void __init kasan_pud_populate(pgd_t *pgdp, unsigned long addr,
+> +static void __init kasan_pud_populate(p4d_t *p4dp, unsigned long addr,
+>  				      unsigned long end, int node, bool early)
+>  {
+>  	unsigned long next;
+> -	pud_t *pudp = kasan_pud_offset(pgdp, addr, node, early);
+> +	pud_t *pudp = kasan_pud_offset(p4dp, addr, node, early);
+>  
+>  	do {
+>  		next = pud_addr_end(addr, end);
+> @@ -138,6 +153,18 @@ static void __init kasan_pud_populate(pgd_t *pgdp, unsigned long addr,
+>  	} while (pudp++, addr = next, addr != end && pud_none(READ_ONCE(*pudp)));
+>  }
+>  
+> +static void __init kasan_p4d_populate(pgd_t *pgdp, unsigned long addr,
+> +				      unsigned long end, int node, bool early)
+> +{
+> +	unsigned long next;
+> +	p4d_t *p4dp = kasan_p4d_offset(pgdp, addr, node, early);
+> +
+> +	do {
+> +		next = p4d_addr_end(addr, end);
+> +		kasan_pmd_populate(p4dp, addr, next, node, early);
+
+s/kasan_pmd_populate()/kasan_pud_populate()
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
