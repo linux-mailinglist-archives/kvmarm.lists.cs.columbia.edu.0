@@ -2,68 +2,57 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 66EE9134D58
-	for <lists+kvmarm@lfdr.de>; Wed,  8 Jan 2020 21:27:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9871C1351B7
+	for <lists+kvmarm@lfdr.de>; Thu,  9 Jan 2020 04:07:51 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0752E4B183;
-	Wed,  8 Jan 2020 15:27:23 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C8D64B19A;
+	Wed,  8 Jan 2020 22:07:51 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: 0.799
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001]
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SW3pJi+UZN9L; Wed,  8 Jan 2020 15:27:22 -0500 (EST)
+	with ESMTP id bl14eJuCIQMc; Wed,  8 Jan 2020 22:07:50 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 668F54B18A;
-	Wed,  8 Jan 2020 15:27:12 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D77614B196;
+	Wed,  8 Jan 2020 22:07:49 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A234C4B132
- for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Jan 2020 15:27:10 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 84D8A4B192
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Jan 2020 22:07:48 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 2zInWSvuytyo for <kvmarm@lists.cs.columbia.edu>;
- Wed,  8 Jan 2020 15:27:09 -0500 (EST)
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 906914B0DD
- for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Jan 2020 15:27:08 -0500 (EST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
- by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 08 Jan 2020 12:27:07 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,411,1571727600"; d="scan'208";a="211658401"
-Received: from sjchrist-coffee.jf.intel.com ([10.54.74.202])
- by orsmga007.jf.intel.com with ESMTP; 08 Jan 2020 12:27:07 -0800
-From: Sean Christopherson <sean.j.christopherson@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 14/14] KVM: x86/mmu: Use huge pages for DAX-backed files
-Date: Wed,  8 Jan 2020 12:24:48 -0800
-Message-Id: <20200108202448.9669-15-sean.j.christopherson@intel.com>
-X-Mailer: git-send-email 2.24.1
-In-Reply-To: <20200108202448.9669-1-sean.j.christopherson@intel.com>
-References: <20200108202448.9669-1-sean.j.christopherson@intel.com>
+ with ESMTP id LW2PVPquO92Y for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  8 Jan 2020 22:07:47 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 40F574B18E
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Jan 2020 22:07:47 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id F353131B;
+ Wed,  8 Jan 2020 19:07:45 -0800 (PST)
+Received: from [10.162.40.138] (p8cg001049571a15.blr.arm.com [10.162.40.138])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id
+ B53F93F534; Wed,  8 Jan 2020 19:07:41 -0800 (PST)
+Subject: Re: [PATCH 0/1] arm/arm64: add support for folded p4d page tables
+To: Mike Rapoport <rppt@kernel.org>, linux-arm-kernel@lists.infradead.org
+References: <20191230082734.28954-1-rppt@kernel.org>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
+Message-ID: <19fc0640-2b7e-a06f-a4c8-2736d54dd565@arm.com>
+Date: Thu, 9 Jan 2020 08:38:54 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- David Hildenbrand <david@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
- Dave Hansen <dave.hansen@linux.intel.com>, Paul Mackerras <paulus@ozlabs.org>,
- linux-mm@kvack.org, kvmarm@lists.cs.columbia.edu,
- Dave Jiang <dave.jiang@intel.com>, linux-nvdimm <linux-nvdimm@lists.01.org>,
- Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- syzbot+c9d1fb51ac9d0d10c39d@syzkaller.appspotmail.com,
- Barret Rhoden <brho@google.com>, kvm-ppc@vger.kernel.org,
- Liran Alon <liran.alon@oracle.com>, Andy Lutomirski <luto@kernel.org>,
- Dan Williams <dan.j.williams@intel.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
- linux-kernel@vger.kernel.org,
- Sean Christopherson <sean.j.christopherson@intel.com>,
- Jason Zeng <jason.zeng@intel.com>, Vitaly Kuznetsov <vkuznets@redhat.com>
+In-Reply-To: <20191230082734.28954-1-rppt@kernel.org>
+Content-Language: en-US
+Cc: Catalin Marinas <catalin.marinas@arm.com>,
+ Russell King <linux@armlinux.org.uk>, linux-kernel@vger.kernel.org,
+ linux-mm@kvack.org, Marc Zyngier <maz@kernel.org>,
+ Mike Rapoport <rppt@linux.ibm.com>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -80,67 +69,31 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Walk the host page tables to identify hugepage mappings for ZONE_DEVICE
-pfns, i.e. DAX pages.  Explicitly query kvm_is_zone_device_pfn() when
-deciding whether or not to bother walking the host page tables, as DAX
-pages do not set up the head/tail infrastructure, i.e. will return false
-for PageCompound() even when using huge pages.
 
-Zap ZONE_DEVICE sptes when disabling dirty logging, e.g. if live
-migration fails, to allow KVM to rebuild large pages for DAX-based
-mappings.  Presumably DAX favors large pages, and worst case scenario is
-a minor performance hit as KVM will need to re-fault all DAX-based
-pages.
 
-Suggested-by: Barret Rhoden <brho@google.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Jason Zeng <jason.zeng@intel.com>
-Cc: Dave Jiang <dave.jiang@intel.com>
-Cc: Liran Alon <liran.alon@oracle.com>
-Cc: linux-nvdimm <linux-nvdimm@lists.01.org>
-Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
----
- arch/x86/kvm/mmu/mmu.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+On 12/30/2019 01:57 PM, Mike Rapoport wrote:
+> From: Mike Rapoport <rppt@linux.ibm.com>
+> 
+> Hi,
 
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 1e4e0ac169a7..324e1919722f 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -3250,7 +3250,7 @@ static int host_pfn_mapping_level(struct kvm_vcpu *vcpu, gfn_t gfn,
- 		     PT_DIRECTORY_LEVEL != (int)PG_LEVEL_2M ||
- 		     PT_PDPE_LEVEL != (int)PG_LEVEL_1G);
- 
--	if (!PageCompound(pfn_to_page(pfn)))
-+	if (!PageCompound(pfn_to_page(pfn)) && !kvm_is_zone_device_pfn(pfn))
- 		return PT_PAGE_TABLE_LEVEL;
- 
- 	/*
-@@ -3282,8 +3282,7 @@ static int kvm_mmu_hugepage_adjust(struct kvm_vcpu *vcpu, gfn_t gfn,
- 	if (unlikely(max_level == PT_PAGE_TABLE_LEVEL))
- 		return PT_PAGE_TABLE_LEVEL;
- 
--	if (is_error_noslot_pfn(pfn) || kvm_is_reserved_pfn(pfn) ||
--	    kvm_is_zone_device_pfn(pfn))
-+	if (is_error_noslot_pfn(pfn) || kvm_is_reserved_pfn(pfn))
- 		return PT_PAGE_TABLE_LEVEL;
- 
- 	slot = kvm_vcpu_gfn_to_memslot(vcpu, gfn);
-@@ -5910,8 +5909,8 @@ static bool kvm_mmu_zap_collapsible_spte(struct kvm *kvm,
- 		 * mapping if the indirect sp has level = 1.
- 		 */
- 		if (sp->role.direct && !kvm_is_reserved_pfn(pfn) &&
--		    !kvm_is_zone_device_pfn(pfn) &&
--		    PageCompound(pfn_to_page(pfn))) {
-+		    (kvm_is_zone_device_pfn(pfn) ||
-+		     PageCompound(pfn_to_page(pfn)))) {
- 			pte_list_remove(rmap_head, sptep);
- 
- 			if (kvm_available_flush_tlb_with_range())
--- 
-2.24.1
+Hello Mike,
 
+> 
+> This is a part of clean up of the page table manipulation code that aims to
+> remove asm-generic/5level-fixup.h and asm-generic/pgtable-nop4d-hack.h
+> 
+> There is a single patch for both arm and arm64 because doing the conversion
+> separately would mean breaking the shared mmu bits in virt/kvm/arm.
+> 
+> The patch is build tested and boot tested on qemu-system-{arm,aarch64}.
+
+There are lots of code changes here for a single patch but as you have
+mentioned shared KVM bits would have prevented splitting arm and arm64
+changes into separate patches. Just curious, are you planning to respin
+this patch sooner after fixing the reported build problems caused by
+missing p4d_offset_kimg() and p4d_sect() definitions ?
+
+- Anshuman
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
