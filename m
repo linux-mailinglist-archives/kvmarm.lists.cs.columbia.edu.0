@@ -2,99 +2,60 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 213A4136CA9
-	for <lists+kvmarm@lfdr.de>; Fri, 10 Jan 2020 13:01:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BD45136CCB
+	for <lists+kvmarm@lfdr.de>; Fri, 10 Jan 2020 13:12:20 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8F3554B18B;
-	Fri, 10 Jan 2020 07:01:06 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A46704B187;
+	Fri, 10 Jan 2020 07:12:19 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: 0.799
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DpTw+IAKSKrK; Fri, 10 Jan 2020 07:01:06 -0500 (EST)
+	with ESMTP id O9QCRq1fT3ec; Fri, 10 Jan 2020 07:12:19 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 869684B179;
-	Fri, 10 Jan 2020 07:01:04 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1935A4B18D;
+	Fri, 10 Jan 2020 07:12:18 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CCF5B4B1FD
- for <kvmarm@lists.cs.columbia.edu>; Thu,  9 Jan 2020 14:47:47 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 109BF4B17B
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Jan 2020 07:12:16 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id umjLYyO27Bmy for <kvmarm@lists.cs.columbia.edu>;
- Thu,  9 Jan 2020 14:47:47 -0500 (EST)
-Received: from mail-pf1-f194.google.com (mail-pf1-f194.google.com
- [209.85.210.194])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id ED91A4B1FA
- for <kvmarm@lists.cs.columbia.edu>; Thu,  9 Jan 2020 14:47:46 -0500 (EST)
-Received: by mail-pf1-f194.google.com with SMTP id x185so3849250pfc.5
- for <kvmarm@lists.cs.columbia.edu>; Thu, 09 Jan 2020 11:47:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=tOr15WETxbkLw/hVhIIJI77xVs+gy+a9H8+1jFpIRfc=;
- b=cG0QOwda3n2lMKGGwl2gvG+FY0g5k14CGaWhbv4nmRcoT2JX4qtut3O08AYJiZSsJ1
- cr8cRqsI97d5/bOkzP8tKl3Tt9qtR5JvXtPKrWUCiPl4DV38hUy0eNUJDkm8kHbJEuBE
- yaFZx1vNucRxrssnQpATjd86jpNCMGp+2Uyc8U06zuHuUL2AoQcrnZJ+y884oRxt8t+n
- VRC8uxlGUAtadaiER22t+8Zb5vtrFxei+x4QHt8BHfVM01jX4dRRdZl9Mv3Dje2YTVYW
- tV4Ihp6XBYA3izk3Ms3j7QY4sBnbwek7lIwiWDhHQ5xPFFbll2klVlmKSmR8wUaYCyZ9
- y5qQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=tOr15WETxbkLw/hVhIIJI77xVs+gy+a9H8+1jFpIRfc=;
- b=IoJv7VAwRHEKPnMQ+VLcGN8RzcNTPj6PpPjYl/P5Pkf/RJzfngWrrq8lPcZlHe1j7Y
- SuRe8BalfyjVffZ4UmiL45SreG2pfW0Im43N7ASOFj2PigSkgJ2+eospApFW0xyFDQlm
- GFfizf4be1b7/vIHZCJGgCT4eWs5gUhy9y3BVXoRDUdsl9hOrYvzMTreS3lP4KBEczOY
- 31WhjsYtKh7/l/u0W10NQcXb4DtE3cfNnR+dIbv+Si6oBt6OW4JRdnSQx0MQ3+QT4omX
- vt0tJDy8pwoiidrvAukRPOH0wzg6phGH3LYpdYjZfJ/EtN/whrf3oqqTOvKEtMU6ACtj
- PdoA==
-X-Gm-Message-State: APjAAAWJDC6M+yvzGE5qY6YXo+0c62vjnVuVFVSU6jIB2F//fBoB6NOu
- AMvQaruzkJppbfhDn42o05bS1g==
-X-Google-Smtp-Source: APXvYqzh23zJ0M/6YUkb1gak5IeC/b1rxGMe/2+na8ui5AM37mG7vNvlQ/Y50JVkaXV8dlCW2yJyFQ==
-X-Received: by 2002:a62:e30f:: with SMTP id g15mr235672pfh.124.1578599265739; 
- Thu, 09 Jan 2020 11:47:45 -0800 (PST)
-Received: from gnomeregan01.cam.corp.google.com
- ([2620:15c:6:14:50b7:ffca:29c4:6488])
- by smtp.googlemail.com with ESMTPSA id z130sm8572761pgz.6.2020.01.09.11.47.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 09 Jan 2020 11:47:44 -0800 (PST)
-Subject: Re: [PATCH 00/14] KVM: x86/mmu: Huge page fixes, cleanup, and DAX
-To: Sean Christopherson <sean.j.christopherson@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20200108202448.9669-1-sean.j.christopherson@intel.com>
-From: Barret Rhoden <brho@google.com>
-Message-ID: <e3e12d17-32e4-84ad-94da-91095d999238@google.com>
-Date: Thu, 9 Jan 2020 14:47:41 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+ with ESMTP id JEHkW9DLsoJi for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 10 Jan 2020 07:12:14 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 53C0B4B175
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Jan 2020 07:12:14 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A8D1C1063;
+ Fri, 10 Jan 2020 04:12:13 -0800 (PST)
+Received: from localhost (unknown [10.37.6.20])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2C1113F534;
+ Fri, 10 Jan 2020 04:12:13 -0800 (PST)
+Date: Fri, 10 Jan 2020 12:12:11 +0000
+From: Andrew Murray <andrew.murray@arm.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH v2 09/18] arm64: KVM: enable conditional save/restore
+ full SPE profiling buffer controls
+Message-ID: <20200110121211.GE42593@e119886-lin.cambridge.arm.com>
+References: <20191220143025.33853-1-andrew.murray@arm.com>
+ <20191220143025.33853-10-andrew.murray@arm.com>
+ <20191221141325.5a177343@why>
+ <20200110105435.GC42593@e119886-lin.cambridge.arm.com>
+ <2a9c9076588ef1dd36a6a365848cdfe7@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20200108202448.9669-1-sean.j.christopherson@intel.com>
-Content-Language: en-US
-X-Mailman-Approved-At: Fri, 10 Jan 2020 07:01:03 -0500
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- David Hildenbrand <david@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
- Dave Hansen <dave.hansen@linux.intel.com>, Paul Mackerras <paulus@ozlabs.org>,
- linux-mm@kvack.org, kvmarm@lists.cs.columbia.edu,
- Dave Jiang <dave.jiang@intel.com>, linux-nvdimm <linux-nvdimm@lists.01.org>,
- Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- syzbot+c9d1fb51ac9d0d10c39d@syzkaller.appspotmail.com, kvm-ppc@vger.kernel.org,
- Liran Alon <liran.alon@oracle.com>, Andy Lutomirski <luto@kernel.org>,
- Dan Williams <dan.j.williams@intel.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
- linux-kernel@vger.kernel.org, Jason Zeng <jason.zeng@intel.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>
+Content-Disposition: inline
+In-Reply-To: <2a9c9076588ef1dd36a6a365848cdfe7@kernel.org>
+User-Agent: Mutt/1.10.1+81 (426a6c1) (2018-08-26)
+Cc: kvm@vger.kernel.org, Catalin Marinas <Catalin.Marinas@arm.com>,
+ linux-kernel@vger.kernel.org, Sudeep Holla <Sudeep.Holla@arm.com>,
+ will@kernel.org, kvmarm <kvmarm@lists.cs.columbia.edu>,
+ linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -106,33 +67,208 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi -
-
-On 1/8/20 3:24 PM, Sean Christopherson wrote:
-> This series is a mix of bug fixes, cleanup and new support in KVM's
-> handling of huge pages.  The series initially stemmed from a syzkaller
-> bug report[1], which is fixed by patch 02, "mm: thp: KVM: Explicitly
-> check for THP when populating secondary MMU".
+On Fri, Jan 10, 2020 at 11:18:48AM +0000, Marc Zyngier wrote:
+> On 2020-01-10 10:54, Andrew Murray wrote:
+> > On Sat, Dec 21, 2019 at 02:13:25PM +0000, Marc Zyngier wrote:
+> > > On Fri, 20 Dec 2019 14:30:16 +0000
+> > > Andrew Murray <andrew.murray@arm.com> wrote:
+> > > 
+> > > [somehow managed not to do a reply all, re-sending]
+> > > 
+> > > > From: Sudeep Holla <sudeep.holla@arm.com>
+> > > >
+> > > > Now that we can save/restore the full SPE controls, we can enable it
+> > > > if SPE is setup and ready to use in KVM. It's supported in KVM only if
+> > > > all the CPUs in the system supports SPE.
+> > > >
+> > > > However to support heterogenous systems, we need to move the check if
+> > > > host supports SPE and do a partial save/restore.
+> > > 
+> > > No. Let's just not go down that path. For now, KVM on heterogeneous
+> > > systems do not get SPE. If SPE has been enabled on a guest and a CPU
+> > > comes up without SPE, this CPU should fail to boot (same as exposing a
+> > > feature to userspace).
+> > > 
+> > > >
+> > > > Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+> > > > Signed-off-by: Andrew Murray <andrew.murray@arm.com>
+> > > > ---
+> > > >  arch/arm64/kvm/hyp/debug-sr.c | 33 ++++++++++++++++-----------------
+> > > >  include/kvm/arm_spe.h         |  6 ++++++
+> > > >  2 files changed, 22 insertions(+), 17 deletions(-)
+> > > >
+> > > > diff --git a/arch/arm64/kvm/hyp/debug-sr.c b/arch/arm64/kvm/hyp/debug-sr.c
+> > > > index 12429b212a3a..d8d857067e6d 100644
+> > > > --- a/arch/arm64/kvm/hyp/debug-sr.c
+> > > > +++ b/arch/arm64/kvm/hyp/debug-sr.c
+> > > > @@ -86,18 +86,13 @@
+> > > >  	}
+> > > >
+> > > >  static void __hyp_text
+> > > > -__debug_save_spe_nvhe(struct kvm_cpu_context *ctxt, bool full_ctxt)
+> > > > +__debug_save_spe_context(struct kvm_cpu_context *ctxt, bool full_ctxt)
+> > > >  {
+> > > >  	u64 reg;
+> > > >
+> > > >  	/* Clear pmscr in case of early return */
+> > > >  	ctxt->sys_regs[PMSCR_EL1] = 0;
+> > > >
+> > > > -	/* SPE present on this CPU? */
+> > > > -	if (!cpuid_feature_extract_unsigned_field(read_sysreg(id_aa64dfr0_el1),
+> > > > -						  ID_AA64DFR0_PMSVER_SHIFT))
+> > > > -		return;
+> > > > -
+> > > >  	/* Yes; is it owned by higher EL? */
+> > > >  	reg = read_sysreg_s(SYS_PMBIDR_EL1);
+> > > >  	if (reg & BIT(SYS_PMBIDR_EL1_P_SHIFT))
+> > > > @@ -142,7 +137,7 @@ __debug_save_spe_nvhe(struct kvm_cpu_context *ctxt, bool full_ctxt)
+> > > >  }
+> > > >
+> > > >  static void __hyp_text
+> > > > -__debug_restore_spe_nvhe(struct kvm_cpu_context *ctxt, bool full_ctxt)
+> > > > +__debug_restore_spe_context(struct kvm_cpu_context *ctxt, bool full_ctxt)
+> > > >  {
+> > > >  	if (!ctxt->sys_regs[PMSCR_EL1])
+> > > >  		return;
+> > > > @@ -210,11 +205,14 @@ void __hyp_text __debug_restore_guest_context(struct kvm_vcpu *vcpu)
+> > > >  	struct kvm_guest_debug_arch *host_dbg;
+> > > >  	struct kvm_guest_debug_arch *guest_dbg;
+> > > >
+> > > > +	host_ctxt = kern_hyp_va(vcpu->arch.host_cpu_context);
+> > > > +	guest_ctxt = &vcpu->arch.ctxt;
+> > > > +
+> > > > +	__debug_restore_spe_context(guest_ctxt, kvm_arm_spe_v1_ready(vcpu));
+> > > > +
+> > > >  	if (!(vcpu->arch.flags & KVM_ARM64_DEBUG_DIRTY))
+> > > >  		return;
+> > > >
+> > > > -	host_ctxt = kern_hyp_va(vcpu->arch.host_cpu_context);
+> > > > -	guest_ctxt = &vcpu->arch.ctxt;
+> > > >  	host_dbg = &vcpu->arch.host_debug_state.regs;
+> > > >  	guest_dbg = kern_hyp_va(vcpu->arch.debug_ptr);
+> > > >
+> > > > @@ -232,8 +230,7 @@ void __hyp_text __debug_restore_host_context(struct kvm_vcpu *vcpu)
+> > > >  	host_ctxt = kern_hyp_va(vcpu->arch.host_cpu_context);
+> > > >  	guest_ctxt = &vcpu->arch.ctxt;
+> > > >
+> > > > -	if (!has_vhe())
+> > > > -		__debug_restore_spe_nvhe(host_ctxt, false);
+> > > > +	__debug_restore_spe_context(host_ctxt, kvm_arm_spe_v1_ready(vcpu));
+> > > 
+> > > So you now do an unconditional save/restore on the exit path for VHE
+> > > as
+> > > well? Even if the host isn't using the SPE HW? That's not acceptable
+> > > as, in most cases, only the host /or/ the guest will use SPE. Here,
+> > > you
+> > > put a measurable overhead on each exit.
+> > > 
+> > > If the host is not using SPE, then the restore/save should happen in
+> > > vcpu_load/vcpu_put. Only if the host is using SPE should you do
+> > > something in the run loop. Of course, this only applies to VHE and
+> > > non-VHE must switch eagerly.
+> > > 
+> > 
+> > On VHE where SPE is used in the guest only - we save/restore in
+> > vcpu_load/put.
 > 
-> While investigating options for fixing the syzkaller bug, I realized KVM
-> could reuse the approach from Barret's series to enable huge pages for DAX
-> mappings in KVM[2] for all types of huge mappings, i.e. walk the host page
-> tables instead of querying metadata (patches 05 - 09).
+> Yes.
+> 
+> > On VHE where SPE is used in the host only - we save/restore in the run
+> > loop.
+> 
+> Why? If only the host is using SPE, why should we do *anything at all*?
 
-Thanks, Sean.  I tested this patch series out, and it works for me. 
-(Huge KVM mappings of a DAX file, etc.).
+Oh yeah of course, we trap them in this case.
+
+(Do I understand correctly that we don't/can't trap them for nVHE? - and so
+we should save/restore them for this use-case in nVHE)
+
+
+> 
+> > On VHE where SPE is used in guest and host - we save/restore in the run
+> > loop.
+> > 
+> > As the guest can't trace EL2 it doesn't matter if we restore guest SPE
+> > early
+> > in the vcpu_load/put functions. (I assume it doesn't matter that we
+> > restore
+> > an EL0/EL1 profiling buffer address at this point and enable tracing
+> > given
+> > that there is nothing to trace until entering the guest).
+> 
+> As long as you do it after the EL1 sysregs have need restored so that the
+> SPE
+> HW has a valid context, we should be fine. Don't restore it before that
+> point
+> though (you have no idea whether the SPE HW can do speculative memory
+> accesses
+> that would use the wrong page tables).
+
+Right, so don't enable tracing until SPE has a valid context. I understand
+that to mean at least the SPE buffer address registers (PMBPTR, PMBLIMITR)
+in the right context with respect to the E2PB bits (translation regime)
+and having those tables mapped in (which I think relate to the __activateX,
+__sysreg_restore_guest_stateX type of calls in kvm_vcpu_run_X right?).
+
+I think that means we can restore the registers no earler than vcpu_load/put
+but we can't re-enable the tracing (PMSCR) until no earlier than just before
+__set_guest_arch_workaround_state. I think that applies to both VHE and nVHE?
+
+> 
+> > However the reason for moving save/restore to vcpu_load/put when the
+> > host is
+> > using SPE is to minimise the host EL2 black-out window.
+> 
+> You should move it to *the run loop* when both host and guest are using SPE.
+> 
+> > On nVHE we always save/restore in the run loop. For the SPE
+> > guest-use-only
+> > use-case we can't save/restore in vcpu_load/put - because the guest runs
+> > at
+> > the same ELx level as the host - and thus doing so would result in the
+> > guest
+> > tracing part of the host.
+> 
+> Not only. It would actively corrupt memory in the host by using the wrong
+> page tables.
+> 
+> > Though if we determine that (for nVHE systems) the guest SPE is
+> > profiling only
+> > EL0 - then we could also save/restore in vcpu_load/put where SPE is only
+> > being
+> > used in the guest.
+> 
+> Same as above: wrong MM context, speculation, potential memory corruption.
+> 
+> > Does that make sense, are my reasons correct?
+> 
+> Not entirely. I think you should use the following table:
+> 
+> VHE | Host-SPE | Guest-SPE | Switch location
+>  0  |     0    |     0     | none
+>  0  |     0    |     1     | run loop
+>  0  |     1    |     0     | run loop
+>  0  |     1    |     1     | run loop
+>  1  |     0    |     0     | none
+>  1  |     0    |     1     | load/put
+>  1  |     1    |     0     | none
+>  1  |     1    |     1     | run loop
 
 Thanks,
 
-Barret
+Andrew Murray
 
-
-
+> 
+> Thanks,
+> 
+>         M.
+> -- 
+> Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
