@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D67B139F71
-	for <lists+kvmarm@lfdr.de>; Tue, 14 Jan 2020 03:20:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4ABE313A158
+	for <lists+kvmarm@lfdr.de>; Tue, 14 Jan 2020 08:10:36 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8FC8A4AFD2;
-	Mon, 13 Jan 2020 21:20:38 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BF4624AF97;
+	Tue, 14 Jan 2020 02:10:35 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
@@ -16,63 +16,44 @@ X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id imi7muBKr8ui; Mon, 13 Jan 2020 21:20:38 -0500 (EST)
+	with ESMTP id JVL2AltLHjBw; Tue, 14 Jan 2020 02:10:35 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7953C4AFCF;
-	Mon, 13 Jan 2020 21:20:37 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CBDE24B022;
+	Tue, 14 Jan 2020 02:10:33 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2A1EC4AFBE
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Jan 2020 21:20:37 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EEB814AF97
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 14 Jan 2020 02:10:31 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id o135QlRaMaSe for <kvmarm@lists.cs.columbia.edu>;
- Mon, 13 Jan 2020 21:20:35 -0500 (EST)
-Received: from huawei.com (szxga02-in.huawei.com [45.249.212.188])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 999D44AF7F
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Jan 2020 21:20:35 -0500 (EST)
-Received: from DGGEMM401-HUB.china.huawei.com (unknown [172.30.72.53])
- by Forcepoint Email with ESMTP id 3D32733A036B44FA5CD2;
- Tue, 14 Jan 2020 10:20:32 +0800 (CST)
-Received: from dggeme766-chm.china.huawei.com (10.3.19.112) by
- DGGEMM401-HUB.china.huawei.com (10.3.20.209) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Tue, 14 Jan 2020 10:20:32 +0800
-Received: from dggeme763-chm.china.huawei.com (10.3.19.109) by
- dggeme766-chm.china.huawei.com (10.3.19.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.1713.5; Tue, 14 Jan 2020 10:20:31 +0800
-Received: from dggeme763-chm.china.huawei.com ([10.6.66.36]) by
- dggeme763-chm.china.huawei.com ([10.6.66.36]) with mapi id 15.01.1713.004;
- Tue, 14 Jan 2020 10:20:31 +0800
-From: linmiaohe <linmiaohe@huawei.com>
-To: "maz@kernel.org" <maz@kernel.org>, "pbonzini@redhat.com"
- <pbonzini@redhat.com>, "rkrcmar@redhat.com" <rkrcmar@redhat.com>,
- "james.morse@arm.com" <james.morse@arm.com>, "julien.thierry.kdev@gmail.com"
- <julien.thierry.kdev@gmail.com>, "suzuki.poulose@arm.com"
- <suzuki.poulose@arm.com>, "christoffer.dall@arm.com"
- <christoffer.dall@arm.com>, "catalin.marinas@arm.com"
- <catalin.marinas@arm.com>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>, "will@kernel.org"
- <will@kernel.org>, "andre.przywara@arm.com" <andre.przywara@arm.com>,
- "tglx@linutronix.de" <tglx@linutronix.de>
-Subject: Re: [PATCH] KVM: arm64: get rid of var ret and out jump label in
- kvm_arch_vcpu_ioctl_set_guest_debug()
-Thread-Topic: [PATCH] KVM: arm64: get rid of var ret and out jump label in
- kvm_arch_vcpu_ioctl_set_guest_debug()
-Thread-Index: AdXKgQO5ibkFZKiqSOySikptaJRgWA==
-Date: Tue, 14 Jan 2020 02:20:31 +0000
-Message-ID: <ab61de3a04a74f74866683b062d0bab2@huawei.com>
-Accept-Language: en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.173.221.158]
+ with ESMTP id pL5VwBRVGdcf for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 14 Jan 2020 02:10:30 -0500 (EST)
+Received: from huawei.com (szxga06-in.huawei.com [45.249.212.32])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8CE354AEBD
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 14 Jan 2020 02:10:30 -0500 (EST)
+Received: from DGGEMS411-HUB.china.huawei.com (unknown [172.30.72.60])
+ by Forcepoint Email with ESMTP id F2952AAD54E551A6FA5C;
+ Tue, 14 Jan 2020 15:10:25 +0800 (CST)
+Received: from [127.0.0.1] (10.173.222.27) by DGGEMS411-HUB.china.huawei.com
+ (10.3.19.211) with Microsoft SMTP Server id 14.3.439.0; Tue, 14 Jan 2020
+ 15:10:19 +0800
+Subject: Re: [PATCH] KVM: arm/arm64: vgic-its: Check hopefully the last
+ DISCARD command error
+To: Auger Eric <eric.auger@redhat.com>, <maz@kernel.org>
+References: <20191225133014.1825-1-yuzenghui@huawei.com>
+ <f9997198-c990-d638-24d0-41d6280a9d8a@redhat.com>
+From: Zenghui Yu <yuzenghui@huawei.com>
+Message-ID: <41c88abb-433a-f87c-c858-7f2eb4c40926@huawei.com>
+Date: Tue, 14 Jan 2020 15:10:16 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.0
 MIME-Version: 1.0
+In-Reply-To: <f9997198-c990-d638-24d0-41d6280a9d8a@redhat.com>
+Content-Language: en-US
+X-Originating-IP: [10.173.222.27]
 X-CFilter-Loop: Reflected
-Cc: "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
- "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
- "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Cc: andre.przywara@arm.com, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -84,53 +65,57 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Friendly ping :)
+Hi Eric,
 
-> From: Miaohe Lin <linmiaohe@huawei.com>
->
-> The var ret and out jump label is not really needed. Clean them up.
-> Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-> ---
->  arch/arm64/kvm/guest.c | 11 +++--------
->  1 file changed, 3 insertions(+), 8 deletions(-)
->
-> diff --git a/arch/arm64/kvm/guest.c b/arch/arm64/kvm/guest.c index 2fff06114a8f..3b836c91609e 100644
-> --- a/arch/arm64/kvm/guest.c
-> +++ b/arch/arm64/kvm/guest.c
-> @@ -834,14 +834,10 @@ int kvm_arch_vcpu_ioctl_translate(struct kvm_vcpu *vcpu,  int kvm_arch_vcpu_ioctl_set_guest_debug(struct kvm_vcpu *vcpu,
->  					struct kvm_guest_debug *dbg)
->  {
-> -	int ret = 0;
-> -
->  	trace_kvm_set_guest_debug(vcpu, dbg->control);
->  
-> -	if (dbg->control & ~KVM_GUESTDBG_VALID_MASK) {
-> -		ret = -EINVAL;
-> -		goto out;
-> -	}
-> +	if (dbg->control & ~KVM_GUESTDBG_VALID_MASK)
-> +		return -EINVAL;
->  
->  	if (dbg->control & KVM_GUESTDBG_ENABLE) {
->  		vcpu->guest_debug = dbg->control;
-> @@ -856,8 +852,7 @@ int kvm_arch_vcpu_ioctl_set_guest_debug(struct kvm_vcpu *vcpu,
->  		vcpu->guest_debug = 0;
->  	}
->  
-> -out:
-> -	return ret;
-> +	return 0;
->  }
->  
->  int kvm_arm_vcpu_arch_set_attr(struct kvm_vcpu *vcpu,
-> --
-> 2.19.1
->
+On 2020/1/10 16:37, Auger Eric wrote:
+> Hi Zenghui,
+> 
+> On 12/25/19 2:30 PM, Zenghui Yu wrote:
+>> DISCARD command error occurs if any of the following apply:
+>>
+>>   - [ ... (those which we have already handled) ]
+> nit: I would remove the above and simply say the discard is supposed to
+> fail if the collection is not mapped to any target redistributor. If an
+> ITE exists then the ite->collection is non NULL.
+
+I think this is not always true. Let's talk about the following scenario
+(a bit insane, though):
+
+1. First map a LPI to an unmapped Collection, then ite->collection is
+    non NULL and its target_addr is COLLECTION_NOT_MAPPED.
+
+2. Then issue MAPC and unMAPC(V=0) commands on this Collection, the
+    ite->collection will be NULL, see vgic_its_free_collection().
+
+Discard the LPI mapping after "1" or "2", we will both encounter the
+unmapped collection command error.
+
+> What needs to be checked is its_is_collection_mapped().
+> 
+> By the way update_affinity_collection() also tests ite->collection. I
+> think this is useless or do I miss something?
+
+Yeah, I agree. We managed to invoke update_affinity_collection(,, coll),
+ensure that the 'coll' can _not_ be NULL.
+So '!ite->collection' is already a subcase of 'coll != ite->collection'.
+We can safely get rid of it.
+
+> 
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> 
+
+Thanks for that. I'll change the commit message with your suggestion and
+add your R-b in v2.
+
+
+Thanks,
+Zenghui
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
