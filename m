@@ -2,52 +2,75 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A5260141E30
-	for <lists+kvmarm@lfdr.de>; Sun, 19 Jan 2020 14:32:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DD0D141F38
+	for <lists+kvmarm@lfdr.de>; Sun, 19 Jan 2020 18:43:37 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 090894ACE6;
-	Sun, 19 Jan 2020 08:32:35 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 83FC74ACDB;
+	Sun, 19 Jan 2020 12:43:36 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.502
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KXWybQeM6AJm; Sun, 19 Jan 2020 08:32:34 -0500 (EST)
+	with ESMTP id Ddb7nWlSPtQA; Sun, 19 Jan 2020 12:43:36 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C72BF4AEA0;
-	Sun, 19 Jan 2020 08:32:33 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2425B4AC07;
+	Sun, 19 Jan 2020 12:43:35 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 997BA4ACFA
- for <kvmarm@lists.cs.columbia.edu>; Sun, 19 Jan 2020 08:32:32 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BE82B4A946
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 19 Jan 2020 12:43:33 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id E5w4vXv+UKpW for <kvmarm@lists.cs.columbia.edu>;
- Sun, 19 Jan 2020 08:32:31 -0500 (EST)
-Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D2B964ACE6
- for <kvmarm@lists.cs.columbia.edu>; Sun, 19 Jan 2020 08:32:30 -0500 (EST)
-Received: from DGGEMS412-HUB.china.huawei.com (unknown [172.30.72.60])
- by Forcepoint Email with ESMTP id 0BB7FE69CDB940A01276;
- Sun, 19 Jan 2020 21:32:27 +0800 (CST)
-Received: from DESKTOP-8RFUVS3.china.huawei.com (10.173.222.27) by
- DGGEMS412-HUB.china.huawei.com (10.3.19.212) with Microsoft SMTP Server id
- 14.3.439.0; Sun, 19 Jan 2020 21:32:17 +0800
-From: Zenghui Yu <yuzenghui@huawei.com>
-To: <peter.maydell@linaro.org>, <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: [PATCH] hw/intc/arm_gicv3_kvm: Stop wrongly programming
- GICR_PENDBASER.PTZ bit
-Date: Sun, 19 Jan 2020 21:30:51 +0800
-Message-ID: <20200119133051.642-1-yuzenghui@huawei.com>
-X-Mailer: git-send-email 2.23.0.windows.1
+ with ESMTP id 9sXc6x7h1QME for <kvmarm@lists.cs.columbia.edu>;
+ Sun, 19 Jan 2020 12:43:32 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 62D254A7FD
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 19 Jan 2020 12:43:32 -0500 (EST)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 01D4320674;
+ Sun, 19 Jan 2020 17:43:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1579455811;
+ bh=R0N0qdRvwA0CSQsT/alDM97aT/J/0dgnyJzGEbfyDhM=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=RmLd1ry7lvMf/1dyH4I/wdco57Za4aj+As791DgPUn2DNnmdDV+6tnrt+HS+AWocT
+ uTjnpfDYIuUpZ8yHToVG8n4Aa32cyZe/DIZAYjNfuJKmSQ91ADCQBXVcWJ04j5UBQd
+ wDW5WgEHkPIau9KIyF3uJY1j3D3QKFsI4h0oKyeo=
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why) by disco-boy.misterjones.org with esmtpsa
+ (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
+ (envelope-from <maz@kernel.org>)
+ id 1itEbg-0004D7-P4; Sun, 19 Jan 2020 17:43:28 +0000
+Date: Sun, 19 Jan 2020 17:43:27 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: Russell King <rmk+kernel@armlinux.org.uk>
+Subject: Re: [PATCH v2] arm64: kvm: fix IDMAP overlap with HYP VA
+Message-ID: <20200119174327.4b2c514e@why>
+In-Reply-To: <E1ilAiY-0000MA-RG@rmk-PC.armlinux.org.uk>
+References: <E1ilAiY-0000MA-RG@rmk-PC.armlinux.org.uk>
+Organization: Approximate
+X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-X-Originating-IP: [10.173.222.27]
-X-CFilter-Loop: Reflected
-Cc: maz@kernel.org, kvmarm@lists.cs.columbia.edu
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: rmk+kernel@armlinux.org.uk, james.morse@arm.com,
+ julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com, catalin.marinas@arm.com,
+ will@kernel.org, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -64,57 +87,61 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-If LPIs are disabled, KVM will just ignore the GICR_PENDBASER.PTZ bit when
-restoring GICR_CTLR.  Setting PTZ here makes littlt sense in "reduce GIC
-initialization time".
+On Sat, 28 Dec 2019 11:57:14 +0000
+Russell King <rmk+kernel@armlinux.org.uk> wrote:
 
-And what's worse, PTZ is generally programmed by guest to indicate to the
-Redistributor whether the LPI Pending table is zero when enabling LPIs.
-If migration is triggered when the PTZ has just been cleared by guest (and
-before enabling LPIs), we will see PTZ==1 on the destination side, which
-is not as expected.  Let's just drop this hackish userspace behavior.
+> Booting 5.4 on LX2160A reveals that KVM is non-functional:
+> 
+> kvm: Limiting the IPA size due to kernel Virtual Address limit
+> kvm [1]: IPA Size Limit: 43bits
+> kvm [1]: IDMAP intersecting with HYP VA, unable to continue
+> kvm [1]: error initializing Hyp mode: -22
+> 
+> Debugging shows:
+> 
+> kvm [1]: IDMAP page: 81a26000
+> kvm [1]: HYP VA range: 0:22ffffffff
+> 
+> as RAM is located at:
+> 
+> 80000000-fbdfffff : System RAM
+> 2080000000-237fffffff : System RAM
+> 
+> Comparing this with the same kernel on Armada 8040 shows:
+> 
+> kvm: Limiting the IPA size due to kernel Virtual Address limit
+> kvm [1]: IPA Size Limit: 43bits
+> kvm [1]: IDMAP page: 2a26000
+> kvm [1]: HYP VA range: 4800000000:493fffffff
+> ...
+> kvm [1]: Hyp mode initialized successfully
+> 
+> which indicates that hyp_va_msb is set, and is always set to the
+> opposite value of the idmap page to avoid the overlap. This does not
+> happen with the LX2160A.
+> 
+> Further debugging shows vabits_actual = 39, kva_msb = 38 on LX2160A and
+> kva_msb = 33 on Armada 8040. Looking at the bit layout of the HYP VA,
+> there is still one bit available for hyp_va_msb. Set this bit
+> appropriately. This allows kvm to be functional on the LX2160A, but
+> without any HYP VA randomisation:
+> 
+> kvm: Limiting the IPA size due to kernel Virtual Address limit
+> kvm [1]: IPA Size Limit: 43bits
+> kvm [1]: IDMAP page: 81a24000
+> kvm [1]: HYP VA range: 4000000000:62ffffffff
+> ...
+> kvm [1]: Hyp mode initialized successfully
+> 
+> Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 
-Also take this chance to refine the comment a bit.
+I've applied this to kvmarm-next with a couple of cleanups, and
+preserving the fallback when the tag is zero (only the mask gets
+applied, without any ROR or ADD).
 
-Fixes: 367b9f527bec ("hw/intc/arm_gicv3_kvm: Implement get/put functions")
-Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
----
- hw/intc/arm_gicv3_kvm.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
-
-diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
-index 9c7f4ab871..49304ca589 100644
---- a/hw/intc/arm_gicv3_kvm.c
-+++ b/hw/intc/arm_gicv3_kvm.c
-@@ -336,7 +336,10 @@ static void kvm_arm_gicv3_put(GICv3State *s)
-     kvm_gicd_access(s, GICD_CTLR, &reg, true);
- 
-     if (redist_typer & GICR_TYPER_PLPIS) {
--        /* Set base addresses before LPIs are enabled by GICR_CTLR write */
-+        /*
-+         * Restore base addresses before LPIs are potentially enabled by
-+         * GICR_CTLR write
-+         */
-         for (ncpu = 0; ncpu < s->num_cpu; ncpu++) {
-             GICv3CPUState *c = &s->cpu[ncpu];
- 
-@@ -347,12 +350,6 @@ static void kvm_arm_gicv3_put(GICv3State *s)
-             kvm_gicr_access(s, GICR_PROPBASER + 4, ncpu, &regh, true);
- 
-             reg64 = c->gicr_pendbaser;
--            if (!(c->gicr_ctlr & GICR_CTLR_ENABLE_LPIS)) {
--                /* Setting PTZ is advised if LPIs are disabled, to reduce
--                 * GIC initialization time.
--                 */
--                reg64 |= GICR_PENDBASER_PTZ;
--            }
-             regl = (uint32_t)reg64;
-             kvm_gicr_access(s, GICR_PENDBASER, ncpu, &regl, true);
-             regh = (uint32_t)(reg64 >> 32);
+	M.
 -- 
-2.19.1
-
-
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
