@@ -2,71 +2,70 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3607A141FD5
-	for <lists+kvmarm@lfdr.de>; Sun, 19 Jan 2020 20:44:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB035142206
+	for <lists+kvmarm@lfdr.de>; Mon, 20 Jan 2020 04:34:22 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 919C04AE96;
-	Sun, 19 Jan 2020 14:44:03 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7C57D4AEDA;
+	Sun, 19 Jan 2020 22:34:22 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.391
+X-Spam-Score: 0.908
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.391 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.908 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01]
+	autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@armlinux.org.uk
+	(fail, message has been altered) header.i=@ozlabs.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id EG-mo-Ikl3Ij; Sun, 19 Jan 2020 14:44:03 -0500 (EST)
+	with ESMTP id K-ShCuttUXLF; Sun, 19 Jan 2020 22:34:21 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3AFC54AC65;
-	Sun, 19 Jan 2020 14:44:02 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 41DCC4AEE5;
+	Sun, 19 Jan 2020 22:34:20 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1EAA34A528
- for <kvmarm@lists.cs.columbia.edu>; Sun, 19 Jan 2020 14:44:00 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D47974AECC
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 19 Jan 2020 22:34:18 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id GM4Sqss9h4rd for <kvmarm@lists.cs.columbia.edu>;
- Sun, 19 Jan 2020 14:43:57 -0500 (EST)
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4424D4A524
- for <kvmarm@lists.cs.columbia.edu>; Sun, 19 Jan 2020 14:43:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
- MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
- Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
- List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=3z7zbcC6+n0ijVHwdWGh6TJYkP0ZMZNW/76LdpCfz2M=; b=lnGZsRNopbJxj2FTf8JDa48y7
- B1t1nQaMIi9rDCTtt3Hsz8CzHM+mudBxXR5dgMaU7tFbqU3BkIORoSTa1gR+xjukxXR6ijxKCxwEL
- L2pjo0pMQsVD5JGYaJRCvZhSALLq9Xhj2YBQjpFVPHR8sIP1ExLNwyvd0Kze4FRz9WD+4xUyRM0Bb
- soGTxz1ERuZtAmDWnHTVLls9gT+lwIVNVohPYBZBn8S6nh6gNI+f5/2ItaYrdX7Pxs/6MIIXWuFnJ
- lGWb2kVMVYSzD+rj0MovK/ZBYuzr6PIMMZljI73ZUvIgzPYN6PLJ8/JcDfsE1EiRvzOOW16QFRd/V
- pL9hFXS1g==;
-Received: from shell.armlinux.org.uk
- ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:40530)
- by pandora.armlinux.org.uk with esmtpsa
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256) (Exim 4.90_1)
- (envelope-from <linux@armlinux.org.uk>)
- id 1itGU4-0001ez-Cy; Sun, 19 Jan 2020 19:43:44 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.92)
- (envelope-from <linux@shell.armlinux.org.uk>)
- id 1itGU0-00025u-NL; Sun, 19 Jan 2020 19:43:40 +0000
-Date: Sun, 19 Jan 2020 19:43:40 +0000
-From: Russell King - ARM Linux admin <linux@armlinux.org.uk>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v2] arm64: kvm: fix IDMAP overlap with HYP VA
-Message-ID: <20200119194340.GW25745@shell.armlinux.org.uk>
-References: <E1ilAiY-0000MA-RG@rmk-PC.armlinux.org.uk>
- <20200119174327.4b2c514e@why>
+ with ESMTP id d+8SlNtOYwRa for <kvmarm@lists.cs.columbia.edu>;
+ Sun, 19 Jan 2020 22:34:17 -0500 (EST)
+Received: from ozlabs.org (bilbo.ozlabs.org [203.11.71.1])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 842094A830
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 19 Jan 2020 22:34:17 -0500 (EST)
+Received: by ozlabs.org (Postfix, from userid 1003)
+ id 481HMj02PMz9sRK; Mon, 20 Jan 2020 14:34:08 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ozlabs.org; s=201707;
+ t=1579491249; bh=Bx1QENbI/taNJYozRF14LNd8JjoLRwCSpGh5bRXaoZc=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=BalvDW2whNPsvCmtISkbOhDMpZauUgvHl09Uaty2WElwJ6Cza+b4DeHGcnUNwOLV3
+ g6DRm1DMzCI/vBJ1PlZfghThTKRiDTXm/9cEYl1gDtPWzG4q+29NKYsabkOFnLKJZW
+ pu7HnKn8KFD4ACQ0z1wJAaZ09+iERSqPxVmZuqJ9tVnb3xT4AbRscYT7AxP5jHVWa0
+ 3Gb0VAa6x9zDA27RPpRqnF9yfWp6Q9n39W6+HvqOjYYy/h9z34BptPYaZs8RzgPLLz
+ x8CTvY8aTo7+f8KU7v7y459Sv+srWbj2FDlNPNQXb3Ix1Y7vabAiDRVuXNEoR2XexB
+ QTFYCAbB5+mEg==
+Date: Mon, 20 Jan 2020 13:57:16 +1100
+From: Paul Mackerras <paulus@ozlabs.org>
+To: Sean Christopherson <sean.j.christopherson@intel.com>
+Subject: Re: [PATCH v2 01/45] KVM: PPC: Book3S HV: Uninit vCPU if vcore
+ creation fails
+Message-ID: <20200120025716.GA14307@blackberry>
+References: <20191218215530.2280-1-sean.j.christopherson@intel.com>
+ <20191218215530.2280-2-sean.j.christopherson@intel.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20200119174327.4b2c514e@why>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+In-Reply-To: <20191218215530.2280-2-sean.j.christopherson@intel.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Cc: Cornelia Huck <cohuck@redhat.com>, Wanpeng Li <wanpengli@tencent.com>,
+ Janosch Frank <frankja@linux.ibm.com>, kvm@vger.kernel.org,
+ Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+ David Hildenbrand <david@redhat.com>, linux-mips@vger.kernel.org,
+ kvm-ppc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Christian Borntraeger <borntraeger@de.ibm.com>, Greg Kurz <groug@kaod.org>,
+ linux-arm-kernel@lists.infradead.org, James Hogan <jhogan@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ kvmarm@lists.cs.columbia.edu, Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -83,72 +82,46 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Sun, Jan 19, 2020 at 05:43:27PM +0000, Marc Zyngier wrote:
-> On Sat, 28 Dec 2019 11:57:14 +0000
-> Russell King <rmk+kernel@armlinux.org.uk> wrote:
+On Wed, Dec 18, 2019 at 01:54:46PM -0800, Sean Christopherson wrote:
+> Call kvm_vcpu_uninit() if vcore creation fails to avoid leaking any
+> resources allocated by kvm_vcpu_init(), i.e. the vcpu->run page.
 > 
-> > Booting 5.4 on LX2160A reveals that KVM is non-functional:
-> > 
-> > kvm: Limiting the IPA size due to kernel Virtual Address limit
-> > kvm [1]: IPA Size Limit: 43bits
-> > kvm [1]: IDMAP intersecting with HYP VA, unable to continue
-> > kvm [1]: error initializing Hyp mode: -22
-> > 
-> > Debugging shows:
-> > 
-> > kvm [1]: IDMAP page: 81a26000
-> > kvm [1]: HYP VA range: 0:22ffffffff
-> > 
-> > as RAM is located at:
-> > 
-> > 80000000-fbdfffff : System RAM
-> > 2080000000-237fffffff : System RAM
-> > 
-> > Comparing this with the same kernel on Armada 8040 shows:
-> > 
-> > kvm: Limiting the IPA size due to kernel Virtual Address limit
-> > kvm [1]: IPA Size Limit: 43bits
-> > kvm [1]: IDMAP page: 2a26000
-> > kvm [1]: HYP VA range: 4800000000:493fffffff
-> > ...
-> > kvm [1]: Hyp mode initialized successfully
-> > 
-> > which indicates that hyp_va_msb is set, and is always set to the
-> > opposite value of the idmap page to avoid the overlap. This does not
-> > happen with the LX2160A.
-> > 
-> > Further debugging shows vabits_actual = 39, kva_msb = 38 on LX2160A and
-> > kva_msb = 33 on Armada 8040. Looking at the bit layout of the HYP VA,
-> > there is still one bit available for hyp_va_msb. Set this bit
-> > appropriately. This allows kvm to be functional on the LX2160A, but
-> > without any HYP VA randomisation:
-> > 
-> > kvm: Limiting the IPA size due to kernel Virtual Address limit
-> > kvm [1]: IPA Size Limit: 43bits
-> > kvm [1]: IDMAP page: 81a24000
-> > kvm [1]: HYP VA range: 4000000000:62ffffffff
-> > ...
-> > kvm [1]: Hyp mode initialized successfully
-> > 
-> > Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+> Fixes: 371fefd6f2dc4 ("KVM: PPC: Allow book3s_hv guests to use SMT processor modes")
+> Cc: stable@vger.kernel.org
+> Reviewed-by: Greg Kurz <groug@kaod.org>
+> Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
+> ---
+>  arch/powerpc/kvm/book3s_hv.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> I've applied this to kvmarm-next with a couple of cleanups, and
-> preserving the fallback when the tag is zero (only the mask gets
-> applied, without any ROR or ADD).
+> diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
+> index dc53578193ee..d07d2f5273e5 100644
+> --- a/arch/powerpc/kvm/book3s_hv.c
+> +++ b/arch/powerpc/kvm/book3s_hv.c
+> @@ -2368,7 +2368,7 @@ static struct kvm_vcpu *kvmppc_core_vcpu_create_hv(struct kvm *kvm,
+>  	mutex_unlock(&kvm->lock);
+>  
+>  	if (!vcore)
+> -		goto free_vcpu;
+> +		goto uninit_vcpu;
+>  
+>  	spin_lock(&vcore->lock);
+>  	++vcore->num_threads;
+> @@ -2385,6 +2385,8 @@ static struct kvm_vcpu *kvmppc_core_vcpu_create_hv(struct kvm *kvm,
+>  
+>  	return vcpu;
+>  
+> +uninit_vcpu:
+> +	kvm_vcpu_uninit(vcpu);
+>  free_vcpu:
+>  	kmem_cache_free(kvm_vcpu_cache, vcpu);
+>  out:
+> -- 
+> 2.24.1
 
-If only the mask is applied, then it will overlap with the IDMAP
-region, and KVM will fail - so I think it would be a good idea in
-that case to print something a little more useful, rather than
-attributing the KVM failure to an overlap of IDMAP and the KVM
-range.
+Looks correct.
 
-The real problem is there aren't enough VA bits to allow the KVM
-range to be adequately placed, rather than the overlap itself.
-
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTC broadband for 0.8mile line in suburbia: sync at 12.1Mbps down 622kbps up
-According to speedtest.net: 11.9Mbps down 500kbps up
+Acked-by: Paul Mackerras <paulus@ozlabs.org>
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
