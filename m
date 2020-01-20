@@ -2,55 +2,75 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 98E1314299C
-	for <lists+kvmarm@lfdr.de>; Mon, 20 Jan 2020 12:34:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BA6D1429EB
+	for <lists+kvmarm@lfdr.de>; Mon, 20 Jan 2020 12:56:47 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 294444AEFA;
-	Mon, 20 Jan 2020 06:34:53 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F8614AEF2;
+	Mon, 20 Jan 2020 06:56:46 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.799
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id kx6Dp0fB-9mO; Mon, 20 Jan 2020 06:34:53 -0500 (EST)
+	with ESMTP id b6+AO+xvSmmg; Mon, 20 Jan 2020 06:56:46 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DCBC04AEF6;
-	Mon, 20 Jan 2020 06:34:51 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 807C54AEF6;
+	Mon, 20 Jan 2020 06:56:42 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C8E714AEF1
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Jan 2020 06:34:50 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B79A94AEB8
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Jan 2020 06:56:41 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id egbwZmdsbeYO for <kvmarm@lists.cs.columbia.edu>;
- Mon, 20 Jan 2020 06:34:47 -0500 (EST)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 81F054AEEA
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Jan 2020 06:34:47 -0500 (EST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 30C4F30E;
- Mon, 20 Jan 2020 03:34:47 -0800 (PST)
-Received: from [10.2.69.39] (unknown [10.2.69.39])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B137B3F68E;
- Mon, 20 Jan 2020 03:34:46 -0800 (PST)
+ with ESMTP id xkz0QoMfRbAB for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 20 Jan 2020 06:56:37 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5EBAC4AEB2
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Jan 2020 06:56:37 -0500 (EST)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 4270D207FF;
+ Mon, 20 Jan 2020 11:56:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1579521396;
+ bh=G5BjgiERIPgD2gmhgW49sz0utTOoaFQGf9Xe0v3nM94=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=yypSpKZTEYdwkcQzZT7E8+v22pWxs9mENCsNX0pUqHTAnjRfPEDL2pRw9TL5bPvs6
+ lSYkudo8DfYGo8c5fI59pA4t1YAm6JyJolJVeH3r+wvItyzkWoraMiulpKysfuyB9h
+ UGJHcoUZ3LzYQd5sjyKCJzW5BajPqZHbGEpp7QXI=
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+ by disco-boy.misterjones.org with esmtpsa
+ (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
+ (envelope-from <maz@kernel.org>)
+ id 1itVfW-000Fp6-Hy; Mon, 20 Jan 2020 11:56:34 +0000
+MIME-Version: 1.0
+Date: Mon, 20 Jan 2020 12:56:34 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: Vladimir Murzin <vladimir.murzin@arm.com>
 Subject: Re: [PATCH] ARM: virt: Relax arch timer version check during early
  boot
-To: Marc Zyngier <maz@kernel.org>
+In-Reply-To: <38a43fed-1c7a-69ea-3662-e17f13ca74d6@arm.com>
 References: <1579097798-106243-1-git-send-email-vladimir.murzin@arm.com>
  <eb889279-87f2-d674-9299-169794c285eb@arm.com>
  <d4b8bb91f95385682f20c9dc5c6f5e50@kernel.org>
-From: Vladimir Murzin <vladimir.murzin@arm.com>
-Message-ID: <38a43fed-1c7a-69ea-3662-e17f13ca74d6@arm.com>
-Date: Mon, 20 Jan 2020 11:34:45 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <d4b8bb91f95385682f20c9dc5c6f5e50@kernel.org>
-Content-Language: en-US
+ <38a43fed-1c7a-69ea-3662-e17f13ca74d6@arm.com>
+Message-ID: <55fbdb33fc3e107385c12def941aa934@kernel.org>
+X-Sender: maz@kernel.org
+User-Agent: Roundcube Webmail/1.3.8
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: vladimir.murzin@arm.com,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
 Cc: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -63,49 +83,63 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-SGkgTWFyYywKCk9uIDEvMjAvMjAgMTE6MTQgQU0sIE1hcmMgWnluZ2llciB3cm90ZToKPiBIaSBW
-bGFkaW1pciwKPiAKPiBPbiAyMDIwLTAxLTIwIDExOjQ2LCBWbGFkaW1pciBNdXJ6aW4gd3JvdGU6
-Cj4+ICsgTWFyYwo+PiArIGt2bWFybUBsaXN0cy5jcy5jb2x1bWJpYS5lZHUKPj4KPj4gT24gMS8x
-NS8yMCAyOjE2IFBNLCBWbGFkaW1pciBNdXJ6aW4gd3JvdGU6Cj4+PiBVcGRhdGVzIHRvIHRoZSBH
-ZW5lcmljIFRpbWVyIGFyY2hpdGVjdHVyZSBhbGxvdyBJRF9QRlIxLkdlblRpbWVyIHRvCj4+PiBo
-YXZlIHZhbHVlcyBvdGhlciB0aGFuIDAgb3IgMS4gQXQgdGhlIG1vbWVudCwgTGludXggaXMgcXVp
-dGUgc3RyaWN0IGluCj4+PiB0aGUgd2F5IGl0IGhhbmRsZXMgdGhpcyBmaWVsZCBhdCBlYXJseSBi
-b290IGFuZCB3aWxsIG5vdCBjb25maWd1cmUKPj4+IGFyY2ggdGltZXIgaWYgaXQgZG9lc24ndCBm
-aW5kIHRoZSB2YWx1ZSAxLgo+Pj4KPj4+IFNpbmNlIGhlcmUgdXNlIHViZnggZm9yIGFyY2ggdGlt
-ZXIgdmVyc2lvbiBleHRyYWN0aW9uIChoeWItc3R1YiBidWlsZAo+Pj4gd2l0aCAtbWFyY2g9YXJt
-djctYSwgc28gaXQgaXMgc2FmZSkKPj4+Cj4+PiBUbyBoZWxwIGJhY2twb3J0cyAoZXZlbiB0aG91
-Z2ggdGhlIGNvZGUgd2FzIGNvcnJlY3QgYXQgdGhlIHRpbWUgb2Ygd3JpdGluZykKPj4+IEZpeGVz
-OiA4ZWM1OGJlOWYzZmYgKCJBUk06IHZpcnQ6IGFyY2hfdGltZXJzOiBlbmFibGUgYWNjZXNzIHRv
-IHBoeXNpY2FsIHRpbWVycyIpCj4+PiBTaWduZWQtb2ZmLWJ5OiBWbGFkaW1pciBNdXJ6aW4gPHZs
-YWRpbWlyLm11cnppbkBhcm0uY29tPgo+IAo+IEknbSBub3Qgb3Bwb3NlZCB0byBzdWNoIGEgY2hh
-bmdlLCBidXQgaXQnZCBiZSBnb29kIHRvIGRvY3VtZW50IHdoYXQgb3RoZXIgdmFsdWVzCj4gYXJl
-IGV4cGVjdGVkIGhlcmUsIGFzIHRoZSBjdXJyZW50IChSZXYgRV9hKSBBUk0gQVJNIG9ubHkgbWVu
-dGlvbnMgdmFsdWVzIDAgYW5kIDEuCgpUaGF0IHRydWUsIEFSTSBBUk0gZG9lc24ndCBtZW50aW9u
-IGl0IHlldC4gT1RPSCwgc2hvdWxkIHdlIHJlYWxseSBjYXJlIGFib3V0IGV4YWN0CnZhbHVlcyBh
-cyBzb29uIGl0IHN0YXlzIGNvbXBhdGlibGU/CgpDaGVlcnMKVmxhZGltaXIKCj4gCj4gVGhhbmtz
-LAo+IAo+IMKgwqDCoMKgwqDCoMKgIE0uCj4gCj4+PiAtLS0KPj4+IMKgYXJjaC9hcm0va2VybmVs
-L2h5cC1zdHViLlMgfCA3ICsrKy0tLS0KPj4+IMKgMSBmaWxlIGNoYW5nZWQsIDMgaW5zZXJ0aW9u
-cygrKSwgNCBkZWxldGlvbnMoLSkKPj4+Cj4+PiBkaWZmIC0tZ2l0IGEvYXJjaC9hcm0va2VybmVs
-L2h5cC1zdHViLlMgYi9hcmNoL2FybS9rZXJuZWwvaHlwLXN0dWIuUwo+Pj4gaW5kZXggYWU1MDIw
-My4uNjYwN2ZhOCAxMDA2NDQKPj4+IC0tLSBhL2FyY2gvYXJtL2tlcm5lbC9oeXAtc3R1Yi5TCj4+
-PiArKysgYi9hcmNoL2FybS9rZXJuZWwvaHlwLXN0dWIuUwo+Pj4gQEAgLTE0NiwxMCArMTQ2LDkg
-QEAgQVJNX0JFOChvcnLCoMKgwqAgcjcsIHI3LCAjKDEgPDwgMjUpKcKgwqDCoMKgIEAgSFNDVExS
-LkVFCj4+PiDCoCNpZiAhZGVmaW5lZChaSU1BR0UpICYmIGRlZmluZWQoQ09ORklHX0FSTV9BUkNI
-X1RJTUVSKQo+Pj4gwqDCoMKgwqAgQCBtYWtlIENOVFBfKiBhbmQgQ05UUENUIGFjY2Vzc2libGUg
-ZnJvbSBQTDEKPj4+IMKgwqDCoMKgIG1yY8KgwqDCoCBwMTUsIDAsIHI3LCBjMCwgYzEsIDHCoMKg
-wqAgQCBJRF9QRlIxCj4+PiAtwqDCoMKgIGxzcsKgwqDCoCByNywgIzE2Cj4+PiAtwqDCoMKgIGFu
-ZMKgwqDCoCByNywgIzB4Zgo+Pj4gLcKgwqDCoCBjbXDCoMKgwqAgcjcsICMxCj4+PiAtwqDCoMKg
-IGJuZcKgwqDCoCAxZgo+Pj4gK8KgwqDCoCB1YmZ4wqDCoMKgIHI3LCByNywgIzE2LCAjNAo+Pj4g
-K8KgwqDCoCB0ZXHCoMKgwqAgcjcsICMwCj4+PiArwqDCoMKgIGJlccKgwqDCoCAxZgo+Pj4gwqDC
-oMKgwqAgbXJjwqDCoMKgIHAxNSwgNCwgcjcsIGMxNCwgYzEsIDDCoMKgwqAgQCBDTlRIQ1RMCj4+
-PiDCoMKgwqDCoCBvcnLCoMKgwqAgcjcsIHI3LCAjM8KgwqDCoMKgwqDCoMKgIEAgUEwxUENFTiB8
-IFBMMVBDVEVOCj4+PiDCoMKgwqDCoCBtY3LCoMKgwqAgcDE1LCA0LCByNywgYzE0LCBjMSwgMMKg
-wqDCoCBAIENOVEhDVEwKPj4+Cj4gCgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1bWJp
-YS5lZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9rdm1h
-cm0K
+On 2020-01-20 12:34, Vladimir Murzin wrote:
+> Hi Marc,
+> 
+> On 1/20/20 11:14 AM, Marc Zyngier wrote:
+>> Hi Vladimir,
+>> 
+>> On 2020-01-20 11:46, Vladimir Murzin wrote:
+>>> + Marc
+>>> + kvmarm@lists.cs.columbia.edu
+>>> 
+>>> On 1/15/20 2:16 PM, Vladimir Murzin wrote:
+>>>> Updates to the Generic Timer architecture allow ID_PFR1.GenTimer to
+>>>> have values other than 0 or 1. At the moment, Linux is quite strict 
+>>>> in
+>>>> the way it handles this field at early boot and will not configure
+>>>> arch timer if it doesn't find the value 1.
+>>>> 
+>>>> Since here use ubfx for arch timer version extraction (hyb-stub 
+>>>> build
+>>>> with -march=armv7-a, so it is safe)
+>>>> 
+>>>> To help backports (even though the code was correct at the time of 
+>>>> writing)
+>>>> Fixes: 8ec58be9f3ff ("ARM: virt: arch_timers: enable access to 
+>>>> physical timers")
+>>>> Signed-off-by: Vladimir Murzin <vladimir.murzin@arm.com>
+>> 
+>> I'm not opposed to such a change, but it'd be good to document what 
+>> other values
+>> are expected here, as the current (Rev E_a) ARM ARM only mentions 
+>> values 0 and 1.
+> 
+> That true, ARM ARM doesn't mention it yet. OTOH, should we really care
+> about exact values as soon it stays compatible?
+
+That's for you to say, really. But given that you hint at some changes,
+it'd be good to have at least a short sentence explaining that, for 
+example,
+"upcoming revisions of the architecture will allow different 
+ID_PFR1.GenTimer
+values while preserving backward compatibility".
+
+Other than that, feel free to add my
+
+Acked-by: Marc Zyngier <maz@kernel.org>
+
+Thanks,
+
+         M.
+-- 
+Jazz is not dead. It just smells funny...
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
