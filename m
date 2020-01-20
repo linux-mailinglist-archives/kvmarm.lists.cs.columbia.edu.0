@@ -2,47 +2,72 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E534142C3A
-	for <lists+kvmarm@lfdr.de>; Mon, 20 Jan 2020 14:38:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E1B5142C8E
+	for <lists+kvmarm@lfdr.de>; Mon, 20 Jan 2020 14:51:50 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A0BF14ACF5;
-	Mon, 20 Jan 2020 08:38:45 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C25C44AF2F;
+	Mon, 20 Jan 2020 08:51:49 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.799
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001] autolearn=no
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IAc9scWeSvGL; Mon, 20 Jan 2020 08:38:40 -0500 (EST)
+	with ESMTP id mXDkU0OyvKds; Mon, 20 Jan 2020 08:51:49 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 680864AF1E;
-	Mon, 20 Jan 2020 08:38:38 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2BD2C4AF1B;
+	Mon, 20 Jan 2020 08:51:45 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DFB684AECD
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Jan 2020 08:38:37 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 95C104AEC3
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Jan 2020 08:51:43 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 3bC+SR8Ptz5y for <kvmarm@lists.cs.columbia.edu>;
- Mon, 20 Jan 2020 08:38:32 -0500 (EST)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3703C4AEBD
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Jan 2020 08:38:32 -0500 (EST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AADBF30E;
- Mon, 20 Jan 2020 05:38:31 -0800 (PST)
-Received: from login2.euhpc.arm.com. (login2.euhpc.arm.com [10.6.27.34])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 2174D3F52E;
- Mon, 20 Jan 2020 05:38:31 -0800 (PST)
-From: Vladimir Murzin <vladimir.murzin@arm.com>
-To: linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2] ARM: virt: Relax arch timer version check during early boot
-Date: Mon, 20 Jan 2020 13:38:18 +0000
-Message-Id: <1579527498-31081-1-git-send-email-vladimir.murzin@arm.com>
-X-Mailer: git-send-email 2.0.0
-Cc: maz@kernel.org, kvmarm@lists.cs.columbia.edu
+ with ESMTP id cHgh2jo-WNFR for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 20 Jan 2020 08:51:37 -0500 (EST)
+Received: from us-smtp-delivery-1.mimecast.com (us-smtp-2.mimecast.com
+ [205.139.110.61])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 926C34AEB4
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Jan 2020 08:51:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1579528297;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=LayzTmfI9tt8icMlZ4vxXXVEjOS+TCI8dYAoQTD0v24=;
+ b=QKzBNCVCOeGek+x+Brs+MdoootA/cTLmls7PaOgBbsBZ4MWw7ebsCRwO18ErxGQkdHai7R
+ 4GmFRpzN6EWDxBdUgm4M8OntVsaOWCEqM8z9S277y9H8L7nn4Uv3NxLQyA4rDGNE8YXN4p
+ 8vZSPZQs+0LnAVnrSaqA8c/OtDio8Qc=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-356-BitWFVWnPIGwIT2FxLW-Pg-1; Mon, 20 Jan 2020 08:51:34 -0500
+X-MC-Unique: BitWFVWnPIGwIT2FxLW-Pg-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com
+ [10.5.11.22])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 3A40C1005510;
+ Mon, 20 Jan 2020 13:51:33 +0000 (UTC)
+Received: from kamzik.brq.redhat.com (unknown [10.43.2.160])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 544C510013A7;
+ Mon, 20 Jan 2020 13:51:32 +0000 (UTC)
+Date: Mon, 20 Jan 2020 14:51:29 +0100
+From: Andrew Jones <drjones@redhat.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH] arm64: KVM: Add XXX UAPI notes for swapped registers
+Message-ID: <20200120135129.tgucvvwbeef2q3js@kamzik.brq.redhat.com>
+References: <20200120130825.28838-1-drjones@redhat.com>
+ <99903fdb3e0d34cb7957981b484fc28c@kernel.org>
+MIME-Version: 1.0
+Content-Disposition: inline
+In-Reply-To: <99903fdb3e0d34cb7957981b484fc28c@kernel.org>
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
+Cc: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -54,54 +79,72 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Updates to the Generic Timer architecture allow ID_PFR1.GenTimer to
-have values other than 0 or 1 while still preserving backward
-compatibility. At the moment, Linux is quite strict in the way it
-handles this field at early boot and will not configure arch timer if
-it doesn't find the value 1.
+On Mon, Jan 20, 2020 at 01:26:32PM +0000, Marc Zyngier wrote:
+> Hi Andrew,
+> 
+> Many thanks for this. Comments below.
+> 
+> On 2020-01-20 13:08, Andrew Jones wrote:
+> > Two UAPI system register IDs do not derive their values from the
+> > ARM system register encodings. This is because their values were
+> > accidentally swapped. As the IDs are API, they cannot be changed.
+> > Add XXX notes to point them out.
+> > 
+> > Suggested-by: Marc Zyngier <maz@kernel.org>
+> > Signed-off-by: Andrew Jones <drjones@redhat.com>
+> > ---
+> >  Documentation/virt/kvm/api.txt    |  8 ++++++++
+> >  arch/arm64/include/uapi/asm/kvm.h | 11 +++++++++--
+> >  2 files changed, 17 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/Documentation/virt/kvm/api.txt
+> > b/Documentation/virt/kvm/api.txt
+> > index ebb37b34dcfc..11556fc457c3 100644
+> > --- a/Documentation/virt/kvm/api.txt
+> > +++ b/Documentation/virt/kvm/api.txt
+> > @@ -2196,6 +2196,14 @@ arm64 CCSIDR registers are demultiplexed by
+> > CSSELR value:
+> >  arm64 system registers have the following id bit patterns:
+> >    0x6030 0000 0013 <op0:2> <op1:3> <crn:4> <crm:4> <op2:3>
+> > 
+> > +XXX: Two system register IDs do not follow the specified pattern.
+> > These
+> > +     are KVM_REG_ARM_TIMER_CVAL and KVM_REG_ARM_TIMER_CNT, which map to
+> > +     system registers CNTV_CVAL_EL0 and CNTVCT_EL0 respectively.  These
+> > +     two had their values accidentally swapped, which means TIMER_CVAL
+> > is
+> > +     derived from the register encoding for CNTVCT_EL0 and TIMER_CNT is
+> > +     derived from the register encoding for CNTV_CVAL_EL0.  As this is
+> > +     API, it must remain this way.
+> 
+> Is 'XXX' an establiched way of documenting this kind of misfeature?
+> I couldn't find any other occurrence in Documentation, but I haven't
+> searched very hard.
 
-Since here use ubfx for arch timer version extraction (hyb-stub build
-with -march=armv7-a, so it is safe)
+I didn't find anything claiming it was the standard way of doing it. I
+also considered using 'NOTE', but I was afraid it wouldn't stand out
+as a "problem" enough. And, even though 'BUG' would certainly stand out,
+I felt it implied we should be posting a fix.
 
-To help backports (even though the code was correct at the time of writing)
-Fixes: 8ec58be9f3ff ("ARM: virt: arch_timers: enable access to physical timers")
-Signed-off-by: Vladimir Murzin <vladimir.murzin@arm.com>
----
+Anyway, I'd be happy to change it to whatever the consensus is.
 
-Changelog:
+Thanks,
+drew
 
-    v1 -> v2
-       - Clarify that backward compatibility is preserved (per Marc)
-
- arch/arm/kernel/hyp-stub.S | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/arch/arm/kernel/hyp-stub.S b/arch/arm/kernel/hyp-stub.S
-index ae50203..6607fa8 100644
---- a/arch/arm/kernel/hyp-stub.S
-+++ b/arch/arm/kernel/hyp-stub.S
-@@ -146,10 +146,9 @@ ARM_BE8(orr	r7, r7, #(1 << 25))     @ HSCTLR.EE
- #if !defined(ZIMAGE) && defined(CONFIG_ARM_ARCH_TIMER)
- 	@ make CNTP_* and CNTPCT accessible from PL1
- 	mrc	p15, 0, r7, c0, c1, 1	@ ID_PFR1
--	lsr	r7, #16
--	and	r7, #0xf
--	cmp	r7, #1
--	bne	1f
-+	ubfx	r7, r7, #16, #4
-+	teq	r7, #0
-+	beq	1f
- 	mrc	p15, 4, r7, c14, c1, 0	@ CNTHCTL
- 	orr	r7, r7, #3		@ PL1PCEN | PL1PCTEN
- 	mcr	p15, 4, r7, c14, c1, 0	@ CNTHCTL
--- 
-2.7.4
+> 
+> If nobody has a better idea, I'll queue it as is.
+> 
+> Thanks,
+> 
+>         M.
+> -- 
+> Jazz is not dead. It just smells funny...
+> 
 
 _______________________________________________
 kvmarm mailing list
