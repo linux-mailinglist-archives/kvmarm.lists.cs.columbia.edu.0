@@ -2,75 +2,93 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A9F5143C2A
-	for <lists+kvmarm@lfdr.de>; Tue, 21 Jan 2020 12:43:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C15AE143CB6
+	for <lists+kvmarm@lfdr.de>; Tue, 21 Jan 2020 13:24:47 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CE8934AFFB;
-	Tue, 21 Jan 2020 06:43:14 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4798F4AFEB;
+	Tue, 21 Jan 2020 07:24:47 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9WC-BOUmsd-y; Tue, 21 Jan 2020 06:43:14 -0500 (EST)
+	with ESMTP id zmezyywRFi1f; Tue, 21 Jan 2020 07:24:47 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 89B514AFF7;
-	Tue, 21 Jan 2020 06:43:13 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B0CF14AFEF;
+	Tue, 21 Jan 2020 07:24:42 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B08204AFEA
- for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Jan 2020 06:43:12 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BCC894AFC0
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Jan 2020 07:24:40 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id noawND624Zhz for <kvmarm@lists.cs.columbia.edu>;
- Tue, 21 Jan 2020 06:43:11 -0500 (EST)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9DD0C4AFE9
- for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Jan 2020 06:43:11 -0500 (EST)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 7998720882;
- Tue, 21 Jan 2020 11:43:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1579606990;
- bh=OyaD3KWZFeQnIfDMhLTck+nfHj8nKKYYGTK3HDGxqNw=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=Mwe5EFKCT8ZriE6DI0uA8MfzhonTA38u6DxTQq78YTtEK/MSrVuPpB9ZwC0hU+rND
- jS3S7d48XTL5IblfT7NzDD/Bq/9RKl6BIzlbE667CHvOrAr2V2CUw+GUPx82yGasQo
- cz5PDo2fq446LbqHbBKeB/6632ESJTNqpFLgJuHY=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
- (envelope-from <maz@kernel.org>)
- id 1itrw4-000USs-PC; Tue, 21 Jan 2020 11:43:08 +0000
-MIME-Version: 1.0
-Date: Tue, 21 Jan 2020 11:43:08 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: Olof Johansson <olof@lixom.net>
-Subject: Re: [PATCH] KVM: arm: Fix build after MMIO cleanup
-In-Reply-To: <20200121031007.106259-1-olof@lixom.net>
-References: <20200119181116.374-1-maz@kernel.org>
- <20200121031007.106259-1-olof@lixom.net>
-Message-ID: <0e4e302783ffecf37eb809553f988625@kernel.org>
-X-Sender: maz@kernel.org
-User-Agent: Roundcube Webmail/1.3.8
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: olof@lixom.net, james.morse@arm.com,
- Christoffer.Dall@arm.com, julien.thierry.kdev@gmail.com,
- suzuki.poulose@arm.com, linux-arm-kernel@lists.infradead.org,
+ with ESMTP id suUQKO1vI+Wj for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 21 Jan 2020 07:24:34 -0500 (EST)
+Received: from us-smtp-delivery-1.mimecast.com
+ (us-smtp-delivery-1.mimecast.com [205.139.110.120])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EB7064AFB1
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Jan 2020 07:24:34 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1579609474;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2JRami1vqERtvVOhWdic7ftSfhU5/AM2PS8umediSqQ=;
+ b=CDoZ+FRbuTegZPROtVuTwBn3WOTMF/8tx6/d8t8sp6oDOSyV7cO3bzGDojU50zIAiI88Tm
+ I/ZQrMQSwtIEpJvqGykHWn0igFNbkQZkFuV9ZuwK8CS3QHvz4QdIg50i/ftw9F7SEtNMHR
+ bjYcJb4AqCadv7OpoNRmtK2LQk6WyYc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-392-dfYa7ptoMbCUMMbuzRw9YQ-1; Tue, 21 Jan 2020 07:24:33 -0500
+Received: by mail-wm1-f69.google.com with SMTP id l11so699614wmi.0
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Jan 2020 04:24:33 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=2JRami1vqERtvVOhWdic7ftSfhU5/AM2PS8umediSqQ=;
+ b=AFIjh/Ro+Cy1wfdVu4LFS+scyBqJIXJOUtAXOLdZ6dw33Bk5h407OadhWg1rz2fyGV
+ KxCPOtUxho5T641k/lIdd3KLjA5MESGLij1ZFyanq9lFGvYwghst0LzK0M2icy0BhlOv
+ DfV73yHWlYFGeAeaCBqw793HOBh84H79WIhNmzZiRxcDDNtGRWQ6Cb/aknl3Eok507Wj
+ sVMAEapDrQApZ5+2UtmgBFV/8ktZwG7DUPWNaxeSNFysiTOYNAl0FnR1vfidovgyCUor
+ /zsvTLhSioKhr1Eo/s4lrSYKvcAYtbWrcIV4ntN7leCfluXhpR3tJgTETdaUWKocV9Pm
+ ppjg==
+X-Gm-Message-State: APjAAAUjddyFvZ604tfx4+QYUuUoy5DJxKnBz0nSQRx/9uZhhszWRK/u
+ bY+xYuJnNBm2scwjk6Xf4zg32Nj346d/MqxqNFaAlWtj2iESj65CX9gXagULz08oeW8DzPJcbc2
+ FfzUtC4731BZhMRmt9wjHy/Ue
+X-Received: by 2002:adf:e6c6:: with SMTP id y6mr4914505wrm.284.1579609472349; 
+ Tue, 21 Jan 2020 04:24:32 -0800 (PST)
+X-Google-Smtp-Source: APXvYqwNvH/P6poOhLh9BEBTM0W39aC5Gdgb79gu8uifJcP0NDeYfjycB4x/ep68tvfF9lucHS4Q4Q==
+X-Received: by 2002:adf:e6c6:: with SMTP id y6mr4914477wrm.284.1579609472031; 
+ Tue, 21 Jan 2020 04:24:32 -0800 (PST)
+Received: from ?IPv6:2001:b07:6468:f312:b509:fc01:ee8a:ca8a?
+ ([2001:b07:6468:f312:b509:fc01:ee8a:ca8a])
+ by smtp.gmail.com with ESMTPSA id f12sm3844116wmf.28.2020.01.21.04.24.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 21 Jan 2020 04:24:31 -0800 (PST)
+Subject: Re: [PATCH kvm-unit-tests 0/3] arm/arm64: selftest for pabt
+To: Andrew Jones <drjones@redhat.com>, kvm@vger.kernel.org,
  kvmarm@lists.cs.columbia.edu
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+References: <20200113130043.30851-1-drjones@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <bbd1f024-2f6c-d963-57f9-e6d7f2939fda@redhat.com>
+Date: Tue, 21 Jan 2020 13:24:31 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.1
+MIME-Version: 1.0
+In-Reply-To: <20200113130043.30851-1-drjones@redhat.com>
+Content-Language: en-US
+X-MC-Unique: dfYa7ptoMbCUMMbuzRw9YQ-1
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -82,48 +100,32 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2020-01-21 03:10, Olof Johansson wrote:
-> Looks like the mmio_decode field was accidentally left in on 32-bit:
+On 13/01/20 14:00, Andrew Jones wrote:
+> Patch 3/3 is a rework of Alexandru's pabt test on top of a couple of
+> framework changes allowing it to be more simply and robustly implemented.
 > 
-> In file included from /build/include/linux/kvm_host.h:36,
->                  from /build/arch/arm/kernel/asm-offsets.c:15:
-> arch/arm/include/asm/kvm_host.h:205:20: error: field 'mmio_decode' has
-> incomplete type
+> Andrew Jones (3):
+>   arm/arm64: Improve memory region management
+>   arm/arm64: selftest: Allow test_exception clobber list to be extended
+>   arm/arm64: selftest: Add prefetch abort test
 > 
-> Fixes: 480bfa6478c8 ("KVM: arm/arm64: Cleanup MMIO handling")
-> Cc: Marc Zyngier <maz@kernel.org>
-> Signed-off-by: Olof Johansson <olof@lixom.net>
-> ---
->  arch/arm/include/asm/kvm_host.h | 3 ---
->  1 file changed, 3 deletions(-)
+>  arm/selftest.c      | 199 ++++++++++++++++++++++++++++++++------------
+>  lib/arm/asm/setup.h |   8 +-
+>  lib/arm/mmu.c       |  24 ++----
+>  lib/arm/setup.c     |  56 +++++++++----
+>  lib/arm64/asm/esr.h |   3 +
+>  5 files changed, 203 insertions(+), 87 deletions(-)
 > 
-> diff --git a/arch/arm/include/asm/kvm_host.h 
-> b/arch/arm/include/asm/kvm_host.h
-> index acf4c87e8321a..bd2233805d995 100644
-> --- a/arch/arm/include/asm/kvm_host.h
-> +++ b/arch/arm/include/asm/kvm_host.h
-> @@ -201,9 +201,6 @@ struct kvm_vcpu_arch {
->  	 /* Don't run the guest (internal implementation need) */
->  	bool pause;
-> 
-> -	/* IO related fields */
-> -	struct kvm_decode mmio_decode;
-> -
->  	/* Cache some mmu pages needed inside spinlock regions */
->  	struct kvm_mmu_memory_cache mmu_page_cache;
 
-Ouch. Thanks for that. I've squashed the fix in the original patch
-(which I didn't really intend to be in -next just yet - not quite
-sure what I did here).
+Looks good, are you going to send a pull request for this?
 
-         M.
--- 
-Jazz is not dead. It just smells funny...
+Paolo
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
