@@ -2,84 +2,62 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BDCF1435D8
-	for <lists+kvmarm@lfdr.de>; Tue, 21 Jan 2020 04:10:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 66E4A1438F3
+	for <lists+kvmarm@lfdr.de>; Tue, 21 Jan 2020 10:04:39 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CA5234AF73;
-	Mon, 20 Jan 2020 22:10:18 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 99EAD4AFE9;
+	Tue, 21 Jan 2020 04:04:38 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 2.423
-X-Spam-Level: **
-X-Spam-Status: No, score=2.423 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01, URIBL_RHS_DOB=1.514]
-	autolearn=unavailable
+X-Spam-Score: -4.091
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered)
-	header.i=@lixom-net.20150623.gappssmtp.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LfWw8LTVK+wB; Mon, 20 Jan 2020 22:10:18 -0500 (EST)
+	with ESMTP id gZHpxTKafL98; Tue, 21 Jan 2020 04:04:38 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C797C4AF65;
-	Mon, 20 Jan 2020 22:10:17 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 44AFD4AFE3;
+	Tue, 21 Jan 2020 04:04:34 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 388264AF41
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Jan 2020 22:10:17 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5F2884AFDF
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Jan 2020 04:04:32 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ErAAHOFQ+ldu for <kvmarm@lists.cs.columbia.edu>;
- Mon, 20 Jan 2020 22:10:16 -0500 (EST)
-Received: from mail-ot1-f67.google.com (mail-ot1-f67.google.com
- [209.85.210.67])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3F5E64AF36
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Jan 2020 22:10:16 -0500 (EST)
-Received: by mail-ot1-f67.google.com with SMTP id k14so1683511otn.4
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Jan 2020 19:10:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=lixom-net.20150623.gappssmtp.com; s=20150623;
- h=from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=7MzOR4y/pXguWn5IQ89Q0tDjVovjCl/+UcDac9xvay4=;
- b=obSsmlOZyGgl53mldrUHp5ESb6XMeWgbX60wlkoH+RUO531i7SPFp9ijCtUKMjl/Iq
- YKyD9NE3Mvt1wXPOBNlJe9asmirSV96DwsfoW/0xFi0bu2S65zjZS+BhMAkUOs1tVLBp
- sOU1mOBOLUwWQZ5VZs1DxiMk+umcN6Zx7kJmgtPZAu0FO9v8LnNRwUokKU2n2LONTHDv
- XqP2x5Rnwi0hTdPPZ5cJRqnEgHEmLlZ475J69CcBATxfS4YSr6ECun6reH8QUBznLwYf
- f2UUH+C2nKX02AAmTNrrqepSlhNk62FuzSnxh96PIqBt4rMfDV86VXDz292u6MBV1pFC
- e+VA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
- :references:mime-version:content-transfer-encoding;
- bh=7MzOR4y/pXguWn5IQ89Q0tDjVovjCl/+UcDac9xvay4=;
- b=fosIwt4qUws/XDCZ1wXx9UCJXoOmMg0VA++izeop7sEZQhcQvdfwnXR3Mv4gwAI6Yf
- G3aBymjxUZpMxdBmxScPy2myXBj7LdoCxbhzzLR70S4sEhEsc0og6tOceNeqCLt8y32i
- poEbZHXnTxRVJg2GUNDj/rFIa0NrIkmfgteceIXALAW1Rpg6U+JRiPc52brwHDbAH+E8
- gwSQ3llDujPwb/udaf30YrBbQvMQr+rPhT9YUEn1VXDRpFfl6ZBMeYOWA5vFYR9kPu1e
- Qgt0DcsbQkAx0LESI9cgvAsxZQ2GddM2ou5U5/4oB8A8u6FGwIBWDbsno7rao4Zu7UUN
- nByg==
-X-Gm-Message-State: APjAAAXUMPala4Y1AYFnCGRvUwBJM1C5a5mwQeAhgXrtVxGyG/AgAGSE
- gJDrCh8V0YUDDwVNjkUZCQjfqA==
-X-Google-Smtp-Source: APXvYqyvaV2rCEBgvI10MHLlZ0aSdyhfnWyYXTCOVnmWZxuLw1UwCgWSEWAlb8sQ0KkG2J7R9RkY2w==
-X-Received: by 2002:a9d:7315:: with SMTP id e21mr2079400otk.255.1579576215363; 
- Mon, 20 Jan 2020 19:10:15 -0800 (PST)
-Received: from rip.lixom.net (99-152-116-91.lightspeed.sntcca.sbcglobal.net.
- [99.152.116.91])
- by smtp.gmail.com with ESMTPSA id l17sm13384612ota.27.2020.01.20.19.10.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jan 2020 19:10:14 -0800 (PST)
-From: Olof Johansson <olof@lixom.net>
-To: maz@kernel.org
-Subject: [PATCH] KVM: arm: Fix build after MMIO cleanup
-Date: Mon, 20 Jan 2020 19:10:07 -0800
-Message-Id: <20200121031007.106259-1-olof@lixom.net>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200119181116.374-1-maz@kernel.org>
-References: <20200119181116.374-1-maz@kernel.org>
+ with ESMTP id iMliN2SRtxnc for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 21 Jan 2020 04:04:27 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3D3DF4AFDC
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Jan 2020 04:04:27 -0500 (EST)
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
+ bits)) (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id D8BCB24125;
+ Tue, 21 Jan 2020 09:04:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1579597466;
+ bh=0/vSnKkkercvxEdQWKR2hLON8AJtjT2I4490/GyPLJs=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=A0c+ow1H1hlJAxBTCst+Smkxrf4RVkQWSG6IHDMRiuVNKnyoyHK+C0v1+dblp8Qs8
+ Myj59KfEUx5bDTXQ+qa+sAJADRBh4oOF2XHGwZH5ljRRrUKSk6wtnvbtVx9tvaxBYl
+ lRtyFAf9sg4ouf6R8yUvCZ7GqnknsjBD/SB67U98=
+Date: Tue, 21 Jan 2020 09:04:21 +0000
+From: Will Deacon <will@kernel.org>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH v3 2/3] KVM: arm64: limit PMU version to ARMv8.4
+Message-ID: <20200121090420.GA9722@willie-the-truck>
+References: <20200102123905.29360-1-andrew.murray@arm.com>
+ <20200102123905.29360-3-andrew.murray@arm.com>
+ <336acb6b88c2df5e6114e6f8811687e4@kernel.org>
 MIME-Version: 1.0
-Cc: Olof Johansson <olof@lixom.net>, kvmarm@lists.cs.columbia.edu,
+Content-Disposition: inline
+In-Reply-To: <336acb6b88c2df5e6114e6f8811687e4@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: Catalin Marinas <catalin.marinas@arm.com>, kvmarm@lists.cs.columbia.edu,
  linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -97,36 +75,68 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Looks like the mmio_decode field was accidentally left in on 32-bit:
+On Mon, Jan 20, 2020 at 05:55:17PM +0000, Marc Zyngier wrote:
+> On 2020-01-02 12:39, Andrew Murray wrote:
+> > ARMv8.5-PMU introduces 64-bit event counters, however KVM doesn't yet
+> > support this. Let's trap the Debug Feature Registers in order to limit
+> > PMUVer/PerfMon in the Debug Feature Registers to PMUv3 for ARMv8.4.
+> > 
+> > Signed-off-by: Andrew Murray <andrew.murray@arm.com>
+> > Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+> > ---
+> >  arch/arm64/include/asm/sysreg.h |  4 ++++
+> >  arch/arm64/kvm/sys_regs.c       | 36 +++++++++++++++++++++++++++++++--
+> >  2 files changed, 38 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/arch/arm64/include/asm/sysreg.h
+> > b/arch/arm64/include/asm/sysreg.h
+> > index 6e919fafb43d..1b74f275a115 100644
+> > --- a/arch/arm64/include/asm/sysreg.h
+> > +++ b/arch/arm64/include/asm/sysreg.h
+> > @@ -672,6 +672,10 @@
+> >  #define ID_AA64DFR0_TRACEVER_SHIFT	4
+> >  #define ID_AA64DFR0_DEBUGVER_SHIFT	0
+> > 
+> > +#define ID_DFR0_PERFMON_SHIFT		24
+> > +
+> > +#define ID_DFR0_EL1_PMUVER_8_4		5
+> > +
+> >  #define ID_ISAR5_RDM_SHIFT		24
+> >  #define ID_ISAR5_CRC32_SHIFT		16
+> >  #define ID_ISAR5_SHA2_SHIFT		12
+> > diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+> > index 9f2165937f7d..61b984d934d1 100644
+> > --- a/arch/arm64/kvm/sys_regs.c
+> > +++ b/arch/arm64/kvm/sys_regs.c
+> > @@ -668,6 +668,37 @@ static bool
+> > pmu_access_event_counter_el0_disabled(struct kvm_vcpu *vcpu)
+> >  	return check_pmu_access_disabled(vcpu, ARMV8_PMU_USERENR_ER |
+> > ARMV8_PMU_USERENR_EN);
+> >  }
+> > 
+> > +static bool access_id_aa64dfr0_el1(struct kvm_vcpu *vcpu,
+> > +				   struct sys_reg_params *p,
+> > +				   const struct sys_reg_desc *rd)
+> > +{
+> > +	if (p->is_write)
+> > +		return write_to_read_only(vcpu, p, rd);
+> > +
+> > +	/* Limit guests to PMUv3 for ARMv8.4 */
+> > +	p->regval = read_sanitised_ftr_reg(SYS_ID_AA64DFR0_EL1);
+> > +	p->regval = cpuid_feature_cap_signed_field_width(p->regval,
+> > +						ID_AA64DFR0_PMUVER_SHIFT,
+> > +						4, ID_DFR0_EL1_PMUVER_8_4);
+> > +
+> > +	return p->regval;
+> 
+> If feels very odd to return the register value in place of a something
+> that actually indicates whether we should update the PC or not. I have
+> no idea what is happening here in this case.
 
-In file included from /build/include/linux/kvm_host.h:36,
-                 from /build/arch/arm/kernel/asm-offsets.c:15:
-arch/arm/include/asm/kvm_host.h:205:20: error: field 'mmio_decode' has incomplete type
+Crikey, yes, I missed that and it probably explains why the code looks so
+odd. Andrew -- is there a missing hunk or something here?
 
-Fixes: 480bfa6478c8 ("KVM: arm/arm64: Cleanup MMIO handling")
-Cc: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Olof Johansson <olof@lixom.net>
----
- arch/arm/include/asm/kvm_host.h | 3 ---
- 1 file changed, 3 deletions(-)
-
-diff --git a/arch/arm/include/asm/kvm_host.h b/arch/arm/include/asm/kvm_host.h
-index acf4c87e8321a..bd2233805d995 100644
---- a/arch/arm/include/asm/kvm_host.h
-+++ b/arch/arm/include/asm/kvm_host.h
-@@ -201,9 +201,6 @@ struct kvm_vcpu_arch {
- 	 /* Don't run the guest (internal implementation need) */
- 	bool pause;
- 
--	/* IO related fields */
--	struct kvm_decode mmio_decode;
--
- 	/* Cache some mmu pages needed inside spinlock regions */
- 	struct kvm_mmu_memory_cache mmu_page_cache;
- 
--- 
-2.20.1
-
+Will
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
