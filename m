@@ -2,73 +2,55 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B92E4143E91
-	for <lists+kvmarm@lfdr.de>; Tue, 21 Jan 2020 14:50:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2418F143E2A
+	for <lists+kvmarm@lfdr.de>; Tue, 21 Jan 2020 14:41:14 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 475DF4B016;
-	Tue, 21 Jan 2020 08:50:08 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B5A354B003;
+	Tue, 21 Jan 2020 08:41:13 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: 0.099
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=0.099 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3nCv6-1EmnHU; Tue, 21 Jan 2020 08:50:08 -0500 (EST)
+	with ESMTP id 449TujGQo49Z; Tue, 21 Jan 2020 08:41:08 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9C9004AFFB;
-	Tue, 21 Jan 2020 08:50:03 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3F1904B004;
+	Tue, 21 Jan 2020 08:41:08 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D08FC4AF2A
- for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Jan 2020 00:57:13 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A1AB94AFC9
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Jan 2020 08:41:06 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id iEBanVOJ7Nr3 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 21 Jan 2020 00:57:12 -0500 (EST)
-Received: from us-smtp-delivery-1.mimecast.com (us-smtp-1.mimecast.com
- [207.211.31.81])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D36EC4AF27
- for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Jan 2020 00:57:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1579586232;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=BGAXAa5VaHXPgggqPLCwDaDm1UbfpZCWsj65um9+hNM=;
- b=ONTYoNZHXhTwRbBZxvdpC4Ajg6vktsSkdfsaF5z5N3/7wsCaYGm0k3gPOLtF51faaf9ueL
- YZnvIeqbZXNkofASVj71zsIr0KbUn0RzR/fix6itRiJltb36KtA/xMYkVW8JcAMmTM+sX6
- 2E+rP8OzRkG9kWWAD5X2Awp8urjKXI0=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-141-7Nc9kkgQPi2wF6YHEaFu0w-1; Tue, 21 Jan 2020 00:57:11 -0500
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com
- [10.5.11.13])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id CDFA5800D41;
- Tue, 21 Jan 2020 05:57:09 +0000 (UTC)
-Received: from localhost.localdomain.com (vpn2-54-75.bne.redhat.com
- [10.64.54.75])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 8453389E9D;
- Tue, 21 Jan 2020 05:57:05 +0000 (UTC)
-From: Gavin Shan <gshan@redhat.com>
-To: kvmarm@lists.cs.columbia.edu,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH] KVM: arm/arm64: Fix young bit from mmu notifier
-Date: Tue, 21 Jan 2020 16:56:59 +1100
-Message-Id: <20200121055659.19560-1-gshan@redhat.com>
+ with ESMTP id JEAgNFxGaNZW for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 21 Jan 2020 08:41:01 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 53A734AFCC
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Jan 2020 08:41:01 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DF7EB30E;
+ Tue, 21 Jan 2020 05:41:00 -0800 (PST)
+Received: from [10.1.196.63] (e123195-lin.cambridge.arm.com [10.1.196.63])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4FCA83F52E;
+ Tue, 21 Jan 2020 05:41:00 -0800 (PST)
+Subject: Re: [PATCH kvm-unit-tests 3/3] arm/arm64: selftest: Add prefetch
+ abort test
+To: Andrew Jones <drjones@redhat.com>, kvm@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu
+References: <20200121131745.7199-1-drjones@redhat.com>
+ <20200121131745.7199-4-drjones@redhat.com>
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+Message-ID: <afceda4b-e610-a92c-9b4c-5c4a8142a269@arm.com>
+Date: Tue, 21 Jan 2020 13:40:58 +0000
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
-X-MC-Unique: 7Nc9kkgQPi2wF6YHEaFu0w-1
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-X-Mailman-Approved-At: Tue, 21 Jan 2020 08:50:02 -0500
-Cc: maz@kernel.org
+In-Reply-To: <20200121131745.7199-4-drjones@redhat.com>
+Content-Language: en-US
+Cc: pbonzini@redhat.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -85,39 +67,186 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-kvm_test_age_hva() is called upon mmu_notifier_test_young(), but wrong
-address range has been passed to handle_hva_to_gpa(). With the wrong
-address range, no young bits will be checked in handle_hva_to_gpa().
-It means zero is always returned from mmu_notifier_test_young().
+Hi,
 
-This fixes the issue by passing correct address range to the underly
-function handle_hva_to_gpa(), so that the hardware young (access) bit
-will be visited.
+On 1/21/20 1:17 PM, Andrew Jones wrote:
+> When a guest tries to execute code from an invalid physical address
+> KVM should inject an external abort. This test is based on a test
+> originally posted by Alexandru Elisei. This version avoids hard
+> coding the invalid physical address used.
+>
+> Cc: Alexandru Elisei <alexandru.elisei@arm.com>
+> Signed-off-by: Andrew Jones <drjones@redhat.com>
+> ---
+>  arm/selftest.c      | 94 +++++++++++++++++++++++++++++++++++++++++++++
+>  lib/arm64/asm/esr.h |  3 ++
+>  2 files changed, 97 insertions(+)
+>
+> diff --git a/arm/selftest.c b/arm/selftest.c
+> index 6d74fa1fa4c4..4495b161cdd5 100644
+> --- a/arm/selftest.c
+> +++ b/arm/selftest.c
+> @@ -8,6 +8,7 @@
+>  #include <libcflat.h>
+>  #include <util.h>
+>  #include <devicetree.h>
+> +#include <vmalloc.h>
+>  #include <asm/setup.h>
+>  #include <asm/ptrace.h>
+>  #include <asm/asm-offsets.h>
+> @@ -15,6 +16,7 @@
+>  #include <asm/thread_info.h>
+>  #include <asm/psci.h>
+>  #include <asm/smp.h>
+> +#include <asm/mmu.h>
+>  #include <asm/barrier.h>
+>  
+>  static cpumask_t ready, valid;
+> @@ -65,9 +67,43 @@ static void check_setup(int argc, char **argv)
+>  		report_abort("missing input");
+>  }
+>  
+> +unsigned long check_pabt_invalid_paddr;
+> +static bool check_pabt_init(void)
+> +{
+> +	phys_addr_t highest_end = 0;
+> +	unsigned long vaddr;
+> +	struct mem_region *r;
+> +
+> +	/*
+> +	 * We need a physical address that isn't backed by anything. Without
+> +	 * fully parsing the device tree there's no way to be certain of any
+> +	 * address, but an unknown address immediately following the highest
+> +	 * memory region has a reasonable chance. This is because we can
+> +	 * assume that that memory region could have been larger, if the user
+> +	 * had configured more RAM, and therefore no MMIO region should be
+> +	 * there.
+> +	 */
+> +	for (r = mem_regions; r->end; ++r) {
+> +		if (r->flags & MR_F_IO)
+> +			continue;
+> +		if (r->end > highest_end)
+> +			highest_end = PAGE_ALIGN(r->end);
+> +	}
+> +
+> +	if (mem_region_get_flags(highest_end) != MR_F_UNKNOWN)
+> +		return false;
+> +
+> +	vaddr = (unsigned long)vmap(highest_end, PAGE_SIZE);
+> +	mmu_clear_user(current_thread_info()->pgtable, vaddr);
+> +	check_pabt_invalid_paddr = vaddr;
+> +
+> +	return true;
+> +}
+> +
+>  static struct pt_regs expected_regs;
+>  static bool und_works;
+>  static bool svc_works;
+> +static bool pabt_works;
+>  #if defined(__arm__)
+>  /*
+>   * Capture the current register state and execute an instruction
+> @@ -166,6 +202,30 @@ static bool check_svc(void)
+>  	return svc_works;
+>  }
+>  
+> +static void pabt_handler(struct pt_regs *regs)
+> +{
+> +	expected_regs.ARM_lr = expected_regs.ARM_pc;
+> +	expected_regs.ARM_pc = expected_regs.ARM_r9;
+> +
+> +	pabt_works = check_regs(regs);
+> +
+> +	regs->ARM_pc = regs->ARM_lr;
+> +}
+> +
+> +static bool check_pabt(void)
+> +{
+> +	install_exception_handler(EXCPTN_PABT, pabt_handler);
+> +
+> +	test_exception("ldr	r9, =check_pabt_invalid_paddr\n"
+> +		       "ldr	r9, [r9]\n",
+> +		       "blx	r9\n",
+> +		       "", "r9", "lr");
+> +
+> +	install_exception_handler(EXCPTN_PABT, NULL);
+> +
+> +	return pabt_works;
+> +}
+> +
+>  static void user_psci_system_off(struct pt_regs *regs)
+>  {
+>  	__user_psci_system_off();
+> @@ -285,6 +345,35 @@ static bool check_svc(void)
+>  	return svc_works;
+>  }
+>  
+> +static void pabt_handler(struct pt_regs *regs, unsigned int esr)
+> +{
+> +	bool is_extabt = (esr & ESR_EL1_FSC_MASK) == ESR_EL1_FSC_EXTABT;
+> +
+> +	expected_regs.regs[30] = expected_regs.pc + 4;
+> +	expected_regs.pc = expected_regs.regs[9];
+> +
+> +	pabt_works = check_regs(regs) && is_extabt;
+> +
+> +	regs->pc = regs->regs[30];
+> +}
+> +
+> +static bool check_pabt(void)
+> +{
+> +	enum vector v = check_vector_prep();
+> +
+> +	install_exception_handler(v, ESR_EL1_EC_IABT_EL1, pabt_handler);
+> +
+> +	test_exception("adrp	x9, check_pabt_invalid_paddr\n"
+> +		       "add	x9, x9, :lo12:check_pabt_invalid_paddr\n"
+> +		       "ldr	x9, [x9]\n",
+> +		       "blr	x9\n",
+> +		       "", "x9", "x30");
+> +
+> +	install_exception_handler(v, ESR_EL1_EC_IABT_EL1, NULL);
+> +
+> +	return pabt_works;
+> +}
+> +
+>  static void user_psci_system_off(struct pt_regs *regs, unsigned int esr)
+>  {
+>  	__user_psci_system_off();
+> @@ -302,6 +391,11 @@ static void check_vectors(void *arg __unused)
+>  		install_exception_handler(EL0_SYNC_64, ESR_EL1_EC_UNKNOWN,
+>  					  user_psci_system_off);
+>  #endif
+> +	} else {
+> +		if (!check_pabt_init())
+> +			report_skip("Couldn't guess an invalid physical address");
+> +		else
+> +			report(check_pabt(), "pabt");
+>  	}
+>  	exit(report_summary());
+>  }
+> diff --git a/lib/arm64/asm/esr.h b/lib/arm64/asm/esr.h
+> index 8e5af4d90767..8c351631b0a0 100644
+> --- a/lib/arm64/asm/esr.h
+> +++ b/lib/arm64/asm/esr.h
+> @@ -44,4 +44,7 @@
+>  #define ESR_EL1_EC_BKPT32	(0x38)
+>  #define ESR_EL1_EC_BRK64	(0x3C)
+>  
+> +#define ESR_EL1_FSC_MASK	(0x3F)
+> +#define ESR_EL1_FSC_EXTABT	(0x10)
+> +
+>  #endif /* _ASMARM64_ESR_H_ */
 
-Cc: stable@vger.kernel.org # v4.1+
-Fixes: 35307b9a5f7e ("arm/arm64: KVM: Implement Stage-2 page aging")
-Signed-off-by: Gavin Shan <gshan@redhat.com>
----
- virt/kvm/arm/mmu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Sorry, this series has been on my TODO list since you posted it, but something
+else came up. The patches look fine, I like how you return back to the function
+that triggered the PABT, it looks much better than my version. I also ran a quick
+test, so:
 
-diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
-index 0b32a904a1bb..a2777efb558e 100644
---- a/virt/kvm/arm/mmu.c
-+++ b/virt/kvm/arm/mmu.c
-@@ -2147,7 +2147,8 @@ int kvm_test_age_hva(struct kvm *kvm, unsigned long hva)
- 	if (!kvm->arch.pgd)
- 		return 0;
- 	trace_kvm_test_age_hva(hva);
--	return handle_hva_to_gpa(kvm, hva, hva, kvm_test_age_hva_handler, NULL);
-+	return handle_hva_to_gpa(kvm, hva, hva + PAGE_SIZE,
-+				 kvm_test_age_hva_handler, NULL);
- }
- 
- void kvm_mmu_free_memory_caches(struct kvm_vcpu *vcpu)
--- 
-2.23.0
+Acked-by: Alexandru Elisei <alexandru.elisei@arm.com>
 
+Thanks,
+Alex
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
