@@ -2,91 +2,68 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CA9F148677
-	for <lists+kvmarm@lfdr.de>; Fri, 24 Jan 2020 15:02:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 41D1D1487C6
+	for <lists+kvmarm@lfdr.de>; Fri, 24 Jan 2020 15:25:57 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CFC7B4AF20;
-	Fri, 24 Jan 2020 09:02:47 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E7BDD4AF21;
+	Fri, 24 Jan 2020 09:25:56 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id eoQdsfNt87QA; Fri, 24 Jan 2020 09:02:47 -0500 (EST)
+	with ESMTP id qs+DovUiRdM3; Fri, 24 Jan 2020 09:25:55 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AE3434AF1A;
-	Fri, 24 Jan 2020 09:02:46 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 04D464AF08;
+	Fri, 24 Jan 2020 09:25:55 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0E8834A95D
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Jan 2020 09:02:45 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 02EAD4AF08
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Jan 2020 09:25:54 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id dH5oAutXVY8X for <kvmarm@lists.cs.columbia.edu>;
- Fri, 24 Jan 2020 09:02:44 -0500 (EST)
-Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com
- [209.85.128.67])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E948A4ACD6
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Jan 2020 09:02:43 -0500 (EST)
-Received: by mail-wm1-f67.google.com with SMTP id p17so1818472wmb.0
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Jan 2020 06:02:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=P//bELOAogzapLRAvc0MrTECr/vkbTdTXm/vZxUoi7A=;
- b=L9ErBMyCtJKb5ZEZYl3TmzU8EuI/xFUWYDF+VW9m90cvjhClhkYvKXe8R60FO1jApB
- myLg4r9b28I5Vc+4zNLsdEfYsQ9aWxkO/BdkYOuyV0Au5mSq/4JtRW7JFx3Q9S24CGvD
- 2Mt0W5leTE7dWl9zVcoVSRPAuGZBK0Oa9tvBEwzJWzXG5ls6izBvvc/iSVkBHUTOe1UN
- lVmz78njpXZZBYDF4uVoTiXQxlxnKtYYk/B3Bkv9edn4xJEHhsz8BwyM/v73POvMSl67
- SKL+XWTPYoyrQQQ9G67iRS++pePFi6hYUxk0uCIipKFSOxIjcgoZK3kfOa46mExL59tk
- 73/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=P//bELOAogzapLRAvc0MrTECr/vkbTdTXm/vZxUoi7A=;
- b=iIqzAaNjGFTAVFIEdKyIE2SURZSeNBWQt4Hx4g9jYm62N93Y2czfGIe4N+I0g+8JlU
- eYUXYIs1WSZqIi8rYRj5InNKPiW2ioWtf//Kz16v/4SLfLgPWBu+drbbIRw5k6feGM86
- K52Hf26SsUg6SciFB3KPRHHREOKXmu6wGKdToWFggLtiYkmXa/fXCJ5TAN3UK2uGw8UF
- xRcnAE9omtoe2//CVCiY7Qw36/ZFmTGh16vQIi9aaVdRQsjWKBJ2j/+ntISmgkxYs9WT
- GRreLRvo7mrt58FPkGPs+T2thk8gIoasTSy8yqtJein3OD8dl3gNL0QLz1UuTGpNbMNi
- +VcQ==
-X-Gm-Message-State: APjAAAUyPLmk+E7pyR5pVLAkyog0wO8sU2Mg3ndZ5y4c3swewqd7UeXQ
- /nxouzPBnPozDiSSQ/nXBbE1YA==
-X-Google-Smtp-Source: APXvYqwh++vgRWy9mDsoWvMlmUS3xeKplJZO2IFAv+YwFA/ve3hr0mvoCovh3TlbiktzN44VhH43YQ==
-X-Received: by 2002:a1c:1b4d:: with SMTP id b74mr1475490wmb.33.1579874562635; 
- Fri, 24 Jan 2020 06:02:42 -0800 (PST)
-Received: from google.com ([2a00:79e0:d:110:d6cc:2030:37c1:9964])
- by smtp.gmail.com with ESMTPSA id o1sm7474771wrn.84.2020.01.24.06.02.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Jan 2020 06:02:41 -0800 (PST)
-Date: Fri, 24 Jan 2020 14:02:37 +0000
-From: Quentin Perret <qperret@google.com>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v2 0/1] arm/arm64: add support for folded p4d page tables
-Message-ID: <20200124140237.GA180536@google.com>
-References: <20200113111323.10463-1-rppt@kernel.org>
- <20200122185017.GA17321@willie-the-truck>
- <cb6357040bd5d9fa061a8d3bd96fb571@kernel.org>
- <20200124122053.GA150292@google.com>
- <af9e7292f723f808406510f437d5b0eb@kernel.org>
+ with ESMTP id 7CMNmtof6Qy7 for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 24 Jan 2020 09:25:52 -0500 (EST)
+Received: from us-smtp-1.mimecast.com (us-smtp-1.mimecast.com [205.139.110.61])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E5D664AEED
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Jan 2020 09:25:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1579875952;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=gFUS+IYpTMcPpriTfqC+Rs1/QtFWk7pC2ooCgkxv0Po=;
+ b=h2h5H9DeIDzjINWT/e0JWXgWUy2ktkehWp203Xf/NG7kwdZ5Z33MeBzxzP4Gc8p8BauYSR
+ 8YGHKDJ1Y+faQy/O76kN+rx7Ml9e0kJeYKdXyCz5KHtcsxVY9gLAJ0DJ/o3Hzr8y0O2bEj
+ DWbG8h5SyrOsvLkcWDIkb/2NzNRGpA4=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-116-8HkIZKcTMhqYNkxhYA9nDw-1; Fri, 24 Jan 2020 09:25:45 -0500
+X-MC-Unique: 8HkIZKcTMhqYNkxhYA9nDw-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com
+ [10.5.11.23])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id E23DB190D345;
+ Fri, 24 Jan 2020 14:25:43 +0000 (UTC)
+Received: from laptop.redhat.com (ovpn-116-37.ams2.redhat.com [10.36.116.37])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id BFFEC3B0;
+ Fri, 24 Jan 2020 14:25:38 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, maz@kernel.org,
+ linux-kernel@vger.kernel.org, kvmarm@lists.cs.columbia.edu
+Subject: [PATCH 0/4] KVM/ARM: Misc PMU fixes
+Date: Fri, 24 Jan 2020 15:25:31 +0100
+Message-Id: <20200124142535.29386-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <af9e7292f723f808406510f437d5b0eb@kernel.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: kernel-team@android.com, Anshuman Khandual <anshuman.khandual@arm.com>,
- Catalin Marinas <catalin.marinas@arm.com>, linux-kernel@vger.kernel.org,
- Russell King <linux@armlinux.org.uk>, linux-mm@kvack.org,
- linux-arm-kernel@lists.infradead.org, Mike Rapoport <rppt@linux.ibm.com>,
- Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
- Mike Rapoport <rppt@kernel.org>
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
+Cc: andrew.murray@arm.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -103,37 +80,57 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Friday 24 Jan 2020 at 13:34:35 (+0000), Marc Zyngier wrote:
-> I don't disagree at all. To be honest, I've been on the cusp of getting
-> rid of it for a while, for multiple reasons:
-> 
-> - It has no users (as you noticed)
-> - It is hardly tested (a consequence of the above)
-> - It isn't feature complete (no debug, no PMU)
-> - It doesn't follow any of the evolution of the architecture (a more
->   generic feature of the 32bit port, probably because people run their
->   64bit-capable cores in 64bit mode)
-> - It is becoming a mess of empty stubs
-> 
-> The maintenance aspect hasn't been a real problem so far. Even the NV
-> support is only about 200 lines of stubs. But what you have in mind is
-> going to be much more invasive, and I wouldn't want an unused feature to
-> get in the way.
-> 
-> What I may end-up doing is to send a RFC series to remove the 32bit host
-> support from the tree during in the 5.6 cycle, targeting 5.7. If someone
-> shouts loudly during that time frame, we keep it and you'll have to work
-> around it. If nobody cares, then dropping it is the right thing to do.
-> 
-> Would that be OK with you?
+While writing new PMUv3 event counter kvm-unit-tests I found
+some bugs related to the chained counter implementation:
 
-Absolutely. And yes, if there are users of the 32 bits port, it'll be on
-us to work around in a clean way, but I think this is perfectly fair.
-I'll be happy to try and test your RFC series when it goes on the list
-if that can help.
+- the enable state of the high counter is not taken into account,
+- chain counters are not implemented along with SW_INCR type,
+- SW_INCR does not take into account the global enable state
 
-Thanks!
-Quentin
+The last patch rather is an optimization that avoids manipulating
+non supported counters.
+
+Best Regards
+
+Eric
+
+This series can be found at:
+https://github.com/eauger/linux/tree/v5.5-rc7-pmu-fixes-v1
+
+Test:
+Tested with kvm-unit-tests [1]: all tests now pass,
+at the exception of one sub-test in pmu-chain-promotion
+but this is a bug in test.
+
+Other testing at higher level (perf) appreciated.
+
+references:
+[1] KVM: arm64: PMUv3 Event Counter Tests
+(https://lore.kernel.org/kvmarm/c1831b6c-dc75-1bd3-6657-0375682c30af@redhat.com/T/)
+
+History:
+
+RFC -> v1:
+- remove  [RFC 3/3] KVM: arm64: pmu: Enforce PMEVTYPER evtCount size
+- add KVM: arm64: pmu: Only handle supported event counters
+- Take into account the enable state of the CHAIN high counter
+- revisit kvm_pmu_software_increment() implementation as suggested
+  by Marc
+
+
+Eric Auger (4):
+  KVM: arm64: pmu: Don't increment SW_INCR if PMCR.E is unset
+  KVM: arm64: pmu: Don't mark a counter as chained if the odd one is
+    disabled
+  KVM: arm64: pmu: Fix chained SW_INCR counters
+  KVM: arm64: pmu: Only handle supported event counters
+
+ virt/kvm/arm/pmu.c | 114 +++++++++++++++++++++++++++------------------
+ 1 file changed, 69 insertions(+), 45 deletions(-)
+
+-- 
+2.20.1
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
