@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AA3614DBD3
-	for <lists+kvmarm@lfdr.de>; Thu, 30 Jan 2020 14:29:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3731914DBCA
+	for <lists+kvmarm@lfdr.de>; Thu, 30 Jan 2020 14:29:26 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CFAD04AECE;
-	Thu, 30 Jan 2020 08:29:30 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DB8E84A588;
+	Thu, 30 Jan 2020 08:29:25 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,44 +18,44 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id wl4jn8H5-LwD; Thu, 30 Jan 2020 08:29:30 -0500 (EST)
+	with ESMTP id QW7lM662qvxg; Thu, 30 Jan 2020 08:29:21 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C34AC4A65C;
-	Thu, 30 Jan 2020 08:29:29 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4641E4AEDE;
+	Thu, 30 Jan 2020 08:29:20 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4226F4AECD
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:27 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7AD174A59B
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:19 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ZPLflS5KC-DS for <kvmarm@lists.cs.columbia.edu>;
- Thu, 30 Jan 2020 08:29:26 -0500 (EST)
+ with ESMTP id C5IZNVs8jOC0 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 30 Jan 2020 08:29:18 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2B64E4A65C
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:26 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4A2614AECF
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:18 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 5826821734;
- Thu, 30 Jan 2020 13:29:25 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 79EB1214AF;
+ Thu, 30 Jan 2020 13:29:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1580390965;
- bh=EHxBFcbcRclt2fmVZvlSdsfqC5iOved/jkw6NRwzA7s=;
+ s=default; t=1580390957;
+ bh=AxpqAinrqMqcSc1J5l+Lh01LGoqatehtYQ3jSu83bmE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=dxsdNL71Db27oyMCLb3Iooq+e+Fjz/IchvuLIbwXId8jIJPmgLChwJRUvfqvJYWfr
- eVrx8W0we/lPeJZ5US0zHnS2z3dspGpTlS3FLAR004ckNY2wuaFDX6CaQgtZUGwTqp
- TD40jjCfrFmj9kFlog0Ktt3izopWum3IFWhNIc5c=
+ b=YQHKmHwDbcO0+V9Gnnu7/QajLLMEUruOslRDCZauCaKshGtbJOc9Sm9mJtnvCTgHp
+ x55jp5xndll4VNALZACVz3F/1zv17eJjPLVPm3gRCQkObs+g5iZwSKSPSnbn67+NYs
+ H22nIXcfBobhD/mgUTrlczkxSLn38fDzJpRq62dY=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1ix9py-002BmW-GS; Thu, 30 Jan 2020 13:26:26 +0000
+ id 1ix9pz-002BmW-To; Thu, 30 Jan 2020 13:26:28 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 16/23] KVM: arm/arm64: Fix young bit from mmu notifier
-Date: Thu, 30 Jan 2020 13:25:51 +0000
-Message-Id: <20200130132558.10201-17-maz@kernel.org>
+Subject: [PATCH 17/23] KVM: arm: Fix DFSR setting for non-LPAE aarch32 guests
+Date: Thu, 30 Jan 2020 13:25:52 +0000
+Message-Id: <20200130132558.10201-18-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200130132558.10201-1-maz@kernel.org>
 References: <20200130132558.10201-1-maz@kernel.org>
@@ -95,39 +95,53 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Gavin Shan <gshan@redhat.com>
+From: James Morse <james.morse@arm.com>
 
-kvm_test_age_hva() is called upon mmu_notifier_test_young(), but wrong
-address range has been passed to handle_hva_to_gpa(). With the wrong
-address range, no young bits will be checked in handle_hva_to_gpa().
-It means zero is always returned from mmu_notifier_test_young().
+Beata reports that KVM_SET_VCPU_EVENTS doesn't inject the expected
+exception to a non-LPAE aarch32 guest.
 
-This fixes the issue by passing correct address range to the underly
-function handle_hva_to_gpa(), so that the hardware young (access) bit
-will be visited.
+The host intends to inject DFSR.FS=0x14 "IMPLEMENTATION DEFINED fault
+(Lockdown fault)", but the guest receives DFSR.FS=0x04 "Fault on
+instruction cache maintenance". This fault is hooked by
+do_translation_fault() since ARMv6, which goes on to silently 'handle'
+the exception, and restart the faulting instruction.
 
-Fixes: 35307b9a5f7e ("arm/arm64: KVM: Implement Stage-2 page aging")
-Signed-off-by: Gavin Shan <gshan@redhat.com>
+It turns out, when TTBCR.EAE is clear DFSR is split, and FS[4] has
+to shuffle up to DFSR[10].
+
+As KVM only does this in one place, fix up the static values. We
+now get the expected:
+| Unhandled fault: lock abort (0x404) at 0x9c800f00
+
+Fixes: 74a64a981662a ("KVM: arm/arm64: Unify 32bit fault injection")
+Reported-by: Beata Michalska <beata.michalska@linaro.org>
+Signed-off-by: James Morse <james.morse@arm.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20200121055659.19560-1-gshan@redhat.com
+Link: https://lore.kernel.org/r/20200121123356.203000-2-james.morse@arm.com
 ---
- virt/kvm/arm/mmu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ virt/kvm/arm/aarch32.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
-index a4fa81d75e84..8a9db95d1e42 100644
---- a/virt/kvm/arm/mmu.c
-+++ b/virt/kvm/arm/mmu.c
-@@ -2144,7 +2144,8 @@ int kvm_test_age_hva(struct kvm *kvm, unsigned long hva)
- 	if (!kvm->arch.pgd)
- 		return 0;
- 	trace_kvm_test_age_hva(hva);
--	return handle_hva_to_gpa(kvm, hva, hva, kvm_test_age_hva_handler, NULL);
-+	return handle_hva_to_gpa(kvm, hva, hva + PAGE_SIZE,
-+				 kvm_test_age_hva_handler, NULL);
+diff --git a/virt/kvm/arm/aarch32.c b/virt/kvm/arm/aarch32.c
+index 631d397ac81b..2da482ca7067 100644
+--- a/virt/kvm/arm/aarch32.c
++++ b/virt/kvm/arm/aarch32.c
+@@ -181,10 +181,12 @@ static void inject_abt32(struct kvm_vcpu *vcpu, bool is_pabt,
+ 
+ 	/* Give the guest an IMPLEMENTATION DEFINED exception */
+ 	is_lpae = (vcpu_cp15(vcpu, c2_TTBCR) >> 31);
+-	if (is_lpae)
++	if (is_lpae) {
+ 		*fsr = 1 << 9 | 0x34;
+-	else
+-		*fsr = 0x14;
++	} else {
++		/* Surprise! DFSR's FS[4] lives in bit 10 */
++		*fsr = BIT(10) | 0x4; /* 0x14 */
++	}
  }
  
- void kvm_mmu_free_memory_caches(struct kvm_vcpu *vcpu)
+ void kvm_inject_dabt32(struct kvm_vcpu *vcpu, unsigned long addr)
 -- 
 2.20.1
 
