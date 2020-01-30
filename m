@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 52AA114DBD6
-	for <lists+kvmarm@lfdr.de>; Thu, 30 Jan 2020 14:29:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AA3614DBD3
+	for <lists+kvmarm@lfdr.de>; Thu, 30 Jan 2020 14:29:31 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 044D34AEF1;
-	Thu, 30 Jan 2020 08:29:33 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CFAD04AECE;
+	Thu, 30 Jan 2020 08:29:30 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,45 +18,44 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id lXu9YYcJLoDm; Thu, 30 Jan 2020 08:29:32 -0500 (EST)
+	with ESMTP id wl4jn8H5-LwD; Thu, 30 Jan 2020 08:29:30 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E28604AEE9;
-	Thu, 30 Jan 2020 08:29:31 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C34AC4A65C;
+	Thu, 30 Jan 2020 08:29:29 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6CCAA4A588
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:30 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4226F4AECD
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:27 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Qzs5V4Nk12C3 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 30 Jan 2020 08:29:29 -0500 (EST)
+ with ESMTP id ZPLflS5KC-DS for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 30 Jan 2020 08:29:26 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 179774AEF2
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:28 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2B64E4A65C
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:26 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 326CC217BA;
- Thu, 30 Jan 2020 13:29:27 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 5826821734;
+ Thu, 30 Jan 2020 13:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1580390967;
- bh=JDdi5H6y9oYJHPQRhe1DKLwTvdhQqHtercYpr+kJ/kg=;
+ s=default; t=1580390965;
+ bh=EHxBFcbcRclt2fmVZvlSdsfqC5iOved/jkw6NRwzA7s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=KaJgpOn4y6FwW4ncPwQBJsCOLNvWabqhFzFDNhUUK0Z6BIkYiY2IYqk0x2ZHUKzni
- IWGbhl6/GgDtUEtK3eDgPjlNfipzqY8DNMFZN132m709++PuFfBVnYX0zsT/X4mRf5
- MsjPzcnm7d+h6ymLVAPK2dNJ5w0w8Vq9pjXeu0KY=
+ b=dxsdNL71Db27oyMCLb3Iooq+e+Fjz/IchvuLIbwXId8jIJPmgLChwJRUvfqvJYWfr
+ eVrx8W0we/lPeJZ5US0zHnS2z3dspGpTlS3FLAR004ckNY2wuaFDX6CaQgtZUGwTqp
+ TD40jjCfrFmj9kFlog0Ktt3izopWum3IFWhNIc5c=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1ix9px-002BmW-Em; Thu, 30 Jan 2020 13:26:25 +0000
+ id 1ix9py-002BmW-GS; Thu, 30 Jan 2020 13:26:26 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 15/23] arm64: KVM: Annotate guest entry/exit as a single
- function
-Date: Thu, 30 Jan 2020 13:25:50 +0000
-Message-Id: <20200130132558.10201-16-maz@kernel.org>
+Subject: [PATCH 16/23] KVM: arm/arm64: Fix young bit from mmu notifier
+Date: Thu, 30 Jan 2020 13:25:51 +0000
+Message-Id: <20200130132558.10201-17-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200130132558.10201-1-maz@kernel.org>
 References: <20200130132558.10201-1-maz@kernel.org>
@@ -96,58 +95,39 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Mark Brown <broonie@kernel.org>
+From: Gavin Shan <gshan@redhat.com>
 
-In an effort to clarify and simplify the annotations of assembly
-functions in the kernel new macros have been introduced replacing ENTRY
-and ENDPROC. There are separate annotations SYM_FUNC_ for normal C
-functions and SYM_CODE_ for other code. Currently __guest_enter and
-__guest_exit are annotated as standard functions but this is not
-entirely correct as the former doesn't do a normal return and the latter
-is not entered in a normal fashion. From the point of view of the
-hypervisor the guest entry/exit may be viewed as a single
-function which happens to have an eret in the middle of it so let's
-annotate it as such.
+kvm_test_age_hva() is called upon mmu_notifier_test_young(), but wrong
+address range has been passed to handle_hva_to_gpa(). With the wrong
+address range, no young bits will be checked in handle_hva_to_gpa().
+It means zero is always returned from mmu_notifier_test_young().
 
-Suggested-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This fixes the issue by passing correct address range to the underly
+function handle_hva_to_gpa(), so that the hardware young (access) bit
+will be visited.
+
+Fixes: 35307b9a5f7e ("arm/arm64: KVM: Implement Stage-2 page aging")
+Signed-off-by: Gavin Shan <gshan@redhat.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Acked-by: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20200120124706.8681-1-broonie@kernel.org
+Link: https://lore.kernel.org/r/20200121055659.19560-1-gshan@redhat.com
 ---
- arch/arm64/kvm/hyp/entry.S | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ virt/kvm/arm/mmu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/hyp/entry.S b/arch/arm64/kvm/hyp/entry.S
-index e5cc8d66bf53..5b76a89939b1 100644
---- a/arch/arm64/kvm/hyp/entry.S
-+++ b/arch/arm64/kvm/hyp/entry.S
-@@ -44,7 +44,7 @@
-  * u64 __guest_enter(struct kvm_vcpu *vcpu,
-  *		     struct kvm_cpu_context *host_ctxt);
-  */
--ENTRY(__guest_enter)
-+SYM_FUNC_START(__guest_enter)
- 	// x0: vcpu
- 	// x1: host context
- 	// x2-x17: clobbered by macros
-@@ -96,9 +96,8 @@ alternative_else_nop_endif
- 	// Do not touch any register after this!
- 	eret
- 	sb
--ENDPROC(__guest_enter)
+diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
+index a4fa81d75e84..8a9db95d1e42 100644
+--- a/virt/kvm/arm/mmu.c
++++ b/virt/kvm/arm/mmu.c
+@@ -2144,7 +2144,8 @@ int kvm_test_age_hva(struct kvm *kvm, unsigned long hva)
+ 	if (!kvm->arch.pgd)
+ 		return 0;
+ 	trace_kvm_test_age_hva(hva);
+-	return handle_hva_to_gpa(kvm, hva, hva, kvm_test_age_hva_handler, NULL);
++	return handle_hva_to_gpa(kvm, hva, hva + PAGE_SIZE,
++				 kvm_test_age_hva_handler, NULL);
+ }
  
--ENTRY(__guest_exit)
-+SYM_INNER_LABEL(__guest_exit, SYM_L_GLOBAL)
- 	// x0: return code
- 	// x1: vcpu
- 	// x2-x29,lr: vcpu regs
-@@ -192,4 +191,4 @@ abort_guest_exit_end:
- 	msr	spsr_el2, x4
- 	orr	x0, x0, x5
- 1:	ret
--ENDPROC(__guest_exit)
-+SYM_FUNC_END(__guest_enter)
+ void kvm_mmu_free_memory_caches(struct kvm_vcpu *vcpu)
 -- 
 2.20.1
 
