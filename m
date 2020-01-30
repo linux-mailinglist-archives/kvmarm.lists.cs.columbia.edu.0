@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0ADC514DBDD
-	for <lists+kvmarm@lfdr.de>; Thu, 30 Jan 2020 14:29:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 521AA14DBD9
+	for <lists+kvmarm@lfdr.de>; Thu, 30 Jan 2020 14:29:37 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AF1394AEF4;
-	Thu, 30 Jan 2020 08:29:40 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 03F394AED8;
+	Thu, 30 Jan 2020 08:29:37 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,44 +18,45 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VInZtmGq1dj2; Thu, 30 Jan 2020 08:29:40 -0500 (EST)
+	with ESMTP id q8QKoAy58DOd; Thu, 30 Jan 2020 08:29:36 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 702C54AF26;
-	Thu, 30 Jan 2020 08:29:39 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 281044AED9;
+	Thu, 30 Jan 2020 08:29:35 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 944294ACBA
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:37 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E77674A588
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:33 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Jjz+T3Oe+AbP for <kvmarm@lists.cs.columbia.edu>;
- Thu, 30 Jan 2020 08:29:36 -0500 (EST)
+ with ESMTP id l5zDEHUf+gTd for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 30 Jan 2020 08:29:32 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E20F94AED1
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:35 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D7B134AED4
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:31 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 1A23D20CC7;
- Thu, 30 Jan 2020 13:29:35 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 12A78214AF;
+ Thu, 30 Jan 2020 13:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1580390975;
- bh=o7G3kM47bUlmvtGkyWDkQWRUlKus1kYJNw4ec+txEpo=;
+ s=default; t=1580390971;
+ bh=xHtHzO8cRVxYRBLAuIiNG+FZL/sF3xqztmdfjYOK934=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=c04A+aCnBEU7IBY5ySLtj+5qq+caVh/+xDkZ8cUM5mtjUHW+q76978QBgbs5HoVme
- PBolggohk9SUP3TIf/8WHEvaqYvjwXRpx151JQ0YNN6aRGXT0lKjBVJx9zjEmBjfOv
- rre7cRCKGBYtc96GR5Y5emEDpj/YiRHWB6KxBo0M=
+ b=TSPeRR6nq/KXOqu4I67O4fmY9WbZbcebGN1nLURHurneVZl4w+KHG3+SvUBkYERwq
+ WucbQPWuxQuZ+JMcX5WvwcCE2RaEeaJCM5XgRkxgut+FALKM+qePKvMkh1nJYe4Wst
+ 76JZBvb++EfCnuYGHAOAmuFxVhM63Dttu/Qhjd4E=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1ix9pq-002BmW-Db; Thu, 30 Jan 2020 13:26:18 +0000
+ id 1ix9pr-002BmW-Eq; Thu, 30 Jan 2020 13:26:19 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 10/23] KVM: arm/arm64: Correct AArch32 SPSR on exception entry
-Date: Thu, 30 Jan 2020 13:25:45 +0000
-Message-Id: <20200130132558.10201-11-maz@kernel.org>
+Subject: [PATCH 11/23] KVM: arm/arm64: vgic-its: Properly check the unmapped
+ coll in DISCARD handler
+Date: Thu, 30 Jan 2020 13:25:46 +0000
+Message-Id: <20200130132558.10201-12-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200130132558.10201-1-maz@kernel.org>
 References: <20200130132558.10201-1-maz@kernel.org>
@@ -69,7 +70,7 @@ X-SA-Exim-Rcpt-To: pbonzini@redhat.com, alexandru.elisei@arm.com,
  shannon.zhao@linux.alibaba.com, steven.price@arm.com, will@kernel.org,
  yuehaibing@huawei.com, yuzenghui@huawei.com, julien.thierry.kdev@gmail.com,
  suzuki.poulose@arm.com, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, stable@vger.kernel.org
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
@@ -78,8 +79,7 @@ Cc: Gavin Shan <gshan@redhat.com>, kvm@vger.kernel.org,
  YueHaibing <yuehaibing@huawei.com>, Steven Price <steven.price@arm.com>,
  Shannon Zhao <shannon.zhao@linux.alibaba.com>,
  Russell King <rmk+kernel@armlinux.org.uk>, Mark Brown <broonie@kernel.org>,
- linux-arm-kernel@lists.infradead.org, stable@vger.kernel.org,
- Andrew Murray <andrew.murray@arm.com>
+ linux-arm-kernel@lists.infradead.org, Andrew Murray <andrew.murray@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -96,128 +96,40 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Zenghui Yu <yuzenghui@huawei.com>
 
-Confusingly, there are three SPSR layouts that a kernel may need to deal
-with:
+Discard is supposed to fail if the collection is not mapped to any
+target redistributor. We currently check if the collection is mapped
+by "ite->collection" but this is incomplete (e.g., mapping a LPI to
+an unmapped collection also results in a non NULL ite->collection).
+What actually needs to be checked is its_is_collection_mapped(), let's
+turn to it.
 
-(1) An AArch64 SPSR_ELx view of an AArch64 pstate
-(2) An AArch64 SPSR_ELx view of an AArch32 pstate
-(3) An AArch32 SPSR_* view of an AArch32 pstate
+Also take this chance to remove an extra blank line.
 
-When the KVM AArch32 support code deals with SPSR_{EL2,HYP}, it's either
-dealing with #2 or #3 consistently. On arm64 the PSR_AA32_* definitions
-match the AArch64 SPSR_ELx view, and on arm the PSR_AA32_* definitions
-match the AArch32 SPSR_* view.
-
-However, when we inject an exception into an AArch32 guest, we have to
-synthesize the AArch32 SPSR_* that the guest will see. Thus, an AArch64
-host needs to synthesize layout #3 from layout #2.
-
-This patch adds a new host_spsr_to_spsr32() helper for this, and makes
-use of it in the KVM AArch32 support code. For arm64 we need to shuffle
-the DIT bit around, and remove the SS bit, while for arm we can use the
-value as-is.
-
-I've open-coded the bit manipulation for now to avoid having to rework
-the existing PSR_* definitions into PSR64_AA32_* and PSR32_AA32_*
-definitions. I hope to perform a more thorough refactoring in future so
-that we can handle pstate view manipulation more consistently across the
-kernel tree.
-
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Alexandru Elisei <alexandru.elisei@arm.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20200108134324.46500-4-mark.rutland@arm.com
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Link: https://lore.kernel.org/r/20200114112212.1411-1-yuzenghui@huawei.com
 ---
- arch/arm/include/asm/kvm_emulate.h   |  5 +++++
- arch/arm64/include/asm/kvm_emulate.h | 32 ++++++++++++++++++++++++++++
- virt/kvm/arm/aarch32.c               |  6 +++---
- 3 files changed, 40 insertions(+), 3 deletions(-)
+ virt/kvm/arm/vgic/vgic-its.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm/include/asm/kvm_emulate.h b/arch/arm/include/asm/kvm_emulate.h
-index c488c629e6c8..08d9805f613b 100644
---- a/arch/arm/include/asm/kvm_emulate.h
-+++ b/arch/arm/include/asm/kvm_emulate.h
-@@ -53,6 +53,11 @@ static inline void vcpu_write_spsr(struct kvm_vcpu *vcpu, unsigned long v)
- 	*__vcpu_spsr(vcpu) = v;
- }
+diff --git a/virt/kvm/arm/vgic/vgic-its.c b/virt/kvm/arm/vgic/vgic-its.c
+index 17920d1b350a..d53d34a33e35 100644
+--- a/virt/kvm/arm/vgic/vgic-its.c
++++ b/virt/kvm/arm/vgic/vgic-its.c
+@@ -839,9 +839,8 @@ static int vgic_its_cmd_handle_discard(struct kvm *kvm, struct vgic_its *its,
+ 	u32 event_id = its_cmd_get_id(its_cmd);
+ 	struct its_ite *ite;
  
-+static inline unsigned long host_spsr_to_spsr32(unsigned long spsr)
-+{
-+	return spsr;
-+}
-+
- static inline unsigned long vcpu_get_reg(struct kvm_vcpu *vcpu,
- 					 u8 reg_num)
- {
-diff --git a/arch/arm64/include/asm/kvm_emulate.h b/arch/arm64/include/asm/kvm_emulate.h
-index f407b6bdad2e..53ea7637b7b2 100644
---- a/arch/arm64/include/asm/kvm_emulate.h
-+++ b/arch/arm64/include/asm/kvm_emulate.h
-@@ -219,6 +219,38 @@ static inline void vcpu_write_spsr(struct kvm_vcpu *vcpu, unsigned long v)
- 		vcpu_gp_regs(vcpu)->spsr[KVM_SPSR_EL1] = v;
- }
- 
-+/*
-+ * The layout of SPSR for an AArch32 state is different when observed from an
-+ * AArch64 SPSR_ELx or an AArch32 SPSR_*. This function generates the AArch32
-+ * view given an AArch64 view.
-+ *
-+ * In ARM DDI 0487E.a see:
-+ *
-+ * - The AArch64 view (SPSR_EL2) in section C5.2.18, page C5-426
-+ * - The AArch32 view (SPSR_abt) in section G8.2.126, page G8-6256
-+ * - The AArch32 view (SPSR_und) in section G8.2.132, page G8-6280
-+ *
-+ * Which show the following differences:
-+ *
-+ * | Bit | AA64 | AA32 | Notes                       |
-+ * +-----+------+------+-----------------------------|
-+ * | 24  | DIT  | J    | J is RES0 in ARMv8          |
-+ * | 21  | SS   | DIT  | SS doesn't exist in AArch32 |
-+ *
-+ * ... and all other bits are (currently) common.
-+ */
-+static inline unsigned long host_spsr_to_spsr32(unsigned long spsr)
-+{
-+	const unsigned long overlap = BIT(24) | BIT(21);
-+	unsigned long dit = !!(spsr & PSR_AA32_DIT_BIT);
-+
-+	spsr &= ~overlap;
-+
-+	spsr |= dit << 21;
-+
-+	return spsr;
-+}
-+
- static inline bool vcpu_mode_priv(const struct kvm_vcpu *vcpu)
- {
- 	u32 mode;
-diff --git a/virt/kvm/arm/aarch32.c b/virt/kvm/arm/aarch32.c
-index 773cf1439081..631d397ac81b 100644
---- a/virt/kvm/arm/aarch32.c
-+++ b/virt/kvm/arm/aarch32.c
-@@ -129,15 +129,15 @@ static unsigned long get_except32_cpsr(struct kvm_vcpu *vcpu, u32 mode)
- 
- static void prepare_fault32(struct kvm_vcpu *vcpu, u32 mode, u32 vect_offset)
- {
--	unsigned long new_spsr_value = *vcpu_cpsr(vcpu);
--	bool is_thumb = (new_spsr_value & PSR_AA32_T_BIT);
-+	unsigned long spsr = *vcpu_cpsr(vcpu);
-+	bool is_thumb = (spsr & PSR_AA32_T_BIT);
- 	u32 return_offset = return_offsets[vect_offset >> 2][is_thumb];
- 	u32 sctlr = vcpu_cp15(vcpu, c1_SCTLR);
- 
- 	*vcpu_cpsr(vcpu) = get_except32_cpsr(vcpu, mode);
- 
- 	/* Note: These now point to the banked copies */
--	vcpu_write_spsr(vcpu, new_spsr_value);
-+	vcpu_write_spsr(vcpu, host_spsr_to_spsr32(spsr));
- 	*vcpu_reg32(vcpu, 14) = *vcpu_pc(vcpu) + return_offset;
- 
- 	/* Branch to exception vector */
+-
+ 	ite = find_ite(its, device_id, event_id);
+-	if (ite && ite->collection) {
++	if (ite && its_is_collection_mapped(ite->collection)) {
+ 		/*
+ 		 * Though the spec talks about removing the pending state, we
+ 		 * don't bother here since we clear the ITTE anyway and the
 -- 
 2.20.1
 
