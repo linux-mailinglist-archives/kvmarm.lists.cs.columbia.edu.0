@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B3AC14DBD8
-	for <lists+kvmarm@lfdr.de>; Thu, 30 Jan 2020 14:29:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B4D1914DBC3
+	for <lists+kvmarm@lfdr.de>; Thu, 30 Jan 2020 14:29:18 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D0E4D4AECB;
-	Thu, 30 Jan 2020 08:29:35 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 66FB24AEDC;
+	Thu, 30 Jan 2020 08:29:18 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,45 +18,45 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hSpmvOQiDgiY; Thu, 30 Jan 2020 08:29:34 -0500 (EST)
+	with ESMTP id qBoiV22FcFlT; Thu, 30 Jan 2020 08:29:18 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0EA5A4AEDD;
-	Thu, 30 Jan 2020 08:29:34 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0F11E4AED5;
+	Thu, 30 Jan 2020 08:29:17 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C5E124AEDD
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:31 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id AA5414A65C
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:15 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 3TZRuvatu7Cl for <kvmarm@lists.cs.columbia.edu>;
- Thu, 30 Jan 2020 08:29:30 -0500 (EST)
+ with ESMTP id zwMLLvEJ4cAZ for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 30 Jan 2020 08:29:14 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0BEC64AECC
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:30 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 722434AC65
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:14 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 3A52D206D3;
- Thu, 30 Jan 2020 13:29:29 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id A083A2082E;
+ Thu, 30 Jan 2020 13:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1580390969;
- bh=QGmoD2g147nn2rXQotyPQlmpUS1aCJlneMZQNHauFhw=;
+ s=default; t=1580390953;
+ bh=7pqJxwe0f7R70UEhqXeOaCEo6sb89MA9E0VPKvlaRjY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=K/T3DV9793fRN0Lqcry0p0lpZmnmsieQCmXNKEi8q3O9nmOTKAvs16zlpdo1tZt2i
- KcJ+RkYMLYlXRcezty7yq/J+T06aHM0pM3QjDd4Ooy5KKIG1iK6LUObYkfdNmRNTD1
- 3qQW1I6mGTIgE6JBUxwhRm5z8aOEludcAD6Xc4LE=
+ b=YRDdbI50xGCvh4VibmZBve4B3l6No67jkHBGvhgg7gFCR+1bvb1ND1mqVafFXZ5uI
+ j25eUeauKjRYY2Mg3VcPbMcTxz7KSvlEuyxP+coY6xsJENB8mhvNbQ7Bvo9eVAtwrA
+ dIekCyK9FmetSYIEYRcTPOdZfw69keBjORQV8zC8=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1ix9q0-002BmW-Vp; Thu, 30 Jan 2020 13:26:29 +0000
+ id 1ix9q2-002BmW-2k; Thu, 30 Jan 2020 13:26:30 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 18/23] KVM: arm: Make inject_abt32() inject an external abort
- instead
-Date: Thu, 30 Jan 2020 13:25:53 +0000
-Message-Id: <20200130132558.10201-19-maz@kernel.org>
+Subject: [PATCH 19/23] KVM: arm64: pmu: Don't increment SW_INCR if PMCR.E is
+ unset
+Date: Thu, 30 Jan 2020 13:25:54 +0000
+Message-Id: <20200130132558.10201-20-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200130132558.10201-1-maz@kernel.org>
 References: <20200130132558.10201-1-maz@kernel.org>
@@ -96,56 +96,39 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: James Morse <james.morse@arm.com>
+From: Eric Auger <eric.auger@redhat.com>
 
-KVM's inject_abt64() injects an external-abort into an aarch64 guest.
-The KVM_CAP_ARM_INJECT_EXT_DABT is intended to do exactly this, but
-for an aarch32 guest inject_abt32() injects an implementation-defined
-exception, 'Lockdown fault'.
+The specification says PMSWINC increments PMEVCNTR<n>_EL1 by 1
+if PMEVCNTR<n>_EL0 is enabled and configured to count SW_INCR.
 
-Change this to external abort. For non-LPAE we now get the documented:
-| Unhandled fault: external abort on non-linefetch (0x008) at 0x9c800f00
-and for LPAE:
-| Unhandled fault: synchronous external abort (0x210) at 0x9c800f00
+For PMEVCNTR<n>_EL0 to be enabled, we need both PMCNTENSET to
+be set for the corresponding event counter but we also need
+the PMCR.E bit to be set.
 
-Fixes: 74a64a981662a ("KVM: arm/arm64: Unify 32bit fault injection")
-Reported-by: Beata Michalska <beata.michalska@linaro.org>
-Signed-off-by: James Morse <james.morse@arm.com>
+Fixes: 7a0adc7064b8 ("arm64: KVM: Add access handler for PMSWINC register")
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20200121123356.203000-3-james.morse@arm.com
+Reviewed-by: Andrew Murray <andrew.murray@arm.com>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20200124142535.29386-2-eric.auger@redhat.com
 ---
- virt/kvm/arm/aarch32.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ virt/kvm/arm/pmu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/virt/kvm/arm/aarch32.c b/virt/kvm/arm/aarch32.c
-index 2da482ca7067..0a356aa91aa1 100644
---- a/virt/kvm/arm/aarch32.c
-+++ b/virt/kvm/arm/aarch32.c
-@@ -15,6 +15,10 @@
- #include <asm/kvm_emulate.h>
- #include <asm/kvm_hyp.h>
+diff --git a/virt/kvm/arm/pmu.c b/virt/kvm/arm/pmu.c
+index 8731dfeced8b..c3f8b059881e 100644
+--- a/virt/kvm/arm/pmu.c
++++ b/virt/kvm/arm/pmu.c
+@@ -486,6 +486,9 @@ void kvm_pmu_software_increment(struct kvm_vcpu *vcpu, u64 val)
+ 	if (val == 0)
+ 		return;
  
-+#define DFSR_FSC_EXTABT_LPAE	0x10
-+#define DFSR_FSC_EXTABT_nLPAE	0x08
-+#define DFSR_LPAE		BIT(9)
++	if (!(__vcpu_sys_reg(vcpu, PMCR_EL0) & ARMV8_PMU_PMCR_E))
++		return;
 +
- /*
-  * Table taken from ARMv8 ARM DDI0487B-B, table G1-10.
-  */
-@@ -182,10 +186,10 @@ static void inject_abt32(struct kvm_vcpu *vcpu, bool is_pabt,
- 	/* Give the guest an IMPLEMENTATION DEFINED exception */
- 	is_lpae = (vcpu_cp15(vcpu, c2_TTBCR) >> 31);
- 	if (is_lpae) {
--		*fsr = 1 << 9 | 0x34;
-+		*fsr = DFSR_LPAE | DFSR_FSC_EXTABT_LPAE;
- 	} else {
--		/* Surprise! DFSR's FS[4] lives in bit 10 */
--		*fsr = BIT(10) | 0x4; /* 0x14 */
-+		/* no need to shuffle FS[4] into DFSR[10] as its 0 */
-+		*fsr = DFSR_FSC_EXTABT_nLPAE;
- 	}
- }
- 
+ 	enable = __vcpu_sys_reg(vcpu, PMCNTENSET_EL0);
+ 	for (i = 0; i < ARMV8_PMU_CYCLE_IDX; i++) {
+ 		if (!(val & BIT(i)))
 -- 
 2.20.1
 
