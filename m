@@ -2,84 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D6C9714DBD0
-	for <lists+kvmarm@lfdr.de>; Thu, 30 Jan 2020 14:29:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B447514DC67
+	for <lists+kvmarm@lfdr.de>; Thu, 30 Jan 2020 15:03:59 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 89DF54AECF;
-	Thu, 30 Jan 2020 08:29:28 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 425EE4AC86;
+	Thu, 30 Jan 2020 09:03:59 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@linaro.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id gluivg4R+h-9; Thu, 30 Jan 2020 08:29:23 -0500 (EST)
+	with ESMTP id 84iLe4FRIWHQ; Thu, 30 Jan 2020 09:03:59 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 633CD4A5C3;
-	Thu, 30 Jan 2020 08:29:23 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 083D84AC07;
+	Thu, 30 Jan 2020 09:03:58 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 522654AE9A
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:22 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 436E04A800
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 09:03:57 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id x+KYv9vgbbgh for <kvmarm@lists.cs.columbia.edu>;
- Thu, 30 Jan 2020 08:29:21 -0500 (EST)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 23DB64AC77
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:29:20 -0500 (EST)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 52977214D8;
- Thu, 30 Jan 2020 13:29:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1580390959;
- bh=dh8dergRizxwfhKXTRtQc9cB5ErpuOCTez5+NklVjS8=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Z+nIVy8Wl+yoeXRp7CAA4BKuc7kQqPHaPC+7dti3zJ3PBhMjCVP07saX/qvMMy4sL
- Z8GqJruaedRUhtDWRSGi715OylUKb+piEIZQhfVhjX4cL+fm09mWNtWPv820OFOYRS
- e9CwBVjz2HW1zkr8iRr3ZVduXJgUBecTJik/sjNI=
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.lan) by disco-boy.misterjones.org with esmtpsa
- (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
- (envelope-from <maz@kernel.org>)
- id 1ix9q7-002BmW-97; Thu, 30 Jan 2020 13:26:35 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 23/23] KVM: arm64: Treat emulated TVAL TimerValue as a signed
- 32-bit integer
-Date: Thu, 30 Jan 2020 13:25:58 +0000
-Message-Id: <20200130132558.10201-24-maz@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200130132558.10201-1-maz@kernel.org>
-References: <20200130132558.10201-1-maz@kernel.org>
+ with ESMTP id oSA3q+DOZAlc for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 30 Jan 2020 09:03:56 -0500 (EST)
+Received: from mail-oi1-f196.google.com (mail-oi1-f196.google.com
+ [209.85.167.196])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 161924A542
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 09:03:56 -0500 (EST)
+Received: by mail-oi1-f196.google.com with SMTP id b18so3608835oie.2
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 06:03:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=+iZsjgsZakLtp6vowX2UviTy1HwcCzzv58SPakeE/f0=;
+ b=warS5U3jI+nfBBZmMjN08U3zX3wbr/EKi7+YEZsJGrKnozxfcDtDdi0vcH40pW8WyR
+ xQ+1AQ4Ff7t7oM2xo1oV7qsKQYJxiYFQepPpwKR4efAO2vwGlkq7FvBku3WYhlaBrDz3
+ zAhpoSqtFV07ErIufrfOEatB/PasVrVs56La7TuY1bM47GsPW8V6WUxtQqqTJlpOf5K4
+ nO3ipDPX3TS7+1Y6sbCxkz2ojEKjMydqOe7DNmrpH5jigJfDnd9VmHIKplRA2KluT4Dt
+ pjgC/SHVTxNTi2nXMVYMnhKWFkEPwn0lv+eY51pVFZKumES5ffItoGkJh4WzYpbIz1RD
+ dllA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=+iZsjgsZakLtp6vowX2UviTy1HwcCzzv58SPakeE/f0=;
+ b=F08mH7i7QVnhBEotw8FkLiigFZO8tjIODlpkDzhBTJdl7eeixI/NotRWB4ziJwlkPB
+ uqsUGox4ulY+GeFR3VAjTnl2SEMMBuiBiDrOAXrbQB78IqCGxWwWXZtes+8lGqDDxLSZ
+ mxg/iMbPJdauG28V3ENoI/9uadPTWIYKPRXOep8oo4hztDLrQjyfy3h+VRwkhEfraCLo
+ yP+5XKyS94xtCsWWQfOUgqsOOLDQSxCyQE2N5U+vNtPro7hJ0JOw0r9UjWpgFEeT2MmH
+ a/i6MpjvGetpnlztQQRyU/+kJM1Punq+CGSyqoKRPXy0kAk+Xhl+ZMuZqsNZDRd/NQKb
+ RmBQ==
+X-Gm-Message-State: APjAAAUxUXfIIQPzZctjKQI4J1VL7EDGldLRPrc1SXLaqPq4OHwsBwx2
+ RYi0bhP/XzYlJcaJhi7UI+ScWA4sCXjYV4Yk99jWVw==
+X-Google-Smtp-Source: APXvYqzxvy87xbQ6kIC63XdTIzKDOn1YjfuQUR+7MXWG/OSk7jFKlCe8eE3Fa10ZTBOEHMhZ5zca3hH3eC6HaiM1Qf4=
+X-Received: by 2002:aca:3d7:: with SMTP id 206mr2953620oid.98.1580393035139;
+ Thu, 30 Jan 2020 06:03:55 -0800 (PST)
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: pbonzini@redhat.com, alexandru.elisei@arm.com,
- drjones@redhat.com, andrew.murray@arm.com, beata.michalska@linaro.org,
- christoffer.dall@arm.com, eric.auger@redhat.com, gshan@redhat.com,
- wanghaibin.wang@huawei.com, james.morse@arm.com, broonie@kernel.org,
- mark.rutland@arm.com, rmk+kernel@armlinux.org.uk,
- shannon.zhao@linux.alibaba.com, steven.price@arm.com, will@kernel.org,
- yuehaibing@huawei.com, yuzenghui@huawei.com, julien.thierry.kdev@gmail.com,
- suzuki.poulose@arm.com, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: Gavin Shan <gshan@redhat.com>, kvm@vger.kernel.org,
- Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
- YueHaibing <yuehaibing@huawei.com>, Steven Price <steven.price@arm.com>,
- Shannon Zhao <shannon.zhao@linux.alibaba.com>,
- Russell King <rmk+kernel@armlinux.org.uk>, Mark Brown <broonie@kernel.org>,
- linux-arm-kernel@lists.infradead.org, Andrew Murray <andrew.murray@arm.com>
+References: <20200119133051.642-1-yuzenghui@huawei.com>
+In-Reply-To: <20200119133051.642-1-yuzenghui@huawei.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 30 Jan 2020 14:03:44 +0000
+Message-ID: <CAFEAcA8igVrEjyChLmbkeQb+gXYMCVhtgGwrNNKrZNaKKSp04w@mail.gmail.com>
+Subject: Re: [PATCH] hw/intc/arm_gicv3_kvm: Stop wrongly programming
+ GICR_PENDBASER.PTZ bit
+To: Zenghui Yu <yuzenghui@huawei.com>
+Cc: Marc Zyngier <maz@kernel.org>, QEMU Developers <qemu-devel@nongnu.org>,
+ qemu-arm <qemu-arm@nongnu.org>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -96,59 +88,42 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Alexandru Elisei <alexandru.elisei@arm.com>
+On Sun, 19 Jan 2020 at 13:32, Zenghui Yu <yuzenghui@huawei.com> wrote:
+>
+> If LPIs are disabled, KVM will just ignore the GICR_PENDBASER.PTZ bit when
+> restoring GICR_CTLR.  Setting PTZ here makes littlt sense in "reduce GIC
+> initialization time".
+>
+> And what's worse, PTZ is generally programmed by guest to indicate to the
+> Redistributor whether the LPI Pending table is zero when enabling LPIs.
+> If migration is triggered when the PTZ has just been cleared by guest (and
+> before enabling LPIs), we will see PTZ==1 on the destination side, which
+> is not as expected.  Let's just drop this hackish userspace behavior.
+>
+> Also take this chance to refine the comment a bit.
 
-According to the ARM ARM, registers CNT{P,V}_TVAL_EL0 have bits [63:32]
-RES0 [1]. When reading the register, the value is truncated to the least
-significant 32 bits [2], and on writes, TimerValue is treated as a signed
-32-bit integer [1, 2].
+I pulled up the original code-review discussion where this code
+was added:
+https://lists.gnu.org/archive/html/qemu-devel/2015-10/msg05889.html
 
-When the guest behaves correctly and writes 32-bit values, treating TVAL
-as an unsigned 64 bit register works as expected. However, things start
-to break down when the guest writes larger values, because
-(u64)0x1_ffff_ffff = 8589934591. but (s32)0x1_ffff_ffff = -1, and the
-former will cause the timer interrupt to be asserted in the future, but
-the latter will cause it to be asserted now.  Let's treat TVAL as a
-signed 32-bit register on writes, to match the behaviour described in
-the architecture, and the behaviour experimentally exhibited by the
-virtual timer on a non-vhe host.
+It looks like the original reason for adding it was that the
+GICR_PENDBASER.PTZ bit is write-only, and so there's no way for
+the migration code in QEMU to accurately restore it on the
+destination end of a migration. So Pavel picked a heuristic
+for guessing what the right value of the PTZ bit was.
 
-[1] Arm DDI 0487E.a, section D13.8.18
-[2] Arm DDI 0487E.a, section D11.2.4
+It sounds like the penalty if userspace sets the bit to 0
+always on a migration is not significant, so I guess that
+just setting this bit to 0 always is an OK thing to do (as you
+say, there's a window in the existing implementation where
+we do the wrong thing sometimes if migration happens at the
+wrong time, because the current code's heuristic can
+sometimes fail in the wrong direction).
 
-Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
-[maz: replaced the read-side mask with lower_32_bits]
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Fixes: 8fa761624871 ("KVM: arm/arm64: arch_timer: Fix CNTP_TVAL calculation")
-Link: https://lore.kernel.org/r/20200127103652.2326-1-alexandru.elisei@arm.com
----
- virt/kvm/arm/arch_timer.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Applied to target-arm.next.
 
-diff --git a/virt/kvm/arm/arch_timer.c b/virt/kvm/arm/arch_timer.c
-index f182b2380345..c6c2a9dde00c 100644
---- a/virt/kvm/arm/arch_timer.c
-+++ b/virt/kvm/arm/arch_timer.c
-@@ -805,6 +805,7 @@ static u64 kvm_arm_timer_read(struct kvm_vcpu *vcpu,
- 	switch (treg) {
- 	case TIMER_REG_TVAL:
- 		val = timer->cnt_cval - kvm_phys_timer_read() + timer->cntvoff;
-+		val &= lower_32_bits(val);
- 		break;
- 
- 	case TIMER_REG_CTL:
-@@ -850,7 +851,7 @@ static void kvm_arm_timer_write(struct kvm_vcpu *vcpu,
- {
- 	switch (treg) {
- 	case TIMER_REG_TVAL:
--		timer->cnt_cval = kvm_phys_timer_read() - timer->cntvoff + val;
-+		timer->cnt_cval = kvm_phys_timer_read() - timer->cntvoff + (s32)val;
- 		break;
- 
- 	case TIMER_REG_CTL:
--- 
-2.20.1
-
+thanks
+-- PMM
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
