@@ -2,78 +2,60 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CAD014D1E6
-	for <lists+kvmarm@lfdr.de>; Wed, 29 Jan 2020 21:25:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0783B14D45D
+	for <lists+kvmarm@lfdr.de>; Thu, 30 Jan 2020 01:10:33 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1D8914AC70;
-	Wed, 29 Jan 2020 15:25:26 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F0E0F4A957;
+	Wed, 29 Jan 2020 19:10:31 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@linaro.org
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Ac2QOjfyl7h4; Wed, 29 Jan 2020 15:25:26 -0500 (EST)
+	with ESMTP id GzOEmKwk+IDP; Wed, 29 Jan 2020 19:10:30 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B777A4ACB7;
-	Wed, 29 Jan 2020 15:25:24 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C0F684A531;
+	Wed, 29 Jan 2020 19:10:29 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 259114A4FC
- for <kvmarm@lists.cs.columbia.edu>; Wed, 29 Jan 2020 15:25:24 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 356E34A5C3
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 29 Jan 2020 19:10:28 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id W0OOo-+xdk5G for <kvmarm@lists.cs.columbia.edu>;
- Wed, 29 Jan 2020 15:25:22 -0500 (EST)
-Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com
- [209.85.128.67])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B00AD4AC77
- for <kvmarm@lists.cs.columbia.edu>; Wed, 29 Jan 2020 15:25:22 -0500 (EST)
-Received: by mail-wm1-f67.google.com with SMTP id s10so1212022wmh.3
- for <kvmarm@lists.cs.columbia.edu>; Wed, 29 Jan 2020 12:25:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
- h=from:to:cc:subject:date:message-id:in-reply-to:references;
- bh=3PMJxyEZQKPRv3ChqMJ50kyAGa0z3Vg9tRNElquTZ/0=;
- b=fNhJAHRq2EN91vTVf0CAQUgHY4DtJ/A/2LLb5mhJ0E05EIlyjL4YIVwyDmEJ7NlVto
- SDscTPCbUKxTTv9/CODpREQcWCq74yLtZCsKd0AH/FgHyvEteIqm3LEm/XJ/yjxVaD9Y
- sRN412CxoXboUeIRMxQPUFcvWozunecAdBaw5qFikas7hCvZfcnx9VXG55SsKUZ9t+6j
- ro0kyF57Pbuu98dItwHupg8aK0aDD6mSyHXky9nbjUdyMDepkgMqRle+JPaVTF6pde1H
- 5+tKN4c17vu8l0EMr3LHnEeWsjaqS6z3yEolmmb95g8geYSmoBOrFD30CLZc2HkqCN/l
- +B8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
- :references;
- bh=3PMJxyEZQKPRv3ChqMJ50kyAGa0z3Vg9tRNElquTZ/0=;
- b=XDVM0unX6Y76DywI2WNVgiI62yon5d/SuJJDR30KayFngQNWF4iiVRDQINaast1My1
- h7BQHMGMs0lI0BshpJyE39sscPzGo7wokFGO45sE5fc7aMEngPH3cDpBZU7i5biRbBjq
- VuKZxUgt5Mmvl4JiXzt4XUVe96D4KSc5qMHGYF/7hbHAjAM6XYw+VA18xxjvMQ3FtMk1
- 06aZVU99vOOKeQWkslBH8ME6C9qx9FetBpqvsmT4WVctN3KLDfFzuNqyFA7mxLBGrvfq
- Nc42EEl94PX/OLlKoJehcp4+FPL3mGbxVVz1KZ1BFkTaiM8eRm6EnmdMF8h4ZM3Audu9
- 0+DA==
-X-Gm-Message-State: APjAAAXoyvZ0scxO0Cv867P0E8faekIFf51JW+G1RlreBLOjz3RnwrZP
- HlZwxf6BVGBuQ2GsaokrXNbBPA==
-X-Google-Smtp-Source: APXvYqz0g4iA87jEhRZKDy8rnbBNpe5mS1Sq4+hRJ+aen45gH8zyb+FOKLZALrAC49Oolhj9SDrc4w==
-X-Received: by 2002:a1c:1fc5:: with SMTP id f188mr1013034wmf.55.1580329521606; 
- Wed, 29 Jan 2020 12:25:21 -0800 (PST)
-Received: from moi-limbo-9350.home
- (host86-131-78-194.range86-131.btcentralplus.com. [86.131.78.194])
- by smtp.gmail.com with ESMTPSA id h2sm4377518wrt.45.2020.01.29.12.25.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Jan 2020 12:25:21 -0800 (PST)
-From: Beata Michalska <beata.michalska@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH v2 2/2] target/arm: kvm: Handle DABT with no valid ISS
-Date: Wed, 29 Jan 2020 20:24:41 +0000
-Message-Id: <20200129202441.12745-3-beata.michalska@linaro.org>
-In-Reply-To: <20200129202441.12745-1-beata.michalska@linaro.org>
-References: <20200129202441.12745-1-beata.michalska@linaro.org>
-Cc: qemu-arm@nongnu.org, kvmarm@lists.cs.columbia.edu, pbonzini@redhat.com
+ with ESMTP id 1WZbWOxugSQM for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 29 Jan 2020 19:10:26 -0500 (EST)
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 35B534A52B
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 29 Jan 2020 19:10:26 -0500 (EST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+ by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 29 Jan 2020 16:10:24 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,379,1574150400"; d="scan'208";a="261990342"
+Received: from sjchrist-coffee.jf.intel.com ([10.54.74.202])
+ by fmsmga002.fm.intel.com with ESMTP; 29 Jan 2020 16:10:24 -0800
+From: Sean Christopherson <sean.j.christopherson@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 0/5] KVM: Move x86 init ops to separate struct
+Date: Wed, 29 Jan 2020 16:10:18 -0800
+Message-Id: <20200130001023.24339-1-sean.j.christopherson@intel.com>
+X-Mailer: git-send-email 2.24.1
+MIME-Version: 1.0
+Cc: linux-arm-kernel@lists.infradead.org, Wanpeng Li <wanpengli@tencent.com>,
+ Janosch Frank <frankja@linux.ibm.com>, kvm@vger.kernel.org,
+ David Hildenbrand <david@redhat.com>, Marc Zyngier <maz@kernel.org>,
+ Joerg Roedel <joro@8bytes.org>, Cornelia Huck <cohuck@redhat.com>,
+ linux-mips@vger.kernel.org,
+ Sean Christopherson <sean.j.christopherson@intel.com>,
+ linux-kernel@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
+ Christian Borntraeger <borntraeger@de.ibm.com>, kvm-ppc@vger.kernel.org,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, kvmarm@lists.cs.columbia.edu,
+ Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -85,262 +67,60 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On ARMv7 & ARMv8 some load/store instructions might trigger a data abort
-exception with no valid ISS info to be decoded. The lack of decode info
-makes it at least tricky to emulate those instruction which is one of the
-(many) reasons why KVM will not even try to do so.
+The non-x86 part of this series is wholly contained in patch 01.  Compared
+to other recent kvm-wide changes, this one is very straightforward (famous
+last words).
 
-Add support for handling those by requesting KVM to inject external
-dabt into the quest.
+Like a few other architectures, e.g. PPC, x86 uses a set of global hooks
+to call back into vendor code on demand.  A handlful of the x86 hooks are
+used only within the scope of kvm_init().  This series moves the init-only
+hooks to a separate struct, partly to clean up the code a bit, but mainly
+so that the runtime hooks can be made available only after the x86 vendor
+has completed its ->hardware_setup().  While working on a different series
+I spent a fair bit of time scratching my as to why a kvm_x86_ops wasn't
+working, and eventually realized VMX's callback wasn't "ready" because the
+vmcs_config hadn't yet been populated.
 
-Signed-off-by: Beata Michalska <beata.michalska@linaro.org>
----
- target/arm/cpu.h     |  2 ++
- target/arm/kvm.c     | 96 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- target/arm/kvm32.c   |  3 ++
- target/arm/kvm64.c   |  3 ++
- target/arm/kvm_arm.h | 19 +++++++++++
- 5 files changed, 123 insertions(+)
+Due to lack of a cross-compiling setup, the non-x86 changes in patch 01
+are untested.
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index c1aedbe..e04a8d3 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -558,6 +558,8 @@ typedef struct CPUARMState {
-         uint8_t has_esr;
-         uint64_t esr;
-     } serror;
-+    /* Status field for pending external dabt */
-+    uint8_t ext_dabt_pending;
- 
-     /* State of our input IRQ/FIQ/VIRQ/VFIQ lines */
-     uint32_t irq_line_state;
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 8d82889..e7bc9b7 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -37,6 +37,7 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
- 
- static bool cap_has_mp_state;
- static bool cap_has_inject_serror_esr;
-+static bool cap_has_inject_ext_dabt; /* KVM_CAP_ARM_INJECT_EXT_DABT */
- 
- static ARMHostCPUFeatures arm_host_cpu_features;
- 
-@@ -62,6 +63,12 @@ void kvm_arm_init_serror_injection(CPUState *cs)
-                                     KVM_CAP_ARM_INJECT_SERROR_ESR);
- }
- 
-+void kvm_arm_init_ext_dabt_injection(CPUState *cs)
-+{
-+    cap_has_inject_ext_dabt = kvm_check_extension(cs->kvm_state,
-+                                    KVM_CAP_ARM_INJECT_EXT_DABT);
-+}
-+
- bool kvm_arm_create_scratch_host_vcpu(const uint32_t *cpus_to_try,
-                                       int *fdarray,
-                                       struct kvm_vcpu_init *init)
-@@ -216,6 +223,11 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         ret = -EINVAL;
-     }
- 
-+    if (kvm_check_extension(s, KVM_CAP_ARM_NISV_TO_USER))
-+        if (kvm_vm_enable_cap(s, KVM_CAP_ARM_NISV_TO_USER, 0)) {
-+            warn_report("Failed to enable DABT NISV cap");
-+        }
-+
-     return ret;
- }
- 
-@@ -598,6 +610,10 @@ int kvm_put_vcpu_events(ARMCPU *cpu)
-         events.exception.serror_esr = env->serror.esr;
-     }
- 
-+    if (cap_has_inject_ext_dabt) {
-+        events.exception.ext_dabt_pending = env->ext_dabt_pending;
-+    }
-+
-     ret = kvm_vcpu_ioctl(CPU(cpu), KVM_SET_VCPU_EVENTS, &events);
-     if (ret) {
-         error_report("failed to put vcpu events");
-@@ -627,6 +643,8 @@ int kvm_get_vcpu_events(ARMCPU *cpu)
-     env->serror.has_esr = events.exception.serror_has_esr;
-     env->serror.esr = events.exception.serror_esr;
- 
-+    env->ext_dabt_pending = events.exception.ext_dabt_pending;
-+
-     return 0;
- }
- 
-@@ -634,6 +652,7 @@ void kvm_arch_pre_run(CPUState *cs, struct kvm_run *run)
- {
- }
- 
-+
- MemTxAttrs kvm_arch_post_run(CPUState *cs, struct kvm_run *run)
- {
-     ARMCPU *cpu;
-@@ -699,6 +718,11 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
-             ret = EXCP_DEBUG;
-         } /* otherwise return to guest */
-         break;
-+    case KVM_EXIT_ARM_NISV:
-+        /* External DABT with no valid iss to decode */
-+        ret = kvm_arm_handle_dabt_nisv(cs, run->arm_nisv.esr_iss,
-+                                       run->arm_nisv.fault_ipa);
-+        break;
-     default:
-         qemu_log_mask(LOG_UNIMP, "%s: un-handled exit reason %d\n",
-                       __func__, run->exit_reason);
-@@ -833,3 +857,75 @@ int kvm_arch_msi_data_to_gsi(uint32_t data)
- {
-     return (data - 32) & 0xffff;
- }
-+
-+int kvm_arm_handle_dabt_nisv(CPUState *cs, uint64_t esr_iss,
-+                             uint64_t fault_ipa)
-+{
-+    ARMCPU *cpu = ARM_CPU(cs);
-+    CPUARMState *env = &cpu->env;
-+    uint32_t ins, ins_fetched;
-+
-+    /*
-+     * Hacky workaround for kernels that for aarch32 guests, instead of expected
-+     * external data abort, inject the IMPLEMENTATION DEFINED exception with the
-+     * lock-down. This is actually handled by the guest which results in
-+     * re-running the faulting instruction.
-+     * This intends to break the vicious cycle.
-+     */
-+    if (!is_a64(env)) {
-+        static uint8_t setback;
-+
-+        /*
-+         * The state has not been synchronized yet, so if this is re-occurrence
-+         * of the same abort triggered by guest, the status for pending external
-+         * abort should not get cleared yet
-+         */
-+        if (unlikely(env->ext_dabt_pending)) {
-+            if (setback) {
-+                error_report("Most probably triggered kernel issue with"
-+                             " injecting external data abort.");
-+                error_printf("Giving up trying ...\n");
-+                /* Here is where the fun comes to an end */
-+                return -EINVAL;
-+            }
-+        }
-+        setback = env->ext_dabt_pending;
-+    }
-+
-+    kvm_cpu_synchronize_state(cs);
-+   /*
-+    * ISS [23:14] is invalid so there is a limited info
-+    * on what has just happened so the only *useful* thing that can
-+    * be retrieved from ISS is WnR & DFSC (though in some cases WnR
-+    * might be less of a value as well)
-+    */
-+
-+    /*
-+     * Get current PC before it will get updated to exception vector entry
-+     */
-+    target_ulong ins_addr = is_a64(env) ? env->pc : env->regs[15];
-+
-+    /*
-+     * Get the faulting instruction
-+     * Instructions have a fixed length of 32 bits
-+     * and are always little-endian
-+     */
-+    ins_fetched = !cpu_memory_rw_debug(cs, ins_addr, (uint8_t *) &ins,
-+                                       sizeof(uint32_t), 0);
-+
-+    error_report("Data abort exception with no valid ISS generated by "
-+                 "guest memory access at physical address: 0x" TARGET_FMT_lx,
-+                 (target_ulong)fault_ipa);
-+
-+    error_printf(ins_fetched ? "%s : 0x%" PRIx32 " (ins encoded)\n"  : "%s\n",
-+                 "KVM unable to emulate faulting instruction",
-+                 (!ins_fetched ? 0 : ldl_le_p(&ins)));
-+    error_printf("Injecting a data abort exception into guest.\n");
-+    /*
-+     * Set pending ext dabt and trigger SET_EVENTS so that
-+     * KVM can inject the abort
-+     */
-+    env->ext_dabt_pending = 1;
-+
-+    return 0;
-+}
-diff --git a/target/arm/kvm32.c b/target/arm/kvm32.c
-index cf2b47f..177402e 100644
---- a/target/arm/kvm32.c
-+++ b/target/arm/kvm32.c
-@@ -240,6 +240,9 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     /* Check whether userspace can specify guest syndrome value */
-     kvm_arm_init_serror_injection(cs);
- 
-+    /* Set status for supporting the external dabt injection */
-+    kvm_arm_init_ext_dabt_injection(cs);
-+
-     return kvm_arm_init_cpreg_list(cpu);
- }
- 
-diff --git a/target/arm/kvm64.c b/target/arm/kvm64.c
-index d06fd32..a474369 100644
---- a/target/arm/kvm64.c
-+++ b/target/arm/kvm64.c
-@@ -791,6 +791,9 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     /* Check whether user space can specify guest syndrome value */
-     kvm_arm_init_serror_injection(cs);
- 
-+    /* Set status for supporting the external dabt injection */
-+    kvm_arm_init_ext_dabt_injection(cs);
-+
-     return kvm_arm_init_cpreg_list(cpu);
- }
- 
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index 8e14d40..fe019f2 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -144,6 +144,14 @@ void kvm_arm_reset_vcpu(ARMCPU *cpu);
- void kvm_arm_init_serror_injection(CPUState *cs);
- 
- /**
-+ * kvm_arm_init_ext_dabt_injection
-+ * @cs: CPUState
-+ *
-+ * Set status for KVM support for Ext DABT injection
-+ */
-+void kvm_arm_init_ext_dabt_injection(CPUState *cs);
-+
-+/**
-  * kvm_get_vcpu_events:
-  * @cpu: ARMCPU
-  *
-@@ -372,6 +380,17 @@ static inline const char *gicv3_class_name(void)
- bool kvm_arm_handle_debug(CPUState *cs, struct kvm_debug_exit_arch *debug_exit);
- 
- /**
-+ * kvm_arm_handle_dabt_nisv
-+ * @cs: CPUState
-+ * @esr_iss: ISS encoding (limited) for the exception from Data Abort
-+ *           ISV bit set to '0b0' -> no valid instruction syndrome
-+ * @fault_ipa: faulting address for the synch data abort
-+ *
-+ * Returns: 0 if the exception has been handled
-+ */
-+int kvm_arm_handle_dabt_nisv(CPUState *cs, uint64_t esr_iss,
-+                             uint64_t fault_ipa);
-+/**
-  * kvm_arm_hw_debug_active:
-  * @cs: CPU State
-  *
+The SVM changes in patch 02 are fairly well tested, e.g. fudged things
+enough to ensure KVM didn't explode on a null pointer.
+
+Patch 05 is a bit scary as a rogue dereference of kvm_x86_ops before
+->hardware_setup() will crash KVM (maybe the kernel?).  I didn't find any
+obvious ways to use kvm_x86_ops on AMD, and tested on a few different
+Intel CPUs, so I'm reasonably confident that there are no existing
+violations.
+
+Sean Christopherson (5):
+  KVM: Pass kvm_init()'s opaque param to additional arch funcs
+  KVM: x86: Move init-only kvm_x86_ops to separate struct
+  KVM: VMX: Move hardware_setup() definition below vmx_x86_ops
+  KVM: VMX: Configure runtime hooks using vmx_x86_ops
+  KVM: x86: Set kvm_x86_ops only after ->hardware_setup() completes
+
+ arch/mips/kvm/mips.c            |   4 +-
+ arch/powerpc/kvm/powerpc.c      |   4 +-
+ arch/s390/kvm/kvm-s390.c        |   4 +-
+ arch/x86/include/asm/kvm_host.h |  13 +-
+ arch/x86/kvm/svm.c              |  15 +-
+ arch/x86/kvm/vmx/nested.c       |  15 +-
+ arch/x86/kvm/vmx/nested.h       |   3 +-
+ arch/x86/kvm/vmx/vmx.c          | 345 ++++++++++++++++----------------
+ arch/x86/kvm/x86.c              |  16 +-
+ include/linux/kvm_host.h        |   4 +-
+ virt/kvm/arm/arm.c              |   4 +-
+ virt/kvm/kvm_main.c             |  18 +-
+ 12 files changed, 238 insertions(+), 207 deletions(-)
+
 -- 
-2.7.4
+2.24.1
 
 _______________________________________________
 kvmarm mailing list
