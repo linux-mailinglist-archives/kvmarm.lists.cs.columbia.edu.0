@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E69E14DB8F
-	for <lists+kvmarm@lfdr.de>; Thu, 30 Jan 2020 14:26:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BBA5614DB91
+	for <lists+kvmarm@lfdr.de>; Thu, 30 Jan 2020 14:26:23 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 21C1D4AEC1;
-	Thu, 30 Jan 2020 08:26:22 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6E0104A578;
+	Thu, 30 Jan 2020 08:26:23 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,44 +18,44 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id sceUcxCaJaEO; Thu, 30 Jan 2020 08:26:22 -0500 (EST)
+	with ESMTP id spvK9wsqtkEx; Thu, 30 Jan 2020 08:26:23 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D5DBA4AECA;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EF5CF4ACD5;
 	Thu, 30 Jan 2020 08:26:20 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7B3CE4ACF5
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:26:17 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C497A4AEC0
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:26:19 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id IwFJ84ekLCZQ for <kvmarm@lists.cs.columbia.edu>;
- Thu, 30 Jan 2020 08:26:16 -0500 (EST)
+ with ESMTP id c57GHtOLDhGy for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 30 Jan 2020 08:26:18 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2F2A44AEBE
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:26:15 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 25A904AC84
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jan 2020 08:26:16 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 3CF9B2082E;
- Thu, 30 Jan 2020 13:26:14 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 5289322522;
+ Thu, 30 Jan 2020 13:26:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1580390774;
- bh=NYzjf0zBc57FKJJDgjapRNI+QmFi9nWATVOeClefQhI=;
+ s=default; t=1580390775;
+ bh=703sKF2yr/seo5m104p+Tb+c37mblLSLleWGBSPZmCY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=hTWZtgAxp7FMLlcdTrGI/LKfpXKipOUfJpGXB02hvdZ77W0WNUO2ADsSPPgQRrUv6
- KCAqdxCo+Yo9qxT9NRUmKLX6wRESDUWF3XJiHbhUiwK3n3mGOgcQzXO/gJD57zJmAG
- 0ydZmR5Scq/GMzKHDIUZjTqoWBwrTu8cmogcgsgY=
+ b=QyTjuKIVFfj0ivQZ445wbXEkDfvM0TWG2yCY3jGkeeEM1Rkdaoq8dsxFI0I0+/9vf
+ 7OgfG9Fl4ZNSHRG13Kv/IIjvmV4OIiqCOZwkgoc/bgZTyrWaDgSAE3Mfc2ZwvfPQEC
+ x9z7tXXkE5XUvYiC1PM4CxAxa7woUAZB3Mm45cHw=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1ix9pk-002BmW-Jg; Thu, 30 Jan 2020 13:26:12 +0000
+ id 1ix9pl-002BmW-LP; Thu, 30 Jan 2020 13:26:13 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 05/23] KVM: ARM: Call hyp_cpu_pm_exit at the right place
-Date: Thu, 30 Jan 2020 13:25:40 +0000
-Message-Id: <20200130132558.10201-6-maz@kernel.org>
+Subject: [PATCH 06/23] KVM: arm: Remove duplicate include
+Date: Thu, 30 Jan 2020 13:25:41 +0000
+Message-Id: <20200130132558.10201-7-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200130132558.10201-1-maz@kernel.org>
 References: <20200130132558.10201-1-maz@kernel.org>
@@ -95,40 +95,31 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Shannon Zhao <shannon.zhao@linux.alibaba.com>
+From: YueHaibing <yuehaibing@huawei.com>
 
-It doesn't needs to call hyp_cpu_pm_exit() in init_hyp_mode() when some
-error occurs. hyp_cpu_pm_exit() only needs to be called in
-kvm_arch_init() if init_subsystems() fails. So move hyp_cpu_pm_exit()
-out from teardown_hyp_mode() and call it directly in kvm_arch_init().
+Remove duplicate header which is included twice.
 
-Signed-off-by: Shannon Zhao <shannon.zhao@linux.alibaba.com>
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/1575272531-3204-1-git-send-email-shannon.zhao@linux.alibaba.com
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://lore.kernel.org/r/20191113014045.15276-1-yuehaibing@huawei.com
 ---
- virt/kvm/arm/arm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ virt/kvm/arm/arm.c | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/virt/kvm/arm/arm.c b/virt/kvm/arm/arm.c
-index 8de4daf25097..b5d57ed6443c 100644
+index b5d57ed6443c..efda376ab3c5 100644
 --- a/virt/kvm/arm/arm.c
 +++ b/virt/kvm/arm/arm.c
-@@ -1537,7 +1537,6 @@ static void teardown_hyp_mode(void)
- 	free_hyp_pgds();
- 	for_each_possible_cpu(cpu)
- 		free_page(per_cpu(kvm_arm_hyp_stack_page, cpu));
--	hyp_cpu_pm_exit();
- }
+@@ -20,8 +20,6 @@
+ #include <linux/irqbypass.h>
+ #include <linux/sched/stat.h>
+ #include <trace/events/kvm.h>
+-#include <kvm/arm_pmu.h>
+-#include <kvm/arm_psci.h>
  
- /**
-@@ -1751,6 +1750,7 @@ int kvm_arch_init(void *opaque)
- 	return 0;
- 
- out_hyp:
-+	hyp_cpu_pm_exit();
- 	if (!in_hyp_mode)
- 		teardown_hyp_mode();
- out_err:
+ #define CREATE_TRACE_POINTS
+ #include "trace.h"
 -- 
 2.20.1
 
