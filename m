@@ -2,82 +2,68 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DC91614EC48
-	for <lists+kvmarm@lfdr.de>; Fri, 31 Jan 2020 13:06:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 81D9614F278
+	for <lists+kvmarm@lfdr.de>; Fri, 31 Jan 2020 19:56:05 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E831F4A800;
-	Fri, 31 Jan 2020 07:06:42 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8256D4A7F0;
+	Fri, 31 Jan 2020 13:56:04 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id kpFymLE6PAJ0; Fri, 31 Jan 2020 07:06:42 -0500 (EST)
+	with ESMTP id 7dIhxmKnY6eS; Fri, 31 Jan 2020 13:56:04 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CF0784A7D9;
-	Fri, 31 Jan 2020 07:06:41 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 764F24A588;
+	Fri, 31 Jan 2020 13:56:03 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8CD584A50F
- for <kvmarm@lists.cs.columbia.edu>; Fri, 31 Jan 2020 07:06:40 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 163374A52C
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 31 Jan 2020 13:56:02 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id yf-Q9MElJlIO for <kvmarm@lists.cs.columbia.edu>;
- Fri, 31 Jan 2020 07:06:39 -0500 (EST)
-Received: from us-smtp-1.mimecast.com (us-smtp-delivery-1.mimecast.com
- [205.139.110.120])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AB43D4A4F7
- for <kvmarm@lists.cs.columbia.edu>; Fri, 31 Jan 2020 07:06:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1580472399;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=O8Za+S+RT8N2UwLMl2kq7dZ6BHikmL9Pgno023mZKr8=;
- b=X5KHvz87m8Ema2TsvSEuE2xrHGiaqpy/wYvTZRGTzt+6A/SxjuByjvcZJJgwkzMPu+jupx
- ID2Z0mij6wXO/GMU/KNSEsPS/eqZL899ddI1S3sTul5woYBXEuWmWS3Zlcwi4rHuGtrfDp
- Qyu1FbfQfDU3ZAk2AXEjJ8TBxnpXtgM=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-136-Ih36PAVQOHGA5sgccpxLOw-1; Fri, 31 Jan 2020 07:06:36 -0500
-X-MC-Unique: Ih36PAVQOHGA5sgccpxLOw-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.phx2.redhat.com
- [10.5.11.16])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 738599275B;
- Fri, 31 Jan 2020 12:06:33 +0000 (UTC)
-Received: from gondolin (dhcp-192-195.str.redhat.com [10.33.192.195])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 46DCC5C3FA;
- Fri, 31 Jan 2020 12:06:18 +0000 (UTC)
-Date: Fri, 31 Jan 2020 13:06:15 +0100
-From: Cornelia Huck <cohuck@redhat.com>
-To: Sean Christopherson <sean.j.christopherson@intel.com>
-Subject: Re: [PATCH 1/5] KVM: Pass kvm_init()'s opaque param to additional
- arch funcs
-Message-ID: <20200131130615.3b21b28d.cohuck@redhat.com>
-In-Reply-To: <20200130001023.24339-2-sean.j.christopherson@intel.com>
+ with ESMTP id YxAG3GH2uGIj for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 31 Jan 2020 13:56:00 -0500 (EST)
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 165814A4E1
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 31 Jan 2020 13:55:59 -0500 (EST)
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+ by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 31 Jan 2020 10:55:33 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,386,1574150400"; d="scan'208";a="253419672"
+Received: from sjchrist-coffee.jf.intel.com (HELO linux.intel.com)
+ ([10.54.74.202])
+ by fmsmga004.fm.intel.com with ESMTP; 31 Jan 2020 10:55:32 -0800
+Date: Fri, 31 Jan 2020 10:55:32 -0800
+From: Sean Christopherson <sean.j.christopherson@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 5/5] KVM: x86: Set kvm_x86_ops only after
+ ->hardware_setup() completes
+Message-ID: <20200131185531.GB18946@linux.intel.com>
 References: <20200130001023.24339-1-sean.j.christopherson@intel.com>
- <20200130001023.24339-2-sean.j.christopherson@intel.com>
-Organization: Red Hat GmbH
+ <20200130001023.24339-6-sean.j.christopherson@intel.com>
+ <44e0c550-7dcc-bfed-07c4-907e61d476a1@redhat.com>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+Content-Disposition: inline
+In-Reply-To: <44e0c550-7dcc-bfed-07c4-907e61d476a1@redhat.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Cc: Wanpeng Li <wanpengli@tencent.com>, Janosch Frank <frankja@linux.ibm.com>,
  kvm@vger.kernel.org, David Hildenbrand <david@redhat.com>,
  Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- linux-mips@vger.kernel.org, kvm-ppc@vger.kernel.org,
- linux-kernel@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
+ Cornelia Huck <cohuck@redhat.com>, linux-mips@vger.kernel.org,
+ kvm-ppc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Paul Mackerras <paulus@ozlabs.org>,
  Christian Borntraeger <borntraeger@de.ibm.com>,
- linux-arm-kernel@lists.infradead.org, Paolo Bonzini <pbonzini@redhat.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, kvmarm@lists.cs.columbia.edu,
- Jim Mattson <jmattson@google.com>
+ linux-arm-kernel@lists.infradead.org, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ kvmarm@lists.cs.columbia.edu, Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -94,56 +80,18 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, 29 Jan 2020 16:10:19 -0800
-Sean Christopherson <sean.j.christopherson@intel.com> wrote:
-
-> Pass @opaque to kvm_arch_hardware_setup() and
-> kvm_arch_check_processor_compat() to allow architecture specific code to
-> reference @opaque without having to stash it away in a temporary global
-> variable.  This will enable x86 to separate its vendor specific callback
-> ops, which are passed via @opaque, into "init" and "runtime" ops without
-> having to stash away the "init" ops.
+On Thu, Jan 30, 2020 at 06:44:09AM +0100, Paolo Bonzini wrote:
+> On 30/01/20 01:10, Sean Christopherson wrote:
+> > Set kvm_x86_ops with the vendor's ops only after ->hardware_setup()
+> > completes to "prevent" using kvm_x86_ops before they are ready, i.e. to
+> > generate a null pointer fault instead of silently consuming unconfigured
+> > state.
 > 
-> No functional change intended.
-> 
-> Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
-> ---
->  arch/mips/kvm/mips.c       |  4 ++--
->  arch/powerpc/kvm/powerpc.c |  4 ++--
->  arch/s390/kvm/kvm-s390.c   |  4 ++--
->  arch/x86/kvm/x86.c         |  4 ++--
->  include/linux/kvm_host.h   |  4 ++--
->  virt/kvm/arm/arm.c         |  4 ++--
->  virt/kvm/kvm_main.c        | 18 ++++++++++++++----
->  7 files changed, 26 insertions(+), 16 deletions(-)
+> What about even copying kvm_x86_ops by value, so that they can be
+> accessed with "kvm_x86_ops.callback()" and save one memory access?
 
-> diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-> index eb3709d55139..5ad252defa54 100644
-> --- a/virt/kvm/kvm_main.c
-> +++ b/virt/kvm/kvm_main.c
-> @@ -4345,14 +4345,22 @@ struct kvm_vcpu * __percpu *kvm_get_running_vcpus(void)
->          return &kvm_running_vcpu;
->  }
->  
-> -static void check_processor_compat(void *rtn)
-> +struct kvm_cpu_compat_check {
-> +	void *opaque;
-> +	int *ret;
-> +};
-> +
-> +static void check_processor_compat(void *data)
->  {
-> -	*(int *)rtn = kvm_arch_check_processor_compat();
-> +	struct kvm_cpu_compat_check *c = data;
-> +
-> +	*c->ret = kvm_arch_check_processor_compat(c->opaque);
->  }
-
-This function also looks better now :)
-
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-Tested-by: Cornelia Huck <cohuck@redhat.com> #s390
-
+Oooh, I like that idea.  And {svm,vmx}_x86_ops could be marked __initdata
+to save a few bytes and force all the runtime stuff through kvm_x86_ops.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
