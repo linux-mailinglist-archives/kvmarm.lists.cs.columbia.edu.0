@@ -2,74 +2,90 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 683A6153103
-	for <lists+kvmarm@lfdr.de>; Wed,  5 Feb 2020 13:46:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D8D161533BC
+	for <lists+kvmarm@lfdr.de>; Wed,  5 Feb 2020 16:21:21 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F223D4A94D;
-	Wed,  5 Feb 2020 07:46:44 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 63BC94A51F;
+	Wed,  5 Feb 2020 10:21:21 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SzyRzj9szmoA; Wed,  5 Feb 2020 07:46:44 -0500 (EST)
+	with ESMTP id S+2C7kBdmmVt; Wed,  5 Feb 2020 10:21:21 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4003F4A51E;
-	Wed,  5 Feb 2020 07:46:41 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 529814A597;
+	Wed,  5 Feb 2020 10:21:20 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DD34B4A4E5
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Feb 2020 07:46:39 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 856CC4A4A0
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Feb 2020 08:42:11 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id GDVB0Q9mFNvE for <kvmarm@lists.cs.columbia.edu>;
- Wed,  5 Feb 2020 07:46:39 -0500 (EST)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E3F9B4A49F
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Feb 2020 07:46:38 -0500 (EST)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 9E6FC20702;
- Wed,  5 Feb 2020 12:46:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1580906797;
- bh=GfGSMXXeXChdHY2rFyfqEnWPYUrl7k3y4PXuksqSPxo=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=MMo0yvYVxHW6Ixw5DBnn9oa1n/Z6efinNp30im/8hwmaiqSxnnz2ll2SgDS2KifNh
- SpqDffeu0rM2ygdSsyGGqC/wnOcfv28oW/XLzPxC4VpH+UnWWAfRJhWzOcVRkKJezh
- KQDjqqsYfIdPBc+UZa49K//qIZGwFqxl+vBcqCqc=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
- (envelope-from <maz@kernel.org>)
- id 1izK4h-00388J-VA; Wed, 05 Feb 2020 12:46:36 +0000
+ with ESMTP id x6HEhFqDZr4F for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  5 Feb 2020 08:42:10 -0500 (EST)
+Received: from us-smtp-1.mimecast.com (us-smtp-delivery-1.mimecast.com
+ [205.139.110.120])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5BAB14A483
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Feb 2020 08:42:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1580910130;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=2fNNJhELYa0usfT/vmjSSmqCwrduDZp8i5id/kXZ0c4=;
+ b=P2FVDi8oxvJ4mL+uDqwlrYm2OlFtnXrCUTXESvNGAMbhPvRppRzaTPTym5TYbgCRlYnuQ8
+ 4FK08cHK8jxjwf84bJUyPe/HLUcbo57uyeorDOm510aA70/SZE3JITHL9+/7kmKQ8SN1je
+ 60sttja/FoOlCirOpjuRWnxlP/WoUp4=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-378-CPKoeHXbNLG8SxUmm6x9bQ-1; Wed, 05 Feb 2020 08:42:05 -0500
+Received: by mail-qk1-f198.google.com with SMTP id k10so1294082qki.2
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 05 Feb 2020 05:42:05 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=63RqOoE/SUxs1bxyPTKTBeyS1B1iUtNQLL9J9vLKYh8=;
+ b=hyCZ7UsJ/1zYx1kQ3aJuoP/SIkK9apiO9QKuzTor19VCakgOX5Qyid/6LhqGZXKmFk
+ R4tkf8fc926WACpjVlcJcFw/11IQkuj74uMt54ZcFLunorwFioOZPvkvLoFBzqpEtVKh
+ 4R4Kvfjg5NWslRKkgvpJDalNPrRFD0zBPuf/cdmZdbg8uZMHhCOgM/GmcMgWrGGWQtsE
+ /Uz4xqBJc8lfyZyTpBzKBQPfLoXblcz0VN5dAcX1MbQdZezsG1nvX5jOl0DQLKX1+tub
+ vUPzZ4aGHu3ApC7ENMOBbgYxcRoDchYdxuKSVLFs49W0a/pGolEG1j5yy+yv4We62nFi
+ vbAg==
+X-Gm-Message-State: APjAAAUNbnbSnfQ7vQC3Dw9rkB3UEsU/DxayYh0ju7WteYhbh68RfrDO
+ WVTVUH4IX5RGp7fvawcEKgXwGM9ZoW+QlFVWCULIOcRyoxSBGR0lMLahRwOH3m4jOD50oW1EC5w
+ WN8Iea30YrNtn1G7xsfr3Z3df
+X-Received: by 2002:a37:d0c:: with SMTP id 12mr33423424qkn.464.1580910124622; 
+ Wed, 05 Feb 2020 05:42:04 -0800 (PST)
+X-Google-Smtp-Source: APXvYqwZ/1/Sty6fHl96Q69KjRb0mE9NhGj48HPjM78jNDpEMNN3g2vmML86vdJ+YqD/niUHe9OAuw==
+X-Received: by 2002:a37:d0c:: with SMTP id 12mr33423403qkn.464.1580910124353; 
+ Wed, 05 Feb 2020 05:42:04 -0800 (PST)
+Received: from dev.jcline.org ([136.56.87.133])
+ by smtp.gmail.com with ESMTPSA id g62sm12797091qkd.25.2020.02.05.05.42.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Feb 2020 05:42:03 -0800 (PST)
+From: Jeremy Cline <jcline@redhat.com>
+To: Marc Zyngier <maz@kernel.org>, James Morse <james.morse@arm.com>,
+ Julien Thierry <julien.thierry.kdev@gmail.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>
+Subject: [PATCH] KVM: arm/arm64: Fix up includes for trace.h
+Date: Wed,  5 Feb 2020 08:41:46 -0500
+Message-Id: <20200205134146.82678-1-jcline@redhat.com>
+X-Mailer: git-send-email 2.24.1
 MIME-Version: 1.0
-Date: Wed, 05 Feb 2020 12:46:35 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: Zenghui Yu <yuzenghui@huawei.com>
-Subject: Re: [PATCH 0/5] irqchip/gic-v4.1: Cleanup and fixes for GICv4.1
-In-Reply-To: <20200204090940.1225-1-yuzenghui@huawei.com>
-References: <20200204090940.1225-1-yuzenghui@huawei.com>
-Message-ID: <004ca9ea2d525d5b1bcf1d78f10c61ba@kernel.org>
-X-Sender: maz@kernel.org
-User-Agent: Roundcube Webmail/1.3.8
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: yuzenghui@huawei.com, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- tglx@linutronix.de, jason@lakedaemon.net, wanghaibin.wang@huawei.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: jason@lakedaemon.net, linux-kernel@vger.kernel.org, tglx@linutronix.de,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+X-MC-Unique: CPKoeHXbNLG8SxUmm6x9bQ-1
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+X-Mailman-Approved-At: Wed, 05 Feb 2020 10:21:19 -0500
+Cc: Jeremy Cline <jcline@redhat.com>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -81,46 +97,44 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Zenghui,
+Fedora kernel builds on armv7hl began failing recently because
+kvm_arm_exception_type and kvm_arm_exception_class were undeclared in
+trace.h. Add the missing include.
 
-On 2020-02-04 09:09, Zenghui Yu wrote:
-> Hi,
-> 
-> This series contains some cleanups, VPROPBASER field programming fix
-> and level2 vPE table allocation enhancement, collected while looking
-> through the GICv4.1 driver one more time.
-> 
-> Hope they will help, thanks!
-> 
-> Zenghui Yu (5):
->   irqchip/gic-v4.1: Fix programming of GICR_VPROPBASER_4_1_SIZE
->   irqchip/gic-v4.1: Set vpe_l1_base for all redistributors
->   irqchip/gic-v4.1: Ensure L2 vPE table is allocated at RD level
->   irqchip/gic-v4.1: Drop 'tmp' in inherit_vpe_l1_table_from_rd()
->   irqchip/gic-v3-its: Remove superfluous WARN_ON
-> 
->  drivers/irqchip/irq-gic-v3-its.c   | 80 +++++++++++++++++++++++++++---
->  include/linux/irqchip/arm-gic-v3.h |  2 +-
->  2 files changed, 75 insertions(+), 7 deletions(-)
+Signed-off-by: Jeremy Cline <jcline@redhat.com>
+---
 
-Thanks a lot for this, much appreciated, I'm quite happy with the 
-overall
-state of the series. If you can just address the couple of nits I have 
-on
-patch #3, I'll then queue the series and send off to Thomas together 
-with
-the rest of the queued fixes.
+I've not dug very deeply into what exactly changed between commit
+b3a608222336 (the last build that succeeded) and commit 14cd0bd04907,
+but my guess was commit 0e20f5e25556 ("KVM: arm/arm64: Cleanup MMIO
+handling").
 
-Thanks,
+Fedora's build config is available at
+https://src.fedoraproject.org/rpms/kernel/blob/master/f/kernel-armv7hl-fedora.config
 
-          M.
+ virt/kvm/arm/trace.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/virt/kvm/arm/trace.h b/virt/kvm/arm/trace.h
+index 204d210d01c2..cc94ccc68821 100644
+--- a/virt/kvm/arm/trace.h
++++ b/virt/kvm/arm/trace.h
+@@ -4,6 +4,7 @@
+ 
+ #include <kvm/arm_arch_timer.h>
+ #include <linux/tracepoint.h>
++#include <asm/kvm_arm.h>
+ 
+ #undef TRACE_SYSTEM
+ #define TRACE_SYSTEM kvm
 -- 
-Jazz is not dead. It just smells funny...
+2.24.1
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
