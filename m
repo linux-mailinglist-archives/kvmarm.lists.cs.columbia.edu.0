@@ -2,73 +2,90 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id BB175155C11
-	for <lists+kvmarm@lfdr.de>; Fri,  7 Feb 2020 17:47:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C944D155C8D
+	for <lists+kvmarm@lfdr.de>; Fri,  7 Feb 2020 18:05:06 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3730F4A610;
-	Fri,  7 Feb 2020 11:47:57 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 595A44A610;
+	Fri,  7 Feb 2020 12:05:06 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ald2ygSiSC3o; Fri,  7 Feb 2020 11:47:57 -0500 (EST)
+	with ESMTP id LQc5ogEE8Dcw; Fri,  7 Feb 2020 12:05:06 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3E2694A522;
-	Fri,  7 Feb 2020 11:47:56 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 41CAB4A50F;
+	Fri,  7 Feb 2020 12:05:05 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 24CFA4A4FC
- for <kvmarm@lists.cs.columbia.edu>; Fri,  7 Feb 2020 11:47:55 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 07BF74A4AA
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  7 Feb 2020 12:05:04 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id STqngEMlHAsu for <kvmarm@lists.cs.columbia.edu>;
- Fri,  7 Feb 2020 11:47:53 -0500 (EST)
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9C7804A3A5
- for <kvmarm@lists.cs.columbia.edu>; Fri,  7 Feb 2020 11:47:53 -0500 (EST)
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-X-Amp-File-Uploaded: False
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
- by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 07 Feb 2020 08:47:52 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,414,1574150400"; d="scan'208";a="430886400"
-Received: from sjchrist-coffee.jf.intel.com (HELO linux.intel.com)
- ([10.54.74.202])
- by fmsmga005.fm.intel.com with ESMTP; 07 Feb 2020 08:47:51 -0800
-Date: Fri, 7 Feb 2020 08:47:48 -0800
-From: Sean Christopherson <sean.j.christopherson@intel.com>
-To: Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH v5 18/19] KVM: Dynamically size memslot array based on
- number of used slots
-Message-ID: <20200207164748.GF2401@linux.intel.com>
-References: <20200121223157.15263-1-sean.j.christopherson@intel.com>
- <20200121223157.15263-19-sean.j.christopherson@intel.com>
- <20200206221208.GI700495@xz-x1>
- <20200207153829.GA2401@linux.intel.com>
- <20200207160546.GA707371@xz-x1>
- <20200207161553.GE2401@linux.intel.com>
- <20200207163740.GA720553@xz-x1>
+ with ESMTP id He3ejqvX0wGo for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  7 Feb 2020 12:05:03 -0500 (EST)
+Received: from us-smtp-delivery-1.mimecast.com (us-smtp-1.mimecast.com
+ [205.139.110.61])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 088034A3B4
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  7 Feb 2020 12:05:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1581095102;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DMuEK+TxV2pdwUTaqetvEaUaSq9X4afTOtTnIjiaB5s=;
+ b=hFGxKdH6huHWivqvm4zVDBa4hDhjKGRbkBdFggPsQZ4OOvMa4sDB9HJWd9+nwzI7khP9N+
+ PJNe4uB6Ak/91DTPIY0JpWVWUYdHSXKYgc4yOjxMgN0IlW9wVrHEOzV6qGvNMxDJx3fVw/
+ RDk8/qJQ5KjvtT2AQHND5SbeBg+JNKE=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-98-5upk4ZPLO4KbToVWyjENuw-1; Fri, 07 Feb 2020 12:04:46 -0500
+Received: by mail-qv1-f70.google.com with SMTP id dw11so1531562qvb.16
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 07 Feb 2020 09:04:46 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=W/mzwS+af3IHrG/BFwWznCkZFHf8eWaEKxp9UaXyBTw=;
+ b=gAoriBAPprjpfZV8IVzEalCs014x21b4AdCa59u5zAtIsJDW80Ty4E2lUjr7GyzU3H
+ MBFRquWGtgKK7rlohF9vbkQyzNwB0FQAqlNj57ze6RO68clXs9Ubv+RU5WDB4CTPCZJQ
+ Y/Xot8EkOAFdNRM/+hUKsjmrniHFSYeNLQQJ1Qv8nXcy5ATP1rBQULoTEhrmIkofQBYt
+ y1z9uN1ZvtCK5e64K+5o3d5b7wd6FsuGBulSO8jm7G8YCbILsNlrI61zMe2YnuJoLj0Q
+ ysUIDbXMIwDyg4EQjwUNEIzTgGyWurgXOgMQxGP39PzbdtEDtypV8gcKGHalA+30xyz1
+ GY6A==
+X-Gm-Message-State: APjAAAUE4JthnUuw5+4asyyJt65IqwkZJvHloPlQr0Mfr+k4bQYNLDvC
+ 2bPI7ojKSyoqcfBWDbl4N9nvj+ICBHGW0G6ud1kXRy4l7mEC7Uu9XxoPqfCvsr6QiXt+qovTzuj
+ KR/dVZSeXD1T+nWhwGhvzhggB
+X-Received: by 2002:ac8:540f:: with SMTP id b15mr8284826qtq.237.1581095086455; 
+ Fri, 07 Feb 2020 09:04:46 -0800 (PST)
+X-Google-Smtp-Source: APXvYqw1G0WIFJFzF3ZaR8RGw77pX9iDrwBoxVk9+CVkdk7fCeK283mLiW1K0rb7VbrSqZfB/uogkQ==
+X-Received: by 2002:ac8:540f:: with SMTP id b15mr8284804qtq.237.1581095086189; 
+ Fri, 07 Feb 2020 09:04:46 -0800 (PST)
+Received: from xz-x1 ([2607:9880:19c8:32::2])
+ by smtp.gmail.com with ESMTPSA id z11sm1575949qkj.91.2020.02.07.09.04.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 07 Feb 2020 09:04:45 -0800 (PST)
+Date: Fri, 7 Feb 2020 12:04:43 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH] KVM: Disable preemption in kvm_get_running_vcpu()
+Message-ID: <20200207170443.GB720553@xz-x1>
+References: <20200207163410.31276-1-maz@kernel.org>
 MIME-Version: 1.0
+In-Reply-To: <20200207163410.31276-1-maz@kernel.org>
+X-MC-Unique: 5upk4ZPLO4KbToVWyjENuw-1
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
 Content-Disposition: inline
-In-Reply-To: <20200207163740.GA720553@xz-x1>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- David Hildenbrand <david@redhat.com>, linux-mips@vger.kernel.org,
- Paul Mackerras <paulus@ozlabs.org>, kvmarm@lists.cs.columbia.edu,
- Janosch Frank <frankja@linux.ibm.com>, Marc Zyngier <maz@kernel.org>,
- Joerg Roedel <joro@8bytes.org>, Christian Borntraeger <borntraeger@de.ibm.com>,
- kvm-ppc@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- Jim Mattson <jmattson@google.com>, Cornelia Huck <cohuck@redhat.com>,
- linux-kernel@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <f4bug@amsat.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -85,15 +102,31 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Feb 07, 2020 at 11:37:40AM -0500, Peter Xu wrote:
-> Sorry again for not being able to identify the meaning of that
-> sentence myself.
+On Fri, Feb 07, 2020 at 04:34:10PM +0000, Marc Zyngier wrote:
+> Accessing a per-cpu variable only makes sense when preemption is
+> disabled (and the kernel does check this when the right debug options
+> are switched on).
+> 
+> For kvm_get_running_vcpu(), it is fine to return the value after
+> re-enabling preemption, as the preempt notifiers will make sure that
+> this is kept consistent across task migration (the comment above the
+> function hints at it, but lacks the crucial preemption management).
+> 
+> While we're at it, move the comment from the ARM code, which explains
+> why the whole thing works.
+> 
+> Fixes: 7495e22bb165 ("KVM: Move running VCPU from ARM to common code").
+> Cc: Peter Xu <peterx@redhat.com>
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Reported-by: Zenghui Yu <yuzenghui@huawei.com>
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
+> Link: https://lore.kernel.org/r/318984f6-bc36-33a3-abc6-bf2295974b06@huawei.com
 
-No worries.  
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-> My English is probably even worse than I thought...
+-- 
+Peter Xu
 
-I'm pretty sure this is true for everyone :-)
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
