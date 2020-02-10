@@ -2,80 +2,63 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C18CE157EC8
-	for <lists+kvmarm@lfdr.de>; Mon, 10 Feb 2020 16:32:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CE00157F20
+	for <lists+kvmarm@lfdr.de>; Mon, 10 Feb 2020 16:46:20 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3854A4A59B;
-	Mon, 10 Feb 2020 10:32:04 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E83FE4AC7E;
+	Mon, 10 Feb 2020 10:46:19 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered)
-	header.i=@lixom-net.20150623.gappssmtp.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id A+JbgA8OKlIk; Mon, 10 Feb 2020 10:32:04 -0500 (EST)
+	with ESMTP id dLDczjYUUf7F; Mon, 10 Feb 2020 10:46:19 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0F2B44A946;
-	Mon, 10 Feb 2020 10:32:03 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C56E84A957;
+	Mon, 10 Feb 2020 10:46:18 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3D7AE4A551
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Feb 2020 10:32:02 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E4B1E4A4FC
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Feb 2020 10:46:16 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 1rirN8aOIl6p for <kvmarm@lists.cs.columbia.edu>;
- Mon, 10 Feb 2020 10:32:00 -0500 (EST)
-Received: from mail-il1-f194.google.com (mail-il1-f194.google.com
- [209.85.166.194])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 626A84A50F
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Feb 2020 10:32:00 -0500 (EST)
-Received: by mail-il1-f194.google.com with SMTP id p8so523757iln.12
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Feb 2020 07:32:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=lixom-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=rJKu0curXNDiIv07BXA7ZVrF2bICC0+Hs2nUqvpWWBE=;
- b=CAXc09ubXS9ZFxUmd/SbvlfA3zsu6fw84nPAia6Y37IBnkkixzVnQQ1DvPc4gVvSDy
- W6Uq5WrNvmHIM9pR9ez7FYUhIv6XdEX9GEwY2rJl2vY33gTufoWhbjwUcACu+BIPxG5G
- bAgK1f8xNqN/VhPHCmGFF+SDEbTzUji36h+YGdbhQmDJdX3HrBJ3fQ7RFH6TSmczTUaI
- l8Lh7ZdUVtAyloybvuqg1r1VSaZqNUt/8vLmi/SyTQGmfdOyC29Tgxf2X4u9kYNOUF8c
- D8wdvnGGssR7+hgN4BP19DR9Am1ylWfvoMD4pA/mEq3/e3yQTNmVwZHuB6JEdy2D62Br
- iXZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=rJKu0curXNDiIv07BXA7ZVrF2bICC0+Hs2nUqvpWWBE=;
- b=C5XYGF+cRpTa0ul1WYP6hk3PzE9hDNJKt++1ylZqSCU+JiRVmCo46EaZTpWhvxbpPh
- a3bpKNzjURHwyPLB3EAScT779eYdtmIDiVn0FC95g+1iIEA72UGcgRDO6QcC1dpdKBH6
- we5G2B6Iv/jawWlZ7lfb+3YX5leZOBJ9KRnCDYHpn8dumFC61O+Yg1ioayZvMJUs1GP5
- 84p6a1UcM9yVdfe+VYa1DTq2KxSkNY2+AW4nBwh/455EJ/iGosQxsPOrXzkky3zyGtBR
- QnIRKmFe45MqctewQvKPminOojsQ5st5GtwucR0M6eu65ejRfhJ00TuYg41cQWJ91+r0
- yGOw==
-X-Gm-Message-State: APjAAAWMCelrI5m86Fk+8VWs36UJ23kyqBZQXY05PCPJADnzMZ4Q1aTT
- Co+CSqVh1ysSdEPfVJmCPAYuok1KxRDS6Cn+ZBv98A==
-X-Google-Smtp-Source: APXvYqxYx29kgSFceIBbFGWRItTIbjo6m8Fbpp5JsPt65w5bFXVn9ceiixXHhUS3KHfAZHhdKoQKoj4ONXPF4oZheGk=
-X-Received: by 2002:a92:9f1a:: with SMTP id u26mr1986348ili.72.1581348719752; 
- Mon, 10 Feb 2020 07:31:59 -0800 (PST)
-MIME-Version: 1.0
-References: <20200210141324.21090-1-maz@kernel.org>
-In-Reply-To: <20200210141324.21090-1-maz@kernel.org>
-From: Olof Johansson <olof@lixom.net>
-Date: Mon, 10 Feb 2020 16:21:42 +0100
-Message-ID: <CAOesGMhHkez-5vxwWuzXc2Rm=dYYWjMX9C8AewVy9GDWuZcwMw@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/5] Removing support for 32bit KVM/arm host
+ with ESMTP id 3zkP4PYf1mlx for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 10 Feb 2020 10:46:16 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id F2EAB4A4F7
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Feb 2020 10:46:15 -0500 (EST)
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
+ bits)) (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 53B6620733;
+ Mon, 10 Feb 2020 15:46:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1581349574;
+ bh=TTGiUvb9RHz3hdhmJfOzp0KIapqFPLU42O9zSWvHhOE=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=Nbgh66A2RBEWvXx6MerEIUd9giZyvTUtyT0g89HKzIxi8UAO5FFSC3DotkWGBZgWh
+ 8VmqH2A4GRYx8VmqwMzWPYlvCHE9g4TRJiKoqXV66JFgqs70vggQKyGjqiH94fc6A/
+ x27HEPnRKKPuNUTsEcUCTryiOPmjdOg06CwR+Wdo=
+Date: Mon, 10 Feb 2020 15:46:08 +0000
+From: Will Deacon <will@kernel.org>
 To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [RFC PATCH 0/5] Removing support for 32bit KVM/arm host
+Message-ID: <20200210154608.GA21086@willie-the-truck>
+References: <20200210141324.21090-1-maz@kernel.org>
+MIME-Version: 1.0
+Content-Disposition: inline
+In-Reply-To: <20200210141324.21090-1-maz@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Cc: Anders Berg <anders.berg@lsi.com>, Russell King <linux@arm.linux.org.uk>,
  Arnd Bergmann <arnd@arndb.de>, kvm@vger.kernel.org,
- Paolo Bonzini <pbonzini@redhat.com>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu,
- Linux ARM Mailing List <linux-arm-kernel@lists.infradead.org>
+ linux-arm-kernel@lists.infradead.org, Paolo Bonzini <pbonzini@redhat.com>,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -92,47 +75,32 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Feb 10, 2020 at 3:13 PM Marc Zyngier <maz@kernel.org> wrote:
->
+On Mon, Feb 10, 2020 at 02:13:19PM +0000, Marc Zyngier wrote:
 > KVM/arm was merged just over 7 years ago, and has lived a very quiet
 > life so far. It mostly works if you're prepared to deal with its
 > limitations, it has been a good prototype for the arm64 version,
 > but it suffers a few problems:
->
+> 
 > - It is incomplete (no debug support, no PMU)
 > - It hasn't followed any of the architectural evolutions
 > - It has zero users (I don't count myself here)
+
+I tend to use it to test that it still works, but that's it.
+
 > - It is more and more getting in the way of new arm64 developments
->
-> So here it is: unless someone screams and shows that they rely on
-> KVM/arm to be maintained upsteam, I'll remove 32bit host support
-> form the tree. One of the reasons that makes me confident nobody is
-> using it is that I never receive *any* bug report. Yes, it is perfect.
-> But if you depend on KVM/arm being available in mainline, please shout.
->
-> To reiterate: 32bit guest support for arm64 stays, of course. Only
-> 32bit host goes. Once this is merged, I plan to move virt/kvm/arm to
-> arm64, and cleanup all the now unnecessary abstractions.
->
-> The patches have been generated with the -D option to avoid spamming
-> everyone with huge diffs, and there is a kvm-arm/goodbye branch in
-> my kernel.org repository.
->
-> Marc Zyngier (5):
->   arm: Unplug KVM from the build system
->   arm: Remove KVM from config files
->   arm: Remove 32bit KVM host support
->   arm: Remove HYP/Stage-2 page-table support
->   arm: Remove GICv3 vgic compatibility macros
 
-Since I'm generally happy to drop legacy code that has no users, with
-the "if there are any significant users that speak up, I'll revoke my
-support" caveat:
+To echo this last point, we're currently looking at the possibility of
+using KVM to isolate VMs from the host in Android. The scope of the
+changes we think we'll have to make would mean effectively duplicating
+the existing code for 32-bit or implementing a whole load of unused and
+untested functionality to keep the current structure. Neither of these
+options are particularly satisfactory from a maintainance point of view,
+so removing the 32-bit code if it doesn't have any significant use would
+be welcomed:
 
-Acked-by: Olof Johansson <olof@lixom.net>
+Acked-by: Will Deacon <will@kernel.org>
 
-
--Olof
+Will
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
