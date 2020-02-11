@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D470158B61
-	for <lists+kvmarm@lfdr.de>; Tue, 11 Feb 2020 09:40:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 48218158B65
+	for <lists+kvmarm@lfdr.de>; Tue, 11 Feb 2020 09:40:53 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9B15A4AE9F;
-	Tue, 11 Feb 2020 03:40:47 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EF8614AEAB;
+	Tue, 11 Feb 2020 03:40:52 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
@@ -16,33 +16,33 @@ X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id a0qubneFqxux; Tue, 11 Feb 2020 03:40:47 -0500 (EST)
+	with ESMTP id EBoG2W7BHJYj; Tue, 11 Feb 2020 03:40:52 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 725CD4A946;
-	Tue, 11 Feb 2020 03:40:46 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CCF084AE8D;
+	Tue, 11 Feb 2020 03:40:51 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 79D114A946
- for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 03:40:45 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 329A14ACF4
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 03:40:50 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 83i49AM1KxHR for <kvmarm@lists.cs.columbia.edu>;
- Tue, 11 Feb 2020 03:40:44 -0500 (EST)
+ with ESMTP id DlT9j7GfZNoI for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 11 Feb 2020 03:40:49 -0500 (EST)
 Received: from huawei.com (szxga06-in.huawei.com [45.249.212.32])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E61014A542
- for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 03:40:43 -0500 (EST)
-Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.59])
- by Forcepoint Email with ESMTP id 7E00E77A104706A55F6E;
- Tue, 11 Feb 2020 16:40:40 +0800 (CST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 180094AE8E
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 03:40:49 -0500 (EST)
+Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.60])
+ by Forcepoint Email with ESMTP id 945D616D4F7F1FABDD1A;
+ Tue, 11 Feb 2020 16:40:45 +0800 (CST)
 Received: from DESKTOP-8RFUVS3.china.huawei.com (10.173.222.27) by
  DGGEMS407-HUB.china.huawei.com (10.3.19.207) with Microsoft SMTP Server id
- 14.3.439.0; Tue, 11 Feb 2020 16:40:34 +0800
+ 14.3.439.0; Tue, 11 Feb 2020 16:40:35 +0800
 From: Zenghui Yu <yuzenghui@huawei.com>
 To: <drjones@redhat.com>, <kvm@vger.kernel.org>, <kvmarm@lists.cs.columbia.edu>
-Subject: [kvm-unit-tests PATCH 2/3] arm64: timer: Use the proper RDist
- register name in GICv3
-Date: Tue, 11 Feb 2020 16:39:00 +0800
-Message-ID: <20200211083901.1478-3-yuzenghui@huawei.com>
+Subject: [kvm-unit-tests PATCH 3/3] arm64: timer: Use existing helpers to
+ access counter/timers
+Date: Tue, 11 Feb 2020 16:39:01 +0800
+Message-ID: <20200211083901.1478-4-yuzenghui@huawei.com>
 X-Mailer: git-send-email 2.23.0.windows.1
 In-Reply-To: <20200211083901.1478-1-yuzenghui@huawei.com>
 References: <20200211083901.1478-1-yuzenghui@huawei.com>
@@ -65,48 +65,50 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-We're actually going to read GICR_ISACTIVER0 and GICR_ISPENDR0 (in
-SGI_base frame of the redistribitor) to get the active/pending state
-of the timer interrupt.  Fix this typo.
-
-And since they have the same value, there's no functional change.
+We already have some good helpers to access the counter and timer
+registers.  Use them to avoid open coding the accessors again.
 
 Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
 ---
- arm/timer.c          | 4 ++--
- lib/arm/asm/gic-v3.h | 4 ++++
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ arm/timer.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/arm/timer.c b/arm/timer.c
-index 94543f2..10a88f3 100644
+index 10a88f3..f5cf775 100644
 --- a/arm/timer.c
 +++ b/arm/timer.c
-@@ -351,8 +351,8 @@ static void test_init(void)
- 		gic_icenabler = gicv2_dist_base() + GICD_ICENABLER;
- 		break;
- 	case 3:
--		gic_isactiver = gicv3_sgi_base() + GICD_ISACTIVER;
--		gic_ispendr = gicv3_sgi_base() + GICD_ISPENDR;
-+		gic_isactiver = gicv3_sgi_base() + GICR_ISACTIVER0;
-+		gic_ispendr = gicv3_sgi_base() + GICR_ISPENDR0;
- 		gic_isenabler = gicv3_sgi_base() + GICR_ISENABLER0;
- 		gic_icenabler = gicv3_sgi_base() + GICR_ICENABLER0;
- 		break;
-diff --git a/lib/arm/asm/gic-v3.h b/lib/arm/asm/gic-v3.h
-index 0dc838b..e2736a1 100644
---- a/lib/arm/asm/gic-v3.h
-+++ b/lib/arm/asm/gic-v3.h
-@@ -32,6 +32,10 @@
- #define GICR_IGROUPR0			GICD_IGROUPR
- #define GICR_ISENABLER0			GICD_ISENABLER
- #define GICR_ICENABLER0			GICD_ICENABLER
-+#define GICR_ISPENDR0			GICD_ISPENDR
-+#define GICR_ICPENDR0			GICD_ICPENDR
-+#define GICR_ISACTIVER0			GICD_ISACTIVER
-+#define GICR_ICACTIVER0			GICD_ICACTIVER
- #define GICR_IPRIORITYR0		GICD_IPRIORITYR
+@@ -331,7 +331,7 @@ static void test_init(void)
+ 	vtimer_info.irq_flags = fdt32_to_cpu(data[8]);
  
- #define ICC_SGI1R_AFFINITY_1_SHIFT	16
+ 	install_exception_handler(EL1H_SYNC, ESR_EL1_EC_UNKNOWN, ptimer_unsupported_handler);
+-	read_sysreg(cntp_ctl_el0);
++	ptimer_info.read_ctl();
+ 	install_exception_handler(EL1H_SYNC, ESR_EL1_EC_UNKNOWN, NULL);
+ 
+ 	if (ptimer_unsupported && !ERRATA(7b6b46311a85)) {
+@@ -366,15 +366,15 @@ static void print_timer_info(void)
+ {
+ 	printf("CNTFRQ_EL0   : 0x%016lx\n", read_sysreg(cntfrq_el0));
+ 
+-	if (!ptimer_unsupported){
+-		printf("CNTPCT_EL0   : 0x%016lx\n", read_sysreg(cntpct_el0));
+-		printf("CNTP_CTL_EL0 : 0x%016lx\n", read_sysreg(cntp_ctl_el0));
+-		printf("CNTP_CVAL_EL0: 0x%016lx\n", read_sysreg(cntp_cval_el0));
++	if (!ptimer_unsupported) {
++		printf("CNTPCT_EL0   : 0x%016lx\n", ptimer_info.read_counter());
++		printf("CNTP_CTL_EL0 : 0x%016lx\n", ptimer_info.read_ctl());
++		printf("CNTP_CVAL_EL0: 0x%016lx\n", ptimer_info.read_cval());
+ 	}
+ 
+-	printf("CNTVCT_EL0   : 0x%016lx\n", read_sysreg(cntvct_el0));
+-	printf("CNTV_CTL_EL0 : 0x%016lx\n", read_sysreg(cntv_ctl_el0));
+-	printf("CNTV_CVAL_EL0: 0x%016lx\n", read_sysreg(cntv_cval_el0));
++	printf("CNTVCT_EL0   : 0x%016lx\n", vtimer_info.read_counter());
++	printf("CNTV_CTL_EL0 : 0x%016lx\n", vtimer_info.read_ctl());
++	printf("CNTV_CVAL_EL0: 0x%016lx\n", vtimer_info.read_cval());
+ }
+ 
+ int main(int argc, char **argv)
 -- 
 2.19.1
 
