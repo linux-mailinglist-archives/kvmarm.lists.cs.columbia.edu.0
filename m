@@ -2,68 +2,54 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C97F8158E98
-	for <lists+kvmarm@lfdr.de>; Tue, 11 Feb 2020 13:35:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0094B158F0F
+	for <lists+kvmarm@lfdr.de>; Tue, 11 Feb 2020 13:49:31 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5FE6E4AEC2;
-	Tue, 11 Feb 2020 07:35:33 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 735954AEB2;
+	Tue, 11 Feb 2020 07:49:30 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id RSNj8PfZFrtd; Tue, 11 Feb 2020 07:35:33 -0500 (EST)
+	with ESMTP id YdzRFvYU1gYi; Tue, 11 Feb 2020 07:49:30 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 40FDF4AEB2;
-	Tue, 11 Feb 2020 07:35:32 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0B62C4AE9A;
+	Tue, 11 Feb 2020 07:49:29 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A465C4AEAC
- for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 07:35:30 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E94AC4A59B
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 07:49:27 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id zN5xLQPR17yL for <kvmarm@lists.cs.columbia.edu>;
- Tue, 11 Feb 2020 07:35:29 -0500 (EST)
-Received: from us-smtp-delivery-1.mimecast.com (us-smtp-2.mimecast.com
- [207.211.31.81])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 91F544A59B
- for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 07:35:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1581424529;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=SvgnBksltlfdKTQjesT7j5JDJyAmqiI6NDbtZfxaBYc=;
- b=QQXq1/OoeobxBPDl6j3B5I1tadgyW1YEXwsq4mHwMSHTEIXIuZjPzWxIV9CGFclNA3t/t5
- HP4X9patdwnrDvu4ES0l9u0qe7rlnWHIRloUCno5wj854CmVm1R+O0TqLzpKIWt3LcZJrk
- iOnGyYOFgm/600OST0T8WRr7eYgarvk=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-393-p6630gJaMpGBbeTuArspaw-1; Tue, 11 Feb 2020 07:35:25 -0500
-X-MC-Unique: p6630gJaMpGBbeTuArspaw-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com
- [10.5.11.11])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 2CAF9477;
- Tue, 11 Feb 2020 12:35:24 +0000 (UTC)
-Received: from kamzik.brq.redhat.com (unknown [10.43.2.160])
- by smtp.corp.redhat.com (Postfix) with ESMTP id A15976055B;
- Tue, 11 Feb 2020 12:35:22 +0000 (UTC)
-From: Andrew Jones <drjones@redhat.com>
-To: kvm@vger.kernel.org,
-	kvmarm@lists.cs.columbia.edu
-Subject: [PATCH kvm-unit-tests] arm64: timer: Speed up gic-timer-state check
-Date: Tue, 11 Feb 2020 13:35:21 +0100
-Message-Id: <20200211123521.13637-1-drjones@redhat.com>
+ with ESMTP id kiOz2x-+vb3j for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 11 Feb 2020 07:49:26 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B47E04A578
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 07:49:26 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BC3521FB;
+ Tue, 11 Feb 2020 04:49:25 -0800 (PST)
+Received: from [10.1.196.63] (e123195-lin.cambridge.arm.com [10.1.196.63])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2D8CC3F6CF;
+ Tue, 11 Feb 2020 04:49:25 -0800 (PST)
+Subject: Re: [PATCH kvm-unit-tests] arm64: timer: Speed up gic-timer-state
+ check
+To: Andrew Jones <drjones@redhat.com>, kvm@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu
+References: <20200211123521.13637-1-drjones@redhat.com>
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+Message-ID: <bba0ce4f-15c6-aa14-4bd8-ce6598b45fd4@arm.com>
+Date: Tue, 11 Feb 2020 12:49:23 +0000
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+In-Reply-To: <20200211123521.13637-1-drjones@redhat.com>
+Content-Language: en-US
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -80,84 +66,97 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Let's bail out of the wait loop if we see the expected state
-to save about seven seconds of run time. Make sure we wait a
-bit before reading the registers, though, to somewhat mitigate
-the chance of the expected state being stale.
+Hi,
 
-Signed-off-by: Andrew Jones <drjones@redhat.com>
----
- arm/timer.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+On 2/11/20 12:35 PM, Andrew Jones wrote:
+> Let's bail out of the wait loop if we see the expected state
+> to save about seven seconds of run time. Make sure we wait a
+> bit before reading the registers, though, to somewhat mitigate
+> the chance of the expected state being stale.
+>
+> Signed-off-by: Andrew Jones <drjones@redhat.com>
+> ---
+>  arm/timer.c | 17 ++++++++++-------
+>  1 file changed, 10 insertions(+), 7 deletions(-)
+>
+> diff --git a/arm/timer.c b/arm/timer.c
+> index f5cf775ce50f..c2262c112c09 100644
+> --- a/arm/timer.c
+> +++ b/arm/timer.c
+> @@ -183,7 +183,8 @@ static bool timer_pending(struct timer_info *info)
+>  		(info->read_ctl() & ARCH_TIMER_CTL_ISTATUS);
+>  }
+>  
+> -static enum gic_state gic_timer_state(struct timer_info *info)
+> +static bool gic_timer_check_state(struct timer_info *info,
+> +				  enum gic_state expected_state)
+>  {
+>  	enum gic_state state = GIC_STATE_INACTIVE;
+>  	int i;
+> @@ -191,6 +192,7 @@ static enum gic_state gic_timer_state(struct timer_info *info)
+>  
+>  	/* Wait for up to 1s for the GIC to sample the interrupt. */
+>  	for (i = 0; i < 10; i++) {
+> +		mdelay(100);
+>  		pending = readl(gic_ispendr) & (1 << PPI(info->irq));
+>  		active = readl(gic_isactiver) & (1 << PPI(info->irq));
+>  		if (!active && !pending)
+> @@ -201,10 +203,11 @@ static enum gic_state gic_timer_state(struct timer_info *info)
+>  			state = GIC_STATE_ACTIVE;
+>  		if (active && pending)
+>  			state = GIC_STATE_ACTIVE_PENDING;
+> -		mdelay(100);
+> +		if (state == expected_state)
+> +			return true;
+>  	}
+>  
+> -	return state;
+> +	return false;
+>  }
 
-diff --git a/arm/timer.c b/arm/timer.c
-index f5cf775ce50f..c2262c112c09 100644
---- a/arm/timer.c
-+++ b/arm/timer.c
-@@ -183,7 +183,8 @@ static bool timer_pending(struct timer_info *info)
- 		(info->read_ctl() & ARCH_TIMER_CTL_ISTATUS);
- }
- 
--static enum gic_state gic_timer_state(struct timer_info *info)
-+static bool gic_timer_check_state(struct timer_info *info,
-+				  enum gic_state expected_state)
- {
- 	enum gic_state state = GIC_STATE_INACTIVE;
- 	int i;
-@@ -191,6 +192,7 @@ static enum gic_state gic_timer_state(struct timer_info *info)
- 
- 	/* Wait for up to 1s for the GIC to sample the interrupt. */
- 	for (i = 0; i < 10; i++) {
-+		mdelay(100);
- 		pending = readl(gic_ispendr) & (1 << PPI(info->irq));
- 		active = readl(gic_isactiver) & (1 << PPI(info->irq));
- 		if (!active && !pending)
-@@ -201,10 +203,11 @@ static enum gic_state gic_timer_state(struct timer_info *info)
- 			state = GIC_STATE_ACTIVE;
- 		if (active && pending)
- 			state = GIC_STATE_ACTIVE_PENDING;
--		mdelay(100);
-+		if (state == expected_state)
-+			return true;
- 	}
- 
--	return state;
-+	return false;
- }
- 
- static bool test_cval_10msec(struct timer_info *info)
-@@ -253,11 +256,11 @@ static void test_timer(struct timer_info *info)
- 	/* Enable the timer, but schedule it for much later */
- 	info->write_cval(later);
- 	info->write_ctl(ARCH_TIMER_CTL_ENABLE);
--	report(!timer_pending(info) && gic_timer_state(info) == GIC_STATE_INACTIVE,
-+	report(!timer_pending(info) && gic_timer_check_state(info, GIC_STATE_INACTIVE),
- 			"not pending before");
- 
- 	info->write_cval(now - 1);
--	report(timer_pending(info) && gic_timer_state(info) == GIC_STATE_PENDING,
-+	report(timer_pending(info) && gic_timer_check_state(info, GIC_STATE_PENDING),
- 			"interrupt signal pending");
- 
- 	/* Disable the timer again and prepare to take interrupts */
-@@ -265,12 +268,12 @@ static void test_timer(struct timer_info *info)
- 	info->irq_received = false;
- 	set_timer_irq_enabled(info, true);
- 	report(!info->irq_received, "no interrupt when timer is disabled");
--	report(!timer_pending(info) && gic_timer_state(info) == GIC_STATE_INACTIVE,
-+	report(!timer_pending(info) && gic_timer_check_state(info, GIC_STATE_INACTIVE),
- 			"interrupt signal no longer pending");
- 
- 	info->write_cval(now - 1);
- 	info->write_ctl(ARCH_TIMER_CTL_ENABLE | ARCH_TIMER_CTL_IMASK);
--	report(timer_pending(info) && gic_timer_state(info) == GIC_STATE_INACTIVE,
-+	report(timer_pending(info) && gic_timer_check_state(info, GIC_STATE_INACTIVE),
- 			"interrupt signal not pending");
- 
- 	report(test_cval_10msec(info), "latency within 10 ms");
--- 
-2.21.1
+The first version I wrote looked similar. However I decided to wait the entire 1s
+because I could imagine a situation where the interrupt was pending, but if I were
+to wait a bit longer, it would have become active and pending, which is not what
+we would want. Same thing with inactive.
 
+How about after the state matches what we expect, we wait for an extra 100ms and
+check that the state hasn't changed?
+
+Also, you probably also want to lower the timeout in arm/unittests.cfg.
+
+Thanks,
+Alex
+>  
+>  static bool test_cval_10msec(struct timer_info *info)
+> @@ -253,11 +256,11 @@ static void test_timer(struct timer_info *info)
+>  	/* Enable the timer, but schedule it for much later */
+>  	info->write_cval(later);
+>  	info->write_ctl(ARCH_TIMER_CTL_ENABLE);
+> -	report(!timer_pending(info) && gic_timer_state(info) == GIC_STATE_INACTIVE,
+> +	report(!timer_pending(info) && gic_timer_check_state(info, GIC_STATE_INACTIVE),
+>  			"not pending before");
+>  
+>  	info->write_cval(now - 1);
+> -	report(timer_pending(info) && gic_timer_state(info) == GIC_STATE_PENDING,
+> +	report(timer_pending(info) && gic_timer_check_state(info, GIC_STATE_PENDING),
+>  			"interrupt signal pending");
+>  
+>  	/* Disable the timer again and prepare to take interrupts */
+> @@ -265,12 +268,12 @@ static void test_timer(struct timer_info *info)
+>  	info->irq_received = false;
+>  	set_timer_irq_enabled(info, true);
+>  	report(!info->irq_received, "no interrupt when timer is disabled");
+> -	report(!timer_pending(info) && gic_timer_state(info) == GIC_STATE_INACTIVE,
+> +	report(!timer_pending(info) && gic_timer_check_state(info, GIC_STATE_INACTIVE),
+>  			"interrupt signal no longer pending");
+>  
+>  	info->write_cval(now - 1);
+>  	info->write_ctl(ARCH_TIMER_CTL_ENABLE | ARCH_TIMER_CTL_IMASK);
+> -	report(timer_pending(info) && gic_timer_state(info) == GIC_STATE_INACTIVE,
+> +	report(timer_pending(info) && gic_timer_check_state(info, GIC_STATE_INACTIVE),
+>  			"interrupt signal not pending");
+>  
+>  	report(test_cval_10msec(info), "latency within 10 ms");
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
