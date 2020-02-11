@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FA211596B3
-	for <lists+kvmarm@lfdr.de>; Tue, 11 Feb 2020 18:51:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D46A41596E5
+	for <lists+kvmarm@lfdr.de>; Tue, 11 Feb 2020 18:52:11 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 001F24AEB8;
-	Tue, 11 Feb 2020 12:51:24 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 856AD4AED9;
+	Tue, 11 Feb 2020 12:52:11 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,46 +18,46 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id CSvJoEOH+f1e; Tue, 11 Feb 2020 12:51:23 -0500 (EST)
+	with ESMTP id 8qupGhnjKN5z; Tue, 11 Feb 2020 12:52:10 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4B4A04AE96;
-	Tue, 11 Feb 2020 12:51:23 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 506934AEB9;
+	Tue, 11 Feb 2020 12:52:10 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 68BD74AE93
- for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 12:51:21 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CD39B4A946
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 12:52:08 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ohWZypD3RFZg for <kvmarm@lists.cs.columbia.edu>;
- Tue, 11 Feb 2020 12:51:19 -0500 (EST)
+ with ESMTP id SX4TFc7-+LrS for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 11 Feb 2020 12:52:07 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A5E664AEE6
- for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 12:51:19 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 189194AEE2
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 12:52:07 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id B354D206D7;
- Tue, 11 Feb 2020 17:51:18 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 4C56A208C3;
+ Tue, 11 Feb 2020 17:52:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1581443478;
- bh=Ik3s7acYpQRtXUBC0I1kZbtJLduLroBrOt90QzyKh88=;
+ s=default; t=1581443526;
+ bh=+xm0GyRSVwHVcIutj4WcHndnRUt3TPwqJzrA5woUxCg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=u9QOzCk14izQ6zcb8aQ0L873AICmdYxrjfivFqIePdpy4XlMhbikv9mY+ViG4XuYM
- Ppi7jTTEEJwscxRBWVFdVzQKZH3Zjv9uPH3O9qDnsh3NpOQqLBMKGFamQ8wqO7vHy8
- H60WbChBHqV9W2Gnj0lfIcghnmEdazX6QjpAv7V4=
+ b=f5Dlin2MWX7gTEniKJd1TzD1iNW7WuDuHL9JSwSqF/8vMtCRQthMLMlEfDuGocIg+
+ eOfoeaGAXDKbHZdpzlVcxpTqH4oTrPthgr7i21RGS58WBGlK/FrsvAoAYnfH3tENqZ
+ IFtwb+YPtzu7eRxmvYOgvG/ADYjnXwZ2UJAq9hPE=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1j1Zg7-004O7k-4o; Tue, 11 Feb 2020 17:50:31 +0000
+ id 1j1Zg7-004O7k-O9; Tue, 11 Feb 2020 17:50:31 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH v2 64/94] arm64: KVM: nv: Invalidate TLBs based on shadow S2
- TTL-like information
-Date: Tue, 11 Feb 2020 17:49:08 +0000
-Message-Id: <20200211174938.27809-65-maz@kernel.org>
+Subject: [PATCH v2 65/94] arm64: KVM: nv: Tag shadow S2 entries with nested
+ level
+Date: Tue, 11 Feb 2020 17:49:09 +0000
+Message-Id: <20200211174938.27809-66-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200211174938.27809-1-maz@kernel.org>
 References: <20200211174938.27809-1-maz@kernel.org>
@@ -88,201 +88,124 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-In order to be able to make S2 TLB invalidations more performant on NV,
-let's use a scheme derived from the ARMv8.4 TTL extension.
-
-If bits [56:55] in the descriptor are non-zero, they indicate a level
-which can be used as an invalidation range.
+Populate bits [56:55] of the leaf entry with the level provided
+by the guest's S2 translation.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/kvm_nested.h |  4 ++
- arch/arm64/kvm/nested.c             | 98 +++++++++++++++++++++++++++++
- arch/arm64/kvm/sys_regs.c           | 13 ++--
- 3 files changed, 110 insertions(+), 5 deletions(-)
+ arch/arm/include/asm/kvm_mmu.h      |  5 +++++
+ arch/arm64/include/asm/kvm_nested.h |  6 ++++++
+ virt/kvm/arm/mmu.c                  | 20 ++++++++++++++++++++
+ 3 files changed, 31 insertions(+)
 
+diff --git a/arch/arm/include/asm/kvm_mmu.h b/arch/arm/include/asm/kvm_mmu.h
+index be7be6583e54..3774a7289ef2 100644
+--- a/arch/arm/include/asm/kvm_mmu.h
++++ b/arch/arm/include/asm/kvm_mmu.h
+@@ -484,6 +484,11 @@ static inline bool kvm_s2_trans_writable(struct kvm_s2_trans *trans)
+ 	BUG();
+ }
+ 
++static inline u64 kvm_encode_nested_level(struct kvm_s2_trans *trans)
++{
++	BUG();
++}
++
+ static inline void kvm_nested_s2_flush(struct kvm *kvm) {}
+ static inline void kvm_nested_s2_wp(struct kvm *kvm) {}
+ static inline void kvm_nested_s2_clear(struct kvm *kvm) {}
 diff --git a/arch/arm64/include/asm/kvm_nested.h b/arch/arm64/include/asm/kvm_nested.h
-index 620296206483..debae814fdc5 100644
+index debae814fdc5..3e3778d3cec6 100644
 --- a/arch/arm64/include/asm/kvm_nested.h
 +++ b/arch/arm64/include/asm/kvm_nested.h
-@@ -67,6 +67,8 @@ extern bool __forward_traps(struct kvm_vcpu *vcpu, unsigned int reg,
- 			    u64 control_bit);
- extern bool forward_traps(struct kvm_vcpu *vcpu, u64 control_bit);
- extern bool forward_nv_traps(struct kvm_vcpu *vcpu);
-+u8 get_guest_mapping_ttl(struct kvm_vcpu *vcpu, struct kvm_s2_mmu *mmu,
-+			 u64 addr);
- unsigned int ttl_to_size(u8 ttl);
- 
- struct sys_reg_params;
-@@ -75,4 +77,6 @@ struct sys_reg_desc;
- void access_nested_id_reg(struct kvm_vcpu *v, struct sys_reg_params *p,
- 			  const struct sys_reg_desc *r);
- 
-+#define KVM_NV_GUEST_MAP_SZ	GENMASK_ULL(56, 55)
-+
- #endif /* __ARM64_KVM_NESTED_H */
-diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
-index 4cb4831d4022..6adff9b433e0 100644
---- a/arch/arm64/kvm/nested.c
-+++ b/arch/arm64/kvm/nested.c
-@@ -16,6 +16,7 @@
-  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  */
+@@ -2,6 +2,7 @@
+ #ifndef __ARM64_KVM_NESTED_H
+ #define __ARM64_KVM_NESTED_H
  
 +#include <linux/bitfield.h>
- #include <linux/kvm.h>
  #include <linux/kvm_host.h>
  
-@@ -351,6 +352,29 @@ int kvm_walk_nested_s2(struct kvm_vcpu *vcpu, phys_addr_t gipa,
- 	return ret;
+ static inline bool nested_virt_in_use(const struct kvm_vcpu *vcpu)
+@@ -79,4 +80,9 @@ void access_nested_id_reg(struct kvm_vcpu *v, struct sys_reg_params *p,
+ 
+ #define KVM_NV_GUEST_MAP_SZ	GENMASK_ULL(56, 55)
+ 
++static inline u64 kvm_encode_nested_level(struct kvm_s2_trans *trans)
++{
++	return FIELD_PREP(KVM_NV_GUEST_MAP_SZ, trans->level);
++}
++
+ #endif /* __ARM64_KVM_NESTED_H */
+diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
+index 7da72c2b7f0f..eaa86cad2ac8 100644
+--- a/virt/kvm/arm/mmu.c
++++ b/virt/kvm/arm/mmu.c
+@@ -1715,6 +1715,11 @@ static bool fault_supports_stage2_huge_mapping(struct kvm_memory_slot *memslot,
+ 	       (hva & ~(map_size - 1)) + map_size <= uaddr_end;
  }
  
-+static int read_host_s2_desc(phys_addr_t pa, u64 *desc, void *data)
-+{
-+	u64 *va = phys_to_virt(pa);
++#define set_desc_bits(which, desc, val)					\
++	do {								\
++		desc = __ ## which(which ## _val(desc) | val);		\
++	} while(0)
 +
-+	*desc = *va;
-+
-+	return 0;
-+}
-+
-+static int kvm_walk_shadow_s2(struct kvm_s2_mmu *mmu, phys_addr_t gipa,
-+			      struct kvm_s2_trans *result)
-+{
-+	struct s2_walk_info wi = { };
-+
-+	wi.read_desc = read_host_s2_desc;
-+	wi.baddr = mmu->pgd_phys;
-+
-+	vtcr_to_walk_info(mmu->kvm->arch.vtcr, &wi);
-+
-+	wi.be = IS_ENABLED(CONFIG_CPU_BIG_ENDIAN);
-+
-+	return walk_nested_s2_pgd(gipa, &wi, result);
-+}
+ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 			  struct kvm_s2_trans *nested,
+ 			  struct kvm_memory_slot *memslot,
+@@ -1736,6 +1741,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 	unsigned long vma_pagesize, flags = 0;
+ 	struct kvm_s2_mmu *mmu = vcpu->arch.hw_mmu;
+ 	unsigned long max_map_size = PUD_SIZE;
++	u64 l1_s2_level;
  
- unsigned int ttl_to_size(u8 ttl)
- {
-@@ -407,6 +431,80 @@ unsigned int ttl_to_size(u8 ttl)
- 	return max_size;
- }
- 
-+/*
-+ * Compute the equivalent of the TTL field by parsing the shadow PT.
-+ * The granule size is extracted from VTCR_EL2.TG0 while the level is
-+ * retrieved from first entry carrying the level as a tag.
-+ */
-+u8 get_guest_mapping_ttl(struct kvm_vcpu *vcpu, struct kvm_s2_mmu *mmu,
-+			 u64 addr)
-+{
-+	u64 tmp, sz = 0, vtcr = vcpu_read_sys_reg(vcpu, VTCR_EL2);
-+	struct kvm_s2_trans out;
-+	u8 ttl, level;
+ 	write_fault = kvm_is_write_fault(vcpu);
+ 	exec_fault = kvm_vcpu_trap_is_iabt(vcpu);
+@@ -1845,10 +1851,18 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 	 * Potentially reduce shadow S2 permissions to match the guest's own
+ 	 * S2. For exec faults, we'd only reach this point if the guest
+ 	 * actually allowed it (see kvm_s2_handle_perm_fault).
++	 *
++	 * Also encode the level of the nested translation in the SW bits of
++	 * the PTE/PMD/PUD. This will be retrived on TLB invalidation from
++	 * the guest.
+ 	 */
+ 	if (kvm_is_shadow_s2_fault(vcpu)) {
+ 		writable &= kvm_s2_trans_writable(nested);
+ 		readable &= kvm_s2_trans_readable(nested);
 +
-+	switch (vtcr & VTCR_EL2_TG0_MASK) {
-+	case VTCR_EL2_TG0_4K:
-+		ttl = (1 << 2);
-+		break;
-+	case VTCR_EL2_TG0_16K:
-+		ttl = (2 << 2);
-+		break;
-+	case VTCR_EL2_TG0_64K:
-+		ttl = (3 << 2);
-+		break;
-+	default:
-+		BUG();
-+	}
-+
-+	tmp = addr;
-+
-+again:
-+	/* Iteratively compute the block sizes for a particular granule size */
-+	switch (vtcr & VTCR_EL2_TG0_MASK) {
-+	case VTCR_EL2_TG0_4K:
-+		if	(sz < SZ_4K)	sz = SZ_4K;
-+		else if (sz < SZ_2M)	sz = SZ_2M;
-+		else if (sz < SZ_1G)	sz = SZ_1G;
-+		else			sz = 0;
-+		break;
-+	case VTCR_EL2_TG0_16K:
-+		if	(sz < SZ_16K)	sz = SZ_16K;
-+		else if (sz < SZ_32M)	sz = SZ_32M;
-+		else			sz = 0;
-+		break;
-+	case VTCR_EL2_TG0_64K:
-+		if	(sz < SZ_64K)	sz = SZ_64K;
-+		else if (sz < SZ_512M)	sz = SZ_512M;
-+		else			sz = 0;
-+		break;
-+	default:
-+		BUG();
-+	}
-+
-+	if (sz == 0)
-+		return 0;
-+
-+	tmp &= ~(sz - 1);
-+	out = (struct kvm_s2_trans) { };
-+	kvm_walk_shadow_s2(mmu, tmp, &out);
-+	level = FIELD_GET(KVM_NV_GUEST_MAP_SZ, out.upper_attr);
-+	if (!level)
-+		goto again;
-+
-+	ttl |= level;
-+
-+	/*
-+	 * We now have found some level information in the shadow S2. Check
-+	 * that the resulting range is actually including the original IPA.
-+	 */
-+	sz = ttl_to_size(ttl);
-+	if (addr < (tmp + sz))
-+		return ttl;
-+
-+	return 0;
-+}
-+
- /* Must be called with kvm->lock held */
- struct kvm_s2_mmu *lookup_s2_mmu(struct kvm *kvm, u64 vttbr, u64 hcr)
- {
-diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index 1dcde0230b87..8d4e67594d87 100644
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -2589,10 +2589,13 @@ static unsigned long compute_tlb_inval_range(struct kvm_vcpu *vcpu,
- 					     u64 val)
- {
- 	unsigned long max_size;
--	u8 ttl = 0;
-+	u8 ttl;
- 
--	if (cpus_have_const_cap(ARM64_HAS_ARMv8_4_TTL)) {
--		ttl = FIELD_GET(GENMASK_ULL(47, 44), val);
-+	ttl = FIELD_GET(GENMASK_ULL(47, 44), val);
-+
-+	if (!(cpus_have_const_cap(ARM64_HAS_ARMv8_4_TTL) && ttl)) {
-+		u64 addr = (val & GENMASK_ULL(35, 0)) << 12;
-+		ttl = get_guest_mapping_ttl(vcpu, mmu, addr);
++		l1_s2_level = kvm_encode_nested_level(nested);
++	} else {
++		l1_s2_level = 0;
  	}
  
- 	max_size = ttl_to_size(ttl);
-@@ -2633,6 +2636,8 @@ static bool handle_ipas2e1is(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
- 	u64 base_addr;
- 	unsigned long max_size;
+ 	spin_lock(&kvm->mmu_lock);
+@@ -1902,6 +1916,8 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 		if (needs_exec)
+ 			new_pud = kvm_s2pud_mkexec(new_pud);
  
-+	spin_lock(&vcpu->kvm->mmu_lock);
++		set_desc_bits(pud, new_pud, l1_s2_level);
 +
- 	/*
- 	 * We drop a number of things from the supplied value:
- 	 *
-@@ -2644,8 +2649,6 @@ static bool handle_ipas2e1is(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
- 	 */
- 	base_addr = (p->regval & GENMASK_ULL(35, 0)) << 12;
+ 		ret = stage2_set_pud_huge(mmu, memcache, fault_ipa, &new_pud);
+ 	} else if (vma_pagesize == PMD_SIZE) {
+ 		pmd_t new_pmd = kvm_pfn_pmd(pfn, mem_type);
+@@ -1917,6 +1933,8 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 		if (needs_exec)
+ 			new_pmd = kvm_s2pmd_mkexec(new_pmd);
  
--	spin_lock(&vcpu->kvm->mmu_lock);
--
- 	mmu = lookup_s2_mmu(vcpu->kvm, vttbr, HCR_VM);
- 	if (mmu) {
- 		max_size = compute_tlb_inval_range(vcpu, mmu, p->regval);
++		set_desc_bits(pmd, new_pmd, l1_s2_level);
++
+ 		ret = stage2_set_pmd_huge(mmu, memcache, fault_ipa, &new_pmd);
+ 	} else {
+ 		pte_t new_pte = kvm_pfn_pte(pfn, mem_type);
+@@ -1932,6 +1950,8 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 		if (needs_exec)
+ 			new_pte = kvm_s2pte_mkexec(new_pte);
+ 
++		set_desc_bits(pte, new_pte, l1_s2_level);
++
+ 		ret = stage2_set_pte(mmu, memcache, fault_ipa, &new_pte, flags);
+ 	}
+ 
 -- 
 2.20.1
 
