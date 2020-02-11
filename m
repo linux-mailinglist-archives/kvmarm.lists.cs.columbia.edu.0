@@ -2,56 +2,56 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1143A158184
-	for <lists+kvmarm@lfdr.de>; Mon, 10 Feb 2020 18:37:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C79581587EE
+	for <lists+kvmarm@lfdr.de>; Tue, 11 Feb 2020 02:26:17 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 94D6B4AC07;
-	Mon, 10 Feb 2020 12:37:56 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 06A7B4ACF5;
+	Mon, 10 Feb 2020 20:26:17 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id CP3UHl8mBEuJ; Mon, 10 Feb 2020 12:37:56 -0500 (EST)
+	with ESMTP id pZXmCUKYs2ov; Mon, 10 Feb 2020 20:26:16 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 457344A946;
-	Mon, 10 Feb 2020 12:37:55 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 05FA24ACF4;
+	Mon, 10 Feb 2020 20:26:16 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 524DA4A7FE
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Feb 2020 12:37:54 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EBFAC4A946
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Feb 2020 20:26:13 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id TRo4tKue7Pzx for <kvmarm@lists.cs.columbia.edu>;
- Mon, 10 Feb 2020 12:37:53 -0500 (EST)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 13C424A50F
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Feb 2020 12:37:53 -0500 (EST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8EF8B1FB;
- Mon, 10 Feb 2020 09:37:52 -0800 (PST)
-Received: from lakrids.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com
- [10.121.207.14])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 741C93F68F;
- Mon, 10 Feb 2020 09:37:51 -0800 (PST)
-Date: Mon, 10 Feb 2020 17:37:44 +0000
-From: Mark Rutland <mark.rutland@arm.com>
-To: Suzuki Kuruppassery Poulose <suzuki.poulose@arm.com>
-Subject: Re: [PATCH 1/2] arm64: cpufeature: add cpus_have_final_cap()
-Message-ID: <20200210173744.GA20840@lakrids.cambridge.arm.com>
-References: <20200210122708.38826-1-mark.rutland@arm.com>
- <20200210122708.38826-2-mark.rutland@arm.com>
- <047f1cd2-3537-6671-233c-69f1758684bf@arm.com>
+ with ESMTP id ukEp32024DcW for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 10 Feb 2020 20:26:12 -0500 (EST)
+Received: from huawei.com (szxga06-in.huawei.com [45.249.212.32])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 65A0B4A551
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Feb 2020 20:26:12 -0500 (EST)
+Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.59])
+ by Forcepoint Email with ESMTP id 3F5E6365F6259C90987B;
+ Tue, 11 Feb 2020 09:26:06 +0800 (CST)
+Received: from [127.0.0.1] (10.173.222.27) by DGGEMS406-HUB.china.huawei.com
+ (10.3.19.206) with Microsoft SMTP Server id 14.3.439.0; Tue, 11 Feb 2020
+ 09:25:56 +0800
+Subject: Re: [PATCH] KVM: Disable preemption in kvm_get_running_vcpu()
+To: Marc Zyngier <maz@kernel.org>, <kvmarm@lists.cs.columbia.edu>,
+ <kvm@vger.kernel.org>
+References: <20200207163410.31276-1-maz@kernel.org>
+From: Zenghui Yu <yuzenghui@huawei.com>
+Message-ID: <2b47b50f-1c78-577a-4216-dcf8d712d96c@huawei.com>
+Date: Tue, 11 Feb 2020 09:25:55 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <047f1cd2-3537-6671-233c-69f1758684bf@arm.com>
-User-Agent: Mutt/1.11.1+11 (2f07cb52) (2018-12-01)
-Cc: catalin.marinas@arm.com, linux-arm-kernel@lists.infradead.org,
- maz@kernel.org, will@kernel.org, kvmarm@lists.cs.columbia.edu
+In-Reply-To: <20200207163410.31276-1-maz@kernel.org>
+Content-Language: en-US
+X-Originating-IP: [10.173.222.27]
+X-CFilter-Loop: Reflected
+Cc: Paolo Bonzini <pbonzini@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -63,84 +63,38 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Feb 10, 2020 at 04:37:53PM +0000, Suzuki Kuruppassery Poulose wrote:
-> On 10/02/2020 12:27, Mark Rutland wrote:
-> > When cpus_have_const_cap() was originally introduced it was intended to
-> > be safe in hyp context, where it is not safe to access the cpu_hwcaps
-> > array as cpus_have_cap() did. For more details see commit:
-> > 
-> >    a4023f682739439b ("arm64: Add hypervisor safe helper for checking constant capabilities")
-> > 
-> > We then made use of cpus_have_const_cap() throughout the kernel.
-> > 
-> > Subsequently, we had to defer updating the static_key associated with
-> > each capability in order to avoid lockdep complaints. To avoid breaking
-> > kernel-wide usage of cpus_have_const_cap(), this was updated to fall
-> > back to the cpu_hwcaps array if called before the static_keys were
-> > updated. As the kvm hyp code was only called later than this, the
-> > fallback is redundant but not functionally harmful. For more details,
-> > see commit:
-> > 
-> >    63a1e1c95e60e798 ("arm64/cpufeature: don't use mutex in bringup path")
-> > 
-> > Today we have more users of cpus_have_const_cap() which are only called
-> > once the relevant static keys are initialized, and it would be
-> > beneficial to avoid the redundant code.
-> > 
-> > To that end, this patch adds a new cpus_have_final_cap(), helper which
-> > is intend to be used in code which is only run once capabilities have
-> > been finalized, and will never check the cpus_hwcap array. This helps
-> > the compiler to generate better code as it no longer needs to generate
-> > code to address and test the cpus_hwcap array. To help catch misuse,
-> > cpus_have_final_cap() will BUG() if called before capabilities are
-> > finalized.
-> > 
-> > In hyp context, BUG() will result in a hyp panic, but the specific BUG()
-> > instance will not be identified in the usual way.
-> > 
-> > Comments are added to the various cpus_have_*_cap() helpers to describe
-> > the constraints on when they can be used. For clarity cpus_have_cap() is
-> > moved above the other helpers.
-> > 
-> > Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-> > Cc: Catalin Marinas <catalin.marinas@arm.com>
-> > Cc: Marc Zyngier <maz@kernel.org>
-> > Cc: Suzuki Poulose <suzuki.poulose@arm.com>
-> > Cc: Will Deacon <will@kernel.org>
-> > ---
+On 2020/2/8 0:34, Marc Zyngier wrote:
+> Accessing a per-cpu variable only makes sense when preemption is
+> disabled (and the kernel does check this when the right debug options
+> are switched on).
 > 
-> ...
+> For kvm_get_running_vcpu(), it is fine to return the value after
+> re-enabling preemption, as the preempt notifiers will make sure that
+> this is kept consistent across task migration (the comment above the
+> function hints at it, but lacks the crucial preemption management).
 > 
-> > +/*
-> > + * Test for a capability without a runtime check.
-> > + *
-> > + * Before capabilities are finalized, this will BUG().
-> > + * After capabilities are finalized, this is patched to avoid a runtime check.
-> > + *
-> > + * @num must be a compile-time constant.
-> > + */
-> > +static __always_inline bool cpus_have_final_cap(int num)
-> > +{
-> > +	if (static_branch_likely(&arm64_const_caps_ready))
+> While we're at it, move the comment from the ARM code, which explains
+> why the whole thing works.
 > 
-> We have introduced system_capabilities_finalized() helper and may be
-> it is a good idea to use it here, to make it more clear.
+> Fixes: 7495e22bb165 ("KVM: Move running VCPU from ARM to common code").
+> Cc: Peter Xu <peterx@redhat.com>
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Reported-by: Zenghui Yu <yuzenghui@huawei.com>
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
+> Link: https://lore.kernel.org/r/318984f6-bc36-33a3-abc6-bf2295974b06@huawei.com
 
-Sure thing. There are a few existing uses that could be moved over, so I
-can move that up for v2.
+Tested-by: Zenghui Yu <yuzenghui@huawei.com>
 
-> Either ways :
-> 
-> Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+on top of v5.6-rc1.
 
-Thanks!
 
-Mark.
+Thanks
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
