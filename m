@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C79581587EE
-	for <lists+kvmarm@lfdr.de>; Tue, 11 Feb 2020 02:26:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 34ECC158B64
+	for <lists+kvmarm@lfdr.de>; Tue, 11 Feb 2020 09:40:49 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 06A7B4ACF5;
-	Mon, 10 Feb 2020 20:26:17 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D42BD4A955;
+	Tue, 11 Feb 2020 03:40:48 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
@@ -16,42 +16,36 @@ X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id pZXmCUKYs2ov; Mon, 10 Feb 2020 20:26:16 -0500 (EST)
+	with ESMTP id mH379379Qsb3; Tue, 11 Feb 2020 03:40:48 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 05FA24ACF4;
-	Mon, 10 Feb 2020 20:26:16 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AB2AF4ACF5;
+	Tue, 11 Feb 2020 03:40:47 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EBFAC4A946
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Feb 2020 20:26:13 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D73194A7D9
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 03:40:45 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ukEp32024DcW for <kvmarm@lists.cs.columbia.edu>;
- Mon, 10 Feb 2020 20:26:12 -0500 (EST)
+ with ESMTP id QRI-tJrdUrsy for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 11 Feb 2020 03:40:45 -0500 (EST)
 Received: from huawei.com (szxga06-in.huawei.com [45.249.212.32])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 65A0B4A551
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Feb 2020 20:26:12 -0500 (EST)
-Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.59])
- by Forcepoint Email with ESMTP id 3F5E6365F6259C90987B;
- Tue, 11 Feb 2020 09:26:06 +0800 (CST)
-Received: from [127.0.0.1] (10.173.222.27) by DGGEMS406-HUB.china.huawei.com
- (10.3.19.206) with Microsoft SMTP Server id 14.3.439.0; Tue, 11 Feb 2020
- 09:25:56 +0800
-Subject: Re: [PATCH] KVM: Disable preemption in kvm_get_running_vcpu()
-To: Marc Zyngier <maz@kernel.org>, <kvmarm@lists.cs.columbia.edu>,
- <kvm@vger.kernel.org>
-References: <20200207163410.31276-1-maz@kernel.org>
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BE0434A944
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 03:40:44 -0500 (EST)
+Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.59])
+ by Forcepoint Email with ESMTP id 797FE2C7D398984F714B;
+ Tue, 11 Feb 2020 16:40:40 +0800 (CST)
+Received: from DESKTOP-8RFUVS3.china.huawei.com (10.173.222.27) by
+ DGGEMS407-HUB.china.huawei.com (10.3.19.207) with Microsoft SMTP Server id
+ 14.3.439.0; Tue, 11 Feb 2020 16:40:33 +0800
 From: Zenghui Yu <yuzenghui@huawei.com>
-Message-ID: <2b47b50f-1c78-577a-4216-dcf8d712d96c@huawei.com>
-Date: Tue, 11 Feb 2020 09:25:55 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.0
+To: <drjones@redhat.com>, <kvm@vger.kernel.org>, <kvmarm@lists.cs.columbia.edu>
+Subject: [kvm-unit-tests PATCH 0/3] arm64: minor cleanups for timer test
+Date: Tue, 11 Feb 2020 16:38:58 +0800
+Message-ID: <20200211083901.1478-1-yuzenghui@huawei.com>
+X-Mailer: git-send-email 2.23.0.windows.1
 MIME-Version: 1.0
-In-Reply-To: <20200207163410.31276-1-maz@kernel.org>
-Content-Language: en-US
 X-Originating-IP: [10.173.222.27]
 X-CFilter-Loop: Reflected
-Cc: Paolo Bonzini <pbonzini@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -63,37 +57,32 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2020/2/8 0:34, Marc Zyngier wrote:
-> Accessing a per-cpu variable only makes sense when preemption is
-> disabled (and the kernel does check this when the right debug options
-> are switched on).
-> 
-> For kvm_get_running_vcpu(), it is fine to return the value after
-> re-enabling preemption, as the preempt notifiers will make sure that
-> this is kept consistent across task migration (the comment above the
-> function hints at it, but lacks the crucial preemption management).
-> 
-> While we're at it, move the comment from the ARM code, which explains
-> why the whole thing works.
-> 
-> Fixes: 7495e22bb165 ("KVM: Move running VCPU from ARM to common code").
-> Cc: Peter Xu <peterx@redhat.com>
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Reported-by: Zenghui Yu <yuzenghui@huawei.com>
-> Signed-off-by: Marc Zyngier <maz@kernel.org>
-> Link: https://lore.kernel.org/r/318984f6-bc36-33a3-abc6-bf2295974b06@huawei.com
+Hi Drew,
 
-Tested-by: Zenghui Yu <yuzenghui@huawei.com>
-
-on top of v5.6-rc1.
-
+There's some minor cleanups which based on your arm/queue branch for
+the timer test.  Please consider taking them if they make the code
+a bit better :)
 
 Thanks
+
+Zenghui Yu (3):
+  arm/arm64: gic: Move gic_state enumeration to asm/gic.h
+  arm64: timer: Use the proper RDist register name in GICv3
+  arm64: timer: Use existing helpers to access counter/timers
+
+ arm/timer.c          | 27 ++++++++++-----------------
+ lib/arm/asm/gic-v3.h |  4 ++++
+ lib/arm/asm/gic.h    |  7 +++++++
+ 3 files changed, 21 insertions(+), 17 deletions(-)
+
+-- 
+2.19.1
+
 
 _______________________________________________
 kvmarm mailing list
