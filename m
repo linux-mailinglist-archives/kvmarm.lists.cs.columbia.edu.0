@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 951B3159733
-	for <lists+kvmarm@lfdr.de>; Tue, 11 Feb 2020 18:53:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 991D9159702
+	for <lists+kvmarm@lfdr.de>; Tue, 11 Feb 2020 18:52:35 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2BD014AC77;
-	Tue, 11 Feb 2020 12:53:18 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4C4884ACE9;
+	Tue, 11 Feb 2020 12:52:35 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,45 +18,46 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id A7OpiLCOksIv; Tue, 11 Feb 2020 12:53:17 -0500 (EST)
+	with ESMTP id GV2LmAnlcl4R; Tue, 11 Feb 2020 12:52:34 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0050B4AEF2;
-	Tue, 11 Feb 2020 12:53:17 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E4E714AC77;
+	Tue, 11 Feb 2020 12:52:30 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 355394AEBF
- for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 12:53:15 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6C92E4A97D
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 12:52:29 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id RwpvWQwjNtx7 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 11 Feb 2020 12:53:14 -0500 (EST)
+ with ESMTP id xDkdosQNTdVm for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 11 Feb 2020 12:52:28 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E78CC4AEF6
- for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 12:53:12 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D92D94AEBF
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 11 Feb 2020 12:52:27 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 14B6720848;
- Tue, 11 Feb 2020 17:53:12 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 0577E20578;
+ Tue, 11 Feb 2020 17:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1581443592;
- bh=BA3j0ebKj60uf2wq/Z+cbQXS2wtxrMbpxGeiK17XT7I=;
+ s=default; t=1581443547;
+ bh=Hzwd2V5pNv8PurnC7nBw9dzDHuozYcO82FdEXCzVPDc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=T3fqg/OdNlWIEUz8//ik3hTukxQIiUsvOVWSlSJcGJzhx9fTQSVqDBswVbhGzMbWi
- NYYR29iDTtXmfNx3Lw5Rsx3nR4mJYiGyJ8u4aubiWfa3UkJYuJ4hX00RYExyN5wY67
- p+PCROw/QWSMrLofV/M66muQNpaAksAhRm8r5OsA=
+ b=ntYGo580sRVgNxSH2Wx9nFcgMwRCmt/JHyEahIcC7AtbVUd+Nk/2baZ56MNCFr68M
+ ixAuGX8i8kejHfokJENZXt0x6vDIfpYChf1MhWOicxGNUcxOeJgXs8awVy+vHJ/Ow9
+ 3nN5Kn5DlJEQWibjMcicohaWtW++adz3WS1yHVLA=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1j1Zfh-004O7k-Or; Tue, 11 Feb 2020 17:50:05 +0000
+ id 1j1Zfi-004O7k-AH; Tue, 11 Feb 2020 17:50:06 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH v2 21/94] KVM: arm64: nv: Trap CPACR_EL1 access in virtual EL2
-Date: Tue, 11 Feb 2020 17:48:25 +0000
-Message-Id: <20200211174938.27809-22-maz@kernel.org>
+Subject: [PATCH v2 22/94] KVM: arm64: nv: Handle PSCI call via smc from the
+ guest
+Date: Tue, 11 Feb 2020 17:48:26 +0000
+Message-Id: <20200211174938.27809-23-maz@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200211174938.27809-1-maz@kernel.org>
 References: <20200211174938.27809-1-maz@kernel.org>
@@ -89,57 +90,68 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: Jintack Lim <jintack.lim@linaro.org>
 
-For the same reason we trap virtual memory register accesses in virtual
-EL2, we trap CPACR_EL1 access too; We allow the virtual EL2 mode to
-access EL1 system register state instead of the virtual EL2 one.
+VMs used to execute hvc #0 for the psci call if EL3 is not implemented.
+However, when we come to provide the virtual EL2 mode to the VM, the
+host OS inside the VM calls kvm_call_hyp() which is also hvc #0. So,
+it's hard to differentiate between them from the host hypervisor's point
+of view.
+
+So, let the VM execute smc instruction for the psci call. On ARMv8.3,
+even if EL3 is not implemented, a smc instruction executed at non-secure
+EL1 is trapped to EL2 if HCR_EL2.TSC==1, rather than being treated as
+UNDEFINED. So, the host hypervisor can handle this psci call without any
+confusion.
 
 Signed-off-by: Jintack Lim <jintack.lim@linaro.org>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/kvm_arm.h | 2 +-
- arch/arm64/kvm/hyp/switch.c      | 2 ++
- arch/arm64/kvm/sys_regs.c        | 2 +-
- 3 files changed, 4 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/handle_exit.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_arm.h b/arch/arm64/include/asm/kvm_arm.h
-index 084844ec0b06..a907c702de45 100644
---- a/arch/arm64/include/asm/kvm_arm.h
-+++ b/arch/arm64/include/asm/kvm_arm.h
-@@ -266,7 +266,7 @@
- #define CPTR_EL2_TFP_SHIFT 10
+diff --git a/arch/arm64/kvm/handle_exit.c b/arch/arm64/kvm/handle_exit.c
+index c3398e6ebbbe..3ee5351b8561 100644
+--- a/arch/arm64/kvm/handle_exit.c
++++ b/arch/arm64/kvm/handle_exit.c
+@@ -63,6 +63,8 @@ static int handle_hvc(struct kvm_vcpu *vcpu, struct kvm_run *run)
  
- /* Hyp Coprocessor Trap Register */
--#define CPTR_EL2_TCPAC	(1 << 31)
-+#define CPTR_EL2_TCPAC	(1U << 31)
- #define CPTR_EL2_TTA	(1 << 20)
- #define CPTR_EL2_TFP	(1 << CPTR_EL2_TFP_SHIFT)
- #define CPTR_EL2_TZ	(1 << 8)
-diff --git a/arch/arm64/kvm/hyp/switch.c b/arch/arm64/kvm/hyp/switch.c
-index 48e738e90966..976b9661203b 100644
---- a/arch/arm64/kvm/hyp/switch.c
-+++ b/arch/arm64/kvm/hyp/switch.c
-@@ -105,6 +105,8 @@ static void activate_traps_vhe(struct kvm_vcpu *vcpu)
- 		val &= ~CPACR_EL1_FPEN;
- 		__activate_traps_fpsimd32(vcpu);
- 	}
-+	if (vcpu_mode_el2(vcpu) && !vcpu_el2_e2h_is_set(vcpu))
-+		val |= CPTR_EL2_TCPAC;
+ static int handle_smc(struct kvm_vcpu *vcpu, struct kvm_run *run)
+ {
++	int ret;
++
+ 	/*
+ 	 * "If an SMC instruction executed at Non-secure EL1 is
+ 	 * trapped to EL2 because HCR_EL2.TSC is 1, the exception is a
+@@ -70,10 +72,28 @@ static int handle_smc(struct kvm_vcpu *vcpu, struct kvm_run *run)
+ 	 *
+ 	 * We need to advance the PC after the trap, as it would
+ 	 * otherwise return to the same address...
++	 *
++	 * If imm is non-zero, it's not defined, so just skip it.
++	 */
++	if (kvm_vcpu_hvc_get_imm(vcpu)) {
++		vcpu_set_reg(vcpu, 0, ~0UL);
++		kvm_skip_instr(vcpu, kvm_vcpu_trap_il_is32bit(vcpu));
++		return 1;
++	}
++
++	/*
++	 * If imm is zero, it's a psci call.
++	 * Note that on ARMv8.3, even if EL3 is not implemented, SMC executed
++	 * at Non-secure EL1 is trapped to EL2 if HCR_EL2.TSC==1, rather than
++	 * being treated as UNDEFINED.
+ 	 */
+-	vcpu_set_reg(vcpu, 0, ~0UL);
++	ret = kvm_hvc_call_handler(vcpu);
++	if (ret < 0)
++		vcpu_set_reg(vcpu, 0, ~0UL);
++
+ 	kvm_skip_instr(vcpu, kvm_vcpu_trap_il_is32bit(vcpu));
+-	return 1;
++
++	return ret;
+ }
  
- 	write_sysreg(val, cpacr_el1);
- 
-diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index 18b14c04355a..b545156c7d79 100644
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -1795,7 +1795,7 @@ static const struct sys_reg_desc sys_reg_descs[] = {
- 	ID_UNALLOCATED(7,7),
- 
- 	{ SYS_DESC(SYS_SCTLR_EL1), access_vm_reg, reset_val, SCTLR_EL1, 0x00C50078 },
--	{ SYS_DESC(SYS_CPACR_EL1), NULL, reset_val, CPACR_EL1, 0 },
-+	{ SYS_DESC(SYS_CPACR_EL1), access_rw, reset_val, CPACR_EL1, 0 },
- 	{ SYS_DESC(SYS_ZCR_EL1), NULL, reset_val, ZCR_EL1, 0, .visibility = sve_visibility },
- 	{ SYS_DESC(SYS_TTBR0_EL1), access_vm_reg, reset_unknown, TTBR0_EL1 },
- 	{ SYS_DESC(SYS_TTBR1_EL1), access_vm_reg, reset_unknown, TTBR1_EL1 },
+ /*
 -- 
 2.20.1
 
