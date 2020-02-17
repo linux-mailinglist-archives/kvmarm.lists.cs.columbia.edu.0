@@ -2,72 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E3291160596
-	for <lists+kvmarm@lfdr.de>; Sun, 16 Feb 2020 19:53:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BC6C8160776
+	for <lists+kvmarm@lfdr.de>; Mon, 17 Feb 2020 01:14:40 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 96A364AF2A;
-	Sun, 16 Feb 2020 13:53:48 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 355964AF2D;
+	Sun, 16 Feb 2020 19:14:40 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@linaro.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YIlysGzEOJUw; Sun, 16 Feb 2020 13:53:47 -0500 (EST)
+	with ESMTP id BKkhUp9zTxKm; Sun, 16 Feb 2020 19:14:40 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 096384AF3F;
-	Sun, 16 Feb 2020 13:53:47 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2DBAB4AF27;
+	Sun, 16 Feb 2020 19:14:39 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AAAAF4AF1C
- for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Feb 2020 13:53:43 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6D6474AF25
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Feb 2020 19:14:37 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id kWRHkvo2bA0m for <kvmarm@lists.cs.columbia.edu>;
- Sun, 16 Feb 2020 13:53:42 -0500 (EST)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A01234AF1B
- for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Feb 2020 13:53:42 -0500 (EST)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id CD98524125;
- Sun, 16 Feb 2020 18:53:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1581879221;
- bh=oXOY45B0ay/QrkVsrHg4dNSnoA3eobeplPmN8P58bQg=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=TxpmM6AmMudS9VIjtp5puwQ26etTs9NujwgtEHtPCDV011pPUdT9E8xwCn38Umawf
- py212W7AUT8MuEZf5ikqL9+L1EdUDHf4o3C5xstd3PoxaqFZeX5Btrzz3QcJqJlwai
- F+Ff6HKL3nr4N7TPF8F/3GKU7z25YuHFw/RqgRYQ=
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.lan) by disco-boy.misterjones.org with esmtpsa
- (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
- (envelope-from <maz@kernel.org>)
- id 1j3P2y-005iWD-55; Sun, 16 Feb 2020 18:53:40 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- kvm@vger.kernel.org
-Subject: [PATCH 5/5] KVM: arm64: Upgrade PMU support to ARMv8.4
-Date: Sun, 16 Feb 2020 18:53:24 +0000
-Message-Id: <20200216185324.32596-6-maz@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200216185324.32596-1-maz@kernel.org>
-References: <20200216185324.32596-1-maz@kernel.org>
+ with ESMTP id v7KgLUrQqMzv for <kvmarm@lists.cs.columbia.edu>;
+ Sun, 16 Feb 2020 19:14:36 -0500 (EST)
+Received: from mail-lf1-f68.google.com (mail-lf1-f68.google.com
+ [209.85.167.68])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5E2644AED5
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Feb 2020 19:14:36 -0500 (EST)
+Received: by mail-lf1-f68.google.com with SMTP id y19so10525485lfl.9
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Feb 2020 16:14:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=+IGQ44b8ehFgo9r1oz6MUXO7lMciX3lsO+/mrOD8lKs=;
+ b=wNohhz24KyweaPRjF/ZHHazpqKxyZNG6eY/v2jPjEqflMXmdDA87blQaYxRrP52OhY
+ oJTM4/wtKG7H+a1O638elj6pNxgX47boYHKawJBnthqWtfiyVZ4wjeYuZUgaNoFf6tmj
+ OHix6PBfxoL2v75rtEk7TggEjhdRlnRIJocJs3QyjXC4ZKEUJVV6f2w4afRH/JV620mr
+ SiiSqZLcMoPYdi4oHPFYWVKg60WUqtCqSmOsPwK6qz2JQgU5S1H0YqmPMkMU76jDZTYn
+ lkP33PSLavtDBMXgIIfm9y3nM9p61Zer7u46FZWlhNRGCPbRQQdDAH4XsABPtGnW60B8
+ BE8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=+IGQ44b8ehFgo9r1oz6MUXO7lMciX3lsO+/mrOD8lKs=;
+ b=qkTVLRbvCpM7vPOiymkEK4AUY3QPOTN+yssS21ae9SxSDUyFfCStyAccA9EgAunS55
+ 99TVeLpLEJHVL/IVxEPsUlIpDH2i9fIt4vdpLMFPk58EP3eH31PVr2CGewJ+NEU11XJk
+ jer0sZq1O3zmrxZ1wsHWWckmCZ/kkiFAJyNP7HRln0PiBehAw+MRav8npMmsRlPAL4U5
+ JILCxEaXKxinDEDWXEhLJ1FH0AU27MpTfHWo4TYvldOx1LZNwrHyrb4/bD5q3ysYxDyr
+ XFtReuZHt5X5fqFZIlElhwjwnPKD63toGZ52ML8F99a5IJ5XpfXj7Erh/3W4rgADEOkM
+ i3ew==
+X-Gm-Message-State: APjAAAWV0ZAbrygUiRdniC8aI/kA/ihRWqoI4AOhPVv8Pp2ocaWUeApO
+ oRjk6Z6l0Zh3BfEKaoGITn6gmzc4ojwTpAxuWZGd4Q==
+X-Google-Smtp-Source: APXvYqzsIMSQIv73Gzmo6PpatlAiH1YXLjMsm2KELMYVI69mtO6l3/cej9L7YkzaEFTovPCBl/VZ0ymnuMu8PEaKD0Y=
+X-Received: by 2002:ac2:5dc8:: with SMTP id x8mr6411681lfq.217.1581898475042; 
+ Sun, 16 Feb 2020 16:14:35 -0800 (PST)
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, peter.maydell@linaro.org,
- james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
+References: <20200210141324.21090-1-maz@kernel.org>
+In-Reply-To: <20200210141324.21090-1-maz@kernel.org>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Mon, 17 Feb 2020 01:14:24 +0100
+Message-ID: <CACRpkdYTpuONqYvhe2k7vpbBFRBbG6PVihzj8mKctpQiK4vXTQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/5] Removing support for 32bit KVM/arm host
+To: Marc Zyngier <maz@kernel.org>
+Cc: Anders Berg <anders.berg@lsi.com>, Russell King <linux@arm.linux.org.uk>,
+ Arnd Bergmann <arnd@arndb.de>, kvm@vger.kernel.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, Linux ARM <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -84,61 +89,29 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Upgrading the PMU code from ARMv8.1 to ARMv8.4 turns out to be
-pretty easy. All that is required is support for PMMIR_EL1, which
-is read-only, and for which returning 0 is a valid option.
+On Mon, Feb 10, 2020 at 3:13 PM Marc Zyngier <maz@kernel.org> wrote:
 
-Let's just do that and adjust what we return to the guest.
+> it has been a good prototype for the arm64 version,
+> but it suffers a few problems:
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/include/asm/sysreg.h | 2 ++
- arch/arm64/kvm/sys_regs.c       | 9 ++++++---
- 2 files changed, 8 insertions(+), 3 deletions(-)
+Wittgenstein wrote that sometimes an intellectual exercise work like such
+that you have to throw away the ladder after you climbed it. It often
+happens in engineering.
 
-diff --git a/arch/arm64/include/asm/sysreg.h b/arch/arm64/include/asm/sysreg.h
-index b91570ff9db1..16d91ed51d06 100644
---- a/arch/arm64/include/asm/sysreg.h
-+++ b/arch/arm64/include/asm/sysreg.h
-@@ -312,6 +312,8 @@
- #define SYS_PMINTENSET_EL1		sys_reg(3, 0, 9, 14, 1)
- #define SYS_PMINTENCLR_EL1		sys_reg(3, 0, 9, 14, 2)
- 
-+#define SYS_PMMIR_EL1			sys_reg(3, 0, 9, 14, 6)
-+
- #define SYS_MAIR_EL1			sys_reg(3, 0, 10, 2, 0)
- #define SYS_AMAIR_EL1			sys_reg(3, 0, 10, 3, 0)
- 
-diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index 43087b50a211..4eee61fb94be 100644
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -1097,9 +1097,11 @@ static u64 read_id_reg(const struct kvm_vcpu *vcpu,
- 		/* Limit debug to ARMv8.0 */
- 		val &= ~FEATURE(ID_AA64DFR0_DEBUGVER);
- 		val |= FIELD_PREP(FEATURE(ID_AA64DFR0_DEBUGVER), 6);
--		/* Limit PMU to ARMv8.1 */
--		val &= ~FEATURE(ID_AA64DFR0_PMUVER);
--		val |= FIELD_PREP(FEATURE(ID_AA64DFR0_PMUVER), 4);
-+		/* Limit PMU to ARMv8.4 */
-+		if (FIELD_GET(FEATURE(ID_AA64DFR0_PMUVER), val) > 5) {
-+			val &= ~FEATURE(ID_AA64DFR0_PMUVER);
-+			val |= FIELD_PREP(FEATURE(ID_AA64DFR0_PMUVER), 5);
-+		}
- 		break;
- 	}
- 
-@@ -1524,6 +1526,7 @@ static const struct sys_reg_desc sys_reg_descs[] = {
- 
- 	{ SYS_DESC(SYS_PMINTENSET_EL1), access_pminten, reset_unknown, PMINTENSET_EL1 },
- 	{ SYS_DESC(SYS_PMINTENCLR_EL1), access_pminten, NULL, PMINTENSET_EL1 },
-+	{ SYS_DESC(SYS_PMMIR_EL1), trap_raz_wi },
- 
- 	{ SYS_DESC(SYS_MAIR_EL1), access_vm_reg, reset_unknown, MAIR_EL1 },
- 	{ SYS_DESC(SYS_AMAIR_EL1), access_vm_reg, reset_amair_el1, AMAIR_EL1 },
--- 
-2.20.1
+It also echoes Fred Brooks Mythical Man-Month:
+"In most projects, the first system built is barely usable....Hence plan to
+throw one away; you will, anyhow."
 
+> To reiterate: 32bit guest support for arm64 stays, of course. Only
+> 32bit host goes.
+
+That sounds more useful.
+
+I won't miss it.
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+
+Yours,
+Linus Walleij
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
