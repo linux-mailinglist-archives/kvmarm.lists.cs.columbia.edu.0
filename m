@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B35D1163405
-	for <lists+kvmarm@lfdr.de>; Tue, 18 Feb 2020 22:08:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 15C3316378E
+	for <lists+kvmarm@lfdr.de>; Wed, 19 Feb 2020 00:54:47 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 680FA4AF77;
-	Tue, 18 Feb 2020 16:08:20 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BB7054AF6A;
+	Tue, 18 Feb 2020 18:54:46 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -15,50 +15,47 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Swnx6-bxJngV; Tue, 18 Feb 2020 16:08:19 -0500 (EST)
+	with ESMTP id bm-c9z0razQ0; Tue, 18 Feb 2020 18:54:45 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6AC8B4AF63;
-	Tue, 18 Feb 2020 16:07:58 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F9354AF73;
+	Tue, 18 Feb 2020 18:54:44 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 27D9B4AF48
- for <kvmarm@lists.cs.columbia.edu>; Tue, 18 Feb 2020 16:07:56 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8059C4AF43
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 18 Feb 2020 18:54:42 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id DHxMUyKfb3gV for <kvmarm@lists.cs.columbia.edu>;
- Tue, 18 Feb 2020 16:07:55 -0500 (EST)
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6A8134AF6F
- for <kvmarm@lists.cs.columbia.edu>; Tue, 18 Feb 2020 16:07:50 -0500 (EST)
+ with ESMTP id s5lB6ceaQUR0 for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 18 Feb 2020 18:54:40 -0500 (EST)
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 827DB4AF3A
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 18 Feb 2020 18:54:40 -0500 (EST)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by fmsmga107.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 18 Feb 2020 13:07:47 -0800
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+ by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 18 Feb 2020 15:54:39 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,457,1574150400"; d="scan'208";a="253856472"
+X-IronPort-AV: E=Sophos;i="5.70,458,1574150400"; d="scan'208";a="224313154"
 Received: from sjchrist-coffee.jf.intel.com ([10.54.74.202])
- by orsmga002.jf.intel.com with ESMTP; 18 Feb 2020 13:07:47 -0800
+ by orsmga007.jf.intel.com with ESMTP; 18 Feb 2020 15:54:38 -0800
 From: Sean Christopherson <sean.j.christopherson@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v6 22/22] KVM: x86/mmu: Consolidate open coded variants of
- memslot TLB flushes
-Date: Tue, 18 Feb 2020 13:07:36 -0800
-Message-Id: <20200218210736.16432-23-sean.j.christopherson@intel.com>
+Subject: [PATCH v2 0/9] KVM: Move x86 init ops to separate struct
+Date: Tue, 18 Feb 2020 15:54:28 -0800
+Message-Id: <20200218235437.20533-1-sean.j.christopherson@intel.com>
 X-Mailer: git-send-email 2.24.1
-In-Reply-To: <20200218210736.16432-1-sean.j.christopherson@intel.com>
-References: <20200218210736.16432-1-sean.j.christopherson@intel.com>
 MIME-Version: 1.0
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- David Hildenbrand <david@redhat.com>, linux-mips@vger.kernel.org,
- Paul Mackerras <paulus@ozlabs.org>, kvmarm@lists.cs.columbia.edu,
- Janosch Frank <frankja@linux.ibm.com>, Marc Zyngier <maz@kernel.org>,
- Joerg Roedel <joro@8bytes.org>, Christian Borntraeger <borntraeger@de.ibm.com>,
- kvm-ppc@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- Jim Mattson <jmattson@google.com>, Cornelia Huck <cohuck@redhat.com>,
+Cc: linux-arm-kernel@lists.infradead.org, Wanpeng Li <wanpengli@tencent.com>,
+ Janosch Frank <frankja@linux.ibm.com>, kvm@vger.kernel.org,
+ David Hildenbrand <david@redhat.com>, Marc Zyngier <maz@kernel.org>,
+ Joerg Roedel <joro@8bytes.org>, Cornelia Huck <cohuck@redhat.com>,
+ linux-mips@vger.kernel.org,
  Sean Christopherson <sean.j.christopherson@intel.com>,
- linux-kernel@vger.kernel.org, Vitaly Kuznetsov <vkuznets@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>
+ linux-kernel@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
+ Christian Borntraeger <borntraeger@de.ibm.com>, kvm-ppc@vger.kernel.org,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, kvmarm@lists.cs.columbia.edu,
+ Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -75,107 +72,77 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Replace open coded instances of kvm_arch_flush_remote_tlbs_memslot()'s
-functionality with calls to the aforementioned function.  Update the
-comment in kvm_arch_flush_remote_tlbs_memslot() to elaborate on how it
-is used and why it asserts that slots_lock is held.
+The non-x86 part of this series is wholly contained in patch 01.  Compared
+to other recent kvm-wide changes, this one is very straightforward (famous
+last words).
 
-No functional change intended.
+Like a few other architectures, e.g. PPC, x86 uses a set of global hooks
+to call back into vendor code on demand.  A handlful of the x86 hooks are
+used only within the scope of kvm_init().  This series moves the init-only
+hooks to a separate struct, partly to clean up the code a bit, but mainly
+so that the runtime hooks can be made available only after the x86 vendor
+has completed its ->hardware_setup().  While working on a different series
+I spent a fair bit of time scratching my as to why a kvm_x86_ops wasn't
+working, and eventually realized VMX's callback wasn't "ready" because the
+vmcs_config hadn't yet been populated.
 
-Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
----
- arch/x86/kvm/mmu/mmu.c | 34 +++++++++-------------------------
- 1 file changed, 9 insertions(+), 25 deletions(-)
+Due to lack of a cross-compiling setup, the non-x86 changes in patch 01
+are untested.
 
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 8a6516ce2983..1eb8654cc9d0 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -5870,13 +5870,6 @@ void kvm_mmu_slot_remove_write_access(struct kvm *kvm,
- 				      false);
- 	spin_unlock(&kvm->mmu_lock);
- 
--	/*
--	 * kvm_mmu_slot_remove_write_access() and kvm_vm_ioctl_get_dirty_log()
--	 * which do tlb flush out of mmu-lock should be serialized by
--	 * kvm->slots_lock otherwise tlb flush would be missed.
--	 */
--	lockdep_assert_held(&kvm->slots_lock);
--
- 	/*
- 	 * We can flush all the TLBs out of the mmu lock without TLB
- 	 * corruption since we just change the spte from writable to
-@@ -5889,8 +5882,7 @@ void kvm_mmu_slot_remove_write_access(struct kvm *kvm,
- 	 * on PT_WRITABLE_MASK anymore.
- 	 */
- 	if (flush)
--		kvm_flush_remote_tlbs_with_address(kvm, memslot->base_gfn,
--			memslot->npages);
-+		kvm_arch_flush_remote_tlbs_memslot(kvm, memslot);
- }
- 
- static bool kvm_mmu_zap_collapsible_spte(struct kvm *kvm,
-@@ -5946,8 +5938,11 @@ void kvm_arch_flush_remote_tlbs_memslot(struct kvm *kvm,
- 					struct kvm_memory_slot *memslot)
- {
- 	/*
--	 * All the TLBs can be flushed out of mmu lock, see the comments in
--	 * kvm_mmu_slot_remove_write_access().
-+	 * All current use cases for flushing the TLBs for a specific memslot
-+	 * are related to dirty logging, and do the TLB flush out of mmu_lock.
-+	 * The interaction between the various operations on memslot must be
-+	 * serialized by slots_locks to ensure the TLB flush from one operation
-+	 * is observed by any other operation on the same memslot.
- 	 */
- 	lockdep_assert_held(&kvm->slots_lock);
- 	kvm_flush_remote_tlbs_with_address(kvm, memslot->base_gfn,
-@@ -5963,8 +5958,6 @@ void kvm_mmu_slot_leaf_clear_dirty(struct kvm *kvm,
- 	flush = slot_handle_leaf(kvm, memslot, __rmap_clear_dirty, false);
- 	spin_unlock(&kvm->mmu_lock);
- 
--	lockdep_assert_held(&kvm->slots_lock);
--
- 	/*
- 	 * It's also safe to flush TLBs out of mmu lock here as currently this
- 	 * function is only used for dirty logging, in which case flushing TLB
-@@ -5972,8 +5965,7 @@ void kvm_mmu_slot_leaf_clear_dirty(struct kvm *kvm,
- 	 * dirty_bitmap.
- 	 */
- 	if (flush)
--		kvm_flush_remote_tlbs_with_address(kvm, memslot->base_gfn,
--				memslot->npages);
-+		kvm_arch_flush_remote_tlbs_memslot(kvm, memslot);
- }
- EXPORT_SYMBOL_GPL(kvm_mmu_slot_leaf_clear_dirty);
- 
-@@ -5987,12 +5979,8 @@ void kvm_mmu_slot_largepage_remove_write_access(struct kvm *kvm,
- 					false);
- 	spin_unlock(&kvm->mmu_lock);
- 
--	/* see kvm_mmu_slot_remove_write_access */
--	lockdep_assert_held(&kvm->slots_lock);
--
- 	if (flush)
--		kvm_flush_remote_tlbs_with_address(kvm, memslot->base_gfn,
--				memslot->npages);
-+		kvm_arch_flush_remote_tlbs_memslot(kvm, memslot);
- }
- EXPORT_SYMBOL_GPL(kvm_mmu_slot_largepage_remove_write_access);
- 
-@@ -6005,12 +5993,8 @@ void kvm_mmu_slot_set_dirty(struct kvm *kvm,
- 	flush = slot_handle_all_level(kvm, memslot, __rmap_set_dirty, false);
- 	spin_unlock(&kvm->mmu_lock);
- 
--	lockdep_assert_held(&kvm->slots_lock);
--
--	/* see kvm_mmu_slot_leaf_clear_dirty */
- 	if (flush)
--		kvm_flush_remote_tlbs_with_address(kvm, memslot->base_gfn,
--				memslot->npages);
-+		kvm_arch_flush_remote_tlbs_memslot(kvm, memslot);
- }
- EXPORT_SYMBOL_GPL(kvm_mmu_slot_set_dirty);
- 
+The SVM changes in patch 02 are fairly well tested, e.g. fudged things
+enough to ensure KVM didn't explode on a null pointer.
+
+Patch 05 is a bit scary as a rogue dereference of kvm_x86_ops before
+->hardware_setup() will crash KVM (maybe the kernel?).  I didn't find any
+obvious ways to use kvm_x86_ops on AMD, and tested on a few different
+Intel CPUs, so I'm reasonably confident that there are no existing
+violations.
+
+v2:
+  - Rebase to kvm/queue, 2c2787938512 ("KVM: selftests: Stop ...")
+  - Collect tags. [Cornelia]
+  - Add a patch to make kvm_x86_ops its own instance and copy
+    {vmx,svm}_x86_ops by value, which saves a memory access on every
+    invocation of a kvm_x86_ops hook. [Paolo]
+  - Add patches to tag {vmx,svm}_x86_ops as __initdata after they're
+    copied by value.
+
+Sean Christopherson (9):
+  KVM: Pass kvm_init()'s opaque param to additional arch funcs
+  KVM: x86: Move init-only kvm_x86_ops to separate struct
+  KVM: VMX: Move hardware_setup() definition below vmx_x86_ops
+  KVM: VMX: Configure runtime hooks using vmx_x86_ops
+  KVM: x86: Set kvm_x86_ops only after ->hardware_setup() completes
+  KVM: x86: Copy kvm_x86_ops by value to eliminate layer of indirection
+  KVM: x86: Drop __exit from kvm_x86_ops' hardware_unsetup()
+  KVM: VMX: Annotate vmx_x86_ops as __initdata
+  KVM: SVM: Annotate svm_x86_ops as __initdata
+
+ arch/mips/kvm/mips.c            |   4 +-
+ arch/powerpc/kvm/powerpc.c      |   4 +-
+ arch/s390/kvm/kvm-s390.c        |   4 +-
+ arch/x86/include/asm/kvm_host.h |  35 +--
+ arch/x86/kvm/cpuid.c            |  24 +-
+ arch/x86/kvm/hyperv.c           |   8 +-
+ arch/x86/kvm/kvm_cache_regs.h   |  10 +-
+ arch/x86/kvm/lapic.c            |  30 +--
+ arch/x86/kvm/mmu.h              |   4 +-
+ arch/x86/kvm/mmu/mmu.c          |  38 ++--
+ arch/x86/kvm/pmu.c              |  30 +--
+ arch/x86/kvm/pmu.h              |   2 +-
+ arch/x86/kvm/svm.c              |  21 +-
+ arch/x86/kvm/trace.h            |   4 +-
+ arch/x86/kvm/vmx/nested.c       |  17 +-
+ arch/x86/kvm/vmx/nested.h       |   3 +-
+ arch/x86/kvm/vmx/pmu_intel.c    |   2 +-
+ arch/x86/kvm/vmx/vmx.c          | 353 +++++++++++++++--------------
+ arch/x86/kvm/x86.c              | 384 ++++++++++++++++----------------
+ arch/x86/kvm/x86.h              |   4 +-
+ include/linux/kvm_host.h        |   4 +-
+ virt/kvm/arm/arm.c              |   4 +-
+ virt/kvm/kvm_main.c             |  18 +-
+ 23 files changed, 519 insertions(+), 488 deletions(-)
+
 -- 
 2.24.1
 
