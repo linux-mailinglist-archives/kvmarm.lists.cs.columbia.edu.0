@@ -2,81 +2,127 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id BAAA516A733
-	for <lists+kvmarm@lfdr.de>; Mon, 24 Feb 2020 14:22:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 500EE16B60C
+	for <lists+kvmarm@lfdr.de>; Tue, 25 Feb 2020 00:51:44 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E75DB4B006;
-	Mon, 24 Feb 2020 08:22:14 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D8A744B0C3;
+	Mon, 24 Feb 2020 18:51:43 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: 0.908
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+X-Spam-Status: No, score=0.908 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+	RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, body has been altered) header.i=@cern.onmicrosoft.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4JwVcS4jhk5L; Mon, 24 Feb 2020 08:22:14 -0500 (EST)
+	with ESMTP id u0wF-FkP-Q-9; Mon, 24 Feb 2020 18:51:43 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D4C924AFFC;
-	Mon, 24 Feb 2020 08:22:13 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 88CA04B0D4;
+	Mon, 24 Feb 2020 18:51:42 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 860324AFC0
- for <kvmarm@lists.cs.columbia.edu>; Mon, 24 Feb 2020 08:22:12 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 17BD44AF95
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 24 Feb 2020 04:26:48 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id BB981jD+vQza for <kvmarm@lists.cs.columbia.edu>;
- Mon, 24 Feb 2020 08:22:11 -0500 (EST)
-Received: from us-smtp-1.mimecast.com (us-smtp-1.mimecast.com [207.211.31.81])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8DDEB4AF9A
- for <kvmarm@lists.cs.columbia.edu>; Mon, 24 Feb 2020 08:22:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1582550531;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AQSjOCN08tuHWwFl/AFZaF1M6yIcbXibQI3Uq0KWdfM=;
- b=VKnBAFyIRCtNeajpZXCSPoyK1odu8kmGYYF8Z/8SIYQXhQktsmmgPpWiDKDEZaR4HEbxJ4
- ItT4k7nKHQeRQ3nS6T/lZKwvN4Ehu+ap8mnVJcG8dTPFOuwFY3Oma0MFyy3fmcFHMxsHAT
- 6CjU/ZvXPZX+MdhWPf+LDRZ21ONZ0qs=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-25-vny8QQvLOrO2Y37m0onvfA-1; Mon, 24 Feb 2020 08:22:07 -0500
-X-MC-Unique: vny8QQvLOrO2Y37m0onvfA-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.phx2.redhat.com
- [10.5.11.16])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id F2DDC1005F6C;
- Mon, 24 Feb 2020 13:22:04 +0000 (UTC)
-Received: from kamzik.brq.redhat.com (unknown [10.43.2.160])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 21E4C5C554;
- Mon, 24 Feb 2020 13:22:02 +0000 (UTC)
-Date: Mon, 24 Feb 2020 14:22:00 +0100
-From: Andrew Jones <drjones@redhat.com>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH 0/3] KVM: arm64: Ask the compiler to __always_inline
- functions used by KVM at HYP
-Message-ID: <20200224132200.ho7hgmnah2zfh27x@kamzik.brq.redhat.com>
-References: <20200220165839.256881-1-james.morse@arm.com>
- <cb56f509ea0a4a9e1809af76f319daa2@kernel.org>
+ with ESMTP id oRcJxf63oRlw for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 24 Feb 2020 04:26:44 -0500 (EST)
+Received: from EUR05-VI1-obe.outbound.protection.outlook.com
+ (mail-vi1eur05on2076.outbound.protection.outlook.com [40.107.21.76])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 053784AF8C
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 24 Feb 2020 04:26:43 -0500 (EST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=eLhB7iH5YDJQd/UPqkLrfmxKIxhuOEeRo6o8Gcea5ND0iEi6k7xi2hbTiBGcZD6y9L8ZIeZ7GxgbKqzuCARa7/dxorkh2FV0tXrKJ8Ra3ueH2QOrhQR2BVB9ND61nTS6hiqe52Hw857jN0gmuASJvbtl52mlJGUcpB2VhpnKZ3Dqw7UEFFnx46aiueqYaDFc9MbpOdSY7X8GibnhUFK14SWvLTiaNrgW0TRlPxoyU6EH2PvLqam6QUHSR+kw1fqJbcKG+OWGwxp35cemaWPZDxuu4U7JyGfSybZXsBGdp7BbXCLhaHHQ+/HKYILfLsUnsj5/tYpZ96zDQo9S5zqmXw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tmGwAKElI2u+A0z/EETBIou5ic5kIe13D9NL0wb7U2M=;
+ b=CGZrT9/zeWLslICwnV47CvnyCi4tEwQUvjqq4frvluTbtOh5IsXbUWZuRHjfuSArjnFQ7V8qGqVtI2g+xSErDkkqpOSMvLUpueUfM/Y9a9cvMUxhhRbsXuIIRghZMWr0aoiTyBh0F+ZkCM8+Y3hBx6wkGKIKjlk/4z7TKSRnyf7C+/w9hY+f31izRZKM57PBovCQDJhle01mAgeJWMacphqeZc477gRYs6vLNoJsWtMM5xovPP/PM0OZc9LqnyZrXo8PTjlcKfMmfh2jHrdSdSA+MTMjrhYqLuJajloIZjDMLL7d3s9hytgzdiyLTjnyRxL1AizGgpggJZlBlsKWag==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 188.184.36.50) smtp.rcpttodomain=kernel.org smtp.mailfrom=cern.ch;
+ dmarc=bestguesspass action=none header.from=cern.ch; dkim=none (message not
+ signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cern.onmicrosoft.com; 
+ s=selector2-cern-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tmGwAKElI2u+A0z/EETBIou5ic5kIe13D9NL0wb7U2M=;
+ b=treHLM/wuTE3F8KbK3ygj/ORGGmbE9HBEQqYgWyAmRwvSPW5jnP+JZ60wkplYx3/8FOYO8MRW3svCyvPlLsPYQKPlKNIaLUHO55uV6xCD9MQs9BFPL7WD+jRjhSKWoD25d/Kj3n/1EbzSGqtTHjsNsdj0qDL4wKrkQGEOj305CA=
+Received: from AM0PR06CA0026.eurprd06.prod.outlook.com (2603:10a6:208:ab::39)
+ by HE1PR0601MB2617.eurprd06.prod.outlook.com (2603:10a6:3:4c::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2750.22; Mon, 24 Feb
+ 2020 09:26:42 +0000
+Received: from VE1EUR02FT030.eop-EUR02.prod.protection.outlook.com
+ (2a01:111:f400:7e06::205) by AM0PR06CA0026.outlook.office365.com
+ (2603:10a6:208:ab::39) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2750.18 via Frontend
+ Transport; Mon, 24 Feb 2020 09:26:42 +0000
+Authentication-Results: spf=pass (sender IP is 188.184.36.50)
+ smtp.mailfrom=cern.ch; kernel.org; dkim=none (message not signed)
+ header.d=none;kernel.org; dmarc=bestguesspass action=none
+ header.from=cern.ch;
+Received-SPF: Pass (protection.outlook.com: domain of cern.ch designates
+ 188.184.36.50 as permitted sender) receiver=protection.outlook.com;
+ client-ip=188.184.36.50; helo=cernmxgwlb4.cern.ch;
+Received: from cernmxgwlb4.cern.ch (188.184.36.50) by
+ VE1EUR02FT030.mail.protection.outlook.com (10.152.12.127) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.20.2750.18 via Frontend Transport; Mon, 24 Feb 2020 09:26:41 +0000
+Received: from cernfe04.cern.ch (188.184.36.41) by cernmxgwlb4.cern.ch
+ (188.184.36.50) with Microsoft SMTP Server (TLS) id 14.3.487.0; Mon, 24 Feb
+ 2020 10:26:40 +0100
+Received: from pcbe13614.localnet (2001:1458:202:121::100:40) by smtp.cern.ch
+ (2001:1458:201:66::100:14) with Microsoft SMTP Server (TLS) id
+ 14.3.487.0; Mon, 24 Feb 2020 10:26:38 +0100
+From: Federico Vaga <federico.vaga@cern.ch>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: Re: [PATCH 3/7] docs: fix broken references to text files
+Date: Mon, 24 Feb 2020 10:26:39 +0100
+Message-ID: <3929512.qvrp2sLpzG@pcbe13614>
+In-Reply-To: <5cfeed6df208b74913312a1c97235ee615180f91.1582361737.git.mchehab+huawei@kernel.org>
+References: <cover.1582361737.git.mchehab+huawei@kernel.org>
+ <5cfeed6df208b74913312a1c97235ee615180f91.1582361737.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <cb56f509ea0a4a9e1809af76f319daa2@kernel.org>
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Disposition: inline
-Cc: Ard Biesheuvel <ard.biesheuvel@linaro.org>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Sami Tolvanen <samitolvanen@google.com>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+X-Originating-IP: [2001:1458:202:121::100:40]
+X-EOPAttributedMessage: 0
+X-Forefront-Antispam-Report: CIP:188.184.36.50; IPV:; CTRY:CH; EFV:NLI;
+ SFV:NSPM;
+ SFS:(10009020)(376002)(39860400002)(136003)(346002)(396003)(199004)(189003)(186003)(9686003)(16526019)(33716001)(26005)(2906002)(478600001)(9576002)(426003)(8676002)(44832011)(3450700001)(336012)(246002)(53546011)(8936002)(7416002)(4326008)(86362001)(7636002)(356004)(70206006)(316002)(54906003)(70586007)(5660300002)(39026012);
+ DIR:OUT; SFP:1101; SCL:1; SRVR:HE1PR0601MB2617; H:cernmxgwlb4.cern.ch; FPR:;
+ SPF:Pass; LANG:en; PTR:cernmx11.cern.ch; A:1; MX:1; 
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 07a24c03-738e-4624-7506-08d7b90ba88c
+X-MS-TrafficTypeDiagnostic: HE1PR0601MB2617:
+X-Microsoft-Antispam-PRVS: <HE1PR0601MB2617DD6A6BADE420AB7F4408EFEC0@HE1PR0601MB2617.eurprd06.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:2803;
+X-Forefront-PRVS: 032334F434
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 0qIX6XFVupoujn6tnMIXACZrhD5q3UXodzvYwqyh0hsK1Lsu+/pJ+LkIjl/NeexA/acueRAQl6tWpe3CFd900UWE/3Dp2zl9mkWVMfYl1qYpVkPmqLAGWnMEDEKi64JQPs3cOzEfTL3WjHbAxZ5gqNC3mLax0dvKusUdgcmqXKLya466pUHPmvk05PkmAw4VpLa35W1pVnc1avg4zQD+W+XccjzAi6cB/jeg95xVwyZEdY7wigcHbjHbZjeUw5bGbym667i307aOvjm5Vli7k+a11ZX1tZ2pjiiBWvLEYzJaJJQ2pSEH9ApQf6ZUYQ5f7TlyJmnEtMyipzP+fXgRIINxHtYghfwKLsQ7Fb2NPkqtE2mY/QN0LGNAE519BJMKJ2V6htEDDIZVXfSjSq9NkQg4un3jbv63EjF6kc6RkQ3fn2TRPhmkbiqtoHaEDIQdUEz7oStS5w1dmTB8Bw7vHuPaRBQq1lv0uJabtpvDjKCWQdNtDjiBIr3Z5wRpVLzv
+X-OriginatorOrg: cern.ch
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Feb 2020 09:26:41.7248 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 07a24c03-738e-4624-7506-08d7b90ba88c
+X-MS-Exchange-CrossTenant-Id: c80d3499-4a40-4a8c-986e-abce017d6b19
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=c80d3499-4a40-4a8c-986e-abce017d6b19; Ip=[188.184.36.50];
+ Helo=[cernmxgwlb4.cern.ch]
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HE1PR0601MB2617
+X-Mailman-Approved-At: Mon, 24 Feb 2020 18:51:41 -0500
+Cc: linux-arch@vger.kernel.org, linux-nfs@vger.kernel.org, kvm@vger.kernel.org,
+ Jonathan Corbet <corbet@lwn.net>, linux-rdma@vger.kernel.org,
+ netdev@vger.kernel.org, Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+ linux-unionfs@vger.kernel.org, kvm-ppc@vger.kernel.org, linux-mm@kvack.org,
+ dri-devel@lists.freedesktop.org, linux-fsdevel@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
+Reply-To: federico.vaga@cern.ch
 List-Id: Where KVM/ARM decisions are made <kvmarm.lists.cs.columbia.edu>
 List-Unsubscribe: <https://lists.cs.columbia.edu/mailman/options/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=unsubscribe>
@@ -85,65 +131,50 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Feb 21, 2020 at 12:55:16PM +0000, Marc Zyngier wrote:
-> Hi James,
-> 
-> On 2020-02-20 16:58, James Morse wrote:
-> > Hello!
-> > 
-> > It turns out KVM relies on the inline hint being honoured by the
-> > compiler
-> > in quite a few more places than expected. Something about the Shadow
-> > Call
-> > Stack support[0] causes the compiler to avoid inline-ing and to place
-> > these functions outside the __hyp_text. This ruins KVM's day.
-> > 
-> > Add the simon-says __always_inline annotation to all the static
-> > inlines that KVM calls from HYP code.
-> > 
-> > This series based on v5.6-rc2.
-> 
-> Many thanks for going through all this.
-> 
-> I'm happy to take it if Catalin or Will ack the arm64 patches.
-> It case we decide to go the other way around:
-> 
-> Acked-by: Marc Zyngier <maz@kernel.org>
-> 
-> One thing I'd like to look into though is a compile-time check that
-> nothing in the hyp_text section has a reference to a non-hyp_text
-> symbol.
-> 
-> We already have checks around non-init symbols pointing to init symbols,
-> and I was wondering if we could reuse this for fun and profit...
+On Saturday, February 22, 2020 10:00:03 AM CET Mauro Carvalho Chehab wrote:
+> Several references got broken due to txt to ReST conversion.
+> =
 
-Hi Marc,
+> Several of them can be automatically fixed with:
+> =
 
-I recall that you've suggested that before, and I even tried it around
-that time [*]. I wasn't happy enough with it to post a proper patch
-though.
+> 	scripts/documentation-file-ref-check --fix
+> =
 
-[*] https://lists.cs.columbia.edu/pipermail/kvmarm/2018-May/031629.html
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> ---
 
-Thanks,
-drew
 
-> 
-> Thanks,
-> 
->         M.
-> -- 
-> Jazz is not dead. It just smells funny...
-> _______________________________________________
-> kvmarm mailing list
-> kvmarm@lists.cs.columbia.edu
-> https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
-> 
+>  26) If any ioctl's are added by the patch, then also update
+> -    ``Documentation/ioctl/ioctl-number.rst``.
+> +    ``Documentation/userspace-api/ioctl/ioctl-number.rst``.
+> =
+
+>  27) If your modified source code depends on or uses any of the kernel
+>      APIs or features that are related to the following ``Kconfig`` symbo=
+ls,
+> diff --git a/Documentation/translations/it_IT/process/submit-checklist.rst
+> b/Documentation/translations/it_IT/process/submit-checklist.rst index
+> 995ee69fab11..3e575502690f 100644
+> --- a/Documentation/translations/it_IT/process/submit-checklist.rst
+> +++ b/Documentation/translations/it_IT/process/submit-checklist.rst
+> @@ -117,7 +117,7 @@ sottomissione delle patch, in particolare
+>      sorgenti che ne spieghi la logica: cosa fanno e perch=E9.
+> =
+
+>  25) Se la patch aggiunge nuove chiamate ioctl, allora aggiornate
+> -    ``Documentation/ioctl/ioctl-number.rst``.
+> +    ``Documentation/userspace-api/ioctl/ioctl-number.rst``.
+
+
+Acked-By: Federico Vaga <federico.vaga@vaga.pv.it>
+
+
 
 _______________________________________________
 kvmarm mailing list
