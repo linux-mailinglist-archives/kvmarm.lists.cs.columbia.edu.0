@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9399F173594
-	for <lists+kvmarm@lfdr.de>; Fri, 28 Feb 2020 11:47:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A7E1173754
+	for <lists+kvmarm@lfdr.de>; Fri, 28 Feb 2020 13:41:38 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B10764AFF7;
-	Fri, 28 Feb 2020 05:47:17 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 779BC4AFEF;
+	Fri, 28 Feb 2020 07:41:37 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
@@ -15,82 +15,70 @@ X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
 	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@linaro.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Pqdol7g3T1xd; Fri, 28 Feb 2020 05:47:17 -0500 (EST)
+	with ESMTP id 5B6gJkAGM9fK; Fri, 28 Feb 2020 07:41:37 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7C7764AFE7;
-	Fri, 28 Feb 2020 05:47:16 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2E6FF4AFC5;
+	Fri, 28 Feb 2020 07:41:36 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EFAA94AF7A
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Feb 2020 05:47:15 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 09E0C4AFC5
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Feb 2020 07:41:34 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id jyoHjFcgOGcf for <kvmarm@lists.cs.columbia.edu>;
- Fri, 28 Feb 2020 05:47:15 -0500 (EST)
-Received: from us-smtp-delivery-1.mimecast.com
- (us-smtp-delivery-1.mimecast.com [207.211.31.120])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 09A604AF78
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Feb 2020 05:47:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1582886834;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=by6qnbWXHvbfMve5jRvxpdLV2eFgarPImZ7pzkAFACI=;
- b=KlQDzgg3XuorEr3EJk4rOQAVx6NAsR6RVnNCkMEUk2o5EBvX72bQbwvHQ2wKatxPXAiwkS
- /ZdKgfEC/LBlFB08bNd1pXv0GhKqxnzC/eZYuPPkQ9IYx4Idqvd6JLdkWm+MT0i2YjHyCW
- gZT4K3jbnBxELVH2mSXsP95JZP1L3Wg=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-295-rQ2lPpxwN8iNb8RI9MI6rA-1; Fri, 28 Feb 2020 05:47:10 -0500
-X-MC-Unique: rQ2lPpxwN8iNb8RI9MI6rA-1
-Received: by mail-wr1-f71.google.com with SMTP id c6so1150665wrm.18
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Feb 2020 02:47:10 -0800 (PST)
+ with ESMTP id LpLwhpiJswrC for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 28 Feb 2020 07:41:33 -0500 (EST)
+Received: from mail-wr1-f66.google.com (mail-wr1-f66.google.com
+ [209.85.221.66])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E940F4AF86
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Feb 2020 07:41:32 -0500 (EST)
+Received: by mail-wr1-f66.google.com with SMTP id r7so2820564wro.2
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Feb 2020 04:41:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=XBS4xJeronFByco7hvqXXCJEpIN3x2l+h2xMS+Qu5VY=;
+ b=H32BlYxSp7yeOYKrV+18Kq0+YS+hSAOrzWo3T6WyqnHTkd0LkP8qZjWhS1n5//SwFO
+ 7yqusqGjdG8VA3A/7qaHEYn0+6hAzJjGiZP0lNj1456ePdSkYU7BMpxhz6GoBcLHXIwK
+ gOzyaCW0Xns5tOdyob4OhuPjbYcfHcOq8e2QURnGhwq0UeBw+sOpJ/73uaprMNuuTXF2
+ iLn1W4nYHLZRS1rRnPYzYVj4gQhwMs+x+nlNaP6uYErNFT5JWSv4K6IuZx8CbGFP59Z9
+ 7CKW+egRaz8fyaTmNtvzCa3R7Hm0PSt6mS5JhRgXArF0qCOJnOgLCizqVEszVt+wk5Y1
+ gojA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=by6qnbWXHvbfMve5jRvxpdLV2eFgarPImZ7pzkAFACI=;
- b=gb6zoU+ubwlwAY+hHZDtmkaPsr/05W8dhaP172rBxHJ0/Cr+sjZQy+VCWOR4PH+1+v
- C/TxhqoZ6kwU1rx2WZAhQ9FLfkt4iGx4FtXXdBuA/jHOuXfZWhV3ARfQ1OKGqmW/uHRn
- ZDZL4vZ2bqFIqfztaD6q/ZmHJGNxXAVerytf7qxVE/sBS5qAek/EHFKzXir1WndLkKl7
- PivCrNyEc4LPzLSWePB9/J+p4N6P9/5P4OWSkoLP9QZZdN4V/tmKJMC8UlRjVR52Or9j
- PVRuXPUaTUyYo4dTZFeij+Rrdr+ff2lgobgE3fDtSJJIObxiShHpWwDwS1uQvsHuLh4I
- +qQg==
-X-Gm-Message-State: APjAAAUYSKTVR/UVy1bZUYG8AhOhiroIRH4mvAllpk8T/bbAfNR0Ia05
- YK5w+btXry9wqy5SQSRC3Mr+PSWiW70ByRumqX4FxztqdLfuNja+Js09wzYggRLHqgAIICeZGBX
- OqwQgC8pgsH+je3Pbdl6rduO7
-X-Received: by 2002:a7b:c7d2:: with SMTP id z18mr4308798wmk.160.1582886829211; 
- Fri, 28 Feb 2020 02:47:09 -0800 (PST)
-X-Google-Smtp-Source: APXvYqz5y4mrS/flKBx5L1gDb3tgLLQMoczS1j4+xFLFc7QK89AHPXzLtC2JXXQ6xdqLZv0ycLtvwA==
-X-Received: by 2002:a7b:c7d2:: with SMTP id z18mr4308771wmk.160.1582886828876; 
- Fri, 28 Feb 2020 02:47:08 -0800 (PST)
-Received: from ?IPv6:2001:b07:6468:f312:d0d9:ea10:9775:f33f?
- ([2001:b07:6468:f312:d0d9:ea10:9775:f33f])
- by smtp.gmail.com with ESMTPSA id h10sm1694142wml.18.2020.02.28.02.47.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Feb 2020 02:47:08 -0800 (PST)
-Subject: Re: [GIT PULL] KVM/arm fixes for 5.6
-To: Marc Zyngier <maz@kernel.org>
-References: <20200225235223.12839-1-maz@kernel.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <53886277-3081-f8a9-7750-5784a9af2e56@redhat.com>
-Date: Fri, 28 Feb 2020 11:47:06 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=XBS4xJeronFByco7hvqXXCJEpIN3x2l+h2xMS+Qu5VY=;
+ b=M3g5bpPAYJ91KQcKXWEyTksGnsthwdigQoYIH+AYSKszEqVwS+j6GSG/Tn9hEMWtyk
+ 9J6M6Wljb+6w5WoIRKMaJxnef1Y+/iLlPUwt7pQl752d0hHZj0Y6QrvYDrsJjO+grN4J
+ XHFocfZmj4+u8lUOPv6NECmJ+Tt0S8udSjg9HCQONl8NWk0HmmK2MSj98+jvq9/dIQPU
+ nBOBQbctoj5Ra0b8FEkMQAMRw913M+SeMUIaXYPVeuslk19IGYFzTf5tvgRSjNClu8TR
+ ilSGwI/hvmNeGSxlyCsGu6gSOVOzRE3sHC0HmvgKo4vRRKOQbLh9PRayVsvQJ9nwDgyH
+ pQKQ==
+X-Gm-Message-State: APjAAAVdEcOryu89jIXR21BMvQGqq6Ve6sLD+ioAdzZffCJRTKmNxt00
+ d9Utl62QPbfIks3mEg7JUIXJCMFoOTAHVpjRJfa6HA==
+X-Google-Smtp-Source: APXvYqycHr5BpR7YsHapDHRDF5PvvknfNJGfaHFydphDQrJgW+V3mYRdB8mumbWLaqIy7fTmjqZ4VZ0ui5GjrBMPKsg=
+X-Received: by 2002:adf:f84a:: with SMTP id d10mr4811332wrq.208.1582893691834; 
+ Fri, 28 Feb 2020 04:41:31 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20200225235223.12839-1-maz@kernel.org>
-Content-Language: en-US
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Cc: kvm@vger.kernel.org, Jeremy Cline <jcline@redhat.com>,
- linux-arm-kernel@lists.infradead.org, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu
+References: <20200218195842.34156-1-broonie@kernel.org>
+ <20200218195842.34156-13-broonie@kernel.org>
+In-Reply-To: <20200218195842.34156-13-broonie@kernel.org>
+From: Ard Biesheuvel <ard.biesheuvel@linaro.org>
+Date: Fri, 28 Feb 2020 13:41:21 +0100
+Message-ID: <CAKv+Gu9Bt93hCaOUrgtfYWp+BU4gheVf2Y==PXVyMZcCssRLQg@mail.gmail.com>
+Subject: Re: [PATCH 12/18] arm64: kernel: Convert to modern annotations for
+ assembly functions
+To: Mark Brown <broonie@kernel.org>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ kvmarm <kvmarm@lists.cs.columbia.edu>,
+ linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+ Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>,
+ "David S. Miller" <davem@davemloft.net>,
+ "open list:HARDWARE RANDOM NUMBER GENERATOR CORE"
+ <linux-crypto@vger.kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -107,71 +95,55 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 26/02/20 00:52, Marc Zyngier wrote:
-> Paolo,
-> 
-> This is a small update containing a number of fixes, the most important ones
-> making sure we force the inlining of any helper that gets used by the EL2 code
-> (James identified that some bad things happen with CLang and the Shadow Call
-> Stack extention).
-> 
-> Please pull,
-> 
-> 	M.
-> 
-> The following changes since commit 4a267aa707953a9a73d1f5dc7f894dd9024a92be:
-> 
->   KVM: arm64: Treat emulated TVAL TimerValue as a signed 32-bit integer (2020-01-28 13:09:31 +0000)
-> 
-> are available in the Git repository at:
-> 
->   git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git tags/kvmarm-fixes-5.6-1
-> 
-> for you to fetch changes up to e43f1331e2ef913b8c566920c9af75e0ccdd1d3f:
-> 
->   arm64: Ask the compiler to __always_inline functions used by KVM at HYP (2020-02-22 11:01:47 +0000)
-> 
-> ----------------------------------------------------------------
-> KVM/arm fixes for 5.6, take #1
-> 
-> - Fix compilation on 32bit
-> - Move  VHE guest entry/exit into the VHE-specific entry code
-> - Make sure all functions called by the non-VHE HYP code is tagged as __always_inline
-> 
-> ----------------------------------------------------------------
-> James Morse (3):
->       KVM: arm64: Ask the compiler to __always_inline functions used at HYP
->       KVM: arm64: Define our own swab32() to avoid a uapi static inline
->       arm64: Ask the compiler to __always_inline functions used by KVM at HYP
-> 
-> Jeremy Cline (1):
->       KVM: arm/arm64: Fix up includes for trace.h
-> 
-> Mark Rutland (1):
->       kvm: arm/arm64: Fold VHE entry/exit work into kvm_vcpu_run_vhe()
-> 
->  arch/arm/include/asm/kvm_host.h          |  3 --
->  arch/arm64/include/asm/arch_gicv3.h      |  2 +-
->  arch/arm64/include/asm/cache.h           |  2 +-
->  arch/arm64/include/asm/cacheflush.h      |  2 +-
->  arch/arm64/include/asm/cpufeature.h      | 10 +++----
->  arch/arm64/include/asm/io.h              |  4 +--
->  arch/arm64/include/asm/kvm_emulate.h     | 48 ++++++++++++++++----------------
->  arch/arm64/include/asm/kvm_host.h        | 32 ---------------------
->  arch/arm64/include/asm/kvm_hyp.h         |  7 +++++
->  arch/arm64/include/asm/kvm_mmu.h         |  3 +-
->  arch/arm64/include/asm/virt.h            |  2 +-
->  arch/arm64/kvm/hyp/switch.c              | 39 ++++++++++++++++++++++++--
->  arch/arm64/kvm/hyp/vgic-v2-cpuif-proxy.c |  4 +--
->  virt/kvm/arm/arm.c                       |  2 --
->  virt/kvm/arm/trace.h                     |  1 +
->  15 files changed, 84 insertions(+), 77 deletions(-)
-> 
+Hi Mark,
 
-Pulled, thanks.
+On Tue, 18 Feb 2020 at 21:02, Mark Brown <broonie@kernel.org> wrote:
+>
+> In an effort to clarify and simplify the annotation of assembly functions
+> in the kernel new macros have been introduced. These replace ENTRY and
+> ENDPROC and also add a new annotation for static functions which previously
+> had no ENTRY equivalent. Update the annotations in the core kernel code to
+> the new macros.
+>
+> Signed-off-by: Mark Brown <broonie@kernel.org>
+> ---
+>  arch/arm64/kernel/cpu-reset.S                 |  4 +-
+>  arch/arm64/kernel/efi-entry.S                 |  4 +-
+>  arch/arm64/kernel/efi-rt-wrapper.S            |  4 +-
+>  arch/arm64/kernel/entry-fpsimd.S              | 20 ++++-----
+>  arch/arm64/kernel/hibernate-asm.S             | 16 +++----
+>  arch/arm64/kernel/hyp-stub.S                  | 20 ++++-----
+>  arch/arm64/kernel/probes/kprobes_trampoline.S |  4 +-
+>  arch/arm64/kernel/reloc_test_syms.S           | 44 +++++++++----------
+>  arch/arm64/kernel/relocate_kernel.S           |  4 +-
+>  arch/arm64/kernel/sleep.S                     | 12 ++---
+>  arch/arm64/kernel/smccc-call.S                |  8 ++--
+>  11 files changed, 70 insertions(+), 70 deletions(-)
+>
+...
+> diff --git a/arch/arm64/kernel/efi-entry.S b/arch/arm64/kernel/efi-entry.S
+> index 304d5b02ca67..de6ced92950e 100644
+> --- a/arch/arm64/kernel/efi-entry.S
+> +++ b/arch/arm64/kernel/efi-entry.S
+> @@ -25,7 +25,7 @@
+>          * we want to be. The kernel image wants to be placed at TEXT_OFFSET
+>          * from start of RAM.
+>          */
+> -ENTRY(entry)
+> +SYM_CODE_START(entry)
+>         /*
+>          * Create a stack frame to save FP/LR with extra space
+>          * for image_addr variable passed to efi_entry().
+> @@ -117,4 +117,4 @@ efi_load_fail:
+>         ret
+>
+>  entry_end:
+> -ENDPROC(entry)
+> +SYM_CODE_END(entry)
 
-Paolo
-
+This hunk is going to conflict badly with the EFI tree. I will
+incorporate this change for v5.7, so could you please just drop it
+from this patch?
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
