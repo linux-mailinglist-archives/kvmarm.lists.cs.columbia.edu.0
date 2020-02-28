@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 83BAD173878
-	for <lists+kvmarm@lfdr.de>; Fri, 28 Feb 2020 14:37:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B31D3173B3B
+	for <lists+kvmarm@lfdr.de>; Fri, 28 Feb 2020 16:22:26 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 07C794AF7E;
-	Fri, 28 Feb 2020 08:37:26 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C316A4AFF5;
+	Fri, 28 Feb 2020 10:22:25 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,41 +16,44 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JHKKOdSB+2j8; Fri, 28 Feb 2020 08:37:25 -0500 (EST)
+	with ESMTP id GCNcipM4fzzK; Fri, 28 Feb 2020 10:22:25 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B74D64AF56;
-	Fri, 28 Feb 2020 08:37:24 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9CE094AFD3;
+	Fri, 28 Feb 2020 10:22:24 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A6A934AF4E
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Feb 2020 08:37:23 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8FDCA4AFB7
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Feb 2020 10:22:23 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id hcgiCQkICSYu for <kvmarm@lists.cs.columbia.edu>;
- Fri, 28 Feb 2020 08:37:22 -0500 (EST)
+ with ESMTP id zBDMlxR12yXO for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 28 Feb 2020 10:22:22 -0500 (EST)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F1CD4AF4A
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Feb 2020 08:37:22 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6B5BE4AF1E
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Feb 2020 10:22:22 -0500 (EST)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DD0A431B;
- Fri, 28 Feb 2020 05:37:21 -0800 (PST)
-Received: from arrakis.emea.arm.com (arrakis.cambridge.arm.com [10.1.196.71])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id
- 5767B3F7B4; Fri, 28 Feb 2020 05:37:20 -0800 (PST)
-Date: Fri, 28 Feb 2020 13:37:18 +0000
-From: Catalin Marinas <catalin.marinas@arm.com>
-To: Ard Biesheuvel <ard.biesheuvel@linaro.org>
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C442831B;
+ Fri, 28 Feb 2020 07:22:21 -0800 (PST)
+Received: from localhost (unknown [10.37.6.21])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 457573F73B;
+ Fri, 28 Feb 2020 07:22:21 -0800 (PST)
+Date: Fri, 28 Feb 2020 15:22:19 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Catalin Marinas <catalin.marinas@arm.com>
 Subject: Re: [PATCH 12/18] arm64: kernel: Convert to modern annotations for
  assembly functions
-Message-ID: <20200228133718.GB4019108@arrakis.emea.arm.com>
+Message-ID: <20200228152219.GA4956@sirena.org.uk>
 References: <20200218195842.34156-1-broonie@kernel.org>
  <20200218195842.34156-13-broonie@kernel.org>
  <CAKv+Gu9Bt93hCaOUrgtfYWp+BU4gheVf2Y==PXVyMZcCssRLQg@mail.gmail.com>
+ <20200228133718.GB4019108@arrakis.emea.arm.com>
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <CAKv+Gu9Bt93hCaOUrgtfYWp+BU4gheVf2Y==PXVyMZcCssRLQg@mail.gmail.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>, Marc Zyngier <maz@kernel.org>,
- kvmarm <kvmarm@lists.cs.columbia.edu>, Mark Brown <broonie@kernel.org>,
+In-Reply-To: <20200228133718.GB4019108@arrakis.emea.arm.com>
+X-Cookie: There Is No Cabal.
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: Herbert Xu <herbert@gondor.apana.org.au>,
+ Ard Biesheuvel <ard.biesheuvel@linaro.org>, Marc Zyngier <maz@kernel.org>,
+ kvmarm <kvmarm@lists.cs.columbia.edu>,
  linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
  Will Deacon <will@kernel.org>, "David S. Miller" <davem@davemloft.net>,
  "open list:HARDWARE RANDOM NUMBER GENERATOR CORE"
@@ -66,65 +69,67 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============6063282828981046151=="
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Feb 28, 2020 at 01:41:21PM +0100, Ard Biesheuvel wrote:
-> On Tue, 18 Feb 2020 at 21:02, Mark Brown <broonie@kernel.org> wrote:
-> > In an effort to clarify and simplify the annotation of assembly functions
-> > in the kernel new macros have been introduced. These replace ENTRY and
-> > ENDPROC and also add a new annotation for static functions which previously
-> > had no ENTRY equivalent. Update the annotations in the core kernel code to
-> > the new macros.
-> >
-> > Signed-off-by: Mark Brown <broonie@kernel.org>
-> > ---
-> >  arch/arm64/kernel/cpu-reset.S                 |  4 +-
-> >  arch/arm64/kernel/efi-entry.S                 |  4 +-
-> >  arch/arm64/kernel/efi-rt-wrapper.S            |  4 +-
-> >  arch/arm64/kernel/entry-fpsimd.S              | 20 ++++-----
-> >  arch/arm64/kernel/hibernate-asm.S             | 16 +++----
-> >  arch/arm64/kernel/hyp-stub.S                  | 20 ++++-----
-> >  arch/arm64/kernel/probes/kprobes_trampoline.S |  4 +-
-> >  arch/arm64/kernel/reloc_test_syms.S           | 44 +++++++++----------
-> >  arch/arm64/kernel/relocate_kernel.S           |  4 +-
-> >  arch/arm64/kernel/sleep.S                     | 12 ++---
-> >  arch/arm64/kernel/smccc-call.S                |  8 ++--
-> >  11 files changed, 70 insertions(+), 70 deletions(-)
-> >
-> ...
-> > diff --git a/arch/arm64/kernel/efi-entry.S b/arch/arm64/kernel/efi-entry.S
-> > index 304d5b02ca67..de6ced92950e 100644
-> > --- a/arch/arm64/kernel/efi-entry.S
-> > +++ b/arch/arm64/kernel/efi-entry.S
-> > @@ -25,7 +25,7 @@
-> >          * we want to be. The kernel image wants to be placed at TEXT_OFFSET
-> >          * from start of RAM.
-> >          */
-> > -ENTRY(entry)
-> > +SYM_CODE_START(entry)
-> >         /*
-> >          * Create a stack frame to save FP/LR with extra space
-> >          * for image_addr variable passed to efi_entry().
-> > @@ -117,4 +117,4 @@ efi_load_fail:
-> >         ret
-> >
-> >  entry_end:
-> > -ENDPROC(entry)
-> > +SYM_CODE_END(entry)
-> 
-> This hunk is going to conflict badly with the EFI tree. I will
-> incorporate this change for v5.7, so could you please just drop it
-> from this patch?
 
-I wonder whether it would be easier to merge all these patches at
-5.7-rc1, once most of the major changes went in.
+--===============6063282828981046151==
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="1yeeQ81UyVL57Vl7"
+Content-Disposition: inline
 
--- 
-Catalin
+
+--1yeeQ81UyVL57Vl7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Fri, Feb 28, 2020 at 01:37:18PM +0000, Catalin Marinas wrote:
+> On Fri, Feb 28, 2020 at 01:41:21PM +0100, Ard Biesheuvel wrote:
+
+> > This hunk is going to conflict badly with the EFI tree. I will
+> > incorporate this change for v5.7, so could you please just drop it
+> > from this patch?
+
+Will do for any reposts.
+
+> I wonder whether it would be easier to merge all these patches at
+> 5.7-rc1, once most of the major changes went in.
+
+Only thing I can think that doing that might cause issue with is if
+people are doing work that's not likely to make it in this cycle then
+it'd be some extra rebasing or carrying of out of tree patches they'd
+need to do (plus obviously this series might pick up new conflicts
+itself).  It's not a completely automated process unfortunately,
+especially with trying to fix up some of the problems with the existing
+annotations changing the output.  But yeah, we could do that.
+
+--1yeeQ81UyVL57Vl7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl5ZMCgACgkQJNaLcl1U
+h9Di0Qf/VWvMvqHepDi/x0ZXGJfY242zVkoLHcIp9UV0+4JT0IyKVRbIsBf/DfdM
+CjvFlDIqp3m35lh9dEDlKUi+0Pynyd/SXEsIyGf4vl5OrWGVUZoTSiWsy00gWp5e
+RFpAo4g4nxGRc4t86UeHZyu9D2+ezFOioFfmCWWmOZZOVKV+DBph+ct/pRqLogJ8
+PyTeSZqJZYmOHQxxe68/jU/bIIhohgxh15poE4vYjVZZaD82+oNANqy0seFJ/rSu
+7Lr3SduLDq7WeVMo/jYb4u3uOZVHvBCKwhktF1c3t602RBQhm+8pNKh33AFUOsRO
+twDGT/8JVuS8HI1K0+7fIlfd4zPxHg==
+=/8sV
+-----END PGP SIGNATURE-----
+
+--1yeeQ81UyVL57Vl7--
+
+--===============6063282828981046151==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
 https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+
+--===============6063282828981046151==--
