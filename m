@@ -2,74 +2,72 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2666717DF3E
-	for <lists+kvmarm@lfdr.de>; Mon,  9 Mar 2020 13:00:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFE7D17E080
+	for <lists+kvmarm@lfdr.de>; Mon,  9 Mar 2020 13:48:49 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A32EF4A500;
-	Mon,  9 Mar 2020 08:00:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3FF7C4A5BD;
+	Mon,  9 Mar 2020 08:48:49 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id foEQ+1F7GZMQ; Mon,  9 Mar 2020 08:00:57 -0400 (EDT)
+	with ESMTP id iaW1wf0Rd5e0; Mon,  9 Mar 2020 08:48:49 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F7104A4A0;
-	Mon,  9 Mar 2020 08:00:56 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 05CF04A524;
+	Mon,  9 Mar 2020 08:48:48 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D838E4A2E5
- for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Mar 2020 08:00:54 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 699084A523
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Mar 2020 08:48:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id uP9Q4mLCUknL for <kvmarm@lists.cs.columbia.edu>;
- Mon,  9 Mar 2020 08:00:54 -0400 (EDT)
-Received: from us-smtp-delivery-1.mimecast.com (us-smtp-2.mimecast.com
- [207.211.31.81])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1E83740217
- for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Mar 2020 08:00:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1583755254;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Ae/HcGopL4IKgJ0MjwGidc1zloipall9ZQoSMymFcxU=;
- b=OYyCimojlQ7TAMXnBxNKaGhXQTxjk5VpAtBdSUhGRR4zO85JKOsACW3fM3OaAz1O0yZeit
- Jz1NiEcfyUhzKdEzdRzEflefg1crJH6iqwimoLy7aX0OSkZ1pKMOarjWH46u5blMhUx6K3
- aRUBcE15KbVsiyQvwukErpKBCWp0pE0=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-153-eg0LmcZMMIa2ACg13u3Rfw-1; Mon, 09 Mar 2020 08:00:49 -0400
-X-MC-Unique: eg0LmcZMMIa2ACg13u3Rfw-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.phx2.redhat.com
- [10.5.11.15])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ with ESMTP id ZFEJHLen-FlP for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  9 Mar 2020 08:48:45 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 557354005D
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Mar 2020 08:48:45 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id A62F0107BAFA;
- Mon,  9 Mar 2020 12:00:47 +0000 (UTC)
-Received: from kamzik.brq.redhat.com (unknown [10.43.2.160])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 1F83A9353C;
- Mon,  9 Mar 2020 12:00:14 +0000 (UTC)
-Date: Mon, 9 Mar 2020 13:00:12 +0100
-From: Andrew Jones <drjones@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-Subject: Re: [kvm-unit-tests PATCH v4 00/13] arm/arm64: Add ITS tests
-Message-ID: <20200309120012.xkgmlbvd5trm6ewk@kamzik.brq.redhat.com>
-References: <20200309102420.24498-1-eric.auger@redhat.com>
- <20200309115741.6stx5tpkb6s6ejzh@kamzik.brq.redhat.com>
+ by mail.kernel.org (Postfix) with ESMTPSA id 285F620727;
+ Mon,  9 Mar 2020 12:48:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1583758124;
+ bh=CSS+5INePZvmhimi/unCx0TEoioRr+d/iqq75Std27I=;
+ h=From:To:Cc:Subject:Date:From;
+ b=DByraDkcHaWW6E85jLzUQ23KZZw8zgL/sHKV0sqqrojbjcSmdvjv4QpPh1LVwr1w9
+ BPEixptW++IaqFflCSjCZ5E03AGMNGh4mgsm58VieYChgPjUQaR/JwiZuTXPIjHuJW
+ scaLyKQSpvuvNdN/wB1L2tH32qEregObfh7UZf+M=
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by disco-boy.misterjones.org with esmtpsa
+ (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
+ (envelope-from <maz@kernel.org>)
+ id 1jBHpq-00BHiN-C7; Mon, 09 Mar 2020 12:48:42 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
+Subject: [PATCH v2 0/2] KVM: arm64: Filtering PMU events
+Date: Mon,  9 Mar 2020 12:48:35 +0000
+Message-Id: <20200309124837.19908-1-maz@kernel.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20200309115741.6stx5tpkb6s6ejzh@kamzik.brq.redhat.com>
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
-Cc: thuth@redhat.com, kvm@vger.kernel.org, maz@kernel.org,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, andre.przywara@arm.com,
- kvmarm@lists.cs.columbia.edu, eric.auger.pro@gmail.com
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, james.morse@arm.com,
+ julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com, robin.murphy@arm.com,
+ mark.rutland@arm.com, eric.auger@redhat.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Robin Murphy <robin.murphy@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -86,17 +84,47 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Mar 09, 2020 at 12:57:51PM +0100, Andrew Jones wrote:
-> This looks pretty good to me. It just needs some resquashing cleanups.
-> Does Andre plan to review? I've only been reviewing with respect to
-> the framework, not ITS. If no other reviews are expected, then I'll
-> queue the next version.
+It is at times necessary to prevent a guest from being able to sample
+certain events if multiple CPUs share resources such as a cache level. In
+this case, it would be interesting if the VMM could simply prevent certain
+events from being counted instead of hiding the PMU.
 
-Oops, sorry Zenghui, I forgot to ask if you'll be reviewing again as
-well.
+Given that most events are not architected, there is no easy way to
+designate which events shouldn't be counted other than specifying the raw
+event number.
 
-Thanks,
-drew
+Since I have no idea whether it is better to use an event whitelist or
+blacklist, the proposed API takes a cue from the x86 version and allows
+either allowing or denying counting of ranges of events. The event space
+being pretty large (16bits on ARMv8.1), the default policy is set by the
+first filter that gets installed (default deny if we first allow, default
+allow if we first deny).
+
+The filter state is global to the guest, despite the PMU being per CPU. I'm
+not sure whether it would be worth it making it CPU-private.
+
+As an example of what can be done in userspace, I have the corresponding
+kvmtool hack here[1].
+
+* From v1:
+  - Cleaned up handling of the cycle counter
+  - Documented restrictions on SW_INC, CHAIN and CPU_CYCLES events
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/maz/kvmtool.git/commit/?h=pmu-filter
+
+Marc Zyngier (2):
+  KVM: arm64: Add PMU event filtering infrastructure
+  KVM: arm64: Document PMU filtering API
+
+ Documentation/virt/kvm/devices/vcpu.rst | 40 ++++++++++++
+ arch/arm64/include/asm/kvm_host.h       |  6 ++
+ arch/arm64/include/uapi/asm/kvm.h       | 16 +++++
+ virt/kvm/arm/arm.c                      |  2 +
+ virt/kvm/arm/pmu.c                      | 84 ++++++++++++++++++++-----
+ 5 files changed, 132 insertions(+), 16 deletions(-)
+
+-- 
+2.20.1
 
 _______________________________________________
 kvmarm mailing list
