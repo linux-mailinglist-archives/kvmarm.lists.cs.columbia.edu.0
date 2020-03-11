@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 47B80181BB7
-	for <lists+kvmarm@lfdr.de>; Wed, 11 Mar 2020 15:50:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A6A0181C7B
+	for <lists+kvmarm@lfdr.de>; Wed, 11 Mar 2020 16:39:00 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B13A84A591;
-	Wed, 11 Mar 2020 10:50:33 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DAD384A597;
+	Wed, 11 Mar 2020 11:38:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
@@ -18,60 +18,56 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JxWaZsuL0N5b; Wed, 11 Mar 2020 10:50:33 -0400 (EDT)
+	with ESMTP id 67Z4or8wA4kq; Wed, 11 Mar 2020 11:38:59 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5DD434A51F;
-	Wed, 11 Mar 2020 10:50:32 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BAFB34A542;
+	Wed, 11 Mar 2020 11:38:58 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3528E4A49C
- for <kvmarm@lists.cs.columbia.edu>; Wed, 11 Mar 2020 10:50:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8A18E4A528
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 11 Mar 2020 11:38:57 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id w7pc0rBc1rXm for <kvmarm@lists.cs.columbia.edu>;
- Wed, 11 Mar 2020 10:50:29 -0400 (EDT)
-Received: from us-smtp-1.mimecast.com (us-smtp-delivery-1.mimecast.com
- [205.139.110.120])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0DF234A1FA
- for <kvmarm@lists.cs.columbia.edu>; Wed, 11 Mar 2020 10:50:29 -0400 (EDT)
+ with ESMTP id C+KShXvAav9D for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 11 Mar 2020 11:38:56 -0400 (EDT)
+Received: from us-smtp-1.mimecast.com (us-smtp-2.mimecast.com [207.211.31.81])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BDC0A4A3BF
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 11 Mar 2020 11:38:56 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1583938228;
+ s=mimecast20190719; t=1583941136;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jsKkDSgyQz2pLGCyrcLc9VQw/vTQBxdYWH0tEharUX4=;
- b=KMA0dl2RUcu71p74VSTLGIKHCzx+Shl8OgC8o61o14sjtFsDUye9LDwHREIHac72+BKgHN
- DIftFelWD73i9bwLJsq5WjR/F0p8p+AfFTqjnbzB/4MkGvg3YIVe81uXhlQmmzBITWaDMi
- ZONuhOYgZ/gob6oN26V1Ca9PBZ2BpRM=
+ bh=W5t/PCQFrEfrTtXP6H3fAc6etVr5BGU7Jh+WijcxdM8=;
+ b=R/kMVGAgED5gqcCRr0PNzD+DSUmTVEFvm6wg0l638hwVEl0x0RP+TF53IDBTMNAPCDJP2H
+ TONHmzaXNDUzCl1JfLbMMbGCd+zWbryFNaJ3Px47oY12HdbkBY0yr+IOYYZoq6wfuJdy/b
+ iNMjLF5JlGp8QnVm0vBgoE+Sbp235wo=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-50-5QHxOei5MXatAU_1bhWitw-1; Wed, 11 Mar 2020 10:50:24 -0400
-X-MC-Unique: 5QHxOei5MXatAU_1bhWitw-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com
- [10.5.11.22])
+ us-mta-211-ukR6C7iqPe-lkwOjA2QKpw-1; Wed, 11 Mar 2020 11:38:54 -0400
+X-MC-Unique: ukR6C7iqPe-lkwOjA2QKpw-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.phx2.redhat.com
+ [10.5.11.15])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 36D458017DF;
- Wed, 11 Mar 2020 14:50:23 +0000 (UTC)
-Received: from [10.36.118.12] (unknown [10.36.118.12])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 0B24C10013A1;
- Wed, 11 Mar 2020 14:50:18 +0000 (UTC)
-Subject: Re: [kvm-unit-tests PATCH v6 06/13] arm/arm64: ITS: Introspection
- tests
-To: Andrew Jones <drjones@redhat.com>
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 74A8A189F764;
+ Wed, 11 Mar 2020 15:38:52 +0000 (UTC)
+Received: from kamzik.brq.redhat.com (ovpn-206-80.brq.redhat.com
+ [10.40.206.80])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 8CF0F5C13D;
+ Wed, 11 Mar 2020 15:38:45 +0000 (UTC)
+Date: Wed, 11 Mar 2020 16:38:42 +0100
+From: Andrew Jones <drjones@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+Subject: Re: [kvm-unit-tests PATCH v6 07/13] arm/arm64: ITS:
+ its_enable_defaults
+Message-ID: <20200311153842.knuyqfnzqopb35gj@kamzik.brq.redhat.com>
 References: <20200311135117.9366-1-eric.auger@redhat.com>
- <20200311135117.9366-7-eric.auger@redhat.com>
- <20200311143331.yesdkxuobng3qzuu@kamzik.brq.redhat.com>
-From: Auger Eric <eric.auger@redhat.com>
-Message-ID: <94f73aef-9898-d551-f440-5dff2c3d2a63@redhat.com>
-Date: Wed, 11 Mar 2020 15:50:16 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+ <20200311135117.9366-8-eric.auger@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <20200311143331.yesdkxuobng3qzuu@kamzik.brq.redhat.com>
-Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
+Content-Disposition: inline
+In-Reply-To: <20200311135117.9366-8-eric.auger@redhat.com>
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
 Cc: thuth@redhat.com, kvm@vger.kernel.org, maz@kernel.org,
  qemu-devel@nongnu.org, qemu-arm@nongnu.org, andre.przywara@arm.com,
  kvmarm@lists.cs.columbia.edu, eric.auger.pro@gmail.com
@@ -91,208 +87,30 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Drew,
+On Wed, Mar 11, 2020 at 02:51:11PM +0100, Eric Auger wrote:
+> +/* must be called after gicv3_enable_defaults */
+> +void its_enable_defaults(void)
+> +{
+> +	int i;
+> +
+> +	/* Allocate LPI config and pending tables */
+> +	gicv3_lpi_alloc_tables();
+> +
+> +	for (i = 0; i < nr_cpus; i++)
+> +		gicv3_lpi_rdist_enable(i);
 
-On 3/11/20 3:33 PM, Andrew Jones wrote:
-> On Wed, Mar 11, 2020 at 02:51:10PM +0100, Eric Auger wrote:
->> Detect the presence of an ITS as part of the GICv3 init
->> routine, initialize its base address and read few registers
->> the IIDR, the TYPER to store its dimensioning parameters.
->> Parse the BASER registers. As part of the init sequence we
->> also init all the requested tables.
->>
->> This is our first ITS test, belonging to a new "its" group.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>
->> ---
->> v5 -> v6:
->> - fix some GENMASK_ULL and tabs
->>
->> v4 -> v5:
->> - Moved test_its_introspection() stub from
->>   lib/arm/asm/gic-v3-its.h back to arm/gic.c
->> - 32b its_init does report_abort()
->> - remove kerneldoc style comment
->> - remove alloc_lpi_tables from its_init()
->>
->> v3 -> v4:
->> - fixed some typos, refine trace msgs
->> - move its files to lib/arm64 instead of lib/arm
->> - create lib/arm/asm/gic-v3-its.h containing stubs
->> - rework gic_get_dt_bases
->> - rework baser parsing
->> - move table allocation to init routine
->> - use get_order()
->>
->> v2 -> v3:
->> - updated dates and changed author
->> - squash "arm/arm64: ITS: Test BASER" into this patch but
->>   removes setup_baser which will be introduced later.
->> - only compile on aarch64
->> - restrict the new test to aarch64
->>
->> v1 -> v2:
->> - clean GITS_TYPER macros and unused fields in typer struct
->> - remove memory attribute related macros
->> - remove everything related to memory attributes
->> - s/dev_baser/coll_baser/ in report_info
->> - add extra line
->> - removed index filed in its_baser
->> ---
->>  arm/Makefile.arm64         |  1 +
->>  arm/gic.c                  | 48 ++++++++++++++++++
->>  arm/unittests.cfg          |  7 +++
->>  lib/arm/asm/gic-v3-its.h   | 22 +++++++++
->>  lib/arm/gic.c              | 34 +++++++++++--
->>  lib/arm64/asm/gic-v3-its.h | 92 +++++++++++++++++++++++++++++++++++
->>  lib/arm64/gic-v3-its.c     | 99 ++++++++++++++++++++++++++++++++++++++
->>  7 files changed, 298 insertions(+), 5 deletions(-)
->>  create mode 100644 lib/arm/asm/gic-v3-its.h
->>  create mode 100644 lib/arm64/asm/gic-v3-its.h
->>  create mode 100644 lib/arm64/gic-v3-its.c
->>
->> diff --git a/arm/Makefile.arm64 b/arm/Makefile.arm64
->> index 6d3dc2c..60182ae 100644
->> --- a/arm/Makefile.arm64
->> +++ b/arm/Makefile.arm64
->> @@ -19,6 +19,7 @@ endef
->>  cstart.o = $(TEST_DIR)/cstart64.o
->>  cflatobjs += lib/arm64/processor.o
->>  cflatobjs += lib/arm64/spinlock.o
->> +cflatobjs += lib/arm64/gic-v3-its.o
->>  
->>  OBJDIRS += lib/arm64
->>  
->> diff --git a/arm/gic.c b/arm/gic.c
->> index 2f904b0..649ed81 100644
->> --- a/arm/gic.c
->> +++ b/arm/gic.c
->> @@ -16,6 +16,7 @@
->>  #include <asm/processor.h>
->>  #include <asm/delay.h>
->>  #include <asm/gic.h>
->> +#include <asm/gic-v3-its.h>
->>  #include <asm/smp.h>
->>  #include <asm/barrier.h>
->>  #include <asm/io.h>
->> @@ -517,6 +518,49 @@ static void gic_test_mmio(void)
->>  		test_targets(nr_irqs);
->>  }
->>  
->> +#if defined(__arm__)
->> +
->> +static void test_its_introspection(void) {}
->> +
->> +#else /* __aarch64__ */
->> +
->> +static void test_its_introspection(void)
->> +{
->> +	struct its_baser *dev_baser = &its_data.device_baser;
->> +	struct its_baser *coll_baser = &its_data.coll_baser;
->> +	struct its_typer *typer = &its_data.typer;
->> +
->> +	if (!gicv3_its_base()) {
->> +		report_skip("No ITS, skip ...");
->> +		return;
->> +	}
->> +
->> +	/* IIDR */
->> +	report(test_readonly_32(gicv3_its_base() + GITS_IIDR, false),
->> +	       "GITS_IIDR is read-only"),
->> +
->> +	/* TYPER */
->> +	report(test_readonly_32(gicv3_its_base() + GITS_TYPER, false),
->> +	       "GITS_TYPER is read-only");
->> +
->> +	report(typer->phys_lpi, "ITS supports physical LPIs");
->> +	report_info("vLPI support: %s", typer->virt_lpi ? "yes" : "no");
->> +	report_info("ITT entry size = 0x%x", typer->ite_size);
->> +	report_info("Bit Count: EventID=%d DeviceId=%d CollId=%d",
->> +		    typer->eventid_bits, typer->deviceid_bits,
->> +		    typer->collid_bits);
->> +	report(typer->eventid_bits && typer->deviceid_bits &&
->> +	       typer->collid_bits, "ID spaces");
->> +	report_info("Target address format %s",
->> +			typer->pta ? "Redist base address" : "PE #");
->> +
->> +	report(dev_baser && coll_baser, "detect device and collection BASER");
->> +	report_info("device table entry_size = 0x%x", dev_baser->esz);
->> +	report_info("collection table entry_size = 0x%x", coll_baser->esz);
->> +}
->> +
->> +#endif
->> +
->>  int main(int argc, char **argv)
->>  {
->>  	if (!gic_init()) {
->> @@ -548,6 +592,10 @@ int main(int argc, char **argv)
->>  		report_prefix_push(argv[1]);
->>  		gic_test_mmio();
->>  		report_prefix_pop();
->> +	} else if (strcmp(argv[1], "its-introspection") == 0) {
->> +		report_prefix_push(argv[1]);
->> +		test_its_introspection();
->> +		report_prefix_pop();
->>  	} else {
->>  		report_abort("Unknown subtest '%s'", argv[1]);
->>  	}
->> diff --git a/arm/unittests.cfg b/arm/unittests.cfg
->> index 017958d..23d378e 100644
->> --- a/arm/unittests.cfg
->> +++ b/arm/unittests.cfg
->> @@ -122,6 +122,13 @@ smp = $MAX_SMP
->>  extra_params = -machine gic-version=3 -append 'active'
->>  groups = gic
->>  
->> +[its-introspection]
->> +file = gic.flat
->> +smp = $MAX_SMP
->> +extra_params = -machine gic-version=3 -append 'its-introspection'
->> +groups = its
->> +arch = arm64
->> +
->>  # Test PSCI emulation
->>  [psci]
->>  file = psci.flat
->> diff --git a/lib/arm/asm/gic-v3-its.h b/lib/arm/asm/gic-v3-its.h
->> new file mode 100644
->> index 0000000..2167099
->> --- /dev/null
->> +++ b/lib/arm/asm/gic-v3-its.h
->> @@ -0,0 +1,22 @@
->> +/*
->> + * ITS 32-bit stubs
->> + *
->> + * Copyright (C) 2020, Red Hat Inc, Eric Auger <eric.auger@redhat.com>
->> + *
->> + * This work is licensed under the terms of the GNU LGPL, version 2.
->> + */
->> +
->> +#ifndef _ASMARM_GIC_V3_ITS_H_
->> +#define _ASMARM_GIC_V3_ITS_H_
->> +
->> +/* dummy its_data struct to allow gic_get_dt_bases() call */
->> +struct its_data {
->> +	void *base;
->> +};
->> +
->> +static inline void its_init(void)
->> +{
->> +	report_abort("not supported on 32-bit");
+You still haven't explained what's wrong with for_each_present_cpu. Also,
+I see you've added 'i < nr_cpus' loops in arm/gic.c too. I'd prefer we not
+assume that all cpu's are present (even though, currently, they must be),
+because we may want to integrate cpu hotplug tests with these tests at
+some point.
+
+> +
+> +	writel(GITS_CTLR_ENABLE, its_data.base + GITS_CTLR);
+> +}
+> -- 
+> 2.20.1
 > 
-> This is supposed to be an assert_msg() (no report_* functions in lib
-> code), but it should never fire anyway, because the test code should
-> just not call its_init() on 32-bit arm. I.e. the assert is there not
-> to report to test runners what's going on, but to stop developers
-> from calling it when they shouldn't.
-> 
-> I can fix stuff like this up myself on merge to arm/queue though.
-OK. Let's see if someone has other comments. In the positive I will respin.
-
-Thanks
-
-Eric
 > 
 
 _______________________________________________
