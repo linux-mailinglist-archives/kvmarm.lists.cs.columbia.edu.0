@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id BEC0A181DB1
-	for <lists+kvmarm@lfdr.de>; Wed, 11 Mar 2020 17:25:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A3EF18263D
+	for <lists+kvmarm@lfdr.de>; Thu, 12 Mar 2020 01:34:35 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3D2694A541;
-	Wed, 11 Mar 2020 12:25:02 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B11EA4A4C0;
+	Wed, 11 Mar 2020 20:34:34 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
@@ -15,60 +15,62 @@ X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
 	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@linaro.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0SoTOcKnyjxa; Wed, 11 Mar 2020 12:25:02 -0400 (EDT)
+	with ESMTP id odDxyLstAICu; Wed, 11 Mar 2020 20:34:34 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CCD9C4A528;
-	Wed, 11 Mar 2020 12:25:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9020F4A51E;
+	Wed, 11 Mar 2020 20:34:33 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 211A84A49F
- for <kvmarm@lists.cs.columbia.edu>; Wed, 11 Mar 2020 12:24:59 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8B7B84A4A9
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 11 Mar 2020 20:34:32 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id tZ+oFq-E9la7 for <kvmarm@lists.cs.columbia.edu>;
- Wed, 11 Mar 2020 12:24:57 -0400 (EDT)
-Received: from us-smtp-1.mimecast.com (us-smtp-1.mimecast.com [205.139.110.61])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id BF5884A32E
- for <kvmarm@lists.cs.columbia.edu>; Wed, 11 Mar 2020 12:24:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1583943897;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DVeoZZJMMZCCIarL9YyHSuTSAyd4nyhK1RYWiCBuaY4=;
- b=BAZQOUatm2J80CrF99MDtRG73DPnskbYcb70Db3KG4mbOVHt80FMFrcXujGCS9u9OpMxZ3
- zsZFCHiZcNwiNtSA3eYrDxx4rEDB5/z6Pf686h1EuWJX3Lr3WzJJxF2qYtPx4qfNnmwb5r
- dtBO/mnFu7YwBXaXoEuRqt4g3EZffs4=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-148-E-cCTqctOkmBYw0OSiI2mQ-1; Wed, 11 Mar 2020 12:24:53 -0400
-X-MC-Unique: E-cCTqctOkmBYw0OSiI2mQ-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com
- [10.5.11.23])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 174C61005510;
- Wed, 11 Mar 2020 16:24:52 +0000 (UTC)
-Received: from kamzik.brq.redhat.com (ovpn-206-80.brq.redhat.com
- [10.40.206.80])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 407F726E6D;
- Wed, 11 Mar 2020 16:24:45 +0000 (UTC)
-Date: Wed, 11 Mar 2020 17:24:42 +0100
-From: Andrew Jones <drjones@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-Subject: Re: [kvm-unit-tests PATCH v6 00/13] arm/arm64: Add ITS tests
-Message-ID: <20200311162442.th564amlnxsvzjqc@kamzik.brq.redhat.com>
-References: <20200311135117.9366-1-eric.auger@redhat.com>
-MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20200311135117.9366-1-eric.auger@redhat.com>
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
-Cc: thuth@redhat.com, kvm@vger.kernel.org, maz@kernel.org,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, andre.przywara@arm.com,
- kvmarm@lists.cs.columbia.edu, eric.auger.pro@gmail.com
+ with ESMTP id ixVdVnbSCwCo for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 11 Mar 2020 20:34:31 -0400 (EDT)
+Received: from mail-wr1-f66.google.com (mail-wr1-f66.google.com
+ [209.85.221.66])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 68EB64A1B0
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 11 Mar 2020 20:34:31 -0400 (EDT)
+Received: by mail-wr1-f66.google.com with SMTP id x11so392912wrv.5
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 11 Mar 2020 17:34:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=from:to:cc:subject:date:message-id;
+ bh=o4wfwFzslWSogfShuzT1GXszAi31gOgslMZWdjvKfVo=;
+ b=LZ24bt60gTmcfYWHhCsEWR4BHFJlkp3DexMhVT/j5ERjOXSeJ37pMmiuMRlvTyT7HK
+ JqpQwkpYsoYVg3uGyXCiVNaquC3kh6E1EVRQ952U+YKVIwfRqXBsUz6VmM94LX0p0oBh
+ nRI/aGFhUkoPn4hMALZanetw/RwDSngToHjwFpqPCujnSOAxmkiyj6G/8adAECNCDw8E
+ q8w1NVeD/wH3ifi2WPvz6qL7utV0dSr2gvuV48lPi2cAL5ZY6jegHjElhMBSsNleheVB
+ +gOjMLxEUqWPZ9ZNmQX7fffkC2dMnRioNxTEI2iZx3NP+9XvKBxojtF3/fKZ7IZYPh4g
+ 8v0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id;
+ bh=o4wfwFzslWSogfShuzT1GXszAi31gOgslMZWdjvKfVo=;
+ b=MV/AWS4v3udovZjjL3zn9LI2j+aPPpA68DX7xidDTnVEJJ4kAS2u1fXLnXFQWdLXxM
+ rw4b6frQq9SSxQqByJM0Unga274gSu/WdlhVDLKyIzKNl3ouvUzqNkUE5JCNccxrOV8q
+ i6JV0+ttYgp034FIf82uhSeS1TH+4T8hVF2ZdxZB/zWrBQXcNil5/h3gGwfVZsz68POT
+ D2CdAwWm8bzgY21Ef2oOCs9eg6hW7u1FebQes0OxdZmbOXscTWM+jlduMEDkgm4ODeuF
+ OieqzDcCzpdQzvtan61TdaLkDje7HQa8txPDfUIiNtQP8PHw9iT0XwTa5SD2ARrjw4t7
+ 40Iw==
+X-Gm-Message-State: ANhLgQ3jB0VPKmbGFfm4d2F9nmRHheuth3ilu3mlg6oqOceIgJkID5Jl
+ J9JsJaaz1pAaaWgVoHo2uK5zow==
+X-Google-Smtp-Source: ADFU+vt+E4lrioPh1o0AmDdDMyHFD+dBDBxBKjY6ZhFem7kPpgR30rCCSCoB7F1MEwVLdmqsXmPQ8A==
+X-Received: by 2002:adf:94c2:: with SMTP id 60mr7155516wrr.396.1583973270323; 
+ Wed, 11 Mar 2020 17:34:30 -0700 (PDT)
+Received: from moi-limbo-9350.home
+ (host86-139-146-66.range86-139.btcentralplus.com. [86.139.146.66])
+ by smtp.gmail.com with ESMTPSA id o5sm10909988wmb.8.2020.03.11.17.34.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Mar 2020 17:34:29 -0700 (PDT)
+From: Beata Michalska <beata.michalska@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PATCH v3 0/2] target/arm: kvm: Support for KVM DABT with no valid ISS
+Date: Thu, 12 Mar 2020 00:33:59 +0000
+Message-Id: <20200312003401.29017-1-beata.michalska@linaro.org>
+Cc: qemu-arm@nongnu.org, pbonzini@redhat.com, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -80,269 +82,57 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Mar 11, 2020 at 02:51:04PM +0100, Eric Auger wrote:
-> This series is a revival of an RFC series sent in Dec 2016 [1].
-> Given the amount of code and the lack of traction at that time,
-> I haven't respinned until now. However a recent bug found related
-> to the ITS migration convinced me that this work may deserve to be
-> respinned and enhanced.
-> 
-> Tests exercise main ITS commands and also test migration.
-> With the migration framework, we are able to trigger the
-> migration from guest and that is very practical actually.
-> 
-> What is particular with the ITS programming is that most of
-> the commands are passed through queues and there is real error
-> handling. Invalid commands are just ignored and that is not
-> really tester friendly.
-> 
-> The series can be fount at:
-> https://github.com/eauger/kut/tree/its-v6
-> 
-> Applies on top of arm/queue.
-> 
-> Best Regards
-> 
-> Eric
-> 
-> History:
-> v5 -> v6:
-> - Took into account Zenghui's comments, mostly functional: see invidual
->   history logs
-> - fix wrong assert!
-> 
-> v4 -> v5:
-> - 32b stubs moved back to arm/gic.c
-> - some changes reordering
-> - minor style issues
-> 
-> v3 -> v4:
-> - addressed comments from Drew and Zenghui
-> - added "page_alloc: Introduce get_order()"
-> - removed "arm: gic: Provide per-IRQ helper functions"
-> - ITS files moved to lib64
-> - and many more, see individual logs
-> 
-> v2 -> v3:
-> - fix 32b compilation
-> - take into account Drew's comments (see individual diff logs)
-> 
-> v1 -> v2:
-> - took into account Zenghui's comments
-> - collect R-b's from Thomas
-> 
-> References:
-> [1] [kvm-unit-tests RFC 00/15] arm/arm64: add ITS framework
->     https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg00575.html
-> 
-> Execution:
-> x For other ITS tests:
->   ./run_tests.sh -g its
-> 
-> x non migration tests can be launched invidually. For instance:
->   ./arm-run arm/gic.flat -smp 8 -append 'its-trigger'
-> 
-> Eric Auger (13):
->   libcflat: Add other size defines
->   page_alloc: Introduce get_order()
->   arm/arm64: gic: Introduce setup_irq() helper
->   arm/arm64: gicv3: Add some re-distributor defines
->   arm/arm64: gicv3: Set the LPI config and pending tables
->   arm/arm64: ITS: Introspection tests
->   arm/arm64: ITS: its_enable_defaults
->   arm/arm64: ITS: Device and collection Initialization
->   arm/arm64: ITS: Commands
->   arm/arm64: ITS: INT functional tests
->   arm/run: Allow Migration tests
->   arm/arm64: ITS: migration tests
->   arm/arm64: ITS: pending table migration test
-> 
->  arm/Makefile.arm64         |   1 +
->  arm/Makefile.common        |   2 +-
->  arm/gic.c                  | 460 ++++++++++++++++++++++++++++++++++--
->  arm/run                    |   2 +-
->  arm/unittests.cfg          |  38 +++
->  lib/alloc_page.c           |   7 +-
->  lib/alloc_page.h           |   1 +
->  lib/arm/asm/gic-v3-its.h   |  22 ++
->  lib/arm/asm/gic-v3.h       |  29 +++
->  lib/arm/asm/processor.h    |   2 +
->  lib/arm/gic-v3.c           |  78 +++++++
->  lib/arm/gic.c              |  34 ++-
->  lib/arm/io.c               |  28 +++
->  lib/arm64/asm/gic-v3-its.h | 170 ++++++++++++++
->  lib/arm64/gic-v3-its-cmd.c | 464 +++++++++++++++++++++++++++++++++++++
->  lib/arm64/gic-v3-its.c     | 172 ++++++++++++++
->  lib/libcflat.h             |   3 +
->  17 files changed, 1484 insertions(+), 29 deletions(-)
->  create mode 100644 lib/arm/asm/gic-v3-its.h
->  create mode 100644 lib/arm64/asm/gic-v3-its.h
->  create mode 100644 lib/arm64/gic-v3-its-cmd.c
->  create mode 100644 lib/arm64/gic-v3-its.c
-> 
-> -- 
-> 2.20.1
-> 
->
+Some of the ARMv7 & ARMv8 load/store instructions might trigger a data abort
+exception with no valid ISS info to be decoded. The lack of decode info
+makes it at least tricky to emulate the instruction which is one of the
+(many) reasons why KVM will not even try to do so.
 
-Hi Eric,
+So far, if a guest made an attempt to access memory outside the memory slot,
+KVM reported vague ENOSYS. As a result QEMU exited with no useful information
+being provided or even a clue on what has just happened.
 
-You don't need to respin for me, but let's see if Zenghui has time for
-another review and possibly more r-b's for me to collect.
+ARM KVM introduced support for notifying of an attempt to execute
+an instruction that resulted in dabt with no valid ISS decoding info.
+This still leaves QEMU to handle the case, but at least now it gives more
+control and a start point for more meaningful handling of such cases.
 
-While applying I made a few changes that you can integrate if you do
-respin (I can also make the for_each_present_cpu changes myself, if
-you don't respin.)
+This patchset relies on KVM to insert the external data abort into the guest.
 
-The changes are for the following reasons and are almost all in
-"arm/arm64: ITS: Introspection tests"
+v3:
+ - Fix setting KVM cap per vm not per vcpu
+ - Simplifying the handler to bare minimum with no default logging to address
+   the potential risk of overflooding the host (adding support for rate
+   limiting the logs turned out to be bit too invasive to justify the little
+   add-on value from logs in this particular case)
+ - Adding handling KVM bug (for small range of affected kernels):
+   little bit of trade-off between what's reasonable and what's effective:
+   aborting qemu when running on buggy host kernel
 
- * Only calling its_init for arm64-gicv3, and removing the report call
- * Not including gic-v3-its.h anywhere directly
- * One spaces to tab
+v2:
+- Improving/re-phrasing messaging
+- Dropping messing around with forced sync (@see [PATCH v2 1/2])
+  and PC alignment
 
-diff of the changes below
 
-diff --git a/arm/gic.c b/arm/gic.c
-index 763ed1bc5106..2c56eb212425 100644
---- a/arm/gic.c
-+++ b/arm/gic.c
-@@ -16,7 +16,6 @@
- #include <asm/processor.h>
- #include <asm/delay.h>
- #include <asm/gic.h>
--#include <asm/gic-v3-its.h>
- #include <asm/smp.h>
- #include <asm/barrier.h>
- #include <asm/io.h>
-diff --git a/lib/arm/asm/gic-v3-its.h b/lib/arm/asm/gic-v3-its.h
-index 2167099eb5d1..1af085ef53be 100644
---- a/lib/arm/asm/gic-v3-its.h
-+++ b/lib/arm/asm/gic-v3-its.h
-@@ -5,10 +5,15 @@
-  *
-  * This work is licensed under the terms of the GNU LGPL, version 2.
-  */
--
- #ifndef _ASMARM_GIC_V3_ITS_H_
- #define _ASMARM_GIC_V3_ITS_H_
- 
-+#ifndef _ASMARM_GIC_H_
-+#error Do not directly include <asm/gic-v3-its.h>. Include <asm/gic.h>
-+#endif
-+
-+#include <libcflat.h>
-+
- /* dummy its_data struct to allow gic_get_dt_bases() call */
- struct its_data {
- 	void *base;
-@@ -16,7 +21,7 @@ struct its_data {
- 
- static inline void its_init(void)
- {
--	report_abort("not supported on 32-bit");
-+	assert_msg(false, "ITS not supported on 32-bit");
- }
- 
--#endif /* _ASMARM_GICv3_ITS_H_ */
-+#endif /* _ASMARM_GIC_V3_ITS_H_ */
-diff --git a/lib/arm/asm/gic.h b/lib/arm/asm/gic.h
-index 922cbe95750c..9564d4f80b93 100644
---- a/lib/arm/asm/gic.h
-+++ b/lib/arm/asm/gic.h
-@@ -40,6 +40,7 @@
- 
- #include <asm/gic-v2.h>
- #include <asm/gic-v3.h>
-+#include <asm/gic-v3-its.h>
- 
- #define PPI(irq)			((irq) + 16)
- #define SPI(irq)			((irq) + GIC_FIRST_SPI)
-diff --git a/lib/arm/gic.c b/lib/arm/gic.c
-index 4f6f15b1eb8a..a807d5f86ee9 100644
---- a/lib/arm/gic.c
-+++ b/lib/arm/gic.c
-@@ -6,7 +6,6 @@
- #include <devicetree.h>
- #include <asm/gic.h>
- #include <asm/io.h>
--#include <asm/gic-v3-its.h>
- 
- struct gicv2_data gicv2_data;
- struct gicv3_data gicv3_data;
-@@ -123,11 +122,14 @@ int gic_version(void)
- 
- int gic_init(void)
- {
--	if (gicv2_init())
-+	if (gicv2_init()) {
- 		gic_common_ops = &gicv2_common_ops;
--	else if (gicv3_init())
-+	} else if (gicv3_init()) {
- 		gic_common_ops = &gicv3_common_ops;
--	its_init();
-+#ifdef __aarch64__
-+		its_init();
-+#endif
-+	}
- 	return gic_version();
- }
- 
-diff --git a/lib/arm64/asm/gic-v3-its.h b/lib/arm64/asm/gic-v3-its.h
-index 872953c005d2..412f43849bac 100644
---- a/lib/arm64/asm/gic-v3-its.h
-+++ b/lib/arm64/asm/gic-v3-its.h
-@@ -8,6 +8,10 @@
- #ifndef _ASMARM64_GIC_V3_ITS_H_
- #define _ASMARM64_GIC_V3_ITS_H_
- 
-+#ifndef _ASMARM_GIC_H_
-+#error Do not directly include <asm/gic-v3-its.h>. Include <asm/gic.h>
-+#endif
-+
- struct its_typer {
- 	unsigned int ite_size;
- 	unsigned int eventid_bits;
-@@ -26,7 +30,7 @@ struct its_baser {
- 	phys_addr_t table_addr;
- };
- 
--#define GITS_BASER_NR_REGS              8
-+#define GITS_BASER_NR_REGS		8
- #define GITS_MAX_DEVICES		8
- #define GITS_MAX_COLLECTIONS		8
- 
-diff --git a/lib/arm64/gic-v3-its-cmd.c b/lib/arm64/gic-v3-its-cmd.c
-index 34b090459ef4..65f1c8c8752f 100644
---- a/lib/arm64/gic-v3-its-cmd.c
-+++ b/lib/arm64/gic-v3-its-cmd.c
-@@ -7,7 +7,6 @@
-  */
- #include <asm/io.h>
- #include <asm/gic.h>
--#include <asm/gic-v3-its.h>
- 
- #define ITS_ITT_ALIGN		SZ_256
- 
-diff --git a/lib/arm64/gic-v3-its.c b/lib/arm64/gic-v3-its.c
-index 9c9fa60400f3..6a3642182bf7 100644
---- a/lib/arm64/gic-v3-its.c
-+++ b/lib/arm64/gic-v3-its.c
-@@ -5,7 +5,6 @@
-  */
- #include <asm/gic.h>
- #include <alloc_page.h>
--#include <asm/gic-v3-its.h>
- 
- void its_parse_typer(void)
- {
+Beata Michalska (2):
+  target/arm: kvm: Inject events at the last stage of sync
+  target/arm: kvm: Handle DABT with no valid ISS
 
- 
+ target/arm/cpu.h     |  3 ++
+ target/arm/kvm.c     | 81 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ target/arm/kvm32.c   | 41 ++++++++++++++++++++++----
+ target/arm/kvm64.c   | 51 +++++++++++++++++++++++++++++----
+ target/arm/kvm_arm.h | 22 ++++++++++++++
+ 5 files changed, 188 insertions(+), 10 deletions(-)
+
+-- 
+2.7.4
 
 _______________________________________________
 kvmarm mailing list
