@@ -2,114 +2,55 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BD87188615
-	for <lists+kvmarm@lfdr.de>; Tue, 17 Mar 2020 14:42:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 043461886AE
+	for <lists+kvmarm@lfdr.de>; Tue, 17 Mar 2020 14:59:47 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A78F54B097;
-	Tue, 17 Mar 2020 09:42:14 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 840304B089;
+	Tue, 17 Mar 2020 09:59:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@ziepe.ca
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3L2cxrUSRtiu; Tue, 17 Mar 2020 09:42:14 -0400 (EDT)
+	with ESMTP id fONBLDXmKkFw; Tue, 17 Mar 2020 09:59:46 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7B4754ACC9;
-	Tue, 17 Mar 2020 09:42:10 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3B76A4B080;
+	Tue, 17 Mar 2020 09:59:45 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CBDDB4A522
- for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Mar 2020 09:25:59 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id ACF7F4A522
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Mar 2020 09:59:43 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id XtdUIPMjm7ci for <kvmarm@lists.cs.columbia.edu>;
- Tue, 17 Mar 2020 09:25:58 -0400 (EDT)
-Received: from mail-qv1-f65.google.com (mail-qv1-f65.google.com
- [209.85.219.65])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A6E8A4A319
- for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Mar 2020 09:25:58 -0400 (EDT)
-Received: by mail-qv1-f65.google.com with SMTP id a10so10791979qvq.8
- for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Mar 2020 06:25:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ziepe.ca; s=google;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=149vrDC6Ny5kXlZ3c9yb3Ff3i3SdoOBmg7pfld3LKGI=;
- b=MGDRAHHwM4nroOOuiUdxwzeDLPsUSxkKGB1ZBFk85k2dwJdJTHMO8PEvHSg2fVErKC
- xbyOzKDkvp5ST2WwzC+GHN4a0yqFAY4pquPxURWoEm5babHrmv41sG04VZtMii9smFBi
- npONJDDXJCv1pMi4ZyGmSrpR4itL6lpn//Whw93FEmcsdwIhQaGMygrv0IxYCF/CIf6e
- A5KYy2R78gVt9xaczD36OBsEfKo76u/YveXPSIXg1stdm9llUXaTvmmz7+djHoeqj25m
- k6WX9vZgfDVYYUp8MszMkTZpAxuWbQ5QLXn6OJXFdneBqng5r8BZ7FIMyRYxs+n/udis
- UKfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=149vrDC6Ny5kXlZ3c9yb3Ff3i3SdoOBmg7pfld3LKGI=;
- b=jSR88UglVj9HEnXGyqFn0EALPeweymVRWDlU8WcVqbYvbLSLAtsrpQZ1x0WwU4dlM9
- 0ldTjP35J7uxZnClO74QrI8CpdVBMZfYLqtNwJnfpsYs05gcA3MPbl7YKhMOGawwGCnP
- Bda/ALTwZf/SZDOCU3O+05mptYGWNiQiLUbCWsrfmAs3ElRy5aUyM9OdLZSdyI0A914i
- PZZsXE9yBl9h367ewfcccyX53pgu/OlF4bG24PCmD73NFfWRLt7B/msBX6b/+u5Sj0tB
- DG8jOuYJN0RAQ31AE13/CFz9jdLQ9Dj0gjCKoSmshtGTyhZLA3E/eB0wqB4tK+7vOlLz
- 1mCw==
-X-Gm-Message-State: ANhLgQ0XRqrtVYOjAUF6TvzT6CqugWwN9blmKfd1YSIPFVD9zvYtJFOs
- BR+1kIVxG8flk9y5wdER/olV/w==
-X-Google-Smtp-Source: ADFU+vud8ckGfbpq7RFxGRUQtjLFosMM5WbNx995vqc+P+Orw+3LIFDIv/yLP5SnzTRZvkDSJttSbw==
-X-Received: by 2002:a0c:bf46:: with SMTP id b6mr4911822qvj.47.1584451558143;
- Tue, 17 Mar 2020 06:25:58 -0700 (PDT)
-Received: from ziepe.ca
- (hlfxns017vw-142-68-57-212.dhcp-dynamic.fibreop.ns.bellaliant.net.
- [142.68.57.212])
- by smtp.gmail.com with ESMTPSA id u77sm1882170qka.134.2020.03.17.06.25.57
- (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Tue, 17 Mar 2020 06:25:57 -0700 (PDT)
-Received: from jgg by mlx.ziepe.ca with local (Exim 4.90_1)
- (envelope-from <jgg@ziepe.ca>)
- id 1jECEH-00027w-2X; Tue, 17 Mar 2020 10:25:57 -0300
-Date: Tue, 17 Mar 2020 10:25:57 -0300
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: Re: [PATCH 08/12] docs: fix broken references to text files
-Message-ID: <20200317132557.GS20941@ziepe.ca>
-References: <cover.1584450500.git.mchehab+huawei@kernel.org>
- <35dcbefd50875b92aaf5b7671d4c57c50b4274fe.1584450500.git.mchehab+huawei@kernel.org>
+ with ESMTP id rzgkACouWyO8 for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 17 Mar 2020 09:59:42 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4E55E4A1B0
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Mar 2020 09:59:42 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DAF01FEC;
+ Tue, 17 Mar 2020 06:59:41 -0700 (PDT)
+Received: from [10.37.12.184] (unknown [10.37.12.184])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8C0E73F534;
+ Tue, 17 Mar 2020 06:59:40 -0700 (PDT)
+Subject: Re: [PATCH] KVM: arm64: Use the correct timer for accessing CNT
+To: KarimAllah Ahmed <karahmed@amazon.de>
+References: <1584351546-5018-1-git-send-email-karahmed@amazon.de>
+From: James Morse <james.morse@arm.com>
+Openpgp: preference=signencrypt
+Message-ID: <ac2933bf-452a-f27a-2d8a-8299c3044111@arm.com>
+Date: Tue, 17 Mar 2020 13:59:38 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <35dcbefd50875b92aaf5b7671d4c57c50b4274fe.1584450500.git.mchehab+huawei@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Mailman-Approved-At: Tue, 17 Mar 2020 09:42:09 -0400
-Cc: kvm@vger.kernel.org, Linux Doc Mailing List <linux-doc@vger.kernel.org>,
- Peter Zijlstra <peterz@infradead.org>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- Akira Yokosawa <akiyks@gmail.com>, dri-devel@lists.freedesktop.org,
- linux-unionfs@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
- linux-mm@kvack.org, Harry Wei <harryxiyou@gmail.com>,
- Alex Shi <alex.shi@linux.alibaba.com>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, linux-arch@vger.kernel.org,
- Jonathan Corbet <corbet@lwn.net>, linux-rdma@vger.kernel.org,
- Michael Ellerman <mpe@ellerman.id.au>, kvm-ppc@vger.kernel.org,
- David Airlie <airlied@linux.ie>, Doug Ledford <dledford@redhat.com>,
- Alan Stern <stern@rowland.harvard.edu>, linux-arm-kernel@lists.infradead.org,
- Federico Vaga <federico.vaga@vaga.pv.it>, Jade Alglave <j.alglave@ucl.ac.uk>,
- Daniel Lustig <dlustig@nvidia.com>, Mike Leach <mike.leach@linaro.org>,
- Andrea Parri <parri.andrea@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- "Paul E. McKenney" <paulmck@kernel.org>, Boqun Feng <boqun.feng@gmail.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Nicholas Piggin <npiggin@gmail.com>, Maxime Ripard <mripard@kernel.org>,
- Luc Maranget <luc.maranget@inria.fr>,
- OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
- David Howells <dhowells@redhat.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Miklos Szeredi <miklos@szeredi.hu>, linux-kernel@vger.kernel.org,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Thomas Zimmermann <tzimmermann@suse.de>, Marc Zyngier <maz@kernel.org>,
- linux-fsdevel@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
- Andrew Morton <akpm@linux-foundation.org>, linuxppc-dev@lists.ozlabs.org
+In-Reply-To: <1584351546-5018-1-git-send-email-karahmed@amazon.de>
+Content-Language: en-US
+Cc: Marc Zyngier <maz@kernel.org>, linux-kernel@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -126,41 +67,68 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, Mar 17, 2020 at 02:10:47PM +0100, Mauro Carvalho Chehab wrote:
-> Several references got broken due to txt to ReST conversion.
-> 
-> Several of them can be automatically fixed with:
-> 
-> 	scripts/documentation-file-ref-check --fix
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
->  Documentation/admin-guide/kernel-parameters.txt      |  2 +-
->  Documentation/memory-barriers.txt                    |  2 +-
->  Documentation/process/submit-checklist.rst           |  2 +-
->  .../translations/it_IT/process/submit-checklist.rst  |  2 +-
->  Documentation/translations/ko_KR/memory-barriers.txt |  2 +-
->  .../translations/zh_CN/filesystems/sysfs.txt         |  2 +-
->  .../translations/zh_CN/process/submit-checklist.rst  |  2 +-
->  Documentation/virt/kvm/arm/pvtime.rst                |  2 +-
->  Documentation/virt/kvm/devices/vcpu.rst              |  2 +-
->  Documentation/virt/kvm/hypercalls.rst                |  4 ++--
->  arch/powerpc/include/uapi/asm/kvm_para.h             |  2 +-
->  drivers/gpu/drm/Kconfig                              |  2 +-
->  drivers/gpu/drm/drm_ioctl.c                          |  2 +-
->  drivers/hwtracing/coresight/Kconfig                  |  2 +-
->  fs/fat/Kconfig                                       |  8 ++++----
->  fs/fuse/Kconfig                                      |  2 +-
->  fs/fuse/dev.c                                        |  2 +-
->  fs/overlayfs/Kconfig                                 |  6 +++---
->  include/linux/mm.h                                   |  4 ++--
->  include/uapi/linux/ethtool_netlink.h                 |  2 +-
->  include/uapi/rdma/rdma_user_ioctl_cmds.h             |  2 +-
+Hi KarimAllah,
 
-For the rdma files
+On 3/16/20 9:39 AM, KarimAllah Ahmed wrote:
+> Use the physical timer object when reading the physical timer counter
+> instead of using the virtual timer object. This is only visible when
+> reading it from user-space as kvm_arm_timer_get_reg() is only executed on
+> the get register patch from user-space.
 
-Acked-by: Jason Gunthorpe <jgg@mellanox.com>
+Have you seen this go wrong?
 
-Jason
+I agree this looks like this was a typo introduced by:
+84135d3d1 ("KVM: arm/arm64: consolidate arch timer trap handlers")
+-----------------%<-----------------
+        case KVM_REG_ARM_PTIMER_CNT:
+-               return kvm_phys_timer_read();
++               return kvm_arm_timer_read(vcpu,
++                                         vcpu_vtimer(vcpu), TIMER_REG_CNT);
+-----------------%<-----------------
+
+This would be a problem when the guest reads the physical counter
+directly, (which doesn't get trapped), and the VMM makes this API call
+and gets a number in a totally different ball-park.
+
+
+Can the VMM actually read these registers with this path?
+
+kvm_arm_get_reg() gets to filter out the coproc registers that aren't in
+the sys_reg[], it also uses is_timer_reg() to spot the timer/counter
+registers, but is_timer_reg() only matches three of them:
+|	case KVM_REG_ARM_TIMER_CTL:
+|	case KVM_REG_ARM_TIMER_CNT:
+|	case KVM_REG_ARM_TIMER_CVAL:
+
+KVM_REG_ARM_PTIMER_CNT is not one of them.
+
+It looks like when the VMM tries to read this, it fails is_timer_reg(),
+and matches in the sys_regs[] and is handled by access_arch_timer(),
+which uses kvm_arm_timer_read_sysreg() -> kvm_arm_timer_read(),
+bypassing this bug.
+
+... this looks like a bug in dead code ...
+
+
+Thanks!
+
+James
+
+> diff --git a/virt/kvm/arm/arch_timer.c b/virt/kvm/arm/arch_timer.c
+> index 0d9438e..93bd59b 100644
+> --- a/virt/kvm/arm/arch_timer.c
+> +++ b/virt/kvm/arm/arch_timer.c
+> @@ -788,7 +788,7 @@ u64 kvm_arm_timer_get_reg(struct kvm_vcpu *vcpu, u64 regid)
+>  					  vcpu_ptimer(vcpu), TIMER_REG_CTL);
+>  	case KVM_REG_ARM_PTIMER_CNT:
+>  		return kvm_arm_timer_read(vcpu,
+> -					  vcpu_vtimer(vcpu), TIMER_REG_CNT);
+> +					  vcpu_ptimer(vcpu), TIMER_REG_CNT);
+>  	case KVM_REG_ARM_PTIMER_CVAL:
+>  		return kvm_arm_timer_read(vcpu,
+>  					  vcpu_ptimer(vcpu), TIMER_REG_CVAL);
+> 
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
