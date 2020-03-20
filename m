@@ -2,54 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4525218D6D8
-	for <lists+kvmarm@lfdr.de>; Fri, 20 Mar 2020 19:25:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DB6118D7BD
+	for <lists+kvmarm@lfdr.de>; Fri, 20 Mar 2020 19:51:24 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EBCC54B0BC;
-	Fri, 20 Mar 2020 14:25:03 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 11B364B0D0;
+	Fri, 20 Mar 2020 14:51:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=ham
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id CBb9OY1mHR-P; Fri, 20 Mar 2020 14:25:03 -0400 (EDT)
+	with ESMTP id UHevH52ELtgD; Fri, 20 Mar 2020 14:51:23 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DAACD4B0A3;
-	Fri, 20 Mar 2020 14:25:02 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C74194B0B4;
+	Fri, 20 Mar 2020 14:51:22 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 332F94A4AA
- for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Mar 2020 14:25:02 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C30BA4B0A5
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Mar 2020 14:51:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id JvxrVwhdi2Ez for <kvmarm@lists.cs.columbia.edu>;
- Fri, 20 Mar 2020 14:25:01 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 28AE04B082
- for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Mar 2020 14:25:01 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 914D21FB;
- Fri, 20 Mar 2020 11:25:00 -0700 (PDT)
-Received: from mbp (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4939B3F305;
- Fri, 20 Mar 2020 11:24:59 -0700 (PDT)
-Date: Fri, 20 Mar 2020 18:24:56 +0000
-From: Catalin Marinas <catalin.marinas@arm.com>
-To: =?iso-8859-1?Q?R=E9mi?= Denis-Courmont <remi@remlab.net>
-Subject: Re: [PATCH] arm64: move kimage_vaddr to .rodata
-Message-ID: <20200320182456.GF7448@mbp>
-References: <20200312094002.153302-1-remi@remlab.net>
+ with ESMTP id VpdKMY0tdknC for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 20 Mar 2020 14:51:20 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 96BB54B0B1
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Mar 2020 14:51:20 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id B41F620775;
+ Fri, 20 Mar 2020 18:51:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1584730279;
+ bh=qOYltc5PEvsMpQTSXW5KLk7fZHc6f6PQXk+Qc6VfB1c=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=ssQmUHCBsD3Ox8CDxP91JouIa2NMG4RBIFIOXvc0l8GIPMtVIBLIgatuJmuOMhE+p
+ uPDwlbyKJWFmqe4WNNtzErWAeKu25kYQPlcy/rdHHflNav4738k14juy/u8XWPilkR
+ 08EOwDVMVwsZQ14GjQeDMjD6/xa9wB+8qrNmpvmk=
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by disco-boy.misterjones.org with esmtpsa
+ (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
+ (envelope-from <maz@kernel.org>)
+ id 1jFMK0-00EKAx-Uu; Fri, 20 Mar 2020 18:24:41 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v6 10/23] irqchip/gic-v4.1: Plumb mask/unmask SGI callbacks
+Date: Fri, 20 Mar 2020 18:23:53 +0000
+Message-Id: <20200320182406.23465-11-maz@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20200320182406.23465-1-maz@kernel.org>
+References: <20200320182406.23465-1-maz@kernel.org>
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20200312094002.153302-1-remi@remlab.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: maz@kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, will@kernel.org,
- kvmarm@lists.cs.columbia.edu
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, lorenzo.pieralisi@arm.com, jason@lakedaemon.net,
+ tglx@linutronix.de, yuzenghui@huawei.com, eric.auger@redhat.com,
+ james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+ Jason Cooper <jason@lakedaemon.net>, Thomas Gleixner <tglx@linutronix.de>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -61,28 +83,61 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Mar 12, 2020 at 11:40:02AM +0200, R=E9mi Denis-Courmont wrote:
-> From: Remi Denis-Courmont <remi.denis.courmont@huawei.com>
-> =
+Implement mask/unmask for virtual SGIs by calling into the
+configuration helper.
 
-> This datum is not referenced from .idmap.text: it does not need to be
-> mapped in idmap. Lets move it to .rodata as it is never written to after
-> early boot of the primary CPU.
-> (Maybe .data.ro_after_init would be cleaner though?)
-> =
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Link: https://lore.kernel.org/r/20200304203330.4967-11-maz@kernel.org
+---
+ drivers/irqchip/irq-gic-v3-its.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-> Signed-off-by: R=E9mi Denis-Courmont <remi@remlab.net>
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index c6aa4b4147ac..d89b9d78394d 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -3944,6 +3944,22 @@ static void its_configure_sgi(struct irq_data *d, bool clear)
+ 	its_send_single_vcommand(find_4_1_its(), its_build_vsgi_cmd, &desc);
+ }
+ 
++static void its_sgi_mask_irq(struct irq_data *d)
++{
++	struct its_vpe *vpe = irq_data_get_irq_chip_data(d);
++
++	vpe->sgi_config[d->hwirq].enabled = false;
++	its_configure_sgi(d, false);
++}
++
++static void its_sgi_unmask_irq(struct irq_data *d)
++{
++	struct its_vpe *vpe = irq_data_get_irq_chip_data(d);
++
++	vpe->sgi_config[d->hwirq].enabled = true;
++	its_configure_sgi(d, false);
++}
++
+ static int its_sgi_set_affinity(struct irq_data *d,
+ 				const struct cpumask *mask_val,
+ 				bool force)
+@@ -3958,6 +3974,8 @@ static int its_sgi_set_affinity(struct irq_data *d,
+ 
+ static struct irq_chip its_sgi_irq_chip = {
+ 	.name			= "GICv4.1-sgi",
++	.irq_mask		= its_sgi_mask_irq,
++	.irq_unmask		= its_sgi_unmask_irq,
+ 	.irq_set_affinity	= its_sgi_set_affinity,
+ };
+ 
+-- 
+2.20.1
 
-Queued for 5.7. Thanks.
-
--- =
-
-Catalin
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
