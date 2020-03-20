@@ -2,80 +2,73 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A373118D05B
-	for <lists+kvmarm@lfdr.de>; Fri, 20 Mar 2020 15:24:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D858D18D399
+	for <lists+kvmarm@lfdr.de>; Fri, 20 Mar 2020 17:09:57 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5612F4B0A2;
-	Fri, 20 Mar 2020 10:24:05 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4F9C54B0A7;
+	Fri, 20 Mar 2020 12:09:57 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id HdwcuzD+-aES; Fri, 20 Mar 2020 10:24:04 -0400 (EDT)
+	with ESMTP id LqFCBIYHxdFh; Fri, 20 Mar 2020 12:09:57 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 71A8F4B0A1;
-	Fri, 20 Mar 2020 10:24:03 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E97A24B09F;
+	Fri, 20 Mar 2020 12:09:55 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EAD024B08B
- for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Mar 2020 10:24:02 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 45C634ACC9
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Mar 2020 12:09:55 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id yoe1x8UOhB1M for <kvmarm@lists.cs.columbia.edu>;
- Fri, 20 Mar 2020 10:24:01 -0400 (EDT)
+ with ESMTP id 1NREFlukFUf7 for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 20 Mar 2020 12:09:53 -0400 (EDT)
 Received: from us-smtp-delivery-74.mimecast.com
- (us-smtp-delivery-74.mimecast.com [63.128.21.74])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D3AE04A578
- for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Mar 2020 10:24:01 -0400 (EDT)
+ (us-smtp-delivery-74.mimecast.com [216.205.24.74])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7803A4A5A0
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Mar 2020 12:09:53 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1584714241;
+ s=mimecast20190719; t=1584720593;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ChzXaaoXuhc1XP2003YPwEPKXIEY82z0Pz3X4zEVJU0=;
- b=KXDuCv9HFrz1Ew3L1Xb4qGsNwJ3pK0/B8iDFE47/DazgA0acaKM1VNCjokxH4vOa1JDxnl
- 1M2pJymzsvREmUc4pYeIS2VYXVcEuIPYMH7XStR11xG7wii9K0xI1C00QU3d1szKnFUJyj
- V1sPhwxmV5ysStj+opVi2VYkjXUY/fw=
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=mt6W53kP88DRiZTuoqb3J/Hxj12DaCnXpHIxP03GIz0=;
+ b=Fr5QzM6+FVteWimPMYIwm8wY9Cpq3qEmqHdMoNhZ8wtpxTXB5iNEB0TCVchOcw3nbWE4nG
+ fadDhrXX2n6fowMdDJ8B8nOxgK/rJBeCtuXhnG/JiQsES/t7Sye+Kz05W2+VoAb0DnhtQA
+ 2MoDRiNNUi1HOFD6vdu0GmzBv0esH7o=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-348-LVVhRZYhMzqVwGVfnSqSUg-1; Fri, 20 Mar 2020 10:23:57 -0400
-X-MC-Unique: LVVhRZYhMzqVwGVfnSqSUg-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com
- [10.5.11.13])
+ us-mta-433-8p6GmzW8PH6jK-84OtJ-OQ-1; Fri, 20 Mar 2020 12:09:49 -0400
+X-MC-Unique: 8p6GmzW8PH6jK-84OtJ-OQ-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.phx2.redhat.com
+ [10.5.11.16])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id D7E581005510;
- Fri, 20 Mar 2020 14:23:54 +0000 (UTC)
-Received: from [10.36.113.142] (ovpn-113-142.ams2.redhat.com [10.36.113.142])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 96AF45C1B3;
- Fri, 20 Mar 2020 14:23:50 +0000 (UTC)
-Subject: Re: [PATCH v5 04/23] irqchip/gic-v4.1: Wait for completion of
- redistributor's INVALL operation
-To: Marc Zyngier <maz@kernel.org>, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20200304203330.4967-1-maz@kernel.org>
- <20200304203330.4967-5-maz@kernel.org>
-From: Auger Eric <eric.auger@redhat.com>
-Message-ID: <60beb328-5249-a79e-eceb-967716a085bc@redhat.com>
-Date: Fri, 20 Mar 2020 15:23:49 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 7EA8B100550E;
+ Fri, 20 Mar 2020 16:09:46 +0000 (UTC)
+Received: from laptop.redhat.com (ovpn-113-142.ams2.redhat.com [10.36.113.142])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 742A45C1D8;
+ Fri, 20 Mar 2020 16:09:37 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com,
+ iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+ kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu, joro@8bytes.org,
+ alex.williamson@redhat.com, jacob.jun.pan@linux.intel.com,
+ yi.l.liu@intel.com, jean-philippe.brucker@arm.com, will.deacon@arm.com,
+ robin.murphy@arm.com
+Subject: [PATCH v10 00/13] SMMUv3 Nested Stage Setup (IOMMU part)
+Date: Fri, 20 Mar 2020 17:09:19 +0100
+Message-Id: <20200320160932.27222-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <20200304203330.4967-5-maz@kernel.org>
-Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
-Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
- Jason Cooper <jason@lakedaemon.net>, Robert Richter <rrichter@marvell.com>,
- Thomas Gleixner <tglx@linutronix.de>
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+Cc: marc.zyngier@arm.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -92,43 +85,139 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi,
+This is a rebase on top of Will's arm-smmu-updates branch
+(git://git.kernel.org/pub/scm/linux/kernel/git/will/linux.git tags/arm-smmu-updates)
 
-On 3/4/20 9:33 PM, Marc Zyngier wrote:
-> From: Zenghui Yu <yuzenghui@huawei.com>
-> 
-> In GICv4.1, we emulate a guest-issued INVALL command by a direct write
-> to GICR_INVALLR.  Before we finish the emulation and go back to guest,
-> let's make sure the physical invalidate operation is actually completed
-> and no stale data will be left in redistributor. Per the specification,
-> this can be achieved by polling the GICR_SYNCR.Busy bit (to zero).
-> 
-> Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
-> Signed-off-by: Marc Zyngier <maz@kernel.org>
-> Link: https://lore.kernel.org/r/20200302092145.899-1-yuzenghui@huawei.com
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+This work has been stalled since Plumber 2019. Since then
+some users expressed interest in that work and tested v9:
+- https://patchwork.kernel.org/cover/11039995/#23012381
+- https://patchwork.kernel.org/cover/11039995/#23197235
 
-Thanks
+The VFIO series is sent separately.
+
+Background:
+
+This series brings the IOMMU part of HW nested paging support
+in the SMMUv3. The VFIO part is submitted separately.
+
+The IOMMU API is extended to support 2 new API functionalities:
+1) pass the guest stage 1 configuration
+2) pass stage 1 MSI bindings
+
+Then those capabilities gets implemented in the SMMUv3 driver.
+
+The virtualizer passes information through the VFIO user API
+which cascades them to the iommu subsystem. This allows the guest
+to own stage 1 tables and context descriptors (so-called PASID
+table) while the host owns stage 2 tables and main configuration
+structures (STE).
+
+Best Regards
 
 Eric
-> ---
->  drivers/irqchip/irq-gic-v3-its.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-> index 1af713990123..c84370245bea 100644
-> --- a/drivers/irqchip/irq-gic-v3-its.c
-> +++ b/drivers/irqchip/irq-gic-v3-its.c
-> @@ -3827,6 +3827,8 @@ static void its_vpe_4_1_invall(struct its_vpe *vpe)
->  	/* Target the redistributor this vPE is currently known on */
->  	rdbase = per_cpu_ptr(gic_rdists->rdist, vpe->col_idx)->rd_base;
->  	gic_write_lpir(val, rdbase + GICR_INVALLR);
-> +
-> +	wait_for_syncr(rdbase);
->  }
->  
->  static int its_vpe_4_1_set_vcpu_affinity(struct irq_data *d, void *vcpu_info)
-> 
+
+This series can be found at:
+https://github.com/eauger/linux/tree/will-arm-smmu-updates-2stage-v10
+(also includes the VFIO part)
+
+History:
+
+v9 -> v10:
+- rebase on top of 5.6.0-rc3
+
+v8 -> v9:
+- rebase on 5.3
+- split iommu/vfio parts
+
+v6 -> v8:
+- Implement VFIO-PCI device specific interrupt framework
+
+v7 -> v8:
+- rebase on top of v5.2-rc1 and especially
+  8be39a1a04c1  iommu/arm-smmu-v3: Add a master->domain pointer
+- dynamic alloc of s1_cfg/s2_cfg
+- __arm_smmu_tlb_inv_asid/s1_range_nosync
+- check there is no HW MSI regions
+- asid invalidation using pasid extended struct (change in the uapi)
+- add s1_live/s2_live checks
+- move check about support of nested stages in domain finalise
+- fixes in error reporting according to the discussion with Robin
+- reordered the patches to have first iommu/smmuv3 patches and then
+  VFIO patches
+
+v6 -> v7:
+- removed device handle from bind/unbind_guest_msi
+- added "iommu/smmuv3: Nested mode single MSI doorbell per domain
+  enforcement"
+- added few uapi comments as suggested by Jean, Jacop and Alex
+
+v5 -> v6:
+- Fix compilation issue when CONFIG_IOMMU_API is unset
+
+v4 -> v5:
+- fix bug reported by Vincent: fault handler unregistration now happens in
+  vfio_pci_release
+- IOMMU_FAULT_PERM_* moved outside of struct definition + small
+  uapi changes suggested by Kean-Philippe (except fetch_addr)
+- iommu: introduce device fault report API: removed the PRI part.
+- see individual logs for more details
+- reset the ste abort flag on detach
+
+v3 -> v4:
+- took into account Alex, jean-Philippe and Robin's comments on v3
+- rework of the smmuv3 driver integration
+- add tear down ops for msi binding and PASID table binding
+- fix S1 fault propagation
+- put fault reporting patches at the beginning of the series following
+  Jean-Philippe's request
+- update of the cache invalidate and fault API uapis
+- VFIO fault reporting rework with 2 separate regions and one mmappable
+  segment for the fault queue
+- moved to PATCH
+
+v2 -> v3:
+- When registering the S1 MSI binding we now store the device handle. This
+  addresses Robin's comment about discimination of devices beonging to
+  different S1 groups and using different physical MSI doorbells.
+- Change the fault reporting API: use VFIO_PCI_DMA_FAULT_IRQ_INDEX to
+  set the eventfd and expose the faults through an mmappable fault region
+
+v1 -> v2:
+- Added the fault reporting capability
+- asid properly passed on invalidation (fix assignment of multiple
+  devices)
+- see individual change logs for more info
+
+Eric Auger (11):
+  iommu: Introduce bind/unbind_guest_msi
+  iommu/smmuv3: Dynamically allocate s1_cfg and s2_cfg
+  iommu/smmuv3: Get prepared for nested stage support
+  iommu/smmuv3: Implement attach/detach_pasid_table
+  iommu/smmuv3: Allow stage 1 invalidation with unmanaged ASIDs
+  iommu/smmuv3: Implement cache_invalidate
+  dma-iommu: Implement NESTED_MSI cookie
+  iommu/smmuv3: Nested mode single MSI doorbell per domain enforcement
+  iommu/smmuv3: Enforce incompatibility between nested mode and HW MSI
+    regions
+  iommu/smmuv3: Implement bind/unbind_guest_msi
+  iommu/smmuv3: Report non recoverable faults
+
+Jacob Pan (1):
+  iommu: Introduce attach/detach_pasid_table API
+
+Jean-Philippe Brucker (1):
+  iommu/arm-smmu-v3: Maintain a SID->device structure
+
+ drivers/iommu/arm-smmu-v3.c | 738 ++++++++++++++++++++++++++++++++----
+ drivers/iommu/dma-iommu.c   | 142 ++++++-
+ drivers/iommu/iommu.c       |  56 +++
+ include/linux/dma-iommu.h   |  16 +
+ include/linux/iommu.h       |  37 ++
+ include/uapi/linux/iommu.h  |  51 +++
+ 6 files changed, 968 insertions(+), 72 deletions(-)
+
+-- 
+2.20.1
 
 _______________________________________________
 kvmarm mailing list
