@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 34A9718F8C5
-	for <lists+kvmarm@lfdr.de>; Mon, 23 Mar 2020 16:38:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BAF5718F99B
+	for <lists+kvmarm@lfdr.de>; Mon, 23 Mar 2020 17:23:37 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BA3314A418;
-	Mon, 23 Mar 2020 11:38:09 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EDEB74B086;
+	Mon, 23 Mar 2020 12:23:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,47 +16,46 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id O8lTMAOsjunh; Mon, 23 Mar 2020 11:38:09 -0400 (EDT)
+	with ESMTP id pZ+n0IJqLM6R; Mon, 23 Mar 2020 12:23:36 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AFF694B099;
-	Mon, 23 Mar 2020 11:38:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C728A4A5A0;
+	Mon, 23 Mar 2020 12:23:35 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id BC2CC4B08C
- for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Mar 2020 11:38:07 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 15FCE4A4FC
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Mar 2020 12:23:35 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id SDeWysXYm4bl for <kvmarm@lists.cs.columbia.edu>;
- Mon, 23 Mar 2020 11:38:06 -0400 (EDT)
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 682A74A418
- for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Mar 2020 11:38:06 -0400 (EDT)
-IronPort-SDR: vCnbx7uI/eMTI83shljZtZ3DoeUL3RXimHSEujXohdG+gaa8Jj9luiEZ/hfPwgp0HdWyOsOxah
- MtUuNoNZ0UJg==
+ with ESMTP id Dc33S6k7fMPm for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 23 Mar 2020 12:23:33 -0400 (EDT)
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5A3A44A49F
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Mar 2020 12:23:33 -0400 (EDT)
+IronPort-SDR: yo7oIls2yYwHf/cAhzqsMVZKXyZgddINZ6H78xYDPDaRcBAME/MHmBtvZWKcPNsXE9IAQP/RBl
+ L6sJPSsJi1xw==
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
- by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Mar 2020 08:38:04 -0700
-IronPort-SDR: 9+1ObKw03rdINnymPRfYKrF7RSRXlP6uiMZXg8gBrh9a6pVNyoKoE2F80qOku+lRShN01imbPW
- nmmRx4WRdMAA==
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+ by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Mar 2020 09:23:06 -0700
+IronPort-SDR: MSUbytwPG21W6dHu5U5WS4F+QkOtlYnEVMtPHZM2yy05ToGOBSa/Iia6kA8iGdkqDv5h8AChKj
+ rBEIy+2a4Nvg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.72,296,1580803200"; d="scan'208";a="235253307"
+X-IronPort-AV: E=Sophos;i="5.72,297,1580803200"; d="scan'208";a="357139587"
 Received: from sjchrist-coffee.jf.intel.com (HELO linux.intel.com)
  ([10.54.74.202])
- by orsmga007.jf.intel.com with ESMTP; 23 Mar 2020 08:38:04 -0700
-Date: Mon, 23 Mar 2020 08:38:04 -0700
+ by fmsmga001.fm.intel.com with ESMTP; 23 Mar 2020 09:23:05 -0700
+Date: Mon, 23 Mar 2020 09:23:05 -0700
 From: Sean Christopherson <sean.j.christopherson@intel.com>
 To: Vitaly Kuznetsov <vkuznets@redhat.com>
-Subject: Re: [PATCH v3 6/9] KVM: x86: Copy kvm_x86_ops by value to eliminate
- layer of indirection
-Message-ID: <20200323153803.GF28711@linux.intel.com>
+Subject: Re: [PATCH v3 4/9] KVM: VMX: Configure runtime hooks using vmx_x86_ops
+Message-ID: <20200323162305.GL28711@linux.intel.com>
 References: <20200321202603.19355-1-sean.j.christopherson@intel.com>
- <20200321202603.19355-7-sean.j.christopherson@intel.com>
- <87d0939r5t.fsf@vitty.brq.redhat.com>
+ <20200321202603.19355-5-sean.j.christopherson@intel.com>
+ <87ftdz9ryn.fsf@vitty.brq.redhat.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <87d0939r5t.fsf@vitty.brq.redhat.com>
+In-Reply-To: <87ftdz9ryn.fsf@vitty.brq.redhat.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Cc: Wanpeng Li <wanpengli@tencent.com>, Janosch Frank <frankja@linux.ibm.com>,
  kvm@vger.kernel.org, David Hildenbrand <david@redhat.com>,
@@ -83,11 +82,57 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Mar 23, 2020 at 01:44:46PM +0100, Vitaly Kuznetsov wrote:
-> (OK, I have to admit I trust the fact that GCC is still able to build
-> KVM modules more than my own eyes)
+On Mon, Mar 23, 2020 at 01:27:28PM +0100, Vitaly Kuznetsov wrote:
+> Sean Christopherson <sean.j.christopherson@intel.com> writes:
+> 
+> > Configure VMX's runtime hooks by modifying vmx_x86_ops directly instead
+> > of using the global kvm_x86_ops.  This sets the stage for waiting until
+> > after ->hardware_setup() to set kvm_x86_ops with the vendor's
+> > implementation.
+> >
+> > Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
+> > ---
+> >  arch/x86/kvm/vmx/nested.c | 15 ++++++++-------
+> >  arch/x86/kvm/vmx/nested.h |  3 ++-
+> >  arch/x86/kvm/vmx/vmx.c    | 27 ++++++++++++++-------------
+> >  3 files changed, 24 insertions(+), 21 deletions(-)
+> >
+> > diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
+> > index 4ff859c99946..87fea22c3799 100644
+> > --- a/arch/x86/kvm/vmx/nested.c
+> > +++ b/arch/x86/kvm/vmx/nested.c
+> > @@ -6241,7 +6241,8 @@ void nested_vmx_hardware_unsetup(void)
+> >  	}
+> >  }
+> >  
+> > -__init int nested_vmx_hardware_setup(int (*exit_handlers[])(struct kvm_vcpu *))
+> > +__init int nested_vmx_hardware_setup(struct kvm_x86_ops *ops,
+> > +				     int (*exit_handlers[])(struct kvm_vcpu *))
+> >  {
+> >  	int i;
+> >  
+> > @@ -6277,12 +6278,12 @@ __init int nested_vmx_hardware_setup(int (*exit_handlers[])(struct kvm_vcpu *))
+> >  	exit_handlers[EXIT_REASON_INVVPID]	= handle_invvpid;
+> >  	exit_handlers[EXIT_REASON_VMFUNC]	= handle_vmfunc;
+> >  
+> > -	kvm_x86_ops->check_nested_events = vmx_check_nested_events;
+> > -	kvm_x86_ops->get_nested_state = vmx_get_nested_state;
+> > -	kvm_x86_ops->set_nested_state = vmx_set_nested_state;
+> > -	kvm_x86_ops->get_vmcs12_pages = nested_get_vmcs12_pages;
+> > -	kvm_x86_ops->nested_enable_evmcs = nested_enable_evmcs;
+> > -	kvm_x86_ops->nested_get_evmcs_version = nested_get_evmcs_version;
+> > +	ops->check_nested_events = vmx_check_nested_events;
+> > +	ops->get_nested_state = vmx_get_nested_state;
+> > +	ops->set_nested_state = vmx_set_nested_state;
+> > +	ops->get_vmcs12_pages = nested_get_vmcs12_pages;
+> > +	ops->nested_enable_evmcs = nested_enable_evmcs;
+> > +	ops->nested_get_evmcs_version = nested_get_evmcs_version;
+> 
+> 
+> A lazy guy like me would appreciate 'ops' -> 'vmx_x86_ops' rename as it
+> would make 'git grep vmx_x86_ops' output more complete.
 
-Ha, yep, I trust gcc far more than my grep skills.
+Ah, didn't think about that, obviously.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
