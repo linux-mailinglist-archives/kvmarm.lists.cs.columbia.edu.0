@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 770E018F5D2
-	for <lists+kvmarm@lfdr.de>; Mon, 23 Mar 2020 14:35:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0169618F5D3
+	for <lists+kvmarm@lfdr.de>; Mon, 23 Mar 2020 14:35:45 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2A9404B09A;
-	Mon, 23 Mar 2020 09:35:43 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A87574B0D4;
+	Mon, 23 Mar 2020 09:35:44 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
@@ -18,71 +18,70 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cf-TCLUISXnl; Mon, 23 Mar 2020 09:35:43 -0400 (EDT)
+	with ESMTP id muPl0uRGSiBD; Mon, 23 Mar 2020 09:35:44 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7CCE04B099;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 99AAF4B0D5;
 	Mon, 23 Mar 2020 09:35:37 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D01BE4A534
- for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Mar 2020 08:46:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3771E4A534
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Mar 2020 08:48:12 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id cvBMYLpb3hh1 for <kvmarm@lists.cs.columbia.edu>;
- Mon, 23 Mar 2020 08:46:30 -0400 (EDT)
+ with ESMTP id OL2TNPZNYbiC for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 23 Mar 2020 08:48:11 -0400 (EDT)
 Received: from us-smtp-delivery-74.mimecast.com
  (us-smtp-delivery-74.mimecast.com [63.128.21.74])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id F32D14A4C0
- for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Mar 2020 08:46:29 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 64B0C4A4C0
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Mar 2020 08:48:11 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1584967589;
+ s=mimecast20190719; t=1584967691;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YdFpUchc9Jk3kYBBsZjPPjHpUFyVWFs7ezq+T4dqNO0=;
- b=Lv68lBgVBzp5smwRVMsnGYS/8ifcnVph8DguuqWt/+KYqwVdnHEOANbee7fKRCWmyMUBAc
- C1wWtm+8wGR3BR6nl2wbMdaSjNjNSEFkKqTSPjbzYbynAFWeOSw91PnNiGR1MuZmJQ6SuN
- sHBLCT2w+LprbIkyGD1s/cC7lddRoUA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-138-gKbuWjmvN2G9DAD5i_ZpQg-1; Mon, 23 Mar 2020 08:46:26 -0400
-X-MC-Unique: gKbuWjmvN2G9DAD5i_ZpQg-1
-Received: by mail-wm1-f69.google.com with SMTP id y1so1986981wmj.3
- for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Mar 2020 05:46:25 -0700 (PDT)
+ bh=B8wQahKGoRUIUJ5ZWFkVo9acPARo3TGrEWALHtiunpg=;
+ b=btEvOdqZ9D7AaaGA3iliV9DU+70UMVihkk/dazaJbhkM2Jae9c1IbsMLvwfxg6whyL2Zn8
+ m+kh8KFM2CpmVQIcF6yxNuHYSMPRny1qc5aIiT/bN6frZRX9uas8X7JLIG1s+MoIv5y5wZ
+ 0cD3eBbirBh1byy2u38sZ/w+rlW5DJE=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-146-uz7PP1ocNmeAwWuKbTpnPA-1; Mon, 23 Mar 2020 08:48:09 -0400
+X-MC-Unique: uz7PP1ocNmeAwWuKbTpnPA-1
+Received: by mail-wr1-f71.google.com with SMTP id h17so7335758wru.16
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Mar 2020 05:48:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
  :message-id:mime-version;
- bh=7ey+1F39M8ByNAstuPtE4DBKq3YafypzQysKAMbXteM=;
- b=Fc8/K2Mz1q8HeZ6mgYHc2LJAOLfm0pd5TZoivAyYfbltI+Q6vxVv+PpJsAUAPy1Vz6
- 4nFEh1Plmh4igBySdDCJ/0n1ea1CL86RXCX4NnHUkMzxpWQoCWWvT8adfcsFN710JA0e
- KQzp+8elFbfVRZRzn6Kirjvl7c12I1/IvCkjjYc1nejdTKktxZ4b66cJw6qJP9S5XO0r
- qgTdKFv41cOpiStBbhABatsS/Dz90bwfsLTKGVUgRLyYyjDIJf7D1Au3AQxQgmgjUjKE
- PINswA2z7xiU74dZEZsLg9B4Gq5NgTpL5buRFqVwQjxDF785o/g8W7nBQeyyIHCxz+C6
- 7vJw==
-X-Gm-Message-State: ANhLgQ1H+eVUfTjIKgbI9H5vd/1yRFTUjU1gM/s4hrKSoIrFY/G3UBUw
- BQ0WgvVHySQQI7FbxmQ1+wPzLfadpW4hFkZKD2/vM3E4JhlDwoO33A9z4GnisTjwtJoM8GBl9L0
- 4KAZ2wyREh/iwNfMQH0ikJF/g
-X-Received: by 2002:a1c:6745:: with SMTP id b66mr27121459wmc.30.1584967584693; 
- Mon, 23 Mar 2020 05:46:24 -0700 (PDT)
-X-Google-Smtp-Source: ADFU+vs9yhBZxRUgm+rnsEcxWBh8IaB2Gorhbhsei0xdDIWP+ldbP2TNlbOrXiLaqIWct/my8m4nng==
-X-Received: by 2002:a1c:6745:: with SMTP id b66mr27121425wmc.30.1584967584395; 
- Mon, 23 Mar 2020 05:46:24 -0700 (PDT)
+ bh=oZZMumaLZJu5X3TxC1ggPEB/siyDp674fd3PHOwNKOk=;
+ b=J1FDCr1nE6gbNNi+WttiOTyJZJVMcPNfT8aAKvFbqyTQLV/GefRabpLOHCMq9nlqS1
+ l9b5dWAFPSVHoCy78RL7rYLW0cv+Atx1odEOYPKZzz0bgWrDUYoJLWSXiNPiE1ElJbWF
+ HIkbB+EekDreHkuYkUwzUMoz+5l1xR9C/ZtOCJDMTIvADeb3yGYCE6x05fpV/wn68rZO
+ X4/o7zTSvoZfF0HN2j/3t6gdM/pBh/6u5Vqmb8cFuNG3aFJ/sjRssixfOl9yxeGTplJ1
+ cGztueRbkyZmwaCP4JzTW+vEyZl7+C9ELJQLUyJKzOpgRNnHp/8DBHcu+VNWO34DF/zZ
+ hsyg==
+X-Gm-Message-State: ANhLgQ0y5uh2Rcm7NGagE4UlOxZV+3BpFOPno8N8hd9k+WwCTzqNIkHQ
+ B090PPdS2JMur/iaXzYyUsaTloPaf8uF9Kv+gfPjbhxgnN3AvlXms+D+mrV9bfYKFQsWQqh++kJ
+ 4NDSgZIvohwlH5dFoOw7f/j6A
+X-Received: by 2002:adf:decf:: with SMTP id i15mr26153363wrn.277.1584967688272; 
+ Mon, 23 Mar 2020 05:48:08 -0700 (PDT)
+X-Google-Smtp-Source: ADFU+vtzfkKiGqY46hQmyiE1uEEqN2+GnJhVE7scycSa3L2yRyeY3La61RQMFCIJXOpzJGHNoWPMLQ==
+X-Received: by 2002:adf:decf:: with SMTP id i15mr26153331wrn.277.1584967688007; 
+ Mon, 23 Mar 2020 05:48:08 -0700 (PDT)
 Received: from vitty.brq.redhat.com (g-server-2.ign.cz. [91.219.240.2])
- by smtp.gmail.com with ESMTPSA id f15sm23749313wru.83.2020.03.23.05.46.22
+ by smtp.gmail.com with ESMTPSA id m12sm15324212wmi.3.2020.03.23.05.48.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Mar 2020 05:46:23 -0700 (PDT)
+ Mon, 23 Mar 2020 05:48:07 -0700 (PDT)
 From: Vitaly Kuznetsov <vkuznets@redhat.com>
 To: Sean Christopherson <sean.j.christopherson@intel.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v3 7/9] KVM: x86: Drop __exit from kvm_x86_ops'
- hardware_unsetup()
-In-Reply-To: <20200321202603.19355-8-sean.j.christopherson@intel.com>
+Subject: Re: [PATCH v3 8/9] KVM: VMX: Annotate vmx_x86_ops as __initdata
+In-Reply-To: <20200321202603.19355-9-sean.j.christopherson@intel.com>
 References: <20200321202603.19355-1-sean.j.christopherson@intel.com>
- <20200321202603.19355-8-sean.j.christopherson@intel.com>
-Date: Mon, 23 Mar 2020 13:46:22 +0100
-Message-ID: <87a7479r35.fsf@vitty.brq.redhat.com>
+ <20200321202603.19355-9-sean.j.christopherson@intel.com>
+Date: Mon, 23 Mar 2020 13:48:05 +0100
+Message-ID: <877dzb9r0a.fsf@vitty.brq.redhat.com>
 MIME-Version: 1.0
 X-Mimecast-Spam-Score: 0
 X-Mimecast-Originator: redhat.com
@@ -114,49 +113,30 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 Sean Christopherson <sean.j.christopherson@intel.com> writes:
 
-> Remove the __exit annotation from VMX hardware_unsetup(), the hook
-> can be reached during kvm_init() by way of kvm_arch_hardware_unsetup()
-> if failure occurs at various points during initialization.
->
-> Note, there is no known functional issue with the __exit annotation, the
-> above is merely justification for its removal.  The real motivation is
-> to be able to annotate vmx_x86_ops and svm_x86_ops with __initdata,
-> which makes objtool complain because objtool doesn't understand that the
-> vendor specific __initdata is being copied by value to a non-__initdata
-> instance.
+> Tag vmx_x86_ops with __initdata now the the struct is copied by value
+
+Typo, "now that the struct".
+
+> to a common x86 instance of kvm_x86_ops as part of kvm_init().
 >
 > Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
 > ---
->  arch/x86/include/asm/kvm_host.h | 2 +-
->  arch/x86/kvm/vmx/vmx.c          | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+>  arch/x86/kvm/vmx/vmx.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-> index 54f991244fae..42a2d0d3984a 100644
-> --- a/arch/x86/include/asm/kvm_host.h
-> +++ b/arch/x86/include/asm/kvm_host.h
-> @@ -1056,7 +1056,7 @@ static inline u16 kvm_lapic_irq_dest_mode(bool dest_mode_logical)
->  struct kvm_x86_ops {
->  	int (*hardware_enable)(void);
->  	void (*hardware_disable)(void);
-> -	void (*hardware_unsetup)(void);            /* __exit */
-> +	void (*hardware_unsetup)(void);
->  	bool (*cpu_has_accelerated_tpr)(void);
->  	bool (*has_emulated_msr)(int index);
->  	void (*cpuid_update)(struct kvm_vcpu *vcpu);
 > diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-> index 4bbe0d165a0c..fac22e316417 100644
+> index fac22e316417..eae90379d0d1 100644
 > --- a/arch/x86/kvm/vmx/vmx.c
 > +++ b/arch/x86/kvm/vmx/vmx.c
-> @@ -7652,7 +7652,7 @@ static bool vmx_apic_init_signal_blocked(struct kvm_vcpu *vcpu)
->  	return to_vmx(vcpu)->nested.vmxon;
+> @@ -7668,7 +7668,7 @@ static bool vmx_check_apicv_inhibit_reasons(ulong bit)
+>  	return supported & BIT(bit);
 >  }
 >  
-> -static __exit void hardware_unsetup(void)
-> +static void hardware_unsetup(void)
->  {
->  	if (nested)
->  		nested_vmx_hardware_unsetup();
+> -static struct kvm_x86_ops vmx_x86_ops __ro_after_init = {
+> +static struct kvm_x86_ops vmx_x86_ops __initdata = {
+>  	.hardware_unsetup = hardware_unsetup,
+>  
+>  	.hardware_enable = hardware_enable,
 
 Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
 
