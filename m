@@ -2,58 +2,79 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B6D8192020
-	for <lists+kvmarm@lfdr.de>; Wed, 25 Mar 2020 05:26:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD9EC1921DD
+	for <lists+kvmarm@lfdr.de>; Wed, 25 Mar 2020 08:46:59 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 364BC4B0BF;
-	Wed, 25 Mar 2020 00:26:55 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4FFE44B093;
+	Wed, 25 Mar 2020 03:46:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.502
+X-Spam-Score: 0.799
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=no
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id NBU0AfhbDvES; Wed, 25 Mar 2020 00:26:53 -0400 (EDT)
+	with ESMTP id 6ujLmMfPbZCH; Wed, 25 Mar 2020 03:46:59 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A590C4B0A3;
-	Wed, 25 Mar 2020 00:26:53 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 512104B08E;
+	Wed, 25 Mar 2020 03:46:58 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 132304B0A3
- for <kvmarm@lists.cs.columbia.edu>; Wed, 25 Mar 2020 00:26:53 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DEFD84A531
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 25 Mar 2020 03:46:56 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id pRQ2mwelvZ9R for <kvmarm@lists.cs.columbia.edu>;
- Wed, 25 Mar 2020 00:26:51 -0400 (EDT)
-Received: from huawei.com (szxga05-in.huawei.com [45.249.212.191])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4AF444B08F
- for <kvmarm@lists.cs.columbia.edu>; Wed, 25 Mar 2020 00:26:51 -0400 (EDT)
-Received: from DGGEMS408-HUB.china.huawei.com (unknown [172.30.72.58])
- by Forcepoint Email with ESMTP id 3ACB7F133C3423769A02;
- Wed, 25 Mar 2020 12:26:44 +0800 (CST)
-Received: from linux-kDCJWP.huawei.com (10.175.104.212) by
- DGGEMS408-HUB.china.huawei.com (10.3.19.208) with Microsoft SMTP Server id
- 14.3.487.0; Wed, 25 Mar 2020 12:26:37 +0800
-From: Keqian Zhu <zhukeqian1@huawei.com>
-To: <kvm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-arm-kernel@lists.infradead.org>, <kvmarm@lists.cs.columbia.edu>
-Subject: [PATCH 3/3] KVM/arm64: Only set bits of dirty bitmap with valid
- translation entries
-Date: Wed, 25 Mar 2020 12:24:23 +0800
-Message-ID: <20200325042423.12181-4-zhukeqian1@huawei.com>
-X-Mailer: git-send-email 2.19.1
-In-Reply-To: <20200325042423.12181-1-zhukeqian1@huawei.com>
-References: <20200325042423.12181-1-zhukeqian1@huawei.com>
+ with ESMTP id RvhPgecbdWht for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 25 Mar 2020 03:46:55 -0400 (EDT)
+Received: from mail-ed1-f65.google.com (mail-ed1-f65.google.com
+ [209.85.208.65])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 651434A500
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 25 Mar 2020 03:46:55 -0400 (EDT)
+Received: by mail-ed1-f65.google.com with SMTP id u59so1183369edc.12
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 25 Mar 2020 00:46:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to:user-agent;
+ bh=UaBcRiu0jhd+aZ3qoAfM9Jyg226NuZ7pG6QSrBAUzKE=;
+ b=ThSUhNnrnlJX/GdCSY78rdYSwUU4rnnuKYDe7uSkxEUm2LdceMFJPZV6mEQ8EdlpW6
+ T+KtX825uyudMmoNsbKPnab7aDa4WlZZkkb1nN/IcZZUoxZrZjxnXcwGNg6g1qdR66Mi
+ g6zW9djT8gVtxuL9dKDEQxLnUEipMpYfwc6DWBTrhBdlv91zLfdyyN2qz0ONwqAvQHOM
+ 5W/0MvOVj9OFJCUjryS3Lo/mRTFs8X9ndtonitZjVa53la4yPieEL+fqHt3ru0dMJwgT
+ ulpIAr555D/+Utns3PYF+yN3HBLgLZIU6boJ5Me6yJ6/4tK1LP+ey2YN5GAWF+GeDBGc
+ WEXg==
+X-Gm-Message-State: ANhLgQ2ezAlmMmTuZoqpGeilINqGOi6ygCM6kVPgy/F2erBBXmMct01J
+ ArmrDZHsS5M9Pq/OS2jBjis=
+X-Google-Smtp-Source: ADFU+vtMcCFFhN/9DmhxAFJzYhIdK+iRP4YL5ukwhPlffOfTndxsoNgCwnBl7CzNaMJbVvRaQUDS1w==
+X-Received: by 2002:a17:906:c4f:: with SMTP id
+ t15mr2040012ejf.193.1585122414316; 
+ Wed, 25 Mar 2020 00:46:54 -0700 (PDT)
+Received: from kozik-lap ([194.230.155.125])
+ by smtp.googlemail.com with ESMTPSA id b5sm1497332edk.72.2020.03.25.00.46.51
+ (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+ Wed, 25 Mar 2020 00:46:53 -0700 (PDT)
+Date: Wed, 25 Mar 2020 08:46:49 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH v2 1/7] arm: Unplug KVM from the build system
+Message-ID: <20200325074649.GA4640@kozik-lap>
+References: <20200324103350.138077-1-maz@kernel.org>
+ <20200324103350.138077-2-maz@kernel.org>
 MIME-Version: 1.0
-X-Originating-IP: [10.175.104.212]
-X-CFilter-Loop: Reflected
-Cc: Marc Zyngier <maz@kernel.org>,
- Sean Christopherson <sean.j.christopherson@intel.com>,
- Jay Zhou <jianjay.zhou@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Will Deacon <will@kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20200324103350.138077-2-maz@kernel.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+Cc: kvm@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
+ Linus Walleij <linus.walleij@linaro.org>, Takashi Yoshi <takashi@yoshi.email>,
+ Daniel Golle <daniel@makrotopia.org>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, Marek Szyprowski <m.szyprowski@samsung.com>,
+ Russell King <linux@arm.linux.org.uk>,
+ Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+ Jan Kiszka <jan.kiszka@siemens.com>, Arnd Bergmann <arnd@arndb.de>,
+ linux-arm-kernel@lists.infradead.org, Olof Johansson <olof@lixom.net>,
+ Paolo Bonzini <pbonzini@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -70,297 +91,28 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-When KVM_DIRTY_LOG_INITIALLY_SET is enabled, we can only report these
-pages that have valid translation entries to userspace, then userspace
-don't need to do zero-check on other pages during VM migration.
+On Tue, Mar 24, 2020 at 10:33:44AM +0000, Marc Zyngier wrote:
+> As we're about to drop KVM/arm on the floor, carefully unplug
+> it from the build system.
+> 
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
+> Acked-by: Olof Johansson <olof@lixom.net>
+> Acked-by: Arnd Bergmann <arnd@arndb.de>
+> Acked-by: Will Deacon <will@kernel.org>
+> Acked-by: Vladimir Murzin <vladimir.murzin@arm.com>
+> Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+> Acked-by: Linus Walleij <linus.walleij@linaro.org>
+> Acked-by: Christoffer Dall <christoffer.dall@arm.com>
+> ---
+>  arch/arm/Kconfig             | 2 --
+>  arch/arm/Makefile            | 1 -
+>  arch/arm/mach-exynos/Kconfig | 2 +-
 
-Under the Huawei Kunpeng 920 2.6GHz platform, I did some tests on 128G
-Linux VMs with different page size.
+For Exynos:
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
-About the time of enabling dirty log: The memory pressure is 127GB.
-Page size   Before      After
-   4K        1.8ms      341ms
-   2M        1.8ms       4ms
-   1G        1.8ms       2ms
-
-About the time of migration: The memory pressure is 3GB and the migration
-bandwidth is 500MB/s.
-Page size   Before    After
-   4K        21s       6s
-   2M        21s       6s
-   1G        21s       7s
-
-Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
----
- virt/kvm/arm/mmu.c | 161 ++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 137 insertions(+), 24 deletions(-)
-
-diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
-index 6c84de442a0e..0c7a5faf8609 100644
---- a/virt/kvm/arm/mmu.c
-+++ b/virt/kvm/arm/mmu.c
-@@ -1413,34 +1413,85 @@ static bool transparent_hugepage_adjust(kvm_pfn_t *pfnp, phys_addr_t *ipap)
- 	return false;
- }
- 
-+enum s2_operation {
-+	S2_OP_WP,  /* write protect page tables */
-+	S2_OP_MD,  /* mark dirty bitmap in memslot */
-+};
-+
- /**
-- * stage2_wp_ptes - write protect PMD range
-+ * mark_range_dirty - mark a range of dirty bitmap
-+ * @kvm:	kvm instance for the VM
-+ * @addr:	range start address
-+ * @end:	range end address
-+ *
-+ * note: addr and end should belong to the same memslot.
-+ */
-+static void mark_range_dirty(struct kvm *kvm,
-+			     phys_addr_t addr,
-+			     phys_addr_t end)
-+{
-+	gfn_t gfn;
-+	unsigned int start, nbits;
-+	struct kvm_memory_slot *memslot = NULL;
-+
-+	gfn = addr >> PAGE_SHIFT;
-+	memslot = gfn_to_memslot(kvm, gfn);
-+
-+	if (memslot && memslot->dirty_bitmap) {
-+		start = gfn - memslot->base_gfn;
-+		nbits = DIV_ROUND_UP(end, PAGE_SIZE) - gfn;
-+		bitmap_set(memslot->dirty_bitmap, start, nbits);
-+	}
-+}
-+
-+/**
-+ * stage2_op_ptes - do an operation on PMD range
-+ * @kvm:	kvm instance for the VM
-+ * @op: 	the operation wanted
-  * @pmd:	pointer to pmd entry
-  * @addr:	range start address
-  * @end:	range end address
-  */
--static void stage2_wp_ptes(pmd_t *pmd, phys_addr_t addr, phys_addr_t end)
-+static void stage2_op_ptes(struct kvm *kvm,
-+			   enum s2_operation op,
-+			   pmd_t *pmd,
-+			   phys_addr_t addr,
-+			   phys_addr_t end)
- {
- 	pte_t *pte;
- 
- 	pte = pte_offset_kernel(pmd, addr);
- 	do {
--		if (!pte_none(*pte)) {
-+		if (pte_none(*pte))
-+			continue;
-+
-+		switch (op) {
-+		case S2_OP_WP:
- 			if (!kvm_s2pte_readonly(pte))
- 				kvm_set_s2pte_readonly(pte);
-+			break;
-+		case S2_OP_MD:
-+			mark_range_dirty(kvm, addr, addr + PAGE_SIZE);
-+			break;
-+		default:
-+			break;
- 		}
- 	} while (pte++, addr += PAGE_SIZE, addr != end);
- }
- 
- /**
-- * stage2_wp_pmds - write protect PUD range
-- * kvm:		kvm instance for the VM
-+ * stage2_op_pmds - do an operation on PUD range
-+ * @kvm:	kvm instance for the VM
-+ * @op: 	the operation wanted
-  * @pud:	pointer to pud entry
-  * @addr:	range start address
-  * @end:	range end address
-  */
--static void stage2_wp_pmds(struct kvm *kvm, pud_t *pud,
--			   phys_addr_t addr, phys_addr_t end)
-+static void stage2_op_pmds(struct kvm *kvm,
-+			   enum s2_operation op,
-+			   pud_t *pud,
-+			   phys_addr_t addr,
-+			   phys_addr_t end)
- {
- 	pmd_t *pmd;
- 	phys_addr_t next;
-@@ -1449,25 +1500,40 @@ static void stage2_wp_pmds(struct kvm *kvm, pud_t *pud,
- 
- 	do {
- 		next = stage2_pmd_addr_end(kvm, addr, end);
--		if (!pmd_none(*pmd)) {
--			if (pmd_thp_or_huge(*pmd)) {
-+		if (pmd_none(*pmd))
-+			continue;
-+
-+		if (pmd_thp_or_huge(*pmd)) {
-+			switch (op) {
-+			case S2_OP_WP:
- 				if (!kvm_s2pmd_readonly(pmd))
- 					kvm_set_s2pmd_readonly(pmd);
--			} else {
--				stage2_wp_ptes(pmd, addr, next);
-+				break;
-+			case S2_OP_MD:
-+				mark_range_dirty(kvm, addr, next);
-+				break;
-+			default:
-+				break;
- 			}
-+		} else {
-+			stage2_op_ptes(kvm, op, pmd, addr, next);
- 		}
- 	} while (pmd++, addr = next, addr != end);
- }
- 
- /**
-- * stage2_wp_puds - write protect PGD range
-+ * stage2_op_puds - do an operation on PGD range
-+ * @kvm:	kvm instance for the VM
-+ * @op: 	the operation wanted
-  * @pgd:	pointer to pgd entry
-  * @addr:	range start address
-  * @end:	range end address
-  */
--static void  stage2_wp_puds(struct kvm *kvm, pgd_t *pgd,
--			    phys_addr_t addr, phys_addr_t end)
-+static void  stage2_op_puds(struct kvm *kvm,
-+			    enum s2_operation op,
-+			    pgd_t *pgd,
-+			    phys_addr_t addr,
-+			    phys_addr_t end)
- {
- 	pud_t *pud;
- 	phys_addr_t next;
-@@ -1475,24 +1541,38 @@ static void  stage2_wp_puds(struct kvm *kvm, pgd_t *pgd,
- 	pud = stage2_pud_offset(kvm, pgd, addr);
- 	do {
- 		next = stage2_pud_addr_end(kvm, addr, end);
--		if (!stage2_pud_none(kvm, *pud)) {
--			if (stage2_pud_huge(kvm, *pud)) {
-+		if (stage2_pud_none(kvm, *pud))
-+			continue;
-+
-+		if (stage2_pud_huge(kvm, *pud)) {
-+			switch (op) {
-+			case S2_OP_WP:
- 				if (!kvm_s2pud_readonly(pud))
- 					kvm_set_s2pud_readonly(pud);
--			} else {
--				stage2_wp_pmds(kvm, pud, addr, next);
-+				break;
-+			case S2_OP_MD:
-+				mark_range_dirty(kvm, addr, next);
-+				break;
-+			default:
-+				break;
- 			}
-+		} else {
-+			stage2_op_pmds(kvm, op, pud, addr, next);
- 		}
- 	} while (pud++, addr = next, addr != end);
- }
- 
- /**
-- * stage2_wp_range() - write protect stage2 memory region range
-+ * stage2_op_range() - do an operation on stage2 memory region range
-  * @kvm:	The KVM pointer
-+ * @op: 	The operation wanted
-  * @addr:	Start address of range
-  * @end:	End address of range
-  */
--static void stage2_wp_range(struct kvm *kvm, phys_addr_t addr, phys_addr_t end)
-+static void stage2_op_range(struct kvm *kvm,
-+			    enum s2_operation op,
-+			    phys_addr_t addr,
-+			    phys_addr_t end)
- {
- 	pgd_t *pgd;
- 	phys_addr_t next;
-@@ -1513,7 +1593,7 @@ static void stage2_wp_range(struct kvm *kvm, phys_addr_t addr, phys_addr_t end)
- 			break;
- 		next = stage2_pgd_addr_end(kvm, addr, end);
- 		if (stage2_pgd_present(kvm, *pgd))
--			stage2_wp_puds(kvm, pgd, addr, next);
-+			stage2_op_puds(kvm, op, pgd, addr, next);
- 	} while (pgd++, addr = next, addr != end);
- }
- 
-@@ -1543,11 +1623,44 @@ static void kvm_mmu_wp_memory_region(struct kvm *kvm, int slot)
- 	end = (memslot->base_gfn + memslot->npages) << PAGE_SHIFT;
- 
- 	spin_lock(&kvm->mmu_lock);
--	stage2_wp_range(kvm, start, end);
-+	stage2_op_range(kvm, S2_OP_WP, start, end);
- 	spin_unlock(&kvm->mmu_lock);
- 	kvm_flush_remote_tlbs(kvm);
- }
- 
-+/**
-+ * kvm_mmu_md_memory_region() - mark dirty bitmap for memory slot
-+ * @kvm:	The KVM pointer
-+ * @slot:	The memory slot to mark dirty
-+ *
-+ * Called to mark dirty bitmap after memory region KVM_MEM_LOG_DIRTY_PAGES
-+ * operation is called and kvm_dirty_log_manual_protect_and_init_set is
-+ * true. After this function returns, a bit of dirty bitmap is set if its
-+ * corresponding page table (including PUD, PMD and PTEs) is present.
-+ *
-+ * Afterwards read of dirty page log can be called and present PUD, PMD and
-+ * PTEs can be write protected by userspace manually.
-+ *
-+ * Acquires kvm_mmu_lock. Called with kvm->slots_lock mutex acquired,
-+ * serializing operations for VM memory regions.
-+ */
-+static void kvm_mmu_md_memory_region(struct kvm *kvm, int slot)
-+{
-+	struct kvm_memslots *slots = kvm_memslots(kvm);
-+	struct kvm_memory_slot *memslot = id_to_memslot(slots, slot);
-+	phys_addr_t start, end;
-+
-+	if (WARN_ON_ONCE(!memslot))
-+		return;
-+
-+	start = memslot->base_gfn << PAGE_SHIFT;
-+	end = (memslot->base_gfn + memslot->npages) << PAGE_SHIFT;
-+
-+	spin_lock(&kvm->mmu_lock);
-+	stage2_op_range(kvm, S2_OP_MD, start, end);
-+	spin_unlock(&kvm->mmu_lock);
-+}
-+
- /**
-  * kvm_mmu_write_protect_pt_masked() - write protect dirty pages
-  * @kvm:	The KVM pointer
-@@ -1567,7 +1680,7 @@ static void kvm_mmu_write_protect_pt_masked(struct kvm *kvm,
- 	phys_addr_t start = (base_gfn +  __ffs(mask)) << PAGE_SHIFT;
- 	phys_addr_t end = (base_gfn + __fls(mask) + 1) << PAGE_SHIFT;
- 
--	stage2_wp_range(kvm, start, end);
-+	stage2_op_range(kvm, S2_OP_WP, start, end);
- }
- 
- /*
-@@ -2274,7 +2387,7 @@ void kvm_arch_commit_memory_region(struct kvm *kvm,
- 			 * write protect any pages because they're reported
- 			 * as dirty here.
- 			 */
--			bitmap_set(new->dirty_bitmap, 0, new->npages);
-+			kvm_mmu_md_memory_region(kvm, mem->slot);
- 		}
- 	}
- }
--- 
-2.19.1
-
+Best regards,
+Krzysztof
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
