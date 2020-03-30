@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EDE219797F
-	for <lists+kvmarm@lfdr.de>; Mon, 30 Mar 2020 12:44:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 36AA21979F1
+	for <lists+kvmarm@lfdr.de>; Mon, 30 Mar 2020 12:55:55 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9ECAD4B28B;
-	Mon, 30 Mar 2020 06:44:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A20994B239;
+	Mon, 30 Mar 2020 06:55:54 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
@@ -16,39 +16,38 @@ X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id oIzI08987Nrh; Mon, 30 Mar 2020 06:44:00 -0400 (EDT)
+	with ESMTP id Rwv-Y1El4AS1; Mon, 30 Mar 2020 06:55:54 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F4014B275;
-	Mon, 30 Mar 2020 06:43:59 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 411444B213;
+	Mon, 30 Mar 2020 06:55:53 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id F36804B1AF
- for <kvmarm@lists.cs.columbia.edu>; Mon, 30 Mar 2020 06:43:57 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C27A44B1D6
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 30 Mar 2020 06:55:51 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 39z0gWAA0Jk9 for <kvmarm@lists.cs.columbia.edu>;
- Mon, 30 Mar 2020 06:43:56 -0400 (EDT)
-Received: from huawei.com (szxga06-in.huawei.com [45.249.212.32])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 114094B134
- for <kvmarm@lists.cs.columbia.edu>; Mon, 30 Mar 2020 06:43:56 -0400 (EDT)
-Received: from DGGEMS401-HUB.china.huawei.com (unknown [172.30.72.58])
- by Forcepoint Email with ESMTP id C80DCD5780820CED5358;
- Mon, 30 Mar 2020 18:43:46 +0800 (CST)
-Received: from [127.0.0.1] (10.173.222.27) by DGGEMS401-HUB.china.huawei.com
- (10.3.19.201) with Microsoft SMTP Server id 14.3.487.0; Mon, 30 Mar 2020
- 18:43:38 +0800
-Subject: Re: [kvm-unit-tests PATCH v7 10/13] arm/arm64: ITS: INT functional
- tests
+ with ESMTP id 5A0PvGlDo1aA for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 30 Mar 2020 06:55:49 -0400 (EDT)
+Received: from huawei.com (szxga05-in.huawei.com [45.249.212.191])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A26B54B1B9
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 30 Mar 2020 06:55:49 -0400 (EDT)
+Received: from DGGEMS411-HUB.china.huawei.com (unknown [172.30.72.58])
+ by Forcepoint Email with ESMTP id 7C91EB38A8366729AFBE;
+ Mon, 30 Mar 2020 18:55:45 +0800 (CST)
+Received: from [127.0.0.1] (10.173.222.27) by DGGEMS411-HUB.china.huawei.com
+ (10.3.19.211) with Microsoft SMTP Server id 14.3.487.0; Mon, 30 Mar 2020
+ 18:55:37 +0800
+Subject: Re: [kvm-unit-tests PATCH v7 12/13] arm/arm64: ITS: migration tests
 To: Eric Auger <eric.auger@redhat.com>
 References: <20200320092428.20880-1-eric.auger@redhat.com>
- <20200320092428.20880-11-eric.auger@redhat.com>
+ <20200320092428.20880-13-eric.auger@redhat.com>
 From: Zenghui Yu <yuzenghui@huawei.com>
-Message-ID: <f7f1d7c4-2321-9123-2394-528af737bfa7@huawei.com>
-Date: Mon, 30 Mar 2020 18:43:37 +0800
+Message-ID: <4ae2e841-2558-133a-1d19-693dc6f34f60@huawei.com>
+Date: Mon, 30 Mar 2020 18:55:36 +0800
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.2.0
 MIME-Version: 1.0
-In-Reply-To: <20200320092428.20880-11-eric.auger@redhat.com>
+In-Reply-To: <20200320092428.20880-13-eric.auger@redhat.com>
 Content-Language: en-US
 X-Originating-IP: [10.173.222.27]
 X-CFilter-Loop: Reflected
@@ -74,73 +73,208 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 Hi Eric,
 
 On 2020/3/20 17:24, Eric Auger wrote:
-> Triggers LPIs through the INT command.
-> 
-> the test checks the LPI hits the right CPU and triggers
-> the right LPI intid, ie. the translation is correct.
-> 
-> Updates to the config table also are tested, along with inv
-> and invall commands.
+> This test maps LPIs (populates the device table, the collection table,
+> interrupt translation tables, configuration table), migrates and make
+> sure the translation is correct on the destination.
 > 
 > Signed-off-by: Eric Auger <eric.auger@redhat.com>
-
-[...]
-
-So I've tested this series and found that the "INT" test will sometimes
-fail.
-
-"not ok 12 - gicv3: its-migration: dev2/eventid=20 triggers LPI 8195 en 
-PE #3 after migration
-not ok 13 - gicv3: its-migration: dev7/eventid=255 triggers LPI 8196 on 
-PE #2 after migration"
-
- From logs:
-"INFO: gicv3: its-migration: Migration complete
-INT dev_id=2 event_id=20
-INFO: gicv3: its-migration: No LPI received whereas (cpuid=3, 
-intid=8195) was expected
-FAIL: gicv3: its-migration: dev2/eventid=20 triggers LPI 8195 en PE #3 
-after migration
-INT dev_id=7 event_id=255
-INFO: gicv3: its-migration: No LPI received whereas (cpuid=2, 
-intid=8196) was expected
-FAIL: gicv3: its-migration: dev7/eventid=255 triggers LPI 8196 on PE #2 
-after migration"
-
-> +static void check_lpi_stats(const char *msg)
-> +{
-> +	bool pass = false;
-> +
-> +	mdelay(100);
-
-After changing this to 'mdelay(1000)', the above error doesn't show up
-anymore. But it sounds strange that 100ms is not enough to deliver a
-single LPI. I haven't dig it further but will get back here later.
-
-> +	smp_rmb(); /* pairs with wmb in lpi_handler */
-> +	if (lpi_stats.observed.cpu_id != lpi_stats.expected.cpu_id ||
-> +	    lpi_stats.observed.lpi_id != lpi_stats.expected.lpi_id) {
-> +		if (lpi_stats.observed.cpu_id == -1 &&
-> +		    lpi_stats.observed.lpi_id == -1) {
-> +			report_info("No LPI received whereas (cpuid=%d, intid=%d) "
-> +				    "was expected", lpi_stats.expected.cpu_id,
-> +				    lpi_stats.expected.lpi_id);
-> +		} else {
-> +			report_info("Unexpected LPI (cpuid=%d, intid=%d)",
-> +				    lpi_stats.observed.cpu_id,
-> +				    lpi_stats.observed.lpi_id);
-> +		}
-> +	} else {
-> +		pass = true;
-> +	}
-> +	report(pass, "%s", msg);
+> 
+> ---
+> v4 -> v5:
+> - move stub from header to arm/gic.c
+> 
+> v3 -> v4:
+> - assert in its_get_device/collection if the id is not found
+> ---
+>   arm/gic.c                  | 58 ++++++++++++++++++++++++++++++++++----
+>   arm/unittests.cfg          |  8 ++++++
+>   lib/arm64/asm/gic-v3-its.h |  3 ++
+>   lib/arm64/gic-v3-its.c     | 22 +++++++++++++++
+>   4 files changed, 85 insertions(+), 6 deletions(-)
+> 
+> diff --git a/arm/gic.c b/arm/gic.c
+> index 5f1e595..6ecfdbc 100644
+> --- a/arm/gic.c
+> +++ b/arm/gic.c
+> @@ -590,6 +590,7 @@ static void gic_test_mmio(void)
+>   
+>   static void test_its_introspection(void) {}
+>   static void test_its_trigger(void) {}
+> +static void test_its_migration(void) {}
+>   
+>   #else /* __aarch64__ */
+>   
+> @@ -658,13 +659,19 @@ static int its_prerequisites(int nb_cpus)
+>   	return 0;
+>   }
+>   
+> -static void test_its_trigger(void)
+> +/*
+> + * Setup the configuration for those mappings:
+> + * dev_id=2 event=20 -> vcpu 3, intid=8195
+> + * dev_id=7 event=255 -> vcpu 2, intid=8196
+> + * LPIs ready to hit
+> + */
+> +static int its_setup1(void)
+>   {
+>   	struct its_collection *col3, *col2;
+>   	struct its_device *dev2, *dev7;
+>   
+>   	if (its_prerequisites(4))
+> -		return;
+> +		return -1;
+>   
+>   	dev2 = its_create_device(2 /* dev id */, 8 /* nb_ites */);
+>   	dev7 = its_create_device(7 /* dev id */, 8 /* nb_ites */);
+> @@ -675,14 +682,10 @@ static void test_its_trigger(void)
+>   	gicv3_lpi_set_config(8195, LPI_PROP_DEFAULT);
+>   	gicv3_lpi_set_config(8196, LPI_PROP_DEFAULT);
+>   
+> -	report_prefix_push("int");
+>   	/*
+>   	 * dev=2, eventid=20  -> lpi= 8195, col=3
+>   	 * dev=7, eventid=255 -> lpi= 8196, col=2
+> -	 * Trigger dev2, eventid=20 and dev7, eventid=255
+> -	 * Check both LPIs hit
+>   	 */
+> -
+>   	its_send_mapd(dev2, true);
+>   	its_send_mapd(dev7, true);
+>   
+> @@ -694,6 +697,22 @@ static void test_its_trigger(void)
+>   
+>   	its_send_mapti(dev2, 8195 /* lpi id */, 20 /* event id */, col3);
+>   	its_send_mapti(dev7, 8196 /* lpi id */, 255 /* event id */, col2);
+> +	return 0;
 > +}
+> +
+> +static void test_its_trigger(void)
+> +{
+> +	struct its_collection *col3;
+> +	struct its_device *dev2, *dev7;
+> +
+> +	if (its_setup1())
+> +		return;
+> +
+> +	col3 = its_get_collection(3);
+> +	dev2 = its_get_device(2);
+> +	dev7 = its_get_device(7);
+> +
+> +	report_prefix_push("int");
+>   
+>   	lpi_stats_expect(3, 8195);
+>   	its_send_int(dev2, 20);
+> @@ -748,6 +767,29 @@ static void test_its_trigger(void)
+>   	check_lpi_stats("no LPI after device unmap");
+>   	report_prefix_pop();
+>   }
+> +
+> +static void test_its_migration(void)
+> +{
+> +	struct its_device *dev2, *dev7;
+> +
+> +	if (its_setup1())
+> +		return;
+> +
+> +	dev2 = its_get_device(2);
+> +	dev7 = its_get_device(7);
+> +
+> +	puts("Now migrate the VM, then press a key to continue...\n");
+> +	(void)getchar();
+> +	report_info("Migration complete");
+> +
+> +	lpi_stats_expect(3, 8195);
+> +	its_send_int(dev2, 20);
+> +	check_lpi_stats("dev2/eventid=20 triggers LPI 8195 en PE #3 after migration");
 
-This patch itself looks good to me,
+typo: s/en PE #3/on PE #3/
+
 Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
 
 
 Thanks
+
+> +
+> +	lpi_stats_expect(2, 8196);
+> +	its_send_int(dev7, 255);
+> +	check_lpi_stats("dev7/eventid=255 triggers LPI 8196 on PE #2 after migration");
+> +}
+>   #endif
+>   
+>   int main(int argc, char **argv)
+> @@ -785,6 +827,10 @@ int main(int argc, char **argv)
+>   		report_prefix_push(argv[1]);
+>   		test_its_trigger();
+>   		report_prefix_pop();
+> +	} else if (!strcmp(argv[1], "its-migration")) {
+> +		report_prefix_push(argv[1]);
+> +		test_its_migration();
+> +		report_prefix_pop();
+>   	} else if (strcmp(argv[1], "its-introspection") == 0) {
+>   		report_prefix_push(argv[1]);
+>   		test_its_introspection();
+> diff --git a/arm/unittests.cfg b/arm/unittests.cfg
+> index b9a7a2c..480adec 100644
+> --- a/arm/unittests.cfg
+> +++ b/arm/unittests.cfg
+> @@ -136,6 +136,14 @@ extra_params = -machine gic-version=3 -append 'its-trigger'
+>   groups = its
+>   arch = arm64
+>   
+> +[its-migration]
+> +file = gic.flat
+> +smp = $MAX_SMP
+> +accel = kvm
+> +extra_params = -machine gic-version=3 -append 'its-migration'
+> +groups = its migration
+> +arch = arm64
+> +
+>   # Test PSCI emulation
+>   [psci]
+>   file = psci.flat
+> diff --git a/lib/arm64/asm/gic-v3-its.h b/lib/arm64/asm/gic-v3-its.h
+> index e1e42c3..412f438 100644
+> --- a/lib/arm64/asm/gic-v3-its.h
+> +++ b/lib/arm64/asm/gic-v3-its.h
+> @@ -168,4 +168,7 @@ extern void __its_send_sync(struct its_collection *col, bool verbose);
+>   #define its_send_movi_nv(dev, col, id)			__its_send_movi(dev, col, id, false)
+>   #define its_send_sync_nv(col)				__its_send_sync(col, false)
+>   
+> +extern struct its_device *its_get_device(u32 id);
+> +extern struct its_collection *its_get_collection(u32 id);
+> +
+>   #endif /* _ASMARM64_GIC_V3_ITS_H_ */
+> diff --git a/lib/arm64/gic-v3-its.c b/lib/arm64/gic-v3-its.c
+> index f0a0381..c7755d9 100644
+> --- a/lib/arm64/gic-v3-its.c
+> +++ b/lib/arm64/gic-v3-its.c
+> @@ -147,3 +147,25 @@ struct its_collection *its_create_collection(u32 col_id, u32 pe)
+>   	its_data.nr_collections++;
+>   	return new;
+>   }
+> +
+> +struct its_device *its_get_device(u32 id)
+> +{
+> +	int i;
+> +
+> +	for (i = 0; i < GITS_MAX_DEVICES; i++) {
+> +		if (its_data.devices[i].device_id == id)
+> +			return &its_data.devices[i];
+> +	}
+> +	assert(0);
+> +}
+> +
+> +struct its_collection *its_get_collection(u32 id)
+> +{
+> +	int i;
+> +
+> +	for (i = 0; i < GITS_MAX_COLLECTIONS; i++) {
+> +		if (its_data.collections[i].col_id == id)
+> +			return &its_data.collections[i];
+> +	}
+> +	assert(0);
+> +}
+> 
 
 _______________________________________________
 kvmarm mailing list
