@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 74A56199625
-	for <lists+kvmarm@lfdr.de>; Tue, 31 Mar 2020 14:17:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 934C3199626
+	for <lists+kvmarm@lfdr.de>; Tue, 31 Mar 2020 14:17:18 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 18EEB4B0B2;
-	Tue, 31 Mar 2020 08:17:17 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 43EB34B0C3;
+	Tue, 31 Mar 2020 08:17:18 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,45 +18,44 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9O43sKk3TWSQ; Tue, 31 Mar 2020 08:17:16 -0400 (EDT)
+	with ESMTP id mQVKdfKBY0bU; Tue, 31 Mar 2020 08:17:17 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B3DC64B0B3;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CD2FC4B0BA;
 	Tue, 31 Mar 2020 08:17:13 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 635224B092
- for <kvmarm@lists.cs.columbia.edu>; Tue, 31 Mar 2020 08:17:12 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3B85C4B093
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 31 Mar 2020 08:17:13 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id saKp-hm2SzZZ for <kvmarm@lists.cs.columbia.edu>;
- Tue, 31 Mar 2020 08:17:11 -0400 (EDT)
+ with ESMTP id QQICgh368HKp for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 31 Mar 2020 08:17:12 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4105D4B08B
- for <kvmarm@lists.cs.columbia.edu>; Tue, 31 Mar 2020 08:17:11 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 207B04A4A0
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 31 Mar 2020 08:17:12 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 6BDEB20838;
- Tue, 31 Mar 2020 12:17:10 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 4C3EE20848;
+ Tue, 31 Mar 2020 12:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1585657030;
- bh=UKESaLDxPSB+InQ4SQPbwyW9ucmZcRKTBMCbcB6rK4g=;
+ s=default; t=1585657031;
+ bh=twI+FrhMAk/LCQP/xGXohCa10/7aYbpXUmUJDbB9Bfc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=taBmYvmLZWGx0pkjt4cFtCG9PLHTIX4i1zlg+ZJGDF6bA6QHl0SNR3wVSibiHykxu
- 3C0qz9oCVqzb50KYOYCyzi6sUQZ+r0QR7Xc2xobkt0YEkBkZE+WOheDhQHkwGkiMdS
- B042cFXcaiKfuBEPEaR7RI8bZijWCJ7z8E3mOhyQ=
+ b=CxikxnfTRAqv+N2cVrFMz8nFFqVt3OJ9YQzX7PsXES/4hGfMO3W+PIy8Oy5XFJt4g
+ egm7KJeN87t8yYeRuNHX01MHHrtW/u8yLVBZwV7XEA/OKMbTMH+uICHASL1BEWTveN
+ Pw7fMeTJ3brGnwQwj/g7r4kmWj5VNsh53mLHCbvU=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1jJFpM-00HBlI-MS; Tue, 31 Mar 2020 13:17:08 +0100
+ id 1jJFpN-00HBlI-Jc; Tue, 31 Mar 2020 13:17:09 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 01/15] KVM: arm64: Use the correct timer structure to access
- the physical counter
-Date: Tue, 31 Mar 2020 13:16:31 +0100
-Message-Id: <20200331121645.388250-2-maz@kernel.org>
+Subject: [PATCH 02/15] arm: Unplug KVM from the build system
+Date: Tue, 31 Mar 2020 13:16:32 +0100
+Message-Id: <20200331121645.388250-3-maz@kernel.org>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <20200331121645.388250-1-maz@kernel.org>
 References: <20200331121645.388250-1-maz@kernel.org>
@@ -94,36 +93,58 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: KarimAllah Ahmed <karahmed@amazon.de>
+As we're about to drop KVM/arm on the floor, carefully unplug
+it from the build system.
 
-Use the physical timer structure when reading the physical counter
-instead of using the virtual timer structure. Thankfully, nothing is
-accessing this code path yet (at least not until we enable save/restore
-of the physical counter). It doesn't hurt for this to be correct though.
-
-Signed-off-by: KarimAllah Ahmed <karahmed@amazon.de>
-[maz: amended commit log]
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Zenghui Yu <yuzenghui@huawei.com>
-Fixes: 84135d3d18da ("KVM: arm/arm64: consolidate arch timer trap handlers")
-Link: https://lore.kernel.org/r/1584351546-5018-1-git-send-email-karahmed@amazon.de
+Acked-by: Olof Johansson <olof@lixom.net>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Will Deacon <will@kernel.org>
+Acked-by: Vladimir Murzin <vladimir.murzin@arm.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Acked-by: Christoffer Dall <christoffer.dall@arm.com>
 ---
- virt/kvm/arm/arch_timer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/Kconfig             | 2 --
+ arch/arm/Makefile            | 1 -
+ arch/arm/mach-exynos/Kconfig | 2 +-
+ 3 files changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/virt/kvm/arm/arch_timer.c b/virt/kvm/arm/arch_timer.c
-index 0d9438e9de2a..93bd59b46848 100644
---- a/virt/kvm/arm/arch_timer.c
-+++ b/virt/kvm/arm/arch_timer.c
-@@ -788,7 +788,7 @@ u64 kvm_arm_timer_get_reg(struct kvm_vcpu *vcpu, u64 regid)
- 					  vcpu_ptimer(vcpu), TIMER_REG_CTL);
- 	case KVM_REG_ARM_PTIMER_CNT:
- 		return kvm_arm_timer_read(vcpu,
--					  vcpu_vtimer(vcpu), TIMER_REG_CNT);
-+					  vcpu_ptimer(vcpu), TIMER_REG_CNT);
- 	case KVM_REG_ARM_PTIMER_CVAL:
- 		return kvm_arm_timer_read(vcpu,
- 					  vcpu_ptimer(vcpu), TIMER_REG_CVAL);
+diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
+index 97864aabc2a6..a07bec7f4d8d 100644
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -2091,5 +2091,3 @@ source "drivers/firmware/Kconfig"
+ if CRYPTO
+ source "arch/arm/crypto/Kconfig"
+ endif
+-
+-source "arch/arm/kvm/Kconfig"
+diff --git a/arch/arm/Makefile b/arch/arm/Makefile
+index db857d07114f..b4ce96f55ddd 100644
+--- a/arch/arm/Makefile
++++ b/arch/arm/Makefile
+@@ -278,7 +278,6 @@ core-$(CONFIG_FPE_NWFPE)	+= arch/arm/nwfpe/
+ core-$(CONFIG_FPE_FASTFPE)	+= $(patsubst $(srctree)/%,%,$(wildcard $(srctree)/arch/arm/fastfpe/))
+ core-$(CONFIG_VFP)		+= arch/arm/vfp/
+ core-$(CONFIG_XEN)		+= arch/arm/xen/
+-core-$(CONFIG_KVM_ARM_HOST) 	+= arch/arm/kvm/
+ core-$(CONFIG_VDSO)		+= arch/arm/vdso/
+ 
+ # If we have a machine-specific directory, then include it in the build.
+diff --git a/arch/arm/mach-exynos/Kconfig b/arch/arm/mach-exynos/Kconfig
+index cbbe03e96de8..76838255b5fa 100644
+--- a/arch/arm/mach-exynos/Kconfig
++++ b/arch/arm/mach-exynos/Kconfig
+@@ -21,7 +21,7 @@ menuconfig ARCH_EXYNOS
+ 	select EXYNOS_SROM
+ 	select EXYNOS_PM_DOMAINS if PM_GENERIC_DOMAINS
+ 	select GPIOLIB
+-	select HAVE_ARM_ARCH_TIMER if ARCH_EXYNOS5 && VIRTUALIZATION
++	select HAVE_ARM_ARCH_TIMER if ARCH_EXYNOS5
+ 	select HAVE_ARM_SCU if SMP
+ 	select HAVE_S3C2410_I2C if I2C
+ 	select HAVE_S3C2410_WATCHDOG if WATCHDOG
 -- 
 2.25.0
 
