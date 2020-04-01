@@ -2,97 +2,50 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C18F1998D3
-	for <lists+kvmarm@lfdr.de>; Tue, 31 Mar 2020 16:45:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79BC819A92F
+	for <lists+kvmarm@lfdr.de>; Wed,  1 Apr 2020 12:09:17 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A27734B098;
-	Tue, 31 Mar 2020 10:45:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2B6F64B0DC;
+	Wed,  1 Apr 2020 06:09:17 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 500GX3sDy+ik; Tue, 31 Mar 2020 10:45:20 -0400 (EDT)
+	with ESMTP id 2mih6ZRVPsR2; Wed,  1 Apr 2020 06:09:17 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 969D74B096;
-	Tue, 31 Mar 2020 10:45:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1EB384B0CE;
+	Wed,  1 Apr 2020 06:09:16 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C94FD4ACC9
- for <kvmarm@lists.cs.columbia.edu>; Tue, 31 Mar 2020 10:45:18 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DBF594B0BA
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Apr 2020 06:09:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id rE-zJaLKwESw for <kvmarm@lists.cs.columbia.edu>;
- Tue, 31 Mar 2020 10:45:17 -0400 (EDT)
-Received: from us-smtp-1.mimecast.com (us-smtp-1.mimecast.com [207.211.31.81])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C00EC4A4A0
- for <kvmarm@lists.cs.columbia.edu>; Tue, 31 Mar 2020 10:45:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1585665917;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XkVeG+wiUd998qeT4qan+1QjPL9epNOUfW2FxCj8pH4=;
- b=L/0TmEi9e9Gu+FUmx1VZ/k4mRRFvrRUm9JZEKBjfHQypxjnuF1XajyrV5YckCLRTNUutrD
- T/jhQ9lQ+NcEBt9UbdvBfAvCmjyCiVxFJ5KOFN62fc9GhC5LvIDwhoBsLQd3JSEIMu3vs7
- ryJbsLB6AI09T6Cff0A1ZcGmb7K771U=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-13-Y8tp1RfpO2Gb4i-AFZ9P4g-1; Tue, 31 Mar 2020 10:45:11 -0400
-X-MC-Unique: Y8tp1RfpO2Gb4i-AFZ9P4g-1
-Received: by mail-wr1-f72.google.com with SMTP id d1so13051908wru.15
- for <kvmarm@lists.cs.columbia.edu>; Tue, 31 Mar 2020 07:45:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=XkVeG+wiUd998qeT4qan+1QjPL9epNOUfW2FxCj8pH4=;
- b=PMjRswrnacVXYfJH4LaOMTphl87D18lqbvtLzTPHBZuPPHYlC5lh2+OEe1FxaCQ4Po
- aYSO1eolbiOXAzv50ICSkzzoz18bN6/76YrRyp+4MkAEP4+WABP+LfFmbY5blMCuRf2l
- rC4Gx5OoQ9dtYsMv7RxU+hOJsur6pN2GFWbVeVkYEB6xhbiv42dYsIh8ExYVhxa+uXpI
- lBXQv+sBZhzsKPOTmts39zrhIIcRQ+JYhL2AuvFQkzZ5vierxOyFT6ZHcbItOlzTbZsk
- oPF+5e6lixl5VcvWBevQ/rdb0tcBWYLZfSAaq6PCx4LhwMBs/j4fL+bStWIaT1tUXWkp
- WY1A==
-X-Gm-Message-State: ANhLgQ3AF6bkZvExz+Migk3PHGbI1KpqMQbjuOR5eaXhf7zD3mVX46fo
- 4lgyOVk62jmC5u+8AehxZYWkxsJ9OZRdcCPL+MkZ1TCtrl2dZ3mOX/GH312RykhT0VhR4i8Zy1s
- i+jDXDugp8tDKx9Ri7vBEQFtW
-X-Received: by 2002:a1c:4054:: with SMTP id n81mr3643238wma.114.1585665910101; 
- Tue, 31 Mar 2020 07:45:10 -0700 (PDT)
-X-Google-Smtp-Source: ADFU+vvRBGuELyCrlyg1lc7SNVVMP1SITAsNZT3BZtrLyIlYKUQ2VKqqSdXcjj6kZdCsf1nf2xKUeg==
-X-Received: by 2002:a1c:4054:: with SMTP id n81mr3643204wma.114.1585665909844; 
- Tue, 31 Mar 2020 07:45:09 -0700 (PDT)
-Received: from ?IPv6:2001:b07:6468:f312:b55d:5ed2:8a41:41ea?
- ([2001:b07:6468:f312:b55d:5ed2:8a41:41ea])
- by smtp.gmail.com with ESMTPSA id i1sm25851518wrq.89.2020.03.31.07.45.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 31 Mar 2020 07:45:09 -0700 (PDT)
-Subject: Re: [GIT PULL] KVM/arm updates for Linux 5.7
-To: Marc Zyngier <maz@kernel.org>
-References: <20200331121645.388250-1-maz@kernel.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <cb49ff66-e943-f8fe-65bc-2e52ae36e47e@redhat.com>
-Date: Tue, 31 Mar 2020 16:45:08 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+ with ESMTP id xi5MgPj3-tXX for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  1 Apr 2020 06:09:14 -0400 (EDT)
+Received: from huawei.com (szxga06-in.huawei.com [45.249.212.32])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 42A9D4B0B8
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Apr 2020 06:09:13 -0400 (EDT)
+Received: from DGGEMS408-HUB.china.huawei.com (unknown [172.30.72.58])
+ by Forcepoint Email with ESMTP id 85F868AB10D6DBB20258;
+ Wed,  1 Apr 2020 18:08:35 +0800 (CST)
+Received: from DESKTOP-FPN2511.china.huawei.com (10.173.222.58) by
+ DGGEMS408-HUB.china.huawei.com (10.3.19.208) with Microsoft SMTP Server id
+ 14.3.487.0; Wed, 1 Apr 2020 18:08:27 +0800
+From: Jingyi Wang <wangjingyi11@huawei.com>
+To: <drjones@redhat.com>, <kvm@vger.kernel.org>, <kvmarm@lists.cs.columbia.edu>
+Subject: [kvm-unit-tests PATCH 0/2] arm/arm64: Add IPI/vtimer latency
+Date: Wed, 1 Apr 2020 18:08:10 +0800
+Message-ID: <20200401100812.27616-1-wangjingyi11@huawei.com>
+X-Mailer: git-send-email 2.14.1.windows.1
 MIME-Version: 1.0
-In-Reply-To: <20200331121645.388250-1-maz@kernel.org>
-Content-Language: en-US
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Cc: kvm@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
- KarimAllah Ahmed <karahmed@amazon.de>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Linus Walleij <linus.walleij@linaro.org>, linux-arm-kernel@lists.infradead.org,
- Olof Johansson <olof@lixom.net>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu
+X-Originating-IP: [10.173.222.58]
+X-CFilter-Loop: Reflected
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -109,12 +62,21 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 31/03/20 14:16, Marc Zyngier wrote:
->   git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git kvmarm-5.7
+With the development of arm gic architecture, we think it will be useful
+to add some simple performance test in kut to measure the cost of
+interrupts. X86 arch has implemented similar test.
 
-Pulled, thanks.
+Jingyi Wang (2):
+  arm/arm64: gic: Add IPI latency test
+  arm/arm64: Add vtimer latency test
 
-Paolo
+ arm/gic.c   | 27 +++++++++++++++++++++++++++
+ arm/timer.c | 11 +++++++++++
+ 2 files changed, 38 insertions(+)
+
+-- 
+2.19.1
+
 
 _______________________________________________
 kvmarm mailing list
