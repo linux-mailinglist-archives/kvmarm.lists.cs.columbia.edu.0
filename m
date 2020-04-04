@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 39A6619E5B9
-	for <lists+kvmarm@lfdr.de>; Sat,  4 Apr 2020 16:38:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A588919E5BD
+	for <lists+kvmarm@lfdr.de>; Sat,  4 Apr 2020 16:38:31 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E17CC4B219;
-	Sat,  4 Apr 2020 10:38:28 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 578524B23D;
+	Sat,  4 Apr 2020 10:38:31 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
@@ -18,55 +18,55 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0aUlrDLyo6ZW; Sat,  4 Apr 2020 10:38:28 -0400 (EDT)
+	with ESMTP id 8d0Yktw2g-wr; Sat,  4 Apr 2020 10:38:31 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8BC054B22A;
-	Sat,  4 Apr 2020 10:38:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C8F044B23C;
+	Sat,  4 Apr 2020 10:38:28 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 610184B222
- for <kvmarm@lists.cs.columbia.edu>; Sat,  4 Apr 2020 10:38:25 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 552C04B200
+ for <kvmarm@lists.cs.columbia.edu>; Sat,  4 Apr 2020 10:38:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 0E5ezNbHI6yM for <kvmarm@lists.cs.columbia.edu>;
- Sat,  4 Apr 2020 10:38:24 -0400 (EDT)
-Received: from us-smtp-delivery-1.mimecast.com
- (us-smtp-delivery-1.mimecast.com [205.139.110.120])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7D4E94B223
- for <kvmarm@lists.cs.columbia.edu>; Sat,  4 Apr 2020 10:38:24 -0400 (EDT)
+ with ESMTP id P7SgxhFYsHJz for <kvmarm@lists.cs.columbia.edu>;
+ Sat,  4 Apr 2020 10:38:26 -0400 (EDT)
+Received: from us-smtp-1.mimecast.com (us-smtp-2.mimecast.com [207.211.31.81])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6C4B04B203
+ for <kvmarm@lists.cs.columbia.edu>; Sat,  4 Apr 2020 10:38:26 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1586011104;
+ s=mimecast20190719; t=1586011106;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QVuFrhT8TJhNSCuR94NxSXlIlj1+1lGH/d1K+jA+epw=;
- b=auP+C6mBQeEdV61AHrMcaSymW5IV9vkCFHf+KfOmMHq37/R6vKP14L0ddm1ERhIJA2XnlP
- kBnVnxgaXvFmaoxH4Vphn3z0diYAkLV9+ZZuEFRUjEBVESYbjJL/qz/b9kcqmIEdxBH/+Q
- E0dm4l3eLka4HYlaoItf/j+PMhWr4t4=
+ bh=+rMYicE8IRsGNdwnkciZxtp1jiaYqa5jnjZhjK0amnI=;
+ b=LaclZAmJQ+XpRCTj61PPQkM1VoRkG77qF5MMqiJ3gl+vh+3M2FO0rgkH8GKevrov+pXsAw
+ M+u5DFZk5llttaMBJk7VrKI1keKahKWVPls+2yFmjODGZtgA0am2dsXht9vzRlceqXNqM1
+ z4jyoONfdmI5zVAoUal/jhmUCFhEhhM=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-330-lLBibGidP72HqiBnmG9P-w-1; Sat, 04 Apr 2020 10:38:22 -0400
-X-MC-Unique: lLBibGidP72HqiBnmG9P-w-1
+ us-mta-51-mdlH_xDpPsam40XFQQCtGg-1; Sat, 04 Apr 2020 10:38:24 -0400
+X-MC-Unique: mdlH_xDpPsam40XFQQCtGg-1
 Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com
  [10.5.11.11])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 0B54318AB2D4;
- Sat,  4 Apr 2020 14:38:21 +0000 (UTC)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id E0957800D4E;
+ Sat,  4 Apr 2020 14:38:22 +0000 (UTC)
 Received: from kamzik.brq.redhat.com (unknown [10.40.192.30])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 81CE71147D3;
- Sat,  4 Apr 2020 14:38:19 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 62D2A9B912;
+ Sat,  4 Apr 2020 14:38:21 +0000 (UTC)
 From: Andrew Jones <drjones@redhat.com>
 To: pbonzini@redhat.com
-Subject: [PULL kvm-unit-tests 17/39] arm: pmu: Don't check PMCR.IMP anymore
-Date: Sat,  4 Apr 2020 16:37:09 +0200
-Message-Id: <20200404143731.208138-18-drjones@redhat.com>
+Subject: [PULL kvm-unit-tests 18/39] arm: pmu: Add a pmu struct
+Date: Sat,  4 Apr 2020 16:37:10 +0200
+Message-Id: <20200404143731.208138-19-drjones@redhat.com>
 In-Reply-To: <20200404143731.208138-1-drjones@redhat.com>
 References: <20200404143731.208138-1-drjones@redhat.com>
 MIME-Version: 1.0
 X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-Cc: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
+Cc: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
+ Andre Przywara <andre.przywara@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -85,89 +85,77 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: Eric Auger <eric.auger@redhat.com>
 
-check_pmcr() checks the IMP field is different than 0.
-However A zero IMP field is permitted by the architecture,
-meaning the MIDR_EL1 should be looked at instead. This
-causes TCG to fail this test on '-cpu max' because in
-that case PMCR.IMP is set equal to MIDR_EL1.Implementer
-which is 0.
-
-So let's remove the check_pmcr() test and just print PMCR
-info in the pmu_probe() function.
+This struct aims at storing information potentially used by
+all tests such as the pmu version, the read-only part of the
+PMCR, the number of implemented event counters, ...
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
 Signed-off-by: Andrew Jones <drjones@redhat.com>
 ---
- arm/pmu.c | 39 ++++++++++++++-------------------------
- 1 file changed, 14 insertions(+), 25 deletions(-)
+ arm/pmu.c | 29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
 diff --git a/arm/pmu.c b/arm/pmu.c
-index 0122f0a8a8a9..44f3543cfa49 100644
+index 44f3543cfa49..d827e8221c54 100644
 --- a/arm/pmu.c
 +++ b/arm/pmu.c
-@@ -134,29 +134,6 @@ static inline void precise_instrs_loop(int loop, uint32_t pmcr)
- }
- #endif
+@@ -33,7 +33,14 @@
  
--/*
-- * As a simple sanity check on the PMCR_EL0, ensure the implementer field isn't
-- * null. Also print out a couple other interesting fields for diagnostic
-- * purposes. For example, as of fall 2016, QEMU TCG mode doesn't implement
-- * event counters and therefore reports zero event counters, but hopefully
-- * support for at least the instructions event will be added in the future and
-- * the reported number of event counters will become nonzero.
-- */
--static bool check_pmcr(void)
--{
--	uint32_t pmcr;
--
--	pmcr = get_pmcr();
--
+ #define NR_SAMPLES 10
+ 
+-static unsigned int pmu_version;
++struct pmu {
++	unsigned int version;
++	unsigned int nb_implemented_counters;
++	uint32_t pmcr_ro;
++};
++
++static struct pmu pmu;
++
+ #if defined(__arm__)
+ #define ID_DFR0_PERFMON_SHIFT 24
+ #define ID_DFR0_PERFMON_MASK  0xf
+@@ -242,7 +249,7 @@ static bool check_cpi(int cpi)
+ static void pmccntr64_test(void)
+ {
+ #ifdef __arm__
+-	if (pmu_version == 0x3) {
++	if (pmu.version == 0x3) {
+ 		if (ERRATA(9e3f7a296940)) {
+ 			write_sysreg(0xdead, PMCCNTR64);
+ 			report(read_sysreg(PMCCNTR64) == 0xdead, "pmccntr64");
+@@ -257,18 +264,24 @@ static bool pmu_probe(void)
+ {
+ 	uint32_t pmcr;
+ 
+-	pmu_version = get_pmu_version();
+-	if (pmu_version == 0 || pmu_version == 0xf)
++	pmu.version = get_pmu_version();
++	if (pmu.version == 0 || pmu.version == 0xf)
+ 		return false;
+ 
+-	report_info("PMU version: %d", pmu_version);
++	report_info("PMU version: %d", pmu.version);
+ 
+ 	pmcr = get_pmcr();
 -	report_info("PMU implementer/ID code/counters: %#x(\"%c\")/%#x/%d",
--		    (pmcr >> PMU_PMCR_IMP_SHIFT) & PMU_PMCR_IMP_MASK,
--		    ((pmcr >> PMU_PMCR_IMP_SHIFT) & PMU_PMCR_IMP_MASK) ? : ' ',
++	report_info("PMU implementer/ID code: %#x(\"%c\")/%#x",
+ 		    (pmcr >> PMU_PMCR_IMP_SHIFT) & PMU_PMCR_IMP_MASK,
+ 		    ((pmcr >> PMU_PMCR_IMP_SHIFT) & PMU_PMCR_IMP_MASK) ? : ' ',
 -		    (pmcr >> PMU_PMCR_ID_SHIFT) & PMU_PMCR_ID_MASK,
 -		    (pmcr >> PMU_PMCR_N_SHIFT) & PMU_PMCR_N_MASK);
--
--	return ((pmcr >> PMU_PMCR_IMP_SHIFT) & PMU_PMCR_IMP_MASK) != 0;
--}
--
- /*
-  * Ensure that the cycle counter progresses between back-to-back reads.
-  */
-@@ -278,9 +255,22 @@ static void pmccntr64_test(void)
- /* Return FALSE if no PMU found, otherwise return TRUE */
- static bool pmu_probe(void)
- {
-+	uint32_t pmcr;
++		    (pmcr >> PMU_PMCR_ID_SHIFT) & PMU_PMCR_ID_MASK);
 +
- 	pmu_version = get_pmu_version();
-+	if (pmu_version == 0 || pmu_version == 0xf)
-+		return false;
-+
- 	report_info("PMU version: %d", pmu_version);
--	return pmu_version != 0 && pmu_version != 0xf;
-+
-+	pmcr = get_pmcr();
-+	report_info("PMU implementer/ID code/counters: %#x(\"%c\")/%#x/%d",
-+		    (pmcr >> PMU_PMCR_IMP_SHIFT) & PMU_PMCR_IMP_MASK,
-+		    ((pmcr >> PMU_PMCR_IMP_SHIFT) & PMU_PMCR_IMP_MASK) ? : ' ',
-+		    (pmcr >> PMU_PMCR_ID_SHIFT) & PMU_PMCR_ID_MASK,
-+		    (pmcr >> PMU_PMCR_N_SHIFT) & PMU_PMCR_N_MASK);
-+
-+	return true;
- }
++	/* store read-only and RES0 fields of the PMCR bottom-half*/
++	pmu.pmcr_ro = pmcr & 0xFFFFFF00;
++	pmu.nb_implemented_counters =
++		(pmcr >> PMU_PMCR_N_SHIFT) & PMU_PMCR_N_MASK;
++	report_info("Implements %d event counters",
++		    pmu.nb_implemented_counters);
  
- int main(int argc, char *argv[])
-@@ -301,7 +291,6 @@ int main(int argc, char *argv[])
- 		report_prefix_push(argv[1]);
- 		if (argc > 2)
- 			cpi = atol(argv[2]);
--		report(check_pmcr(), "Control register");
- 		report(check_cycles_increase(),
- 		       "Monotonically increasing cycle count");
- 		report(check_cpi(cpi), "Cycle/instruction ratio");
+ 	return true;
+ }
 -- 
 2.25.1
 
