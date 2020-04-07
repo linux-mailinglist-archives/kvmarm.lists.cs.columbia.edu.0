@@ -2,56 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BF5F1A098B
-	for <lists+kvmarm@lfdr.de>; Tue,  7 Apr 2020 10:50:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30A761A0CC5
+	for <lists+kvmarm@lfdr.de>; Tue,  7 Apr 2020 13:24:53 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A6EE44B114;
-	Tue,  7 Apr 2020 04:50:50 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8B0EA4B11B;
+	Tue,  7 Apr 2020 07:24:52 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@linaro.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WxwuTiwlDjVC; Tue,  7 Apr 2020 04:50:50 -0400 (EDT)
+	with ESMTP id 8aKJFLmGMrkt; Tue,  7 Apr 2020 07:24:52 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8F8494B0F2;
-	Tue,  7 Apr 2020 04:50:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 67EFE4B149;
+	Tue,  7 Apr 2020 07:24:51 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1EB384B0FA
- for <kvmarm@lists.cs.columbia.edu>; Tue,  7 Apr 2020 04:50:48 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4A8C84B11B
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  7 Apr 2020 07:24:50 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Wc1kXoIZ1bdi for <kvmarm@lists.cs.columbia.edu>;
- Tue,  7 Apr 2020 04:50:46 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id BFB4E4B0F2
- for <kvmarm@lists.cs.columbia.edu>; Tue,  7 Apr 2020 04:50:46 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2CAA430E;
- Tue,  7 Apr 2020 01:50:46 -0700 (PDT)
-Received: from [10.163.1.2] (unknown [10.163.1.2])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D21EE3F73D;
- Tue,  7 Apr 2020 01:50:36 -0700 (PDT)
-Subject: Re: [PATCH 0/6] Introduce ID_PFR2 and other CPU feature changes
-To: Will Deacon <will@kernel.org>
-References: <1580215149-21492-1-git-send-email-anshuman.khandual@arm.com>
- <20200406170911.GA7446@willie-the-truck>
-From: Anshuman Khandual <anshuman.khandual@arm.com>
-Message-ID: <05f6eb1e-a82c-bd02-1871-e44ea00683d8@arm.com>
-Date: Tue, 7 Apr 2020 14:20:20 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+ with ESMTP id llfXEUD54yQC for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  7 Apr 2020 07:24:49 -0400 (EDT)
+Received: from mail-ot1-f65.google.com (mail-ot1-f65.google.com
+ [209.85.210.65])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4FC534B0BB
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  7 Apr 2020 07:24:49 -0400 (EDT)
+Received: by mail-ot1-f65.google.com with SMTP id x11so2693916otp.6
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 07 Apr 2020 04:24:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=vnASXYJpk92WfwXwrbznymfvmBuY/sr1MK3eKQbxoXM=;
+ b=EbXmjYLXGFUiUbEFtAJaqtqhT8nbqdKnXm7EOymQju+AN8pQQ7Ef53P0WOOAz16/PG
+ Dwd+qvFdFskuTztzBDkxAQ8oIOAUb5IOCREHuwCc6T1J6BjZ3E83XY0BC0gbQA7anguE
+ 7equgXH3Dlk69uqnIdhQCFtIory02zJbM6DSdr6koV4uIad58tXvm86vsgIhf4svgyaA
+ ct+y1lHmlF399tLELCzzLxND8iNu7DFOfzbTskxZSIXqWJqXMRTa9gSt+hJrbMpNbFCX
+ 8E7wC/KDBPfnUiuIg3eBSQ1K7PfcTt+X8u5cOccwt+9o5HveC1KRIzcSuC4dwrz32k8j
+ gnug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=vnASXYJpk92WfwXwrbznymfvmBuY/sr1MK3eKQbxoXM=;
+ b=QoTk8INv25h5TR66OWF4UZDclMopVDFynKjwT5EDWtrMp6bPlNDWPoh18T2nMpoQjZ
+ 2YBjoBx6zDf+R26koVX09tKmLwp8UTYEjuMDlBKsxntCPZ+zs1KkFquo5NH6V21aCJlD
+ 4IJiT49RibXRatrYtC6nJ/JUgr2PAjv5tANWhorXNYO23j/2BB4UURjj6YEJqeMV0ob0
+ 1VZq3KATHRuu482yb25NsBHNaVujR7IGbZBhPoqsmxGr3Rn4Yg1sIRQ0ZhngkfMAP/Uv
+ ut26MbBTQjXSFzi/5LeUTx+Y2yGMltyW7ka9PFPcv2wU6iS+HIBrwbaDyQf6C9PaOkeA
+ Gg4g==
+X-Gm-Message-State: AGi0PuZauJFJGrYK4R+e8t0JVdcOq3KggIZFpgxOsntnBldV10flRaHO
+ IDGg/Zq1FyquPh+ZcMg4LA3Rrshe4Xb4Y9GvJ44IQg==
+X-Google-Smtp-Source: APiQypLWArKPOw0PZD0smR06050zJ9zXEwIyOsNwy140j1L7le0lK5rWjGL3mSPfonZ9BgjeU4/rxN8//gDG9fPJWLw=
+X-Received: by 2002:a4a:2a09:: with SMTP id k9mr1439312oof.64.1586258688530;
+ Tue, 07 Apr 2020 04:24:48 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200406170911.GA7446@willie-the-truck>
-Content-Language: en-US
-Cc: Catalin Marinas <catalin.marinas@arm.com>, linux-kernel@vger.kernel.org,
- Marc Zyngier <maz@kernel.org>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+References: <20200323113227.3169-1-beata.michalska@linaro.org>
+ <20200323113227.3169-3-beata.michalska@linaro.org>
+ <20200403084435.zvfewiivn7orsnll@kamzik.brq.redhat.com>
+In-Reply-To: <20200403084435.zvfewiivn7orsnll@kamzik.brq.redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 7 Apr 2020 12:24:37 +0100
+Message-ID: <CAFEAcA8fMzWhvt0R9MhXuLYb4Wo+Yz484HNC9YAE59yxz5xD0w@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] target/arm: kvm: Handle potential issue with dabt
+ injection
+To: Andrew Jones <drjones@redhat.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -68,32 +90,35 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+On Fri, 3 Apr 2020 at 09:44, Andrew Jones <drjones@redhat.com> wrote:
+>
+> On Mon, Mar 23, 2020 at 11:32:27AM +0000, Beata Michalska wrote:
+> > Injecting external data abort through KVM might trigger
+> > an issue on kernels that do not get updated to include the KVM fix.
+> > For those and aarch32 guests, the injected abort gets misconfigured
+> > to be an implementation defined exception. This leads to the guest
+> > repeatedly re-running the faulting instruction.
+> >
+> > Add support for handling that case.
+> > [
+> >   Fixed-by: 018f22f95e8a
+> >       ('KVM: arm: Fix DFSR setting for non-LPAE aarch32 guests')
+> >   Fixed-by: 21aecdbd7f3a
+> >       ('KVM: arm: Make inject_abt32() inject an external abort instead')
+> > ]
+> >
 
+> I'll leave the decision to take this KVM bug workaround patch at all to Peter,
+> and I didn't actually review whether or not kvm_arm_verify_ext_dabt_pending
+> is doing what it claims it's doing, so I'm reluctant to give an r-b on
+> this patch. But, as far as the code goes, besides the comments above, it
+> looks fine to me.
 
-On 04/06/2020 10:39 PM, Will Deacon wrote:
-> On Tue, Jan 28, 2020 at 06:09:03PM +0530, Anshuman Khandual wrote:
->> This series is primarily motivated from an adhoc list from Mark Rutland
->> during our ID_ISAR6 discussion [1]. Besides, it also includes a patch
->> which does macro replacement for various open bits shift encodings in
->> various CPU ID registers. This series is based on linux-next 20200124.
->>
->> [1] https://patchwork.kernel.org/patch/11287805/
->>
->> Is there anything else apart from these changes which can be accommodated
->> in this series, please do let me know. Thank you.
-> 
-> The latest Arm ARM also talks about DFR1 and MMFR5. Please can you include
+I think that having the workaround for the broken kernels is
+reasonable (in fact it might have been my suggestion).
 
-Sure, will do.
-
-> those too? Might also be worth checking to see if anything is missing on
-> the 64-bit side as well (I didn't look).
-
-Yeah. Now there some missing ones, will add those as well.
-
-> 
-> Will
-> 
+thanks
+-- PMM
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
