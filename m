@@ -2,67 +2,89 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AD351A3054
-	for <lists+kvmarm@lfdr.de>; Thu,  9 Apr 2020 09:39:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A7961A3055
+	for <lists+kvmarm@lfdr.de>; Thu,  9 Apr 2020 09:39:43 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3DB9D4B17B;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E9BB94B14A;
 	Thu,  9 Apr 2020 03:39:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.8
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=0.8 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	UNPARSEABLE_RELAY=0.001] autolearn=no
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
+	autolearn=no
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kolabnow.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BpZoduyRYz4A; Thu,  9 Apr 2020 03:39:41 -0400 (EDT)
+	with ESMTP id DghzL1ybOGeC; Thu,  9 Apr 2020 03:39:42 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2E1074B146;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 480D04B159;
 	Thu,  9 Apr 2020 03:39:38 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5F9774B146
- for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Apr 2020 23:03:16 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4E3524B12E
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  9 Apr 2020 03:07:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ACmFreBKLZpi for <kvmarm@lists.cs.columbia.edu>;
- Wed,  8 Apr 2020 23:03:15 -0400 (EDT)
-Received: from out30-43.freemail.mail.aliyun.com
- (out30-43.freemail.mail.aliyun.com [115.124.30.43])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A03B94B109
- for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Apr 2020 23:03:13 -0400 (EDT)
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01f04427; MF=alex.shi@linux.alibaba.com;
- NM=1; PH=DS; RN=50; SR=0; TI=SMTPD_---0Tv02u1U_1586401383; 
-Received: from IT-FVFX43SYHV2H.local(mailfrom:alex.shi@linux.alibaba.com
- fp:SMTPD_---0Tv02u1U_1586401383) by smtp.aliyun-inc.com(127.0.0.1);
- Thu, 09 Apr 2020 11:03:04 +0800
+ with ESMTP id NnnmO4Hnccfd for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  9 Apr 2020 03:07:19 -0400 (EDT)
+Received: from mx.kolabnow.com (mx.kolabnow.com [95.128.36.41])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 07A524B116
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  9 Apr 2020 03:07:19 -0400 (EDT)
+Received: from localhost (unknown [127.0.0.1])
+ by ext-mx-out002.mykolab.com (Postfix) with ESMTP id 87520BB8;
+ Thu,  9 Apr 2020 09:07:17 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
+ content-type:content-type:content-transfer-encoding:mime-version
+ :references:in-reply-to:message-id:date:date:subject:subject
+ :from:from:received:received:received; s=dkim20160331; t=
+ 1586416036; x=1588230437; bh=CR6YNXrsOFFgGGN4E5h4mEiC7xqdpy0fPI3
+ euxlrRik=; b=hV2TUNwJO5MJ2HIDsZTAGAoyMMYw1shO1io2Z+OaLWJR6uS6SFs
+ ApD8Xh9Zj29Z6f8iFz249nu4R3j4EJBU6WmIamE5XQy5v+JPInUaCFd8siPb3zw3
+ kBauPIUue9EMo2URDi9aLLnwEZgusLXdD1gfYc/F88sfyTAJlQrrJvxjEJagcIwt
+ Y9w341+MLh+kvXPwHPvpF1ExHOgE8bzlIyRdvldMvFv27NOzBUgMtcvFVR3Om81d
+ n61jSIVlzN2nZPU4F/xpn3PuZtecjssI0LCJindaFQGWpDGSlg97hVlCHK3o+2ZE
+ KHqPzI+nr2TlELjcGi+0RfSQGbmRGLeg1Eupev0lQ84qGuq3KtMYntttI0Du3e1D
+ WlaYC94qGE3hpzUemlqromTKDYPqIc0Q697HGosu0fjmt9qcEfNL2hBc9Wlri+Kh
+ cU4vjgK0YVT4Dwvn0HHcuAPbhYGoB3dootjQ8ml5HAkv8kA9br+P4D5sLqvnujRY
+ rkIs2H5vdnOMv0W08ffI/Gc/CMZlDetfY8s+K69Ry3udMsVIy/MjvwyVSY2stzN3
+ wHDVlMD/qnjh+nLSzezaBv1gIvZnIFm7zEFyL05Gg1UxywFFyFqjPLf9ZETyRoKM
+ wIvmk9yPvK3HBbdkza0j3ltoblnbkQtF/h0nsAgwHrv7BLnyKNEJyNy4=
+X-Virus-Scanned: amavisd-new at mykolab.com
+Received: from mx.kolabnow.com ([127.0.0.1])
+ by localhost (ext-mx-out002.mykolab.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id gPRTEy1MsLlq; Thu,  9 Apr 2020 09:07:16 +0200 (CEST)
+Received: from int-mx001.mykolab.com (unknown [10.9.13.1])
+ by ext-mx-out002.mykolab.com (Postfix) with ESMTPS id B59B83E1;
+ Thu,  9 Apr 2020 09:07:16 +0200 (CEST)
+Received: from ext-subm002.mykolab.com (unknown [10.9.6.2])
+ by int-mx001.mykolab.com (Postfix) with ESMTPS id 194D6526;
+ Thu,  9 Apr 2020 09:07:15 +0200 (CEST)
+From: Federico Vaga <federico.vaga@vaga.pv.it>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Subject: Re: [PATCH 03/35] docs: fix broken references to text files
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Linux Doc Mailing List <linux-doc@vger.kernel.org>
+Date: Thu, 09 Apr 2020 09:07:13 +0200
+Message-ID: <2427906.fv9odQMh6t@harkonnen>
+In-Reply-To: <2e12bf13355bd06748fed5d135fd4de3d94ad5fd.1586359676.git.mchehab+huawei@kernel.org>
 References: <cover.1586359676.git.mchehab+huawei@kernel.org>
  <2e12bf13355bd06748fed5d135fd4de3d94ad5fd.1586359676.git.mchehab+huawei@kernel.org>
-From: Alex Shi <alex.shi@linux.alibaba.com>
-Message-ID: <4a38109b-b764-c2c2-abda-98d357bff6f8@linux.alibaba.com>
-Date: Thu, 9 Apr 2020 11:03:01 +0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <2e12bf13355bd06748fed5d135fd4de3d94ad5fd.1586359676.git.mchehab+huawei@kernel.org>
 X-Mailman-Approved-At: Thu, 09 Apr 2020 03:39:36 -0400
-Cc: kvm@vger.kernel.org, Peter Zijlstra <peterz@infradead.org>,
+Cc: kvm@vger.kernel.org, Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+ Peter Zijlstra <peterz@infradead.org>,
  Benjamin Herrenschmidt <benh@kernel.crashing.org>,
  Akira Yokosawa <akiyks@gmail.com>, dri-devel@lists.freedesktop.org,
  linux-unionfs@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
  linux-mm@kvack.org, Harry Wei <harryxiyou@gmail.com>,
- Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
- linux-arch@vger.kernel.org, Jason Gunthorpe <jgg@ziepe.ca>,
- Jonathan Corbet <corbet@lwn.net>, linux-rdma@vger.kernel.org,
- Michael Ellerman <mpe@ellerman.id.au>, kvm-ppc@vger.kernel.org,
- David Airlie <airlied@linux.ie>, Doug Ledford <dledford@redhat.com>,
- Alan Stern <stern@rowland.harvard.edu>, linux-arm-kernel@lists.infradead.org,
- Federico Vaga <federico.vaga@vaga.pv.it>, Jade Alglave <j.alglave@ucl.ac.uk>,
+ Alex Shi <alex.shi@linux.alibaba.com>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, linux-arch@vger.kernel.org,
+ Jason Gunthorpe <jgg@ziepe.ca>, Jonathan Corbet <corbet@lwn.net>,
+ linux-rdma@vger.kernel.org, Michael Ellerman <mpe@ellerman.id.au>,
+ kvm-ppc@vger.kernel.org, David Airlie <airlied@linux.ie>,
+ Doug Ledford <dledford@redhat.com>, Alan Stern <stern@rowland.harvard.edu>,
+ linux-arm-kernel@lists.infradead.org, Jade Alglave <j.alglave@ucl.ac.uk>,
  Daniel Lustig <dlustig@nvidia.com>, Mike Leach <mike.leach@linaro.org>,
  Andrea Parri <parri.andrea@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
  "Paul E. McKenney" <paulmck@kernel.org>, Boqun Feng <boqun.feng@gmail.com>,
@@ -88,15 +110,31 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-CgrlnKggMjAyMC80Lzgg5LiL5Y2IMTE6NDUsIE1hdXJvIENhcnZhbGhvIENoZWhhYiDlhpnpgZM6
-Cj4gIC4uLi90cmFuc2xhdGlvbnMvemhfQ04vZmlsZXN5c3RlbXMvc3lzZnMudHh0ICAgICAgICAg
-fCAgMiArLQo+ICAuLi4vdHJhbnNsYXRpb25zL3poX0NOL3Byb2Nlc3Mvc3VibWl0LWNoZWNrbGlz
-dC5yc3QgIHwgIDIgKy0KCkl0IGxvb2tzIGZpbmUgZm9yIG1lLgpfX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBs
-aXN0cy5jcy5jb2x1bWJpYS5lZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1h
-bi9saXN0aW5mby9rdm1hcm0K
+On Wednesday, April 8, 2020 5:45:55 PM CEST Mauro Carvalho Chehab wrote:
+> Several references got broken due to txt to ReST conversion.
+> 
+> Several of them can be automatically fixed with:
+> 
+> 	scripts/documentation-file-ref-check --fix
+> 
+> Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org> #
+> hwtracing/coresight/Kconfig Signed-off-by: Mauro Carvalho Chehab
+> <mchehab+huawei@kernel.org>
+> ---
+>  Documentation/memory-barriers.txt                    |  2 +-
+>  Documentation/process/submit-checklist.rst           |  2 +-
+>  .../translations/it_IT/process/submit-checklist.rst  |  2 +-
+
+Acked-by: Federico Vaga <federico.vaga@vaga.pv.it>
+
+
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
