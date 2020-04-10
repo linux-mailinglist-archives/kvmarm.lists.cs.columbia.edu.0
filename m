@@ -2,67 +2,68 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C3781A4488
-	for <lists+kvmarm@lfdr.de>; Fri, 10 Apr 2020 11:42:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45FAB1A448A
+	for <lists+kvmarm@lfdr.de>; Fri, 10 Apr 2020 11:42:26 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3D0C64B1AC;
-	Fri, 10 Apr 2020 05:42:24 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D702A4B1CE;
+	Fri, 10 Apr 2020 05:42:25 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ouDJqQG2SqAr; Fri, 10 Apr 2020 05:42:24 -0400 (EDT)
+	with ESMTP id UVmRUgTYc7Zn; Fri, 10 Apr 2020 05:42:24 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A4F534B1D0;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BB0A84B1D3;
 	Fri, 10 Apr 2020 05:42:19 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 288CA4B0E7
- for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Apr 2020 04:59:03 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A71DB4B126
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Apr 2020 04:59:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id k0V4EMPv6py0 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 10 Apr 2020 04:59:02 -0400 (EDT)
-Received: from us-smtp-1.mimecast.com (us-smtp-delivery-1.mimecast.com
- [205.139.110.120])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0DF914B17E
- for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Apr 2020 04:59:02 -0400 (EDT)
+ with ESMTP id OBE46EdKXmPd for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 10 Apr 2020 04:59:09 -0400 (EDT)
+Received: from us-smtp-delivery-1.mimecast.com
+ (us-smtp-delivery-1.mimecast.com [207.211.31.120])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C1FD14B0E7
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Apr 2020 04:59:09 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1586509141;
+ s=mimecast20190719; t=1586509149;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SzgzXE9lIE0M6eWgr4KWBqqpXLesWeBSkINGyFAQgss=;
- b=P3WRcfFgJcBkNoPuKJhiIqWQzQSiWTo3gxCJMkEk0hiR56G1QypoCtiUqbpPD4MXFwh8VB
- a5hLGs+AZLG2kzg6M6BcGubyJ96MPvVNsChuYEr3479KNkuSln2XW72skcwY0bE6kdeooH
- PenCNjcWI5SCa986vH7XQfPv0bB4ZLM=
+ bh=fZNuwiXphTWWqS4YmzRx/KgTPBYy1nRlE1KjK1ue/Hw=;
+ b=H+NHbVhIyOu4AZOSCnX9HcoMccw0vwNY4QCbnBa4Qy9eWxR+2HHuCieMlUHeJUDyNMer3M
+ nAM/n75KcJokfzE+2JeX2/wgwFRltyijOgVwGS5ye8gzVtxeYOC4J/K7igqnTiBqevXhXE
+ O6CW54xFK63YWFX15In86DUfY+ra1Yk=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-164-EQrlD14EPgO8CZcFEs4j6w-1; Fri, 10 Apr 2020 04:59:00 -0400
-X-MC-Unique: EQrlD14EPgO8CZcFEs4j6w-1
+ us-mta-205-CA8NAzg1Mxajmb4VraUS-A-1; Fri, 10 Apr 2020 04:59:07 -0400
+X-MC-Unique: CA8NAzg1Mxajmb4VraUS-A-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.phx2.redhat.com
  [10.5.11.15])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 944C18017FC;
- Fri, 10 Apr 2020 08:58:58 +0000 (UTC)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id DFD2A8018A4;
+ Fri, 10 Apr 2020 08:59:05 +0000 (UTC)
 Received: from 192-168-1-115.tpgi.com.com (vpn2-54-29.bne.redhat.com
  [10.64.54.29])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 5BA605E001;
- Fri, 10 Apr 2020 08:58:54 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 2CFD25E001;
+ Fri, 10 Apr 2020 08:58:58 +0000 (UTC)
 From: Gavin Shan <gshan@redhat.com>
 To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH RFCv1 3/7] kvm/arm64: Replace hsr with esr
-Date: Fri, 10 Apr 2020 18:58:16 +1000
-Message-Id: <20200410085820.758686-4-gshan@redhat.com>
+Subject: [PATCH RFCv1 4/7] kvm/arm64: Export kvm_handle_user_mem_abort() with
+ prefault mode
+Date: Fri, 10 Apr 2020 18:58:17 +1000
+Message-Id: <20200410085820.758686-5-gshan@redhat.com>
 In-Reply-To: <20200410085820.758686-1-gshan@redhat.com>
 References: <20200410085820.758686-1-gshan@redhat.com>
 MIME-Version: 1.0
@@ -88,198 +89,77 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-This replace the variable names to make them self-explaining. The
-tracepoint isn't changed accordingly because they're part of ABI:
+This renames user_mem_abort() to kvm_handle_user_mem_abort(), and
+then export it. The function will be used in asynchronous page fault
+to populate a page table entry once the corresponding page is populated
+from the backup device (e.g. swap partition):
 
-   * @hsr to @esr
-   * @hsr_ec to @ec
-   * Use kvm_vcpu_trap_get_class() helper if possible
+   * Parameter @fault_status is replace by @esr.
+   * The parameters are reorder based on their importance.
+
+This shouldn't cause any functional changes.
 
 Signed-off-by: Gavin Shan <gshan@redhat.com>
 ---
- arch/arm64/kvm/handle_exit.c | 28 ++++++++++++++--------------
- arch/arm64/kvm/hyp/switch.c  |  9 ++++-----
- arch/arm64/kvm/sys_regs.c    | 30 +++++++++++++++---------------
- 3 files changed, 33 insertions(+), 34 deletions(-)
+ arch/arm64/include/asm/kvm_host.h |  4 ++++
+ virt/kvm/arm/mmu.c                | 14 ++++++++------
+ 2 files changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/kvm/handle_exit.c b/arch/arm64/kvm/handle_exit.c
-index 00858db82a64..e3b3dcd5b811 100644
---- a/arch/arm64/kvm/handle_exit.c
-+++ b/arch/arm64/kvm/handle_exit.c
-@@ -123,13 +123,13 @@ static int kvm_handle_wfx(struct kvm_vcpu *vcpu, struct kvm_run *run)
-  */
- static int kvm_handle_guest_debug(struct kvm_vcpu *vcpu, struct kvm_run *run)
- {
--	u32 hsr = kvm_vcpu_get_esr(vcpu);
-+	u32 esr = kvm_vcpu_get_esr(vcpu);
- 	int ret = 0;
+diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+index 32c8a675e5a4..f77c706777ec 100644
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -437,6 +437,10 @@ int __kvm_arm_vcpu_set_events(struct kvm_vcpu *vcpu,
+ 			      struct kvm_vcpu_events *events);
  
- 	run->exit_reason = KVM_EXIT_DEBUG;
--	run->debug.arch.hsr = hsr;
-+	run->debug.arch.hsr = esr;
- 
--	switch (ESR_ELx_EC(hsr)) {
-+	switch (kvm_vcpu_trap_get_class(esr)) {
- 	case ESR_ELx_EC_WATCHPT_LOW:
- 		run->debug.arch.far = vcpu->arch.fault.far_el2;
- 		/* fall through */
-@@ -139,8 +139,8 @@ static int kvm_handle_guest_debug(struct kvm_vcpu *vcpu, struct kvm_run *run)
- 	case ESR_ELx_EC_BRK64:
- 		break;
- 	default:
--		kvm_err("%s: un-handled case hsr: %#08x\n",
--			__func__, (unsigned int) hsr);
-+		kvm_err("%s: un-handled case esr: %#08x\n",
-+			__func__, (unsigned int)esr);
- 		ret = -1;
- 		break;
- 	}
-@@ -150,10 +150,10 @@ static int kvm_handle_guest_debug(struct kvm_vcpu *vcpu, struct kvm_run *run)
- 
- static int kvm_handle_unknown_ec(struct kvm_vcpu *vcpu, struct kvm_run *run)
- {
--	u32 hsr = kvm_vcpu_get_esr(vcpu);
-+	u32 esr = kvm_vcpu_get_esr(vcpu);
- 
--	kvm_pr_unimpl("Unknown exception class: hsr: %#08x -- %s\n",
--		      hsr, esr_get_class_string(hsr));
-+	kvm_pr_unimpl("Unknown exception class: esr: %#08x -- %s\n",
-+		      esr, esr_get_class_string(esr));
- 
- 	kvm_inject_undefined(vcpu);
- 	return 1;
-@@ -230,10 +230,10 @@ static exit_handle_fn arm_exit_handlers[] = {
- 
- static exit_handle_fn kvm_get_exit_handler(struct kvm_vcpu *vcpu)
- {
--	u32 hsr = kvm_vcpu_get_esr(vcpu);
--	u8 hsr_ec = ESR_ELx_EC(hsr);
-+	u32 esr = kvm_vcpu_get_esr(vcpu);
-+	u8 ec = kvm_vcpu_trap_get_class(esr);
- 
--	return arm_exit_handlers[hsr_ec];
-+	return arm_exit_handlers[ec];
+ #define KVM_ARCH_WANT_MMU_NOTIFIER
++int kvm_handle_user_mem_abort(struct kvm_vcpu *vcpu, unsigned int esr,
++			      struct kvm_memory_slot *memslot,
++			      phys_addr_t fault_ipa, unsigned long hva,
++			      bool prefault);
+ int kvm_unmap_hva_range(struct kvm *kvm,
+ 			unsigned long start, unsigned long end);
+ int kvm_set_spte_hva(struct kvm *kvm, unsigned long hva, pte_t pte);
+diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
+index e462e0368fd9..95aaabb2b1fc 100644
+--- a/virt/kvm/arm/mmu.c
++++ b/virt/kvm/arm/mmu.c
+@@ -1656,12 +1656,12 @@ static bool fault_supports_stage2_huge_mapping(struct kvm_memory_slot *memslot,
+ 	       (hva & ~(map_size - 1)) + map_size <= uaddr_end;
  }
  
- /*
-@@ -273,15 +273,15 @@ int handle_exit(struct kvm_vcpu *vcpu, struct kvm_run *run,
+-static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+-			  struct kvm_memory_slot *memslot, unsigned long hva,
+-			  unsigned long fault_status)
++int kvm_handle_user_mem_abort(struct kvm_vcpu *vcpu, unsigned int esr,
++			      struct kvm_memory_slot *memslot,
++			      phys_addr_t fault_ipa, unsigned long hva,
++			      bool prefault)
  {
- 	if (ARM_SERROR_PENDING(exception_index)) {
- 		u32 esr = kvm_vcpu_get_esr(vcpu);
--		u8 hsr_ec = ESR_ELx_EC(esr);
-+		u8 ec = kvm_vcpu_trap_get_class(esr);
+-	int ret;
+-	u32 esr = kvm_vcpu_get_esr(vcpu);
++	unsigned int fault_status = kvm_vcpu_trap_get_fault_type(esr);
+ 	bool write_fault, writable, force_pte = false;
+ 	bool exec_fault, needs_exec;
+ 	unsigned long mmu_seq;
+@@ -1674,6 +1674,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 	pgprot_t mem_type = PAGE_S2;
+ 	bool logging_active = memslot_is_logging(memslot);
+ 	unsigned long vma_pagesize, flags = 0;
++	int ret;
  
- 		/*
- 		 * HVC/SMC already have an adjusted PC, which we need
- 		 * to correct in order to return to after having
- 		 * injected the SError.
- 		 */
--		if (hsr_ec == ESR_ELx_EC_HVC32 || hsr_ec == ESR_ELx_EC_HVC64 ||
--		    hsr_ec == ESR_ELx_EC_SMC32 || hsr_ec == ESR_ELx_EC_SMC64) {
-+		if (ec == ESR_ELx_EC_HVC32 || ec == ESR_ELx_EC_HVC64 ||
-+		    ec == ESR_ELx_EC_SMC32 || ec == ESR_ELx_EC_SMC64) {
- 			u32 adj =  kvm_vcpu_trap_il_is32bit(esr) ? 4 : 2;
- 			*vcpu_pc(vcpu) -= adj;
- 		}
-diff --git a/arch/arm64/kvm/hyp/switch.c b/arch/arm64/kvm/hyp/switch.c
-index 369f22f49f3d..7bf4840bf90e 100644
---- a/arch/arm64/kvm/hyp/switch.c
-+++ b/arch/arm64/kvm/hyp/switch.c
-@@ -356,8 +356,8 @@ static bool __hyp_text __populate_fault_info(struct kvm_vcpu *vcpu)
- static bool __hyp_text __hyp_handle_fpsimd(struct kvm_vcpu *vcpu)
- {
- 	u32 esr = kvm_vcpu_get_esr(vcpu);
-+	u8 ec = kvm_vcpu_trap_get_class(esr);
- 	bool vhe, sve_guest, sve_host;
--	u8 hsr_ec;
- 
- 	if (!system_supports_fpsimd())
- 		return false;
-@@ -372,14 +372,13 @@ static bool __hyp_text __hyp_handle_fpsimd(struct kvm_vcpu *vcpu)
- 		vhe = has_vhe();
+ 	write_fault = kvm_is_write_fault(esr);
+ 	exec_fault = kvm_vcpu_trap_is_iabt(esr);
+@@ -1995,7 +1996,8 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu, struct kvm_run *run)
+ 		goto out_unlock;
  	}
  
--	hsr_ec = kvm_vcpu_trap_get_class(esr);
--	if (hsr_ec != ESR_ELx_EC_FP_ASIMD &&
--	    hsr_ec != ESR_ELx_EC_SVE)
-+	if (ec != ESR_ELx_EC_FP_ASIMD &&
-+	    ec != ESR_ELx_EC_SVE)
- 		return false;
- 
- 	/* Don't handle SVE traps for non-SVE vcpus here: */
- 	if (!sve_guest)
--		if (hsr_ec != ESR_ELx_EC_FP_ASIMD)
-+		if (ec != ESR_ELx_EC_FP_ASIMD)
- 			return false;
- 
- 	/* Valid trap.  Switch the context: */
-diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index 012fff834a4b..58f81ab519af 100644
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -2182,10 +2182,10 @@ static void unhandled_cp_access(struct kvm_vcpu *vcpu,
- 				struct sys_reg_params *params)
- {
- 	u32 esr = kvm_vcpu_get_esr(vcpu);
--	u8 hsr_ec = kvm_vcpu_trap_get_class(esr);
-+	u8 ec = kvm_vcpu_trap_get_class(esr);
- 	int cp = -1;
- 
--	switch(hsr_ec) {
-+	switch (ec) {
- 	case ESR_ELx_EC_CP15_32:
- 	case ESR_ELx_EC_CP15_64:
- 		cp = 15;
-@@ -2216,17 +2216,17 @@ static int kvm_handle_cp_64(struct kvm_vcpu *vcpu,
- 			    size_t nr_specific)
- {
- 	struct sys_reg_params params;
--	u32 hsr = kvm_vcpu_get_esr(vcpu);
--	int Rt = kvm_vcpu_sys_get_rt(hsr);
--	int Rt2 = (hsr >> 10) & 0x1f;
-+	u32 esr = kvm_vcpu_get_esr(vcpu);
-+	int Rt = kvm_vcpu_sys_get_rt(esr);
-+	int Rt2 = (esr >> 10) & 0x1f;
- 
- 	params.is_aarch32 = true;
- 	params.is_32bit = false;
--	params.CRm = (hsr >> 1) & 0xf;
--	params.is_write = ((hsr & 1) == 0);
-+	params.CRm = (esr >> 1) & 0xf;
-+	params.is_write = ((esr & 1) == 0);
- 
- 	params.Op0 = 0;
--	params.Op1 = (hsr >> 16) & 0xf;
-+	params.Op1 = (esr >> 16) & 0xf;
- 	params.Op2 = 0;
- 	params.CRn = 0;
- 
-@@ -2273,18 +2273,18 @@ static int kvm_handle_cp_32(struct kvm_vcpu *vcpu,
- 			    size_t nr_specific)
- {
- 	struct sys_reg_params params;
--	u32 hsr = kvm_vcpu_get_esr(vcpu);
--	int Rt  = kvm_vcpu_sys_get_rt(hsr);
-+	u32 esr = kvm_vcpu_get_esr(vcpu);
-+	int Rt = kvm_vcpu_sys_get_rt(esr);
- 
- 	params.is_aarch32 = true;
- 	params.is_32bit = true;
--	params.CRm = (hsr >> 1) & 0xf;
-+	params.CRm = (esr >> 1) & 0xf;
- 	params.regval = vcpu_get_reg(vcpu, Rt);
--	params.is_write = ((hsr & 1) == 0);
--	params.CRn = (hsr >> 10) & 0xf;
-+	params.is_write = ((esr & 1) == 0);
-+	params.CRn = (esr >> 10) & 0xf;
- 	params.Op0 = 0;
--	params.Op1 = (hsr >> 14) & 0x7;
--	params.Op2 = (hsr >> 17) & 0x7;
-+	params.Op1 = (esr >> 14) & 0x7;
-+	params.Op2 = (esr >> 17) & 0x7;
- 
- 	if (!emulate_cp(vcpu, &params, target_specific, nr_specific) ||
- 	    !emulate_cp(vcpu, &params, global, nr_global)) {
+-	ret = user_mem_abort(vcpu, fault_ipa, memslot, hva, fault_status);
++	ret = kvm_handle_user_mem_abort(vcpu, esr, memslot,
++					fault_ipa, hva, false);
+ 	if (ret == 0)
+ 		ret = 1;
+ out:
 -- 
 2.23.0
 
