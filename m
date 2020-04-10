@@ -2,85 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id EE1D11A4319
-	for <lists+kvmarm@lfdr.de>; Fri, 10 Apr 2020 09:43:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62B851A431A
+	for <lists+kvmarm@lfdr.de>; Fri, 10 Apr 2020 09:43:58 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5B7604B1D0;
-	Fri, 10 Apr 2020 03:43:56 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 142FF4B190;
+	Fri, 10 Apr 2020 03:43:58 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.911
+X-Spam-Score: 0.912
 X-Spam-Level: 
-X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
+X-Spam-Status: No, score=0.912 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@gmail.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hjX41sQQAh3x; Fri, 10 Apr 2020 03:43:56 -0400 (EDT)
+	with ESMTP id nysYO8PuK8gb; Fri, 10 Apr 2020 03:43:56 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 057204B186;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1BB794B1B5;
 	Fri, 10 Apr 2020 03:43:54 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 364244B14A
- for <kvmarm@lists.cs.columbia.edu>; Thu,  9 Apr 2020 23:53:02 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 775904B14A
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  9 Apr 2020 23:54:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 8jVIgNfViaAI for <kvmarm@lists.cs.columbia.edu>;
- Thu,  9 Apr 2020 23:53:01 -0400 (EDT)
-Received: from mail-pf1-f195.google.com (mail-pf1-f195.google.com
- [209.85.210.195])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 121304B147
- for <kvmarm@lists.cs.columbia.edu>; Thu,  9 Apr 2020 23:53:01 -0400 (EDT)
-Received: by mail-pf1-f195.google.com with SMTP id l1so526545pff.10
- for <kvmarm@lists.cs.columbia.edu>; Thu, 09 Apr 2020 20:53:01 -0700 (PDT)
+ with ESMTP id QnrIPNRi-dG3 for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  9 Apr 2020 23:54:22 -0400 (EDT)
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com
+ [209.85.215.178])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 598364B147
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  9 Apr 2020 23:54:22 -0400 (EDT)
+Received: by mail-pg1-f178.google.com with SMTP id k191so461100pgc.13
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 09 Apr 2020 20:54:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=vSIPEPOc5ZIkDepQBj4MVQxNI/hKIwhnPMzWb3j2cdg=;
- b=mOOFt0UftnQV7EQlLU/Z0Ws7IhdatJylqfsoCmwhaBgUZWrsNA6/RJ0YUzROT0KiVL
- vdG9y4QVZ1Rl8giDRDcZMulEKGaFFQsydDGGKc4ARLVcPxDxStAiHkBvtD2+jeK01+uT
- 1GVs7W/T71S8PY9ewZMfiIaI4lFRnegc1qhwagu3hj+uG0QydUzrlPLTmTjCeFwjO9YQ
- KcVlUlV6lbKQXZ0Oz5GU1/tLDDkRhQHClHOTGOJnN8kafIHAfeF1TsUuElWWsKz76dop
- mky8pwdExPPlHT4HvPnKJLaQDljxBlF+uOgxWfUsmpuYyFZ/NXPT6CO9xlbAGRfKCgpS
- b/TA==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=MVNHl8ZYPBjPp5ynGu7XA1fsdeRM/3jDxhZmbvgU1e4=;
+ b=anypSvL3upk0MAF1Tfyk00TfNL5GQZ8vevHKsiqh7UvTg+qzxoxQgnPaCbYu6PfCLn
+ 0sMShIkh8eJvSanxewIVo66u3WyqXIzOO+aJL5DO4/sFRre2uD4cxkKDpHXt7e6llRh7
+ cje4w6NrGwPj7BWphkx+VvgAQQMnc1lw/ZmuNJ3hWuKdoAc9dfkuHVZtHBW2RWUeKOgL
+ wgJdsb/6tja3gIBZIzpK4zXbBlZvP8jjYrOUgLtjVnI7WDicw9XeAPeWfU64t+IrI0Vs
+ O43hIXz0W+ElOBC5urpj0WnHenSS7i4gXDbfDiE18Pi6aFgJv9+P53SNsBGyc/ZIoT9/
+ jQiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=vSIPEPOc5ZIkDepQBj4MVQxNI/hKIwhnPMzWb3j2cdg=;
- b=Q/StvkRbi3wIq1TPlx+BOzPvUANVWYR+IfSzO27oazyJ1vNc6Tpt7y3mjVm0oRfyvW
- rP2u1pcfcyCURawdv47O0VMFnZCRyrmUzZgrE+/LnrvVZlHoOAhweAYsZjkADoJMXxQo
- 2M4gX9apwjaXNt5epz1huUFsm0lscmgJFMmMr3jqTJY5cFyxJ64D5F048LLSVu+OLnzp
- xs8A9zkJS8tlKbEXgH5BmQb1UT3aX9U6tC4nYHvc8GpvXVseO0hr8uS61zIcXyScrMAm
- fUmCSVDeeqWfHcWVlb2PnhrEmtB552Y339GbN6bmuZOg6BIkS5vCZ8IFyvruhzJTZhIg
- SqeA==
-X-Gm-Message-State: AGi0PuYvuXhwPx0+HXPj6mft0ioXG5Dbff+j6afmdpaQEeLoqjzxsvqz
- a9t5/V89RCsHRWh1i21+wmM=
-X-Google-Smtp-Source: APiQypJgEoPdhrJZvgMTrP0qIAy3rcKbJUAcjDjl3RwOCMwNaIkRgzs/3XW0Ty2wP8MV6mYBuLqHfw==
-X-Received: by 2002:a63:cf50:: with SMTP id b16mr2600005pgj.189.1586490779975; 
- Thu, 09 Apr 2020 20:52:59 -0700 (PDT)
-Received: from ?IPv6:2601:647:4700:9b2:d8e9:9b3c:bb20:8b56?
- ([2601:647:4700:9b2:d8e9:9b3c:bb20:8b56])
- by smtp.gmail.com with ESMTPSA id w2sm521868pff.195.2020.04.09.20.52.58
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 09 Apr 2020 20:52:58 -0700 (PDT)
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: Contribution to KVM.
-From: Nadav Amit <nadav.amit@gmail.com>
-In-Reply-To: <c86002a6-d613-c0be-a672-cca8e9c83e1c@intel.com>
-Date: Thu, 9 Apr 2020 20:52:57 -0700
-Message-Id: <2E118FCA-7AB1-480F-8F49-3EFD77CC2992@gmail.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=MVNHl8ZYPBjPp5ynGu7XA1fsdeRM/3jDxhZmbvgU1e4=;
+ b=pHmQw6YVj68NQ7K/BtdEJFVJ8OONxFDq7k29fJ6OqNlS/bhWZtxg3BJCa9C9pD6PN6
+ IneS/4sWb1+eJmbK6nhWvPcn4E94ENnsAGxuD1jrQji4aT7crK9XC2Jp4gaQY6eRpn0k
+ 2nMmXOZs0CzzeOr305X+wSaAonE+l8frmp42keKdEKOtJKNjeERwUd/hadVU4W0eLxP/
+ eMQ95xQX//GMyKmCkm/TqYMBF/axSwTT4rPDsFy2sfuSDGKK2EielNPV1aQLvyVX/ZYU
+ 3WeHHiDj4WXnYMx8gmJeTb+WtZjbyUNOPlHgjxJECi4oa84RPDKWTEpZ7bYQalBv1n7A
+ mFrg==
+X-Gm-Message-State: AGi0PuZEpuIXIXJor8YQsynUfAKNw/W2F9wkS4qBHjjyqIVKm07YUvge
+ K5YxtsBJwqe+WaJA9++Cjsg8GzOErcbf+kRWLCE=
+X-Google-Smtp-Source: APiQypKlXMme6WN2BengKpJW9xkiTJf2OghzarDKKYx+CcWmA8FP+kGaNbHMcM4Ltr2kIJdLIudBHPwG4v3PQe/GW0A=
+X-Received: by 2002:a62:6dc1:: with SMTP id i184mr3063905pfc.25.1586490861043; 
+ Thu, 09 Apr 2020 20:54:21 -0700 (PDT)
+MIME-Version: 1.0
 References: <CAEX+82KTJecx_aSHAPN9ZkS_YDiDfyEM9b6ji4wabmSZ6O516Q@mail.gmail.com>
  <c86002a6-d613-c0be-a672-cca8e9c83e1c@intel.com>
-To: Javier Romero <xavinux@gmail.com>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+In-Reply-To: <c86002a6-d613-c0be-a672-cca8e9c83e1c@intel.com>
+From: Javier Romero <xavinux@gmail.com>
+Date: Fri, 10 Apr 2020 00:54:10 -0300
+Message-ID: <CAEX+82Lxv=Hrc3eDfUReSXpxv174swvmbnD1fXCgpxuzB_6NbQ@mail.gmail.com>
+Subject: Re: Contribution to KVM.
+To: like.xu@intel.com
 X-Mailman-Approved-At: Fri, 10 Apr 2020 03:43:52 -0400
-Cc: like.xu@intel.com, Liran Alon <liran.alon@oracle.com>,
- kvmarm@lists.cs.columbia.edu, kvm <kvm@vger.kernel.org>
+Cc: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -92,42 +84,119 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============4102120347055436862=="
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-> On Apr 9, 2020, at 8:34 PM, Xu, Like <like.xu@intel.com> wrote:
-> 
-> On 2020/4/10 5:29, Javier Romero wrote:
->> Hello,
->> 
->>  My name is Javier, live in Argentina and work as a cloud engineer.
->> 
->> Have been working with Linux servers for the last 10 years in an
->> Internet Service Provider and I'm interested in contributing to KVM
-> Welcome, I'm a newbie as well.
->> maybe with testing as a start point.
-> You may try the http://git.kernel.org/pub/scm/virt/kvm/kvm-unit-tests.git
-> and tools/testing/selftests/kvm in the kernel tree.
->> If it can be useful to test KVM on ARM, I have a Raspberry PI 3 at disposal.
-> If you test KVM on Intel platforms, you will definitely get support from me :D.
+--===============4102120347055436862==
+Content-Type: multipart/alternative; boundary="00000000000036423505a2e7b083"
 
-If you are looking for something specific, here are two issues with
-relatively limited scope, which AFAIK were not resolved:
+--00000000000036423505a2e7b083
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-1. Shadow VMCS bug, which is also a test bug [1]. You can start by fixing
-   the test and then fix KVM.
+Hi Like Xu,
 
-2. Try to run the tests with more than 4GB of memory. The last time I tried
-   (actually by running the test on bare metal), the INIT test that Liran
-   wrote failed.
+Thank you for your time to answer.
+
+Yes, I can also test KVM in an Intel platform, have a Pixelbook with a Core
+i7 processor and 16 GB of RAM at disposal to start working.
+
+Thanks for your attention.
 
 Regards,
-Nadav
 
-[1] https://lore.kernel.org/kvm/3235DBB0-0DC0-418C-BC45-A4B78612E273@gmail.com/T/#u
+El vie., 10 abr. 2020 00:34, Xu, Like <like.xu@intel.com> escribi=C3=B3:
+
+> On 2020/4/10 5:29, Javier Romero wrote:
+> > Hello,
+> >
+> >   My name is Javier, live in Argentina and work as a cloud engineer.
+> >
+> > Have been working with Linux servers for the last 10 years in an
+> > Internet Service Provider and I'm interested in contributing to KVM
+> Welcome, I'm a newbie as well.
+> > maybe with testing as a start point.
+> You may try the http://git.kernel.org/pub/scm/virt/kvm/kvm-unit-tests.git
+> and tools/testing/selftests/kvm in the kernel tree.
+> >
+> > If it can be useful to test KVM on ARM, I have a Raspberry PI 3 at
+> disposal.
+> If you test KVM on Intel platforms, you will definitely get support from
+> me :D.
+>
+> Thanks,
+> Like Xu
+> >
+> > Thanks for your kind attention.
+> >
+> > Best Regards,
+> >
+> >
+> >
+> > Javier Romero
+>
+>
+
+--00000000000036423505a2e7b083
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div dir=3D"auto">Hi Like Xu,</div><div dir=3D"auto"><br>=
+</div><div dir=3D"auto">Thank you for your time to answer.=C2=A0</div><div =
+dir=3D"auto"><br></div><div dir=3D"auto">Yes, I can also test KVM in an Int=
+el platform, have a Pixelbook with a Core i7 processor and 16 GB of RAM at =
+disposal to start working.</div><div dir=3D"auto"><br></div><div dir=3D"aut=
+o">Thanks for your attention.</div><div dir=3D"auto"><br></div><div dir=3D"=
+auto">Regards,</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr">E=
+l vie., 10 abr. 2020 00:34, Xu, Like &lt;<a href=3D"mailto:like.xu@intel.co=
+m">like.xu@intel.com</a>&gt; escribi=C3=B3:<br></div><blockquote class=3D"g=
+mail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-l=
+eft:1ex">On 2020/4/10 5:29, Javier Romero wrote:<br>
+&gt; Hello,<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0My name is Javier, live in Argentina and work as a cloud e=
+ngineer.<br>
+&gt;<br>
+&gt; Have been working with Linux servers for the last 10 years in an<br>
+&gt; Internet Service Provider and I&#39;m interested in contributing to KV=
+M<br>
+Welcome, I&#39;m a newbie as well.<br>
+&gt; maybe with testing as a start point.<br>
+You may try the <a href=3D"http://git.kernel.org/pub/scm/virt/kvm/kvm-unit-=
+tests.git" rel=3D"noreferrer noreferrer" target=3D"_blank">http://git.kerne=
+l.org/pub/scm/virt/kvm/kvm-unit-tests.git</a><br>
+and tools/testing/selftests/kvm in the kernel tree.<br>
+&gt;<br>
+&gt; If it can be useful to test KVM on ARM, I have a Raspberry PI 3 at dis=
+posal.<br>
+If you test KVM on Intel platforms, you will definitely get support from me=
+ :D.<br>
+<br>
+Thanks,<br>
+Like Xu<br>
+&gt;<br>
+&gt; Thanks for your kind attention.<br>
+&gt;<br>
+&gt; Best Regards,<br>
+&gt;<br>
+&gt;<br>
+&gt;<br>
+&gt; Javier Romero<br>
+<br>
+</blockquote></div>
+
+--00000000000036423505a2e7b083--
+
+--===============4102120347055436862==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
 https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+
+--===============4102120347055436862==--
