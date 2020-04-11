@@ -2,68 +2,88 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 364161A4F12
-	for <lists+kvmarm@lfdr.de>; Sat, 11 Apr 2020 11:20:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F27D1A4F1D
+	for <lists+kvmarm@lfdr.de>; Sat, 11 Apr 2020 11:24:04 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DD5F84B18C;
-	Sat, 11 Apr 2020 05:20:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A14844B23A;
+	Sat, 11 Apr 2020 05:24:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.502
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=no
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id gErdgWtUpjCS; Sat, 11 Apr 2020 05:20:11 -0400 (EDT)
+	with ESMTP id SpP1hYY5TxOR; Sat, 11 Apr 2020 05:24:03 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E2BF04B235;
-	Sat, 11 Apr 2020 05:20:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 803E34B21E;
+	Sat, 11 Apr 2020 05:24:02 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 90C644B1FC
- for <kvmarm@lists.cs.columbia.edu>; Sat, 11 Apr 2020 00:10:14 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 972E34B18C
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 11 Apr 2020 05:24:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id UaAMS1cneHJi for <kvmarm@lists.cs.columbia.edu>;
- Sat, 11 Apr 2020 00:10:11 -0400 (EDT)
-Received: from huawei.com (szxga01-in.huawei.com [45.249.212.187])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id AA72E4B1EF
- for <kvmarm@lists.cs.columbia.edu>; Sat, 11 Apr 2020 00:10:11 -0400 (EDT)
-Received: from DGGEMM404-HUB.china.huawei.com (unknown [172.30.72.57])
- by Forcepoint Email with ESMTP id BA23A3A4DAD75E537C19;
- Sat, 11 Apr 2020 12:10:07 +0800 (CST)
-Received: from DGGEMM526-MBX.china.huawei.com ([169.254.8.54]) by
- DGGEMM404-HUB.china.huawei.com ([10.3.20.212]) with mapi id 14.03.0487.000;
- Sat, 11 Apr 2020 12:10:05 +0800
-From: "Zengtao (B)" <prime.zeng@hisilicon.com>
-To: Marc Zyngier <maz@kernel.org>, George Cherian <gcherian@marvell.com>
-Subject: RE: [PATCH v2 00/94] KVM: arm64: ARMv8.3/8.4 Nested Virtualization
+ with ESMTP id qedhmV1AejLL for <kvmarm@lists.cs.columbia.edu>;
+ Sat, 11 Apr 2020 05:24:00 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9A92C4B16D
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 11 Apr 2020 05:24:00 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 64B6B20857;
+ Sat, 11 Apr 2020 09:23:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1586597039;
+ bh=K90rgXY4TWpAkIW5KZCWi0jhW+x/kY4ZiXFZIllEs2M=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=UiRa/RX4NHEViHO5ccU94Pb69h0ReC90LoUClRg83c7t3C5hRykS+47XYO75Io4iL
+ QowIYv6pUSwZ5qUkJdmhOPyV1IDkAsBcy5+insjLhJ28goWRSy0QiJvnhrG/UROtyv
+ vKHPVASCOiu14AB3sTGI3i0R3Kc7Zvyi/OZT4fZg=
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=big-swifty.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa
+ (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
+ (envelope-from <maz@kernel.org>)
+ id 1jNCMn-002LiR-Nk; Sat, 11 Apr 2020 10:23:57 +0100
+Date: Sat, 11 Apr 2020 10:23:56 +0100
+Message-ID: <86r1wus7df.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: "Zengtao (B)" <prime.zeng@hisilicon.com>
+Subject: Re: [PATCH v2 00/94] KVM: arm64: ARMv8.3/8.4 Nested Virtualization
  support
-Thread-Topic: [PATCH v2 00/94] KVM: arm64: ARMv8.3/8.4 Nested Virtualization
- support
-Thread-Index: AdYJhvrCKEKaxySRQua1lfr4U9NN2v//iESA//MqKcA=
-Date: Sat, 11 Apr 2020 04:10:05 +0000
-Message-ID: <678F3D1BB717D949B966B68EAEB446ED342E29B9@dggemm526-mbx.china.huawei.com>
+In-Reply-To: <678F3D1BB717D949B966B68EAEB446ED342E29B9@dggemm526-mbx.china.huawei.com>
 References: <MN2PR18MB26869A6CA4E67558324F655CC5C70@MN2PR18MB2686.namprd18.prod.outlook.com>
  <06d08f904f003160a48eac3c5ab3c7ff@kernel.org>
-In-Reply-To: <06d08f904f003160a48eac3c5ab3c7ff@kernel.org>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.74.221.187]
-MIME-Version: 1.0
-X-CFilter-Loop: Reflected
-X-Mailman-Approved-At: Sat, 11 Apr 2020 05:20:07 -0400
+ <678F3D1BB717D949B966B68EAEB446ED342E29B9@dggemm526-mbx.china.huawei.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL/10.8 EasyPG/1.0.0 Emacs/26
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: prime.zeng@hisilicon.com, gcherian@marvell.com,
+ Dave.Martin@arm.com, alexandru.elisei@arm.com, andre.przywara@arm.com,
+ christoffer.dall@arm.com, james.morse@arm.com, jintack@cs.columbia.edu,
+ julien.thierry.kdev@gmail.com, kvm@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
+ suzuki.poulose@arm.com, areddy3@marvell.com, gkulkarni@marvell.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
 Cc: "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
  Ganapatrao Kulkarni <gkulkarni@marvell.com>,
  "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
  "andre.przywara@arm.com" <andre.przywara@arm.com>,
- "Dave.Martin@arm.com" <Dave.Martin@arm.com>,
+ George Cherian <gcherian@marvell.com>,
  "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
- Anil Kumar Reddy H <areddy3@marvell.com>
+ Anil Kumar Reddy H <areddy3@marvell.com>,
+ "Dave.Martin@arm.com" <Dave.Martin@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -80,99 +100,29 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Marc:
+Hi Zengtao,
 
-Since it's a very large patch series, I want to test it on my platform
- which don't support nv, and want to make sure if this patch series
-affects the existed virtualization functions or not.
- 
-Any suggestion about the test focus?
+On Sat, 11 Apr 2020 05:10:05 +0100,
+"Zengtao (B)" <prime.zeng@hisilicon.com> wrote:
+> 
+> Hi Marc:
+> 
+> Since it's a very large patch series, I want to test it on my platform
+>  which don't support nv, and want to make sure if this patch series
+> affects the existed virtualization functions or not.
+>  
+> Any suggestion about the test focus?
 
-Thanks.
-> -----Original Message-----
-> From: kvm-owner@vger.kernel.org [mailto:kvm-owner@vger.kernel.org]
-> On Behalf Of Marc Zyngier
-> Sent: Friday, April 03, 2020 4:02 PM
-> To: George Cherian
-> Cc: Dave.Martin@arm.com; alexandru.elisei@arm.com;
-> andre.przywara@arm.com; christoffer.dall@arm.com;
-> james.morse@arm.com; jintack@cs.columbia.edu;
-> julien.thierry.kdev@gmail.com; kvm@vger.kernel.org;
-> kvmarm@lists.cs.columbia.edu; linux-arm-kernel@lists.infradead.org;
-> suzuki.poulose@arm.com; Anil Kumar Reddy H; Ganapatrao Kulkarni
-> Subject: Re: [PATCH v2 00/94] KVM: arm64: ARMv8.3/8.4 Nested
-> Virtualization support
-> 
-> Hi George,
-> 
-> On 2020-04-03 08:27, George Cherian wrote:
-> > Hi Marc,
-> >
-> > On 2/11/20 9:48 AM, Marc Zyngier wrote:
-> >> This is a major rework of the NV series that I posted over 6 months
-> >> ago[1], and a lot has changed since then:
-> >>
-> >> - Early ARMv8.4-NV support
-> >> - ARMv8.4-TTL support in host and guest
-> >> - ARMv8.5-GTG support in host and guest
-> >> - Lots of comments addressed after the review
-> >> - Rebased on v5.6-rc1
-> >> - Way too many patches
-> >>
-> >> In my defence, the whole of the NV code is still smaller that the
-> >> 32bit KVM/arm code I'm about to remove, so I feel less bad inflicting
-> >> this on everyone! ;-)
-> >>
-> >> >From a functionality perspective, you can expect a L2 guest to work,
-> >> but don't even think of L3, as we only partially emulate the
-> >> ARMv8.{3,4}-NV extensions themselves. Same thing for vgic, debug,
-> PMU,
-> >> as well as anything that would require a Stage-1 PTW. What we want
-> to
-> >> achieve is that with NV disabled, there is no performance overhead
-> and
-> >> no regression.
-> >>
-> >> The series is roughly divided in 5 parts: exception handling, memory
-> >> virtualization, interrupts and timers for ARMv8.3, followed by the
-> >> ARMv8.4 support. There are of course some dependencies, but you'll
-> >> hopefully get the gist of it.
-> >>
-> >> For the most courageous of you, I've put out a branch[2]. Of course,
-> >> you'll need some userspace. Andre maintains a hacked version of
-> >> kvmtool[3] that takes a --nested option, allowing the guest to be
-> >> started at EL2. You can run the whole stack in the Foundation
-> >> model. Don't be in a hurry ;-).
-> >>
-> > The full series was tested on both Foundation model as well as Marvell
-> > ThunderX3
-> > Emulation Platform.
-> > Basic boot testing done for Guest Hypervisor and Guest Guest.
-> >
-> > Tested-by:  George Cherian <george.cherian@marvell.com>
-> 
-> Thanks for having given this a go.
-> 
-> However, without more details, it is pretty hard to find out what you
-> have tested.
-> What sort of guest have you booted, with what configuration, what
-> workloads did you
-> run in the L2 guests and what are the architectural features that TX3
-> implements?
-> 
-> The last point is specially important, as the NV architecture spans two
-> major
-> revisions of the architecture and affects tons of other extensions that
-> are
-> themselves optional. Without any detail on that front, I have no idea
-> what the
-> coverage of your testing is.
-> 
-> Thanks,
-> 
->          M.
-> --
-> Jazz is not dead. It just smells funny...
+Not really. Given that the NV patches affect absolutely every
+architectural parts of KVM/arm64, everything needs careful
+testing. But more than testing, it needs reviewing.
+
+Thanks,
+
+	M.
+
+-- 
+Jazz is not dead, it just smells funny.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
