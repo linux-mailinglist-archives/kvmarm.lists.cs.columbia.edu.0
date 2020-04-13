@@ -2,120 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 638AA1A770E
-	for <lists+kvmarm@lfdr.de>; Tue, 14 Apr 2020 11:11:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5259B1A770F
+	for <lists+kvmarm@lfdr.de>; Tue, 14 Apr 2020 11:11:39 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DAD944B1F7;
-	Tue, 14 Apr 2020 05:11:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 039BA4B1F4;
+	Tue, 14 Apr 2020 05:11:39 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@gmail.com
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 08ZHsiefB16r; Tue, 14 Apr 2020 05:11:37 -0400 (EDT)
+	with ESMTP id xHY6mJnCTHcw; Tue, 14 Apr 2020 05:11:37 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B59CA4B1E4;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D4C8E4B1ED;
 	Tue, 14 Apr 2020 05:11:36 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 23BF64B16D
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 17:34:24 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 605B44B1F0
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 19:10:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id HvLm246TNKSe for <kvmarm@lists.cs.columbia.edu>;
- Mon, 13 Apr 2020 17:34:23 -0400 (EDT)
-Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com
- [209.85.221.67])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D241A4B153
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 17:34:22 -0400 (EDT)
-Received: by mail-wr1-f67.google.com with SMTP id d17so4945619wrg.11
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 14:34:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:subject:to:cc:references:from:autocrypt:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=WDLpX6un52/AMwecGbJF0+8vb65HmQ8qFANqOY0XK7Y=;
- b=IuYqFbiHvSBMhlKLU88FQD6ph6l8u5128kLqE8SenvYihQJEPGmJINrkyvIh6vpW2u
- /atBvA75QL7UmEbyidSfCXE9VeE6SdB9IhYX6B3aHhwgMX0tmJ1dGgq1iHOBxSuH5Ezk
- VCWc51OJuo2eWBiWuYxF2kVCeRK0CX7KJ1dT2S+MSOGnulH5DMjtn5pZ88A/Y0yof0T2
- UcJ+AiMZeX97qHo6+sK6kWsJjsp0iuoGeKviv5k/BbU7JcMcpQXEn6SjrQEbaon0dw6S
- y7IERsJ3FCFJptrbidN9ACEH4G0Eg5BXm3yzzlYa9opYGLDAD1VPzulRpYMvxfhhzH+p
- vOlg==
+ with ESMTP id dXqSeFo2GjfE for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 13 Apr 2020 19:10:21 -0400 (EDT)
+Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com
+ [209.85.215.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 405A64B1B4
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 19:10:21 -0400 (EDT)
+Received: by mail-pg1-f202.google.com with SMTP id u187so9886826pgu.14
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 16:10:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=vuPWpOEpABdmh/1VI4/up8dAs2XH63GBNImm7d32EIk=;
+ b=uuJSa5giC8TYDkne2taIdNZXmrgXcjt5CgpmGdHhNkQ5j9v4VYPqCbuOp/KxDtbpN/
+ 4cEve/TUCY86wv/6A7knM+8e9X2X26bBtQI1pCE3hfpB0tNpS2C6uuPLmBbXCsDUsLCt
+ yGMJ+F5vrbUcoQa3o341Dx9C5iCe89I30q1guImO4DyqZb4diH3XCeHvbcpviNeozcws
+ gj+8/im9ix9ynfMpIso42JYQXromt7QpwqYKI74mEYsJhq5j9oGEAXhJZ135kR2imQDD
+ 3m4Qjg55XxOsQiFJaEkVMAaVkGz41KeMuqSEUp5ld97t/FXZdGOxaDPNmBYTGbIKMZAN
+ aCVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:subject:to:cc:references:from:autocrypt
- :message-id:date:user-agent:mime-version:in-reply-to
- :content-language:content-transfer-encoding;
- bh=WDLpX6un52/AMwecGbJF0+8vb65HmQ8qFANqOY0XK7Y=;
- b=clD9veJ/ziUTOHiUXHp/SA3zrX4fFj6B3tYXTmzOijQkPzEDwAcwQIHSvIwY1j8AFr
- NWxVsRSX0TYdGOBQmP60da9vGbC2V/lHVONQAUQ+nDLZ0XZnVBgpV9+6mfp6P7zDGVVJ
- ZiU3J15NS6kFooEUMdnfGikrdiIzeBnNh6o18jl0zvTuPlkD8TGdcouehwAvtOv2Rbgn
- TTKLi3WlFnf+7ZuD8fjbBZdlk/79flbGv2ElAngL+jpmkKbonabFcFUDTfd52yQkGBYd
- lKe8tp5guvnUiFOJOwYGdSWCAxZ1G6Nym9UkVcCOV5FQhr5MBVZystGK7I7rpMdnhAn0
- 7eRw==
-X-Gm-Message-State: AGi0Pub5CyLwV/67uraZ624d3nOYp6ozOX4+2Uy8d/yTHIBZvaMylBIN
- yqJmf0APbt2bDNwx7BCDL0Q=
-X-Google-Smtp-Source: APiQypIaudaXPJ6rENC31BASdvEjjHEOZ24liPPj6hbZ7Im0hP2KXUJDynYo1n+j8lgnYgsqwzYqNQ==
-X-Received: by 2002:a5d:5230:: with SMTP id i16mr14472562wra.71.1586813661849; 
- Mon, 13 Apr 2020 14:34:21 -0700 (PDT)
-Received: from [192.168.1.39] (116.red-83-42-57.dynamicip.rima-tde.net.
- [83.42.57.116])
- by smtp.gmail.com with ESMTPSA id b11sm16503963wrq.26.2020.04.13.14.34.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 13 Apr 2020 14:34:21 -0700 (PDT)
-Subject: Re: [PATCH] kvm_host: unify VM_STAT and VCPU_STAT definitions in a
- single place
-To: Emanuele Giuseppe Esposito <eesposit@redhat.com>, kvm@vger.kernel.org
-References: <20200413140332.22896-1-eesposit@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <f4bug@amsat.org>
-Autocrypt: addr=f4bug@amsat.org; keydata=
- mQINBDU8rLoBEADb5b5dyglKgWF9uDbIjFXU4gDtcwiga9wJ/wX6xdhBqU8tlQ4BroH7AeRl
- u4zXP0QnBDAG7EetxlQzcfYbPmxFISWjckDBFvDbFsojrZmwF2/LkFSzlvKiN5KLghzzJhLO
- HhjGlF8deEZz/d/G8qzO9mIw8GIBS8uuWh6SIcG/qq7+y+2+aifaj92EdwU79apZepT/U3vN
- YrfcAuo1Ycy7/u0hJ7rlaFUn2Fu5KIgV2O++hHYtCCQfdPBg/+ujTL+U+sCDawCyq+9M5+LJ
- ojCzP9rViLZDd/gS6jX8T48hhidtbtsFRj/e9QpdZgDZfowRMVsRx+TB9yzjFdMO0YaYybXp
- dg/wCUepX5xmDBrle6cZ8VEe00+UQCAU1TY5Hs7QFfBbjgR3k9pgJzVXNUKcJ9DYQP0OBH9P
- ZbZvM0Ut2Bk6bLBO5iCVDOco0alrPkX7iJul2QWBy3Iy9j02GnA5jZ1Xtjr9kpCqQT+sRXso
- Vpm5TPGWaWljIeLWy/qL8drX1eyJzwTB3A36Ck4r3YmjMjfmvltSZB1uAdo1elHTlFEULpU/
- HiwvvqXQ9koB15U154VCuguvx/Qnboz8GFb9Uw8VyawzVxYVNME7xw7CQF8FYxzj6eI7rBf2
- Dj/II6wxWPgDEy3oUzuNOxTB7sT3b/Ym76yOJzWX5BylXQIJ5wARAQABtDFQaGlsaXBwZSBN
- YXRoaWV1LURhdWTDqSAoRjRCVUcpIDxmNGJ1Z0BhbXNhdC5vcmc+iQJVBBMBCAA/AhsPBgsJ
- CAcDAgYVCAIJCgsEFgIDAQIeAQIXgBYhBPqr514SkXIh3P1rsuPjLCzercDeBQJd660aBQks
- klzgAAoJEOPjLCzercDe2iMP+gMG2dUf+qHz2uG8nTBGMjgK0aEJrKVPodFA+iedQ5Kp3BMo
- jrTg3/DG1HMYdcvQu/NFLYwamUfUasyor1k+3dB23hY09O4xOsYJBWdilkBGsJTKErUmkUO2
- 3J/kawosvYtJJSHUpw3N6mwz/iWnjkT8BPp7fFXSujV63aZWZINueTbK7Y8skFHI0zpype9s
- loU8xc4JBrieGccy3n4E/kogGrTG5jcMTNHZ106DsQkhFnjhWETp6g9xOKrzZQbETeRBOe4P
- sRsY9YSG2Sj+ZqmZePvO8LyzGRjYU7T6Z80S1xV0lH6KTMvq7vvz5rd92f3pL4YrXq+e//HZ
- JsiLen8LH/FRhTsWRgBtNYkOsd5F9NvfJtSM0qbX32cSXMAStDVnS4U+H2vCVCWnfNug2TdY
- 7v4NtdpaCi4CBBa3ZtqYVOU05IoLnlx0miKTBMqmI05kpgX98pi2QUPJBYi/+yNu3fjjcuS9
- K5WmpNFTNi6yiBbNjJA5E2qUKbIT/RwQFQvhrxBUcRCuK4x/5uOZrysjFvhtR8YGm08h+8vS
- n0JCnJD5aBhiVdkohEFAz7e5YNrAg6kOA5IVRHB44lTBOatLqz7ntwdGD0rteKuHaUuXpTYy
- CRqCVAKqFJtxhvJvaX0vLS1Z2dwtDwhjfIdgPiKEGOgCNGH7R8l+aaM4OPOd
-Message-ID: <03a481a8-bcf2-8755-d113-71ef393508bf@amsat.org>
-Date: Mon, 13 Apr 2020 23:34:18 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
-MIME-Version: 1.0
-In-Reply-To: <20200413140332.22896-1-eesposit@redhat.com>
-Content-Language: en-US
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=vuPWpOEpABdmh/1VI4/up8dAs2XH63GBNImm7d32EIk=;
+ b=pu/LZz5FyhMeOKTPOOCdVjwI7Jllyzm5mL2ObA8QGAAHGXTbe+E4RHO0LdIpsAEkv8
+ rEAI9IkziKzuTsKAUsQXMgshVNRF2Z57MFHBVIAc0fbXIC24ZX5h+dYxuy9zhW2e5a+x
+ U7aySkEioCMkgUfEzqT8wqOsm+GRoZg7k3XBEwld7IM31xFcQM1QX2Aebadp281RV2Vd
+ AKZMUuuTsVwBEJi4GOWfeN+Yg9lJJtg/FOfSUQEv8Qg4ReeS8B+WwV2lZFMRF9zkdNaL
+ WlIn8P0rgw3sk61/2vgv4dkn05lB+/7llAp9uJXyg6N169TD+T1jPhfH1QQL7fAI1s2Q
+ K+iw==
+X-Gm-Message-State: AGi0PuahTI0piOMmV/gdZpIL1NUqH1hKg/xUQTHx0u8NpfZF6dS8Uwhy
+ f+xecDxA0iH57EXacWPwetHxxFN31F/m
+X-Google-Smtp-Source: APiQypLAo/3dWG3aUJ9m8iimrYZneDDZJRDeReO1X+fvoW4FdoVomY39iYtNWeyL4ijSeh5b/qrZUHHF+4CD
+X-Received: by 2002:a63:b256:: with SMTP id t22mr18355736pgo.92.1586819420186; 
+ Mon, 13 Apr 2020 16:10:20 -0700 (PDT)
+Date: Mon, 13 Apr 2020 16:10:16 -0700
+Message-Id: <20200413231016.250737-1-maskray@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.26.0.110.g2183baf09c-goog
+Subject: [PATCH] arm64: kvm: Delete duplicated label: in invalid_vector
+From: Fangrui Song <maskray@google.com>
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu, 
+ linux-kernel@vger.kernel.org
 X-Mailman-Approved-At: Tue, 14 Apr 2020 05:11:35 -0400
-Cc: Wanpeng Li <wanpengli@tencent.com>, David Hildenbrand <david@redhat.com>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>, linux-mips@vger.kernel.org,
- Paul Mackerras <paulus@ozlabs.org>, kvmarm@lists.cs.columbia.edu,
- linux-s390@vger.kernel.org, Janosch Frank <frankja@linux.ibm.com>,
- Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- Christian Borntraeger <borntraeger@de.ibm.com>, kvm-ppc@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
- Cornelia Huck <cohuck@redhat.com>, linux-kernel@vger.kernel.org,
- Sean Christopherson <sean.j.christopherson@intel.com>,
- Michael Ellerman <mpe@ellerman.id.au>, Paolo Bonzini <pbonzini@redhat.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, linuxppc-dev@lists.ozlabs.org
+Cc: Fangrui Song <maskray@google.com>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ Nick Desaulniers <ndesaulniers@google.com>, clang-built-linux@googlegroups.com,
+ Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -132,86 +90,33 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Emanuele,
+SYM_CODE_START defines \label , so it is redundant to define \label again.
+A redefinition at the same place is accepted by GNU as
+(https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=159fbb6088f17a341bcaaac960623cab881b4981)
+but rejected by the clang integrated assembler.
 
-On 4/13/20 4:03 PM, Emanuele Giuseppe Esposito wrote:
-> The macros VM_STAT and VCPU_STAT are redundantly implemented in multiple
-> files, each used by a different architecure to initialize the debugfs
-> entries for statistics. Since they all have the same purpose, they can be
-> unified in a single common definition in include/linux/kvm_host.h
-> 
-> Signed-off-by: Emanuele Giuseppe Esposito <eesposit@redhat.com>
-> ---
->  arch/arm64/kvm/guest.c    | 23 +++++++--------
->  arch/mips/kvm/mips.c      | 61 +++++++++++++++++++--------------------
->  arch/powerpc/kvm/book3s.c |  3 --
->  arch/powerpc/kvm/booke.c  |  3 --
->  arch/s390/kvm/kvm-s390.c  |  3 --
->  arch/x86/kvm/x86.c        |  3 --
->  include/linux/kvm_host.h  |  3 ++
->  7 files changed, 43 insertions(+), 56 deletions(-)
-> 
-> diff --git a/arch/arm64/kvm/guest.c b/arch/arm64/kvm/guest.c
-> index 23ebe51410f0..3e3aee8b37c0 100644
-> --- a/arch/arm64/kvm/guest.c
-> +++ b/arch/arm64/kvm/guest.c
-> @@ -29,20 +29,17 @@
->  
->  #include "trace.h"
->  
-> -#define VM_STAT(x) { #x, offsetof(struct kvm, stat.x), KVM_STAT_VM }
-> -#define VCPU_STAT(x) { #x, offsetof(struct kvm_vcpu, stat.x), KVM_STAT_VCPU }
-> -
->  struct kvm_stats_debugfs_item debugfs_entries[] = {
-> -	VCPU_STAT(halt_successful_poll),
-> -	VCPU_STAT(halt_attempted_poll),
-> -	VCPU_STAT(halt_poll_invalid),
-> -	VCPU_STAT(halt_wakeup),
-> -	VCPU_STAT(hvc_exit_stat),
-> -	VCPU_STAT(wfe_exit_stat),
-> -	VCPU_STAT(wfi_exit_stat),
-> -	VCPU_STAT(mmio_exit_user),
-> -	VCPU_STAT(mmio_exit_kernel),
-> -	VCPU_STAT(exits),
-> +	{ "halt_successful_poll", VCPU_STAT(halt_successful_poll) },
-> +	{ "halt_attempted_poll", VCPU_STAT(halt_attempted_poll) },
-> +	{ "halt_poll_invalid", VCPU_STAT(halt_poll_invalid) },
-> +	{ "halt_wakeup", VCPU_STAT(halt_wakeup) },
-> +	{ "hvc_exit_stat", VCPU_STAT(hvc_exit_stat) },
-> +	{ "wfe_exit_stat", VCPU_STAT(wfe_exit_stat) },
-> +	{ "wfi_exit_stat", VCPU_STAT(wfi_exit_stat) },
-> +	{ "mmio_exit_user", VCPU_STAT(mmio_exit_user) },
-> +	{ "mmio_exit_kernel", VCPU_STAT(mmio_exit_kernel) },
-> +	{ "exits", VCPU_STAT(exits) },
->  	{ NULL }
->  };
->  
-[...]
-> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> index 6d58beb65454..e02d38c7fff1 100644
-> --- a/include/linux/kvm_host.h
-> +++ b/include/linux/kvm_host.h
-> @@ -1130,6 +1130,9 @@ struct kvm_stats_debugfs_item {
->  #define KVM_DBGFS_GET_MODE(dbgfs_item)                                         \
->  	((dbgfs_item)->mode ? (dbgfs_item)->mode : 0644)
->  
-> +#define VM_STAT(x, ...) offsetof(struct kvm, stat.x), KVM_STAT_VM, ## __VA_ARGS__
-> +#define VCPU_STAT(x, ...) offsetof(struct kvm_vcpu, stat.x), KVM_STAT_VCPU, ## __VA_ARGS__
+Fixes: 617a2f392c92 ("arm64: kvm: Annotate assembly using modern annoations")
+Link: https://github.com/ClangBuiltLinux/linux/issues/988
+Signed-off-by: Fangrui Song <maskray@google.com>
+---
+ arch/arm64/kvm/hyp/hyp-entry.S | 1 -
+ 1 file changed, 1 deletion(-)
 
-I find this macro expanding into multiple fields odd... Maybe a matter
-of taste. Sugggestion, have the macro define the full structure, as in
-the arm64 arch:
+diff --git a/arch/arm64/kvm/hyp/hyp-entry.S b/arch/arm64/kvm/hyp/hyp-entry.S
+index c2a13ab3c471..9c5cfb04170e 100644
+--- a/arch/arm64/kvm/hyp/hyp-entry.S
++++ b/arch/arm64/kvm/hyp/hyp-entry.S
+@@ -198,7 +198,6 @@ SYM_CODE_END(__hyp_panic)
+ .macro invalid_vector	label, target = __hyp_panic
+ 	.align	2
+ SYM_CODE_START(\label)
+-\label:
+ 	b \target
+ SYM_CODE_END(\label)
+ .endm
+-- 
+2.26.0.110.g2183baf09c-goog
 
-#define VM_STAT(n, x, ...) { n, offsetof(struct kvm, stat.x),
-KVM_STAT_VM, ## __VA_ARGS__ }
-
-Ditto for VCPU_STAT().
-
-> +
->  extern struct kvm_stats_debugfs_item debugfs_entries[];
->  extern struct dentry *kvm_debugfs_dir;
->  
-> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
