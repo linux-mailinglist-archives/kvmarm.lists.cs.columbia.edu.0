@@ -2,76 +2,55 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 40E061A645D
-	for <lists+kvmarm@lfdr.de>; Mon, 13 Apr 2020 10:56:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B7A131A647A
+	for <lists+kvmarm@lfdr.de>; Mon, 13 Apr 2020 11:10:00 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B240B4B1C6;
-	Mon, 13 Apr 2020 04:56:24 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 69F984B1DA;
+	Mon, 13 Apr 2020 05:10:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: 0.8
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=0.8 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	UNPARSEABLE_RELAY=0.001] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8hLKLR3fceAJ; Mon, 13 Apr 2020 04:56:24 -0400 (EDT)
+	with ESMTP id Y8IPIJjwPDRC; Mon, 13 Apr 2020 05:09:59 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 958F54B1BF;
-	Mon, 13 Apr 2020 04:56:23 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 83B134B1E0;
+	Mon, 13 Apr 2020 05:09:57 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9BAA14B13B
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 04:56:22 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C53454B15A
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 05:07:38 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id P6QlsGLhfzpI for <kvmarm@lists.cs.columbia.edu>;
- Mon, 13 Apr 2020 04:56:20 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9F76D4B0D3
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 04:56:20 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 46B5920692;
- Mon, 13 Apr 2020 08:56:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1586768179;
- bh=GyaHe3+UWAOxENedBfck6FDz0o/OWfUlsXv987iJQNY=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=AqkvWJwnZMdH4yXR42mVJxFY/122uUYZTeh7KQvVG+ONwnyKmUxp9fytp/Gh8FWWT
- AI4cBPOoNZVA6p9TtCZIWKf00hKXhEUZB/OdlcC0LTrjyfenJ6jTsMxmZad3EKR4Ht
- PvT2YKdfwvlUky+dnidjFPIYDuwnuPS8JBFpAneI=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
- (envelope-from <maz@kernel.org>)
- id 1jNut7-002oec-J1; Mon, 13 Apr 2020 09:56:17 +0100
-MIME-Version: 1.0
-Date: Mon, 13 Apr 2020 09:56:17 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+ with ESMTP id mgyScHBdqkls for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 13 Apr 2020 05:07:37 -0400 (EDT)
+Received: from out30-131.freemail.mail.aliyun.com
+ (out30-131.freemail.mail.aliyun.com [115.124.30.131])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id EFEDA4B156
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 05:07:36 -0400 (EDT)
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R671e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01e01355;
+ MF=tianjia.zhang@linux.alibaba.com; NM=1; PH=DS; RN=19; SR=0;
+ TI=SMTPD_---0TvMk-zp_1586768848; 
+Received: from 30.27.118.45(mailfrom:tianjia.zhang@linux.alibaba.com
+ fp:SMTPD_---0TvMk-zp_1586768848) by smtp.aliyun-inc.com(127.0.0.1);
+ Mon, 13 Apr 2020 17:07:29 +0800
 Subject: Re: [PATCH] KVM: Optimize kvm_arch_vcpu_ioctl_run function
-In-Reply-To: <20200413034523.110548-1-tianjia.zhang@linux.alibaba.com>
+To: Marc Zyngier <maz@kernel.org>
 References: <20200413034523.110548-1-tianjia.zhang@linux.alibaba.com>
-Message-ID: <17097df45c7fe76ee3c09ac180b844d2@kernel.org>
-X-Sender: maz@kernel.org
-User-Agent: Roundcube Webmail/1.3.10
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: tianjia.zhang@linux.alibaba.com, pbonzini@redhat.com,
- sean.j.christopherson@intel.com, vkuznets@redhat.com, wanpengli@tencent.com,
- jmattson@google.com, joro@8bytes.org, tglx@linutronix.de, mingo@redhat.com,
- bp@alien8.de, x86@kernel.org, hpa@zytor.com, james.morse@arm.com,
- julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com, kvm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- linux-kernel@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
+ <17097df45c7fe76ee3c09ac180b844d2@kernel.org>
+From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+Message-ID: <a06c5435-8790-a970-519b-92ea4ee70f7d@linux.alibaba.com>
+Date: Mon, 13 Apr 2020 17:07:28 +0800
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+In-Reply-To: <17097df45c7fe76ee3c09ac180b844d2@kernel.org>
+X-Mailman-Approved-At: Mon, 13 Apr 2020 05:09:56 -0400
 Cc: wanpengli@tencent.com, kvm@vger.kernel.org, joro@8bytes.org, x86@kernel.org,
  linux-kernel@vger.kernel.org, sean.j.christopherson@intel.com,
  kvmarm@lists.cs.columbia.edu, mingo@redhat.com, bp@alien8.de,
@@ -88,86 +67,59 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Tianjia,
-
-On 2020-04-13 04:45, Tianjia Zhang wrote:
-> kvm_arch_vcpu_ioctl_run() is only called in the file kvm_main.c,
-> where vcpu->run is the kvm_run parameter, so it has been replaced.
-> 
-> Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
-> ---
->  arch/x86/kvm/x86.c | 8 ++++----
->  virt/kvm/arm/arm.c | 2 +-
->  2 files changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-> index 3bf2ecafd027..70e3f4abbd4d 100644
-> --- a/arch/x86/kvm/x86.c
-> +++ b/arch/x86/kvm/x86.c
-> @@ -8726,18 +8726,18 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu
-> *vcpu, struct kvm_run *kvm_run)
->  		r = -EAGAIN;
->  		if (signal_pending(current)) {
->  			r = -EINTR;
-> -			vcpu->run->exit_reason = KVM_EXIT_INTR;
-> +			kvm_run->exit_reason = KVM_EXIT_INTR;
->  			++vcpu->stat.signal_exits;
->  		}
->  		goto out;
->  	}
-> 
-> -	if (vcpu->run->kvm_valid_regs & ~KVM_SYNC_X86_VALID_FIELDS) {
-> +	if (kvm_run->kvm_valid_regs & ~KVM_SYNC_X86_VALID_FIELDS) {
->  		r = -EINVAL;
->  		goto out;
->  	}
-> 
-> -	if (vcpu->run->kvm_dirty_regs) {
-> +	if (kvm_run->kvm_dirty_regs) {
->  		r = sync_regs(vcpu);
->  		if (r != 0)
->  			goto out;
-> @@ -8767,7 +8767,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu
-> *vcpu, struct kvm_run *kvm_run)
-> 
->  out:
->  	kvm_put_guest_fpu(vcpu);
-> -	if (vcpu->run->kvm_valid_regs)
-> +	if (kvm_run->kvm_valid_regs)
->  		store_regs(vcpu);
->  	post_kvm_run_save(vcpu);
->  	kvm_sigset_deactivate(vcpu);
-> diff --git a/virt/kvm/arm/arm.c b/virt/kvm/arm/arm.c
-> index 48d0ec44ad77..ab9d7966a4c8 100644
-> --- a/virt/kvm/arm/arm.c
-> +++ b/virt/kvm/arm/arm.c
-> @@ -659,7 +659,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu,
-> struct kvm_run *run)
->  		return ret;
-> 
->  	if (run->exit_reason == KVM_EXIT_MMIO) {
-> -		ret = kvm_handle_mmio_return(vcpu, vcpu->run);
-> +		ret = kvm_handle_mmio_return(vcpu, run);
->  		if (ret)
->  			return ret;
->  	}
-
-Do you have any number supporting the idea that you are optimizing 
-anything
-here? Performance, code size, register pressure or any other relevant 
-metric?
-
-Thanks,
-
-         M.
--- 
-Jazz is not dead. It just smells funny...
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+CgpPbiAyMDIwLzQvMTMgMTY6NTYsIE1hcmMgWnluZ2llciB3cm90ZToKPiBUaWFuamlhLAo+IAo+
+IE9uIDIwMjAtMDQtMTMgMDQ6NDUsIFRpYW5qaWEgWmhhbmcgd3JvdGU6Cj4+IGt2bV9hcmNoX3Zj
+cHVfaW9jdGxfcnVuKCkgaXMgb25seSBjYWxsZWQgaW4gdGhlIGZpbGUga3ZtX21haW4uYywKPj4g
+d2hlcmUgdmNwdS0+cnVuIGlzIHRoZSBrdm1fcnVuIHBhcmFtZXRlciwgc28gaXQgaGFzIGJlZW4g
+cmVwbGFjZWQuCj4+Cj4+IFNpZ25lZC1vZmYtYnk6IFRpYW5qaWEgWmhhbmcgPHRpYW5qaWEuemhh
+bmdAbGludXguYWxpYmFiYS5jb20+Cj4+IC0tLQo+PiDCoGFyY2gveDg2L2t2bS94ODYuYyB8IDgg
+KysrKy0tLS0KPj4gwqB2aXJ0L2t2bS9hcm0vYXJtLmMgfCAyICstCj4+IMKgMiBmaWxlcyBjaGFu
+Z2VkLCA1IGluc2VydGlvbnMoKyksIDUgZGVsZXRpb25zKC0pCj4+Cj4+IGRpZmYgLS1naXQgYS9h
+cmNoL3g4Ni9rdm0veDg2LmMgYi9hcmNoL3g4Ni9rdm0veDg2LmMKPj4gaW5kZXggM2JmMmVjYWZk
+MDI3Li43MGUzZjRhYmJkNGQgMTAwNjQ0Cj4+IC0tLSBhL2FyY2gveDg2L2t2bS94ODYuYwo+PiAr
+KysgYi9hcmNoL3g4Ni9rdm0veDg2LmMKPj4gQEAgLTg3MjYsMTggKzg3MjYsMTggQEAgaW50IGt2
+bV9hcmNoX3ZjcHVfaW9jdGxfcnVuKHN0cnVjdCBrdm1fdmNwdQo+PiAqdmNwdSwgc3RydWN0IGt2
+bV9ydW4gKmt2bV9ydW4pCj4+IMKgwqDCoMKgwqDCoMKgwqAgciA9IC1FQUdBSU47Cj4+IMKgwqDC
+oMKgwqDCoMKgwqAgaWYgKHNpZ25hbF9wZW5kaW5nKGN1cnJlbnQpKSB7Cj4+IMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCByID0gLUVJTlRSOwo+PiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB2Y3B1
+LT5ydW4tPmV4aXRfcmVhc29uID0gS1ZNX0VYSVRfSU5UUjsKPj4gK8KgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAga3ZtX3J1bi0+ZXhpdF9yZWFzb24gPSBLVk1fRVhJVF9JTlRSOwo+PiDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqAgKyt2Y3B1LT5zdGF0LnNpZ25hbF9leGl0czsKPj4gwqDCoMKgwqDCoMKg
+wqDCoCB9Cj4+IMKgwqDCoMKgwqDCoMKgwqAgZ290byBvdXQ7Cj4+IMKgwqDCoMKgIH0KPj4KPj4g
+LcKgwqDCoCBpZiAodmNwdS0+cnVuLT5rdm1fdmFsaWRfcmVncyAmIH5LVk1fU1lOQ19YODZfVkFM
+SURfRklFTERTKSB7Cj4+ICvCoMKgwqAgaWYgKGt2bV9ydW4tPmt2bV92YWxpZF9yZWdzICYgfktW
+TV9TWU5DX1g4Nl9WQUxJRF9GSUVMRFMpIHsKPj4gwqDCoMKgwqDCoMKgwqDCoCByID0gLUVJTlZB
+TDsKPj4gwqDCoMKgwqDCoMKgwqDCoCBnb3RvIG91dDsKPj4gwqDCoMKgwqAgfQo+Pgo+PiAtwqDC
+oMKgIGlmICh2Y3B1LT5ydW4tPmt2bV9kaXJ0eV9yZWdzKSB7Cj4+ICvCoMKgwqAgaWYgKGt2bV9y
+dW4tPmt2bV9kaXJ0eV9yZWdzKSB7Cj4+IMKgwqDCoMKgwqDCoMKgwqAgciA9IHN5bmNfcmVncyh2
+Y3B1KTsKPj4gwqDCoMKgwqDCoMKgwqDCoCBpZiAociAhPSAwKQo+PiDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqAgZ290byBvdXQ7Cj4+IEBAIC04NzY3LDcgKzg3NjcsNyBAQCBpbnQga3ZtX2FyY2hf
+dmNwdV9pb2N0bF9ydW4oc3RydWN0IGt2bV92Y3B1Cj4+ICp2Y3B1LCBzdHJ1Y3Qga3ZtX3J1biAq
+a3ZtX3J1bikKPj4KPj4gwqBvdXQ6Cj4+IMKgwqDCoMKgIGt2bV9wdXRfZ3Vlc3RfZnB1KHZjcHUp
+Owo+PiAtwqDCoMKgIGlmICh2Y3B1LT5ydW4tPmt2bV92YWxpZF9yZWdzKQo+PiArwqDCoMKgIGlm
+IChrdm1fcnVuLT5rdm1fdmFsaWRfcmVncykKPj4gwqDCoMKgwqDCoMKgwqDCoCBzdG9yZV9yZWdz
+KHZjcHUpOwo+PiDCoMKgwqDCoCBwb3N0X2t2bV9ydW5fc2F2ZSh2Y3B1KTsKPj4gwqDCoMKgwqAg
+a3ZtX3NpZ3NldF9kZWFjdGl2YXRlKHZjcHUpOwo+PiBkaWZmIC0tZ2l0IGEvdmlydC9rdm0vYXJt
+L2FybS5jIGIvdmlydC9rdm0vYXJtL2FybS5jCj4+IGluZGV4IDQ4ZDBlYzQ0YWQ3Ny4uYWI5ZDc5
+NjZhNGM4IDEwMDY0NAo+PiAtLS0gYS92aXJ0L2t2bS9hcm0vYXJtLmMKPj4gKysrIGIvdmlydC9r
+dm0vYXJtL2FybS5jCj4+IEBAIC02NTksNyArNjU5LDcgQEAgaW50IGt2bV9hcmNoX3ZjcHVfaW9j
+dGxfcnVuKHN0cnVjdCBrdm1fdmNwdSAqdmNwdSwKPj4gc3RydWN0IGt2bV9ydW4gKnJ1bikKPj4g
+wqDCoMKgwqDCoMKgwqDCoCByZXR1cm4gcmV0Owo+Pgo+PiDCoMKgwqDCoCBpZiAocnVuLT5leGl0
+X3JlYXNvbiA9PSBLVk1fRVhJVF9NTUlPKSB7Cj4+IC3CoMKgwqDCoMKgwqDCoCByZXQgPSBrdm1f
+aGFuZGxlX21taW9fcmV0dXJuKHZjcHUsIHZjcHUtPnJ1bik7Cj4+ICvCoMKgwqDCoMKgwqDCoCBy
+ZXQgPSBrdm1faGFuZGxlX21taW9fcmV0dXJuKHZjcHUsIHJ1bik7Cj4+IMKgwqDCoMKgwqDCoMKg
+wqAgaWYgKHJldCkKPj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHJldHVybiByZXQ7Cj4+IMKg
+wqDCoMKgIH0KPiAKPiBEbyB5b3UgaGF2ZSBhbnkgbnVtYmVyIHN1cHBvcnRpbmcgdGhlIGlkZWEg
+dGhhdCB5b3UgYXJlIG9wdGltaXppbmcgYW55dGhpbmcKPiBoZXJlPyBQZXJmb3JtYW5jZSwgY29k
+ZSBzaXplLCByZWdpc3RlciBwcmVzc3VyZSBvciBhbnkgb3RoZXIgcmVsZXZhbnQgCj4gbWV0cmlj
+Pwo+IAo+IFRoYW5rcywKPiAKPiAgwqDCoMKgwqDCoMKgwqAgTS4KClRoaXMgaXMgb25seSBhIHNp
+bXBsaWZpZWQgaW1wbGVtZW50YXRpb24gb2YgdGhlIGZ1bmN0aW9uLCB0aGUgaW1wYWN0IG9uIApw
+ZXJmb3JtYW5jZSBhbmQgcmVnaXN0ZXIgcHJlc3N1cmUgY2FuIGJlIGlnbm9yZWQuCgpUaGFua3Ms
+ClRpYW5qaWEKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18K
+a3ZtYXJtIG1haWxpbmcgbGlzdAprdm1hcm1AbGlzdHMuY3MuY29sdW1iaWEuZWR1Cmh0dHBzOi8v
+bGlzdHMuY3MuY29sdW1iaWEuZWR1L21haWxtYW4vbGlzdGluZm8va3ZtYXJtCg==
