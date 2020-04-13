@@ -2,57 +2,57 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 006B51A61BF
-	for <lists+kvmarm@lfdr.de>; Mon, 13 Apr 2020 05:33:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C09161A6479
+	for <lists+kvmarm@lfdr.de>; Mon, 13 Apr 2020 11:09:59 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1C4B14B132;
-	Sun, 12 Apr 2020 23:33:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4C8714B1E2;
+	Mon, 13 Apr 2020 05:09:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: 0.8
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.8 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	UNPARSEABLE_RELAY=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id S5OOkqZu5URq; Sun, 12 Apr 2020 23:33:12 -0400 (EDT)
+	with ESMTP id XbE-hlEfSWXQ; Mon, 13 Apr 2020 05:09:59 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DEB524B105;
-	Sun, 12 Apr 2020 23:33:10 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6EC324B1D4;
+	Mon, 13 Apr 2020 05:09:57 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id BF0704B0D0
- for <kvmarm@lists.cs.columbia.edu>; Sun, 12 Apr 2020 23:33:09 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B79EB4B0A0
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 12 Apr 2020 23:45:30 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 02r6eF0HQ7gs for <kvmarm@lists.cs.columbia.edu>;
- Sun, 12 Apr 2020 23:33:08 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 835A64B0BA
- for <kvmarm@lists.cs.columbia.edu>; Sun, 12 Apr 2020 23:33:08 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E24C530E;
- Sun, 12 Apr 2020 20:33:07 -0700 (PDT)
-Received: from [10.163.1.49] (unknown [10.163.1.49])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 089B43F6C4;
- Sun, 12 Apr 2020 20:33:04 -0700 (PDT)
-Subject: Re: [PATCH 1/6] arm64/cpufeature: Introduce ID_PFR2 CPU register
-To: Will Deacon <will@kernel.org>
-References: <1580215149-21492-1-git-send-email-anshuman.khandual@arm.com>
- <1580215149-21492-2-git-send-email-anshuman.khandual@arm.com>
- <20200409125431.GB13078@willie-the-truck>
-From: Anshuman Khandual <anshuman.khandual@arm.com>
-Message-ID: <8b905244-c296-3859-b515-711550bef3a2@arm.com>
-Date: Mon, 13 Apr 2020 09:02:57 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
-MIME-Version: 1.0
-In-Reply-To: <20200409125431.GB13078@willie-the-truck>
-Content-Language: en-US
-Cc: Catalin Marinas <catalin.marinas@arm.com>, linux-kernel@vger.kernel.org,
- Marc Zyngier <maz@kernel.org>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+ with ESMTP id 3HmxOZ4vZTBb for <kvmarm@lists.cs.columbia.edu>;
+ Sun, 12 Apr 2020 23:45:29 -0400 (EDT)
+Received: from out30-132.freemail.mail.aliyun.com
+ (out30-132.freemail.mail.aliyun.com [115.124.30.132])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 59B254A51D
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 12 Apr 2020 23:45:29 -0400 (EDT)
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R771e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01f04397;
+ MF=tianjia.zhang@linux.alibaba.com; NM=1; PH=DS; RN=20; SR=0;
+ TI=SMTPD_---0TvK0H1G_1586749524; 
+Received: from localhost(mailfrom:tianjia.zhang@linux.alibaba.com
+ fp:SMTPD_---0TvK0H1G_1586749524) by smtp.aliyun-inc.com(127.0.0.1);
+ Mon, 13 Apr 2020 11:45:24 +0800
+From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+To: pbonzini@redhat.com, sean.j.christopherson@intel.com, vkuznets@redhat.com,
+ wanpengli@tencent.com, jmattson@google.com, joro@8bytes.org,
+ tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, x86@kernel.org,
+ hpa@zytor.com, maz@kernel.org, james.morse@arm.com,
+ julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com
+Subject: [PATCH] KVM: Optimize kvm_arch_vcpu_ioctl_run function
+Date: Mon, 13 Apr 2020 11:45:23 +0800
+Message-Id: <20200413034523.110548-1-tianjia.zhang@linux.alibaba.com>
+X-Mailer: git-send-email 2.17.1
+X-Mailman-Approved-At: Mon, 13 Apr 2020 05:09:56 -0400
+Cc: linux-kernel@vger.kernel.org, tianjia.zhang@linux.alibaba.com,
+ linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -64,90 +64,72 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+kvm_arch_vcpu_ioctl_run() is only called in the file kvm_main.c,
+where vcpu->run is the kvm_run parameter, so it has been replaced.
 
+Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+---
+ arch/x86/kvm/x86.c | 8 ++++----
+ virt/kvm/arm/arm.c | 2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-On 04/09/2020 06:24 PM, Will Deacon wrote:
-> On Tue, Jan 28, 2020 at 06:09:04PM +0530, Anshuman Khandual wrote:
->> This adds basic building blocks required for ID_PFR2 CPU register which
->> provides information about the AArch32 programmers model which must be
->> interpreted along with ID_PFR0 and ID_PFR1 CPU registers.
->>
->> Cc: Catalin Marinas <catalin.marinas@arm.com>
->> Cc: Will Deacon <will@kernel.org>
->> Cc: Marc Zyngier <maz@kernel.org>
->> Cc: James Morse <james.morse@arm.com>
->> Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
->> Cc: Mark Rutland <mark.rutland@arm.com>
->> Cc: kvmarm@lists.cs.columbia.edu
->> Cc: linux-kernel@vger.kernel.org
->> Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
->> ---
->>  arch/arm64/include/asm/cpu.h    |  1 +
->>  arch/arm64/include/asm/sysreg.h |  4 ++++
->>  arch/arm64/kernel/cpufeature.c  | 11 +++++++++++
->>  arch/arm64/kernel/cpuinfo.c     |  1 +
->>  arch/arm64/kvm/sys_regs.c       |  2 +-
->>  5 files changed, 18 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/include/asm/cpu.h b/arch/arm64/include/asm/cpu.h
->> index b4a40535a3d8..464e828a994d 100644
->> --- a/arch/arm64/include/asm/cpu.h
->> +++ b/arch/arm64/include/asm/cpu.h
->> @@ -46,6 +46,7 @@ struct cpuinfo_arm64 {
->>  	u32		reg_id_mmfr3;
->>  	u32		reg_id_pfr0;
->>  	u32		reg_id_pfr1;
->> +	u32		reg_id_pfr2;
->>  
->>  	u32		reg_mvfr0;
->>  	u32		reg_mvfr1;
->> diff --git a/arch/arm64/include/asm/sysreg.h b/arch/arm64/include/asm/sysreg.h
->> index b91570ff9db1..054aab7ebf1b 100644
->> --- a/arch/arm64/include/asm/sysreg.h
->> +++ b/arch/arm64/include/asm/sysreg.h
->> @@ -151,6 +151,7 @@
->>  #define SYS_MVFR0_EL1			sys_reg(3, 0, 0, 3, 0)
->>  #define SYS_MVFR1_EL1			sys_reg(3, 0, 0, 3, 1)
->>  #define SYS_MVFR2_EL1			sys_reg(3, 0, 0, 3, 2)
->> +#define SYS_ID_PFR2_EL1			sys_reg(3, 0, 0, 3, 4)
->>  
->>  #define SYS_ID_AA64PFR0_EL1		sys_reg(3, 0, 0, 4, 0)
->>  #define SYS_ID_AA64PFR1_EL1		sys_reg(3, 0, 0, 4, 1)
->> @@ -717,6 +718,9 @@
->>  #define ID_ISAR6_DP_SHIFT		4
->>  #define ID_ISAR6_JSCVT_SHIFT		0
->>  
->> +#define ID_PFR2_SSBS_SHIFT		4
->> +#define ID_PFR2_CSV3_SHIFT		0
->> +
->>  #define MVFR0_FPROUND_SHIFT		28
->>  #define MVFR0_FPSHVEC_SHIFT		24
->>  #define MVFR0_FPSQRT_SHIFT		20
->> diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
->> index 0b6715625cf6..c1e837fc8f97 100644
->> --- a/arch/arm64/kernel/cpufeature.c
->> +++ b/arch/arm64/kernel/cpufeature.c
->> @@ -348,6 +348,12 @@ static const struct arm64_ftr_bits ftr_id_pfr0[] = {
->>  	ARM64_FTR_END,
->>  };
->>  
->> +static const struct arm64_ftr_bits ftr_id_pfr2[] = {
->> +	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_PFR2_SSBS_SHIFT, 4, 0),
->> +	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_PFR2_CSV3_SHIFT, 4, 0),
-> 
-> Why is CSV3 strict here, but not when we see if in aa64pfr0? I think it
-> should be non-strict in both cases.
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 3bf2ecafd027..70e3f4abbd4d 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -8726,18 +8726,18 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu, struct kvm_run *kvm_run)
+ 		r = -EAGAIN;
+ 		if (signal_pending(current)) {
+ 			r = -EINTR;
+-			vcpu->run->exit_reason = KVM_EXIT_INTR;
++			kvm_run->exit_reason = KVM_EXIT_INTR;
+ 			++vcpu->stat.signal_exits;
+ 		}
+ 		goto out;
+ 	}
+ 
+-	if (vcpu->run->kvm_valid_regs & ~KVM_SYNC_X86_VALID_FIELDS) {
++	if (kvm_run->kvm_valid_regs & ~KVM_SYNC_X86_VALID_FIELDS) {
+ 		r = -EINVAL;
+ 		goto out;
+ 	}
+ 
+-	if (vcpu->run->kvm_dirty_regs) {
++	if (kvm_run->kvm_dirty_regs) {
+ 		r = sync_regs(vcpu);
+ 		if (r != 0)
+ 			goto out;
+@@ -8767,7 +8767,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu, struct kvm_run *kvm_run)
+ 
+ out:
+ 	kvm_put_guest_fpu(vcpu);
+-	if (vcpu->run->kvm_valid_regs)
++	if (kvm_run->kvm_valid_regs)
+ 		store_regs(vcpu);
+ 	post_kvm_run_save(vcpu);
+ 	kvm_sigset_deactivate(vcpu);
+diff --git a/virt/kvm/arm/arm.c b/virt/kvm/arm/arm.c
+index 48d0ec44ad77..ab9d7966a4c8 100644
+--- a/virt/kvm/arm/arm.c
++++ b/virt/kvm/arm/arm.c
+@@ -659,7 +659,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu, struct kvm_run *run)
+ 		return ret;
+ 
+ 	if (run->exit_reason == KVM_EXIT_MMIO) {
+-		ret = kvm_handle_mmio_return(vcpu, vcpu->run);
++		ret = kvm_handle_mmio_return(vcpu, run);
+ 		if (ret)
+ 			return ret;
+ 	}
+-- 
+2.17.1
 
-Sure, will do.
-
-> 
-> Will
-> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
