@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5259B1A770F
-	for <lists+kvmarm@lfdr.de>; Tue, 14 Apr 2020 11:11:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56E471A6FD9
+	for <lists+kvmarm@lfdr.de>; Tue, 14 Apr 2020 01:37:28 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 039BA4B1F4;
-	Tue, 14 Apr 2020 05:11:39 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CA2AE4B227;
+	Mon, 13 Apr 2020 19:37:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,66 +14,67 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xHY6mJnCTHcw; Tue, 14 Apr 2020 05:11:37 -0400 (EDT)
+	with ESMTP id 5WcVlwTGdKhf; Mon, 13 Apr 2020 19:37:27 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D4C8E4B1ED;
-	Tue, 14 Apr 2020 05:11:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BCBED4B22B;
+	Mon, 13 Apr 2020 19:37:26 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 605B44B1F0
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 19:10:22 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 334684B21A
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 19:37:25 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id dXqSeFo2GjfE for <kvmarm@lists.cs.columbia.edu>;
- Mon, 13 Apr 2020 19:10:21 -0400 (EDT)
-Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com
- [209.85.215.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 405A64B1B4
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 19:10:21 -0400 (EDT)
-Received: by mail-pg1-f202.google.com with SMTP id u187so9886826pgu.14
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 16:10:21 -0700 (PDT)
+ with ESMTP id JbPHWsgSitYo for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 13 Apr 2020 19:37:24 -0400 (EDT)
+Received: from mail-pg1-f194.google.com (mail-pg1-f194.google.com
+ [209.85.215.194])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E661A4B133
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 19:37:23 -0400 (EDT)
+Received: by mail-pg1-f194.google.com with SMTP id g32so5178458pgb.6
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 16:37:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:message-id:mime-version:subject:from:to:cc;
- bh=vuPWpOEpABdmh/1VI4/up8dAs2XH63GBNImm7d32EIk=;
- b=uuJSa5giC8TYDkne2taIdNZXmrgXcjt5CgpmGdHhNkQ5j9v4VYPqCbuOp/KxDtbpN/
- 4cEve/TUCY86wv/6A7knM+8e9X2X26bBtQI1pCE3hfpB0tNpS2C6uuPLmBbXCsDUsLCt
- yGMJ+F5vrbUcoQa3o341Dx9C5iCe89I30q1guImO4DyqZb4diH3XCeHvbcpviNeozcws
- gj+8/im9ix9ynfMpIso42JYQXromt7QpwqYKI74mEYsJhq5j9oGEAXhJZ135kR2imQDD
- 3m4Qjg55XxOsQiFJaEkVMAaVkGz41KeMuqSEUp5ld97t/FXZdGOxaDPNmBYTGbIKMZAN
- aCVA==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=lMPIRjn0PE7jnqkkSuf3FQb+qv7klZT/6x17CMWdL34=;
+ b=d9NwDt3IHShJ2ZFMU0WdEcCis4G+93NeL33oosLAJ0QBuuU2m6PWo3KMjSfpLJlU4I
+ t06sp32EumYZEhSVDRcWGyPkyeetQP8+MvbdwRXYykzoH3+AITWvVP64YO93bwnOJxLF
+ D5KfnhButbLosSN8/qU629tHEf6ViakscnvvxpZ3hhQXplpdLVNheOPeHCaq8xhmjbzn
+ s6Z9ObCL9VQ4ioIaVHFzpurAEI0OZDQEdMmeCPFrIo58ZFT/7Xe0wdFRaU5Vdi3dQhlc
+ rYQcrSsUKZOdKvzTe+NmJgyRZz7G74rogHaSGx7C4MrN6k8npbyfw+gF6whUx0hQek9X
+ eQOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
- bh=vuPWpOEpABdmh/1VI4/up8dAs2XH63GBNImm7d32EIk=;
- b=pu/LZz5FyhMeOKTPOOCdVjwI7Jllyzm5mL2ObA8QGAAHGXTbe+E4RHO0LdIpsAEkv8
- rEAI9IkziKzuTsKAUsQXMgshVNRF2Z57MFHBVIAc0fbXIC24ZX5h+dYxuy9zhW2e5a+x
- U7aySkEioCMkgUfEzqT8wqOsm+GRoZg7k3XBEwld7IM31xFcQM1QX2Aebadp281RV2Vd
- AKZMUuuTsVwBEJi4GOWfeN+Yg9lJJtg/FOfSUQEv8Qg4ReeS8B+WwV2lZFMRF9zkdNaL
- WlIn8P0rgw3sk61/2vgv4dkn05lB+/7llAp9uJXyg6N169TD+T1jPhfH1QQL7fAI1s2Q
- K+iw==
-X-Gm-Message-State: AGi0PuahTI0piOMmV/gdZpIL1NUqH1hKg/xUQTHx0u8NpfZF6dS8Uwhy
- f+xecDxA0iH57EXacWPwetHxxFN31F/m
-X-Google-Smtp-Source: APiQypLAo/3dWG3aUJ9m8iimrYZneDDZJRDeReO1X+fvoW4FdoVomY39iYtNWeyL4ijSeh5b/qrZUHHF+4CD
-X-Received: by 2002:a63:b256:: with SMTP id t22mr18355736pgo.92.1586819420186; 
- Mon, 13 Apr 2020 16:10:20 -0700 (PDT)
-Date: Mon, 13 Apr 2020 16:10:16 -0700
-Message-Id: <20200413231016.250737-1-maskray@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.26.0.110.g2183baf09c-goog
-Subject: [PATCH] arm64: kvm: Delete duplicated label: in invalid_vector
-From: Fangrui Song <maskray@google.com>
-To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu, 
- linux-kernel@vger.kernel.org
-X-Mailman-Approved-At: Tue, 14 Apr 2020 05:11:35 -0400
-Cc: Fangrui Song <maskray@google.com>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Nick Desaulniers <ndesaulniers@google.com>, clang-built-linux@googlegroups.com,
- Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=lMPIRjn0PE7jnqkkSuf3FQb+qv7klZT/6x17CMWdL34=;
+ b=HokALX0Hcxw1QLkr10DT3N6GlLHFXikBzZvKmpr0s4BZAUtWH9EPJboDsfSZJSCNFa
+ zm+3W/pYBMWMQa8Xob6uC+xLWDEpjrNE6aqqPV1B89dk83q9GRrsz5IdcmiqBkD0+UhO
+ 644pxQ2xx3rw/q3NWo+u/XkD6Ur4MtWPbvKO7S4pTfcBtFseGRCFDzh0fln2RE4Lowgs
+ g2uGATso8ZlI5iib++wjBcjSgKZnqNNdje4lzzhu5BI+CfnegAfAY3//804sCczPHDRb
+ e3wucyGBGtu1bswQpXtd9KmVAd7L+kJq4LES28cgO/F+ozdjb4mOBW3TTlzGgmpE6Phz
+ d8qw==
+X-Gm-Message-State: AGi0PubxmsefMuOn0Mn7L41pbU7cKa4hpwvjgfy6qkEblryKXu31X10W
+ dz60g0RG09+bEh6oyTgZJu3AdXJUrnLA+ItA/oZVmw==
+X-Google-Smtp-Source: APiQypIIArEcMtBa+6lU3ecAVeDtyJ9+R/7AtvwXV6mkhFTgICAF71cY/Q7KBQ2W2N1aHsHsV6yeVXwI/BROaWewvSM=
+X-Received: by 2002:a63:6604:: with SMTP id a4mr18265124pgc.381.1586821042616; 
+ Mon, 13 Apr 2020 16:37:22 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200413231016.250737-1-maskray@google.com>
+In-Reply-To: <20200413231016.250737-1-maskray@google.com>
+From: Nick Desaulniers <ndesaulniers@google.com>
+Date: Mon, 13 Apr 2020 16:37:10 -0700
+Message-ID: <CAKwvOdn35v5LkvhWugfLmK_FjVsd0RdPtBCRSqVaM9EP_1KU7w@mail.gmail.com>
+Subject: Re: [PATCH] arm64: kvm: Delete duplicated label: in invalid_vector
+To: Fangrui Song <maskray@google.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>,
+ LKML <linux-kernel@vger.kernel.org>,
+ clang-built-linux <clang-built-linux@googlegroups.com>,
+ Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, Linux ARM <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -90,33 +91,51 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-SYM_CODE_START defines \label , so it is redundant to define \label again.
-A redefinition at the same place is accepted by GNU as
-(https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=159fbb6088f17a341bcaaac960623cab881b4981)
-but rejected by the clang integrated assembler.
+On Mon, Apr 13, 2020 at 4:10 PM Fangrui Song <maskray@google.com> wrote:
+>
+> SYM_CODE_START defines \label , so it is redundant to define \label again.
+> A redefinition at the same place is accepted by GNU as
+> (https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=159fbb6088f17a341bcaaac960623cab881b4981)
+> but rejected by the clang integrated assembler.
+>
+> Fixes: 617a2f392c92 ("arm64: kvm: Annotate assembly using modern annoations")
 
-Fixes: 617a2f392c92 ("arm64: kvm: Annotate assembly using modern annoations")
-Link: https://github.com/ClangBuiltLinux/linux/issues/988
-Signed-off-by: Fangrui Song <maskray@google.com>
----
- arch/arm64/kvm/hyp/hyp-entry.S | 1 -
- 1 file changed, 1 deletion(-)
+Thanks for the patch!  I think a more accurate Fixes tag would be:
+Fixes: 2b28162cf65a ("arm64: KVM: HYP mode entry points")
 
-diff --git a/arch/arm64/kvm/hyp/hyp-entry.S b/arch/arm64/kvm/hyp/hyp-entry.S
-index c2a13ab3c471..9c5cfb04170e 100644
---- a/arch/arm64/kvm/hyp/hyp-entry.S
-+++ b/arch/arm64/kvm/hyp/hyp-entry.S
-@@ -198,7 +198,6 @@ SYM_CODE_END(__hyp_panic)
- .macro invalid_vector	label, target = __hyp_panic
- 	.align	2
- SYM_CODE_START(\label)
--\label:
- 	b \target
- SYM_CODE_END(\label)
- .endm
+With this patch applied, and your other arm64 integrated assembler
+patch (https://lore.kernel.org/linux-arm-kernel/20200413033811.75074-1-maskray@google.com/T/#u),
+I can now assemble arch/arm64/kvm/.
+
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Nick Desaulniers <ndesaulniers@google.com>
+
+> Link: https://github.com/ClangBuiltLinux/linux/issues/988
+> Signed-off-by: Fangrui Song <maskray@google.com>
+> ---
+>  arch/arm64/kvm/hyp/hyp-entry.S | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/arch/arm64/kvm/hyp/hyp-entry.S b/arch/arm64/kvm/hyp/hyp-entry.S
+> index c2a13ab3c471..9c5cfb04170e 100644
+> --- a/arch/arm64/kvm/hyp/hyp-entry.S
+> +++ b/arch/arm64/kvm/hyp/hyp-entry.S
+> @@ -198,7 +198,6 @@ SYM_CODE_END(__hyp_panic)
+>  .macro invalid_vector  label, target = __hyp_panic
+>         .align  2
+>  SYM_CODE_START(\label)
+> -\label:
+>         b \target
+>  SYM_CODE_END(\label)
+>  .endm
+> --
+> 2.26.0.110.g2183baf09c-goog
+>
+
+
 -- 
-2.26.0.110.g2183baf09c-goog
-
+Thanks,
+~Nick Desaulniers
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
