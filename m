@@ -2,79 +2,52 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 56E471A6FD9
-	for <lists+kvmarm@lfdr.de>; Tue, 14 Apr 2020 01:37:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A14141A716B
+	for <lists+kvmarm@lfdr.de>; Tue, 14 Apr 2020 05:04:26 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CA2AE4B227;
-	Mon, 13 Apr 2020 19:37:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 534034B217;
+	Mon, 13 Apr 2020 23:04:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5WcVlwTGdKhf; Mon, 13 Apr 2020 19:37:27 -0400 (EDT)
+	with ESMTP id UTrFjc3bjupT; Mon, 13 Apr 2020 23:04:26 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BCBED4B22B;
-	Mon, 13 Apr 2020 19:37:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 48FCB4B213;
+	Mon, 13 Apr 2020 23:04:25 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 334684B21A
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 19:37:25 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 39E284B208
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 23:04:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id JbPHWsgSitYo for <kvmarm@lists.cs.columbia.edu>;
- Mon, 13 Apr 2020 19:37:24 -0400 (EDT)
-Received: from mail-pg1-f194.google.com (mail-pg1-f194.google.com
- [209.85.215.194])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E661A4B133
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 19:37:23 -0400 (EDT)
-Received: by mail-pg1-f194.google.com with SMTP id g32so5178458pgb.6
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 16:37:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=lMPIRjn0PE7jnqkkSuf3FQb+qv7klZT/6x17CMWdL34=;
- b=d9NwDt3IHShJ2ZFMU0WdEcCis4G+93NeL33oosLAJ0QBuuU2m6PWo3KMjSfpLJlU4I
- t06sp32EumYZEhSVDRcWGyPkyeetQP8+MvbdwRXYykzoH3+AITWvVP64YO93bwnOJxLF
- D5KfnhButbLosSN8/qU629tHEf6ViakscnvvxpZ3hhQXplpdLVNheOPeHCaq8xhmjbzn
- s6Z9ObCL9VQ4ioIaVHFzpurAEI0OZDQEdMmeCPFrIo58ZFT/7Xe0wdFRaU5Vdi3dQhlc
- rYQcrSsUKZOdKvzTe+NmJgyRZz7G74rogHaSGx7C4MrN6k8npbyfw+gF6whUx0hQek9X
- eQOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=lMPIRjn0PE7jnqkkSuf3FQb+qv7klZT/6x17CMWdL34=;
- b=HokALX0Hcxw1QLkr10DT3N6GlLHFXikBzZvKmpr0s4BZAUtWH9EPJboDsfSZJSCNFa
- zm+3W/pYBMWMQa8Xob6uC+xLWDEpjrNE6aqqPV1B89dk83q9GRrsz5IdcmiqBkD0+UhO
- 644pxQ2xx3rw/q3NWo+u/XkD6Ur4MtWPbvKO7S4pTfcBtFseGRCFDzh0fln2RE4Lowgs
- g2uGATso8ZlI5iib++wjBcjSgKZnqNNdje4lzzhu5BI+CfnegAfAY3//804sCczPHDRb
- e3wucyGBGtu1bswQpXtd9KmVAd7L+kJq4LES28cgO/F+ozdjb4mOBW3TTlzGgmpE6Phz
- d8qw==
-X-Gm-Message-State: AGi0PubxmsefMuOn0Mn7L41pbU7cKa4hpwvjgfy6qkEblryKXu31X10W
- dz60g0RG09+bEh6oyTgZJu3AdXJUrnLA+ItA/oZVmw==
-X-Google-Smtp-Source: APiQypIIArEcMtBa+6lU3ecAVeDtyJ9+R/7AtvwXV6mkhFTgICAF71cY/Q7KBQ2W2N1aHsHsV6yeVXwI/BROaWewvSM=
-X-Received: by 2002:a63:6604:: with SMTP id a4mr18265124pgc.381.1586821042616; 
- Mon, 13 Apr 2020 16:37:22 -0700 (PDT)
+ with ESMTP id 3eOagl955SdR for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 13 Apr 2020 23:04:23 -0400 (EDT)
+Received: from huawei.com (szxga05-in.huawei.com [45.249.212.191])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 25B3F4B1F9
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Apr 2020 23:04:21 -0400 (EDT)
+Received: from DGGEMS402-HUB.china.huawei.com (unknown [172.30.72.60])
+ by Forcepoint Email with ESMTP id 3826CD28A6A4E787588D;
+ Tue, 14 Apr 2020 11:04:16 +0800 (CST)
+Received: from DESKTOP-8RFUVS3.china.huawei.com (10.173.222.27) by
+ DGGEMS402-HUB.china.huawei.com (10.3.19.202) with Microsoft SMTP Server id
+ 14.3.487.0; Tue, 14 Apr 2020 11:04:08 +0800
+From: Zenghui Yu <yuzenghui@huawei.com>
+To: <kvmarm@lists.cs.columbia.edu>
+Subject: [PATCH 0/2] KVM: arm64: vgic_irq: Fix memory leaks
+Date: Tue, 14 Apr 2020 11:03:46 +0800
+Message-ID: <20200414030349.625-1-yuzenghui@huawei.com>
+X-Mailer: git-send-email 2.23.0.windows.1
 MIME-Version: 1.0
-References: <20200413231016.250737-1-maskray@google.com>
-In-Reply-To: <20200413231016.250737-1-maskray@google.com>
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Mon, 13 Apr 2020 16:37:10 -0700
-Message-ID: <CAKwvOdn35v5LkvhWugfLmK_FjVsd0RdPtBCRSqVaM9EP_1KU7w@mail.gmail.com>
-Subject: Re: [PATCH] arm64: kvm: Delete duplicated label: in invalid_vector
-To: Fangrui Song <maskray@google.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>,
- LKML <linux-kernel@vger.kernel.org>,
- clang-built-linux <clang-built-linux@googlegroups.com>,
- Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, Linux ARM <linux-arm-kernel@lists.infradead.org>
+X-Originating-IP: [10.173.222.27]
+X-CFilter-Loop: Reflected
+Cc: maz@kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -91,51 +64,27 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Apr 13, 2020 at 4:10 PM Fangrui Song <maskray@google.com> wrote:
->
-> SYM_CODE_START defines \label , so it is redundant to define \label again.
-> A redefinition at the same place is accepted by GNU as
-> (https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=159fbb6088f17a341bcaaac960623cab881b4981)
-> but rejected by the clang integrated assembler.
->
-> Fixes: 617a2f392c92 ("arm64: kvm: Annotate assembly using modern annoations")
+A memory leak on vgic_irq structure was recently reported by kmemleak
+on the guest destroy (or shutdown). It turned out that there're still
+pending interrupts (LPI) staying in the vcpu's ap_list during destroy
+so that KVM can't free the vgic_irq structure due to an extra refcount.
 
-Thanks for the patch!  I think a more accurate Fixes tag would be:
-Fixes: 2b28162cf65a ("arm64: KVM: HYP mode entry points")
+Patch #1 is intended to fix this issue. Patch #2 is a memory leak fix
+on the error path, noticed while debugging.
 
-With this patch applied, and your other arm64 integrated assembler
-patch (https://lore.kernel.org/linux-arm-kernel/20200413033811.75074-1-maskray@google.com/T/#u),
-I can now assemble arch/arm64/kvm/.
+Zenghui Yu (2):
+  KVM: arm64: vgic-v3: Retire all pending LPIs on vcpu destroy
+  KVM: arm64: vgic-its: Fix memory leak on the error path of
+    vgic_add_lpi()
 
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Tested-by: Nick Desaulniers <ndesaulniers@google.com>
-
-> Link: https://github.com/ClangBuiltLinux/linux/issues/988
-> Signed-off-by: Fangrui Song <maskray@google.com>
-> ---
->  arch/arm64/kvm/hyp/hyp-entry.S | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/arch/arm64/kvm/hyp/hyp-entry.S b/arch/arm64/kvm/hyp/hyp-entry.S
-> index c2a13ab3c471..9c5cfb04170e 100644
-> --- a/arch/arm64/kvm/hyp/hyp-entry.S
-> +++ b/arch/arm64/kvm/hyp/hyp-entry.S
-> @@ -198,7 +198,6 @@ SYM_CODE_END(__hyp_panic)
->  .macro invalid_vector  label, target = __hyp_panic
->         .align  2
->  SYM_CODE_START(\label)
-> -\label:
->         b \target
->  SYM_CODE_END(\label)
->  .endm
-> --
-> 2.26.0.110.g2183baf09c-goog
->
-
+ virt/kvm/arm/vgic/vgic-init.c | 6 ++++++
+ virt/kvm/arm/vgic/vgic-its.c  | 8 ++++++--
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
 -- 
-Thanks,
-~Nick Desaulniers
+2.19.1
+
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
