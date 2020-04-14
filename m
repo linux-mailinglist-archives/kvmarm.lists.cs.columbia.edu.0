@@ -2,108 +2,51 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E73F1A75B1
-	for <lists+kvmarm@lfdr.de>; Tue, 14 Apr 2020 10:19:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72F841A77A6
+	for <lists+kvmarm@lfdr.de>; Tue, 14 Apr 2020 11:48:53 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 55F9D4B15A;
-	Tue, 14 Apr 2020 04:19:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E1CB64B1A9;
+	Tue, 14 Apr 2020 05:48:52 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3ggpANNRWeZm; Tue, 14 Apr 2020 04:19:08 -0400 (EDT)
+	with ESMTP id etb6Fy44lxX6; Tue, 14 Apr 2020 05:48:52 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 28F724B169;
-	Tue, 14 Apr 2020 04:19:07 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9AEF64B174;
+	Tue, 14 Apr 2020 05:48:51 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8B1194B14E
- for <kvmarm@lists.cs.columbia.edu>; Tue, 14 Apr 2020 04:19:05 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C87CA4B142
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 14 Apr 2020 05:48:49 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id aY8owNO2u4N4 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 14 Apr 2020 04:19:04 -0400 (EDT)
-Received: from us-smtp-delivery-1.mimecast.com (us-smtp-2.mimecast.com
- [207.211.31.81])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 84FB24B14C
- for <kvmarm@lists.cs.columbia.edu>; Tue, 14 Apr 2020 04:19:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1586852344;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5Wb7ghxdvKYdRHUeDIrwZRLDN53fs9i+DGns+KVd+no=;
- b=PkTSlSFuPa3VHPfkwulYvXZXNWKPSqnP6MKwyfdAH/CtMAG9ixUBadV96a2iIFtplJkuof
- +Pf/4L5xGmUNSBj0r5Chp14DGoHvwwK6QqPSk0BAuGfoNwVyZGDnAzZsIbiAq9nhfRGx0S
- oi0yCtUlTd5/6cqd7bzGEgCXIY46AdU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-31-DSY7EZP2OYal9mpV1xr0lA-1; Tue, 14 Apr 2020 04:19:02 -0400
-X-MC-Unique: DSY7EZP2OYal9mpV1xr0lA-1
-Received: by mail-wm1-f69.google.com with SMTP id f128so2267981wmf.8
- for <kvmarm@lists.cs.columbia.edu>; Tue, 14 Apr 2020 01:19:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=TtBLM3c8JTLmBP2uDmSrWuT9/+Pwll6JJwpjBt6QX00=;
- b=Oy5Red8MWAyRw2RXaqNLdUh8Ewv52kLK0DoZhGKH9XrKNpM6PY2iipVkWbykKMfK5A
- gWojPoy8VGrBNB7qDDMAa4mPm79m7B0+LjRv5rsplrRRhSHFz6u7nwF+sRHqqs0P8J/J
- 9OOuOGFtJYFTJFeWcAXU9gRp+/xODh+cP+u3Mt/2cb7n4dq+2Vbs3ZB8lwYeAvUvGv85
- gu6aaQnfbz0Nr5a/+2eWStI2CPW7yLeJn2DskvzmAo2dxPy0Mgfn4bH3YDZuP34LgkDx
- /ogl5P6eBhLgJ1ky0U1X5BcxC7RaOvtMaRycqNOD4MN8WC00uugueLcJqjCfkn4hmzHr
- BNKw==
-X-Gm-Message-State: AGi0PuYQ8jsuJO+7BoCAKaiNYryorcixrQ5J2MKZsyEchWH9cKdAwiqW
- K2f6S26nmw2cAH+RuMidowrnWFzqWcBkwSlyV4qvRV2UUscHa5ysPzDDWJK1UAQAW51qKDE+WCv
- 2KI1NJHRnRXzzIvjQEtWs2mTN
-X-Received: by 2002:a05:6000:8b:: with SMTP id
- m11mr8390722wrx.168.1586852341262; 
- Tue, 14 Apr 2020 01:19:01 -0700 (PDT)
-X-Google-Smtp-Source: APiQypKNVMzJLyv+Go05DzXWcde1VJnPobjfS5TpC3OSGCsAYJkHQBkL4kr8iyDzRWBXP64iQWFZGA==
-X-Received: by 2002:a05:6000:8b:: with SMTP id
- m11mr8390681wrx.168.1586852340970; 
- Tue, 14 Apr 2020 01:19:00 -0700 (PDT)
-Received: from ?IPv6:2001:b07:6468:f312:e159:eda1:c472:fcfa?
- ([2001:b07:6468:f312:e159:eda1:c472:fcfa])
- by smtp.gmail.com with ESMTPSA id o28sm3426907wra.84.2020.04.14.01.18.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 14 Apr 2020 01:19:00 -0700 (PDT)
-Subject: Re: [PATCH] kvm_host: unify VM_STAT and VCPU_STAT definitions in a
- single place
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <f4bug@amsat.org>,
- Emanuele Giuseppe Esposito <eesposit@redhat.com>, kvm@vger.kernel.org
-References: <20200413140332.22896-1-eesposit@redhat.com>
- <03a481a8-bcf2-8755-d113-71ef393508bf@amsat.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <bf870876-9f9a-7ba8-d941-a3883e519eed@redhat.com>
-Date: Tue, 14 Apr 2020 10:18:58 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
-MIME-Version: 1.0
-In-Reply-To: <03a481a8-bcf2-8755-d113-71ef393508bf@amsat.org>
-Content-Language: en-US
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Cc: Wanpeng Li <wanpengli@tencent.com>, David Hildenbrand <david@redhat.com>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>, linux-mips@vger.kernel.org,
- Paul Mackerras <paulus@ozlabs.org>, kvmarm@lists.cs.columbia.edu,
- linux-s390@vger.kernel.org, Janosch Frank <frankja@linux.ibm.com>,
- Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- Christian Borntraeger <borntraeger@de.ibm.com>, kvm-ppc@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
- Cornelia Huck <cohuck@redhat.com>, linux-kernel@vger.kernel.org,
- Sean Christopherson <sean.j.christopherson@intel.com>,
- Michael Ellerman <mpe@ellerman.id.au>, Vitaly Kuznetsov <vkuznets@redhat.com>,
- linuxppc-dev@lists.ozlabs.org
+ with ESMTP id mMEepwLo7NZA for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 14 Apr 2020 05:48:48 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5247D4B140
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 14 Apr 2020 05:48:48 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D8A331FB;
+ Tue, 14 Apr 2020 02:48:47 -0700 (PDT)
+Received: from p8cg001049571a15.arm.com (unknown [10.163.1.49])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 26F5A3F6C4;
+ Tue, 14 Apr 2020 02:48:43 -0700 (PDT)
+From: Anshuman Khandual <anshuman.khandual@arm.com>
+To: linux-arm-kernel@lists.infradead.org
+Subject: [PATCH V2 00/16] arm64/cpufeature: Introduce ID_PFR2, ID_DFR1,
+ ID_MMFR5 and other changes
+Date: Tue, 14 Apr 2020 15:18:14 +0530
+Message-Id: <1586857710-17154-1-git-send-email-anshuman.khandual@arm.com>
+X-Mailer: git-send-email 2.7.4
+Cc: catalin.marinas@arm.com, Anshuman Khandual <anshuman.khandual@arm.com>,
+ linux-kernel@vger.kernel.org, maz@kernel.org, will@kernel.org,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -115,22 +58,84 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-T24gMTMvMDQvMjAgMjM6MzQsIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3RlOgo+PiArI2Rl
-ZmluZSBWTV9TVEFUKHgsIC4uLikgb2Zmc2V0b2Yoc3RydWN0IGt2bSwgc3RhdC54KSwgS1ZNX1NU
-QVRfVk0sICMjIF9fVkFfQVJHU19fCj4+ICsjZGVmaW5lIFZDUFVfU1RBVCh4LCAuLi4pIG9mZnNl
-dG9mKHN0cnVjdCBrdm1fdmNwdSwgc3RhdC54KSwgS1ZNX1NUQVRfVkNQVSwgIyMgX19WQV9BUkdT
-X18KPiBJIGZpbmQgdGhpcyBtYWNybyBleHBhbmRpbmcgaW50byBtdWx0aXBsZSBmaWVsZHMgb2Rk
-Li4uIE1heWJlIGEgbWF0dGVyCj4gb2YgdGFzdGUuIFN1Z2dnZXN0aW9uLCBoYXZlIHRoZSBtYWNy
-byBkZWZpbmUgdGhlIGZ1bGwgc3RydWN0dXJlLCBhcyBpbgo+IHRoZSBhcm02NCBhcmNoOgo+IAo+
-ICNkZWZpbmUgVk1fU1RBVChuLCB4LCAuLi4pIHsgbiwgb2Zmc2V0b2Yoc3RydWN0IGt2bSwgc3Rh
-dC54KSwKPiBLVk1fU1RBVF9WTSwgIyMgX19WQV9BUkdTX18gfQo+IAo+IERpdHRvIGZvciBWQ1BV
-X1NUQVQoKS4KPiAKClllcywgdGhhdCdzIGEgZ29vZCBpZGVhLiAgRW1hbnVlbGUsIGNhbiB5b3Ug
-c3dpdGNoIGl0IHRvIHRoaXMgZm9ybWF0PwoKVGhhbmtzLAoKUGFvbG8KCl9fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCmt2bWFybSBtYWlsaW5nIGxpc3QKa3Zt
-YXJtQGxpc3RzLmNzLmNvbHVtYmlhLmVkdQpodHRwczovL2xpc3RzLmNzLmNvbHVtYmlhLmVkdS9t
-YWlsbWFuL2xpc3RpbmZvL2t2bWFybQo=
+This series is primarily motivated from an adhoc list from Mark Rutland
+during our previous ID_ISAR6 discussion [1]. The current proposal also
+accommodates some more suggestions from Will and Suzuki.
+
+This series adds missing 32 bit system registers (ID_PFR2, ID_DFR1 and
+ID_MMFR5), adds missing features bits on all existing system registers
+(32 and 64 bit) and some other miscellaneous changes. While here it also
+includes a patch which does macro replacement for various open bits shift
+encodings for various CPU ID registers. There is a slight re-order of the
+patches here as compared to the previous version (V1).
+
+This series is based on v5.7-rc1. All feature bits enabled here can be
+referred in ARM DDI 0487F.a specification. Though I have tried to select
+appropriate values for each new feature being added here, there might be
+some inconsistencies (or mistakes). In which case, please do let me know
+if anything needs to change. Thank you.
+
+[1] https://patchwork.kernel.org/patch/11287805/
+
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com> 
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: James Morse <james.morse@arm.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: kvmarm@lists.cs.columbia.edu
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+
+Changes in V2:
+
+- Added Suggested-by tag from Mark Rutland for all changes he had proposed
+- Added comment for SpecSEI feature on why it is HIGHER_SAFE per Suzuki
+- Added a patch which makes ID_AA64DFR0_DOUBLELOCK a signed feature per Suzuki
+- Added ID_DFR1 and ID_MMFR5 system register definitions per Will
+- Added remaining features bits for relevant 64 bit system registers per Will
+- Changed commit message on [PATCH 5/7] regarding TraceFilt feature per Suzuki
+- Changed ID_PFR2.CSV3 (FTR_STRICT -> FTR_NONSTRICT) as 64 bit registers per Will
+- Changed ID_PFR0.CSV2 (FTR_STRICT -> FTR_NONSTRICT) as 64 bit registers per Will 
+- Changed some commit messages
+
+Changes in V1: (https://patchwork.kernel.org/project/linux-arm-kernel/list/?series=234093)
+
+Anshuman Khandual (16):
+  arm64/cpufeature: Add explicit ftr_id_isar0[] for ID_ISAR0 register
+  arm64/cpufeature: Drop TraceFilt feature exposure from ID_DFR0 register
+  arm64/cpufeature: Make doublelock a signed feature in ID_AA64DFR0
+  arm64/cpufeature: Introduce ID_PFR2 CPU register
+  arm64/cpufeature: Introduce ID_DFR1 CPU register
+  arm64/cpufeature: Introduce ID_MMFR5 CPU register
+  arm64/cpufeature: Add remaining feature bits in ID_PFR0 register
+  arm64/cpufeature: Add remaining feature bits in ID_MMFR4 register
+  arm64/cpufeature: Add remaining feature bits in ID_AA64ISAR0 register
+  arm64/cpufeature: Add remaining feature bits in ID_AA64PFR0 register
+  arm64/cpufeature: Add remaining feature bits in ID_AA64PFR1 register
+  arm64/cpufeature: Add remaining feature bits in ID_AA64MMFR0 register
+  arm64/cpufeature: Add remaining feature bits in ID_AA64MMFR1 register
+  arm64/cpufeature: Add remaining feature bits in ID_AA64MMFR2 register
+  arm64/cpufeature: Add remaining feature bits in ID_AA64DFR0 register
+  arm64/cpufeature: Replace all open bits shift encodings with macros
+
+ arch/arm64/include/asm/cpu.h    |   3 +
+ arch/arm64/include/asm/sysreg.h |  90 ++++++++++++++++++++
+ arch/arm64/kernel/cpufeature.c  | 141 +++++++++++++++++++++++++-------
+ arch/arm64/kernel/cpuinfo.c     |   3 +
+ arch/arm64/kvm/sys_regs.c       |   6 +-
+ 5 files changed, 211 insertions(+), 32 deletions(-)
+
+-- 
+2.20.1
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
