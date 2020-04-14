@@ -2,57 +2,63 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 81EFD1A9894
-	for <lists+kvmarm@lfdr.de>; Wed, 15 Apr 2020 11:23:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 092731A8DA2
+	for <lists+kvmarm@lfdr.de>; Tue, 14 Apr 2020 23:31:30 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1737D4B1E0;
-	Wed, 15 Apr 2020 05:23:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 73DF44B233;
+	Tue, 14 Apr 2020 17:31:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id RY57tksJCfvq; Wed, 15 Apr 2020 05:23:48 -0400 (EDT)
+	with ESMTP id vh66h2hk6GDT; Tue, 14 Apr 2020 17:31:29 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1C69A4B20C;
-	Wed, 15 Apr 2020 05:23:48 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3D1394B218;
+	Tue, 14 Apr 2020 17:31:28 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E5CBA4B211
- for <kvmarm@lists.cs.columbia.edu>; Tue, 14 Apr 2020 17:15:00 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8CE7B4B21E
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 14 Apr 2020 17:31:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id iyfsizjdP8q3 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 14 Apr 2020 17:15:00 -0400 (EDT)
-Received: from mx2.suse.de (mx2.suse.de [195.135.220.15])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id ECCC64B107
- for <kvmarm@lists.cs.columbia.edu>; Tue, 14 Apr 2020 17:14:59 -0400 (EDT)
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
- by mx2.suse.de (Postfix) with ESMTP id 45390ABBE;
- Tue, 14 Apr 2020 21:14:57 +0000 (UTC)
-Date: Tue, 14 Apr 2020 14:12:43 -0700
-From: Davidlohr Bueso <dave@stgolabs.net>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 3/4] kvm: Replace vcpu->swait with rcuwait
-Message-ID: <20200414211243.7vehybdrvbzmbduu@linux-p48b>
-References: <20200324044453.15733-1-dave@stgolabs.net>
- <20200324044453.15733-4-dave@stgolabs.net>
- <a6b23828-aa50-bea0-1d2d-03e2871239d4@redhat.com>
+ with ESMTP id A+Wh8yMaPM5Y for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 14 Apr 2020 17:31:25 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 68AB74B213
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 14 Apr 2020 17:31:25 -0400 (EDT)
+Received: from localhost.localdomain (236.31.169.217.in-addr.arpa
+ [217.169.31.236])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id F369320644;
+ Tue, 14 Apr 2020 21:31:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1586899884;
+ bh=qeG55Sjfpyu47bFN+MIW7aw5s10goy92+ZhxxXPxgLA=;
+ h=From:To:Cc:Subject:Date:From;
+ b=GJNTUFI7Ga6QB1tE8ADU5wTm6J3Znm9yDhnzk02eI1nHt2RXGL4ZBivouf8AzK+H+
+ 2r5KYB9HelKtM8LlTi5bi8/yFDKY3Jc0nUnhKXbOhKJDDy3xVyDIdguYTF0m7M0M8Z
+ E6cmcsfaMMjenVFhUnJb+ao24FOPYE0P4rxLGmRE=
+From: Will Deacon <will@kernel.org>
+To: linux-arm-kernel@lists.infradead.org,
+	kvmarm@lists.cs.columbia.edu
+Subject: [PATCH 0/8] Relax sanity checking for mismatched AArch32 EL1
+Date: Tue, 14 Apr 2020 22:31:06 +0100
+Message-Id: <20200414213114.2378-1-will@kernel.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <a6b23828-aa50-bea0-1d2d-03e2871239d4@redhat.com>
-User-Agent: NeoMutt/20180716
-X-Mailman-Approved-At: Wed, 15 Apr 2020 05:23:47 -0400
-Cc: kvm@vger.kernel.org, Davidlohr Bueso <dbueso@suse.de>, peterz@infradead.org,
- torvalds@linux-foundation.org, bigeasy@linutronix.de,
- linux-kernel@vger.kernel.org, rostedt@goodmis.org, linux-mips@vger.kernel.org,
- Paul Mackerras <paulus@ozlabs.org>, joel@joelfernandes.org, tglx@linutronix.de,
- will@kernel.org, kvmarm@lists.cs.columbia.edu
+Cc: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+ kernel-team@android.com, Anshuman Khandual <anshuman.khandual@arm.com>,
+ Marc Zyngier <maz@kernel.org>, linux-kernel@vger.kernel.org,
+ Doug Anderson <dianders@chromium.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -64,34 +70,64 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, 25 Mar 2020, Paolo Bonzini wrote:
+Hi all,
 
->On 24/03/20 05:44, Davidlohr Bueso wrote:
->> diff --git a/arch/mips/kvm/mips.c b/arch/mips/kvm/mips.c
->> index 71244bf87c3a..e049fcb3dffb 100644
->> --- a/arch/mips/kvm/mips.c
->> +++ b/arch/mips/kvm/mips.c
->> @@ -290,8 +290,7 @@ static enum hrtimer_restart kvm_mips_comparecount_wakeup(struct hrtimer *timer)
->>	kvm_mips_callbacks->queue_timer_int(vcpu);
->>
->>	vcpu->arch.wait = 0;
->> -	if (swq_has_sleeper(&vcpu->wq))
->> -		swake_up_one(&vcpu->wq);
->> +	rcuwait_wake_up(&vcpu->wait)
->
->This is missing a semicolon.  (KVM MIPS is known not to compile and will
->be changed to "depends on BROKEN" in 5.7).
+For better or worse, there are SoCs in production where some, but not
+all of the CPUs, support AArch32 at EL1 and above. Right now, that
+results in "SANITY CHECK" warnings during boot and an unconditional
+kernel taint.
 
-Do you want me to send another version with this fix or do you prefer
-fixing it when/if picked up?
+This patch series tries to do a bit better: the only time we care about
+AArch32 at EL1 is for KVM, so rather than throw our toys out of the
+pram, we can instead just disable support for 32-bit guests on these
+systems. In the unlikely scenario of a late CPU hotplug being the first
+time we notice that AArch32 is not available, then we fail the hotplug
+(right now we let the thing come online, which leads to hilarious
+results for any pre-existing 32-bit guests).
 
-Thanks,
-Davidlohr
+Feedback welcome,
+
+Will
+
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc: Doug Anderson <dianders@chromium.org>
+Cc: kernel-team@android.com
+
+--->8
+
+Sai Prakash Ranjan (1):
+  arm64: cpufeature: Relax check for IESB support
+
+Will Deacon (7):
+  arm64: cpufeature: Spell out register fields for ID_ISAR4 and ID_PFR1
+  arm64: cpufeature: Add CPU capability for AArch32 EL1 support
+  arm64: cpufeature: Remove redundant call to id_aa64pfr0_32bit_el0()
+  arm64: cpufeature: Factor out checking of AArch32 features
+  arm64: cpufeature: Relax AArch32 system checks if EL1 is 64-bit only
+  arm64: cpufeature: Relax checks for AArch32 support at EL[0-2]
+  arm64: cpufeature: Add an overview comment for the cpufeature
+    framework
+
+ arch/arm64/include/asm/cpucaps.h    |   3 +-
+ arch/arm64/include/asm/cpufeature.h |   7 +
+ arch/arm64/include/asm/sysreg.h     |  18 +++
+ arch/arm64/kernel/cpufeature.c      | 236 +++++++++++++++++++++-------
+ arch/arm64/kvm/reset.c              |  12 +-
+ 5 files changed, 206 insertions(+), 70 deletions(-)
+
+-- 
+2.26.0.110.g2183baf09c-goog
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
