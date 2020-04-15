@@ -2,73 +2,67 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0174B1AAF19
-	for <lists+kvmarm@lfdr.de>; Wed, 15 Apr 2020 19:06:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A04441AAC4E
+	for <lists+kvmarm@lfdr.de>; Wed, 15 Apr 2020 17:53:19 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 90C674B165;
-	Wed, 15 Apr 2020 13:06:35 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0F8424B21F;
+	Wed, 15 Apr 2020 11:53:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id d0tMpb5wvwWF; Wed, 15 Apr 2020 13:06:34 -0400 (EDT)
+	with ESMTP id 8tW8VnPMSnJ8; Wed, 15 Apr 2020 11:53:18 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D0894B229;
-	Wed, 15 Apr 2020 13:06:31 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 91DE94B15D;
+	Wed, 15 Apr 2020 11:53:17 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 245C24B15D
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 11:56:06 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A62054B12B
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 11:53:16 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 0nTz39wtbMoW for <kvmarm@lists.cs.columbia.edu>;
- Wed, 15 Apr 2020 11:56:05 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E4E254B12B
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 11:56:04 -0400 (EDT)
-Received: from mail-il1-f169.google.com (mail-il1-f169.google.com
- [209.85.166.169])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id D8F5820857
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 15:56:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1586966163;
- bh=n4WL1T858zal6SWux0kcghyeb03YcdCK83LPyQqpmOU=;
- h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=yychbi2M7PdL4U/sur0ERyt44GK4CFegqPUkaZ1u5iy/BuUdzfAp14ANUWaR8RxPY
- bwqjQ64EQpRgDtmlgXu9BiUK0xgrFqQTt18ZLPPLIvp0DI+7bea4NZZSwk2qL2/iIK
- 8cJC/FT8JDPZpcoYDkmf2w2RhK7MSepi/7zMldDI=
-Received: by mail-il1-f169.google.com with SMTP id i75so3745698ild.13
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 08:56:03 -0700 (PDT)
-X-Gm-Message-State: AGi0PubbL6Bcs9DwGwTUaoMX78CiOaYkW2KanPk9yGCKfmf/Lj3XLrYv
- JJU7RQY/ImNan4p0aoMIcX4aqBm+3YKOZjMNsT4=
-X-Google-Smtp-Source: APiQypJO2rcsOAPOZwNgYyBGwSD18Rro24rIIN5xJo2IrgJIuBFWlXuwcbqq2VlhdS3Pf3dN91LZUXXkZ6WIB4fz4EM=
-X-Received: by 2002:a92:5a4c:: with SMTP id o73mr5693957ilb.218.1586966163228; 
- Wed, 15 Apr 2020 08:56:03 -0700 (PDT)
+ with ESMTP id p4dXhI1eO3Ba for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 15 Apr 2020 11:53:15 -0400 (EDT)
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B1D374B0FF
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 11:53:14 -0400 (EDT)
+IronPort-SDR: PIz240srWy8/ur49JG9eDftPdQEURD+fMRqfEmkLL5k/y8kPvf8Tvk/Jcoth3vsQPfS6/f/R4p
+ 7AuEJ7dS0aRA==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+ by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Apr 2020 08:53:13 -0700
+IronPort-SDR: F6uUaqyd6cceLSV0Kq4PASCZhpm64sTmBxjVMAAcmV6plfo2xf/+A5Rr/5MG5sM7lvlIP+oEsC
+ oMslcndCbN5A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.72,387,1580803200"; d="scan'208";a="253561163"
+Received: from jacob-builder.jf.intel.com (HELO jacob-builder) ([10.7.199.155])
+ by orsmga003.jf.intel.com with ESMTP; 15 Apr 2020 08:53:13 -0700
+Date: Wed, 15 Apr 2020 08:59:08 -0700
+From: Jacob Pan <jacob.jun.pan@linux.intel.com>
+To: Auger Eric <eric.auger@redhat.com>
+Subject: Re: [PATCH v11 01/13] iommu: Introduce attach/detach_pasid_table API
+Message-ID: <20200415085908.0e1803b7@jacob-builder>
+In-Reply-To: <c781ce8d-7fe4-0fee-ba95-a1e493e003f5@redhat.com>
+References: <20200414150607.28488-1-eric.auger@redhat.com>
+ <20200414150607.28488-2-eric.auger@redhat.com>
+ <20200414151548.658a0401@jacob-builder>
+ <c781ce8d-7fe4-0fee-ba95-a1e493e003f5@redhat.com>
+Organization: OTC
+X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20200221165532.90618-1-andre.przywara@arm.com>
- <2d3bad43-10a5-3ee1-72e7-e1da1d6c65dd@arm.com>
- <CAMj1kXGUiCLvmJUwrxCc8aHdE30WWfa95ou-tEM8Kv0nj2GdDA@mail.gmail.com>
-In-Reply-To: <CAMj1kXGUiCLvmJUwrxCc8aHdE30WWfa95ou-tEM8Kv0nj2GdDA@mail.gmail.com>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Wed, 15 Apr 2020 17:55:51 +0200
-X-Gmail-Original-Message-ID: <CAMj1kXF6iw47MM_tg5izB9KC-N2zrnQbhwT2TVPOuKdpOBX=ow@mail.gmail.com>
-Message-ID: <CAMj1kXF6iw47MM_tg5izB9KC-N2zrnQbhwT2TVPOuKdpOBX=ow@mail.gmail.com>
-Subject: Re: [PATCH kvmtool v3] Add emulation for CFI compatible flash memory
-To: Alexandru Elisei <alexandru.elisei@arm.com>, sami.mujawar@arm.com
-X-Mailman-Approved-At: Wed, 15 Apr 2020 13:06:31 -0400
-Cc: kvm@vger.kernel.org, Andre Przywara <andre.przywara@arm.com>,
- Raphael Gault <raphael.gault@arm.com>, Will Deacon <will@kernel.org>,
- kvmarm <kvmarm@lists.cs.columbia.edu>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+Cc: jean-philippe@linaro.org, yi.l.liu@intel.com, alex.williamson@redhat.com,
+ kvm@vger.kernel.org, maz@kernel.org, joro@8bytes.org, zhangfei.gao@foxmail.com,
+ linux-kernel@vger.kernel.org, iommu@lists.linux-foundation.org,
+ jacob.jun.pan@linux.intel.com, zhangfei.gao@linaro.org, robin.murphy@arm.com,
+ bbhushan2@marvell.com, will@kernel.org, kvmarm@lists.cs.columbia.edu,
+ eric.auger.pro@gmail.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -85,66 +79,246 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, 15 Apr 2020 at 17:43, Ard Biesheuvel <ardb@kernel.org> wrote:
->
-> On Tue, 7 Apr 2020 at 17:15, Alexandru Elisei <alexandru.elisei@arm.com> wrote:
-> >
-> > Hi,
-> >
-> > I've tested this patch by running badblocks and fio on a flash device inside a
-> > guest, everything worked as expected.
-> >
-> > I've also looked at the flowcharts for device operation from Intel Application
-> > Note 646, pages 12-21, and they seem implemented correctly.
-> >
-> > A few minor issues below.
-> >
-> > On 2/21/20 4:55 PM, Andre Przywara wrote:
-> > > From: Raphael Gault <raphael.gault@arm.com>
-> > >
-> > > The EDK II UEFI firmware implementation requires some storage for the EFI
-> > > variables, which is typically some flash storage.
-> > > Since this is already supported on the EDK II side, we add a CFI flash
-> > > emulation to kvmtool.
-> > > This is backed by a file, specified via the --flash or -F command line
-> > > option. Any flash writes done by the guest will immediately be reflected
-> > > into this file (kvmtool mmap's the file).
-> > > The flash will be limited to the nearest power-of-2 size, so only the
-> > > first 2 MB of a 3 MB file will be used.
-> > >
-> > > This implements a CFI flash using the "Intel/Sharp extended command
-> > > set", as specified in:
-> > > - JEDEC JESD68.01
-> > > - JEDEC JEP137B
-> > > - Intel Application Note 646
-> > > Some gaps in those specs have been filled by looking at real devices and
-> > > other implementations (QEMU, Linux kernel driver).
-> > >
-> > > At the moment this relies on DT to advertise the base address of the
-> > > flash memory (mapped into the MMIO address space) and is only enabled
-> > > for ARM/ARM64. The emulation itself is architecture agnostic, though.
-> > >
-> > > This is one missing piece toward a working UEFI boot with kvmtool on
-> > > ARM guests, the other is to provide writable PCI BARs, which is WIP.
-> > >
->
-> I have given this a spin with UEFI built for kvmtool, and it appears
-> to be working correctly. However, I noticed that it is intolerably
-> slow, which seems to be caused by the fact that both array mode and
-> command mode (or whatever it is called in the CFI spec) are fully
-> emulated, whereas in the QEMU implementation (for instance), the
-> region is actually exposed to the guest using a read-only KVM memslot
-> in array mode, and so the read accesses are made natively.
->
-> It is also causing problems in the UEFI implementation, as we can no
-> longer use unaligned accesses to read from the region, which is
-> something the code currently relies on (and which works fine on actual
-> hardware as long as you use normal non-cacheable mappings)
->
+On Wed, 15 Apr 2020 16:52:10 +0200
+Auger Eric <eric.auger@redhat.com> wrote:
 
-Actually, the issue is not alignment. The issue is with instructions
-with multiple outputs, which means you cannot do an ordinary memcpy()
-from the NOR region using ldp instructions, aligned or not.
+> Hi Jacob,
+> On 4/15/20 12:15 AM, Jacob Pan wrote:
+> > Hi Eric,
+> > 
+> > There are some discussions about how to size the uAPI data.
+> > https://lkml.org/lkml/2020/4/14/939
+> > 
+> > I think the problem with the current scheme is that when uAPI data
+> > gets extended, if VFIO continue to use:
+> > 
+> > minsz = offsetofend(struct vfio_iommu_type1_set_pasid_table,
+> > config); if (copy_from_user(&spt, (void __user *)arg, minsz))
+> > 
+> > It may copy more data from user than what was setup by the user.
+> > 
+> > So, as suggested by Alex, we could add argsz to the IOMMU uAPI
+> > struct. So if argsz > minsz, then fail the attach_table since
+> > kernel might be old, doesn't know about the extra data.
+> > If argsz <= minsz, kernel can support the attach_table but must
+> > process the data based on flags or config.  
+> 
+> So I guess we would need both an argsz _u32 + a new flag _u32 right?
+> 
+Yes.
+> I am ok with that idea. Besides how will you manage for existing IOMMU
+> UAPIs?
+I plan to add argsz and flags (if not already have one)
+
+> At some point you envisionned to have a getter at iommu api
+> level to retrieve the size of a structure for a given version, right?
+> 
+This idea is shot down. There is no version-size lookup.
+So the current plan is for user to fill out argsz in each IOMMU uAPI
+struct. VFIO does the copy_from_user() based on argsz (sanitized
+against the size of current kernel struct).
+
+IOMMU vendor driver process the data based on flags which indicates
+new capability/extensions.
+
+> Thanks
+> 
+> Eric
+> > 
+> > Does it make sense to you?
+> > 
+> > 
+> > On Tue, 14 Apr 2020 17:05:55 +0200
+> > Eric Auger <eric.auger@redhat.com> wrote:
+> >   
+> >> From: Jacob Pan <jacob.jun.pan@linux.intel.com>
+> >>
+> >> In virtualization use case, when a guest is assigned
+> >> a PCI host device, protected by a virtual IOMMU on the guest,
+> >> the physical IOMMU must be programmed to be consistent with
+> >> the guest mappings. If the physical IOMMU supports two
+> >> translation stages it makes sense to program guest mappings
+> >> onto the first stage/level (ARM/Intel terminology) while the host
+> >> owns the stage/level 2.
+> >>
+> >> In that case, it is mandated to trap on guest configuration
+> >> settings and pass those to the physical iommu driver.
+> >>
+> >> This patch adds a new API to the iommu subsystem that allows
+> >> to set/unset the pasid table information.
+> >>
+> >> A generic iommu_pasid_table_config struct is introduced in
+> >> a new iommu.h uapi header. This is going to be used by the VFIO
+> >> user API.
+> >>
+> >> Signed-off-by: Jean-Philippe Brucker
+> >> <jean-philippe.brucker@arm.com> Signed-off-by: Liu, Yi L
+> >> <yi.l.liu@linux.intel.com> Signed-off-by: Ashok Raj
+> >> <ashok.raj@intel.com> Signed-off-by: Jacob Pan
+> >> <jacob.jun.pan@linux.intel.com> Signed-off-by: Eric Auger
+> >> <eric.auger@redhat.com> Reviewed-by: Jean-Philippe Brucker
+> >> <jean-philippe.brucker@arm.com> ---
+> >>  drivers/iommu/iommu.c      | 19 ++++++++++++++
+> >>  include/linux/iommu.h      | 18 ++++++++++++++
+> >>  include/uapi/linux/iommu.h | 51
+> >> ++++++++++++++++++++++++++++++++++++++ 3 files changed, 88
+> >> insertions(+)
+> >>
+> >> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> >> index 2b471419e26c..b71ad56f8c99 100644
+> >> --- a/drivers/iommu/iommu.c
+> >> +++ b/drivers/iommu/iommu.c
+> >> @@ -1723,6 +1723,25 @@ int iommu_sva_unbind_gpasid(struct
+> >> iommu_domain *domain, struct device *dev, }
+> >>  EXPORT_SYMBOL_GPL(iommu_sva_unbind_gpasid);
+> >>  
+> >> +int iommu_attach_pasid_table(struct iommu_domain *domain,
+> >> +			     struct iommu_pasid_table_config *cfg)
+> >> +{
+> >> +	if (unlikely(!domain->ops->attach_pasid_table))
+> >> +		return -ENODEV;
+> >> +
+> >> +	return domain->ops->attach_pasid_table(domain, cfg);
+> >> +}
+> >> +EXPORT_SYMBOL_GPL(iommu_attach_pasid_table);
+> >> +
+> >> +void iommu_detach_pasid_table(struct iommu_domain *domain)
+> >> +{
+> >> +	if (unlikely(!domain->ops->detach_pasid_table))
+> >> +		return;
+> >> +
+> >> +	domain->ops->detach_pasid_table(domain);
+> >> +}
+> >> +EXPORT_SYMBOL_GPL(iommu_detach_pasid_table);
+> >> +
+> >>  static void __iommu_detach_device(struct iommu_domain *domain,
+> >>  				  struct device *dev)
+> >>  {
+> >> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+> >> index 7ef8b0bda695..3e1057c3585a 100644
+> >> --- a/include/linux/iommu.h
+> >> +++ b/include/linux/iommu.h
+> >> @@ -248,6 +248,8 @@ struct iommu_iotlb_gather {
+> >>   * @cache_invalidate: invalidate translation caches
+> >>   * @sva_bind_gpasid: bind guest pasid and mm
+> >>   * @sva_unbind_gpasid: unbind guest pasid and mm
+> >> + * @attach_pasid_table: attach a pasid table
+> >> + * @detach_pasid_table: detach the pasid table
+> >>   * @pgsize_bitmap: bitmap of all possible supported page sizes
+> >>   * @owner: Driver module providing these ops
+> >>   */
+> >> @@ -307,6 +309,9 @@ struct iommu_ops {
+> >>  				      void *drvdata);
+> >>  	void (*sva_unbind)(struct iommu_sva *handle);
+> >>  	int (*sva_get_pasid)(struct iommu_sva *handle);
+> >> +	int (*attach_pasid_table)(struct iommu_domain *domain,
+> >> +				  struct iommu_pasid_table_config
+> >> *cfg);
+> >> +	void (*detach_pasid_table)(struct iommu_domain *domain);
+> >>  
+> >>  	int (*page_response)(struct device *dev,
+> >>  			     struct iommu_fault_event *evt,
+> >> @@ -446,6 +451,9 @@ extern int iommu_sva_bind_gpasid(struct
+> >> iommu_domain *domain, struct device *dev, struct
+> >> iommu_gpasid_bind_data *data); extern int
+> >> iommu_sva_unbind_gpasid(struct iommu_domain *domain, struct device
+> >> *dev, ioasid_t pasid); +extern int iommu_attach_pasid_table(struct
+> >> iommu_domain *domain,
+> >> +				    struct
+> >> iommu_pasid_table_config *cfg); +extern void
+> >> iommu_detach_pasid_table(struct iommu_domain *domain); extern
+> >> struct iommu_domain *iommu_get_domain_for_dev(struct device *dev);
+> >> extern struct iommu_domain *iommu_get_dma_domain(struct device
+> >> *dev); extern int iommu_map(struct iommu_domain *domain, unsigned
+> >> long iova, @@ -1048,6 +1056,16 @@ iommu_aux_get_pasid(struct
+> >> iommu_domain *domain, struct device *dev) return -ENODEV; }
+> >>  
+> >> +static inline
+> >> +int iommu_attach_pasid_table(struct iommu_domain *domain,
+> >> +			     struct iommu_pasid_table_config *cfg)
+> >> +{
+> >> +	return -ENODEV;
+> >> +}
+> >> +
+> >> +static inline
+> >> +void iommu_detach_pasid_table(struct iommu_domain *domain) {}
+> >> +
+> >>  static inline struct iommu_sva *
+> >>  iommu_sva_bind_device(struct device *dev, struct mm_struct *mm,
+> >> void *drvdata) {
+> >> diff --git a/include/uapi/linux/iommu.h
+> >> b/include/uapi/linux/iommu.h index 4ad3496e5c43..8d00be10dc6d
+> >> 100644 --- a/include/uapi/linux/iommu.h
+> >> +++ b/include/uapi/linux/iommu.h
+> >> @@ -321,4 +321,55 @@ struct iommu_gpasid_bind_data {
+> >>  	};
+> >>  };
+> >>  
+> >> +/**
+> >> + * struct iommu_pasid_smmuv3 - ARM SMMUv3 Stream Table Entry
+> >> stage 1 related
+> >> + *     information
+> >> + * @version: API version of this structure
+> >> + * @s1fmt: STE s1fmt (format of the CD table: single CD, linear
+> >> table
+> >> + *         or 2-level table)
+> >> + * @s1dss: STE s1dss (specifies the behavior when @pasid_bits != 0
+> >> + *         and no PASID is passed along with the incoming
+> >> transaction)
+> >> + * @padding: reserved for future use (should be zero)
+> >> + *
+> >> + * The PASID table is referred to as the Context Descriptor (CD)
+> >> table on ARM
+> >> + * SMMUv3. Please refer to the ARM SMMU 3.x spec (ARM IHI 0070A)
+> >> for full
+> >> + * details.
+> >> + */
+> >> +struct iommu_pasid_smmuv3 {
+> >> +#define PASID_TABLE_SMMUV3_CFG_VERSION_1 1
+> >> +	__u32	version;
+> >> +	__u8	s1fmt;
+> >> +	__u8	s1dss;
+> >> +	__u8	padding[2];
+> >> +};
+> >> +
+> >> +/**
+> >> + * struct iommu_pasid_table_config - PASID table data used to bind
+> >> guest PASID
+> >> + *     table to the host IOMMU
+> >> + * @version: API version to prepare for future extensions
+> >> + * @format: format of the PASID table
+> >> + * @base_ptr: guest physical address of the PASID table
+> >> + * @pasid_bits: number of PASID bits used in the PASID table
+> >> + * @config: indicates whether the guest translation stage must
+> >> + *          be translated, bypassed or aborted.
+> >> + * @padding: reserved for future use (should be zero)
+> >> + * @smmuv3: table information when @format is
+> >> %IOMMU_PASID_FORMAT_SMMUV3
+> >> + */
+> >> +struct iommu_pasid_table_config {
+> >> +#define PASID_TABLE_CFG_VERSION_1 1
+> >> +	__u32	version;
+> >> +#define IOMMU_PASID_FORMAT_SMMUV3	1
+> >> +	__u32	format;
+> >> +	__u64	base_ptr;
+> >> +	__u8	pasid_bits;
+> >> +#define IOMMU_PASID_CONFIG_TRANSLATE	1
+> >> +#define IOMMU_PASID_CONFIG_BYPASS	2
+> >> +#define IOMMU_PASID_CONFIG_ABORT	3
+> >> +	__u8	config;
+> >> +	__u8    padding[6];
+> >> +	union {
+> >> +		struct iommu_pasid_smmuv3 smmuv3;
+> >> +	};
+> >> +};
+> >> +
+> >>  #endif /* _UAPI_IOMMU_H */  
+> > 
+> > [Jacob Pan]
+> >   
+> 
+
+[Jacob Pan]
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
