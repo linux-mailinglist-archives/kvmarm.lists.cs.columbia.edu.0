@@ -2,81 +2,95 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D3AD1A97A9
-	for <lists+kvmarm@lfdr.de>; Wed, 15 Apr 2020 10:56:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7897A1A9899
+	for <lists+kvmarm@lfdr.de>; Wed, 15 Apr 2020 11:23:53 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B439E4B1D9;
-	Wed, 15 Apr 2020 04:56:04 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E62544B263;
+	Wed, 15 Apr 2020 05:23:52 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id aCXTxtIipwjn; Wed, 15 Apr 2020 04:56:04 -0400 (EDT)
+	with ESMTP id DIDDhmzkiUCS; Wed, 15 Apr 2020 05:23:52 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 96D544B1DD;
-	Wed, 15 Apr 2020 04:56:03 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B5E734B230;
+	Wed, 15 Apr 2020 05:23:48 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 68D424B1BC
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 04:56:02 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5EEA04B18D
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 05:08:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id eFhbuOsIhT7H for <kvmarm@lists.cs.columbia.edu>;
- Wed, 15 Apr 2020 04:56:00 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A58C34B0FF
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 04:56:00 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 900C520737;
- Wed, 15 Apr 2020 08:55:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1586940959;
- bh=lL08kyfy+9y5wE4bT7FrtRAP9e6Jx76z4bGDZo1tk4s=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=zPVuO2lg9Bf7O4AyeHVkBbTdBcjJ0l9TTPg+WqJ1AqZYtX9Ksbab4hxQBuS6PhOcz
- nG946f+z2ldlNfsBvYalLoWeuksyMjcQaVfN7Vrfos3ZdMA9haxjGQx7k25dNYi8JR
- 3SG+qQmED0JCKXDh2wrsKH9jJipvG+N1lrNGpk3o=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
- (envelope-from <maz@kernel.org>)
- id 1jOdpt-003Rlm-Ss; Wed, 15 Apr 2020 09:55:58 +0100
+ with ESMTP id 5PSLiBse8E0k for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 15 Apr 2020 05:07:59 -0400 (EDT)
+Received: from us-smtp-delivery-1.mimecast.com
+ (us-smtp-delivery-1.mimecast.com [205.139.110.120])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 658C34B0F1
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 05:07:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1586941679;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/EXNpOGZswAeAZPkceeFE/XM7sXAwUaoIFU9vZ0wVCE=;
+ b=UcTzm7uICWtO7ji/wKvxFy3p0SaCmZB7hRxQmE1x1IaWwSiEpq3xadw9M0I4DOnE5iAtt6
+ +Y3kVI9v6IlWROtJLLph01dV+OyqT91FBB6lRSgp8t4aivR4RLFbdCXOpJMchZw7Z1JSb6
+ SSkvTyVQtAuZ/HDkFEULF3B/AVOuWsg=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-452-2_QOMZBFOOKtSlc2Q-6SSQ-1; Wed, 15 Apr 2020 05:07:57 -0400
+X-MC-Unique: 2_QOMZBFOOKtSlc2Q-6SSQ-1
+Received: by mail-wm1-f71.google.com with SMTP id f8so5480447wmh.4
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 02:07:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
+ :message-id:mime-version;
+ bh=lisOMIPYzGEOUKW/w9q538cTmyUuHd07/Sojgyr8MlQ=;
+ b=Yn2nAWs0UVKb0jpty7esrs+0OpaPFUv1asXTXoOpvHnBkNEQLHso/hAV6or6ZwkC7r
+ 9Fi0P8zwjyYEHFB3oX2TR075Sn6vC/1kbqcRiSqb8hsDhcT92YT1cUR9pvnrRYtickaO
+ tmvXHWxgadqhhW/XP1NSffMLCtwX8sSiRh5CYtOgud7KLkXOIRJLZhTQSELUdSox1I+w
+ A/QyjKM2qw+/98hEY1PzU9uUTq9EGE9X58qzyNkBdJt8WxxD5hnmFikkKMEjWsma6vp9
+ 5O88gEX3xjrA0pvEVBzwT3Z9YJHp9kUJrjbnRu2CuuNtf8ss0KyeHUfNApXbzwkMIRjp
+ 8xuw==
+X-Gm-Message-State: AGi0PuYuVUUTJSO/SzgcvmV987UW2yf0C2YFisH2+GnNpUth8FE8wTQn
+ W8NA4LgWCFe1DuwpnkQ6MVaMQSwUfIHRbBqQYz50mXQ8yuS2byj8juzzn4bDP9gv/b/XTuiTjxm
+ DBn98fDis/MX2wlIr7/9X/fVV
+X-Received: by 2002:a5d:6841:: with SMTP id o1mr27977385wrw.412.1586941676332; 
+ Wed, 15 Apr 2020 02:07:56 -0700 (PDT)
+X-Google-Smtp-Source: APiQypIXD/p9LNlXg20pn+U/yQCcvvORh177d5YZbgu7SsoqIprQYNJ2FhjSis/HsfEJeQMW+4tCHg==
+X-Received: by 2002:a5d:6841:: with SMTP id o1mr27977353wrw.412.1586941676047; 
+ Wed, 15 Apr 2020 02:07:56 -0700 (PDT)
+Received: from vitty.brq.redhat.com (g-server-2.ign.cz. [91.219.240.2])
+ by smtp.gmail.com with ESMTPSA id e5sm23214697wru.92.2020.04.15.02.07.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 15 Apr 2020 02:07:55 -0700 (PDT)
+From: Vitaly Kuznetsov <vkuznets@redhat.com>
+To: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+Subject: Re: [PATCH] KVM: Optimize kvm_arch_vcpu_ioctl_run function
+In-Reply-To: <cc29ce22-4c70-87d1-d7aa-9d38438ba8a5@linux.alibaba.com>
+References: <20200413034523.110548-1-tianjia.zhang@linux.alibaba.com>
+ <875ze2ywhy.fsf@vitty.brq.redhat.com>
+ <cc29ce22-4c70-87d1-d7aa-9d38438ba8a5@linux.alibaba.com>
+Date: Wed, 15 Apr 2020 11:07:53 +0200
+Message-ID: <87a73dxgk6.fsf@vitty.brq.redhat.com>
 MIME-Version: 1.0
-Date: Wed, 15 Apr 2020 09:55:57 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: Will Deacon <will@kernel.org>
-Subject: Re: [PATCH 3/8] arm64: cpufeature: Add CPU capability for AArch32 EL1
- support
-In-Reply-To: <20200414213114.2378-4-will@kernel.org>
-References: <20200414213114.2378-1-will@kernel.org>
- <20200414213114.2378-4-will@kernel.org>
-Message-ID: <1b76993491176577567a0960a435dac0@kernel.org>
-X-Sender: maz@kernel.org
-User-Agent: Roundcube Webmail/1.3.10
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: will@kernel.org, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org,
- suzuki.poulose@arm.com, mark.rutland@arm.com, anshuman.khandual@arm.com,
- catalin.marinas@arm.com, saiprakash.ranjan@codeaurora.org,
- dianders@chromium.org, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Anshuman Khandual <anshuman.khandual@arm.com>, linux-kernel@vger.kernel.org,
- Doug Anderson <dianders@chromium.org>, kernel-team@android.com,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+X-Mailman-Approved-At: Wed, 15 Apr 2020 05:23:47 -0400
+Cc: wanpengli@tencent.com, kvm@vger.kernel.org, maz@kernel.org, joro@8bytes.org,
+ x86@kernel.org, linux-kernel@vger.kernel.org, sean.j.christopherson@intel.com,
+ mingo@redhat.com, bp@alien8.de, hpa@zytor.com, pbonzini@redhat.com,
+ tglx@linutronix.de, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, jmattson@google.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -88,37 +102,55 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Will,
+Tianjia Zhang <tianjia.zhang@linux.alibaba.com> writes:
 
-On 2020-04-14 22:31, Will Deacon wrote:
-> Although we emit a "SANITY CHECK" warning and taint the kernel if we
-> detect a CPU mismatch for AArch32 support at EL1, we still online the
-> CPU with disastrous consequences for any running 32-bit VMs.
-> 
-> Introduce a capability for AArch32 support at EL1 so that late onlining
-> of incompatible CPUs is forbidden.
-> 
-> Signed-off-by: Will Deacon <will@kernel.org>
+> On 2020/4/14 22:26, Vitaly Kuznetsov wrote:
+>> Tianjia Zhang <tianjia.zhang@linux.alibaba.com> writes:
+>> 
+>>> kvm_arch_vcpu_ioctl_run() is only called in the file kvm_main.c,
+>>> where vcpu->run is the kvm_run parameter, so it has been replaced.
+>>>
+>>> Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+>>> ---
+>>>   arch/x86/kvm/x86.c | 8 ++++----
+>>>   virt/kvm/arm/arm.c | 2 +-
+>>>   2 files changed, 5 insertions(+), 5 deletions(-)
+>>>
+>>> diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+>>> index 3bf2ecafd027..70e3f4abbd4d 100644
+>>> --- a/arch/x86/kvm/x86.c
+>>> +++ b/arch/x86/kvm/x86.c
+>>> @@ -8726,18 +8726,18 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu, struct kvm_run *kvm_run)
+>>>   		r = -EAGAIN;
+>>>   		if (signal_pending(current)) {
+>>>   			r = -EINTR;
+>>> -			vcpu->run->exit_reason = KVM_EXIT_INTR;
+>>> +			kvm_run->exit_reason = KVM_EXIT_INTR;
+>> 
+>> I have a more generic question: why do we need to pass 'kvm_run' to
+>> kvm_arch_vcpu_ioctl_run() if it can be extracted from 'struct kvm_vcpu'?
+>> The only call site looks like
+>> 
+>> virt/kvm/kvm_main.c:            r = kvm_arch_vcpu_ioctl_run(vcpu, vcpu->run);
+>> 
+>
+> In the earlier version, kvm_run is used to pass parameters with user 
+> mode and is not included in the vcpu structure, so it has been retained 
+> until now.
+>
 
-Definitely an improvement over the current situation, as the direct read
-of ID_AA64PFR0 was always a bit dodgy. Given that I'm pretty sure these 
-new
-braindead SoCs are going to run an older version of the kernel, should 
-we
-Cc stable for this?
+In case this is no longer needed I'd suggest we drop 'kvm_run' parameter
+and extract it from 'struct kvm_vcpu' when needed. This looks like a
+natural add-on to your cleanup patch.
 
-Otherwise:
-
-Acked-by: Marc Zyngier <maz@kernel.org>
-
-         M.
 -- 
-Jazz is not dead. It just smells funny...
+Vitaly
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
