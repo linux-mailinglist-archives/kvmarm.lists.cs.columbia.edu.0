@@ -2,98 +2,74 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5034E1AAD33
-	for <lists+kvmarm@lfdr.de>; Wed, 15 Apr 2020 18:14:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 287381AAF1A
+	for <lists+kvmarm@lfdr.de>; Wed, 15 Apr 2020 19:06:37 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C36344B19A;
-	Wed, 15 Apr 2020 12:14:09 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CD3764B10E;
+	Wed, 15 Apr 2020 13:06:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id wjLXxv49fTqr; Wed, 15 Apr 2020 12:14:09 -0400 (EDT)
+	with ESMTP id l-QB2f9C1iyQ; Wed, 15 Apr 2020 13:06:35 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 77E6A4B1D1;
-	Wed, 15 Apr 2020 12:14:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B9D994B23B;
+	Wed, 15 Apr 2020 13:06:31 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 397294B19A
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 12:14:07 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C73A4B1D7
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 12:20:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id c9L2mzjguOTv for <kvmarm@lists.cs.columbia.edu>;
- Wed, 15 Apr 2020 12:14:06 -0400 (EDT)
-Received: from us-smtp-delivery-1.mimecast.com
- (us-smtp-delivery-1.mimecast.com [207.211.31.120])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 39F534B188
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 12:14:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1586967246;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RJeTo/zRnrqHhvOgPTgaHSH4vrzTtRuXcGPzKEfUHnY=;
- b=e1eEYVzctatqwLxJLuzuNGAgqdyx60+5mHE6YsEaota2X0hspOsHsOEk7zXg8FQlGp0b4M
- Y3huUfNUl7N42kbE6/W59FaWkNZEtLnWMNtUcDikS+Vo64EJakq0VjJuGVOWpBRFK7ToLi
- J4ajxvQZWZxNc6pOlklxQsZn4ugjdzo=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-33-iFFWSRFTPju2LtmJwjDYHQ-1; Wed, 15 Apr 2020 12:13:59 -0400
-X-MC-Unique: iFFWSRFTPju2LtmJwjDYHQ-1
-Received: by mail-wr1-f71.google.com with SMTP id r11so139903wrx.21
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 09:13:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=RJeTo/zRnrqHhvOgPTgaHSH4vrzTtRuXcGPzKEfUHnY=;
- b=R6TpWl6FJulVJHEQGOe/R06HQsysPFdyZxUsvhRifNd6G1rRtv6JcWaoNPrdmLKmJu
- LPW9SyUvAbMdMXMEimKyjUu8htOeuoAmSnBFLoRKYgXuKaKk57EWHKeoFhuSSEHxs3fA
- 2AZXvaCMCv0nZBv15zQTWU5/PhDwQb0076cpI78FSyyIDLr8PGDNTaWU+y+1VcrIVPAY
- WVt9QGRF1nhDTSvFi6TwLE93Tp8lrEjX04oWMbuKfOEmgFr3xcbhbKr0IzEKnO5jqZj2
- 3HPyUWOSEj8mBYEp4CgQtmrcRq0REdtiP5Jh3CrtXTQ9ZvK++Y0pzVnTC13QaKCZ2ALr
- cxdw==
-X-Gm-Message-State: AGi0PuYzll63hEHMUDDZcj1cGJn7PnyLhdBPQHqSFKr5c1pgN9VgDqHr
- gzYj6i/S7nrOT74qdGl8nlG44xNrIeN+dLJ07AZ4NkdYLplHfw1tOBhY85vygLjBlznN62YhGJb
- WSwFIATs79uFsRtp3NunE0RfU
-X-Received: by 2002:adf:ff82:: with SMTP id j2mr18428726wrr.96.1586967238415; 
- Wed, 15 Apr 2020 09:13:58 -0700 (PDT)
-X-Google-Smtp-Source: APiQypIDz/OV9eeQuwJYvgc7hCdaj4l2fEwtDfmedhtg4jVMeo+Svh1HHKzk8lWg60lun+SjucTPTg==
-X-Received: by 2002:adf:ff82:: with SMTP id j2mr18428685wrr.96.1586967238108; 
- Wed, 15 Apr 2020 09:13:58 -0700 (PDT)
-Received: from ?IPv6:2001:b07:6468:f312:9066:4f2:9fbd:f90e?
- ([2001:b07:6468:f312:9066:4f2:9fbd:f90e])
- by smtp.gmail.com with ESMTPSA id p7sm24315229wrf.31.2020.04.15.09.13.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 15 Apr 2020 09:13:57 -0700 (PDT)
-Subject: Re: [PATCH v2] KVM/arm64: Support enabling dirty log gradually in
- small chunks
-To: Keqian Zhu <zhukeqian1@huawei.com>, kvm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu
-References: <20200413122023.52583-1-zhukeqian1@huawei.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <be45ec89-2bdb-454b-d20a-c08898e26024@redhat.com>
-Date: Wed, 15 Apr 2020 18:13:56 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+ with ESMTP id dFuZsZ9dEIqi for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 15 Apr 2020 12:20:38 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BBAC24B19A
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 12:20:38 -0400 (EDT)
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com
+ [209.85.166.49])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id A3095206F9
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 16:20:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1586967637;
+ bh=xiWRRWSIiNJkZgzN/gsKBCqoW4ucuqZrzCPF+0y0s3Y=;
+ h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+ b=lVfxioqDtBIDtVZe6p4owl9oThM2453JiNHQbwWgv5H2Ku3OmoNzoaCU7Llce8caI
+ Iq3sIzpUGf33c90jVVyF6LgwZBQz+Piuxk4ujkuuj3qsmCR7EEe0Pf1TcghTMTbl6j
+ 2YyERQYlRv0hXfx0ndDZPXN+coDC0EX9BoUi2pGc=
+Received: by mail-io1-f49.google.com with SMTP id n10so17723642iom.3
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 09:20:37 -0700 (PDT)
+X-Gm-Message-State: AGi0PuZZW5EUdJmPXSqfcal2XLxm3TG/O7+CYazbdc4DRqBBTZruNE2N
+ zjFkTItS4Zy2c9uKPuI/8guQHxC/QRG1Pt8Bvvc=
+X-Google-Smtp-Source: APiQypLgOSRPv1bC/QOZQLEX3sYcp6ObUrfMGehj4hFMujnG8x8tCvW9SfKpInZF6hOzPUdOrer1k5rTNzt4nm6uAo8=
+X-Received: by 2002:a02:6a1e:: with SMTP id l30mr25608981jac.98.1586967636895; 
+ Wed, 15 Apr 2020 09:20:36 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200413122023.52583-1-zhukeqian1@huawei.com>
-Content-Language: en-US
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Cc: Marc Zyngier <maz@kernel.org>,
- Sean Christopherson <sean.j.christopherson@intel.com>,
- Jay Zhou <jianjay.zhou@huawei.com>, Will Deacon <will@kernel.org>
+References: <20200221165532.90618-1-andre.przywara@arm.com>
+ <2d3bad43-10a5-3ee1-72e7-e1da1d6c65dd@arm.com>
+ <CAMj1kXGUiCLvmJUwrxCc8aHdE30WWfa95ou-tEM8Kv0nj2GdDA@mail.gmail.com>
+ <CAMj1kXF6iw47MM_tg5izB9KC-N2zrnQbhwT2TVPOuKdpOBX=ow@mail.gmail.com>
+ <d9ae6d29-c2c5-6aa7-15b6-6549fc89c043@arm.com>
+In-Reply-To: <d9ae6d29-c2c5-6aa7-15b6-6549fc89c043@arm.com>
+From: Ard Biesheuvel <ardb@kernel.org>
+Date: Wed, 15 Apr 2020 18:20:25 +0200
+X-Gmail-Original-Message-ID: <CAMj1kXHKOBbCKsgYOYuLU+vOALBUbNRysVfVRpKXkh00GvTtEA@mail.gmail.com>
+Message-ID: <CAMj1kXHKOBbCKsgYOYuLU+vOALBUbNRysVfVRpKXkh00GvTtEA@mail.gmail.com>
+Subject: Re: [PATCH kvmtool v3] Add emulation for CFI compatible flash memory
+To: =?UTF-8?Q?Andr=C3=A9_Przywara?= <andre.przywara@arm.com>
+X-Mailman-Approved-At: Wed, 15 Apr 2020 13:06:31 -0400
+Cc: kvm@vger.kernel.org, Raphael Gault <raphael.gault@arm.com>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>, sami.mujawar@arm.com,
+ Will Deacon <will@kernel.org>, kvmarm <kvmarm@lists.cs.columbia.edu>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -105,98 +81,86 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 13/04/20 14:20, Keqian Zhu wrote:
-> There is already support of enabling dirty log graually in small chunks
-> for x86 in commit 3c9bd4006bfc ("KVM: x86: enable dirty log gradually in
-> small chunks"). This adds support for arm64.
-> 
-> x86 still writes protect all huge pages when DIRTY_LOG_INITIALLY_ALL_SET
-> is eanbled. However, for arm64, both huge pages and normal pages can be
-> write protected gradually by userspace.
-> 
-> Under the Huawei Kunpeng 920 2.6GHz platform, I did some tests on 128G
-> Linux VMs with different page size. The memory pressure is 127G in each
-> case. The time taken of memory_global_dirty_log_start in QEMU is listed
-> below:
-> 
-> Page Size      Before    After Optimization
->   4K            650ms         1.8ms
->   2M             4ms          1.8ms
->   1G             2ms          1.8ms
-> 
-> Besides the time reduction, the biggest income is that we will minimize
-> the performance side effect (because of dissloving huge pages and marking
-> memslots dirty) on guest after enabling dirty log.
-> 
-> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
-> ---
->  Documentation/virt/kvm/api.rst    |  2 +-
->  arch/arm64/include/asm/kvm_host.h |  3 +++
->  virt/kvm/arm/mmu.c                | 12 ++++++++++--
->  3 files changed, 14 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
-> index efbbe570aa9b..0017f63fa44f 100644
-> --- a/Documentation/virt/kvm/api.rst
-> +++ b/Documentation/virt/kvm/api.rst
-> @@ -5777,7 +5777,7 @@ will be initialized to 1 when created.  This also improves performance because
->  dirty logging can be enabled gradually in small chunks on the first call
->  to KVM_CLEAR_DIRTY_LOG.  KVM_DIRTY_LOG_INITIALLY_SET depends on
->  KVM_DIRTY_LOG_MANUAL_PROTECT_ENABLE (it is also only available on
-> -x86 for now).
-> +x86 and arm64 for now).
->  
->  KVM_CAP_MANUAL_DIRTY_LOG_PROTECT2 was previously available under the name
->  KVM_CAP_MANUAL_DIRTY_LOG_PROTECT, but the implementation had bugs that make
-> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-> index 32c8a675e5a4..a723f84fab83 100644
-> --- a/arch/arm64/include/asm/kvm_host.h
-> +++ b/arch/arm64/include/asm/kvm_host.h
-> @@ -46,6 +46,9 @@
->  #define KVM_REQ_RECORD_STEAL	KVM_ARCH_REQ(3)
->  #define KVM_REQ_RELOAD_GICv4	KVM_ARCH_REQ(4)
->  
-> +#define KVM_DIRTY_LOG_MANUAL_CAPS   (KVM_DIRTY_LOG_MANUAL_PROTECT_ENABLE | \
-> +				     KVM_DIRTY_LOG_INITIALLY_SET)
-> +
->  DECLARE_STATIC_KEY_FALSE(userspace_irqchip_in_use);
->  
->  extern unsigned int kvm_sve_max_vl;
-> diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
-> index e3b9ee268823..1077f653a611 100644
-> --- a/virt/kvm/arm/mmu.c
-> +++ b/virt/kvm/arm/mmu.c
-> @@ -2265,8 +2265,16 @@ void kvm_arch_commit_memory_region(struct kvm *kvm,
->  	 * allocated dirty_bitmap[], dirty pages will be be tracked while the
->  	 * memory slot is write protected.
->  	 */
-> -	if (change != KVM_MR_DELETE && mem->flags & KVM_MEM_LOG_DIRTY_PAGES)
-> -		kvm_mmu_wp_memory_region(kvm, mem->slot);
-> +	if (change != KVM_MR_DELETE && mem->flags & KVM_MEM_LOG_DIRTY_PAGES) {
-> +		/*
-> +		 * If we're with initial-all-set, we don't need to write
-> +		 * protect any pages because they're all reported as dirty.
-> +		 * Huge pages and normal pages will be write protect gradually.
-> +		 */
-> +		if (!kvm_dirty_log_manual_protect_and_init_set(kvm)) {
-> +			kvm_mmu_wp_memory_region(kvm, mem->slot);
-> +		}
-> +	}
->  }
->  
->  int kvm_arch_prepare_memory_region(struct kvm *kvm,
-> 
-
-Marc, what is the status of this patch?
-
-Paolo
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+T24gV2VkLCAxNSBBcHIgMjAyMCBhdCAxODoxMSwgQW5kcsOpIFByenl3YXJhIDxhbmRyZS5wcnp5
+d2FyYUBhcm0uY29tPiB3cm90ZToKPgo+IE9uIDE1LzA0LzIwMjAgMTY6NTUsIEFyZCBCaWVzaGV1
+dmVsIHdyb3RlOgo+ID4gT24gV2VkLCAxNSBBcHIgMjAyMCBhdCAxNzo0MywgQXJkIEJpZXNoZXV2
+ZWwgPGFyZGJAa2VybmVsLm9yZz4gd3JvdGU6Cj4gPj4KPiA+PiBPbiBUdWUsIDcgQXByIDIwMjAg
+YXQgMTc6MTUsIEFsZXhhbmRydSBFbGlzZWkgPGFsZXhhbmRydS5lbGlzZWlAYXJtLmNvbT4gd3Jv
+dGU6Cj4gPj4+Cj4gPj4+IEhpLAo+ID4+Pgo+ID4+PiBJJ3ZlIHRlc3RlZCB0aGlzIHBhdGNoIGJ5
+IHJ1bm5pbmcgYmFkYmxvY2tzIGFuZCBmaW8gb24gYSBmbGFzaCBkZXZpY2UgaW5zaWRlIGEKPiA+
+Pj4gZ3Vlc3QsIGV2ZXJ5dGhpbmcgd29ya2VkIGFzIGV4cGVjdGVkLgo+ID4+Pgo+ID4+PiBJJ3Zl
+IGFsc28gbG9va2VkIGF0IHRoZSBmbG93Y2hhcnRzIGZvciBkZXZpY2Ugb3BlcmF0aW9uIGZyb20g
+SW50ZWwgQXBwbGljYXRpb24KPiA+Pj4gTm90ZSA2NDYsIHBhZ2VzIDEyLTIxLCBhbmQgdGhleSBz
+ZWVtIGltcGxlbWVudGVkIGNvcnJlY3RseS4KPiA+Pj4KPiA+Pj4gQSBmZXcgbWlub3IgaXNzdWVz
+IGJlbG93Lgo+ID4+Pgo+ID4+PiBPbiAyLzIxLzIwIDQ6NTUgUE0sIEFuZHJlIFByenl3YXJhIHdy
+b3RlOgo+ID4+Pj4gRnJvbTogUmFwaGFlbCBHYXVsdCA8cmFwaGFlbC5nYXVsdEBhcm0uY29tPgo+
+ID4+Pj4KPiA+Pj4+IFRoZSBFREsgSUkgVUVGSSBmaXJtd2FyZSBpbXBsZW1lbnRhdGlvbiByZXF1
+aXJlcyBzb21lIHN0b3JhZ2UgZm9yIHRoZSBFRkkKPiA+Pj4+IHZhcmlhYmxlcywgd2hpY2ggaXMg
+dHlwaWNhbGx5IHNvbWUgZmxhc2ggc3RvcmFnZS4KPiA+Pj4+IFNpbmNlIHRoaXMgaXMgYWxyZWFk
+eSBzdXBwb3J0ZWQgb24gdGhlIEVESyBJSSBzaWRlLCB3ZSBhZGQgYSBDRkkgZmxhc2gKPiA+Pj4+
+IGVtdWxhdGlvbiB0byBrdm10b29sLgo+ID4+Pj4gVGhpcyBpcyBiYWNrZWQgYnkgYSBmaWxlLCBz
+cGVjaWZpZWQgdmlhIHRoZSAtLWZsYXNoIG9yIC1GIGNvbW1hbmQgbGluZQo+ID4+Pj4gb3B0aW9u
+LiBBbnkgZmxhc2ggd3JpdGVzIGRvbmUgYnkgdGhlIGd1ZXN0IHdpbGwgaW1tZWRpYXRlbHkgYmUg
+cmVmbGVjdGVkCj4gPj4+PiBpbnRvIHRoaXMgZmlsZSAoa3ZtdG9vbCBtbWFwJ3MgdGhlIGZpbGUp
+Lgo+ID4+Pj4gVGhlIGZsYXNoIHdpbGwgYmUgbGltaXRlZCB0byB0aGUgbmVhcmVzdCBwb3dlci1v
+Zi0yIHNpemUsIHNvIG9ubHkgdGhlCj4gPj4+PiBmaXJzdCAyIE1CIG9mIGEgMyBNQiBmaWxlIHdp
+bGwgYmUgdXNlZC4KPiA+Pj4+Cj4gPj4+PiBUaGlzIGltcGxlbWVudHMgYSBDRkkgZmxhc2ggdXNp
+bmcgdGhlICJJbnRlbC9TaGFycCBleHRlbmRlZCBjb21tYW5kCj4gPj4+PiBzZXQiLCBhcyBzcGVj
+aWZpZWQgaW46Cj4gPj4+PiAtIEpFREVDIEpFU0Q2OC4wMQo+ID4+Pj4gLSBKRURFQyBKRVAxMzdC
+Cj4gPj4+PiAtIEludGVsIEFwcGxpY2F0aW9uIE5vdGUgNjQ2Cj4gPj4+PiBTb21lIGdhcHMgaW4g
+dGhvc2Ugc3BlY3MgaGF2ZSBiZWVuIGZpbGxlZCBieSBsb29raW5nIGF0IHJlYWwgZGV2aWNlcyBh
+bmQKPiA+Pj4+IG90aGVyIGltcGxlbWVudGF0aW9ucyAoUUVNVSwgTGludXgga2VybmVsIGRyaXZl
+cikuCj4gPj4+Pgo+ID4+Pj4gQXQgdGhlIG1vbWVudCB0aGlzIHJlbGllcyBvbiBEVCB0byBhZHZl
+cnRpc2UgdGhlIGJhc2UgYWRkcmVzcyBvZiB0aGUKPiA+Pj4+IGZsYXNoIG1lbW9yeSAobWFwcGVk
+IGludG8gdGhlIE1NSU8gYWRkcmVzcyBzcGFjZSkgYW5kIGlzIG9ubHkgZW5hYmxlZAo+ID4+Pj4g
+Zm9yIEFSTS9BUk02NC4gVGhlIGVtdWxhdGlvbiBpdHNlbGYgaXMgYXJjaGl0ZWN0dXJlIGFnbm9z
+dGljLCB0aG91Z2guCj4gPj4+Pgo+ID4+Pj4gVGhpcyBpcyBvbmUgbWlzc2luZyBwaWVjZSB0b3dh
+cmQgYSB3b3JraW5nIFVFRkkgYm9vdCB3aXRoIGt2bXRvb2wgb24KPiA+Pj4+IEFSTSBndWVzdHMs
+IHRoZSBvdGhlciBpcyB0byBwcm92aWRlIHdyaXRhYmxlIFBDSSBCQVJzLCB3aGljaCBpcyBXSVAu
+Cj4gPj4+Pgo+ID4+Cj4gPj4gSSBoYXZlIGdpdmVuIHRoaXMgYSBzcGluIHdpdGggVUVGSSBidWls
+dCBmb3Iga3ZtdG9vbCwgYW5kIGl0IGFwcGVhcnMKPiA+PiB0byBiZSB3b3JraW5nIGNvcnJlY3Rs
+eS4gSG93ZXZlciwgSSBub3RpY2VkIHRoYXQgaXQgaXMgaW50b2xlcmFibHkKPiA+PiBzbG93LCB3
+aGljaCBzZWVtcyB0byBiZSBjYXVzZWQgYnkgdGhlIGZhY3QgdGhhdCBib3RoIGFycmF5IG1vZGUg
+YW5kCj4gPj4gY29tbWFuZCBtb2RlIChvciB3aGF0ZXZlciBpdCBpcyBjYWxsZWQgaW4gdGhlIENG
+SSBzcGVjKSBhcmUgZnVsbHkKPiA+PiBlbXVsYXRlZCwgd2hlcmVhcyBpbiB0aGUgUUVNVSBpbXBs
+ZW1lbnRhdGlvbiAoZm9yIGluc3RhbmNlKSwgdGhlCj4gPj4gcmVnaW9uIGlzIGFjdHVhbGx5IGV4
+cG9zZWQgdG8gdGhlIGd1ZXN0IHVzaW5nIGEgcmVhZC1vbmx5IEtWTSBtZW1zbG90Cj4gPj4gaW4g
+YXJyYXkgbW9kZSwgYW5kIHNvIHRoZSByZWFkIGFjY2Vzc2VzIGFyZSBtYWRlIG5hdGl2ZWx5Lgo+
+ID4+Cj4gPj4gSXQgaXMgYWxzbyBjYXVzaW5nIHByb2JsZW1zIGluIHRoZSBVRUZJIGltcGxlbWVu
+dGF0aW9uLCBhcyB3ZSBjYW4gbm8KPiA+PiBsb25nZXIgdXNlIHVuYWxpZ25lZCBhY2Nlc3NlcyB0
+byByZWFkIGZyb20gdGhlIHJlZ2lvbiwgd2hpY2ggaXMKPiA+PiBzb21ldGhpbmcgdGhlIGNvZGUg
+Y3VycmVudGx5IHJlbGllcyBvbiAoYW5kIHdoaWNoIHdvcmtzIGZpbmUgb24gYWN0dWFsCj4gPj4g
+aGFyZHdhcmUgYXMgbG9uZyBhcyB5b3UgdXNlIG5vcm1hbCBub24tY2FjaGVhYmxlIG1hcHBpbmdz
+KQo+ID4+Cj4gPgo+ID4gQWN0dWFsbHksIHRoZSBpc3N1ZSBpcyBub3QgYWxpZ25tZW50LiBUaGUg
+aXNzdWUgaXMgd2l0aCBpbnN0cnVjdGlvbnMKPiA+IHdpdGggbXVsdGlwbGUgb3V0cHV0cywgd2hp
+Y2ggbWVhbnMgeW91IGNhbm5vdCBkbyBhbiBvcmRpbmFyeSBtZW1jcHkoKQo+ID4gZnJvbSB0aGUg
+Tk9SIHJlZ2lvbiB1c2luZyBsZHAgaW5zdHJ1Y3Rpb25zLCBhbGlnbmVkIG9yIG5vdC4KPgo+IFll
+cywgd2UgdHJhY2VkIHRoYXQgZG93biB0byBhbiAibGRyYiB3aXRoIHBvc3QtaW5jIiwgaW4gdGhl
+IG1lbWNweSBjb2RlLgo+IE15IHN1Z2dlc3Rpb24gd2FzIHRvIHByb3ZpZGUgYSB2ZXJzaW9uIG9m
+IG1lbWNweV97ZnJvbSx0b31faW8oKSwgYXMKPiBMaW51eCBkb2VzLCB3aGljaCBvbmx5IHVzZXMg
+TU1JTyBhY2Nlc3NvcnMgdG8gYXZvaWQgImZhbmN5IiBpbnN0cnVjdGlvbnMuCj4KClRoYXQgaXMg
+cG9zc2libGUsIGFuZCB0aGUgaW1wYWN0IG9uIHRoZSBjb2RlIGlzIG1hbmFnZWFibGUsIGdpdmVu
+IHRoZQptb2R1bGFyIG5hdHVyZSBvZiBFREsyLgoKPiBCYWNrIGF0IHRoaXMgcG9pbnQgSSB3YXMg
+Y2hhbGxlbmdpbmcgdGhlIGlkZWEgb2YgYWNjZXNzaW5nIGEgZmxhc2gKPiBkZXZpY2Ugd2l0aCBh
+IG5vcm1hbCBtZW1vcnkgbWFwcGluZywgYmVjYXVzZSBvZiBpdCBmYWlsaW5nIHdoZW4gYmVpbmcg
+aW4KPiBzb21lIHF1ZXJ5IG1vZGUuIERvIHlvdSBrbm93IG9mIGFueSBiZXN0IHByYWN0aWNlcyBm
+b3IgZmxhc2ggbWFwcGluZ3M/Cj4gQXJlIHR3byBtYXBwaW5ncyBjb21tb24/Cj4KCkluIHRoZSBR
+RU1VIHBvcnQgb2YgRURLMiwgd2UgdXNlIG5vcm1hbCBub24tY2FjaGVhYmxlIGZvciB0aGUgZmly
+c3QKZmxhc2ggZGV2aWNlLCB3aGljaCBjb250YWlucyB0aGUgZXhlY3V0YWJsZSBpbWFnZSwgYW5k
+IGlzIG5vdAp1cGRhdGFibGUgYnkgdGhlIGd1ZXN0LiBUaGUgc2Vjb25kIGZsYXNoIGJhbmsgaXMg
+dXNlZCBmb3IgdGhlIHZhcmlhYmxlCnN0b3JlLCBhbmQgaXMgYWN0dWFsbHkgbWFwcGVkIGFzIGEg
+ZGV2aWNlIGFsbCB0aGUgdGltZS4KCkFub3RoZXIgdGhpbmcgSSBqdXN0IHJlYWxpemVkIGlzIHRo
+YXQgeW91IGNhbm5vdCBmZXRjaCBpbnN0cnVjdGlvbnMKZnJvbSBhbiBlbXVsYXRlZCBmbGFzaCBk
+ZXZpY2UgZWl0aGVyLCBzbyB0byBleGVjdXRlIGZyb20gTk9SIGZsYXNoLAp5b3Ugd2lsbCBuZWVk
+IGEgdHJ1ZSBtZW1vcnkgbWFwcGluZyBhcyB3ZWxsLgoKU28gaW4gc3VtbWFyeSwgSSB0aGluayB0
+aGUgbW9kZSBzd2l0Y2ggaXMgbmVlZGVkIHRvIGJlIGdlbmVyYWxseQp1c2VmdWwsIGV2ZW4gaWYg
+dGhlIGN1cnJlbnQgYXBwcm9hY2ggaXMgc3VmZmljaWVudCBmb3IgKHNsb3cpCnJlYWQvd3JpdGUg
+dXNpbmcgc3BlY2lhbCBtZW1vcnkgYWNjZXNzb3JzLgpfX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5j
+cy5jb2x1bWJpYS5lZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0
+aW5mby9rdm1hcm0K
