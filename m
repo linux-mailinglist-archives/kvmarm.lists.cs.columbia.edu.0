@@ -2,81 +2,87 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DE0B1ABA35
-	for <lists+kvmarm@lfdr.de>; Thu, 16 Apr 2020 09:45:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24B061ABED2
+	for <lists+kvmarm@lfdr.de>; Thu, 16 Apr 2020 13:10:25 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 73E9B4B239;
-	Thu, 16 Apr 2020 03:45:44 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A7A174B228;
+	Thu, 16 Apr 2020 07:10:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id NN7kk+WKvD1i; Thu, 16 Apr 2020 03:45:44 -0400 (EDT)
+	with ESMTP id Ai+zXALSSuCE; Thu, 16 Apr 2020 07:10:23 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3D2544B209;
-	Thu, 16 Apr 2020 03:45:43 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 865124B267;
+	Thu, 16 Apr 2020 07:10:17 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 048824B16C
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 03:45:42 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 438744B201
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 03:59:54 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ZKSGrtHBI+Ue for <kvmarm@lists.cs.columbia.edu>;
- Thu, 16 Apr 2020 03:45:41 -0400 (EDT)
-Received: from us-smtp-1.mimecast.com (us-smtp-2.mimecast.com [205.139.110.61])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EF4194B15D
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 03:45:40 -0400 (EDT)
+ with ESMTP id NM3V1KtMpZD3 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 16 Apr 2020 03:59:53 -0400 (EDT)
+Received: from us-smtp-1.mimecast.com (us-smtp-1.mimecast.com [205.139.110.61])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 268044B1FC
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 03:59:53 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1587023140;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1587023992;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xtMw61WExPfRdJ7k/9e2uGO0mShWA0MWE6V5DxSJKqU=;
- b=TvuWJ5T3z+X4Cx3ICLvNe2RK0US6Nhp+jcWIhAFtXCGepzL+E0vwDzVyiNxoUv8Sfxuyho
- fxc8VtJCjZKCfhemxptLg3SU8K8ascJW3mqtNPtjNR62uuyKni4zQ+lwSL6xQfV1Q7iQyO
- cUx0iXoHldLmwYSBJuNEiHnBlipp5yg=
+ bh=59R+ovlxm6On+Qd8pYU/mUIYBEwTiidwJnUqasBYx2I=;
+ b=hsF1i6JWQ6LADO/6TlDqfQmMRCK6Lk4WszDgCPDegG8Nrl2+2T3IH/j09HqReJJZCBeOxk
+ XexlxsFDNswcztX+jAlkGmXjb7Dxm+b/e48s5C04Mvt3a2/hVvQGsDp6+ttOD3QA85mdj5
+ 68cf+ob+Qlw2uq+ODOB7lwbZfBkhDRI=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-362-UyxvZ--jPOSsOW2DrZQkxw-1; Thu, 16 Apr 2020 03:45:35 -0400
-X-MC-Unique: UyxvZ--jPOSsOW2DrZQkxw-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com
- [10.5.11.12])
+ us-mta-346-9hOwk_6DP4u2o4uguH0tVQ-1; Thu, 16 Apr 2020 03:59:45 -0400
+X-MC-Unique: 9hOwk_6DP4u2o4uguH0tVQ-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.phx2.redhat.com
+ [10.5.11.16])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 7354A8017F5;
- Thu, 16 Apr 2020 07:45:32 +0000 (UTC)
-Received: from [10.36.115.53] (ovpn-115-53.ams2.redhat.com [10.36.115.53])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 943CE60BE0;
- Thu, 16 Apr 2020 07:45:25 +0000 (UTC)
-Subject: Re: [PATCH v11 00/13] SMMUv3 Nested Stage Setup (IOMMU part)
-To: Zhangfei Gao <zhangfei.gao@linaro.org>, eric.auger.pro@gmail.com,
- iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
- kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu, will@kernel.org,
- joro@8bytes.org, maz@kernel.org, robin.murphy@arm.com
-References: <20200414150607.28488-1-eric.auger@redhat.com>
- <eb27f625-ad7a-fcb5-2185-5471e4666f09@linaro.org>
-From: Auger Eric <eric.auger@redhat.com>
-Message-ID: <06fe02f7-2556-8986-2f1e-dcdf59773b8c@redhat.com>
-Date: Thu, 16 Apr 2020 09:45:24 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id A503618C8C04;
+ Thu, 16 Apr 2020 07:59:43 +0000 (UTC)
+Received: from localhost.localdomain (vpn2-54-119.bne.redhat.com
+ [10.64.54.119])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 26C495C1C5;
+ Thu, 16 Apr 2020 07:59:36 +0000 (UTC)
+Subject: Re: [PATCH RFCv1 0/7] Support Async Page Fault
+To: Mark Rutland <mark.rutland@arm.com>
+References: <20200410085820.758686-1-gshan@redhat.com>
+ <d2882e806ad2f9793437160093c8d3fa@kernel.org>
+ <6a1d7e8b-da10-409f-16d0-354004566a1a@redhat.com>
+ <20200414110554.GB2486@C02TD0UTHF1T.local>
+From: Gavin Shan <gshan@redhat.com>
+Message-ID: <5bc62c4f-e19d-82f2-072e-dfa4498dccf3@redhat.com>
+Date: Thu, 16 Apr 2020 17:59:33 +1000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.0
 MIME-Version: 1.0
-In-Reply-To: <eb27f625-ad7a-fcb5-2185-5471e4666f09@linaro.org>
+In-Reply-To: <20200414110554.GB2486@C02TD0UTHF1T.local>
 Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-Cc: jean-philippe@linaro.org, jacob.jun.pan@linux.intel.com,
- alex.williamson@redhat.com, yi.l.liu@intel.com, bbhushan2@marvell.com
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+X-Mailman-Approved-At: Thu, 16 Apr 2020 07:10:16 -0400
+Cc: Marc Zyngier <maz@kernel.org>, sudeep.holla@arm.com, shan.gavin@gmail.com,
+ catalin.marinas@arm.com, will@kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
+Reply-To: Gavin Shan <gshan@redhat.com>
 List-Id: Where KVM/ARM decisions are made <kvmarm.lists.cs.columbia.edu>
 List-Unsubscribe: <https://lists.cs.columbia.edu/mailman/options/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=unsubscribe>
@@ -85,48 +91,73 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-SGkgWmhhbmdmZWksCgpPbiA0LzE2LzIwIDY6MjUgQU0sIFpoYW5nZmVpIEdhbyB3cm90ZToKPiAK
-PiAKPiBPbiAyMDIwLzQvMTQg5LiL5Y2IMTE6MDUsIEVyaWMgQXVnZXIgd3JvdGU6Cj4+IFRoaXMg
-dmVyc2lvbiBmaXhlcyBhbiBpc3N1ZSBvYnNlcnZlZCBieSBTaGFtZWVyIG9uIGFuIFNNTVUgMy4y
-LAo+PiB3aGVuIG1vdmluZyBmcm9tIGR1YWwgc3RhZ2UgY29uZmlnIHRvIHN0YWdlIDEgb25seSBj
-b25maWcuCj4+IFRoZSAyIGhpZ2ggNjRiIG9mIHRoZSBTVEUgbm93IGdldCByZXNldC4gT3RoZXJ3
-aXNlLCBsZWF2aW5nIHRoZQo+PiBTMlRUQiBzZXQgbWF5IGNhdXNlIGEgQ19CQURfU1RFIGVycm9y
-Lgo+Pgo+PiBUaGlzIHNlcmllcyBjYW4gYmUgZm91bmQgYXQ6Cj4+IGh0dHBzOi8vZ2l0aHViLmNv
-bS9lYXVnZXIvbGludXgvdHJlZS92NS42LTJzdGFnZS12MTFfMTAuMQo+PiAoaW5jbHVkaW5nIHRo
-ZSBWRklPIHBhcnQpCj4+IFRoZSBRRU1VIGZlbGxvdyBzZXJpZXMgc3RpbGwgY2FuIGJlIGZvdW5k
-IGF0Ogo+PiBodHRwczovL2dpdGh1Yi5jb20vZWF1Z2VyL3FlbXUvdHJlZS92NC4yLjAtMnN0YWdl
-LXJmY3Y2Cj4+Cj4+IFVzZXJzIGhhdmUgZXhwcmVzc2VkIGludGVyZXN0IGluIHRoYXQgd29yayBh
-bmQgdGVzdGVkIHY5L3YxMDoKPj4gLSBodHRwczovL3BhdGNod29yay5rZXJuZWwub3JnL2NvdmVy
-LzExMDM5OTk1LyMyMzAxMjM4MQo+PiAtIGh0dHBzOi8vcGF0Y2h3b3JrLmtlcm5lbC5vcmcvY292
-ZXIvMTEwMzk5OTUvIzIzMTk3MjM1Cj4+Cj4+IEJhY2tncm91bmQ6Cj4+Cj4+IFRoaXMgc2VyaWVz
-IGJyaW5ncyB0aGUgSU9NTVUgcGFydCBvZiBIVyBuZXN0ZWQgcGFnaW5nIHN1cHBvcnQKPj4gaW4g
-dGhlIFNNTVV2My4gVGhlIFZGSU8gcGFydCBpcyBzdWJtaXR0ZWQgc2VwYXJhdGVseS4KPj4KPj4g
-VGhlIElPTU1VIEFQSSBpcyBleHRlbmRlZCB0byBzdXBwb3J0IDIgbmV3IEFQSSBmdW5jdGlvbmFs
-aXRpZXM6Cj4+IDEpIHBhc3MgdGhlIGd1ZXN0IHN0YWdlIDEgY29uZmlndXJhdGlvbgo+PiAyKSBw
-YXNzIHN0YWdlIDEgTVNJIGJpbmRpbmdzCj4+Cj4+IFRoZW4gdGhvc2UgY2FwYWJpbGl0aWVzIGdl
-dHMgaW1wbGVtZW50ZWQgaW4gdGhlIFNNTVV2MyBkcml2ZXIuCj4+Cj4+IFRoZSB2aXJ0dWFsaXpl
-ciBwYXNzZXMgaW5mb3JtYXRpb24gdGhyb3VnaCB0aGUgVkZJTyB1c2VyIEFQSQo+PiB3aGljaCBj
-YXNjYWRlcyB0aGVtIHRvIHRoZSBpb21tdSBzdWJzeXN0ZW0uIFRoaXMgYWxsb3dzIHRoZSBndWVz
-dAo+PiB0byBvd24gc3RhZ2UgMSB0YWJsZXMgYW5kIGNvbnRleHQgZGVzY3JpcHRvcnMgKHNvLWNh
-bGxlZCBQQVNJRAo+PiB0YWJsZSkgd2hpbGUgdGhlIGhvc3Qgb3ducyBzdGFnZSAyIHRhYmxlcyBh
-bmQgbWFpbiBjb25maWd1cmF0aW9uCj4+IHN0cnVjdHVyZXMgKFNURSkuCj4+Cj4+Cj4gCj4gVGhh
-bmtzIEVyaWMKPiAKPiBUZXN0ZWQgdjExIG9uIEhpc2lsaWNvbiBrdW5wZW5nOTIwIGJvYXJkIHZp
-YSBoYXJkd2FyZSB6aXAgYWNjZWxlcmF0b3IuCj4gMS4gbm8tc3ZhIHdvcmtzLCB3aGVyZSBndWVz
-dCBhcHAgZGlyZWN0bHkgdXNlIHBoeXNpY2FsIGFkZHJlc3MgdmlhIGlvY3RsLgpUaGFuayB5b3Ug
-Zm9yIHRoZSB0ZXN0aW5nLiBHbGFkIGl0IHdvcmtzIGZvciB5b3UuCj4gMi4gdlNWQSBzdGlsbCBu
-b3Qgd29yaywgc2FtZSBhcyB2MTAsClllcyB0aGF0J3Mgbm9ybWFsIHRoaXMgc2VyaWVzIGlzIG5v
-dCBtZWFudCB0byBzdXBwb3J0IHZTVk0gYXQgdGhpcyBzdGFnZS4KCkkgaW50ZW5kIHRvIGFkZCB0
-aGUgbWlzc2luZyBwaWVjZXMgZHVyaW5nIHRoZSBuZXh0IHdlZWtzLgoKVGhhbmtzCgpFcmljCj4g
-My7CoCB0aGUgdjEwIGlzc3VlIHJlcG9ydGVkIGJ5IFNoYW1lZXIgaGFzIGJlZW4gc29sdmVkLMKg
-IGZpcnN0IHN0YXJ0IHFlbXUKPiB3aXRowqAgaW9tbXU9c21tdXYzLCB0aGVuIHN0YXJ0IHFlbXUg
-d2l0aG91dMKgIGlvbW11PXNtbXV2Mwo+IDQuIG5vLXN2YSBhbHNvIHdvcmtzIHdpdGhvdXTCoCBp
-b21tdT1zbW11djMKPiAKPiBUZXN0IGRldGFpbHMgaW4gaHR0cHM6Ly9kb2NzLnFxLmNvbS9kb2Mv
-RFJVNW9SMU50VUVSc2VGTkwKPiAKPiBUaGFua3MKPiAKCl9fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fCmt2bWFybSBtYWlsaW5nIGxpc3QKa3ZtYXJtQGxpc3Rz
-LmNzLmNvbHVtYmlhLmVkdQpodHRwczovL2xpc3RzLmNzLmNvbHVtYmlhLmVkdS9tYWlsbWFuL2xp
-c3RpbmZvL2t2bWFybQo=
+Hi Mark,
+
+On 4/14/20 9:05 PM, Mark Rutland wrote:
+> On Tue, Apr 14, 2020 at 03:39:56PM +1000, Gavin Shan wrote:
+>> On 4/10/20 10:52 PM, Marc Zyngier wrote:
+>>> On 2020-04-10 09:58, Gavin Shan wrote:
+>>>> In order to fulfil the control flow and convey signals between host
+>>>> and guest. A IMPDEF system register (SYS_ASYNC_PF_EL1) is introduced.
+>>>> The register accepts control block's physical address, plus requested
+>>>> features. Also, the signal is sent using data abort with the specific
+>>>> IMPDEF Data Fault Status Code (DFSC). The specific signal is stored
+>>>> in the control block by host, to be consumed by guest.
+> 
+>>> - We don't add IMPDEF sysregs, period. That's reserved for the HW. If
+>>>     you want to trap, there's the HVC instruction to that effect.
+> 
+>> I really don't understand how IMPDEF sysreg is used by hardware vendors.
+>> Do we have an existing functionality, which depends on IMPDEF sysreg?
+>> I was thinking the IMPDEF sysreg can be used by software either, but
+>> it seems I'm wrong.
+> 
+> The key is in the name: an IMPLEMENTATION DEFINED register is defined by
+> the implementation (i.e. the specific CPU microarchitecture), so it's
+> wrong for software to come up with an arbitrary semantic as this will
+> differ from the implementation's defined semantic for the register.
+> 
+> Typically, IMP DEF resgisters are used for things that firmware needs to
+> do (e.g. enter/exit coherency), or for bringup-time debug (e.g. poking
+> into TLB/cache internals), and are not usually intended for general
+> purpose software.
+> 
+> Linux generally avoids the use of IMP DEF registers, but does so in some
+> cases (e.g. for PMUs) after FW explicitly describes that those are safe
+> to access.
+> 
+
+Thanks for the explanation and details, which make things much clear. Since
+the IMPDEF system register can't be used like this way, hypercall (HVC) would
+be considered to serve same purpose - deliver signals from host to guest. However,
+the hypercall number and behaviors are guarded by specification. For example,
+the hypercalls used by para-virtualized stolen time, which are defined in
+include/linux/arm-smccc.h, are specified by ARM DEN0057A [1]. So I need a
+specification to be created, where the hypercalls used by this feature are
+defined? If it's not needed, can I pick hypercalls that aren't used and define
+their behaviors by myself?
+
+[1] http://infocenter.arm.com/help/topic/com.arm.doc.den0057a/DEN0057A_Paravirtualized_Time_for_Arm_based_Systems_v1_0.pdf
+
+Another thing I want to check is about the ESR_EL1[DFSC]. In this series,
+the asynchronous page fault is identified by IMPDEF DFSC (Data Fault Status
+Code) in ESR_EL1. According to what we discussed, the IMPDEF DFSC shouldn't
+be fired (produced) by software. It should be produced by hardware either?
+What I understood is IMPDEF is hardware behavior. If this is true, I need
+to avoid using IMPDEF DFSC in next revision :)
+
+
+Thanks,
+Gavin
+
+
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
