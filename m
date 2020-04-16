@@ -2,87 +2,74 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 09EAC1ACF85
-	for <lists+kvmarm@lfdr.de>; Thu, 16 Apr 2020 20:22:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EA8E1AD724
+	for <lists+kvmarm@lfdr.de>; Fri, 17 Apr 2020 09:13:16 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 902174B194;
-	Thu, 16 Apr 2020 14:22:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F0EA44B26C;
+	Fri, 17 Apr 2020 03:13:15 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Score: 5.677
+X-Spam-Level: *****
+X-Spam-Status: No, score=5.677 required=6.1 tests=[BAYES_20=-0.001,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_SORBS_WEB=0.77,
+	SPF_HELO_PASS=-0.001, TO_MALFORMED=2.099, TVD_SPACE_RATIO=0.001,
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, body has been altered) header.i=@novsu.ru
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xUdVRjIAJ274; Thu, 16 Apr 2020 14:22:27 -0400 (EDT)
+	with ESMTP id ZzUWftojAjwc; Fri, 17 Apr 2020 03:13:15 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6C68B4B1C6;
-	Thu, 16 Apr 2020 14:22:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 03DD34B1FE;
+	Fri, 17 Apr 2020 03:13:12 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DE1FF4B1AC
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 14:22:25 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 650F04B239
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 16:50:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id rph7PguSEZ1G for <kvmarm@lists.cs.columbia.edu>;
- Thu, 16 Apr 2020 14:22:25 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id EEABC4B159
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 14:22:24 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id D55042222D;
- Thu, 16 Apr 2020 18:22:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1587061344;
- bh=6zrtXU9CGPRKE5NSlsMwz1LYWf6+ZBpckIQKGAKC7K8=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=HiRIy1z1b/9U9K+HKP8HUDXGPoNL44r3nyxvBq85trtY+XWWj6ob8+0lfJFRnW0H3
- xfrIzxGX3t37kXQ5lYZE/Dqk9a5OD4UMRUfqJoTwM5pf/dVoOf37Zft4sSvRmAP3Yz
- uAPsq677yjr3o4m7tOWUz+zx5md6spR3xPjkCFqk=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
- (envelope-from <maz@kernel.org>)
- id 1jP99a-003xpV-12; Thu, 16 Apr 2020 19:22:22 +0100
+ with ESMTP id adQmY7VlgqJR for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 16 Apr 2020 16:50:45 -0400 (EDT)
+Received: from xcp137.novsu.ac.ru (xcp137.novsu.ac.ru [80.250.189.11])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0C64A4B235
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 16:50:45 -0400 (EDT)
+Received: from localhost (localhost [127.0.0.1])
+ by xcp137.novsu.ac.ru (Postfix) with ESMTP id C669D61D47;
+ Thu, 16 Apr 2020 23:50:40 +0300 (MSK)
+Received: from xcp137.novsu.ac.ru ([127.0.0.1])
+ by localhost (xcp137.novsu.ac.ru [127.0.0.1]) (amavisd-new, port 10032)
+ with ESMTP id Y5Ehw9BdEt2T; Thu, 16 Apr 2020 23:50:40 +0300 (MSK)
+Received: from localhost (localhost [127.0.0.1])
+ by xcp137.novsu.ac.ru (Postfix) with ESMTP id 448ED61D66;
+ Thu, 16 Apr 2020 23:50:39 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.10.3 xcp137.novsu.ac.ru 448ED61D66
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=novsu.ru;
+ s=AB32354C-6D0E-11E7-857E-252FEF7F1304; t=1587070240;
+ bh=+slkbZJPWM2ceFoh17//Eu44P/KZJq9EqQOtvHwqE9Y=;
+ h=MIME-Version:To:From:Date:Message-Id;
+ b=XSAjP3tZ6zxrM67mnpZjBVjECylrz+JUgKN1QBW0l7JUEToJeeNxHH4CjAujaXdj2
+ kbi3IvERm4mf5nldfTs12Oyu0TktJxtVDmSfG3Y1GQuvBMVL2FwNEOHmQD2yv54/WA
+ 0kNVOswmqfRhL5Z/f5GKOcgWORC2Tkqu6mZqetgs=
+X-Virus-Scanned: amavisd-new at xcp137.novsu.ac.ru
+Received: from xcp137.novsu.ac.ru ([127.0.0.1])
+ by localhost (xcp137.novsu.ac.ru [127.0.0.1]) (amavisd-new, port 10026)
+ with ESMTP id 3LlP-Kciy98J; Thu, 16 Apr 2020 23:50:39 +0300 (MSK)
+Received: from [192.168.8.100] (unknown [197.211.61.56])
+ by xcp137.novsu.ac.ru (Postfix) with ESMTPSA id CBDCD61D47;
+ Thu, 16 Apr 2020 23:50:36 +0300 (MSK)
 MIME-Version: 1.0
-Date: Thu, 16 Apr 2020 19:22:21 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: "Zengtao (B)" <prime.zeng@hisilicon.com>
-Subject: Re: [PATCH v2 00/94] KVM: arm64: ARMv8.3/8.4 Nested Virtualization
- support
-In-Reply-To: <678F3D1BB717D949B966B68EAEB446ED3A535FCF@DGGEMM506-MBX.china.huawei.com>
-References: <MN2PR18MB26869A6CA4E67558324F655CC5C70@MN2PR18MB2686.namprd18.prod.outlook.com>
- <06d08f904f003160a48eac3c5ab3c7ff@kernel.org>
- <678F3D1BB717D949B966B68EAEB446ED342E29B9@dggemm526-mbx.china.huawei.com>
- <86r1wus7df.wl-maz@kernel.org>
- <678F3D1BB717D949B966B68EAEB446ED3A535FCF@DGGEMM506-MBX.china.huawei.com>
-Message-ID: <3e84aaf8b757bc5a7685a291e54c232b@kernel.org>
-X-Sender: maz@kernel.org
-User-Agent: Roundcube Webmail/1.3.10
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: prime.zeng@hisilicon.com, gcherian@marvell.com,
- Dave.Martin@arm.com, alexandru.elisei@arm.com, andre.przywara@arm.com,
- christoffer.dall@arm.com, james.morse@arm.com, jintack@cs.columbia.edu,
- julien.thierry.kdev@gmail.com, kvm@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
- suzuki.poulose@arm.com, areddy3@marvell.com, gkulkarni@marvell.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kvmarm@lists.cs.columbia.edu, Ganapatrao Kulkarni <gkulkarni@marvell.com>,
- kvm@vger.kernel.org, andre.przywara@arm.com,
- George Cherian <gcherian@marvell.com>, linux-arm-kernel@lists.infradead.org,
- Anil Kumar Reddy H <areddy3@marvell.com>, Dave.Martin@arm.com
+Content-Description: Mail message body
+Subject: ***SPAM*** Vorschlag
+To: Recipients <>
+From: Yi Huiman <""@novsu.ru>
+Date: Thu, 16 Apr 2020 21:50:35 +0100
+Message-Id: <20200416205036.CBDCD61D47@xcp137.novsu.ac.ru>
+X-Mailman-Approved-At: Fri, 17 Apr 2020 03:13:10 -0400
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
+Reply-To: info@huiman.cf
 List-Id: Where KVM/ARM decisions are made <kvmarm.lists.cs.columbia.edu>
 List-Unsubscribe: <https://lists.cs.columbia.edu/mailman/options/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=unsubscribe>
@@ -91,43 +78,12 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Zengtao,
-
-On 2020-04-16 02:38, Zengtao (B) wrote:
-> Hi Marc:
-> 
-> Got it.
-> Really a bit patch set :)
-
-Well, yeah... ;-)
-
-> 
-> BTW, I have done a basic kvm unit test
-> git://git.kernel.org/pub/scm/virt/kvm/kvm-unit-tests.git
-> And I find that after apply the patch KVM: arm64: VNCR-ize ELR_EL1,
-> The psci test failed for some reason, I can't understand why, this
-> is only the test result.(find the patch by git bisect + kvm test)
-
-That it is that mechanical, we should be able to quickly nail that one.
-
-> My platform: Hisilicon D06 board.
-> Linux kernel: Linux 5.6-rc6 + nv patches(some rebases)
-> Could you help to take a look?
-
-I'll have a look tomorrow. I'm in the middle of refactoring the series
-for 5.7, and things have changed quite a bit. Hopefully this isn't a VHE
-vs non-VHE issue.
-
-Thanks,
-
-         M.
--- 
-Jazz is not dead. It just smells funny...
+I have a proposal for you.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
