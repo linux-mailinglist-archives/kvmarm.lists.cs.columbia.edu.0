@@ -2,87 +2,84 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 24B061ABED2
-	for <lists+kvmarm@lfdr.de>; Thu, 16 Apr 2020 13:10:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 677531ABAD7
+	for <lists+kvmarm@lfdr.de>; Thu, 16 Apr 2020 10:11:16 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A7A174B228;
-	Thu, 16 Apr 2020 07:10:24 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E03584B239;
+	Thu, 16 Apr 2020 04:11:15 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Ai+zXALSSuCE; Thu, 16 Apr 2020 07:10:23 -0400 (EDT)
+	with ESMTP id NkEH+36xp3Bq; Thu, 16 Apr 2020 04:11:15 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 865124B267;
-	Thu, 16 Apr 2020 07:10:17 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CC4CB4B229;
+	Thu, 16 Apr 2020 04:11:14 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 438744B201
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 03:59:54 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C7E6A4B19E
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 04:11:12 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id NM3V1KtMpZD3 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 16 Apr 2020 03:59:53 -0400 (EDT)
+ with ESMTP id 6l3M+15KJWhJ for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 16 Apr 2020 04:11:11 -0400 (EDT)
 Received: from us-smtp-1.mimecast.com (us-smtp-1.mimecast.com [205.139.110.61])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 268044B1FC
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 03:59:53 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D9A8D4B21E
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 04:11:11 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1587023992;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1587024671;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=59R+ovlxm6On+Qd8pYU/mUIYBEwTiidwJnUqasBYx2I=;
- b=hsF1i6JWQ6LADO/6TlDqfQmMRCK6Lk4WszDgCPDegG8Nrl2+2T3IH/j09HqReJJZCBeOxk
- XexlxsFDNswcztX+jAlkGmXjb7Dxm+b/e48s5C04Mvt3a2/hVvQGsDp6+ttOD3QA85mdj5
- 68cf+ob+Qlw2uq+ODOB7lwbZfBkhDRI=
+ bh=wFZ203bZj9/d1HrtvH0p9KqRawPq4JxwlKVrmFjPcis=;
+ b=ZpY/cg0PH+fdeElEQMrOOXMp2BG7X3J8clM5I/Av1DE5wzZ10ZPdPQ+5bA7HrJyqXZVKtT
+ XhZlt4LoZQZYhcbWwxvjfQUkj2X6hpswE8m6SR+rk9HZ7NqXPMdKLERDF+VJAtV1qFvo4T
+ ry7X/rZRQUqmsRwr0G9S9a9fD+PNVfU=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-346-9hOwk_6DP4u2o4uguH0tVQ-1; Thu, 16 Apr 2020 03:59:45 -0400
-X-MC-Unique: 9hOwk_6DP4u2o4uguH0tVQ-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.phx2.redhat.com
- [10.5.11.16])
+ us-mta-6-tZrY3pJgMBy2TZZWxU1zqg-1; Thu, 16 Apr 2020 04:11:08 -0400
+X-MC-Unique: tZrY3pJgMBy2TZZWxU1zqg-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com
+ [10.5.11.14])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id A503618C8C04;
- Thu, 16 Apr 2020 07:59:43 +0000 (UTC)
-Received: from localhost.localdomain (vpn2-54-119.bne.redhat.com
- [10.64.54.119])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 26C495C1C5;
- Thu, 16 Apr 2020 07:59:36 +0000 (UTC)
-Subject: Re: [PATCH RFCv1 0/7] Support Async Page Fault
-To: Mark Rutland <mark.rutland@arm.com>
-References: <20200410085820.758686-1-gshan@redhat.com>
- <d2882e806ad2f9793437160093c8d3fa@kernel.org>
- <6a1d7e8b-da10-409f-16d0-354004566a1a@redhat.com>
- <20200414110554.GB2486@C02TD0UTHF1T.local>
-From: Gavin Shan <gshan@redhat.com>
-Message-ID: <5bc62c4f-e19d-82f2-072e-dfa4498dccf3@redhat.com>
-Date: Thu, 16 Apr 2020 17:59:33 +1000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.0
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 93AD81005509;
+ Thu, 16 Apr 2020 08:11:03 +0000 (UTC)
+Received: from gondolin (ovpn-112-234.ams2.redhat.com [10.36.112.234])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 734275DA7B;
+ Thu, 16 Apr 2020 08:10:49 +0000 (UTC)
+Date: Thu, 16 Apr 2020 10:10:47 +0200
+From: Cornelia Huck <cohuck@redhat.com>
+To: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+Subject: Re: [PATCH v2] KVM: Optimize kvm_arch_vcpu_ioctl_run function
+Message-ID: <20200416101047.1cb9693c.cohuck@redhat.com>
+In-Reply-To: <20200416051057.26526-1-tianjia.zhang@linux.alibaba.com>
+References: <20200416051057.26526-1-tianjia.zhang@linux.alibaba.com>
+Organization: Red Hat GmbH
 MIME-Version: 1.0
-In-Reply-To: <20200414110554.GB2486@C02TD0UTHF1T.local>
-Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-X-Mailman-Approved-At: Thu, 16 Apr 2020 07:10:16 -0400
-Cc: Marc Zyngier <maz@kernel.org>, sudeep.holla@arm.com, shan.gavin@gmail.com,
- catalin.marinas@arm.com, will@kernel.org, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+Cc: wanpengli@tencent.com, kvm@vger.kernel.org, david@redhat.com,
+ benh@kernel.crashing.org, heiko.carstens@de.ibm.com,
+ linux-mips@vger.kernel.org, paulus@ozlabs.org, hpa@zytor.com,
+ kvmarm@lists.cs.columbia.edu, linux-s390@vger.kernel.org,
+ frankja@linux.ibm.com, maz@kernel.org, joro@8bytes.org, x86@kernel.org,
+ borntraeger@de.ibm.com, mingo@redhat.com, thuth@redhat.com, gor@linux.ibm.com,
+ kvm-ppc@vger.kernel.org, bp@alien8.de, tglx@linutronix.de,
+ linux-arm-kernel@lists.infradead.org, jmattson@google.com,
+ tsbogend@alpha.franken.de, sean.j.christopherson@intel.com,
+ linux-kernel@vger.kernel.org, mpe@ellerman.id.au, pbonzini@redhat.com,
+ vkuznets@redhat.com, linuxppc-dev@lists.ozlabs.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
-Reply-To: Gavin Shan <gshan@redhat.com>
 List-Id: Where KVM/ARM decisions are made <kvmarm.lists.cs.columbia.edu>
 List-Unsubscribe: <https://lists.cs.columbia.edu/mailman/options/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=unsubscribe>
@@ -91,71 +88,46 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Mark,
+On Thu, 16 Apr 2020 13:10:57 +0800
+Tianjia Zhang <tianjia.zhang@linux.alibaba.com> wrote:
 
-On 4/14/20 9:05 PM, Mark Rutland wrote:
-> On Tue, Apr 14, 2020 at 03:39:56PM +1000, Gavin Shan wrote:
->> On 4/10/20 10:52 PM, Marc Zyngier wrote:
->>> On 2020-04-10 09:58, Gavin Shan wrote:
->>>> In order to fulfil the control flow and convey signals between host
->>>> and guest. A IMPDEF system register (SYS_ASYNC_PF_EL1) is introduced.
->>>> The register accepts control block's physical address, plus requested
->>>> features. Also, the signal is sent using data abort with the specific
->>>> IMPDEF Data Fault Status Code (DFSC). The specific signal is stored
->>>> in the control block by host, to be consumed by guest.
+> In earlier versions of kvm, 'kvm_run' is an independent structure
+> and is not included in the vcpu structure. At present, 'kvm_run'
+> is already included in the vcpu structure, so the parameter
+> 'kvm_run' is redundant.
 > 
->>> - We don't add IMPDEF sysregs, period. That's reserved for the HW. If
->>>     you want to trap, there's the HVC instruction to that effect.
+> This patch simplify the function definition, removes the extra
+
+s/simplify/simplifies/
+
+> 'kvm_run' parameter, and extract it from the 'kvm_vcpu' structure
+
+s/extract/extracts/
+
+> if necessary.
 > 
->> I really don't understand how IMPDEF sysreg is used by hardware vendors.
->> Do we have an existing functionality, which depends on IMPDEF sysreg?
->> I was thinking the IMPDEF sysreg can be used by software either, but
->> it seems I'm wrong.
+> Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+> ---
 > 
-> The key is in the name: an IMPLEMENTATION DEFINED register is defined by
-> the implementation (i.e. the specific CPU microarchitecture), so it's
-> wrong for software to come up with an arbitrary semantic as this will
-> differ from the implementation's defined semantic for the register.
+> v2 change:
+>   remove 'kvm_run' parameter and extract it from 'kvm_vcpu'
 > 
-> Typically, IMP DEF resgisters are used for things that firmware needs to
-> do (e.g. enter/exit coherency), or for bringup-time debug (e.g. poking
-> into TLB/cache internals), and are not usually intended for general
-> purpose software.
-> 
-> Linux generally avoids the use of IMP DEF registers, but does so in some
-> cases (e.g. for PMUs) after FW explicitly describes that those are safe
-> to access.
+>  arch/mips/kvm/mips.c       |  3 ++-
+>  arch/powerpc/kvm/powerpc.c |  3 ++-
+>  arch/s390/kvm/kvm-s390.c   |  3 ++-
+>  arch/x86/kvm/x86.c         | 11 ++++++-----
+>  include/linux/kvm_host.h   |  2 +-
+>  virt/kvm/arm/arm.c         |  6 +++---
+>  virt/kvm/kvm_main.c        |  2 +-
+>  7 files changed, 17 insertions(+), 13 deletions(-)
 > 
 
-Thanks for the explanation and details, which make things much clear. Since
-the IMPDEF system register can't be used like this way, hypercall (HVC) would
-be considered to serve same purpose - deliver signals from host to guest. However,
-the hypercall number and behaviors are guarded by specification. For example,
-the hypercalls used by para-virtualized stolen time, which are defined in
-include/linux/arm-smccc.h, are specified by ARM DEN0057A [1]. So I need a
-specification to be created, where the hypercalls used by this feature are
-defined? If it's not needed, can I pick hypercalls that aren't used and define
-their behaviors by myself?
-
-[1] http://infocenter.arm.com/help/topic/com.arm.doc.den0057a/DEN0057A_Paravirtualized_Time_for_Arm_based_Systems_v1_0.pdf
-
-Another thing I want to check is about the ESR_EL1[DFSC]. In this series,
-the asynchronous page fault is identified by IMPDEF DFSC (Data Fault Status
-Code) in ESR_EL1. According to what we discussed, the IMPDEF DFSC shouldn't
-be fired (produced) by software. It should be produced by hardware either?
-What I understood is IMPDEF is hardware behavior. If this is true, I need
-to avoid using IMPDEF DFSC in next revision :)
-
-
-Thanks,
-Gavin
-
-
+Reviewed-by: Cornelia Huck <cohuck@redhat.com>
 
 _______________________________________________
 kvmarm mailing list
