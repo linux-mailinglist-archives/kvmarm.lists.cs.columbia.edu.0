@@ -2,98 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B23CB1ABED1
-	for <lists+kvmarm@lfdr.de>; Thu, 16 Apr 2020 13:10:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DE0B1ABA35
+	for <lists+kvmarm@lfdr.de>; Thu, 16 Apr 2020 09:45:45 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3FAC74B286;
-	Thu, 16 Apr 2020 07:10:24 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 73E9B4B239;
+	Thu, 16 Apr 2020 03:45:44 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cbN4jcSKlez2; Thu, 16 Apr 2020 07:10:22 -0400 (EDT)
+	with ESMTP id NN7kk+WKvD1i; Thu, 16 Apr 2020 03:45:44 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 703244B263;
-	Thu, 16 Apr 2020 07:10:17 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3D2544B209;
+	Thu, 16 Apr 2020 03:45:43 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 77A634B226
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 03:03:56 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 048824B16C
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 03:45:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ztKgk+CBCp47 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 16 Apr 2020 03:03:54 -0400 (EDT)
-Received: from us-smtp-1.mimecast.com (us-smtp-2.mimecast.com [207.211.31.81])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A066C4B0F7
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 03:03:54 -0400 (EDT)
+ with ESMTP id ZKSGrtHBI+Ue for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 16 Apr 2020 03:45:41 -0400 (EDT)
+Received: from us-smtp-1.mimecast.com (us-smtp-2.mimecast.com [205.139.110.61])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EF4194B15D
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 03:45:40 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1587020634;
+ s=mimecast20190719; t=1587023140;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ycA+oaK7HnY0LCry275m8vvLJYLlqC5gRDJoT8fOj6s=;
- b=iIX1DYOWAXPgNxk6aF8CTQV6URQVWwBfXInDhlCMm+a2vtoT13nZArvWQnlv4J+28TY9lx
- TU9ISPw5612D7pPe2D2HSJcw4wc4jjuk4Th2wIXzvMzKItyTbuWnm4bmFzOSHF1PbxIt+J
- 4t9U97jEEKUJOP8p75CxM8g2Z+TcfAI=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-53-pFgjUwFbOA2Rmdn5Bh6oXQ-1; Thu, 16 Apr 2020 03:03:52 -0400
-X-MC-Unique: pFgjUwFbOA2Rmdn5Bh6oXQ-1
-Received: by mail-wr1-f71.google.com with SMTP id j22so1255714wrb.4
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 00:03:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
- :message-id:mime-version;
- bh=u8Fe4HRBZIpxRs2mIcqmv3RiTnssjCSY9lhZeXvdF9I=;
- b=jfruO5oCj4wvBeh4BHejC2E3i+DiFboaBgaZ8wKv0hNFNTxbHw44SjBVKNjrsHSB47
- lGCGwcy7utUX/uVTQIcCqcqzM/hzCMtAU8s9DFC+ahGFYrLYeMYzYMtGdNgT7DlBKM30
- wWBt86v2dddN3sV2i/pmNaak2xSeVM+UFjSA5djhHKDp9b5UNkYCkjmcsJjX4HnmM/7R
- GvwYmIeICgTc74QdX3HF/lKBRXs3hOAt0J3bXRxeXblK5WC97go1a2Vkf+ZZBgf4flYa
- lsicGMiWdGMtKIl4bjh9K+W+Oj9mHtqvFsnwURZZBJhfTz+BxeRZO2SkozhyrBs2at6E
- fPvw==
-X-Gm-Message-State: AGi0Puba9RteUAr8LqFTDUfblA8UAtTHPIRVkUMuaHTrjZLIbdkJuRIj
- 6dCtlJ/bjLKVlVWBkP9cvWugYPjeeRGWgGbvWkehk3FyXXgpVjCrBJcHG96lRJDBgKdUaou2Lmd
- wghJmnj3aJQFTmYzBZfb51cDK
-X-Received: by 2002:a5d:4005:: with SMTP id n5mr7830151wrp.242.1587020631114; 
- Thu, 16 Apr 2020 00:03:51 -0700 (PDT)
-X-Google-Smtp-Source: APiQypKzVfRYkQQjXNmPRmmEuweWR0AsvTUy66VIOLHRJ9IcCVXdD+fbCSvkQnkvtw8EzDw2iMvttg==
-X-Received: by 2002:a5d:4005:: with SMTP id n5mr7830094wrp.242.1587020630785; 
- Thu, 16 Apr 2020 00:03:50 -0700 (PDT)
-Received: from vitty.brq.redhat.com (g-server-2.ign.cz. [91.219.240.2])
- by smtp.gmail.com with ESMTPSA id o16sm26785055wrs.44.2020.04.16.00.03.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Apr 2020 00:03:49 -0700 (PDT)
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
-To: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
-Subject: Re: [PATCH v2] KVM: Optimize kvm_arch_vcpu_ioctl_run function
-In-Reply-To: <20200416051057.26526-1-tianjia.zhang@linux.alibaba.com>
-References: <20200416051057.26526-1-tianjia.zhang@linux.alibaba.com>
-Date: Thu, 16 Apr 2020 09:03:47 +0200
-Message-ID: <878sivx67g.fsf@vitty.brq.redhat.com>
+ bh=xtMw61WExPfRdJ7k/9e2uGO0mShWA0MWE6V5DxSJKqU=;
+ b=TvuWJ5T3z+X4Cx3ICLvNe2RK0US6Nhp+jcWIhAFtXCGepzL+E0vwDzVyiNxoUv8Sfxuyho
+ fxc8VtJCjZKCfhemxptLg3SU8K8ascJW3mqtNPtjNR62uuyKni4zQ+lwSL6xQfV1Q7iQyO
+ cUx0iXoHldLmwYSBJuNEiHnBlipp5yg=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-362-UyxvZ--jPOSsOW2DrZQkxw-1; Thu, 16 Apr 2020 03:45:35 -0400
+X-MC-Unique: UyxvZ--jPOSsOW2DrZQkxw-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com
+ [10.5.11.12])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 7354A8017F5;
+ Thu, 16 Apr 2020 07:45:32 +0000 (UTC)
+Received: from [10.36.115.53] (ovpn-115-53.ams2.redhat.com [10.36.115.53])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 943CE60BE0;
+ Thu, 16 Apr 2020 07:45:25 +0000 (UTC)
+Subject: Re: [PATCH v11 00/13] SMMUv3 Nested Stage Setup (IOMMU part)
+To: Zhangfei Gao <zhangfei.gao@linaro.org>, eric.auger.pro@gmail.com,
+ iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+ kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu, will@kernel.org,
+ joro@8bytes.org, maz@kernel.org, robin.murphy@arm.com
+References: <20200414150607.28488-1-eric.auger@redhat.com>
+ <eb27f625-ad7a-fcb5-2185-5471e4666f09@linaro.org>
+From: Auger Eric <eric.auger@redhat.com>
+Message-ID: <06fe02f7-2556-8986-2f1e-dcdf59773b8c@redhat.com>
+Date: Thu, 16 Apr 2020 09:45:24 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-X-Mailman-Approved-At: Thu, 16 Apr 2020 07:10:16 -0400
-Cc: wanpengli@tencent.com, kvm@vger.kernel.org, david@redhat.com,
- benh@kernel.crashing.org, heiko.carstens@de.ibm.com,
- linux-kernel@vger.kernel.org, paulus@ozlabs.org, hpa@zytor.com,
- kvmarm@lists.cs.columbia.edu, linux-s390@vger.kernel.org,
- frankja@linux.ibm.com, mpe@ellerman.id.au, joro@8bytes.org, x86@kernel.org,
- borntraeger@de.ibm.com, mingo@redhat.com, thuth@redhat.com, gor@linux.ibm.com,
- kvm-ppc@vger.kernel.org, bp@alien8.de, tglx@linutronix.de,
- linux-arm-kernel@lists.infradead.org, jmattson@google.com,
- tsbogend@alpha.franken.de, tianjia.zhang@linux.alibaba.com, cohuck@redhat.com,
- linux-mips@vger.kernel.org, sean.j.christopherson@intel.com, maz@kernel.org,
- pbonzini@redhat.com, linuxppc-dev@lists.ozlabs.org
+In-Reply-To: <eb27f625-ad7a-fcb5-2185-5471e4666f09@linaro.org>
+Content-Language: en-US
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+Cc: jean-philippe@linaro.org, jacob.jun.pan@linux.intel.com,
+ alex.williamson@redhat.com, yi.l.liu@intel.com, bbhushan2@marvell.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -105,201 +85,48 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Tianjia Zhang <tianjia.zhang@linux.alibaba.com> writes:
-
-> In earlier versions of kvm, 'kvm_run' is an independent structure
-> and is not included in the vcpu structure. At present, 'kvm_run'
-> is already included in the vcpu structure, so the parameter
-> 'kvm_run' is redundant.
->
-> This patch simplify the function definition, removes the extra
-> 'kvm_run' parameter, and extract it from the 'kvm_vcpu' structure
-> if necessary.
->
-> Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
-> ---
->
-> v2 change:
->   remove 'kvm_run' parameter and extract it from 'kvm_vcpu'
->
->  arch/mips/kvm/mips.c       |  3 ++-
->  arch/powerpc/kvm/powerpc.c |  3 ++-
->  arch/s390/kvm/kvm-s390.c   |  3 ++-
->  arch/x86/kvm/x86.c         | 11 ++++++-----
->  include/linux/kvm_host.h   |  2 +-
->  virt/kvm/arm/arm.c         |  6 +++---
->  virt/kvm/kvm_main.c        |  2 +-
->  7 files changed, 17 insertions(+), 13 deletions(-)
->
-> diff --git a/arch/mips/kvm/mips.c b/arch/mips/kvm/mips.c
-> index 8f05dd0a0f4e..ec24adf4857e 100644
-> --- a/arch/mips/kvm/mips.c
-> +++ b/arch/mips/kvm/mips.c
-> @@ -439,8 +439,9 @@ int kvm_arch_vcpu_ioctl_set_guest_debug(struct kvm_vcpu *vcpu,
->  	return -ENOIOCTLCMD;
->  }
->  
-> -int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu, struct kvm_run *run)
-> +int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
->  {
-> +	struct kvm_run *run = vcpu->run;
->  	int r = -EINTR;
->  
->  	vcpu_load(vcpu);
-> diff --git a/arch/powerpc/kvm/powerpc.c b/arch/powerpc/kvm/powerpc.c
-> index e15166b0a16d..7e24691e138a 100644
-> --- a/arch/powerpc/kvm/powerpc.c
-> +++ b/arch/powerpc/kvm/powerpc.c
-> @@ -1764,8 +1764,9 @@ int kvm_vcpu_ioctl_set_one_reg(struct kvm_vcpu *vcpu, struct kvm_one_reg *reg)
->  	return r;
->  }
->  
-> -int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu, struct kvm_run *run)
-> +int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
->  {
-> +	struct kvm_run *run = vcpu->run;
->  	int r;
->  
->  	vcpu_load(vcpu);
-> diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
-> index 19a81024fe16..443af3ead739 100644
-> --- a/arch/s390/kvm/kvm-s390.c
-> +++ b/arch/s390/kvm/kvm-s390.c
-> @@ -4333,8 +4333,9 @@ static void store_regs(struct kvm_vcpu *vcpu, struct kvm_run *kvm_run)
->  		store_regs_fmt2(vcpu, kvm_run);
->  }
->  
-> -int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu, struct kvm_run *kvm_run)
-> +int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
->  {
-> +	struct kvm_run *kvm_run = vcpu->run;
->  	int rc;
->  
->  	if (kvm_run->immediate_exit)
-> diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-> index 3bf2ecafd027..a0338e86c90f 100644
-> --- a/arch/x86/kvm/x86.c
-> +++ b/arch/x86/kvm/x86.c
-> @@ -8707,8 +8707,9 @@ static void kvm_put_guest_fpu(struct kvm_vcpu *vcpu)
->  	trace_kvm_fpu(0);
->  }
->  
-> -int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu, struct kvm_run *kvm_run)
-> +int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
->  {
-> +	struct kvm_run *kvm_run = vcpu->run;
->  	int r;
->  
->  	vcpu_load(vcpu);
-> @@ -8726,18 +8727,18 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu, struct kvm_run *kvm_run)
->  		r = -EAGAIN;
->  		if (signal_pending(current)) {
->  			r = -EINTR;
-> -			vcpu->run->exit_reason = KVM_EXIT_INTR;
-> +			kvm_run->exit_reason = KVM_EXIT_INTR;
->  			++vcpu->stat.signal_exits;
->  		}
->  		goto out;
->  	}
->  
-> -	if (vcpu->run->kvm_valid_regs & ~KVM_SYNC_X86_VALID_FIELDS) {
-> +	if (kvm_run->kvm_valid_regs & ~KVM_SYNC_X86_VALID_FIELDS) {
->  		r = -EINVAL;
->  		goto out;
->  	}
->  
-> -	if (vcpu->run->kvm_dirty_regs) {
-> +	if (kvm_run->kvm_dirty_regs) {
->  		r = sync_regs(vcpu);
->  		if (r != 0)
->  			goto out;
-> @@ -8767,7 +8768,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu, struct kvm_run *kvm_run)
->  
->  out:
->  	kvm_put_guest_fpu(vcpu);
-> -	if (vcpu->run->kvm_valid_regs)
-> +	if (kvm_run->kvm_valid_regs)
->  		store_regs(vcpu);
->  	post_kvm_run_save(vcpu);
->  	kvm_sigset_deactivate(vcpu);
-> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> index 6d58beb65454..1e17ef719595 100644
-> --- a/include/linux/kvm_host.h
-> +++ b/include/linux/kvm_host.h
-> @@ -866,7 +866,7 @@ int kvm_arch_vcpu_ioctl_set_mpstate(struct kvm_vcpu *vcpu,
->  				    struct kvm_mp_state *mp_state);
->  int kvm_arch_vcpu_ioctl_set_guest_debug(struct kvm_vcpu *vcpu,
->  					struct kvm_guest_debug *dbg);
-> -int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu, struct kvm_run *kvm_run);
-> +int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu);
->  
->  int kvm_arch_init(void *opaque);
->  void kvm_arch_exit(void);
-> diff --git a/virt/kvm/arm/arm.c b/virt/kvm/arm/arm.c
-> index 48d0ec44ad77..f5390ac2165b 100644
-> --- a/virt/kvm/arm/arm.c
-> +++ b/virt/kvm/arm/arm.c
-> @@ -639,7 +639,6 @@ static void check_vcpu_requests(struct kvm_vcpu *vcpu)
->  /**
->   * kvm_arch_vcpu_ioctl_run - the main VCPU run function to execute guest code
->   * @vcpu:	The VCPU pointer
-> - * @run:	The kvm_run structure pointer used for userspace state exchange
->   *
->   * This function is called through the VCPU_RUN ioctl called from user space. It
->   * will execute VM code in a loop until the time slice for the process is used
-> @@ -647,8 +646,9 @@ static void check_vcpu_requests(struct kvm_vcpu *vcpu)
->   * return with return value 0 and with the kvm_run structure filled in with the
->   * required data for the requested emulation.
->   */
-> -int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu, struct kvm_run *run)
-> +int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
->  {
-> +	struct kvm_run *run = vcpu->run;
->  	int ret;
->  
->  	if (unlikely(!kvm_vcpu_initialized(vcpu)))
-> @@ -659,7 +659,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu, struct kvm_run *run)
->  		return ret;
->  
->  	if (run->exit_reason == KVM_EXIT_MMIO) {
-> -		ret = kvm_handle_mmio_return(vcpu, vcpu->run);
-> +		ret = kvm_handle_mmio_return(vcpu, run);
-
-I don't know much about ARM but this also seems redundant,
-kvm_handle_mmio_return() is also able to extruct 'struct kvm_run' from'
-'struct kvm_vcpu'. This likely deserves it's own patch though.
-
->  		if (ret)
->  			return ret;
->  	}
-> diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-> index 74bdb7bf3295..e18faea89146 100644
-> --- a/virt/kvm/kvm_main.c
-> +++ b/virt/kvm/kvm_main.c
-> @@ -3135,7 +3135,7 @@ static long kvm_vcpu_ioctl(struct file *filp,
->  				synchronize_rcu();
->  			put_pid(oldpid);
->  		}
-> -		r = kvm_arch_vcpu_ioctl_run(vcpu, vcpu->run);
-> +		r = kvm_arch_vcpu_ioctl_run(vcpu);
->  		trace_kvm_userspace_exit(vcpu->run->exit_reason, r);
->  		break;
->  	}
-
-Looked at non-x86 arches just briefly but there seems to be no
-controversy here, so
-
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-
--- 
-Vitaly
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+SGkgWmhhbmdmZWksCgpPbiA0LzE2LzIwIDY6MjUgQU0sIFpoYW5nZmVpIEdhbyB3cm90ZToKPiAK
+PiAKPiBPbiAyMDIwLzQvMTQg5LiL5Y2IMTE6MDUsIEVyaWMgQXVnZXIgd3JvdGU6Cj4+IFRoaXMg
+dmVyc2lvbiBmaXhlcyBhbiBpc3N1ZSBvYnNlcnZlZCBieSBTaGFtZWVyIG9uIGFuIFNNTVUgMy4y
+LAo+PiB3aGVuIG1vdmluZyBmcm9tIGR1YWwgc3RhZ2UgY29uZmlnIHRvIHN0YWdlIDEgb25seSBj
+b25maWcuCj4+IFRoZSAyIGhpZ2ggNjRiIG9mIHRoZSBTVEUgbm93IGdldCByZXNldC4gT3RoZXJ3
+aXNlLCBsZWF2aW5nIHRoZQo+PiBTMlRUQiBzZXQgbWF5IGNhdXNlIGEgQ19CQURfU1RFIGVycm9y
+Lgo+Pgo+PiBUaGlzIHNlcmllcyBjYW4gYmUgZm91bmQgYXQ6Cj4+IGh0dHBzOi8vZ2l0aHViLmNv
+bS9lYXVnZXIvbGludXgvdHJlZS92NS42LTJzdGFnZS12MTFfMTAuMQo+PiAoaW5jbHVkaW5nIHRo
+ZSBWRklPIHBhcnQpCj4+IFRoZSBRRU1VIGZlbGxvdyBzZXJpZXMgc3RpbGwgY2FuIGJlIGZvdW5k
+IGF0Ogo+PiBodHRwczovL2dpdGh1Yi5jb20vZWF1Z2VyL3FlbXUvdHJlZS92NC4yLjAtMnN0YWdl
+LXJmY3Y2Cj4+Cj4+IFVzZXJzIGhhdmUgZXhwcmVzc2VkIGludGVyZXN0IGluIHRoYXQgd29yayBh
+bmQgdGVzdGVkIHY5L3YxMDoKPj4gLSBodHRwczovL3BhdGNod29yay5rZXJuZWwub3JnL2NvdmVy
+LzExMDM5OTk1LyMyMzAxMjM4MQo+PiAtIGh0dHBzOi8vcGF0Y2h3b3JrLmtlcm5lbC5vcmcvY292
+ZXIvMTEwMzk5OTUvIzIzMTk3MjM1Cj4+Cj4+IEJhY2tncm91bmQ6Cj4+Cj4+IFRoaXMgc2VyaWVz
+IGJyaW5ncyB0aGUgSU9NTVUgcGFydCBvZiBIVyBuZXN0ZWQgcGFnaW5nIHN1cHBvcnQKPj4gaW4g
+dGhlIFNNTVV2My4gVGhlIFZGSU8gcGFydCBpcyBzdWJtaXR0ZWQgc2VwYXJhdGVseS4KPj4KPj4g
+VGhlIElPTU1VIEFQSSBpcyBleHRlbmRlZCB0byBzdXBwb3J0IDIgbmV3IEFQSSBmdW5jdGlvbmFs
+aXRpZXM6Cj4+IDEpIHBhc3MgdGhlIGd1ZXN0IHN0YWdlIDEgY29uZmlndXJhdGlvbgo+PiAyKSBw
+YXNzIHN0YWdlIDEgTVNJIGJpbmRpbmdzCj4+Cj4+IFRoZW4gdGhvc2UgY2FwYWJpbGl0aWVzIGdl
+dHMgaW1wbGVtZW50ZWQgaW4gdGhlIFNNTVV2MyBkcml2ZXIuCj4+Cj4+IFRoZSB2aXJ0dWFsaXpl
+ciBwYXNzZXMgaW5mb3JtYXRpb24gdGhyb3VnaCB0aGUgVkZJTyB1c2VyIEFQSQo+PiB3aGljaCBj
+YXNjYWRlcyB0aGVtIHRvIHRoZSBpb21tdSBzdWJzeXN0ZW0uIFRoaXMgYWxsb3dzIHRoZSBndWVz
+dAo+PiB0byBvd24gc3RhZ2UgMSB0YWJsZXMgYW5kIGNvbnRleHQgZGVzY3JpcHRvcnMgKHNvLWNh
+bGxlZCBQQVNJRAo+PiB0YWJsZSkgd2hpbGUgdGhlIGhvc3Qgb3ducyBzdGFnZSAyIHRhYmxlcyBh
+bmQgbWFpbiBjb25maWd1cmF0aW9uCj4+IHN0cnVjdHVyZXMgKFNURSkuCj4+Cj4+Cj4gCj4gVGhh
+bmtzIEVyaWMKPiAKPiBUZXN0ZWQgdjExIG9uIEhpc2lsaWNvbiBrdW5wZW5nOTIwIGJvYXJkIHZp
+YSBoYXJkd2FyZSB6aXAgYWNjZWxlcmF0b3IuCj4gMS4gbm8tc3ZhIHdvcmtzLCB3aGVyZSBndWVz
+dCBhcHAgZGlyZWN0bHkgdXNlIHBoeXNpY2FsIGFkZHJlc3MgdmlhIGlvY3RsLgpUaGFuayB5b3Ug
+Zm9yIHRoZSB0ZXN0aW5nLiBHbGFkIGl0IHdvcmtzIGZvciB5b3UuCj4gMi4gdlNWQSBzdGlsbCBu
+b3Qgd29yaywgc2FtZSBhcyB2MTAsClllcyB0aGF0J3Mgbm9ybWFsIHRoaXMgc2VyaWVzIGlzIG5v
+dCBtZWFudCB0byBzdXBwb3J0IHZTVk0gYXQgdGhpcyBzdGFnZS4KCkkgaW50ZW5kIHRvIGFkZCB0
+aGUgbWlzc2luZyBwaWVjZXMgZHVyaW5nIHRoZSBuZXh0IHdlZWtzLgoKVGhhbmtzCgpFcmljCj4g
+My7CoCB0aGUgdjEwIGlzc3VlIHJlcG9ydGVkIGJ5IFNoYW1lZXIgaGFzIGJlZW4gc29sdmVkLMKg
+IGZpcnN0IHN0YXJ0IHFlbXUKPiB3aXRowqAgaW9tbXU9c21tdXYzLCB0aGVuIHN0YXJ0IHFlbXUg
+d2l0aG91dMKgIGlvbW11PXNtbXV2Mwo+IDQuIG5vLXN2YSBhbHNvIHdvcmtzIHdpdGhvdXTCoCBp
+b21tdT1zbW11djMKPiAKPiBUZXN0IGRldGFpbHMgaW4gaHR0cHM6Ly9kb2NzLnFxLmNvbS9kb2Mv
+RFJVNW9SMU50VUVSc2VGTkwKPiAKPiBUaGFua3MKPiAKCl9fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fCmt2bWFybSBtYWlsaW5nIGxpc3QKa3ZtYXJtQGxpc3Rz
+LmNzLmNvbHVtYmlhLmVkdQpodHRwczovL2xpc3RzLmNzLmNvbHVtYmlhLmVkdS9tYWlsbWFuL2xp
+c3RpbmZvL2t2bWFybQo=
