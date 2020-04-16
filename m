@@ -2,67 +2,58 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 709DE1AAEF7
-	for <lists+kvmarm@lfdr.de>; Wed, 15 Apr 2020 19:00:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 790BA1AB556
+	for <lists+kvmarm@lfdr.de>; Thu, 16 Apr 2020 03:18:13 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CFF0A4B23B;
-	Wed, 15 Apr 2020 13:00:39 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D0AD54B21F;
+	Wed, 15 Apr 2020 21:18:12 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id X+GoL-NVoHWo; Wed, 15 Apr 2020 13:00:39 -0400 (EDT)
+	with ESMTP id 6KxWLhXSB0SZ; Wed, 15 Apr 2020 21:18:12 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 801144B21E;
-	Wed, 15 Apr 2020 13:00:38 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AB7BC4B15E;
+	Wed, 15 Apr 2020 21:18:11 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E345D4B213
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 13:00:36 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 484674B134
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 21:18:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id XkTNc2VXh8-T for <kvmarm@lists.cs.columbia.edu>;
- Wed, 15 Apr 2020 13:00:36 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id EB80D4B155
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 13:00:35 -0400 (EDT)
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
- bits)) (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 0AE31206F9;
- Wed, 15 Apr 2020 17:00:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1586970034;
- bh=MgOckoa6oaXylsn5YDxRnw+SO2S8/uU9ZQM4CMMYhm0=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=cp7XRASHgNQMYStqM9ccE+H4cbmpnvWsouW1/UcDJzRy7Tj4nwWnYlg5nCtAE246T
- bvnQx6CzbbqsPvaDF8ASoMzrXi3scNKrNh/PmIe+hw+3dcNqI/VHdWiAfYOEXE8JtC
- JaG0B9RXKq7wg2MukI0p2o4VLkjDuFNms4+4269M=
-Date: Wed, 15 Apr 2020 18:00:29 +0100
-From: Will Deacon <will@kernel.org>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH 3/8] arm64: cpufeature: Add CPU capability for AArch32
- EL1 support
-Message-ID: <20200415170029.GA19615@willie-the-truck>
-References: <20200414213114.2378-1-will@kernel.org>
- <20200414213114.2378-4-will@kernel.org>
- <1b76993491176577567a0960a435dac0@kernel.org>
+ with ESMTP id J9E5KN97WS8c for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 15 Apr 2020 21:18:09 -0400 (EDT)
+Received: from huawei.com (szxga05-in.huawei.com [45.249.212.191])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D461C4B0AC
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Apr 2020 21:18:08 -0400 (EDT)
+Received: from DGGEMS408-HUB.china.huawei.com (unknown [172.30.72.58])
+ by Forcepoint Email with ESMTP id 35B945A0308DF2F16736;
+ Thu, 16 Apr 2020 09:18:04 +0800 (CST)
+Received: from [127.0.0.1] (10.173.222.27) by DGGEMS408-HUB.china.huawei.com
+ (10.3.19.208) with Microsoft SMTP Server id 14.3.487.0; Thu, 16 Apr 2020
+ 09:17:55 +0800
+Subject: Re: [PATCH 2/2] KVM: arm64: vgic-its: Fix memory leak on the error
+ path of vgic_add_lpi()
+To: <kvmarm@lists.cs.columbia.edu>
+References: <20200414030349.625-1-yuzenghui@huawei.com>
+ <20200414030349.625-3-yuzenghui@huawei.com>
+From: Zenghui Yu <yuzenghui@huawei.com>
+Message-ID: <610f2195-f85d-4beb-b711-47d63bb393d0@huawei.com>
+Date: Thu, 16 Apr 2020 09:17:54 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <1b76993491176577567a0960a435dac0@kernel.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Anshuman Khandual <anshuman.khandual@arm.com>, linux-kernel@vger.kernel.org,
- Doug Anderson <dianders@chromium.org>, kernel-team@android.com,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+In-Reply-To: <20200414030349.625-3-yuzenghui@huawei.com>
+Content-Language: en-US
+X-Originating-IP: [10.173.222.27]
+X-CFilter-Loop: Reflected
+Cc: maz@kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -74,34 +65,54 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Marc,
-
-On Wed, Apr 15, 2020 at 09:55:57AM +0100, Marc Zyngier wrote:
-> On 2020-04-14 22:31, Will Deacon wrote:
-> > Although we emit a "SANITY CHECK" warning and taint the kernel if we
-> > detect a CPU mismatch for AArch32 support at EL1, we still online the
-> > CPU with disastrous consequences for any running 32-bit VMs.
-> > 
-> > Introduce a capability for AArch32 support at EL1 so that late onlining
-> > of incompatible CPUs is forbidden.
-> > 
-> > Signed-off-by: Will Deacon <will@kernel.org>
+On 2020/4/14 11:03, Zenghui Yu wrote:
+> If we're going to fail out the vgic_add_lpi(), let's make sure the
+> allocated vgic_irq memory is also freed. Though it seems that both
+> cases are unlikely to fail.
 > 
-> Definitely an improvement over the current situation, as the direct read
-> of ID_AA64PFR0 was always a bit dodgy. Given that I'm pretty sure these new
-> braindead SoCs are going to run an older version of the kernel, should we
-> Cc stable for this?
+> Cc: Zengruan Ye <yezengruan@huawei.com>
+> Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
+> ---
+>   virt/kvm/arm/vgic/vgic-its.c | 8 ++++++--
+>   1 file changed, 6 insertions(+), 2 deletions(-)
+> 
+> diff --git a/virt/kvm/arm/vgic/vgic-its.c b/virt/kvm/arm/vgic/vgic-its.c
+> index d53d34a33e35..3c3b6a0f2dce 100644
+> --- a/virt/kvm/arm/vgic/vgic-its.c
+> +++ b/virt/kvm/arm/vgic/vgic-its.c
+> @@ -98,12 +98,16 @@ static struct vgic_irq *vgic_add_lpi(struct kvm *kvm, u32 intid,
+>   	 * the respective config data from memory here upon mapping the LPI.
+>   	 */
+>   	ret = update_lpi_config(kvm, irq, NULL, false);
+> -	if (ret)
+> +	if (ret) {
+> +		kfree(irq);
+>   		return ERR_PTR(ret);
+> +	}
+>   
+>   	ret = vgic_v3_lpi_sync_pending_status(kvm, irq);
+> -	if (ret)
+> +	if (ret) {
+> +		kfree(irq);
+>   		return ERR_PTR(ret);
+> +	}
 
-I don't think there's a real need for -stable given that we do at least
-taint the kernel. That's likely to annoy vendors enough to backport this
-themselves ;)
+Looking at it again, I realized that this error handling is still not
+complete. Maybe we should use a vgic_put_irq() instead so that we can
+also properly delete the vgic_irq from lpi_list.
 
-Will
+Marc, what do you think? Could you please help to fix it, or I can
+resend it.
+
+
+Thanks,
+Zenghui
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
