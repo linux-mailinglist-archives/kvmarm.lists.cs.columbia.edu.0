@@ -2,95 +2,68 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 413811ABBE1
-	for <lists+kvmarm@lfdr.de>; Thu, 16 Apr 2020 10:58:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FCD91ABED4
+	for <lists+kvmarm@lfdr.de>; Thu, 16 Apr 2020 13:10:27 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4C4A84B24E;
-	Thu, 16 Apr 2020 04:58:52 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CF61B4B269;
+	Thu, 16 Apr 2020 07:10:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: 0.8
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=0.8 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	UNPARSEABLE_RELAY=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9ZhRm-R-ypyq; Thu, 16 Apr 2020 04:58:52 -0400 (EDT)
+	with ESMTP id FnpkDLHhAcfE; Thu, 16 Apr 2020 07:10:26 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3A4244B20D;
-	Thu, 16 Apr 2020 04:58:51 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CCD334B21A;
+	Thu, 16 Apr 2020 07:10:17 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AF0DA4B15D
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 04:58:49 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D55BB4B11F
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 05:08:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id W9PWLKDg+XZ8 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 16 Apr 2020 04:58:48 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id ACA424B15B
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 04:58:48 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 84BF220784;
- Thu, 16 Apr 2020 08:58:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1587027527;
- bh=dVAp91Tj6hWWtUY7tL+aLgKkZ276mvf5MWRT7goV5sk=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=NAw/DPQ2vN2rzJzmUreAA38rnfxIXX3BUID+0uehW0Z9v4f/Ntd1a7JWQHTF+uDMv
- 4tUi3XdV3gd/0EuPpoon9MJXibqbgTfuDttD3xyfrTBNZAOlFyJ4cRJ6Z+sHqArQUT
- PeqbbpCCaPZTxxeljv/xMr+adoczGliqtOh0MmEk=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
- (envelope-from <maz@kernel.org>)
- id 1jP0M9-003lwb-Tr; Thu, 16 Apr 2020 09:58:46 +0100
-MIME-Version: 1.0
-Date: Thu, 16 Apr 2020 09:58:45 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+ with ESMTP id IGulCchIstuk for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 16 Apr 2020 05:08:59 -0400 (EDT)
+Received: from out30-54.freemail.mail.aliyun.com
+ (out30-54.freemail.mail.aliyun.com [115.124.30.54])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8B3434B1D9
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Apr 2020 05:08:58 -0400 (EDT)
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01e04394;
+ MF=tianjia.zhang@linux.alibaba.com; NM=1; PH=DS; RN=36; SR=0;
+ TI=SMTPD_---0TvhGIdK_1587028131; 
+Received: from 30.27.118.45(mailfrom:tianjia.zhang@linux.alibaba.com
+ fp:SMTPD_---0TvhGIdK_1587028131) by smtp.aliyun-inc.com(127.0.0.1);
+ Thu, 16 Apr 2020 17:08:53 +0800
 Subject: Re: [PATCH v2] KVM: Optimize kvm_arch_vcpu_ioctl_run function
-In-Reply-To: <8b92fb5b-5138-0695-fb90-6c36b8dfad00@linux.alibaba.com>
+To: Cornelia Huck <cohuck@redhat.com>
 References: <20200416051057.26526-1-tianjia.zhang@linux.alibaba.com>
  <878sivx67g.fsf@vitty.brq.redhat.com>
  <1000159f971a6fa3b5bd9e5871ce4d82@kernel.org>
  <8b92fb5b-5138-0695-fb90-6c36b8dfad00@linux.alibaba.com>
-Message-ID: <b700f9bde1218b217ca4e571b1d29c1e@kernel.org>
-X-Sender: maz@kernel.org
-User-Agent: Roundcube Webmail/1.3.10
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: tianjia.zhang@linux.alibaba.com, vkuznets@redhat.com,
- kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, linux-mips@vger.kernel.org,
- kvm-ppc@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
- linux-s390@vger.kernel.org, linux-kernel@vger.kernel.org, pbonzini@redhat.com,
- tsbogend@alpha.franken.de, paulus@ozlabs.org, mpe@ellerman.id.au,
- benh@kernel.crashing.org, borntraeger@de.ibm.com, frankja@linux.ibm.com,
- david@redhat.com, cohuck@redhat.com, heiko.carstens@de.ibm.com,
- gor@linux.ibm.com, sean.j.christopherson@intel.com, wanpengli@tencent.com,
- jmattson@google.com, joro@8bytes.org, tglx@linutronix.de, mingo@redhat.com,
- bp@alien8.de, x86@kernel.org, hpa@zytor.com, james.morse@arm.com,
- julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
- christoffer.dall@arm.com, peterx@redhat.com, thuth@redhat.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
+ <20200416105019.51191d79.cohuck@redhat.com>
+From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+Message-ID: <668a12b9-eda5-2d42-95f9-8d5e2990a465@linux.alibaba.com>
+Date: Thu, 16 Apr 2020 17:08:51 +0800
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+In-Reply-To: <20200416105019.51191d79.cohuck@redhat.com>
+X-Mailman-Approved-At: Thu, 16 Apr 2020 07:10:16 -0400
 Cc: wanpengli@tencent.com, kvm@vger.kernel.org, david@redhat.com,
  benh@kernel.crashing.org, heiko.carstens@de.ibm.com,
  linux-kernel@vger.kernel.org, paulus@ozlabs.org, hpa@zytor.com,
  kvmarm@lists.cs.columbia.edu, linux-s390@vger.kernel.org,
- frankja@linux.ibm.com, mpe@ellerman.id.au, joro@8bytes.org, x86@kernel.org,
- borntraeger@de.ibm.com, mingo@redhat.com, thuth@redhat.com, gor@linux.ibm.com,
- kvm-ppc@vger.kernel.org, bp@alien8.de, tglx@linutronix.de,
+ frankja@linux.ibm.com, Marc Zyngier <maz@kernel.org>, joro@8bytes.org,
+ x86@kernel.org, borntraeger@de.ibm.com, mingo@redhat.com, thuth@redhat.com,
+ gor@linux.ibm.com, kvm-ppc@vger.kernel.org, bp@alien8.de, tglx@linutronix.de,
  linux-arm-kernel@lists.infradead.org, jmattson@google.com,
- tsbogend@alpha.franken.de, cohuck@redhat.com, linux-mips@vger.kernel.org,
- sean.j.christopherson@intel.com, pbonzini@redhat.com,
+ tsbogend@alpha.franken.de, linux-mips@vger.kernel.org,
+ sean.j.christopherson@intel.com, mpe@ellerman.id.au, pbonzini@redhat.com,
  Vitaly Kuznetsov <vkuznets@redhat.com>, linuxppc-dev@lists.ozlabs.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -108,18 +81,39 @@ Content-Type: text/plain; charset="utf-8"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-T24gMjAyMC0wNC0xNiAwOTo0NSwgVGlhbmppYSBaaGFuZyB3cm90ZToKPiBPbiAyMDIwLzQvMTYg
-MTY6MjgsIE1hcmMgWnluZ2llciB3cm90ZToKClsuLi5dCgo+PiBPdmVyYWxsLCB0aGVyZSBpcyBh
-IGxhcmdlIHNldCBvZiBjbGVhbnVwcyB0byBiZSBkb25lIHdoZW4gYm90aCB0aGUgCj4+IHZjcHUg
-YW5kIHRoZSBydW4KPj4gc3RydWN0dXJlcyBhcmUgcGFzc2VkIGFzIHBhcmFtZXRlcnMgYXQgdGhl
-IHNhbWUgdGltZS4gSnVzdCBncmVwcGluZyAKPj4gdGhlIHRyZWUgZm9yCj4+IGt2bV9ydW4gaXMg
-cHJldHR5IGluc3RydWN0aXZlLgo+PiAKPj4gIMKgwqDCoMKgwqDCoMKgIE0uCj4gCj4gU29ycnks
-IGl0J3MgbXkgbWlzdGFrZSwgSSBvbmx5IGNvbXBpbGVkIHRoZSB4ODYgcGxhdGZvcm0sIEkgd2ls
-bAo+IHN1Ym1pdCBwYXRjaCBhZ2Fpbi4KCk5vdCBhIG1pc3Rha2UuIEFsbCBJJ20gc2F5aW5nIGlz
-IHRoYXQgdGhlcmUgaXMgYW4gb3Bwb3J0dW5pdHkgZm9yIGEgCmxhcmdlcgpzZXJpZXMgdGhhdCBj
-bGVhbnMgdXAgdGhlIGNvZGUgYmFzZSwgcmF0aGVyIHRoYW4ganVzdCBkb2luZyBhIGNvdXBsZSBv
-Zgpsb2NhbGl6ZWQgY2hhbmdlcy4KClRoYW5rcywKCiAgICAgICAgIE0uCi0tIApKYXp6IGlzIG5v
-dCBkZWFkLiBJdCBqdXN0IHNtZWxscyBmdW5ueS4uLgpfX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5j
-cy5jb2x1bWJpYS5lZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0
-aW5mby9rdm1hcm0K
+CgpPbiAyMDIwLzQvMTYgMTY6NTAsIENvcm5lbGlhIEh1Y2sgd3JvdGU6Cj4gT24gVGh1LCAxNiBB
+cHIgMjAyMCAxNjo0NTozMyArMDgwMAo+IFRpYW5qaWEgWmhhbmcgPHRpYW5qaWEuemhhbmdAbGlu
+dXguYWxpYmFiYS5jb20+IHdyb3RlOgo+IAo+PiBPbiAyMDIwLzQvMTYgMTY6MjgsIE1hcmMgWnlu
+Z2llciB3cm90ZToKPj4+IE9uIDIwMjAtMDQtMTYgMDg6MDMsIFZpdGFseSBLdXpuZXRzb3Ygd3Jv
+dGU6Cj4+Pj4gVGlhbmppYSBaaGFuZyA8dGlhbmppYS56aGFuZ0BsaW51eC5hbGliYWJhLmNvbT4g
+d3JpdGVzOgo+Pj4+ICAgCj4+Pj4+IEluIGVhcmxpZXIgdmVyc2lvbnMgb2Yga3ZtLCAna3ZtX3J1
+bicgaXMgYW4gaW5kZXBlbmRlbnQgc3RydWN0dXJlCj4+Pj4+IGFuZCBpcyBub3QgaW5jbHVkZWQg
+aW4gdGhlIHZjcHUgc3RydWN0dXJlLiBBdCBwcmVzZW50LCAna3ZtX3J1bicKPj4+Pj4gaXMgYWxy
+ZWFkeSBpbmNsdWRlZCBpbiB0aGUgdmNwdSBzdHJ1Y3R1cmUsIHNvIHRoZSBwYXJhbWV0ZXIKPj4+
+Pj4gJ2t2bV9ydW4nIGlzIHJlZHVuZGFudC4KPj4+Pj4KPj4+Pj4gVGhpcyBwYXRjaCBzaW1wbGlm
+eSB0aGUgZnVuY3Rpb24gZGVmaW5pdGlvbiwgcmVtb3ZlcyB0aGUgZXh0cmEKPj4+Pj4gJ2t2bV9y
+dW4nIHBhcmFtZXRlciwgYW5kIGV4dHJhY3QgaXQgZnJvbSB0aGUgJ2t2bV92Y3B1JyBzdHJ1Y3R1
+cmUKPj4+Pj4gaWYgbmVjZXNzYXJ5Lgo+Pj4+Pgo+Pj4+PiBTaWduZWQtb2ZmLWJ5OiBUaWFuamlh
+IFpoYW5nIDx0aWFuamlhLnpoYW5nQGxpbnV4LmFsaWJhYmEuY29tPgo+Pj4+PiAtLS0KPj4+Pj4K
+Pj4+Pj4gdjIgY2hhbmdlOgo+Pj4+PiAgwqAgcmVtb3ZlICdrdm1fcnVuJyBwYXJhbWV0ZXIgYW5k
+IGV4dHJhY3QgaXQgZnJvbSAna3ZtX3ZjcHUnCj4+Pj4+Cj4+Pj4+ICDCoGFyY2gvbWlwcy9rdm0v
+bWlwcy5jwqDCoMKgwqDCoMKgIHzCoCAzICsrLQo+Pj4+PiAgwqBhcmNoL3Bvd2VycGMva3ZtL3Bv
+d2VycGMuYyB8wqAgMyArKy0KPj4+Pj4gIMKgYXJjaC9zMzkwL2t2bS9rdm0tczM5MC5jwqDCoCB8
+wqAgMyArKy0KPj4+Pj4gIMKgYXJjaC94ODYva3ZtL3g4Ni5jwqDCoMKgwqDCoMKgwqDCoCB8IDEx
+ICsrKysrKy0tLS0tCj4+Pj4+ICDCoGluY2x1ZGUvbGludXgva3ZtX2hvc3QuaMKgwqAgfMKgIDIg
+Ky0KPj4+Pj4gIMKgdmlydC9rdm0vYXJtL2FybS5jwqDCoMKgwqDCoMKgwqDCoCB8wqAgNiArKyst
+LS0KPj4+Pj4gIMKgdmlydC9rdm0va3ZtX21haW4uY8KgwqDCoMKgwqDCoMKgIHzCoCAyICstCj4+
+Pj4+ICDCoDcgZmlsZXMgY2hhbmdlZCwgMTcgaW5zZXJ0aW9ucygrKSwgMTMgZGVsZXRpb25zKC0p
+Cj4gCj4+PiBPdmVyYWxsLCB0aGVyZSBpcyBhIGxhcmdlIHNldCBvZiBjbGVhbnVwcyB0byBiZSBk
+b25lIHdoZW4gYm90aCB0aGUgdmNwdQo+Pj4gYW5kIHRoZSBydW4KPj4+IHN0cnVjdHVyZXMgYXJl
+IHBhc3NlZCBhcyBwYXJhbWV0ZXJzIGF0IHRoZSBzYW1lIHRpbWUuIEp1c3QgZ3JlcHBpbmcgdGhl
+Cj4+PiB0cmVlIGZvcgo+Pj4ga3ZtX3J1biBpcyBwcmV0dHkgaW5zdHJ1Y3RpdmUuCj4+Pgo+Pj4g
+ICDCoMKgwqDCoMKgwqDCoCBNLgo+Pgo+PiBTb3JyeSwgaXQncyBteSBtaXN0YWtlLCBJIG9ubHkg
+Y29tcGlsZWQgdGhlIHg4NiBwbGF0Zm9ybSwgSSB3aWxsIHN1Ym1pdAo+PiBwYXRjaCBhZ2Fpbi4K
+PiAKPiBJIHRoaW5rIGl0J3MgY29tcGxldGVseSBmaW5lIChhbmQgZXZlbiBwcmVmZXJhYmxlKSB0
+byBkbyBjbGVhbnVwcyBsaWtlCj4gdGhhdCBvbiB0b3AuCj4gCj4gW0ZXSVcsIEkgY29tcGlsZWQg
+czM5MCBoZXJlLl0KPiAKClZlcnkgZ29vZCwgSSB3aWxsIGRvIGEgY29tcHJlaGVuc2l2ZSBjbGVh
+bnVwIG9mIHRoaXMgdHlwZSBvZiBjb2RlLgoKVGhhbmtzLApUaWFuamlhCl9fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCmt2bWFybSBtYWlsaW5nIGxpc3QKa3Zt
+YXJtQGxpc3RzLmNzLmNvbHVtYmlhLmVkdQpodHRwczovL2xpc3RzLmNzLmNvbHVtYmlhLmVkdS9t
+YWlsbWFuL2xpc3RpbmZvL2t2bWFybQo=
