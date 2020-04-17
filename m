@@ -2,73 +2,62 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C7F431AD9E5
-	for <lists+kvmarm@lfdr.de>; Fri, 17 Apr 2020 11:29:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9FDAF1ADA01
+	for <lists+kvmarm@lfdr.de>; Fri, 17 Apr 2020 11:33:06 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 613BA4B1FE;
-	Fri, 17 Apr 2020 05:29:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 34E9F4B286;
+	Fri, 17 Apr 2020 05:33:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7-8vBgYtfmrP; Fri, 17 Apr 2020 05:29:36 -0400 (EDT)
+	with ESMTP id hyEH9COZ9NkE; Fri, 17 Apr 2020 05:33:06 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 528F94B22B;
-	Fri, 17 Apr 2020 05:29:35 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0B4A34B263;
+	Fri, 17 Apr 2020 05:33:05 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 475154B1FD
- for <kvmarm@lists.cs.columbia.edu>; Fri, 17 Apr 2020 05:29:34 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3BB474B23C
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 17 Apr 2020 05:33:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id sSQCcuryCBDC for <kvmarm@lists.cs.columbia.edu>;
- Fri, 17 Apr 2020 05:29:33 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4A34F4B10E
- for <kvmarm@lists.cs.columbia.edu>; Fri, 17 Apr 2020 05:29:33 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 3242D20776;
- Fri, 17 Apr 2020 09:29:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1587115772;
- bh=8GFWZC8Mlqm1nrlxFXiXZ+DRoDx2jHTF7EPJnkvnhR8=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=tuKU9z9rJkUGyVamDwgpc4De6rBtKFOiabUsjvOFu9FJIuHSdwFzebiaMDcDRNpHP
- 7S6LgVFAKhCGGQ9IftBm+2v72/J+swxa+p9D+fOEHJUlltXee9BaN3ZkH56xffgi/g
- CxidCiZV2ChfeIzk6G/0RaHHSWXjwxIQTs+SO9/8=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
- (envelope-from <maz@kernel.org>)
- id 1jPNJS-00487e-FA; Fri, 17 Apr 2020 10:29:30 +0100
+ with ESMTP id D7V1vQI01Qr6 for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 17 Apr 2020 05:33:03 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1F7A84B201
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 17 Apr 2020 05:33:03 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A017F30E;
+ Fri, 17 Apr 2020 02:33:02 -0700 (PDT)
+Received: from [10.37.12.128] (unknown [10.37.12.128])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 38E6E3F73D;
+ Fri, 17 Apr 2020 02:33:00 -0700 (PDT)
+Subject: Re: [PATCH 7/8] arm64: cpufeature: Relax checks for AArch32 support
+ at EL[0-2]
+To: will@kernel.org
+References: <20200414213114.2378-1-will@kernel.org>
+ <20200414213114.2378-8-will@kernel.org>
+ <714f124c-7eb7-b750-e98c-63da64ddae75@arm.com>
+ <20200415105843.GE12621@willie-the-truck>
+ <d1f538ec-e956-c136-d0f8-54e7351a28a9@arm.com>
+ <20200415122926.GA17095@willie-the-truck>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+Message-ID: <399dee05-9f47-2f91-a4e8-b4c9d3932b40@arm.com>
+Date: Fri, 17 Apr 2020 10:37:50 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Date: Fri, 17 Apr 2020 10:29:30 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: Fuad Tabba <tabba@google.com>
-Subject: Re: [PATCH 0/4] KVM: arm64: Tidy up arch Kconfig and Makefiles
-In-Reply-To: <20200417085522.150701-1-tabba@google.com>
-References: <20200417085522.150701-1-tabba@google.com>
-Message-ID: <50eb0bea7691f2430e4dfa72a1a22a73@kernel.org>
-X-Sender: maz@kernel.org
-User-Agent: Roundcube Webmail/1.3.10
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: tabba@google.com, catalin.marinas@arm.com,
- julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
- kvmarm@lists.cs.columbia.edu, will@kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: catalin.marinas@arm.com, will@kernel.org, kvmarm@lists.cs.columbia.edu
+In-Reply-To: <20200415122926.GA17095@willie-the-truck>
+Content-Language: en-US
+Cc: saiprakash.ranjan@codeaurora.org, anshuman.khandual@arm.com, maz@kernel.org,
+ linux-kernel@vger.kernel.org, dianders@chromium.org, catalin.marinas@arm.com,
+ kernel-team@android.com, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -85,32 +74,47 @@ Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Fuad,
-
-Thanks for this.
-
-On 2020-04-17 09:55, Fuad Tabba wrote:
-> Hi,
+On 04/15/2020 01:29 PM, Will Deacon wrote:
+> On Wed, Apr 15, 2020 at 12:37:31PM +0100, Suzuki K Poulose wrote:
+>> On 04/15/2020 11:58 AM, Will Deacon wrote:
+>>> On Wed, Apr 15, 2020 at 11:50:58AM +0100, Suzuki K Poulose wrote:
+>>>> On 04/14/2020 10:31 PM, Will Deacon wrote:
+>>>>> We don't need to be quite as strict about mismatched AArch32 support,
+>>>>> which is good because the friendly hardware folks have been busy
+>>>>> mismatching this to their hearts' content.
+>>>>>
+>>>>>      * We don't care about EL2 or EL3 (there are silly comments concerning
+>>>>>        the latter, so remove those)
+>>>>>
+>>>>>      * EL1 support is gated by the ARM64_HAS_32BIT_EL1 capability and handled
+>>>>>        gracefully when a mismatch occurs
+>>>>>
+>>>>>      * EL1 support is gated by the ARM64_HAS_32BIT_EL0 capability and handled
+>>>>
+>>>> s/EL1/EL0
+>>>>
+>>>>>        gracefully when a mismatch occurs
+>>>>>
+>>>>> Relax the AArch32 checks to FTR_NONSTRICT.
+>>>>
+>>>> Agreed. We should do something similar for the features exposed by the
+>>>> ELF_HWCAP, of course in a separate series.
+>>>
+>>> Hmm, I didn't think we needed to touch the HWCAPs, as they're derived from
+>>> the sanitised feature register values. What am I missing?
+>>
+>> sorry, that was cryptic. I was suggesting to relax the ftr fields to
+>> NONSTRICT for the fields covered by ELF HWCAPs (and other CPU hwcaps).
 > 
-> This small patch series tidies up the arm64 KVM build system by
-> rejigging config options, removing some redundant help text, and
-> consolidating some of the Makefile rules.
-> 
-> The changes are cosmetic, but it seemed worthwhile to send this out
-> for consideration.
+> Ah, gotcha. Given that the HWCAPs usually describe EL0 features, I say we
+> can punt this down the road until people give us hardware with mismatched
+> AArch32 at EL0.
 
-Happy to take these patches for 5.8. Could you please rebase them on top
-of [1], which moves all of the (now arm64-specific) code where it 
-belongs?
+Btw, this is not just mismatched AArch32, but mismatched AArch64 HWCAPs
+too, which I believe exists. Anyways as you said, we can delay this
+until we get the reports :-)
 
-Cheers,
-
-         M.
-
-[1] 
-https://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git/log/?h=kvm-arm64/welcome-home
--- 
-Jazz is not dead. It just smells funny...
+Suzuki
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
