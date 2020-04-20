@@ -2,99 +2,59 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 485F61B12E2
-	for <lists+kvmarm@lfdr.de>; Mon, 20 Apr 2020 19:25:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 282BD1B246D
+	for <lists+kvmarm@lfdr.de>; Tue, 21 Apr 2020 12:55:57 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D31024B151;
-	Mon, 20 Apr 2020 13:25:38 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B15794B15E;
+	Tue, 21 Apr 2020 06:55:56 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id iyjbON+jdqwF; Mon, 20 Apr 2020 13:25:38 -0400 (EDT)
+	with ESMTP id RLKwGIxl0sVF; Tue, 21 Apr 2020 06:55:56 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BDA7F4B139;
-	Mon, 20 Apr 2020 13:25:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 98BFF4B13D;
+	Tue, 21 Apr 2020 06:55:55 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0E5BE4B11F
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Apr 2020 13:25:36 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8E6994B13D
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Apr 2020 17:00:13 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 3HjEYzku97YB for <kvmarm@lists.cs.columbia.edu>;
- Mon, 20 Apr 2020 13:25:35 -0400 (EDT)
-Received: from us-smtp-1.mimecast.com (us-smtp-2.mimecast.com [207.211.31.81])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 372A84B118
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Apr 2020 13:25:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1587403535;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5zFau9oVnCy2aNDs2gF30gGKofVM+mf7Njlmsy7kpl8=;
- b=YlT7IHYdQfA3bvM0WSqEBDMX3cNFnc6dvck77nRNV5fupThoYNkus+NwNIp990xwOUNqcb
- ReajhmzFPfwDyEGkhmKPV5ii2buR4ICukPOIkfQq5jT9hBwCX48DQBR7xWT7/Sa5FhOcSM
- 4YVz0BO8s3UXu5lr7pEK2i+yLM8ayTc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-341-0mpgg4BiPfywQavySsu77Q-1; Mon, 20 Apr 2020 13:25:31 -0400
-X-MC-Unique: 0mpgg4BiPfywQavySsu77Q-1
-Received: by mail-wm1-f69.google.com with SMTP id 71so129139wmb.8
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Apr 2020 10:25:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=4Wi4I6E0HOoTIiwC/qCL3vbIOZi357RgujrqauiVCgo=;
- b=sntzZtRc3GT3CLFppPochUlmaNGmYyBPGXQ/GUJBx8OnhXSSd7+6U7OzmruVtSvd7j
- 4c4bS9Mm/IbYDTRMPAkZDFUQeXIzvDtqrXiMyDcPvqLvImV2Suewual2ZwrmDDTg8DMV
- FW62F6FBFIKyk09IQQL5tF9LwmiI1h6/B4GNx9M3B9R4mrXNLEoCtVRUxTNxW4Bcas+e
- cLY+R/U6vQdr9SizTzEHsRRQdB6jTXpPg/drtMfYE7Whs9XI5Sw6dLkrP4OeDVIOANdX
- 0k2TeVQXZanzslZjEQ/2+CtVPm/jcRcP6Lgna63oCwptHd8C9NEKEWaoeJmryU7dJ+ga
- nojw==
-X-Gm-Message-State: AGi0PuZU5FSHXApZYxW469bf/+jN3zHwqugSX70igOTg+yJS6UrWlst6
- auwSRwk7t9HTm+QLXUwKZLeXwD020UlbNI4GFw6V7kXZHRLVIRbuu4xT3k4o4kjfer3PT0f78oI
- 9wc5IXlvudSSNF1b6U6dsY1po
-X-Received: by 2002:adf:c109:: with SMTP id r9mr19678381wre.265.1587403530025; 
- Mon, 20 Apr 2020 10:25:30 -0700 (PDT)
-X-Google-Smtp-Source: APiQypLifiyD2rISqsBTFDUXYG+CQzr+z4iBiqXWbcljpUFDAk2pWd1/77hoQLgJWF6OMqcIiIWbgw==
-X-Received: by 2002:adf:c109:: with SMTP id r9mr19678363wre.265.1587403529829; 
- Mon, 20 Apr 2020 10:25:29 -0700 (PDT)
-Received: from ?IPv6:2001:b07:6468:f312:199a:e5ab:a38c:544c?
- ([2001:b07:6468:f312:199a:e5ab:a38c:544c])
- by smtp.gmail.com with ESMTPSA id h2sm240458wro.9.2020.04.20.10.25.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Apr 2020 10:25:29 -0700 (PDT)
+ with ESMTP id H0-zOsorJ5R3 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 20 Apr 2020 17:00:12 -0400 (EDT)
+Received: from mx2.suse.de (mx2.suse.de [195.135.220.15])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 889704B136
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Apr 2020 17:00:12 -0400 (EDT)
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+ by mx2.suse.de (Postfix) with ESMTP id CAA6FAC7F;
+ Mon, 20 Apr 2020 21:00:09 +0000 (UTC)
+Date: Mon, 20 Apr 2020 13:56:41 -0700
+From: Davidlohr Bueso <dave@stgolabs.net>
+To: Marc Zyngier <maz@kernel.org>
 Subject: Re: [PATCH v2] kvm: Replace vcpu->swait with rcuwait
-To: Marc Zyngier <maz@kernel.org>, Davidlohr Bueso <dave@stgolabs.net>
+Message-ID: <20200420205641.6sgsllj6pmsnwrvp@linux-p48b>
 References: <20200324044453.15733-1-dave@stgolabs.net>
  <20200324044453.15733-4-dave@stgolabs.net>
  <20200420164132.tjzk5ebx35m66yce@linux-p48b>
  <418acdb5001a9ae836095b7187338085@misterjones.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <22800f1b-3bdb-15b4-7592-93a7b244b45a@redhat.com>
-Date: Mon, 20 Apr 2020 19:25:28 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
 MIME-Version: 1.0
+Content-Disposition: inline
 In-Reply-To: <418acdb5001a9ae836095b7187338085@misterjones.org>
-Content-Language: en-US
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
+User-Agent: NeoMutt/20180716
+X-Mailman-Approved-At: Tue, 21 Apr 2020 06:55:53 -0400
 Cc: kvm@vger.kernel.org, Davidlohr Bueso <dbueso@suse.de>, peterz@infradead.org,
  will@kernel.org, bigeasy@linutronix.de, linux-kernel@vger.kernel.org,
  rostedt@goodmis.org, linux-mips@vger.kernel.org,
- Paul Mackerras <paulus@ozlabs.org>, joel@joelfernandes.org, tglx@linutronix.de,
- torvalds@linux-foundation.org, kvmarm@lists.cs.columbia.edu
+ Paul Mackerras <paulus@ozlabs.org>, joel@joelfernandes.org,
+ pbonzini@redhat.com, tglx@linutronix.de, torvalds@linux-foundation.org,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -106,29 +66,24 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="windows-1252"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 20/04/20 19:12, Marc Zyngier wrote:
->>
->>
->> -=A0=A0=A0 trace_kvm_vcpu_wakeup(block_ns, waited, vcpu_valid_wakeup(vcp=
-u));
->> +=A0=A0=A0 trace_kvm_vcpu_wakeup(block_ns, !block_check,
->> vcpu_valid_wakeup(vcpu));
-> =
+On Mon, 20 Apr 2020, Marc Zyngier wrote:
 
-> This looks like a change in the semantics of the tracepoint. Before
-> this change, 'waited' would have been true if the vcpu waited at all.
-> Here, you'd have false if it has been interrupted by a signal, even
-> if the vcpu has waited for a period of time.
-True, good catch.  Perhaps add macros prepare_to_rcuwait and
-finish_rcuwait?
+>This looks like a change in the semantics of the tracepoint. Before this
+>change, 'waited' would have been true if the vcpu waited at all. Here, 
+>you'd
+>have false if it has been interrupted by a signal, even if the vcpu 
+>has waited
+>for a period of time.
 
-Paolo
+Hmm but sleeps are now uninterruptible as we're using TASK_IDLE.
 
+Thanks,
+Davidlohr
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
