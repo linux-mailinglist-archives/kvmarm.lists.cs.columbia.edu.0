@@ -2,103 +2,71 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 147C01B17F3
-	for <lists+kvmarm@lfdr.de>; Mon, 20 Apr 2020 23:04:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 522D51B2470
+	for <lists+kvmarm@lfdr.de>; Tue, 21 Apr 2020 12:56:04 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 85D4D4B180;
-	Mon, 20 Apr 2020 17:04:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 061124B158;
+	Tue, 21 Apr 2020 06:56:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: 0.799
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 43iAQ7nP1B8M; Mon, 20 Apr 2020 17:04:49 -0400 (EDT)
+	with ESMTP id WuEIpWFbpZxZ; Tue, 21 Apr 2020 06:56:03 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 90C8D4B139;
-	Mon, 20 Apr 2020 17:04:48 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E74BF4B148;
+	Tue, 21 Apr 2020 06:56:02 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3F44B4B139
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Apr 2020 17:04:47 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 74D514B13A
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Apr 2020 17:43:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id FHV4YWpjLvFR for <kvmarm@lists.cs.columbia.edu>;
- Mon, 20 Apr 2020 17:04:46 -0400 (EDT)
-Received: from us-smtp-delivery-1.mimecast.com
- (us-smtp-delivery-1.mimecast.com [205.139.110.120])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 614354B130
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Apr 2020 17:04:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1587416685;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=el4OTjYf5mEySshudgJWDWTRuJmOvD4sG0r7YGx0AyM=;
- b=gekU46IFWfZ4L8PuXfRgIdXjW603HxxLC6JtcOzfKhSNUvfcJBXwh/O1kymwvXFgaDdXk5
- iDBxR0P+pNUokS+vqNMiztGWta9gQQcfB0YHDa3HwlpOubRqL+RdSbXb587BSSaVotttcf
- 4SKbZBZZbGyovYrZVkLdZy6RwME4wA0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-424-Bbrbmi0WO8uQnXOkJS-xCQ-1; Mon, 20 Apr 2020 17:04:42 -0400
-X-MC-Unique: Bbrbmi0WO8uQnXOkJS-xCQ-1
-Received: by mail-wr1-f72.google.com with SMTP id e5so6350544wrs.23
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Apr 2020 14:04:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=el4OTjYf5mEySshudgJWDWTRuJmOvD4sG0r7YGx0AyM=;
- b=RRvdM8aiBoVJZwj/JF0brV2mUDj6rNr5O+JmLtLm9F0nT0Uh74wyXhLKh4d9u+Rndp
- f3iR4xYuDT6ttvuDH+QWdLlvVOH6SY0MUP8rF4ncKfr4ua62yQlSFThc+AHVsIlfj7ae
- 9jHFEc4EYXdu0NyLY+6wA+uUP702vYTy/e8K6LECpzKQ1HXtw6Fea91rRXSjLXvddKjZ
- jRKoYP5FWrDWqfEJhWfmkQjtR4Yts7HKCpNdCcropdfHBOL2Vm0A70PLA9oLg6yDSbDc
- 3Kmv0/Oo5dCGKJtJ8krsbuJLL/+xSN8ZcGlD0VpKnyc6mWKZLYIg//jshpONtapMOk5m
- WgIA==
-X-Gm-Message-State: AGi0PuZ7zHJUX6qUTI+Lbgkcb9Z7ISSNrQoZdleaqcESgmh0EJAVfHAo
- lBMUDJSy2PdwI/Q0Fkd1LHBj9LcRrgXHvyLayfL+T+LRYyZfUDEz8OBajoAJXzO7M+tvG5KVyau
- 1AfMNlumnYZblpsN3pxM4yu6U
-X-Received: by 2002:a05:600c:2c0f:: with SMTP id
- q15mr1372501wmg.185.1587416679646; 
- Mon, 20 Apr 2020 14:04:39 -0700 (PDT)
-X-Google-Smtp-Source: APiQypLCHmby4MneKzzDfoFddn0WzGOWW+JhFqcNNGOFAialDolkEgs5MBOpolhNVZ8zYuGZUO7k8A==
-X-Received: by 2002:a05:600c:2c0f:: with SMTP id
- q15mr1372470wmg.185.1587416679373; 
- Mon, 20 Apr 2020 14:04:39 -0700 (PDT)
-Received: from ?IPv6:2001:b07:6468:f312:5c18:5523:c13e:fa9f?
- ([2001:b07:6468:f312:5c18:5523:c13e:fa9f])
- by smtp.gmail.com with ESMTPSA id a20sm944701wra.26.2020.04.20.14.04.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Apr 2020 14:04:38 -0700 (PDT)
-Subject: Re: [PATCH v2] kvm: Replace vcpu->swait with rcuwait
-To: Davidlohr Bueso <dave@stgolabs.net>, Marc Zyngier <maz@kernel.org>
-References: <20200324044453.15733-1-dave@stgolabs.net>
- <20200324044453.15733-4-dave@stgolabs.net>
- <20200420164132.tjzk5ebx35m66yce@linux-p48b>
- <418acdb5001a9ae836095b7187338085@misterjones.org>
- <20200420205641.6sgsllj6pmsnwrvp@linux-p48b>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <f7cc83fe-3e91-0057-9af2-26c201456689@redhat.com>
-Date: Mon, 20 Apr 2020 23:04:37 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+ with ESMTP id LSANl7MGSB+X for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 20 Apr 2020 17:43:20 -0400 (EDT)
+Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 679034B0CD
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Apr 2020 17:43:20 -0400 (EDT)
+Received: from lwn.net (localhost [127.0.0.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ms.lwn.net (Postfix) with ESMTPSA id 632E4823;
+ Mon, 20 Apr 2020 21:43:17 +0000 (UTC)
+Date: Mon, 20 Apr 2020 15:43:16 -0600
+From: Jonathan Corbet <corbet@lwn.net>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: Re: [PATCH v2 00/33] Documentation fixes for Kernel 5.8
+Message-ID: <20200420154316.28e42905@lwn.net>
+In-Reply-To: <cover.1586881715.git.mchehab+huawei@kernel.org>
+References: <cover.1586881715.git.mchehab+huawei@kernel.org>
+Organization: LWN.net
 MIME-Version: 1.0
-In-Reply-To: <20200420205641.6sgsllj6pmsnwrvp@linux-p48b>
-Content-Language: en-US
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Cc: kvm@vger.kernel.org, Davidlohr Bueso <dbueso@suse.de>, peterz@infradead.org,
- will@kernel.org, bigeasy@linutronix.de, linux-kernel@vger.kernel.org,
- rostedt@goodmis.org, linux-mips@vger.kernel.org,
- Paul Mackerras <paulus@ozlabs.org>, joel@joelfernandes.org, tglx@linutronix.de,
- torvalds@linux-foundation.org, kvmarm@lists.cs.columbia.edu
+X-Mailman-Approved-At: Tue, 21 Apr 2020 06:56:02 -0400
+Cc: kvm@vger.kernel.org, Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+ linux-pci@vger.kernel.org, Linus Walleij <linus.walleij@linaro.org>,
+ dri-devel@lists.freedesktop.org, linux-unionfs@vger.kernel.org,
+ linux-mm@kvack.org, netdev@vger.kernel.org, linux-i2c@vger.kernel.org,
+ linux1394-devel@lists.sourceforge.net, kvmarm@lists.cs.columbia.edu,
+ linux-arch@vger.kernel.org, Rob Herring <robh@kernel.org>,
+ Geert Uytterhoeven <geert+renesas@glider.be>, linux-rdma@vger.kernel.org,
+ Kishon Vijay Abraham I <kishon@ti.com>, linux-rockchip@lists.infradead.org,
+ Matthias Kaehlcke <mka@chromium.org>, Sandeep Maheswaram <sanm@codeaurora.org>,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-afs@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ ecryptfs@vger.kernel.org, kvm-ppc@vger.kernel.org,
+ Stephen Boyd <swboyd@chromium.org>, Maxime Ripard <maxime@cerno.tech>,
+ linux-arm-kernel@lists.infradead.org, linux-edac@vger.kernel.org,
+ Matthias Brugger <mbrugger@suse.com>, Yuti Amonkar <yamonkar@cadence.com>,
+ linux-ide@vger.kernel.org, linux-ntfs-dev@lists.sourceforge.net,
+ freedreno@lists.freedesktop.org, linux-usb@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
+ linux-crypto@vger.kernel.org, Sudeep Holla <sudeep.holla@arm.com>,
+ linux-fsdevel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+ ocfs2-devel@oss.oracle.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -115,23 +83,37 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 20/04/20 22:56, Davidlohr Bueso wrote:
-> On Mon, 20 Apr 2020, Marc Zyngier wrote:
+On Tue, 14 Apr 2020 18:48:26 +0200
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+
+> Patches 1 to 5 contain changes to the documentation toolset:
 > 
->> This looks like a change in the semantics of the tracepoint. Before this
->> change, 'waited' would have been true if the vcpu waited at all. Here,
->> you'd
->> have false if it has been interrupted by a signal, even if the vcpu
->> has waited
->> for a period of time.
+> - The first 3 patches help to reduce a lot the number of reported
+>   kernel-doc issues, by making the tool more smart.
 > 
-> Hmm but sleeps are now uninterruptible as we're using TASK_IDLE.
+> - Patches 4 and 5 are meant to partially address the PDF
+>   build, with now requires Sphinx version 2.4 or upper.
+> 
+> The remaining patches fix broken references detected by
+> this tool:
+> 
+>         ./scripts/documentation-file-ref-check
+> 
+> and address other random errors due to tags being mis-interpreted
+> or mis-used.
+> 
+> They are independent each other, but some may depend on
+> the kernel-doc improvements.
+> 
+> PS.: Due to the large number of C/C, I opted to keep a smaller
+> set of C/C at this first e-mail (only e-mails with "L:" tag from
+> MAINTAINERS file).
 
-Hold on, does that mean that you can't anymore send a signal in order to
-kick a thread out of KVM_RUN?  Or am I just misunderstanding?
+OK, I've applied this set, minus #17 which was applied elsewhere.
 
-Paolo
+Thanks,
 
+jon
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
