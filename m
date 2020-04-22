@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 670A41B44CC
-	for <lists+kvmarm@lfdr.de>; Wed, 22 Apr 2020 14:21:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA4D71B44B8
+	for <lists+kvmarm@lfdr.de>; Wed, 22 Apr 2020 14:21:22 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 142724B11F;
-	Wed, 22 Apr 2020 08:21:41 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7D7B94B171;
+	Wed, 22 Apr 2020 08:21:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,46 +18,46 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id t0mt3rr6oLTe; Wed, 22 Apr 2020 08:21:40 -0400 (EDT)
+	with ESMTP id SKj6i6tq5gQw; Wed, 22 Apr 2020 08:21:21 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 43A3C4B16D;
-	Wed, 22 Apr 2020 08:21:39 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A4AC24B181;
+	Wed, 22 Apr 2020 08:21:20 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2ED7F4B19B
- for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Apr 2020 08:21:37 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DC9FA4B179
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Apr 2020 08:21:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id frnnczn+YdPN for <kvmarm@lists.cs.columbia.edu>;
- Wed, 22 Apr 2020 08:21:36 -0400 (EDT)
+ with ESMTP id osn0kYIK9n7b for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 22 Apr 2020 08:21:19 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 05C354B0C2
- for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Apr 2020 08:21:36 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 561C74B178
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Apr 2020 08:21:10 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 16A4421D7B;
- Wed, 22 Apr 2020 12:21:35 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 71C5621582;
+ Wed, 22 Apr 2020 12:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1587558095;
- bh=Idczft88aog6M8M4O6TVlb0GRSTqov9o2dWVVhNYIEs=;
+ s=default; t=1587558069;
+ bh=7JcK0Rg6TlWwKG97FEPn+5O/0r9729K5HS42mRM3beg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=xkzG1l0oYIkP8ND8XsQyB8vOZbeoqon1cG4bW6FXggxGAdfCW6abvqtENI1Z+0Tnz
- cL4ehaBzWJUyTj0jRwjkmRGYAc05wQ4axRQsyD6/UivhYaHkt2Q7AOQiEhp8As504Y
- bz39DrXN82H6HdSwbCwcWKLgTxzc6eU9ruuriMoc=
+ b=sfnHewqVeGeg2SPMVXnGUG0D0dKSfBzSG5AW/Y4S5hXCf5pE15cCOUekQ7Eptu6rM
+ Opmp0XTRxz04c3F2SvuuzAhlPhD3K6zv7Dbsp6RnUB/BRyBeEEiSYpujHftFq1I8dw
+ 69TRA1zhTiHMrsh3D4DcgUzlF8/+NvB1oVDrdEGQ=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1jRE3z-005UI7-9h; Wed, 22 Apr 2020 13:01:11 +0100
+ id 1jRE40-005UI7-4c; Wed, 22 Apr 2020 13:01:12 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH 17/26] KVM: arm64: debug: Use ctxt_sys_reg() instead of raw
- sys_regs access
-Date: Wed, 22 Apr 2020 13:00:41 +0100
-Message-Id: <20200422120050.3693593-18-maz@kernel.org>
+Subject: [PATCH 18/26] KVM: arm64: Don't use empty structures as CPU reset
+ state
+Date: Wed, 22 Apr 2020 13:00:42 +0100
+Message-Id: <20200422120050.3693593-19-maz@kernel.org>
 X-Mailer: git-send-email 2.26.1
 In-Reply-To: <20200422120050.3693593-1-maz@kernel.org>
 References: <20200422120050.3693593-1-maz@kernel.org>
@@ -92,60 +92,68 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Now that we have a wrapper for the sysreg accesses, let's use that
-consistently.
+Keeping empty structure as the vcpu state initializer is slightly
+wasteful: we only want to set pstate, and zero everything else.
+Just do that.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/hyp/debug-sr.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ arch/arm64/kvm/reset.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm64/kvm/hyp/debug-sr.c b/arch/arm64/kvm/hyp/debug-sr.c
-index 998758f8b5774..421e547ed10f3 100644
---- a/arch/arm64/kvm/hyp/debug-sr.c
-+++ b/arch/arm64/kvm/hyp/debug-sr.c
-@@ -129,8 +129,7 @@ static void __hyp_text __debug_restore_spe_nvhe(u64 pmscr_el1)
- 	write_sysreg_s(pmscr_el1, SYS_PMSCR_EL1);
- }
+diff --git a/arch/arm64/kvm/reset.c b/arch/arm64/kvm/reset.c
+index 241db35a7ef4f..895d7d9ad1866 100644
+--- a/arch/arm64/kvm/reset.c
++++ b/arch/arm64/kvm/reset.c
+@@ -37,15 +37,11 @@ static u32 kvm_ipa_limit;
+ /*
+  * ARMv8 Reset Values
+  */
+-static const struct kvm_regs default_regs_reset = {
+-	.regs.pstate = (PSR_MODE_EL1h | PSR_A_BIT | PSR_I_BIT |
+-			PSR_F_BIT | PSR_D_BIT),
+-};
++#define VCPU_RESET_PSTATE_EL1	(PSR_MODE_EL1h | PSR_A_BIT | PSR_I_BIT | \
++				 PSR_F_BIT | PSR_D_BIT)
  
--static void __hyp_text __debug_save_state(struct kvm_vcpu *vcpu,
--					  struct kvm_guest_debug_arch *dbg,
-+static void __hyp_text __debug_save_state(struct kvm_guest_debug_arch *dbg,
- 					  struct kvm_cpu_context *ctxt)
+-static const struct kvm_regs default_regs_reset32 = {
+-	.regs.pstate = (PSR_AA32_MODE_SVC | PSR_AA32_A_BIT |
+-			PSR_AA32_I_BIT | PSR_AA32_F_BIT),
+-};
++#define VCPU_RESET_PSTATE_SVC	(PSR_AA32_MODE_SVC | PSR_AA32_A_BIT | \
++				 PSR_AA32_I_BIT | PSR_AA32_F_BIT)
+ 
+ static bool cpu_has_32bit_el1(void)
  {
- 	u64 aa64dfr0;
-@@ -148,8 +147,7 @@ static void __hyp_text __debug_save_state(struct kvm_vcpu *vcpu,
- 	ctxt_sys_reg(ctxt, MDCCINT_EL1) = read_sysreg(mdccint_el1);
- }
+@@ -261,6 +257,7 @@ int kvm_reset_vcpu(struct kvm_vcpu *vcpu)
+ 	const struct kvm_regs *cpu_reset;
+ 	int ret = -EINVAL;
+ 	bool loaded;
++	u32 pstate;
  
--static void __hyp_text __debug_restore_state(struct kvm_vcpu *vcpu,
--					     struct kvm_guest_debug_arch *dbg,
-+static void __hyp_text __debug_restore_state(struct kvm_guest_debug_arch *dbg,
- 					     struct kvm_cpu_context *ctxt)
- {
- 	u64 aa64dfr0;
-@@ -190,8 +188,8 @@ void __hyp_text __debug_switch_to_guest(struct kvm_vcpu *vcpu)
- 	host_dbg = &vcpu->arch.host_debug_state.regs;
- 	guest_dbg = kern_hyp_va(vcpu->arch.debug_ptr);
+ 	/* Reset PMU outside of the non-preemptible section */
+ 	kvm_pmu_vcpu_reset(vcpu);
+@@ -291,16 +288,17 @@ int kvm_reset_vcpu(struct kvm_vcpu *vcpu)
+ 		if (test_bit(KVM_ARM_VCPU_EL1_32BIT, vcpu->arch.features)) {
+ 			if (!cpu_has_32bit_el1())
+ 				goto out;
+-			cpu_reset = &default_regs_reset32;
++			pstate = VCPU_RESET_PSTATE_SVC;
+ 		} else {
+-			cpu_reset = &default_regs_reset;
++			pstate = VCPU_RESET_PSTATE_EL1;
+ 		}
  
--	__debug_save_state(vcpu, host_dbg, host_ctxt);
--	__debug_restore_state(vcpu, guest_dbg, guest_ctxt);
-+	__debug_save_state(host_dbg, host_ctxt);
-+	__debug_restore_state(guest_dbg, guest_ctxt);
- }
+ 		break;
+ 	}
  
- void __hyp_text __debug_switch_to_host(struct kvm_vcpu *vcpu)
-@@ -212,8 +210,8 @@ void __hyp_text __debug_switch_to_host(struct kvm_vcpu *vcpu)
- 	host_dbg = &vcpu->arch.host_debug_state.regs;
- 	guest_dbg = kern_hyp_va(vcpu->arch.debug_ptr);
+ 	/* Reset core registers */
+-	memcpy(vcpu_gp_regs(vcpu), cpu_reset, sizeof(*cpu_reset));
++	memset(vcpu_gp_regs(vcpu), 0, sizeof(*cpu_reset));
++	vcpu_gp_regs(vcpu)->regs.pstate = pstate;
  
--	__debug_save_state(vcpu, guest_dbg, guest_ctxt);
--	__debug_restore_state(vcpu, host_dbg, host_ctxt);
-+	__debug_save_state(guest_dbg, guest_ctxt);
-+	__debug_restore_state(host_dbg, host_ctxt);
- 
- 	vcpu->arch.flags &= ~KVM_ARM64_DEBUG_DIRTY;
- }
+ 	/* Reset system registers */
+ 	kvm_reset_sys_regs(vcpu);
 -- 
 2.26.1
 
