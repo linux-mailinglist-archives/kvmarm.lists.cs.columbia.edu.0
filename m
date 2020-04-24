@@ -2,66 +2,67 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C76A1B7136
-	for <lists+kvmarm@lfdr.de>; Fri, 24 Apr 2020 11:51:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FCA61B7227
+	for <lists+kvmarm@lfdr.de>; Fri, 24 Apr 2020 12:40:05 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 78AD44B285;
-	Fri, 24 Apr 2020 05:51:51 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E126F4B20B;
+	Fri, 24 Apr 2020 06:40:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4ygG10zjFxom; Fri, 24 Apr 2020 05:51:51 -0400 (EDT)
+	with ESMTP id uvQLC+N6QGSw; Fri, 24 Apr 2020 06:40:04 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4CA134B280;
-	Fri, 24 Apr 2020 05:51:50 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7BE7B4B255;
+	Fri, 24 Apr 2020 06:40:03 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E8F284B27B
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Apr 2020 05:51:48 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 76FBE4B1D0
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Apr 2020 06:40:02 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 6TzrUXV0Hnz9 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 24 Apr 2020 05:51:48 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id EF16E4B278
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Apr 2020 05:51:47 -0400 (EDT)
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
- bits)) (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 9790A20728;
- Fri, 24 Apr 2020 09:51:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1587721907;
- bh=GlmWL52bv6OnLp9DBrDN1ldUCRy/XQQdtf9ANF1syTg=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=v5nleYikOuIFnS0BI7aR6eooGKKHQ5ItndtMTTMulwEAhRMdR/qpxngv1ZCzwqvD/
- pfCGsm16KpvVb0SiPFO0ntXGzDV3zOVACX2s8lgJFi1mO2VlB+RfR98rDQRHf6mDwI
- BSycbMR0P6QSaPD/xbnQFlMRPuDd/+NVG6xfaCI8=
-Date: Fri, 24 Apr 2020 10:51:42 +0100
-From: Will Deacon <will@kernel.org>
-To: =?iso-8859-1?Q?Andr=E9?= Przywara <andre.przywara@arm.com>
-Subject: Re: [PATCH kvmtool v4 1/5] virtio-mmio: Assign IRQ line directly
- before registering device
-Message-ID: <20200424095141.GA21141@willie-the-truck>
-References: <20200423173844.24220-1-andre.przywara@arm.com>
- <20200423173844.24220-2-andre.przywara@arm.com>
- <20200424084104.GB20801@willie-the-truck>
- <a8b424ed-9c63-bc72-6608-3e7e01dbdbce@arm.com>
+ with ESMTP id aaXTuWQLYSNs for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 24 Apr 2020 06:40:01 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 124934B205
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Apr 2020 06:40:01 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9ABDC1FB;
+ Fri, 24 Apr 2020 03:40:00 -0700 (PDT)
+Received: from C02TD0UTHF1T.local (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4E0C53F6CF;
+ Fri, 24 Apr 2020 03:39:56 -0700 (PDT)
+Date: Fri, 24 Apr 2020 11:39:53 +0100
+From: Mark Rutland <mark.rutland@arm.com>
+To: Jianyong Wu <Jianyong.Wu@arm.com>
+Subject: Re: [RFC PATCH v11 5/9] psci: Add hypercall service for ptp_kvm.
+Message-ID: <20200424103953.GD1167@C02TD0UTHF1T.local>
+References: <20200421032304.26300-1-jianyong.wu@arm.com>
+ <20200421032304.26300-6-jianyong.wu@arm.com>
+ <20200421095736.GB16306@C02TD0UTHF1T.local>
+ <ab629714-c08c-2155-dd13-ad25e7f60b39@arm.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <a8b424ed-9c63-bc72-6608-3e7e01dbdbce@arm.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: kvm@vger.kernel.org, Ard Biesheuvel <ardb@kernel.org>,
- Raphael Gault <raphael.gault@arm.com>, Sami Mujawar <sami.mujawar@arm.com>,
- kvmarm@lists.cs.columbia.edu
+In-Reply-To: <ab629714-c08c-2155-dd13-ad25e7f60b39@arm.com>
+Cc: "maz@kernel.org" <maz@kernel.org>, Justin He <Justin.He@arm.com>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+ "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ "richardcochran@gmail.com" <richardcochran@gmail.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "sean.j.christopherson@intel.com" <sean.j.christopherson@intel.com>,
+ Steven Price <Steven.Price@arm.com>,
+ "john.stultz@linaro.org" <john.stultz@linaro.org>,
+ "yangbo.lu@nxp.com" <yangbo.lu@nxp.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "tglx@linutronix.de" <tglx@linutronix.de>, nd <nd@arm.com>,
+ "will@kernel.org" <will@kernel.org>,
+ "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -73,58 +74,87 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Apr 24, 2020 at 09:50:04AM +0100, Andr=E9 Przywara wrote:
-> On 24/04/2020 09:41, Will Deacon wrote:
-> > On Thu, Apr 23, 2020 at 06:38:40PM +0100, Andre Przywara wrote:
-> >> diff --git a/devices.c b/devices.c
-> >> index a7c666a7..2c8b2665 100644
-> >> --- a/devices.c
-> >> +++ b/devices.c
-> >> @@ -1,7 +1,6 @@
-> >>  #include "kvm/devices.h"
-> >>  #include "kvm/kvm.h"
-> >>  #include "kvm/pci.h"
-> >> -#include "kvm/virtio-mmio.h"
-> >>  =
+On Fri, Apr 24, 2020 at 03:50:22AM +0100, Jianyong Wu wrote:
+> On 2020/4/21 5:57 PM, Mark Rutland wrote:
+> > On Tue, Apr 21, 2020 at 11:23:00AM +0800, Jianyong Wu wrote:
+> >> diff --git a/virt/kvm/arm/hypercalls.c b/virt/kvm/arm/hypercalls.c
+> >> index 550dfa3e53cd..a5309c28d4dc 100644
+> >> --- a/virt/kvm/arm/hypercalls.c
+> >> +++ b/virt/kvm/arm/hypercalls.c
 
-> >>  #include <linux/err.h>
-> >>  #include <linux/rbtree.h>
-> >> @@ -33,9 +32,6 @@ int device__register(struct device_header *dev)
-> >>  	case DEVICE_BUS_PCI:
-> >>  		pci__assign_irq(dev);
-> >>  		break;
-> >> -	case DEVICE_BUS_MMIO:
-> >> -		virtio_mmio_assign_irq(dev);
-> >> -		break;
-> > =
+> >> @@ -62,6 +66,44 @@ int kvm_hvc_call_handler(struct kvm_vcpu *vcpu)
+> >>   if (gpa != GPA_INVALID)
+> >>   val = gpa;
+> >>   break;
+> >> +/*
+> >> + * This serves virtual kvm_ptp.
+> >> + * Four values will be passed back.
+> >> + * reg0 stores high 32-bit host ktime;
+> >> + * reg1 stores low 32-bit host ktime;
+> >> + * reg2 stores high 32-bit difference of host cycles and cntvoff;
+> >> + * reg3 stores low 32-bit difference of host cycles and cntvoff.
+> >> + */
+> >> +case ARM_SMCCC_HYP_KVM_PTP_FUNC_ID:
+> > Shouldn't the host opt-in to providing this to the guest, as with other
+> > features?
+> 
+> er, do you mean that "ARM_SMCCC_HV_PV_TIME_XXX" as "opt-in"? if so, I
+> think this
+> 
+> kvm_ptp doesn't need a buddy. the driver in guest will call this service
+> in a definite way.
 
-> > Hmm, but then it's a bit ugly to handle these differently to PCI. How
-> > difficult is it to add a new bus type instead? e.g. stick the virtio mm=
-io
-> > devices on DEVICE_BUS_VIRTIO_MMIO and then add the non-virtio MMIO devi=
-ces
-> > to DEVICE_BUS_MMIO?
-> =
+I mean that when creating the VM, userspace should be able to choose
+whether the PTP service is provided to the guest. The host shouldn't
+always provide it as there may be cases where doing so is undesireable.
 
-> I have another patch to also do the IRQ allocation for PCI devices in
-> their callers. This avoids the allocation on an IRQ for vesa, for
-> instance, but otherwise doesn't solve a real problem, so I didn't post
-> it yet.
-> By looking at devices.c, I feel like this should only be handling the
-> administrative part of managing the device_header structs in the rbtree.
-> Dealing with bus specific things looks out of scope for this file, IMHO.
-> =
+> >> +/*
+> >> + * system time and counter value must captured in the same
+> >> + * time to keep consistency and precision.
+> >> + */
+> >> +ktime_get_snapshot(&systime_snapshot);
+> >> +if (systime_snapshot.cs_id != CSID_ARM_ARCH_COUNTER)
+> >> +break;
+> >> +arg[0] = upper_32_bits(systime_snapshot.real);
+> >> +arg[1] = lower_32_bits(systime_snapshot.real);
+> > Why exactly does the guest need the host's real time? Neither the cover
+> > letter nor this commit message have explained that, and for those of us
+> > unfamliar with PTP it would be very helpful to know that to understand
+> > what's going on.
+> 
+> oh, sorry, I should have added more background knowledge here.
+> 
+> just give some hints here:
+> 
+> the kvm_ptp targets to sync guest time with host. some services in user
+> space
+> 
+> like chrony can do time sync by inputing time(in kvm_ptp also clock
+> counter sometimes) from
+> 
+> remote clocksource(often network clocksource). This kvm_ptp driver can
+> offer a interface for
+> 
+> those user space service in guest to get the host time to do time sync
+> in guest.
 
-> If you agree, I will send the patch shortly.
+I think it would be very helpful for the commit message and/or cover
+letter to have a high-level desctiption of what PTP is meant to do, and
+an outline of the algorithmm (clearly splitting the host and guest
+bits).
 
-Yes please.
+It's also not clear to me what notion of host time is being exposed to
+the guest (and consequently how this would interact with time changes on
+the host, time namespaces, etc). Having some description of that would
+be very helpful.
 
-Will
+Thanks,
+Mark.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
