@@ -2,80 +2,49 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 128581B75F1
-	for <lists+kvmarm@lfdr.de>; Fri, 24 Apr 2020 14:51:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2B911B7940
+	for <lists+kvmarm@lfdr.de>; Fri, 24 Apr 2020 17:17:20 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8AB284B249;
-	Fri, 24 Apr 2020 08:51:56 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 299E04B266;
+	Fri, 24 Apr 2020 11:17:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@linaro.org
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jKaDXD6LI3Ca; Fri, 24 Apr 2020 08:51:56 -0400 (EDT)
+	with ESMTP id Vkzjp2flrUon; Fri, 24 Apr 2020 11:17:20 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5D28D4B218;
-	Fri, 24 Apr 2020 08:51:55 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DE2A14B264;
+	Fri, 24 Apr 2020 11:17:18 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3A3A84B211
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Apr 2020 08:51:54 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5D8904B255
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Apr 2020 11:17:17 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Qo6hp7YkndAq for <kvmarm@lists.cs.columbia.edu>;
- Fri, 24 Apr 2020 08:51:53 -0400 (EDT)
-Received: from mail-ot1-f67.google.com (mail-ot1-f67.google.com
- [209.85.210.67])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 30B6F4B20F
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Apr 2020 08:51:53 -0400 (EDT)
-Received: by mail-ot1-f67.google.com with SMTP id j26so12141320ots.0
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Apr 2020 05:51:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=BsEj32339N9txHinFeBr5Cb+eAcnXuu4GyaJJlDL5Xs=;
- b=wqxIct9Vdjf7GbHCvxT1MiYpyTH0iAANjm65ib62bdKmXkUFNwoH2Qatz7paLYpEO6
- c8ejTE1n7IOdE0xpR1JZ964Wruoe4AnvsicWutEUYnYyXvBPd5VQJU27WIB4DvbiNola
- tOM73Fbegx5pg82i/NIfns4e8hHRtQPQ/GwRtkdcOOS7RzrjyWCH8+DvFVum3qwN+DSo
- dTj+8o+oBPvoRwzU27lj7r7bmSkFdomSepa92imc2kjiWvj/JQ+dKmXYoQ59r0MJ9JOq
- QaFwmXR/aq8u6x8OPS3EPk8Y5nigIYZ1Y/A0EXvIr/ixnBJ8FFCwgcZzIzfwmJrSrvtu
- zS3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=BsEj32339N9txHinFeBr5Cb+eAcnXuu4GyaJJlDL5Xs=;
- b=hvkw+iChhv4+gcAD6hudEyg5RSX7cA+eOMaKdQM4YPrtSpK5bnaHzwN5XSMK3R8XY8
- 0HlxNGaUev/pIliAh73sA+XPqeHqHzTUZrCEh7v85GOeV3hEZqNZNeWa3P9SyR5263KO
- zOtrsi6tdn3M6qFgU1u/WRafReA4myfZXKhpqJ0l/DwfaSTZcxuOcdTEiklUn5mvrgKn
- HUu9Zmbxk9PgZNxm8l+AEeQsH6oj2uxcsQLixZvHecSg+TQNai5YNJpzt0uzQj9qlGTZ
- KYG8bM/bxmAqZktVDk/GxfvH1fGh9awMIy7ooNngEygKxZ3oSrOUDBvXfYxhPFuiFBcR
- lTmw==
-X-Gm-Message-State: AGi0PuZgrSTZP3zDjMrAhN27aAjDfByQeQTvXxXDnnmfkhP4EoQh8k7T
- E4PUPQanxtb89Z2GvueT934yRM791tWgLeIOF7rjZg==
-X-Google-Smtp-Source: APiQypKVnLFNwVY5t00WPhM8z2bI07Ju/0ZayiLrA0S2LuuZ0G6FoJm2Y+qAfl22SkFy5bl1uyAiEYaOFIvxHt3Z4Ps=
-X-Received: by 2002:a9d:2c08:: with SMTP id f8mr7769127otb.135.1587732712601; 
- Fri, 24 Apr 2020 05:51:52 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200323113227.3169-1-beata.michalska@linaro.org>
- <20200323113227.3169-2-beata.michalska@linaro.org>
- <CAFEAcA_uWS+cVRk=BKra8AhsD+B1syVzhXeCMttSKwQDdo=j3w@mail.gmail.com>
- <20200417131032.lcyunbjwofsn2nzz@kamzik.brq.redhat.com>
- <20200424121633.GF3106@work-vm>
-In-Reply-To: <20200424121633.GF3106@work-vm>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 24 Apr 2020 13:51:41 +0100
-Message-ID: <CAFEAcA9055qMOMDubpRf+XS4RwtbYEVFqQf-nhPd8T087aCdHg@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] target/arm: kvm: Handle DABT with no valid ISS
-To: "Dr. David Alan Gilbert" <dgilbert@redhat.com>
-Cc: Juan Quintela <quintela@redhat.com>,
- QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>,
- Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu
+ with ESMTP id NVzTE16enKtD for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 24 Apr 2020 11:17:16 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id ECC894B1F8
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Apr 2020 11:17:15 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 79CA931B;
+ Fri, 24 Apr 2020 08:17:15 -0700 (PDT)
+Received: from localhost.localdomain (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8258C3F68F;
+ Fri, 24 Apr 2020 08:17:14 -0700 (PDT)
+From: Andre Przywara <andre.przywara@arm.com>
+To: Will Deacon <will@kernel.org>,
+ Julien Thierry <julien.thierry.kdev@gmail.com>
+Subject: [PATCH kvmtool v4 6/5] pci: Move legacy IRQ assignment into devices
+Date: Fri, 24 Apr 2020 16:17:02 +0100
+Message-Id: <20200424151702.4750-1-andre.przywara@arm.com>
+X-Mailer: git-send-email 2.17.1
+Cc: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -87,45 +56,138 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, 24 Apr 2020 at 13:17, Dr. David Alan Gilbert
-<dgilbert@redhat.com> wrote:
->
-> * Andrew Jones (drjones@redhat.com) wrote:
-> > On Fri, Apr 17, 2020 at 11:39:25AM +0100, Peter Maydell wrote:
-> > > I was trying to work out whether we need to migrate this state,
-> > > and I'm not sure. Andrew, do you know? I think this comes down
-> > > to "at what points in QEMU's kvm run loop can migration kick in",
-> > > and specifically if we get a KVM_EXIT_ARM_NISV do we definitely
-> > > go round the loop and KVM_RUN again without ever checking
-> > > to see if we should do a migration ?
-> > >
-> >
-> > I'd prefer a migration expert confirm this, so I've CC'ed David and Juan,
-> > but afaict there's no way to break out of the KVM_RUN loop after a
-> > successful (ret=0) call to kvm_arch_handle_exit() until after the next
-> > KVM_RUN ioctl. This is because even if migration kicks the vcpus between
-> > kvm_arch_handle_exit() and the next run, the signal won't do anything
-> > other than prepare the vcpu for an immediate exit.
->
-> This is a level I've not looked at I'm afraid.
-> However, the point at which we're saving the vCPU state is when the
-> vCPUs are stopped; so as long as your state that you save is everything
-> you need to restart and you migrate that then you should be OK; but in
-> the end fromt he migration point of view we just stop the VM and ask for
-> each devices state.
+So far the (legacy) IRQ line for a PCI device is allocated in devices.c,
+which should actually not take care of that. Since we allocate all other
+device specific resources in the actual device emulation code, the IRQ
+should not be something special.
 
-Yeah, but I think the question is "at what point in the main loop
-do we check 'is the VM stopping'". It sounds from what Andrew
-says that the answer is that it can't happen at this point in
-time, though.
+Remove the PCI specific code from devices.c, and move the IRQ line
+allocation to the PCI code.
+This drops the IRQ line from the VESA device, since it does not use one.
 
-thanks
--- PMM
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+---
+Hi Will,
+
+this is the patch I mentioned earlier today. Briefly tested on x86 with
+the VESA device and on a Juno.
+
+Cheers,
+Andre
+
+ devices.c         | 9 ---------
+ include/kvm/pci.h | 2 +-
+ pci.c             | 6 +++---
+ vfio/pci.c        | 2 ++
+ virtio/pci.c      | 5 ++---
+ 5 files changed, 8 insertions(+), 16 deletions(-)
+
+diff --git a/devices.c b/devices.c
+index 2c8b2665..41cffdd7 100644
+--- a/devices.c
++++ b/devices.c
+@@ -1,6 +1,5 @@
+ #include "kvm/devices.h"
+ #include "kvm/kvm.h"
+-#include "kvm/pci.h"
+ 
+ #include <linux/err.h>
+ #include <linux/rbtree.h>
+@@ -28,14 +27,6 @@ int device__register(struct device_header *dev)
+ 	bus = &device_trees[dev->bus_type];
+ 	dev->dev_num = bus->dev_num++;
+ 
+-	switch (dev->bus_type) {
+-	case DEVICE_BUS_PCI:
+-		pci__assign_irq(dev);
+-		break;
+-	default:
+-		break;
+-	}
+-
+ 	node = &bus->root.rb_node;
+ 	while (*node) {
+ 		int num = rb_entry(*node, struct device_header, node)->dev_num;
+diff --git a/include/kvm/pci.h b/include/kvm/pci.h
+index ccb155e3..2c29c094 100644
+--- a/include/kvm/pci.h
++++ b/include/kvm/pci.h
+@@ -155,7 +155,7 @@ int pci__exit(struct kvm *kvm);
+ struct pci_device_header *pci__find_dev(u8 dev_num);
+ u32 pci_get_mmio_block(u32 size);
+ u16 pci_get_io_port_block(u32 size);
+-void pci__assign_irq(struct device_header *dev_hdr);
++int pci__assign_irq(struct pci_device_header *pci_hdr);
+ void pci__config_wr(struct kvm *kvm, union pci_config_address addr, void *data, int size);
+ void pci__config_rd(struct kvm *kvm, union pci_config_address addr, void *data, int size);
+ 
+diff --git a/pci.c b/pci.c
+index b6892d97..3ecdd0f9 100644
+--- a/pci.c
++++ b/pci.c
+@@ -49,10 +49,8 @@ void *pci_find_cap(struct pci_device_header *hdr, u8 cap_type)
+ 	return NULL;
+ }
+ 
+-void pci__assign_irq(struct device_header *dev_hdr)
++int pci__assign_irq(struct pci_device_header *pci_hdr)
+ {
+-	struct pci_device_header *pci_hdr = dev_hdr->data;
+-
+ 	/*
+ 	 * PCI supports only INTA#,B#,C#,D# per device.
+ 	 *
+@@ -64,6 +62,8 @@ void pci__assign_irq(struct device_header *dev_hdr)
+ 
+ 	if (!pci_hdr->irq_type)
+ 		pci_hdr->irq_type = IRQ_TYPE_EDGE_RISING;
++
++	return pci_hdr->irq_line;
+ }
+ 
+ static void *pci_config_address_ptr(u16 port)
+diff --git a/vfio/pci.c b/vfio/pci.c
+index 4412c6d7..7c2ea10c 100644
+--- a/vfio/pci.c
++++ b/vfio/pci.c
+@@ -1212,6 +1212,8 @@ static int vfio_pci_configure_dev_irqs(struct kvm *kvm, struct vfio_device *vdev
+ 	}
+ 
+ 	if (pdev->irq_modes & VFIO_PCI_IRQ_MODE_INTX) {
++		pci__assign_irq(&vdev->pci.hdr);
++
+ 		ret = vfio_pci_init_intx(kvm, vdev);
+ 		if (ret)
+ 			return ret;
+diff --git a/virtio/pci.c b/virtio/pci.c
+index 281c3181..c6529493 100644
+--- a/virtio/pci.c
++++ b/virtio/pci.c
+@@ -524,13 +524,12 @@ int virtio_pci__init(struct kvm *kvm, void *dev, struct virtio_device *vdev,
+ 	if (irq__can_signal_msi(kvm))
+ 		vpci->features |= VIRTIO_PCI_F_SIGNAL_MSI;
+ 
++	vpci->legacy_irq_line = pci__assign_irq(&vpci->pci_hdr);
++
+ 	r = device__register(&vpci->dev_hdr);
+ 	if (r < 0)
+ 		goto free_msix_mmio;
+ 
+-	/* save the IRQ that device__register() has allocated */
+-	vpci->legacy_irq_line = vpci->pci_hdr.irq_line;
+-
+ 	return 0;
+ 
+ free_msix_mmio:
+-- 
+2.17.1
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
