@@ -2,98 +2,72 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CB00A1B859D
-	for <lists+kvmarm@lfdr.de>; Sat, 25 Apr 2020 12:24:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F32C11B8F2A
+	for <lists+kvmarm@lfdr.de>; Sun, 26 Apr 2020 12:57:27 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6102E4B2C5;
-	Sat, 25 Apr 2020 06:24:35 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 624214B1EF;
+	Sun, 26 Apr 2020 06:57:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yWD+CVoGWD-J; Sat, 25 Apr 2020 06:24:35 -0400 (EDT)
+	with ESMTP id r1wcpy5M4CKv; Sun, 26 Apr 2020 06:57:27 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 545964B250;
-	Sat, 25 Apr 2020 06:24:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F241D4B1F2;
+	Sun, 26 Apr 2020 06:57:25 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AE4754B21B
- for <kvmarm@lists.cs.columbia.edu>; Sat, 25 Apr 2020 06:24:32 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 274634B0EB
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 25 Apr 2020 11:16:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id yRUnrSWekkxx for <kvmarm@lists.cs.columbia.edu>;
- Sat, 25 Apr 2020 06:24:31 -0400 (EDT)
-Received: from us-smtp-delivery-1.mimecast.com
- (us-smtp-delivery-1.mimecast.com [205.139.110.120])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C36D74B1E9
- for <kvmarm@lists.cs.columbia.edu>; Sat, 25 Apr 2020 06:24:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1587810271;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AiiGjxMSfR/3HcuLZdv0rh/BGKXUkSP2JfWB96AlEV4=;
- b=R5UEs3rfkcxmFXqmegr8xxrcqVDr8feMITNUPcLwj3NjGw4GcL3NNWcDNrW8in4iLtLwHY
- gM4jQ5BF6buHS7MR995yMOFddELpY8Vb/xdpNr0hJdtX/u9qs/o6BxLUsP6Zn1YhNOejRp
- duvokAL4teBYLz1Bx1BtDug7CnYpmbs=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-294-f4muo0AfNgCx-VZqlLYWNw-1; Sat, 25 Apr 2020 06:24:29 -0400
-X-MC-Unique: f4muo0AfNgCx-VZqlLYWNw-1
-Received: by mail-wm1-f71.google.com with SMTP id h6so5040811wmi.7
- for <kvmarm@lists.cs.columbia.edu>; Sat, 25 Apr 2020 03:24:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=AiiGjxMSfR/3HcuLZdv0rh/BGKXUkSP2JfWB96AlEV4=;
- b=OK9M+3Z0qJS7dM+l5tayDCuFiMdhb9XlYcohNtcxmHQM7whFBwsAyLGiE48lbweENG
- U8IH6MtUrxUpcYUQD/8CjayyGw/fkIXAatBJ0TkN4lN4VsjeUtIANPOubbQSp1bfeaHu
- ZN94K8JfM5X1Hv6T0j3nAlcWGN3CT11sACAIU+03b7i4lraPZd4lAQ78WyxkMmqGjmWF
- HidXlHNgxFuNCsMxXCutY3hdFIoVnlgqtufFQttE3ZHfvYQ5LuUPpIjQb1TaIeptHAtZ
- Yb1lDAXZhv+snfQQ1ecpmjfipuMq5/ZrjF/HqRekg9XWk/Z+TaeQRIaZx4Q7KMNIlJuU
- BKTQ==
-X-Gm-Message-State: AGi0PuaScyTRjtyeth8oieRWlCYzqhebzcG4Cp67gWz8KsPXct7FMsvk
- +QKI8KZjetopcoXxKN+5xdfjMlckv6jYLqWX/Hq1sQ5n45B3leL9/CsNUTpK02V/BSlmjxHucu8
- ++FPe1zSqq8DFWA1fZ4N3nOdN
-X-Received: by 2002:a5d:5745:: with SMTP id q5mr17541305wrw.351.1587810268503; 
- Sat, 25 Apr 2020 03:24:28 -0700 (PDT)
-X-Google-Smtp-Source: APiQypJCsnbfHqFriQbI24TXuIAXrqXN8iqz6uh+Ag2xVYIfCBS/H8oNA4RK58IzO9hfko5vLHJ96Q==
-X-Received: by 2002:a5d:5745:: with SMTP id q5mr17541287wrw.351.1587810268284; 
- Sat, 25 Apr 2020 03:24:28 -0700 (PDT)
-Received: from ?IPv6:2001:b07:6468:f312:d0a0:f143:e9e4:2926?
- ([2001:b07:6468:f312:d0a0:f143:e9e4:2926])
- by smtp.gmail.com with ESMTPSA id t17sm11580360wro.2.2020.04.25.03.24.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 25 Apr 2020 03:24:27 -0700 (PDT)
-Subject: Re: [PATCH 5/5] kvm: Replace vcpu->swait with rcuwait
-To: Davidlohr Bueso <dave@stgolabs.net>, tglx@linutronix.de
-References: <20200424054837.5138-1-dave@stgolabs.net>
- <20200424054837.5138-6-dave@stgolabs.net>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <69af54bb-8632-fbf7-d774-da9a954ff1b7@redhat.com>
-Date: Sat, 25 Apr 2020 12:24:25 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+ with ESMTP id 0IrD+-r2BhBV for <kvmarm@lists.cs.columbia.edu>;
+ Sat, 25 Apr 2020 11:16:21 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 21D694B0E7
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 25 Apr 2020 11:16:21 -0400 (EDT)
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com
+ [209.85.166.50])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 0A19520748
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 25 Apr 2020 15:16:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1587827780;
+ bh=o0YvFXB0fOhkpMsOYQtyfaC/gbqb1WTOlDnFNBy5vYg=;
+ h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+ b=WHljdFkCPrGvMauQcqkQpX5IqC4DgJqxiZXcR9v6QBtR0AoMMqa4UWNnKxqyh39eN
+ qMM3xtTEI2bUVsU2OhunkCpogsZJ/JrhiTxAQpLUHxXwPmk9IZQJz/00PDeEZb45+q
+ +6LR8xOM4eK+UIoxokqO5i2kvDt2vzHj1NJBBN0s=
+Received: by mail-io1-f50.google.com with SMTP id f3so13895251ioj.1
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 25 Apr 2020 08:16:20 -0700 (PDT)
+X-Gm-Message-State: AGi0Pub0qafPCrHzW0FP230GVlJv2152alZXsAjB6m8WMINj4cF1ivRl
+ FhU7YHoCMQQmkG9SDO77UWnhfY1Svc59f5CiBN4=
+X-Google-Smtp-Source: APiQypKpQLTIEmPBlkNb/mJvpnVtQmj0oSSXVLfzbPQIzljzrUXXxbbXS8vMsiZMRXnwnNWajim3I0mgUTHSAVuXVPs=
+X-Received: by 2002:a5d:8b57:: with SMTP id c23mr13684897iot.161.1587827779426; 
+ Sat, 25 Apr 2020 08:16:19 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200424054837.5138-6-dave@stgolabs.net>
-Content-Language: en-US
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Cc: kvm@vger.kernel.org, will@kernel.org, Davidlohr Bueso <dbueso@suse.de>,
- peterz@infradead.org, maz@kernel.org, bigeasy@linutronix.de,
- linux-kernel@vger.kernel.org, rostedt@goodmis.org, linux-mips@vger.kernel.org,
- Paul Mackerras <paulus@ozlabs.org>, joel@joelfernandes.org,
- torvalds@linux-foundation.org, kvmarm@lists.cs.columbia.edu
+References: <20200423173844.24220-1-andre.przywara@arm.com>
+ <20200424084051.GA20801@willie-the-truck>
+ <20200424170315.GH21141@willie-the-truck>
+In-Reply-To: <20200424170315.GH21141@willie-the-truck>
+From: Ard Biesheuvel <ardb@kernel.org>
+Date: Sat, 25 Apr 2020 17:16:08 +0200
+X-Gmail-Original-Message-ID: <CAMj1kXFGzBvrCr_-+_Gse8kpoPx49iCrLnVpb3JLT=GqaQA5+A@mail.gmail.com>
+Message-ID: <CAMj1kXFGzBvrCr_-+_Gse8kpoPx49iCrLnVpb3JLT=GqaQA5+A@mail.gmail.com>
+Subject: Re: [PATCH kvmtool v4 0/5] Add CFI flash emulation
+To: Will Deacon <will@kernel.org>
+X-Mailman-Approved-At: Sun, 26 Apr 2020 06:57:24 -0400
+Cc: kvm@vger.kernel.org, Andre Przywara <andre.przywara@arm.com>,
+ Raphael Gault <raphael.gault@arm.com>, Sami Mujawar <sami.mujawar@arm.com>,
+ kvmarm <kvmarm@lists.cs.columbia.edu>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -110,72 +84,48 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-I'm squashing this in to keep the changes compared to the current code minimal,
-and queuing the series.
+On Fri, 24 Apr 2020 at 19:03, Will Deacon <will@kernel.org> wrote:
+>
+> On Fri, Apr 24, 2020 at 09:40:51AM +0100, Will Deacon wrote:
+> > On Thu, Apr 23, 2020 at 06:38:39PM +0100, Andre Przywara wrote:
+> > > an update for the CFI flash emulation, addressing Alex' comments and
+> > > adding direct mapping support.
+> > > The actual code changes to the flash emulation are minimal, mostly this
+> > > is about renaming and cleanups.
+> > > This versions now adds some patches. 1/5 is a required fix, the last
+> > > three patches add mapping support as an extension. See below.
+> >
+> > Cheers, this mostly looks good to me. I've left a couple of minor comments,
+> > and I'll give Alexandru a chance to have another look, but hopefully we can
+> > merge it soon.
+>
+> Ok, I pushed this out along with the follow-up patch.
+>
 
-Thanks,
+Cheers for that, this is useful stuff.
 
-Paolo
+For the record, I did a quick benchmark on RPi4 booting Debian in a
+VM, and I get the following delays (with GRUB and EFI timeouts both
+set to 0)
 
-diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
-index bbefa2a7f950..feca3118b17f 100644
---- a/arch/powerpc/kvm/book3s_hv.c
-+++ b/arch/powerpc/kvm/book3s_hv.c
-@@ -230,10 +230,10 @@ static bool kvmppc_ipi_thread(int cpu)
- static void kvmppc_fast_vcpu_kick_hv(struct kvm_vcpu *vcpu)
- {
- 	int cpu;
--	struct rcuwait *wait;
-+	struct rcuwait *waitp;
- 
--	wait = kvm_arch_vcpu_get_wait(vcpu);
--	if (rcuwait_wake_up(wait))
-+	waitp = kvm_arch_vcpu_get_wait(vcpu);
-+	if (rcuwait_wake_up(waitp))
- 		++vcpu->stat.halt_wakeup;
- 
- 	cpu = READ_ONCE(vcpu->arch.thread_cpu);
-@@ -3814,7 +3814,10 @@ static void kvmppc_vcore_blocked(struct kvmppc_vcore *vc)
- 		}
- 	}
- 
-+	prepare_to_rcuwait(&vc->wait);
-+	set_current_state(TASK_INTERRUPTIBLE);
- 	if (kvmppc_vcore_check_block(vc)) {
-+		finish_rcuwait(&vc->wait);
- 		do_sleep = 0;
- 		/* If we polled, count this as a successful poll */
- 		if (vc->halt_poll_ns)
-@@ -3827,8 +3830,8 @@ static void kvmppc_vcore_blocked(struct kvmppc_vcore *vc)
- 	vc->vcore_state = VCORE_SLEEPING;
- 	trace_kvmppc_vcore_blocked(vc, 0);
- 	spin_unlock(&vc->lock);
--	rcuwait_wait_event(&vc->wait,
--			   kvmppc_vcore_check_block(vc), TASK_INTERRUPTIBLE);
-+	schedule();
-+	finish_rcuwait(&vc->wait);
- 	spin_lock(&vc->lock);
- 	vc->vcore_state = VCORE_INACTIVE;
- 	trace_kvmppc_vcore_blocked(vc, 1);
-diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-index 7c2d18c12d87..c671de51a753 100644
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -2737,10 +2737,10 @@ EXPORT_SYMBOL_GPL(kvm_vcpu_block);
- 
- bool kvm_vcpu_wake_up(struct kvm_vcpu *vcpu)
- {
--	struct rcuwait *wait;
-+	struct rcuwait *waitp;
- 
--	wait = kvm_arch_vcpu_get_wait(vcpu);
--	if (rcuwait_wake_up(wait)) {
-+	waitp = kvm_arch_vcpu_get_wait(vcpu);
-+	if (rcuwait_wake_up(waitp)) {
- 		WRITE_ONCE(vcpu->ready, true);
- 		++vcpu->stat.halt_wakeup;
- 		return true;
+17:04:58.487065
+17:04:58.563700 UEFI firmware (version  built at 22:13:20 on Apr 23 2020)
+17:04:58.853653 Welcome to GRUB!
+17:04:58.924606 Booting `Debian GNU/Linux'
+17:04:58.927835 Loading Linux 5.5.0-2-arm64 ...
+17:04:59.063490 Loading initial ramdisk ...
+17:05:01.303560 /dev/vda2: recovering journal
+17:05:01.408861 /dev/vda2: clean, 37882/500960 files, 457154/2001920 blocks
+17:05:09.646023 Debian GNU/Linux bullseye/sid rpi4vm64 ttyS0
 
+So it takes less than 400 ms from starting kvmtool to entering GRUB
+when the boot path is set normally. Any other delays you are observing
+may be due to the fact that no boot path has been configured yet,
+which is why it attempts PXE boot or other things.
+
+Also, note that you can pass the --rng option to kvmtool to get the
+EFI_RNG_PROTOCOL to be exposed to the EFI stub, for KASLR and for
+seeding the kernel's RNG.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
