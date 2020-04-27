@@ -2,94 +2,90 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A0F3F1B9047
-	for <lists+kvmarm@lfdr.de>; Sun, 26 Apr 2020 14:59:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0108D1BA01F
+	for <lists+kvmarm@lfdr.de>; Mon, 27 Apr 2020 11:40:10 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1A3B74B1B5;
-	Sun, 26 Apr 2020 08:59:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9EFF14B108;
+	Mon, 27 Apr 2020 05:40:09 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: 0.911
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@gmail.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id N21FN4NISGZg; Sun, 26 Apr 2020 08:59:48 -0400 (EDT)
+	with ESMTP id gtl8zhEjqnbv; Mon, 27 Apr 2020 05:40:08 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B57024B1AE;
-	Sun, 26 Apr 2020 08:59:47 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2EC344B1CC;
+	Mon, 27 Apr 2020 05:39:57 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A86AF4B1A6
- for <kvmarm@lists.cs.columbia.edu>; Sun, 26 Apr 2020 08:59:46 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 660FB4B174
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 26 Apr 2020 23:44:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id gBVOYU+lu2DG for <kvmarm@lists.cs.columbia.edu>;
- Sun, 26 Apr 2020 08:59:45 -0400 (EDT)
-Received: from us-smtp-delivery-1.mimecast.com
- (us-smtp-delivery-1.mimecast.com [207.211.31.120])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 71D654B1A0
- for <kvmarm@lists.cs.columbia.edu>; Sun, 26 Apr 2020 08:59:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1587905985;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:openpgp:openpgp;
- bh=cS6N3dz+H92wTTUjeik0cWhJVJMk8JtsySToZ32DZB8=;
- b=aMl/8ryPi9d+jjVbN8PB6eKImZsR5rdDtWa1xfi1jNTVPlKpQ1lcMPMW4vw3f054jdCZWC
- kVC8uUDI86xGRwYWIOUnl0jkHZPq8425382RKqFWotQnVSCzpyG2cHlwoQsOw5VzF/9FuW
- 8GdkB5ZGCuIKVIja7od18Emc9e0kEQ8=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-295-L1Gr5bIyNaSAU5A4TdMIqA-1; Sun, 26 Apr 2020 08:59:40 -0400
-X-MC-Unique: L1Gr5bIyNaSAU5A4TdMIqA-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com
- [10.5.11.12])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 1CAF545F;
- Sun, 26 Apr 2020 12:59:36 +0000 (UTC)
-Received: from thuth.remote.csb (ovpn-112-33.ams2.redhat.com [10.36.112.33])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 26AC460C05;
- Sun, 26 Apr 2020 12:59:19 +0000 (UTC)
-Subject: Re: [PATCH v2 1/7] KVM: s390: clean up redundant 'kvm_run' parameters
-To: Christian Borntraeger <borntraeger@de.ibm.com>,
- Tianjia Zhang <tianjia.zhang@linux.alibaba.com>,
- Cornelia Huck <cohuck@redhat.com>
-References: <20200422125810.34847-1-tianjia.zhang@linux.alibaba.com>
- <20200422125810.34847-2-tianjia.zhang@linux.alibaba.com>
- <20200422154543.2efba3dd.cohuck@redhat.com>
- <dc5e0fa3-558b-d606-bda9-ed281cf9e9ae@de.ibm.com>
- <20200422180403.03f60b0c.cohuck@redhat.com>
- <5e1e126d-f1b0-196c-594b-4289d0afb9a8@linux.alibaba.com>
- <20200423123901.72a4c6a4.cohuck@redhat.com>
- <71344f73-c34f-a373-49d1-5d839c6be5f6@linux.alibaba.com>
- <1d73b700-4a20-3d7a-66d1-29b5afa03f4d@de.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Openpgp: preference=signencrypt
-Message-ID: <73f6ecd0-ac47-eaad-0e4f-2d41c2b34450@redhat.com>
-Date: Sun, 26 Apr 2020 14:59:18 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+ with ESMTP id M5v2K93Wa2aQ for <kvmarm@lists.cs.columbia.edu>;
+ Sun, 26 Apr 2020 23:44:24 -0400 (EDT)
+Received: from mail-io1-f68.google.com (mail-io1-f68.google.com
+ [209.85.166.68])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E59724B09D
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 26 Apr 2020 23:44:24 -0400 (EDT)
+Received: by mail-io1-f68.google.com with SMTP id i3so17301067ioo.13
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 26 Apr 2020 20:44:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=aQq0CUnQfujiDDnJvRHgF4LcjSyfQt3UEj7L50b98/A=;
+ b=RKVWEZ2ioRL+cte2OumCaEGfBNi/Ob4AKIpk4K5KD00rj0JDK1PZIS7gzPvJXBAwXD
+ wEDKZYPg+Iwxfg3u6Qu2tHISBcIuoeMiAheln22UZOiycsdQ0HMoswEn0IMGDShJmzQk
+ 1SCN3h1Ol/griaEytviyKiCcTm+lE555t9lIv5tWcUb5za9Ic35WNIaCEsYbLHrTQ1Fu
+ 0l4ku6FDE+jmz7sQl3r2fP1tZYb2z9gLkiQqPBHbXGY2DfDYDrYJr2pLEETcwtCZxioW
+ tTPAGa9UZBCCSkNrIf8UWpHNoocAvTroQLIVShq/A0Z5rdQcfaDZA8EIjVuRUWnEivXS
+ UDcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=aQq0CUnQfujiDDnJvRHgF4LcjSyfQt3UEj7L50b98/A=;
+ b=dFBgLr52nZhGdvPec0wmgilFtnseo3KEhgpWI0ruX4Il47L51k39rOzv5xwZlDHj2F
+ CgDWOvbrV0VH22AEvlzsOaxE5HpoY5faid3y4rTnsYIog2vNvtc8UrlosUMxLNEHCKAr
+ gWGMziFKqepiyC0IsLLRJjc1DZYpU/m92YjEf7NLIZpN+g9QbvAhdK+g8WAtIUkX/XLp
+ IKcUUPVHlRP1p/Js8JjGoDW7UXCYsd2Q3hrFi0wwHDwMrAAWHldaSpEJav1s/C+AjnCt
+ pMqUzJ7SbXH9BTMe1YgBjw5LQZbojNXs4x0Qn0LWOl35b1JiVrMtt41BREturt29ugPO
+ RYxA==
+X-Gm-Message-State: AGi0PuYK4p6naVIY9mEB/Ckb/ISxVkLKsmV7smLjBuyVD8aYmluBwERB
+ QudINB3qHEvi+Y7gTREcZdOIXaENW309CxAStRk=
+X-Google-Smtp-Source: APiQypLX3afqSM1QWAKv61iq3HlPwMPQmqlnAsESamTCfsmhHfuQWhrkAz+NtraNDJj1UyhtF31EjwCvfUn58THeneA=
+X-Received: by 2002:a6b:7317:: with SMTP id e23mr19071605ioh.72.1587959064357; 
+ Sun, 26 Apr 2020 20:44:24 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1d73b700-4a20-3d7a-66d1-29b5afa03f4d@de.ibm.com>
-Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+References: <20200426123905.8336-1-tianjia.zhang@linux.alibaba.com>
+ <20200426123905.8336-8-tianjia.zhang@linux.alibaba.com>
+In-Reply-To: <20200426123905.8336-8-tianjia.zhang@linux.alibaba.com>
+From: Huacai Chen <chenhuacai@gmail.com>
+Date: Mon, 27 Apr 2020 11:51:51 +0800
+Message-ID: <CAAhV-H7tSPFSU143ZfmgitEY1BY7MrBzwvJHve49i+ABQ9quCg@mail.gmail.com>
+Subject: Re: [PATCH v3 7/7] KVM: MIPS: clean up redundant kvm_run parameters
+ in assembly
+To: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+X-Mailman-Approved-At: Mon, 27 Apr 2020 05:39:54 -0400
 Cc: wanpengli@tencent.com, kvm@vger.kernel.org, david@redhat.com,
- benh@kernel.crashing.org, heiko.carstens@de.ibm.com,
- linux-mips@vger.kernel.org, paulus@ozlabs.org, hpa@zytor.com,
- kvmarm@lists.cs.columbia.edu, linux-s390@vger.kernel.org,
- frankja@linux.ibm.com, maz@kernel.org, joro@8bytes.org, x86@kernel.org,
- mingo@redhat.com, gor@linux.ibm.com, kvm-ppc@vger.kernel.org, bp@alien8.de,
- tglx@linutronix.de, linux-arm-kernel@lists.infradead.org, jmattson@google.com,
- tsbogend@alpha.franken.de, sean.j.christopherson@intel.com,
- linux-kernel@vger.kernel.org, mpe@ellerman.id.au, pbonzini@redhat.com,
- vkuznets@redhat.com, linuxppc-dev@lists.ozlabs.org
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>, heiko.carstens@de.ibm.com,
+ "open list:MIPS" <linux-mips@vger.kernel.org>, paulus@ozlabs.org,
+ hpa@zytor.com, kvmarm@lists.cs.columbia.edu, linux-s390@vger.kernel.org,
+ frankja@linux.ibm.com, Marc Zyngier <maz@kernel.org>, joro@8bytes.org,
+ x86@kernel.org, borntraeger@de.ibm.com, mingo@redhat.com, thuth@redhat.com,
+ gor@linux.ibm.com, kvm-ppc@vger.kernel.org, Borislav Petkov <bp@alien8.de>,
+ Thomas Gleixner <tglx@linutronix.de>,
+ linux-arm-kernel <linux-arm-kernel@lists.infradead.org>, jmattson@google.com,
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>, cohuck@redhat.com,
+ sean.j.christopherson@intel.com, LKML <linux-kernel@vger.kernel.org>,
+ mpe@ellerman.id.au, Paolo Bonzini <pbonzini@redhat.com>, vkuznets@redhat.com,
+ linuxppc-dev@lists.ozlabs.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -101,76 +97,160 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-T24gMjMvMDQvMjAyMCAxMy4wMCwgQ2hyaXN0aWFuIEJvcm50cmFlZ2VyIHdyb3RlOgo+IAo+IAo+
-IE9uIDIzLjA0LjIwIDEyOjU4LCBUaWFuamlhIFpoYW5nIHdyb3RlOgo+Pgo+Pgo+PiBPbiAyMDIw
-LzQvMjMgMTg6MzksIENvcm5lbGlhIEh1Y2sgd3JvdGU6Cj4+PiBPbiBUaHUsIDIzIEFwciAyMDIw
-IDExOjAxOjQzICswODAwCj4+PiBUaWFuamlhIFpoYW5nIDx0aWFuamlhLnpoYW5nQGxpbnV4LmFs
-aWJhYmEuY29tPiB3cm90ZToKPj4+Cj4+Pj4gT24gMjAyMC80LzIzIDA6MDQsIENvcm5lbGlhIEh1
-Y2sgd3JvdGU6Cj4+Pj4+IE9uIFdlZCwgMjIgQXByIDIwMjAgMTc6NTg6MDQgKzAyMDAKPj4+Pj4g
-Q2hyaXN0aWFuIEJvcm50cmFlZ2VyIDxib3JudHJhZWdlckBkZS5pYm0uY29tPiB3cm90ZToKPj4+
-Pj4gwqDCoAo+Pj4+Pj4gT24gMjIuMDQuMjAgMTU6NDUsIENvcm5lbGlhIEh1Y2sgd3JvdGU6Cj4+
-Pj4+Pj4gT24gV2VkLCAyMiBBcHIgMjAyMCAyMDo1ODowNCArMDgwMAo+Pj4+Pj4+IFRpYW5qaWEg
-WmhhbmcgPHRpYW5qaWEuemhhbmdAbGludXguYWxpYmFiYS5jb20+IHdyb3RlOgo+Pj4+Pj4+IMKg
-wqDCoMKgwqAKPj4+Pj4+Pj4gSW4gdGhlIGN1cnJlbnQga3ZtIHZlcnNpb24sICdrdm1fcnVuJyBo
-YXMgYmVlbiBpbmNsdWRlZCBpbiB0aGUgJ2t2bV92Y3B1Jwo+Pj4+Pj4+PiBzdHJ1Y3R1cmUuIEVh
-cmxpZXIgdGhhbiBoaXN0b3JpY2FsIHJlYXNvbnMsIG1hbnkga3ZtLXJlbGF0ZWQgZnVuY3Rpb24K
-Pj4+Pj4+Pgo+Pj4+Pj4+IHMvRWFybGllciB0aGFuL0Zvci8gPwo+Pj4+Pj4+IMKgwqDCoMKgwqAK
-Pj4+Pj4+Pj4gcGFyYW1ldGVycyByZXRhaW4gdGhlICdrdm1fcnVuJyBhbmQgJ2t2bV92Y3B1JyBw
-YXJhbWV0ZXJzIGF0IHRoZSBzYW1lIHRpbWUuCj4+Pj4+Pj4+IFRoaXMgcGF0Y2ggZG9lcyBhIHVu
-aWZpZWQgY2xlYW51cCBvZiB0aGVzZSByZW1haW5pbmcgcmVkdW5kYW50IHBhcmFtZXRlcnMuCj4+
-Pj4+Pj4+Cj4+Pj4+Pj4+IFNpZ25lZC1vZmYtYnk6IFRpYW5qaWEgWmhhbmcgPHRpYW5qaWEuemhh
-bmdAbGludXguYWxpYmFiYS5jb20+Cj4+Pj4+Pj4+IC0tLQo+Pj4+Pj4+PiDCoMKgIGFyY2gvczM5
-MC9rdm0va3ZtLXMzOTAuYyB8IDM3ICsrKysrKysrKysrKysrKysrKysrKystLS0tLS0tLS0tLS0t
-LS0KPj4+Pj4+Pj4gwqDCoCAxIGZpbGUgY2hhbmdlZCwgMjIgaW5zZXJ0aW9ucygrKSwgMTUgZGVs
-ZXRpb25zKC0pCj4+Pj4+Pj4+Cj4+Pj4+Pj4+IGRpZmYgLS1naXQgYS9hcmNoL3MzOTAva3ZtL2t2
-bS1zMzkwLmMgYi9hcmNoL3MzOTAva3ZtL2t2bS1zMzkwLmMKPj4+Pj4+Pj4gaW5kZXggZTMzNWE3
-ZTVlYWQ3Li5kN2JiMmU3YTA3ZmYgMTAwNjQ0Cj4+Pj4+Pj4+IC0tLSBhL2FyY2gvczM5MC9rdm0v
-a3ZtLXMzOTAuYwo+Pj4+Pj4+PiArKysgYi9hcmNoL3MzOTAva3ZtL2t2bS1zMzkwLmMKPj4+Pj4+
-Pj4gQEAgLTQxNzYsOCArNDE3Niw5IEBAIHN0YXRpYyBpbnQgX192Y3B1X3J1bihzdHJ1Y3Qga3Zt
-X3ZjcHUgKnZjcHUpCj4+Pj4+Pj4+IMKgwqDCoMKgwqDCoCByZXR1cm4gcmM7Cj4+Pj4+Pj4+IMKg
-wqAgfQo+Pj4+Pj4+PiDCoMKgIC1zdGF0aWMgdm9pZCBzeW5jX3JlZ3NfZm10MihzdHJ1Y3Qga3Zt
-X3ZjcHUgKnZjcHUsIHN0cnVjdCBrdm1fcnVuICprdm1fcnVuKQo+Pj4+Pj4+PiArc3RhdGljIHZv
-aWQgc3luY19yZWdzX2ZtdDIoc3RydWN0IGt2bV92Y3B1ICp2Y3B1KQo+Pj4+Pj4+PiDCoMKgIHsK
-Pj4+Pj4+Pj4gK8KgwqDCoCBzdHJ1Y3Qga3ZtX3J1biAqa3ZtX3J1biA9IHZjcHUtPnJ1bjsKPj4+
-Pj4+Pj4gwqDCoMKgwqDCoMKgIHN0cnVjdCBydW50aW1lX2luc3RyX2NiICpyaWNjYjsKPj4+Pj4+
-Pj4gwqDCoMKgwqDCoMKgIHN0cnVjdCBnc19jYiAqZ3NjYjsKPj4+Pj4+Pj4gwqDCoCBAQCAtNDIz
-NSw3ICs0MjM2LDcgQEAgc3RhdGljIHZvaWQgc3luY19yZWdzX2ZtdDIoc3RydWN0IGt2bV92Y3B1
-ICp2Y3B1LCBzdHJ1Y3Qga3ZtX3J1biAqa3ZtX3J1bikKPj4+Pj4+Pj4gwqDCoMKgwqDCoMKgwqDC
-oMKgwqAgfQo+Pj4+Pj4+PiDCoMKgwqDCoMKgwqDCoMKgwqDCoCBpZiAodmNwdS0+YXJjaC5nc19l
-bmFibGVkKSB7Cj4+Pj4+Pj4+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY3VycmVudC0+
-dGhyZWFkLmdzX2NiID0gKHN0cnVjdCBnc19jYiAqKQo+Pj4+Pj4+PiAtwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAmdmNwdS0+cnVuLT5zLnJlZ3MuZ3NjYjsK
-Pj4+Pj4+Pj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
-Jmt2bV9ydW4tPnMucmVncy5nc2NiOwo+Pj4+Pj4+Cj4+Pj4+Pj4gTm90IHN1cmUgaWYgdGhlc2Ug
-Y2hhbmdlcyAodmNwdS0+cnVuLT4gPT4ga3ZtX3J1bi0+KSBhcmUgcmVhbGx5IHdvcnRoCj4+Pj4+
-Pj4gaXQuIChJdCBzZWVtcyB0aGV5IGFtb3VudCB0byBhdCBsZWFzdCBhcyBtdWNoIGFzIHRoZSBj
-aGFuZ2VzIGFkdmVydGlzZWQKPj4+Pj4+PiBpbiB0aGUgcGF0Y2ggZGVzY3JpcHRpb24uKQo+Pj4+
-Pj4+Cj4+Pj4+Pj4gT3RoZXIgb3BpbmlvbnM/Cj4+Pj4+Pgo+Pj4+Pj4gQWdyZWVkLiBJdCBmZWVs
-cyBraW5kIG9mIHJhbmRvbS4gTWF5YmUganVzdCBkbyB0aGUgZmlyc3QgbGluZSAobW92ZSBrdm1f
-cnVuIGZyb20gdGhlCj4+Pj4+PiBmdW5jdGlvbiBwYXJhbWV0ZXIgbGlzdCBpbnRvIHRoZSB2YXJp
-YWJsZSBkZWNsYXJhdGlvbik/IE5vdCBzdXJlIGlmIHRoaXMgaXMgYmV0dGVyLgo+Pj4+Pj4gwqAg
-Cj4+Pj4+Cj4+Pj4+IFRoZXJlJ3MgbW9yZSBpbiB0aGlzIHBhdGNoIHRoYXQgSSBjdXQuLi4gYnV0
-IEkgdGhpbmsganVzdCBtb3ZpbmcKPj4+Pj4ga3ZtX3J1biBmcm9tIHRoZSBwYXJhbWV0ZXIgbGlz
-dCB3b3VsZCBiZSBtdWNoIGxlc3MgZGlzcnVwdGl2ZS4KPj4+Pj4gwqDCoCAKPj4+Pgo+Pj4+IEkg
-dGhpbmsgdGhlcmUgYXJlIHR3byBraW5kcyBvZiBjb2RlKGB2Y3B1LT5ydW4tPmAgYW5kIGBrdm1f
-cnVuLT5gKSwgYnV0Cj4+Pj4gdGhlcmUgd2lsbCBiZSBtb3JlIGRpc3J1cHRpdmUsIG5vdCBsZXNz
-Lgo+Pj4KPj4+IEkganVzdCBmYWlsIHRvIHNlZSB0aGUgYmVuZWZpdDsgc3VyZSwga3ZtX3J1bi0+
-IGlzIGNvbnZlbmllbnQsIGJ1dCB0aGUKPj4+IGN1cnJlbnQgY29kZSBpcyBqdXN0IGZpbmUsIGFu
-ZCBhbnkgcmV3b3JrIHNob3VsZCBiZSBiYWxhbmNlZCBhZ2FpbnN0Cj4+PiB0aGUgY29zdCAoZS5n
-LiBjbHV0dGVyaW5nIGdpdCBhbm5vdGF0ZSkuCj4+Pgo+Pgo+PiBjbHV0dGVyaW5nIGdpdCBhbm5v
-dGF0ZSA/IERvZXMgaXQgbWVhbiBGaXggeHh4eCAoImNvbW1lbnQiKS4gSXMgaXQgcG9zc2libGUg
-dG8gc29sdmUgdGhpcyBwcm9ibGVtIGJ5IHNwbGl0dGluZyB0aGlzIHBhdGNoPwo+IAo+IE5vIGl0
-cyBhYm91dCBicmVha2luZyBnaXQgYmxhbWUgKGFuZCBidWdmaXggYmFja3BvcnRzKSBmb3IganVz
-dCBhIGNvc21ldGljIGltcHJvdmVtZW50LgoKSXQgY291bGQgYmUgc2xpZ2h0bHkgbW9yZSB0aGFu
-IGEgY29zbWV0aWMgaW1wcm92ZW1lbnQgKGRlcGVuZGluZyBvbiB0aGUKc21hcnRuZXNzIG9mIHRo
-ZSBjb21waWxlcik6IHZjcHUtPnJ1bi0+IGFyZSB0d28gZGVyZWZlcmVuY2VzLCB3aGlsZQprdm1f
-cnVuLT4gaXMgb25seSBvbmUgZGVyZWZlcmVuY2UuIFNvIGl0IGNvdWxkIGJlIHNsaWdodGx5IG1v
-cmUgY29tcGFjdAphbmQgZmFzdGVyIGNvZGUuCgogVGhvbWFzCgpfX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBs
-aXN0cy5jcy5jb2x1bWJpYS5lZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1h
-bi9saXN0aW5mby9rdm1hcm0K
+Hi, Tianjia,
+
+On Sun, Apr 26, 2020 at 8:40 PM Tianjia Zhang
+<tianjia.zhang@linux.alibaba.com> wrote:
+>
+> In the current kvm version, 'kvm_run' has been included in the 'kvm_vcpu'
+> structure. Earlier than historical reasons, many kvm-related function
+> parameters retain the 'kvm_run' and 'kvm_vcpu' parameters at the same time.
+> This patch does a unified cleanup of these remaining redundant parameters.
+>
+> Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+> ---
+>  arch/mips/include/asm/kvm_host.h |  4 ++--
+>  arch/mips/kvm/entry.c            | 15 +++++----------
+>  arch/mips/kvm/mips.c             |  3 ++-
+>  arch/mips/kvm/trap_emul.c        |  2 +-
+>  arch/mips/kvm/vz.c               |  2 +-
+>  5 files changed, 11 insertions(+), 15 deletions(-)
+>
+> diff --git a/arch/mips/include/asm/kvm_host.h b/arch/mips/include/asm/kvm_host.h
+> index 971439297cea..db915c55166d 100644
+> --- a/arch/mips/include/asm/kvm_host.h
+> +++ b/arch/mips/include/asm/kvm_host.h
+> @@ -310,7 +310,7 @@ struct kvm_mmu_memory_cache {
+>  #define KVM_MIPS_GUEST_TLB_SIZE        64
+>  struct kvm_vcpu_arch {
+>         void *guest_ebase;
+> -       int (*vcpu_run)(struct kvm_run *run, struct kvm_vcpu *vcpu);
+> +       int (*vcpu_run)(struct kvm_vcpu *vcpu);
+>
+>         /* Host registers preserved across guest mode execution */
+>         unsigned long host_stack;
+> @@ -821,7 +821,7 @@ int kvm_mips_emulation_init(struct kvm_mips_callbacks **install_callbacks);
+>  /* Debug: dump vcpu state */
+>  int kvm_arch_vcpu_dump_regs(struct kvm_vcpu *vcpu);
+>
+> -extern int kvm_mips_handle_exit(struct kvm_run *run, struct kvm_vcpu *vcpu);
+> +extern int kvm_mips_handle_exit(struct kvm_vcpu *vcpu);
+>
+>  /* Building of entry/exception code */
+>  int kvm_mips_entry_setup(void);
+> diff --git a/arch/mips/kvm/entry.c b/arch/mips/kvm/entry.c
+> index 16e1c93b484f..e3f29af3b6cd 100644
+> --- a/arch/mips/kvm/entry.c
+> +++ b/arch/mips/kvm/entry.c
+> @@ -204,7 +204,7 @@ static inline void build_set_exc_base(u32 **p, unsigned int reg)
+>   * Assemble the start of the vcpu_run function to run a guest VCPU. The function
+>   * conforms to the following prototype:
+>   *
+> - * int vcpu_run(struct kvm_run *run, struct kvm_vcpu *vcpu);
+> + * int vcpu_run(struct kvm_vcpu *vcpu);
+>   *
+>   * The exit from the guest and return to the caller is handled by the code
+>   * generated by kvm_mips_build_ret_to_host().
+> @@ -217,8 +217,7 @@ void *kvm_mips_build_vcpu_run(void *addr)
+>         unsigned int i;
+>
+>         /*
+> -        * A0: run
+> -        * A1: vcpu
+> +        * A0: vcpu
+>          */
+>
+>         /* k0/k1 not being used in host kernel context */
+> @@ -237,10 +236,10 @@ void *kvm_mips_build_vcpu_run(void *addr)
+>         kvm_mips_build_save_scratch(&p, V1, K1);
+>
+>         /* VCPU scratch register has pointer to vcpu */
+> -       UASM_i_MTC0(&p, A1, scratch_vcpu[0], scratch_vcpu[1]);
+> +       UASM_i_MTC0(&p, A0, scratch_vcpu[0], scratch_vcpu[1]);
+>
+>         /* Offset into vcpu->arch */
+> -       UASM_i_ADDIU(&p, K1, A1, offsetof(struct kvm_vcpu, arch));
+> +       UASM_i_ADDIU(&p, K1, A0, offsetof(struct kvm_vcpu, arch));
+>
+>         /*
+>          * Save the host stack to VCPU, used for exception processing
+> @@ -628,10 +627,7 @@ void *kvm_mips_build_exit(void *addr)
+>         /* Now that context has been saved, we can use other registers */
+>
+>         /* Restore vcpu */
+> -       UASM_i_MFC0(&p, S1, scratch_vcpu[0], scratch_vcpu[1]);
+> -
+> -       /* Restore run (vcpu->run) */
+> -       UASM_i_LW(&p, S0, offsetof(struct kvm_vcpu, run), S1);
+> +       UASM_i_MFC0(&p, S0, scratch_vcpu[0], scratch_vcpu[1]);
+>
+>         /*
+>          * Save Host level EPC, BadVaddr and Cause to VCPU, useful to process
+> @@ -793,7 +789,6 @@ void *kvm_mips_build_exit(void *addr)
+>          * with this in the kernel
+>          */
+>         uasm_i_move(&p, A0, S0);
+> -       uasm_i_move(&p, A1, S1);
+>         UASM_i_LA(&p, T9, (unsigned long)kvm_mips_handle_exit);
+>         uasm_i_jalr(&p, RA, T9);
+>          UASM_i_ADDIU(&p, SP, SP, -CALLFRAME_SIZ);
+I think uasm_i_move(&p, K1, S1) in kvm_mips_build_ret_from_exit() and
+UASM_i_MTC0(&p, S1, scratch_vcpu[0], scratch_vcpu[1]) in
+kvm_mips_build_ret_to_guest() should also be changed.
+
+> diff --git a/arch/mips/kvm/mips.c b/arch/mips/kvm/mips.c
+> index 9710477a9827..32850470c037 100644
+> --- a/arch/mips/kvm/mips.c
+> +++ b/arch/mips/kvm/mips.c
+> @@ -1186,8 +1186,9 @@ static void kvm_mips_set_c0_status(void)
+>  /*
+>   * Return value is in the form (errcode<<2 | RESUME_FLAG_HOST | RESUME_FLAG_NV)
+>   */
+> -int kvm_mips_handle_exit(struct kvm_run *run, struct kvm_vcpu *vcpu)
+> +int kvm_mips_handle_exit(struct kvm_vcpu *vcpu)
+>  {
+> +       struct kvm_run *run = vcpu->run;
+>         u32 cause = vcpu->arch.host_cp0_cause;
+>         u32 exccode = (cause >> CAUSEB_EXCCODE) & 0x1f;
+>         u32 __user *opc = (u32 __user *) vcpu->arch.pc;
+> diff --git a/arch/mips/kvm/trap_emul.c b/arch/mips/kvm/trap_emul.c
+> index d822f3aee3dc..04c864cc356a 100644
+> --- a/arch/mips/kvm/trap_emul.c
+> +++ b/arch/mips/kvm/trap_emul.c
+> @@ -1238,7 +1238,7 @@ static int kvm_trap_emul_vcpu_run(struct kvm_vcpu *vcpu)
+>          */
+>         kvm_mips_suspend_mm(cpu);
+>
+> -       r = vcpu->arch.vcpu_run(vcpu->run, vcpu);
+> +       r = vcpu->arch.vcpu_run(vcpu);
+>
+>         /* We may have migrated while handling guest exits */
+>         cpu = smp_processor_id();
+> diff --git a/arch/mips/kvm/vz.c b/arch/mips/kvm/vz.c
+> index 94f1d23828e3..c5878fa0636d 100644
+> --- a/arch/mips/kvm/vz.c
+> +++ b/arch/mips/kvm/vz.c
+> @@ -3152,7 +3152,7 @@ static int kvm_vz_vcpu_run(struct kvm_vcpu *vcpu)
+>         kvm_vz_vcpu_load_tlb(vcpu, cpu);
+>         kvm_vz_vcpu_load_wired(vcpu);
+>
+> -       r = vcpu->arch.vcpu_run(vcpu->run, vcpu);
+> +       r = vcpu->arch.vcpu_run(vcpu);
+>
+>         kvm_vz_vcpu_save_wired(vcpu);
+>
+> --
+> 2.17.1
+>
+
+Regards,
+Huacai
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
