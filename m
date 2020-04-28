@@ -2,79 +2,70 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CF401BAB5F
-	for <lists+kvmarm@lfdr.de>; Mon, 27 Apr 2020 19:33:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C52F1BB955
+	for <lists+kvmarm@lfdr.de>; Tue, 28 Apr 2020 10:57:33 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D43344B1AB;
-	Mon, 27 Apr 2020 13:33:42 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A21044B27B;
+	Tue, 28 Apr 2020 04:57:32 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id B3qcJPmsLrCS; Mon, 27 Apr 2020 13:33:42 -0400 (EDT)
+	with ESMTP id kA3cm5s5iZjI; Tue, 28 Apr 2020 04:57:32 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B37DB4B19E;
-	Mon, 27 Apr 2020 13:33:41 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DD2E14B268;
+	Tue, 28 Apr 2020 04:57:29 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 249664B18A
- for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Apr 2020 13:33:40 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 82D4C4B1D9
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Apr 2020 21:34:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id jD91YklMObLZ for <kvmarm@lists.cs.columbia.edu>;
- Mon, 27 Apr 2020 13:33:39 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 010FF4B127
- for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Apr 2020 13:33:38 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id D451F206D9;
- Mon, 27 Apr 2020 17:33:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1588008818;
- bh=En6PMPermi7/qXogYL4qV4kDVxomi2kZ/siwiOXKS1E=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=FXKAonvdo0qpOkOILva/raUkYBFNRi5fSKy/mA3pCRpZsxvhAUHtwTAdO9X7dKEeC
- 2beGGpYruB3VdYBKTmLGYPRNuVre4U5QNYbQZudz9wksSesyOHzLUUTfJNT75eG6Y3
- W5Vf41J+8GMrpCbbsq0HApS7YkJ7ibl9yGoFhHLk=
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why) by disco-boy.misterjones.org with esmtpsa
- (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
- (envelope-from <maz@kernel.org>)
- id 1jT7dQ-006ng9-79; Mon, 27 Apr 2020 18:33:36 +0100
-Date: Mon, 27 Apr 2020 18:33:31 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: Alexandru Elisei <alexandru.elisei@arm.com>
-Subject: Re: [PATCH][kvmtool] kvm: Request VM specific limits instead of
- system-wide ones
-Message-ID: <20200427183331.48f411f5@why>
-In-Reply-To: <7ac17890-72d1-1c81-e513-5d4f7841ca9d@arm.com>
-References: <20200427141738.285217-1-maz@kernel.org>
- <d27e4a14-34b8-7f3d-1e58-ef2ae13e443b@arm.com>
- <7ac17890-72d1-1c81-e513-5d4f7841ca9d@arm.com>
-Organization: Approximate
-X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+ with ESMTP id yd-hvBUgKKtF for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 27 Apr 2020 21:34:38 -0400 (EDT)
+Received: from huawei.com (szxga08-in.huawei.com [45.249.212.255])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 19F984B1C5
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Apr 2020 21:34:38 -0400 (EDT)
+Received: from DGGEMM402-HUB.china.huawei.com (unknown [172.30.72.53])
+ by Forcepoint Email with ESMTP id 050A225275FAC370E7B4;
+ Tue, 28 Apr 2020 09:34:34 +0800 (CST)
+Received: from DGGEMM526-MBX.china.huawei.com ([169.254.8.234]) by
+ DGGEMM402-HUB.china.huawei.com ([10.3.20.210]) with mapi id 14.03.0487.000;
+ Tue, 28 Apr 2020 09:34:24 +0800
+From: "Zengtao (B)" <prime.zeng@hisilicon.com>
+To: Marc Zyngier <maz@kernel.org>, yuzenghui <yuzenghui@huawei.com>
+Subject: RE: [PATCH 18/26] KVM: arm64: Don't use empty structures as CPU
+ reset state
+Thread-Topic: [PATCH 18/26] KVM: arm64: Don't use empty structures as CPU
+ reset state
+Thread-Index: AQHWGKCGXKlP0CoY30iMrQFdxO97gqiHJHkAgAA8s4CABmeP4A==
+Date: Tue, 28 Apr 2020 01:34:24 +0000
+Message-ID: <678F3D1BB717D949B966B68EAEB446ED3A5634AE@dggemm526-mbx.china.huawei.com>
+References: <20200422120050.3693593-1-maz@kernel.org>
+ <20200422120050.3693593-19-maz@kernel.org>
+ <77963c60-bcc4-0c9e-fd35-d696827ea55c@huawei.com>
+ <20200424084505.6b0afc94@why>
+In-Reply-To: <20200424084505.6b0afc94@why>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.74.221.187]
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: alexandru.elisei@arm.com, kvmarm@lists.cs.columbia.edu,
- kvm@vger.kernel.org, james.morse@arm.com, julien.thierry.kdev@gmail.com,
- suzuki.poulose@arm.com, will@kernel.org, Andre.Przywara@arm.com,
- ardb@kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kvm@vger.kernel.org, Andre Przywara <Andre.Przywara@arm.com>,
- Ard Biesheuvel <ardb@kernel.org>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu
+X-CFilter-Loop: Reflected
+X-Mailman-Approved-At: Tue, 28 Apr 2020 04:57:28 -0400
+Cc: "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+ Andre Przywara <andre.przywara@arm.com>,
+ "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
+ George Cherian <gcherian@marvell.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Dave Martin <Dave.Martin@arm.com>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -91,76 +82,135 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, 27 Apr 2020 16:00:58 +0100
-Alexandru Elisei <alexandru.elisei@arm.com> wrote:
-
-> Hi,
+> -----Original Message-----
+> From: kvm-owner@vger.kernel.org [mailto:kvm-owner@vger.kernel.org]
+> On Behalf Of Marc Zyngier
+> Sent: Friday, April 24, 2020 3:45 PM
+> To: yuzenghui
+> Cc: linux-arm-kernel@lists.infradead.org; kvmarm@lists.cs.columbia.edu;
+> kvm@vger.kernel.org; Will Deacon; Andre Przywara; Dave Martin;
+> George Cherian; Zengtao (B); Catalin Marinas
+> Subject: Re: [PATCH 18/26] KVM: arm64: Don't use empty structures as
+> CPU reset state
 > 
-> On 4/27/20 3:44 PM, Alexandru Elisei wrote:
-> > Hi,
-> >
-> > On 4/27/20 3:17 PM, Marc Zyngier wrote:  
-> >> On arm64, the maximum number of vcpus is constrained by the type
-> >> of interrupt controller that has been selected (GICv2 imposes a
-> >> limit of 8 vcpus, while GICv3 currently has a limit of 512).
-> >>
-> >> It is thus important to request this limit on the VM file descriptor
-> >> rather than on the one that corresponds to /dev/kvm, as the latter
-> >> is likely to return something that doesn't take the constraints into
-> >> account.
-> >>
-> >> Reported-by: Ard Biesheuvel <ardb@kernel.org>
-> >> Signed-off-by: Marc Zyngier <maz@kernel.org>
-> >> ---
-> >>  kvm.c | 4 ++--
-> >>  1 file changed, 2 insertions(+), 2 deletions(-)
-> >>
-> >> diff --git a/kvm.c b/kvm.c
-> >> index e327541..3d5173d 100644
-> >> --- a/kvm.c
-> >> +++ b/kvm.c
-> >> @@ -406,7 +406,7 @@ int kvm__recommended_cpus(struct kvm *kvm)
-> >>  {
-> >>  	int ret;
-> >>  
-> >> -	ret = ioctl(kvm->sys_fd, KVM_CHECK_EXTENSION, KVM_CAP_NR_VCPUS);
-> >> +	ret = ioctl(kvm->vm_fd, KVM_CHECK_EXTENSION, KVM_CAP_NR_VCPUS);
-> >>  	if (ret <= 0)
-> >>  		/*
-> >>  		 * api.txt states that if KVM_CAP_NR_VCPUS does not exist,
-> >> @@ -421,7 +421,7 @@ int kvm__max_cpus(struct kvm *kvm)
-> >>  {
-> >>  	int ret;
-> >>  
-> >> -	ret = ioctl(kvm->sys_fd, KVM_CHECK_EXTENSION, KVM_CAP_MAX_VCPUS);
-> >> +	ret = ioctl(kvm->vm_fd, KVM_CHECK_EXTENSION, KVM_CAP_MAX_VCPUS);
-> >>  	if (ret <= 0)
-> >>  		ret = kvm__recommended_cpus(kvm);
-> >>    
-> > I've checked that gic__create comes before the call kvm__recommended_capus:
-> > gic__create is in core_init (called via kvm__init->kvm_arch_init), and
-> > kvm__recommended_cpus is in base_init (called via kvm__cpu_init ->
-> > kvm__{recommended,max}_cpus).
-> >
-> > The KVM api documentation states that KVM_CHECK_EXTENSION is available for the vm
-> > fd only if the system capability KVM_CAP_CHECK_EXTENSION_VM is present. kvmtool
-> > already has a function for checking extensions on the vm fd, it's called
-> > kvm__supports_vm_extension. Can we use that instead of doing the ioctl directly on
-> > the vm fd?  
+> Hi Zenghui,
 > 
-> Scratch that, kvm__supports_vm_extension returns a bool, not an int.
-> How about we write kvm__check_vm_extension that returns an int, and
-> kvm__supports_vm_extension calls it?
+> On Fri, 24 Apr 2020 12:07:50 +0800
+> Zenghui Yu <yuzenghui@huawei.com> wrote:
+> 
+> > Hi Marc,
+> >
+> > On 2020/4/22 20:00, Marc Zyngier wrote:
+> > > Keeping empty structure as the vcpu state initializer is slightly
+> > > wasteful: we only want to set pstate, and zero everything else.
+> > > Just do that.
+> > >
+> > > Signed-off-by: Marc Zyngier <maz@kernel.org>
+> > > ---
+> > >   arch/arm64/kvm/reset.c | 20 +++++++++-----------
+> > >   1 file changed, 9 insertions(+), 11 deletions(-)
+> > >
+> > > diff --git a/arch/arm64/kvm/reset.c b/arch/arm64/kvm/reset.c
+> > > index 241db35a7ef4f..895d7d9ad1866 100644
+> > > --- a/arch/arm64/kvm/reset.c
+> > > +++ b/arch/arm64/kvm/reset.c
+> > > @@ -37,15 +37,11 @@ static u32 kvm_ipa_limit;
+> > >   /*
+> > >    * ARMv8 Reset Values
+> > >    */
+> > > -static const struct kvm_regs default_regs_reset = {
+> > > -	.regs.pstate = (PSR_MODE_EL1h | PSR_A_BIT | PSR_I_BIT |
+> > > -			PSR_F_BIT | PSR_D_BIT),
+> > > -};
+> > > +#define VCPU_RESET_PSTATE_EL1	(PSR_MODE_EL1h |
+> PSR_A_BIT | PSR_I_BIT | \
+> > > +				 PSR_F_BIT | PSR_D_BIT)
+> > >   > -static const struct kvm_regs default_regs_reset32 = {
+> > > -	.regs.pstate = (PSR_AA32_MODE_SVC | PSR_AA32_A_BIT |
+> > > -			PSR_AA32_I_BIT | PSR_AA32_F_BIT),
+> > > -};
+> > > +#define VCPU_RESET_PSTATE_SVC	(PSR_AA32_MODE_SVC |
+> PSR_AA32_A_BIT | \
+> > > +				 PSR_AA32_I_BIT | PSR_AA32_F_BIT)
+> > >   >   static bool cpu_has_32bit_el1(void)
+> > >   {
+> > > @@ -261,6 +257,7 @@ int kvm_reset_vcpu(struct kvm_vcpu *vcpu)
+> > >   	const struct kvm_regs *cpu_reset;
+> > >   	int ret = -EINVAL;
+> > >   	bool loaded;
+> > > +	u32 pstate;
+> > >   >   	/* Reset PMU outside of the non-preemptible section */
+> > >   	kvm_pmu_vcpu_reset(vcpu);
+> > > @@ -291,16 +288,17 @@ int kvm_reset_vcpu(struct kvm_vcpu
+> *vcpu)
+> > >   		if (test_bit(KVM_ARM_VCPU_EL1_32BIT,
+> vcpu->arch.features)) {
+> > >   			if (!cpu_has_32bit_el1())
+> > >   				goto out;
+> > > -			cpu_reset = &default_regs_reset32;
+> > > +			pstate = VCPU_RESET_PSTATE_SVC;
+> > >   		} else {
+> > > -			cpu_reset = &default_regs_reset;
+> > > +			pstate = VCPU_RESET_PSTATE_EL1;
+> > >   		}
+> > >   >   		break;
+> > >   	}
+> > >   >   	/* Reset core registers */
+> > > -	memcpy(vcpu_gp_regs(vcpu), cpu_reset, sizeof(*cpu_reset));
+> > > +	memset(vcpu_gp_regs(vcpu), 0, sizeof(*cpu_reset));
+> >
+> > Be careful that we can *not* use 'sizeof(*cpu_reset)' here anymore.
+> As
+> > you're going to refactor the layout of the core registers whilst keeping
+> > the kvm_regs API unchanged.  Resetting the whole kvm_regs will go
+> > corrupting some affected registers and make them temporarily invalid.
+> > The bad thing will show up after you start moving ELR_EL1 around,
+> > specifically in patch #20...
+> 
+> Ah, awesome find! Yes, it is pretty obvious now that you point it out.
+> If I had removed this now useless cpu_reset variable, I'd have spotted
+> it!
+> 
+> > And the first victim is ... MPIDR_EL1 (the first one in sys_regs array).
+> > Now you know how this was spotted ;-)  I think this should be the
+> root
+> > cause of what Zengtao had previously reported [*].
+> 
+> It'd be good if Zengtao could confirm that changing this line to
+> 
+> 	memset(vcpu_gp_regs(vcpu), 0, sizeof(*vcpu_gp_regs(vcpu)));
+> 
+> fixes his problem.
 
-That, or we just change the return type for kvm__supports_vm_extension,
-and hack the only places that uses it so far (the GIC code) to detect
-the error.
+I tried this change, and it did fix my problem, thanks :). 
 
-Thanks,
-
-	M.
--- 
-Jazz is not dead. It just smells funny...
+> 
+> > If these registers are all expected to be reset to architecturally
+> > UNKNOWN values, I think we can just drop this memset(), though
+> haven't
+> > check with the ARM ARM carefully.
+> 
+> D1.9.1 ("PE state on reset to AArch64 state"):
+> 
+> "All general-purpose, and SIMD and floating-point registers are
+> UNKNOWN."
+> 
+> There is a vaguely similar wording for AArch32 (G1.17.1), although it
+> is only described by omission:
+> 
+> "Immediately after a reset, much of the PE state is UNKNOWN. However,
+> some of the PE state is defined."
+> 
+> and the GPRs are not part of the list of defined states.
+> 
+> Still, I'm worried to change KVM's behaviour after so long... I'll have
+> a try with a handful of non-Linux guests and see if anything breaks.
+> 
+> Thanks again,
+> 
+>          M.
+> --
+> Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
