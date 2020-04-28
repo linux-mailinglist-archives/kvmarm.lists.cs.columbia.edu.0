@@ -2,55 +2,63 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4FB1E1BC02B
-	for <lists+kvmarm@lfdr.de>; Tue, 28 Apr 2020 15:50:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 076B71BC58F
+	for <lists+kvmarm@lfdr.de>; Tue, 28 Apr 2020 18:45:02 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BD9AD4B2A9;
-	Tue, 28 Apr 2020 09:50:50 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 879C24B249;
+	Tue, 28 Apr 2020 12:45:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -1.392
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.392 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(invalid, public key: not available) header.i=@openpandora.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VdOCO04PLR2W; Tue, 28 Apr 2020 09:50:50 -0400 (EDT)
+	with ESMTP id BzTuad7iuuuk; Tue, 28 Apr 2020 12:45:01 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 80DCC4B29F;
-	Tue, 28 Apr 2020 09:50:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1268F4B247;
+	Tue, 28 Apr 2020 12:45:00 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6E7404B290
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Apr 2020 09:50:48 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8F2594B2BC
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Apr 2020 10:26:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id dAUDtavizaaP for <kvmarm@lists.cs.columbia.edu>;
- Tue, 28 Apr 2020 09:50:47 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 192AD4B287
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Apr 2020 09:50:47 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A573231B;
- Tue, 28 Apr 2020 06:50:46 -0700 (PDT)
-Received: from [192.168.0.110] (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 984B83F68F;
- Tue, 28 Apr 2020 06:50:45 -0700 (PDT)
-Subject: Re: [PATCH] KVM: arm64: Make KVM_CAP_MAX_VCPUS compatible with the
- selected GIC version
-To: Marc Zyngier <maz@kernel.org>, kvmarm@lists.cs.columbia.edu,
- kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20200427141507.284985-1-maz@kernel.org>
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-Message-ID: <5ac78e8b-4776-70c7-c05c-8ffe536e175d@arm.com>
-Date: Tue, 28 Apr 2020 14:51:15 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ with ESMTP id dioAAzEIXZoo for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 28 Apr 2020 10:26:27 -0400 (EDT)
+Received: from rhea.dragonbox.de (rhea.dragonbox.de [95.216.39.121])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C7D364B266
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Apr 2020 10:26:27 -0400 (EDT)
+Received: from bigevilshop (p4FC9321D.dip0.t-ipconnect.de [79.201.50.29])
+ (Authenticated sender: evildragon@openpandora.org)
+ by rhea.dragonbox.de (Postfix) with ESMTPSA id AA572780531;
+ Tue, 28 Apr 2020 16:26:25 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=openpandora.org;
+ s=2020; t=1588083985;
+ bh=Cp1GbbIebWOVj7lHaBObu5tJ0h8gF9t75KwpoxSij4Q=;
+ h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+ b=pLFyr0wmRBqIDAcf4G7s469wh45tFiC4VymgSYgv6+KCx9fklNhqG845wd/rsorJH
+ UL94zxxdnCX0wxw+iKLzw9QzeIk/diWb0RWXIvfufEuE4qcD7+rU/2Fwh22X1Dud6q
+ tvuPq7UpvRs/KuCuzzk+gJ/jjks9mXBa6QF8Lr1bppFFHX+JFRmT8qbd6ooTRwWkBS
+ t0a/4T3hX8eWFW/OpMXQKKEXj+2pMln4R9/t/1DaTnQIGih73TMdpzaKnpjW46eSmk
+ 3rcqkczSF3k+wv0UbIP65h1ZEyB22LBi61x3XTrZ/qFBJ0yfosGXIg9xGEcnSCePFg
+ qHnHWojPihVrQ==
+Message-ID: <9c67a3722611d1ec9fe1e8a1fbe65956b32147c3.camel@openpandora.org>
+Subject: Re: Against removing aarch32 kvm host support
+From: Michael Mrozek <EvilDragon@openpandora.org>
+To: Marc Zyngier <maz@kernel.org>, Lukas Straub <lukasstraub2@web.de>
+Date: Tue, 28 Apr 2020 16:26:05 +0200
+In-Reply-To: <916b6072a4a2688745a5e3f75c1c8c01@misterjones.org>
+References: <20200428143850.4c8cbd2a@luklap>
+ <916b6072a4a2688745a5e3f75c1c8c01@misterjones.org>
+User-Agent: Evolution 3.36.1 
 MIME-Version: 1.0
-In-Reply-To: <20200427141507.284985-1-maz@kernel.org>
-Content-Language: en-US
-Cc: Ard Biesheuvel <ardb@kernel.org>
+X-Mailman-Approved-At: Tue, 28 Apr 2020 12:44:58 -0400
+Cc: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, kernel@pyra-handheld.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -62,102 +70,50 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi,
-
-On 4/27/20 3:15 PM, Marc Zyngier wrote:
-> KVM_CAP_MAX_VCPUS always return the maximum possible number of
-
-s/return/returns?
-
-> VCPUs, irrespective of the selected interrupt controller. This
-> is pretty misleading for userspace that selects a GICv2 on a GICv3
-> system that supports v2 compat: It always gets a maximum of 512
-> VCPUs, even if the effective limit is 8. The 9th VCPU will fail
-> to be created, which is unexpected as far as userspace is concerned.
->
-> Fortunately, we already have the right information stashed in the
-> kvm structure, and we can return it as requested.
->
-> Reported-by: Ard Biesheuvel <ardb@kernel.org>
-> Signed-off-by: Marc Zyngier <maz@kernel.org>
-> ---
->  virt/kvm/arm/arm.c | 15 ++++++++++-----
->  1 file changed, 10 insertions(+), 5 deletions(-)
->
-> diff --git a/virt/kvm/arm/arm.c b/virt/kvm/arm/arm.c
-> index 48d0ec44ad77..f9b0528f7305 100644
-> --- a/virt/kvm/arm/arm.c
-> +++ b/virt/kvm/arm/arm.c
-> @@ -95,6 +95,11 @@ int kvm_vm_ioctl_enable_cap(struct kvm *kvm,
->  	return r;
->  }
->  
-> +static int kvm_arm_default_max_vcpus(void)
-> +{
-> +	return vgic_present ? kvm_vgic_get_max_vcpus() : KVM_MAX_VCPUS;
-> +}
-> +
->  /**
->   * kvm_arch_init_vm - initializes a VM data structure
->   * @kvm:	pointer to the KVM struct
-> @@ -128,8 +133,7 @@ int kvm_arch_init_vm(struct kvm *kvm, unsigned long type)
->  	kvm->arch.vmid.vmid_gen = 0;
->  
->  	/* The maximum number of VCPUs is limited by the host's GIC model */
-> -	kvm->arch.max_vcpus = vgic_present ?
-> -				kvm_vgic_get_max_vcpus() : KVM_MAX_VCPUS;
-> +	kvm->arch.max_vcpus = kvm_arm_default_max_vcpus();
-
-Nitpicking, but the comment is not 100% true because the maximum number of vcpus
-is limited based on the requested vgic type, even before this patch.
-
->  
->  	return ret;
->  out_free_stage2_pgd:
-> @@ -204,10 +208,11 @@ int kvm_vm_ioctl_check_extension(struct kvm *kvm, long ext)
->  		r = num_online_cpus();
-
-Not relevant to this patch. If the host has a GICv3, and userspace requests a
-GICv2, it is possible that KVM_CAP_NR_VCPUS > KVM_CAP_MAX_VCPUS. I am curious, I
-don't see anything in the KVM API documentation about this case, so I suppose it's
-perfectly legal, right?
-
->  		break;
->  	case KVM_CAP_MAX_VCPUS:
-> -		r = KVM_MAX_VCPUS;
-> -		break;
->  	case KVM_CAP_MAX_VCPU_ID:
-> -		r = KVM_MAX_VCPU_ID;
-> +		if (kvm)
-> +			r = kvm->arch.max_vcpus;
-> +		else
-> +			r = kvm_arm_default_max_vcpus();
-
-This works as expected - when KVM_CHECK_EXTENSION is called on the kvm fd, struct
-kvm is NULL.
-
->  		break;
->  	case KVM_CAP_MSI_DEVID:
->  		if (!kvm)
-
-The patch looks fine to me:
-
-Reviewed-by: Alexandru Elisei <alexandru.elisei@arm.com>
-
-Tested it on a rockpro64, which has a GICv3 that can also emulate a GICv2. When
-the vgic is a GICv3, before and after instantiating the device, the ioctl returns
-512 on both /dev/kvm and the vm fd, as you would expect. When the vgic is a GICv2,
-the ioctl return 512 on /dev/kvm and the vm fd before instantiating the vgic;
-afterward it returns 512 on /dev/kvm and 8 on the vm fd:
-
-Tested-by: Alexandru Elisei
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+QW0gRGllbnN0YWcsIGRlbiAyOC4wNC4yMDIwLCAxNDozMCArMDEwMCBzY2hyaWViIE1hcmMgWnlu
+Z2llcjoKCkhpLAoKd2VsbCwgdGhlIFBDQnMgYXJlIGN1cnJlbnRseSBpbiBwcm9kdWN0aW9uLCB0
+aGUgY2FzZXMgYXJlIGFscmVhZHkgaGVyZSAoY29hdGluZwppcyBjdXJyZW50bHkgYmVpbmcgZGVs
+YXllZCBhcyB0aGUgY29tcGFueSBoYXMgY2xvc2VkIGRvd24gZHVlIHRvIENvcm9uYSByaWdodApu
+b3cpLCBzbyB0aGUgZmlyc3QgNTAwIHVuaXRzIHdvdWxkIGJlIHJlYWR5IHRvIGJlIHNoaXBwZWQg
+aW4gYXJvdW5kIDIgLSAzIG1vbnRocwphdCBsYXRlc3QuCgpUaGUgbm9uLWV4aXN0YW5jZSBwcm9i
+bGVtIHdvdWxkIHRoZXJlZm9yZSBiZSBzb2x2ZWQgdGhlbi4KClNvIGZhciwgQUZBSUssIHRoZSBM
+ZXR1eCB0ZWFtIGhhcyB0cmllZCB0aGVpciBiZXN0IHRvIGdldCBhcyBjbG9zZSB0byBwb3NzaWJs
+ZQp0byBtYWlubGluZSBrZXJuZWwgYW5kIHN1cHBvcnQgYXMgbWFueSBjbGFzc2ljIGRldmljZXMg
+KE9NQVAzIGFuZCBPTUFQNCBkZXZpY2VzCmFzIHdlbGwpLCBzbyByZW1vdmluZyAzMmJpdCBzdXBw
+b3J0IGZyb20gbWFpbmxpbmUgd291bGQgc3VyZWx5IGJlIGEgc3RlcCBiYWNrCmZvciBhIGxvdCBv
+ZiBvbGRlciBkZXZpY2VzIGFzIHdlbGwuCgpJIGtub3cgd2UgaGF2ZSB0byBhY2NlcHQgdGhlIGRl
+Y2lzaW9uLCBidXQgc28gZmFyLCBJJ3ZlIGtub3duIExpbnV4IHRvIHN1cHBvcnQKYXMgbWFueSBv
+bGRlciBkZXZpY2VzIGFzIHBvc3NpYmxlIGFzIHdlbGwgLSByZW1vdmluZyBLVk0gSG9zdCAzMmJp
+dCBzdXBwb3J0CndvdWxkIGJlIGEgc3RlcCBiYWNrIGhlcmUuCgpJcyB0aGVyZSBhIHNwZWNpZmlj
+IHJlYXNvbiBmb3IgdGhhdD8KSXMgaXQgdG9vIGNvbXBsZXggdG8gbWFpbnRhaW4gYWxvbmdzaWRl
+IHRoZSBhYXJjaDY0IEtWTSBIb3N0PwoKPiBIaSBMdWthcywKPiAKPiBUaGFua3MgZm9yIHlvdXIg
+ZW1haWwuCj4gCj4gT24gMjAyMC0wNC0yOCAxMzozOCwgTHVrYXMgU3RyYXViIHdyb3RlOgo+ID4g
+SGVsbG8gRXZlcnlvbmUsCj4gPiBBcyBhIHByZW9yZGVyIG9mIHRoZSBQeXJhIGhhbmRoZWxkLCAo
+T01BUDUgU29DIHdpdGggMnggY29ydGV4LWExNSBhcm0gCj4gPiBjb3JlcykKPiA+IEknbSBhZ2Fp
+bnN0IHJlbW92aW5nIEtWTSBob3N0IHN1cHBvcnQgZm9yIGFhcmNoMzIuIEknbSBwcm9iYWJseSBn
+b2luZyAKPiA+IHRvIHVzZQo+ID4gdGhpcyBkZXZpY2UgZm9yIG1vcmUgdGhhbiA1IHllYXJzIGFu
+ZCB0aHVzIHRoZSBsYXRlc3QgbHRzLWtlcm5lbCBpcyBubyAKPiA+IG9wdGlvbgo+ID4gZm9yIG1l
+Lgo+IAo+IFNvIGxldCBtZSBzcGVsbCBpdCBvdXQuIFlvdSBhcmUgYWdhaW5zdCB0aGUgcmVtb3Zh
+bCBvZiBhIGZlYXR1cmUgdGhhdCAKPiB5b3UgZG9uJ3QKPiB1c2UgeWV0LCB0aGF0IHlvdSBtYXkg
+b2YgbWF5IG5vdCB1c2Ugb24gYSBkZXZpY2UgdGhhdCBkb2Vzbid0IGV4aXN0IHlldCwgCj4gd2hp
+Y2gKPiB5b3UgbWF5IG9yIG1heSBub3Qgc3RpbGwgYmUgdXNpbmcgYnkgdGhlIHRpbWUgNS40LzUu
+NiBhcmVuJ3Qgc3VwcG9ydGVkIAo+IGFueW1vcmUuCj4gWW91IGRvbid0IHNlZW0gdG8gaGF2ZSB0
+aGUgc3Ryb25nZXN0IGNhc2UsIEknbSBhZnJhaWQuCj4gCj4gQnV0IG5vdGhpbmcgaXMgbG9zdCEg
+VGhlIGNvZGUgaXMgc3RpbGwgaW4gdGhlIGdpdCB0cmVlLCBvdSBjYW4gYWx3YXlzIAo+IHJldmVy
+dAo+IHRoZSByZW1vdmFsIHBhdGNoZXMgYW5kIHJldml2ZSB0aGUgcG9ydCBpZiB5b3UgYXJlIHNv
+IGluY2xpbmVkLiBJdCB3aWxsIAo+IGp1c3QgbmVlZAo+IHRvIGJlIHN0YW5kLWFsb25lLCBhbmQg
+bm90IGRlcGVuZCBvbiB0aGUgYXJtNjQgY29kZSwgd2hpY2ggaXMgbm93IAo+IGV2b2x2aW5nIGl0
+cyBvd24KPiBzZXBhcmF0ZSB3YXkuCj4gCj4gQ2hlZXJzLAo+IAo+ICAgICAgICAgIE0uCi0tIApN
+aXQgZnJldW5kbGljaGVuIEdyw7zDn2VuLAoKTWljaGFlbCBNcm96ZWsKCi0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tCk9wZW5QYW5kb3JhIEdtYkgKR2VzY2jDpGZ0c2bDvGhyZXI6IE1pY2hhZWwgTXJv
+emVrCgpTY2jDpGZmYnLDpHVzdHIuIDExCjg1MDQ5IEluZ29sc3RhZHQKRGV1dHNjaGxhbmQKVGVs
+LjogMDg0MSAvIDk5MCA1NTQ4Cmh0dHA6Ly93d3cub3BlbnBhbmRvcmEuZGUvCkhSQiA0ODc5LCBB
+bXRzZ2VyaWNodCBJbmdvbHN0YWR0Ci0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCmVNYWlsOiBtcm96
+ZWtAb3BlbnBhbmRvcmEub3JnCgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1bWJpYS5l
+ZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9rdm1hcm0K
