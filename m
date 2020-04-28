@@ -2,63 +2,61 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 076B71BC58F
-	for <lists+kvmarm@lfdr.de>; Tue, 28 Apr 2020 18:45:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 484CC1BC1BF
+	for <lists+kvmarm@lfdr.de>; Tue, 28 Apr 2020 16:50:09 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 879C24B249;
-	Tue, 28 Apr 2020 12:45:01 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8FC324B31D;
+	Tue, 28 Apr 2020 10:50:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.392
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.392 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(invalid, public key: not available) header.i=@openpandora.org
+	(fail, body has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BzTuad7iuuuk; Tue, 28 Apr 2020 12:45:01 -0400 (EDT)
+	with ESMTP id fZ5gJgps0xdI; Tue, 28 Apr 2020 10:50:08 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1268F4B247;
-	Tue, 28 Apr 2020 12:45:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2D7784B30E;
+	Tue, 28 Apr 2020 10:50:07 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8F2594B2BC
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Apr 2020 10:26:29 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D8104B1C6
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Apr 2020 10:50:05 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id dioAAzEIXZoo for <kvmarm@lists.cs.columbia.edu>;
- Tue, 28 Apr 2020 10:26:27 -0400 (EDT)
-Received: from rhea.dragonbox.de (rhea.dragonbox.de [95.216.39.121])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C7D364B266
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Apr 2020 10:26:27 -0400 (EDT)
-Received: from bigevilshop (p4FC9321D.dip0.t-ipconnect.de [79.201.50.29])
- (Authenticated sender: evildragon@openpandora.org)
- by rhea.dragonbox.de (Postfix) with ESMTPSA id AA572780531;
- Tue, 28 Apr 2020 16:26:25 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=openpandora.org;
- s=2020; t=1588083985;
- bh=Cp1GbbIebWOVj7lHaBObu5tJ0h8gF9t75KwpoxSij4Q=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
- b=pLFyr0wmRBqIDAcf4G7s469wh45tFiC4VymgSYgv6+KCx9fklNhqG845wd/rsorJH
- UL94zxxdnCX0wxw+iKLzw9QzeIk/diWb0RWXIvfufEuE4qcD7+rU/2Fwh22X1Dud6q
- tvuPq7UpvRs/KuCuzzk+gJ/jjks9mXBa6QF8Lr1bppFFHX+JFRmT8qbd6ooTRwWkBS
- t0a/4T3hX8eWFW/OpMXQKKEXj+2pMln4R9/t/1DaTnQIGih73TMdpzaKnpjW46eSmk
- 3rcqkczSF3k+wv0UbIP65h1ZEyB22LBi61x3XTrZ/qFBJ0yfosGXIg9xGEcnSCePFg
- qHnHWojPihVrQ==
-Message-ID: <9c67a3722611d1ec9fe1e8a1fbe65956b32147c3.camel@openpandora.org>
-Subject: Re: Against removing aarch32 kvm host support
-From: Michael Mrozek <EvilDragon@openpandora.org>
-To: Marc Zyngier <maz@kernel.org>, Lukas Straub <lukasstraub2@web.de>
-Date: Tue, 28 Apr 2020 16:26:05 +0200
-In-Reply-To: <916b6072a4a2688745a5e3f75c1c8c01@misterjones.org>
-References: <20200428143850.4c8cbd2a@luklap>
- <916b6072a4a2688745a5e3f75c1c8c01@misterjones.org>
-User-Agent: Evolution 3.36.1 
+ with ESMTP id TyUxfmIVJgpY for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 28 Apr 2020 10:50:04 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 66B694B117
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Apr 2020 10:50:04 -0400 (EDT)
+Received: from localhost.localdomain (236.31.169.217.in-addr.arpa
+ [217.169.31.236])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 0A4902070B;
+ Tue, 28 Apr 2020 14:50:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1588085403;
+ bh=wLkMog+C31R9s35T9i+aq0ijLlgLzB9NiqhRDEWFHMQ=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=uB8e0UjJMU74eFifX38zXKgiEWe5bPcwPZo6dQ4B8kxElcPzsVdGWiWxaUJXmWQht
+ HMqWj7ty10mNGN1QhEW6R0qQw3+wJ/YhtTkQXXiSAgij77C1YfHWYuwNI86nwJwmmW
+ AI7IT2t8GdCO5wjcb3fuXrLuo20ZTElweDMz59l4=
+From: Will Deacon <will@kernel.org>
+To: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
+ Zenghui Yu <yuzenghui@huawei.com>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] KVM: arm64: Drop PTE_S2_MEMATTR_MASK
+Date: Tue, 28 Apr 2020 15:49:41 +0100
+Message-Id: <158808189342.219357.12380979087402977148.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20200415105746.314-1-yuzenghui@huawei.com>
+References: <20200415105746.314-1-yuzenghui@huawei.com>
 MIME-Version: 1.0
-X-Mailman-Approved-At: Tue, 28 Apr 2020 12:44:58 -0400
-Cc: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, kernel@pyra-handheld.com
+Cc: catalin.marinas@arm.com, Will Deacon <will@kernel.org>, maz@kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -70,50 +68,30 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-QW0gRGllbnN0YWcsIGRlbiAyOC4wNC4yMDIwLCAxNDozMCArMDEwMCBzY2hyaWViIE1hcmMgWnlu
-Z2llcjoKCkhpLAoKd2VsbCwgdGhlIFBDQnMgYXJlIGN1cnJlbnRseSBpbiBwcm9kdWN0aW9uLCB0
-aGUgY2FzZXMgYXJlIGFscmVhZHkgaGVyZSAoY29hdGluZwppcyBjdXJyZW50bHkgYmVpbmcgZGVs
-YXllZCBhcyB0aGUgY29tcGFueSBoYXMgY2xvc2VkIGRvd24gZHVlIHRvIENvcm9uYSByaWdodApu
-b3cpLCBzbyB0aGUgZmlyc3QgNTAwIHVuaXRzIHdvdWxkIGJlIHJlYWR5IHRvIGJlIHNoaXBwZWQg
-aW4gYXJvdW5kIDIgLSAzIG1vbnRocwphdCBsYXRlc3QuCgpUaGUgbm9uLWV4aXN0YW5jZSBwcm9i
-bGVtIHdvdWxkIHRoZXJlZm9yZSBiZSBzb2x2ZWQgdGhlbi4KClNvIGZhciwgQUZBSUssIHRoZSBM
-ZXR1eCB0ZWFtIGhhcyB0cmllZCB0aGVpciBiZXN0IHRvIGdldCBhcyBjbG9zZSB0byBwb3NzaWJs
-ZQp0byBtYWlubGluZSBrZXJuZWwgYW5kIHN1cHBvcnQgYXMgbWFueSBjbGFzc2ljIGRldmljZXMg
-KE9NQVAzIGFuZCBPTUFQNCBkZXZpY2VzCmFzIHdlbGwpLCBzbyByZW1vdmluZyAzMmJpdCBzdXBw
-b3J0IGZyb20gbWFpbmxpbmUgd291bGQgc3VyZWx5IGJlIGEgc3RlcCBiYWNrCmZvciBhIGxvdCBv
-ZiBvbGRlciBkZXZpY2VzIGFzIHdlbGwuCgpJIGtub3cgd2UgaGF2ZSB0byBhY2NlcHQgdGhlIGRl
-Y2lzaW9uLCBidXQgc28gZmFyLCBJJ3ZlIGtub3duIExpbnV4IHRvIHN1cHBvcnQKYXMgbWFueSBv
-bGRlciBkZXZpY2VzIGFzIHBvc3NpYmxlIGFzIHdlbGwgLSByZW1vdmluZyBLVk0gSG9zdCAzMmJp
-dCBzdXBwb3J0CndvdWxkIGJlIGEgc3RlcCBiYWNrIGhlcmUuCgpJcyB0aGVyZSBhIHNwZWNpZmlj
-IHJlYXNvbiBmb3IgdGhhdD8KSXMgaXQgdG9vIGNvbXBsZXggdG8gbWFpbnRhaW4gYWxvbmdzaWRl
-IHRoZSBhYXJjaDY0IEtWTSBIb3N0PwoKPiBIaSBMdWthcywKPiAKPiBUaGFua3MgZm9yIHlvdXIg
-ZW1haWwuCj4gCj4gT24gMjAyMC0wNC0yOCAxMzozOCwgTHVrYXMgU3RyYXViIHdyb3RlOgo+ID4g
-SGVsbG8gRXZlcnlvbmUsCj4gPiBBcyBhIHByZW9yZGVyIG9mIHRoZSBQeXJhIGhhbmRoZWxkLCAo
-T01BUDUgU29DIHdpdGggMnggY29ydGV4LWExNSBhcm0gCj4gPiBjb3JlcykKPiA+IEknbSBhZ2Fp
-bnN0IHJlbW92aW5nIEtWTSBob3N0IHN1cHBvcnQgZm9yIGFhcmNoMzIuIEknbSBwcm9iYWJseSBn
-b2luZyAKPiA+IHRvIHVzZQo+ID4gdGhpcyBkZXZpY2UgZm9yIG1vcmUgdGhhbiA1IHllYXJzIGFu
-ZCB0aHVzIHRoZSBsYXRlc3QgbHRzLWtlcm5lbCBpcyBubyAKPiA+IG9wdGlvbgo+ID4gZm9yIG1l
-Lgo+IAo+IFNvIGxldCBtZSBzcGVsbCBpdCBvdXQuIFlvdSBhcmUgYWdhaW5zdCB0aGUgcmVtb3Zh
-bCBvZiBhIGZlYXR1cmUgdGhhdCAKPiB5b3UgZG9uJ3QKPiB1c2UgeWV0LCB0aGF0IHlvdSBtYXkg
-b2YgbWF5IG5vdCB1c2Ugb24gYSBkZXZpY2UgdGhhdCBkb2Vzbid0IGV4aXN0IHlldCwgCj4gd2hp
-Y2gKPiB5b3UgbWF5IG9yIG1heSBub3Qgc3RpbGwgYmUgdXNpbmcgYnkgdGhlIHRpbWUgNS40LzUu
-NiBhcmVuJ3Qgc3VwcG9ydGVkIAo+IGFueW1vcmUuCj4gWW91IGRvbid0IHNlZW0gdG8gaGF2ZSB0
-aGUgc3Ryb25nZXN0IGNhc2UsIEknbSBhZnJhaWQuCj4gCj4gQnV0IG5vdGhpbmcgaXMgbG9zdCEg
-VGhlIGNvZGUgaXMgc3RpbGwgaW4gdGhlIGdpdCB0cmVlLCBvdSBjYW4gYWx3YXlzIAo+IHJldmVy
-dAo+IHRoZSByZW1vdmFsIHBhdGNoZXMgYW5kIHJldml2ZSB0aGUgcG9ydCBpZiB5b3UgYXJlIHNv
-IGluY2xpbmVkLiBJdCB3aWxsIAo+IGp1c3QgbmVlZAo+IHRvIGJlIHN0YW5kLWFsb25lLCBhbmQg
-bm90IGRlcGVuZCBvbiB0aGUgYXJtNjQgY29kZSwgd2hpY2ggaXMgbm93IAo+IGV2b2x2aW5nIGl0
-cyBvd24KPiBzZXBhcmF0ZSB3YXkuCj4gCj4gQ2hlZXJzLAo+IAo+ICAgICAgICAgIE0uCi0tIApN
-aXQgZnJldW5kbGljaGVuIEdyw7zDn2VuLAoKTWljaGFlbCBNcm96ZWsKCi0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tCk9wZW5QYW5kb3JhIEdtYkgKR2VzY2jDpGZ0c2bDvGhyZXI6IE1pY2hhZWwgTXJv
-emVrCgpTY2jDpGZmYnLDpHVzdHIuIDExCjg1MDQ5IEluZ29sc3RhZHQKRGV1dHNjaGxhbmQKVGVs
-LjogMDg0MSAvIDk5MCA1NTQ4Cmh0dHA6Ly93d3cub3BlbnBhbmRvcmEuZGUvCkhSQiA0ODc5LCBB
-bXRzZ2VyaWNodCBJbmdvbHN0YWR0Ci0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCmVNYWlsOiBtcm96
-ZWtAb3BlbnBhbmRvcmEub3JnCgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1bWJpYS5l
-ZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9rdm1hcm0K
+On Wed, 15 Apr 2020 18:57:46 +0800, Zenghui Yu wrote:
+> The only user of PTE_S2_MEMATTR_MASK macro had been removed since
+> commit a501e32430d4 ("arm64: Clean up the default pgprot setting").
+> It has been about six years and no one has used it again.
+> 
+> Let's drop it.
+
+Applied to arm64 (for-next/misc), thanks!
+
+[1/1] KVM: arm64: Drop PTE_S2_MEMATTR_MASK
+      https://git.kernel.org/arm64/c/f4be140fa33f
+
+Cheers,
+-- 
+Will
+
+https://fixes.arm64.dev
+https://next.arm64.dev
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
