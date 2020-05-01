@@ -2,61 +2,55 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E29951C07D3
-	for <lists+kvmarm@lfdr.de>; Thu, 30 Apr 2020 22:25:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F6271C100A
+	for <lists+kvmarm@lfdr.de>; Fri,  1 May 2020 10:51:26 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5E6114B3DF;
-	Thu, 30 Apr 2020 16:25:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 04F394B5A9;
+	Fri,  1 May 2020 04:51:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id k4m8GaoVa4Rl; Thu, 30 Apr 2020 16:25:20 -0400 (EDT)
+	with ESMTP id 3WQpaKdcXLIl; Fri,  1 May 2020 04:51:25 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2D4024B3D6;
-	Thu, 30 Apr 2020 16:25:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CD57A4B542;
+	Fri,  1 May 2020 04:51:24 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D446C4B3BF
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Apr 2020 16:25:17 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5B3684B542
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 May 2020 04:51:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id UKJ3uT84HL4T for <kvmarm@lists.cs.columbia.edu>;
- Thu, 30 Apr 2020 16:25:16 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C171D4B3BB
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Apr 2020 16:25:16 -0400 (EDT)
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
- bits)) (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 5E49C206D9;
- Thu, 30 Apr 2020 20:25:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1588278315;
- bh=Xn+tE5OcczALCQrB4z/K3kU/5d8pPFbiEJOPvrC/zko=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=hAs32bsnVoa0/Yh+2QzwVRaVvbOoSz+pD9f74BAjRo7XoC/GPkbSKxy40nxisbxZm
- drxJdbgiXWFKmyMcrs6WuRMP/xYh69fQZC3D2cZj3M3XsmEUx2uvT6IncAdmBux37J
- wXFtlbYTwpsrg0zuSvO477Jvl/vBC9vpZGKTfbss=
-Date: Thu, 30 Apr 2020 21:25:10 +0100
-From: Will Deacon <will@kernel.org>
-To: Fuad Tabba <tabba@google.com>
-Subject: Re: [PATCH v4 4/4] KVM: arm64: Clean up kvm makefiles
-Message-ID: <20200430202509.GA31455@willie-the-truck>
+ with ESMTP id voSxyS46-LWn for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  1 May 2020 04:51:22 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 43AAF4B2B1
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 May 2020 04:51:22 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C6BF41FB;
+ Fri,  1 May 2020 01:51:21 -0700 (PDT)
+Received: from [10.37.12.139] (unknown [10.37.12.139])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6A3373F305;
+ Fri,  1 May 2020 01:51:19 -0700 (PDT)
+Subject: Re: [PATCH v4 2/4] KVM: arm64: Update help text
+To: tabba@google.com, maz@kernel.org, catalin.marinas@arm.com,
+ julien.thierry.kdev@gmail.com, kvmarm@lists.cs.columbia.edu
 References: <20200421131734.141766-1-tabba@google.com>
- <20200421131734.141766-5-tabba@google.com>
+ <20200421131734.141766-3-tabba@google.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+Message-ID: <170ec871-be60-a150-5c3e-2dc9a3366f36@arm.com>
+Date: Fri, 1 May 2020 09:56:16 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20200421131734.141766-5-tabba@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: maz@kernel.org, kvmarm@lists.cs.columbia.edu, catalin.marinas@arm.com
+In-Reply-To: <20200421131734.141766-3-tabba@google.com>
+Content-Language: en-US
+Cc: will@kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -68,26 +62,38 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, Apr 21, 2020 at 02:17:34PM +0100, Fuad Tabba wrote:
-> Consolidate references to the CONFIG_KVM configuration item to encompass
-> entire folders rather than per line.
+On 04/21/2020 02:17 PM, Fuad Tabba wrote:
+> From: Will Deacon <will@kernel.org>
 > 
+> arm64 KVM supports 16k pages since 02e0b7600f83
+> ("arm64: kvm: Add support for 16K pages"), so update the Kconfig help
+> text accordingly.
+> 
+> Signed-off-by: Will Deacon <will@kernel.org>
 > Signed-off-by: Fuad Tabba <tabba@google.com>
 > ---
->  arch/arm64/kvm/Makefile     | 40 ++++++++++++-------------------------
->  arch/arm64/kvm/hyp/Makefile | 15 ++++----------
->  2 files changed, 17 insertions(+), 38 deletions(-)
+>   arch/arm64/kvm/Kconfig | 2 --
+>   1 file changed, 2 deletions(-)
+> 
+> diff --git a/arch/arm64/kvm/Kconfig b/arch/arm64/kvm/Kconfig
+> index ce724e526689..d2cf4f099454 100644
+> --- a/arch/arm64/kvm/Kconfig
+> +++ b/arch/arm64/kvm/Kconfig
+> @@ -44,8 +44,6 @@ config KVM
+>   	select TASK_DELAY_ACCT
+>   	---help---
+>   	  Support hosting virtualized guest machines.
+> -	  We don't support KVM with 16K page tables yet, due to the multiple
+> -	  levels of fake page tables.
+>   
+>   	  If unsure, say N.
 
-Seems like a sensible clean-up to me:
-
-Acked-by: Will Deacon <will@kernel.org>
-
-Will
+Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
