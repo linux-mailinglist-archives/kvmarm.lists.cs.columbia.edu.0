@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 917681C10A6
-	for <lists+kvmarm@lfdr.de>; Fri,  1 May 2020 12:12:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15D9C1C10A9
+	for <lists+kvmarm@lfdr.de>; Fri,  1 May 2020 12:12:21 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 19A6A4B633;
-	Fri,  1 May 2020 06:12:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B91744B634;
+	Fri,  1 May 2020 06:12:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,44 +18,44 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JUF1R+Cnlkix; Fri,  1 May 2020 06:12:18 -0400 (EDT)
+	with ESMTP id jKSIfZ5dTPpN; Fri,  1 May 2020 06:12:20 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F2B4F4B609;
-	Fri,  1 May 2020 06:12:16 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 207AE4B630;
+	Fri,  1 May 2020 06:12:18 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9B55D4B5CE
- for <kvmarm@lists.cs.columbia.edu>; Fri,  1 May 2020 06:12:15 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 531594B609
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 May 2020 06:12:16 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id V-sb+vILhKRY for <kvmarm@lists.cs.columbia.edu>;
- Fri,  1 May 2020 06:12:14 -0400 (EDT)
+ with ESMTP id Bzrt7AUb9V5i for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  1 May 2020 06:12:15 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6D90E4B5CB
- for <kvmarm@lists.cs.columbia.edu>; Fri,  1 May 2020 06:12:14 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 09CCA4B60F
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 May 2020 06:12:15 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 918732173E;
- Fri,  1 May 2020 10:12:13 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 32ABD21924;
+ Fri,  1 May 2020 10:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1588327933;
- bh=QYiBh6HpiYyWl4I9Yb5aCaWR/B9ybjQ0TBfRZS8/OFk=;
+ s=default; t=1588327934;
+ bh=bMx2EriYCSvyW828LVPGOGydmJwee1SlnxC1Ul02RRc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=GRtKiHgJRORNUzXs6UmL3jB54JteyePLhF5dICggsTIuK7n9dUd+W5Xqs29iostQ6
- F41yOulUTKi+BGcm8l1LC7KR1pV/AT+KwMQuJhQtkLE+wVstilHZ/R5RHhF3DC17Pf
- YtfysgP4nkrZduRC9W6G9k9fwhtTL44elao8u4q8=
+ b=bj2MkX64zIsStOtpD/LM/xxpTRkoVcIpx9SNKt9ROtXwFWYowgwrhuz+PDJZZGLoH
+ cc4teTU7u676lbGCjnOKhWFKrsxYL8t7U89r9h7NYuEgf87MxFrX3cgMvrl4N+wA2D
+ euuZQp7L2Q2hZJVf1TG0nUZMgP56E3rYVOgEqZYg=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1jUSeR-008J3K-UM; Fri, 01 May 2020 11:12:12 +0100
+ id 1jUSeS-008J3K-Ju; Fri, 01 May 2020 11:12:12 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 1/4] KVM: arm64: Delete duplicated label in invalid_vector
-Date: Fri,  1 May 2020 11:12:01 +0100
-Message-Id: <20200501101204.364798-2-maz@kernel.org>
+Subject: [PATCH 2/4] KVM: arm64: Save/restore sp_el0 as part of __guest_enter
+Date: Fri,  1 May 2020 11:12:02 +0100
+Message-Id: <20200501101204.364798-3-maz@kernel.org>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20200501101204.364798-1-maz@kernel.org>
 References: <20200501101204.364798-1-maz@kernel.org>
@@ -89,36 +89,135 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Fangrui Song <maskray@google.com>
+We currently save/restore sp_el0 in C code. This is a bit unsafe,
+as a lot of the C code expects 'current' to be accessible from
+there (and the opportunity to run kernel code in HYP is specially
+great with VHE).
 
-SYM_CODE_START defines \label , so it is redundant to define \label again.
-A redefinition at the same place is accepted by GNU as
-(https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=159fbb6088f17a341bcaaac960623cab881b4981)
-but rejected by the clang integrated assembler.
+Instead, let's move the save/restore of sp_el0 to the assembly
+code (in __guest_enter), making sure that sp_el0 is correct
+very early on when we exit the guest, and is preserved as long
+as possible to its host value when we enter the guest.
 
-Fixes: 617a2f392c92 ("arm64: kvm: Annotate assembly using modern annoations")
-Signed-off-by: Fangrui Song <maskray@google.com>
+Reviewed-by: Andrew Jones <drjones@redhat.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Tested-by: Nick Desaulniers <ndesaulniers@google.com>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://github.com/ClangBuiltLinux/linux/issues/988
-Link: https://lore.kernel.org/r/20200413231016.250737-1-maskray@google.com
 ---
- arch/arm64/kvm/hyp/hyp-entry.S | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/kvm/hyp/entry.S     | 23 +++++++++++++++++++++++
+ arch/arm64/kvm/hyp/sysreg-sr.c | 17 +++--------------
+ 2 files changed, 26 insertions(+), 14 deletions(-)
 
-diff --git a/arch/arm64/kvm/hyp/hyp-entry.S b/arch/arm64/kvm/hyp/hyp-entry.S
-index c2a13ab3c471..9c5cfb04170e 100644
---- a/arch/arm64/kvm/hyp/hyp-entry.S
-+++ b/arch/arm64/kvm/hyp/hyp-entry.S
-@@ -198,7 +198,6 @@ SYM_CODE_END(__hyp_panic)
- .macro invalid_vector	label, target = __hyp_panic
- 	.align	2
- SYM_CODE_START(\label)
--\label:
- 	b \target
- SYM_CODE_END(\label)
+diff --git a/arch/arm64/kvm/hyp/entry.S b/arch/arm64/kvm/hyp/entry.S
+index d22d0534dd60..90186cf6473e 100644
+--- a/arch/arm64/kvm/hyp/entry.S
++++ b/arch/arm64/kvm/hyp/entry.S
+@@ -18,6 +18,7 @@
+ 
+ #define CPU_GP_REG_OFFSET(x)	(CPU_GP_REGS + x)
+ #define CPU_XREG_OFFSET(x)	CPU_GP_REG_OFFSET(CPU_USER_PT_REGS + 8*x)
++#define CPU_SP_EL0_OFFSET	(CPU_XREG_OFFSET(30) + 8)
+ 
+ 	.text
+ 	.pushsection	.hyp.text, "ax"
+@@ -47,6 +48,16 @@
+ 	ldp	x29, lr,  [\ctxt, #CPU_XREG_OFFSET(29)]
  .endm
+ 
++.macro save_sp_el0 ctxt, tmp
++	mrs	\tmp,	sp_el0
++	str	\tmp,	[\ctxt, #CPU_SP_EL0_OFFSET]
++.endm
++
++.macro restore_sp_el0 ctxt, tmp
++	ldr	\tmp,	  [\ctxt, #CPU_SP_EL0_OFFSET]
++	msr	sp_el0, \tmp
++.endm
++
+ /*
+  * u64 __guest_enter(struct kvm_vcpu *vcpu,
+  *		     struct kvm_cpu_context *host_ctxt);
+@@ -60,6 +71,9 @@ SYM_FUNC_START(__guest_enter)
+ 	// Store the host regs
+ 	save_callee_saved_regs x1
+ 
++	// Save the host's sp_el0
++	save_sp_el0	x1, x2
++
+ 	// Now the host state is stored if we have a pending RAS SError it must
+ 	// affect the host. If any asynchronous exception is pending we defer
+ 	// the guest entry. The DSB isn't necessary before v8.2 as any SError
+@@ -83,6 +97,9 @@ alternative_else_nop_endif
+ 	// when this feature is enabled for kernel code.
+ 	ptrauth_switch_to_guest x29, x0, x1, x2
+ 
++	// Restore the guest's sp_el0
++	restore_sp_el0 x29, x0
++
+ 	// Restore guest regs x0-x17
+ 	ldp	x0, x1,   [x29, #CPU_XREG_OFFSET(0)]
+ 	ldp	x2, x3,   [x29, #CPU_XREG_OFFSET(2)]
+@@ -130,6 +147,9 @@ SYM_INNER_LABEL(__guest_exit, SYM_L_GLOBAL)
+ 	// Store the guest regs x18-x29, lr
+ 	save_callee_saved_regs x1
+ 
++	// Store the guest's sp_el0
++	save_sp_el0	x1, x2
++
+ 	get_host_ctxt	x2, x3
+ 
+ 	// Macro ptrauth_switch_to_guest format:
+@@ -139,6 +159,9 @@ SYM_INNER_LABEL(__guest_exit, SYM_L_GLOBAL)
+ 	// when this feature is enabled for kernel code.
+ 	ptrauth_switch_to_host x1, x2, x3, x4, x5
+ 
++	// Restore the hosts's sp_el0
++	restore_sp_el0 x2, x3
++
+ 	// Now restore the host regs
+ 	restore_callee_saved_regs x2
+ 
+diff --git a/arch/arm64/kvm/hyp/sysreg-sr.c b/arch/arm64/kvm/hyp/sysreg-sr.c
+index 75b1925763f1..6d2df9fe0b5d 100644
+--- a/arch/arm64/kvm/hyp/sysreg-sr.c
++++ b/arch/arm64/kvm/hyp/sysreg-sr.c
+@@ -15,8 +15,9 @@
+ /*
+  * Non-VHE: Both host and guest must save everything.
+  *
+- * VHE: Host and guest must save mdscr_el1 and sp_el0 (and the PC and pstate,
+- * which are handled as part of the el2 return state) on every switch.
++ * VHE: Host and guest must save mdscr_el1 and sp_el0 (and the PC and
++ * pstate, which are handled as part of the el2 return state) on every
++ * switch (sp_el0 is being dealt with in the assembly code).
+  * tpidr_el0 and tpidrro_el0 only need to be switched when going
+  * to host userspace or a different VCPU.  EL1 registers only need to be
+  * switched when potentially going to run a different VCPU.  The latter two
+@@ -26,12 +27,6 @@
+ static void __hyp_text __sysreg_save_common_state(struct kvm_cpu_context *ctxt)
+ {
+ 	ctxt->sys_regs[MDSCR_EL1]	= read_sysreg(mdscr_el1);
+-
+-	/*
+-	 * The host arm64 Linux uses sp_el0 to point to 'current' and it must
+-	 * therefore be saved/restored on every entry/exit to/from the guest.
+-	 */
+-	ctxt->gp_regs.regs.sp		= read_sysreg(sp_el0);
+ }
+ 
+ static void __hyp_text __sysreg_save_user_state(struct kvm_cpu_context *ctxt)
+@@ -99,12 +94,6 @@ NOKPROBE_SYMBOL(sysreg_save_guest_state_vhe);
+ static void __hyp_text __sysreg_restore_common_state(struct kvm_cpu_context *ctxt)
+ {
+ 	write_sysreg(ctxt->sys_regs[MDSCR_EL1],	  mdscr_el1);
+-
+-	/*
+-	 * The host arm64 Linux uses sp_el0 to point to 'current' and it must
+-	 * therefore be saved/restored on every entry/exit to/from the guest.
+-	 */
+-	write_sysreg(ctxt->gp_regs.regs.sp,	  sp_el0);
+ }
+ 
+ static void __hyp_text __sysreg_restore_user_state(struct kvm_cpu_context *ctxt)
 -- 
 2.26.2
 
