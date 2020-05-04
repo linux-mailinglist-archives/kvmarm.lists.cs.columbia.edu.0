@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A70C1C3806
-	for <lists+kvmarm@lfdr.de>; Mon,  4 May 2020 13:26:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E01691C381C
+	for <lists+kvmarm@lfdr.de>; Mon,  4 May 2020 13:31:01 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B360D4B3A4;
-	Mon,  4 May 2020 07:26:33 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 62AA44B39C;
+	Mon,  4 May 2020 07:31:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,47 +18,46 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2eiiaOry2Y0Z; Mon,  4 May 2020 07:26:33 -0400 (EDT)
+	with ESMTP id 7C+cAAa8S2ae; Mon,  4 May 2020 07:31:01 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9E3FF4B39D;
-	Mon,  4 May 2020 07:26:32 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 482384B39E;
+	Mon,  4 May 2020 07:31:00 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 365C34B397
- for <kvmarm@lists.cs.columbia.edu>; Mon,  4 May 2020 07:26:31 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5A7D04B399
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  4 May 2020 07:30:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 4ZQN98MWH79k for <kvmarm@lists.cs.columbia.edu>;
- Mon,  4 May 2020 07:26:30 -0400 (EDT)
+ with ESMTP id Gxw7YDs15Iq1 for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  4 May 2020 07:30:58 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 30D2F4B315
- for <kvmarm@lists.cs.columbia.edu>; Mon,  4 May 2020 07:26:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 65C984B397
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  4 May 2020 07:30:58 -0400 (EDT)
 Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
  bits)) (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id BE1F520721;
- Mon,  4 May 2020 11:26:27 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 44F3D2073E;
+ Mon,  4 May 2020 11:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1588591589;
- bh=bbiZPVfmFqYVL/wAzhRV8cgjhVbnfg17BIGvQfSh0nQ=;
+ s=default; t=1588591857;
+ bh=VZLtzlcQTt1eJsb0z5+z2NjKOOqUX3h5X2JO4zv9pDo=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=MPL/S/eG4Q240qsKgogVhDaxe7bXcVOEZZ1eoUWmwg4D456a5QdiHxHN5TC9E8y+V
- cuPbf4aTEWSbPf2KO2NuVDuTpf6r5S5ZfSsM861OKx4cmvTXcOpzh3O0lddznL2K+d
- ygmVZUTM2rNDkjG9hpzw/Bz32OsC3TGPngbCFxI0=
-Date: Mon, 4 May 2020 12:26:24 +0100
+ b=2OhI4xd+rijq0aBcmEM/iBxzF5t4ZID7LjsEROOxJ3U+rl8zzzZODfvwMGpGOIVOU
+ hyTIJfu0kwTZZqy5wn/cm2xQcjZSwI8zFeAX/Cml8tlVeHtrwun8MrVVhu0ozgFYpj
+ OhL5v6lGFQghRa1mpUK69u+KkaktGLi9EQgJ7HiM=
+Date: Mon, 4 May 2020 12:30:52 +0100
 From: Will Deacon <will@kernel.org>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v3] arm64: Unify WORKAROUND_SPECULATIVE_AT_{NVHE,VHE}
-Message-ID: <20200504112624.GA1326@willie-the-truck>
-References: <20200504094858.108917-1-ascull@google.com>
- <20200504105539.GA4879@willie-the-truck>
- <7b3cc0b0a3fa6d08d8c8413e4498d485@kernel.org>
+To: Marc Zyngier <maz@kernel.org>, pbonzini@redhat.com
+Subject: Re: [GIT PULL] KVM/arm fixes for 5.7, take #2
+Message-ID: <20200504113051.GB1326@willie-the-truck>
+References: <20200501101204.364798-1-maz@kernel.org>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <7b3cc0b0a3fa6d08d8c8413e4498d485@kernel.org>
+In-Reply-To: <20200501101204.364798-1-maz@kernel.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: Steven Price <steven.price@arm.com>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+Cc: kvm@vger.kernel.org, Fangrui Song <maskray@google.com>,
+ Nick Desaulniers <ndesaulniers@google.com>,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -75,56 +74,28 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, May 04, 2020 at 12:13:02PM +0100, Marc Zyngier wrote:
-> On 2020-05-04 11:55, Will Deacon wrote:
-> > On Mon, May 04, 2020 at 10:48:58AM +0100, Andrew Scull wrote:
-> > > Errata 1165522, 1319367 and 1530923 each allow TLB entries to be
-> > > allocated as a result of a speculative AT instruction. In order to
-> > > avoid mandating VHE on certain affected CPUs, apply the workaround to
-> > > both the nVHE and the VHE case for all affected CPUs.
-> > > 
-> > > Signed-off-by: Andrew Scull <ascull@google.com>
-> > > CC: Marc Zyngier <maz@kernel.org>
-> > > CC: James Morse <james.morse@arm.com>
-> > > CC: Suzuki K Poulose <suzuki.poulose@arm.com>
-> > > CC: Will Deacon <will@kernel.org>
-> > > CC: Steven Price <steven.price@arm.com>
-> > > ---
-> > > From v2 <20200422161346.67325-1-ascull@google.com>:
-> > >  - const_cap -> final_cap merge correction
-> > >  - based on 5.7 rc4
-> > > ---
-> > >  arch/arm64/Kconfig                | 39
-> > > ++++++++++++++-----------------
-> > >  arch/arm64/include/asm/cpucaps.h  | 15 ++++++------
-> > >  arch/arm64/include/asm/kvm_host.h |  4 ----
-> > >  arch/arm64/include/asm/kvm_hyp.h  |  2 +-
-> > >  arch/arm64/kernel/cpu_errata.c    | 25 +++++++++-----------
-> > >  arch/arm64/kvm/hyp/switch.c       |  6 ++---
-> > >  arch/arm64/kvm/hyp/sysreg-sr.c    |  6 +++--
-> > >  arch/arm64/kvm/hyp/tlb.c          | 11 +++++----
-> > >  8 files changed, 50 insertions(+), 58 deletions(-)
-> > 
-> > Acked-by: Will Deacon <will@kernel.org>
-> > 
-> > We'll probably run into some trivial conflicts with the arm64 tree, but
-> > I'm happy to put this on a branch if it helps. Marc?
+Hi Marc, Paolo,
+
+On Fri, May 01, 2020 at 11:12:00AM +0100, Marc Zyngier wrote:
+> This is the second batch of KVM/arm fixes for 5.7. A compilation fix,
+> a GICv4.1 fix, plus a couple of sanity checks (SP_EL0 save/restore,
+> and the sanitising of AArch32 registers).
 > 
-> I'd rather we avoid the conflicts by not repainting all the capabilities
-> and just leave a capability unused until the next one fills in the slot.
+> Note that the pull request I sent a week ago[1] is still valid, and
+> that this new series is built on top of the previous one.
+> 
+> Please pull,
 
-I think we'll run into conflicts whatever we do, so I'd say the patch is
-alright like it is.
+I don't see this queued up in the kvm tree, which appears to have been
+sitting dormant for 10 days. Consequently, there are fixes sitting in
+limbo and we /still/ don't have a sensible base for arm64/kvm patches
+targetting 5.8.
 
-> But otherwise, I'll take a stable branch.
+Paolo -- how can I help get this stuff moving again? I'm more than happy
+to send this lot up to Linus via arm64 if you're busy atm. Please just
+let me know.
 
-Ok, let me cook that today.
-
-> Also the current state of the KVM/arm tree is a bit crap as none of the
-> fixes have made it into Linus' tree yet, and I don't have a good base
-> for the current queue (the welcome-home branch could create havoc).
-
-Seriously? I'll reply on your pull to see if I can help.
+Cheers,
 
 Will
 _______________________________________________
