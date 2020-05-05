@@ -2,57 +2,95 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 052D61C4EBB
-	for <lists+kvmarm@lfdr.de>; Tue,  5 May 2020 09:02:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 29BC71C508D
+	for <lists+kvmarm@lfdr.de>; Tue,  5 May 2020 10:40:07 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F10A04B325;
-	Tue,  5 May 2020 03:02:35 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AB24A4B218;
+	Tue,  5 May 2020 04:40:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id p6fFjG24ryYW; Tue,  5 May 2020 03:02:35 -0400 (EDT)
+	with ESMTP id L4mtwIVOu2sh; Tue,  5 May 2020 04:40:06 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B0EE74B318;
-	Tue,  5 May 2020 03:02:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 900C34B1DB;
+	Tue,  5 May 2020 04:40:05 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B14654B2CC
- for <kvmarm@lists.cs.columbia.edu>; Tue,  5 May 2020 03:02:32 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 99D444B1C6
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  5 May 2020 04:40:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id tEwAtC88W4oe for <kvmarm@lists.cs.columbia.edu>;
- Tue,  5 May 2020 03:02:29 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EFB984B2A2
- for <kvmarm@lists.cs.columbia.edu>; Tue,  5 May 2020 03:02:28 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 599271FB;
- Tue,  5 May 2020 00:02:28 -0700 (PDT)
-Received: from [10.163.71.248] (unknown [10.163.71.248])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 467B53F68F;
- Tue,  5 May 2020 00:02:24 -0700 (PDT)
-Subject: Re: [PATCH V3 06/16] arm64/cpufeature: Introduce ID_MMFR5 CPU register
-To: Will Deacon <will@kernel.org>
-References: <1588426445-24344-1-git-send-email-anshuman.khandual@arm.com>
- <1588426445-24344-7-git-send-email-anshuman.khandual@arm.com>
- <20200504203313.GB5012@willie-the-truck>
-From: Anshuman Khandual <anshuman.khandual@arm.com>
-Message-ID: <97cd9ba9-d5de-2a85-5eac-0cb460061617@arm.com>
-Date: Tue, 5 May 2020 12:31:54 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+ with ESMTP id mZFB071q6BYe for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  5 May 2020 04:40:02 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 804AF4B1C4
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  5 May 2020 04:40:02 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 541FE2068E;
+ Tue,  5 May 2020 08:40:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1588668001;
+ bh=+lAoCLRT0+FEtavrhvzvewEUxnz1O4jXBxyoaAJzyTU=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=TojqmxZ51MAKtNII0QJTZkHZV54vQs0dYCqdZzSyLZY69CtmzXEUlGOedXp492lYB
+ Pb+hXuyVYXaBcWe++5qpKHqNYkLddxXfK29FC3Zy/SVXmLHj6vHNpjYSjFgPHssfM9
+ tJSpqFDEEFagx/s4/AinWjXsVVXozQpESISSAN6Q=
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+ by disco-boy.misterjones.org with esmtpsa
+ (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
+ (envelope-from <maz@kernel.org>)
+ id 1jVt7P-009L2s-N3; Tue, 05 May 2020 09:39:59 +0100
 MIME-Version: 1.0
-In-Reply-To: <20200504203313.GB5012@willie-the-truck>
-Content-Language: en-US
-Cc: Catalin Marinas <catalin.marinas@arm.com>, linux-kernel@vger.kernel.org,
- Marc Zyngier <maz@kernel.org>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+Date: Tue, 05 May 2020 09:39:59 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+Subject: Re: [PATCH v4 2/7] KVM: arm64: clean up redundant 'kvm_run' parameters
+In-Reply-To: <20200427043514.16144-3-tianjia.zhang@linux.alibaba.com>
+References: <20200427043514.16144-1-tianjia.zhang@linux.alibaba.com>
+ <20200427043514.16144-3-tianjia.zhang@linux.alibaba.com>
+User-Agent: Roundcube Webmail/1.4.3
+Message-ID: <35eb095a344b4192b912385bc02c54e6@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: tianjia.zhang@linux.alibaba.com, pbonzini@redhat.com,
+ tsbogend@alpha.franken.de, paulus@ozlabs.org, mpe@ellerman.id.au,
+ benh@kernel.crashing.org, borntraeger@de.ibm.com, frankja@linux.ibm.com,
+ david@redhat.com, cohuck@redhat.com, heiko.carstens@de.ibm.com,
+ gor@linux.ibm.com, sean.j.christopherson@intel.com, vkuznets@redhat.com,
+ wanpengli@tencent.com, jmattson@google.com, joro@8bytes.org,
+ tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, x86@kernel.org,
+ hpa@zytor.com, james.morse@arm.com, julien.thierry.kdev@gmail.com,
+ suzuki.poulose@arm.com, christoffer.dall@arm.com, peterx@redhat.com,
+ thuth@redhat.com, chenhuacai@gmail.com, kvm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ linux-mips@vger.kernel.org, kvm-ppc@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, linux-s390@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: wanpengli@tencent.com, kvm@vger.kernel.org, david@redhat.com,
+ benh@kernel.crashing.org, heiko.carstens@de.ibm.com,
+ linux-mips@vger.kernel.org, paulus@ozlabs.org, hpa@zytor.com,
+ kvmarm@lists.cs.columbia.edu, linux-s390@vger.kernel.org,
+ frankja@linux.ibm.com, chenhuacai@gmail.com, mpe@ellerman.id.au,
+ joro@8bytes.org, x86@kernel.org, borntraeger@de.ibm.com, mingo@redhat.com,
+ thuth@redhat.com, gor@linux.ibm.com, kvm-ppc@vger.kernel.org, bp@alien8.de,
+ tglx@linutronix.de, linux-arm-kernel@lists.infradead.org, jmattson@google.com,
+ tsbogend@alpha.franken.de, cohuck@redhat.com, sean.j.christopherson@intel.com,
+ linux-kernel@vger.kernel.org, pbonzini@redhat.com, vkuznets@redhat.com,
+ linuxppc-dev@lists.ozlabs.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -64,86 +102,39 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+Hi Tianjia,
+
+On 2020-04-27 05:35, Tianjia Zhang wrote:
+> In the current kvm version, 'kvm_run' has been included in the 
+> 'kvm_vcpu'
+> structure. For historical reasons, many kvm-related function parameters
+> retain the 'kvm_run' and 'kvm_vcpu' parameters at the same time. This
+> patch does a unified cleanup of these remaining redundant parameters.
+> 
+> Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+
+On the face of it, this looks OK, but I haven't tried to run the
+resulting kernel. I'm not opposed to taking this patch *if* there
+is an agreement across architectures to take the series (I value
+consistency over the janitorial exercise).
+
+Another thing is that this is going to conflict with the set of
+patches that move the KVM/arm code back where it belongs 
+(arch/arm64/kvm),
+so I'd probably cherry-pick that one directly.
+
+Thanks,
+
+         M.
 
 
-On 05/05/2020 02:03 AM, Will Deacon wrote:
-> On Sat, May 02, 2020 at 07:03:55PM +0530, Anshuman Khandual wrote:
->> This adds basic building blocks required for ID_MMFR5 CPU register which
->> provides information about the implemented memory model and memory
->> management support in AArch32 state. This is added per ARM DDI 0487F.a
->> specification.
->>
->> Cc: Catalin Marinas <catalin.marinas@arm.com>
->> Cc: Will Deacon <will@kernel.org>
->> Cc: Marc Zyngier <maz@kernel.org>
->> Cc: Mark Rutland <mark.rutland@arm.com>
->> Cc: James Morse <james.morse@arm.com>
->> Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
->> Cc: kvmarm@lists.cs.columbia.edu
->> Cc: linux-arm-kernel@lists.infradead.org
->> Cc: linux-kernel@vger.kernel.org
->>
->> Suggested-by: Will Deacon <will@kernel.org>
->> Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
->> ---
->>  arch/arm64/include/asm/cpu.h    |  1 +
->>  arch/arm64/include/asm/sysreg.h |  3 +++
->>  arch/arm64/kernel/cpufeature.c  | 10 ++++++++++
->>  arch/arm64/kernel/cpuinfo.c     |  1 +
->>  arch/arm64/kvm/sys_regs.c       |  2 +-
->>  5 files changed, 16 insertions(+), 1 deletion(-)
-> 
-> [...]
-> 
->> diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
->> index 2ce952d9668d..c790cc200bb1 100644
->> --- a/arch/arm64/kernel/cpufeature.c
->> +++ b/arch/arm64/kernel/cpufeature.c
->> @@ -403,6 +403,11 @@ static const struct arm64_ftr_bits ftr_id_isar4[] = {
->>  	ARM64_FTR_END,
->>  };
->>  
->> +static const struct arm64_ftr_bits ftr_id_mmfr5[] = {
->> +	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_MMFR5_ETS_SHIFT, 4, 0),
->> +	ARM64_FTR_END,
->> +};
->> +
->>  static const struct arm64_ftr_bits ftr_id_isar6[] = {
->>  	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR6_I8MM_SHIFT, 4, 0),
->>  	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR6_BF16_SHIFT, 4, 0),
->> @@ -527,6 +532,7 @@ static const struct __ftr_reg_entry {
->>  	ARM64_FTR_REG(SYS_MVFR2_EL1, ftr_mvfr2),
->>  	ARM64_FTR_REG(SYS_ID_PFR2_EL1, ftr_id_pfr2),
->>  	ARM64_FTR_REG(SYS_ID_DFR1_EL1, ftr_id_dfr1),
->> +	ARM64_FTR_REG(SYS_ID_MMFR5_EL1, ftr_id_mmfr5),
->>  
->>  	/* Op1 = 0, CRn = 0, CRm = 4 */
->>  	ARM64_FTR_REG(SYS_ID_AA64PFR0_EL1, ftr_id_aa64pfr0),
->> @@ -732,6 +738,7 @@ void __init init_cpu_features(struct cpuinfo_arm64 *info)
->>  		init_cpu_ftr_reg(SYS_ID_MMFR1_EL1, info->reg_id_mmfr1);
->>  		init_cpu_ftr_reg(SYS_ID_MMFR2_EL1, info->reg_id_mmfr2);
->>  		init_cpu_ftr_reg(SYS_ID_MMFR3_EL1, info->reg_id_mmfr3);
->> +		init_cpu_ftr_reg(SYS_ID_MMFR5_EL1, info->reg_id_mmfr5);
->>  		init_cpu_ftr_reg(SYS_ID_PFR0_EL1, info->reg_id_pfr0);
->>  		init_cpu_ftr_reg(SYS_ID_PFR1_EL1, info->reg_id_pfr1);
->>  		init_cpu_ftr_reg(SYS_ID_PFR2_EL1, info->reg_id_pfr2);
->> @@ -866,6 +873,8 @@ static int update_32bit_cpu_features(int cpu, struct cpuinfo_arm64 *info,
->>  				      info->reg_id_mmfr2, boot->reg_id_mmfr2);
->>  	taint |= check_update_ftr_reg(SYS_ID_MMFR3_EL1, cpu,
->>  				      info->reg_id_mmfr3, boot->reg_id_mmfr3);
-> 
-> Looks like MMFR4 is missing here?
-
-ID_MMFR4 is missing from cpuinfo_arm64 itself, hence from init_cpu_features()
-and update_cpu_features() as well. But it is defined in arm64_ftr_regs[]. I
-was wondering about it but left as it is (due to lack of complete context).
-Unless there is any other concern, will add it up in cpuinfo_arm64 and make
-it a part of the CPU context.
+-- 
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
