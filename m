@@ -2,62 +2,66 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 61BDB1C4858
-	for <lists+kvmarm@lfdr.de>; Mon,  4 May 2020 22:33:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 473041C4FF5
+	for <lists+kvmarm@lfdr.de>; Tue,  5 May 2020 10:13:03 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C89AC4B350;
-	Mon,  4 May 2020 16:33:23 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B1F7C4B322;
+	Tue,  5 May 2020 04:13:02 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: 0.8
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=0.8 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	UNPARSEABLE_RELAY=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bM8+L4Pm8dme; Mon,  4 May 2020 16:33:23 -0400 (EDT)
+	with ESMTP id 9f4N4nY49qVP; Tue,  5 May 2020 04:13:02 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6D8704B16E;
-	Mon,  4 May 2020 16:33:22 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 80D8F4B2F1;
+	Tue,  5 May 2020 04:13:01 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E7A0B4B169
- for <kvmarm@lists.cs.columbia.edu>; Mon,  4 May 2020 16:33:20 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id ACA174B280
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  5 May 2020 00:15:30 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id N+-UOQvNl-tP for <kvmarm@lists.cs.columbia.edu>;
- Mon,  4 May 2020 16:33:19 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id BD6114B0D9
- for <kvmarm@lists.cs.columbia.edu>; Mon,  4 May 2020 16:33:19 -0400 (EDT)
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
- bits)) (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 21780205ED;
- Mon,  4 May 2020 20:33:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1588624398;
- bh=y/D+iOhgi2sMFoWPB1GzgRf58kmCHVuTDHDgbVFDhNI=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=AyqtyYzDK69vjUVWyvIZlQskZX19mjt4mvMwmR6SG0JcVNPF3SxxGs64Epwy/d48v
- fztftrs+wf5WQVulePPVv4LLuB+GiXU0+MwBdzbW+SVT8OqjOfJ6pvUgQoRqZQLKMX
- ZKHzTV4abCsJUbyIGwOSWCG40Poh7mtvdVhkBOLY=
-Date: Mon, 4 May 2020 21:33:14 +0100
-From: Will Deacon <will@kernel.org>
-To: Anshuman Khandual <anshuman.khandual@arm.com>
-Subject: Re: [PATCH V3 06/16] arm64/cpufeature: Introduce ID_MMFR5 CPU register
-Message-ID: <20200504203313.GB5012@willie-the-truck>
-References: <1588426445-24344-1-git-send-email-anshuman.khandual@arm.com>
- <1588426445-24344-7-git-send-email-anshuman.khandual@arm.com>
+ with ESMTP id IF--hsK5eO2r for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  5 May 2020 00:15:29 -0400 (EDT)
+Received: from out30-132.freemail.mail.aliyun.com
+ (out30-132.freemail.mail.aliyun.com [115.124.30.132])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2579D4B263
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  5 May 2020 00:15:28 -0400 (EDT)
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R491e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01f04397;
+ MF=tianjia.zhang@linux.alibaba.com; NM=1; PH=DS; RN=37; SR=0;
+ TI=SMTPD_---0TxXItq5_1588652118; 
+Received: from 30.27.236.135(mailfrom:tianjia.zhang@linux.alibaba.com
+ fp:SMTPD_---0TxXItq5_1588652118) by smtp.aliyun-inc.com(127.0.0.1);
+ Tue, 05 May 2020 12:15:22 +0800
+Subject: Re: [PATCH v4 0/7] clean up redundant 'kvm_run' parameters
+To: pbonzini@redhat.com, tsbogend@alpha.franken.de, paulus@ozlabs.org,
+ mpe@ellerman.id.au, benh@kernel.crashing.org, borntraeger@de.ibm.com,
+ frankja@linux.ibm.com, david@redhat.com, cohuck@redhat.com,
+ heiko.carstens@de.ibm.com, gor@linux.ibm.com,
+ sean.j.christopherson@intel.com, vkuznets@redhat.com, wanpengli@tencent.com,
+ jmattson@google.com, joro@8bytes.org, tglx@linutronix.de, mingo@redhat.com,
+ bp@alien8.de, x86@kernel.org, hpa@zytor.com, maz@kernel.org,
+ james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
+ christoffer.dall@arm.com, peterx@redhat.com, thuth@redhat.com,
+ chenhuacai@gmail.com
+References: <20200427043514.16144-1-tianjia.zhang@linux.alibaba.com>
+From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+Message-ID: <b660f6cb-a89b-2452-c15b-095add6413ec@linux.alibaba.com>
+Date: Tue, 5 May 2020 12:15:17 +0800
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <1588426445-24344-7-git-send-email-anshuman.khandual@arm.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: Catalin Marinas <catalin.marinas@arm.com>, linux-kernel@vger.kernel.org,
- Marc Zyngier <maz@kernel.org>, kvmarm@lists.cs.columbia.edu,
+In-Reply-To: <20200427043514.16144-1-tianjia.zhang@linux.alibaba.com>
+X-Mailman-Approved-At: Tue, 05 May 2020 04:13:00 -0400
+Cc: linux-s390@vger.kernel.org, kvm@vger.kernel.org, linux-mips@vger.kernel.org,
+ kvm-ppc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, kvmarm@lists.cs.columbia.edu,
  linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -70,82 +74,88 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Sat, May 02, 2020 at 07:03:55PM +0530, Anshuman Khandual wrote:
-> This adds basic building blocks required for ID_MMFR5 CPU register which
-> provides information about the implemented memory model and memory
-> management support in AArch32 state. This is added per ARM DDI 0487F.a
-> specification.
+Paolo Bonzini, any opinion on this?
+
+Thanks and best,
+Tianjia
+
+On 2020/4/27 12:35, Tianjia Zhang wrote:
+> In the current kvm version, 'kvm_run' has been included in the 'kvm_vcpu'
+> structure. For historical reasons, many kvm-related function parameters
+> retain the 'kvm_run' and 'kvm_vcpu' parameters at the same time. This
+> patch does a unified cleanup of these remaining redundant parameters.
 > 
-> Cc: Catalin Marinas <catalin.marinas@arm.com>
-> Cc: Will Deacon <will@kernel.org>
-> Cc: Marc Zyngier <maz@kernel.org>
-> Cc: Mark Rutland <mark.rutland@arm.com>
-> Cc: James Morse <james.morse@arm.com>
-> Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
-> Cc: kvmarm@lists.cs.columbia.edu
-> Cc: linux-arm-kernel@lists.infradead.org
-> Cc: linux-kernel@vger.kernel.org
+> This series of patches has completely cleaned the architecture of
+> arm64, mips, ppc, and s390 (no such redundant code on x86). Due to
+> the large number of modified codes, a separate patch is made for each
+> platform. On the ppc platform, there is also a redundant structure
+> pointer of 'kvm_run' in 'vcpu_arch', which has also been cleaned
+> separately.
 > 
-> Suggested-by: Will Deacon <will@kernel.org>
-> Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
 > ---
->  arch/arm64/include/asm/cpu.h    |  1 +
->  arch/arm64/include/asm/sysreg.h |  3 +++
->  arch/arm64/kernel/cpufeature.c  | 10 ++++++++++
->  arch/arm64/kernel/cpuinfo.c     |  1 +
->  arch/arm64/kvm/sys_regs.c       |  2 +-
->  5 files changed, 16 insertions(+), 1 deletion(-)
-
-[...]
-
-> diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-> index 2ce952d9668d..c790cc200bb1 100644
-> --- a/arch/arm64/kernel/cpufeature.c
-> +++ b/arch/arm64/kernel/cpufeature.c
-> @@ -403,6 +403,11 @@ static const struct arm64_ftr_bits ftr_id_isar4[] = {
->  	ARM64_FTR_END,
->  };
->  
-> +static const struct arm64_ftr_bits ftr_id_mmfr5[] = {
-> +	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_MMFR5_ETS_SHIFT, 4, 0),
-> +	ARM64_FTR_END,
-> +};
-> +
->  static const struct arm64_ftr_bits ftr_id_isar6[] = {
->  	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR6_I8MM_SHIFT, 4, 0),
->  	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR6_BF16_SHIFT, 4, 0),
-> @@ -527,6 +532,7 @@ static const struct __ftr_reg_entry {
->  	ARM64_FTR_REG(SYS_MVFR2_EL1, ftr_mvfr2),
->  	ARM64_FTR_REG(SYS_ID_PFR2_EL1, ftr_id_pfr2),
->  	ARM64_FTR_REG(SYS_ID_DFR1_EL1, ftr_id_dfr1),
-> +	ARM64_FTR_REG(SYS_ID_MMFR5_EL1, ftr_id_mmfr5),
->  
->  	/* Op1 = 0, CRn = 0, CRm = 4 */
->  	ARM64_FTR_REG(SYS_ID_AA64PFR0_EL1, ftr_id_aa64pfr0),
-> @@ -732,6 +738,7 @@ void __init init_cpu_features(struct cpuinfo_arm64 *info)
->  		init_cpu_ftr_reg(SYS_ID_MMFR1_EL1, info->reg_id_mmfr1);
->  		init_cpu_ftr_reg(SYS_ID_MMFR2_EL1, info->reg_id_mmfr2);
->  		init_cpu_ftr_reg(SYS_ID_MMFR3_EL1, info->reg_id_mmfr3);
-> +		init_cpu_ftr_reg(SYS_ID_MMFR5_EL1, info->reg_id_mmfr5);
->  		init_cpu_ftr_reg(SYS_ID_PFR0_EL1, info->reg_id_pfr0);
->  		init_cpu_ftr_reg(SYS_ID_PFR1_EL1, info->reg_id_pfr1);
->  		init_cpu_ftr_reg(SYS_ID_PFR2_EL1, info->reg_id_pfr2);
-> @@ -866,6 +873,8 @@ static int update_32bit_cpu_features(int cpu, struct cpuinfo_arm64 *info,
->  				      info->reg_id_mmfr2, boot->reg_id_mmfr2);
->  	taint |= check_update_ftr_reg(SYS_ID_MMFR3_EL1, cpu,
->  				      info->reg_id_mmfr3, boot->reg_id_mmfr3);
-
-Looks like MMFR4 is missing here?
-
-> +	taint |= check_update_ftr_reg(SYS_ID_MMFR5_EL1, cpu,
-> +				      info->reg_id_mmfr5, boot->reg_id_mmfr5);
-
-Will
+> v4 change:
+>    mips: fixes two errors in entry.c.
+> 
+> v3 change:
+>    Keep the existing `vcpu->run` in the function body unchanged.
+> 
+> v2 change:
+>    s390 retains the original variable name and minimizes modification.
+> 
+> Tianjia Zhang (7):
+>    KVM: s390: clean up redundant 'kvm_run' parameters
+>    KVM: arm64: clean up redundant 'kvm_run' parameters
+>    KVM: PPC: Remove redundant kvm_run from vcpu_arch
+>    KVM: PPC: clean up redundant 'kvm_run' parameters
+>    KVM: PPC: clean up redundant kvm_run parameters in assembly
+>    KVM: MIPS: clean up redundant 'kvm_run' parameters
+>    KVM: MIPS: clean up redundant kvm_run parameters in assembly
+> 
+>   arch/arm64/include/asm/kvm_coproc.h      |  12 +--
+>   arch/arm64/include/asm/kvm_host.h        |  11 +--
+>   arch/arm64/include/asm/kvm_mmu.h         |   2 +-
+>   arch/arm64/kvm/handle_exit.c             |  36 +++----
+>   arch/arm64/kvm/sys_regs.c                |  13 ++-
+>   arch/mips/include/asm/kvm_host.h         |  32 +------
+>   arch/mips/kvm/emulate.c                  |  59 ++++--------
+>   arch/mips/kvm/entry.c                    |  21 ++---
+>   arch/mips/kvm/mips.c                     |  14 +--
+>   arch/mips/kvm/trap_emul.c                | 114 ++++++++++-------------
+>   arch/mips/kvm/vz.c                       |  26 ++----
+>   arch/powerpc/include/asm/kvm_book3s.h    |  16 ++--
+>   arch/powerpc/include/asm/kvm_host.h      |   1 -
+>   arch/powerpc/include/asm/kvm_ppc.h       |  27 +++---
+>   arch/powerpc/kvm/book3s.c                |   4 +-
+>   arch/powerpc/kvm/book3s.h                |   2 +-
+>   arch/powerpc/kvm/book3s_64_mmu_hv.c      |  12 +--
+>   arch/powerpc/kvm/book3s_64_mmu_radix.c   |   4 +-
+>   arch/powerpc/kvm/book3s_emulate.c        |  10 +-
+>   arch/powerpc/kvm/book3s_hv.c             |  64 ++++++-------
+>   arch/powerpc/kvm/book3s_hv_nested.c      |  12 +--
+>   arch/powerpc/kvm/book3s_interrupts.S     |  17 ++--
+>   arch/powerpc/kvm/book3s_paired_singles.c |  72 +++++++-------
+>   arch/powerpc/kvm/book3s_pr.c             |  33 ++++---
+>   arch/powerpc/kvm/booke.c                 |  39 ++++----
+>   arch/powerpc/kvm/booke.h                 |   8 +-
+>   arch/powerpc/kvm/booke_emulate.c         |   2 +-
+>   arch/powerpc/kvm/booke_interrupts.S      |   9 +-
+>   arch/powerpc/kvm/bookehv_interrupts.S    |  10 +-
+>   arch/powerpc/kvm/e500_emulate.c          |  15 ++-
+>   arch/powerpc/kvm/emulate.c               |  10 +-
+>   arch/powerpc/kvm/emulate_loadstore.c     |  32 +++----
+>   arch/powerpc/kvm/powerpc.c               |  72 +++++++-------
+>   arch/powerpc/kvm/trace_hv.h              |   6 +-
+>   arch/s390/kvm/kvm-s390.c                 |  23 +++--
+>   virt/kvm/arm/arm.c                       |   6 +-
+>   virt/kvm/arm/mmio.c                      |  11 ++-
+>   virt/kvm/arm/mmu.c                       |   5 +-
+>   38 files changed, 392 insertions(+), 470 deletions(-)
+> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
