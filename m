@@ -2,56 +2,83 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8361B1CA621
-	for <lists+kvmarm@lfdr.de>; Fri,  8 May 2020 10:33:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C38551CAA6F
+	for <lists+kvmarm@lfdr.de>; Fri,  8 May 2020 14:21:01 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 03B964B5FF;
-	Fri,  8 May 2020 04:33:16 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 42B1C4B1CD;
+	Fri,  8 May 2020 08:21:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Di28bzJSLBrr; Fri,  8 May 2020 04:33:15 -0400 (EDT)
+	with ESMTP id 8ilMZrSWzInh; Fri,  8 May 2020 08:21:01 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A50574B5F4;
-	Fri,  8 May 2020 04:33:14 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CCE944B1BE;
+	Fri,  8 May 2020 08:20:59 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 835234B5EA
- for <kvmarm@lists.cs.columbia.edu>; Fri,  8 May 2020 04:33:12 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0A1964B1B0
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  8 May 2020 08:20:58 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id aiYZNAfWqpXb for <kvmarm@lists.cs.columbia.edu>;
- Fri,  8 May 2020 04:33:10 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9FF484B5DA
- for <kvmarm@lists.cs.columbia.edu>; Fri,  8 May 2020 04:33:10 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 021CA1FB;
- Fri,  8 May 2020 01:33:10 -0700 (PDT)
-Received: from [10.163.73.155] (unknown [10.163.73.155])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AB1ED3F305;
- Fri,  8 May 2020 01:33:06 -0700 (PDT)
-Subject: Re: [PATCH V3 04/16] arm64/cpufeature: Introduce ID_PFR2 CPU register
-To: Will Deacon <will@kernel.org>
-References: <1588426445-24344-1-git-send-email-anshuman.khandual@arm.com>
- <1588426445-24344-5-git-send-email-anshuman.khandual@arm.com>
- <20200505111241.GF19710@willie-the-truck>
-From: Anshuman Khandual <anshuman.khandual@arm.com>
-Message-ID: <918e2dfb-4b3b-c1e6-3151-c81ac9f416b6@arm.com>
-Date: Fri, 8 May 2020 14:02:35 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+ with ESMTP id w7ITZTlp5Ljc for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  8 May 2020 08:20:56 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0678A4B18A
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  8 May 2020 08:20:55 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id B22E2208D6;
+ Fri,  8 May 2020 12:20:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1588940454;
+ bh=FW6rwatJpH3f9YqjBLgABYd8viojkg66m20HhLLxy+E=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=0iY3OCVhd9Xw00lEJKywiWeb5005YOoZLT2lUuSCBbm+9lHODalCeg/IODZ/a1+Mg
+ VdZDi9cpYRFrP/8f2kldeQ6u6d5yguyICPpLXjUIH233W2dhLuEgJBMpgw4AB0G00e
+ yYfq36Pcx5b+5NY7lMFIe1HBLT+u7dtIXRMCKMDA=
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why) by disco-boy.misterjones.org with esmtpsa
+ (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
+ (envelope-from <maz@kernel.org>)
+ id 1jX1zp-00Aacj-2D; Fri, 08 May 2020 13:20:53 +0100
+Date: Fri, 8 May 2020 13:20:51 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: James Morse <james.morse@arm.com>
+Subject: Re: [PATCH 09/26] KVM: arm64: vgic-v3: Take cpu_if pointer directly
+ instead of vcpu
+Message-ID: <20200508132051.490943f8@why>
+In-Reply-To: <3174eaad-7d8d-0c52-d71c-afc6b991b636@arm.com>
+References: <20200422120050.3693593-1-maz@kernel.org>
+ <20200422120050.3693593-10-maz@kernel.org>
+ <3174eaad-7d8d-0c52-d71c-afc6b991b636@arm.com>
+Organization: Approximate
+X-Mailer: Claws Mail 3.17.5 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-In-Reply-To: <20200505111241.GF19710@willie-the-truck>
-Content-Language: en-US
-Cc: Catalin Marinas <catalin.marinas@arm.com>, linux-kernel@vger.kernel.org,
- Marc Zyngier <maz@kernel.org>, kvmarm@lists.cs.columbia.edu,
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: james.morse@arm.com, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
+ andre.przywara@arm.com, christoffer.dall@arm.com, Dave.Martin@arm.com,
+ jintack@cs.columbia.edu, alexandru.elisei@arm.com, gcherian@marvell.com,
+ prime.zeng@hisilicon.com, will@kernel.org, catalin.marinas@arm.com,
+ mark.rutland@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvm@vger.kernel.org, Andre Przywara <andre.przywara@arm.com>,
+ kvmarm@lists.cs.columbia.edu, Will Deacon <will@kernel.org>,
+ George Cherian <gcherian@marvell.com>,
+ "Zengtao \(B\)" <prime.zeng@hisilicon.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Dave Martin <Dave.Martin@arm.com>,
  linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -69,61 +96,58 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+On Thu, 7 May 2020 17:26:06 +0100
+James Morse <james.morse@arm.com> wrote:
 
+Hi James,
 
-On 05/05/2020 04:42 PM, Will Deacon wrote:
-> On Sat, May 02, 2020 at 07:03:53PM +0530, Anshuman Khandual wrote:
->> This adds basic building blocks required for ID_PFR2 CPU register which
->> provides information about the AArch32 programmers model which must be
->> interpreted along with ID_PFR0 and ID_PFR1 CPU registers. This is added
->> per ARM DDI 0487F.a specification.
->>
->> Cc: Catalin Marinas <catalin.marinas@arm.com>
->> Cc: Will Deacon <will@kernel.org>
->> Cc: Marc Zyngier <maz@kernel.org>
->> Cc: Mark Rutland <mark.rutland@arm.com>
->> Cc: James Morse <james.morse@arm.com>
->> Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
->> Cc: kvmarm@lists.cs.columbia.edu
->> Cc: linux-arm-kernel@lists.infradead.org
->> Cc: linux-kernel@vger.kernel.org
->>
->> Suggested-by: Mark Rutland <mark.rutland@arm.com>
->> Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
->> Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
->> ---
->>  arch/arm64/include/asm/cpu.h    |  1 +
->>  arch/arm64/include/asm/sysreg.h |  4 ++++
->>  arch/arm64/kernel/cpufeature.c  | 11 +++++++++++
->>  arch/arm64/kernel/cpuinfo.c     |  1 +
->>  arch/arm64/kvm/sys_regs.c       |  2 +-
->>  5 files changed, 18 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/include/asm/cpu.h b/arch/arm64/include/asm/cpu.h
->> index b4a40535a3d8..464e828a994d 100644
->> --- a/arch/arm64/include/asm/cpu.h
->> +++ b/arch/arm64/include/asm/cpu.h
->> @@ -46,6 +46,7 @@ struct cpuinfo_arm64 {
->>  	u32		reg_id_mmfr3;
->>  	u32		reg_id_pfr0;
->>  	u32		reg_id_pfr1;
->> +	u32		reg_id_pfr2;
->>  
->>  	u32		reg_mvfr0;
->>  	u32		reg_mvfr1;
->> diff --git a/arch/arm64/include/asm/sysreg.h b/arch/arm64/include/asm/sysreg.h
->> index e5317a6367b6..c977449e02db 100644
->> --- a/arch/arm64/include/asm/sysreg.h
->> +++ b/arch/arm64/include/asm/sysreg.h
->> @@ -153,6 +153,7 @@
->>  #define SYS_MVFR0_EL1			sys_reg(3, 0, 0, 3, 0)
->>  #define SYS_MVFR1_EL1			sys_reg(3, 0, 0, 3, 1)
->>  #define SYS_MVFR2_EL1			sys_reg(3, 0, 0, 3, 2)
->> +#define SYS_ID_PFR2_EL1			sys_reg(3, 0, 0, 3, 4)
+> Hi Marc, Christoffer,
 > 
-> nit: but please group these defines by name rather than encoding.
+> On 22/04/2020 13:00, Marc Zyngier wrote:
+> > From: Christoffer Dall <christoffer.dall@arm.com>
+> > 
+> > If we move the used_lrs field to the version-specific cpu interface
+> > structure, the following functions only operate on the struct
+> > vgic_v3_cpu_if and not the full vcpu:
+> > 
+> >   __vgic_v3_save_state
+> >   __vgic_v3_restore_state
+> >   __vgic_v3_activate_traps
+> >   __vgic_v3_deactivate_traps
+> >   __vgic_v3_save_aprs
+> >   __vgic_v3_restore_aprs
+> > 
+> > This is going to be very useful for nested virt,   
+> 
+> ... because you don't need to consider whether the vcpu is running in vEL2?
 
-Sure, will do the same for all new register being added in the series.
+That's one of the reasons, as vEL2 is still EL1.
+
+But things become really fun when you run a L2 guest, which is an EL1
+guest from the PoV of the guest hypervisor (aka L1). At this stage
+what you feed to the HW is not the state that could be populated by L0
+for L1, but instead what L1 has created for L2 (with a bit of
+additional repainting to adjust some of the interrupt numbers).
+
+So we build a shadow cpu_if on the fly and pass it to the normal vgic
+handling functions. I told you it was fun! ;-)
+
+> > so move the used_lrs
+> > field and change the prototypes and implementations of these functions to
+> > take the cpu_if parameter directly.  
+> 
+> 
+> > No functional change.  
+> 
+> Looks like no change!
+> 
+> Reviewed-by: James Morse <james.morse@arm.com>
+
+Thanks!
+
+	M.
+-- 
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
