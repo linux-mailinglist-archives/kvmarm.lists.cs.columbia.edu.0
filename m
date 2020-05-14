@@ -2,61 +2,53 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 31FD31D210F
-	for <lists+kvmarm@lfdr.de>; Wed, 13 May 2020 23:29:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 14D3B1D2B16
+	for <lists+kvmarm@lfdr.de>; Thu, 14 May 2020 11:17:18 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9C5734B364;
-	Wed, 13 May 2020 17:29:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 871614B289;
+	Thu, 14 May 2020 05:17:17 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id aOGHUcjevZPY; Wed, 13 May 2020 17:29:34 -0400 (EDT)
+	with ESMTP id s8YSjlDolF5X; Thu, 14 May 2020 05:17:17 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6F42A4B365;
-	Wed, 13 May 2020 17:29:33 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7D8774B28D;
+	Thu, 14 May 2020 05:17:16 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 36F274B35F
- for <kvmarm@lists.cs.columbia.edu>; Wed, 13 May 2020 17:29:32 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6AE8C4B286
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 14 May 2020 05:17:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 0Cq3e-yWlTIB for <kvmarm@lists.cs.columbia.edu>;
- Wed, 13 May 2020 17:29:31 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 242CB4B35D
- for <kvmarm@lists.cs.columbia.edu>; Wed, 13 May 2020 17:29:31 -0400 (EDT)
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
- bits)) (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id EBA29205ED;
- Wed, 13 May 2020 21:29:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1589405370;
- bh=82keoslIP27mEcCwIYl6UmWhou7iCdqwqR319WJP/24=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=J2pFC/rvtEq2MhEL7dK4dX8n/tVIAE+9YOl4lPE+v3YOqeTkTGzvdiPEY3sdO4+s4
- vn1aOGHij4CaEpfJWipmxe7Jr1chdQlwkRyixK+Q8VSbCrfwDeGbDYzFloSnhJ0ScE
- DmYN9QAjWI85lkM7RZRbO+2CEL0D/Wc64Uc3WuH4=
-Date: Wed, 13 May 2020 22:29:25 +0100
-From: Will Deacon <will@kernel.org>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH] KVM: arm64: Move virt/kvm/arm to arch/arm64
-Message-ID: <20200513212925.GD28594@willie-the-truck>
-References: <20200513104034.74741-1-maz@kernel.org>
+ with ESMTP id x23DPUyrp8y7 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 14 May 2020 05:17:13 -0400 (EDT)
+Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id DE6444B287
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 14 May 2020 05:17:12 -0400 (EDT)
+Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.60])
+ by Forcepoint Email with ESMTP id ABBD6B17E2B7EA933AF5;
+ Thu, 14 May 2020 17:17:09 +0800 (CST)
+Received: from [10.173.221.230] (10.173.221.230) by
+ DGGEMS413-HUB.china.huawei.com (10.3.19.213) with Microsoft SMTP Server id
+ 14.3.487.0; Thu, 14 May 2020 17:17:04 +0800
+To: <linux-arm-kernel@lists.infradead.org>, <kvmarm@lists.cs.columbia.edu>
+From: zhukeqian <zhukeqian1@huawei.com>
+Subject: [Question] Hardware management of stage2 page dirty state
+Message-ID: <0767678d-d580-eb02-c2f0-423b16526736@huawei.com>
+Date: Thu, 14 May 2020 17:16:52 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20200513104034.74741-1-maz@kernel.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+X-Originating-IP: [10.173.221.230]
+X-CFilter-Loop: Reflected
+Cc: catalin.marinas@arm.com, "Zengtao \(B\)" <prime.zeng@hisilicon.com>,
+ Marc Zyngier <maz@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -73,17 +65,42 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, May 13, 2020 at 11:40:34AM +0100, Marc Zyngier wrote:
-> Now that the 32bit KVM/arm host is a distant memory, let's move the
-> whole of the KVM/arm64 code into the arm64 tree.
-> 
-> As they said in the song: Welcome Home (Sanitarium).
-> 
-> Signed-off-by: Marc Zyngier <maz@kernel.org>
+Hi Catalin,
 
-Acked-by: Will Deacon <will@kernel.org>
+I have some questions after deep reading your patch
+https://patchwork.kernel.org/patch/8824261/ which enables hardware updates
+of the Access Flag for Stage 2 page tables.
 
-Will
+I notice that at the bottom of commit message, you said the following words:
+"After some digging through the KVM code, I concluded that hardware DBM
+(dirty bit management) support is not feasible for Stage 2. A potential
+user would be dirty logging but this requires a different bitmap exposed
+to Qemu and, to avoid races, the stage 2 mappings need to be mapped
+read-only on clean, writable on fault. This assumption simplifies the
+hardware Stage 2 AF support."
+
+I have three questions here.
+
+1. I do not understand the reason well about "not feasible". Does the main reason
+   for this is the "races" you referred?
+
+2. What does the "races" refer to? Do you mean the races between [hardware S2 DBM]
+   and [dirty information collection that executed by KVM]?
+
+   During VM live migration, Qemu will send dirty page iteratively and finally stop
+   VM when dirty pages is not too much. We may miss dirty pages during each iteration
+   before VM stop, but there are no races after VM stop, so we won't miss dirty pages
+   finally. It seems that "races" is not a convinced reason for "not feasible".
+
+3. You said that disable hardware S2 DBM support can simplify the hardware S2 AF support.
+   Could you please explain the reason in detail?
+
+
+
+Expect your reply. Many Thanks!
+
+Thanks,
+Keqian.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
