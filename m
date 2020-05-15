@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E0BF41D4BD2
-	for <lists+kvmarm@lfdr.de>; Fri, 15 May 2020 12:59:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 719D71D4BD5
+	for <lists+kvmarm@lfdr.de>; Fri, 15 May 2020 12:59:12 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 611814B4CB;
-	Fri, 15 May 2020 06:59:03 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 26ACD4B494;
+	Fri, 15 May 2020 06:59:12 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,69 +14,68 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4YZ2399wKz4F; Fri, 15 May 2020 06:59:03 -0400 (EDT)
+	with ESMTP id d05NRdKUr29J; Fri, 15 May 2020 06:59:07 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6700E4B4CF;
-	Fri, 15 May 2020 06:58:59 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A610C4B4EC;
+	Fri, 15 May 2020 06:59:04 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E99754B4C8
- for <kvmarm@lists.cs.columbia.edu>; Fri, 15 May 2020 06:58:57 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3991C4B46C
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 15 May 2020 06:59:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ZSMFPhwu+ufQ for <kvmarm@lists.cs.columbia.edu>;
- Fri, 15 May 2020 06:58:57 -0400 (EDT)
-Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com
- [209.85.128.68])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E30154B4C7
- for <kvmarm@lists.cs.columbia.edu>; Fri, 15 May 2020 06:58:56 -0400 (EDT)
-Received: by mail-wm1-f68.google.com with SMTP id w64so2161238wmg.4
- for <kvmarm@lists.cs.columbia.edu>; Fri, 15 May 2020 03:58:56 -0700 (PDT)
+ with ESMTP id psNxT9UH8Gon for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 15 May 2020 06:58:59 -0400 (EDT)
+Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com
+ [209.85.221.67])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id CFAA54B4C8
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 15 May 2020 06:58:58 -0400 (EDT)
+Received: by mail-wr1-f67.google.com with SMTP id y3so3063741wrt.1
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 15 May 2020 03:58:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=n0WmKLG9AhFHe1sx7/xWBbs910NkW2ou4PIf9/zvdZk=;
- b=XH/o0H7oM78CWsMava6ImC+pDI6hF6ua9+7a+QgMxesqt0yvnk3qtmKK2Kdbnpgwn5
- syN/+CbKjm6nWhTD4kIjUoLCKKDl0DlXsbkO5IvT0Ng63b17fu0k70ArZyIFneeBaLRz
- raNSACI6WrwfkYHp+NLgayYvdjKyhhOPIG/9EnB9PD4u3xxQQz7jOb2yARtaUaugtPMx
- f2om0EoHE2cV01n/1IlqoPq1I3NpnCfjdh4Irg94n2vsLyaQthwX7TH58GQap8aIibHq
- HX/YAdJj4EJ54cR/YtNxaqTu/khLe/vqabq3I08duZ21GmKhMeAnn0qbb3oOZpPG1tZJ
- FCcg==
+ bh=Ai6Fwl8UyJm6B87jvYHBuJcbjLJDaWpZZPVaPcXdfLA=;
+ b=u2DytUW7gTaWjKgKY0D29Drbg//IklH60EMwY3UFqgWODthsP3akJrIYzhlnI5FJKv
+ RNUVgMc+XbbpJVoDkByhNUhNdw9T7bxR6ZjOn0hrivmRGUWB8qbGL1mfRJ18I/0tACbJ
+ xeAuqFwIfPJp8vLLJXuTVyl27cwnBPE91ENGsEqjeMFv1vVmgE5F2C8Wh9+EkaIbSqar
+ cYFpZWx5UpuZwEqqAV5GKNOYKQdjT52uS1qNza/RpJ+CZUQEyO6g/W+JJVKg6K4E0vIu
+ Ql55gaM8m+fAEIqi1nqzANNnf0liHhnaKFjWRwDrVGkGM6t52MBlqnsp4q+zlQsDI4kQ
+ 8Tqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=n0WmKLG9AhFHe1sx7/xWBbs910NkW2ou4PIf9/zvdZk=;
- b=EwcXV6nlQk5ZUNiHLSL03ok2BjiAtm5cND8UJOriOPIUT+sTNUqbDGBrH8p9raxDC3
- TPJs2jnpyGFg5dH/bq3VkJGkYy188/hccckt/Stl08gZu5HkNajjTNqfXUsWWkR1jNjD
- OGpBHymrSNleDOk+tpxg+91LvxKQ7OTDr7AQ5C2PE7Uelg8h0Sf9x8mCsaFper8TRzT5
- fD2BE7RHBN5rwBp4W84digSWOizwt/OyxOXCYDKkLLzeMNtcXzlcHV7XJ3P1IvR6/x/h
- 9IVdtRLdVId09D1xKW1Q2E9Dh4q0nXyRdV9tHM0CLlCXMejhcmz5VZZQSTIZV0pUPJWK
- K3GA==
-X-Gm-Message-State: AOAM532fuBHY/x8Mae2rbtKv25LGPJBlMmLmzPomnuDHNQa5HMTdXrBg
- Mc93ydDY5IpLWyobhaxHMKVppQ==
-X-Google-Smtp-Source: ABdhPJyFi+//KaD2VusD1LXgNbdSGbxHqdar1dGWec/TaEPF0FrbkPG38tGqXW8/K5EnBa5mk9BeqA==
-X-Received: by 2002:a7b:ca53:: with SMTP id m19mr3574570wml.182.1589540335813; 
- Fri, 15 May 2020 03:58:55 -0700 (PDT)
+ bh=Ai6Fwl8UyJm6B87jvYHBuJcbjLJDaWpZZPVaPcXdfLA=;
+ b=Z1ZDXKkA3GgdbD2EVFxPM2jMnCkM7ciqtc0ROku3C9kOGASCWSoVowBQQWZFxcgCNq
+ 6finz6wuShoCjTlE57i5qmF0T/Ehaazq2JbNKge9HKJRN7HNmGtEh8jRZ2xSOdzps5d2
+ vIR7pdrVjg27SJZai+wsVRXD+/Mn103e+Qg0do44f8Of3coOLYTcxuz1dpr2dnTBgQRw
+ pSzVoc1c6i0d6xYsBRtRUCGhDKGdpVxuWgtE8u8+xCz2+9yxQayXdmz8Dpp+aCDsEX/k
+ hM4E73fj5lriRwL5bCKZKZ0htz0w2CQ87UTPYSGkloUJXFL5MXLcasCbz4oZ4jCpaC+B
+ xCRw==
+X-Gm-Message-State: AOAM531KfxnIXaQ9wF1LxRZ+Es+330kFLctDOi8T8LahT4nI049L8+uE
+ B6rVxUuI4f3Wy6Qfv5DEeoULLA==
+X-Google-Smtp-Source: ABdhPJxJSLJpRVMm0dV2T5Dk4zybjMjD8L0/aFOEv7m2OekpRetlA0SYTkbeLI0O0Ger9pleD5J2kA==
+X-Received: by 2002:adf:f84c:: with SMTP id d12mr3627382wrq.248.1589540337673; 
+ Fri, 15 May 2020 03:58:57 -0700 (PDT)
 Received: from localhost ([2a01:4b00:8523:2d03:d11b:f847:8002:7411])
- by smtp.gmail.com with ESMTPSA id x184sm3090403wmg.38.2020.05.15.03.58.54
+ by smtp.gmail.com with ESMTPSA id t7sm3106188wrq.39.2020.05.15.03.58.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 15 May 2020 03:58:55 -0700 (PDT)
+ Fri, 15 May 2020 03:58:56 -0700 (PDT)
 From: David Brazdil <dbrazdil@google.com>
 To: Catalin Marinas <catalin.marinas@arm.com>,
  James Morse <james.morse@arm.com>,
  Julien Thierry <julien.thierry.kdev@gmail.com>,
  Marc Zyngier <maz@kernel.org>, Suzuki K Poulose <suzuki.poulose@arm.com>,
  Will Deacon <will@kernel.org>
-Subject: [PATCH v2 01/14] arm64: kvm: Fix symbol dependency in
- __hyp_call_panic_nvhe
-Date: Fri, 15 May 2020 11:58:28 +0100
-Message-Id: <20200515105841.73532-2-dbrazdil@google.com>
+Subject: [PATCH v2 02/14] arm64: kvm: Move __smccc_workaround_1_smc to .rodata
+Date: Fri, 15 May 2020 11:58:29 +0100
+Message-Id: <20200515105841.73532-3-dbrazdil@google.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20200515105841.73532-1-dbrazdil@google.com>
 References: <20200515105841.73532-1-dbrazdil@google.com>
@@ -99,33 +98,90 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-__hyp_call_panic_nvhe contains inline assembly which did not declare
-its dependency on the __hyp_panic_string symbol.
-
-The static-declared string has previously been kept alive because of a use in
-__hyp_call_panic_vhe. Fix this in preparation for separating the source files
-between VHE and nVHE when the two users land in two different compilation
-units. The static variable otherwise gets dropped when compiling the nVHE
-source file, causing an undefined symbol linker error later.
+This snippet of assembly is used by cpu_errata.c to overwrite parts of KVM hyp
+vector. Move it to its own source file and change its ELF section to .rodata.
 
 Signed-off-by: David Brazdil <dbrazdil@google.com>
 ---
- arch/arm64/kvm/hyp/switch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/hyp/Makefile    |  1 +
+ arch/arm64/kvm/hyp/hyp-entry.S | 16 ----------------
+ arch/arm64/kvm/hyp/smccc_wa.S  | 30 ++++++++++++++++++++++++++++++
+ 3 files changed, 31 insertions(+), 16 deletions(-)
+ create mode 100644 arch/arm64/kvm/hyp/smccc_wa.S
 
-diff --git a/arch/arm64/kvm/hyp/switch.c b/arch/arm64/kvm/hyp/switch.c
-index 8a1e81a400e0..7a7c08029d81 100644
---- a/arch/arm64/kvm/hyp/switch.c
-+++ b/arch/arm64/kvm/hyp/switch.c
-@@ -836,7 +836,7 @@ static void __hyp_text __hyp_call_panic_nvhe(u64 spsr, u64 elr, u64 par,
- 	 * making sure it is a kernel address and not a PC-relative
- 	 * reference.
- 	 */
--	asm volatile("ldr %0, =__hyp_panic_string" : "=r" (str_va));
-+	asm volatile("ldr %0, =%1" : "=r" (str_va) : "S" (__hyp_panic_string));
+diff --git a/arch/arm64/kvm/hyp/Makefile b/arch/arm64/kvm/hyp/Makefile
+index 8c9880783839..5d8357ddc234 100644
+--- a/arch/arm64/kvm/hyp/Makefile
++++ b/arch/arm64/kvm/hyp/Makefile
+@@ -7,6 +7,7 @@ ccflags-y += -fno-stack-protector -DDISABLE_BRANCH_PROFILING \
+ 		$(DISABLE_STACKLEAK_PLUGIN)
  
- 	__hyp_do_panic(str_va,
- 		       spsr, elr,
+ obj-$(CONFIG_KVM) += hyp.o
++obj-$(CONFIG_KVM_INDIRECT_VECTORS) += smccc_wa.o
+ 
+ hyp-y := vgic-v3-sr.o timer-sr.o aarch32.o vgic-v2-cpuif-proxy.o sysreg-sr.o \
+ 	 debug-sr.o entry.o switch.o fpsimd.o tlb.o hyp-entry.o
+diff --git a/arch/arm64/kvm/hyp/hyp-entry.S b/arch/arm64/kvm/hyp/hyp-entry.S
+index c2a13ab3c471..65ff99a7e02d 100644
+--- a/arch/arm64/kvm/hyp/hyp-entry.S
++++ b/arch/arm64/kvm/hyp/hyp-entry.S
+@@ -319,20 +319,4 @@ SYM_CODE_START(__bp_harden_hyp_vecs)
+ 1:	.org __bp_harden_hyp_vecs + __BP_HARDEN_HYP_VECS_SZ
+ 	.org 1b
+ SYM_CODE_END(__bp_harden_hyp_vecs)
+-
+-	.popsection
+-
+-SYM_CODE_START(__smccc_workaround_1_smc)
+-	esb
+-	sub	sp, sp, #(8 * 4)
+-	stp	x2, x3, [sp, #(8 * 0)]
+-	stp	x0, x1, [sp, #(8 * 2)]
+-	mov	w0, #ARM_SMCCC_ARCH_WORKAROUND_1
+-	smc	#0
+-	ldp	x2, x3, [sp, #(8 * 0)]
+-	ldp	x0, x1, [sp, #(8 * 2)]
+-	add	sp, sp, #(8 * 4)
+-1:	.org __smccc_workaround_1_smc + __SMCCC_WORKAROUND_1_SMC_SZ
+-	.org 1b
+-SYM_CODE_END(__smccc_workaround_1_smc)
+ #endif
+diff --git a/arch/arm64/kvm/hyp/smccc_wa.S b/arch/arm64/kvm/hyp/smccc_wa.S
+new file mode 100644
+index 000000000000..aa25b5428e77
+--- /dev/null
++++ b/arch/arm64/kvm/hyp/smccc_wa.S
+@@ -0,0 +1,30 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Copyright (C) 2015-2018 - ARM Ltd
++ * Author: Marc Zyngier <marc.zyngier@arm.com>
++ */
++
++#include <linux/arm-smccc.h>
++
++#include <asm/kvm_asm.h>
++#include <asm/kvm_mmu.h>
++
++	/*
++	 * This is not executed directly and is instead copied into the vectors
++	 * by install_bp_hardening_cb().
++	 */
++	.data
++	.pushsection	.rodata
++	.global		__smccc_workaround_1_smc
++__smccc_workaround_1_smc:
++	esb
++	sub	sp, sp, #(8 * 4)
++	stp	x2, x3, [sp, #(8 * 0)]
++	stp	x0, x1, [sp, #(8 * 2)]
++	mov	w0, #ARM_SMCCC_ARCH_WORKAROUND_1
++	smc	#0
++	ldp	x2, x3, [sp, #(8 * 0)]
++	ldp	x0, x1, [sp, #(8 * 2)]
++	add	sp, sp, #(8 * 4)
++1:	.org __smccc_workaround_1_smc + __SMCCC_WORKAROUND_1_SMC_SZ
++	.org 1b
 -- 
 2.26.2
 
