@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 73E471D4BEE
-	for <lists+kvmarm@lfdr.de>; Fri, 15 May 2020 12:59:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E4AD1D4C07
+	for <lists+kvmarm@lfdr.de>; Fri, 15 May 2020 13:03:04 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 29DE54B500;
-	Fri, 15 May 2020 06:59:53 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C8CCB4B418;
+	Fri, 15 May 2020 07:03:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,69 +19,68 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5j7lqC8jpXRL; Fri, 15 May 2020 06:59:53 -0400 (EDT)
+	with ESMTP id G8WAOMW+-Om0; Fri, 15 May 2020 07:03:03 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 28F414B513;
-	Fri, 15 May 2020 06:59:33 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C70C24B4AD;
+	Fri, 15 May 2020 07:02:59 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 785464B4E5
- for <kvmarm@lists.cs.columbia.edu>; Fri, 15 May 2020 06:59:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id ED3664B49E
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 15 May 2020 07:02:58 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id bz3CbIQpXoBN for <kvmarm@lists.cs.columbia.edu>;
- Fri, 15 May 2020 06:59:29 -0400 (EDT)
-Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com
- [209.85.221.65])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A27734B4FA
- for <kvmarm@lists.cs.columbia.edu>; Fri, 15 May 2020 06:59:21 -0400 (EDT)
-Received: by mail-wr1-f65.google.com with SMTP id l17so3033289wrr.4
- for <kvmarm@lists.cs.columbia.edu>; Fri, 15 May 2020 03:59:21 -0700 (PDT)
+ with ESMTP id yP09Z-mCRqKe for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 15 May 2020 07:02:58 -0400 (EDT)
+Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com
+ [209.85.221.67])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E61DC4B418
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 15 May 2020 07:02:57 -0400 (EDT)
+Received: by mail-wr1-f67.google.com with SMTP id j5so3066536wrq.2
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 15 May 2020 04:02:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=sW/5ZwfUkcrq8MNsWbZB8lRN7UAKxOnejMG35fACcpU=;
- b=tqre/qi7LotrlOupGSzYt/UzPtBy6RKj8xVepwDzpdtgmD2j1I7oQ4kcPPdkV2ZGOJ
- hkb6qLAW45uzBZeohJSLIXIGRY/7SVGY1leLVFJVuP4CMq9xSsZjxdeS5vfPPIJEl/y4
- MHUYKk1DPQdCyvYh7bT9gvsdjIWCHy1cgZBKcG/RbceKT+P2dXPlyzEVONehZKyuPUXL
- 388pp6M15+gpipCoh7DAoq00mt0q5cZfUMfLfunZYQv4+z9cvbDoEj4JB4JSpO7k2DxO
- V5ckh4Ftfrl4+RmZy2SzVWEqFvC/U1b7tjmCt7qIYEAU6yVfSEpjBRvfcTtbYrhOj0xo
- KVHw==
+ h=from:date:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=QSEyQaq4LQecf0jyORsCF74hs8fmG+5qsCygtQRV5Dg=;
+ b=Iuwv0st6tBfu2N1oXCtOhkcayvgqQMZupIvuQ2VGVv1/w1cebSJ+5Tf9lEm8kv4Of5
+ VKUNqoghQw0xMwQ+iW365XX0XBTte7eaFcbQo5WX6k5T6R72gIUdlcCpSO6Cykl622ym
+ upplDZVGF5MEy0WOV6XukDee6uz/yvuFu++aEfenRKuQQUB47C+uzX5AfNtVc4z8kz6e
+ U2JJBHvOQpPCV5kDVPnZH1Saop0L8AeGY2XSLhBfrUTHh8rHYkwBbK/AnlpgnLVIz9xe
+ HqGGHea8OOioDCvS7+IpU9SrBjQHhfuKNpwa6CKeyX4zSKbG/L5Q7eUMYp53DinKjgqK
+ dB4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
- :references:mime-version:content-transfer-encoding;
- bh=sW/5ZwfUkcrq8MNsWbZB8lRN7UAKxOnejMG35fACcpU=;
- b=Z6L8mKcJp4rmRoac8Ff39boIJXfJpRb1rpeh2kqwdjh2wCvtZ3UZQ/BwECT/h9aGdD
- q1kQZNNuJXo9UQCrdky69LkkK9s1j6yIuUDw4ImbvWP1AxsxXHAQtD92JXDxZS3qyGGg
- CsOLHp7vwmi+3W+5OLH/WEpE1E7nzDtbyFq6KV4Ra8aE8MqKZ6kDi27JhgPm7XWE+zEV
- KwiTjIyBiglAlsME0QMYQgO3zGeQ61ZQaJAkkSD6ySAJSC31mGEqI4kVmdn0fM5GfTsq
- dBMDLJ8cFo5sakR79F83vmCuTOEwJpooszy4wSbRm1hmya9V8/+LJXkg2ALcubDw8pyo
- 2zHA==
-X-Gm-Message-State: AOAM5326wiDxJO56J/SGMhAa2dyF6/NRArU3K9NxbzFmsJlsTAIG4FTo
- G20MCaxCOS7aZ1wKU9KP8ArvSw==
-X-Google-Smtp-Source: ABdhPJypINRB1vch83S8A4T3nKixjdrHNtaJjymSWdrumgmpTeVVmG20s6/LdGZ7yzPGLe/h25kr3w==
-X-Received: by 2002:adf:d4c6:: with SMTP id w6mr3816250wrk.92.1589540360508;
- Fri, 15 May 2020 03:59:20 -0700 (PDT)
-Received: from localhost ([2a01:4b00:8523:2d03:d11b:f847:8002:7411])
- by smtp.gmail.com with ESMTPSA id f128sm3300011wme.1.2020.05.15.03.59.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 15 May 2020 03:59:19 -0700 (PDT)
+ h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=QSEyQaq4LQecf0jyORsCF74hs8fmG+5qsCygtQRV5Dg=;
+ b=D7nOXe3aCteZ4QqQQMi67SA/nIR9rsnZns19KpQ79HI0O97Na8j6s3pupMSrdNTGYB
+ 3HRpZwqIPS/aU7VOcECaWdQCjPSYYQAF6MnKxfHO41MYComOU5C9IQlJaOaKApzOR0SO
+ hdD2eij7cMrOz1/1T5WeAGYNeQ3/YMS1Uv0wvgiPMFUEZyQIPBlnNjtGkluP4QhGXX4U
+ rNprP48M/lsXiEMRp8yvGEGt6V7EMfRWYHArM6WIlWQRaGu95NQuzK/qeY/UbYH9YT9K
+ IXZtdUHAX2XquBjWvNR7vsdAu1/Uu8P6Tj4XlgnGWf8PymdUx2CWk+5n716fQoTbJJXl
+ dL4w==
+X-Gm-Message-State: AOAM533bpcYP7azQ3q9TbS665D4YmMTkG+NkjedytE5WSxNOr9lqChD7
+ 82sm6OQ9hgL4LyxL5rwTRKH3kQ==
+X-Google-Smtp-Source: ABdhPJxdZw/B+gueDnbAmXpzPy0/wjSgamnTKKreYvMlu/5kVJi8yd7clMYiq36nVcXiMdvgBkF7tA==
+X-Received: by 2002:a5d:4950:: with SMTP id r16mr3785390wrs.350.1589540576609; 
+ Fri, 15 May 2020 04:02:56 -0700 (PDT)
+Received: from dbrazdil-macbookpro.roam.corp.google.com
+ ([2a01:4b00:8523:2d03:d11b:f847:8002:7411])
+ by smtp.gmail.com with ESMTPSA id z3sm3368475wrm.81.2020.05.15.04.02.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 15 May 2020 04:02:55 -0700 (PDT)
 From: David Brazdil <dbrazdil@google.com>
-To: Catalin Marinas <catalin.marinas@arm.com>,
- James Morse <james.morse@arm.com>,
- Julien Thierry <julien.thierry.kdev@gmail.com>,
- Marc Zyngier <maz@kernel.org>, Suzuki K Poulose <suzuki.poulose@arm.com>,
- Will Deacon <will@kernel.org>
-Subject: [PATCH v2 14/14] arm64: kvm: Lift instrumentation restrictions on VHE
-Date: Fri, 15 May 2020 11:58:41 +0100
-Message-Id: <20200515105841.73532-15-dbrazdil@google.com>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200515105841.73532-1-dbrazdil@google.com>
-References: <20200515105841.73532-1-dbrazdil@google.com>
+X-Google-Original-From: David Brazdil
+ <dbrazdil@dbrazdil-macbookpro.roam.corp.google.com>
+Date: Fri, 15 May 2020 12:02:54 +0100
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH] KVM: arm64: Use cpus_have_final_cap for has_vhe()
+Message-ID: <20200515110254.cxmng6u2qnnvwpya@dbrazdil-macbookpro.roam.corp.google.com>
+References: <20200513103828.74580-1-maz@kernel.org>
 MIME-Version: 1.0
-Cc: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20200513103828.74580-1-maz@kernel.org>
+Cc: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -98,36 +97,16 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-With VHE and nVHE executable code completely separated, remove build config
-that disabled GCOV/KASAN/UBSAN/KCOV instrumentation for VHE as these now
-execute under the same memory mappings as the rest of the kernel.
+Hi Marc,
 
-No violations are currently being reported by either KASAN or UBSAN.
+> 
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
+Acked-by: David Brazdil <dbrazdil@google.com>
 
-Signed-off-by: David Brazdil <dbrazdil@google.com>
----
- arch/arm64/kvm/hyp/Makefile | 8 --------
- 1 file changed, 8 deletions(-)
+Thanks, this is really helpful for the 'Split off nVHE code' series. Tested
+them together and things seem to work just fine.
 
-diff --git a/arch/arm64/kvm/hyp/Makefile b/arch/arm64/kvm/hyp/Makefile
-index c9fd8618980d..69113bf193de 100644
---- a/arch/arm64/kvm/hyp/Makefile
-+++ b/arch/arm64/kvm/hyp/Makefile
-@@ -11,11 +11,3 @@ obj-$(CONFIG_KVM_INDIRECT_VECTORS) += smccc_wa.o
- 
- vhe-y := vgic-v3-sr.o timer-sr.o aarch32.o vgic-v2-cpuif-proxy.o sysreg-sr.o \
- 	 debug-sr.o entry.o switch.o fpsimd.o tlb.o hyp-entry.o
--
--# KVM code is run at a different exception code with a different map, so
--# compiler instrumentation that inserts callbacks or checks into the code may
--# cause crashes. Just disable it.
--GCOV_PROFILE	:= n
--KASAN_SANITIZE	:= n
--UBSAN_SANITIZE	:= n
--KCOV_INSTRUMENT	:= n
--- 
-2.26.2
-
+David
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
