@@ -2,56 +2,85 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7284D1D4459
-	for <lists+kvmarm@lfdr.de>; Fri, 15 May 2020 06:20:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A7011D4BD3
+	for <lists+kvmarm@lfdr.de>; Fri, 15 May 2020 12:59:08 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D41F04B462;
-	Fri, 15 May 2020 00:20:30 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B30574B4CF;
+	Fri, 15 May 2020 06:59:07 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.502
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=no
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6oTBQQhefLPy; Fri, 15 May 2020 00:20:30 -0400 (EDT)
+	with ESMTP id qNSlnn01Za5H; Fri, 15 May 2020 06:59:03 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CF9CE4B45A;
-	Fri, 15 May 2020 00:20:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8CE794B4D8;
+	Fri, 15 May 2020 06:59:00 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1CF9D4B457
- for <kvmarm@lists.cs.columbia.edu>; Fri, 15 May 2020 00:20:25 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C42754B494
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 15 May 2020 06:58:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id tgCn4UsUcdlV for <kvmarm@lists.cs.columbia.edu>;
- Fri, 15 May 2020 00:20:23 -0400 (EDT)
-Received: from huawei.com (szxga07-in.huawei.com [45.249.212.35])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id F29AD4B453
- for <kvmarm@lists.cs.columbia.edu>; Fri, 15 May 2020 00:20:22 -0400 (EDT)
-Received: from DGGEMS411-HUB.china.huawei.com (unknown [172.30.72.59])
- by Forcepoint Email with ESMTP id CED2B789477CF5FD1381;
- Fri, 15 May 2020 12:20:18 +0800 (CST)
-Received: from [10.173.221.230] (10.173.221.230) by
- DGGEMS411-HUB.china.huawei.com (10.3.19.211) with Microsoft SMTP Server id
- 14.3.487.0; Fri, 15 May 2020 12:20:12 +0800
-Subject: Re: [Question] Hardware management of stage2 page dirty state
-To: Catalin Marinas <catalin.marinas@arm.com>
-References: <0767678d-d580-eb02-c2f0-423b16526736@huawei.com>
- <20200514161427.GD1907@gaia>
-From: zhukeqian <zhukeqian1@huawei.com>
-Message-ID: <dce26d58-7b6b-5eaf-8f7d-41361cb5cc9c@huawei.com>
-Date: Fri, 15 May 2020 12:20:00 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+ with ESMTP id e5X1YaEk51LA for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 15 May 2020 06:58:55 -0400 (EDT)
+Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com
+ [209.85.128.68])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8EAE14B352
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 15 May 2020 06:58:55 -0400 (EDT)
+Received: by mail-wm1-f68.google.com with SMTP id f13so1848676wmc.5
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 15 May 2020 03:58:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=nz5T7Ti8J6fFByDN7jOu8omjWEMvQxD/kfVl2PcIzCU=;
+ b=T+jG2gdoHAiFMGlPBUlnH03zcMMorDiITXPXucXkn/GIGjnkQO+jeBVCZ2a5wadM5r
+ moE4Sx4biP9FnWYkKowwtGpFns0jtPDK9cYB0VrB6HSWaAHHSifPvmDwq6pKLyoRtvag
+ MaKowrZyO66h/EL1u/mBdDVvZDI+jlSkCYyd7p+rN7LhxzUUqiBzFik/3rAwwMeCUDHb
+ YCsAzblgWg8QrIGJzlpH1dNC7EklX67Qs4MW8egbDagsgAmbA+bYX2erCDO5+pRXPw3P
+ pXuGoQj5cFaYfmwHWU6Klmm/PsF4wGtEeRSQ9U6AVPZBz9NZ9koDinlhv96IKplT7LhI
+ Omrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=nz5T7Ti8J6fFByDN7jOu8omjWEMvQxD/kfVl2PcIzCU=;
+ b=NZdcBM+2NebmOGhKVBd6McgyxIPJ2VBSNG52BQf+BANje4zUB7Gnp9nsrKy5e93a/S
+ fHS0O1faz6frK5L2s5kclt+KqW5jtb+VRd09sMbSFUDPkkUcjs8hVOEj6u3Xe5ezYIQX
+ OLumxgcMngMtAYjOYluukka1S7ZQwEcXUTXiec4+Cf9gBeF3jQnsTTvlcy+AcbJNzIAn
+ zl8N4OHYpXU5NhAcI8q96VjqFnjqReKRIog5mc4ydbYf3CeIua/yuGerGxcCIIdGicmB
+ yzPEZMh+6usbaIhB7/GPFLJBKhICQY88NpG3EB44cJ+y6jZjvpNuOFRoBeD4+XNR3ZYp
+ rcJg==
+X-Gm-Message-State: AOAM533dxA7ubQucYheIhFZXycAlH5PeKKJTKaRhB/nnUq4fnFxSq2Re
+ Hh8825E6wok6OnBjrZ5nFLWAng==
+X-Google-Smtp-Source: ABdhPJxWMYThFcLucYF0IjewRo2gtUyqiGrfOuZ3Lj0ioN+1L/iHTKXER/IB0GkMggNvnKrZEH6YSw==
+X-Received: by 2002:a05:600c:2dd0:: with SMTP id
+ e16mr3626689wmh.121.1589540333968; 
+ Fri, 15 May 2020 03:58:53 -0700 (PDT)
+Received: from localhost ([2a01:4b00:8523:2d03:d11b:f847:8002:7411])
+ by smtp.gmail.com with ESMTPSA id y3sm3005132wrm.64.2020.05.15.03.58.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 15 May 2020 03:58:52 -0700 (PDT)
+From: David Brazdil <dbrazdil@google.com>
+To: Catalin Marinas <catalin.marinas@arm.com>,
+ James Morse <james.morse@arm.com>,
+ Julien Thierry <julien.thierry.kdev@gmail.com>,
+ Marc Zyngier <maz@kernel.org>, Suzuki K Poulose <suzuki.poulose@arm.com>,
+ Will Deacon <will@kernel.org>
+Subject: [PATCH v2 00/14] Split off nVHE hyp code
+Date: Fri, 15 May 2020 11:58:27 +0100
+Message-Id: <20200515105841.73532-1-dbrazdil@google.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-In-Reply-To: <20200514161427.GD1907@gaia>
-X-Originating-IP: [10.173.221.230]
-X-CFilter-Loop: Reflected
-Cc: Marc Zyngier <maz@kernel.org>, "Zengtao \(B\)" <prime.zeng@hisilicon.com>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Cc: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -68,87 +97,122 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Catalin,
+Refactor files in arch/arm64/kvm/hyp to compile all code which runs in EL2
+under nVHE into separate object files from the rest of KVM. This is done in
+preparation for being able to unmap hyp code from EL1 and kernel code/data
+from EL2 but has other benefits too, notably:
+ * safe use of KASAN/UBSAN/GCOV instrumentation on VHE code,
+ * cleaner HVC API,
+ * no need for __hyp_text annotations.
 
-On 2020/5/15 0:14, Catalin Marinas wrote:
-> Hi Keqian,
-> 
-> On Thu, May 14, 2020 at 05:16:52PM +0800, zhukeqian wrote:
->> I have some questions after deep reading your patch
->> https://patchwork.kernel.org/patch/8824261/ which enables hardware updates
->> of the Access Flag for Stage 2 page tables.
->>
->> I notice that at the bottom of commit message, you said the following words:
->> "After some digging through the KVM code, I concluded that hardware DBM
->> (dirty bit management) support is not feasible for Stage 2. A potential
->> user would be dirty logging but this requires a different bitmap exposed
->> to Qemu and, to avoid races, the stage 2 mappings need to be mapped
->> read-only on clean, writable on fault. This assumption simplifies the
->> hardware Stage 2 AF support."
->>
->> I have three questions here.
->>
->> 1. I do not understand the reason well about "not feasible". Does the main reason
->>    for this is the "races" you referred?
-> 
-> IIRC, dirty logging works by having a bitmap populated by the host
-> kernel when the guest writes a page. Such write triggers a stage 2 fault
-> and the kernel populates the bitmap. With S2 DBM, you wouldn't get a
-> fault when the guest writes the page, so the host kernel would have to
-> periodically check which S2 entries became writable to update the qemu
-> bitmap.
-Sure, the performance problem introduced by traversing page table entries is
-a defect of DBM mechanism.
+nVHE-specific code is moved to hyp/nvhe and compiled with custom build rules
+similar to those used by EFI stub. Shared source files are compiled under both
+VHE and nVHE build rules. Where a source file contained both VHE and nVHE code,
+it is split into a shared header file and two C source files. This is done one
+file per commit to make review easier.
 
-> 
-> I think the race I had in mind was that the bitmap still reports the
-> page as clean while the guest already updated it.
-> 
-> Looking at this again, it may not matter much as qemu can copy those
-> pages again when migrating and before control is handed over to the new
-> host.
-Yes, race is not a problem. Qemu will not miss dirty pages when control is
-handed over to the new Qemu.
+All nVHE symbols are prefixed with "__kvm_nvhe_" to avoid collisions with VHE
+variants (also inspired by EFI stub). Since this prefixes unresolved symbols
+too, image-vars.h contains a list of kernel symbol aliases where nVHE code
+still refers to kernel proper. The list grows fairly large as the patch series
+progresses and code is moved around, but at the end contains 17 symbols. These
+remaining dependencies on kernel proper will be further reduced in the future.
 
-> 
->> 2. What does the "races" refer to? Do you mean the races between [hardware S2 DBM]
->>    and [dirty information collection that executed by KVM]?
-> 
-> Yes.
-> 
->>    During VM live migration, Qemu will send dirty page iteratively and finally stop
->>    VM when dirty pages is not too much. We may miss dirty pages during each iteration
->>    before VM stop, but there are no races after VM stop, so we won't miss dirty pages
->>    finally. It seems that "races" is not a convinced reason for "not feasible".
-> 
-> You are probably right. But you'd have to change the dirty tracking from
-> a fault mechanism to a polling one checking the S2 page tables
-> periodically. Or, can you check then only once after VM stop?
+No functional changes are intended but code was simplified whenever the
+refactoring made it possible.
 
-Our purpose is to remove performance side effect on guest caused by fault mechanism, so we want to
-use DBM from begin to end.
+Tested by running kvm-unit-tests on QEMU 5.0 with VHE/nVHE and GIC v2/v3.
 
-For now, the only problem of DBM that we can figure out is the page table traversing performance.
-We have done some demo tests on this and situation is not that bad. Besides, we have come up with
-some optimizations which can ease this situation effectively.
+Dual compilation of code shared by VHE/nVHE increase the size of the kernel.
+Bloat-o-meter vmlinux diff shows an increase of 21 KB on the ELF symbol level.
+Size of Image.gz is up by 10 KB; size of Image is unchanged, presumably due
+to ELF section alignment.
 
-I plan to send out all test data and PATCH RFC to community next week. It should work functional
-correctly but without any optimizations. After that I will add all optimizations based on PATCH
-RFC and send PATCH v1.
+This is based off Fuad Tabba's patch series "KVM: arm64: Tidy up arch Kconfig
+and Makefiles". Available in branch 'topic/el2-obj-v2' of git repo:
+  https://android-kvm.googlesource.com/linux
 
-> 
->> 3. You said that disable hardware S2 DBM support can simplify the hardware S2 AF support.
->>    Could you please explain the reason in detail?
-> 
-> I probably meant that it simplifies the patch rather than something
-> specific to the AF support. If you add DBM, you'd need to make sure that
-> making a pte read-only doesn't lose the dirty information (see
-> ptep_set_wrprotect(), not sure whether KVM uses the same macro).
-> 
-OK, I will notice this problem, thanks!
+Changes v1 -> v2:
+ * change nVHE symbol prefix from __hyp_text_ to __kvm_nvhe_
+ * rename __HYPERVISOR__ macro to __KVM_NVHE_HYPERVISOR__
+ * use hcall jump table instead of array of function pointers
+ * drop patch to unify HVC callers
+ * move __smccc_workaround_1_smc to own file
+ * header guards for hyp/*.h
+ * improve helpers for handling VHE/nVHE hyp syms in kernel proper
+ * improve commit messages, cover letter
 
-Thanks,
-Keqian
+-David
+
+David Brazdil (14):
+  arm64: kvm: Fix symbol dependency in __hyp_call_panic_nvhe
+  arm64: kvm: Move __smccc_workaround_1_smc to .rodata
+  arm64: kvm: Formalize hypcall ABI
+  arm64: kvm: Add build rules for separate nVHE object files
+  arm64: kvm: Build hyp-entry.S separately for VHE/nVHE
+  arm64: kvm: Split hyp/tlb.c to VHE/nVHE
+  arm64: kvm: Split hyp/switch.c to VHE/nVHE
+  arm64: kvm: Split hyp/debug-sr.c to VHE/nVHE
+  arm64: kvm: Split hyp/sysreg-sr.c to VHE/nVHE
+  arm64: kvm: Split hyp/timer-sr.c to VHE/nVHE
+  arm64: kvm: Compile remaining hyp/ files for both VHE/nVHE
+  arm64: kvm: Add comments around __kvm_nvhe_ symbol aliases
+  arm64: kvm: Remove __hyp_text macro, use build rules instead
+  arm64: kvm: Lift instrumentation restrictions on VHE
+
+ arch/arm64/include/asm/kvm_asm.h             |  29 +-
+ arch/arm64/include/asm/kvm_emulate.h         |   2 +-
+ arch/arm64/include/asm/kvm_host.h            |  12 +-
+ arch/arm64/include/asm/kvm_host_hypercalls.h |  59 ++
+ arch/arm64/include/asm/kvm_hyp.h             |  15 +-
+ arch/arm64/include/asm/kvm_mmu.h             |  16 +-
+ arch/arm64/include/asm/mmu.h                 |   7 -
+ arch/arm64/kernel/cpu_errata.c               |   4 +-
+ arch/arm64/kernel/image-vars.h               |  43 ++
+ arch/arm64/kvm/arm.c                         |   6 +-
+ arch/arm64/kvm/hyp.S                         |  18 +-
+ arch/arm64/kvm/hyp/Makefile                  |  13 +-
+ arch/arm64/kvm/hyp/aarch32.c                 |   6 +-
+ arch/arm64/kvm/hyp/debug-sr.c                | 214 +-----
+ arch/arm64/kvm/hyp/debug-sr.h                | 170 +++++
+ arch/arm64/kvm/hyp/entry.S                   |   1 -
+ arch/arm64/kvm/hyp/fpsimd.S                  |   1 -
+ arch/arm64/kvm/hyp/hyp-entry.S               |  77 +--
+ arch/arm64/kvm/hyp/nvhe/Makefile             |  42 ++
+ arch/arm64/kvm/hyp/nvhe/debug-sr.c           |  77 +++
+ arch/arm64/kvm/hyp/nvhe/switch.c             | 271 ++++++++
+ arch/arm64/kvm/hyp/nvhe/sysreg-sr.c          |  56 ++
+ arch/arm64/kvm/hyp/nvhe/timer-sr.c           |  43 ++
+ arch/arm64/kvm/hyp/nvhe/tlb.c                |  67 ++
+ arch/arm64/kvm/hyp/smccc_wa.S                |  30 +
+ arch/arm64/kvm/hyp/switch.c                  | 688 +------------------
+ arch/arm64/kvm/hyp/switch.h                  | 443 ++++++++++++
+ arch/arm64/kvm/hyp/sysreg-sr.c               | 233 +------
+ arch/arm64/kvm/hyp/sysreg-sr.h               | 216 ++++++
+ arch/arm64/kvm/hyp/timer-sr.c                |  38 +-
+ arch/arm64/kvm/hyp/tlb.c                     | 168 +----
+ arch/arm64/kvm/hyp/tlb.h                     | 131 ++++
+ arch/arm64/kvm/hyp/vgic-v2-cpuif-proxy.c     |   4 +-
+ arch/arm64/kvm/hyp/vgic-v3-sr.c              | 130 ++--
+ arch/arm64/kvm/va_layout.c                   |   2 +-
+ scripts/kallsyms.c                           |   1 +
+ 36 files changed, 1867 insertions(+), 1466 deletions(-)
+ create mode 100644 arch/arm64/include/asm/kvm_host_hypercalls.h
+ create mode 100644 arch/arm64/kvm/hyp/debug-sr.h
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/Makefile
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/debug-sr.c
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/switch.c
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/sysreg-sr.c
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/timer-sr.c
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/tlb.c
+ create mode 100644 arch/arm64/kvm/hyp/smccc_wa.S
+ create mode 100644 arch/arm64/kvm/hyp/switch.h
+ create mode 100644 arch/arm64/kvm/hyp/sysreg-sr.h
+ create mode 100644 arch/arm64/kvm/hyp/tlb.h
+
+-- 
+2.26.2
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
