@@ -2,63 +2,84 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 354E01D7325
-	for <lists+kvmarm@lfdr.de>; Mon, 18 May 2020 10:42:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9CF91D7567
+	for <lists+kvmarm@lfdr.de>; Mon, 18 May 2020 12:43:06 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9760B4B18D;
-	Mon, 18 May 2020 04:42:52 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3179D4B1A4;
+	Mon, 18 May 2020 06:43:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: 0.911
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@gmail.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id gm08WzOXtZOp; Mon, 18 May 2020 04:42:52 -0400 (EDT)
+	with ESMTP id SZEt8Ep2pcFw; Mon, 18 May 2020 06:43:06 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8A8B34B112;
-	Mon, 18 May 2020 04:42:51 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C6AC34B183;
+	Mon, 18 May 2020 06:43:04 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A139E4B0EC
- for <kvmarm@lists.cs.columbia.edu>; Mon, 18 May 2020 04:42:50 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 496E54B0EC
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 18 May 2020 04:41:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 6eyICTRoyRiu for <kvmarm@lists.cs.columbia.edu>;
- Mon, 18 May 2020 04:42:49 -0400 (EDT)
-Received: from Galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 964F24B0E2
- for <kvmarm@lists.cs.columbia.edu>; Mon, 18 May 2020 04:42:49 -0400 (EDT)
-Received: from p5de0bf0b.dip0.t-ipconnect.de ([93.224.191.11]
- helo=nanos.tec.linutronix.de)
- by Galois.linutronix.de with esmtpsa (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256)
- (Exim 4.80) (envelope-from <tglx@linutronix.de>)
- id 1jabM0-0005IY-I1; Mon, 18 May 2020 10:42:32 +0200
-Received: by nanos.tec.linutronix.de (Postfix, from userid 1000)
- id 026F6100606; Mon, 18 May 2020 10:42:31 +0200 (CEST)
-From: Thomas Gleixner <tglx@linutronix.de>
-To: Anastassios Nanos <ananos@nubificus.co.uk>, kvm@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] Expose KVM API to Linux Kernel
-In-Reply-To: <cover.1589784221.git.ananos@nubificus.co.uk>
-References: <cover.1589784221.git.ananos@nubificus.co.uk>
-Date: Mon, 18 May 2020 10:42:31 +0200
-Message-ID: <87y2ppy6q0.fsf@nanos.tec.linutronix.de>
+ with ESMTP id zbDW9lyT8+go for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 18 May 2020 04:41:28 -0400 (EDT)
+Received: from mail-oo1-f66.google.com (mail-oo1-f66.google.com
+ [209.85.161.66])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1ACF34B0E2
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 18 May 2020 04:41:28 -0400 (EDT)
+Received: by mail-oo1-f66.google.com with SMTP id c83so1868863oob.6
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 18 May 2020 01:41:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=oSrWGHIJnwl5plJgYtRqlGjz3pXTL9DsLqcdAW+1uCU=;
+ b=QLh9x0+mo7WjOWixJEjS1rVML9oGzFMs5CsEWLB/IAEvmag0PSHrperdIn0zBrzDsl
+ pYnhxRjvnxThDu9QSVaFngwkKp9eI+6iW6YLhG3OxZfyTsyDnrO+E2xvOX0KL3FOHTDa
+ 1lpVjRLz3hfkVg6M+f1T9IjjZAuLIS+lfYA1tvL2V3dDmXZlyeRA2XQX39WliK7a9rhY
+ Wue6Dkzmsks2mNImdslYtyZUX+BBv6FTUXGLl6w4HDSIV2dTW9Wdl93m7uKwpn6HQrqz
+ GIfiWvj3Bd1KiI59NikTKmr8N/utG6gjAbXoUwdHZJLRYQSFtxn71dbICsjxNAmFsGlZ
+ PwqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=oSrWGHIJnwl5plJgYtRqlGjz3pXTL9DsLqcdAW+1uCU=;
+ b=bT7hF0YQeBqKfm+6oCnyKILhfIs01vadZUKwP4yJRjYo6BS84fWX/sKTHdJUzWG1Pt
+ BqzZGhX8vZu7V16+s6Funq7X8sobYl8kiyPCa8BG5r4qgf9Srz94ehkn515NclTWDva3
+ Xymjvxaf/P11AGN65J2SwLcBnluRpwQUtKZZpHCu9VZCO5UXXe03zg0t0FWg3lKlF8m3
+ meKIz+eR/UBBvgdmA6k4WSswFfM4bLegc0x9YmckneRGMpMPUDuyxElRQsCp7Ib7EtNZ
+ +4YL0rvgZfh3P2XlJ4Q2lFHNO3dzP/SmiYmYUWB5NNm0skaBh11uPX2eMwpV0/YqoYsA
+ FGmA==
+X-Gm-Message-State: AOAM530Oh1dJaMCwyuHP7NNkvY3A/9xh9I6oWaf8WiH0J4qdtl+9B0fx
+ B4LxgyWYeZV+kirT5XYkj+FU/Ucj+RuNndxqmAc=
+X-Google-Smtp-Source: ABdhPJycE+6a6o/J6arfnHwij8PJ1dF3Q16uX/Ocgj0cvyQxLFRu+werKa1BFDMJ3mqH450g1PA6nqpoX5OZok90G0I=
+X-Received: by 2002:a4a:d355:: with SMTP id d21mr11985320oos.66.1589791287419; 
+ Mon, 18 May 2020 01:41:27 -0700 (PDT)
 MIME-Version: 1.0
-X-Linutronix-Spam-Score: -1.0
-X-Linutronix-Spam-Level: -
-X-Linutronix-Spam-Status: No , -1.0 points, 5.0 required, ALL_TRUSTED=-1,
- SHORTCIRCUIT=-0.0001
-Cc: Wanpeng Li <wanpengli@tencent.com>, Marc Zyngier <maz@kernel.org>,
- Joerg Roedel <joro@8bytes.org>, x86@kernel.org,
- "H. Peter Anvin" <hpa@zytor.com>,
- Sean Christopherson <sean.j.christopherson@intel.com>,
- Ingo Molnar <mingo@redhat.com>, Catalin Marinas <catalin.marinas@arm.com>,
- Borislav Petkov <bp@alien8.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, Will Deacon <will@kernel.org>,
- Jim Mattson <jmattson@google.com>
+References: <20200424054837.5138-1-dave@stgolabs.net>
+ <20200424054837.5138-6-dave@stgolabs.net>
+In-Reply-To: <20200424054837.5138-6-dave@stgolabs.net>
+From: Wanpeng Li <kernellwp@gmail.com>
+Date: Mon, 18 May 2020 16:51:29 +0800
+Message-ID: <CANRm+CwDGx57yOxXMF5VkkeJzwTAqrNQWsdDzfYHxJR3Oj_VFA@mail.gmail.com>
+Subject: Re: [PATCH 5/5] kvm: Replace vcpu->swait with rcuwait
+To: Davidlohr Bueso <dave@stgolabs.net>
+X-Mailman-Approved-At: Mon, 18 May 2020 06:43:03 -0400
+Cc: kvm <kvm@vger.kernel.org>, will@kernel.org,
+ Davidlohr Bueso <dbueso@suse.de>, Peter Zijlstra <peterz@infradead.org>,
+ Marc Zyngier <maz@kernel.org>, Sebastian Sewior <bigeasy@linutronix.de>,
+ LKML <linux-kernel@vger.kernel.org>, Steven Rostedt <rostedt@goodmis.org>,
+ linux-mips@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
+ joel@joelfernandes.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Gleixner <tglx@linutronix.de>,
+ Linus Torvalds <torvalds@linux-foundation.org>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -75,37 +96,159 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Anastassios Nanos <ananos@nubificus.co.uk> writes:
-> To spawn KVM-enabled Virtual Machines on Linux systems, one has to use
-> QEMU, or some other kind of VM monitor in user-space to host the vCPU
-> threads, I/O threads and various other book-keeping/management mechanisms.
-> This is perfectly fine for a large number of reasons and use cases: for
-> instance, running generic VMs, running general purpose Operating systems
-> that need some kind of emulation for legacy boot/hardware etc.
+On Fri, 24 Apr 2020 at 13:53, Davidlohr Bueso <dave@stgolabs.net> wrote:
 >
-> What if we wanted to execute a small piece of code as a guest instance,
-> without the involvement of user-space? The KVM functions are already doing
-> what they should: VM and vCPU setup is already part of the kernel, the only
-> missing piece is memory handling.
+> The use of any sort of waitqueue (simple or regular) for
+> wait/waking vcpus has always been an overkill and semantically
+> wrong. Because this is per-vcpu (which is blocked) there is
+> only ever a single waiting vcpu, thus no need for any sort of
+> queue.
 >
-> With these series, (a) we expose to the Linux Kernel the bare minimum KVM
-> API functions in order to spawn a guest instance without the intervention
-> of user-space; and (b) we tweak the memory handling code of KVM-related
-> functions to account for another kind of guest, spawned in kernel-space.
+> As such, make use of the rcuwait primitive, with the following
+> considerations:
 >
-> PATCH #1 exposes the needed stub functions, whereas PATCH #2 introduces the
-> changes in the KVM memory handling code for x86_64 and aarch64.
+>   - rcuwait already provides the proper barriers that serialize
+>   concurrent waiter and waker.
 >
-> An example of use is provided based on kvmtest.c
-> [https://lwn.net/Articles/658512/] at
+>   - Task wakeup is done in rcu read critical region, with a
+>   stable task pointer.
+>
+>   - Because there is no concurrency among waiters, we need
+>   not worry about rcuwait_wait_event() calls corrupting
+>   the wait->task. As a consequence, this saves the locking
+>   done in swait when modifying the queue. This also applies
+>   to per-vcore wait for powerpc kvm-hv.
+>
+> The x86 tscdeadline_latency test mentioned in 8577370fb0cb
+> ("KVM: Use simple waitqueue for vcpu->wq") shows that, on avg,
+> latency is reduced by around 15-20% with this change.
+>
 
-And this shows clearly how simple the user space is which is required to
-do that. So why on earth would we want to have all of that in the
-kernel?
+This is splatting when I run linux guest on latest kvm/queue.
 
-Thanks,
+[24726.009187] =============================
+[24726.009193] WARNING: suspicious RCU usage
+[24726.009201] 5.7.0-rc2+ #3 Not tainted
+[24726.009207] -----------------------------
+[24726.009215] ./include/linux/rcuwait.h:34 suspicious
+rcu_dereference_check() usage!
+[24726.009222]
+other info that might help us debug this:
 
-        tglx
+[24726.009229]
+rcu_scheduler_active = 2, debug_locks = 1
+[24726.009237] 2 locks held by qemu-system-x86/6094:
+[24726.009244]  #0: ffff88837b6cb990 (&vcpu->mutex){+.+.}-{3:3}, at:
+kvm_vcpu_ioctl+0x191/0xbb0 [kvm]
+[24726.009347]  #1: ffffc900036c2c68 (&kvm->srcu){....}-{0:0}, at:
+kvm_arch_vcpu_ioctl_run+0x17f1/0x5680 [kvm]
+[24726.009386]
+stack backtrace:
+[24726.009394] CPU: 5 PID: 6094 Comm: qemu-system-x86 Not tainted 5.7.0-rc2+ #3
+[24726.009400] Hardware name: LENOVO ThinkCentre M8500t-N000/SHARKBAY,
+BIOS FBKTC1AUS 02/16/2016
+[24726.009405] Call Trace:
+[24726.009418]  dump_stack+0x98/0xd5
+[24726.009432]  lockdep_rcu_suspicious+0x123/0x170
+[24726.009465]  kvm_vcpu_on_spin+0x46f/0x5d0 [kvm]
+[24726.009497]  handle_pause+0x7e/0x3e0 [kvm_intel]
+[24726.009517]  vmx_handle_exit+0x1fe/0x1000 [kvm_intel]
+[24726.009547]  ? kvm_arch_vcpu_ioctl_run+0x17c5/0x5680 [kvm]
+[24726.009586]  kvm_arch_vcpu_ioctl_run+0x18f5/0x5680 [kvm]
+[24726.009595]  ? check_chain_key+0x26e/0x670
+[24726.009651]  ? kvm_arch_vcpu_runnable+0x540/0x540 [kvm]
+[24726.009667]  ? tomoyo_execute_permission+0x4b0/0x4b0
+[24726.009677]  ? sched_clock+0x31/0x40
+[24726.009726]  kvm_vcpu_ioctl+0x5d2/0xbb0 [kvm]
+[24726.009754]  ? kvm_vcpu_ioctl+0x5d2/0xbb0 [kvm]
+[24726.009786]  ? kvm_set_memory_region+0x90/0x90 [kvm]
+[24726.009819]  ? __fget_files+0x2d4/0x420
+[24726.009837]  ? do_dup2+0x660/0x660
+[24726.009847]  ? lock_acquire+0x1e5/0x660
+[24726.009864]  ? tomoyo_file_ioctl+0x19/0x20
+[24726.009880]  ksys_ioctl+0x3d2/0x1390
+[24726.009900]  ? generic_block_fiemap+0x70/0x70
+[24726.009911]  ? rcu_read_lock_sched_held+0xb4/0xe0
+[24726.009920]  ? rcu_read_lock_any_held.part.9+0x20/0x20
+[24726.009935]  ? __x64_sys_futex+0x1a1/0x400
+[24726.009943]  ? __kasan_check_write+0x14/0x20
+[24726.009951]  ? switch_fpu_return+0x181/0x3e0
+[24726.009963]  ? do_futex+0x14e0/0x14e0
+[24726.009970]  ? lockdep_hardirqs_off+0x1df/0x2d0
+[24726.009977]  ? syscall_return_slowpath+0x66/0x9d0
+[24726.009987]  ? do_syscall_64+0x8e/0xae0
+[24726.009995]  ? entry_SYSCALL_64_after_hwframe+0x49/0xb3
+[24726.010012]  __x64_sys_ioctl+0x73/0xb0
+[24726.010023]  do_syscall_64+0x108/0xae0
+[24726.010032]  ? trace_hardirqs_on_thunk+0x1a/0x1c
+[24726.010042]  ? syscall_return_slowpath+0x9d0/0x9d0
+[24726.010048]  ? trace_hardirqs_off_thunk+0x1a/0x1c
+[24726.010059]  ? trace_hardirqs_off_caller+0x28/0x1b0
+[24726.010074]  ? trace_hardirqs_off_thunk+0x1a/0x1c
+[24726.010092]  entry_SYSCALL_64_after_hwframe+0x49/0xb3
+
+
+[25372.530417] =============================
+[25372.530420] WARNING: suspicious RCU usage
+[25372.530425] 5.7.0-rc2+ #3 Not tainted
+[25372.530428] -----------------------------
+[25372.530432] ./include/linux/rcuwait.h:34 suspicious
+rcu_dereference_check() usage!
+[25372.530436]
+other info that might help us debug this:
+
+[25372.530440]
+rcu_scheduler_active = 2, debug_locks = 1
+[25372.530443] 1 lock held by qemu-system-x86/6433:
+[25372.530447]  #0: ffff88837b6cb990 (&vcpu->mutex){+.+.}-{3:3}, at:
+kvm_vcpu_ioctl+0x191/0xbb0 [kvm]
+[25372.530483]
+stack backtrace:
+[25372.530487] CPU: 1 PID: 6433 Comm: qemu-system-x86 Not tainted 5.7.0-rc2+ #3
+[25372.530491] Hardware name: LENOVO ThinkCentre M8500t-N000/SHARKBAY,
+BIOS FBKTC1AUS 02/16/2016
+[25372.530495] Call Trace:
+[25372.530504]  dump_stack+0x98/0xd5
+[25372.530513]  lockdep_rcu_suspicious+0x123/0x170
+[25372.530547]  kvm_lapic_expired_hv_timer+0x1ad/0x1f0 [kvm]
+[25372.530559]  vmx_vcpu_run+0x1892/0x2c60 [kvm_intel]
+[25372.530568]  ? rcu_preempt_deferred_qs_handler+0x20/0x40
+[25372.530579]  ? clear_atomic_switch_msr+0x970/0x970 [kvm_intel]
+[25372.530586]  ? rcu_read_lock_any_held.part.9+0x20/0x20
+[25372.530613]  kvm_arch_vcpu_ioctl_run+0x1579/0x5680 [kvm]
+[25372.530619]  ? check_chain_key+0x26e/0x670
+[25372.530654]  ? kvm_arch_vcpu_runnable+0x540/0x540 [kvm]
+[25372.530665]  ? tomoyo_execute_permission+0x4b0/0x4b0
+[25372.530671]  ? sched_clock+0x31/0x40
+[25372.530678]  ? sched_clock_cpu+0x1b/0x1b0
+[25372.530706]  kvm_vcpu_ioctl+0x5d2/0xbb0 [kvm]
+[25372.530724]  ? kvm_vcpu_ioctl+0x5d2/0xbb0 [kvm]
+[25372.530744]  ? kvm_set_memory_region+0x90/0x90 [kvm]
+[25372.530764]  ? __fget_files+0x2d4/0x420
+[25372.530775]  ? do_dup2+0x660/0x660
+[25372.530779]  ? vfs_iter_write+0xb0/0xb0
+[25372.530785]  ? rcu_read_lock_held+0xb4/0xc0
+[25372.530795]  ? tomoyo_file_ioctl+0x19/0x20
+[25372.530806]  ksys_ioctl+0x3d2/0x1390
+[25372.530814]  ? do_dup2+0x660/0x660
+[25372.530821]  ? generic_block_fiemap+0x70/0x70
+[25372.530833]  ? __kasan_check_write+0x14/0x20
+[25372.530838]  ? fput_many+0x20/0x140
+[25372.530844]  ? fput+0x13/0x20
+[25372.530848]  ? do_writev+0x175/0x320
+[25372.530856]  ? lockdep_hardirqs_off+0x1df/0x2d0
+[25372.530861]  ? syscall_return_slowpath+0x66/0x9d0
+[25372.530867]  ? do_syscall_64+0x8e/0xae0
+[25372.530872]  ? entry_SYSCALL_64_after_hwframe+0x49/0xb3
+[25372.530883]  __x64_sys_ioctl+0x73/0xb0
+[25372.530890]  do_syscall_64+0x108/0xae0
+[25372.530894]  ? switch_fpu_return+0x181/0x3e0
+[25372.530899]  ? trace_hardirqs_on_thunk+0x1a/0x1c
+[25372.530905]  ? syscall_return_slowpath+0x9d0/0x9d0
+[25372.530908]  ? trace_hardirqs_off_thunk+0x1a/0x1c
+[25372.530917]  ? trace_hardirqs_off_caller+0x28/0x1b0
+[25372.530926]  ? trace_hardirqs_off_thunk+0x1a/0x1c
+[25372.530937]  entry_SYSCALL_64_after_hwframe+0x49/0xb3
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
