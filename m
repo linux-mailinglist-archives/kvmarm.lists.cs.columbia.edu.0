@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B42F01D948F
-	for <lists+kvmarm@lfdr.de>; Tue, 19 May 2020 12:45:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6C481D9486
+	for <lists+kvmarm@lfdr.de>; Tue, 19 May 2020 12:41:55 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 489984B1B6;
-	Tue, 19 May 2020 06:45:10 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 57F6B4B184;
+	Tue, 19 May 2020 06:41:55 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,44 +16,41 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KphNWXng4y6W; Tue, 19 May 2020 06:45:10 -0400 (EDT)
+	with ESMTP id bwiIrkUYDdNV; Tue, 19 May 2020 06:41:55 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DA7944B1B4;
-	Tue, 19 May 2020 06:45:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 26AFB4B183;
+	Tue, 19 May 2020 06:41:54 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 477F14B1B0
- for <kvmarm@lists.cs.columbia.edu>; Tue, 19 May 2020 06:45:07 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D48264B138
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 19 May 2020 06:41:52 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id YStfCaGqFZeI for <kvmarm@lists.cs.columbia.edu>;
- Tue, 19 May 2020 06:45:06 -0400 (EDT)
+ with ESMTP id 3g3JV6znpOpZ for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 19 May 2020 06:41:50 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 01DE14B1AF
- for <kvmarm@lists.cs.columbia.edu>; Tue, 19 May 2020 06:45:05 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0581F4B132
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 19 May 2020 06:41:50 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A279A101E;
- Tue, 19 May 2020 03:45:05 -0700 (PDT)
-Received: from C02TD0UTHF1T.local (unknown [10.57.1.217])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5837B3F305;
- Tue, 19 May 2020 03:45:02 -0700 (PDT)
-Date: Tue, 19 May 2020 11:44:57 +0100
-From: Mark Rutland <mark.rutland@arm.com>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH 26/26] KVM: arm64: Parametrize exception entry with a
- target EL
-Message-ID: <20200519104457.GA19548@C02TD0UTHF1T.local>
-References: <20200422120050.3693593-1-maz@kernel.org>
- <20200422120050.3693593-27-maz@kernel.org>
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 650AC101E;
+ Tue, 19 May 2020 03:41:49 -0700 (PDT)
+Received: from [10.37.8.206] (unknown [10.37.8.206])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 555D23F305;
+ Tue, 19 May 2020 03:41:47 -0700 (PDT)
+Subject: Re: [PATCH V4 05/17] arm64/cpufeature: Introduce ID_DFR1 CPU register
+To: anshuman.khandual@arm.com, linux-arm-kernel@lists.infradead.org
+References: <1589881254-10082-1-git-send-email-anshuman.khandual@arm.com>
+ <1589881254-10082-6-git-send-email-anshuman.khandual@arm.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+Message-ID: <9d609264-83e4-230e-8d37-46f040b79666@arm.com>
+Date: Tue, 19 May 2020 11:46:32 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.7.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20200422120050.3693593-27-maz@kernel.org>
-Cc: kvm@vger.kernel.org, Andre Przywara <andre.przywara@arm.com>,
- kvmarm@lists.cs.columbia.edu, Will Deacon <will@kernel.org>,
- George Cherian <gcherian@marvell.com>,
- "Zengtao \(B\)" <prime.zeng@hisilicon.com>,
- Catalin Marinas <catalin.marinas@arm.com>, Dave Martin <Dave.Martin@arm.com>,
- linux-arm-kernel@lists.infradead.org
+In-Reply-To: <1589881254-10082-6-git-send-email-anshuman.khandual@arm.com>
+Content-Language: en-US
+Cc: catalin.marinas@arm.com, linux-kernel@vger.kernel.org, maz@kernel.org,
+ will@kernel.org, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -65,131 +62,71 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Apr 22, 2020 at 01:00:50PM +0100, Marc Zyngier wrote:
-> We currently assume that an exception is delivered to EL1, always.
-> Once we emulate EL2, this no longer will be the case. To prepare
-> for this, add a target_mode parameter.
+On 05/19/2020 10:40 AM, Anshuman Khandual wrote:
+> This adds basic building blocks required for ID_DFR1 CPU register which
+> provides top level information about the debug system in AArch32 state.
+> This is added per ARM DDI 0487F.a specification.
 > 
-> While we're at it, merge the computing of the target PC and PSTATE in
-> a single function that updates both PC and CPSR after saving their
-> previous values in the corresponding ELR/SPSR. This ensures that they
-> are updated in the correct order (a pretty common source of bugs...).
+> Cc: Catalin Marinas <catalin.marinas@arm.com>
+> Cc: Will Deacon <will@kernel.org>
+> Cc: Marc Zyngier <maz@kernel.org>
+> Cc: Mark Rutland <mark.rutland@arm.com>
+> Cc: James Morse <james.morse@arm.com>
+> Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+> Cc: kvmarm@lists.cs.columbia.edu
+> Cc: linux-arm-kernel@lists.infradead.org
+> Cc: linux-kernel@vger.kernel.org
 > 
-> Signed-off-by: Marc Zyngier <maz@kernel.org>
-> ---
->  arch/arm64/kvm/inject_fault.c | 75 ++++++++++++++++++-----------------
->  1 file changed, 38 insertions(+), 37 deletions(-)
-> 
-> diff --git a/arch/arm64/kvm/inject_fault.c b/arch/arm64/kvm/inject_fault.c
-> index d3ebf8bca4b89..3dbcbc839b9c3 100644
-> --- a/arch/arm64/kvm/inject_fault.c
-> +++ b/arch/arm64/kvm/inject_fault.c
-> @@ -26,28 +26,12 @@ enum exception_type {
->  	except_type_serror	= 0x180,
->  };
->  
-> -static u64 get_except_vector(struct kvm_vcpu *vcpu, enum exception_type type)
-> -{
-> -	u64 exc_offset;
-> -
-> -	switch (*vcpu_cpsr(vcpu) & (PSR_MODE_MASK | PSR_MODE32_BIT)) {
-> -	case PSR_MODE_EL1t:
-> -		exc_offset = CURRENT_EL_SP_EL0_VECTOR;
-> -		break;
-> -	case PSR_MODE_EL1h:
-> -		exc_offset = CURRENT_EL_SP_ELx_VECTOR;
-> -		break;
-> -	case PSR_MODE_EL0t:
-> -		exc_offset = LOWER_EL_AArch64_VECTOR;
-> -		break;
-> -	default:
-> -		exc_offset = LOWER_EL_AArch32_VECTOR;
-> -	}
-> -
-> -	return vcpu_read_sys_reg(vcpu, VBAR_EL1) + exc_offset + type;
-> -}
-> -
->  /*
-> + * This performs the exception entry at a given EL (@target_mode), stashing PC
-> + * and PSTATE into ELR and SPSR respectively, and compute the new PC/PSTATE.
-> + * The EL passed to this function *must* be a non-secure, privileged mode with
-> + * bit 0 being set (PSTATE.SP == 1).
-> + *
->   * When an exception is taken, most PSTATE fields are left unchanged in the
->   * handler. However, some are explicitly overridden (e.g. M[4:0]). Luckily all
->   * of the inherited bits have the same position in the AArch64/AArch32 SPSR_ELx
-> @@ -59,10 +43,35 @@ static u64 get_except_vector(struct kvm_vcpu *vcpu, enum exception_type type)
->   * Here we manipulate the fields in order of the AArch64 SPSR_ELx layout, from
->   * MSB to LSB.
->   */
-> -static unsigned long get_except64_pstate(struct kvm_vcpu *vcpu)
-> +static void enter_exception(struct kvm_vcpu *vcpu, unsigned long target_mode,
-> +			    enum exception_type type)
+> Suggested-by: Will Deacon <will@kernel.org>
+> Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
 
-Since this is all for an AArch64 target, could we keep `64` in the name,
-e.g enter_exception64? That'd mirror the callers below.
-
->  {
-> -	unsigned long sctlr = vcpu_read_sys_reg(vcpu, SCTLR_EL1);
-> -	unsigned long old, new;
-> +	unsigned long sctlr, vbar, old, new, mode;
-> +	u64 exc_offset;
+> diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
+> index 600ce237c487..faf644a66e89 100644
+> --- a/arch/arm64/kernel/cpufeature.c
+> +++ b/arch/arm64/kernel/cpufeature.c
+> @@ -457,6 +457,11 @@ static const struct arm64_ftr_bits ftr_id_dfr0[] = {
+>   	ARM64_FTR_END,
+>   };
+>   
+> +static const struct arm64_ftr_bits ftr_id_dfr1[] = {
+> +	S_ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_DFR1_MTPMU_SHIFT, 4, 0),
+> +	ARM64_FTR_END,
+> +};
 > +
-> +	mode = *vcpu_cpsr(vcpu) & (PSR_MODE_MASK | PSR_MODE32_BIT);
-> +
-> +	if      (mode == target_mode)
-> +		exc_offset = CURRENT_EL_SP_ELx_VECTOR;
-> +	else if ((mode | 1) == target_mode)
-> +		exc_offset = CURRENT_EL_SP_EL0_VECTOR;
 
-It would be nice if we could add a mnemonic for the `1` here, e.g.
-PSR_MODE_SP0 or PSR_MODE_THREAD_BIT.
+> diff --git a/arch/arm64/kernel/cpuinfo.c b/arch/arm64/kernel/cpuinfo.c
+> index cb79b083f97f..50a281703d9d 100644
+> --- a/arch/arm64/kernel/cpuinfo.c
+> +++ b/arch/arm64/kernel/cpuinfo.c
+> @@ -362,6 +362,7 @@ static void __cpuinfo_store_cpu(struct cpuinfo_arm64 *info)
+>   	/* Update the 32bit ID registers only if AArch32 is implemented */
+>   	if (id_aa64pfr0_32bit_el0(info->reg_id_aa64pfr0)) {
+>   		info->reg_id_dfr0 = read_cpuid(ID_DFR0_EL1);
+> +		info->reg_id_dfr1 = read_cpuid(ID_DFR1_EL1);
+>   		info->reg_id_isar0 = read_cpuid(ID_ISAR0_EL1);
+>   		info->reg_id_isar1 = read_cpuid(ID_ISAR1_EL1);
+>   		info->reg_id_isar2 = read_cpuid(ID_ISAR2_EL1);
+> diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+> index b784b156edb3..0723cfbff7e9 100644
+> --- a/arch/arm64/kvm/sys_regs.c
+> +++ b/arch/arm64/kvm/sys_regs.c
+> @@ -1457,7 +1457,7 @@ static const struct sys_reg_desc sys_reg_descs[] = {
+>   	ID_SANITISED(MVFR2_EL1),
+>   	ID_UNALLOCATED(3,3),
+>   	ID_SANITISED(ID_PFR2_EL1),
+> -	ID_UNALLOCATED(3,5),
+> +	ID_HIDDEN(ID_DFR1_EL1),
 
-> +	else if (!(mode & PSR_MODE32_BIT))
-> +		exc_offset = LOWER_EL_AArch64_VECTOR;
-> +	else
-> +		exc_offset = LOWER_EL_AArch32_VECTOR;
+It might be a good idea to mention why this is HIDDEN in the description.
 
-Other than the above, I couldn't think of a nicer way of writing thism
-and AFAICT this is correct.
+With that :
 
-> +
-> +	switch (target_mode) {
-> +	case PSR_MODE_EL1h:
-> +		vbar = vcpu_read_sys_reg(vcpu, VBAR_EL1);
-> +		sctlr = vcpu_read_sys_reg(vcpu, SCTLR_EL1);
-> +		vcpu_write_sys_reg(vcpu, *vcpu_pc(vcpu), ELR_EL1);
-> +		break;
-> +	default:
-> +		/* Don't do that */
-> +		BUG();
-> +	}
-> +
-> +	*vcpu_pc(vcpu) = vbar + exc_offset + type;
->  
->  	old = *vcpu_cpsr(vcpu);
->  	new = 0;
-> @@ -105,9 +114,10 @@ static unsigned long get_except64_pstate(struct kvm_vcpu *vcpu)
->  	new |= PSR_I_BIT;
->  	new |= PSR_F_BIT;
->  
-> -	new |= PSR_MODE_EL1h;
-> +	new |= target_mode;
-
-As a heads-up, some of the other bits will need to change for an EL2
-target (e.g. SPAN will depend on HCR_EL2.E2H), but as-is this this is
-fine.
-
-Regardless of the above comments:
-
-Reviewed-by: Mark Rutland <mark.rutland@arm.com>
-
-Mark.
+Reviewed-by : Suzuki K Poulose <suzuki.poulose@arm.com>
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
