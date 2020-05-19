@@ -2,74 +2,58 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EDCC1D9484
-	for <lists+kvmarm@lfdr.de>; Tue, 19 May 2020 12:40:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B42F01D948F
+	for <lists+kvmarm@lfdr.de>; Tue, 19 May 2020 12:45:10 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 08F2C4B184;
-	Tue, 19 May 2020 06:40:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 489984B1B6;
+	Tue, 19 May 2020 06:45:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id smNtPae1BFhR; Tue, 19 May 2020 06:40:48 -0400 (EDT)
+	with ESMTP id KphNWXng4y6W; Tue, 19 May 2020 06:45:10 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E46114B183;
-	Tue, 19 May 2020 06:40:47 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DA7944B1B4;
+	Tue, 19 May 2020 06:45:08 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AD6FD4B138
- for <kvmarm@lists.cs.columbia.edu>; Tue, 19 May 2020 06:40:46 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 477F14B1B0
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 19 May 2020 06:45:07 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id XoYiaR4xBul6 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 19 May 2020 06:40:44 -0400 (EDT)
-Received: from mail-qt1-f202.google.com (mail-qt1-f202.google.com
- [209.85.160.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 138454B132
- for <kvmarm@lists.cs.columbia.edu>; Tue, 19 May 2020 06:40:44 -0400 (EDT)
-Received: by mail-qt1-f202.google.com with SMTP id c20so16206493qtw.11
- for <kvmarm@lists.cs.columbia.edu>; Tue, 19 May 2020 03:40:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:message-id:mime-version:subject:from:to:cc;
- bh=IukSylGaIR5gaKlG+xDtFZim9P8RAJ6FK69GQOC9RaQ=;
- b=asPR0hztoEoHaGzaHjCw+fe/33Ee3krH9GlxwXyBDh0CDhZMRpxqzBAnJbcf+KzLeh
- Fo5lbRQeY/B3I5ZrEUwMabjb57cFzpJLgNBc9yIg9AVKn0ZUWHVK160PEi0+Cc/OcVUq
- FYo8qUioio8CZBQ+gqvJysQd7yRxigcg/xxbT14BEgYwhLfwnUucnI+2MlpHM28N0Tlx
- RG5hiz9Q4cyP2B+AUkf4qvAMGzckvYD4324/TtIMSVufpq/jrZA4bb7Sef+76z4BxFlD
- 9jH1taeLDZOaS7yea9neMUKfZ3DDYSj1by9Aw5TrlQaFtnNyPKAdCuK9rU1RWhBvdUte
- txVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
- bh=IukSylGaIR5gaKlG+xDtFZim9P8RAJ6FK69GQOC9RaQ=;
- b=HBJGxHCemM2e3pZRTv/Vlq8s7tF5DwPOHhYGFgn7vjRCt+4dObLpWhJQpRiPtNPYqg
- YukTWtS9WfyZTom2ZhD1QqiEH54mJcUK+teWTCubrFfxKMLvOEjnjUTmitQfw1wz8Lvq
- aaxWbBAcxhhUTVrXL+WbsJFsckiKXqgSU1fEwLCm+zr9NbkimcK7S3F3okcitd85xqbq
- Hi3TRkz3vsTWDHd9KHy2jbodtl8Qzr/RcNRu+GXzGGDBykLhhtXkNmMf9o7odSDbxx1B
- cBaFkDoGpYga9Vdq5hOsriQVlU/gKWGBcNtdNtUDKnDHi/DKjQwILzrK3BZ5ECJGLpYS
- NAxg==
-X-Gm-Message-State: AOAM530TX6F9qK2275Q4SoS36JSSAy3SDu0CgABMIZbAaEmHPEBiR8dG
- NiFj0kOusbXqms/M4+GNnCb7VeMsdPYXnFlcMxHcgWnVjvQVc8Et2LqRq/v6DjMD4JemvJuy9LN
- uFHu55cDsqO+1NVGcJJzjoQY/1f+LE6jnA6Qc740lBOP/pY3nKGtN39h6zgd8B5nYrdFwqA==
-X-Google-Smtp-Source: ABdhPJzRMWotQQ2GSoODUI15KJr07PIzObzEaNnJPdBcJPC1OCuYK6tQUji4oYmJXVF5R0/R/ze8J9pEbgY=
-X-Received: by 2002:a25:77d8:: with SMTP id s207mr2934092ybc.8.1589884843420; 
- Tue, 19 May 2020 03:40:43 -0700 (PDT)
-Date: Tue, 19 May 2020 11:40:36 +0100
-Message-Id: <20200519104036.259917-1-ascull@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.26.2.761.g0e0b3e54be-goog
-Subject: [PATCH] arm64: kvm: Remove obsolete kvm_virt_to_phys abstraction
-From: Andrew Scull <ascull@google.com>
-To: kvmarm@lists.cs.columbia.edu
-Cc: Marc Zyngier <maz@kernel.org>
+ with ESMTP id YStfCaGqFZeI for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 19 May 2020 06:45:06 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 01DE14B1AF
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 19 May 2020 06:45:05 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A279A101E;
+ Tue, 19 May 2020 03:45:05 -0700 (PDT)
+Received: from C02TD0UTHF1T.local (unknown [10.57.1.217])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5837B3F305;
+ Tue, 19 May 2020 03:45:02 -0700 (PDT)
+Date: Tue, 19 May 2020 11:44:57 +0100
+From: Mark Rutland <mark.rutland@arm.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH 26/26] KVM: arm64: Parametrize exception entry with a
+ target EL
+Message-ID: <20200519104457.GA19548@C02TD0UTHF1T.local>
+References: <20200422120050.3693593-1-maz@kernel.org>
+ <20200422120050.3693593-27-maz@kernel.org>
+MIME-Version: 1.0
+Content-Disposition: inline
+In-Reply-To: <20200422120050.3693593-27-maz@kernel.org>
+Cc: kvm@vger.kernel.org, Andre Przywara <andre.przywara@arm.com>,
+ kvmarm@lists.cs.columbia.edu, Will Deacon <will@kernel.org>,
+ George Cherian <gcherian@marvell.com>,
+ "Zengtao \(B\)" <prime.zeng@hisilicon.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Dave Martin <Dave.Martin@arm.com>,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -86,54 +70,126 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-This abstraction was introduced to hide the difference between arm and
-arm64 but, with the former no longer supported, this abstraction can be
-removed and the canonical kernel API used directly instead.
+On Wed, Apr 22, 2020 at 01:00:50PM +0100, Marc Zyngier wrote:
+> We currently assume that an exception is delivered to EL1, always.
+> Once we emulate EL2, this no longer will be the case. To prepare
+> for this, add a target_mode parameter.
+> 
+> While we're at it, merge the computing of the target PC and PSTATE in
+> a single function that updates both PC and CPSR after saving their
+> previous values in the corresponding ELR/SPSR. This ensures that they
+> are updated in the correct order (a pretty common source of bugs...).
+> 
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
+> ---
+>  arch/arm64/kvm/inject_fault.c | 75 ++++++++++++++++++-----------------
+>  1 file changed, 38 insertions(+), 37 deletions(-)
+> 
+> diff --git a/arch/arm64/kvm/inject_fault.c b/arch/arm64/kvm/inject_fault.c
+> index d3ebf8bca4b89..3dbcbc839b9c3 100644
+> --- a/arch/arm64/kvm/inject_fault.c
+> +++ b/arch/arm64/kvm/inject_fault.c
+> @@ -26,28 +26,12 @@ enum exception_type {
+>  	except_type_serror	= 0x180,
+>  };
+>  
+> -static u64 get_except_vector(struct kvm_vcpu *vcpu, enum exception_type type)
+> -{
+> -	u64 exc_offset;
+> -
+> -	switch (*vcpu_cpsr(vcpu) & (PSR_MODE_MASK | PSR_MODE32_BIT)) {
+> -	case PSR_MODE_EL1t:
+> -		exc_offset = CURRENT_EL_SP_EL0_VECTOR;
+> -		break;
+> -	case PSR_MODE_EL1h:
+> -		exc_offset = CURRENT_EL_SP_ELx_VECTOR;
+> -		break;
+> -	case PSR_MODE_EL0t:
+> -		exc_offset = LOWER_EL_AArch64_VECTOR;
+> -		break;
+> -	default:
+> -		exc_offset = LOWER_EL_AArch32_VECTOR;
+> -	}
+> -
+> -	return vcpu_read_sys_reg(vcpu, VBAR_EL1) + exc_offset + type;
+> -}
+> -
+>  /*
+> + * This performs the exception entry at a given EL (@target_mode), stashing PC
+> + * and PSTATE into ELR and SPSR respectively, and compute the new PC/PSTATE.
+> + * The EL passed to this function *must* be a non-secure, privileged mode with
+> + * bit 0 being set (PSTATE.SP == 1).
+> + *
+>   * When an exception is taken, most PSTATE fields are left unchanged in the
+>   * handler. However, some are explicitly overridden (e.g. M[4:0]). Luckily all
+>   * of the inherited bits have the same position in the AArch64/AArch32 SPSR_ELx
+> @@ -59,10 +43,35 @@ static u64 get_except_vector(struct kvm_vcpu *vcpu, enum exception_type type)
+>   * Here we manipulate the fields in order of the AArch64 SPSR_ELx layout, from
+>   * MSB to LSB.
+>   */
+> -static unsigned long get_except64_pstate(struct kvm_vcpu *vcpu)
+> +static void enter_exception(struct kvm_vcpu *vcpu, unsigned long target_mode,
+> +			    enum exception_type type)
 
-Signed-off-by: Andrew Scull <ascull@google.com>
-CC: Marc Zyngier <maz@kernel.org>
-CC: James Morse <james.morse@arm.com>
-CC: Suzuki K Poulose <suzuki.poulose@arm.com>
----
- arch/arm64/include/asm/kvm_mmu.h | 2 --
- virt/kvm/arm/mmu.c               | 6 +++---
- 2 files changed, 3 insertions(+), 5 deletions(-)
+Since this is all for an AArch64 target, could we keep `64` in the name,
+e.g enter_exception64? That'd mirror the callers below.
 
-diff --git a/arch/arm64/include/asm/kvm_mmu.h b/arch/arm64/include/asm/kvm_mmu.h
-index 30b0e8d6b895..e275a85117e8 100644
---- a/arch/arm64/include/asm/kvm_mmu.h
-+++ b/arch/arm64/include/asm/kvm_mmu.h
-@@ -363,8 +363,6 @@ static inline void __kvm_flush_dcache_pud(pud_t pud)
- 	}
- }
- 
--#define kvm_virt_to_phys(x)		__pa_symbol(x)
--
- void kvm_set_way_flush(struct kvm_vcpu *vcpu);
- void kvm_toggle_cache(struct kvm_vcpu *vcpu, bool was_enabled);
- 
-diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
-index e3b9ee268823..2aa853e3c789 100644
---- a/virt/kvm/arm/mmu.c
-+++ b/virt/kvm/arm/mmu.c
-@@ -2185,11 +2185,11 @@ int kvm_mmu_init(void)
- {
- 	int err;
- 
--	hyp_idmap_start = kvm_virt_to_phys(__hyp_idmap_text_start);
-+	hyp_idmap_start = __pa_symbol(__hyp_idmap_text_start);
- 	hyp_idmap_start = ALIGN_DOWN(hyp_idmap_start, PAGE_SIZE);
--	hyp_idmap_end = kvm_virt_to_phys(__hyp_idmap_text_end);
-+	hyp_idmap_end = __pa_symbol(__hyp_idmap_text_end);
- 	hyp_idmap_end = ALIGN(hyp_idmap_end, PAGE_SIZE);
--	hyp_idmap_vector = kvm_virt_to_phys(__kvm_hyp_init);
-+	hyp_idmap_vector = __pa_symbol(__kvm_hyp_init);
- 
- 	/*
- 	 * We rely on the linker script to ensure at build time that the HYP
--- 
-2.26.2.761.g0e0b3e54be-goog
+>  {
+> -	unsigned long sctlr = vcpu_read_sys_reg(vcpu, SCTLR_EL1);
+> -	unsigned long old, new;
+> +	unsigned long sctlr, vbar, old, new, mode;
+> +	u64 exc_offset;
+> +
+> +	mode = *vcpu_cpsr(vcpu) & (PSR_MODE_MASK | PSR_MODE32_BIT);
+> +
+> +	if      (mode == target_mode)
+> +		exc_offset = CURRENT_EL_SP_ELx_VECTOR;
+> +	else if ((mode | 1) == target_mode)
+> +		exc_offset = CURRENT_EL_SP_EL0_VECTOR;
 
+It would be nice if we could add a mnemonic for the `1` here, e.g.
+PSR_MODE_SP0 or PSR_MODE_THREAD_BIT.
+
+> +	else if (!(mode & PSR_MODE32_BIT))
+> +		exc_offset = LOWER_EL_AArch64_VECTOR;
+> +	else
+> +		exc_offset = LOWER_EL_AArch32_VECTOR;
+
+Other than the above, I couldn't think of a nicer way of writing thism
+and AFAICT this is correct.
+
+> +
+> +	switch (target_mode) {
+> +	case PSR_MODE_EL1h:
+> +		vbar = vcpu_read_sys_reg(vcpu, VBAR_EL1);
+> +		sctlr = vcpu_read_sys_reg(vcpu, SCTLR_EL1);
+> +		vcpu_write_sys_reg(vcpu, *vcpu_pc(vcpu), ELR_EL1);
+> +		break;
+> +	default:
+> +		/* Don't do that */
+> +		BUG();
+> +	}
+> +
+> +	*vcpu_pc(vcpu) = vbar + exc_offset + type;
+>  
+>  	old = *vcpu_cpsr(vcpu);
+>  	new = 0;
+> @@ -105,9 +114,10 @@ static unsigned long get_except64_pstate(struct kvm_vcpu *vcpu)
+>  	new |= PSR_I_BIT;
+>  	new |= PSR_F_BIT;
+>  
+> -	new |= PSR_MODE_EL1h;
+> +	new |= target_mode;
+
+As a heads-up, some of the other bits will need to change for an EL2
+target (e.g. SPAN will depend on HCR_EL2.E2H), but as-is this this is
+fine.
+
+Regardless of the above comments:
+
+Reviewed-by: Mark Rutland <mark.rutland@arm.com>
+
+Mark.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
