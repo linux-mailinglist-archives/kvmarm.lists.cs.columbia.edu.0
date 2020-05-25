@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B11961E0CCB
-	for <lists+kvmarm@lfdr.de>; Mon, 25 May 2020 13:25:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 285B91E0D5D
+	for <lists+kvmarm@lfdr.de>; Mon, 25 May 2020 13:34:34 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5EAC34B1D3;
-	Mon, 25 May 2020 07:25:21 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B40A94B1D1;
+	Mon, 25 May 2020 07:34:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
@@ -16,45 +16,46 @@ X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id HNSUhvVSdDn4; Mon, 25 May 2020 07:25:21 -0400 (EDT)
+	with ESMTP id qGe4x8qwoJ32; Mon, 25 May 2020 07:34:33 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3ABB84B1D8;
-	Mon, 25 May 2020 07:25:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 86C8B4B17A;
+	Mon, 25 May 2020 07:34:32 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 35C884B1D3
- for <kvmarm@lists.cs.columbia.edu>; Mon, 25 May 2020 07:25:18 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E2CD64B162
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 25 May 2020 07:34:31 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id hoXubApHfz3a for <kvmarm@lists.cs.columbia.edu>;
- Mon, 25 May 2020 07:25:17 -0400 (EDT)
-Received: from huawei.com (szxga07-in.huawei.com [45.249.212.35])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A0F444B1D4
- for <kvmarm@lists.cs.columbia.edu>; Mon, 25 May 2020 07:25:16 -0400 (EDT)
-Received: from DGGEMS401-HUB.china.huawei.com (unknown [172.30.72.59])
- by Forcepoint Email with ESMTP id 8459C6C346A43648B102;
- Mon, 25 May 2020 19:25:14 +0800 (CST)
-Received: from DESKTOP-5IS4806.china.huawei.com (10.173.221.230) by
- DGGEMS401-HUB.china.huawei.com (10.3.19.201) with Microsoft SMTP Server id
- 14.3.487.0; Mon, 25 May 2020 19:25:07 +0800
-From: Keqian Zhu <zhukeqian1@huawei.com>
-To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <kvmarm@lists.cs.columbia.edu>, <kvm@vger.kernel.org>
-Subject: [RFC PATCH 7/7] KVM: arm64: Enable stage2 hardware DBM
-Date: Mon, 25 May 2020 19:24:06 +0800
-Message-ID: <20200525112406.28224-8-zhukeqian1@huawei.com>
-X-Mailer: git-send-email 2.8.4.windows.1
-In-Reply-To: <20200525112406.28224-1-zhukeqian1@huawei.com>
-References: <20200525112406.28224-1-zhukeqian1@huawei.com>
+ with ESMTP id sM7ndql8m3+C for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 25 May 2020 07:34:30 -0400 (EDT)
+Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A9AB44B15F
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 25 May 2020 07:34:30 -0400 (EDT)
+Received: from DGGEMS402-HUB.china.huawei.com (unknown [172.30.72.60])
+ by Forcepoint Email with ESMTP id 70F0B3DFEED4FB33AF0C;
+ Mon, 25 May 2020 19:34:27 +0800 (CST)
+Received: from [127.0.0.1] (10.173.221.213) by DGGEMS402-HUB.china.huawei.com
+ (10.3.19.202) with Microsoft SMTP Server id 14.3.487.0;
+ Mon, 25 May 2020 19:34:19 +0800
+Subject: Re: [RFC] Use SMMU HTTU for DMA dirty page tracking
+To: Jean-Philippe Brucker <jean-philippe@linaro.org>
+References: <b926ec0b-fe87-0792-c41d-acad56c656a4@huawei.com>
+ <20200522171452.GC3453945@myrica>
+From: Xiang Zheng <zhengxiang9@huawei.com>
+Message-ID: <e68c1158-8573-a477-42ce-48cee510c3ce@huawei.com>
+Date: Mon, 25 May 2020 19:34:18 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.0
 MIME-Version: 1.0
-X-Originating-IP: [10.173.221.230]
+In-Reply-To: <20200522171452.GC3453945@myrica>
+Content-Language: en-US
+X-Originating-IP: [10.173.221.213]
 X-CFilter-Loop: Reflected
-Cc: Catalin Marinas <catalin.marinas@arm.com>,
- Sean Christopherson <sean.j.christopherson@intel.com>,
- Peng Liang <liangpeng10@huawei.com>, Alexios Zavras <alexios.zavras@intel.com>,
- Mark Brown <broonie@kernel.org>, Marc Zyngier <maz@kernel.org>, Thomas
- Gleixner <tglx@linutronix.de>, Will Deacon <will@kernel.org>,
- Andrew Morton <akpm@linux-foundation.org>
+Cc: alex.williamson@redhat.com, Yan Zhao <yan.y.zhao@intel.com>, maz@kernel.org,
+ iommu@lists.linux-foundation.org, Kirti Wankhede <kwankhede@nvidia.com>,
+ wangzhou1@hisilicon.com, prime.zeng@hisilicon.com,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -71,58 +72,71 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-We are ready to support hw management of dirty state, enable it if
-hardware support it.
+[+cc Kirti, Yan, Alex]
 
-Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
-Signed-off-by: Peng Liang <liangpeng10@huawei.com>
----
- arch/arm64/include/asm/sysreg.h | 2 ++
- arch/arm64/kvm/reset.c          | 9 ++++++++-
- 2 files changed, 10 insertions(+), 1 deletion(-)
+On 2020/5/23 1:14, Jean-Philippe Brucker wrote:
+> Hi,
+> 
+> On Tue, May 19, 2020 at 05:42:55PM +0800, Xiang Zheng wrote:
+>> Hi all,
+>>
+>> Is there any plan for enabling SMMU HTTU?
+> 
+> Not outside of SVA, as far as I know.
+> 
 
-diff --git a/arch/arm64/include/asm/sysreg.h b/arch/arm64/include/asm/sysreg.h
-index ebc622432831..371ea6d65c16 100644
---- a/arch/arm64/include/asm/sysreg.h
-+++ b/arch/arm64/include/asm/sysreg.h
-@@ -721,6 +721,8 @@
- #define ID_AA64MMFR1_VMIDBITS_8		0
- #define ID_AA64MMFR1_VMIDBITS_16	2
- 
-+#define ID_AA64MMFR1_HADBS_DBS		2
-+
- /* id_aa64mmfr2 */
- #define ID_AA64MMFR2_E0PD_SHIFT		60
- #define ID_AA64MMFR2_FWB_SHIFT		40
-diff --git a/arch/arm64/kvm/reset.c b/arch/arm64/kvm/reset.c
-index 30b7ea680f66..cb727e1fb581 100644
---- a/arch/arm64/kvm/reset.c
-+++ b/arch/arm64/kvm/reset.c
-@@ -392,7 +392,7 @@ int kvm_arm_setup_stage2(struct kvm *kvm, unsigned long type)
- {
- 	u64 vtcr = VTCR_EL2_FLAGS;
- 	u32 parange, phys_shift;
--	u8 lvls;
-+	u8 lvls, hadbs;
- 
- 	if (type & ~KVM_VM_TYPE_ARM_IPA_SIZE_MASK)
- 		return -EINVAL;
-@@ -428,6 +428,13 @@ int kvm_arm_setup_stage2(struct kvm *kvm, unsigned long type)
- 	 */
- 	vtcr |= VTCR_EL2_HA;
- 
-+	hadbs = (read_sysreg(id_aa64mmfr1_el1) >>
-+			ID_AA64MMFR1_HADBS_SHIFT) & 0xf;
-+#ifdef CONFIG_ARM64_HW_AFDBM
-+	if (hadbs == ID_AA64MMFR1_HADBS_DBS)
-+		vtcr |= VTCR_EL2_HD;
-+#endif
-+
- 	/* Set the vmid bits */
- 	vtcr |= (kvm_get_vmid_bits() == 16) ?
- 		VTCR_EL2_VS_16BIT :
+>> I have seen the patch locates in the SVA series patch, which adds
+>> support for HTTU:
+>>     https://www.spinics.net/lists/arm-kernel/msg798694.html
+>>
+>> HTTU reduces the number of access faults on SMMU fault queue
+>> (permission faults also benifit from it).
+>>
+>> Besides reducing the faults, HTTU also helps to track dirty pages for
+>> device DMA. Is it feasible to utilize HTTU to get dirty pages on device
+>> DMA during VFIO live migration?
+> 
+> As you know there is a VFIO interface for this under discussion:
+> https://lore.kernel.org/kvm/1589781397-28368-1-git-send-email-kwankhede@nvidia.com/
+> It doesn't implement an internal API to communicate with the IOMMU driver
+> about dirty pages.
+
+> 
+>> If SMMU can track dirty pages, devices are not required to implement
+>> additional dirty pages tracking to support VFIO live migration.
+> 
+> It seems feasible, though tracking it in the device might be more
+> efficient. I might have misunderstood but I think for live migration of
+> the Intel NIC they trap guest accesses to the device and introspect its
+> state to figure out which pages it is accessing.
+> 
+> With HTTU I suppose (without much knowledge about live migration) that
+> you'd need several new interfaces to the IOMMU drivers:
+> 
+> * A way for VFIO to query HTTU support in the SMMU. There are some
+>   discussions about communicating more IOMMU capabilities through VFIO but
+>   no implementation yet. When HTTU isn't supported the DIRTY_PAGES bitmap
+>   would report all pages as they do now.
+> 
+> * VFIO_IOMMU_DIRTY_PAGES_FLAG_START/STOP would clear the dirty bit
+>   for all VFIO mappings (which is going to take some time). There is a
+>   walker in io-pgtable for iova_to_phys() which could be extended. I
+>   suppose it's also possible to atomically switch the HA and HD bits in
+>   context descriptors.
+
+Maybe we need not switch HA and HD bits, just turn on them all the time?
+
+> 
+> * VFIO_IOMMU_DIRTY_PAGES_FLAG_GET_BITMAP would query the dirty bit for all
+>   VFIO mappings.
+> 
+
+I think we need to consider the case of IOMMU dirty pages logging. We want
+to test Kirti's VFIO migration patches combined with SMMU HTTU, any suggestions?
+
 -- 
-2.19.1
+Thanks,
+Xiang
 
 _______________________________________________
 kvmarm mailing list
