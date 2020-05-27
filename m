@@ -2,79 +2,81 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E1391E3A33
-	for <lists+kvmarm@lfdr.de>; Wed, 27 May 2020 09:18:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35CA61E3A34
+	for <lists+kvmarm@lfdr.de>; Wed, 27 May 2020 09:18:44 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EBC5A4B1FF;
-	Wed, 27 May 2020 03:18:41 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DA0104B1E0;
+	Wed, 27 May 2020 03:18:43 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1UXhM1zis5eO; Wed, 27 May 2020 03:18:41 -0400 (EDT)
+	with ESMTP id bAaTu9nLGob2; Wed, 27 May 2020 03:18:41 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6822C4B203;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 87AE14B206;
 	Wed, 27 May 2020 03:18:40 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 07B834B1A1
- for <kvmarm@lists.cs.columbia.edu>; Tue, 26 May 2020 22:39:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 479344B0FD
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 26 May 2020 22:43:48 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id fJHUsxbX5+x4 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 26 May 2020 22:39:28 -0400 (EDT)
-Received: from us-smtp-1.mimecast.com (us-smtp-1.mimecast.com [205.139.110.61])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A9AE84B18E
- for <kvmarm@lists.cs.columbia.edu>; Tue, 26 May 2020 22:39:28 -0400 (EDT)
+ with ESMTP id 7OkD2f+FNZMc for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 26 May 2020 22:43:46 -0400 (EDT)
+Received: from us-smtp-1.mimecast.com (us-smtp-1.mimecast.com [207.211.31.81])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D6D184B159
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 26 May 2020 22:43:46 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1590547168;
+ s=mimecast20190719; t=1590547426;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OSB4MQ0sSc72lQAw+UxZAF+ryvkbXacyBfPHDaEQ7+0=;
- b=LfimCiEpU0GqUfDLW41knd0ZF9rM9tQSfZODinOURTsMxOzV3rvGKJTPfIUCu5I++ZQRnl
- R7LkDoKjoWb7l0uVu6JHtraUjfw4s/4Pz5CRLZEzoVQk8tia2Z9cFp0mHFw14KNet+woPJ
- Ak7mk22mxJ74/uiobaWR3rAxV6mp/Tk=
+ bh=+dPoJ64ZoeDylWTA8ItW49wD3xLEH9sSK+s03KqFtgY=;
+ b=BKkz+nBtmYnEjK+rXBNa3+tfnmfDSwWojRzGlgykSeYl4jfiPE8m4XVmisjHxq8dFiu+BK
+ INmuzVo/maykIg+83OLudFeyfMmecEaMZ6Wf6VKDffmc48nW5OgrNh4GVIm5v7kmZG0sXS
+ E2qjaFhK91n3q3wmwq5ckocElDizh5M=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-196-y0cRexijNpynYVGTrN8pPQ-1; Tue, 26 May 2020 22:39:21 -0400
-X-MC-Unique: y0cRexijNpynYVGTrN8pPQ-1
+ us-mta-429-eIOOXBLoPgC2wER7YF4lhw-1; Tue, 26 May 2020 22:43:44 -0400
+X-MC-Unique: eIOOXBLoPgC2wER7YF4lhw-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.phx2.redhat.com
  [10.5.11.15])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 1558E100CCC0;
- Wed, 27 May 2020 02:39:20 +0000 (UTC)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id CF9758014D4;
+ Wed, 27 May 2020 02:43:42 +0000 (UTC)
 Received: from localhost.localdomain (vpn2-54-130.bne.redhat.com
  [10.64.54.130])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id A927F6FB86;
- Wed, 27 May 2020 02:39:12 +0000 (UTC)
-Subject: Re: [PATCH RFCv2 0/9] kvm/arm64: Support Async Page Fault
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 877466FB86;
+ Wed, 27 May 2020 02:43:35 +0000 (UTC)
+Subject: Re: [PATCH RFCv2 3/9] kvm/arm64: Rename kvm_vcpu_get_hsr() to
+ kvm_vcpu_get_esr()
 To: Mark Rutland <mark.rutland@arm.com>
 References: <20200508032919.52147-1-gshan@redhat.com>
- <20200526130927.GH1363@C02TD0UTHF1T.local>
+ <20200508032919.52147-4-gshan@redhat.com>
+ <20200526104249.GB1363@C02TD0UTHF1T.local>
 From: Gavin Shan <gshan@redhat.com>
-Message-ID: <987785b2-2533-c3d8-8f6a-4193aa82d502@redhat.com>
-Date: Wed, 27 May 2020 12:39:09 +1000
+Message-ID: <2e4dd03f-656a-c32b-5e87-ca28583999ef@redhat.com>
+Date: Wed, 27 May 2020 12:43:33 +1000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.2.0
 MIME-Version: 1.0
-In-Reply-To: <20200526130927.GH1363@C02TD0UTHF1T.local>
+In-Reply-To: <20200526104249.GB1363@C02TD0UTHF1T.local>
 Content-Language: en-US
 X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
 X-Mailman-Approved-At: Wed, 27 May 2020 03:18:39 -0400
-Cc: maz@kernel.org, linux-kernel@vger.kernel.org, shan.gavin@gmail.com,
- catalin.marinas@arm.com, pbonzini@redhat.com, will@kernel.org,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Cc: catalin.marinas@arm.com, linux-kernel@vger.kernel.org, shan.gavin@gmail.com,
+ maz@kernel.org, will@kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -94,141 +96,333 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 Hi Mark,
 
-On 5/26/20 11:09 PM, Mark Rutland wrote:
-> At a high-level I'm rather fearful of this series. I can see many ways
-> that this can break, and I can also see that even if/when we get things
-> into a working state, constant vigilance will be requried for any
-> changes to the entry code.
-> 
-> I'm not keen on injecting non-architectural exceptions in this way, and
-> I'm also not keen on how deep the PV hooks are injected currently (e.g.
-> in the ret_to_user path).
-> 
-
-First of all, thank you for your time and providing your comments continuously.
-Since the series is tagged as RFC, it's not a surprise to see something is
-obviously broken. However, Could you please provide more details? With more
-details, I can figure out the solutions. If I'm correct, you're talking about
-the added entry code and the injected PV hooks. Anyway, please provide more
-details about your concerns so that I can figure out the solutions.
-
-Let me briefly explain why we need the injected PV hooks in ret_to_user: There
-are two fashions of wakeup and I would call them as direct wakeup and delayed
-wakeup. The sleeping process is waked up directly when received PAGE_READY
-notification from the host, which is the process of direct wakeup. However there
-are some cases the direct wakeup can't be carried out. For example, the sleeper
-and the waker are same process or the (CFS) runqueue has been locked by somebody
-else. In these cases, the wakeup is delayed until the idle process is running or
-in ret_to_user. It's how delayed wakeup works.
-
-> I see a few patches have preparator cleanup that I think would be
-> worthwhile regardless of this series; if you could factor those out and
-> send them on their own it would get that out of the way and make it
-> easier to review the series itself. Similarly, there's some duplication
-> of code from arch/x86 which I think can be factored out to virt/kvm
-> instead as preparatory work.
-> 
-
-Yep, I agree there are several cleanup patches can be posted separately
-and merged in advance. I will do that and thanks for the comments.
-
-About the shared code between arm64/x86, I need some time to investigate.
-Basically, I agree to do so. I also included Paolo here to check his opnion.
-
-It's no doubt these are all preparatory work, to make the review a bit
-easier as you said :)
-
-> Generally, I also think that you need to spend some time on commit
-> messages and/or documentation to better explain the concepts and
-> expected usage. I had to reverse-engineer the series by reviewing it in
-> entirety before I had an idea as to how basic parts of it strung
-> together, and a more thorough conceptual explanation would make it much
-> easier to critique the approach rather than the individual patches.
-> 
-
-Yes, sure. I will do this in the future. Sorry about having taken you
-too much to do the reverse-engineering. In next revision, I might put
-more information in the cover letter and commit log to explain how things
-are designed and working :)
-
-> On Fri, May 08, 2020 at 01:29:10PM +1000, Gavin Shan wrote:
->> Testing
->> =======
->> The tests are carried on the following machine. A guest with single vCPU
->> and 4GB memory is started. Also, the QEMU process is put into memory cgroup
->> (v1) whose memory limit is set to 2GB. In the guest, there are two threads,
->> which are memory bound and CPU bound separately. The memory bound thread
->> allocates all available memory, accesses and them free them. The CPU bound
->> thread simply executes block of "nop".
-> 
-> I appreciate this is a microbenchmark, but that sounds far from
-> realistic.
-> 
-> Is there a specitic real workload that's expected to be representative
-> of?
-> 
-> Can you run tests with a real workload? For example, a kernel build
-> inside the VM?
-> 
-
-Yeah, I agree it's far from a realistic workload. However, it's the test case
-which was suggested when async page fault was proposed from day one, according
-to the following document. On the page#34, you can see the benchmark, which is
-similar to what we're doing.
-
-https://www.linux-kvm.org/images/a/ac/2010-forum-Async-page-faults.pdf
-
-Ok. I will test with the workload to build kernel or another better one to
-represent the case.
-
->> The test is carried out for 5 time
->> continuously and the average number (per minute) of executed blocks in the
->> CPU bound thread is taken as indicator of improvement.
+On 5/26/20 8:42 PM, Mark Rutland wrote:
+> On Fri, May 08, 2020 at 01:29:13PM +1000, Gavin Shan wrote:
+>> Since kvm/arm32 was removed, this renames kvm_vcpu_get_hsr() to
+>> kvm_vcpu_get_esr() to it a bit more self-explaining because the
+>> functions returns ESR instead of HSR on aarch64. This shouldn't
+>> cause any functional changes.
 >>
->>     Vendor: GIGABYTE   CPU: 224 x Cavium ThunderX2(R) CPU CN9975 v2.2 @ 2.0GHz
->>     Memory: 32GB       Disk: Fusion-MPT SAS-3 (PCIe3.0 x8)
->>
->>     Without-APF: 7029030180/minute = avg(7559625120 5962155840 7823208540
->>                                          7629633480 6170527920)
->>     With-APF:    8286827472/minute = avg(8464584540 8177073360 8262723180
->>                                          8095084020 8434672260)
->>     Outcome:     +17.8%
->>
->> Another test case is to measure the time consumed by the application, but
->> with the CPU-bound thread disabled.
->>
->>     Without-APF: 40.3s = avg(40.6 39.3 39.2 41.6 41.2)
->>     With-APF:    40.8s = avg(40.6 41.1 40.9 41.0 40.7)
->>     Outcome:     +1.2%
+>> Signed-off-by: Gavin Shan <gshan@redhat.com>
 > 
-> So this is pure overhead in that case?
+> I think that this would be a nice cleanup on its own, and could be taken
+> independently of the rest of this series if it were rebased and sent as
+> a single patch.
 > 
 
-Yes, It's the pure overhead, which is mainly contributed by the injected
-PV code in ret_to_user.
+Yeah, I'll see how PATCH[3,4,5] can be posted independently
+as part of the preparatory work, which is suggested by you
+in another reply.
 
-> I think we need to see a real workload that this benefits. As it stands
-> it seems that this is a lot of complexity to game a synthetic benchmark.
-> 
-> Thanks,
-> Mark.
-> 
->> I also have some code in the host to capture the number of async page faults,
->> time used to do swapin and its maximal/minimal values when async page fault
->> is enabled. During the test, the CPU-bound thread is disabled. There is about
->> 30% of the time used to do swapin.
->>
->>     Number of async page fault:     7555 times
->>     Total time used by application: 42.2 seconds
->>     Total time used by swapin:      12.7 seconds   (30%)
->>           Minimal swapin time:      36.2 us
->>           Maximal swapin time:      55.7 ms
->>
-
-[...]
+By the way, I assume the cleanup patches are good enough to
+target 5.8.rc1/rc2 if you agree.
 
 Thanks,
 Gavin
+>> ---
+>>   arch/arm64/include/asm/kvm_emulate.h | 36 +++++++++++++++-------------
+>>   arch/arm64/kvm/handle_exit.c         | 12 +++++-----
+>>   arch/arm64/kvm/hyp/switch.c          |  2 +-
+>>   arch/arm64/kvm/sys_regs.c            |  6 ++---
+>>   virt/kvm/arm/hyp/aarch32.c           |  2 +-
+>>   virt/kvm/arm/hyp/vgic-v3-sr.c        |  4 ++--
+>>   virt/kvm/arm/mmu.c                   |  6 ++---
+>>   7 files changed, 35 insertions(+), 33 deletions(-)
+>>
+>> diff --git a/arch/arm64/include/asm/kvm_emulate.h b/arch/arm64/include/asm/kvm_emulate.h
+>> index a30b4eec7cb4..bd1a69e7c104 100644
+>> --- a/arch/arm64/include/asm/kvm_emulate.h
+>> +++ b/arch/arm64/include/asm/kvm_emulate.h
+>> @@ -265,14 +265,14 @@ static inline bool vcpu_mode_priv(const struct kvm_vcpu *vcpu)
+>>   	return mode != PSR_MODE_EL0t;
+>>   }
+>>   
+>> -static __always_inline u32 kvm_vcpu_get_hsr(const struct kvm_vcpu *vcpu)
+>> +static __always_inline u32 kvm_vcpu_get_esr(const struct kvm_vcpu *vcpu)
+>>   {
+>>   	return vcpu->arch.fault.esr_el2;
+>>   }
+>>   
+>>   static __always_inline int kvm_vcpu_get_condition(const struct kvm_vcpu *vcpu)
+>>   {
+>> -	u32 esr = kvm_vcpu_get_hsr(vcpu);
+>> +	u32 esr = kvm_vcpu_get_esr(vcpu);
+>>   
+>>   	if (esr & ESR_ELx_CV)
+>>   		return (esr & ESR_ELx_COND_MASK) >> ESR_ELx_COND_SHIFT;
+>> @@ -297,64 +297,66 @@ static inline u64 kvm_vcpu_get_disr(const struct kvm_vcpu *vcpu)
+>>   
+>>   static inline u32 kvm_vcpu_hvc_get_imm(const struct kvm_vcpu *vcpu)
+>>   {
+>> -	return kvm_vcpu_get_hsr(vcpu) & ESR_ELx_xVC_IMM_MASK;
+>> +	return kvm_vcpu_get_esr(vcpu) & ESR_ELx_xVC_IMM_MASK;
+>>   }
+>>   
+>>   static __always_inline bool kvm_vcpu_dabt_isvalid(const struct kvm_vcpu *vcpu)
+>>   {
+>> -	return !!(kvm_vcpu_get_hsr(vcpu) & ESR_ELx_ISV);
+>> +	return !!(kvm_vcpu_get_esr(vcpu) & ESR_ELx_ISV);
+>>   }
+>>   
+>>   static inline unsigned long kvm_vcpu_dabt_iss_nisv_sanitized(const struct kvm_vcpu *vcpu)
+>>   {
+>> -	return kvm_vcpu_get_hsr(vcpu) & (ESR_ELx_CM | ESR_ELx_WNR | ESR_ELx_FSC);
+>> +	return kvm_vcpu_get_esr(vcpu) &
+>> +	       (ESR_ELx_CM | ESR_ELx_WNR | ESR_ELx_FSC);
+>>   }
+>>   
+>>   static inline bool kvm_vcpu_dabt_issext(const struct kvm_vcpu *vcpu)
+>>   {
+>> -	return !!(kvm_vcpu_get_hsr(vcpu) & ESR_ELx_SSE);
+>> +	return !!(kvm_vcpu_get_esr(vcpu) & ESR_ELx_SSE);
+>>   }
+>>   
+>>   static inline bool kvm_vcpu_dabt_issf(const struct kvm_vcpu *vcpu)
+>>   {
+>> -	return !!(kvm_vcpu_get_hsr(vcpu) & ESR_ELx_SF);
+>> +	return !!(kvm_vcpu_get_esr(vcpu) & ESR_ELx_SF);
+>>   }
+>>   
+>>   static __always_inline int kvm_vcpu_dabt_get_rd(const struct kvm_vcpu *vcpu)
+>>   {
+>> -	return (kvm_vcpu_get_hsr(vcpu) & ESR_ELx_SRT_MASK) >> ESR_ELx_SRT_SHIFT;
+>> +	return (kvm_vcpu_get_esr(vcpu) & ESR_ELx_SRT_MASK) >> ESR_ELx_SRT_SHIFT;
+>>   }
+>>   
+>>   static __always_inline bool kvm_vcpu_dabt_iss1tw(const struct kvm_vcpu *vcpu)
+>>   {
+>> -	return !!(kvm_vcpu_get_hsr(vcpu) & ESR_ELx_S1PTW);
+>> +	return !!(kvm_vcpu_get_esr(vcpu) & ESR_ELx_S1PTW);
+>>   }
+>>   
+>>   static __always_inline bool kvm_vcpu_dabt_iswrite(const struct kvm_vcpu *vcpu)
+>>   {
+>> -	return !!(kvm_vcpu_get_hsr(vcpu) & ESR_ELx_WNR) ||
+>> +	return !!(kvm_vcpu_get_esr(vcpu) & ESR_ELx_WNR) ||
+>>   		kvm_vcpu_dabt_iss1tw(vcpu); /* AF/DBM update */
+>>   }
+>>   
+>>   static inline bool kvm_vcpu_dabt_is_cm(const struct kvm_vcpu *vcpu)
+>>   {
+>> -	return !!(kvm_vcpu_get_hsr(vcpu) & ESR_ELx_CM);
+>> +	return !!(kvm_vcpu_get_esr(vcpu) & ESR_ELx_CM);
+>>   }
+>>   
+>>   static __always_inline unsigned int kvm_vcpu_dabt_get_as(const struct kvm_vcpu *vcpu)
+>>   {
+>> -	return 1 << ((kvm_vcpu_get_hsr(vcpu) & ESR_ELx_SAS) >> ESR_ELx_SAS_SHIFT);
+>> +	return 1 << ((kvm_vcpu_get_esr(vcpu) & ESR_ELx_SAS) >>
+>> +		     ESR_ELx_SAS_SHIFT);
+>>   }
+>>   
+>>   /* This one is not specific to Data Abort */
+>>   static __always_inline bool kvm_vcpu_trap_il_is32bit(const struct kvm_vcpu *vcpu)
+>>   {
+>> -	return !!(kvm_vcpu_get_hsr(vcpu) & ESR_ELx_IL);
+>> +	return !!(kvm_vcpu_get_esr(vcpu) & ESR_ELx_IL);
+>>   }
+>>   
+>>   static __always_inline u8 kvm_vcpu_trap_get_class(const struct kvm_vcpu *vcpu)
+>>   {
+>> -	return ESR_ELx_EC(kvm_vcpu_get_hsr(vcpu));
+>> +	return ESR_ELx_EC(kvm_vcpu_get_esr(vcpu));
+>>   }
+>>   
+>>   static inline bool kvm_vcpu_trap_is_iabt(const struct kvm_vcpu *vcpu)
+>> @@ -364,12 +366,12 @@ static inline bool kvm_vcpu_trap_is_iabt(const struct kvm_vcpu *vcpu)
+>>   
+>>   static __always_inline u8 kvm_vcpu_trap_get_fault(const struct kvm_vcpu *vcpu)
+>>   {
+>> -	return kvm_vcpu_get_hsr(vcpu) & ESR_ELx_FSC;
+>> +	return kvm_vcpu_get_esr(vcpu) & ESR_ELx_FSC;
+>>   }
+>>   
+>>   static __always_inline u8 kvm_vcpu_trap_get_fault_type(const struct kvm_vcpu *vcpu)
+>>   {
+>> -	return kvm_vcpu_get_hsr(vcpu) & ESR_ELx_FSC_TYPE;
+>> +	return kvm_vcpu_get_esr(vcpu) & ESR_ELx_FSC_TYPE;
+>>   }
+>>   
+>>   static __always_inline bool kvm_vcpu_dabt_isextabt(const struct kvm_vcpu *vcpu)
+>> @@ -393,7 +395,7 @@ static __always_inline bool kvm_vcpu_dabt_isextabt(const struct kvm_vcpu *vcpu)
+>>   
+>>   static __always_inline int kvm_vcpu_sys_get_rt(struct kvm_vcpu *vcpu)
+>>   {
+>> -	u32 esr = kvm_vcpu_get_hsr(vcpu);
+>> +	u32 esr = kvm_vcpu_get_esr(vcpu);
+>>   	return ESR_ELx_SYS64_ISS_RT(esr);
+>>   }
+>>   
+>> diff --git a/arch/arm64/kvm/handle_exit.c b/arch/arm64/kvm/handle_exit.c
+>> index aacfc55de44c..c5b75a4d5eda 100644
+>> --- a/arch/arm64/kvm/handle_exit.c
+>> +++ b/arch/arm64/kvm/handle_exit.c
+>> @@ -89,7 +89,7 @@ static int handle_no_fpsimd(struct kvm_vcpu *vcpu, struct kvm_run *run)
+>>    */
+>>   static int kvm_handle_wfx(struct kvm_vcpu *vcpu, struct kvm_run *run)
+>>   {
+>> -	if (kvm_vcpu_get_hsr(vcpu) & ESR_ELx_WFx_ISS_WFE) {
+>> +	if (kvm_vcpu_get_esr(vcpu) & ESR_ELx_WFx_ISS_WFE) {
+>>   		trace_kvm_wfx_arm64(*vcpu_pc(vcpu), true);
+>>   		vcpu->stat.wfe_exit_stat++;
+>>   		kvm_vcpu_on_spin(vcpu, vcpu_mode_priv(vcpu));
+>> @@ -119,7 +119,7 @@ static int kvm_handle_wfx(struct kvm_vcpu *vcpu, struct kvm_run *run)
+>>    */
+>>   static int kvm_handle_guest_debug(struct kvm_vcpu *vcpu, struct kvm_run *run)
+>>   {
+>> -	u32 hsr = kvm_vcpu_get_hsr(vcpu);
+>> +	u32 hsr = kvm_vcpu_get_esr(vcpu);
+>>   	int ret = 0;
+>>   
+>>   	run->exit_reason = KVM_EXIT_DEBUG;
+>> @@ -146,7 +146,7 @@ static int kvm_handle_guest_debug(struct kvm_vcpu *vcpu, struct kvm_run *run)
+>>   
+>>   static int kvm_handle_unknown_ec(struct kvm_vcpu *vcpu, struct kvm_run *run)
+>>   {
+>> -	u32 hsr = kvm_vcpu_get_hsr(vcpu);
+>> +	u32 hsr = kvm_vcpu_get_esr(vcpu);
+>>   
+>>   	kvm_pr_unimpl("Unknown exception class: hsr: %#08x -- %s\n",
+>>   		      hsr, esr_get_class_string(hsr));
+>> @@ -226,7 +226,7 @@ static exit_handle_fn arm_exit_handlers[] = {
+>>   
+>>   static exit_handle_fn kvm_get_exit_handler(struct kvm_vcpu *vcpu)
+>>   {
+>> -	u32 hsr = kvm_vcpu_get_hsr(vcpu);
+>> +	u32 hsr = kvm_vcpu_get_esr(vcpu);
+>>   	u8 hsr_ec = ESR_ELx_EC(hsr);
+>>   
+>>   	return arm_exit_handlers[hsr_ec];
+>> @@ -267,7 +267,7 @@ int handle_exit(struct kvm_vcpu *vcpu, struct kvm_run *run,
+>>   		       int exception_index)
+>>   {
+>>   	if (ARM_SERROR_PENDING(exception_index)) {
+>> -		u8 hsr_ec = ESR_ELx_EC(kvm_vcpu_get_hsr(vcpu));
+>> +		u8 hsr_ec = ESR_ELx_EC(kvm_vcpu_get_esr(vcpu));
+>>   
+>>   		/*
+>>   		 * HVC/SMC already have an adjusted PC, which we need
+>> @@ -333,5 +333,5 @@ void handle_exit_early(struct kvm_vcpu *vcpu, struct kvm_run *run,
+>>   	exception_index = ARM_EXCEPTION_CODE(exception_index);
+>>   
+>>   	if (exception_index == ARM_EXCEPTION_EL1_SERROR)
+>> -		kvm_handle_guest_serror(vcpu, kvm_vcpu_get_hsr(vcpu));
+>> +		kvm_handle_guest_serror(vcpu, kvm_vcpu_get_esr(vcpu));
+>>   }
+>> diff --git a/arch/arm64/kvm/hyp/switch.c b/arch/arm64/kvm/hyp/switch.c
+>> index 8a1e81a400e0..2c3242bcfed2 100644
+>> --- a/arch/arm64/kvm/hyp/switch.c
+>> +++ b/arch/arm64/kvm/hyp/switch.c
+>> @@ -437,7 +437,7 @@ static bool __hyp_text __hyp_handle_fpsimd(struct kvm_vcpu *vcpu)
+>>   
+>>   static bool __hyp_text handle_tx2_tvm(struct kvm_vcpu *vcpu)
+>>   {
+>> -	u32 sysreg = esr_sys64_to_sysreg(kvm_vcpu_get_hsr(vcpu));
+>> +	u32 sysreg = esr_sys64_to_sysreg(kvm_vcpu_get_esr(vcpu));
+>>   	int rt = kvm_vcpu_sys_get_rt(vcpu);
+>>   	u64 val = vcpu_get_reg(vcpu, rt);
+>>   
+>> diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+>> index 51db934702b6..5b61465927b7 100644
+>> --- a/arch/arm64/kvm/sys_regs.c
+>> +++ b/arch/arm64/kvm/sys_regs.c
+>> @@ -2214,7 +2214,7 @@ static int kvm_handle_cp_64(struct kvm_vcpu *vcpu,
+>>   			    size_t nr_specific)
+>>   {
+>>   	struct sys_reg_params params;
+>> -	u32 hsr = kvm_vcpu_get_hsr(vcpu);
+>> +	u32 hsr = kvm_vcpu_get_esr(vcpu);
+>>   	int Rt = kvm_vcpu_sys_get_rt(vcpu);
+>>   	int Rt2 = (hsr >> 10) & 0x1f;
+>>   
+>> @@ -2271,7 +2271,7 @@ static int kvm_handle_cp_32(struct kvm_vcpu *vcpu,
+>>   			    size_t nr_specific)
+>>   {
+>>   	struct sys_reg_params params;
+>> -	u32 hsr = kvm_vcpu_get_hsr(vcpu);
+>> +	u32 hsr = kvm_vcpu_get_esr(vcpu);
+>>   	int Rt  = kvm_vcpu_sys_get_rt(vcpu);
+>>   
+>>   	params.is_aarch32 = true;
+>> @@ -2387,7 +2387,7 @@ static void reset_sys_reg_descs(struct kvm_vcpu *vcpu,
+>>   int kvm_handle_sys_reg(struct kvm_vcpu *vcpu, struct kvm_run *run)
+>>   {
+>>   	struct sys_reg_params params;
+>> -	unsigned long esr = kvm_vcpu_get_hsr(vcpu);
+>> +	unsigned long esr = kvm_vcpu_get_esr(vcpu);
+>>   	int Rt = kvm_vcpu_sys_get_rt(vcpu);
+>>   	int ret;
+>>   
+>> diff --git a/virt/kvm/arm/hyp/aarch32.c b/virt/kvm/arm/hyp/aarch32.c
+>> index d31f267961e7..864b477e660a 100644
+>> --- a/virt/kvm/arm/hyp/aarch32.c
+>> +++ b/virt/kvm/arm/hyp/aarch32.c
+>> @@ -51,7 +51,7 @@ bool __hyp_text kvm_condition_valid32(const struct kvm_vcpu *vcpu)
+>>   	int cond;
+>>   
+>>   	/* Top two bits non-zero?  Unconditional. */
+>> -	if (kvm_vcpu_get_hsr(vcpu) >> 30)
+>> +	if (kvm_vcpu_get_esr(vcpu) >> 30)
+>>   		return true;
+>>   
+>>   	/* Is condition field valid? */
+>> diff --git a/virt/kvm/arm/hyp/vgic-v3-sr.c b/virt/kvm/arm/hyp/vgic-v3-sr.c
+>> index ccf1fde9836c..8a7a14ec9120 100644
+>> --- a/virt/kvm/arm/hyp/vgic-v3-sr.c
+>> +++ b/virt/kvm/arm/hyp/vgic-v3-sr.c
+>> @@ -441,7 +441,7 @@ static int __hyp_text __vgic_v3_bpr_min(void)
+>>   
+>>   static int __hyp_text __vgic_v3_get_group(struct kvm_vcpu *vcpu)
+>>   {
+>> -	u32 esr = kvm_vcpu_get_hsr(vcpu);
+>> +	u32 esr = kvm_vcpu_get_esr(vcpu);
+>>   	u8 crm = (esr & ESR_ELx_SYS64_ISS_CRM_MASK) >> ESR_ELx_SYS64_ISS_CRM_SHIFT;
+>>   
+>>   	return crm != 8;
+>> @@ -1007,7 +1007,7 @@ int __hyp_text __vgic_v3_perform_cpuif_access(struct kvm_vcpu *vcpu)
+>>   	bool is_read;
+>>   	u32 sysreg;
+>>   
+>> -	esr = kvm_vcpu_get_hsr(vcpu);
+>> +	esr = kvm_vcpu_get_esr(vcpu);
+>>   	if (vcpu_mode_is_32bit(vcpu)) {
+>>   		if (!kvm_condition_valid(vcpu)) {
+>>   			__kvm_skip_instr(vcpu);
+>> diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
+>> index e3b9ee268823..5da0d0e7519b 100644
+>> --- a/virt/kvm/arm/mmu.c
+>> +++ b/virt/kvm/arm/mmu.c
+>> @@ -1922,7 +1922,7 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu, struct kvm_run *run)
+>>   		 * For RAS the host kernel may handle this abort.
+>>   		 * There is no need to pass the error into the guest.
+>>   		 */
+>> -		if (!kvm_handle_guest_sea(fault_ipa, kvm_vcpu_get_hsr(vcpu)))
+>> +		if (!kvm_handle_guest_sea(fault_ipa, kvm_vcpu_get_esr(vcpu)))
+>>   			return 1;
+>>   
+>>   		if (unlikely(!is_iabt)) {
+>> @@ -1931,7 +1931,7 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu, struct kvm_run *run)
+>>   		}
+>>   	}
+>>   
+>> -	trace_kvm_guest_fault(*vcpu_pc(vcpu), kvm_vcpu_get_hsr(vcpu),
+>> +	trace_kvm_guest_fault(*vcpu_pc(vcpu), kvm_vcpu_get_esr(vcpu),
+>>   			      kvm_vcpu_get_hfar(vcpu), fault_ipa);
+>>   
+>>   	/* Check the stage-2 fault is trans. fault or write fault */
+>> @@ -1940,7 +1940,7 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu, struct kvm_run *run)
+>>   		kvm_err("Unsupported FSC: EC=%#x xFSC=%#lx ESR_EL2=%#lx\n",
+>>   			kvm_vcpu_trap_get_class(vcpu),
+>>   			(unsigned long)kvm_vcpu_trap_get_fault(vcpu),
+>> -			(unsigned long)kvm_vcpu_get_hsr(vcpu));
+>> +			(unsigned long)kvm_vcpu_get_esr(vcpu));
+>>   		return -EFAULT;
+>>   	}
+>>   
+>> -- 
+>> 2.23.0
+>>
+> 
 
 _______________________________________________
 kvmarm mailing list
