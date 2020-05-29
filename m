@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 37DF31E82D3
-	for <lists+kvmarm@lfdr.de>; Fri, 29 May 2020 18:02:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12C401E82FF
+	for <lists+kvmarm@lfdr.de>; Fri, 29 May 2020 18:04:12 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D5DA54B28B;
-	Fri, 29 May 2020 12:01:59 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B9A624B2AC;
+	Fri, 29 May 2020 12:04:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,45 +18,45 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id j7cxcaDlTCKD; Fri, 29 May 2020 12:01:59 -0400 (EDT)
+	with ESMTP id FhwNdOH4uMWq; Fri, 29 May 2020 12:04:11 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0A68D4B2D0;
-	Fri, 29 May 2020 12:01:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3848D4B2A7;
+	Fri, 29 May 2020 12:04:10 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B40B44B28D
- for <kvmarm@lists.cs.columbia.edu>; Fri, 29 May 2020 12:01:55 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A8EF94B0D0
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 29 May 2020 12:04:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 7VrYZbGAiw+I for <kvmarm@lists.cs.columbia.edu>;
- Fri, 29 May 2020 12:01:54 -0400 (EDT)
+ with ESMTP id 5vMs+H9AeAU7 for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 29 May 2020 12:04:07 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B33CC4B2C8
- for <kvmarm@lists.cs.columbia.edu>; Fri, 29 May 2020 12:01:50 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A3CAA4B12E
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 29 May 2020 12:04:07 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id E38A1207F9;
- Fri, 29 May 2020 16:01:49 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id D3452207F9;
+ Fri, 29 May 2020 16:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1590768110;
- bh=KUg14+CaJZ9AWk7EfYjAKCvGH6MwQ8/GM6yO+OJnz2o=;
+ s=default; t=1590768247;
+ bh=JOkpbMlcjI9/itplMT14/1X3wT/8l30AWPnys8EJhvU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=nU0ZVT5bQTXNPcH/tNLx+E/sIBFGAHakUFGO27I9qF638KtmUb+kEQHH5rZJGDbnL
- ZB2959WiGax5gp4wQEnlrIC4oUjBwVCZPpw7FgrDBuZdb3Yn+mtk114WBD9S5TxuiG
- cRv+1Gyb4qs2RHxmFGuSjy5Ml5m5c6+0z4RdTxAo=
+ b=bLntMe4zNTVSsATTQ2yxc6M+qQtNWqP2tZkb4l0rWE2N7L4/9go/ow/CK1+8pF8GX
+ t+6FQ6FUIh1/19izsGsTzeiXB24i93hcc0lRN7hGVbRDCxsHl1GxDSn07BED1HG55f
+ zDHMkXMMPRd7sRxBSfZOCniywTiCjjSkosN2oQLg=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1jehS8-00GJKc-CJ; Fri, 29 May 2020 17:01:48 +0100
+ id 1jehS9-00GJKc-6T; Fri, 29 May 2020 17:01:49 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 09/24] KVM: arm64: Sidestep stage2_unmap_vm() on vcpu reset
- when S2FWB is supported
-Date: Fri, 29 May 2020 17:01:06 +0100
-Message-Id: <20200529160121.899083-10-maz@kernel.org>
+Subject: [PATCH 10/24] KVM: arm/arm64: Release kvm->mmu_lock in loop to
+ prevent starvation
+Date: Fri, 29 May 2020 17:01:07 +0100
+Message-Id: <20200529160121.899083-11-maz@kernel.org>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20200529160121.899083-1-maz@kernel.org>
 References: <20200529160121.899083-1-maz@kernel.org>
@@ -91,46 +91,34 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Zenghui Yu <yuzenghui@huawei.com>
+From: Jiang Yi <giangyi@amazon.com>
 
-stage2_unmap_vm() was introduced to unmap user RAM region in the stage2
-page table to make the caches coherent. E.g., a guest reboot with stage1
-MMU disabled will access memory using non-cacheable attributes. If the
-RAM and caches are not coherent at this stage, some evicted dirty cache
-line may go and corrupt guest data in RAM.
+Do cond_resched_lock() in stage2_flush_memslot() like what is done in
+unmap_stage2_range() and other places holding mmu_lock while processing
+a possibly large range of memory.
 
-Since ARMv8.4, S2FWB feature is mandatory and KVM will take advantage
-of it to configure the stage2 page table and the attributes of memory
-access. So we ensure that guests always access memory using cacheable
-attributes and thus, the caches always be coherent.
-
-So on CPUs that support S2FWB, we can safely reset the vcpu without a
-heavy stage2 unmapping.
-
-Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
+Signed-off-by: Jiang Yi <giangyi@amazon.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20200415072835.1164-1-yuzenghui@huawei.com
+Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20200415084229.29992-1-giangyi@amazon.com
 ---
- arch/arm64/kvm/arm.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/mmu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index ee1b5bba1d08..0ea9a0266d9a 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -983,8 +983,11 @@ static int kvm_arch_vcpu_ioctl_vcpu_init(struct kvm_vcpu *vcpu,
- 	/*
- 	 * Ensure a rebooted VM will fault in RAM pages and detect if the
- 	 * guest MMU is turned off and flush the caches as needed.
-+	 *
-+	 * S2FWB enforces all memory accesses to RAM being cacheable, we
-+	 * ensure that the cache is always coherent.
- 	 */
--	if (vcpu->arch.has_run_once)
-+	if (vcpu->arch.has_run_once && !cpus_have_const_cap(ARM64_HAS_STAGE2_FWB))
- 		stage2_unmap_vm(vcpu->kvm);
+diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+index 29d8f24df944..917363375e8a 100644
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -422,6 +422,9 @@ static void stage2_flush_memslot(struct kvm *kvm,
+ 		next = stage2_pgd_addr_end(kvm, addr, end);
+ 		if (!stage2_pgd_none(kvm, *pgd))
+ 			stage2_flush_puds(kvm, pgd, addr, next);
++
++		if (next != end)
++			cond_resched_lock(&kvm->mmu_lock);
+ 	} while (pgd++, addr = next, addr != end);
+ }
  
- 	vcpu_reset_hcr(vcpu);
 -- 
 2.26.2
 
