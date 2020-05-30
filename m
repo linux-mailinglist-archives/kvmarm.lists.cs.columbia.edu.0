@@ -2,78 +2,56 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B9F6A1E82E3
-	for <lists+kvmarm@lfdr.de>; Fri, 29 May 2020 18:03:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED1221E90A4
+	for <lists+kvmarm@lfdr.de>; Sat, 30 May 2020 12:45:44 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5562D4B280;
-	Fri, 29 May 2020 12:03:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F20FF4B2AC;
+	Sat, 30 May 2020 06:45:43 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qdDgcysMLkyu; Fri, 29 May 2020 12:03:26 -0400 (EDT)
+	with ESMTP id 6q7N-1TtXFHs; Sat, 30 May 2020 06:45:43 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 63A3B4B283;
-	Fri, 29 May 2020 12:03:25 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7089F4B2B2;
+	Sat, 30 May 2020 06:45:42 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DDFC94B274
- for <kvmarm@lists.cs.columbia.edu>; Fri, 29 May 2020 12:03:23 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 678D74B2AD
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 30 May 2020 06:45:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Y-Md5dlinngT for <kvmarm@lists.cs.columbia.edu>;
- Fri, 29 May 2020 12:03:22 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id CC7C44B1CF
- for <kvmarm@lists.cs.columbia.edu>; Fri, 29 May 2020 12:03:22 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id B6C39207BC;
- Fri, 29 May 2020 16:03:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1590768201;
- bh=Y4wR35sXpU4HJt4C1cy2OouLyeLPiiNYcixW9HynfuQ=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=pkPlOWC4RqX+J8MPVbByW5BDkf0WWh1OGCn2RxmLyHqDvOm7FazZ11+hns80g1Tv9
- RjG8knr0QTEj/ON/LVXW/PzmoXuPNReNL21YFRX9m/sSBuAm2jTzKKhGmw5LAanvI4
- G1wR2ivaY8HCV8+U1o6rNVIJrcaYCgVYd4Ik6uko=
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.lan) by disco-boy.misterjones.org with esmtpsa
- (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
- (envelope-from <maz@kernel.org>)
- id 1jehSP-00GJKc-GO; Fri, 29 May 2020 17:02:05 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 24/24] KVM: arm64: Drop obsolete comment about sys_reg ordering
-Date: Fri, 29 May 2020 17:01:21 +0100
-Message-Id: <20200529160121.899083-25-maz@kernel.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200529160121.899083-1-maz@kernel.org>
-References: <20200529160121.899083-1-maz@kernel.org>
+ with ESMTP id LBfQ26kRnUCQ for <kvmarm@lists.cs.columbia.edu>;
+ Sat, 30 May 2020 06:45:39 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E5A4C4B2AC
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 30 May 2020 06:45:38 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 665131042;
+ Sat, 30 May 2020 03:45:38 -0700 (PDT)
+Received: from [192.168.0.110] (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AC74B3F6C4;
+ Sat, 30 May 2020 03:45:37 -0700 (PDT)
+Subject: Re: [PATCH RFC] KVM: arm64: Sidestep stage2_unmap_vm() on vcpu reset
+ when S2FWB is supported
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+To: Zenghui Yu <yuzenghui@huawei.com>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20200415072835.1164-1-yuzenghui@huawei.com>
+ <e99bc07d-0dd4-055c-808f-fd9cde88d2fc@arm.com>
+Message-ID: <a1a1961a-2eae-b26c-e607-ab5c0c929f37@arm.com>
+Date: Sat, 30 May 2020 11:46:16 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.1
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: pbonzini@redhat.com, alexandru.elisei@arm.com,
- ascull@google.com, ardb@kernel.org, christoffer.dall@arm.com,
- dbrazdil@google.com, tabba@google.com, james.morse@arm.com, giangyi@amazon.com,
- zhukeqian1@huawei.com, mark.rutland@arm.com, suzuki.poulose@arm.com,
- will@kernel.org, yuzenghui@huawei.com, julien.thierry.kdev@gmail.com,
- linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
- Will Deacon <will@kernel.org>, Jiang Yi <giangyi@amazon.com>,
- Ard Biesheuvel <ardb@kernel.org>, linux-arm-kernel@lists.infradead.org
+In-Reply-To: <e99bc07d-0dd4-055c-808f-fd9cde88d2fc@arm.com>
+Content-Language: en-US
+Cc: Marc Zyngier <maz@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -90,41 +68,101 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The general comment about keeping the enum order in sync
-with the save/restore code has been obsolete for many years now.
+Hi,
 
-Just drop it.
+On 4/20/20 5:10 PM, Alexandru Elisei wrote:
+> Hi,
+>
+> On 4/15/20 8:28 AM, Zenghui Yu wrote:
+>> stage2_unmap_vm() was introduced to unmap user RAM region in the stage2
+>> page table to make the caches coherent. E.g., a guest reboot with stage1
+>> MMU disabled will access memory using non-cacheable attributes. If the
+>> RAM and caches are not coherent at this stage, some evicted dirty cache
+>> line may go and corrupt guest data in RAM.
+>>
+>> Since ARMv8.4, S2FWB feature is mandatory and KVM will take advantage
+>> of it to configure the stage2 page table and the attributes of memory
+>> access. So we ensure that guests always access memory using cacheable
+>> attributes and thus, the caches always be coherent.
+>>
+>> So on CPUs that support S2FWB, we can safely reset the vcpu without a
+>> heavy stage2 unmapping.
+>>
+>> Cc: Marc Zyngier <maz@kernel.org>
+>> Cc: Christoffer Dall <christoffer.dall@arm.com>
+>> Cc: James Morse <james.morse@arm.com>
+>> Cc: Julien Thierry <julien.thierry.kdev@gmail.com>
+>> Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+>> Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
+>> ---
+>>
+>> If this is correct, there should be a great performance improvement on
+>> a guest reboot (or reset) on systems support S2FWB. But I'm afraid that
+>> I've missed some points here, so please comment!
+>>
+>> The commit 957db105c997 ("arm/arm64: KVM: Introduce stage2_unmap_vm")
+>> was merged about six years ago and I failed to track its histroy and
+>> intention. Instead of a whole stage2 unmapping, something like
+>> stage2_flush_vm() looks enough to me. But again, I'm unsure...
+>>
+>> Thanks for having a look!
+> I had a chat with Christoffer about stage2_unmap_vm, and as I understood it, the
+> purpose was to make sure that any changes made by userspace were seen by the guest
+> while the MMU is off. When a stage 2 fault happens, we do clean+inval on the
+> dcache, or inval on the icache if it was an exec fault. This means that whatever
+> the host userspace writes while the guest is shut down and is still in the cache,
+> the guest will be able to read/execute.
+>
+> This can be relevant if the guest relocates the kernel and overwrites the original
+> image location, and userspace copies the original kernel image back in before
+> restarting the vm.
+>
+>>  virt/kvm/arm/arm.c | 5 ++++-
+>>  1 file changed, 4 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/virt/kvm/arm/arm.c b/virt/kvm/arm/arm.c
+>> index 48d0ec44ad77..e6378162cdef 100644
+>> --- a/virt/kvm/arm/arm.c
+>> +++ b/virt/kvm/arm/arm.c
+>> @@ -983,8 +983,11 @@ static int kvm_arch_vcpu_ioctl_vcpu_init(struct kvm_vcpu *vcpu,
+>>  	/*
+>>  	 * Ensure a rebooted VM will fault in RAM pages and detect if the
+>>  	 * guest MMU is turned off and flush the caches as needed.
+>> +	 *
+>> +	 * S2FWB enforces all memory accesses to RAM being cacheable, we
+>> +	 * ensure that the cache is always coherent.
+>>  	 */
+>> -	if (vcpu->arch.has_run_once)
+>> +	if (vcpu->arch.has_run_once && !cpus_have_const_cap(ARM64_HAS_STAGE2_FWB))
+> I think userspace does not invalidate the icache when loading a new kernel image,
+> and if the guest patched instructions, they could potentially still be in the
+> icache. Should the icache be invalidated if FWB is present?
 
-Note that there are other ordering requirements in the enum,
-such as the PtrAuth and PMU registers, which are still valid.
+I noticed that this was included in the current pull request and I remembered that
+I wasn't sure about this part. Did some more digging and it turns out that FWB
+implies no cache maintenance needed for *data to instruction* coherence. From ARM
+DDI 0487F.b, page D5-2635:
 
-Reported-by: James Morse <james.morse@arm.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/include/asm/kvm_host.h | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+"When ARMv8.4-S2FWB is implemented, the architecture requires that
+CLIDR_EL1.{LOUU, LOIUS} are zero so that no levels of data cache need to be
+cleaned in order to manage coherency with instruction fetches".
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 69a338a390a6..59029e90b557 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -115,12 +115,8 @@ struct kvm_vcpu_fault_info {
- 	u64 disr_el1;		/* Deferred [SError] Status Register */
- };
- 
--/*
-- * 0 is reserved as an invalid value.
-- * Order should be kept in sync with the save/restore code.
-- */
- enum vcpu_sysreg {
--	__INVALID_SYSREG__,
-+	__INVALID_SYSREG__,   /* 0 is reserved as an invalid value */
- 	MPIDR_EL1,	/* MultiProcessor Affinity Register */
- 	CSSELR_EL1,	/* Cache Size Selection Register */
- 	SCTLR_EL1,	/* System Control Register */
--- 
-2.26.2
+However, there's no mention that I found for instruction to data coherence,
+meaning that the icache would still need to be invalidated on each vcpu in order
+to prevent fetching of patched instructions from the icache. Am I missing something?
 
+Thanks,
+Alex
+>
+> Thanks,
+> Alex
+>>  		stage2_unmap_vm(vcpu->kvm);
+>>  
+>>  	vcpu_reset_hcr(vcpu);
+> _______________________________________________
+> kvmarm mailing list
+> kvmarm@lists.cs.columbia.edu
+> https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
