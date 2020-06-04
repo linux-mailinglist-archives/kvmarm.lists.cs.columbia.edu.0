@@ -2,78 +2,56 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id EA08B1EE57C
-	for <lists+kvmarm@lfdr.de>; Thu,  4 Jun 2020 15:37:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07F551EE748
+	for <lists+kvmarm@lfdr.de>; Thu,  4 Jun 2020 17:04:47 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F45B4B366;
-	Thu,  4 Jun 2020 09:37:56 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 75D704B2E6;
+	Thu,  4 Jun 2020 11:04:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@linaro.org
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qY8xdrEUcN9A; Thu,  4 Jun 2020 09:37:56 -0400 (EDT)
+	with ESMTP id mPhRyuP3QgEM; Thu,  4 Jun 2020 11:04:46 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 44FFA4B368;
-	Thu,  4 Jun 2020 09:37:53 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0FE9A4B34E;
+	Thu,  4 Jun 2020 11:04:45 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 300994B354
- for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Jun 2020 09:37:52 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8F0DE4B34E
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Jun 2020 11:04:43 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id AiXe9qcUT7p7 for <kvmarm@lists.cs.columbia.edu>;
- Thu,  4 Jun 2020 09:37:48 -0400 (EDT)
-Received: from mail-oi1-f194.google.com (mail-oi1-f194.google.com
- [209.85.167.194])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 15E824B2FC
- for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Jun 2020 09:37:48 -0400 (EDT)
-Received: by mail-oi1-f194.google.com with SMTP id a137so5097711oii.3
- for <kvmarm@lists.cs.columbia.edu>; Thu, 04 Jun 2020 06:37:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=VzZ6Wiac3hkSNr5jQzhWPiHZxuLwzhsmIf66iTOTCD4=;
- b=d6lkZg00g4aEpYR7gFHX3mGWaI+f6OcmuiSIr1JuUdjzHQQA+cqQJJLp4LcWq+akqu
- ktc7fZV6YkLdsqjUgI6qm7SvZdOB+9/DhHTXBAFCwLfqI7OYzUvV79+1rZvZ3QqHtj3T
- YaM7mP1rp0DNmIDKql5u/BBh/Rq0hLB+NnvFCBgJ2Xui+DBZ7WdaATemgG2S0A40eGOb
- 7tEV+aLwq2iNg1nHz1dangZyL5pvFTt+4/yPwme+MHKFTV9AbpVwLS8QTelwXPjNb7WI
- vuoAQXmR6X5VcPAX3juNLHm8MuI9ABi/AG4z1lOD/pTPlmBBSNDkswED7p9NAHUWP7np
- HFXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=VzZ6Wiac3hkSNr5jQzhWPiHZxuLwzhsmIf66iTOTCD4=;
- b=SHI/VtntkhMqUdbEujnBcZfCts6TSWk11ZmXMgCzW5y+DSkP4tW2jW/I9AfZgk/9d4
- kc1enRtvWQeBX8/LHOgdu9RrJntudYZctdxcDWl03Rf8ps63WYwU98RnwrqdAgXz8aCI
- 3exkErKimt4P71C7Mj6t9eU28MfJ/z/k3GMHt8oTOZ9JebBMKokeoSLxxYR+pgo4fudw
- 8Nbi0BNXJPN3vnm80sIrRJPoB2P2N6FA1A4oJDMhbvPa7WOl9rZ7i+kJI44R5bfZKDDQ
- CQLX77oMD0+ZR8PLMdm88slb5rLqNACVG0/4ktdTBNZC7+0/GgGLEZll4XjrP2d6sIha
- oZzg==
-X-Gm-Message-State: AOAM531ZdInyQBi5IYfF2084lo8r5zda9jAzIALThhsbw44Mvu8f5Yjy
- eJBCFQtXWlrW01NEr14Aykegib2ioo57KRayCnDBLQ==
-X-Google-Smtp-Source: ABdhPJw+4eNIl5O3xHQbHlFaV8UFq90vk5gPrGG4mj4ZpCRpmYt4hqvsEwKrEJWc2gN6hxxcN2wEaSkaNdOv95Vhd7I=
-X-Received: by 2002:aca:5152:: with SMTP id f79mr3017830oib.146.1591277867402; 
- Thu, 04 Jun 2020 06:37:47 -0700 (PDT)
+ with ESMTP id vRAxC9xxV8Np for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  4 Jun 2020 11:04:42 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 357564B325
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Jun 2020 11:04:42 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A52571FB;
+ Thu,  4 Jun 2020 08:04:41 -0700 (PDT)
+Received: from C02TD0UTHF1T.local (unknown [10.57.9.165])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2BA053F305;
+ Thu,  4 Jun 2020 08:04:38 -0700 (PDT)
+Date: Thu, 4 Jun 2020 16:04:36 +0100
+From: Mark Rutland <mark.rutland@arm.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH 1/3] KVM: arm64: Save the host's PtrAuth keys in
+ non-preemptible context
+Message-ID: <20200604150436.GC75320@C02TD0UTHF1T.local>
+References: <20200604133354.1279412-1-maz@kernel.org>
+ <20200604133354.1279412-2-maz@kernel.org>
 MIME-Version: 1.0
-References: <20200604125544.GW28566@vanye>
- <CAFEAcA-ACvx19HZBk-nusMCOkr-D3KReUJRTouL02rLEXOUanQ@mail.gmail.com>
- <20200604133221.zpqv5segdv7qwio6@kamzik.brq.redhat.com>
-In-Reply-To: <20200604133221.zpqv5segdv7qwio6@kamzik.brq.redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 4 Jun 2020 14:37:36 +0100
-Message-ID: <CAFEAcA8EOis7=2rderA6qi31Yuaubt=9_yWxoc82v1paPQD_rA@mail.gmail.com>
-Subject: Re: kvm_target, QEMU_KVM_ARM_TARGET_GENERIC_V8 questions
-To: Andrew Jones <drjones@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Leif Lindholm <leif@nuviainc.com>,
- QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>,
- kvmarm@lists.cs.columbia.edu
+Content-Disposition: inline
+In-Reply-To: <20200604133354.1279412-2-maz@kernel.org>
+Cc: kernel-team@android.com, kvm@vger.kernel.org,
+ Catalin Marinas <catalin.marinas@arm.com>, stable@vger.kernel.org,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -90,34 +68,131 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, 4 Jun 2020 at 14:32, Andrew Jones <drjones@redhat.com> wrote:
-> On Thu, Jun 04, 2020 at 02:10:08PM +0100, Peter Maydell wrote:
-> > These explicit settings are correct, because for these CPUs
-> > the kernel does have a "give me what I want in particular"
-> > setting (which it will fail on the wrong h/w), and also as
-> > back-compat for older kernels that predate the GENERIC_V8
-> > define and only recognize the explicit "give me an A53" value.
->
-> Actually, I think the failing for the wrong hardware is about all these
-> older targets do. I didn't look real closely, but I think all targets
-> produce the same result for the guest, which is to pass through the host
-> ID registers.
+On Thu, Jun 04, 2020 at 02:33:52PM +0100, Marc Zyngier wrote:
+> When using the PtrAuth feature in a guest, we need to save the host's
+> keys before allowing the guest to program them. For that, we dump
+> them in a per-CPU data structure (the so called host context).
+> 
+> But both call sites that do this are in preemptible context,
+> which may end up in disaster should the vcpu thread get preempted
+> before reentering the guest.
 
-Yes; it's just that originally "specify CPU exactly" was the
-only interface, and there wasn't a GENERIC_V8 at all.
-I actually suspect that current QEMU will no longer work
-on a kernel that's so old that it lacks the GENERIC_V8 and
-PREFERRED_TARGET support[*], but we don't have an explicit "we need
-at least host kernel version X" requirement that we track, so
-it's hard to say for certain. (If we cared enough to test we
-could likely delete a bit of back-compat handling code in QEMU.)
+Yuck!
 
-[*] in particular I have a feeling that recent changes to the
-GIC handling code in the virt board implicitly dropped handling
-for ancient kernels
+> Instead, save the keys eagerly on each vcpu_load(). This has an
+> increased overhead, but is at least safe.
+> 
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
 
-thanks
--- PMM
+This looks sound to me given kvm_arch_vcpu_load() is surrounded with
+get_cpu() .. put_cpu() and gets called when the thread is preempted.
+
+Reviewed-by: Mark Rutland <mark.rutland@arm.com>
+
+Thanks,
+Mark.
+
+> ---
+>  arch/arm64/include/asm/kvm_emulate.h |  6 ------
+>  arch/arm64/kvm/arm.c                 | 18 +++++++++++++++++-
+>  arch/arm64/kvm/handle_exit.c         | 19 ++-----------------
+>  3 files changed, 19 insertions(+), 24 deletions(-)
+> 
+> diff --git a/arch/arm64/include/asm/kvm_emulate.h b/arch/arm64/include/asm/kvm_emulate.h
+> index a30b4eec7cb4..977843e4d5fb 100644
+> --- a/arch/arm64/include/asm/kvm_emulate.h
+> +++ b/arch/arm64/include/asm/kvm_emulate.h
+> @@ -112,12 +112,6 @@ static inline void vcpu_ptrauth_disable(struct kvm_vcpu *vcpu)
+>  	vcpu->arch.hcr_el2 &= ~(HCR_API | HCR_APK);
+>  }
+>  
+> -static inline void vcpu_ptrauth_setup_lazy(struct kvm_vcpu *vcpu)
+> -{
+> -	if (vcpu_has_ptrauth(vcpu))
+> -		vcpu_ptrauth_disable(vcpu);
+> -}
+> -
+>  static inline unsigned long vcpu_get_vsesr(struct kvm_vcpu *vcpu)
+>  {
+>  	return vcpu->arch.vsesr_el2;
+> diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+> index d6988401c22a..152049c5055d 100644
+> --- a/arch/arm64/kvm/arm.c
+> +++ b/arch/arm64/kvm/arm.c
+> @@ -337,6 +337,12 @@ void kvm_arch_vcpu_unblocking(struct kvm_vcpu *vcpu)
+>  	preempt_enable();
+>  }
+>  
+> +#define __ptrauth_save_key(regs, key)						\
+> +({										\
+> +	regs[key ## KEYLO_EL1] = read_sysreg_s(SYS_ ## key ## KEYLO_EL1);	\
+> +	regs[key ## KEYHI_EL1] = read_sysreg_s(SYS_ ## key ## KEYHI_EL1);	\
+> +})
+> +
+>  void kvm_arch_vcpu_load(struct kvm_vcpu *vcpu, int cpu)
+>  {
+>  	int *last_ran;
+> @@ -370,7 +376,17 @@ void kvm_arch_vcpu_load(struct kvm_vcpu *vcpu, int cpu)
+>  	else
+>  		vcpu_set_wfx_traps(vcpu);
+>  
+> -	vcpu_ptrauth_setup_lazy(vcpu);
+> +	if (vcpu_has_ptrauth(vcpu)) {
+> +		struct kvm_cpu_context *ctxt = vcpu->arch.host_cpu_context;
+> +
+> +		__ptrauth_save_key(ctxt->sys_regs, APIA);
+> +		__ptrauth_save_key(ctxt->sys_regs, APIB);
+> +		__ptrauth_save_key(ctxt->sys_regs, APDA);
+> +		__ptrauth_save_key(ctxt->sys_regs, APDB);
+> +		__ptrauth_save_key(ctxt->sys_regs, APGA);
+> +
+> +		vcpu_ptrauth_disable(vcpu);
+> +	}
+>  }
+>  
+>  void kvm_arch_vcpu_put(struct kvm_vcpu *vcpu)
+> diff --git a/arch/arm64/kvm/handle_exit.c b/arch/arm64/kvm/handle_exit.c
+> index eb194696ef62..065251efa2e6 100644
+> --- a/arch/arm64/kvm/handle_exit.c
+> +++ b/arch/arm64/kvm/handle_exit.c
+> @@ -162,31 +162,16 @@ static int handle_sve(struct kvm_vcpu *vcpu, struct kvm_run *run)
+>  	return 1;
+>  }
+>  
+> -#define __ptrauth_save_key(regs, key)						\
+> -({										\
+> -	regs[key ## KEYLO_EL1] = read_sysreg_s(SYS_ ## key ## KEYLO_EL1);	\
+> -	regs[key ## KEYHI_EL1] = read_sysreg_s(SYS_ ## key ## KEYHI_EL1);	\
+> -})
+> -
+>  /*
+>   * Handle the guest trying to use a ptrauth instruction, or trying to access a
+>   * ptrauth register.
+>   */
+>  void kvm_arm_vcpu_ptrauth_trap(struct kvm_vcpu *vcpu)
+>  {
+> -	struct kvm_cpu_context *ctxt;
+> -
+> -	if (vcpu_has_ptrauth(vcpu)) {
+> +	if (vcpu_has_ptrauth(vcpu))
+>  		vcpu_ptrauth_enable(vcpu);
+> -		ctxt = vcpu->arch.host_cpu_context;
+> -		__ptrauth_save_key(ctxt->sys_regs, APIA);
+> -		__ptrauth_save_key(ctxt->sys_regs, APIB);
+> -		__ptrauth_save_key(ctxt->sys_regs, APDA);
+> -		__ptrauth_save_key(ctxt->sys_regs, APDB);
+> -		__ptrauth_save_key(ctxt->sys_regs, APGA);
+> -	} else {
+> +	else
+>  		kvm_inject_undefined(vcpu);
+> -	}
+>  }
+>  
+>  /*
+> -- 
+> 2.26.2
+> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
