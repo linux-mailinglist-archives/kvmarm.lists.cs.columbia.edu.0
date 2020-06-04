@@ -2,75 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id EA23F1EE504
-	for <lists+kvmarm@lfdr.de>; Thu,  4 Jun 2020 15:10:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E5071EE517
+	for <lists+kvmarm@lfdr.de>; Thu,  4 Jun 2020 15:14:56 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 686094B22D;
-	Thu,  4 Jun 2020 09:10:23 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B83214B303;
+	Thu,  4 Jun 2020 09:14:55 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: 0.911
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001,
 	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@linaro.org
+	(fail, body has been altered) header.i=@gmail.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KIaqfLu3XAJL; Thu,  4 Jun 2020 09:10:23 -0400 (EDT)
+	with ESMTP id 4HaC6rbrDL3f; Thu,  4 Jun 2020 09:14:55 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 01E604B22F;
-	Thu,  4 Jun 2020 09:10:22 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A464C4B2E9;
+	Thu,  4 Jun 2020 09:14:54 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1D7E84B228
- for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Jun 2020 09:10:21 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2D2124B2E6
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Jun 2020 09:14:53 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Vv50vdNGsLyT for <kvmarm@lists.cs.columbia.edu>;
- Thu,  4 Jun 2020 09:10:20 -0400 (EDT)
-Received: from mail-oi1-f196.google.com (mail-oi1-f196.google.com
- [209.85.167.196])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0BAF84B153
- for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Jun 2020 09:10:20 -0400 (EDT)
-Received: by mail-oi1-f196.google.com with SMTP id s21so4984984oic.9
- for <kvmarm@lists.cs.columbia.edu>; Thu, 04 Jun 2020 06:10:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ with ESMTP id 4ntZ9AXcFA3v for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  4 Jun 2020 09:14:52 -0400 (EDT)
+Received: from mail-lj1-f193.google.com (mail-lj1-f193.google.com
+ [209.85.208.193])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 063BB4B2BE
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Jun 2020 09:14:51 -0400 (EDT)
+Received: by mail-lj1-f193.google.com with SMTP id z18so7169128lji.12
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 04 Jun 2020 06:14:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=PWjEg59kz2CoeitEapTrGuAHI86fvdYOTJhTalufixQ=;
- b=pOumfR1HLk3zksbPDnaGI5DJbg4WgBxhcTkqidpFjTtNDff2w4FJZ6Nmkw3n1RUWfw
- iky4f/s4LzebF7TienA03dWTVldL/amvlMN0iwgRdyrjpoS60HYGEoYx6a/Bz5gxPcWP
- mayiTtPw8v/woGruUAbkzI6URvNP+1WjQFwUP3HBl0W7DdwuRMIE8sfgo6oSoImhh4G7
- 0eIx2OFUnlHa9W/2L6vfKBWBhLH0vDX0CvFhcRJqQy4d4xtkNYHHZjMmuWgCeOy4u5Zv
- pB/MQmn2Hbb3DHqLwU8J/u0xhoAEc+FVXB050caiikWx9oLVzZjq+tmnEdBKi9AJp6Pq
- stDA==
+ :cc; bh=rvA0g1H8/qDSww1N+MC4xGCNWg2HV4OLYTmKhd/FSeE=;
+ b=q0AQr8qJJYdYEryoPCNAux7IMp+tlMxmJK8d2WAfojVEdx/zBSwfqbianDlHM9NSb6
+ TTnAylh3pcJc68OLEcoVBD2mNpEI4Xmmbt2M+cDNO/t7Eka2rAq5Rxjw9Bq7P68EA+IS
+ hPzXn/9Xl8bc++l7efxsWf3L+KMv0lFOXt2z+oQt/Ok4lgMbfZ9E79tpYXFp3zxty24D
+ ZLFj2n7J6xlkWlbE2KEXqdT7YYgA8Ip1nNdtUoLudEfNcrnSrbOt2wnGif8P/rUO+lAo
+ 8m6b9Ovk52KO1ZytcU19ej9YiLV7NyZtrFNvt5QYC6Sa5GEjtNa9egQiUT5KMKhxLysV
+ d0Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=PWjEg59kz2CoeitEapTrGuAHI86fvdYOTJhTalufixQ=;
- b=sHYwdj1XbTzUMWEYjlHdXvKm9+T0v8CwNwgSMg+V6TkuVYl/KudPimvZA7gPjuw9Mo
- 6Do8wWVtNmeaIionu7+jbtJQ9IYYlY/a+IiAgBPR3IBeRQh7gu8JpuzD21vB6K49cZa2
- L+1E8FhaCD/8YWTWqYvoiFQ24dgX+09r1SP21leQlDs33ls4ehz/48S6c/6y1QOPFrAD
- oRg6TRxrhVrVZyjp+7FdvUonsaszalYfrUU1DRhAPe70PEry9VB/thZyDeibRXdREAkp
- hGUsbOkXIF2KCYE5FFTCq+SS+TU6bKSYZgz8SwdFnvg5b6i/wHS195x/ynjP1pmTN0ae
- 3HwA==
-X-Gm-Message-State: AOAM53149VRWXd69DL7sTzmFAzOqUlozWibA9EOF7LUhQTXlCUn0lzgD
- VBV8OHSoHnMTYlczh+TeNMV7+z0tADuh56MVfQIufA==
-X-Google-Smtp-Source: ABdhPJxQK0brocuY/yk5yNQAhXiKBQWL1O57vMjoG5tbK+9HVP5RNwgfK7m5WStVPn5PL8PsFRO4dxBbKMdE0Xah7Gw=
-X-Received: by 2002:aca:568c:: with SMTP id k134mr2826760oib.48.1591276219324; 
- Thu, 04 Jun 2020 06:10:19 -0700 (PDT)
+ bh=rvA0g1H8/qDSww1N+MC4xGCNWg2HV4OLYTmKhd/FSeE=;
+ b=gdkGg7Wmzc2HRS5ZEKurFPGNV3hWNyB3BwEYsA6je8sl2gAdRW6KQfHDIojbDLHn7z
+ Ya04Hf3cMkZLQozNErVw+mqQheLWF1An/wxZ7rjYBXItP5XERoTy+dhBm1j8f9Kll9OO
+ pjxfL9SA29kHTkaIiJTTeyIy9tdviMldDH/T4nxsw4tCYwXLE3BgFXTkm6Aejcb9Db6h
+ sN1gpFqCs2o13OhfhdMeOKAAQOqcvPL/j70l9HwzA09qMYyf5rsq1f/tTKs1qyOQPutm
+ OAwQbj7FOCq0YVvVIxYRoec0s6rnf0xsyCmnuJwinIsOi857Q1zQIpBRaENEfyT/qXww
+ 7yiQ==
+X-Gm-Message-State: AOAM530ROHJNvxO7jSrXyMA3jvqMyOAhWXVlxsHsJma9bK1kOfkZdm4N
+ rY5g0FXB6LqESAgj0ezpRUJVAxJgKkbwp9d7yQ4=
+X-Google-Smtp-Source: ABdhPJw3TeaEydFqJh515TquuO2xHz3YUXZRSqo14z6NxlPwg6jD65y+LsoY1qV5otXgnDY6EaEPQbqO2huA9toCWbI=
+X-Received: by 2002:a2e:8490:: with SMTP id b16mr2262242ljh.325.1591276490402; 
+ Thu, 04 Jun 2020 06:14:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200604125544.GW28566@vanye>
-In-Reply-To: <20200604125544.GW28566@vanye>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 4 Jun 2020 14:10:08 +0100
-Message-ID: <CAFEAcA-ACvx19HZBk-nusMCOkr-D3KReUJRTouL02rLEXOUanQ@mail.gmail.com>
-Subject: Re: kvm_target, QEMU_KVM_ARM_TARGET_GENERIC_V8 questions
-To: Leif Lindholm <leif@nuviainc.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm <qemu-arm@nongnu.org>,
- QEMU Developers <qemu-devel@nongnu.org>, kvmarm@lists.cs.columbia.edu
+References: <CAE=Ncrb80uS5wtAu6e1Gctnu8tjcBEpWd7zHJv7aHdEkipe2FQ@mail.gmail.com>
+ <7d05e422cb61296fe372e0de3f1602b2@kernel.org>
+In-Reply-To: <7d05e422cb61296fe372e0de3f1602b2@kernel.org>
+From: Janne Karhunen <janne.karhunen@gmail.com>
+Date: Thu, 4 Jun 2020 16:14:38 +0300
+Message-ID: <CAE=NcrZ_JFrbimwmoCGt0Dix9A9bMDrG++_i+kJZKz_Ekw5YfQ@mail.gmail.com>
+Subject: Re: randomly firing kvm_arch_timer_handler
+To: Marc Zyngier <maz@kernel.org>
+Cc: kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -87,79 +88,52 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-[added kvm-arm to the cc list; the kernel folks tend to hang out
-there, not on qemu-devel, so KVM related questions are usually
-worth raising there as well.]
+On Thu, Jun 4, 2020 at 3:37 PM Marc Zyngier <maz@kernel.org> wrote:
 
-On Thu, 4 Jun 2020 at 13:55, Leif Lindholm <leif@nuviainc.com> wrote:
-> However, while looking at this, I noticed aarch64_a72_initfn doesn't
-> initialise kvm_target at all.
+> > triggered. The guest does run, but the whine (unexpected interrupt) is
+> > annoying and it seems to be hindering the performance drastically - of
+> > both the host and the guest. This behavior can even lead to the host
+> > watchdog biting as the firing timer prevents the progress, especially
+> > during the very early boot when the guest is doing heavy paging
+> > anyway.
+>
+> The only system I witnessed this was a Cavium TX1. It seems incredibly
+> bad at retiring an interrupt that has been masked at the source.
+> Which hardware is that?
 
-Yep. The kernel doesn't support "give me a CPU that looks like
-a Cortex-A72".
+Unreleased one
 
-> So, then I decided to actually test things, and found that
-> (with -enable-kvm):
-> - on Cortex-A53 hardware
->   - "max" kvm_target gets initialized to 4 (KVM_ARM_TARGET_CORTEX_A53)
->     by kvm_arm_get_host_cpu_features (as returned from the kernel for
->     vm_arm_create_scratch_host_vcpu)
->   - cortex-A72 fails to start with "KVM is not supported for this guest
->     CPU type"
->   (fair enough, it's later than A53)
 
-Untested, but I assume that -cpu cortex-a53 works on the A53...
+> > Based on the comment in the latest code the fundamental issue is that
+> > the interrupt controller does not recognize the timer disable fast
+> > enough on guest exit.
+> >
+> > Has anyone worked on a proper fix for the issue
+> > for the old stable series? 5+ kernels seem to have quite a drastic
+> > rework on this front. Plain 'isb' did not seem to do the trick after
+> > the timer disable...
+>
+> ISB really has no bearing on how an interrupt gets retired from the
+> redistributor. The flow we use on mainline these days makes it less
+> susceptible to this kind of brokenness, but it is still possible to
+> hit it.
 
-> - on Cortex-A72 hardware
->   - "max" kvm_target gets initialized to 5 (KVM_ARM_TARGET_GENERIC_V8)
->     by kvm_arm_get_host_cpu_features
->   - "cortex-A72" fails to start (umm...)
+Thanks. I'll try to see if I can backport some of that.
 
-...and fails on the A72 host.
+That said, if you remember my previous email, we got the kernel
+external hypervisor going. I have multiple kernel versions running OK
+(4.9 ... 5.4) under the external hypervisor. It will still need some
+polishing rounds and security related work, but in general it seems to
+run fine. 95%+ of the kvmarm code is intact and I suppose if this kind
+of thing is of interest to others, we could present the work and
+potentially some of the hooks required in the kvm code to make it all
+run for others, too. The guest and the host can both be VMs and the
+guests can be just untouchable holes in the host memory. Kind of like
+AMD SEV, just no encryption needed.
 
-> However ... if I haven't managed to confuse myself somewhere in here
-> (which is completely possible), would it be OK if I submitted a set of
-> patches that:
-> - add a QEMU_KVM_ARM_TARGET_GENERIC_V8 to match the kernel one
-> - set kvm_target for Cortex-A72 to QEMU_KVM_ARM_TARGET_GENERIC_V8
 
-This would be wrong -- it would mean that you could tell QEMU "give
-me a guest CPU that's a Cortex-A72" and it would not error on
-non-A72 hardware but not actually give a guest CPU that looks
-like a Cortex-A72.
-
- * If what you want is "give me something that works" then that's
-   -cpu host or -cpu max.
-
- * If what you want is "give me something that's always this kind of
-   CPU regardless of the host hardware" then that's a lot of kernel
-   dev work nobody's been enthusiastic enough to undertake yet
-   (notably the "what do we do about CPU errata workarounds" question
-   would need to be solved...)
-
- * If what you want is "allow me to say '-cpu cortex-a72' and have
-   it work on an A72 host and not anywhere else" then I guess we could
-   implement that on the QEMU side by querying the MIDR and checking
-   whether it was what we expected.
-
->   - alternatively drop the explicit settings for A57/A53
-
-These explicit settings are correct, because for these CPUs
-the kernel does have a "give me what I want in particular"
-setting (which it will fail on the wrong h/w), and also as
-back-compat for older kernels that predate the GENERIC_V8
-define and only recognize the explicit "give me an A53" value.
-
-> - drop the call from aarch64_max_initfn to aarch64_a57_initfn, and
->   copy the relevant bits into the former for the !kvm case
-
-Not sure why you care about this -- it's an implementation
-detail of the TCG handling of the 'max' CPU. There's an argument
-for disentangling TCG 'max' so it's not literally implemented
-as "a57 plus newer stuff", granted.
-
-thanks
--- PMM
+--
+Janne
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
