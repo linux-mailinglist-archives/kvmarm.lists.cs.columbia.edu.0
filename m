@@ -2,69 +2,73 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A4281F01FA
-	for <lists+kvmarm@lfdr.de>; Fri,  5 Jun 2020 23:39:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 694961F14D1
+	for <lists+kvmarm@lfdr.de>; Mon,  8 Jun 2020 10:57:14 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2AD1A4B227;
-	Fri,  5 Jun 2020 17:39:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 969C04B1C2;
+	Mon,  8 Jun 2020 04:57:13 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id e5NHisLs9Ur1; Fri,  5 Jun 2020 17:39:35 -0400 (EDT)
+	with ESMTP id GduFbx09H12j; Mon,  8 Jun 2020 04:57:13 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5CAC34B255;
-	Fri,  5 Jun 2020 17:39:24 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 508B04B1C6;
+	Mon,  8 Jun 2020 04:57:12 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6549B4B0FD
- for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Jun 2020 17:39:22 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E42EA4B1BF
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Jun 2020 04:57:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 6wKzLLOLT1Xj for <kvmarm@lists.cs.columbia.edu>;
- Fri,  5 Jun 2020 17:39:21 -0400 (EDT)
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D9A954B14C
- for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Jun 2020 17:39:15 -0400 (EDT)
-IronPort-SDR: VjXIpt1JM4S7ehNk21qLF24J9lAm3pKKia3diWDFFBK+cQerQ+cWIzlDEisfZRO0XDv/z65q+F
- B6lSN4+ROg8Q==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Jun 2020 14:39:09 -0700
-IronPort-SDR: PWArTjc0SrJLSJ05VypN8vL975Wv8bdiyKJ53PVlmPdjQXrXRT1XPVBonpfvRNol5tassY2nle
- iHJoSum0887Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,477,1583222400"; d="scan'208";a="287860931"
-Received: from sjchrist-coffee.jf.intel.com ([10.54.74.152])
- by orsmga002.jf.intel.com with ESMTP; 05 Jun 2020 14:39:09 -0700
-From: Sean Christopherson <sean.j.christopherson@intel.com>
-To: Marc Zyngier <maz@kernel.org>, Paul Mackerras <paulus@ozlabs.org>,
- Christian Borntraeger <borntraeger@de.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 21/21] KVM: MIPS: Use common KVM implementation of MMU memory
- caches
-Date: Fri,  5 Jun 2020 14:38:53 -0700
-Message-Id: <20200605213853.14959-22-sean.j.christopherson@intel.com>
-X-Mailer: git-send-email 2.26.0
-In-Reply-To: <20200605213853.14959-1-sean.j.christopherson@intel.com>
-References: <20200605213853.14959-1-sean.j.christopherson@intel.com>
+ with ESMTP id vhsoJH5jEbO6 for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  8 Jun 2020 04:57:09 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 843264B1C1
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Jun 2020 04:57:09 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 7636C2067B;
+ Mon,  8 Jun 2020 08:57:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1591606628;
+ bh=Z+v/XPM1/PmMjTBq3xkoyGiM8DRyZsFhG1jTBdZEKE0=;
+ h=From:To:Cc:Subject:Date:From;
+ b=0V7OXheOm8eSne7gCQbbgH9QibTufb0fA5KTEQcIT5G4wzMzKpEb13oH6PEqDPhvN
+ ZuyLd5secqqjp589tYUgacIqCTDebeEo+wkGdLBfy/CRU+rEkH+wfJ+2PrnLsAnDgN
+ ibOpg0nJ66IEaLpxOhZQObLSZlyXSVF/S5KFbxZ4=
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by disco-boy.misterjones.org with esmtpsa
+ (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
+ (envelope-from <maz@kernel.org>)
+ id 1jiDac-0015Ac-L5; Mon, 08 Jun 2020 09:57:06 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
+Subject: [PATCH v2] KVM: arm64: Remove host_cpu_context member from vcpu
+ structure
+Date: Mon,  8 Jun 2020 09:56:57 +0100
+Message-Id: <20200608085657.1405730-1-maz@kernel.org>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- David Hildenbrand <david@redhat.com>, linux-mips@vger.kernel.org,
- Ben Gardon <bgardon@google.com>, Claudio Imbrenda <imbrenda@linux.ibm.com>,
- kvmarm@lists.cs.columbia.edu, Joerg Roedel <joro@8bytes.org>,
- Junaid Shahid <junaids@google.com>, kvm-ppc@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
- Cornelia Huck <cohuck@redhat.com>, Peter Shier <pshier@google.com>,
- Sean Christopherson <sean.j.christopherson@intel.com>,
- linux-kernel@vger.kernel.org, Vitaly Kuznetsov <vkuznets@redhat.com>,
- Peter Feiner <pfeiner@google.com>
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, james.morse@arm.com,
+ julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com, mark.rutland@arm.com,
+ kernel-team@android.com, ascull@google.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -81,135 +85,195 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Move to the common MMU memory cache implementation now that the common
-code and MIPS's existing code are semantically compatible.
+For very long, we have kept this pointer back to the per-cpu
+host state, despite having working per-cpu accessors at EL2
+for some time now.
 
-No functional change intended.
+Recent investigations have shown that this pointer is easy
+to abuse in preemptible context, which is a sure sign that
+it would better be gone. Not to mention that a per-cpu
+pointer is faster to access at all times.
 
-Suggested-by: Christoffer Dall <christoffer.dall@arm.com>
-Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
+Reported-by: Andrew Scull <ascull@google.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/mips/include/asm/kvm_host.h  | 11 ---------
- arch/mips/include/asm/kvm_types.h |  2 ++
- arch/mips/kvm/mmu.c               | 40 ++++---------------------------
- 3 files changed, 7 insertions(+), 46 deletions(-)
 
-diff --git a/arch/mips/include/asm/kvm_host.h b/arch/mips/include/asm/kvm_host.h
-index 363e7a89d173..f49617175f60 100644
---- a/arch/mips/include/asm/kvm_host.h
-+++ b/arch/mips/include/asm/kvm_host.h
-@@ -335,17 +335,6 @@ struct kvm_mips_tlb {
- 	long tlb_lo[2];
- };
+Notes:
+    v2: Stick to this_cpu_ptr() in pmu.c, as this only used on the
+        kernel side and not the hypervisor.
+
+ arch/arm64/include/asm/kvm_host.h | 3 ---
+ arch/arm64/kvm/arm.c              | 3 ---
+ arch/arm64/kvm/hyp/debug-sr.c     | 4 ++--
+ arch/arm64/kvm/hyp/switch.c       | 6 +++---
+ arch/arm64/kvm/hyp/sysreg-sr.c    | 6 ++++--
+ arch/arm64/kvm/pmu.c              | 8 ++------
+ 6 files changed, 11 insertions(+), 19 deletions(-)
+
+diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+index 59029e90b557..ada1faa92211 100644
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -284,9 +284,6 @@ struct kvm_vcpu_arch {
+ 	struct kvm_guest_debug_arch vcpu_debug_state;
+ 	struct kvm_guest_debug_arch external_debug_state;
  
--#define KVM_NR_MEM_OBJS     4
+-	/* Pointer to host CPU context */
+-	struct kvm_cpu_context *host_cpu_context;
 -
--/*
-- * We don't want allocation failures within the mmu code, so we preallocate
-- * enough memory for a single page fault in a cache.
-- */
--struct kvm_mmu_memory_cache {
--	int nobjs;
--	void *objects[KVM_NR_MEM_OBJS];
--};
--
- #define KVM_MIPS_AUX_FPU	0x1
- #define KVM_MIPS_AUX_MSA	0x2
+ 	struct thread_info *host_thread_info;	/* hyp VA */
+ 	struct user_fpsimd_state *host_fpsimd_state;	/* hyp VA */
  
-diff --git a/arch/mips/include/asm/kvm_types.h b/arch/mips/include/asm/kvm_types.h
-index 5efeb32a5926..213754d9ef6b 100644
---- a/arch/mips/include/asm/kvm_types.h
-+++ b/arch/mips/include/asm/kvm_types.h
-@@ -2,4 +2,6 @@
- #ifndef _ASM_MIPS_KVM_TYPES_H
- #define _ASM_MIPS_KVM_TYPES_H
- 
-+#define KVM_ARCH_NR_OBJS_PER_MEMORY_CACHE     4
-+
- #endif /* _ASM_MIPS_KVM_TYPES_H */
-diff --git a/arch/mips/kvm/mmu.c b/arch/mips/kvm/mmu.c
-index 41a4a063a730..d6acd88c0c46 100644
---- a/arch/mips/kvm/mmu.c
-+++ b/arch/mips/kvm/mmu.c
-@@ -25,39 +25,9 @@
- #define KVM_MMU_CACHE_MIN_PAGES 2
- #endif
- 
--static int mmu_topup_memory_cache(struct kvm_mmu_memory_cache *cache, int min)
--{
--	void *page;
--
--	if (cache->nobjs >= min)
--		return 0;
--	while (cache->nobjs < ARRAY_SIZE(cache->objects)) {
--		page = (void *)__get_free_page(GFP_KERNEL_ACCOUNT);
--		if (!page)
--			return -ENOMEM;
--		cache->objects[cache->nobjs++] = page;
--	}
--	return 0;
--}
--
--static void mmu_free_memory_cache(struct kvm_mmu_memory_cache *mc)
--{
--	while (mc->nobjs)
--		free_page((unsigned long)mc->objects[--mc->nobjs]);
--}
--
--static void *mmu_memory_cache_alloc(struct kvm_mmu_memory_cache *mc)
--{
--	void *p;
--
--	BUG_ON(!mc || !mc->nobjs);
--	p = mc->objects[--mc->nobjs];
--	return p;
--}
--
- void kvm_mmu_free_memory_caches(struct kvm_vcpu *vcpu)
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 14b747266607..6ddaa23ef346 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -340,10 +340,8 @@ void kvm_arch_vcpu_unblocking(struct kvm_vcpu *vcpu)
+ void kvm_arch_vcpu_load(struct kvm_vcpu *vcpu, int cpu)
  {
--	mmu_free_memory_cache(&vcpu->arch.mmu_page_cache);
-+	kvm_mmu_free_memory_cache(&vcpu->arch.mmu_page_cache);
- }
+ 	int *last_ran;
+-	kvm_host_data_t *cpu_data;
  
- /**
-@@ -151,7 +121,7 @@ static pte_t *kvm_mips_walk_pgd(pgd_t *pgd, struct kvm_mmu_memory_cache *cache,
+ 	last_ran = this_cpu_ptr(vcpu->kvm->arch.last_vcpu_ran);
+-	cpu_data = this_cpu_ptr(&kvm_host_data);
  
- 		if (!cache)
- 			return NULL;
--		new_pmd = mmu_memory_cache_alloc(cache);
-+		new_pmd = kvm_mmu_memory_cache_alloc(cache);
- 		pmd_init((unsigned long)new_pmd,
- 			 (unsigned long)invalid_pte_table);
- 		pud_populate(NULL, pud, new_pmd);
-@@ -162,7 +132,7 @@ static pte_t *kvm_mips_walk_pgd(pgd_t *pgd, struct kvm_mmu_memory_cache *cache,
- 
- 		if (!cache)
- 			return NULL;
--		new_pte = mmu_memory_cache_alloc(cache);
-+		new_pte = kvm_mmu_memory_cache_alloc(cache);
- 		clear_page(new_pte);
- 		pmd_populate_kernel(NULL, pmd, new_pte);
+ 	/*
+ 	 * We might get preempted before the vCPU actually runs, but
+@@ -355,7 +353,6 @@ void kvm_arch_vcpu_load(struct kvm_vcpu *vcpu, int cpu)
  	}
-@@ -709,7 +679,7 @@ static int kvm_mips_map_page(struct kvm_vcpu *vcpu, unsigned long gpa,
- 		goto out;
  
- 	/* We need a minimum of cached pages ready for page table creation */
--	err = mmu_topup_memory_cache(memcache, KVM_MMU_CACHE_MIN_PAGES);
-+	err = kvm_mmu_topup_memory_cache(memcache, KVM_MMU_CACHE_MIN_PAGES);
- 	if (err)
- 		goto out;
+ 	vcpu->cpu = cpu;
+-	vcpu->arch.host_cpu_context = &cpu_data->host_ctxt;
  
-@@ -793,7 +763,7 @@ static pte_t *kvm_trap_emul_pte_for_gva(struct kvm_vcpu *vcpu,
- 	int ret;
+ 	kvm_vgic_load(vcpu);
+ 	kvm_timer_vcpu_load(vcpu);
+diff --git a/arch/arm64/kvm/hyp/debug-sr.c b/arch/arm64/kvm/hyp/debug-sr.c
+index 0fc9872a1467..e95af204fec7 100644
+--- a/arch/arm64/kvm/hyp/debug-sr.c
++++ b/arch/arm64/kvm/hyp/debug-sr.c
+@@ -185,7 +185,7 @@ void __hyp_text __debug_switch_to_guest(struct kvm_vcpu *vcpu)
+ 	if (!(vcpu->arch.flags & KVM_ARM64_DEBUG_DIRTY))
+ 		return;
  
- 	/* We need a minimum of cached pages ready for page table creation */
--	ret = mmu_topup_memory_cache(memcache, KVM_MMU_CACHE_MIN_PAGES);
-+	ret = kvm_mmu_topup_memory_cache(memcache, KVM_MMU_CACHE_MIN_PAGES);
- 	if (ret)
- 		return NULL;
+-	host_ctxt = kern_hyp_va(vcpu->arch.host_cpu_context);
++	host_ctxt = &__hyp_this_cpu_ptr(kvm_host_data)->host_ctxt;
+ 	guest_ctxt = &vcpu->arch.ctxt;
+ 	host_dbg = &vcpu->arch.host_debug_state.regs;
+ 	guest_dbg = kern_hyp_va(vcpu->arch.debug_ptr);
+@@ -207,7 +207,7 @@ void __hyp_text __debug_switch_to_host(struct kvm_vcpu *vcpu)
+ 	if (!(vcpu->arch.flags & KVM_ARM64_DEBUG_DIRTY))
+ 		return;
+ 
+-	host_ctxt = kern_hyp_va(vcpu->arch.host_cpu_context);
++	host_ctxt = &__hyp_this_cpu_ptr(kvm_host_data)->host_ctxt;
+ 	guest_ctxt = &vcpu->arch.ctxt;
+ 	host_dbg = &vcpu->arch.host_debug_state.regs;
+ 	guest_dbg = kern_hyp_va(vcpu->arch.debug_ptr);
+diff --git a/arch/arm64/kvm/hyp/switch.c b/arch/arm64/kvm/hyp/switch.c
+index fc09c3dfa466..fc671426c14b 100644
+--- a/arch/arm64/kvm/hyp/switch.c
++++ b/arch/arm64/kvm/hyp/switch.c
+@@ -544,7 +544,7 @@ static bool __hyp_text __hyp_handle_ptrauth(struct kvm_vcpu *vcpu)
+ 		return false;
+ 	}
+ 
+-	ctxt = kern_hyp_va(vcpu->arch.host_cpu_context);
++	ctxt = &__hyp_this_cpu_ptr(kvm_host_data)->host_ctxt;
+ 	__ptrauth_save_key(ctxt->sys_regs, APIA);
+ 	__ptrauth_save_key(ctxt->sys_regs, APIB);
+ 	__ptrauth_save_key(ctxt->sys_regs, APDA);
+@@ -715,7 +715,7 @@ static int __kvm_vcpu_run_vhe(struct kvm_vcpu *vcpu)
+ 	struct kvm_cpu_context *guest_ctxt;
+ 	u64 exit_code;
+ 
+-	host_ctxt = vcpu->arch.host_cpu_context;
++	host_ctxt = &__hyp_this_cpu_ptr(kvm_host_data)->host_ctxt;
+ 	host_ctxt->__hyp_running_vcpu = vcpu;
+ 	guest_ctxt = &vcpu->arch.ctxt;
+ 
+@@ -820,7 +820,7 @@ int __hyp_text __kvm_vcpu_run_nvhe(struct kvm_vcpu *vcpu)
+ 
+ 	vcpu = kern_hyp_va(vcpu);
+ 
+-	host_ctxt = kern_hyp_va(vcpu->arch.host_cpu_context);
++	host_ctxt = &__hyp_this_cpu_ptr(kvm_host_data)->host_ctxt;
+ 	host_ctxt->__hyp_running_vcpu = vcpu;
+ 	guest_ctxt = &vcpu->arch.ctxt;
+ 
+diff --git a/arch/arm64/kvm/hyp/sysreg-sr.c b/arch/arm64/kvm/hyp/sysreg-sr.c
+index 6d2df9fe0b5d..143d7b7358f2 100644
+--- a/arch/arm64/kvm/hyp/sysreg-sr.c
++++ b/arch/arm64/kvm/hyp/sysreg-sr.c
+@@ -265,12 +265,13 @@ void __hyp_text __sysreg32_restore_state(struct kvm_vcpu *vcpu)
+  */
+ void kvm_vcpu_load_sysregs(struct kvm_vcpu *vcpu)
+ {
+-	struct kvm_cpu_context *host_ctxt = vcpu->arch.host_cpu_context;
+ 	struct kvm_cpu_context *guest_ctxt = &vcpu->arch.ctxt;
++	struct kvm_cpu_context *host_ctxt;
+ 
+ 	if (!has_vhe())
+ 		return;
+ 
++	host_ctxt = &__hyp_this_cpu_ptr(kvm_host_data)->host_ctxt;
+ 	__sysreg_save_user_state(host_ctxt);
+ 
+ 	/*
+@@ -301,12 +302,13 @@ void kvm_vcpu_load_sysregs(struct kvm_vcpu *vcpu)
+  */
+ void kvm_vcpu_put_sysregs(struct kvm_vcpu *vcpu)
+ {
+-	struct kvm_cpu_context *host_ctxt = vcpu->arch.host_cpu_context;
+ 	struct kvm_cpu_context *guest_ctxt = &vcpu->arch.ctxt;
++	struct kvm_cpu_context *host_ctxt;
+ 
+ 	if (!has_vhe())
+ 		return;
+ 
++	host_ctxt = &__hyp_this_cpu_ptr(kvm_host_data)->host_ctxt;
+ 	deactivate_traps_vhe_put();
+ 
+ 	__sysreg_save_el1_state(guest_ctxt);
+diff --git a/arch/arm64/kvm/pmu.c b/arch/arm64/kvm/pmu.c
+index e71d00bb5271..b5ae3a5d509e 100644
+--- a/arch/arm64/kvm/pmu.c
++++ b/arch/arm64/kvm/pmu.c
+@@ -163,15 +163,13 @@ static void kvm_vcpu_pmu_disable_el0(unsigned long events)
+  */
+ void kvm_vcpu_pmu_restore_guest(struct kvm_vcpu *vcpu)
+ {
+-	struct kvm_cpu_context *host_ctxt;
+ 	struct kvm_host_data *host;
+ 	u32 events_guest, events_host;
+ 
+ 	if (!has_vhe())
+ 		return;
+ 
+-	host_ctxt = vcpu->arch.host_cpu_context;
+-	host = container_of(host_ctxt, struct kvm_host_data, host_ctxt);
++	host = this_cpu_ptr(&kvm_host_data);
+ 	events_guest = host->pmu_events.events_guest;
+ 	events_host = host->pmu_events.events_host;
+ 
+@@ -184,15 +182,13 @@ void kvm_vcpu_pmu_restore_guest(struct kvm_vcpu *vcpu)
+  */
+ void kvm_vcpu_pmu_restore_host(struct kvm_vcpu *vcpu)
+ {
+-	struct kvm_cpu_context *host_ctxt;
+ 	struct kvm_host_data *host;
+ 	u32 events_guest, events_host;
+ 
+ 	if (!has_vhe())
+ 		return;
+ 
+-	host_ctxt = vcpu->arch.host_cpu_context;
+-	host = container_of(host_ctxt, struct kvm_host_data, host_ctxt);
++	host = this_cpu_ptr(&kvm_host_data);
+ 	events_guest = host->pmu_events.events_guest;
+ 	events_host = host->pmu_events.events_host;
  
 -- 
-2.26.0
+2.26.2
 
 _______________________________________________
 kvmarm mailing list
