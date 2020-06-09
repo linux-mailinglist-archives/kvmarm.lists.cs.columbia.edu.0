@@ -2,10 +2,10 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B4A631F5302
-	for <lists+kvmarm@lfdr.de>; Wed, 10 Jun 2020 13:20:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 523761F5303
+	for <lists+kvmarm@lfdr.de>; Wed, 10 Jun 2020 13:20:52 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 64E8D4B2D3;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 95FE14B2E9;
 	Wed, 10 Jun 2020 07:20:51 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
@@ -14,63 +14,63 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id iDGAs16F6xaQ; Wed, 10 Jun 2020 07:20:50 -0400 (EDT)
+	with ESMTP id vHUL1wfdkItQ; Wed, 10 Jun 2020 07:20:51 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1776A4B2D8;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2D7104B2DA;
 	Wed, 10 Jun 2020 07:20:48 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 466714B1BA
- for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Jun 2020 19:03:53 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 13DEB4B1D5
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Jun 2020 19:56:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id S6hNNd69rMp7 for <kvmarm@lists.cs.columbia.edu>;
- Tue,  9 Jun 2020 19:03:52 -0400 (EDT)
-Received: from mail-vk1-f194.google.com (mail-vk1-f194.google.com
- [209.85.221.194])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 57D864B142
- for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Jun 2020 19:03:52 -0400 (EDT)
-Received: by mail-vk1-f194.google.com with SMTP id u15so113283vkk.6
- for <kvmarm@lists.cs.columbia.edu>; Tue, 09 Jun 2020 16:03:52 -0700 (PDT)
+ with ESMTP id btINRqxV4NzK for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  9 Jun 2020 19:56:26 -0400 (EDT)
+Received: from mail-ua1-f66.google.com (mail-ua1-f66.google.com
+ [209.85.222.66])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0BC594B1D2
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Jun 2020 19:56:26 -0400 (EDT)
+Received: by mail-ua1-f66.google.com with SMTP id z47so237160uad.5
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 09 Jun 2020 16:56:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=QPEA53MpdF9ON3exFjCberFh9r4WY/+iX04WGFZFtXU=;
- b=rwanDsZdo86Rv+vzZDRG+0C9QrHIbGQgfj2nwO+GiGBNVyLSExN93DGrkptklgs9I1
- AC0cy3+rivR0wtaNSSV9u8U2CqWzAr9cwayr0OtE6O+jC2+BtUr9VjUb8UFNbXJkVAi1
- WfJhopss4dvT37wHibefpDeELAXyANGodPwrJTtsn9yIlJTNlMVMXjXyhR/cP5akWDCP
- mjbboyehlJjrEud3b556BAnXu9H3ea7lZqMAdBWMg65r0d3SNuuwYPZvv8rUlGOJMmVx
- 1rAQzDRF0wybOVz5i+mnG2dV7tbBHX6NxTZfN6sP+E0p5F7rIRZGBiMOtY3RefHOaxGa
- MGfQ==
+ :cc; bh=4sxWZx3UI6VKLDq8Qy1UYUg5vtAHPMsTevThfv39TWA=;
+ b=WLpRcLXqwdVOvuMgwWkmR8Gr4lwaHRK/EF6daq2IMeFXYgWSJrphnkQvLEH+41LO0x
+ pBkEeJfVAEq/uryeN4HHM4Hb3NfdIqrrZcULOeMuMtGfZEKTK0JPggE4ybLNYEuiV0pp
+ hiSCdaRlAd+ayR3yLwkLqaPFRVUUau1KjcEyNNFF5lmfQTLhnmvgVGyA1JJV3qaW45Fh
+ jEN3gjAjfZpQCTtGPfowcu+cTV09P9OWMskURcxzz2UEuwU2bgMY7NSPvwSFJYRc6/bv
+ 5cAINv0x9snM9p3flSgBPUFTJrC9TtnEnQ07K+dBbcgAeuIsCrM4zFy5fBTuIldM5yBs
+ xNEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=QPEA53MpdF9ON3exFjCberFh9r4WY/+iX04WGFZFtXU=;
- b=qzRmKXCIhRCZwIgkHWX5y+rStGX64rojC3mxBZ1K8P+/litrWllsq2L0a/otPPy2J4
- xgcM5N/3SLp9hL8QelIguIq9/iitZBcdiJeROBTHFO0gGxG77FTVIvQNdRYLB0AYHzjZ
- umIRSSnPGDLPdup2QpRhQf6qGNm+En7WZrQGtXSdtpXhtn4MwDgywbhV937mkBDfIW5X
- hL0SxR8ZOec1JxybY1fhWTbEXhU2TKBGqbDtLBECcqvL5WVBfTEDyQTgyciUhihVuc7n
- m00AMKzQ+e/PQ8EDtxpPGlbZnC7Vsc0Rx5yDZ5xQ3nkEFRNycnLkUSWPC1G6O6G/v1l6
- rVeg==
-X-Gm-Message-State: AOAM531UrfNUMamkfnC6FUlfH8OwAYtTnLMJRLvWqiLdpR8QxDuQT86G
- ntSNzXPO7AKm4yT+CtTGJkzlhVIAVILwm5GYLVuEnA==
-X-Google-Smtp-Source: ABdhPJwvz0K9ugkUS0zUu2sV6SC9xdH2ngcwyFlRhaY+EjhyMbUztSqGBkZnAcJGtcUe/roomwm1IuKpnHfl3gWMyfI=
-X-Received: by 2002:a1f:974d:: with SMTP id z74mr401275vkd.40.1591743831579;
- Tue, 09 Jun 2020 16:03:51 -0700 (PDT)
+ bh=4sxWZx3UI6VKLDq8Qy1UYUg5vtAHPMsTevThfv39TWA=;
+ b=cOojYzGD+ACwP/aPqoXzN6r2ses5E2n6di4w0ZgG2mStEHBuvWNUA7DaAcId6kgZ4u
+ EaROuo22SZcYmS63RTec+nsdWKzloh5TPh3PQdCvgBu4KznJkAvBvXOLiEOHLfhDjsTY
+ o45cki8thrQYjgR+kmbt6kzmxNgfcd73Og7TZl6V6yZCsNKwlwvcNUMK/hA2Nys7d50o
+ hS0FMTYazMIJCY6KP3wiUbZrTUSu38TMDP3fgNh78U/0JvDFT1SKsdgTvqp7BHOkxhEV
+ TU9g3cjUkM9zyGl13VXaKQoroKRqRCZL2uTUFjlf/rxaFTM1PZMKZPsH9EpovR7PqONf
+ SI/w==
+X-Gm-Message-State: AOAM531ee2dIG6iSIoezR6RM0TvjWeV0ciSdwAbTFLDTF4TOLu4yuTKu
+ eSy03he92EC72W+g7BiJ9X59Tjd10ReB1k9lApW/RQ==
+X-Google-Smtp-Source: ABdhPJyXAGLXljdkHhgQRDD2Vm3KO3b89VigddFLuju4QbS8KbKbayXYphsX76+lBqoc+5yPzGQnUDz7icYaQgNy+rs=
+X-Received: by 2002:ab0:6012:: with SMTP id j18mr679163ual.69.1591746985111;
+ Tue, 09 Jun 2020 16:56:25 -0700 (PDT)
 MIME-Version: 1.0
 References: <20200605213853.14959-1-sean.j.christopherson@intel.com>
- <20200605213853.14959-7-sean.j.christopherson@intel.com>
-In-Reply-To: <20200605213853.14959-7-sean.j.christopherson@intel.com>
+ <20200605213853.14959-10-sean.j.christopherson@intel.com>
+In-Reply-To: <20200605213853.14959-10-sean.j.christopherson@intel.com>
 From: Ben Gardon <bgardon@google.com>
-Date: Tue, 9 Jun 2020 16:03:40 -0700
-Message-ID: <CANgfPd9Y9P+-got9HmtrvChmwZBe-XOA0zSSLMsPCUKcuBv4aQ@mail.gmail.com>
-Subject: Re: [PATCH 06/21] KVM: x86/mmu: Move fast_page_fault() call above
- mmu_topup_memory_caches()
+Date: Tue, 9 Jun 2020 16:56:13 -0700
+Message-ID: <CANgfPd_ftZ_fC0EEt=1nOoyc6Yi6Xo3TB4woY=tkHzXbjHk4aA@mail.gmail.com>
+Subject: Re: [PATCH 09/21] KVM: x86/mmu: Separate the memory caches for shadow
+ pages and gfn arrays
 To: Sean Christopherson <sean.j.christopherson@intel.com>
 X-Mailman-Approved-At: Wed, 10 Jun 2020 07:20:46 -0400
 Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
@@ -103,40 +103,74 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 On Fri, Jun 5, 2020 at 2:39 PM Sean Christopherson
 <sean.j.christopherson@intel.com> wrote:
 >
-> Avoid refilling the memory caches and potentially slow reclaim/swap when
-> handling a fast page fault, which does not need to allocate any new
-> objects.
+> Use separate caches for allocating shadow pages versus gfn arrays.  This
+> sets the stage for specifying __GFP_ZERO when allocating shadow pages
+> without incurring extra cost for gfn arrays.
+>
+> No functional change intended.
 >
 > Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
 Reviewed-by: Ben Gardon <bgardon@google.com>
 > ---
->  arch/x86/kvm/mmu/mmu.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+>  arch/x86/include/asm/kvm_host.h |  3 ++-
+>  arch/x86/kvm/mmu/mmu.c          | 15 ++++++++++-----
+>  2 files changed, 12 insertions(+), 6 deletions(-)
 >
+> diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+> index 16347b050754..e7a427547557 100644
+> --- a/arch/x86/include/asm/kvm_host.h
+> +++ b/arch/x86/include/asm/kvm_host.h
+> @@ -636,7 +636,8 @@ struct kvm_vcpu_arch {
+>         struct kvm_mmu *walk_mmu;
+>
+>         struct kvm_mmu_memory_cache mmu_pte_list_desc_cache;
+> -       struct kvm_mmu_memory_cache mmu_page_cache;
+> +       struct kvm_mmu_memory_cache mmu_shadow_page_cache;
+> +       struct kvm_mmu_memory_cache mmu_gfn_array_cache;
+>         struct kvm_mmu_memory_cache mmu_page_header_cache;
+>
+>         /*
 > diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-> index 5e773564ab20..4b4c3234d623 100644
+> index 451e0365e5dd..d245acece3cd 100644
 > --- a/arch/x86/kvm/mmu/mmu.c
 > +++ b/arch/x86/kvm/mmu/mmu.c
-> @@ -4095,6 +4095,9 @@ static int direct_page_fault(struct kvm_vcpu *vcpu, gpa_t gpa, u32 error_code,
->         if (page_fault_handle_page_track(vcpu, error_code, gfn))
->                 return RET_PF_EMULATE;
->
-> +       if (fast_page_fault(vcpu, gpa, error_code))
-> +               return RET_PF_RETRY;
-> +
->         r = mmu_topup_memory_caches(vcpu);
+> @@ -1108,8 +1108,12 @@ static int mmu_topup_memory_caches(struct kvm_vcpu *vcpu)
+>                                    1 + PT64_ROOT_MAX_LEVEL + PTE_PREFETCH_NUM);
 >         if (r)
 >                 return r;
-> @@ -4102,9 +4105,6 @@ static int direct_page_fault(struct kvm_vcpu *vcpu, gpa_t gpa, u32 error_code,
->         if (lpage_disallowed)
->                 max_level = PG_LEVEL_4K;
+> -       r = mmu_topup_memory_cache(&vcpu->arch.mmu_page_cache,
+> -                                  2 * PT64_ROOT_MAX_LEVEL);
+> +       r = mmu_topup_memory_cache(&vcpu->arch.mmu_shadow_page_cache,
+> +                                  PT64_ROOT_MAX_LEVEL);
+> +       if (r)
+> +               return r;
+> +       r = mmu_topup_memory_cache(&vcpu->arch.mmu_gfn_array_cache,
+> +                                  PT64_ROOT_MAX_LEVEL);
+>         if (r)
+>                 return r;
+>         return mmu_topup_memory_cache(&vcpu->arch.mmu_page_header_cache,
+> @@ -1119,7 +1123,8 @@ static int mmu_topup_memory_caches(struct kvm_vcpu *vcpu)
+>  static void mmu_free_memory_caches(struct kvm_vcpu *vcpu)
+>  {
+>         mmu_free_memory_cache(&vcpu->arch.mmu_pte_list_desc_cache);
+> -       mmu_free_memory_cache(&vcpu->arch.mmu_page_cache);
+> +       mmu_free_memory_cache(&vcpu->arch.mmu_shadow_page_cache);
+> +       mmu_free_memory_cache(&vcpu->arch.mmu_gfn_array_cache);
+>         mmu_free_memory_cache(&vcpu->arch.mmu_page_header_cache);
+>  }
 >
-> -       if (fast_page_fault(vcpu, gpa, error_code))
-> -               return RET_PF_RETRY;
-> -
->         mmu_seq = vcpu->kvm->mmu_notifier_seq;
->         smp_rmb();
+> @@ -2096,9 +2101,9 @@ static struct kvm_mmu_page *kvm_mmu_alloc_page(struct kvm_vcpu *vcpu, int direct
+>         struct kvm_mmu_page *sp;
 >
+>         sp = mmu_memory_cache_alloc(&vcpu->arch.mmu_page_header_cache);
+> -       sp->spt = mmu_memory_cache_alloc(&vcpu->arch.mmu_page_cache);
+> +       sp->spt = mmu_memory_cache_alloc(&vcpu->arch.mmu_shadow_page_cache);
+>         if (!direct)
+> -               sp->gfns = mmu_memory_cache_alloc(&vcpu->arch.mmu_page_cache);
+> +               sp->gfns = mmu_memory_cache_alloc(&vcpu->arch.mmu_gfn_array_cache);
+>         set_page_private(virt_to_page(sp->spt), (unsigned long)sp);
+>
+>         /*
 > --
 > 2.26.0
 >
