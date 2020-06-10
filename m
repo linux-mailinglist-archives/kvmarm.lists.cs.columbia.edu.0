@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id ACF401F622F
-	for <lists+kvmarm@lfdr.de>; Thu, 11 Jun 2020 09:22:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28AC31F6230
+	for <lists+kvmarm@lfdr.de>; Thu, 11 Jun 2020 09:22:38 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 512EB4B1FE;
-	Thu, 11 Jun 2020 03:22:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9868D4B1D5;
+	Thu, 11 Jun 2020 03:22:37 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,63 +14,63 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JtFjALt63mZW; Thu, 11 Jun 2020 03:22:36 -0400 (EDT)
+	with ESMTP id 36Q2J01fNEWD; Thu, 11 Jun 2020 03:22:36 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7CA804B1E2;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 962824B1EA;
 	Thu, 11 Jun 2020 03:22:33 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6801D4B199
- for <kvmarm@lists.cs.columbia.edu>; Wed, 10 Jun 2020 18:01:04 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 14E9F4B150
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 10 Jun 2020 18:03:48 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 1obB31ANEkvK for <kvmarm@lists.cs.columbia.edu>;
- Wed, 10 Jun 2020 18:01:01 -0400 (EDT)
-Received: from mail-ua1-f65.google.com (mail-ua1-f65.google.com
- [209.85.222.65])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B4ABA4B1B0
- for <kvmarm@lists.cs.columbia.edu>; Wed, 10 Jun 2020 18:01:01 -0400 (EDT)
-Received: by mail-ua1-f65.google.com with SMTP id a10so1419643uan.8
- for <kvmarm@lists.cs.columbia.edu>; Wed, 10 Jun 2020 15:01:01 -0700 (PDT)
+ with ESMTP id mMVcQMYdjTW7 for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 10 Jun 2020 18:03:47 -0400 (EDT)
+Received: from mail-vs1-f68.google.com (mail-vs1-f68.google.com
+ [209.85.217.68])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 15D944B101
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 10 Jun 2020 18:03:47 -0400 (EDT)
+Received: by mail-vs1-f68.google.com with SMTP id q2so2259500vsr.1
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 10 Jun 2020 15:03:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=nR4rRNMXeXdrkwRNt5QUkb3PmbbCiqg+ykW9gq1PQDY=;
- b=ssJPmRj0DZMvwcNEm4rDMS1iQrTWKQ/CbrV5wUy4HLikCgt2cbVC/HDDuHwX2SXS34
- /J8wRq6CwydELAPYvYcbwrDRsMkJH2cXrp9p8LbG2wwj5rLX6heicwHC01b/RDYnbI2z
- WKvDdthm3zSW/suBOb+OllMNyyy9hLg5GcCuRmXJk2MArnFxKrNjxDQXng6qwvE2OXW3
- M63vgoCWkMbWKpR90U8Uq4o21HJsc/3BYhChAHeC7UpWQYUMofIIBtqHHBbXocUFsmb9
- aq3zx5lovFe4LSrej8YaDa1SAAckaY56q16hkEW5W4g3RTHhk1/l+KXZQ5nSmR2y9Sm4
- Lnig==
+ :cc; bh=vDWPbvyM3cqJd2ORoD0SPltk6IcPQq+mA/Xeq0EsR5Q=;
+ b=HtBemui3S+wlJlJDJ02Q481rDHDfxLfLvNajFyxAV+3MgJgw3oMaW3w+9xkzOJHdOU
+ OzI3lyiSjv6lYHSB6aO+fOX8oTLV1e+4dTEvg0Bb3jYIltK/8hP7WE2rTFWFLo0BKv+g
+ jChlOJLa2VmIeGOlncQkZ+6vIdpbi3ZVjs/+gIMU9m/V7BQmRgkLIDPlHOBzNvHwA7He
+ z3s054JQpPVmd5YxEVf2WtDoip/eqp+jrUiBedV1cRI0/JEKwBwm9TwQyKRXySbhpoEO
+ 8JOOuQ6iXe4IMpPwP/km8+5+pozfjgb/vmU+yBmORAc7J+MYPgsGqfxUKYCncbmW1xJc
+ d1nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=nR4rRNMXeXdrkwRNt5QUkb3PmbbCiqg+ykW9gq1PQDY=;
- b=Fd6hw0sXnkIVsM/sMKEHJj3QPnlM4eMW2HS/lPTn014Z4SXLJzorvdxurvAC1ZmjEX
- WUX2EXFDEqUD60j2MVXDnSOAvp+xA13W9sbGZhkvNfIDJAW3VHlXfLx00qhdNyzeByKt
- 5vrFPFHVqBY8AB3rdziHT7rDjRH02IVEn3NxZQTStdejekkWlG8dm4j1G5eAnIVQD9E0
- V5FgJEPZh+TpQ2hYRvCGr8QbNsbrdBXPkgWOwy9ZxpxKYmSQZx95ewh0yD3OApXtSia8
- a2oZvV9hhw0WNE1bLAOxCZSsbk8KtfcTC2hxeiP9Tijuv2hG/TxsU9Z7xzidchM1nSqC
- Hpzw==
-X-Gm-Message-State: AOAM5335bt+xFPKuhqfQifRQpE93dMxEDXgWxe3Z4okeqZzqi+O9ZS8R
- 44OVdHwJ+HoJZIc1tdcE93pYVwy2MonDUtfapsj1uw==
-X-Google-Smtp-Source: ABdhPJz7I64SKS5NtEWHj0e9pQtJJ4M+FXlIhms8qP48sFrPid4B2AZwfLYjGcLpBA0gvUju57nQ5kEx5xqguip91SM=
-X-Received: by 2002:ab0:70c9:: with SMTP id r9mr4204376ual.15.1591826460956;
- Wed, 10 Jun 2020 15:01:00 -0700 (PDT)
+ bh=vDWPbvyM3cqJd2ORoD0SPltk6IcPQq+mA/Xeq0EsR5Q=;
+ b=JQ7QYHrcYb62mf8rFSU8zmuWMpk86GQKhqMbWAxSzFaKH3dN54680HChxZgeNee75N
+ gbArloanoBdeRdPyW4NKccx0Rc+JKV0Z3JtHNtYJ4uB4FldxhUASFsyb4KeHGoWVHflm
+ oR7S1lWNXql1XV4lwaJdeHOpZ445YW7StbOLSHfwNxdrgGjtWAogSDgMfnDBAzu4nvSu
+ hQ7sBGb0H+XWZh2ZRTJQNvYYoFi3HDfKg9SILZyjPORSVCday4ZxE9dn/h5tMwW3D4if
+ t/jU7FJokeGZHdtVq1Dj4CqlUVz/Jm+myQdXNJuQNAWHRelhzU1LqQ1TXDcaIcZE6clg
+ MmQg==
+X-Gm-Message-State: AOAM532RMxtK9seH5j2g5septlX35q78lrIn/0IyDOocG+53w9hmPTGs
+ HzvfaLguaSZALymltHl6pbKERIPwddpSx4cqiSo2Ig==
+X-Google-Smtp-Source: ABdhPJzQqRq1kSgZfPTBAuvGye9mC+iq+87t5Ox/WTN7eShxqXFGWQvbS00c/EdH8V5E91+Dg9ynPn922dWRj734K9w=
+X-Received: by 2002:a67:70c3:: with SMTP id l186mr4267734vsc.117.1591826626254; 
+ Wed, 10 Jun 2020 15:03:46 -0700 (PDT)
 MIME-Version: 1.0
 References: <20200605213853.14959-1-sean.j.christopherson@intel.com>
- <20200605213853.14959-17-sean.j.christopherson@intel.com>
-In-Reply-To: <20200605213853.14959-17-sean.j.christopherson@intel.com>
+ <20200605213853.14959-4-sean.j.christopherson@intel.com>
+In-Reply-To: <20200605213853.14959-4-sean.j.christopherson@intel.com>
 From: Ben Gardon <bgardon@google.com>
-Date: Wed, 10 Jun 2020 15:00:47 -0700
-Message-ID: <CANgfPd-x=Af6Wdn9Wz=9r5CiHDCbxEgQhS2swALUMQd00oQ3jg@mail.gmail.com>
-Subject: Re: [PATCH 16/21] KVM: arm64: Drop @max param from
- mmu_topup_memory_cache()
+Date: Wed, 10 Jun 2020 15:03:35 -0700
+Message-ID: <CANgfPd9tOLb2ipbm9-zyo0G4Onh6LqmYq1rg9o93k90DoMsx2A@mail.gmail.com>
+Subject: Re: [PATCH 03/21] KVM: x86/mmu: Use consistent "mc" name for
+ kvm_mmu_memory_cache locals
 To: Sean Christopherson <sean.j.christopherson@intel.com>
 X-Mailman-Approved-At: Thu, 11 Jun 2020 03:22:32 -0400
 Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
@@ -103,65 +103,73 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 On Fri, Jun 5, 2020 at 2:39 PM Sean Christopherson
 <sean.j.christopherson@intel.com> wrote:
 >
-> Replace the @max param in mmu_topup_memory_cache() and instead use
-> ARRAY_SIZE() to terminate the loop to fill the cache.  This removes a
-> BUG_ON() and sets the stage for moving arm64 to the common memory cache
-> implementation.
+> Use "mc" for local variables to shorten line lengths and provide
+> consistent names, which will be especially helpful when some of the
+> helpers are moved to common KVM code in future patches.
 >
 > No functional change intended.
 >
 > Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
+Reviewed-by: Ben Gardon <bgardon@google.com>
 > ---
->  arch/arm64/kvm/mmu.c | 12 ++++--------
->  1 file changed, 4 insertions(+), 8 deletions(-)
+>  arch/x86/kvm/mmu/mmu.c | 24 ++++++++++++------------
+>  1 file changed, 12 insertions(+), 12 deletions(-)
 >
-> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> index a1f6bc70c4e4..9398b66f8a87 100644
-> --- a/arch/arm64/kvm/mmu.c
-> +++ b/arch/arm64/kvm/mmu.c
-> @@ -124,15 +124,13 @@ static void stage2_dissolve_pud(struct kvm *kvm, phys_addr_t addr, pud_t *pudp)
->         put_page(virt_to_page(pudp));
+> diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+> index cbc101663a89..36c90f004ef4 100644
+> --- a/arch/x86/kvm/mmu/mmu.c
+> +++ b/arch/x86/kvm/mmu/mmu.c
+> @@ -1060,27 +1060,27 @@ static void walk_shadow_page_lockless_end(struct kvm_vcpu *vcpu)
+>         local_irq_enable();
 >  }
 >
-> -static int mmu_topup_memory_cache(struct kvm_mmu_memory_cache *cache,
-> -                                 int min, int max)
-> +static int mmu_topup_memory_cache(struct kvm_mmu_memory_cache *cache, int min)
+> -static int mmu_topup_memory_cache(struct kvm_mmu_memory_cache *cache, int min)
+> +static int mmu_topup_memory_cache(struct kvm_mmu_memory_cache *mc, int min)
 >  {
->         void *page;
+>         void *obj;
 >
-> -       BUG_ON(max > KVM_NR_MEM_OBJS);
-KVM_NR_MEM_OBJS should be undefined as of patch 14 in this series. I'd
-recommend changing this to use the new constant you defined in that
-patch.
->         if (cache->nobjs >= min)
+> -       if (cache->nobjs >= min)
+> +       if (mc->nobjs >= min)
 >                 return 0;
-> -       while (cache->nobjs < max) {
-> +       while (cache->nobjs < ARRAY_SIZE(cache->objects)) {
->                 page = (void *)__get_free_page(GFP_PGTABLE_USER);
->                 if (!page)
->                         return -ENOMEM;
-> @@ -1356,8 +1354,7 @@ int kvm_phys_addr_ioremap(struct kvm *kvm, phys_addr_t guest_ipa,
->                         pte = kvm_s2pte_mkwrite(pte);
+> -       while (cache->nobjs < ARRAY_SIZE(cache->objects)) {
+> -               if (cache->kmem_cache)
+> -                       obj = kmem_cache_zalloc(cache->kmem_cache, GFP_KERNEL_ACCOUNT);
+> +       while (mc->nobjs < ARRAY_SIZE(mc->objects)) {
+> +               if (mc->kmem_cache)
+> +                       obj = kmem_cache_zalloc(mc->kmem_cache, GFP_KERNEL_ACCOUNT);
+>                 else
+>                         obj = (void *)__get_free_page(GFP_KERNEL_ACCOUNT);
+>                 if (!obj)
+> -                       return cache->nobjs >= min ? 0 : -ENOMEM;
+> -               cache->objects[cache->nobjs++] = obj;
+> +                       return mc->nobjs >= min ? 0 : -ENOMEM;
+> +               mc->objects[mc->nobjs++] = obj;
+>         }
+>         return 0;
+>  }
 >
->                 ret = mmu_topup_memory_cache(&cache,
-> -                                            kvm_mmu_cache_min_pages(kvm),
-> -                                            KVM_NR_MEM_OBJS);
-See above, KVM_NR_MEM_OBJS is undefined as of patch 14.
-> +                                            kvm_mmu_cache_min_pages(kvm));
->                 if (ret)
->                         goto out;
->                 spin_lock(&kvm->mmu_lock);
-> @@ -1737,8 +1734,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
->         up_read(&current->mm->mmap_sem);
+> -static int mmu_memory_cache_free_objects(struct kvm_mmu_memory_cache *cache)
+> +static int mmu_memory_cache_free_objects(struct kvm_mmu_memory_cache *mc)
+>  {
+> -       return cache->nobjs;
+> +       return mc->nobjs;
+>  }
 >
->         /* We need minimum second+third level pages */
-> -       ret = mmu_topup_memory_cache(memcache, kvm_mmu_cache_min_pages(kvm),
-> -                                    KVM_NR_MEM_OBJS);
-See above, KVM_NR_MEM_OBJS is undefined as of patch 14.
-> +       ret = mmu_topup_memory_cache(memcache, kvm_mmu_cache_min_pages(kvm));
->         if (ret)
->                 return ret;
+>  static void mmu_free_memory_cache(struct kvm_mmu_memory_cache *mc)
+> @@ -1395,10 +1395,10 @@ static struct kvm_rmap_head *gfn_to_rmap(struct kvm *kvm, gfn_t gfn,
 >
+>  static bool rmap_can_add(struct kvm_vcpu *vcpu)
+>  {
+> -       struct kvm_mmu_memory_cache *cache;
+> +       struct kvm_mmu_memory_cache *mc;
+>
+> -       cache = &vcpu->arch.mmu_pte_list_desc_cache;
+> -       return mmu_memory_cache_free_objects(cache);
+> +       mc = &vcpu->arch.mmu_pte_list_desc_cache;
+> +       return mmu_memory_cache_free_objects(mc);
+>  }
+>
+>  static int rmap_add(struct kvm_vcpu *vcpu, u64 *spte, gfn_t gfn)
 > --
 > 2.26.0
 >
