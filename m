@@ -2,74 +2,73 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 54A8E1F64CA
-	for <lists+kvmarm@lfdr.de>; Thu, 11 Jun 2020 11:33:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98D631F6B4C
+	for <lists+kvmarm@lfdr.de>; Thu, 11 Jun 2020 17:44:05 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C84EB4B1A1;
-	Thu, 11 Jun 2020 05:33:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C4BAE4B1A4;
+	Thu, 11 Jun 2020 11:44:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6HE2piEH-fnn; Thu, 11 Jun 2020 05:33:26 -0400 (EDT)
+	with ESMTP id gqs51tbxAy0I; Thu, 11 Jun 2020 11:44:04 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9E55B4B189;
-	Thu, 11 Jun 2020 05:33:25 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 932A24B192;
+	Thu, 11 Jun 2020 11:44:03 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C11EA4B168
- for <kvmarm@lists.cs.columbia.edu>; Thu, 11 Jun 2020 05:33:23 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6885B4B160
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 11 Jun 2020 11:44:02 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id F1JkRQBqW0kr for <kvmarm@lists.cs.columbia.edu>;
- Thu, 11 Jun 2020 05:33:22 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A123D4B164
- for <kvmarm@lists.cs.columbia.edu>; Thu, 11 Jun 2020 05:33:22 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 8D08D20747;
- Thu, 11 Jun 2020 09:33:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1591868001;
- bh=9k1Z6Oc9tLld6mFM8g0LB4dGrlIcUbNndPsmAFUGesY=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=SefjnXr1FArdFXM6HoG6yYiKFG+6zcCBmk1NZK7zvqUZtcoLekp5Ln/BBx/Jp0nBn
- r2S6cXk/v+ZjU5YNdoo4JIIrLMtpYkAFrDu6SnrMAmUgEWRE2Zh0wvZ1OP23lcuBP6
- SH8Hu+Udi95/tfwfOgKGv1zbjAZTBqXXQA2lZn34=
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.lan) by disco-boy.misterjones.org with esmtpsa
- (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
- (envelope-from <maz@kernel.org>)
- id 1jjJDz-0022ZT-GD; Thu, 11 Jun 2020 10:10:15 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 11/11] KVM: arm64: Move hyp_symbol_addr() to kvm_asm.h
-Date: Thu, 11 Jun 2020 10:09:56 +0100
-Message-Id: <20200611090956.1537104-12-maz@kernel.org>
-X-Mailer: git-send-email 2.26.2
-In-Reply-To: <20200611090956.1537104-1-maz@kernel.org>
-References: <20200611090956.1537104-1-maz@kernel.org>
+ with ESMTP id vMocXEqnbMk2 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 11 Jun 2020 11:44:01 -0400 (EDT)
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id DC0D34B132
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 11 Jun 2020 11:44:00 -0400 (EDT)
+IronPort-SDR: iD9L8IlYgAhph0j/xuAhBc4PKj0He6A5U1vEAeW+jJABontf648ZH8uCPlZNcTSKyp6Ubc0ezA
+ sWEh95ZJeI4w==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+ by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Jun 2020 08:43:59 -0700
+IronPort-SDR: +Ydw/4Fg05XSUVeVdaVnYwXl169Eie8ePVgfFpQAiQZ2NUmXKZaRvV2IeZsKgMR2pcPAaKpDpn
+ +n8lSwG3SLOg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,499,1583222400"; d="scan'208";a="419144435"
+Received: from sjchrist-coffee.jf.intel.com (HELO linux.intel.com)
+ ([10.54.74.152])
+ by orsmga004.jf.intel.com with ESMTP; 11 Jun 2020 08:43:59 -0700
+Date: Thu, 11 Jun 2020 08:43:59 -0700
+From: Sean Christopherson <sean.j.christopherson@intel.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH 17/21] KVM: arm64: Use common code's approach for
+ __GFP_ZERO with memory caches
+Message-ID: <20200611154359.GF29918@linux.intel.com>
+References: <20200605213853.14959-1-sean.j.christopherson@intel.com>
+ <20200605213853.14959-18-sean.j.christopherson@intel.com>
+ <6cc08074c289cbea7b9c1deeaf18c63f@kernel.org>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: pbonzini@redhat.com, alexandru.elisei@arm.com,
- ascull@google.com, james.morse@arm.com, mark.rutland@arm.com,
- julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com, kvm@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+Content-Disposition: inline
+In-Reply-To: <6cc08074c289cbea7b9c1deeaf18c63f@kernel.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
+ David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org,
+ Paul Mackerras <paulus@ozlabs.org>, Ben Gardon <bgardon@google.com>,
+ Claudio Imbrenda <imbrenda@linux.ibm.com>, kvmarm@lists.cs.columbia.edu,
+ Janosch Frank <frankja@linux.ibm.com>, Joerg Roedel <joro@8bytes.org>,
+ Christian Borntraeger <borntraeger@de.ibm.com>,
+ Junaid Shahid <junaids@google.com>, kvm-ppc@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
+ Cornelia Huck <cohuck@redhat.com>, Peter Shier <pshier@google.com>,
+ linux-mips@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, Peter Feiner <pfeiner@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -86,81 +85,57 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Recent refactoring of the arm64 code make it awkward to have
-hyp_symbol_addr() in kvm_mmu.h. Instead, move it next to its
-main user, which is __hyp_this_cpu_ptr().
+On Thu, Jun 11, 2020 at 08:59:05AM +0100, Marc Zyngier wrote:
+> >diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> >index 9398b66f8a87..688213ef34f0 100644
+> >--- a/arch/arm64/kvm/mmu.c
+> >+++ b/arch/arm64/kvm/mmu.c
+> >@@ -131,7 +131,8 @@ static int mmu_topup_memory_cache(struct
+> >kvm_mmu_memory_cache *cache, int min)
+> > 	if (cache->nobjs >= min)
+> > 		return 0;
+> > 	while (cache->nobjs < ARRAY_SIZE(cache->objects)) {
+> >-		page = (void *)__get_free_page(GFP_PGTABLE_USER);
+> >+		page = (void *)__get_free_page(GFP_KERNEL_ACCOUNT |
+> 
+> This is definitely a change in the way we account for guest
+> page tables allocation, although I find it bizarre that not
+> all architectures account for it the same way.
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/include/asm/kvm_asm.h | 20 ++++++++++++++++++++
- arch/arm64/include/asm/kvm_mmu.h | 20 --------------------
- 2 files changed, 20 insertions(+), 20 deletions(-)
+It's not intended to be a functional change, i.e. the allocations should
+still be accounted:
 
-diff --git a/arch/arm64/include/asm/kvm_asm.h b/arch/arm64/include/asm/kvm_asm.h
-index d9b7da15dbca..352aaebf4198 100644
---- a/arch/arm64/include/asm/kvm_asm.h
-+++ b/arch/arm64/include/asm/kvm_asm.h
-@@ -81,6 +81,26 @@ extern u32 __kvm_get_mdcr_el2(void);
- 
- extern char __smccc_workaround_1_smc[__SMCCC_WORKAROUND_1_SMC_SZ];
- 
-+/*
-+ * Obtain the PC-relative address of a kernel symbol
-+ * s: symbol
-+ *
-+ * The goal of this macro is to return a symbol's address based on a
-+ * PC-relative computation, as opposed to a loading the VA from a
-+ * constant pool or something similar. This works well for HYP, as an
-+ * absolute VA is guaranteed to be wrong. Only use this if trying to
-+ * obtain the address of a symbol (i.e. not something you obtained by
-+ * following a pointer).
-+ */
-+#define hyp_symbol_addr(s)						\
-+	({								\
-+		typeof(s) *addr;					\
-+		asm("adrp	%0, %1\n"				\
-+		    "add	%0, %0, :lo12:%1\n"			\
-+		    : "=r" (addr) : "S" (&s));				\
-+		addr;							\
-+	})
-+
- /*
-  * Home-grown __this_cpu_{ptr,read} variants that always work at HYP,
-  * provided that sym is really a *symbol* and not a pointer obtained from
-diff --git a/arch/arm64/include/asm/kvm_mmu.h b/arch/arm64/include/asm/kvm_mmu.h
-index 53bd4d517a4d..df485840005c 100644
---- a/arch/arm64/include/asm/kvm_mmu.h
-+++ b/arch/arm64/include/asm/kvm_mmu.h
-@@ -107,26 +107,6 @@ static __always_inline unsigned long __kern_hyp_va(unsigned long v)
- 
- #define kern_hyp_va(v) 	((typeof(v))(__kern_hyp_va((unsigned long)(v))))
- 
--/*
-- * Obtain the PC-relative address of a kernel symbol
-- * s: symbol
-- *
-- * The goal of this macro is to return a symbol's address based on a
-- * PC-relative computation, as opposed to a loading the VA from a
-- * constant pool or something similar. This works well for HYP, as an
-- * absolute VA is guaranteed to be wrong. Only use this if trying to
-- * obtain the address of a symbol (i.e. not something you obtained by
-- * following a pointer).
-- */
--#define hyp_symbol_addr(s)						\
--	({								\
--		typeof(s) *addr;					\
--		asm("adrp	%0, %1\n"				\
--		    "add	%0, %0, :lo12:%1\n"			\
--		    : "=r" (addr) : "S" (&s));				\
--		addr;							\
--	})
--
- /*
-  * We currently support using a VM-specified IPA size. For backward
-  * compatibility, the default IPA size is fixed to 40bits.
--- 
-2.26.2
+  #define GFP_PGTABLE_USER  (GFP_PGTABLE_KERNEL | __GFP_ACCOUNT)
+  |
+  -> #define GFP_PGTABLE_KERNEL        (GFP_KERNEL | __GFP_ZERO)
 
+  == GFP_KERNEL | __GFP_ACCOUNT | __GFP_ZERO
+
+versus 
+
+  #define GFP_KERNEL_ACCOUNT (GFP_KERNEL | __GFP_ACCOUNT)
+
+    with __GFP_ZERO explicitly OR'd in
+
+  == GFP_KERNEL | __GFP_ACCOUNT | __GFP_ZERO
+
+I can put the above in the changelog, unless of course it's wrong and I've
+missed something.
+
+> It seems logical to me that nested page tables would be accounted
+> against userspace, but I'm willing to be educated on the matter.
+> 
+> Another possibility is that depending on the context, some allocations
+> should be accounted on either the kernel or userspace (NV on arm64
+> could definitely do something like that). If that was the case,
+> maybe moving most of the GFP_* flags into the per-cache flags,
+> and have the renaming that Ben suggested earlier.
+> 
+> Thanks,
+> 
+>         M.
+> -- 
+> Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
