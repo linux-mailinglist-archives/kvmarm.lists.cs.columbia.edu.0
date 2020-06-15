@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D3CD1F9138
-	for <lists+kvmarm@lfdr.de>; Mon, 15 Jun 2020 10:20:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D6F71F9136
+	for <lists+kvmarm@lfdr.de>; Mon, 15 Jun 2020 10:20:11 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4346B4B126;
-	Mon, 15 Jun 2020 04:20:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0ABD64B0E5;
+	Mon, 15 Jun 2020 04:20:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,46 +18,49 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BLYFTfhejJjg; Mon, 15 Jun 2020 04:20:11 -0400 (EDT)
+	with ESMTP id kVhHCsCesLHn; Mon, 15 Jun 2020 04:20:08 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 831B54B08D;
-	Mon, 15 Jun 2020 04:20:09 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 432264B0E0;
+	Mon, 15 Jun 2020 04:20:08 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8D5914B0D8
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Jun 2020 04:20:07 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D910E4B0DE
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Jun 2020 04:20:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id N-3rRNMKpi+o for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id PDOeHUn29r5p for <kvmarm@lists.cs.columbia.edu>;
  Mon, 15 Jun 2020 04:20:05 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C24804A551
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id DD0734B09B
  for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Jun 2020 04:20:05 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 81D2B2053B;
- Mon, 15 Jun 2020 08:20:04 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 0CA85206E2;
+ Mon, 15 Jun 2020 08:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1592209204;
- bh=rn6yKK06LpzRw/3dsq0h1xocnLbW3SUFTAd2Sa8+1Js=;
- h=From:To:Cc:Subject:Date:From;
- b=YWtLZGQyd7nbuuYsMvmTnST0IZDFzzhO9C/apw+MIVjPu8F//TT/q/odf8KcBnu/g
- kQRjs69i3amQsA177aT9+pF5TTUI85VSEjMlFL679jKIVBEIn9BlrjaJ1Qvbun4oL/
- UOZwW4WuBQ5zAmwPQLaPAf3q1FKAxQMcQCjeiQ4A=
+ s=default; t=1592209205;
+ bh=3JOu3whXJHagX3A5FXu4YOyMwg0buhIfq0J6saBPEWM=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=MSVi3gmPR9xUm2rCakwEj3nJ130UF203cE4RAlDZuI/haaRGRkXWZNddLJefxqnsZ
+ V0TFhXghmCZq4V9HsILYwivR5UaqASj/PZe163BnLIJDF5hNmTXWy1sNbEHfZLzoil
+ nTRsqhvhoxu5nK9fr7nRde30rwecznbQbbHFG94Q=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=wait-a-minute.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1jkkLb-0031ew-1k; Mon, 15 Jun 2020 09:20:03 +0100
+ id 1jkkLb-0031ew-Ju; Mon, 15 Jun 2020 09:20:03 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  kvmarm@lists.cs.columbia.edu
-Subject: [PATCH 0/4] KVM/arm64: Enable PtrAuth on non-VHE KVM
-Date: Mon, 15 Jun 2020 09:19:50 +0100
-Message-Id: <20200615081954.6233-1-maz@kernel.org>
+Subject: [PATCH 1/4] KVM: arm64: Enable Pointer Authentication at EL2 if
+ available
+Date: Mon, 15 Jun 2020 09:19:51 +0100
+Message-Id: <20200615081954.6233-2-maz@kernel.org>
 X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20200615081954.6233-1-maz@kernel.org>
+References: <20200615081954.6233-1-maz@kernel.org>
 MIME-Version: 1.0
 X-SA-Exim-Connect-IP: 62.31.163.78
 X-SA-Exim-Rcpt-To: kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
@@ -83,33 +86,36 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Not having PtrAuth on non-VHE KVM (for whatever reason VHE is not
-enabled on a v8.3 system) has always looked like an oddity. This
-trivial series remedies it, and allows a non-VHE KVM to offer PtrAuth
-to its guests.
+While initializing EL2, switch Pointer Authentication if detected
+from EL1. We use the EL1-provided keys though.
 
-In the tradition of not having separate security between host-EL1 and
-EL2, EL2 reuses the keys set up by host-EL1. It is likely that, should
-we switch to a mode where EL2 is more distrusting of EL1, we'd have
-private keys there.
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+---
+ arch/arm64/kvm/hyp-init.S | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-The last patch is just an optimisation which I've lobbed with the rest
-of the series in order not to forget it.
-
-Marc Zyngier (4):
-  KVM: arm64: Enable Pointer Authentication at EL2 if available
-  KVM: arm64: Allow ARM64_PTR_AUTH when ARM64_VHE=n
-  KVM: arm64: Allow PtrAuth to be enabled from userspace on non-VHE
-    systems
-  KVM: arm64: Check HCR_EL2 instead of shadow copy to swap PtrAuth
-    registers
-
- arch/arm64/Kconfig                   |  4 +---
- arch/arm64/include/asm/kvm_ptrauth.h |  4 ++--
- arch/arm64/kvm/hyp-init.S            | 11 +++++++++++
- arch/arm64/kvm/reset.c               | 21 ++++++++++-----------
- 4 files changed, 24 insertions(+), 16 deletions(-)
-
+diff --git a/arch/arm64/kvm/hyp-init.S b/arch/arm64/kvm/hyp-init.S
+index 6e6ed5581eed..81732177507d 100644
+--- a/arch/arm64/kvm/hyp-init.S
++++ b/arch/arm64/kvm/hyp-init.S
+@@ -104,6 +104,17 @@ alternative_else_nop_endif
+ 	 */
+ 	mov_q	x4, (SCTLR_EL2_RES1 | (SCTLR_ELx_FLAGS & ~SCTLR_ELx_A))
+ CPU_BE(	orr	x4, x4, #SCTLR_ELx_EE)
++alternative_if ARM64_HAS_ADDRESS_AUTH_ARCH
++	b	1f
++alternative_else_nop_endif
++alternative_if_not ARM64_HAS_ADDRESS_AUTH_IMP_DEF
++	b	2f
++alternative_else_nop_endif
++1:
++	orr	x4, x4, #(SCTLR_ELx_ENIA | SCTLR_ELx_ENIB)
++	orr	x4, x4, #SCTLR_ELx_ENDA
++	orr	x4, x4, #SCTLR_ELx_ENDB
++2:
+ 	msr	sctlr_el2, x4
+ 	isb
+ 
 -- 
 2.27.0
 
