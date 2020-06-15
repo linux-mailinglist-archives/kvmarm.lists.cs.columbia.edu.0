@@ -2,85 +2,71 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id EEDA61F7316
-	for <lists+kvmarm@lfdr.de>; Fri, 12 Jun 2020 06:42:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D3CD1F9138
+	for <lists+kvmarm@lfdr.de>; Mon, 15 Jun 2020 10:20:12 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 617CC4B197;
-	Fri, 12 Jun 2020 00:42:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4346B4B126;
+	Mon, 15 Jun 2020 04:20:12 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.911
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@gmail.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id lIpXuLdUZMes; Fri, 12 Jun 2020 00:42:37 -0400 (EDT)
+	with ESMTP id BLYFTfhejJjg; Mon, 15 Jun 2020 04:20:11 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3D0494B194;
-	Fri, 12 Jun 2020 00:42:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 831B54B08D;
+	Mon, 15 Jun 2020 04:20:09 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 958714B164
- for <kvmarm@lists.cs.columbia.edu>; Fri, 12 Jun 2020 00:42:35 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8D5914B0D8
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Jun 2020 04:20:07 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id mc4zvmHdB3RD for <kvmarm@lists.cs.columbia.edu>;
- Fri, 12 Jun 2020 00:42:34 -0400 (EDT)
-Received: from mail-pj1-f67.google.com (mail-pj1-f67.google.com
- [209.85.216.67])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 727434B137
- for <kvmarm@lists.cs.columbia.edu>; Fri, 12 Jun 2020 00:42:34 -0400 (EDT)
-Received: by mail-pj1-f67.google.com with SMTP id ne5so3146988pjb.5
- for <kvmarm@lists.cs.columbia.edu>; Thu, 11 Jun 2020 21:42:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id;
- bh=tnkNvIy4NyhOcfhzdkEEgf5Q0aBBdpOiKM99Ch2kRHo=;
- b=p2J2k390abBAM4NCbA9yAEM/LrDNElIECJSQNv3Nr8adiQVAS5SzbFY95WgXXxsQIh
- WJkHweRSLgzRw+GhG7AdtIsCCWhBM8XJSKuStAPyg5GzWrP6UfZokkvvSDuCia7LKDe8
- 71ujb6m40rMGRbwrRU+cN48oUNWf6r0I2VKCdk3XFkhd7SI1mBjeH2MYM00dZWC5qOCP
- FHXiJVbAQiG/K5Obfn+8x9PhykJbXAlXcTajBOJKJlM1Wemqs6OzfESWAa5E+VfI9uFY
- 0/YzlC1zdTftffN4s1iJyIMA8CW79XvwgF/CZ2Um4s/Uxf3elaXGjlbcz4Tn9Hlj3jV0
- d2tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id;
- bh=tnkNvIy4NyhOcfhzdkEEgf5Q0aBBdpOiKM99Ch2kRHo=;
- b=kvX9Eyo6Og58UpMq8wLhHKx5ZOfHlet68te3E2Ujj2a+52fU3fivPluBAk3IoFsZg0
- lHZyJEFcOPIlaEGOSut1VxyErDy0gTYWAZNQr64BeqmrtuZ3G7uL/Ntab1yjCBGiuOVo
- 188oqQcm9YvgiKxTaxtgP1BclFa+ij+tSwMoTwYO/AlKn9hVp1/hmMS15Qg9g00bJqi8
- Dd65fYRO9sbKQzEQs6Y1c9Yk6By0KRqWlBZDwb7A0Tbzbpiu+IV7992AYpKBmMxJSoij
- dGb61/fNT3uTcHuS4P1cl1J+WtmDhjEB2YT/rDpSKdXn2W0c4UGU5o3rz4YhA4AVUdsS
- te0Q==
-X-Gm-Message-State: AOAM5300YCEFPMYjfSTT34OndIZNKk71p2CkAPcNPGxv88Y2rho9cu47
- AwTJF7vxP5iTd/A/wFzTMO4=
-X-Google-Smtp-Source: ABdhPJwVfVwWuvBqsmyJQUwzIkKhTVDfAOSa0G75EXUmTNsmKXeQmrkCijvdn4svfC9O7GaAMKn6pA==
-X-Received: by 2002:a17:902:c30c:: with SMTP id
- k12mr10389411plx.130.1591936953486; 
- Thu, 11 Jun 2020 21:42:33 -0700 (PDT)
-Received: from localhost.localdomain ([192.19.223.252])
- by smtp.gmail.com with ESMTPSA id s9sm4084239pgo.22.2020.06.11.21.42.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Jun 2020 21:42:32 -0700 (PDT)
-From: Florian Fainelli <f.fainelli@gmail.com>
-To: linux-arm-kernel@lists.infradead.org
-Subject: [PATCH stable 4.9] arm64: entry: Place an SB sequence following an
- ERET instruction
-Date: Thu, 11 Jun 2020 21:42:18 -0700
-Message-Id: <20200612044219.31606-1-f.fainelli@gmail.com>
-X-Mailer: git-send-email 2.17.1
-Cc: Florian Fainelli <f.fainelli@gmail.com>,
- "open list:KERNEL VIRTUAL MACHINE KVM" <kvm@vger.kernel.org>,
- =?UTF-8?q?Radim=20Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@redhat.com>,
- Marc Zyngier <marc.zyngier@arm.com>, Catalin Marinas <catalin.marinas@arm.com>,
- Will Deacon <will.deacon@arm.com>, open list <linux-kernel@vger.kernel.org>,
- stable@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>, will@kernel.org,
- "open list:KERNEL VIRTUAL MACHINE FOR ARM64 KVM/arm64"
- <kvmarm@lists.cs.columbia.edu>, Christoffer Dall <christoffer.dall@linaro.org>
+ with ESMTP id N-3rRNMKpi+o for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 15 Jun 2020 04:20:05 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C24804A551
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Jun 2020 04:20:05 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 81D2B2053B;
+ Mon, 15 Jun 2020 08:20:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1592209204;
+ bh=rn6yKK06LpzRw/3dsq0h1xocnLbW3SUFTAd2Sa8+1Js=;
+ h=From:To:Cc:Subject:Date:From;
+ b=YWtLZGQyd7nbuuYsMvmTnST0IZDFzzhO9C/apw+MIVjPu8F//TT/q/odf8KcBnu/g
+ kQRjs69i3amQsA177aT9+pF5TTUI85VSEjMlFL679jKIVBEIn9BlrjaJ1Qvbun4oL/
+ UOZwW4WuBQ5zAmwPQLaPAf3q1FKAxQMcQCjeiQ4A=
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=wait-a-minute.lan) by disco-boy.misterjones.org with esmtpsa
+ (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
+ (envelope-from <maz@kernel.org>)
+ id 1jkkLb-0031ew-1k; Mon, 15 Jun 2020 09:20:03 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu
+Subject: [PATCH 0/4] KVM/arm64: Enable PtrAuth on non-VHE KVM
+Date: Mon, 15 Jun 2020 09:19:50 +0100
+Message-Id: <20200615081954.6233-1-maz@kernel.org>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, james.morse@arm.com,
+ julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com, kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -92,109 +78,40 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Will Deacon <will.deacon@arm.com>
+Not having PtrAuth on non-VHE KVM (for whatever reason VHE is not
+enabled on a v8.3 system) has always looked like an oddity. This
+trivial series remedies it, and allows a non-VHE KVM to offer PtrAuth
+to its guests.
 
-commit 679db70801da9fda91d26caf13bf5b5ccc74e8e8 upstream
+In the tradition of not having separate security between host-EL1 and
+EL2, EL2 reuses the keys set up by host-EL1. It is likely that, should
+we switch to a mode where EL2 is more distrusting of EL1, we'd have
+private keys there.
 
-Some CPUs can speculate past an ERET instruction and potentially perform
-speculative accesses to memory before processing the exception return.
-Since the register state is often controlled by a lower privilege level
-at the point of an ERET, this could potentially be used as part of a
-side-channel attack.
+The last patch is just an optimisation which I've lobbed with the rest
+of the series in order not to forget it.
 
-This patch emits an SB sequence after each ERET so that speculation is
-held up on exception return.
+Marc Zyngier (4):
+  KVM: arm64: Enable Pointer Authentication at EL2 if available
+  KVM: arm64: Allow ARM64_PTR_AUTH when ARM64_VHE=n
+  KVM: arm64: Allow PtrAuth to be enabled from userspace on non-VHE
+    systems
+  KVM: arm64: Check HCR_EL2 instead of shadow copy to swap PtrAuth
+    registers
 
-Signed-off-by: Will Deacon <will.deacon@arm.com>
-[florian: Adjust hyp-entry.S to account for the label]
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
----
-Will,
+ arch/arm64/Kconfig                   |  4 +---
+ arch/arm64/include/asm/kvm_ptrauth.h |  4 ++--
+ arch/arm64/kvm/hyp-init.S            | 11 +++++++++++
+ arch/arm64/kvm/reset.c               | 21 ++++++++++-----------
+ 4 files changed, 24 insertions(+), 16 deletions(-)
 
-Can you confirm that for 4.9 these are the only places that require
-patching? Thank you!
-
- arch/arm64/kernel/entry.S      | 2 ++
- arch/arm64/kvm/hyp/entry.S     | 1 +
- arch/arm64/kvm/hyp/hyp-entry.S | 4 ++++
- 3 files changed, 7 insertions(+)
-
-diff --git a/arch/arm64/kernel/entry.S b/arch/arm64/kernel/entry.S
-index ca978d7d98eb..3408c782702c 100644
---- a/arch/arm64/kernel/entry.S
-+++ b/arch/arm64/kernel/entry.S
-@@ -255,6 +255,7 @@ alternative_insn eret, nop, ARM64_UNMAP_KERNEL_AT_EL0
- 	.else
- 	eret
- 	.endif
-+	sb
- 	.endm
- 
- 	.macro	get_thread_info, rd
-@@ -945,6 +946,7 @@ __ni_sys_trace:
- 	mrs	x30, far_el1
- 	.endif
- 	eret
-+	sb
- 	.endm
- 
- 	.align	11
-diff --git a/arch/arm64/kvm/hyp/entry.S b/arch/arm64/kvm/hyp/entry.S
-index a360ac6e89e9..bc5c6cdb8538 100644
---- a/arch/arm64/kvm/hyp/entry.S
-+++ b/arch/arm64/kvm/hyp/entry.S
-@@ -83,6 +83,7 @@ ENTRY(__guest_enter)
- 
- 	// Do not touch any register after this!
- 	eret
-+	sb
- ENDPROC(__guest_enter)
- 
- ENTRY(__guest_exit)
-diff --git a/arch/arm64/kvm/hyp/hyp-entry.S b/arch/arm64/kvm/hyp/hyp-entry.S
-index bf4988f9dae8..3675e7f0ab72 100644
---- a/arch/arm64/kvm/hyp/hyp-entry.S
-+++ b/arch/arm64/kvm/hyp/hyp-entry.S
-@@ -97,6 +97,7 @@ el1_sync:				// Guest trapped into EL2
- 	do_el2_call
- 
- 2:	eret
-+	sb
- 
- el1_hvc_guest:
- 	/*
-@@ -147,6 +148,7 @@ wa_epilogue:
- 	mov	x0, xzr
- 	add	sp, sp, #16
- 	eret
-+	sb
- 
- el1_trap:
- 	get_vcpu_ptr	x1, x0
-@@ -198,6 +200,7 @@ el2_error:
- 	b.ne	__hyp_panic
- 	mov	x0, #(1 << ARM_EXIT_WITH_SERROR_BIT)
- 	eret
-+	sb
- 
- ENTRY(__hyp_do_panic)
- 	mov	lr, #(PSR_F_BIT | PSR_I_BIT | PSR_A_BIT | PSR_D_BIT |\
-@@ -206,6 +209,7 @@ ENTRY(__hyp_do_panic)
- 	ldr	lr, =panic
- 	msr	elr_el2, lr
- 	eret
-+	sb
- ENDPROC(__hyp_do_panic)
- 
- ENTRY(__hyp_panic)
 -- 
-2.17.1
+2.27.0
 
 _______________________________________________
 kvmarm mailing list
