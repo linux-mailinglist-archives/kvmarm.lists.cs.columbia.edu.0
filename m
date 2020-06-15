@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A3781F9878
-	for <lists+kvmarm@lfdr.de>; Mon, 15 Jun 2020 15:27:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4ED51F98BB
+	for <lists+kvmarm@lfdr.de>; Mon, 15 Jun 2020 15:33:40 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D24F34B0C7;
-	Mon, 15 Jun 2020 09:27:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 780034B126;
+	Mon, 15 Jun 2020 09:33:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,46 +18,46 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8kFD-DaYJXI7; Mon, 15 Jun 2020 09:27:56 -0400 (EDT)
+	with ESMTP id VoUVLHNOpm6E; Mon, 15 Jun 2020 09:33:40 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 46BF34B10C;
-	Mon, 15 Jun 2020 09:27:54 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 800BC4B13C;
+	Mon, 15 Jun 2020 09:33:38 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 92FE54B0D5
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Jun 2020 09:27:53 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E18E34B0CC
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Jun 2020 09:33:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id h9jaky2DBo-0 for <kvmarm@lists.cs.columbia.edu>;
- Mon, 15 Jun 2020 09:27:52 -0400 (EDT)
+ with ESMTP id AusdqoNi3qaF for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 15 Jun 2020 09:33:35 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id CB2EA4B0C8
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Jun 2020 09:27:46 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id CB74D4B0FA
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Jun 2020 09:33:35 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 0A127207D4;
- Mon, 15 Jun 2020 13:27:46 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id E55A5207DA;
+ Mon, 15 Jun 2020 13:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1592227666;
- bh=xckqO6UbhRJG0nQqxFxGNFPDF2IUW7XFzfwJWVwWbm8=;
+ s=default; t=1592228015;
+ bh=Ccxvsr57UrAOLR+owG6CU5hnOo2EH/JVGx8ixgxFI2o=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=0xO4rqaLtvfBAh4TO0p0JUQgX+BClvDedPZnenOXuP6HHlVyr6hK47r/DNBsVBPc2
- fiw9z3u+OV1S9c7gV11KkcPsUS+eBsMp/wWzC9u50jJYDlpAb1/NjBZ9xKK3swHwI8
- EaJSSyapVnd6J1nG8dOttqjzB3uIejnbp2UdHo1s=
+ b=BmU/xjTru6gFM9+f8qmaA7uRV1aNdGPUHhTJ3eDqGhH7cctrJzj0vvaGRmRFWtndY
+ YpTK8cuVc7Rkabblin5xMD2oqmlnMjQFxVcIhBsmtx0KWlExF2XLs4iG1MVcMO0Zdw
+ ZQJYLG7lbMF0Rc0W4hTBt/4lqyUaXPBZiDvEzGt4=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1jkp9M-0036w9-3L; Mon, 15 Jun 2020 14:27:44 +0100
+ id 1jkp9N-0036w9-CW; Mon, 15 Jun 2020 14:27:45 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH v2 09/17] KVM: arm64: pauth: Use ctxt_sys_reg() instead of raw
+Subject: [PATCH v2 10/17] KVM: arm64: debug: Use ctxt_sys_reg() instead of raw
  sys_regs access
-Date: Mon, 15 Jun 2020 14:27:11 +0100
-Message-Id: <20200615132719.1932408-10-maz@kernel.org>
+Date: Mon, 15 Jun 2020 14:27:12 +0100
+Message-Id: <20200615132719.1932408-11-maz@kernel.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200615132719.1932408-1-maz@kernel.org>
 References: <20200615132719.1932408-1-maz@kernel.org>
@@ -99,50 +99,55 @@ consistently.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/hyp/switch.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ arch/arm64/kvm/hyp/debug-sr.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/kvm/hyp/switch.c b/arch/arm64/kvm/hyp/switch.c
-index 0eef15bf64d5..c05799693a4e 100644
---- a/arch/arm64/kvm/hyp/switch.c
-+++ b/arch/arm64/kvm/hyp/switch.c
-@@ -516,11 +516,14 @@ static bool __hyp_text esr_is_ptrauth_trap(u32 esr)
- 	return false;
+diff --git a/arch/arm64/kvm/hyp/debug-sr.c b/arch/arm64/kvm/hyp/debug-sr.c
+index 2a6bfa2d3a94..aa2e62c4ed59 100644
+--- a/arch/arm64/kvm/hyp/debug-sr.c
++++ b/arch/arm64/kvm/hyp/debug-sr.c
+@@ -129,8 +129,7 @@ static void __hyp_text __debug_restore_spe_nvhe(u64 pmscr_el1)
+ 	write_sysreg_s(pmscr_el1, SYS_PMSCR_EL1);
  }
  
--#define __ptrauth_save_key(regs, key)						\
--({										\
--	regs[key ## KEYLO_EL1] = read_sysreg_s(SYS_ ## key ## KEYLO_EL1);	\
--	regs[key ## KEYHI_EL1] = read_sysreg_s(SYS_ ## key ## KEYHI_EL1);	\
--})
-+#define __ptrauth_save_key(ctxt, key)					\
-+do {									\
-+	u64 __val;							\
-+	__val = read_sysreg_s(SYS_ ## key ## KEYLO_EL1);		\
-+	ctxt_sys_reg(ctxt, key ## KEYLO_EL1) = __val;			\
-+	__val = read_sysreg_s(SYS_ ## key ## KEYHI_EL1);		\
-+	ctxt_sys_reg(ctxt, key ## KEYHI_EL1) = __val;			\
-+} while(0)
- 
- static bool __hyp_text __hyp_handle_ptrauth(struct kvm_vcpu *vcpu)
+-static void __hyp_text __debug_save_state(struct kvm_vcpu *vcpu,
+-					  struct kvm_guest_debug_arch *dbg,
++static void __hyp_text __debug_save_state(struct kvm_guest_debug_arch *dbg,
+ 					  struct kvm_cpu_context *ctxt)
  {
-@@ -532,11 +535,11 @@ static bool __hyp_text __hyp_handle_ptrauth(struct kvm_vcpu *vcpu)
- 		return false;
+ 	u64 aa64dfr0;
+@@ -148,8 +147,7 @@ static void __hyp_text __debug_save_state(struct kvm_vcpu *vcpu,
+ 	ctxt_sys_reg(ctxt, MDCCINT_EL1) = read_sysreg(mdccint_el1);
+ }
  
- 	ctxt = &__hyp_this_cpu_ptr(kvm_host_data)->host_ctxt;
--	__ptrauth_save_key(ctxt->sys_regs, APIA);
--	__ptrauth_save_key(ctxt->sys_regs, APIB);
--	__ptrauth_save_key(ctxt->sys_regs, APDA);
--	__ptrauth_save_key(ctxt->sys_regs, APDB);
--	__ptrauth_save_key(ctxt->sys_regs, APGA);
-+	__ptrauth_save_key(ctxt, APIA);
-+	__ptrauth_save_key(ctxt, APIB);
-+	__ptrauth_save_key(ctxt, APDA);
-+	__ptrauth_save_key(ctxt, APDB);
-+	__ptrauth_save_key(ctxt, APGA);
+-static void __hyp_text __debug_restore_state(struct kvm_vcpu *vcpu,
+-					     struct kvm_guest_debug_arch *dbg,
++static void __hyp_text __debug_restore_state(struct kvm_guest_debug_arch *dbg,
+ 					     struct kvm_cpu_context *ctxt)
+ {
+ 	u64 aa64dfr0;
+@@ -190,8 +188,8 @@ void __hyp_text __debug_switch_to_guest(struct kvm_vcpu *vcpu)
+ 	host_dbg = &vcpu->arch.host_debug_state.regs;
+ 	guest_dbg = kern_hyp_va(vcpu->arch.debug_ptr);
  
- 	vcpu_ptrauth_enable(vcpu);
+-	__debug_save_state(vcpu, host_dbg, host_ctxt);
+-	__debug_restore_state(vcpu, guest_dbg, guest_ctxt);
++	__debug_save_state(host_dbg, host_ctxt);
++	__debug_restore_state(guest_dbg, guest_ctxt);
+ }
  
+ void __hyp_text __debug_switch_to_host(struct kvm_vcpu *vcpu)
+@@ -212,8 +210,8 @@ void __hyp_text __debug_switch_to_host(struct kvm_vcpu *vcpu)
+ 	host_dbg = &vcpu->arch.host_debug_state.regs;
+ 	guest_dbg = kern_hyp_va(vcpu->arch.debug_ptr);
+ 
+-	__debug_save_state(vcpu, guest_dbg, guest_ctxt);
+-	__debug_restore_state(vcpu, host_dbg, host_ctxt);
++	__debug_save_state(guest_dbg, guest_ctxt);
++	__debug_restore_state(host_dbg, host_ctxt);
+ 
+ 	vcpu->arch.flags &= ~KVM_ARM64_DEBUG_DIRTY;
+ }
 -- 
 2.27.0
 
