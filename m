@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7942A203167
-	for <lists+kvmarm@lfdr.de>; Mon, 22 Jun 2020 10:07:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8331220316A
+	for <lists+kvmarm@lfdr.de>; Mon, 22 Jun 2020 10:07:08 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2B3BD4B0B8;
-	Mon, 22 Jun 2020 04:07:04 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 361564B0C6;
+	Mon, 22 Jun 2020 04:07:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,45 +18,46 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4FH5ZZHXsfHr; Mon, 22 Jun 2020 04:07:04 -0400 (EDT)
+	with ESMTP id OYitTQO+CUQa; Mon, 22 Jun 2020 04:07:04 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 228414B0B9;
-	Mon, 22 Jun 2020 04:06:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 46BDE4B0D8;
+	Mon, 22 Jun 2020 04:06:59 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E3EF84B092
- for <kvmarm@lists.cs.columbia.edu>; Mon, 22 Jun 2020 04:06:55 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F28B4B0B2
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 22 Jun 2020 04:06:56 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id M9Lmefg8v95A for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id JBf+U9f50f4M for <kvmarm@lists.cs.columbia.edu>;
  Mon, 22 Jun 2020 04:06:55 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id DF1F84B0A5
- for <kvmarm@lists.cs.columbia.edu>; Mon, 22 Jun 2020 04:06:54 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6BB9E4B0AC
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 22 Jun 2020 04:06:55 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 1AB3120809;
+ by mail.kernel.org (Postfix) with ESMTPSA id 9F4472083E;
  Mon, 22 Jun 2020 08:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=default; t=1592813214;
- bh=auCGx6XCpPj3YqEfR6NXLz5q29tOXX3dB0MRke0HUQQ=;
+ bh=ImUQBlLW57suQ3KIKHAaNJSiF8oTValBlw7IMxbIgqg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=b37ZMGbaz5WtmJvhG6Pa1s06V+Ty4K5Rf1v0tS9cSD0Qox8QqyJodBDKGz4w2b3Qp
- bMIYKnSJFiDIwz6p9QTOoZFe37QiKWObZSEa4YZvKtMu7C3AjhnOuN05utZKE7s8Zg
- Uw199VMmsnsMWr3Z9dI5ZU3Kk5ubeP7ugMqAWQKs=
+ b=bWJW+sluR2X5pfiMN+1jKheEHMkDwH/kjkz5t4ychMdOXJf/a3DrL0/74NRq7LN4L
+ CPQ+o9rnwUcNwjquDQbGNM9Ic8rb480uKcv8NJ2hxsNZ5GdY0lqosDj+f4YR3yUYbr
+ 53LR2+IrH/DCaVSawhrUwi3LcE32A9Jw+cfriVhE=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1jnHTg-005FG8-K2; Mon, 22 Jun 2020 09:06:52 +0100
+ id 1jnHTh-005FG8-5t; Mon, 22 Jun 2020 09:06:53 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v2 2/5] KVM: arm64: Allow ARM64_PTR_AUTH when ARM64_VHE=n
-Date: Mon, 22 Jun 2020 09:06:40 +0100
-Message-Id: <20200622080643.171651-3-maz@kernel.org>
+Subject: [PATCH v2 3/5] KVM: arm64: Allow PtrAuth to be enabled from userspace
+ on non-VHE systems
+Date: Mon, 22 Jun 2020 09:06:41 +0100
+Message-Id: <20200622080643.171651-4-maz@kernel.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200622080643.171651-1-maz@kernel.org>
 References: <20200622080643.171651-1-maz@kernel.org>
@@ -86,42 +87,66 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-We currently prevent PtrAuth from even being built if KVM is selected,
-but VHE isn't. It is a bit of a pointless restriction, since we also
-check this at run time (rejecting the enabling of PtrAuth for the
-vcpu if we're not running with VHE).
-
-Just drop this apparently useless restriction.
+Now that the scene is set for enabling PtrAuth on non-VHE, drop
+the restrictions preventing userspace from enabling it.
 
 Acked-by: Andrew Scull <ascull@google.com>
 Acked-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/Kconfig | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/arm64/kvm/reset.c | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index 31380da53689..d719ea9c596d 100644
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -1516,7 +1516,6 @@ menu "ARMv8.3 architectural features"
- config ARM64_PTR_AUTH
- 	bool "Enable support for pointer authentication"
- 	default y
--	depends on !KVM || ARM64_VHE
- 	depends on (CC_HAS_SIGN_RETURN_ADDRESS || CC_HAS_BRANCH_PROT_PAC_RET) && AS_HAS_PAC
- 	# GCC 9.1 and later inserts a .note.gnu.property section note for PAC
- 	# which is only understood by binutils starting with version 2.33.1.
-@@ -1543,8 +1542,7 @@ config ARM64_PTR_AUTH
+diff --git a/arch/arm64/kvm/reset.c b/arch/arm64/kvm/reset.c
+index d3b209023727..2a929789fe2e 100644
+--- a/arch/arm64/kvm/reset.c
++++ b/arch/arm64/kvm/reset.c
+@@ -42,6 +42,11 @@ static u32 kvm_ipa_limit;
+ #define VCPU_RESET_PSTATE_SVC	(PSR_AA32_MODE_SVC | PSR_AA32_A_BIT | \
+ 				 PSR_AA32_I_BIT | PSR_AA32_F_BIT)
  
- 	  The feature is detected at runtime. If the feature is not present in
- 	  hardware it will not be advertised to userspace/KVM guest nor will it
--	  be enabled. However, KVM guest also require VHE mode and hence
--	  CONFIG_ARM64_VHE=y option to use this feature.
-+	  be enabled.
++static bool system_has_full_ptr_auth(void)
++{
++	return system_supports_address_auth() && system_supports_generic_auth();
++}
++
+ /**
+  * kvm_arch_vm_ioctl_check_extension
+  *
+@@ -80,8 +85,7 @@ int kvm_arch_vm_ioctl_check_extension(struct kvm *kvm, long ext)
+ 		break;
+ 	case KVM_CAP_ARM_PTRAUTH_ADDRESS:
+ 	case KVM_CAP_ARM_PTRAUTH_GENERIC:
+-		r = has_vhe() && system_supports_address_auth() &&
+-				 system_supports_generic_auth();
++		r = system_has_full_ptr_auth();
+ 		break;
+ 	default:
+ 		r = 0;
+@@ -205,19 +209,14 @@ static void kvm_vcpu_reset_sve(struct kvm_vcpu *vcpu)
  
- 	  If the feature is present on the boot CPU but not on a late CPU, then
- 	  the late CPU will be parked. Also, if the boot CPU does not have
+ static int kvm_vcpu_enable_ptrauth(struct kvm_vcpu *vcpu)
+ {
+-	/* Support ptrauth only if the system supports these capabilities. */
+-	if (!has_vhe())
+-		return -EINVAL;
+-
+-	if (!system_supports_address_auth() ||
+-	    !system_supports_generic_auth())
+-		return -EINVAL;
+ 	/*
+ 	 * For now make sure that both address/generic pointer authentication
+-	 * features are requested by the userspace together.
++	 * features are requested by the userspace together and the system
++	 * supports these capabilities.
+ 	 */
+ 	if (!test_bit(KVM_ARM_VCPU_PTRAUTH_ADDRESS, vcpu->arch.features) ||
+-	    !test_bit(KVM_ARM_VCPU_PTRAUTH_GENERIC, vcpu->arch.features))
++	    !test_bit(KVM_ARM_VCPU_PTRAUTH_GENERIC, vcpu->arch.features) ||
++	    !system_has_full_ptr_auth())
+ 		return -EINVAL;
+ 
+ 	vcpu->arch.flags |= KVM_ARM64_GUEST_HAS_PTRAUTH;
 -- 
 2.27.0
 
