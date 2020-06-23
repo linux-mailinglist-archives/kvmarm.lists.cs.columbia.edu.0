@@ -2,67 +2,53 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B3DE2058AB
-	for <lists+kvmarm@lfdr.de>; Tue, 23 Jun 2020 19:33:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A6142059EE
+	for <lists+kvmarm@lfdr.de>; Tue, 23 Jun 2020 19:48:18 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EC2A04B172;
-	Tue, 23 Jun 2020 13:33:15 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1E30D4B15E;
+	Tue, 23 Jun 2020 13:48:18 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.8
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=0.8 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	UNPARSEABLE_RELAY=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UtZGI-wQrLBZ; Tue, 23 Jun 2020 13:33:15 -0400 (EDT)
+	with ESMTP id ubAm0sO6jy8n; Tue, 23 Jun 2020 13:48:18 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0F9324B179;
-	Tue, 23 Jun 2020 13:33:13 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B52B94B15C;
+	Tue, 23 Jun 2020 13:48:16 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B5E184B08F
- for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Jun 2020 09:14:29 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BD1494B158
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Jun 2020 13:48:15 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id z3-mTOwsSjMR for <kvmarm@lists.cs.columbia.edu>;
- Tue, 23 Jun 2020 09:14:28 -0400 (EDT)
-Received: from out30-56.freemail.mail.aliyun.com
- (out30-56.freemail.mail.aliyun.com [115.124.30.56])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D4F654A49F
- for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Jun 2020 09:14:27 -0400 (EDT)
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R801e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01e04407;
- MF=tianjia.zhang@linux.alibaba.com; NM=1; PH=DS; RN=38; SR=0;
- TI=SMTPD_---0U0WFL-I_1592918062; 
-Received: from localhost(mailfrom:tianjia.zhang@linux.alibaba.com
- fp:SMTPD_---0U0WFL-I_1592918062) by smtp.aliyun-inc.com(127.0.0.1);
- Tue, 23 Jun 2020 21:14:23 +0800
-From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
-To: pbonzini@redhat.com, tsbogend@alpha.franken.de, paulus@ozlabs.org,
- mpe@ellerman.id.au, benh@kernel.crashing.org, borntraeger@de.ibm.com,
- frankja@linux.ibm.com, david@redhat.com, cohuck@redhat.com,
- heiko.carstens@de.ibm.com, gor@linux.ibm.com,
- sean.j.christopherson@intel.com, vkuznets@redhat.com,
- wanpengli@tencent.com, jmattson@google.com, joro@8bytes.org,
- tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, x86@kernel.org,
- hpa@zytor.com, maz@kernel.org, james.morse@arm.com,
- julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
- christoffer.dall@arm.com, peterx@redhat.com, thuth@redhat.com,
- chenhuacai@gmail.com
-Subject: [PATCH v6 5/5] KVM: MIPS: clean up redundant kvm_run parameters in
- assembly
-Date: Tue, 23 Jun 2020 21:14:18 +0800
-Message-Id: <20200623131418.31473-6-tianjia.zhang@linux.alibaba.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200623131418.31473-1-tianjia.zhang@linux.alibaba.com>
-References: <20200623131418.31473-1-tianjia.zhang@linux.alibaba.com>
-X-Mailman-Approved-At: Tue, 23 Jun 2020 13:33:11 -0400
-Cc: linux-s390@vger.kernel.org, tianjia.zhang@linux.alibaba.com,
- kvm@vger.kernel.org, linux-mips@vger.kernel.org, kvm-ppc@vger.kernel.org,
- linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+ with ESMTP id lvJoahFM4Gqx for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 23 Jun 2020 13:48:13 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7C3114B157
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Jun 2020 13:48:13 -0400 (EDT)
+Received: from gaia (unknown [2.26.170.173])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 3E85D206D4;
+ Tue, 23 Jun 2020 17:48:10 +0000 (UTC)
+Date: Tue, 23 Jun 2020 18:48:07 +0100
+From: Catalin Marinas <catalin.marinas@arm.com>
+To: Steven Price <steven.price@arm.com>
+Subject: Re: [RFC PATCH 0/2] MTE support for KVM guest
+Message-ID: <20200623174807.GD5180@gaia>
+References: <20200617123844.29960-1-steven.price@arm.com>
+MIME-Version: 1.0
+Content-Disposition: inline
+In-Reply-To: <20200617123844.29960-1-steven.price@arm.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: Marc Zyngier <maz@kernel.org>, linux-kernel@vger.kernel.org,
+ Dave Martin <Dave.Martin@arm.com>, linux-arm-kernel@lists.infradead.org,
+ Thomas Gleixner <tglx@linutronix.de>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -74,169 +60,104 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-In the current kvm version, 'kvm_run' has been included in the 'kvm_vcpu'
-structure. For historical reasons, many kvm-related function parameters
-retain the 'kvm_run' and 'kvm_vcpu' parameters at the same time. This
-patch does a unified cleanup of these remaining redundant parameters.
+Hi Steven,
 
-Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
-Reviewed-by: Huacai Chen <chenhc@lemote.com>
----
- arch/mips/include/asm/kvm_host.h |  4 ++--
- arch/mips/kvm/entry.c            | 21 ++++++++-------------
- arch/mips/kvm/mips.c             |  3 ++-
- arch/mips/kvm/trap_emul.c        |  2 +-
- arch/mips/kvm/vz.c               |  2 +-
- 5 files changed, 14 insertions(+), 18 deletions(-)
+On Wed, Jun 17, 2020 at 01:38:42PM +0100, Steven Price wrote:
+> These patches add support to KVM to enable MTE within a guest. It is
+> based on Catalin's v4 MTE user space series[1].
+> 
+> [1] http://lkml.kernel.org/r/20200515171612.1020-1-catalin.marinas%40arm.com
+> 
+> Posting as an RFC as I'd like feedback on the approach taken. First a
+> little background on how MTE fits within the architecture:
+> 
+> The stage 2 page tables have limited scope for controlling the
+> availability of MTE. If a page is mapped as Normal and cached in stage 2
+> then it's the stage 1 tables that get to choose whether the memory is
+> tagged or not. So the only way of forbidding tags on a page from the
+> hypervisor is to change the cacheability (or make it device memory)
+> which would cause other problems.  Note this restriction fits the
+> intention that a system should have all (general purpose) memory
+> supporting tags if it support MTE, so it's not too surprising.
+> 
+> However, the upshot of this is that to enable MTE within a guest all
+> pages of memory mapped into the guest as normal cached pages in stage 2
+> *must* support MTE (i.e. we must ensure the tags are appropriately
+> sanitised and save/restore the tags during swap etc).
+> 
+> My current approach is that KVM transparently upgrades any pages
+> provided by the VMM to be tag-enabled when they are faulted in (i.e.
+> sets the PG_mte_tagged flag on the page) which has the benefit of
+> requiring fewer changes in the VMM. However, save/restore of the VM
+> state still requires the VMM to have a PROT_MTE enabled mapping so that
+> it can access the tag values. A VMM which 'forgets' to enable PROT_MTE
+> would lose the tag values when saving/restoring (tags are RAZ/WI when
+> PROT_MTE isn't set).
+> 
+> An alternative approach would be to enforce the VMM provides PROT_MTE
+> memory in the first place. This seems appealing to prevent the above
+> potentially unexpected gotchas with save/restore, however this would
+> also extend to memory that you might not expect to have PROT_MTE (e.g. a
+> shared frame buffer for an emulated graphics card). 
 
-diff --git a/arch/mips/include/asm/kvm_host.h b/arch/mips/include/asm/kvm_host.h
-index 157fc876feca..01efa635fa73 100644
---- a/arch/mips/include/asm/kvm_host.h
-+++ b/arch/mips/include/asm/kvm_host.h
-@@ -352,7 +352,7 @@ struct kvm_mmu_memory_cache {
- #define KVM_MIPS_GUEST_TLB_SIZE	64
- struct kvm_vcpu_arch {
- 	void *guest_ebase;
--	int (*vcpu_run)(struct kvm_run *run, struct kvm_vcpu *vcpu);
-+	int (*vcpu_run)(struct kvm_vcpu *vcpu);
- 
- 	/* Host registers preserved across guest mode execution */
- 	unsigned long host_stack;
-@@ -863,7 +863,7 @@ int kvm_mips_emulation_init(struct kvm_mips_callbacks **install_callbacks);
- /* Debug: dump vcpu state */
- int kvm_arch_vcpu_dump_regs(struct kvm_vcpu *vcpu);
- 
--extern int kvm_mips_handle_exit(struct kvm_run *run, struct kvm_vcpu *vcpu);
-+extern int kvm_mips_handle_exit(struct kvm_vcpu *vcpu);
- 
- /* Building of entry/exception code */
- int kvm_mips_entry_setup(void);
-diff --git a/arch/mips/kvm/entry.c b/arch/mips/kvm/entry.c
-index fd716942e302..832475bf2055 100644
---- a/arch/mips/kvm/entry.c
-+++ b/arch/mips/kvm/entry.c
-@@ -205,7 +205,7 @@ static inline void build_set_exc_base(u32 **p, unsigned int reg)
-  * Assemble the start of the vcpu_run function to run a guest VCPU. The function
-  * conforms to the following prototype:
-  *
-- * int vcpu_run(struct kvm_run *run, struct kvm_vcpu *vcpu);
-+ * int vcpu_run(struct kvm_vcpu *vcpu);
-  *
-  * The exit from the guest and return to the caller is handled by the code
-  * generated by kvm_mips_build_ret_to_host().
-@@ -218,8 +218,7 @@ void *kvm_mips_build_vcpu_run(void *addr)
- 	unsigned int i;
- 
- 	/*
--	 * A0: run
--	 * A1: vcpu
-+	 * A0: vcpu
- 	 */
- 
- 	/* k0/k1 not being used in host kernel context */
-@@ -238,10 +237,10 @@ void *kvm_mips_build_vcpu_run(void *addr)
- 	kvm_mips_build_save_scratch(&p, V1, K1);
- 
- 	/* VCPU scratch register has pointer to vcpu */
--	UASM_i_MTC0(&p, A1, scratch_vcpu[0], scratch_vcpu[1]);
-+	UASM_i_MTC0(&p, A0, scratch_vcpu[0], scratch_vcpu[1]);
- 
- 	/* Offset into vcpu->arch */
--	UASM_i_ADDIU(&p, K1, A1, offsetof(struct kvm_vcpu, arch));
-+	UASM_i_ADDIU(&p, K1, A0, offsetof(struct kvm_vcpu, arch));
- 
- 	/*
- 	 * Save the host stack to VCPU, used for exception processing
-@@ -645,10 +644,7 @@ void *kvm_mips_build_exit(void *addr)
- 	/* Now that context has been saved, we can use other registers */
- 
- 	/* Restore vcpu */
--	UASM_i_MFC0(&p, S1, scratch_vcpu[0], scratch_vcpu[1]);
--
--	/* Restore run (vcpu->run) */
--	UASM_i_LW(&p, S0, offsetof(struct kvm_vcpu, run), S1);
-+	UASM_i_MFC0(&p, S0, scratch_vcpu[0], scratch_vcpu[1]);
- 
- 	/*
- 	 * Save Host level EPC, BadVaddr and Cause to VCPU, useful to process
-@@ -810,7 +806,6 @@ void *kvm_mips_build_exit(void *addr)
- 	 * with this in the kernel
- 	 */
- 	uasm_i_move(&p, A0, S0);
--	uasm_i_move(&p, A1, S1);
- 	UASM_i_LA(&p, T9, (unsigned long)kvm_mips_handle_exit);
- 	uasm_i_jalr(&p, RA, T9);
- 	 UASM_i_ADDIU(&p, SP, SP, -CALLFRAME_SIZ);
-@@ -852,7 +847,7 @@ static void *kvm_mips_build_ret_from_exit(void *addr)
- 	 * guest, reload k1
- 	 */
- 
--	uasm_i_move(&p, K1, S1);
-+	uasm_i_move(&p, K1, S0);
- 	UASM_i_ADDIU(&p, K1, K1, offsetof(struct kvm_vcpu, arch));
- 
- 	/*
-@@ -886,8 +881,8 @@ static void *kvm_mips_build_ret_to_guest(void *addr)
- {
- 	u32 *p = addr;
- 
--	/* Put the saved pointer to vcpu (s1) back into the scratch register */
--	UASM_i_MTC0(&p, S1, scratch_vcpu[0], scratch_vcpu[1]);
-+	/* Put the saved pointer to vcpu (s0) back into the scratch register */
-+	UASM_i_MTC0(&p, S0, scratch_vcpu[0], scratch_vcpu[1]);
- 
- 	/* Load up the Guest EBASE to minimize the window where BEV is set */
- 	UASM_i_LW(&p, T0, offsetof(struct kvm_vcpu_arch, guest_ebase), K1);
-diff --git a/arch/mips/kvm/mips.c b/arch/mips/kvm/mips.c
-index f5ba393472e3..21bfbf414d2c 100644
---- a/arch/mips/kvm/mips.c
-+++ b/arch/mips/kvm/mips.c
-@@ -1195,8 +1195,9 @@ static void kvm_mips_set_c0_status(void)
- /*
-  * Return value is in the form (errcode<<2 | RESUME_FLAG_HOST | RESUME_FLAG_NV)
-  */
--int kvm_mips_handle_exit(struct kvm_run *run, struct kvm_vcpu *vcpu)
-+int kvm_mips_handle_exit(struct kvm_vcpu *vcpu)
- {
-+	struct kvm_run *run = vcpu->run;
- 	u32 cause = vcpu->arch.host_cp0_cause;
- 	u32 exccode = (cause >> CAUSEB_EXCCODE) & 0x1f;
- 	u32 __user *opc = (u32 __user *) vcpu->arch.pc;
-diff --git a/arch/mips/kvm/trap_emul.c b/arch/mips/kvm/trap_emul.c
-index f8cba51e1054..0788c00d7e94 100644
---- a/arch/mips/kvm/trap_emul.c
-+++ b/arch/mips/kvm/trap_emul.c
-@@ -1241,7 +1241,7 @@ static int kvm_trap_emul_vcpu_run(struct kvm_vcpu *vcpu)
- 	 */
- 	kvm_mips_suspend_mm(cpu);
- 
--	r = vcpu->arch.vcpu_run(vcpu->run, vcpu);
-+	r = vcpu->arch.vcpu_run(vcpu);
- 
- 	/* We may have migrated while handling guest exits */
- 	cpu = smp_processor_id();
-diff --git a/arch/mips/kvm/vz.c b/arch/mips/kvm/vz.c
-index 9e58c479ee20..9ca6a879f222 100644
---- a/arch/mips/kvm/vz.c
-+++ b/arch/mips/kvm/vz.c
-@@ -3265,7 +3265,7 @@ static int kvm_vz_vcpu_run(struct kvm_vcpu *vcpu)
- 	kvm_vz_vcpu_load_tlb(vcpu, cpu);
- 	kvm_vz_vcpu_load_wired(vcpu);
- 
--	r = vcpu->arch.vcpu_run(vcpu->run, vcpu);
-+	r = vcpu->arch.vcpu_run(vcpu);
- 
- 	kvm_vz_vcpu_save_wired(vcpu);
- 
+As you mentioned above, if memory is mapped as Normal Cacheable at Stage
+2 (whether we use FWB or not), the guest is allowed to turn MTE on via
+Stage 1. There is no way for KVM to prevent a guest from using MTE other
+than the big HCR_EL2.ATA knob.
+
+This causes potential issues since we can't guarantee that all the
+Cacheable memory slots allocated by the VMM support MTE. If they do not,
+the arch behaviour is "unpredictable". We also can't trust the guest to
+not enable MTE on such Cacheable mappings.
+
+On the host kernel, mmap'ing with PROT_MTE is only allowed for anonymous
+mappings and shmem. So requiring the VMM to always pass PROT_MTE mapped
+ranges to KVM, irrespective of whether it's guest RAM, emulated device,
+virtio etc. (as long as they are Cacheable), filters unsafe ranges that
+may be mapped into guest.
+
+Note that in the next revision of the MTE patches I'll drop the DT
+memory nodes checking and rely only on the CPUID information (arch
+updated promised by the architects).
+
+I see two possible ways to handle this (there may be more):
+
+1. As in your current patches, assume any Cacheable at Stage 2 can have
+   MTE enabled at Stage 1. In addition, we need to check whether the
+   physical memory supports MTE and it could be something simple like
+   pfn_valid(). Is there a way to reject a memory slot passed by the
+   VMM?
+
+2. Similar to 1 but instead of checking whether the pfn supports MTE, we
+   require the VMM to only pass PROT_MTE ranges (filtering already done
+   by the host kernel). We need a way to reject the slot and return an
+   error to the VMM.
+
+I think rejecting a slot at the Stage 2 fault time is very late. You
+probably won't be able to do much other than killing the guest.
+
+Both 1 and 2 above risk breaking existing VMMs just because they happen
+to start on an MTE-capable machine. So, can we also require the VMM to
+explicitly opt in to MTE support in guests via some ioctl()? This in
+turn would enable the additional checks in KVM for the MTE capability of
+the memory slots (1 or 2 above).
+
+An alternative to an MTE enable ioctl(), if all the memory slots are set
+up prior to the VM starting, KVM could check 1 or 2 above and decide
+whether to expose MTE to guests (HCR_EL2.ATA).
+
+More questions than solutions above, mostly for the KVM and Qemu
+maintainers.
+
+Thanks.
+
 -- 
-2.17.1
-
+Catalin
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
