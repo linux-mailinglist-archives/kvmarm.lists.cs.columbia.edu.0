@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 82451209F77
-	for <lists+kvmarm@lfdr.de>; Thu, 25 Jun 2020 15:14:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3435A209F7A
+	for <lists+kvmarm@lfdr.de>; Thu, 25 Jun 2020 15:15:01 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 36EED4B571;
-	Thu, 25 Jun 2020 09:14:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D94904B4B8;
+	Thu, 25 Jun 2020 09:15:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,68 +14,69 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id wysSP-WMe4A3; Thu, 25 Jun 2020 09:14:57 -0400 (EDT)
+	with ESMTP id JV0yjMUk3U7h; Thu, 25 Jun 2020 09:14:59 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7A95B4B57B;
-	Thu, 25 Jun 2020 09:14:52 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9EEEF4B17A;
+	Thu, 25 Jun 2020 09:14:57 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B08AA4B404
- for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Jun 2020 09:14:51 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 591F24B4D5
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Jun 2020 09:14:56 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id KlRjNg9+rK0O for <kvmarm@lists.cs.columbia.edu>;
- Thu, 25 Jun 2020 09:14:50 -0400 (EDT)
-Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com
- [209.85.221.65])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 084F84B4B8
- for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Jun 2020 09:14:50 -0400 (EDT)
-Received: by mail-wr1-f65.google.com with SMTP id q5so5786846wru.6
- for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Jun 2020 06:14:49 -0700 (PDT)
+ with ESMTP id iPq5vhgCW4eR for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 25 Jun 2020 09:14:55 -0400 (EDT)
+Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com
+ [209.85.128.67])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D56B44B54D
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Jun 2020 09:14:51 -0400 (EDT)
+Received: by mail-wm1-f67.google.com with SMTP id j18so5510813wmi.3
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Jun 2020 06:14:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=o3YELHjM1BgSWP0+S5toOkAsepEf5nX9XhvGc5i2xbU=;
- b=ilTyU0AgGSK7WeD/FKjM2QHVp2cuKnlScEo1zl+lyPExxPoKPjmWmxrNy9vzUr1mRY
- LzhR1Rh/UrAFo+GhEztERMJc68vpsrQf6W3Yf/nriOW/2dZqo/7DP4Zp4pMQVSBJssi2
- p43nHoW3yDaXkm6m59mcwjp3SWGZzfs5TpMBZ1WnFW1PujxCKDBFsl98R5ZXj7SUpseQ
- 7F6DtEC8ATtjrHxUeMEE9knb7uVqie5aq7Z3mAIJnOXwRuR7zRBeibXTuUdRk7JGlIbF
- 9tqc0j50JvMD3FZbP/CRI1A4AcSct/0mJ1tdqD0Wix2G1JmGnXnuf3C5/79LgEmNgUD0
- ltPg==
+ bh=2xpUOlwp0j4kixcuMcqYD0AVOmVjntpoGLeDVKp6rbQ=;
+ b=iRnQElWNuHWk5fkQJF9im7CPlbJ9s/Bv5rCHrLY97GTMyPQ2dZYP36n/XKpi63GaHn
+ JA1R/BQlEchrEHNOQwpdifXawZeODF0nGmB92XE1WjeQEoE2PqOZuCQhAF9rn9N5gNZy
+ BMBB4OlK8yg0mXG8GihwNzAkOFUBbWjICQ71Ipnn3KMaWKjAb/jV9bprS88dweJBZLpT
+ d5qV++ZR8gnS+iLMEWT0cv2f9upcX3PVnwIVbNslO1QGcenEcmH6uqXPvLljk9KbySxi
+ z0sTO6eC0+ZGJlnxY5xs5+hzu2pjm0BQbhnwy10yWjsLoHhvfTNppPi/TqtACFX2TN6r
+ RXxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=o3YELHjM1BgSWP0+S5toOkAsepEf5nX9XhvGc5i2xbU=;
- b=pufL6XsLBx+nq2ZePhKmnWJWpyqIYU26PoiFJE2Oa3rWjcxlHmyY2p8kDH0vtPjjd2
- LGftdHC/xq1jGCs0ouDV/hx/ysZ2hixgGZ8qi+vjTOt0+rvqycZ1rYKSDDSN09QlaKC4
- xWCRDYfcMzHTkGOp7M9i92Vo0IrTgMwVhv9RBJWZOYL8OMQrMlerWkcI9Cyz9x8utLXR
- tMu7fUN7wvjNKFbT2Jflc6IYJ7njYubsUjfgTrn+v8YMwCJRNF6UmO/DT8YzpQB9Pwkx
- CxW3jClTKZEGwestO7d3eIguBg6hqZpPVnfFoVObZPiCnM5ZEyjogHFgkYhamIG2fUPh
- gA9g==
-X-Gm-Message-State: AOAM530enPp/s6Lg+4bqUhUPU5C1O8YKHyKl6ArtRW9PUn/f01IbQnkh
- HpiObOMhCPOg+uQ6FJWFI7hMjA==
-X-Google-Smtp-Source: ABdhPJyLXF+uU/BlSix30zQts4PivrY6/W4SxO/M5sYmX4ja0Dr3vI+AEEytk5FhJrUCpy+0J45FDw==
-X-Received: by 2002:adf:dc90:: with SMTP id r16mr2898229wrj.264.1593090889018; 
- Thu, 25 Jun 2020 06:14:49 -0700 (PDT)
+ bh=2xpUOlwp0j4kixcuMcqYD0AVOmVjntpoGLeDVKp6rbQ=;
+ b=eVjnfme5uYa8oqSAEeAGqdEwKu3YVatiJHpXQSTEqPviN0W9luExrKh/9C7I+YWW7W
+ jYXPeskmNR0D8+eJufSdPKSoBvgDKw0lMrJyJiYpuSiUiio9Hon5frogWTxIb02WXMgh
+ B/oy6PDH+1HnytSVpaAiGReTE8D+TSt73n/VS1jkIk7xhr1mIredA7KrTEK4ld4HIV52
+ I+irgDgs3G+G8ViEC4a7FQGEsNEZxGobgBRkuQ5c6VPdOAIujujdcXGUPizzfugLjgoc
+ 7N6Y7byZNewQss+e3skjd0aqh+IfXqj2xIzT4DmLtvlmeXQzku3k5Wug8z8Khh+4Tkd3
+ sqSw==
+X-Gm-Message-State: AOAM532AvuCY4YKa+3pgV3lSkUilGY//5YC7vFKrm9SuHdD/ikV/z5CJ
+ /n879Htme8iUFqfMU8Lrpi25Ag==
+X-Google-Smtp-Source: ABdhPJxGxJja/jT5oTKGrw+3w0aijL5YvUJiF17syWz5nrHEReD8sNkVNAERPfeh53aofCnuLFYTBA==
+X-Received: by 2002:a1c:7fd7:: with SMTP id a206mr3350840wmd.104.1593090890761; 
+ Thu, 25 Jun 2020 06:14:50 -0700 (PDT)
 Received: from localhost ([2a01:4b00:8523:2d03:c126:6748:7a9d:2d])
- by smtp.gmail.com with ESMTPSA id g13sm5650833wro.84.2020.06.25.06.14.47
+ by smtp.gmail.com with ESMTPSA id x18sm11904701wmi.35.2020.06.25.06.14.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Jun 2020 06:14:48 -0700 (PDT)
+ Thu, 25 Jun 2020 06:14:49 -0700 (PDT)
 From: David Brazdil <dbrazdil@google.com>
 To: Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>,
  Catalin Marinas <catalin.marinas@arm.com>,
  James Morse <james.morse@arm.com>,
  Julien Thierry <julien.thierry.kdev@gmail.com>,
  Suzuki K Poulose <suzuki.poulose@arm.com>
-Subject: [PATCH v4 12/15] arm64: kvm: Duplicate hyp/timer-sr.c for VHE/nVHE
-Date: Thu, 25 Jun 2020 14:14:17 +0100
-Message-Id: <20200625131420.71444-13-dbrazdil@google.com>
+Subject: [PATCH v4 13/15] arm64: kvm: Compile remaining hyp/ files for both
+ VHE/nVHE
+Date: Thu, 25 Jun 2020 14:14:18 +0100
+Message-Id: <20200625131420.71444-14-dbrazdil@google.com>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200625131420.71444-1-dbrazdil@google.com>
 References: <20200625131420.71444-1-dbrazdil@google.com>
@@ -99,129 +100,112 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-timer-sr.c contains a HVC handler for setting CNTVOFF_EL2 and two helper
-functions for controlling access to physical counter. The former is used by
-both VHE/nVHE and is duplicated, the latter are used only by nVHE and moved
-to nvhe/timer-sr.c.
+The following files in hyp/ contain only code shared by VHE/nVHE:
+  vgic-v3-sr.c, aarch32.c, vgic-v2-cpuif-proxy.c, entry.S, fpsimd.S
+Compile them under both configurations. Deletions in image-vars.h reflect
+eliminated dependencies of nVHE code on the rest of the kernel.
 
 Signed-off-by: David Brazdil <dbrazdil@google.com>
 ---
- arch/arm64/include/asm/kvm_hyp.h         |  2 ++
- arch/arm64/kernel/image-vars.h           |  5 -----
- arch/arm64/kvm/hyp/Makefile              |  2 +-
- arch/arm64/kvm/hyp/nvhe/Makefile         |  3 ++-
- arch/arm64/kvm/hyp/{ => nvhe}/timer-sr.c |  2 +-
- arch/arm64/kvm/hyp/vhe/Makefile          |  2 +-
- arch/arm64/kvm/hyp/vhe/timer-sr.c        | 12 ++++++++++++
- 7 files changed, 19 insertions(+), 9 deletions(-)
- rename arch/arm64/kvm/hyp/{ => nvhe}/timer-sr.c (95%)
- create mode 100644 arch/arm64/kvm/hyp/vhe/timer-sr.c
+ arch/arm64/kernel/image-vars.h   | 29 -----------------------------
+ arch/arm64/kvm/hyp/Makefile      | 13 +------------
+ arch/arm64/kvm/hyp/nvhe/Makefile |  5 +++--
+ arch/arm64/kvm/hyp/vhe/Makefile  |  4 +++-
+ 4 files changed, 7 insertions(+), 44 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_hyp.h b/arch/arm64/include/asm/kvm_hyp.h
-index 997c5bda1ac7..19f8b40fe6cf 100644
---- a/arch/arm64/include/asm/kvm_hyp.h
-+++ b/arch/arm64/include/asm/kvm_hyp.h
-@@ -63,8 +63,10 @@ void __vgic_v3_save_aprs(struct vgic_v3_cpu_if *cpu_if);
- void __vgic_v3_restore_aprs(struct vgic_v3_cpu_if *cpu_if);
- int __vgic_v3_perform_cpuif_access(struct kvm_vcpu *vcpu);
- 
-+#ifdef __KVM_NVHE_HYPERVISOR__
- void __timer_enable_traps(struct kvm_vcpu *vcpu);
- void __timer_disable_traps(struct kvm_vcpu *vcpu);
-+#endif
- 
- #ifdef __KVM_NVHE_HYPERVISOR__
- void __sysreg_save_state_nvhe(struct kvm_cpu_context *ctxt);
 diff --git a/arch/arm64/kernel/image-vars.h b/arch/arm64/kernel/image-vars.h
-index 05c642621d61..221024e745c9 100644
+index 221024e745c9..8ba32bff7bb2 100644
 --- a/arch/arm64/kernel/image-vars.h
 +++ b/arch/arm64/kernel/image-vars.h
-@@ -76,11 +76,6 @@ KVM_NVHE_ALIAS(abort_guest_exit_start);
- KVM_NVHE_ALIAS(__fpsimd_restore_state);
- KVM_NVHE_ALIAS(__fpsimd_save_state);
+@@ -63,35 +63,6 @@ __efistub__ctype		= _ctype;
  
--/* Symbols defined in timer-sr.c (not yet compiled with nVHE build rules). */
--KVM_NVHE_ALIAS(__kvm_timer_set_cntvoff);
--KVM_NVHE_ALIAS(__timer_disable_traps);
--KVM_NVHE_ALIAS(__timer_enable_traps);
+ #define KVM_NVHE_ALIAS(sym) __kvm_nvhe_##sym = sym;
+ 
+-/* Symbols defined in aarch32.c (not yet compiled with nVHE build rules). */
+-KVM_NVHE_ALIAS(kvm_skip_instr32);
 -
- /* Symbols defined in vgic-v2-cpuif-proxy.c (not yet compiled with nVHE build rules). */
- KVM_NVHE_ALIAS(__vgic_v2_perform_cpuif_access);
- 
+-/* Symbols defined in entry.S (not yet compiled with nVHE build rules). */
+-KVM_NVHE_ALIAS(__guest_enter);
+-KVM_NVHE_ALIAS(__guest_exit);
+-KVM_NVHE_ALIAS(abort_guest_exit_end);
+-KVM_NVHE_ALIAS(abort_guest_exit_start);
+-
+-/* Symbols defined in fpsimd.S (not yet compiled with nVHE build rules). */
+-KVM_NVHE_ALIAS(__fpsimd_restore_state);
+-KVM_NVHE_ALIAS(__fpsimd_save_state);
+-
+-/* Symbols defined in vgic-v2-cpuif-proxy.c (not yet compiled with nVHE build rules). */
+-KVM_NVHE_ALIAS(__vgic_v2_perform_cpuif_access);
+-
+-/* Symbols defined in vgic-v3-sr.c (not yet compiled with nVHE build rules). */
+-KVM_NVHE_ALIAS(__vgic_v3_activate_traps);
+-KVM_NVHE_ALIAS(__vgic_v3_deactivate_traps);
+-KVM_NVHE_ALIAS(__vgic_v3_get_ich_vtr_el2);
+-KVM_NVHE_ALIAS(__vgic_v3_init_lrs);
+-KVM_NVHE_ALIAS(__vgic_v3_perform_cpuif_access);
+-KVM_NVHE_ALIAS(__vgic_v3_read_vmcr);
+-KVM_NVHE_ALIAS(__vgic_v3_restore_aprs);
+-KVM_NVHE_ALIAS(__vgic_v3_restore_state);
+-KVM_NVHE_ALIAS(__vgic_v3_save_aprs);
+-KVM_NVHE_ALIAS(__vgic_v3_save_state);
+-KVM_NVHE_ALIAS(__vgic_v3_write_vmcr);
+-
+ /* Alternative callbacks for init-time patching of nVHE hyp code. */
+ KVM_NVHE_ALIAS(arm64_enable_wa2_handling);
+ KVM_NVHE_ALIAS(kvm_patch_vector_branch);
 diff --git a/arch/arm64/kvm/hyp/Makefile b/arch/arm64/kvm/hyp/Makefile
-index f49797237818..ef1aa7fe8f5a 100644
+index ef1aa7fe8f5a..f54f0e89a71c 100644
 --- a/arch/arm64/kvm/hyp/Makefile
 +++ b/arch/arm64/kvm/hyp/Makefile
-@@ -13,7 +13,7 @@ subdir-ccflags-y := -I$(incdir)				\
- obj-$(CONFIG_KVM) += hyp.o vhe/ nvhe/
+@@ -10,16 +10,5 @@ subdir-ccflags-y := -I$(incdir)				\
+ 		    -DDISABLE_BRANCH_PROFILING		\
+ 		    $(DISABLE_STACKLEAK_PLUGIN)
+ 
+-obj-$(CONFIG_KVM) += hyp.o vhe/ nvhe/
++obj-$(CONFIG_KVM) += vhe/ nvhe/
  obj-$(CONFIG_KVM_INDIRECT_VECTORS) += smccc_wa.o
- 
--hyp-y := vgic-v3-sr.o timer-sr.o aarch32.o vgic-v2-cpuif-proxy.o entry.o \
-+hyp-y := vgic-v3-sr.o aarch32.o vgic-v2-cpuif-proxy.o entry.o \
- 	 fpsimd.o
- 
- # KVM code is run at a different exception code with a different map, so
+-
+-hyp-y := vgic-v3-sr.o aarch32.o vgic-v2-cpuif-proxy.o entry.o \
+-	 fpsimd.o
+-
+-# KVM code is run at a different exception code with a different map, so
+-# compiler instrumentation that inserts callbacks or checks into the code may
+-# cause crashes. Just disable it.
+-GCOV_PROFILE	:= n
+-KASAN_SANITIZE	:= n
+-UBSAN_SANITIZE	:= n
+-KCOV_INSTRUMENT	:= n
 diff --git a/arch/arm64/kvm/hyp/nvhe/Makefile b/arch/arm64/kvm/hyp/nvhe/Makefile
-index 61a8160f0dd9..0f4c544f07db 100644
+index 0f4c544f07db..ad8729f5e814 100644
 --- a/arch/arm64/kvm/hyp/nvhe/Makefile
 +++ b/arch/arm64/kvm/hyp/nvhe/Makefile
-@@ -6,7 +6,8 @@
+@@ -6,8 +6,9 @@
  asflags-y := -D__KVM_NVHE_HYPERVISOR__
  ccflags-y := -D__KVM_NVHE_HYPERVISOR__
  
--obj-y := sysreg-sr.o debug-sr.o switch.o tlb.o hyp-init.o ../hyp-entry.o
-+obj-y := timer-sr.o sysreg-sr.o debug-sr.o switch.o tlb.o hyp-init.o \
-+	 ../hyp-entry.o
+-obj-y := timer-sr.o sysreg-sr.o debug-sr.o switch.o tlb.o hyp-init.o \
+-	 ../hyp-entry.o
++obj-y := timer-sr.o sysreg-sr.o debug-sr.o switch.o tlb.o hyp-init.o
++obj-y += ../vgic-v3-sr.o ../aarch32.o ../vgic-v2-cpuif-proxy.o ../entry.o \
++	 ../fpsimd.o ../hyp-entry.o
  
  obj-y := $(patsubst %.o,%.hyp.o,$(obj-y))
  extra-y := $(patsubst %.hyp.o,%.hyp.tmp.o,$(obj-y))
-diff --git a/arch/arm64/kvm/hyp/timer-sr.c b/arch/arm64/kvm/hyp/nvhe/timer-sr.c
-similarity index 95%
-rename from arch/arm64/kvm/hyp/timer-sr.c
-rename to arch/arm64/kvm/hyp/nvhe/timer-sr.c
-index fb5c0be33223..42c8ed71d06e 100644
---- a/arch/arm64/kvm/hyp/timer-sr.c
-+++ b/arch/arm64/kvm/hyp/nvhe/timer-sr.c
-@@ -10,7 +10,7 @@
- 
- #include <asm/kvm_hyp.h>
- 
--void __hyp_text __kvm_timer_set_cntvoff(u64 cntvoff)
-+void __kvm_timer_set_cntvoff(u64 cntvoff)
- {
- 	write_sysreg(cntvoff, cntvoff_el2);
- }
 diff --git a/arch/arm64/kvm/hyp/vhe/Makefile b/arch/arm64/kvm/hyp/vhe/Makefile
-index 2801582a739a..a1dbbc5409bd 100644
+index a1dbbc5409bd..090fd1e14be2 100644
 --- a/arch/arm64/kvm/hyp/vhe/Makefile
 +++ b/arch/arm64/kvm/hyp/vhe/Makefile
-@@ -6,7 +6,7 @@
+@@ -6,7 +6,9 @@
  asflags-y := -D__KVM_VHE_HYPERVISOR__
  ccflags-y := -D__KVM_VHE_HYPERVISOR__
  
--obj-y := sysreg-sr.o debug-sr.o switch.o tlb.o ../hyp-entry.o
-+obj-y := timer-sr.o sysreg-sr.o debug-sr.o switch.o tlb.o ../hyp-entry.o
+-obj-y := timer-sr.o sysreg-sr.o debug-sr.o switch.o tlb.o ../hyp-entry.o
++obj-y := timer-sr.o sysreg-sr.o debug-sr.o switch.o tlb.o
++obj-y += ../vgic-v3-sr.o ../aarch32.o ../vgic-v2-cpuif-proxy.o ../entry.o \
++	 ../fpsimd.o ../hyp-entry.o
  
  # KVM code is run at a different exception code with a different map, so
  # compiler instrumentation that inserts callbacks or checks into the code may
-diff --git a/arch/arm64/kvm/hyp/vhe/timer-sr.c b/arch/arm64/kvm/hyp/vhe/timer-sr.c
-new file mode 100644
-index 000000000000..4cda674a8be6
---- /dev/null
-+++ b/arch/arm64/kvm/hyp/vhe/timer-sr.c
-@@ -0,0 +1,12 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (C) 2012-2015 - ARM Ltd
-+ * Author: Marc Zyngier <marc.zyngier@arm.com>
-+ */
-+
-+#include <asm/kvm_hyp.h>
-+
-+void __kvm_timer_set_cntvoff(u64 cntvoff)
-+{
-+	write_sysreg(cntvoff, cntvoff_el2);
-+}
 -- 
 2.27.0
 
