@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 25C0B20B23F
-	for <lists+kvmarm@lfdr.de>; Fri, 26 Jun 2020 15:14:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D70D720B4D5
+	for <lists+kvmarm@lfdr.de>; Fri, 26 Jun 2020 17:39:19 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 910C14B219;
-	Fri, 26 Jun 2020 09:14:22 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3B86C4B10F;
+	Fri, 26 Jun 2020 11:39:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,40 +16,39 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dHbItYN2+xZf; Fri, 26 Jun 2020 09:14:22 -0400 (EDT)
+	with ESMTP id A2RB26CVCkZw; Fri, 26 Jun 2020 11:39:19 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7D4D24B212;
-	Fri, 26 Jun 2020 09:14:21 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D8AE94B113;
+	Fri, 26 Jun 2020 11:39:17 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A51BB4B20E
- for <kvmarm@lists.cs.columbia.edu>; Fri, 26 Jun 2020 09:14:19 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 61CB44B10A
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 26 Jun 2020 11:39:16 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id bkcRbKRSap1j for <kvmarm@lists.cs.columbia.edu>;
- Fri, 26 Jun 2020 09:14:18 -0400 (EDT)
+ with ESMTP id OXjiEoIeDYF2 for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 26 Jun 2020 11:39:15 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5F27A4B20A
- for <kvmarm@lists.cs.columbia.edu>; Fri, 26 Jun 2020 09:14:18 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 013CA4B101
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 26 Jun 2020 11:39:14 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E20EDD6E;
- Fri, 26 Jun 2020 06:14:17 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 53F771042;
+ Fri, 26 Jun 2020 08:39:14 -0700 (PDT)
 Received: from [192.168.0.110] (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B1FF43F6CF;
- Fri, 26 Jun 2020 06:14:15 -0700 (PDT)
-Subject: Re: [PATCH v2 05/17] KVM: arm64: Use TTL hint in when invalidating
- stage-2 translations
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2F1E33F6CF;
+ Fri, 26 Jun 2020 08:39:12 -0700 (PDT)
+Subject: Re: [PATCH v2 06/17] KVM: arm64: Introduce accessor for ctxt->sys_reg
 To: Marc Zyngier <maz@kernel.org>, linux-arm-kernel@lists.infradead.org,
  kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
 References: <20200615132719.1932408-1-maz@kernel.org>
- <20200615132719.1932408-6-maz@kernel.org>
+ <20200615132719.1932408-7-maz@kernel.org>
 From: Alexandru Elisei <alexandru.elisei@arm.com>
-Message-ID: <08ad46a7-b676-a889-7e48-63367dcf453b@arm.com>
-Date: Fri, 26 Jun 2020 14:14:26 +0100
+Message-ID: <a9c3a43e-7850-e74d-5383-905885721ab4@arm.com>
+Date: Fri, 26 Jun 2020 16:39:52 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.9.0
 MIME-Version: 1.0
-In-Reply-To: <20200615132719.1932408-6-maz@kernel.org>
+In-Reply-To: <20200615132719.1932408-7-maz@kernel.org>
 Content-Language: en-US
 Cc: kernel-team@android.com, Andre Przywara <andre.przywara@arm.com>,
  Dave Martin <Dave.Martin@arm.com>, George Cherian <gcherian@marvell.com>,
@@ -71,32 +70,65 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hello,
+Hi,
 
 On 6/15/20 2:27 PM, Marc Zyngier wrote:
-> Since we often have a precise idea of the level we're dealing with
-> when invalidating TLBs, we can provide it to as a hint to our
-> invalidation helper.
+> In order to allow the disintegration of the per-vcpu sysreg array,
+> let's introduce a new helper (ctxt_sys_reg()) that returns the
+> in-memory copy of a system register, picked from a given context.
 >
-> Reviewed-by: James Morse <james.morse@arm.com>
+> __vcpu_sys_reg() is rewritten to use this helper.
+>
 > Signed-off-by: Marc Zyngier <maz@kernel.org>
 > ---
->  arch/arm64/include/asm/kvm_asm.h |  3 ++-
->  arch/arm64/kvm/hyp/tlb.c         |  5 +++--
->  arch/arm64/kvm/mmu.c             | 29 +++++++++++++++--------------
->  3 files changed, 20 insertions(+), 17 deletions(-)
+>  arch/arm64/include/asm/kvm_host.h | 15 ++++++++++-----
+>  1 file changed, 10 insertions(+), 5 deletions(-)
 >
-> [..]
+> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+> index e7fd03271e52..5314399944e7 100644
+> --- a/arch/arm64/include/asm/kvm_host.h
+> +++ b/arch/arm64/include/asm/kvm_host.h
+> @@ -405,12 +405,17 @@ struct kvm_vcpu_arch {
+>  #define vcpu_gp_regs(v)		(&(v)->arch.ctxt.gp_regs)
+>  
+>  /*
+> - * Only use __vcpu_sys_reg if you know you want the memory backed version of a
+> - * register, and not the one most recently accessed by a running VCPU.  For
+> - * example, for userspace access or for system registers that are never context
+> - * switched, but only emulated.
+> + * Only use __vcpu_sys_reg/ctxt_sys_reg if you know you want the
+> + * memory backed version of a register, and not the one most recently
+> + * accessed by a running VCPU.  For example, for userspace access or
+> + * for system registers that are never context switched, but only
+> + * emulated.
+>   */
+> -#define __vcpu_sys_reg(v,r)	((v)->arch.ctxt.sys_regs[(r)])
+> +#define __ctxt_sys_reg(c,r)	(&(c)->sys_regs[(r)])
+> +
+> +#define ctxt_sys_reg(c,r)	(*__ctxt_sys_reg(c,r))
+> +
+> +#define __vcpu_sys_reg(v,r)	(ctxt_sys_reg(&(v)->arch.ctxt, (r)))
 
-I checked that we use the correct level hints where appropriate (for example, that
-we use the S2_PMD_LEVEL hint in stage2_dissolve_pmd()). From what I could tell, we
-use hints only where we know for sure that we are invalidating a PUD or PMD block
-mapping, or a PTE entry. FWIW:
+This is confusing - __vcpu_sys_reg() returns the value, but __ctxt_sys_reg()
+return a pointer to the value. Because of that, I made the mistake of thinking
+that __vcpu_sys_reg() returns a pointer when reviewing the next patch in the
+series, and I got really worried that stuff was seriously broken (it was not).
 
-Reviewed-by: Alexandru Elisei <alexandru.elisei@arm.com>
+I'm not sure what the reasonable solution is, or even if there is one.
+
+Some thoughts: we could have just one macro, ctxt_sys_reg() and dereference that
+when we want the value; we could keep both and swap the macro definitions; or we
+could encode the fact that a macro returns a pointer in the macro name (so we
+would end up with __ctxt_sys_reg() -> __ctxt_sys_regp() and ctxt_sys_reg ->
+__ctxt_sys_reg()).
+
+What do you think?
 
 Thanks,
 Alex
+>  
+>  u64 vcpu_read_sys_reg(const struct kvm_vcpu *vcpu, int reg);
+>  void vcpu_write_sys_reg(struct kvm_vcpu *vcpu, u64 val, int reg);
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
