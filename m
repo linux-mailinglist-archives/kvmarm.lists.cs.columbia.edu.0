@@ -2,97 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AF84210DA6
-	for <lists+kvmarm@lfdr.de>; Wed,  1 Jul 2020 16:24:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 46FF7210F92
+	for <lists+kvmarm@lfdr.de>; Wed,  1 Jul 2020 17:42:47 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 982DF4B235;
-	Wed,  1 Jul 2020 10:24:48 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EFA734B35D;
+	Wed,  1 Jul 2020 11:42:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -3.291
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=-3.291 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_ALL=0.8, DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_HI=-5, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@amazon.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id suet6uUi0dXM; Wed,  1 Jul 2020 10:24:48 -0400 (EDT)
+	with ESMTP id XEpQjqycuzUA; Wed,  1 Jul 2020 11:42:46 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8FCBE4B279;
-	Wed,  1 Jul 2020 10:24:47 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C2BAD4B349;
+	Wed,  1 Jul 2020 11:42:45 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D11374B235
- for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Jul 2020 10:24:45 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C59394B294
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Jul 2020 10:02:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id HZm-EBhismDa for <kvmarm@lists.cs.columbia.edu>;
- Wed,  1 Jul 2020 10:24:44 -0400 (EDT)
-Received: from us-smtp-1.mimecast.com (us-smtp-delivery-1.mimecast.com
- [205.139.110.120])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D575C4B21C
- for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Jul 2020 10:24:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1593613484;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tBmVabZ/r13W4Wz52iSUSVBPJD1c2mHsibs2U9wV+k0=;
- b=JORjjIePUZQezCAclKKFkSzAIjrXEE5C88sR05rEKzyedsYViBfL1NJWLq8Q77W/ehHQMQ
- npN5uqEGzShW/ntodx1E0Tw92vNSGgGZoMTZBYnT8oKCipDElDAERLXERcxoEP877jCAzE
- Dk8QDDAKDCylQq4qqEqePtNXUYe4Y+U=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-84-hPKQIC0tM4ChtUrCRKsK3w-1; Wed, 01 Jul 2020 10:24:43 -0400
-X-MC-Unique: hPKQIC0tM4ChtUrCRKsK3w-1
-Received: by mail-wr1-f69.google.com with SMTP id h28so20808641wrc.18
- for <kvmarm@lists.cs.columbia.edu>; Wed, 01 Jul 2020 07:24:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=tBmVabZ/r13W4Wz52iSUSVBPJD1c2mHsibs2U9wV+k0=;
- b=mBDEoPbEt4vno4mouIUJtXSymvf364kLnn0A/pntgQNNYugVvNfMZvBkPLl8789UTr
- vUmIUTfMRz42Sb/ZweehwmnWWDsM8YQ04cXWMlVhmvN1/G3tEXfqh7KJ3U00J3mNLVWR
- Pl+RIynOAEMcX2tMFFMdyep/Os/soufKr3YsZF3flNnsHXGXL2RiuPvSS462GGLMpjoJ
- qPGexjauBSdi4g8x18X+uD4FJQoYBUcRtLtq9flwBgZkjxOsjqiRxqvoahf9okwiVyzu
- SlcxEAnSvm/uKYjsp6FJT+Nm3gPX8K4zXFlseNKxOckTuyKPf4WEjRKvptQnX9dzJr3f
- RRvA==
-X-Gm-Message-State: AOAM532B6vtrM7wpmDpqfsoksm7hMGg06XJXYPaX71LtxJWZLe8QwEZG
- +dd6Y/nloDDl0gbM58VuYi3hSqA4eqm1A9hQjbO0FYXKMU+M2lzgT2gUIf169PZ9wjhM9/d/GQV
- p8UJ3qtaKd4YKrKDUXGQiIEz3
-X-Received: by 2002:a7b:c208:: with SMTP id x8mr27080865wmi.49.1593613481931; 
- Wed, 01 Jul 2020 07:24:41 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJyrQwpCBpIqQTfqMpAOLuxuJU2euPTk+0h0YDWiJcUqEtgDNaujmK6RDYgEkNxjJFdbdhkcfw==
-X-Received: by 2002:a7b:c208:: with SMTP id x8mr27080838wmi.49.1593613481707; 
- Wed, 01 Jul 2020 07:24:41 -0700 (PDT)
-Received: from ?IPv6:2001:b07:6468:f312:1142:70d6:6b9b:3cd1?
- ([2001:b07:6468:f312:1142:70d6:6b9b:3cd1])
- by smtp.gmail.com with ESMTPSA id 133sm7947357wme.5.2020.07.01.07.24.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 01 Jul 2020 07:24:41 -0700 (PDT)
-Subject: Re: [GIT PULL] KVM/arm64 fixes for 5.8, take #2
-To: Marc Zyngier <maz@kernel.org>
-References: <20200629162519.825200-1-maz@kernel.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <733910d5-b4db-3df5-9589-80e0367311fd@redhat.com>
-Date: Wed, 1 Jul 2020 16:24:39 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+ with ESMTP id gsvwyNWlWXpz for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  1 Jul 2020 10:02:28 -0400 (EDT)
+Received: from smtp-fw-9101.amazon.com (smtp-fw-9101.amazon.com
+ [207.171.184.25])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id AD6084B1C5
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Jul 2020 10:02:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1593612150; x=1625148150;
+ h=from:to:cc:subject:date:message-id:mime-version;
+ bh=5zs5lyxU5AtUdWhiM9M4OnXzAKmqv7biVE/Gy/y7dYc=;
+ b=jl2ZkyRyRLeWCi2HM+7mtwNrZDPxc7GKCmlaiyCUCC/8y4SAvi+HzEPu
+ yOi1mFuZXL2PpqK1pGiuXBrUJkRZdk9PHH8KPuenefYqjen7KIMP8Eol6
+ g9Xh6z73cBssE2gzcFMu5YEyMTrQN1NSJGLPRUK5PviamfpPXlZbAyMCM E=;
+IronPort-SDR: /W76JCUcLQtk7wQg9wwmfEH4BUJ0N5VwiTtPu0r4q1nWt0lIbl7VZ5lLBHNJhWL0Do5IzhbSQw
+ 5Haek1aXZJcQ==
+X-IronPort-AV: E=Sophos;i="5.75,300,1589241600"; d="scan'208";a="48368723"
+Received: from sea32-co-svc-lb4-vlan3.sea.corp.amazon.com (HELO
+ email-inbound-relay-1a-16acd5e0.us-east-1.amazon.com) ([10.47.23.38])
+ by smtp-border-fw-out-9101.sea19.amazon.com with ESMTP;
+ 01 Jul 2020 14:02:20 +0000
+Received: from EX13MTAUWC001.ant.amazon.com
+ (iad55-ws-svc-p15-lb9-vlan2.iad.amazon.com [10.40.159.162])
+ by email-inbound-relay-1a-16acd5e0.us-east-1.amazon.com (Postfix) with ESMTPS
+ id AA33CA26D8; Wed,  1 Jul 2020 14:02:16 +0000 (UTC)
+Received: from EX13D20UWC001.ant.amazon.com (10.43.162.244) by
+ EX13MTAUWC001.ant.amazon.com (10.43.162.135) with Microsoft SMTP Server (TLS)
+ id 15.0.1497.2; Wed, 1 Jul 2020 14:02:15 +0000
+Received: from u79c5a0a55de558.ant.amazon.com (10.43.162.85) by
+ EX13D20UWC001.ant.amazon.com (10.43.162.244) with Microsoft SMTP Server (TLS)
+ id 15.0.1497.2; Wed, 1 Jul 2020 14:02:13 +0000
+From: Alexander Graf <graf@amazon.com>
+To: <kvmarm@lists.cs.columbia.edu>
+Subject: [PATCH] KVM: arm64: Change default caching mode for {PEND,
+ PROP}BASER.outer
+Date: Wed, 1 Jul 2020 16:02:06 +0200
+Message-ID: <20200701140206.8664-1-graf@amazon.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-In-Reply-To: <20200629162519.825200-1-maz@kernel.org>
-Content-Language: en-US
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pbonzini@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Cc: kvm@vger.kernel.org, kernel-team@android.com,
- Steven Price <steven.price@arm.com>, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu
+X-Originating-IP: [10.43.162.85]
+X-ClientProxiedBy: EX13D06UWA003.ant.amazon.com (10.43.160.13) To
+ EX13D20UWC001.ant.amazon.com (10.43.162.244)
+X-Mailman-Approved-At: Wed, 01 Jul 2020 11:42:44 -0400
+Cc: Marc Zyngier <maz@kernel.org>, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -109,62 +89,50 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 29/06/20 18:25, Marc Zyngier wrote:
-> Hi Paolo,
-> 
-> Here's another pull request for a handful of KVM/arm64 fixes. Nothing
-> absolutely critical (see the tag for the gory details), but I'd rather
-> get these merged as soon as possible.
-> 
-> Please pull,
-> 
-> 	M.
-> 
-> The following changes since commit b3a9e3b9622ae10064826dccb4f7a52bd88c7407:
-> 
->   Linux 5.8-rc1 (2020-06-14 12:45:04 -0700)
-> 
-> are available in the Git repository at:
-> 
->   git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git kvmarm-fixes-5.8-2
-> 
-> for you to fetch changes up to a3f574cd65487cd993f79ab235d70229d9302c1e:
-> 
->   KVM: arm64: vgic-v4: Plug race between non-residency and v4.1 doorbell (2020-06-23 11:24:39 +0100)
-> 
-> ----------------------------------------------------------------
-> KVM/arm fixes for 5.8, take #2
-> 
-> - Make sure a vcpu becoming non-resident doesn't race against the doorbell delivery
-> - Only advertise pvtime if accounting is enabled
-> - Return the correct error code if reset fails with SVE
-> - Make sure that pseudo-NMI functions are annotated as __always_inline
-> 
-> ----------------------------------------------------------------
-> Alexandru Elisei (1):
->       KVM: arm64: Annotate hyp NMI-related functions as __always_inline
-> 
-> Andrew Jones (1):
->       KVM: arm64: pvtime: Ensure task delay accounting is enabled
-> 
-> Marc Zyngier (1):
->       KVM: arm64: vgic-v4: Plug race between non-residency and v4.1 doorbell
-> 
-> Steven Price (1):
->       KVM: arm64: Fix kvm_reset_vcpu() return code being incorrect with SVE
-> 
->  arch/arm64/include/asm/arch_gicv3.h |  2 +-
->  arch/arm64/include/asm/cpufeature.h |  2 +-
->  arch/arm64/kvm/pvtime.c             | 15 ++++++++++++---
->  arch/arm64/kvm/reset.c              | 10 +++++++---
->  arch/arm64/kvm/vgic/vgic-v4.c       |  8 ++++++++
->  drivers/irqchip/irq-gic-v3-its.c    |  8 ++++++++
->  6 files changed, 37 insertions(+), 8 deletions(-)
-> 
+PENDBASER and PROPBASER define the outer caching mode for LPI tables.
+The memory backing them may not be outer sharable, so we mark them as nC
+by default. This however, breaks Windows on ARM which only accepts
+SameAsInner or RaWaWb as values for outer cachability.
 
-Pulled, thanks.
+We do today already allow the outer mode to be set to SameAsInner
+explicitly, so the easy fix is to default to that instead of nC for
+situations when an OS asks for a not fulfillable cachability request.
 
-Paolo
+This fixes booting Windows in KVM with vgicv3 and ITS enabled for me.
+
+Signed-off-by: Alexander Graf <graf@amazon.com>
+---
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+index d2339a2b9fb9..5c786b915cd3 100644
+--- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+@@ -389,7 +389,7 @@ u64 vgic_sanitise_outer_cacheability(u64 field)
+ 	case GIC_BASER_CACHE_nC:
+ 		return field;
+ 	default:
+-		return GIC_BASER_CACHE_nC;
++		return GIC_BASER_CACHE_SameAsInner;
+ 	}
+ }
+ 
+-- 
+2.17.1
+
+
+
+
+Amazon Development Center Germany GmbH
+Krausenstr. 38
+10117 Berlin
+Geschaeftsfuehrung: Christian Schlaeger, Jonathan Weiss
+Eingetragen am Amtsgericht Charlottenburg unter HRB 149173 B
+Sitz: Berlin
+Ust-ID: DE 289 237 879
+
+
 
 _______________________________________________
 kvmarm mailing list
