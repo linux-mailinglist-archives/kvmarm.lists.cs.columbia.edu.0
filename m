@@ -2,61 +2,73 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DBF8F212562
-	for <lists+kvmarm@lfdr.de>; Thu,  2 Jul 2020 15:56:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2521D21258C
+	for <lists+kvmarm@lfdr.de>; Thu,  2 Jul 2020 16:05:01 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8D4B84B55D;
-	Thu,  2 Jul 2020 09:56:47 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9CCF94B60E;
+	Thu,  2 Jul 2020 10:05:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.502
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7ab4nc0QCe8j; Thu,  2 Jul 2020 09:56:47 -0400 (EDT)
+	with ESMTP id V2YSPwGlUtLB; Thu,  2 Jul 2020 10:05:00 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 78A244B5E6;
-	Thu,  2 Jul 2020 09:56:46 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5EEC24B5E6;
+	Thu,  2 Jul 2020 10:04:59 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2E6324B55D
- for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 09:56:45 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id F12EA4B5D2
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 10:04:57 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ZbuLWPLngUtH for <kvmarm@lists.cs.columbia.edu>;
- Thu,  2 Jul 2020 09:56:44 -0400 (EDT)
-Received: from huawei.com (szxga07-in.huawei.com [45.249.212.35])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0751E4B4EC
- for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 09:56:42 -0400 (EDT)
-Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.59])
- by Forcepoint Email with ESMTP id A246244A5C93F08B323C;
- Thu,  2 Jul 2020 21:56:15 +0800 (CST)
-Received: from DESKTOP-5IS4806.china.huawei.com (10.174.187.22) by
- DGGEMS406-HUB.china.huawei.com (10.3.19.206) with Microsoft SMTP Server id
- 14.3.487.0; Thu, 2 Jul 2020 21:56:09 +0800
-From: Keqian Zhu <zhukeqian1@huawei.com>
-To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <kvmarm@lists.cs.columbia.edu>, <kvm@vger.kernel.org>
-Subject: [PATCH v2 8/8] KVM: Omit dirty log sync in log clear if initially all
- set
-Date: Thu, 2 Jul 2020 21:55:56 +0800
-Message-ID: <20200702135556.36896-9-zhukeqian1@huawei.com>
-X-Mailer: git-send-email 2.8.4.windows.1
-In-Reply-To: <20200702135556.36896-1-zhukeqian1@huawei.com>
-References: <20200702135556.36896-1-zhukeqian1@huawei.com>
+ with ESMTP id 0Hu0m-wh6xPz for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  2 Jul 2020 10:04:56 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C89234B4D2
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 10:04:56 -0400 (EDT)
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com
+ [209.85.167.176])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id B454120CC7
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 14:04:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1593698695;
+ bh=kA50VBMMrGdrE3xQ5v88BLtSVM3GvpTTysDMHRSjmko=;
+ h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+ b=a+aiKaeuTklSMSmtg/vA3HtvjPu26UYvgY252wgBZA006pvwDB0gJQEuZgJODWpQp
+ CMU5OPvfV3mXBDU9Bjh0vZByGx5Ek+eqAAMwOK4AOrnuIGOGeU+zCpHNxZu45uExM2
+ 4rmZjTQZWgSvjaIjKF00J96/8oBwBoQDFf+9L/x0=
+Received: by mail-oi1-f176.google.com with SMTP id t4so5930551oij.9
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 02 Jul 2020 07:04:55 -0700 (PDT)
+X-Gm-Message-State: AOAM531FiVd3wZEVAWhWqzg3ay9dbbFLrZELjqkSQMDuxqdXQ4XdBxQy
+ 227UwMR++zNtFtB9nYQU/EUkYmTBvtPOag2P1A==
+X-Google-Smtp-Source: ABdhPJzrROq+VU/GH93IJWKW6WzvKUKB+YcooXfMjvvTdLnExXgvVy4cZjq/+hv19pvd+ndH7K9GFY4fG46Ww9CIFFc=
+X-Received: by 2002:aca:30d2:: with SMTP id w201mr3133804oiw.147.1593698695101; 
+ Thu, 02 Jul 2020 07:04:55 -0700 (PDT)
 MIME-Version: 1.0
-X-Originating-IP: [10.174.187.22]
-X-CFilter-Loop: Reflected
+References: <20200701215308.3715856-1-robh@kernel.org>
+ <20200701215308.3715856-2-robh@kernel.org>
+ <20200702114527.GB16499@willie-the-truck>
+In-Reply-To: <20200702114527.GB16499@willie-the-truck>
+From: Rob Herring <robh@kernel.org>
+Date: Thu, 2 Jul 2020 08:04:43 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqLnZHXjnYf3s6FJnVKf4kN1fhRgJov=Sb3H6J=Yro+cQg@mail.gmail.com>
+Message-ID: <CAL_JsqLnZHXjnYf3s6FJnVKf4kN1fhRgJov=Sb3H6J=Yro+cQg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] KVM: arm64: Print warning when cpu erratum can
+ cause guests to deadlock
+To: Will Deacon <will@kernel.org>
 Cc: Catalin Marinas <catalin.marinas@arm.com>,
- Sean Christopherson <sean.j.christopherson@intel.com>,
- Steven Price <steven.price@arm.com>, liangpeng10@huawei.com,
- Alexios Zavras <alexios.zavras@intel.com>, Mark Brown <broonie@kernel.org>,
- Marc Zyngier <maz@kernel.org>, Thomas
- Gleixner <tglx@linutronix.de>, Will Deacon <will@kernel.org>,
- Andrew Morton <akpm@linux-foundation.org>
+ "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE"
+ <linux-arm-kernel@lists.infradead.org>, Marc Zyngier <maz@kernel.org>,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -73,39 +85,51 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Synchronizing dirty log during log clear is useful only when the dirty
-bitmap of userspace contains dirty bits that memslot dirty bitmap does
-not contain, because we can sync new dirty bits to memslot dirty bitmap,
-then we can clear them by the way and avoid reporting them to userspace
-later.
+On Thu, Jul 2, 2020 at 5:45 AM Will Deacon <will@kernel.org> wrote:
+>
+> On Wed, Jul 01, 2020 at 03:53:06PM -0600, Rob Herring wrote:
+> > If guests don't have certain CPU erratum work-arounds implemented, then
+> > there is a possibility a guest can deadlock the system. IOW, only trusted
+> > guests should be used on systems with the erratum.
+> >
+> > This is the case for Cortex-A57 erratum 832075.
+> >
+> > Cc: Marc Zyngier <maz@kernel.org>
+> > Cc: James Morse <james.morse@arm.com>
+> > Cc: Julien Thierry <julien.thierry.kdev@gmail.com>
+> > Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+> > Cc: Catalin Marinas <catalin.marinas@arm.com>
+> > Cc: Will Deacon <will@kernel.org>
+> > Cc: kvmarm@lists.cs.columbia.edu
+> > Signed-off-by: Rob Herring <robh@kernel.org>
+> > ---
+> >  arch/arm64/kvm/arm.c | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> >
+> > diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+> > index 90cb90561446..e2f50fa4d825 100644
+> > --- a/arch/arm64/kvm/arm.c
+> > +++ b/arch/arm64/kvm/arm.c
+> > @@ -1653,6 +1653,10 @@ int kvm_arch_init(void *opaque)
+> >               return -ENODEV;
+> >       }
+> >
+> > +     if (cpus_have_const_cap(ARM64_WORKAROUND_DEVICE_LOAD_ACQUIRE))
+> > +             kvm_info("Guests without required CPU erratum work-arounds can deadlock system!\n" \
+>
+> work-arounds => workarounds
+>
+> (mainly for consistency, I have no clue if this is a real word or not!).
+>
+> I'd also probably do erratum => errata given that you're about to add a
+> second one.
 
-With dirty bitmap "initially all set" feature, the above situation will
-not appear if userspace logic is normal, so we can omit dirty log sync in
-log clear. This is valuable when dirty log sync is a high-cost operation,
-such as arm64 DBM.
+Humm, the plural is on workarounds. If I use a more standard singular
+vs. plural form like "CPU feature workarounds" vs "CPU features
+workarounds", the former seems more correct to me. (working around
+features may be a bit nonsensical, but big.LITTLE ;) )
 
-Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
----
- virt/kvm/kvm_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-index a852af5c3214..3f9e51d52b7a 100644
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -1554,7 +1554,8 @@ static int kvm_clear_dirty_log_protect(struct kvm *kvm,
- 	    (log->num_pages < memslot->npages - log->first_page && (log->num_pages & 63)))
- 	    return -EINVAL;
- 
--	kvm_arch_sync_dirty_log(kvm, memslot);
-+	if (!kvm_dirty_log_manual_protect_and_init_set(kvm))
-+		kvm_arch_sync_dirty_log(kvm, memslot);
- 
- 	flush = false;
- 	dirty_bitmap_buffer = kvm_second_dirty_bitmap(memslot);
--- 
-2.19.1
-
+Rob
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
