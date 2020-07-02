@@ -2,78 +2,58 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 702562124FD
-	for <lists+kvmarm@lfdr.de>; Thu,  2 Jul 2020 15:42:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDBB721256D
+	for <lists+kvmarm@lfdr.de>; Thu,  2 Jul 2020 15:57:17 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 03BE24B5E4;
-	Thu,  2 Jul 2020 09:42:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8104E4B5C3;
+	Thu,  2 Jul 2020 09:57:17 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id EnxRlGcJgQ9p; Thu,  2 Jul 2020 09:42:33 -0400 (EDT)
+	with ESMTP id AdZGx4EzkbLS; Thu,  2 Jul 2020 09:57:17 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7140A4B5D3;
-	Thu,  2 Jul 2020 09:42:32 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 254814B5E3;
+	Thu,  2 Jul 2020 09:57:16 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8B7014B545
- for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 09:42:31 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CB4274B47D
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 09:57:13 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id vLUbxSBcfh3S for <kvmarm@lists.cs.columbia.edu>;
- Thu,  2 Jul 2020 09:42:30 -0400 (EDT)
-Received: from us-smtp-delivery-1.mimecast.com (us-smtp-1.mimecast.com
- [207.211.31.81])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B000D4B421
- for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 09:42:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1593697350;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9MNOdxawbqCNhNwGOQIC2Aifh6aq6wqhAa3zMjCE53g=;
- b=eTAeST4KHJwac3W8YssmUg5l9r3nmuKgFjAt7p5SOIqyzIWYFH9s7P+QxpmGH7XBqY5jut
- AtSTKsEftKZAKNpBg0XbNdDw24ucY3dT6mk29sKKCMY60hLDLBJ4LJn7PWmtGbN+eQ7QH6
- eq3UaryNAhnZoZ0RpP4AtMxmRivdRiI=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-45-4XjQd4sqMCGNhL6LvNKvMQ-1; Thu, 02 Jul 2020 09:42:28 -0400
-X-MC-Unique: 4XjQd4sqMCGNhL6LvNKvMQ-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com
- [10.5.11.13])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id CB3BA1083E82;
- Thu,  2 Jul 2020 13:42:26 +0000 (UTC)
-Received: from [10.36.112.70] (ovpn-112-70.ams2.redhat.com [10.36.112.70])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 3D7D679257;
- Thu,  2 Jul 2020 13:42:25 +0000 (UTC)
-Subject: Re: [kvm-unit-tests PATCH v2 3/8] arm64: microbench: gic: Add gicv4.1
- support for ipi latency test.
-To: Marc Zyngier <maz@kernel.org>
-References: <20200702030132.20252-1-wangjingyi11@huawei.com>
- <20200702030132.20252-4-wangjingyi11@huawei.com>
- <087ef371-5e7b-e0b2-900f-67b2eacb4e0f@redhat.com>
- <05a3da5fa35568606e55eb6428ce91d8@kernel.org>
-From: Auger Eric <eric.auger@redhat.com>
-Message-ID: <69a37427-7e93-3411-f61c-50525a0ca3e1@redhat.com>
-Date: Thu, 2 Jul 2020 15:42:23 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+ with ESMTP id CuMtuOGeJ7Vo for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  2 Jul 2020 09:57:12 -0400 (EDT)
+Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 881B64B589
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 09:57:11 -0400 (EDT)
+Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.60])
+ by Forcepoint Email with ESMTP id 913E96BE24CEBCEA50BE;
+ Thu,  2 Jul 2020 21:56:10 +0800 (CST)
+Received: from DESKTOP-5IS4806.china.huawei.com (10.174.187.22) by
+ DGGEMS406-HUB.china.huawei.com (10.3.19.206) with Microsoft SMTP Server id
+ 14.3.487.0; Thu, 2 Jul 2020 21:56:00 +0800
+From: Keqian Zhu <zhukeqian1@huawei.com>
+To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <kvmarm@lists.cs.columbia.edu>, <kvm@vger.kernel.org>
+Subject: [PATCH v2 0/8] KVM: arm64: Support HW dirty log based on DBM
+Date: Thu, 2 Jul 2020 21:55:48 +0800
+Message-ID: <20200702135556.36896-1-zhukeqian1@huawei.com>
+X-Mailer: git-send-email 2.8.4.windows.1
 MIME-Version: 1.0
-In-Reply-To: <05a3da5fa35568606e55eb6428ce91d8@kernel.org>
-Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
-Cc: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
+X-Originating-IP: [10.174.187.22]
+X-CFilter-Loop: Reflected
+Cc: Catalin Marinas <catalin.marinas@arm.com>,
+ Sean Christopherson <sean.j.christopherson@intel.com>,
+ Steven Price <steven.price@arm.com>, liangpeng10@huawei.com,
+ Alexios Zavras <alexios.zavras@intel.com>, Mark Brown <broonie@kernel.org>,
+ Marc Zyngier <maz@kernel.org>, Thomas
+ Gleixner <tglx@linutronix.de>, Will Deacon <will@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -85,42 +65,93 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-SGkgTWFyYywKCk9uIDcvMi8yMCAzOjA4IFBNLCBNYXJjIFp5bmdpZXIgd3JvdGU6Cj4gSGkgRXJp
-YywKPiAKPiBPbiAyMDIwLTA3LTAyIDEzOjU3LCBBdWdlciBFcmljIHdyb3RlOgo+PiBIaSBKaW5n
-eWksCj4+Cj4+IE9uIDcvMi8yMCA1OjAxIEFNLCBKaW5neWkgV2FuZyB3cm90ZToKPj4+IElmIGdp
-Y3Y0LjEoc2dpIGhhcmR3YXJlIGluamVjdGlvbikgc3VwcG9ydGVkLCB3ZSB0ZXN0IGlwaSBpbmpl
-Y3Rpb24KPj4+IHZpYSBody9zdyB3YXkgc2VwYXJhdGVseS4KPj4+Cj4+PiBTaWduZWQtb2ZmLWJ5
-OiBKaW5neWkgV2FuZyA8d2FuZ2ppbmd5aTExQGh1YXdlaS5jb20+Cj4+PiAtLS0KPj4+IMKgYXJt
-L21pY3JvLWJlbmNoLmPCoMKgwqAgfCA0NSArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKysrKystLS0tLQo+Pj4gwqBsaWIvYXJtL2FzbS9naWMtdjMuaCB8wqAgMyArKysKPj4+IMKg
-bGliL2FybS9hc20vZ2ljLmjCoMKgwqAgfMKgIDEgKwo+Pj4gwqAzIGZpbGVzIGNoYW5nZWQsIDQ0
-IGluc2VydGlvbnMoKyksIDUgZGVsZXRpb25zKC0pCj4+Pgo+Pj4gZGlmZiAtLWdpdCBhL2FybS9t
-aWNyby1iZW5jaC5jIGIvYXJtL21pY3JvLWJlbmNoLmMKPj4+IGluZGV4IGZjNGQzNTYuLjgwZDhk
-YjMgMTAwNjQ0Cj4+PiAtLS0gYS9hcm0vbWljcm8tYmVuY2guYwo+Pj4gKysrIGIvYXJtL21pY3Jv
-LWJlbmNoLmMKPj4+IEBAIC05MSw5ICs5MSw0MCBAQCBzdGF0aWMgdm9pZCBnaWNfcHJlcF9jb21t
-b24odm9pZCkKPj4+IMKgwqDCoMKgIGFzc2VydChpcnFfcmVhZHkpOwo+Pj4gwqB9Cj4+Pgo+Pj4g
-LXN0YXRpYyB2b2lkIGlwaV9wcmVwKHZvaWQpCj4+PiArc3RhdGljIGJvb2wgaXBpX3ByZXAodm9p
-ZCkKPj4gQW55IHJlYXNvbiB3aHkgdGhlIGJvb2wgcmV0dXJuZWQgdmFsdWUgaXMgcHJlZmVycmVk
-IG92ZXIgdGhlIHN0YW5kYXJkCj4+IGludD8KPj4+IMKgewo+Pj4gK8KgwqDCoCB1MzIgdmFsOwo+
-Pj4gKwo+Pj4gK8KgwqDCoCB2YWwgPSByZWFkbCh2Z2ljX2Rpc3RfYmFzZSArIEdJQ0RfQ1RMUik7
-Cj4+PiArwqDCoMKgIGlmIChyZWFkbCh2Z2ljX2Rpc3RfYmFzZSArIEdJQ0RfVFlQRVIyKSAmIEdJ
-Q0RfVFlQRVIyX25BU1NHSWNhcCkgewo+Pj4gK8KgwqDCoMKgwqDCoMKgIHZhbCAmPSB+R0lDRF9D
-VExSX0VOQUJMRV9HMUE7Cj4+PiArwqDCoMKgwqDCoMKgwqAgdmFsICY9IH5HSUNEX0NUTFJfbkFT
-U0dJcmVxOwo+Pj4gK8KgwqDCoMKgwqDCoMKgIHdyaXRlbCh2YWwsIHZnaWNfZGlzdF9iYXNlICsg
-R0lDRF9DVExSKTsKPj4+ICvCoMKgwqDCoMKgwqDCoCB2YWwgfD0gR0lDRF9DVExSX0VOQUJMRV9H
-MUE7Cj4+PiArwqDCoMKgwqDCoMKgwqAgd3JpdGVsKHZhbCwgdmdpY19kaXN0X2Jhc2UgKyBHSUNE
-X0NUTFIpOwo+PiBXaHkgZG8gd2UgbmVlZCB0aGlzIEcxQSBkYW5jZT8KPiAKPiBCZWNhdXNlIGl0
-IGlzbid0IGxlZ2FsIHRvIGNoYW5nZSB0aGUgU0dJIGJlaGF2aW91ciB3aGVuIGdyb3VwcyBhcmUg
-ZW5hYmxlZC4KPiBZZXMsIGl0IGlzIGRlc2NyaWJlZCBpbiB0aGlzIGJpdCBvZiBkb2N1bWVudGF0
-aW9uIG5vYm9keSBoYXMgYWNjZXNzIHRvLgoKT0sgdGhhbmsgeW91IGZvciB0aGUgZXhwbGFuYXRp
-b24uIEppbmd5aSwgbWF5YmUgYWRkIGEgY29tbWVudCB0byBhdm9pZAp0aGUgcXVlc3Rpb24gYWdh
-aW4gOy0pCgpUaGFua3MKCkVyaWMKPiAKPiBBbmQgdGhpcyBjb2RlIG5lZWRzIHRvIHRyYWNrIFJX
-UCBvbiBkaXNhYmxpbmcgR3JvdXAtMS4KPiAKPiDCoMKgwqDCoMKgwqDCoCBNLgoKX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18Ka3ZtYXJtIG1haWxpbmcgbGlz
-dAprdm1hcm1AbGlzdHMuY3MuY29sdW1iaWEuZWR1Cmh0dHBzOi8vbGlzdHMuY3MuY29sdW1iaWEu
-ZWR1L21haWxtYW4vbGlzdGluZm8va3ZtYXJtCg==
+This patch series add support for dirty log based on HW DBM.
+
+It works well under some migration test cases, including VM with 4K
+pages or 2M THP. I checked the SHA256 hash digest of all memory and
+they keep same for source VM and destination VM, which means no dirty
+pages is missed under hardware DBM.
+
+Some key points:
+
+1. Only support hardware updates of dirty status for PTEs. PMDs and PUDs
+   are not involved for now.
+
+2. About *performance*: In RFC patch, I have mentioned that for every 64GB
+   memory, KVM consumes about 40ms to scan all PTEs to collect dirty log.
+   This patch solves this problem through two ways: HW/SW dynamic switch
+   and Multi-core offload.
+
+   HW/SW dynamic switch: Give userspace right to enable/disable hw dirty
+   log. This adds a new KVM cap named KVM_CAP_ARM_HW_DIRTY_LOG. We can
+   achieve this by change the kvm->arch.vtcr value and kick vCPUs out to
+   reload this value to VCTR_EL2. Then userspace can enable hw dirty log
+   at the begining and disable it when dirty pages is little and about to
+   stop VM, so VM downtime is not affected.
+
+   Multi-core offload: Offload the PT scanning workload to multi-core can
+   greatly reduce scanning time. To promise we can complete in time, I use
+   smp_call_fuction to realize this policy, which utilize IPI to dispatch
+   workload to other CPUs. Under 128U Kunpeng 920 platform, it just takes
+   about 5ms to scan PTs of 256 RAM (use mempress and almost all PTs have
+   been established). And We dispatch workload iterately (every CPU just
+   scan PTs of 512M RAM for each iteration), so it won't affect physical
+   CPUs seriously.
+
+3. About correctness: Only add DBM bit when PTE is already writable, so
+   we still have readonly PTE and some mechanisms which rely on readonly
+   PTs are not broken.
+
+4. About PTs modification races: There are two kinds of PTs modification.
+   
+   The first is adding or clearing specific bit, such as AF or RW. All
+   these operations have been converted to be atomic, avoid covering
+   dirty status set by hardware.
+   
+   The second is replacement, such as PTEs unmapping or changement. All
+   these operations will invoke kvm_set_pte finally. kvm_set_pte have
+   been converted to be atomic and we save the dirty status to underlying
+   bitmap if dirty status is coverred.
+
+Change log:
+
+v2:
+ - Address Steven's comments.
+ - Add support of parallel dirty log sync.
+ - Simplify and merge patches of v1.
+
+v1:
+ - Address Catalin's comments.
+
+Keqian Zhu (8):
+  KVM: arm64: Set DBM bit for writable PTEs
+  KVM: arm64: Scan PTEs to sync dirty log
+  KVM: arm64: Modify stage2 young mechanism to support hw DBM
+  KVM: arm64: Save stage2 PTE dirty status if it is covered
+  KVM: arm64: Steply write protect page table by mask bit
+  KVM: arm64: Add KVM_CAP_ARM_HW_DIRTY_LOG capability
+  KVM: arm64: Sync dirty log parallel
+  KVM: Omit dirty log sync in log clear if initially all set
+
+ arch/arm64/include/asm/kvm_host.h |   5 +
+ arch/arm64/include/asm/kvm_mmu.h  |  43 ++++-
+ arch/arm64/kvm/arm.c              |  45 ++++-
+ arch/arm64/kvm/mmu.c              | 307 ++++++++++++++++++++++++++++--
+ arch/arm64/kvm/reset.c            |   5 +
+ include/uapi/linux/kvm.h          |   1 +
+ tools/include/uapi/linux/kvm.h    |   1 +
+ virt/kvm/kvm_main.c               |   3 +-
+ 8 files changed, 389 insertions(+), 21 deletions(-)
+
+-- 
+2.19.1
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
