@@ -2,76 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 47BB8212371
-	for <lists+kvmarm@lfdr.de>; Thu,  2 Jul 2020 14:36:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83F4F212374
+	for <lists+kvmarm@lfdr.de>; Thu,  2 Jul 2020 14:36:43 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B2EB44B5F4;
-	Thu,  2 Jul 2020 08:36:38 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 36FC54B5F5;
+	Thu,  2 Jul 2020 08:36:43 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Ao1w4ajBvqvn; Thu,  2 Jul 2020 08:36:38 -0400 (EDT)
+	with ESMTP id NPQpi+Vhtlhu; Thu,  2 Jul 2020 08:36:42 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B08A74B5E0;
-	Thu,  2 Jul 2020 08:36:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 15C364B601;
+	Thu,  2 Jul 2020 08:36:42 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EA2A74B57B
- for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 08:36:36 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 400534B3FF
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 08:36:41 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id DNqAIYFdRSqp for <kvmarm@lists.cs.columbia.edu>;
- Thu,  2 Jul 2020 08:36:36 -0400 (EDT)
-Received: from us-smtp-1.mimecast.com (us-smtp-1.mimecast.com [207.211.31.81])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 289894B3FF
- for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 08:36:36 -0400 (EDT)
+ with ESMTP id lMy979GATBJH for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  2 Jul 2020 08:36:40 -0400 (EDT)
+Received: from us-smtp-1.mimecast.com (us-smtp-delivery-1.mimecast.com
+ [205.139.110.120])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5120C4B5DF
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 08:36:40 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1593693396;
+ s=mimecast20190719; t=1593693400;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eu+kJ7Ihi6JK3py5LXu63NgxsOOft47n07UKf0C3e2o=;
- b=iUKGQ/ExaGk+GFCDuMvQGeJvWn5/xmd4xPZCT5T2TmoAHCashdp0s6GDLszc2fbIe79Q+9
- sE8SvDK/ta1SvgeOLJzN+/8k87q4cXzzQyxgxspkb6mn90+VNhQXSaPvndfwshIZpwZY+A
- cfxmiUnUf87+xTfsV8PVkQSZbOw7PjI=
+ bh=F6txGPJf3/pYs89gmu9iU2ZLMdOhpZiTs7tIqLOSO7M=;
+ b=aDixymuBiU9PzaeWUmwp7mUDMDhpRHz6Jlbm3CHXNMuiDdQitXNf6Jky/qZoGWCv01Ijz0
+ nzHeXJ6k3XQJSrhEfEH2w3B2L92OAGv7P5wsafl/6rdUOZBCCzimx9SxxygJXHwlofvrhF
+ Iq+VVeqjS5kt6KwnIcKJRS6I7J1H56k=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-495-e9ZQNIuSODy3s9yfzPHlpA-1; Thu, 02 Jul 2020 08:36:34 -0400
-X-MC-Unique: e9ZQNIuSODy3s9yfzPHlpA-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.phx2.redhat.com
- [10.5.11.15])
+ us-mta-140-RhTXJ50_Pp-MhGT2WywtGg-1; Thu, 02 Jul 2020 08:36:36 -0400
+X-MC-Unique: RhTXJ50_Pp-MhGT2WywtGg-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com
+ [10.5.11.11])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id C90BB107ACF8;
- Thu,  2 Jul 2020 12:36:32 +0000 (UTC)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id D9C29107B7C9;
+ Thu,  2 Jul 2020 12:36:34 +0000 (UTC)
 Received: from [10.36.112.70] (ovpn-112-70.ams2.redhat.com [10.36.112.70])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 983D773FD1;
- Thu,  2 Jul 2020 12:36:31 +0000 (UTC)
-Subject: Re: [kvm-unit-tests PATCH v2 3/8] arm64: microbench: gic: Add gicv4.1
- support for ipi latency test.
-To: Marc Zyngier <maz@kernel.org>, Jingyi Wang <wangjingyi11@huawei.com>
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 39748741AF;
+ Thu,  2 Jul 2020 12:36:33 +0000 (UTC)
+Subject: Re: [kvm-unit-tests PATCH v2 2/8] arm64: microbench: Use the funcions
+ for ipi test as the general functions for gic(ipi/lpi/timer) test
+To: Jingyi Wang <wangjingyi11@huawei.com>, drjones@redhat.com,
+ kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
 References: <20200702030132.20252-1-wangjingyi11@huawei.com>
- <20200702030132.20252-4-wangjingyi11@huawei.com>
- <fe9699e3ee2131fe800911aea1425af4@kernel.org>
+ <20200702030132.20252-3-wangjingyi11@huawei.com>
 From: Auger Eric <eric.auger@redhat.com>
-Message-ID: <dabc2406-4a7f-61cf-cdbd-b0b79d97bf2c@redhat.com>
-Date: Thu, 2 Jul 2020 14:36:30 +0200
+Message-ID: <c862d39b-37e7-472f-c5ce-5f47ce76af87@redhat.com>
+Date: Thu, 2 Jul 2020 14:36:31 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.5.0
 MIME-Version: 1.0
-In-Reply-To: <fe9699e3ee2131fe800911aea1425af4@kernel.org>
+In-Reply-To: <20200702030132.20252-3-wangjingyi11@huawei.com>
 Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
-Cc: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+Cc: maz@kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -83,23 +84,122 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-SGkgTWFyYywKCk9uIDcvMi8yMCAxMDoyMiBBTSwgTWFyYyBaeW5naWVyIHdyb3RlOgo+IE9uIDIw
-MjAtMDctMDIgMDQ6MDEsIEppbmd5aSBXYW5nIHdyb3RlOgo+PiBJZiBnaWN2NC4xKHNnaSBoYXJk
-d2FyZSBpbmplY3Rpb24pIHN1cHBvcnRlZCwgd2UgdGVzdCBpcGkgaW5qZWN0aW9uCj4+IHZpYSBo
-dy9zdyB3YXkgc2VwYXJhdGVseS4KPiAKPiBuaXQ6IGFjdGl2ZS1sZXNzIFNHSXMgYXJlIG5vdCBz
-dHJpY3RseSBhIGZlYXR1cmUgb2YgR0lDdjQuMSAoeW91IGNvdWxkCj4gaW1hZ2luZSBhIEdJQyBl
-bXVsYXRpb24gb2ZmZXJpbmcgdGhlIHNhbWUgdGhpbmcpLiBGdXJ0aGVybW9yZSwgR0lDdjQuMQo+
-IGlzbid0IGFzIHN1Y2ggdmlzaWJsZSB0byB0aGUgZ3Vlc3QgaXRzZWxmIChpdCBvbmx5IHNlZXMg
-YSBHSUN2MykuCgpCeSB0aGUgd2F5LCBJIGhhdmUganVzdCBkb3dubG9hZGVkIHRoZSBsYXRlc3Qg
-R0lDIHNwZWMgZnJvbSB0aGUgQVJNCnBvcnRhbCBhbmQgSSBzdGlsbCBkbyBub3QgZmluZCB0aGUg
-R0lDRF9DVExSX0VOQUJMRV9HMUEsCkdJQ0RfQ1RMUl9uQVNTR0lyZXEgYW5kIEdJQ0RfVFlQRVIy
-X25BU1NHSWNhcC4gRG8gSSBtaXNzIHNvbWV0aGluZz8KClRoYW5rcwoKRXJpYwoKCj4gCj4gVGhh
-bmtzLAo+IAo+IMKgwqDCoMKgwqDCoMKgIE0uCgpfX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5j
-b2x1bWJpYS5lZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5m
-by9rdm1hcm0K
+Hi,
+
+On 7/2/20 5:01 AM, Jingyi Wang wrote:
+> The following patches will use that.
+> 
+> Signed-off-by: Jingyi Wang <wangjingyi11@huawei.com>
+> ---
+>  arm/micro-bench.c | 39 ++++++++++++++++++++++-----------------
+>  1 file changed, 22 insertions(+), 17 deletions(-)
+> 
+With commit message suggested by Drew,
+
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+
+Eric
+> diff --git a/arm/micro-bench.c b/arm/micro-bench.c
+> index 794dfac..fc4d356 100644
+> --- a/arm/micro-bench.c
+> +++ b/arm/micro-bench.c
+> @@ -25,24 +25,24 @@
+>  
+>  static u32 cntfrq;
+>  
+> -static volatile bool ipi_ready, ipi_received;
+> +static volatile bool irq_ready, irq_received;
+>  static void *vgic_dist_base;
+>  static void (*write_eoir)(u32 irqstat);
+>  
+> -static void ipi_irq_handler(struct pt_regs *regs)
+> +static void gic_irq_handler(struct pt_regs *regs)
+>  {
+> -	ipi_ready = false;
+> -	ipi_received = true;
+> +	irq_ready = false;
+> +	irq_received = true;
+>  	gic_write_eoir(gic_read_iar());
+> -	ipi_ready = true;
+> +	irq_ready = true;
+>  }
+>  
+> -static void ipi_secondary_entry(void *data)
+> +static void gic_secondary_entry(void *data)
+>  {
+> -	install_irq_handler(EL1H_IRQ, ipi_irq_handler);
+> +	install_irq_handler(EL1H_IRQ, gic_irq_handler);
+>  	gic_enable_defaults();
+>  	local_irq_enable();
+> -	ipi_ready = true;
+> +	irq_ready = true;
+>  	while (true)
+>  		cpu_relax();
+>  }
+> @@ -72,9 +72,9 @@ static bool test_init(void)
+>  		break;
+>  	}
+>  
+> -	ipi_ready = false;
+> +	irq_ready = false;
+>  	gic_enable_defaults();
+> -	on_cpu_async(1, ipi_secondary_entry, NULL);
+> +	on_cpu_async(1, gic_secondary_entry, NULL);
+>  
+>  	cntfrq = get_cntfrq();
+>  	printf("Timer Frequency %d Hz (Output in microseconds)\n", cntfrq);
+> @@ -82,13 +82,18 @@ static bool test_init(void)
+>  	return true;
+>  }
+>  
+> -static void ipi_prep(void)
+> +static void gic_prep_common(void)
+>  {
+>  	unsigned tries = 1 << 28;
+>  
+> -	while (!ipi_ready && tries--)
+> +	while (!irq_ready && tries--)
+>  		cpu_relax();
+> -	assert(ipi_ready);
+> +	assert(irq_ready);
+> +}
+> +
+> +static void ipi_prep(void)
+> +{
+> +	gic_prep_common();
+>  }
+>  
+>  static void ipi_exec(void)
+> @@ -96,17 +101,17 @@ static void ipi_exec(void)
+>  	unsigned tries = 1 << 28;
+>  	static int received = 0;
+>  
+> -	ipi_received = false;
+> +	irq_received = false;
+>  
+>  	gic_ipi_send_single(1, 1);
+>  
+> -	while (!ipi_received && tries--)
+> +	while (!irq_received && tries--)
+>  		cpu_relax();
+>  
+> -	if (ipi_received)
+> +	if (irq_received)
+>  		++received;
+>  
+> -	assert_msg(ipi_received, "failed to receive IPI in time, but received %d successfully\n", received);
+> +	assert_msg(irq_received, "failed to receive IPI in time, but received %d successfully\n", received);
+>  }
+>  
+>  static void hvc_exec(void)
+> 
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
