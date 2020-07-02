@@ -2,47 +2,47 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E9C7F211A73
-	for <lists+kvmarm@lfdr.de>; Thu,  2 Jul 2020 05:02:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40392211A6C
+	for <lists+kvmarm@lfdr.de>; Thu,  2 Jul 2020 05:02:40 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9C2CF4B598;
-	Wed,  1 Jul 2020 23:02:43 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E7DC44B569;
+	Wed,  1 Jul 2020 23:02:39 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+	SPF_HELO_PASS=-0.001] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id fsqUSMEneDiJ; Wed,  1 Jul 2020 23:02:43 -0400 (EDT)
+	with ESMTP id W8lK3COBcFpG; Wed,  1 Jul 2020 23:02:38 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 465D34B5A0;
-	Wed,  1 Jul 2020 23:02:41 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CCFFD4B580;
+	Wed,  1 Jul 2020 23:02:37 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 70D2B4B4CE
- for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Jul 2020 23:02:40 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 38A674B572
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Jul 2020 23:02:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id jNJ0+EqVc8yc for <kvmarm@lists.cs.columbia.edu>;
- Wed,  1 Jul 2020 23:02:39 -0400 (EDT)
+ with ESMTP id jyOZ9Z7S60Mm for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  1 Jul 2020 23:02:35 -0400 (EDT)
 Received: from huawei.com (szxga07-in.huawei.com [45.249.212.35])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A37494B56A
- for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Jul 2020 23:02:37 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BC7D74B569
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Jul 2020 23:02:34 -0400 (EDT)
 Received: from DGGEMS405-HUB.china.huawei.com (unknown [172.30.72.60])
- by Forcepoint Email with ESMTP id 92D6A7303B63728EDB9E;
+ by Forcepoint Email with ESMTP id 6708DC55B26981E027C7;
  Thu,  2 Jul 2020 11:02:30 +0800 (CST)
 Received: from DESKTOP-FPN2511.china.huawei.com (10.174.187.42) by
  DGGEMS405-HUB.china.huawei.com (10.3.19.205) with Microsoft SMTP Server id
  14.3.487.0; Thu, 2 Jul 2020 11:02:23 +0800
 From: Jingyi Wang <wangjingyi11@huawei.com>
 To: <drjones@redhat.com>, <kvm@vger.kernel.org>, <kvmarm@lists.cs.columbia.edu>
-Subject: [kvm-unit-tests PATCH v2 5/8] arm64: microbench: its: Add LPI latency
- test
-Date: Thu, 2 Jul 2020 11:01:29 +0800
-Message-ID: <20200702030132.20252-6-wangjingyi11@huawei.com>
+Subject: [kvm-unit-tests PATCH v2 6/8] arm64: microbench: Allow each test to
+ specify its running times
+Date: Thu, 2 Jul 2020 11:01:30 +0800
+Message-ID: <20200702030132.20252-7-wangjingyi11@huawei.com>
 X-Mailer: git-send-email 2.14.1.windows.1
 In-Reply-To: <20200702030132.20252-1-wangjingyi11@huawei.com>
 References: <20200702030132.20252-1-wangjingyi11@huawei.com>
@@ -66,84 +66,75 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Triggers LPIs through the INT command and test the latency.
-Mostly inherited form commit 0ef02cd6cbaa(arm/arm64: ITS: INT
-functional tests).
+For some test in micro-bench can be time consuming, we add a
+micro-bench test parameter to allow each individual test to specify
+its running times.
 
 Signed-off-by: Jingyi Wang <wangjingyi11@huawei.com>
 ---
- arm/micro-bench.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+ arm/micro-bench.c | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
 diff --git a/arm/micro-bench.c b/arm/micro-bench.c
-index 80d8db3..aeb60a7 100644
+index aeb60a7..506d2f9 100644
 --- a/arm/micro-bench.c
 +++ b/arm/micro-bench.c
-@@ -20,6 +20,7 @@
-  */
- #include <libcflat.h>
- #include <asm/gic.h>
-+#include <asm/gic-v3-its.h>
+@@ -223,17 +223,18 @@ struct exit_test {
+ 	const char *name;
+ 	bool (*prep)(void);
+ 	void (*exec)(void);
++	u32 times;
+ 	bool run;
+ };
  
- #define NTIMES (1U << 16)
- 
-@@ -145,6 +146,48 @@ static void ipi_exec(void)
- 	assert_msg(irq_received, "failed to receive IPI in time, but received %d successfully\n", received);
- }
- 
-+static bool lpi_prep(void)
-+{
-+	struct its_collection *col1;
-+	struct its_device *dev2;
-+
-+	if (!gicv3_its_base())
-+		return false;
-+
-+	its_enable_defaults();
-+	dev2 = its_create_device(2 /* dev id */, 8 /* nb_ites */);
-+	col1 = its_create_collection(1 /* col id */, 1 /* target PE */);
-+	gicv3_lpi_set_config(8199, LPI_PROP_DEFAULT);
-+
-+	its_send_mapd_nv(dev2, true);
-+	its_send_mapc_nv(col1, true);
-+	its_send_invall_nv(col1);
-+	its_send_mapti_nv(dev2, 8199 /* lpi id */, 20 /* event id */, col1);
-+
-+	gic_prep_common();
-+	return true;
-+}
-+
-+static void lpi_exec(void)
-+{
-+	struct its_device *dev2;
-+	unsigned tries = 1 << 28;
-+	static int received = 0;
-+
-+	irq_received = false;
-+
-+	dev2 = its_get_device(2);
-+	its_send_int_nv(dev2, 20);
-+
-+	while (!irq_received && tries--)
-+		cpu_relax();
-+
-+	if (irq_received)
-+		++received;
-+
-+	assert_msg(irq_received, "failed to receive LPI in time, but received %d successfully\n", received);
-+}
-+
- static void hvc_exec(void)
- {
- 	asm volatile("mov w0, #0x4b000000; hvc #0" ::: "w0");
-@@ -190,6 +233,7 @@ static struct exit_test tests[] = {
- 	{"eoi",			NULL,		eoi_exec,		true},
- 	{"ipi",			ipi_prep,	ipi_exec,		true},
- 	{"ipi_hw",		ipi_hw_prep,	ipi_exec,		true},
-+	{"lpi",			lpi_prep,	lpi_exec,		true},
+ static struct exit_test tests[] = {
+-	{"hvc",			NULL,		hvc_exec,		true},
+-	{"mmio_read_user",	NULL,		mmio_read_user_exec,	true},
+-	{"mmio_read_vgic",	NULL,		mmio_read_vgic_exec,	true},
+-	{"eoi",			NULL,		eoi_exec,		true},
+-	{"ipi",			ipi_prep,	ipi_exec,		true},
+-	{"ipi_hw",		ipi_hw_prep,	ipi_exec,		true},
+-	{"lpi",			lpi_prep,	lpi_exec,		true},
++	{"hvc",			NULL,		hvc_exec,		NTIMES,		true},
++	{"mmio_read_user",	NULL,		mmio_read_user_exec,	NTIMES,		true},
++	{"mmio_read_vgic",	NULL,		mmio_read_vgic_exec,	NTIMES,		true},
++	{"eoi",			NULL,		eoi_exec,		NTIMES,		true},
++	{"ipi",			ipi_prep,	ipi_exec,		NTIMES,		true},
++	{"ipi_hw",		ipi_hw_prep,	ipi_exec,		NTIMES,		true},
++	{"lpi",			lpi_prep,	lpi_exec,		NTIMES,		true},
  };
  
  struct ns_time {
+@@ -254,7 +255,7 @@ static void ticks_to_ns_time(uint64_t ticks, struct ns_time *ns_time)
+ 
+ static void loop_test(struct exit_test *test)
+ {
+-	uint64_t start, end, total_ticks, ntimes = NTIMES;
++	uint64_t start, end, total_ticks, ntimes = 0;
+ 	struct ns_time total_ns, avg_ns;
+ 
+ 	if (test->prep) {
+@@ -265,15 +266,17 @@ static void loop_test(struct exit_test *test)
+ 	}
+ 	isb();
+ 	start = read_sysreg(cntpct_el0);
+-	while (ntimes--)
++	while (ntimes < test->times) {
+ 		test->exec();
++		ntimes++;
++	}
+ 	isb();
+ 	end = read_sysreg(cntpct_el0);
+ 
+ 	total_ticks = end - start;
+ 	ticks_to_ns_time(total_ticks, &total_ns);
+-	avg_ns.ns = total_ns.ns / NTIMES;
+-	avg_ns.ns_frac = total_ns.ns_frac / NTIMES;
++	avg_ns.ns = total_ns.ns / ntimes;
++	avg_ns.ns_frac = total_ns.ns_frac / ntimes;
+ 
+ 	printf("%-30s%15" PRId64 ".%-15" PRId64 "%15" PRId64 ".%-15" PRId64 "\n",
+ 		test->name, total_ns.ns, total_ns.ns_frac, avg_ns.ns, avg_ns.ns_frac);
 -- 
 2.19.1
 
