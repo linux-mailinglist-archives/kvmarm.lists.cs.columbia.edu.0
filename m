@@ -2,74 +2,66 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 64EE9212EE5
-	for <lists+kvmarm@lfdr.de>; Thu,  2 Jul 2020 23:33:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B79AC213161
+	for <lists+kvmarm@lfdr.de>; Fri,  3 Jul 2020 04:36:14 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BDB484B17A;
-	Thu,  2 Jul 2020 17:33:35 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 679DC4B264;
+	Thu,  2 Jul 2020 22:36:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dxRbIs4CHNC5; Thu,  2 Jul 2020 17:33:35 -0400 (EDT)
+	with ESMTP id WWdpkcQkJP9D; Thu,  2 Jul 2020 22:36:13 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A01854B176;
-	Thu,  2 Jul 2020 17:33:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 487AD4B28E;
+	Thu,  2 Jul 2020 22:36:10 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id BA1D84B170
- for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 17:33:33 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6F83F4B267
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 22:36:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 7K+OM-0gNPeU for <kvmarm@lists.cs.columbia.edu>;
- Thu,  2 Jul 2020 17:33:31 -0400 (EDT)
-Received: from us-smtp-delivery-1.mimecast.com (us-smtp-2.mimecast.com
- [205.139.110.61])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DFF854B16B
- for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 17:33:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1593725611;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0h1v1gqoiYvmFvRrxXEUuS8DGV7OpPpVRJ2+qA494c0=;
- b=bMsfqgsRo9y0umabz2MyOc85fcioacMp5u2ZWIobyZmkb4O2vVCTOTqtxPS5klruEnClU2
- vucNzDuhDzjCYaqe0DYgy2xCNBdR6z4RW2oKwxvRWRheXb9BJCJwfh1O5iWyRS4KJ19X90
- RggujmFgJzO3D3LIU65X0sOEEztUzTM=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-110-sOPfLPf9ON2iAjzy-rk44A-1; Thu, 02 Jul 2020 17:33:29 -0400
-X-MC-Unique: sOPfLPf9ON2iAjzy-rk44A-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com
- [10.5.11.14])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 556CD186A200;
- Thu,  2 Jul 2020 21:33:28 +0000 (UTC)
-Received: from kamzik.brq.redhat.com (unknown [10.40.192.87])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 497047610C;
- Thu,  2 Jul 2020 21:33:23 +0000 (UTC)
-Date: Thu, 2 Jul 2020 23:33:20 +0200
-From: Andrew Jones <drjones@redhat.com>
-To: Auger Eric <eric.auger@redhat.com>
-Subject: Re: [kvm-unit-tests PATCH v2 3/8] arm64: microbench: gic: Add
- gicv4.1 support for ipi latency test.
-Message-ID: <20200702213320.6okdtuesqkpz3c3t@kamzik.brq.redhat.com>
-References: <20200702030132.20252-1-wangjingyi11@huawei.com>
- <20200702030132.20252-4-wangjingyi11@huawei.com>
- <087ef371-5e7b-e0b2-900f-67b2eacb4e0f@redhat.com>
+ with ESMTP id XNM+WZAP6UIy for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  2 Jul 2020 22:36:06 -0400 (EDT)
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7191A4B150
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 22:36:06 -0400 (EDT)
+IronPort-SDR: icECRyZKkXFiRzJc3RRqZsXv02oTwzbxMvRbsfkh08racbU/1IyFQwi8Qk9ZSbmThKss8WV45b
+ jsYRLyBdM5cg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9670"; a="231938474"
+X-IronPort-AV: E=Sophos;i="5.75,306,1589266800"; d="scan'208";a="231938474"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+ by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jul 2020 19:36:05 -0700
+IronPort-SDR: T2DxoJ+6pDgQH7e5SIxXyTgQ9QkegMOBSCNjFHu7YUc0H8gIQqRN5KQHpGrfYlDlqtc8ESDZ15
+ OICltGe0pc2w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,306,1589266800"; d="scan'208";a="278295716"
+Received: from sjchrist-coffee.jf.intel.com ([10.54.74.152])
+ by orsmga003.jf.intel.com with ESMTP; 02 Jul 2020 19:36:04 -0700
+From: Sean Christopherson <sean.j.christopherson@intel.com>
+To: Marc Zyngier <maz@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH v3 00/21] KVM: Cleanup and unify kvm_mmu_memory_cache usage
+Date: Thu,  2 Jul 2020 19:35:24 -0700
+Message-Id: <20200703023545.8771-1-sean.j.christopherson@intel.com>
+X-Mailer: git-send-email 2.26.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <087ef371-5e7b-e0b2-900f-67b2eacb4e0f@redhat.com>
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-Cc: kvm@vger.kernel.org, maz@kernel.org, kvmarm@lists.cs.columbia.edu
+Cc: linux-arch@vger.kernel.org, Junaid Shahid <junaids@google.com>,
+ Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
+ Joerg Roedel <joro@8bytes.org>, Peter Shier <pshier@google.com>,
+ linux-mips@vger.kernel.org,
+ Sean Christopherson <sean.j.christopherson@intel.com>,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ Ben Gardon <bgardon@google.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ Peter Feiner <pfeiner@google.com>, kvmarm@lists.cs.columbia.edu,
+ Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -86,36 +78,92 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Jul 02, 2020 at 02:57:56PM +0200, Auger Eric wrote:
-> Hi Jingyi,
-> 
-> On 7/2/20 5:01 AM, Jingyi Wang wrote:
-> > If gicv4.1(sgi hardware injection) supported, we test ipi injection
-> > via hw/sw way separately.
-> > 
-> > Signed-off-by: Jingyi Wang <wangjingyi11@huawei.com>
-> > ---
-> >  arm/micro-bench.c    | 45 +++++++++++++++++++++++++++++++++++++++-----
-> >  lib/arm/asm/gic-v3.h |  3 +++
-> >  lib/arm/asm/gic.h    |  1 +
-> >  3 files changed, 44 insertions(+), 5 deletions(-)
-> > 
-> > diff --git a/arm/micro-bench.c b/arm/micro-bench.c
-> > index fc4d356..80d8db3 100644
-> > --- a/arm/micro-bench.c
-> > +++ b/arm/micro-bench.c
-> > @@ -91,9 +91,40 @@ static void gic_prep_common(void)
-> >  	assert(irq_ready);
-> >  }
-> >  
-> > -static void ipi_prep(void)
-> > +static bool ipi_prep(void)
-> Any reason why the bool returned value is preferred over the standard int?
+The only interesting delta from v2 is that patch 18 is updated to handle
+a conflict with arm64's p4d rework.  Resolution was straightforward
+(famous last words).
 
-Why would an int be preferred over bool if the return is boolean?
 
-Thanks,
-drew
+This series resurrects Christoffer Dall's series[1] to provide a common
+MMU memory cache implementation that can be shared by x86, arm64 and MIPS.
+
+It also picks up a suggested change from Ben Gardon[2] to clear shadow
+page tables during initial allocation so as to avoid clearing entire
+pages while holding mmu_lock.
+
+The front half of the patches do house cleaning on x86's memory cache
+implementation in preparation for moving it to common code, along with a
+fair bit of cleanup on the usage.  The middle chunk moves the patches to
+common KVM, and the last two chunks convert arm64 and MIPS to the common
+implementation.
+
+Fully tested on x86 only.  Compile tested patches 14-21 on arm64, MIPS,
+s390 and PowerPC.
+
+v3:
+  - Rebased to kvm/queue, commit a037ff353ba6 ("Merge ... into HEAD")
+  - Collect more review tags. [Ben]
+
+v2:
+  - Rebase to kvm-5.8-2, commit 49b3deaad345 ("Merge tag ...").
+  - Use an asm-generic kvm_types.h for s390 and PowerPC instead of an
+    empty arch-specific file. [Marc]
+  - Explicit document "GFP_PGTABLE_USER == GFP_KERNEL_ACCOUNT | GFP_ZERO"
+    in the arm64 conversion patch. [Marc]
+  - Collect review tags. [Ben]
+
+Sean Christopherson (21):
+  KVM: x86/mmu: Track the associated kmem_cache in the MMU caches
+  KVM: x86/mmu: Consolidate "page" variant of memory cache helpers
+  KVM: x86/mmu: Use consistent "mc" name for kvm_mmu_memory_cache locals
+  KVM: x86/mmu: Remove superfluous gotos from mmu_topup_memory_caches()
+  KVM: x86/mmu: Try to avoid crashing KVM if a MMU memory cache is empty
+  KVM: x86/mmu: Move fast_page_fault() call above
+    mmu_topup_memory_caches()
+  KVM: x86/mmu: Topup memory caches after walking GVA->GPA
+  KVM: x86/mmu: Clean up the gorilla math in mmu_topup_memory_caches()
+  KVM: x86/mmu: Separate the memory caches for shadow pages and gfn
+    arrays
+  KVM: x86/mmu: Make __GFP_ZERO a property of the memory cache
+  KVM: x86/mmu: Zero allocate shadow pages (outside of mmu_lock)
+  KVM: x86/mmu: Skip filling the gfn cache for guaranteed direct MMU
+    topups
+  KVM: x86/mmu: Prepend "kvm_" to memory cache helpers that will be
+    global
+  KVM: Move x86's version of struct kvm_mmu_memory_cache to common code
+  KVM: Move x86's MMU memory cache helpers to common KVM code
+  KVM: arm64: Drop @max param from mmu_topup_memory_cache()
+  KVM: arm64: Use common code's approach for __GFP_ZERO with memory
+    caches
+  KVM: arm64: Use common KVM implementation of MMU memory caches
+  KVM: MIPS: Drop @max param from mmu_topup_memory_cache()
+  KVM: MIPS: Account pages used for GPA page tables
+  KVM: MIPS: Use common KVM implementation of MMU memory caches
+
+ arch/arm64/include/asm/kvm_host.h  |  11 ---
+ arch/arm64/include/asm/kvm_types.h |   8 ++
+ arch/arm64/kvm/arm.c               |   2 +
+ arch/arm64/kvm/mmu.c               |  56 +++----------
+ arch/mips/include/asm/kvm_host.h   |  11 ---
+ arch/mips/include/asm/kvm_types.h  |   7 ++
+ arch/mips/kvm/mmu.c                |  44 ++--------
+ arch/powerpc/include/asm/Kbuild    |   1 +
+ arch/s390/include/asm/Kbuild       |   1 +
+ arch/x86/include/asm/kvm_host.h    |  14 +---
+ arch/x86/include/asm/kvm_types.h   |   7 ++
+ arch/x86/kvm/mmu/mmu.c             | 129 +++++++++--------------------
+ arch/x86/kvm/mmu/paging_tmpl.h     |  10 +--
+ include/asm-generic/kvm_types.h    |   5 ++
+ include/linux/kvm_host.h           |   7 ++
+ include/linux/kvm_types.h          |  19 +++++
+ virt/kvm/kvm_main.c                |  55 ++++++++++++
+ 17 files changed, 176 insertions(+), 211 deletions(-)
+ create mode 100644 arch/arm64/include/asm/kvm_types.h
+ create mode 100644 arch/mips/include/asm/kvm_types.h
+ create mode 100644 arch/x86/include/asm/kvm_types.h
+ create mode 100644 include/asm-generic/kvm_types.h
+
+-- 
+2.26.0
 
 _______________________________________________
 kvmarm mailing list
