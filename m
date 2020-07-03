@@ -2,57 +2,56 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id F41B0213163
-	for <lists+kvmarm@lfdr.de>; Fri,  3 Jul 2020 04:36:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 356A6213175
+	for <lists+kvmarm@lfdr.de>; Fri,  3 Jul 2020 04:36:26 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 93EE14B2E5;
-	Thu,  2 Jul 2020 22:36:15 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AE5154B288;
+	Thu,  2 Jul 2020 22:36:25 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KtLaC8irFl+o; Thu,  2 Jul 2020 22:36:15 -0400 (EDT)
+	with ESMTP id 2NJ4iAGRIGjX; Thu,  2 Jul 2020 22:36:25 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7E98C4B25B;
-	Thu,  2 Jul 2020 22:36:10 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B3E974B2CD;
+	Thu,  2 Jul 2020 22:36:14 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 473FE4B26C
- for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 22:36:09 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 73C904B295
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 22:36:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id GtkUgu5K5oII for <kvmarm@lists.cs.columbia.edu>;
- Thu,  2 Jul 2020 22:36:08 -0400 (EDT)
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0B1E24B25F
- for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 22:36:07 -0400 (EDT)
-IronPort-SDR: lOjyMrU+bmwtzZVctH7//3SQ7dYr3LAvTY+3RfWQUxiUnITpO0+K/BkM8QWnU+kJ4WzMKSQ/nQ
- KPNEJ4n7HEjQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9670"; a="231938491"
-X-IronPort-AV: E=Sophos;i="5.75,306,1589266800"; d="scan'208";a="231938491"
+ with ESMTP id RYQWc7d1Aw9I for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  2 Jul 2020 22:36:09 -0400 (EDT)
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 088C84B267
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jul 2020 22:36:08 -0400 (EDT)
+IronPort-SDR: AwAVUNorfDlpezalz2ZMSM/hqa5kJ7cCLrla2A15QDESjPeENisxPA0S01p8dws14vZXmUOfQ/
+ oGbvVJ8Dmq6Q==
+X-IronPort-AV: E=McAfee;i="6000,8403,9670"; a="147086667"
+X-IronPort-AV: E=Sophos;i="5.75,306,1589266800"; d="scan'208";a="147086667"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  02 Jul 2020 19:36:06 -0700
-IronPort-SDR: PFslKE7FImhgbkhI1kag4qP27HpXp33Wl+BVDjfY4qg20UNFz+mjVTnpk7iL3nyjg1hf0g2jlp
- 3C6M1DYUpGiQ==
+IronPort-SDR: gc+V4jelwd6cdgDX/gNAN+SSR2GE6Zg27AtHAEY7cnfQ0WEuRH0dbo014d86x55dkDeDQ0CoOi
+ ASJavvqq280g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,306,1589266800"; d="scan'208";a="278295773"
+X-IronPort-AV: E=Sophos;i="5.75,306,1589266800"; d="scan'208";a="278295778"
 Received: from sjchrist-coffee.jf.intel.com ([10.54.74.152])
  by orsmga003.jf.intel.com with ESMTP; 02 Jul 2020 19:36:06 -0700
 From: Sean Christopherson <sean.j.christopherson@intel.com>
 To: Marc Zyngier <maz@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH v3 16/21] KVM: arm64: Drop @max param from
- mmu_topup_memory_cache()
-Date: Thu,  2 Jul 2020 19:35:40 -0700
-Message-Id: <20200703023545.8771-17-sean.j.christopherson@intel.com>
+Subject: [PATCH v3 17/21] KVM: arm64: Use common code's approach for
+ __GFP_ZERO with memory caches
+Date: Thu,  2 Jul 2020 19:35:41 -0700
+Message-Id: <20200703023545.8771-18-sean.j.christopherson@intel.com>
 X-Mailer: git-send-email 2.26.0
 In-Reply-To: <20200703023545.8771-1-sean.j.christopherson@intel.com>
 References: <20200703023545.8771-1-sean.j.christopherson@intel.com>
@@ -82,61 +81,86 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Replace the @max param in mmu_topup_memory_cache() and instead use
-ARRAY_SIZE() to terminate the loop to fill the cache.  This removes a
-BUG_ON() and sets the stage for moving arm64 to the common memory cache
-implementation.
+Add a "gfp_zero" member to arm64's 'struct kvm_mmu_memory_cache' to make
+the struct and its usage compatible with the common 'struct
+kvm_mmu_memory_cache' in linux/kvm_host.h.  This will minimize code
+churn when arm64 moves to the common implementation in a future patch, at
+the cost of temporarily having somewhat silly code.
+
+Note, GFP_PGTABLE_USER is equivalent to GFP_KERNEL_ACCOUNT | GFP_ZERO:
+
+  #define GFP_PGTABLE_USER  (GFP_PGTABLE_KERNEL | __GFP_ACCOUNT)
+  |
+  -> #define GFP_PGTABLE_KERNEL        (GFP_KERNEL | __GFP_ZERO)
+
+  == GFP_KERNEL | __GFP_ACCOUNT | __GFP_ZERO
+
+versus
+
+  #define GFP_KERNEL_ACCOUNT (GFP_KERNEL | __GFP_ACCOUNT)
+
+    with __GFP_ZERO explicitly OR'd in
+
+  == GFP_KERNEL | __GFP_ACCOUNT | __GFP_ZERO
 
 No functional change intended.
 
 Tested-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
 ---
- arch/arm64/kvm/mmu.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ arch/arm64/include/asm/kvm_host.h | 1 +
+ arch/arm64/kvm/arm.c              | 2 ++
+ arch/arm64/kvm/mmu.c              | 5 +++--
+ 3 files changed, 6 insertions(+), 2 deletions(-)
 
+diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+index c3e6fcc664b1..335170b59899 100644
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -105,6 +105,7 @@ struct kvm_arch {
+  */
+ struct kvm_mmu_memory_cache {
+ 	int nobjs;
++	gfp_t gfp_zero;
+ 	void *objects[KVM_NR_MEM_OBJS];
+ };
+ 
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 90cb90561446..1016635b3782 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -270,6 +270,8 @@ int kvm_arch_vcpu_create(struct kvm_vcpu *vcpu)
+ 	vcpu->arch.target = -1;
+ 	bitmap_zero(vcpu->arch.features, KVM_VCPU_MAX_FEATURES);
+ 
++	vcpu->arch.mmu_page_cache.gfp_zero = __GFP_ZERO;
++
+ 	/* Set up the timer */
+ 	kvm_timer_vcpu_init(vcpu);
+ 
 diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 8c0035cab6b6..f78aa3e269e9 100644
+index f78aa3e269e9..5220623a4efb 100644
 --- a/arch/arm64/kvm/mmu.c
 +++ b/arch/arm64/kvm/mmu.c
-@@ -124,15 +124,13 @@ static void stage2_dissolve_pud(struct kvm *kvm, phys_addr_t addr, pud_t *pudp)
- 	put_page(virt_to_page(pudp));
- }
- 
--static int mmu_topup_memory_cache(struct kvm_mmu_memory_cache *cache,
--				  int min, int max)
-+static int mmu_topup_memory_cache(struct kvm_mmu_memory_cache *cache, int min)
- {
- 	void *page;
- 
--	BUG_ON(max > KVM_NR_MEM_OBJS);
+@@ -131,7 +131,8 @@ static int mmu_topup_memory_cache(struct kvm_mmu_memory_cache *cache, int min)
  	if (cache->nobjs >= min)
  		return 0;
--	while (cache->nobjs < max) {
-+	while (cache->nobjs < ARRAY_SIZE(cache->objects)) {
- 		page = (void *)__get_free_page(GFP_PGTABLE_USER);
+ 	while (cache->nobjs < ARRAY_SIZE(cache->objects)) {
+-		page = (void *)__get_free_page(GFP_PGTABLE_USER);
++		page = (void *)__get_free_page(GFP_KERNEL_ACCOUNT |
++					       cache->gfp_zero);
  		if (!page)
  			return -ENOMEM;
-@@ -1481,8 +1479,7 @@ int kvm_phys_addr_ioremap(struct kvm *kvm, phys_addr_t guest_ipa,
- 			pte = kvm_s2pte_mkwrite(pte);
+ 		cache->objects[cache->nobjs++] = page;
+@@ -1467,7 +1468,7 @@ int kvm_phys_addr_ioremap(struct kvm *kvm, phys_addr_t guest_ipa,
+ 	phys_addr_t addr, end;
+ 	int ret = 0;
+ 	unsigned long pfn;
+-	struct kvm_mmu_memory_cache cache = { 0, };
++	struct kvm_mmu_memory_cache cache = { 0, __GFP_ZERO, };
  
- 		ret = mmu_topup_memory_cache(&cache,
--					     kvm_mmu_cache_min_pages(kvm),
--					     KVM_NR_MEM_OBJS);
-+					     kvm_mmu_cache_min_pages(kvm));
- 		if (ret)
- 			goto out;
- 		spin_lock(&kvm->mmu_lock);
-@@ -1882,8 +1879,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 	mmap_read_unlock(current->mm);
- 
- 	/* We need minimum second+third level pages */
--	ret = mmu_topup_memory_cache(memcache, kvm_mmu_cache_min_pages(kvm),
--				     KVM_NR_MEM_OBJS);
-+	ret = mmu_topup_memory_cache(memcache, kvm_mmu_cache_min_pages(kvm));
- 	if (ret)
- 		return ret;
- 
+ 	end = (guest_ipa + size + PAGE_SIZE - 1) & PAGE_MASK;
+ 	pfn = __phys_to_pfn(pa);
 -- 
 2.26.0
 
