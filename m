@@ -2,64 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D1D822139CB
-	for <lists+kvmarm@lfdr.de>; Fri,  3 Jul 2020 14:07:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60B77213A75
+	for <lists+kvmarm@lfdr.de>; Fri,  3 Jul 2020 15:01:09 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 69F1F4B161;
-	Fri,  3 Jul 2020 08:07:59 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C62F84B1B1;
+	Fri,  3 Jul 2020 09:01:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@linaro.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9wmB-x1+cweZ; Fri,  3 Jul 2020 08:07:59 -0400 (EDT)
+	with ESMTP id 57jx28g45DOM; Fri,  3 Jul 2020 09:01:08 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 541724B187;
-	Fri,  3 Jul 2020 08:07:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D1F34B165;
+	Fri,  3 Jul 2020 09:01:07 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C916D4B163
- for <kvmarm@lists.cs.columbia.edu>; Fri,  3 Jul 2020 08:07:56 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EA0064B14E
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  3 Jul 2020 09:01:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id LyjSOY-H2O+X for <kvmarm@lists.cs.columbia.edu>;
- Fri,  3 Jul 2020 08:07:55 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7027B4B161
- for <kvmarm@lists.cs.columbia.edu>; Fri,  3 Jul 2020 08:07:55 -0400 (EDT)
-Received: from localhost.localdomain (236.31.169.217.in-addr.arpa
- [217.169.31.236])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 99EB2207D4;
- Fri,  3 Jul 2020 12:07:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1593778074;
- bh=nUh9op6CAi0IxgUhuOMPaGPv8W0mnewfQsFgLajKM8Q=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ZWokXalUsEEfKxEaYWHe/VpbopWzUYcyJ4zepSldCNmsSsiiH8ltKSHNVgRIWa0uY
- C2nz+c2xriblDEx6x+1Ufpv95aHv5UqXZmkXBi/xabSVE02/ZVo+WViIgK8tSQCQip
- 1ifUGemUJwM7wQgRe0A0U6TojMLaLbJ01JloK4Rk=
-From: Will Deacon <will@kernel.org>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-	kvm@vger.kernel.org
-Subject: Re: [PATCH] kvmtool: arm64: Report missing support for 32bit guests
-Date: Fri,  3 Jul 2020 13:07:48 +0100
-Message-Id: <159377741751.260263.15198073437610178444.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200701142002.51654-1-suzuki.poulose@arm.com>
-References: <20200701142002.51654-1-suzuki.poulose@arm.com>
+ with ESMTP id oN16AV1LgRCf for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  3 Jul 2020 09:01:06 -0400 (EDT)
+Received: from mail-ot1-f65.google.com (mail-ot1-f65.google.com
+ [209.85.210.65])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 114594B130
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  3 Jul 2020 09:01:06 -0400 (EDT)
+Received: by mail-ot1-f65.google.com with SMTP id n5so26676368otj.1
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 03 Jul 2020 06:01:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=E5rO2xkav8qempBVEekmcKPJ77H6iG3rRif77s86Ajg=;
+ b=AhIik/DXfy2epE5Yz43CROdtoC5KMu0B6oq3VndRKh6iqK8kYO2BsOvUnRhu3QZvLx
+ 4QR/GVl5BGcODHM94yd2OpB3/GvAfliIrSwitIAegpRmI7cR/SP/1K1jsTc8LR0YxirT
+ /aDpq5F1XmcZeag1N46Y3oBedrLBf/9UD64RzCmjbDcwa2CIa6yp+SSk2udxPG/GW/KD
+ dJihy4DKTUtxKdbkyhAMgsE79Ba7LQR4kjZZSQ5fJvQNCQhwHaz/nznkiM51hhzWrBL5
+ 8S30GJNbmWdKxe62Lvm9y1m9VhEbnhuIrncwuQK0ezJ8zmVjWtJXj8WHQ8LjyTuSXOlr
+ 3JZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=E5rO2xkav8qempBVEekmcKPJ77H6iG3rRif77s86Ajg=;
+ b=VBVPmXUhezbTCn7hXIGxSEoUZtDrr9J6gsZkQtC1IjHhh/5T6Se3zBBhMQmRxfMG5x
+ bi4TYwlt4azeu13CFetM6bmAWtMn4baT1+wvk+fwK+uM6VF26xbguSKWZJLOQoLMR5rv
+ g07m2dylRu7/Auo02NVdDCwtysZFDIRoFhqlNT0DkikcNPR2T1t38kpOJxWNB4pg3FAU
+ K3SuT6urVSuBHwSK56pDF9536JRQGr2O3132W/Cp5uowTITQB3hGvlhh+KrCv28HRBPt
+ nIA+Q7YtK+Jx3pzedNvnWiIqfWAe29tj6M7p7YMYEB8TdMVlPoBbCCclMBdj/SfTBQrf
+ NvZg==
+X-Gm-Message-State: AOAM532pPTU8UbtGlISCTPub+CKO/rzFgcaMUl9SOZ+pEWRTGk1Rt2Cj
+ tjYN+ZJYWdrbKwrjQsvvE7NUBkZoJRBLgK7kdJTRLA==
+X-Google-Smtp-Source: ABdhPJx/hSX9eOK8XYmESF6MLIATWFTIDJ2rBcyfo9GSqDL5P4aLBbPS2JAdAdxXrPqepYPaRjaIIEtmyCcFWTWO7ys=
+X-Received: by 2002:a05:6830:10ce:: with SMTP id
+ z14mr23075129oto.135.1593781265438; 
+ Fri, 03 Jul 2020 06:01:05 -0700 (PDT)
 MIME-Version: 1.0
-Cc: Will Deacon <will@kernel.org>, catalin.marinas@arm.com,
- andre.przywara@arm.com, Sami Mujawar <sami.mujawar@arm.com>,
- kernel-team@android.com, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+References: <20200629114110.30723-1-beata.michalska@linaro.org>
+In-Reply-To: <20200629114110.30723-1-beata.michalska@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 3 Jul 2020 14:00:54 +0100
+Message-ID: <CAFEAcA8F-LR8qBw-ozp=0pDe2f9oC+F1fQW4xDO0ooPRws53uQ@mail.gmail.com>
+Subject: Re: [PATCH v9 0/2] target/arm: kvm: Support for KVM DABT with no
+ valid ISS
+To: Beata Michalska <beata.michalska@linaro.org>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -76,28 +89,30 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, 1 Jul 2020 15:20:02 +0100, Suzuki K Poulose wrote:
-> When the host doesn't support 32bit guests, the kvmtool fails
-> without a proper message on what is wrong. i.e,
-> 
->  $ lkvm run -c 1 Image --aarch32
->   # lkvm run -k Image -m 256 -c 1 --name guest-105618
->   Fatal: Unable to initialise vcpu
-> 
-> [...]
+On Mon, 29 Jun 2020 at 12:41, Beata Michalska
+<beata.michalska@linaro.org> wrote:
+>
+> Some of the ARMv7 & ARMv8 load/store instructions might trigger a data abort
+> exception with no valid ISS info to be decoded. The lack of decode info
+> makes it at least tricky to emulate the instruction which is one of the
+> (many) reasons why KVM will not even try to do so.
+>
+> So far, if a guest made an attempt to access memory outside the memory slot,
+> KVM reported vague ENOSYS. As a result QEMU exited with no useful information
+> being provided or even a clue on what has just happened.
+>
+> ARM KVM introduced support for notifying of an attempt to execute
+> an instruction that resulted in dabt with no valid ISS decoding info.
+> This still leaves QEMU to handle the case, but at least now it gives more
+> control and a start point for more meaningful handling of such cases.
+>
+> This patchset relies on KVM to insert the external data abort into the guest.
 
-Applied to kvmtool (master), thanks!
 
-[1/1] kvmtool: arm64: Report missing support for 32bit guests
-      https://git.kernel.org/will/kvmtool/c/351d931f496a
 
-Cheers,
--- 
-Will
+Applied to target-arm.next, thanks.
 
-https://fixes.arm64.dev
-https://next.arm64.dev
-https://will.arm64.dev
+-- PMM
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
