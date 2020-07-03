@@ -2,56 +2,63 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id EC33921399D
-	for <lists+kvmarm@lfdr.de>; Fri,  3 Jul 2020 13:54:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1D822139CB
+	for <lists+kvmarm@lfdr.de>; Fri,  3 Jul 2020 14:07:59 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 182C34B178;
-	Fri,  3 Jul 2020 07:54:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 69F1F4B161;
+	Fri,  3 Jul 2020 08:07:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6OqHM+qg8Tsh; Fri,  3 Jul 2020 07:54:44 -0400 (EDT)
+	with ESMTP id 9wmB-x1+cweZ; Fri,  3 Jul 2020 08:07:59 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B3DA74B0F5;
-	Fri,  3 Jul 2020 07:54:43 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 541724B187;
+	Fri,  3 Jul 2020 08:07:58 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F6274B0BE
- for <kvmarm@lists.cs.columbia.edu>; Fri,  3 Jul 2020 07:54:42 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C916D4B163
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  3 Jul 2020 08:07:56 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id U-VGSz2KjYRA for <kvmarm@lists.cs.columbia.edu>;
- Fri,  3 Jul 2020 07:54:40 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E0D3E4B153
- for <kvmarm@lists.cs.columbia.edu>; Fri,  3 Jul 2020 07:54:40 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1DEDB2F;
- Fri,  3 Jul 2020 04:54:40 -0700 (PDT)
-Received: from [10.163.85.168] (unknown [10.163.85.168])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 64ED53F68F;
- Fri,  3 Jul 2020 04:54:37 -0700 (PDT)
-Subject: Re: [PATCH V5 0/4] arm64/cpufeature: Introduce ID_PFR2, ID_DFR1,
- ID_MMFR5 and other changes
-To: Catalin Marinas <catalin.marinas@arm.com>
-References: <1590548619-3441-1-git-send-email-anshuman.khandual@arm.com>
- <20200702173403.GI22241@gaia>
-From: Anshuman Khandual <anshuman.khandual@arm.com>
-Message-ID: <5a66d9a0-7ada-d0b0-f768-9901494175e4@arm.com>
-Date: Fri, 3 Jul 2020 17:24:21 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+ with ESMTP id LyjSOY-H2O+X for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  3 Jul 2020 08:07:55 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7027B4B161
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  3 Jul 2020 08:07:55 -0400 (EDT)
+Received: from localhost.localdomain (236.31.169.217.in-addr.arpa
+ [217.169.31.236])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 99EB2207D4;
+ Fri,  3 Jul 2020 12:07:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1593778074;
+ bh=nUh9op6CAi0IxgUhuOMPaGPv8W0mnewfQsFgLajKM8Q=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=ZWokXalUsEEfKxEaYWHe/VpbopWzUYcyJ4zepSldCNmsSsiiH8ltKSHNVgRIWa0uY
+ C2nz+c2xriblDEx6x+1Ufpv95aHv5UqXZmkXBi/xabSVE02/ZVo+WViIgK8tSQCQip
+ 1ifUGemUJwM7wQgRe0A0U6TojMLaLbJ01JloK4Rk=
+From: Will Deacon <will@kernel.org>
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+	kvm@vger.kernel.org
+Subject: Re: [PATCH] kvmtool: arm64: Report missing support for 32bit guests
+Date: Fri,  3 Jul 2020 13:07:48 +0100
+Message-Id: <159377741751.260263.15198073437610178444.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20200701142002.51654-1-suzuki.poulose@arm.com>
+References: <20200701142002.51654-1-suzuki.poulose@arm.com>
 MIME-Version: 1.0
-In-Reply-To: <20200702173403.GI22241@gaia>
-Content-Language: en-US
-Cc: Marc Zyngier <maz@kernel.org>, linux-kernel@vger.kernel.org,
- will@kernel.org, kvmarm@lists.cs.columbia.edu,
+Cc: Will Deacon <will@kernel.org>, catalin.marinas@arm.com,
+ andre.przywara@arm.com, Sami Mujawar <sami.mujawar@arm.com>,
+ kernel-team@android.com, kvmarm@lists.cs.columbia.edu,
  linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -69,34 +76,28 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-
-
-On 07/02/2020 11:04 PM, Catalin Marinas wrote:
-> On Wed, May 27, 2020 at 08:33:35AM +0530, Anshuman Khandual wrote:
->> These are remaining patches from V4 series which had some pending reviews
->> from Suzuki (https://patchwork.kernel.org/cover/11557333/). Also dropped
->> [PATCH 15/17] as that will need some more investigation and rework.
->>
->> This series applies on arm64/for-next/cpufeature.
->>
->> Cc: Catalin Marinas <catalin.marinas@arm.com>
->> Cc: Will Deacon <will@kernel.org>
->> Cc: Mark Rutland <mark.rutland@arm.com> 
->> Cc: Marc Zyngier <maz@kernel.org>
->> Cc: James Morse <james.morse@arm.com>
->> Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
->> Cc: kvmarm@lists.cs.columbia.edu
->> Cc: linux-arm-kernel@lists.infradead.org
->> Cc: linux-kernel@vger.kernel.org
+On Wed, 1 Jul 2020 15:20:02 +0100, Suzuki K Poulose wrote:
+> When the host doesn't support 32bit guests, the kvmtool fails
+> without a proper message on what is wrong. i.e,
 > 
-> Thanks Suzuki for review.
+>  $ lkvm run -c 1 Image --aarch32
+>   # lkvm run -k Image -m 256 -c 1 --name guest-105618
+>   Fatal: Unable to initialise vcpu
 > 
-> Anshuman, could you please rebase this series on top of 5.8-rc3? It no
-> longer applies cleanly.
+> [...]
 
-Already posted here.
+Applied to kvmtool (master), thanks!
 
-https://patchwork.kernel.org/project/linux-arm-kernel/list/?series=312281
+[1/1] kvmtool: arm64: Report missing support for 32bit guests
+      https://git.kernel.org/will/kvmtool/c/351d931f496a
+
+Cheers,
+-- 
+Will
+
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
