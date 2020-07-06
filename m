@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 408522157C2
-	for <lists+kvmarm@lfdr.de>; Mon,  6 Jul 2020 14:55:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CEB52157D0
+	for <lists+kvmarm@lfdr.de>; Mon,  6 Jul 2020 14:56:04 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E73664B38C;
-	Mon,  6 Jul 2020 08:55:11 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4FE464B3EA;
+	Mon,  6 Jul 2020 08:56:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,47 +18,46 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jQmDMGQu2PMc; Mon,  6 Jul 2020 08:55:10 -0400 (EDT)
+	with ESMTP id CFFIx85xEGf1; Mon,  6 Jul 2020 08:56:03 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2D2054B42A;
-	Mon,  6 Jul 2020 08:55:05 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 65B4F4B3C8;
+	Mon,  6 Jul 2020 08:56:01 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 701CC4B401
- for <kvmarm@lists.cs.columbia.edu>; Mon,  6 Jul 2020 08:55:03 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 024224B1F7
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  6 Jul 2020 08:56:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id yDahJ096ljUg for <kvmarm@lists.cs.columbia.edu>;
- Mon,  6 Jul 2020 08:55:02 -0400 (EDT)
+ with ESMTP id OioEWmsIx-Zu for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  6 Jul 2020 08:56:00 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 519714B3DC
- for <kvmarm@lists.cs.columbia.edu>; Mon,  6 Jul 2020 08:55:02 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E1BCE4B35B
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  6 Jul 2020 08:55:59 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 806C520722;
- Mon,  6 Jul 2020 12:55:01 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 0DB0E20874;
+ Mon,  6 Jul 2020 12:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1594040101;
- bh=Ny3h164gZIWU26G4ILDBmkFKlB2pQLuuQwMsv5oeflc=;
+ s=default; t=1594040159;
+ bh=coBFhvxK2q/R9mJrFoLvBfMpmosxtdCyB+g5bJYKGGE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=TlAFn3bgh+s/J73zPeL5T2FWrMjeVWOyR93idajBpn9bBPovMzZNiH5Bm3rMmYsZW
- 0jyChtXYhjC8Mcga4h+hEO0SEZ0z8wlvT/GOTQyLEo6Pd79yFOCoa+kvCsB4sG51pC
- We0w99ECx71QKx8yw0nPH/yaL0UdkM3K+KwbqwJs=
+ b=J0rxX7apz9sM7Dvw6GO5Oh0FfTAzDLt8374K+mDWNNiFdty0lLqinDbwxyXVrPTr6
+ m2rT4WJPS2iCdBI7oYWTp15mB+x40cIscsFR4HKaFZ3AnqTs+phFjfAS/3Ic3x74id
+ C+mWzKmv6nBFap/Ei5LRRYAgX8nNjQseMOo2di9Y=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1jsQeC-009SCo-3e; Mon, 06 Jul 2020 13:55:00 +0100
+ id 1jsQeC-009SCo-T6; Mon, 06 Jul 2020 13:55:01 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: Catalin Marinas <catalin.marinas@arm.com>,
  linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH v3 09/17] KVM: arm64: pauth: Use ctxt_sys_reg() instead of raw
- sys_regs access
-Date: Mon,  6 Jul 2020 13:54:17 +0100
-Message-Id: <20200706125425.1671020-10-maz@kernel.org>
+Subject: [PATCH v3 10/17] KVM: arm64: debug: Drop useless vpcu parameter
+Date: Mon,  6 Jul 2020 13:54:18 +0100
+Message-Id: <20200706125425.1671020-11-maz@kernel.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200706125425.1671020-1-maz@kernel.org>
 References: <20200706125425.1671020-1-maz@kernel.org>
@@ -94,55 +93,65 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Now that we have a wrapper for the sysreg accesses, let's use that
-consistently.
+As part of the ongoing spring cleanup, remove the now useless
+vcpu parameter that is passed around (host and guest contexts
+give us everything we need).
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/hyp/include/hyp/switch.h | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ arch/arm64/kvm/hyp/include/hyp/debug-sr.h | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/kvm/hyp/include/hyp/switch.h b/arch/arm64/kvm/hyp/include/hyp/switch.h
-index 7cf14e4f9f77..70367699d69a 100644
---- a/arch/arm64/kvm/hyp/include/hyp/switch.h
-+++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
-@@ -364,11 +364,14 @@ static inline bool esr_is_ptrauth_trap(u32 esr)
- 	return false;
+diff --git a/arch/arm64/kvm/hyp/include/hyp/debug-sr.h b/arch/arm64/kvm/hyp/include/hyp/debug-sr.h
+index 5499d6c1fd9f..0297dc63988c 100644
+--- a/arch/arm64/kvm/hyp/include/hyp/debug-sr.h
++++ b/arch/arm64/kvm/hyp/include/hyp/debug-sr.h
+@@ -88,9 +88,8 @@
+ 	default:	write_debug(ptr[0], reg, 0);			\
+ 	}
+ 
+-static inline void __debug_save_state(struct kvm_vcpu *vcpu,
+-				      struct kvm_guest_debug_arch *dbg,
+-				      struct kvm_cpu_context *ctxt)
++static void __debug_save_state(struct kvm_guest_debug_arch *dbg,
++			       struct kvm_cpu_context *ctxt)
+ {
+ 	u64 aa64dfr0;
+ 	int brps, wrps;
+@@ -107,9 +106,8 @@ static inline void __debug_save_state(struct kvm_vcpu *vcpu,
+ 	ctxt_sys_reg(ctxt, MDCCINT_EL1) = read_sysreg(mdccint_el1);
  }
  
--#define __ptrauth_save_key(regs, key)						\
--({										\
--	regs[key ## KEYLO_EL1] = read_sysreg_s(SYS_ ## key ## KEYLO_EL1);	\
--	regs[key ## KEYHI_EL1] = read_sysreg_s(SYS_ ## key ## KEYHI_EL1);	\
--})
-+#define __ptrauth_save_key(ctxt, key)					\
-+	do {								\
-+	u64 __val;                                                      \
-+	__val = read_sysreg_s(SYS_ ## key ## KEYLO_EL1);                \
-+	ctxt_sys_reg(ctxt, key ## KEYLO_EL1) = __val;                   \
-+	__val = read_sysreg_s(SYS_ ## key ## KEYHI_EL1);                \
-+	ctxt_sys_reg(ctxt, key ## KEYHI_EL1) = __val;                   \
-+} while(0)
- 
- static inline bool __hyp_handle_ptrauth(struct kvm_vcpu *vcpu)
+-static inline void __debug_restore_state(struct kvm_vcpu *vcpu,
+-					 struct kvm_guest_debug_arch *dbg,
+-					 struct kvm_cpu_context *ctxt)
++static void __debug_restore_state(struct kvm_guest_debug_arch *dbg,
++				  struct kvm_cpu_context *ctxt)
  {
-@@ -380,11 +383,11 @@ static inline bool __hyp_handle_ptrauth(struct kvm_vcpu *vcpu)
- 		return false;
+ 	u64 aa64dfr0;
+ 	int brps, wrps;
+@@ -142,8 +140,8 @@ static inline void __debug_switch_to_guest_common(struct kvm_vcpu *vcpu)
+ 	host_dbg = &vcpu->arch.host_debug_state.regs;
+ 	guest_dbg = kern_hyp_va(vcpu->arch.debug_ptr);
  
- 	ctxt = &__hyp_this_cpu_ptr(kvm_host_data)->host_ctxt;
--	__ptrauth_save_key(ctxt->sys_regs, APIA);
--	__ptrauth_save_key(ctxt->sys_regs, APIB);
--	__ptrauth_save_key(ctxt->sys_regs, APDA);
--	__ptrauth_save_key(ctxt->sys_regs, APDB);
--	__ptrauth_save_key(ctxt->sys_regs, APGA);
-+	__ptrauth_save_key(ctxt, APIA);
-+	__ptrauth_save_key(ctxt, APIB);
-+	__ptrauth_save_key(ctxt, APDA);
-+	__ptrauth_save_key(ctxt, APDB);
-+	__ptrauth_save_key(ctxt, APGA);
+-	__debug_save_state(vcpu, host_dbg, host_ctxt);
+-	__debug_restore_state(vcpu, guest_dbg, guest_ctxt);
++	__debug_save_state(host_dbg, host_ctxt);
++	__debug_restore_state(guest_dbg, guest_ctxt);
+ }
  
- 	vcpu_ptrauth_enable(vcpu);
+ static inline void __debug_switch_to_host_common(struct kvm_vcpu *vcpu)
+@@ -161,8 +159,8 @@ static inline void __debug_switch_to_host_common(struct kvm_vcpu *vcpu)
+ 	host_dbg = &vcpu->arch.host_debug_state.regs;
+ 	guest_dbg = kern_hyp_va(vcpu->arch.debug_ptr);
  
+-	__debug_save_state(vcpu, guest_dbg, guest_ctxt);
+-	__debug_restore_state(vcpu, host_dbg, host_ctxt);
++	__debug_save_state(guest_dbg, guest_ctxt);
++	__debug_restore_state(host_dbg, host_ctxt);
+ 
+ 	vcpu->arch.flags &= ~KVM_ARM64_DEBUG_DIRTY;
+ }
 -- 
 2.27.0
 
