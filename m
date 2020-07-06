@@ -2,49 +2,52 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EDC0215D02
-	for <lists+kvmarm@lfdr.de>; Mon,  6 Jul 2020 19:24:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEF32215D07
+	for <lists+kvmarm@lfdr.de>; Mon,  6 Jul 2020 19:25:30 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2CF3D4B3D6;
-	Mon,  6 Jul 2020 13:24:52 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7DA254B3E9;
+	Mon,  6 Jul 2020 13:25:30 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JXt7F8rLIM1x; Mon,  6 Jul 2020 13:24:52 -0400 (EDT)
+	with ESMTP id PYJNb4wDy8U6; Mon,  6 Jul 2020 13:25:30 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 213B54B375;
-	Mon,  6 Jul 2020 13:24:51 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 61ED04B3D4;
+	Mon,  6 Jul 2020 13:25:29 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0EDAC4B2C4
- for <kvmarm@lists.cs.columbia.edu>; Mon,  6 Jul 2020 13:24:50 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C89AF4B3BC
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  6 Jul 2020 13:25:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id uDNEE3B2RQtb for <kvmarm@lists.cs.columbia.edu>;
- Mon,  6 Jul 2020 13:24:49 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 26EEE4B18E
- for <kvmarm@lists.cs.columbia.edu>; Mon,  6 Jul 2020 13:24:49 -0400 (EDT)
-Received: from gaia (unknown [95.146.230.158])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id A1C292070C;
- Mon,  6 Jul 2020 17:24:45 +0000 (UTC)
-Date: Mon, 6 Jul 2020 18:24:43 +0100
+ with ESMTP id hBvOpNJwtiEy for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  6 Jul 2020 13:25:26 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C19F84B18E
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  6 Jul 2020 13:25:26 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5536A31B;
+ Mon,  6 Jul 2020 10:25:26 -0700 (PDT)
+Received: from gaia (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id EE4953F68F;
+ Mon,  6 Jul 2020 10:25:23 -0700 (PDT)
+Date: Mon, 6 Jul 2020 18:25:21 +0100
 From: Catalin Marinas <catalin.marinas@arm.com>
 To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v3 04/17] arm64: Add level-hinted TLB invalidation helper
-Message-ID: <20200706172442.GJ28170@gaia>
+Subject: Re: [PATCH v3 03/17] arm64: Document SW reserved PTE/PMD bits in
+ Stage-2 descriptors
+Message-ID: <20200706172508.GK28170@gaia>
 References: <20200706125425.1671020-1-maz@kernel.org>
- <20200706125425.1671020-5-maz@kernel.org>
+ <20200706125425.1671020-4-maz@kernel.org>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20200706125425.1671020-5-maz@kernel.org>
+In-Reply-To: <20200706125425.1671020-4-maz@kernel.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Cc: kernel-team@android.com, kvm@vger.kernel.org,
  Andre Przywara <andre.przywara@arm.com>, kvmarm@lists.cs.columbia.edu,
@@ -67,16 +70,13 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Jul 06, 2020 at 01:54:12PM +0100, Marc Zyngier wrote:
-> Add a level-hinted TLB invalidation helper that only gets used if
-> ARMv8.4-TTL gets detected.
+On Mon, Jul 06, 2020 at 01:54:11PM +0100, Marc Zyngier wrote:
+> Advertise bits [58:55] as reserved for SW in the S2 descriptors.
 > 
-> Reviewed-by: Alexandru Elisei <alexandru.elisei@arm.com>
+> Reviewed-by: Andrew Scull <ascull@google.com>
 > Signed-off-by: Marc Zyngier <maz@kernel.org>
 
-Same here:
-
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
