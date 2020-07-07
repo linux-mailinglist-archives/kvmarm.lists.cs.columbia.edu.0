@@ -2,71 +2,52 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 340E8216FC1
-	for <lists+kvmarm@lfdr.de>; Tue,  7 Jul 2020 17:12:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93B35217493
+	for <lists+kvmarm@lfdr.de>; Tue,  7 Jul 2020 19:00:06 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A90264B113;
-	Tue,  7 Jul 2020 11:12:05 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3B2C24B135;
+	Tue,  7 Jul 2020 13:00:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3bMai4VXXWY0; Tue,  7 Jul 2020 11:12:05 -0400 (EDT)
+	with ESMTP id 56Fv-1PfKQ5y; Tue,  7 Jul 2020 13:00:06 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4E0654B108;
-	Tue,  7 Jul 2020 11:12:04 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F6984B10F;
+	Tue,  7 Jul 2020 13:00:04 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7BE774B101
- for <kvmarm@lists.cs.columbia.edu>; Tue,  7 Jul 2020 11:12:02 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8509F4B0F2
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  7 Jul 2020 13:00:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id R2D-sA4XjmW0 for <kvmarm@lists.cs.columbia.edu>;
- Tue,  7 Jul 2020 11:12:01 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 33ADE4B0FF
- for <kvmarm@lists.cs.columbia.edu>; Tue,  7 Jul 2020 11:12:01 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 1BAF52065D;
- Tue,  7 Jul 2020 15:12:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1594134720;
- bh=C4bPJbq0e1P34S5uLx3jO+V10U+5mus3QC4vneFLX1Y=;
- h=From:To:Cc:Subject:Date:From;
- b=frYEk8iaPRhfVRhVtZ5aQCYq7V2EWVUpPQ1xar9FIMJtduC6Os5mcGHmWesD2xu0j
- bxNCIk4f9NvMsPil6ThxO/O7OddeaOOHn2PYV3T/QTBDeqhhHAgqRuAxsXYk1t++rw
- GVsJbkqA7f3SQDK8ZCTW/skBpHyrtMSbJrTVCyXQ=
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=hot-poop.lan) by disco-boy.misterjones.org with esmtpsa
- (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
- (envelope-from <maz@kernel.org>)
- id 1jspGI-009mGD-I7; Tue, 07 Jul 2020 16:11:58 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
- kvm@vger.kernel.org
-Subject: [PATCH] KVM: arm64: Don't use has_vhe() for CHOOSE_HYP_SYM()
-Date: Tue,  7 Jul 2020 16:11:12 +0100
-Message-Id: <20200707151112.2514630-1-maz@kernel.org>
-X-Mailer: git-send-email 2.26.2
+ with ESMTP id LOXjIPWhLQsT for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  7 Jul 2020 13:00:02 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E0C7B4B0BC
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  7 Jul 2020 13:00:01 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8C4341FB;
+ Tue,  7 Jul 2020 10:00:01 -0700 (PDT)
+Received: from arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DC5523F68F;
+ Tue,  7 Jul 2020 10:00:00 -0700 (PDT)
+Date: Tue, 7 Jul 2020 17:59:58 +0100
+From: Dave Martin <Dave.Martin@arm.com>
+To: Andrew Scull <ascull@google.com>
+Subject: Re: [PATCH] arm64: kvm: Remove redundant KVM_ARM64_FP_HOST flag
+Message-ID: <20200707165958.GL10992@arm.com>
+References: <20200707145713.287710-1-ascull@google.com>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org, james.morse@arm.com,
- julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com
+Content-Disposition: inline
+In-Reply-To: <20200707145713.287710-1-ascull@google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Cc: maz@kernel.org, kernel-team@android.com, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -83,101 +64,197 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The recently introduced CHOOSE_HYP_SYM() macro picks one symbol
-or another, depending on whether the kernel run as a VHE
-hypervisor or not. For that, it uses the has_vhe() helper, which
-is itself implemented as a final capability.
+On Tue, Jul 07, 2020 at 03:57:13PM +0100, Andrew Scull wrote:
+> The FPSIMD registers can be in one of three states:
+>  (a) loaded with the user task's state
+>  (b) loaded with the vcpu's state
+>  (c) dirty with transient state
+> 
+> KVM_ARM64_FP_HOST identifies the case (a). When loading the vcpu state,
+> this is used to decide whether to save the current FPSIMD registers to
+> the user task.
+> 
+> However, at the point of loading the vcpu's FPSIMD state, it is known
+> that we are not in state (b). States (a) and (c) can be distinguished by
+> by checking the TIF_FOREIGN_FPSTATE bit, as was previously being done to
+> prepare the KVM_ARM64_FP_HOST flag but without the need for mirroring
+> the state.
 
-Unfortunately, __copy_hyp_vect_bpi now indirectly uses CHOOSE_HYP_SYM
-to get the __bp_harden_hyp_vecs symbol, using has_vhe() in the process.
-At this stage, the capability isn't final and things explode:
+In general there's another case
 
-[    0.000000] ACPI: SRAT not present
-[    0.000000] percpu: Embedded 34 pages/cpu s101264 r8192 d29808 u139264
-[    0.000000] Detected PIPT I-cache on CPU0
-[    0.000000] ------------[ cut here ]------------
-[    0.000000] kernel BUG at arch/arm64/include/asm/cpufeature.h:459!
-[    0.000000] Internal error: Oops - BUG: 0 [#1] PREEMPT SMP
-[    0.000000] Modules linked in:
-[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 5.8.0-rc4-00080-gd630681366e5 #1388
-[    0.000000] pstate: 80000085 (Nzcv daIf -PAN -UAO BTYPE=--)
-[    0.000000] pc : check_branch_predictor+0x3a4/0x408
-[    0.000000] lr : check_branch_predictor+0x2a4/0x408
-[    0.000000] sp : ffff800011693e90
-[    0.000000] x29: ffff800011693e90 x28: ffff8000116a1530
-[    0.000000] x27: ffff8000112c1008 x26: ffff800010ca6ff8
-[    0.000000] x25: ffff8000112c1000 x24: ffff8000116a1320
-[    0.000000] x23: 0000000000000000 x22: ffff8000112c1000
-[    0.000000] x21: ffff800010177120 x20: ffff8000116ae108
-[    0.000000] x19: 0000000000000000 x18: ffff800011965c90
-[    0.000000] x17: 0000000000022000 x16: 0000000000000003
-[    0.000000] x15: 00000000ffffffff x14: ffff8000118c3a38
-[    0.000000] x13: 0000000000000021 x12: 0000000000000022
-[    0.000000] x11: d37a6f4de9bd37a7 x10: 000000000000001d
-[    0.000000] x9 : 0000000000000000 x8 : ffff800011f8dad8
-[    0.000000] x7 : ffff800011965ad0 x6 : 0000000000000003
-[    0.000000] x5 : 0000000000000000 x4 : 0000000000000000
-[    0.000000] x3 : 0000000000000100 x2 : 0000000000000004
-[    0.000000] x1 : ffff8000116ae148 x0 : 0000000000000000
-[    0.000000] Call trace:
-[    0.000000]  check_branch_predictor+0x3a4/0x408
-[    0.000000]  update_cpu_capabilities+0x84/0x138
-[    0.000000]  init_cpu_features+0x2c0/0x2d8
-[    0.000000]  cpuinfo_store_boot_cpu+0x54/0x64
-[    0.000000]  smp_prepare_boot_cpu+0x2c/0x60
-[    0.000000]  start_kernel+0x16c/0x574
-[    0.000000] Code: 17ffffc7 91010281 14000198 17ffffca (d4210000)
+	(d) loaded with some unrelated user task's state
 
-This is addressed using a two-fold process:
-- Replace has_vhe() with is_kernel_in_hyp_mode(), which tests
-  whether we are running at EL2.
-- Make CHOOSE_HYP_SYM() return an *undefined* symbol when
-  compiled in the nVHE hypervisor, as we really should never
-  use this helper in the nVHE-specific code.
+I have a vague memory that the hyp trap code is supposed to save state
+back to whatever task it belonged to -- but functions like
+kvm_arch_vcpu_run_map_fp() make me suspicious that if this can happen,
+it doesn't work correctly.
 
-With this in place, we're back to a bootable kernel again.
+Since you're digging anyway, I'll answer in the form of a question:
+when we reach __hyp_handle_fpsimd(), can the state in the FPSIMD/SVE
+regs be unsaved data belonging to another task?  I'd hope not, because
+fpsimd_thread_switch() should have saved any dirty regs when scheduling
+that other thread out.
 
-Fixes: b877e9849d41 ("KVM: arm64: Build hyp-entry.S separately for VHE/nVHE")
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/include/asm/kvm_asm.h | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+If the regs can't be owned by another task, then there may be some scope
+for simplifying the code along the lines you suggest...
 
-diff --git a/arch/arm64/include/asm/kvm_asm.h b/arch/arm64/include/asm/kvm_asm.h
-index 5716f5de9707..fb1a922b31ba 100644
---- a/arch/arm64/include/asm/kvm_asm.h
-+++ b/arch/arm64/include/asm/kvm_asm.h
-@@ -62,8 +62,26 @@
- 
- #define CHOOSE_VHE_SYM(sym)	sym
- #define CHOOSE_NVHE_SYM(sym)	kvm_nvhe_sym(sym)
--#define CHOOSE_HYP_SYM(sym)	(has_vhe() ? CHOOSE_VHE_SYM(sym) \
-+
-+#ifndef __KVM_NVHE_HYPERVISOR__
-+/*
-+ * BIG FAT WARNINGS:
-+ *
-+ * - Don't be tempted to change the following is_kernel_in_hyp_mode()
-+ *   to has_vhe(). has_vhe() is implemented as a *final* capability,
-+ *   while this is used early at boot time, when the capabilities are
-+ *   not final yet....
-+ *
-+ * - Don't let the nVHE hypervisor have access to this, as it will
-+ *   pick the *wrong* symbol (yes, it runs at EL2...).
-+ */
-+#define CHOOSE_HYP_SYM(sym)	(is_kernel_in_hyp_mode() ? CHOOSE_VHE_SYM(sym) \
- 					   : CHOOSE_NVHE_SYM(sym))
-+#else
-+/* The nVHE hypervisor shouldn't even try to access anything */
-+extern void *__nvhe_undefined_symbol;
-+#define CHOOSE_HYP_SYM(sym)	__nvhe_undefined_symbol
-+#endif
- 
- /* Translate a kernel address @ptr into its equivalent linear mapping */
- #define kvm_ksym_ref(ptr)						\
--- 
-2.26.2
+(See also below)
 
+> 
+> Signed-off-by: Andrew Scull <ascull@google.com>
+> ---
+> This is the result of trying to get my head around the FPSIMD handling.
+> If I've misunderstood something I'll be very happy to have it explained
+> to me :)
+
+Er, me too.  It's a while since I worked on this ;)
+
+> ---
+>  arch/arm64/include/asm/kvm_host.h       | 11 +++++----
+>  arch/arm64/kvm/fpsimd.c                 |  1 -
+>  arch/arm64/kvm/hyp/include/hyp/switch.h | 30 +++++++++++++++++--------
+>  3 files changed, 26 insertions(+), 16 deletions(-)
+> 
+> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+> index e0920df1d0c1..d3652745282d 100644
+> --- a/arch/arm64/include/asm/kvm_host.h
+> +++ b/arch/arm64/include/asm/kvm_host.h
+> @@ -370,12 +370,11 @@ struct kvm_vcpu_arch {
+>  /* vcpu_arch flags field values: */
+>  #define KVM_ARM64_DEBUG_DIRTY		(1 << 0)
+>  #define KVM_ARM64_FP_ENABLED		(1 << 1) /* guest FP regs loaded */
+> -#define KVM_ARM64_FP_HOST		(1 << 2) /* host FP regs loaded */
+> -#define KVM_ARM64_HOST_SVE_IN_USE	(1 << 3) /* backup for host TIF_SVE */
+> -#define KVM_ARM64_HOST_SVE_ENABLED	(1 << 4) /* SVE enabled for EL0 */
+> -#define KVM_ARM64_GUEST_HAS_SVE		(1 << 5) /* SVE exposed to guest */
+> -#define KVM_ARM64_VCPU_SVE_FINALIZED	(1 << 6) /* SVE config completed */
+> -#define KVM_ARM64_GUEST_HAS_PTRAUTH	(1 << 7) /* PTRAUTH exposed to guest */
+> +#define KVM_ARM64_HOST_SVE_IN_USE	(1 << 2) /* backup for host TIF_SVE */
+> +#define KVM_ARM64_HOST_SVE_ENABLED	(1 << 3) /* SVE enabled for EL0 */
+> +#define KVM_ARM64_GUEST_HAS_SVE		(1 << 4) /* SVE exposed to guest */
+> +#define KVM_ARM64_VCPU_SVE_FINALIZED	(1 << 5) /* SVE config completed */
+> +#define KVM_ARM64_GUEST_HAS_PTRAUTH	(1 << 6) /* PTRAUTH exposed to guest */
+>  
+>  #define vcpu_has_sve(vcpu) (system_supports_sve() && \
+>  			    ((vcpu)->arch.flags & KVM_ARM64_GUEST_HAS_SVE))
+> diff --git a/arch/arm64/kvm/fpsimd.c b/arch/arm64/kvm/fpsimd.c
+> index e329a36b2bee..4e9afeb31989 100644
+> --- a/arch/arm64/kvm/fpsimd.c
+> +++ b/arch/arm64/kvm/fpsimd.c
+> @@ -65,7 +65,6 @@ void kvm_arch_vcpu_load_fp(struct kvm_vcpu *vcpu)
+>  	vcpu->arch.flags &= ~(KVM_ARM64_FP_ENABLED |
+>  			      KVM_ARM64_HOST_SVE_IN_USE |
+>  			      KVM_ARM64_HOST_SVE_ENABLED);
+> -	vcpu->arch.flags |= KVM_ARM64_FP_HOST;
+
+I'm wondering whether the original code is buggy here.
+
+If the FPSIMD/SVE regs contain some other task's data, we'd overwrite
+current's regs with that data when running __hyp_handle_fpsimd().
+
+Maybe we should have been checking TIF_FOREIGN_FPSTATE here.  If the
+issue can happen, your version may fix it.
+
+If we wanted to keep the separate flag (see below for some rationale),
+it might make sense to do:
+
+  	vcpu->arch.flags &= ~(KVM_ARM64_FP_ENABLED |
+  			      KVM_ARM64_HOST_SVE_IN_USE |
+  			      KVM_ARM64_HOST_SVE_ENABLED |
+			      KVM_ARM64_FP_HOST);
+	if (!test_thread_flag(TIF_FOREIGN_FPSTATE))
+		vcpu->arch.flags |= KVM_ARM64_FP_HOST;
+
+[...]
+
+>  	if (test_thread_flag(TIF_SVE))
+>  		vcpu->arch.flags |= KVM_ARM64_HOST_SVE_IN_USE;
+> diff --git a/arch/arm64/kvm/hyp/include/hyp/switch.h b/arch/arm64/kvm/hyp/include/hyp/switch.h
+> index 8f622688fa64..beadf17f12a6 100644
+> --- a/arch/arm64/kvm/hyp/include/hyp/switch.h
+> +++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
+> @@ -33,16 +33,24 @@ extern const char __hyp_panic_string[];
+>  static inline bool update_fp_enabled(struct kvm_vcpu *vcpu)
+>  {
+>  	/*
+> -	 * When the system doesn't support FP/SIMD, we cannot rely on
+> -	 * the _TIF_FOREIGN_FPSTATE flag. However, we always inject an
+> -	 * abort on the very first access to FP and thus we should never
+> -	 * see KVM_ARM64_FP_ENABLED. For added safety, make sure we always
+> +	 * When entering the vcpu during a KVM_VCPU_RUN call before the vcpu
+> +	 * has used FPSIMD, FPSIMD is disabled for the vcpu and will trap when
+> +	 * it is first used. The FPSIMD state currently bound to the cpu is
+> +	 * that of the user task.
+> +	 *
+> +	 * After the vcpu has used FPSIMD, on subsequent entries into the vcpu
+> +	 * for the same KVM_VCPU_RUN call, the vcpu's FPSIMD state is bound to
+> +	 * the cpu. Therefore, if _TIF_FOREIGN_FPSTATE is set, we know the
+> +	 * FPSIMD registers no longer contain the vcpu's state. In this case we
+> +	 * must, once again, disable FPSIMD.
+> +	 *
+> +	 * When the system doesn't support FPSIMD, we cannot rely on the
+> +	 * _TIF_FOREIGN_FPSTATE flag. For added safety, make sure we always
+>  	 * trap the accesses.
+>  	 */
+>  	if (!system_supports_fpsimd() ||
+>  	    vcpu->arch.host_thread_info->flags & _TIF_FOREIGN_FPSTATE)
+> -		vcpu->arch.flags &= ~(KVM_ARM64_FP_ENABLED |
+> -				      KVM_ARM64_FP_HOST);
+> +		vcpu->arch.flags &= ~KVM_ARM64_FP_ENABLED;
+>  
+>  	return !!(vcpu->arch.flags & KVM_ARM64_FP_ENABLED);
+>  }
+> @@ -245,7 +253,13 @@ static inline bool __hyp_handle_fpsimd(struct kvm_vcpu *vcpu)
+>  
+>  	isb();
+>  
+> -	if (vcpu->arch.flags & KVM_ARM64_FP_HOST) {
+> +	/*
+> +	 * The trap means that the vcpu's FPSIMD state is not loaded. If
+> +	 * _TIF_FOREIGN_FPSTATE is set, the current state does not need to be
+> +	 * saved. Otherwise, the user task's state is currently loaded and
+> +	 * needs to be saved.
+> +	 */
+> +	if (!(vcpu->arch.host_thread_info->flags & _TIF_FOREIGN_FPSTATE)) {
+>  		/*
+>  		 * In the SVE case, VHE is assumed: it is enforced by
+>  		 * Kconfig and kvm_arch_init().
+> @@ -260,8 +274,6 @@ static inline bool __hyp_handle_fpsimd(struct kvm_vcpu *vcpu)
+>  		} else {
+>  			__fpsimd_save_state(vcpu->arch.host_fpsimd_state);
+>  		}
+> -
+> -		vcpu->arch.flags &= ~KVM_ARM64_FP_HOST;
+
+Without this, there is no record that we did anything.  Are you sure we
+can't save junk data into the host context the next time we take this
+trap?  Will we re-enable the trap unnecessarily?
+
+
+I think previously I was trying to avoid things like
+test_and_clear_thread_flag() here because there were limitations on what
+we could call from the hyp code.  Maybe that's not such an issue now.
+
+I'm slightly uneasy about setting TIF_FOREIGN_FPSTATE from the hyp
+switch code however.  The order in which this flag is touched with
+respect to other metadata is important in preemptible code, so I
+preferred to avoid bare writing of this thread flag: rather it should
+be set and cleared through the fpsimd_bind_*() and fpsimd_flush_*()
+functions if at all possible, but these didn't seem suitable for calling
+from hyp at the time.
+
+In the hyp code we are of course not preemptible, so we would probably
+get away with a bare set_thread_flag() in practice.
+
+Overall, it felt a bit cleaner to have separate metdata for the hyp
+code, and sync it with the host's metadata in clearly defined places
+(the functions in arch/arm64/kvm/fpsimd.c).  KVM_ARM64_FP_HOST plays
+that role for the hyp code at present.
+
+That doesn't mean I wouldn't welcome a simplification, though!
+
+Cheers
+---Dave
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
