@@ -2,86 +2,67 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 41EDE21A829
-	for <lists+kvmarm@lfdr.de>; Thu,  9 Jul 2020 21:51:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5621421B808
+	for <lists+kvmarm@lfdr.de>; Fri, 10 Jul 2020 16:14:44 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AB3A74B15F;
-	Thu,  9 Jul 2020 15:51:04 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C624F4B169;
+	Fri, 10 Jul 2020 10:14:43 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.911
+X-Spam-Score: 0.8
 X-Spam-Level: 
-X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@gmail.com
+X-Spam-Status: No, score=0.8 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	UNPARSEABLE_RELAY=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id EFR5XjREsTmt; Thu,  9 Jul 2020 15:51:04 -0400 (EDT)
+	with ESMTP id 0AZ1jBXkNCXy; Fri, 10 Jul 2020 10:14:43 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 874C34B162;
-	Thu,  9 Jul 2020 15:51:03 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id ADE824B155;
+	Fri, 10 Jul 2020 10:14:42 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 66AF44B15A
- for <kvmarm@lists.cs.columbia.edu>; Thu,  9 Jul 2020 15:51:02 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id F34B54B157
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Jul 2020 03:32:37 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id d2hqto-8KBEl for <kvmarm@lists.cs.columbia.edu>;
- Thu,  9 Jul 2020 15:51:01 -0400 (EDT)
-Received: from mail-pl1-f193.google.com (mail-pl1-f193.google.com
- [209.85.214.193])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 587D84B14D
- for <kvmarm@lists.cs.columbia.edu>; Thu,  9 Jul 2020 15:51:01 -0400 (EDT)
-Received: by mail-pl1-f193.google.com with SMTP id x9so1254750plr.2
- for <kvmarm@lists.cs.columbia.edu>; Thu, 09 Jul 2020 12:51:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id;
- bh=RwIQJPyP7UHlF/ZGGKtcnGZyKRkZA3pCBcfEq7K/2Ho=;
- b=AznY960+pK6TOErT6DuUqz4G4vZlBkddYOl5d2OHe7pG00Y0HIPRjgSEb5zEauhq3u
- RKM6boUHn3SMWeCJDchdIobej2f1kSt+RZnspd8DsOp/HbooshTkDo+M00AmnvDD6yXH
- 07OtQgi8r6ZPSJ0Eky6PU/dhvo8seV9KaGEOORqVmXVD95zxKP5jR5wAtjB3sN2Ew/hy
- 194wpp1EWZyhMIKvI8Zcwi+hxgj5t/ag+Ch9C2Q9Lsq4+u6xoosUVdcMXrVlxNwX4KnF
- b4SSBTNB108RFRlXcVo67ObtTCVjwrxgMaYcHYZ4WSWCa1aEhdNOPddPq475+qFl6uyO
- X/fA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id;
- bh=RwIQJPyP7UHlF/ZGGKtcnGZyKRkZA3pCBcfEq7K/2Ho=;
- b=J8/sUwlo38GS7sPa5NB197OihlK6b09zAcFfGFA1YvDK3Lr/e0JaDateYhON5JTSzb
- xFDudssKYCcjTZdVh5/IG9/OJb0ksf59aSuk1KLfUYt623YPOY6NzktTtWUl3NawkCu4
- s6DbJjZ0d6nR0184NfM4uI7GDsc+sNVSdy3stLZzWM+C/y0yPLXkBBsH/CTc608VIytH
- aO0i68eRvV3FfruYtizFaAKt50yB7mQLLQOvKROWS8nifOpTcSungv+hhZSAnJn8I/si
- KY9peoBlwSKLFIobfQyv61qYNfepl/chjc788flL8bSDqTKZ0GaESefxEvmGRNsFT08h
- NJrQ==
-X-Gm-Message-State: AOAM532T8VoV7tWyXtsosi8ukNRw6zrOkolyIHZgtQdmDkEVElifs5qL
- HL1b3CSWZuHxqkBUIX0fBYQ=
-X-Google-Smtp-Source: ABdhPJwDJxkzz3kgTcJCu9/JCf8HhRsvChMEW+U2cgrMgNAOBN45sP1bW6XPDT8vS97J11EP5enArQ==
-X-Received: by 2002:a17:902:820a:: with SMTP id
- x10mr4938403pln.135.1594324260334; 
- Thu, 09 Jul 2020 12:51:00 -0700 (PDT)
-Received: from localhost.localdomain ([2001:470:67:5b9:5dec:e971:4cde:a128])
- by smtp.gmail.com with ESMTPSA id f2sm3694941pfb.184.2020.07.09.12.50.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Jul 2020 12:50:59 -0700 (PDT)
-From: Florian Fainelli <f.fainelli@gmail.com>
-To: linux-arm-kernel@lists.infradead.org
-Subject: [PATCH stable v4.9 v2] arm64: entry: Place an SB sequence following
- an ERET instruction
-Date: Thu,  9 Jul 2020 12:50:23 -0700
-Message-Id: <20200709195034.15185-1-f.fainelli@gmail.com>
-X-Mailer: git-send-email 2.17.1
-Cc: Nick Desaulniers <ndesaulniers@google.com>,
- Florian Fainelli <f.fainelli@gmail.com>, Fangrui Song <maskray@google.com>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will.deacon@arm.com>,
- open list <linux-kernel@vger.kernel.org>, stable@vger.kernel.org,
- "open list:KERNEL VIRTUAL MACHINE FOR ARM64 KVM/arm64"
- <kvmarm@lists.cs.columbia.edu>, Mark Brown <broonie@kernel.org>,
- Kristina Martsenko <kristina.martsenko@arm.com>,
- Sami Tolvanen <samitolvanen@google.com>, Marc Zyngier <maz@kernel.org>,
- Will Deacon <will@kernel.org>, Ard Biesheuvel <ardb@kernel.org>
+ with ESMTP id JJqzDpkQdKXE for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 10 Jul 2020 03:32:36 -0400 (EDT)
+Received: from out30-133.freemail.mail.aliyun.com
+ (out30-133.freemail.mail.aliyun.com [115.124.30.133])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7B4054B13A
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Jul 2020 03:32:35 -0400 (EDT)
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01f04427;
+ MF=tianjia.zhang@linux.alibaba.com; NM=1; PH=DS; RN=37; SR=0;
+ TI=SMTPD_---0U2Gmw93_1594366344; 
+Received: from 30.27.116.248(mailfrom:tianjia.zhang@linux.alibaba.com
+ fp:SMTPD_---0U2Gmw93_1594366344) by smtp.aliyun-inc.com(127.0.0.1);
+ Fri, 10 Jul 2020 15:32:26 +0800
+Subject: Re: [PATCH v6 0/5] clean up redundant 'kvm_run' parameters
+To: pbonzini@redhat.com, tsbogend@alpha.franken.de, paulus@ozlabs.org,
+ mpe@ellerman.id.au, benh@kernel.crashing.org, borntraeger@de.ibm.com,
+ frankja@linux.ibm.com, david@redhat.com, cohuck@redhat.com,
+ heiko.carstens@de.ibm.com, gor@linux.ibm.com,
+ sean.j.christopherson@intel.com, vkuznets@redhat.com, wanpengli@tencent.com,
+ jmattson@google.com, joro@8bytes.org, tglx@linutronix.de, mingo@redhat.com,
+ bp@alien8.de, x86@kernel.org, hpa@zytor.com, maz@kernel.org,
+ james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
+ christoffer.dall@arm.com, peterx@redhat.com, thuth@redhat.com,
+ chenhuacai@gmail.com
+References: <20200623131418.31473-1-tianjia.zhang@linux.alibaba.com>
+From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+Message-ID: <6604e273-d7b1-5007-8721-75c4a4dec68e@linux.alibaba.com>
+Date: Fri, 10 Jul 2020 15:32:24 +0800
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <20200623131418.31473-1-tianjia.zhang@linux.alibaba.com>
+X-Mailman-Approved-At: Fri, 10 Jul 2020 10:14:41 -0400
+Cc: linux-s390@vger.kernel.org, kvm@vger.kernel.org, linux-mips@vger.kernel.org,
+ kvm-ppc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -93,116 +74,78 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Will Deacon <will.deacon@arm.com>
+Hi Paolo,
 
-commit 679db70801da9fda91d26caf13bf5b5ccc74e8e8 upstream
+Any opinion on this series patches? Can I help with this patchset ?
 
-Some CPUs can speculate past an ERET instruction and potentially perform
-speculative accesses to memory before processing the exception return.
-Since the register state is often controlled by a lower privilege level
-at the point of an ERET, this could potentially be used as part of a
-side-channel attack.
+Thanks and best,
+Tianjia
 
-This patch emits an SB sequence after each ERET so that speculation is
-held up on exception return.
-
-Signed-off-by: Will Deacon <will.deacon@arm.com>
-[florian: Adjust hyp-entry.S to account for the label
- added change to hyp/entry.S]
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
----
-Changes in v2:
-
-- added missing hunk in hyp/entry.S per Will's feedback
-
- arch/arm64/kernel/entry.S      | 2 ++
- arch/arm64/kvm/hyp/entry.S     | 2 ++
- arch/arm64/kvm/hyp/hyp-entry.S | 4 ++++
- 3 files changed, 8 insertions(+)
-
-diff --git a/arch/arm64/kernel/entry.S b/arch/arm64/kernel/entry.S
-index ca978d7d98eb..3408c782702c 100644
---- a/arch/arm64/kernel/entry.S
-+++ b/arch/arm64/kernel/entry.S
-@@ -255,6 +255,7 @@ alternative_insn eret, nop, ARM64_UNMAP_KERNEL_AT_EL0
- 	.else
- 	eret
- 	.endif
-+	sb
- 	.endm
- 
- 	.macro	get_thread_info, rd
-@@ -945,6 +946,7 @@ __ni_sys_trace:
- 	mrs	x30, far_el1
- 	.endif
- 	eret
-+	sb
- 	.endm
- 
- 	.align	11
-diff --git a/arch/arm64/kvm/hyp/entry.S b/arch/arm64/kvm/hyp/entry.S
-index a360ac6e89e9..93704e6894d2 100644
---- a/arch/arm64/kvm/hyp/entry.S
-+++ b/arch/arm64/kvm/hyp/entry.S
-@@ -83,6 +83,7 @@ ENTRY(__guest_enter)
- 
- 	// Do not touch any register after this!
- 	eret
-+	sb
- ENDPROC(__guest_enter)
- 
- ENTRY(__guest_exit)
-@@ -195,4 +196,5 @@ alternative_endif
- 	ldp	x0, x1, [sp], #16
- 
- 	eret
-+	sb
- ENDPROC(__fpsimd_guest_restore)
-diff --git a/arch/arm64/kvm/hyp/hyp-entry.S b/arch/arm64/kvm/hyp/hyp-entry.S
-index bf4988f9dae8..3675e7f0ab72 100644
---- a/arch/arm64/kvm/hyp/hyp-entry.S
-+++ b/arch/arm64/kvm/hyp/hyp-entry.S
-@@ -97,6 +97,7 @@ el1_sync:				// Guest trapped into EL2
- 	do_el2_call
- 
- 2:	eret
-+	sb
- 
- el1_hvc_guest:
- 	/*
-@@ -147,6 +148,7 @@ wa_epilogue:
- 	mov	x0, xzr
- 	add	sp, sp, #16
- 	eret
-+	sb
- 
- el1_trap:
- 	get_vcpu_ptr	x1, x0
-@@ -198,6 +200,7 @@ el2_error:
- 	b.ne	__hyp_panic
- 	mov	x0, #(1 << ARM_EXIT_WITH_SERROR_BIT)
- 	eret
-+	sb
- 
- ENTRY(__hyp_do_panic)
- 	mov	lr, #(PSR_F_BIT | PSR_I_BIT | PSR_A_BIT | PSR_D_BIT |\
-@@ -206,6 +209,7 @@ ENTRY(__hyp_do_panic)
- 	ldr	lr, =panic
- 	msr	elr_el2, lr
- 	eret
-+	sb
- ENDPROC(__hyp_do_panic)
- 
- ENTRY(__hyp_panic)
--- 
-2.17.1
-
+On 2020/6/23 21:14, Tianjia Zhang wrote:
+> In the current kvm version, 'kvm_run' has been included in the 'kvm_vcpu'
+> structure. For historical reasons, many kvm-related function parameters
+> retain the 'kvm_run' and 'kvm_vcpu' parameters at the same time. This
+> patch does a unified cleanup of these remaining redundant parameters.
+> 
+> This series of patches has completely cleaned the architecture of
+> arm64, mips, ppc, and s390 (no such redundant code on x86). Due to
+> the large number of modified codes, a separate patch is made for each
+> platform. On the ppc platform, there is also a redundant structure
+> pointer of 'kvm_run' in 'vcpu_arch', which has also been cleaned
+> separately.
+> 
+> ---
+> v6 changes:
+>    Rearrange patch sets, only keep the unmerged patch.
+>    rebase on mainline.
+> 
+> v5 change:
+>    ppc: fix for review.
+> 
+> v4 change:
+>    mips: fixes two errors in entry.c.
+> 
+> v3 change:
+>    Keep the existing `vcpu->run` in the function body unchanged.
+> 
+> v2 change:
+>    s390 retains the original variable name and minimizes modification.
+> 
+> Tianjia Zhang (5):
+>    KVM: s390: clean up redundant 'kvm_run' parameters
+>    KVM: arm64: clean up redundant 'kvm_run' parameters
+>    KVM: PPC: clean up redundant kvm_run parameters in assembly
+>    KVM: MIPS: clean up redundant 'kvm_run' parameters
+>    KVM: MIPS: clean up redundant kvm_run parameters in assembly
+> 
+>   arch/arm64/include/asm/kvm_coproc.h   |  12 +--
+>   arch/arm64/include/asm/kvm_host.h     |  11 +--
+>   arch/arm64/include/asm/kvm_mmu.h      |   2 +-
+>   arch/arm64/kvm/arm.c                  |   6 +-
+>   arch/arm64/kvm/handle_exit.c          |  36 ++++----
+>   arch/arm64/kvm/mmio.c                 |  11 +--
+>   arch/arm64/kvm/mmu.c                  |   5 +-
+>   arch/arm64/kvm/sys_regs.c             |  13 ++-
+>   arch/mips/include/asm/kvm_host.h      |  32 ++------
+>   arch/mips/kvm/emulate.c               |  59 +++++--------
+>   arch/mips/kvm/entry.c                 |  21 ++---
+>   arch/mips/kvm/mips.c                  |  14 ++--
+>   arch/mips/kvm/trap_emul.c             | 114 +++++++++++---------------
+>   arch/mips/kvm/vz.c                    |  26 +++---
+>   arch/powerpc/include/asm/kvm_ppc.h    |   2 +-
+>   arch/powerpc/kvm/book3s_interrupts.S  |  22 +++--
+>   arch/powerpc/kvm/book3s_pr.c          |   9 +-
+>   arch/powerpc/kvm/booke.c              |   9 +-
+>   arch/powerpc/kvm/booke_interrupts.S   |   9 +-
+>   arch/powerpc/kvm/bookehv_interrupts.S |  10 +--
+>   arch/s390/kvm/kvm-s390.c              |  23 ++++--
+>   21 files changed, 188 insertions(+), 258 deletions(-)
+> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
