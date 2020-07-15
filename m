@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 63E14221482
-	for <lists+kvmarm@lfdr.de>; Wed, 15 Jul 2020 20:45:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDA90221483
+	for <lists+kvmarm@lfdr.de>; Wed, 15 Jul 2020 20:45:04 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 14F8B4B3A5;
-	Wed, 15 Jul 2020 14:45:02 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8219E4B213;
+	Wed, 15 Jul 2020 14:45:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,62 +14,62 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cGVupIwYD9vf; Wed, 15 Jul 2020 14:45:01 -0400 (EDT)
+	with ESMTP id V5du17UHL81W; Wed, 15 Jul 2020 14:45:04 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BB9684B3D3;
-	Wed, 15 Jul 2020 14:45:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E19244B367;
+	Wed, 15 Jul 2020 14:45:02 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CC98D4B349
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:44:59 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 587254B3C4
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id hUbuLm5kypRB for <kvmarm@lists.cs.columbia.edu>;
- Wed, 15 Jul 2020 14:44:58 -0400 (EDT)
-Received: from mail-wr1-f74.google.com (mail-wr1-f74.google.com
- [209.85.221.74])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B0F7B4B3C0
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:44:57 -0400 (EDT)
-Received: by mail-wr1-f74.google.com with SMTP id c6so1954989wru.7
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 11:44:57 -0700 (PDT)
+ with ESMTP id 3ZBUr6+Lza7f for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 15 Jul 2020 14:45:00 -0400 (EDT)
+Received: from mail-wr1-f73.google.com (mail-wr1-f73.google.com
+ [209.85.221.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4C6664B367
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:00 -0400 (EDT)
+Received: by mail-wr1-f73.google.com with SMTP id e11so1966426wrs.2
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 11:45:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=SyxRkKLKWcXOuT2LUxaUcFPGnHrRaKpVY9uzbh96ffA=;
- b=LVDh6uMqpr+JiL0cdPI7HctGHH8Fe3x00MJpT0tfzIeMjmLdLQjPzHe2QJfFF1xiBr
- ZZ5S1k0HZ3tW1n+3EMW6EYMThGccPzxDILEl54luRI/2aYuYDNfOElrIEPFVBAcr2Nqm
- 2ltBq2cY/ehPPxfVLk9/LVU/+APylK8cpSrfg4M2BXU4oN8R4KICwBkyd1GD8Jz7as11
- io/qF5zE0C6tMMJkfrmut5cum7NM9K1T45m8ahg9U41zfKtqZQZJOH0cmQ0BXSOx1M4D
- Zq8/yKqpRk3+4rirEVrurZrvky85NgI0ObFq5ecVoBlzkrA5WOJkjmc6Dn0r2gpP/v47
- dFSw==
+ :cc; bh=iL59/llhgx4ePlBR+XOWUtyD4lyYgd42fTs5cxiQgzc=;
+ b=lFI073O1Em+eVRdeZ3mvVoerLeG7MXTl/0IPTTm9aZ0F6igiUf08mCUgJQiSApqmlF
+ aCThDuAP4/HcjA6FWZl3mlU8fnh2KRb1UzqIjbuOxSx20mTCynISkhmG1w8qnGCBRxbh
+ 9IUwfiu6rDA24PyUkD22rsTBZwLJMSKp1gwS4D2RCaNbxM/m0x05aVT/H83yz8O0Q1Wv
+ UD7ID/zcy2631ASywpA8NUALqO3tdkxtt9iPsME5lD73SFmudu1o95pTIFmPUhdLMTPq
+ Jk2+CdzWIWGwNZGTgzi7iyxE4CGCPwAWnkx7rM56aESKC5pOypKNMNPEO8NwrQJLob1C
+ xowQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=SyxRkKLKWcXOuT2LUxaUcFPGnHrRaKpVY9uzbh96ffA=;
- b=NyPGrtbBvIpX8N6+kRJwBZAq8JWKmKB5e866A+j2K9hXQArVUGddxLf9N/Syb8TFxc
- muzWp64sZnfW55GyYSGtzXo7CcTML2jiavbjK5I05xbvNNvM8Lp6wZgkaVOxJC6geT9E
- 0l/kxlie11jOvxUDczXPqpMP6ejxhQKBJE3JxKXYMPh3CzMk7xIjuGiGhXA1XOF7zWg1
- 5iju0Abvv45uYf552K7bB4ujAnSSQTTHW0Lo06vxOO9kt09vgmyOF422XnDXJUVft2Bs
- IFrh0xccfrIUrUUsE3o/LTsCfNwIWTIeziD9jBDIx5a6S5plfnf8H1Hx4sZPadphHe6z
- ON1w==
-X-Gm-Message-State: AOAM532HxGoWYYcCl9d5dh8RB9VWmPdSCKJhCyIQYPTl5EzGH9P1r+hl
- EHBnAs1Nf0f5Rb6sRSpvBRhiQZhJCHOIqDHHkC4FCO6QALEVfQ02jD+XxK8pYbPdcDwQWwo8Q69
- s5NQXqWcE0W4QdMIG2gcHnO4rKsV/bBZk/+wPKIZgOSvaXmyF6BYxDUENM6WYZQwMriIBAw==
-X-Google-Smtp-Source: ABdhPJy6Q4HVs7j7fPq8iP4gr2bwTHKT1UL5MS1P9x4s2b+UrCi49QDL9pl6QsxKWhpSUY7aX/41hmK+kps=
-X-Received: by 2002:a1c:a557:: with SMTP id o84mr782435wme.42.1594838696814;
- Wed, 15 Jul 2020 11:44:56 -0700 (PDT)
-Date: Wed, 15 Jul 2020 19:44:05 +0100
+ bh=iL59/llhgx4ePlBR+XOWUtyD4lyYgd42fTs5cxiQgzc=;
+ b=VgYPie6+31Jm1iRamItq+7p9CVbw2sCrl0jz2dQ3KbS6njy94RvyY15D/p3G1JIBsY
+ YUE4Tbj+7FCppnQXvWSN6xh2/+Mubkifevq6/Vs4nAiBDU3U/GOzBv6IEmA7+RtNgr0K
+ NWN+KR6NlPxcqbXw+lhC9wb4x6XUbByARZTZMdvvLPHquzPKyv/NqD8Ar/b1sPpBIs0X
+ 1VThfGcy5gQ64pymqhVvkoNm/ySfN2M/1SdWE6H/nfrm0E7lDkBXrsZtSx0LsNb6Kzo7
+ 1dfRFwxuavEE4rDJcinPQrFJLwXNeX3MwxstiMMoCAhymBC7jKEWAOJ+oLNhdiS7ZAu6
+ sRqA==
+X-Gm-Message-State: AOAM530uyWMR6OmIMcVP4ivqDMYz8UtYrrAYVBsvCpTqF3nigkuZ+Nxm
+ 05gNoYnRrdINpk+3lmoAnOV5UlS8OLl/JpNXp516+fU1a7qAVJzd0d0/T2Oe+zhkwyGr4Tyeg1d
+ WdT50jTO8JfPtHGBsUl/uiJ+ZIUzXAhbtV93LMwjAoMiY9GlV/Sjl+bDObjCLo6V04G0FeQ==
+X-Google-Smtp-Source: ABdhPJxXYtT8F6Y75B3cZ/xShhBqJVmuZOON1Y7qkjjqhhetpHd916TD7yiLP8vsi9pGQCOb0VKjZCeQCXY=
+X-Received: by 2002:a7b:c185:: with SMTP id y5mr762974wmi.85.1594838699187;
+ Wed, 15 Jul 2020 11:44:59 -0700 (PDT)
+Date: Wed, 15 Jul 2020 19:44:06 +0100
 In-Reply-To: <20200715184438.1390996-1-ascull@google.com>
-Message-Id: <20200715184438.1390996-5-ascull@google.com>
+Message-Id: <20200715184438.1390996-6-ascull@google.com>
 Mime-Version: 1.0
 References: <20200715184438.1390996-1-ascull@google.com>
 X-Mailer: git-send-email 2.27.0.389.gc38d7665816-goog
-Subject: [PATCH 04/37] KVM: arm64: nVHE: Pass pointers consistently to hyp-init
+Subject: [PATCH 05/37] KVM: arm64: nVHE: Break out of the hyp-init idmap
 From: Andrew Scull <ascull@google.com>
 To: kvmarm@lists.cs.columbia.edu
 Cc: maz@kernel.org, kernel-team@android.com
@@ -89,39 +89,134 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Rather than some being kernel pointer and others being hyp pointers,
-standardize on all pointers being hyp pointers.
+The idmap is a restrictive context as it is located separately from the
+rest of hyp. Extra care must be taken to avoid symbol references that
+will not resolve correctly so, the less that has to be done in this
+context, the better.
+
+To overcome this, pass an pre-resolved pointer into hyp-init that it can
+jump to and escape the idmap once it has installed the page table.
+
+This patch just introduces the mechanism to break out of the idmap for
+use in future changes.
 
 Signed-off-by: Andrew Scull <ascull@google.com>
 ---
- arch/arm64/kvm/arm.c               | 1 +
- arch/arm64/kvm/hyp/nvhe/hyp-init.S | 1 -
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/arm.c                |  7 ++++++-
+ arch/arm64/kvm/hyp/nvhe/Makefile    |  3 ++-
+ arch/arm64/kvm/hyp/nvhe/hyp-init.S  | 13 +++++++------
+ arch/arm64/kvm/hyp/nvhe/hyp-start.S | 16 ++++++++++++++++
+ 4 files changed, 31 insertions(+), 8 deletions(-)
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/hyp-start.S
 
 diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 94f4481e5637..bf662c0dd409 100644
+index bf662c0dd409..52be6149fcbf 100644
 --- a/arch/arm64/kvm/arm.c
 +++ b/arch/arm64/kvm/arm.c
-@@ -1275,6 +1275,7 @@ static void cpu_init_hyp_mode(void)
+@@ -1257,9 +1257,12 @@ long kvm_arch_vm_ioctl(struct file *filp,
  
- 	pgd_ptr = kvm_mmu_get_httbr();
+ static void cpu_init_hyp_mode(void)
+ {
++	DECLARE_KVM_NVHE_SYM(__kvm_hyp_start);
++
+ 	phys_addr_t pgd_ptr;
+ 	unsigned long hyp_stack_ptr;
+ 	unsigned long vector_ptr;
++	unsigned long start_hyp;
+ 	unsigned long tpidr_el2;
+ 
+ 	/* Switch from the HYP stub to our own HYP init vector */
+@@ -1277,6 +1280,7 @@ static void cpu_init_hyp_mode(void)
  	hyp_stack_ptr = __this_cpu_read(kvm_arm_hyp_stack_page) + PAGE_SIZE;
-+	hyp_stack_ptr = kern_hyp_va(hyp_stack_ptr);
+ 	hyp_stack_ptr = kern_hyp_va(hyp_stack_ptr);
  	vector_ptr = (unsigned long)kvm_get_hyp_vector();
++	start_hyp = (unsigned long)kern_hyp_va(kvm_ksym_ref_nvhe(__kvm_hyp_start));
  
  	/*
+ 	 * Call initialization code, and switch to the full blown HYP code.
+@@ -1285,7 +1289,8 @@ static void cpu_init_hyp_mode(void)
+ 	 * cpus_have_const_cap() wrapper.
+ 	 */
+ 	BUG_ON(!system_capabilities_finalized());
+-	__kvm_call_hyp((void *)pgd_ptr, hyp_stack_ptr, vector_ptr, tpidr_el2);
++	__kvm_call_hyp((void *)pgd_ptr, hyp_stack_ptr, vector_ptr, start_hyp,
++		       tpidr_el2);
+ 
+ 	/*
+ 	 * Disabling SSBD on a non-VHE system requires us to enable SSBS
+diff --git a/arch/arm64/kvm/hyp/nvhe/Makefile b/arch/arm64/kvm/hyp/nvhe/Makefile
+index 0b34414557d6..1f3a39efaa6e 100644
+--- a/arch/arm64/kvm/hyp/nvhe/Makefile
++++ b/arch/arm64/kvm/hyp/nvhe/Makefile
+@@ -6,7 +6,8 @@
+ asflags-y := -D__KVM_NVHE_HYPERVISOR__
+ ccflags-y := -D__KVM_NVHE_HYPERVISOR__
+ 
+-obj-y := timer-sr.o sysreg-sr.o debug-sr.o switch.o tlb.o hyp-init.o
++obj-y := timer-sr.o sysreg-sr.o debug-sr.o switch.o tlb.o hyp-init.o \
++	 hyp-start.o
+ obj-y += ../vgic-v3-sr.o ../aarch32.o ../vgic-v2-cpuif-proxy.o ../entry.o \
+ 	 ../fpsimd.o ../hyp-entry.o
+ 
 diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-init.S b/arch/arm64/kvm/hyp/nvhe/hyp-init.S
-index 1587d146726a..f80f169a8442 100644
+index f80f169a8442..029c51365d03 100644
 --- a/arch/arm64/kvm/hyp/nvhe/hyp-init.S
 +++ b/arch/arm64/kvm/hyp/nvhe/hyp-init.S
-@@ -113,7 +113,6 @@ alternative_else_nop_endif
- 	isb
+@@ -46,13 +46,17 @@ __invalid:
+ 	 * x0: HYP pgd
+ 	 * x1: HYP stack
+ 	 * x2: HYP vectors
+-	 * x3: per-CPU offset
++	 * x3: __kvm_hyp_start HYP address
++	 * x4: per-CPU offset
+ 	 */
+ __do_hyp_init:
+ 	/* Check for a stub HVC call */
+ 	cmp	x0, #HVC_STUB_HCALL_NR
+ 	b.lo	__kvm_handle_stub_hvc
  
- 	/* Set the stack and new vectors */
--	kern_hyp_va	x1
++	/* Set tpidr_el2 for use by HYP */
++	msr	tpidr_el2, x4
++
+ 	phys_to_ttbr x4, x0
+ alternative_if ARM64_HAS_CNP
+ 	orr	x4, x4, #TTBR_CNP_BIT
+@@ -116,11 +120,8 @@ alternative_else_nop_endif
  	mov	sp, x1
  	msr	vbar_el2, x2
  
+-	/* Set tpidr_el2 for use by HYP */
+-	msr	tpidr_el2, x3
+-
+-	/* Hello, World! */
+-	eret
++	/* Leave the idmap posthaste and head over to __kvm_hyp_start */
++	br	x3
+ SYM_CODE_END(__kvm_hyp_init)
+ 
+ SYM_CODE_START(__kvm_handle_stub_hvc)
+diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-start.S b/arch/arm64/kvm/hyp/nvhe/hyp-start.S
+new file mode 100644
+index 000000000000..5f7fbcb57fd5
+--- /dev/null
++++ b/arch/arm64/kvm/hyp/nvhe/hyp-start.S
+@@ -0,0 +1,16 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Copyright (C) 2020 - Google Inc
++ * Author: Andrew Scull <ascull@google.com>
++ */
++
++#include <linux/linkage.h>
++
++#include <asm/assembler.h>
++#include <asm/asm-offsets.h>
++#include <asm/kvm_asm.h>
++
++SYM_CODE_START(__kvm_hyp_start)
++	/* Hello, World! */
++	eret
++SYM_CODE_END(__kvm_hyp_start)
 -- 
 2.27.0.389.gc38d7665816-goog
 
