@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 44A79221488
-	for <lists+kvmarm@lfdr.de>; Wed, 15 Jul 2020 20:45:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86C26221489
+	for <lists+kvmarm@lfdr.de>; Wed, 15 Jul 2020 20:45:18 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EB2414B388;
-	Wed, 15 Jul 2020 14:45:15 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3AC374B16A;
+	Wed, 15 Jul 2020 14:45:18 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,57 +19,57 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rXpDTBTfBl+W; Wed, 15 Jul 2020 14:45:14 -0400 (EDT)
+	with ESMTP id tW+EeEj9aEi3; Wed, 15 Jul 2020 14:45:16 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9528B4B3CD;
-	Wed, 15 Jul 2020 14:45:14 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B93654B381;
+	Wed, 15 Jul 2020 14:45:16 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 18CD34B213
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:13 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 773AF4B316
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:15 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id QFf2rvdytCsu for <kvmarm@lists.cs.columbia.edu>;
- Wed, 15 Jul 2020 14:45:11 -0400 (EDT)
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com
- [209.85.219.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1E5334B1CC
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:11 -0400 (EDT)
-Received: by mail-yb1-f201.google.com with SMTP id d202so3967174ybh.12
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 11:45:11 -0700 (PDT)
+ with ESMTP id wnNBZNdf-YCb for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 15 Jul 2020 14:45:14 -0400 (EDT)
+Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com
+ [209.85.128.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1FA514B381
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:14 -0400 (EDT)
+Received: by mail-wm1-f73.google.com with SMTP id g6so1754282wmk.4
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 11:45:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=Pe+OeVkFdVfdLCR9l3Rkbn829uq1fiFz6g2wLHYGq3k=;
- b=FfJ8yrfM2AzmdQnBJY2PX/wVHJyHyQaGnSzd7zACLhQloJ5FUk0nzlR4Adju1URDBN
- Hs5JgwE+eNLzG3B7BoGWzCxqeiOtt5jAadkGZSXdI1AzdgZ8DJ8YBwMenArjAKxBPQNH
- 7p0e5FJOZXXJwp9v3u8FDjiJcPcv8JhaEdeqVoAVPPmQEtzNwMg+6LefU6vuQp7FJ7VY
- /DDBlgYN3eACPWVog5donf+EP33ogjDzYxHDjJBbeGcEuzzA9f+fKk1J33bKsRXUQgXT
- ThuNDORp72QkCDCDMzoj9qKKuRfOt6irnk6NV36hs2AEAmdqfKLfysfk4GLw4Y91mfHC
- moPg==
+ :cc; bh=a2Ho+lepGR/y+cRuGpw9mRRd7tn63EYGoevk0RcWxuI=;
+ b=T1zytl5BQ6TGZDgJ3AllM+YacCudT1mbAHCOwB4+WRw3ynrcopuS/FtecLG5tD7nTp
+ ZYaElovK63x98UZo0BPe+WJmZRlQsKogosQdF+C+HQABSi1A0gphyrut+XTb4781laab
+ 6WxwV9BNEoabBFvrAGFWpjKxv9KABjVLzENYcYCVtlbrn6Xa540NwCE0agFWgSdLPXNj
+ UEXuPeW0H7Ii/HDz6J9zjklFx90nfWpyunq0Co2Ni1KHDIFdAC7PmoMxw7ulNYDlicmM
+ +LrVPD+YNJ3peo2CkqStFAE1KA0820TACSH68VT4O5vrOC+IkvwI3khtxaQxLt8UmqNO
+ LpOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=Pe+OeVkFdVfdLCR9l3Rkbn829uq1fiFz6g2wLHYGq3k=;
- b=oRAHuaXItrXquZK+pOaqm+eRWXJMGA4OUA5M4uKkJPTvVRHhp2b2RwgWkXSHh1W7Sx
- wQBFkR88o/UKB93qXgcKqs/YWyQztry0N1rFoIZE2o4cI1FPLjnp1vCOE0ee4TaUGsJX
- YG6E0775Y9TP/aIypsgs3CViJy3JAkoidk7Y0J621k/EDAK4U3jOgVHLgk8KbaNspljr
- YvNS2Yzav84NG92ytqX67OY2oRKuTXYc/L97KvA/SPZtbtXBg6A5QZQsP+guVYQZ+yZP
- 1LI5xgz6OISfcRUPWGgjh3VKTk8RZLGLh3N6mBMkIqhzJZavAivjUE5/5Jdl8My0ADz9
- xXzg==
-X-Gm-Message-State: AOAM531o3Q4796CwNiCLTdTLo8cXw60Dh5L54jIrjHUZsUXQhIrlaoYJ
- zSjC+MeTBkBnTqgGBbq50YSoQS4rQmknkxLTwpNyf/zFh8WXu1XkHDD5N3QMpRIvP6p4AUglyIX
- jU/dSr/LneDSRrNgDRbENB3hMJ50DXs7nlaWRxJ09k4Gf1vGvk155UCB2siqLlUkuQi2Z9g==
-X-Google-Smtp-Source: ABdhPJywioEiXWVrSK1+7gkaaiKWFzNLdUSFQv9Z6v46oVWxWDk1eRf+Nw0gKU/MltCP9AxcWNbivtkdtHM=
-X-Received: by 2002:a5b:4ca:: with SMTP id u10mr597339ybp.128.1594838710592;
- Wed, 15 Jul 2020 11:45:10 -0700 (PDT)
-Date: Wed, 15 Jul 2020 19:44:11 +0100
+ bh=a2Ho+lepGR/y+cRuGpw9mRRd7tn63EYGoevk0RcWxuI=;
+ b=kDyN625Ue10X1oLKPLxZPB+sV8AgC6JowlwTK8FEfFos9NBp1Lv0ykABIyrzBOCBjN
+ GTiTXAEE6PwuhBzIcfNomrbAtRvxRHSskwGgccdRcTP5MbG5pnrL7fj6rnGlAjlaeSXq
+ 9mWXe8/l2an9riXPAFWOB72NKB3YEujOmMAwd3sQnFpyhWqHwmnmoYx3u71uLnC87/nc
+ mkbbMsiiif26q4S0msQ4iDIw0e906PqQ0aOPiNOrpOzGLz7vzDGcD4W4JZ0bUQr95SPw
+ wau/KsjntjWa25o7E96QIoKhBRdMmIusH/w7CobfCct3kCjDnvHVenMjHB9nk7t5q4qN
+ V0SQ==
+X-Gm-Message-State: AOAM530mwSEpAAp9czqFyloKU5wJi7vjKfxIZhuQgNB8O6iYjhlw5ApD
+ Z35JpAcJD9Mogsr8Vj83U3L8SlgknrqmLBept2Mg81KN0ehMiE6keUalmqJSwRdh7APwXwthSf2
+ +bnL6wBKpHAdeLTAH2Andlisg2OjVTtUeGbhVlVu0yEHZpoWjOlzom5OnkkoO+GliJxi8Yw==
+X-Google-Smtp-Source: ABdhPJwO/Bo9UH033ZqioFrrxqlXl2z+/3jGpyipK0Ri32hIeu9VI8WqcyzzljWh9AeJ2S22V2ofRXtYwPE=
+X-Received: by 2002:a05:6000:1c8:: with SMTP id t8mr766023wrx.73.1594838712926; 
+ Wed, 15 Jul 2020 11:45:12 -0700 (PDT)
+Date: Wed, 15 Jul 2020 19:44:12 +0100
 In-Reply-To: <20200715184438.1390996-1-ascull@google.com>
-Message-Id: <20200715184438.1390996-11-ascull@google.com>
+Message-Id: <20200715184438.1390996-12-ascull@google.com>
 Mime-Version: 1.0
 References: <20200715184438.1390996-1-ascull@google.com>
 X-Mailer: git-send-email 2.27.0.389.gc38d7665816-goog
-Subject: [PATCH 10/37] KVM: arm64: nVHE: Migrate hyp interface to SMCCC
+Subject: [PATCH 11/37] KVM: arm64: nVHE: Migrate hyp-init to SMCCC
 From: Andrew Scull <ascull@google.com>
 To: kvmarm@lists.cs.columbia.edu
 Cc: maz@kernel.org, kernel-team@android.com
@@ -89,281 +89,251 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Rather than passing arbitrary function pointers to run at hyp, define
-and equivalent set of SMCCC functions.
+To complete the transition to SMCCC, the hyp initialization is given a
+function ID. This looks neater than comparing the hyp stub function IDs
+to the page table physical address.
 
-Since the SMCCC functions are strongly tied to the original function
-prototypes, it is not expected for the host to ever call an invalid ID
-but a warning is raised if this does ever occur.
+Some care is taken to only clobber x0-3 before the host context is saved
+as only those registers can be clobbered accoring to SMCCC. Fortunately,
+only a few acrobatics are needed. The possible new tpidr_el2 is moved to
+the argument in x2 so that it can be stashed in tpidr_el2 early to free
+up a scratch register. The page table configuration then makes use of
+x0-2.
 
 Signed-off-by: Andrew Scull <ascull@google.com>
-Signed-off-by: David Brazdil <dbrazdil@google.com>
 ---
- arch/arm64/include/asm/kvm_asm.h   |  24 +++++++
- arch/arm64/include/asm/kvm_host.h  |  26 +++++---
- arch/arm64/kvm/arm.c               |   4 +-
- arch/arm64/kvm/hyp.S               |  25 ++-----
- arch/arm64/kvm/hyp/nvhe/hyp-main.c | 104 +++++++++++++++++++++++++----
- 5 files changed, 139 insertions(+), 44 deletions(-)
+ arch/arm64/include/asm/kvm_host.h  |  6 ---
+ arch/arm64/kvm/Makefile            |  2 +-
+ arch/arm64/kvm/arm.c               |  7 +++-
+ arch/arm64/kvm/hyp.S               | 23 -----------
+ arch/arm64/kvm/hyp/nvhe/hyp-init.S | 63 +++++++++++++++++-------------
+ arch/arm64/kvm/hyp/nvhe/hyp-main.c |  6 +++
+ 6 files changed, 48 insertions(+), 59 deletions(-)
+ delete mode 100644 arch/arm64/kvm/hyp.S
 
-diff --git a/arch/arm64/include/asm/kvm_asm.h b/arch/arm64/include/asm/kvm_asm.h
-index ebe9d582f360..ff27c18b9fd6 100644
---- a/arch/arm64/include/asm/kvm_asm.h
-+++ b/arch/arm64/include/asm/kvm_asm.h
-@@ -38,6 +38,30 @@
- 
- #define __SMCCC_WORKAROUND_1_SMC_SZ 36
- 
-+#define KVM_HOST_SMCCC_ID(id)						\
-+	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,				\
-+			   ARM_SMCCC_SMC_64,				\
-+			   ARM_SMCCC_OWNER_STANDARD_HYP,		\
-+			   (id))
-+
-+#define KVM_HOST_SMCCC_FUNC(name) KVM_HOST_SMCCC_ID(__KVM_HOST_SMCCC_FUNC_##name)
-+
-+#define __KVM_HOST_SMCCC_FUNC___kvm_hyp_init			0
-+#define __KVM_HOST_SMCCC_FUNC___kvm_flush_vm_context		1
-+#define __KVM_HOST_SMCCC_FUNC___kvm_tlb_flush_vmid_ipa		2
-+#define __KVM_HOST_SMCCC_FUNC___kvm_tlb_flush_vmid		3
-+#define __KVM_HOST_SMCCC_FUNC___kvm_tlb_flush_local_vmid	4
-+#define __KVM_HOST_SMCCC_FUNC___kvm_timer_set_cntvoff		5
-+#define __KVM_HOST_SMCCC_FUNC___kvm_vcpu_run			6
-+#define __KVM_HOST_SMCCC_FUNC___kvm_enable_ssbs			7
-+#define __KVM_HOST_SMCCC_FUNC___vgic_v3_get_ich_vtr_el2		8
-+#define __KVM_HOST_SMCCC_FUNC___vgic_v3_read_vmcr		9
-+#define __KVM_HOST_SMCCC_FUNC___vgic_v3_write_vmcr		10
-+#define __KVM_HOST_SMCCC_FUNC___vgic_v3_init_lrs		11
-+#define __KVM_HOST_SMCCC_FUNC___kvm_get_mdcr_el2		12
-+#define __KVM_HOST_SMCCC_FUNC___vgic_v3_save_aprs		13
-+#define __KVM_HOST_SMCCC_FUNC___vgic_v3_restore_aprs		14
-+
- #ifndef __ASSEMBLY__
- 
- #include <linux/mm.h>
 diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 183312340d2c..5603d2f465eb 100644
+index 5603d2f465eb..152c050e74a9 100644
 --- a/arch/arm64/include/asm/kvm_host.h
 +++ b/arch/arm64/include/asm/kvm_host.h
-@@ -11,6 +11,7 @@
- #ifndef __ARM64_KVM_HOST_H__
- #define __ARM64_KVM_HOST_H__
- 
-+#include <linux/arm-smccc.h>
- #include <linux/bitmap.h>
- #include <linux/types.h>
- #include <linux/jump_label.h>
-@@ -492,18 +493,21 @@ int kvm_test_age_hva(struct kvm *kvm, unsigned long hva);
+@@ -493,12 +493,6 @@ int kvm_test_age_hva(struct kvm *kvm, unsigned long hva);
  void kvm_arm_halt_guest(struct kvm *kvm);
  void kvm_arm_resume_guest(struct kvm *kvm);
  
--u64 __kvm_call_hyp(void *hypfn, ...);
-+u64 __kvm_call_hyp_init(phys_addr_t pgd_ptr,
-+			unsigned long hyp_stack_ptr,
-+			unsigned long vector_ptr,
-+			unsigned long start_hyp,
-+			unsigned long tpidr_el2);
- 
--#define kvm_call_hyp_nvhe(f, ...)					\
--	do {								\
--		DECLARE_KVM_NVHE_SYM(f);				\
--		__kvm_call_hyp(kvm_ksym_ref_nvhe(f), ##__VA_ARGS__);	\
--	} while(0)
+-u64 __kvm_call_hyp_init(phys_addr_t pgd_ptr,
+-			unsigned long hyp_stack_ptr,
+-			unsigned long vector_ptr,
+-			unsigned long start_hyp,
+-			unsigned long tpidr_el2);
 -
--#define kvm_call_hyp_nvhe_ret(f, ...)					\
-+#define kvm_call_hyp_nvhe(f, ...)						\
+ #define kvm_call_hyp_nvhe(f, ...)						\
  	({								\
--		DECLARE_KVM_NVHE_SYM(f);				\
--		__kvm_call_hyp(kvm_ksym_ref_nvhe(f), ##__VA_ARGS__);	\
-+		struct arm_smccc_res res;				\
-+									\
-+		arm_smccc_1_1_hvc(KVM_HOST_SMCCC_FUNC(f),		\
-+				  ##__VA_ARGS__, &res);			\
-+		WARN_ON(res.a0 != SMCCC_RET_SUCCESS);			\
-+									\
-+		res.a1;							\
- 	})
- 
- /*
-@@ -529,7 +533,7 @@ u64 __kvm_call_hyp(void *hypfn, ...);
- 			ret = f(__VA_ARGS__);				\
- 			isb();						\
- 		} else {						\
--			ret = kvm_call_hyp_nvhe_ret(f, ##__VA_ARGS__);	\
-+			ret = kvm_call_hyp_nvhe(f, ##__VA_ARGS__);	\
- 		}							\
- 									\
- 		ret;							\
+ 		struct arm_smccc_res res;				\
+diff --git a/arch/arm64/kvm/Makefile b/arch/arm64/kvm/Makefile
+index 99977c1972cc..1504c81fbf5d 100644
+--- a/arch/arm64/kvm/Makefile
++++ b/arch/arm64/kvm/Makefile
+@@ -13,7 +13,7 @@ obj-$(CONFIG_KVM) += hyp/
+ kvm-y := $(KVM)/kvm_main.o $(KVM)/coalesced_mmio.o $(KVM)/eventfd.o \
+ 	 $(KVM)/vfio.o $(KVM)/irqchip.o \
+ 	 arm.o mmu.o mmio.o psci.o perf.o hypercalls.o pvtime.o \
+-	 inject_fault.o regmap.o va_layout.o hyp.o handle_exit.o \
++	 inject_fault.o regmap.o va_layout.o handle_exit.o \
+ 	 guest.o debug.o reset.o sys_regs.o \
+ 	 vgic-sys-reg-v3.o fpsimd.o pmu.o \
+ 	 aarch32.o arch_timer.o \
 diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 8bd4630666ca..c42c00c8141a 100644
+index c42c00c8141a..fe49203948d3 100644
 --- a/arch/arm64/kvm/arm.c
 +++ b/arch/arm64/kvm/arm.c
-@@ -1290,8 +1290,8 @@ static void cpu_init_hyp_mode(void)
+@@ -1265,6 +1265,7 @@ static void cpu_init_hyp_mode(void)
+ 	unsigned long vector_ptr;
+ 	unsigned long start_hyp;
+ 	unsigned long tpidr_el2;
++	struct arm_smccc_res res;
+ 
+ 	/* Switch from the HYP stub to our own HYP init vector */
+ 	__hyp_set_vectors(kvm_get_idmap_vector());
+@@ -1290,8 +1291,10 @@ static void cpu_init_hyp_mode(void)
  	 * cpus_have_const_cap() wrapper.
  	 */
  	BUG_ON(!system_capabilities_finalized());
--	__kvm_call_hyp((void *)pgd_ptr, hyp_stack_ptr, vector_ptr, start_hyp,
--		       tpidr_el2);
-+	__kvm_call_hyp_init(pgd_ptr, hyp_stack_ptr, vector_ptr, start_hyp,
-+			    tpidr_el2);
+-	__kvm_call_hyp_init(pgd_ptr, hyp_stack_ptr, vector_ptr, start_hyp,
+-			    tpidr_el2);
++	arm_smccc_1_1_hvc(KVM_HOST_SMCCC_FUNC(__kvm_hyp_init),
++			  pgd_ptr, tpidr_el2, start_hyp, hyp_stack_ptr,
++			  vector_ptr, &res);
++	WARN_ON(res.a0 != SMCCC_RET_SUCCESS);
  
  	/*
  	 * Disabling SSBD on a non-VHE system requires us to enable SSBS
 diff --git a/arch/arm64/kvm/hyp.S b/arch/arm64/kvm/hyp.S
-index 3c79a1124af2..0891625c8648 100644
+deleted file mode 100644
+index 0891625c8648..000000000000
 --- a/arch/arm64/kvm/hyp.S
-+++ b/arch/arm64/kvm/hyp.S
-@@ -11,24 +11,13 @@
- #include <asm/cpufeature.h>
- 
- /*
-- * u64 __kvm_call_hyp(void *hypfn, ...);
-- *
-- * This is not really a variadic function in the classic C-way and care must
-- * be taken when calling this to ensure parameters are passed in registers
-- * only, since the stack will change between the caller and the callee.
-- *
-- * Call the function with the first argument containing a pointer to the
-- * function you wish to call in Hyp mode, and subsequent arguments will be
-- * passed as x0, x1, and x2 (a maximum of 3 arguments in addition to the
-- * function pointer can be passed).  The function being called must be mapped
-- * in Hyp mode (see init_hyp_mode in arch/arm/kvm/arm.c).  Return values are
-- * passed in x0.
-- *
-- * A function pointer with a value less than 0xfff has a special meaning,
-- * and is used to implement hyp stubs in the same way as in
-- * arch/arm64/kernel/hyp_stub.S.
-+ * u64 __kvm_call_hyp_init(phys_addr_t pgd_ptr,
-+ * 			   unsigned long hyp_stack_ptr,
-+ * 			   unsigned long vector_ptr,
-+ * 			   unsigned long start_hyp,
-+ * 			   unsigned long tpidr_el2);
++++ /dev/null
+@@ -1,23 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0-only */
+-/*
+- * Copyright (C) 2012,2013 - ARM Ltd
+- * Author: Marc Zyngier <marc.zyngier@arm.com>
+- */
+-
+-#include <linux/linkage.h>
+-
+-#include <asm/alternative.h>
+-#include <asm/assembler.h>
+-#include <asm/cpufeature.h>
+-
+-/*
+- * u64 __kvm_call_hyp_init(phys_addr_t pgd_ptr,
+- * 			   unsigned long hyp_stack_ptr,
+- * 			   unsigned long vector_ptr,
+- * 			   unsigned long start_hyp,
+- * 			   unsigned long tpidr_el2);
+- */
+-SYM_FUNC_START(__kvm_call_hyp_init)
+-	hvc	#0
+-	ret
+-SYM_FUNC_END(__kvm_call_hyp_init)
+diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-init.S b/arch/arm64/kvm/hyp/nvhe/hyp-init.S
+index 029c51365d03..df2a7904a83b 100644
+--- a/arch/arm64/kvm/hyp/nvhe/hyp-init.S
++++ b/arch/arm64/kvm/hyp/nvhe/hyp-init.S
+@@ -4,10 +4,12 @@
+  * Author: Marc Zyngier <marc.zyngier@arm.com>
   */
--SYM_FUNC_START(__kvm_call_hyp)
-+SYM_FUNC_START(__kvm_call_hyp_init)
- 	hvc	#0
- 	ret
--SYM_FUNC_END(__kvm_call_hyp)
-+SYM_FUNC_END(__kvm_call_hyp_init)
+ 
++#include <linux/arm-smccc.h>
+ #include <linux/linkage.h>
+ 
+ #include <asm/assembler.h>
+ #include <asm/kvm_arm.h>
++#include <asm/kvm_asm.h>
+ #include <asm/kvm_mmu.h>
+ #include <asm/pgtable-hwdef.h>
+ #include <asm/sysreg.h>
+@@ -43,31 +45,38 @@ __invalid:
+ 	b	.
+ 
+ 	/*
+-	 * x0: HYP pgd
+-	 * x1: HYP stack
+-	 * x2: HYP vectors
++	 * x0: SMCCC function ID
++	 * x1: HYP pgd
++	 * x2: per-CPU offset
+ 	 * x3: __kvm_hyp_start HYP address
+-	 * x4: per-CPU offset
++	 * x4: HYP stack
++	 * x5: HYP vectors
+ 	 */
+ __do_hyp_init:
+ 	/* Check for a stub HVC call */
+ 	cmp	x0, #HVC_STUB_HCALL_NR
+ 	b.lo	__kvm_handle_stub_hvc
+ 
+-	/* Set tpidr_el2 for use by HYP */
+-	msr	tpidr_el2, x4
++	/* Set tpidr_el2 for use by HYP to free a register */
++	msr	tpidr_el2, x2
+ 
+-	phys_to_ttbr x4, x0
++	mov	x2, #KVM_HOST_SMCCC_FUNC(__kvm_hyp_init)
++	cmp	x0, x2
++	b.eq	1f
++	mov	x0, #SMCCC_RET_NOT_SUPPORTED
++	eret
++
++1:	phys_to_ttbr x0, x1
+ alternative_if ARM64_HAS_CNP
+-	orr	x4, x4, #TTBR_CNP_BIT
++	orr	x0, x0, #TTBR_CNP_BIT
+ alternative_else_nop_endif
+-	msr	ttbr0_el2, x4
++	msr	ttbr0_el2, x0
+ 
+-	mrs	x4, tcr_el1
+-	mov_q	x5, TCR_EL2_MASK
+-	and	x4, x4, x5
+-	mov	x5, #TCR_EL2_RES1
+-	orr	x4, x4, x5
++	mrs	x0, tcr_el1
++	mov_q	x1, TCR_EL2_MASK
++	and	x0, x0, x1
++	mov	x1, #TCR_EL2_RES1
++	orr	x0, x0, x1
+ 
+ 	/*
+ 	 * The ID map may be configured to use an extended virtual address
+@@ -83,18 +92,18 @@ alternative_else_nop_endif
+ 	 *
+ 	 * So use the same T0SZ value we use for the ID map.
+ 	 */
+-	ldr_l	x5, idmap_t0sz
+-	bfi	x4, x5, TCR_T0SZ_OFFSET, TCR_TxSZ_WIDTH
++	ldr_l	x1, idmap_t0sz
++	bfi	x0, x1, TCR_T0SZ_OFFSET, TCR_TxSZ_WIDTH
+ 
+ 	/*
+ 	 * Set the PS bits in TCR_EL2.
+ 	 */
+-	tcr_compute_pa_size x4, #TCR_EL2_PS_SHIFT, x5, x6
++	tcr_compute_pa_size x0, #TCR_EL2_PS_SHIFT, x1, x2
+ 
+-	msr	tcr_el2, x4
++	msr	tcr_el2, x0
+ 
+-	mrs	x4, mair_el1
+-	msr	mair_el2, x4
++	mrs	x0, mair_el1
++	msr	mair_el2, x0
+ 	isb
+ 
+ 	/* Invalidate the stale TLBs from Bootloader */
+@@ -106,19 +115,19 @@ alternative_else_nop_endif
+ 	 * as well as the EE bit on BE. Drop the A flag since the compiler
+ 	 * is allowed to generate unaligned accesses.
+ 	 */
+-	mov_q	x4, (SCTLR_EL2_RES1 | (SCTLR_ELx_FLAGS & ~SCTLR_ELx_A))
+-CPU_BE(	orr	x4, x4, #SCTLR_ELx_EE)
++	mov_q	x0, (SCTLR_EL2_RES1 | (SCTLR_ELx_FLAGS & ~SCTLR_ELx_A))
++CPU_BE(	orr	x0, x0, #SCTLR_ELx_EE)
+ alternative_if ARM64_HAS_ADDRESS_AUTH
+-	mov_q	x5, (SCTLR_ELx_ENIA | SCTLR_ELx_ENIB | \
++	mov_q	x1, (SCTLR_ELx_ENIA | SCTLR_ELx_ENIB | \
+ 		     SCTLR_ELx_ENDA | SCTLR_ELx_ENDB)
+-	orr	x4, x4, x5
++	orr	x0, x0, x1
+ alternative_else_nop_endif
+-	msr	sctlr_el2, x4
++	msr	sctlr_el2, x0
+ 	isb
+ 
+ 	/* Set the stack and new vectors */
+-	mov	sp, x1
+-	msr	vbar_el2, x2
++	mov	sp, x4
++	msr	vbar_el2, x5
+ 
+ 	/* Leave the idmap posthaste and head over to __kvm_hyp_start */
+ 	br	x3
 diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-index 9b58d58d6cfa..7e7c074f8093 100644
+index 7e7c074f8093..4e3634cdfde6 100644
 --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
 +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-@@ -11,23 +11,101 @@
- #include <asm/kvm_hyp.h>
- #include <asm/kvm_mmu.h>
+@@ -125,6 +125,12 @@ void __noreturn kvm_hyp_main(void)
+ 	host_vcpu->arch.flags = KVM_ARM64_HOST_VCPU_FLAGS;
+ 	host_vcpu->arch.workaround_flags = VCPU_WORKAROUND_2_FLAG;
  
--typedef unsigned long (*hypcall_fn_t)
--	(unsigned long, unsigned long, unsigned long);
-+#include <kvm/arm_hypercalls.h>
++	/*
++	 * The first time entering the host is seen by the host as the return
++	 * of the initialization HVC so mark it as successful.
++	 */
++	smccc_set_retval(host_vcpu, SMCCC_RET_SUCCESS, 0, 0, 0);
 +
-+static void handle_host_hcall(unsigned long func_id, struct kvm_vcpu *host_vcpu)
-+{
-+	unsigned long ret = 0;
-+
-+	switch (func_id) {
-+	case KVM_HOST_SMCCC_FUNC(__kvm_flush_vm_context):
-+		__kvm_flush_vm_context();
-+		break;
-+	case KVM_HOST_SMCCC_FUNC(__kvm_tlb_flush_vmid_ipa): {
-+			struct kvm_s2_mmu *mmu =
-+				(struct kvm_s2_mmu *)smccc_get_arg1(host_vcpu);
-+			phys_addr_t ipa = smccc_get_arg2(host_vcpu);
-+			int level = smccc_get_arg3(host_vcpu);
-+
-+			__kvm_tlb_flush_vmid_ipa(mmu, ipa, level);
-+			break;
-+		}
-+	case KVM_HOST_SMCCC_FUNC(__kvm_tlb_flush_vmid): {
-+			struct kvm_s2_mmu *mmu =
-+				(struct kvm_s2_mmu *)smccc_get_arg1(host_vcpu);
-+
-+			__kvm_tlb_flush_vmid(mmu);
-+			break;
-+		}
-+	case KVM_HOST_SMCCC_FUNC(__kvm_tlb_flush_local_vmid): {
-+			struct kvm_s2_mmu *mmu =
-+				(struct kvm_s2_mmu *)smccc_get_arg1(host_vcpu);
-+
-+			__kvm_tlb_flush_local_vmid(mmu);
-+			break;
-+		}
-+	case KVM_HOST_SMCCC_FUNC(__kvm_timer_set_cntvoff): {
-+			u64 cntvoff = smccc_get_arg1(host_vcpu);
-+
-+			__kvm_timer_set_cntvoff(cntvoff);
-+			break;
-+		}
-+	case KVM_HOST_SMCCC_FUNC(__kvm_vcpu_run): {
-+			struct kvm_vcpu *vcpu =
-+				(struct kvm_vcpu *)smccc_get_arg1(host_vcpu);
-+
-+			ret = __kvm_vcpu_run(vcpu);
-+			break;
-+		}
-+	case KVM_HOST_SMCCC_FUNC(__kvm_enable_ssbs):
-+		__kvm_enable_ssbs();
-+		break;
-+	case KVM_HOST_SMCCC_FUNC(__vgic_v3_get_ich_vtr_el2):
-+		ret = __vgic_v3_get_ich_vtr_el2();
-+		break;
-+	case KVM_HOST_SMCCC_FUNC(__vgic_v3_read_vmcr):
-+		ret = __vgic_v3_read_vmcr();
-+		break;
-+	case KVM_HOST_SMCCC_FUNC(__vgic_v3_write_vmcr): {
-+			u32 vmcr = smccc_get_arg1(host_vcpu);
-+
-+			__vgic_v3_write_vmcr(vmcr);
-+			break;
-+		}
-+	case KVM_HOST_SMCCC_FUNC(__vgic_v3_init_lrs):
-+		__vgic_v3_init_lrs();
-+		break;
-+	case KVM_HOST_SMCCC_FUNC(__kvm_get_mdcr_el2):
-+		ret = __kvm_get_mdcr_el2();
-+		break;
-+	case KVM_HOST_SMCCC_FUNC(__vgic_v3_save_aprs): {
-+			struct vgic_v3_cpu_if *cpu_if =
-+				(struct vgic_v3_cpu_if *)smccc_get_arg1(host_vcpu);
-+
-+			__vgic_v3_save_aprs(cpu_if);
-+			break;
-+		}
-+	case KVM_HOST_SMCCC_FUNC(__vgic_v3_restore_aprs): {
-+			struct vgic_v3_cpu_if *cpu_if =
-+				(struct vgic_v3_cpu_if *)smccc_get_arg1(host_vcpu);
-+
-+			__vgic_v3_restore_aprs(cpu_if);
-+			break;
-+		}
-+	default:
-+		/* Invalid host HVC. */
-+		smccc_set_retval(host_vcpu, SMCCC_RET_NOT_SUPPORTED, 0, 0, 0);
-+		return;
-+	}
-+
-+	smccc_set_retval(host_vcpu, SMCCC_RET_SUCCESS, ret, 0, 0);
-+}
+ 	while (true) {
+ 		u64 exit_code;
  
- static void handle_trap(struct kvm_vcpu *host_vcpu) {
- 	if (kvm_vcpu_trap_get_class(host_vcpu) == ESR_ELx_EC_HVC64) {
--		hypcall_fn_t func;
--		unsigned long ret;
-+		unsigned long func_id = smccc_get_function(host_vcpu);
- 
--		/*
--		 * __kvm_call_hyp takes a pointer in the host address space and
--		 * up to three arguments.
--		 */
--		func = (hypcall_fn_t)kern_hyp_va(vcpu_get_reg(host_vcpu, 0));
--		ret = func(vcpu_get_reg(host_vcpu, 1),
--			   vcpu_get_reg(host_vcpu, 2),
--			   vcpu_get_reg(host_vcpu, 3));
--		vcpu_set_reg(host_vcpu, 0, ret);
-+		handle_host_hcall(func_id, host_vcpu);
- 	}
- 
- 	/* Other traps are ignored. */
 -- 
 2.27.0.389.gc38d7665816-goog
 
