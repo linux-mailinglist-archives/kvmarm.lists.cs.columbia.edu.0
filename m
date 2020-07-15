@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id EAA6D22148A
-	for <lists+kvmarm@lfdr.de>; Wed, 15 Jul 2020 20:45:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D52E722148B
+	for <lists+kvmarm@lfdr.de>; Wed, 15 Jul 2020 20:45:21 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D80F4B3D3;
-	Wed, 15 Jul 2020 14:45:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 874FE4B170;
+	Wed, 15 Jul 2020 14:45:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,63 +14,62 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rOU2otoG3bi9; Wed, 15 Jul 2020 14:45:19 -0400 (EDT)
+	with ESMTP id VZH8pFKjvrCL; Wed, 15 Jul 2020 14:45:20 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E36144B170;
-	Wed, 15 Jul 2020 14:45:17 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0EEAE4B3E7;
+	Wed, 15 Jul 2020 14:45:20 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 636C04B1CC
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:17 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 168B44B1CC
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id dHPfSCsaYbct for <kvmarm@lists.cs.columbia.edu>;
- Wed, 15 Jul 2020 14:45:16 -0400 (EDT)
-Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com
- [209.85.128.74])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2DD844B1E1
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:16 -0400 (EDT)
-Received: by mail-wm1-f74.google.com with SMTP id g138so1558804wme.7
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 11:45:16 -0700 (PDT)
+ with ESMTP id xVEOmConIHZM for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 15 Jul 2020 14:45:18 -0400 (EDT)
+Received: from mail-qt1-f202.google.com (mail-qt1-f202.google.com
+ [209.85.160.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C449B4B3E5
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:17 -0400 (EDT)
+Received: by mail-qt1-f202.google.com with SMTP id t36so1992501qtc.16
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 11:45:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=bynoXcd8hocBoiNtymx3u8KaOcRpgmrVNAmRk5YvXaQ=;
- b=E0k+1ahT92ys1eRP7X5XPAbD4tLCs75u6BLWHPJq2BKvjq9qnq0vInpEHFykozXNRK
- fTNXkfY9Da67ID5veCj8v3BgaUT4uDPRb1kSwqHwzSwT4T3NpNCf+HgvxqMCbWvBw7eT
- 6aRZiOrxoLrOsZTl9XZudQp/8BK4YXMgNrhVYBL4dxoSrHiEFzeeQu1eLvpxDHDXwUX4
- Q6JriEo6UoP6EAB5mNBP4yAn7bZIY99N8Sr4noxGtJ839GYdMm/mPoiQdxJT6xMKgIJh
- PElIguu6uJYt+nGJG4wARVT4ZiKNBmAbE0HCcHWu8Vo/ficPxVyQq2+uLzgLWlIWEI7O
- O7wQ==
+ :cc; bh=DzLM30YLaDahBmFN2vdswcf6xS4U0YF4/in7tp2e7Ac=;
+ b=WCkXUeWkGWipxkJCnWezDbCCye5WPmn66w/ehPc0Z+l4toQG+0YCSl7fVleP8jhhgW
+ uugm9ZqV3oEtfBPpC+awJS7TWFvCoVyYiI1lWmJCrJuP8GQBQ0ShSQjzSzQS5p7GN+MR
+ XKt/prGdwBu/JEwQKYsaSiuVdoRBDDmDBCz+MXPbUfQn/ir3YXBtoBlTU6izDGkDl03b
+ w857hVaR/7JH/pIYsV9d2yidZAzaveOevBG4byZs9XsQak6XwYprLKUL9g6KAmzVQ5El
+ osO9X33dyLac7cgFNOmd0mTe3MVXgjzP501wWF+UKJmXuIqMwbnsjDCKbIIxuo21InCb
+ uBVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=bynoXcd8hocBoiNtymx3u8KaOcRpgmrVNAmRk5YvXaQ=;
- b=uK08v3C+IbCVMwr6QpXkqqk+29bJj/clBPhNf/hGnmqYrhvGSDTMIt8XfiDM5VyYpV
- jRF2iFThFcJbTIpE91K2qWBzApto4Egoi7uKDd1nSlVF/gRTUHyDXoh4JX7FSj8b/qDO
- dIqxkOVPyvWm4OaoyEn3wv4y1eIMckTaZdh0w17YQBtkk4G4eLXMnofuLXYXZbHXH7R8
- k+uni8ppfnfzGZETUID4b8bnfyUF+prezy9Bu9c1myuRENTgU6IbJqkEhtb/nvx5UbHl
- 63PBVNtJHPrKLB1aI6LfCv1HbuD546OIIP+m/KnT7oWEtPCUf8f6cawUm1GgQfaL6L9R
- Ej1g==
-X-Gm-Message-State: AOAM530QDfywk4HhG+spNnRsztbtGEUX3NHCg7nZFioe3lQrCV++0og+
- y/WYFZfF8nLT0Grdfp0yHmWqF1rtVkksSFn3EOfvNeGS3PiWOXffHCF2SIEjRtV22TfLb32mV18
- FWY2z4rSA2iUmD802y906mQ+C6iwRi3u3HfN3VfqqSlQNZPnB6tISswOwqNu+tMX5M/cPCw==
-X-Google-Smtp-Source: ABdhPJyMCjYYNeXkUgSPKRBFALmAq/8wrKX+htIRtH4MMqTvowZ6PrB3VJmG+WzgXz1Kyt0psfAry3U7ZUA=
-X-Received: by 2002:a05:600c:2144:: with SMTP id
- v4mr802288wml.128.1594838715237; 
- Wed, 15 Jul 2020 11:45:15 -0700 (PDT)
-Date: Wed, 15 Jul 2020 19:44:13 +0100
+ bh=DzLM30YLaDahBmFN2vdswcf6xS4U0YF4/in7tp2e7Ac=;
+ b=agTFVLGLvFqtEZZOOXneZ4V88b1p7O3Pc2ccoYDCoSUgctTIWzhzkObdN2665Yq4by
+ T7wjzS/JhVMwB06rA8Y+2VmJuY2WlFtTC7n3u9pX5NjfS1Zuvayxe2z7FSg8OnhoBls6
+ YhEXHAoa+3lHqWjvEl50bRrab/xGmUMdlvyzv/RV5pJIQYdLySRS+F6L1l1wpOFMlBGa
+ jXT30aWSwj7/hyDHPLPBCXQOxUm8AXPlFuyXgJ9C9Ao0QVBl7jXWj96Bil9eaWDCU1z3
+ IzJVyi+M6F2ygwgPJcya9T/r8dPmRB4zgLbzC+J3z5RdAfUJeZ4Al+0V5wpz3aTsxCF3
+ 6vuA==
+X-Gm-Message-State: AOAM531CBFaY/i4JjDj3yey8DVilywPC3SIsoFZD5Cx/2m9GMa2pms1c
+ m7SyPzAU3UksD4RvUZmnVxp7V5SLippWM5tC36UBZX8K9n7MSA7TnVQ1zXkRAcsWmOSCcFdbdNG
+ iUHlTyLBSBJ5OHp/us5qq8Nqd8NqPPidXHrs84BtYfRAlepGsfHzqaRRHrCCNTfB58vuXxQ==
+X-Google-Smtp-Source: ABdhPJz07yNAPawl1Q7Sa9Gv1Ygjsv3jpDz+jg0pE43kpSN1W13sgdR3OGkk29zNgxuysvvAQvOjhQt9dpM=
+X-Received: by 2002:a0c:ea26:: with SMTP id t6mr708145qvp.220.1594838717224;
+ Wed, 15 Jul 2020 11:45:17 -0700 (PDT)
+Date: Wed, 15 Jul 2020 19:44:14 +0100
 In-Reply-To: <20200715184438.1390996-1-ascull@google.com>
-Message-Id: <20200715184438.1390996-13-ascull@google.com>
+Message-Id: <20200715184438.1390996-14-ascull@google.com>
 Mime-Version: 1.0
 References: <20200715184438.1390996-1-ascull@google.com>
 X-Mailer: git-send-email 2.27.0.389.gc38d7665816-goog
-Subject: [PATCH 12/37] KVM: arm64: nVHE: Fix pointers during SMCCC convertion
+Subject: [PATCH 13/37] KVM: arm64: Rename workaround 2 helpers
 From: Andrew Scull <ascull@google.com>
 To: kvmarm@lists.cs.columbia.edu
 Cc: maz@kernel.org, kernel-team@android.com
@@ -90,133 +89,103 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The host need not concern itself with the pointer differences for the
-hyp interfaces that are shared between VHE and nVHE so leave it to the
-hyp to handle.
+Change the names from 'guest' and 'host' to terms that can also apply
+when the host is treated as a vcpu and hyp has its own state.
 
-As the SMCCC function IDs are converted into function calls, it is a
-suitable place to also convert any pointer arguments into hyp pointers.
-This, additionally, eases the reuse of the handlers in different
-contexts.
+'guest' becomes 'vcpu' as the host is now also a vcpu.
+
+'host' becomes 'hyp' as the nVHE hyp is gaining indepedent state and the
+VHE hyp _is_ the host anyway.
 
 Signed-off-by: Andrew Scull <ascull@google.com>
 ---
- arch/arm64/kvm/hyp/nvhe/hyp-main.c | 12 ++++++------
- arch/arm64/kvm/hyp/nvhe/switch.c   |  2 --
- arch/arm64/kvm/hyp/nvhe/tlb.c      |  2 --
- arch/arm64/kvm/vgic/vgic-v3.c      |  4 ++--
- 4 files changed, 8 insertions(+), 12 deletions(-)
+ arch/arm64/kvm/hyp/include/hyp/switch.h | 12 ++++++------
+ arch/arm64/kvm/hyp/nvhe/switch.c        |  4 ++--
+ arch/arm64/kvm/hyp/vhe/switch.c         |  4 ++--
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-index 4e3634cdfde6..2d621bf5ac3e 100644
---- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-+++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-@@ -27,21 +27,21 @@ static void handle_host_hcall(unsigned long func_id, struct kvm_vcpu *host_vcpu)
- 			phys_addr_t ipa = smccc_get_arg2(host_vcpu);
- 			int level = smccc_get_arg3(host_vcpu);
+diff --git a/arch/arm64/kvm/hyp/include/hyp/switch.h b/arch/arm64/kvm/hyp/include/hyp/switch.h
+index 248f434c5de6..fa62c2b21b4b 100644
+--- a/arch/arm64/kvm/hyp/include/hyp/switch.h
++++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
+@@ -484,15 +484,15 @@ static inline bool __needs_ssbd_off(struct kvm_vcpu *vcpu)
+ 	if (!cpus_have_final_cap(ARM64_SSBD))
+ 		return false;
  
--			__kvm_tlb_flush_vmid_ipa(mmu, ipa, level);
-+			__kvm_tlb_flush_vmid_ipa(kern_hyp_va(mmu), ipa, level);
- 			break;
- 		}
- 	case KVM_HOST_SMCCC_FUNC(__kvm_tlb_flush_vmid): {
- 			struct kvm_s2_mmu *mmu =
- 				(struct kvm_s2_mmu *)smccc_get_arg1(host_vcpu);
+-	return !(vcpu->arch.workaround_flags & VCPU_WORKAROUND_2_FLAG);
++	return !kvm_arm_get_vcpu_workaround_2_flag(vcpu);
+ }
  
--			__kvm_tlb_flush_vmid(mmu);
-+			__kvm_tlb_flush_vmid(kern_hyp_va(mmu));
- 			break;
- 		}
- 	case KVM_HOST_SMCCC_FUNC(__kvm_tlb_flush_local_vmid): {
- 			struct kvm_s2_mmu *mmu =
- 				(struct kvm_s2_mmu *)smccc_get_arg1(host_vcpu);
+-static inline void __set_guest_arch_workaround_state(struct kvm_vcpu *vcpu)
++static inline void __set_vcpu_arch_workaround_state(struct kvm_vcpu *vcpu)
+ {
+ #ifdef CONFIG_ARM64_SSBD
+ 	/*
+-	 * The host runs with the workaround always present. If the
+-	 * guest wants it disabled, so be it...
++	 * The hyp runs with the workaround always present. If the
++	 * vpu wants it disabled, so be it...
+ 	 */
+ 	if (__needs_ssbd_off(vcpu) &&
+ 	    __hyp_this_cpu_read(arm64_ssbd_callback_required))
+@@ -500,11 +500,11 @@ static inline void __set_guest_arch_workaround_state(struct kvm_vcpu *vcpu)
+ #endif
+ }
  
--			__kvm_tlb_flush_local_vmid(mmu);
-+			__kvm_tlb_flush_local_vmid(kern_hyp_va(mmu));
- 			break;
- 		}
- 	case KVM_HOST_SMCCC_FUNC(__kvm_timer_set_cntvoff): {
-@@ -54,7 +54,7 @@ static void handle_host_hcall(unsigned long func_id, struct kvm_vcpu *host_vcpu)
- 			struct kvm_vcpu *vcpu =
- 				(struct kvm_vcpu *)smccc_get_arg1(host_vcpu);
- 
--			ret = __kvm_vcpu_run(vcpu);
-+			ret = __kvm_vcpu_run(kern_hyp_va(vcpu));
- 			break;
- 		}
- 	case KVM_HOST_SMCCC_FUNC(__kvm_enable_ssbs):
-@@ -82,14 +82,14 @@ static void handle_host_hcall(unsigned long func_id, struct kvm_vcpu *host_vcpu)
- 			struct vgic_v3_cpu_if *cpu_if =
- 				(struct vgic_v3_cpu_if *)smccc_get_arg1(host_vcpu);
- 
--			__vgic_v3_save_aprs(cpu_if);
-+			__vgic_v3_save_aprs(kern_hyp_va(cpu_if));
- 			break;
- 		}
- 	case KVM_HOST_SMCCC_FUNC(__vgic_v3_restore_aprs): {
- 			struct vgic_v3_cpu_if *cpu_if =
- 				(struct vgic_v3_cpu_if *)smccc_get_arg1(host_vcpu);
- 
--			__vgic_v3_restore_aprs(cpu_if);
-+			__vgic_v3_restore_aprs(kern_hyp_va(cpu_if));
- 			break;
- 		}
- 	default:
+-static inline void __set_host_arch_workaround_state(struct kvm_vcpu *vcpu)
++static inline void __set_hyp_arch_workaround_state(struct kvm_vcpu *vcpu)
+ {
+ #ifdef CONFIG_ARM64_SSBD
+ 	/*
+-	 * If the guest has disabled the workaround, bring it back on.
++	 * If the vcpu has disabled the workaround, bring it back on.
+ 	 */
+ 	if (__needs_ssbd_off(vcpu) &&
+ 	    __hyp_this_cpu_read(arm64_ssbd_callback_required))
 diff --git a/arch/arm64/kvm/hyp/nvhe/switch.c b/arch/arm64/kvm/hyp/nvhe/switch.c
-index 99cf90200bf7..d866bff8a142 100644
+index d866bff8a142..81cdf33f92bc 100644
 --- a/arch/arm64/kvm/hyp/nvhe/switch.c
 +++ b/arch/arm64/kvm/hyp/nvhe/switch.c
-@@ -173,8 +173,6 @@ int __kvm_vcpu_run(struct kvm_vcpu *vcpu)
- 		pmr_sync();
- 	}
+@@ -200,7 +200,7 @@ int __kvm_vcpu_run(struct kvm_vcpu *vcpu)
  
--	vcpu = kern_hyp_va(vcpu);
--
- 	host_ctxt = &__hyp_this_cpu_ptr(kvm_host_data)->host_ctxt;
- 	*__hyp_this_cpu_ptr(kvm_hyp_running_vcpu) = vcpu;
- 	guest_ctxt = &vcpu->arch.ctxt;
-diff --git a/arch/arm64/kvm/hyp/nvhe/tlb.c b/arch/arm64/kvm/hyp/nvhe/tlb.c
-index f31185272b50..e5f65f0da106 100644
---- a/arch/arm64/kvm/hyp/nvhe/tlb.c
-+++ b/arch/arm64/kvm/hyp/nvhe/tlb.c
-@@ -56,7 +56,6 @@ void __kvm_tlb_flush_vmid_ipa(struct kvm_s2_mmu *mmu,
- 	dsb(ishst);
+ 	__debug_switch_to_guest(vcpu);
  
- 	/* Switch to requested VMID */
--	mmu = kern_hyp_va(mmu);
- 	__tlb_switch_to_guest(mmu, &cxt);
+-	__set_guest_arch_workaround_state(vcpu);
++	__set_vcpu_arch_workaround_state(vcpu);
  
- 	/*
-@@ -110,7 +109,6 @@ void __kvm_tlb_flush_vmid(struct kvm_s2_mmu *mmu)
- 	dsb(ishst);
+ 	do {
+ 		/* Jump in the fire! */
+@@ -209,7 +209,7 @@ int __kvm_vcpu_run(struct kvm_vcpu *vcpu)
+ 		/* And we're baaack! */
+ 	} while (fixup_guest_exit(vcpu, &exit_code));
  
- 	/* Switch to requested VMID */
--	mmu = kern_hyp_va(mmu);
- 	__tlb_switch_to_guest(mmu, &cxt);
+-	__set_host_arch_workaround_state(vcpu);
++	__set_hyp_arch_workaround_state(vcpu);
  
- 	__tlbi(vmalls12e1is);
-diff --git a/arch/arm64/kvm/vgic/vgic-v3.c b/arch/arm64/kvm/vgic/vgic-v3.c
-index 76e2d85789ed..9cdf39a94a63 100644
---- a/arch/arm64/kvm/vgic/vgic-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-v3.c
-@@ -662,7 +662,7 @@ void vgic_v3_load(struct kvm_vcpu *vcpu)
- 	if (likely(cpu_if->vgic_sre))
- 		kvm_call_hyp(__vgic_v3_write_vmcr, cpu_if->vgic_vmcr);
+ 	__sysreg_save_state_nvhe(guest_ctxt);
+ 	__sysreg32_save_state(vcpu);
+diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
+index 366dc386224c..d871e79fceaf 100644
+--- a/arch/arm64/kvm/hyp/vhe/switch.c
++++ b/arch/arm64/kvm/hyp/vhe/switch.c
+@@ -131,7 +131,7 @@ static int __kvm_vcpu_run_vhe(struct kvm_vcpu *vcpu)
+ 	sysreg_restore_guest_state_vhe(guest_ctxt);
+ 	__debug_switch_to_guest(vcpu);
  
--	kvm_call_hyp(__vgic_v3_restore_aprs, kern_hyp_va(cpu_if));
-+	kvm_call_hyp(__vgic_v3_restore_aprs, cpu_if);
+-	__set_guest_arch_workaround_state(vcpu);
++	__set_vcpu_arch_workaround_state(vcpu);
  
- 	if (has_vhe())
- 		__vgic_v3_activate_traps(cpu_if);
-@@ -686,7 +686,7 @@ void vgic_v3_put(struct kvm_vcpu *vcpu)
+ 	do {
+ 		/* Jump in the fire! */
+@@ -140,7 +140,7 @@ static int __kvm_vcpu_run_vhe(struct kvm_vcpu *vcpu)
+ 		/* And we're baaack! */
+ 	} while (fixup_guest_exit(vcpu, &exit_code));
  
- 	vgic_v3_vmcr_sync(vcpu);
+-	__set_host_arch_workaround_state(vcpu);
++	__set_hyp_arch_workaround_state(vcpu);
  
--	kvm_call_hyp(__vgic_v3_save_aprs, kern_hyp_va(cpu_if));
-+	kvm_call_hyp(__vgic_v3_save_aprs, cpu_if);
+ 	sysreg_save_guest_state_vhe(guest_ctxt);
  
- 	if (has_vhe())
- 		__vgic_v3_deactivate_traps(cpu_if);
 -- 
 2.27.0.389.gc38d7665816-goog
 
