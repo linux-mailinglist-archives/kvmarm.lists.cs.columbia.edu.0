@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 46AB1221494
-	for <lists+kvmarm@lfdr.de>; Wed, 15 Jul 2020 20:45:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 602B2221495
+	for <lists+kvmarm@lfdr.de>; Wed, 15 Jul 2020 20:45:45 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id ECE024B357;
-	Wed, 15 Jul 2020 14:45:41 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 117F04B381;
+	Wed, 15 Jul 2020 14:45:45 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,63 +14,62 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DiRrQY7q0y7x; Wed, 15 Jul 2020 14:45:41 -0400 (EDT)
+	with ESMTP id va3V5jvSn760; Wed, 15 Jul 2020 14:45:44 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4FC444B3DC;
-	Wed, 15 Jul 2020 14:45:40 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7310A4B3E5;
+	Wed, 15 Jul 2020 14:45:43 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3B74F4B381
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:39 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 25C2A4B3D0
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id DZMXY6-D+hCM for <kvmarm@lists.cs.columbia.edu>;
- Wed, 15 Jul 2020 14:45:38 -0400 (EDT)
+ with ESMTP id nbPUo8EcFYjg for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 15 Jul 2020 14:45:41 -0400 (EDT)
 Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com
  [209.85.128.73])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 416BE4B3FE
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:38 -0400 (EDT)
-Received: by mail-wm1-f73.google.com with SMTP id b13so1744191wme.9
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 11:45:38 -0700 (PDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 156374B3C0
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:41 -0400 (EDT)
+Received: by mail-wm1-f73.google.com with SMTP id s134so1560472wme.6
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 11:45:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=0z/MiPlBDRsHJF7rBDqdEMFFrKLB9C9HVm3iOVMZkUs=;
- b=KNH5aOM91lvpEZiNF2yIpXNMMKK4R40K8U8Fx4UHIOY1wdnl3TqHXQcwGAXHGiaHXd
- vKZEfkndRGeiL6jM5f7t/KY+6g2K2/VbOXw/rSUgHl0jUVn5svzDG5zaRMoWxKFJPhlX
- FSllxbfOW7BUbje99RK6X/K2dO+4QBFJjeh4haNEy5iQMdHkAIFlkR5Ut2jZk0fYyad2
- ui3SArX8ChZaj2h9B00o2eRVioC8LdZvU/wj9aaqEQ1NAfzfTzaAZIFMdXT2jj/oLgoe
- iTulZcKhIWGrBr7LWAAcjfO2lDG3kwTm4DPWswD8fOFvPINhGS0Can1XiMKnpTxM7Qu6
- 0L+g==
+ :cc; bh=Y54p5wOLVjkqV9LQOmEOwl9Orb3HRxUOEFIdX/9yWSs=;
+ b=boYRFIULe/j64FkXQMikU8XA2e/fVAyLe+OGGX9CMYmX9lf0esahK57YzTmehmIcUj
+ ypRD1GATfFWTYtNFnbHjoy7NixHCZQwA0DyQWg5bZQAmSXbGouTubt+wOJloHqt8D6wy
+ ejEHG6yAZtlSXlp632YL99Noah3elCejozLkDSt8a1bKeIrtf+hNlJmkcCOz2Tonyxdi
+ eG0ZRiwPzuphWt9v0Z7ZXyD5eyZZHn2jjLHPGWGR34VCE63KBERlbasQNjy73KmnCg/0
+ Sf2cV9L1aLaoLQkl7h6SMRuIOTPbaxYxV+ReLQT7jPiYrbLY/VhvhX600GyuGYxzo7XX
+ ZdYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=0z/MiPlBDRsHJF7rBDqdEMFFrKLB9C9HVm3iOVMZkUs=;
- b=uK2IqWN6ZUEfwqX9rjcbZ4ATKS0m+dWr2MFR/hL3sk8H+kVh++3swvXPqER8wrK81p
- 9nN3FHYPfejLJymdWnnPp6VlpCzk13MXb+fiMcuInwWu7BCi/5FZKSRpzTPCyh6aRReW
- i7UKnZYQEHfEgEwGGsS7TAL8HrLKfOiFMVpE6rs1tlnHnekaL2gCZH/U5yr2q9U6QmiS
- WGsFPRJW7xtn+4SgkRxb8AtQPW5+jgAmgyq9Ip5uT/c3DMzCl6fyfD07IOxoIMecHt3q
- o+pUdsiDjHpkvFHlnNRzXwgOnZvuS+KFnBjKOrRXrzfv4TVcK0mUetbLTgq05bUBKbkM
- 2skg==
-X-Gm-Message-State: AOAM532uQLB47O2v01/a5Lnc8RBhcBGcahXbX39xI4tQc+Y9lqtrlb95
- Bj8E5QXRobWyqfhNtyOfT/Zt2Dv3NMDaSj2VKYNhJcDuLPQHbmDz8p1GDs9JpDYnshoRoV8nriB
- RTAKHhEXYCxrvie/i3DSqxzb31bAevYUO4LjlbMRYOBzwd5x8U92JjTCsyWkTxzJn8e034g==
-X-Google-Smtp-Source: ABdhPJzwqYmpIBd6FEfulgMm+7rik4YbvG0zz3ok0WSrhgInfuUJIl/TzHuAOgY0yvYrKI2O5bJ4gpI+3NM=
-X-Received: by 2002:a7b:c116:: with SMTP id w22mr707371wmi.97.1594838737380;
- Wed, 15 Jul 2020 11:45:37 -0700 (PDT)
-Date: Wed, 15 Jul 2020 19:44:23 +0100
+ bh=Y54p5wOLVjkqV9LQOmEOwl9Orb3HRxUOEFIdX/9yWSs=;
+ b=YPqNcNM/bNK7uvefgtqrdZLtW3t0ZdOjilqzhvnKkCgAXe+ZObxszo/o7kPtQuFqNG
+ 04Lh6mQm6Iqd6O1uP+Qrb6vIHmwXicnYGXN5YOE2NGemDtYNYQ8mBp/J9iHg6nTnFWXD
+ Sl3rj+jpQRDWxtfH7CI9XnggbQ30/gzoSkvmrqeenYVzIRJjz63+MPeNAcKyZsmyJUp0
+ PAubDHFZ4ThBLzOewIWOlyzzJq9hv/fqOXOT6bh0XmQ/X8G0E+2naSzi2krBhmTr+v2R
+ Eu7lKsz81pSAjSd4UwixikY/a9eXidc/B2nii58jIsUX5YpOZpdJoT8P2QQSFc0ZPEOp
+ XK3Q==
+X-Gm-Message-State: AOAM530rWrHh0llBT8eaCkXeAJ+8lLlAPedwr4aLN/5pszOHAPB6+9Qe
+ X5lwwY2yIeavHi+oy7dDB/imPz4yUvfJiA+3PBPWhRSjt4hN3oPdEVIFOE2RngRMLNb5UxHnESA
+ 6yMBiWaBjIvOF0qr3eQ+yVO9UYoUCaTauEQPMd4a9dVhAAoQo5jAAdB2ndC5Qrrfobx4Kjw==
+X-Google-Smtp-Source: ABdhPJx8RzdHZ3EA/N51JCfHTpWo5jRWx98sv6Z8CnauzddIv7L9ziQixtiQN/BBb/qoDJBdrvkhdIo1vVA=
+X-Received: by 2002:a1c:cc09:: with SMTP id h9mr1314897wmb.1.1594838739712;
+ Wed, 15 Jul 2020 11:45:39 -0700 (PDT)
+Date: Wed, 15 Jul 2020 19:44:24 +0100
 In-Reply-To: <20200715184438.1390996-1-ascull@google.com>
-Message-Id: <20200715184438.1390996-23-ascull@google.com>
+Message-Id: <20200715184438.1390996-24-ascull@google.com>
 Mime-Version: 1.0
 References: <20200715184438.1390996-1-ascull@google.com>
 X-Mailer: git-send-email 2.27.0.389.gc38d7665816-goog
-Subject: [PATCH 22/37] KVM: arm64: nVHE: Store host's mdcr_el2 and hcr_el2 in
- its vcpu
+Subject: [PATCH 23/37] KVM: arm64: Skip __hyp_panic and go direct to hyp_panic
 From: Andrew Scull <ascull@google.com>
 To: kvmarm@lists.cs.columbia.edu
 Cc: maz@kernel.org, kernel-team@android.com
@@ -90,92 +89,95 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-This make the host vcpu's state more accurate and lays the foundations
-for the configurations being dynamic.
+The VHE and nVHE variants of hyp_panic no longer share the same
+arguments so __hyp_panic no longer serves a useful purpose. hyp_panic
+can get all the context it needs from percpu variables.
 
 Signed-off-by: Andrew Scull <ascull@google.com>
 ---
- arch/arm64/kvm/hyp/nvhe/hyp-main.c |  7 +++++++
- arch/arm64/kvm/hyp/nvhe/switch.c   | 17 +++++------------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ arch/arm64/include/asm/kvm_hyp.h |  2 +-
+ arch/arm64/kvm/hyp/hyp-entry.S   | 11 +++--------
+ arch/arm64/kvm/hyp/nvhe/switch.c |  2 +-
+ arch/arm64/kvm/hyp/vhe/switch.c  |  3 ++-
+ 4 files changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-index e7601de3b901..3a78fe8b923a 100644
---- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-+++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-@@ -163,13 +163,20 @@ void __noreturn kvm_hyp_main(void)
- {
- 	/* Set tpidr_el2 for use by HYP */
- 	struct kvm_vcpu *host_vcpu;
-+	u64 mdcr_el2;
+diff --git a/arch/arm64/include/asm/kvm_hyp.h b/arch/arm64/include/asm/kvm_hyp.h
+index 75016c92d70b..32b438c1da4e 100644
+--- a/arch/arm64/include/asm/kvm_hyp.h
++++ b/arch/arm64/include/asm/kvm_hyp.h
+@@ -104,7 +104,7 @@ u64 __guest_enter(struct kvm_vcpu *vcpu, struct kvm_cpu_context *host_ctxt);
  
- 	host_vcpu = __hyp_this_cpu_ptr(kvm_host_vcpu);
+ void __vaxorcize_serror(void);
  
- 	kvm_init_host_cpu_context(&host_vcpu->arch.ctxt);
+-void __noreturn hyp_panic(struct kvm_cpu_context *host_ctxt);
++void __noreturn hyp_panic(void);
+ #ifdef __KVM_NVHE_HYPERVISOR__
+ void __noreturn __hyp_do_panic(unsigned long, ...);
+ #endif
+diff --git a/arch/arm64/kvm/hyp/hyp-entry.S b/arch/arm64/kvm/hyp/hyp-entry.S
+index 3113665ce912..2748e3d3ef85 100644
+--- a/arch/arm64/kvm/hyp/hyp-entry.S
++++ b/arch/arm64/kvm/hyp/hyp-entry.S
+@@ -95,7 +95,7 @@ el2_sync:
  
-+	mdcr_el2 = read_sysreg(mdcr_el2);
-+	mdcr_el2 &= MDCR_EL2_HPMN_MASK;
-+	mdcr_el2 |= MDCR_EL2_E2PB_MASK << MDCR_EL2_E2PB_SHIFT;
-+
- 	host_vcpu->arch.flags = KVM_ARM64_HOST_VCPU_FLAGS;
- 	host_vcpu->arch.workaround_flags = VCPU_WORKAROUND_2_FLAG;
-+	host_vcpu->arch.hcr_el2 = HCR_HOST_NVHE_FLAGS;
-+	host_vcpu->arch.mdcr_el2 = mdcr_el2;
- 	host_vcpu->arch.debug_ptr = &host_vcpu->arch.vcpu_debug_state;
+ 	/* if this was something else, then panic! */
+ 	tst	x0, #PSR_IL_BIT
+-	b.eq	__hyp_panic
++	b.eq	hyp_panic
  
- 	/*
+ 	/* Let's attempt a recovery from the illegal exception return */
+ 	hyp_ldr_this_cpu x1, kvm_hyp_running_vcpu, x0
+@@ -123,7 +123,7 @@ el2_error:
+ 	cmp	x0, x1
+ 	adr	x1, abort_guest_exit_end
+ 	ccmp	x0, x1, #4, ne
+-	b.ne	__hyp_panic
++	b.ne	hyp_panic
+ 	eret
+ 	sb
+ 
+@@ -139,12 +139,7 @@ SYM_FUNC_START(__hyp_do_panic)
+ SYM_FUNC_END(__hyp_do_panic)
+ #endif
+ 
+-SYM_CODE_START(__hyp_panic)
+-	get_host_ctxt x0, x1
+-	b	hyp_panic
+-SYM_CODE_END(__hyp_panic)
+-
+-.macro invalid_vector	label, target = __hyp_panic
++.macro invalid_vector	label, target = hyp_panic
+ 	.align	2
+ SYM_CODE_START(\label)
+ 	b \target
 diff --git a/arch/arm64/kvm/hyp/nvhe/switch.c b/arch/arm64/kvm/hyp/nvhe/switch.c
-index 629fea722de1..88e7946a35d5 100644
+index 88e7946a35d5..e49967c915de 100644
 --- a/arch/arm64/kvm/hyp/nvhe/switch.c
 +++ b/arch/arm64/kvm/hyp/nvhe/switch.c
-@@ -58,14 +58,10 @@ static void __activate_traps(struct kvm_vcpu *vcpu)
- 	}
+@@ -265,7 +265,7 @@ int __kvm_vcpu_run(struct kvm_vcpu *vcpu)
+ 	return exit_code;
  }
  
--static void __deactivate_traps(struct kvm_vcpu *vcpu)
-+static void __deactivate_traps(struct kvm_vcpu *host_vcpu, struct kvm_vcpu *vcpu)
+-void __noreturn hyp_panic(struct kvm_cpu_context *host_ctxt)
++void __noreturn hyp_panic(void)
  {
--	u64 mdcr_el2;
--
- 	___deactivate_traps(vcpu);
- 
--	mdcr_el2 = read_sysreg(mdcr_el2);
--
- 	if (cpus_have_final_cap(ARM64_WORKAROUND_SPECULATIVE_AT)) {
- 		u64 val;
- 
-@@ -85,11 +81,8 @@ static void __deactivate_traps(struct kvm_vcpu *vcpu)
- 
- 	__deactivate_traps_common();
- 
--	mdcr_el2 &= MDCR_EL2_HPMN_MASK;
--	mdcr_el2 |= MDCR_EL2_E2PB_MASK << MDCR_EL2_E2PB_SHIFT;
--
--	write_sysreg(mdcr_el2, mdcr_el2);
--	write_sysreg(HCR_HOST_NVHE_FLAGS, hcr_el2);
-+	write_sysreg(host_vcpu->arch.mdcr_el2, mdcr_el2);
-+	write_sysreg(host_vcpu->arch.hcr_el2, hcr_el2);
- 	write_sysreg(CPTR_EL2_DEFAULT, cptr_el2);
+ 	u64 spsr = read_sysreg_el2(SYS_SPSR);
+ 	u64 elr = read_sysreg_el2(SYS_ELR);
+diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
+index d871e79fceaf..5c2eaf889cf5 100644
+--- a/arch/arm64/kvm/hyp/vhe/switch.c
++++ b/arch/arm64/kvm/hyp/vhe/switch.c
+@@ -207,8 +207,9 @@ static void __hyp_call_panic(u64 spsr, u64 elr, u64 par,
  }
+ NOKPROBE_SYMBOL(__hyp_call_panic);
  
-@@ -194,7 +187,7 @@ static void __kvm_vcpu_switch_to_host(struct kvm_vcpu *host_vcpu,
- 	__timer_disable_traps(vcpu);
- 	__hyp_vgic_save_state(vcpu);
- 
--	__deactivate_traps(vcpu);
-+	__deactivate_traps(host_vcpu, vcpu);
- 	__deactivate_vm(vcpu);
- 
- 	__sysreg_restore_state_nvhe(&host_vcpu->arch.ctxt);
-@@ -283,7 +276,7 @@ void __noreturn hyp_panic(struct kvm_cpu_context *host_ctxt)
- 
- 	if (vcpu != host_vcpu) {
- 		__timer_disable_traps(vcpu);
--		__deactivate_traps(vcpu);
-+		__deactivate_traps(host_vcpu, vcpu);
- 		__deactivate_vm(vcpu);
- 		__sysreg_restore_state_nvhe(&host_vcpu->arch.ctxt);
- 	}
+-void __noreturn hyp_panic(struct kvm_cpu_context *host_ctxt)
++void __noreturn hyp_panic(void)
+ {
++	struct kvm_cpu_context *host_ctxt = &__hyp_this_cpu_ptr(kvm_host_data)->host_ctxt;
+ 	u64 spsr = read_sysreg_el2(SYS_SPSR);
+ 	u64 elr = read_sysreg_el2(SYS_ELR);
+ 	u64 par = read_sysreg(par_el1);
 -- 
 2.27.0.389.gc38d7665816-goog
 
