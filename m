@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B5EE22148C
-	for <lists+kvmarm@lfdr.de>; Wed, 15 Jul 2020 20:45:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF86322148D
+	for <lists+kvmarm@lfdr.de>; Wed, 15 Jul 2020 20:45:26 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D183D4B39F;
-	Wed, 15 Jul 2020 14:45:23 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 73AAB4B314;
+	Wed, 15 Jul 2020 14:45:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,57 +19,57 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8jlu8S91wOyf; Wed, 15 Jul 2020 14:45:23 -0400 (EDT)
+	with ESMTP id iW6rxNZ4NwP5; Wed, 15 Jul 2020 14:45:26 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 29DB14B3D8;
-	Wed, 15 Jul 2020 14:45:22 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4C3E64B3D3;
+	Wed, 15 Jul 2020 14:45:25 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 06ECC4B3C0
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:21 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3850F4B170
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Vr8OiD74iSsn for <kvmarm@lists.cs.columbia.edu>;
- Wed, 15 Jul 2020 14:45:19 -0400 (EDT)
-Received: from mail-qk1-f202.google.com (mail-qk1-f202.google.com
- [209.85.222.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D06054B3C4
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:19 -0400 (EDT)
-Received: by mail-qk1-f202.google.com with SMTP id h4so2062704qkl.23
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 11:45:19 -0700 (PDT)
+ with ESMTP id sx92mvseJfAe for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 15 Jul 2020 14:45:23 -0400 (EDT)
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com
+ [209.85.219.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 19AD64B3D7
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:45:22 -0400 (EDT)
+Received: by mail-yb1-f202.google.com with SMTP id x1so3963027ybg.8
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 11:45:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=gUi+pL95nHangpHU9mv6/1nVTrQ0ibsC6/EzxOy4I0k=;
- b=tsWjcYpfCiIv/NdRvEviXMESDU77Qb4IjecaJ2NKRFCpgr5QrjM/TE+qbqh8o6rRWm
- WmWv5Is0iNqElYbkadL30rxWDaD/0jo++s42+0iUoOEJrdrkPsNQ5X1KGalih3mRXAcd
- zu9teHTLQASZ14CO2zAEKrbGxwLVYDG7yY0azsv9ZDoSnQUOYhq5FLb2GfdPGUqPw9FC
- fmG3k04WEoJCfroyfLSGQS9rq6MBo09OulfT8aJBjlunViIAaDWXiOm7KvnfQT843ShO
- zCRQnXFAYKnLVKW+YNSrzzBhfZQahQvfDUAdjRkPGtuxbT7OijNr3pnFgv72s6Rz3jEC
- L59Q==
+ :cc; bh=hHJnqDO6tZwOu8efN18XUjctMX/oYEHWNmg+LgZYzVw=;
+ b=EdocCqMIxlC7QxpxvM0J/lCXIN/cVt09OdJE4kn6kTzaoVAKuBTsCVK8RcfggsG/Yu
+ +6kyfskCgAFjbMVRs3/bbUlYCxgY05vD+fOFyYtEx8j0g2M6F9gMrqOQXNwhSIXvIJvb
+ uryfy+IpWbaio6k9sOYkwefe2z3IzRoOd+jrym3nZOZLblP7Z9M9IgcFMyeuCpF7nWRV
+ rAkccGsV0d9hoGH+S+vKHReg39XeyG8SyOFmWqXENf13e1UVg/bj8owNFI1wegGJCSNk
+ GTu1thIdDNjrO90lqf7r2jcDX9tarz6GCaBVPbdPrtAAOmarT2em5rlvNgn2+RUvLIVG
+ ysWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=gUi+pL95nHangpHU9mv6/1nVTrQ0ibsC6/EzxOy4I0k=;
- b=P7usJwLMnyggNfwh/95NK8KHTEZJR8hC3h0AomWy7pB8zp2+Bq2X4Qsbjt6R0SCn2C
- QHSiIygz/TTrMrKiOe+4oRYohgC8E47W5n/y7A+7z0mVLGSMC5MUs8k2qlwNjd4edpxg
- LYyZlAKh1GOgOBKD2q6qodDN8d+RoweCv2KhuMOIkqh8Tt/1CkXBb1CWh+s249imBQfY
- XBUMg+FCBxgDKnccE6Rzqrws8n/48q5/6RdNaZKDk8NZTbZffL7nCm7VA87LrxAeBkF4
- 7Pp9CnFsl119x9IkgIgexnuTAt8sxi/zfQKfML2N+yiJRL+WWhb2BIUsWo/SBTWEgr8S
- dVSQ==
-X-Gm-Message-State: AOAM531O2s95uIL680wBz8qRrxj4H3zzNyxk3lnvhR2h+mIsovioYg0b
- KzwWdM4cHVlE0r4rFz69rSlkKpC7MyB01Hjwd5FCHFEEH2eFmc1ob1Ssixx1SshmoNMROB4TaSB
- 6u6NXedNmD8Nbyk6oZT3yL1cjwZt1KinJ33GdVlQC13ny2lUe2w2sAtrlmW3kYziZu//h3Q==
-X-Google-Smtp-Source: ABdhPJwXsv4DZeg+KMEwxfy93xzIr+bZH1QIB2LdNhZgA+3SRBBAF3Mlbjp3yRE5BZM1xUn3SSz68QbMyOA=
-X-Received: by 2002:a0c:d84d:: with SMTP id i13mr649517qvj.167.1594838719321; 
- Wed, 15 Jul 2020 11:45:19 -0700 (PDT)
-Date: Wed, 15 Jul 2020 19:44:15 +0100
+ bh=hHJnqDO6tZwOu8efN18XUjctMX/oYEHWNmg+LgZYzVw=;
+ b=lGa2+NjbzueN226Me4nFBbbej62hZ42En0z+AMzeSF41snHpofIJeh+zw4TIiAiS3D
+ ZH4m1uEjZVYb20dTCwRpDXCIblSnqe4hAcOGW/xFJrezVCel2vdiA8w48zE84vcNv0T9
+ w7UMySdDJ/bNeuIHme1ngz9Phoiol32aL0EVYf3gDxfxo5/Ua4bszhIMn6m23WxQ/f1E
+ 0tQPFuNriXqxuutrIwuSNBEuop6+QJsnLAjdU4l+fTvXE89Z9FY2qzZ1/W5EaCB7sP1R
+ LgD7J53OLFvvoeUs3i+yfpqQyhPRPAsKvekyd9mQcFkTWl3QtMoVsGk1v86c1qND99Sk
+ D5Xw==
+X-Gm-Message-State: AOAM530KxigaRvbdOu47VphmfOssz7/7ZsUwnbAgJSEW2bFJmUz4TrTh
+ mhRGjX/cD+qtzbiyDX15ChEtdNEnbvtkBHryTu4CH/N9JDdkBvJ0VoXMWVRnnYV48a4Hrrz2fRd
+ 7tAdFHAAhfNkS+sxjmGS2kse5y1I4ASqiHxbK/3iLbCVAKSo18C00ZqmrfagnPs0xLcw/Hw==
+X-Google-Smtp-Source: ABdhPJyo5brUJ+RY/S4CV291QQHPiJIVpLC6fza7NLvgCB37ByTolFKQzIpb27LV06nVZOzEYd6czWpg6uo=
+X-Received: by 2002:a25:4c81:: with SMTP id z123mr491621yba.309.1594838721552; 
+ Wed, 15 Jul 2020 11:45:21 -0700 (PDT)
+Date: Wed, 15 Jul 2020 19:44:16 +0100
 In-Reply-To: <20200715184438.1390996-1-ascull@google.com>
-Message-Id: <20200715184438.1390996-15-ascull@google.com>
+Message-Id: <20200715184438.1390996-16-ascull@google.com>
 Mime-Version: 1.0
 References: <20200715184438.1390996-1-ascull@google.com>
 X-Mailer: git-send-email 2.27.0.389.gc38d7665816-goog
-Subject: [PATCH 14/37] KVM: arm64: nVHE: Use __kvm_vcpu_run for the host vcpu
+Subject: [PATCH 15/37] KVM: arm64: Share some context save and restore macros
 From: Andrew Scull <ascull@google.com>
 To: kvmarm@lists.cs.columbia.edu
 Cc: maz@kernel.org, kernel-team@android.com
@@ -89,211 +89,138 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Keeping the assumption that transitions will only be from the host to a
-guest and vice-versa, make __kvm_vcpu_run switch to the requested vcpu
-and run it.
-
-The context is only switched when it is not currently active allowing
-the host to be run repeatedly when servicing HVCs.
+These macros should be used to avoid repeating the context save and
+restore sequences.
 
 Signed-off-by: Andrew Scull <ascull@google.com>
 ---
- arch/arm64/kvm/hyp/nvhe/hyp-main.c | 22 ++-----
- arch/arm64/kvm/hyp/nvhe/switch.c   | 95 ++++++++++++++++++++++--------
- 2 files changed, 74 insertions(+), 43 deletions(-)
+ arch/arm64/include/asm/kvm_asm.h    | 39 +++++++++++++++++++++++++++++
+ arch/arm64/kvm/hyp/entry.S          | 39 -----------------------------
+ arch/arm64/kvm/hyp/nvhe/hyp-start.S |  2 --
+ 3 files changed, 39 insertions(+), 41 deletions(-)
 
-diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-index 2d621bf5ac3e..213977634601 100644
---- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-+++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-@@ -115,10 +115,8 @@ void __noreturn kvm_hyp_main(void)
- {
- 	/* Set tpidr_el2 for use by HYP */
- 	struct kvm_vcpu *host_vcpu;
--	struct kvm_cpu_context *hyp_ctxt;
+diff --git a/arch/arm64/include/asm/kvm_asm.h b/arch/arm64/include/asm/kvm_asm.h
+index ff27c18b9fd6..1b2c718fa58f 100644
+--- a/arch/arm64/include/asm/kvm_asm.h
++++ b/arch/arm64/include/asm/kvm_asm.h
+@@ -212,6 +212,45 @@ extern char __smccc_workaround_1_smc[__SMCCC_WORKAROUND_1_SMC_SZ];
+ 	add	\reg, \reg, #HOST_DATA_CONTEXT
+ .endm
  
- 	host_vcpu = __hyp_this_cpu_ptr(kvm_host_vcpu);
--	hyp_ctxt = &__hyp_this_cpu_ptr(kvm_host_data)->host_ctxt;
- 
- 	kvm_init_host_cpu_context(&host_vcpu->arch.ctxt);
- 
-@@ -131,24 +129,14 @@ void __noreturn kvm_hyp_main(void)
- 	 */
- 	smccc_set_retval(host_vcpu, SMCCC_RET_SUCCESS, 0, 0, 0);
- 
-+	/* The host is already loaded so note it as the running vcpu. */
-+	*__hyp_this_cpu_ptr(kvm_hyp_running_vcpu) = host_vcpu;
++#define CPU_XREG_OFFSET(x)	(CPU_USER_PT_REGS + 8*x)
++#define CPU_LR_OFFSET		CPU_XREG_OFFSET(30)
++#define CPU_SP_EL0_OFFSET	(CPU_LR_OFFSET + 8)
 +
- 	while (true) {
- 		u64 exit_code;
++/*
++ * We treat x18 as callee-saved as the host may use it as a platform
++ * register (e.g. for shadow call stack).
++ */
++.macro save_callee_saved_regs ctxt
++	str	x18,      [\ctxt, #CPU_XREG_OFFSET(18)]
++	stp	x19, x20, [\ctxt, #CPU_XREG_OFFSET(19)]
++	stp	x21, x22, [\ctxt, #CPU_XREG_OFFSET(21)]
++	stp	x23, x24, [\ctxt, #CPU_XREG_OFFSET(23)]
++	stp	x25, x26, [\ctxt, #CPU_XREG_OFFSET(25)]
++	stp	x27, x28, [\ctxt, #CPU_XREG_OFFSET(27)]
++	stp	x29, lr,  [\ctxt, #CPU_XREG_OFFSET(29)]
++.endm
++
++.macro restore_callee_saved_regs ctxt
++	// We require \ctxt is not x18-x28
++	ldr	x18,      [\ctxt, #CPU_XREG_OFFSET(18)]
++	ldp	x19, x20, [\ctxt, #CPU_XREG_OFFSET(19)]
++	ldp	x21, x22, [\ctxt, #CPU_XREG_OFFSET(21)]
++	ldp	x23, x24, [\ctxt, #CPU_XREG_OFFSET(23)]
++	ldp	x25, x26, [\ctxt, #CPU_XREG_OFFSET(25)]
++	ldp	x27, x28, [\ctxt, #CPU_XREG_OFFSET(27)]
++	ldp	x29, lr,  [\ctxt, #CPU_XREG_OFFSET(29)]
++.endm
++
++.macro save_sp_el0 ctxt, tmp
++	mrs	\tmp,	sp_el0
++	str	\tmp,	[\ctxt, #CPU_SP_EL0_OFFSET]
++.endm
++
++.macro restore_sp_el0 ctxt, tmp
++	ldr	\tmp,	  [\ctxt, #CPU_SP_EL0_OFFSET]
++	msr	sp_el0, \tmp
++.endm
++
+ #endif
  
--		/*
--		 * Set the running cpu for the vectors to pass to __guest_exit
--		 * so it can get the cpu context.
--		 */
--		*__hyp_this_cpu_ptr(kvm_hyp_running_vcpu) = host_vcpu;
+ #endif /* __ARM_KVM_ASM_H__ */
+diff --git a/arch/arm64/kvm/hyp/entry.S b/arch/arm64/kvm/hyp/entry.S
+index da349c152791..63d484059c01 100644
+--- a/arch/arm64/kvm/hyp/entry.S
++++ b/arch/arm64/kvm/hyp/entry.S
+@@ -7,7 +7,6 @@
+ #include <linux/linkage.h>
+ 
+ #include <asm/alternative.h>
+-#include <asm/asm-offsets.h>
+ #include <asm/assembler.h>
+ #include <asm/fpsimdmacros.h>
+ #include <asm/kvm.h>
+@@ -16,46 +15,8 @@
+ #include <asm/kvm_mmu.h>
+ #include <asm/kvm_ptrauth.h>
+ 
+-#define CPU_XREG_OFFSET(x)	(CPU_USER_PT_REGS + 8*x)
+-#define CPU_SP_EL0_OFFSET	(CPU_XREG_OFFSET(30) + 8)
 -
--		/*
--		 * Enter the host now that we feel like we're in charge.
--		 *
--		 * This should merge with __kvm_vcpu_run as host becomes more
--		 * vcpu-like.
--		 */
--		do {
--			exit_code = __guest_enter(host_vcpu, hyp_ctxt);
--		} while (fixup_guest_exit(host_vcpu, &exit_code));
-+		/* Enter the host now that we feel like we're in charge. */
-+		exit_code = __kvm_vcpu_run(host_vcpu);
+ 	.text
  
- 		switch (ARM_EXCEPTION_CODE(exit_code)) {
- 		case ARM_EXCEPTION_TRAP:
-diff --git a/arch/arm64/kvm/hyp/nvhe/switch.c b/arch/arm64/kvm/hyp/nvhe/switch.c
-index 81cdf33f92bc..36140686e1d8 100644
---- a/arch/arm64/kvm/hyp/nvhe/switch.c
-+++ b/arch/arm64/kvm/hyp/nvhe/switch.c
-@@ -119,7 +119,7 @@ static void __hyp_vgic_restore_state(struct kvm_vcpu *vcpu)
- /**
-  * Disable host events, enable guest events
-  */
--static bool __pmu_switch_to_guest(struct kvm_cpu_context *host_ctxt)
-+static void __pmu_switch_to_guest(struct kvm_cpu_context *host_ctxt)
- {
- 	struct kvm_host_data *host;
- 	struct kvm_pmu_events *pmu;
-@@ -132,8 +132,6 @@ static bool __pmu_switch_to_guest(struct kvm_cpu_context *host_ctxt)
- 
- 	if (pmu->events_guest)
- 		write_sysreg(pmu->events_guest, pmcntenset_el0);
+-/*
+- * We treat x18 as callee-saved as the host may use it as a platform
+- * register (e.g. for shadow call stack).
+- */
+-.macro save_callee_saved_regs ctxt
+-	str	x18,      [\ctxt, #CPU_XREG_OFFSET(18)]
+-	stp	x19, x20, [\ctxt, #CPU_XREG_OFFSET(19)]
+-	stp	x21, x22, [\ctxt, #CPU_XREG_OFFSET(21)]
+-	stp	x23, x24, [\ctxt, #CPU_XREG_OFFSET(23)]
+-	stp	x25, x26, [\ctxt, #CPU_XREG_OFFSET(25)]
+-	stp	x27, x28, [\ctxt, #CPU_XREG_OFFSET(27)]
+-	stp	x29, lr,  [\ctxt, #CPU_XREG_OFFSET(29)]
+-.endm
 -
--	return (pmu->events_host || pmu->events_guest);
- }
- 
- /**
-@@ -154,13 +152,10 @@ static void __pmu_switch_to_host(struct kvm_cpu_context *host_ctxt)
- 		write_sysreg(pmu->events_host, pmcntenset_el0);
- }
- 
--/* Switch to the guest for legacy non-VHE systems */
--int __kvm_vcpu_run(struct kvm_vcpu *vcpu)
-+static void __kvm_vcpu_switch_to_guest(struct kvm_cpu_context *host_ctxt,
-+				       struct kvm_vcpu *vcpu)
- {
--	struct kvm_cpu_context *host_ctxt;
--	struct kvm_cpu_context *guest_ctxt;
--	bool pmu_switch_needed;
--	u64 exit_code;
-+	struct kvm_cpu_context *guest_ctxt = &vcpu->arch.ctxt;
- 
- 	/*
- 	 * Having IRQs masked via PMR when entering the guest means the GIC
-@@ -173,11 +168,7 @@ int __kvm_vcpu_run(struct kvm_vcpu *vcpu)
- 		pmr_sync();
- 	}
- 
--	host_ctxt = &__hyp_this_cpu_ptr(kvm_host_data)->host_ctxt;
--	*__hyp_this_cpu_ptr(kvm_hyp_running_vcpu) = vcpu;
--	guest_ctxt = &vcpu->arch.ctxt;
+-.macro restore_callee_saved_regs ctxt
+-	// We require \ctxt is not x18-x28
+-	ldr	x18,      [\ctxt, #CPU_XREG_OFFSET(18)]
+-	ldp	x19, x20, [\ctxt, #CPU_XREG_OFFSET(19)]
+-	ldp	x21, x22, [\ctxt, #CPU_XREG_OFFSET(21)]
+-	ldp	x23, x24, [\ctxt, #CPU_XREG_OFFSET(23)]
+-	ldp	x25, x26, [\ctxt, #CPU_XREG_OFFSET(25)]
+-	ldp	x27, x28, [\ctxt, #CPU_XREG_OFFSET(27)]
+-	ldp	x29, lr,  [\ctxt, #CPU_XREG_OFFSET(29)]
+-.endm
 -
--	pmu_switch_needed = __pmu_switch_to_guest(host_ctxt);
-+	__pmu_switch_to_guest(host_ctxt);
- 
- 	__sysreg_save_state_nvhe(host_ctxt);
- 
-@@ -199,17 +190,13 @@ int __kvm_vcpu_run(struct kvm_vcpu *vcpu)
- 	__timer_enable_traps(vcpu);
- 
- 	__debug_switch_to_guest(vcpu);
-+}
- 
--	__set_vcpu_arch_workaround_state(vcpu);
+-.macro save_sp_el0 ctxt, tmp
+-	mrs	\tmp,	sp_el0
+-	str	\tmp,	[\ctxt, #CPU_SP_EL0_OFFSET]
+-.endm
 -
--	do {
--		/* Jump in the fire! */
--		exit_code = __guest_enter(vcpu, host_ctxt);
+-.macro restore_sp_el0 ctxt, tmp
+-	ldr	\tmp,	  [\ctxt, #CPU_SP_EL0_OFFSET]
+-	msr	sp_el0, \tmp
+-.endm
 -
--		/* And we're baaack! */
--	} while (fixup_guest_exit(vcpu, &exit_code));
+ /*
+  * u64 __guest_enter(struct kvm_vcpu *vcpu,
+  *		     struct kvm_cpu_context *host_ctxt);
+diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-start.S b/arch/arm64/kvm/hyp/nvhe/hyp-start.S
+index dd955e022963..d7744dcfd184 100644
+--- a/arch/arm64/kvm/hyp/nvhe/hyp-start.S
++++ b/arch/arm64/kvm/hyp/nvhe/hyp-start.S
+@@ -13,8 +13,6 @@
+ #include <asm/kvm_asm.h>
+ #include <asm/kvm_ptrauth.h>
+ 
+-#define CPU_LR_OFFSET (CPU_USER_PT_REGS + (8 * 30))
 -
--	__set_hyp_arch_workaround_state(vcpu);
-+static void __kvm_vcpu_switch_to_host(struct kvm_cpu_context *host_ctxt,
-+				      struct kvm_vcpu *host_vcpu,
-+				      struct kvm_vcpu *vcpu)
-+{
-+	struct kvm_cpu_context *guest_ctxt = &vcpu->arch.ctxt;
- 
- 	__sysreg_save_state_nvhe(guest_ctxt);
- 	__sysreg32_save_state(vcpu);
-@@ -230,12 +217,68 @@ int __kvm_vcpu_run(struct kvm_vcpu *vcpu)
- 	 */
- 	__debug_switch_to_host(vcpu);
- 
--	if (pmu_switch_needed)
--		__pmu_switch_to_host(host_ctxt);
-+	__pmu_switch_to_host(host_ctxt);
- 
- 	/* Returning to host will clear PSR.I, remask PMR if needed */
- 	if (system_uses_irq_prio_masking())
- 		gic_write_pmr(GIC_PRIO_IRQOFF);
-+}
-+
-+static void __vcpu_switch_to(struct kvm_vcpu *vcpu)
-+{
-+	struct kvm_cpu_context *host_ctxt;
-+	struct kvm_vcpu *running_vcpu;
-+
-+	/*
-+	 * Restoration is not yet pure so it still makes use of the previously
-+	 * running vcpu.
-+	 */
-+	host_ctxt = &__hyp_this_cpu_ptr(kvm_host_data)->host_ctxt;
-+	running_vcpu = __hyp_this_cpu_read(kvm_hyp_running_vcpu);
-+
-+	if (vcpu->arch.ctxt.is_host)
-+		__kvm_vcpu_switch_to_host(host_ctxt, vcpu, running_vcpu);
-+	else
-+		__kvm_vcpu_switch_to_guest(host_ctxt, vcpu);
-+
-+	*__hyp_this_cpu_ptr(kvm_hyp_running_vcpu) = vcpu;
-+}
-+
-+/* Switch to the guest for legacy non-VHE systems */
-+int __kvm_vcpu_run(struct kvm_vcpu *vcpu)
-+{
-+	struct kvm_cpu_context *host_ctxt;
-+	struct kvm_vcpu *running_vcpu;
-+	u64 exit_code;
-+
-+	host_ctxt = &__hyp_this_cpu_ptr(kvm_host_data)->host_ctxt;
-+	running_vcpu = __hyp_this_cpu_read(kvm_hyp_running_vcpu);
-+
-+	if (running_vcpu != vcpu) {
-+		if (!running_vcpu->arch.ctxt.is_host &&
-+		    !vcpu->arch.ctxt.is_host) {
-+			/*
-+			 * There are still assumptions that the switch will
-+			 * always be between a guest and the host so double
-+			 * check that is the case. If it isn't, pretending
-+			 * there was an interrupt is a harmless way to bail.
-+			 */
-+			return ARM_EXCEPTION_IRQ;
-+		}
-+
-+		__vcpu_switch_to(vcpu);
-+	}
-+
-+	__set_vcpu_arch_workaround_state(vcpu);
-+
-+	do {
-+		/* Jump in the fire! */
-+		exit_code = __guest_enter(vcpu, host_ctxt);
-+
-+		/* And we're baaack! */
-+	} while (fixup_guest_exit(vcpu, &exit_code));
-+
-+	__set_hyp_arch_workaround_state(vcpu);
- 
- 	return exit_code;
- }
+ /*
+  * Initialize ptrauth in the hyp ctxt by populating it with the keys of the
+  * host, which are the keys currently installed.
 -- 
 2.27.0.389.gc38d7665816-goog
 
