@@ -2,77 +2,70 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 89C0D2214A4
-	for <lists+kvmarm@lfdr.de>; Wed, 15 Jul 2020 20:46:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40EB5222234
+	for <lists+kvmarm@lfdr.de>; Thu, 16 Jul 2020 14:08:16 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3B7744B407;
-	Wed, 15 Jul 2020 14:46:16 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D1B14B4A5;
+	Thu, 16 Jul 2020 08:08:15 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id FzkjY5QaAZZZ; Wed, 15 Jul 2020 14:46:16 -0400 (EDT)
+	with ESMTP id aEzN1dX6wnRH; Thu, 16 Jul 2020 08:08:15 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 89F3C4B419;
-	Wed, 15 Jul 2020 14:46:14 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3022B4B490;
+	Thu, 16 Jul 2020 08:08:14 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2CD1B4B3D6
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:46:13 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 204AB4B476
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Jul 2020 08:08:12 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id F5+9Cl7QnT6y for <kvmarm@lists.cs.columbia.edu>;
- Wed, 15 Jul 2020 14:46:12 -0400 (EDT)
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com
- [209.85.219.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 418274B32C
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 14:46:11 -0400 (EDT)
-Received: by mail-yb1-f202.google.com with SMTP id t7so4036455ybk.2
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jul 2020 11:46:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=1h5yiVlEcGSjp9MBOFB9/KxLYEWTdRezK4/MxuPKPQc=;
- b=OBDCmtH2wegRr+gXO7OzWZ/BBpjtI0m1anex4KziDwrdaVrFJzx7qU+UEr/3rNh0kv
- GXk5atmvsjfX/KsT6FqEKqcLtCY4Jmhe2SNe9CbsLDaKQsBsjweJBeawLtWlTcYM7fK3
- Tmg+yyg0WZOEZq1lCr6tmaQSr15HL1ZqebqM1BgjkhOGnrn7csGos7tLcGmiU9/lwtuw
- 9D5YOjWqD8Q6ysmcfoxlbg2SsdusuESjgkckwa4PqVfU2wvhvkXIIlyufoF6GiaFf8Q+
- +2LPSz2r8VJWp/d+CpwZFasYseR0w6RChbPcAbHbIsVBbEDSw4uf/MX0TqMKIkgxCzMl
- S9Lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:in-reply-to:message-id:mime-version
- :references:subject:from:to:cc;
- bh=1h5yiVlEcGSjp9MBOFB9/KxLYEWTdRezK4/MxuPKPQc=;
- b=toO+x3GZaSVef9WErDKnHGJJMWvOD6hGbxW/kl7bQuHt71pb3I1zMcejcPk+l81HQz
- Y+XLikOWTAkZpx5nziYjA3A7MeapLd0VHJRa09WiZAKWG7D0fHlnjkIl8jXtTsl06+KC
- Z/mIAx5fp/ZLp008xChzLtAR0zE30h5urmrBkKZIEbnwmH6QBoiNd2FoKq8wls8lKArq
- ZXzNkSoqXIOaG8Lv17NQzgzoJx69ypfEOmhqRL0iPvM8y0L4ukXeNfpR+/bcHcZi09dd
- oCinFH3AIA1fr/Se1jriT9q3s9Lz9JlWZwiZNtCzzZj+YR1naSZ1Le7ZWibLR+P2Vq29
- ew9A==
-X-Gm-Message-State: AOAM5339Boy7k9aNts4zY+dxm+jh4YQQCXtjh2PM7CTcvRL30A/NTDwF
- Y+dK7HN8C2lE31ON/WLC3bGyo62fGBMRX2pjrgegdTkS1cGNDY8Zrb9uO0G4jaHu9NBXKpAvWjg
- OfkZZqCx4WAI9ZqYAh1Hq5BrGFH2ZVOBFkMyRp1CvMsZdNG6Pj2BW5tMw1pDI1lz6RJzkDA==
-X-Google-Smtp-Source: ABdhPJyI3zp2R0zq9z+DRZTR0QXAwy5Aa1yAlCGVWokjzc9zNBdWQ1JE90RUFE4y3kcsU8J0CRUxG8ax3ao=
-X-Received: by 2002:a25:abe3:: with SMTP id v90mr679496ybi.36.1594838770659;
- Wed, 15 Jul 2020 11:46:10 -0700 (PDT)
-Date: Wed, 15 Jul 2020 19:44:38 +0100
-In-Reply-To: <20200715184438.1390996-1-ascull@google.com>
-Message-Id: <20200715184438.1390996-38-ascull@google.com>
-Mime-Version: 1.0
-References: <20200715184438.1390996-1-ascull@google.com>
-X-Mailer: git-send-email 2.27.0.389.gc38d7665816-goog
-Subject: [PATCH 37/37] KVM: arm64: Separate save and restore of vcpu trap state
-From: Andrew Scull <ascull@google.com>
+ with ESMTP id 8PjWOcXjNplD for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 16 Jul 2020 08:08:11 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id F3A874B472
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Jul 2020 08:08:10 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id B31302074B;
+ Thu, 16 Jul 2020 12:08:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1594901289;
+ bh=3PipD2VgqpMm6NsDZAGjXt1uT7SJIOeABIEJHpL222Q=;
+ h=From:To:Cc:Subject:Date:From;
+ b=rXwi/yatQ9N3eqMd3+e05P1NKXMpa2fhrezNvIvWkkCo83u/x/SrD4e2gIUA9CY43
+ gNhNZ98RIG45MZ8yoUg4cLP8SFQC7tz5gQ99iboC201BRJuvJ2h5JEDn9ioqi0w7QJ
+ E++j+ak1gTjcFHTdM9xdD3gRdyO+e3IM2Iiz6n3g=
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=hot-poop.lan) by disco-boy.misterjones.org with esmtpsa
+ (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
+ (envelope-from <maz@kernel.org>)
+ id 1jw2gK-00CIGX-0B; Thu, 16 Jul 2020 13:08:08 +0100
+From: Marc Zyngier <maz@kernel.org>
 To: kvmarm@lists.cs.columbia.edu
-Cc: maz@kernel.org, kernel-team@android.com
+Subject: [kvmtool][PATCH] arm64: Use default kernel offset when the image file
+ can't be seeked
+Date: Thu, 16 Jul 2020 13:08:01 +0100
+Message-Id: <20200716120801.2996-1-maz@kernel.org>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, will@kernel.org,
+ julien.thierry.kdev@gmail.com, kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com, Will Deacon <will@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -89,120 +82,62 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Pending virtual interrupts are saved in the saving phase and restoration
-enables or disables traps depending on whether or not the host is being
-restored.
+While introducing new code to extract the kernel offset from the
+image, commit fd0a05b ("arm64: Obtain text offset from kernel image")
+introduced a regression where something such as:
 
-Signed-off-by: Andrew Scull <ascull@google.com>
+  ./lkvm run -c 8 -p earlycon <(zcat /boot/vmlinuz-5.8.0-rc5-00172-ga161216e31ba)
+
+now fails to load the kernel, as the file descriptor cannot be
+seeked.
+
+Let's assume the good old 0x80000 offset when the seek syscall fails,
+with a warning for a good measure.
+
+Fixes: fd0a05b ("arm64: Obtain text offset from kernel image")
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/hyp/include/hyp/switch.h |  2 +-
- arch/arm64/kvm/hyp/nvhe/switch.c        | 28 +++++++++++--------------
- arch/arm64/kvm/hyp/vhe/switch.c         |  2 +-
- 3 files changed, 14 insertions(+), 18 deletions(-)
+ arm/aarch64/kvm.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/kvm/hyp/include/hyp/switch.h b/arch/arm64/kvm/hyp/include/hyp/switch.h
-index 84fd6b0601b2..65a29d029c53 100644
---- a/arch/arm64/kvm/hyp/include/hyp/switch.h
-+++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
-@@ -113,7 +113,7 @@ static inline void ___activate_traps(struct kvm_vcpu *vcpu)
- 		write_sysreg_s(vcpu->arch.vsesr_el2, SYS_VSESR_EL2);
+diff --git a/arm/aarch64/kvm.c b/arm/aarch64/kvm.c
+index a46d438..49e1dd3 100644
+--- a/arm/aarch64/kvm.c
++++ b/arm/aarch64/kvm.c
+@@ -15,6 +15,7 @@ unsigned long long kvm__arch_get_kern_offset(struct kvm *kvm, int fd)
+ 	struct arm64_image_header header;
+ 	off_t cur_offset;
+ 	ssize_t size;
++	const char *warn_str;
+ 
+ 	/* the 32bit kernel offset is a well known value */
+ 	if (kvm->cfg.arch.aarch32_guest)
+@@ -22,8 +23,10 @@ unsigned long long kvm__arch_get_kern_offset(struct kvm *kvm, int fd)
+ 
+ 	cur_offset = lseek(fd, 0, SEEK_CUR);
+ 	if (cur_offset == (off_t)-1 ||
+-	    lseek(fd, 0, SEEK_SET) == (off_t)-1)
+-		die("Failed to seek in image file");
++	    lseek(fd, 0, SEEK_SET) == (off_t)-1) {
++		warn_str = "Failed to seek in kernel image file";
++		goto fail;
++	}
+ 
+ 	size = xread(fd, &header, sizeof(header));
+ 	if (size < 0 || (size_t)size < sizeof(header))
+@@ -37,7 +40,9 @@ unsigned long long kvm__arch_get_kern_offset(struct kvm *kvm, int fd)
+ 	if (le64_to_cpu(header.image_size))
+ 		return le64_to_cpu(header.text_offset);
+ 
+-	pr_warning("Image size is 0, assuming TEXT_OFFSET to be 0x80000");
++	warn_str = "Image size is 0";
++fail:
++	pr_warning("%s, assuming TEXT_OFFSET to be 0x80000", warn_str);
+ 	return 0x80000;
  }
- 
--static inline void ___deactivate_traps(struct kvm_vcpu *vcpu)
-+static inline void __save_traps(struct kvm_vcpu *vcpu)
- {
- 	/*
- 	 * If we pended a virtual abort, preserve it until it gets
-diff --git a/arch/arm64/kvm/hyp/nvhe/switch.c b/arch/arm64/kvm/hyp/nvhe/switch.c
-index 260c5cbb6717..0f7670dabf50 100644
---- a/arch/arm64/kvm/hyp/nvhe/switch.c
-+++ b/arch/arm64/kvm/hyp/nvhe/switch.c
-@@ -45,10 +45,8 @@ static void __activate_traps(struct kvm_vcpu *vcpu)
- 	write_sysreg(val, cptr_el2);
- }
- 
--static void __deactivate_traps(struct kvm_vcpu *host_vcpu, struct kvm_vcpu *vcpu)
-+static void __deactivate_traps(struct kvm_vcpu *host_vcpu)
- {
--	___deactivate_traps(vcpu);
--
- 	__deactivate_traps_common();
- 
- 	write_sysreg(host_vcpu->arch.mdcr_el2, mdcr_el2);
-@@ -56,6 +54,14 @@ static void __deactivate_traps(struct kvm_vcpu *host_vcpu, struct kvm_vcpu *vcpu
- 	write_sysreg(CPTR_EL2_DEFAULT, cptr_el2);
- }
- 
-+static void __restore_traps(struct kvm_vcpu *vcpu)
-+{
-+	if (vcpu->arch.ctxt.is_host)
-+		__deactivate_traps(vcpu);
-+	else
-+		__activate_traps(vcpu);
-+}
-+
- static void __restore_stage2(struct kvm_vcpu *vcpu)
- {
- 	if (vcpu->arch.hcr_el2 & HCR_VM)
-@@ -134,6 +140,7 @@ static void __vcpu_save_state(struct kvm_vcpu *vcpu, bool save_debug)
- 
- 	__fpsimd_save_fpexc32(vcpu);
- 
-+	__save_traps(vcpu);
- 	__debug_save_spe(vcpu);
- 
- 	if (save_debug)
-@@ -143,14 +150,6 @@ static void __vcpu_save_state(struct kvm_vcpu *vcpu, bool save_debug)
- 
- static void __vcpu_restore_state(struct kvm_vcpu *vcpu, bool restore_debug)
- {
--	struct kvm_vcpu *running_vcpu;
--
--	/*
--	 * Restoration is not yet pure so it still makes use of the previously
--	 * running vcpu.
--	 */
--	running_vcpu = __hyp_this_cpu_read(kvm_hyp_running_vcpu);
--
- 	if (cpus_have_final_cap(ARM64_WORKAROUND_SPECULATIVE_AT)) {
- 		u64 val;
- 
-@@ -179,10 +178,7 @@ static void __vcpu_restore_state(struct kvm_vcpu *vcpu, bool restore_debug)
- 	__sysreg32_restore_state(vcpu);
- 	__sysreg_restore_state_nvhe(&vcpu->arch.ctxt);
- 
--	if (vcpu->arch.ctxt.is_host)
--		__deactivate_traps(vcpu, running_vcpu);
--	else
--		__activate_traps(vcpu);
-+	__restore_traps(vcpu);
- 
- 	__hyp_vgic_restore_state(vcpu);
- 	__timer_restore_traps(vcpu);
-@@ -260,7 +256,7 @@ void __noreturn hyp_panic(void)
- 
- 	if (vcpu != host_vcpu) {
- 		__timer_restore_traps(host_vcpu);
--		__deactivate_traps(host_vcpu, vcpu);
-+		__restore_traps(host_vcpu);
- 		__restore_stage2(host_vcpu);
- 		__sysreg_restore_state_nvhe(&host_vcpu->arch.ctxt);
- 	}
-diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
-index bc372629e1c1..bc5939581f61 100644
---- a/arch/arm64/kvm/hyp/vhe/switch.c
-+++ b/arch/arm64/kvm/hyp/vhe/switch.c
-@@ -67,7 +67,7 @@ static void __deactivate_traps(struct kvm_vcpu *vcpu)
- {
- 	extern char vectors[];	/* kernel exception vectors */
- 
--	___deactivate_traps(vcpu);
-+	__save_traps(vcpu);
- 
- 	write_sysreg(HCR_HOST_VHE_FLAGS, hcr_el2);
  
 -- 
-2.27.0.389.gc38d7665816-goog
+2.27.0
 
 _______________________________________________
 kvmarm mailing list
