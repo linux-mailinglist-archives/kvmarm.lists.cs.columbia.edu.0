@@ -2,51 +2,68 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A2542240BF
-	for <lists+kvmarm@lfdr.de>; Fri, 17 Jul 2020 18:46:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3624422455F
+	for <lists+kvmarm@lfdr.de>; Fri, 17 Jul 2020 22:52:40 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 039124B1B0;
-	Fri, 17 Jul 2020 12:46:47 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A83C94B16F;
+	Fri, 17 Jul 2020 16:52:39 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: 0.799
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001]
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id kwvTv3BiAfk2; Fri, 17 Jul 2020 12:46:46 -0400 (EDT)
+	with ESMTP id 7Qn9H8+R8erY; Fri, 17 Jul 2020 16:52:39 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D3AFB4B1AA;
-	Fri, 17 Jul 2020 12:46:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B61F74B15D;
+	Fri, 17 Jul 2020 16:52:38 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 334C24B1A6
- for <kvmarm@lists.cs.columbia.edu>; Fri, 17 Jul 2020 12:46:45 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C26254B13C
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 17 Jul 2020 16:52:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id gaJAHULdEbFN for <kvmarm@lists.cs.columbia.edu>;
- Fri, 17 Jul 2020 12:46:44 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0B84A4B1A5
- for <kvmarm@lists.cs.columbia.edu>; Fri, 17 Jul 2020 12:46:44 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A2E3612FC;
- Fri, 17 Jul 2020 09:46:43 -0700 (PDT)
-Received: from monolith.arm.com (unknown [10.37.8.27])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B06213F68F;
- Fri, 17 Jul 2020 09:46:42 -0700 (PDT)
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-To: kvm@vger.kernel.org,
-	kvmarm@lists.cs.columbia.edu
-Subject: [kvm-unit-tests PATCH] arm64: Compile with -mno-outline-atomics for
- GCC >= 10
-Date: Fri, 17 Jul 2020 17:47:27 +0100
-Message-Id: <20200717164727.75580-1-alexandru.elisei@arm.com>
-X-Mailer: git-send-email 2.27.0
+ with ESMTP id v1kQ5gYpFjUO for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 17 Jul 2020 16:52:35 -0400 (EDT)
+Received: from mail-io1-f66.google.com (mail-io1-f66.google.com
+ [209.85.166.66])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B64444B146
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 17 Jul 2020 16:52:35 -0400 (EDT)
+Received: by mail-io1-f66.google.com with SMTP id v8so11801461iox.2
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 17 Jul 2020 13:52:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=mhs5FFai87Ig296v3TqrQxrtuK3e2ENuVof1kjV7dWA=;
+ b=hWIDvpTcnL4RwR5P8D9LJvdIg26ZyAUrjAyn8D3vJKh+uB22q8TnuE+mGGsVGUdBu9
+ wec/pq+Hzxm+ra4tKWO8qhQGlxB3aUe7d5f+1Hn9v2mDsxhg833Jc++RoSqzR7OdkONE
+ Ag3WHkpLGVjU1LxiUYJ4AsQO5ugv4F83GGbEEee3bwmW675TahVuILMNRpLfUUWPsVhk
+ LVkQpEun+WlR3ULGpXl/Ofz/vnzAVTpgJreG6crnq9j0qXYNc7+bkM/j0U+85syMpIZx
+ FquJ5fHP/aPH7+MFyzeeksq8S9sXzhM6fzlGnzLhg94VsNNxuxCwDPhcjys2mTSpUBAs
+ PA+w==
+X-Gm-Message-State: AOAM5303yfcczVqWvzEQY8QSigHk7DepeJlk1wncPlqC7nhBwU+cQdKO
+ +k9sdEsT5NX2+7sbHpT2jw==
+X-Google-Smtp-Source: ABdhPJykbjET3b/SbtFLSHBP8S5wWN1jyjxTFrVnyhE4WKqweYLocoTBilT3/POJRVbrAlfFyG5H7A==
+X-Received: by 2002:a05:6602:2c08:: with SMTP id
+ w8mr9219239iov.129.1595019155142; 
+ Fri, 17 Jul 2020 13:52:35 -0700 (PDT)
+Received: from xps15.herring.priv ([64.188.179.252])
+ by smtp.googlemail.com with ESMTPSA id 136sm4737492iou.50.2020.07.17.13.52.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Jul 2020 13:52:34 -0700 (PDT)
+From: Rob Herring <robh@kernel.org>
+To: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Marc Zyngier <maz@kernel.org>
+Subject: [PATCH v3 0/3] Cortex-A77 erratum 1508412 workaround
+Date: Fri, 17 Jul 2020 14:52:30 -0600
+Message-Id: <20200717205233.903344-1-robh@kernel.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Cc: pbonzini@redhat.com
+Cc: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -63,62 +80,39 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-GCC 10.1.0 introduced the -m{,no-}outline-atomics flags which, according to
-man 1 gcc:
+This series implements the work-around for Cortex-A77 erratum 1508412.
+KVM guests which don't implement the workaround can still deadlock the
+system. This is also the case with the existing Cortex-A57 erratum 832075,
+so we add a warning message if an erratum can cause deadlock.
 
-"Enable or disable calls to out-of-line helpers to implement atomic
-operations.  These helpers will, at runtime, determine if the LSE
-instructions from ARMv8.1-A can be used; if not, they will use the
-load/store-exclusive instructions that are present in the base ARMv8.0 ISA.
-[..] This option is on by default."
+Changes detailed in patches.
 
-Unfortunately the option causes the following error at compile time:
+Rob
 
-aarch64-linux-gnu-ld -nostdlib -pie -n -o arm/spinlock-test.elf -T /path/to/kvm-unit-tests/arm/flat.lds \
-	arm/spinlock-test.o arm/cstart64.o lib/libcflat.a lib/libfdt/libfdt.a /usr/lib/gcc/aarch64-linux-gnu/10.1.0/libgcc.a lib/arm/libeabi.a arm/spinlock-test.aux.o
-aarch64-linux-gnu-ld: /usr/lib/gcc/aarch64-linux-gnu/10.1.0/libgcc.a(lse-init.o): in function `init_have_lse_atomics':
-lse-init.c:(.text.startup+0xc): undefined reference to `__getauxval'
+v2: https://lore.kernel.org/linux-arm-kernel/20200701215308.3715856-1-robh@kernel.org/
+v1: https://lore.kernel.org/linux-arm-kernel/20200629213321.2953022-1-robh@kernel.org/
 
-This is happening because we are linking against our own libcflat which
-doesn't implement the function __getauxval().
+Rob Herring (3):
+  KVM: arm64: Print warning when cpu erratum can cause guests to
+    deadlock
+  arm64: Add part number for Arm Cortex-A77
+  arm64: Add workaround for Arm Cortex-A77 erratum 1508412
 
-Disable the use of the out-of-line functions by compiling with
--mno-outline-atomics if we detect a GCC version greater than 10.
+ Documentation/arm64/silicon-errata.rst |  2 ++
+ arch/arm64/Kconfig                     | 19 +++++++++++++++++++
+ arch/arm64/include/asm/cpucaps.h       |  3 ++-
+ arch/arm64/include/asm/cputype.h       |  2 ++
+ arch/arm64/include/asm/kvm_hyp.h       | 11 +++++++++++
+ arch/arm64/kernel/cpu_errata.c         | 10 ++++++++++
+ arch/arm64/kvm/arm.c                   |  5 +++++
+ arch/arm64/kvm/hyp/switch.c            |  7 ++++---
+ arch/arm64/kvm/hyp/sysreg-sr.c         |  2 +-
+ arch/arm64/kvm/sys_regs.c              |  8 +++++++-
+ arch/arm64/mm/fault.c                  | 10 ++++++++++
+ 11 files changed, 73 insertions(+), 6 deletions(-)
 
-Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
----
-
-Tested with gcc versions 10.1.0 and 5.4.0 (cross-compilation), 9.3.0
-(native).
-
-I've been able to suss out the reason for the build failure from this
-rejected gcc patch [1].
-
-[1] https://patches.openembedded.org/patch/172460/
-
- arm/Makefile.arm64 | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/arm/Makefile.arm64 b/arm/Makefile.arm64
-index dfd0c56fe8fb..3223cb966789 100644
---- a/arm/Makefile.arm64
-+++ b/arm/Makefile.arm64
-@@ -9,6 +9,12 @@ ldarch = elf64-littleaarch64
- arch_LDFLAGS = -pie -n
- CFLAGS += -mstrict-align
- 
-+# The -mno-outline-atomics flag is only valid for GCC versions 10 and greater.
-+GCC_MAJOR_VERSION=$(shell $(CC) -dumpversion 2> /dev/null | cut -f1 -d.)
-+ifeq ($(shell expr "$(GCC_MAJOR_VERSION)" ">=" "10"), 1)
-+CFLAGS += -mno-outline-atomics
-+endif
-+
- define arch_elf_check =
- 	$(if $(shell ! $(OBJDUMP) -R $(1) >&/dev/null && echo "nok"),
- 		$(error $(shell $(OBJDUMP) -R $(1) 2>&1)))
--- 
-2.27.0
-
+--
+2.25.1
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
