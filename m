@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id F06062280FB
-	for <lists+kvmarm@lfdr.de>; Tue, 21 Jul 2020 15:31:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78A172280FC
+	for <lists+kvmarm@lfdr.de>; Tue, 21 Jul 2020 15:31:52 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1F21A4B1C8;
-	Tue, 21 Jul 2020 09:31:51 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 270F24B1C1;
+	Tue, 21 Jul 2020 09:31:52 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.911
@@ -14,71 +14,71 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@gmail.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Th5OQseaOa6W; Tue, 21 Jul 2020 09:31:51 -0400 (EDT)
+	with ESMTP id 1jsqBZv2A9mi; Tue, 21 Jul 2020 09:31:51 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 012FB4B176;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 228374B1DF;
 	Tue, 21 Jul 2020 09:31:50 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 444354B22C
- for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Jul 2020 00:17:59 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EA03C4B249
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Jul 2020 00:18:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id owZ1E-5IHUSI for <kvmarm@lists.cs.columbia.edu>;
- Tue, 21 Jul 2020 00:17:58 -0400 (EDT)
-Received: from mail-pg1-f194.google.com (mail-pg1-f194.google.com
- [209.85.215.194])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 227164B1BC
- for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Jul 2020 00:17:58 -0400 (EDT)
-Received: by mail-pg1-f194.google.com with SMTP id p3so11355609pgh.3
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Jul 2020 21:17:58 -0700 (PDT)
+ with ESMTP id E6yoMORHt4IX for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 21 Jul 2020 00:18:04 -0400 (EDT)
+Received: from mail-pg1-f195.google.com (mail-pg1-f195.google.com
+ [209.85.215.195])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id EDDCA4B13A
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Jul 2020 00:18:03 -0400 (EDT)
+Received: by mail-pg1-f195.google.com with SMTP id m22so11320302pgv.9
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Jul 2020 21:18:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=NGaATuKDW25tfXnjy17rADeTuRjp0tV/vbWKKeWM86k=;
- b=FxePU75MyL2vEbevw6TtpxAoZ7al858qTZLgnulsvLtPDHAZfRUGdWc8xDb2P2/S9/
- bBc/PZv5oRmBtHu48J57hkDZoUPQczKHwLfygAQtWJAsbxUuyNPgQOhqoO7hnGwY2S1l
- BjCPVh9MaV1iO0wYglWEBL4YpgbhAKblNLO+R5ajQ6JgPxXfHsi5f7SvrdmclWZhjMtz
- Y+YCcQoTX72YN/GxWylHQAn1hpHmYUVKeFMHkT/mb0j446hxYU+dM2N7Iccf+4Enn9/u
- /BVQr+laVTtELgg68bMcctbJvSPmcvK0ISINvHZSf6qmhX8LdfPhs54QE7ulpgedx3ty
- BEOQ==
+ h=from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=373R9ouGaabWkF9LOu0D0r/ZsTxSFcUlmLnh8I9bY0s=;
+ b=RPE+tWYjEq8lfF5Lw3l/T2VT2gCqX3SDMnLPmA7+qFMTTKSKBzKX5ZJj+2qCHprw0X
+ zhFj6A9WFsSrz9NAqY5J4gbiqPbJPY8qJRzhfwUq9lyt1Su+mlIO4+W8O1jXJzMvWNZQ
+ 5uOA2k2a6QWmhZN5ysIsuMEd/nrlVlZBsmd/QDGma0t53aVuYeX9E2zytGNvy22clEmz
+ swji83M0Z6BNIBEqYqvPmRvztC/wG/tcV8MVy6ra8iMBzCG8sUQBznsfD1Mynnvru0b0
+ TNO3NgvemhHKueBqbtH3AHZ82se4DMGdqjcTcO8iyQkGvM6awUyOp6uosnGYAdWDzPfp
+ hQvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=NGaATuKDW25tfXnjy17rADeTuRjp0tV/vbWKKeWM86k=;
- b=FKNG/eV3C9DfpZcupxjQhHf7GdCuiL3SZCZg2RtddVClecMYauWmRbUUafeWDxgcSQ
- tHyG+x3UYA3iqBn4I/xuoo7Ii8NEXWmGcSyJLl4q94L6wretUtf5HvmrJuKWPQ9NuRs3
- C8dfnVpSDE6IfpABfaM1CTHASSj6hgwl8BPg1z2Y1sbfDozDhKiIcZAaDbWqbM0cmZAK
- mLZ5sYdTmNLR4i9/Xw5GRegR97NpUJI2aM6KRDzP76bBUu0ANFWW2hPSaM5RjN+N0mbW
- XFaOhJgC6/E8kfAuKZHQ9MNahwBfOhnoqgg8xpmLtGsfxpNOZeqposm0XCYbGnIQ8dJX
- 0Ppg==
-X-Gm-Message-State: AOAM530DRzs6FJrPQwnUxZ7nIrUJktdhq2QUz7iK6x7oF4XgG2iiPlqd
- eplmLfYtBq9uX88gvWOl69U=
-X-Google-Smtp-Source: ABdhPJzYY7DsDQI2R2Hw96u5qdwyUqBzumqyzaOhAyEtXxWQuqRgXwtqQViAPRcRnUwjnAvM4sTsoQ==
-X-Received: by 2002:a63:6884:: with SMTP id
- d126mr20548484pgc.341.1595305077188; 
- Mon, 20 Jul 2020 21:17:57 -0700 (PDT)
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+ :references:mime-version:content-transfer-encoding;
+ bh=373R9ouGaabWkF9LOu0D0r/ZsTxSFcUlmLnh8I9bY0s=;
+ b=gzEAu6T0fZhx9EkDpGqvJqINkWgoQIdnd6eHO5MaUYXhV+5pmR0712xz1bPK16Ygns
+ 5+MrNnJ3qGIbmw5dzsWHENtesHa4HWcubupM1ccGWfpwkeViO3GTbi7jFKed4uP1/u6f
+ J6cbeKFqu/CFxeduGZGYMMLh3YihJIay5IiKdnhVtk2sFwG6TUIm1Z3Xgd2yNqpayvs9
+ COHIWLLZGHeitWlHjY11sVAF7o0FiUSrVaWIPvE1cuKQBoheYnug+JgoLoIJFJiNnH4q
+ d/cCnP7Wj0UpczzGQYVy7pUdVNR+icgzAbH4h0pa19D3TfF4JMI7NI+qJoNQE82GFtxa
+ vPig==
+X-Gm-Message-State: AOAM533X5kb6wkvzeQ4sDHL6UwvXPzLPpb+B6SJsALCo02PbS6Fknpax
+ YDHTUN2mfTGRfTOrSmhQ/T8=
+X-Google-Smtp-Source: ABdhPJwVPnVtk5dh2Lh4fkPP3MVN8SquGMQEFuF8nfcQma0abf59oSZFhiCWcRp1e3eJXlBbB8zm0g==
+X-Received: by 2002:a63:417:: with SMTP id 23mr20032006pge.44.1595305083162;
+ Mon, 20 Jul 2020 21:18:03 -0700 (PDT)
 Received: from localhost.localdomain ([2409:10:2e40:5100:6e29:95ff:fe2d:8f34])
  by smtp.gmail.com with ESMTPSA id
- e28sm18467270pfm.177.2020.07.20.21.17.53
+ e28sm18467270pfm.177.2020.07.20.21.17.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 20 Jul 2020 21:17:56 -0700 (PDT)
+ Mon, 20 Jul 2020 21:18:02 -0700 (PDT)
 From: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
 To: Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
  James Morse <james.morse@arm.com>,
  Julien Thierry <julien.thierry.kdev@gmail.com>,
  Suzuki K Poulose <suzuki.poulose@arm.com>
-Subject: [RFC][PATCH 0/4] arm64:kvm: teach guest sched that VCPUs can be
- preempted
-Date: Tue, 21 Jul 2020 13:17:38 +0900
-Message-Id: <20200721041742.197354-1-sergey.senozhatsky@gmail.com>
+Subject: [RFC][PATCH 1/4] arm64:kvm: define pv_state SMCCC HV calls
+Date: Tue, 21 Jul 2020 13:17:39 +0900
+Message-Id: <20200721041742.197354-2-sergey.senozhatsky@gmail.com>
 X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20200721041742.197354-1-sergey.senozhatsky@gmail.com>
+References: <20200721041742.197354-1-sergey.senozhatsky@gmail.com>
 MIME-Version: 1.0
 X-Mailman-Approved-At: Tue, 21 Jul 2020 09:31:48 -0400
 Cc: joelaf@google.com, linux-kernel@vger.kernel.org,
@@ -100,55 +100,43 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hello,
+These will be used later on to configure and enable vCPU
+PV-state support, which is needed for vcpu_is_preempted().
 
-	RFC
+Signed-off-by: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
+---
+ include/linux/arm-smccc.h | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-	We noticed that in a number of cases when we wake_up_process()
-on arm64 guest we end up enqueuing that task on a preempted VCPU. The culprit
-appears to be the fact that arm64 guests are not aware of VCPU preemption
-as such, so when sched picks up an idle VCPU it always assumes that VCPU
-is available:
-
-      wake_up_process()
-       try_to_wake_up()
-        select_task_rq_fair()
-         available_idle_cpu()
-          vcpu_is_preempted()    // return false;
-
-Which is, obviously, not the case.
-
-This RFC patch set adds a simple vcpu_is_preempted() implementation so
-that scheduler can make better decisions when it search for the idle
-(v)CPU.
-
-I ran a number of sched benchmarks please refer to [0] for more
-details.
-
-[0] https://github.com/sergey-senozhatsky/arm64-vcpu_is_preempted
-
-Sergey Senozhatsky (4):
-  arm64:kvm: define pv_state SMCCC HV calls
-  arm64: add guest pvstate support
-  arm64: add host pvstate support
-  arm64: do not use dummy vcpu_is_preempted() anymore
-
- arch/arm64/include/asm/kvm_host.h  |  23 ++++++
- arch/arm64/include/asm/paravirt.h  |  15 ++++
- arch/arm64/include/asm/spinlock.h  |  17 +++--
- arch/arm64/kernel/Makefile         |   2 +-
- arch/arm64/kernel/paravirt-state.c | 117 +++++++++++++++++++++++++++++
- arch/arm64/kernel/paravirt.c       |   4 +-
- arch/arm64/kernel/time.c           |   1 +
- arch/arm64/kvm/Makefile            |   2 +-
- arch/arm64/kvm/arm.c               |   4 +
- arch/arm64/kvm/hypercalls.c        |  11 +++
- arch/arm64/kvm/pvstate.c           |  58 ++++++++++++++
- include/linux/arm-smccc.h          |  18 +++++
- 12 files changed, 262 insertions(+), 10 deletions(-)
- create mode 100644 arch/arm64/kernel/paravirt-state.c
- create mode 100644 arch/arm64/kvm/pvstate.c
-
+diff --git a/include/linux/arm-smccc.h b/include/linux/arm-smccc.h
+index 15c706fb0a37..cba054662692 100644
+--- a/include/linux/arm-smccc.h
++++ b/include/linux/arm-smccc.h
+@@ -99,6 +99,24 @@
+ 			   ARM_SMCCC_OWNER_STANDARD_HYP,	\
+ 			   0x21)
+ 
++#define ARM_SMCCC_HV_PV_STATE_FEATURES				\
++	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,			\
++			   ARM_SMCCC_SMC_64,			\
++			   ARM_SMCCC_OWNER_STANDARD_HYP,	\
++			   0x22)
++
++#define ARM_SMCCC_HV_PV_STATE_INIT				\
++	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,			\
++			   ARM_SMCCC_SMC_64,			\
++			   ARM_SMCCC_OWNER_STANDARD_HYP,	\
++			   0x23)
++
++#define ARM_SMCCC_HV_PV_STATE_RELEASE				\
++	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,			\
++			   ARM_SMCCC_SMC_64,			\
++			   ARM_SMCCC_OWNER_STANDARD_HYP,	\
++			   0x24)
++
+ /*
+  * Return codes defined in ARM DEN 0070A
+  * ARM DEN 0070A is now merged/consolidated into ARM DEN 0028 C
 -- 
 2.27.0
 
