@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9512A229D0D
-	for <lists+kvmarm@lfdr.de>; Wed, 22 Jul 2020 18:24:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74B28229D0E
+	for <lists+kvmarm@lfdr.de>; Wed, 22 Jul 2020 18:24:23 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 313FE4B2A0;
-	Wed, 22 Jul 2020 12:24:16 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 25CB64B2B7;
+	Wed, 22 Jul 2020 12:24:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,38 +16,38 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id O1P1p-krboZV; Wed, 22 Jul 2020 12:24:16 -0400 (EDT)
+	with ESMTP id jepVsRlC6E7S; Wed, 22 Jul 2020 12:24:23 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BA48B4B2B1;
-	Wed, 22 Jul 2020 12:24:14 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E27B34B2B2;
+	Wed, 22 Jul 2020 12:24:21 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E1F2D4B294
- for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Jul 2020 12:24:13 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E551E4B294
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Jul 2020 12:24:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id khTFeV4DrT7A for <kvmarm@lists.cs.columbia.edu>;
- Wed, 22 Jul 2020 12:24:12 -0400 (EDT)
+ with ESMTP id 9DZrWW30sIVQ for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 22 Jul 2020 12:24:19 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6CA654B296
- for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Jul 2020 12:24:12 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A2D004B298
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Jul 2020 12:24:19 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1797431B;
- Wed, 22 Jul 2020 09:24:12 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5379531B;
+ Wed, 22 Jul 2020 09:24:19 -0700 (PDT)
 Received: from arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 609BD3F66E;
- Wed, 22 Jul 2020 09:24:11 -0700 (PDT)
-Date: Wed, 22 Jul 2020 17:24:08 +0100
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A46C23F66E;
+ Wed, 22 Jul 2020 09:24:18 -0700 (PDT)
+Date: Wed, 22 Jul 2020 17:24:15 +0100
 From: Dave Martin <Dave.Martin@arm.com>
 To: Andrew Scull <ascull@google.com>
-Subject: Re: [PATCH v2 3/4] KVM: arm64: Leave vcpu FPSIMD synchronization in
- host
-Message-ID: <20200722162407.GM30452@arm.com>
+Subject: Re: [PATCH v2 4/4] KVM: arm64: Stop mapping host task thread flags
+ to hyp
+Message-ID: <20200722162415.GN30452@arm.com>
 References: <20200713210505.2959828-1-ascull@google.com>
- <20200713210505.2959828-4-ascull@google.com>
+ <20200713210505.2959828-5-ascull@google.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20200713210505.2959828-4-ascull@google.com>
+In-Reply-To: <20200713210505.2959828-5-ascull@google.com>
 User-Agent: Mutt/1.5.23 (2014-03-12)
 Cc: maz@kernel.org, kernel-team@android.com, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
@@ -66,187 +66,79 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Jul 13, 2020 at 10:05:04PM +0100, Andrew Scull wrote:
+On Mon, Jul 13, 2020 at 10:05:05PM +0100, Andrew Scull wrote:
 
-vv Nit: Message body doesn't say what changed _or_ why.  See comments on
-patch 2.
+Familiar nits about commit message and Subject line.
 
-> The task state can be checked by the host and the vcpu flags updated
-> before calling into hyp. Hyp simply acts on the state provided to it by
-> the host and updates it when switching to the vcpu state.
-
-It would be useful here to explain the renaming of
-kvm_arch_vcpu_ctxsync_fp().
-
+> Since hyp now doesn't access the host task's thread flags, there's no
+> need to map them up to hyp.
 > 
 > Signed-off-by: Andrew Scull <ascull@google.com>
+
+With a reworked commit message:
+
+Reviewed-by: Dave Martin <Dave.Martin@arm.com>
+
 > ---
->  arch/arm64/include/asm/kvm_host.h       |  3 ++-
->  arch/arm64/kvm/arm.c                    |  4 +++-
->  arch/arm64/kvm/fpsimd.c                 | 19 ++++++++++++++++++-
->  arch/arm64/kvm/hyp/include/hyp/switch.h | 19 -------------------
->  arch/arm64/kvm/hyp/nvhe/switch.c        |  3 +--
->  arch/arm64/kvm/hyp/vhe/switch.c         |  3 +--
->  6 files changed, 25 insertions(+), 26 deletions(-)
+>  arch/arm64/include/asm/kvm_host.h |  2 --
+>  arch/arm64/kvm/fpsimd.c           | 11 +----------
+>  2 files changed, 1 insertion(+), 12 deletions(-)
 > 
 > diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-> index b06f24b5f443..1a062d44b395 100644
+> index 1a062d44b395..fb0dfffa8be1 100644
 > --- a/arch/arm64/include/asm/kvm_host.h
 > +++ b/arch/arm64/include/asm/kvm_host.h
-> @@ -616,7 +616,8 @@ int kvm_arm_vcpu_arch_has_attr(struct kvm_vcpu *vcpu,
->  /* Guest/host FPSIMD coordination helpers */
->  int kvm_arch_vcpu_run_map_fp(struct kvm_vcpu *vcpu);
->  void kvm_arch_vcpu_load_fp(struct kvm_vcpu *vcpu);
-> -void kvm_arch_vcpu_ctxsync_fp(struct kvm_vcpu *vcpu);
-> +void kvm_arch_vcpu_sync_fp_before_run(struct kvm_vcpu *vcpu);
-> +void kvm_arch_vcpu_sync_fp_after_run(struct kvm_vcpu *vcpu);
->  void kvm_arch_vcpu_put_fp(struct kvm_vcpu *vcpu);
->  
->  static inline bool kvm_pmu_counter_deferred(struct perf_event_attr *attr)
-> diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-> index 98f05bdac3c1..c91b0a66bf20 100644
-> --- a/arch/arm64/kvm/arm.c
-> +++ b/arch/arm64/kvm/arm.c
-> @@ -682,6 +682,8 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
->  
->  		local_irq_disable();
->  
-> +		kvm_arch_vcpu_sync_fp_before_run(vcpu);
-> +
->  		kvm_vgic_flush_hwstate(vcpu);
->  
->  		/*
-> @@ -769,7 +771,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
->  		if (static_branch_unlikely(&userspace_irqchip_in_use))
->  			kvm_timer_sync_user(vcpu);
->  
-> -		kvm_arch_vcpu_ctxsync_fp(vcpu);
-> +		kvm_arch_vcpu_sync_fp_after_run(vcpu);
->  
->  		/*
->  		 * We may have taken a host interrupt in HYP mode (ie
-> diff --git a/arch/arm64/kvm/fpsimd.c b/arch/arm64/kvm/fpsimd.c
-> index c6b3197f6754..2779cc11f3dd 100644
-> --- a/arch/arm64/kvm/fpsimd.c
-> +++ b/arch/arm64/kvm/fpsimd.c
-> @@ -88,13 +88,30 @@ void kvm_arch_vcpu_load_fp(struct kvm_vcpu *vcpu)
->  	}
->  }
->  
-> +void kvm_arch_vcpu_sync_fp_before_run(struct kvm_vcpu *vcpu)
-> +{
-> +	WARN_ON_ONCE(!irqs_disabled());
-> +
-> +	if (!system_supports_fpsimd())
-> +		return;
-> +
-> +	/*
-> +	 * If the CPU's FP state is transient, there is no need to save the
-
-See comments on patch 2 regarding "transient".
-
-Beyond not needing to save the state, we must not even attempt to do so.
-
-> +	 * current state. Without further information, it must also be assumed
-> +	 * that the vcpu's state is not loaded.
-> +	 */
-> +	if (test_thread_flag(TIF_FOREIGN_FPSTATE))
-> +		vcpu->arch.flags &= ~(KVM_ARM64_FP_ENABLED |
-> +				      KVM_ARM64_FP_HOST);
-> +}
-> +
->  /*
->   * If the guest FPSIMD state was loaded, update the host's context
->   * tracking data mark the CPU FPSIMD regs as dirty and belonging to vcpu
->   * so that they will be written back if the kernel clobbers them due to
->   * kernel-mode NEON before re-entry into the guest.
->   */
-> -void kvm_arch_vcpu_ctxsync_fp(struct kvm_vcpu *vcpu)
-> +void kvm_arch_vcpu_sync_fp_after_run(struct kvm_vcpu *vcpu)
->  {
->  	WARN_ON_ONCE(!irqs_disabled());
->  
-> diff --git a/arch/arm64/kvm/hyp/include/hyp/switch.h b/arch/arm64/kvm/hyp/include/hyp/switch.h
-> index 0511af14dc81..65cde758abad 100644
-> --- a/arch/arm64/kvm/hyp/include/hyp/switch.h
-> +++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
-> @@ -25,28 +25,9 @@
->  #include <asm/fpsimd.h>
->  #include <asm/debug-monitors.h>
->  #include <asm/processor.h>
-> -#include <asm/thread_info.h>
->  
->  extern const char __hyp_panic_string[];
->  
-> -/* Check whether the FP regs were dirtied while in the host-side run loop: */
-> -static inline bool update_fp_enabled(struct kvm_vcpu *vcpu)
-> -{
-> -	/*
-> -	 * When the system doesn't support FP/SIMD, we cannot rely on
-> -	 * the _TIF_FOREIGN_FPSTATE flag. However, we always inject an
-> -	 * abort on the very first access to FP and thus we should never
-> -	 * see KVM_ARM64_FP_ENABLED. For added safety, make sure we always
-> -	 * trap the accesses.
-> -	 */
-> -	if (!system_supports_fpsimd() ||
-> -	    vcpu->arch.host_thread_info->flags & _TIF_FOREIGN_FPSTATE)
-> -		vcpu->arch.flags &= ~(KVM_ARM64_FP_ENABLED |
-> -				      KVM_ARM64_FP_HOST);
-> -
-> -	return !!(vcpu->arch.flags & KVM_ARM64_FP_ENABLED);
-> -}
-> -
->  /* Save the 32-bit only FPSIMD system register state */
->  static inline void __fpsimd_save_fpexc32(struct kvm_vcpu *vcpu)
->  {
-> diff --git a/arch/arm64/kvm/hyp/nvhe/switch.c b/arch/arm64/kvm/hyp/nvhe/switch.c
-> index 341be2f2f312..3b7306003917 100644
-> --- a/arch/arm64/kvm/hyp/nvhe/switch.c
-> +++ b/arch/arm64/kvm/hyp/nvhe/switch.c
-> @@ -25,7 +25,6 @@
->  #include <asm/fpsimd.h>
->  #include <asm/debug-monitors.h>
->  #include <asm/processor.h>
-> -#include <asm/thread_info.h>
->  
->  static void __activate_traps(struct kvm_vcpu *vcpu)
->  {
-> @@ -36,7 +35,7 @@ static void __activate_traps(struct kvm_vcpu *vcpu)
->  
->  	val = CPTR_EL2_DEFAULT;
->  	val |= CPTR_EL2_TTA | CPTR_EL2_TZ | CPTR_EL2_TAM;
-> -	if (!update_fp_enabled(vcpu)) {
-> +	if (!(vcpu->arch.flags & KVM_ARM64_FP_ENABLED)) {
->  		val |= CPTR_EL2_TFP;
->  		__activate_traps_fpsimd32(vcpu);
->  	}
-> diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
-> index c52d714e0d75..0c08c9123ce5 100644
-> --- a/arch/arm64/kvm/hyp/vhe/switch.c
-> +++ b/arch/arm64/kvm/hyp/vhe/switch.c
 > @@ -24,7 +24,6 @@
 >  #include <asm/fpsimd.h>
->  #include <asm/debug-monitors.h>
->  #include <asm/processor.h>
+>  #include <asm/kvm.h>
+>  #include <asm/kvm_asm.h>
 > -#include <asm/thread_info.h>
 >  
->  const char __hyp_panic_string[] = "HYP panic:\nPS:%08llx PC:%016llx ESR:%08llx\nFAR:%016llx HPFAR:%016llx PAR:%016llx\nVCPU:%p\n";
+>  #define __KVM_HAVE_ARCH_INTC_INITIALIZED
 >  
-> @@ -49,7 +48,7 @@ static void __activate_traps(struct kvm_vcpu *vcpu)
+> @@ -320,7 +319,6 @@ struct kvm_vcpu_arch {
+>  	struct kvm_guest_debug_arch vcpu_debug_state;
+>  	struct kvm_guest_debug_arch external_debug_state;
 >  
->  	val |= CPTR_EL2_TAM;
+> -	struct thread_info *host_thread_info;	/* hyp VA */
+>  	struct user_fpsimd_state *host_fpsimd_state;	/* hyp VA */
 >  
-> -	if (update_fp_enabled(vcpu)) {
-> +	if (vcpu->arch.flags & KVM_ARM64_FP_ENABLED) {
->  		if (vcpu_has_sve(vcpu))
->  			val |= CPACR_EL1_ZEN;
-
-Looks reasonable otherwise.
-
-[...]
-
-Cheers
----Dave
+>  	struct {
+> diff --git a/arch/arm64/kvm/fpsimd.c b/arch/arm64/kvm/fpsimd.c
+> index 2779cc11f3dd..08ce264c2f41 100644
+> --- a/arch/arm64/kvm/fpsimd.c
+> +++ b/arch/arm64/kvm/fpsimd.c
+> @@ -27,22 +27,13 @@ int kvm_arch_vcpu_run_map_fp(struct kvm_vcpu *vcpu)
+>  {
+>  	int ret;
+>  
+> -	struct thread_info *ti = &current->thread_info;
+>  	struct user_fpsimd_state *fpsimd = &current->thread.uw.fpsimd_state;
+>  
+> -	/*
+> -	 * Make sure the host task thread flags and fpsimd state are
+> -	 * visible to hyp:
+> -	 */
+> -	ret = create_hyp_mappings(ti, ti + 1, PAGE_HYP);
+> -	if (ret)
+> -		goto error;
+> -
+> +	/* Make sure the host task fpsimd state is visible to hyp: */
+>  	ret = create_hyp_mappings(fpsimd, fpsimd + 1, PAGE_HYP);
+>  	if (ret)
+>  		goto error;
+>  
+> -	vcpu->arch.host_thread_info = kern_hyp_va(ti);
+>  	vcpu->arch.host_fpsimd_state = kern_hyp_va(fpsimd);
+>  error:
+>  	return ret;
+> -- 
+> 2.27.0.383.g050319c2ae-goog
+> 
+> _______________________________________________
+> kvmarm mailing list
+> kvmarm@lists.cs.columbia.edu
+> https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
