@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C5A822AC4B
-	for <lists+kvmarm@lfdr.de>; Thu, 23 Jul 2020 12:17:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A617822AD22
+	for <lists+kvmarm@lfdr.de>; Thu, 23 Jul 2020 13:02:49 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 02D354B32B;
-	Thu, 23 Jul 2020 06:17:28 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3F59F4B312;
+	Thu, 23 Jul 2020 07:02:49 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,44 +18,42 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id y2oaR2wzqqcb; Thu, 23 Jul 2020 06:17:27 -0400 (EDT)
+	with ESMTP id 9WgsOGNvkrje; Thu, 23 Jul 2020 07:02:49 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CEF434B31A;
-	Thu, 23 Jul 2020 06:17:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5197F4B314;
+	Thu, 23 Jul 2020 07:02:48 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D8FEC4B1AE
- for <kvmarm@lists.cs.columbia.edu>; Thu, 23 Jul 2020 06:17:25 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C99BF4B2E9
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 23 Jul 2020 07:02:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id dvO629DWodkW for <kvmarm@lists.cs.columbia.edu>;
- Thu, 23 Jul 2020 06:17:24 -0400 (EDT)
+ with ESMTP id vdwkn83rCpPg for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 23 Jul 2020 07:02:46 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D49C14B1A5
- for <kvmarm@lists.cs.columbia.edu>; Thu, 23 Jul 2020 06:17:24 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E9D974B2E6
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 23 Jul 2020 07:02:45 -0400 (EDT)
 Received: from localhost.localdomain (236.31.169.217.in-addr.arpa
  [217.169.31.236])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 4CC152065F;
- Thu, 23 Jul 2020 10:17:22 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 910B42080D;
+ Thu, 23 Jul 2020 11:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1595499443;
- bh=4ztxpVxuw3J+NpHwpRVfU/Jf180Pmhs4xnxPAm51wUs=;
+ s=default; t=1595502165;
+ bh=7BS3tGlUSdMKnll9WlvmP5t8lhtC1LVjE2eQrR2WVKk=;
  h=From:To:Cc:Subject:Date:From;
- b=uNTuvWwqErBygQv3JeLNHv0IiQ3j9TdR4W3XzYel9D6a9dXijN7MY0nqEa0mh3RWh
- 63LPeEuUo9nR2EYp5S17wy3E+d02+h8aIrdiDxorrsmwUu1DIrm6jvOxJolSGB8/qI
- uy0TfwnlvMz1mL3/TvzXf7eiKSwiAP5VPdd3z6EU=
+ b=1XgwXX1ksp94++hKQkvh1//ockWr1w0JQf31mqbNyL/M86H2yvLh5VP6631zafeMy
+ ybtKuXJxj12Lr+9wVRVuC1ySJhYGD+n4T71DGqonR7M8BUTK+1XGes0K8XkFI92orh
+ EfAcsV+ccqA+eWvCvAIi74rkckjH81Vqb9b80R5U=
 From: Will Deacon <will@kernel.org>
 To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v2] KVM: arm64: Don't inherit exec permission across
- page-table levels
-Date: Thu, 23 Jul 2020 11:17:14 +0100
-Message-Id: <20200723101714.15873-1-will@kernel.org>
+Subject: [PATCH 0/3] KVM: arm64: Clean up memcache usage for page-table pages
+Date: Thu, 23 Jul 2020 12:02:24 +0100
+Message-Id: <20200723110227.16001-1-will@kernel.org>
 X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Cc: Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
- stable@vger.kernel.org, kernel-team@android.com,
+Cc: Will Deacon <will@kernel.org>, maz@kernel.org, kernel-team@android.com,
  linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -73,68 +71,26 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-If a stage-2 page-table contains an executable, read-only mapping at the
-pte level (e.g. due to dirty logging being enabled), a subsequent write
-fault to the same page which tries to install a larger block mapping
-(e.g. due to dirty logging having been disabled) will erroneously inherit
-the exec permission and consequently skip I-cache invalidation for the
-rest of the block.
+Hi all,
 
-Ensure that exec permission is only inherited by write faults when the
-new mapping is of the same size as the existing one. A subsequent
-instruction abort will result in I-cache invalidation for the entire
-block mapping.
+Here are some small cleanups I made to the memcache logic while hacking on the
+page-table code. The ioremap() behaviour looks like a bug to me, although it's
+just a performance thing so nothing urgent.
 
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Quentin Perret <qperret@google.com>
-Tested-by: Quentin Perret <qperret@google.com>
-Signed-off-by: Will Deacon <will@kernel.org>
----
+Cheers,
 
-v2: Fix pte size check and allow inheriting to smaller granule.
+Will
 
- arch/arm64/kvm/mmu.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+--->8
 
-diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 8c0035cab6b6..31058e6e7c2a 100644
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -1326,7 +1326,7 @@ static bool stage2_get_leaf_entry(struct kvm *kvm, phys_addr_t addr,
- 	return true;
- }
- 
--static bool stage2_is_exec(struct kvm *kvm, phys_addr_t addr)
-+static bool stage2_is_exec(struct kvm *kvm, phys_addr_t addr, unsigned long sz)
- {
- 	pud_t *pudp;
- 	pmd_t *pmdp;
-@@ -1338,11 +1338,11 @@ static bool stage2_is_exec(struct kvm *kvm, phys_addr_t addr)
- 		return false;
- 
- 	if (pudp)
--		return kvm_s2pud_exec(pudp);
-+		return sz <= PUD_SIZE && kvm_s2pud_exec(pudp);
- 	else if (pmdp)
--		return kvm_s2pmd_exec(pmdp);
-+		return sz <= PMD_SIZE && kvm_s2pmd_exec(pmdp);
- 	else
--		return kvm_s2pte_exec(ptep);
-+		return sz == PAGE_SIZE && kvm_s2pte_exec(ptep);
- }
- 
- static int stage2_set_pte(struct kvm *kvm, struct kvm_mmu_memory_cache *cache,
-@@ -1958,7 +1958,8 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 	 * execute permissions, and we preserve whatever we have.
- 	 */
- 	needs_exec = exec_fault ||
--		(fault_status == FSC_PERM && stage2_is_exec(kvm, fault_ipa));
-+		(fault_status == FSC_PERM &&
-+		 stage2_is_exec(kvm, fault_ipa, vma_pagesize));
- 
- 	if (vma_pagesize == PUD_SIZE) {
- 		pud_t new_pud = kvm_pfn_pud(pfn, mem_type);
+Will Deacon (3):
+  KVM: arm64: Don't free memcache pages in kvm_phys_addr_ioremap()
+  KVM: arm64: Simplify mmu_topup_memory_cache()
+  KVM: arm64: Remove mmu_free_memory_cache()
+
+ arch/arm64/kvm/mmu.c | 34 ++++++++++++++--------------------
+ 1 file changed, 14 insertions(+), 20 deletions(-)
+
 -- 
 2.28.0.rc0.105.gf9edc3c819-goog
 
