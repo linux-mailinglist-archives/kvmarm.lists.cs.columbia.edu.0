@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id BE65822F716
-	for <lists+kvmarm@lfdr.de>; Mon, 27 Jul 2020 19:54:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 075A222F71F
+	for <lists+kvmarm@lfdr.de>; Mon, 27 Jul 2020 19:56:06 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 342B64B860;
-	Mon, 27 Jul 2020 13:54:30 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8AF364B87F;
+	Mon, 27 Jul 2020 13:56:05 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,50 +18,49 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 00-Y63Xj7c6E; Mon, 27 Jul 2020 13:54:30 -0400 (EDT)
+	with ESMTP id kagwIXlIK4Hn; Mon, 27 Jul 2020 13:56:05 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F13534B850;
-	Mon, 27 Jul 2020 13:54:28 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5CA8C4B84F;
+	Mon, 27 Jul 2020 13:56:04 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4AE504B84C
- for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Jul 2020 13:54:27 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CF78E4B74E
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Jul 2020 13:56:02 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id b2Jt8cLPbYqE for <kvmarm@lists.cs.columbia.edu>;
- Mon, 27 Jul 2020 13:54:26 -0400 (EDT)
+ with ESMTP id Sk0SihTVX9Se for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 27 Jul 2020 13:56:01 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 06DB24B849
- for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Jul 2020 13:54:25 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D6C0D4B740
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Jul 2020 13:56:01 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id D68F22070B;
- Mon, 27 Jul 2020 17:54:24 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id B73CA2070B;
+ Mon, 27 Jul 2020 17:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1595872465;
- bh=unMSJDnD2gWLTML1FM1rBLALcFOdgrns4RDfOVlwcHM=;
+ s=default; t=1595872560;
+ bh=v11Epheq5tSy5AvwBVwRwdX6oVjInFx2eoLMFquy0RA=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=bRy7I4HwiHk9XhVEHfOpH7jRBh+/gmX/4zTdLMuHZocsjrmXYlcFzfEh4VKId7V6N
- k1trcJiNZ9rs8X507MqUnf+oBbvYHo+Wl+FK3cTW/y1maUeoAjW8Y0mYztRXMvx2hQ
- sxga2LKttu4KI2Lyd4POThxbsKIU1s9IF2T+oVi0=
+ b=Z5m7WFP3q6x8fuIeCZan7fGpFiqVVVda9qmiiAI480Y3aJrd5O2sETTQ8j4lZP2Mv
+ RLvYMAkbp1wGuYjzlOl1AqEtB46wXHjYIus9aFIbkoKue3mdFmQSz5XmoIIrjt60vF
+ lYkwjPj3976MbdOAdFWD/88b9UB6vyj4vIfuvIh8=
 Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
  by disco-boy.misterjones.org with esmtpsa
  (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1k07KR-00FNyz-FA; Mon, 27 Jul 2020 18:54:23 +0100
+ id 1k07Lz-00FO0M-Bc; Mon, 27 Jul 2020 18:55:59 +0100
 MIME-Version: 1.0
-Date: Mon, 27 Jul 2020 18:54:23 +0100
+Date: Mon, 27 Jul 2020 18:55:59 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: Andrew Jones <drjones@redhat.com>
-Subject: Re: [PATCH 3/5] KVM: arm64: pvtime: Fix stolen time accounting across
- migration
-In-Reply-To: <20200711100434.46660-4-drjones@redhat.com>
+Subject: Re: [PATCH 4/5] KVM: Documentation minor fixups
+In-Reply-To: <20200711100434.46660-5-drjones@redhat.com>
 References: <20200711100434.46660-1-drjones@redhat.com>
- <20200711100434.46660-4-drjones@redhat.com>
+ <20200711100434.46660-5-drjones@redhat.com>
 User-Agent: Roundcube Webmail/1.4.5
-Message-ID: <7f982e4cb6a839f698482686a6be57b3@kernel.org>
+Message-ID: <7f940c35be5e4c11dc3e7a6188539091@kernel.org>
 X-Sender: maz@kernel.org
 X-SA-Exim-Connect-IP: 51.254.78.96
 X-SA-Exim-Rcpt-To: drjones@redhat.com, kvm@vger.kernel.org,
@@ -88,122 +87,56 @@ Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 On 2020-07-11 11:04, Andrew Jones wrote:
-> When updating the stolen time we should always read the current
-> stolen time from the user provided memory, not from a kernel
-> cache. If we use a cache then we'll end up resetting stolen time
-> to zero on the first update after migration.
-> 
+> Reviewed-by: Steven Price <steven.price@arm.com>
 > Signed-off-by: Andrew Jones <drjones@redhat.com>
+
+It'd be good to have an actual commit message.
+
 > ---
->  arch/arm64/include/asm/kvm_host.h |  1 -
->  arch/arm64/kvm/pvtime.c           | 23 +++++++++--------------
->  include/linux/kvm_host.h          | 19 +++++++++++++++++++
->  3 files changed, 28 insertions(+), 15 deletions(-)
+>  Documentation/virt/kvm/api.rst | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
 > 
-> diff --git a/arch/arm64/include/asm/kvm_host.h
-> b/arch/arm64/include/asm/kvm_host.h
-> index c3e6fcc664b1..b01f52b61572 100644
-> --- a/arch/arm64/include/asm/kvm_host.h
-> +++ b/arch/arm64/include/asm/kvm_host.h
-> @@ -343,7 +343,6 @@ struct kvm_vcpu_arch {
+> diff --git a/Documentation/virt/kvm/api.rst 
+> b/Documentation/virt/kvm/api.rst
+> index 320788f81a05..3bd96c1a3962 100644
+> --- a/Documentation/virt/kvm/api.rst
+> +++ b/Documentation/virt/kvm/api.rst
+> @@ -6122,7 +6122,7 @@ HvCallSendSyntheticClusterIpi,
+> HvCallSendSyntheticClusterIpiEx.
+>  8.21 KVM_CAP_HYPERV_DIRECT_TLBFLUSH
+>  -----------------------------------
 > 
->  	/* Guest PV state */
->  	struct {
-> -		u64 steal;
->  		u64 last_steal;
->  		gpa_t base;
->  	} steal;
-> diff --git a/arch/arm64/kvm/pvtime.c b/arch/arm64/kvm/pvtime.c
-> index db5ef097a166..025b5f3a97ef 100644
-> --- a/arch/arm64/kvm/pvtime.c
-> +++ b/arch/arm64/kvm/pvtime.c
-> @@ -13,26 +13,22 @@
->  void kvm_update_stolen_time(struct kvm_vcpu *vcpu)
->  {
->  	struct kvm *kvm = vcpu->kvm;
-> +	u64 base = vcpu->arch.steal.base;
->  	u64 last_steal = vcpu->arch.steal.last_steal;
-> -	u64 steal;
-> -	__le64 steal_le;
-> -	u64 offset;
-> +	u64 offset = offsetof(struct pvclock_vcpu_stolen_time, stolen_time);
-> +	u64 steal = 0;
->  	int idx;
-> -	u64 base = vcpu->arch.steal.base;
+> -:Architecture: x86
+> +:Architectures: x86
 > 
->  	if (base == GPA_INVALID)
->  		return;
+>  This capability indicates that KVM running on top of Hyper-V 
+> hypervisor
+>  enables Direct TLB flush for its guests meaning that TLB flush
+> @@ -6135,16 +6135,17 @@ in CPUID and only exposes Hyper-V
+> identification. In this case, guest
+>  thinks it's running on Hyper-V and only use Hyper-V hypercalls.
 > 
-> -	/* Let's do the local bookkeeping */
-> -	steal = vcpu->arch.steal.steal;
-> -	vcpu->arch.steal.last_steal = current->sched_info.run_delay;
-> -	steal += vcpu->arch.steal.last_steal - last_steal;
-> -	vcpu->arch.steal.steal = steal;
+>  8.22 KVM_CAP_S390_VCPU_RESETS
+> +-----------------------------
+> 
+> -Architectures: s390
+> +:Architectures: s390
+> 
+>  This capability indicates that the KVM_S390_NORMAL_RESET and
+>  KVM_S390_CLEAR_RESET ioctls are available.
+> 
+>  8.23 KVM_CAP_S390_PROTECTED
+> +---------------------------
+> 
+> -Architecture: s390
 > -
-> -	steal_le = cpu_to_le64(steal);
->  	idx = srcu_read_lock(&kvm->srcu);
-> -	offset = offsetof(struct pvclock_vcpu_stolen_time, stolen_time);
-> -	kvm_put_guest(kvm, base + offset, steal_le, u64);
-> +	if (!kvm_get_guest(kvm, base + offset, steal, u64)) {
-> +		steal = le64_to_cpu(steal);
-> +		vcpu->arch.steal.last_steal = current->sched_info.run_delay;
-> +		steal += vcpu->arch.steal.last_steal - last_steal;
-> +		kvm_put_guest(kvm, base + offset, cpu_to_le64(steal), u64);
-> +	}
->  	srcu_read_unlock(&kvm->srcu, idx);
->  }
+> +:Architectures: s390
 > 
-> @@ -68,7 +64,6 @@ gpa_t kvm_init_stolen_time(struct kvm_vcpu *vcpu)
->  	 * Start counting stolen time from the time the guest requests
->  	 * the feature enabled.
->  	 */
-> -	vcpu->arch.steal.steal = 0;
->  	vcpu->arch.steal.last_steal = current->sched_info.run_delay;
-> 
->  	idx = srcu_read_lock(&kvm->srcu);
-> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> index d564855243d8..e2fc655f0b5b 100644
-> --- a/include/linux/kvm_host.h
-> +++ b/include/linux/kvm_host.h
-> @@ -749,6 +749,25 @@ int kvm_write_guest_offset_cached(struct kvm
-> *kvm, struct gfn_to_hva_cache *ghc,
->  int kvm_gfn_to_hva_cache_init(struct kvm *kvm, struct gfn_to_hva_cache 
-> *ghc,
->  			      gpa_t gpa, unsigned long len);
-> 
-> +#define __kvm_get_guest(kvm, gfn, offset, x, type)			\
-> +({									\
-> +	unsigned long __addr = gfn_to_hva(kvm, gfn);			\
-> +	type __user *__uaddr = (type __user *)(__addr + offset);	\
+>  This capability indicates that the Ultravisor has been initialized and
+>  KVM can therefore start protected VMs.
 
-Passing the type around is pretty ugly. Can't you use something like:
-
-typeof(x) __user *__uaddr = (typeof(__uaddr))(__addr + offset);
-
-which would avoid passing this type around? kvm_put_guest could
-use the same treatment.
-
-Yes, it forces the caller to rigorously type the inputs to the
-macro. But they should do that anyway.
-
-> +	int __ret = -EFAULT;						\
-> +									\
-> +	if (!kvm_is_error_hva(__addr))					\
-> +		__ret = get_user(x, __uaddr);				\
-> +	__ret;								\
-> +})
-> +
-> +#define kvm_get_guest(kvm, gpa, x, type)				\
-> +({									\
-> +	gpa_t __gpa = gpa;						\
-> +	struct kvm *__kvm = kvm;					\
-> +	__kvm_get_guest(__kvm, __gpa >> PAGE_SHIFT,			\
-> +			offset_in_page(__gpa), x, type);		\
-> +})
-> +
->  #define __kvm_put_guest(kvm, gfn, offset, value, type)			\
->  ({									\
->  	unsigned long __addr = gfn_to_hva(kvm, gfn);			\
+But this seems to be an otherwise unrelated patch.
+I'm happy to take it, but it seems odd here.
 
 Thanks,
 
