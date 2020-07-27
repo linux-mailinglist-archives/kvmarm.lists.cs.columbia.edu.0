@@ -2,71 +2,74 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id F30AD22EAA0
-	for <lists+kvmarm@lfdr.de>; Mon, 27 Jul 2020 13:02:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C50AF22EAF3
+	for <lists+kvmarm@lfdr.de>; Mon, 27 Jul 2020 13:15:50 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 794114B9F7;
-	Mon, 27 Jul 2020 07:02:35 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1FB784B0CC;
+	Mon, 27 Jul 2020 07:15:50 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id CqlWQ5W7BD9r; Mon, 27 Jul 2020 07:02:35 -0400 (EDT)
+	with ESMTP id zzm6C4nXUx+X; Mon, 27 Jul 2020 07:15:49 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 44FEF4B9D9;
-	Mon, 27 Jul 2020 07:02:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EDF2F4B0CF;
+	Mon, 27 Jul 2020 07:15:48 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 864DE4B99F
- for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Jul 2020 07:02:33 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DC5CD4B09B
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Jul 2020 07:15:47 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id vIaBNQXziLrE for <kvmarm@lists.cs.columbia.edu>;
- Mon, 27 Jul 2020 07:02:32 -0400 (EDT)
-Received: from us-smtp-delivery-1.mimecast.com
- (us-smtp-delivery-1.mimecast.com [205.139.110.120])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9DB764B99B
- for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Jul 2020 07:02:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1595847752;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Bhjm+k3ZKFy4jBT6oOZ6KaNSYOxpyHTbPoNoFYayimA=;
- b=Au5mEdEw8LHN+Vs5M3+wFBGyNAz0F068TuF5R7a/KbjeHnhr4+Tqi7a+z5k+g13NsBmEVY
- CEgtslTJLP8xU/VFh5vOPy7etDeFMYdAfgA8tZd8YVcmHbYn2y4CRWZD7fmIObK7hCDQch
- avSeQkjWv7QPbALpV9WDHItnBxCeX98=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-262-LAev5u0sNhCroDOd5CsXbw-1; Mon, 27 Jul 2020 07:02:30 -0400
-X-MC-Unique: LAev5u0sNhCroDOd5CsXbw-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com
- [10.5.11.23])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ with ESMTP id l8MxhBOtOSp4 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 27 Jul 2020 07:15:45 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C1C5E4B09A
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Jul 2020 07:15:45 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 4C917800597;
- Mon, 27 Jul 2020 11:02:29 +0000 (UTC)
-Received: from kamzik.brq.redhat.com (unknown [10.40.194.132])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 5361719C66;
- Mon, 27 Jul 2020 11:02:27 +0000 (UTC)
-Date: Mon, 27 Jul 2020 13:02:24 +0200
-From: Andrew Jones <drjones@redhat.com>
-To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
-Subject: Re: [PATCH 0/5] KVM: arm64: pvtime: Fixes and a new cap
-Message-ID: <20200727110224.vpsakrqaj2vm7g66@kamzik.brq.redhat.com>
-References: <20200711100434.46660-1-drjones@redhat.com>
+ by mail.kernel.org (Postfix) with ESMTPSA id AAC5020663;
+ Mon, 27 Jul 2020 11:15:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1595848544;
+ bh=oJnFe7i2aMyPNt4qncXo7Nnv+J187zuVdYAjcMJGEog=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=fRiKrLaRN9c/GvrICVrJSLTc55ZFQFuQON/4BaIiBrtP6q28Jr3zUZmCxBjP+ri9z
+ 3VxplHU0ecP2s0v6GzvSCuDryvc84p4JGz2f1xD2bGxO5u16i9xcXIfw/408fUwVeI
+ flw/Qlhv2goKHpiBHjAwfQ3R3nv+pyXKFZn1QjM8=
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+ by disco-boy.misterjones.org with esmtpsa
+ (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
+ (envelope-from <maz@kernel.org>)
+ id 1k016c-00FHAN-RG; Mon, 27 Jul 2020 12:15:43 +0100
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20200711100434.46660-1-drjones@redhat.com>
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
-Cc: pbonzini@redhat.com, steven.price@arm.com, maz@kernel.org
+Date: Mon, 27 Jul 2020 12:15:42 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: Andrew Jones <drjones@redhat.com>
+Subject: Re: [PATCH 0/5] KVM: arm64: pvtime: Fixes and a new cap
+In-Reply-To: <20200727110224.vpsakrqaj2vm7g66@kamzik.brq.redhat.com>
+References: <20200711100434.46660-1-drjones@redhat.com>
+ <20200727110224.vpsakrqaj2vm7g66@kamzik.brq.redhat.com>
+User-Agent: Roundcube Webmail/1.4.5
+Message-ID: <4171d397a22c78c242dee9f161372663@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: drjones@redhat.com, kvm@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu, pbonzini@redhat.com, steven.price@arm.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: pbonzini@redhat.com, kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
+ steven.price@arm.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -78,52 +81,21 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-
-Hi Marc,
-
-Ping?
-
-Thanks,
-drew
-
-
-On Sat, Jul 11, 2020 at 12:04:29PM +0200, Andrew Jones wrote:
-> The first three patches in the series are fixes that come from testing
-> and reviewing pvtime code while writing the QEMU support (I'll reply
-> to this mail with a link to the QEMU patches after posting - which I'll
-> do shortly). The last patch is only a convenience for userspace, and I
-> wouldn't be heartbroken if it wasn't deemed worth it. The QEMU patches
-> I'll be posting are currently written without the cap. However, if the
-> cap is accepted, then I'll change the QEMU code to use it.
+On 2020-07-27 12:02, Andrew Jones wrote:
+> Hi Marc,
 > 
-> Thanks,
-> drew
-> 
-> Andrew Jones (5):
->   KVM: arm64: pvtime: steal-time is only supported when configured
->   KVM: arm64: pvtime: Fix potential loss of stolen time
->   KVM: arm64: pvtime: Fix stolen time accounting across migration
->   KVM: Documentation minor fixups
->   arm64/x86: KVM: Introduce steal-time cap
-> 
->  Documentation/virt/kvm/api.rst    | 20 ++++++++++++++++----
->  arch/arm64/include/asm/kvm_host.h |  2 +-
->  arch/arm64/kvm/arm.c              |  3 +++
->  arch/arm64/kvm/pvtime.c           | 31 +++++++++++++++----------------
->  arch/x86/kvm/x86.c                |  3 +++
->  include/linux/kvm_host.h          | 19 +++++++++++++++++++
->  include/uapi/linux/kvm.h          |  1 +
->  7 files changed, 58 insertions(+), 21 deletions(-)
-> 
-> -- 
-> 2.25.4
-> 
+> Ping?
 
+On it! ;-)
+
+         M.
+-- 
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
