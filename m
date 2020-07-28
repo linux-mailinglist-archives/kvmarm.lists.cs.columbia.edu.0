@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D649C2304A6
-	for <lists+kvmarm@lfdr.de>; Tue, 28 Jul 2020 09:52:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B50B230540
+	for <lists+kvmarm@lfdr.de>; Tue, 28 Jul 2020 10:23:29 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 58A0B4B8E7;
-	Tue, 28 Jul 2020 03:52:29 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 20BC44B91E;
+	Tue, 28 Jul 2020 04:23:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,61 +18,60 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2r5hBw1d+RyX; Tue, 28 Jul 2020 03:52:29 -0400 (EDT)
+	with ESMTP id 4S7D1Asov4oN; Tue, 28 Jul 2020 04:23:29 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1850B4B8E3;
-	Tue, 28 Jul 2020 03:52:28 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E47D74B911;
+	Tue, 28 Jul 2020 04:23:27 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AA43B4B8DD
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Jul 2020 03:52:26 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D5BE94B8D1
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Jul 2020 04:23:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 36on0qILguRA for <kvmarm@lists.cs.columbia.edu>;
- Tue, 28 Jul 2020 03:52:25 -0400 (EDT)
+ with ESMTP id AGtmM3AMyr7j for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 28 Jul 2020 04:23:25 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A08554B8D9
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Jul 2020 03:52:25 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8AE9B4B858
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Jul 2020 04:23:25 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 7966E20714;
- Tue, 28 Jul 2020 07:52:24 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 5E64A2075D;
+ Tue, 28 Jul 2020 08:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1595922744;
- bh=T3T/i9s4kjXiGBww2mdjvGIltFK2CfgJhwpaoNpxtYs=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=JAuLLRAGqGuJBARRLhEZRnOsDgzjPBZnogBSZIG3DOc04fB1pr/xvSrGUZJvIoCCP
- 50Bd94dzrgSr1A97/tpE8AREwFufG/ifQ05pfUIqNVttmCCXymptLX/6Jhe6145i3X
- gp8esyQfdvx25uGba2IeA9i/j5JJU73LU4d5fv/o=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
+ s=default; t=1595924604;
+ bh=s+JcctlNG0hHX2xEwi6C3ENfXMCtVb68JpHdq0Skmw4=;
+ h=From:To:Cc:Subject:Date:From;
+ b=FhwUUQidy339zU5Wogz7l7ZnPOqzOczutbqIH2gK1BTX5z0NE9l7Ve489HTCVByJR
+ 5FoMU64OWFU+Dy1nx65lqauBVZMUso+rxZB+85ve4BCguqOnD/Wqy9eerAg2rICaOl
+ 8x8WSiJjUkToSjV+fWon8nmzf7GyS8B66OyclbPA=
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by disco-boy.misterjones.org with esmtpsa
+ (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1k0KPP-00Fa5B-3X; Tue, 28 Jul 2020 08:52:23 +0100
-MIME-Version: 1.0
-Date: Tue, 28 Jul 2020 08:52:22 +0100
+ id 1k0KtO-00FaXh-S3; Tue, 28 Jul 2020 09:23:23 +0100
 From: Marc Zyngier <maz@kernel.org>
-To: zhukeqian <zhukeqian1@huawei.com>
-Subject: Re: [PATCH v2 0/8] KVM: arm64: Support HW dirty log based on DBM
-In-Reply-To: <884bd32d-c8ba-6237-82f6-1769a83289f5@huawei.com>
-References: <20200702135556.36896-1-zhukeqian1@huawei.com>
- <e120ec04-24d5-f1cb-3aa2-8baf3d6da1db@huawei.com>
- <015847afd67e8bd4f8a158b604854838@kernel.org>
- <4eee3e4c-db73-c4ce-ca3d-d665ee87d66a@huawei.com>
- <87mu43xy94.wl-maz@kernel.org>
- <884bd32d-c8ba-6237-82f6-1769a83289f5@huawei.com>
-User-Agent: Roundcube Webmail/1.4.5
-Message-ID: <2a81b2a0e1bd1e7523760a8074b9ec6e@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: zhukeqian1@huawei.com, catalin.marinas@arm.com,
- kvmarm@lists.cs.columbia.edu, wanghaibin.wang@huawei.com
+To: Paolo Bonzini <pbonzini@redhat.com>
+Subject: [GIT PULL] KVM/arm64 fixes for 5.8, take #4
+Date: Tue, 28 Jul 2020 09:22:53 +0100
+Message-Id: <20200728082255.3864378-1-maz@kernel.org>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: pbonzini@redhat.com, natechancellor@gmail.com,
+ ndesaulniers@google.com, qperret@google.com, will@kernel.org,
+ james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org, kernel-team@android.com
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
-Cc: Catalin Marinas <catalin.marinas@arm.com>, kvmarm@lists.cs.columbia.edu
+Cc: kvm@vger.kernel.org, kernel-team@android.com,
+ Nick Desaulniers <ndesaulniers@google.com>,
+ linux-arm-kernel@lists.infradead.org,
+ Nathan Chancellor <natechancellor@gmail.com>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -84,53 +83,51 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2020-07-28 03:11, zhukeqian wrote:
-> Hi Marc,
+Hi Paolo,
 
-[...]
+This is the last batch of fixes for 5.8. One fixes a long standing MMU
+issue, while the other addresses a more recent brekage with out-of-line
+helpers in the nVHE code.
 
->> But you are still reading the leaf entries of the PTs, hence defeating
->> any sort of prefetch that the CPU could do for you. And my claim is
->> that reading the bitmap is much faster than parsing the PTs. Are you
->> saying that this isn't the case?
-> I am confused here. MMU DBM just updates the S2AP[1] of PTs, so dirty
-> information
-> is not continuous. The smallest granularity of read instruction is one
-> byte, we must
-> read one byte of each PTE to determine whether it is dirty. So I think
-> the smallest
-> reading amount is 512 bytes per 2MB.
+Please pull,
 
-Which is why using DBM as a way to implement dirty-logging doesn't work.
-Forcing the vcpu to take faults in order to update the dirty bitmap
-has the benefit of (a) telling you exactly what page has been written 
-to,
-(b) *slowing the vcpu down*.
+	M.
 
-See? no additional read, better convergence ratio because you are not
-trying to catch up with a vcpu running wild. You are in control of the
-dirtying rate, not the vcpu, and the information you get requires no
-extra work (just set the corresponding bit in the dirty bitmap).
+The following changes since commit b9e10d4a6c9f5cbe6369ce2c17ebc67d2e5a4be5:
 
-Honestly, I think you are looking at the problem the wrong way.
-DBM at S2 is not a solution to anything, because the information is
-way too sparse, and  it doesn't solve the real problem, which is
-the tracking of dirty pages caused by devices.
+  KVM: arm64: Stop clobbering x0 for HVC_SOFT_RESTART (2020-07-06 11:47:02 +0100)
 
-As I said twice before, I will not consider these patches without
-a solution to the DMA problem, and I don't think DBM is part of
-that solution.
+are available in the Git repository at:
 
-Thanks,
+  git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git tags/kvmarm-fixes-5.8-4
 
-         M.
--- 
-Jazz is not dead. It just smells funny...
+for you to fetch changes up to b757b47a2fcba584d4a32fd7ee68faca510ab96f:
+
+  KVM: arm64: Don't inherit exec permission across page-table levels (2020-07-28 09:03:57 +0100)
+
+----------------------------------------------------------------
+KVM/arm64 fixes for Linux 5.8, take #3
+
+- Fix a corner case of a new mapping inheriting exec permission without
+  and yet bypassing invalidation of the I-cache
+- Make sure PtrAuth predicates oinly generate inline code for the
+  non-VHE hypervisor code
+
+----------------------------------------------------------------
+Marc Zyngier (1):
+      KVM: arm64: Prevent vcpu_has_ptrauth from generating OOL functions
+
+Will Deacon (1):
+      KVM: arm64: Don't inherit exec permission across page-table levels
+
+ arch/arm64/include/asm/kvm_host.h | 11 ++++++++---
+ arch/arm64/kvm/mmu.c              | 11 ++++++-----
+ 2 files changed, 14 insertions(+), 8 deletions(-)
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
