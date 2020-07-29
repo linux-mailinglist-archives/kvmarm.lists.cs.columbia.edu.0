@@ -2,61 +2,59 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 485D02317E0
-	for <lists+kvmarm@lfdr.de>; Wed, 29 Jul 2020 04:57:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F530231CAB
+	for <lists+kvmarm@lfdr.de>; Wed, 29 Jul 2020 12:28:31 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A089C4BBA9;
-	Tue, 28 Jul 2020 22:57:54 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AE9EF4B544;
+	Wed, 29 Jul 2020 06:28:30 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.502
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=ham
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id f7CiqE6xHmV8; Tue, 28 Jul 2020 22:57:54 -0400 (EDT)
+	with ESMTP id RDbuHXLBlFiG; Wed, 29 Jul 2020 06:28:29 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 50D914BB37;
-	Tue, 28 Jul 2020 22:57:53 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AA8934B547;
+	Wed, 29 Jul 2020 06:28:29 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AE60E4BA81
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Jul 2020 22:57:51 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 14D3F4B549
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 29 Jul 2020 06:28:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id fvv31TgssXNE for <kvmarm@lists.cs.columbia.edu>;
- Tue, 28 Jul 2020 22:57:48 -0400 (EDT)
-Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4C8074BA80
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Jul 2020 22:57:44 -0400 (EDT)
-Received: from DGGEMS405-HUB.china.huawei.com (unknown [172.30.72.60])
- by Forcepoint Email with ESMTP id DEDAF5C6B6236BE30C72;
- Wed, 29 Jul 2020 10:57:38 +0800 (CST)
-Received: from [10.174.187.22] (10.174.187.22) by
- DGGEMS405-HUB.china.huawei.com (10.3.19.205) with Microsoft SMTP Server id
- 14.3.487.0; Wed, 29 Jul 2020 10:57:30 +0800
-From: zhukeqian <zhukeqian1@huawei.com>
-Subject: Re: [PATCH 0/9] arm64: Stolen time support
-To: Steven Price <steven.price@arm.com>
-References: <20190802145017.42543-1-steven.price@arm.com>
- <1611996b-1ec1-dee7-ed61-b3b9df23f138@huawei.com>
- <25c7f2e2-e779-4e97-fdc5-0aba9fcf0fbc@arm.com>
-Message-ID: <816e3b46-07fc-0274-deb2-0d026d50b989@huawei.com>
-Date: Wed, 29 Jul 2020 10:57:30 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+ with ESMTP id vqkejcxHiXqy for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 29 Jul 2020 06:28:27 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2C9364B53C
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 29 Jul 2020 06:28:27 -0400 (EDT)
+Received: from localhost.localdomain (236.31.169.217.in-addr.arpa
+ [217.169.31.236])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 084AE206D4;
+ Wed, 29 Jul 2020 10:28:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1596018506;
+ bh=OV8Q9chiN1dhcOrS3acpO8IjQZ3jxCwC1wadS7xchSI=;
+ h=From:To:Cc:Subject:Date:From;
+ b=dIS/NmbfPix05mFEShDhJhFpvMqjnx8Xzl/GtokK8jy9ExXed7SdP0YtzhqUzzMfR
+ 5V4fepj3NuDFzO1ZATSR0ufc1STNSGUh3pavtpsvdHiedi+eYVstGLxQnGoVfPrN03
+ Za61g1iNQIsqMTeZvemzKjPWGCXxOc7ex75u78mQ=
+From: Will Deacon <will@kernel.org>
+To: kvmarm@lists.cs.columbia.edu
+Subject: [PATCH v2 0/4] KVM: arm64: Fixes to early stage-2 fault handling
+Date: Wed, 29 Jul 2020 11:28:17 +0100
+Message-Id: <20200729102821.23392-1-will@kernel.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <25c7f2e2-e779-4e97-fdc5-0aba9fcf0fbc@arm.com>
-X-Originating-IP: [10.174.187.22]
-X-CFilter-Loop: Reflected
-Cc: kvm@vger.kernel.org, linux-doc@vger.kernel.org,
- Catalin Marinas <catalin.marinas@arm.com>,
- Russell King <linux@armlinux.org.uk>, linux-kernel@vger.kernel.org,
- yebiaoxiang@huawei.com, Marc Zyngier <maz@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Cc: kernel-team@android.com, Will Deacon <will@kernel.org>,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -73,70 +71,59 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Steven,
+Hi all,
 
-On 2020/7/27 18:48, Steven Price wrote:
-> On 21/07/2020 04:26, zhukeqian wrote:
->> Hi Steven,
-> 
-> Hi Keqian,
-> 
->> On 2019/8/2 22:50, Steven Price wrote:
->>> This series add support for paravirtualized time for arm64 guests and
->>> KVM hosts following the specification in Arm's document DEN 0057A:
->>>
->>> https://developer.arm.com/docs/den0057/a
->>>
->>> It implements support for stolen time, allowing the guest to
->>> identify time when it is forcibly not executing.
->>>
->>> It doesn't implement support for Live Physical Time (LPT) as there are
->>> some concerns about the overheads and approach in the above
->> Do you plan to pick up LPT support? As there is demand of cross-frequency migration
->> (from older platform to newer platform).
-> 
-> I don't have any plans to pick up the LPT support at the moment - feel free to pick it up! ;)
-> 
->> I am not clear about the overheads and approach problem here, could you please
->> give some detail information? Maybe we can work together to solve these concerns. :-)
-> 
-> Fundamentally the issue here is that LPT only solves one small part of migration between different hosts. To successfully migrate between hosts with different CPU implementations it is also necessary to be able to virtualise various ID registers (e.g. MIDR_EL1, REVIDR_EL1, AIDR_EL1) which we have no support for currently.
-> 
-Yeah, currently we are trying to do both timer freq virtualization and CPU feature virtualization.
+This is version two of the patches I posted last week:
 
-> The problem with just virtualising the registers is how you handle errata. The guest will currently use those (and other) ID registers to decide whether to enable specific errata workarounds. But what errata should be enabled for a guest which might migrate to another host?
-> 
-Thanks for pointing this out.
+  https://lore.kernel.org/r/20200724143506.17772-1-will@kernel.org
 
-I think the most important thing is that we should introduce a concept named CPU baseline which represents a standard platform.
-If we bring up a guest with a specific CPU baseline, then this guest can only run on a platform that is compatible with this CPU baseline.
-So "baseline" and "compatible" are the key point to promise successful cross-platform migration.
+I got my brain in a twist with exactly what is reported in HPFAR for
+a stage-2 abort on a stage-1 table walk, so I don't think any of these
+are serious any more.
 
+With these changes, the early stage-2 fault handling follows:
 
-> What we ideally need is a mechanism to communicate to the guest what workarounds are required to successfully run on any of the hosts that the guest may be migrated to. You may also have the situation where the workarounds required for two hosts are mutually incompatible - something needs to understand this and do the "right thing" (most likely just reject this situation, i.e. prevent the migration).
-> 
-> There are various options here: e.g. a para-virtualised interface to describe the workarounds (but this is hard to do in an OS-agnostic way), or virtual-ID registers describing an idealised environment where no workarounds are required (and only hosts that have no errata affecting a guest would be able to provide this).
-> 
-My idea is similar with the "idealised environment", but errata workaround still exists.
-We do not provide para-virtualised interface, and migration is restricted between platforms that are compatible with baseline.
+S2 instruction abort:
+  * Not in memslot, or S2 fault on S1 walk for tables in R/O memslot:
+	=> inject external iabt to guest
 
-Baseline should has two aspects: CPU feature and errata. These platforms that are compatible with a specific baseline should have the corresponding CPU feature and errata.
+S2 data abort:
+  * Not in memslot:
+    - S2 fault on S1 walk:      inject external dabt to guest
+    - Cache maintenance:        skip instr
+    - Syndrome valid            EXIT_MMIO
+    - Syndrome invalid          EXIT_NISV
+  * Write fault in R/O memslot:
+    - S2 fault on S1 walk:      inject external dabt to guest
+    - Access is write:
+      - Syndrome valid          EXIT_MMIO
+      - Syndrome invalid        EXIT_NISV (includes cache maintenance)
 
-> Given the above complexity and the fact that Armv8.6-A standardises the frequency to 1GHz this didn't seem worth continuing with. So LPT was dropped from the spec and patches to avoid holding up the stolen time support.
-> 
-> However, if you have a use case which doesn't require such a generic migration (e.g. perhaps old and new platforms are based on the same IP) then it might be worth looking at bring this back. But to make the problem solvable it either needs to be restricted to platforms which are substantially the same (so the errata list will be identical), or there's work to be done in preparation to deal with migrating a guest successfully between hosts with potentially different errata requirements.
-> 
-> Can you share more details about the hosts that you are interested in migrating between?
-Here we have new platform with 1GHz timer, and old platform is 100MHZ, so we want to solve the cross-platform migration firstly.
+Everything else gets handled by handle_access_fault()/user_mem_abort().
 
-Thanks,
-Keqian
-> 
-> Thanks,
-> 
-> Steve
-> .
-> 
+Will
+
+Cc: James Morse <james.morse@arm.com>
+Cc: Suzuki Poulose <suzuki.poulose@arm.com>
+Cc: kernel-team@android.com
+
+--->8
+
+Will Deacon (4):
+  KVM: arm64: Rename kvm_vcpu_dabt_isextabt()
+  KVM: arm64: Handle data and instruction external aborts the same way
+  KVM: arm64: Don't skip cache maintenance for read-only memslots
+  KVM: arm64: Move S1PTW S2 fault logic out of io_mem_abort()
+
+ arch/arm64/include/asm/kvm_emulate.h |  2 +-
+ arch/arm64/kvm/hyp/switch.c          |  2 +-
+ arch/arm64/kvm/mmio.c                |  6 ------
+ arch/arm64/kvm/mmu.c                 | 26 +++++++++++++++++---------
+ 4 files changed, 19 insertions(+), 17 deletions(-)
+
+-- 
+2.28.0.rc0.142.g3c755180ce-goog
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
