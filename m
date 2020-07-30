@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D709B233592
-	for <lists+kvmarm@lfdr.de>; Thu, 30 Jul 2020 17:34:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDF8A233593
+	for <lists+kvmarm@lfdr.de>; Thu, 30 Jul 2020 17:34:48 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 89FF34B509;
-	Thu, 30 Jul 2020 11:34:46 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 81BDA4B4CE;
+	Thu, 30 Jul 2020 11:34:48 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,40 +18,40 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6DIpkqtDzBgP; Thu, 30 Jul 2020 11:34:46 -0400 (EDT)
+	with ESMTP id NSEM83SIwpws; Thu, 30 Jul 2020 11:34:47 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F131D4B4FB;
-	Thu, 30 Jul 2020 11:34:44 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1AD1A4B480;
+	Thu, 30 Jul 2020 11:34:47 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9FB9D4B480
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jul 2020 11:34:43 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DD6DD4B48C
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jul 2020 11:34:45 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 4PZowY3NVftp for <kvmarm@lists.cs.columbia.edu>;
- Thu, 30 Jul 2020 11:34:42 -0400 (EDT)
+ with ESMTP id BqR+bseriPNm for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 30 Jul 2020 11:34:45 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8F56E4B500
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jul 2020 11:34:42 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9C2024B439
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jul 2020 11:34:44 -0400 (EDT)
 Received: from localhost.localdomain (236.31.169.217.in-addr.arpa
  [217.169.31.236])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 59BFE2082E;
- Thu, 30 Jul 2020 15:34:40 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 52B0D22B3F;
+ Thu, 30 Jul 2020 15:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1596123281;
- bh=DwM1hbt8coZsE1uiYZtal06l3PSCMfgsmt7mKWgFqcM=;
+ s=default; t=1596123283;
+ bh=x4eJ/icjnPtK/YErozxgKpmW+WE3OYQVubykC8F+vu4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=xVE1R4MySAp3LOSsLwMf7Z079vN/+vhDDYEu6N7/kSgwB39+Gn/NOcqsWYUN/aEjZ
- Bo3PEGSa0biyj3rN/bkCziHjkISEbQR8jZEcMBZs/qcBRos/Gsy2DQdSLWu5BgmXet
- yhuKAwUO3GSa2LLVepeLNM6qKMdlfXn6zSAga23I=
+ b=hLjLeoyDvS1rnie7yZLEZwbCfAt+Af4TIeZjt1U9KPmaFRWQpz9EHRBUF/E8yOST9
+ kj92WYhWtPeUx3TIlmzjOj7ILW+6fCcM0lhRY7yGYmfEl7QqWQ1iSeek6VlEh41z1X
+ V5TrRiSkm4jhIedIF0p6vIFs5t6foVPIMt0zHzWo=
 From: Will Deacon <will@kernel.org>
 To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH 11/20] KVM: arm64: Add support for stage-2 write-protect in
- generic page-table
-Date: Thu, 30 Jul 2020 16:33:57 +0100
-Message-Id: <20200730153406.25136-12-will@kernel.org>
+Subject: [PATCH 12/20] KVM: arm64: Convert write-protect operation to generic
+ page-table API
+Date: Thu, 30 Jul 2020 16:33:58 +0100
+Message-Id: <20200730153406.25136-13-will@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200730153406.25136-1-will@kernel.org>
 References: <20200730153406.25136-1-will@kernel.org>
@@ -77,59 +77,50 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: Quentin Perret <qperret@google.com>
 
-Add a stage-2 wrprotect() operation to the generic page-table code.
+Convert stage2_wp_range() to call the kvm_pgtable_stage2_wrprotect()
+function of the generic page-table code instead of walking the page-table
+directly.
 
 Cc: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Quentin Perret <qperret@google.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 ---
- arch/arm64/include/asm/kvm_pgtable.h | 15 +++++++++++++++
- arch/arm64/kvm/pgtable.c             |  6 ++++++
- 2 files changed, 21 insertions(+)
+ arch/arm64/kvm/mmu.c | 22 +---------------------
+ 1 file changed, 1 insertion(+), 21 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_pgtable.h b/arch/arm64/include/asm/kvm_pgtable.h
-index 7bc55e874a90..ce90432ec6b9 100644
---- a/arch/arm64/include/asm/kvm_pgtable.h
-+++ b/arch/arm64/include/asm/kvm_pgtable.h
-@@ -155,6 +155,21 @@ int kvm_pgtable_stage2_map(void *cookie, u64 addr, u64 size, u64 phys,
-  */
- int kvm_pgtable_stage2_unmap(void *cookie, u64 addr, u64 size);
- 
-+/**
-+ * kvm_pgtable_stage2_wrprotect() - Write-protect guest stage-2 address range
-+ *                                  without TLB invalidation.
-+ * @cookie:	Opaque cookie allocated by kvm_pgtable_stage2_alloc_cookie().
-+ * @addr:	Intermediate physical address from which to write-protect,
-+ * @size:	Size of the range.
-+ *
-+ * Note that it is the caller's responsibility to invalidate the TLB after
-+ * calling this function to ensure that the updated permissions are visible
-+ * to the CPUs.
-+ *
-+ * Return: 0 on success, negative error code on failure.
-+ */
-+int kvm_pgtable_stage2_wrprotect(void *cookie, u64 addr, u64 size);
-+
- /**
-  * kvm_pgtable_stage2_mkyoung() - Set the access flag in a page-table entry.
-  * @cookie:	Opaque cookie allocated by kvm_pgtable_stage2_alloc_cookie().
-diff --git a/arch/arm64/kvm/pgtable.c b/arch/arm64/kvm/pgtable.c
-index af15282d3df9..52cb3d5f156e 100644
---- a/arch/arm64/kvm/pgtable.c
-+++ b/arch/arm64/kvm/pgtable.c
-@@ -764,6 +764,12 @@ static int stage2_update_leaf_attrs(struct kvm_pgtable *pgt, u64 addr,
- 	return 0;
+diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+index 6b4479057df6..30ade01cb179 100644
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -1310,27 +1310,7 @@ static void  stage2_wp_p4ds(struct kvm_s2_mmu *mmu, pgd_t *pgd,
+ static void stage2_wp_range(struct kvm_s2_mmu *mmu, phys_addr_t addr, phys_addr_t end)
+ {
+ 	struct kvm *kvm = mmu->kvm;
+-	pgd_t *pgd;
+-	phys_addr_t next;
+-
+-	pgd = mmu->pgd + stage2_pgd_index(kvm, addr);
+-	do {
+-		/*
+-		 * Release kvm_mmu_lock periodically if the memory region is
+-		 * large. Otherwise, we may see kernel panics with
+-		 * CONFIG_DETECT_HUNG_TASK, CONFIG_LOCKUP_DETECTOR,
+-		 * CONFIG_LOCKDEP. Additionally, holding the lock too long
+-		 * will also starve other vCPUs. We have to also make sure
+-		 * that the page tables are not freed while we released
+-		 * the lock.
+-		 */
+-		cond_resched_lock(&kvm->mmu_lock);
+-		if (!READ_ONCE(mmu->pgd))
+-			break;
+-		next = stage2_pgd_addr_end(kvm, addr, end);
+-		if (stage2_pgd_present(kvm, *pgd))
+-			stage2_wp_p4ds(mmu, pgd, addr, next);
+-	} while (pgd++, addr = next, addr != end);
++	stage2_apply_range_resched(kvm, addr, end, kvm_pgtable_stage2_wrprotect);
  }
  
-+int kvm_pgtable_stage2_wrprotect(void *cookie, u64 addr, u64 size)
-+{
-+	return stage2_update_leaf_attrs(cookie, addr, size, 0,
-+					KVM_PTE_LEAF_ATTR_LO_S2_S2AP_W, NULL);
-+}
-+
- kvm_pte_t kvm_pgtable_stage2_mkyoung(void *cookie, u64 addr)
- {
- 	kvm_pte_t pte = 0;
+ /**
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
