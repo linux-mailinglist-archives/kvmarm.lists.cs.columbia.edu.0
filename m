@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A76523359C
-	for <lists+kvmarm@lfdr.de>; Thu, 30 Jul 2020 17:35:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5322A23359E
+	for <lists+kvmarm@lfdr.de>; Thu, 30 Jul 2020 17:35:07 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D18EE4B4D3;
-	Thu, 30 Jul 2020 11:35:01 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F38B94B4B3;
+	Thu, 30 Jul 2020 11:35:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,40 +18,40 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9TNdel5e35k9; Thu, 30 Jul 2020 11:35:00 -0400 (EDT)
+	with ESMTP id zs+OBWb-CmLH; Thu, 30 Jul 2020 11:35:06 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CD08A4B4C6;
-	Thu, 30 Jul 2020 11:35:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 25BCB4B522;
+	Thu, 30 Jul 2020 11:35:05 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B55B04B3AB
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jul 2020 11:34:59 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B47A24B520
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jul 2020 11:35:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id DxjZ9zmYo6fk for <kvmarm@lists.cs.columbia.edu>;
- Thu, 30 Jul 2020 11:34:58 -0400 (EDT)
+ with ESMTP id Kyh7vZHfqbfy for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 30 Jul 2020 11:35:00 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id ABEA34B4F0
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jul 2020 11:34:58 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A5FB64B359
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jul 2020 11:35:00 -0400 (EDT)
 Received: from localhost.localdomain (236.31.169.217.in-addr.arpa
  [217.169.31.236])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 74A5722B49;
- Thu, 30 Jul 2020 15:34:56 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 6DA8520838;
+ Thu, 30 Jul 2020 15:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1596123298;
- bh=vCaNRWqwfgl6pffqz/R6cv3xROa61YkUyi1FE8SOKog=;
+ s=default; t=1596123300;
+ bh=pu0sUnTAfAWt7HdNnKDSz/kebO3KilDdXlxaLElGVYM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=htnuPvKkbpgu3bnbNERhB3yHNX1QyUs958gDig7gd/V55zvT46JBGAoloXBhXh99g
- HWK9xGt4w3fHrXgYsTTy3mTYPT0pnCa7QnI3WZGlrZXqa1/OfmqGrRklyL7uN77c48
- xgFJE+zajfH/5IMO9u2R94hPTRH2GXxL8Y8ergIs=
+ b=ESHqkzLuGck37AA1mZAR3PuXhjq6+VmKJXTKw6Ubsf6Sc4C+SYSbnBYe8A61rNUjt
+ XIr4Oe+j7T6xi9RUlcA5HiVrwjWwfWwQMzHqCz0s6VvO+X1tv9r9jQ17U5Zr5UkK7I
+ wu+SJZZmVRFnpC5T0KkN+3jUrN5q+ssCXZfZwV5k=
 From: Will Deacon <will@kernel.org>
 To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH 19/20] KVM: arm64: Remove unused 'pgd' field from 'struct
- kvm_s2_mmu'
-Date: Thu, 30 Jul 2020 16:34:05 +0100
-Message-Id: <20200730153406.25136-20-will@kernel.org>
+Subject: [PATCH 20/20] KVM: arm64: Don't constrain maximum IPA size based on
+ host configuration
+Date: Thu, 30 Jul 2020 16:34:06 +0100
+Message-Id: <20200730153406.25136-21-will@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200730153406.25136-1-will@kernel.org>
 References: <20200730153406.25136-1-will@kernel.org>
@@ -75,49 +75,74 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The stage-2 page-tables are entirely encapsulated by the 'pgt_cookie'
-field of 'struct kvm_s2_mmu', so remove the unused 'pgd' field.
+Now that the guest stage-2 page-tables are managed independently from
+the host stage-1 page-tables, we can avoid constraining the IPA size
+based on the host and instead limit it only based on the PARange field
+of the ID_AA64MMFR0 register.
 
 Cc: Marc Zyngier <maz@kernel.org>
 Cc: Quentin Perret <qperret@google.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 ---
- arch/arm64/include/asm/kvm_host.h | 1 -
- arch/arm64/kvm/mmu.c              | 2 --
- 2 files changed, 3 deletions(-)
+ arch/arm64/kvm/reset.c | 38 +++++---------------------------------
+ 1 file changed, 5 insertions(+), 33 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 072ab1fac98a..3763880dd47b 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -79,7 +79,6 @@ struct kvm_s2_mmu {
- 	 * for vEL1/EL0 with vHCR_EL2.VM == 0.  In that case, we use the
- 	 * canonical stage-2 page tables.
- 	 */
--	pgd_t		*pgd;
- 	phys_addr_t	pgd_phys;
- 	void		*pgt_cookie;
+diff --git a/arch/arm64/kvm/reset.c b/arch/arm64/kvm/reset.c
+index 92c3bba048ff..a0c3591286aa 100644
+--- a/arch/arm64/kvm/reset.c
++++ b/arch/arm64/kvm/reset.c
+@@ -335,7 +335,7 @@ u32 get_kvm_ipa_limit(void)
  
-diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 66af9c00b9ad..6351c2dfb63e 100644
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -397,7 +397,6 @@ int kvm_init_stage2_mmu(struct kvm *kvm, struct kvm_s2_mmu *mmu)
- 	mmu->kvm = kvm;
- 	mmu->pgt_cookie = cookie;
- 	mmu->pgd_phys = kvm_pgtable_get_pgd_phys(cookie);
--	mmu->pgd = __va(mmu->pgd_phys);
- 	mmu->vmid.vmid_gen = 0;
+ int kvm_set_ipa_limit(void)
+ {
+-	unsigned int ipa_max, pa_max, va_max, parange, tgran_2;
++	unsigned int parange, tgran_2;
+ 	u64 mmfr0;
+ 
+ 	mmfr0 = read_sanitised_ftr_reg(SYS_ID_AA64MMFR0_EL1);
+@@ -372,38 +372,10 @@ int kvm_set_ipa_limit(void)
+ 		break;
+ 	}
+ 
+-	pa_max = id_aa64mmfr0_parange_to_phys_shift(parange);
+-
+-	/* Clamp the IPA limit to the PA size supported by the kernel */
+-	ipa_max = (pa_max > PHYS_MASK_SHIFT) ? PHYS_MASK_SHIFT : pa_max;
+-	/*
+-	 * Since our stage2 table is dependent on the stage1 page table code,
+-	 * we must always honor the following condition:
+-	 *
+-	 *  Number of levels in Stage1 >= Number of levels in Stage2.
+-	 *
+-	 * So clamp the ipa limit further down to limit the number of levels.
+-	 * Since we can concatenate upto 16 tables at entry level, we could
+-	 * go upto 4bits above the maximum VA addressable with the current
+-	 * number of levels.
+-	 */
+-	va_max = PGDIR_SHIFT + PAGE_SHIFT - 3;
+-	va_max += 4;
+-
+-	if (va_max < ipa_max)
+-		ipa_max = va_max;
+-
+-	/*
+-	 * If the final limit is lower than the real physical address
+-	 * limit of the CPUs, report the reason.
+-	 */
+-	if (ipa_max < pa_max)
+-		pr_info("kvm: Limiting the IPA size due to kernel %s Address limit\n",
+-			(va_max < pa_max) ? "Virtual" : "Physical");
+-
+-	WARN(ipa_max < KVM_PHYS_SHIFT,
+-	     "KVM IPA limit (%d bit) is smaller than default size\n", ipa_max);
+-	kvm_ipa_limit = ipa_max;
++	kvm_ipa_limit = id_aa64mmfr0_parange_to_phys_shift(parange);
++	WARN(kvm_ipa_limit < KVM_PHYS_SHIFT,
++	     "KVM IPA limit (%d bit) is smaller than default size\n",
++	     kvm_ipa_limit);
+ 	kvm_info("IPA Size Limit: %dbits\n", kvm_ipa_limit);
  
  	return 0;
-@@ -478,7 +477,6 @@ void kvm_free_stage2_pgd(struct kvm_s2_mmu *mmu)
- 	spin_lock(&kvm->mmu_lock);
- 	cookie = mmu->pgt_cookie;
- 	if (cookie) {
--		mmu->pgd = NULL;
- 		mmu->pgd_phys = 0;
- 		mmu->pgt_cookie = NULL;
- 		free_percpu(mmu->last_vcpu_ran);
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
