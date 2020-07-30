@@ -2,10 +2,10 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B893233596
+	by mail.lfdr.de (Postfix) with ESMTP id 1635E233595
 	for <lists+kvmarm@lfdr.de>; Thu, 30 Jul 2020 17:34:54 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E010A4B4FB;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BE09C4B4EE;
 	Thu, 30 Jul 2020 11:34:53 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
@@ -18,40 +18,40 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id fEDv2RZ5DYGj; Thu, 30 Jul 2020 11:34:51 -0400 (EDT)
+	with ESMTP id k+NTdE4MkiVW; Thu, 30 Jul 2020 11:34:53 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 56D454B4FE;
-	Thu, 30 Jul 2020 11:34:51 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7611A4B489;
+	Thu, 30 Jul 2020 11:34:52 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6D0F84B51A
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jul 2020 11:34:49 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8B0BE4B439
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jul 2020 11:34:51 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 5V6hdDOD8kXp for <kvmarm@lists.cs.columbia.edu>;
- Thu, 30 Jul 2020 11:34:48 -0400 (EDT)
+ with ESMTP id 5YJS8gP2Uv98 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 30 Jul 2020 11:34:50 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7EFC54B4DE
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jul 2020 11:34:48 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 88A444B4C0
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jul 2020 11:34:50 -0400 (EDT)
 Received: from localhost.localdomain (236.31.169.217.in-addr.arpa
  [217.169.31.236])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 46866208A9;
- Thu, 30 Jul 2020 15:34:46 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 40B7622B42;
+ Thu, 30 Jul 2020 15:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1596123287;
- bh=ZdNue1e+38LJzrn6nycodEJrU6phVGlmi8JHb6gr5kQ=;
+ s=default; t=1596123289;
+ bh=fZtxzvhOzdyXaAUD31LH6x+TDWxF0GaTJ2KbdQyLKbc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=CtoSejyc5sCcrY4cDSJWvDUEqSh2JemsTsmIceQ1WzlJIlFCLnPStTZC9dnEoNPzB
- /kfpfqumVWy1/3yAmzHLpF+s6AfamFTI5pVhOj1+fdOOyFfob3vv6tb7qGbnQPFh3u
- VJRmsDGEVAzthSC7BTvLUFXXcwfF5pkqPgSomHws=
+ b=KB0czXdGBCexDuzVnPtg7/mCh6h7aT9IeEMov8rj1dzi1Aa1k9Vque37CLij0zfos
+ Kviy0vEeOQ2NUB5ZXKS0T/3ii4xtTFu1sK0HXpsiGExu2JVMerhtZYg/s+4bFMqRJx
+ 1ZOVzqOKORIMkvdUV7eDFX1oWcrcLmMUkWfCD9hQ=
 From: Will Deacon <will@kernel.org>
 To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH 14/20] KVM: arm64: Convert memslot cache-flushing code to
- generic page-table API
-Date: Thu, 30 Jul 2020 16:34:00 +0100
-Message-Id: <20200730153406.25136-15-will@kernel.org>
+Subject: [PATCH 15/20] KVM: arm64: Add support for relaxing stage-2 perms in
+ generic page-table code
+Date: Thu, 30 Jul 2020 16:34:01 +0100
+Message-Id: <20200730153406.25136-16-will@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200730153406.25136-1-will@kernel.org>
 References: <20200730153406.25136-1-will@kernel.org>
@@ -75,46 +75,76 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Quentin Perret <qperret@google.com>
-
-Convert stage2_flush_memslot() to call the kvm_pgtable_stage2_flush()
-function of the generic page-table code instead of walking the page-table
-directly.
+Add support for relaxing the permissions of a stage-2 mapping (i.e.
+adding additional permissions) to the generic page-table code.
 
 Cc: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Quentin Perret <qperret@google.com>
+Cc: Quentin Perret <qperret@google.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 ---
- arch/arm64/kvm/mmu.c | 13 +------------
- 1 file changed, 1 insertion(+), 12 deletions(-)
+ arch/arm64/include/asm/kvm_pgtable.h | 17 +++++++++++++++++
+ arch/arm64/kvm/pgtable.c             | 20 ++++++++++++++++++++
+ 2 files changed, 37 insertions(+)
 
-diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 30ade01cb179..bb2bf060a2ef 100644
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -483,21 +483,10 @@ static void stage2_flush_p4ds(struct kvm_s2_mmu *mmu, pgd_t *pgd,
- static void stage2_flush_memslot(struct kvm *kvm,
- 				 struct kvm_memory_slot *memslot)
- {
--	struct kvm_s2_mmu *mmu = &kvm->arch.mmu;
- 	phys_addr_t addr = memslot->base_gfn << PAGE_SHIFT;
- 	phys_addr_t end = addr + PAGE_SIZE * memslot->npages;
--	phys_addr_t next;
--	pgd_t *pgd;
--
--	pgd = mmu->pgd + stage2_pgd_index(kvm, addr);
--	do {
--		next = stage2_pgd_addr_end(kvm, addr, end);
--		if (!stage2_pgd_none(kvm, *pgd))
--			stage2_flush_p4ds(mmu, pgd, addr, next);
+diff --git a/arch/arm64/include/asm/kvm_pgtable.h b/arch/arm64/include/asm/kvm_pgtable.h
+index e4d99556a22f..36f0e9e88acd 100644
+--- a/arch/arm64/include/asm/kvm_pgtable.h
++++ b/arch/arm64/include/asm/kvm_pgtable.h
+@@ -198,6 +198,23 @@ kvm_pte_t kvm_pgtable_stage2_mkyoung(void *cookie, u64 addr);
+  */
+ kvm_pte_t kvm_pgtable_stage2_mkold(void *cookie, u64 addr);
  
--		if (next != end)
--			cond_resched_lock(&kvm->mmu_lock);
--	} while (pgd++, addr = next, addr != end);
-+	stage2_apply_range_resched(kvm, addr, end, kvm_pgtable_stage2_flush);
++/**
++ * kvm_pgtable_stage2_relax_perms() - Relax the permissions enforced by a
++ *				      page-table entry.
++ * @cookie:	Opaque cookie allocated by kvm_pgtable_stage2_alloc_cookie().
++ * @addr:	Intermediate physical address to identify the page-table entry.
++ * @prot:	Additional permissions to grant for the mapping.
++ *
++ * If there is a valid, leaf page-table entry used to translate @addr, then
++ * relax the permissions in that entry according to the read, write and
++ * execute permissions specified by @prot. No permissions are removed, and
++ * TLB invalidation is performed after updating the entry.
++ *
++ * Return: 0 on success, negative error code on failure.
++ */
++int kvm_pgtable_stage2_relax_perms(void *cookie, u64 addr,
++				   enum kvm_pgtable_prot prot);
++
+ /**
+  * kvm_pgtable_stage2_is_young() - Test whether a page-table entry has the
+  *				   access flag set.
+diff --git a/arch/arm64/kvm/pgtable.c b/arch/arm64/kvm/pgtable.c
+index eb41f162a36a..14d8a1b2c4c1 100644
+--- a/arch/arm64/kvm/pgtable.c
++++ b/arch/arm64/kvm/pgtable.c
+@@ -800,6 +800,26 @@ bool kvm_pgtable_stage2_is_young(void *cookie, u64 addr)
+ 	return !!(pte & KVM_PTE_LEAF_ATTR_LO_S2_AF);
  }
  
- /**
++int kvm_pgtable_stage2_relax_perms(void *cookie, u64 addr,
++				   enum kvm_pgtable_prot prot)
++{
++	int ret;
++	struct kvm_pgtable *pgt = cookie;
++	kvm_pte_t set = 0, clr = 0;
++
++	if (prot & KVM_PGTABLE_PROT_R)
++		set |= KVM_PTE_LEAF_ATTR_LO_S2_S2AP_R;
++
++	if (prot & KVM_PGTABLE_PROT_W)
++		set |= KVM_PTE_LEAF_ATTR_LO_S2_S2AP_W;
++
++	if (prot & KVM_PGTABLE_PROT_X)
++		clr |= KVM_PTE_LEAF_ATTR_HI_S2_XN;
++
++	ret = stage2_update_leaf_attrs(cookie, addr, 1, set, clr, NULL);
++	kvm_call_hyp(__kvm_tlb_flush_vmid_ipa, pgt->mmu, addr, 0);
++	return ret;
++}
+ 
+ static int stage2_flush_walker(u64 addr, u64 end, u32 level, kvm_pte_t *ptep,
+ 			       enum kvm_pgtable_walk_flags flag,
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
