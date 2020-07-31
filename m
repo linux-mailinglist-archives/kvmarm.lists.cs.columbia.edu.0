@@ -2,47 +2,47 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6841B23404B
-	for <lists+kvmarm@lfdr.de>; Fri, 31 Jul 2020 09:43:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4830523404F
+	for <lists+kvmarm@lfdr.de>; Fri, 31 Jul 2020 09:43:53 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 139254B3F0;
-	Fri, 31 Jul 2020 03:43:48 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F04064B519;
+	Fri, 31 Jul 2020 03:43:52 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=no
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id o-b2QRsk8o7L; Fri, 31 Jul 2020 03:43:47 -0400 (EDT)
+	with ESMTP id RoVu3j418TP5; Fri, 31 Jul 2020 03:43:52 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9E9D94B50F;
-	Fri, 31 Jul 2020 03:43:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BD7B64B4CA;
+	Fri, 31 Jul 2020 03:43:51 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9DB294B37C
- for <kvmarm@lists.cs.columbia.edu>; Fri, 31 Jul 2020 03:43:44 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 707BC4B385
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 31 Jul 2020 03:43:50 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id vwHS72yh5I2A for <kvmarm@lists.cs.columbia.edu>;
- Fri, 31 Jul 2020 03:43:43 -0400 (EDT)
-Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 56E184B36E
- for <kvmarm@lists.cs.columbia.edu>; Fri, 31 Jul 2020 03:43:38 -0400 (EDT)
-Received: from DGGEMS414-HUB.china.huawei.com (unknown [172.30.72.58])
- by Forcepoint Email with ESMTP id AC3D96735F1894E630EB;
- Fri, 31 Jul 2020 15:43:31 +0800 (CST)
+ with ESMTP id T+wctUgh3Y+R for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 31 Jul 2020 03:43:49 -0400 (EDT)
+Received: from huawei.com (szxga06-in.huawei.com [45.249.212.32])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 559824B30A
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 31 Jul 2020 03:43:47 -0400 (EDT)
+Received: from DGGEMS414-HUB.china.huawei.com (unknown [172.30.72.60])
+ by Forcepoint Email with ESMTP id BFA2E2378A2746313A8B;
+ Fri, 31 Jul 2020 15:43:36 +0800 (CST)
 Received: from DESKTOP-FPN2511.china.huawei.com (10.174.187.42) by
  DGGEMS414-HUB.china.huawei.com (10.3.19.214) with Microsoft SMTP Server id
- 14.3.487.0; Fri, 31 Jul 2020 15:43:25 +0800
+ 14.3.487.0; Fri, 31 Jul 2020 15:43:26 +0800
 From: Jingyi Wang <wangjingyi11@huawei.com>
 To: <drjones@redhat.com>, <kvm@vger.kernel.org>, <kvmarm@lists.cs.columbia.edu>
-Subject: [kvm-unit-tests PATCH v3 04/10] arm64: its: Handle its command queue
- wrapping
-Date: Fri, 31 Jul 2020 15:42:38 +0800
-Message-ID: <20200731074244.20432-5-wangjingyi11@huawei.com>
+Subject: [kvm-unit-tests PATCH v3 06/10] arm64: microbench: Allow each test to
+ specify its running times
+Date: Fri, 31 Jul 2020 15:42:40 +0800
+Message-ID: <20200731074244.20432-7-wangjingyi11@huawei.com>
 X-Mailer: git-send-email 2.14.1.windows.1
 In-Reply-To: <20200731074244.20432-1-wangjingyi11@huawei.com>
 References: <20200731074244.20432-1-wangjingyi11@huawei.com>
@@ -66,31 +66,85 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Because micro-bench may send a large number of ITS commands, we
-should handle ITS command queue wrapping as kernel instead of just
-failing the test.
+For some test in micro-bench can be time consuming, we add a
+micro-bench test parameter to allow each individual test to specify
+its running times.
 
 Signed-off-by: Jingyi Wang <wangjingyi11@huawei.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
 ---
- lib/arm64/gic-v3-its-cmd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arm/micro-bench.c | 27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
-diff --git a/lib/arm64/gic-v3-its-cmd.c b/lib/arm64/gic-v3-its-cmd.c
-index 2c208d1..34574f7 100644
---- a/lib/arm64/gic-v3-its-cmd.c
-+++ b/lib/arm64/gic-v3-its-cmd.c
-@@ -164,8 +164,9 @@ static struct its_cmd_block *its_allocate_entry(void)
+diff --git a/arm/micro-bench.c b/arm/micro-bench.c
+index 82f3c07..93bd855 100644
+--- a/arm/micro-bench.c
++++ b/arm/micro-bench.c
+@@ -22,8 +22,6 @@
+ #include <asm/gic.h>
+ #include <asm/gic-v3-its.h>
+ 
+-#define NTIMES (1U << 16)
+-
+ static u32 cntfrq;
+ 
+ static volatile bool irq_ready, irq_received;
+@@ -234,17 +232,18 @@ struct exit_test {
+ 	const char *name;
+ 	bool (*prep)(void);
+ 	void (*exec)(void);
++	u32 times;
+ 	bool run;
+ };
+ 
+ static struct exit_test tests[] = {
+-	{"hvc",			NULL,		hvc_exec,		true},
+-	{"mmio_read_user",	NULL,		mmio_read_user_exec,	true},
+-	{"mmio_read_vgic",	NULL,		mmio_read_vgic_exec,	true},
+-	{"eoi",			NULL,		eoi_exec,		true},
+-	{"ipi",			ipi_prep,	ipi_exec,		true},
+-	{"ipi_hw",		ipi_hw_prep,	ipi_exec,		true},
+-	{"lpi",			lpi_prep,	lpi_exec,		true},
++	{"hvc",			NULL,		hvc_exec,		65536,		true},
++	{"mmio_read_user",	NULL,		mmio_read_user_exec,	65536,		true},
++	{"mmio_read_vgic",	NULL,		mmio_read_vgic_exec,	65536,		true},
++	{"eoi",			NULL,		eoi_exec,		65536,		true},
++	{"ipi",			ipi_prep,	ipi_exec,		65536,		true},
++	{"ipi_hw",		ipi_hw_prep,	ipi_exec,		65536,		true},
++	{"lpi",			lpi_prep,	lpi_exec,		65536,		true},
+ };
+ 
+ struct ns_time {
+@@ -265,7 +264,7 @@ static void ticks_to_ns_time(uint64_t ticks, struct ns_time *ns_time)
+ 
+ static void loop_test(struct exit_test *test)
  {
- 	struct its_cmd_block *cmd;
+-	uint64_t start, end, total_ticks, ntimes = NTIMES;
++	uint64_t start, end, total_ticks, ntimes = 0;
+ 	struct ns_time total_ns, avg_ns;
  
--	assert((u64)its_data.cmd_write < (u64)its_data.cmd_base + SZ_64K);
- 	cmd = its_data.cmd_write++;
-+	if ((u64)its_data.cmd_write  == (u64)its_data.cmd_base + SZ_64K)
-+		its_data.cmd_write = its_data.cmd_base;
- 	return cmd;
- }
+ 	if (test->prep) {
+@@ -276,15 +275,17 @@ static void loop_test(struct exit_test *test)
+ 	}
+ 	isb();
+ 	start = read_sysreg(cntpct_el0);
+-	while (ntimes--)
++	while (ntimes < test->times) {
+ 		test->exec();
++		ntimes++;
++	}
+ 	isb();
+ 	end = read_sysreg(cntpct_el0);
  
+ 	total_ticks = end - start;
+ 	ticks_to_ns_time(total_ticks, &total_ns);
+-	avg_ns.ns = total_ns.ns / NTIMES;
+-	avg_ns.ns_frac = total_ns.ns_frac / NTIMES;
++	avg_ns.ns = total_ns.ns / ntimes;
++	avg_ns.ns_frac = total_ns.ns_frac / ntimes;
+ 
+ 	printf("%-30s%15" PRId64 ".%-15" PRId64 "%15" PRId64 ".%-15" PRId64 "\n",
+ 		test->name, total_ns.ns, total_ns.ns_frac, avg_ns.ns, avg_ns.ns_frac);
 -- 
 2.19.1
 
