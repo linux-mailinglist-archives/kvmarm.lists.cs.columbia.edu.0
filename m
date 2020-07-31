@@ -2,98 +2,52 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id EB08B233F4D
-	for <lists+kvmarm@lfdr.de>; Fri, 31 Jul 2020 08:45:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4EF6234048
+	for <lists+kvmarm@lfdr.de>; Fri, 31 Jul 2020 09:43:40 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 827944B449;
-	Fri, 31 Jul 2020 02:45:04 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 785684B388;
+	Fri, 31 Jul 2020 03:43:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id aEvpt3bFktat; Fri, 31 Jul 2020 02:45:04 -0400 (EDT)
+	with ESMTP id dgAeAJNn4vhm; Fri, 31 Jul 2020 03:43:39 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 66C834B459;
-	Fri, 31 Jul 2020 02:45:03 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 37FE74B4E6;
+	Fri, 31 Jul 2020 03:43:38 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1BA664B447
- for <kvmarm@lists.cs.columbia.edu>; Fri, 31 Jul 2020 02:45:02 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E79804B362
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 31 Jul 2020 03:43:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id OLLZflOdbiuW for <kvmarm@lists.cs.columbia.edu>;
- Fri, 31 Jul 2020 02:45:01 -0400 (EDT)
-Received: from us-smtp-delivery-1.mimecast.com (us-smtp-1.mimecast.com
- [207.211.31.81])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1325B4B439
- for <kvmarm@lists.cs.columbia.edu>; Fri, 31 Jul 2020 02:45:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1596177900;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=akcf5o31IxmDQVV9nGhhRCpgu422ncpTC7D3b7rqbA4=;
- b=KTxNMcbb+M3BiDFUP3MTUs52R6f5/LgzLO4WVApA/7IEjJazaqbvQ1rYhKw79jig5uwEOB
- C5oPB25BMMfm3u776OR1o8QXSfi32vTvF74xWryFVEoKfxeAukSTLdSVj3sxtzz7OgSBth
- SqW+m7950k3paJ6S5Fu5bp+IILF1jKQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-271-H4b3tlzpNteG5ktiq7Gbug-1; Fri, 31 Jul 2020 02:44:58 -0400
-X-MC-Unique: H4b3tlzpNteG5ktiq7Gbug-1
-Received: by mail-wm1-f70.google.com with SMTP id u14so1765417wml.0
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jul 2020 23:44:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=akcf5o31IxmDQVV9nGhhRCpgu422ncpTC7D3b7rqbA4=;
- b=YSTlGPgbhj73yM/9wMgk05/GjOi4KNfdSFlJzhqxK+BkSqwbQvavh94lXssKhyIe4M
- OeOENhzKroGdR7+V2t6NJlfTgaC29BgmcCkNScDzoWow9yFp53ndLLJT05s7N8U5y6PG
- 8vleQAYHGTnn6+PoVKc4Nzwez39QVrY4IiONVKsG/clzm9YvdWLy3EK0bfaBMOudsz9d
- qTBvZDkgEmPRU46rlXoHroYaamyV4Kwohi3cqT27AExQXQfzdqmUczFzPDM1eCwy79y2
- GQ1NQmUMLgVgNXkpCT0/yyVuiIgZBS8DEAnBJJRVL5ILsXO7dx1m+rYpbLjYHDJs+7Nm
- aPnw==
-X-Gm-Message-State: AOAM530TmIVmpiFeO9APFAmMv+SElSYp+M7brG3rKduCs2XSW9hIog9F
- /AyzONt5gwp3uayHZDc536ypTwFXt+tJX11vHKCjKpDC7VlaU6rSLpA9HNPDJVYW6XRNEnwSra+
- bBt60wsOrhLz/Te21saBciW8O
-X-Received: by 2002:a5d:4109:: with SMTP id l9mr2102414wrp.398.1596177897800; 
- Thu, 30 Jul 2020 23:44:57 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJxb5GRvfk7uYiQKiLNWu3grzIfY78jWIsuxWLgPwULOyAUG8/2c+Tmj75lzVnz9+VNZS5ExPA==
-X-Received: by 2002:a5d:4109:: with SMTP id l9mr2102394wrp.398.1596177897568; 
- Thu, 30 Jul 2020 23:44:57 -0700 (PDT)
-Received: from ?IPv6:2001:b07:6468:f312:90a5:f767:5f9f:3445?
- ([2001:b07:6468:f312:90a5:f767:5f9f:3445])
- by smtp.gmail.com with ESMTPSA id 32sm14850330wrh.18.2020.07.30.23.44.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Jul 2020 23:44:57 -0700 (PDT)
-Subject: Re: [Question] the check of ioeventfd collision in
- kvm_*assign_ioeventfd_idx
-To: Zhenyu Ye <yezhenyu2@huawei.com>
-References: <bbece68b-fb39-d599-9ba7-a8ee8be16525@huawei.com>
- <CABgObfbFXYodCeGWSnKw0j_n2-QLxpnD_Uyc5r-_ApXv=x+qmw@mail.gmail.com>
- <4aa75d90-f2d2-888c-8970-02a41f3733e4@huawei.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <cffcf9e1-6675-6815-ccfc-f48497ade818@redhat.com>
-Date: Fri, 31 Jul 2020 08:44:56 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+ with ESMTP id Idd0bslQfqq4 for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 31 Jul 2020 03:43:35 -0400 (EDT)
+Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3C7E04B36E
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 31 Jul 2020 03:43:35 -0400 (EDT)
+Received: from DGGEMS414-HUB.china.huawei.com (unknown [172.30.72.58])
+ by Forcepoint Email with ESMTP id B11D2A499CBE004B7632;
+ Fri, 31 Jul 2020 15:43:31 +0800 (CST)
+Received: from DESKTOP-FPN2511.china.huawei.com (10.174.187.42) by
+ DGGEMS414-HUB.china.huawei.com (10.3.19.214) with Microsoft SMTP Server id
+ 14.3.487.0; Fri, 31 Jul 2020 15:43:23 +0800
+From: Jingyi Wang <wangjingyi11@huawei.com>
+To: <drjones@redhat.com>, <kvm@vger.kernel.org>, <kvmarm@lists.cs.columbia.edu>
+Subject: [kvm-unit-tests PATCH v3 00/10] arm/arm64: Add IPI/LPI/vtimer latency
+ test
+Date: Fri, 31 Jul 2020 15:42:34 +0800
+Message-ID: <20200731074244.20432-1-wangjingyi11@huawei.com>
+X-Mailer: git-send-email 2.14.1.windows.1
 MIME-Version: 1.0
-In-Reply-To: <4aa75d90-f2d2-888c-8970-02a41f3733e4@huawei.com>
-Content-Language: en-US
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Cc: gleb@redhat.com, kvm@vger.kernel.org, "S. Tsirkin,
- Michael" <mst@redhat.com>, linux-kernel@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+X-Originating-IP: [10.174.187.42]
+X-CFilter-Loop: Reflected
+Cc: maz@kernel.org, prime.zeng@hisilicon.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -110,59 +64,50 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 31/07/20 08:39, Zhenyu Ye wrote:
-> On 2020/7/31 2:03, Paolo Bonzini wrote:
->> Yes, I think it's not needed. Probably the deassign check can be turned into an assertion?
->>
->> Paolo
->>
-> 
-> I think we can do this in the same function, and turnt he check of
-> p->eventfd into assertion in kvm_deassign_ioeventfd_idx(). Just like:
-> 
-> ---8<---
-> static inline struct _ioeventfd *
-> get_ioeventfd(struct kvm *kvm, enum kvm_bus bus_idx,
->               struct kvm_ioeventfd *args)
-> {
->         static struct _ioeventfd *_p;
->         bool wildcard = !(args->flags & KVM_IOEVENTFD_FLAG_DATAMATCH);
-> 
->         list_for_each_entry(_p, &kvm->ioeventfds, list)
->                 if (_p->bus_idx == bus_idx &&
->                     _p->addr == args->addr &&
->                     (!_p->length || !args->len ||
->                      (_p->length == args->len &&
->                       (_p->wildcard || wildcard ||
->                        _p->datamatch == args->datamatch))))
->                         return _p;
-> 
->         return NULL;
-> }
-> 
-> kvm_deassign_ioeventfd_idx() {
-> 	...
-> 	p = get_ioeventfd(kvm, bus_idx, args);
-> 	if (p) {
-> 		assert(p->eventfd == eventfd);
-> 		...
-> 	}
-> 
-> ---8<----
-> 
-> This may be easier to understand (keep the same logic in assign/deassign).
+With the development of arm gic architecture, we think it will be useful
+to add some performance test in kut to measure the cost of interrupts.
+In this series, we add GICv4.1 support for ipi latency test and
+implement LPI/vtimer latency test.
 
-I think you should also warn if:
+This series of patches has been tested on GICv4.1 supported hardware.
 
-1) p->length != args->len
+Note:
+Based on patch "arm/arm64: timer: Extract irqs at setup time",
+https://www.spinics.net/lists/kvm-arm/msg41425.html
 
-2) p->wildcard != args->wildcard if p->length
+* From v2:
+  - Code and commit message cleanup
+  - Clear nr_ipi_received before ipi_exec() thanks for Tao Zeng's review
+  - rebase the patch "Add vtimer latency test" on Andrew's patch
+  - Add test->post() to get actual PPI latency
 
-3) p->datamatch != args->datamatch if p->length && !p->wildcard
+* From v1:
+  - Fix spelling mistake
+  - Use the existing interface to inject hw sgi to simply the logic
+  - Add two separate patches to limit the running times and time cost
+    of each individual micro-bench test
 
-but yeah it sounds like a plan.
+Jingyi Wang (10):
+  arm64: microbench: get correct ipi received num
+  arm64: microbench: Generalize ipi test names
+  arm64: microbench: gic: Add ipi latency test for gicv4.1 support kvm
+  arm64: its: Handle its command queue wrapping
+  arm64: microbench: its: Add LPI latency test
+  arm64: microbench: Allow each test to specify its running times
+  arm64: microbench: Add time limit for each individual test
+  arm64: microbench: Add vtimer latency test
+  arm64: microbench: Add test->post() to further process test results
+  arm64: microbench: Add timer_post() to get actual PPI latency
 
-Paolo
+ arm/micro-bench.c          | 256 ++++++++++++++++++++++++++++++-------
+ lib/arm/asm/gic-v3.h       |   3 +
+ lib/arm/asm/gic.h          |   1 +
+ lib/arm64/gic-v3-its-cmd.c |   3 +-
+ 4 files changed, 219 insertions(+), 44 deletions(-)
+
+-- 
+2.19.1
+
 
 _______________________________________________
 kvmarm mailing list
