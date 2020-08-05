@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B79E23CE84
-	for <lists+kvmarm@lfdr.de>; Wed,  5 Aug 2020 20:27:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D079F23CE8B
+	for <lists+kvmarm@lfdr.de>; Wed,  5 Aug 2020 20:27:22 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F3EC34B5B9;
-	Wed,  5 Aug 2020 14:27:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 83F824B5B9;
+	Wed,  5 Aug 2020 14:27:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,45 +18,44 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bdfs8C6aLqLM; Wed,  5 Aug 2020 14:27:08 -0400 (EDT)
+	with ESMTP id b4uqgduMeUFN; Wed,  5 Aug 2020 14:27:22 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3E25B4B61C;
-	Wed,  5 Aug 2020 14:27:04 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 13C764B651;
+	Wed,  5 Aug 2020 14:27:18 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CCE974B45F
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:27:02 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D7D594B5B9
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:27:16 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id bjdRiXXRKvqH for <kvmarm@lists.cs.columbia.edu>;
- Wed,  5 Aug 2020 14:27:01 -0400 (EDT)
+ with ESMTP id 5rN9Z7ClrOzi for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  5 Aug 2020 14:27:15 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 598DD4B5B9
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:26:59 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8B8EE4B4BA
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:27:12 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 8518422E01;
- Wed,  5 Aug 2020 18:26:58 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id B2C7B230FF;
+ Wed,  5 Aug 2020 18:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1596652018;
- bh=qWbqjPlIPwkyEPb+J2ieeFiKJ1fw2t8X5TuAlqMXn4o=;
+ s=default; t=1596652031;
+ bh=+La9Q4eY0rPcjTlQyZQYOR9azky57a4bBmE93pWcyX4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=vMLT1zygplaGzq1ry484nkOe49QbNtJysFnQnA0VGRPDz5QKI9WoHaBh6OIvAKxZC
- ZSlMV1dLmyWCOjtZl/foqv2sJBoKSjYZTwiw1+hqY+63NS3fSREa+GpzxQ+CrXZKwe
- 2c1EXdR1vs50js27ni2fL2Vl3jAngS9wSIs4xUOA=
+ b=HlXdRpcs48t59SHxb4RDRmvkZqF5v8kOKSjqZKr94qPDHHHBpJgtKKkU/SinWYj0I
+ UvDtbKWy5Qmq0rcTW6KZWRMblLMVBu2XksYzUzgrm65zdASnSfpzKPsUjesMIK3zJF
+ SqHqZnGInNM+EANc8t6eCOMwzoGn3x7gND9JxqIU=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1k3Ng0-0004w9-5p; Wed, 05 Aug 2020 18:58:08 +0100
+ id 1k3Ng1-0004w9-29; Wed, 05 Aug 2020 18:58:09 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 51/56] KVM: arm64: Ensure that all nVHE hyp code is in
- .hyp.text
-Date: Wed,  5 Aug 2020 18:56:55 +0100
-Message-Id: <20200805175700.62775-52-maz@kernel.org>
+Subject: [PATCH 52/56] KVM: arm: Add trace name for ARM_NISV
+Date: Wed,  5 Aug 2020 18:56:56 +0100
+Message-Id: <20200805175700.62775-53-maz@kernel.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200805175700.62775-1-maz@kernel.org>
 References: <20200805175700.62775-1-maz@kernel.org>
@@ -93,78 +92,39 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: David Brazdil <dbrazdil@google.com>
+From: Alexander Graf <graf@amazon.com>
 
-Some compilers may put a subset of generated functions into '.text.*'
-ELF sections and the linker may leverage this division to optimize ELF
-layout. Unfortunately, the recently introduced HYPCOPY command assumes
-that all executable code (with the exception of specialized sections
-such as '.hyp.idmap.text') is in the '.text' section. If this
-assumption is broken, code in '.text.*' will be merged into kernel
-proper '.text' instead of the '.hyp.text' that is mapped in EL2.
+Commit c726200dd106d ("KVM: arm/arm64: Allow reporting non-ISV data aborts
+to userspace") introduced a mechanism to deflect MMIO traffic the kernel
+can not handle to user space. For that, it introduced a new exit reason.
 
-To ensure that this cannot happen, insert an OBJDUMP assertion into
-HYPCOPY. The command dumps a list of ELF sections in the input object
-file and greps for '.text.'. If found, compilation fails. Tested with
-both binutils' and LLVM's objdump (the output format is different).
+However, it did not update the trace point array that gives human readable
+names to these exit reasons inside the trace log.
 
-GCC offers '-fno-reorder-functions' to disable this behaviour. Select
-the flag if it is available. From inspection of GCC source (latest
-Git in July 2020), this flag does force all code into '.text'.
-By default, GCC uses profile data, heuristics and attributes to select
-a subsection.
+Let's fix that up after the fact, so that trace logs are pretty even when
+we get user space MMIO traps on ARM.
 
-LLVM/Clang currently does not have a similar optimization pass. It can
-place static constructors into '.text.startup' and it's optimizer can
-be provided with profile data to reorder hot/cold functions. Neither
-of these is applicable to nVHE hyp code. If this changes in the future,
-the OBJDUMP assertion should alert users to the problem.
-
-Signed-off-by: David Brazdil <dbrazdil@google.com>
+Fixes: c726200dd106d ("KVM: arm/arm64: Allow reporting non-ISV data aborts to userspace")
+Signed-off-by: Alexander Graf <graf@amazon.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20200730132519.48787-1-dbrazdil@google.com
+Link: https://lore.kernel.org/r/20200730094441.18231-1-graf@amazon.com
 ---
- arch/arm64/kvm/hyp/nvhe/Makefile | 26 +++++++++++++++++++++++---
- 1 file changed, 23 insertions(+), 3 deletions(-)
+ include/trace/events/kvm.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/hyp/nvhe/Makefile b/arch/arm64/kvm/hyp/nvhe/Makefile
-index 0b34414557d6..aef76487edc2 100644
---- a/arch/arm64/kvm/hyp/nvhe/Makefile
-+++ b/arch/arm64/kvm/hyp/nvhe/Makefile
-@@ -20,10 +20,30 @@ $(obj)/%.hyp.tmp.o: $(src)/%.S FORCE
- $(obj)/%.hyp.o: $(obj)/%.hyp.tmp.o FORCE
- 	$(call if_changed,hypcopy)
+diff --git a/include/trace/events/kvm.h b/include/trace/events/kvm.h
+index 2c735a3e6613..9417a34aad08 100644
+--- a/include/trace/events/kvm.h
++++ b/include/trace/events/kvm.h
+@@ -17,7 +17,7 @@
+ 	ERSN(NMI), ERSN(INTERNAL_ERROR), ERSN(OSI), ERSN(PAPR_HCALL),	\
+ 	ERSN(S390_UCONTROL), ERSN(WATCHDOG), ERSN(S390_TSCH), ERSN(EPR),\
+ 	ERSN(SYSTEM_EVENT), ERSN(S390_STSI), ERSN(IOAPIC_EOI),          \
+-	ERSN(HYPERV)
++	ERSN(HYPERV), ERSN(ARM_NISV)
  
-+# Disable reordering functions by GCC (enabled at -O2).
-+# This pass puts functions into '.text.*' sections to aid the linker
-+# in optimizing ELF layout. See HYPCOPY comment below for more info.
-+ccflags-y += $(call cc-option,-fno-reorder-functions)
-+
-+# The HYPCOPY command uses `objcopy` to prefix all ELF symbol names
-+# and relevant ELF section names to avoid clashes with VHE code/data.
-+#
-+# Hyp code is assumed to be in the '.text' section of the input object
-+# files (with the exception of specialized sections such as
-+# '.hyp.idmap.text'). This assumption may be broken by a compiler that
-+# divides code into sections like '.text.unlikely' so as to optimize
-+# ELF layout. HYPCOPY checks that no such sections exist in the input
-+# using `objdump`, otherwise they would be linked together with other
-+# kernel code and not memory-mapped correctly at runtime.
- quiet_cmd_hypcopy = HYPCOPY $@
--      cmd_hypcopy = $(OBJCOPY)	--prefix-symbols=__kvm_nvhe_		\
--				--rename-section=.text=.hyp.text	\
--				$< $@
-+      cmd_hypcopy =							\
-+	if $(OBJDUMP) -h $< | grep -F '.text.'; then			\
-+		echo "$@: function reordering not supported in nVHE hyp code" >&2; \
-+		/bin/false;						\
-+	fi;								\
-+	$(OBJCOPY) --prefix-symbols=__kvm_nvhe_				\
-+		   --rename-section=.text=.hyp.text			\
-+		   $< $@
- 
- # Remove ftrace and Shadow Call Stack CFLAGS.
- # This is equivalent to the 'notrace' and '__noscs' annotations.
+ TRACE_EVENT(kvm_userspace_exit,
+ 	    TP_PROTO(__u32 reason, int errno),
 -- 
 2.27.0
 
