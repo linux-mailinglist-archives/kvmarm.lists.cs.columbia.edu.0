@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AAA423CDE0
-	for <lists+kvmarm@lfdr.de>; Wed,  5 Aug 2020 19:57:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7CA123CDE1
+	for <lists+kvmarm@lfdr.de>; Wed,  5 Aug 2020 19:57:26 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2E7AA4B578;
-	Wed,  5 Aug 2020 13:57:25 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 55D624B5D6;
+	Wed,  5 Aug 2020 13:57:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,44 +18,44 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TpczPYiEDhBQ; Wed,  5 Aug 2020 13:57:24 -0400 (EDT)
+	with ESMTP id ChoxwZh3d31b; Wed,  5 Aug 2020 13:57:25 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 14D8E4B579;
-	Wed,  5 Aug 2020 13:57:22 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2B1A64B5F4;
+	Wed,  5 Aug 2020 13:57:23 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E75334B397
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 13:57:20 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B33AA4B587
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 13:57:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id iSKmqOLGGCss for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id y72jOA6tsi8y for <kvmarm@lists.cs.columbia.edu>;
  Wed,  5 Aug 2020 13:57:20 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 677C14B56C
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 13:57:18 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 621434B558
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 13:57:19 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 85E9122CBB;
- Wed,  5 Aug 2020 17:57:17 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 72F3D22CE3;
+ Wed,  5 Aug 2020 17:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1596650237;
- bh=SsItzmgNSUJmbU2ivN3tQvkpomzT92B3KJRadAxB4FM=;
+ s=default; t=1596650238;
+ bh=fAuT8VTgA3l5MxpGKHZ5lW2sGaO4vZ74wkEmAKAFtrA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=eRHZNbIPt+QywYxWJXmgi5qQTsm0ZEBXwWhf0Zhoog44OKuVGLY5QohJbXrDn4mBe
- H54ylpMsTikcPbcadEY61BoG3egxb91uctvvh4aazBuZZ1H36q3YyKGmzl8Crv7C95
- 5nVqqKvd+4A4SdToplX2JpP8k+wNkP9V39quwxu8=
+ b=vcUqq6D/d3qBogzUqxDEU1yrJft154JBCm9/Iv2SxFCKg6SWwNAnaoSxtp2W9u4Hi
+ 1LHIcd1mWTG2aLoNfI7y9EjiiC3kqdt3YfEY5jdj3KebOg9wC3TqfaAHRqVXwGYtis
+ DgzUWUvS16QrvvGac+L0RzYqg7Yp+BFj7y7qV2mg=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1k3NfA-0004w9-3y; Wed, 05 Aug 2020 18:57:16 +0100
+ id 1k3NfA-0004w9-Vm; Wed, 05 Aug 2020 18:57:17 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 05/56] KVM: arm64: Simplify PtrAuth alternative patching
-Date: Wed,  5 Aug 2020 18:56:09 +0100
-Message-Id: <20200805175700.62775-6-maz@kernel.org>
+Subject: [PATCH 06/56] KVM: arm64: Allow in-atomic injection of SPIs
+Date: Wed,  5 Aug 2020 18:56:10 +0100
+Message-Id: <20200805175700.62775-7-maz@kernel.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200805175700.62775-1-maz@kernel.org>
 References: <20200805175700.62775-1-maz@kernel.org>
@@ -92,79 +92,90 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-We currently decide to execute the PtrAuth save/restore code based
-on a set of branches that evaluate as (ARM64_HAS_ADDRESS_AUTH_ARCH ||
-ARM64_HAS_ADDRESS_AUTH_IMP_DEF). This can be easily replaced by
-a much simpler test as the ARM64_HAS_ADDRESS_AUTH capability is
-exactly this expression.
+On a system that uses SPIs to implement MSIs (as it would be
+the case on a GICv2 system exposing a GICv2m to its guests),
+we deny the possibility of injecting SPIs on the in-atomic
+fast-path.
 
-Suggested-by: Mark Rutland <mark.rutland@arm.com>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
+This results in a very large amount of context-switches
+(roughly equivalent to twice the interrupt rate) on the host,
+and suboptimal performance for the guest (as measured with
+a test workload involving a virtio interface backed by vhost-net).
+Given that GICv2 systems are usually on the low-end of the spectrum
+performance wise, they could do without the aggravation.
+
+We solved this for GICv3+ITS by having a translation cache. But
+SPIs do not need any extra infrastructure, and can be immediately
+injected in the virtual distributor as the locking is already
+heavy enough that we don't need to worry about anything.
+
+This halves the number of context switches for the same workload.
+
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/kvm_ptrauth.h | 30 ++++++++++------------------
- 1 file changed, 11 insertions(+), 19 deletions(-)
+ arch/arm64/kvm/vgic/vgic-irqfd.c | 24 +++++++++++++++++++-----
+ arch/arm64/kvm/vgic/vgic-its.c   |  3 +--
+ 2 files changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_ptrauth.h b/arch/arm64/include/asm/kvm_ptrauth.h
-index f1830173fa9e..0ddf98c3ba9f 100644
---- a/arch/arm64/include/asm/kvm_ptrauth.h
-+++ b/arch/arm64/include/asm/kvm_ptrauth.h
-@@ -61,44 +61,36 @@
+diff --git a/arch/arm64/kvm/vgic/vgic-irqfd.c b/arch/arm64/kvm/vgic/vgic-irqfd.c
+index d8cdfea5cc96..79f8899b234c 100644
+--- a/arch/arm64/kvm/vgic/vgic-irqfd.c
++++ b/arch/arm64/kvm/vgic/vgic-irqfd.c
+@@ -100,19 +100,33 @@ int kvm_set_msi(struct kvm_kernel_irq_routing_entry *e,
  
- /*
-  * Both ptrauth_switch_to_guest and ptrauth_switch_to_host macros will
-- * check for the presence of one of the cpufeature flag
-- * ARM64_HAS_ADDRESS_AUTH_ARCH or ARM64_HAS_ADDRESS_AUTH_IMP_DEF and
-+ * check for the presence ARM64_HAS_ADDRESS_AUTH, which is defined as
-+ * (ARM64_HAS_ADDRESS_AUTH_ARCH || ARM64_HAS_ADDRESS_AUTH_IMP_DEF) and
-  * then proceed ahead with the save/restore of Pointer Authentication
-- * key registers.
-+ * key registers if enabled for the guest.
+ /**
+  * kvm_arch_set_irq_inatomic: fast-path for irqfd injection
+- *
+- * Currently only direct MSI injection is supported.
   */
- .macro ptrauth_switch_to_guest g_ctxt, reg1, reg2, reg3
--alternative_if ARM64_HAS_ADDRESS_AUTH_ARCH
--	b	1000f
-+alternative_if_not ARM64_HAS_ADDRESS_AUTH
-+	b	.L__skip_switch\@
- alternative_else_nop_endif
--alternative_if_not ARM64_HAS_ADDRESS_AUTH_IMP_DEF
--	b	1001f
--alternative_else_nop_endif
--1000:
- 	mrs	\reg1, hcr_el2
- 	and	\reg1, \reg1, #(HCR_API | HCR_APK)
--	cbz	\reg1, 1001f
-+	cbz	\reg1, .L__skip_switch\@
- 	add	\reg1, \g_ctxt, #CPU_APIAKEYLO_EL1
- 	ptrauth_restore_state	\reg1, \reg2, \reg3
--1001:
-+.L__skip_switch\@:
- .endm
+ int kvm_arch_set_irq_inatomic(struct kvm_kernel_irq_routing_entry *e,
+ 			      struct kvm *kvm, int irq_source_id, int level,
+ 			      bool line_status)
+ {
+-	if (e->type == KVM_IRQ_ROUTING_MSI && vgic_has_its(kvm) && level) {
++	if (!level)
++		return -EWOULDBLOCK;
++
++	switch (e->type) {
++	case KVM_IRQ_ROUTING_MSI: {
+ 		struct kvm_msi msi;
  
- .macro ptrauth_switch_to_host g_ctxt, h_ctxt, reg1, reg2, reg3
--alternative_if ARM64_HAS_ADDRESS_AUTH_ARCH
--	b	2000f
--alternative_else_nop_endif
--alternative_if_not ARM64_HAS_ADDRESS_AUTH_IMP_DEF
--	b	2001f
-+alternative_if_not ARM64_HAS_ADDRESS_AUTH
-+	b	.L__skip_switch\@
- alternative_else_nop_endif
--2000:
- 	mrs	\reg1, hcr_el2
- 	and	\reg1, \reg1, #(HCR_API | HCR_APK)
--	cbz	\reg1, 2001f
-+	cbz	\reg1, .L__skip_switch\@
- 	add	\reg1, \g_ctxt, #CPU_APIAKEYLO_EL1
- 	ptrauth_save_state	\reg1, \reg2, \reg3
- 	add	\reg1, \h_ctxt, #CPU_APIAKEYLO_EL1
- 	ptrauth_restore_state	\reg1, \reg2, \reg3
- 	isb
--2001:
-+.L__skip_switch\@:
- .endm
++		if (!vgic_has_its(kvm))
++			break;
++
+ 		kvm_populate_msi(e, &msi);
+-		if (!vgic_its_inject_cached_translation(kvm, &msi))
+-			return 0;
++		return vgic_its_inject_cached_translation(kvm, &msi);
++	}
++
++	case KVM_IRQ_ROUTING_IRQCHIP:
++		/*
++		 * Injecting SPIs is always possible in atomic context
++		 * as long as the damn vgic is initialized.
++		 */
++		if (unlikely(!vgic_initialized(kvm)))
++			break;
++		return vgic_irqfd_set_irq(e, kvm, irq_source_id, 1, line_status);
+ 	}
  
- #else /* !CONFIG_ARM64_PTR_AUTH */
+ 	return -EWOULDBLOCK;
+diff --git a/arch/arm64/kvm/vgic/vgic-its.c b/arch/arm64/kvm/vgic/vgic-its.c
+index c012a52b19f5..40cbaca81333 100644
+--- a/arch/arm64/kvm/vgic/vgic-its.c
++++ b/arch/arm64/kvm/vgic/vgic-its.c
+@@ -757,9 +757,8 @@ int vgic_its_inject_cached_translation(struct kvm *kvm, struct kvm_msi *msi)
+ 
+ 	db = (u64)msi->address_hi << 32 | msi->address_lo;
+ 	irq = vgic_its_check_cache(kvm, db, msi->devid, msi->data);
+-
+ 	if (!irq)
+-		return -1;
++		return -EWOULDBLOCK;
+ 
+ 	raw_spin_lock_irqsave(&irq->irq_lock, flags);
+ 	irq->pending_latch = true;
 -- 
 2.27.0
 
