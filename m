@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E2E8623CDE2
-	for <lists+kvmarm@lfdr.de>; Wed,  5 Aug 2020 19:57:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62CAA23CDE3
+	for <lists+kvmarm@lfdr.de>; Wed,  5 Aug 2020 19:57:28 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 745294B622;
-	Wed,  5 Aug 2020 13:57:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 17FAC4B5FA;
+	Wed,  5 Aug 2020 13:57:28 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,44 +18,44 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id W-NctgZd+KMb; Wed,  5 Aug 2020 13:57:26 -0400 (EDT)
+	with ESMTP id P3fNKkwl7GCS; Wed,  5 Aug 2020 13:57:27 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 429574B5A6;
-	Wed,  5 Aug 2020 13:57:24 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5E6B24B5C8;
+	Wed,  5 Aug 2020 13:57:26 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 43A344B571
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 13:57:23 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C8CAE4B578
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 13:57:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 8Fw69vTo2Ky9 for <kvmarm@lists.cs.columbia.edu>;
- Wed,  5 Aug 2020 13:57:22 -0400 (EDT)
+ with ESMTP id v-NnnrX4oBnU for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  5 Aug 2020 13:57:23 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 57CDE4B578
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 13:57:20 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1A58C4B397
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 13:57:21 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 57C9A22D02;
- Wed,  5 Aug 2020 17:57:19 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 36E1722D04;
+ Wed,  5 Aug 2020 17:57:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1596650239;
- bh=3Tfkvqoo8GFPZXEgY5NJ8zdwN9kP0ftFGO3mLvEnD1E=;
+ s=default; t=1596650240;
+ bh=7ArqvSK8VUGJgeX1OnhoTSQ+a7BydokvwxYLyhHIlMg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=nLgBjoP4hI7Bg1AKLcAd0tELZnTTuzYpHe0aqkyEg3E+supjbL5ueXv7gdoBpajeP
- MyCDmGjbD4OGxJRYZvFJwSHTj9joBNnUyo7pYRt8iwgJf4Nb8kW0FJSaZvBd/OzqR9
- DONem/7ea0Ys7hS+X5XswKwOv/z4s7z1lnoLtKfM=
+ b=G7uMxOjz8gkR3xFfhtpD82P2khC6WFYs2XifyJqv9j8pemgssW4y6+fB58SANSeRP
+ JQ77MaMaQlXFEK+d4DGnHaObDprDOQn/gb6w67MsmTJ7sTtzuZcgRbP8v8yaA1xICu
+ VgM7p/Ls/izszv+/8S5ybw8tmp00XBEVrDma7XzA=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1k3NfB-0004w9-R4; Wed, 05 Aug 2020 18:57:17 +0100
+ id 1k3NfC-0004w9-LP; Wed, 05 Aug 2020 18:57:18 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 07/56] arm64: kvm: Remove kern_hyp_va from get_vcpu_ptr
-Date: Wed,  5 Aug 2020 18:56:11 +0100
-Message-Id: <20200805175700.62775-8-maz@kernel.org>
+Subject: [PATCH 08/56] KVM: arm64: Drop the target_table[] indirection
+Date: Wed,  5 Aug 2020 18:56:12 +0100
+Message-Id: <20200805175700.62775-9-maz@kernel.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200805175700.62775-1-maz@kernel.org>
 References: <20200805175700.62775-1-maz@kernel.org>
@@ -92,37 +92,136 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Andrew Scull <ascull@google.com>
+From: James Morse <james.morse@arm.com>
 
-get_vcpu_ptr is an assembly accessor for the percpu value
-kvm_host_data->host_ctxt.__hyp_running_vcpu. kern_hyp_va only applies to
-nVHE however __hyp_running_vcpu is always assigned a pointer that has
-already had kern_hyp_va applied in __kvm_vcpu_run_nvhe.
+KVM for 32bit arm had a get/set target mechanism to allow for
+micro-architecture differences that are visible in system registers
+to be described.
 
-kern_hyp_va is currently idempotent as it just masks and inserts the
-tag, but this could change in future and the second application is
-unnecessary.
+KVM's user-space can query the supported targets for a CPU, and
+create vCPUs for that target. The target can override the handling
+of system registers to provide different reset or RES0 behaviour.
+On 32bit arm this was used to provide different ACTLR reset values
+for A7 and A15.
 
-Signed-off-by: Andrew Scull <ascull@google.com>
+On 64bit arm, the first few CPUs out of the gate used this mechanism,
+before it was deemed redundant in commit bca556ac468a ("arm64/kvm:
+Add generic v8 KVM target"). All future CPUs use the
+KVM_ARM_TARGET_GENERIC_V8 target.
+
+The 64bit target_table[] stuff exists to preserve the ABI to
+user-space. As all targets registers genericv8_target_table, there
+is no reason to look the target up.
+
+Until we can merge genericv8_target_table with the main sys_regs
+array, kvm_register_target_sys_reg_table() becomes
+kvm_check_target_sys_reg_table(), which uses BUG_ON() in keeping
+with the other callers in this file.
+
+Signed-off-by: James Morse <james.morse@arm.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: James Morse <james.morse@arm.com>
-Link: https://lore.kernel.org/r/20200618093616.164413-1-ascull@google.com
+Link: https://lore.kernel.org/r/20200622113317.20477-2-james.morse@arm.com
 ---
- arch/arm64/include/asm/kvm_asm.h | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/include/asm/kvm_coproc.h  |  3 +--
+ arch/arm64/kvm/sys_regs.c            | 16 ++++------------
+ arch/arm64/kvm/sys_regs.h            |  2 ++
+ arch/arm64/kvm/sys_regs_generic_v8.c | 15 ++-------------
+ 4 files changed, 9 insertions(+), 27 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_asm.h b/arch/arm64/include/asm/kvm_asm.h
-index 352aaebf4198..ac71d0939f2e 100644
---- a/arch/arm64/include/asm/kvm_asm.h
-+++ b/arch/arm64/include/asm/kvm_asm.h
-@@ -143,7 +143,6 @@ extern char __smccc_workaround_1_smc[__SMCCC_WORKAROUND_1_SMC_SZ];
- .macro get_vcpu_ptr vcpu, ctxt
- 	get_host_ctxt \ctxt, \vcpu
- 	ldr	\vcpu, [\ctxt, #HOST_CONTEXT_VCPU]
--	kern_hyp_va	\vcpu
- .endm
+diff --git a/arch/arm64/include/asm/kvm_coproc.h b/arch/arm64/include/asm/kvm_coproc.h
+index 0185ee8b8b5e..4bf0d6d05e0f 100644
+--- a/arch/arm64/include/asm/kvm_coproc.h
++++ b/arch/arm64/include/asm/kvm_coproc.h
+@@ -24,8 +24,7 @@ struct kvm_sys_reg_target_table {
+ 	struct kvm_sys_reg_table table32;
+ };
  
- #endif
+-void kvm_register_target_sys_reg_table(unsigned int target,
+-				       struct kvm_sys_reg_target_table *table);
++void kvm_check_target_sys_reg_table(struct kvm_sys_reg_target_table *table);
+ 
+ int kvm_handle_cp14_load_store(struct kvm_vcpu *vcpu, struct kvm_run *run);
+ int kvm_handle_cp14_32(struct kvm_vcpu *vcpu, struct kvm_run *run);
+diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+index baf5ce9225ce..6333a7cd92d3 100644
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -2109,17 +2109,10 @@ static int check_sysreg_table(const struct sys_reg_desc *table, unsigned int n,
+ 	return 0;
+ }
+ 
+-/* Target specific emulation tables */
+-static struct kvm_sys_reg_target_table *target_tables[KVM_ARM_NUM_TARGETS];
+-
+-void kvm_register_target_sys_reg_table(unsigned int target,
+-				       struct kvm_sys_reg_target_table *table)
++void kvm_check_target_sys_reg_table(struct kvm_sys_reg_target_table *table)
+ {
+-	if (check_sysreg_table(table->table64.table, table->table64.num, false) ||
+-	    check_sysreg_table(table->table32.table, table->table32.num, true))
+-		return;
+-
+-	target_tables[target] = table;
++	BUG_ON(check_sysreg_table(table->table64.table, table->table64.num, false));
++	BUG_ON(check_sysreg_table(table->table32.table, table->table32.num, true));
+ }
+ 
+ /* Get specific register table for this target. */
+@@ -2127,9 +2120,8 @@ static const struct sys_reg_desc *get_target_table(unsigned target,
+ 						   bool mode_is_64,
+ 						   size_t *num)
+ {
+-	struct kvm_sys_reg_target_table *table;
++	struct kvm_sys_reg_target_table *table = &genericv8_target_table;
+ 
+-	table = target_tables[target];
+ 	if (mode_is_64) {
+ 		*num = table->table64.num;
+ 		return table->table64.table;
+diff --git a/arch/arm64/kvm/sys_regs.h b/arch/arm64/kvm/sys_regs.h
+index 5a6fc30f5989..933609e883bf 100644
+--- a/arch/arm64/kvm/sys_regs.h
++++ b/arch/arm64/kvm/sys_regs.h
+@@ -165,4 +165,6 @@ const struct sys_reg_desc *find_reg_by_id(u64 id,
+ 	CRn(sys_reg_CRn(reg)), CRm(sys_reg_CRm(reg)),	\
+ 	Op2(sys_reg_Op2(reg))
+ 
++extern struct kvm_sys_reg_target_table genericv8_target_table;
++
+ #endif /* __ARM64_KVM_SYS_REGS_LOCAL_H__ */
+diff --git a/arch/arm64/kvm/sys_regs_generic_v8.c b/arch/arm64/kvm/sys_regs_generic_v8.c
+index aa9d356451eb..a82cc2ccfd44 100644
+--- a/arch/arm64/kvm/sys_regs_generic_v8.c
++++ b/arch/arm64/kvm/sys_regs_generic_v8.c
+@@ -59,7 +59,7 @@ static const struct sys_reg_desc genericv8_cp15_regs[] = {
+ 	  access_actlr },
+ };
+ 
+-static struct kvm_sys_reg_target_table genericv8_target_table = {
++struct kvm_sys_reg_target_table genericv8_target_table = {
+ 	.table64 = {
+ 		.table = genericv8_sys_regs,
+ 		.num = ARRAY_SIZE(genericv8_sys_regs),
+@@ -78,18 +78,7 @@ static int __init sys_reg_genericv8_init(void)
+ 		BUG_ON(cmp_sys_reg(&genericv8_sys_regs[i-1],
+ 			       &genericv8_sys_regs[i]) >= 0);
+ 
+-	kvm_register_target_sys_reg_table(KVM_ARM_TARGET_AEM_V8,
+-					  &genericv8_target_table);
+-	kvm_register_target_sys_reg_table(KVM_ARM_TARGET_FOUNDATION_V8,
+-					  &genericv8_target_table);
+-	kvm_register_target_sys_reg_table(KVM_ARM_TARGET_CORTEX_A53,
+-					  &genericv8_target_table);
+-	kvm_register_target_sys_reg_table(KVM_ARM_TARGET_CORTEX_A57,
+-					  &genericv8_target_table);
+-	kvm_register_target_sys_reg_table(KVM_ARM_TARGET_XGENE_POTENZA,
+-					  &genericv8_target_table);
+-	kvm_register_target_sys_reg_table(KVM_ARM_TARGET_GENERIC_V8,
+-					  &genericv8_target_table);
++	kvm_check_target_sys_reg_table(&genericv8_target_table);
+ 
+ 	return 0;
+ }
 -- 
 2.27.0
 
