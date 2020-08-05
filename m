@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CC6D123CE7B
-	for <lists+kvmarm@lfdr.de>; Wed,  5 Aug 2020 20:26:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 414D323CE85
+	for <lists+kvmarm@lfdr.de>; Wed,  5 Aug 2020 20:27:11 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 815984B4E3;
-	Wed,  5 Aug 2020 14:26:48 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EA0814B639;
+	Wed,  5 Aug 2020 14:27:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,44 +18,45 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Se42iybO633p; Wed,  5 Aug 2020 14:26:47 -0400 (EDT)
+	with ESMTP id wKpXyvfFYuP9; Wed,  5 Aug 2020 14:27:10 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1B92C4B45E;
-	Wed,  5 Aug 2020 14:26:47 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 567064B61E;
+	Wed,  5 Aug 2020 14:27:09 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 743194B463
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:26:45 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6DC5B4B480
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:27:07 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id XxwwTEjXy7p0 for <kvmarm@lists.cs.columbia.edu>;
- Wed,  5 Aug 2020 14:26:44 -0400 (EDT)
+ with ESMTP id ZZ0+ZJ5ftu2v for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  5 Aug 2020 14:27:06 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id EF6BB4B4C7
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:26:42 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 04F7C4B4B4
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:27:01 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 25F4F22DA7;
- Wed,  5 Aug 2020 18:26:42 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 3184222DFB;
+ Wed,  5 Aug 2020 18:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1596652002;
- bh=rJU9FpgzL1aaH6n2FLB56Nqg0exe8hF5Av5kI/gOlgI=;
+ s=default; t=1596652020;
+ bh=dxhW8/AeZjUnxe+PJofqSFXP/Hhd4d4Rgqxp0UL3Rfc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=M9bTlWJmLFI2kNmfy7hIUe20lp7j5g4+MeB6FuINe3ZYDGX2R0MRNNorh2b8oxTld
- q6xXemIDRQJW+c76tlwdtbkg2LcJmvup+Awo20JkLUvGyift8Rr4O3IUWfrRw57IB+
- w93PYHowsxxc//x9tpgN6xRNQ6roQ+Tjl21gYDe0=
+ b=OCKl2X3oe9wXjLFurVAeHdP02wRsYLxTJPSrwI5Xnp4773wX2wIO8FHHnvH5Hp5N7
+ RdBoiRlt5IVezZFmJxo0gpzGobpPMkQrWEsq3Bz8qJjpRoGizmClanAG0IG41kUJQL
+ c+UHH4NQxwHnB7a8HoanNI8UAHcEbITs75NnATng=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1k3Nfe-0004w9-1l; Wed, 05 Aug 2020 18:57:46 +0100
+ id 1k3Nfe-0004w9-UK; Wed, 05 Aug 2020 18:57:47 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 27/56] KVM: arm64: Lift instrumentation restrictions on VHE
-Date: Wed,  5 Aug 2020 18:56:31 +0100
-Message-Id: <20200805175700.62775-28-maz@kernel.org>
+Subject: [PATCH 28/56] KVM: arm64: vgic-its: Change default outer cacheability
+ for {PEND, PROP}BASER
+Date: Wed,  5 Aug 2020 18:56:32 +0100
+Message-Id: <20200805175700.62775-29-maz@kernel.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200805175700.62775-1-maz@kernel.org>
 References: <20200805175700.62775-1-maz@kernel.org>
@@ -92,37 +93,39 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: David Brazdil <dbrazdil@google.com>
+From: Alexander Graf <graf@amazon.com>
 
-With VHE and nVHE executable code completely separated, remove build config
-that disabled GCOV/KASAN/UBSAN/KCOV instrumentation for VHE as these now
-execute under the same memory mappings as the rest of the kernel.
+PENDBASER and PROPBASER define the outer caching mode for LPI tables.
+The memory backing them may not be outer sharable, so we mark them as nC
+by default. This however, breaks Windows on ARM which only accepts
+SameAsInner or RaWaWb as values for outer cachability.
 
-No violations are currently being reported by either KASAN or UBSAN.
+We do today already allow the outer mode to be set to SameAsInner
+explicitly, so the easy fix is to default to that instead of nC for
+situations when an OS asks for a not fulfillable cachability request.
 
-Signed-off-by: David Brazdil <dbrazdil@google.com>
+This fixes booting Windows in KVM with vgicv3 and ITS enabled for me.
+
+Signed-off-by: Alexander Graf <graf@amazon.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20200625131420.71444-16-dbrazdil@google.com
+Link: https://lore.kernel.org/r/20200701140206.8664-1-graf@amazon.com
 ---
- arch/arm64/kvm/hyp/vhe/Makefile | 8 --------
- 1 file changed, 8 deletions(-)
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/hyp/vhe/Makefile b/arch/arm64/kvm/hyp/vhe/Makefile
-index 090fd1e14be2..461e97c375cc 100644
---- a/arch/arm64/kvm/hyp/vhe/Makefile
-+++ b/arch/arm64/kvm/hyp/vhe/Makefile
-@@ -9,11 +9,3 @@ ccflags-y := -D__KVM_VHE_HYPERVISOR__
- obj-y := timer-sr.o sysreg-sr.o debug-sr.o switch.o tlb.o
- obj-y += ../vgic-v3-sr.o ../aarch32.o ../vgic-v2-cpuif-proxy.o ../entry.o \
- 	 ../fpsimd.o ../hyp-entry.o
--
--# KVM code is run at a different exception code with a different map, so
--# compiler instrumentation that inserts callbacks or checks into the code may
--# cause crashes. Just disable it.
--GCOV_PROFILE	:= n
--KASAN_SANITIZE	:= n
--UBSAN_SANITIZE	:= n
--KCOV_INSTRUMENT	:= n
+diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+index d2339a2b9fb9..5c786b915cd3 100644
+--- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+@@ -389,7 +389,7 @@ u64 vgic_sanitise_outer_cacheability(u64 field)
+ 	case GIC_BASER_CACHE_nC:
+ 		return field;
+ 	default:
+-		return GIC_BASER_CACHE_nC;
++		return GIC_BASER_CACHE_SameAsInner;
+ 	}
+ }
+ 
 -- 
 2.27.0
 
