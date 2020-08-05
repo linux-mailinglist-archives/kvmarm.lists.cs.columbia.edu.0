@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 90E0C23CE69
-	for <lists+kvmarm@lfdr.de>; Wed,  5 Aug 2020 20:26:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 213C223CE63
+	for <lists+kvmarm@lfdr.de>; Wed,  5 Aug 2020 20:26:07 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 44D454B5F9;
-	Wed,  5 Aug 2020 14:26:17 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C9CA84B591;
+	Wed,  5 Aug 2020 14:26:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,45 +18,45 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id MllQ6-K6oVfi; Wed,  5 Aug 2020 14:26:17 -0400 (EDT)
+	with ESMTP id UAJCFr2h229y; Wed,  5 Aug 2020 14:26:06 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 277444B5B1;
-	Wed,  5 Aug 2020 14:26:16 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6EBF24B5B1;
+	Wed,  5 Aug 2020 14:26:03 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6ED604B4CB
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:26:14 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 317244B4C6
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:26:02 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id k5qH6CQMojH4 for <kvmarm@lists.cs.columbia.edu>;
- Wed,  5 Aug 2020 14:26:13 -0400 (EDT)
+ with ESMTP id 02X+w8cx32Qm for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  5 Aug 2020 14:26:01 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D6F2F4B456
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:26:11 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E855B4B431
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:26:00 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id ECA9122D03;
- Wed,  5 Aug 2020 18:26:10 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 0C13522CE3;
+ Wed,  5 Aug 2020 18:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1596651971;
- bh=W24AS4Bq5U16UDVsYGu8+EESYRWDTiZMQfrojw+S804=;
+ s=default; t=1596651960;
+ bh=3U7buSNUEjcQUVvkpA07ruuC7lkCwoCZadrKnYwdpp8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ilxj4OBluk2cbgHz0R9290zoNQIyIzCl39m0h/b7BSUlY/62Qru60dGmgcqN2gJ8/
- pvIytkdZX0zmbwFQ0AjuVMtUpq89axTvTwB4ra3fdZ7yvKV7XBWfESAKxjXamBw8lh
- pQqHWSMB09m2EOMXZJO2Wugyasek+ElWz1n33e4g=
+ b=VnyRY45eC5j8qt31RBEYZoTQY+Vdo/1lmkGcUbtHYRV4TQfXRQNnqI6JwYCL2VTkl
+ RXJ8ggH10KOZUHKpXvfU49E4nMPr4KhoaDE1fimpHr6GQmkaEx7YSRP65/ijhHFcjq
+ tGneUtJ6KdbCMR5i293Hh9HZksoA4EYoOY/CfBX4=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1k3Ng3-0004w9-LN; Wed, 05 Aug 2020 18:58:13 +0100
+ id 1k3Ng5-0004w9-P0; Wed, 05 Aug 2020 18:58:13 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 55/56] KVM: arm64: Don't skip cache maintenance for read-only
- memslots
-Date: Wed,  5 Aug 2020 18:56:59 +0100
-Message-Id: <20200805175700.62775-56-maz@kernel.org>
+Subject: [PATCH 56/56] KVM: arm64: Move S1PTW S2 fault logic out of
+ io_mem_abort()
+Date: Wed,  5 Aug 2020 18:57:00 +0100
+Message-Id: <20200805175700.62775-57-maz@kernel.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200805175700.62775-1-maz@kernel.org>
 References: <20200805175700.62775-1-maz@kernel.org>
@@ -95,31 +95,67 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: Will Deacon <will@kernel.org>
 
-If a guest performs cache maintenance on a read-only memslot, we should
-inform userspace rather than skip the instruction altogether.
+To allow for re-injection of stage-2 faults on stage-1 page-table walks
+due to either a missing or read-only memslot, move the triage logic out
+of io_mem_abort() and into kvm_handle_guest_abort(), where these aborts
+can be handled before anything else.
 
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: Marc Zyngier <maz@kernel.org>
 Cc: Quentin Perret <qperret@google.com>
-Link: https://lore.kernel.org/r/20200729102821.23392-4-will@kernel.org
+Link: https://lore.kernel.org/r/20200729102821.23392-5-will@kernel.org
 ---
- arch/arm64/kvm/mmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/mmio.c |  6 ------
+ arch/arm64/kvm/mmu.c  | 13 ++++++++++++-
+ 2 files changed, 12 insertions(+), 7 deletions(-)
 
+diff --git a/arch/arm64/kvm/mmio.c b/arch/arm64/kvm/mmio.c
+index 4e0366759726..58de2ae4f6bb 100644
+--- a/arch/arm64/kvm/mmio.c
++++ b/arch/arm64/kvm/mmio.c
+@@ -145,12 +145,6 @@ int io_mem_abort(struct kvm_vcpu *vcpu, struct kvm_run *run,
+ 		return -ENOSYS;
+ 	}
+ 
+-	/* Page table accesses IO mem: tell guest to fix its TTBR */
+-	if (kvm_vcpu_dabt_iss1tw(vcpu)) {
+-		kvm_inject_dabt(vcpu, kvm_vcpu_get_hfar(vcpu));
+-		return 1;
+-	}
+-
+ 	/*
+ 	 * Prepare MMIO operation. First decode the syndrome data we get
+ 	 * from the CPU. Then try if some in-kernel emulation feels
 diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 14c6a9df5c9f..85b0ec9dd9ef 100644
+index 85b0ec9dd9ef..dc8464669efd 100644
 --- a/arch/arm64/kvm/mmu.c
 +++ b/arch/arm64/kvm/mmu.c
-@@ -2121,7 +2121,7 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu, struct kvm_run *run)
- 		 * So let's assume that the guest is just being
- 		 * cautious, and skip the instruction.
- 		 */
--		if (kvm_vcpu_dabt_is_cm(vcpu)) {
-+		if (kvm_is_error_hva(hva) && kvm_vcpu_dabt_is_cm(vcpu)) {
- 			kvm_skip_instr(vcpu, kvm_vcpu_trap_il_is32bit(vcpu));
- 			ret = 1;
- 			goto out_unlock;
+@@ -2105,12 +2105,23 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu, struct kvm_run *run)
+ 	hva = gfn_to_hva_memslot_prot(memslot, gfn, &writable);
+ 	write_fault = kvm_is_write_fault(vcpu);
+ 	if (kvm_is_error_hva(hva) || (write_fault && !writable)) {
++		/*
++		 * The guest has put either its instructions or its page-tables
++		 * somewhere it shouldn't have. Userspace won't be able to do
++		 * anything about this (there's no syndrome for a start), so
++		 * re-inject the abort back into the guest.
++		 */
+ 		if (is_iabt) {
+-			/* Prefetch Abort on I/O address */
+ 			ret = -ENOEXEC;
+ 			goto out;
+ 		}
+ 
++		if (kvm_vcpu_dabt_iss1tw(vcpu)) {
++			kvm_inject_dabt(vcpu, kvm_vcpu_get_hfar(vcpu));
++			ret = 1;
++			goto out_unlock;
++		}
++
+ 		/*
+ 		 * Check for a cache maintenance operation. Since we
+ 		 * ended-up here, we know it is outside of any memory
 -- 
 2.27.0
 
