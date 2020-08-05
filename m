@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 504FC23CE6A
-	for <lists+kvmarm@lfdr.de>; Wed,  5 Aug 2020 20:26:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90E0C23CE69
+	for <lists+kvmarm@lfdr.de>; Wed,  5 Aug 2020 20:26:17 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 04F574B591;
-	Wed,  5 Aug 2020 14:26:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 44D454B5F9;
+	Wed,  5 Aug 2020 14:26:17 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,45 +18,45 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SYI-7HzegjxB; Wed,  5 Aug 2020 14:26:19 -0400 (EDT)
+	with ESMTP id MllQ6-K6oVfi; Wed,  5 Aug 2020 14:26:17 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 50EA74B5AF;
-	Wed,  5 Aug 2020 14:26:18 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 277444B5B1;
+	Wed,  5 Aug 2020 14:26:16 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CD0444B57A
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:26:16 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6ED604B4CB
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:26:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id wgOdZRBJGfS1 for <kvmarm@lists.cs.columbia.edu>;
- Wed,  5 Aug 2020 14:26:15 -0400 (EDT)
+ with ESMTP id k5qH6CQMojH4 for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  5 Aug 2020 14:26:13 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5279F4B58A
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:26:15 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D6F2F4B456
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:26:11 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 7EF8D22D05;
- Wed,  5 Aug 2020 18:26:14 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id ECA9122D03;
+ Wed,  5 Aug 2020 18:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1596651974;
- bh=p3WNcMvJB/y3Jj8HoY+KqKAm2MlBfzXMw7WEk0zysys=;
+ s=default; t=1596651971;
+ bh=W24AS4Bq5U16UDVsYGu8+EESYRWDTiZMQfrojw+S804=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=2rFbbck4dYZBBeA5TOv3YBf9m6Zp5JbB0ep8a62uwDKoTkpUZKAkyEw9CBYNXvJhP
- 4stTYaai8vd6E8rV4bKsdf2n2IQrXwsdTK7/oQKx64Lp0lcKTUgz/+sa0DQpSJhgNN
- A8I0Ah9urJv3tPrSGFxrmwqYcalNp/+TmyYDJSuc=
+ b=ilxj4OBluk2cbgHz0R9290zoNQIyIzCl39m0h/b7BSUlY/62Qru60dGmgcqN2gJ8/
+ pvIytkdZX0zmbwFQ0AjuVMtUpq89axTvTwB4ra3fdZ7yvKV7XBWfESAKxjXamBw8lh
+ pQqHWSMB09m2EOMXZJO2Wugyasek+ElWz1n33e4g=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1k3Ng2-0004w9-PF; Wed, 05 Aug 2020 18:58:10 +0100
+ id 1k3Ng3-0004w9-LN; Wed, 05 Aug 2020 18:58:13 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 54/56] KVM: arm64: Handle data and instruction external aborts
- the same way
-Date: Wed,  5 Aug 2020 18:56:58 +0100
-Message-Id: <20200805175700.62775-55-maz@kernel.org>
+Subject: [PATCH 55/56] KVM: arm64: Don't skip cache maintenance for read-only
+ memslots
+Date: Wed,  5 Aug 2020 18:56:59 +0100
+Message-Id: <20200805175700.62775-56-maz@kernel.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200805175700.62775-1-maz@kernel.org>
 References: <20200805175700.62775-1-maz@kernel.org>
@@ -95,46 +95,31 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: Will Deacon <will@kernel.org>
 
-If the guest generates a synchronous external abort which is not handled
-by the host, we inject it back into the guest as a virtual SError, but
-only if the original fault was reported on the data side. Instruction
-faults are reported as "Unsupported FSC", causing the vCPU run loop to
-bail with -EFAULT.
-
-Although synchronous external aborts from a guest are pretty unusual,
-treat them the same regardless of whether they are taken as data or
-instruction aborts by EL2.
+If a guest performs cache maintenance on a read-only memslot, we should
+inform userspace rather than skip the instruction altogether.
 
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: Marc Zyngier <maz@kernel.org>
 Cc: Quentin Perret <qperret@google.com>
-Link: https://lore.kernel.org/r/20200729102821.23392-3-will@kernel.org
+Link: https://lore.kernel.org/r/20200729102821.23392-4-will@kernel.org
 ---
- arch/arm64/kvm/mmu.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ arch/arm64/kvm/mmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 8004f1f68946..14c6a9df5c9f 100644
+index 14c6a9df5c9f..85b0ec9dd9ef 100644
 --- a/arch/arm64/kvm/mmu.c
 +++ b/arch/arm64/kvm/mmu.c
-@@ -2079,13 +2079,10 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu, struct kvm_run *run)
- 		 * For RAS the host kernel may handle this abort.
- 		 * There is no need to pass the error into the guest.
+@@ -2121,7 +2121,7 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu, struct kvm_run *run)
+ 		 * So let's assume that the guest is just being
+ 		 * cautious, and skip the instruction.
  		 */
--		if (!kvm_handle_guest_sea(fault_ipa, kvm_vcpu_get_esr(vcpu)))
--			return 1;
--
--		if (unlikely(!is_iabt)) {
-+		if (kvm_handle_guest_sea(fault_ipa, kvm_vcpu_get_esr(vcpu)))
- 			kvm_inject_vabt(vcpu);
--			return 1;
--		}
-+
-+		return 1;
- 	}
- 
- 	trace_kvm_guest_fault(*vcpu_pc(vcpu), kvm_vcpu_get_esr(vcpu),
+-		if (kvm_vcpu_dabt_is_cm(vcpu)) {
++		if (kvm_is_error_hva(hva) && kvm_vcpu_dabt_is_cm(vcpu)) {
+ 			kvm_skip_instr(vcpu, kvm_vcpu_trap_il_is32bit(vcpu));
+ 			ret = 1;
+ 			goto out_unlock;
 -- 
 2.27.0
 
