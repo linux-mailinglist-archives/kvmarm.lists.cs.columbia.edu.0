@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 23DE923CE74
-	for <lists+kvmarm@lfdr.de>; Wed,  5 Aug 2020 20:26:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D6C7023CE77
+	for <lists+kvmarm@lfdr.de>; Wed,  5 Aug 2020 20:26:42 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CC0C84B5B9;
-	Wed,  5 Aug 2020 14:26:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 893524B595;
+	Wed,  5 Aug 2020 14:26:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,45 +18,44 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id t11VOcuYDtpk; Wed,  5 Aug 2020 14:26:36 -0400 (EDT)
+	with ESMTP id 68mQid+cEz+0; Wed,  5 Aug 2020 14:26:42 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 659854B4BA;
-	Wed,  5 Aug 2020 14:26:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B28CB4B611;
+	Wed,  5 Aug 2020 14:26:39 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 695994B4CB
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:26:33 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9A7474B560
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:26:38 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id pYN5FVTsBifL for <kvmarm@lists.cs.columbia.edu>;
- Wed,  5 Aug 2020 14:26:32 -0400 (EDT)
+ with ESMTP id YOYkRKdV13Ku for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  5 Aug 2020 14:26:37 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5AC4A4B4C7
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:26:31 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A11314B579
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Aug 2020 14:26:37 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 6501522D2B;
- Wed,  5 Aug 2020 18:26:30 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id CE9B922D74;
+ Wed,  5 Aug 2020 18:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1596651990;
- bh=6Ab/eUk00myUeLfnxSkmHWxeqqGmHlVIjtuoHXcMfZo=;
+ s=default; t=1596651996;
+ bh=OidDvqgNt7AtTgrarcnUSI+gl3qGpjJT5cx+8I1SDeo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Kth77fl88AoIcviPaPr5Rc3aWe9sa5LiTHvf9M0sF1R9seXCh3+06gGWzNam2Esj5
- EUShTg1gBciGR3OSq5CfFgHDmGW65gDQTlXoETappgIYv+WwJuwqmCOCcA6AIcEaGI
- aOZ/NBzvlFBki+fsOcttj6701GHZ9tQLub0WAbqo=
+ b=xsc40dPNLadcUo66RIk/gQEmZBfB3sztQlk/Qce/8Mw98mBub1/DAP5Bogb5xlHf/
+ OfMegn5FK7XzLuBpEzZOP6hyq5sS8RT4N417K2cdpSVcx567a/aIKMoQ2dS6c3M5k0
+ qMAiaJ/Cn2VConZ7jagb1U1BKJMbxnavn+EzAua0=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
  (envelope-from <maz@kernel.org>)
- id 1k3Nfj-0004w9-0x; Wed, 05 Aug 2020 18:57:51 +0100
+ id 1k3Nfj-0004w9-SH; Wed, 05 Aug 2020 18:57:52 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 32/56] arm64: Document SW reserved PTE/PMD bits in Stage-2
- descriptors
-Date: Wed,  5 Aug 2020 18:56:36 +0100
-Message-Id: <20200805175700.62775-33-maz@kernel.org>
+Subject: [PATCH 33/56] arm64: Add level-hinted TLB invalidation helper
+Date: Wed,  5 Aug 2020 18:56:37 +0100
+Message-Id: <20200805175700.62775-34-maz@kernel.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200805175700.62775-1-maz@kernel.org>
 References: <20200805175700.62775-1-maz@kernel.org>
@@ -93,32 +92,98 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Advertise bits [58:55] as reserved for SW in the S2 descriptors.
+Add a level-hinted TLB invalidation helper that only gets used if
+ARMv8.4-TTL gets detected.
 
-Reviewed-by: Andrew Scull <ascull@google.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Alexandru Elisei <alexandru.elisei@arm.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/pgtable-hwdef.h | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/include/asm/stage2_pgtable.h |  9 +++++
+ arch/arm64/include/asm/tlbflush.h       | 45 +++++++++++++++++++++++++
+ 2 files changed, 54 insertions(+)
 
-diff --git a/arch/arm64/include/asm/pgtable-hwdef.h b/arch/arm64/include/asm/pgtable-hwdef.h
-index 9c91a8f93a0e..de0b603955f4 100644
---- a/arch/arm64/include/asm/pgtable-hwdef.h
-+++ b/arch/arm64/include/asm/pgtable-hwdef.h
-@@ -178,10 +178,12 @@
- #define PTE_S2_RDONLY		(_AT(pteval_t, 1) << 6)   /* HAP[2:1] */
- #define PTE_S2_RDWR		(_AT(pteval_t, 3) << 6)   /* HAP[2:1] */
- #define PTE_S2_XN		(_AT(pteval_t, 2) << 53)  /* XN[1:0] */
-+#define PTE_S2_SW_RESVD		(_AT(pteval_t, 15) << 55) /* Reserved for SW */
+diff --git a/arch/arm64/include/asm/stage2_pgtable.h b/arch/arm64/include/asm/stage2_pgtable.h
+index b767904f28b1..996bf98f0cab 100644
+--- a/arch/arm64/include/asm/stage2_pgtable.h
++++ b/arch/arm64/include/asm/stage2_pgtable.h
+@@ -256,4 +256,13 @@ stage2_pgd_addr_end(struct kvm *kvm, phys_addr_t addr, phys_addr_t end)
+ 	return (boundary - 1 < end - 1) ? boundary : end;
+ }
  
- #define PMD_S2_RDONLY		(_AT(pmdval_t, 1) << 6)   /* HAP[2:1] */
- #define PMD_S2_RDWR		(_AT(pmdval_t, 3) << 6)   /* HAP[2:1] */
- #define PMD_S2_XN		(_AT(pmdval_t, 2) << 53)  /* XN[1:0] */
-+#define PMD_S2_SW_RESVD		(_AT(pmdval_t, 15) << 55) /* Reserved for SW */
++/*
++ * Level values for the ARMv8.4-TTL extension, mapping PUD/PMD/PTE and
++ * the architectural page-table level.
++ */
++#define S2_NO_LEVEL_HINT	0
++#define S2_PUD_LEVEL		1
++#define S2_PMD_LEVEL		2
++#define S2_PTE_LEVEL		3
++
+ #endif	/* __ARM64_S2_PGTABLE_H_ */
+diff --git a/arch/arm64/include/asm/tlbflush.h b/arch/arm64/include/asm/tlbflush.h
+index bc3949064725..3353f26302de 100644
+--- a/arch/arm64/include/asm/tlbflush.h
++++ b/arch/arm64/include/asm/tlbflush.h
+@@ -10,6 +10,7 @@
  
- #define PUD_S2_RDONLY		(_AT(pudval_t, 1) << 6)   /* HAP[2:1] */
- #define PUD_S2_RDWR		(_AT(pudval_t, 3) << 6)   /* HAP[2:1] */
+ #ifndef __ASSEMBLY__
+ 
++#include <linux/bitfield.h>
+ #include <linux/mm_types.h>
+ #include <linux/sched.h>
+ #include <asm/cputype.h>
+@@ -59,6 +60,50 @@
+ 		__ta;						\
+ 	})
+ 
++/*
++ * Level-based TLBI operations.
++ *
++ * When ARMv8.4-TTL exists, TLBI operations take an additional hint for
++ * the level at which the invalidation must take place. If the level is
++ * wrong, no invalidation may take place. In the case where the level
++ * cannot be easily determined, a 0 value for the level parameter will
++ * perform a non-hinted invalidation.
++ *
++ * For Stage-2 invalidation, use the level values provided to that effect
++ * in asm/stage2_pgtable.h.
++ */
++#define TLBI_TTL_MASK		GENMASK_ULL(47, 44)
++#define TLBI_TTL_TG_4K		1
++#define TLBI_TTL_TG_16K		2
++#define TLBI_TTL_TG_64K		3
++
++#define __tlbi_level(op, addr, level)					\
++	do {								\
++		u64 arg = addr;						\
++									\
++		if (cpus_have_const_cap(ARM64_HAS_ARMv8_4_TTL) &&	\
++		    level) {						\
++			u64 ttl = level & 3;				\
++									\
++			switch (PAGE_SIZE) {				\
++			case SZ_4K:					\
++				ttl |= TLBI_TTL_TG_4K << 2;		\
++				break;					\
++			case SZ_16K:					\
++				ttl |= TLBI_TTL_TG_16K << 2;		\
++				break;					\
++			case SZ_64K:					\
++				ttl |= TLBI_TTL_TG_64K << 2;		\
++				break;					\
++			}						\
++									\
++			arg &= ~TLBI_TTL_MASK;				\
++			arg |= FIELD_PREP(TLBI_TTL_MASK, ttl);		\
++		}							\
++									\
++		__tlbi(op, arg);					\
++	} while(0)
++
+ /*
+  *	TLB Invalidation
+  *	================
 -- 
 2.27.0
 
