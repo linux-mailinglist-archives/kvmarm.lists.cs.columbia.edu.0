@@ -2,79 +2,53 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C8130245FD1
-	for <lists+kvmarm@lfdr.de>; Mon, 17 Aug 2020 10:26:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55943246073
+	for <lists+kvmarm@lfdr.de>; Mon, 17 Aug 2020 10:41:36 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4BFC64BF91;
-	Mon, 17 Aug 2020 04:26:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 076C24BF91;
+	Mon, 17 Aug 2020 04:41:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7-Iny4C3SjPi; Mon, 17 Aug 2020 04:26:26 -0400 (EDT)
+	with ESMTP id 0EUT449oi3hk; Mon, 17 Aug 2020 04:41:35 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F1E9D4BF65;
-	Mon, 17 Aug 2020 04:26:24 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 845804BFA7;
+	Mon, 17 Aug 2020 04:41:33 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EE3B94BD34
- for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 04:26:22 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3C4804BF91
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 04:41:30 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id K6uWVmhWq8gM for <kvmarm@lists.cs.columbia.edu>;
- Mon, 17 Aug 2020 04:26:22 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D45B84BD2D
- for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 04:26:21 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id A194E207FB;
- Mon, 17 Aug 2020 08:26:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1597652780;
- bh=DqrhFlbqsLKUbQeyFxnK0Kuuu4I7hstm5T+jbg9Evrs=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=z5HKSUqwTqfvkxm/ePqE7aOX/IGBddSo4Kyjs9A8hSnGpHylUuJGDOnFkjOlw/U9/
- KkOnC5r+iRVraYQqDayVeenJpwxRA/QR7yvL/ExiGB4i1R3UUqOiA505g8nDnqlgjz
- j4tbijNIWMeZjXw/IpTb/plWqL1YNjPdC6fGZRKM=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
- (envelope-from <maz@kernel.org>)
- id 1k7aTD-003UEx-7D; Mon, 17 Aug 2020 09:26:19 +0100
+ with ESMTP id 9LItYpOiU9g0 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 17 Aug 2020 04:41:29 -0400 (EDT)
+Received: from huawei.com (szxga07-in.huawei.com [45.249.212.35])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1A6D44BF6E
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 04:41:29 -0400 (EDT)
+Received: from DGGEMS411-HUB.china.huawei.com (unknown [172.30.72.60])
+ by Forcepoint Email with ESMTP id 724AC236C0FF1FBF5E6D;
+ Mon, 17 Aug 2020 16:41:22 +0800 (CST)
+Received: from DESKTOP-5IS4806.china.huawei.com (10.174.187.22) by
+ DGGEMS411-HUB.china.huawei.com (10.3.19.211) with Microsoft SMTP Server id
+ 14.3.487.0; Mon, 17 Aug 2020 16:41:12 +0800
+From: Keqian Zhu <zhukeqian1@huawei.com>
+To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <kvmarm@lists.cs.columbia.edu>, <kvm@vger.kernel.org>
+Subject: [RFC PATCH 0/5] KVM: arm64: Add pvtime LPT support
+Date: Mon, 17 Aug 2020 16:41:05 +0800
+Message-ID: <20200817084110.2672-1-zhukeqian1@huawei.com>
+X-Mailer: git-send-email 2.8.4.windows.1
 MIME-Version: 1.0
-Date: Mon, 17 Aug 2020 09:26:19 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: Jingyi Wang <wangjingyi11@huawei.com>
-Subject: Re: [kvm-unit-tests PATCH v3 00/10] arm/arm64: Add IPI/LPI/vtimer
- latency test
-In-Reply-To: <d9aa5414-490e-179f-d789-3c929ffe0727@huawei.com>
-References: <20200731074244.20432-1-wangjingyi11@huawei.com>
- <957a4657-7e17-b173-ea4d-10c29ab9e3cd@huawei.com>
- <0bd81d1da9040fce660af46763507ac2@kernel.org>
- <54de9edf-3cca-f968-1ea8-027556b5f5ff@huawei.com>
- <b175763e4f4f08ecdae46e6e87b0bc81@kernel.org>
- <d9aa5414-490e-179f-d789-3c929ffe0727@huawei.com>
-User-Agent: Roundcube Webmail/1.4.7
-Message-ID: <9d2dcee37f9c2509cb9556f74b6f5277@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: wangjingyi11@huawei.com, drjones@redhat.com,
- kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu, eric.auger@redhat.com,
- wanghaibin.wang@huawei.com, yuzenghui@huawei.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
+X-Originating-IP: [10.174.187.22]
+X-CFilter-Loop: Reflected
+Cc: Marc Zyngier <maz@kernel.org>, Steven Price <steven.price@arm.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -86,46 +60,80 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset="utf-8"; Format="flowed"
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-T24gMjAyMC0wOC0xNyAwMjo0NiwgSmluZ3lpIFdhbmcgd3JvdGU6Cj4gT24gOC8xMS8yMDIwIDM6
-NDkgUE0sIE1hcmMgWnluZ2llciB3cm90ZToKPj4gT24gMjAyMC0wOC0xMSAwMjo0OCwgSmluZ3lp
-IFdhbmcgd3JvdGU6CgpbLi4uXQoKPj4+IEFzIEkgbWVudGlvbmVkIGJlZm9yZSwgd2Ugd2FudCB0
-byBhZGQgdkxQSSBkaXJlY3QgaW5qZWN0aW9uIHRlc3QKPj4+IGluIEtVVCwgbWVhbndoaWxlIG1l
-YXN1cmUgdGhlIGxhdGVuY3kgb2YgaGFyZHdhcmUgdkxQSSBpbmplY3Rpb24uCj4+PiAKPj4+IFN1
-cmUsIHZMUEkgaXMgdHJpZ2dlcmVkIGJ5IGhhcmR3YXJlLiBTaW5jZSBrZXJuZWwgc3VwcG9ydHMg
-c2VuZGluZwo+Pj4gSVRTIElOVCBjb21tYW5kIGluIGd1ZXN0IHRvIHRyaWdnZXIgdkxQSSwgSSB3
-b25kZXIgaWYgaXQgaXMgcG9zc2libGUKPj4gCj4+IFNvIGNhbiB0aGUgaG9zdC4KPj4gCj4+PiB0
-byBhZGQgYW4gZXh0cmEgaW50ZXJmYWNlIHRvIG1ha2UgYSB2TFBJIGhhcmR3YXJlLW9mZmxvYWQo
-anVzdCBhcwo+Pj4ga3ZtX3ZnaWNfdjRfc2V0X2ZvcndhcmRpbmcoKSBkb2VzKS4gSWYgc28sIHZn
-aWNfaXRzX3RyaWdnZXJfbXNpKCkKPj4+IGNhbiBpbmplY3QgdkxQSSBkaXJlY3RseSBpbnN0ZWFk
-IG9mIHVzaW5nIExSLgo+PiAKPj4gVGhlIGludGVyZmFjZSBleGlzdHMsIGl0IGlzIGluIGRlYnVn
-ZnMuIEJ1dCBpdCBtYW5kYXRlcyB0aGF0IHRoZQo+PiBkZXZpY2UgZXhpc3RzLiBBbmQgbm8sIEkg
-YW0gbm90IHdpbGxpbmcgdG8gYWRkIGFuIGV4dHJhIEtWTSB1c2Vyc3BhY2UKPj4gQVBJIGZvciB0
-aGlzLgo+PiAKPj4gVGhlIHdob2xlIGNvbmNlcHQgb2YgaW5qZWN0aW5nIGFuIElOVCB0byBtZWFz
-dXJlIHRoZSBwZXJmb3JtYW5jZQo+PiBvZiBHSUN2NCBpcyBzbGlnaHRseSBib25rZXJzLCBhY3R1
-YWxseS4gTW9zdCBvZiB0aGUgY29zdCBpcyBwYWlkCj4+IG9uIHRoZSBpbmplY3Rpb24gcGF0aCAo
-cXVldWluZyBhIHBhaXIgb2YgY29tbWFuZCwgd2FpdGluZyB1bnRpbAo+PiB0aGUgSVRTIHdha2Vz
-IHVwIGFuZCBnZW5lcmF0ZSB0aGUgc2lnbmFsLi4uKS4KPj4gCj4+IFdoYXQgeW91IHJlYWxseSB3
-YW50IHRvIG1lYXN1cmUgaXMgdGhlIHRpbWUgZnJvbSBnZW5lcmF0aW9uIG9mCj4+IHRoZSBMUEkg
-YnkgYSBkZXZpY2UgdW50aWwgdGhlIGd1ZXN0IGFja25vd2xlZGdlcyB0aGUgaW50ZXJydXB0Cj4+
-IHRvIHRoZSBkZXZpY2UgaXRzZWxmLiBhbmQgdGhpcyBjYW4gb25seSBiZSBpbXBsZW1lbnRlZCBp
-biB0aGUKPj4gZGV2aWNlLgo+PiAKPj4gIMKgwqDCoMKgwqDCoMKgIE0uCj4gCj4gT0sgdW5kZXJz
-dG9vZC4gSSBqdXN0IHRob3VnaHQgbWVhc3VyaW5nIHRoZSBsYXRlbmN5IG9mIHRoZSBwYXRoCj4g
-a3ZtLT5ndWVzdCBjYW4gYmUgdXNlZnVsLgoKVGhhdCdzIHRoZSBwcm9ibGVtLiBUaGVyZSBpcyBu
-byB3YXkgeW91IGNhbiBpbXBsZW1lbnQgdGhpcywgYmVjYXVzZQp5b3UgY2Fubm90IGRpc3Rpbmd1
-aXNoIGluamVjdGlvbiBsYXRlbmN5IGZyb20gdGhlIGRlbGl2ZXJ5IGxhdGVuY3kuCkFuZCBmcmFu
-a2x5LCBpdCBkb2Vzbid0IG1hdHRlciwgYmVjYXVzZSB0aGUgaHlwZXJ2aXNvciBpcyBub3Qgb24K
-dGhhdCBwYXRoIGF0IGFsbCAoaWYgaXQgaXMgc2xvdywgdGhhdCdzIGJlY2F1c2UgdGhlIEhXIGlz
-IHNsb3csIGFuZAp5b3UgY2FuJ3QgY2hhbmdlIGFueXRoaW5nIGluIEtWTSB0byBtYWtlIGl0IGJl
-dHRlcikuCgpPbiB0aGUgb3RoZXIgaGFuZCwgbWVhc3VyaW5nIHRoZSBsYXRlbmN5IG9mIGEgZ3Vl
-c3QgYmVpbmcgc2NoZWR1bGVkCmJhY2sgaW4gd2hlbiBibG9ja2VkIG9uIFdGSSB3b3VsZCBiZSBt
-dWNoIG1vcmUgcmVsZXZhbnQsIGFzIHRoaXMgaXMKZXhhY3RseSB3aGF0IHdvdWxkIGhhcHBlbiBv
-biBkZWxpdmVyeSBvZiBhIGRvb3JiZWxsLgoKICAgICAgICAgTS4KLS0gCkphenogaXMgbm90IGRl
-YWQuIEl0IGp1c3Qgc21lbGxzIGZ1bm55Li4uCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fCmt2bWFybSBtYWlsaW5nIGxpc3QKa3ZtYXJtQGxpc3RzLmNzLmNv
-bHVtYmlhLmVkdQpodHRwczovL2xpc3RzLmNzLmNvbHVtYmlhLmVkdS9tYWlsbWFuL2xpc3RpbmZv
-L2t2bWFybQo=
+Hi all,
+
+This patch series picks up the LPT pvtime feature originally developed
+by Steven Price: https://patchwork.kernel.org/cover/10726499/
+
+Backgroud:
+
+There is demand for cross-platform migration, which means we have to
+solve different CPU features and arch counter frequency between hosts.
+This patch series can solve the latter problem.
+
+About LPT:
+
+This implements support for Live Physical Time (LPT) which provides the
+guest with a method to derive a stable counter of time during which the
+guest is executing even when the guest is being migrated between hosts
+with different physical counter frequencies.
+
+Changes on Steven Price's work:
+1. LPT structure: use symmatical semantics of scale multiplier, and use
+   fraction bits instead of "shift" to make everything clear.
+2. Structure allocation: host kernel does not allocates the LPT structure,
+   instead it is allocated by userspace through VM attributes. The save/restore
+   functionality can be removed.
+3. Since LPT structure just need update once for each guest run, add a flag to
+   indicate the update status. This has two benifits: 1) avoid multiple update
+   by each vCPUs. 2) If the update flag is not set, then return NOT SUPPORT for
+   coressponding guest HVC call.
+4. Add VM device attributes interface for userspace configuration.
+5. Add a base LPT read/write layer to reduce code.
+6. Support ptimer scaling.
+7. Support timer event stream translation.
+
+Things need concern:
+1. https://developer.arm.com/docs/den0057/a needs update.
+2. If a guest fails to initialize and use LPT, when it migrates to a host with
+   different native frequency, it will see the virtual counter jump. However
+   this concern is not a problem.
+   1) Guest does not support LPT or host does not enable LPT: we won't migrate
+      guest to a host with different frequency.
+   2) Guest kernel faces problem when initilize LPT: guest can not boot up, so
+      counter jump is not a problem at this situation.
+
+
+Patch 2 and 3 implement host KVM part.
+Patch 4 and 5 implement guest driver part.
+
+Keqian Zhu (5):
+  KVM: arm64: Document pvtime LPT interface
+  KVM: arm64: Support Live Physical Time reporting
+  KVM: arm64: Provide VM device attributes for LPT time
+  clocksource: arm_arch_timer: Add pvtime LPT initialization
+  clocksource: arm_arch_timer: Use pvtime LPT
+
+ Documentation/virt/kvm/arm/pvtime.rst |  78 +++++++++++--
+ Documentation/virt/kvm/devices/vm.rst |  30 +++++
+ arch/arm64/include/asm/arch_timer.h   | 179 ++++++++++++++++++++++++++--
+ arch/arm64/include/asm/kvm_host.h     |  14 +++
+ arch/arm64/include/uapi/asm/kvm.h     |   5 +
+ arch/arm64/kvm/arm.c                  |  71 ++++++++++++
+ arch/arm64/kvm/hypercalls.c           |   5 +
+ arch/arm64/kvm/pvtime.c               | 212 +++++++++++++++++++++++++++++++++-
+ drivers/clocksource/arm_arch_timer.c  | 120 +++++++++++++++----
+ 9 files changed, 669 insertions(+), 45 deletions(-)
+
+-- 
+1.8.3.1
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
