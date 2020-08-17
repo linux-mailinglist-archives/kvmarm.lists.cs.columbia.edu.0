@@ -2,55 +2,85 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D345C245B18
-	for <lists+kvmarm@lfdr.de>; Mon, 17 Aug 2020 05:38:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA5C8245E94
+	for <lists+kvmarm@lfdr.de>; Mon, 17 Aug 2020 09:55:40 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 878D24BD87;
-	Sun, 16 Aug 2020 23:38:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 45C6D4BF4D;
+	Mon, 17 Aug 2020 03:55:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.502
+X-Spam-Score: 0.911
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@gmail.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id irOcDX6rWT8p; Sun, 16 Aug 2020 23:38:27 -0400 (EDT)
+	with ESMTP id IwYGN0XE6cV1; Mon, 17 Aug 2020 03:55:40 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A34024BD23;
-	Sun, 16 Aug 2020 23:38:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3B86B4BF3F;
+	Mon, 17 Aug 2020 03:55:39 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1EEAC4BCAB
- for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Aug 2020 23:38:25 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1D0B94BC02
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Aug 2020 22:03:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id jRp8zIU5ZrHE for <kvmarm@lists.cs.columbia.edu>;
- Sun, 16 Aug 2020 23:38:24 -0400 (EDT)
-Received: from huawei.com (szxga07-in.huawei.com [45.249.212.35])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 34E834BD7F
- for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Aug 2020 23:38:23 -0400 (EDT)
-Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.58])
- by Forcepoint Email with ESMTP id 5A30889994A65CB4171F;
- Mon, 17 Aug 2020 11:38:18 +0800 (CST)
-Received: from DESKTOP-5IS4806.china.huawei.com (10.174.187.22) by
- DGGEMS413-HUB.china.huawei.com (10.3.19.213) with Microsoft SMTP Server id
- 14.3.487.0; Mon, 17 Aug 2020 11:38:07 +0800
-From: Keqian Zhu <zhukeqian1@huawei.com>
-To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <kvmarm@lists.cs.columbia.edu>, <kvm@vger.kernel.org>
-Subject: [PATCH 3/3] KVM: arm64: Use kvm_write_guest_lock when init stolen time
-Date: Mon, 17 Aug 2020 11:37:29 +0800
-Message-ID: <20200817033729.10848-4-zhukeqian1@huawei.com>
-X-Mailer: git-send-email 2.8.4.windows.1
-In-Reply-To: <20200817033729.10848-1-zhukeqian1@huawei.com>
-References: <20200817033729.10848-1-zhukeqian1@huawei.com>
+ with ESMTP id wopY1ZqCwvKV for <kvmarm@lists.cs.columbia.edu>;
+ Sun, 16 Aug 2020 22:03:13 -0400 (EDT)
+Received: from mail-pg1-f196.google.com (mail-pg1-f196.google.com
+ [209.85.215.196])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0BE354BC01
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Aug 2020 22:03:13 -0400 (EDT)
+Received: by mail-pg1-f196.google.com with SMTP id j21so7361932pgi.9
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Aug 2020 19:03:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=g5HDuGeUVDk8sqM9/o9Q4NUmETeOwP25OuVRGMdbePY=;
+ b=UHlkQh/6diYYltxpDHOf9F6jhol14EbQYUrpGuhjvkcO8jon5uiJ4TImBdetaDSwv2
+ XEawf1DrPtHMEfmKHTXnLkZFvqmqbO8rYrd37X3aiOk8vBrEoWL+G94nVoT5aJsXmQsm
+ Go9KlFt4aN3b9hWucnpcRpB/NQcLN+vX0Rd/Kk2MiJ036vl7dnnQ5XeO7DpTKnnqG2qU
+ dsifEdi4HLaQk8lmm5b++5gcyTKSwaKiXkqPnyUKhJs4NEYLhAzQCN8n84QpQZDV3p/u
+ 7wtsBbqByBqeEXfd32Q33LqFtpwduLcrA857QLGv4wcraYoxWiGFxmK/u0O2z5OTkvzn
+ d95w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=g5HDuGeUVDk8sqM9/o9Q4NUmETeOwP25OuVRGMdbePY=;
+ b=uTFSlvUJ1dn92WuIiNngF5mRH7U7wWgpUX9kIp/N/nex227/g15bd9EJcIsuYOzcFd
+ QvxDjZF57Z+BL4TS58sSncYKMdIKgBid0ng35jo1Rxv4vXS0pf45BKqYw8e5sTqXmlhF
+ dTwImogmcatl0/OLeso7xmYU1L1aWimdAPz7BeLqITp+4CtFry5LxREc7LuO0fxD+7kT
+ iM/BnAD9e/c970dxAVf3WA87NdbtNw8KNsegtmMYZxZiP9NxQJ2xRBkEF57tjjG2GpKr
+ MkIwPHZhPNcbQQ5cl6Svb1Tx991VU0pnaDynkAOC+MpHAfkcFEV3h++zdhLfp19ZJ5RV
+ S7RQ==
+X-Gm-Message-State: AOAM533iPFpctFukm7qb5AK3qGCeN2i34qQdXB3JA19Z2+CWXe8QuYpZ
+ S3RJ0YFk7eZWqBJxRzG42Kk=
+X-Google-Smtp-Source: ABdhPJwQc+l1piKsFZa/qTebQhuu4bbc4URcZ9WtR1gAqur0rzEPvsvBexYaTUpz1Zlk7YJhLE+qJg==
+X-Received: by 2002:a62:2c0e:: with SMTP id s14mr9881030pfs.289.1597629791959; 
+ Sun, 16 Aug 2020 19:03:11 -0700 (PDT)
+Received: from localhost ([2409:10:2e40:5100:6e29:95ff:fe2d:8f34])
+ by smtp.gmail.com with ESMTPSA id na16sm15433091pjb.30.2020.08.16.19.03.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 16 Aug 2020 19:03:11 -0700 (PDT)
+Date: Mon, 17 Aug 2020 11:03:10 +0900
+From: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
+To: Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>
+Subject: Re: [RFC][PATCH 0/4] arm64:kvm: teach guest sched that VCPUs can be
+ preempted
+Message-ID: <20200817020310.GA1210848@jagdpanzerIV.localdomain>
+References: <20200721041742.197354-1-sergey.senozhatsky@gmail.com>
 MIME-Version: 1.0
-X-Originating-IP: [10.174.187.22]
-X-CFilter-Loop: Reflected
-Cc: Marc Zyngier <maz@kernel.org>, Steven Price <steven.price@arm.com>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20200721041742.197354-1-sergey.senozhatsky@gmail.com>
+X-Mailman-Approved-At: Mon, 17 Aug 2020 03:55:37 -0400
+Cc: joelaf@google.com, linux-kernel@vger.kernel.org,
+ Sergey Senozhatsky <sergey.senozhatsky@gmail.com>, suleiman@google.com,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -67,40 +97,34 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-There is a lock version kvm_write_guest. Use it to simplify code.
+On (20/07/21 13:17), Sergey Senozhatsky wrote:
+> Hello,
+> 
+> 	RFC
+> 
+> 	We noticed that in a number of cases when we wake_up_process()
+> on arm64 guest we end up enqueuing that task on a preempted VCPU. The culprit
+> appears to be the fact that arm64 guests are not aware of VCPU preemption
+> as such, so when sched picks up an idle VCPU it always assumes that VCPU
+> is available:
+> 
+>       wake_up_process()
+>        try_to_wake_up()
+>         select_task_rq_fair()
+>          available_idle_cpu()
+>           vcpu_is_preempted()    // return false;
+> 
+> Which is, obviously, not the case.
+> 
+> This RFC patch set adds a simple vcpu_is_preempted() implementation so
+> that scheduler can make better decisions when it search for the idle
+> (v)CPU.
 
-Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
----
- arch/arm64/kvm/pvtime.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+Hi,
 
-diff --git a/arch/arm64/kvm/pvtime.c b/arch/arm64/kvm/pvtime.c
-index f7b52ce..2b24e7f 100644
---- a/arch/arm64/kvm/pvtime.c
-+++ b/arch/arm64/kvm/pvtime.c
-@@ -55,7 +55,6 @@ gpa_t kvm_init_stolen_time(struct kvm_vcpu *vcpu)
- 	struct pvclock_vcpu_stolen_time init_values = {};
- 	struct kvm *kvm = vcpu->kvm;
- 	u64 base = vcpu->arch.steal.base;
--	int idx;
- 
- 	if (base == GPA_INVALID)
- 		return base;
-@@ -66,10 +65,7 @@ gpa_t kvm_init_stolen_time(struct kvm_vcpu *vcpu)
- 	 */
- 	vcpu->arch.steal.steal = 0;
- 	vcpu->arch.steal.last_steal = current->sched_info.run_delay;
--
--	idx = srcu_read_lock(&kvm->srcu);
--	kvm_write_guest(kvm, base, &init_values, sizeof(init_values));
--	srcu_read_unlock(&kvm->srcu, idx);
-+	kvm_write_guest_lock(kvm, base, &init_values, sizeof(init_values));
- 
- 	return base;
- }
--- 
-1.8.3.1
+A gentle ping.
 
+	-ss
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
