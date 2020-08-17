@@ -2,60 +2,53 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3607B245A87
-	for <lists+kvmarm@lfdr.de>; Mon, 17 Aug 2020 03:46:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B7E0E245B16
+	for <lists+kvmarm@lfdr.de>; Mon, 17 Aug 2020 05:38:22 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BABA14BA4B;
-	Sun, 16 Aug 2020 21:46:32 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 65C464BCAE;
+	Sun, 16 Aug 2020 23:38:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+	SPF_HELO_PASS=-0.001] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JVBmAtjKo1pf; Sun, 16 Aug 2020 21:46:32 -0400 (EDT)
+	with ESMTP id 1isRq-db7PZ7; Sun, 16 Aug 2020 23:38:21 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 95F2C4BB4D;
-	Sun, 16 Aug 2020 21:46:31 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 652C84BD76;
+	Sun, 16 Aug 2020 23:38:20 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 239474BA4E
- for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Aug 2020 21:46:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B05944BCF5
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Aug 2020 23:38:18 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 6vGfM9fmwd9u for <kvmarm@lists.cs.columbia.edu>;
- Sun, 16 Aug 2020 21:46:28 -0400 (EDT)
+ with ESMTP id 6DVYWS5ftxN8 for <kvmarm@lists.cs.columbia.edu>;
+ Sun, 16 Aug 2020 23:38:17 -0400 (EDT)
 Received: from huawei.com (szxga05-in.huawei.com [45.249.212.191])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 159C04B69A
- for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Aug 2020 21:46:28 -0400 (EDT)
-Received: from DGGEMS404-HUB.china.huawei.com (unknown [172.30.72.59])
- by Forcepoint Email with ESMTP id C2D54D38E42019B5E021;
- Mon, 17 Aug 2020 09:46:24 +0800 (CST)
-Received: from [127.0.0.1] (10.174.187.42) by DGGEMS404-HUB.china.huawei.com
- (10.3.19.204) with Microsoft SMTP Server id 14.3.487.0; Mon, 17 Aug 2020
- 09:46:18 +0800
-Subject: Re: [kvm-unit-tests PATCH v3 00/10] arm/arm64: Add IPI/LPI/vtimer
- latency test
-To: Marc Zyngier <maz@kernel.org>
-References: <20200731074244.20432-1-wangjingyi11@huawei.com>
- <957a4657-7e17-b173-ea4d-10c29ab9e3cd@huawei.com>
- <0bd81d1da9040fce660af46763507ac2@kernel.org>
- <54de9edf-3cca-f968-1ea8-027556b5f5ff@huawei.com>
- <b175763e4f4f08ecdae46e6e87b0bc81@kernel.org>
-From: Jingyi Wang <wangjingyi11@huawei.com>
-Message-ID: <d9aa5414-490e-179f-d789-3c929ffe0727@huawei.com>
-Date: Mon, 17 Aug 2020 09:46:17 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 21D134BD07
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Aug 2020 23:38:17 -0400 (EDT)
+Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.58])
+ by Forcepoint Email with ESMTP id 45AAB8ECA51EA1AF71C6;
+ Mon, 17 Aug 2020 11:38:13 +0800 (CST)
+Received: from DESKTOP-5IS4806.china.huawei.com (10.174.187.22) by
+ DGGEMS413-HUB.china.huawei.com (10.3.19.213) with Microsoft SMTP Server id
+ 14.3.487.0; Mon, 17 Aug 2020 11:38:04 +0800
+From: Keqian Zhu <zhukeqian1@huawei.com>
+To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <kvmarm@lists.cs.columbia.edu>, <kvm@vger.kernel.org>
+Subject: [PATCH 0/3] KVM: arm64: Some fixes and code adjustments for pvtime ST
+Date: Mon, 17 Aug 2020 11:37:26 +0800
+Message-ID: <20200817033729.10848-1-zhukeqian1@huawei.com>
+X-Mailer: git-send-email 2.8.4.windows.1
 MIME-Version: 1.0
-In-Reply-To: <b175763e4f4f08ecdae46e6e87b0bc81@kernel.org>
-Content-Language: en-US
-X-Originating-IP: [10.174.187.42]
+X-Originating-IP: [10.174.187.22]
 X-CFilter-Loop: Reflected
-Cc: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
+Cc: Marc Zyngier <maz@kernel.org>, Steven Price <steven.price@arm.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -67,48 +60,29 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset="utf-8"; Format="flowed"
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-T24gOC8xMS8yMDIwIDM6NDkgUE0sIE1hcmMgWnluZ2llciB3cm90ZToKPiBPbiAyMDIwLTA4LTEx
-IDAyOjQ4LCBKaW5neWkgV2FuZyB3cm90ZToKPj4gSGkgTWFyYywKPj4KPj4gT24gOC81LzIwMjAg
-ODoxMyBQTSwgTWFyYyBaeW5naWVyIHdyb3RlOgo+Pj4gT24gMjAyMC0wOC0wNSAxMjo1NCwgSmlu
-Z3lpIFdhbmcgd3JvdGU6Cj4+Pj4gSGkgYWxsLAo+Pj4+Cj4+Pj4gQ3VycmVudGx5LCBrdm0tdW5p
-dC10ZXN0cyBvbmx5IHN1cHBvcnQgR0lDdjMgdkxQSSBpbmplY3Rpb24uIE1heSBJIGFzawo+Pj4+
-IGlzIHRoZXJlIGFueSBwbGFuIG9yIHN1Z2dlc3Rpb24gb24gY29uc3RydWN0aW5nIGlycSBieXBh
-c3MgbWVjaGFuaXNtCj4+Pj4gdG8gdGVzdCB2TFBJIGRpcmVjdCBpbmplY3Rpb24gaW4ga3ZtLXVu
-aXQtdGVzdHM/Cj4+Pgo+Pj4gSSdtIG5vdCBzdXJlIHdoYXQgeW91IGFyZSBhc2tpbmcgZm9yIGhl
-cmUuIFZMUElzIGFyZSBvbmx5IGRlbGl2ZXJlZAo+Pj4gZnJvbSBhIEhXIGRldmljZSwgYW5kIHRo
-ZSBvZmZsb2FkaW5nIG1lY2hhbmlzbSBpc24ndCB2aXNpYmxlIGZyb20KPj4+IHVzZXJzcGFjZSAo
-eW91IGVpdGhlciBoYXZlIGFuIGVuYWJsZWQgR0lDdjQgaW1wbGVtZW50YXRpb24sIG9yCj4+PiB5
-b3UgZG9uJ3QpLgo+Pj4KPj4+IFRoZXJlIGFyZSB3YXlzIHRvICp0cmlnZ2VyKiBkZXZpY2UgTVNJ
-cyBmcm9tIHVzZXJzcGFjZSBhbmQgaW5qZWN0Cj4+PiB0aGVtIGluIGEgZ3Vlc3QsIGJ1dCB0aGF0
-J3Mgb25seSBhIGRlYnVnIGZlYXR1cmUsIHdoaWNoIHNob3VsZG4ndAo+Pj4gYmUgZW5hYmxlZCBv
-biBhIHByb2R1Y3Rpb24gc3lzdGVtLgo+Pj4KPj4+IMKgwqDCoMKgwqDCoMKgwqAgTS4KPj4KPj4g
-U29ycnkgZm9yIHRoZSBsYXRlIHJlcGx5Lgo+Pgo+PiBBcyBJIG1lbnRpb25lZCBiZWZvcmUsIHdl
-IHdhbnQgdG8gYWRkIHZMUEkgZGlyZWN0IGluamVjdGlvbiB0ZXN0Cj4+IGluIEtVVCwgbWVhbndo
-aWxlIG1lYXN1cmUgdGhlIGxhdGVuY3kgb2YgaGFyZHdhcmUgdkxQSSBpbmplY3Rpb24uCj4+Cj4+
-IFN1cmUsIHZMUEkgaXMgdHJpZ2dlcmVkIGJ5IGhhcmR3YXJlLiBTaW5jZSBrZXJuZWwgc3VwcG9y
-dHMgc2VuZGluZwo+PiBJVFMgSU5UIGNvbW1hbmQgaW4gZ3Vlc3QgdG8gdHJpZ2dlciB2TFBJLCBJ
-IHdvbmRlciBpZiBpdCBpcyBwb3NzaWJsZQo+IAo+IFNvIGNhbiB0aGUgaG9zdC4KPiAKPj4gdG8g
-YWRkIGFuIGV4dHJhIGludGVyZmFjZSB0byBtYWtlIGEgdkxQSSBoYXJkd2FyZS1vZmZsb2FkKGp1
-c3QgYXMKPj4ga3ZtX3ZnaWNfdjRfc2V0X2ZvcndhcmRpbmcoKSBkb2VzKS4gSWYgc28sIHZnaWNf
-aXRzX3RyaWdnZXJfbXNpKCkKPj4gY2FuIGluamVjdCB2TFBJIGRpcmVjdGx5IGluc3RlYWQgb2Yg
-dXNpbmcgTFIuCj4gCj4gVGhlIGludGVyZmFjZSBleGlzdHMsIGl0IGlzIGluIGRlYnVnZnMuIEJ1
-dCBpdCBtYW5kYXRlcyB0aGF0IHRoZQo+IGRldmljZSBleGlzdHMuIEFuZCBubywgSSBhbSBub3Qg
-d2lsbGluZyB0byBhZGQgYW4gZXh0cmEgS1ZNIHVzZXJzcGFjZQo+IEFQSSBmb3IgdGhpcy4KPiAK
-PiBUaGUgd2hvbGUgY29uY2VwdCBvZiBpbmplY3RpbmcgYW4gSU5UIHRvIG1lYXN1cmUgdGhlIHBl
-cmZvcm1hbmNlCj4gb2YgR0lDdjQgaXMgc2xpZ2h0bHkgYm9ua2VycywgYWN0dWFsbHkuIE1vc3Qg
-b2YgdGhlIGNvc3QgaXMgcGFpZAo+IG9uIHRoZSBpbmplY3Rpb24gcGF0aCAocXVldWluZyBhIHBh
-aXIgb2YgY29tbWFuZCwgd2FpdGluZyB1bnRpbAo+IHRoZSBJVFMgd2FrZXMgdXAgYW5kIGdlbmVy
-YXRlIHRoZSBzaWduYWwuLi4pLgo+IAo+IFdoYXQgeW91IHJlYWxseSB3YW50IHRvIG1lYXN1cmUg
-aXMgdGhlIHRpbWUgZnJvbSBnZW5lcmF0aW9uIG9mCj4gdGhlIExQSSBieSBhIGRldmljZSB1bnRp
-bCB0aGUgZ3Vlc3QgYWNrbm93bGVkZ2VzIHRoZSBpbnRlcnJ1cHQKPiB0byB0aGUgZGV2aWNlIGl0
-c2VsZi4gYW5kIHRoaXMgY2FuIG9ubHkgYmUgaW1wbGVtZW50ZWQgaW4gdGhlCj4gZGV2aWNlLgo+
-IAo+ICDCoMKgwqDCoMKgwqDCoCBNLgoKT0sgdW5kZXJzdG9vZC4gSSBqdXN0IHRob3VnaHQgbWVh
-c3VyaW5nIHRoZSBsYXRlbmN5IG9mIHRoZSBwYXRoCmt2bS0+Z3Vlc3QgY2FuIGJlIHVzZWZ1bC4K
-ClRoYW5rcywKSmluZ3lpCgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1bWJpYS5lZHUK
-aHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9rdm1hcm0K
+During picking up pvtime LPT support for arm64, I do some trivial fixes for
+pvtime ST.
+
+Keqian Zhu (3):
+  KVM: arm64: Some fixes of PV-time interface document
+  KVM: uapi: Remove KVM_DEV_TYPE_ARM_PV_TIME in kvm_device_type
+  KVM: arm64: Use kvm_write_guest_lock when init stolen time
+
+ Documentation/virt/kvm/arm/pvtime.rst | 6 +++---
+ arch/arm64/kvm/pvtime.c               | 6 +-----
+ include/uapi/linux/kvm.h              | 2 --
+ tools/include/uapi/linux/kvm.h        | 2 --
+ 4 files changed, 4 insertions(+), 12 deletions(-)
+
+-- 
+1.8.3.1
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
