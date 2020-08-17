@@ -2,78 +2,54 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D28BA24650B
-	for <lists+kvmarm@lfdr.de>; Mon, 17 Aug 2020 13:01:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA41524651D
+	for <lists+kvmarm@lfdr.de>; Mon, 17 Aug 2020 13:08:11 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5B6D24C061;
-	Mon, 17 Aug 2020 07:01:44 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 75CDE4C072;
+	Mon, 17 Aug 2020 07:08:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ybnMuDBM8467; Mon, 17 Aug 2020 07:01:44 -0400 (EDT)
+	with ESMTP id XniX3I6IxWEt; Mon, 17 Aug 2020 07:08:11 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F0D734C066;
-	Mon, 17 Aug 2020 07:01:42 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 467D74C071;
+	Mon, 17 Aug 2020 07:08:09 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 32A7D4C060
- for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 07:01:42 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 34FFC4C014
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 07:08:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id yUcp-909G0zR for <kvmarm@lists.cs.columbia.edu>;
- Mon, 17 Aug 2020 07:01:41 -0400 (EDT)
-Received: from us-smtp-delivery-1.mimecast.com (us-smtp-1.mimecast.com
- [205.139.110.61])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id F2D2C4BFC4
- for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 07:01:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1597662100;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3uYWEtU1v+x3owbm1uS/RKQqHqnOSb1RHyYIEV1w3Jc=;
- b=O15QjaFSkjiYOzD2Qb+nBBYs6UyhvCW+FrVsM/O1QnR8C2Ap37ySA1D9TsDtxWFDYkwBAo
- qAAwYw2+O26eNfzE7lPNAPr2wgQZKC7OlKFWBMMN88PlbxIpql/JbmvqTm+p0ZUjrW0zd4
- taUSs6jdfoXnzAdCoxr9wELUJAuJKjE=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-122-bciCgXZqPvujGmvBTkaw4w-1; Mon, 17 Aug 2020 07:01:33 -0400
-X-MC-Unique: bciCgXZqPvujGmvBTkaw4w-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.phx2.redhat.com
- [10.5.11.16])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 7408280F040;
- Mon, 17 Aug 2020 11:01:32 +0000 (UTC)
-Received: from [10.64.54.130] (vpn2-54-130.bne.redhat.com [10.64.54.130])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 8F2715C63E;
- Mon, 17 Aug 2020 11:01:26 +0000 (UTC)
-Subject: Re: [PATCH 00/18] Support SDEI Virtualization
-From: Gavin Shan <gshan@redhat.com>
-To: kvmarm@lists.cs.columbia.edu
-References: <20200817100531.83045-1-gshan@redhat.com>
-Message-ID: <9e80380e-16cd-2a4f-0b6a-bc904b9d0999@redhat.com>
-Date: Mon, 17 Aug 2020 21:01:23 +1000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.0
+ with ESMTP id OvDRjjPhRIiq for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 17 Aug 2020 07:08:07 -0400 (EDT)
+Received: from huawei.com (szxga06-in.huawei.com [45.249.212.32])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3E6E44BBEB
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 07:08:07 -0400 (EDT)
+Received: from DGGEMS411-HUB.china.huawei.com (unknown [172.30.72.59])
+ by Forcepoint Email with ESMTP id 20E8964B12CB55BA6D23;
+ Mon, 17 Aug 2020 19:08:01 +0800 (CST)
+Received: from DESKTOP-5IS4806.china.huawei.com (10.174.187.22) by
+ DGGEMS411-HUB.china.huawei.com (10.3.19.211) with Microsoft SMTP Server id
+ 14.3.487.0; Mon, 17 Aug 2020 19:07:50 +0800
+From: Keqian Zhu <zhukeqian1@huawei.com>
+To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <kvmarm@lists.cs.columbia.edu>, <kvm@vger.kernel.org>
+Subject: [PATCH v2 0/2] KVM: arm64: Some fixes and code adjustments for pvtime
+ ST
+Date: Mon, 17 Aug 2020 19:07:26 +0800
+Message-ID: <20200817110728.12196-1-zhukeqian1@huawei.com>
+X-Mailer: git-send-email 2.8.4.windows.1
 MIME-Version: 1.0
-In-Reply-To: <20200817100531.83045-1-gshan@redhat.com>
-Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=gshan@redhat.com
-X-Mimecast-Spam-Score: 0.003
-X-Mimecast-Originator: redhat.com
-Cc: maz@kernel.org, shan.gavin@gmail.com, pbonzini@redhat.com
+X-Originating-IP: [10.174.187.22]
+X-CFilter-Loop: Reflected
+Cc: Marc Zyngier <maz@kernel.org>, Steven Price <steven.price@arm.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -85,126 +61,31 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 8/17/20 8:05 PM, Gavin Shan wrote:
-> This series intends to support SDEI virtualization. The background is
-> the feature (Asynchronous Page Fault) needs virtualized SDEI event to
-> deliver page-not-present notification from host to guest. This series
-> depends on the series "Refactor SDEI Client Driver", which was posted
-> previously. Both series can be found from github:
-> 
->     https://developer.arm.com/documentation/den0054/a/
->     https://www.spinics.net/lists/arm-kernel/msg826783.html
->     https://github.com/gwshan/linux  ("sdei_client")
->     https://github.com/gwshan/linux  ("sdei")
-> 
-> First of all, bits[23:20] of the SDEI event number are reserved to
-> indicate the SDEI event type:
-> 
->     0x0: physical SDEI event number, originated from underly firmware
->     0x1: virtual SDEI event number, passed from KVM because of physical
->          SDEI event. The corresponding SDEI events are also called as
->          passthrou SDEI events.
->     0x2: KVM private SDEI event number, originated from KVM itself.
-> 
-> The implementation supports passthrou and KVM private SDEI events. The
-> same SDEI event can be registered and enabled on multiple VMs. So the
-> registered SDEI event is represented by "struct kvm_sdei_event" and
-> formed into a linked list globally. "struct kvm_sdei_kvm_event" is
-> created and inserted into the radix tree in "struct kvm_sdei_event",
-> which is indexed by @kvm->userspace_pid if the corresponding SDEI event
-> is registered on the particular KVM. Besides, "struct kvm_sdei_vcpu_event"
-> is introduced to deliver SDEI event to one particular vCPU. So the data
-> structs have different scopes, summaried as below:
-> 
->     struct kvm_sdei_event: global scope
->     struct kvm_sdei_kvm_event: VM scope
->     struct kvm_sdei_vcpu_event: vCPU sope
-> 
-> For the passthrou SDEI events, the specific handler is registered to the
-> underly firmware if it's supported. The core functionality of the handler
-> is to route the incoming SDEI events to the target VM and vCPU. For the
-> shared SDEI event, it's duplicated to all VMs where the SDEI event was
-> registered and enabled. The target vCPU is chosen basing on the setting
-> of routing affinity. For private SDEI event, the event received from the
-> physical CPU is duplicated and delivered to the vCPUs, which are currently
-> running or suspending on the physical CPU. For KVM private event, which is
-> pre-defined and represented by "struct kvm_sdei_priv", API (kvm_sdei_inject())
-> is always called to deliver the event to the specified vCPU.
-> 
-> The series is organized as below:
-> 
-> PATCH[01-02] Retrieve event signaled property on registration and add API
->               (sdei_event_get_info()) to retrieve event's information from
->               underly firmware for the passthrou SDEI events.
-> PATCH[03]    Introduce template for smccc_get_argx().
-> PATCH[04]    Adds the needed source files, data structs.
-> PATCH[05-13] Support various hypercalls defined in SDEI specification (v1.0).
-> PATCH[14]    Implements the SDEI handler to route the incoming passthrou SDEI
->               events to target VMs and vCPUs.
-> PATCH[15-16] Support more hypercalls like COMPLETE, COMPLETE_AND_RESUME, and
->               CONTEXT.
-> PATCH[17]    Support injecting KVM private SDEI event and expose the SDEI
->               capability.
-> PATCH[18]    Add self-test case for KVM private SDEI event
-> 
+During picking up pvtime LPT support for arm64, I do some trivial fixes for
+pvtime ST.
 
-[+James/Mark/Eric]
+change log:
 
-The series was supposed to have been cc'ed to more folks, but the
-"git send-email" didn't do it properly for me. I assume I needn't
-resend it until I'm going to be asked for that explicitly.
+v2:
+ - Add Andrew's and Steven's R-b.
+ - Correct commit message of the first patch.
+ - Drop the second patch.
 
-Thanks,
-Gavin
+Keqian Zhu (2):
+  KVM: arm64: Some fixes of PV-time interface document
+  KVM: arm64: Use kvm_write_guest_lock when init stolen time
 
-> Gavin Shan (18):
->    drivers/firmware/sdei: Retrieve event signaled property on
->      registration
->    drivers/firmware/sdei: Add sdei_event_get_info()
->    arm/smccc: Introduce template for inline functions
->    arm64/kvm: Add SDEI virtualization infrastructure
->    arm64/kvm: Support SDEI_1_0_FN_SDEI_VERSION hypercall
->    arm64/kvm: Support SDEI_1_0_FN_SDEI_EVENT_REGISTER
->    arm64/kvm: Support SDEI_1_0_FN_SDEI_EVENT_{ENABLE, DISABLE} hypercall
->    arm64/kvm: Support SDEI_1_0_FN_SDEI_EVENT_UNREGISTER hypercall
->    arm64/kvm: Support SDEI_1_0_FN_SDEI_EVENT_STATUS hypercall
->    arm64/kvm: Support SDEI_1_0_FN_SDEI_EVENT_GET_INFO hypercall
->    arm64/kvm: Support SDEI_1_0_FN_SDEI_EVENT_ROUTING_SET hypercall
->    arm64/kvm: Support SDEI_1_0_FN_SDEI_PE_{MASK, UNMASK} hypercall
->    arm64/kvm: Support SDEI_1_0_FN_SDEI_{PRIVATE,SHARED}_RESET hypercall
->    arm64/kvm: Implement event handler
->    arm64/kvm: Support SDEI_1_0_FN_SDEI_EVENT_{COMPLETE,
->      COMPLETE_AND_RESUME} hypercall
->    arm64/kvm: Support SDEI_1_0_FN_SDEI_EVENT_CONTEXT hypercall
->    arm64/kvm: Expose SDEI capability
->    kvm/selftests: Add SDEI test case
-> 
->   arch/arm64/include/asm/kvm_emulate.h       |    2 +
->   arch/arm64/include/asm/kvm_host.h          |   10 +
->   arch/arm64/include/asm/kvm_sdei.h          |  117 ++
->   arch/arm64/kvm/Makefile                    |    2 +-
->   arch/arm64/kvm/aarch32.c                   |    8 +
->   arch/arm64/kvm/arm.c                       |   19 +
->   arch/arm64/kvm/hypercalls.c                |   19 +
->   arch/arm64/kvm/inject_fault.c              |   30 +
->   arch/arm64/kvm/reset.c                     |    3 +
->   arch/arm64/kvm/sdei.c                      | 1322 ++++++++++++++++++++
->   drivers/firmware/arm_sdei.c                |   38 +
->   include/kvm/arm_hypercalls.h               |   34 +-
->   include/linux/arm_sdei.h                   |    7 +
->   include/uapi/linux/kvm.h                   |    4 +
->   tools/testing/selftests/kvm/Makefile       |    1 +
->   tools/testing/selftests/kvm/aarch64/sdei.c |  170 +++
->   16 files changed, 1766 insertions(+), 20 deletions(-)
->   create mode 100644 arch/arm64/include/asm/kvm_sdei.h
->   create mode 100644 arch/arm64/kvm/sdei.c
->   create mode 100644 tools/testing/selftests/kvm/aarch64/sdei.c
-> 
+ Documentation/virt/kvm/arm/pvtime.rst | 6 +++---
+ arch/arm64/kvm/pvtime.c               | 6 +-----
+ 2 files changed, 4 insertions(+), 8 deletions(-)
+
+-- 
+1.8.3.1
 
 _______________________________________________
 kvmarm mailing list
