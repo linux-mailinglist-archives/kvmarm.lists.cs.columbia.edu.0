@@ -2,59 +2,74 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id AD72A246084
-	for <lists+kvmarm@lfdr.de>; Mon, 17 Aug 2020 10:43:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 14E22246105
+	for <lists+kvmarm@lfdr.de>; Mon, 17 Aug 2020 10:47:52 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2A9874BF7A;
-	Mon, 17 Aug 2020 04:43:29 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 90AA84BF92;
+	Mon, 17 Aug 2020 04:47:51 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.502
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id shTWTaZCde+F; Mon, 17 Aug 2020 04:43:29 -0400 (EDT)
+	with ESMTP id YkSLTPbXX59f; Mon, 17 Aug 2020 04:47:51 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EF8454BF70;
-	Mon, 17 Aug 2020 04:43:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 88A634BF74;
+	Mon, 17 Aug 2020 04:47:50 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 123514BF34
- for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 04:43:26 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E55404BF6E
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 04:47:48 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id GuXqXtc0UHYY for <kvmarm@lists.cs.columbia.edu>;
- Mon, 17 Aug 2020 04:43:25 -0400 (EDT)
-Received: from huawei.com (szxga07-in.huawei.com [45.249.212.35])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id EAE9C4B647
- for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 04:43:24 -0400 (EDT)
-Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.60])
- by Forcepoint Email with ESMTP id B2129354BE937E759B8A;
- Mon, 17 Aug 2020 16:43:20 +0800 (CST)
-Received: from [10.174.187.22] (10.174.187.22) by
- DGGEMS413-HUB.china.huawei.com (10.3.19.213) with Microsoft SMTP Server id
- 14.3.487.0; Mon, 17 Aug 2020 16:43:14 +0800
-Subject: Re: [PATCH 2/3] KVM: uapi: Remove KVM_DEV_TYPE_ARM_PV_TIME in
- kvm_device_type
-To: Marc Zyngier <maz@kernel.org>
+ with ESMTP id kxKvWbYAoknZ for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 17 Aug 2020 04:47:47 -0400 (EDT)
+Received: from us-smtp-delivery-1.mimecast.com
+ (us-smtp-delivery-1.mimecast.com [207.211.31.120])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E951B4BF6A
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 04:47:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1597654067;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=t355WPxa6uPtXL7lonYCwvII2S9kGVc9Ngbl+va3Q60=;
+ b=Uof3R/krOg1yAzNoKrFKek7aV/LVfVKB9lE90p7sPmJIXXNP1uub4hTpmJdBBlhHML6MBB
+ WX+W13fwbNWLAsc0SSBEp8lglBLp86M4flKfcca5VwOebrCAHEq5gbp6Imab1eOS7iTKK/
+ wPDnfKtU0XrRVAZvMKbMLlFNT5lyeL0=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-469-jE_OXeiPPe2LKymmUwTwdQ-1; Mon, 17 Aug 2020 04:47:43 -0400
+X-MC-Unique: jE_OXeiPPe2LKymmUwTwdQ-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com
+ [10.5.11.14])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id A951D81F010;
+ Mon, 17 Aug 2020 08:47:41 +0000 (UTC)
+Received: from kamzik.brq.redhat.com (unknown [10.40.192.210])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 7048D5D9D2;
+ Mon, 17 Aug 2020 08:47:38 +0000 (UTC)
+Date: Mon, 17 Aug 2020 10:47:35 +0200
+From: Andrew Jones <drjones@redhat.com>
+To: Keqian Zhu <zhukeqian1@huawei.com>
+Subject: Re: [PATCH 1/3] KVM: arm64: Some fixes of PV-time interface document
+Message-ID: <20200817084735.xyfdtgcsuxzwgzyr@kamzik.brq.redhat.com>
 References: <20200817033729.10848-1-zhukeqian1@huawei.com>
- <20200817033729.10848-3-zhukeqian1@huawei.com>
- <f97633b4a39c301f916bb76030dcabf0@kernel.org>
-From: zhukeqian <zhukeqian1@huawei.com>
-Message-ID: <4cd543a2-4d5b-882c-38d6-f5055512f0dc@huawei.com>
-Date: Mon, 17 Aug 2020 16:43:14 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+ <20200817033729.10848-2-zhukeqian1@huawei.com>
 MIME-Version: 1.0
-In-Reply-To: <f97633b4a39c301f916bb76030dcabf0@kernel.org>
-X-Originating-IP: [10.174.187.22]
-X-CFilter-Loop: Reflected
+Content-Disposition: inline
+In-Reply-To: <20200817033729.10848-2-zhukeqian1@huawei.com>
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
 Cc: kvm@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
- linux-kernel@vger.kernel.org, Steven
- Price <steven.price@arm.com>, Will Deacon <will@kernel.org>,
+ linux-kernel@vger.kernel.org, Steven Price <steven.price@arm.com>,
+ Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>,
  kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -72,56 +87,44 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Marc,
-
-On 2020/8/17 15:39, Marc Zyngier wrote:
-> On 2020-08-17 04:37, Keqian Zhu wrote:
->> ARM64 PV-time ST is configured by userspace through vCPU attribute,
->> and KVM_DEV_TYPE_ARM_PV_TIME is unused.
->>
->> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
->> ---
->>  include/uapi/linux/kvm.h       | 2 --
->>  tools/include/uapi/linux/kvm.h | 2 --
->>  2 files changed, 4 deletions(-)
->>
->> diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
->> index 4fdf303..9a6b97e 100644
->> --- a/include/uapi/linux/kvm.h
->> +++ b/include/uapi/linux/kvm.h
->> @@ -1258,8 +1258,6 @@ enum kvm_device_type {
->>  #define KVM_DEV_TYPE_ARM_VGIC_ITS    KVM_DEV_TYPE_ARM_VGIC_ITS
->>      KVM_DEV_TYPE_XIVE,
->>  #define KVM_DEV_TYPE_XIVE        KVM_DEV_TYPE_XIVE
->> -    KVM_DEV_TYPE_ARM_PV_TIME,
->> -#define KVM_DEV_TYPE_ARM_PV_TIME    KVM_DEV_TYPE_ARM_PV_TIME
->>      KVM_DEV_TYPE_MAX,
->>  };
->>
->> diff --git a/tools/include/uapi/linux/kvm.h b/tools/include/uapi/linux/kvm.h
->> index 4fdf303..9a6b97e 100644
->> --- a/tools/include/uapi/linux/kvm.h
->> +++ b/tools/include/uapi/linux/kvm.h
->> @@ -1258,8 +1258,6 @@ enum kvm_device_type {
->>  #define KVM_DEV_TYPE_ARM_VGIC_ITS    KVM_DEV_TYPE_ARM_VGIC_ITS
->>      KVM_DEV_TYPE_XIVE,
->>  #define KVM_DEV_TYPE_XIVE        KVM_DEV_TYPE_XIVE
->> -    KVM_DEV_TYPE_ARM_PV_TIME,
->> -#define KVM_DEV_TYPE_ARM_PV_TIME    KVM_DEV_TYPE_ARM_PV_TIME
->>      KVM_DEV_TYPE_MAX,
->>  };
+On Mon, Aug 17, 2020 at 11:37:27AM +0800, Keqian Zhu wrote:
+> Rename PV_FEATURES tp PV_TIME_FEATURES
 > 
-> No. You can't drop anything from UAPI, used or not. Doing so will
-> break the compilation of any userspace that, for any reason, references
-> this value. We cannot reuse this value in the future either, as it would
-> create a we wouldn't know which device to create.
+> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
+> ---
+>  Documentation/virt/kvm/arm/pvtime.rst | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> It is pretty unfortunate that PV time has turned into such a train wreck,
-> but that's what we have now, and it has to stay.
-Well, I see. It is a sad thing indeed.
+> diff --git a/Documentation/virt/kvm/arm/pvtime.rst b/Documentation/virt/kvm/arm/pvtime.rst
+> index 687b60d..94bffe2 100644
+> --- a/Documentation/virt/kvm/arm/pvtime.rst
+> +++ b/Documentation/virt/kvm/arm/pvtime.rst
+> @@ -3,7 +3,7 @@
+>  Paravirtualized time support for arm64
+>  ======================================
+>  
+> -Arm specification DEN0057/A defines a standard for paravirtualised time
+> +Arm specification DEN0057/A defines a standard for paravirtualized time
+>  support for AArch64 guests:
+>  
+>  https://developer.arm.com/docs/den0057/a
+> @@ -19,8 +19,8 @@ Two new SMCCC compatible hypercalls are defined:
+>  
+>  These are only available in the SMC64/HVC64 calling convention as
+>  paravirtualized time is not available to 32 bit Arm guests. The existence of
+> -the PV_FEATURES hypercall should be probed using the SMCCC 1.1 ARCH_FEATURES
+> -mechanism before calling it.
+> +the PV_TIME_FEATURES hypercall should be probed using the SMCCC 1.1
+> +ARCH_FEATURES mechanism before calling it.
+>  
+>  PV_TIME_FEATURES
+>      ============= ========    ==========
+> -- 
+> 1.8.3.1
+>
 
-Thanks,
-Keqian
+Reviewed-by: Andrew Jones <drjones@redhat.com>
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
