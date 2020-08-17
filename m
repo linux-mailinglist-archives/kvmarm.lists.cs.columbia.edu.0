@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DA8EE245B17
-	for <lists+kvmarm@lfdr.de>; Mon, 17 Aug 2020 05:38:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00725245B15
+	for <lists+kvmarm@lfdr.de>; Mon, 17 Aug 2020 05:38:21 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 89EC14BD07;
-	Sun, 16 Aug 2020 23:38:22 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6D05B4BD73;
+	Sun, 16 Aug 2020 23:38:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
@@ -16,33 +16,34 @@ X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1pkx3zhi-xg9; Sun, 16 Aug 2020 23:38:22 -0400 (EDT)
+	with ESMTP id ISJYsfcLECfH; Sun, 16 Aug 2020 23:38:21 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7C2E44BD70;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 43D914BD57;
 	Sun, 16 Aug 2020 23:38:20 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0CFDC4BCF5
- for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Aug 2020 23:38:19 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A0AC54BD33
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Aug 2020 23:38:18 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id uDNaSBu9vc66 for <kvmarm@lists.cs.columbia.edu>;
- Sun, 16 Aug 2020 23:38:18 -0400 (EDT)
+ with ESMTP id L8i9-uG0eSxd for <kvmarm@lists.cs.columbia.edu>;
+ Sun, 16 Aug 2020 23:38:16 -0400 (EDT)
 Received: from huawei.com (szxga05-in.huawei.com [45.249.212.191])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D43284BD0A
- for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Aug 2020 23:38:17 -0400 (EDT)
-Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.58])
- by Forcepoint Email with ESMTP id 3E6E47DEA0381D2AEE45;
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 91FCD4BCF5
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Aug 2020 23:38:16 -0400 (EDT)
+Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.60])
+ by Forcepoint Email with ESMTP id 71BB2E42055582206BF7;
  Mon, 17 Aug 2020 11:38:13 +0800 (CST)
 Received: from DESKTOP-5IS4806.china.huawei.com (10.174.187.22) by
  DGGEMS413-HUB.china.huawei.com (10.3.19.213) with Microsoft SMTP Server id
- 14.3.487.0; Mon, 17 Aug 2020 11:38:05 +0800
+ 14.3.487.0; Mon, 17 Aug 2020 11:38:06 +0800
 From: Keqian Zhu <zhukeqian1@huawei.com>
 To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
  <kvmarm@lists.cs.columbia.edu>, <kvm@vger.kernel.org>
-Subject: [PATCH 1/3] KVM: arm64: Some fixes of PV-time interface document
-Date: Mon, 17 Aug 2020 11:37:27 +0800
-Message-ID: <20200817033729.10848-2-zhukeqian1@huawei.com>
+Subject: [PATCH 2/3] KVM: uapi: Remove KVM_DEV_TYPE_ARM_PV_TIME in
+ kvm_device_type
+Date: Mon, 17 Aug 2020 11:37:28 +0800
+Message-ID: <20200817033729.10848-3-zhukeqian1@huawei.com>
 X-Mailer: git-send-email 2.8.4.windows.1
 In-Reply-To: <20200817033729.10848-1-zhukeqian1@huawei.com>
 References: <20200817033729.10848-1-zhukeqian1@huawei.com>
@@ -67,37 +68,41 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Rename PV_FEATURES tp PV_TIME_FEATURES
+ARM64 PV-time ST is configured by userspace through vCPU attribute,
+and KVM_DEV_TYPE_ARM_PV_TIME is unused.
 
 Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
 ---
- Documentation/virt/kvm/arm/pvtime.rst | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/uapi/linux/kvm.h       | 2 --
+ tools/include/uapi/linux/kvm.h | 2 --
+ 2 files changed, 4 deletions(-)
 
-diff --git a/Documentation/virt/kvm/arm/pvtime.rst b/Documentation/virt/kvm/arm/pvtime.rst
-index 687b60d..94bffe2 100644
---- a/Documentation/virt/kvm/arm/pvtime.rst
-+++ b/Documentation/virt/kvm/arm/pvtime.rst
-@@ -3,7 +3,7 @@
- Paravirtualized time support for arm64
- ======================================
+diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
+index 4fdf303..9a6b97e 100644
+--- a/include/uapi/linux/kvm.h
++++ b/include/uapi/linux/kvm.h
+@@ -1258,8 +1258,6 @@ enum kvm_device_type {
+ #define KVM_DEV_TYPE_ARM_VGIC_ITS	KVM_DEV_TYPE_ARM_VGIC_ITS
+ 	KVM_DEV_TYPE_XIVE,
+ #define KVM_DEV_TYPE_XIVE		KVM_DEV_TYPE_XIVE
+-	KVM_DEV_TYPE_ARM_PV_TIME,
+-#define KVM_DEV_TYPE_ARM_PV_TIME	KVM_DEV_TYPE_ARM_PV_TIME
+ 	KVM_DEV_TYPE_MAX,
+ };
  
--Arm specification DEN0057/A defines a standard for paravirtualised time
-+Arm specification DEN0057/A defines a standard for paravirtualized time
- support for AArch64 guests:
+diff --git a/tools/include/uapi/linux/kvm.h b/tools/include/uapi/linux/kvm.h
+index 4fdf303..9a6b97e 100644
+--- a/tools/include/uapi/linux/kvm.h
++++ b/tools/include/uapi/linux/kvm.h
+@@ -1258,8 +1258,6 @@ enum kvm_device_type {
+ #define KVM_DEV_TYPE_ARM_VGIC_ITS	KVM_DEV_TYPE_ARM_VGIC_ITS
+ 	KVM_DEV_TYPE_XIVE,
+ #define KVM_DEV_TYPE_XIVE		KVM_DEV_TYPE_XIVE
+-	KVM_DEV_TYPE_ARM_PV_TIME,
+-#define KVM_DEV_TYPE_ARM_PV_TIME	KVM_DEV_TYPE_ARM_PV_TIME
+ 	KVM_DEV_TYPE_MAX,
+ };
  
- https://developer.arm.com/docs/den0057/a
-@@ -19,8 +19,8 @@ Two new SMCCC compatible hypercalls are defined:
- 
- These are only available in the SMC64/HVC64 calling convention as
- paravirtualized time is not available to 32 bit Arm guests. The existence of
--the PV_FEATURES hypercall should be probed using the SMCCC 1.1 ARCH_FEATURES
--mechanism before calling it.
-+the PV_TIME_FEATURES hypercall should be probed using the SMCCC 1.1
-+ARCH_FEATURES mechanism before calling it.
- 
- PV_TIME_FEATURES
-     ============= ========    ==========
 -- 
 1.8.3.1
 
