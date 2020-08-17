@@ -2,85 +2,80 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id BA5C8245E94
-	for <lists+kvmarm@lfdr.de>; Mon, 17 Aug 2020 09:55:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23420245E24
+	for <lists+kvmarm@lfdr.de>; Mon, 17 Aug 2020 09:39:20 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 45C6D4BF4D;
-	Mon, 17 Aug 2020 03:55:40 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9DC144BF16;
+	Mon, 17 Aug 2020 03:39:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.911
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@gmail.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IwYGN0XE6cV1; Mon, 17 Aug 2020 03:55:40 -0400 (EDT)
+	with ESMTP id oGJdVG-fJPCh; Mon, 17 Aug 2020 03:39:19 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3B86B4BF3F;
-	Mon, 17 Aug 2020 03:55:39 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6EDDC4BF18;
+	Mon, 17 Aug 2020 03:39:18 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1D0B94BC02
- for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Aug 2020 22:03:14 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C7B424BF12
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 03:39:16 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id wopY1ZqCwvKV for <kvmarm@lists.cs.columbia.edu>;
- Sun, 16 Aug 2020 22:03:13 -0400 (EDT)
-Received: from mail-pg1-f196.google.com (mail-pg1-f196.google.com
- [209.85.215.196])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0BE354BC01
- for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Aug 2020 22:03:13 -0400 (EDT)
-Received: by mail-pg1-f196.google.com with SMTP id j21so7361932pgi.9
- for <kvmarm@lists.cs.columbia.edu>; Sun, 16 Aug 2020 19:03:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=g5HDuGeUVDk8sqM9/o9Q4NUmETeOwP25OuVRGMdbePY=;
- b=UHlkQh/6diYYltxpDHOf9F6jhol14EbQYUrpGuhjvkcO8jon5uiJ4TImBdetaDSwv2
- XEawf1DrPtHMEfmKHTXnLkZFvqmqbO8rYrd37X3aiOk8vBrEoWL+G94nVoT5aJsXmQsm
- Go9KlFt4aN3b9hWucnpcRpB/NQcLN+vX0Rd/Kk2MiJ036vl7dnnQ5XeO7DpTKnnqG2qU
- dsifEdi4HLaQk8lmm5b++5gcyTKSwaKiXkqPnyUKhJs4NEYLhAzQCN8n84QpQZDV3p/u
- 7wtsBbqByBqeEXfd32Q33LqFtpwduLcrA857QLGv4wcraYoxWiGFxmK/u0O2z5OTkvzn
- d95w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=g5HDuGeUVDk8sqM9/o9Q4NUmETeOwP25OuVRGMdbePY=;
- b=uTFSlvUJ1dn92WuIiNngF5mRH7U7wWgpUX9kIp/N/nex227/g15bd9EJcIsuYOzcFd
- QvxDjZF57Z+BL4TS58sSncYKMdIKgBid0ng35jo1Rxv4vXS0pf45BKqYw8e5sTqXmlhF
- dTwImogmcatl0/OLeso7xmYU1L1aWimdAPz7BeLqITp+4CtFry5LxREc7LuO0fxD+7kT
- iM/BnAD9e/c970dxAVf3WA87NdbtNw8KNsegtmMYZxZiP9NxQJ2xRBkEF57tjjG2GpKr
- MkIwPHZhPNcbQQ5cl6Svb1Tx991VU0pnaDynkAOC+MpHAfkcFEV3h++zdhLfp19ZJ5RV
- S7RQ==
-X-Gm-Message-State: AOAM533iPFpctFukm7qb5AK3qGCeN2i34qQdXB3JA19Z2+CWXe8QuYpZ
- S3RJ0YFk7eZWqBJxRzG42Kk=
-X-Google-Smtp-Source: ABdhPJwQc+l1piKsFZa/qTebQhuu4bbc4URcZ9WtR1gAqur0rzEPvsvBexYaTUpz1Zlk7YJhLE+qJg==
-X-Received: by 2002:a62:2c0e:: with SMTP id s14mr9881030pfs.289.1597629791959; 
- Sun, 16 Aug 2020 19:03:11 -0700 (PDT)
-Received: from localhost ([2409:10:2e40:5100:6e29:95ff:fe2d:8f34])
- by smtp.gmail.com with ESMTPSA id na16sm15433091pjb.30.2020.08.16.19.03.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 16 Aug 2020 19:03:11 -0700 (PDT)
-Date: Mon, 17 Aug 2020 11:03:10 +0900
-From: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
-To: Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>
-Subject: Re: [RFC][PATCH 0/4] arm64:kvm: teach guest sched that VCPUs can be
- preempted
-Message-ID: <20200817020310.GA1210848@jagdpanzerIV.localdomain>
-References: <20200721041742.197354-1-sergey.senozhatsky@gmail.com>
+ with ESMTP id qepmjXX7eAXH for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 17 Aug 2020 03:39:15 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 584D34BA11
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 03:39:15 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 14CC420758;
+ Mon, 17 Aug 2020 07:39:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1597649954;
+ bh=5f7u17TvsjTrzreApIZ4x0jr/04LEQs1hIO1IBZJBVg=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=MZk/ZzO0Xwj51vzBkOh6djd6cauo+roP/pRXxR0PLsTP9CxwmDwEQWJzTOZ+efS5N
+ QUUrA+K/1xW95pGQ2wvCVRVUyJzPQ17UZXIXt1cfl5+9y6EMMgKTNeEDjcoRzAfaIj
+ XlILTLZZUpgl+E35JmvL+d76aYnLmH9VvHC3F0nA=
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+ by disco-boy.misterjones.org with esmtpsa
+ (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
+ (envelope-from <maz@kernel.org>)
+ id 1k7Zjc-003T4X-BL; Mon, 17 Aug 2020 08:39:12 +0100
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20200721041742.197354-1-sergey.senozhatsky@gmail.com>
-X-Mailman-Approved-At: Mon, 17 Aug 2020 03:55:37 -0400
-Cc: joelaf@google.com, linux-kernel@vger.kernel.org,
- Sergey Senozhatsky <sergey.senozhatsky@gmail.com>, suleiman@google.com,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Date: Mon, 17 Aug 2020 08:39:12 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: Keqian Zhu <zhukeqian1@huawei.com>
+Subject: Re: [PATCH 2/3] KVM: uapi: Remove KVM_DEV_TYPE_ARM_PV_TIME in
+ kvm_device_type
+In-Reply-To: <20200817033729.10848-3-zhukeqian1@huawei.com>
+References: <20200817033729.10848-1-zhukeqian1@huawei.com>
+ <20200817033729.10848-3-zhukeqian1@huawei.com>
+User-Agent: Roundcube Webmail/1.4.7
+Message-ID: <f97633b4a39c301f916bb76030dcabf0@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: zhukeqian1@huawei.com, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org, catalin.marinas@arm.com, will@kernel.org,
+ james.morse@arm.com, suzuki.poulose@arm.com, steven.price@arm.com,
+ wanghaibin.wang@huawei.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvm@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
+ linux-kernel@vger.kernel.org, Steven Price <steven.price@arm.com>,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -92,39 +87,60 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On (20/07/21 13:17), Sergey Senozhatsky wrote:
-> Hello,
+On 2020-08-17 04:37, Keqian Zhu wrote:
+> ARM64 PV-time ST is configured by userspace through vCPU attribute,
+> and KVM_DEV_TYPE_ARM_PV_TIME is unused.
 > 
-> 	RFC
+> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
+> ---
+>  include/uapi/linux/kvm.h       | 2 --
+>  tools/include/uapi/linux/kvm.h | 2 --
+>  2 files changed, 4 deletions(-)
 > 
-> 	We noticed that in a number of cases when we wake_up_process()
-> on arm64 guest we end up enqueuing that task on a preempted VCPU. The culprit
-> appears to be the fact that arm64 guests are not aware of VCPU preemption
-> as such, so when sched picks up an idle VCPU it always assumes that VCPU
-> is available:
+> diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
+> index 4fdf303..9a6b97e 100644
+> --- a/include/uapi/linux/kvm.h
+> +++ b/include/uapi/linux/kvm.h
+> @@ -1258,8 +1258,6 @@ enum kvm_device_type {
+>  #define KVM_DEV_TYPE_ARM_VGIC_ITS	KVM_DEV_TYPE_ARM_VGIC_ITS
+>  	KVM_DEV_TYPE_XIVE,
+>  #define KVM_DEV_TYPE_XIVE		KVM_DEV_TYPE_XIVE
+> -	KVM_DEV_TYPE_ARM_PV_TIME,
+> -#define KVM_DEV_TYPE_ARM_PV_TIME	KVM_DEV_TYPE_ARM_PV_TIME
+>  	KVM_DEV_TYPE_MAX,
+>  };
 > 
->       wake_up_process()
->        try_to_wake_up()
->         select_task_rq_fair()
->          available_idle_cpu()
->           vcpu_is_preempted()    // return false;
-> 
-> Which is, obviously, not the case.
-> 
-> This RFC patch set adds a simple vcpu_is_preempted() implementation so
-> that scheduler can make better decisions when it search for the idle
-> (v)CPU.
+> diff --git a/tools/include/uapi/linux/kvm.h 
+> b/tools/include/uapi/linux/kvm.h
+> index 4fdf303..9a6b97e 100644
+> --- a/tools/include/uapi/linux/kvm.h
+> +++ b/tools/include/uapi/linux/kvm.h
+> @@ -1258,8 +1258,6 @@ enum kvm_device_type {
+>  #define KVM_DEV_TYPE_ARM_VGIC_ITS	KVM_DEV_TYPE_ARM_VGIC_ITS
+>  	KVM_DEV_TYPE_XIVE,
+>  #define KVM_DEV_TYPE_XIVE		KVM_DEV_TYPE_XIVE
+> -	KVM_DEV_TYPE_ARM_PV_TIME,
+> -#define KVM_DEV_TYPE_ARM_PV_TIME	KVM_DEV_TYPE_ARM_PV_TIME
+>  	KVM_DEV_TYPE_MAX,
+>  };
 
-Hi,
+No. You can't drop anything from UAPI, used or not. Doing so will
+break the compilation of any userspace that, for any reason, references
+this value. We cannot reuse this value in the future either, as it would
+create a we wouldn't know which device to create.
 
-A gentle ping.
+It is pretty unfortunate that PV time has turned into such a train 
+wreck,
+but that's what we have now, and it has to stay.
 
-	-ss
+         M.
+-- 
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
