@@ -2,66 +2,65 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 63CF62463F6
-	for <lists+kvmarm@lfdr.de>; Mon, 17 Aug 2020 12:05:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0F432463F8
+	for <lists+kvmarm@lfdr.de>; Mon, 17 Aug 2020 12:05:56 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EDC864C00F;
-	Mon, 17 Aug 2020 06:05:51 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 85B414C00E;
+	Mon, 17 Aug 2020 06:05:56 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id uy+NFo7Fum8h; Mon, 17 Aug 2020 06:05:51 -0400 (EDT)
+	with ESMTP id WZbE03fbenn1; Mon, 17 Aug 2020 06:05:55 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F165F4BFFB;
-	Mon, 17 Aug 2020 06:05:50 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3EF1F4BE67;
+	Mon, 17 Aug 2020 06:05:55 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 068CC4BF95
- for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 06:05:49 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 215284BFFD
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 06:05:54 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id bcar-nQc4FrP for <kvmarm@lists.cs.columbia.edu>;
- Mon, 17 Aug 2020 06:05:48 -0400 (EDT)
-Received: from us-smtp-1.mimecast.com (us-smtp-1.mimecast.com [205.139.110.61])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2AFED4BF8F
- for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 06:05:48 -0400 (EDT)
+ with ESMTP id gj-8FGsBeG8M for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 17 Aug 2020 06:05:53 -0400 (EDT)
+Received: from us-smtp-1.mimecast.com (us-smtp-2.mimecast.com [205.139.110.61])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 52D694BFFA
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 06:05:53 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1597658748;
+ s=mimecast20190719; t=1597658753;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6AlofgTqUEw/nGPN1bXhtMBOTHIkm8lMFe6ktm3rCzQ=;
- b=ZAWoVi7bHQA6bi4Q+L/soFqQ0CakPw8zj+4C9WSlrBtyfCvDv6pIJpmyPoiDTtY1ZCGfSf
- tSLMSh/EWi8VzoSfQy/0/1JKAVRM5UMcE23dndCz232Tj8/UuErlPK9e4KZlx/bcCrcCDz
- NUZFuA2iIwDBlcxP07lrCiUm91keSYo=
+ bh=MA2v3vE89FUu4aS1otniNGp24wVcz0FO7FYKp56xhsk=;
+ b=CJykQ9i6zAXAUWiMGFxg1M6hNISfYFBaZeTvOHfahDU14XV6D4/1zvu+8RFZwACYG24Pyj
+ e8YF2yzPz7o1Z6FJibyQpos9cIyBcPwCOe7s2C9cXuYy+kBzkVCzzPnrMFuP317jSjkAc3
+ MoME35MbS/93ggmuKyWQF/t62IZWPpo=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-100-BMgFa0lTM4mkS7urHgAJhw-1; Mon, 17 Aug 2020 06:05:46 -0400
-X-MC-Unique: BMgFa0lTM4mkS7urHgAJhw-1
+ us-mta-492-2DaIqkNZML6ZUrj4hKXtyA-1; Mon, 17 Aug 2020 06:05:49 -0400
+X-MC-Unique: 2DaIqkNZML6ZUrj4hKXtyA-1
 Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com
  [10.5.11.13])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id F3B8918686C1;
- Mon, 17 Aug 2020 10:05:44 +0000 (UTC)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 8DD281014DEE;
+ Mon, 17 Aug 2020 10:05:48 +0000 (UTC)
 Received: from gshan.redhat.com (vpn2-54-130.bne.redhat.com [10.64.54.130])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 1D6F178414;
- Mon, 17 Aug 2020 10:05:41 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 903B9784A8;
+ Mon, 17 Aug 2020 10:05:45 +0000 (UTC)
 From: Gavin Shan <gshan@redhat.com>
 To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH 01/18] drivers/firmware/sdei: Retrieve event signaled property
- on registration
-Date: Mon, 17 Aug 2020 20:05:14 +1000
-Message-Id: <20200817100531.83045-2-gshan@redhat.com>
+Subject: [PATCH 02/18] drivers/firmware/sdei: Add sdei_event_get_info()
+Date: Mon, 17 Aug 2020 20:05:15 +1000
+Message-Id: <20200817100531.83045-3-gshan@redhat.com>
 In-Reply-To: <20200817100531.83045-1-gshan@redhat.com>
 References: <20200817100531.83045-1-gshan@redhat.com>
 MIME-Version: 1.0
@@ -87,45 +86,53 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-This retrieves the event signaled property when it's created for the
-first time. The property will be needed when SDEI virtualization is
-supported.
+This adds API sdei_event_get_info(), to be used when virtualized
+SDEI is supported to retrieve the information about the specified
+event.
 
 Signed-off-by: Gavin Shan <gshan@redhat.com>
 ---
- drivers/firmware/arm_sdei.c | 6 ++++++
- include/linux/arm_sdei.h    | 1 +
- 2 files changed, 7 insertions(+)
+ drivers/firmware/arm_sdei.c | 13 +++++++++++++
+ include/linux/arm_sdei.h    |  2 ++
+ 2 files changed, 15 insertions(+)
 
 diff --git a/drivers/firmware/arm_sdei.c b/drivers/firmware/arm_sdei.c
-index 9c7a6a7c9527..3b34501610f9 100644
+index 3b34501610f9..6bc84ab317d3 100644
 --- a/drivers/firmware/arm_sdei.c
 +++ b/drivers/firmware/arm_sdei.c
-@@ -225,6 +225,12 @@ static struct sdei_internal_event *sdei_event_create(u32 event_num,
- 		goto fail;
- 	event->type = result;
+@@ -191,6 +191,19 @@ static int sdei_api_event_get_info(u32 event, u32 info, u64 *result)
+ 			      0, 0, result);
+ }
  
-+	err = sdei_api_event_get_info(event_num, SDEI_EVENT_INFO_EV_SIGNALED,
-+				      &result);
-+	if (err)
-+		goto fail;
-+	event->signaled = result;
++int sdei_event_get_info(u32 event_num, u32 info, u64 *result)
++{
++	int err;
 +
- 	if (event->type == SDEI_EVENT_TYPE_SHARED) {
- 		reg = kzalloc(sizeof(*reg), GFP_KERNEL);
- 		if (!reg) {
++	mutex_lock(&sdei_events_lock);
++
++	err = sdei_api_event_get_info(event_num, info, result);
++
++	mutex_unlock(&sdei_events_lock);
++
++	return err;
++}
++
+ static struct sdei_internal_event *sdei_event_create(u32 event_num,
+ 						     sdei_event_callback *cb,
+ 						     void *cb_arg)
 diff --git a/include/linux/arm_sdei.h b/include/linux/arm_sdei.h
-index 2723a99937f3..447fe4ae8d8b 100644
+index 447fe4ae8d8b..28d5d5853314 100644
 --- a/include/linux/arm_sdei.h
 +++ b/include/linux/arm_sdei.h
-@@ -26,6 +26,7 @@ struct sdei_event {
- 	u32			event_num;
- 	u8			type;
- 	u8			priority;
-+	u8			signaled;
+@@ -29,6 +29,8 @@ struct sdei_event {
+ 	u8			signaled;
  };
  
++int sdei_event_get_info(u32 event_num, u32 info, u64 *result);
++
  /*
+  * Register your callback to claim an event. The event must be described
+  * by firmware.
 -- 
 2.23.0
 
