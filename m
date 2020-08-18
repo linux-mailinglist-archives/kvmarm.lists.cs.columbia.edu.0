@@ -2,56 +2,99 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 75546247CC3
-	for <lists+kvmarm@lfdr.de>; Tue, 18 Aug 2020 05:28:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D717247E76
+	for <lists+kvmarm@lfdr.de>; Tue, 18 Aug 2020 08:31:22 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A3FFF4C265;
-	Mon, 17 Aug 2020 23:28:32 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 74BEA4BF97;
+	Tue, 18 Aug 2020 02:31:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.502
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id G8hBQK85AeEG; Mon, 17 Aug 2020 23:28:32 -0400 (EDT)
+	with ESMTP id n+Nm1v18Wc2t; Tue, 18 Aug 2020 02:31:21 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 925264C23D;
-	Mon, 17 Aug 2020 23:28:31 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4136E4BF80;
+	Tue, 18 Aug 2020 02:31:20 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 997BC4C265
- for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 23:28:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E2C594BF3A
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 18 Aug 2020 02:31:18 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Zffh8-36UcXj for <kvmarm@lists.cs.columbia.edu>;
- Mon, 17 Aug 2020 23:28:29 -0400 (EDT)
-Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id F17B14C261
- for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 23:28:28 -0400 (EDT)
-Received: from DGGEMS414-HUB.china.huawei.com (unknown [172.30.72.60])
- by Forcepoint Email with ESMTP id 5E320A170C129F5B98F0;
- Tue, 18 Aug 2020 11:28:25 +0800 (CST)
-Received: from DESKTOP-5IS4806.china.huawei.com (10.174.187.22) by
- DGGEMS414-HUB.china.huawei.com (10.3.19.214) with Microsoft SMTP Server id
- 14.3.487.0; Tue, 18 Aug 2020 11:28:18 +0800
-From: Keqian Zhu <zhukeqian1@huawei.com>
-To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <kvmarm@lists.cs.columbia.edu>, <kvm@vger.kernel.org>
-Subject: [PATCH v2 2/2] clocksource: arm_arch_timer: Correct fault programming
- of CNTKCTL_EL1.EVNTI
-Date: Tue, 18 Aug 2020 11:28:14 +0800
-Message-ID: <20200818032814.15968-3-zhukeqian1@huawei.com>
-X-Mailer: git-send-email 2.8.4.windows.1
-In-Reply-To: <20200818032814.15968-1-zhukeqian1@huawei.com>
-References: <20200818032814.15968-1-zhukeqian1@huawei.com>
+ with ESMTP id M8yFzCsY-Mlm for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 18 Aug 2020 02:31:17 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [216.205.24.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E3DE74BF17
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 18 Aug 2020 02:31:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1597732277;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KmRLPfSWkEBQgpTHY9W7Qe7QZ1EnQbdh33fVf10hkAI=;
+ b=SJ0wgOAWfqr0THi9W8yx22QaiFL2LOCHrYyO7wYaFCNDeNW2+qOrtqxYW20xNWpRjsX9gL
+ 1WKNay3DIiAl9eJ0YBuLLmsjJ28BRQzYzhe1A/F9embVPYnuwV/vhFQ8wAXiwWd4PeVPga
+ tvDms7vQVrQYZhRc3Z+i1wpKZY7GfHI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-529-zNcUrNTzPQe_-0idY2cxyw-1; Tue, 18 Aug 2020 02:31:11 -0400
+X-MC-Unique: zNcUrNTzPQe_-0idY2cxyw-1
+Received: by mail-wr1-f70.google.com with SMTP id b18so7844243wrn.6
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Aug 2020 23:31:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=KmRLPfSWkEBQgpTHY9W7Qe7QZ1EnQbdh33fVf10hkAI=;
+ b=k5l2Y1oRBm9sPnChi/6MNbbjGZuXgsYAIKmZOAMfH29gW17Jj+H+pBEkMNIq0f1qDD
+ 4PYG4D98OUothAj6jxiclMjjCu294frJ7X+RWzI1b/6ITkFTWsUzMrolQVOSdOS1zVLU
+ bn9ICuMY4u6ocy9bsg38WNtTdXoCmPJGaETWXQzX73gOKICKQJrtL+ma2qekj+Q1Zkyl
+ m/Yx7M1/o+tJ8n4wz1By8xWf3MWVyggjkId1xRfgVjEJQA3Jc/Wd3YOuTdDGFMyCoyBL
+ VQmXZwNJXwL4e+1Gm0hVdwq0xIh7wfQA+C9xY4Yaur6MWOLJhwbzKOAfZRpIlHXgKFf8
+ eD/Q==
+X-Gm-Message-State: AOAM532dGVwkqSKrU2iYBSVY5NDbnqdi+T1pAaXlYZo6wrThXMsLKiE5
+ AIJZhavlItHeXroF7BqBGL0NJ5ANGG/2p2CdfoC1zfrEsEIN8PRWWgjYZ0s1EXs+iKkL0vlYjbL
+ NYWR2gUG3n5/7WeuUQtGB3sTd
+X-Received: by 2002:adf:df89:: with SMTP id z9mr18730291wrl.395.1597732270032; 
+ Mon, 17 Aug 2020 23:31:10 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJwPB8f/uccX694hKHkN5+J5pWk6Dx0FQTiyjeONl3Wl6YBHXs3vqZafBJ+p7LBVG4M6e7mTNA==
+X-Received: by 2002:adf:df89:: with SMTP id z9mr18730262wrl.395.1597732269719; 
+ Mon, 17 Aug 2020 23:31:09 -0700 (PDT)
+Received: from ?IPv6:2001:b07:6468:f312:a0d1:fc42:c610:f977?
+ ([2001:b07:6468:f312:a0d1:fc42:c610:f977])
+ by smtp.gmail.com with ESMTPSA id b203sm32630286wmc.22.2020.08.17.23.31.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Aug 2020 23:31:08 -0700 (PDT)
+Subject: Re: [PATCH 0/2] KVM: arm64: Fix sleeping while atomic BUG() on OOM
+To: Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ linux-kernel@vger.kernel.org, kvm@vger.kernel.org
+References: <20200811102725.7121-1-will@kernel.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <ff1d4de2-f3f8-eafa-6ba5-3e5bb715ae05@redhat.com>
+Date: Tue, 18 Aug 2020 08:31:08 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-X-Originating-IP: [10.174.187.22]
-X-CFilter-Loop: Reflected
-Cc: Marc Zyngier <maz@kernel.org>, Steven Price <steven.price@arm.com>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
+In-Reply-To: <20200811102725.7121-1-will@kernel.org>
+Content-Language: en-US
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pbonzini@redhat.com
+X-Mimecast-Spam-Score: 0.002
+X-Mimecast-Originator: redhat.com
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+ Marc Zyngier <maz@kernel.org>,
+ Sean Christopherson <sean.j.christopherson@intel.com>,
+ Paul Mackerras <paulus@ozlabs.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -68,44 +111,58 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-ARM virtual counter supports event stream, it can only trigger an event
-when the trigger bit (the value of CNTKCTL_EL1.EVNTI) of CNTVCT_EL0 changes,
-so the actual period of event stream is 2^(cntkctl_evnti + 1). For example,
-when the trigger bit is 0, then virtual counter trigger an event for every
-two cycles.
+On 11/08/20 12:27, Will Deacon wrote:
+> Hi all,
+> 
+> While stress-testing my arm64 stage-2 page-table rewrite [1], I ran into
+> a sleeping while atomic BUG() during OOM that I can reproduce with
+> mainline.
+> 
+> The problem is that the arm64 page-table code periodically calls
+> cond_resched_lock() when unmapping the stage-2 page-tables, but in the
+> case of OOM, this occurs in atomic context.
+> 
+> These couple of patches (based on 5.8) propagate the flags from the MMU
+> notifier range structure, which in turn indicate whether or not blocking
+> is permitted.
+> 
+> Cheers,
+> 
+> Will
+> 
+> [1] https://android-kvm.googlesource.com/linux/+/refs/heads/topic/pgtable
+> 
+> Cc: Marc Zyngier <maz@kernel.org>
+> Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+> Cc: James Morse <james.morse@arm.com>
+> Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+> Cc: Paul Mackerras <paulus@ozlabs.org>
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: Sean Christopherson <sean.j.christopherson@intel.com>
+> 
+> --->8
+> 
+> Will Deacon (2):
+>   KVM: Pass MMU notifier range flags to kvm_unmap_hva_range()
+>   KVM: arm64: Only reschedule if MMU_NOTIFIER_RANGE_BLOCKABLE is not set
+> 
+>  arch/arm64/include/asm/kvm_host.h   |  2 +-
+>  arch/arm64/kvm/mmu.c                | 19 ++++++++++++++-----
+>  arch/mips/include/asm/kvm_host.h    |  2 +-
+>  arch/mips/kvm/mmu.c                 |  3 ++-
+>  arch/powerpc/include/asm/kvm_host.h |  3 ++-
+>  arch/powerpc/kvm/book3s.c           |  3 ++-
+>  arch/powerpc/kvm/e500_mmu_host.c    |  3 ++-
+>  arch/x86/include/asm/kvm_host.h     |  3 ++-
+>  arch/x86/kvm/mmu/mmu.c              |  3 ++-
+>  virt/kvm/kvm_main.c                 |  3 ++-
+>  10 files changed, 30 insertions(+), 14 deletions(-)
+> 
 
-Fixes: 037f637767a8 ("drivers: clocksource: add support for
-       ARM architected timer event stream")
-Suggested-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
----
- drivers/clocksource/arm_arch_timer.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+These would be okay for 5.9 too, so I plan to queue them myself before
+we fork for 5.10.
 
-diff --git a/drivers/clocksource/arm_arch_timer.c b/drivers/clocksource/arm_arch_timer.c
-index 777d38c..e3b2ee0 100644
---- a/drivers/clocksource/arm_arch_timer.c
-+++ b/drivers/clocksource/arm_arch_timer.c
-@@ -824,10 +824,14 @@ static void arch_timer_configure_evtstream(void)
- {
- 	int evt_stream_div, pos;
- 
--	/* Find the closest power of two to the divisor */
--	evt_stream_div = arch_timer_rate / ARCH_TIMER_EVT_STREAM_FREQ;
-+	/*
-+	 * Find the closest power of two to the divisor. As the event
-+	 * stream can at most be generated at half the frequency of the
-+	 * counter, use half the frequency when computing the divider.
-+	 */
-+	evt_stream_div = arch_timer_rate / ARCH_TIMER_EVT_STREAM_FREQ / 2;
- 	pos = fls(evt_stream_div);
--	if (pos > 1 && !(evt_stream_div & (1 << (pos - 2))))
-+	if ((pos == 1) || (pos > 1 && !(evt_stream_div & (1 << (pos - 2)))))
- 		pos--;
- 	/* enable event stream */
- 	arch_timer_evtstrm_enable(min(pos, 15));
--- 
-1.8.3.1
+Paolo
 
 _______________________________________________
 kvmarm mailing list
