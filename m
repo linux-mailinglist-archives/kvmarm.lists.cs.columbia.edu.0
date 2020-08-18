@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D70922485F6
-	for <lists+kvmarm@lfdr.de>; Tue, 18 Aug 2020 15:28:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EAB692485F7
+	for <lists+kvmarm@lfdr.de>; Tue, 18 Aug 2020 15:28:37 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8B7974BD8A;
-	Tue, 18 Aug 2020 09:28:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9E6BA4BC5F;
+	Tue, 18 Aug 2020 09:28:37 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,40 +18,39 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dkWp102GZCvo; Tue, 18 Aug 2020 09:28:36 -0400 (EDT)
+	with ESMTP id areVlf9k8d1T; Tue, 18 Aug 2020 09:28:36 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6DC214BC56;
-	Tue, 18 Aug 2020 09:28:35 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8AA464BD85;
+	Tue, 18 Aug 2020 09:28:36 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 80FB54BC43
- for <kvmarm@lists.cs.columbia.edu>; Tue, 18 Aug 2020 09:28:32 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 84E854BC5F
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 18 Aug 2020 09:28:34 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id lrRawIRiE9ng for <kvmarm@lists.cs.columbia.edu>;
- Tue, 18 Aug 2020 09:28:31 -0400 (EDT)
+ with ESMTP id QTzCo4Wt9l-K for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 18 Aug 2020 09:28:33 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 817114BA0F
- for <kvmarm@lists.cs.columbia.edu>; Tue, 18 Aug 2020 09:28:31 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 80AAC4BC56
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 18 Aug 2020 09:28:33 -0400 (EDT)
 Received: from localhost.localdomain (236.31.169.217.in-addr.arpa
  [217.169.31.236])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 45CD420786;
- Tue, 18 Aug 2020 13:28:29 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 46E8F2076D;
+ Tue, 18 Aug 2020 13:28:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1597757310;
- bh=e0DnMZYSpHAG3cOE9gkUfbLB2zI+Heb7Ik00ZTvLhqM=;
+ s=default; t=1597757312;
+ bh=LwUUkbZgkvxXk9XXd+UNCL0J6fuOo4qoA8GCDdGU2u8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=RMX1/2Ga9+jRx6jToNmCF7ruzAWlHFaUZpLVzK4hsbquCQ9rHx4vIvRTPmSM3spor
- Tyu8ZIFtpB5f/3S6i0nZqdh6rY3MKl/nL29aixHYCct/CKQAqVnIWyT/7msY2+wHC1
- L0OzeG1u9g5VKaOY431UPyPO1OXGY6S4G6DVdqlQ=
+ b=ybbjGTobnjyqEAcOG2yJHzyJIBQOJxs24vwuTKxjgTKSp/DO2u+OtH3Has6eBmDBt
+ 0dskq07L358gtsgwclxUiJDKdvDRH3Jv9X7pUJ4sIB+WPFenPZO83YCWc6G0FMBSEk
+ cg3NZ0dT71ykh1KJDWcC4XvnKeIRJF8Gxas6SCuY=
 From: Will Deacon <will@kernel.org>
 To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v2 01/22] KVM: arm64: Don't free memcache pages in
- kvm_phys_addr_ioremap()
-Date: Tue, 18 Aug 2020 14:27:57 +0100
-Message-Id: <20200818132818.16065-2-will@kernel.org>
+Subject: [PATCH v2 02/22] KVM: arm64: Remove kvm_mmu_free_memory_caches()
+Date: Tue, 18 Aug 2020 14:27:58 +0100
+Message-Id: <20200818132818.16065-3-will@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200818132818.16065-1-will@kernel.org>
 References: <20200818132818.16065-1-will@kernel.org>
@@ -75,48 +74,60 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-kvm_phys_addr_ioremap() unconditionally empties out the memcache pages
-for the current vCPU on return. This causes subsequent topups to allocate
-fresh pages and is at odds with the behaviour when mapping memory in
-user_mem_abort().
-
-Remove the call to kvm_mmu_free_memory_cache() from
-kvm_phys_addr_ioremap(), allowing the cached pages to be used by a later
-mapping.
+kvm_mmu_free_memory_caches() is only called by kvm_arch_vcpu_destroy(),
+so inline the implementation and get rid of the extra function.
 
 Cc: Marc Zyngier <maz@kernel.org>
 Cc: Quentin Perret <qperret@google.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 ---
- arch/arm64/kvm/mmu.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ arch/arm64/include/asm/kvm_mmu.h | 2 --
+ arch/arm64/kvm/arm.c             | 2 +-
+ arch/arm64/kvm/mmu.c             | 5 -----
+ 3 files changed, 1 insertion(+), 8 deletions(-)
 
+diff --git a/arch/arm64/include/asm/kvm_mmu.h b/arch/arm64/include/asm/kvm_mmu.h
+index 189839c3706a..0f078b1920ff 100644
+--- a/arch/arm64/include/asm/kvm_mmu.h
++++ b/arch/arm64/include/asm/kvm_mmu.h
+@@ -141,8 +141,6 @@ int kvm_phys_addr_ioremap(struct kvm *kvm, phys_addr_t guest_ipa,
+ 
+ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu);
+ 
+-void kvm_mmu_free_memory_caches(struct kvm_vcpu *vcpu);
+-
+ phys_addr_t kvm_mmu_get_httbr(void);
+ phys_addr_t kvm_get_idmap_vector(void);
+ int kvm_mmu_init(void);
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 691d21e4c717..c958c8f03144 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -283,7 +283,7 @@ void kvm_arch_vcpu_destroy(struct kvm_vcpu *vcpu)
+ 	if (vcpu->arch.has_run_once && unlikely(!irqchip_in_kernel(vcpu->kvm)))
+ 		static_branch_dec(&userspace_irqchip_in_use);
+ 
+-	kvm_mmu_free_memory_caches(vcpu);
++	kvm_mmu_free_memory_cache(&vcpu->arch.mmu_page_cache);
+ 	kvm_timer_vcpu_terminate(vcpu);
+ 	kvm_pmu_vcpu_destroy(vcpu);
+ 
 diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 662b0c99a63d..4a24ebdc6fc6 100644
+index 4a24ebdc6fc6..9bc1a5d5a310 100644
 --- a/arch/arm64/kvm/mmu.c
 +++ b/arch/arm64/kvm/mmu.c
-@@ -1489,19 +1489,17 @@ int kvm_phys_addr_ioremap(struct kvm *kvm, phys_addr_t guest_ipa,
- 		ret = kvm_mmu_topup_memory_cache(&cache,
- 						 kvm_mmu_cache_min_pages(kvm));
- 		if (ret)
--			goto out;
-+			break;
- 		spin_lock(&kvm->mmu_lock);
- 		ret = stage2_set_pte(&kvm->arch.mmu, &cache, addr, &pte,
- 				     KVM_S2PTE_FLAG_IS_IOMAP);
- 		spin_unlock(&kvm->mmu_lock);
- 		if (ret)
--			goto out;
-+			break;
- 
- 		pfn++;
- 	}
- 
--out:
--	kvm_mmu_free_memory_cache(&cache);
- 	return ret;
+@@ -2322,11 +2322,6 @@ int kvm_test_age_hva(struct kvm *kvm, unsigned long hva)
+ 				 kvm_test_age_hva_handler, NULL);
  }
  
+-void kvm_mmu_free_memory_caches(struct kvm_vcpu *vcpu)
+-{
+-	kvm_mmu_free_memory_cache(&vcpu->arch.mmu_page_cache);
+-}
+-
+ phys_addr_t kvm_mmu_get_httbr(void)
+ {
+ 	if (__kvm_cpu_uses_extended_idmap())
 -- 
 2.28.0.220.ged08abb693-goog
 
