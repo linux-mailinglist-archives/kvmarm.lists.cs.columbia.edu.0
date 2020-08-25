@@ -2,72 +2,61 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7085F2511F7
-	for <lists+kvmarm@lfdr.de>; Tue, 25 Aug 2020 08:19:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A152425158C
+	for <lists+kvmarm@lfdr.de>; Tue, 25 Aug 2020 11:40:08 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 248844BEB7;
-	Tue, 25 Aug 2020 02:19:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 185654C04E;
+	Tue, 25 Aug 2020 05:40:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id kUSCqVrdjj4m; Tue, 25 Aug 2020 02:19:20 -0400 (EDT)
+	with ESMTP id TMqqTLLuBmpD; Tue, 25 Aug 2020 05:40:07 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 196814BDDC;
-	Tue, 25 Aug 2020 02:19:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B28474C019;
+	Tue, 25 Aug 2020 05:40:06 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0ED1B4BC4E
- for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Aug 2020 02:19:18 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A99814BE82
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Aug 2020 05:40:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id fc13Dh6np+-C for <kvmarm@lists.cs.columbia.edu>;
- Tue, 25 Aug 2020 02:19:17 -0400 (EDT)
-Received: from us-smtp-delivery-1.mimecast.com (us-smtp-1.mimecast.com
- [207.211.31.81])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 396134BBFB
- for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Aug 2020 02:19:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1598336357;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=psiDVQpppxm+kCrD3RikguJd8ywmUxETau29dCApZ1s=;
- b=UtKH4HTw/hQHo16iQDIAhuD4jYDTfPFY3sllDT4XnJYL+RfdYloNY31k9PFhxeyB6iTm6N
- Rjh+ac7thDLpykjIJbZVPomzv6sbTZlZABz3C5HE39UIwCWSVA8nVabLcCCN9AbkTzoF+e
- h17vI/O26ADL3q1M95mubTqSY1l2BeA=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-49-7N7HSzwhOpqsJFE6gdyLzw-1; Tue, 25 Aug 2020 02:19:12 -0400
-X-MC-Unique: 7N7HSzwhOpqsJFE6gdyLzw-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com
- [10.5.11.22])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ with ESMTP id BYN3vwJk0pVA for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 25 Aug 2020 05:40:03 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7D1684BE45
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Aug 2020 05:40:03 -0400 (EDT)
+Received: from localhost.localdomain (236.31.169.217.in-addr.arpa
+ [217.169.31.236])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id A6D551007467;
- Tue, 25 Aug 2020 06:19:11 +0000 (UTC)
-Received: from gshan.redhat.com (vpn2-54-33.bne.redhat.com [10.64.54.33])
- by smtp.corp.redhat.com (Postfix) with ESMTP id E0528100AE5B;
- Tue, 25 Aug 2020 06:19:09 +0000 (UTC)
-From: Gavin Shan <gshan@redhat.com>
+ by mail.kernel.org (Postfix) with ESMTPSA id B19782075B;
+ Tue, 25 Aug 2020 09:40:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1598348402;
+ bh=DarpS0fmBDiEq7Q5dXJMMvw3XvnjQeF94nVnn3lLR/M=;
+ h=From:To:Cc:Subject:Date:From;
+ b=XSD6Fv4S3lRk4CSEpIfcmY+OLFxhXXJCdQPLfu1DKPWKd4WDh1tb66S02Oq1qaqKN
+ wG9+zVIw7vUtOLOOhaC0J7kGfamlCnnM+9MRKbg4daN127C3iqwCMVHBQCPmBhZWDO
+ luKtSyDXW0pE9FH1lDtMQBjrszls3msoKYRpy450=
+From: Will Deacon <will@kernel.org>
 To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH 2/2] arm64/kvm: Drop checking target CPU type on initializing
- module
-Date: Tue, 25 Aug 2020 16:18:56 +1000
-Message-Id: <20200825061856.25382-2-gshan@redhat.com>
-In-Reply-To: <20200825061856.25382-1-gshan@redhat.com>
-References: <20200825061856.25382-1-gshan@redhat.com>
+Subject: [PATCH v3 00/21] KVM: arm64: Rewrite page-table code and fault
+ handling
+Date: Tue, 25 Aug 2020 10:39:32 +0100
+Message-Id: <20200825093953.26493-1-will@kernel.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
-Cc: maz@kernel.org, linux-kernel@vger.kernel.org
+Cc: kernel-team@android.com, Marc Zyngier <maz@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -84,59 +73,85 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The target CPU type is validated when KVM module is initialized.
-However, we always have a valid target CPU type since commit
-<bca556ac468a> ("arm64/kvm: Add generic v8 KVM target").
+Hello folks,
 
-So it's unnecessary to validate the target CPU type at that time
-and this just drops it.
+This is version three of the KVM page-table rework that I previously posted
+here:
 
-Signed-off-by: Gavin Shan <gshan@redhat.com>
----
- arch/arm64/kvm/arm.c | 14 --------------
- 1 file changed, 14 deletions(-)
+  v1: https://lore.kernel.org/r/20200730153406.25136-1-will@kernel.org
+  v2: https://lore.kernel.org/r/20200818132818.16065-1-will@kernel.org
 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 691d21e4c717..faf4bc208a4a 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -1561,11 +1561,6 @@ static int init_hyp_mode(void)
- 	return err;
- }
- 
--static void check_kvm_target_cpu(void *ret)
--{
--	*(int *)ret = kvm_target_cpu();
--}
--
- struct kvm_vcpu *kvm_mpidr_to_vcpu(struct kvm *kvm, unsigned long mpidr)
- {
- 	struct kvm_vcpu *vcpu;
-@@ -1625,7 +1620,6 @@ void kvm_arch_irq_bypass_start(struct irq_bypass_consumer *cons)
- int kvm_arch_init(void *opaque)
- {
- 	int err;
--	int ret, cpu;
- 	bool in_hyp_mode;
- 
- 	if (!is_hyp_mode_available()) {
-@@ -1640,14 +1634,6 @@ int kvm_arch_init(void *opaque)
- 		return -ENODEV;
- 	}
- 
--	for_each_online_cpu(cpu) {
--		smp_call_function_single(cpu, check_kvm_target_cpu, &ret, 1);
--		if (ret < 0) {
--			kvm_err("Error, CPU %d not supported!\n", cpu);
--			return -ENODEV;
--		}
--	}
--
- 	err = init_common_resources();
- 	if (err)
- 		return err;
+Changes since v2 include:
+
+  * Rebased onto -rc2, which includes the conflicting OOM blocking fixes
+  * Dropped the patch trying to "fix" the memcache in kvm_phys_addr_ioremap()
+
+Cheers,
+
+Will
+
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Quentin Perret <qperret@google.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Suzuki Poulose <suzuki.poulose@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Gavin Shan <gshan@redhat.com>
+Cc: kernel-team@android.com
+Cc: linux-arm-kernel@lists.infradead.org
+
+--->8
+
+Quentin Perret (4):
+  KVM: arm64: Add support for stage-2 write-protect in generic
+    page-table
+  KVM: arm64: Convert write-protect operation to generic page-table API
+  KVM: arm64: Add support for stage-2 cache flushing in generic
+    page-table
+  KVM: arm64: Convert memslot cache-flushing code to generic page-table
+    API
+
+Will Deacon (17):
+  KVM: arm64: Remove kvm_mmu_free_memory_caches()
+  KVM: arm64: Add stand-alone page-table walker infrastructure
+  KVM: arm64: Add support for creating kernel-agnostic stage-1 page
+    tables
+  KVM: arm64: Use generic allocator for hyp stage-1 page-tables
+  KVM: arm64: Add support for creating kernel-agnostic stage-2 page
+    tables
+  KVM: arm64: Add support for stage-2 map()/unmap() in generic
+    page-table
+  KVM: arm64: Convert kvm_phys_addr_ioremap() to generic page-table API
+  KVM: arm64: Convert kvm_set_spte_hva() to generic page-table API
+  KVM: arm64: Convert unmap_stage2_range() to generic page-table API
+  KVM: arm64: Add support for stage-2 page-aging in generic page-table
+  KVM: arm64: Convert page-aging and access faults to generic page-table
+    API
+  KVM: arm64: Add support for relaxing stage-2 perms in generic
+    page-table code
+  KVM: arm64: Convert user_mem_abort() to generic page-table API
+  KVM: arm64: Check the pgt instead of the pgd when modifying page-table
+  KVM: arm64: Remove unused page-table code
+  KVM: arm64: Remove unused 'pgd' field from 'struct kvm_s2_mmu'
+  KVM: arm64: Don't constrain maximum IPA size based on host
+    configuration
+
+ arch/arm64/include/asm/kvm_host.h       |    2 +-
+ arch/arm64/include/asm/kvm_mmu.h        |  221 +---
+ arch/arm64/include/asm/kvm_pgtable.h    |  279 ++++
+ arch/arm64/include/asm/pgtable-hwdef.h  |   23 -
+ arch/arm64/include/asm/pgtable-prot.h   |   19 -
+ arch/arm64/include/asm/stage2_pgtable.h |  215 ----
+ arch/arm64/kvm/arm.c                    |    2 +-
+ arch/arm64/kvm/hyp/Makefile             |    2 +-
+ arch/arm64/kvm/hyp/pgtable.c            |  860 +++++++++++++
+ arch/arm64/kvm/mmu.c                    | 1566 +++--------------------
+ arch/arm64/kvm/reset.c                  |   38 +-
+ 11 files changed, 1326 insertions(+), 1901 deletions(-)
+ create mode 100644 arch/arm64/include/asm/kvm_pgtable.h
+ create mode 100644 arch/arm64/kvm/hyp/pgtable.c
+
 -- 
-2.23.0
+2.28.0.297.g1956fa8f8d-goog
 
 _______________________________________________
 kvmarm mailing list
