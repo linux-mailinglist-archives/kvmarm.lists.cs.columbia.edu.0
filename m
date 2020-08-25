@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A152425158C
-	for <lists+kvmarm@lfdr.de>; Tue, 25 Aug 2020 11:40:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7791925158D
+	for <lists+kvmarm@lfdr.de>; Tue, 25 Aug 2020 11:40:09 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 185654C04E;
-	Tue, 25 Aug 2020 05:40:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2BD2E4C057;
+	Tue, 25 Aug 2020 05:40:09 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,41 +18,42 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TMqqTLLuBmpD; Tue, 25 Aug 2020 05:40:07 -0400 (EDT)
+	with ESMTP id PNV+KtkdnTNU; Tue, 25 Aug 2020 05:40:08 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B28474C019;
-	Tue, 25 Aug 2020 05:40:06 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D026D4C05A;
+	Tue, 25 Aug 2020 05:40:07 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A99814BE82
- for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Aug 2020 05:40:04 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4ACF24BE45
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Aug 2020 05:40:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id BYN3vwJk0pVA for <kvmarm@lists.cs.columbia.edu>;
- Tue, 25 Aug 2020 05:40:03 -0400 (EDT)
+ with ESMTP id qRxkQNsRy8Va for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 25 Aug 2020 05:40:05 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7D1684BE45
- for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Aug 2020 05:40:03 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 417534BE82
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Aug 2020 05:40:05 -0400 (EDT)
 Received: from localhost.localdomain (236.31.169.217.in-addr.arpa
  [217.169.31.236])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id B19782075B;
- Tue, 25 Aug 2020 09:40:00 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id D897320706;
+ Tue, 25 Aug 2020 09:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1598348402;
- bh=DarpS0fmBDiEq7Q5dXJMMvw3XvnjQeF94nVnn3lLR/M=;
- h=From:To:Cc:Subject:Date:From;
- b=XSD6Fv4S3lRk4CSEpIfcmY+OLFxhXXJCdQPLfu1DKPWKd4WDh1tb66S02Oq1qaqKN
- wG9+zVIw7vUtOLOOhaC0J7kGfamlCnnM+9MRKbg4daN127C3iqwCMVHBQCPmBhZWDO
- luKtSyDXW0pE9FH1lDtMQBjrszls3msoKYRpy450=
+ s=default; t=1598348404;
+ bh=EDeMcvRAUr+HAFxgfQOErnPVmot6600cdhrl5sfJBT8=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=IkTe9yD6qc8wuayc4Zu8pWdFUBPnIbKP8xC2gYtcLAJ+E1S5kUj1Df5yzMk2Xh8/a
+ pRZClsnXRmSW0HT/EEP87yTtPtooQQRhBdLHIIawJVZgkBADMoAn8RTx7A811Wu0/9
+ Kp55ULmbhJ82chZLgSjw3oK6paT+8+MtkKpKt8IE=
 From: Will Deacon <will@kernel.org>
 To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v3 00/21] KVM: arm64: Rewrite page-table code and fault
- handling
-Date: Tue, 25 Aug 2020 10:39:32 +0100
-Message-Id: <20200825093953.26493-1-will@kernel.org>
+Subject: [PATCH v3 01/21] KVM: arm64: Remove kvm_mmu_free_memory_caches()
+Date: Tue, 25 Aug 2020 10:39:33 +0100
+Message-Id: <20200825093953.26493-2-will@kernel.org>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20200825093953.26493-1-will@kernel.org>
+References: <20200825093953.26493-1-will@kernel.org>
 MIME-Version: 1.0
 Cc: kernel-team@android.com, Marc Zyngier <maz@kernel.org>,
  Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
@@ -73,83 +74,61 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hello folks,
-
-This is version three of the KVM page-table rework that I previously posted
-here:
-
-  v1: https://lore.kernel.org/r/20200730153406.25136-1-will@kernel.org
-  v2: https://lore.kernel.org/r/20200818132818.16065-1-will@kernel.org
-
-Changes since v2 include:
-
-  * Rebased onto -rc2, which includes the conflicting OOM blocking fixes
-  * Dropped the patch trying to "fix" the memcache in kvm_phys_addr_ioremap()
-
-Cheers,
-
-Will
+kvm_mmu_free_memory_caches() is only called by kvm_arch_vcpu_destroy(),
+so inline the implementation and get rid of the extra function.
 
 Cc: Marc Zyngier <maz@kernel.org>
 Cc: Quentin Perret <qperret@google.com>
-Cc: James Morse <james.morse@arm.com>
-Cc: Suzuki Poulose <suzuki.poulose@arm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Gavin Shan <gshan@redhat.com>
-Cc: kernel-team@android.com
-Cc: linux-arm-kernel@lists.infradead.org
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+---
+ arch/arm64/include/asm/kvm_mmu.h | 2 --
+ arch/arm64/kvm/arm.c             | 2 +-
+ arch/arm64/kvm/mmu.c             | 5 -----
+ 3 files changed, 1 insertion(+), 8 deletions(-)
 
---->8
-
-Quentin Perret (4):
-  KVM: arm64: Add support for stage-2 write-protect in generic
-    page-table
-  KVM: arm64: Convert write-protect operation to generic page-table API
-  KVM: arm64: Add support for stage-2 cache flushing in generic
-    page-table
-  KVM: arm64: Convert memslot cache-flushing code to generic page-table
-    API
-
-Will Deacon (17):
-  KVM: arm64: Remove kvm_mmu_free_memory_caches()
-  KVM: arm64: Add stand-alone page-table walker infrastructure
-  KVM: arm64: Add support for creating kernel-agnostic stage-1 page
-    tables
-  KVM: arm64: Use generic allocator for hyp stage-1 page-tables
-  KVM: arm64: Add support for creating kernel-agnostic stage-2 page
-    tables
-  KVM: arm64: Add support for stage-2 map()/unmap() in generic
-    page-table
-  KVM: arm64: Convert kvm_phys_addr_ioremap() to generic page-table API
-  KVM: arm64: Convert kvm_set_spte_hva() to generic page-table API
-  KVM: arm64: Convert unmap_stage2_range() to generic page-table API
-  KVM: arm64: Add support for stage-2 page-aging in generic page-table
-  KVM: arm64: Convert page-aging and access faults to generic page-table
-    API
-  KVM: arm64: Add support for relaxing stage-2 perms in generic
-    page-table code
-  KVM: arm64: Convert user_mem_abort() to generic page-table API
-  KVM: arm64: Check the pgt instead of the pgd when modifying page-table
-  KVM: arm64: Remove unused page-table code
-  KVM: arm64: Remove unused 'pgd' field from 'struct kvm_s2_mmu'
-  KVM: arm64: Don't constrain maximum IPA size based on host
-    configuration
-
- arch/arm64/include/asm/kvm_host.h       |    2 +-
- arch/arm64/include/asm/kvm_mmu.h        |  221 +---
- arch/arm64/include/asm/kvm_pgtable.h    |  279 ++++
- arch/arm64/include/asm/pgtable-hwdef.h  |   23 -
- arch/arm64/include/asm/pgtable-prot.h   |   19 -
- arch/arm64/include/asm/stage2_pgtable.h |  215 ----
- arch/arm64/kvm/arm.c                    |    2 +-
- arch/arm64/kvm/hyp/Makefile             |    2 +-
- arch/arm64/kvm/hyp/pgtable.c            |  860 +++++++++++++
- arch/arm64/kvm/mmu.c                    | 1566 +++--------------------
- arch/arm64/kvm/reset.c                  |   38 +-
- 11 files changed, 1326 insertions(+), 1901 deletions(-)
- create mode 100644 arch/arm64/include/asm/kvm_pgtable.h
- create mode 100644 arch/arm64/kvm/hyp/pgtable.c
-
+diff --git a/arch/arm64/include/asm/kvm_mmu.h b/arch/arm64/include/asm/kvm_mmu.h
+index 189839c3706a..0f078b1920ff 100644
+--- a/arch/arm64/include/asm/kvm_mmu.h
++++ b/arch/arm64/include/asm/kvm_mmu.h
+@@ -141,8 +141,6 @@ int kvm_phys_addr_ioremap(struct kvm *kvm, phys_addr_t guest_ipa,
+ 
+ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu);
+ 
+-void kvm_mmu_free_memory_caches(struct kvm_vcpu *vcpu);
+-
+ phys_addr_t kvm_mmu_get_httbr(void);
+ phys_addr_t kvm_get_idmap_vector(void);
+ int kvm_mmu_init(void);
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 46dc3d75cf13..262a0afbcc27 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -283,7 +283,7 @@ void kvm_arch_vcpu_destroy(struct kvm_vcpu *vcpu)
+ 	if (vcpu->arch.has_run_once && unlikely(!irqchip_in_kernel(vcpu->kvm)))
+ 		static_branch_dec(&userspace_irqchip_in_use);
+ 
+-	kvm_mmu_free_memory_caches(vcpu);
++	kvm_mmu_free_memory_cache(&vcpu->arch.mmu_page_cache);
+ 	kvm_timer_vcpu_terminate(vcpu);
+ 	kvm_pmu_vcpu_destroy(vcpu);
+ 
+diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+index ba00bcc0c884..935f8f689433 100644
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -2324,11 +2324,6 @@ int kvm_test_age_hva(struct kvm *kvm, unsigned long hva)
+ 				 kvm_test_age_hva_handler, NULL);
+ }
+ 
+-void kvm_mmu_free_memory_caches(struct kvm_vcpu *vcpu)
+-{
+-	kvm_mmu_free_memory_cache(&vcpu->arch.mmu_page_cache);
+-}
+-
+ phys_addr_t kvm_mmu_get_httbr(void)
+ {
+ 	if (__kvm_cpu_uses_extended_idmap())
 -- 
 2.28.0.297.g1956fa8f8d-goog
 
