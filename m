@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 733B5255947
-	for <lists+kvmarm@lfdr.de>; Fri, 28 Aug 2020 13:23:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D50C255B9E
+	for <lists+kvmarm@lfdr.de>; Fri, 28 Aug 2020 15:53:15 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1F1444C239;
-	Fri, 28 Aug 2020 07:23:44 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B5D5E4C2B7;
+	Fri, 28 Aug 2020 09:53:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.911
@@ -14,67 +14,70 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@gmail.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DFuxqjYNyoml; Fri, 28 Aug 2020 07:23:42 -0400 (EDT)
+	with ESMTP id qC0ibUWzZM+g; Fri, 28 Aug 2020 09:53:14 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D11E04C232;
-	Fri, 28 Aug 2020 07:23:40 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 886164C270;
+	Fri, 28 Aug 2020 09:53:13 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C73654BD21
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Aug 2020 04:41:15 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7EDAF4C1EF
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Aug 2020 09:40:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id jnk4Ij4vYIjN for <kvmarm@lists.cs.columbia.edu>;
- Fri, 28 Aug 2020 04:41:14 -0400 (EDT)
-Received: from mail-io1-f68.google.com (mail-io1-f68.google.com
- [209.85.166.68])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 781024B972
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Aug 2020 04:41:14 -0400 (EDT)
-Received: by mail-io1-f68.google.com with SMTP id b16so449044ioj.4
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Aug 2020 01:41:14 -0700 (PDT)
+ with ESMTP id rTnvmGSVSZmT for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 28 Aug 2020 09:40:17 -0400 (EDT)
+Received: from mail-pg1-f196.google.com (mail-pg1-f196.google.com
+ [209.85.215.196])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BE9D14C1EB
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Aug 2020 09:40:17 -0400 (EDT)
+Received: by mail-pg1-f196.google.com with SMTP id w186so466984pgb.8
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Aug 2020 06:40:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Rv9t9DBMT4Y9Uv16M/8E2uBNqN9bviSqC1cfMDj55qk=;
- b=O3nMQOdrhgjp6pS91SYY1V/rXLQgfKSIVRfsltF1r3lM5xYWjM/3hPwTifUchnhBE+
- cmbau7uFPuSgsqd/68IVYDK4FHCm/lfYzfVg7K3e29J6HZ6Ef1Or2+6wluD1hkRq+2G0
- 1ETSdruDkdU8FyzBQy4yjKSi/XyjlcyJgmQwyMU+SRCQ37xSkwnHvj1VSa7xU7QgARj9
- 3A8yLY3Uu7pCN85wgCo5cUUCkbvCXdpjcDjyqKk9y9MFvw7HBi6+VnGTKC1fSUswjwCB
- K05hk9A2PKgFCMDBkCbnIDXWedvJ9QXfAZMkzqsR+m4YX7no1t8v3O4O0dwtCM5cSRGQ
- l2bA==
+ h=from:to:cc:subject:date:message-id;
+ bh=mgrYv7djjcwPKBcwSuPRa9gDCJlsOXVcLbni56sIc20=;
+ b=c6+iYFm39iM5ehnXHgohQOtvPP4Actfi+8FwijsEJLKpNxIw+zaMTTRVW5QuiVMSyK
+ +uHvjVMeImm8j1nkGFFvBhdeq+mW57UR0mDt+TMCi9o1VA33Bazp32lsPKVyzGtFRgvU
+ obaOn8bzO3sK6syphhgOp58IARzEs3BuHEOFKzvUJAiqUP1hzu9/W/LVB3XtKuVQRAmj
+ SiSzWpgz0qVL4WxIFzNdUcaHUpYVzd5lp54gbDLZYbhovS7Bw9bEMWgT7xuWksJGMlTZ
+ Om/ECbEvIuuQT/FFgjmIprCoeVjXm42xu3A44N/doEYtETaYrh66S2KBE98cOd48GXJu
+ Dbtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=Rv9t9DBMT4Y9Uv16M/8E2uBNqN9bviSqC1cfMDj55qk=;
- b=XYN0BOjxW5wNXMMKwjvheapt6S23I45UzAq/oF+7EafYM/yDG/AJlnsx6Wo4q3dctE
- q+Ck3zsTcKss/yKjkOW33yIJENzS32OsFfvTygt6DoCAEBrpKf3XuhG3OVsJPYNjjlKq
- D7MXRAZIMpzHD/R1csE7F56U4EKhIOfVAV1WWcMODDggd1jK0mNYK8/IMXwPJ0t9KiCW
- 8ATx0xOGV7dnjpF/4iO7IKqrOgef82Hfg/tjalfB2QDpXU4xPSR68XhYfJBdjw5S6So4
- 9sANud3z4Z7GUAj3xOSWWW4Wb9COZGmIrek3eEnW3C6cRw5SKCPXP6PQapZMbwvKnKoi
- sLcA==
-X-Gm-Message-State: AOAM531xH79cEgY7ipny0hPuhxGEMEro5LiICMoMpE7/JvYIvr1QXS+L
- hQyO8B/xrilGy+4N8BL8vDS0mo6Lah+YdLWstw==
-X-Google-Smtp-Source: ABdhPJxIX0fJi9w6dYvAGIo8yULiAYghXMHvu5eHGaixZLaaGSv3j99yakmktgVk8wFUKdTWYhT3m0gbG/uomOq1HDA=
-X-Received: by 2002:a5e:9e0a:: with SMTP id i10mr455714ioq.41.1598604073846;
- Fri, 28 Aug 2020 01:41:13 -0700 (PDT)
-MIME-Version: 1.0
-References: <1597241133-3630-1-git-send-email-kernelfans@gmail.com>
- <50ccd1aa-797f-bc97-d675-8d6732d9ae06@arm.com>
-In-Reply-To: <50ccd1aa-797f-bc97-d675-8d6732d9ae06@arm.com>
+ h=x-gm-message-state:from:to:cc:subject:date:message-id;
+ bh=mgrYv7djjcwPKBcwSuPRa9gDCJlsOXVcLbni56sIc20=;
+ b=mqyTZ87DvLzU/y2iEeFFDkyLcS85i936C35eQn0EKZE0a811gYQXey61zfEA+5PSS7
+ bV0/WYPKePC63tRdKbiyiTZX8Bjao6Xym1t4HusAXhfAFUO3q2U4syCKm7ujbJ5dkJar
+ ZCthkzCp67LQKY2+FY+2UWt+am4aJlq5sxh0JbSScC7O2MsvNBIK+48ud/DBpsTBqJOK
+ /wqT1Vzw76sqjKcLFNAqiRGCaoRmEhZD/1THfJhYZ+kDvrLFvGPAUIX+wYZ9XdobXHb3
+ Qv7+aqX6xgH8Crhv4FjrqTvb38arpyakAI2EJHCPD+UtjHbZ29a6cOZZssUxhn+UQ/tg
+ H9wA==
+X-Gm-Message-State: AOAM531KrYFCCfZX6ky2L4AtNJbXjA/G/+oHVtsHG5Iz13hygwry64G1
+ h3eYgTbFj9vBoLorvjhI5Q==
+X-Google-Smtp-Source: ABdhPJwZ8ssnw7ayyRREkP1u9OCgsSNGyNfGZJQAc104tTnsMqU4PSmyX9pjBVp3Bj3pBJbEhvD1Kg==
+X-Received: by 2002:a63:1d07:: with SMTP id d7mr1349038pgd.106.1598622016873; 
+ Fri, 28 Aug 2020 06:40:16 -0700 (PDT)
+Received: from mylaptop.redhat.com ([209.132.188.80])
+ by smtp.gmail.com with ESMTPSA id k1sm1806559pfp.86.2020.08.28.06.40.12
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 28 Aug 2020 06:40:16 -0700 (PDT)
 From: Pingfan Liu <kernelfans@gmail.com>
-Date: Fri, 28 Aug 2020 16:41:02 +0800
-Message-ID: <CAFgQCTvy0UGq73AxBmGKPNZATRRggGLkSqksXJaz_-ZOj2YCrg@mail.gmail.com>
-Subject: Re: [PATCH] arm(64)/kvm: improve the documentation about HVC calls
-To: James Morse <james.morse@arm.com>
-X-Mailman-Approved-At: Fri, 28 Aug 2020 07:23:40 -0400
-Cc: Marc Zyngier <maz@kernel.org>, linux-doc@vger.kernel.org,
- Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu
+To: linux-arm-kernel@lists.infradead.org
+Subject: [PATCHv2 1/2] arm64/relocate_kernel: remove redundant code
+Date: Fri, 28 Aug 2020 21:39:57 +0800
+Message-Id: <1598621998-20563-1-git-send-email-kernelfans@gmail.com>
+X-Mailer: git-send-email 2.7.5
+X-Mailman-Approved-At: Fri, 28 Aug 2020 09:53:13 -0400
+Cc: Kees Cook <keescook@chromium.org>, Geoff Levand <geoff@infradead.org>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ Remi Denis-Courmont <remi.denis.courmont@huawei.com>,
+ Pingfan Liu <kernelfans@gmail.com>, kvmarm@lists.cs.columbia.edu,
+ Mark Brown <broonie@kernel.org>, Marc Zyngier <maz@kernel.org>,
+ Will Deacon <will@kernel.org>, Ard Biesheuvel <ardb@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -86,78 +89,93 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Aug 27, 2020 at 2:10 AM James Morse <james.morse@arm.com> wrote:
->
-> Hi Pingfan,
->
-> On 12/08/2020 15:05, Pingfan Liu wrote:
-> > Both arm and arm64 kernel entry point have the following prerequisite:
-> >   MMU = off, D-cache = off, I-cache = dont care.
-> >
-> > HVC_SOFT_RESTART call should meet this prerequisite before jumping to the
-> > new kernel.
->
-> I think you have this the wrong way up. This should describe what HVC_SOFT_RESTART does.
-Yes, it is a wrong way.
+Kernel startup entry point requires disabling MMU and D-cache.
 
->
-> We want to remove some extra work kexec does on arm64, and both implementations of
-> HVC_SOFT_RESTART on arm64 already do what we need. The change here should be to document
-> that the D/I bits are cleared after a HVC_SOFT_RESTART on arm64.
->
->
-> > Furthermore, on arm64, el2_setup doesn't set I+C bits and keeps EL2 MMU
-> > off, and KVM resets them when its unload. These are achieved by
-> > HVC_RESET_VECTORS call.
-> >
-> > Improve the document.
->
->
-> > diff --git a/Documentation/virt/kvm/arm/hyp-abi.rst b/Documentation/virt/kvm/arm/hyp-abi.rst
-> > index d9eba93..a95bc30 100644
-> > --- a/Documentation/virt/kvm/arm/hyp-abi.rst
-> > +++ b/Documentation/virt/kvm/arm/hyp-abi.rst
-> > @@ -40,9 +40,9 @@ these functions (see arch/arm{,64}/include/asm/virt.h):
-> >
-> >  * ::
-> >
-> > -    r0/x0 = HVC_RESET_VECTORS
-> > +    x0 = HVC_RESET_VECTORS (arm64 only)
-> >
-> > -  Turn HYP/EL2 MMU off, and reset HVBAR/VBAR_EL2 to the initials
-> > +  Disable HYP/EL2 MMU and D-cache, and reset HVBAR/VBAR_EL2 to the initials
-> >    stubs' exception vector value. This effectively disables an existing
-> >    hypervisor.
->
-> I don't think we should remove this. KVM on 32bit was the only implementer, but if there
-> ever is another, this is how it should work.
->
->
-> > @@ -54,7 +54,7 @@ these functions (see arch/arm{,64}/include/asm/virt.h):
-> >      x3 = x1's value when entering the next payload (arm64)
-> >      x4 = x2's value when entering the next payload (arm64)
-> >
-> > -  Mask all exceptions, disable the MMU, move the arguments into place
-> > +  Mask all exceptions, disable the MMU and D-cache, move the arguments into place
-> >    (arm64 only), and jump to the restart address while at HYP/EL2. This
-> >    hypercall is not expected to return to its caller.
->
-> (I don't think disable the D-cache is what the bit does, it forces the attributes that are
-> used for a data access).
->
-> Please just describe this as the on arm64 the D and I bits are cleared.
-OK, I will do it.
+As for kexec-reboot, taking a close look at "msr sctlr_el1, x12" in
+__cpu_soft_restart as the following:
 
-> (it might be true on 32bit, I can't work the assembly out).
-I will leave 32bit as it is.
+-1. booted at EL1
+The instruction is enough to disable MMU and I/D cache for
+EL1 regime.
 
-Thanks,
-Pingfan
+-2. booted at EL2, using VHE
+Access to SCTLR_EL1 is redirected to SCTLR_EL2 in EL2.  So the instruction
+is enough to disable MMU and clear I+C bits for EL2 regime.
+
+-3. booted at EL2, not using VHE
+The instruction itself can not affect EL2 regime. But The hyp-stub doesn't
+enable the MMU and I/D cache for EL2 regime. And KVM also disable them for EL2
+regime when its unloaded, or execute a HVC_SOFT_RESTART call. So when
+kexec-reboot, the code in KVM has prepare the requirement.
+
+As a conclusion, disabling MMU and clearing I+C bits in
+SYM_CODE_START(arm64_relocate_new_kernel) is redundant, and can be removed
+
+Signed-off-by: Pingfan Liu <kernelfans@gmail.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Geoff Levand <geoff@infradead.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Remi Denis-Courmont <remi.denis.courmont@huawei.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: kvmarm@lists.cs.columbia.edu
+To: linux-arm-kernel@lists.infradead.org
+---
+ arch/arm64/kernel/cpu-reset.S       |  4 ++++
+ arch/arm64/kernel/relocate_kernel.S | 12 ------------
+ 2 files changed, 4 insertions(+), 12 deletions(-)
+
+diff --git a/arch/arm64/kernel/cpu-reset.S b/arch/arm64/kernel/cpu-reset.S
+index 4a18055..37721eb 100644
+--- a/arch/arm64/kernel/cpu-reset.S
++++ b/arch/arm64/kernel/cpu-reset.S
+@@ -35,6 +35,10 @@ SYM_CODE_START(__cpu_soft_restart)
+ 	mov_q	x13, SCTLR_ELx_FLAGS
+ 	bic	x12, x12, x13
+ 	pre_disable_mmu_workaround
++	/*
++	 * either disable EL1&0 translation regime or disable EL2&0 translation
++	 * regime if HCR_EL2.E2H == 1
++	 */
+ 	msr	sctlr_el1, x12
+ 	isb
+ 
+diff --git a/arch/arm64/kernel/relocate_kernel.S b/arch/arm64/kernel/relocate_kernel.S
+index 542d6ed..84eec95 100644
+--- a/arch/arm64/kernel/relocate_kernel.S
++++ b/arch/arm64/kernel/relocate_kernel.S
+@@ -36,18 +36,6 @@ SYM_CODE_START(arm64_relocate_new_kernel)
+ 	mov	x14, xzr			/* x14 = entry ptr */
+ 	mov	x13, xzr			/* x13 = copy dest */
+ 
+-	/* Clear the sctlr_el2 flags. */
+-	mrs	x0, CurrentEL
+-	cmp	x0, #CurrentEL_EL2
+-	b.ne	1f
+-	mrs	x0, sctlr_el2
+-	mov_q	x1, SCTLR_ELx_FLAGS
+-	bic	x0, x0, x1
+-	pre_disable_mmu_workaround
+-	msr	sctlr_el2, x0
+-	isb
+-1:
+-
+ 	/* Check if the new image needs relocation. */
+ 	tbnz	x16, IND_DONE_BIT, .Ldone
+ 
+-- 
+2.7.5
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
