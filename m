@@ -2,57 +2,55 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E4B1C254AAC
-	for <lists+kvmarm@lfdr.de>; Thu, 27 Aug 2020 18:26:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C4A1255946
+	for <lists+kvmarm@lfdr.de>; Fri, 28 Aug 2020 13:23:43 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8228A4BFCB;
-	Thu, 27 Aug 2020 12:26:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DEE2A4C216;
+	Fri, 28 Aug 2020 07:23:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id kPjkN4g35sk3; Thu, 27 Aug 2020 12:26:19 -0400 (EDT)
+	with ESMTP id qQ-SeWukNpuu; Fri, 28 Aug 2020 07:23:42 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A17664BFDB;
-	Thu, 27 Aug 2020 12:26:17 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B98BA4C21B;
+	Fri, 28 Aug 2020 07:23:40 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9001E4BFC2
- for <kvmarm@lists.cs.columbia.edu>; Thu, 27 Aug 2020 12:26:16 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1786E4C1D8
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 27 Aug 2020 23:18:38 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ZSYByabWxKz7 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 27 Aug 2020 12:26:14 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F4174BFBC
- for <kvmarm@lists.cs.columbia.edu>; Thu, 27 Aug 2020 12:26:14 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A829431B;
- Thu, 27 Aug 2020 09:26:13 -0700 (PDT)
-Received: from [192.168.0.110] (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B0CF63F66B;
- Thu, 27 Aug 2020 09:26:12 -0700 (PDT)
-Subject: Re: [PATCH v3 02/21] KVM: arm64: Add stand-alone page-table walker
- infrastructure
-To: Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu
-References: <20200825093953.26493-1-will@kernel.org>
- <20200825093953.26493-3-will@kernel.org>
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-Message-ID: <9de812eb-1067-08bf-69cd-eb205dfbda35@arm.com>
-Date: Thu, 27 Aug 2020 17:27:13 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+ with ESMTP id or25JtwfVd2Q for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 27 Aug 2020 23:18:35 -0400 (EDT)
+Received: from huawei.com (szxga06-in.huawei.com [45.249.212.32])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A02314BDA9
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 27 Aug 2020 23:18:35 -0400 (EDT)
+Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.59])
+ by Forcepoint Email with ESMTP id 353D0A606CB6908B1DDD;
+ Fri, 28 Aug 2020 11:18:31 +0800 (CST)
+Received: from use12-sp2.huawei.com (10.67.189.174) by
+ DGGEMS406-HUB.china.huawei.com (10.3.19.206) with Microsoft SMTP Server id
+ 14.3.487.0; Fri, 28 Aug 2020 11:18:24 +0800
+From: Xiaoming Ni <nixiaoming@huawei.com>
+To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <kvmarm@lists.cs.columbia.edu>, <mark.rutland@arm.com>,
+ <catalin.marinas@arm.com>, <will@kernel.org>, <maz@kernel.org>,
+ <julien.thierry.kdev@gmail.com>, <suzuki.poulose@arm.com>
+Subject: [PATCH] arm64: fix some spelling mistakes in the comments by codespell
+Date: Fri, 28 Aug 2020 11:18:22 +0800
+Message-ID: <20200828031822.35928-1-nixiaoming@huawei.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-In-Reply-To: <20200825093953.26493-3-will@kernel.org>
-Content-Language: en-US
-Cc: Marc Zyngier <maz@kernel.org>, kernel-team@android.com,
- linux-arm-kernel@lists.infradead.org,
- Catalin Marinas <catalin.marinas@arm.com>
+X-Originating-IP: [10.67.189.174]
+X-CFilter-Loop: Reflected
+X-Mailman-Approved-At: Fri, 28 Aug 2020 07:23:40 -0400
+Cc: wangle6@huawei.com, nixiaoming@huawei.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -69,515 +67,111 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Will,
+arch/arm64/include/asm/cpu_ops.h:24: necesary ==> necessary
+arch/arm64/include/asm/kvm_arm.h:69: maintainance ==> maintenance
+arch/arm64/include/asm/cpufeature.h:361: capabilties ==> capabilities
+arch/arm64/kernel/perf_regs.c:19: compatability ==> compatibility
+arch/arm64/kernel/smp_spin_table.c:86: endianess ==> endianness
+arch/arm64/kernel/smp_spin_table.c:88: endianess ==> endianness
+arch/arm64/kvm/vgic/vgic-mmio-v3.c:1004: targetting ==> targeting
+arch/arm64/kvm/vgic/vgic-mmio-v3.c:1005: targetting ==> targeting
 
-It looks to me like the fact that code doesn't take into account the fact that we
-can have concatenated pages at the initial level of lookup. Am I missing
-something? Is it added in later patches and I missed it? I've commented below in a
-few places where I noticed that.
+Signed-off-by: Xiaoming Ni <nixiaoming@huawei.com>
+---
+ arch/arm64/include/asm/cpu_ops.h    | 2 +-
+ arch/arm64/include/asm/cpufeature.h | 2 +-
+ arch/arm64/include/asm/kvm_arm.h    | 2 +-
+ arch/arm64/kernel/perf_regs.c       | 2 +-
+ arch/arm64/kernel/smp_spin_table.c  | 4 ++--
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c  | 4 ++--
+ 6 files changed, 8 insertions(+), 8 deletions(-)
 
-On 8/25/20 10:39 AM, Will Deacon wrote:
-> The KVM page-table code is intricately tied into the kernel page-table
-> code and re-uses the pte/pmd/pud/p4d/pgd macros directly in an attempt
-> to reduce code duplication. Unfortunately, the reality is that there is
-> an awful lot of code required to make this work, and at the end of the
-> day you're limited to creating page-tables with the same configuration
-> as the host kernel. Furthermore, lifting the page-table code to run
-> directly at EL2 on a non-VHE system (as we plan to to do in future
-> patches) is practically impossible due to the number of dependencies it
-> has on the core kernel.
->
-> Introduce a framework for walking Armv8 page-tables configured
-> independently from the host kernel.
->
-> Cc: Marc Zyngier <maz@kernel.org>
-> Cc: Quentin Perret <qperret@google.com>
-> Signed-off-by: Will Deacon <will@kernel.org>
-> ---
->  arch/arm64/include/asm/kvm_pgtable.h | 101 ++++++++++
->  arch/arm64/kvm/hyp/Makefile          |   2 +-
->  arch/arm64/kvm/hyp/pgtable.c         | 290 +++++++++++++++++++++++++++
->  3 files changed, 392 insertions(+), 1 deletion(-)
->  create mode 100644 arch/arm64/include/asm/kvm_pgtable.h
->  create mode 100644 arch/arm64/kvm/hyp/pgtable.c
->
-> diff --git a/arch/arm64/include/asm/kvm_pgtable.h b/arch/arm64/include/asm/kvm_pgtable.h
-> new file mode 100644
-> index 000000000000..51ccbbb0efae
-> --- /dev/null
-> +++ b/arch/arm64/include/asm/kvm_pgtable.h
-> @@ -0,0 +1,101 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (C) 2020 Google LLC
-> + * Author: Will Deacon <will@kernel.org>
-> + */
-> +
-> +#ifndef __ARM64_KVM_PGTABLE_H__
-> +#define __ARM64_KVM_PGTABLE_H__
-> +
-> +#include <linux/bits.h>
-> +#include <linux/kvm_host.h>
-> +#include <linux/types.h>
-> +
-> +typedef u64 kvm_pte_t;
-> +
-> +/**
-> + * struct kvm_pgtable - KVM page-table.
-> + * @ia_bits:		Maximum input address size, in bits.
-> + * @start_level:	Level at which the page-table walk starts.
-> + * @pgd:		Pointer to the first top-level entry of the page-table.
-> + * @mmu:		Stage-2 KVM MMU struct. Unused for stage-1 page-tables.
-> + */
-> +struct kvm_pgtable {
-> +	u32					ia_bits;
-> +	u32					start_level;
-> +	kvm_pte_t				*pgd;
-> +
-> +	/* Stage-2 only */
-> +	struct kvm_s2_mmu			*mmu;
-> +};
-> +
-> +/**
-> + * enum kvm_pgtable_prot - Page-table permissions and attributes.
-> + * @KVM_PGTABLE_PROT_R:		Read permission.
-> + * @KVM_PGTABLE_PROT_W:		Write permission.
-> + * @KVM_PGTABLE_PROT_X:		Execute permission.
-> + * @KVM_PGTABLE_PROT_DEVICE:	Device attributes.
-> + */
-> +enum kvm_pgtable_prot {
-> +	KVM_PGTABLE_PROT_R			= BIT(0),
-> +	KVM_PGTABLE_PROT_W			= BIT(1),
-> +	KVM_PGTABLE_PROT_X			= BIT(2),
-> +
-> +	KVM_PGTABLE_PROT_DEVICE			= BIT(3),
-> +};
-> +
-> +/**
-> + * enum kvm_pgtable_walk_flags - Flags to control a depth-first page-table walk.
-> + * @KVM_PGTABLE_WALK_LEAF:		Visit leaf entries, including invalid
-> + *					entries.
-> + * @KVM_PGTABLE_WALK_TABLE_PRE:		Visit table entries before their
-> + *					children.
-> + * @KVM_PGTABLE_WALK_TABLE_POST:	Visit table entries after their
-> + *					children.
-> + */
-> +enum kvm_pgtable_walk_flags {
-> +	KVM_PGTABLE_WALK_LEAF			= BIT(0),
-> +	KVM_PGTABLE_WALK_TABLE_PRE		= BIT(1),
-> +	KVM_PGTABLE_WALK_TABLE_POST		= BIT(2),
-> +};
-> +
-> +typedef int (*kvm_pgtable_visitor_fn_t)(u64 addr, u64 end, u32 level,
-> +					kvm_pte_t *ptep,
-> +					enum kvm_pgtable_walk_flags flag,
-> +					void * const arg);
-> +
-> +/**
-> + * struct kvm_pgtable_walker - Hook into a page-table walk.
-> + * @cb:		Callback function to invoke during the walk.
-> + * @arg:	Argument passed to the callback function.
-> + * @flags:	Bitwise-OR of flags to identify the entry types on which to
-> + *		invoke the callback function.
-> + */
-> +struct kvm_pgtable_walker {
-> +	const kvm_pgtable_visitor_fn_t		cb;
-> +	void * const				arg;
-> +	const enum kvm_pgtable_walk_flags	flags;
-> +};
-> +
-> +/**
-> + * kvm_pgtable_walk() - Walk a page-table.
-> + * @pgt:	Page-table structure initialised by kvm_pgtable_*_init().
-> + * @addr:	Input address for the start of the walk.
-> + * @size:	Size of the range to walk.
-> + * @walker:	Walker callback description.
-> + *
-> + * The walker will walk the page-table entries corresponding to the input
-> + * address range specified, visiting entries according to the walker flags.
-> + * Invalid entries are treated as leaf entries. Leaf entries are reloaded
-> + * after invoking the walker callback, allowing the walker to descend into
-> + * a newly installed table.
-> + *
-> + * Returning a negative error code from the walker callback function will
-> + * terminate the walk immediately with the same error code.
-> + *
-> + * Return: 0 on success, negative error code on failure.
-> + */
-> +int kvm_pgtable_walk(struct kvm_pgtable *pgt, u64 addr, u64 size,
-> +		     struct kvm_pgtable_walker *walker);
-> +
-> +#endif	/* __ARM64_KVM_PGTABLE_H__ */
-> diff --git a/arch/arm64/kvm/hyp/Makefile b/arch/arm64/kvm/hyp/Makefile
-> index f54f0e89a71c..607b8a898826 100644
-> --- a/arch/arm64/kvm/hyp/Makefile
-> +++ b/arch/arm64/kvm/hyp/Makefile
-> @@ -10,5 +10,5 @@ subdir-ccflags-y := -I$(incdir)				\
->  		    -DDISABLE_BRANCH_PROFILING		\
->  		    $(DISABLE_STACKLEAK_PLUGIN)
->  
-> -obj-$(CONFIG_KVM) += vhe/ nvhe/
-> +obj-$(CONFIG_KVM) += vhe/ nvhe/ pgtable.o
->  obj-$(CONFIG_KVM_INDIRECT_VECTORS) += smccc_wa.o
-> diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
-> new file mode 100644
-> index 000000000000..462001bbe028
-> --- /dev/null
-> +++ b/arch/arm64/kvm/hyp/pgtable.c
-> @@ -0,0 +1,290 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Stand-alone page-table allocator for hyp stage-1 and guest stage-2.
-> + * No bombay mix was harmed in the writing of this file.
-> + *
-> + * Copyright (C) 2020 Google LLC
-> + * Author: Will Deacon <will@kernel.org>
-> + */
-> +
-> +#include <linux/bitfield.h>
-> +#include <asm/kvm_pgtable.h>
-> +
-> +#define KVM_PGTABLE_MAX_LEVELS		4U
-> +
-> +#define KVM_PTE_VALID			BIT(0)
-> +
-> +#define KVM_PTE_TYPE			BIT(1)
-> +#define KVM_PTE_TYPE_BLOCK		0
-> +#define KVM_PTE_TYPE_PAGE		1
-> +#define KVM_PTE_TYPE_TABLE		1
-> +
-> +#define KVM_PTE_ADDR_MASK		GENMASK(47, PAGE_SHIFT)
-> +#define KVM_PTE_ADDR_51_48		GENMASK(15, 12)
-> +
-> +#define KVM_PTE_LEAF_ATTR_LO		GENMASK(11, 2)
-> +
-> +#define KVM_PTE_LEAF_ATTR_HI		GENMASK(63, 51)
-> +
-> +struct kvm_pgtable_walk_data {
-> +	struct kvm_pgtable		*pgt;
-> +	struct kvm_pgtable_walker	*walker;
-> +
-> +	u64				addr;
-> +	u64				end;
-> +};
-> +
-> +static u64 kvm_granule_shift(u32 level)
-> +{
-> +	return (KVM_PGTABLE_MAX_LEVELS - level) * (PAGE_SHIFT - 3) + 3;
+diff --git a/arch/arm64/include/asm/cpu_ops.h b/arch/arm64/include/asm/cpu_ops.h
+index d28e8f37d3b4..e95c4df83911 100644
+--- a/arch/arm64/include/asm/cpu_ops.h
++++ b/arch/arm64/include/asm/cpu_ops.h
+@@ -21,7 +21,7 @@
+  *		mechanism for doing so, tests whether it is possible to boot
+  *		the given CPU.
+  * @cpu_boot:	Boots a cpu into the kernel.
+- * @cpu_postboot: Optionally, perform any post-boot cleanup or necesary
++ * @cpu_postboot: Optionally, perform any post-boot cleanup or necessary
+  *		synchronisation. Called from the cpu being booted.
+  * @cpu_can_disable: Determines whether a CPU can be disabled based on
+  *		mechanism-specific information.
+diff --git a/arch/arm64/include/asm/cpufeature.h b/arch/arm64/include/asm/cpufeature.h
+index 89b4f0142c28..3a42dc8e697c 100644
+--- a/arch/arm64/include/asm/cpufeature.h
++++ b/arch/arm64/include/asm/cpufeature.h
+@@ -358,7 +358,7 @@ static inline int cpucap_default_scope(const struct arm64_cpu_capabilities *cap)
+ }
+ 
+ /*
+- * Generic helper for handling capabilties with multiple (match,enable) pairs
++ * Generic helper for handling capabilities with multiple (match,enable) pairs
+  * of call backs, sharing the same capability bit.
+  * Iterate over each entry to see if at least one matches.
+  */
+diff --git a/arch/arm64/include/asm/kvm_arm.h b/arch/arm64/include/asm/kvm_arm.h
+index 51c1d9918999..21f91aebc052 100644
+--- a/arch/arm64/include/asm/kvm_arm.h
++++ b/arch/arm64/include/asm/kvm_arm.h
+@@ -66,7 +66,7 @@
+  * TWI:		Trap WFI
+  * TIDCP:	Trap L2CTLR/L2ECTLR
+  * BSU_IS:	Upgrade barriers to the inner shareable domain
+- * FB:		Force broadcast of all maintainance operations
++ * FB:		Force broadcast of all maintenance operations
+  * AMO:		Override CPSR.A and enable signaling with VA
+  * IMO:		Override CPSR.I and enable signaling with VI
+  * FMO:		Override CPSR.F and enable signaling with VF
+diff --git a/arch/arm64/kernel/perf_regs.c b/arch/arm64/kernel/perf_regs.c
+index 666b225aeb3a..94e8718e7229 100644
+--- a/arch/arm64/kernel/perf_regs.c
++++ b/arch/arm64/kernel/perf_regs.c
+@@ -16,7 +16,7 @@ u64 perf_reg_value(struct pt_regs *regs, int idx)
+ 
+ 	/*
+ 	 * Our handling of compat tasks (PERF_SAMPLE_REGS_ABI_32) is weird, but
+-	 * we're stuck with it for ABI compatability reasons.
++	 * we're stuck with it for ABI compatibility reasons.
+ 	 *
+ 	 * For a 32-bit consumer inspecting a 32-bit task, then it will look at
+ 	 * the first 16 registers (see arch/arm/include/uapi/asm/perf_regs.h).
+diff --git a/arch/arm64/kernel/smp_spin_table.c b/arch/arm64/kernel/smp_spin_table.c
+index c8a3fee00c11..5892e79fa429 100644
+--- a/arch/arm64/kernel/smp_spin_table.c
++++ b/arch/arm64/kernel/smp_spin_table.c
+@@ -83,9 +83,9 @@ static int smp_spin_table_cpu_prepare(unsigned int cpu)
+ 
+ 	/*
+ 	 * We write the release address as LE regardless of the native
+-	 * endianess of the kernel. Therefore, any boot-loaders that
++	 * endianness of the kernel. Therefore, any boot-loaders that
+ 	 * read this address need to convert this address to the
+-	 * boot-loader's endianess before jumping. This is mandated by
++	 * boot-loader's endianness before jumping. This is mandated by
+ 	 * the boot protocol.
+ 	 */
+ 	writeq_relaxed(__pa_symbol(secondary_holding_pen), release_addr);
+diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+index 5c786b915cd3..52d6f24f65dc 100644
+--- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+@@ -1001,8 +1001,8 @@ void vgic_v3_dispatch_sgi(struct kvm_vcpu *vcpu, u64 reg, bool allow_group1)
+ 		raw_spin_lock_irqsave(&irq->irq_lock, flags);
+ 
+ 		/*
+-		 * An access targetting Group0 SGIs can only generate
+-		 * those, while an access targetting Group1 SGIs can
++		 * An access targeting Group0 SGIs can only generate
++		 * those, while an access targeting Group1 SGIs can
+ 		 * generate interrupts of either group.
+ 		 */
+ 		if (!irq->group || allow_group1) {
+-- 
+2.27.0
 
-Isn't that the same same thing as the macro ARM64_HW_PGTABLE_LEVEL_SHIFT(n) from
-pgtable-hwdef.h? I think the header is already included, as this file uses
-PTRS_PER_PTE and that's the only place I found it defined.
-
-> +}
-> +
-> +static u64 kvm_granule_size(u32 level)
-> +{
-> +	return BIT(kvm_granule_shift(level));
-> +}
-> +
-> +static bool kvm_block_mapping_supported(u64 addr, u64 end, u64 phys, u32 level)
-> +{
-> +	u64 granule = kvm_granule_size(level);
-> +
-> +	/*
-> +	 * Reject invalid block mappings and don't bother with 4TB mappings for
-> +	 * 52-bit PAs.
-> +	 */
-> +	if (level == 0 || (PAGE_SIZE != SZ_4K && level == 1))
-> +		return false;
-> +
-> +	if (granule > (end - addr))
-> +		return false;
-> +
-> +	return IS_ALIGNED(addr, granule) && IS_ALIGNED(phys, granule);
-> +}
-
-This is a very nice rewrite of fault_supports_stage2_huge_mapping, definitely
-easier to understand.
-
-> +
-> +static u32 kvm_start_level(u64 ia_bits)
-> +{
-> +	u64 levels = DIV_ROUND_UP(ia_bits - PAGE_SHIFT, PAGE_SHIFT - 3);
-
-Isn't that the same same thing as the macro ARM64_HW_PGTABLE_LEVELS from
-pgtable-hwdef.h?
-
-> +	return KVM_PGTABLE_MAX_LEVELS - levels;
-
-I tried to verify this formula and I think there's something that I don't
-understand or I'm missing. For the default KVM setup, where the user doesn't
-specify an IPA size different from the 40 bits default: ia_bits = 40 (IPA =
-[39:0]), 4KB pages, translation starting at level 1 with 2 concatenated level 1
-tables (VTCR_EL2.T0SZ = 24, VTCR_EL2.SL0 = 1, VTCR_EL2.TG0 = 0, starting level
-from table D5-13 at page D5-2566, ARM DDI 0487F.b), according to the formula I get:
-
-levels = DIV_ROUND_UP(40 - 12, 12 -3) = DIV_ROUND_UP(28, 9) = 4
-return 4 - 4 = 0
-
-which means the resulting starting level is 0 instead of 1.
-
-> +}
-> +
-> +static u32 kvm_pgtable_idx(struct kvm_pgtable_walk_data *data, u32 level)
-> +{
-> +	u64 shift = kvm_granule_shift(level);
-> +	u64 mask = BIT(PAGE_SHIFT - 3) - 1;
-
-This doesn't seem to take into account the fact that we can have concatenated
-initial page tables.
-
-> +
-> +	return (data->addr >> shift) & mask;
-> +}
-> +
-> +static u32 __kvm_pgd_page_idx(struct kvm_pgtable *pgt, u64 addr)
-> +{
-> +	u64 shift = kvm_granule_shift(pgt->start_level - 1); /* May underflow */
-> +	u64 mask = BIT(pgt->ia_bits) - 1;
-> +
-> +	return (addr & mask) >> shift;
-> +}
-> +
-> +static u32 kvm_pgd_page_idx(struct kvm_pgtable_walk_data *data)
-> +{
-> +	return __kvm_pgd_page_idx(data->pgt, data->addr);
-> +}
-> +
-> +static u32 kvm_pgd_pages(u32 ia_bits, u32 start_level)
-> +{
-> +	struct kvm_pgtable pgt = {
-> +		.ia_bits	= ia_bits,
-> +		.start_level	= start_level,
-> +	};
-> +
-> +	return __kvm_pgd_page_idx(&pgt, -1ULL) + 1;
-> +}
-> +
-> +static bool kvm_pte_valid(kvm_pte_t pte)
-> +{
-> +	return pte & KVM_PTE_VALID;
-> +}
-> +
-> +static bool kvm_pte_table(kvm_pte_t pte, u32 level)
-> +{
-> +	if (level == KVM_PGTABLE_MAX_LEVELS - 1)
-> +		return false;
-> +
-> +	if (!kvm_pte_valid(pte))
-> +		return false;
-> +
-> +	return FIELD_GET(KVM_PTE_TYPE, pte) == KVM_PTE_TYPE_TABLE;
-> +}
-> +
-> +static u64 kvm_pte_to_phys(kvm_pte_t pte)
-> +{
-> +	u64 pa = pte & KVM_PTE_ADDR_MASK;
-> +
-> +	if (PAGE_SHIFT == 16)
-> +		pa |= FIELD_GET(KVM_PTE_ADDR_51_48, pte) << 48;
-> +
-> +	return pa;
-> +}
-> +
-> +static kvm_pte_t kvm_phys_to_pte(u64 pa)
-> +{
-> +	kvm_pte_t pte = pa & KVM_PTE_ADDR_MASK;
-> +
-> +	if (PAGE_SHIFT == 16)
-> +		pte |= FIELD_PREP(KVM_PTE_ADDR_51_48, pa >> 48);
-> +
-> +	return pte;
-> +}
-> +
-> +static kvm_pte_t *kvm_pte_follow(kvm_pte_t pte)
-> +{
-> +	return __va(kvm_pte_to_phys(pte));
-> +}
-> +
-> +static void kvm_set_invalid_pte(kvm_pte_t *ptep)
-> +{
-> +	kvm_pte_t pte = 0;
-> +	WRITE_ONCE(*ptep, pte);
-> +}
-> +
-> +static void kvm_set_table_pte(kvm_pte_t *ptep, kvm_pte_t *childp)
-> +{
-> +	kvm_pte_t old = *ptep, pte = kvm_phys_to_pte(__pa(childp));
-> +
-> +	pte |= FIELD_PREP(KVM_PTE_TYPE, KVM_PTE_TYPE_TABLE);
-> +	pte |= KVM_PTE_VALID;
-> +
-> +	WARN_ON(kvm_pte_valid(old));
-> +	smp_store_release(ptep, pte);
-> +}
-> +
-> +static bool kvm_set_valid_leaf_pte(kvm_pte_t *ptep, u64 pa, kvm_pte_t attr,
-> +				   u32 level)
-> +{
-> +	kvm_pte_t old = *ptep, pte = kvm_phys_to_pte(pa);
-> +	u64 type = (level == KVM_PGTABLE_MAX_LEVELS - 1) ? KVM_PTE_TYPE_PAGE :
-> +							   KVM_PTE_TYPE_BLOCK;
-> +
-> +	pte |= attr & (KVM_PTE_LEAF_ATTR_LO | KVM_PTE_LEAF_ATTR_HI);
-> +	pte |= FIELD_PREP(KVM_PTE_TYPE, type);
-> +	pte |= KVM_PTE_VALID;
-> +
-> +	/* Tolerate KVM recreating the exact same mapping. */
-> +	if (kvm_pte_valid(old))
-> +		return old == pte;
-> +
-> +	smp_store_release(ptep, pte);
-> +	return true;
-> +}
-> +
-> +static int kvm_pgtable_visitor_cb(struct kvm_pgtable_walk_data *data, u64 addr,
-> +				  u32 level, kvm_pte_t *ptep,
-> +				  enum kvm_pgtable_walk_flags flag)
-> +{
-> +	struct kvm_pgtable_walker *walker = data->walker;
-> +	return walker->cb(addr, data->end, level, ptep, flag, walker->arg);
-> +}
-> +
-> +static int __kvm_pgtable_walk(struct kvm_pgtable_walk_data *data,
-> +			      kvm_pte_t *pgtable, u32 level);
-> +
-> +static inline int __kvm_pgtable_visit(struct kvm_pgtable_walk_data *data,
-> +				      kvm_pte_t *ptep, u32 level)
-> +{
-> +	int ret = 0;
-> +	u64 addr = data->addr;
-> +	kvm_pte_t *childp, pte = *ptep;
-> +	bool table = kvm_pte_table(pte, level);
-> +	enum kvm_pgtable_walk_flags flags = data->walker->flags;
-> +
-> +	if (table && (flags & KVM_PGTABLE_WALK_TABLE_PRE)) {
-> +		ret = kvm_pgtable_visitor_cb(data, addr, level, ptep,
-> +					     KVM_PGTABLE_WALK_TABLE_PRE);
-
-I see that below we check if the visitor modified the leaf entry and turned into a
-table. Is it not allowed for a visitor to turn a table into a block mapping?
-
-> +	}
-> +
-> +	if (!table && (flags & KVM_PGTABLE_WALK_LEAF)) {
-> +		ret = kvm_pgtable_visitor_cb(data, addr, level, ptep,
-> +					     KVM_PGTABLE_WALK_LEAF);
-> +		pte = *ptep;
-> +		table = kvm_pte_table(pte, level);
-> +	}
-> +
-> +	if (ret)
-> +		goto out;
-> +
-> +	if (!table) {
-> +		data->addr += kvm_granule_size(level);
-> +		goto out;
-> +	}
-> +
-> +	childp = kvm_pte_follow(pte);
-> +	ret = __kvm_pgtable_walk(data, childp, level + 1);
-> +	if (ret)
-> +		goto out;
-> +
-> +	if (flags & KVM_PGTABLE_WALK_TABLE_POST) {
-
-We check that ptep is a valid table when we test the KVM_PGTABLE_WALK_TABLE_PRE
-flag, why aren't we doing that here?
-
-> +		ret = kvm_pgtable_visitor_cb(data, addr, level, ptep,
-> +					     KVM_PGTABLE_WALK_TABLE_POST);
-> +	}
-> +
-> +out:
-> +	return ret;
-> +}
-> +
-> +static int __kvm_pgtable_walk(struct kvm_pgtable_walk_data *data,
-> +			      kvm_pte_t *pgtable, u32 level)
-> +{
-> +	u32 idx;
-> +	int ret = 0;
-> +
-> +	if (WARN_ON_ONCE(level >= KVM_PGTABLE_MAX_LEVELS))
-> +		return -EINVAL;
-> +
-> +	for (idx = kvm_pgtable_idx(data, level); idx < PTRS_PER_PTE; ++idx) {
-> +		kvm_pte_t *ptep = &pgtable[idx];
-> +
-> +		if (data->addr >= data->end)
-> +			break;
-> +
-> +		ret = __kvm_pgtable_visit(data, ptep, level);
-> +		if (ret)
-> +			break;
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +static int _kvm_pgtable_walk(struct kvm_pgtable_walk_data *data)
-> +{
-> +	u32 idx;
-> +	int ret = 0;
-> +	struct kvm_pgtable *pgt = data->pgt;
-> +	u64 limit = BIT(pgt->ia_bits);
-> +
-> +	if (data->addr > limit || data->end > limit)
-> +		return -ERANGE;
-> +
-> +	if (!pgt->pgd)
-> +		return -EINVAL;
-> +
-> +	for (idx = kvm_pgd_page_idx(data); data->addr < data->end; ++idx) {
-> +		kvm_pte_t *ptep = &pgt->pgd[idx * PTRS_PER_PTE];
-
-I'm sorry, but I just don't understand this part:
-
-- Why do we skip over PTRS_PER_PTE instead of visiting each idx?
-
-- Why do we use PTRS_PER_PTE instead of PTRS_PER_PGD?
-
-Would you mind explaining what the loop is doing?
-
-I also don't see anywhere in the page table walking code where we take into
-account that we can have concatenated tables at level 1 or 2, which means we have
-more entries than PTRS_PER_P{U,M}D.
-
-> +
-> +		ret = __kvm_pgtable_walk(data, ptep, pgt->start_level);
-> +		if (ret)
-> +			break;
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +int kvm_pgtable_walk(struct kvm_pgtable *pgt, u64 addr, u64 size,
-> +		     struct kvm_pgtable_walker *walker)
-> +{
-> +	struct kvm_pgtable_walk_data walk_data = {
-> +		.pgt	= pgt,
-> +		.addr	= ALIGN_DOWN(addr, PAGE_SIZE),
-> +		.end	= PAGE_ALIGN(walk_data.addr + size),
-
-Shouldn't that be .end = PAGE_ALIGN(addr + size)? For example, for addr = 2 *
-PAGE_SIZE -1 and size = PAGE_SIZE, PAGE_ALIGN(addr + size) = 3 * PAGE_SIZE, but
-PAGE_ALIGN(walk_data.addr + size) = 2 * PAGE_SIZE.
-
-What happens if addr < PAGE_SIZE - 1? It looks to me that according to the
-definition of ALIGN_DOWN, addr will wrap around.
-
-Thanks,
-
-Alex
-
-> +		.walker	= walker,
-> +	};
-> +
-> +	return _kvm_pgtable_walk(&walk_data);
-> +}
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
