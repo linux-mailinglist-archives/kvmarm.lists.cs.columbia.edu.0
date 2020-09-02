@@ -2,65 +2,53 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DB17825A9B0
-	for <lists+kvmarm@lfdr.de>; Wed,  2 Sep 2020 12:49:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 878F425A9BE
+	for <lists+kvmarm@lfdr.de>; Wed,  2 Sep 2020 12:58:28 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 624A44B26F;
-	Wed,  2 Sep 2020 06:49:51 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 214204B290;
+	Wed,  2 Sep 2020 06:58:28 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id w1pssVqKS9WD; Wed,  2 Sep 2020 06:49:51 -0400 (EDT)
+	with ESMTP id Jr0-FHtgKSix; Wed,  2 Sep 2020 06:58:28 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 25F2A4B276;
-	Wed,  2 Sep 2020 06:49:50 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E62624B28B;
+	Wed,  2 Sep 2020 06:58:26 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8155F4B25D
- for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Sep 2020 06:49:48 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E30484B158
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Sep 2020 06:58:25 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id emuFSeTsjJix for <kvmarm@lists.cs.columbia.edu>;
- Wed,  2 Sep 2020 06:49:47 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 86F2A4B249
- for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Sep 2020 06:49:47 -0400 (EDT)
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
- bits)) (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 502A3206F0;
- Wed,  2 Sep 2020 10:49:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1599043786;
- bh=hqOEf2qbUyka1286fLRGcTR209PqnnwJFVWvIdjyW8k=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=hACv0D8s7mmgygZEOGEsT/nH8OZG7vWEOTo4LYe3KLyg8F3e0tq1fmPon0LMoEbAB
- Th4vJFQl6yB97K1T108QrBUvpvTSDTaw5Q7sd34S6OvYYxLuPHCliFI23AlUOzufgK
- 0G7f7EpzXHDEJ3r7WQuBVL+5hgr1X/rCbpz9jRVc=
-Date: Wed, 2 Sep 2020 11:49:42 +0100
-From: Will Deacon <will@kernel.org>
-To: Alexandru Elisei <alexandru.elisei@arm.com>
-Subject: Re: [PATCH v3 02/21] KVM: arm64: Add stand-alone page-table walker
- infrastructure
-Message-ID: <20200902104941.GD5567@willie-the-truck>
-References: <20200825093953.26493-1-will@kernel.org>
- <20200825093953.26493-3-will@kernel.org>
- <8afa26de-1839-7e5e-a324-351b241e0976@arm.com>
+ with ESMTP id 9Ul51o3HxtBo for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  2 Sep 2020 06:58:24 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D0CD44B129
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Sep 2020 06:58:24 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 70D81D6E;
+ Wed,  2 Sep 2020 03:58:24 -0700 (PDT)
+Received: from [192.168.0.110] (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D57CB3F66F;
+ Wed,  2 Sep 2020 03:58:23 -0700 (PDT)
+Subject: Re: [PATCH] arm64/kvm: Fix zapping stage2 page table wrongly
+To: Gavin Shan <gshan@redhat.com>, kvmarm@lists.cs.columbia.edu
+References: <20200822024444.28132-1-gshan@redhat.com>
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+Message-ID: <dbd37825-9f3b-1911-cba5-03099250dc7e@arm.com>
+Date: Wed, 2 Sep 2020 11:59:18 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <8afa26de-1839-7e5e-a324-351b241e0976@arm.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: Marc Zyngier <maz@kernel.org>, kernel-team@android.com,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
- Catalin Marinas <catalin.marinas@arm.com>
+In-Reply-To: <20200822024444.28132-1-gshan@redhat.com>
+Content-Language: en-US
+Cc: maz@kernel.org, shan.gavin@gmail.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -77,55 +65,40 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Aug 28, 2020 at 04:51:02PM +0100, Alexandru Elisei wrote:
-> On 8/25/20 10:39 AM, Will Deacon wrote:
-> > [..]
-> > +static void kvm_set_table_pte(kvm_pte_t *ptep, kvm_pte_t *childp)
-> > +{
-> > +	kvm_pte_t old = *ptep, pte = kvm_phys_to_pte(__pa(childp));
-> > +
-> > +	pte |= FIELD_PREP(KVM_PTE_TYPE, KVM_PTE_TYPE_TABLE);
-> > +	pte |= KVM_PTE_VALID;
-> > +
-> > +	WARN_ON(kvm_pte_valid(old));
-> > +	smp_store_release(ptep, pte);
-> > +}
-> > +
-> > +static bool kvm_set_valid_leaf_pte(kvm_pte_t *ptep, u64 pa, kvm_pte_t attr,
-> > +				   u32 level)
-> > +{
-> > +	kvm_pte_t old = *ptep, pte = kvm_phys_to_pte(pa);
-> > +	u64 type = (level == KVM_PGTABLE_MAX_LEVELS - 1) ? KVM_PTE_TYPE_PAGE :
-> > +							   KVM_PTE_TYPE_BLOCK;
-> > +
-> > +	pte |= attr & (KVM_PTE_LEAF_ATTR_LO | KVM_PTE_LEAF_ATTR_HI);
-> > +	pte |= FIELD_PREP(KVM_PTE_TYPE, type);
-> > +	pte |= KVM_PTE_VALID;
-> > +
-> > +	/* Tolerate KVM recreating the exact same mapping. */
-> > +	if (kvm_pte_valid(old))
-> > +		return old == pte;
-> > +
-> > +	smp_store_release(ptep, pte);
-> > +	return true;
-> > +}
-> 
-> These two functions look inconsistent to me - we refuse to update a valid leaf
-> entry with a new value, but we allow updating a valid table. Is there something
-> that I'm not taking into account?
+Hi,
 
-Well, the table code will WARN() so it's not like we do it quietly. I could
-try to propagate the error, but I don't see what the gains us other than
-complexity and code that likely won't get tested.
+On 8/22/20 3:44 AM, Gavin Shan wrote:
+> Depending on the kernel configuration, PUD_SIZE could be equal to
+> PMD_SIZE. For example, both of them are 512MB with the following
+> kernel configuration. In this case, both PUD and PMD are folded
+> to PGD.
+>
+>    CONFIG_ARM64_64K_PAGES   y
+>    CONFIG_ARM64_VA_BITS     42
+>    CONFIG_PGTABLE_LEVELS    2
+>
+> With the above configuration, the stage2 PUD is used to backup the
+> 512MB huge page when the stage2 mapping is built. During the mapping,
+> the PUD and its subordinate levels of page table entries are unmapped
+> if the PUD is present and not huge page sensitive in stage2_set_pud_huge().
+> Unfornately, the @addr isn't aligned to S2_PUD_SIZE and wrong page table
+> entries are zapped. It eventually leads to PUD's present bit can't be
+> cleared successfully and infinite loop in stage2_set_pud_huge().
+>
+> This fixes the issue by checking with S2_{PUD, PMD}_SIZE instead of
+> {PUD, PMD}_SIZE to determine if stage2 PUD or PMD is used to back the
+> huge page. For this particular case, the stage2 PMD entry should be
+> used to backup the 512MB huge page with stage2_set_pmd_huge().
 
-The leaf case is different, because some callers will handle the failure
-and perform break-before-make; TLBI (e.g. because of an MMU notifier
-changing the PTE).
+I can reproduce this on my rockpro64 using kvmtool.
 
-Take a look at how stage2_map_walker_try_leaf() ends up being called from
-kvm_set_spte_handler().
+I see two issues here: first, PUD_SIZE = 512MB, but S2_PUD_SIZE = 4TB (checked
+using printk), and second, stage2_set_pud_huge() hangs. I'm working on debugging them.
 
-Will
+Thanks,
+
+Alex
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
