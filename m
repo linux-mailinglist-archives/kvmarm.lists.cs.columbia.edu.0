@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A34325C1F3
-	for <lists+kvmarm@lfdr.de>; Thu,  3 Sep 2020 15:53:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B80825C1F6
+	for <lists+kvmarm@lfdr.de>; Thu,  3 Sep 2020 15:53:42 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3CC144B2C6;
-	Thu,  3 Sep 2020 09:53:38 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E31F94B2C5;
+	Thu,  3 Sep 2020 09:53:41 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,66 +14,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jiCXlc-3HiVB; Thu,  3 Sep 2020 09:53:36 -0400 (EDT)
+	with ESMTP id mdj9nGo2St+g; Thu,  3 Sep 2020 09:53:41 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E31064B2AF;
-	Thu,  3 Sep 2020 09:53:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 31B6A4B312;
+	Thu,  3 Sep 2020 09:53:40 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AC6194B2C5
- for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Sep 2020 09:53:35 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 539C24B119
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Sep 2020 09:53:38 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id E3GjaOWKQ4Ti for <kvmarm@lists.cs.columbia.edu>;
- Thu,  3 Sep 2020 09:53:34 -0400 (EDT)
-Received: from mail-qt1-f202.google.com (mail-qt1-f202.google.com
- [209.85.160.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7E0B24B16C
- for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Sep 2020 09:53:34 -0400 (EDT)
-Received: by mail-qt1-f202.google.com with SMTP id t11so2164013qtn.8
- for <kvmarm@lists.cs.columbia.edu>; Thu, 03 Sep 2020 06:53:34 -0700 (PDT)
+ with ESMTP id XMwBnG+PtFVK for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  3 Sep 2020 09:53:37 -0400 (EDT)
+Received: from mail-ed1-f74.google.com (mail-ed1-f74.google.com
+ [209.85.208.74])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 348784B29C
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Sep 2020 09:53:37 -0400 (EDT)
+Received: by mail-ed1-f74.google.com with SMTP id n4so1311520edo.20
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 03 Sep 2020 06:53:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=sender:date:in-reply-to:message-id:mime-version:references:subject
- :from:to:cc; bh=vGZZU806BMsy2FlLEX9qIWyBhkIdFLM7BAbzd+ZcB1o=;
- b=WT5sc5tdhRBRISXaDNOk6FqQ7nwCI8swSSbHW2meTzgSCRWZpQMQ+39HAxerymu55M
- 5CKahcMIAX18RDONRzqdli9HeHdrqgbhmfH+IXvMCkRsEsOI6F74TQYH00pedVeTEmwP
- z5IiQJ84F2zGTC7A+1nuGRXSwsuOsdkcieVR8be9W4cDbHpw2RNaUoyt146rNBztQcXS
- a1Zd0KH4aeuqPcGvdE2S0dVtJL9gx0eXQOjqG4PxRjIfhwd5Wtb3JxVhkx89HzqvNalq
- fpH8iLt49vhiwnTEGFUG+akvIrChc+nmcA1QNOhW1s0GdzdFRfqSkECpYrTF8wrUOH+o
- Y9hw==
+ :from:to:cc; bh=cAvy6+fwIiIRiG9Lmy2tseyLyfcoEEJ+B7YgNlapmHE=;
+ b=XybMqOVIYlSbC1mtMeCumaSTYuKR14itWH/9Udj4Q/jGw8Oq2z5dQkzc3Z8OnEAxyI
+ D/WhXvX6F7odWpOCc5SLig1gOk/Nz3nvFHkkh1MeM5Gjy+jgHn7aho1eHSp5US8n3b0Z
+ G2P6ACMYQzfdKCG9u6wQGCD04ORc6Zb7PV3PJpMwah9eMHfesEBYJAWxAJGWyA+WlC7F
+ Qo4U+F/WpRzmHvZVLVczcGsLMRw9V3yyDACclox5sf1IkoypDs5HqFMvctotspcuy7IV
+ HFWVNtmdEM9SfMSkgHrbZZKKACYpxV0u0j5IFRKG3zdLc3nweKjZyMPqF1eruiq2u8R7
+ 3u3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=vGZZU806BMsy2FlLEX9qIWyBhkIdFLM7BAbzd+ZcB1o=;
- b=Si1IFbqt5vZhNakZavnqYYHpW+mNDTpKAwV8KrOaCXcZvJRi735/PXRGfNwo2kDxa3
- hS/+rsqRTL3iA4BI+Eh80RRpcLWC2U/jwCD/6doLNSsEXafR3Yi5yG2QAU32l3dcqutM
- UtLJ5QKw8wC8GQcL3vsADJ5Nt4M3b0ue4CmL7R1rw4R5X/vkFEibI1jE/gVj4cUFw4bO
- z9Fs5+d1je5uyXxkX8/LPRf/FGe00EzaZdTpTrvNJJJ6JLWWO5d7OrVF8FHEibaDMdKI
- 3dGiSMk+e4rzAYo+aOEHMvoJ2dd2qykCuvsXPF+X7B+7O/u8As+Pk51AsiGiC7vs4a7O
- xcsQ==
-X-Gm-Message-State: AOAM530OIjl5GJN09eRdUsXZcxWPDbf7rydcbAg2COQCMJ5IYUa0FBi1
- fij3VoopWFXhDuuTga+vtggV3rUrrHSdyw6pjmMRJgI6qrHFeNTvpduqBMfWWEi/PagAbogYdFe
- GmxW/8bAt9Y4f9nWgIKxz2RiIg+hrnmEEFIsS7fGzGc6dFQE++Z67FE4oas4tZJsvZDOfsg==
-X-Google-Smtp-Source: ABdhPJw4vZR6Z2Okaohac4Pa1YhCKmEapI4LF/TQcl603TxBJtJMT+OMFzMRR1DDDIyHUfYHfgoynLi/62s=
+ bh=cAvy6+fwIiIRiG9Lmy2tseyLyfcoEEJ+B7YgNlapmHE=;
+ b=uPJndUcfhvTHcl8fKY2eiAGQF6V9KQOZfPfKTFFxaPZWR3dpjMrOoqWglZ4tXAmLnk
+ q1tLIt6OBQze+R2JXLwA6NxqnPH9lw0Vw4O+caM7rTuz/ncF9j3DxZ6+SrlcFoJ0Vwwb
+ F/H5Mket8x1bbOAxbjo2UML5Ew+RHQVWKlRqmjedWP9GY2IFIaHNWVaV3Y63u1AF7shA
+ dswq7HuBXOVNoSVdN/FNXCYI5QNXI7KTOVHkFlZJvTwDMcnfOlsFEBsVc/wmz/VPyPzl
+ 0bs4j+W/lnK7+BwrYL4wxAMS8CmjmQanL4VNXeiTbQREgER35RXJAFYqFytw9MNwFWvF
+ EnSg==
+X-Gm-Message-State: AOAM531VQhtTeDfkbFjrmswW+fjxMm1kuyrdHDKwtTRf1TPUaHkb4G+9
+ tZKUA9zRgJ4ScDt3upNJRE/7CflQVsQXwy5oV/C5eH9vg9m52tFQO8EMQQj+FPj0ZX5ujM3dXa0
+ OPTX4YeYaDItlY/8gVaSgrcseZr5l2TR6FXDgEwUvH/XxiB+Ve82K2SsK3S4zxl08sudPdA==
+X-Google-Smtp-Source: ABdhPJzp/V/z98iSGPCAD6TVFlO4ZbwsqHiIoj9tVHtOmIVogU8wQqeSmKEJPPLOE02Odj0PDM2eo/nnjNc=
 X-Received: from ascull.lon.corp.google.com
  ([2a00:79e0:d:109:4a0f:cfff:fe4a:6363])
- (user=ascull job=sendgmr) by 2002:a0c:b2d4:: with SMTP id
- d20mr1990339qvf.1.1599141213911; 
- Thu, 03 Sep 2020 06:53:33 -0700 (PDT)
-Date: Thu,  3 Sep 2020 14:52:59 +0100
+ (user=ascull job=sendgmr) by 2002:a17:906:8245:: with SMTP id
+ f5mr743254ejx.264.1599141216147; Thu, 03 Sep 2020 06:53:36 -0700 (PDT)
+Date: Thu,  3 Sep 2020 14:53:00 +0100
 In-Reply-To: <20200903135307.251331-1-ascull@google.com>
-Message-Id: <20200903135307.251331-11-ascull@google.com>
+Message-Id: <20200903135307.251331-12-ascull@google.com>
 Mime-Version: 1.0
 References: <20200903135307.251331-1-ascull@google.com>
 X-Mailer: git-send-email 2.28.0.402.g5ffc5be6b7-goog
-Subject: [PATCH v3 10/18] KVM: arm64: Restore hyp when panicking in guest
- context
+Subject: [PATCH v3 11/18] KVM: arm64: Share context save and restore macros
 From: Andrew Scull <ascull@google.com>
 To: kvmarm@lists.cs.columbia.edu
 Cc: linux-arm-kernel@lists.infradead.org, kernel-team@android.com,
@@ -95,156 +93,124 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-If the guest context is loaded when a panic is triggered, restore the
-hyp context so e.g. the shadow call stack works when hyp_panic() is
-called and SP_EL0 is valid when the host's panic() is called.
-
-Use the hyp context's __hyp_running_vcpu field to track when hyp
-transitions to and from the guest vcpu so the exception handlers know
-whether the context needs to be restored.
+To avoid duplicating the context save and restore macros, move them into
+a shareable header.
 
 Signed-off-by: Andrew Scull <ascull@google.com>
 ---
- arch/arm64/include/asm/kvm_asm.h        | 10 ++++++++++
- arch/arm64/kvm/hyp/entry.S              | 24 ++++++++++++++++++++++++
- arch/arm64/kvm/hyp/hyp-entry.S          |  5 ++---
- arch/arm64/kvm/hyp/include/hyp/switch.h |  4 +++-
- arch/arm64/kvm/hyp/nvhe/host.S          |  5 +++++
- 5 files changed, 44 insertions(+), 4 deletions(-)
+ arch/arm64/include/asm/kvm_asm.h | 39 ++++++++++++++++++++++++++++++++
+ arch/arm64/kvm/hyp/entry.S       | 39 --------------------------------
+ 2 files changed, 39 insertions(+), 39 deletions(-)
 
 diff --git a/arch/arm64/include/asm/kvm_asm.h b/arch/arm64/include/asm/kvm_asm.h
-index 34ec1b558219..6c3e3b903343 100644
+index 6c3e3b903343..4bbde3d3989c 100644
 --- a/arch/arm64/include/asm/kvm_asm.h
 +++ b/arch/arm64/include/asm/kvm_asm.h
-@@ -226,6 +226,16 @@ extern char __smccc_workaround_1_smc[__SMCCC_WORKAROUND_1_SMC_SZ];
- 	ldr	\vcpu, [\ctxt, #HOST_CONTEXT_VCPU]
+@@ -251,6 +251,45 @@ extern char __smccc_workaround_1_smc[__SMCCC_WORKAROUND_1_SMC_SZ];
+ 	.popsection
  .endm
  
-+.macro get_loaded_vcpu vcpu, ctxt
-+	hyp_adr_this_cpu \ctxt, kvm_hyp_ctxt, \vcpu
-+	ldr	\vcpu, [\ctxt, #HOST_CONTEXT_VCPU]
++#define CPU_XREG_OFFSET(x)	(CPU_USER_PT_REGS + 8*x)
++#define CPU_LR_OFFSET		CPU_XREG_OFFSET(30)
++#define CPU_SP_EL0_OFFSET	(CPU_LR_OFFSET + 8)
++
++/*
++ * We treat x18 as callee-saved as the host may use it as a platform
++ * register (e.g. for shadow call stack).
++ */
++.macro save_callee_saved_regs ctxt
++	str	x18,      [\ctxt, #CPU_XREG_OFFSET(18)]
++	stp	x19, x20, [\ctxt, #CPU_XREG_OFFSET(19)]
++	stp	x21, x22, [\ctxt, #CPU_XREG_OFFSET(21)]
++	stp	x23, x24, [\ctxt, #CPU_XREG_OFFSET(23)]
++	stp	x25, x26, [\ctxt, #CPU_XREG_OFFSET(25)]
++	stp	x27, x28, [\ctxt, #CPU_XREG_OFFSET(27)]
++	stp	x29, lr,  [\ctxt, #CPU_XREG_OFFSET(29)]
 +.endm
 +
-+.macro set_loaded_vcpu vcpu, ctxt, tmp
-+	hyp_adr_this_cpu \ctxt, kvm_hyp_ctxt, \tmp
-+	str	\vcpu, [\ctxt, #HOST_CONTEXT_VCPU]
++.macro restore_callee_saved_regs ctxt
++	// We require \ctxt is not x18-x28
++	ldr	x18,      [\ctxt, #CPU_XREG_OFFSET(18)]
++	ldp	x19, x20, [\ctxt, #CPU_XREG_OFFSET(19)]
++	ldp	x21, x22, [\ctxt, #CPU_XREG_OFFSET(21)]
++	ldp	x23, x24, [\ctxt, #CPU_XREG_OFFSET(23)]
++	ldp	x25, x26, [\ctxt, #CPU_XREG_OFFSET(25)]
++	ldp	x27, x28, [\ctxt, #CPU_XREG_OFFSET(27)]
++	ldp	x29, lr,  [\ctxt, #CPU_XREG_OFFSET(29)]
 +.endm
 +
- /*
-  * KVM extable for unexpected exceptions.
-  * In the same format _asm_extable, but output to a different section so that
++.macro save_sp_el0 ctxt, tmp
++	mrs	\tmp,	sp_el0
++	str	\tmp,	[\ctxt, #CPU_SP_EL0_OFFSET]
++.endm
++
++.macro restore_sp_el0 ctxt, tmp
++	ldr	\tmp,	  [\ctxt, #CPU_SP_EL0_OFFSET]
++	msr	sp_el0, \tmp
++.endm
++
+ #endif
+ 
+ #endif /* __ARM_KVM_ASM_H__ */
 diff --git a/arch/arm64/kvm/hyp/entry.S b/arch/arm64/kvm/hyp/entry.S
-index 38cca690a6ff..4787fc82790c 100644
+index 4787fc82790c..afaa8d1f2485 100644
 --- a/arch/arm64/kvm/hyp/entry.S
 +++ b/arch/arm64/kvm/hyp/entry.S
-@@ -86,6 +86,8 @@ alternative_else_nop_endif
- 	ret
+@@ -7,7 +7,6 @@
+ #include <linux/linkage.h>
  
- 1:
-+	set_loaded_vcpu x0, x1, x2
-+
- 	add	x29, x0, #VCPU_CONTEXT
+ #include <asm/alternative.h>
+-#include <asm/asm-offsets.h>
+ #include <asm/assembler.h>
+ #include <asm/fpsimdmacros.h>
+ #include <asm/kvm.h>
+@@ -16,46 +15,8 @@
+ #include <asm/kvm_mmu.h>
+ #include <asm/kvm_ptrauth.h>
  
- 	// Macro ptrauth_switch_to_guest format:
-@@ -116,6 +118,26 @@ alternative_else_nop_endif
- 	eret
- 	sb
+-#define CPU_XREG_OFFSET(x)	(CPU_USER_PT_REGS + 8*x)
+-#define CPU_SP_EL0_OFFSET	(CPU_XREG_OFFSET(30) + 8)
+-
+ 	.text
  
-+SYM_INNER_LABEL(__guest_exit_panic, SYM_L_GLOBAL)
-+	// x2-x29,lr: vcpu regs
-+	// vcpu x0-x1 on the stack
-+
-+	// If the hyp context is loaded, go straight to hyp_panic
-+	get_loaded_vcpu x0, x1
-+	cbz	x0, hyp_panic
-+
-+	// The hyp context is saved so make sure it is restored to allow
-+	// hyp_panic to run at hyp and, subsequently, panic to run in the host.
-+	// This makes use of __guest_exit to avoid duplication but sets the
-+	// return address to tail call into hyp_panic. As a side effect, the
-+	// current state is saved to the guest context but it will only be
-+	// accurate if the guest had been completely restored.
-+	hyp_adr_this_cpu x0, kvm_hyp_ctxt, x1
-+	adr	x1, hyp_panic
-+	str	x1, [x0, #CPU_XREG_OFFSET(30)]
-+
-+	get_vcpu_ptr	x1, x0
-+
- SYM_INNER_LABEL(__guest_exit, SYM_L_GLOBAL)
- 	// x0: return code
- 	// x1: vcpu
-@@ -163,6 +185,8 @@ SYM_INNER_LABEL(__guest_exit, SYM_L_GLOBAL)
- 	// Now restore the hyp regs
- 	restore_callee_saved_regs x2
- 
-+	set_loaded_vcpu xzr, x1, x2
-+
- alternative_if ARM64_HAS_RAS_EXTN
- 	// If we have the RAS extensions we can consume a pending error
- 	// without an unmask-SError and isb. The ESB-instruction consumed any
-diff --git a/arch/arm64/kvm/hyp/hyp-entry.S b/arch/arm64/kvm/hyp/hyp-entry.S
-index f92489250dfc..bc9f53df46f5 100644
---- a/arch/arm64/kvm/hyp/hyp-entry.S
-+++ b/arch/arm64/kvm/hyp/hyp-entry.S
-@@ -145,7 +145,7 @@ el2_error:
- 	eret
- 	sb
- 
--.macro invalid_vector	label, target = hyp_panic
-+.macro invalid_vector	label, target = __guest_exit_panic
- 	.align	2
- SYM_CODE_START(\label)
- 	b \target
-@@ -186,10 +186,9 @@ check_preamble_length 661b, 662b
- .macro invalid_vect target
- 	.align 7
- 661:
--	b	\target
- 	nop
-+	stp	x0, x1, [sp, #-16]!
- 662:
--	ldp	x0, x1, [sp], #16
- 	b	\target
- 
- check_preamble_length 661b, 662b
-diff --git a/arch/arm64/kvm/hyp/include/hyp/switch.h b/arch/arm64/kvm/hyp/include/hyp/switch.h
-index afe714056b97..821721b78ad9 100644
---- a/arch/arm64/kvm/hyp/include/hyp/switch.h
-+++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
-@@ -509,6 +509,7 @@ static inline void __set_host_arch_workaround_state(struct kvm_vcpu *vcpu)
- 
- static inline void __kvm_unexpected_el2_exception(void)
- {
-+	extern char __guest_exit_panic[];
- 	unsigned long addr, fixup;
- 	struct exception_table_entry *entry, *end;
- 	unsigned long elr_el2 = read_sysreg(elr_el2);
-@@ -529,7 +530,8 @@ static inline void __kvm_unexpected_el2_exception(void)
- 		return;
- 	}
- 
--	hyp_panic();
-+	/* Trigger a panic after restoring the hyp context. */
-+	write_sysreg(__guest_exit_panic, elr_el2);
- }
- 
- #endif /* __ARM64_KVM_HYP_SWITCH_H__ */
-diff --git a/arch/arm64/kvm/hyp/nvhe/host.S b/arch/arm64/kvm/hyp/nvhe/host.S
-index 5a7380c342c8..d4e8b8084020 100644
---- a/arch/arm64/kvm/hyp/nvhe/host.S
-+++ b/arch/arm64/kvm/hyp/nvhe/host.S
-@@ -72,6 +72,11 @@ SYM_FUNC_END(__hyp_do_panic)
- 
- .macro invalid_host_vect
- 	.align 7
-+	/* If a guest is loaded, panic out of it. */
-+	stp	x0, x1, [sp, #-16]!
-+	get_loaded_vcpu x0, x1
-+	cbnz	x0, __guest_exit_panic
-+	add	sp, sp, #16
- 	b	hyp_panic
- .endm
- 
+-/*
+- * We treat x18 as callee-saved as the host may use it as a platform
+- * register (e.g. for shadow call stack).
+- */
+-.macro save_callee_saved_regs ctxt
+-	str	x18,      [\ctxt, #CPU_XREG_OFFSET(18)]
+-	stp	x19, x20, [\ctxt, #CPU_XREG_OFFSET(19)]
+-	stp	x21, x22, [\ctxt, #CPU_XREG_OFFSET(21)]
+-	stp	x23, x24, [\ctxt, #CPU_XREG_OFFSET(23)]
+-	stp	x25, x26, [\ctxt, #CPU_XREG_OFFSET(25)]
+-	stp	x27, x28, [\ctxt, #CPU_XREG_OFFSET(27)]
+-	stp	x29, lr,  [\ctxt, #CPU_XREG_OFFSET(29)]
+-.endm
+-
+-.macro restore_callee_saved_regs ctxt
+-	// We require \ctxt is not x18-x28
+-	ldr	x18,      [\ctxt, #CPU_XREG_OFFSET(18)]
+-	ldp	x19, x20, [\ctxt, #CPU_XREG_OFFSET(19)]
+-	ldp	x21, x22, [\ctxt, #CPU_XREG_OFFSET(21)]
+-	ldp	x23, x24, [\ctxt, #CPU_XREG_OFFSET(23)]
+-	ldp	x25, x26, [\ctxt, #CPU_XREG_OFFSET(25)]
+-	ldp	x27, x28, [\ctxt, #CPU_XREG_OFFSET(27)]
+-	ldp	x29, lr,  [\ctxt, #CPU_XREG_OFFSET(29)]
+-.endm
+-
+-.macro save_sp_el0 ctxt, tmp
+-	mrs	\tmp,	sp_el0
+-	str	\tmp,	[\ctxt, #CPU_SP_EL0_OFFSET]
+-.endm
+-
+-.macro restore_sp_el0 ctxt, tmp
+-	ldr	\tmp,	  [\ctxt, #CPU_SP_EL0_OFFSET]
+-	msr	sp_el0, \tmp
+-.endm
+-
+ /*
+  * u64 __guest_enter(struct kvm_vcpu *vcpu);
+  */
 -- 
 2.28.0.402.g5ffc5be6b7-goog
 
