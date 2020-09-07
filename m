@@ -2,63 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E358525FCFA
-	for <lists+kvmarm@lfdr.de>; Mon,  7 Sep 2020 17:24:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 556FB25FD16
+	for <lists+kvmarm@lfdr.de>; Mon,  7 Sep 2020 17:28:33 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9764F4B56E;
-	Mon,  7 Sep 2020 11:24:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DAF964B531;
+	Mon,  7 Sep 2020 11:28:32 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: 0.919
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.919 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01, T_HK_NAME_DR=0.01]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WtuE6slRRgu1; Mon,  7 Sep 2020 11:24:49 -0400 (EDT)
+	with ESMTP id 60MhTHokfHRt; Mon,  7 Sep 2020 11:28:32 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DAE884B586;
-	Mon,  7 Sep 2020 11:24:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7C0634B396;
+	Mon,  7 Sep 2020 11:28:31 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4EAC64B51F
- for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Sep 2020 11:24:44 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 842874B2BA
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Sep 2020 11:28:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id CoG1xjWJgZyG for <kvmarm@lists.cs.columbia.edu>;
- Mon,  7 Sep 2020 11:24:43 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5D4E54B50A
- for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Sep 2020 11:24:43 -0400 (EDT)
-Received: from localhost.localdomain (236.31.169.217.in-addr.arpa
- [217.169.31.236])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ with ESMTP id sXpxmSsfd-kB for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  7 Sep 2020 11:28:28 -0400 (EDT)
+Received: from us-smtp-1.mimecast.com (us-smtp-1.mimecast.com [207.211.31.81])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 48E5D4B26E
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Sep 2020 11:28:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1599492508;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8sVz1sXB3S8O+Ei2CKhwWlGsleL+awuWDP8l7TGlMTQ=;
+ b=R9Hi2birWVxPEBY/RqcwJ5jN7pBluzCCap02DE8qrEPjNd6wFbzDR2GuYkJ2pRtzrDKFgx
+ AFLeLXfouxNjGb2nNDAMwM7m16pZ/08lPfO6xeWWvZAjl6fxp3yHVgCopfXNqmfECeI17L
+ e+ryuSBWKeYTh2W3neQBhGgOSunGc4E=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-227-lo-bhTY-OiOxxFEK9sC7Kg-1; Mon, 07 Sep 2020 11:28:24 -0400
+X-MC-Unique: lo-bhTY-OiOxxFEK9sC7Kg-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com
+ [10.5.11.14])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id D67D121481;
- Mon,  7 Sep 2020 15:24:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1599492282;
- bh=iBNbgwJ7G65jJYLyvnOGyhJVexhT3sNAbVfJ0PjC9HM=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=HuwaK2qlYZejdE6EKOBvuFwAB11xRx2wfQcU8S5CgmUc6dCQno5T0b+YkxV3FvZtF
- ARKdiMtU6bVBbNG5RoCdYwQ2bdxVmle7MshdKIT9z/qkPgYeS9ZmZiTqnrN9hNSFN0
- fID4NrFYwbhj6xACUMewXLA0cmUWEPSwPkrFz1es=
-From: Will Deacon <will@kernel.org>
-To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v4 21/21] KVM: arm64: Don't constrain maximum IPA size based
- on host configuration
-Date: Mon,  7 Sep 2020 16:23:44 +0100
-Message-Id: <20200907152344.12978-22-will@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200907152344.12978-1-will@kernel.org>
-References: <20200907152344.12978-1-will@kernel.org>
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 1D0DD18B9EC1;
+ Mon,  7 Sep 2020 15:28:22 +0000 (UTC)
+Received: from work-vm (ovpn-114-180.ams2.redhat.com [10.36.114.180])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 742D65D9D2;
+ Mon,  7 Sep 2020 15:28:15 +0000 (UTC)
+Date: Mon, 7 Sep 2020 16:28:12 +0100
+From: "Dr. David Alan Gilbert" <dgilbert@redhat.com>
+To: Steven Price <steven.price@arm.com>, eric.auger@redhat.com
+Subject: Re: [PATCH v2 0/2] MTE support for KVM guest
+Message-ID: <20200907152812.GJ2682@work-vm>
+References: <20200904160018.29481-1-steven.price@arm.com>
 MIME-Version: 1.0
-Cc: kernel-team@android.com, Marc Zyngier <maz@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- linux-arm-kernel@lists.infradead.org
+Content-Disposition: inline
+In-Reply-To: <20200904160018.29481-1-steven.price@arm.com>
+User-Agent: Mutt/1.14.6 (2020-07-11)
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+Cc: Peter Maydell <Peter.Maydell@arm.com>, qemu-devel@nongnu.org,
+ Catalin Marinas <catalin.marinas@arm.com>, Juan Quintela <quintela@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, linux-kernel@vger.kernel.org,
+ Dave Martin <Dave.Martin@arm.com>, linux-arm-kernel@lists.infradead.org,
+ Marc Zyngier <maz@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -75,77 +89,121 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Now that the guest stage-2 page-tables are managed independently from
-the host stage-1 page-tables, we can avoid constraining the IPA size
-based on the host and instead limit it only based on the PARange field
-of the ID_AA64MMFR0 register.
+(cc'ing in Eric Auger)
 
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Quentin Perret <qperret@google.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Signed-off-by: Will Deacon <will@kernel.org>
----
- arch/arm64/kvm/reset.c | 38 +++++---------------------------------
- 1 file changed, 5 insertions(+), 33 deletions(-)
+* Steven Price (steven.price@arm.com) wrote:
+> Arm's Memory Tagging Extension (MTE) adds 4 bits of tag data to every 16
+> bytes of memory in the system. This along with stashing a tag within the
+> high bit of virtual addresses allows runtime checking of memory
+> accesses.
+> 
+> These patches add support to KVM to enable MTE within a guest. They are
+> based on Catalin's v9 MTE user-space support series[1].
+> 
+> I'd welcome feedback on the proposed user-kernel ABI. Specifically this
+> series currently:
+> 
+>  1. Requires the VMM to enable MTE per-VCPU.
+>  2. Automatically promotes (normal host) memory given to the guest to be
+>     tag enabled (sets PG_mte_tagged), if any VCPU has MTE enabled. The
+>     tags are cleared if the memory wasn't previously MTE enabled.
+>  3. Doesn't provide any new methods for the VMM to access the tags on
+>     memory.
+> 
+> (2) and (3) are particularly interesting from the aspect of VM migration.
+> The guest is able to store/retrieve data in the tags (presumably for the
+> purpose of tag checking, but architecturally it could be used as just
+> storage). This means that when migrating a guest the data needs to be
+> transferred (or saved/restored).
+> 
+> MTE tags are controlled by the same permission model as normal pages
+> (i.e. a read-only page has read-only tags), so the normal methods of
+> detecting guest changes to pages can be used. But this would also
+> require the tags within a page to be migrated at the same time as the
+> data (since the access control for tags is the same as the normal data
+> within a page).
 
-diff --git a/arch/arm64/kvm/reset.c b/arch/arm64/kvm/reset.c
-index ee33875c5c2a..471ee9234e40 100644
---- a/arch/arm64/kvm/reset.c
-+++ b/arch/arm64/kvm/reset.c
-@@ -339,7 +339,7 @@ u32 get_kvm_ipa_limit(void)
- 
- int kvm_set_ipa_limit(void)
- {
--	unsigned int ipa_max, pa_max, va_max, parange, tgran_2;
-+	unsigned int parange, tgran_2;
- 	u64 mmfr0;
- 
- 	mmfr0 = read_sanitised_ftr_reg(SYS_ID_AA64MMFR0_EL1);
-@@ -376,38 +376,10 @@ int kvm_set_ipa_limit(void)
- 		break;
- 	}
- 
--	pa_max = id_aa64mmfr0_parange_to_phys_shift(parange);
--
--	/* Clamp the IPA limit to the PA size supported by the kernel */
--	ipa_max = (pa_max > PHYS_MASK_SHIFT) ? PHYS_MASK_SHIFT : pa_max;
--	/*
--	 * Since our stage2 table is dependent on the stage1 page table code,
--	 * we must always honor the following condition:
--	 *
--	 *  Number of levels in Stage1 >= Number of levels in Stage2.
--	 *
--	 * So clamp the ipa limit further down to limit the number of levels.
--	 * Since we can concatenate upto 16 tables at entry level, we could
--	 * go upto 4bits above the maximum VA addressable with the current
--	 * number of levels.
--	 */
--	va_max = PGDIR_SHIFT + PAGE_SHIFT - 3;
--	va_max += 4;
--
--	if (va_max < ipa_max)
--		ipa_max = va_max;
--
--	/*
--	 * If the final limit is lower than the real physical address
--	 * limit of the CPUs, report the reason.
--	 */
--	if (ipa_max < pa_max)
--		pr_info("kvm: Limiting the IPA size due to kernel %s Address limit\n",
--			(va_max < pa_max) ? "Virtual" : "Physical");
--
--	WARN(ipa_max < KVM_PHYS_SHIFT,
--	     "KVM IPA limit (%d bit) is smaller than default size\n", ipa_max);
--	kvm_ipa_limit = ipa_max;
-+	kvm_ipa_limit = id_aa64mmfr0_parange_to_phys_shift(parange);
-+	WARN(kvm_ipa_limit < KVM_PHYS_SHIFT,
-+	     "KVM IPA limit (%d bit) is smaller than default size\n",
-+	     kvm_ipa_limit);
- 	kvm_info("IPA Size Limit: %dbits\n", kvm_ipa_limit);
- 
- 	return 0;
+(Without understanding anything about your tag system...)
+
+Note that during (normal, non-postcopy) migration the consistency can
+be a little loose - until the guest starts running; i.e. you can send
+a page that's in themiddle of being modified as long as you make sure
+you send it again later so that what the guest sees on the destination
+when it runs is consistent; i.e. it would be fine to send your tags
+separately to your data and allow them to get a little out of sync, as
+long as they caught up before the guest ran.
+
+> (3) may be problematic and I'd welcome input from those familiar with
+> VMMs. User space cannot access tags unless the memory is mapped with the
+> PROT_MTE flag. However enabling PROT_MTE will also enable tag checking
+> for the user space process (assuming the VMM enables tag checking for
+> the process) and since the tags in memory are controlled by the guest
+> it's unlikely the VMM would have an appropriately tagged pointer for its
+> access. This means the VMM would either need to maintain two mappings of
+> memory (one to access tags, the other to access data) or disable tag
+> checking during the accesses to data.
+
+Imagine I had a second mapping; what would it look like; how would I get
+and restore the tags?
+
+In terms of migration stream, I guess we have two ways to do this,
+either it rides shotgun on the main RAM section pages, transmitting
+those few extra bytes whenever we transmit a page, or you have a
+separate iteratable device for RAMtags, and it just transmits those.
+How you keep the two together is an interesting question.
+The shotgun method sounds nasty to avoid putting special cases in the,
+already hairy, RAM code.
+
+> If it's not practical to either disable tag checking in the VMM or
+> maintain multiple mappings then the alternatives I'm aware of are:
+> 
+>  * Provide a KVM-specific method to extract the tags from guest memory.
+>    This might also have benefits in terms of providing an easy way to
+>    read bulk tag data from guest memory (since the LDGM instruction
+>    isn't available at EL0).
+>  * Provide support for user space setting the TCMA0 or TCMA1 bits in
+>    TCR_EL1. These would allow the VMM to generate pointers which are not
+>    tag checked.
+
+I guess you want the VMM to do as much tagged checked access as possible
+on it's own data structures?
+
+How do things like virtio work where the qemu or kernel is accessing
+guest memory for IO?
+
+Dave
+
+> Feedback is welcome, and feel free to ask questions if anything in the
+> above doesn't make sense.
+> 
+> Changes since the previous v1 posting[2]:
+> 
+>  * Rebasing clean-ups
+>  * sysreg visibility is now controlled based on whether the VCPU has MTE
+>    enabled or not
+> 
+> [1] https://lore.kernel.org/r/20200904103029.32083-1-catalin.marinas@arm.com
+> [2] https://lore.kernel.org/r/20200713100102.53664-1-steven.price%40arm.com
+> 
+> Steven Price (2):
+>   arm64: kvm: Save/restore MTE registers
+>   arm64: kvm: Introduce MTE VCPU feature
+> 
+>  arch/arm64/include/asm/kvm_emulate.h       |  3 +++
+>  arch/arm64/include/asm/kvm_host.h          |  9 ++++++++-
+>  arch/arm64/include/asm/sysreg.h            |  3 ++-
+>  arch/arm64/include/uapi/asm/kvm.h          |  1 +
+>  arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h | 14 ++++++++++++++
+>  arch/arm64/kvm/mmu.c                       | 15 +++++++++++++++
+>  arch/arm64/kvm/reset.c                     |  8 ++++++++
+>  arch/arm64/kvm/sys_regs.c                  | 20 +++++++++++++++-----
+>  8 files changed, 66 insertions(+), 7 deletions(-)
+> 
+> -- 
+> 2.20.1
+> 
 -- 
-2.28.0.526.ge36021eeef-goog
+Dr. David Alan Gilbert / dgilbert@redhat.com / Manchester, UK
 
 _______________________________________________
 kvmarm mailing list
