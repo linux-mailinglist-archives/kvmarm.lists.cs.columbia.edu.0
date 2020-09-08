@@ -2,76 +2,74 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E897260CC1
-	for <lists+kvmarm@lfdr.de>; Tue,  8 Sep 2020 09:58:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73886260F0A
+	for <lists+kvmarm@lfdr.de>; Tue,  8 Sep 2020 11:53:32 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 31DA44B4AA;
-	Tue,  8 Sep 2020 03:58:56 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EAEA04B2C9;
+	Tue,  8 Sep 2020 05:53:31 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KwzOcMUVmZTn; Tue,  8 Sep 2020 03:58:55 -0400 (EDT)
+	with ESMTP id 3soTBEUBSL0P; Tue,  8 Sep 2020 05:53:31 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D1E434B583;
-	Tue,  8 Sep 2020 03:58:54 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BCB554B48A;
+	Tue,  8 Sep 2020 05:53:30 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5FA374B570
- for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Sep 2020 03:58:52 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6E0614B21F
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Sep 2020 05:53:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id tWZxxTHCab9Q for <kvmarm@lists.cs.columbia.edu>;
- Tue,  8 Sep 2020 03:58:51 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 35F9B4B543
- for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Sep 2020 03:58:51 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ with ESMTP id at3sBjQeOj3f for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  8 Sep 2020 05:53:28 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [63.128.21.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 74DBB4B20A
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Sep 2020 05:53:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1599558808;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FBNH2TKloZYz+VQ8z5rDqMA5CzFUqgJN9jmog9OO4ZQ=;
+ b=NbEhs6nO1P0J2iuwCGF6/C+rPwNHtcWXvrCAxAlz24hwQ8qHUfoTN8WSUOukappj96vBSd
+ OOWNMaJULIVm1pXv4HOvjcpNemNHlmk/8HcAHochY7Y0vRcpOSaejyzm/7J7+EnRFqkSLR
+ r21DVlMh7JYmUbBQGqWgnJv1/UGRfWU=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-288--kGdKwDyOlCWDSa31-TTbw-1; Tue, 08 Sep 2020 05:53:24 -0400
+X-MC-Unique: -kGdKwDyOlCWDSa31-TTbw-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com
+ [10.5.11.13])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 52FBB21D7A;
- Tue,  8 Sep 2020 07:58:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1599551929;
- bh=OjNspS+jgFhDp5gV44DQ99VuWmNJnN6icx3cBfKv7Nc=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=E4DJgZ4pt0bv2LiqzimsGwPw4BFiqBVFLMHWKx6hd7GNsdldB2L3P7ssa3TAQVsv4
- SAtRpJ6ouF9a7OhGSmH8vGpsBcS5/b6IOAIy0TTV74gB/7Uu5+uqyOrgU1AEfB8/OB
- BVsiqWcjg8Q+oq/aDmzHZTucwz/dqDEIdhsqQ/oI=
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.lan) by disco-boy.misterjones.org with esmtpsa
- (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
- (envelope-from <maz@kernel.org>)
- id 1kFYWd-009zhy-RO; Tue, 08 Sep 2020 08:58:47 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- kvm@vger.kernel.org
-Subject: [PATCH v3 5/5] KVM: arm64: Document PMU filtering API
-Date: Tue,  8 Sep 2020 08:58:30 +0100
-Message-Id: <20200908075830.1161921-6-maz@kernel.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200908075830.1161921-1-maz@kernel.org>
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id A328A800469;
+ Tue,  8 Sep 2020 09:53:22 +0000 (UTC)
+Received: from kamzik.brq.redhat.com (unknown [10.40.192.171])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id CF272805F0;
+ Tue,  8 Sep 2020 09:53:20 +0000 (UTC)
+Date: Tue, 8 Sep 2020 11:53:18 +0200
+From: Andrew Jones <drjones@redhat.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH v3 1/5] KVM: arm64: Refactor PMU attribute error handling
+Message-ID: <20200908095318.nzbnadvgcmxvt3xs@kamzik.brq.redhat.com>
 References: <20200908075830.1161921-1-maz@kernel.org>
+ <20200908075830.1161921-2-maz@kernel.org>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, james.morse@arm.com,
- julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com, robin.murphy@arm.com,
- mark.rutland@arm.com, eric.auger@redhat.com, graf@amazon.com,
- kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com, graf@amazon.com,
- Robin Murphy <robin.murphy@arm.com>
+Content-Disposition: inline
+In-Reply-To: <20200908075830.1161921-2-maz@kernel.org>
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
+Cc: kvm@vger.kernel.org, kernel-team@android.com, graf@amazon.com,
+ Robin Murphy <robin.murphy@arm.com>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -88,72 +86,90 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add a small blurb describing how the event filtering API gets used.
+Hi Marc,
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- Documentation/virt/kvm/devices/vcpu.rst | 46 +++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+On Tue, Sep 08, 2020 at 08:58:26AM +0100, Marc Zyngier wrote:
+> The PMU emulation error handling is pretty messy when dealing with
+> attributes. Let's refactor it so that we have less duplication,
+> and that it is easy to extend later on.
+> 
+> A functional change is that kvm_arm_pmu_v3_init() used to return
+> -ENXIO when the PMU feature wasn't set. The error is now reported
+> as -ENODEV, matching the documentation.
 
-diff --git a/Documentation/virt/kvm/devices/vcpu.rst b/Documentation/virt/kvm/devices/vcpu.rst
-index ca374d3fe085..203b91e93151 100644
---- a/Documentation/virt/kvm/devices/vcpu.rst
-+++ b/Documentation/virt/kvm/devices/vcpu.rst
-@@ -55,6 +55,52 @@ Request the initialization of the PMUv3.  If using the PMUv3 with an in-kernel
- virtual GIC implementation, this must be done after initializing the in-kernel
- irqchip.
- 
-+1.3 ATTRIBUTE: KVM_ARM_VCPU_PMU_V3_FILTER
-+---------------------------------------
-+
-+:Parameters: in kvm_device_attr.addr the address for a PMU event filter is a
-+             pointer to a struct kvm_pmu_event_filter
-+
-+:Returns:
-+
-+	 =======  ======================================================
-+	 -ENODEV: PMUv3 not supported or GIC not initialized
-+	 -ENXIO:  PMUv3 not properly configured or in-kernel irqchip not
-+	 	  configured as required prior to calling this attribute
-+	 -EBUSY:  PMUv3 already initialized
-+	 -EINVAL: Invalid filter range
-+	 =======  ======================================================
-+
-+Request the installation of a PMU event filter describe as follows:
-+
-+struct kvm_pmu_event_filter {
-+	__u16	base_event;
-+	__u16	nevents;
-+
-+#define KVM_PMU_EVENT_ALLOW	0
-+#define KVM_PMU_EVENT_DENY	1
-+
-+	__u8	action;
-+	__u8	pad[3];
-+};
-+
-+A filter range is defined as the range [@base_event, @base_event + @nevents[,
-+together with an @action (KVM_PMU_EVENT_ALLOW or KVM_PMU_EVENT_DENY). The
-+first registered range defines the global policy (global ALLOW if the first
-+@action is DENY, global DENY if the first @action is ALLOW). Multiple ranges
-+can be programmed, and must fit within the event space defined by the PMU
-+architecture (10 bits on ARMv8.0, 16 bits from ARMv8.1 onwards).
-+
-+Note: "Cancelling" a filter by registering the opposite action for the same
-+range doesn't change the default action. For example, installing an ALLOW
-+filter for event range [0:10] as the first filter and then applying a DENY
-+action for the same range will leave the whole range as disabled.
-+
-+Restrictions: Event 0 (SW_INCR) is never filtered, as it doesn't count a
-+hardware event. Filtering event 0x1E (CHAIN) has no effect either, as it
-+isn't strictly speaking an event. Filtering the cycle counter is possible
-+using event 0x11 (CPU_CYCLES).
-+
- 
- 2. GROUP: KVM_ARM_VCPU_TIMER_CTRL
- =================================
--- 
-2.28.0
+Hmm, I didn't think we could make changes like that, since some userspace
+somewhere may now depend on the buggy interface. That said, I'm not really
+against the change, but maybe it should go as a separate patch.
+
+> -ENXIO is still returned
+> when the interrupt isn't properly configured.
+> 
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
+> ---
+>  arch/arm64/kvm/pmu-emul.c | 21 +++++++++------------
+>  1 file changed, 9 insertions(+), 12 deletions(-)
+> 
+> diff --git a/arch/arm64/kvm/pmu-emul.c b/arch/arm64/kvm/pmu-emul.c
+> index f0d0312c0a55..93d797df42c6 100644
+> --- a/arch/arm64/kvm/pmu-emul.c
+> +++ b/arch/arm64/kvm/pmu-emul.c
+> @@ -735,15 +735,6 @@ int kvm_arm_pmu_v3_enable(struct kvm_vcpu *vcpu)
+>  
+>  static int kvm_arm_pmu_v3_init(struct kvm_vcpu *vcpu)
+>  {
+> -	if (!kvm_arm_support_pmu_v3())
+> -		return -ENODEV;
+> -
+> -	if (!test_bit(KVM_ARM_VCPU_PMU_V3, vcpu->arch.features))
+> -		return -ENXIO;
+> -
+> -	if (vcpu->arch.pmu.created)
+> -		return -EBUSY;
+> -
+>  	if (irqchip_in_kernel(vcpu->kvm)) {
+>  		int ret;
+>  
+> @@ -796,6 +787,15 @@ static bool pmu_irq_is_valid(struct kvm *kvm, int irq)
+>  
+>  int kvm_arm_pmu_v3_set_attr(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
+>  {
+> +	if (!kvm_arm_support_pmu_v3())
+> +		return -ENODEV;
+> +
+> +	if (!test_bit(KVM_ARM_VCPU_PMU_V3, vcpu->arch.features))
+> +		return -ENODEV;
+
+nit: could combine these two if's w/ an ||
+
+> +
+> +	if (vcpu->arch.pmu.created)
+> +		return -EBUSY;
+> +
+>  	switch (attr->attr) {
+>  	case KVM_ARM_VCPU_PMU_V3_IRQ: {
+>  		int __user *uaddr = (int __user *)(long)attr->addr;
+> @@ -804,9 +804,6 @@ int kvm_arm_pmu_v3_set_attr(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
+>  		if (!irqchip_in_kernel(vcpu->kvm))
+>  			return -EINVAL;
+>  
+> -		if (!test_bit(KVM_ARM_VCPU_PMU_V3, vcpu->arch.features))
+> -			return -ENODEV;
+> -
+>  		if (get_user(irq, uaddr))
+>  			return -EFAULT;
+>  
+> -- 
+> 2.28.0
+> 
+
+Thanks,
+drew
+
+> _______________________________________________
+> kvmarm mailing list
+> kvmarm@lists.cs.columbia.edu
+> https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+> 
 
 _______________________________________________
 kvmarm mailing list
