@@ -2,65 +2,59 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id F20B5264638
-	for <lists+kvmarm@lfdr.de>; Thu, 10 Sep 2020 14:42:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7062D264694
+	for <lists+kvmarm@lfdr.de>; Thu, 10 Sep 2020 15:09:13 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7D3304B408;
-	Thu, 10 Sep 2020 08:42:13 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C24854B22A;
+	Thu, 10 Sep 2020 09:09:12 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1JPlTDu36vuE; Thu, 10 Sep 2020 08:42:13 -0400 (EDT)
+	with ESMTP id VnC1TUQ1TJAH; Thu, 10 Sep 2020 09:09:12 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4BDCE4B406;
-	Thu, 10 Sep 2020 08:42:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 898074B1BF;
+	Thu, 10 Sep 2020 09:09:11 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 66EA34B3B4
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Sep 2020 08:42:11 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D12094B19B
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Sep 2020 09:09:09 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id IDTflAu1IsgC for <kvmarm@lists.cs.columbia.edu>;
- Thu, 10 Sep 2020 08:42:10 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8D4954B3A9
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Sep 2020 08:42:10 -0400 (EDT)
-Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
- bits)) (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id D005D208FE;
- Thu, 10 Sep 2020 12:42:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1599741729;
- bh=s/ImfSj4GtOVqobSLRCwmo2Y6eUw8cRqEt3SO+ax0WM=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=tl9mouv28NgKI/NwlPeWBC4meBdVR8Fp4ha/h5PQN7m4PRxUqg+/MYeMM7XgELOt4
- FYE7p7QFlx7KmFWYbaDtV84yUcKLkMcLJ+76n48PgYBLTO38TRWZkexS0P3e6DWgbZ
- n5glcN+0OSaCyCaw3Ay9Pr0isis7uSBoSNDkaZkE=
-Date: Thu, 10 Sep 2020 13:42:04 +0100
-From: Will Deacon <will@kernel.org>
-To: Alexandru Elisei <alexandru.elisei@arm.com>
-Subject: Re: [PATCH v4 10/21] KVM: arm64: Add support for stage-2 page-aging
- in generic page-table
-Message-ID: <20200910124204.GC18100@willie-the-truck>
+ with ESMTP id Tgo06nzaLgkx for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 10 Sep 2020 09:09:08 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9C77C4B11E
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Sep 2020 09:09:08 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D13F01063;
+ Thu, 10 Sep 2020 06:09:07 -0700 (PDT)
+Received: from [192.168.0.110] (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 958A23F66E;
+ Thu, 10 Sep 2020 06:09:06 -0700 (PDT)
+Subject: Re: [PATCH v4 17/21] KVM: arm64: Convert user_mem_abort() to generic
+ page-table API
+To: Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>
 References: <20200907152344.12978-1-will@kernel.org>
- <20200907152344.12978-11-will@kernel.org>
- <080cd3d9-4979-1d72-0c5a-188334b5a26a@arm.com>
+ <20200907152344.12978-18-will@kernel.org>
+ <2ae77a66-9cc4-f4e1-9e98-a50d5891cf20@arm.com>
+ <c2e5e055251db637327f81da452cea2c@kernel.org>
+ <20200910105107.GA17887@willie-the-truck>
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+Message-ID: <41e4a714-138c-1132-575f-cfd8a447c7ef@arm.com>
+Date: Thu, 10 Sep 2020 14:10:07 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <080cd3d9-4979-1d72-0c5a-188334b5a26a@arm.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: Marc Zyngier <maz@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
- kernel-team@android.com, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+In-Reply-To: <20200910105107.GA17887@willie-the-truck>
+Content-Language: en-US
+Cc: Catalin Marinas <catalin.marinas@arm.com>, kernel-team@android.com,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -77,29 +71,45 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, Sep 08, 2020 at 04:30:15PM +0100, Alexandru Elisei wrote:
-> On 9/7/20 4:23 PM, Will Deacon wrote:
-> > +kvm_pte_t kvm_pgtable_stage2_mkyoung(struct kvm_pgtable *pgt, u64 addr)
-> > +{
-> > +	kvm_pte_t pte = 0;
-> > +	stage2_update_leaf_attrs(pgt, addr, 1, KVM_PTE_LEAF_ATTR_LO_S2_AF, 0,
-> > +				 &pte);
-> > +	dsb(ishst);
-> 
-> I am curious about the DSB above. We don't do it when we clear the AF bit, because
-> in the clear_flush_young() mmu notifier, kvm_age_hva() is followed by
-> kvm_flush_remote_tlbs() -> kvm_flush_remote_tlbs(), which does a DSB ISHST.
-> 
-> When AF is zero, the entry is not allowed to be stored in a TLB, and that's why we
-> don't need to issue a TLBI instruction. Do we do the DSB here to make sure all PEs
-> in the inner shareability domain see the updated translation tables? Or there's
-> another reason I'm not seeing?
+Hi,
 
-You're right: the DSB is to ensure that the updated PTE is visible to the
-page-table walker, as I'm not sure how well we'll handle the spurious access
-fault in this case (particularly as is_young() would return true).
+On 9/10/20 11:51 AM, Will Deacon wrote:
+> On Wed, Sep 09, 2020 at 06:12:29PM +0100, Marc Zyngier wrote:
+>> On 2020-09-09 15:20, Alexandru Elisei wrote:
+>>> On 9/7/20 4:23 PM, Will Deacon wrote:
+>>>> @@ -1610,62 +1605,31 @@ static int user_mem_abort(struct kvm_vcpu
+>>>> *vcpu, phys_addr_t fault_ipa,
+>>>>  	if (vma_pagesize == PAGE_SIZE && !force_pte)
+>>>>  		vma_pagesize = transparent_hugepage_adjust(memslot, hva,
+>>>>  							   &pfn, &fault_ipa);
+>>>> -	if (writable)
+>>>> +	if (writable) {
+>>>> +		prot |= KVM_PGTABLE_PROT_W;
+>>>>  		kvm_set_pfn_dirty(pfn);
+>>>> +		mark_page_dirty(kvm, gfn);
+>>> The previous code called mark_page_dirty() only if the vma_pagesize ==
+>>> PAGE_SIZE
+>>> (and writable was true, obviously). Is this supposed to fix a bug?
+>> No, this is actually introducing one. mark_page_dirty() checks that there is
+>> an
+>> associated bitmap, and thus only happens when writing to a single page, but
+>> we
+>> shouldn't do it for R/O memslots, which the current code avoids. It should
+>> be
+>> guarded by logging_active.
+> gfn_to_pfn_prot() will set "writable" to false for R/O memslots, so I think
+> we're good here.
 
-Will
+That also looks correct to me, gfn_to_pfn_prot() -> __gfn_to_pfn_memslot() sets
+*writable to false if the memslot is readonly.
+
+Marc is also right, mark_page_dirty() first checks if there's a dirty bitmap
+associated with the memslot, and memslot->dirty_bitmap gets allocated only if
+KVM_SET_USER_MEMORY_REGION was called with the KVM_MEM_LOG_DIRTY_PAGES flag set
+(should've checked for that before asking).
+
+Thanks,
+Alex
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
