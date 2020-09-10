@@ -2,85 +2,60 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 038E1263FC2
+	by mail.lfdr.de (Postfix) with ESMTP id D67AF263FC3
 	for <lists+kvmarm@lfdr.de>; Thu, 10 Sep 2020 10:29:28 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6DDA64B3FB;
-	Thu, 10 Sep 2020 04:29:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8B30A4B45E;
+	Thu, 10 Sep 2020 04:29:28 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@ziepe.ca
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TRltsAowwWRn; Thu, 10 Sep 2020 04:29:27 -0400 (EDT)
+	with ESMTP id CXCKQ7PW4vxz; Thu, 10 Sep 2020 04:29:27 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 55BE54B3D5;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 739574B3E6;
 	Thu, 10 Sep 2020 04:29:26 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4FE1E4B3A1
- for <kvmarm@lists.cs.columbia.edu>; Wed,  9 Sep 2020 18:36:05 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CC3DE4B4AA
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Sep 2020 02:28:28 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id qtPAHa9kV51M for <kvmarm@lists.cs.columbia.edu>;
- Wed,  9 Sep 2020 18:36:04 -0400 (EDT)
-Received: from mail-qk1-f195.google.com (mail-qk1-f195.google.com
- [209.85.222.195])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 635494B343
- for <kvmarm@lists.cs.columbia.edu>; Wed,  9 Sep 2020 18:36:04 -0400 (EDT)
-Received: by mail-qk1-f195.google.com with SMTP id p4so4155228qkf.0
- for <kvmarm@lists.cs.columbia.edu>; Wed, 09 Sep 2020 15:36:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ziepe.ca; s=google;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=c134n78aG+T1D05fG/7gwyDy+RohECK5LAEVlOiODCw=;
- b=NyzBsT+JUu0U0kwfTlzpDClheXiWwFCChT8B3B3AnRObKvk4drNujFjFruGeHjyE5E
- J/ekKdFGX4ZPNWUfEPhKExoK0sWWjXwST+pbBqDSQQLO3bhHO97u7XE9KwITCllyZTNP
- KD49/yc1MfvhSPgbWZUU1AxUsv6U0vCFkivBcLxiu3ppVdmJeK1Itxs2CD5ayafEhare
- Y4u34snA9MTl4Likr5RS+E4LR0hKde+fx41J4h2BvlUn7go15Yxb6eLzvLXVka4Mre/N
- zumvX8Blxljzlanq14R9XGa7dbkpGn90Uvx/RhT36f5UMVOZXDvQeH4wAZB+Eu6xRGBh
- woew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=c134n78aG+T1D05fG/7gwyDy+RohECK5LAEVlOiODCw=;
- b=oHVo3AR+tMq1Wjew1JGTUk/a/wlmnzMyF1cvlsX3CY7S10vPPwz6spTmgcu+4iE5nc
- +qj7xzALREPRpmXvZiAb5kVSMeervB0Lpmrty82Bs0rFVAW66B9E5BvERe7MGtiFnDBF
- UUDgt7R0P4meiWSNb0eAjI0KqrsOU06EzmYdHDdpFxWIqTN3gKGolY3wj22sISi7dgY/
- BUkixH1RWF6kl5aPSLFtAvsmYpo96k0Ei5CUvTXN5to1oz6c1wGlaUe572jjlM7KegdB
- 2qo9mcOWsEqu7+q4idcISuD2Xu34bm7bSX+ec9ZzPbBDZoVyP0eOt8th4ZAbjBfEs1dP
- Bggg==
-X-Gm-Message-State: AOAM533yt7Xfvo8lOqwrpQw9linFC8Ke7gu+AGI2nokOWHYWdP2vhePs
- dtvYAIJnjoYQn1+Ynmd/V5bGnQ==
-X-Google-Smtp-Source: ABdhPJx7fgh7UgPdTXT6uFy6snoRxxciP2Hd+WS8NFMVek051RlvF5/SRN4VKGquIHZA++zqp1uC0Q==
-X-Received: by 2002:a05:620a:2225:: with SMTP id
- n5mr5229154qkh.171.1599690963887; 
- Wed, 09 Sep 2020 15:36:03 -0700 (PDT)
-Received: from ziepe.ca
- (hlfxns017vw-156-34-48-30.dhcp-dynamic.fibreop.ns.bellaliant.net.
- [156.34.48.30])
- by smtp.gmail.com with ESMTPSA id g5sm4497430qtx.43.2020.09.09.15.36.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Sep 2020 15:36:03 -0700 (PDT)
-Received: from jgg by mlx with local (Exim 4.94) (envelope-from <jgg@ziepe.ca>)
- id 1kG8h8-004BIN-8t; Wed, 09 Sep 2020 19:36:02 -0300
-Date: Wed, 9 Sep 2020 19:36:02 -0300
-From: Jason Gunthorpe <jgg@ziepe.ca>
+ with ESMTP id FhuVrTAOS4kg for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 10 Sep 2020 02:28:27 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 970774B47F
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Sep 2020 02:28:27 -0400 (EDT)
+Received: from coco.lan (ip5f5ad5ac.dynamic.kabel-deutschland.de
+ [95.90.213.172])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 79CF6206A1;
+ Thu, 10 Sep 2020 06:28:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1599719306;
+ bh=DjrBPnz1BgCnBYG/64IiUxKEJrMJGKb1A3mRWVpncJk=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=KppkCOGGex5Td4qsjLzCFk1NCf4XHbXpibLJsQYMVVaT0bkaAFQjn+ZuEeXf2o77m
+ UyE3jBNOXTpotfoeco2l+h7jkiCeDQm7I+A6v3H6sCfl0zDTboY8/bNQu+oaB5Un+6
+ r8LmWMYkPZepovOPOzqdHyn81ea3fXGQ2O9gVUL8=
+Date: Thu, 10 Sep 2020 08:28:12 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Joe Perches <joe@perches.com>
 Subject: Re: [trivial PATCH] treewide: Convert switch/case fallthrough; to
  break;
-Message-ID: <20200909223602.GJ87483@ziepe.ca>
-References: <e6387578c75736d61b2fe70d9783d91329a97eb4.camel@perches.com>
-MIME-Version: 1.0
-Content-Disposition: inline
+Message-ID: <20200910082812.057a04e6@coco.lan>
 In-Reply-To: <e6387578c75736d61b2fe70d9783d91329a97eb4.camel@perches.com>
+References: <e6387578c75736d61b2fe70d9783d91329a97eb4.camel@perches.com>
+X-Mailer: Claws Mail 3.17.6 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
+MIME-Version: 1.0
 X-Mailman-Approved-At: Thu, 10 Sep 2020 04:29:24 -0400
 Cc: linux-wireless@vger.kernel.org, linux-fbdev@vger.kernel.org,
  oss-drivers@netronome.com, nouveau@lists.freedesktop.org,
@@ -121,7 +96,9 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Sep 09, 2020 at 01:06:39PM -0700, Joe Perches wrote:
+Em Wed, 09 Sep 2020 13:06:39 -0700
+Joe Perches <joe@perches.com> escreveu:
+
 > fallthrough to a separate case/default label break; isn't very readable.
 > 
 > Convert pseudo-keyword fallthrough; statements to a simple break; when
@@ -141,13 +118,24 @@ On Wed, Sep 09, 2020 at 01:06:39PM -0700, Joe Perches wrote:
 > 
 > Compiled allyesconfig x86-64 only.
 > A few files for other arches were not compiled.
+> 
 
-IB part looks OK, I prefer it like this
 
-You could do the same for continue as well, I saw a few of those..
+>  drivers/media/dvb-frontends/drxd_hard.c                   |  2 +-
+>  drivers/media/i2c/ov5640.c                                |  2 +-
+>  drivers/media/i2c/ov6650.c                                |  5 ++---
+>  drivers/media/i2c/smiapp/smiapp-core.c                    |  2 +-
+>  drivers/media/i2c/tvp5150.c                               |  2 +-
+>  drivers/media/pci/ddbridge/ddbridge-core.c                |  2 +-
+>  drivers/media/usb/cpia2/cpia2_core.c                      |  2 +-
+
+For media drivers:
+
+Reviewed-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+
 
 Thanks,
-Jason
+Mauro
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
