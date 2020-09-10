@@ -2,165 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id ED4CF263FC5
-	for <lists+kvmarm@lfdr.de>; Thu, 10 Sep 2020 10:29:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB3F326401E
+	for <lists+kvmarm@lfdr.de>; Thu, 10 Sep 2020 10:35:37 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9FEE04B3E3;
-	Thu, 10 Sep 2020 04:29:30 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7A59D4B36A;
+	Thu, 10 Sep 2020 04:35:37 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.392
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.392 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01] autolearn=no
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@microchip.com
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered)
-	header.i=@microchiptechnology.onmicrosoft.com
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7zBTKYkBMnnd; Thu, 10 Sep 2020 04:29:29 -0400 (EDT)
+	with ESMTP id U7Gj+usFE3T3; Thu, 10 Sep 2020 04:35:37 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AAE354B3F3;
-	Thu, 10 Sep 2020 04:29:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E28B94B364;
+	Thu, 10 Sep 2020 04:35:35 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 670EF4B27A
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Sep 2020 04:24:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 106764B364
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Sep 2020 04:35:35 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id C6zAXnA99kOA for <kvmarm@lists.cs.columbia.edu>;
- Thu, 10 Sep 2020 04:24:29 -0400 (EDT)
-Received: from esa3.microchip.iphmx.com (esa3.microchip.iphmx.com
- [68.232.153.233])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0EE6F4B24E
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Sep 2020 04:24:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
- t=1599726269; x=1631262269;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=Yyq2EDCS2vKZmH5eLOYYicNPIXcRgkd+H8Ca+7FcXOc=;
- b=EWdUZ4osiST+F9W1hu2pRtoJoToZwC8aemU1DmhPSA3ZLN96bM9RJrpF
- 8K3E7SEXtHUYfLriX8/H4HPQ+PxA6ezFxRNo5v2x+sfWo+4t4nUQuQQVx
- MDMtXcNHDmmNs7WRomkSjWcAW5i6n64LUw9mt9IoknwpNWlO6y2oPOR0A
- OCRbA1pITO+KeBOqRPyWjysu/6LoM3dTPL3zNSoy2AEgoT2SdwLDpkG3P
- K/n054zBJLFy1iVHbAgJFeRFE0gwj+HJYAeVA+X1RqGa3OKxPvmnLUy3A
- 5OYxUvryq6WH3L0IgREtBoF7Yw7mEFiKJQOXUe5t1/0uGX2VTbM9X7f3Z Q==;
-IronPort-SDR: ftLnKVJWWVARs6xE60k80lvcWvEF9LnNReTXi2pIeHcFd1pOvCbq5YtWKyNQKbgntoF3PJrEzZ
- yGkW+CSPkTanXwFzN+yaXQvli7N+J9TDXD7EYbxy0puKvjPuscpCKfJznonLOJ1RssHzyGXWld
- FEmXkljrjgcGdATyyJ52ywdn6YOedSeAiw39Unb2/iAlFSlX4xOSaPEQ1oDzJo6jB0orKUYHob
- 8TPZOmriiXyQ/YsxyXR92KLsMxoOl9I7rBMGKN1j5VU4WXWSblm45hfVc18o3BtgyAUNaPQFAh
- yGo=
-X-IronPort-AV: E=Sophos;i="5.76,412,1592895600"; d="scan'208";a="91279822"
-Received: from smtpout.microchip.com (HELO email.microchip.com)
- ([198.175.253.82])
- by esa3.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256;
- 10 Sep 2020 01:24:26 -0700
-Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
- chn-vm-ex03.mchp-main.com (10.10.85.151) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1979.3; Thu, 10 Sep 2020 01:24:22 -0700
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (10.10.215.89) by
- email.microchip.com (10.10.87.152) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1979.3
- via Frontend Transport; Thu, 10 Sep 2020 01:24:22 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=itElKv30dbsNhtpfiKLkCOXYopTjtkZ9zEAzRioxDAmgifjIhq6QVV/lc6kfk0TIuSPX1OZAUrSDWVumK4tLXffHjOu4WRZugnRrQRvvAAgpCE7V1+zJn3PyPC0j6/G2aAtgoGzj2pGQVkq35HD5i3ZvkV68QA+ILQVSTYqBA+q+9/IrmOIYHSq5T7WknjE5tqhKpcoEPyxu0LHlp9MR91+nL0ffI8mb6UZ8R19c1Z8LDep20pLw6r6tPamTWrMJ0hAxNX35wsV6GMNcE6JFgdV5g0JfNl3CssuMyPR0eMKE/T9DeShiio5DN/5SR2TytdQ7bAPBSy6lDzF4x9zLmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/BE3UD6DmJgxUoBN4fm1O92DvDQlokRm7L2E5H8tZ/w=;
- b=aw+E7ncriQCfdGAUGrQZUE/X01NpnQkPaMKg98SJOA6wY+Umt71j+ZM3yJT4X2e4Z3a1Nf1QLyhCWVWM5woSGiSrFRCtJ7Y+axoK5muAMFzy8K/q5zDKA+XhU43kGZTFp6nun78Bc4vdtny2nuHntBDykocQKzISfMU5cKF8KWDvMYiCfneJuxF9RID1NNZC8H0s/Flemt9H/8te0Tc5X4Wgyt0zHH2qftbjcUtGDix9JdV3FbJj+OP489jnkeYYjXBTFPWiX1axHsYPxivLdaeMUWo+d8svoqnPmKjaFYR7H+Czrws9kPnJiEDFXxT1EnrZJjVbs3wTlpHvyWTwVg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microchip.com; dmarc=pass action=none
- header.from=microchip.com; dkim=pass header.d=microchip.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=microchiptechnology.onmicrosoft.com;
- s=selector2-microchiptechnology-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/BE3UD6DmJgxUoBN4fm1O92DvDQlokRm7L2E5H8tZ/w=;
- b=nHI74pvWX9voKu6qjF0Kfqy5Sc0AGs+NSCuuZ7eJDs13Cd2LSPaaZXvb/ZjcOfT09uuWHM6p5pmozbJumZzu3LweHgExn3n4A3SazKZjxpV5HJ3Rfd1IYhfQ1vrLcAgTG/9j9wdLhYAt6RaeZr3RJVUTfyzdVhJVMpRZmeQD3Xk=
-Received: from BYAPR11MB3477.namprd11.prod.outlook.com (2603:10b6:a03:7c::28)
- by BY5PR11MB4307.namprd11.prod.outlook.com (2603:10b6:a03:1bd::27)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3370.16; Thu, 10 Sep
- 2020 08:24:22 +0000
-Received: from BYAPR11MB3477.namprd11.prod.outlook.com
- ([fe80::d1dd:de76:4e99:7c85]) by BYAPR11MB3477.namprd11.prod.outlook.com
- ([fe80::d1dd:de76:4e99:7c85%7]) with mapi id 15.20.3348.019; Thu, 10 Sep 2020
- 08:24:21 +0000
-From: <Nicolas.Ferre@microchip.com>
-To: <joe@perches.com>, <linux-kernel@vger.kernel.org>, <trivial@kernel.org>
-Subject: Re: [trivial PATCH] treewide: Convert switch/case fallthrough; to
- break;
-Thread-Topic: [trivial PATCH] treewide: Convert switch/case fallthrough; to
- break;
-Thread-Index: AQHWh0vIy44IYF5A+kuaVLhVJ6ZdVw==
-Date: Thu, 10 Sep 2020 08:24:21 +0000
-Message-ID: <c2929349-ca60-486d-3cad-a83321587c5f@microchip.com>
-References: <e6387578c75736d61b2fe70d9783d91329a97eb4.camel@perches.com>
-In-Reply-To: <e6387578c75736d61b2fe70d9783d91329a97eb4.camel@perches.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-authentication-results: perches.com; dkim=none (message not signed)
- header.d=none;perches.com; dmarc=none action=none header.from=microchip.com;
-x-originating-ip: [2a01:cb1c:8c:b200:d11f:426b:f805:cbe2]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: e351a690-85b8-47aa-f38f-08d85562eb8c
-x-ms-traffictypediagnostic: BY5PR11MB4307:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <BY5PR11MB4307E000D4DA0597A74F9A31E0270@BY5PR11MB4307.namprd11.prod.outlook.com>
-x-bypassexternaltag: True
-x-ms-oob-tlc-oobclassifiers: OLM:6108;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: rwdyTK6oNx+pJXY+VYO8jlUUcB5LsJW3ZQhau0YhpysDI1uZrWJ+5KkXmnJNABVwRpL8mxf24YLlXWyB3yirjaXQ/srQXMAk73DmLRMX7FFSd/uWs59kXpR0gz7YIDZpkdEHXR8Ks47+GSWaldjUxHW1dDgr9Bml1Ile+LfAjDi5j/2WavAN5DcmiJhVV86brSYApECTF1sqFMiIoIfargGWcDiXjLp0xoZy1wTF5cYKXSjd2DGvBQRASj+UAeO1Pg9WFEX+2sgdqqFJ/HgGUzu9uaOU20bpHBTTwQw7yoVGql5DTXE+Xr30INsHw1gSuTyHpcI3KtFhJi6QDKEIl6ZhO0EwhNcia52tqGsvyefiqtKNAZSsmZhN9N/OPaNO
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BYAPR11MB3477.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(136003)(376002)(346002)(396003)(366004)(39860400002)(36756003)(6506007)(4744005)(53546011)(31686004)(4326008)(8676002)(31696002)(6512007)(186003)(478600001)(2616005)(107886003)(83380400001)(54906003)(110136005)(5660300002)(316002)(2906002)(6486002)(76116006)(71200400001)(91956017)(66476007)(66556008)(8936002)(66446008)(66946007)(64756008)(7416002)(7406005)(86362001)(43740500002);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata: CK3jnFjP+DaxTGoKSfijNwQSDSi+zYRAANKGWEe0w6BHoCBr3jeo8QFCPrdi+OpT1qz3lmVs3mCRxOmBtUGK5WN0AxOt0wvA3bBJRUyjBicAE+lDMsP7vy1cft0wcXBrEZgdgqF7VD1sQj+khtUTD5EsNnntahNSIGqwN+VZCKQ1QzjPtAbjR2oPP/LrPDKYk//qfKAomMDI7R2fpR0tTUzDMz48DEh+PQCCmr/krCP8U3KTB6FIGhilgI7TLOfsJcLS9qlGh0PGNeVy7GIerGvFEQfkR4YdlzVLyEKvYmf4EXR5wArGM6eS5MMbLL4vYVjGrhiNaJt+earGuTqyYiFZbc+uujPQG9qCWcGOhC7tSaJvV/BIkb7lV8g/yXvxSbayqkCXQ/s7jX+D9fM+ZWNqgoWbSd/P+uuCP7/8e33PXHOet1lAM1sUIHpLxk8RCyecYucN6ijlgMa8IdFcV7U+ZA3zH97/7OWVEtd6OgF0CR21Hki2raxtlS5sca+cVURYu2gcHFAMLULSgaOruMk5qcKurGsgOTL9NDY1H7Jpn1+7gJ+bMQIt2b5OxDFW2nSizeQSfqlNFoprGc6aS71OSv+MwkoEfhBi640q5sGrdYfhliWNj5HhbdiTLJVy1TBmrhSIzi6KODxmStaMlQzfe8a1Otv3042csYwXaPKEPC9i6WiYuHbWrvEwzSbxIsAABeXwAiTaxYC040N9rw==
-Content-ID: <0B2726412C35D14B94E876CA5EB14904@namprd11.prod.outlook.com>
+ with ESMTP id EzaYjNPtx4pO for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 10 Sep 2020 04:35:33 -0400 (EDT)
+Received: from us-smtp-delivery-1.mimecast.com (us-smtp-1.mimecast.com
+ [207.211.31.81])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CCF704B34D
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Sep 2020 04:35:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1599726933;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CYmRoWWniFPaHjjXdipbulnXobK8uQf7JpAYrezYUMM=;
+ b=Jrd94r/HLukKL+bmeayIdic1MwPX1kcaTa+3PQ7M16CfACxICj1D+ITY6CmbTiW+kPy6R4
+ l/vxTHDnYUBat7s1vdiU+1hyVp9qLKn7mkl4R5EJ2RLQijekrvA+eDBEIQgT+ia0Mncck9
+ 3zYIfRWX4HhuDmpHZsV3hefV3IN+1Ow=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-543-LSHAAh1-MpCiq8ANKZVVcQ-1; Thu, 10 Sep 2020 04:35:29 -0400
+X-MC-Unique: LSHAAh1-MpCiq8ANKZVVcQ-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com
+ [10.5.11.22])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id EB87E1008308;
+ Thu, 10 Sep 2020 08:35:27 +0000 (UTC)
+Received: from [10.36.112.212] (ovpn-112-212.ams2.redhat.com [10.36.112.212])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 2F88E10027A4;
+ Thu, 10 Sep 2020 08:35:25 +0000 (UTC)
+Subject: Re: [PATCH v2] KVM: arm64: Allow to limit number of PMU counters
+From: Auger Eric <eric.auger@redhat.com>
+To: Alexander Graf <graf@amazon.com>, kvmarm@lists.cs.columbia.edu
+References: <20200908205730.23898-1-graf@amazon.com>
+ <79606f01-7638-ed6f-27c8-1183c723cd60@redhat.com>
+Message-ID: <366e640b-eb1e-33a2-7865-2751742cae58@redhat.com>
+Date: Thu, 10 Sep 2020 10:35:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3477.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e351a690-85b8-47aa-f38f-08d85562eb8c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Sep 2020 08:24:21.4887 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3f4057f3-b418-4d4e-ba84-d55b4e897d88
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: JW3oElxXZwEvl6R2z5GFIVkcX/+UpGKsEW8MKFxofB9W1y9KDMUkM69WnQUZrCOB/0mudh2ADBhfj0C34gWZhgepCXhZk3LC9prwi+CGg3E=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR11MB4307
-X-Mailman-Approved-At: Thu, 10 Sep 2020 04:29:24 -0400
-Cc: linux-wireless@vger.kernel.org, linux-fbdev@vger.kernel.org,
- oss-drivers@netronome.com, nouveau@lists.freedesktop.org,
- alsa-devel@alsa-project.org, dri-devel@lists.freedesktop.org,
- linux-ide@vger.kernel.org, dm-devel@redhat.com, linux-mtd@lists.infradead.org,
- linux-i2c@vger.kernel.org, sparclinux@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, linux-rtc@vger.kernel.org,
- linux-s390@vger.kernel.org, linux-scsi@vger.kernel.org, dccp@vger.kernel.org,
- linux-rdma@vger.kernel.org, linux-atm-general@lists.sourceforge.net,
- linux-afs@lists.infradead.org, Ludovic.Desroches@microchip.com,
- coreteam@netfilter.org, intel-wired-lan@lists.osuosl.org,
- linux-serial@vger.kernel.org, linux-input@vger.kernel.org,
- linux-mmc@vger.kernel.org, kees.cook@canonical.com,
- linux-media@vger.kernel.org, linux-pm@vger.kernel.org,
- intel-gfx@lists.freedesktop.org, linux-sctp@vger.kernel.org,
- linux-mediatek@lists.infradead.org, linux-nvme@lists.infradead.org,
- storagedev@microchip.com, ceph-devel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-nfs@vger.kernel.org,
- linux-parisc@vger.kernel.org, netdev@vger.kernel.org,
- linux-usb@vger.kernel.org, ndesaulniers@google.com, linux-mips@vger.kernel.org,
- iommu@lists.linux-foundation.org, netfilter-devel@vger.kernel.org,
- linux-crypto@vger.kernel.org, Eugen.Hristev@microchip.com, bpf@vger.kernel.org,
- linuxppc-dev@lists.ozlabs.org
+In-Reply-To: <79606f01-7638-ed6f-27c8-1183c723cd60@redhat.com>
+Content-Language: en-US
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
+Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+ linux-arm-kernel@lists.infradead.org, Robin Murphy <robin.murphy@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -177,36 +88,215 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Joe,
+Hi Alex,
 
-Please drop this chunk: it's a successive controller version number 
-which are all backward compatible with "fallthrough" on each case so 
-removing from this last one makes it inconsistent.
+On 9/10/20 9:21 AM, Auger Eric wrote:
+> Hi Alex,
+> 
+> On 9/8/20 10:57 PM, Alexander Graf wrote:
+>> We currently pass through the number of PMU counters that we have available
+>> in hardware to guests. So if my host supports 10 concurrently active PMU
+>> counters, my guest will be able to spawn 10 counters as well.
+>>
+>> This is undesireable if we also want to use the PMU on the host for
+>> monitoring. In that case, we want to split the PMU between guest and
+>> host.
+> but don't we have a trap and emulate approach as opposed to current SPE
+> implementation?
 
-In sort: NACK for atmel-mci.
+Looking again at the switch code (__pmu_switch_to_guest), I see we just
+enable/disable the event counters owned by either the host/guest. I
+thought this was more involved. So now it is clear.
 
-Best regards,
-   Nicolas
+Thanks
 
+Eric
+>>
+>> To help that case, let's add a PMU attr that allows us to limit the number
+>> of PMU counters that we expose. With this patch in place, user space can
+>> keep some counters free for host use.
+>>
+>> Signed-off-by: Alexander Graf <graf@amazon.com>
+>>
+>> ---
+>>
+>> Because this patch touches the same code paths as the vPMU filtering one
+>> and the vPMU filtering generalized a few conditions in the attr path,
+>> I've based it on top. Please let me know if you want it independent instead.
+>>
+>> v1 -> v2:
+>>
+>>   - Add documentation
+>>   - Add read support
+>> ---
+>>  Documentation/virt/kvm/devices/vcpu.rst | 25 +++++++++++++++++++++++++
+>>  arch/arm64/include/uapi/asm/kvm.h       |  7 ++++---
+>>  arch/arm64/kvm/pmu-emul.c               | 32 ++++++++++++++++++++++++++++++++
+>>  arch/arm64/kvm/sys_regs.c               |  5 +++++
+>>  include/kvm/arm_pmu.h                   |  1 +
+>>  5 files changed, 67 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/Documentation/virt/kvm/devices/vcpu.rst b/Documentation/virt/kvm/devices/vcpu.rst
+>> index 203b91e93151..1a1c8d8c8b1d 100644
+>> --- a/Documentation/virt/kvm/devices/vcpu.rst
+>> +++ b/Documentation/virt/kvm/devices/vcpu.rst
+>> @@ -102,6 +102,31 @@ isn't strictly speaking an event. Filtering the cycle counter is possible
+>>  using event 0x11 (CPU_CYCLES).
+>>  
+>>  
+>> +1.4 ATTRIBUTE: KVM_ARM_VCPU_PMU_V3_NUM_EVENTS
+>> +---------------------------------------------
+>> +
+>> +:Parameters: in kvm_device_attr.addr the address for the limit of concurrent
+>> +             events is a pointer to an int
+>> +
+>> +:Returns:
+>> +
+>> +	 =======  ======================================================
+>> +	 -ENODEV: PMUv3 not supported
+>> +	 -EBUSY:  PMUv3 already initialized
+>> +	 -EINVAL: Too large number of events
+> s/events/event counters
+> 
+> I see that in perf code indeed num_events is used for that but I think
+> for the end-user the event counter terminology is better as it fits the
+> ARM spec.
+>> +	 =======  ======================================================
+>> +
+>> +Reconfigure the limit of concurrent PMU events that the guest can monitor.
+> here also
+>> +This number is directly exposed as part of the PMCR_EL0 register.
+> Maybe quote the "N" field
+>> +
+>> +On vcpu creation, this attribute is set to the hardware limit of the current
+>> +platform. If you need to determine the hardware limit, you can read this
+>> +attribute before setting it.
+>> +
+>> +Restrictions: The default value for this property is the number of hardware
+>> +supported events. Only values that are smaller than the hardware limit can
+> event counters
+>> +be set.
+>> +
+>>  2. GROUP: KVM_ARM_VCPU_TIMER_CTRL
+>>  =================================
+>>  
+>> diff --git a/arch/arm64/include/uapi/asm/kvm.h b/arch/arm64/include/uapi/asm/kvm.h
+>> index 7b1511d6ce44..db025c0b5a40 100644
+>> --- a/arch/arm64/include/uapi/asm/kvm.h
+>> +++ b/arch/arm64/include/uapi/asm/kvm.h
+>> @@ -342,9 +342,10 @@ struct kvm_vcpu_events {
+>>  
+>>  /* Device Control API on vcpu fd */
+>>  #define KVM_ARM_VCPU_PMU_V3_CTRL	0
+>> -#define   KVM_ARM_VCPU_PMU_V3_IRQ	0
+>> -#define   KVM_ARM_VCPU_PMU_V3_INIT	1
+>> -#define   KVM_ARM_VCPU_PMU_V3_FILTER	2
+>> +#define   KVM_ARM_VCPU_PMU_V3_IRQ		0
+>> +#define   KVM_ARM_VCPU_PMU_V3_INIT		1
+>> +#define   KVM_ARM_VCPU_PMU_V3_FILTER		2
+>> +#define   KVM_ARM_VCPU_PMU_V3_NUM_EVENTS	3
+>>  #define KVM_ARM_VCPU_TIMER_CTRL		1
+>>  #define   KVM_ARM_VCPU_TIMER_IRQ_VTIMER		0
+>>  #define   KVM_ARM_VCPU_TIMER_IRQ_PTIMER		1
+>> diff --git a/arch/arm64/kvm/pmu-emul.c b/arch/arm64/kvm/pmu-emul.c
+>> index 0458860bade2..c7915b95fec0 100644
+>> --- a/arch/arm64/kvm/pmu-emul.c
+>> +++ b/arch/arm64/kvm/pmu-emul.c
+>> @@ -253,6 +253,8 @@ void kvm_pmu_vcpu_init(struct kvm_vcpu *vcpu)
+>>  
+>>  	for (i = 0; i < ARMV8_PMU_MAX_COUNTERS; i++)
+>>  		pmu->pmc[i].idx = i;
+>> +
+>> +	pmu->num_events = perf_num_counters() - 1;
+>>  }
+>>  
+>>  /**
+>> @@ -978,6 +980,25 @@ int kvm_arm_pmu_v3_set_attr(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
+>>  
+>>  		return 0;
+>>  	}
+>> +	case KVM_ARM_VCPU_PMU_V3_NUM_EVENTS: {
+>> +		u64 mask = ARMV8_PMU_PMCR_N_MASK << ARMV8_PMU_PMCR_N_SHIFT;
+>> +		int __user *uaddr = (int __user *)(long)attr->addr;
+>> +		u32 num_events;
+>> +
+>> +		if (get_user(num_events, uaddr))
+>> +			return -EFAULT;
+>> +
+>> +		if (num_events >= perf_num_counters())
+>> +			return -EINVAL;
+>> +
+>> +		vcpu->arch.pmu.num_events = num_events;
+>> +
+>> +		num_events <<= ARMV8_PMU_PMCR_N_SHIFT;
+>> +		__vcpu_sys_reg(vcpu, SYS_PMCR_EL0) &= ~mask;
+>> +		__vcpu_sys_reg(vcpu, SYS_PMCR_EL0) |= num_events;
+>> +
+>> +		return 0;
+>> +	}
+>>  	case KVM_ARM_VCPU_PMU_V3_INIT:
+>>  		return kvm_arm_pmu_v3_init(vcpu);
+>>  	}
+>> @@ -1004,6 +1025,16 @@ int kvm_arm_pmu_v3_get_attr(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
+>>  		irq = vcpu->arch.pmu.irq_num;
+>>  		return put_user(irq, uaddr);
+>>  	}
+>> +	case KVM_ARM_VCPU_PMU_V3_NUM_EVENTS: {
+>> +		int __user *uaddr = (int __user *)(long)attr->addr;
+>> +		u32 num_events;
+>> +
+>> +		if (!test_bit(KVM_ARM_VCPU_PMU_V3, vcpu->arch.features))
+>> +			return -ENODEV;
+>> +
+>> +		num_events = vcpu->arch.pmu.num_events;
+>> +		return put_user(num_events, uaddr);
+>> +	}
+>>  	}
+>>  
+>>  	return -ENXIO;
+>> @@ -1015,6 +1046,7 @@ int kvm_arm_pmu_v3_has_attr(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
+>>  	case KVM_ARM_VCPU_PMU_V3_IRQ:
+>>  	case KVM_ARM_VCPU_PMU_V3_INIT:
+>>  	case KVM_ARM_VCPU_PMU_V3_FILTER:
+>> +	case KVM_ARM_VCPU_PMU_V3_NUM_EVENTS:
+>>  		if (kvm_arm_support_pmu_v3() &&
+>>  		    test_bit(KVM_ARM_VCPU_PMU_V3, vcpu->arch.features))
+>>  			return 0;
+>> diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+>> index 20ab2a7d37ca..d51e39600bbd 100644
+>> --- a/arch/arm64/kvm/sys_regs.c
+>> +++ b/arch/arm64/kvm/sys_regs.c
+>> @@ -672,6 +672,11 @@ static void reset_pmcr(struct kvm_vcpu *vcpu, const struct sys_reg_desc *r)
+>>  	       | (ARMV8_PMU_PMCR_MASK & 0xdecafbad)) & (~ARMV8_PMU_PMCR_E);
+>>  	if (!system_supports_32bit_el0())
+>>  		val |= ARMV8_PMU_PMCR_LC;
+>> +
+>> +	/* Override number of event selectors */
+>> +	val &= ~(ARMV8_PMU_PMCR_N_MASK << ARMV8_PMU_PMCR_N_SHIFT);
+>> +	val |= (u32)vcpu->arch.pmu.num_events << ARMV8_PMU_PMCR_N_SHIFT;
+>> +
+>>  	__vcpu_sys_reg(vcpu, r->reg) = val;
+>>  }
+>>  
+>> diff --git a/include/kvm/arm_pmu.h b/include/kvm/arm_pmu.h
+>> index 98cbfe885a53..ea3fc96a37d9 100644
+>> --- a/include/kvm/arm_pmu.h
+>> +++ b/include/kvm/arm_pmu.h
+>> @@ -27,6 +27,7 @@ struct kvm_pmu {
+>>  	bool ready;
+>>  	bool created;
+>>  	bool irq_level;
+>> +	u8 num_events;
+>>  };
+>>  
+>>  #define kvm_arm_pmu_v3_ready(v)		((v)->arch.pmu.ready)
+>>
+> 
+> Thanks
+> 
+> Eric
+> 
 
-On 09/09/2020 at 22:06, Joe Perches wrote:
-> diff --git a/drivers/mmc/host/atmel-mci.c b/drivers/mmc/host/atmel-mci.c
-> index 444bd3a0a922..8324312e4f42 100644
-> --- a/drivers/mmc/host/atmel-mci.c
-> +++ b/drivers/mmc/host/atmel-mci.c
-> @@ -2435,7 +2435,7 @@ static void atmci_get_cap(struct atmel_mci *host)
->          case 0x100:
->                  host->caps.has_bad_data_ordering = 0;
->                  host->caps.need_reset_after_xfer = 0;
-> -               fallthrough;
-> +               break;
->          case 0x0:
->                  break;
->          default:
-
-
--- 
-Nicolas Ferre
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
