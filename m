@@ -2,88 +2,65 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FBA42647BB
-	for <lists+kvmarm@lfdr.de>; Thu, 10 Sep 2020 16:07:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B5FF2647D0
+	for <lists+kvmarm@lfdr.de>; Thu, 10 Sep 2020 16:15:55 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A508A4B2C3;
-	Thu, 10 Sep 2020 10:07:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 934D24B279;
+	Thu, 10 Sep 2020 10:15:54 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id NyTK-jhD9mzB; Thu, 10 Sep 2020 10:07:49 -0400 (EDT)
+	with ESMTP id GtwiUN0KTnla; Thu, 10 Sep 2020 10:15:54 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F1814B2C7;
-	Thu, 10 Sep 2020 10:07:48 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 54F494B2F4;
+	Thu, 10 Sep 2020 10:15:53 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B84244B2C1
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Sep 2020 10:07:46 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 42BD34B2E7
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Sep 2020 10:15:52 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Gw3Z50ZBKUYa for <kvmarm@lists.cs.columbia.edu>;
- Thu, 10 Sep 2020 10:07:45 -0400 (EDT)
-Received: from mail-wm1-f65.google.com (mail-wm1-f65.google.com
- [209.85.128.65])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 930794B22C
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Sep 2020 10:07:45 -0400 (EDT)
-Received: by mail-wm1-f65.google.com with SMTP id x23so178410wmi.3
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Sep 2020 07:07:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=QJ5xEB2z11c85j6v+J4UJJ6T/KCHaYAOj5sVJT9cY58=;
- b=cYL3QKW0nMiKASGS3CJTqYRW4EJhwjV95TkNT0tAhERyHlIVcKujnsUZ992Tgt805x
- 3uuPEFEzZ6VgoEVJunPO22PvL1THHkv0rx45qgLJ5V4frgzv84ZS4X4awVwGcqp6sl2v
- zR1Fglj6zs5XzvZseqGJun2dk9bpkq3nUYWLNEEqA+T0eMTr23JSl7M9K0Ok+jnduwEj
- /eZHnRWGDiVRXE8KK+upeUUGtW6Y/g7j8relgaZTHwu0oIF4TJHUCIUCUAvmS6x/EDXI
- nevfOC1kp/P7s7F8psEC35HXkrbOLNy0uO6x8SSD50eVqa4iYCMPePAxogexL4gtbNlP
- ESIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=QJ5xEB2z11c85j6v+J4UJJ6T/KCHaYAOj5sVJT9cY58=;
- b=nR6c10s5anlOeqOHRmpTX3ATt+3y/oWkgqVgqn3xp8OUe8vyYdYkVlZ0ssidT3M45p
- 1fgwsexBcpy3P4fDKWcZO78p2T3iYr+9sl8enXDNLVDNgvs36E8fZXj9zeyX1pXbU/La
- 85yx0JhpFZTQcgcRawJuHzTOIs5YIII8urXjOEEGH6yJ3x3Z9KCbllS3PNcspv72Ybb0
- yyu78iQcD9T9sQ/M1JOEfKGsz3sEzpEDPeAR4zfiAjW94rdx9kXvGW8O0apJENjwIsM8
- M0EbyxLNki5KrnD7Ix0u4oCMKCvUqCNI1ClgqBjktMwhfeM1p1HRRTqQJdivUJbZ91PY
- BjlQ==
-X-Gm-Message-State: AOAM530dlS3Z9YqlRDCgU+/tx70RdIciykLUDIU6LjPfhiPvmVFTGVWI
- ucDDdaxe/SLowpfYFvNaeKts6A==
-X-Google-Smtp-Source: ABdhPJxlhCOonhA/QUW6OuXk1EjfpUKr/GIkLwPXiWKB30qBaOqPGDH5pFin00r8M+FnE6NxmcHIbg==
-X-Received: by 2002:a05:600c:21c4:: with SMTP id
- x4mr149856wmj.107.1599746864225; 
- Thu, 10 Sep 2020 07:07:44 -0700 (PDT)
-Received: from google.com ([2a00:79e0:d:109:4a0f:cfff:fe4a:6363])
- by smtp.gmail.com with ESMTPSA id v128sm3801248wme.2.2020.09.10.07.07.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Sep 2020 07:07:43 -0700 (PDT)
-Date: Thu, 10 Sep 2020 15:07:38 +0100
-From: Andrew Scull <ascull@google.com>
-To: David Brazdil <dbrazdil@google.com>
-Subject: Re: [PATCH v2 10/10] kvm: arm64: Remove unnecessary hyp mappings
-Message-ID: <20200910140738.GE93664@google.com>
-References: <20200903091712.46456-1-dbrazdil@google.com>
- <20200903091712.46456-11-dbrazdil@google.com>
+ with ESMTP id 64gSXlM+7Oqy for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 10 Sep 2020 10:15:51 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 072F74B2E6
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Sep 2020 10:15:50 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 747EB113E;
+ Thu, 10 Sep 2020 07:15:50 -0700 (PDT)
+Received: from [192.168.1.179] (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 92E7F3F66E;
+ Thu, 10 Sep 2020 07:15:48 -0700 (PDT)
+Subject: Re: [PATCH v2 0/2] MTE support for KVM guest
+To: Andrew Jones <drjones@redhat.com>
+References: <20200904160018.29481-1-steven.price@arm.com>
+ <20200909152540.ylnrljd6aelxoxrf@kamzik.brq.redhat.com>
+ <857566df-1b98-84f7-9268-d092722dc749@arm.com>
+ <20200910062958.o55apuvdxmf3uiqb@kamzik.brq.redhat.com>
+ <37663bb6-d3a7-6f53-d0cd-88777633a2b2@arm.com>
+ <20200910135618.cvnlrgvhuy3amv6s@kamzik.brq.redhat.com>
+From: Steven Price <steven.price@arm.com>
+Message-ID: <17efa848-9bda-26b2-b70f-040c9fa3f2da@arm.com>
+Date: Thu, 10 Sep 2020 15:14:47 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20200903091712.46456-11-dbrazdil@google.com>
-Cc: linux-arch@vger.kernel.org, kernel-team@android.com,
- Arnd Bergmann <arnd@arndb.de>, Marc Zyngier <maz@kernel.org>,
+In-Reply-To: <20200910135618.cvnlrgvhuy3amv6s@kamzik.brq.redhat.com>
+Content-Language: en-GB
+Cc: Peter Maydell <Peter.Maydell@arm.com>, Juan Quintela <quintela@redhat.com>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
  linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- Catalin Marinas <catalin.marinas@arm.com>, Tejun Heo <tj@kernel.org>,
- Dennis Zhou <dennis@kernel.org>, Christoph Lameter <cl@linux.com>,
- Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu
+ Marc Zyngier <maz@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ "Dr. David Alan Gilbert" <dgilbert@redhat.com>,
+ Dave Martin <Dave.Martin@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -95,103 +72,82 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Sep 03, 2020 at 11:17:12AM +0200, 'David Brazdil' via kernel-team wrote:
-> With all nVHE per-CPU variables being part of the hyp per-CPU region,
-> mapping them individual is not necessary any longer. They are mapped to hyp
-> as part of the overall per-CPU region.
+On 10/09/2020 14:56, Andrew Jones wrote:
+> On Thu, Sep 10, 2020 at 10:21:04AM +0100, Steven Price wrote:
+>> On 10/09/2020 07:29, Andrew Jones wrote:
+>>> But if userspace created the memslots with memory already set with
+>>> PROT_MTE, then this wouldn't be necessary, right? And, as long as
+>>> there's still a way to access the memory with tag checking disabled,
+>>> then it shouldn't be a problem.
+>>
+>> Yes, so one option would be to attempt to validate that the VMM has provided
+>> memory pages with the PG_mte_tagged bit set (e.g. by mapping with PROT_MTE).
+>> The tricky part here is that we support KVM_CAP_SYNC_MMU which means that
+>> the VMM can change the memory backing at any time - so we could end up in
+>> user_mem_abort() discovering that a page doesn't have PG_mte_tagged set - at
+>> that point there's no nice way of handling it (other than silently upgrading
+>> the page) so the VM is dead.
+>>
+>> So since enforcing that PG_mte_tagged is set isn't easy and provides a
+>> hard-to-debug foot gun to the VMM I decided the better option was to let the
+>> kernel set the bit automatically.
+>>
 > 
-> Signed-off-by: David Brazdil <dbrazdil@google.com>
+> The foot gun still exists when migration is considered, no? If userspace
+> is telling a guest it can use MTE on its normal memory, but then doesn't
+> prepare that memory correctly, or remember to migrate the tags correctly
+> (which requires knowing the memory has tags and knowing how to get them),
+> then I guess the VM is in trouble one way or another.
 
-Acked-by: Andrew Scull<ascull@google.com>
+Well not all VMMs support migration, and it's only migration that is 
+affected by this for a simple VMM (e.g. the changes to kvmtool are 
+minimal for MTE). But yes fundamentally if a VMM enables MTE it needs to 
+know how to deal with the extra tags everywhere.
 
-> ---
->  arch/arm64/include/asm/kvm_mmu.h | 25 +++++++------------------
->  arch/arm64/kvm/arm.c             | 17 +----------------
->  2 files changed, 8 insertions(+), 34 deletions(-)
+> I feel like we should trust the VMM to ensure MTE will work on any memory
+> the guest could use it on, and change the action in user_mem_abort() to
+> abort the guest with a big error message if it sees the flag is missing.
+
+I'm happy to change it, if you feel this is easier to debug.
+
+>>>>>
+>>>>> If userspace needs to write to guest memory then it should be due to
+>>>>> a device DMA or other specific hardware emulation. Those accesses can
+>>>>> be done with tag checking disabled.
+>>>>
+>>>> Yes, the question is can the VMM (sensibly) wrap the accesses with a
+>>>> disable/renable tag checking for the process sequence. The alternative at
+>>>> the moment is to maintain a separate (untagged) mapping for the purpose
+>>>> which might present it's own problems.
+>>>
+>>> Hmm, so there's no easy way to disable tag checking when necessary? If we
+>>> don't map the guest ram with PROT_MTE and continue setting the attribute
+>>> in KVM, as this series does, then we don't need to worry about it tag
+>>> checking when accessing the memory, but then we can't access the tags for
+>>> migration.
+>>
+>> There's a "TCO" (Tag Check Override) bit in PSTATE which allows disabling
+>> tag checking, so if it's reasonable to wrap accesses to the memory you can
+>> simply set the TCO bit, perform the memory access and then unset TCO. That
+>> would mean a single mapping with MTE enabled would work fine. What I don't
+>> have a clue about is whether it's practical in the VMM to wrap guest
+>> accesses like this.
+>>
 > 
-> diff --git a/arch/arm64/include/asm/kvm_mmu.h b/arch/arm64/include/asm/kvm_mmu.h
-> index 9db93da35606..bbe9df76ff42 100644
-> --- a/arch/arm64/include/asm/kvm_mmu.h
-> +++ b/arch/arm64/include/asm/kvm_mmu.h
-> @@ -531,28 +531,17 @@ static inline int kvm_map_vectors(void)
->  DECLARE_PER_CPU_READ_MOSTLY(u64, arm64_ssbd_callback_required);
->  DECLARE_KVM_NVHE_PER_CPU(u64, arm64_ssbd_callback_required);
->  
-> -static inline int hyp_init_aux_data(void)
-> +static inline void hyp_init_aux_data(void)
->  {
-> -	int cpu, err;
-> +	int cpu;
->  
-> -	for_each_possible_cpu(cpu) {
-> -		u64 *ptr;
-> -
-> -		ptr = per_cpu_ptr_nvhe(arm64_ssbd_callback_required, cpu);
-> -		err = create_hyp_mappings(ptr, ptr + 1, PAGE_HYP);
-> -		if (err)
-> -			return err;
-> -
-> -		/* Copy value from kernel to hyp. */
-> -		*ptr = per_cpu(arm64_ssbd_callback_required, cpu);
-> -	}
-> -	return 0;
-> +	/* Copy arm64_ssbd_callback_required values from kernel to hyp. */
-> +	for_each_possible_cpu(cpu)
-> +		*(per_cpu_ptr_nvhe(arm64_ssbd_callback_required, cpu)) =
-> +			per_cpu(arm64_ssbd_callback_required, cpu);
+> At least QEMU goes through many abstractions to get to memory already.
+> There may already be a hook we could use, if not, it probably wouldn't
+> be too hard to add one (famous last words).
 
-Careful with breaking allocations across lines, that seems to be taboo
-in this subsystem.
+Sounds good. My hope was that the abstractions were already in there.
 
->  }
->  #else
-> -static inline int hyp_init_aux_data(void)
-> -{
-> -	return 0;
-> -}
-> +static inline void hyp_init_aux_data(void) {}
->  #endif
->  
->  #define kvm_phys_to_vttbr(addr)		phys_to_ttbr(addr)
-> diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-> index df7d133056ce..dfe1baa5bbb7 100644
-> --- a/arch/arm64/kvm/arm.c
-> +++ b/arch/arm64/kvm/arm.c
-> @@ -1631,22 +1631,7 @@ static int init_hyp_mode(void)
->  		}
->  	}
->  
-> -	for_each_possible_cpu(cpu) {
-> -		kvm_host_data_t *cpu_data;
-> -
-> -		cpu_data = per_cpu_ptr_hyp(kvm_host_data, cpu);
-> -		err = create_hyp_mappings(cpu_data, cpu_data + 1, PAGE_HYP);
-> -
-> -		if (err) {
-> -			kvm_err("Cannot map host CPU state: %d\n", err);
-> -			goto out_err;
-> -		}
-> -	}
-> -
-> -	err = hyp_init_aux_data();
-> -	if (err)
-> -		kvm_err("Cannot map host auxiliary data: %d\n", err);
-> -
-> +	hyp_init_aux_data();
->  	return 0;
->  
->  out_err:
-> -- 
-> 2.28.0.402.g5ffc5be6b7-goog
-> 
-> -- 
-> To unsubscribe from this group and stop receiving emails from it, send an email to kernel-team+unsubscribe@android.com.
-> 
+Thanks,
+
+Steve
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
