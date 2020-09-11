@@ -2,64 +2,91 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CBE0265C4A
-	for <lists+kvmarm@lfdr.de>; Fri, 11 Sep 2020 11:16:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 60B90265C4C
+	for <lists+kvmarm@lfdr.de>; Fri, 11 Sep 2020 11:16:18 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DFA1C4B2FB;
-	Fri, 11 Sep 2020 05:16:16 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 132644B32E;
+	Fri, 11 Sep 2020 05:16:18 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.098
+X-Spam-Score: 0.911
 X-Spam-Level: 
-X-Spam-Status: No, score=0.098 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@gmail.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ubCDdiAUxfrt; Fri, 11 Sep 2020 05:16:16 -0400 (EDT)
+	with ESMTP id 0iiTncw9hQTb; Fri, 11 Sep 2020 05:16:16 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 725B64B340;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8CA3A4B358;
 	Fri, 11 Sep 2020 05:16:15 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EF7A34B19B
- for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Sep 2020 04:34:22 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1F31F4B314
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Sep 2020 04:46:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id XcUntnOqd8gd for <kvmarm@lists.cs.columbia.edu>;
- Fri, 11 Sep 2020 04:34:20 -0400 (EDT)
-Received: from mo-csw.securemx.jp (mo-csw1514.securemx.jp [210.130.202.153])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id DBE1D4B187
- for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Sep 2020 04:34:19 -0400 (EDT)
-Received: by mo-csw.securemx.jp (mx-mo-csw1514) id 08B8Y5k9030833;
- Fri, 11 Sep 2020 17:34:05 +0900
-X-Iguazu-Qid: 34tMSeeoTP4KRyiZdN
-X-Iguazu-QSIG: v=2; s=0; t=1599813245; q=34tMSeeoTP4KRyiZdN;
- m=HJVq5MQecyHkcBp+H+KkIyrPGsf3z9XQfg7af2mu9Js=
-Received: from imx2.toshiba.co.jp (imx2.toshiba.co.jp [106.186.93.51])
- by relay.securemx.jp (mx-mr1512) id 08B8Y3dJ018385;
- Fri, 11 Sep 2020 17:34:03 +0900
-Received: from enc01.toshiba.co.jp ([106.186.93.100])
- by imx2.toshiba.co.jp  with ESMTP id 08B8Y3xD025049;
- Fri, 11 Sep 2020 17:34:03 +0900 (JST)
-Received: from hop001.toshiba.co.jp ([133.199.164.63])
- by enc01.toshiba.co.jp  with ESMTP id 08B8Y213028891;
- Fri, 11 Sep 2020 17:34:03 +0900
-From: Punit Agrawal <punit1.agrawal@toshiba.co.jp>
-To: Alexandru Elisei <alexandru.elisei@arm.com>
-Subject: Re: [PATCH v2] KVM: arm64: Try PMD block mappings if PUD mappings are
- not supported
-References: <20200910133351.118191-1-alexandru.elisei@arm.com>
-Date: Fri, 11 Sep 2020 17:34:01 +0900
-In-Reply-To: <20200910133351.118191-1-alexandru.elisei@arm.com> (Alexandru
- Elisei's message of "Thu, 10 Sep 2020 14:33:51 +0100")
-X-TSB-HOP: ON
-Message-ID: <87363oogp2.fsf@kokedama.swc.toshiba.co.jp>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+ with ESMTP id EHOM+UztczEk for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 11 Sep 2020 04:46:19 -0400 (EDT)
+Received: from mail-pg1-f195.google.com (mail-pg1-f195.google.com
+ [209.85.215.195])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 04A0E4B312
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Sep 2020 04:46:19 -0400 (EDT)
+Received: by mail-pg1-f195.google.com with SMTP id g29so6177449pgl.2
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Sep 2020 01:46:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=1GkA0UL55bpOzq1799709zbI1L7Jh544dh/Usr44kfY=;
+ b=Qlm5X4knHMrYRafI9yPXpq/lAMmN7kMUumWHzSyktdaHpfYBjRf1L0i48OjrFnD4fM
+ QC5/LOrJI4cjoM4qJqWw9UqmT0WvVcjx03RbQaUbQLjEmaxWdw1M/dcHa0maDsXfUJ0W
+ wM5ZIAfEEoRPx0B/75qP+WTBhhOJylPJkkUHV79aUXsMANVTl3BIpBjXp4ena4YTrf1r
+ 3mxNqotZn8thYnV+HLFlVfvzhOmi1AOSCxKWWohGR0wi+6t8I1S4276qyF/Y6m44RkZl
+ jJfGxLqFjGk/gV5j3dHxwjKVa7HqscPsihjNOTSQqVx1Vjca8hPk22xcCdmXm/Jlj+Uy
+ 6K+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=1GkA0UL55bpOzq1799709zbI1L7Jh544dh/Usr44kfY=;
+ b=tfpgwsiM9J+bgWrOVbQOeQmQ8eVkFEpOT9RvkxFD872j/kHsj+Cwh/Xj4dt1QkD1LB
+ +M+qCGd7djRqZrzxUOXYBb7PigOQKZRWvJwf3GXF8rA87ftElkjr2Nx46Lq0IRTjtI44
+ qc/DKbz+zjsfep7D6O4150w4Zk6HUh5oYi12kFZoxa6XcopVu1U1H8vFyOkG6bsiDbT0
+ fccVcXFM5eA+hVCwGYV7hukZl1t7pwiaJb0OPrb6lLBPRaBEn2bcd5U9qb1cY1tcVy72
+ h9aqJbl3ro7rWlERN1YLRuFTg+Gq9VpWN+ju1KGZhs+ZxvBEEUPkSd68hLrGprHRTW+f
+ HYtA==
+X-Gm-Message-State: AOAM531SmZMXwhoEPmmLe7p2Y3Wh1dprWbOhpYL4DNSzQt10kORIMasY
+ lQrFXbA8IMqitZiBkKcA1D4=
+X-Google-Smtp-Source: ABdhPJy14gOgqqZY97TQbIkEVgxM3qq0OMF4Cuu0NkODRuyBetn3P5gFLShii+KjF6Qfx1erVNJ0hg==
+X-Received: by 2002:a17:902:fe08:: with SMTP id
+ g8mr1051664plj.122.1599813977903; 
+ Fri, 11 Sep 2020 01:46:17 -0700 (PDT)
+Received: from localhost ([2409:10:2e40:5100:6e29:95ff:fe2d:8f34])
+ by smtp.gmail.com with ESMTPSA id k3sm1602956pfp.41.2020.09.11.01.46.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 11 Sep 2020 01:46:16 -0700 (PDT)
+Date: Fri, 11 Sep 2020 17:46:13 +0900
+From: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
+To: yezengruan <yezengruan@huawei.com>
+Subject: Re: [RFC][PATCH 0/4] arm64:kvm: teach guest sched that VCPUs can be
+ preempted
+Message-ID: <20200911084613.GA562@jagdpanzerIV.localdomain>
+References: <20200721041742.197354-1-sergey.senozhatsky@gmail.com>
+ <20200817020310.GA1210848@jagdpanzerIV.localdomain>
+ <fe72592c-c721-bece-1469-95eebf931299@huawei.com>
 MIME-Version: 1.0
+Content-Disposition: inline
+In-Reply-To: <fe72592c-c721-bece-1469-95eebf931299@huawei.com>
 X-Mailman-Approved-At: Fri, 11 Sep 2020 05:16:14 -0400
-Cc: maz@kernel.org, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu
+Cc: joelaf@google.com, "maz@kernel.org" <maz@kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ Sergey Senozhatsky <sergey.senozhatsky@gmail.com>, suleiman@google.com,
+ "will@kernel.org" <will@kernel.org>,
+ "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -76,97 +103,25 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Alexandru,
+Hi,
 
-Alexandru Elisei <alexandru.elisei@arm.com> writes:
+On (20/08/17 20:03), yezengruan wrote:
+> Hi Sergey,
+> 
+> I have a set of patches similar to yours.
+> 
+> https://lore.kernel.org/lkml/20191226135833.1052-1-yezengruan@huawei.com/
 
-> When userspace uses hugetlbfs for the VM memory, user_mem_abort() tries to
-> use the same block size to map the faulting IPA in stage 2. If stage 2
-> cannot the same block mapping because the block size doesn't fit in the
-> memslot or the memslot is not properly aligned, user_mem_abort() will fall
-> back to a page mapping, regardless of the block size. We can do better for
-> PUD backed hugetlbfs by checking if a PMD block mapping is supported before
-> deciding to use a page.
+I'm sorry for the belated reply.
 
-I think this was discussed in the past.
+Right, quite similar, but not exactly, I believe. I deliberately wanted
+to untangle vcpu preemption (which is a characteristics feature) from
+pv-lock, which may be somewhat implementation dependent.
 
-I have a vague recollection of there being a problem if the user and
-stage 2 mappings go out of sync - can't recall the exact details.
+Perhaps vcpu_is_preempted() should not even be implemented on per-arch
+basis, but instead it can be more of a "core" functionality.
 
-Putting it out there in case anybody else on the thread can recall the
-details of the previous discussion (offlist).
-
-Though things may have changed and if it passes testing - then maybe I
-am mis-remembering. I'll take a closer look at the patch and shout out
-if I notice anything.
-
-Thanks,
-Punit
-
->
-> vma_pagesize is an unsigned long, use 1UL instead of 1ULL when assigning
-> its value.
->
-> Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
-> ---
-> Tested on a rockpro64 with 4K pages and hugetlbfs hugepagesz=1G (PUD sized
-> block mappings).  First test, guest RAM starts at 0x8100 0000
-> (memslot->base_gfn not aligned to 1GB); second test, guest RAM starts at
-> 0x8000 0000, but is only 512 MB.  In both cases using PUD mappings is not
-> possible because either the memslot base address is not aligned, or the
-> mapping would extend beyond the memslot.
->
-> Without the changes, user_mem_abort() uses 4K pages to map the guest IPA.
-> With the patches, user_mem_abort() uses PMD block mappings (2MB) to map the
-> guest RAM, which means less TLB pressure and fewer stage 2 aborts.
->
-> Changes since v1 [1]:
-> - Rebased on top of Will's stage 2 page table handling rewrite, version 4
->   of the series [2]. His series is missing the patch "KVM: arm64: Update
->   page shift if stage 2 block mapping not supported" and there might be a
->   conflict (it's straightforward to fix).
->
-> [1] https://www.spinics.net/lists/arm-kernel/msg834015.html
-> [2] https://www.spinics.net/lists/arm-kernel/msg835806.html
->
->  arch/arm64/kvm/mmu.c | 19 ++++++++++++++-----
->  1 file changed, 14 insertions(+), 5 deletions(-)
->
-> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> index 1041be1fafe4..39c539d4d4cb 100644
-> --- a/arch/arm64/kvm/mmu.c
-> +++ b/arch/arm64/kvm/mmu.c
-> @@ -776,16 +776,25 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
->  	else
->  		vma_shift = PAGE_SHIFT;
->  
-> -	vma_pagesize = 1ULL << vma_shift;
->  	if (logging_active ||
-> -	    (vma->vm_flags & VM_PFNMAP) ||
-> -	    !fault_supports_stage2_huge_mapping(memslot, hva, vma_pagesize)) {
-> +	    (vma->vm_flags & VM_PFNMAP)) {
->  		force_pte = true;
-> -		vma_pagesize = PAGE_SIZE;
-> +		vma_shift = PAGE_SHIFT;
-> +	}
-> +
-> +	if (vma_shift == PUD_SHIFT &&
-> +	    !fault_supports_stage2_huge_mapping(memslot, hva, PUD_SIZE))
-> +	       vma_shift = PMD_SHIFT;
-> +
-> +	if (vma_shift == PMD_SHIFT &&
-> +	    !fault_supports_stage2_huge_mapping(memslot, hva, PMD_SIZE)) {
-> +		force_pte = true;
-> +		vma_shift = PAGE_SHIFT;
->  	}
->  
-> +	vma_pagesize = 1UL << vma_shift;
->  	if (vma_pagesize == PMD_SIZE || vma_pagesize == PUD_SIZE)
-> -		fault_ipa &= huge_page_mask(hstate_vma(vma));
-> +		fault_ipa &= ~(vma_pagesize - 1);
->  
->  	gfn = fault_ipa >> PAGE_SHIFT;
->  	mmap_read_unlock(current->mm);
+	-ss
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
