@@ -2,56 +2,66 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C69212663CB
-	for <lists+kvmarm@lfdr.de>; Fri, 11 Sep 2020 18:25:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 61D56266823
+	for <lists+kvmarm@lfdr.de>; Fri, 11 Sep 2020 20:16:43 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3F3A24B33E;
-	Fri, 11 Sep 2020 12:25:21 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C75434B353;
+	Fri, 11 Sep 2020 14:16:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0hSBZjuzSDtq; Fri, 11 Sep 2020 12:25:21 -0400 (EDT)
+	with ESMTP id OTaFIW4D7rrY; Fri, 11 Sep 2020 14:16:42 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EAAEB4B320;
-	Fri, 11 Sep 2020 12:25:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A21914B33C;
+	Fri, 11 Sep 2020 14:16:41 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D9C6A4B2B9
- for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Sep 2020 12:25:18 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2DC5B4B32D
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Sep 2020 14:16:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 0pM-eQEsi8vT for <kvmarm@lists.cs.columbia.edu>;
- Fri, 11 Sep 2020 12:25:16 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 447754B1D9
- for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Sep 2020 12:25:16 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BE2951045;
- Fri, 11 Sep 2020 09:25:15 -0700 (PDT)
-Received: from [192.168.0.110] (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D20163F73C;
- Fri, 11 Sep 2020 09:25:14 -0700 (PDT)
-Subject: Re: [PATCH v2] KVM: arm64: Try PMD block mappings if PUD mappings are
- not supported
-To: Punit Agrawal <punit1.agrawal@toshiba.co.jp>
-References: <20200910133351.118191-1-alexandru.elisei@arm.com>
- <87363oogp2.fsf@kokedama.swc.toshiba.co.jp>
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-Message-ID: <2850b4d3-4399-c44c-0e5e-b01906c80ec7@arm.com>
-Date: Fri, 11 Sep 2020 17:26:11 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+ with ESMTP id UTfn+BYYjQOD for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 11 Sep 2020 14:16:39 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 340884B2FC
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Sep 2020 14:16:39 -0400 (EDT)
+Received: from localhost.localdomain (236.31.169.217.in-addr.arpa
+ [217.169.31.236])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 0781D208E4;
+ Fri, 11 Sep 2020 18:16:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1599848198;
+ bh=xiLwwQKdB3rqjy0HJkWYD2shDrqi+EEsJk9/W6rgFxw=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=NNZ4a05LYG5iuNBlkO3+vlk+9N0qcdLQQTSjhR+3vvMeqZtQicsUt3bmClS7jT4EV
+ ynYUIBXPwmjU0ql1sFDEsbWG6k6Kt0PPuLUHGiwfTLNyJSIjCPfr4LoJ0VSdaAmju3
+ 0Nd0LkrFaUdAFRtnixDIR2gOJZs7SopFZz4WLB1k=
+From: Will Deacon <will@kernel.org>
+To: Pingfan Liu <kernelfans@gmail.com>,
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCHv2 1/2] arm64/relocate_kernel: remove redundant code
+Date: Fri, 11 Sep 2020 19:16:31 +0100
+Message-Id: <159984758595.3563738.8721956376933355883.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <1598621998-20563-1-git-send-email-kernelfans@gmail.com>
+References: <1598621998-20563-1-git-send-email-kernelfans@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <87363oogp2.fsf@kokedama.swc.toshiba.co.jp>
-Content-Language: en-US
-Cc: maz@kernel.org, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu
+Cc: Marc Zyngier <maz@kernel.org>, Kees Cook <keescook@chromium.org>,
+ Will Deacon <will@kernel.org>, Geoff Levand <geoff@infradead.org>,
+ catalin.marinas@arm.com, kvmarm@lists.cs.columbia.edu,
+ Mark Brown <broonie@kernel.org>,
+ Remi Denis-Courmont <remi.denis.courmont@huawei.com>, kernel-team@android.com,
+ Ard Biesheuvel <ardb@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -63,49 +73,36 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-SGkgUHVuaXQsCgpUaGFuayB5b3UgZm9yIGhhdmluZyBhIGxvb2shCgpPbiA5LzExLzIwIDk6MzQg
-QU0sIFB1bml0IEFncmF3YWwgd3JvdGU6Cj4gSGkgQWxleGFuZHJ1LAo+Cj4gQWxleGFuZHJ1IEVs
-aXNlaSA8YWxleGFuZHJ1LmVsaXNlaUBhcm0uY29tPiB3cml0ZXM6Cj4KPj4gV2hlbiB1c2Vyc3Bh
-Y2UgdXNlcyBodWdldGxiZnMgZm9yIHRoZSBWTSBtZW1vcnksIHVzZXJfbWVtX2Fib3J0KCkgdHJp
-ZXMgdG8KPj4gdXNlIHRoZSBzYW1lIGJsb2NrIHNpemUgdG8gbWFwIHRoZSBmYXVsdGluZyBJUEEg
-aW4gc3RhZ2UgMi4gSWYgc3RhZ2UgMgo+PiBjYW5ub3QgdGhlIHNhbWUgYmxvY2sgbWFwcGluZyBi
-ZWNhdXNlIHRoZSBibG9jayBzaXplIGRvZXNuJ3QgZml0IGluIHRoZQo+PiBtZW1zbG90IG9yIHRo
-ZSBtZW1zbG90IGlzIG5vdCBwcm9wZXJseSBhbGlnbmVkLCB1c2VyX21lbV9hYm9ydCgpIHdpbGwg
-ZmFsbAo+PiBiYWNrIHRvIGEgcGFnZSBtYXBwaW5nLCByZWdhcmRsZXNzIG9mIHRoZSBibG9jayBz
-aXplLiBXZSBjYW4gZG8gYmV0dGVyIGZvcgo+PiBQVUQgYmFja2VkIGh1Z2V0bGJmcyBieSBjaGVj
-a2luZyBpZiBhIFBNRCBibG9jayBtYXBwaW5nIGlzIHN1cHBvcnRlZCBiZWZvcmUKPj4gZGVjaWRp
-bmcgdG8gdXNlIGEgcGFnZS4KPiBJIHRoaW5rIHRoaXMgd2FzIGRpc2N1c3NlZCBpbiB0aGUgcGFz
-dC4KPgo+IEkgaGF2ZSBhIHZhZ3VlIHJlY29sbGVjdGlvbiBvZiB0aGVyZSBiZWluZyBhIHByb2Js
-ZW0gaWYgdGhlIHVzZXIgYW5kCj4gc3RhZ2UgMiBtYXBwaW5ncyBnbyBvdXQgb2Ygc3luYyAtIGNh
-bid0IHJlY2FsbCB0aGUgZXhhY3QgZGV0YWlscy4KCkknbSBub3Qgc3VyZSB3aGF0IHlvdSBtZWFu
-IGJ5IHRoZSB0d28gdGFibGVzIGdvaW5nIG91dCBvZiBzeW5jLiBJJ20gbG9va2luZyBhdApEb2N1
-bWVudGF0aW9uL3ZtL3VuZXZpY3RhYmxlLWxydS5yc3QgYW5kIHRoaXMgaXMgd2hhdCBpdCBzYXlz
-IHJlZ2FyZGluZyBodWdldGxiZnM6CgoiVk1BcyBtYXBwaW5nIGh1Z2V0bGJmcyBwYWdlIGFyZSBh
-bHJlYWR5IGVmZmVjdGl2ZWx5IHBpbm5lZCBpbnRvIG1lbW9yeS7CoCBXZQpuZWl0aGVyIG5lZWQg
-bm9yIHdhbnQgdG8gbWxvY2soKSB0aGVzZSBwYWdlcy7CoCBIb3dldmVyLCB0byBwcmVzZXJ2ZSB0
-aGUgcHJpb3IKYmVoYXZpb3Igb2YgbWxvY2soKSAtIGJlZm9yZSB0aGUgdW5ldmljdGFibGUvbWxv
-Y2sgY2hhbmdlcyAtIG1sb2NrX2ZpeHVwKCkgd2lsbApjYWxsIG1ha2VfcGFnZXNfcHJlc2VudCgp
-IGluIHRoZSBodWdldGxiZnMgVk1BIHJhbmdlIHRvIGFsbG9jYXRlIHRoZSBodWdlIHBhZ2VzCmFu
-ZCBwb3B1bGF0ZSB0aGUgcHRlcy4iCgpQbGVhc2UgY29ycmVjdCBtZSBpZiBJJ20gd3JvbmcsIGJ1
-dCBteSBpbnRlcnByZXRhdGlvbiBpcyB0aGF0IG9uY2UgYSBodWdldGxiZnMKcGFnZSBoYXMgYmVl
-biBtYXBwZWQgaW4gYSBwcm9jZXNzJyBhZGRyZXNzIHNwYWNlLCB0aGUgb25seSB3YXkgdG8gdW5t
-YXAgaXQgaXMgdmlhCm11bm1hcC4gSWYgdGhhdCdzIHRoZSBjYXNlLCB0aGUgS1ZNIG1tdSBub3Rp
-ZmllciBzaG91bGQgdGFrZSBjYXJlIG9mIHVubWFwcGluZwpmcm9tIHN0YWdlIDIgdGhlIGVudGly
-ZSBtZW1vcnkgcmFuZ2UgYWRkcmVzc2VkIGJ5IHRoZSBodWdldGxiZnMgcGFnZXMsIHJpZ2h0PwoK
-Pgo+IFB1dHRpbmcgaXQgb3V0IHRoZXJlIGluIGNhc2UgYW55Ym9keSBlbHNlIG9uIHRoZSB0aHJl
-YWQgY2FuIHJlY2FsbCB0aGUKPiBkZXRhaWxzIG9mIHRoZSBwcmV2aW91cyBkaXNjdXNzaW9uIChv
-ZmZsaXN0KS4KPgo+IFRob3VnaCB0aGluZ3MgbWF5IGhhdmUgY2hhbmdlZCBhbmQgaWYgaXQgcGFz
-c2VzIHRlc3RpbmcgLSB0aGVuIG1heWJlIEkKPiBhbSBtaXMtcmVtZW1iZXJpbmcuIEknbGwgdGFr
-ZSBhIGNsb3NlciBsb29rIGF0IHRoZSBwYXRjaCBhbmQgc2hvdXQgb3V0Cj4gaWYgSSBub3RpY2Ug
-YW55dGhpbmcuCgpUaGUgdGVzdCBJIHJhbiB3YXMgdG8gYm9vdCBhIFZNIGFuZCBydW4gbHRwICh3
-aXRoIHByaW50aydzIHNwcmlua2xlZCBpbiB0aGUgaG9zdAprZXJuZWwgdG8gc2VlIHdoYXQgcGFn
-ZSBzaXplIGFuZCB3aGVyZSBpdCBnZXRzIG1hcHBlZC91bm1hcHBlZCBhdCBzdGFnZSAyKS4gRG8g
-eW91Cm1pbmQgcmVjb21tZW5kaW5nIG90aGVyIHRlc3RzIHRoYXQgSSBtaWdodCBydW4/CgpUaGFu
-a3MsCkFsZXgKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18K
-a3ZtYXJtIG1haWxpbmcgbGlzdAprdm1hcm1AbGlzdHMuY3MuY29sdW1iaWEuZWR1Cmh0dHBzOi8v
-bGlzdHMuY3MuY29sdW1iaWEuZWR1L21haWxtYW4vbGlzdGluZm8va3ZtYXJtCg==
+On Fri, 28 Aug 2020 21:39:57 +0800, Pingfan Liu wrote:
+> Kernel startup entry point requires disabling MMU and D-cache.
+> 
+> As for kexec-reboot, taking a close look at "msr sctlr_el1, x12" in
+> __cpu_soft_restart as the following:
+> 
+> -1. booted at EL1
+> The instruction is enough to disable MMU and I/D cache for
+> EL1 regime.
+> 
+> [...]
+
+Applied to arm64 (for-next/boot), thanks!
+
+[1/1] arm64/relocate_kernel: remove redundant code
+      https://git.kernel.org/arm64/c/72789a4a6a91
+
+Cheers,
+-- 
+Will
+
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
