@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 27ECB269339
-	for <lists+kvmarm@lfdr.de>; Mon, 14 Sep 2020 19:28:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 957D2269340
+	for <lists+kvmarm@lfdr.de>; Mon, 14 Sep 2020 19:28:27 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CE76F4B5B9;
-	Mon, 14 Sep 2020 13:28:21 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4B18A4B4EA;
+	Mon, 14 Sep 2020 13:28:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,67 +14,67 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SdWvS-vHJFwt; Mon, 14 Sep 2020 13:28:20 -0400 (EDT)
+	with ESMTP id 9hzd2NldyMlH; Mon, 14 Sep 2020 13:28:27 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C3FB74B5A0;
-	Mon, 14 Sep 2020 13:28:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2548B4B565;
+	Mon, 14 Sep 2020 13:28:26 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 872914B59F
- for <kvmarm@lists.cs.columbia.edu>; Mon, 14 Sep 2020 13:28:19 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 240F84B49A
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 14 Sep 2020 13:28:25 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 4HHKvL+dVOnN for <kvmarm@lists.cs.columbia.edu>;
- Mon, 14 Sep 2020 13:28:18 -0400 (EDT)
-Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com
- [209.85.128.68])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 72AAB4B58D
- for <kvmarm@lists.cs.columbia.edu>; Mon, 14 Sep 2020 13:28:18 -0400 (EDT)
-Received: by mail-wm1-f68.google.com with SMTP id s13so799923wmh.4
- for <kvmarm@lists.cs.columbia.edu>; Mon, 14 Sep 2020 10:28:18 -0700 (PDT)
+ with ESMTP id hacQJIDQfsx3 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 14 Sep 2020 13:28:20 -0400 (EDT)
+Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com
+ [209.85.221.67])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4C3134B571
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 14 Sep 2020 13:28:20 -0400 (EDT)
+Received: by mail-wr1-f67.google.com with SMTP id m6so556515wrn.0
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 14 Sep 2020 10:28:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=/EjNih3r7ygkjYASNBWp7YtEX1KLL1OovUvtOR4yQ8E=;
- b=LDOJW73/Nx4NRSF62nukRv0fkeOiLGfPXVP1aJhDKCMUKmk3HmHAf6NWlyYj1Fc30H
- 4ctb86ijJJ+PMUx7pA1+2eEIf+G0cmjOvbtE9oBe55C3Cvn1qkgI3USj0yAzKEsPU9q0
- Kg6zWbX13Nvf35fM5FUm0vCKYp5AV89AlTGoxiq/9SNtkV9H5JeJZSjohjU7p9UCPTCc
- AFzF0SLwziqh80xl5uTlhqNQPcFqdMho3+ObPMEgdgw7XZugj3HlUg9gMeuZ9Wl5vn3G
- sEIZ2338YOSdEnkx35Dj1zujfiD6uqhHIIRpeBrFBUJeHIahNLU31ZLtfIcNVZWFj6tG
- ir0Q==
+ bh=KftJRcollRLFMVov7TaPj7WtBHwyxRPUsiHY/UZT1fw=;
+ b=EYgWAcl9cL9AeiTblL7CMC+AqQx78U6/I1W7VW7Ja5I15I0jt+My8KPdhD1SAVpEHD
+ AJXt5LuKrD0WR0bw/B1exIDwe7tkOX43hf5qS4uwiYCJAEU/FA1aTxXb7U22+RLK0Gw5
+ IEqZhFqCrBcnVwsvqPgPtUtdGHrW6CU24YKBfkwIy52kBZc31aRqkrNTC7FpmXQy/eQ5
+ dVCJRFM3SOoQVUXjSfMIKlDXY7aS2d0IgN2BzjI6mWTiBBzhjwhcJRJy/vKgdde8y6Km
+ iNWk73Vy+veU+2hjy0D/PR5vfHhuUmQkzEOLnrIPC2sx7KQNQCejEB2d78t3JnwXXpZV
+ WvtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=/EjNih3r7ygkjYASNBWp7YtEX1KLL1OovUvtOR4yQ8E=;
- b=pT4yiP/76pvUyrwKvuTCl97ogEq2mAjDWGX76eBhZZQQhJ9aUTMMZwLZHCuh73WpUe
- 0AHzBKNwzs/grZ68YsYOnCfZOSwll6ZN2PH+ajyC+xEx8UC3VeQjr8A5TJt05Ragn7c7
- FQnjfn0m5SOkgvm9qnZt5jsfjWo/WUIfPhB3CUecKLaLjt8b6zlUisC6JwoYQ53nBT8q
- j8VoCTR6lz7YJeTLVolBC8jiwZSks6PKaLLzWoqRYi5W0PwLiPKSyAW7RwX3oMV1zIco
- Gn/G5QK3u3jRl1HmeDFtRCAvpfS5DeSvNIxjHiH+2vN4TPHxln3NosSWmu6hd4eriUxB
- fAKg==
-X-Gm-Message-State: AOAM533Mbl7XvqWj9wwOl9XcBzYLvXG8IiGnQZDIOknFETSse7stB6g8
- repveMe1zzs0NLChs8l6hQZJXw==
-X-Google-Smtp-Source: ABdhPJz7n/8ZzKopjoksEbonJHe8/t/B9RylxHy4LiUHqu75FJ9ZhVdcDVjP7yVogd6IknutagEtqw==
-X-Received: by 2002:a1c:a551:: with SMTP id o78mr486952wme.4.1600104497464;
- Mon, 14 Sep 2020 10:28:17 -0700 (PDT)
+ bh=KftJRcollRLFMVov7TaPj7WtBHwyxRPUsiHY/UZT1fw=;
+ b=dWBRIOVOLaLh/1XdB1B4W7393/pS31E11nj2cynoJ3eCW/JP6uc6F5cPoHXP//Rawv
+ 1CnCOKbTqf3NW4/WBLrhIhwtN4wI2cqitGf+1bRpixYTn4+iBZZwzmxd65ICn30dBsfg
+ X0zitCFLwm7J8Ro/+tGLO54y/q1Bjsed94czDHzkJli2QQgOgkYqNk1Mzl84Ea4Ix299
+ tyq7cfSeMv/0ytcqd217IBL99ARG2Y4UH66i3IOkWpkJcMgpbZPRK+1TjlzT6x8gITLR
+ tz/NcAT6TxEE9gYvCP/aqb/eLB57XeDr/7zLcnFUXdwt+yrEJZvy7qKWid5spgSd0vkq
+ p34Q==
+X-Gm-Message-State: AOAM533/Mo6mk2s4g/R44F4DvhEcAEou4hTa3fe4W0J508RvDnsZN7ZT
+ GmtLbDe0Zw8L2J0wJSteDKszig==
+X-Google-Smtp-Source: ABdhPJyWV+uC0DmNRAdK7vcbjg9wndOENA5KYq6/erRd565McYdWx62TZeUsQp7Eg/H+vCrNtXp7tA==
+X-Received: by 2002:adf:f10a:: with SMTP id r10mr16416565wro.86.1600104499411; 
+ Mon, 14 Sep 2020 10:28:19 -0700 (PDT)
 Received: from localhost (49.222.77.34.bc.googleusercontent.com.
  [34.77.222.49])
- by smtp.gmail.com with ESMTPSA id a17sm22898300wra.24.2020.09.14.10.28.16
+ by smtp.gmail.com with ESMTPSA id l19sm19870946wmi.8.2020.09.14.10.28.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Sep 2020 10:28:16 -0700 (PDT)
+ Mon, 14 Sep 2020 10:28:18 -0700 (PDT)
 From: George-Aurelian Popescu <georgepope@google.com>
 To: maz@kernel.org, catalin.marinas@arm.com, will@kernel.org,
  masahiroy@kernel.org, michal.lkml@markovi.net
-Subject: [PATCH 08/14] KVM: arm64: Enable UBsan check for unreachable code
- inside hyp/nVHE code
-Date: Mon, 14 Sep 2020 17:27:44 +0000
-Message-Id: <20200914172750.852684-9-georgepope@google.com>
+Subject: [PATCH 09/14] KVM: arm64: Enable shift out of bounds undefined
+ behaviour check for hyp/nVHE
+Date: Mon, 14 Sep 2020 17:27:45 +0000
+Message-Id: <20200914172750.852684-10-georgepope@google.com>
 X-Mailer: git-send-email 2.28.0.618.gf4bc123cb7-goog
 In-Reply-To: <20200914172750.852684-1-georgepope@google.com>
 References: <20200914172750.852684-1-georgepope@google.com>
@@ -103,71 +103,79 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: George Popescu <georgepope@google.com>
 
-The data from __ubsan_handle_builtin_unreachable is passed to the buffer
-and printed inside the kernel by its symmetric handler.
+__ubsan_handle_shift_out_of_bounds data is passed to the buffer inside
+hyp/nVHE. This data is passed to the original handler from kernel.
+
+The values of the operands of the shift expression are stored as the lhs
+and rhs pointers, so there is no need to dereference them.
 
 Signed-off-by: George Popescu <georgepope@google.com>
 ---
  arch/arm64/include/asm/kvm_ubsan.h |  5 ++++-
- arch/arm64/kvm/hyp/nvhe/ubsan.c    | 12 +++++++++++-
- arch/arm64/kvm/kvm_ubsan_buffer.c  |  3 +++
- 3 files changed, 18 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/hyp/nvhe/ubsan.c    | 14 +++++++++++++-
+ arch/arm64/kvm/kvm_ubsan_buffer.c  |  4 ++++
+ 3 files changed, 21 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/include/asm/kvm_ubsan.h b/arch/arm64/include/asm/kvm_ubsan.h
-index 575881e0bd5f..7fd0d0dfbd82 100644
+index 7fd0d0dfbd82..3130a80cd8b2 100644
 --- a/arch/arm64/include/asm/kvm_ubsan.h
 +++ b/arch/arm64/include/asm/kvm_ubsan.h
-@@ -20,10 +20,12 @@ struct ubsan_values {
- struct kvm_ubsan_info {
+@@ -21,11 +21,13 @@ struct kvm_ubsan_info {
  	enum {
  		UBSAN_NONE,
--		UBSAN_OUT_OF_BOUNDS
-+		UBSAN_OUT_OF_BOUNDS,
-+		UBSAN_UNREACHABLE_DATA
+ 		UBSAN_OUT_OF_BOUNDS,
+-		UBSAN_UNREACHABLE_DATA
++		UBSAN_UNREACHABLE_DATA,
++		UBSAN_SHIFT_OUT_OF_BOUNDS
  	} type;
  	union {
  		struct out_of_bounds_data out_of_bounds_data;
-+		struct unreachable_data unreachable_data;
+ 		struct unreachable_data unreachable_data;
++		struct shift_out_of_bounds_data shift_out_of_bounds_data;
  	};
  	union {
  		struct ubsan_values u_val;
-@@ -32,3 +34,4 @@ struct kvm_ubsan_info {
- #endif
+@@ -35,3 +37,4 @@ struct kvm_ubsan_info {
  
  void __ubsan_handle_out_of_bounds(void *_data, void *index);
-+void __ubsan_handle_builtin_unreachable(void *_data);
+ void __ubsan_handle_builtin_unreachable(void *_data);
++void __ubsan_handle_shift_out_of_bounds(void *_data, void *lhs, void *rhs);
 diff --git a/arch/arm64/kvm/hyp/nvhe/ubsan.c b/arch/arm64/kvm/hyp/nvhe/ubsan.c
-index b2d3404f6215..9497e7f7f397 100644
+index 9497e7f7f397..40b82143e57f 100644
 --- a/arch/arm64/kvm/hyp/nvhe/ubsan.c
 +++ b/arch/arm64/kvm/hyp/nvhe/ubsan.c
-@@ -58,6 +58,16 @@ void __ubsan_handle_out_of_bounds(void *_data, void *index)
+@@ -56,7 +56,19 @@ void __ubsan_handle_out_of_bounds(void *_data, void *index)
+ 	}
+ }
  
- void __ubsan_handle_shift_out_of_bounds(void *_data, void *lhs, void *rhs) {}
- 
--void __ubsan_handle_builtin_unreachable(void *_data) {}
-+void __ubsan_handle_builtin_unreachable(void *_data)
+-void __ubsan_handle_shift_out_of_bounds(void *_data, void *lhs, void *rhs) {}
++void __ubsan_handle_shift_out_of_bounds(void *_data, void *lhs, void *rhs)
 +{
 +	struct kvm_ubsan_info *slot;
-+	struct unreachable_data *data = _data;
++	struct shift_out_of_bounds_data *data = _data;
 +
 +	slot = kvm_ubsan_buffer_next_slot();
 +	if (slot) {
-+		slot->type = UBSAN_UNREACHABLE_DATA;
-+		slot->unreachable_data = *data;
++		slot->type = UBSAN_SHIFT_OUT_OF_BOUNDS;
++		slot->shift_out_of_bounds_data = *data;
++		slot->u_val.lval = lhs;
++		slot->u_val.rval = rhs;
 +	}
 +}
  
- void __ubsan_handle_load_invalid_value(void *_data, void *val) {}
+ void __ubsan_handle_builtin_unreachable(void *_data)
+ {
 diff --git a/arch/arm64/kvm/kvm_ubsan_buffer.c b/arch/arm64/kvm/kvm_ubsan_buffer.c
-index ce796bdd027e..f66cc5f7878e 100644
+index f66cc5f7878e..b4a282bec91d 100644
 --- a/arch/arm64/kvm/kvm_ubsan_buffer.c
 +++ b/arch/arm64/kvm/kvm_ubsan_buffer.c
-@@ -25,6 +25,9 @@ void __kvm_check_ubsan_data(struct kvm_ubsan_info *slot)
- 		__ubsan_handle_out_of_bounds(&slot->out_of_bounds_data,
- 				slot->u_val.lval);
+@@ -28,6 +28,10 @@ void __kvm_check_ubsan_data(struct kvm_ubsan_info *slot)
+ 	case UBSAN_UNREACHABLE_DATA:
+ 		__ubsan_handle_builtin_unreachable(&slot->unreachable_data);
  		break;
-+	case UBSAN_UNREACHABLE_DATA:
-+		__ubsan_handle_builtin_unreachable(&slot->unreachable_data);
++	case UBSAN_SHIFT_OUT_OF_BOUNDS:
++		__ubsan_handle_shift_out_of_bounds(&slot->shift_out_of_bounds_data,
++				slot->u_val.lval, slot->u_val.rval);
 +		break;
  	}
  }
