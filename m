@@ -2,75 +2,90 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 34F1E26A2DC
-	for <lists+kvmarm@lfdr.de>; Tue, 15 Sep 2020 12:12:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E20926A30D
+	for <lists+kvmarm@lfdr.de>; Tue, 15 Sep 2020 12:25:06 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D7FA24B2CB;
-	Tue, 15 Sep 2020 06:12:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A20E74B352;
+	Tue, 15 Sep 2020 06:25:05 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.799
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699] autolearn=no
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Wwx3KfOOLIYn; Tue, 15 Sep 2020 06:12:08 -0400 (EDT)
+	with ESMTP id XXa37Lqwxk3J; Tue, 15 Sep 2020 06:25:05 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 78E0C4B32E;
-	Tue, 15 Sep 2020 06:12:06 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 886F24B2D4;
+	Tue, 15 Sep 2020 06:25:04 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 256B84B1AC
- for <kvmarm@lists.cs.columbia.edu>; Tue, 15 Sep 2020 05:19:42 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5F5B84B1F7
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 15 Sep 2020 06:25:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 26-FJrzluI-B for <kvmarm@lists.cs.columbia.edu>;
- Tue, 15 Sep 2020 05:19:40 -0400 (EDT)
-Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net
- [217.70.183.195])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 708294B1A7
- for <kvmarm@lists.cs.columbia.edu>; Tue, 15 Sep 2020 05:19:40 -0400 (EDT)
-X-Originating-IP: 91.224.148.103
-Received: from xps13 (unknown [91.224.148.103])
- (Authenticated sender: miquel.raynal@bootlin.com)
- by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id A7B9F60004;
- Tue, 15 Sep 2020 09:19:26 +0000 (UTC)
-Date: Tue, 15 Sep 2020 11:19:25 +0200
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: Joe Perches <joe@perches.com>
-Subject: Re: [trivial PATCH] treewide: Convert switch/case fallthrough; to
- break;
-Message-ID: <20200915111925.475dd3f1@xps13>
-In-Reply-To: <e6387578c75736d61b2fe70d9783d91329a97eb4.camel@perches.com>
-References: <e6387578c75736d61b2fe70d9783d91329a97eb4.camel@perches.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+ with ESMTP id CYooSNS7yuvJ for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 15 Sep 2020 06:25:02 -0400 (EDT)
+Received: from mail-wm1-f68.google.com (mail-wm1-f68.google.com
+ [209.85.128.68])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 38F2F4B1F1
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 15 Sep 2020 06:25:02 -0400 (EDT)
+Received: by mail-wm1-f68.google.com with SMTP id w2so2828744wmi.1
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 15 Sep 2020 03:25:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=nCObEKoOnmpHrzYJFBm9pkBKEq9SNCMkpHaxOskN+KQ=;
+ b=vbBJy4kwOuP8fps7ENGxPva5zUYL7ASA78U0Ik7uGtyQwbCdxLIDc5R+Lkce3LiyG9
+ tLhWib3rO23PtT7aBoJi1Wh5s5YnYthzHConFQ9L9lfT5mJzO+PvYFbCpNkD3Y3Y5pV7
+ ccjX2TexQXkFDZFRXCF4Vu7sGsVYCi2n6CfR+ga+FrmT/CM19VfdHrlV+uoAyQb7Wnux
+ Ua6jN3ov5SDmM4C4t32H7+HFTozTlN8q3kPzjcNZy74cI/nUj7maUu2W1Xv0iRcsns8V
+ 7sMEIca6qA/KcCQnNsC8rCvlnSY3mxClh6VbPDZTXsnqTmoM6xWaK0XxddnzL4J3SJO6
+ b+3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=nCObEKoOnmpHrzYJFBm9pkBKEq9SNCMkpHaxOskN+KQ=;
+ b=CYpGvvAd1b+izYrUUG/38vWz+1mZvemEO/rs/DgUExw6ErMo1/Sv7PK9EK/SRTHPSV
+ QMbBFJlzqwiJxwRjLqE8uP43qTYlv3PhExEX9bsaWBosHrW/eGmicu3kqvn1jq5+sK3U
+ ajPG2BQcS4kUx3E+cDAcnBfdCZ6IuY9jdpwSThQdf2EbeHh5x258ChmdFAGnLo1htKee
+ GlM1rFy6yIu4TREKkrLrvbbFRV/iH2q6y7rvRiOVcN2vK3wBOikC0JS/Y2ZQT5cqXjwa
+ UxhkHsa9SWsOMdy2F9K4Nnho3RsxURwoVpgO/rePREPVBTgVBxmeMcESp5L7fAyL8ldX
+ OAug==
+X-Gm-Message-State: AOAM532ptGXuekMeuV+BX3NLAhlKsUnuDc+e/CF330zfzW9NBr0Wflqz
+ LeC0iCssyydxKpSe/JsqTZR8Cw==
+X-Google-Smtp-Source: ABdhPJyLkeeoM2ZZcrGWaota2zFMVO2kAkBf28Jt84EjulN5M4ljnumj2SEmrORUfgsijOJP5ZWZqg==
+X-Received: by 2002:a1c:2e08:: with SMTP id u8mr4155025wmu.156.1600165500941; 
+ Tue, 15 Sep 2020 03:25:00 -0700 (PDT)
+Received: from google.com (49.222.77.34.bc.googleusercontent.com.
+ [34.77.222.49])
+ by smtp.gmail.com with ESMTPSA id w15sm27651716wro.46.2020.09.15.03.25.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Sep 2020 03:25:00 -0700 (PDT)
+Date: Tue, 15 Sep 2020 10:24:58 +0000
+From: George Popescu <georgepope@google.com>
+To: Kees Cook <keescook@chromium.org>
+Subject: Re: [PATCH 06/14] Fix CFLAGS for UBSAN_BOUNDS on Clang
+Message-ID: <20200915102458.GA1650630@google.com>
+References: <20200914172750.852684-1-georgepope@google.com>
+ <20200914172750.852684-7-georgepope@google.com>
+ <202009141509.CDDC8C8@keescook>
 MIME-Version: 1.0
-X-Mailman-Approved-At: Tue, 15 Sep 2020 06:12:04 -0400
-Cc: linux-fbdev@vger.kernel.org, oss-drivers@netronome.com,
- nouveau@lists.freedesktop.org, alsa-devel <alsa-devel@alsa-project.org>,
- dri-devel@lists.freedesktop.org, linux-mips@vger.kernel.org,
- linux-ide@vger.kernel.org, dm-devel@redhat.com, linux-mtd@lists.infradead.org,
- linux-i2c@vger.kernel.org, sparclinux@vger.kernel.org,
- linux-afs@lists.infradead.org, linux-rtc@vger.kernel.org,
- linux-s390@vger.kernel.org, linux-scsi@vger.kernel.org, dccp@vger.kernel.org,
- linux-rdma@vger.kernel.org, linux-atm-general@lists.sourceforge.net,
- iommu@lists.linux-foundation.org, kvmarm@lists.cs.columbia.edu,
- coreteam@netfilter.org, intel-wired-lan@lists.osuosl.org,
- linux-serial@vger.kernel.org, linux-input@vger.kernel.org,
- linux-mmc@vger.kernel.org, Kees Cook <kees.cook@canonical.com>,
- linux-media@vger.kernel.org, linux-pm@vger.kernel.org,
- intel-gfx@lists.freedesktop.org, linux-mediatek@lists.infradead.org,
- linux-nvme@lists.infradead.org, storagedev@microchip.com,
- ceph-devel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- Nick Desaulniers <ndesaulniers@google.com>, linux-nfs@vger.kernel.org,
- Jiri Kosina <trivial@kernel.org>, linux-parisc@vger.kernel.org,
- netdev@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-wireless@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
- linux-sctp@vger.kernel.org, netfilter-devel@vger.kernel.org,
- linux-crypto@vger.kernel.org, bpf@vger.kernel.org,
- linuxppc-dev@lists.ozlabs.org
+Content-Disposition: inline
+In-Reply-To: <202009141509.CDDC8C8@keescook>
+Cc: tglx@linutronix.de, catalin.marinas@arm.com, will@kernel.org,
+ kvmarm@lists.cs.columbia.edu, maskray@google.com, maz@kernel.org,
+ masahiroy@kernel.org, clang-built-linux@googlegroups.com,
+ linux-arm-kernel@lists.infradead.org, elver@google.com, arnd@arndb.de,
+ linux-kbuild@vger.kernel.org, broonie@kernel.org, natechancellor@gmail.com,
+ dvyukov@google.com, michal.lkml@markovi.net, ndesaulniers@google.com,
+ linux-kernel@vger.kernel.org, akpm@linux-foundation.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -82,14 +97,70 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-SGkgSm9lLAoKRm9yIE1URDoKCj4gIGRyaXZlcnMvbXRkL25hbmQvcmF3L25hbmRzaW0uYyAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICB8ICAyICstCgpSZXZpZXdlZC1ieTogTWlxdWVsIFJheW5h
-bCA8bWlxdWVsLnJheW5hbEBib290bGluLmNvbT4KCgpUaGFua3MsCk1pcXXDqGwKX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18Ka3ZtYXJtIG1haWxpbmcgbGlz
-dAprdm1hcm1AbGlzdHMuY3MuY29sdW1iaWEuZWR1Cmh0dHBzOi8vbGlzdHMuY3MuY29sdW1iaWEu
-ZWR1L21haWxtYW4vbGlzdGluZm8va3ZtYXJtCg==
+On Mon, Sep 14, 2020 at 03:13:14PM -0700, Kees Cook wrote:
+> On Mon, Sep 14, 2020 at 05:27:42PM +0000, George-Aurelian Popescu wrote:
+> > From: George Popescu <georgepope@google.com>
+> > 
+> > When the kernel is compiled with Clang, UBSAN_BOUNDS inserts a brk after
+> > the handler call, preventing it from printing any information processed
+> > inside the buffer.
+> > For Clang -fsanitize=bounds expands to -fsanitize=array-bounds and
+> > -fsanitize=local-bounds, and the latter adds a brk after the handler
+> > call
+> 
+> That sounds like a compiler bug?
+Actually in clang 12 documentation is written that -fsanitize=bounds
+expands to that. GCC  doesn't have those two options, only the
+-fsanitize=bounds which looks similar to -fsanitize=array-bounds from
+clang. So I don't see it as a compiler bug, just a misuse of flags.
+
+> > Signed-off-by: George Popescu <georgepope@google.com>
+> > ---
+> >  scripts/Makefile.ubsan | 9 ++++++++-
+> >  1 file changed, 8 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/scripts/Makefile.ubsan b/scripts/Makefile.ubsan
+> > index 27348029b2b8..3d15ac346c97 100644
+> > --- a/scripts/Makefile.ubsan
+> > +++ b/scripts/Makefile.ubsan
+> > @@ -4,7 +4,14 @@ ifdef CONFIG_UBSAN_ALIGNMENT
+> >  endif
+> >  
+> >  ifdef CONFIG_UBSAN_BOUNDS
+> > -      CFLAGS_UBSAN += $(call cc-option, -fsanitize=bounds)
+> > +      # For Clang -fsanitize=bounds translates to -fsanitize=array-bounds and
+> > +      # -fsanitize=local-bounds; the latter adds a brk right after the
+> > +      # handler is called.
+> > +      ifdef CONFIG_CC_IS_CLANG
+> > +            CFLAGS_UBSAN += $(call cc-option, -fsanitize=array-bounds)
+> 
+> This would mean losing the local-bounds coverage? Isn't that for locally
+> defined arrays on the stack?
+This would mean losing the local-bounds coverage. I tried to  test it without
+local-bounds and with a locally defined array on the stack and it works fine
+(the handler is called and the error reported). For me it feels like
+--array-bounds and --local-bounds are triggered for the same type of
+undefined_behaviours but they are handling them different.
+
+> > +      else
+> > +            CFLAGS_UBSAN += $(call cc-option, -fsanitize=bounds)
+> > +      endif
+> >  endif
+> >  
+> >  ifdef CONFIG_UBSAN_MISC
+> > -- 
+> > 2.28.0.618.gf4bc123cb7-goog
+> > 
+> 
+> --
+Thanks,
+George
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
