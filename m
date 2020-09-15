@@ -2,73 +2,80 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E5E8826A35D
-	for <lists+kvmarm@lfdr.de>; Tue, 15 Sep 2020 12:42:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1AA326A379
+	for <lists+kvmarm@lfdr.de>; Tue, 15 Sep 2020 12:46:52 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9790E4B302;
-	Tue, 15 Sep 2020 06:42:47 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 861BE4B319;
+	Tue, 15 Sep 2020 06:46:52 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QdXXhNNuuK83; Tue, 15 Sep 2020 06:42:47 -0400 (EDT)
+	with ESMTP id SFxjMu84G0EB; Tue, 15 Sep 2020 06:46:52 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 55CB24B334;
-	Tue, 15 Sep 2020 06:42:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 37B5C4B32E;
+	Tue, 15 Sep 2020 06:46:51 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 478F24B302
- for <kvmarm@lists.cs.columbia.edu>; Tue, 15 Sep 2020 06:42:44 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D42974B319
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 15 Sep 2020 06:46:50 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id qoBPJ3twEVgp for <kvmarm@lists.cs.columbia.edu>;
- Tue, 15 Sep 2020 06:42:43 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5CB1F4B315
- for <kvmarm@lists.cs.columbia.edu>; Tue, 15 Sep 2020 06:42:43 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 7E3E720B1F;
- Tue, 15 Sep 2020 10:42:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1600166562;
- bh=JpQAb6Gm2FYtY9xG2whFGPDFubcLeWuG9gg0NSevaxs=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=1WPqzQ4aQD2giZcrdNRC1eigtTWsqyH1+i6u597CO2//h+JBFboBpvKspQgu9+0za
- Vtk+uuOV4hXwuCWzwCX/t94/NOLZyd1kJE+wqRBfzav0Rl0WnTHx8ywA8SS02OX09C
- cqFYuVySais/VOfEomR/Mc3h6wauq8p2AHG1+E7o=
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.lan) by disco-boy.misterjones.org with esmtpsa
- (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
- (envelope-from <maz@kernel.org>)
- id 1kI8Q4-00ByDU-97; Tue, 15 Sep 2020 11:42:41 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2 2/2] KVM: arm64: Remove S1PTW check from
- kvm_vcpu_dabt_iswrite()
-Date: Tue, 15 Sep 2020 11:42:18 +0100
-Message-Id: <20200915104218.1284701-3-maz@kernel.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200915104218.1284701-1-maz@kernel.org>
-References: <20200915104218.1284701-1-maz@kernel.org>
-MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org, kernel-team@android.com, will@kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: Will Deacon <will@kernel.org>, kernel-team@android.com
+ with ESMTP id JId0T6IrItbo for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 15 Sep 2020 06:46:49 -0400 (EDT)
+Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com
+ [209.85.128.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7234A4B311
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 15 Sep 2020 06:46:49 -0400 (EDT)
+Received: by mail-wm1-f73.google.com with SMTP id x81so750129wmg.8
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 15 Sep 2020 03:46:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=sender:date:message-id:mime-version:subject:from:to:cc;
+ bh=q5iRRAj0SUsthOjBN2PJyc/yoW5r5Y3Rs945BK5S73I=;
+ b=pCW2Jq+48EDIL/IC3ltwztUgjn5uEm1sV1tWhQgE1gH7ucq9gjhcdRebL2+yTmA+mK
+ LFjoS8sKttmOQ+Eh4XSr0ceVlG4N4wje9xS/1557tc/Uv3CzaOO1LRd7nP/PJtYgNp7/
+ emwcmQHNfKwTZndNc412CUolKjToAutTlPim3TEOnJUXEfnOTfGiSuke9kDX6QUgKubQ
+ yLzdxsucyAagIdbyTW98OlA6z7884I79DFdK2XvB4bax3jfd85Zqepy+U+R5jgWx1Rcq
+ hhvGCA/vT9Fj93j1N3oVy2h2q0CEMnNQFUe+1+0yQqqmC20kvOa2VFIIJGpkQFBzc/Sv
+ /sog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
+ :to:cc;
+ bh=q5iRRAj0SUsthOjBN2PJyc/yoW5r5Y3Rs945BK5S73I=;
+ b=GYyH9xQTGFFrtkyt42CvKcsL5sYVpYe+AUrf/tQrdeZSq5uhEdeAh7UehL58QKcpg6
+ axrdZVGMnk1vuTi/Tvvo9Fs7yiPsOAviJ0cPZxyC6zuoTWOS+msw9jl/Qymq6EhCzuYh
+ U261kV1r873JNyWVu6xB15TQKLfPO02m0XrUU4UlrZyRt/PGHgWqCuYmSWcw+9Fw2Xgu
+ bjJVtwZM7gb/+7+eyHAl4PgJmDC7D42Q+3/XZgfu+LZkMrMF8Lh/8xUvIoF6IAWDbius
+ 8Psd9RjyK9WObHhoqYAyh8oG3UuBcraVNH1iShLhS3ZtSGstrq+hge1oN7178OgMfBk1
+ CJzQ==
+X-Gm-Message-State: AOAM5307GmM7pk1sTJjRR1O6uWw1lFSUCc3ZDQIEO67wq+Kk7JyoLDTT
+ j1hJ0ZGgEFirzwrdN+mAAFLaDNlZ4kmb0jZSKCDv7w7k/wbm7g8fWub3iS6QNWrkV2JMOKhXdEh
+ ZJ/6eVD7h6sghOYBMtrYSVQDGbJbEEVIcVCo07UEYs36s0Ycg5djn8QdalcqvsNohfxjarg==
+X-Google-Smtp-Source: ABdhPJwHZNc4IJ9YyBn/VOmidrd8JTUW1eIIQzrcOUj/V9w2IOUcSO1J6wpFQnqAWwHLRZTrZeCtrg//mOo=
+X-Received: from ascull.lon.corp.google.com
+ ([2a00:79e0:d:109:4a0f:cfff:fe4a:6363])
+ (user=ascull job=sendgmr) by 2002:a7b:c38f:: with SMTP id
+ s15mr4180830wmj.16.1600166808236; 
+ Tue, 15 Sep 2020 03:46:48 -0700 (PDT)
+Date: Tue, 15 Sep 2020 11:46:24 +0100
+Message-Id: <20200915104643.2543892-1-ascull@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.28.0.618.gf4bc123cb7-goog
+Subject: [PATCH v4 00/19] Introduce separate nVHE hyp context
+From: Andrew Scull <ascull@google.com>
+To: kvmarm@lists.cs.columbia.edu
+Cc: linux-arm-kernel@lists.infradead.org, kernel-team@android.com,
+ maz@kernel.org, Sudeep Holla <sudeep.holla@arm.com>, catalin.marinas@arm.com,
+ will@kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -85,36 +92,105 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Now that kvm_vcpu_trap_is_write_fault() checks for S1PTW, there
-is no need for kvm_vcpu_dabt_iswrite() to do the same thing, as
-we already check for this condition on all existing paths.
+As a step on the way to isolating hyp from the host on nVHE as part of
+Android's "Protected KVM" project, this series introduces a separate
+register context. Topics include:
 
-Drop the check and add a comment instead.
+ - RAS for nVHE
+ - Panicking from guest vectors with SCS
+ - Switching to hyp context
+ - Migrating hyp interface off of function pointers
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/include/asm/kvm_emulate.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+First 4 patches are small refactors. Then an exception vector is added
+just for the nVHE host to untangle the existing EL2 vector e.g. to
+separate the RAS cases.
 
-diff --git a/arch/arm64/include/asm/kvm_emulate.h b/arch/arm64/include/asm/kvm_emulate.h
-index 4f618af660ba..1cc5f5f72d0b 100644
---- a/arch/arm64/include/asm/kvm_emulate.h
-+++ b/arch/arm64/include/asm/kvm_emulate.h
-@@ -303,10 +303,10 @@ static __always_inline bool kvm_vcpu_abt_iss1tw(const struct kvm_vcpu *vcpu)
- 	return !!(kvm_vcpu_get_esr(vcpu) & ESR_ELx_S1PTW);
- }
- 
-+/* Always check for S1PTW *before* using this. */
- static __always_inline bool kvm_vcpu_dabt_iswrite(const struct kvm_vcpu *vcpu)
- {
--	return !!(kvm_vcpu_get_esr(vcpu) & ESR_ELx_WNR) ||
--		kvm_vcpu_abt_iss1tw(vcpu); /* AF/DBM update */
-+	return kvm_vcpu_get_esr(vcpu) & ESR_ELx_WNR;
- }
- 
- static inline bool kvm_vcpu_dabt_is_cm(const struct kvm_vcpu *vcpu)
+Hyp panics from the guest context, e.g. from an invalid vector, are
+fixed so they have a chance of completely cleanly with features that
+depend on register state such as x18 for shadow call stack (SCS) enabled
+on VHE.
+
+Finally, hyp is made to switch to its own context rather than borrowing the
+host context before migrating the hyp interface from raw function
+pointers to SMCCC based functions IDs.
+
+From v3:
+ - https://lore.kernel.org/kvmarm/20200903135307.251331-1-ascull@google.com/
+ - Rebased onto 5.9-rc4
+ - Addressed review comments
+
+From v2:
+ - https://lore.kernel.org/kvmarm/20200820103446.959000-1-ascull@google.com/
+ - Rebased onto 5.9-rc3.
+ - Removed some of the unused separation of host and hyp.
+
+From v1:
+ - https://lore.kernel.org/kvmarm/20200715184438.1390996-1-ascull@google.com/
+ - HVC microbenchmark overhead cut from over 15% to under 6%.
+ - Abandon the symmetry of a run loop in hyp and treating the host as a
+   vCPU as there was little practical benefit for the overhead it
+   introduced.
+
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: James Morse <james.morse@arm.com>
+Cc: Suzuki Poulose <suzuki.poulose@arm.com>
+Cc: Sudeep Holla <sudeep.holla@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: kernel-team@android.com
+Cc: kvmarm@lists.cs.columbia.edu
+Cc: linux-arm-kernel@lists.infradead.org
+
+*** BLURB HERE ***
+
+Andrew Scull (19):
+  KVM: arm64: Remove __activate_vm wrapper
+  KVM: arm64: Remove hyp_panic arguments
+  KVM: arm64: Remove kvm_host_data_t typedef
+  KVM: arm64: Choose hyp symbol based on context
+  KVM: arm64: Save chosen hyp vector to a percpu variable
+  KVM: arm64: nVHE: Use separate vector for the host
+  KVM: arm64: nVHE: Don't consume host SErrors with ESB
+  KVM: arm64: Introduce hyp context
+  KVM: arm64: Update context references from host to hyp
+  KVM: arm64: Restore hyp when panicking in guest context
+  KVM: arm64: Share context save and restore macros
+  KVM: arm64: nVHE: Switch to hyp context for EL2
+  KVM: arm64: nVHE: Handle hyp panics
+  KVM: arm64: nVHE: Pass pointers consistently to hyp-init
+  smccc: Define vendor hyp owned service call region
+  smccc: Use separate variables for args and results
+  KVM: arm64: nVHE: Migrate hyp interface to SMCCC
+  KVM: arm64: nVHE: Migrate hyp-init to SMCCC
+  KVM: arm64: nVHE: Fix pointers during SMCCC convertion
+
+ arch/arm64/include/asm/kvm_asm.h        | 100 ++++++++++++-
+ arch/arm64/include/asm/kvm_host.h       |  26 ++--
+ arch/arm64/include/asm/kvm_hyp.h        |   9 +-
+ arch/arm64/include/asm/kvm_ptrauth.h    |   6 +-
+ arch/arm64/kernel/image-vars.h          |   2 +
+ arch/arm64/kvm/Makefile                 |   2 +-
+ arch/arm64/kvm/arm.c                    |  34 ++++-
+ arch/arm64/kvm/hyp.S                    |  34 -----
+ arch/arm64/kvm/hyp/entry.S              |  95 +++++-------
+ arch/arm64/kvm/hyp/hyp-entry.S          |  76 +---------
+ arch/arm64/kvm/hyp/include/hyp/switch.h |  15 +-
+ arch/arm64/kvm/hyp/nvhe/Makefile        |   2 +-
+ arch/arm64/kvm/hyp/nvhe/host.S          | 187 ++++++++++++++++++++++++
+ arch/arm64/kvm/hyp/nvhe/hyp-init.S      |  67 +++++----
+ arch/arm64/kvm/hyp/nvhe/hyp-main.c      | 117 +++++++++++++++
+ arch/arm64/kvm/hyp/nvhe/switch.c        |  41 +++---
+ arch/arm64/kvm/hyp/nvhe/tlb.c           |   2 -
+ arch/arm64/kvm/hyp/vhe/switch.c         |  24 +--
+ arch/arm64/kvm/vgic/vgic-v3.c           |   4 +-
+ include/linux/arm-smccc.h               |  74 ++++------
+ 20 files changed, 602 insertions(+), 315 deletions(-)
+ delete mode 100644 arch/arm64/kvm/hyp.S
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/host.S
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/hyp-main.c
+
 -- 
-2.28.0
+2.28.0.618.gf4bc123cb7-goog
 
 _______________________________________________
 kvmarm mailing list
