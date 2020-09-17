@@ -2,105 +2,59 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B53ED26DA5D
-	for <lists+kvmarm@lfdr.de>; Thu, 17 Sep 2020 13:35:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A60C126DAD6
+	for <lists+kvmarm@lfdr.de>; Thu, 17 Sep 2020 13:55:40 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4EED54B3DB;
-	Thu, 17 Sep 2020 07:35:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5D99D4B3EB;
+	Thu, 17 Sep 2020 07:55:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id x+phlLlE3w6e; Thu, 17 Sep 2020 07:35:49 -0400 (EDT)
+	with ESMTP id j+mjt5UB9Ewb; Thu, 17 Sep 2020 07:55:39 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1042D4B3D3;
-	Thu, 17 Sep 2020 07:35:48 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C89294B339;
+	Thu, 17 Sep 2020 07:55:37 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C89D44B30B
- for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Sep 2020 07:35:46 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2311F4B303
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Sep 2020 07:51:55 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id eEwXBY0Q78xg for <kvmarm@lists.cs.columbia.edu>;
- Thu, 17 Sep 2020 07:35:45 -0400 (EDT)
-Received: from mail-wr1-f66.google.com (mail-wr1-f66.google.com
- [209.85.221.66])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5EF024B308
- for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Sep 2020 07:35:45 -0400 (EDT)
-Received: by mail-wr1-f66.google.com with SMTP id z1so1698790wrt.3
- for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Sep 2020 04:35:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=EtH4/cbuQgykQYd+jjjiuY8limbLr894Hm1Wfr5TKQE=;
- b=MZtwfo2Wkr6xjMeQYiz0AzKCHXOeKN48g2ul8ghIqc3xiqk9zQf+HOBZ+UHRPpswvD
- 9SBgHRwMaFLJDl27uhHNtO8R/rVQPrHwHvld1k1cSpz8o0eAbb3ZsN9tjQpOpqlJKGlW
- GrwSOQnzS9k0pLp3WVTGsfCkX2nwuK4/KULnQidX0PveC+EMFDCZsR5EPDsAU4hnW/C4
- FwjND5Y6WgjF+MR48bLLBhiZwio2a9ADpBpQiFIj+6TTVuegNGnGK+5dwnjCcZZiHSIO
- 9G8jASY5hC9NeCi7D/s0svoVNRSESbWKf5XK5jmgjExYi5hfODHSRbI3XH+jyy9nFahP
- i+zA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=EtH4/cbuQgykQYd+jjjiuY8limbLr894Hm1Wfr5TKQE=;
- b=nH+IBPSkL9SCpnkrrZUcK0nYNSQjhPNm709MfHAq40bKFbppC64KML3E5dfKG9sevf
- g54kXkB3D1THaF8yn0TXmwS0is/7jMI8sEQlf9WjeIJGbHgSAJIJIoPubuu7+CnIa+1i
- jBPu5+ioAvzvTh8s+0HR38BkJ71SZn7oVcFLiPsVBhFfBGFxcdU9DHQcQwrkTfULbfsg
- /Y/NaapzeJYGpCWrQfeiQzhm4jaBHPX6oJcDtDaDWYMW6X2gjUUV869zK6X4dq7qs44i
- lss1u2AYBNgaFXwFQONx8aG48P5TMOuJcm9Z3vGC8dbky3unRqydApnmbZ3l3VM8GljU
- a8kA==
-X-Gm-Message-State: AOAM53345/q3GVXp9Pw1c81IETIYMZlDnk7JuhvXS7dOixkznyywkF4T
- Ed4zcwk9HUVezphBBNSvOlN1tw==
-X-Google-Smtp-Source: ABdhPJwAdcQbPsLcZZV58AgYAMNaXQbRRw54r+D+72HaJLI/PEWaAMsAwIznC1PUJ+lKzs+dj/3gLQ==
-X-Received: by 2002:adf:df87:: with SMTP id z7mr32658549wrl.239.1600342544219; 
- Thu, 17 Sep 2020 04:35:44 -0700 (PDT)
-Received: from google.com (49.222.77.34.bc.googleusercontent.com.
- [34.77.222.49])
- by smtp.gmail.com with ESMTPSA id f14sm10591991wme.22.2020.09.17.04.35.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Sep 2020 04:35:42 -0700 (PDT)
-Date: Thu, 17 Sep 2020 11:35:40 +0000
-From: George Popescu <georgepope@google.com>
-To: Marco Elver <elver@google.com>
-Subject: Re: [PATCH 06/14] Fix CFLAGS for UBSAN_BOUNDS on Clang
-Message-ID: <20200917113540.GA1742660@google.com>
-References: <202009141509.CDDC8C8@keescook>
- <20200915102458.GA1650630@google.com>
- <CANpmjNOTcS_vvZ1swh1iHYaRbTvGKnPAe4Q2DpR1MGhk_oZDeA@mail.gmail.com>
- <20200915120105.GA2294884@google.com>
- <CANpmjNPpq7LfTHYesz2wTVw6Pqv0FQ2gc-vmSB6Mdov+XWPZiw@mail.gmail.com>
- <20200916074027.GA2946587@google.com>
- <CANpmjNMT9-a8qKZSvGWBPAb9x9y1DkrZMSvHGq++_TcEv=7AuA@mail.gmail.com>
- <20200916121401.GA3362356@google.com>
- <20200916134029.GA1146904@elver.google.com>
- <CANpmjNOfgeR0zpL-4AtOt0FL56BFZ_sud-mR3CrYB7OCMg0PaA@mail.gmail.com>
+ with ESMTP id pPe7lAdLk+UZ for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 17 Sep 2020 07:51:52 -0400 (EDT)
+Received: from huawei.com (szxga06-in.huawei.com [45.249.212.32])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A04274B2FB
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Sep 2020 07:51:51 -0400 (EDT)
+Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.60])
+ by Forcepoint Email with ESMTP id 6EBB7B9CD01997F6A4FA;
+ Thu, 17 Sep 2020 19:51:47 +0800 (CST)
+Received: from [10.174.185.104] (10.174.185.104) by
+ DGGEMS406-HUB.china.huawei.com (10.3.19.206) with Microsoft SMTP Server id
+ 14.3.487.0; Thu, 17 Sep 2020 19:51:40 +0800
+Subject: Re: [PATCH 2/2] kvm/arm: Add mp_affinity for arm vcpu
+To: Marc Zyngier <maz@kernel.org>
+References: <20200917023033.1337-1-fangying1@huawei.com>
+ <20200917023033.1337-3-fangying1@huawei.com>
+ <7a924b0fb27505a0d8b00389fe2f02df@kernel.org>
+From: Ying Fang <fangying1@huawei.com>
+Message-ID: <0772755c-d337-a994-5a85-11e168038e7e@huawei.com>
+Date: Thu, 17 Sep 2020 19:51:40 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <CANpmjNOfgeR0zpL-4AtOt0FL56BFZ_sud-mR3CrYB7OCMg0PaA@mail.gmail.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Alexander Potapenko <glider@google.com>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, Fangrui Song <maskray@google.com>,
- maz@kernel.org, Masahiro Yamada <masahiroy@kernel.org>,
- kasan-dev <kasan-dev@googlegroups.com>,
- clang-built-linux <clang-built-linux@googlegroups.com>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>,
- Kees Cook <keescook@chromium.org>, Arnd Bergmann <arnd@arndb.de>,
- Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>,
- Andrey Konovalov <andreyknvl@google.com>, broonie@kernel.org,
- Nathan Chancellor <natechancellor@gmail.com>,
- Dmitry Vyukov <dvyukov@google.com>, Michal Marek <michal.lkml@markovi.net>,
- Nick Desaulniers <ndesaulniers@google.com>,
- LKML <linux-kernel@vger.kernel.org>, Andrew Morton <akpm@linux-foundation.org>
+In-Reply-To: <7a924b0fb27505a0d8b00389fe2f02df@kernel.org>
+Content-Language: en-US
+X-Originating-IP: [10.174.185.104]
+X-CFilter-Loop: Reflected
+X-Mailman-Approved-At: Thu, 17 Sep 2020 07:55:36 -0400
+Cc: zhang.zhanghailiang@huawei.com, kvm@vger.kernel.org, alex.chen@huawei.com,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -112,104 +66,139 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Sep 17, 2020 at 08:37:07AM +0200, Marco Elver wrote:
-> On Wed, 16 Sep 2020 at 15:40, Marco Elver <elver@google.com> wrote:
-> > On Wed, Sep 16, 2020 at 12:14PM +0000, George Popescu wrote:
-> > > On Wed, Sep 16, 2020 at 10:32:40AM +0200, Marco Elver wrote:
-> > > > On Wed, 16 Sep 2020 at 09:40, George Popescu <georgepope@google.com> wrote:
-> > > > > On Tue, Sep 15, 2020 at 07:32:28PM +0200, Marco Elver wrote:
-> > > > > > On Tue, 15 Sep 2020 at 14:01, George Popescu <georgepope@google.com> wrote:
-> > > > > > > On Tue, Sep 15, 2020 at 01:18:11PM +0200, Marco Elver wrote:
-> > > > > > > > On Tue, 15 Sep 2020 at 12:25, George Popescu <georgepope@google.com> wrote:
-> > > > > > > > > On Mon, Sep 14, 2020 at 03:13:14PM -0700, Kees Cook wrote:
-> > > > > > > > > > On Mon, Sep 14, 2020 at 05:27:42PM +0000, George-Aurelian Popescu wrote:
-> > > > > > > > > > > From: George Popescu <georgepope@google.com>
-> > > > > > > > > > >
-> > > > > > > > > > > When the kernel is compiled with Clang, UBSAN_BOUNDS inserts a brk after
-> > > > > > > > > > > the handler call, preventing it from printing any information processed
-> > > > > > > > > > > inside the buffer.
-> > > > > > > > > > > For Clang -fsanitize=bounds expands to -fsanitize=array-bounds and
-> > > > > > > > > > > -fsanitize=local-bounds, and the latter adds a brk after the handler
-> > > > > > > > > > > call
-> > > > > > > > > >
-> > > > > > > > > This would mean losing the local-bounds coverage. I tried to  test it without
-> > > > > > > > > local-bounds and with a locally defined array on the stack and it works fine
-> > > > > > > > > (the handler is called and the error reported). For me it feels like
-> > > > > > > > > --array-bounds and --local-bounds are triggered for the same type of
-> > > > > > > > > undefined_behaviours but they are handling them different.
-> > > > > > > >
-> > > > > > > > Does -fno-sanitize-trap=bounds help?
-> > [...]
-> > > > Your full config would be good, because it includes compiler version etc.
-> > > My full config is:
-> >
-> > Thanks. Yes, I can reproduce, and the longer I keep digging I start
-> > wondering why we have local-bounds at all.
-> >
-> > It appears that local-bounds finds a tiny subset of the issues that
-> > KASAN finds:
-> >
-> >         http://lists.llvm.org/pipermail/cfe-commits/Week-of-Mon-20131021/091536.html
-> >         http://llvm.org/viewvc/llvm-project?view=revision&revision=193205
-> >
-> > fsanitize=undefined also does not include local-bounds:
-> >
-> >         https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html#available-checks
-> >
-> > And the reason is that we do want to enable KASAN and UBSAN together;
-> > but local-bounds is useless overhead if we already have KASAN.
-> >
-> > I'm inclined to say that what you propose is reasonable (but the commit
-> > message needs to be more detailed explaining the relationship with
-> > KASAN) -- but I have no idea if this is going to break somebody's
-> > usecase (e.g. find some OOB bugs, but without KASAN -- but then why not
-> > use KASAN?!)
-> 
-> So, it seems that local-bounds can still catch some rare OOB accesses,
-> where KASAN fails to catch it because the access might skip over the
-> redzone.
-> 
-> The other more interesting bit of history is that
-> -fsanitize=local-bounds used to be -fbounds-checking, and meant for
-> production use as a hardening feature:
-> http://lists.llvm.org/pipermail/llvm-dev/2012-May/049972.html
-> 
-> And local-bounds just does not behave like any other sanitizer as a
-> result, it just traps. The fact that it's enabled via
-> -fsanitize=local-bounds (or just bounds) but hasn't much changed in
-> behaviour is a little unfortunate.
-
-> I suppose there are 3 options:
-> 
-> 1. George implements trap handling somehow. Is this feasible? If not,
-> why not? Maybe that should also have been explained in the commit
-> message.
-> 
-> 2. Only enable -fsanitize=local-bounds if UBSAN_TRAP was selected, at
-> least for as long as Clang traps for local-bounds. I think this makes
-> sense either way, because if we do not expect UBSAN to trap, it really
-> should not trap!
-> 
-> 3. Change the compiler. As always, this will take a while to implement
-> and then to reach whoever should have that updated compiler.
-> 
-> Preferences?
-Considering of what you said above, I find option 2 the most elegant.
-The first one doesn't sound doable for the moment, also the third.
-I will edit this patch considering your comments and resend it to the
-list.
-Thank you for your support.
-
-Thanks,
-George
-
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+CgpPbiA5LzE3LzIwMjAgMzo0NyBQTSwgTWFyYyBaeW5naWVyIHdyb3RlOgo+IE9uIDIwMjAtMDkt
+MTcgMDM6MzAsIFlpbmcgRmFuZyB3cm90ZToKPj4gQWxsb3cgdXNlcnNwYWNlIHRvIHNldCBNUElE
+UiB1c2luZyB2Y3B1IGlvY3RsIEtWTV9BUk1fU0VUX01QX0FGRklOSVRZLAo+PiBzbyB0aGF0IHdl
+IGNhbiBzdXBwb3J0IGNwdSB0b3BvbG9neSBmb3IgYXJtLgo+IAo+IE1QSURSIGhhcyAqbm90aGlu
+ZyogdG8gZG8gd2l0aCBDUFUgdG9wb2xvZ3kgaW4gdGhlIEFSTSBhcmNoaXRlY3R1cmUuCj4gSSBl
+bmNvdXJhZ2UgeW91IHRvIGhhdmUgYSBsb29rIGF0IHRoZSBBUk0gQVJNIGFuZCBmaW5kIG91dCBo
+b3cgb2Z0ZW4KPiB0aGUgd29yZCAidG9wb2xvZ3kiIGlzIHVzZWQgaW4gY29uanVuY3Rpb24gd2l0
+aCB0aGUgTVBJRFJfRUwxIHJlZ2lzdGVyLgo+IAo+Pgo+PiBTaWduZWQtb2ZmLWJ5OiBZaW5nIEZh
+bmcgPGZhbmd5aW5nMUBodWF3ZWkuY29tPgo+PiAtLS0KPj4gwqBhcmNoL2FybTY0L2luY2x1ZGUv
+YXNtL2t2bV9ob3N0LmggfMKgIDUgKysrKysKPj4gwqBhcmNoL2FybTY0L2t2bS9hcm0uY8KgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoCA4ICsrKysrKysrCj4+IMKgYXJjaC9hcm02NC9rdm0v
+cmVzZXQuY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfCAxMSArKysrKysrKysrKwo+PiDCoGFyY2gv
+YXJtNjQva3ZtL3N5c19yZWdzLmPCoMKgwqDCoMKgwqDCoMKgIHwgMzAgKysrKysrKysrKysrKysr
+KysrKy0tLS0tLS0tLS0tCj4+IMKgaW5jbHVkZS91YXBpL2xpbnV4L2t2bS5owqDCoMKgwqDCoMKg
+wqDCoMKgIHzCoCAyICsrCj4+IMKgNSBmaWxlcyBjaGFuZ2VkLCA0NSBpbnNlcnRpb25zKCspLCAx
+MSBkZWxldGlvbnMoLSkKPj4KPj4gZGlmZiAtLWdpdCBhL2FyY2gvYXJtNjQvaW5jbHVkZS9hc20v
+a3ZtX2hvc3QuaAo+PiBiL2FyY2gvYXJtNjQvaW5jbHVkZS9hc20va3ZtX2hvc3QuaAo+PiBpbmRl
+eCBlNTJjOTI3YWFkZTUuLjdhZGMzNTFlZTcwYSAxMDA2NDQKPj4gLS0tIGEvYXJjaC9hcm02NC9p
+bmNsdWRlL2FzbS9rdm1faG9zdC5oCj4+ICsrKyBiL2FyY2gvYXJtNjQvaW5jbHVkZS9hc20va3Zt
+X2hvc3QuaAo+PiBAQCAtMzcyLDYgKzM3Miw5IEBAIHN0cnVjdCBrdm1fdmNwdV9hcmNoIHsKPj4g
+wqDCoMKgwqDCoMKgwqDCoCB1NjQgbGFzdF9zdGVhbDsKPj4gwqDCoMKgwqDCoMKgwqDCoCBncGFf
+dCBiYXNlOwo+PiDCoMKgwqDCoCB9IHN0ZWFsOwo+PiArCj4+ICvCoMKgwqAgLyogdkNQVSBNUCBB
+ZmZpbml0eSAqLwo+PiArwqDCoMKgIHU2NCBtcF9hZmZpbml0eTsKPiAKPiBOby4gV2UgYWxyZWFk
+eSBoYXZlIGEgcGVyLUNQVSBNUElEUl9FTDEgcmVnaXN0ZXIsIHdlIGRvbid0IG5lZWQgYW5vdGhl
+cgo+IHBpZWNlIG9mIHN0YXRlLgpJIGFtIGFsc28gbm90IHN1cmUgaWYgaXQgaXMgbmVlZGVkIGhl
+cmUuCj4gCj4+IMKgfTsKPj4KPj4gwqAvKiBQb2ludGVyIHRvIHRoZSB2Y3B1J3MgU1ZFIEZGUiBm
+b3Igc3ZlX3tzYXZlLGxvYWR9X3N0YXRlKCkgKi8KPj4gQEAgLTY4NSw2ICs2ODgsOCBAQCBpbnQg
+a3ZtX2FybV9zZXR1cF9zdGFnZTIoc3RydWN0IGt2bSAqa3ZtLCB1bnNpZ25lZAo+PiBsb25nIHR5
+cGUpOwo+PiDCoGludCBrdm1fYXJtX3ZjcHVfZmluYWxpemUoc3RydWN0IGt2bV92Y3B1ICp2Y3B1
+LCBpbnQgZmVhdHVyZSk7Cj4+IMKgYm9vbCBrdm1fYXJtX3ZjcHVfaXNfZmluYWxpemVkKHN0cnVj
+dCBrdm1fdmNwdSAqdmNwdSk7Cj4+Cj4+ICtpbnQga3ZtX2FybV92Y3B1X3NldF9tcF9hZmZpbml0
+eShzdHJ1Y3Qga3ZtX3ZjcHUgKnZjcHUsIHVpbnQ2NF90IG1waWRyKTsKPj4gKwo+PiDCoCNkZWZp
+bmUga3ZtX2FybV92Y3B1X3N2ZV9maW5hbGl6ZWQodmNwdSkgXAo+PiDCoMKgwqDCoCAoKHZjcHUp
+LT5hcmNoLmZsYWdzICYgS1ZNX0FSTTY0X1ZDUFVfU1ZFX0ZJTkFMSVpFRCkKPj4KPj4gZGlmZiAt
+LWdpdCBhL2FyY2gvYXJtNjQva3ZtL2FybS5jIGIvYXJjaC9hcm02NC9rdm0vYXJtLmMKPj4gaW5k
+ZXggOTEzYzhkYTUzOWIzLi41ZjFmYTYyNWRjMTEgMTAwNjQ0Cj4+IC0tLSBhL2FyY2gvYXJtNjQv
+a3ZtL2FybS5jCj4+ICsrKyBiL2FyY2gvYXJtNjQva3ZtL2FybS5jCj4+IEBAIC0xMTc4LDYgKzEx
+NzgsMTQgQEAgbG9uZyBrdm1fYXJjaF92Y3B1X2lvY3RsKHN0cnVjdCBmaWxlICpmaWxwLAo+Pgo+
+PiDCoMKgwqDCoMKgwqDCoMKgIHJldHVybiBrdm1fYXJtX3ZjcHVfZmluYWxpemUodmNwdSwgd2hh
+dCk7Cj4+IMKgwqDCoMKgIH0KPj4gK8KgwqDCoCBjYXNlIEtWTV9BUk1fU0VUX01QX0FGRklOSVRZ
+OiB7Cj4+ICvCoMKgwqDCoMKgwqDCoCB1NjQgbXBpZHI7Cj4+ICsKPj4gK8KgwqDCoMKgwqDCoMKg
+IGlmIChnZXRfdXNlcihtcGlkciwgKGNvbnN0IHVuc2lnbmVkIGludCBfX3VzZXIgKilhcmdwKSkK
+Pj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcmV0dXJuIC1FRkFVTFQ7Cj4+ICsKPj4gK8KgwqDC
+oMKgwqDCoMKgIHJldHVybiBrdm1fYXJtX3ZjcHVfc2V0X21wX2FmZmluaXR5KHZjcHUsIG1waWRy
+KTsKPj4gK8KgwqDCoCB9Cj4gCj4gVGhhdCdzIG5vdCB0aGUgd2F5IHdlIGFjY2VzcyBzeXN0ZW0g
+cmVnaXN0ZXJzIGZyb20gdXNlcnNwYWNlLgoKSSBrbm93IHRoYXQgd2UgYWxyZWFkeSBoYWQgdGhl
+IEtWTV9TRVRfT05FX1JFRyBhcGkgYW5kIHdlbGwgZGVzaWduZWQKc3lzX3JlZ3Mgc3Vic3lzdGVt
+LgoKSG93ZXZlciB3aGVuIEkgdHJpZWQgdG8gc2V0IE1QSURSIHVzaW5nIHRoZSBLVk1fU0VUX09O
+RV9SRUcgYXBpIGluIAprdm1fYXJjaF9pbml0X3ZjcHUsIHRoZSB2YWx1ZSBtYXkgZ2V0IGVyYXNl
+ZCBieSBjcHVfcmVzZXQgY2FsbGVkIHdpdGhpbiAKYXJtX2NwdV9yZWFsaXplZm4uIE1heWJlIHdl
+IHNob3VsZCBtYWtlIGNoYW5nZSBvbiBxZW11IGluc3RlYWQgb2YgYWRkaW5nCnRoaXMgcmVkdW5k
+YW50IGlvY3RsLgoKPiAKPj4gwqDCoMKgwqAgZGVmYXVsdDoKPj4gwqDCoMKgwqDCoMKgwqDCoCBy
+ID0gLUVJTlZBTDsKPj4gwqDCoMKgwqAgfQo+PiBkaWZmIC0tZ2l0IGEvYXJjaC9hcm02NC9rdm0v
+cmVzZXQuYyBiL2FyY2gvYXJtNjQva3ZtL3Jlc2V0LmMKPj4gaW5kZXggZWUzMzg3NWM1YzJhLi40
+OTE4Yzk2N2IwYzkgMTAwNjQ0Cj4+IC0tLSBhL2FyY2gvYXJtNjQva3ZtL3Jlc2V0LmMKPj4gKysr
+IGIvYXJjaC9hcm02NC9rdm0vcmVzZXQuYwo+PiBAQCAtMTg4LDYgKzE4OCwxNyBAQCBpbnQga3Zt
+X2FybV92Y3B1X2ZpbmFsaXplKHN0cnVjdCBrdm1fdmNwdSAqdmNwdSwKPj4gaW50IGZlYXR1cmUp
+Cj4+IMKgwqDCoMKgIHJldHVybiAtRUlOVkFMOwo+PiDCoH0KPj4KPj4gK2ludCBrdm1fYXJtX3Zj
+cHVfc2V0X21wX2FmZmluaXR5KHN0cnVjdCBrdm1fdmNwdSAqdmNwdSwgdWludDY0X3QgbXBpZHIp
+Cj4+ICt7Cj4+ICvCoMKgwqAgaWYgKCEobXBpZHIgJiAoMVVMTCA8PCAzMSkpKSB7Cj4+ICvCoMKg
+wqDCoMKgwqDCoCBwcl93YXJuKCJpbnZhbGlkIG1wX2FmZmluaXR5IGZvcm1hdFxuIik7Cj4+ICvC
+oMKgwqDCoMKgwqDCoCByZXR1cm4gLUVJTlZBTDsKPj4gK8KgwqDCoCB9Cj4+ICsKPj4gK8KgwqDC
+oCB2Y3B1LT5hcmNoLm1wX2FmZmluaXR5ID0gbXBpZHI7Cj4gCj4gVGhpcyBkb2Vzbid0IG1hdGNo
+IHRoZSBkZWZpbml0aW9uIG9mIHRoZSBNUElEUl9FTDEgcmVnaXN0ZXIuIEl0IGFsc28KPiBkb2Vz
+bid0IHRha2UgaW50byBhY2NvdW50IGFueSBvZiB0aGUgZXhpc3RpbmcgcmVzdHJpY3Rpb25zIGZv
+ciB0aGUKPiBzdXBwb3J0ZWQgYWZmaW5pdHkgbGV2ZWxzIGFuZCBudW1iZXIgb2YgUEVzIGF0IHRo
+ZSBsb3dlc3QgYWZmaW5pdHkKPiBsZXZlbC4KWWVzLCB3ZSBzaG91bGQgZG8gc2FuaXR5IGNoZWNr
+IGhlcmUgYW5kIHdlIG11c3Qga2VlcCB0aGUgZm9ybWF0IG9mIE1QSURSCmZvbGxvd2luZyB0aGUg
+U3BlYyBkZWZpbml0aW9uLgoKPiAKPj4gK8KgwqDCoCByZXR1cm4gMDsKPj4gK30KPj4gKwo+PiDC
+oGJvb2wga3ZtX2FybV92Y3B1X2lzX2ZpbmFsaXplZChzdHJ1Y3Qga3ZtX3ZjcHUgKnZjcHUpCj4+
+IMKgewo+PiDCoMKgwqDCoCBpZiAodmNwdV9oYXNfc3ZlKHZjcHUpICYmICFrdm1fYXJtX3ZjcHVf
+c3ZlX2ZpbmFsaXplZCh2Y3B1KSkKPj4gZGlmZiAtLWdpdCBhL2FyY2gvYXJtNjQva3ZtL3N5c19y
+ZWdzLmMgYi9hcmNoL2FybTY0L2t2bS9zeXNfcmVncy5jCj4+IGluZGV4IDA3NzI5M2I1MTE1Zi4u
+ZTc2ZjQ4MzQ3NWFkIDEwMDY0NAo+PiAtLS0gYS9hcmNoL2FybTY0L2t2bS9zeXNfcmVncy5jCj4+
+ICsrKyBiL2FyY2gvYXJtNjQva3ZtL3N5c19yZWdzLmMKPj4gQEAgLTY0NiwxNyArNjQ2LDI1IEBA
+IHN0YXRpYyB2b2lkIHJlc2V0X21waWRyKHN0cnVjdCBrdm1fdmNwdSAqdmNwdSwKPj4gY29uc3Qg
+c3RydWN0IHN5c19yZWdfZGVzYyAqcikKPj4gwqB7Cj4+IMKgwqDCoMKgIHU2NCBtcGlkcjsKPj4K
+Pj4gLcKgwqDCoCAvKgo+PiAtwqDCoMKgwqAgKiBNYXAgdGhlIHZjcHVfaWQgaW50byB0aGUgZmly
+c3QgdGhyZWUgYWZmaW5pdHkgbGV2ZWwgZmllbGRzIG9mCj4+IC3CoMKgwqDCoCAqIHRoZSBNUElE
+Ui4gV2UgbGltaXQgdGhlIG51bWJlciBvZiBWQ1BVcyBpbiBsZXZlbCAwIGR1ZSB0byBhCj4+IC3C
+oMKgwqDCoCAqIGxpbWl0YXRpb24gdG8gMTYgQ1BVcyBpbiB0aGF0IGxldmVsIGluIHRoZSBJQ0Nf
+U0dJeFIgcmVnaXN0ZXJzCj4+IC3CoMKgwqDCoCAqIG9mIHRoZSBHSUN2MyB0byBiZSBhYmxlIHRv
+IGFkZHJlc3MgZWFjaCBDUFUgZGlyZWN0bHkgd2hlbgo+PiAtwqDCoMKgwqAgKiBzZW5kaW5nIElQ
+SXMuCj4+IC3CoMKgwqDCoCAqLwo+PiAtwqDCoMKgIG1waWRyID0gKHZjcHUtPnZjcHVfaWQgJiAw
+eDBmKSA8PCBNUElEUl9MRVZFTF9TSElGVCgwKTsKPj4gLcKgwqDCoCBtcGlkciB8PSAoKHZjcHUt
+PnZjcHVfaWQgPj4gNCkgJiAweGZmKSA8PCBNUElEUl9MRVZFTF9TSElGVCgxKTsKPj4gLcKgwqDC
+oCBtcGlkciB8PSAoKHZjcHUtPnZjcHVfaWQgPj4gMTIpICYgMHhmZikgPDwgTVBJRFJfTEVWRUxf
+U0hJRlQoMik7Cj4+IC3CoMKgwqAgdmNwdV93cml0ZV9zeXNfcmVnKHZjcHUsICgxVUxMIDw8IDMx
+KSB8IG1waWRyLCBNUElEUl9FTDEpOwo+PiArwqDCoMKgIGlmICh2Y3B1LT5hcmNoLm1wX2FmZmlu
+aXR5KSB7Cj4+ICvCoMKgwqDCoMKgwqDCoCAvKiBJZiBtcF9hZmZpbml0eSBpcyBzZXQgYnkgdXNl
+cnNwYWNlLCBpdCBtZWFucyBhbiBjdXN0b21pemVkIAo+PiBjcHUKPj4gK8KgwqDCoMKgwqDCoMKg
+wqAgKiB0b3BvbG9neSBpcyBkZWZpbmVkLiBMZXQgaXQgYmUgTVBJRFIgb2YgdGhlIHZjcHUKPj4g
+K8KgwqDCoMKgwqDCoMKgwqAgKi8KPj4gK8KgwqDCoMKgwqDCoMKgIG1waWRyID0gdmNwdS0+YXJj
+aC5tcF9hZmZpbml0eTsKPj4gK8KgwqDCoCB9IGVsc2Ugewo+PiArwqDCoMKgwqDCoMKgwqAgLyoK
+Pj4gK8KgwqDCoMKgwqDCoMKgwqAgKiBNYXAgdGhlIHZjcHVfaWQgaW50byB0aGUgZmlyc3QgdGhy
+ZWUgYWZmaW5pdHkgbGV2ZWwgZmllbGRzIG9mCj4+ICvCoMKgwqDCoMKgwqDCoMKgICogdGhlIE1Q
+SURSLiBXZSBsaW1pdCB0aGUgbnVtYmVyIG9mIFZDUFVzIGluIGxldmVsIDAgZHVlIHRvIGEKPj4g
+K8KgwqDCoMKgwqDCoMKgwqAgKiBsaW1pdGF0aW9uIHRvIDE2IENQVXMgaW4gdGhhdCBsZXZlbCBp
+biB0aGUgSUNDX1NHSXhSIAo+PiByZWdpc3RlcnMKPj4gK8KgwqDCoMKgwqDCoMKgwqAgKiBvZiB0
+aGUgR0lDdjMgdG8gYmUgYWJsZSB0byBhZGRyZXNzIGVhY2ggQ1BVIGRpcmVjdGx5IHdoZW4KPj4g
+K8KgwqDCoMKgwqDCoMKgwqAgKiBzZW5kaW5nIElQSXMuCj4+ICvCoMKgwqDCoMKgwqDCoMKgICov
+Cj4+ICvCoMKgwqDCoMKgwqDCoCBtcGlkciA9ICh2Y3B1LT52Y3B1X2lkICYgMHgwZikgPDwgTVBJ
+RFJfTEVWRUxfU0hJRlQoMCk7Cj4+ICvCoMKgwqDCoMKgwqDCoCBtcGlkciB8PSAoKHZjcHUtPnZj
+cHVfaWQgPj4gNCkgJiAweGZmKSA8PCBNUElEUl9MRVZFTF9TSElGVCgxKTsKPj4gK8KgwqDCoMKg
+wqDCoMKgIG1waWRyIHw9ICgodmNwdS0+dmNwdV9pZCA+PiAxMikgJiAweGZmKSA8PCBNUElEUl9M
+RVZFTF9TSElGVCgyKTsKPj4gK8KgwqDCoMKgwqDCoMKgIG1waWRyIHw9ICgxVUxMIDw8IDMxKTsK
+Pj4gK8KgwqDCoCB9Cj4+ICvCoMKgwqAgdmNwdV93cml0ZV9zeXNfcmVnKHZjcHUsIG1waWRyLCBN
+UElEUl9FTDEpOwo+PiDCoH0KPj4KPj4gwqBzdGF0aWMgdm9pZCByZXNldF9wbWNyKHN0cnVjdCBr
+dm1fdmNwdSAqdmNwdSwgY29uc3Qgc3RydWN0IAo+PiBzeXNfcmVnX2Rlc2MgKnIpCj4+IGRpZmYg
+LS1naXQgYS9pbmNsdWRlL3VhcGkvbGludXgva3ZtLmggYi9pbmNsdWRlL3VhcGkvbGludXgva3Zt
+LmgKPj4gaW5kZXggYzQ4NzQ5MDVjZDljLi5hZTQ1ODc2YTY4OWQgMTAwNjQ0Cj4+IC0tLSBhL2lu
+Y2x1ZGUvdWFwaS9saW51eC9rdm0uaAo+PiArKysgYi9pbmNsdWRlL3VhcGkvbGludXgva3ZtLmgK
+Pj4gQEAgLTE0NzUsNiArMTQ3NSw4IEBAIHN0cnVjdCBrdm1fczM5MF91Y2FzX21hcHBpbmcgewo+
+PiDCoCNkZWZpbmUgS1ZNX1MzOTBfU0VUX0NNTUFfQklUU8KgwqDCoMKgwqAgX0lPVyhLVk1JTywg
+MHhiOSwgc3RydWN0IAo+PiBrdm1fczM5MF9jbW1hX2xvZykKPj4gwqAvKiBNZW1vcnkgRW5jcnlw
+dGlvbiBDb21tYW5kcyAqLwo+PiDCoCNkZWZpbmUgS1ZNX01FTU9SWV9FTkNSWVBUX09QwqDCoMKg
+wqDCoCBfSU9XUihLVk1JTywgMHhiYSwgdW5zaWduZWQgbG9uZykKPj4gKy8qIEF2YWlsYWJsZSB3
+aXRoIEtWTV9DQVBfQVJNX01QX0FGRklOSVRZICovCj4+ICsjZGVmaW5lIEtWTV9BUk1fU0VUX01Q
+X0FGRklOSVRZwqDCoMKgIF9JT1dSKEtWTUlPLCAweGJiLCB1bnNpZ25lZCBsb25nKQo+Pgo+PiDC
+oHN0cnVjdCBrdm1fZW5jX3JlZ2lvbiB7Cj4+IMKgwqDCoMKgIF9fdTY0IGFkZHI7Cj4gCj4gQXMg
+aXQgaXMsIHRoaXMgcGF0Y2ggaXMgdW5hY2NlcHRhYmxlLiBJdCBpZ25vcmVzIHRoZSByZXF1aXJl
+bWVudHMgb2YgdGhlCj4gYXJjaGl0ZWN0dXJlLCBhcyB3ZWxsIGFzIHRob3NlIG9mIGltcG9zZWQg
+YnkgS1ZNIGFzIGEgcGxhdGZvcm0uCj4gSXQgYWxzbyBwb2ludGxlc3NseSBjcmVhdGVzIGFkZGl0
+aW9uYWwgc3RhdGUgYW5kIGludmVudHMgdW5uZWNlc3NhcnkKPiB1c2Vyc3BhY2UgaW50ZXJmYWNl
+cy4gSW4gc2hvcnQsIGl0IHJlcXVpcmVzIHNvbWUgKm1ham9yKiByZXdvcmsuCgpZZXMsIHRoYW5r
+cyBmb3IgeW91ciBjb21tZW50cy4KCldlIHNob3VsZCBzZXQgTVBJRFIgZnJvbSB1c2Vyc3BhY2Ug
+aW4gYW5vdGhlciBlbGVnYW50IHdheS4KSSdsbCBkcm9wIHRoaXMgYW5kIGZpZ3VyZSBpdCBvdXQu
+Cj4gCj4gIMKgwqDCoMKgwqDCoMKgIE0uCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fCmt2bWFybSBtYWlsaW5nIGxpc3QKa3ZtYXJtQGxpc3RzLmNzLmNvbHVt
+YmlhLmVkdQpodHRwczovL2xpc3RzLmNzLmNvbHVtYmlhLmVkdS9tYWlsbWFuL2xpc3RpbmZvL2t2
+bWFybQo=
