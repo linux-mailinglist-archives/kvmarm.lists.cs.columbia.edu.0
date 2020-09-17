@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6406826DB1D
-	for <lists+kvmarm@lfdr.de>; Thu, 17 Sep 2020 14:09:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B78626DB1E
+	for <lists+kvmarm@lfdr.de>; Thu, 17 Sep 2020 14:09:38 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EF11D4B3DE;
-	Thu, 17 Sep 2020 08:09:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 20EEB4B3DE;
+	Thu, 17 Sep 2020 08:09:38 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
@@ -16,33 +16,35 @@ X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Pwh4ORRcJ78n; Thu, 17 Sep 2020 08:09:27 -0400 (EDT)
+	with ESMTP id oSPSuZ6DeK4B; Thu, 17 Sep 2020 08:09:38 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DA4C84B2F1;
-	Thu, 17 Sep 2020 08:09:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0BB0A4B3D5;
+	Thu, 17 Sep 2020 08:09:37 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C69414B2F1
- for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Sep 2020 08:09:25 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6627F4B36C
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Sep 2020 08:09:35 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id AVg0f52jKb0G for <kvmarm@lists.cs.columbia.edu>;
- Thu, 17 Sep 2020 08:09:23 -0400 (EDT)
-Received: from huawei.com (szxga07-in.huawei.com [45.249.212.35])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A62E14B1C1
- for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Sep 2020 08:09:23 -0400 (EDT)
+ with ESMTP id 9TvmoiaJ8pga for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 17 Sep 2020 08:09:34 -0400 (EDT)
+Received: from huawei.com (szxga06-in.huawei.com [45.249.212.32])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 41C154B36B
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Sep 2020 08:09:34 -0400 (EDT)
 Received: from DGGEMS412-HUB.china.huawei.com (unknown [172.30.72.60])
- by Forcepoint Email with ESMTP id 61C231A20D53158B4E33;
- Thu, 17 Sep 2020 20:09:19 +0800 (CST)
+ by Forcepoint Email with ESMTP id 7D36B8D2574DD75760F7;
+ Thu, 17 Sep 2020 20:09:29 +0800 (CST)
 Received: from localhost.localdomain (10.175.104.175) by
  DGGEMS412-HUB.china.huawei.com (10.3.19.212) with Microsoft SMTP Server id
- 14.3.487.0; Thu, 17 Sep 2020 20:09:10 +0800
+ 14.3.487.0; Thu, 17 Sep 2020 20:09:22 +0800
 From: Peng Liang <liangpeng10@huawei.com>
 To: <kvmarm@lists.cs.columbia.edu>
-Subject: [RFC v2 0/7] kvm: arm64: emulate ID registers
-Date: Thu, 17 Sep 2020 20:00:54 +0800
-Message-ID: <20200917120101.3438389-1-liangpeng10@huawei.com>
+Subject: [RFC v2 1/7] arm64: add a helper function to traverse arm64_ftr_regs
+Date: Thu, 17 Sep 2020 20:00:55 +0800
+Message-ID: <20200917120101.3438389-2-liangpeng10@huawei.com>
 X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20200917120101.3438389-1-liangpeng10@huawei.com>
+References: <20200917120101.3438389-1-liangpeng10@huawei.com>
 MIME-Version: 1.0
 X-Originating-IP: [10.175.104.175]
 X-CFilter-Loop: Reflected
@@ -64,36 +66,55 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-In AArch64, guest will read the same values of the ID regsiters with
-host.  Both of them read the values from arm64_ftr_regs.  This patch
-series add support to emulate and configure ID registers so that we can
-control the value of ID registers that guest read.
+If we want to emulate ID registers, we need to initialize ID registers
+firstly.  This commit is to add a helper function to traverse
+arm64_ftr_regs so that we can initialize ID registers from
+arm64_ftr_regs.
 
-v1 -> v2:
- - save the ID registers in sysreg file instead of a new struct
- - apply a checker before setting the value to the register
- - add doc for new KVM_CAP_ARM_CPU_FEATURE
+Signed-off-by: zhanghailiang <zhang.zhanghailiang@huawei.com>
+Signed-off-by: Peng Liang <liangpeng10@huawei.com>
+---
+ arch/arm64/include/asm/cpufeature.h |  2 ++
+ arch/arm64/kernel/cpufeature.c      | 13 +++++++++++++
+ 2 files changed, 15 insertions(+)
 
-Peng Liang (7):
-  arm64: add a helper function to traverse arm64_ftr_regs
-  arm64: introduce check_features
-  kvm: arm64: save ID registers to sys_regs file
-  kvm: arm64: introduce check_user
-  kvm: arm64: implement check_user for ID registers
-  kvm: arm64: make ID registers configurable
-  kvm: arm64: add KVM_CAP_ARM_CPU_FEATURE extension
-
- Documentation/virt/kvm/api.rst      |   8 +
- arch/arm64/include/asm/cpufeature.h |   4 +
- arch/arm64/include/asm/kvm_coproc.h |   2 +
- arch/arm64/include/asm/kvm_host.h   |   3 +
- arch/arm64/kernel/cpufeature.c      |  36 +++
- arch/arm64/kvm/arm.c                |   3 +
- arch/arm64/kvm/sys_regs.c           | 481 +++++++++++++++++++++++++++-
- arch/arm64/kvm/sys_regs.h           |   6 +
- include/uapi/linux/kvm.h            |   1 +
- 9 files changed, 532 insertions(+), 12 deletions(-)
-
+diff --git a/arch/arm64/include/asm/cpufeature.h b/arch/arm64/include/asm/cpufeature.h
+index 89b4f0142c28..2ba7c4f11d8a 100644
+--- a/arch/arm64/include/asm/cpufeature.h
++++ b/arch/arm64/include/asm/cpufeature.h
+@@ -79,6 +79,8 @@ struct arm64_ftr_reg {
+ 
+ extern struct arm64_ftr_reg arm64_ftr_reg_ctrel0;
+ 
++int arm64_cpu_ftr_regs_traverse(int (*op)(u32, u64, void *), void *argp);
++
+ /*
+  * CPU capabilities:
+  *
+diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
+index 6424584be01e..698b32705544 100644
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -1112,6 +1112,19 @@ u64 read_sanitised_ftr_reg(u32 id)
+ 	return regp->sys_val;
+ }
+ 
++int arm64_cpu_ftr_regs_traverse(int (*op)(u32, u64, void *), void *argp)
++{
++	int i, ret;
++
++	for (i = 0; i <  ARRAY_SIZE(arm64_ftr_regs); i++) {
++		ret = (*op)(arm64_ftr_regs[i].sys_id,
++			    arm64_ftr_regs[i].reg->sys_val, argp);
++		if (ret < 0)
++			return ret;
++	}
++	return 0;
++}
++
+ #define read_sysreg_case(r)	\
+ 	case r:		return read_sysreg_s(r)
+ 
 -- 
 2.26.2
 
