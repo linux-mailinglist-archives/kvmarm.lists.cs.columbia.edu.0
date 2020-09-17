@@ -2,47 +2,49 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B54726D52C
-	for <lists+kvmarm@lfdr.de>; Thu, 17 Sep 2020 09:51:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FCFE26D52D
+	for <lists+kvmarm@lfdr.de>; Thu, 17 Sep 2020 09:51:37 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C80044B84B;
-	Thu, 17 Sep 2020 03:51:35 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E7E664B86C;
+	Thu, 17 Sep 2020 03:51:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.502
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+	SPF_HELO_PASS=-0.001] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id r64ebSzL1qTk; Thu, 17 Sep 2020 03:51:35 -0400 (EDT)
+	with ESMTP id 2aVNWfQBp-3j; Thu, 17 Sep 2020 03:51:35 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8F44C4B850;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A9A354B856;
 	Thu, 17 Sep 2020 03:51:34 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8E9714B6D7
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A2E5C4B6D9
  for <kvmarm@lists.cs.columbia.edu>; Wed, 16 Sep 2020 22:31:05 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id FDc4aviDtqvv for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id xDNUt8KDy2hP for <kvmarm@lists.cs.columbia.edu>;
  Wed, 16 Sep 2020 22:31:04 -0400 (EDT)
 Received: from huawei.com (szxga06-in.huawei.com [45.249.212.32])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 56F664B6CF
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 56F064B6CD
  for <kvmarm@lists.cs.columbia.edu>; Wed, 16 Sep 2020 22:31:04 -0400 (EDT)
-Received: from DGGEMS405-HUB.china.huawei.com (unknown [172.30.72.58])
- by Forcepoint Email with ESMTP id 646BEB1720B8D3657DCC;
- Thu, 17 Sep 2020 10:31:00 +0800 (CST)
-Received: from localhost (10.174.185.104) by DGGEMS405-HUB.china.huawei.com
- (10.3.19.205) with Microsoft SMTP Server id 14.3.487.0; Thu, 17 Sep 2020
- 10:30:50 +0800
+Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.59])
+ by Forcepoint Email with ESMTP id B355FE72A94ED350DBC9;
+ Thu, 17 Sep 2020 10:31:01 +0800 (CST)
+Received: from localhost (10.174.185.104) by DGGEMS406-HUB.china.huawei.com
+ (10.3.19.206) with Microsoft SMTP Server id 14.3.487.0; Thu, 17 Sep 2020
+ 10:30:53 +0800
 From: Ying Fang <fangying1@huawei.com>
 To: <kvm@vger.kernel.org>, <kvmarm@lists.cs.columbia.edu>, <maz@kernel.org>
-Subject: [PATCH 0/2] KVM: arm64: Add support for setting MPIDR
-Date: Thu, 17 Sep 2020 10:30:31 +0800
-Message-ID: <20200917023033.1337-1-fangying1@huawei.com>
+Subject: [PATCH 1/2] KVM: arm64: add KVM_CAP_ARM_MP_AFFINITY extension
+Date: Thu, 17 Sep 2020 10:30:32 +0800
+Message-ID: <20200917023033.1337-2-fangying1@huawei.com>
 X-Mailer: git-send-email 2.26.0.windows.1
+In-Reply-To: <20200917023033.1337-1-fangying1@huawei.com>
+References: <20200917023033.1337-1-fangying1@huawei.com>
 MIME-Version: 1.0
 X-Originating-IP: [10.174.185.104]
 X-CFilter-Loop: Reflected
@@ -65,24 +67,58 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-MPIDR is used to show multiprocessor affinity on arm platform. It is
-also used to provide an additional processor identification mechanism
-for scheduling purposes. To add support for setting MPIDR from usersapce
-an vcpu ioctl KVM_CAP_ARM_MP_AFFINITY is introduced. This patch series is
-needed to help qemu to build the accurate cpu topology for arm.
+Add KVM_CAP_ARM_MP_AFFINITY extension for userspace to check
+whether KVM supports setting MPIDR on AArch64 platform. Thus
+we can give userspace control over the MPIDR to present
+cpu topology information.
 
-Ying Fang (2):
-  KVM: arm64: add KVM_CAP_ARM_MP_AFFINITY extension
-  kvm/arm: Add mp_affinity for arm vcpu
+Signed-off-by: Ying Fang <fangying1@huawei.com>
+---
+ Documentation/virt/kvm/api.rst | 8 ++++++++
+ arch/arm64/kvm/arm.c           | 1 +
+ include/uapi/linux/kvm.h       | 1 +
+ 3 files changed, 10 insertions(+)
 
- Documentation/virt/kvm/api.rst    |  8 ++++++++
- arch/arm64/include/asm/kvm_host.h |  5 +++++
- arch/arm64/kvm/arm.c              |  9 +++++++++
- arch/arm64/kvm/reset.c            | 11 +++++++++++
- arch/arm64/kvm/sys_regs.c         | 30 +++++++++++++++++++-----------
- include/uapi/linux/kvm.h          |  3 +++
- 6 files changed, 55 insertions(+), 11 deletions(-)
-
+diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
+index eb3a1316f03e..d2fb18613a34 100644
+--- a/Documentation/virt/kvm/api.rst
++++ b/Documentation/virt/kvm/api.rst
+@@ -6159,3 +6159,11 @@ KVM can therefore start protected VMs.
+ This capability governs the KVM_S390_PV_COMMAND ioctl and the
+ KVM_MP_STATE_LOAD MP_STATE. KVM_SET_MP_STATE can fail for protected
+ guests when the state change is invalid.
++
++8.24 KVM_CAP_ARM_MP_AFFINITY
++----------------------------
++
++:Architecture: arm64
++
++This capability indicates that KVM_ARM_SET_MP_AFFINITY ioctl is available.
++It is used by to set MPIDR from userspace.
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 46dc3d75cf13..913c8da539b3 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -178,6 +178,7 @@ int kvm_vm_ioctl_check_extension(struct kvm *kvm, long ext)
+ 	case KVM_CAP_ARM_IRQ_LINE_LAYOUT_2:
+ 	case KVM_CAP_ARM_NISV_TO_USER:
+ 	case KVM_CAP_ARM_INJECT_EXT_DABT:
++	case KVM_CAP_ARM_MP_AFFINITY:
+ 		r = 1;
+ 		break;
+ 	case KVM_CAP_ARM_SET_DEVICE_ADDR:
+diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
+index f6d86033c4fa..c4874905cd9c 100644
+--- a/include/uapi/linux/kvm.h
++++ b/include/uapi/linux/kvm.h
+@@ -1035,6 +1035,7 @@ struct kvm_ppc_resize_hpt {
+ #define KVM_CAP_LAST_CPU 184
+ #define KVM_CAP_SMALLER_MAXPHYADDR 185
+ #define KVM_CAP_S390_DIAG318 186
++#define KVM_CAP_ARM_MP_AFFINITY 187
+ 
+ #ifdef KVM_CAP_IRQ_ROUTING
+ 
 -- 
 2.23.0
 
