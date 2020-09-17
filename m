@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EA4B26D99B
-	for <lists+kvmarm@lfdr.de>; Thu, 17 Sep 2020 12:54:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A8E826DAD5
+	for <lists+kvmarm@lfdr.de>; Thu, 17 Sep 2020 13:55:39 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E51064B379;
-	Thu, 17 Sep 2020 06:53:59 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E84354B3DF;
+	Thu, 17 Sep 2020 07:55:38 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
@@ -15,65 +15,94 @@ X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
 	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered)
+	header.i=@netronome-com.20150623.gappssmtp.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6mVdpaggKe7g; Thu, 17 Sep 2020 06:53:59 -0400 (EDT)
+	with ESMTP id xLwOgMOt6Zhr; Thu, 17 Sep 2020 07:55:38 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 19C374B240;
-	Thu, 17 Sep 2020 06:53:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B10354B3B1;
+	Thu, 17 Sep 2020 07:55:37 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 53F184B1CC
- for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Sep 2020 06:53:56 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C8A3E4B812
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Sep 2020 04:03:39 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id SafaSB-rAZiE for <kvmarm@lists.cs.columbia.edu>;
- Thu, 17 Sep 2020 06:53:54 -0400 (EDT)
-Received: from us-smtp-1.mimecast.com (us-smtp-1.mimecast.com [207.211.31.81])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E2F544B1CA
- for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Sep 2020 06:53:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1600340034;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=S8C7t3NQHq9z3BC6UetbrQdCqNK9g2Cj1ZoGxibjTb0=;
- b=J58JYOk4F2qwNH6eFjJKGVi3S00wvUdQoc2UssRKY1k44qVRI5zN7kVruKMWkSGq3lvzey
- lBwvIfZtUFK9T7fsAD7lCokRowj3CWVMpu51p2eZoStVDteNdr9i47HHFeEhkPsI89bf+n
- KtxqwRJLdwHGzP2FXEu8THBP50d6F9E=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-589-iHKfzHgYMma8RN14nP1alA-1; Thu, 17 Sep 2020 06:53:50 -0400
-X-MC-Unique: iHKfzHgYMma8RN14nP1alA-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com
- [10.5.11.22])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id BFC4518BE168;
- Thu, 17 Sep 2020 10:53:48 +0000 (UTC)
-Received: from kamzik.brq.redhat.com (unknown [10.40.192.179])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id DBD5F1002D62;
- Thu, 17 Sep 2020 10:53:45 +0000 (UTC)
-Date: Thu, 17 Sep 2020 12:53:43 +0200
-From: Andrew Jones <drjones@redhat.com>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH 2/2] kvm/arm: Add mp_affinity for arm vcpu
-Message-ID: <20200917105343.de6z7ajccnx3zrld@kamzik.brq.redhat.com>
-References: <20200917023033.1337-1-fangying1@huawei.com>
- <20200917023033.1337-3-fangying1@huawei.com>
- <7a924b0fb27505a0d8b00389fe2f02df@kernel.org>
- <20200917080429.jimidzdtdskwhbdx@kamzik.brq.redhat.com>
- <198c63d5e9e17ddb4c3848845891301c@kernel.org>
- <12a47a99-9857-b86d-6c45-39fdee08613e@arm.com>
- <b88c7988a00c25a9ae0fdd373ba45227@kernel.org>
+ with ESMTP id q2jmVB+gts4s for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 17 Sep 2020 04:03:38 -0400 (EDT)
+Received: from mail-wm1-f65.google.com (mail-wm1-f65.google.com
+ [209.85.128.65])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A30A54B810
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Sep 2020 04:03:38 -0400 (EDT)
+Received: by mail-wm1-f65.google.com with SMTP id b79so1040011wmb.4
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Sep 2020 01:03:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=netronome-com.20150623.gappssmtp.com; s=20150623;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=TUShtxADeMIRUv08jDyFnIdO2h4AVdi1g89uLOtrWXw=;
+ b=Xm9muXpLMfdw+3JTaQ5+6nxJDSneO0K8th2wgQ0VLh2VI2BmK+XWoQ9cDtIn8+KaRJ
+ B45Xbntr5JjNU8mF7nIZd8VP+CTHviEtF1Um5VazOhr6GEQCgh9bbRNIM6C+XWioNjmk
+ ImuOo8Gi8eD0FtSQ7hHZ1yPAo82BLFHJwGGg0UxKCYs0oMSSpMWIe45dJUN+DzUELaKQ
+ JzvvcS8KVPQMZJTfgm/lLBewbBl9UGKGHM3XV6hYGQwunOqgCSfJKO8sQaLl1M6X9BRD
+ K+XM2hJttDJQqNZl5Xftk9yd2fnhmTZR2ol6vfSH0itoQkT2+o/FcX7saxpuLl0f47l5
+ EzpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to:user-agent;
+ bh=TUShtxADeMIRUv08jDyFnIdO2h4AVdi1g89uLOtrWXw=;
+ b=rqc56h+kZhN1Qvo3YlI9yLN5o/J2m6yHPE8R+CI4uoXoR2hZpWRqU7Dww7k7i586ju
+ 8kbagCoLdy0v2kVmQFQrMrKEc0ezKGQNP3YyM2iZFjx1l3kgLfCyLyujogDbVM4l8ElX
+ haPggtEG3bOfGhCzhWYJKbcyZOmvaqBHFq6h8LraUq3TJTPyPwh6MayH0zcfsPw2MrYm
+ QVdVCnf7H1OHwbcxOBV6+k8cy6YVC+QSzMPtzc50UV6Rn7isXzf+LsiGLUmlLqUHQZSF
+ vFvmxcd94n7x9Nu4e1PbTKLxVWNRLQDTK/kh6aESfxEiK6hlDaca3Th6/DIurRdqFwf3
+ FQYQ==
+X-Gm-Message-State: AOAM530rXFhO7BDqfX8UcJMwMfnB3keKsVLs/CP1y2rzBgYPY0eLZdid
+ Ti53LE0iP7ks3BlyY/PSUMOqUQ==
+X-Google-Smtp-Source: ABdhPJzTwzfeJOnCQh65prZummqH9JR09Yxja+zvv2OTSAZpPcom4k7xuvXSyH3Yv50qn/8+2aIWyQ==
+X-Received: by 2002:a1c:e256:: with SMTP id z83mr8793930wmg.33.1600329817598; 
+ Thu, 17 Sep 2020 01:03:37 -0700 (PDT)
+Received: from netronome.com ([2001:982:756:703:d63d:7eff:fe99:ac9d])
+ by smtp.gmail.com with ESMTPSA id a13sm9836030wme.26.2020.09.17.01.03.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 17 Sep 2020 01:03:36 -0700 (PDT)
+Date: Thu, 17 Sep 2020 10:03:35 +0200
+From: Simon Horman <simon.horman@netronome.com>
+To: Joe Perches <joe@perches.com>
+Subject: Re: [oss-drivers] [trivial PATCH] treewide: Convert switch/case
+ fallthrough; to break;
+Message-ID: <20200917080334.GB5769@netronome.com>
+References: <e6387578c75736d61b2fe70d9783d91329a97eb4.camel@perches.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <b88c7988a00c25a9ae0fdd373ba45227@kernel.org>
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
-Cc: zhang.zhanghailiang@huawei.com, kvm@vger.kernel.org, alex.chen@huawei.com,
- Ying Fang <fangying1@huawei.com>, kvmarm@lists.cs.columbia.edu
+In-Reply-To: <e6387578c75736d61b2fe70d9783d91329a97eb4.camel@perches.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Mailman-Approved-At: Thu, 17 Sep 2020 07:55:36 -0400
+Cc: linux-wireless@vger.kernel.org, linux-fbdev@vger.kernel.org,
+ oss-drivers@netronome.com, nouveau@lists.freedesktop.org,
+ alsa-devel <alsa-devel@alsa-project.org>, dri-devel@lists.freedesktop.org,
+ linux-mips@vger.kernel.org, linux-ide@vger.kernel.org, dm-devel@redhat.com,
+ linux-mtd@lists.infradead.org, linux-i2c@vger.kernel.org,
+ sparclinux@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-rtc@vger.kernel.org, linux-s390@vger.kernel.org,
+ linux-scsi@vger.kernel.org, dccp@vger.kernel.org, linux-rdma@vger.kernel.org,
+ linux-atm-general@lists.sourceforge.net, linux-afs@lists.infradead.org,
+ coreteam@netfilter.org, intel-wired-lan@lists.osuosl.org,
+ linux-serial@vger.kernel.org, linux-input@vger.kernel.org,
+ linux-mmc@vger.kernel.org, Kees Cook <kees.cook@canonical.com>,
+ linux-media@vger.kernel.org, linux-pm@vger.kernel.org,
+ intel-gfx@lists.freedesktop.org, linux-sctp@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, linux-nvme@lists.infradead.org,
+ storagedev@microchip.com, ceph-devel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-nfs@vger.kernel.org,
+ Jiri Kosina <trivial@kernel.org>, linux-parisc@vger.kernel.org,
+ netdev@vger.kernel.org, linux-usb@vger.kernel.org,
+ Nick Desaulniers <ndesaulniers@google.com>,
+ LKML <linux-kernel@vger.kernel.org>, iommu@lists.linux-foundation.org,
+ netfilter-devel@vger.kernel.org, linux-crypto@vger.kernel.org,
+ bpf@vger.kernel.org, linuxppc-dev@lists.ozlabs.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -85,115 +114,48 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Sep 17, 2020 at 11:01:39AM +0100, Marc Zyngier wrote:
-> On 2020-09-17 10:47, Alexandru Elisei wrote:
-> > Hi,
-> > =
+On Wed, Sep 09, 2020 at 01:06:39PM -0700, Joe Perches wrote:
+> fallthrough to a separate case/default label break; isn't very readable.
+> 
+> Convert pseudo-keyword fallthrough; statements to a simple break; when
+> the next label is case or default and the only statement in the next
+> label block is break;
+> 
+> Found using:
+> 
+> $ grep-2.5.4 -rP --include=*.[ch] -n "fallthrough;(\s*(case\s+\w+|default)\s*:\s*){1,7}break;" *
+> 
+> Miscellanea:
+> 
+> o Move or coalesce a couple label blocks above a default: block.
+> 
+> Signed-off-by: Joe Perches <joe@perches.com>
 
-> > On 9/17/20 9:42 AM, Marc Zyngier wrote:
-> > > On 2020-09-17 09:04, Andrew Jones wrote:
-> > > > On Thu, Sep 17, 2020 at 08:47:42AM +0100, Marc Zyngier wrote:
-> > > > > On 2020-09-17 03:30, Ying Fang wrote:
-> > > > > > Allow userspace to set MPIDR using vcpu ioctl KVM_ARM_SET_MP_AF=
-FINITY,
-> > > > > > so that we can support cpu topology for arm.
-> > > > > =
+...
 
-> > > > > MPIDR has *nothing* to do with CPU topology in the ARM architectu=
-re.
-> > > > > I encourage you to have a look at the ARM ARM and find out how of=
-ten
-> > > > > the word "topology" is used in conjunction with the
-> > > > > MPIDR_EL1 register.
-> > > > > =
+> diff --git a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c
+> index 252fe06f58aa..1d5b87079104 100644
+> --- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c
+> +++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c
+> @@ -345,7 +345,7 @@ static int matching_bar(struct nfp_bar *bar, u32 tgt, u32 act, u32 tok,
+>  		baract = NFP_CPP_ACTION_RW;
+>  		if (act == 0)
+>  			act = NFP_CPP_ACTION_RW;
+> -		fallthrough;
+> +		break;
+>  	case NFP_PCIE_BAR_PCIE2CPP_MapType_FIXED:
+>  		break;
+>  	default:
 
-> > > > =
+This is a cascading fall-through handling all map types.
+I don't think this change improves readability.
 
-> > > > Hi Marc,
-> > > > =
-
-> > > > I mostly agree. However, the CPU topology descriptions use MPIDR to
-> > > > identify PEs. If userspace wants to build topology descriptions then
-> > > > it either needs to
-> > > > =
-
-> > > > 1) build them after instantiating all KVM VCPUs in order to query K=
-VM
-> > > > =A0=A0 for each MPIDR, or
-> > > > 2) have a way to ask KVM for an MPIDR of given VCPU ID in advance
-> > > > =A0=A0 (maybe just a scratch VCPU), or
-> > > > 3) have control over the MPIDRs so it can choose them when it likes,
-> > > > =A0=A0 use them for topology descriptions, and then instantiate KVM=
- VCPUs
-> > > > =A0=A0 with them.
-> > > > =
-
-> > > > I think (3) is the most robust approach, and it has the least
-> > > > overhead.
-> > > =
-
-> > > I don't disagree with the goal, and not even with the choice of
-> > > implementation (though I have huge reservations about its quality).
-> > > =
-
-> > > But the key word here is *userspace*. Only userspace has a notion of
-> > > how MPIDR values map to the assumed topology. That's not something
-> > > that KVM does nor should interpret (aside from the GIC-induced Aff0
-> > > brain-damage). So talking of "topology" in a KVM kernel patch sends
-> > > the wrong message, and that's all this remark was about.
-> > =
-
-> > There's also a patch queued for next which removes using MPIDR as a
-> > source of
-> > information about CPU topology [1]: "arm64: topology: Stop using MPIDR
-> > for
-> > topology information".
-> > =
-
-> > I'm not really sure how useful KVM fiddling with the guest MPIDR will be
-> > going
-> > forward, at least for a Linux guest.
-> =
-
-> I think these are two orthogonal things. There is value in setting MPIDR
-> to something different as a way to replicate an existing system, for
-> example. But deriving *any* sort of topology information from MPIDR isn't
-> reliable at all, and is better expressed by firmware tables (and even
-> that isn't great).
-> =
-
-
-Yes, this is my opinion as well and I'm glad to see the patch that
-Alexandru pointed out, since it should stop the MPIDR abuse. Ying Fang
-has also posted a QEMU series that populates DT and ACPI[*] to describe
-CPU topology to the guest. The user controlled MPIDR is being proposed
-in order to support that series.
-
-[*] https://lists.gnu.org/archive/html/qemu-devel/2020-09/msg06027.html
-
-Thanks,
-drew
-
-> As far as I am concerned, this patch fits in the "cosmetic" department.
-> It's a "nice to have", but doesn't really solve much. Firmware tables
-> and userspace placement of the vcpus are key.
-> =
-
-> Thanks,
-> =
-
->         M.
-> -- =
-
-> Jazz is not dead. It just smells funny...
-> =
-
-
+...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
