@@ -2,75 +2,54 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 362B027030C
-	for <lists+kvmarm@lfdr.de>; Fri, 18 Sep 2020 19:17:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2981A270D8C
+	for <lists+kvmarm@lfdr.de>; Sat, 19 Sep 2020 13:16:02 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DDE0D4B248;
-	Fri, 18 Sep 2020 13:17:29 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 235F74B308;
+	Sat, 19 Sep 2020 07:16:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9NRQfwXmYW7B; Fri, 18 Sep 2020 13:17:29 -0400 (EDT)
+	with ESMTP id sxzt4gRgE+87; Sat, 19 Sep 2020 07:16:01 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4EBD14B218;
-	Fri, 18 Sep 2020 13:17:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1786E4B2FE;
+	Sat, 19 Sep 2020 07:16:00 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 52E8A4B1C1
- for <kvmarm@lists.cs.columbia.edu>; Fri, 18 Sep 2020 13:17:26 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A996C4B2FB
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 19 Sep 2020 07:15:58 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id a8ap38VGLMHx for <kvmarm@lists.cs.columbia.edu>;
- Fri, 18 Sep 2020 13:17:25 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4D1894B1BE
- for <kvmarm@lists.cs.columbia.edu>; Fri, 18 Sep 2020 13:17:25 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 67A4021741;
- Fri, 18 Sep 2020 17:17:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1600449444;
- bh=cAgxLXePeYCs/M26SYLkziKIDoRBbatCmklPQ+trqT0=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=y/u2oVlXb5KeDrKPcI/EU4XxJ5GMbUd49XQXmguldfr5lslVpkcGCY9doHqnbu+lh
- fXVraqfum/Hl11QjQ8cVy+ac+4ygzB/I2lGmcdSSVblWompMvK2BDEOYh+/z8G/9rc
- RuZJkG0w6haHsyV9JnGJW/JL6xLgdtzGNcKF44v8=
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.lan) by disco-boy.misterjones.org with esmtpsa
- (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
- (envelope-from <maz@kernel.org>)
- id 1kJK0g-00D4ZN-TG; Fri, 18 Sep 2020 18:17:23 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 2/2] KVM: arm64: Remove S1PTW check from
- kvm_vcpu_dabt_iswrite()
-Date: Fri, 18 Sep 2020 18:16:51 +0100
-Message-Id: <20200918171651.1340445-3-maz@kernel.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20200918171651.1340445-1-maz@kernel.org>
-References: <20200918171651.1340445-1-maz@kernel.org>
+ with ESMTP id R1rH-02A+0yO for <kvmarm@lists.cs.columbia.edu>;
+ Sat, 19 Sep 2020 07:15:57 -0400 (EDT)
+Received: from huawei.com (szxga05-in.huawei.com [45.249.212.191])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3E19D4B2F9
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 19 Sep 2020 07:15:57 -0400 (EDT)
+Received: from DGGEMS408-HUB.china.huawei.com (unknown [172.30.72.60])
+ by Forcepoint Email with ESMTP id 0BAC450C2E2CAE8B0AC4;
+ Sat, 19 Sep 2020 19:15:49 +0800 (CST)
+Received: from [10.174.185.226] (10.174.185.226) by
+ DGGEMS408-HUB.china.huawei.com (10.3.19.208) with Microsoft SMTP Server id
+ 14.3.487.0; Sat, 19 Sep 2020 19:15:38 +0800
+From: Zenghui Yu <yuzenghui@huawei.com>
+Subject: KVM_SET_DEVICE_ATTR failed
+To: <qemu-arm@nongnu.org>, <kvmarm@lists.cs.columbia.edu>,
+ <kvm@vger.kernel.org>
+Message-ID: <1f70926e-27dd-9e30-3d0f-770130112777@huawei.com>
+Date: Sat, 19 Sep 2020 19:15:38 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: pbonzini@redhat.com, will@kernel.org,
- kernel-team@android.com, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, james.morse@arm.com,
- julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kvm@vger.kernel.org, Will Deacon <will@kernel.org>, kernel-team@android.com,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Content-Language: en-US
+X-Originating-IP: [10.174.185.226]
+X-CFilter-Loop: Reflected
+Cc: Marc Zyngier <maz@kernel.org>, Alex Williamson <alex.williamson@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -82,44 +61,47 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Now that kvm_vcpu_trap_is_write_fault() checks for S1PTW, there
-is no need for kvm_vcpu_dabt_iswrite() to do the same thing, as
-we already check for this condition on all existing paths.
+Hi folks,
 
-Drop the check and add a comment instead.
+I had booted a guest with an assigned virtual function, with GICv4
+(direct MSI injection) enabled on my arm64 server. I got the following
+QEMU error message on its shutdown:
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20200915104218.1284701-3-maz@kernel.org
----
- arch/arm64/include/asm/kvm_emulate.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+"qemu-system-aarch64: KVM_SET_DEVICE_ATTR failed: Group 4 attr 
+0x0000000000000001: Permission denied"
 
-diff --git a/arch/arm64/include/asm/kvm_emulate.h b/arch/arm64/include/asm/kvm_emulate.h
-index 4f618af660ba..1cc5f5f72d0b 100644
---- a/arch/arm64/include/asm/kvm_emulate.h
-+++ b/arch/arm64/include/asm/kvm_emulate.h
-@@ -303,10 +303,10 @@ static __always_inline bool kvm_vcpu_abt_iss1tw(const struct kvm_vcpu *vcpu)
- 	return !!(kvm_vcpu_get_esr(vcpu) & ESR_ELx_S1PTW);
- }
- 
-+/* Always check for S1PTW *before* using this. */
- static __always_inline bool kvm_vcpu_dabt_iswrite(const struct kvm_vcpu *vcpu)
- {
--	return !!(kvm_vcpu_get_esr(vcpu) & ESR_ELx_WNR) ||
--		kvm_vcpu_abt_iss1tw(vcpu); /* AF/DBM update */
-+	return kvm_vcpu_get_esr(vcpu) & ESR_ELx_WNR;
- }
- 
- static inline bool kvm_vcpu_dabt_is_cm(const struct kvm_vcpu *vcpu)
--- 
-2.28.0
+The problem is that the KVM_DEV_ARM_ITS_SAVE_TABLES ioctl failed while
+stopping the VM.
 
+As for the kernel side, it turned out that an LPI with irq->hw=true was
+observed while saving ITT for the device. KVM simply failed the save
+operation by returning -EACCES to user-space. The reason is explained in
+the comment block of vgic_its_save_itt(), though I think the HW bit
+should actually be checked in the KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES
+ioctl rather than in the ITT saving, well, it isn't much related to this
+problem...
+
+I had noticed that some vectors had been masked by guest VF-driver on
+shutdown, the correspond VLPIs had therefore been unmapped and irq->hw
+was cleared. But some other vectors were un-handled. I *guess* that VFIO
+released these vectors *after* the KVM_DEV_ARM_ITS_SAVE_TABLES ioctl so
+that we end-up trying to save the VLPI's state.
+
+It may not be a big problem as the guest is going to shutdown anyway and
+the whole guest save/restore on the GICv4.x system is not supported for
+the time being... I'll look at how VFIO would release these vectors but
+post it early in case this is an already known issue (and this might be
+one thing need to be considered if one wants to implement migration on
+the GICv4.x system).
+
+
+Thanks,
+Zenghui
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
