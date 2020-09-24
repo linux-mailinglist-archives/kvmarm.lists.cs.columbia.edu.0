@@ -2,59 +2,66 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B8962772CE
-	for <lists+kvmarm@lfdr.de>; Thu, 24 Sep 2020 15:42:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86CB727730E
+	for <lists+kvmarm@lfdr.de>; Thu, 24 Sep 2020 15:48:59 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 73B304B258;
-	Thu, 24 Sep 2020 09:42:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 243584B34C;
+	Thu, 24 Sep 2020 09:48:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.502
+X-Spam-Score: 0.799
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id C99XeSh8ndvT; Thu, 24 Sep 2020 09:42:27 -0400 (EDT)
+	with ESMTP id bVXRU-foTyhN; Thu, 24 Sep 2020 09:48:58 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6D4104B17C;
-	Thu, 24 Sep 2020 09:42:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9EFBD4B28A;
+	Thu, 24 Sep 2020 09:48:57 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 012ED4B11D
- for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Sep 2020 09:42:25 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4A2944B23C
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Sep 2020 09:48:56 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 21c1rb8b222L for <kvmarm@lists.cs.columbia.edu>;
- Thu, 24 Sep 2020 09:42:23 -0400 (EDT)
-Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2268A4B0B7
- for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Sep 2020 09:42:23 -0400 (EDT)
-Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.60])
- by Forcepoint Email with ESMTP id ABEC7382033A6CEF029B;
- Thu, 24 Sep 2020 21:42:18 +0800 (CST)
-Received: from [10.174.185.226] (10.174.185.226) by
- DGGEMS407-HUB.china.huawei.com (10.3.19.207) with Microsoft SMTP Server id
- 14.3.487.0; Thu, 24 Sep 2020 21:42:10 +0800
-Subject: Re: [PATCH v10 11/11] vfio: Document nested stage control
-To: Eric Auger <eric.auger@redhat.com>, <eric.auger.pro@gmail.com>,
- <iommu@lists.linux-foundation.org>, <linux-kernel@vger.kernel.org>,
- <kvm@vger.kernel.org>, <kvmarm@lists.cs.columbia.edu>, <joro@8bytes.org>,
- <alex.williamson@redhat.com>, <jacob.jun.pan@linux.intel.com>,
- <yi.l.liu@intel.com>, <robin.murphy@arm.com>
-References: <20200320161911.27494-1-eric.auger@redhat.com>
- <20200320161911.27494-12-eric.auger@redhat.com>
-From: Zenghui Yu <yuzenghui@huawei.com>
-Message-ID: <26a85a63-6cc1-0348-e703-cb31ddd75339@huawei.com>
-Date: Thu, 24 Sep 2020 21:42:10 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+ with ESMTP id OZeNf1-+s876 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 24 Sep 2020 09:48:55 -0400 (EDT)
+Received: from mail-il1-f196.google.com (mail-il1-f196.google.com
+ [209.85.166.196])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5FB564B189
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Sep 2020 09:48:55 -0400 (EDT)
+Received: by mail-il1-f196.google.com with SMTP id h2so3144886ilo.12
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Sep 2020 06:48:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=3WaX3GB+RjtdnSP+LhD8IcmydPpakTj1sPjuGaJHhUk=;
+ b=Ie7k5XSeLpGkaFdTBvZsFcv45QvMOvN+megaD8k6G6UCqdQdp6WsR0s6bME5B9Yoqv
+ X/YQzg7dUhlvhJRlCs5ExTcpcqvSNezPNDyPwn9ztWYBXgDQcTyYbwQpAh0cnP9PEOjB
+ YHLSRU3yQ+pcv3CocQFs8ngJT3r/VW9Hk93lxJftF60dbB+enQ190p1QWitLfoMaCDJt
+ uTY9H5HlbllbsAycl4stHi9nuxOaqUHhDAOAAzRmNqomWhhuoq7X2gghdq3pKDR015jp
+ PU9nFNwmzWr6lnjbRN1aTW2S/jl5MAI3e7sLPRwAPfPAsGl3dTEt9+taTMUSI3ex2nu5
+ FaXA==
+X-Gm-Message-State: AOAM533y6Y5vQUDe7x3Z6w/MBtx7ZP3IV0pkv886Jtj2XQwYA2dIPH16
+ JIM+HKCXWddWxk2C3ErNUA==
+X-Google-Smtp-Source: ABdhPJyUyofZsuK9sw3RF8ovn6mV27/FPSpocHIZ1Mv4BvydMhTVe26RUtJiPMp2pFwFcBJVbyZx+w==
+X-Received: by 2002:a92:ad11:: with SMTP id w17mr4344417ilh.77.1600955334727; 
+ Thu, 24 Sep 2020 06:48:54 -0700 (PDT)
+Received: from xps15.herring.priv ([64.188.179.253])
+ by smtp.googlemail.com with ESMTPSA id k16sm1389152ioc.15.2020.09.24.06.48.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 24 Sep 2020 06:48:54 -0700 (PDT)
+From: Rob Herring <robh@kernel.org>
+To: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Marc Zyngier <maz@kernel.org>
+Subject: [PATCH v6 1/2] arm64: Add part number for Arm Cortex-A77
+Date: Thu, 24 Sep 2020 07:48:52 -0600
+Message-Id: <20200924134853.2696503-1-robh@kernel.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <20200320161911.27494-12-eric.auger@redhat.com>
-Content-Language: en-US
-X-Originating-IP: [10.174.185.226]
-X-CFilter-Loop: Reflected
+Cc: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -66,38 +73,43 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Eric,
+Add the MIDR part number info for the Arm Cortex-A77.
 
-On 2020/3/21 0:19, Eric Auger wrote:
-> The VFIO API was enhanced to support nested stage control: a bunch of
-> new iotcls, one DMA FAULT region and an associated specific IRQ.
-> 
-> Let's document the process to follow to set up nested mode.
-> 
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Rob Herring <robh@kernel.org>
+---
+ arch/arm64/include/asm/cputype.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-[...]
+diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+index 7219cddeba66..9e2e9a63c7b6 100644
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -71,6 +71,7 @@
+ #define ARM_CPU_PART_CORTEX_A55		0xD05
+ #define ARM_CPU_PART_CORTEX_A76		0xD0B
+ #define ARM_CPU_PART_NEOVERSE_N1	0xD0C
++#define ARM_CPU_PART_CORTEX_A77		0xD0D
+ 
+ #define APM_CPU_PART_POTENZA		0x000
+ 
+@@ -105,6 +106,7 @@
+ #define MIDR_CORTEX_A55 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A55)
+ #define MIDR_CORTEX_A76	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A76)
+ #define MIDR_NEOVERSE_N1 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N1)
++#define MIDR_CORTEX_A77	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A77)
+ #define MIDR_THUNDERX	MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX)
+ #define MIDR_THUNDERX_81XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_81XX)
+ #define MIDR_THUNDERX_83XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_83XX)
+-- 
+2.25.1
 
-> +The userspace must be prepared to receive faults. The VFIO-PCI device
-> +exposes one dedicated DMA FAULT region: it contains a ring buffer and
-> +its header that allows to manage the head/tail indices. The region is
-> +identified by the following index/subindex:
-> +- VFIO_REGION_TYPE_NESTED/VFIO_REGION_SUBTYPE_NESTED_DMA_FAULT
-> +
-> +The DMA FAULT region exposes a VFIO_REGION_INFO_CAP_PRODUCER_FAULT
-> +region capability that allows the userspace to retrieve the ABI version
-> +of the fault records filled by the host.
-
-Nit: I don't see this capability in the code.
-
-
-Thanks,
-Zenghui
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
