@@ -2,78 +2,59 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 987962771B4
-	for <lists+kvmarm@lfdr.de>; Thu, 24 Sep 2020 14:59:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B8962772CE
+	for <lists+kvmarm@lfdr.de>; Thu, 24 Sep 2020 15:42:28 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 326674B2F5;
-	Thu, 24 Sep 2020 08:59:44 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 73B304B258;
+	Thu, 24 Sep 2020 09:42:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.502
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	SPF_HELO_PASS=-0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id mxPa1Es7jZrp; Thu, 24 Sep 2020 08:59:44 -0400 (EDT)
+	with ESMTP id C99XeSh8ndvT; Thu, 24 Sep 2020 09:42:27 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2B7854B146;
-	Thu, 24 Sep 2020 08:59:43 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6D4104B17C;
+	Thu, 24 Sep 2020 09:42:26 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 42F274B102
- for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Sep 2020 08:59:42 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 012ED4B11D
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Sep 2020 09:42:25 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id PQXTn9Hlfatp for <kvmarm@lists.cs.columbia.edu>;
- Thu, 24 Sep 2020 08:59:41 -0400 (EDT)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [63.128.21.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 311374B11C
- for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Sep 2020 08:59:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1600952380;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MJ9LAqUJKPp2osVPq5HpA4pPqvybekZg436IfI2lYCk=;
- b=EuvxwRw+9FVHJUEXmbZ2GPaPf2BB4myV1/q2FShHqnKfKshntF7DnSmDghWjGryVT8BEwe
- hRj2HJs+V9CsDylhhE8tw1nTaSFlgJVGH+S+xDQFlo2OmxX9ZMS6RUHoSwprQbGiiV8kH+
- gBL96M0vCvwc1YjzXl5L17xKu40Lr/Q=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-396-FinDcyc7MPumdkUnQ7YlAg-1; Thu, 24 Sep 2020 08:59:36 -0400
-X-MC-Unique: FinDcyc7MPumdkUnQ7YlAg-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com
- [10.5.11.12])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 79890ACE20;
- Thu, 24 Sep 2020 12:59:35 +0000 (UTC)
-Received: from kamzik.brq.redhat.com (unknown [10.40.192.158])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 2496C60C15;
- Thu, 24 Sep 2020 12:59:32 +0000 (UTC)
-Date: Thu, 24 Sep 2020 14:59:30 +0200
-From: Andrew Jones <drjones@redhat.com>
-To: Alexandru Elisei <alexandru.elisei@arm.com>
-Subject: Re: [PATCH v2 2/2] KVM: arm64: Match PMU error code descriptions
- with error conditions
-Message-ID: <20200924125930.tcoz7g6kcvg4rooj@kamzik.brq.redhat.com>
-References: <20200924123731.268177-1-alexandru.elisei@arm.com>
- <20200924123731.268177-3-alexandru.elisei@arm.com>
+ with ESMTP id 21c1rb8b222L for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 24 Sep 2020 09:42:23 -0400 (EDT)
+Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2268A4B0B7
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Sep 2020 09:42:23 -0400 (EDT)
+Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.60])
+ by Forcepoint Email with ESMTP id ABEC7382033A6CEF029B;
+ Thu, 24 Sep 2020 21:42:18 +0800 (CST)
+Received: from [10.174.185.226] (10.174.185.226) by
+ DGGEMS407-HUB.china.huawei.com (10.3.19.207) with Microsoft SMTP Server id
+ 14.3.487.0; Thu, 24 Sep 2020 21:42:10 +0800
+Subject: Re: [PATCH v10 11/11] vfio: Document nested stage control
+To: Eric Auger <eric.auger@redhat.com>, <eric.auger.pro@gmail.com>,
+ <iommu@lists.linux-foundation.org>, <linux-kernel@vger.kernel.org>,
+ <kvm@vger.kernel.org>, <kvmarm@lists.cs.columbia.edu>, <joro@8bytes.org>,
+ <alex.williamson@redhat.com>, <jacob.jun.pan@linux.intel.com>,
+ <yi.l.liu@intel.com>, <robin.murphy@arm.com>
+References: <20200320161911.27494-1-eric.auger@redhat.com>
+ <20200320161911.27494-12-eric.auger@redhat.com>
+From: Zenghui Yu <yuzenghui@huawei.com>
+Message-ID: <26a85a63-6cc1-0348-e703-cb31ddd75339@huawei.com>
+Date: Thu, 24 Sep 2020 21:42:10 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-In-Reply-To: <20200924123731.268177-3-alexandru.elisei@arm.com>
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=drjones@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Disposition: inline
-Cc: maz@kernel.org, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu
+In-Reply-To: <20200320161911.27494-12-eric.auger@redhat.com>
+Content-Language: en-US
+X-Originating-IP: [10.174.185.226]
+X-CFilter-Loop: Reflected
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -85,53 +66,38 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Sep 24, 2020 at 01:37:31PM +0100, Alexandru Elisei wrote:
-> Update the description of the PMU KVM_{GET, SET}_DEVICE_ATTR error codes
-> to be a better match for the code that returns them.
-> 
-> Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
-> ---
->  Documentation/virt/kvm/devices/vcpu.rst | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/virt/kvm/devices/vcpu.rst b/Documentation/virt/kvm/devices/vcpu.rst
-> index 96d6cf77cb1e..8c24411ece2e 100644
-> --- a/Documentation/virt/kvm/devices/vcpu.rst
-> +++ b/Documentation/virt/kvm/devices/vcpu.rst
-> @@ -26,8 +26,9 @@ Returns:
->  	 =======  ========================================================
->  	 -EBUSY   The PMU overflow interrupt is already set
->  	 -EFAULT  Error reading interrupt number
-> -	 -ENXIO   The overflow interrupt not set when attempting to get it
-> -	 -ENODEV  PMUv3 not supported
-> +	 -ENXIO   PMUv3 not supported or the overflow interrupt not set
-> +		  when attempting to get it
-> +	 -ENODEV  KVM_ARM_VCPU_PMU_V3 feature missing from VCPU
->  	 -EINVAL  Invalid PMU overflow interrupt number supplied or
->  		  trying to set the IRQ number without using an in-kernel
->  		  irqchip.
-> @@ -48,8 +49,8 @@ Returns:
->  	 =======  ======================================================
->  	 -EEXIST  Interrupt number already used
->  	 -ENODEV  PMUv3 not supported or GIC not initialized
-> -	 -ENXIO   PMUv3 not properly configured or in-kernel irqchip not
-> -		  configured as required prior to calling this attribute
-> +	 -ENXIO   PMUv3 not supported, missing VCPU feature or interrupt
-> +		  number not set
->  	 -EBUSY   PMUv3 already initialized
->  	 =======  ======================================================
->  
-> -- 
-> 2.28.0
->
+Hi Eric,
 
-Reviewed-by: Andrew Jones <drjones@redhat.com>
+On 2020/3/21 0:19, Eric Auger wrote:
+> The VFIO API was enhanced to support nested stage control: a bunch of
+> new iotcls, one DMA FAULT region and an associated specific IRQ.
+> 
+> Let's document the process to follow to set up nested mode.
+> 
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
 
+[...]
+
+> +The userspace must be prepared to receive faults. The VFIO-PCI device
+> +exposes one dedicated DMA FAULT region: it contains a ring buffer and
+> +its header that allows to manage the head/tail indices. The region is
+> +identified by the following index/subindex:
+> +- VFIO_REGION_TYPE_NESTED/VFIO_REGION_SUBTYPE_NESTED_DMA_FAULT
+> +
+> +The DMA FAULT region exposes a VFIO_REGION_INFO_CAP_PRODUCER_FAULT
+> +region capability that allows the userspace to retrieve the ABI version
+> +of the fault records filled by the host.
+
+Nit: I don't see this capability in the code.
+
+
+Thanks,
+Zenghui
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
