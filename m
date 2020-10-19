@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DC67292860
-	for <lists+kvmarm@lfdr.de>; Mon, 19 Oct 2020 15:41:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CB4329291F
+	for <lists+kvmarm@lfdr.de>; Mon, 19 Oct 2020 16:18:27 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3D6D54B5CA;
-	Mon, 19 Oct 2020 09:41:01 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 11CB24B688;
+	Mon, 19 Oct 2020 10:18:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
@@ -15,52 +15,54 @@ X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
 	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@linaro.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bcxURfi9-Mbb; Mon, 19 Oct 2020 09:41:01 -0400 (EDT)
+	with ESMTP id lwAT+TPsUdMa; Mon, 19 Oct 2020 10:18:26 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1FF884B4E0;
-	Mon, 19 Oct 2020 09:41:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E62DC4B673;
+	Mon, 19 Oct 2020 10:18:25 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id F2CB54B4E0
- for <kvmarm@lists.cs.columbia.edu>; Mon, 19 Oct 2020 09:40:58 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D598E4B4A0
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 19 Oct 2020 10:18:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id j2lnDjRnYGPx for <kvmarm@lists.cs.columbia.edu>;
- Mon, 19 Oct 2020 09:40:58 -0400 (EDT)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [63.128.21.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 023EA4B487
- for <kvmarm@lists.cs.columbia.edu>; Mon, 19 Oct 2020 09:40:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1603114857;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=sNWBV7BLvG0+SkFKmi7DuKB8loiT1Sr1513NgBfdFUs=;
- b=ZX4ojNChoAhsnglBDbXrNwcBConUF7P9T3MGWB+B1EJlvWnqKX/Gm0sHpIrQhSr6p/hvq5
- ssa78746est8QDreJFI93qoGInrmRQ9oi+iivHRo9o12WPSZSVaGYJXmHPk5umhT51sHY0
- rRI8SYBV+oqp33aOzN2e0WgS6pmQ314=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-322-Xg-WiyYnPbuoOdNeSt-X_w-1; Mon, 19 Oct 2020 09:40:50 -0400
-X-MC-Unique: Xg-WiyYnPbuoOdNeSt-X_w-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com
- [10.5.11.14])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 41F2B803F41;
- Mon, 19 Oct 2020 13:40:49 +0000 (UTC)
-Received: from kamzik.brq.redhat.com (unknown [10.40.193.206])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 70C175D9D2;
- Mon, 19 Oct 2020 13:40:46 +0000 (UTC)
-Date: Mon, 19 Oct 2020 15:40:43 +0200
-From: Andrew Jones <drjones@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: Kernel patch cases qemu live migration failed.
-Message-ID: <20201019134043.vqusmzhqp7owjt6x@kamzik.brq.redhat.com>
+ with ESMTP id dIaoZvVJDWGK for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 19 Oct 2020 10:18:24 -0400 (EDT)
+Received: from mail-ej1-f66.google.com (mail-ej1-f66.google.com
+ [209.85.218.66])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E29564B492
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 19 Oct 2020 10:18:23 -0400 (EDT)
+Received: by mail-ej1-f66.google.com with SMTP id ce10so14160546ejc.5
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 19 Oct 2020 07:18:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=P+q5eYuI1k2apwhrOjSGFGRHo5809gNHaxtenpNMuYw=;
+ b=MczSj6+E+TEhn3EmNgvtfVGUNeTN65ETQn8oj+HFePDmEj2lsrhjWodyiSMAg6RpKT
+ 2+kiYIRLNP0W7O2qdRMjCW+j8weNipZVBX2q9w8Ci4ydrIwmGVgNqm5keZV33N7gjPcu
+ 4QX8jUPxFaXeyD+sox2QMUbhMsg3ugWN8xXzPrqIGiTihy80L44c9ASAqPxF0aC6Yg0I
+ g3SDYH33fDJY6vZHkeHmomE3y5rhd+QXpZYGDTRIgTMKjU4B16EAYnexwX21FgxKrnNa
+ V5f9qD4iVZwbTNSyhruBMB8AUn3Ok8PPqVekpDQmYYu8RMfpp2S1aXfuKcXBZBdPznk8
+ qQ8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=P+q5eYuI1k2apwhrOjSGFGRHo5809gNHaxtenpNMuYw=;
+ b=VoxP9FEgMN3uwMZ6yandAZhYgatdD1G4d26VGCuE/8cANmquIyn7/rYrdby0JvxA/P
+ +bagRo46jjju3vjEwLaZZf1ae9MRo+/ypy6DmAN2n1g9HBefSwbHnkQ6s44Jc2WdvZkX
+ EnN0GOTFQiQ5IvPio6paBMloQMGXCuKDzVUjP4S7pwuDZjkfc8GVJzVpOQ4rlOB7HZvW
+ Ye0uXJh5RrWaCX7Oaj0ks1bWNfB34sUoNvjFFL3/IpVgu+4wgNdltVwyejEKaKY7Ne9X
+ +jDKCqXDqPIuR547AD5Z7W02+PBk9B7cME4BvdwE8pcGQ87LDAGyazniZpVvn/cDAYTh
+ +OPg==
+X-Gm-Message-State: AOAM533UOCJVMRz2/PmEjQNZfrxRu8Qs41nUN/gRT6UwyI78ezjKEFiH
+ 0DGZOFSTADf9q199lgrYwqMNsRd/Tx/AVwDWcPQGOg==
+X-Google-Smtp-Source: ABdhPJw3vW4GnAqPbWP30F0VUJ7G6Yt8X9gS2VaxnQj6oSBN9PU9jmUQyfruo6m9TLe6heauDs/6WHB+Df/7MFucyiY=
+X-Received: by 2002:a17:906:c7d9:: with SMTP id
+ dc25mr110314ejb.482.1603117102813; 
+ Mon, 19 Oct 2020 07:18:22 -0700 (PDT)
+MIME-Version: 1.0
 References: <20201015040639.70C6D414009F@webmail.sinamail.sina.com.cn>
  <7fecfc67da4caab1d677a8b4cd5386b3@kernel.org>
  <20201015133505.ubxvbrt6xyvl4362@kamzik.brq.redhat.com>
@@ -70,14 +72,13 @@ References: <20201015040639.70C6D414009F@webmail.sinamail.sina.com.cn>
  <20201019092525.ekvgbcwwtm63pueu@kamzik.brq.redhat.com>
  <20201019113157.GN32292@arm.com>
  <CAFEAcA8oncKmGxKGEZBg9Pnm4hjSO8u9KSv4YxFWxX0+LJ5E2g@mail.gmail.com>
-MIME-Version: 1.0
-In-Reply-To: <CAFEAcA8oncKmGxKGEZBg9Pnm4hjSO8u9KSv4YxFWxX0+LJ5E2g@mail.gmail.com>
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=drjones@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Disposition: inline
+ <20201019134043.vqusmzhqp7owjt6x@kamzik.brq.redhat.com>
+In-Reply-To: <20201019134043.vqusmzhqp7owjt6x@kamzik.brq.redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 19 Oct 2020 15:18:11 +0100
+Message-ID: <CAFEAcA8RB6MTnv0qavxWs28=pbT16i9dT1pd+0Dy9HxPVk+bZA@mail.gmail.com>
+Subject: Re: Kernel patch cases qemu live migration failed.
+To: Andrew Jones <drjones@redhat.com>
 Cc: Marc Zyngier <maz@kernel.org>, xu910121@sina.com,
  Dave Martin <Dave.Martin@arm.com>, kvmarm <kvmarm@lists.cs.columbia.edu>,
  qemu-devel <qemu-devel@nongnu.org>
@@ -97,71 +98,32 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Oct 19, 2020 at 12:43:33PM +0100, Peter Maydell wrote:
-> On Mon, 19 Oct 2020 at 12:32, Dave Martin <Dave.Martin@arm.com> wrote:
-> > I'm not quite sure about Peter's assessment here.
-> >
-> > I agree with the inconsistency identified here: we always enumerate all
-> > unallocated ID regs, but we enumerate ID_AA64ZFR0_EL1 conditionally.
-> > This doesn't feel right: on a non-SVE guest, ID_AA64ZFR0_EL1 should
-> > behave exactly as an unallocated ID register.
-> >
-> > I'm not sure about the proposed fix.
-> >
-> > For one thing, I'm not sure that old hosts will accept writing of 0 to
-> > arbitrary ID regs.  This may require some digging, but commit
-> > 93390c0a1b20 ("arm64: KVM: Hide unsupported AArch64 CPU features from guests")
-> > may be the place to start.
-> 
-> Well, ID regs are special in the architecture -- they always exist
-> and must RAZ/WI, even if they're not actually given any fields yet.
-> This is different from other "unused" parts of the system register
-> encoding space, which UNDEF.
+On Mon, 19 Oct 2020 at 14:40, Andrew Jones <drjones@redhat.com> wrote:
+>
+> On Mon, Oct 19, 2020 at 12:43:33PM +0100, Peter Maydell wrote:
+> > Well, ID regs are special in the architecture -- they always exist
+> > and must RAZ/WI, even if they're not actually given any fields yet.
+> > This is different from other "unused" parts of the system register
+> > encoding space, which UNDEF.
+>
+> Table D12-2 confirms the register should be RAZ, as it says the register
+> is "RO, but RAZ if SVE is not implemented". Does "RO" imply "WI", though?
+> For the guest we inject an exception on writes, and for userspace we
+> require the value to be preserved on write.
 
-Table D12-2 confirms the register should be RAZ, as it says the register
-is "RO, but RAZ if SVE is not implemented". Does "RO" imply "WI", though?
-For the guest we inject an exception on writes, and for userspace we
-require the value to be preserved on write.
+Sorry, I mis-spoke. They're RAZ, but not WI, just RO (which is to say
+they'll UNDEF if you try to write to them).
 
-> 
-> Older hosts didn't permit writing 0 to all parts of the ID
-> register space (and didn't list all ID registers in the KVM_GET_REG_LIST
-> list), but that was a kernel bug which we've since fixed.
-> (QEMU has workaround code for pre-4.15 kernels for this.)
-> Across that older bugfix, migration works from an old kernel to
-> a newer one, but wouldn't have worked from a post-bugfix kernel
-> to a pre-4.15 one.
-> 
-> > My original idea was that at the source end we should be conservative:
-> > enumerate and dump the minimum set of registers relevant to the
-> > target -- for compatibility with old hosts that don't handle the
-> > unallocated ID regs at all.  At the destination end, modern hosts
-> > should be permissive, i.e., allow any ID reg to be set to 0, but don't
-> > require the setting of any reg that older source hosts might not send.
-> 
-> The problem is that you've actually removed registers from
-> the list that were previously in it (because pre-SVE
-> kernels put this ID register in the list as a RAZ/WI register,
-> and now it's not in the list if SVE isn't supported).
-> 
-> > So, I think that instead of changing the ID_AA64ZFR0_EL1 behaviour,
-> > parhaps we should move all ID_UNALLOCATED() regs (and possibly
-> > ID_HIDDEN(), not sure about that) to have REG_HIDDEN_USER visibility.
-> 
-> What does this do as far as the user-facing list-of-registers
-> is concerned? All these registers need to remain in the
-> KVM_GET_REG_LIST list, or you break migration from an old
-> kernel to a new one.
+> I think we should follow the spec, even for userspace access, and be RAZ
+> for when the feature isn't implemented. As for writes, assuming the
+> exception injection is what we want for the guest (not WI), then that's
+> correct. For userspace, I think we should continue forcing preservation
+> (which will force preservation of zero when it's RAZ).
 
-I think we should follow the spec, even for userspace access, and be RAZ
-for when the feature isn't implemented. As for writes, assuming the
-exception injection is what we want for the guest (not WI), then that's
-correct. For userspace, I think we should continue forcing preservation
-(which will force preservation of zero when it's RAZ).
+Yes, that sounds right.
 
-Thanks,
-drew
-
+thanks
+-- PMM
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
