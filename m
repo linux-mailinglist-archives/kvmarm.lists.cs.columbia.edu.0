@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id BBE612988D0
-	for <lists+kvmarm@lfdr.de>; Mon, 26 Oct 2020 09:55:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 83E892989C6
+	for <lists+kvmarm@lfdr.de>; Mon, 26 Oct 2020 10:51:39 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 549584B38F;
-	Mon, 26 Oct 2020 04:55:32 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 214F84B603;
+	Mon, 26 Oct 2020 05:51:39 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,58 +18,56 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BXyvGYvFxfr6; Mon, 26 Oct 2020 04:55:32 -0400 (EDT)
+	with ESMTP id T9OYC-uS36bx; Mon, 26 Oct 2020 05:51:37 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1ACFF4B3C2;
-	Mon, 26 Oct 2020 04:55:31 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4981C4B5FA;
+	Mon, 26 Oct 2020 05:51:35 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5228F4B38D
- for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Oct 2020 04:55:29 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 07A164B481
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Oct 2020 05:51:34 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 57vtf7TrCdmS for <kvmarm@lists.cs.columbia.edu>;
- Mon, 26 Oct 2020 04:55:28 -0400 (EDT)
+ with ESMTP id 8DvUpy88nRNY for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 26 Oct 2020 05:51:32 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4BD834B38C
- for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Oct 2020 04:55:28 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B1FFD4B47E
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Oct 2020 05:51:32 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 18ED82242A;
- Mon, 26 Oct 2020 08:55:27 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 612A020704;
+ Mon, 26 Oct 2020 09:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1603702527;
- bh=0AQLbU4PmLOdIQmrKNxHvxVbWNPNxMURUiD8Vm9U/yo=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=Wp7kCm4UMZKrNAwr+uJU01I9oXa+GnBqC59htF77K5v/C86wJOW/Le7+SyszbL647
- TzrShXQ0xfVIL+78gZ+j2rZrZPJsRaaVWYOJiAZ21ygcdrwzfbdeVO4KhxQdmoGmDg
- otJBllCCAOJRGxLJY3pjZwjnR9A9SSIKy7MB6z+Y=
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94)
+ s=default; t=1603705891;
+ bh=/871FOVPW0E/2Dr2XjwHcJP0LUAoYcByZt/uNRRFF80=;
+ h=From:To:Cc:Subject:Date:From;
+ b=WD43U8rqPf0syvCAvMG/IcVDofcUUOS/TFk/pC+UizH/0Db318ZDt6vTVU2Rcgkv4
+ RlXt5wfgwCzqZ/XR+pQ9VcsifQtS4beZLAqrCNp3Z0rYfOSU4iZlofTv3hbplAoCyg
+ aEXqP4KK1OlZD/ToX3ZQIuATp44SZNTLU4S1npGQ=
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1kWyHl-004GvP-3A; Mon, 26 Oct 2020 08:55:25 +0000
-MIME-Version: 1.0
-Date: Mon, 26 Oct 2020 08:55:25 +0000
+ id 1kWzA1-004HZn-7b; Mon, 26 Oct 2020 09:51:29 +0000
 From: Marc Zyngier <maz@kernel.org>
-To: Gavin Shan <gshan@redhat.com>
-Subject: Re: [PATCH 3/3] KVM: arm64: Failback on unsupported huge page sizes
-In-Reply-To: <74539016-f41f-c6a0-5c37-034204dc00cc@redhat.com>
-References: <20201025002739.5804-1-gshan@redhat.com>
- <20201025002739.5804-4-gshan@redhat.com> <87y2juoa2s.wl-maz@kernel.org>
- <74539016-f41f-c6a0-5c37-034204dc00cc@redhat.com>
-User-Agent: Roundcube Webmail/1.4.9
-Message-ID: <baa5b87f4fe72163c3e16f7411a0ef46@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: gshan@redhat.com, kvmarm@lists.cs.columbia.edu,
- linux-kernel@vger.kernel.org, will@kernel.org, alexandru.elisei@arm.com
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
+Subject: [PATCH 0/8] KVM: arm64: Host EL2 entry improvements
+Date: Mon, 26 Oct 2020 09:51:08 +0000
+Message-Id: <20201026095116.72051-1-maz@kernel.org>
+X-Mailer: git-send-email 2.28.0
+MIME-Version: 1.0
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, james.morse@arm.com,
+ julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com, ascull@google.com,
+ will@kernel.org, qperret@google.com, kernel-team@android.com
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
-Cc: will@kernel.org, kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org
+Cc: kernel-team@android.com, Will Deacon <will@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -81,80 +79,56 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2020-10-25 23:04, Gavin Shan wrote:
-> Hi Marc,
-> 
-> On 10/25/20 9:48 PM, Marc Zyngier wrote:
->> On Sun, 25 Oct 2020 01:27:39 +0100,
->> Gavin Shan <gshan@redhat.com> wrote:
->>> 
->>> The huge page could be mapped through multiple contiguous PMDs or 
->>> PTEs.
->>> The corresponding huge page sizes aren't supported by the page table
->>> walker currently.
->>> 
->>> This fails the unsupported huge page sizes to the near one. 
->>> Otherwise,
->>> the guest can't boot successfully: CONT_PMD_SHIFT and CONT_PTE_SHIFT
->>> fail back to PMD_SHIFT and PAGE_SHIFT separately.
->>> 
->>> Signed-off-by: Gavin Shan <gshan@redhat.com>
->>> ---
->>>   arch/arm64/kvm/mmu.c | 8 ++++++++
->>>   1 file changed, 8 insertions(+)
->>> 
->>> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
->>> index 0f51585adc04..81cbdc368246 100644
->>> --- a/arch/arm64/kvm/mmu.c
->>> +++ b/arch/arm64/kvm/mmu.c
->>> @@ -793,12 +793,20 @@ static int user_mem_abort(struct kvm_vcpu 
->>> *vcpu, phys_addr_t fault_ipa,
->>>   		vma_shift = PMD_SHIFT;
->>>   #endif
->>>   +	if (vma_shift == CONT_PMD_SHIFT)
->>> +		vma_shift = PMD_SHIFT;
->>> +
->>>   	if (vma_shift == PMD_SHIFT &&
->>>   	    !fault_supports_stage2_huge_mapping(memslot, hva, PMD_SIZE)) {
->>>   		force_pte = true;
->>>   		vma_shift = PAGE_SHIFT;
->>>   	}
->>>   +	if (vma_shift == CONT_PTE_SHIFT) {
->>> +		force_pte = true;
->>> +		vma_shift = PAGE_SHIFT;
->>> +	}
->>> +
->>>   	vma_pagesize = 1UL << vma_shift;
->>>   	if (vma_pagesize == PMD_SIZE || vma_pagesize == PUD_SIZE)
->>>   		fault_ipa &= ~(vma_pagesize - 1);
->> 
->> Yup, nice catch. However, I think we should take this opportunity to
->> rationalise the logic here, and catch future discrepancies (should
->> someone add contiguous PUD or something similarly silly). How about
->> something like this (untested):
->> 
-> 
-> Yeah, I started the work to support contiguous PMDs/PTEs, but I'm not
-> sure when I can post the patches for review as my time becomes a bit
-> fragmented recently. At least, I need focus on "async page fault" in
-> the coming weeks :)
-> 
-> Thanks for the suggested code and it worked for me. I'll post v2 to
-> integrate them. However, I would like to drop PATCH[1] and PATCH[2]
-> as I really don't have strong reasons to have them.
+This small series reworks various bits of the host EL2 entry after
+Andrew's extensive rework to move from direct function calls to a
+SMCCC implementation.
 
-Yes, please drop these patches, and focus on the actual bug fix.
+The first 3 patches are plain bug fixes, and candidates for immediate
+merge into 5.10.
 
-Thanks,
+The following 2 patches allow the use of direct function pointers at
+EL2, something that we can't do at the moment (other than PC-relative
+addressing). This requires a helper to translate pointers at runtime,
+but the result is neat enough. This allows the rewrite of the host HVC
+handling in a more maintainable way.
 
-         M.
+A similar patch removes the direct use of kimage_voffset, which we
+won't be able to trust for much longer.
+
+The last two patches are just cleanups and optimisations.
+
+Patches on top of 5.10-rc1.
+
+Marc Zyngier (8):
+  KVM: arm64: Don't corrupt tpidr_el2 on failed HVC call
+  KVM: arm64: Remove leftover kern_hyp_va() in nVHE TLB invalidation
+  KVM: arm64: Drop useless PAN setting on host EL1 to EL2 transition
+  KVM: arm64: Add kimg_hyp_va() helper
+  KVM: arm64: Turn host HVC handling into a dispatch table
+  KVM: arm64: Patch kimage_voffset instead of loading the EL1 value
+  KVM: arm64: Simplify __kvm_enable_ssbs()
+  KVM: arm64: Avoid repetitive stack access on host EL1 to EL2 exception
+
+ arch/arm64/include/asm/kvm_asm.h    |   2 -
+ arch/arm64/include/asm/kvm_mmu.h    |  16 ++
+ arch/arm64/include/asm/sysreg.h     |   1 +
+ arch/arm64/kernel/image-vars.h      |   5 +-
+ arch/arm64/kvm/hyp/nvhe/host.S      |  14 +-
+ arch/arm64/kvm/hyp/nvhe/hyp-init.S  |  23 ++-
+ arch/arm64/kvm/hyp/nvhe/hyp-main.c  | 231 +++++++++++++++++-----------
+ arch/arm64/kvm/hyp/nvhe/sysreg-sr.c |  11 --
+ arch/arm64/kvm/hyp/nvhe/tlb.c       |   1 -
+ arch/arm64/kvm/va_layout.c          |  56 +++++++
+ 10 files changed, 236 insertions(+), 124 deletions(-)
+
 -- 
-Jazz is not dead. It just smells funny...
+2.28.0
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
