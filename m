@@ -2,75 +2,56 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C4F22989CB
-	for <lists+kvmarm@lfdr.de>; Mon, 26 Oct 2020 10:51:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AC043298AAD
+	for <lists+kvmarm@lfdr.de>; Mon, 26 Oct 2020 11:48:08 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D2B624B5F0;
-	Mon, 26 Oct 2020 05:51:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 38A734B600;
+	Mon, 26 Oct 2020 06:48:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id I2KnU5+U7VEL; Mon, 26 Oct 2020 05:51:45 -0400 (EDT)
+	with ESMTP id TZb9hwnmyp+p; Mon, 26 Oct 2020 06:48:08 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 32B644B6C2;
-	Mon, 26 Oct 2020 05:51:42 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CAB674B5B9;
+	Mon, 26 Oct 2020 06:48:06 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 23CE94B4FD
- for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Oct 2020 05:51:40 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A65554B516
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Oct 2020 06:48:05 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 0mx1ovebSRO5 for <kvmarm@lists.cs.columbia.edu>;
- Mon, 26 Oct 2020 05:51:38 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5394B4B5A1
- for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Oct 2020 05:51:36 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 52CEB222EC;
- Mon, 26 Oct 2020 09:51:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1603705895;
- bh=SurefXaVHTkq8zMCu3OywCnUsZc0fFu5URrqoO8B4xE=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=i/7ZdOxQbzEv8h+8z1RnD1VA6PKO8a90na1JhFWRRUwezTCrkJQpKzyhY4ABHGETj
- 6Q6518zDC22x6MwQ5nXo+iogozTR7Xnx4mMD80QydAXT7rwuOcWgajDgM5VGZkTFhf
- QzL7Q1dNz6BLfO9sKxCrXefFp7f3KqO0nheKeAaI=
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1kWzA5-004HZn-F6; Mon, 26 Oct 2020 09:51:33 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- kvm@vger.kernel.org
-Subject: [PATCH 8/8] KVM: arm64: Avoid repetitive stack access on host EL1 to
- EL2 exception
-Date: Mon, 26 Oct 2020 09:51:16 +0000
-Message-Id: <20201026095116.72051-9-maz@kernel.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20201026095116.72051-1-maz@kernel.org>
+ with ESMTP id yLld6e7QD9sm for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 26 Oct 2020 06:48:04 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2580B4B515
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Oct 2020 06:48:04 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 70FFB101E;
+ Mon, 26 Oct 2020 03:48:03 -0700 (PDT)
+Received: from [10.57.20.91] (unknown [10.57.20.91])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D7DC93F719;
+ Mon, 26 Oct 2020 03:48:01 -0700 (PDT)
+Subject: Re: [PATCH 3/8] KVM: arm64: Drop useless PAN setting on host EL1 to
+ EL2 transition
+To: Marc Zyngier <maz@kernel.org>, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
 References: <20201026095116.72051-1-maz@kernel.org>
+ <20201026095116.72051-4-maz@kernel.org>
+From: Vladimir Murzin <vladimir.murzin@arm.com>
+Message-ID: <8d798f0d-6bf4-ed26-9d40-b9d09bf2954e@arm.com>
+Date: Mon, 26 Oct 2020 10:48:03 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, james.morse@arm.com,
- julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com, ascull@google.com,
- will@kernel.org, qperret@google.com, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com, Will Deacon <will@kernel.org>
+In-Reply-To: <20201026095116.72051-4-maz@kernel.org>
+Content-Language: en-US
+Cc: Will Deacon <will@kernel.org>, kernel-team@android.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -87,47 +68,41 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Registers x0/x1 get repeateadly pushed and poped during a host
-HVC call. Instead, leave the registers on the stack, saving
-a store instruction on the fast path for an add on the slow path.
+On 10/26/20 9:51 AM, Marc Zyngier wrote:
+> Setting PSTATE.PAN when entering EL2 on nVHE doesn't make much
+> sense as this bit only means something for translation regimes
+> that include EL0. This obviously isn't the case in the nVHE case,
+> so let's drop this setting.
+> 
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
+> ---
+>  arch/arm64/kvm/hyp/nvhe/host.S | 2 --
+>  1 file changed, 2 deletions(-)
+> 
+> diff --git a/arch/arm64/kvm/hyp/nvhe/host.S b/arch/arm64/kvm/hyp/nvhe/host.S
+> index ff9a0f547b9f..ed27f06a31ba 100644
+> --- a/arch/arm64/kvm/hyp/nvhe/host.S
+> +++ b/arch/arm64/kvm/hyp/nvhe/host.S
+> @@ -17,8 +17,6 @@ SYM_FUNC_START(__host_exit)
+>  
+>  	get_host_ctxt	x0, x1
+>  
+> -	ALTERNATIVE(nop, SET_PSTATE_PAN(1), ARM64_HAS_PAN, CONFIG_ARM64_PAN)
+> -
+>  	/* Store the host regs x2 and x3 */
+>  	stp	x2, x3,   [x0, #CPU_XREG_OFFSET(2)]
+>  
+> 
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/kvm/hyp/nvhe/host.S | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+It was originally introduced in cb96408da4e1 (arm64: KVM: VHE: reset PSTATE.PAN on entry to EL2)
+and indeed only applies to VHE (I even remember some attempts to put in under CONFIG_ARM64_VHE).
 
-diff --git a/arch/arm64/kvm/hyp/nvhe/host.S b/arch/arm64/kvm/hyp/nvhe/host.S
-index e2d316d13180..7b69f9ff8da0 100644
---- a/arch/arm64/kvm/hyp/nvhe/host.S
-+++ b/arch/arm64/kvm/hyp/nvhe/host.S
-@@ -13,8 +13,6 @@
- 	.text
+So, if it helps:
  
- SYM_FUNC_START(__host_exit)
--	stp	x0, x1, [sp, #-16]!
--
- 	get_host_ctxt	x0, x1
- 
- 	/* Store the host regs x2 and x3 */
-@@ -99,13 +97,14 @@ SYM_FUNC_END(__hyp_do_panic)
- 	mrs	x0, esr_el2
- 	lsr	x0, x0, #ESR_ELx_EC_SHIFT
- 	cmp	x0, #ESR_ELx_EC_HVC64
--	ldp	x0, x1, [sp], #16
-+	ldp	x0, x1, [sp]		// Don't fixup the stack yet
- 	b.ne	__host_exit
- 
- 	/* Check for a stub HVC call */
- 	cmp	x0, #HVC_STUB_HCALL_NR
- 	b.hs	__host_exit
- 
-+	add	sp, sp, #16
- 	/*
- 	 * Compute the idmap address of __kvm_handle_stub_hvc and
- 	 * jump there. Since we use kimage_voffset, do not use the
--- 
-2.28.0
+    Reviewed-by: Vladimir Murzin <vladimir.murzin@arm.com>
 
+Cheers
+Vladimir
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
