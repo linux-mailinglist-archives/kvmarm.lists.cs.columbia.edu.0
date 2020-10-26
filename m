@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A75F6298E74
-	for <lists+kvmarm@lfdr.de>; Mon, 26 Oct 2020 14:49:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A0407298E76
+	for <lists+kvmarm@lfdr.de>; Mon, 26 Oct 2020 14:49:49 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5C3074B4DF;
-	Mon, 26 Oct 2020 09:49:47 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 550004B52C;
+	Mon, 26 Oct 2020 09:49:49 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,35 +16,34 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id g8ihAmLgRRef; Mon, 26 Oct 2020 09:49:47 -0400 (EDT)
+	with ESMTP id yGfY3ZLmsMjv; Mon, 26 Oct 2020 09:49:49 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DF1D14B500;
-	Mon, 26 Oct 2020 09:49:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0946C4B50E;
+	Mon, 26 Oct 2020 09:49:48 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B37164B250
- for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Oct 2020 09:49:44 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A20E14B250
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Oct 2020 09:49:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ke+BkYLaZ8ac for <kvmarm@lists.cs.columbia.edu>;
- Mon, 26 Oct 2020 09:49:43 -0400 (EDT)
+ with ESMTP id ZjEbBG-1fWGn for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 26 Oct 2020 09:49:45 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 125F44B500
- for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Oct 2020 09:49:43 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6264D4B4FB
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Oct 2020 09:49:45 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BBA1F1042;
- Mon, 26 Oct 2020 06:49:42 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2119D1476;
+ Mon, 26 Oct 2020 06:49:45 -0700 (PDT)
 Received: from lakrids.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com
  [10.121.207.14])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id D6B573F68F;
- Mon, 26 Oct 2020 06:49:41 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 3A7593F68F;
+ Mon, 26 Oct 2020 06:49:44 -0700 (PDT)
 From: Mark Rutland <mark.rutland@arm.com>
 To: kvmarm@lists.cs.columbia.edu,
 	linux-arm-kernel@lists.infradead.org
-Subject: [PATCHv2 2/3] arm64: cpufeature: reorder cpus_have_{const,
- final}_cap()
-Date: Mon, 26 Oct 2020 13:49:30 +0000
-Message-Id: <20201026134931.28246-3-mark.rutland@arm.com>
+Subject: [PATCHv2 3/3] arm64: cpufeature: upgrade hyp caps to final
+Date: Mon, 26 Oct 2020 13:49:31 +0000
+Message-Id: <20201026134931.28246-4-mark.rutland@arm.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20201026134931.28246-1-mark.rutland@arm.com>
 References: <20201026134931.28246-1-mark.rutland@arm.com>
@@ -66,71 +65,119 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-In a subsequent patch we'll modify cpus_have_const_cap() to call
-cpus_have_final_cap(), and hence we need to define cpus_have_final_cap()
-first.
+We finalize caps before initializing kvm hyp code, and any use of
+cpus_have_const_cap() in kvm hyp code generates redundant and
+potentially unsound code to read the cpu_hwcaps array.
 
-To make subsequent changes easier to follow, this patch reorders the two
-without making any other changes.
+A number of helper functions used in both hyp context and regular kernel
+context use cpus_have_const_cap(), as some regular kernel code runs
+before the capabilities are finalized. It's tedious and error-prone to
+write separate copies of these for hyp and non-hyp code.
 
-There should be no functional change as a result of this patch.
+So that we can avoid the redundant code, let's automatically upgrade
+cpus_have_const_cap() to cpus_have_final_cap() when used in hyp context.
+With this change, there's never a reason to access to cpu_hwcaps array
+from hyp code, and we don't need to create an NVHE alias for this.
+
+This should have no effect on non-hyp code.
 
 Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Cc: David Brazdil <dbrazdil@google.com>
 Cc: Marc Zyngier <maz@kernel.org>
 Cc: Will Deacon <will@kernel.org>
 ---
- arch/arm64/include/asm/cpufeature.h | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/arm64/include/asm/cpufeature.h | 26 ++++++++++++++++++++++++--
+ arch/arm64/include/asm/virt.h       | 12 ------------
+ arch/arm64/kernel/image-vars.h      |  1 -
+ 3 files changed, 24 insertions(+), 15 deletions(-)
 
 diff --git a/arch/arm64/include/asm/cpufeature.h b/arch/arm64/include/asm/cpufeature.h
-index f7e7144af174c..5d18c54507e6a 100644
+index 5d18c54507e6a..97244d4feca9c 100644
 --- a/arch/arm64/include/asm/cpufeature.h
 +++ b/arch/arm64/include/asm/cpufeature.h
-@@ -428,35 +428,35 @@ static __always_inline bool __cpus_have_const_cap(int num)
+@@ -375,6 +375,23 @@ cpucap_multi_entry_cap_matches(const struct arm64_cpu_capabilities *entry,
+ 	return false;
+ }
+ 
++static __always_inline bool is_vhe_hyp_code(void)
++{
++	/* Only defined for code run in VHE hyp context */
++	return __is_defined(__KVM_VHE_HYPERVISOR__);
++}
++
++static __always_inline bool is_nvhe_hyp_code(void)
++{
++	/* Only defined for code run in NVHE hyp context */
++	return __is_defined(__KVM_NVHE_HYPERVISOR__);
++}
++
++static __always_inline bool is_hyp_code(void)
++{
++	return is_vhe_hyp_code() || is_nvhe_hyp_code();
++}
++
+ extern DECLARE_BITMAP(cpu_hwcaps, ARM64_NCAPS);
+ extern struct static_key_false cpu_hwcap_keys[ARM64_NCAPS];
+ extern struct static_key_false arm64_const_caps_ready;
+@@ -444,8 +461,11 @@ static __always_inline bool cpus_have_final_cap(int num)
  }
  
  /*
 - * Test for a capability, possibly with a runtime check.
-+ * Test for a capability without a runtime check.
++ * Test for a capability, possibly with a runtime check for non-hyp code.
   *
-- * Before capabilities are finalized, this behaves as cpus_have_cap().
-+ * Before capabilities are finalized, this will BUG().
++ * For hyp code, this behaves the same as cpus_have_final_cap().
++ *
++ * For non-hyp code:
+  * Before capabilities are finalized, this behaves as cpus_have_cap().
   * After capabilities are finalized, this is patched to avoid a runtime check.
   *
-  * @num must be a compile-time constant.
+@@ -453,7 +473,9 @@ static __always_inline bool cpus_have_final_cap(int num)
   */
--static __always_inline bool cpus_have_const_cap(int num)
-+static __always_inline bool cpus_have_final_cap(int num)
+ static __always_inline bool cpus_have_const_cap(int num)
  {
- 	if (system_capabilities_finalized())
+-	if (system_capabilities_finalized())
++	if (is_hyp_code())
++		return cpus_have_final_cap(num);
++	else if (system_capabilities_finalized())
  		return __cpus_have_const_cap(num);
  	else
--		return cpus_have_cap(num);
-+		BUG();
+ 		return cpus_have_cap(num);
+diff --git a/arch/arm64/include/asm/virt.h b/arch/arm64/include/asm/virt.h
+index 300be14ba77b2..6069be50baf9f 100644
+--- a/arch/arm64/include/asm/virt.h
++++ b/arch/arm64/include/asm/virt.h
+@@ -83,18 +83,6 @@ static inline bool is_kernel_in_hyp_mode(void)
+ 	return read_sysreg(CurrentEL) == CurrentEL_EL2;
  }
  
- /*
-- * Test for a capability without a runtime check.
-+ * Test for a capability, possibly with a runtime check.
-  *
-- * Before capabilities are finalized, this will BUG().
-+ * Before capabilities are finalized, this behaves as cpus_have_cap().
-  * After capabilities are finalized, this is patched to avoid a runtime check.
-  *
-  * @num must be a compile-time constant.
-  */
--static __always_inline bool cpus_have_final_cap(int num)
-+static __always_inline bool cpus_have_const_cap(int num)
+-static __always_inline bool is_vhe_hyp_code(void)
+-{
+-	/* Only defined for code run in VHE hyp context */
+-	return __is_defined(__KVM_VHE_HYPERVISOR__);
+-}
+-
+-static __always_inline bool is_nvhe_hyp_code(void)
+-{
+-	/* Only defined for code run in NVHE hyp context */
+-	return __is_defined(__KVM_NVHE_HYPERVISOR__);
+-}
+-
+ static __always_inline bool has_vhe(void)
  {
- 	if (system_capabilities_finalized())
- 		return __cpus_have_const_cap(num);
- 	else
--		BUG();
-+		return cpus_have_cap(num);
- }
+ 	/*
+diff --git a/arch/arm64/kernel/image-vars.h b/arch/arm64/kernel/image-vars.h
+index 61684a5009148..c615b285ff5b3 100644
+--- a/arch/arm64/kernel/image-vars.h
++++ b/arch/arm64/kernel/image-vars.h
+@@ -87,7 +87,6 @@ KVM_NVHE_ALIAS(__icache_flags);
+ /* Kernel symbols needed for cpus_have_final/const_caps checks. */
+ KVM_NVHE_ALIAS(arm64_const_caps_ready);
+ KVM_NVHE_ALIAS(cpu_hwcap_keys);
+-KVM_NVHE_ALIAS(cpu_hwcaps);
  
- static inline void cpus_set_cap(unsigned int num)
+ /* Static keys which are set if a vGIC trap should be handled in hyp. */
+ KVM_NVHE_ALIAS(vgic_v2_cpuif_trap);
 -- 
 2.11.0
 
