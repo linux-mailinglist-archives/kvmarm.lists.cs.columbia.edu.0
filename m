@@ -2,47 +2,47 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C86A29C184
-	for <lists+kvmarm@lfdr.de>; Tue, 27 Oct 2020 18:26:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B54129C187
+	for <lists+kvmarm@lfdr.de>; Tue, 27 Oct 2020 18:26:44 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4EF974B354;
-	Tue, 27 Oct 2020 13:26:40 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 44C694B448;
+	Tue, 27 Oct 2020 13:26:44 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id GYaRmHeD+iBo; Tue, 27 Oct 2020 13:26:40 -0400 (EDT)
+	with ESMTP id Sqb4eI1xZNRg; Tue, 27 Oct 2020 13:26:43 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 043A24B4D4;
-	Tue, 27 Oct 2020 13:26:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 44B4F4B562;
+	Tue, 27 Oct 2020 13:26:39 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 566614B3E4
- for <kvmarm@lists.cs.columbia.edu>; Tue, 27 Oct 2020 13:26:35 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 70C734B4E8
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 27 Oct 2020 13:26:38 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id vwr0eK05hJWy for <kvmarm@lists.cs.columbia.edu>;
- Tue, 27 Oct 2020 13:26:34 -0400 (EDT)
+ with ESMTP id BpduOVY9FwMO for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 27 Oct 2020 13:26:37 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7CFB54B4EB
- for <kvmarm@lists.cs.columbia.edu>; Tue, 27 Oct 2020 13:26:34 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CE1714B3D3
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 27 Oct 2020 13:26:35 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4DA1B150C;
- Tue, 27 Oct 2020 10:26:34 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 87F3115AB;
+ Tue, 27 Oct 2020 10:26:35 -0700 (PDT)
 Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 46C783F719;
- Tue, 27 Oct 2020 10:26:33 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 814EF3F719;
+ Tue, 27 Oct 2020 10:26:34 -0700 (PDT)
 From: Alexandru Elisei <alexandru.elisei@arm.com>
 To: linux-arm-kernel@lists.infradead.org,
 	kvmarm@lists.cs.columbia.edu
-Subject: [RFC PATCH v3 15/16] KVM: arm64: Enable SPE for guests
-Date: Tue, 27 Oct 2020 17:27:04 +0000
-Message-Id: <20201027172705.15181-16-alexandru.elisei@arm.com>
+Subject: [RFC PATCH v3 16/16] Documentation: arm64: Document ARM Neoverse-N1
+ erratum #1688567
+Date: Tue, 27 Oct 2020 17:27:05 +0000
+Message-Id: <20201027172705.15181-17-alexandru.elisei@arm.com>
 X-Mailer: git-send-email 2.29.1
 In-Reply-To: <20201027172705.15181-1-alexandru.elisei@arm.com>
 References: <20201027172705.15181-1-alexandru.elisei@arm.com>
@@ -64,48 +64,32 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-We have all the bits in place to expose SPE to guests, allow userspace to
-set the feature and advertise the presence of SPE in the ID_AA64DFR0_EL1
-register.
+According to erratum #1688567, a SPE buffer write that results in an Access
+flag fault or Permission fault at stage 2 is reported with an unsupported
+PMBSR_EL1.FSC code.
+
+KVM avoids SPE stage 2 faults altogether by requiring userspace to lock the
+guest memory in RAM and pre-mapping it in stage 2 before the VM is started.
+As a result, KVM is not impacted by this erratum.
 
 Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
 ---
- arch/arm64/include/asm/kvm_host.h | 2 +-
- arch/arm64/kvm/sys_regs.c         | 8 ++++++--
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ Documentation/arm64/silicon-errata.rst | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index bcecc6224c59..e5504c9847fc 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -39,7 +39,7 @@
- 
- #define KVM_MAX_VCPUS VGIC_V3_MAX_CPUS
- 
--#define KVM_VCPU_MAX_FEATURES 7
-+#define KVM_VCPU_MAX_FEATURES 8
- 
- #define KVM_REQ_SLEEP \
- 	KVM_ARCH_REQ_FLAGS(0, KVM_REQUEST_WAIT | KVM_REQUEST_NO_WAKEUP)
-diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index 3a0687602839..076be04d2e28 100644
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -1178,8 +1178,12 @@ static u64 read_id_reg(const struct kvm_vcpu *vcpu,
- 		val = cpuid_feature_cap_perfmon_field(val,
- 						ID_AA64DFR0_PMUVER_SHIFT,
- 						ID_AA64DFR0_PMUVER_8_1);
--		/* Don't advertise SPE to guests */
--		val &= ~(0xfUL << ID_AA64DFR0_PMSVER_SHIFT);
-+		/*
-+		 * Don't advertise SPE to guests without SPE. Otherwise, allow
-+		 * the guest to detect the hardware SPE version.
-+		 */
-+		if (!vcpu_has_spe(vcpu))
-+			val &= ~(0xfUL << ID_AA64DFR0_PMSVER_SHIFT);
- 	} else if (id == SYS_ID_DFR0_EL1) {
- 		/* Limit guests to PMUv3 for ARMv8.1 */
- 		val = cpuid_feature_cap_perfmon_field(val,
+diff --git a/Documentation/arm64/silicon-errata.rst b/Documentation/arm64/silicon-errata.rst
+index d3587805de64..1f6c403fd555 100644
+--- a/Documentation/arm64/silicon-errata.rst
++++ b/Documentation/arm64/silicon-errata.rst
+@@ -96,6 +96,8 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Neoverse-N1     | #1542419        | ARM64_ERRATUM_1542419       |
+ +----------------+-----------------+-----------------+-----------------------------+
++| ARM            | Neoverse-N1     | #1688567        | N/A                         |
+++----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | MMU-500         | #841119,826419  | N/A                         |
+ +----------------+-----------------+-----------------+-----------------------------+
+ +----------------+-----------------+-----------------+-----------------------------+
 -- 
 2.29.1
 
