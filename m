@@ -2,46 +2,47 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F53929C17A
-	for <lists+kvmarm@lfdr.de>; Tue, 27 Oct 2020 18:26:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 58E5B29C17C
+	for <lists+kvmarm@lfdr.de>; Tue, 27 Oct 2020 18:26:26 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E96E64B4D5;
-	Tue, 27 Oct 2020 13:26:24 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0D1104B4B7;
+	Tue, 27 Oct 2020 13:26:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5NuUU6UX4Obq; Tue, 27 Oct 2020 13:26:23 -0400 (EDT)
+	with ESMTP id rGXys4YS4EEm; Tue, 27 Oct 2020 13:26:25 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A4FE14B354;
-	Tue, 27 Oct 2020 13:26:22 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DAEE84B4BF;
+	Tue, 27 Oct 2020 13:26:24 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3F4D54B3D5
- for <kvmarm@lists.cs.columbia.edu>; Tue, 27 Oct 2020 13:26:21 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9FF4C4B3FA
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 27 Oct 2020 13:26:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id QRN8vRhJCnEw for <kvmarm@lists.cs.columbia.edu>;
- Tue, 27 Oct 2020 13:26:20 -0400 (EDT)
+ with ESMTP id aUjx0bAEHTQK for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 27 Oct 2020 13:26:22 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4A84C4B33B
- for <kvmarm@lists.cs.columbia.edu>; Tue, 27 Oct 2020 13:26:20 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5E6084B4D5
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 27 Oct 2020 13:26:21 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D469E15AB;
- Tue, 27 Oct 2020 10:26:19 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 24709139F;
+ Tue, 27 Oct 2020 10:26:21 -0700 (PDT)
 Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CD1BE3F719;
- Tue, 27 Oct 2020 10:26:18 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1D4683F719;
+ Tue, 27 Oct 2020 10:26:20 -0700 (PDT)
 From: Alexandru Elisei <alexandru.elisei@arm.com>
 To: linux-arm-kernel@lists.infradead.org,
 	kvmarm@lists.cs.columbia.edu
-Subject: [RFC PATCH v3 04/16] arm64: Introduce CPU SPE feature
-Date: Tue, 27 Oct 2020 17:26:53 +0000
-Message-Id: <20201027172705.15181-5-alexandru.elisei@arm.com>
+Subject: [RFC PATCH v3 05/16] KVM: arm64: Introduce VCPU SPE feature
+Date: Tue, 27 Oct 2020 17:26:54 +0000
+Message-Id: <20201027172705.15181-6-alexandru.elisei@arm.com>
 X-Mailer: git-send-email 2.29.1
 In-Reply-To: <20201027172705.15181-1-alexandru.elisei@arm.com>
 References: <20201027172705.15181-1-alexandru.elisei@arm.com>
@@ -63,76 +64,25 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Detect Statistical Profiling Extension (SPE) support using the cpufeatures
-framework. The presence of SPE is reported via the ARM64_SPE capability.
-
-The feature will be necessary for emulating SPE in KVM, because KVM needs
-that all CPUs have SPE hardware to avoid scheduling a VCPU on a CPU without
-support. For this reason, the feature type ARM64_CPUCAP_SYSTEM_FEATURE has
-been selected to disallow hotplugging a CPU which doesn't support SPE.
+Introduce the feature bit, but don't allow userspace to set it yet.
 
 Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
 ---
- arch/arm64/include/asm/cpucaps.h |  3 ++-
- arch/arm64/kernel/cpufeature.c   | 24 ++++++++++++++++++++++++
- 2 files changed, 26 insertions(+), 1 deletion(-)
+ arch/arm64/include/uapi/asm/kvm.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/include/asm/cpucaps.h b/arch/arm64/include/asm/cpucaps.h
-index 42868dbd29fd..10fd094d9a5b 100644
---- a/arch/arm64/include/asm/cpucaps.h
-+++ b/arch/arm64/include/asm/cpucaps.h
-@@ -65,7 +65,8 @@
- #define ARM64_HAS_ARMv8_4_TTL			55
- #define ARM64_HAS_TLB_RANGE			56
- #define ARM64_MTE				57
-+#define ARM64_SPE				58
+diff --git a/arch/arm64/include/uapi/asm/kvm.h b/arch/arm64/include/uapi/asm/kvm.h
+index 1c17c3a24411..489e12304dbb 100644
+--- a/arch/arm64/include/uapi/asm/kvm.h
++++ b/arch/arm64/include/uapi/asm/kvm.h
+@@ -106,6 +106,7 @@ struct kvm_regs {
+ #define KVM_ARM_VCPU_SVE		4 /* enable SVE for this CPU */
+ #define KVM_ARM_VCPU_PTRAUTH_ADDRESS	5 /* VCPU uses address authentication */
+ #define KVM_ARM_VCPU_PTRAUTH_GENERIC	6 /* VCPU uses generic authentication */
++#define KVM_ARM_VCPU_SPE		7 /* Enable SPE for this CPU */
  
--#define ARM64_NCAPS				58
-+#define ARM64_NCAPS				59
- 
- #endif /* __ASM_CPUCAPS_H */
-diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-index dcc165b3fc04..4a0f4dc53824 100644
---- a/arch/arm64/kernel/cpufeature.c
-+++ b/arch/arm64/kernel/cpufeature.c
-@@ -1278,6 +1278,18 @@ has_useable_cnp(const struct arm64_cpu_capabilities *entry, int scope)
- 	return has_cpuid_feature(entry, scope);
- }
- 
-+static bool __maybe_unused
-+has_usable_spe(const struct arm64_cpu_capabilities *entry, int scope)
-+{
-+	u64 pmbidr;
-+
-+	if (!has_cpuid_feature(entry, scope))
-+		return false;
-+
-+	pmbidr = read_sysreg_s(SYS_PMBIDR_EL1);
-+	return !(pmbidr & BIT(SYS_PMBIDR_EL1_P_SHIFT));
-+}
-+
- /*
-  * This check is triggered during the early boot before the cpufeature
-  * is initialised. Checking the status on the local CPU allows the boot
-@@ -2003,6 +2015,18 @@ static const struct arm64_cpu_capabilities arm64_features[] = {
- 		.min_field_value = 1,
- 		.cpu_enable = cpu_enable_cnp,
- 	},
-+#endif
-+#ifdef CONFIG_ARM_SPE_PMU
-+	{
-+		.desc = "Statistical Profiling Extension (SPE)",
-+		.capability = ARM64_SPE,
-+		.type = ARM64_CPUCAP_SYSTEM_FEATURE,
-+		.matches = has_usable_spe,
-+		.sys_reg = SYS_ID_AA64DFR0_EL1,
-+		.sign = FTR_UNSIGNED,
-+		.field_pos = ID_AA64DFR0_PMSVER_SHIFT,
-+		.min_field_value = 1,
-+	},
- #endif
- 	{
- 		.desc = "Speculation barrier (SB)",
+ struct kvm_vcpu_init {
+ 	__u32 target;
 -- 
 2.29.1
 
