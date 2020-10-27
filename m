@@ -2,54 +2,51 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C18829C179
-	for <lists+kvmarm@lfdr.de>; Tue, 27 Oct 2020 18:26:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F3D329C17B
+	for <lists+kvmarm@lfdr.de>; Tue, 27 Oct 2020 18:26:26 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D45154B452;
-	Tue, 27 Oct 2020 13:26:22 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 02F2D4B3FA;
+	Tue, 27 Oct 2020 13:26:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7aDeOU7woLuj; Tue, 27 Oct 2020 13:26:22 -0400 (EDT)
+	with ESMTP id PJhghu9EYS5U; Tue, 27 Oct 2020 13:26:24 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8CB0B4B4CD;
-	Tue, 27 Oct 2020 13:26:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BCC654B3F8;
+	Tue, 27 Oct 2020 13:26:22 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 84A894B3E1
- for <kvmarm@lists.cs.columbia.edu>; Tue, 27 Oct 2020 13:26:18 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4F50D4B3EA
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 27 Oct 2020 13:26:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id AYgzI2ehtRhl for <kvmarm@lists.cs.columbia.edu>;
- Tue, 27 Oct 2020 13:26:17 -0400 (EDT)
+ with ESMTP id yaTflpP1IsoB for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 27 Oct 2020 13:26:20 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8215C4B3DB
- for <kvmarm@lists.cs.columbia.edu>; Tue, 27 Oct 2020 13:26:17 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D3F9F4B3D3
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 27 Oct 2020 13:26:18 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3577315AB;
- Tue, 27 Oct 2020 10:26:17 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9901115AD;
+ Tue, 27 Oct 2020 10:26:18 -0700 (PDT)
 Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E3BE83F719;
- Tue, 27 Oct 2020 10:26:15 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6EE093F719;
+ Tue, 27 Oct 2020 10:26:17 -0700 (PDT)
 From: Alexandru Elisei <alexandru.elisei@arm.com>
 To: linux-arm-kernel@lists.infradead.org,
 	kvmarm@lists.cs.columbia.edu
-Subject: [RFC PATCH v3 02/16] dt-bindings: ARM SPE: Highlight the need for PPI
- partitions on heterogeneous systems
-Date: Tue, 27 Oct 2020 17:26:51 +0000
-Message-Id: <20201027172705.15181-3-alexandru.elisei@arm.com>
+Subject: [RFC PATCH v3 03/16] KVM: arm64: Hide SPE from guests
+Date: Tue, 27 Oct 2020 17:26:52 +0000
+Message-Id: <20201027172705.15181-4-alexandru.elisei@arm.com>
 X-Mailer: git-send-email 2.29.1
 In-Reply-To: <20201027172705.15181-1-alexandru.elisei@arm.com>
 References: <20201027172705.15181-1-alexandru.elisei@arm.com>
 MIME-Version: 1.0
-Cc: maz@kernel.org, Sudeep Holla <sudeep.holla@arm.com>,
- Andrew Murray <andrew.murray@arm.com>, will@kernel.org
+Cc: maz@kernel.org, will@kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -66,37 +63,66 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+When SPE is not implemented, accesses to the SPE registers cause an
+undefined exception. KVM advertises the presence of SPE in the
+ID_AA64DFR0_EL1 register, but configures MDCR_EL2 to trap accesses to the
+registers and injects an undefined exception when that happens.
 
-It's not entirely clear from the binding document that the only way to
-express ARM SPE affined to a subset of CPUs on a heterogeneous systems is
-through the use of PPI partitions available in the interrupt controller
-bindings.
+The architecture doesn't allow trapping access to the PMBIDR_EL1 register,
+which means the guest will be able to read it even if SPE is not advertised
+in the ID register. However, since it's usually better for a read to
+unexpectedly succeed than to cause an exception, let's stop advertising the
+presence of SPE to guests to better match how KVM emulates the
+architecture.
 
-Let's make it clear.
-
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Andrew Murray <andrew.murray@arm.com>
 Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
 ---
- Documentation/devicetree/bindings/arm/spe-pmu.txt | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/sys_regs.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/arm/spe-pmu.txt b/Documentation/devicetree/bindings/arm/spe-pmu.txt
-index 93372f2a7df9..4f4815800f6e 100644
---- a/Documentation/devicetree/bindings/arm/spe-pmu.txt
-+++ b/Documentation/devicetree/bindings/arm/spe-pmu.txt
-@@ -9,8 +9,9 @@ performance sample data using an in-memory trace buffer.
- 	       "arm,statistical-profiling-extension-v1"
+diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+index d9117bc56237..aa776c006a2a 100644
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -244,6 +244,12 @@ static bool access_vm_reg(struct kvm_vcpu *vcpu,
+ 	return true;
+ }
  
- - interrupts : Exactly 1 PPI must be listed. For heterogeneous systems where
--               SPE is only supported on a subset of the CPUs, please consult
--	       the arm,gic-v3 binding for details on describing a PPI partition.
-+               SPE is only supported on a subset of the CPUs, a PPI partition
-+	       described in the arm,gic-v3 binding must be used to describe
-+	       the set of CPUs this interrupt is affine to.
++static unsigned int spe_visibility(const struct kvm_vcpu *vcpu,
++				   const struct sys_reg_desc *r)
++{
++	return REG_HIDDEN_GUEST | REG_HIDDEN_USER;
++}
++
+ static bool access_actlr(struct kvm_vcpu *vcpu,
+ 			 struct sys_reg_params *p,
+ 			 const struct sys_reg_desc *r)
+@@ -1143,6 +1149,8 @@ static u64 read_id_reg(const struct kvm_vcpu *vcpu,
+ 		val = cpuid_feature_cap_perfmon_field(val,
+ 						ID_AA64DFR0_PMUVER_SHIFT,
+ 						ID_AA64DFR0_PMUVER_8_1);
++		/* Don't advertise SPE to guests */
++		val &= ~(0xfUL << ID_AA64DFR0_PMSVER_SHIFT);
+ 	} else if (id == SYS_ID_DFR0_EL1) {
+ 		/* Limit guests to PMUv3 for ARMv8.1 */
+ 		val = cpuid_feature_cap_perfmon_field(val,
+@@ -1590,6 +1598,17 @@ static const struct sys_reg_desc sys_reg_descs[] = {
+ 	{ SYS_DESC(SYS_FAR_EL1), access_vm_reg, reset_unknown, FAR_EL1 },
+ 	{ SYS_DESC(SYS_PAR_EL1), NULL, reset_unknown, PAR_EL1 },
  
- ** Example:
++	{ SYS_DESC(SYS_PMSCR_EL1), .visibility = spe_visibility },
++	{ SYS_DESC(SYS_PMSICR_EL1), .visibility = spe_visibility },
++	{ SYS_DESC(SYS_PMSIRR_EL1), .visibility = spe_visibility },
++	{ SYS_DESC(SYS_PMSFCR_EL1), .visibility = spe_visibility },
++	{ SYS_DESC(SYS_PMSEVFR_EL1), .visibility = spe_visibility },
++	{ SYS_DESC(SYS_PMSLATFR_EL1), .visibility = spe_visibility },
++	{ SYS_DESC(SYS_PMSIDR_EL1), .visibility = spe_visibility },
++	{ SYS_DESC(SYS_PMBLIMITR_EL1), .visibility = spe_visibility },
++	{ SYS_DESC(SYS_PMBPTR_EL1), .visibility = spe_visibility },
++	{ SYS_DESC(SYS_PMBSR_EL1), .visibility = spe_visibility },
++
+ 	{ SYS_DESC(SYS_PMINTENSET_EL1), access_pminten, reset_unknown, PMINTENSET_EL1 },
+ 	{ SYS_DESC(SYS_PMINTENCLR_EL1), access_pminten, reset_unknown, PMINTENSET_EL1 },
  
 -- 
 2.29.1
