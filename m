@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C1622A0B60
-	for <lists+kvmarm@lfdr.de>; Fri, 30 Oct 2020 17:40:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 48C952A0B67
+	for <lists+kvmarm@lfdr.de>; Fri, 30 Oct 2020 17:40:37 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 513094B559;
-	Fri, 30 Oct 2020 12:40:33 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F00ED4B5A2;
+	Fri, 30 Oct 2020 12:40:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,45 +18,45 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id p68lJqdZQLuh; Fri, 30 Oct 2020 12:40:32 -0400 (EDT)
+	with ESMTP id yxJJZGCmixwU; Fri, 30 Oct 2020 12:40:34 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EFBC14B545;
-	Fri, 30 Oct 2020 12:40:29 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2D7084B590;
+	Fri, 30 Oct 2020 12:40:32 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8DD7B4B21C
- for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Oct 2020 12:40:28 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 36E934B21B
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Oct 2020 12:40:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id lHAsGvQtKqc0 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 30 Oct 2020 12:40:27 -0400 (EDT)
+ with ESMTP id 8DHsPO+PG6gk for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 30 Oct 2020 12:40:28 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 67A494B235
- for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Oct 2020 12:40:27 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0E9374B220
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Oct 2020 12:40:28 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 5942B2076E;
- Fri, 30 Oct 2020 16:40:26 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 14C5420A8B;
+ Fri, 30 Oct 2020 16:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1604076026;
- bh=C2KHtdO9bCq4PJbhH/iBlIoYeIiXNpTc5az68+9hcHQ=;
+ s=default; t=1604076027;
+ bh=aO4GPkhwFMp13Q20m0gqeo+N2mUl41ti48Pxp5IzoSE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=P9wJff+MXWAld7WxezhIEVfGNg+0Vc5V14Xl38wuL6ordof+JXD0ysCTMiVRhWzJ0
- 5fG85OCRSBTG/s/WOKdBpNNVXkZkd63tHgbutMIzCyagp0MUIWkhQ9xYFQd3iFcxiR
- Ow2ItBsgl8agM9N98sga4t1lOQ0/PvZKVvlYr5O4=
+ b=ekcBw1GeLqqs9vwF/sJFpZa7/tVvioeWhSigK4ooXlJxfHdqffkFaQjHRKsp90y8p
+ zkCyoj9cunNdRn7h5TfAFz6Wah9AyZ2zLBZSxORFj/Z3/Pqs3WZzQUhk3WfqYFyusK
+ ti2zdyDDHbAJwgdBn9kfq8UfQQoA6m82d9YmGVG8=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1kYXRw-005noK-I5; Fri, 30 Oct 2020 16:40:24 +0000
+ id 1kYXRx-005noK-9i; Fri, 30 Oct 2020 16:40:25 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 03/12] KVM: arm64: Drop useless PAN setting on host EL1 to EL2
- transition
-Date: Fri, 30 Oct 2020 16:40:08 +0000
-Message-Id: <20201030164017.244287-4-maz@kernel.org>
+Subject: [PATCH 04/12] KVM: arm64: Allocate stage-2 pgd pages with
+ GFP_KERNEL_ACCOUNT
+Date: Fri, 30 Oct 2020 16:40:09 +0000
+Message-Id: <20201030164017.244287-5-maz@kernel.org>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20201030164017.244287-1-maz@kernel.org>
 References: <20201030164017.244287-1-maz@kernel.org>
@@ -90,30 +90,34 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Setting PSTATE.PAN when entering EL2 on nVHE doesn't make much
-sense as this bit only means something for translation regimes
-that include EL0. This obviously isn't the case in the nVHE case,
-so let's drop this setting.
+From: Will Deacon <will@kernel.org>
 
+For consistency with the rest of the stage-2 page-table page allocations
+(performing using a kvm_mmu_memory_cache), ensure that __GFP_ACCOUNT is
+included in the GFP flags for the PGD pages.
+
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Vladimir Murzin <vladimir.murzin@arm.com>
-Link: https://lore.kernel.org/r/20201026095116.72051-4-maz@kernel.org
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Quentin Perret <qperret@google.com>
+Link: https://lore.kernel.org/r/20201026144423.24683-1-will@kernel.org
 ---
- arch/arm64/kvm/hyp/nvhe/host.S | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm64/kvm/hyp/pgtable.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/hyp/nvhe/host.S b/arch/arm64/kvm/hyp/nvhe/host.S
-index ff9a0f547b9f..ed27f06a31ba 100644
---- a/arch/arm64/kvm/hyp/nvhe/host.S
-+++ b/arch/arm64/kvm/hyp/nvhe/host.S
-@@ -17,8 +17,6 @@ SYM_FUNC_START(__host_exit)
+diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
+index 0cdf6e461cbd..95141b0d6088 100644
+--- a/arch/arm64/kvm/hyp/pgtable.c
++++ b/arch/arm64/kvm/hyp/pgtable.c
+@@ -846,7 +846,7 @@ int kvm_pgtable_stage2_init(struct kvm_pgtable *pgt, struct kvm *kvm)
+ 	u32 start_level = VTCR_EL2_TGRAN_SL0_BASE - sl0;
  
- 	get_host_ctxt	x0, x1
- 
--	ALTERNATIVE(nop, SET_PSTATE_PAN(1), ARM64_HAS_PAN, CONFIG_ARM64_PAN)
--
- 	/* Store the host regs x2 and x3 */
- 	stp	x2, x3,   [x0, #CPU_XREG_OFFSET(2)]
+ 	pgd_sz = kvm_pgd_pages(ia_bits, start_level) * PAGE_SIZE;
+-	pgt->pgd = alloc_pages_exact(pgd_sz, GFP_KERNEL | __GFP_ZERO);
++	pgt->pgd = alloc_pages_exact(pgd_sz, GFP_KERNEL_ACCOUNT | __GFP_ZERO);
+ 	if (!pgt->pgd)
+ 		return -ENOMEM;
  
 -- 
 2.28.0
