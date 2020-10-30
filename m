@@ -2,54 +2,75 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7ECA12A0A97
-	for <lists+kvmarm@lfdr.de>; Fri, 30 Oct 2020 17:00:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C32D32A0B5E
+	for <lists+kvmarm@lfdr.de>; Fri, 30 Oct 2020 17:40:31 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1E8734B576;
-	Fri, 30 Oct 2020 12:00:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 491A24B235;
+	Fri, 30 Oct 2020 12:40:31 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0afvEBy4+fC8; Fri, 30 Oct 2020 12:00:58 -0400 (EDT)
+	with ESMTP id dxqsx-s1jWPR; Fri, 30 Oct 2020 12:40:30 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E5A344B57F;
-	Fri, 30 Oct 2020 12:00:56 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BD6C04B35A;
+	Fri, 30 Oct 2020 12:40:29 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 41B6D4B579
- for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Oct 2020 12:00:55 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B652B4B249
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Oct 2020 12:40:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ZiPC+oH9aNp4 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 30 Oct 2020 12:00:53 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E38394B559
- for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Oct 2020 12:00:53 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 93CCD1435;
- Fri, 30 Oct 2020 09:00:53 -0700 (PDT)
-Received: from [192.168.0.110] (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id F3CA13F719;
- Fri, 30 Oct 2020 09:00:52 -0700 (PDT)
-Subject: Re: [kvm-unit-tests RFC PATCH v2 0/5] arm64: Statistical Profiling
- Extension Tests
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
-References: <20201027171944.13933-1-alexandru.elisei@arm.com>
-Message-ID: <a231b40f-ff99-1529-387b-d9708862cc62@arm.com>
-Date: Fri, 30 Oct 2020 16:02:06 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+ with ESMTP id gJIN42iniIfX for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 30 Oct 2020 12:40:26 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7CCAF4B21C
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Oct 2020 12:40:26 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 692BA20756;
+ Fri, 30 Oct 2020 16:40:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1604076025;
+ bh=5IdJB+vSy9WtqFoTUhuMK/Ne2TdAtmbDZodcpICYmnU=;
+ h=From:To:Cc:Subject:Date:From;
+ b=mY2QczB+bo87U8fMn7qv4VHllqSccKIUuhsW02/aX4Yuj8hqMHxzWIpI/pbvM9juv
+ TIJ34uxNPzi5eMZdtSGLXP7Rq5BKtOojZdB/xkk1SA9Aoe32WIxPEu2mkS0OK998DC
+ PcLczwkdcqVxVXvgyHHQBRK9HdIjhMRqE5f0cSfs=
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1kYXRu-005noK-96; Fri, 30 Oct 2020 16:40:22 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Subject: [GIT PULL] KVM/arm64 fixes for 5.10, take #1
+Date: Fri, 30 Oct 2020 16:40:05 +0000
+Message-Id: <20201030164017.244287-1-maz@kernel.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-In-Reply-To: <20201027171944.13933-1-alexandru.elisei@arm.com>
-Content-Language: en-US
-Cc: pbonzini@redhat.com
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: pbonzini@redhat.com, dbrazdil@google.com, gshan@redhat.com,
+ james.morse@arm.com, mark.rutland@arm.com, qais.yousef@arm.com,
+ qperret@google.com, sashukla@nvidia.com, vladimir.murzin@arm.com,
+ will@kernel.org, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
+ kernel-team@android.com, kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvm@vger.kernel.org, kernel-team@android.com, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, Will Deacon <will@kernel.org>,
+ Qais Yousef <qais.yousef@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -66,59 +87,87 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi,
+[Apologies for the spam, I appear to have forgotten to Cc the lists in
+ my initial posting]
 
-Adding Andrew to CC list, somehow I forgot, sorry for that.
+Hi Paolo,
 
-Thanks,
+It was good to see you (and everyone else) at KVM Forum this week!
 
-Alex
+And to celebrate, here's a first batch of fixes for KVM/arm64. A bunch
+of them are addressing issues introduced by the invasive changes that
+took place in the 5.10 merge window (MM, nVHE host entry). A few
+others are addressing some older bugs (VFIO PTE mappings, AArch32
+debug, composite huge pages), and a couple of improvements
+(HYP-visible capabilities are made more robust).
 
-On 10/27/20 5:19 PM, Alexandru Elisei wrote:
-> This series implements two basic tests for KVM SPE: one that checks that
-> the reported features match what is specified in the architecture,
-> implemented in patch #3 ("arm64: spe: Add introspection test"), and another
-> test that checks that the buffer management interrupt is asserted
-> correctly, implemented in patch #5 ("am64: spe: Add buffer test"). The rest
-> of the patches are either preparatory patches, or a fix, in the case of
-> patch #2 ("lib/{bitops,alloc_page}.h: Add missing headers").
->
-> This series builds on Eric's initial version [1], to which I've added the
-> buffer tests that I used while developing SPE support for KVM.
->
-> KVM SPE support is current in RFC phase, hence why this series is also sent
-> as RFC. The KVM patches needed for the tests to work can be found at [2].
-> Userspace support is also necessary, which I've implemented for kvmtool;
-> this can be found at [3]. This series is also available in a repo [4] to make
-> testing easier.
->
-> [1] https://www.spinics.net/lists/kvm/msg223792.html
-> [2] https://gitlab.arm.com/linux-arm/linux-ae/-/tree/kvm-spe-v3
-> [3] https://gitlab.arm.com/linux-arm/kvmtool-ae/-/tree/kvm-spe-v3
-> [4] https://gitlab.arm.com/linux-arm/kvm-unit-tests-ae/-/tree/kvm-spe-v2
->
-> Alexandru Elisei (3):
->   lib/{bitops,alloc_page}.h: Add missing headers
->   lib: arm/arm64: Add function to unmap a page
->   am64: spe: Add buffer test
->
-> Eric Auger (2):
->   arm64: Move get_id_aa64dfr0() in processor.h
->   arm64: spe: Add introspection test
->
->  arm/Makefile.arm64        |   1 +
->  lib/arm/asm/mmu-api.h     |   1 +
->  lib/arm64/asm/processor.h |   5 +
->  lib/alloc_page.h          |   2 +
->  lib/bitops.h              |   2 +
->  lib/libcflat.h            |   1 +
->  lib/arm/mmu.c             |  32 +++
->  arm/pmu.c                 |   1 -
->  arm/spe.c                 | 506 ++++++++++++++++++++++++++++++++++++++
->  arm/unittests.cfg         |  15 ++
->  10 files changed, 565 insertions(+), 1 deletion(-)
->  create mode 100644 arm/spe.c
->
+Please pull,
+
+	M.
+
+The following changes since commit 4e5dc64c43192b4fd4c96ac150a8f013065f5f5b:
+
+  Merge branches 'kvm-arm64/pt-new' and 'kvm-arm64/pmu-5.9' into kvmarm-master/next (2020-10-02 09:25:55 +0100)
+
+are available in the Git repository at:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git tags/kvmarm-fixes-5.10-1
+
+for you to fetch changes up to 22f553842b14a1289c088a79a67fb479d3fa2a4e:
+
+  KVM: arm64: Handle Asymmetric AArch32 systems (2020-10-30 16:06:22 +0000)
+
+----------------------------------------------------------------
+KVM/arm64 fixes for 5.10, take #1
+
+- Force PTE mapping on device pages provided via VFIO
+- Fix detection of cacheable mapping at S2
+- Fallback to PMD/PTE mappings for composite huge pages
+- Fix accounting of Stage-2 PGD allocation
+- Fix AArch32 handling of some of the debug registers
+- Simplify host HYP entry
+- Fix stray pointer conversion on nVHE TLB invalidation
+- Fix initialization of the nVHE code
+- Simplify handling of capabilities exposed to HYP
+- Nuke VCPUs caught using a forbidden AArch32 EL0
+
+----------------------------------------------------------------
+Gavin Shan (1):
+      KVM: arm64: Use fallback mapping sizes for contiguous huge page sizes
+
+Marc Zyngier (4):
+      KVM: arm64: Don't corrupt tpidr_el2 on failed HVC call
+      KVM: arm64: Remove leftover kern_hyp_va() in nVHE TLB invalidation
+      KVM: arm64: Drop useless PAN setting on host EL1 to EL2 transition
+      KVM: arm64: Fix AArch32 handling of DBGD{CCINT,SCRext} and DBGVCR
+
+Mark Rutland (3):
+      KVM: arm64: Factor out is_{vhe,nvhe}_hyp_code()
+      arm64: cpufeature: reorder cpus_have_{const, final}_cap()
+      arm64: cpufeature: upgrade hyp caps to final
+
+Qais Yousef (1):
+      KVM: arm64: Handle Asymmetric AArch32 systems
+
+Santosh Shukla (1):
+      KVM: arm64: Force PTE mapping on fault resulting in a device mapping
+
+Will Deacon (2):
+      KVM: arm64: Allocate stage-2 pgd pages with GFP_KERNEL_ACCOUNT
+      KVM: arm64: Fix masks in stage2_pte_cacheable()
+
+ arch/arm64/include/asm/cpufeature.h | 40 ++++++++++++++++++++++++++++---------
+ arch/arm64/include/asm/kvm_host.h   |  1 +
+ arch/arm64/include/asm/virt.h       |  9 ++++-----
+ arch/arm64/kernel/image-vars.h      |  1 -
+ arch/arm64/kvm/arm.c                | 19 ++++++++++++++++++
+ arch/arm64/kvm/hyp/nvhe/host.S      |  2 --
+ arch/arm64/kvm/hyp/nvhe/hyp-init.S  | 23 ++++++++++++++-------
+ arch/arm64/kvm/hyp/nvhe/tlb.c       |  1 -
+ arch/arm64/kvm/hyp/pgtable.c        |  4 ++--
+ arch/arm64/kvm/mmu.c                | 27 ++++++++++++++++++-------
+ arch/arm64/kvm/sys_regs.c           |  6 +++---
+ 11 files changed, 96 insertions(+), 37 deletions(-)
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
