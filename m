@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5991429F6A8
-	for <lists+kvmarm@lfdr.de>; Thu, 29 Oct 2020 22:09:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 797D729FF89
+	for <lists+kvmarm@lfdr.de>; Fri, 30 Oct 2020 09:19:01 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0D7834B689;
-	Thu, 29 Oct 2020 17:09:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E7B734B385;
+	Fri, 30 Oct 2020 04:19:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,58 +18,47 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Unq0bJICz9yg; Thu, 29 Oct 2020 17:09:34 -0400 (EDT)
+	with ESMTP id v8RQhy7Nnhnc; Fri, 30 Oct 2020 04:19:00 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 86FD74B687;
-	Thu, 29 Oct 2020 17:09:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C19194B344;
+	Fri, 30 Oct 2020 04:18:59 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3AA174B688
- for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Oct 2020 17:09:31 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 302B34B319
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Oct 2020 04:18:58 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id kxG9gzLbj4Ql for <kvmarm@lists.cs.columbia.edu>;
- Thu, 29 Oct 2020 17:09:30 -0400 (EDT)
+ with ESMTP id 6-XWfwrjGWjC for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 30 Oct 2020 04:18:55 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 464C44B4A4
- for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Oct 2020 17:09:30 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 2E50020790;
- Thu, 29 Oct 2020 21:09:28 +0000 (UTC)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 715FF4B20D
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Oct 2020 04:18:55 -0400 (EDT)
+Received: from willie-the-truck (236.31.169.217.in-addr.arpa [217.169.31.236])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
+ bits)) (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id E267022228;
+ Fri, 30 Oct 2020 08:18:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1604005768;
- bh=eJNmaxxN3bpRjg/8DkkzFyp4/7A6NSEBbr9xR4ejjE8=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=IsYLpf76qsMNEqFoOKshdSo4uaeuSbwQmfqFl9ir6v9gNLijgXteca4AX2b/Knh8c
- n8bTR+8mtT/1eIEtYD5yYp/LNS2bUoWcBPYzf0TiJTK0yJ5+LEFDUlXw3Fri5/Lqmd
- Njr0fvtOotvzhVPV9WeCEpAAmVsL7YyE+B1gjqEs=
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=wait-a-minute.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1kYFAk-005YNy-Az; Thu, 29 Oct 2020 21:09:26 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: kvmarm@lists.cs.columbia.edu, Gavin Shan <gshan@redhat.com>,
- Will Deacon <will@kernel.org>
-Subject: Re: [PATCH] KVM: arm64: Fix masks in stage2_pte_cacheable()
-Date: Thu, 29 Oct 2020 21:09:18 +0000
-Message-Id: <160400571841.9348.3202358449739872177.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20201029144716.30476-1-will@kernel.org>
-References: <20201029144716.30476-1-will@kernel.org>
+ s=default; t=1604045934;
+ bh=8rOcJqln/miOd3/MTJuG+pTgP9+bOBD+gWzstFD1mIM=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=ok+t6cFVSMvk9yCZJUphhwuMgW5HqneTdZkqc8rrov4e+TPjUe+KKm/vcUm3yiNoz
+ n2v2L0HScgM/Lsuc0pRl8LBkOzajKkNYM0jV+ZvlnCiRqpX3R7dB6PzHdVNuIm4bAt
+ 4HsJJaGhdJml2f8sOgLByYLUzmFq7z1S6ZylWjIU=
+Date: Fri, 30 Oct 2020 08:18:49 +0000
+From: Will Deacon <will@kernel.org>
+To: Mark Rutland <mark.rutland@arm.com>
+Subject: Re: [PATCHv2 2/3] arm64: cpufeature: reorder
+ cpus_have_{const,final}_cap()
+Message-ID: <20201030081848.GB32066@willie-the-truck>
+References: <20201026134931.28246-1-mark.rutland@arm.com>
+ <20201026134931.28246-3-mark.rutland@arm.com>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, gshan@redhat.com,
- will@kernel.org, shan.gavin@gmail.com, linux-kernel@vger.kernel.org,
- kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com, linux-kernel@vger.kernel.org, shan.gavin@gmail.com
+Content-Disposition: inline
+In-Reply-To: <20201026134931.28246-3-mark.rutland@arm.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: maz@kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -86,28 +75,57 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, 29 Oct 2020 14:47:16 +0000, Will Deacon wrote:
-> stage2_pte_cacheable() tries to figure out whether the mapping installed
-> in its 'pte' parameter is cacheable or not. Unfortunately, it fails
-> miserably because it extracts the memory attributes from the entry using
-> FIELD_GET(), which returns the attributes shifted down to bit 0, but then
-> compares this with the unshifted value generated by the PAGE_S2_MEMATTR()
-> macro.
+On Mon, Oct 26, 2020 at 01:49:30PM +0000, Mark Rutland wrote:
+> In a subsequent patch we'll modify cpus_have_const_cap() to call
+> cpus_have_final_cap(), and hence we need to define cpus_have_final_cap()
+> first.
 > 
-> [...]
+> To make subsequent changes easier to follow, this patch reorders the two
+> without making any other changes.
+> 
+> There should be no functional change as a result of this patch.
 
-Applied to next, thanks!
+You say this...
 
-[1/1] KVM: arm64: Fix masks in stage2_pte_cacheable()
-      commit: e2fc6a9f686d037cbd9b08b9fb657685b4a722d3
+> 
+> Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+> Cc: David Brazdil <dbrazdil@google.com>
+> Cc: Marc Zyngier <maz@kernel.org>
+> Cc: Will Deacon <will@kernel.org>
+> ---
+>  arch/arm64/include/asm/cpufeature.h | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/arch/arm64/include/asm/cpufeature.h b/arch/arm64/include/asm/cpufeature.h
+> index f7e7144af174c..5d18c54507e6a 100644
+> --- a/arch/arm64/include/asm/cpufeature.h
+> +++ b/arch/arm64/include/asm/cpufeature.h
+> @@ -428,35 +428,35 @@ static __always_inline bool __cpus_have_const_cap(int num)
+>  }
+>  
+>  /*
+> - * Test for a capability, possibly with a runtime check.
+> + * Test for a capability without a runtime check.
+>   *
+> - * Before capabilities are finalized, this behaves as cpus_have_cap().
+> + * Before capabilities are finalized, this will BUG().
+>   * After capabilities are finalized, this is patched to avoid a runtime check.
+>   *
+>   * @num must be a compile-time constant.
+>   */
+> -static __always_inline bool cpus_have_const_cap(int num)
+> +static __always_inline bool cpus_have_final_cap(int num)
+>  {
+>  	if (system_capabilities_finalized())
+>  		return __cpus_have_const_cap(num);
+>  	else
+> -		return cpus_have_cap(num);
+> +		BUG();
 
-Cheers,
+... but isn't the failure case of calling cpus_have_final_cap() early now
+different? What does BUG() do at EL2 w/ nVHE?
 
-	M.
--- 
-Without deviation from the norm, progress is not possible.
-
-
+Will
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
