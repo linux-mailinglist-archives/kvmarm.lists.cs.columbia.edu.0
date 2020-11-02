@@ -2,75 +2,74 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C19512A263B
-	for <lists+kvmarm@lfdr.de>; Mon,  2 Nov 2020 09:38:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DEC9D2A2705
+	for <lists+kvmarm@lfdr.de>; Mon,  2 Nov 2020 10:29:49 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5C04C4B5FE;
-	Mon,  2 Nov 2020 03:38:50 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 67AA54B5F9;
+	Mon,  2 Nov 2020 04:29:49 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xFXFmvfQgwPy; Mon,  2 Nov 2020 03:38:50 -0500 (EST)
+	with ESMTP id gdczoHcVDv4i; Mon,  2 Nov 2020 04:29:49 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 474764B5F3;
-	Mon,  2 Nov 2020 03:38:49 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 48A814B5CD;
+	Mon,  2 Nov 2020 04:29:48 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E2A994B5E1
- for <kvmarm@lists.cs.columbia.edu>; Mon,  2 Nov 2020 03:38:47 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CE8004B59E
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  2 Nov 2020 04:29:46 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id P4RJl49bL7aG for <kvmarm@lists.cs.columbia.edu>;
- Mon,  2 Nov 2020 03:38:47 -0500 (EST)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 018114B5DE
- for <kvmarm@lists.cs.columbia.edu>; Mon,  2 Nov 2020 03:38:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1604306326;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=iKprBlRGMj1c6o4rrrCoX/rFjaOYaPOS8vcmwCUOrZI=;
- b=N5YUJBbnZ5hlZDtM4FC4wdhUXsgBAi+fpA73fzINA7pDkM2owsu4eiiEbNIP3Y6QHVQx5C
- gBBqCeBvC5gL6dOjVT541EXh7jAuTy6eUgDzUm1+IB1yqPAWk41XIAGztgzEmtplE46vrU
- 4qDJ61Y7SZpWbYSeYYhk7N2LOvyTBhs=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-129-p-ZdT5QJPvGRJvwdzpI1sg-1; Mon, 02 Nov 2020 03:38:43 -0500
-X-MC-Unique: p-ZdT5QJPvGRJvwdzpI1sg-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com
- [10.5.11.22])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ with ESMTP id kGKaFGytBD4N for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  2 Nov 2020 04:29:45 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 766CF4B589
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  2 Nov 2020 04:29:45 -0500 (EST)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id DB8B66414D;
- Mon,  2 Nov 2020 08:38:41 +0000 (UTC)
-Received: from kamzik.brq.redhat.com (unknown [10.40.193.222])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id B8D1E1002C13;
- Mon,  2 Nov 2020 08:38:36 +0000 (UTC)
-Date: Mon, 2 Nov 2020 09:38:33 +0100
-From: Andrew Jones <drjones@redhat.com>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH 3/4] KVM: selftests: Update aarch64 get-reg-list blessed
- list
-Message-ID: <20201102083833.zjqrlmyvwfir2du4@kamzik.brq.redhat.com>
-References: <20201029201703.102716-1-drjones@redhat.com>
- <20201029201703.102716-4-drjones@redhat.com>
- <875z6qdy63.wl-maz@kernel.org>
+ by mail.kernel.org (Postfix) with ESMTPSA id 0E8692223C;
+ Mon,  2 Nov 2020 09:29:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1604309384;
+ bh=T/El0ov3kcySGtqMdNf16TinqhVt5VEHPjes7JQw5rQ=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=UOBhySJ2dtH28uNtKBxC0sR3S37pa5BzAUK9U+yfl3yZ0LqGDNbfTj27LbE8KIjb0
+ 4h0S0pOQTUW2ibzMnxAJhIHZSvSVXnSFmViA46FR8qorFbEJCl2y1M3ygBKh0xwOb+
+ L8zuGMRsrizn+MsKTeLXuFKWSEjnGboaZ4l8hUYw=
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1kZW9l-006c7H-VB; Mon, 02 Nov 2020 09:29:42 +0000
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <875z6qdy63.wl-maz@kernel.org>
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
-Cc: kvm@vger.kernel.org, Dave.Martin@arm.com, pbonzini@redhat.com,
- kvmarm@lists.cs.columbia.edu
+Date: Mon, 02 Nov 2020 09:29:41 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: Peng Liang <liangpeng10@huawei.com>
+Subject: Re: VM live migration failed from Linux v5.9 to Linux v5.10-rc1
+In-Reply-To: <05de753e-1845-e23f-7ab2-eaa8d53f0ac5@huawei.com>
+References: <5ade34aa-e725-93e8-7b28-83fb25dcf896@huawei.com>
+ <87blgieddu.wl-maz@kernel.org>
+ <05de753e-1845-e23f-7ab2-eaa8d53f0ac5@huawei.com>
+User-Agent: Roundcube Webmail/1.4.9
+Message-ID: <eaeb38babfd8ba77d4bd09ffeb7622e9@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: liangpeng10@huawei.com, kvmarm@lists.cs.columbia.edu,
+ xiexiangyou@huawei.com, will@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -82,72 +81,76 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Sat, Oct 31, 2020 at 06:53:56PM +0000, Marc Zyngier wrote:
-> On Thu, 29 Oct 2020 20:17:02 +0000,
-> Andrew Jones <drjones@redhat.com> wrote:
-> > 
-> > The new registers come from the following commits:
-> > 
-> > commit 99adb567632b ("KVM: arm/arm64: Add save/restore support for
-> > firmware workaround state")
-> > 
-> > commit c773ae2b3476 ("KVM: arm64: Save/Restore guest DISR_EL1")
-> > 
-> > commit 03fdfb269009 ("KVM: arm64: Don't write junk to sysregs on reset")
-> > 
-> > The last commit, which adds ARM64_SYS_REG(3, 3, 9, 12, 0) (PMCR_EL0),
-> > and was committed for v5.3, doesn't indicate in its commit message that
-> > enumerating it for save/restore was the plan, so doing so may have
-> > been by accident.
+On 2020-11-02 03:12, Peng Liang wrote:
+> Hi Marc,
+> Sorry for my late reply.
 > 
-> It definitely was.
+> On 10/31/2020 9:25 PM, Marc Zyngier wrote:
+>> Hi Peng,
+>> 
+>> [+Will, as we hacked the new ECE (Ectoplasmic Control Enclosure) 
+>> together]
+>> 
+>> On Sat, 31 Oct 2020 07:03:02 +0000,
+>> Peng Liang <liangpeng10@huawei.com> wrote:
+>>> 
+>>> [...]
+>>> 
+>>> I found that the different register and the different field between
+>>> source and destination is ID_AA64PFR0_EL1.CSV2. I searched in git log
+>>> and found that the commit e1026237f9067 ("KVM: arm64: Set CSV2 for
+>>> guests on hardware unaffected by Spectre-v2") may be the cause of the
+>>> failure?
+>> 
+>> Thanks for the thorough analysis. Yes, this could well be the issue if
+>> CSV2 isn't explicitly set at the source, and is now set on the target.
+>> For confirmation, what is the value of ID_AA64PFR0_EL1.CSV2 on the
+>> host?  What does /sys/devices/system/cpu/vulnerabilities/spectre_v2
+>> contain?
 > 
-> > It's a good idea anyway, though, since the other PMU registers have
-> > been enumerated since v4.10.
-> 
-> Quite. The state of the PMU is pretty much unknown on restore until then.
-> 
-> > 
-> > Signed-off-by: Andrew Jones <drjones@redhat.com>
-> > ---
-> >  tools/testing/selftests/kvm/aarch64/get-reg-list.c | 8 +++++++-
-> >  1 file changed, 7 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/tools/testing/selftests/kvm/aarch64/get-reg-list.c b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
-> > index 3aeb3de780a1..3ff097f6886e 100644
-> > --- a/tools/testing/selftests/kvm/aarch64/get-reg-list.c
-> > +++ b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
-> > @@ -352,7 +352,8 @@ int main(int ac, char **av)
-> >  }
-> >  
-> >  /*
-> > - * The current blessed list comes from kernel version v4.15 with --core-reg-fixup
-> > + * The current blessed list was primed with the output of kernel version
-> > + * v4.15 with --core-reg-fixup and then later updated with new registers.
-> 
-> Maybe have a reference to the last kernel version this was checked
-> against? Either here or in the commit message?
+> On host:
+>   ID_AA64PFR0_EL1.CSV2: 0
+>   /sys/devices/system/cpu/vulnerabilities/spectre_v2: Not affected
 
-Good idea. I'll put it in the comment in list form, encouraging the list
-to be continued as we add more.
-
-Thanks,
-drew
+Right. I guess this system supports WA1 and reports "not affected".
 
 > 
-> Thanks,
+>> 
+>>> So do we need to make it possible to migrate VMs between Linux v5.9 
+>>> and
+>>> Linux v5.10-rc1 with QEMU?
+>> 
+>> We should fix the migration from 5.9 to 5.10. I don't plan to support
+>> migrating in the other direction, which is consistent with new sysregs
+>> and features appearing in the sysreg space over time (although I would
+>> expect 5.9 -> 5.10 -> 5.9 to work once we fix this issue).
 > 
-> 	M.
-> 
-> -- 
-> Without deviation from the norm, progress is not possible.
-> 
+> BTW, there always be new sysregs/features introduced to kernel over
+> time.  If that happened, do we need to make migration successful from a
+> older version without the new sysregs/features?  I think there is no
+> reason to not allow migration from old version to new version if the
+> source end and the destination end have the same hardware just because
+> old version doesn't expose some sysregs/features to guest but new
+> version does.
 
+What if kernel 5.11 adds unconditional support for a feature and that
+results in a new sysreg gets exposed? How do you plan to restore this
+guest on 5.10?
+
+In may work in limited cases, but it doesn't in general. To make that
+work, you'd need to implement some explicit buy-in from userspace on
+each and every feature that gets added to the hypervisor. This is
+completely impractical, and I have no desire to support it.
+
+
+         M.
+-- 
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
