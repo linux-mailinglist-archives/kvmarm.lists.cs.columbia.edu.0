@@ -2,77 +2,72 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3136B2A46FB
-	for <lists+kvmarm@lfdr.de>; Tue,  3 Nov 2020 14:52:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6310D2A4C75
+	for <lists+kvmarm@lfdr.de>; Tue,  3 Nov 2020 18:14:59 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C09BE4B31D;
-	Tue,  3 Nov 2020 08:52:58 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D88004B463;
+	Tue,  3 Nov 2020 12:14:58 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Kf3jN7N3yVue; Tue,  3 Nov 2020 08:52:58 -0500 (EST)
+	with ESMTP id LuacT3su8GK5; Tue,  3 Nov 2020 12:14:58 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B1A824B365;
-	Tue,  3 Nov 2020 08:52:57 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CE4904B41C;
+	Tue,  3 Nov 2020 12:14:57 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9CEE54B343
- for <kvmarm@lists.cs.columbia.edu>; Tue,  3 Nov 2020 08:52:55 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 92AFE4B414
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  3 Nov 2020 12:14:56 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id w3RrkNQR8hwY for <kvmarm@lists.cs.columbia.edu>;
- Tue,  3 Nov 2020 08:52:54 -0500 (EST)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [63.128.21.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 997ED4B31D
- for <kvmarm@lists.cs.columbia.edu>; Tue,  3 Nov 2020 08:52:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1604411574;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5s1o/DGi//7okuKPAs+fgFfyMIVMys/OQo4UThSJDlY=;
- b=PbFtpAX32lxhfepdjpgTw5tYshlqNeDTt8GiVcYBbOMo3iDF6uKrgLZKXkTzfTKjl2wFoo
- XUHpID0sLcn+hTKPCbpNsK2YBXZ8IbKghWZvNgelUnEdHuCJOeOZttK4G4zJY3CVEm9KRg
- ZNYAipfJL6To5N7tb0eaPUr1JZBXtKI=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-112-MD1kglPSMuqrJbfSPRE1yA-1; Tue, 03 Nov 2020 08:52:50 -0500
-X-MC-Unique: MD1kglPSMuqrJbfSPRE1yA-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.phx2.redhat.com
- [10.5.11.15])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ with ESMTP id ytTH8Pt+Is2L for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  3 Nov 2020 12:14:53 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BA6EB4B2B9
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  3 Nov 2020 12:14:53 -0500 (EST)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 3E6396D242;
- Tue,  3 Nov 2020 13:52:49 +0000 (UTC)
-Received: from kamzik.brq.redhat.com (unknown [10.40.193.252])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id B41186266E;
- Tue,  3 Nov 2020 13:52:47 +0000 (UTC)
-Date: Tue, 3 Nov 2020 14:52:44 +0100
-From: Andrew Jones <drjones@redhat.com>
-To: Dave Martin <Dave.Martin@arm.com>
-Subject: Re: [PATCH v2 0/3] KVM: arm64: Fix get-reg-list regression
-Message-ID: <20201103135244.bbgpp2b33mlqpan4@kamzik.brq.redhat.com>
-References: <20201102185037.49248-1-drjones@redhat.com>
- <20201103113726.GJ6882@arm.com>
+ by mail.kernel.org (Postfix) with ESMTPSA id 4FA8C20E65;
+ Tue,  3 Nov 2020 17:14:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1604423692;
+ bh=6+qWLb2RuYMP6Lh4W5V8A6bsv6YMBX9ny8ju+VAAdW0=;
+ h=From:To:Cc:Subject:Date:From;
+ b=c6PdVPRRjCGBWTLYuOFAf1qeWgIZ2ltAw/wGAgbd4g0BbkiOImKrkusWHZw8fFk7a
+ 4LJ9vA+G/dU29gHYkLy0oL/KLttVC9huKkE5mBtOFfpajFY92HGKCnvbRZm2kipzjq
+ vFzRxMgMlwEQJA3PWPB22JZBPxaiACJFr1gFv7AA=
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1kZztS-007CyW-4V; Tue, 03 Nov 2020 17:14:50 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
+Subject: [PATCH 0/3] KVM: arm64: Another set of CSV2-related fixes
+Date: Tue,  3 Nov 2020 17:14:42 +0000
+Message-Id: <20201103171445.271195-1-maz@kernel.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-In-Reply-To: <20201103113726.GJ6882@arm.com>
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=drjones@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Disposition: inline
-Cc: maz@kernel.org, xu910121@sina.com, kvmarm@lists.cs.columbia.edu
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, liangpeng10@huawei.com, will@kernel.org,
+ james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
+ kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Will Deacon <will@kernel.org>, kernel-team@android.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -84,42 +79,37 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-T24gVHVlLCBOb3YgMDMsIDIwMjAgYXQgMTE6Mzc6MjdBTSArMDAwMCwgRGF2ZSBNYXJ0aW4gd3Jv
-dGU6Cj4gT24gTW9uLCBOb3YgMDIsIDIwMjAgYXQgMDc6NTA6MzRQTSArMDEwMCwgQW5kcmV3IEpv
-bmVzIHdyb3RlOgo+ID4g5byg5Lic5petIDx4dTkxMDEyMUBzaW5hLmNvbT4gcmVwb3J0ZWQgYSBy
-ZWdyZXNzaW9uIHNlZW4gd2l0aCBDZW50T1MKPiA+IHdoZW4gbWlncmF0aW5nIGZyb20gYW4gb2xk
-IGtlcm5lbCB0byBhIG5ldyBvbmUuIFRoZSBwcm9ibGVtIHdhcwo+ID4gdGhhdCBRRU1VIHJlamVj
-dGVkIHRoZSBtaWdyYXRpb24gc2luY2UgS1ZNX0dFVF9SRUdfTElTVCByZXBvcnRlZAo+ID4gYSBy
-ZWdpc3RlciB3YXMgbWlzc2luZyBvbiB0aGUgZGVzdGluYXRpb24uIEV4dHJhIHJlZ2lzdGVycyBh
-cmUgT0sKPiA+IG9uIHRoZSBkZXN0aW5hdGlvbiwgYnV0IG5vdCBtaXNzaW5nIG9uZXMuIFRoZSBy
-ZWdyZXNzaW9uIHJlcHJvZHVjZXMKPiA+IHdpdGggdXBzdHJlYW0ga2VybmVscyB3aGVuIG1pZ3Jh
-dGluZyBmcm9tIGEgNC4xNSBvciBsYXRlciBrZXJuZWwsCj4gPiB1cCB0byBvbmUgd2l0aCBjb21t
-aXQgNzM0MzM3NjJmY2FlICgiS1ZNOiBhcm02NC9zdmU6IFN5c3RlbSByZWdpc3Rlcgo+ID4gY29u
-dGV4dCBzd2l0Y2ggYW5kIGFjY2VzcyBzdXBwb3J0IiksIHRvIGEga2VybmVsIHRoYXQgaW5jbHVk
-ZXMgdGhhdAo+ID4gY29tbWl0LCBlLmcuIHRoZSBsYXRlc3QgbWFpbmxpbmUgKDUuMTAtcmMyKS4K
-PiA+IAo+ID4gVGhlIGZpcnN0IHBhdGNoIG9mIHRoaXMgc2VyaWVzIGlzIHRoZSBmaXguIFRoZSBu
-ZXh0IHR3byBwYXRjaGVzLAo+ID4gd2hpY2ggZG9uJ3QgaGF2ZSBhbnkgaW50ZW5kZWQgZnVuY3Rp
-b25hbCBjaGFuZ2VzLCBhbGxvdyBJRF9TQU5JVElTRUQKPiA+IHRvIGJlIHVzZWQgZm9yIHJlZ2lz
-dGVycyB0aGF0IGZsaXAgYmV0d2VlbiBleHBvc2luZyBmZWF0dXJlcyBhbmQKPiA+IGJlaW5nIFJB
-Wiwgd2hpY2ggYWxsb3dzIHNvbWUgY29kZSB0byBiZSByZW1vdmVkLgo+IAo+IElzIGl0IHdvcnRo
-IHVwZGF0aW5nIERvY3VtZW50YXRpb24vdmlydC9rdm0vYXBpLnJzdCB0byBjbGFyaWZ5IHRoZQo+
-IGV4cGVjdGVkIHVzZSBkdXJpbmcgVk0gbWlncmF0aW9ucywgYW5kIHRoZSBndWFyYW50ZWVzIHRo
-YXQgYXJlIGV4cGVjdGVkCj4gdG8gaG9sZCBiZXR3ZWVuIG1pZ3JhdGFibGUga2VybmVsIHZlcnNp
-b25zPyAgQ3VycmVudGx5IHRoZSBzcGVjaWZpY2F0aW9uCj4gaXMgYSBtaXh0dXJlIG9mICJzdXJl
-bHkgaXQncyBvYnZpb3VzIiBhbmQgIndoYXRldmVyIG1ha2VzIFFFTVUgd29yayIuCj4gCj4gSSBn
-dWVzcyB0aGF0IGNhdWdodCBtZSBvdXQsIGJ1dCBJJ2xsIGxldCBvdGhlcnMganVkZ2Ugd2hldGhl
-ciBvdGhlcgo+IHBlb3BsZSBhcmUgbGlrZWx5IHRvIGdldCBzaW1pbGFybHkgY29uZnVzZWQuCj4K
-CkknbSBub3Qgc3VyZSB3aGF0IHNlY3Rpb24gdGhpcyB3b3VsZCBmaXQgaW4gaW4gYXBpLnJzdC4g
-SXQgZmVlbHMgbGlrZQp0aGlzIHNob3VsZCBiZSBhIGhpZ2hlciBsZXZlbCBkb2N1bWVudCB0aGF0
-IGNvdmVycyB0aGUgbWlncmF0aW9uCmd1YXJhbnRlZXMgb2YgdGhlIEFQSSBpbiBnZW5lcmFsLiBP
-ZiBjb3Vyc2UsIHdpdGggaG9zdCBjcHUgcGFzc3Rocm91Z2gsCm5vdGhpbmcgaXMgcmVhbGx5IGd1
-YXJhbnRlZWQuIFRoZSB1cGdyYWRlIHBhdGggaXMgcmVhc29uYWJsZSBhbmQgcHJvYmFibHkKZG9h
-YmxlIHRob3VnaC4KClRoYW5rcywKZHJldwoKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX18Ka3ZtYXJtIG1haWxpbmcgbGlzdAprdm1hcm1AbGlzdHMuY3MuY29s
-dW1iaWEuZWR1Cmh0dHBzOi8vbGlzdHMuY3MuY29sdW1iaWEuZWR1L21haWxtYW4vbGlzdGluZm8v
-a3ZtYXJtCg==
+This small series addresses a couple of Spectre-v2 related issues:
+
+- Fix a live migration regression introduced with the setting of CSV2
+  on systems that are not affected by Spectre-v2, but that don't
+  directly expose it in ID_AA64PFR0_EL1
+
+- Inject an UNDEF exception if the guest tries to access any of
+  SCXTNUM_ELx, as we don't advertise it to guests.
+
+Patches on top of 5.10-rc2.
+
+Marc Zyngier (3):
+  KVM: arm64: Allow setting of ID_AA64PFR0_EL1.CSV2 from userspace
+  KVM: arm64: Rename access_amu() to undef_access()
+  KVM: arm64: Handle SCXTNUM_ELx traps
+
+ arch/arm64/include/asm/kvm_host.h |  2 +
+ arch/arm64/include/asm/sysreg.h   |  4 ++
+ arch/arm64/kvm/arm.c              | 16 +++++++
+ arch/arm64/kvm/sys_regs.c         | 70 +++++++++++++++++++++++--------
+ 4 files changed, 74 insertions(+), 18 deletions(-)
+
+-- 
+2.28.0
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
