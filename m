@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E9182A6CD1
-	for <lists+kvmarm@lfdr.de>; Wed,  4 Nov 2020 19:37:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 008C12A6CD3
+	for <lists+kvmarm@lfdr.de>; Wed,  4 Nov 2020 19:37:20 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 017B14B7A9;
-	Wed,  4 Nov 2020 13:37:18 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6466D4B7D0;
+	Wed,  4 Nov 2020 13:37:19 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,64 +14,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hh-qolGrKUzH; Wed,  4 Nov 2020 13:37:17 -0500 (EST)
+	with ESMTP id 4UziMlfrtTPm; Wed,  4 Nov 2020 13:37:19 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 06C484B7C3;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3AEE04B7E7;
 	Wed,  4 Nov 2020 13:37:17 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 378554B606
- for <kvmarm@lists.cs.columbia.edu>; Wed,  4 Nov 2020 13:37:15 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CB0164B6D6
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  4 Nov 2020 13:37:16 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id cTINgTqKpJMj for <kvmarm@lists.cs.columbia.edu>;
- Wed,  4 Nov 2020 13:37:14 -0500 (EST)
-Received: from mail-wr1-f66.google.com (mail-wr1-f66.google.com
- [209.85.221.66])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A28354B6D6
- for <kvmarm@lists.cs.columbia.edu>; Wed,  4 Nov 2020 13:37:13 -0500 (EST)
-Received: by mail-wr1-f66.google.com with SMTP id s9so23140881wro.8
- for <kvmarm@lists.cs.columbia.edu>; Wed, 04 Nov 2020 10:37:13 -0800 (PST)
+ with ESMTP id 28ReS6skNTrH for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  4 Nov 2020 13:37:15 -0500 (EST)
+Received: from mail-wm1-f67.google.com (mail-wm1-f67.google.com
+ [209.85.128.67])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A7DCD4B780
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  4 Nov 2020 13:37:15 -0500 (EST)
+Received: by mail-wm1-f67.google.com with SMTP id c18so3359050wme.2
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 04 Nov 2020 10:37:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=ZVjVFozTLdMZo3Qj+qmHuuLudZQ2Vnjr88mC0h8KdNc=;
- b=phvU+aAR0cMr4PSwYP4GPkWz29rXwGC9l6/gUkgEjJ41OCA08ZcE+n1PJzNz0U9axl
- S4dpFjCDxAzjGzMRrsJKFU28M4gkHv2uhaxYBrgJHsUcuvE+VD3lfqcNB5TohC56+pK/
- yxLAWGHDqcd+ZySMPpb0Uc3ftPAUejRVMWEG281NsCzDDEqtT9MYem7+nqhqXqX7dAc/
- MjbJFmxejTtBit6tLHcNLX36y+YPsBGpwamh2dfQLuneXQx1Va1B+hY0xXr/c7obRIYC
- 2yFJOmJFT8asy/4FASrFkHgHJ9WveV0lIgaATcylkuOr9Xn7oy5QE1FC6m2LVo7KbC5G
- b5xA==
+ bh=NtbQNJ0uZzWKg9gLgK2M3GouFY/UQOUZaNHatLeLQ8M=;
+ b=glZIgG4SvpZZisD70c1QAFcHNEqwgKXE55ekUwKFPprz1IIkVpSXlyWYgAtg2MCZM5
+ GqbKCZ3+xM/3+eOqF8D5wUxLEkEa6IQiJBeW8l6gSOLPRjEyrZUczqmCfQWxw0KjFRAV
+ UTg06vSZoQR1ZRffNmFizJslF0vRdkKBwRISs0LhkuKK3dxmFpeYQzWGseWjGXaP53pX
+ /XHsM9yTMR0wqMauTJgRe+RH3fb0nyXd+XMoMRPI3fdzZHBU1YxFys0+gatGpOM+mWw3
+ 9Y1glJporpQT5vgTtSIAUmA3HuRnvrogowxslIbDEDS242fjxYGpkpL7E97BbqlKk7yy
+ /SVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=ZVjVFozTLdMZo3Qj+qmHuuLudZQ2Vnjr88mC0h8KdNc=;
- b=EmT89v5zPcRKMjqv9TzI7saIFo2GdY5aXJ5q888PvROD2y4EeNJon0kLCycsz7UBXO
- j6rQKBk5IJYiguRJhVjJilgd0xXio2+QpEMQVCq8PZlgvAkm9Yi+0yBnco6bcQuPQ/AN
- 6vBKqcyZPdtASudhzR2aBym8DrocM6VxA0KxPdWuXiE7+8hzdqMGcbJcSu0zERR6VGyb
- 9nvbDHUO6oXcnQPmglYH3i0a/l4b4bYNWrBCH7v2ejyZW8Po8CCXiJhpceyoplIl2Z/k
- jkTgUIo0IZK5EboZpfvnCLIlLuCRR/K/2whokoTpcJ6UGrBOwfE+lUujP+JpO+SwbOJG
- 1PBg==
-X-Gm-Message-State: AOAM533nb2c+GxZgV2n0AybHkfc0GMbY/HLHIrajdrpdkULR1AElS5M8
- o4Qn3wUePdCeKq7d/BemYm0e95GX5fo67tyM
-X-Google-Smtp-Source: ABdhPJzSOg5ehTCfdQXoJjzXBCOHpK0Uzw56Ie6OCbSaHqF4Y4sxI4USadgIi3s6J90cFV5gmW4tkw==
-X-Received: by 2002:adf:f245:: with SMTP id b5mr6282692wrp.389.1604515032310; 
- Wed, 04 Nov 2020 10:37:12 -0800 (PST)
+ bh=NtbQNJ0uZzWKg9gLgK2M3GouFY/UQOUZaNHatLeLQ8M=;
+ b=Mkx5oiu++C4vYrBQX1vNC6liCL27sYTSn/6UH6PAi8Qefhsh4iVjxXUHTVBZ82/6m2
+ ZCJdUY9LiXVuINuL7PzQ6C3VlQjGc4Jkf+GWXeOBvZexv99k2lb+12n9jfR4VmpDKnbZ
+ 3Rr90Ni8S0QyD0vxth8VRd6W3IgVvWfFoMzCqqh1oohKmzV2Sed7jLWl8iT7VAg1qTqJ
+ j6O83obfxLf2TnrH9FILmt3eFVA/iqXFXKJdlY9VfeL65tBmXzhqdV48BtJKWGBdYJ5w
+ cbYHSFcZ9KEozxJKGA4+SqlrA7KmeVdRcmXWX5+qa1d17aZxMuS1Bsl4Zjv1O9bhJCAS
+ miYQ==
+X-Gm-Message-State: AOAM533hL/TWL+gFa8PloTqWanLcd0g35x/NMwrvHTS9GwDXsUvLJE7k
+ yz2S9le+sKLEeukbtfUDacBsIAYjH0YGopiS
+X-Google-Smtp-Source: ABdhPJxJRepCEtlNkPsKx2eanZXbzlkYpzLB45jmxePnFjEoeyIHr7ruHFcNIkE+7lLzMGGiaX+Q4g==
+X-Received: by 2002:a1c:4144:: with SMTP id o65mr6301427wma.171.1604515034317; 
+ Wed, 04 Nov 2020 10:37:14 -0800 (PST)
 Received: from localhost ([2a01:4b00:8523:2d03:c8d2:30f2:53c6:bc2])
- by smtp.gmail.com with ESMTPSA id b14sm4016046wrx.35.2020.11.04.10.37.10
+ by smtp.gmail.com with ESMTPSA id w4sm3692651wrk.28.2020.11.04.10.37.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Nov 2020 10:37:11 -0800 (PST)
+ Wed, 04 Nov 2020 10:37:13 -0800 (PST)
 From: David Brazdil <dbrazdil@google.com>
 To: kvmarm@lists.cs.columbia.edu
-Subject: [RFC PATCH 16/26] kvm: arm64: Add offset for hyp VA <-> PA conversion
-Date: Wed,  4 Nov 2020 18:36:20 +0000
-Message-Id: <20201104183630.27513-17-dbrazdil@google.com>
+Subject: [RFC PATCH 17/26] kvm: arm64: Bootstrap PSCI power state of host CPUs
+Date: Wed,  4 Nov 2020 18:36:21 +0000
+Message-Id: <20201104183630.27513-18-dbrazdil@google.com>
 X-Mailer: git-send-email 2.29.1
 In-Reply-To: <20201104183630.27513-1-dbrazdil@google.com>
 References: <20201104183630.27513-1-dbrazdil@google.com>
@@ -98,63 +98,88 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add a host-initialized constant to KVM nVHE hyp code for converting
-between EL2 linear map virtual addresses and physical addresses.
-Also add `__hyp_pa` macro that performs the conversion.
+Proxying host's PSCI SMCs will require synchronizing CPU_ON/OFF/SUSPEND
+calls based on the observed state of individual cores. Add a per-CPU enum
+that tracks the power state of each core and initialize all CPUs online
+at the point of KVM init to ON.
 
 Signed-off-by: David Brazdil <dbrazdil@google.com>
 ---
- arch/arm64/kvm/arm.c           | 15 +++++++++++++++
- arch/arm64/kvm/hyp/nvhe/psci.c |  3 +++
- 2 files changed, 18 insertions(+)
+ arch/arm64/include/asm/kvm_asm.h | 6 ++++++
+ arch/arm64/include/asm/kvm_hyp.h | 1 +
+ arch/arm64/kvm/arm.c             | 5 +++++
+ arch/arm64/kvm/hyp/nvhe/psci.c   | 2 ++
+ 4 files changed, 14 insertions(+)
 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index cedec793da64..580d4a656a7b 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -1484,6 +1484,20 @@ static inline void hyp_cpu_pm_exit(void)
- }
+diff --git a/arch/arm64/include/asm/kvm_asm.h b/arch/arm64/include/asm/kvm_asm.h
+index 893327d1e449..9eecb37db6df 100644
+--- a/arch/arm64/include/asm/kvm_asm.h
++++ b/arch/arm64/include/asm/kvm_asm.h
+@@ -157,6 +157,12 @@ struct kvm_nvhe_init_params {
+ 	unsigned long vector_ptr;
+ };
+ 
++enum kvm_nvhe_psci_state {
++	KVM_NVHE_PSCI_CPU_OFF = 0,
++	KVM_NVHE_PSCI_CPU_PENDING_ON,
++	KVM_NVHE_PSCI_CPU_ON,
++};
++
+ /* Translate a kernel address @ptr into its equivalent linear mapping */
+ #define kvm_ksym_ref(ptr)						\
+ 	({								\
+diff --git a/arch/arm64/include/asm/kvm_hyp.h b/arch/arm64/include/asm/kvm_hyp.h
+index 95a2bbbcc7e1..cf4c1d16c3e0 100644
+--- a/arch/arm64/include/asm/kvm_hyp.h
++++ b/arch/arm64/include/asm/kvm_hyp.h
+@@ -97,6 +97,7 @@ void deactivate_traps_vhe_put(void);
+ u64 __guest_enter(struct kvm_vcpu *vcpu);
+ 
+ #ifdef __KVM_NVHE_HYPERVISOR__
++void kvm_host_psci_cpu_init(void);
+ bool kvm_host_psci_handler(struct kvm_cpu_context *host_ctxt);
  #endif
  
-+static void init_hyp_physvirt_offset(void)
-+{
-+	extern s64 kvm_nvhe_sym(hyp_physvirt_offset);
-+	unsigned long kern_vaddr, hyp_vaddr, paddr;
-+
-+	/* Check that kvm_arm_hyp_percpu_base has been set. */
-+	BUG_ON(kvm_arm_hyp_percpu_base[0] == 0);
-+
-+	kern_vaddr = kvm_arm_hyp_percpu_base[0];
-+	hyp_vaddr = kern_hyp_va(kern_vaddr);
-+	paddr = __pa(kern_vaddr);
-+	CHOOSE_NVHE_SYM(hyp_physvirt_offset) = (s64)paddr - (s64)hyp_vaddr;
-+}
-+
- static void init_cpu_logical_map(void)
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 580d4a656a7b..5b073806463e 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -52,6 +52,7 @@ DECLARE_KVM_HYP_PER_CPU(unsigned long, kvm_hyp_vector);
+ static DEFINE_PER_CPU(unsigned long, kvm_arm_hyp_stack_page);
+ unsigned long kvm_arm_hyp_percpu_base[NR_CPUS];
+ DECLARE_KVM_NVHE_PER_CPU(struct kvm_nvhe_init_params, kvm_init_params);
++DECLARE_KVM_NVHE_PER_CPU(enum kvm_nvhe_psci_state, psci_cpu_state);
+ 
+ /* The VMID used in the VTTBR */
+ static atomic64_t kvm_vmid_gen = ATOMIC64_INIT(1);
+@@ -1517,10 +1518,14 @@ static void init_psci(void)
  {
- 	extern u64 kvm_nvhe_sym(__cpu_logical_map)[NR_CPUS];
-@@ -1686,6 +1700,7 @@ static int init_hyp_mode(void)
- 		}
- 	}
+ 	extern u32 kvm_nvhe_sym(kvm_host_psci_version);
+ 	extern u32 kvm_nvhe_sym(kvm_host_psci_function_id)[PSCI_FN_MAX];
++	int cpu;
  
-+	init_hyp_physvirt_offset();
- 	init_cpu_logical_map();
- 	init_psci();
+ 	kvm_nvhe_sym(kvm_host_psci_version) = psci_driver_version;
+ 	memcpy(kvm_nvhe_sym(kvm_host_psci_function_id),
+ 		psci_function_id, sizeof(psci_function_id));
++
++	for_each_online_cpu(cpu)
++		*per_cpu_ptr_nvhe_sym(psci_cpu_state, cpu) = KVM_NVHE_PSCI_CPU_ON;
+ }
  
+ static int init_common_resources(void)
 diff --git a/arch/arm64/kvm/hyp/nvhe/psci.c b/arch/arm64/kvm/hyp/nvhe/psci.c
-index 8f779560ab6f..3eafcf48a29b 100644
+index 3eafcf48a29b..c3d0a6246c66 100644
 --- a/arch/arm64/kvm/hyp/nvhe/psci.c
 +++ b/arch/arm64/kvm/hyp/nvhe/psci.c
-@@ -16,6 +16,9 @@
- /* Config options set by the host. */
- u32 kvm_host_psci_version = PSCI_VERSION(0, 0);
- u32 kvm_host_psci_function_id[PSCI_FN_MAX];
-+s64 hyp_physvirt_offset;
-+
-+#define __hyp_pa(x) ((phys_addr_t)(x) + hyp_physvirt_offset)
+@@ -20,6 +20,8 @@ s64 hyp_physvirt_offset;
  
+ #define __hyp_pa(x) ((phys_addr_t)(x) + hyp_physvirt_offset)
+ 
++DEFINE_PER_CPU(enum kvm_nvhe_psci_state, psci_cpu_state);
++
  static u64 get_psci_func_id(struct kvm_cpu_context *host_ctxt)
  {
+ 	return host_ctxt->regs.regs[0];
 -- 
 2.29.1.341.ge80a0c044ae-goog
 
