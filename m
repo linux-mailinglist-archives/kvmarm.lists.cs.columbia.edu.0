@@ -2,75 +2,81 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 537C32A7A21
-	for <lists+kvmarm@lfdr.de>; Thu,  5 Nov 2020 10:10:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2EA22A7AF4
+	for <lists+kvmarm@lfdr.de>; Thu,  5 Nov 2020 10:47:17 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 053994B368;
-	Thu,  5 Nov 2020 04:10:45 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 79FD54B756;
+	Thu,  5 Nov 2020 04:47:17 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id amyeDM-iUy54; Thu,  5 Nov 2020 04:10:44 -0500 (EST)
+	with ESMTP id J9AIV4ib9C8a; Thu,  5 Nov 2020 04:47:17 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BFCA64B7CB;
-	Thu,  5 Nov 2020 04:10:43 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2BD074B618;
+	Thu,  5 Nov 2020 04:47:16 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 970F94B368
- for <kvmarm@lists.cs.columbia.edu>; Thu,  5 Nov 2020 04:10:41 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7733F4B5D8
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  5 Nov 2020 04:47:14 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id EDhm4Mv-8JRZ for <kvmarm@lists.cs.columbia.edu>;
- Thu,  5 Nov 2020 04:10:40 -0500 (EST)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [63.128.21.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3B9424B46C
- for <kvmarm@lists.cs.columbia.edu>; Thu,  5 Nov 2020 04:10:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1604567440;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xkAKI6q97gi5LKtTbF6NLVxDhxKqyQ7tUw1ltOTiADs=;
- b=EnG9JkspBw9+Von4X3vUrXacRJNCZBVzrrHWGGT7aLMWtoKCiaqz/WTqoeG1TjHVkHflFv
- 1lVFoIC3qejwgjpfWg+LHgHi3n5M+NEsME0SETza/qkPMHjmUNUGMLUH1lJ0CTRuoA5r6J
- 2tht3g6vge9/wyNBeD4B4hutDJZ5b5M=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-108-k4t2uT9oPCGgET8oYD5A5w-1; Thu, 05 Nov 2020 04:10:36 -0500
-X-MC-Unique: k4t2uT9oPCGgET8oYD5A5w-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com
- [10.5.11.12])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ with ESMTP id KnnrGkANA+t0 for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  5 Nov 2020 04:47:13 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3E20F4B5D7
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  5 Nov 2020 04:47:13 -0500 (EST)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id EA923803F41;
- Thu,  5 Nov 2020 09:10:34 +0000 (UTC)
-Received: from kamzik.brq.redhat.com (unknown [10.40.193.18])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 8185A60C17;
- Thu,  5 Nov 2020 09:10:33 +0000 (UTC)
-From: Andrew Jones <drjones@redhat.com>
-To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v3 4/4] KVM: arm64: Remove AA64ZFR0_EL1 accessors
-Date: Thu,  5 Nov 2020 10:10:22 +0100
-Message-Id: <20201105091022.15373-5-drjones@redhat.com>
-In-Reply-To: <20201105091022.15373-1-drjones@redhat.com>
-References: <20201105091022.15373-1-drjones@redhat.com>
+ by mail.kernel.org (Postfix) with ESMTPSA id C8AAE2080D;
+ Thu,  5 Nov 2020 09:47:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1604569632;
+ bh=HHlnMYvribr6tXTc4dWdBjcjHKLjb6dHLifRUqDqwQQ=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=EFLzxc0G4nItwOrjOMnnSewgHj9shosTzBoWlwDLKKI7KwDNQ7RaKW9TqsU/pIg+p
+ uMsxcNdZQZJQo+Rj1yD1EmgjbipQWG6wClnZfll/W+huy0QRJr1y0deHb5k/8Mzl3/
+ ECS9HsXAUOFDwEhdx2CSmDCDPi5yO0opgabFzzXQ=
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1kabrJ-007n9r-JG; Thu, 05 Nov 2020 09:47:09 +0000
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=drjones@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Cc: maz@kernel.org, xu910121@sina.com, Dave.Martin@arm.com
+Date: Thu, 05 Nov 2020 09:47:09 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: David Brazdil <dbrazdil@google.com>
+Subject: Re: [RFC PATCH 01/26] psci: Export configured PSCI version
+In-Reply-To: <20201104183630.27513-2-dbrazdil@google.com>
+References: <20201104183630.27513-1-dbrazdil@google.com>
+ <20201104183630.27513-2-dbrazdil@google.com>
+User-Agent: Roundcube Webmail/1.4.9
+Message-ID: <2265d2fed043ab79721c1014d6144558@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: dbrazdil@google.com, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
+ catalin.marinas@arm.com, will@kernel.org, dennis@kernel.org, tj@kernel.org,
+ cl@linux.com, mark.rutland@arm.com, lorenzo.pieralisi@arm.com,
+ qperret@google.com, ascull@google.com, kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>, kernel-team@android.com,
+ Catalin Marinas <catalin.marinas@arm.com>, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, Tejun Heo <tj@kernel.org>,
+ Dennis Zhou <dennis@kernel.org>, Christoph Lameter <cl@linux.com>,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -82,116 +88,119 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The AA64ZFR0_EL1 accessors are just the general accessors with
-its visibility function open-coded. It also skips the if-else
-chain in read_id_reg, but there's no reason not to go there.
-Indeed consolidating ID register accessors and removing lines
-of code make it worthwhile.
+On 2020-11-04 18:36, David Brazdil wrote:
+> The version of PSCI that the kernel should use to communicate with
+> firmware is typically obtained from probing PSCI_VERSION. However, that
+> doesn't work for PSCI v0.1 where the host gets the information from
+> DT/ACPI, or if PSCI is not supported / was disabled.
+> 
+> KVM's PSCI proxy for the host needs to be configured with the same
+> version used by the host driver. Expose the PSCI version used by the
+> host.
+> 
+> Signed-off-by: David Brazdil <dbrazdil@google.com>
+> ---
+>  drivers/firmware/psci/psci.c | 6 ++++++
+>  include/linux/psci.h         | 8 ++++++++
+>  2 files changed, 14 insertions(+)
+> 
+> diff --git a/drivers/firmware/psci/psci.c 
+> b/drivers/firmware/psci/psci.c
+> index 00af99b6f97c..ff523bdbfe3f 100644
+> --- a/drivers/firmware/psci/psci.c
+> +++ b/drivers/firmware/psci/psci.c
+> @@ -49,6 +49,8 @@ static int resident_cpu = -1;
+>  struct psci_operations psci_ops;
+>  static enum arm_smccc_conduit psci_conduit = SMCCC_CONDUIT_NONE;
+> 
+> +int psci_driver_version = PSCI_VERSION(0, 0);
+> +
+>  bool psci_tos_resident_on(int cpu)
+>  {
+>  	return cpu == resident_cpu;
+> @@ -461,6 +463,8 @@ static int __init psci_probe(void)
+>  		return -EINVAL;
+>  	}
+> 
+> +	psci_driver_version = ver;
+> +
+>  	psci_0_2_set_functions();
+> 
+>  	psci_init_migrate();
+> @@ -514,6 +518,8 @@ static int __init psci_0_1_init(struct device_node 
+> *np)
+> 
+>  	pr_info("Using PSCI v0.1 Function IDs from DT\n");
+> 
+> +	psci_driver_version = PSCI_VERSION(0, 1);
+> +
+>  	if (!of_property_read_u32(np, "cpu_suspend", &id)) {
+>  		psci_function_id[PSCI_FN_CPU_SUSPEND] = id;
+>  		psci_ops.cpu_suspend = psci_cpu_suspend;
+> diff --git a/include/linux/psci.h b/include/linux/psci.h
+> index 2a1bfb890e58..cb35b90d1746 100644
+> --- a/include/linux/psci.h
+> +++ b/include/linux/psci.h
+> @@ -21,6 +21,14 @@ bool psci_power_state_is_valid(u32 state);
+>  int psci_set_osi_mode(bool enable);
+>  bool psci_has_osi_support(void);
+> 
+> +/**
+> + * The version of the PSCI specification followed by the driver.
+> + * This is equivalent to calling PSCI_VERSION except:
+> + *   (a) it also works for PSCI v0.1, which does not support 
+> PSCI_VERSION, and
+> + *   (b) it is set to v0.0 if the PSCI driver was not initialized.
+> + */
+> +extern int psci_driver_version;
+> +
+>  struct psci_operations {
+>  	u32 (*get_version)(void);
+>  	int (*cpu_suspend)(u32 state, unsigned long entry_point);
 
-Remove the AA64ZFR0_EL1 accessors, replacing them with the
-general accessors for sanitized ID registers.
+How about providing a get_version callback for pre-0.2 implementations
+instead? This would avoid exposing more symbols (psci_ops is already
+global).
 
-No functional change intended.
+Thanks,
 
-Signed-off-by: Andrew Jones <drjones@redhat.com>
----
- arch/arm64/kvm/sys_regs.c | 61 +++++++--------------------------------
- 1 file changed, 11 insertions(+), 50 deletions(-)
+         M.
 
-diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index 47893b7e982f..d0868d0e8ff4 100644
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -1156,6 +1156,16 @@ static u64 read_id_reg(const struct kvm_vcpu *vcpu,
- static unsigned int id_visibility(const struct kvm_vcpu *vcpu,
- 				  const struct sys_reg_desc *r)
- {
-+	u32 id = sys_reg((u32)r->Op0, (u32)r->Op1,
-+			 (u32)r->CRn, (u32)r->CRm, (u32)r->Op2);
+diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+index 00af99b6f97c..b84454e12d92 100644
+--- a/drivers/firmware/psci/psci.c
++++ b/drivers/firmware/psci/psci.c
+@@ -500,6 +500,11 @@ static int __init psci_0_2_init(struct device_node 
+*np)
+  	return psci_probe();
+  }
+
++static u32 psci_0_1_get_version(void)
++{
++	return PSCI_VERSION(0, 1);
++}
 +
-+	switch (id) {
-+	case SYS_ID_AA64ZFR0_EL1:
-+		if (!vcpu_has_sve(vcpu))
-+			return REG_RAZ;
-+		break;
-+	}
+  /*
+   * PSCI < v0.2 get PSCI Function IDs via DT.
+   */
+@@ -514,6 +519,8 @@ static int __init psci_0_1_init(struct device_node 
+*np)
+
+  	pr_info("Using PSCI v0.1 Function IDs from DT\n");
+
++	psci_ops.get_version = psci_0_1_get_version;
 +
- 	return 0;
- }
- 
-@@ -1203,55 +1213,6 @@ static unsigned int sve_visibility(const struct kvm_vcpu *vcpu,
- 	return REG_HIDDEN;
- }
- 
--/* Generate the emulated ID_AA64ZFR0_EL1 value exposed to the guest */
--static u64 guest_id_aa64zfr0_el1(const struct kvm_vcpu *vcpu)
--{
--	if (!vcpu_has_sve(vcpu))
--		return 0;
--
--	return read_sanitised_ftr_reg(SYS_ID_AA64ZFR0_EL1);
--}
--
--static bool access_id_aa64zfr0_el1(struct kvm_vcpu *vcpu,
--				   struct sys_reg_params *p,
--				   const struct sys_reg_desc *rd)
--{
--	if (p->is_write)
--		return write_to_read_only(vcpu, p, rd);
--
--	p->regval = guest_id_aa64zfr0_el1(vcpu);
--	return true;
--}
--
--static int get_id_aa64zfr0_el1(struct kvm_vcpu *vcpu,
--		const struct sys_reg_desc *rd,
--		const struct kvm_one_reg *reg, void __user *uaddr)
--{
--	u64 val;
--
--	val = guest_id_aa64zfr0_el1(vcpu);
--	return reg_to_user(uaddr, &val, reg->id);
--}
--
--static int set_id_aa64zfr0_el1(struct kvm_vcpu *vcpu,
--		const struct sys_reg_desc *rd,
--		const struct kvm_one_reg *reg, void __user *uaddr)
--{
--	const u64 id = sys_reg_to_index(rd);
--	int err;
--	u64 val;
--
--	err = reg_from_user(&val, uaddr, id);
--	if (err)
--		return err;
--
--	/* This is what we mean by invariant: you can't change it. */
--	if (val != guest_id_aa64zfr0_el1(vcpu))
--		return -EINVAL;
--
--	return 0;
--}
--
- /*
-  * cpufeature ID register user accessors
-  *
-@@ -1515,7 +1476,7 @@ static const struct sys_reg_desc sys_reg_descs[] = {
- 	ID_SANITISED(ID_AA64PFR1_EL1),
- 	ID_UNALLOCATED(4,2),
- 	ID_UNALLOCATED(4,3),
--	{ SYS_DESC(SYS_ID_AA64ZFR0_EL1), access_id_aa64zfr0_el1, .get_user = get_id_aa64zfr0_el1, .set_user = set_id_aa64zfr0_el1, },
-+	ID_SANITISED(ID_AA64ZFR0_EL1),
- 	ID_UNALLOCATED(4,5),
- 	ID_UNALLOCATED(4,6),
- 	ID_UNALLOCATED(4,7),
+  	if (!of_property_read_u32(np, "cpu_suspend", &id)) {
+  		psci_function_id[PSCI_FN_CPU_SUSPEND] = id;
+  		psci_ops.cpu_suspend = psci_cpu_suspend;
+
 -- 
-2.26.2
-
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
