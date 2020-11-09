@@ -2,73 +2,87 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 003F92AC05E
-	for <lists+kvmarm@lfdr.de>; Mon,  9 Nov 2020 17:00:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 101D32AC198
+	for <lists+kvmarm@lfdr.de>; Mon,  9 Nov 2020 17:59:44 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6F4174B96C;
-	Mon,  9 Nov 2020 11:00:39 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8BEB84B992;
+	Mon,  9 Nov 2020 11:59:43 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id sux5kDcPuyIx; Mon,  9 Nov 2020 11:00:39 -0500 (EST)
+	with ESMTP id VtHO5QSaUn0v; Mon,  9 Nov 2020 11:59:43 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1C5644B518;
-	Mon,  9 Nov 2020 11:00:38 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5B8484B983;
+	Mon,  9 Nov 2020 11:59:42 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 54D294B3F5
- for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Nov 2020 11:00:36 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 44CA04B975
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Nov 2020 11:59:40 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 8wefn2V5d1R5 for <kvmarm@lists.cs.columbia.edu>;
- Mon,  9 Nov 2020 11:00:35 -0500 (EST)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [63.128.21.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4F59E4B38C
- for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Nov 2020 11:00:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1604937635;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9x2i9FhJ3FEdl0CuO9z7pB7e6HrDm7nT6Y35uAhzyuQ=;
- b=O0+4OaeyJOskKl+h9wU7b/zOcD1FipYPKjI+vWsCGtjXNJ0m8luA3OTORReISqrYABdCBh
- 8F8euwjs2R771aNjK0cF3JCLpXgPGySDO9FGHdX1TZzh1QoUKAvmSuXdbpfkSX5Oz3jUXI
- jdqdzG3yupUtZLAu/otXxScM7rgPqGc=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-292-ji2dBrXoOme5FwMdlQUdSQ-1; Mon, 09 Nov 2020 11:00:31 -0500
-X-MC-Unique: ji2dBrXoOme5FwMdlQUdSQ-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com
- [10.5.11.14])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 5430CCE642;
- Mon,  9 Nov 2020 16:00:30 +0000 (UTC)
-Received: from kamzik.brq.redhat.com (unknown [10.40.192.176])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id E219E5DA82;
- Mon,  9 Nov 2020 16:00:23 +0000 (UTC)
-Date: Mon, 9 Nov 2020 17:00:20 +0100
-From: Andrew Jones <drjones@redhat.com>
-To: Alexandru Elisei <alexandru.elisei@arm.com>
-Subject: Re: [kvm-unit-tests PATCH] arm: Fix compilation errors
-Message-ID: <20201109160020.atjjurkh3mwteork@kamzik.brq.redhat.com>
-References: <20201105135936.55088-1-alexandru.elisei@arm.com>
+ with ESMTP id Wi1NKnDb9qov for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  9 Nov 2020 11:59:39 -0500 (EST)
+Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com
+ [209.85.221.67])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 02A3E4B7C6
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Nov 2020 11:59:38 -0500 (EST)
+Received: by mail-wr1-f67.google.com with SMTP id w1so9470491wrm.4
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 09 Nov 2020 08:59:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=/xpU6aOe7zsc2ojDYPHqW1B2hesNecHBAri6xa34+HU=;
+ b=ub6t8/MOSTRAo1q64ajRgsXANVnqPQ0Z+9yCni3FNC/THKKkF0KWrlmaz4Olll8n91
+ kVKuS1MZQFSC+t2hiWbsvar3jXt0qc4njXZbFuvLN1ktikhMbKhhMP1Wc8q/Yv/TPP+b
+ hJ/NE1YGg+VVLbCCGwZqOoijzhJ6rvi/OyPoa3eCHndq0cb9TzQ80jQHnMpFHsHFbMsW
+ Ft2Z4y5VsrwEdcbniSqDvm5r6hrmmARhroKk1GDg7iOaPJ7T8d6t7PSsh9AjUU6TsIIy
+ MB6nqhIpOYeFZ/s894F5jblZArz/cSbk1ckM9cDku2Kgjpo3YCxBR4jSgQsufS9ldBO0
+ c6tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=/xpU6aOe7zsc2ojDYPHqW1B2hesNecHBAri6xa34+HU=;
+ b=VTyI2rlyYELt6os1c7nQcG1WEDhBTI8KNFWKL+ksDzCD6TyLR48alWzh69j2jt9y84
+ Ujbg104WQ8yPwaWJxZE8u26JRp6Pp9/XP/kmtD1yiWIkPSu4MVME1GDwbyUND6MxC2Im
+ lMRzTwi4x+4nS/PZUVGDyPz4dFuvry2J2B5wjwhyrDBtEjpVNTwncG4kt5LyoGDj7Hzm
+ v8rEi67T8HtE9mTVp4TTCPIsPDkSTLDBHWQISoWW4YU2jx95EKNyfztdRHXR1jTpib86
+ UJM246q/tpKJ0qfoQivw9uEJxQvUnt/lPJXK1HRaBviEd+yHlNv0wdGO4/FR7unXOAW6
+ +K/g==
+X-Gm-Message-State: AOAM533qbYWvC2TAkE0CxkbArCKIIYFk03591nIRqenBRjI8KAyjfNGI
+ 2qqtqN8Jzn6xjQWuthL9pqbdKw==
+X-Google-Smtp-Source: ABdhPJxTSTLsT2jswsky+1lrZdCHipmnbSyPEtOAfZOAYkuKuCpAmY1FsIwpQPGF3duv+aoj3xTxKw==
+X-Received: by 2002:a5d:6689:: with SMTP id l9mr12801967wru.134.1604941177704; 
+ Mon, 09 Nov 2020 08:59:37 -0800 (PST)
+Received: from google.com ([2a00:79e0:d:210:f693:9fff:fef4:a7ef])
+ by smtp.gmail.com with ESMTPSA id b8sm7527771wrv.57.2020.11.09.08.59.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Nov 2020 08:59:37 -0800 (PST)
+Date: Mon, 9 Nov 2020 16:59:33 +0000
+From: Quentin Perret <qperret@google.com>
+To: David Brazdil <dbrazdil@google.com>
+Subject: Re: [PATCH v1 17/24] kvm: arm64: Add __hyp_pa_symbol helper macro
+Message-ID: <20201109165933.GA447754@google.com>
+References: <20201109113233.9012-1-dbrazdil@google.com>
+ <20201109113233.9012-18-dbrazdil@google.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20201105135936.55088-1-alexandru.elisei@arm.com>
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-Cc: kvm@vger.kernel.org, Andre Przywara <andre.przywara@arm.com>,
- Alexander Graf <graf@amazon.com>, pbonzini@redhat.com,
- kvmarm@lists.cs.columbia.edu
+In-Reply-To: <20201109113233.9012-18-dbrazdil@google.com>
+Cc: kernel-team@android.com, Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+ Andrew Walbran <qwandor@google.com>, Marc Zyngier <maz@kernel.org>,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ Catalin Marinas <catalin.marinas@arm.com>, Tejun Heo <tj@kernel.org>,
+ Dennis Zhou <dennis@kernel.org>, Christoph Lameter <cl@linux.com>,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -85,80 +99,42 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Nov 05, 2020 at 01:59:36PM +0000, Alexandru Elisei wrote:
-> Using arm-none-eabi-gcc triggers the following compilation errors:
-> 
-> $ ./configure --arch=arm --cross-prefix=arm-none-eabi-
-> $ make clean
-> $ make -j8
-> [..]
-> arm/pmu.c: In function 'pmu_probe':
-> arm/pmu.c:1000:47: error: format '%c' expects argument of type 'int', but argument 3 has type 'long unsigned int' [-Werror=format=]
->  1000 |  report_info("PMU implementer/ID code: %#x(\"%c\")/%#x",
->       |                                              ~^
->       |                                               |
->       |                                               int
->       |                                              %ld
->  1001 |       (pmcr >> PMU_PMCR_IMP_SHIFT) & PMU_PMCR_IMP_MASK,
->  1002 |       ((pmcr >> PMU_PMCR_IMP_SHIFT) & PMU_PMCR_IMP_MASK) ? : ' ',
->       |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->       |                                                            |
->       |                                                            long unsigned int
-> [..]
-> arm/gic.c: In function 'test_byte_access':
-> arm/gic.c:460:31: error: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'u32' {aka 'long unsigned int'} [-Werror=format=]
->   460 |   report_info("byte 1 of 0x%08x => 0x%02x", pattern & mask, reg);
->       |                            ~~~^             ~~~~~~~~~~~~~~
->       |                               |                     |
->       |                               unsigned int          u32 {aka long unsigned int}
->       |                            %08lx
-> [..]
-> arm/pl031.c: In function 'irq_handler':
-> arm/pl031.c:153:39: error: format '%d' expects argument of type 'int', but argument 2 has type 'u32' {aka 'long unsigned int'} [-Werror=format=]
->   153 |   report_info("Unexpected interrupt: %d\n", irqnr);
->       |                                      ~^     ~~~~~
->       |                                       |     |
->       |                                       int   u32 {aka long unsigned int}
->       |                                      %ld
-> 
-> The errors were observed when using arm-none-eabi-gcc versions 10.2.0 and
-> 9.2.0. No errors were found when using arm-linux-gnu-gcc version 10.2.1.
-> 
-> Replace the offending printf format specifiers with their PRIxxx
-> counterparts defined by C99 and available in libcflat.h. Also remove the
-> unnecessary call to get_pmcr() in pmu_probe(), as the pmcr value hasn't
-> changed since initialization.
-> 
-> Nu functional changes intended by this patch.
+Hey David,
 
-  ^ I've fixed this typo
-
+On Monday 09 Nov 2020 at 11:32:26 (+0000), David Brazdil wrote:
+> Add helper macro for computing the PA of a kernel symbol in nVHE hyp
+> code. This will be useful for computing the PA of a PSCI CPU_ON entry
+> point.
 > 
-> CC: Eric Auger <eric.auger@redhat.com>
-> CC: Alexander Graf <graf@amazon.com>
-> CC: Andre Przywara <andre.przywara@arm.com>
-> CC: Andrew Jones <drjones@redhat.com>
-> Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
+> Signed-off-by: David Brazdil <dbrazdil@google.com>
 > ---
-
-Thanks Alex. I've queued this for the next Arm pull request.
-
+>  arch/arm64/kvm/hyp/nvhe/psci.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 > 
-> Andre suggested that we drop using gcc's stdint.h and implement our own to avoid
-> such errors in the future. The distro that I'm using on my desktop doesn't have
-> the arm-linux-gnu toolchain in the default repos, so I figured I should send
-> this fix to get things compiling again.
-> 
-> I have no preference for, or against, implementing our own types.h header file.
-> I imagine it's not going to be easy to change the code to use it (possibly for
-> all architectures), and it should be worth it in the long run.
+> diff --git a/arch/arm64/kvm/hyp/nvhe/psci.c b/arch/arm64/kvm/hyp/nvhe/psci.c
+> index b0b5df590ba5..7510b9e174e9 100644
+> --- a/arch/arm64/kvm/hyp/nvhe/psci.c
+> +++ b/arch/arm64/kvm/hyp/nvhe/psci.c
+> @@ -20,6 +20,16 @@ s64 hyp_physvirt_offset;
+>  
+>  #define __hyp_pa(x) ((phys_addr_t)((x)) + hyp_physvirt_offset)
+>  
+> +#define __hyp_pa_symbol(sym)					\
+> +	({							\
+> +		extern char sym[];				\
+> +		unsigned long kern_va;				\
+> +								\
+> +		asm volatile("ldr %0, =%1" : "=r" (kern_va)	\
+> +					   : "S" (sym));	\
+> +		kern_va - kimage_voffset;			\
+> +	})
+> +
 
-I'd keep gcc's stdint.h for now, but it might be a good idea to post a
-travis patch that tests compiling with your preferred toolchain.
+Could this be simplified to __hyp_pa(hyp_symbol_addr(sym))? That would
+avoid the dependency on kimage_voffset.
 
 Thanks,
-drew
-
+Quentin
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
