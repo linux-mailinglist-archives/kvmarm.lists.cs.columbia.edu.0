@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 865A52AC309
-	for <lists+kvmarm@lfdr.de>; Mon,  9 Nov 2020 18:59:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 538472AC30C
+	for <lists+kvmarm@lfdr.de>; Mon,  9 Nov 2020 18:59:42 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2804E4B99C;
-	Mon,  9 Nov 2020 12:59:39 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E64EC4B9B3;
+	Mon,  9 Nov 2020 12:59:41 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,45 +18,46 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id wD1gz7jtr5g7; Mon,  9 Nov 2020 12:59:37 -0500 (EST)
+	with ESMTP id RCdYj5l8L4Tk; Mon,  9 Nov 2020 12:59:41 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D8C164B839;
-	Mon,  9 Nov 2020 12:59:35 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 628BC4B9BA;
+	Mon,  9 Nov 2020 12:59:37 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DCD494B905
- for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Nov 2020 12:59:33 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 59B9D4B902
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Nov 2020 12:59:35 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ns24u2ApaOgd for <kvmarm@lists.cs.columbia.edu>;
- Mon,  9 Nov 2020 12:59:32 -0500 (EST)
+ with ESMTP id jFIIvW5Uilt5 for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  9 Nov 2020 12:59:33 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B27454B975
- for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Nov 2020 12:59:32 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5C4FE4B983
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Nov 2020 12:59:33 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id BAC4C21D7F;
- Mon,  9 Nov 2020 17:59:31 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 650B820809;
+ Mon,  9 Nov 2020 17:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1604944771;
- bh=wJ6/BUTOMZrzU8+ZiMi/w3DAO5no+Zm2kiKxUJBo+Ko=;
+ s=default; t=1604944772;
+ bh=CvlpepUleGE92S4Hy7ecNff+HZV8FbvvzRSLVzB5XVA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=PO3krMRa3GlFGVqRfOGFGuNXPncdCDVj544IUEu/Erc/J79RXgEvUrJ1XJ0Xv1Dql
- AKUKH6IN2aOIBe07mcnJNhH64gr2kmcpO2chVIGZMw0h8QqKI1qRMeICH+QuGoeCVc
- RiCOc9djjHrrB87RJC/uZe4Jav6XwKOnRfkOew50=
+ b=iBKUSi0NyN0DsyawPKfhWMx/yU2o8IGxYh7bT9yco3OsXC4PRFKQ92zySp730oowm
+ ClZXLOGHe6edWxMRe37Bg6+6iNVCJ204Jxulrzd6AFqTx2rQcbcziqxxYlmLgELaW/
+ TM6YsK8RmoOjwltJwnzO/nPGUMuLzch2Wtxu2+Ig=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1kcBRx-009BQs-Tx; Mon, 09 Nov 2020 17:59:30 +0000
+ id 1kcBRy-009BQs-Jc; Mon, 09 Nov 2020 17:59:30 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH v2 4/5] KVM: arm64: Simplify __kvm_enable_ssbs()
-Date: Mon,  9 Nov 2020 17:59:22 +0000
-Message-Id: <20201109175923.445945-5-maz@kernel.org>
+Subject: [PATCH v2 5/5] KVM: arm64: Avoid repetitive stack access on host EL1
+ to EL2 exception
+Date: Mon,  9 Nov 2020 17:59:23 +0000
+Message-Id: <20201109175923.445945-6-maz@kernel.org>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20201109175923.445945-1-maz@kernel.org>
 References: <20201109175923.445945-1-maz@kernel.org>
@@ -89,79 +90,46 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Move the setting of SSBS directly into the HVC handler, using
-the C helpers rather than the inline asssembly code.
+Registers x0/x1 get repeateadly pushed and poped during a host
+HVC call. Instead, leave the registers on the stack, trading
+a store instruction on the fast path for an add on the slow path.
 
 Reviewed-by: Alexandru Elisei <alexandru.elisei@arm.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/kvm_asm.h    |  2 --
- arch/arm64/include/asm/sysreg.h     |  1 +
- arch/arm64/kvm/hyp/nvhe/hyp-main.c  |  6 +++++-
- arch/arm64/kvm/hyp/nvhe/sysreg-sr.c | 11 -----------
- 4 files changed, 6 insertions(+), 14 deletions(-)
+ arch/arm64/kvm/hyp/nvhe/host.S | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_asm.h b/arch/arm64/include/asm/kvm_asm.h
-index 54387ccd1ab2..a542c422a036 100644
---- a/arch/arm64/include/asm/kvm_asm.h
-+++ b/arch/arm64/include/asm/kvm_asm.h
-@@ -189,8 +189,6 @@ extern void __kvm_timer_set_cntvoff(u64 cntvoff);
+diff --git a/arch/arm64/kvm/hyp/nvhe/host.S b/arch/arm64/kvm/hyp/nvhe/host.S
+index 4e207c1c5126..fe2740b224cf 100644
+--- a/arch/arm64/kvm/hyp/nvhe/host.S
++++ b/arch/arm64/kvm/hyp/nvhe/host.S
+@@ -13,8 +13,6 @@
+ 	.text
  
- extern int __kvm_vcpu_run(struct kvm_vcpu *vcpu);
- 
--extern void __kvm_enable_ssbs(void);
+ SYM_FUNC_START(__host_exit)
+-	stp	x0, x1, [sp, #-16]!
 -
- extern u64 __vgic_v3_get_ich_vtr_el2(void);
- extern u64 __vgic_v3_read_vmcr(void);
- extern void __vgic_v3_write_vmcr(u32 vmcr);
-diff --git a/arch/arm64/include/asm/sysreg.h b/arch/arm64/include/asm/sysreg.h
-index 174817ba119c..153faa15d490 100644
---- a/arch/arm64/include/asm/sysreg.h
-+++ b/arch/arm64/include/asm/sysreg.h
-@@ -461,6 +461,7 @@
+ 	get_host_ctxt	x0, x1
  
- #define SYS_PMCCFILTR_EL0		sys_reg(3, 3, 14, 15, 7)
+ 	/* Store the host regs x2 and x3 */
+@@ -99,13 +97,15 @@ SYM_FUNC_END(__hyp_do_panic)
+ 	mrs	x0, esr_el2
+ 	lsr	x0, x0, #ESR_ELx_EC_SHIFT
+ 	cmp	x0, #ESR_ELx_EC_HVC64
+-	ldp	x0, x1, [sp], #16
+ 	b.ne	__host_exit
  
-+#define SYS_SCTLR_EL2			sys_reg(3, 4, 1, 0, 0)
- #define SYS_ZCR_EL2			sys_reg(3, 4, 1, 2, 0)
- #define SYS_DACR32_EL2			sys_reg(3, 4, 3, 0, 0)
- #define SYS_SPSR_EL2			sys_reg(3, 4, 4, 0, 0)
-diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-index c0543b2e760e..82df7fc24760 100644
---- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-+++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-@@ -58,7 +58,11 @@ static void handle___kvm_timer_set_cntvoff(struct kvm_cpu_context *host_ctxt)
- 
- static void handle___kvm_enable_ssbs(struct kvm_cpu_context *host_ctxt)
- {
--	__kvm_enable_ssbs();
-+	u64 tmp;
++	ldp	x0, x1, [sp]		// Don't fixup the stack yet
 +
-+	tmp = read_sysreg_el2(SYS_SCTLR);
-+	tmp |= SCTLR_ELx_DSSBS;
-+	write_sysreg_el2(tmp, SYS_SCTLR);
- }
+ 	/* Check for a stub HVC call */
+ 	cmp	x0, #HVC_STUB_HCALL_NR
+ 	b.hs	__host_exit
  
- static void handle___vgic_v3_get_ich_vtr_el2(struct kvm_cpu_context *host_ctxt)
-diff --git a/arch/arm64/kvm/hyp/nvhe/sysreg-sr.c b/arch/arm64/kvm/hyp/nvhe/sysreg-sr.c
-index 88a25fc8fcd3..29305022bc04 100644
---- a/arch/arm64/kvm/hyp/nvhe/sysreg-sr.c
-+++ b/arch/arm64/kvm/hyp/nvhe/sysreg-sr.c
-@@ -33,14 +33,3 @@ void __sysreg_restore_state_nvhe(struct kvm_cpu_context *ctxt)
- 	__sysreg_restore_user_state(ctxt);
- 	__sysreg_restore_el2_return_state(ctxt);
- }
--
--void __kvm_enable_ssbs(void)
--{
--	u64 tmp;
--
--	asm volatile(
--	"mrs	%0, sctlr_el2\n"
--	"orr	%0, %0, %1\n"
--	"msr	sctlr_el2, %0"
--	: "=&r" (tmp) : "L" (SCTLR_ELx_DSSBS));
--}
++	add	sp, sp, #16
+ 	/*
+ 	 * Compute the idmap address of __kvm_handle_stub_hvc and
+ 	 * jump there. Since we use kimage_voffset, do not use the
 -- 
 2.28.0
 
