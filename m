@@ -2,87 +2,75 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 101D32AC198
-	for <lists+kvmarm@lfdr.de>; Mon,  9 Nov 2020 17:59:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 07CCC2AC30A
+	for <lists+kvmarm@lfdr.de>; Mon,  9 Nov 2020 18:59:41 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8BEB84B992;
-	Mon,  9 Nov 2020 11:59:43 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AFB8F4B978;
+	Mon,  9 Nov 2020 12:59:40 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VtHO5QSaUn0v; Mon,  9 Nov 2020 11:59:43 -0500 (EST)
+	with ESMTP id CQNvdfdpQzVJ; Mon,  9 Nov 2020 12:59:39 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5B8484B983;
-	Mon,  9 Nov 2020 11:59:42 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 264224B9AC;
+	Mon,  9 Nov 2020 12:59:37 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 44CA04B975
- for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Nov 2020 11:59:40 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D186C4B902
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Nov 2020 12:59:34 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Wi1NKnDb9qov for <kvmarm@lists.cs.columbia.edu>;
- Mon,  9 Nov 2020 11:59:39 -0500 (EST)
-Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com
- [209.85.221.67])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 02A3E4B7C6
- for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Nov 2020 11:59:38 -0500 (EST)
-Received: by mail-wr1-f67.google.com with SMTP id w1so9470491wrm.4
- for <kvmarm@lists.cs.columbia.edu>; Mon, 09 Nov 2020 08:59:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=/xpU6aOe7zsc2ojDYPHqW1B2hesNecHBAri6xa34+HU=;
- b=ub6t8/MOSTRAo1q64ajRgsXANVnqPQ0Z+9yCni3FNC/THKKkF0KWrlmaz4Olll8n91
- kVKuS1MZQFSC+t2hiWbsvar3jXt0qc4njXZbFuvLN1ktikhMbKhhMP1Wc8q/Yv/TPP+b
- hJ/NE1YGg+VVLbCCGwZqOoijzhJ6rvi/OyPoa3eCHndq0cb9TzQ80jQHnMpFHsHFbMsW
- Ft2Z4y5VsrwEdcbniSqDvm5r6hrmmARhroKk1GDg7iOaPJ7T8d6t7PSsh9AjUU6TsIIy
- MB6nqhIpOYeFZ/s894F5jblZArz/cSbk1ckM9cDku2Kgjpo3YCxBR4jSgQsufS9ldBO0
- c6tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=/xpU6aOe7zsc2ojDYPHqW1B2hesNecHBAri6xa34+HU=;
- b=VTyI2rlyYELt6os1c7nQcG1WEDhBTI8KNFWKL+ksDzCD6TyLR48alWzh69j2jt9y84
- Ujbg104WQ8yPwaWJxZE8u26JRp6Pp9/XP/kmtD1yiWIkPSu4MVME1GDwbyUND6MxC2Im
- lMRzTwi4x+4nS/PZUVGDyPz4dFuvry2J2B5wjwhyrDBtEjpVNTwncG4kt5LyoGDj7Hzm
- v8rEi67T8HtE9mTVp4TTCPIsPDkSTLDBHWQISoWW4YU2jx95EKNyfztdRHXR1jTpib86
- UJM246q/tpKJ0qfoQivw9uEJxQvUnt/lPJXK1HRaBviEd+yHlNv0wdGO4/FR7unXOAW6
- +K/g==
-X-Gm-Message-State: AOAM533qbYWvC2TAkE0CxkbArCKIIYFk03591nIRqenBRjI8KAyjfNGI
- 2qqtqN8Jzn6xjQWuthL9pqbdKw==
-X-Google-Smtp-Source: ABdhPJxTSTLsT2jswsky+1lrZdCHipmnbSyPEtOAfZOAYkuKuCpAmY1FsIwpQPGF3duv+aoj3xTxKw==
-X-Received: by 2002:a5d:6689:: with SMTP id l9mr12801967wru.134.1604941177704; 
- Mon, 09 Nov 2020 08:59:37 -0800 (PST)
-Received: from google.com ([2a00:79e0:d:210:f693:9fff:fef4:a7ef])
- by smtp.gmail.com with ESMTPSA id b8sm7527771wrv.57.2020.11.09.08.59.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Nov 2020 08:59:37 -0800 (PST)
-Date: Mon, 9 Nov 2020 16:59:33 +0000
-From: Quentin Perret <qperret@google.com>
-To: David Brazdil <dbrazdil@google.com>
-Subject: Re: [PATCH v1 17/24] kvm: arm64: Add __hyp_pa_symbol helper macro
-Message-ID: <20201109165933.GA447754@google.com>
-References: <20201109113233.9012-1-dbrazdil@google.com>
- <20201109113233.9012-18-dbrazdil@google.com>
+ with ESMTP id cUB5drjERuR2 for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  9 Nov 2020 12:59:30 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B605D4B4B7
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Nov 2020 12:59:30 -0500 (EST)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 47E8920665;
+ Mon,  9 Nov 2020 17:59:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1604944769;
+ bh=VB4W1R6Xidy63HPldBkvYgNymeTHvz90LHtlTza6wcQ=;
+ h=From:To:Cc:Subject:Date:From;
+ b=1WyyWxd6omZIqHS646zTRLqZpPKC0zBMKlpQ++0dgOSQlhLk+b4uq2Q45g3bt7jFP
+ oWSo3EUsYmCs6w/muSDYPFB5Kmg2A1XuCLYVpmszzmdd08s+bMofK656RIoxq+7/VC
+ mvacaEITP9Jz8ni9pNyFrBepc5qQ6ujtFysiCDvM=
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1kcBRv-009BQs-17; Mon, 09 Nov 2020 17:59:27 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
+Subject: [PATCH v2 0/5] KVM: arm64: Host EL2 entry improvements
+Date: Mon,  9 Nov 2020 17:59:18 +0000
+Message-Id: <20201109175923.445945-1-maz@kernel.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20201109113233.9012-18-dbrazdil@google.com>
-Cc: kernel-team@android.com, Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
- Andrew Walbran <qwandor@google.com>, Marc Zyngier <maz@kernel.org>,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- Catalin Marinas <catalin.marinas@arm.com>, Tejun Heo <tj@kernel.org>,
- Dennis Zhou <dennis@kernel.org>, Christoph Lameter <cl@linux.com>,
- Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, james.morse@arm.com,
+ julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
+ alexandru.elisei@arm.com, ascull@google.com, will@kernel.org,
+ qperret@google.com, ndesaulniers@google.com, dbrazdil@google.com,
+ kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com, Will Deacon <will@kernel.org>,
+ ndesaulniers@google.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -99,42 +87,54 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hey David,
+This small series reworks various bits of the host EL2 entry after
+Andrew's extensive rework to move from direct function calls to a
+SMCCC implementation.
 
-On Monday 09 Nov 2020 at 11:32:26 (+0000), David Brazdil wrote:
-> Add helper macro for computing the PA of a kernel symbol in nVHE hyp
-> code. This will be useful for computing the PA of a PSCI CPU_ON entry
-> point.
-> 
-> Signed-off-by: David Brazdil <dbrazdil@google.com>
-> ---
->  arch/arm64/kvm/hyp/nvhe/psci.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/arch/arm64/kvm/hyp/nvhe/psci.c b/arch/arm64/kvm/hyp/nvhe/psci.c
-> index b0b5df590ba5..7510b9e174e9 100644
-> --- a/arch/arm64/kvm/hyp/nvhe/psci.c
-> +++ b/arch/arm64/kvm/hyp/nvhe/psci.c
-> @@ -20,6 +20,16 @@ s64 hyp_physvirt_offset;
->  
->  #define __hyp_pa(x) ((phys_addr_t)((x)) + hyp_physvirt_offset)
->  
-> +#define __hyp_pa_symbol(sym)					\
-> +	({							\
-> +		extern char sym[];				\
-> +		unsigned long kern_va;				\
-> +								\
-> +		asm volatile("ldr %0, =%1" : "=r" (kern_va)	\
-> +					   : "S" (sym));	\
-> +		kern_va - kimage_voffset;			\
-> +	})
-> +
+The first 2 patches allow the use of direct function pointers at EL2,
+something that we can't do at the moment (other than PC-relative
+addressing). This requires a helper to translate pointers at runtime,
+but the result is neat enough. This allows the rewrite of the host HVC
+handling in a more maintainable way.
 
-Could this be simplified to __hyp_pa(hyp_symbol_addr(sym))? That would
-avoid the dependency on kimage_voffset.
+Note that this version now includes the result of a discussion with
+Nick, providing some funky pointer mangling in order to make the use
+of these pointers vaguely safer (no, they are not safe at all).
 
-Thanks,
-Quentin
+Another patch removes the direct use of kimage_voffset, which we won't
+be able to trust for much longer.
+
+The last two patches are just cleanups and optimisations.
+
+* From v1 [1]:
+  - Merged the 3 first patches as fixes
+  - Added pointer mangling for function calls
+  - Moved EL2 entry ldp a couple of instructions later (as suggested
+    by Alex)
+  - Rebased on top of -rc3
+
+[1] https://lore.kernel.org/r/20201026095116.72051-1-maz@kernel.org
+
+Marc Zyngier (5):
+  KVM: arm64: Add kimg_hyp_va() helper
+  KVM: arm64: Turn host HVC handling into a dispatch table
+  KVM: arm64: Patch kimage_voffset instead of loading the EL1 value
+  KVM: arm64: Simplify __kvm_enable_ssbs()
+  KVM: arm64: Avoid repetitive stack access on host EL1 to EL2 exception
+
+ arch/arm64/include/asm/kvm_asm.h    |   2 -
+ arch/arm64/include/asm/kvm_mmu.h    |  40 +++++
+ arch/arm64/include/asm/sysreg.h     |   1 +
+ arch/arm64/kernel/image-vars.h      |   5 +-
+ arch/arm64/kvm/hyp/nvhe/host.S      |  11 +-
+ arch/arm64/kvm/hyp/nvhe/hyp-main.c  | 232 +++++++++++++++++-----------
+ arch/arm64/kvm/hyp/nvhe/sysreg-sr.c |  11 --
+ arch/arm64/kvm/va_layout.c          |  56 +++++++
+ 8 files changed, 241 insertions(+), 117 deletions(-)
+
+-- 
+2.28.0
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
