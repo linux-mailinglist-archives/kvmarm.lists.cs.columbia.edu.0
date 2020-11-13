@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1867F2B1A26
-	for <lists+kvmarm@lfdr.de>; Fri, 13 Nov 2020 12:39:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 993B32B1A29
+	for <lists+kvmarm@lfdr.de>; Fri, 13 Nov 2020 12:39:04 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BFC754BCC3;
-	Fri, 13 Nov 2020 06:39:01 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D49E4BD20;
+	Fri, 13 Nov 2020 06:39:04 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,39 +18,40 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id heTljE1WCX-V; Fri, 13 Nov 2020 06:39:00 -0500 (EST)
+	with ESMTP id TmgYoU0JZsdD; Fri, 13 Nov 2020 06:39:03 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BD14F4BCDE;
-	Fri, 13 Nov 2020 06:39:00 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 030AD4BD40;
+	Fri, 13 Nov 2020 06:39:03 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D7F334BCBF
- for <kvmarm@lists.cs.columbia.edu>; Fri, 13 Nov 2020 06:38:57 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 93FA44BCDE
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 13 Nov 2020 06:39:00 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ipgjXwaTlO-f for <kvmarm@lists.cs.columbia.edu>;
- Fri, 13 Nov 2020 06:38:57 -0500 (EST)
+ with ESMTP id FhoPihNhjTIN for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 13 Nov 2020 06:38:59 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id EA98F4BCC3
- for <kvmarm@lists.cs.columbia.edu>; Fri, 13 Nov 2020 06:38:56 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A0A694BCB6
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 13 Nov 2020 06:38:58 -0500 (EST)
 Received: from localhost.localdomain (236.31.169.217.in-addr.arpa
  [217.169.31.236])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id C291222250;
- Fri, 13 Nov 2020 11:38:54 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 7E56B22252;
+ Fri, 13 Nov 2020 11:38:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1605267536;
- bh=kFM1QC2+iRMy/GOTL17JZ8JIILyIAU2kZs4R48yUPEM=;
+ s=default; t=1605267537;
+ bh=5oKkedONqxp5jXLd3uh3IYZZu0+rHtM/7Ls9fb2LGGg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=sLugL1b5x2j2jyKXQI/upsAqfYa8FMiqqzbZpumF+owVLVcih9rypY8kmyAl+teWM
- 1atr63z3SnDM7D73Ek0N9B/IPwEQwNqGIfwwRPYKJgKq6Dbwkkt3lVNiTkFD8XH+XJ
- 2GUegPZ5onKMm/dwnTBPv2pZWOffm69+eKuFoKfs=
+ b=tWWyF5m7esfGq0NAGn83PupZXsWuSaMoau/aVCZ2PO0DjU+Pq7KgRMg9NrhP7wnFl
+ b9mPWlJ5DuhzTOU+FCUl8x+vCebpi8xcrB6GdjXv+Tjbp7JSRhJyY9AS4w5b611RaR
+ rdSjZ6JwkD3/F5oY1bS7WJr3dcWDXP7fKVGamjFo=
 From: Will Deacon <will@kernel.org>
 To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v3 02/10] KVM: arm64: Tidy up kvm_map_vector()
-Date: Fri, 13 Nov 2020 11:38:39 +0000
-Message-Id: <20201113113847.21619-3-will@kernel.org>
+Subject: [PATCH v3 03/10] KVM: arm64: Move kvm_get_hyp_vector() out of header
+ file
+Date: Fri, 13 Nov 2020 11:38:40 +0000
+Message-Id: <20201113113847.21619-4-will@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20201113113847.21619-1-will@kernel.org>
 References: <20201113113847.21619-1-will@kernel.org>
@@ -73,65 +74,137 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The bulk of the work in kvm_map_vector() is conditional on the
-ARM64_HARDEN_EL2_VECTORS capability, so return early if that is not set
-and make the code a bit easier to read.
+kvm_get_hyp_vector() has only one caller, so move it out of kvm_mmu.h
+and inline it into a new function, cpu_set_hyp_vector(), for setting
+the vector.
 
 Cc: Marc Zyngier <maz@kernel.org>
 Cc: Quentin Perret <qperret@google.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 ---
- arch/arm64/kvm/arm.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ arch/arm64/include/asm/kvm_mmu.h | 43 -----------------------------
+ arch/arm64/kvm/arm.c             | 46 ++++++++++++++++++++++++++++++--
+ 2 files changed, 44 insertions(+), 45 deletions(-)
 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index b43b637ded14..476bc613d0e6 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -1297,6 +1297,8 @@ static unsigned long nvhe_percpu_order(void)
- 
- static int kvm_map_vectors(void)
- {
-+	int slot;
-+
- 	/*
- 	 * SV2  = ARM64_SPECTRE_V2
- 	 * HEL2 = ARM64_HARDEN_EL2_VECTORS
-@@ -1306,22 +1308,20 @@ static int kvm_map_vectors(void)
- 	 * !SV2 +  HEL2 -> allocate one vector slot and use exec mapping
- 	 *  SV2 +  HEL2 -> use hardened vectors and use exec mapping
- 	 */
--	if (cpus_have_const_cap(ARM64_HARDEN_EL2_VECTORS)) {
--		phys_addr_t vect_pa = __pa_symbol(__bp_harden_hyp_vecs);
--		unsigned long size = __BP_HARDEN_HYP_VECS_SZ;
-+	if (!cpus_have_const_cap(ARM64_HARDEN_EL2_VECTORS))
-+		return 0;
- 
--		/*
--		 * Always allocate a spare vector slot, as we don't
--		 * know yet which CPUs have a BP hardening slot that
--		 * we can reuse.
--		 */
--		__kvm_harden_el2_vector_slot = atomic_inc_return(&arm64_el2_vector_last_slot);
--		BUG_ON(__kvm_harden_el2_vector_slot >= BP_HARDEN_EL2_SLOTS);
--		return create_hyp_exec_mappings(vect_pa, size,
--						&__kvm_bp_vect_base);
--	}
-+	/*
-+	 * Always allocate a spare vector slot, as we don't know yet which CPUs
-+	 * have a BP hardening slot that we can reuse.
-+	 */
-+	slot = atomic_inc_return(&arm64_el2_vector_last_slot);
-+	BUG_ON(slot >= BP_HARDEN_EL2_SLOTS);
-+	__kvm_harden_el2_vector_slot = slot;
- 
--	return 0;
-+	return create_hyp_exec_mappings(__pa_symbol(__bp_harden_hyp_vecs),
-+					__BP_HARDEN_HYP_VECS_SZ,
-+					&__kvm_bp_vect_base);
+diff --git a/arch/arm64/include/asm/kvm_mmu.h b/arch/arm64/include/asm/kvm_mmu.h
+index 331394306cce..23182e7d9413 100644
+--- a/arch/arm64/include/asm/kvm_mmu.h
++++ b/arch/arm64/include/asm/kvm_mmu.h
+@@ -208,52 +208,9 @@ static inline int kvm_write_guest_lock(struct kvm *kvm, gpa_t gpa,
+ 	return ret;
  }
  
- static void cpu_init_hyp_mode(void)
+-/*
+- * EL2 vectors can be mapped and rerouted in a number of ways,
+- * depending on the kernel configuration and CPU present:
+- *
+- * - If the CPU is affected by Spectre-v2, the hardening sequence is
+- *   placed in one of the vector slots, which is executed before jumping
+- *   to the real vectors.
+- *
+- * - If the CPU also has the ARM64_HARDEN_EL2_VECTORS cap, the slot
+- *   containing the hardening sequence is mapped next to the idmap page,
+- *   and executed before jumping to the real vectors.
+- *
+- * - If the CPU only has the ARM64_HARDEN_EL2_VECTORS cap, then an
+- *   empty slot is selected, mapped next to the idmap page, and
+- *   executed before jumping to the real vectors.
+- *
+- * Note that ARM64_HARDEN_EL2_VECTORS is somewhat incompatible with
+- * VHE, as we don't have hypervisor-specific mappings. If the system
+- * is VHE and yet selects this capability, it will be ignored.
+- */
+ extern void *__kvm_bp_vect_base;
+ extern int __kvm_harden_el2_vector_slot;
+ 
+-static inline void *kvm_get_hyp_vector(void)
+-{
+-	struct bp_hardening_data *data = arm64_get_bp_hardening_data();
+-	void *vect = kern_hyp_va(kvm_ksym_ref(__kvm_hyp_vector));
+-	int slot = -1;
+-
+-	if (cpus_have_const_cap(ARM64_SPECTRE_V2) && data->fn) {
+-		vect = kern_hyp_va(kvm_ksym_ref(__bp_harden_hyp_vecs));
+-		slot = data->hyp_vectors_slot;
+-	}
+-
+-	if (this_cpu_has_cap(ARM64_HARDEN_EL2_VECTORS) && !has_vhe()) {
+-		vect = __kvm_bp_vect_base;
+-		if (slot == -1)
+-			slot = __kvm_harden_el2_vector_slot;
+-	}
+-
+-	if (slot != -1)
+-		vect += slot * SZ_2K;
+-
+-	return vect;
+-}
+-
+ #define kvm_phys_to_vttbr(addr)		phys_to_ttbr(addr)
+ 
+ static __always_inline u64 kvm_get_vttbr(struct kvm_s2_mmu *mmu)
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 476bc613d0e6..c63c0b3c9b17 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -1375,13 +1375,55 @@ static void cpu_hyp_reset(void)
+ 		__hyp_reset_vectors();
+ }
+ 
++/*
++ * EL2 vectors can be mapped and rerouted in a number of ways,
++ * depending on the kernel configuration and CPU present:
++ *
++ * - If the CPU is affected by Spectre-v2, the hardening sequence is
++ *   placed in one of the vector slots, which is executed before jumping
++ *   to the real vectors.
++ *
++ * - If the CPU also has the ARM64_HARDEN_EL2_VECTORS cap, the slot
++ *   containing the hardening sequence is mapped next to the idmap page,
++ *   and executed before jumping to the real vectors.
++ *
++ * - If the CPU only has the ARM64_HARDEN_EL2_VECTORS cap, then an
++ *   empty slot is selected, mapped next to the idmap page, and
++ *   executed before jumping to the real vectors.
++ *
++ * Note that ARM64_HARDEN_EL2_VECTORS is somewhat incompatible with
++ * VHE, as we don't have hypervisor-specific mappings. If the system
++ * is VHE and yet selects this capability, it will be ignored.
++ */
++static void cpu_set_hyp_vector(void)
++{
++	struct bp_hardening_data *data = arm64_get_bp_hardening_data();
++	void *vect = kern_hyp_va(kvm_ksym_ref(__kvm_hyp_vector));
++	int slot = -1;
++
++	if (cpus_have_const_cap(ARM64_SPECTRE_V2) && data->fn) {
++		vect = kern_hyp_va(kvm_ksym_ref(__bp_harden_hyp_vecs));
++		slot = data->hyp_vectors_slot;
++	}
++
++	if (this_cpu_has_cap(ARM64_HARDEN_EL2_VECTORS) && !has_vhe()) {
++		vect = __kvm_bp_vect_base;
++		if (slot == -1)
++			slot = __kvm_harden_el2_vector_slot;
++	}
++
++	if (slot != -1)
++		vect += slot * SZ_2K;
++
++	*this_cpu_ptr_hyp_sym(kvm_hyp_vector) = (unsigned long)vect;
++}
++
+ static void cpu_hyp_reinit(void)
+ {
+ 	kvm_init_host_cpu_context(&this_cpu_ptr_hyp_sym(kvm_host_data)->host_ctxt);
+ 
+ 	cpu_hyp_reset();
+-
+-	*this_cpu_ptr_hyp_sym(kvm_hyp_vector) = (unsigned long)kvm_get_hyp_vector();
++	cpu_set_hyp_vector();
+ 
+ 	if (is_kernel_in_hyp_mode())
+ 		kvm_timer_init_vhe();
 -- 
 2.29.2.299.gdc1121823c-goog
 
