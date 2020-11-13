@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E77F92B23B0
-	for <lists+kvmarm@lfdr.de>; Fri, 13 Nov 2020 19:26:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D4BC2B23B5
+	for <lists+kvmarm@lfdr.de>; Fri, 13 Nov 2020 19:26:26 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9B2F34B742;
-	Fri, 13 Nov 2020 13:26:24 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 329054BADB;
+	Fri, 13 Nov 2020 13:26:26 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,46 +18,46 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6j0jr40ynaBj; Fri, 13 Nov 2020 13:26:23 -0500 (EST)
+	with ESMTP id wmKm6ch7XnCk; Fri, 13 Nov 2020 13:26:25 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BAE2A4BA0E;
-	Fri, 13 Nov 2020 13:26:21 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F0AB14B9CC;
+	Fri, 13 Nov 2020 13:26:24 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B2F894B728
- for <kvmarm@lists.cs.columbia.edu>; Fri, 13 Nov 2020 13:26:20 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1C6194B615
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 13 Nov 2020 13:26:21 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id UfsJdlpPFZ3l for <kvmarm@lists.cs.columbia.edu>;
- Fri, 13 Nov 2020 13:26:19 -0500 (EST)
+ with ESMTP id v3KKZ3GM7O0T for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 13 Nov 2020 13:26:20 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id BBE2D4B622
- for <kvmarm@lists.cs.columbia.edu>; Fri, 13 Nov 2020 13:26:19 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 205D84B5DB
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 13 Nov 2020 13:26:20 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id B7514208D5;
- Fri, 13 Nov 2020 18:26:18 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 2EE79206C0;
+ Fri, 13 Nov 2020 18:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1605291978;
- bh=8exQ+RJWp7s5beIsrjhtie2H7PoVpSHVfotFblRbfkU=;
+ s=default; t=1605291979;
+ bh=gqeOpdKIC8c1SEOYJyLabRdrjbnRjjbH5FwGDpMWGOQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=dDLBjuENH33jZ3V2szqs+b5y1JFD/XbFnnokFDScqJq9ZtTHUXGQkpad2zj8Al0HA
- XVRXvTM6pt4tUUjEebMQ7806QzfHE/OOlfazeu6GY77KPA20YQLlKevtZior7upkkU
- fetX7Q2OrTX8RkQaLXGxZYdEP2mS7d0pCHKM+bHE=
+ b=vRjTGm0w5ksgiKWhpZPBk8Iw73UMo9F5KrhDM5pYdk8Pmvks5rvNp2dysyszem9FK
+ w/lnb98UIssw09HKfC63Gq0xnCw16YlPNv4TJfyy4AlLLSdHscFkwG9ybD9LHCzAaI
+ +RpoJre0QM00caLy/IcpWy4o+Mz7t/1o1Bn6bGRg=
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1kddm4-00APrY-Vy; Fri, 13 Nov 2020 18:26:17 +0000
+ id 1kddm5-00APrY-F5; Fri, 13 Nov 2020 18:26:17 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH 3/8] KVM: arm64: Refuse illegal KVM_ARM_VCPU_PMU_V3 at reset
- time
-Date: Fri, 13 Nov 2020 18:25:57 +0000
-Message-Id: <20201113182602.471776-4-maz@kernel.org>
+Subject: [PATCH 4/8] KVM: arm64: Inject UNDEF on PMU access when no PMU
+ configured
+Date: Fri, 13 Nov 2020 18:25:58 +0000
+Message-Id: <20201113182602.471776-5-maz@kernel.org>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <20201113182602.471776-1-maz@kernel.org>
 References: <20201113182602.471776-1-maz@kernel.org>
@@ -87,58 +87,60 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-We accept to configure a PMU when a vcpu is created, even if the
-HW (or the host) doesn't support it. This results in failures
-when attributes get set, which is a bit odd as we should have
-failed the vcpu creation the first place.
+The ARMv8 architecture says that in the absence of FEAT_PMUv3,
+all the PMU-related register generate an UNDEF. Let's make
+sure that all our PMU handers catch this case by hooking into
+check_pmu_access_disabled(), and add checks in a couple of
+other places.
 
-Move the check to the point where we check the vcpu feature set,
-and fail early if we cannot support a PMU. This further simplifies
-the attribute handling.
+Note that we still cannot deliver an exception into the guest
+as the offending cases are already caught by the RAZ/WI handling.
+But this puts us one step away to architectural compliance.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/pmu-emul.c | 4 ++--
- arch/arm64/kvm/reset.c    | 4 ++++
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/sys_regs.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/kvm/pmu-emul.c b/arch/arm64/kvm/pmu-emul.c
-index e7e3b4629864..200f2a0d8d17 100644
---- a/arch/arm64/kvm/pmu-emul.c
-+++ b/arch/arm64/kvm/pmu-emul.c
-@@ -913,7 +913,7 @@ static bool pmu_irq_is_valid(struct kvm *kvm, int irq)
- 
- int kvm_arm_pmu_v3_set_attr(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
+diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+index 6629cfde2838..b098d667bb42 100644
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -609,8 +609,9 @@ static void reset_pmcr(struct kvm_vcpu *vcpu, const struct sys_reg_desc *r)
+ static bool check_pmu_access_disabled(struct kvm_vcpu *vcpu, u64 flags)
  {
--	if (!kvm_arm_support_pmu_v3() || !kvm_vcpu_has_pmu(vcpu))
-+	if (!kvm_vcpu_has_pmu(vcpu))
- 		return -ENODEV;
+ 	u64 reg = __vcpu_sys_reg(vcpu, PMUSERENR_EL0);
+-	bool enabled = (reg & flags) || vcpu_mode_priv(vcpu);
++	bool enabled = kvm_vcpu_has_pmu(vcpu);
  
- 	if (vcpu->arch.pmu.created)
-@@ -1034,7 +1034,7 @@ int kvm_arm_pmu_v3_has_attr(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
- 	case KVM_ARM_VCPU_PMU_V3_IRQ:
- 	case KVM_ARM_VCPU_PMU_V3_INIT:
- 	case KVM_ARM_VCPU_PMU_V3_FILTER:
--		if (kvm_arm_support_pmu_v3() && kvm_vcpu_has_pmu(vcpu))
-+		if (kvm_vcpu_has_pmu(vcpu))
- 			return 0;
- 	}
++	enabled &= (reg & flags) || vcpu_mode_priv(vcpu);
+ 	if (!enabled)
+ 		kvm_inject_undefined(vcpu);
  
-diff --git a/arch/arm64/kvm/reset.c b/arch/arm64/kvm/reset.c
-index 74ce92a4988c..3e772ea4e066 100644
---- a/arch/arm64/kvm/reset.c
-+++ b/arch/arm64/kvm/reset.c
-@@ -285,6 +285,10 @@ int kvm_reset_vcpu(struct kvm_vcpu *vcpu)
- 			pstate = VCPU_RESET_PSTATE_EL1;
- 		}
+@@ -857,10 +858,8 @@ static bool access_pminten(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
+ 	if (!kvm_arm_pmu_v3_ready(vcpu))
+ 		return trap_raz_wi(vcpu, p, r);
  
-+		if (kvm_vcpu_has_pmu(vcpu) && !kvm_arm_support_pmu_v3()) {
-+			ret = -EINVAL;
-+			goto out;
-+		}
- 		break;
- 	}
+-	if (!vcpu_mode_priv(vcpu)) {
+-		kvm_inject_undefined(vcpu);
++	if (check_pmu_access_disabled(vcpu, 0))
+ 		return false;
+-	}
  
+ 	if (p->is_write) {
+ 		u64 val = p->regval & mask;
+@@ -928,6 +927,11 @@ static bool access_pmuserenr(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
+ 	if (!kvm_arm_pmu_v3_ready(vcpu))
+ 		return trap_raz_wi(vcpu, p, r);
+ 
++	if (!kvm_vcpu_has_pmu(vcpu)) {
++		kvm_inject_undefined(vcpu);
++		return false;
++	}
++
+ 	if (p->is_write) {
+ 		if (!vcpu_mode_priv(vcpu)) {
+ 			kvm_inject_undefined(vcpu);
 -- 
 2.28.0
 
