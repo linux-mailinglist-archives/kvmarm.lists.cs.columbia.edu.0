@@ -2,76 +2,86 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DFC112B6BB8
-	for <lists+kvmarm@lfdr.de>; Tue, 17 Nov 2020 18:30:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A0942B6CB2
+	for <lists+kvmarm@lfdr.de>; Tue, 17 Nov 2020 19:16:25 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5D7514B80B;
-	Tue, 17 Nov 2020 12:30:04 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D54DB4B601;
+	Tue, 17 Nov 2020 13:16:24 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id RK5wLhSqTwdM; Tue, 17 Nov 2020 12:30:04 -0500 (EST)
+	with ESMTP id OtGKvQKYg5bz; Tue, 17 Nov 2020 13:16:24 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 222A24B821;
-	Tue, 17 Nov 2020 12:30:03 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4513C4B61D;
+	Tue, 17 Nov 2020 13:16:23 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 86F034B808
- for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Nov 2020 12:30:02 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C77964B5DD
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Nov 2020 13:16:21 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Qy5IjiM0Y4wk for <kvmarm@lists.cs.columbia.edu>;
- Tue, 17 Nov 2020 12:30:01 -0500 (EST)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 63FA54B7F3
- for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Nov 2020 12:30:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1605634201;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Vro1buifvm686BzsfyYs3/2N9XyBtnxtRecQ5TGBeE8=;
- b=NqWJyVHoXO7A4N5DhC/cOx9e1Ugd35cYKLj2+i2DqjmGzw8e6mWgPOy5DwZdHFWn7qLhWt
- LqnjDT3RNkWElHIaMWycqMg2VUqcCnN89otY7YtM4lZq6bwi1IHNyerYw9MfhbN4kiCATo
- EUds5dyAlR5zCHKH64GSQn++U+XhyMs=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-117-Ewue8X--PqmxoBXd4NNcFg-1; Tue, 17 Nov 2020 12:29:56 -0500
-X-MC-Unique: Ewue8X--PqmxoBXd4NNcFg-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com
- [10.5.11.22])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id BAEEFF6CF5;
- Tue, 17 Nov 2020 17:29:54 +0000 (UTC)
-Received: from [10.36.115.104] (ovpn-115-104.ams2.redhat.com [10.36.115.104])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 1E65B10013C4;
- Tue, 17 Nov 2020 17:29:51 +0000 (UTC)
-Subject: Re: [PATCH] KVM: arm64: vgic-v3: Drop the reporting of
- GICR_TYPER.Last for userspace
-To: Zenghui Yu <yuzenghui@huawei.com>, kvmarm@lists.cs.columbia.edu,
- maz@kernel.org
-References: <20201117151629.1738-1-yuzenghui@huawei.com>
-From: Auger Eric <eric.auger@redhat.com>
-Message-ID: <4c9c10f9-fc6d-2725-168e-db6442b74574@redhat.com>
-Date: Tue, 17 Nov 2020 18:29:50 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
-MIME-Version: 1.0
-In-Reply-To: <20201117151629.1738-1-yuzenghui@huawei.com>
-Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
-Cc: linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+ with ESMTP id uzbNqmDE-ulb for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 17 Nov 2020 13:16:20 -0500 (EST)
+Received: from mail-qk1-f201.google.com (mail-qk1-f201.google.com
+ [209.85.222.201])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0B5D64B5D6
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Nov 2020 13:16:20 -0500 (EST)
+Received: by mail-qk1-f201.google.com with SMTP id t64so14722487qkd.5
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Nov 2020 10:16:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=sender:date:message-id:mime-version:subject:from:to:cc;
+ bh=4x2LPs+SVLChp+56gdHoWBr1y6qmTjYGgcctnhFKsXo=;
+ b=H73ISXjMOGVV1w3bN1jGOFUiUY1yRfJ7AOCQXuOoODvokljw2HLFEN5+G9rTeK4xVQ
+ VXDPG0olr7xSsDBmpit1p1vTjkFCBj36EsT2dRlNaWtGF5FcY85I4gkFpRu7u08zuVud
+ 5wOsR+OmSbpw5Rd9N2yadrUm7yKlp4dzBvrlC706Z2UssEbMifZzzTvFNPT8ull40jm/
+ Mp2OrAkvIn5KnQqV7wpr6uhGzhKZUdifsJbQlrLaXfcmhVmbpQCnY2GFqI7DeuVvIJ0a
+ ik6fE1aZ/Rgj7Wn0TXAg2fK49UYC7cq5nkUANKEJ+eVYpDDjlqtV65E67i/HISd7jeEd
+ 1Ccg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
+ :to:cc;
+ bh=4x2LPs+SVLChp+56gdHoWBr1y6qmTjYGgcctnhFKsXo=;
+ b=hLHcwlCHM9sovSM8DQoqqRFtxYPsA2sglc0vABa+tokisQibyq0lcrXoctvqPVFJ9/
+ m6fQ9GKNtayZW15AEAMREyItefxbH5FaSDyeRs3gNqvNuJjpc1ouUt5X4NQldkvgXF/J
+ t2qyNBNNN7JUq/r3LPojaWtD8nfIGoRdEmfFVzQiWysOqYhQW2A8iNJ5RmKNH1i2Gp12
+ sZiub6qxbNliH4VpD3ZTCGJmSDnoxb9ieaW7Wfd1fWpv5uLUnZWYw1kAoSlIh8xm9EVe
+ 8GJOScSHYmEoo4KgLDooB2QDLPzr4Ea/S7eDAM85A26B2LDnOx50z+FHzQHzr+U4LDFD
+ +ibw==
+X-Gm-Message-State: AOAM531AJqjuCPcG7L+EhE7S02xDKLrw3/8XG2prsrYlxn+P9kdH+iNt
+ yfbw5HeMWwXn1DA7fxTBNx65cTWVm8/+
+X-Google-Smtp-Source: ABdhPJx8GBSOh7X/x/f3+0D0vrCA1gVP067PW6ywKbFjbKrFdmO63xQSY+G4mk1iJInpYT3Z/CtEUZb0Pssr
+X-Received: from luke.lon.corp.google.com
+ ([2a00:79e0:d:210:f693:9fff:fef4:a7ef])
+ (user=qperret job=sendgmr) by 2002:ad4:4a8a:: with SMTP id
+ h10mr884248qvx.55.1605636979378; Tue, 17 Nov 2020 10:16:19 -0800 (PST)
+Date: Tue, 17 Nov 2020 18:15:40 +0000
+Message-Id: <20201117181607.1761516-1-qperret@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.29.2.299.gdc1121823c-goog
+Subject: [RFC PATCH 00/27] KVM/arm64: A stage 2 for the host
+From: Quentin Perret <qperret@google.com>
+To: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+ Marc Zyngier <maz@kernel.org>, James Morse <james.morse@arm.com>, 
+ Julien Thierry <julien.thierry.kdev@gmail.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>, 
+ Rob Herring <robh+dt@kernel.org>, Frank Rowand <frowand.list@gmail.com>
+Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE"
+ <devicetree@vger.kernel.org>, android-kvm@google.com,
+ open list <linux-kernel@vger.kernel.org>, kernel-team@android.com,
+ "open list:KERNEL VIRTUAL MACHINE FOR ARM64 \(KVM/arm64\)"
+ <kvmarm@lists.cs.columbia.edu>,
+ "moderated list:ARM64 PORT \(AARCH64 ARCHITECTURE\)"
+ <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -88,90 +98,199 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Zenghui,
+Hi all,
 
-On 11/17/20 4:16 PM, Zenghui Yu wrote:
-> It was recently reported that if GICR_TYPER is accessed before the RD base
-> address is set, we'll suffer from the unset @rdreg dereferencing. Oops...
-> 
-> 	gpa_t last_rdist_typer = rdreg->base + GICR_TYPER +
-> 			(rdreg->free_index - 1) * KVM_VGIC_V3_REDIST_SIZE;
-> 
-> It's "expected" that users will access registers in the redistributor if
-> the RD has been properly configured (e.g., the RD base address is set). But
-> it hasn't yet been covered by the existing documentation.
-> 
-> Per discussion on the list [1], the reporting of the GICR_TYPER.Last bit
-> for userspace never actually worked. And it's difficult for us to emulate
-> it correctly given that userspace has the flexibility to access it any
-> time. Let's just drop the reporting of the Last bit for userspace for now
-> (userspace should have full knowledge about it anyway) and it at least
-> prevents kernel from panic ;-)
-> 
-> [1] https://lore.kernel.org/kvmarm/c20865a267e44d1e2c0d52ce4e012263@kernel.org/
-> 
-> Fixes: ba7b3f1275fd ("KVM: arm/arm64: Revisit Redistributor TYPER last bit computation")
-> Reported-by: Keqian Zhu <zhukeqian1@huawei.com>
-> Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
-Given the state of last bit, it looks sensible atm.
+This RFC series provides the infrastructure enabling to wrap the host
+kernel with a stage 2 when running KVM in nVHE. This can be useful for
+several use-cases, but the primary motivation is to (eventually) be able
+to protect guest memory from the host kernel. More details about the
+overall idea, design, and motivations can be found in Will's talk at KVM
+Forum 2020 [1], or the pKVM talk at the Android uconf during LPC 2020
+[2].
 
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+This series essentially gets us to a point where the 'VM' bit is set
+in the host's HCR_EL2 when running in nVHE and if 'kvm-arm.protected'
+is set on the kernel command line. The EL2 object directly handles
+memory aborts from the host and manages entirely its stage 2 page table.
 
-Thanks
+However, this series does _not_ provide any real user for this (yet)
+and simply idmaps everything into the host stage 2 as RWX cacheable.
+This is all about the infrastructure for now, so clearly not ready for
+inclusion upstream yet (hence the RFC tag), but the bases are there and
+I thought it'd be useful to start a discussion with the community early
+as this is a rather intrusive change. So, here goes.
 
-Eric
+One of the interesting requirements that comes with the series is that
+managing page-tables requires some sort of memory allocator at EL2 to
+allocate, refcount and free memory pages. Clearly, none of that is
+currently possible in nVHE, so a significant chunk of the series is
+dedicated to solving that problem. The proposed EL2 memory allocator
+mimics Linux' buddy system in principles, and re-uses some of the arm64
+mm design choices. Specifically, it uses a vmemmap at EL2 which contains
+a set of struct hyp_page entries to hold pages metadata. To support
+this, I extended the EL2 object to make it manage its own stage 1
+page-table in addition to host stage 2. This simplifies the hyp_vmemmap
+creation and was going to be required anyway for the protected VM
+use-case -- the threat model implies the host cannot be trusted after
+boot, and it will thus be crucial to ensure it cannot map arbitrary code
+at EL2.
+
+The pool of memory pages used by the EL2 allocator are reserved by the
+host early during boot (while it is still trusted) using the memblock
+API, and are donated to EL2 during KVM init. The current assumption is
+that the host reserves enough pages to allow the EL2 object to map all
+of memory at page granularity for both hyp stage 1 and host stage 2,
+plus some extra pages for device mappings.
+
+On top of that the series introduces a few smaller features that are
+needed along the way, but hopefully all of those are detailed properly
+in the relevant commit messages.
+
+And as a last note, I'd like to point out that there are at this point
+trivial ways for the host to circumvent its stage 2 protection. It still
+owns the guests stage 2 for example, meaning that nothing would prevent
+a malicious host from using a guest as a proxy to access protected
+memory, _yet_. This series lays the ground for future work to address
+these things, which will clearly require a stage 2 over the host at some
+point, so I just wanted to set the expectations right.
+
+With all that in mind, the series is organized as follows:
+
+ - patches 01-03 provide EL2 with some utility libraries needed for
+   memory management and synchronization;
+
+ - patches 04-09 mostly refactor smalls portions of the code to ease the
+   EL2 memory management;
+
+ - patches 10-17 add the actual EL2 memory management code, as well as
+   the setup/bootstrap code on the KVM init path;
+
+ - patches 18-24 refactor the existing stage 2 management code to make
+   it re-usable from the EL2 object;
+
+ - and finally patches 25-27 introduce the host stage 2 and the trap
+   handling logic at EL2.
+
+This work is based on the latest kvmarm/queue (which includes Marc's
+host EL2 entry rework [3], as well as Will's guest vector refactoring
+[4]) + David's PSCI proxying series [5].
+
+And if you'd like a branch that has all the bits and pieces:
+
+    https://android-kvm.googlesource.com/linux qperret/host-stage2
+
+Boot-tested (host and guest) using qemu in VHE and nVHE, and on real
+hardware on a AML-S905X-CC (Le Potato).
+
+Thanks,
+Quentin
+
+[1] https://kvmforum2020.sched.com/event/eE24/virtualization-for-the-masses-exposing-kvm-on-android-will-deacon-google
+[2] https://youtu.be/54q6RzS9BpQ?t=10859
+[3] https://lore.kernel.org/kvmarm/20201109175923.445945-1-maz@kernel.org/
+[4] https://lore.kernel.org/kvmarm/20201113113847.21619-1-will@kernel.org/
+[5] https://lore.kernel.org/kvmarm/20201116204318.63987-1-dbrazdil@google.com/
 
 
-> ---
-> 
-> This may be the easiest way to fix the issue and to get the fix backported
-> to stable tree. There is still some work can be done since (at least) we
-> have code duplicates between the MMIO and uaccess callbacks.
-> 
->  arch/arm64/kvm/vgic/vgic-mmio-v3.c | 22 ++++++++++++++++++++--
->  1 file changed, 20 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-> index 52d6f24f65dc..15a6c98ee92f 100644
-> --- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-> +++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-> @@ -273,6 +273,23 @@ static unsigned long vgic_mmio_read_v3r_typer(struct kvm_vcpu *vcpu,
->  	return extract_bytes(value, addr & 7, len);
->  }
->  
-> +static unsigned long vgic_uaccess_read_v3r_typer(struct kvm_vcpu *vcpu,
-> +						 gpa_t addr, unsigned int len)
-> +{
-> +	unsigned long mpidr = kvm_vcpu_get_mpidr_aff(vcpu);
-> +	int target_vcpu_id = vcpu->vcpu_id;
-> +	u64 value;
-> +
-> +	value = (u64)(mpidr & GENMASK(23, 0)) << 32;
-> +	value |= ((target_vcpu_id & 0xffff) << 8);
-> +
-> +	if (vgic_has_its(vcpu->kvm))
-> +		value |= GICR_TYPER_PLPIS;
-> +
-> +	/* reporting of the Last bit is not supported for userspace */
-> +	return extract_bytes(value, addr & 7, len);
-> +}
-> +
->  static unsigned long vgic_mmio_read_v3r_iidr(struct kvm_vcpu *vcpu,
->  					     gpa_t addr, unsigned int len)
->  {
-> @@ -593,8 +610,9 @@ static const struct vgic_register_region vgic_v3_rd_registers[] = {
->  	REGISTER_DESC_WITH_LENGTH(GICR_IIDR,
->  		vgic_mmio_read_v3r_iidr, vgic_mmio_write_wi, 4,
->  		VGIC_ACCESS_32bit),
-> -	REGISTER_DESC_WITH_LENGTH(GICR_TYPER,
-> -		vgic_mmio_read_v3r_typer, vgic_mmio_write_wi, 8,
-> +	REGISTER_DESC_WITH_LENGTH_UACCESS(GICR_TYPER,
-> +		vgic_mmio_read_v3r_typer, vgic_mmio_write_wi,
-> +		vgic_uaccess_read_v3r_typer, vgic_mmio_uaccess_write_wi, 8,
->  		VGIC_ACCESS_64bit | VGIC_ACCESS_32bit),
->  	REGISTER_DESC_WITH_LENGTH(GICR_WAKER,
->  		vgic_mmio_read_raz, vgic_mmio_write_wi, 4,
-> 
+Quentin Perret (24):
+  KVM: arm64: Initialize kvm_nvhe_init_params early
+  KVM: arm64: Avoid free_page() in page-table allocator
+  KVM: arm64: Factor memory allocation out of pgtable.c
+  KVM: arm64: Introduce a BSS section for use at Hyp
+  KVM: arm64: Make kvm_call_hyp() a function call at Hyp
+  KVM: arm64: Allow using kvm_nvhe_sym() in hyp code
+  KVM: arm64: Introduce an early Hyp page allocator
+  KVM: arm64: Stub CONFIG_DEBUG_LIST at Hyp
+  KVM: arm64: Introduce a Hyp buddy page allocator
+  KVM: arm64: Enable access to sanitized CPU features at EL2
+  KVM: arm64: Factor out vector address calculation
+  of/fdt: Introduce early_init_dt_add_memory_hyp()
+  KVM: arm64: Prepare Hyp memory protection
+  KVM: arm64: Elevate Hyp mappings creation at EL2
+  KVM: arm64: Use kvm_arch for stage 2 pgtable
+  KVM: arm64: Use kvm_arch in kvm_s2_mmu
+  KVM: arm64: Set host stage 2 using kvm_nvhe_init_params
+  KVM: arm64: Refactor kvm_arm_setup_stage2()
+  KVM: arm64: Refactor __load_guest_stage2()
+  KVM: arm64: Refactor __populate_fault_info()
+  KVM: arm64: Make memcache anonymous in pgtable allocator
+  KVM: arm64: Reserve memory for host stage 2
+  KVM: arm64: Sort the memblock regions list
+  KVM: arm64: Wrap the host with a stage 2
+
+Will Deacon (3):
+  arm64: lib: Annotate {clear,copy}_page() as position-independent
+  KVM: arm64: Link position-independent string routines into .hyp.text
+  KVM: arm64: Add standalone ticket spinlock implementation for use at
+    hyp
+
+ arch/arm64/include/asm/cpufeature.h           |   1 +
+ arch/arm64/include/asm/hyp_image.h            |   4 +
+ arch/arm64/include/asm/kvm_asm.h              |  13 +-
+ arch/arm64/include/asm/kvm_cpufeature.h       |  19 ++
+ arch/arm64/include/asm/kvm_host.h             |  17 +-
+ arch/arm64/include/asm/kvm_hyp.h              |   8 +
+ arch/arm64/include/asm/kvm_mmu.h              |  69 +++++-
+ arch/arm64/include/asm/kvm_pgtable.h          |  41 +++-
+ arch/arm64/include/asm/sections.h             |   1 +
+ arch/arm64/kernel/asm-offsets.c               |   3 +
+ arch/arm64/kernel/cpufeature.c                |  14 +-
+ arch/arm64/kernel/image-vars.h                |  35 +++
+ arch/arm64/kernel/vmlinux.lds.S               |   7 +
+ arch/arm64/kvm/arm.c                          | 136 +++++++++--
+ arch/arm64/kvm/hyp/Makefile                   |   2 +-
+ arch/arm64/kvm/hyp/include/hyp/switch.h       |  36 +--
+ arch/arm64/kvm/hyp/include/nvhe/early_alloc.h |  14 ++
+ arch/arm64/kvm/hyp/include/nvhe/gfp.h         |  32 +++
+ arch/arm64/kvm/hyp/include/nvhe/mem_protect.h |  33 +++
+ arch/arm64/kvm/hyp/include/nvhe/memory.h      |  55 +++++
+ arch/arm64/kvm/hyp/include/nvhe/mm.h          | 107 +++++++++
+ arch/arm64/kvm/hyp/include/nvhe/spinlock.h    |  95 ++++++++
+ arch/arm64/kvm/hyp/include/nvhe/util.h        |  25 ++
+ arch/arm64/kvm/hyp/nvhe/Makefile              |   9 +-
+ arch/arm64/kvm/hyp/nvhe/cache.S               |  13 ++
+ arch/arm64/kvm/hyp/nvhe/cpufeature.c          |   8 +
+ arch/arm64/kvm/hyp/nvhe/early_alloc.c         |  60 +++++
+ arch/arm64/kvm/hyp/nvhe/hyp-init.S            |  39 ++++
+ arch/arm64/kvm/hyp/nvhe/hyp-main.c            |  50 ++++
+ arch/arm64/kvm/hyp/nvhe/hyp.lds.S             |   1 +
+ arch/arm64/kvm/hyp/nvhe/mem_protect.c         | 191 ++++++++++++++++
+ arch/arm64/kvm/hyp/nvhe/mm.c                  | 175 ++++++++++++++
+ arch/arm64/kvm/hyp/nvhe/page_alloc.c          | 185 +++++++++++++++
+ arch/arm64/kvm/hyp/nvhe/psci-relay.c          |   7 +-
+ arch/arm64/kvm/hyp/nvhe/setup.c               | 214 ++++++++++++++++++
+ arch/arm64/kvm/hyp/nvhe/stub.c                |  22 ++
+ arch/arm64/kvm/hyp/nvhe/switch.c              |  12 +-
+ arch/arm64/kvm/hyp/nvhe/tlb.c                 |   4 +-
+ arch/arm64/kvm/hyp/pgtable.c                  |  98 ++++----
+ arch/arm64/kvm/hyp/reserved_mem.c             |  95 ++++++++
+ arch/arm64/kvm/mmu.c                          | 114 +++++++++-
+ arch/arm64/kvm/reset.c                        |  42 +---
+ arch/arm64/lib/clear_page.S                   |   4 +-
+ arch/arm64/lib/copy_page.S                    |   4 +-
+ arch/arm64/mm/init.c                          |   3 +
+ drivers/of/fdt.c                              |   5 +
+ 46 files changed, 1971 insertions(+), 151 deletions(-)
+ create mode 100644 arch/arm64/include/asm/kvm_cpufeature.h
+ create mode 100644 arch/arm64/kvm/hyp/include/nvhe/early_alloc.h
+ create mode 100644 arch/arm64/kvm/hyp/include/nvhe/gfp.h
+ create mode 100644 arch/arm64/kvm/hyp/include/nvhe/mem_protect.h
+ create mode 100644 arch/arm64/kvm/hyp/include/nvhe/memory.h
+ create mode 100644 arch/arm64/kvm/hyp/include/nvhe/mm.h
+ create mode 100644 arch/arm64/kvm/hyp/include/nvhe/spinlock.h
+ create mode 100644 arch/arm64/kvm/hyp/include/nvhe/util.h
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/cache.S
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/cpufeature.c
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/early_alloc.c
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/mem_protect.c
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/mm.c
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/page_alloc.c
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/setup.c
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/stub.c
+ create mode 100644 arch/arm64/kvm/hyp/reserved_mem.c
+
+-- 
+2.29.2.299.gdc1121823c-goog
 
 _______________________________________________
 kvmarm mailing list
