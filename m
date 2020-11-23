@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 608D42C07F6
-	for <lists+kvmarm@lfdr.de>; Mon, 23 Nov 2020 13:52:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 31B672C07FB
+	for <lists+kvmarm@lfdr.de>; Mon, 23 Nov 2020 13:57:34 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EA7744BB08;
-	Mon, 23 Nov 2020 07:51:59 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6AD764B99D;
+	Mon, 23 Nov 2020 07:57:31 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,66 +19,65 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BnSud-0O7l2m; Mon, 23 Nov 2020 07:51:59 -0500 (EST)
+	with ESMTP id d0++szg8HjDw; Mon, 23 Nov 2020 07:57:31 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E9CC04B9EC;
-	Mon, 23 Nov 2020 07:51:58 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 13DF84B964;
+	Mon, 23 Nov 2020 07:57:30 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D84794B8C7
- for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Nov 2020 07:51:57 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6EB0C4B8F6
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Nov 2020 07:57:29 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 4SiVI2E3AAMQ for <kvmarm@lists.cs.columbia.edu>;
- Mon, 23 Nov 2020 07:51:56 -0500 (EST)
-Received: from mail-ej1-f68.google.com (mail-ej1-f68.google.com
- [209.85.218.68])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C0DE54B909
- for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Nov 2020 07:51:56 -0500 (EST)
-Received: by mail-ej1-f68.google.com with SMTP id gj5so23118034ejb.8
- for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Nov 2020 04:51:56 -0800 (PST)
+ with ESMTP id X0BvQPWeIaJG for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 23 Nov 2020 07:57:28 -0500 (EST)
+Received: from mail-oi1-f193.google.com (mail-oi1-f193.google.com
+ [209.85.167.193])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5F6EA4B8E6
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Nov 2020 07:57:28 -0500 (EST)
+Received: by mail-oi1-f193.google.com with SMTP id o25so19560712oie.5
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Nov 2020 04:57:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:from:to:cc:subject:message-id:references:mime-version
  :content-disposition:in-reply-to;
- bh=jnD6JxIyxc4vm54K4tKnhPWtevyVeHY1Zgn00laUUfA=;
- b=n+SsvAnOuvFpo9fuYFpraPfRqMJQBKN5DmMsO67xbOdk7xeiFLjd9qowus6ere1Cg3
- IyClkLOxj+jm6I2dSTy2Tx1nAoEZtFF6N2t915Kw+bQ+hCeNUQe+u8vfps7+3A37Wd0i
- Xw468ZyUMHg34aARMw+5sCah5Ife3hgkIOgBaEFtTkrdvjw+F3UZo5x6JCdflbNWKuPL
- +gH7yEC9lZxw9iErt3++xiBCrsbPc8RsDMEJx2rKd5jMKKG8buEGI2odLG0PEC0EqUaX
- T33iehIZOGb9ctsRDtPWP1OUCnXL1/JQt4rpA1d7l2yVOfogxApssQ/fZAMIbiU6O13Y
- pn1g==
+ bh=exUXNPUBqsurzs6TF2YvQJu6wWbhf9lKT2IejTuCk6o=;
+ b=I3OXYWhBSA+1mdoW0bKXVxLM3nK8o5rwHvWB5g9l7IGc+bV7qkL5+PU4hJ7b7NgL8z
+ FXYI1z+65RYwIeIpZTVYS7zvkmm8FodW0mkraqyTAQcvv1C6iR1dTMAlpQi9gviXsaSE
+ e/DtN+e5rUzphZT3+t1qAQx0pPq6QFj6Y5tH5Hdqqy8kTsJdyCnGszJY+13sD6iGoh07
+ csHrxamprkhWDVgMDeYd6WO98tGoRH41ytiWYFy6xeBkP0bAKCKPLQkytzU591ldRU+5
+ OXzeDkclqy+vcfGx6u3gaoLqNfgrmqKzKM2iJgvdZ5FBg/nm2nUts7VflWy4gL7iJqNO
+ RCkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to;
- bh=jnD6JxIyxc4vm54K4tKnhPWtevyVeHY1Zgn00laUUfA=;
- b=QacM51aVJrwAhKMf6Held8Vlr3VJ25xL8aNBQLixfAh/+Tr6PNnemgl8D2OtfXbVy1
- stAldgnpSRCY8Zw23r1fmCnXpJpQNG3wwgf1h661Pz7uDFSHIB293dnaA4w2UClbD1Ko
- MPFvRDiAdB0JD4Ggbrqu0t3VA4AN2islbuMCDRwbtoRS9/Rbhv8HH2OG+atL7bL0uEfc
- bW3A3F+QSkRJwc/JT06G5XnzzjQiRAqqT3lTivwUoUyvIbmQE622jbpOR8c0M69iUZ5g
- lPzLwVkuD33zAjPIDdzYKw9l/BS+ytGDvxQi/4/+Jyy1o3KpOXBNNpkTh9LHFHOc8fE2
- iQRg==
-X-Gm-Message-State: AOAM531xZo+2+hkiwfslvJL+Nk5oJiENeUyuAwbdB0MwRt9mdDBykzFE
- hoNZZJlE0osMuy8aU/J0cpEM2g==
-X-Google-Smtp-Source: ABdhPJzoJRpQuSQbyVo4FnWnIGE0h6PqMXD5ASqgZR/lDI3/6lf/+dq9ThIlEFnuoEOJELCR8o+4KQ==
-X-Received: by 2002:a17:907:c14:: with SMTP id
- ga20mr43858051ejc.526.1606135915525; 
- Mon, 23 Nov 2020 04:51:55 -0800 (PST)
+ bh=exUXNPUBqsurzs6TF2YvQJu6wWbhf9lKT2IejTuCk6o=;
+ b=Oo/AtlmFF9YdKavvn1D+cIot2VCJKPKfSxoHhwYTGxrDPDMtZS+7ejYQHDjjQsMv3B
+ PsjT4oUkfMXzX7iJdXohvMxGzQwb9vup7BjIWK8lBRo/RywgpkEPytC+qJFGAsoy9AXq
+ 5URTtwI5058/GQjSE7KDkm7vzDEi/5eXcRPkDmcAzy7+Me/hVqtH2mnP0HC3SJme6jhz
+ nNmOzKLsR21JeIMSaAKyQrIj9dwNueRHo78BQqI3tlZySvWlrJ29vpc+Pb/fz/GXaqpQ
+ GkcpTTqSb3D0hMZpMb0wqdFh8+yZgOhLnI3lICeObLV3TTAWRsK8OAXupDIoP9iGA6f3
+ jrWQ==
+X-Gm-Message-State: AOAM5320q6mgymzQHoheOsHa+YYOhxkE5ODNc85PhI+b/3yzQeX4E3AH
+ ygoMY1I2bO8xql09BySo0aErNg==
+X-Google-Smtp-Source: ABdhPJwzwpfeNQT89sLH3jtamJqzFPHhAkP5CxC0/IL/uG66e6CxjBbYWKqGxu2eQLKFnmXRE/oXZQ==
+X-Received: by 2002:aca:6548:: with SMTP id j8mr15090532oiw.109.1606136247152; 
+ Mon, 23 Nov 2020 04:57:27 -0800 (PST)
 Received: from google.com ([2a01:4b00:8523:2d03:acac:b2ef:c7d:fd8a])
- by smtp.gmail.com with ESMTPSA id z19sm4921235ejj.101.2020.11.23.04.51.53
+ by smtp.gmail.com with ESMTPSA id j73sm6677293otj.37.2020.11.23.04.57.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Nov 2020 04:51:54 -0800 (PST)
-Date: Mon, 23 Nov 2020 12:51:53 +0000
+ Mon, 23 Nov 2020 04:57:26 -0800 (PST)
+Date: Mon, 23 Nov 2020 12:57:23 +0000
 From: David Brazdil <dbrazdil@google.com>
 To: Quentin Perret <qperret@google.com>
-Subject: Re: [RFC PATCH 08/27] KVM: arm64: Make kvm_call_hyp() a function
- call at Hyp
-Message-ID: <20201123125153.hnipzls2ijptpti7@google.com>
+Subject: Re: [RFC PATCH 09/27] KVM: arm64: Allow using kvm_nvhe_sym() in hyp
+ code
+Message-ID: <20201123125723.4mnodg3tnal4q4v2@google.com>
 References: <20201117181607.1761516-1-qperret@google.com>
- <20201117181607.1761516-9-qperret@google.com>
+ <20201117181607.1761516-10-qperret@google.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20201117181607.1761516-9-qperret@google.com>
+In-Reply-To: <20201117181607.1761516-10-qperret@google.com>
 Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE"
  <devicetree@vger.kernel.org>, kernel-team@android.com,
  Frank Rowand <frowand.list@gmail.com>, android-kvm@google.com,
@@ -105,57 +104,78 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, Nov 17, 2020 at 06:15:48PM +0000, 'Quentin Perret' via kernel-team wrote:
-> kvm_call_hyp() has some logic to issue a function call or a hypercall
-> depending the EL at which the kernel is running. However, all the code
-> compiled under __KVM_NVHE_HYPERVISOR__ is guaranteed to run only at EL2,
-> and in this case a simple function call is needed.
-> 
-> Add ifdefery to kvm_host.h to symplify kvm_call_hyp() in .hyp.text.
+On Tue, Nov 17, 2020 at 06:15:49PM +0000, 'Quentin Perret' via kernel-team wrote:
+> In order to allow the usage of code shared by the host and the hyp in
+> static inline library function, allow the usage of kvm_nvhe_sym() at el2
+> by defaulting to the raw symbol name.
 > 
 > Signed-off-by: Quentin Perret <qperret@google.com>
 > ---
->  arch/arm64/include/asm/kvm_host.h | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  arch/arm64/include/asm/hyp_image.h | 4 ++++
+>  arch/arm64/include/asm/kvm_asm.h   | 4 ++--
+>  arch/arm64/kvm/arm.c               | 2 +-
+>  3 files changed, 7 insertions(+), 3 deletions(-)
 > 
-> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-> index ac11adab6602..7a5d5f4b3351 100644
-> --- a/arch/arm64/include/asm/kvm_host.h
-> +++ b/arch/arm64/include/asm/kvm_host.h
-> @@ -557,6 +557,7 @@ int kvm_test_age_hva(struct kvm *kvm, unsigned long hva);
->  void kvm_arm_halt_guest(struct kvm *kvm);
->  void kvm_arm_resume_guest(struct kvm *kvm);
+> diff --git a/arch/arm64/include/asm/hyp_image.h b/arch/arm64/include/asm/hyp_image.h
+> index daa1a1da539e..8b807b646b8f 100644
+> --- a/arch/arm64/include/asm/hyp_image.h
+> +++ b/arch/arm64/include/asm/hyp_image.h
+> @@ -7,11 +7,15 @@
+>  #ifndef __ARM64_HYP_IMAGE_H__
+>  #define __ARM64_HYP_IMAGE_H__
 >  
 > +#ifndef __KVM_NVHE_HYPERVISOR__
->  #define kvm_call_hyp_nvhe(f, ...)						\
->  	({								\
->  		struct arm_smccc_res res;				\
-> @@ -596,6 +597,11 @@ void kvm_arm_resume_guest(struct kvm *kvm);
->  									\
->  		ret;							\
->  	})
-> +#else /* __KVM_NVHE_HYPERVISOR__ */
-> +#define kvm_call_hyp(f, ...) f(__VA_ARGS__)
-> +#define kvm_call_hyp_ret(f, ...) f(__VA_ARGS__)
-> +#define kvm_call_hyp_nvhe(f, ...) f(__VA_ARGS__)
-> +#endif /* __KVM_NVHE_HYPERVISOR__ */
+>  /*
+>   * KVM nVHE code has its own symbol namespace prefixed with __kvm_nvhe_,
+>   * to separate it from the kernel proper.
+>   */
+>  #define kvm_nvhe_sym(sym)	__kvm_nvhe_##sym
+> +#else
+> +#define kvm_nvhe_sym(sym)	sym
+> +#endif
+>  
+>  #ifdef LINKER_SCRIPT
+>  
+> diff --git a/arch/arm64/include/asm/kvm_asm.h b/arch/arm64/include/asm/kvm_asm.h
+> index 1a86581e581e..e4934f5e4234 100644
+> --- a/arch/arm64/include/asm/kvm_asm.h
+> +++ b/arch/arm64/include/asm/kvm_asm.h
+> @@ -173,11 +173,11 @@ struct kvm_s2_mmu;
+>  DECLARE_KVM_NVHE_SYM(__kvm_hyp_init);
+>  DECLARE_KVM_NVHE_SYM(__kvm_hyp_host_vector);
+>  DECLARE_KVM_HYP_SYM(__kvm_hyp_vector);
+> -DECLARE_KVM_NVHE_SYM(__kvm_hyp_psci_cpu_entry);
+>  #define __kvm_hyp_init			CHOOSE_NVHE_SYM(__kvm_hyp_init)
+>  #define __kvm_hyp_host_vector		CHOOSE_NVHE_SYM(__kvm_hyp_host_vector)
+>  #define __kvm_hyp_vector		CHOOSE_HYP_SYM(__kvm_hyp_vector)
+> -#define __kvm_hyp_psci_cpu_entry	CHOOSE_NVHE_SYM(__kvm_hyp_psci_cpu_entry)
+> +
+> +void kvm_nvhe_sym(__kvm_hyp_psci_cpu_entry)(void);
+>  
+>  extern unsigned long kvm_arm_hyp_percpu_base[NR_CPUS];
+>  DECLARE_KVM_NVHE_SYM(__per_cpu_start);
+> diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+> index 882eb383bd75..391cf6753a13 100644
+> --- a/arch/arm64/kvm/arm.c
+> +++ b/arch/arm64/kvm/arm.c
+> @@ -1369,7 +1369,7 @@ static void cpu_prepare_hyp_mode(int cpu)
+>  
+>  	params->vector_hyp_va = kern_hyp_va((unsigned long)kvm_ksym_ref(__kvm_hyp_host_vector));
+>  	params->stack_hyp_va = kern_hyp_va(per_cpu(kvm_arm_hyp_stack_page, cpu) + PAGE_SIZE);
+> -	params->entry_hyp_va = kern_hyp_va((unsigned long)kvm_ksym_ref(__kvm_hyp_psci_cpu_entry));
+> +	params->entry_hyp_va = kern_hyp_va((unsigned long)kvm_ksym_ref_nvhe(__kvm_hyp_psci_cpu_entry));
 
-I was hoping we could define this as the following instead. That would require
-adding host-side declarations of all functions currently called with _nvhe.
+Why is this change needed?
 
-#define kvm_call_hyp_nvhe(f, ...)					\
-+	is_nvhe_hyp_code() ? f(__VA_ARGS__) :				\
-	({								\
-		struct arm_smccc_res res;				\
-									\
-		arm_smccc_1_1_hvc(KVM_HOST_SMCCC_FUNC(f),		\
-				##__VA_ARGS__, &res);			\
-		WARN_ON(res.a0 != SMCCC_RET_SUCCESS);			\
-									\
-		res.a1;							\
-	})
-
-Up to you what you think is cleaner, just my 2 cents...
+>  	params->pgd_pa = kvm_mmu_get_httbr();
+>  
+>  	/*
+> -- 
+> 2.29.2.299.gdc1121823c-goog
+> 
+> -- 
+> To unsubscribe from this group and stop receiving emails from it, send an email to kernel-team+unsubscribe@android.com.
+> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
