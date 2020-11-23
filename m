@@ -2,55 +2,58 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F4932BAB24
-	for <lists+kvmarm@lfdr.de>; Fri, 20 Nov 2020 14:33:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CC7462C0173
+	for <lists+kvmarm@lfdr.de>; Mon, 23 Nov 2020 09:35:55 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E07FD4B3BB;
-	Fri, 20 Nov 2020 08:33:11 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7C3B04B959;
+	Mon, 23 Nov 2020 03:35:55 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id B3vxw11VBUYI; Fri, 20 Nov 2020 08:33:11 -0500 (EST)
+	with ESMTP id 1hh8ryVEipqc; Mon, 23 Nov 2020 03:35:54 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8E7294B38C;
-	Fri, 20 Nov 2020 08:33:10 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 17C244BB3D;
+	Mon, 23 Nov 2020 03:35:51 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7616F4B384
- for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Nov 2020 08:33:09 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 173314BA5E
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Nov 2020 01:54:58 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id lfaiIAi-4LQ5 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 20 Nov 2020 08:33:08 -0500 (EST)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3CA714B383
- for <kvmarm@lists.cs.columbia.edu>; Fri, 20 Nov 2020 08:33:08 -0500 (EST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8990C11D4;
- Fri, 20 Nov 2020 05:33:07 -0800 (PST)
-Received: from [192.168.0.110] (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id EC8423F718;
- Fri, 20 Nov 2020 05:33:06 -0800 (PST)
-Subject: Re: [kvm-unit-tests] its-migration segmentation fault
-To: Andrew Jones <drjones@redhat.com>
-References: <d18ab1d5-4eff-43e1-4a5b-5373b67e4286@arm.com>
- <20201120123414.bolwl6pym4iy3m6x@kamzik.brq.redhat.com>
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-Message-ID: <1dd15f28-2201-7061-7227-52f0eea9715f@arm.com>
-Date: Fri, 20 Nov 2020 13:34:26 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.3
+ with ESMTP id SwT1Dn4JpY1k for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 23 Nov 2020 01:54:56 -0500 (EST)
+Received: from szxga06-in.huawei.com (szxga06-in.huawei.com [45.249.212.32])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6C5204BA50
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 23 Nov 2020 01:54:55 -0500 (EST)
+Received: from DGGEMS405-HUB.china.huawei.com (unknown [172.30.72.59])
+ by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4CfdDn12VvzhgH2;
+ Mon, 23 Nov 2020 14:54:33 +0800 (CST)
+Received: from DESKTOP-7FEPK9S.china.huawei.com (10.174.187.74) by
+ DGGEMS405-HUB.china.huawei.com (10.3.19.205) with Microsoft SMTP Server id
+ 14.3.487.0; Mon, 23 Nov 2020 14:54:38 +0800
+From: Shenming Lu <lushenming@huawei.com>
+To: Marc Zyngier <maz@kernel.org>, James Morse <james.morse@arm.com>, "Julien
+ Thierry" <julien.thierry.kdev@gmail.com>, Suzuki K Poulose
+ <suzuki.poulose@arm.com>, Eric Auger <eric.auger@redhat.com>,
+ <linux-arm-kernel@lists.infradead.org>, <kvmarm@lists.cs.columbia.edu>,
+ <kvm@vger.kernel.org>, <linux-kernel@vger.kernel.org>, Christoffer Dall
+ <christoffer.dall@arm.com>
+Subject: [RFC PATCH v1 0/4] KVM: arm64: Add VLPI migration support on GICv4.1
+Date: Mon, 23 Nov 2020 14:54:06 +0800
+Message-ID: <20201123065410.1915-1-lushenming@huawei.com>
+X-Mailer: git-send-email 2.27.0.windows.1
 MIME-Version: 1.0
-In-Reply-To: <20201120123414.bolwl6pym4iy3m6x@kamzik.brq.redhat.com>
-Content-Language: en-US
-Cc: "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
- kvm@vger.kernel.org
+X-Originating-IP: [10.174.187.74]
+X-CFilter-Loop: Reflected
+X-Mailman-Approved-At: Mon, 23 Nov 2020 03:35:49 -0500
+Cc: Neo Jia <cjia@nvidia.com>, Cornelia Huck <cohuck@redhat.com>,
+ Kirti Wankhede <kwankhede@nvidia.com>, lushenming@huawei.com,
+ Alex Williamson <alex.williamson@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -67,62 +70,89 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi,
+In GICv4.1, migration has been supported except for (directly-injected)
+VLPI. And GICv4.1 spec explicitly gives a way to get the VLPI's pending
+state (which was crucially missing in GICv4.0). So we make VLPI migration
+capable on GICv4.1 in this patch set.
 
-On 11/20/20 12:34 PM, Andrew Jones wrote:
-> On Fri, Nov 20, 2020 at 12:02:10PM +0000, Alexandru Elisei wrote:
->> When running all the tests with taskset -c 0-3 ./run_tests.sh on a rockpro64 (on
->> the Cortex-a53 cores) the its-migration test hangs.[..]
-> Is your ncat segfaulting? It looks like it from this output. Have you
-> tried running your ncat with a UNIX socket independently of this test?
->
-> Is this the first time you've tried this test in this environment, or
-> is this a regression for you?
+In order to support VLPI migration, we need to save and restore all
+required configuration information and pending states of VLPIs. But
+in fact, the configuration information of VLPIs has already been saved
+(or will be reallocated on the dst host...) in vgic(kvm) migration.
+So we only have to migrate the pending states of VLPIs specially.
 
-Looks like it's a regression in nmap. I downgraded to nmap 7.80 and the test
-passes, thank you for the help!
+Below is the related workflow in migration.
 
->
->> If I run the test manually:
->>
->> $ taskset -c 0-3 ./arm-run arm/gic.flat -smp 4 -machine gic-version=3 -append
->> 'its-migration'
-> This won't work because we need run_tests.sh to setup the run_migration()
-> call. The only ways to run migration tests separately are
->
->  $ ./run_tests.sh its-migration
->
-> and
->
->  $ tests/its-migration
->
-> For the second one you need to do 'make standalone' first.
->
->
->> /usr/bin/qemu-system-aarch64 -nodefaults -machine virt,gic-version=host,accel=kvm
->> -cpu host -device virtio-serial-device -device virtconsole,chardev=ctd -chardev
->> testdev,id=ctd -device pci-testdev -display none -serial stdio -kernel
->> arm/gic.flat -smp 4 -machine gic-version=3 -append its-migration # -initrd
->> /tmp/tmp.OtsTj3QD4J
->> ITS: MAPD devid=2 size = 0x8 itt=0x403a0000 valid=1
->> ITS: MAPD devid=7 size = 0x8 itt=0x403b0000 valid=1
->> MAPC col_id=3 target_addr = 0x30000 valid=1
->> MAPC col_id=2 target_addr = 0x20000 valid=1
->> INVALL col_id=2
->> INVALL col_id=3
->> MAPTI dev_id=2 event_id=20 -> phys_id=8195, col_id=3
->> MAPTI dev_id=7 event_id=255 -> phys_id=8196, col_id=2
->> Now migrate the VM, then press a key to continue...
->>
->> And the test hangs here after I press a key.
-> The test doesn't get your input because of the '</dev/null' in run_qemu(),
-> which ./arm-run calls. So it's not hanging it's just waiting forever on
-> the key press.
+On the save path:
+	In migration completion:
+		pause all vCPUs
+				|
+		call each VM state change handler:
+			pause other devices (just keep from sending interrupts, and
+			such as VFIO migration protocol has already realized it [1])
+					|
+			flush ITS tables into guest RAM
+					|
+			flush RDIST pending tables (also flush VLPI state here)
+				|
+		...
+On the resume path:
+	load each device's state:
+		restore ITS tables (include pending tables) from guest RAM
+				|
+		for other (PCI) devices (paused), if configured to have VLPIs,
+		establish the forwarding paths of their VLPIs (and transfer
+		the pending states from kvm's vgic to VPT here)
 
-I see, thanks for the explanation!
+Yet TODO:
+ - For some reason, such as for VFIO PCI devices, there may be repeated
+   resettings of HW VLPI configuration in load_state, resulting in the
+   loss of pending state. A very intuitive solution is to retrieve the
+   pending state in unset_forwarding (and this should be so regardless
+   of migration). But at normal run time, this function may be called
+   when all devices are running, in which case the unmapping of VPE is
+   not allowed. It seems to be an almost insoluble bug...
+   There are other possible solutions as follows:
+   1) avoid unset_forwarding being called from QEMU in resuming (simply
+   allocate all needed vectors first), which is more reasonable and
+   efficient.
+   2) add a new dedicated interface to transfer these pending states to
+   HW in GIC VM state change handler corresponding to save_pending_tables.
+   ...
 
-Thanks,
-Alex
+Any comments and suggestions are very welcome.
+
+Besides, we have tested this series in VFIO migration, and nothing else
+goes wrong (with two issues committed [2][3]).
+
+Links:
+[1] vfio: UAPI for migration interface for device state:
+    https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/
+    commit/?id=a8a24f3f6e38103b77cf399c38eb54e1219d00d6
+[2] vfio: Move the saving of the config space to the right place in VFIO migration:
+    https://patchwork.ozlabs.org/patch/1400246/
+[3] vfio: Set the priority of VFIO VM state change handler explicitly:
+    https://patchwork.ozlabs.org/patch/1401280/
+
+Shenming Lu (2):
+  KVM: arm64: GICv4.1: Try to save hw pending state in
+    save_pending_tables
+  KVM: arm64: GICv4.1: Give a chance to save VLPI's pending state
+
+Zenghui Yu (2):
+  irqchip/gic-v4.1: Plumb get_irqchip_state VLPI callback
+  KVM: arm64: GICv4.1: Restore VLPI's pending state to physical side
+
+ .../virt/kvm/devices/arm-vgic-its.rst         |  2 +-
+ arch/arm64/kvm/vgic/vgic-its.c                |  6 +-
+ arch/arm64/kvm/vgic/vgic-v3.c                 | 62 +++++++++++++++++--
+ arch/arm64/kvm/vgic/vgic-v4.c                 | 12 ++++
+ drivers/irqchip/irq-gic-v3-its.c              | 38 ++++++++++++
+ 5 files changed, 110 insertions(+), 10 deletions(-)
+
+-- 
+2.23.0
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
