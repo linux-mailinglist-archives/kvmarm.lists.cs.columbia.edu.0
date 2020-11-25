@@ -2,84 +2,80 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 330CC2C411C
-	for <lists+kvmarm@lfdr.de>; Wed, 25 Nov 2020 14:26:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 411CC2C412A
+	for <lists+kvmarm@lfdr.de>; Wed, 25 Nov 2020 14:33:29 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BE0E14B916;
-	Wed, 25 Nov 2020 08:26:23 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C38B04B953;
+	Wed, 25 Nov 2020 08:33:28 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jMkfyM7kmdhm; Wed, 25 Nov 2020 08:26:23 -0500 (EST)
+	with ESMTP id MMSoAhk72+-n; Wed, 25 Nov 2020 08:33:28 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 846234B900;
-	Wed, 25 Nov 2020 08:26:22 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 86EA34B8B6;
+	Wed, 25 Nov 2020 08:33:27 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0498B4B8E9
- for <kvmarm@lists.cs.columbia.edu>; Wed, 25 Nov 2020 08:26:22 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id AE14B4B849
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 25 Nov 2020 08:33:26 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id wBYOLua21rOi for <kvmarm@lists.cs.columbia.edu>;
- Wed, 25 Nov 2020 08:26:21 -0500 (EST)
-Received: from mail-wr1-f66.google.com (mail-wr1-f66.google.com
- [209.85.221.66])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D64444B8E4
- for <kvmarm@lists.cs.columbia.edu>; Wed, 25 Nov 2020 08:26:20 -0500 (EST)
-Received: by mail-wr1-f66.google.com with SMTP id u12so1932310wrt.0
- for <kvmarm@lists.cs.columbia.edu>; Wed, 25 Nov 2020 05:26:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=AlYFyy65mMJrzPAF8ZbtQbw2MzAGfUKKDzhurYImYTg=;
- b=BTfJiOV5Qs1kwbPh75cNnFXtGarY+41MnAH0XZ7Mmi0dqbPtd7shBqFXYDymd3GNkm
- lkdahn66M2LPzI/Td7gXSvJfiKph5rGOimnUJgajkNXfkGkhhnIPA4RRxMk2LTmgHb2Q
- mbfd5dzmX33uNWJIDA46LqcFUM6xlfPDAVQeq/+zCLfloZMl84wadxqfD6mgdQKXCrlr
- eGZ2McF9rUgTkshK/YzShcNErO8yEsGhUGj12eZkY5cV2c8xFalXfd5xEWQbClJkdz0P
- G41tzHEcWP3iwW4szgurd8J3PnWzv6UR7faQVwqid6zeIaZATYdS3BwjRTDbasQ+w/uK
- 72DA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=AlYFyy65mMJrzPAF8ZbtQbw2MzAGfUKKDzhurYImYTg=;
- b=GlE/zwviuEJssH3ro0bSF9C3uEY+6/ccUCrYQzjVJ2kL0IweSW+y126twGFH4KzPSx
- UHmzia+SdGLUj7G40kvi33sJXav60ud33qnowfi7DycN5GGRwv+wPWs/2F4dfo3VcPin
- x3JCLVmI8MiIefd9w9wUs68aQ7eKp5o3697hftCOldGlrAmI5dqGy/YrxobI4CHqGHOA
- SQFxbkvsgKmYp6a4EqiPCmARFmXqxi5FzpIcXwQ82xoqspfKtYqJAIpFKUToG9Zen6P3
- ybovCD8D9FWuBcSnW2dV0jjSxM/yJG/NVsbFy40FYayQIwaR1yfo7SaesPmgdu3VOANH
- ITEQ==
-X-Gm-Message-State: AOAM5311/ZqVn9Aw8qIYYqyd3jmkbyoZa+9K95GxC+Z6JxYWMBcK6Pr+
- YzcdqwtUgW7K0s1jVitdlSH6sw==
-X-Google-Smtp-Source: ABdhPJy2QWZ+aTIexoqvjYkDzVR7TA/T3I3OJCD/3ABMXhMh9WhgGwr7tT6EW53IiAEKwTAmTr5PnA==
-X-Received: by 2002:adf:dd52:: with SMTP id u18mr4022419wrm.44.1606310779648; 
- Wed, 25 Nov 2020 05:26:19 -0800 (PST)
-Received: from google.com ([2a01:4b00:8523:2d03:38bf:5817:e665:9b9b])
- by smtp.gmail.com with ESMTPSA id 90sm5059825wra.95.2020.11.25.05.26.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Nov 2020 05:26:18 -0800 (PST)
-Date: Wed, 25 Nov 2020 13:26:17 +0000
-From: David Brazdil <dbrazdil@google.com>
-To: Marc Zyngier <maz@kernel.org>
+ with ESMTP id dt6ZjlIoFIrJ for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 25 Nov 2020 08:33:25 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id AEA794B7D7
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 25 Nov 2020 08:33:25 -0500 (EST)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 5497C206E5;
+ Wed, 25 Nov 2020 13:33:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1606311204;
+ bh=qMR4WaI/ekNVGzswOam38uhrE/iZ8ZA6U592n3HBsvA=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=QT9LtFymLx8QxE54gU6H9wvWBf3Zmp2NL62G/yRo5IKH1uA1RS5ZMlF9xlm4NUh8n
+ KKoc2BajuiVZdWaWJgwSsSGyR3SvLPOooBFuUMJFByB62z3+8WM4xF2p2zkARFkQnT
+ DALFOGDQb1xluXHCpLujP+PjetHuUrGfCRAtlt2g=
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1khuvC-00DXJl-9S; Wed, 25 Nov 2020 13:33:22 +0000
+MIME-Version: 1.0
+Date: Wed, 25 Nov 2020 13:33:22 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: David Brazdil <dbrazdil@google.com>
 Subject: Re: [PATCH v2 04/24] arm64: Move MAIR_EL1_SET to asm/memory.h
-Message-ID: <20201125132617.qf6vd752dtfasyi7@google.com>
+In-Reply-To: <20201125132617.qf6vd752dtfasyi7@google.com>
 References: <20201116204318.63987-1-dbrazdil@google.com>
- <20201116204318.63987-5-dbrazdil@google.com>
- <87mtz85geh.wl-maz@kernel.org>
+ <20201116204318.63987-5-dbrazdil@google.com> <87mtz85geh.wl-maz@kernel.org>
  <20201125103137.iml7mqpzhylldvqy@google.com>
  <e6c9184c6ee986d134625932b4fa8e89@kernel.org>
-MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <e6c9184c6ee986d134625932b4fa8e89@kernel.org>
+ <20201125132617.qf6vd752dtfasyi7@google.com>
+User-Agent: Roundcube Webmail/1.4.9
+Message-ID: <a37ac792b61d4931d0b4d1356e96415e@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: dbrazdil@google.com, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
+ catalin.marinas@arm.com, will@kernel.org, dennis@kernel.org, tj@kernel.org,
+ cl@linux.com, mark.rutland@arm.com, lorenzo.pieralisi@arm.com,
+ qperret@google.com, ascull@google.com, qwandor@google.com,
+ kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
 Cc: kernel-team@android.com, Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
  Andrew Walbran <qwandor@google.com>, Catalin Marinas <catalin.marinas@arm.com>,
  linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
@@ -97,88 +93,41 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-> > > > +/*
-> > > > + * Memory types available.
-> > > > + *
-> > > > + * IMPORTANT: MT_NORMAL must be index 0 since vm_get_page_prot() may 'or' in
-> > > > + *	      the MT_NORMAL_TAGGED memory type for PROT_MTE mappings. Note
-> > > > + *	      that protection_map[] only contains MT_NORMAL attributes.
-> > > > + */
-> > > > +#define MT_NORMAL		0
-> > > > +#define MT_NORMAL_TAGGED	1
-> > > > +#define MT_NORMAL_NC		2
-> > > > +#define MT_NORMAL_WT		3
-> > > > +#define MT_DEVICE_nGnRnE	4
-> > > > +#define MT_DEVICE_nGnRE		5
-> > > > +#define MT_DEVICE_GRE		6
-> > > > +
-> > > > +/*
-> > > > + * Default MAIR_ELx. MT_NORMAL_TAGGED is initially mapped as Normal memory and
-> > > > + * changed during __cpu_setup to Normal Tagged if the system supports MTE.
-> > > > + */
-> > > > +#define MAIR_ELx_SET							\
-> > > > +	(MAIR_ATTRIDX(MAIR_ATTR_DEVICE_nGnRnE, MT_DEVICE_nGnRnE) |	\
-> > > > +	 MAIR_ATTRIDX(MAIR_ATTR_DEVICE_nGnRE, MT_DEVICE_nGnRE) |	\
-> > > > +	 MAIR_ATTRIDX(MAIR_ATTR_DEVICE_GRE, MT_DEVICE_GRE) |		\
-> > > > +	 MAIR_ATTRIDX(MAIR_ATTR_NORMAL_NC, MT_NORMAL_NC) |		\
-> > > > +	 MAIR_ATTRIDX(MAIR_ATTR_NORMAL, MT_NORMAL) |			\
-> > > > +	 MAIR_ATTRIDX(MAIR_ATTR_NORMAL_WT, MT_NORMAL_WT) |		\
-> > > > +	 MAIR_ATTRIDX(MAIR_ATTR_NORMAL, MT_NORMAL_TAGGED))
-> > > > +
-> 
-> Wait: You now have MAIR_ELx_SET defined at two locations. Surely that's
-> one too many.
-> 
+On 2020-11-25 13:26, David Brazdil wrote:
 
-Oops, told you I tried different things...
-
-> > > >  /* id_aa64isar0 */
-> > > >  #define ID_AA64ISAR0_RNDR_SHIFT		60
-> > > >  #define ID_AA64ISAR0_TLB_SHIFT		56
-> > > > @@ -992,6 +1020,7 @@
-> > > >  /* Safe value for MPIDR_EL1: Bit31:RES1, Bit30:U:0, Bit24:MT:0 */
-> > > >  #define SYS_MPIDR_SAFE_VAL	(BIT(31))
-> > > >
-> > > > +#ifndef LINKER_SCRIPT
-> > > 
-> > > This is terribly ugly. Why is this included by the linker script? Does
-> > > it actually define __ASSEMBLY__?
-> > 
-> > vmlinux.lds.S includes memory.h for PAGE_SIZE. And yes, linker scripts
-> > are
-> > built with this rule:
-> > 
-> >       cmd_cpp_lds_S = $(CPP) $(cpp_flags) -P -U$(ARCH) \
-> > 	                     -D__ASSEMBLY__ -DLINKER_SCRIPT -o $@ $<
-> > 
-> > I tried a few things and wasn't completely happy with any of them. I
-> > think in
-> > the previous spin you suggested moving this constant to sysreg.h. That
-> > works
-> > too but sysreg.h seems to have only architecture constants, memory.h
-> > about a
-> > Linux-specific configuration, so I wanted to keep it here.
+>> I came up with the following patch on top of this series that seems to
+>> compile without issue.
 > 
-> MAIR_ELx_SET isn't really Linux specific. Or rather, not more specific than
-> any of the other configurations we have. On the other hand, the S1 MT_*
-> stuff
-> is totally arbitrary, and does fit in memory.h, together with the rest of
-> the indexes for the memory types.
-> 
-> I came up with the following patch on top of this series that seems to
-> compile without issue.
+> That seems to have an implicit dependency of sysreg.h on memory.h, 
+> doesn't it?
+> I had it the other way round initially. I also tried including memory.h 
+> in
+> sysreg.h. That creates a circular dependency mmdebug.h -> bug.h -> ... 
+> ->
+> sysreg.h -> memory.h -> mmdebug.h. Pretty annoying. I could try to fix 
+> that,
+> or create a new header file... :(
 
-That seems to have an implicit dependency of sysreg.h on memory.h, doesn't it?
-I had it the other way round initially. I also tried including memory.h in
-sysreg.h. That creates a circular dependency mmdebug.h -> bug.h -> ... ->
-sysreg.h -> memory.h -> mmdebug.h. Pretty annoying. I could try to fix that,
-or create a new header file... :(
+I don't think we need this. Any low-level source using MAIR_ELx_SET is 
+bound
+to require memory.h as well, one way or another. As this is all 
+#defines,
+it won't break anything unless actively used.
 
+And given that this is used in exactly *two* places, I don't believe 
+there
+is a need for over-engineering this.
+
+Thanks,
+
+         M.
+-- 
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
