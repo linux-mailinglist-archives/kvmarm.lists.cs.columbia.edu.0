@@ -2,57 +2,87 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 64C0E2C5884
-	for <lists+kvmarm@lfdr.de>; Thu, 26 Nov 2020 16:52:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 437372C589B
+	for <lists+kvmarm@lfdr.de>; Thu, 26 Nov 2020 16:54:58 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EFA454BEC1;
-	Thu, 26 Nov 2020 10:52:49 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id ED45B4BA29;
+	Thu, 26 Nov 2020 10:54:57 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=no
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id GC+8qAgJDx+P; Thu, 26 Nov 2020 10:52:49 -0500 (EST)
+	with ESMTP id QNEjP14Yumhs; Thu, 26 Nov 2020 10:54:56 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DDAA14BAFE;
-	Thu, 26 Nov 2020 10:52:48 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A86434C09E;
+	Thu, 26 Nov 2020 10:54:56 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 83C584B904
- for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 10:52:47 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E4E134C08E
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 10:54:54 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id MN3st5bGG8VX for <kvmarm@lists.cs.columbia.edu>;
- Thu, 26 Nov 2020 10:52:46 -0500 (EST)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 625794B8FD
- for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 10:52:46 -0500 (EST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id ED0A731B;
- Thu, 26 Nov 2020 07:52:45 -0800 (PST)
-Received: from [192.168.0.110] (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4156A3F23F;
- Thu, 26 Nov 2020 07:52:45 -0800 (PST)
-Subject: Re: [PATCH 6/8] KVM: arm64: Remove dead PMU sysreg decoding code
-To: Marc Zyngier <maz@kernel.org>
-References: <20201113182602.471776-1-maz@kernel.org>
- <20201113182602.471776-7-maz@kernel.org>
- <1ed6dfd6-4ace-a562-bc2f-054a5c853fa6@arm.com>
- <3ae09ecc95b732129f71076b4b59c873@kernel.org>
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-Message-ID: <b05e1334-e7d0-5c00-3442-d383d0358bcd@arm.com>
-Date: Thu, 26 Nov 2020 15:54:09 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.3
+ with ESMTP id rYw6FoGx+666 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 26 Nov 2020 10:54:54 -0500 (EST)
+Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com
+ [209.85.221.67])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9E0B54C0C9
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 10:54:53 -0500 (EST)
+Received: by mail-wr1-f67.google.com with SMTP id m6so2632375wrg.7
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 07:54:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=abHZKvAnOIOh0cfJUm3aASRkjBMLNkdSVRPPeTy9mxo=;
+ b=jqLq4mvuFUHRNYTuDA8X4VqzR999IfDP4q84W39BYEKyBQxNgrPCGYrczkPYGhK3xu
+ rAyOQQer3BhE9duh1aWdFCeG+6knjdw5TuROmYdg4HhznGrigbB06JqMnjAT7xfK+est
+ C3hOyQ9Hz6DwLFMNdCGX7L+t1pUqK9ugYB0c9EsrTz5zLyPmstSDlVJslLskorCLfkLJ
+ xnDwNLr1x8JteRXu7nG+IZYBSzTE8FzQbQlInhi+UOtUpSqxM/09so4wFxOqzOzG7W3k
+ fMq1ulRSMT+FhtRSYbgZxKC8qiIf4rnRr+xoJ9PrqtwZUt/DvnRvDjiCJXDqxMKOdZfk
+ IUcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+ :references:mime-version:content-transfer-encoding;
+ bh=abHZKvAnOIOh0cfJUm3aASRkjBMLNkdSVRPPeTy9mxo=;
+ b=hgGXdWuf2jAFWsRfegHmwgaPwyIHnYSavAg7/YhhFitg+WVhBDe1WnrbsLjwGA3N69
+ QdI08B6tQuRdgL9VoNBx6m2qRt2pDQEk9cOL73nt1cT61QyAjv3WmWZyzEd3cjX1Ju35
+ QhmDC3XcJXEKnhR/Zfr8muKHr5CkFXL2mgRVFweec+Uv6aAFjO6iAHOSmNLMaFZP81ZY
+ IQDt7DAltCn247eVsCSNmm5eUWJy++0lV05MsiNvM6WNGDysiGQiPp80zzRMfjRKoPmp
+ ohiTs9hoy6Ru+pNP4wqf8sV/GdmowD7JqUSfwssBU5zGyLltvNKlqhyqGJKndUCaQ47u
+ +l5A==
+X-Gm-Message-State: AOAM532WG9rQsYKDeBmriBdHjU1PfJMJuqr4y0aOgUDF3xAvG1YSp0Nf
+ B/ufVlCdScWqxzHFa8o6IWgHMx4mFfJYPQe6
+X-Google-Smtp-Source: ABdhPJzBk1cgJvigLTBpzrkzyw93ozQjhaI8GSxKK42oABc32zYGurmL/AUO7+tHdNOzK5VOfFnjDw==
+X-Received: by 2002:adf:dc83:: with SMTP id r3mr4498991wrj.223.1606406092266; 
+ Thu, 26 Nov 2020 07:54:52 -0800 (PST)
+Received: from localhost ([2a01:4b00:8523:2d03:f008:704d:8d4b:9951])
+ by smtp.gmail.com with ESMTPSA id r13sm4193297wrm.25.2020.11.26.07.54.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Nov 2020 07:54:51 -0800 (PST)
+From: David Brazdil <dbrazdil@google.com>
+To: kvmarm@lists.cs.columbia.edu
+Subject: [PATCH v3 12/23] kvm: arm64: Create nVHE copy of cpu_logical_map
+Date: Thu, 26 Nov 2020 15:54:10 +0000
+Message-Id: <20201126155421.14901-13-dbrazdil@google.com>
+X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20201126155421.14901-1-dbrazdil@google.com>
+References: <20201126155421.14901-1-dbrazdil@google.com>
 MIME-Version: 1.0
-In-Reply-To: <3ae09ecc95b732129f71076b4b59c873@kernel.org>
-Content-Language: en-US
-Cc: kernel-team@android.com, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org
+Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>, kernel-team@android.com,
+ Jonathan Corbet <corbet@lwn.net>, Catalin Marinas <catalin.marinas@arm.com>,
+ linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Sudeep Holla <sudeep.holla@arm.com>, linux-arm-kernel@lists.infradead.org,
+ Marc Zyngier <maz@kernel.org>, Tejun Heo <tj@kernel.org>,
+ Dennis Zhou <dennis@kernel.org>, Christoph Lameter <cl@linux.com>,
+ Will Deacon <will@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -64,42 +94,100 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-SGkgTWFyYywKCk9uIDExLzI2LzIwIDM6MzQgUE0sIE1hcmMgWnluZ2llciB3cm90ZToKPiBIaSBB
-bGV4LAo+Cj4gT24gMjAyMC0xMS0yNiAxNToxOCwgQWxleGFuZHJ1IEVsaXNlaSB3cm90ZToKPj4g
-SGkgTWFyYywKPj4KPj4gSSBjaGVja2VkIGFuZCBpbmRlZWQgdGhlIHJlbWFpbmluZyBjYXNlcyBj
-b3ZlciBhbGwgcmVnaXN0ZXJzIHRoYXQgdXNlCj4+IHRoaXMgYWNjZXNzb3IuCj4+Cj4+IEhvd2V2
-ZXIsIEknbSBhIGJpdCB0b3JuIGhlcmUuIFRoZSB3YXJuaW5nIHRoYXQgSSBnb3Qgd2hlbiB0cnlp
-bmcgdG8gcnVuIGEgZ3Vlc3QKPj4gd2l0aCB0aGUgUE1VIGZlYXR1cmUgZmxhZyBzZXQsIGJ1dCBu
-b3QgaW5pdGlhbGl6ZWQgKHJlcG9ydGVkIGF0IFsxXSkKPj4gd2FzIGFsc28gbm90Cj4+IHN1cHBv
-c2VkIHRvIGV2ZXIgYmUgcmVhY2hlZDoKPj4KPj4gc3RhdGljIHUzMiBrdm1fcG11X2V2ZW50X21h
-c2soc3RydWN0IGt2bSAqa3ZtKQo+PiB7Cj4+IMKgwqDCoCBzd2l0Y2ggKGt2bS0+YXJjaC5wbXV2
-ZXIpIHsKPj4gwqDCoMKgIGNhc2UgMTrCoMKgwqAgwqDCoMKgIMKgwqDCoCAvKiBBUk12OC4wICov
-Cj4+IMKgwqDCoCDCoMKgwqAgcmV0dXJuIEdFTk1BU0soOSwgMCk7Cj4+IMKgwqDCoCBjYXNlIDQ6
-wqDCoMKgIMKgwqDCoCDCoMKgwqAgLyogQVJNdjguMSAqLwo+PiDCoMKgwqAgY2FzZSA1OsKgwqDC
-oCDCoMKgwqAgwqDCoMKgIC8qIEFSTXY4LjQgKi8KPj4gwqDCoMKgIGNhc2UgNjrCoMKgwqAgwqDC
-oMKgIMKgwqDCoCAvKiBBUk12OC41ICovCj4+IMKgwqDCoCDCoMKgwqAgcmV0dXJuIEdFTk1BU0so
-MTUsIDApOwo+PiDCoMKgwqAgZGVmYXVsdDrCoMKgwqAgwqDCoMKgIC8qIFNob3VsZG4ndCBiZSBo
-ZXJlLCBqdXN0IGZvciBzYW5pdHkgKi8KPj4gwqDCoMKgIMKgwqDCoCBXQVJOX09OQ0UoMSwgIlVu
-a25vd24gUE1VIHZlcnNpb24gJWRcbiIsIGt2bS0+YXJjaC5wbXV2ZXIpOwo+PiDCoMKgwqAgwqDC
-oMKgIHJldHVybiAwOwo+PiDCoMKgwqAgfQo+PiB9Cj4+Cj4+IEkgcmVhbGl6ZSBpdCdzIG5vdCBl
-eGFjdGx5IHRoZSBzYW1lIHRoaW5nIGFuZCBJJ2xsIGxlYXZlIGl0IHVwIHRvIHlvdQo+PiBpZiB5
-b3Ugd2FudAo+PiB0byBhZGQgYSB3YXJuaW5nIGZvciB0aGUgY2FzZXMgdGhhdCBzaG91bGQgbmV2
-ZXIgaGFwcGVuLiBJJ20gZmluZSBlaXRoZXIgd2F5Ogo+Cj4gSSBhbHJlYWR5IGhhdmUgcXVldWVk
-IHN1Y2ggYSB3YXJuaW5nWzFdLiBJdCB0dXJucyBvdXQgdGhhdCBMTFZNIHdhcm5zCj4gaWR4IGNh
-biBiZSBsZWZ0IHVuaW5pdGlhbGl6ZWQsIGFuZCBzaG91dHMuIExldCBtZSBrbm93IGlmIHRoYXQg
-d29ya3MKPiBmb3IgeW91LgoKTG9va3MgZ29vZCB0byBtZSwgdW5zaWduZWQgbG9uZyBpcyA2NCBi
-aXRzIGFuZCBpbnN0cnVjdGlvbnMgYXJlIDMyIGJpdHMsIHNvIHdlJ2xsCm5ldmVyIHJ1biBpbnRv
-IGEgc2l0dWF0aW9uIHdoZXJlIGEgdmFsaWQgZW5jb2RpbmcgaXMgfjBVTC4KCllvdSBjYW4gYWRk
-IG15IFJldmlld2VkLWJ5IHRvIHRoaXMgcGF0Y2ggKGFuZCB0byB0aGUgb25lIGF0IFsxXSBpZiBp
-dCdzIHN0aWxsCnBvc3NpYmxlKS4KClRoYW5rcywKCkFsZXgKCj4KPiBUaGFua3MsCj4KPiDCoMKg
-wqDCoMKgwqDCoCBNLgo+Cj4gWzFdCj4gaHR0cHM6Ly9naXQua2VybmVsLm9yZy9wdWIvc2NtL2xp
-bnV4L2tlcm5lbC9naXQvbWF6L2FybS1wbGF0Zm9ybXMuZ2l0L2NvbW1pdC8/aD1rdm0tYXJtNjQv
-cG11LXVuZGVmJmlkPWFmN2VmZjcwZWFmOGYyODE3OTMzNGY1YWVhYmI3MGEzMDYyNDJjODMKX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18Ka3ZtYXJtIG1haWxp
-bmcgbGlzdAprdm1hcm1AbGlzdHMuY3MuY29sdW1iaWEuZWR1Cmh0dHBzOi8vbGlzdHMuY3MuY29s
-dW1iaWEuZWR1L21haWxtYW4vbGlzdGluZm8va3ZtYXJtCg==
+When KVM starts validating host's PSCI requests, it will need to map
+MPIDR back to the CPU ID. To this end, copy cpu_logical_map into nVHE
+hyp memory when KVM is initialized.
+
+Only copy the information for CPUs that are online at the point of KVM
+initialization so that KVM rejects CPUs whose features were not checked
+against the finalized capabilities.
+
+Signed-off-by: David Brazdil <dbrazdil@google.com>
+---
+ arch/arm64/kvm/arm.c              | 19 +++++++++++++++++++
+ arch/arm64/kvm/hyp/nvhe/hyp-smp.c | 16 ++++++++++++++++
+ 2 files changed, 35 insertions(+)
+
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index bb07f0401c68..bb3c541d3ddb 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -61,6 +61,8 @@ static bool vgic_present;
+ static DEFINE_PER_CPU(unsigned char, kvm_arm_hardware_enabled);
+ DEFINE_STATIC_KEY_FALSE(userspace_irqchip_in_use);
+ 
++extern u64 kvm_nvhe_sym(__cpu_logical_map)[NR_CPUS];
++
+ int kvm_arch_vcpu_should_kick(struct kvm_vcpu *vcpu)
+ {
+ 	return kvm_vcpu_exiting_guest_mode(vcpu) == IN_GUEST_MODE;
+@@ -1531,6 +1533,20 @@ static inline void hyp_cpu_pm_exit(void)
+ }
+ #endif
+ 
++static void init_cpu_logical_map(void)
++{
++	unsigned int cpu;
++
++	/*
++	 * Copy the MPIDR <-> logical CPU ID mapping to hyp.
++	 * Only copy the set of online CPUs whose features have been chacked
++	 * against the finalized system capabilities. The hypervisor will not
++	 * allow any other CPUs from the `possible` set to boot.
++	 */
++	for_each_online_cpu(cpu)
++		kvm_nvhe_sym(__cpu_logical_map)[cpu] = cpu_logical_map(cpu);
++}
++
+ static int init_common_resources(void)
+ {
+ 	return kvm_set_ipa_limit();
+@@ -1703,6 +1719,9 @@ static int init_hyp_mode(void)
+ 		}
+ 	}
+ 
++	if (is_protected_kvm_enabled())
++		init_cpu_logical_map();
++
+ 	return 0;
+ 
+ out_err:
+diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-smp.c b/arch/arm64/kvm/hyp/nvhe/hyp-smp.c
+index c168d86f885a..ceb427aabb91 100644
+--- a/arch/arm64/kvm/hyp/nvhe/hyp-smp.c
++++ b/arch/arm64/kvm/hyp/nvhe/hyp-smp.c
+@@ -8,6 +8,22 @@
+ #include <asm/kvm_hyp.h>
+ #include <asm/kvm_mmu.h>
+ 
++/*
++ * nVHE copy of data structures tracking available CPU cores.
++ * Only entries for CPUs that were online at KVM init are populated.
++ * Other CPUs should not be allowed to boot because their features were
++ * not checked against the finalized system capabilities.
++ */
++u64 __ro_after_init __cpu_logical_map[NR_CPUS] = { [0 ... NR_CPUS-1] = INVALID_HWID };
++
++u64 cpu_logical_map(unsigned int cpu)
++{
++	if (cpu >= ARRAY_SIZE(__cpu_logical_map))
++		hyp_panic();
++
++	return __cpu_logical_map[cpu];
++}
++
+ unsigned long __hyp_per_cpu_offset(unsigned int cpu)
+ {
+ 	unsigned long *cpu_base_array;
+-- 
+2.29.2.454.gaff20da3a2-goog
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
