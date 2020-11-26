@@ -2,87 +2,57 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EF902C589A
-	for <lists+kvmarm@lfdr.de>; Thu, 26 Nov 2020 16:54:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 64C0E2C5884
+	for <lists+kvmarm@lfdr.de>; Thu, 26 Nov 2020 16:52:50 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B71884C079;
-	Thu, 26 Nov 2020 10:54:56 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EFA454BEC1;
+	Thu, 26 Nov 2020 10:52:49 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0tED+HC1amtp; Thu, 26 Nov 2020 10:54:55 -0500 (EST)
+	with ESMTP id GC+8qAgJDx+P; Thu, 26 Nov 2020 10:52:49 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8BEE34C09B;
-	Thu, 26 Nov 2020 10:54:55 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DDAA14BAFE;
+	Thu, 26 Nov 2020 10:52:48 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 041504C0B2
- for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 10:54:54 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 83C584B904
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 10:52:47 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 6b3-7YKZuelk for <kvmarm@lists.cs.columbia.edu>;
- Thu, 26 Nov 2020 10:54:53 -0500 (EST)
-Received: from mail-wr1-f66.google.com (mail-wr1-f66.google.com
- [209.85.221.66])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 72AC74C08B
- for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 10:54:51 -0500 (EST)
-Received: by mail-wr1-f66.google.com with SMTP id m6so2632252wrg.7
- for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 07:54:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=e2DA2lb08NjF2kLgte3niLs4IyK5ibsw6X8kGTbt6og=;
- b=vuRWz2VzCx+NsTyFxiM9DdVajdfpccRX2BWXmB2CRIKJ8IzexQMvbefFsjGqaWVBCk
- jWYzf55/dDIw1J5itVsU6h1tTPCWRlLRysQ7+3qrYy+EoIg+fWGWDuwzw2ZQVAsIjn0F
- tl1qerp25yz+79MsbHXnIG7eE0AEPzyspl6b05MfemZ1kEW7LD/IP9Z+g6oyvenjQUyR
- OYRrcPmdT7/xKDifSqGlleIWs/7ENNoHBYcekTQhjra9BKPI8jSuBf0moV3uceCgIGTE
- ND4L4ysHhmtYmCnqlon52bBx8YPNEqSXVO2o6mzj9yoL1P2LxOMw54fSC2rF/y7o5xDt
- LJYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
- :references:mime-version:content-transfer-encoding;
- bh=e2DA2lb08NjF2kLgte3niLs4IyK5ibsw6X8kGTbt6og=;
- b=C/RdoUdTE0bWtW0rg1fjYJf9yQ08Mu4hgLwr9jTOZCYRhSKseJyFWKoD+ZsxUTFO8A
- nBvHEc1Wo4s9zWZ+WKEN84szC+wQvb5Oxc0K/AYpNfEj7zbgxpoTJARYN3jQuFQdJweh
- hMiR9hIQHQsaGIrJ99WM33eIo6Sj2JokyEyndClSzWqp+UFJJRTv3a+rOzUQFpKGVMBA
- Ht6xx31E21cbws9VHbZ3LnQbrBmCKCTC7aQ9LzQC9gUz4nSxhoe9qOZ83B5BJgmAlq+h
- QIQkwbHgcNdGfijHZJqn9KtMHBq9d4ooquo8mL+BWEtnie/orc6XUMSjy2wdWjeGY9X3
- nboA==
-X-Gm-Message-State: AOAM533WNDMzU4ZQ730xxxv8KGZC3sp7T6167ifldgZPto3WEFHU2P2H
- Jwl3zyuHwdsPGKshmpEHXNiSjoQR/Ed+zGeK
-X-Google-Smtp-Source: ABdhPJx6VhjNHKBFfpNR31U6UDoq1VL+sz6rt7bUK0/RH8aBigcXdj9z3q8fmfoUnFbrGm/vavCgnA==
-X-Received: by 2002:a5d:4349:: with SMTP id u9mr4496622wrr.319.1606406090191; 
- Thu, 26 Nov 2020 07:54:50 -0800 (PST)
-Received: from localhost ([2a01:4b00:8523:2d03:f008:704d:8d4b:9951])
- by smtp.gmail.com with ESMTPSA id d8sm8608344wmb.11.2020.11.26.07.54.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Nov 2020 07:54:49 -0800 (PST)
-From: David Brazdil <dbrazdil@google.com>
-To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v3 11/23] kvm: arm64: Support per_cpu_ptr in nVHE hyp code
+ with ESMTP id MN3st5bGG8VX for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 26 Nov 2020 10:52:46 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 625794B8FD
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 10:52:46 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id ED0A731B;
+ Thu, 26 Nov 2020 07:52:45 -0800 (PST)
+Received: from [192.168.0.110] (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4156A3F23F;
+ Thu, 26 Nov 2020 07:52:45 -0800 (PST)
+Subject: Re: [PATCH 6/8] KVM: arm64: Remove dead PMU sysreg decoding code
+To: Marc Zyngier <maz@kernel.org>
+References: <20201113182602.471776-1-maz@kernel.org>
+ <20201113182602.471776-7-maz@kernel.org>
+ <1ed6dfd6-4ace-a562-bc2f-054a5c853fa6@arm.com>
+ <3ae09ecc95b732129f71076b4b59c873@kernel.org>
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+Message-ID: <b05e1334-e7d0-5c00-3442-d383d0358bcd@arm.com>
 Date: Thu, 26 Nov 2020 15:54:09 +0000
-Message-Id: <20201126155421.14901-12-dbrazdil@google.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20201126155421.14901-1-dbrazdil@google.com>
-References: <20201126155421.14901-1-dbrazdil@google.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.3
 MIME-Version: 1.0
-Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>, kernel-team@android.com,
- Jonathan Corbet <corbet@lwn.net>, Catalin Marinas <catalin.marinas@arm.com>,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
- Sudeep Holla <sudeep.holla@arm.com>, linux-arm-kernel@lists.infradead.org,
- Marc Zyngier <maz@kernel.org>, Tejun Heo <tj@kernel.org>,
- Dennis Zhou <dennis@kernel.org>, Christoph Lameter <cl@linux.com>,
- Will Deacon <will@kernel.org>
+In-Reply-To: <3ae09ecc95b732129f71076b4b59c873@kernel.org>
+Content-Language: en-US
+Cc: kernel-team@android.com, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -94,107 +64,42 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-When compiling with __KVM_NVHE_HYPERVISOR__ redefine per_cpu_offset() to
-__hyp_per_cpu_offset() which looks up the base of the nVHE per-CPU
-region of the given cpu and computes its offset from the
-.hyp.data..percpu section.
-
-This enables use of per_cpu_ptr() helpers in nVHE hyp code. Until now
-only this_cpu_ptr() was supported by setting TPIDR_EL2.
-
-Signed-off-by: David Brazdil <dbrazdil@google.com>
----
- arch/arm64/include/asm/percpu.h   |  6 ++++++
- arch/arm64/kernel/image-vars.h    |  3 +++
- arch/arm64/kvm/hyp/nvhe/Makefile  |  3 ++-
- arch/arm64/kvm/hyp/nvhe/hyp-smp.c | 24 ++++++++++++++++++++++++
- 4 files changed, 35 insertions(+), 1 deletion(-)
- create mode 100644 arch/arm64/kvm/hyp/nvhe/hyp-smp.c
-
-diff --git a/arch/arm64/include/asm/percpu.h b/arch/arm64/include/asm/percpu.h
-index 1599e17379d8..8f1661603b78 100644
---- a/arch/arm64/include/asm/percpu.h
-+++ b/arch/arm64/include/asm/percpu.h
-@@ -239,6 +239,12 @@ PERCPU_RET_OP(add, add, ldadd)
- #define this_cpu_cmpxchg_8(pcp, o, n)	\
- 	_pcp_protect_return(cmpxchg_relaxed, pcp, o, n)
- 
-+#ifdef __KVM_NVHE_HYPERVISOR__
-+extern unsigned long __hyp_per_cpu_offset(unsigned int cpu);
-+#define __per_cpu_offset
-+#define per_cpu_offset(cpu)	__hyp_per_cpu_offset((cpu))
-+#endif
-+
- #include <asm-generic/percpu.h>
- 
- /* Redefine macros for nVHE hyp under DEBUG_PREEMPT to avoid its dependencies. */
-diff --git a/arch/arm64/kernel/image-vars.h b/arch/arm64/kernel/image-vars.h
-index 4b32588918d9..8539f34d7538 100644
---- a/arch/arm64/kernel/image-vars.h
-+++ b/arch/arm64/kernel/image-vars.h
-@@ -102,6 +102,9 @@ KVM_NVHE_ALIAS(gic_nonsecure_priorities);
- KVM_NVHE_ALIAS(__start___kvm_ex_table);
- KVM_NVHE_ALIAS(__stop___kvm_ex_table);
- 
-+/* Array containing bases of nVHE per-CPU memory regions. */
-+KVM_NVHE_ALIAS(kvm_arm_hyp_percpu_base);
-+
- #endif /* CONFIG_KVM */
- 
- #endif /* __ARM64_KERNEL_IMAGE_VARS_H */
-diff --git a/arch/arm64/kvm/hyp/nvhe/Makefile b/arch/arm64/kvm/hyp/nvhe/Makefile
-index 77b8c4e06f2f..cf11f8182756 100644
---- a/arch/arm64/kvm/hyp/nvhe/Makefile
-+++ b/arch/arm64/kvm/hyp/nvhe/Makefile
-@@ -6,7 +6,8 @@
- asflags-y := -D__KVM_NVHE_HYPERVISOR__
- ccflags-y := -D__KVM_NVHE_HYPERVISOR__
- 
--obj-y := timer-sr.o sysreg-sr.o debug-sr.o switch.o tlb.o hyp-init.o host.o hyp-main.o
-+obj-y := timer-sr.o sysreg-sr.o debug-sr.o switch.o tlb.o hyp-init.o host.o \
-+	 hyp-main.o hyp-smp.o
- obj-y += ../vgic-v3-sr.o ../aarch32.o ../vgic-v2-cpuif-proxy.o ../entry.o \
- 	 ../fpsimd.o ../hyp-entry.o ../exception.o
- 
-diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-smp.c b/arch/arm64/kvm/hyp/nvhe/hyp-smp.c
-new file mode 100644
-index 000000000000..c168d86f885a
---- /dev/null
-+++ b/arch/arm64/kvm/hyp/nvhe/hyp-smp.c
-@@ -0,0 +1,24 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (C) 2020 - Google LLC
-+ * Author: David Brazdil <dbrazdil@google.com>
-+ */
-+
-+#include <asm/kvm_asm.h>
-+#include <asm/kvm_hyp.h>
-+#include <asm/kvm_mmu.h>
-+
-+unsigned long __hyp_per_cpu_offset(unsigned int cpu)
-+{
-+	unsigned long *cpu_base_array;
-+	unsigned long this_cpu_base;
-+	unsigned long elf_base;
-+
-+	if (cpu >= ARRAY_SIZE(kvm_arm_hyp_percpu_base))
-+		hyp_panic();
-+
-+	cpu_base_array = (unsigned long*)hyp_symbol_addr(kvm_arm_hyp_percpu_base);
-+	this_cpu_base = kern_hyp_va(cpu_base_array[cpu]);
-+	elf_base = (unsigned long)hyp_symbol_addr(__per_cpu_start);
-+	return this_cpu_base - elf_base;
-+}
--- 
-2.29.2.454.gaff20da3a2-goog
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+SGkgTWFyYywKCk9uIDExLzI2LzIwIDM6MzQgUE0sIE1hcmMgWnluZ2llciB3cm90ZToKPiBIaSBB
+bGV4LAo+Cj4gT24gMjAyMC0xMS0yNiAxNToxOCwgQWxleGFuZHJ1IEVsaXNlaSB3cm90ZToKPj4g
+SGkgTWFyYywKPj4KPj4gSSBjaGVja2VkIGFuZCBpbmRlZWQgdGhlIHJlbWFpbmluZyBjYXNlcyBj
+b3ZlciBhbGwgcmVnaXN0ZXJzIHRoYXQgdXNlCj4+IHRoaXMgYWNjZXNzb3IuCj4+Cj4+IEhvd2V2
+ZXIsIEknbSBhIGJpdCB0b3JuIGhlcmUuIFRoZSB3YXJuaW5nIHRoYXQgSSBnb3Qgd2hlbiB0cnlp
+bmcgdG8gcnVuIGEgZ3Vlc3QKPj4gd2l0aCB0aGUgUE1VIGZlYXR1cmUgZmxhZyBzZXQsIGJ1dCBu
+b3QgaW5pdGlhbGl6ZWQgKHJlcG9ydGVkIGF0IFsxXSkKPj4gd2FzIGFsc28gbm90Cj4+IHN1cHBv
+c2VkIHRvIGV2ZXIgYmUgcmVhY2hlZDoKPj4KPj4gc3RhdGljIHUzMiBrdm1fcG11X2V2ZW50X21h
+c2soc3RydWN0IGt2bSAqa3ZtKQo+PiB7Cj4+IMKgwqDCoCBzd2l0Y2ggKGt2bS0+YXJjaC5wbXV2
+ZXIpIHsKPj4gwqDCoMKgIGNhc2UgMTrCoMKgwqAgwqDCoMKgIMKgwqDCoCAvKiBBUk12OC4wICov
+Cj4+IMKgwqDCoCDCoMKgwqAgcmV0dXJuIEdFTk1BU0soOSwgMCk7Cj4+IMKgwqDCoCBjYXNlIDQ6
+wqDCoMKgIMKgwqDCoCDCoMKgwqAgLyogQVJNdjguMSAqLwo+PiDCoMKgwqAgY2FzZSA1OsKgwqDC
+oCDCoMKgwqAgwqDCoMKgIC8qIEFSTXY4LjQgKi8KPj4gwqDCoMKgIGNhc2UgNjrCoMKgwqAgwqDC
+oMKgIMKgwqDCoCAvKiBBUk12OC41ICovCj4+IMKgwqDCoCDCoMKgwqAgcmV0dXJuIEdFTk1BU0so
+MTUsIDApOwo+PiDCoMKgwqAgZGVmYXVsdDrCoMKgwqAgwqDCoMKgIC8qIFNob3VsZG4ndCBiZSBo
+ZXJlLCBqdXN0IGZvciBzYW5pdHkgKi8KPj4gwqDCoMKgIMKgwqDCoCBXQVJOX09OQ0UoMSwgIlVu
+a25vd24gUE1VIHZlcnNpb24gJWRcbiIsIGt2bS0+YXJjaC5wbXV2ZXIpOwo+PiDCoMKgwqAgwqDC
+oMKgIHJldHVybiAwOwo+PiDCoMKgwqAgfQo+PiB9Cj4+Cj4+IEkgcmVhbGl6ZSBpdCdzIG5vdCBl
+eGFjdGx5IHRoZSBzYW1lIHRoaW5nIGFuZCBJJ2xsIGxlYXZlIGl0IHVwIHRvIHlvdQo+PiBpZiB5
+b3Ugd2FudAo+PiB0byBhZGQgYSB3YXJuaW5nIGZvciB0aGUgY2FzZXMgdGhhdCBzaG91bGQgbmV2
+ZXIgaGFwcGVuLiBJJ20gZmluZSBlaXRoZXIgd2F5Ogo+Cj4gSSBhbHJlYWR5IGhhdmUgcXVldWVk
+IHN1Y2ggYSB3YXJuaW5nWzFdLiBJdCB0dXJucyBvdXQgdGhhdCBMTFZNIHdhcm5zCj4gaWR4IGNh
+biBiZSBsZWZ0IHVuaW5pdGlhbGl6ZWQsIGFuZCBzaG91dHMuIExldCBtZSBrbm93IGlmIHRoYXQg
+d29ya3MKPiBmb3IgeW91LgoKTG9va3MgZ29vZCB0byBtZSwgdW5zaWduZWQgbG9uZyBpcyA2NCBi
+aXRzIGFuZCBpbnN0cnVjdGlvbnMgYXJlIDMyIGJpdHMsIHNvIHdlJ2xsCm5ldmVyIHJ1biBpbnRv
+IGEgc2l0dWF0aW9uIHdoZXJlIGEgdmFsaWQgZW5jb2RpbmcgaXMgfjBVTC4KCllvdSBjYW4gYWRk
+IG15IFJldmlld2VkLWJ5IHRvIHRoaXMgcGF0Y2ggKGFuZCB0byB0aGUgb25lIGF0IFsxXSBpZiBp
+dCdzIHN0aWxsCnBvc3NpYmxlKS4KClRoYW5rcywKCkFsZXgKCj4KPiBUaGFua3MsCj4KPiDCoMKg
+wqDCoMKgwqDCoCBNLgo+Cj4gWzFdCj4gaHR0cHM6Ly9naXQua2VybmVsLm9yZy9wdWIvc2NtL2xp
+bnV4L2tlcm5lbC9naXQvbWF6L2FybS1wbGF0Zm9ybXMuZ2l0L2NvbW1pdC8/aD1rdm0tYXJtNjQv
+cG11LXVuZGVmJmlkPWFmN2VmZjcwZWFmOGYyODE3OTMzNGY1YWVhYmI3MGEzMDYyNDJjODMKX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18Ka3ZtYXJtIG1haWxp
+bmcgbGlzdAprdm1hcm1AbGlzdHMuY3MuY29sdW1iaWEuZWR1Cmh0dHBzOi8vbGlzdHMuY3MuY29s
+dW1iaWEuZWR1L21haWxtYW4vbGlzdGluZm8va3ZtYXJtCg==
