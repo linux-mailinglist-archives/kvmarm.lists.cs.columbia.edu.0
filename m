@@ -2,67 +2,54 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D223D2C5939
-	for <lists+kvmarm@lfdr.de>; Thu, 26 Nov 2020 17:23:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 735A62C5952
+	for <lists+kvmarm@lfdr.de>; Thu, 26 Nov 2020 17:33:56 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 643C94C114;
-	Thu, 26 Nov 2020 11:23:46 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C9984BA50;
+	Thu, 26 Nov 2020 11:33:56 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
 	autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@infradead.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id i09vwuUWe+P2; Thu, 26 Nov 2020 11:23:46 -0500 (EST)
+	with ESMTP id f2clhqSTvayA; Thu, 26 Nov 2020 11:33:55 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6455B4C0E5;
-	Thu, 26 Nov 2020 11:23:45 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CA1BC4B803;
+	Thu, 26 Nov 2020 11:33:54 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D6D8A4C0B2
- for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 11:23:43 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 07AD34B70A
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 11:33:54 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 7B5J4YciX07R for <kvmarm@lists.cs.columbia.edu>;
- Thu, 26 Nov 2020 11:23:43 -0500 (EST)
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id F3F1B4C06F
- for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 11:23:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=J/yD0KFriqWMZtNa1/eriAjfaLbTwrShtSXGHA91Qqg=; b=K5NPkzils6igylPVgbl+1esF0f
- xEzI5QMLfMEX0KgTXqboE+X4bWmnUW/Z5SekuMxAJZq+QYCwLAOHi85g4/x8hK92dQo6z0uuzcIYI
- +YUWiX9k0nw6q+Q3B20Oi0l7wp/0CCpUmjiU4EZ7NE4KRt7RGmJTuus3kubc0TygiTjwTm8irUWXG
- gRz/HaZGA19gBb4X4o5azgcd55gSeyCKO8NiElpskZsl7C/ft1Rd+MjrZ+aUgEJrPbRLZl7ujCadT
- psBDmdMn+xz5XFyWb3zYx9TSbT6GAcvM3VZi6h/MD/NtmJ4Ob4qrpJPnzVP+5C8cn9nn0PGlgDn5j
- zBeC1vBA==;
-Received: from willy by casper.infradead.org with local (Exim 4.92.3 #3 (Red
- Hat Linux)) id 1kiK3X-0000x3-2G; Thu, 26 Nov 2020 16:23:39 +0000
-Date: Thu, 26 Nov 2020 16:23:38 +0000
-From: Matthew Wilcox <willy@infradead.org>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v3 00/23] Opt-in always-on nVHE hypervisor
-Message-ID: <20201126162338.GV4327@casper.infradead.org>
-References: <20201126155421.14901-1-dbrazdil@google.com>
- <20201126155746.GU4327@casper.infradead.org>
- <6a2a14af06232cdf2f5146cd8ec6fc35@kernel.org>
+ with ESMTP id U+GDFtwh+T-6 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 26 Nov 2020 11:33:52 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B4AF84B6D2
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 11:33:52 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 59A5731B;
+ Thu, 26 Nov 2020 08:33:52 -0800 (PST)
+Received: from [192.168.0.110] (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9F6243F23F;
+ Thu, 26 Nov 2020 08:33:51 -0800 (PST)
+Subject: Re: [PATCH 0/8] KVM: arm64: Disabled PMU handling
+To: Marc Zyngier <maz@kernel.org>, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
+References: <20201113182602.471776-1-maz@kernel.org>
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+Message-ID: <d5d09a86-41bc-1085-9394-09cfcecef9d9@arm.com>
+Date: Thu, 26 Nov 2020 16:34:40 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.3
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <6a2a14af06232cdf2f5146cd8ec6fc35@kernel.org>
-Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>, kernel-team@android.com,
- Jonathan Corbet <corbet@lwn.net>, Catalin Marinas <catalin.marinas@arm.com>,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, Sudeep Holla <sudeep.holla@arm.com>,
- Tejun Heo <tj@kernel.org>, Dennis Zhou <dennis@kernel.org>,
- Christoph Lameter <cl@linux.com>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu
+In-Reply-To: <20201113182602.471776-1-maz@kernel.org>
+Content-Language: en-US
+Cc: kernel-team@android.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -79,25 +66,57 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Nov 26, 2020 at 04:19:55PM +0000, Marc Zyngier wrote:
-> On 2020-11-26 15:57, Matthew Wilcox wrote:
-> > On Thu, Nov 26, 2020 at 03:53:58PM +0000, David Brazdil wrote:
-> > > The hypervisor starts trapping host SMCs and intercepting host's PSCI
-> > > CPU_ON/SUSPEND calls. It replaces the host's entry point with its own,
-> > > initializes the EL2 state of the new CPU and installs the nVHE hyp
-> > > vector
-> > > before ERETing to the host's entry point.
-> > 
-> > I hate CPU people.  This is complete gibberish to anyone who doesn't
-> > already have their head deep in ... whatever you're talking about.
-> 
-> What I hate the most is people having a go at other people because they
-> don't understand what is being discussed. Who is at fault there?
+Hi Marc,
 
-The person who wrote an explanation that doesn't actually explain
-anything?  If you're sending mail to a bunch of mailing lists which
-aren't already familiar with what you're trying to do, the onus is on
-you to do more explanation.
+On 11/13/20 6:25 PM, Marc Zyngier wrote:
+> It recently dawned on me that the way we handle PMU traps when the PMU
+> is disabled is plain wrong. We consider that handling the registers as
+> RAZ/WI is a fine thing to do, while the ARMv8 ARM is pretty clear that
+> that's not OK and that such registers should UNDEF when FEAT_PMUv3
+> doesn't exist. I went all the way back to the first public version of
+> the spec, and it turns out we were *always* wrong.
+>
+> It probably comes from the fact that we used not to trap the ID
+> registers, and thus were unable to advertise the lack of PMU, but
+> that's hardly an excuse. So let's fix the damned thing.
+>
+> This series adds an extra check in the helpers that check for the
+> validity of the PMU access (most of the registers have to checked
+> against some enable flags and/or the accessing exception level), and
+> rids us of the RAZ/WI behaviour.
+>
+> This enables us to make additional cleanups, to the point where we can
+> remove the PMU "ready" state that always had very bizarre semantics.
+> All in all, a negative diffstat, and spec compliant behaviours. What's
+> not to like?
+>
+> I've run a few guests with and without PMUs as well as KUT, and
+> nothing caught fire. The patches are on top of kvmarm/queue.
+Everything looks fine to me. You can add my Reviewed-by tag the patches I haven't
+commented on separately.
+
+Thanks,
+
+Alex
+
+>
+> Marc Zyngier (8):
+>   KVM: arm64: Add kvm_vcpu_has_pmu() helper
+>   KVM: arm64: Set ID_AA64DFR0_EL1.PMUVer to 0 when no PMU support
+>   KVM: arm64: Refuse illegal KVM_ARM_VCPU_PMU_V3 at reset time
+>   KVM: arm64: Inject UNDEF on PMU access when no PMU configured
+>   KVM: arm64: Remove PMU RAZ/WI handling
+>   KVM: arm64: Remove dead PMU sysreg decoding code
+>   KVM: arm64: Gate kvm_pmu_update_state() on the PMU feature
+>   KVM: arm64: Get rid of the PMU ready state
+>
+>  arch/arm64/include/asm/kvm_host.h |  3 ++
+>  arch/arm64/kvm/pmu-emul.c         | 11 +++----
+>  arch/arm64/kvm/reset.c            |  4 +++
+>  arch/arm64/kvm/sys_regs.c         | 51 ++++++++-----------------------
+>  include/kvm/arm_pmu.h             |  3 --
+>  5 files changed, 24 insertions(+), 48 deletions(-)
+>
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
