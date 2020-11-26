@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id ACF062C588F
-	for <lists+kvmarm@lfdr.de>; Thu, 26 Nov 2020 16:54:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE7612C5891
+	for <lists+kvmarm@lfdr.de>; Thu, 26 Nov 2020 16:54:36 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 464794BCDF;
-	Thu, 26 Nov 2020 10:54:33 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 82CE24B8FD;
+	Thu, 26 Nov 2020 10:54:36 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,59 +19,59 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5v1LXclDFYOZ; Thu, 26 Nov 2020 10:54:33 -0500 (EST)
+	with ESMTP id lZX8FQPRqbcd; Thu, 26 Nov 2020 10:54:36 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3A02D4BEA7;
-	Thu, 26 Nov 2020 10:54:32 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7AA1A4C060;
+	Thu, 26 Nov 2020 10:54:35 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E38EF4B914
- for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 10:54:30 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4B31B4B914
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 10:54:34 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id jKiTeC9oWS8P for <kvmarm@lists.cs.columbia.edu>;
- Thu, 26 Nov 2020 10:54:30 -0500 (EST)
-Received: from mail-wr1-f66.google.com (mail-wr1-f66.google.com
- [209.85.221.66])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D6B094B747
- for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 10:54:29 -0500 (EST)
-Received: by mail-wr1-f66.google.com with SMTP id g14so2604027wrm.13
- for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 07:54:29 -0800 (PST)
+ with ESMTP id ZdS72RDHs60Z for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 26 Nov 2020 10:54:33 -0500 (EST)
+Received: from mail-wm1-f66.google.com (mail-wm1-f66.google.com
+ [209.85.128.66])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4BF434BEC6
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 10:54:32 -0500 (EST)
+Received: by mail-wm1-f66.google.com with SMTP id x22so2551274wmc.5
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Nov 2020 07:54:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=9eBkN6lmfdOZ6y3T4AeVQ2xEMCxfbxxoIUc76Qx59Gw=;
- b=q0DXHENIOaqhJFnVso9J1kN3Eb61iVK8nd3AricHajirGlfnSXv+NmgwWHCMVIELoM
- /xkucGICwySq83LXla7dhpUSyhhrYAX2WyLB2M0GSO+2LUD2XI2l+m2AypGqvHH1oZWj
- ar44f6d4mUGekt4sM2d7YlccV/6w5dO+75q5vS8ABmkgJxt4nsK1E5YYxMSRXHZwtqRw
- CgRzDUSpetP2+yE0F4UC58Vh56PRAdl/j8zQgvJ3gdi0B97IexPJS8ZDk2Z0gcqlwvRq
- +6NN5jRL2/yL9KuYo3aGBfcKHp1j9xVMqkzoFKdL7JrD/vM8UlDrwr99kKCpPxKPalu6
- 8LXA==
+ bh=GRbbAoAyT+twJ6DWAMnVPh0yMfbGrEWPbKn8Cs93LQs=;
+ b=RIxckPoe2SCexeONFtE4DSkvr9AstiWpnehcv0VL5bhqQYEg6F/oOLEITVaQ1YoEfP
+ hGk3BAB/mFs/TVGkOysWFzWL2o2OJ63MAD9vHn6ziIvpoT6iU7Kp+f3yRtPmRLGrK3uL
+ 0deZiq22+yVHN3uu+0OcZirO1XVk48C0r0exGjyDri75/b+No5iT5S4xp4Jb/F2siD20
+ 9mbZCjgyOtXgQaVY+Md/r07NG7gzIABxytKiAfgC6hHFqf47OWj1AJA/CygIdN1Nz3RG
+ QjClGrsnaR32TvHvOZhfrzbfM8Kl2yeEXRKWMhh3KYMG0WT+diIy8djka0sD24s2czFl
+ LSkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=9eBkN6lmfdOZ6y3T4AeVQ2xEMCxfbxxoIUc76Qx59Gw=;
- b=C4yUlBo6Tx5/G/EAmB9Q4BwLtZys9xnXgIQwyCQumZf2556lUaganNGrMRV1dCo8RG
- XifDi5gwU7N/5A5TUXXFzqM4rvzYymHrcCTCNc0IZfUpVaL+K3GrWAuk2mhaoMu5bY7T
- In7j76pZJnCVKYdxh/+T19Kg9NRjSGf9aNYTzVJuDLuQdaWIfgyI1k/c27DkpjhEAoD+
- +omfiyT/yHKuayphtpV90HSLeuKQglZV+H+bFVvoMNXQhJUnvyZleIDdwbl5d0kzt44U
- GxweSZ46xf13k6bnLMpbipqDuNlc0u1XSBlVLtc10XQba9gJpgrysChqmvO7gZ2xJRhv
- 9xig==
-X-Gm-Message-State: AOAM531FnRhCIJnOqxRoFxjFMmsNiTBW0gXmgUyMbjSTsNLB8QQZp9Ae
- DdPEsxJIoOm0QgdKPgByXklHS+w0bUwGO/Am
-X-Google-Smtp-Source: ABdhPJw/lRW3PEMxi02nhLES66F/ltyrof/LoT+FjVRp6ybB+E4igrjSX8c/nxUUNknF9HL5GfidZA==
-X-Received: by 2002:a5d:5482:: with SMTP id h2mr4667449wrv.18.1606406068612;
- Thu, 26 Nov 2020 07:54:28 -0800 (PST)
+ bh=GRbbAoAyT+twJ6DWAMnVPh0yMfbGrEWPbKn8Cs93LQs=;
+ b=koRpqhr4VAXU6cCCE51hU/TTfBmS+jgudpGmOMEURFksbsI1WHSsrjKGNY0lSBlVMI
+ R6kxfsMqDeOtMC3tXtQdUBRqVisxqeZ3+EKuJvbN398MPE+91innU/eIgrj6Njie9AxO
+ N7FbBDf/oDJxbMFcwsky+RppRND1vMbD0I1Tl2Xm2lX+XnVoUTIyD+yhGI1FmsCzfyIJ
+ 11ZfCORNofirxCR066mjZ3VsHVTQihJ1bJHgW8qfeKuHWJvuvI8grqr9uglZfROdf0E8
+ QjuaYe+8peK0ZoRFC9PSJcQ8SrSXCtb09vE8wLSPPgjmh+SqmKzTYKYysZsmZXnJbMUu
+ jzJg==
+X-Gm-Message-State: AOAM530AQwsInXQloHviuj3BuoKX1NGKp8x7+E8mTTr53DBvDtnBv39e
+ VBydcq4KncD2ztwXU+UQU660gvh9iUnLZimC
+X-Google-Smtp-Source: ABdhPJwT9SLDB2L8OAgTeM8M2ZPVm2Y3TUfSJCQdJPrpoyLr/4gGDkZXGYwQZBc52TdBQc78XLbyjQ==
+X-Received: by 2002:a1c:31c6:: with SMTP id x189mr4071224wmx.50.1606406070792; 
+ Thu, 26 Nov 2020 07:54:30 -0800 (PST)
 Received: from localhost ([2a01:4b00:8523:2d03:f008:704d:8d4b:9951])
- by smtp.gmail.com with ESMTPSA id v7sm2637615wma.26.2020.11.26.07.54.27
+ by smtp.gmail.com with ESMTPSA id q1sm9612864wrj.8.2020.11.26.07.54.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Nov 2020 07:54:27 -0800 (PST)
+ Thu, 26 Nov 2020 07:54:29 -0800 (PST)
 From: David Brazdil <dbrazdil@google.com>
 To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v3 01/23] psci: Support psci_ops.get_version for v0.1
-Date: Thu, 26 Nov 2020 15:53:59 +0000
-Message-Id: <20201126155421.14901-2-dbrazdil@google.com>
+Subject: [PATCH v3 02/23] psci: Accessor for configured PSCI function IDs
+Date: Thu, 26 Nov 2020 15:54:00 +0000
+Message-Id: <20201126155421.14901-3-dbrazdil@google.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201126155421.14901-1-dbrazdil@google.com>
 References: <20201126155421.14901-1-dbrazdil@google.com>
@@ -99,45 +99,66 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-KVM's host PSCI SMC filter needs to be aware of the PSCI version of the
-system but currently it is impossible to distinguish between v0.1 and
-PSCI disabled because both have get_version == NULL.
-
-Populate get_version for v0.1 with a function that returns a constant.
-
-psci_opt.get_version is currently unused so this has no effect on
-existing functionality.
+Function IDs used by PSCI are configurable for v0.1 via DT/APCI. If the
+host is using PSCI v0.1, KVM's host PSCI proxy needs to use the same IDs.
+Expose the array holding the information with a read-only accessor.
 
 Signed-off-by: David Brazdil <dbrazdil@google.com>
 ---
- drivers/firmware/psci/psci.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/firmware/psci/psci.c | 16 ++++++++--------
+ include/linux/psci.h         | 10 ++++++++++
+ 2 files changed, 18 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
-index 00af99b6f97c..213c68418a65 100644
+index 213c68418a65..40609564595e 100644
 --- a/drivers/firmware/psci/psci.c
 +++ b/drivers/firmware/psci/psci.c
-@@ -146,6 +146,11 @@ static int psci_to_linux_errno(int errno)
- 	return -EINVAL;
- }
+@@ -58,16 +58,16 @@ typedef unsigned long (psci_fn)(unsigned long, unsigned long,
+ 				unsigned long, unsigned long);
+ static psci_fn *invoke_psci_fn;
  
-+static u32 psci_get_version_0_1(void)
+-enum psci_function {
+-	PSCI_FN_CPU_SUSPEND,
+-	PSCI_FN_CPU_ON,
+-	PSCI_FN_CPU_OFF,
+-	PSCI_FN_MIGRATE,
+-	PSCI_FN_MAX,
+-};
+-
+ static u32 psci_function_id[PSCI_FN_MAX];
+ 
++u32 psci_get_function_id(enum psci_function fn)
 +{
-+	return PSCI_VERSION(0, 1);
++	if (WARN_ON_ONCE(fn < 0 || fn >= PSCI_FN_MAX))
++		return 0;
++
++	return psci_function_id[fn];
 +}
 +
- static u32 psci_get_version(void)
- {
- 	return invoke_psci_fn(PSCI_0_2_FN_PSCI_VERSION, 0, 0, 0);
-@@ -514,6 +519,8 @@ static int __init psci_0_1_init(struct device_node *np)
+ #define PSCI_0_2_POWER_STATE_MASK		\
+ 				(PSCI_0_2_POWER_STATE_ID_MASK | \
+ 				PSCI_0_2_POWER_STATE_TYPE_MASK | \
+diff --git a/include/linux/psci.h b/include/linux/psci.h
+index 2a1bfb890e58..5b49a5c82d6f 100644
+--- a/include/linux/psci.h
++++ b/include/linux/psci.h
+@@ -21,6 +21,16 @@ bool psci_power_state_is_valid(u32 state);
+ int psci_set_osi_mode(bool enable);
+ bool psci_has_osi_support(void);
  
- 	pr_info("Using PSCI v0.1 Function IDs from DT\n");
- 
-+	psci_ops.get_version = psci_get_version_0_1;
++enum psci_function {
++	PSCI_FN_CPU_SUSPEND,
++	PSCI_FN_CPU_ON,
++	PSCI_FN_CPU_OFF,
++	PSCI_FN_MIGRATE,
++	PSCI_FN_MAX,
++};
 +
- 	if (!of_property_read_u32(np, "cpu_suspend", &id)) {
- 		psci_function_id[PSCI_FN_CPU_SUSPEND] = id;
- 		psci_ops.cpu_suspend = psci_cpu_suspend;
++u32 psci_get_function_id(enum psci_function fn);
++
+ struct psci_operations {
+ 	u32 (*get_version)(void);
+ 	int (*cpu_suspend)(u32 state, unsigned long entry_point);
 -- 
 2.29.2.454.gaff20da3a2-goog
 
