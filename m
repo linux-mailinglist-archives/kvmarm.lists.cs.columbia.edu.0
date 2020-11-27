@@ -2,60 +2,74 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FB442C62BA
-	for <lists+kvmarm@lfdr.de>; Fri, 27 Nov 2020 11:14:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A8E912C63CA
+	for <lists+kvmarm@lfdr.de>; Fri, 27 Nov 2020 12:21:27 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DC88C4BFE5;
-	Fri, 27 Nov 2020 05:14:46 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2CBD24BE92;
+	Fri, 27 Nov 2020 06:21:27 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id oC4Z2GaCVsRV; Fri, 27 Nov 2020 05:14:46 -0500 (EST)
+	with ESMTP id oT1MAThsEACO; Fri, 27 Nov 2020 06:21:27 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8577F4BFDE;
-	Fri, 27 Nov 2020 05:14:45 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E3EC24BE87;
+	Fri, 27 Nov 2020 06:21:25 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 056F24BFD0
- for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Nov 2020 05:14:44 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B85BF4BE7B
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Nov 2020 06:21:24 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id z2uUe4BS+34T for <kvmarm@lists.cs.columbia.edu>;
- Fri, 27 Nov 2020 05:14:42 -0500 (EST)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 863284BFA4
- for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Nov 2020 05:14:42 -0500 (EST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D965E1516;
- Fri, 27 Nov 2020 02:14:41 -0800 (PST)
-Received: from e121166-lin.cambridge.arm.com (e121166-lin.cambridge.arm.com
- [10.1.196.255])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A809E3F71F;
- Fri, 27 Nov 2020 02:14:39 -0800 (PST)
-Date: Fri, 27 Nov 2020 10:14:33 +0000
-From: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To: David Brazdil <dbrazdil@google.com>
-Subject: Re: [PATCH v3 16/23] kvm: arm64: Forward safe PSCI SMCs coming from
- host
-Message-ID: <20201127101433.GA1061@e121166-lin.cambridge.arm.com>
-References: <20201126155421.14901-1-dbrazdil@google.com>
- <20201126155421.14901-17-dbrazdil@google.com>
+ with ESMTP id oH+8SLYYHC7m for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 27 Nov 2020 06:21:22 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9767A4BE75
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Nov 2020 06:21:22 -0500 (EST)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 0DF2420B80;
+ Fri, 27 Nov 2020 11:21:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1606476081;
+ bh=fS6mF1IDPaTZHP4+FiQm7nj4O1emt6KtMrKo/Vv9QOc=;
+ h=From:To:Cc:Subject:Date:From;
+ b=kCn5yoOc6ucB2MaxXimiA11mtBW5b7w5jKlVWS+s12qCYG6LSHjmiqy+k2ejZBkv3
+ XElrP4//E0eXdoRXTavH98gI/PnZRvEgzpQ4Y/ln8xpg4QBUKyoGXnql/wf9OLMk/+
+ zBphLzrdbtGS3HJvO13T9ICBUY2NsoWmCV/Fr1Ro=
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1kiboU-00E2fR-Nq; Fri, 27 Nov 2020 11:21:18 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Subject: [GIT PULL] KVM/arm64 fixes for 5.10, take #4
+Date: Fri, 27 Nov 2020 11:20:59 +0000
+Message-Id: <20201127112101.658224-1-maz@kernel.org>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20201126155421.14901-17-dbrazdil@google.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Cc: Sudeep Holla <sudeep.holla@arm.com>, kernel-team@android.com,
- Jonathan Corbet <corbet@lwn.net>, Catalin Marinas <catalin.marinas@arm.com>,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, Marc Zyngier <maz@kernel.org>,
- Tejun Heo <tj@kernel.org>, Dennis Zhou <dennis@kernel.org>,
- Christoph Lameter <cl@linux.com>, Will Deacon <will@kernel.org>,
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: pbonzini@redhat.com, dbrazdil@google.com,
+ eric.auger@redhat.com, jamie@nuviainc.com, zhukeqian1@huawei.com,
+ will@kernel.org, yuzenghui@huawei.com, james.morse@arm.com,
+ julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com, kernel-team@android.com,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com, kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
+ Jamie Iles <jamie@nuviainc.com>, linux-arm-kernel@lists.infradead.org,
  kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -73,110 +87,45 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Nov 26, 2020 at 03:54:14PM +0000, David Brazdil wrote:
-> Forward the following PSCI SMCs issued by host to EL3 as they do not
-> require the hypervisor's intervention. This assumes that EL3 correctly
-> implements the PSCI specification.
-> 
-> Only function IDs implemented in Linux are included.
-> 
-> Where both 32-bit and 64-bit variants exist, it is assumed that the host
-> will always use the 64-bit variant.
-> 
->  * SMCs that only return information about the system
->    * PSCI_VERSION        - PSCI version implemented by EL3
->    * PSCI_FEATURES       - optional features supported by EL3
->    * AFFINITY_INFO       - power state of core/cluster
->    * MIGRATE_INFO_TYPE   - whether Trusted OS can be migrated
->    * MIGRATE_INFO_UP_CPU - resident core of Trusted OS
->  * operations which do not affect the hypervisor
->    * MIGRATE             - migrate Trusted OS to a different core
->    * SET_SUSPEND_MODE    - toggle OS-initiated mode
->  * system shutdown/reset
->    * SYSTEM_OFF
->    * SYSTEM_RESET
->    * SYSTEM_RESET2
+Hi Paolo,
 
-What about SYSTEM_SUSPEND ?
+This is hopefully the last set of fixes for 5.10. We have a linker
+script fix addressing the alignment requirement for the way we now
+build the EL2 code, and a fix for a long standing bug affecting
+userspace access to the GICR_TYPER registers.
 
-Lorenzo
+Please pull,
 
-> Signed-off-by: David Brazdil <dbrazdil@google.com>
-> ---
->  arch/arm64/kvm/hyp/nvhe/psci-relay.c | 43 +++++++++++++++++++++++++++-
->  1 file changed, 42 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/kvm/hyp/nvhe/psci-relay.c b/arch/arm64/kvm/hyp/nvhe/psci-relay.c
-> index e7091d89f0fc..7aa87ab7f5ce 100644
-> --- a/arch/arm64/kvm/hyp/nvhe/psci-relay.c
-> +++ b/arch/arm64/kvm/hyp/nvhe/psci-relay.c
-> @@ -57,14 +57,51 @@ static bool is_psci_call(u64 func_id)
->  	}
->  }
->  
-> +static unsigned long psci_call(unsigned long fn, unsigned long arg0,
-> +			       unsigned long arg1, unsigned long arg2)
-> +{
-> +	struct arm_smccc_res res;
-> +
-> +	arm_smccc_1_1_smc(fn, arg0, arg1, arg2, &res);
-> +	return res.a0;
-> +}
-> +
-> +static unsigned long psci_forward(struct kvm_cpu_context *host_ctxt)
-> +{
-> +	return psci_call(cpu_reg(host_ctxt, 0), cpu_reg(host_ctxt, 1),
-> +			 cpu_reg(host_ctxt, 2), cpu_reg(host_ctxt, 3));
-> +}
-> +
-> +static __noreturn unsigned long psci_forward_noreturn(struct kvm_cpu_context *host_ctxt)
-> +{
-> +	psci_forward(host_ctxt);
-> +	hyp_panic(); /* unreachable */
-> +}
-> +
->  static unsigned long psci_0_1_handler(u64 func_id, struct kvm_cpu_context *host_ctxt)
->  {
-> -	return PSCI_RET_NOT_SUPPORTED;
-> +	if (func_id == kvm_host_psci_function_id[PSCI_FN_CPU_OFF])
-> +		return psci_forward(host_ctxt);
-> +	else if (func_id == kvm_host_psci_function_id[PSCI_FN_MIGRATE])
-> +		return psci_forward(host_ctxt);
-> +	else
-> +		return PSCI_RET_NOT_SUPPORTED;
->  }
->  
->  static unsigned long psci_0_2_handler(u64 func_id, struct kvm_cpu_context *host_ctxt)
->  {
->  	switch (func_id) {
-> +	case PSCI_0_2_FN_PSCI_VERSION:
-> +	case PSCI_0_2_FN_CPU_OFF:
-> +	case PSCI_0_2_FN64_AFFINITY_INFO:
-> +	case PSCI_0_2_FN64_MIGRATE:
-> +	case PSCI_0_2_FN_MIGRATE_INFO_TYPE:
-> +	case PSCI_0_2_FN64_MIGRATE_INFO_UP_CPU:
-> +		return psci_forward(host_ctxt);
-> +	case PSCI_0_2_FN_SYSTEM_OFF:
-> +	case PSCI_0_2_FN_SYSTEM_RESET:
-> +		psci_forward_noreturn(host_ctxt);
-> +		unreachable();
->  	default:
->  		return PSCI_RET_NOT_SUPPORTED;
->  	}
-> @@ -73,6 +110,10 @@ static unsigned long psci_0_2_handler(u64 func_id, struct kvm_cpu_context *host_
->  static unsigned long psci_1_0_handler(u64 func_id, struct kvm_cpu_context *host_ctxt)
->  {
->  	switch (func_id) {
-> +	case PSCI_1_0_FN_PSCI_FEATURES:
-> +	case PSCI_1_0_FN_SET_SUSPEND_MODE:
-> +	case PSCI_1_1_FN64_SYSTEM_RESET2:
-> +		return psci_forward(host_ctxt);
->  	default:
->  		return psci_0_2_handler(func_id, host_ctxt);
->  	}
-> -- 
-> 2.29.2.454.gaff20da3a2-goog
-> 
+	M.
+
+The following changes since commit ed4ffaf49bf9ce1002b516d8c6aa04937b7950bc:
+
+  KVM: arm64: Handle SCXTNUM_ELx traps (2020-11-12 21:22:46 +0000)
+
+are available in the Git repository at:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git tags/kvmarm-fixes-5.10-4
+
+for you to fetch changes up to 23bde34771f1ea92fb5e6682c0d8c04304d34b3b:
+
+  KVM: arm64: vgic-v3: Drop the reporting of GICR_TYPER.Last for userspace (2020-11-17 18:51:09 +0000)
+
+----------------------------------------------------------------
+KVM/arm64 fixes for v5.10, take #4
+
+- Fix alignment of the new HYP sections
+- Fix GICR_TYPER access from userspace
+
+----------------------------------------------------------------
+Jamie Iles (1):
+      KVM: arm64: Correctly align nVHE percpu data
+
+Zenghui Yu (1):
+      KVM: arm64: vgic-v3: Drop the reporting of GICR_TYPER.Last for userspace
+
+ arch/arm64/kvm/hyp/nvhe/hyp.lds.S  |  5 +++++
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c | 22 ++++++++++++++++++++--
+ 2 files changed, 25 insertions(+), 2 deletions(-)
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
