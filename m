@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CFB902CA668
-	for <lists+kvmarm@lfdr.de>; Tue,  1 Dec 2020 15:58:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EE03C2CA66F
+	for <lists+kvmarm@lfdr.de>; Tue,  1 Dec 2020 16:00:45 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6F53A4C28B;
-	Tue,  1 Dec 2020 09:58:51 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8F5344C280;
+	Tue,  1 Dec 2020 10:00:45 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,49 +16,36 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5VkFgMPdy8BA; Tue,  1 Dec 2020 09:58:51 -0500 (EST)
+	with ESMTP id yuwDdqR4NYaL; Tue,  1 Dec 2020 10:00:45 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3F80E4C257;
-	Tue,  1 Dec 2020 09:58:50 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 83E6D4C17B;
+	Tue,  1 Dec 2020 10:00:44 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 097A94C245
- for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Dec 2020 09:58:49 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C5E9D4C17B
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Dec 2020 10:00:42 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id OMFpWvs2XAyS for <kvmarm@lists.cs.columbia.edu>;
- Tue,  1 Dec 2020 09:58:48 -0500 (EST)
+ with ESMTP id kn8DhQmJNt+X for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  1 Dec 2020 10:00:41 -0500 (EST)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 01AD44C1A1
- for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Dec 2020 09:58:47 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9E37F4B1DF
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Dec 2020 10:00:41 -0500 (EST)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A6CCA30E;
- Tue,  1 Dec 2020 06:58:47 -0800 (PST)
-Received: from C02TD0UTHF1T.local (unknown [10.57.30.155])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 444ED3F575;
- Tue,  1 Dec 2020 06:58:43 -0800 (PST)
-Date: Tue, 1 Dec 2020 14:58:40 +0000
-From: Mark Rutland <mark.rutland@arm.com>
-To: David Brazdil <dbrazdil@google.com>
-Subject: Re: [PATCH v3 06/23] kvm: arm64: Add kvm-arm.protected early kernel
- parameter
-Message-ID: <20201201145840.GC86881@C02TD0UTHF1T.local>
-References: <20201126155421.14901-1-dbrazdil@google.com>
- <20201126155421.14901-7-dbrazdil@google.com>
- <20201127163254.zxdrszlveaxhluwn@bogus>
- <20201201131913.u7m2eifvtus74dra@google.com>
- <20201201140734.GA86881@C02TD0UTHF1T.local>
- <20201201144349.bglz7yicc3peixe6@google.com>
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EFD7530E;
+ Tue,  1 Dec 2020 07:00:40 -0800 (PST)
+Received: from monolith.localdoman (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 863B23F575;
+ Tue,  1 Dec 2020 07:00:39 -0800 (PST)
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ maz@kernel.org, james.morse@arm.com, julien.thierry.kdev@gmail.com,
+ suzuki.poulose@arm.com
+Subject: [PATCH 0/5] KVM: arm64: Miscellaneous improvements
+Date: Tue,  1 Dec 2020 15:01:52 +0000
+Message-Id: <20201201150157.223625-1-alexandru.elisei@arm.com>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20201201144349.bglz7yicc3peixe6@google.com>
-Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>, kernel-team@android.com,
- Jonathan Corbet <corbet@lwn.net>, Catalin Marinas <catalin.marinas@arm.com>,
- Sudeep Holla <sudeep.holla@arm.com>, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- Marc Zyngier <maz@kernel.org>, Tejun Heo <tj@kernel.org>,
- Dennis Zhou <dennis@kernel.org>, Christoph Lameter <cl@linux.com>,
- Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -75,50 +62,58 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, Dec 01, 2020 at 02:43:49PM +0000, David Brazdil wrote:
-> > > > be just me, but if you agree please update so that it doesn't give remote
-> > > > idea that it is not valid on VHE enabled hardware.
-> > > > 
-> > > > I was trying to run this on the hardware and was trying to understand the
-> > > > details on how to do that.
-> > > 
-> > > I see what you're saying, but !CONFIG_ARM64_VHE isn't accurate either. The
-> > > option makes sense if:
-> > >   1) all cores booted in EL2
-> > >      == is_hyp_mode_available()
-> > >   2) ID_AA64MMFR1_EL1.VH=0 or !CONFIG_ARM64_VHE
-> > >      == !is_kernel_in_hyp_mode()
-> > > 
-> > > The former feels implied for KVM, the latter could be 'Valid if the kernel
-> > > is running in EL1'? WDYT?
-> > 
-> > I reckon we can avoid the restriction if we instead add an early stub
-> > like with have for KASLR. That way we could parse the command line
-> > early, and if necessary re-initialize EL2 and drop to EL1 before the
-> > main kernel has to make any decisions about how to initialize things.
-> > That would allow us to have a more general kvm-arm.mode option where a
-> > single kernel Image could support:
-> > 
-> > * "protected" mode on nVHE or VHE HW
-> > * "nvhe" mode on nVHE or VHE HW
-> > * "vhe" mode on VHE HW
-> > 
-> > ... defaulting to VHE/nVHE modes depending on HW support.
-> > 
-> > That would also be somewhat future-proof if we have to add other
-> > variants of protected mode in future, as we could extend the mode option
-> > with parameters for each mode.
-> 
-> Agreed that 'mode' is a more future-proof flag and I would very much love to
-> have an option to force nVHE on VHE HW. I however expect that the early stub
-> would not be a trivial addition and would not want to get into that in this
-> series. Could we agree on 'protected' as the only supported value for the time
-> being?
+The documentation update in the first patch was suggested by Marc [1]. When
+I was going through the code to track down all the places error codes were
+coming from I noticed a few things that in my opinion could be improved.
+The following patches aim to do just that. I'm fine dropping them if the
+churn looks unjustified.
 
-Sure, that works for me.
+Tested the Documentation changes by building pdfdocs, didn't notice any
+warnings regarding api.rst.
 
-Thanks,
-Mark. 
+Tested the other patches on a rockpro64 on the little cores. I ran
+kvm-unit-tests with qemu and kvmtool. I also ran a Linux guest with qemu
+and ran perf:
+
+$ perf record -a -- iperf3 -c 127.0.0.1 -t 60
+
+I checked that interrupts were firing and nothing looked out of the
+ordinary. I used qemu because qemu VCPUs do initialization concurrently
+from their own thread, not from the main thread like kvmtool.
+
+To check that kvm_timer_enable() is never reached if the VGIC is not
+initialized, I hacked kvmtool to remove the ioctl
+KVM_DEV_ARM_VGIC_GRP_CTRL(KVM_DEV_ARM_VGIC_CTRL_INIT) from gic__init_gic().
+When trying to run a guest, I got the following error message:
+
+KVM_RUN failed: Device or resource busy
+
+which is consistent with the EBUSY return code from
+vgic_v3_map_resources(). Double checked that that's where the code is
+coming from by adding a pr_info statement to
+kvm_arch_vcpu_first_run_init().
+
+[1] https://www.spinics.net/lists/arm-kernel/msg858024.html
+
+Alexandru Elisei (5):
+  KVM: Documentation: Add arm64 KVM_RUN error codes
+  KVM: arm64: arch_timer: Remove VGIC initialization check
+  KVM: arm64: Move double-checked lock to kvm_vgic_map_resources()
+  KVM: arm64: Update comment in kvm_vgic_map_resources()
+  KVM: arm64: Remove redundant call to kvm_pmu_vcpu_reset()
+
+ Documentation/virt/kvm/api.rst  | 9 +++++++--
+ arch/arm64/kvm/arch_timer.c     | 3 ---
+ arch/arm64/kvm/arm.c            | 8 +++-----
+ arch/arm64/kvm/pmu-emul.c       | 2 --
+ arch/arm64/kvm/vgic/vgic-init.c | 9 ++++++++-
+ arch/arm64/kvm/vgic/vgic-v2.c   | 3 ---
+ arch/arm64/kvm/vgic/vgic-v3.c   | 3 ---
+ 7 files changed, 18 insertions(+), 19 deletions(-)
+
+-- 
+2.29.2
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
