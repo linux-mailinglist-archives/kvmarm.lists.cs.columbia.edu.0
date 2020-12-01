@@ -2,89 +2,56 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id BB6C32CA5FC
-	for <lists+kvmarm@lfdr.de>; Tue,  1 Dec 2020 15:43:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 989CB2CA65F
+	for <lists+kvmarm@lfdr.de>; Tue,  1 Dec 2020 15:57:37 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 35A994C202;
-	Tue,  1 Dec 2020 09:43:56 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2C7764C24C;
+	Tue,  1 Dec 2020 09:57:37 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Z7BM9mSMpDJq; Tue,  1 Dec 2020 09:43:56 -0500 (EST)
+	with ESMTP id yvRI7qwiGgTL; Tue,  1 Dec 2020 09:57:37 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 13B6B4C03E;
-	Tue,  1 Dec 2020 09:43:55 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E560D4C253;
+	Tue,  1 Dec 2020 09:57:35 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DDE9A4B91D
- for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Dec 2020 09:43:53 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3A3384C246
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Dec 2020 09:57:34 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 8HLj+X5cnOuE for <kvmarm@lists.cs.columbia.edu>;
- Tue,  1 Dec 2020 09:43:52 -0500 (EST)
-Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com
- [209.85.221.67])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B24DA4B6EF
- for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Dec 2020 09:43:52 -0500 (EST)
-Received: by mail-wr1-f67.google.com with SMTP id 23so2981973wrc.8
- for <kvmarm@lists.cs.columbia.edu>; Tue, 01 Dec 2020 06:43:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=JIA0Scl4OIMMkSS/5dfb1RixGjs/UhotRuHwz308dGA=;
- b=ICa9ez6xKvXoVFd5a+nyt9V7db40a6UDXltW3gu+5eDTPPoS7Y+JHn0qhh505cto8f
- GRLJkOPi8X4qfWqafWsQ6KrEg1FBVyXFnMuueku5Rvh2nAkHFVLVmB94DGc7SMapcND8
- iCfVQkWismF7cf9Pxzp3Pi5NrsRfBnkClOAt3axQ3sGSRNPGhXQv7qFGz5pajfx4cjxn
- 5vFpF4gkJTjJGtnvbwVNxH5lm7Jc0cCZfd9IXPiS4SNeZVCufI98odvCCzyskxTIRMwx
- S+gz72PQ6q5hfrC4mBZr8J/bOiuIbHPAIKUX5idfyO8GKJNpNm3oeMe1COzvBl6m/a3D
- I85A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=JIA0Scl4OIMMkSS/5dfb1RixGjs/UhotRuHwz308dGA=;
- b=qG78KLDvjMazFYykCT88xJfDW8M2uI43bbvWHV5+447X95S7qks6I8gkXNRh9jd2am
- NOaklEDk57b6xFmdQVnSyHjHDvEmD8Ft4CY1OlB5bXpMykP2AH11ofKJ7QCiISSiDxmP
- /wTa+TUWcu8L/xErVs6hJr/+xnag7PUTg61q7zsKPMPa69TGChXa3o1siMKn95t+y13b
- dw900IVbNMUijBKgXMoALQEyWFafyQiQaxwapQhKXgqIzqhjeZdmDnB3WZSS91JAbTim
- kVEViCVtJKYbn6Qj/76qrt8Gp7s0PO/rMJq7nii2CArTU+KD2+UdaxcKpVURVol926GT
- PP2w==
-X-Gm-Message-State: AOAM533yEkVS+j9bN2Wf45D/nA0RRlv1DnR5pLhzBzVQEx92c8sWXx8U
- O0UvNr+OCeAayD+JcebW3cm1iw==
-X-Google-Smtp-Source: ABdhPJxFvoIa6LKNTCZysKjYl0L3o6ekKKdzC32vTURn5ckCGb5MJxfK027unJvURm7vUyFNvUoRNg==
-X-Received: by 2002:a5d:4e87:: with SMTP id e7mr4467528wru.70.1606833831387;
- Tue, 01 Dec 2020 06:43:51 -0800 (PST)
-Received: from google.com ([2a01:4b00:8523:2d03:7c5f:5ab5:ac1f:89ce])
- by smtp.gmail.com with ESMTPSA id y130sm99756wmc.22.2020.12.01.06.43.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Dec 2020 06:43:50 -0800 (PST)
-Date: Tue, 1 Dec 2020 14:43:49 +0000
-From: David Brazdil <dbrazdil@google.com>
-To: Mark Rutland <mark.rutland@arm.com>
-Subject: Re: [PATCH v3 06/23] kvm: arm64: Add kvm-arm.protected early kernel
- parameter
-Message-ID: <20201201144349.bglz7yicc3peixe6@google.com>
+ with ESMTP id gFDGS6KJI4UB for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  1 Dec 2020 09:57:33 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 085B24C245
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Dec 2020 09:57:32 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 72E9C30E;
+ Tue,  1 Dec 2020 06:57:32 -0800 (PST)
+Received: from C02TD0UTHF1T.local (unknown [10.57.30.155])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 073823F575;
+ Tue,  1 Dec 2020 06:57:23 -0800 (PST)
+Date: Tue, 1 Dec 2020 14:57:20 +0000
+From: Mark Rutland <mark.rutland@arm.com>
+To: David Brazdil <dbrazdil@google.com>
+Subject: Re: [PATCH v3 20/23] kvm: arm64: Intercept host's CPU_SUSPEND PSCI
+ SMCs
+Message-ID: <20201201145720.GB86881@C02TD0UTHF1T.local>
 References: <20201126155421.14901-1-dbrazdil@google.com>
- <20201126155421.14901-7-dbrazdil@google.com>
- <20201127163254.zxdrszlveaxhluwn@bogus>
- <20201201131913.u7m2eifvtus74dra@google.com>
- <20201201140734.GA86881@C02TD0UTHF1T.local>
+ <20201126155421.14901-21-dbrazdil@google.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20201201140734.GA86881@C02TD0UTHF1T.local>
+In-Reply-To: <20201126155421.14901-21-dbrazdil@google.com>
 Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>, kernel-team@android.com,
  Jonathan Corbet <corbet@lwn.net>, Catalin Marinas <catalin.marinas@arm.com>,
- Sudeep Holla <sudeep.holla@arm.com>, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Sudeep Holla <sudeep.holla@arm.com>, linux-arm-kernel@lists.infradead.org,
  Marc Zyngier <maz@kernel.org>, Tejun Heo <tj@kernel.org>,
  Dennis Zhou <dennis@kernel.org>, Christoph Lameter <cl@linux.com>,
  Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu
@@ -104,47 +71,45 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-> > > be just me, but if you agree please update so that it doesn't give remote
-> > > idea that it is not valid on VHE enabled hardware.
-> > > 
-> > > I was trying to run this on the hardware and was trying to understand the
-> > > details on how to do that.
-> > 
-> > I see what you're saying, but !CONFIG_ARM64_VHE isn't accurate either. The
-> > option makes sense if:
-> >   1) all cores booted in EL2
-> >      == is_hyp_mode_available()
-> >   2) ID_AA64MMFR1_EL1.VH=0 or !CONFIG_ARM64_VHE
-> >      == !is_kernel_in_hyp_mode()
-> > 
-> > The former feels implied for KVM, the latter could be 'Valid if the kernel
-> > is running in EL1'? WDYT?
+On Thu, Nov 26, 2020 at 03:54:18PM +0000, David Brazdil wrote:
+> Add a handler of CPU_SUSPEND host PSCI SMCs. The SMC can either enter
+> a sleep state indistinguishable from a WFI or a deeper sleep state that
+> behaves like a CPU_OFF+CPU_ON except that the core is still considered
+> online when asleep.
 > 
-> I reckon we can avoid the restriction if we instead add an early stub
-> like with have for KASLR. That way we could parse the command line
-> early, and if necessary re-initialize EL2 and drop to EL1 before the
-> main kernel has to make any decisions about how to initialize things.
-> That would allow us to have a more general kvm-arm.mode option where a
-> single kernel Image could support:
-> 
-> * "protected" mode on nVHE or VHE HW
-> * "nvhe" mode on nVHE or VHE HW
-> * "vhe" mode on VHE HW
-> 
-> ... defaulting to VHE/nVHE modes depending on HW support.
-> 
-> That would also be somewhat future-proof if we have to add other
-> variants of protected mode in future, as we could extend the mode option
-> with parameters for each mode.
+> The handler saves r0,pc of the host and makes the same call to EL3 with
+> the hyp CPU entry point. It either returns back to the handler and then
+> back to the host, or wakes up into the entry point and initializes EL2
+> state before dropping back to EL1.
 
-Agreed that 'mode' is a more future-proof flag and I would very much love to
-have an option to force nVHE on VHE HW. I however expect that the early stub
-would not be a trivial addition and would not want to get into that in this
-series. Could we agree on 'protected' as the only supported value for the time
-being?
+For those CPU_SUSPEND calls which lose context, is there no EL2 state
+that you need to save/restore, or is that all saved elsewhere already?
 
-David
+The usual suspects are PMU, debug, and timers, so maybe not. It'd be
+nice to have a statement in the commit message if we're certain there's
+no state that we need to save.
 
+> A core can only suspend itself but other cores can concurrently invoke
+> CPU_ON with this core as target. To avoid racing them for the same
+> boot args struct, CPU_SUSPEND uses a different struct instance and entry
+> point. Each entry point selects the corresponding struct to restore host
+> boot args from. This avoids the need for locking in CPU_SUSPEND.
+
+I found this a bit confusing since the first sentence can be read to
+mean that CPU_ON is expected to compose with CPU_SUSPEND, whereas what
+this is actually saying is the implementation ensures they don't
+interact. How about:
+
+| CPU_ON and CPU_SUSPEND are both implemented using struct cpu_boot_args
+| to store the state upon powerup, with each CPU having separate structs
+| for CPU_ON and CPU_SUSPEND so that CPU_SUSPEND can operate locklessly
+| and so that a CPU_ON xall targetting a CPU cannot interfere with a
+| concurrent CPU_SUSPEND call on that CPU.
+
+The patch itself looks fine to me.
+
+Thanks,
+Mark.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
