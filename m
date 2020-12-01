@@ -2,50 +2,52 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id EE03C2CA66F
-	for <lists+kvmarm@lfdr.de>; Tue,  1 Dec 2020 16:00:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 099EE2CA670
+	for <lists+kvmarm@lfdr.de>; Tue,  1 Dec 2020 16:00:47 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8F5344C280;
-	Tue,  1 Dec 2020 10:00:45 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AF5054C257;
+	Tue,  1 Dec 2020 10:00:46 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yuwDdqR4NYaL; Tue,  1 Dec 2020 10:00:45 -0500 (EST)
+	with ESMTP id Wfg8dhZl6M4X; Tue,  1 Dec 2020 10:00:45 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 83E6D4C17B;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A1F6A4C275;
 	Tue,  1 Dec 2020 10:00:44 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C5E9D4C17B
- for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Dec 2020 10:00:42 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CBCF54B1DF
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Dec 2020 10:00:43 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id kn8DhQmJNt+X for <kvmarm@lists.cs.columbia.edu>;
- Tue,  1 Dec 2020 10:00:41 -0500 (EST)
+ with ESMTP id BBVFWusHPi-y for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  1 Dec 2020 10:00:42 -0500 (EST)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9E37F4B1DF
- for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Dec 2020 10:00:41 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B8AEF4C1CD
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Dec 2020 10:00:42 -0500 (EST)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EFD7530E;
- Tue,  1 Dec 2020 07:00:40 -0800 (PST)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5D3AA1042;
+ Tue,  1 Dec 2020 07:00:42 -0800 (PST)
 Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 863B23F575;
- Tue,  1 Dec 2020 07:00:39 -0800 (PST)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2F6D13F575;
+ Tue,  1 Dec 2020 07:00:41 -0800 (PST)
 From: Alexandru Elisei <alexandru.elisei@arm.com>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  maz@kernel.org, james.morse@arm.com, julien.thierry.kdev@gmail.com,
  suzuki.poulose@arm.com
-Subject: [PATCH 0/5] KVM: arm64: Miscellaneous improvements
-Date: Tue,  1 Dec 2020 15:01:52 +0000
-Message-Id: <20201201150157.223625-1-alexandru.elisei@arm.com>
+Subject: [PATCH 1/5] KVM: Documentation: Add arm64 KVM_RUN error codes
+Date: Tue,  1 Dec 2020 15:01:53 +0000
+Message-Id: <20201201150157.223625-2-alexandru.elisei@arm.com>
 X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20201201150157.223625-1-alexandru.elisei@arm.com>
+References: <20201201150157.223625-1-alexandru.elisei@arm.com>
 MIME-Version: 1.0
+Cc: Paolo Bonzini <pbonzini@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -62,55 +64,45 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The documentation update in the first patch was suggested by Marc [1]. When
-I was going through the code to track down all the places error codes were
-coming from I noticed a few things that in my opinion could be improved.
-The following patches aim to do just that. I'm fine dropping them if the
-churn looks unjustified.
+The API documentation states that general error codes are not detailed, but
+errors with specific meanings are. On arm64, KVM_RUN can return error
+numbers with a different meaning than what is described by POSIX or the C99
+standard (as taken from man 3 errno).
 
-Tested the Documentation changes by building pdfdocs, didn't notice any
-warnings regarding api.rst.
+Absent from the newly documented error codes is ERANGE which can be
+returned when making a change to the EL2 stage 1 tables if the address is
+larger than the largest supported input address. Assuming no bugs in the
+implementation, that is not possible because the input addresses which are
+mapped are the result of applying the macro kern_hyp_va() on kernel virtual
+addresses.
 
-Tested the other patches on a rockpro64 on the little cores. I ran
-kvm-unit-tests with qemu and kvmtool. I also ran a Linux guest with qemu
-and ran perf:
+CC: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
+---
+ Documentation/virt/kvm/api.rst | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-$ perf record -a -- iperf3 -c 127.0.0.1 -t 60
-
-I checked that interrupts were firing and nothing looked out of the
-ordinary. I used qemu because qemu VCPUs do initialization concurrently
-from their own thread, not from the main thread like kvmtool.
-
-To check that kvm_timer_enable() is never reached if the VGIC is not
-initialized, I hacked kvmtool to remove the ioctl
-KVM_DEV_ARM_VGIC_GRP_CTRL(KVM_DEV_ARM_VGIC_CTRL_INIT) from gic__init_gic().
-When trying to run a guest, I got the following error message:
-
-KVM_RUN failed: Device or resource busy
-
-which is consistent with the EBUSY return code from
-vgic_v3_map_resources(). Double checked that that's where the code is
-coming from by adding a pr_info statement to
-kvm_arch_vcpu_first_run_init().
-
-[1] https://www.spinics.net/lists/arm-kernel/msg858024.html
-
-Alexandru Elisei (5):
-  KVM: Documentation: Add arm64 KVM_RUN error codes
-  KVM: arm64: arch_timer: Remove VGIC initialization check
-  KVM: arm64: Move double-checked lock to kvm_vgic_map_resources()
-  KVM: arm64: Update comment in kvm_vgic_map_resources()
-  KVM: arm64: Remove redundant call to kvm_pmu_vcpu_reset()
-
- Documentation/virt/kvm/api.rst  | 9 +++++++--
- arch/arm64/kvm/arch_timer.c     | 3 ---
- arch/arm64/kvm/arm.c            | 8 +++-----
- arch/arm64/kvm/pmu-emul.c       | 2 --
- arch/arm64/kvm/vgic/vgic-init.c | 9 ++++++++-
- arch/arm64/kvm/vgic/vgic-v2.c   | 3 ---
- arch/arm64/kvm/vgic/vgic-v3.c   | 3 ---
- 7 files changed, 18 insertions(+), 19 deletions(-)
-
+diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
+index 36d5f1f3c6dd..090a2331b1f2 100644
+--- a/Documentation/virt/kvm/api.rst
++++ b/Documentation/virt/kvm/api.rst
+@@ -380,9 +380,14 @@ This ioctl is obsolete and has been removed.
+ 
+ Errors:
+ 
+-  =====      =============================
++  =======    ==============================================================
+   EINTR      an unmasked signal is pending
+-  =====      =============================
++  ENOEXEC    the vcpu hasn't been initialized or the guest tried to execute
++             instructions from device memory (arm64)
++  ENOSYS     data abort outside memslots with no syndrome info and
++             KVM_CAP_ARM_NISV_TO_USER not enabled (arm64)
++  EPERM      SVE feature set but not finalized (arm64)
++  =======    ==============================================================
+ 
+ This ioctl is used to run a guest virtual cpu.  While there are no
+ explicit parameters, there is an implicit parameter block that can be
 -- 
 2.29.2
 
