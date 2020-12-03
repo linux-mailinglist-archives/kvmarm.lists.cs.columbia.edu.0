@@ -2,70 +2,86 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 116DF2CD919
-	for <lists+kvmarm@lfdr.de>; Thu,  3 Dec 2020 15:29:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 147542CD91A
+	for <lists+kvmarm@lfdr.de>; Thu,  3 Dec 2020 15:29:11 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9B9544B1FE;
-	Thu,  3 Dec 2020 09:29:08 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BD6F14B209;
+	Thu,  3 Dec 2020 09:29:10 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.5
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.5 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=no
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JetP9YRoEIXJ; Thu,  3 Dec 2020 09:29:08 -0500 (EST)
+	with ESMTP id k-EhhtMksqjL; Thu,  3 Dec 2020 09:29:08 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6FC314B1F2;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 89B144B200;
 	Thu,  3 Dec 2020 09:29:06 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C1CE34B0DE
- for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Dec 2020 07:33:03 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 12A1A4B15F
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Dec 2020 07:58:13 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id h-RlgAxXfNzI for <kvmarm@lists.cs.columbia.edu>;
- Thu,  3 Dec 2020 07:33:01 -0500 (EST)
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A1E684B0DD
- for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Dec 2020 07:33:00 -0500 (EST)
-Received: from DGGEMM405-HUB.china.huawei.com (unknown [172.30.72.57])
- by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4CmwG73DgxzQnJc;
- Thu,  3 Dec 2020 20:32:31 +0800 (CST)
-Received: from dggema765-chm.china.huawei.com (10.1.198.207) by
- DGGEMM405-HUB.china.huawei.com (10.3.20.213) with Microsoft SMTP Server (TLS)
- id 14.3.487.0; Thu, 3 Dec 2020 20:32:55 +0800
-Received: from [10.174.185.137] (10.174.185.137) by
- dggema765-chm.china.huawei.com (10.1.198.207) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.1913.5; Thu, 3 Dec 2020 20:32:54 +0800
-Subject: Re: [PATCH v13 05/15] iommu/smmuv3: Get prepared for nested stage
- support
-To: Eric Auger <eric.auger@redhat.com>, <eric.auger.pro@gmail.com>,
- <iommu@lists.linux-foundation.org>, <linux-kernel@vger.kernel.org>,
- <kvm@vger.kernel.org>, <kvmarm@lists.cs.columbia.edu>, <will@kernel.org>,
- <joro@8bytes.org>, <maz@kernel.org>, <robin.murphy@arm.com>,
- <alex.williamson@redhat.com>
-References: <20201118112151.25412-1-eric.auger@redhat.com>
- <20201118112151.25412-6-eric.auger@redhat.com>
-From: Kunkun Jiang <jiangkunkun@huawei.com>
-Message-ID: <a40b90bd-6756-c8cc-b455-c093d16d35f5@huawei.com>
-Date: Thu, 3 Dec 2020 20:32:42 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.0
+ with ESMTP id KZh7Tscvdl2k for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  3 Dec 2020 07:58:10 -0500 (EST)
+Received: from mail-oo1-f67.google.com (mail-oo1-f67.google.com
+ [209.85.161.67])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C8EA54B14E
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Dec 2020 07:58:10 -0500 (EST)
+Received: by mail-oo1-f67.google.com with SMTP id l20so481624oot.3
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 03 Dec 2020 04:58:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=FQFn841jHQ6lImpZMqjzWkJv/1YnlMG17mo2m57f2EU=;
+ b=T9bUaRlYDhvt4We2MKYu+1Wnxr1YWl9KM4nvJZx3ly7NyqjHFQjguBOJn6VKD1x/68
+ NBLwe53SCOLiCwFAdNL+tl9bBA6uocuY19aQlJvnTh8bpSwd4AVUJg94OqANAOJbkcVY
+ U4S6OaBE1JPMrn66VJ+KSDextlyLtWoHoq0gI3LV9+WIRvDUOeSPt3RYpy/pU4+1xfQG
+ u8YjGkMFs1RgNuqtTvPX8so+B6fA1oClhX8AO4sOcxb1UhYBkAdUktfG00uB/wSgWStN
+ XcpDYbAfdMB+HmyHBF8535eyr/0iHjq6jXNc+wL3FcDWawEBXF5Mpg8CKmvSlQOgIYjb
+ ESCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=FQFn841jHQ6lImpZMqjzWkJv/1YnlMG17mo2m57f2EU=;
+ b=Jjdl80CDH4DwRl0Z7j1ts8HGzcfpqfdyrMmyqxVIr7EPSSV3qYUesoYwcQc59q33/9
+ eQ/S21yXzx0Y9n3s/8tEUUhiYDBH5rDfEbO/UMeIGfTzgTnU9QheWdqi7GwXmrSd5gXO
+ rMlHj3q5rLm9ltMZAZHb7o9XBhHmBv/tDIU0OiDRVzhpZCE3OAq6xsObftoA/nmLYKEr
+ Zt5fWnj8KEoRjMtmCozBQ9DYPtxuyhbMSrgFl+HTmhBaK+uIPhpFyAADhT3sIxPfB7Eq
+ W85bjOnh6HkNbeOpz5ePmN8trtqcdNWb28+JV60tQr7x38OERrGjPtpdjIHJSxoyjW0T
+ BqkQ==
+X-Gm-Message-State: AOAM533rXpcfZwMZ/BonLT/Bm3ZBzgtq9M1gElTSg4Ytp8vxJ+4d0rM+
+ Q98oMjcHVlOaHhGKO+B6OuOEnbbe/H4KMIb0XzDjzg==
+X-Google-Smtp-Source: ABdhPJx9rBwzQljP09U15LlUpBM5Vd+Srs9avnElfeIp4Q6luog74c9jiIiXywhNuy4oKluSHHO01rKuaARLC3715c0=
+X-Received: by 2002:a4a:9e02:: with SMTP id t2mr1991529ook.42.1607000289727;
+ Thu, 03 Dec 2020 04:58:09 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20201118112151.25412-6-eric.auger@redhat.com>
-Content-Language: en-US
-X-Originating-IP: [10.174.185.137]
-X-ClientProxiedBy: dggeme706-chm.china.huawei.com (10.1.199.102) To
- dggema765-chm.china.huawei.com (10.1.198.207)
-X-CFilter-Loop: Reflected
+References: <20201117181607.1761516-1-qperret@google.com>
+ <20201117181607.1761516-17-qperret@google.com>
+In-Reply-To: <20201117181607.1761516-17-qperret@google.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Thu, 3 Dec 2020 12:57:33 +0000
+Message-ID: <CA+EHjTyJnZ8e=AN7H_k+oZb0VTWAgMicMY8Rqe2Di_3A87hm0A@mail.gmail.com>
+Subject: Re: [RFC PATCH 16/27] KVM: arm64: Prepare Hyp memory protection
+To: Quentin Perret <qperret@google.com>
 X-Mailman-Approved-At: Thu, 03 Dec 2020 09:29:05 -0500
-Cc: jean-philippe@linaro.org, jacob.jun.pan@linux.intel.com,
- nicoleotsuka@gmail.com, vivek.gautam@arm.com, yi.l.liu@intel.com,
- zhangfei.gao@linaro.org
+Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE"
+ <devicetree@vger.kernel.org>, kernel-team@android.com,
+ Frank Rowand <frowand.list@gmail.com>, Android KVM <android-kvm@google.com>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ open list <linux-kernel@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ "moderated list:ARM64 PORT \(AARCH64 ARCHITECTURE\)"
+ <linux-arm-kernel@lists.infradead.org>, Marc Zyngier <maz@kernel.org>,
+ Will Deacon <will@kernel.org>,
+ "open list:KERNEL VIRTUAL MACHINE FOR ARM64 \(KVM/arm64\)"
+ <kvmarm@lists.cs.columbia.edu>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -77,464 +93,943 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============8747211234052994714=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
---===============8747211234052994714==
-Content-Type: multipart/alternative;
-	boundary="------------2E2FC73B722F3D2CE7CFEA1A"
-Content-Language: en-US
+Hi Quentin,
 
---------------2E2FC73B722F3D2CE7CFEA1A
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-
-Hi Eric,
-
-On 2020/11/18 19:21, Eric Auger wrote:
-> When nested stage translation is setup, both s1_cfg and
-> s2_cfg are set.
+On Tue, Nov 17, 2020 at 6:17 PM 'Quentin Perret' via kernel-team
+<kernel-team@android.com> wrote:
 >
-> We introduce a new smmu domain abort field that will be set
-> upon guest stage1 configuration passing.
+> When memory protection is enabled, the Hyp code needs the ability to
+> create and manage its own page-table. To do so, introduce a new set of
+> hypercalls to initialize Hyp memory protection.
 >
-> arm_smmu_write_strtab_ent() is modified to write both stage
-> fields in the STE and deal with the abort field.
+> During the init hcall, the hypervisor runs with the host-provided
+> page-table and uses the trivial early page allocator to create its own
+> set of page-tables, using a memory pool that was donated by the host.
+> Specifically, the hypervisor creates its own mappings for __hyp_text,
+> the Hyp memory pool, the __hyp_bss, the portion of hyp_vmemmap
+> corresponding to the Hyp pool, among other things. It then jumps back in
+> the idmap page, switches to use the newly-created pgd (instead of the
+> temporary one provided by the host) and then installs the full-fledged
+> buddy allocator which will then be the only one in used from then on.
 >
-> In nested mode, only stage 2 is "finalized" as the host does
-> not own/configure the stage 1 context descriptor; guest does.
+> Note that for the sake of symplifying the review, this only introduces
+> the code doing this operation, without actually being called by anyhing
+> yet. This will be done in a subsequent patch, which will introduce the
+> necessary host kernel changes.
 >
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Credits to Will for __kvm_init_switch_pgd.
 >
+> Co-authored-by: Will Deacon <will@kernel.org>
+> Signed-off-by: Quentin Perret <qperret@google.com>
 > ---
-> v10 -> v11:
-> - Fix an issue reported by Shameer when switching from with vSMMU
->    to without vSMMU. Despite the spec does not seem to mention it
->    seems to be needed to reset the 2 high 64b when switching from
->    S1+S2 cfg to S1 only. Especially dst[3] needs to be reset (S2TTB).
->    On some implementations, if the S2TTB is not reset, this causes
->    a C_BAD_STE error
-> ---
->   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 64 +++++++++++++++++----
->   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |  2 +
->   2 files changed, 56 insertions(+), 10 deletions(-)
+>  arch/arm64/include/asm/kvm_asm.h         |   6 +-
+>  arch/arm64/include/asm/kvm_host.h        |   8 +
+>  arch/arm64/include/asm/kvm_hyp.h         |   8 +
+>  arch/arm64/kernel/cpufeature.c           |   2 +-
+>  arch/arm64/kernel/image-vars.h           |  19 +++
+>  arch/arm64/kvm/hyp/Makefile              |   2 +-
+>  arch/arm64/kvm/hyp/include/nvhe/memory.h |   6 +
+>  arch/arm64/kvm/hyp/include/nvhe/mm.h     |  79 +++++++++
+>  arch/arm64/kvm/hyp/nvhe/Makefile         |   4 +-
+>  arch/arm64/kvm/hyp/nvhe/hyp-init.S       |  30 ++++
+>  arch/arm64/kvm/hyp/nvhe/hyp-main.c       |  44 +++++
+>  arch/arm64/kvm/hyp/nvhe/mm.c             | 175 ++++++++++++++++++++
+>  arch/arm64/kvm/hyp/nvhe/psci-relay.c     |   2 -
+>  arch/arm64/kvm/hyp/nvhe/setup.c          | 196 +++++++++++++++++++++++
+>  arch/arm64/kvm/hyp/reserved_mem.c        |  75 +++++++++
+>  arch/arm64/kvm/mmu.c                     |   2 +-
+>  arch/arm64/mm/init.c                     |   3 +
+>  17 files changed, 653 insertions(+), 8 deletions(-)
+>  create mode 100644 arch/arm64/kvm/hyp/include/nvhe/mm.h
+>  create mode 100644 arch/arm64/kvm/hyp/nvhe/mm.c
+>  create mode 100644 arch/arm64/kvm/hyp/nvhe/setup.c
+>  create mode 100644 arch/arm64/kvm/hyp/reserved_mem.c
 >
-> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> index 18ac5af1b284..412ea1bafa50 100644
-> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> @@ -1181,8 +1181,10 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
->   	 * three cases at the moment:
-Now, it should be *five cases*.
->   	 *
->   	 * 1. Invalid (all zero) -> bypass/fault (init)
-> -	 * 2. Bypass/fault -> translation/bypass (attach)
-> -	 * 3. Translation/bypass -> bypass/fault (detach)
-> +	 * 2. Bypass/fault -> single stage translation/bypass (attach)
-> +	 * 3. Single or nested stage Translation/bypass -> bypass/fault (detach)
-> +	 * 4. S2 -> S1 + S2 (attach_pasid_table)
-
-I was testing this series on one of our hardware board with SMMUv3. And 
-I found while trying to /"//attach_pasid_table//"/,
-
-the sequence of STE (host) config(bit[3:1]) is /"S2->abort->S1 + S2"/. 
-Because the maintenance is /"Write everything apart///
-
-/from dword 0, sync, write dword 0, sync"/ when we update the STE 
-(guest). Dose the sequence meet your expectation?
-
-> +	 * 5. S1 + S2 -> S2 (detach_pasid_table)
->   	 *
->   	 * Given that we can't update the STE atomically and the SMMU
->   	 * doesn't read the thing in a defined order, that leaves us
-> @@ -1193,7 +1195,8 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
->   	 * 3. Update Config, sync
->   	 */
->   	u64 val = le64_to_cpu(dst[0]);
-> -	bool ste_live = false;
-> +	bool s1_live = false, s2_live = false, ste_live;
-> +	bool abort, nested = false, translate = false;
->   	struct arm_smmu_device *smmu = NULL;
->   	struct arm_smmu_s1_cfg *s1_cfg;
->   	struct arm_smmu_s2_cfg *s2_cfg;
-> @@ -1233,6 +1236,8 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
->   		default:
->   			break;
->   		}
-> +		nested = s1_cfg->set && s2_cfg->set;
-> +		translate = s1_cfg->set || s2_cfg->set;
->   	}
->   
->   	if (val & STRTAB_STE_0_V) {
-> @@ -1240,23 +1245,36 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
->   		case STRTAB_STE_0_CFG_BYPASS:
->   			break;
->   		case STRTAB_STE_0_CFG_S1_TRANS:
-> +			s1_live = true;
-> +			break;
->   		case STRTAB_STE_0_CFG_S2_TRANS:
-> -			ste_live = true;
-> +			s2_live = true;
-> +			break;
-> +		case STRTAB_STE_0_CFG_NESTED:
-> +			s1_live = true;
-> +			s2_live = true;
->   			break;
->   		case STRTAB_STE_0_CFG_ABORT:
-> -			BUG_ON(!disable_bypass);
->   			break;
->   		default:
->   			BUG(); /* STE corruption */
->   		}
->   	}
->   
-> +	ste_live = s1_live || s2_live;
+> diff --git a/arch/arm64/include/asm/kvm_asm.h b/arch/arm64/include/asm/kvm_asm.h
+> index e4934f5e4234..9266b17f8ba9 100644
+> --- a/arch/arm64/include/asm/kvm_asm.h
+> +++ b/arch/arm64/include/asm/kvm_asm.h
+> @@ -57,6 +57,10 @@
+>  #define __KVM_HOST_SMCCC_FUNC___kvm_get_mdcr_el2               12
+>  #define __KVM_HOST_SMCCC_FUNC___vgic_v3_save_aprs              13
+>  #define __KVM_HOST_SMCCC_FUNC___vgic_v3_restore_aprs           14
+> +#define __KVM_HOST_SMCCC_FUNC___kvm_hyp_protect                        15
+> +#define __KVM_HOST_SMCCC_FUNC___hyp_create_mappings            16
+> +#define __KVM_HOST_SMCCC_FUNC___hyp_create_private_mapping     17
+> +#define __KVM_HOST_SMCCC_FUNC___hyp_cpu_set_vector             18
+>
+>  #ifndef __ASSEMBLY__
+>
+> @@ -171,7 +175,7 @@ struct kvm_vcpu;
+>  struct kvm_s2_mmu;
+>
+>  DECLARE_KVM_NVHE_SYM(__kvm_hyp_init);
+> -DECLARE_KVM_NVHE_SYM(__kvm_hyp_host_vector);
+> +DECLARE_KVM_HYP_SYM(__kvm_hyp_host_vector);
+>  DECLARE_KVM_HYP_SYM(__kvm_hyp_vector);
+>  #define __kvm_hyp_init                 CHOOSE_NVHE_SYM(__kvm_hyp_init)
+>  #define __kvm_hyp_host_vector          CHOOSE_NVHE_SYM(__kvm_hyp_host_vector)
+> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+> index 7a5d5f4b3351..ee8bb8021637 100644
+> --- a/arch/arm64/include/asm/kvm_host.h
+> +++ b/arch/arm64/include/asm/kvm_host.h
+> @@ -742,4 +742,12 @@ bool kvm_arm_vcpu_is_finalized(struct kvm_vcpu *vcpu);
+>  #define kvm_vcpu_has_pmu(vcpu)                                 \
+>         (test_bit(KVM_ARM_VCPU_PMU_V3, (vcpu)->arch.features))
+>
+> +#ifdef CONFIG_KVM
+> +extern phys_addr_t hyp_mem_base;
+> +extern phys_addr_t hyp_mem_size;
+> +void __init reserve_kvm_hyp(void);
+> +#else
+> +static inline void reserve_kvm_hyp(void) { }
+> +#endif
 > +
->   	/* Nuke the existing STE_0 value, as we're going to rewrite it */
->   	val = STRTAB_STE_0_V;
->   
->   	/* Bypass/fault */
-> -	if (!smmu_domain || !(s1_cfg->set || s2_cfg->set)) {
-> -		if (!smmu_domain && disable_bypass)
+>  #endif /* __ARM64_KVM_HOST_H__ */
+> diff --git a/arch/arm64/include/asm/kvm_hyp.h b/arch/arm64/include/asm/kvm_hyp.h
+> index 95a2bbbcc7e1..dbd2ef86afa9 100644
+> --- a/arch/arm64/include/asm/kvm_hyp.h
+> +++ b/arch/arm64/include/asm/kvm_hyp.h
+> @@ -105,5 +105,13 @@ void __noreturn hyp_panic(void);
+>  void __noreturn __hyp_do_panic(bool restore_host, u64 spsr, u64 elr, u64 par);
+>  #endif
+>
+> +#ifdef __KVM_NVHE_HYPERVISOR__
+> +void __kvm_init_switch_pgd(phys_addr_t phys, unsigned long size,
+> +                          phys_addr_t pgd, void *sp, void *cont_fn);
+> +int __kvm_hyp_protect(phys_addr_t phys, unsigned long size,
+> +                     unsigned long nr_cpus, unsigned long *per_cpu_base);
+> +void __noreturn __host_enter(struct kvm_cpu_context *host_ctxt);
+> +#endif
 > +
-> +	if (!smmu_domain)
-> +		abort = disable_bypass;
-> +	else
-> +		abort = smmu_domain->abort;
+>  #endif /* __ARM64_KVM_HYP_H__ */
+>
+> diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
+> index 3bc86d1423f8..010458f6d799 100644
+> --- a/arch/arm64/kernel/cpufeature.c
+> +++ b/arch/arm64/kernel/cpufeature.c
+> @@ -1722,7 +1722,7 @@ static void cpu_enable_mte(struct arm64_cpu_capabilities const *cap)
+>  #endif /* CONFIG_ARM64_MTE */
+>
+>  #ifdef CONFIG_KVM
+> -static bool enable_protected_kvm;
+> +bool enable_protected_kvm;
+>
+>  static bool has_protected_kvm(const struct arm64_cpu_capabilities *entry, int __unused)
+>  {
+> diff --git a/arch/arm64/kernel/image-vars.h b/arch/arm64/kernel/image-vars.h
+> index c35d768672eb..f2d43e6cd86d 100644
+> --- a/arch/arm64/kernel/image-vars.h
+> +++ b/arch/arm64/kernel/image-vars.h
+> @@ -118,6 +118,25 @@ __kvm_nvhe___memset                        = __kvm_nvhe___pi_memset;
+>
+>  _kvm_nvhe___flush_dcache_area          = __kvm_nvhe___pi___flush_dcache_area;
+>
+> +/* Hypevisor VA size */
+> +KVM_NVHE_ALIAS(hyp_va_bits);
 > +
-> +	if (abort || !translate) {
-> +		if (abort)
->   			val |= FIELD_PREP(STRTAB_STE_0_CFG, STRTAB_STE_0_CFG_ABORT);
->   		else
->   			val |= FIELD_PREP(STRTAB_STE_0_CFG, STRTAB_STE_0_CFG_BYPASS);
-> @@ -1274,8 +1292,16 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
->   		return;
->   	}
->   
-> +	BUG_ON(ste_live && !nested);
+> +/* Kernel memory sections */
+> +KVM_NVHE_ALIAS(__start_rodata);
+> +KVM_NVHE_ALIAS(__end_rodata);
+> +KVM_NVHE_ALIAS(__bss_start);
+> +KVM_NVHE_ALIAS(__bss_stop);
 > +
-> +	if (ste_live) {
-> +		/* First invalidate the live STE */
-> +		dst[0] = cpu_to_le64(STRTAB_STE_0_CFG_ABORT);
-> +		arm_smmu_sync_ste_for_sid(smmu, sid);
-> +	}
+> +/* Hyp memory sections */
+> +KVM_NVHE_ALIAS(__hyp_idmap_text_start);
+> +KVM_NVHE_ALIAS(__hyp_idmap_text_end);
+> +KVM_NVHE_ALIAS(__hyp_text_start);
+> +KVM_NVHE_ALIAS(__hyp_text_end);
+> +KVM_NVHE_ALIAS(__hyp_data_ro_after_init_start);
+> +KVM_NVHE_ALIAS(__hyp_data_ro_after_init_end);
+> +KVM_NVHE_ALIAS(__hyp_bss_start);
+> +KVM_NVHE_ALIAS(__hyp_bss_end);
 > +
->   	if (s1_cfg->set) {
-> -		BUG_ON(ste_live);
-> +		BUG_ON(s1_live);
->   		dst[1] = cpu_to_le64(
->   			 FIELD_PREP(STRTAB_STE_1_S1DSS, STRTAB_STE_1_S1DSS_SSID0) |
->   			 FIELD_PREP(STRTAB_STE_1_S1CIR, STRTAB_STE_1_S1C_CACHE_WBRA) |
-> @@ -1294,7 +1320,14 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
->   	}
->   
->   	if (s2_cfg->set) {
-> -		BUG_ON(ste_live);
-> +		u64 vttbr = s2_cfg->vttbr & STRTAB_STE_3_S2TTB_MASK;
+>  #endif /* CONFIG_KVM */
+>
+>  #endif /* __ARM64_KERNEL_IMAGE_VARS_H */
+> diff --git a/arch/arm64/kvm/hyp/Makefile b/arch/arm64/kvm/hyp/Makefile
+> index 687598e41b21..b726332eec49 100644
+> --- a/arch/arm64/kvm/hyp/Makefile
+> +++ b/arch/arm64/kvm/hyp/Makefile
+> @@ -10,4 +10,4 @@ subdir-ccflags-y := -I$(incdir)                               \
+>                     -DDISABLE_BRANCH_PROFILING          \
+>                     $(DISABLE_STACKLEAK_PLUGIN)
+>
+> -obj-$(CONFIG_KVM) += vhe/ nvhe/ pgtable.o
+> +obj-$(CONFIG_KVM) += vhe/ nvhe/ pgtable.o reserved_mem.o
+> diff --git a/arch/arm64/kvm/hyp/include/nvhe/memory.h b/arch/arm64/kvm/hyp/include/nvhe/memory.h
+> index ed47674bc988..c8af6fe87bfb 100644
+> --- a/arch/arm64/kvm/hyp/include/nvhe/memory.h
+> +++ b/arch/arm64/kvm/hyp/include/nvhe/memory.h
+> @@ -6,6 +6,12 @@
+>
+>  #include <linux/types.h>
+>
+> +#define HYP_MEMBLOCK_REGIONS 128
+> +struct hyp_memblock_region {
+> +       phys_addr_t start;
+> +       phys_addr_t end;
+> +};
 > +
-> +		if (s2_live) {
-> +			u64 s2ttb = le64_to_cpu(dst[3] & STRTAB_STE_3_S2TTB_MASK);
+>  struct hyp_pool;
+>  struct hyp_page {
+>         unsigned int refcount;
+> diff --git a/arch/arm64/kvm/hyp/include/nvhe/mm.h b/arch/arm64/kvm/hyp/include/nvhe/mm.h
+> new file mode 100644
+> index 000000000000..5a3ad6f4e5bc
+> --- /dev/null
+> +++ b/arch/arm64/kvm/hyp/include/nvhe/mm.h
+> @@ -0,0 +1,79 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +#ifndef __KVM_HYP_MM_H
+> +#define __KVM_HYP_MM_H
 > +
-> +			BUG_ON(s2ttb != vttbr);
-> +		}
+> +#include <asm/kvm_pgtable.h>
+> +#include <asm/spectre.h>
+> +#include <linux/types.h>
 > +
->   		dst[2] = cpu_to_le64(
->   			 FIELD_PREP(STRTAB_STE_2_S2VMID, s2_cfg->vmid) |
->   			 FIELD_PREP(STRTAB_STE_2_VTCR, s2_cfg->vtcr) |
-> @@ -1304,9 +1337,12 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
->   			 STRTAB_STE_2_S2PTW | STRTAB_STE_2_S2AA64 |
->   			 STRTAB_STE_2_S2R);
->   
-> -		dst[3] = cpu_to_le64(s2_cfg->vttbr & STRTAB_STE_3_S2TTB_MASK);
-> +		dst[3] = cpu_to_le64(vttbr);
->   
->   		val |= FIELD_PREP(STRTAB_STE_0_CFG, STRTAB_STE_0_CFG_S2_TRANS);
-> +	} else {
-> +		dst[2] = 0;
-> +		dst[3] = 0;
->   	}
->   
->   	if (master->ats_enabled)
-> @@ -1982,6 +2018,14 @@ static int arm_smmu_domain_finalise(struct iommu_domain *domain,
->   		return 0;
->   	}
->   
-> +	if (smmu_domain->stage == ARM_SMMU_DOMAIN_NESTED &&
-> +	    (!(smmu->features & ARM_SMMU_FEAT_TRANS_S1) ||
-> +	     !(smmu->features & ARM_SMMU_FEAT_TRANS_S2))) {
-> +		dev_info(smmu_domain->smmu->dev,
-> +			 "does not implement two stages\n");
-> +		return -EINVAL;
-> +	}
+> +#include <nvhe/memory.h>
+> +#include <nvhe/spinlock.h>
 > +
->   	/* Restrict the stage to what we can actually support */
->   	if (!(smmu->features & ARM_SMMU_FEAT_TRANS_S1))
->   		smmu_domain->stage = ARM_SMMU_DOMAIN_S2;
-> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-> index 07f59252dd21..269779dee8d1 100644
-> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-> @@ -206,6 +206,7 @@
->   #define STRTAB_STE_0_CFG_BYPASS		4
->   #define STRTAB_STE_0_CFG_S1_TRANS	5
->   #define STRTAB_STE_0_CFG_S2_TRANS	6
-> +#define STRTAB_STE_0_CFG_NESTED		7
->   
->   #define STRTAB_STE_0_S1FMT		GENMASK_ULL(5, 4)
->   #define STRTAB_STE_0_S1FMT_LINEAR	0
-> @@ -682,6 +683,7 @@ struct arm_smmu_domain {
->   	enum arm_smmu_domain_stage	stage;
->   	struct arm_smmu_s1_cfg	s1_cfg;
->   	struct arm_smmu_s2_cfg	s2_cfg;
-> +	bool				abort;
->   
->   	struct iommu_domain		domain;
+> +extern struct hyp_memblock_region kvm_nvhe_sym(hyp_memory)[];
+> +extern int kvm_nvhe_sym(hyp_memblock_nr);
+> +extern struct kvm_pgtable hyp_pgtable;
 
-Thanks,
+nit: I found the name of this struct to be confusing (hyp_pgtable),
+since there's also
+arch/arm64/kvm/mmu.c:25:static struct kvm_pgtable *hyp_pgtable;
+which has the same name, but is a pointer to the hyp page table before
+being swapped out in favor of this one.
 
-Kunkun Jiang
+> +extern hyp_spinlock_t __hyp_pgd_lock;
+> +extern struct hyp_pool hpool;
+> +extern u64 __io_map_base;
+> +extern u32 hyp_va_bits;
+> +
+> +int hyp_create_idmap(void);
+> +int hyp_map_vectors(void);
+> +int hyp_back_vmemmap(phys_addr_t phys, unsigned long size, phys_addr_t back);
+> +int hyp_cpu_set_vector(enum arm64_hyp_spectre_vector slot);
+> +int hyp_create_mappings(void *from, void *to, enum kvm_pgtable_prot prot);
+> +int __hyp_create_mappings(unsigned long start, unsigned long size,
+> +                         unsigned long phys, unsigned long prot);
+> +unsigned long __hyp_create_private_mapping(phys_addr_t phys, size_t size,
+> +                                          unsigned long prot);
+> +
 
+nit: I also thought that the hyp_create_mappings function names are a
+bit confusing, since there's the create_hyp_mappings functions which
+use the aforementioned *hyp_pgtable.
 
---------------2E2FC73B722F3D2CE7CFEA1A
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+> +static inline void hyp_vmemmap_range(phys_addr_t phys, unsigned long size,
+> +                                    unsigned long *start, unsigned long *end)
+> +{
+> +       unsigned long nr_pages = size >> PAGE_SHIFT;
+> +       struct hyp_page *p = hyp_phys_to_page(phys);
+> +
+> +       *start = (unsigned long)p;
+> +       *end = *start + nr_pages * sizeof(struct hyp_page);
+> +       *start = ALIGN_DOWN(*start, PAGE_SIZE);
+> +       *end = ALIGN(*end, PAGE_SIZE);
+> +}
+> +
+> +static inline unsigned long __hyp_pgtable_max_pages(unsigned long nr_pages)
+> +{
+> +       unsigned long total = 0, i;
+> +
+> +       /* Provision the worst case scenario with 4 levels of page-table */
+> +       for (i = 0; i < 4; i++) {
+> +               nr_pages = DIV_ROUND_UP(nr_pages, PTRS_PER_PTE);
+> +               total += nr_pages;
+> +       }
+> +
+> +       return total;
+> +}
+> +
+> +static inline unsigned long hyp_s1_pgtable_size(void)
+> +{
+> +       struct hyp_memblock_region *reg;
+> +       unsigned long nr_pages, res = 0;
+> +       int i;
+> +
+> +       if (kvm_nvhe_sym(hyp_memblock_nr) <= 0)
+> +               return 0;
+> +
+> +       for (i = 0; i < kvm_nvhe_sym(hyp_memblock_nr); i++) {
+> +               reg = &kvm_nvhe_sym(hyp_memory)[i];
+> +               nr_pages = (reg->end - reg->start) >> PAGE_SHIFT;
+> +               nr_pages = __hyp_pgtable_max_pages(nr_pages);
+> +               res += nr_pages << PAGE_SHIFT;
+> +       }
+> +
+> +       /* Allow 1 GiB for private mappings */
+> +       nr_pages = (1 << 30) >> PAGE_SHIFT;
+> +       nr_pages = __hyp_pgtable_max_pages(nr_pages);
+> +       res += nr_pages << PAGE_SHIFT;
+> +
+> +       return res;
+> +}
+> +
+> +#endif /* __KVM_HYP_MM_H */
+> diff --git a/arch/arm64/kvm/hyp/nvhe/Makefile b/arch/arm64/kvm/hyp/nvhe/Makefile
+> index 72cfe53f106f..d7381a503182 100644
+> --- a/arch/arm64/kvm/hyp/nvhe/Makefile
+> +++ b/arch/arm64/kvm/hyp/nvhe/Makefile
+> @@ -11,9 +11,9 @@ lib-objs := $(addprefix ../../../lib/, $(lib-objs))
+>
+>  obj-y := timer-sr.o sysreg-sr.o debug-sr.o switch.o tlb.o hyp-init.o host.o \
+>          hyp-main.o hyp-smp.o psci-relay.o early_alloc.o stub.o page_alloc.o \
+> -        cache.o cpufeature.o
+> +        cache.o cpufeature.o setup.o mm.o
+>  obj-y += ../vgic-v3-sr.o ../aarch32.o ../vgic-v2-cpuif-proxy.o ../entry.o \
+> -        ../fpsimd.o ../hyp-entry.o ../exception.o
+> +        ../fpsimd.o ../hyp-entry.o ../exception.o ../pgtable.o
+>  obj-y += $(lib-objs)
+>
+>  ##
+> diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-init.S b/arch/arm64/kvm/hyp/nvhe/hyp-init.S
+> index 8f3602f320ac..e2d62297edfe 100644
+> --- a/arch/arm64/kvm/hyp/nvhe/hyp-init.S
+> +++ b/arch/arm64/kvm/hyp/nvhe/hyp-init.S
+> @@ -247,4 +247,34 @@ alternative_else_nop_endif
+>
+>  SYM_CODE_END(__kvm_handle_stub_hvc)
+>
+> +SYM_FUNC_START(__kvm_init_switch_pgd)
+> +       /* Turn the MMU off */
+> +       pre_disable_mmu_workaround
+> +       mrs     x2, sctlr_el2
+> +       bic     x3, x2, #SCTLR_ELx_M
+> +       msr     sctlr_el2, x3
+> +       isb
+> +
+> +       tlbi    alle2
+> +
+> +       /* Install the new pgtables */
+> +       ldr     x3, [x0, #NVHE_INIT_PGD_PA]
+> +       phys_to_ttbr x4, x3
+> +alternative_if ARM64_HAS_CNP
+> +       orr     x4, x4, #TTBR_CNP_BIT
+> +alternative_else_nop_endif
+> +       msr     ttbr0_el2, x4
+> +
+> +       /* Set the new stack pointer */
+> +       ldr     x0, [x0, #NVHE_INIT_STACK_HYP_VA]
+> +       mov     sp, x0
+> +
+> +       /* And turn the MMU back on! */
+> +       dsb     nsh
+> +       isb
+> +       msr     sctlr_el2, x2
+> +       isb
+> +       ret     x1
+> +SYM_FUNC_END(__kvm_init_switch_pgd)
+> +
 
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>Hi Eric,<br>
-    </p>
-    <div class="moz-cite-prefix">On 2020/11/18 19:21, Eric Auger wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:20201118112151.25412-6-eric.auger@redhat.com">
-      <pre class="moz-quote-pre" wrap="">When nested stage translation is setup, both s1_cfg and
-s2_cfg are set.
+Should the instruction cache be flushed here (ic iallu), to discard
+speculatively fetched instructions?
 
-We introduce a new smmu domain abort field that will be set
-upon guest stage1 configuration passing.
+>         .popsection
+> diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> index 933329699425..a0bfe0d26da6 100644
+> --- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> +++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+> @@ -6,12 +6,15 @@
+>
+>  #include <hyp/switch.h>
+>
+> +#include <asm/pgtable-types.h>
+>  #include <asm/kvm_asm.h>
+>  #include <asm/kvm_emulate.h>
+>  #include <asm/kvm_host.h>
+>  #include <asm/kvm_hyp.h>
+>  #include <asm/kvm_mmu.h>
+>
+> +#include <nvhe/mm.h>
+> +
+>  DEFINE_PER_CPU(struct kvm_nvhe_init_params, kvm_init_params);
+>
+>  #define cpu_reg(ctxt, r)       (ctxt)->regs.regs[r]
+> @@ -106,6 +109,43 @@ static void handle___vgic_v3_restore_aprs(struct kvm_cpu_context *host_ctxt)
+>         __vgic_v3_restore_aprs(kern_hyp_va(cpu_if));
+>  }
+>
+> +static void handle___kvm_hyp_protect(struct kvm_cpu_context *host_ctxt)
+> +{
+> +       DECLARE_REG(phys_addr_t, phys, host_ctxt, 1);
+> +       DECLARE_REG(unsigned long, size, host_ctxt, 2);
+> +       DECLARE_REG(unsigned long, nr_cpus, host_ctxt, 3);
+> +       DECLARE_REG(unsigned long *, per_cpu_base, host_ctxt, 4);
+> +
+> +       cpu_reg(host_ctxt, 1) = __kvm_hyp_protect(phys, size, nr_cpus,
+> +                                                 per_cpu_base);
+> +}
+> +
+> +static void handle___hyp_cpu_set_vector(struct kvm_cpu_context *host_ctxt)
+> +{
+> +       DECLARE_REG(enum arm64_hyp_spectre_vector, slot, host_ctxt, 1);
+> +
+> +       cpu_reg(host_ctxt, 1) = hyp_cpu_set_vector(slot);
+> +}
+> +
+> +static void handle___hyp_create_mappings(struct kvm_cpu_context *host_ctxt)
+> +{
+> +       DECLARE_REG(unsigned long, start, host_ctxt, 1);
+> +       DECLARE_REG(unsigned long, size, host_ctxt, 2);
+> +       DECLARE_REG(unsigned long, phys, host_ctxt, 3);
+> +       DECLARE_REG(unsigned long, prot, host_ctxt, 4);
+> +
+> +       cpu_reg(host_ctxt, 1) = __hyp_create_mappings(start, size, phys, prot);
+> +}
+> +
+> +static void handle___hyp_create_private_mapping(struct kvm_cpu_context *host_ctxt)
+> +{
+> +       DECLARE_REG(phys_addr_t, phys, host_ctxt, 1);
+> +       DECLARE_REG(size_t, size, host_ctxt, 2);
+> +       DECLARE_REG(unsigned long, prot, host_ctxt, 3);
+> +
+> +       cpu_reg(host_ctxt, 1) = __hyp_create_private_mapping(phys, size, prot);
+> +}
+> +
+>  typedef void (*hcall_t)(struct kvm_cpu_context *);
+>
+>  #define HANDLE_FUNC(x) [__KVM_HOST_SMCCC_FUNC_##x] = kimg_fn_ptr(handle_##x)
+> @@ -125,6 +165,10 @@ static const hcall_t *host_hcall[] = {
+>         HANDLE_FUNC(__kvm_get_mdcr_el2),
+>         HANDLE_FUNC(__vgic_v3_save_aprs),
+>         HANDLE_FUNC(__vgic_v3_restore_aprs),
+> +       HANDLE_FUNC(__kvm_hyp_protect),
+> +       HANDLE_FUNC(__hyp_cpu_set_vector),
+> +       HANDLE_FUNC(__hyp_create_mappings),
+> +       HANDLE_FUNC(__hyp_create_private_mapping),
+>  };
+>
+>  static void handle_host_hcall(struct kvm_cpu_context *host_ctxt)
+> diff --git a/arch/arm64/kvm/hyp/nvhe/mm.c b/arch/arm64/kvm/hyp/nvhe/mm.c
+> new file mode 100644
+> index 000000000000..cad5dae197c6
+> --- /dev/null
+> +++ b/arch/arm64/kvm/hyp/nvhe/mm.c
+> @@ -0,0 +1,175 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (C) 2020 Google LLC
+> + * Author: Quentin Perret <qperret@google.com>
+> + */
+> +
+> +#include <linux/kvm_host.h>
+> +#include <asm/kvm_hyp.h>
+> +#include <asm/kvm_mmu.h>
+> +#include <asm/kvm_pgtable.h>
+> +#include <asm/spectre.h>
+> +
+> +#include <nvhe/early_alloc.h>
+> +#include <nvhe/gfp.h>
+> +#include <nvhe/memory.h>
+> +#include <nvhe/mm.h>
+> +#include <nvhe/spinlock.h>
+> +
+> +struct kvm_pgtable hyp_pgtable;
+> +
+> +hyp_spinlock_t __hyp_pgd_lock;
+> +u64 __io_map_base;
+> +
+> +struct hyp_memblock_region hyp_memory[HYP_MEMBLOCK_REGIONS];
+> +int hyp_memblock_nr;
+> +
+> +int __hyp_create_mappings(unsigned long start, unsigned long size,
+> +                         unsigned long phys, unsigned long prot)
+> +{
+> +       int err;
+> +
+> +       hyp_spin_lock(&__hyp_pgd_lock);
+> +       err = kvm_pgtable_hyp_map(&hyp_pgtable, start, size, phys, prot);
+> +       hyp_spin_unlock(&__hyp_pgd_lock);
+> +
+> +       return err;
+> +}
+> +
+> +unsigned long __hyp_create_private_mapping(phys_addr_t phys, size_t size,
+> +                                          unsigned long prot)
+> +{
+> +       unsigned long addr;
+> +       int ret;
+> +
+> +       hyp_spin_lock(&__hyp_pgd_lock);
+> +
+> +       size = PAGE_ALIGN(size + offset_in_page(phys));
+> +       addr = __io_map_base;
+> +       __io_map_base += size;
+> +
+> +       /* Are we overflowing on the vmemmap ? */
+> +       if (__io_map_base > __hyp_vmemmap) {
+> +               __io_map_base -= size;
+> +               addr = 0;
+> +               goto out;
+> +       }
+> +
+> +       ret = kvm_pgtable_hyp_map(&hyp_pgtable, addr, size, phys, prot);
+> +       if (ret) {
+> +               addr = 0;
+> +               goto out;
+> +       }
+> +
+> +       addr = addr + offset_in_page(phys);
+> +out:
+> +       hyp_spin_unlock(&__hyp_pgd_lock);
+> +
+> +       return addr;
+> +}
+> +
+> +int hyp_create_mappings(void *from, void *to, enum kvm_pgtable_prot prot)
+> +{
+> +       unsigned long start = (unsigned long)from;
+> +       unsigned long end = (unsigned long)to;
+> +       unsigned long virt_addr;
+> +       phys_addr_t phys;
+> +
+> +       start = start & PAGE_MASK;
+> +       end = PAGE_ALIGN(end);
+> +
+> +       for (virt_addr = start; virt_addr < end; virt_addr += PAGE_SIZE) {
+> +               int err;
+> +
+> +               phys = hyp_virt_to_phys((void *)virt_addr);
+> +               err = __hyp_create_mappings(virt_addr, PAGE_SIZE, phys, prot);
+> +               if (err)
+> +                       return err;
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+> +int hyp_back_vmemmap(phys_addr_t phys, unsigned long size, phys_addr_t back)
+> +{
+> +       unsigned long start, end;
+> +
+> +       hyp_vmemmap_range(phys, size, &start, &end);
+> +
+> +       return __hyp_create_mappings(start, end - start, back, PAGE_HYP);
+> +}
+> +
+> +static void *__hyp_bp_vect_base;
+> +int hyp_cpu_set_vector(enum arm64_hyp_spectre_vector slot)
+> +{
+> +       void *vector;
+> +
+> +       switch (slot) {
+> +       case HYP_VECTOR_DIRECT: {
+> +               vector = hyp_symbol_addr(__kvm_hyp_vector);
+> +               break;
+> +       }
+> +       case HYP_VECTOR_SPECTRE_DIRECT: {
+> +               vector = hyp_symbol_addr(__bp_harden_hyp_vecs);
+> +               break;
+> +       }
+> +       case HYP_VECTOR_INDIRECT:
+> +       case HYP_VECTOR_SPECTRE_INDIRECT: {
+> +               vector = (void *)__hyp_bp_vect_base;
+> +               break;
+> +       }
+> +       default:
+> +               return -EINVAL;
+> +       }
+> +
+> +       vector = __kvm_vector_slot2addr(vector, slot);
+> +       *this_cpu_ptr(&kvm_hyp_vector) = (unsigned long)vector;
+> +
+> +       return 0;
+> +}
+> +
+> +int hyp_map_vectors(void)
+> +{
+> +       unsigned long bp_base;
+> +
+> +       if (!cpus_have_const_cap(ARM64_SPECTRE_V3A))
+> +               return 0;
+> +
+> +       bp_base = (unsigned long)hyp_symbol_addr(__bp_harden_hyp_vecs);
+> +       bp_base = __hyp_pa(bp_base);
+> +       bp_base = __hyp_create_private_mapping(bp_base, __BP_HARDEN_HYP_VECS_SZ,
+> +                                              PAGE_HYP_EXEC);
+> +       if (!bp_base)
+> +               return -1;
+> +
+> +       __hyp_bp_vect_base = (void *)bp_base;
+> +
+> +       return 0;
+> +}
+> +
+> +int hyp_create_idmap(void)
+> +{
+> +       unsigned long start, end;
+> +
+> +       start = (unsigned long)hyp_symbol_addr(__hyp_idmap_text_start);
+> +       start = hyp_virt_to_phys((void *)start);
+> +       start = ALIGN_DOWN(start, PAGE_SIZE);
+> +
+> +       end = (unsigned long)hyp_symbol_addr(__hyp_idmap_text_end);
+> +       end = hyp_virt_to_phys((void *)end);
+> +       end = ALIGN(end, PAGE_SIZE);
+> +
+> +       /*
+> +        * One half of the VA space is reserved to linearly map portions of
+> +        * memory -- see va_layout.c for more details. The other half of the VA
+> +        * space contains the trampoline page, and needs some care. Split that
+> +        * second half in two and find the quarter of VA space not conflicting
+> +        * with the idmap to place the IOs and the vmemmap. IOs use the lower
+> +        * half of the quarter and the vmemmap the upper half.
+> +        */
+> +       __io_map_base = start & BIT(hyp_va_bits - 2);
+> +       __io_map_base ^= BIT(hyp_va_bits - 2);
+> +       __hyp_vmemmap = __io_map_base | BIT(hyp_va_bits - 3);
+> +
+> +       return __hyp_create_mappings(start, end - start, start, PAGE_HYP_EXEC);
+> +}
+> diff --git a/arch/arm64/kvm/hyp/nvhe/psci-relay.c b/arch/arm64/kvm/hyp/nvhe/psci-relay.c
+> index dbe57ae84a0c..cfc6dac0f0ac 100644
+> --- a/arch/arm64/kvm/hyp/nvhe/psci-relay.c
+> +++ b/arch/arm64/kvm/hyp/nvhe/psci-relay.c
+> @@ -193,8 +193,6 @@ static int psci_cpu_on(u64 func_id, struct kvm_cpu_context *host_ctxt)
+>         return ret;
+>  }
+>
+> -void __noreturn __host_enter(struct kvm_cpu_context *host_ctxt);
+> -
+>  asmlinkage void __noreturn __kvm_hyp_psci_cpu_entry(void)
+>  {
+>         struct kvm_host_psci_state *cpu_state = this_cpu_ptr(&kvm_host_psci_state);
+> diff --git a/arch/arm64/kvm/hyp/nvhe/setup.c b/arch/arm64/kvm/hyp/nvhe/setup.c
+> new file mode 100644
+> index 000000000000..9679c97b875b
+> --- /dev/null
+> +++ b/arch/arm64/kvm/hyp/nvhe/setup.c
+> @@ -0,0 +1,196 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (C) 2020 Google LLC
+> + * Author: Quentin Perret <qperret@google.com>
+> + */
+> +
+> +#include <linux/kvm_host.h>
+> +#include <asm/kvm_hyp.h>
+> +#include <asm/kvm_mmu.h>
+> +#include <asm/kvm_pgtable.h>
+> +
+> +#include <nvhe/early_alloc.h>
+> +#include <nvhe/gfp.h>
+> +#include <nvhe/memory.h>
+> +#include <nvhe/mm.h>
+> +
+> +struct hyp_pool hpool;
+> +struct kvm_pgtable_mm_ops hyp_pgtable_mm_ops;
+> +unsigned long hyp_nr_cpus;
+> +
+> +#define hyp_percpu_size ((unsigned long)__per_cpu_end - \
+> +                        (unsigned long)__per_cpu_start)
+> +
+> +static void *stacks_base;
+> +static void *vmemmap_base;
+> +static void *hyp_pgt_base;
+> +
+> +static int divide_memory_pool(void *virt, unsigned long size)
+> +{
+> +       unsigned long vstart, vend, nr_pages;
+> +
+> +       hyp_early_alloc_init(virt, size);
+> +
+> +       stacks_base = hyp_early_alloc_contig(hyp_nr_cpus);
+> +       if (!stacks_base)
+> +               return -ENOMEM;
+> +
+> +       hyp_vmemmap_range(__hyp_pa(virt), size, &vstart, &vend);
+> +       nr_pages = (vend - vstart) >> PAGE_SHIFT;
+> +       vmemmap_base = hyp_early_alloc_contig(nr_pages);
+> +       if (!vmemmap_base)
+> +               return -ENOMEM;
+> +
+> +       nr_pages = hyp_s1_pgtable_size() >> PAGE_SHIFT;
+> +       hyp_pgt_base = hyp_early_alloc_contig(nr_pages);
+> +       if (!hyp_pgt_base)
+> +               return -ENOMEM;
+> +
+> +       return 0;
+> +}
+> +
+> +static int recreate_hyp_mappings(phys_addr_t phys, unsigned long size,
+> +                                unsigned long *per_cpu_base)
+> +{
+> +       void *start, *end, *virt = hyp_phys_to_virt(phys);
+> +       int ret, i;
+> +
+> +       /* Recreate the hyp page-table using the early page allocator */
+> +       hyp_early_alloc_init(hyp_pgt_base, hyp_s1_pgtable_size());
+> +       ret = kvm_pgtable_hyp_init(&hyp_pgtable, hyp_va_bits,
+> +                                  &hyp_early_alloc_mm_ops);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret = hyp_create_idmap();
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret = hyp_map_vectors();
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret = hyp_back_vmemmap(phys, size, hyp_virt_to_phys(vmemmap_base));
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret = hyp_create_mappings(hyp_symbol_addr(__hyp_text_start),
+> +                                 hyp_symbol_addr(__hyp_text_end),
+> +                                 PAGE_HYP_EXEC);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret = hyp_create_mappings(hyp_symbol_addr(__start_rodata),
+> +                                 hyp_symbol_addr(__end_rodata), PAGE_HYP_RO);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret = hyp_create_mappings(hyp_symbol_addr(__hyp_data_ro_after_init_start),
+> +                                 hyp_symbol_addr(__hyp_data_ro_after_init_end),
+> +                                 PAGE_HYP_RO);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret = hyp_create_mappings(hyp_symbol_addr(__bss_start),
+> +                                 hyp_symbol_addr(__hyp_bss_end), PAGE_HYP);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret = hyp_create_mappings(hyp_symbol_addr(__hyp_bss_end),
+> +                                 hyp_symbol_addr(__bss_stop), PAGE_HYP_RO);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret = hyp_create_mappings(virt, virt + size - 1, PAGE_HYP);
+> +       if (ret)
+> +               return ret;
+> +
+> +       for (i = 0; i < hyp_nr_cpus; i++) {
+> +               start = (void *)kern_hyp_va(per_cpu_base[i]);
+> +               end = start + PAGE_ALIGN(hyp_percpu_size);
+> +               ret = hyp_create_mappings(start, end, PAGE_HYP);
+> +               if (ret)
+> +                       return ret;
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+> +static void update_nvhe_init_params(void)
+> +{
+> +       struct kvm_nvhe_init_params *params;
+> +       unsigned long i, stack;
+> +
+> +       for (i = 0; i < hyp_nr_cpus; i++) {
+> +               stack = (unsigned long)stacks_base + (i << PAGE_SHIFT);
+> +               params = per_cpu_ptr(&kvm_init_params, i);
+> +               params->stack_hyp_va = stack + PAGE_SIZE;
+> +               params->pgd_pa = __hyp_pa(hyp_pgtable.pgd);
+> +               __flush_dcache_area(params, sizeof(*params));
+> +       }
+> +}
+> +
+> +static void *hyp_zalloc_hyp_page(void *arg)
+> +{
+> +       return hyp_alloc_pages(&hpool, HYP_GFP_ZERO, 0);
+> +}
+> +
+> +void __noreturn __kvm_hyp_protect_finalise(void)
+> +{
+> +       struct kvm_host_data *host_data = this_cpu_ptr(&kvm_host_data);
+> +       struct kvm_cpu_context *host_ctxt = &host_data->host_ctxt;
+> +       unsigned long nr_pages, used_pages;
+> +       int ret;
+> +
+> +       /* Now that the vmemmap is backed, install the full-fledged allocator */
+> +       nr_pages = hyp_s1_pgtable_size() >> PAGE_SHIFT;
+> +       used_pages = hyp_early_alloc_nr_pages();
+> +       ret = hyp_pool_init(&hpool, __hyp_pa(hyp_pgt_base), nr_pages, used_pages);
+> +       if (ret)
+> +               goto out;
+> +
+> +       hyp_pgtable_mm_ops.zalloc_page = hyp_zalloc_hyp_page;
+> +       hyp_pgtable_mm_ops.phys_to_virt = hyp_phys_to_virt;
+> +       hyp_pgtable_mm_ops.virt_to_phys = hyp_virt_to_phys;
+> +       hyp_pgtable_mm_ops.get_page = hyp_get_page;
+> +       hyp_pgtable_mm_ops.put_page = hyp_put_page;
+> +       hyp_pgtable.mm_ops = &hyp_pgtable_mm_ops;
+> +
+> +out:
+> +       host_ctxt->regs.regs[0] = SMCCC_RET_SUCCESS;
+> +       host_ctxt->regs.regs[1] = ret;
+> +
+> +       __host_enter(host_ctxt);
+> +}
+> +
+> +int __kvm_hyp_protect(phys_addr_t phys, unsigned long size,
+> +                     unsigned long nr_cpus, unsigned long *per_cpu_base)
+> +{
+> +       struct kvm_nvhe_init_params *params;
+> +       void *virt = hyp_phys_to_virt(phys);
+> +       void (*fn)(phys_addr_t params_pa, void *finalize_fn_va);
+> +       int ret;
+> +
+> +       if (phys % PAGE_SIZE || size % PAGE_SIZE || (u64)virt % PAGE_SIZE)
+> +               return -EINVAL;
+> +
+> +       hyp_spin_lock_init(&__hyp_pgd_lock);
+> +       hyp_nr_cpus = nr_cpus;
+> +
+> +       ret = divide_memory_pool(virt, size);
+> +       if (ret)
+> +               return ret;
+> +
+> +       ret = recreate_hyp_mappings(phys, size, per_cpu_base);
+> +       if (ret)
+> +               return ret;
+> +
+> +       update_nvhe_init_params();
+> +
+> +       /* Jump in the idmap page to switch to the new page-tables */
+> +       params = this_cpu_ptr(&kvm_init_params);
+> +       fn = (typeof(fn))__hyp_pa(hyp_symbol_addr(__kvm_init_switch_pgd));
+> +       fn(__hyp_pa(params), hyp_symbol_addr(__kvm_hyp_protect_finalise));
+> +
+> +       unreachable();
+> +}
+> diff --git a/arch/arm64/kvm/hyp/reserved_mem.c b/arch/arm64/kvm/hyp/reserved_mem.c
+> new file mode 100644
+> index 000000000000..02b0b18006f5
+> --- /dev/null
+> +++ b/arch/arm64/kvm/hyp/reserved_mem.c
+> @@ -0,0 +1,75 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (C) 2020 - Google LLC
+> + * Author: Quentin Perret <qperret@google.com>
+> + */
+> +
+> +#include <linux/kvm_host.h>
+> +#include <linux/memblock.h>
+> +
+> +#include <asm/kvm_host.h>
+> +
+> +#include <nvhe/memory.h>
+> +#include <nvhe/mm.h>
+> +
+> +phys_addr_t hyp_mem_base;
+> +phys_addr_t hyp_mem_size;
+> +
+> +void __init early_init_dt_add_memory_hyp(u64 base, u64 size)
+> +{
+> +       struct hyp_memblock_region *reg;
+> +
+> +       if (kvm_nvhe_sym(hyp_memblock_nr) >= HYP_MEMBLOCK_REGIONS)
+> +               kvm_nvhe_sym(hyp_memblock_nr) = -1;
+> +
+> +       if (kvm_nvhe_sym(hyp_memblock_nr) < 0)
+> +               return;
+> +
+> +       reg = kvm_nvhe_sym(hyp_memory);
+> +       reg[kvm_nvhe_sym(hyp_memblock_nr)].start = base;
+> +       reg[kvm_nvhe_sym(hyp_memblock_nr)].end = base + size;
+> +       kvm_nvhe_sym(hyp_memblock_nr)++;
+> +}
+> +
+> +extern bool enable_protected_kvm;
+> +void __init reserve_kvm_hyp(void)
+> +{
+> +       u64 nr_pages, prev;
+> +
+> +       if (!enable_protected_kvm)
+> +               return;
+> +
+> +       if (!is_hyp_mode_available() || is_kernel_in_hyp_mode())
+> +               return;
+> +
+> +       if (kvm_nvhe_sym(hyp_memblock_nr) <= 0)
+> +               return;
+> +
+> +       hyp_mem_size += num_possible_cpus() << PAGE_SHIFT;
+> +       hyp_mem_size += hyp_s1_pgtable_size();
+> +
+> +       /*
+> +        * The hyp_vmemmap needs to be backed by pages, but these pages
+> +        * themselves need to be present in the vmemmap, so compute the number
+> +        * of pages needed by looking for a fixed point.
+> +        */
+> +       nr_pages = 0;
+> +       do {
+> +               prev = nr_pages;
+> +               nr_pages = (hyp_mem_size >> PAGE_SHIFT) + prev;
+> +               nr_pages = DIV_ROUND_UP(nr_pages * sizeof(struct hyp_page), PAGE_SIZE);
+> +               nr_pages += __hyp_pgtable_max_pages(nr_pages);
+> +       } while (nr_pages != prev);
+> +       hyp_mem_size += nr_pages << PAGE_SHIFT;
+> +
+> +       hyp_mem_base = memblock_find_in_range(0, memblock_end_of_DRAM(),
+> +                                             hyp_mem_size, SZ_2M);
+> +       if (!hyp_mem_base) {
+> +               kvm_err("Failed to reserve hyp memory\n");
+> +               return;
+> +       }
+> +       memblock_reserve(hyp_mem_base, hyp_mem_size);
+> +
+> +       kvm_info("Reserved %lld MiB at 0x%llx\n", hyp_mem_size >> 20,
+> +                hyp_mem_base);
+> +}
+> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> index 278e163beda4..3cf9397dabdb 100644
+> --- a/arch/arm64/kvm/mmu.c
+> +++ b/arch/arm64/kvm/mmu.c
+> @@ -1264,10 +1264,10 @@ static struct kvm_pgtable_mm_ops kvm_hyp_mm_ops = {
+>         .virt_to_phys           = kvm_host_pa,
+>  };
+>
+> +u32 hyp_va_bits;
+>  int kvm_mmu_init(void)
+>  {
+>         int err;
+> -       u32 hyp_va_bits;
+>
+>         hyp_idmap_start = __pa_symbol(__hyp_idmap_text_start);
+>         hyp_idmap_start = ALIGN_DOWN(hyp_idmap_start, PAGE_SIZE);
+> diff --git a/arch/arm64/mm/init.c b/arch/arm64/mm/init.c
+> index 095540667f0f..f81da019b677 100644
+> --- a/arch/arm64/mm/init.c
+> +++ b/arch/arm64/mm/init.c
+> @@ -34,6 +34,7 @@
+>  #include <asm/fixmap.h>
+>  #include <asm/kasan.h>
+>  #include <asm/kernel-pgtable.h>
+> +#include <asm/kvm_host.h>
+>  #include <asm/memory.h>
+>  #include <asm/numa.h>
+>  #include <asm/sections.h>
+> @@ -390,6 +391,8 @@ void __init arm64_memblock_init(void)
+>
+>         reserve_elfcorehdr();
+>
+> +       reserve_kvm_hyp();
+> +
+>         high_memory = __va(memblock_end_of_DRAM() - 1) + 1;
+>
+>         dma_contiguous_reserve(arm64_dma32_phys_limit);
+> --
+> 2.29.2.299.gdc1121823c-goog
 
-arm_smmu_write_strtab_ent() is modified to write both stage
-fields in the STE and deal with the abort field.
-
-In nested mode, only stage 2 is "finalized" as the host does
-not own/configure the stage 1 context descriptor; guest does.
-
-Signed-off-by: Eric Auger <a class="moz-txt-link-rfc2396E" href="mailto:eric.auger@redhat.com">&lt;eric.auger@redhat.com&gt;</a>
-
----
-v10 -&gt; v11:
-- Fix an issue reported by Shameer when switching from with vSMMU
-  to without vSMMU. Despite the spec does not seem to mention it
-  seems to be needed to reset the 2 high 64b when switching from
-  S1+S2 cfg to S1 only. Especially dst[3] needs to be reset (S2TTB).
-  On some implementations, if the S2TTB is not reset, this causes
-  a C_BAD_STE error
----
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 64 +++++++++++++++++----
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |  2 +
- 2 files changed, 56 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 18ac5af1b284..412ea1bafa50 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -1181,8 +1181,10 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
- 	 * three cases at the moment:</pre>
-    </blockquote>
-    Now, it should be <b>five cases</b>.<br>
-    <blockquote type="cite"
-      cite="mid:20201118112151.25412-6-eric.auger@redhat.com">
-      <pre class="moz-quote-pre" wrap="">
- 	 *
- 	 * 1. Invalid (all zero) -&gt; bypass/fault (init)
--	 * 2. Bypass/fault -&gt; translation/bypass (attach)
--	 * 3. Translation/bypass -&gt; bypass/fault (detach)
-+	 * 2. Bypass/fault -&gt; single stage translation/bypass (attach)
-+	 * 3. Single or nested stage Translation/bypass -&gt; bypass/fault (detach)
-+	 * 4. S2 -&gt; S1 + S2 (attach_pasid_table)</pre>
-    </blockquote>
-    <p>I was testing this series on one of our hardware board with
-      SMMUv3. And I found while trying to <i>"</i><i>attach_pasid_table</i><i>"</i>,
-      <br>
-    </p>
-    <p>the sequence of STE (host) config(bit[3:1]) is <i>"S2-&gt;abort-&gt;S1
-        + S2"</i>. Because the maintenance is  <i>"Write everything
-        apart</i><i></i></p>
-    <p><i>from dword 0, sync, write dword 0, sync"</i> when we update
-      the STE (guest). Dose the sequence meet your expectation?<br>
-    </p>
-    <blockquote type="cite"
-      cite="mid:20201118112151.25412-6-eric.auger@redhat.com">
-      <pre class="moz-quote-pre" wrap="">
-+	 * 5. S1 + S2 -&gt; S2 (detach_pasid_table)
- 	 *
- 	 * Given that we can't update the STE atomically and the SMMU
- 	 * doesn't read the thing in a defined order, that leaves us
-@@ -1193,7 +1195,8 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
- 	 * 3. Update Config, sync
- 	 */
- 	u64 val = le64_to_cpu(dst[0]);
--	bool ste_live = false;
-+	bool s1_live = false, s2_live = false, ste_live;
-+	bool abort, nested = false, translate = false;
- 	struct arm_smmu_device *smmu = NULL;
- 	struct arm_smmu_s1_cfg *s1_cfg;
- 	struct arm_smmu_s2_cfg *s2_cfg;
-@@ -1233,6 +1236,8 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
- 		default:
- 			break;
- 		}
-+		nested = s1_cfg-&gt;set &amp;&amp; s2_cfg-&gt;set;
-+		translate = s1_cfg-&gt;set || s2_cfg-&gt;set;
- 	}
- 
- 	if (val &amp; STRTAB_STE_0_V) {
-@@ -1240,23 +1245,36 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
- 		case STRTAB_STE_0_CFG_BYPASS:
- 			break;
- 		case STRTAB_STE_0_CFG_S1_TRANS:
-+			s1_live = true;
-+			break;
- 		case STRTAB_STE_0_CFG_S2_TRANS:
--			ste_live = true;
-+			s2_live = true;
-+			break;
-+		case STRTAB_STE_0_CFG_NESTED:
-+			s1_live = true;
-+			s2_live = true;
- 			break;
- 		case STRTAB_STE_0_CFG_ABORT:
--			BUG_ON(!disable_bypass);
- 			break;
- 		default:
- 			BUG(); /* STE corruption */
- 		}
- 	}
- 
-+	ste_live = s1_live || s2_live;
-+
- 	/* Nuke the existing STE_0 value, as we're going to rewrite it */
- 	val = STRTAB_STE_0_V;
- 
- 	/* Bypass/fault */
--	if (!smmu_domain || !(s1_cfg-&gt;set || s2_cfg-&gt;set)) {
--		if (!smmu_domain &amp;&amp; disable_bypass)
-+
-+	if (!smmu_domain)
-+		abort = disable_bypass;
-+	else
-+		abort = smmu_domain-&gt;abort;
-+
-+	if (abort || !translate) {
-+		if (abort)
- 			val |= FIELD_PREP(STRTAB_STE_0_CFG, STRTAB_STE_0_CFG_ABORT);
- 		else
- 			val |= FIELD_PREP(STRTAB_STE_0_CFG, STRTAB_STE_0_CFG_BYPASS);
-@@ -1274,8 +1292,16 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
- 		return;
- 	}
- 
-+	BUG_ON(ste_live &amp;&amp; !nested);
-+
-+	if (ste_live) {
-+		/* First invalidate the live STE */
-+		dst[0] = cpu_to_le64(STRTAB_STE_0_CFG_ABORT);
-+		arm_smmu_sync_ste_for_sid(smmu, sid);
-+	}
-+
- 	if (s1_cfg-&gt;set) {
--		BUG_ON(ste_live);
-+		BUG_ON(s1_live);
- 		dst[1] = cpu_to_le64(
- 			 FIELD_PREP(STRTAB_STE_1_S1DSS, STRTAB_STE_1_S1DSS_SSID0) |
- 			 FIELD_PREP(STRTAB_STE_1_S1CIR, STRTAB_STE_1_S1C_CACHE_WBRA) |
-@@ -1294,7 +1320,14 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
- 	}
- 
- 	if (s2_cfg-&gt;set) {
--		BUG_ON(ste_live);
-+		u64 vttbr = s2_cfg-&gt;vttbr &amp; STRTAB_STE_3_S2TTB_MASK;
-+
-+		if (s2_live) {
-+			u64 s2ttb = le64_to_cpu(dst[3] &amp; STRTAB_STE_3_S2TTB_MASK);
-+
-+			BUG_ON(s2ttb != vttbr);
-+		}
-+
- 		dst[2] = cpu_to_le64(
- 			 FIELD_PREP(STRTAB_STE_2_S2VMID, s2_cfg-&gt;vmid) |
- 			 FIELD_PREP(STRTAB_STE_2_VTCR, s2_cfg-&gt;vtcr) |
-@@ -1304,9 +1337,12 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
- 			 STRTAB_STE_2_S2PTW | STRTAB_STE_2_S2AA64 |
- 			 STRTAB_STE_2_S2R);
- 
--		dst[3] = cpu_to_le64(s2_cfg-&gt;vttbr &amp; STRTAB_STE_3_S2TTB_MASK);
-+		dst[3] = cpu_to_le64(vttbr);
- 
- 		val |= FIELD_PREP(STRTAB_STE_0_CFG, STRTAB_STE_0_CFG_S2_TRANS);
-+	} else {
-+		dst[2] = 0;
-+		dst[3] = 0;
- 	}
- 
- 	if (master-&gt;ats_enabled)
-@@ -1982,6 +2018,14 @@ static int arm_smmu_domain_finalise(struct iommu_domain *domain,
- 		return 0;
- 	}
- 
-+	if (smmu_domain-&gt;stage == ARM_SMMU_DOMAIN_NESTED &amp;&amp;
-+	    (!(smmu-&gt;features &amp; ARM_SMMU_FEAT_TRANS_S1) ||
-+	     !(smmu-&gt;features &amp; ARM_SMMU_FEAT_TRANS_S2))) {
-+		dev_info(smmu_domain-&gt;smmu-&gt;dev,
-+			 "does not implement two stages\n");
-+		return -EINVAL;
-+	}
-+
- 	/* Restrict the stage to what we can actually support */
- 	if (!(smmu-&gt;features &amp; ARM_SMMU_FEAT_TRANS_S1))
- 		smmu_domain-&gt;stage = ARM_SMMU_DOMAIN_S2;
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 07f59252dd21..269779dee8d1 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -206,6 +206,7 @@
- #define STRTAB_STE_0_CFG_BYPASS		4
- #define STRTAB_STE_0_CFG_S1_TRANS	5
- #define STRTAB_STE_0_CFG_S2_TRANS	6
-+#define STRTAB_STE_0_CFG_NESTED		7
- 
- #define STRTAB_STE_0_S1FMT		GENMASK_ULL(5, 4)
- #define STRTAB_STE_0_S1FMT_LINEAR	0
-@@ -682,6 +683,7 @@ struct arm_smmu_domain {
- 	enum arm_smmu_domain_stage	stage;
- 	struct arm_smmu_s1_cfg	s1_cfg;
- 	struct arm_smmu_s2_cfg	s2_cfg;
-+	bool				abort;
- 
- 	struct iommu_domain		domain;
-</pre>
-    </blockquote>
-    <p>Thanks,</p>
-    <p>Kunkun Jiang<br>
-    </p>
-  </body>
-</html>
-
---------------2E2FC73B722F3D2CE7CFEA1A--
-
---===============8747211234052994714==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+Cheers,
+/fuad
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
 https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
-
---===============8747211234052994714==--
