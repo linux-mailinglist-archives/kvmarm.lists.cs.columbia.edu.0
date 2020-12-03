@@ -2,56 +2,70 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A5EF2CD8C7
-	for <lists+kvmarm@lfdr.de>; Thu,  3 Dec 2020 15:18:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 240DE2CD9AE
+	for <lists+kvmarm@lfdr.de>; Thu,  3 Dec 2020 15:57:31 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9E8964B1D4;
-	Thu,  3 Dec 2020 09:18:23 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A14C34B1E6;
+	Thu,  3 Dec 2020 09:57:30 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id sBgZCGC0iHud; Thu,  3 Dec 2020 09:18:23 -0500 (EST)
+	with ESMTP id QF8Jq4kY7qTO; Thu,  3 Dec 2020 09:57:30 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8B89A4B1CF;
-	Thu,  3 Dec 2020 09:18:22 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 618F64B1E2;
+	Thu,  3 Dec 2020 09:57:29 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 932544B1C0
- for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Dec 2020 09:18:20 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 82C864B198
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Dec 2020 09:57:27 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id pf7zVqwXLgNE for <kvmarm@lists.cs.columbia.edu>;
- Thu,  3 Dec 2020 09:18:19 -0500 (EST)
-Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3C3B34B08E
- for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Dec 2020 09:18:19 -0500 (EST)
-Received: from DGGEMS403-HUB.china.huawei.com (unknown [172.30.72.58])
- by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4CmybY5N94z15VPL;
- Thu,  3 Dec 2020 22:17:45 +0800 (CST)
-Received: from [10.174.187.37] (10.174.187.37) by
- DGGEMS403-HUB.china.huawei.com (10.3.19.203) with Microsoft SMTP Server id
- 14.3.487.0; Thu, 3 Dec 2020 22:18:03 +0800
-Subject: Re: [PATCH v2 0/2] clocksource: arm_arch_timer: Some fixes
-To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <kvmarm@lists.cs.columbia.edu>, <kvm@vger.kernel.org>
-References: <20200818032814.15968-1-zhukeqian1@huawei.com>
-From: zhukeqian <zhukeqian1@huawei.com>
-Message-ID: <63334212-e151-07f4-ccf6-63eedaaf33bc@huawei.com>
-Date: Thu, 3 Dec 2020 22:18:02 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+ with ESMTP id OKfP3Nt01TNb for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  3 Dec 2020 09:57:25 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 741DA4B15D
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Dec 2020 09:57:25 -0500 (EST)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id CA2E4206D6;
+ Thu,  3 Dec 2020 14:57:23 +0000 (UTC)
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1kkq2r-00FhLT-G9; Thu, 03 Dec 2020 14:57:21 +0000
 MIME-Version: 1.0
-In-Reply-To: <20200818032814.15968-1-zhukeqian1@huawei.com>
-X-Originating-IP: [10.174.187.37]
-X-CFilter-Loop: Reflected
-Cc: Marc Zyngier <maz@kernel.org>, Steven Price <steven.price@arm.com>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
+Date: Thu, 03 Dec 2020 14:57:21 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: Keqian Zhu <zhukeqian1@huawei.com>
+Subject: Re: [PATCH v2 2/2] clocksource: arm_arch_timer: Correct fault
+ programming of CNTKCTL_EL1.EVNTI
+In-Reply-To: <20200818032814.15968-3-zhukeqian1@huawei.com>
+References: <20200818032814.15968-1-zhukeqian1@huawei.com>
+ <20200818032814.15968-3-zhukeqian1@huawei.com>
+User-Agent: Roundcube Webmail/1.4.9
+Message-ID: <b232d02b2d9c3e29898914bd9bbb8dc5@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: zhukeqian1@huawei.com, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org, steven.price@arm.com, drjones@redhat.com,
+ catalin.marinas@arm.com, will@kernel.org, james.morse@arm.com,
+ suzuki.poulose@arm.com, wanghaibin.wang@huawei.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvm@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
+ linux-kernel@vger.kernel.org, Steven Price <steven.price@arm.com>,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -63,34 +77,76 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Marc,
+On 2020-08-18 04:28, Keqian Zhu wrote:
+> ARM virtual counter supports event stream, it can only trigger an event
+> when the trigger bit (the value of CNTKCTL_EL1.EVNTI) of CNTVCT_EL0 
+> changes,
+> so the actual period of event stream is 2^(cntkctl_evnti + 1). For 
+> example,
+> when the trigger bit is 0, then virtual counter trigger an event for 
+> every
+> two cycles.
+> 
+> Fixes: 037f637767a8 ("drivers: clocksource: add support for
+>        ARM architected timer event stream")
 
-Found that this bugfix series is not applied for now.
-Does it need some modification? Wish you can pick it up :-)
+Fixes: tags should on a single line.
+
+> Suggested-by: Marc Zyngier <maz@kernel.org>
+> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
+> ---
+>  drivers/clocksource/arm_arch_timer.c | 10 +++++++---
+>  1 file changed, 7 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/clocksource/arm_arch_timer.c
+> b/drivers/clocksource/arm_arch_timer.c
+> index 777d38c..e3b2ee0 100644
+> --- a/drivers/clocksource/arm_arch_timer.c
+> +++ b/drivers/clocksource/arm_arch_timer.c
+> @@ -824,10 +824,14 @@ static void arch_timer_configure_evtstream(void)
+>  {
+>  	int evt_stream_div, pos;
+> 
+> -	/* Find the closest power of two to the divisor */
+> -	evt_stream_div = arch_timer_rate / ARCH_TIMER_EVT_STREAM_FREQ;
+> +	/*
+> +	 * Find the closest power of two to the divisor. As the event
+> +	 * stream can at most be generated at half the frequency of the
+> +	 * counter, use half the frequency when computing the divider.
+> +	 */
+> +	evt_stream_div = arch_timer_rate / ARCH_TIMER_EVT_STREAM_FREQ / 2;
+>  	pos = fls(evt_stream_div);
+> -	if (pos > 1 && !(evt_stream_div & (1 << (pos - 2))))
+> +	if ((pos == 1) || (pos > 1 && !(evt_stream_div & (1 << (pos - 2)))))
+>  		pos--;
+
+You don't explain why you are special-casing pos == 1.
+
+>  	/* enable event stream */
+>  	arch_timer_evtstrm_enable(min(pos, 15));
+
+Also, please Cc the subsystem maintainers:
+
+CLOCKSOURCE, CLOCKEVENT DRIVERS
+M:      Daniel Lezcano <daniel.lezcano@linaro.org>
+M:      Thomas Gleixner <tglx@linutronix.de>
+L:      linux-kernel@vger.kernel.org
+S:      Supported
+T:      git git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git 
+timers/core
+F:      Documentation/devicetree/bindings/timer/
+F:      drivers/clocksource/
 
 Thanks,
-Keqian
 
-On 2020/8/18 11:28, Keqian Zhu wrote:
-> change log:
-> 
-> v2:
->  - Do not revert commit 0ea415390cd3, fix it instead.
->  - Correct the tags of second patch.
-> 
-> Keqian Zhu (2):
->   clocksource: arm_arch_timer: Use stable count reader in erratum sne
->   clocksource: arm_arch_timer: Correct fault programming of
->     CNTKCTL_EL1.EVNTI
-> 
->  drivers/clocksource/arm_arch_timer.c | 14 +++++++++-----
->  1 file changed, 9 insertions(+), 5 deletions(-)
-> 
+         M.
+-- 
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
