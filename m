@@ -2,76 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 029F32CD661
-	for <lists+kvmarm@lfdr.de>; Thu,  3 Dec 2020 14:10:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E30DF2CD695
+	for <lists+kvmarm@lfdr.de>; Thu,  3 Dec 2020 14:21:38 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A9FF44B1BC;
-	Thu,  3 Dec 2020 08:10:14 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 97B154B19D;
+	Thu,  3 Dec 2020 08:21:38 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4VunIfxZbjRH; Thu,  3 Dec 2020 08:10:13 -0500 (EST)
+	with ESMTP id e9jwgtjDT+oi; Thu,  3 Dec 2020 08:21:38 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8C0034B1C0;
-	Thu,  3 Dec 2020 08:10:12 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 57C794B1B2;
+	Thu,  3 Dec 2020 08:21:37 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7A8194B1A4
- for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Dec 2020 08:10:11 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 979FB4B19A
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Dec 2020 08:21:36 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id tDIz6nRq8HYG for <kvmarm@lists.cs.columbia.edu>;
- Thu,  3 Dec 2020 08:10:10 -0500 (EST)
+ with ESMTP id PgQWc5xF7CcI for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  3 Dec 2020 08:21:35 -0500 (EST)
 Received: from us-smtp-delivery-124.mimecast.com
  (us-smtp-delivery-124.mimecast.com [63.128.21.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id ABCC74B1AB
- for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Dec 2020 08:10:10 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B49EE4B197
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Dec 2020 08:21:35 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1607001010;
+ s=mimecast20190719; t=1607001695;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QmzYaUkBaQ2Yctwjpp50+AT2BYlAlf7JoSbm5HLlJOI=;
- b=LGilkiOefvinyIpIls9PJTT9ORFC/xNgRf0wcGV1MCIUEgU7+uTKUGsX3A1GLMLli4NNMz
- MaXiDJBsPLLDJ5/KjaZrZ2j+wG19+/qkjG0it+YDeVPkorsE2BXtDkVu16LpAk5N7uFPxw
- NYey+D6ob454lXV+YNMqLPX/XMCPT70=
+ bh=17TeDiAi7K0S6jRLyvG5tS2QR8aHxbPehr3O5F8cUhM=;
+ b=bPw02zeskisALodOpvVuebApJ7Vl7GGb9nTZqayr+KCPSew9jF6JcZ6CRCFrWch1Tw25GE
+ nQ8uZN130t2cZBaZAztndq04zVJMANu5J8j8DTpUl32nNJRDbwh/64BfTY0/5Ya6gZTbU9
+ 9/tNOuxdd6yIxMers66VdmzfcTAHVrg=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-248-z5pjIOBOObyc92aaxOOOaQ-1; Thu, 03 Dec 2020 08:10:08 -0500
-X-MC-Unique: z5pjIOBOObyc92aaxOOOaQ-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.phx2.redhat.com
- [10.5.11.16])
+ us-mta-206-cvC7Zs4DNKGhVXB9qF5XVQ-1; Thu, 03 Dec 2020 08:21:33 -0500
+X-MC-Unique: cvC7Zs4DNKGhVXB9qF5XVQ-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com
+ [10.5.11.14])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id CA1A1100C60E;
- Thu,  3 Dec 2020 13:10:07 +0000 (UTC)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 1F62AA0CA6;
+ Thu,  3 Dec 2020 13:21:32 +0000 (UTC)
 Received: from [10.36.112.89] (ovpn-112-89.ams2.redhat.com [10.36.112.89])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 9B10C5C1B4;
- Thu,  3 Dec 2020 13:10:06 +0000 (UTC)
-Subject: Re: [kvm-unit-tests PATCH 04/10] arm/arm64: gic: Remove unnecessary
- synchronization with stats_reset()
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id A97715D9CA;
+ Thu,  3 Dec 2020 13:21:30 +0000 (UTC)
+Subject: Re: [kvm-unit-tests PATCH 07/10] arm/arm64: gic: Wait for writes to
+ acked or spurious to complete
 To: Alexandru Elisei <alexandru.elisei@arm.com>, kvm@vger.kernel.org,
  kvmarm@lists.cs.columbia.edu, drjones@redhat.com
 References: <20201125155113.192079-1-alexandru.elisei@arm.com>
- <20201125155113.192079-5-alexandru.elisei@arm.com>
+ <20201125155113.192079-8-alexandru.elisei@arm.com>
 From: Auger Eric <eric.auger@redhat.com>
-Message-ID: <46af2717-6da7-3ea1-5ac0-1283b1d842cf@redhat.com>
-Date: Thu, 3 Dec 2020 14:10:05 +0100
+Message-ID: <179b4f5f-8bdf-1922-f79a-930bde2ed103@redhat.com>
+Date: Thu, 3 Dec 2020 14:21:29 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.5.0
 MIME-Version: 1.0
-In-Reply-To: <20201125155113.192079-5-alexandru.elisei@arm.com>
+In-Reply-To: <20201125155113.192079-8-alexandru.elisei@arm.com>
 Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
 Cc: andre.przywara@arm.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -89,52 +89,67 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi,
+Hi Alexandru,
 
 On 11/25/20 4:51 PM, Alexandru Elisei wrote:
-> The GICv3 driver executes a DSB barrier before sending an IPI, which
-> ensures that memory accesses have completed. This removes the need to
-> enforce ordering with respect to stats_reset() in the IPI handler.
+> The IPI test has two parts: in the first part, it tests that the sender CPU
+> can send an IPI to itself (ipi_test_self()), and in the second part it
+> sends interrupts to even-numbered CPUs (ipi_test_smp()). When acknowledging
+> an interrupt, if we read back a spurious interrupt ID (1023), the handler
+> increments the index in the static array spurious corresponding to the CPU
+> ID that the handler is running on; if we get the expected interrupt ID, we
+> increment the same index in the acked array.
 > 
-> For GICv2, we still need the DMB to ensure ordering between the read of the
-> GICC_IAR MMIO register and the read from the acked array. It also matches
-> what the Linux GICv2 driver does in gic_handle_irq().
+> Reads of the spurious and acked arrays are synchronized with writes
+> performed before sending the IPI. The synchronization is done either in the
+> IPI sender function (GICv3), either by creating a data dependency (GICv2).
+> 
+> At the end of the test, the sender CPU reads from the acked and spurious
+> arrays to check against the expected behaviour. We need to make sure the
+> that writes in ipi_handler() are observable by the sender CPU. Use a DSB
+> ISHST to make sure that the writes have completed.
+> 
+> One might rightfully argue that there are no guarantees regarding when the
+> DSB instruction completes, just like there are no guarantees regarding when
+> the value is observed by the other CPUs. However, let's do our best and
+> instruct the CPU to complete the memory access when we know that it will be
+> needed.
+> 
+> We still need to follow the message passing pattern for the acked,
+> respectively bad_irq and bad_sender, because DSB guarantees that all memory
+> accesses that come before the barrier have completed, not that they have
+> completed in program order.
+I guess the removal of the smp_rmb in check_spurious should belong to
+that patch?
 > 
 > Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
+Besides, AFAIU
+
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
+
+Thanks
 
 Eric
 > ---
->  arm/gic.c | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
+>  arm/gic.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
 > diff --git a/arm/gic.c b/arm/gic.c
-> index 4e947e8516a2..7befda2a8673 100644
+> index 5727d72a0ef3..544c283f5f47 100644
 > --- a/arm/gic.c
 > +++ b/arm/gic.c
-> @@ -60,7 +60,6 @@ static void stats_reset(void)
->  		bad_sender[i] = -1;
->  		bad_irq[i] = -1;
+> @@ -161,8 +161,10 @@ static void ipi_handler(struct pt_regs *regs __unused)
+>  		++acked[smp_processor_id()];
+>  	} else {
+>  		++spurious[smp_processor_id()];
+> -		smp_wmb();
 >  	}
-> -	smp_wmb();
+> +
+> +	/* Wait for writes to acked/spurious to complete */
+> +	dsb(ishst);
 >  }
 >  
->  static void check_acked(const char *testname, cpumask_t *mask)
-> @@ -150,7 +149,13 @@ static void ipi_handler(struct pt_regs *regs __unused)
->  
->  	if (irqnr != GICC_INT_SPURIOUS) {
->  		gic_write_eoir(irqstat);
-> -		smp_rmb(); /* pairs with wmb in stats_reset */
-> +		/*
-> +		 * Make sure data written before the IPI was triggered is
-> +		 * observed after the IAR is read. Pairs with the smp_wmb
-> +		 * when sending the IPI.
-> +		 */
-> +		if (gic_version() == 2)
-> +			smp_rmb();
->  		++acked[smp_processor_id()];
->  		check_ipi_sender(irqstat);
->  		check_irqnr(irqnr);
+>  static void setup_irq(irq_handler_fn handler)
 > 
 
 _______________________________________________
