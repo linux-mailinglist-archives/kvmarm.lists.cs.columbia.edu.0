@@ -2,60 +2,56 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id BA1052CE85D
-	for <lists+kvmarm@lfdr.de>; Fri,  4 Dec 2020 08:03:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 910D22CE8A3
+	for <lists+kvmarm@lfdr.de>; Fri,  4 Dec 2020 08:32:28 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 494784B299;
-	Fri,  4 Dec 2020 02:03:01 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 470AD4B234;
+	Fri,  4 Dec 2020 02:32:28 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Mfg-Uw65z1f7; Fri,  4 Dec 2020 02:03:01 -0500 (EST)
+	with ESMTP id ozDEZhGEy7Oj; Fri,  4 Dec 2020 02:32:27 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 30BC64B26A;
-	Fri,  4 Dec 2020 02:03:00 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 302994B231;
+	Fri,  4 Dec 2020 02:32:26 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AD70F4B22D
- for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Dec 2020 02:02:58 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D413F4B135
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Dec 2020 02:32:24 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 6q2HvCaTL7UE for <kvmarm@lists.cs.columbia.edu>;
- Fri,  4 Dec 2020 02:02:56 -0500 (EST)
-Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A4F614B224
- for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Dec 2020 02:02:56 -0500 (EST)
-Received: from DGGEMS408-HUB.china.huawei.com (unknown [172.30.72.58])
- by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4CnNtc3WcLzklD0;
- Fri,  4 Dec 2020 15:02:16 +0800 (CST)
-Received: from [10.174.187.37] (10.174.187.37) by
- DGGEMS408-HUB.china.huawei.com (10.3.19.208) with Microsoft SMTP Server id
- 14.3.487.0; Fri, 4 Dec 2020 15:02:43 +0800
-Subject: Re: [PATCH v2 2/2] clocksource: arm_arch_timer: Correct fault
- programming of CNTKCTL_EL1.EVNTI
-To: Marc Zyngier <maz@kernel.org>
-References: <20200818032814.15968-1-zhukeqian1@huawei.com>
- <20200818032814.15968-3-zhukeqian1@huawei.com>
- <b232d02b2d9c3e29898914bd9bbb8dc5@kernel.org>
-From: zhukeqian <zhukeqian1@huawei.com>
-Message-ID: <c41a32f6-e671-4c69-cbbc-57c11d35112f@huawei.com>
-Date: Fri, 4 Dec 2020 15:02:31 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+ with ESMTP id EltXBMA9FjDj for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  4 Dec 2020 02:32:23 -0500 (EST)
+Received: from szxga07-in.huawei.com (szxga07-in.huawei.com [45.249.212.35])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0EB164B146
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Dec 2020 02:32:23 -0500 (EST)
+Received: from DGGEMS404-HUB.china.huawei.com (unknown [172.30.72.58])
+ by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4CnPXm0qWLz76lf;
+ Fri,  4 Dec 2020 15:31:52 +0800 (CST)
+Received: from DESKTOP-5IS4806.china.huawei.com (10.174.187.37) by
+ DGGEMS404-HUB.china.huawei.com (10.3.19.204) with Microsoft SMTP Server id
+ 14.3.487.0; Fri, 4 Dec 2020 15:32:12 +0800
+From: Keqian Zhu <zhukeqian1@huawei.com>
+To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <kvmarm@lists.cs.columbia.edu>, <kvm@vger.kernel.org>
+Subject: [PATCH v3 0/2] clocksource: arm_arch_timer: Some fixes
+Date: Fri, 4 Dec 2020 15:31:24 +0800
+Message-ID: <20201204073126.6920-1-zhukeqian1@huawei.com>
+X-Mailer: git-send-email 2.8.4.windows.1
 MIME-Version: 1.0
-In-Reply-To: <b232d02b2d9c3e29898914bd9bbb8dc5@kernel.org>
 X-Originating-IP: [10.174.187.37]
 X-CFilter-Loop: Reflected
-Cc: kvm@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
- linux-kernel@vger.kernel.org, Steven Price <steven.price@arm.com>,
- Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+Cc: Marc Zyngier <maz@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Sean Christopherson <sean.j.christopherson@intel.com>,
+ Alexios Zavras <alexios.zavras@intel.com>, Mark Brown <broonie@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ Thomas Gleixner <tglx@linutronix.de>, Will Deacon <will@kernel.org>, Andrew
+ Morton <akpm@linux-foundation.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -72,77 +68,27 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Marc,
+change log:
 
-On 2020/12/3 22:57, Marc Zyngier wrote:
-> On 2020-08-18 04:28, Keqian Zhu wrote:
->> ARM virtual counter supports event stream, it can only trigger an event
->> when the trigger bit (the value of CNTKCTL_EL1.EVNTI) of CNTVCT_EL0 changes,
->> so the actual period of event stream is 2^(cntkctl_evnti + 1). For example,
->> when the trigger bit is 0, then virtual counter trigger an event for every
->> two cycles.
->>
->> Fixes: 037f637767a8 ("drivers: clocksource: add support for
->>        ARM architected timer event stream")
-> 
-> Fixes: tags should on a single line.
-Will do.
+v3:
+ - Address Marc's comments.
+ - Reform arch_timer_configure_evtstream.
 
-> 
->> Suggested-by: Marc Zyngier <maz@kernel.org>
->> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
->> ---
->>  drivers/clocksource/arm_arch_timer.c | 10 +++++++---
->>  1 file changed, 7 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/clocksource/arm_arch_timer.c
->> b/drivers/clocksource/arm_arch_timer.c
->> index 777d38c..e3b2ee0 100644
->> --- a/drivers/clocksource/arm_arch_timer.c
->> +++ b/drivers/clocksource/arm_arch_timer.c
->> @@ -824,10 +824,14 @@ static void arch_timer_configure_evtstream(void)
->>  {
->>      int evt_stream_div, pos;
->>
->> -    /* Find the closest power of two to the divisor */
->> -    evt_stream_div = arch_timer_rate / ARCH_TIMER_EVT_STREAM_FREQ;
->> +    /*
->> +     * Find the closest power of two to the divisor. As the event
->> +     * stream can at most be generated at half the frequency of the
->> +     * counter, use half the frequency when computing the divider.
->> +     */
->> +    evt_stream_div = arch_timer_rate / ARCH_TIMER_EVT_STREAM_FREQ / 2;
->>      pos = fls(evt_stream_div);
->> -    if (pos > 1 && !(evt_stream_div & (1 << (pos - 2))))
->> +    if ((pos == 1) || (pos > 1 && !(evt_stream_div & (1 << (pos - 2)))))
->>          pos--;
-> 
-> You don't explain why you are special-casing pos == 1.
-The logic is not clear here, I will try to reform it.
+v2:
+ - Do not revert commit 0ea415390cd3, fix it instead.
+ - Correct the tags of second patch.
 
-> 
->>      /* enable event stream */
->>      arch_timer_evtstrm_enable(min(pos, 15));
-> 
-> Also, please Cc the subsystem maintainers:
-> 
-> CLOCKSOURCE, CLOCKEVENT DRIVERS
-> M:      Daniel Lezcano <daniel.lezcano@linaro.org>
-> M:      Thomas Gleixner <tglx@linutronix.de>
-> L:      linux-kernel@vger.kernel.org
-> S:      Supported
-> T:      git git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git timers/core
-> F:      Documentation/devicetree/bindings/timer/
-> F:      drivers/clocksource/
-> 
-Will do.
+Keqian Zhu (2):
+  clocksource: arm_arch_timer: Use stable count reader in erratum sne
+  clocksource: arm_arch_timer: Correct fault programming of
+    CNTKCTL_EL1.EVNTI
 
-> Thanks,
-> 
->         M.
+ drivers/clocksource/arm_arch_timer.c | 27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
-Thanks,
-Keqian
+-- 
+2.23.0
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
