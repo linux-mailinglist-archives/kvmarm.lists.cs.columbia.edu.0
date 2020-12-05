@@ -2,66 +2,93 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9CC8B2CF42C
-	for <lists+kvmarm@lfdr.de>; Fri,  4 Dec 2020 19:37:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C12AD2CFB1D
+	for <lists+kvmarm@lfdr.de>; Sat,  5 Dec 2020 12:15:09 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 455174B1F9;
-	Fri,  4 Dec 2020 13:37:52 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2E2B54B1B5;
+	Sat,  5 Dec 2020 06:15:09 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@linaro.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cKft+kDIk3A4; Fri,  4 Dec 2020 13:37:52 -0500 (EST)
+	with ESMTP id oUQLDOuBDjIr; Sat,  5 Dec 2020 06:15:09 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 645154B190;
-	Fri,  4 Dec 2020 13:37:50 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D418E4B1A7;
+	Sat,  5 Dec 2020 06:15:07 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 301BB4B126
- for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Dec 2020 13:37:49 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 024BA4B15B
+ for <kvmarm@lists.cs.columbia.edu>; Sat,  5 Dec 2020 06:15:07 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id l3Rw0T2SK4oP for <kvmarm@lists.cs.columbia.edu>;
- Fri,  4 Dec 2020 13:37:48 -0500 (EST)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E08A24B18B
- for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Dec 2020 13:37:47 -0500 (EST)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 0E2DC22CA1;
- Fri,  4 Dec 2020 18:37:47 +0000 (UTC)
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1klFxh-00G3Uh-AZ; Fri, 04 Dec 2020 18:37:45 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ with ESMTP id VFOrqkthdMVw for <kvmarm@lists.cs.columbia.edu>;
+ Sat,  5 Dec 2020 06:15:05 -0500 (EST)
+Received: from mail-wr1-f67.google.com (mail-wr1-f67.google.com
+ [209.85.221.67])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7ED864B10C
+ for <kvmarm@lists.cs.columbia.edu>; Sat,  5 Dec 2020 06:15:05 -0500 (EST)
+Received: by mail-wr1-f67.google.com with SMTP id 91so3865183wrj.7
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 05 Dec 2020 03:15:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=vm0kTYRfsbbw/uXa2uKVACoRIfxCWD5Snf9/ZZBS4vI=;
+ b=Yr1ZIzDR77DcgbQbUxzYZI0kWHLoTvxPJi6yJox554/E5iE4d4BfyXrcjh9kQanIFl
+ 7NUcFENYX8B+GnaTBmEk6JDJKwmS3wq9B0aXsIA8x8tpTNywbdy33TOjYqbDxWKM/e5Q
+ GRv5p43UpM6pr6oc14g2NF+YOtjmyBxBAasEiVBayB1JolLmXIoOUQwDotq0qLvYgOEH
+ eFPxAA3AeVwMsrNQr85hrxbLRcNd892rbKdnEljiKEWwEbUKYagkfFOxrGz4Htc+Iwaw
+ sFsVJz1U5Y6deBeak6EVLnN/0xjRCdFKrdESHIIoBJu1LHenlWG1SSleFpgFQYpnxFZ6
+ fQoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=vm0kTYRfsbbw/uXa2uKVACoRIfxCWD5Snf9/ZZBS4vI=;
+ b=dsaWGtmgvQlv8KwVb7w6+/e8K0SArQF1m/RPv0v/qcYNMisL6OLb57FlH4UvK+LJZM
+ JaDZ9WjAhKLioSIB36rO/Bj+UlqfNIwHfzaYqXEYQKBP7SsQY5LWaZSYKWOTYFRmxr2C
+ 7Doo490WCaw8gkqGC9pv8gMPzYkuV2lkT7sY3JfPSJi1ww2s3217e/GTRScoahbudlkv
+ ta/Cbhh0GL26cHsjg/Q8SolIVOZaRG0ddmdDtXoE1zMRq5e3mwWcVMQT1Z3lIiLdzOQM
+ gNl6f84uUDdZj2QIE9RCCqBb+202lGVaM61i3IuIN/BKpeHTThQsm4pDVDSgIGnf2Kxf
+ 2qFg==
+X-Gm-Message-State: AOAM530MKnY3kSG5b51XBIkZlVJP9xvSSHPy8uy8K6Wmk7oj9q7dJ2Dc
+ Hgdj/JlTwzch/Ptm63TzPOF8Wg==
+X-Google-Smtp-Source: ABdhPJzidHN37LYdbiTj7YPUSYlEeuJWU1/5ZyiN4M4YFSu2jXb2xdJ0Tww0x7DtBdcHudzvJvASzA==
+X-Received: by 2002:adf:a3d1:: with SMTP id m17mr9487100wrb.289.1607166904041; 
+ Sat, 05 Dec 2020 03:15:04 -0800 (PST)
+Received: from ?IPv6:2a01:e34:ed2f:f020:8165:c1cc:d736:b53f?
+ ([2a01:e34:ed2f:f020:8165:c1cc:d736:b53f])
+ by smtp.googlemail.com with ESMTPSA id a65sm6470758wmc.35.2020.12.05.03.15.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 05 Dec 2020 03:15:03 -0800 (PST)
+Subject: Re: [PATCH v3 2/2] clocksource: arm_arch_timer: Correct fault
+ programming of CNTKCTL_EL1.EVNTI
+To: Keqian Zhu <zhukeqian1@huawei.com>, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH v2 2/2] KVM: arm64: Advertise ID_AA64PFR0_EL1.CSV3=1 if the
- CPUs are Meltdown-safe
-Date: Fri,  4 Dec 2020 18:37:09 +0000
-Message-Id: <20201204183709.784533-3-maz@kernel.org>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <20201204183709.784533-1-maz@kernel.org>
-References: <20201204183709.784533-1-maz@kernel.org>
+References: <20201204073126.6920-1-zhukeqian1@huawei.com>
+ <20201204073126.6920-3-zhukeqian1@huawei.com>
+From: Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <a82cf9ff-f18d-ce0a-f7a2-82a56cbbec40@linaro.org>
+Date: Sat, 5 Dec 2020 12:15:01 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, will@kernel.org,
- james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
- dbarzdil@google.com, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: Will Deacon <will@kernel.org>, David Brazdil <dbarzdil@google.com>,
- kernel-team@android.com
+In-Reply-To: <20201204073126.6920-3-zhukeqian1@huawei.com>
+Content-Language: en-US
+Cc: Marc Zyngier <maz@kernel.org>,
+ Sean Christopherson <sean.j.christopherson@intel.com>,
+ Alexios Zavras <alexios.zavras@intel.com>, Mark Brown <broonie@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ Thomas Gleixner <tglx@linutronix.de>, Will Deacon <will@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -73,126 +100,52 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Cores that predate the introduction of ID_AA64PFR0_EL1.CSV3 to
-the ARMv8 architecture have this field set to 0, even of some of
-them are not affected by the vulnerability.
-
-The kernel maintains a list of unaffected cores (A53, A55 and a few
-others) so that it doesn't impose an expensive mitigation uncessarily.
-
-As we do for CSV2, let's expose the CSV3 property to guests that run
-on HW that is effectively not vulnerable. This can be reset to zero
-by writing to the ID register from userspace, ensuring that VMs can
-be migrated despite the new property being set.
-
-Reported-by: Will Deacon <will@kernel.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/include/asm/kvm_host.h |  1 +
- arch/arm64/kvm/arm.c              |  6 ++++--
- arch/arm64/kvm/sys_regs.c         | 16 +++++++++++++---
- 3 files changed, 18 insertions(+), 5 deletions(-)
-
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 0cd9f0f75c13..147347028a20 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -120,6 +120,7 @@ struct kvm_arch {
- 	unsigned int pmuver;
- 
- 	u8 pfr0_csv2;
-+	u8 pfr0_csv3;
- };
- 
- struct kvm_vcpu_fault_info {
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index c0ffb019ca8b..dc3fa6a0f9e5 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -102,7 +102,7 @@ static int kvm_arm_default_max_vcpus(void)
- 	return vgic_present ? kvm_vgic_get_max_vcpus() : KVM_MAX_VCPUS;
- }
- 
--static void set_default_csv2(struct kvm *kvm)
-+static void set_default_spectre(struct kvm *kvm)
- {
- 	/*
- 	 * The default is to expose CSV2 == 1 if the HW isn't affected.
-@@ -114,6 +114,8 @@ static void set_default_csv2(struct kvm *kvm)
- 	 */
- 	if (arm64_get_spectre_v2_state() == SPECTRE_UNAFFECTED)
- 		kvm->arch.pfr0_csv2 = 1;
-+	if (arm64_get_meltdown_state() == SPECTRE_UNAFFECTED)
-+		kvm->arch.pfr0_csv3 = 1;
- }
- 
- /**
-@@ -141,7 +143,7 @@ int kvm_arch_init_vm(struct kvm *kvm, unsigned long type)
- 	/* The maximum number of VCPUs is limited by the host's GIC model */
- 	kvm->arch.max_vcpus = kvm_arm_default_max_vcpus();
- 
--	set_default_csv2(kvm);
-+	set_default_spectre(kvm);
- 
- 	return ret;
- out_free_stage2_pgd:
-diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index c1fac9836af1..5fee43dc66cf 100644
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -1122,6 +1122,8 @@ static u64 read_id_reg(const struct kvm_vcpu *vcpu,
- 		val &= ~(0xfUL << ID_AA64PFR0_AMU_SHIFT);
- 		val &= ~(0xfUL << ID_AA64PFR0_CSV2_SHIFT);
- 		val |= ((u64)vcpu->kvm->arch.pfr0_csv2 << ID_AA64PFR0_CSV2_SHIFT);
-+		val &= ~(0xfUL << ID_AA64PFR0_CSV3_SHIFT);
-+		val |= ((u64)vcpu->kvm->arch.pfr0_csv3 << ID_AA64PFR0_CSV3_SHIFT);
- 	} else if (id == SYS_ID_AA64PFR1_EL1) {
- 		val &= ~(0xfUL << ID_AA64PFR1_MTE_SHIFT);
- 	} else if (id == SYS_ID_AA64ISAR1_EL1 && !vcpu_has_ptrauth(vcpu)) {
-@@ -1209,9 +1211,9 @@ static int set_id_aa64pfr0_el1(struct kvm_vcpu *vcpu,
- 			       const struct kvm_one_reg *reg, void __user *uaddr)
- {
- 	const u64 id = sys_reg_to_index(rd);
-+	u8 csv2, csv3;
- 	int err;
- 	u64 val;
--	u8 csv2;
- 
- 	err = reg_from_user(&val, uaddr, id);
- 	if (err)
-@@ -1227,13 +1229,21 @@ static int set_id_aa64pfr0_el1(struct kvm_vcpu *vcpu,
- 	    (csv2 && arm64_get_spectre_v2_state() != SPECTRE_UNAFFECTED))
- 		return -EINVAL;
- 
--	/* We can only differ with CSV2, and anything else is an error */
-+	/* Same thing for CSV3 */
-+	csv3 = cpuid_feature_extract_unsigned_field(val, ID_AA64PFR0_CSV3_SHIFT);
-+	if (csv3 > 1 ||
-+	    (csv3 && arm64_get_meltdown_state() != SPECTRE_UNAFFECTED))
-+		return -EINVAL;
-+
-+	/* We can only differ with CSV[23], and anything else is an error */
- 	val ^= read_id_reg(vcpu, rd, false);
--	val &= ~(0xFUL << ID_AA64PFR0_CSV2_SHIFT);
-+	val &= ~((0xFUL << ID_AA64PFR0_CSV2_SHIFT) |
-+		 (0xFUL << ID_AA64PFR0_CSV3_SHIFT));
- 	if (val)
- 		return -EINVAL;
- 
- 	vcpu->kvm->arch.pfr0_csv2 = csv2;
-+	vcpu->kvm->arch.pfr0_csv3 = csv3;
- 
- 	return 0;
- }
--- 
-2.28.0
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+CgpIaSBNYXJjLAoKYXJlIHlvdSBmaW5lIHdpdGggdGhpcyBwYXRjaCA/CgoKT24gMDQvMTIvMjAy
+MCAwODozMSwgS2VxaWFuIFpodSB3cm90ZToKPiBBUk0gdmlydHVhbCBjb3VudGVyIHN1cHBvcnRz
+IGV2ZW50IHN0cmVhbSwgaXQgY2FuIG9ubHkgdHJpZ2dlciBhbiBldmVudAo+IHdoZW4gdGhlIHRy
+aWdnZXIgYml0ICh0aGUgdmFsdWUgb2YgQ05US0NUTF9FTDEuRVZOVEkpIG9mIENOVFZDVF9FTDAg
+Y2hhbmdlcywKPiBzbyB0aGUgYWN0dWFsIHBlcmlvZCBvZiBldmVudCBzdHJlYW0gaXMgMl4oY250
+a2N0bF9ldm50aSArIDEpLiBGb3IgZXhhbXBsZSwKPiB3aGVuIHRoZSB0cmlnZ2VyIGJpdCBpcyAw
+LCB0aGVuIHZpcnR1YWwgY291bnRlciB0cmlnZ2VyIGFuIGV2ZW50IGZvciBldmVyeQo+IHR3byBj
+eWNsZXMuCj4gCj4gRml4ZXM6IDAzN2Y2Mzc3NjdhOCAoImRyaXZlcnM6IGNsb2Nrc291cmNlOiBh
+ZGQgc3VwcG9ydCBmb3IgQVJNIGFyY2hpdGVjdGVkIHRpbWVyIGV2ZW50IHN0cmVhbSIpCj4gU3Vn
+Z2VzdGVkLWJ5OiBNYXJjIFp5bmdpZXIgPG1hekBrZXJuZWwub3JnPgo+IFNpZ25lZC1vZmYtYnk6
+IEtlcWlhbiBaaHUgPHpodWtlcWlhbjFAaHVhd2VpLmNvbT4KPiAtLS0KPiAgZHJpdmVycy9jbG9j
+a3NvdXJjZS9hcm1fYXJjaF90aW1lci5jIHwgMjMgKysrKysrKysrKysrKysrKy0tLS0tLS0KPiAg
+MSBmaWxlIGNoYW5nZWQsIDE2IGluc2VydGlvbnMoKyksIDcgZGVsZXRpb25zKC0pCj4gCj4gZGlm
+ZiAtLWdpdCBhL2RyaXZlcnMvY2xvY2tzb3VyY2UvYXJtX2FyY2hfdGltZXIuYyBiL2RyaXZlcnMv
+Y2xvY2tzb3VyY2UvYXJtX2FyY2hfdGltZXIuYwo+IGluZGV4IDc3N2QzOGNiMzliMC4uZDAxNzc4
+MjRjNTE4IDEwMDY0NAo+IC0tLSBhL2RyaXZlcnMvY2xvY2tzb3VyY2UvYXJtX2FyY2hfdGltZXIu
+Ywo+ICsrKyBiL2RyaXZlcnMvY2xvY2tzb3VyY2UvYXJtX2FyY2hfdGltZXIuYwo+IEBAIC04MjIs
+MTUgKzgyMiwyNCBAQCBzdGF0aWMgdm9pZCBhcmNoX3RpbWVyX2V2dHN0cm1fZW5hYmxlKGludCBk
+aXZpZGVyKQo+ICAKPiAgc3RhdGljIHZvaWQgYXJjaF90aW1lcl9jb25maWd1cmVfZXZ0c3RyZWFt
+KHZvaWQpCj4gIHsKPiAtCWludCBldnRfc3RyZWFtX2RpdiwgcG9zOwo+ICsJaW50IGV2dF9zdHJl
+YW1fZGl2LCBsc2I7Cj4gKwo+ICsJLyoKPiArCSAqIEFzIHRoZSBldmVudCBzdHJlYW0gY2FuIGF0
+IG1vc3QgYmUgZ2VuZXJhdGVkIGF0IGhhbGYgdGhlIGZyZXF1ZW5jeQo+ICsJICogb2YgdGhlIGNv
+dW50ZXIsIHVzZSBoYWxmIHRoZSBmcmVxdWVuY3kgd2hlbiBjb21wdXRpbmcgdGhlIGRpdmlkZXIu
+Cj4gKwkgKi8KPiArCWV2dF9zdHJlYW1fZGl2ID0gYXJjaF90aW1lcl9yYXRlIC8gQVJDSF9USU1F
+Ul9FVlRfU1RSRUFNX0ZSRVEgLyAyOwo+ICsKPiArCS8qCj4gKwkgKiBGaW5kIHRoZSBjbG9zZXN0
+IHBvd2VyIG9mIHR3byB0byB0aGUgZGl2aXNvci4gSWYgdGhlIGFkamFjZW50IGJpdAo+ICsJICog
+b2YgbHNiIChsYXN0IHNldCBiaXQsIHN0YXJ0cyBmcm9tIDApIGlzIHNldCwgdGhlbiB3ZSB1c2Ug
+KGxzYiArIDEpLgo+ICsJICovCj4gKwlsc2IgPSBmbHMoZXZ0X3N0cmVhbV9kaXYpIC0gMTsKPiAr
+CWlmIChsc2IgPiAwICYmIChldnRfc3RyZWFtX2RpdiAmIEJJVChsc2IgLSAxKSkpCj4gKwkJbHNi
+Kys7Cj4gIAo+IC0JLyogRmluZCB0aGUgY2xvc2VzdCBwb3dlciBvZiB0d28gdG8gdGhlIGRpdmlz
+b3IgKi8KPiAtCWV2dF9zdHJlYW1fZGl2ID0gYXJjaF90aW1lcl9yYXRlIC8gQVJDSF9USU1FUl9F
+VlRfU1RSRUFNX0ZSRVE7Cj4gLQlwb3MgPSBmbHMoZXZ0X3N0cmVhbV9kaXYpOwo+IC0JaWYgKHBv
+cyA+IDEgJiYgIShldnRfc3RyZWFtX2RpdiAmICgxIDw8IChwb3MgLSAyKSkpKQo+IC0JCXBvcy0t
+Owo+ICAJLyogZW5hYmxlIGV2ZW50IHN0cmVhbSAqLwo+IC0JYXJjaF90aW1lcl9ldnRzdHJtX2Vu
+YWJsZShtaW4ocG9zLCAxNSkpOwo+ICsJYXJjaF90aW1lcl9ldnRzdHJtX2VuYWJsZShtYXgoMCwg
+bWluKGxzYiwgMTUpKSk7Cj4gIH0KPiAgCj4gIHN0YXRpYyB2b2lkIGFyY2hfY291bnRlcl9zZXRf
+dXNlcl9hY2Nlc3Modm9pZCkKPiAKCgotLSAKPGh0dHA6Ly93d3cubGluYXJvLm9yZy8+IExpbmFy
+by5vcmcg4pSCIE9wZW4gc291cmNlIHNvZnR3YXJlIGZvciBBUk0gU29DcwoKRm9sbG93IExpbmFy
+bzogIDxodHRwOi8vd3d3LmZhY2Vib29rLmNvbS9wYWdlcy9MaW5hcm8+IEZhY2Vib29rIHwKPGh0
+dHA6Ly90d2l0dGVyLmNvbS8jIS9saW5hcm9vcmc+IFR3aXR0ZXIgfAo8aHR0cDovL3d3dy5saW5h
+cm8ub3JnL2xpbmFyby1ibG9nLz4gQmxvZwpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1
+bWJpYS5lZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9r
+dm1hcm0K
