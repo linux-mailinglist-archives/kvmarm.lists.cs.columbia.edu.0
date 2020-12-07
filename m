@@ -2,71 +2,65 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 30E8D2D0DE0
-	for <lists+kvmarm@lfdr.de>; Mon,  7 Dec 2020 11:20:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C94E12D0E9D
+	for <lists+kvmarm@lfdr.de>; Mon,  7 Dec 2020 12:06:01 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 76FE44B288;
-	Mon,  7 Dec 2020 05:20:14 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5D5204B28E;
+	Mon,  7 Dec 2020 06:06:01 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id i-azTxgrFjVf; Mon,  7 Dec 2020 05:20:14 -0500 (EST)
+	with ESMTP id OahuwyF8ZEhU; Mon,  7 Dec 2020 06:06:01 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D77E4B285;
-	Mon,  7 Dec 2020 05:20:13 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3B58C4B285;
+	Mon,  7 Dec 2020 06:06:00 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DC8504B275
- for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Dec 2020 05:20:11 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3785C4B27C
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Dec 2020 06:05:59 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id hbsYOY-YCnLt for <kvmarm@lists.cs.columbia.edu>;
- Mon,  7 Dec 2020 05:20:10 -0500 (EST)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B53F94B267
- for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Dec 2020 05:20:10 -0500 (EST)
-Date: Mon, 7 Dec 2020 10:20:03 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1607336409;
- bh=Li8eED23jwkjCXrIrIn4+IUiJ6tDcvVO2vCH088mQUY=;
- h=From:To:Cc:Subject:References:In-Reply-To:From;
- b=K0FLanr1uDR47XUL7aujD4qaGGbywqubDEU6lzDVlMfvD//mkVCklE2WbkUreeRsF
- ncinZWVrT2AwhNXtAEu7udfm5Ra44P7u6N9cLOu/LTTtGgycvdW1qNx4sraOioIoZa
- Da8B9TcxWiwOV9b6KYOOrEl8DkLL8fOXAlVl3poIBu2FmWmwSifU2/yOUzhHm9V9a5
- IHbrCePeoiha2DCMfA9Y2DmGUWeOiHG51ryLDmLYje36rUYJpCcefNliCtTfAzSYBy
- 7wY+z4MDM/D1pz+TTNx8Xpg/glPzWozfh9TkevI0IP/OMkug1QZ34pk3+XhTTjugpZ
- dykDvjQEoh9qQ==
-From: Will Deacon <will@kernel.org>
-To: Quentin Perret <qperret@google.com>
+ with ESMTP id 2VUlq+RD8om1 for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  7 Dec 2020 06:05:58 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EDEFD4B21A
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Dec 2020 06:05:57 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 861F21042;
+ Mon,  7 Dec 2020 03:05:57 -0800 (PST)
+Received: from C02TD0UTHF1T.local (unknown [10.57.27.106])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A111C3F66B;
+ Mon,  7 Dec 2020 03:05:54 -0800 (PST)
+Date: Mon, 7 Dec 2020 11:05:45 +0000
+From: Mark Rutland <mark.rutland@arm.com>
+To: Will Deacon <will@kernel.org>
 Subject: Re: [RFC PATCH 16/27] KVM: arm64: Prepare Hyp memory protection
-Message-ID: <20201207102002.GA3825@willie-the-truck>
+Message-ID: <20201207110528.GA18365@C02TD0UTHF1T.local>
 References: <20201117181607.1761516-1-qperret@google.com>
  <20201117181607.1761516-17-qperret@google.com>
  <CA+EHjTyJnZ8e=AN7H_k+oZb0VTWAgMicMY8Rqe2Di_3A87hm0A@mail.gmail.com>
  <X8p5kLSIq2MoQZ24@google.com>
+ <20201207102002.GA3825@willie-the-truck>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <X8p5kLSIq2MoQZ24@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: "moderated list:ARM64 PORT \(AARCH64 ARCHITECTURE\)"
- <linux-arm-kernel@lists.infradead.org>,
- "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE"
- <devicetree@vger.kernel.org>, kernel-team@android.com,
+In-Reply-To: <20201207102002.GA3825@willie-the-truck>
+Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE"
+ <devicetree@vger.kernel.org>, Frank Rowand <frowand.list@gmail.com>,
  Android KVM <android-kvm@google.com>,
  Catalin Marinas <catalin.marinas@arm.com>,
  open list <linux-kernel@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
  Fuad Tabba <tabba@google.com>, Marc Zyngier <maz@kernel.org>,
- Frank Rowand <frowand.list@gmail.com>,
+ kernel-team@android.com,
  "open list:KERNEL VIRTUAL MACHINE FOR ARM64 \(KVM/arm64\)"
- <kvmarm@lists.cs.columbia.edu>
+ <kvmarm@lists.cs.columbia.edu>,
+ "moderated list:ARM64 PORT \(AARCH64 ARCHITECTURE\)"
+ <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -83,68 +77,67 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Dec 04, 2020 at 06:01:52PM +0000, Quentin Perret wrote:
-> On Thursday 03 Dec 2020 at 12:57:33 (+0000), Fuad Tabba wrote:
-> <snip>
-> > > +int hyp_create_idmap(void);
-> > > +int hyp_map_vectors(void);
-> > > +int hyp_back_vmemmap(phys_addr_t phys, unsigned long size, phys_addr_t back);
-> > > +int hyp_cpu_set_vector(enum arm64_hyp_spectre_vector slot);
-> > > +int hyp_create_mappings(void *from, void *to, enum kvm_pgtable_prot prot);
-> > > +int __hyp_create_mappings(unsigned long start, unsigned long size,
-> > > +                         unsigned long phys, unsigned long prot);
-> > > +unsigned long __hyp_create_private_mapping(phys_addr_t phys, size_t size,
-> > > +                                          unsigned long prot);
-> > > +
+On Mon, Dec 07, 2020 at 10:20:03AM +0000, Will Deacon wrote:
+> On Fri, Dec 04, 2020 at 06:01:52PM +0000, Quentin Perret wrote:
+> > On Thursday 03 Dec 2020 at 12:57:33 (+0000), Fuad Tabba wrote:
+> > <snip>
+> > > > +SYM_FUNC_START(__kvm_init_switch_pgd)
+> > > > +       /* Turn the MMU off */
+> > > > +       pre_disable_mmu_workaround
+> > > > +       mrs     x2, sctlr_el2
+> > > > +       bic     x3, x2, #SCTLR_ELx_M
+> > > > +       msr     sctlr_el2, x3
+> > > > +       isb
+> > > > +
+> > > > +       tlbi    alle2
+> > > > +
+> > > > +       /* Install the new pgtables */
+> > > > +       ldr     x3, [x0, #NVHE_INIT_PGD_PA]
+> > > > +       phys_to_ttbr x4, x3
+> > > > +alternative_if ARM64_HAS_CNP
+> > > > +       orr     x4, x4, #TTBR_CNP_BIT
+> > > > +alternative_else_nop_endif
+> > > > +       msr     ttbr0_el2, x4
+> > > > +
+> > > > +       /* Set the new stack pointer */
+> > > > +       ldr     x0, [x0, #NVHE_INIT_STACK_HYP_VA]
+> > > > +       mov     sp, x0
+> > > > +
+> > > > +       /* And turn the MMU back on! */
+> > > > +       dsb     nsh
+> > > > +       isb
+> > > > +       msr     sctlr_el2, x2
+> > > > +       isb
+> > > > +       ret     x1
+> > > > +SYM_FUNC_END(__kvm_init_switch_pgd)
+> > > > +
+> > > 
+> > > Should the instruction cache be flushed here (ic iallu), to discard
+> > > speculatively fetched instructions?
 > > 
-> > nit: I also thought that the hyp_create_mappings function names are a
-> > bit confusing, since there's the create_hyp_mappings functions which
-> > use the aforementioned *hyp_pgtable.
+> > Hmm, Will? Thoughts?
 > 
-> Sure, happy to re-name those (and hyp_pgtable above). Any suggestions?
-> 
-> 
-> <snip>
-> > > +SYM_FUNC_START(__kvm_init_switch_pgd)
-> > > +       /* Turn the MMU off */
-> > > +       pre_disable_mmu_workaround
-> > > +       mrs     x2, sctlr_el2
-> > > +       bic     x3, x2, #SCTLR_ELx_M
-> > > +       msr     sctlr_el2, x3
-> > > +       isb
-> > > +
-> > > +       tlbi    alle2
-> > > +
-> > > +       /* Install the new pgtables */
-> > > +       ldr     x3, [x0, #NVHE_INIT_PGD_PA]
-> > > +       phys_to_ttbr x4, x3
-> > > +alternative_if ARM64_HAS_CNP
-> > > +       orr     x4, x4, #TTBR_CNP_BIT
-> > > +alternative_else_nop_endif
-> > > +       msr     ttbr0_el2, x4
-> > > +
-> > > +       /* Set the new stack pointer */
-> > > +       ldr     x0, [x0, #NVHE_INIT_STACK_HYP_VA]
-> > > +       mov     sp, x0
-> > > +
-> > > +       /* And turn the MMU back on! */
-> > > +       dsb     nsh
-> > > +       isb
-> > > +       msr     sctlr_el2, x2
-> > > +       isb
-> > > +       ret     x1
-> > > +SYM_FUNC_END(__kvm_init_switch_pgd)
-> > > +
-> > 
-> > Should the instruction cache be flushed here (ic iallu), to discard
-> > speculatively fetched instructions?
-> 
-> Hmm, Will? Thoughts?
+> The I-cache is physically tagged, so not sure what invalidation would
+> achieve here. Fuad -- what do you think could go wrong specifically?
 
-The I-cache is physically tagged, so not sure what invalidation would
-achieve here. Fuad -- what do you think could go wrong specifically?
+While the MMU is off, instruction fetches can be made from the PoC
+rather than the PoU, so where instructions have been modified/copied and
+not cleaned to the PoC, it's possible to fetch stale copies into the
+I-caches. The physical tag doesn't prevent that.
 
-Will
+In the regular CPU boot paths, __enabble_mmu() has an IC IALLU after
+enabling the MMU to ensure that we get rid of anything stale (e.g. so
+secondaries don't miss ftrace patching, which is only cleaned to the
+PoU).
+
+That might not be a problem here, if things are suitably padded and
+never dynamically patched, but if so it's probably worth a comment.
+
+Fuad, is that the sort of thing you were considering, or did you have
+additional concerns?
+
+Thanks,
+Mark.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
