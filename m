@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 72EC92D3290
-	for <lists+kvmarm@lfdr.de>; Tue,  8 Dec 2020 20:14:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B08F2D3303
+	for <lists+kvmarm@lfdr.de>; Tue,  8 Dec 2020 21:13:26 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D353F4B2BD;
-	Tue,  8 Dec 2020 14:14:53 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C27E94B25B;
+	Tue,  8 Dec 2020 15:13:25 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,71 +19,68 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Bt85i+APALPP; Tue,  8 Dec 2020 14:14:53 -0500 (EST)
+	with ESMTP id KSgJElXfjHUG; Tue,  8 Dec 2020 15:13:25 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A64664B2AC;
-	Tue,  8 Dec 2020 14:14:52 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9BCB64B2BB;
+	Tue,  8 Dec 2020 15:13:24 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DE6324B14B
- for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Dec 2020 14:14:50 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C750D4B1A8
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Dec 2020 15:02:59 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 7CvYXEmA-8bn for <kvmarm@lists.cs.columbia.edu>;
- Tue,  8 Dec 2020 14:14:50 -0500 (EST)
-Received: from mail-wr1-f66.google.com (mail-wr1-f66.google.com
- [209.85.221.66])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D32334B134
- for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Dec 2020 14:14:49 -0500 (EST)
-Received: by mail-wr1-f66.google.com with SMTP id x6so13459573wro.11
- for <kvmarm@lists.cs.columbia.edu>; Tue, 08 Dec 2020 11:14:49 -0800 (PST)
+ with ESMTP id Xi6qCfkmLV7U for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  8 Dec 2020 15:02:59 -0500 (EST)
+Received: from mail-qv1-f66.google.com (mail-qv1-f66.google.com
+ [209.85.219.66])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id EBC604B1C9
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Dec 2020 15:02:58 -0500 (EST)
+Received: by mail-qv1-f66.google.com with SMTP id l7so3462070qvt.4
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 08 Dec 2020 12:02:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=REHA7EmuVy2412k5JBZlHnXSXCITuu5RQOyBaXf28o8=;
- b=DgXW4UZBGLPpi3lT4JKM6pKgI6mSt/dk7wglJitvXIYua+es3r0i9AvLN/NQeGaP5U
- 0o39PUgticPGXS/fYZNwS8crslfcVJzP5XqpbflzbNi1WIPQQkwrD8L+PyURTqOQpZXK
- juYMowq4SdzpKYgYEWh9mjAqdMeSmT5AuzeomKp9OBkSwKn/nhgrCcRcloOpBNFyF+LS
- F7QTMAtYzWvCBhMO17hlxIie6tINGAutTZqZ+iA69roa3OxdwFqTXq3aWTLNOU3Nf25h
- h+HiI5SvMkOHNJE2debg9Vgm+45pfSNQ7dCEr+eKCAP0z5nl66gJpg6Khb1Qiev3/hZh
- EtJQ==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=FpPpi8VoMtsoCPIRy8jenvKh8eCrXui01GBoXCmAibc=;
+ b=Gje8dhYAHnzmhozDV6nyAB+eibl0NgYpORU05kDPkIsFQm37tYrnN4/L5WpaA6uvS+
+ +dHvy4ZXN5zo4qJlmIohacYz1zhwiR/rtYyTWwJJkoG/BYkpxYe4DqDiHWO1G0udLWou
+ 1SE763ZcU8jYBPs4Sw8FnjLo5u6/kP+LatT4YlexzoE/lP6uul6Bwq7qCPg8w9eQDohr
+ GADmErF1mrU4ZhcphF1gcZDAHe1M4sEMEjXCsCP6RDQPv+yg+Ad6+iXiDc+OU9sLeEGp
+ f10bwiv7KZrCdvjE52W3zNx8L0cQ8XX6FbT+jBECaVlKTrFlaRkYVNHsf/Nozqzzrro7
+ qBuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=REHA7EmuVy2412k5JBZlHnXSXCITuu5RQOyBaXf28o8=;
- b=fGF5DKmyoDMJ1rbKlagjPmmLdIgrsHMYOo1yOa4jMkJuPvt491fVwQOcsD8xhWyWuN
- kDtR+sJYItGY7AoPwEPt9P4iG+YNy8AcZF0j3uy5h5hxmpHvZxYpSweA//LknR3SB34u
- 0vdi7dDbKAW9fxT7sHVix2nzFzpfn2P/BwZj0OQKtxy9qnVvJx0MztcmTmiFO8c1eWZ2
- 79i7n2GJNVQYIFoPVePdyKZwSo9fiJctscEa9dJlUG9NdamusbMje0vv1EYEg7xWGo7T
- u6sHpKf72l57jL3f0EFUBBvc5kXfQvycKRlsB1klkK91iQpLRxgWAOBF1IjU9OXhRuaT
- SqHg==
-X-Gm-Message-State: AOAM533BoFwTUnExJUuRhxFDTru2h7vUt6/E0hXH10V0JIHMIG6X2hSD
- ZHDn6D4Elalvr59wJipPBX/GMA==
-X-Google-Smtp-Source: ABdhPJzMvjijXhKf6UwzlQgGLdXNiyElYjmteXjfB+clUMsCI8Qf7bumNkex70eiOtelbQWNt3aQ2A==
-X-Received: by 2002:a5d:51d2:: with SMTP id n18mr19894485wrv.92.1607454888755; 
- Tue, 08 Dec 2020 11:14:48 -0800 (PST)
-Received: from google.com ([2a01:4b00:8523:2d03:258e:cb26:cef:a620])
- by smtp.gmail.com with ESMTPSA id i16sm2846391wrx.89.2020.12.08.11.14.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Dec 2020 11:14:47 -0800 (PST)
-Date: Tue, 8 Dec 2020 19:14:47 +0000
-From: David Brazdil <dbrazdil@google.com>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v4 00/26] Opt-in always-on nVHE hypervisor
-Message-ID: <20201208191447.47idqf7n2v3hvrdg@google.com>
-References: <20201202184122.26046-1-dbrazdil@google.com>
- <160702322202.1501317.9696987088711766533.b4-ty@kernel.org>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=FpPpi8VoMtsoCPIRy8jenvKh8eCrXui01GBoXCmAibc=;
+ b=lmkFA8kJxFWvl5H9Wr9zAQt4SmLhPdriPcqgT4imJC3wj8sznd68LciSzEc6TiwKt2
+ V0dbBjVwzSCd8lUwpzNAmyBqeCgtYnjO0xw7Ee+LjbV2z7tQT7SQnFcPRKE7UhpEOFUl
+ wC883EDj4BMKPS6NmpKne0k8bd0nhThNp1m1oDn7LTh0JdlOk+IfgRnh9dpHSG7CfOMX
+ 5+l1UI8bforx5xrKZSeFyvXM8HcxfOsL94FD2xZSezgNC9Jlxkm8aYlEgo2EIRi0WCuV
+ P0PDDxYg3lrj8cKqxOvy6lrocuwCtKCUeZJtjLEFWEkA4FQOH4nRZFS+xKtj8wtLdqsV
+ SCSw==
+X-Gm-Message-State: AOAM531r3V/Mxj++k6sWUvwdkKI5F9VBTm+MH1cyZy/LmSZhXeShrsoS
+ 0ywluJbgfb0XiEYAGB5J1aLR/b42OvsCRZWVemkYdQ==
+X-Google-Smtp-Source: ABdhPJwfAM3wWeibHv8RrcoIhrJYGQjLkXIowS5Q4MiQJ6CrIMru6ycDzCbJFu7Uh1Oc0y/LYVfq5je68a5SrPqTFLM=
+X-Received: by 2002:ad4:59d2:: with SMTP id el18mr22835717qvb.35.1607457778234; 
+ Tue, 08 Dec 2020 12:02:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <160702322202.1501317.9696987088711766533.b4-ty@kernel.org>
-Cc: Christoph Lameter <cl@linux.com>,
- Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>, linux-doc@vger.kernel.org,
- Catalin Marinas <catalin.marinas@arm.com>, Jonathan Corbet <corbet@lwn.net>,
- linux-kernel@vger.kernel.org, Sudeep Holla <sudeep.holla@arm.com>,
- Tejun Heo <tj@kernel.org>, Dennis Zhou <dennis@kernel.org>,
- kernel-team@android.com, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+References: <20200721041742.197354-1-sergey.senozhatsky@gmail.com>
+ <20200817020310.GA1210848@jagdpanzerIV.localdomain>
+ <fe72592c-c721-bece-1469-95eebf931299@huawei.com>
+ <cbcfb402b7fdb8a2a45b80fbb0e79f3e@kernel.org>
+ <20200911085841.GB562@jagdpanzerIV.localdomain>
+In-Reply-To: <20200911085841.GB562@jagdpanzerIV.localdomain>
+From: Joel Fernandes <joelaf@google.com>
+Date: Tue, 8 Dec 2020 15:02:47 -0500
+Message-ID: <CAJWu+oq26OK1-7Ze2pb5xpRJ-tS9wtXOdGFrYpHq+fhkyGhjkA@mail.gmail.com>
+Subject: Re: [RFC][PATCH 0/4] arm64:kvm: teach guest sched that VCPUs can be
+ preempted
+To: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>
+X-Mailman-Approved-At: Tue, 08 Dec 2020 15:13:23 -0500
+Cc: Marc Zyngier <maz@kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+ Suleiman Souhlal <suleiman@google.com>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu,
+ "moderated list:ARM64 PORT \(AARCH64 ARCHITECTURE\)"
+ <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -100,58 +97,41 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hey Marc,
+On Fri, Sep 11, 2020 at 4:58 AM Sergey Senozhatsky
+<sergey.senozhatsky@gmail.com> wrote:
+>
+> My apologies for the slow reply.
+>
+> On (20/08/17 13:25), Marc Zyngier wrote:
+> >
+> > It really isn't the same thing at all. You are exposing PV spinlocks,
+> > while Sergey exposes preemption to vcpus.
+> >
+>
+> Correct, we see vcpu preemption as a "fundamental" feature, with
+> consequences that affect scheduling, which is a core feature :)
+>
+> Marc, is there anything in particular that you dislike about this RFC
+> patch set? Joel has some ideas, which we may discuss offline if that
+> works for you.
 
-On Thu, Dec 03, 2020 at 07:23:19PM +0000, Marc Zyngier wrote:
-> On Wed, 2 Dec 2020 18:40:56 +0000, David Brazdil wrote:
-> > As we progress towards being able to keep guest state private to the
-> > host running nVHE hypervisor, this series allows the hypervisor to
-> > install itself on newly booted CPUs before the host is allowed to run
-> > on them.
-> > 
-> > All functionality described below is opt-in, guarded by an early param
-> > 'kvm-arm.mode=protected'. Future patches specific to the new protected
-> > mode should be hidden behind the same param.
-> > 
-> > [...]
-> 
-> Applied to kvm-arm64/psci-relay, thanks!
-> 
-> Note that although I pushed it to -next, I still need people to
-> eyeball it and give it some Acks. The commit-IDs below will
-> thus change as I apply tags, if any.
-> 
+Hi Marc, Sergey, Just checking what is the latest on this series?
 
-I'm looking at -next and I think the merge with Mark Rutland's el2_setup
-refactor didn't go as planned.
+About the idea me and Sergey discussed, at a high level we discussed
+being able to share information similar to "Is the vCPU preempted?"
+using a more arch-independent infrastructure. I do not believe this
+needs to be arch-specific. Maybe the speciifc mechanism about how to
+share a page of information needs to be arch-specific, but the actual
+information shared need not be. This could open the door to sharing
+more such information in an arch-independent way (for example, if the
+scheduler needs to know other information such as the capacity of the
+CPU that the vCPU is on).
 
-The `#ifdef CONFIG_ARM64_VHE` section needs to cover everything between
-init_el2 and init_el2_nvhe. Currently the code falls through into VHE init
-when CONFIG_ARM64_VHE is not set.
+Other thoughts?
 
-Here's the snippet:
+thanks,
 
-SYM_INNER_LABEL(init_el2, SYM_L_LOCAL)
-#ifdef CONFIG_ARM64_VHE
-	/*
-	 * Check for VHE being present. x2 being non-zero indicates that we
-	 * do have VHE, and that the kernel is intended to run at EL2.
-	 */
-	mrs	x2, id_aa64mmfr1_el1
-	ubfx	x2, x2, #ID_AA64MMFR1_VHE_SHIFT, #4
-	cbz	x2, init_el2_nvhe
-#endif						// <--- THIS
-
-	<... initialize VHE ...>
-	msr	elr_el2, lr
-	mov	w0, #BOOT_CPU_MODE_EL2
-	eret
-						// <--- NEEDS TO MOVE HERE
-SYM_INNER_LABEL(init_el2_nvhe, SYM_L_LOCAL)
-	<... initialize nVHE ...>
-
--David
-
+ - Joel
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
