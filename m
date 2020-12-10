@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0016D2D54AF
-	for <lists+kvmarm@lfdr.de>; Thu, 10 Dec 2020 08:35:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F3392D54B0
+	for <lists+kvmarm@lfdr.de>; Thu, 10 Dec 2020 08:35:51 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A41ED4B1F5;
-	Thu, 10 Dec 2020 02:35:49 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C8B584B201;
+	Thu, 10 Dec 2020 02:35:50 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,37 +16,37 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id OPk-dWfxwQeJ; Thu, 10 Dec 2020 02:35:49 -0500 (EST)
+	with ESMTP id nQXCUiwwr8d2; Thu, 10 Dec 2020 02:35:50 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 564494B1DB;
-	Thu, 10 Dec 2020 02:35:47 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 72E134B1CE;
+	Thu, 10 Dec 2020 02:35:49 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4879E4B11F
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 02:35:46 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 382664B1BF
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 02:35:48 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id JcIWUkFJ8d5G for <kvmarm@lists.cs.columbia.edu>;
- Thu, 10 Dec 2020 02:35:41 -0500 (EST)
-Received: from szxga07-in.huawei.com (szxga07-in.huawei.com [45.249.212.35])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E69644B17E
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 02:35:40 -0500 (EST)
-Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.58])
- by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4Cs5Kg5xvQz7C9b;
- Thu, 10 Dec 2020 15:35:03 +0800 (CST)
+ with ESMTP id LE8XU6gpkU+O for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 10 Dec 2020 02:35:47 -0500 (EST)
+Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E3E4D4B1CE
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 02:35:43 -0500 (EST)
+Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.60])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4Cs5Km46jlz15b9Q;
+ Thu, 10 Dec 2020 15:35:08 +0800 (CST)
 Received: from DESKTOP-5IS4806.china.huawei.com (10.174.187.37) by
  DGGEMS407-HUB.china.huawei.com (10.3.19.207) with Microsoft SMTP Server id
- 14.3.487.0; Thu, 10 Dec 2020 15:35:29 +0800
+ 14.3.487.0; Thu, 10 Dec 2020 15:35:30 +0800
 From: Keqian Zhu <zhukeqian1@huawei.com>
 To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
  <iommu@lists.linux-foundation.org>, <kvm@vger.kernel.org>,
  <kvmarm@lists.cs.columbia.edu>, Alex Williamson <alex.williamson@redhat.com>, 
  Cornelia Huck <cohuck@redhat.com>, Marc Zyngier <maz@kernel.org>, Will Deacon
  <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>
-Subject: [PATCH 5/7] vfio: iommu_type1: Drop parameter "pgsize" of
- vfio_dma_bitmap_alloc_all
-Date: Thu, 10 Dec 2020 15:34:23 +0800
-Message-ID: <20201210073425.25960-6-zhukeqian1@huawei.com>
+Subject: [PATCH 6/7] vfio: iommu_type1: Drop parameter "pgsize" of
+ vfio_iova_dirty_bitmap.
+Date: Thu, 10 Dec 2020 15:34:24 +0800
+Message-ID: <20201210073425.25960-7-zhukeqian1@huawei.com>
 X-Mailer: git-send-email 2.8.4.windows.1
 In-Reply-To: <20201210073425.25960-1-zhukeqian1@huawei.com>
 References: <20201210073425.25960-1-zhukeqian1@huawei.com>
@@ -75,43 +75,42 @@ Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 We always use the smallest supported page size of vfio_iommu as
-pgsize. Remove parameter "pgsize" of vfio_dma_bitmap_alloc_all.
+pgsize. Remove parameter "pgsize" of vfio_iova_dirty_bitmap.
 
 Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
 ---
- drivers/vfio/vfio_iommu_type1.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/vfio/vfio_iommu_type1.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
-index 00684597b098..32ab889c8193 100644
+index 32ab889c8193..2d7a5cd9b916 100644
 --- a/drivers/vfio/vfio_iommu_type1.c
 +++ b/drivers/vfio/vfio_iommu_type1.c
-@@ -236,9 +236,10 @@ static void vfio_dma_populate_bitmap(struct vfio_dma *dma, size_t pgsize)
- 	}
+@@ -1026,11 +1026,12 @@ static int update_user_bitmap(u64 __user *bitmap, struct vfio_iommu *iommu,
  }
  
--static int vfio_dma_bitmap_alloc_all(struct vfio_iommu *iommu, size_t pgsize)
-+static int vfio_dma_bitmap_alloc_all(struct vfio_iommu *iommu)
+ static int vfio_iova_dirty_bitmap(u64 __user *bitmap, struct vfio_iommu *iommu,
+-				  dma_addr_t iova, size_t size, size_t pgsize)
++				  dma_addr_t iova, size_t size)
  {
+ 	struct vfio_dma *dma;
  	struct rb_node *n;
-+	size_t pgsize = (size_t)1 << __ffs(iommu->pgsize_bitmap);
+-	unsigned long pgshift = __ffs(pgsize);
++	unsigned long pgshift = __ffs(iommu->pgsize_bitmap);
++	size_t pgsize = (size_t)1 << pgshift;
+ 	int ret;
  
- 	for (n = rb_first(&iommu->dma_list); n; n = rb_next(n)) {
- 		struct vfio_dma *dma = rb_entry(n, struct vfio_dma, node);
-@@ -2798,12 +2799,9 @@ static int vfio_iommu_type1_dirty_pages(struct vfio_iommu *iommu,
- 		return -EINVAL;
- 
- 	if (dirty.flags & VFIO_IOMMU_DIRTY_PAGES_FLAG_START) {
--		size_t pgsize;
--
- 		mutex_lock(&iommu->lock);
--		pgsize = 1 << __ffs(iommu->pgsize_bitmap);
- 		if (!iommu->dirty_page_tracking) {
--			ret = vfio_dma_bitmap_alloc_all(iommu, pgsize);
-+			ret = vfio_dma_bitmap_alloc_all(iommu);
- 			if (!ret)
- 				iommu->dirty_page_tracking = true;
- 		}
+ 	/*
+@@ -2861,8 +2862,7 @@ static int vfio_iommu_type1_dirty_pages(struct vfio_iommu *iommu,
+ 		if (iommu->dirty_page_tracking)
+ 			ret = vfio_iova_dirty_bitmap(range.bitmap.data,
+ 						     iommu, range.iova,
+-						     range.size,
+-						     range.bitmap.pgsize);
++						     range.size);
+ 		else
+ 			ret = -EINVAL;
+ out_unlock:
 -- 
 2.23.0
 
