@@ -2,51 +2,52 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E80F2D54A5
-	for <lists+kvmarm@lfdr.de>; Thu, 10 Dec 2020 08:35:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 769A82D54AC
+	for <lists+kvmarm@lfdr.de>; Thu, 10 Dec 2020 08:35:48 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0394B4B1A9;
-	Thu, 10 Dec 2020 02:35:41 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2A8CA4B1D4;
+	Thu, 10 Dec 2020 02:35:48 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WXBVLn9dMEFb; Thu, 10 Dec 2020 02:35:40 -0500 (EST)
+	with ESMTP id Xg7kPMOjq-p5; Thu, 10 Dec 2020 02:35:46 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BA8214B17A;
-	Thu, 10 Dec 2020 02:35:39 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 348424B104;
+	Thu, 10 Dec 2020 02:35:43 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id F28014B11F
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 02:35:37 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7C9724B134
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 02:35:42 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id jp0v5sPjpK3m for <kvmarm@lists.cs.columbia.edu>;
- Thu, 10 Dec 2020 02:35:35 -0500 (EST)
-Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5A8A24B117
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 02:35:35 -0500 (EST)
+ with ESMTP id h+LaPv2dRLF4 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 10 Dec 2020 02:35:41 -0500 (EST)
+Received: from szxga07-in.huawei.com (szxga07-in.huawei.com [45.249.212.35])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id F2DC94B1A2
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 02:35:40 -0500 (EST)
 Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.58])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4Cs5KN6PFMzM2xM;
- Thu, 10 Dec 2020 15:34:48 +0800 (CST)
+ by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4Cs5Kg6N1tz7CCB;
+ Thu, 10 Dec 2020 15:35:03 +0800 (CST)
 Received: from DESKTOP-5IS4806.china.huawei.com (10.174.187.37) by
  DGGEMS407-HUB.china.huawei.com (10.3.19.207) with Microsoft SMTP Server id
- 14.3.487.0; Thu, 10 Dec 2020 15:35:24 +0800
+ 14.3.487.0; Thu, 10 Dec 2020 15:35:25 +0800
 From: Keqian Zhu <zhukeqian1@huawei.com>
 To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
  <iommu@lists.linux-foundation.org>, <kvm@vger.kernel.org>,
  <kvmarm@lists.cs.columbia.edu>, Alex Williamson <alex.williamson@redhat.com>, 
  Cornelia Huck <cohuck@redhat.com>, Marc Zyngier <maz@kernel.org>, Will Deacon
  <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>
-Subject: [PATCH 0/7] vfio: iommu_type1: Some fixes and optimization
-Date: Thu, 10 Dec 2020 15:34:18 +0800
-Message-ID: <20201210073425.25960-1-zhukeqian1@huawei.com>
+Subject: [PATCH 1/7] vfio: iommu_type1: Clear added dirty bit when unwind pin
+Date: Thu, 10 Dec 2020 15:34:19 +0800
+Message-ID: <20201210073425.25960-2-zhukeqian1@huawei.com>
 X-Mailer: git-send-email 2.8.4.windows.1
+In-Reply-To: <20201210073425.25960-1-zhukeqian1@huawei.com>
+References: <20201210073425.25960-1-zhukeqian1@huawei.com>
 MIME-Version: 1.0
 X-Originating-IP: [10.174.187.37]
 X-CFilter-Loop: Reflected
@@ -71,34 +72,98 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi folks,
+Currently we do not clear added dirty bit of bitmap when unwind
+pin, so if pin failed at halfway, we set unnecessary dirty bit
+in bitmap. Clearing added dirty bit when unwind pin, userspace
+will see less dirty page, which can save much time to handle them.
 
-This patch series aim to fix up or optimize some code about vfio
-dirty log tracking.
+Note that we should distinguish the bits added by pin and the bits
+already set before pin, so introduce bitmap_added to record this.
 
-patch   1: Optimize dirty log when unwind pin pages.
-patch 2-3: Optimize promoting pinned_page_dirty_scope.
-patch   4: Fix up dirty log missing when promote pinned_page_dirty_scope.
-patch 5-7: Drop superfluous parameter "pgsize" of some functions.
+Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
+---
+ drivers/vfio/vfio_iommu_type1.c | 33 ++++++++++++++++++++++-----------
+ 1 file changed, 22 insertions(+), 11 deletions(-)
 
-Wish they improves the robustness of vfio dirty log tracking.
-
-Thanks,
-Keqian
-
-Keqian Zhu (7):
-  vfio: iommu_type1: Clear added dirty bit when unwind pin
-  vfio: iommu_type1: Initially set the pinned_page_dirty_scope
-  vfio: iommu_type1: Make an explicit "promote" semantic
-  vfio: iommu_type1: Fix missing dirty page when promote pinned_scope
-  vfio: iommu_type1: Drop parameter "pgsize" of
-    vfio_dma_bitmap_alloc_all
-  vfio: iommu_type1: Drop parameter "pgsize" of vfio_iova_dirty_bitmap.
-  vfio: iommu_type1: Drop parameter "pgsize" of update_user_bitmap
-
- drivers/vfio/vfio_iommu_type1.c | 108 +++++++++++++++++++-------------
- 1 file changed, 65 insertions(+), 43 deletions(-)
-
+diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
+index 67e827638995..f129d24a6ec3 100644
+--- a/drivers/vfio/vfio_iommu_type1.c
++++ b/drivers/vfio/vfio_iommu_type1.c
+@@ -637,7 +637,11 @@ static int vfio_iommu_type1_pin_pages(void *iommu_data,
+ 	struct vfio_iommu *iommu = iommu_data;
+ 	struct vfio_group *group;
+ 	int i, j, ret;
++	unsigned long pgshift = __ffs(iommu->pgsize_bitmap);
+ 	unsigned long remote_vaddr;
++	unsigned long bitmap_offset;
++	unsigned long *bitmap_added;
++	dma_addr_t iova;
+ 	struct vfio_dma *dma;
+ 	bool do_accounting;
+ 
+@@ -650,6 +654,12 @@ static int vfio_iommu_type1_pin_pages(void *iommu_data,
+ 
+ 	mutex_lock(&iommu->lock);
+ 
++	bitmap_added = bitmap_zalloc(npage, GFP_KERNEL);
++	if (!bitmap_added) {
++		ret = -ENOMEM;
++		goto pin_done;
++	}
++
+ 	/* Fail if notifier list is empty */
+ 	if (!iommu->notifier.head) {
+ 		ret = -EINVAL;
+@@ -664,7 +674,6 @@ static int vfio_iommu_type1_pin_pages(void *iommu_data,
+ 	do_accounting = !IS_IOMMU_CAP_DOMAIN_IN_CONTAINER(iommu);
+ 
+ 	for (i = 0; i < npage; i++) {
+-		dma_addr_t iova;
+ 		struct vfio_pfn *vpfn;
+ 
+ 		iova = user_pfn[i] << PAGE_SHIFT;
+@@ -699,14 +708,10 @@ static int vfio_iommu_type1_pin_pages(void *iommu_data,
+ 		}
+ 
+ 		if (iommu->dirty_page_tracking) {
+-			unsigned long pgshift = __ffs(iommu->pgsize_bitmap);
+-
+-			/*
+-			 * Bitmap populated with the smallest supported page
+-			 * size
+-			 */
+-			bitmap_set(dma->bitmap,
+-				   (iova - dma->iova) >> pgshift, 1);
++			/* Populated with the smallest supported page size */
++			bitmap_offset = (iova - dma->iova) >> pgshift;
++			if (!test_and_set_bit(bitmap_offset, dma->bitmap))
++				set_bit(i, bitmap_added);
+ 		}
+ 	}
+ 	ret = i;
+@@ -722,14 +727,20 @@ static int vfio_iommu_type1_pin_pages(void *iommu_data,
+ pin_unwind:
+ 	phys_pfn[i] = 0;
+ 	for (j = 0; j < i; j++) {
+-		dma_addr_t iova;
+-
+ 		iova = user_pfn[j] << PAGE_SHIFT;
+ 		dma = vfio_find_dma(iommu, iova, PAGE_SIZE);
+ 		vfio_unpin_page_external(dma, iova, do_accounting);
+ 		phys_pfn[j] = 0;
++
++		if (test_bit(j, bitmap_added)) {
++			bitmap_offset = (iova - dma->iova) >> pgshift;
++			clear_bit(bitmap_offset, dma->bitmap);
++		}
+ 	}
+ pin_done:
++	if (bitmap_added)
++		bitmap_free(bitmap_added);
++
+ 	mutex_unlock(&iommu->lock);
+ 	return ret;
+ }
 -- 
 2.23.0
 
