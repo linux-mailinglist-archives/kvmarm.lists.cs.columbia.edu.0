@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 494AE2D60BE
-	for <lists+kvmarm@lfdr.de>; Thu, 10 Dec 2020 17:00:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 531852D60BD
+	for <lists+kvmarm@lfdr.de>; Thu, 10 Dec 2020 17:00:44 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F35924B1DD;
-	Thu, 10 Dec 2020 11:00:45 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 091714B23C;
+	Thu, 10 Dec 2020 11:00:44 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,39 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZQKUJNxsePyF; Thu, 10 Dec 2020 11:00:45 -0500 (EST)
+	with ESMTP id JC0TxgZe3u4n; Thu, 10 Dec 2020 11:00:43 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 78CC64B252;
-	Thu, 10 Dec 2020 11:00:41 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5AF424B220;
+	Thu, 10 Dec 2020 11:00:39 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id F2ED54B1F4
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 822AB4B1DC
  for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 11:00:38 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Yt+-+v5-g2sZ for <kvmarm@lists.cs.columbia.edu>;
- Thu, 10 Dec 2020 11:00:36 -0500 (EST)
+ with ESMTP id F1bpiz4Yip57 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 10 Dec 2020 11:00:37 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 68FBB4B17A
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 11:00:35 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 484084B1FD
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 11:00:36 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 7F28A23E1B;
- Thu, 10 Dec 2020 16:00:34 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 518D523E1D;
+ Thu, 10 Dec 2020 16:00:35 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1knOMq-0008Di-OD; Thu, 10 Dec 2020 16:00:32 +0000
+ id 1knOMr-0008Di-IJ; Thu, 10 Dec 2020 16:00:33 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH v3 05/66] KVM: arm64: nv: Add EL2 system registers to vcpu
- context
-Date: Thu, 10 Dec 2020 15:59:01 +0000
-Message-Id: <20201210160002.1407373-6-maz@kernel.org>
+Subject: [PATCH v3 06/66] KVM: arm64: nv: Add nested virt VCPU primitives for
+ vEL2 VCPU state
+Date: Thu, 10 Dec 2020 15:59:02 +0000
+Message-Id: <20201210160002.1407373-7-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201210160002.1407373-1-maz@kernel.org>
 References: <20201210160002.1407373-1-maz@kernel.org>
@@ -78,64 +78,86 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add the minimal set of EL2 system registers to the vcpu context.
-Nothing uses them just yet.
+From: Christoffer Dall <christoffer.dall@arm.com>
 
+When running a nested hypervisor we commonly have to figure out if
+the VCPU mode is running in the context of a guest hypervisor or guest
+guest, or just a normal guest.
+
+Add convenient primitives for this.
+
+Signed-off-by: Christoffer Dall <christoffer.dall@arm.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/kvm_host.h | 34 ++++++++++++++++++++++++++++++-
- 1 file changed, 33 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/kvm_emulate.h | 55 ++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 11beda85ee7e..d731cf7a56cb 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -206,12 +206,44 @@ enum vcpu_sysreg {
- 	CNTP_CVAL_EL0,
- 	CNTP_CTL_EL0,
+diff --git a/arch/arm64/include/asm/kvm_emulate.h b/arch/arm64/include/asm/kvm_emulate.h
+index c8f550a53516..e3e22d364dc9 100644
+--- a/arch/arm64/include/asm/kvm_emulate.h
++++ b/arch/arm64/include/asm/kvm_emulate.h
+@@ -173,6 +173,61 @@ static __always_inline void vcpu_set_reg(struct kvm_vcpu *vcpu, u8 reg_num,
+ 		vcpu_gp_regs(vcpu)->regs[reg_num] = val;
+ }
  
--	/* 32bit specific registers. Keep them at the end of the range */
-+	/* 32bit specific registers. */
- 	DACR32_EL2,	/* Domain Access Control Register */
- 	IFSR32_EL2,	/* Instruction Fault Status Register */
- 	FPEXC32_EL2,	/* Floating-Point Exception Control Register */
- 	DBGVCR32_EL2,	/* Debug Vector Catch Register */
- 
-+	/* EL2 registers */
-+	VPIDR_EL2,	/* Virtualization Processor ID Register */
-+	VMPIDR_EL2,	/* Virtualization Multiprocessor ID Register */
-+	SCTLR_EL2,	/* System Control Register (EL2) */
-+	ACTLR_EL2,	/* Auxiliary Control Register (EL2) */
-+	HCR_EL2,	/* Hypervisor Configuration Register */
-+	MDCR_EL2,	/* Monitor Debug Configuration Register (EL2) */
-+	CPTR_EL2,	/* Architectural Feature Trap Register (EL2) */
-+	HSTR_EL2,	/* Hypervisor System Trap Register */
-+	HACR_EL2,	/* Hypervisor Auxiliary Control Register */
-+	TTBR0_EL2,	/* Translation Table Base Register 0 (EL2) */
-+	TTBR1_EL2,	/* Translation Table Base Register 1 (EL2) */
-+	TCR_EL2,	/* Translation Control Register (EL2) */
-+	VTTBR_EL2,	/* Virtualization Translation Table Base Register */
-+	VTCR_EL2,	/* Virtualization Translation Control Register */
-+	SPSR_EL2,	/* EL2 saved program status register */
-+	ELR_EL2,	/* EL2 exception link register */
-+	AFSR0_EL2,	/* Auxiliary Fault Status Register 0 (EL2) */
-+	AFSR1_EL2,	/* Auxiliary Fault Status Register 1 (EL2) */
-+	ESR_EL2,	/* Exception Syndrome Register (EL2) */
-+	FAR_EL2,	/* Hypervisor IPA Fault Address Register */
-+	HPFAR_EL2,	/* Hypervisor IPA Fault Address Register */
-+	MAIR_EL2,	/* Memory Attribute Indirection Register (EL2) */
-+	AMAIR_EL2,	/* Auxiliary Memory Attribute Indirection Register (EL2) */
-+	VBAR_EL2,	/* Vector Base Address Register (EL2) */
-+	RVBAR_EL2,	/* Reset Vector Base Address Register */
-+	RMR_EL2,	/* Reset Management Register */
-+	CONTEXTIDR_EL2,	/* Context ID Register (EL2) */
-+	TPIDR_EL2,	/* EL2 Software Thread ID Register */
-+	CNTHCTL_EL2,	/* Counter-timer Hypervisor Control register */
-+	SP_EL2,		/* EL2 Stack Pointer */
++static inline bool vcpu_mode_el2_ctxt(const struct kvm_cpu_context *ctxt)
++{
++	unsigned long cpsr = ctxt->regs.pstate;
 +
- 	NR_SYS_REGS	/* Nothing after this line! */
- };
- 
++	switch (cpsr & (PSR_MODE32_BIT | PSR_MODE_MASK)) {
++	case PSR_MODE_EL2h:
++	case PSR_MODE_EL2t:
++		return true;
++	default:
++		return false;
++	}
++}
++
++static inline bool vcpu_mode_el2(const struct kvm_vcpu *vcpu)
++{
++	return vcpu_mode_el2_ctxt(&vcpu->arch.ctxt);
++}
++
++static inline bool __vcpu_el2_e2h_is_set(const struct kvm_cpu_context *ctxt)
++{
++	return ctxt_sys_reg(ctxt, HCR_EL2) & HCR_E2H;
++}
++
++static inline bool vcpu_el2_e2h_is_set(const struct kvm_vcpu *vcpu)
++{
++	return __vcpu_el2_e2h_is_set(&vcpu->arch.ctxt);
++}
++
++static inline bool __vcpu_el2_tge_is_set(const struct kvm_cpu_context *ctxt)
++{
++	return ctxt_sys_reg(ctxt, HCR_EL2) & HCR_TGE;
++}
++
++static inline bool vcpu_el2_tge_is_set(const struct kvm_vcpu *vcpu)
++{
++	return __vcpu_el2_tge_is_set(&vcpu->arch.ctxt);
++}
++
++static inline bool __is_hyp_ctxt(const struct kvm_cpu_context *ctxt)
++{
++	/*
++	 * We are in a hypervisor context if the vcpu mode is EL2 or
++	 * E2H and TGE bits are set. The latter means we are in the user space
++	 * of the VHE kernel. ARMv8.1 ARM describes this as 'InHost'
++	 */
++	return vcpu_mode_el2_ctxt(ctxt) ||
++		(__vcpu_el2_e2h_is_set(ctxt) && __vcpu_el2_tge_is_set(ctxt)) ||
++		WARN_ON(__vcpu_el2_tge_is_set(ctxt));
++}
++
++static inline bool is_hyp_ctxt(const struct kvm_vcpu *vcpu)
++{
++	return __is_hyp_ctxt(&vcpu->arch.ctxt);
++}
++
+ /*
+  * The layout of SPSR for an AArch32 state is different when observed from an
+  * AArch64 SPSR_ELx or an AArch32 SPSR_*. This function generates the AArch32
 -- 
 2.29.2
 
