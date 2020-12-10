@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 86F992D6119
-	for <lists+kvmarm@lfdr.de>; Thu, 10 Dec 2020 17:05:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D63612D6103
+	for <lists+kvmarm@lfdr.de>; Thu, 10 Dec 2020 17:04:50 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3D0004B325;
-	Thu, 10 Dec 2020 11:05:39 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6F5894B2EE;
+	Thu, 10 Dec 2020 11:04:50 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,39 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id r+qMo9LWXZv2; Thu, 10 Dec 2020 11:05:39 -0500 (EST)
+	with ESMTP id LRyO1Y5n3Y0s; Thu, 10 Dec 2020 11:04:50 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 748BF4B324;
-	Thu, 10 Dec 2020 11:05:35 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D85544B2F4;
+	Thu, 10 Dec 2020 11:04:45 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3C9554B0E9
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 11:05:34 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D38AF4B2B2
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 11:04:44 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Qp+fTJvCMSar for <kvmarm@lists.cs.columbia.edu>;
- Thu, 10 Dec 2020 11:05:33 -0500 (EST)
+ with ESMTP id ivTAIgXFLnWq for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 10 Dec 2020 11:04:43 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0A7F44B253
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 11:05:33 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7DECB4B2BF
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 11:04:40 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id EA77A23EB0;
- Thu, 10 Dec 2020 16:05:31 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 980FC23F35;
+ Thu, 10 Dec 2020 16:04:39 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1knON1-0008Di-9p; Thu, 10 Dec 2020 16:00:44 +0000
+ id 1knON3-0008Di-In; Thu, 10 Dec 2020 16:00:46 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH v3 17/66] KVM: arm64: nv: Emulate PSTATE.M for a guest
- hypervisor
-Date: Thu, 10 Dec 2020 15:59:13 +0000
-Message-Id: <20201210160002.1407373-18-maz@kernel.org>
+Subject: [PATCH v3 18/66] KVM: arm64: nv: Trap EL1 VM register accesses in
+ virtual EL2
+Date: Thu, 10 Dec 2020 15:59:14 +0000
+Message-Id: <20201210160002.1407373-19-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201210160002.1407373-1-maz@kernel.org>
 References: <20201210160002.1407373-1-maz@kernel.org>
@@ -57,11 +57,12 @@ X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
  kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, andre.przywara@arm.com,
  christoffer.dall@arm.com, jintack@cs.columbia.edu, alexandru.elisei@arm.com,
  james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
- kernel-team@android.com
+ kernel-team@android.com, christoffer.dall@linaro.org
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
-Cc: kernel-team@android.com, Andre Przywara <andre.przywara@arm.com>
+Cc: kernel-team@android.com, Andre Przywara <andre.przywara@arm.com>,
+ Christoffer Dall <christoffer.dall@linaro.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -78,85 +79,114 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Christoffer Dall <christoffer.dall@arm.com>
+From: Christoffer Dall <christoffer.dall@linaro.org>
 
-We can no longer blindly copy the VCPU's PSTATE into SPSR_EL2 and return
-to the guest and vice versa when taking an exception to the hypervisor,
-because we emulate virtual EL2 in EL1 and therefore have to translate
-the mode field from EL2 to EL1 and vice versa.
+When running in virtual EL2 mode, we actually run the hardware in EL1
+and therefore have to use the EL1 registers to ensure correct operation.
 
-Signed-off-by: Christoffer Dall <christoffer.dall@arm.com>
+By setting the HCR.TVM and HCR.TVRM we ensure that the virtual EL2 mode
+doesn't shoot itself in the foot when setting up what it believes to be
+a different mode's system register state (for example when preparing to
+switch to a VM).
+
+We can leverage the existing sysregs infrastructure to support trapped
+accesses to these registers.
+
+Signed-off-by: Christoffer Dall <christoffer.dall@linaro.org>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h | 43 +++++++++++++++++++++-
- 1 file changed, 41 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/hyp/include/hyp/switch.h |  4 +---
+ arch/arm64/kvm/hyp/nvhe/switch.c        |  2 +-
+ arch/arm64/kvm/hyp/vhe/switch.c         |  7 ++++++-
+ arch/arm64/kvm/sys_regs.c               | 19 ++++++++++++++++---
+ 4 files changed, 24 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h b/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h
-index e3901c73893e..92715fa01e88 100644
---- a/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h
-+++ b/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h
-@@ -51,10 +51,32 @@ static inline void __sysreg_save_el1_state(struct kvm_cpu_context *ctxt)
- 	ctxt_sys_reg(ctxt, SPSR_EL1)	= read_sysreg_el1(SYS_SPSR);
+diff --git a/arch/arm64/kvm/hyp/include/hyp/switch.h b/arch/arm64/kvm/hyp/include/hyp/switch.h
+index 84473574c2e7..424b074e4377 100644
+--- a/arch/arm64/kvm/hyp/include/hyp/switch.h
++++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
+@@ -101,10 +101,8 @@ static inline void __deactivate_traps_common(void)
+ 	write_sysreg(0, pmuserenr_el0);
  }
  
-+static inline u64 from_hw_pstate(const struct kvm_cpu_context *ctxt)
-+{
-+	u64 reg = read_sysreg_el2(SYS_SPSR);
-+
-+	if (__is_hyp_ctxt(ctxt)) {
-+		u64 mode = reg & (PSR_MODE_MASK | PSR_MODE32_BIT);
-+
-+		switch (mode) {
-+		case PSR_MODE_EL1t:
-+			mode = PSR_MODE_EL2t;
-+			break;
-+		case PSR_MODE_EL1h:
-+			mode = PSR_MODE_EL2h;
-+			break;
-+		}
-+
-+		return (reg & ~(PSR_MODE_MASK | PSR_MODE32_BIT)) | mode;
-+	}
-+
-+	return reg;
-+}
-+
- static inline void __sysreg_save_el2_return_state(struct kvm_cpu_context *ctxt)
+-static inline void ___activate_traps(struct kvm_vcpu *vcpu)
++static inline void ___activate_traps(struct kvm_vcpu *vcpu, u64 hcr)
  {
- 	ctxt->regs.pc			= read_sysreg_el2(SYS_ELR);
--	ctxt->regs.pstate		= read_sysreg_el2(SYS_SPSR);
-+	ctxt->regs.pstate		= from_hw_pstate(ctxt);
+-	u64 hcr = vcpu->arch.hcr_el2;
+-
+ 	if (cpus_have_final_cap(ARM64_WORKAROUND_CAVIUM_TX2_219_TVM))
+ 		hcr |= HCR_TVM;
  
- 	if (cpus_have_final_cap(ARM64_HAS_RAS_EXTN))
- 		ctxt_sys_reg(ctxt, DISR_EL1) = read_sysreg_s(SYS_VDISR_EL2);
-@@ -131,9 +153,26 @@ static inline void __sysreg_restore_el1_state(struct kvm_cpu_context *ctxt,
- 	write_sysreg_el1(ctxt_sys_reg(ctxt, SPSR_EL1),	SYS_SPSR);
- }
- 
-+/* Read the VCPU state's PSTATE, but translate (v)EL2 to EL1. */
-+static inline u64 to_hw_pstate(const struct kvm_cpu_context *ctxt)
-+{
-+	u64 mode = ctxt->regs.pstate & (PSR_MODE_MASK | PSR_MODE32_BIT);
-+
-+	switch (mode) {
-+	case PSR_MODE_EL2t:
-+		mode = PSR_MODE_EL1t;
-+		break;
-+	case PSR_MODE_EL2h:
-+		mode = PSR_MODE_EL1h;
-+		break;
-+	}
-+
-+	return (ctxt->regs.pstate & ~(PSR_MODE_MASK | PSR_MODE32_BIT)) | mode;
-+}
-+
- static inline void __sysreg_restore_el2_return_state(struct kvm_cpu_context *ctxt)
+diff --git a/arch/arm64/kvm/hyp/nvhe/switch.c b/arch/arm64/kvm/hyp/nvhe/switch.c
+index f3d0e9eca56c..07bf5c03631b 100644
+--- a/arch/arm64/kvm/hyp/nvhe/switch.c
++++ b/arch/arm64/kvm/hyp/nvhe/switch.c
+@@ -37,7 +37,7 @@ static void __activate_traps(struct kvm_vcpu *vcpu)
  {
--	u64 pstate = ctxt->regs.pstate;
-+	u64 pstate = to_hw_pstate(ctxt);
- 	u64 mode = pstate & PSR_AA32_MODE_MASK;
+ 	u64 val;
  
- 	/*
+-	___activate_traps(vcpu);
++	___activate_traps(vcpu, vcpu->arch.hcr_el2);
+ 	__activate_traps_common(vcpu);
+ 
+ 	val = CPTR_EL2_DEFAULT;
+diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
+index af8e940d0f03..3d8a4402b52c 100644
+--- a/arch/arm64/kvm/hyp/vhe/switch.c
++++ b/arch/arm64/kvm/hyp/vhe/switch.c
+@@ -36,9 +36,14 @@ DEFINE_PER_CPU(unsigned long, kvm_hyp_vector);
+ 
+ static void __activate_traps(struct kvm_vcpu *vcpu)
+ {
++	u64 hcr = vcpu->arch.hcr_el2;
+ 	u64 val;
+ 
+-	___activate_traps(vcpu);
++	/* Trap VM sysreg accesses if an EL2 guest is not using VHE. */
++	if (vcpu_mode_el2(vcpu) && !vcpu_el2_e2h_is_set(vcpu))
++		hcr |= HCR_TVM | HCR_TRVM;
++
++	___activate_traps(vcpu, hcr);
+ 
+ 	val = read_sysreg(cpacr_el1);
+ 	val |= CPACR_EL1_TTA;
+diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+index e7db4d809674..540a7faaaee3 100644
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -361,8 +361,15 @@ static void get_access_mask(const struct sys_reg_desc *r, u64 *mask, u64 *shift)
+ 
+ /*
+  * Generic accessor for VM registers. Only called as long as HCR_TVM
+- * is set. If the guest enables the MMU, we stop trapping the VM
+- * sys_regs and leave it in complete control of the caches.
++ * is set.
++ *
++ * This is set in two cases: either (1) we're running at vEL2, or (2)
++ * we're running at EL1 and the guest has its MMU off.
++ *
++ * (1) TVM/TRVM is set, as we need to virtualise some of the VM
++ * registers for the guest hypervisor
++ * (2) Once the guest enables the MMU, we stop trapping the VM sys_regs
++ * and leave it in complete control of the caches.
+  */
+ static bool access_vm_reg(struct kvm_vcpu *vcpu,
+ 			  struct sys_reg_params *p,
+@@ -371,7 +378,13 @@ static bool access_vm_reg(struct kvm_vcpu *vcpu,
+ 	bool was_enabled = vcpu_has_cache_enabled(vcpu);
+ 	u64 val, mask, shift;
+ 
+-	BUG_ON(!p->is_write);
++	/* We don't expect TRVM on the host */
++	BUG_ON(!vcpu_mode_el2(vcpu) && !p->is_write);
++
++	if (!p->is_write) {
++		p->regval = vcpu_read_sys_reg(vcpu, r->reg);
++		return true;
++	}
+ 
+ 	get_access_mask(r, &mask, &shift);
+ 
 -- 
 2.29.2
 
