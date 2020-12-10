@@ -2,57 +2,63 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 888782D5E3E
-	for <lists+kvmarm@lfdr.de>; Thu, 10 Dec 2020 15:45:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6541D2D60B8
+	for <lists+kvmarm@lfdr.de>; Thu, 10 Dec 2020 17:00:37 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 122B24B1B9;
-	Thu, 10 Dec 2020 09:45:55 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D58924B1A9;
+	Thu, 10 Dec 2020 11:00:36 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id OL4XdR+ru09V; Thu, 10 Dec 2020 09:45:54 -0500 (EST)
+	with ESMTP id yMGAlZJbyaqT; Thu, 10 Dec 2020 11:00:35 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 79AD54B1B3;
-	Thu, 10 Dec 2020 09:45:53 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C46334B1DA;
+	Thu, 10 Dec 2020 11:00:34 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7B72F4B124
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 09:45:52 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2B3AA4B1AE
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 11:00:33 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id seomdrqmXir7 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 10 Dec 2020 09:45:51 -0500 (EST)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E985E4B119
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 09:45:50 -0500 (EST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9666C1FB;
- Thu, 10 Dec 2020 06:45:50 -0800 (PST)
-Received: from [192.168.0.110] (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DD18C3F718;
- Thu, 10 Dec 2020 06:45:49 -0800 (PST)
-Subject: Re: [kvm-unit-tests PATCH 08/10] arm/arm64: gic: Split check_acked()
- into two functions
-To: Auger Eric <eric.auger@redhat.com>, kvm@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, drjones@redhat.com
-References: <20201125155113.192079-1-alexandru.elisei@arm.com>
- <20201125155113.192079-9-alexandru.elisei@arm.com>
- <0eb98cb0-835c-e257-484e-8210f1279f2c@redhat.com>
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-Message-ID: <2b8d774e-9398-e24b-6989-8643f5dd2492@arm.com>
-Date: Thu, 10 Dec 2020 14:45:37 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.3
+ with ESMTP id H7JZBIt3VV+5 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 10 Dec 2020 11:00:31 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 785074B126
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 11:00:31 -0500 (EST)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 1501523D50;
+ Thu, 10 Dec 2020 16:00:30 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1knOMl-0008Di-V5; Thu, 10 Dec 2020 16:00:28 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
+Subject: [PATCH v3 00/66] KVM: arm64: ARMv8.3/8.4 Nested Virtualization support
+Date: Thu, 10 Dec 2020 15:58:56 +0000
+Message-Id: <20201210160002.1407373-1-maz@kernel.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-In-Reply-To: <0eb98cb0-835c-e257-484e-8210f1279f2c@redhat.com>
-Content-Language: en-US
-Cc: andre.przywara@arm.com
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, andre.przywara@arm.com,
+ christoffer.dall@arm.com, jintack@cs.columbia.edu, alexandru.elisei@arm.com,
+ james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
+ kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com, Andre Przywara <andre.przywara@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -69,171 +75,184 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Eric,
+This is a rework of the NV series that I posted 10 months ago[1], as a
+lot of the KVM code has changed since, and the series apply anymore
+(not that anybody really cares as the the HW is, as usual, made of
+unobtainium...).
 
-On 12/3/20 1:39 PM, Auger Eric wrote:
->
-> On 11/25/20 4:51 PM, Alexandru Elisei wrote:
->> check_acked() has several peculiarities: is the only function among the
->> check_* functions which calls report() directly, it does two things
->> (waits for interrupts and checks for misfired interrupts) and it also
->> mixes printf, report_info and report calls.
->>
->> check_acked() also reports a pass and returns as soon all the target CPUs
->> have received interrupts, However, a CPU not having received an interrupt
->> *now* does not guarantee not receiving an eroneous interrupt if we wait
-> erroneous
->> long enough.
->>
->> Rework the function by splitting it into two separate functions, each with
->> a single responsability: wait_for_interrupts(), which waits for the
->> expected interrupts to fire, and check_acked() which checks that interrupts
->> have been received as expected.
->>
->> wait_for_interrupts() also waits an extra 100 milliseconds after the
->> expected interrupts have been received in an effort to make sure we don't
->> miss misfiring interrupts.
->>
->> Splitting check_acked() into two functions will also allow us to
->> customize the behavior of each function in the future more easily
->> without using an unnecessarily long list of arguments for check_acked().
->>
->> CC: Andre Przywara <andre.przywara@arm.com>
->> Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
->> ---
->>  arm/gic.c | 73 +++++++++++++++++++++++++++++++++++--------------------
->>  1 file changed, 47 insertions(+), 26 deletions(-)
->>
->> diff --git a/arm/gic.c b/arm/gic.c
->> index 544c283f5f47..dcdab7d5f39a 100644
->> --- a/arm/gic.c
->> +++ b/arm/gic.c
->> @@ -62,41 +62,42 @@ static void stats_reset(void)
->>  	}
->>  }
->>  
->> -static void check_acked(const char *testname, cpumask_t *mask)
->> +static void wait_for_interrupts(cpumask_t *mask)
->>  {
->> -	int missing = 0, extra = 0, unexpected = 0;
->>  	int nr_pass, cpu, i;
->> -	bool bad = false;
->>  
->>  	/* Wait up to 5s for all interrupts to be delivered */
->> -	for (i = 0; i < 50; ++i) {
->> +	for (i = 0; i < 50; i++) {
->>  		mdelay(100);
->>  		nr_pass = 0;
->>  		for_each_present_cpu(cpu) {
->> +			/*
->> +			 * A CPU having receied more than one interrupts will
-> received
->> +			 * show up in check_acked(), and no matter how long we
->> +			 * wait it cannot un-receive it. Consier at least one
-> consider
+From the previous version:
 
-Will fix all three typos, thanks.
+- Integration with the new page-table code
+- New exception injection code
+- No more messing with the nVHE code
+- No AArch32!!!!
+- Rebased on v5.10-rc4 + kvmarm/next for 5.11
 
->> +			 * interrupt as a pass.
->> +			 */
->>  			nr_pass += cpumask_test_cpu(cpu, mask) ?
->> -				acked[cpu] == 1 : acked[cpu] == 0;
->> -			smp_rmb(); /* pairs with smp_wmb in ipi_handler */
->> -
->> -			if (bad_sender[cpu] != -1) {
->> -				printf("cpu%d received IPI from wrong sender %d\n",
->> -					cpu, bad_sender[cpu]);
->> -				bad = true;
->> -			}
->> -
->> -			if (bad_irq[cpu] != -1) {
->> -				printf("cpu%d received wrong irq %d\n",
->> -					cpu, bad_irq[cpu]);
->> -				bad = true;
->> -			}
->> +				acked[cpu] >= 1 : acked[cpu] == 0;
->>  		}
->> +
->>  		if (nr_pass == nr_cpus) {
->> -			report(!bad, "%s", testname);
->>  			if (i)
->> -				report_info("took more than %d ms", i * 100);
->> +				report_info("interrupts took more than %d ms", i * 100);
->> +			mdelay(100);
->>  			return;
->>  		}
->>  	}
->>  
->> +	report_info("interrupts timed-out (5s)");
->> +}
->> +
->> +static bool check_acked(cpumask_t *mask)
->> +{
->> +	int missing = 0, extra = 0, unexpected = 0;
->> +	bool pass = true;
->> +	int cpu;
->> +
->>  	for_each_present_cpu(cpu) {
->>  		if (cpumask_test_cpu(cpu, mask)) {
->>  			if (!acked[cpu])
->> @@ -107,11 +108,28 @@ static void check_acked(const char *testname, cpumask_t *mask)
->>  			if (acked[cpu])
->>  				++unexpected;
->>  		}
->> +		smp_rmb(); /* pairs with smp_wmb in ipi_handler */
->> +
->> +		if (bad_sender[cpu] != -1) {
->> +			report_info("cpu%d received IPI from wrong sender %d",
->> +					cpu, bad_sender[cpu]);
->> +			pass = false;
->> +		}
->> +
->> +		if (bad_irq[cpu] != -1) {
->> +			report_info("cpu%d received wrong irq %d",
->> +					cpu, bad_irq[cpu]);
->> +			pass = false;
->> +		}
->> +	}
->> +
->> +	if (missing || extra || unexpected) {
->> +		report_info("ACKS: missing=%d extra=%d unexpected=%d",
->> +				missing, extra, unexpected);
->> +		pass = false;
->>  	}
->>  
->> -	report(false, "%s", testname);
->> -	report_info("Timed-out (5s). ACKS: missing=%d extra=%d unexpected=%d",
->> -		    missing, extra, unexpected);
->> +	return pass;
->>  }
->>  
->>  static void check_spurious(void)
->> @@ -300,7 +318,8 @@ static void ipi_test_self(void)
->>  	cpumask_clear(&mask);
->>  	cpumask_set_cpu(smp_processor_id(), &mask);
->>  	gic->ipi.send_self();
->> -	check_acked("IPI: self", &mask);
->> +	wait_for_interrupts(&mask);
->> +	report(check_acked(&mask), "Interrupts received");
->>  	report_prefix_pop();
->>  }
->>  
->> @@ -315,7 +334,8 @@ static void ipi_test_smp(void)
->>  	for (i = smp_processor_id() & 1; i < nr_cpus; i += 2)
->>  		cpumask_clear_cpu(i, &mask);
->>  	gic_ipi_send_mask(IPI_IRQ, &mask);
->> -	check_acked("IPI: directed", &mask);
->> +	wait_for_interrupts(&mask);
->> +	report(check_acked(&mask), "Interrupts received");
-> both ipi_test_smp and ipi_test_self are called from the same test so
-> better to use different error messages like it was done originally.
+From a functionality perspective, you can expect a L2 guest to work,
+but don't even think of L3, as we only partially emulate the
+ARMv8.{3,4}-NV extensions themselves. Same thing for vgic, debug, PMU,
+as well as anything that would require a Stage-1 PTW. What we want to
+achieve is that with NV disabled, there is no performance overhead and
+no regression.
 
-I used the same error message because the tests have a different prefix
-("target-list" versus "broadcast"). Do you think there are cases where that's not
-enough?
+The series is roughly divided in 5 parts: exception handling, memory
+virtualization, interrupts and timers for ARMv8.3, followed by the
+ARMv8.4 support. There are of course some dependencies, but you'll
+hopefully get the gist of it.
 
-Thanks,
-Alex
+For the most courageous of you, I've put out a branch[2]. Of course,
+you'll need some userspace. Andre maintains a hacked version of
+kvmtool[3] that takes a --nested option, allowing the guest to be
+started at EL2. You can run the whole stack in the Foundation
+model. Don't be in a hurry ;-).
+
+And to be clear: although Jintack and Christoffer have written tons of
+the stuff originaly, I'm the one responsible for breaking it!
+
+[1] https://lore.kernel.org/r/20200211174938.27809-1-maz@kernel.org
+[2] git://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git kvm-arm64/nv-5.11.-WIP
+[3] git://linux-arm.org/kvmtool.git nv/nv-wip-5.2-rc5
+
+Andre Przywara (1):
+  KVM: arm64: nv: vgic: Allow userland to set VGIC maintenance IRQ
+
+Christoffer Dall (15):
+  KVM: arm64: nv: Introduce nested virtualization VCPU feature
+  KVM: arm64: nv: Reset VCPU to EL2 registers if VCPU nested virt is set
+  KVM: arm64: nv: Allow userspace to set PSR_MODE_EL2x
+  KVM: arm64: nv: Add nested virt VCPU primitives for vEL2 VCPU state
+  KVM: arm64: nv: Reset VMPIDR_EL2 and VPIDR_EL2 to sane values
+  KVM: arm64: nv: Handle trapped ERET from virtual EL2
+  KVM: arm64: nv: Emulate PSTATE.M for a guest hypervisor
+  KVM: arm64: nv: Trap EL1 VM register accesses in virtual EL2
+  KVM: arm64: nv: Only toggle cache for virtual EL2 when SCTLR_EL2
+    changes
+  KVM: arm64: nv: Implement nested Stage-2 page table walk logic
+  KVM: arm64: nv: Unmap/flush shadow stage 2 page tables
+  KVM: arm64: nv: arch_timer: Support hyp timer emulation
+  KVM: arm64: nv: vgic: Emulate the HW bit in software
+  KVM: arm64: nv: Add nested GICv3 tracepoints
+  KVM: arm64: nv: Sync nested timer state with ARMv8.4
+
+Jintack Lim (19):
+  arm64: Add ARM64_HAS_NESTED_VIRT cpufeature
+  KVM: arm64: nv: Handle HCR_EL2.NV system register traps
+  KVM: arm64: nv: Support virtual EL2 exceptions
+  KVM: arm64: nv: Inject HVC exceptions to the virtual EL2
+  KVM: arm64: nv: Trap SPSR_EL1, ELR_EL1 and VBAR_EL1 from virtual EL2
+  KVM: arm64: nv: Trap CPACR_EL1 access in virtual EL2
+  KVM: arm64: nv: Handle PSCI call via smc from the guest
+  KVM: arm64: nv: Respect virtual HCR_EL2.TWX setting
+  KVM: arm64: nv: Respect virtual CPTR_EL2.{TFP,FPEN} settings
+  KVM: arm64: nv: Respect the virtual HCR_EL2.NV bit setting
+  KVM: arm64: nv: Respect virtual HCR_EL2.TVM and TRVM settings
+  KVM: arm64: nv: Respect the virtual HCR_EL2.NV1 bit setting
+  KVM: arm64: nv: Emulate EL12 register accesses from the virtual EL2
+  KVM: arm64: nv: Configure HCR_EL2 for nested virtualization
+  KVM: arm64: nv: Introduce sys_reg_desc.forward_trap
+  KVM: arm64: nv: Set a handler for the system instruction traps
+  KVM: arm64: nv: Trap and emulate AT instructions from virtual EL2
+  KVM: arm64: nv: Trap and emulate TLBI instructions from virtual EL2
+  KVM: arm64: nv: Nested GICv3 Support
+
+Marc Zyngier (31):
+  KVM: arm64: nv: Add EL2 system registers to vcpu context
+  KVM: arm64: nv: Add non-VHE-EL2->EL1 translation helpers
+  KVM: arm64: nv: Handle virtual EL2 registers in
+    vcpu_read/write_sys_reg()
+  KVM: arm64: nv: Handle SPSR_EL2 specially
+  KVM: arm64: nv: Handle HCR_EL2.E2H specially
+  KVM: arm64: nv: Save/Restore vEL2 sysregs
+  KVM: arm64: nv: Forward debug traps to the nested guest
+  KVM: arm64: nv: Filter out unsupported features from ID regs
+  KVM: arm64: nv: Hide RAS from nested guests
+  KVM: arm64: nv: Support multiple nested Stage-2 mmu structures
+  KVM: arm64: nv: Handle shadow stage 2 page faults
+  KVM: arm64: nv: Restrict S2 RD/WR permissions to match the guest's
+  KVM: arm64: nv: Fold guest's HCR_EL2 configuration into the host's
+  KVM: arm64: nv: Add handling of EL2-specific timer registers
+  KVM: arm64: nv: Load timer before the GIC
+  KVM: arm64: nv: Don't load the GICv4 context on entering a nested
+    guest
+  KVM: arm64: nv: Implement maintenance interrupt forwarding
+  KVM: arm64: nv: Allow userspace to request KVM_ARM_VCPU_NESTED_VIRT
+  KVM: arm64: nv: Add handling of ARMv8.4-TTL TLB invalidation
+  KVM: arm64: nv: Invalidate TLBs based on shadow S2 TTL-like
+    information
+  KVM: arm64: Allow populating S2 SW bits
+  KVM: arm64: nv: Tag shadow S2 entries with nested level
+  KVM: arm64: nv: Add include containing the VNCR_EL2 offsets
+  KVM: arm64: Map VNCR-capable registers to a separate page
+  KVM: arm64: nv: Move nested vgic state into the sysreg file
+  KVM: arm64: Add ARMv8.4 Enhanced Nested Virt cpufeature
+  KVM: arm64: nv: Synchronize PSTATE early on exit
+  KVM: arm64: nv: Allocate VNCR page when required
+  KVM: arm64: nv: Enable ARMv8.4-NV support
+  KVM: arm64: nv: Fast-track 'InHost' exception returns
+  KVM: arm64: nv: Fast-track EL1 TLBIs for VHE guests
+
+ .../admin-guide/kernel-parameters.txt         |    4 +
+ .../virt/kvm/devices/arm-vgic-v3.rst          |   12 +-
+ arch/arm64/include/asm/cpucaps.h              |    2 +
+ arch/arm64/include/asm/esr.h                  |    6 +
+ arch/arm64/include/asm/kvm_arm.h              |   28 +-
+ arch/arm64/include/asm/kvm_asm.h              |    4 +
+ arch/arm64/include/asm/kvm_emulate.h          |  145 +-
+ arch/arm64/include/asm/kvm_host.h             |  175 ++-
+ arch/arm64/include/asm/kvm_hyp.h              |    2 +
+ arch/arm64/include/asm/kvm_mmu.h              |   17 +-
+ arch/arm64/include/asm/kvm_nested.h           |  152 ++
+ arch/arm64/include/asm/kvm_pgtable.h          |   10 +
+ arch/arm64/include/asm/sysreg.h               |  104 +-
+ arch/arm64/include/asm/vncr_mapping.h         |   73 +
+ arch/arm64/include/uapi/asm/kvm.h             |    2 +
+ arch/arm64/kernel/cpufeature.c                |   35 +
+ arch/arm64/kvm/Makefile                       |    4 +-
+ arch/arm64/kvm/arch_timer.c                   |  189 ++-
+ arch/arm64/kvm/arm.c                          |   34 +-
+ arch/arm64/kvm/at.c                           |  231 ++++
+ arch/arm64/kvm/emulate-nested.c               |  186 +++
+ arch/arm64/kvm/guest.c                        |    6 +
+ arch/arm64/kvm/handle_exit.c                  |   81 +-
+ arch/arm64/kvm/hyp/exception.c                |   44 +-
+ arch/arm64/kvm/hyp/include/hyp/switch.h       |   31 +-
+ arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h    |   28 +-
+ arch/arm64/kvm/hyp/nvhe/switch.c              |   10 +-
+ arch/arm64/kvm/hyp/nvhe/sysreg-sr.c           |    2 +-
+ arch/arm64/kvm/hyp/pgtable.c                  |    6 +
+ arch/arm64/kvm/hyp/vgic-v3-sr.c               |    2 +-
+ arch/arm64/kvm/hyp/vhe/switch.c               |  207 ++-
+ arch/arm64/kvm/hyp/vhe/sysreg-sr.c            |  125 +-
+ arch/arm64/kvm/hyp/vhe/tlb.c                  |   83 ++
+ arch/arm64/kvm/inject_fault.c                 |   62 +-
+ arch/arm64/kvm/mmu.c                          |  183 ++-
+ arch/arm64/kvm/nested.c                       |  908 ++++++++++++
+ arch/arm64/kvm/reset.c                        |   14 +-
+ arch/arm64/kvm/sys_regs.c                     | 1226 ++++++++++++++++-
+ arch/arm64/kvm/sys_regs.h                     |    6 +
+ arch/arm64/kvm/trace_arm.h                    |   65 +-
+ arch/arm64/kvm/vgic/vgic-init.c               |   30 +
+ arch/arm64/kvm/vgic/vgic-kvm-device.c         |   22 +
+ arch/arm64/kvm/vgic/vgic-nested-trace.h       |  137 ++
+ arch/arm64/kvm/vgic/vgic-v3-nested.c          |  240 ++++
+ arch/arm64/kvm/vgic/vgic-v3.c                 |   39 +-
+ arch/arm64/kvm/vgic/vgic.c                    |   44 +
+ arch/arm64/kvm/vgic/vgic.h                    |   10 +
+ include/kvm/arm_arch_timer.h                  |    7 +
+ include/kvm/arm_vgic.h                        |   16 +
+ tools/arch/arm/include/uapi/asm/kvm.h         |    1 +
+ 50 files changed, 4890 insertions(+), 160 deletions(-)
+ create mode 100644 arch/arm64/include/asm/kvm_nested.h
+ create mode 100644 arch/arm64/include/asm/vncr_mapping.h
+ create mode 100644 arch/arm64/kvm/at.c
+ create mode 100644 arch/arm64/kvm/emulate-nested.c
+ create mode 100644 arch/arm64/kvm/nested.c
+ create mode 100644 arch/arm64/kvm/vgic/vgic-nested-trace.h
+ create mode 100644 arch/arm64/kvm/vgic/vgic-v3-nested.c
+
+-- 
+2.29.2
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
