@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 53AD22D6110
-	for <lists+kvmarm@lfdr.de>; Thu, 10 Dec 2020 17:05:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E37102D60E8
+	for <lists+kvmarm@lfdr.de>; Thu, 10 Dec 2020 17:04:13 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CAD2F4B2EE;
-	Thu, 10 Dec 2020 11:05:15 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 988864B1BF;
+	Thu, 10 Dec 2020 11:04:13 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,38 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id U1KPIe4x23MW; Thu, 10 Dec 2020 11:05:15 -0500 (EST)
+	with ESMTP id 8VpP3L76KY7U; Thu, 10 Dec 2020 11:04:12 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 799694B239;
-	Thu, 10 Dec 2020 11:05:13 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EE6E44B2AF;
+	Thu, 10 Dec 2020 11:04:06 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9528F4B28E
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 11:05:11 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C32824B265
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 11:04:05 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id WtwzxqUBMLy3 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 10 Dec 2020 11:05:10 -0500 (EST)
+ with ESMTP id sZYlFei5-9CI for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 10 Dec 2020 11:04:04 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 296884B26C
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 11:05:10 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id F38364B1E4
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 11:04:00 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 26FE223E52;
- Thu, 10 Dec 2020 16:05:09 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 2A10423EB0;
+ Thu, 10 Dec 2020 16:04:00 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1knON6-0008Di-CY; Thu, 10 Dec 2020 16:00:48 +0000
+ id 1knON7-0008Di-I8; Thu, 10 Dec 2020 16:00:50 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH v3 19/66] KVM: arm64: nv: Trap SPSR_EL1,
- ELR_EL1 and VBAR_EL1 from virtual EL2
-Date: Thu, 10 Dec 2020 15:59:15 +0000
-Message-Id: <20201210160002.1407373-20-maz@kernel.org>
+Subject: [PATCH v3 20/66] KVM: arm64: nv: Trap CPACR_EL1 access in virtual EL2
+Date: Thu, 10 Dec 2020 15:59:16 +0000
+Message-Id: <20201210160002.1407373-21-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201210160002.1407373-1-maz@kernel.org>
 References: <20201210160002.1407373-1-maz@kernel.org>
@@ -81,72 +80,58 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: Jintack Lim <jintack.lim@linaro.org>
 
-For the same reason we trap virtual memory register accesses at virtual
-EL2, we need to trap SPSR_EL1, ELR_EL1 and VBAR_EL1 accesses. ARM v8.3
-introduces the HCR_EL2.NV1 bit to be able to trap on those register
-accesses in EL1. Do not set this bit until the whole nesting support is
-completed.
+For the same reason we trap virtual memory register accesses in virtual
+EL2, we trap CPACR_EL1 access too; We allow the virtual EL2 mode to
+access EL1 system register state instead of the virtual EL2 one.
 
 Signed-off-by: Jintack Lim <jintack.lim@linaro.org>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/sys_regs.c | 29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/kvm_arm.h | 2 +-
+ arch/arm64/kvm/hyp/vhe/switch.c  | 3 +++
+ arch/arm64/kvm/sys_regs.c        | 2 +-
+ 3 files changed, 5 insertions(+), 2 deletions(-)
 
+diff --git a/arch/arm64/include/asm/kvm_arm.h b/arch/arm64/include/asm/kvm_arm.h
+index 4cf745f79985..3bd29fd01d80 100644
+--- a/arch/arm64/include/asm/kvm_arm.h
++++ b/arch/arm64/include/asm/kvm_arm.h
+@@ -269,7 +269,7 @@
+ #define CPTR_EL2_TFP_SHIFT 10
+ 
+ /* Hyp Coprocessor Trap Register */
+-#define CPTR_EL2_TCPAC	(1 << 31)
++#define CPTR_EL2_TCPAC	(1U << 31)
+ #define CPTR_EL2_TAM	(1 << 30)
+ #define CPTR_EL2_TTA	(1 << 20)
+ #define CPTR_EL2_TFP	(1 << CPTR_EL2_TFP_SHIFT)
+diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
+index 3d8a4402b52c..66358f8ec5ad 100644
+--- a/arch/arm64/kvm/hyp/vhe/switch.c
++++ b/arch/arm64/kvm/hyp/vhe/switch.c
+@@ -68,6 +68,9 @@ static void __activate_traps(struct kvm_vcpu *vcpu)
+ 		__activate_traps_fpsimd32(vcpu);
+ 	}
+ 
++	if (vcpu_mode_el2(vcpu) && !vcpu_el2_e2h_is_set(vcpu))
++		val |= CPTR_EL2_TCPAC;
++	
+ 	write_sysreg(val, cpacr_el1);
+ 
+ 	write_sysreg(__this_cpu_read(kvm_hyp_vector), vbar_el1);
 diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index 540a7faaaee3..5185f148f25e 100644
+index 5185f148f25e..4410d399f8e2 100644
 --- a/arch/arm64/kvm/sys_regs.c
 +++ b/arch/arm64/kvm/sys_regs.c
-@@ -1567,6 +1567,30 @@ static bool access_sp_el1(struct kvm_vcpu *vcpu,
- 	return true;
- }
+@@ -1736,7 +1736,7 @@ static const struct sys_reg_desc sys_reg_descs[] = {
  
-+static bool access_elr(struct kvm_vcpu *vcpu,
-+		       struct sys_reg_params *p,
-+		       const struct sys_reg_desc *r)
-+{
-+	if (p->is_write)
-+		vcpu_write_sys_reg(vcpu, p->regval, ELR_EL1);
-+	else
-+		p->regval = vcpu_read_sys_reg(vcpu, ELR_EL1);
-+
-+	return true;
-+}
-+
-+static bool access_spsr(struct kvm_vcpu *vcpu,
-+			struct sys_reg_params *p,
-+			const struct sys_reg_desc *r)
-+{
-+	if (p->is_write)
-+		__vcpu_sys_reg(vcpu, SPSR_EL1) = p->regval;
-+	else
-+		p->regval = __vcpu_sys_reg(vcpu, SPSR_EL1);
-+
-+	return true;
-+}
-+
- static bool access_spsr_el2(struct kvm_vcpu *vcpu,
- 			    struct sys_reg_params *p,
- 			    const struct sys_reg_desc *r)
-@@ -1728,6 +1752,9 @@ static const struct sys_reg_desc sys_reg_descs[] = {
- 	PTRAUTH_KEY(APDB),
- 	PTRAUTH_KEY(APGA),
+ 	{ SYS_DESC(SYS_SCTLR_EL1), access_vm_reg, reset_val, SCTLR_EL1, 0x00C50078 },
+ 	{ SYS_DESC(SYS_ACTLR_EL1), access_actlr, reset_actlr, ACTLR_EL1 },
+-	{ SYS_DESC(SYS_CPACR_EL1), NULL, reset_val, CPACR_EL1, 0 },
++	{ SYS_DESC(SYS_CPACR_EL1), access_rw, reset_val, CPACR_EL1, 0 },
  
-+	{ SYS_DESC(SYS_SPSR_EL1), access_spsr},
-+	{ SYS_DESC(SYS_ELR_EL1), access_elr},
-+
- 	{ SYS_DESC(SYS_AFSR0_EL1), access_vm_reg, reset_unknown, AFSR0_EL1 },
- 	{ SYS_DESC(SYS_AFSR1_EL1), access_vm_reg, reset_unknown, AFSR1_EL1 },
- 	{ SYS_DESC(SYS_ESR_EL1), access_vm_reg, reset_unknown, ESR_EL1 },
-@@ -1759,7 +1786,7 @@ static const struct sys_reg_desc sys_reg_descs[] = {
- 	{ SYS_DESC(SYS_LORC_EL1), trap_loregion },
- 	{ SYS_DESC(SYS_LORID_EL1), trap_loregion },
- 
--	{ SYS_DESC(SYS_VBAR_EL1), NULL, reset_val, VBAR_EL1, 0 },
-+	{ SYS_DESC(SYS_VBAR_EL1), access_rw, reset_val, VBAR_EL1, 0 },
- 	{ SYS_DESC(SYS_DISR_EL1), NULL, reset_val, DISR_EL1, 0 },
- 
- 	{ SYS_DESC(SYS_ICC_IAR0_EL1), write_to_read_only },
+ 	{ SYS_DESC(SYS_RGSR_EL1), undef_access },
+ 	{ SYS_DESC(SYS_GCR_EL1), undef_access },
 -- 
 2.29.2
 
