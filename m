@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id BB7F42D60EA
-	for <lists+kvmarm@lfdr.de>; Thu, 10 Dec 2020 17:04:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FE7A2D6104
+	for <lists+kvmarm@lfdr.de>; Thu, 10 Dec 2020 17:04:52 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 695314B24B;
-	Thu, 10 Dec 2020 11:04:16 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C9EE54B2B0;
+	Thu, 10 Dec 2020 11:04:51 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,39 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 19fZbsB2Qusc; Thu, 10 Dec 2020 11:04:16 -0500 (EST)
+	with ESMTP id vQXSFKWRvb2a; Thu, 10 Dec 2020 11:04:51 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 268164B299;
-	Thu, 10 Dec 2020 11:04:14 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 045524B2D4;
+	Thu, 10 Dec 2020 11:04:48 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 85D624B280
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 11:04:13 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2ADB04B2B5
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 11:04:46 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id UZWRIgaD1uwn for <kvmarm@lists.cs.columbia.edu>;
- Thu, 10 Dec 2020 11:04:07 -0500 (EST)
+ with ESMTP id PCGfC493oS8b for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 10 Dec 2020 11:04:45 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A86994B1BF
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 11:04:03 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 574574B293
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Dec 2020 11:04:43 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id BAB4423EB3;
- Thu, 10 Dec 2020 16:04:02 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 75A3723F37;
+ Thu, 10 Dec 2020 16:04:42 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1knONj-0008Di-MS; Thu, 10 Dec 2020 16:01:27 +0000
+ id 1knONl-0008Di-4D; Thu, 10 Dec 2020 16:01:29 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH v3 56/66] KVM: arm64: nv: Tag shadow S2 entries with nested
- level
-Date: Thu, 10 Dec 2020 15:59:52 +0000
-Message-Id: <20201210160002.1407373-57-maz@kernel.org>
+Subject: [PATCH v3 57/66] KVM: arm64: nv: Add include containing the VNCR_EL2
+ offsets
+Date: Thu, 10 Dec 2020 15:59:53 +0000
+Message-Id: <20201210160002.1407373-58-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201210160002.1407373-1-maz@kernel.org>
 References: <20201210160002.1407373-1-maz@kernel.org>
@@ -78,61 +78,97 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Populate bits [56:55] of the leaf entry with the level provided
-by the guest's S2 translation.
+VNCR_EL2 points to a page containing a number of system registers
+accessed by a guest hypervisor when ARMv8.4-NV is enabled.
+
+Let's document the offsets in that page, as we are going to use
+this layout.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/kvm_nested.h | 8 ++++++++
- arch/arm64/kvm/mmu.c                | 6 ++++++
- 2 files changed, 14 insertions(+)
+ arch/arm64/include/asm/vncr_mapping.h | 73 +++++++++++++++++++++++++++
+ 1 file changed, 73 insertions(+)
+ create mode 100644 arch/arm64/include/asm/vncr_mapping.h
 
-diff --git a/arch/arm64/include/asm/kvm_nested.h b/arch/arm64/include/asm/kvm_nested.h
-index 34499c496ae6..36f2cd2c6fdf 100644
---- a/arch/arm64/include/asm/kvm_nested.h
-+++ b/arch/arm64/include/asm/kvm_nested.h
-@@ -5,6 +5,8 @@
- #include <linux/bitfield.h>
- #include <linux/kvm_host.h>
- 
-+#include <asm/kvm_pgtable.h>
+diff --git a/arch/arm64/include/asm/vncr_mapping.h b/arch/arm64/include/asm/vncr_mapping.h
+new file mode 100644
+index 000000000000..64c46d658fc8
+--- /dev/null
++++ b/arch/arm64/include/asm/vncr_mapping.h
+@@ -0,0 +1,73 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * System register offsets in the VNCR page
++ * All offsets are *byte* displacements!
++ */
 +
- static inline bool nested_virt_in_use(const struct kvm_vcpu *vcpu)
- {
- 	return (!__is_defined(__KVM_NVHE_HYPERVISOR__) &&
-@@ -135,4 +137,10 @@ void access_nested_id_reg(struct kvm_vcpu *v, struct sys_reg_params *p,
- 
- #define KVM_NV_GUEST_MAP_SZ	GENMASK_ULL(56, 55)
- 
-+static inline u64 kvm_encode_nested_level(struct kvm_s2_trans *trans)
-+{
-+	return FIELD_PREP(KVM_PGTABLE_PROT_S2_SW1 | KVM_PGTABLE_PROT_S2_SW0,
-+			  trans->level);
-+}
++#ifndef __ARM64_VNCR_MAPPING_H__
++#define __ARM64_VNCR_MAPPING_H__
 +
- #endif /* __ARM64_KVM_NESTED_H */
-diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 5fb13995190e..0994b3264d28 100644
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -920,11 +920,17 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 	 * Potentially reduce shadow S2 permissions to match the guest's own
- 	 * S2. For exec faults, we'd only reach this point if the guest
- 	 * actually allowed it (see kvm_s2_handle_perm_fault).
-+	 *
-+	 * Also encode the level of the nested translation in the SW bits of
-+	 * the PTE/PMD/PUD. This will be retrived on TLB invalidation from
-+	 * the guest.
- 	 */
- 	if (kvm_is_shadow_s2_fault(vcpu)) {
- 		writable &= kvm_s2_trans_writable(nested);
- 		if (!kvm_s2_trans_readable(nested))
- 			prot &= ~KVM_PGTABLE_PROT_R;
++#define VNCR_VTTBR_EL2          0x020
++#define VNCR_VTCR_EL2           0x040
++#define VNCR_VMPIDR_EL2         0x050
++#define VNCR_CNTVOFF_EL2        0x060
++#define VNCR_HCR_EL2            0x078
++#define VNCR_HSTR_EL2           0x080
++#define VNCR_VPIDR_EL2          0x088
++#define VNCR_TPIDR_EL2          0x090
++#define VNCR_VNCR_EL2           0x0B0
++#define VNCR_CPACR_EL1          0x100
++#define VNCR_CONTEXTIDR_EL1     0x108
++#define VNCR_SCTLR_EL1          0x110
++#define VNCR_ACTLR_EL1          0x118
++#define VNCR_TCR_EL1            0x120
++#define VNCR_AFSR0_EL1          0x128
++#define VNCR_AFSR1_EL1          0x130
++#define VNCR_ESR_EL1            0x138
++#define VNCR_MAIR_EL1           0x140
++#define VNCR_AMAIR_EL1          0x148
++#define VNCR_MDSCR_EL1          0x158
++#define VNCR_SPSR_EL1           0x160
++#define VNCR_CNTV_CVAL_EL0      0x168
++#define VNCR_CNTV_CTL_EL0       0x170
++#define VNCR_CNTP_CVAL_EL0      0x178
++#define VNCR_CNTP_CTL_EL0       0x180
++#define VNCR_SCXTNUM_EL1        0x188
++#define VNCR_ZCR_EL1            0x1E0
++#define VNCR_TTBR0_EL1          0x200
++#define VNCR_TTBR1_EL1          0x210
++#define VNCR_FAR_EL1            0x220
++#define VNCR_ELR_EL1            0x230
++#define VNCR_SP_EL1             0x240
++#define VNCR_VBAR_EL1           0x250
++#define VNCR_ICH_LR0_EL2        0x400
++//      VNCR_ICH_LRN_EL2(n)     VNCR_ICH_LR0_EL2+8*((n) & 7)
++#define VNCR_ICH_AP0R0_EL2      0x480
++//      VNCR_ICH_AP0RN_EL2(n)   VNCR_ICH_AP0R0_EL2+8*((n) & 3)
++#define VNCR_ICH_AP1R0_EL2      0x4A0
++//      VNCR_ICH_AP1RN_EL2(n)   VNCR_ICH_AP1R0_EL2+8*((n) & 3)
++#define VNCR_ICH_HCR_EL2        0x4C0
++#define VNCR_ICH_VMCR_EL2       0x4C8
++#define VNCR_VDISR_EL2          0x500
++#define VNCR_PMBLIMITR_EL1      0x800
++#define VNCR_PMBPTR_EL1         0x810
++#define VNCR_PMBSR_EL1          0x820
++#define VNCR_PMSCR_EL1          0x828
++#define VNCR_PMSEVFR_EL1        0x830
++#define VNCR_PMSICR_EL1         0x838
++#define VNCR_PMSIRR_EL1         0x840
++#define VNCR_PMSLATFR_EL1       0x848
++#define VNCR_TRFCR_EL1          0x880
++#define VNCR_MPAM1_EL1          0x900
++#define VNCR_MPAMHCR_EL2        0x930
++#define VNCR_MPAMVPMV_EL2       0x938
++#define VNCR_MPAMVPM0_EL2       0x940
++#define VNCR_MPAMVPM1_EL2       0x948
++#define VNCR_MPAMVPM2_EL2       0x950
++#define VNCR_MPAMVPM3_EL2       0x958
++#define VNCR_MPAMVPM4_EL2       0x960
++#define VNCR_MPAMVPM5_EL2       0x968
++#define VNCR_MPAMVPM6_EL2       0x970
++#define VNCR_MPAMVPM7_EL2       0x978
 +
-+		prot |= kvm_encode_nested_level(nested);
- 	}
- 
- 	spin_lock(&kvm->mmu_lock);
++#endif /* __ARM64_VNCR_MAPPING_H__ */
 -- 
 2.29.2
 
