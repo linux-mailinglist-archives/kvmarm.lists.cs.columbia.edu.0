@@ -2,84 +2,90 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 24DEF2DB08C
-	for <lists+kvmarm@lfdr.de>; Tue, 15 Dec 2020 16:54:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 49EB92DBDCA
+	for <lists+kvmarm@lfdr.de>; Wed, 16 Dec 2020 10:42:00 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 922B24B679;
-	Tue, 15 Dec 2020 10:54:19 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D8ED14B53D;
+	Wed, 16 Dec 2020 04:41:59 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VAxKcHM9DalE; Tue, 15 Dec 2020 10:54:19 -0500 (EST)
+	with ESMTP id hP9Dagfnw07a; Wed, 16 Dec 2020 04:41:59 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 525974B630;
-	Tue, 15 Dec 2020 10:54:18 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F1E0F4B4B8;
+	Wed, 16 Dec 2020 04:41:57 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B72834B619
- for <kvmarm@lists.cs.columbia.edu>; Tue, 15 Dec 2020 10:54:16 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0B7D04B570
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 15 Dec 2020 20:45:45 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id zwNEa5fEeeM3 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 15 Dec 2020 10:54:12 -0500 (EST)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1828B4B62E
- for <kvmarm@lists.cs.columbia.edu>; Tue, 15 Dec 2020 10:54:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1608047651;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tPEqUf9K/9QpL3MMNAVvudGcFr4JwyB646HzAagpF+Q=;
- b=aS95BRmN62TySJIblZRYPGlFEMwqIDRr1LfzD8/6l1Rng4f4kAE3grU7ee2W2dRN/o8WNm
- qz+De8UqC6WIMZMeTm49+I31qRnWZ00MSaBGxhV9BGmX7gZKyuQjij+DfKBfe40dc336pj
- vUsWQ+whTwKsmC6z5t6q5ff45OcH2WA=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-441-XRpPflBjPsmL5JDWg5sD-Q-1; Tue, 15 Dec 2020 10:54:06 -0500
-X-MC-Unique: XRpPflBjPsmL5JDWg5sD-Q-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com
- [10.5.11.11])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 6C2A7192CC41;
- Tue, 15 Dec 2020 15:54:03 +0000 (UTC)
-Received: from x1.home (ovpn-112-193.phx2.redhat.com [10.3.112.193])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 917E81962E;
- Tue, 15 Dec 2020 15:54:00 +0000 (UTC)
-Date: Tue, 15 Dec 2020 08:53:59 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: zhukeqian <zhukeqian1@huawei.com>
-Subject: Re: [PATCH 4/7] vfio: iommu_type1: Fix missing dirty page when
- promote pinned_scope
-Message-ID: <20201215085359.053e73ed@x1.home>
-In-Reply-To: <d2073c05-b6c9-04b4-782c-b89680834633@huawei.com>
-References: <20201210073425.25960-1-zhukeqian1@huawei.com>
- <20201210073425.25960-5-zhukeqian1@huawei.com>
- <20201214170459.50cb8729@omen.home>
- <d2073c05-b6c9-04b4-782c-b89680834633@huawei.com>
-Organization: Red Hat
+ with ESMTP id 2NNUBgSO07iu for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 15 Dec 2020 20:45:43 -0500 (EST)
+Received: from mail-qt1-f195.google.com (mail-qt1-f195.google.com
+ [209.85.160.195])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E72364B533
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 15 Dec 2020 20:45:43 -0500 (EST)
+Received: by mail-qt1-f195.google.com with SMTP id 2so6350421qtt.10
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 15 Dec 2020 17:45:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=kCToIgJ9t4fgOgR1IG7z/T+GyYq+8OtwKPwUFbQA53E=;
+ b=Gi1o+o2odN0GzIaw5X46sC3GPFaeMhjoBJnGwwFiCma44bSFjsl0bgwIxoEg9ec0Kp
+ OztQkTIT0mU8btHuUYdrAT4EBge+EdFc4M94KJ50AivdTCaUvXua82zvmcJn/JcJ0DqM
+ GdIW0Wjfmmh0z3upTz/s8oanoeVm2H+6egJWp0TS+xccJ3MoOzpnLVgObdOzRQ0p/26J
+ beoVo2wEs4tlY6mVtHNJ8VGZDCOEpSbST+AcuoWOvWGmTF1lgyN3Sd/zwvNFkrQvSnJP
+ N0T98P8htYMq+8wRWezxBwXtp74BY8sEV/M6s3OVeHNqUSOsRFaePCy8ZVgFL4MP7Elw
+ 3/iQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=kCToIgJ9t4fgOgR1IG7z/T+GyYq+8OtwKPwUFbQA53E=;
+ b=W94uZF8nuo8q8yDj2IgfxKtN+alqyIiUJG02zRfJPaPUHv1pIdPvo6vqlxalNaPvYn
+ 8pfEqeiQ+1wqH6dfqUuAU0mXaOTC/B7K/0aF2H2gE4RPNe+9iY57iAQwNu5FZETjuqNu
+ bZYwx6v0a0Dc1tluFmhFXKtPtNagT1bprfnkyVj6GOIPvYGB7xFc+AX6fpHL8m2bbWm9
+ mZ/crGXETIHzC6plA9YL51PA72nHhNFHiARToBaIaavymekFd1ebP7lAAkzLO3tRzOk7
+ eh3PTK8qyofuVrRdwnGUsjv6aW68d2+mBSO8AVYUc17mQUkLoPRC5hgqvWORBbs8rm0v
+ s7qw==
+X-Gm-Message-State: AOAM5338xUPgoRnGWg2xU55Cm8+jwPLaqKYfWzOLMVWGs1SD/fatMRHX
+ wffxZtOHB8EJYUDDgSdw6wBsj+jI2gWgPRtb0hYoyw==
+X-Google-Smtp-Source: ABdhPJwU/7CORIsAIiTVntmow90QUVubXxG+PPZiFr2mV+dF13CoGd56D1d8SNThX0rRsMFvF8yaaWWUEt3jESh+Tz0=
+X-Received: by 2002:ac8:6758:: with SMTP id n24mr41536181qtp.258.1608083143215; 
+ Tue, 15 Dec 2020 17:45:43 -0800 (PST)
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-Cc: Andrew Morton <akpm@linux-foundation.org>, kvm@vger.kernel.org, Marc
- Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- Cornelia Huck <cohuck@redhat.com>, linux-kernel@vger.kernel.org,
- Sean Christopherson <sean.j.christopherson@intel.com>,
- Alexios Zavras <alexios.zavras@intel.com>, iommu@lists.linux-foundation.org,
- Mark Brown <broonie@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
- Thomas Gleixner <tglx@linutronix.de>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
- Robin Murphy <robin.murphy@arm.com>
+References: <20200721041742.197354-1-sergey.senozhatsky@gmail.com>
+ <20200817020310.GA1210848@jagdpanzerIV.localdomain>
+ <fe72592c-c721-bece-1469-95eebf931299@huawei.com>
+ <cbcfb402b7fdb8a2a45b80fbb0e79f3e@kernel.org>
+ <20200911085841.GB562@jagdpanzerIV.localdomain>
+ <CAJWu+oq26OK1-7Ze2pb5xpRJ-tS9wtXOdGFrYpHq+fhkyGhjkA@mail.gmail.com>
+ <fdc35e25f2bc2cdfa0849a84802eafd6@kernel.org>
+ <CAJWu+ooy=r=G+AnyriQDA9_4CJqfO6hkf=c8heV8HV+yNea_PQ@mail.gmail.com>
+ <78091359dab0d8decfc452f7c5c25971@kernel.org> <X9M9JuK5DIWzgdyQ@google.com>
+In-Reply-To: <X9M9JuK5DIWzgdyQ@google.com>
+From: Joel Fernandes <joelaf@google.com>
+Date: Tue, 15 Dec 2020 20:45:32 -0500
+Message-ID: <CAJWu+oqwYQDvcRa3_TPtDDXGnUOBPEqM4vCLCc7konKSe0jPEg@mail.gmail.com>
+Subject: Re: [RFC][PATCH 0/4] arm64:kvm: teach guest sched that VCPUs can be
+ preempted
+To: Quentin Perret <qperret@google.com>
+X-Mailman-Approved-At: Wed, 16 Dec 2020 04:41:56 -0500
+Cc: Sergey Senozhatsky <sergey.senozhatsky@gmail.com>,
+ Marc Zyngier <maz@kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+ Suleiman Souhlal <suleiman@google.com>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu,
+ "moderated list:ARM64 PORT \(AARCH64 ARCHITECTURE\)"
+ <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -96,98 +102,110 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, 15 Dec 2020 17:37:11 +0800
-zhukeqian <zhukeqian1@huawei.com> wrote:
+Hi Marc, Quentin,
 
-> Hi Alex,
-> 
-> On 2020/12/15 8:04, Alex Williamson wrote:
-> > On Thu, 10 Dec 2020 15:34:22 +0800
-> > Keqian Zhu <zhukeqian1@huawei.com> wrote:
-> >   
-> >> When we pin or detach a group which is not dirty tracking capable,
-> >> we will try to promote pinned_scope of vfio_iommu.
-> >>
-> >> If we succeed to do so, vfio only report pinned_scope as dirty to
-> >> userspace next time, but these memory written before pin or detach
-> >> is missed.
-> >>
-> >> The solution is that we must populate all dma range as dirty before
-> >> promoting pinned_scope of vfio_iommu.  
-> > 
-> > Please don't bury fixes patches into a series with other optimizations
-> > and semantic changes.  Send it separately.
-> >   
-> OK, I will.
-> 
-> >>
-> >> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
-> >> ---
-> >>  drivers/vfio/vfio_iommu_type1.c | 18 ++++++++++++++++++
-> >>  1 file changed, 18 insertions(+)
-> >>
-> >> diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
-> >> index bd9a94590ebc..00684597b098 100644
-> >> --- a/drivers/vfio/vfio_iommu_type1.c
-> >> +++ b/drivers/vfio/vfio_iommu_type1.c
-> >> @@ -1633,6 +1633,20 @@ static struct vfio_group *vfio_iommu_find_iommu_group(struct vfio_iommu *iommu,
-> >>  	return group;
-> >>  }
-> >>  
-> >> +static void vfio_populate_bitmap_all(struct vfio_iommu *iommu)
-> >> +{
-> >> +	struct rb_node *n;
-> >> +	unsigned long pgshift = __ffs(iommu->pgsize_bitmap);
-> >> +
-> >> +	for (n = rb_first(&iommu->dma_list); n; n = rb_next(n)) {
-> >> +		struct vfio_dma *dma = rb_entry(n, struct vfio_dma, node);
-> >> +		unsigned long nbits = dma->size >> pgshift;
-> >> +
-> >> +		if (dma->iommu_mapped)
-> >> +			bitmap_set(dma->bitmap, 0, nbits);
-> >> +	}
-> >> +}  
-> > 
-> > 
-> > If we detach a group which results in only non-IOMMU backed mdevs,
-> > don't we also clear dma->iommu_mapped as part of vfio_unmap_unpin()
-> > such that this test is invalid?  Thanks,  
-> 
-> Good spot :-). The code will skip bitmap_set under this situation.
-> 
-> We should set the bitmap unconditionally when vfio_iommu is promoted,
-> as we must have IOMMU backed domain before promoting the vfio_iommu.
-> 
-> Besides, I think we should also mark dirty in vfio_remove_dma if dirty
-> tracking is active. Right?
+On Fri, Dec 11, 2020 at 4:34 AM Quentin Perret <qperret@google.com> wrote:
+>
+> On Thursday 10 Dec 2020 at 08:45:22 (+0000), Marc Zyngier wrote:
+> > On 2020-12-10 01:39, Joel Fernandes wrote:
+> >
+> > [...]
+> >
+> > > > Quentin and I have discussed potential ways of improving guest
+> > > > scheduling
+> > > > on terminally broken systems (otherwise known as big-little), in the
+> > > > form of a capacity request from the guest to the host. I'm not really
+> > > > keen on the host exposing its own capacity, as that doesn't tell the
+> > > > host what the guest actually needs.
+> > >
+> > > I am not sure how a capacity request could work well. It seems the
+> > > cost of a repeated hypercall could be prohibitive. In this case, a
+> > > lighter approach might be for KVM to restrict vCPU threads to run on
+> > > certain types of cores, and pass the capacity information to the guest
+> > > at guest's boot time.
+> >
+> > That seems like a very narrow use case. If you actually pin vcpus to
+> > physical CPU classes, DT is the right place to put things, because
+> > it is completely static. This is effectively creating a virtual
+> > big-little, which is in my opinion a userspace job.
+>
+> +1, all you should need for this is to have the VMM pin the vCPUS and
+> set capacity-dmips-mhz in the guest DT accordingly. And if you're
+> worried about sharing the runqueue with host tasks, could you vacate the
+> host CPUs using cpusets or such?
 
-There's no remaining bitmap to mark dirty if the vfio_dma is removed.
-In this case it's the user's responsibility to collect remaining dirty
-pages using the VFIO_DMA_UNMAP_FLAG_GET_DIRTY_BITMAP support in the
-VFIO_IOMMU_UNMAP_DMA ioctl.  Thanks,
+I agree, the VMM is the right place for it with appropriate DT
+settings. I think this is similar to how CPUID is emulated on Intel as
+well (for example to specify SMT topology for a vCPU) -- it is done by
+the VMM.
 
-Alex
+On sharing vCPU with host tasks, that is indeed an issue because the
+host does not know the priority of an app (For example, a "top app"
+running in Android in a VM). The sharing with host tasks should be Ok
+as long as the scheduler priorities of the vCPU threads on the host
+are setup correctly?
 
-> >> +
-> >>  static void promote_pinned_page_dirty_scope(struct vfio_iommu *iommu)
-> >>  {
-> >>  	struct vfio_domain *domain;
-> >> @@ -1657,6 +1671,10 @@ static void promote_pinned_page_dirty_scope(struct vfio_iommu *iommu)
-> >>  	}
-> >>  
-> >>  	iommu->pinned_page_dirty_scope = true;
-> >> +
-> >> +	/* Set all bitmap to avoid missing dirty page */
-> >> +	if (iommu->dirty_page_tracking)
-> >> +		vfio_populate_bitmap_all(iommu);
-> >>  }
-> >>  
-> >>  static bool vfio_iommu_has_sw_msi(struct list_head *group_resv_regions,  
-> > 
-> > .
-> >   
-> 
+> The last difficult bit is how to drive DVFS. I suppose Marc's suggestion
+> to relay capacity requests from the guest would help with that.
 
+Yeah I misunderstood Marc.  I think for DVFS, a hypercall for capacity
+request should work and be infrequent enough. IIRC, there is some rate
+limiting support in cpufreq governors as well that should reduce the
+rate of hypercalls if needed.
+
+> > > This would be a one-time cost to pay. And then,
+> > > then the guest scheduler can handle the scheduling appropriately
+> > > without any more hypercalls. Thoughts?
+> >
+> > Anything that is a one-off belongs to firmware configuration, IMO.
+> >
+> > The case I'm concerned with is when vcpus are allowed to roam across
+> > the system, and hit random physical CPUs because the host has no idea
+> > of the workload the guest deals with (specially as the AMU counters
+> > are either absent or unusable on any available core).
+
+It sounds like this might be a usecase for pinning the vCPU threads
+appropriately (So designate a set of vCPU threads to only run on bigs
+and another set to only run on LITTLEs).  The host can setup the DT to
+describe this and the VM kernel's scheduler can do appropriate task
+placement.  Did I miss anything?
+
+> > The cost of a hypercall really depends on where you terminate it.
+> > If it is a shallow exit, that's only a few hundred cycles on any half
+> > baked CPU. Go all the way to userspace, and the host scheduler is the
+> > limit. But the frequency of that hypercall obviously matters too.
+> >
+> > How often do you expect the capacity request to fire? Probably not
+> > on each and every time slice, right?
+> >
+> > Quentin, can you shed some light on this?
+>
+> Assuming that we change the 'capacity request' (aka uclamp.min of the
+> vCPU) every time the guest makes a frequency request, then the answer
+> very much is 'it depends on the workload'. Yes there is an overhead, but
+> I think it is hard to say how bad that would be before we give it a go.
+> It's unfortunately not uncommon to have painfully slow frequency changes
+> on real hardware, so this may be just fine. And there may be ways we
+> can mitigate this too (with rate limiting and such), so all in all it is
+> worth a try.
+
+Agreed.
+
+> Also as per the above, this still would help even if the VMM pins vCPUs
+> and such, so these two things can live and complement each other I
+> think.
+
+Makes sense.
+
+> Now, for the patch originally under discussion here, no objection from
+> me in principle, it looks like a nice improvement to the stolen time
+> stuff and I can see how that could help some use-cases, so +1 from me.
+
+Sounds good!
+
+thanks,
+
+ - Joel
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
