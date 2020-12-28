@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 178CA2E3614
-	for <lists+kvmarm@lfdr.de>; Mon, 28 Dec 2020 11:50:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 25CAE2E3616
+	for <lists+kvmarm@lfdr.de>; Mon, 28 Dec 2020 11:50:20 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A5A864B22A;
-	Mon, 28 Dec 2020 05:50:17 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D02E24B236;
+	Mon, 28 Dec 2020 05:50:19 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,38 +15,38 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 23en4K+ECpIy; Mon, 28 Dec 2020 05:50:17 -0500 (EST)
+	with ESMTP id sno8iHLZFQVe; Mon, 28 Dec 2020 05:50:18 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C8CCE4B21E;
-	Mon, 28 Dec 2020 05:50:11 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 02A774B255;
+	Mon, 28 Dec 2020 05:50:15 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 855784B202
- for <kvmarm@lists.cs.columbia.edu>; Mon, 28 Dec 2020 05:50:10 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A19364B21E
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 28 Dec 2020 05:50:11 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 86dihwzqbzii for <kvmarm@lists.cs.columbia.edu>;
- Mon, 28 Dec 2020 05:50:09 -0500 (EST)
+ with ESMTP id jdwYudwyWoZx for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 28 Dec 2020 05:50:10 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A6CD24B1F9
- for <kvmarm@lists.cs.columbia.edu>; Mon, 28 Dec 2020 05:50:09 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8E6144B1F3
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 28 Dec 2020 05:50:10 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id E055822AEC;
- Mon, 28 Dec 2020 10:50:08 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id A39D52242A;
+ Mon, 28 Dec 2020 10:50:09 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1ktq6J-0048wX-74; Mon, 28 Dec 2020 10:50:07 +0000
+ id 1ktq6J-0048wX-S2; Mon, 28 Dec 2020 10:50:08 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org,
 	kvmarm@lists.cs.columbia.edu
-Subject: [PATCH 08/17] arm64: Move SCTLR_EL1 initialisation to EL-agnostic code
-Date: Mon, 28 Dec 2020 10:49:49 +0000
-Message-Id: <20201228104958.1848833-9-maz@kernel.org>
+Subject: [PATCH 09/17] arm64: cpufeature: Add global feature override facility
+Date: Mon, 28 Dec 2020 10:49:50 +0000
+Message-Id: <20201228104958.1848833-10-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201228104958.1848833-1-maz@kernel.org>
 References: <20201228104958.1848833-1-maz@kernel.org>
@@ -78,45 +78,76 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-We can now move the initial SCTLR_EL1 setup to be used for both
-EL1 and EL2 setup.
+Add a facility to globally override a feature, no matter what
+the HW says. Yes, this is dangerous.
+
+Nothing uses this yet, so we are pretty safe. For now.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kernel/head.S | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ arch/arm64/include/asm/cpufeature.h |  2 ++
+ arch/arm64/kernel/cpufeature.c      | 26 +++++++++++++++++++++-----
+ 2 files changed, 23 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/kernel/head.S b/arch/arm64/kernel/head.S
-index 36212c05df42..b425d2587cdb 100644
---- a/arch/arm64/kernel/head.S
-+++ b/arch/arm64/kernel/head.S
-@@ -479,13 +479,14 @@ EXPORT_SYMBOL(kimage_vaddr)
-  * booted in EL1 or EL2 respectively.
-  */
- SYM_FUNC_START(init_kernel_el)
-+	mov_q	x0, INIT_SCTLR_EL1_MMU_OFF
-+	msr	sctlr_el1, x0
+diff --git a/arch/arm64/include/asm/cpufeature.h b/arch/arm64/include/asm/cpufeature.h
+index 9a555809b89c..465d2cb63bfc 100644
+--- a/arch/arm64/include/asm/cpufeature.h
++++ b/arch/arm64/include/asm/cpufeature.h
+@@ -75,6 +75,8 @@ struct arm64_ftr_reg {
+ 	u64				sys_val;
+ 	u64				user_val;
+ 	const struct arm64_ftr_bits	*ftr_bits;
++	u64				*override_val;
++	u64				*override_mask;
+ };
+ 
+ extern struct arm64_ftr_reg arm64_ftr_reg_ctrel0;
+diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
+index 7ffb5f1d8b68..2dbfc0096b0d 100644
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -544,13 +544,17 @@ static const struct arm64_ftr_bits ftr_raz[] = {
+ 	ARM64_FTR_END,
+ };
+ 
+-#define ARM64_FTR_REG(id, table) {		\
+-	.sys_id = id,				\
+-	.reg = 	&(struct arm64_ftr_reg){	\
+-		.name = #id,			\
+-		.ftr_bits = &((table)[0]),	\
++#define ARM64_FTR_REG_OVERRIDE(id, table, v, m) {		\
++		.sys_id = id,					\
++		.reg = 	&(struct arm64_ftr_reg){		\
++			.name = #id,				\
++			.ftr_bits = &((table)[0]),		\
++			.override_val = v,			\
++			.override_mask = m,			\
+ 	}}
+ 
++#define ARM64_FTR_REG(id, table) ARM64_FTR_REG_OVERRIDE(id, table, NULL, NULL)
 +
- 	mrs	x0, CurrentEL
- 	cmp	x0, #CurrentEL_EL2
- 	b.eq	init_el2
+ static const struct __ftr_reg_entry {
+ 	u32			sys_id;
+ 	struct arm64_ftr_reg 	*reg;
+@@ -786,6 +790,18 @@ static void __init init_cpu_ftr_reg(u32 sys_reg, u64 new)
  
- SYM_INNER_LABEL(init_el1, SYM_L_LOCAL)
--	mov_q	x0, INIT_SCTLR_EL1_MMU_OFF
--	msr	sctlr_el1, x0
- 	isb
- 	mov_q	x0, INIT_PSTATE_EL1
- 	msr	spsr_el1, x0
-@@ -494,9 +495,6 @@ SYM_INNER_LABEL(init_el1, SYM_L_LOCAL)
- 	eret
+ 	val &= valid_mask;
  
- SYM_INNER_LABEL(init_el2, SYM_L_LOCAL)
--	mov_q	x0, INIT_SCTLR_EL1_MMU_OFF
--	msr	sctlr_el1, x0
--
- 	mov_q	x0, HCR_HOST_NVHE_FLAGS
- 	msr	hcr_el2, x0
- 	isb
++	if (reg->override_mask && reg->override_val) {
++		u64 override = val;
++		override &= ~*reg->override_mask;
++		override |= (*reg->override_val & *reg->override_mask);
++
++		if (val != override)
++			pr_warn("%s: forced from %016llx to %016llx\n",
++				reg->name, val, override);
++
++		val = override;
++	}
++
+ 	reg->sys_val = val;
+ 	reg->strict_mask = strict_mask;
+ 	reg->user_mask = user_mask;
 -- 
 2.29.2
 
