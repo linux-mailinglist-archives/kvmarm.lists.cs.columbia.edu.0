@@ -2,84 +2,67 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CB072E74F6
-	for <lists+kvmarm@lfdr.de>; Tue, 29 Dec 2020 23:11:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 59C012E74F5
+	for <lists+kvmarm@lfdr.de>; Tue, 29 Dec 2020 23:11:15 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D512D4B318;
-	Tue, 29 Dec 2020 17:11:23 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C15B74B30C;
+	Tue, 29 Dec 2020 17:11:14 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.911
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@gmail.com
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TQgM9b2h4dwG; Tue, 29 Dec 2020 17:11:23 -0500 (EST)
+	with ESMTP id ZIA5XewF-0iE; Tue, 29 Dec 2020 17:11:14 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BAF734B310;
-	Tue, 29 Dec 2020 17:11:22 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 91D814B310;
+	Tue, 29 Dec 2020 17:11:13 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AE9094B2B5
- for <kvmarm@lists.cs.columbia.edu>; Tue, 29 Dec 2020 16:43:42 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B5CCB4B30A
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 29 Dec 2020 17:11:11 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id hA4+OW4ETCP9 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 29 Dec 2020 16:43:41 -0500 (EST)
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com
- [209.85.160.178])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9F72E4B2AE
- for <kvmarm@lists.cs.columbia.edu>; Tue, 29 Dec 2020 16:43:41 -0500 (EST)
-Received: by mail-qt1-f178.google.com with SMTP id z20so9856797qtq.3
- for <kvmarm@lists.cs.columbia.edu>; Tue, 29 Dec 2020 13:43:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=HyTMgo2VSftHBiDIe/SLp0txxvwc3jI6o6j5ZlWh/dw=;
- b=f0dILRFveWykzV+Z08AvfOmj26DARStkXTD2rimwgfWkfyVMqtfKDgl3xemZfvShcu
- wchzqQrdG3m9iLk3zCc2lgOa4be5mWmA4hJxWlc9OIqKOIavkMFv6U0Wjp6biO7jNHxK
- VMfU2h8EmtfFqiB1wQ3c5h10hPIZ7hfjpQAmzIEK/42ryVwsOtWnfffmx2hRQxlvPRm+
- lRPE3BxPkpJITLJ7pTCbUOWEdU8v3PPQzLPhxT2jCXyBltLlN/cFMCVqIUwTYvGWhpfP
- ahaKWxBfxutvEc4bFDrcIH5LZPJsw0wSv2gcWlpWUfD8WAA4MzYvetKlsExY7T9FmwSZ
- aFhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=HyTMgo2VSftHBiDIe/SLp0txxvwc3jI6o6j5ZlWh/dw=;
- b=RAHoj9CaCiAvvShTFPPoOOqlzWYcS4awWbqNfZ9fWg25+/1RLiJvcjZ43iJNIeTUCP
- JlAMFvQgDjc8c57fu5fIPbolQfEFjEWuLjWkb0v2tMR4XkSQhmCgxi3Zfgr/Z6Ez+iVQ
- qogBWzWw8iXpWsbOOZgrMXlXbb2PQTVv+/Ua5G+Xumy+EUUT7JSfAzON+BYG+c+xubFY
- 7Ib+CTTd1x1xy3uTO+hI6C5o6VXrlxQ0udt4v5pqh83/VnohaRx9cZhvo1OPWrVuPsSB
- 6CAD5JYaHjbfErWr4uci/VSon9jdR8Ixb0EQoRgXMYbS6PPwB5/I9wIqSbyNfEAaB5GN
- AiFQ==
-X-Gm-Message-State: AOAM531GWt0nDsW+Qad/mw6pTGsZPyARqbKhbXv1kycM1n2rkmYL+Uz3
- CzBU1+hNrFnscGKDjnlxsNk=
-X-Google-Smtp-Source: ABdhPJxNRqILS8BFoDpnYl60ROLPkm6ALqjECJjXraNE4zHWZETdZN9t0HskLPCKTUrnD0VAHbTDpA==
-X-Received: by 2002:ac8:1184:: with SMTP id d4mr50229998qtj.103.1609278221078; 
- Tue, 29 Dec 2020 13:43:41 -0800 (PST)
-Received: from localhost.localdomain ([2604:1380:45f1:1d00::1])
- by smtp.gmail.com with ESMTPSA id 17sm25725927qtb.17.2020.12.29.13.43.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Dec 2020 13:43:40 -0800 (PST)
-From: Nathan Chancellor <natechancellor@gmail.com>
-To: Marc Zyngier <maz@kernel.org>
-Subject: [PATCH] KVM: arm64: Fix section mismatches around hyp_cpu_pm_{init,
- exit}
-Date: Tue, 29 Dec 2020 14:43:36 -0700
-Message-Id: <20201229214336.4098955-1-natechancellor@gmail.com>
-X-Mailer: git-send-email 2.30.0
+ with ESMTP id J17MB3gk0YZj for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 29 Dec 2020 17:11:10 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9B1804B1E0
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 29 Dec 2020 17:11:10 -0500 (EST)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 78D3020825;
+ Tue, 29 Dec 2020 22:11:09 +0000 (UTC)
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1kuNCt-004Ti1-6E; Tue, 29 Dec 2020 22:11:07 +0000
 MIME-Version: 1.0
-X-Patchwork-Bot: notify
-X-Mailman-Approved-At: Tue, 29 Dec 2020 17:11:21 -0500
+Date: Tue, 29 Dec 2020 22:11:07 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: Nathan Chancellor <natechancellor@gmail.com>
+Subject: Re: [PATCH] KVM: arm64: Fix section mismatches around
+ hyp_cpu_pm_{init,exit}
+In-Reply-To: <20201229214336.4098955-1-natechancellor@gmail.com>
+References: <20201229214336.4098955-1-natechancellor@gmail.com>
+User-Agent: Roundcube Webmail/1.4.9
+Message-ID: <49e9d2e2e7103c49882b54c18c567667@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: natechancellor@gmail.com, james.morse@arm.com,
+ julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com, catalin.marinas@arm.com,
+ will@kernel.org, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, clang-built-linux@googlegroups.com,
+ linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
 Cc: Catalin Marinas <catalin.marinas@arm.com>, linux-kernel@vger.kernel.org,
- clang-built-linux@googlegroups.com,
- Nathan Chancellor <natechancellor@gmail.com>, Will Deacon <will@kernel.org>,
+ clang-built-linux@googlegroups.com, Will Deacon <will@kernel.org>,
  kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -92,66 +75,54 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Commit fa8c3d65538a ("KVM: arm64: Keep nVHE EL2 vector installed")
-inadvertently changed clang's inlining decisions around
-hyp_cpu_pm_{init,exit}, causing the following section mismatch warnings:
+On 2020-12-29 21:43, Nathan Chancellor wrote:
+> Commit fa8c3d65538a ("KVM: arm64: Keep nVHE EL2 vector installed")
+> inadvertently changed clang's inlining decisions around
+> hyp_cpu_pm_{init,exit}, causing the following section mismatch 
+> warnings:
+> 
+> WARNING: modpost: vmlinux.o(.text+0x95c6c): Section mismatch in
+> reference from the function kvm_arch_init() to the function
+> .init.text:hyp_cpu_pm_exit()
+> The function kvm_arch_init() references
+> the function __init hyp_cpu_pm_exit().
+> This is often because kvm_arch_init lacks a __init
+> annotation or the annotation of hyp_cpu_pm_exit is wrong.
+> 
+> WARNING: modpost: vmlinux.o(.text+0x97054): Section mismatch in
+> reference from the function init_subsystems() to the function
+> .init.text:hyp_cpu_pm_init()
+> The function init_subsystems() references
+> the function __init hyp_cpu_pm_init().
+> This is often because init_subsystems lacks a __init
+> annotation or the annotation of hyp_cpu_pm_init is wrong.
+> 
+> Remove the __init annotation so that there are no warnings regardless 
+> of
+> how functions are inlined.
+> 
+> Fixes: 1fcf7ce0c602 ("arm: kvm: implement CPU PM notifier")
+> Fixes: 06a71a24bae5 ("arm64: KVM: unregister notifiers in hyp mode
+> teardown path")
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1230
+> Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 
-WARNING: modpost: vmlinux.o(.text+0x95c6c): Section mismatch in
-reference from the function kvm_arch_init() to the function
-.init.text:hyp_cpu_pm_exit()
-The function kvm_arch_init() references
-the function __init hyp_cpu_pm_exit().
-This is often because kvm_arch_init lacks a __init
-annotation or the annotation of hyp_cpu_pm_exit is wrong.
+Hi Nathan,
 
-WARNING: modpost: vmlinux.o(.text+0x97054): Section mismatch in
-reference from the function init_subsystems() to the function
-.init.text:hyp_cpu_pm_init()
-The function init_subsystems() references
-the function __init hyp_cpu_pm_init().
-This is often because init_subsystems lacks a __init
-annotation or the annotation of hyp_cpu_pm_init is wrong.
+Already posted[1] last week.
 
-Remove the __init annotation so that there are no warnings regardless of
-how functions are inlined.
+Thanks,
 
-Fixes: 1fcf7ce0c602 ("arm: kvm: implement CPU PM notifier")
-Fixes: 06a71a24bae5 ("arm64: KVM: unregister notifiers in hyp mode teardown path")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1230
-Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
----
- arch/arm64/kvm/arm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+         M.
 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 6e637d2b4cfb..71a49eae9ea0 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -1574,12 +1574,12 @@ static struct notifier_block hyp_init_cpu_pm_nb = {
- 	.notifier_call = hyp_init_cpu_pm_notifier,
- };
- 
--static void __init hyp_cpu_pm_init(void)
-+static void hyp_cpu_pm_init(void)
- {
- 	if (!is_protected_kvm_enabled())
- 		cpu_pm_register_notifier(&hyp_init_cpu_pm_nb);
- }
--static void __init hyp_cpu_pm_exit(void)
-+static void hyp_cpu_pm_exit(void)
- {
- 	if (!is_protected_kvm_enabled())
- 		cpu_pm_unregister_notifier(&hyp_init_cpu_pm_nb);
-
-base-commit: 5c8fe583cce542aa0b84adc939ce85293de36e5e
+[1] htps://lore.kernel.org/r/20201223120854.255347-1-maz@kernel.org
 -- 
-2.30.0
-
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
