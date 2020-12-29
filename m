@@ -2,67 +2,85 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 20BF52E7339
-	for <lists+kvmarm@lfdr.de>; Tue, 29 Dec 2020 20:27:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CB072E74F6
+	for <lists+kvmarm@lfdr.de>; Tue, 29 Dec 2020 23:11:24 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8E6C44B2F9;
-	Tue, 29 Dec 2020 14:27:21 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D512D4B318;
+	Tue, 29 Dec 2020 17:11:23 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.911
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@gmail.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id unrmN7b+J7yP; Tue, 29 Dec 2020 14:27:21 -0500 (EST)
+	with ESMTP id TQgM9b2h4dwG; Tue, 29 Dec 2020 17:11:23 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 614F84B2F5;
-	Tue, 29 Dec 2020 14:27:20 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BAF734B310;
+	Tue, 29 Dec 2020 17:11:22 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 464854B2EF
- for <kvmarm@lists.cs.columbia.edu>; Tue, 29 Dec 2020 14:27:19 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id AE9094B2B5
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 29 Dec 2020 16:43:42 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id cOb55tvRK27a for <kvmarm@lists.cs.columbia.edu>;
- Tue, 29 Dec 2020 14:27:18 -0500 (EST)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 259A24B203
- for <kvmarm@lists.cs.columbia.edu>; Tue, 29 Dec 2020 14:27:18 -0500 (EST)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id D69C9207B1;
- Tue, 29 Dec 2020 19:27:16 +0000 (UTC)
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1kuKeI-004SXK-Nx; Tue, 29 Dec 2020 19:27:14 +0000
+ with ESMTP id hA4+OW4ETCP9 for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 29 Dec 2020 16:43:41 -0500 (EST)
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com
+ [209.85.160.178])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9F72E4B2AE
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 29 Dec 2020 16:43:41 -0500 (EST)
+Received: by mail-qt1-f178.google.com with SMTP id z20so9856797qtq.3
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 29 Dec 2020 13:43:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=HyTMgo2VSftHBiDIe/SLp0txxvwc3jI6o6j5ZlWh/dw=;
+ b=f0dILRFveWykzV+Z08AvfOmj26DARStkXTD2rimwgfWkfyVMqtfKDgl3xemZfvShcu
+ wchzqQrdG3m9iLk3zCc2lgOa4be5mWmA4hJxWlc9OIqKOIavkMFv6U0Wjp6biO7jNHxK
+ VMfU2h8EmtfFqiB1wQ3c5h10hPIZ7hfjpQAmzIEK/42ryVwsOtWnfffmx2hRQxlvPRm+
+ lRPE3BxPkpJITLJ7pTCbUOWEdU8v3PPQzLPhxT2jCXyBltLlN/cFMCVqIUwTYvGWhpfP
+ ahaKWxBfxutvEc4bFDrcIH5LZPJsw0wSv2gcWlpWUfD8WAA4MzYvetKlsExY7T9FmwSZ
+ aFhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=HyTMgo2VSftHBiDIe/SLp0txxvwc3jI6o6j5ZlWh/dw=;
+ b=RAHoj9CaCiAvvShTFPPoOOqlzWYcS4awWbqNfZ9fWg25+/1RLiJvcjZ43iJNIeTUCP
+ JlAMFvQgDjc8c57fu5fIPbolQfEFjEWuLjWkb0v2tMR4XkSQhmCgxi3Zfgr/Z6Ez+iVQ
+ qogBWzWw8iXpWsbOOZgrMXlXbb2PQTVv+/Ua5G+Xumy+EUUT7JSfAzON+BYG+c+xubFY
+ 7Ib+CTTd1x1xy3uTO+hI6C5o6VXrlxQ0udt4v5pqh83/VnohaRx9cZhvo1OPWrVuPsSB
+ 6CAD5JYaHjbfErWr4uci/VSon9jdR8Ixb0EQoRgXMYbS6PPwB5/I9wIqSbyNfEAaB5GN
+ AiFQ==
+X-Gm-Message-State: AOAM531GWt0nDsW+Qad/mw6pTGsZPyARqbKhbXv1kycM1n2rkmYL+Uz3
+ CzBU1+hNrFnscGKDjnlxsNk=
+X-Google-Smtp-Source: ABdhPJxNRqILS8BFoDpnYl60ROLPkm6ALqjECJjXraNE4zHWZETdZN9t0HskLPCKTUrnD0VAHbTDpA==
+X-Received: by 2002:ac8:1184:: with SMTP id d4mr50229998qtj.103.1609278221078; 
+ Tue, 29 Dec 2020 13:43:41 -0800 (PST)
+Received: from localhost.localdomain ([2604:1380:45f1:1d00::1])
+ by smtp.gmail.com with ESMTPSA id 17sm25725927qtb.17.2020.12.29.13.43.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 29 Dec 2020 13:43:40 -0800 (PST)
+From: Nathan Chancellor <natechancellor@gmail.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: [PATCH] KVM: arm64: Fix section mismatches around hyp_cpu_pm_{init,
+ exit}
+Date: Tue, 29 Dec 2020 14:43:36 -0700
+Message-Id: <20201229214336.4098955-1-natechancellor@gmail.com>
+X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
-Date: Tue, 29 Dec 2020 19:27:14 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu
-Subject: Re: [PATCH 00/17] arm64: Early CPU feature override, and an
- application to VHE
-In-Reply-To: <20201228104958.1848833-1-maz@kernel.org>
-References: <20201228104958.1848833-1-maz@kernel.org>
-User-Agent: Roundcube Webmail/1.4.9
-Message-ID: <20205dd2e203de92c680082eb3bf399e@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, mark.rutland@arm.com, kernel-team@android.com,
- suzuki.poulose@arm.com, catalin.marinas@arm.com, alexandru.elisei@arm.com,
- james.morse@arm.com, dbrazdil@google.com, will@kernel.org, ardb@kernel.org,
- julien.thierry.kdev@gmail.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: Will Deacon <will@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
- kernel-team@android.com, Ard Biesheuvel <ardb@kernel.org>
+X-Patchwork-Bot: notify
+X-Mailman-Approved-At: Tue, 29 Dec 2020 17:11:21 -0500
+Cc: Catalin Marinas <catalin.marinas@arm.com>, linux-kernel@vger.kernel.org,
+ clang-built-linux@googlegroups.com,
+ Nathan Chancellor <natechancellor@gmail.com>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -74,54 +92,66 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2020-12-28 10:49, Marc Zyngier wrote:
-> It recently came to light that there is a need to be able to override
-> some CPU features very early on, before the kernel is fully up and
-> running. The reasons for this range from specific feature support
-> (such as using Protected KVM on VHE HW, which is the main motivation
-> for this work) to errata workaround (a feature is broken on a CPU and
-> needs to be turned off, or rather not enabled).
-> 
-> This series tries to offer a limited framework for this kind of
-> problems, by allowing a set of options to be passed on the
-> command-line and altering the feature set that the cpufeature
-> subsystem exposes to the rest of the kernel. Note that this doesn't
-> change anything for code that directly uses the CPU ID registers.
-> 
-> The series completely changes the way a VHE-capable arm64 boots, by
-> *always* booting non-VHE first, and then upgrading to VHE when deemed
-> capable. Although this sounds scary, this is actually simple to
-> implement (and I wish I had though of it five years ago). The "upgrade
-> to VHE" path is then conditioned on the VHE feature not being disabled
-> from the command-line.
-> 
-> Said command-line parsing borrows a lot from the kaslr code, and
-> subsequently allows the "nokaslr" option to be moved to the new
-> infrastructure (though it all looks a bit... odd).
-> 
-> This has been tested on multiple VHE and non-VHE systems.
+Commit fa8c3d65538a ("KVM: arm64: Keep nVHE EL2 vector installed")
+inadvertently changed clang's inlining decisions around
+hyp_cpu_pm_{init,exit}, causing the following section mismatch warnings:
 
-FWIW, I've just fixed a number of issues with this series, ranging
-from compilation issues when CONFIG_RANDOMIZE_BASE is not set,
-SPE setup bugs, and boot hangs when kaslr kicks in.
+WARNING: modpost: vmlinux.o(.text+0x95c6c): Section mismatch in
+reference from the function kvm_arch_init() to the function
+.init.text:hyp_cpu_pm_exit()
+The function kvm_arch_init() references
+the function __init hyp_cpu_pm_exit().
+This is often because kvm_arch_init lacks a __init
+annotation or the annotation of hyp_cpu_pm_exit is wrong.
 
-It all should be fixed now, and I have pushed an updated series
-at [1], for those of you who really can't wait to try new stuff
-while you could just ignore it all.
+WARNING: modpost: vmlinux.o(.text+0x97054): Section mismatch in
+reference from the function init_subsystems() to the function
+.init.text:hyp_cpu_pm_init()
+The function init_subsystems() references
+the function __init hyp_cpu_pm_init().
+This is often because init_subsystems lacks a __init
+annotation or the annotation of hyp_cpu_pm_init is wrong.
 
-Thanks,
+Remove the __init annotation so that there are no warnings regardless of
+how functions are inlined.
 
-         M.
+Fixes: 1fcf7ce0c602 ("arm: kvm: implement CPU PM notifier")
+Fixes: 06a71a24bae5 ("arm64: KVM: unregister notifiers in hyp mode teardown path")
+Link: https://github.com/ClangBuiltLinux/linux/issues/1230
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
+---
+ arch/arm64/kvm/arm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-[1] 
-https://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git/log/?h=hack/arm64-early-cpufeature
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 6e637d2b4cfb..71a49eae9ea0 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -1574,12 +1574,12 @@ static struct notifier_block hyp_init_cpu_pm_nb = {
+ 	.notifier_call = hyp_init_cpu_pm_notifier,
+ };
+ 
+-static void __init hyp_cpu_pm_init(void)
++static void hyp_cpu_pm_init(void)
+ {
+ 	if (!is_protected_kvm_enabled())
+ 		cpu_pm_register_notifier(&hyp_init_cpu_pm_nb);
+ }
+-static void __init hyp_cpu_pm_exit(void)
++static void hyp_cpu_pm_exit(void)
+ {
+ 	if (!is_protected_kvm_enabled())
+ 		cpu_pm_unregister_notifier(&hyp_init_cpu_pm_nb);
+
+base-commit: 5c8fe583cce542aa0b84adc939ce85293de36e5e
 -- 
-Jazz is not dead. It just smells funny...
+2.30.0
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
