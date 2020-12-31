@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B4A92E7FDC
-	for <lists+kvmarm@lfdr.de>; Thu, 31 Dec 2020 13:22:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D6C1C2E80CA
+	for <lists+kvmarm@lfdr.de>; Thu, 31 Dec 2020 16:09:48 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E724E4B2A0;
-	Thu, 31 Dec 2020 07:22:19 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 567AB4B265;
+	Thu, 31 Dec 2020 10:09:48 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,55 +15,49 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ho4JzFBbNkvC; Thu, 31 Dec 2020 07:22:19 -0500 (EST)
+	with ESMTP id nCCrkeRzsqhh; Thu, 31 Dec 2020 10:09:48 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8B2984B299;
-	Thu, 31 Dec 2020 07:22:18 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0AB284B242;
+	Thu, 31 Dec 2020 10:09:47 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 90A174B1F0
- for <kvmarm@lists.cs.columbia.edu>; Thu, 31 Dec 2020 07:22:17 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id AD5A54B198
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 31 Dec 2020 10:09:45 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id SS3k5zLuAKAf for <kvmarm@lists.cs.columbia.edu>;
- Thu, 31 Dec 2020 07:22:16 -0500 (EST)
+ with ESMTP id OoHP9XnD7Lr4 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 31 Dec 2020 10:09:43 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 539B74B294
- for <kvmarm@lists.cs.columbia.edu>; Thu, 31 Dec 2020 07:22:16 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0877D4B17A
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 31 Dec 2020 10:09:43 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 0E7FB223DB;
- Thu, 31 Dec 2020 12:22:15 +0000 (UTC)
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94)
+ by mail.kernel.org (Postfix) with ESMTPSA id 9E4BC223E4;
+ Thu, 31 Dec 2020 15:09:41 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=hot-poop.lan)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1kuwy4-004iEa-Tk; Thu, 31 Dec 2020 12:22:12 +0000
-MIME-Version: 1.0
-Date: Thu, 31 Dec 2020 12:22:12 +0000
+ id 1kuza7-004jc9-GO; Thu, 31 Dec 2020 15:09:39 +0000
 From: Marc Zyngier <maz@kernel.org>
-To: Shenming Lu <lushenming@huawei.com>
-Subject: Re: [PATCH RFC] KVM: arm64: vgic: Decouple the check of the
- EnableLPIs bit from the ITS LPI translation
-In-Reply-To: <cf530279-4c68-c7de-f87e-1236ce0241cf@huawei.com>
-References: <20201231062813.714-1-lushenming@huawei.com>
- <683134bdea8a22d3bb784117dcfe17a1@kernel.org>
- <cf530279-4c68-c7de-f87e-1236ce0241cf@huawei.com>
-User-Agent: Roundcube Webmail/1.4.9
-Message-ID: <85dd45f580eaa7a0b8ec91ac0b7ca066@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: lushenming@huawei.com, will@kernel.org,
- eric.auger@redhat.com, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org,
- wanghaibin.wang@huawei.com, yuzenghui@huawei.com
+To: kvmarm@lists.cs.columbia.edu,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH] KVM: arm64: Remove spurious semicolon in reg_to_encoding()
+Date: Thu, 31 Dec 2020 15:09:36 +0000
+Message-Id: <20201231150936.4013764-1-maz@kernel.org>
+X-Mailer: git-send-email 2.29.2
+MIME-Version: 1.0
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, james.morse@arm.com,
+ julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com, kernel-team@android.com
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
-Cc: linux-kernel@vger.kernel.org, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Cc: kernel-team@android.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -75,77 +69,36 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2020-12-31 11:58, Shenming Lu wrote:
-> On 2020/12/31 16:57, Marc Zyngier wrote:
->> Hi Shemming,
->> 
->> On 2020-12-31 06:28, Shenming Lu wrote:
->>> When the EnableLPIs bit is set to 0, any ITS LPI requests in the
->>> Redistributor would be ignored. And this check is independent from
->>> the ITS LPI translation. So it might be better to move the check
->>> of the EnableLPIs bit out of the LPI resolving, and also add it
->>> to the path that uses the translation cache.
->> 
->> But by doing that, you are moving the overhead of checking for
->> EnableLPIs from the slow path (translation walk) to the fast
->> path (cache hit), which seems counter-productive.
-> 
-> Oh, I didn't notice the overhead of the checking, I thought it would
-> be negligible...
+Although not a problem right now, it flared up while working
+on some other aspects of the code-base. Remove the useless
+semicolon.
 
-It probably doesn't show on a modern box, but some of the slower
-systems might see it. Overall, this is a design decision to keep
-the translation cache as simple and straightforward as possible:
-if anything affects the output of the cache, we invalidate it,
-and that's it.
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+---
+ arch/arm64/kvm/sys_regs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> 
->> 
->>> Besides it seems that
->>> by this the invalidating of the translation cache caused by the LPI
->>> disabling is unnecessary.
->>> 
->>> Not sure if I have missed something... Thanks.
->> 
->> I am certainly missing the purpose of this patch.
->> 
->> The effect of EnableLPIs being zero is to drop the result of any
->> translation (a new pending bit) on the floor. Given that, it is
->> immaterial whether this causes a new translation or hits in the
->> cache, as the result is still to not pend a new interrupt.
->> 
->> I get the feeling that you are trying to optimise for the unusual
->> case where EnableLPIs is 0 *and* you have a screaming device
->> injecting tons of interrupt. If that is the case, I don't think
->> this is worth it.
-> 
-> In fact, I just found (imagining) that if the EnableLPIs bit is 0,
-> the kvm_vgic_v4_set_forwarding() would fail when performing the LPI
-> translation, but indeed we don't try to pend any interrupts there...
-> 
-> By the way, it seems that the LPI disabling would not affect the
-> injection of VLPIs...
-
-Yes, good point. We could unmap the VPE from all ITS, which would result
-in all translations to be discarded, but this has the really bad side
-effect of *also* preventing the delivery of vSGIs, which isn't what
-you'd expect.
-
-Overall, I don't think there is a good way to support this, and maybe
-we should just prevent EnableLPIs to be turned off when using direct
-injection. After all, the architecture does allow that for GICv3
-implementations, which is what we emulate.
-
-Thanks,
-
-         M.
+diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+index d46e7f706cb0..42ccc27fb684 100644
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -923,7 +923,7 @@ static bool access_pmuserenr(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
+ 
+ #define reg_to_encoding(x)						\
+ 	sys_reg((u32)(x)->Op0, (u32)(x)->Op1,				\
+-		(u32)(x)->CRn, (u32)(x)->CRm, (u32)(x)->Op2);
++		(u32)(x)->CRn, (u32)(x)->CRm, (u32)(x)->Op2)
+ 
+ /* Silly macro to expand the DBG{BCR,BVR,WVR,WCR}n_EL1 registers in one go */
+ #define DBG_BCR_BVR_WCR_WVR_EL1(n)					\
 -- 
-Jazz is not dead. It just smells funny...
+2.29.2
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
