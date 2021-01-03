@@ -2,59 +2,73 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E97DE2E9199
-	for <lists+kvmarm@lfdr.de>; Mon,  4 Jan 2021 09:17:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1022E2E9328
+	for <lists+kvmarm@lfdr.de>; Mon,  4 Jan 2021 11:16:30 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D3F74B302;
-	Mon,  4 Jan 2021 03:17:09 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7C70F4B2E7;
+	Mon,  4 Jan 2021 05:16:29 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rxb+k+FrdIRU; Mon,  4 Jan 2021 03:17:09 -0500 (EST)
+	with ESMTP id gEYPeFa2yeaK; Mon,  4 Jan 2021 05:16:29 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 90D714B2F5;
-	Mon,  4 Jan 2021 03:17:08 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5BA3E4B2E5;
+	Mon,  4 Jan 2021 05:16:28 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AF7ED4B202
- for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 03:17:07 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3A7FB4B259
+ for <kvmarm@lists.cs.columbia.edu>; Sun,  3 Jan 2021 13:39:03 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 44QDDiPBMct9 for <kvmarm@lists.cs.columbia.edu>;
- Mon,  4 Jan 2021 03:17:06 -0500 (EST)
-Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A9D534B192
- for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 03:17:05 -0500 (EST)
-Received: from DGGEMS403-HUB.china.huawei.com (unknown [172.30.72.60])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4D8T3G2xDrzMF8d;
- Mon,  4 Jan 2021 16:15:54 +0800 (CST)
-Received: from DESKTOP-7FEPK9S.china.huawei.com (10.174.184.196) by
- DGGEMS403-HUB.china.huawei.com (10.3.19.203) with Microsoft SMTP Server id
- 14.3.498.0; Mon, 4 Jan 2021 16:16:55 +0800
-From: Shenming Lu <lushenming@huawei.com>
-To: Marc Zyngier <maz@kernel.org>, Eric Auger <eric.auger@redhat.com>, "Will
- Deacon" <will@kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <kvmarm@lists.cs.columbia.edu>, <kvm@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: [RFC PATCH v2 4/4] KVM: arm64: GICv4.1: Give a chance to save VLPI's
- pending state
-Date: Mon, 4 Jan 2021 16:16:13 +0800
-Message-ID: <20210104081613.100-5-lushenming@huawei.com>
-X-Mailer: git-send-email 2.27.0.windows.1
-In-Reply-To: <20210104081613.100-1-lushenming@huawei.com>
-References: <20210104081613.100-1-lushenming@huawei.com>
+ with ESMTP id 0Vjv4h6ENTjw for <kvmarm@lists.cs.columbia.edu>;
+ Sun,  3 Jan 2021 13:39:02 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 450344B1DC
+ for <kvmarm@lists.cs.columbia.edu>; Sun,  3 Jan 2021 13:39:02 -0500 (EST)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 19F4320B1F
+ for <kvmarm@lists.cs.columbia.edu>; Sun,  3 Jan 2021 18:39:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1609699141;
+ bh=1gzdyXY4h/wwDwh9061JmyDJFt1tPnc1xrQ+kbmqN9g=;
+ h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+ b=ooQXhMGDeV+50gshBN5x10evzZwMNhiw4L7U20M3QdSpH4OV1vbD4RauOpXZ3nGDR
+ Lz8LfPEcHFirnXTUtnnHluXFpaXFCMm+2ZB3Pg4k1xiT+Z2+ZlHkumVSYmjYCnbNGf
+ O527+5TFGgHCgokM6GRmHMuqECr/4MIi0jO+dSRB4zBihfcJP4Y/R7edoDMn85hDkb
+ 6mqtQvlkDrGBMdBySgnQm1Hx8emLxzd3GBcOyPdbFJHFs+SKDdtzn/SEhszzuJZafv
+ BaJ9iQX0EzrtvUA5JEkjk3fhV6Fcao/ktd6jhwF6NXQPBvvFiCBHB0NZlV1NUT7dy4
+ wd1Z3LTvnR4kA==
+Received: by mail-ot1-f49.google.com with SMTP id r9so24065243otk.11
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 03 Jan 2021 10:39:01 -0800 (PST)
+X-Gm-Message-State: AOAM530b06ZukYfhkLQlhZPCgeqncTEfJNXfs/w8StHzQVG0btifui5Z
+ 46OirOSclcvKLqpU3grfIDcvPBwKt+3N5gxAME4=
+X-Google-Smtp-Source: ABdhPJwFqfaF0KvE0DQuSO4pNB525Wq4bIJdHdLYh6etgqFgae//cMjDmYWmA6JbGIKQXNAR37XHmxWF3artosWU0rE=
+X-Received: by 2002:a05:6830:1e14:: with SMTP id
+ s20mr50467524otr.210.1609699140454; 
+ Sun, 03 Jan 2021 10:39:00 -0800 (PST)
 MIME-Version: 1.0
-X-Originating-IP: [10.174.184.196]
-X-CFilter-Loop: Reflected
-Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
- Cornelia Huck <cohuck@redhat.com>, lushenming@huawei.com,
- Alex Williamson <alex.williamson@redhat.com>
+References: <20210103140104.3853922-1-arnd@kernel.org>
+ <871rf2km2c.wl-maz@kernel.org>
+In-Reply-To: <871rf2km2c.wl-maz@kernel.org>
+From: Arnd Bergmann <arnd@kernel.org>
+Date: Sun, 3 Jan 2021 19:38:44 +0100
+X-Gmail-Original-Message-ID: <CAK8P3a1W7O_qKO6QuddO462fzJ--x3JGpDk=YqPk7yQm16-Zcg@mail.gmail.com>
+Message-ID: <CAK8P3a1W7O_qKO6QuddO462fzJ--x3JGpDk=YqPk7yQm16-Zcg@mail.gmail.com>
+Subject: Re: [PATCH] KVM: arm64: remove incorrect __init annotation
+To: Marc Zyngier <maz@kernel.org>
+X-Mailman-Approved-At: Mon, 04 Jan 2021 05:16:27 -0500
+Cc: Linux ARM <linux-arm-kernel@lists.infradead.org>,
+ Arnd Bergmann <arnd@arndb.de>, Catalin Marinas <catalin.marinas@arm.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ Sean Christopherson <seanjc@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -66,45 +80,38 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-QmVmb3JlIEdJQ3Y0LjEsIHdlIGRvIG5vdCBoYXZlIGRpcmVjdCBhY2Nlc3MgdG8gdGhlIFZMUEkn
-cyBwZW5kaW5nCnN0YXRlLiBTbyB3ZSBzaW1wbHkgbGV0IGl0IGZhaWwgZWFybHkgd2hlbiBlbmNv
-dW50ZXJpbmcgYW55IFZMUEkuCgpCdXQgbm93IHdlIGRvbid0IGhhdmUgdG8gcmV0dXJuIC1FQUND
-RVMgZGlyZWN0bHkgaWYgb24gR0lDdjQuMS4gU28KbGV04oCZcyBjaGFuZ2UgdGhlIGhhcmQgY29k
-ZSBhbmQgZ2l2ZSBhIGNoYW5jZSB0byBzYXZlIHRoZSBWTFBJJ3MgcGVuZGluZwpzdGF0ZSAoYW5k
-IHByZXNlcnZlIHRoZSBVQVBJKS4KClNpZ25lZC1vZmYtYnk6IFNoZW5taW5nIEx1IDxsdXNoZW5t
-aW5nQGh1YXdlaS5jb20+Ci0tLQogRG9jdW1lbnRhdGlvbi92aXJ0L2t2bS9kZXZpY2VzL2FybS12
-Z2ljLWl0cy5yc3QgfCAyICstCiBhcmNoL2FybTY0L2t2bS92Z2ljL3ZnaWMtaXRzLmMgICAgICAg
-ICAgICAgICAgICB8IDYgKysrLS0tCiAyIGZpbGVzIGNoYW5nZWQsIDQgaW5zZXJ0aW9ucygrKSwg
-NCBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9Eb2N1bWVudGF0aW9uL3ZpcnQva3ZtL2Rldmlj
-ZXMvYXJtLXZnaWMtaXRzLnJzdCBiL0RvY3VtZW50YXRpb24vdmlydC9rdm0vZGV2aWNlcy9hcm0t
-dmdpYy1pdHMucnN0CmluZGV4IDZjMzA0ZmQyYjFiNC4uZDI1N2VkZGJhZTI5IDEwMDY0NAotLS0g
-YS9Eb2N1bWVudGF0aW9uL3ZpcnQva3ZtL2RldmljZXMvYXJtLXZnaWMtaXRzLnJzdAorKysgYi9E
-b2N1bWVudGF0aW9uL3ZpcnQva3ZtL2RldmljZXMvYXJtLXZnaWMtaXRzLnJzdApAQCAtODAsNyAr
-ODAsNyBAQCBLVk1fREVWX0FSTV9WR0lDX0dSUF9DVFJMCiAgICAgLUVGQVVMVCAgSW52YWxpZCBn
-dWVzdCByYW0gYWNjZXNzCiAgICAgLUVCVVNZICAgT25lIG9yIG1vcmUgVkNQVVMgYXJlIHJ1bm5p
-bmcKICAgICAtRUFDQ0VTICBUaGUgdmlydHVhbCBJVFMgaXMgYmFja2VkIGJ5IGEgcGh5c2ljYWwg
-R0lDdjQgSVRTLCBhbmQgdGhlCi0JICAgICBzdGF0ZSBpcyBub3QgYXZhaWxhYmxlCisJICAgICBz
-dGF0ZSBpcyBub3QgYXZhaWxhYmxlIHdpdGhvdXQgR0lDdjQuMQogICAgID09PT09PT0gID09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KIAog
-S1ZNX0RFVl9BUk1fVkdJQ19HUlBfSVRTX1JFR1MKZGlmZiAtLWdpdCBhL2FyY2gvYXJtNjQva3Zt
-L3ZnaWMvdmdpYy1pdHMuYyBiL2FyY2gvYXJtNjQva3ZtL3ZnaWMvdmdpYy1pdHMuYwppbmRleCA0
-MGNiYWNhODEzMzMuLmVjNzU0M2E5NjE3YyAxMDA2NDQKLS0tIGEvYXJjaC9hcm02NC9rdm0vdmdp
-Yy92Z2ljLWl0cy5jCisrKyBiL2FyY2gvYXJtNjQva3ZtL3ZnaWMvdmdpYy1pdHMuYwpAQCAtMjIx
-OCwxMCArMjIxOCwxMCBAQCBzdGF0aWMgaW50IHZnaWNfaXRzX3NhdmVfaXR0KHN0cnVjdCB2Z2lj
-X2l0cyAqaXRzLCBzdHJ1Y3QgaXRzX2RldmljZSAqZGV2aWNlKQogCQkvKgogCQkgKiBJZiBhbiBM
-UEkgY2FycmllcyB0aGUgSFcgYml0LCB0aGlzIG1lYW5zIHRoYXQgdGhpcwogCQkgKiBpbnRlcnJ1
-cHQgaXMgY29udHJvbGxlZCBieSBHSUN2NCwgYW5kIHdlIGRvIG5vdAotCQkgKiBoYXZlIGRpcmVj
-dCBhY2Nlc3MgdG8gdGhhdCBzdGF0ZS4gTGV0J3Mgc2ltcGx5IGZhaWwKLQkJICogdGhlIHNhdmUg
-b3BlcmF0aW9uLi4uCisJCSAqIGhhdmUgZGlyZWN0IGFjY2VzcyB0byB0aGF0IHN0YXRlIHdpdGhv
-dXQgR0lDdjQuMS4KKwkJICogTGV0J3Mgc2ltcGx5IGZhaWwgdGhlIHNhdmUgb3BlcmF0aW9uLi4u
-CiAJCSAqLwotCQlpZiAoaXRlLT5pcnEtPmh3KQorCQlpZiAoaXRlLT5pcnEtPmh3ICYmICFrdm1f
-dmdpY19nbG9iYWxfc3RhdGUuaGFzX2dpY3Y0XzEpCiAJCQlyZXR1cm4gLUVBQ0NFUzsKIAogCQly
-ZXQgPSB2Z2ljX2l0c19zYXZlX2l0ZShpdHMsIGRldmljZSwgaXRlLCBncGEsIGl0ZV9lc3opOwot
-LSAKMi4xOS4xCgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-Xwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1bWJpYS5lZHUKaHR0cHM6
-Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9rdm1hcm0K
+On Sun, Jan 3, 2021 at 5:43 PM Marc Zyngier <maz@kernel.org> wrote:
+>
+> On Sun, 03 Jan 2021 14:00:50 +0000,
+> Arnd Bergmann <arnd@kernel.org> wrote:
+> >
+> > From: Arnd Bergmann <arnd@arndb.de>
+> >
+> > When hyp_cpu_pm_exit() is not inlined, it causes a link time warning:
+> >
+> > WARNING: modpost: vmlinux.o(.text+0x39974): Section mismatch in reference from the function kvm_arch_init() to the function .init.text:hyp_cpu_pm_exit()
+> > The function kvm_arch_init() references
+> > the function __init hyp_cpu_pm_exit().
+> > This is often because kvm_arch_init lacks a __init
+> > annotation or the annotation of hyp_cpu_pm_exit is wrong.
+> >
+> > This is not only called at boot time, so remove the annotation
+> > to prevent undefined behavior in case it gets called after being
+> > freed.
+>
+> It *is* only called at boot time (despite these functions being called
+> from module_init(), KVM cannot be built as a module on arm64).
+
+Ah, I see where I went wrong: I looked at the callers of kvm_arch_init_vm()
+instead of kvm_arch_init().
+
+      Arnd
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
