@@ -2,60 +2,61 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8EC0C2E82D6
-	for <lists+kvmarm@lfdr.de>; Fri,  1 Jan 2021 04:09:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E1712E8D46
+	for <lists+kvmarm@lfdr.de>; Sun,  3 Jan 2021 17:45:10 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CB35D4B345;
-	Thu, 31 Dec 2020 22:09:10 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2DFC44B277;
+	Sun,  3 Jan 2021 11:45:10 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LFovxMX1adKL; Thu, 31 Dec 2020 22:09:10 -0500 (EST)
+	with ESMTP id VPiQCM+eJL7u; Sun,  3 Jan 2021 11:45:10 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 994D44B326;
-	Thu, 31 Dec 2020 22:09:09 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 194BE4B27E;
+	Sun,  3 Jan 2021 11:45:09 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A62604B235
- for <kvmarm@lists.cs.columbia.edu>; Thu, 31 Dec 2020 22:09:08 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C0BA24B266
+ for <kvmarm@lists.cs.columbia.edu>; Sun,  3 Jan 2021 09:01:10 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id mGchWMNB202A for <kvmarm@lists.cs.columbia.edu>;
- Thu, 31 Dec 2020 22:09:06 -0500 (EST)
-Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 60C4D4B31A
- for <kvmarm@lists.cs.columbia.edu>; Thu, 31 Dec 2020 22:09:06 -0500 (EST)
-Received: from DGGEMS410-HUB.china.huawei.com (unknown [172.30.72.58])
- by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4D6VMc07wHz15h91;
- Fri,  1 Jan 2021 11:08:12 +0800 (CST)
-Received: from [10.174.184.196] (10.174.184.196) by
- DGGEMS410-HUB.china.huawei.com (10.3.19.210) with Microsoft SMTP Server id
- 14.3.498.0; Fri, 1 Jan 2021 11:08:55 +0800
-Subject: Re: [PATCH RFC] KVM: arm64: vgic: Decouple the check of the
- EnableLPIs bit from the ITS LPI translation
-To: Marc Zyngier <maz@kernel.org>
-References: <20201231062813.714-1-lushenming@huawei.com>
- <683134bdea8a22d3bb784117dcfe17a1@kernel.org>
- <cf530279-4c68-c7de-f87e-1236ce0241cf@huawei.com>
- <85dd45f580eaa7a0b8ec91ac0b7ca066@kernel.org>
-From: Shenming Lu <lushenming@huawei.com>
-Message-ID: <032ab609-0602-a3d6-5877-489e583ba0a8@huawei.com>
-Date: Fri, 1 Jan 2021 11:08:55 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.2.2
+ with ESMTP id 40ZFLdsvA4d0 for <kvmarm@lists.cs.columbia.edu>;
+ Sun,  3 Jan 2021 09:01:09 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C452B4B1F2
+ for <kvmarm@lists.cs.columbia.edu>; Sun,  3 Jan 2021 09:01:09 -0500 (EST)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 3CC5B20C56;
+ Sun,  3 Jan 2021 14:01:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1609682468;
+ bh=HTypC30TDtap+wwyfZ7D+lF6Xf783015Cd+73+IGuD4=;
+ h=From:To:Cc:Subject:Date:From;
+ b=hoqjBQMsL0M+WFOYBk/RiHhGD0f3wf3zgivimzkWaIaHRZOWHhvs83ko3/UIquXZr
+ JzoqCqv6D9c/Fs0qO9HcPRSZhUeaK7hTX7nusmqp7/8KzhcSKESrTsXLEcXz1ZOQlS
+ cEnm+L7eF5Z+DvzLuA5H/BSN7W03A7AVtgOn/C0pXKUKoYGIiu6agHFaw4HAxCwfdW
+ zm+Onu/34tJwWr922C7vUUj17Z7fHIkAn2AVRg43mru0Mm8oiqBSmq5SE/NDYVPPdc
+ R0jrFiHjUunynrXGv3FTaJtSzqzrAXH1gxUAS1TTAo51C9df5wOlKUNlFNFLrk/6cI
+ ErsZZbvoLRxbA==
+From: Arnd Bergmann <arnd@kernel.org>
+To: Marc Zyngier <maz@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
+ Will Deacon <will@kernel.org>
+Subject: [PATCH] KVM: arm64: remove incorrect __init annotation
+Date: Sun,  3 Jan 2021 15:00:50 +0100
+Message-Id: <20210103140104.3853922-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-In-Reply-To: <85dd45f580eaa7a0b8ec91ac0b7ca066@kernel.org>
-Content-Language: en-US
-X-Originating-IP: [10.174.184.196]
-X-CFilter-Loop: Reflected
-Cc: linux-kernel@vger.kernel.org, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+X-Mailman-Approved-At: Sun, 03 Jan 2021 11:45:07 -0500
+Cc: linux-arm-kernel@lists.infradead.org, Arnd Bergmann <arnd@arndb.de>,
+ Sean Christopherson <seanjc@google.com>, linux-kernel@vger.kernel.org,
+ Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -67,61 +68,53 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-T24gMjAyMC8xMi8zMSAyMDoyMiwgTWFyYyBaeW5naWVyIHdyb3RlOgo+IE9uIDIwMjAtMTItMzEg
-MTE6NTgsIFNoZW5taW5nIEx1IHdyb3RlOgo+PiBPbiAyMDIwLzEyLzMxIDE2OjU3LCBNYXJjIFp5
-bmdpZXIgd3JvdGU6Cj4+PiBIaSBTaGVtbWluZywKPj4+Cj4+PiBPbiAyMDIwLTEyLTMxIDA2OjI4
-LCBTaGVubWluZyBMdSB3cm90ZToKPj4+PiBXaGVuIHRoZSBFbmFibGVMUElzIGJpdCBpcyBzZXQg
-dG8gMCwgYW55IElUUyBMUEkgcmVxdWVzdHMgaW4gdGhlCj4+Pj4gUmVkaXN0cmlidXRvciB3b3Vs
-ZCBiZSBpZ25vcmVkLiBBbmQgdGhpcyBjaGVjayBpcyBpbmRlcGVuZGVudCBmcm9tCj4+Pj4gdGhl
-IElUUyBMUEkgdHJhbnNsYXRpb24uIFNvIGl0IG1pZ2h0IGJlIGJldHRlciB0byBtb3ZlIHRoZSBj
-aGVjawo+Pj4+IG9mIHRoZSBFbmFibGVMUElzIGJpdCBvdXQgb2YgdGhlIExQSSByZXNvbHZpbmcs
-IGFuZCBhbHNvIGFkZCBpdAo+Pj4+IHRvIHRoZSBwYXRoIHRoYXQgdXNlcyB0aGUgdHJhbnNsYXRp
-b24gY2FjaGUuCj4+Pgo+Pj4gQnV0IGJ5IGRvaW5nIHRoYXQsIHlvdSBhcmUgbW92aW5nIHRoZSBv
-dmVyaGVhZCBvZiBjaGVja2luZyBmb3IKPj4+IEVuYWJsZUxQSXMgZnJvbSB0aGUgc2xvdyBwYXRo
-ICh0cmFuc2xhdGlvbiB3YWxrKSB0byB0aGUgZmFzdAo+Pj4gcGF0aCAoY2FjaGUgaGl0KSwgd2hp
-Y2ggc2VlbXMgY291bnRlci1wcm9kdWN0aXZlLgo+Pgo+PiBPaCwgSSBkaWRuJ3Qgbm90aWNlIHRo
-ZSBvdmVyaGVhZCBvZiB0aGUgY2hlY2tpbmcsIEkgdGhvdWdodCBpdCB3b3VsZAo+PiBiZSBuZWds
-aWdpYmxlLi4uCj4gCj4gSXQgcHJvYmFibHkgZG9lc24ndCBzaG93IG9uIGEgbW9kZXJuIGJveCwg
-YnV0IHNvbWUgb2YgdGhlIHNsb3dlcgo+IHN5c3RlbXMgbWlnaHQgc2VlIGl0LiBPdmVyYWxsLCB0
-aGlzIGlzIGEgZGVzaWduIGRlY2lzaW9uIHRvIGtlZXAKPiB0aGUgdHJhbnNsYXRpb24gY2FjaGUg
-YXMgc2ltcGxlIGFuZCBzdHJhaWdodGZvcndhcmQgYXMgcG9zc2libGU6Cj4gaWYgYW55dGhpbmcg
-YWZmZWN0cyB0aGUgb3V0cHV0IG9mIHRoZSBjYWNoZSwgd2UgaW52YWxpZGF0ZSBpdCwKPiBhbmQg
-dGhhdCdzIGl0LgoKT2ssIGdldCBpdC4KCj4gCj4+Cj4+Pgo+Pj4+IEJlc2lkZXMgaXQgc2VlbXMg
-dGhhdAo+Pj4+IGJ5IHRoaXMgdGhlIGludmFsaWRhdGluZyBvZiB0aGUgdHJhbnNsYXRpb24gY2Fj
-aGUgY2F1c2VkIGJ5IHRoZSBMUEkKPj4+PiBkaXNhYmxpbmcgaXMgdW5uZWNlc3NhcnkuCj4+Pj4K
-Pj4+PiBOb3Qgc3VyZSBpZiBJIGhhdmUgbWlzc2VkIHNvbWV0aGluZy4uLiBUaGFua3MuCj4+Pgo+
-Pj4gSSBhbSBjZXJ0YWlubHkgbWlzc2luZyB0aGUgcHVycG9zZSBvZiB0aGlzIHBhdGNoLgo+Pj4K
-Pj4+IFRoZSBlZmZlY3Qgb2YgRW5hYmxlTFBJcyBiZWluZyB6ZXJvIGlzIHRvIGRyb3AgdGhlIHJl
-c3VsdCBvZiBhbnkKPj4+IHRyYW5zbGF0aW9uIChhIG5ldyBwZW5kaW5nIGJpdCkgb24gdGhlIGZs
-b29yLiBHaXZlbiB0aGF0LCBpdCBpcwo+Pj4gaW1tYXRlcmlhbCB3aGV0aGVyIHRoaXMgY2F1c2Vz
-IGEgbmV3IHRyYW5zbGF0aW9uIG9yIGhpdHMgaW4gdGhlCj4+PiBjYWNoZSwgYXMgdGhlIHJlc3Vs
-dCBpcyBzdGlsbCB0byBub3QgcGVuZCBhIG5ldyBpbnRlcnJ1cHQuCj4+Pgo+Pj4gSSBnZXQgdGhl
-IGZlZWxpbmcgdGhhdCB5b3UgYXJlIHRyeWluZyB0byBvcHRpbWlzZSBmb3IgdGhlIHVudXN1YWwK
-Pj4+IGNhc2Ugd2hlcmUgRW5hYmxlTFBJcyBpcyAwICphbmQqIHlvdSBoYXZlIGEgc2NyZWFtaW5n
-IGRldmljZQo+Pj4gaW5qZWN0aW5nIHRvbnMgb2YgaW50ZXJydXB0LiBJZiB0aGF0IGlzIHRoZSBj
-YXNlLCBJIGRvbid0IHRoaW5rCj4+PiB0aGlzIGlzIHdvcnRoIGl0Lgo+Pgo+PiBJbiBmYWN0LCBJ
-IGp1c3QgZm91bmQgKGltYWdpbmluZykgdGhhdCBpZiB0aGUgRW5hYmxlTFBJcyBiaXQgaXMgMCwK
-Pj4gdGhlIGt2bV92Z2ljX3Y0X3NldF9mb3J3YXJkaW5nKCkgd291bGQgZmFpbCB3aGVuIHBlcmZv
-cm1pbmcgdGhlIExQSQo+PiB0cmFuc2xhdGlvbiwgYnV0IGluZGVlZCB3ZSBkb24ndCB0cnkgdG8g
-cGVuZCBhbnkgaW50ZXJydXB0cyB0aGVyZS4uLgo+Pgo+PiBCeSB0aGUgd2F5LCBpdCBzZWVtcyB0
-aGF0IHRoZSBMUEkgZGlzYWJsaW5nIHdvdWxkIG5vdCBhZmZlY3QgdGhlCj4+IGluamVjdGlvbiBv
-ZiBWTFBJcy4uLgo+IAo+IFllcywgZ29vZCBwb2ludC4gV2UgY291bGQgdW5tYXAgdGhlIFZQRSBm
-cm9tIGFsbCBJVFMsIHdoaWNoIHdvdWxkIHJlc3VsdAo+IGluIGFsbCB0cmFuc2xhdGlvbnMgdG8g
-YmUgZGlzY2FyZGVkLCBidXQgdGhpcyBoYXMgdGhlIHJlYWxseSBiYWQgc2lkZQo+IGVmZmVjdCBv
-ZiAqYWxzbyogcHJldmVudGluZyB0aGUgZGVsaXZlcnkgb2YgdlNHSXMsIHdoaWNoIGlzbid0IHdo
-YXQKPiB5b3UnZCBleHBlY3QuCj4gCj4gT3ZlcmFsbCwgSSBkb24ndCB0aGluayB0aGVyZSBpcyBh
-IGdvb2Qgd2F5IHRvIHN1cHBvcnQgdGhpcywgYW5kIG1heWJlCj4gd2Ugc2hvdWxkIGp1c3QgcHJl
-dmVudCBFbmFibGVMUElzIHRvIGJlIHR1cm5lZCBvZmYgd2hlbiB1c2luZyBkaXJlY3QKPiBpbmpl
-Y3Rpb24uIEFmdGVyIGFsbCwgdGhlIGFyY2hpdGVjdHVyZSBkb2VzIGFsbG93IHRoYXQgZm9yIEdJ
-Q3YzCj4gaW1wbGVtZW50YXRpb25zLCB3aGljaCBpcyB3aGF0IHdlIGVtdWxhdGUuCgpBZ3JlZWQs
-IGlmIHRoZXJlIGlzIG5vIGdvb2Qgd2F5LCB3ZSBjb3VsZCBqdXN0IG1ha2UgdGhlIEVuYWJsZUxQ
-SXMgY2xlYXJpbmcKdW5zdXBwb3J0ZWQuLi4KClRoYW5rcyhIYXBweSAyMDIxKSwKU2hlbm1pbmcK
-Cj4gCj4gVGhhbmtzLAo+IAo+IMKgwqDCoMKgwqDCoMKgIE0uCl9fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fCmt2bWFybSBtYWlsaW5nIGxpc3QKa3ZtYXJtQGxp
-c3RzLmNzLmNvbHVtYmlhLmVkdQpodHRwczovL2xpc3RzLmNzLmNvbHVtYmlhLmVkdS9tYWlsbWFu
-L2xpc3RpbmZvL2t2bWFybQo=
+From: Arnd Bergmann <arnd@arndb.de>
+
+When hyp_cpu_pm_exit() is not inlined, it causes a link time warning:
+
+WARNING: modpost: vmlinux.o(.text+0x39974): Section mismatch in reference from the function kvm_arch_init() to the function .init.text:hyp_cpu_pm_exit()
+The function kvm_arch_init() references
+the function __init hyp_cpu_pm_exit().
+This is often because kvm_arch_init lacks a __init
+annotation or the annotation of hyp_cpu_pm_exit is wrong.
+
+This is not only called at boot time, so remove the annotation
+to prevent undefined behavior in case it gets called after being
+freed.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ arch/arm64/kvm/arm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 6e637d2b4cfb..71a49eae9ea0 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -1574,12 +1574,12 @@ static struct notifier_block hyp_init_cpu_pm_nb = {
+ 	.notifier_call = hyp_init_cpu_pm_notifier,
+ };
+ 
+-static void __init hyp_cpu_pm_init(void)
++static void hyp_cpu_pm_init(void)
+ {
+ 	if (!is_protected_kvm_enabled())
+ 		cpu_pm_register_notifier(&hyp_init_cpu_pm_nb);
+ }
+-static void __init hyp_cpu_pm_exit(void)
++static void hyp_cpu_pm_exit(void)
+ {
+ 	if (!is_protected_kvm_enabled())
+ 		cpu_pm_unregister_notifier(&hyp_init_cpu_pm_nb);
+-- 
+2.29.2
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
