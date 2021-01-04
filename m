@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CBD2C2E965B
-	for <lists+kvmarm@lfdr.de>; Mon,  4 Jan 2021 14:50:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 381032E970D
+	for <lists+kvmarm@lfdr.de>; Mon,  4 Jan 2021 15:20:08 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 80A544B232;
-	Mon,  4 Jan 2021 08:50:55 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DFF364B2BE;
+	Mon,  4 Jan 2021 09:20:07 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,39 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id NyPcve2Bw7VZ; Mon,  4 Jan 2021 08:50:54 -0500 (EST)
+	with ESMTP id uyJFcss1OhBQ; Mon,  4 Jan 2021 09:20:07 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B13364B2F9;
-	Mon,  4 Jan 2021 08:50:50 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9F9124B2B4;
+	Mon,  4 Jan 2021 09:20:05 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E3A334B2B1
- for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 08:50:49 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D36844B2BB
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 09:20:04 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id bNra3jLBApuA for <kvmarm@lists.cs.columbia.edu>;
- Mon,  4 Jan 2021 08:50:49 -0500 (EST)
+ with ESMTP id bww5oydfihfZ for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  4 Jan 2021 09:20:03 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5D2EC4B248
- for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 08:50:46 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BC7EA4B2B5
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 09:20:03 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 7C29A21D93;
- Mon,  4 Jan 2021 13:50:45 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id E2F1E20784;
+ Mon,  4 Jan 2021 14:20:02 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1kwQFv-005E24-Q1; Mon, 04 Jan 2021 13:50:43 +0000
+ id 1kwQFw-005E24-DL; Mon, 04 Jan 2021 13:50:44 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org,
 	kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v2 09/17] arm64: cpufeature: Add global feature override
- facility
-Date: Mon,  4 Jan 2021 13:50:03 +0000
-Message-Id: <20210104135011.2063104-10-maz@kernel.org>
+Subject: [PATCH v2 10/17] arm64: Extract early FDT mapping from
+ kaslr_early_init()
+Date: Mon,  4 Jan 2021 13:50:04 +0000
+Message-Id: <20210104135011.2063104-11-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210104135011.2063104-1-maz@kernel.org>
 References: <20210104135011.2063104-1-maz@kernel.org>
@@ -79,76 +79,121 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add a facility to globally override a feature, no matter what
-the HW says. Yes, this is dangerous.
+As we want to parse more options very early in the kernel lifetime,
+let's always map the FDT early. This is achieved by moving that
+code out of kaslr_early_init().
 
-Nothing uses this yet, so we are pretty safe. For now.
+No functionnal change expected.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/cpufeature.h |  2 ++
- arch/arm64/kernel/cpufeature.c      | 26 +++++++++++++++++++++-----
- 2 files changed, 23 insertions(+), 5 deletions(-)
+ arch/arm64/include/asm/setup.h | 11 +++++++++++
+ arch/arm64/kernel/head.S       |  3 ++-
+ arch/arm64/kernel/kaslr.c      |  7 +++----
+ arch/arm64/kernel/setup.c      | 15 +++++++++++++++
+ 4 files changed, 31 insertions(+), 5 deletions(-)
+ create mode 100644 arch/arm64/include/asm/setup.h
 
-diff --git a/arch/arm64/include/asm/cpufeature.h b/arch/arm64/include/asm/cpufeature.h
-index 9a555809b89c..465d2cb63bfc 100644
---- a/arch/arm64/include/asm/cpufeature.h
-+++ b/arch/arm64/include/asm/cpufeature.h
-@@ -75,6 +75,8 @@ struct arm64_ftr_reg {
- 	u64				sys_val;
- 	u64				user_val;
- 	const struct arm64_ftr_bits	*ftr_bits;
-+	u64				*override_val;
-+	u64				*override_mask;
- };
- 
- extern struct arm64_ftr_reg arm64_ftr_reg_ctrel0;
-diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-index 7ffb5f1d8b68..2dbfc0096b0d 100644
---- a/arch/arm64/kernel/cpufeature.c
-+++ b/arch/arm64/kernel/cpufeature.c
-@@ -544,13 +544,17 @@ static const struct arm64_ftr_bits ftr_raz[] = {
- 	ARM64_FTR_END,
- };
- 
--#define ARM64_FTR_REG(id, table) {		\
--	.sys_id = id,				\
--	.reg = 	&(struct arm64_ftr_reg){	\
--		.name = #id,			\
--		.ftr_bits = &((table)[0]),	\
-+#define ARM64_FTR_REG_OVERRIDE(id, table, v, m) {		\
-+		.sys_id = id,					\
-+		.reg = 	&(struct arm64_ftr_reg){		\
-+			.name = #id,				\
-+			.ftr_bits = &((table)[0]),		\
-+			.override_val = v,			\
-+			.override_mask = m,			\
- 	}}
- 
-+#define ARM64_FTR_REG(id, table) ARM64_FTR_REG_OVERRIDE(id, table, NULL, NULL)
+diff --git a/arch/arm64/include/asm/setup.h b/arch/arm64/include/asm/setup.h
+new file mode 100644
+index 000000000000..d3320618ed14
+--- /dev/null
++++ b/arch/arm64/include/asm/setup.h
+@@ -0,0 +1,11 @@
++// SPDX-License-Identifier: GPL-2.0
 +
- static const struct __ftr_reg_entry {
- 	u32			sys_id;
- 	struct arm64_ftr_reg 	*reg;
-@@ -786,6 +790,18 @@ static void __init init_cpu_ftr_reg(u32 sys_reg, u64 new)
++#ifndef __ARM64_ASM_SETUP_H
++#define __ARM64_ASM_SETUP_H
++
++#include <uapi/asm/setup.h>
++
++void *get_early_fdt_ptr(void);
++void early_fdt_map(u64 dt_phys);
++
++#endif
+diff --git a/arch/arm64/kernel/head.S b/arch/arm64/kernel/head.S
+index b425d2587cdb..d74e5f84042e 100644
+--- a/arch/arm64/kernel/head.S
++++ b/arch/arm64/kernel/head.S
+@@ -433,6 +433,8 @@ SYM_FUNC_START_LOCAL(__primary_switched)
+ 	bl	__pi_memset
+ 	dsb	ishst				// Make zero page visible to PTW
  
- 	val &= valid_mask;
++	mov	x0, x21				// pass FDT address in x0
++	bl	early_fdt_map			// Try mapping the FDT early
+ 	bl	switch_to_vhe
+ #if defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)
+ 	bl	kasan_early_init
+@@ -440,7 +442,6 @@ SYM_FUNC_START_LOCAL(__primary_switched)
+ #ifdef CONFIG_RANDOMIZE_BASE
+ 	tst	x23, ~(MIN_KIMG_ALIGN - 1)	// already running randomized?
+ 	b.ne	0f
+-	mov	x0, x21				// pass FDT address in x0
+ 	bl	kaslr_early_init		// parse FDT for KASLR options
+ 	cbz	x0, 0f				// KASLR disabled? just proceed
+ 	orr	x23, x23, x0			// record KASLR offset
+diff --git a/arch/arm64/kernel/kaslr.c b/arch/arm64/kernel/kaslr.c
+index 1c74c45b9494..5fc86e7d01a1 100644
+--- a/arch/arm64/kernel/kaslr.c
++++ b/arch/arm64/kernel/kaslr.c
+@@ -19,6 +19,7 @@
+ #include <asm/memory.h>
+ #include <asm/mmu.h>
+ #include <asm/sections.h>
++#include <asm/setup.h>
  
-+	if (reg->override_mask && reg->override_val) {
-+		u64 override = val;
-+		override &= ~*reg->override_mask;
-+		override |= (*reg->override_val & *reg->override_mask);
+ enum kaslr_status {
+ 	KASLR_ENABLED,
+@@ -92,12 +93,11 @@ static __init bool is_kaslr_disabled_cmdline(void *fdt)
+  * containing function pointers) to be reinitialized, and zero-initialized
+  * .bss variables will be reset to 0.
+  */
+-u64 __init kaslr_early_init(u64 dt_phys)
++u64 __init kaslr_early_init(void)
+ {
+ 	void *fdt;
+ 	u64 seed, offset, mask, module_range;
+ 	unsigned long raw;
+-	int size;
+ 
+ 	/*
+ 	 * Set a reasonable default for module_alloc_base in case
+@@ -111,8 +111,7 @@ u64 __init kaslr_early_init(u64 dt_phys)
+ 	 * and proceed with KASLR disabled. We will make another
+ 	 * attempt at mapping the FDT in setup_machine()
+ 	 */
+-	early_fixmap_init();
+-	fdt = fixmap_remap_fdt(dt_phys, &size, PAGE_KERNEL);
++	fdt = get_early_fdt_ptr();
+ 	if (!fdt) {
+ 		kaslr_status = KASLR_DISABLED_FDT_REMAP;
+ 		return 0;
+diff --git a/arch/arm64/kernel/setup.c b/arch/arm64/kernel/setup.c
+index c18aacde8bb0..01a994730754 100644
+--- a/arch/arm64/kernel/setup.c
++++ b/arch/arm64/kernel/setup.c
+@@ -168,6 +168,21 @@ static void __init smp_build_mpidr_hash(void)
+ 		pr_warn("Large number of MPIDR hash buckets detected\n");
+ }
+ 
++static void *early_fdt_ptr __initdata;
 +
-+		if (val != override)
-+			pr_warn("%s: forced from %016llx to %016llx\n",
-+				reg->name, val, override);
++void __init *get_early_fdt_ptr(void)
++{
++	return early_fdt_ptr;
++}
 +
-+		val = override;
-+	}
++void __init early_fdt_map(u64 dt_phys)
++{
++	int fdt_size;
 +
- 	reg->sys_val = val;
- 	reg->strict_mask = strict_mask;
- 	reg->user_mask = user_mask;
++	early_fixmap_init();
++	early_fdt_ptr = fixmap_remap_fdt(dt_phys, &fdt_size, PAGE_KERNEL);
++}
++
+ static void __init setup_machine_fdt(phys_addr_t dt_phys)
+ {
+ 	int size;
 -- 
 2.29.2
 
