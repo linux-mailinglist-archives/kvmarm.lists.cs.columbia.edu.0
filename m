@@ -2,67 +2,74 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E00612E970F
-	for <lists+kvmarm@lfdr.de>; Mon,  4 Jan 2021 15:20:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AE302E9B07
+	for <lists+kvmarm@lfdr.de>; Mon,  4 Jan 2021 17:27:59 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 94F5F4B2B5;
-	Mon,  4 Jan 2021 09:20:12 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C457B4B308;
+	Mon,  4 Jan 2021 11:27:58 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dNdjIQy0jJBu; Mon,  4 Jan 2021 09:20:12 -0500 (EST)
+	with ESMTP id G88842sKwJvZ; Mon,  4 Jan 2021 11:27:58 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F29E54B2F5;
-	Mon,  4 Jan 2021 09:20:10 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7E58B4B2F0;
+	Mon,  4 Jan 2021 11:27:57 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 15D124B2BD
- for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 09:20:10 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7B7954B294
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 10:47:39 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 2h5m6zbGuoeY for <kvmarm@lists.cs.columbia.edu>;
- Mon,  4 Jan 2021 09:20:09 -0500 (EST)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E20FE4B2B5
- for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 09:20:08 -0500 (EST)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ with ESMTP id WAPwfjIaL8Aq for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  4 Jan 2021 10:47:38 -0500 (EST)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [216.205.24.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 647AD4B291
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 10:47:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1609775258;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GdVjsGRGqcz2Bp3755zL9bg1/osM9yZ5XLo7yMYYsTA=;
+ b=VFa2F8oGwTpi8o41U91j1ii2nmEiqUL2TmK7+YG6r5Jg+pEgnBKWhkD8VWpR82yYrK0qOa
+ k081qh6jOHgbHpUXEZTFSMvc4B6cq96eacHG1xLUZ6++1+gPxuOF3pKqWJn+sLtZd1eyfP
+ LfDUcaaRzQ6Ip1N8oMwTATw6SOVWPx8=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-235-k2tGDxxXOsuqoOETBhFf3w-1; Mon, 04 Jan 2021 10:47:33 -0500
+X-MC-Unique: k2tGDxxXOsuqoOETBhFf3w-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com
+ [10.5.11.22])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 25224221E5;
- Mon,  4 Jan 2021 14:20:08 +0000 (UTC)
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1kwQG0-005E24-Px; Mon, 04 Jan 2021 13:50:48 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: linux-arm-kernel@lists.infradead.org,
-	kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v2 17/17] arm64: Move "nokaslr" over to the early cpufeature
- infrastructure
-Date: Mon,  4 Jan 2021 13:50:11 +0000
-Message-Id: <20210104135011.2063104-18-maz@kernel.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210104135011.2063104-1-maz@kernel.org>
-References: <20210104135011.2063104-1-maz@kernel.org>
-MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, catalin.marinas@arm.com, will@kernel.org,
- mark.rutland@arm.com, dbrazdil@google.com, alexandru.elisei@arm.com,
- ardb@kernel.org, james.morse@arm.com, julien.thierry.kdev@gmail.com,
- suzuki.poulose@arm.com, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com, Catalin Marinas <catalin.marinas@arm.com>,
- Will Deacon <will@kernel.org>, Ard Biesheuvel <ardb@kernel.org>
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 9D3E2801AA9;
+ Mon,  4 Jan 2021 15:47:31 +0000 (UTC)
+Received: from ovpn-66-203.rdu2.redhat.com (unknown [10.10.67.203])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 872551007613;
+ Mon,  4 Jan 2021 15:47:30 +0000 (UTC)
+Message-ID: <703e1b5f2db1631e8f9c55619909fe66eb069f25.camel@redhat.com>
+Subject: Re: [PATCH] KVM: arm64: Don't access PMCR_EL0 when no PMU is available
+From: Qian Cai <qcai@redhat.com>
+To: Marc Zyngier <maz@kernel.org>, linux-arm-kernel@lists.infradead.org, 
+ kvmarm@lists.cs.columbia.edu
+Date: Mon, 04 Jan 2021 10:47:30 -0500
+In-Reply-To: <20201210083059.1277162-1-maz@kernel.org>
+References: <20201210083059.1277162-1-maz@kernel.org>
+Mime-Version: 1.0
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
+X-Mailman-Approved-At: Mon, 04 Jan 2021 11:27:56 -0500
+Cc: Stephen Rothwell <sfr@canb.auug.org.au>,
+ Linux Next Mailing List <linux-next@vger.kernel.org>, kernel-team@android.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -79,110 +86,59 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Given that the early cpufeature infrastructure has borrowed quite
-a lot of code from the kaslr implementation, let's reimplement
-the matching of the "nokaslr" option with it.
+On Thu, 2020-12-10 at 08:30 +0000, Marc Zyngier wrote:
+> We reset the guest's view of PMCR_EL0 unconditionally, based on
+> the host's view of this register. It is however legal for an
+> imnplementation not to provide any PMU, resulting in an UNDEF.
+> 
+> The obvious fix is to skip the reset of this shadow register
+> when no PMU is available, sidestepping the issue entirely.
+> If no PMU is available, the guest is not able to request
+> a virtual PMU anyway, so not doing nothing is the right thing
+> to do!
+> 
+> It is unlikely that this bug can hit any HW implementation
+> though, as they all provide a PMU. It has been found using nested
+> virt with the host KVM not implementing the PMU itself.
+> 
+> Fixes: ab9468340d2bc ("arm64: KVM: Add access handler for PMCR register")
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/kernel/idreg-override.c | 17 ++++++++++++++
- arch/arm64/kernel/kaslr.c          | 37 +++---------------------------
- 2 files changed, 20 insertions(+), 34 deletions(-)
+Reverting this commit on the top of today's linux-next fixed a qemu-kvm coredump
+issue on TX2 while starting a guest.
 
-diff --git a/arch/arm64/kernel/idreg-override.c b/arch/arm64/kernel/idreg-override.c
-index 1db54878b2c4..143fe7b8e3ce 100644
---- a/arch/arm64/kernel/idreg-override.c
-+++ b/arch/arm64/kernel/idreg-override.c
-@@ -33,8 +33,24 @@ static const struct reg_desc mmfr1 __initdata = {
- 	},
- };
- 
-+extern u64 kaslr_feature_val;
-+extern u64 kaslr_feature_mask;
-+
-+static const struct reg_desc kaslr __initdata = {
-+	.name		= "kaslr",
-+#ifdef CONFIG_RANDOMIZE_BASE
-+	.val		= &kaslr_feature_val,
-+	.mask		= &kaslr_feature_mask,
-+#endif
-+	.fields		= {
-+		{ "disabled", 0 },
-+		{}
-+	},
-+};
-+
- static const struct reg_desc * const regs[] __initdata = {
- 	&mmfr1,
-+	&kaslr,
- };
- 
- static const struct {
-@@ -43,6 +59,7 @@ static const struct {
- } aliases[] __initdata = {
- 	{ "kvm-arm.mode=nvhe",		"id_aa64mmfr1.vh=0" },
- 	{ "kvm-arm.mode=protected",	"id_aa64mmfr1.vh=0" },
-+	{ "nokaslr",			"kaslr.disabled=1" },
- };
- 
- static int __init find_field(const char *cmdline, const struct reg_desc *reg,
-diff --git a/arch/arm64/kernel/kaslr.c b/arch/arm64/kernel/kaslr.c
-index 5fc86e7d01a1..dcc4a5aadbe2 100644
---- a/arch/arm64/kernel/kaslr.c
-+++ b/arch/arm64/kernel/kaslr.c
-@@ -51,39 +51,8 @@ static __init u64 get_kaslr_seed(void *fdt)
- 	return ret;
- }
- 
--static __init bool cmdline_contains_nokaslr(const u8 *cmdline)
--{
--	const u8 *str;
--
--	str = strstr(cmdline, "nokaslr");
--	return str == cmdline || (str > cmdline && *(str - 1) == ' ');
--}
--
--static __init bool is_kaslr_disabled_cmdline(void *fdt)
--{
--	if (!IS_ENABLED(CONFIG_CMDLINE_FORCE)) {
--		int node;
--		const u8 *prop;
--
--		node = fdt_path_offset(fdt, "/chosen");
--		if (node < 0)
--			goto out;
--
--		prop = fdt_getprop(fdt, node, "bootargs", NULL);
--		if (!prop)
--			goto out;
--
--		if (cmdline_contains_nokaslr(prop))
--			return true;
--
--		if (IS_ENABLED(CONFIG_CMDLINE_EXTEND))
--			goto out;
--
--		return false;
--	}
--out:
--	return cmdline_contains_nokaslr(CONFIG_CMDLINE);
--}
-+u64 kaslr_feature_val __initdata;
-+u64 kaslr_feature_mask __initdata;
- 
- /*
-  * This routine will be executed with the kernel mapped at its default virtual
-@@ -126,7 +95,7 @@ u64 __init kaslr_early_init(void)
- 	 * Check if 'nokaslr' appears on the command line, and
- 	 * return 0 if that is the case.
- 	 */
--	if (is_kaslr_disabled_cmdline(fdt)) {
-+	if (kaslr_feature_val & kaslr_feature_mask & 0xf) {
- 		kaslr_status = KASLR_DISABLED_CMDLINE;
- 		return 0;
- 	}
--- 
-2.29.2
+- host kernel .config:
+https://cailca.coding.net/public/linux/mm/git/files/master/arm64.config
+
+# /usr/libexec/qemu-kvm -name ubuntu-20.04-server-cloudimg -cpu host -smp 2 -m 2g
+-drive if=none,format=qcow2,file=./ubuntu-20.04-server-cloudimg.qcow2,id=hd 
+-device virtio-scsi -device scsi-hd,drive=hd -cdrom ./ubuntu-20.04-server-cloudimg.iso
+-bios /usr/share/AAVMF/AAVMF_CODE.fd -M gic-version=host -nographic 
+-nic user,model=virtio,hostfwd=tcp::2222-:22
+
+qemu-kvm: /builddir/build/BUILD/qemu-4.2.0/target/arm/helper.c:1812:
+pmevcntr_rawwrite: Assertion `counter < pmu_num_counters(env)' failed.
+
+> ---
+>  arch/arm64/kvm/sys_regs.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+> index bc15246775d0..6c64d010102b 100644
+> --- a/arch/arm64/kvm/sys_regs.c
+> +++ b/arch/arm64/kvm/sys_regs.c
+> @@ -923,6 +923,10 @@ static void reset_pmcr(struct kvm_vcpu *vcpu, const
+> struct sys_reg_desc *r)
+>  {
+>  	u64 pmcr, val;
+>  
+> +	/* No PMU available, PMCR_EL0 may UNDEF... */
+> +	if (!kvm_arm_support_pmu_v3())
+> +		return;
+> +
+>  	pmcr = read_sysreg(pmcr_el0);
+>  	/*
+>  	 * Writable bits of PMCR_EL0 (ARMV8_PMU_PMCR_MASK) are reset to UNKNOWN
 
 _______________________________________________
 kvmarm mailing list
