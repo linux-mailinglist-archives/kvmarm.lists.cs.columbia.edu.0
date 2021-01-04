@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 680582E9655
-	for <lists+kvmarm@lfdr.de>; Mon,  4 Jan 2021 14:50:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E21E32E9658
+	for <lists+kvmarm@lfdr.de>; Mon,  4 Jan 2021 14:50:52 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1D0F14B2B1;
-	Mon,  4 Jan 2021 08:50:50 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 987E14B291;
+	Mon,  4 Jan 2021 08:50:52 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,38 +15,38 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id J+INQBdSGt+L; Mon,  4 Jan 2021 08:50:49 -0500 (EST)
+	with ESMTP id Mb8xwkngfF3f; Mon,  4 Jan 2021 08:50:51 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2D2524B29F;
-	Mon,  4 Jan 2021 08:50:46 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6832D4B2EA;
+	Mon,  4 Jan 2021 08:50:48 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3D7394B1F1
- for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 08:50:44 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2B94B4B26E
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 08:50:47 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id DGi+TFvcmjBg for <kvmarm@lists.cs.columbia.edu>;
- Mon,  4 Jan 2021 08:50:43 -0500 (EST)
+ with ESMTP id Ou8N7YRNXccZ for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  4 Jan 2021 08:50:46 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2007A4B235
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C94944B288
  for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 08:50:43 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 452B7221E5;
+ by mail.kernel.org (Postfix) with ESMTPSA id EC76C221F9;
  Mon,  4 Jan 2021 13:50:42 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1kwQFr-005E24-Ti; Mon, 04 Jan 2021 13:50:40 +0000
+ id 1kwQFt-005E24-6q; Mon, 04 Jan 2021 13:50:41 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org,
 	kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v2 04/17] arm64: Provide an 'upgrade to VHE' stub hypercall
-Date: Mon,  4 Jan 2021 13:49:58 +0000
-Message-Id: <20210104135011.2063104-5-maz@kernel.org>
+Subject: [PATCH v2 05/17] arm64: Initialise as nVHE before switching to VHE
+Date: Mon,  4 Jan 2021 13:49:59 +0000
+Message-Id: <20210104135011.2063104-6-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210104135011.2063104-1-maz@kernel.org>
 References: <20210104135011.2063104-1-maz@kernel.org>
@@ -78,140 +78,131 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-As we are about to change the way a VHE system boots, let's
-provide the core helper, in the form of a stub hypercall that
-enables VHE and replicates the full EL1 context at EL2, thanks
-to EL1 and VHE-EL2 being extremely similar.
+As we are aiming to be able to control whether we enable VHE or
+not, let's always drop down to EL1 first, and only then upgrade
+to VHE if at all possible.
 
-On exception return, the kernel carries on at EL2. Fancy!
+This means that if the kernel is booted at EL2, we always start
+with a nVHE init, drop to EL1 to initialise the the kernel, and
+only then upgrade the kernel EL to EL2 if possible (the process
+is obviously shortened for secondary CPUs).
 
-Nothing calls this new hypercall yet, so no functional change.
+The resume path is handled similarly to a secondary CPU boot.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/virt.h |  7 +++-
- arch/arm64/kernel/hyp-stub.S  | 70 ++++++++++++++++++++++++++++++++++-
- 2 files changed, 74 insertions(+), 3 deletions(-)
+ arch/arm64/kernel/head.S     | 38 ++----------------------------------
+ arch/arm64/kernel/hyp-stub.S | 24 +++++++++++++++++++++++
+ arch/arm64/kernel/sleep.S    |  1 +
+ 3 files changed, 27 insertions(+), 36 deletions(-)
 
-diff --git a/arch/arm64/include/asm/virt.h b/arch/arm64/include/asm/virt.h
-index ee6a48df89d9..7379f35ae2c6 100644
---- a/arch/arm64/include/asm/virt.h
-+++ b/arch/arm64/include/asm/virt.h
-@@ -35,8 +35,13 @@
-  */
- #define HVC_RESET_VECTORS 2
+diff --git a/arch/arm64/kernel/head.S b/arch/arm64/kernel/head.S
+index 28e9735302df..07445fd976ef 100644
+--- a/arch/arm64/kernel/head.S
++++ b/arch/arm64/kernel/head.S
+@@ -433,6 +433,7 @@ SYM_FUNC_START_LOCAL(__primary_switched)
+ 	bl	__pi_memset
+ 	dsb	ishst				// Make zero page visible to PTW
  
-+/*
-+ * HVC_VHE_RESTART - Upgrade the CPU from EL1 to EL2, if possible
-+ */
-+#define HVC_VHE_RESTART	3
-+
- /* Max number of HYP stub hypercalls */
--#define HVC_STUB_HCALL_NR 3
-+#define HVC_STUB_HCALL_NR 4
++	bl	switch_to_vhe
+ #if defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)
+ 	bl	kasan_early_init
+ #endif
+@@ -493,42 +494,6 @@ SYM_INNER_LABEL(init_el1, SYM_L_LOCAL)
+ 	eret
  
- /* Error returned when an invalid stub number is passed into x0 */
- #define HVC_STUB_ERR	0xbadca11
+ SYM_INNER_LABEL(init_el2, SYM_L_LOCAL)
+-#ifdef CONFIG_ARM64_VHE
+-	/*
+-	 * Check for VHE being present. x2 being non-zero indicates that we
+-	 * do have VHE, and that the kernel is intended to run at EL2.
+-	 */
+-	mrs	x2, id_aa64mmfr1_el1
+-	ubfx	x2, x2, #ID_AA64MMFR1_VHE_SHIFT, #4
+-#else
+-	mov	x2, xzr
+-#endif
+-	cbz	x2, init_el2_nvhe
+-
+-	/*
+-	 * When VHE _is_ in use, EL1 will not be used in the host and
+-	 * requires no configuration, and all non-hyp-specific EL2 setup
+-	 * will be done via the _EL1 system register aliases in __cpu_setup.
+-	 */
+-	mov_q	x0, HCR_HOST_VHE_FLAGS
+-	msr	hcr_el2, x0
+-	isb
+-
+-	init_el2_state vhe
+-
+-	isb
+-
+-	mov_q	x0, INIT_PSTATE_EL2
+-	msr	spsr_el2, x0
+-	msr	elr_el2, lr
+-	mov	w0, #BOOT_CPU_MODE_EL2
+-	eret
+-
+-SYM_INNER_LABEL(init_el2_nvhe, SYM_L_LOCAL)
+-	/*
+-	 * When VHE is not in use, early init of EL2 and EL1 needs to be
+-	 * done here.
+-	 */
+ 	mov_q	x0, INIT_SCTLR_EL1_MMU_OFF
+ 	msr	sctlr_el1, x0
+ 
+@@ -623,6 +588,7 @@ SYM_FUNC_START_LOCAL(secondary_startup)
+ 	/*
+ 	 * Common entry point for secondary CPUs.
+ 	 */
++	bl	switch_to_vhe
+ 	bl	__cpu_secondary_check52bitva
+ 	bl	__cpu_setup			// initialise processor
+ 	adrp	x1, swapper_pg_dir
 diff --git a/arch/arm64/kernel/hyp-stub.S b/arch/arm64/kernel/hyp-stub.S
-index 160f5881a0b7..6ffdc1f7778b 100644
+index 6ffdc1f7778b..b727848bd0ec 100644
 --- a/arch/arm64/kernel/hyp-stub.S
 +++ b/arch/arm64/kernel/hyp-stub.S
-@@ -8,9 +8,9 @@
- 
- #include <linux/init.h>
- #include <linux/linkage.h>
--#include <linux/irqchip/arm-gic-v3.h>
- 
- #include <asm/assembler.h>
-+#include <asm/el2_setup.h>
- #include <asm/kvm_arm.h>
- #include <asm/kvm_asm.h>
- #include <asm/ptrace.h>
-@@ -47,10 +47,16 @@ SYM_CODE_END(__hyp_stub_vectors)
- 
- SYM_CODE_START_LOCAL(el1_sync)
- 	cmp	x0, #HVC_SET_VECTORS
--	b.ne	2f
+@@ -184,3 +184,27 @@ SYM_FUNC_START(__hyp_reset_vectors)
+ 	hvc	#0
+ 	ret
+ SYM_FUNC_END(__hyp_reset_vectors)
++
++/*
++ * Entry point to switch to VHE if deemed capable
++ */
++SYM_FUNC_START(switch_to_vhe)
++#ifdef CONFIG_ARM64_VHE
++	// Need to have booted at EL2
++	adr_l	x1, __boot_cpu_mode
++	ldr	w0, [x1]
++	cmp	w0, #BOOT_CPU_MODE_EL2
 +	b.ne	1f
- 	msr	vbar_el2, x1
- 	b	9f
- 
-+1:	cmp	x0, #HVC_VHE_RESTART
-+	b.ne	2f
-+	mov	x0, #HVC_SOFT_RESTART
-+	adr	x1, mutate_to_vhe
-+	// fall through...
 +
- 2:	cmp	x0, #HVC_SOFT_RESTART
- 	b.ne	3f
- 	mov	x0, x2
-@@ -70,6 +76,66 @@ SYM_CODE_START_LOCAL(el1_sync)
- 	eret
- SYM_CODE_END(el1_sync)
- 
-+// nVHE? No way! Give me the real thing!
-+SYM_CODE_START_LOCAL(mutate_to_vhe)
-+	// Sanity check: MMU *must* be off
-+	mrs	x0, sctlr_el2
-+	tbnz	x0, #0, 1f
++	// and still be at EL1
++	mrs	x0, CurrentEL
++	cmp	x0, #CurrentEL_EL1
++	b.ne	1f
 +
-+	// Needs to be VHE capable, obviously
-+	mrs	x0, id_aa64mmfr1_el1
-+	ubfx	x0, x0, #ID_AA64MMFR1_VHE_SHIFT, #4
-+	cbz	x0, 1f
-+
-+	// Engage the VHE magic!
-+	mov_q	x0, HCR_HOST_VHE_FLAGS
-+	msr	hcr_el2, x0
-+	isb
-+
-+	// Doesn't do much on VHE, but still, worth a shot
-+	init_el2_state vhe
-+
-+	// Use the EL1 allocated stack, per-cpu offset
-+	mrs	x0, sp_el1
-+	mov	sp, x0
-+	mrs	x0, tpidr_el1
-+	msr	tpidr_el2, x0
-+
-+	// FP configuration, vectors
-+	mrs_s	x0, SYS_CPACR_EL12
-+	msr	cpacr_el1, x0
-+	mrs_s	x0, SYS_VBAR_EL12
-+	msr	vbar_el1, x0
-+
-+	// Transfert the MM state from EL1 to EL2
-+	mrs_s	x0, SYS_TCR_EL12
-+	msr	tcr_el1, x0
-+	mrs_s	x0, SYS_TTBR0_EL12
-+	msr	ttbr0_el1, x0
-+	mrs_s	x0, SYS_TTBR1_EL12
-+	msr	ttbr1_el1, x0
-+	mrs_s	x0, SYS_MAIR_EL12
-+	msr	mair_el1, x0
-+	isb
-+
-+	// Invalidate TLBs before enabling the MMU
-+	tlbi	vmalle1
-+	dsb	nsh
-+
-+	// Enable the EL2 S1 MMU, as set up from EL1
-+	mrs_s	x0, SYS_SCTLR_EL12
-+	set_sctlr_el1	x0
-+
-+	// Hack the exception return to stay at EL2
-+	mrs	x0, spsr_el1
-+	and	x0, x0, #~PSR_MODE_MASK
-+	mov	x1, #PSR_MODE_EL2h
-+	orr	x0, x0, x1
-+	msr	spsr_el1, x0
-+
-+1:	eret
-+SYM_CODE_END(mutate_to_vhe)
-+
- .macro invalid_vector	label
- SYM_CODE_START_LOCAL(\label)
- 	b \label
++	// Turn the world upside down
++	mov	x0, #HVC_VHE_RESTART
++	hvc	#0
++1:
++#endif
++	ret
++SYM_FUNC_END(switch_to_vhe)
+diff --git a/arch/arm64/kernel/sleep.S b/arch/arm64/kernel/sleep.S
+index 6bdef7362c0e..5bfd9b87f85d 100644
+--- a/arch/arm64/kernel/sleep.S
++++ b/arch/arm64/kernel/sleep.S
+@@ -100,6 +100,7 @@ SYM_FUNC_END(__cpu_suspend_enter)
+ 	.pushsection ".idmap.text", "awx"
+ SYM_CODE_START(cpu_resume)
+ 	bl	init_kernel_el
++	bl	switch_to_vhe
+ 	bl	__cpu_setup
+ 	/* enable the MMU early - so we can access sleep_save_stash by va */
+ 	adrp	x1, swapper_pg_dir
 -- 
 2.29.2
 
