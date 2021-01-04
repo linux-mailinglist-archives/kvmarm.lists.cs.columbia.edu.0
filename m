@@ -2,74 +2,66 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AE302E9B07
-	for <lists+kvmarm@lfdr.de>; Mon,  4 Jan 2021 17:27:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F8602E9A19
+	for <lists+kvmarm@lfdr.de>; Mon,  4 Jan 2021 17:08:16 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C457B4B308;
-	Mon,  4 Jan 2021 11:27:58 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D48BC4B2D2;
+	Mon,  4 Jan 2021 11:08:14 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.209
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id G88842sKwJvZ; Mon,  4 Jan 2021 11:27:58 -0500 (EST)
+	with ESMTP id PBM1zIKSnaS1; Mon,  4 Jan 2021 11:08:14 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7E58B4B2F0;
-	Mon,  4 Jan 2021 11:27:57 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A01734B2B5;
+	Mon,  4 Jan 2021 11:08:13 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7B7954B294
- for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 10:47:39 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 208174B238
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 11:08:12 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id WAPwfjIaL8Aq for <kvmarm@lists.cs.columbia.edu>;
- Mon,  4 Jan 2021 10:47:38 -0500 (EST)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 647AD4B291
- for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 10:47:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1609775258;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GdVjsGRGqcz2Bp3755zL9bg1/osM9yZ5XLo7yMYYsTA=;
- b=VFa2F8oGwTpi8o41U91j1ii2nmEiqUL2TmK7+YG6r5Jg+pEgnBKWhkD8VWpR82yYrK0qOa
- k081qh6jOHgbHpUXEZTFSMvc4B6cq96eacHG1xLUZ6++1+gPxuOF3pKqWJn+sLtZd1eyfP
- LfDUcaaRzQ6Ip1N8oMwTATw6SOVWPx8=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-235-k2tGDxxXOsuqoOETBhFf3w-1; Mon, 04 Jan 2021 10:47:33 -0500
-X-MC-Unique: k2tGDxxXOsuqoOETBhFf3w-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com
- [10.5.11.22])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ with ESMTP id kiK6EDWZI2-7 for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  4 Jan 2021 11:08:11 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 09CCA4B1B9
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 11:08:11 -0500 (EST)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 9D3E2801AA9;
- Mon,  4 Jan 2021 15:47:31 +0000 (UTC)
-Received: from ovpn-66-203.rdu2.redhat.com (unknown [10.10.67.203])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 872551007613;
- Mon,  4 Jan 2021 15:47:30 +0000 (UTC)
-Message-ID: <703e1b5f2db1631e8f9c55619909fe66eb069f25.camel@redhat.com>
+ by mail.kernel.org (Postfix) with ESMTPSA id DB4C420665;
+ Mon,  4 Jan 2021 16:08:09 +0000 (UTC)
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1kwSOt-005FxL-4b; Mon, 04 Jan 2021 16:08:07 +0000
+MIME-Version: 1.0
+Date: Mon, 04 Jan 2021 16:08:07 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: Qian Cai <qcai@redhat.com>
 Subject: Re: [PATCH] KVM: arm64: Don't access PMCR_EL0 when no PMU is available
-From: Qian Cai <qcai@redhat.com>
-To: Marc Zyngier <maz@kernel.org>, linux-arm-kernel@lists.infradead.org, 
- kvmarm@lists.cs.columbia.edu
-Date: Mon, 04 Jan 2021 10:47:30 -0500
-In-Reply-To: <20201210083059.1277162-1-maz@kernel.org>
+In-Reply-To: <703e1b5f2db1631e8f9c55619909fe66eb069f25.camel@redhat.com>
 References: <20201210083059.1277162-1-maz@kernel.org>
-Mime-Version: 1.0
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
-X-Mailman-Approved-At: Mon, 04 Jan 2021 11:27:56 -0500
+ <703e1b5f2db1631e8f9c55619909fe66eb069f25.camel@redhat.com>
+User-Agent: Roundcube Webmail/1.4.9
+Message-ID: <579c839a0016107af66e704f147f9814@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: qcai@redhat.com, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kernel-team@android.com, sfr@canb.auug.org.au,
+ linux-next@vger.kernel.org, alexandru.elisei@arm.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
 Cc: Stephen Rothwell <sfr@canb.auug.org.au>,
- Linux Next Mailing List <linux-next@vger.kernel.org>, kernel-team@android.com
+ Linux Next Mailing List <linux-next@vger.kernel.org>, kernel-team@android.com,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -81,65 +73,56 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, 2020-12-10 at 08:30 +0000, Marc Zyngier wrote:
-> We reset the guest's view of PMCR_EL0 unconditionally, based on
-> the host's view of this register. It is however legal for an
-> imnplementation not to provide any PMU, resulting in an UNDEF.
+On 2021-01-04 15:47, Qian Cai wrote:
+> On Thu, 2020-12-10 at 08:30 +0000, Marc Zyngier wrote:
+>> We reset the guest's view of PMCR_EL0 unconditionally, based on
+>> the host's view of this register. It is however legal for an
+>> imnplementation not to provide any PMU, resulting in an UNDEF.
+>> 
+>> The obvious fix is to skip the reset of this shadow register
+>> when no PMU is available, sidestepping the issue entirely.
+>> If no PMU is available, the guest is not able to request
+>> a virtual PMU anyway, so not doing nothing is the right thing
+>> to do!
+>> 
+>> It is unlikely that this bug can hit any HW implementation
+>> though, as they all provide a PMU. It has been found using nested
+>> virt with the host KVM not implementing the PMU itself.
+>> 
+>> Fixes: ab9468340d2bc ("arm64: KVM: Add access handler for PMCR 
+>> register")
+>> Signed-off-by: Marc Zyngier <maz@kernel.org>
 > 
-> The obvious fix is to skip the reset of this shadow register
-> when no PMU is available, sidestepping the issue entirely.
-> If no PMU is available, the guest is not able to request
-> a virtual PMU anyway, so not doing nothing is the right thing
-> to do!
+> Reverting this commit on the top of today's linux-next fixed a qemu-kvm 
+> coredump
+> issue on TX2 while starting a guest.
 > 
-> It is unlikely that this bug can hit any HW implementation
-> though, as they all provide a PMU. It has been found using nested
-> virt with the host KVM not implementing the PMU itself.
+> - host kernel .config:
+> https://cailca.coding.net/public/linux/mm/git/files/master/arm64.config
 > 
-> Fixes: ab9468340d2bc ("arm64: KVM: Add access handler for PMCR register")
-> Signed-off-by: Marc Zyngier <maz@kernel.org>
-
-Reverting this commit on the top of today's linux-next fixed a qemu-kvm coredump
-issue on TX2 while starting a guest.
-
-- host kernel .config:
-https://cailca.coding.net/public/linux/mm/git/files/master/arm64.config
-
-# /usr/libexec/qemu-kvm -name ubuntu-20.04-server-cloudimg -cpu host -smp 2 -m 2g
--drive if=none,format=qcow2,file=./ubuntu-20.04-server-cloudimg.qcow2,id=hd 
--device virtio-scsi -device scsi-hd,drive=hd -cdrom ./ubuntu-20.04-server-cloudimg.iso
--bios /usr/share/AAVMF/AAVMF_CODE.fd -M gic-version=host -nographic 
--nic user,model=virtio,hostfwd=tcp::2222-:22
-
-qemu-kvm: /builddir/build/BUILD/qemu-4.2.0/target/arm/helper.c:1812:
-pmevcntr_rawwrite: Assertion `counter < pmu_num_counters(env)' failed.
-
-> ---
->  arch/arm64/kvm/sys_regs.c | 4 ++++
->  1 file changed, 4 insertions(+)
+> # /usr/libexec/qemu-kvm -name ubuntu-20.04-server-cloudimg -cpu host
+> -smp 2 -m 2g
+> -drive 
+> if=none,format=qcow2,file=./ubuntu-20.04-server-cloudimg.qcow2,id=hd
+> -device virtio-scsi -device scsi-hd,drive=hd -cdrom
+> ./ubuntu-20.04-server-cloudimg.iso
+> -bios /usr/share/AAVMF/AAVMF_CODE.fd -M gic-version=host -nographic
+> -nic user,model=virtio,hostfwd=tcp::2222-:22
 > 
-> diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-> index bc15246775d0..6c64d010102b 100644
-> --- a/arch/arm64/kvm/sys_regs.c
-> +++ b/arch/arm64/kvm/sys_regs.c
-> @@ -923,6 +923,10 @@ static void reset_pmcr(struct kvm_vcpu *vcpu, const
-> struct sys_reg_desc *r)
->  {
->  	u64 pmcr, val;
->  
-> +	/* No PMU available, PMCR_EL0 may UNDEF... */
-> +	if (!kvm_arm_support_pmu_v3())
-> +		return;
-> +
->  	pmcr = read_sysreg(pmcr_el0);
->  	/*
->  	 * Writable bits of PMCR_EL0 (ARMV8_PMU_PMCR_MASK) are reset to UNKNOWN
+> qemu-kvm: /builddir/build/BUILD/qemu-4.2.0/target/arm/helper.c:1812:
+> pmevcntr_rawwrite: Assertion `counter < pmu_num_counters(env)' failed.
 
+You don't have KVM_ARM_PMU selected in your config, so QEMU cannot
+access the PMU registers, and no counters are exposed.
+
+         M.
+-- 
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
