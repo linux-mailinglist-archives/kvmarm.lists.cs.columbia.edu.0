@@ -2,67 +2,51 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 34D392E9DF1
-	for <lists+kvmarm@lfdr.de>; Mon,  4 Jan 2021 20:06:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B49692E9E33
+	for <lists+kvmarm@lfdr.de>; Mon,  4 Jan 2021 20:32:48 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 805334B1F2;
-	Mon,  4 Jan 2021 14:06:21 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 442CA4B224;
+	Mon,  4 Jan 2021 14:32:48 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.209
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id y9UYt4zjHd1H; Mon,  4 Jan 2021 14:06:21 -0500 (EST)
+	with ESMTP id XrDInbjhHiSG; Mon,  4 Jan 2021 14:32:48 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 723C94B1E6;
-	Mon,  4 Jan 2021 14:06:20 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EC0AD4B217;
+	Mon,  4 Jan 2021 14:32:46 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 58DE34B109
- for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 13:42:38 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 75AEC4B20C
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 14:32:45 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id UfYBbGP-f7fB for <kvmarm@lists.cs.columbia.edu>;
- Mon,  4 Jan 2021 13:42:37 -0500 (EST)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 847D24B104
- for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 13:42:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1609785757;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DKmL21N+iyKhBf8N6rygtnRxpR6MVevdbYR2ogpgY9U=;
- b=iar9VlfAnTfiRmOmWb5jv5Sj/U7+qxjSiEngPMaEm0k5VlSytmW0E4rqySvh+NzTLFAM3B
- QxZqawP8CvHlZV8MrSnl/TMs268MNDZGwURQLW67+xurO2+2CryBXg5i5j0jC5cfTajgZp
- 1oDl5AQWGUUt3qDa9ZI7CUHna5ei0HQ=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-181-0a-1fElvMayIVmgyVXnKvA-1; Mon, 04 Jan 2021 13:42:35 -0500
-X-MC-Unique: 0a-1fElvMayIVmgyVXnKvA-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.phx2.redhat.com
- [10.5.11.15])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ with ESMTP id ff8dZYRYVfTt for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  4 Jan 2021 14:32:44 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7A4874B20B
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Jan 2021 14:32:44 -0500 (EST)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 09817107ACF8;
- Mon,  4 Jan 2021 18:42:33 +0000 (UTC)
-Received: from ovpn-66-203.rdu2.redhat.com (unknown [10.10.67.203])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 3052B5D751;
- Mon,  4 Jan 2021 18:42:32 +0000 (UTC)
-Message-ID: <22cd2b3e8b8b278f110a3540755583efee7189fd.camel@redhat.com>
+ by mail.kernel.org (Postfix) with ESMTPSA id 3AB9720784;
+ Mon,  4 Jan 2021 19:32:43 +0000 (UTC)
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1kwVar-005IJG-4e; Mon, 04 Jan 2021 19:32:41 +0000
+MIME-Version: 1.0
+Date: Mon, 04 Jan 2021 19:32:41 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: Qian Cai <qcai@redhat.com>
 Subject: Re: [PATCH] KVM: arm64: Don't access PMCR_EL0 when no PMU is available
-From: Qian Cai <qcai@redhat.com>
-To: Marc Zyngier <maz@kernel.org>
-Date: Mon, 04 Jan 2021 13:42:31 -0500
-In-Reply-To: <f7b97771ed29c7630f678a8939a591dd@kernel.org>
+In-Reply-To: <22cd2b3e8b8b278f110a3540755583efee7189fd.camel@redhat.com>
 References: <20201210083059.1277162-1-maz@kernel.org>
  <703e1b5f2db1631e8f9c55619909fe66eb069f25.camel@redhat.com>
  <579c839a0016107af66e704f147f9814@kernel.org>
@@ -70,9 +54,17 @@ References: <20201210083059.1277162-1-maz@kernel.org>
  <bd725a533e4754b0d5634574bcab4b0d@kernel.org>
  <a0fcd5a4a595deddd990a6327568c82a1e94948a.camel@redhat.com>
  <f7b97771ed29c7630f678a8939a591dd@kernel.org>
-Mime-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
-X-Mailman-Approved-At: Mon, 04 Jan 2021 14:06:19 -0500
+ <22cd2b3e8b8b278f110a3540755583efee7189fd.camel@redhat.com>
+User-Agent: Roundcube Webmail/1.4.9
+Message-ID: <81607700b5de4860a6f281c68ee17669@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: qcai@redhat.com, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kernel-team@android.com, sfr@canb.auug.org.au,
+ linux-next@vger.kernel.org, alexandru.elisei@arm.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
 Cc: Stephen Rothwell <sfr@canb.auug.org.au>,
  Linux Next Mailing List <linux-next@vger.kernel.org>, kernel-team@android.com,
  kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
@@ -87,27 +79,35 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, 2021-01-04 at 18:26 +0000, Marc Zyngier wrote:
-> What I'm suggesting is this [1], which is to get rid of KVM_ARM_PMU
-> completely. At least, the kernel configuration will be consistent.
+On 2021-01-04 18:42, Qian Cai wrote:
+> On Mon, 2021-01-04 at 18:26 +0000, Marc Zyngier wrote:
+>> What I'm suggesting is this [1], which is to get rid of KVM_ARM_PMU
+>> completely. At least, the kernel configuration will be consistent.
+>> 
 > 
+> Do you have a patch for CONFIG_KVM to select HW_PERF_EVENTS then? I 
+> could cook
+> one if not.
 
-Do you have a patch for CONFIG_KVM to select HW_PERF_EVENTS then? I could cook
-one if not.
+I don't think there should be such a patch. People do disable
+HW_PERF_EVENTS in production in some cases, and we should
+honor that. All I am trying to guarantee at the moment is
+that the KVM configuration is consistent, as I believe that's
+what broke in your particular case.
 
-> Overall, I think there is an issue with KVM exposing more than it
-> should to userspace when no PMU is defined, but I don't think that's
-> the problem you are seeing.
-> 
->          M.
-> 
-> [1] https://lore.kernel.org/r/20210104172723.2014324-1-maz@kernel.org
+What needs doing is to hide the PMU registers from userspace
+when no PMU is configured, or even available. I'll try and post
+something to that effect tomorrow (hey, I'm still officially
+on holiday...).
 
+         M.
+-- 
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
