@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 35C832EA921
-	for <lists+kvmarm@lfdr.de>; Tue,  5 Jan 2021 11:48:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D7AA22EA985
+	for <lists+kvmarm@lfdr.de>; Tue,  5 Jan 2021 12:09:04 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A3F284B239;
-	Tue,  5 Jan 2021 05:48:33 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 64E904B323;
+	Tue,  5 Jan 2021 06:09:04 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,45 +16,45 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id HTxRUSNXW7uN; Tue,  5 Jan 2021 05:48:33 -0500 (EST)
+	with ESMTP id MHvQYZgTHbhw; Tue,  5 Jan 2021 06:09:04 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7D3344B310;
-	Tue,  5 Jan 2021 05:48:32 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 412E24B32E;
+	Tue,  5 Jan 2021 06:09:03 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 41FB14B30D
- for <kvmarm@lists.cs.columbia.edu>; Tue,  5 Jan 2021 05:48:31 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 119464B323
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  5 Jan 2021 06:09:02 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id YK61+JGAbKb5 for <kvmarm@lists.cs.columbia.edu>;
- Tue,  5 Jan 2021 05:48:29 -0500 (EST)
-Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4647A4B309
- for <kvmarm@lists.cs.columbia.edu>; Tue,  5 Jan 2021 05:48:29 -0500 (EST)
-Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.59])
- by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4D98Mj740dz15nlp;
- Tue,  5 Jan 2021 18:47:29 +0800 (CST)
-Received: from [10.174.184.42] (10.174.184.42) by
- DGGEMS406-HUB.china.huawei.com (10.3.19.206) with Microsoft SMTP Server id
- 14.3.498.0; Tue, 5 Jan 2021 18:48:18 +0800
+ with ESMTP id jwgndeSxsUbw for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  5 Jan 2021 06:09:00 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CD2BF4B321
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  5 Jan 2021 06:09:00 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1EB131FB;
+ Tue,  5 Jan 2021 03:09:00 -0800 (PST)
+Received: from [10.163.89.46] (unknown [10.163.89.46])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A4C113F70D;
+ Tue,  5 Jan 2021 03:08:55 -0800 (PST)
 Subject: Re: [PATCH] arm64/smp: Remove unused variable irq in
  arch_show_interrupts()
-To: Catalin Marinas <catalin.marinas@arm.com>
+To: Catalin Marinas <catalin.marinas@arm.com>,
+ Keqian Zhu <zhukeqian1@huawei.com>
 References: <20210105092221.15144-1-zhukeqian1@huawei.com>
  <20210105100847.GB11802@gaia>
-From: Keqian Zhu <zhukeqian1@huawei.com>
-Message-ID: <ebbe8da6-bd81-f43c-8bda-cc302657d6f3@huawei.com>
-Date: Tue, 5 Jan 2021 18:48:18 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+From: Anshuman Khandual <anshuman.khandual@arm.com>
+Message-ID: <8deed54d-d184-69b8-fce9-d87128a7d880@arm.com>
+Date: Tue, 5 Jan 2021 16:39:15 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
 In-Reply-To: <20210105100847.GB11802@gaia>
-X-Originating-IP: [10.174.184.42]
-X-CFilter-Loop: Reflected
+Content-Language: en-US
 Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
  Joerg Roedel <joro@8bytes.org>, linux-kernel@vger.kernel.org,
- Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org, Robin Murphy <robin.murphy@arm.com>
+ linux-arm-kernel@lists.infradead.org, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, Robin Murphy <robin.murphy@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -73,7 +73,7 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 
 
-On 2021/1/5 18:08, Catalin Marinas wrote:
+On 1/5/21 3:38 PM, Catalin Marinas wrote:
 > On Tue, Jan 05, 2021 at 05:22:21PM +0800, Keqian Zhu wrote:
 >> The local variable irq is added in commit a26388152531 ("arm64:
 >> Remove custom IRQ stat accounting"), but forget to remove in
@@ -83,9 +83,11 @@ On 2021/1/5 18:08, Catalin Marinas wrote:
 >> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
 > 
 > I already queued a similar fix in arm64 for-next/fixes (it should appear
-> in linux-next at some point).
-> 
-OK, I see. Thanks.
+> in linux-next at some point)
+
+I too sent this fix yesterday as well :) as it was preventing a clean
+build on v5.11-rc2. Missed to check this on arm64 for-next/fixes though
+I did check on linux-next.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
