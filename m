@@ -2,68 +2,60 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id ED5F02EBB7B
-	for <lists+kvmarm@lfdr.de>; Wed,  6 Jan 2021 10:03:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4ED452EBBF6
+	for <lists+kvmarm@lfdr.de>; Wed,  6 Jan 2021 10:55:20 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 855664B352;
-	Wed,  6 Jan 2021 04:03:54 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BCB1B4B33B;
+	Wed,  6 Jan 2021 04:55:19 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZkPswP2tljgd; Wed,  6 Jan 2021 04:03:54 -0500 (EST)
+	with ESMTP id TeLdoH9QgKdu; Wed,  6 Jan 2021 04:55:19 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 562434B34D;
-	Wed,  6 Jan 2021 04:03:53 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9499B4B32A;
+	Wed,  6 Jan 2021 04:55:18 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 99E8D4B33D
- for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jan 2021 04:03:52 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 013C54B30E
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jan 2021 04:55:17 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id uzEzPMqwotZx for <kvmarm@lists.cs.columbia.edu>;
- Wed,  6 Jan 2021 04:03:51 -0500 (EST)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8A25D4B31E
- for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jan 2021 04:03:51 -0500 (EST)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 29FDA2310A;
- Wed,  6 Jan 2021 09:03:50 +0000 (UTC)
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1kx4jM-005bCS-0P; Wed, 06 Jan 2021 09:03:48 +0000
+ with ESMTP id wnDlCs4jNc-I for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  6 Jan 2021 04:55:15 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id AD64A4B30A
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jan 2021 04:55:15 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DFD711FB;
+ Wed,  6 Jan 2021 01:55:14 -0800 (PST)
+Received: from slackpad.fritz.box (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 044EE3F719;
+ Wed,  6 Jan 2021 01:55:12 -0800 (PST)
+Date: Wed, 6 Jan 2021 09:54:32 +0000
+From: Andre Przywara <andre.przywara@arm.com>
+To: Mark Brown <broonie@kernel.org>
+Subject: Re: [PATCH v5 4/5] arm64: Add support for SMCCC TRNG entropy source
+Message-ID: <20210106095432.26e5b86d@slackpad.fritz.box>
+In-Reply-To: <20210105170014.GG4487@sirena.org.uk>
+References: <20210105163652.23646-1-andre.przywara@arm.com>
+ <20210105163652.23646-5-andre.przywara@arm.com>
+ <20210105170014.GG4487@sirena.org.uk>
+Organization: Arm Ltd.
+X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.31; x86_64-slackware-linux-gnu)
 MIME-Version: 1.0
-Date: Wed, 06 Jan 2021 09:03:47 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: Jing Zhang <jingzhangos@google.com>
-Subject: Re: [PATCH v2 11/17] arm64: cpufeature: Add an early command-line
- cpufeature override facility
-In-Reply-To: <CAAdAUtjNiBACFbxp-0x_ar9RcnFDkiSoGqOn0XKiwtJAd3qCHg@mail.gmail.com>
-References: <20210104135011.2063104-1-maz@kernel.org>
- <20210104135011.2063104-12-maz@kernel.org>
- <CAAdAUtjNiBACFbxp-0x_ar9RcnFDkiSoGqOn0XKiwtJAd3qCHg@mail.gmail.com>
-User-Agent: Roundcube Webmail/1.4.9
-Message-ID: <90dccfccbfdfa8abb05716c2572af9ca@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: jingzhangos@google.com, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, kernel-team@android.com, catalin.marinas@arm.com,
- will@kernel.org, ardb@kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com, Catalin Marinas <catalin.marinas@arm.com>,
- Ard Biesheuvel <ardb@kernel.org>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+ Theodore Ts'o <tytso@mit.edu>, Catalin Marinas <catalin.marinas@arm.com>,
+ Linus Walleij <linus.walleij@linaro.org>, Sudeep Holla <sudeep.holla@arm.com>,
+ linux-kernel@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+ kvmarm@lists.cs.columbia.edu, Marc Zyngier <maz@kernel.org>,
+ Will Deacon <will@kernel.org>, Ard Biesheuvel <ardb@kernel.org>,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -75,76 +67,38 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2021-01-06 02:16, Jing Zhang wrote:
-> On Mon, Jan 4, 2021 at 8:20 AM Marc Zyngier <maz@kernel.org> wrote:
+On Tue, 5 Jan 2021 17:00:14 +0000
+Mark Brown <broonie@kernel.org> wrote:
 
-[...]
+> On Tue, Jan 05, 2021 at 04:36:51PM +0000, Andre Przywara wrote:
+> 
+> > @@ -77,10 +117,20 @@ arch_get_random_seed_long_early(unsigned long
+> > *v) {
+> >  	WARN_ON(system_state != SYSTEM_BOOTING);
+> >  
+> > -	if (!__early_cpu_has_rndr())
+> > -		return false;
+> > +	if (__early_cpu_has_rndr())
+> > +		return __arm64_rndr(v);
+> > +
+> > +	if (smccc_trng_available) {
+> > +		struct arm_smccc_res res;  
+> 
+> This still seems to be preferring RNDR over SMCCC for the early seed
+> unless I'm misreading the diff?
 
->> +static __init void parse_cmdline(void)
->> +{
->> +       if (!IS_ENABLED(CONFIG_CMDLINE_FORCE)) {
->> +               const u8 *prop;
->> +               void *fdt;
->> +               int node;
->> +
->> +               fdt = get_early_fdt_ptr();
->> +               if (!fdt)
->> +                       goto out;
->> +
->> +               node = fdt_path_offset(fdt, "/chosen");
->> +               if (node < 0)
->> +                       goto out;
->> +
->> +               prop = fdt_getprop(fdt, node, "bootargs", NULL);
->> +               if (!prop)
->> +                       goto out;
->> +
->> +               match_options(prop);
->> +
->> +               if (!IS_ENABLED(CONFIG_CMDLINE_EXTEND))
->> +                       return;
->> +       }
->> +
->> +out:
->> +       match_options(CONFIG_CMDLINE);
->> +}
->> +
->> +void __init init_shadow_regs(void)
->> +{
->> +       int i;
->> +
->> +       for (i = 0; i < ARRAY_SIZE(regs); i++) {
->> +               if (regs[i]->val)
->> +                       *regs[i]->val  = 0;
->> +               if (regs[i]->mask)
->> +                       *regs[i]->mask = 0;
->> +       }
->> +
->> +       parse_cmdline();
->> +
->> +       for (i = 0; i < ARRAY_SIZE(regs); i++) {
->> +               if (regs[i]->val)
->> +                       __flush_dcache_area(regs[i]->val, 
->> sizeof(*regs[i]->val));
->> +               if (regs[i]->mask)
->> +                       __flush_dcache_area(regs[i]->mask, 
->> sizeof(*regs[i]->mask));
->> +       }
-> Could you shed some light on the usage of __flush_dcache_area here? 
-> Thanks.
+Argh, my apologies for that blunder. I *did* change it, but must have
+lost it when rebasing against my debug patches.
+Will send a fixed version in a jiffy.
 
-Some of this data gets used by secondary CPUs when they have their
-MMU off. If we don't clean to the PoC, they will miss the updates
-and things will randomly fail.
+Cheers,
+Andre.
 
-         M.
--- 
-Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
