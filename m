@@ -2,66 +2,57 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D58F92EC204
-	for <lists+kvmarm@lfdr.de>; Wed,  6 Jan 2021 18:22:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 49CA22EC985
+	for <lists+kvmarm@lfdr.de>; Thu,  7 Jan 2021 05:44:49 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 615C04B3CE;
-	Wed,  6 Jan 2021 12:22:59 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F3E354B36D;
+	Wed,  6 Jan 2021 23:44:48 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id uXydpz2fYb-Q; Wed,  6 Jan 2021 12:22:59 -0500 (EST)
+	with ESMTP id 20zmXgpw8lce; Wed,  6 Jan 2021 23:44:48 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3E8A64B3BD;
-	Wed,  6 Jan 2021 12:22:58 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 02CAF4B345;
+	Wed,  6 Jan 2021 23:44:48 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2EA504B3A6
- for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jan 2021 12:22:57 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 837F94B369
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jan 2021 23:44:46 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id jPNg4dThGhme for <kvmarm@lists.cs.columbia.edu>;
- Wed,  6 Jan 2021 12:22:56 -0500 (EST)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 28F8E4B336
- for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jan 2021 12:22:56 -0500 (EST)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 41493222F9;
- Wed,  6 Jan 2021 17:22:55 +0000 (UTC)
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1kxCWL-005g7y-I9; Wed, 06 Jan 2021 17:22:53 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: linux-arm-kernel@lists.infradead.org,
-	kvmarm@lists.cs.columbia.edu
-Subject: [PATCH 2/2] KVM: arm64: Simplify handling of absent PMU system
- registers
-Date: Wed,  6 Jan 2021 17:22:28 +0000
-Message-Id: <20210106172228.2289695-3-maz@kernel.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210106172228.2289695-1-maz@kernel.org>
-References: <20210106172228.2289695-1-maz@kernel.org>
+ with ESMTP id 2Nr3aV8MW31w for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  6 Jan 2021 23:44:45 -0500 (EST)
+Received: from szxga06-in.huawei.com (szxga06-in.huawei.com [45.249.212.32])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6234D4B368
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jan 2021 23:44:42 -0500 (EST)
+Received: from DGGEMS401-HUB.china.huawei.com (unknown [172.30.72.60])
+ by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4DBDC84vtmzj2Xl;
+ Thu,  7 Jan 2021 12:43:48 +0800 (CST)
+Received: from DESKTOP-5IS4806.china.huawei.com (10.174.184.42) by
+ DGGEMS401-HUB.china.huawei.com (10.3.19.201) with Microsoft SMTP Server id
+ 14.3.498.0; Thu, 7 Jan 2021 12:44:25 +0800
+From: Keqian Zhu <zhukeqian1@huawei.com>
+To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <iommu@lists.linux-foundation.org>, <kvm@vger.kernel.org>,
+ <kvmarm@lists.cs.columbia.edu>, Alex Williamson <alex.williamson@redhat.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Will Deacon <will@kernel.org>, "Marc
+ Zyngier" <maz@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 0/6] vfio/iommu_type1: Some optimizations about dirty tracking
+Date: Thu, 7 Jan 2021 12:43:55 +0800
+Message-ID: <20210107044401.19828-1-zhukeqian1@huawei.com>
+X-Mailer: git-send-email 2.8.4.windows.1
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, james.morse@arm.com,
- julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
- alexandru.elisei@arm.com, drjones@redhat.com, eric.auger@redhat.com,
- kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com
+X-Originating-IP: [10.174.184.42]
+X-CFilter-Loop: Reflected
+Cc: Joerg Roedel <joro@8bytes.org>, Daniel
+ Lezcano <daniel.lezcano@linaro.org>, Alexios Zavras <alexios.zavras@intel.com>,
+ Thomas Gleixner <tglx@linutronix.de>, Robin Murphy <robin.murphy@arm.com>,
+ Andrew Morton <akpm@linux-foundation.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -78,43 +69,31 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Now that all PMU registers are gated behind a .visibility callback,
-remove the other checks against an absent PMU.
+Hi,
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/kvm/sys_regs.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+In patch series[1], I put forward some fixes and optimizations for
+vfio_iommu_type1. This extracts and improves the optimization part
+of it.
 
-diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index 45f4ae71c8dc..93f0a4a0789a 100644
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -622,9 +622,8 @@ static void reset_pmcr(struct kvm_vcpu *vcpu, const struct sys_reg_desc *r)
- static bool check_pmu_access_disabled(struct kvm_vcpu *vcpu, u64 flags)
- {
- 	u64 reg = __vcpu_sys_reg(vcpu, PMUSERENR_EL0);
--	bool enabled = kvm_vcpu_has_pmu(vcpu);
-+	bool enabled = (reg & flags) || vcpu_mode_priv(vcpu);
- 
--	enabled &= (reg & flags) || vcpu_mode_priv(vcpu);
- 	if (!enabled)
- 		kvm_inject_undefined(vcpu);
- 
-@@ -909,11 +908,6 @@ static bool access_pmswinc(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
- static bool access_pmuserenr(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
- 			     const struct sys_reg_desc *r)
- {
--	if (!kvm_vcpu_has_pmu(vcpu)) {
--		kvm_inject_undefined(vcpu);
--		return false;
--	}
--
- 	if (p->is_write) {
- 		if (!vcpu_mode_priv(vcpu)) {
- 			kvm_inject_undefined(vcpu);
+[1] https://lore.kernel.org/linux-iommu/20201210073425.25960-1-zhukeqian1@huawei.com/T/#t
+
+Thanks,
+Keqian
+
+
+Keqian Zhu (6):
+  vfio/iommu_type1: Make an explicit "promote" semantic
+  vfio/iommu_type1: Ignore external domain when promote pinned_scope
+  vfio/iommu_type1: Initially set the pinned_page_dirty_scope
+  vfio/iommu_type1: Drop parameter "pgsize" of vfio_dma_bitmap_alloc_all
+  vfio/iommu_type1: Drop parameter "pgsize" of vfio_iova_dirty_bitmap
+  vfio/iommu_type1: Drop parameter "pgsize" of update_user_bitmap
+
+ drivers/vfio/vfio_iommu_type1.c | 67 +++++++++++++--------------------
+ 1 file changed, 26 insertions(+), 41 deletions(-)
+
 -- 
-2.29.2
+2.19.1
 
 _______________________________________________
 kvmarm mailing list
