@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 17B282ECEA2
-	for <lists+kvmarm@lfdr.de>; Thu,  7 Jan 2021 12:21:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D942A2ECF07
+	for <lists+kvmarm@lfdr.de>; Thu,  7 Jan 2021 12:50:56 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C081B4B3CB;
-	Thu,  7 Jan 2021 06:21:32 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8DD254B3DC;
+	Thu,  7 Jan 2021 06:50:56 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,37 +15,37 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6EBTOOfacP6H; Thu,  7 Jan 2021 06:21:32 -0500 (EST)
+	with ESMTP id p3Ipx8-CaNwr; Thu,  7 Jan 2021 06:50:55 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 074984B404;
-	Thu,  7 Jan 2021 06:21:31 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8B9664B3F2;
+	Thu,  7 Jan 2021 06:50:55 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 465E94B3C0
- for <kvmarm@lists.cs.columbia.edu>; Thu,  7 Jan 2021 06:21:30 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C2F2F4B3D6
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  7 Jan 2021 06:50:53 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id JbOdDj1MsfMH for <kvmarm@lists.cs.columbia.edu>;
- Thu,  7 Jan 2021 06:21:29 -0500 (EST)
+ with ESMTP id WfYsBWm9+o1N for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  7 Jan 2021 06:50:52 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7F68B4B3CB
- for <kvmarm@lists.cs.columbia.edu>; Thu,  7 Jan 2021 06:21:26 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id AE3C14B3DE
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  7 Jan 2021 06:50:52 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 926A92333F;
- Thu,  7 Jan 2021 11:21:25 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id C6C942333F;
+ Thu,  7 Jan 2021 11:50:51 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1kxTM3-005p1o-Ny; Thu, 07 Jan 2021 11:21:23 +0000
+ id 1kxTM4-005p1o-Gt; Thu, 07 Jan 2021 11:21:24 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 09/18] KVM: Documentation: Add arm64 KVM_RUN error codes
-Date: Thu,  7 Jan 2021 11:20:52 +0000
-Message-Id: <20210107112101.2297944-10-maz@kernel.org>
+Subject: [PATCH 10/18] KVM: arm64: arch_timer: Remove VGIC initialization check
+Date: Thu,  7 Jan 2021 11:20:53 +0000
+Message-Id: <20210107112101.2297944-11-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210107112101.2297944-1-maz@kernel.org>
 References: <20210107112101.2297944-1-maz@kernel.org>
@@ -84,47 +84,47 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: Alexandru Elisei <alexandru.elisei@arm.com>
 
-The API documentation states that general error codes are not detailed, but
-errors with specific meanings are. On arm64, KVM_RUN can return error
-numbers with a different meaning than what is described by POSIX or the C99
-standard (as taken from man 3 errno).
+kvm_timer_enable() is called in kvm_vcpu_first_run_init() after
+kvm_vgic_map_resources() if the VGIC wasn't ready. kvm_vgic_map_resources()
+is the only place where kvm->arch.vgic.ready is set to true.
 
-Absent from the newly documented error codes is ERANGE which can be
-returned when making a change to the EL2 stage 1 tables if the address is
-larger than the largest supported input address. Assuming no bugs in the
-implementation, that is not possible because the input addresses which are
-mapped are the result of applying the macro kern_hyp_va() on kernel virtual
-addresses.
+For a v2 VGIC, kvm_vgic_map_resources() will attempt to initialize the VGIC
+and set the initialized flag.
 
-CC: Paolo Bonzini <pbonzini@redhat.com>
+For a v3 VGIC, kvm_vgic_map_resources() will return an error code if the
+VGIC isn't already initialized.
+
+The end result is that if we've reached kvm_timer_enable(), the VGIC is
+initialzed and ready and vgic_initialized() will always be true, so remove
+this check.
+
 Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+[maz: added comment about vgic initialisation, as suggested by Eric]
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20201201150157.223625-2-alexandru.elisei@arm.com
+Link: https://lore.kernel.org/r/20201201150157.223625-3-alexandru.elisei@arm.com
 ---
- Documentation/virt/kvm/api.rst | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/arch_timer.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
-index e00a66d72372..4e5316ed10e9 100644
---- a/Documentation/virt/kvm/api.rst
-+++ b/Documentation/virt/kvm/api.rst
-@@ -380,9 +380,14 @@ This ioctl is obsolete and has been removed.
+diff --git a/arch/arm64/kvm/arch_timer.c b/arch/arm64/kvm/arch_timer.c
+index 32ba6fbc3814..74e0699661e9 100644
+--- a/arch/arm64/kvm/arch_timer.c
++++ b/arch/arm64/kvm/arch_timer.c
+@@ -1129,9 +1129,10 @@ int kvm_timer_enable(struct kvm_vcpu *vcpu)
+ 	if (!irqchip_in_kernel(vcpu->kvm))
+ 		goto no_vgic;
  
- Errors:
- 
--  =====      =============================
-+  =======    ==============================================================
-   EINTR      an unmasked signal is pending
--  =====      =============================
-+  ENOEXEC    the vcpu hasn't been initialized or the guest tried to execute
-+             instructions from device memory (arm64)
-+  ENOSYS     data abort outside memslots with no syndrome info and
-+             KVM_CAP_ARM_NISV_TO_USER not enabled (arm64)
-+  EPERM      SVE feature set but not finalized (arm64)
-+  =======    ==============================================================
- 
- This ioctl is used to run a guest virtual cpu.  While there are no
- explicit parameters, there is an implicit parameter block that can be
+-	if (!vgic_initialized(vcpu->kvm))
+-		return -ENODEV;
+-
++	/*
++	 * At this stage, we have the guarantee that the vgic is both
++	 * available and initialized.
++	 */
+ 	if (!timer_irqs_are_valid(vcpu)) {
+ 		kvm_debug("incorrectly configured timer irqs\n");
+ 		return -EINVAL;
 -- 
 2.29.2
 
