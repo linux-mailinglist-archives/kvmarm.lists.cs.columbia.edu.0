@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B0992ECE9E
-	for <lists+kvmarm@lfdr.de>; Thu,  7 Jan 2021 12:21:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 891DC2ECE9F
+	for <lists+kvmarm@lfdr.de>; Thu,  7 Jan 2021 12:21:28 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 004614B3E2;
-	Thu,  7 Jan 2021 06:21:27 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 39AFA4B3DE;
+	Thu,  7 Jan 2021 06:21:28 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,37 +15,37 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id a3NulLkDNYIa; Thu,  7 Jan 2021 06:21:26 -0500 (EST)
+	with ESMTP id ZeWI5PaEQSKU; Thu,  7 Jan 2021 06:21:28 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6E0C44B3E9;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 90B264B3F1;
 	Thu,  7 Jan 2021 06:21:24 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6B77E4B3C2
- for <kvmarm@lists.cs.columbia.edu>; Thu,  7 Jan 2021 06:21:22 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id F3B564B3C4
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  7 Jan 2021 06:21:23 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id V-OAfg9JSxTS for <kvmarm@lists.cs.columbia.edu>;
- Thu,  7 Jan 2021 06:21:21 -0500 (EST)
+ with ESMTP id FM4Tc7mHC5KW for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  7 Jan 2021 06:21:23 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5F24D4B3BC
- for <kvmarm@lists.cs.columbia.edu>; Thu,  7 Jan 2021 06:21:21 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 196FC4B3C9
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  7 Jan 2021 06:21:22 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 6835B23333;
- Thu,  7 Jan 2021 11:21:20 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 392962333C;
+ Thu,  7 Jan 2021 11:21:21 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1kxTLy-005p1o-Ku; Thu, 07 Jan 2021 11:21:18 +0000
+ id 1kxTLz-005p1o-DY; Thu, 07 Jan 2021 11:21:19 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 03/18] KVM: arm64: Use lm_alias in nVHE-only VA conversion
-Date: Thu,  7 Jan 2021 11:20:46 +0000
-Message-Id: <20210107112101.2297944-4-maz@kernel.org>
+Subject: [PATCH 04/18] KVM: arm64: Skip computing hyp VA layout for VHE
+Date: Thu,  7 Jan 2021 11:20:47 +0000
+Message-Id: <20210107112101.2297944-5-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210107112101.2297944-1-maz@kernel.org>
 References: <20210107112101.2297944-1-maz@kernel.org>
@@ -84,32 +84,30 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: David Brazdil <dbrazdil@google.com>
 
-init_hyp_physvirt_offset() computes PA from a kernel VA. Conversion to
-kernel linear-map is required first but the code used kvm_ksym_ref() for
-this purpose. Under VHE that is a NOP and resulted in a runtime warning.
-Replace kvm_ksym_ref with lm_alias.
+Computing the hyp VA layout is redundant when the kernel runs in EL2 and
+hyp shares its VA mappings. Make calling kvm_compute_layout()
+conditional on not just CONFIG_KVM but also !is_kernel_in_hyp_mode().
 
-Reported-by: Qian Cai <qcai@redhat.com>
 Signed-off-by: David Brazdil <dbrazdil@google.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20201208142452.87237-3-dbrazdil@google.com
+Link: https://lore.kernel.org/r/20201208142452.87237-4-dbrazdil@google.com
 ---
- arch/arm64/kvm/va_layout.c | 2 +-
+ arch/arm64/kernel/smp.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/va_layout.c b/arch/arm64/kvm/va_layout.c
-index d8cc51bd60bf..914732b88c69 100644
---- a/arch/arm64/kvm/va_layout.c
-+++ b/arch/arm64/kvm/va_layout.c
-@@ -42,7 +42,7 @@ static void init_hyp_physvirt_offset(void)
- 	u64 kern_va, hyp_va;
- 
- 	/* Compute the offset from the hyp VA and PA of a random symbol. */
--	kern_va = (u64)kvm_ksym_ref(__hyp_text_start);
-+	kern_va = (u64)lm_alias(__hyp_text_start);
- 	hyp_va = __early_kern_hyp_va(kern_va);
- 	CHOOSE_NVHE_SYM(hyp_physvirt_offset) = (s64)__pa(kern_va) - (s64)hyp_va;
+diff --git a/arch/arm64/kernel/smp.c b/arch/arm64/kernel/smp.c
+index 18e9727d3f64..4e585cc892e8 100644
+--- a/arch/arm64/kernel/smp.c
++++ b/arch/arm64/kernel/smp.c
+@@ -434,7 +434,7 @@ static void __init hyp_mode_check(void)
+ 			   "CPU: CPUs started in inconsistent modes");
+ 	else
+ 		pr_info("CPU: All CPU(s) started at EL1\n");
+-	if (IS_ENABLED(CONFIG_KVM))
++	if (IS_ENABLED(CONFIG_KVM) && !is_kernel_in_hyp_mode())
+ 		kvm_compute_layout();
  }
+ 
 -- 
 2.29.2
 
