@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B74EE2F3662
-	for <lists+kvmarm@lfdr.de>; Tue, 12 Jan 2021 18:02:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7973B2F3712
+	for <lists+kvmarm@lfdr.de>; Tue, 12 Jan 2021 18:28:57 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4578D4B1EB;
-	Tue, 12 Jan 2021 12:02:40 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1426D4B1FC;
+	Tue, 12 Jan 2021 12:28:57 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,27 +16,27 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zZMKlGOygtpr; Tue, 12 Jan 2021 12:02:40 -0500 (EST)
+	with ESMTP id yEomiSFS0EeH; Tue, 12 Jan 2021 12:28:56 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 08F494B1C5;
-	Tue, 12 Jan 2021 12:02:39 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A8CF44B1FF;
+	Tue, 12 Jan 2021 12:28:55 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A9B984B1B4
- for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Jan 2021 12:02:37 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E4C2F4B1F8
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Jan 2021 12:28:53 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id lcAznuSm1SqQ for <kvmarm@lists.cs.columbia.edu>;
- Tue, 12 Jan 2021 12:02:36 -0500 (EST)
+ with ESMTP id a5yqouKG0j+e for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 12 Jan 2021 12:28:52 -0500 (EST)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 799804B19E
- for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Jan 2021 12:02:36 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5491C4B1F3
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Jan 2021 12:28:52 -0500 (EST)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D9557101E;
- Tue, 12 Jan 2021 09:02:35 -0800 (PST)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E72FA101E;
+ Tue, 12 Jan 2021 09:28:51 -0800 (PST)
 Received: from [192.168.0.110] (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D4C213F719;
- Tue, 12 Jan 2021 09:02:33 -0800 (PST)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 655A13F719;
+ Tue, 12 Jan 2021 09:28:50 -0800 (PST)
 Subject: Re: [PATCH 8/9] KVM: arm64: vgic-v3: Expose GICR_TYPER.Last for
  userspace
 To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
@@ -45,8 +45,8 @@ To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
 References: <20201212185010.26579-1-eric.auger@redhat.com>
  <20201212185010.26579-9-eric.auger@redhat.com>
 From: Alexandru Elisei <alexandru.elisei@arm.com>
-Message-ID: <45a364ec-eac6-a04b-9654-e97970186839@arm.com>
-Date: Tue, 12 Jan 2021 17:02:36 +0000
+Message-ID: <fe0a3415-0c7b-be13-6438-89e82fe4c281@arm.com>
+Date: Tue, 12 Jan 2021 17:28:52 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.6.0
 MIME-Version: 1.0
@@ -80,9 +80,18 @@ On 12/12/20 6:50 PM, Eric Auger wrote:
 > support (if the redistributor region was set) while keeping the
 > code safe.
 
-I suppose the reason for emulating GICR_TYPER.Last is for architecture compliance,
-right? I think that should be in the commit message.
+If I understand your patch correctly, it is possible for the GICR_TYPER.Last bit
+to be transiently 1 if the register is accessed before all the redistributors
+regions have been configured.
 
+Arm IHI 0069F states that accesses to the GICR_TYPER register are RO. I haven't
+found exactly what RO means (please point me to the definition if you find it in
+the architecture!), but I assume it means read-only and I'm not sure how correct
+(from an architectural point of view) it is for two subsequent reads of this
+register to return different values. Maybe Marc can shed some light on this.
+
+Thanks,
+Alex
 >
 > Signed-off-by: Eric Auger <eric.auger@redhat.com>
 > ---
@@ -119,18 +128,6 @@ right? I think that should be in the commit message.
 >  
 >  	vgic_cpu->rdreg = rdreg;
 > +	vgic_cpu->rdreg_index = rdreg->free_index;
-
-What happens if the next redistributor region we register has the base address
-adjacent to this one?
-
-I'm really not familiar with the code, but is it not possible to create two
-Redistributor regions (via
-KVM_DEV_ARM_VGIC_GRP_ADDR(KVM_VGIC_V3_ADDR_TYPE_REDIST)) where the second
-Redistributor region start address is immediately after the last Redistributor in
-the preceding region?
-
-Thanks,
-Alex
 >  
 >  	rd_base = rdreg->base + rdreg->free_index * KVM_VGIC_V3_REDIST_SIZE;
 >  
