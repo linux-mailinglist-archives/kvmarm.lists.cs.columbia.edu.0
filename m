@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C85A82F50E5
-	for <lists+kvmarm@lfdr.de>; Wed, 13 Jan 2021 18:18:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 701D22F50E7
+	for <lists+kvmarm@lfdr.de>; Wed, 13 Jan 2021 18:18:34 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 01E334B1CE;
-	Wed, 13 Jan 2021 12:18:31 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 24A624B1C0;
+	Wed, 13 Jan 2021 12:18:34 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.209
@@ -18,64 +18,63 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tHfotMAEYJei; Wed, 13 Jan 2021 12:18:30 -0500 (EST)
+	with ESMTP id zwbU-u-Nhz+Y; Wed, 13 Jan 2021 12:18:34 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B23CA4B1B4;
-	Wed, 13 Jan 2021 12:18:29 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F1FD24B1BF;
+	Wed, 13 Jan 2021 12:18:32 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9C21A4B1AD
- for <kvmarm@lists.cs.columbia.edu>; Wed, 13 Jan 2021 12:18:28 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E77E64B1C9
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 13 Jan 2021 12:18:31 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 74TdDdnqodOy for <kvmarm@lists.cs.columbia.edu>;
- Wed, 13 Jan 2021 12:18:27 -0500 (EST)
+ with ESMTP id 0R4x1kH1aL7A for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 13 Jan 2021 12:18:31 -0500 (EST)
 Received: from us-smtp-delivery-124.mimecast.com
  (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8C7C34B122
- for <kvmarm@lists.cs.columbia.edu>; Wed, 13 Jan 2021 12:18:27 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0833D4B1C0
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 13 Jan 2021 12:18:31 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1610558307;
+ s=mimecast20190719; t=1610558310;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Qu3CWqmF7QYC04FWUAReLMtCaEfpUHx+J6CcWfR9p7c=;
- b=EpqADGEHM2CzW6KIqxyFuNap6lYaQcROHVR2s0qUobupu1p24E40SYJb36C5E/tYRHliQ/
- 24RO3Gto94Kd4IOqpKiCvOVtFPrKZeOqTWj011FuuJm7tl+g5278UekyfnaJw+G8Jqca4+
- JOsfFhiks7djKYVO137teVbcNfkz+c4=
+ bh=RtqK698Gz2UPmkSrQZ+1pqM9fJn9xrCeQ0Ydv7oehh8=;
+ b=MLr4yLzYn4PgxVXssb1JMZ4HDk5azJpVvlu5qvQAAJzUiILPnrgySN0nnkiVL+fT0MsrKp
+ NFxhVbYZjTC7kL3zzrU4mB0np2ZUC26QYfynYYBM49c3K8c+XdBOwHuEw0pgB1Q+9RQdcG
+ VlZD7RGxwEzTL9vD/TddYUcbPF12gRg=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-433-9xTE6IfGPKypiJQR8c6JDw-1; Wed, 13 Jan 2021 12:18:24 -0500
-X-MC-Unique: 9xTE6IfGPKypiJQR8c6JDw-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com
- [10.5.11.14])
+ us-mta-551-wnXSPicHN36julsnJPTxOA-1; Wed, 13 Jan 2021 12:18:26 -0500
+X-MC-Unique: wnXSPicHN36julsnJPTxOA-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com
+ [10.5.11.12])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 0723A425C8;
- Wed, 13 Jan 2021 17:18:23 +0000 (UTC)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 3243F1081B2F;
+ Wed, 13 Jan 2021 17:18:25 +0000 (UTC)
 Received: from [10.36.114.165] (ovpn-114-165.ams2.redhat.com [10.36.114.165])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id ED1045D9DD;
- Wed, 13 Jan 2021 17:18:20 +0000 (UTC)
-Subject: Re: [PATCH 7/9] KVM: arm64: Simplify argument passing to
- vgic_uaccess_[read|write]
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 7812660BF1;
+ Wed, 13 Jan 2021 17:18:22 +0000 (UTC)
+Subject: Re: [PATCH 2/9] KVM: arm64: Fix KVM_VGIC_V3_ADDR_TYPE_REDIST_REGION
+ read
 To: Alexandru Elisei <alexandru.elisei@arm.com>, eric.auger.pro@gmail.com,
  linux-kernel@vger.kernel.org, kvm@vger.kernel.org,
  kvmarm@lists.cs.columbia.edu, maz@kernel.org, drjones@redhat.com
 References: <20201212185010.26579-1-eric.auger@redhat.com>
- <20201212185010.26579-8-eric.auger@redhat.com>
- <ee2ec95e-4262-a364-b037-c43f3d396760@arm.com>
- <e7af1e23-7b08-99d6-d78c-812d442b32ce@arm.com>
+ <20201212185010.26579-3-eric.auger@redhat.com>
+ <888cf519-8c0e-f781-98a1-86594bdfacb1@arm.com>
 From: Auger Eric <eric.auger@redhat.com>
-Message-ID: <266b0ffc-c1a5-4939-975c-aea6a9248a2f@redhat.com>
-Date: Wed, 13 Jan 2021 18:18:19 +0100
+Message-ID: <ccc874c3-75a9-a2b8-1e9d-b762c0f8d6ad@redhat.com>
+Date: Wed, 13 Jan 2021 18:18:20 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.5.0
 MIME-Version: 1.0
-In-Reply-To: <e7af1e23-7b08-99d6-d78c-812d442b32ce@arm.com>
+In-Reply-To: <888cf519-8c0e-f781-98a1-86594bdfacb1@arm.com>
 Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-Cc: pbonzini@redhat.com, shuah@kernel.org
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+Cc: shuah@kernel.org, pbonzini@redhat.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -93,92 +92,55 @@ Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 Hi Alexandru,
-On 1/12/21 5:16 PM, Alexandru Elisei wrote:
+
+On 1/6/21 6:12 PM, Alexandru Elisei wrote:
 > Hi Eric,
 > 
-> On 1/12/21 4:04 PM, Alexandru Elisei wrote:
->> Hi Eric,
+> The patch looks correct to me. kvm_vgic_addr() masks out all the bits except index
+> from addr, so we don't need to do it in vgic_get_common_attr():
+> 
+> Reviewed-by: Alexandru Elisei <alexandru.elisei@arm.com>
+> 
+> One nitpick below.
+> 
+> On 12/12/20 6:50 PM, Eric Auger wrote:
+>> The doc says:
+>> "The characteristics of a specific redistributor region can
+>>  be read by presetting the index field in the attr data.
+>>  Only valid for KVM_DEV_TYPE_ARM_VGIC_V3"
 >>
->> On 12/12/20 6:50 PM, Eric Auger wrote:
->>> Instead of converting the vgic_io_device handle to a kvm_io_device
->>> handled and then do the oppositive, pass a vgic_io_device pointer all
->>> along the call chain.
->> To me, it looks like the commit message describes what the patch does instead of
->> why it does it.
->>
->> What are "vgic_io_device handle" and "kvm_io_device handled"?
-Yes unfortunate typo, sorry.
+>> Unfortunately the existing code fails to read the input attr data
+>> and thus the index always is 0.
 > 
-> Sorry, I think I got it now. You were referring to the argument types struct
-> vgic_io_device and struct kvm_io_device. The patch looks like a very good cleanup.
-> 
-> How changing to commit message to sound something like this (feel free to
-> ignore/change it if you think of something else):
-> 
-> vgic_uaccess() takes a struct vgic_io_device argument, converts it to a struct
-> kvm_io_device and passes it to the read/write accessor functions, which convert it
-> back to a struct vgic_io_device. Avoid the indirection by passing the struct
-> vgic_io_device argument directly to vgic_uaccess_{read,write).
-I reworded the commit message as you suggested.
-
-Thanks
+> addr is allocated on the stack, I don't think it will always be 0.
+I removed this statement in the commit message. Thanks!
 
 Eric
 > 
 > Thanks,
 > Alex
 >>
->> Thanks,
->> Alex
->>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>> ---
->>>  arch/arm64/kvm/vgic/vgic-mmio.c | 10 ++++------
->>>  1 file changed, 4 insertions(+), 6 deletions(-)
->>>
->>> diff --git a/arch/arm64/kvm/vgic/vgic-mmio.c b/arch/arm64/kvm/vgic/vgic-mmio.c
->>> index b2d73fc0d1ef..48c6067fc5ec 100644
->>> --- a/arch/arm64/kvm/vgic/vgic-mmio.c
->>> +++ b/arch/arm64/kvm/vgic/vgic-mmio.c
->>> @@ -938,10 +938,9 @@ vgic_get_mmio_region(struct kvm_vcpu *vcpu, struct vgic_io_device *iodev,
->>>  	return region;
->>>  }
->>>  
->>> -static int vgic_uaccess_read(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
->>> +static int vgic_uaccess_read(struct kvm_vcpu *vcpu, struct vgic_io_device *iodev,
->>>  			     gpa_t addr, u32 *val)
->>>  {
->>> -	struct vgic_io_device *iodev = kvm_to_vgic_iodev(dev);
->>>  	const struct vgic_register_region *region;
->>>  	struct kvm_vcpu *r_vcpu;
->>>  
->>> @@ -960,10 +959,9 @@ static int vgic_uaccess_read(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
->>>  	return 0;
->>>  }
->>>  
->>> -static int vgic_uaccess_write(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
->>> +static int vgic_uaccess_write(struct kvm_vcpu *vcpu, struct vgic_io_device *iodev,
->>>  			      gpa_t addr, const u32 *val)
->>>  {
->>> -	struct vgic_io_device *iodev = kvm_to_vgic_iodev(dev);
->>>  	const struct vgic_register_region *region;
->>>  	struct kvm_vcpu *r_vcpu;
->>>  
->>> @@ -986,9 +984,9 @@ int vgic_uaccess(struct kvm_vcpu *vcpu, struct vgic_io_device *dev,
->>>  		 bool is_write, int offset, u32 *val)
->>>  {
->>>  	if (is_write)
->>> -		return vgic_uaccess_write(vcpu, &dev->dev, offset, val);
->>> +		return vgic_uaccess_write(vcpu, dev, offset, val);
->>>  	else
->>> -		return vgic_uaccess_read(vcpu, &dev->dev, offset, val);
->>> +		return vgic_uaccess_read(vcpu, dev, offset, val);
->>>  }
->>>  
->>>  static int dispatch_mmio_read(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
->> _______________________________________________
->> kvmarm mailing list
->> kvmarm@lists.cs.columbia.edu
->> https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+>> Fixes: 04c110932225 ("KVM: arm/arm64: Implement KVM_VGIC_V3_ADDR_TYPE_REDIST_REGION")
+>> Cc: stable@vger.kernel.org#v4.17+
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> ---
+>>  arch/arm64/kvm/vgic/vgic-kvm-device.c | 3 +++
+>>  1 file changed, 3 insertions(+)
+>>
+>> diff --git a/arch/arm64/kvm/vgic/vgic-kvm-device.c b/arch/arm64/kvm/vgic/vgic-kvm-device.c
+>> index 44419679f91a..2f66cf247282 100644
+>> --- a/arch/arm64/kvm/vgic/vgic-kvm-device.c
+>> +++ b/arch/arm64/kvm/vgic/vgic-kvm-device.c
+>> @@ -226,6 +226,9 @@ static int vgic_get_common_attr(struct kvm_device *dev,
+>>  		u64 addr;
+>>  		unsigned long type = (unsigned long)attr->attr;
+>>  
+>> +		if (copy_from_user(&addr, uaddr, sizeof(addr)))
+>> +			return -EFAULT;
+>> +
+>>  		r = kvm_vgic_addr(dev->kvm, type, &addr, false);
+>>  		if (r)
+>>  			return (r == -ENODEV) ? -ENXIO : r;
 > 
 
 _______________________________________________
