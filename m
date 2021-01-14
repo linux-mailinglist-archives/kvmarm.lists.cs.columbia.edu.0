@@ -2,69 +2,69 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E46942F5EE6
-	for <lists+kvmarm@lfdr.de>; Thu, 14 Jan 2021 11:37:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EB6F2F5EE7
+	for <lists+kvmarm@lfdr.de>; Thu, 14 Jan 2021 11:37:57 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 945464B1E9;
-	Thu, 14 Jan 2021 05:37:52 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9EE544B088;
+	Thu, 14 Jan 2021 05:37:56 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.209
 X-Spam-Level: 
 X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id W+CNGKq6d9rb; Thu, 14 Jan 2021 05:37:52 -0500 (EST)
+	with ESMTP id ENZ-IWzYRYT5; Thu, 14 Jan 2021 05:37:55 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5EE1C4B1B3;
-	Thu, 14 Jan 2021 05:37:51 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 81A2D4B19A;
+	Thu, 14 Jan 2021 05:37:55 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B28934B116
- for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jan 2021 05:37:49 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 95BBA4B17B
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jan 2021 05:37:54 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id O+rD5x9DzT+U for <kvmarm@lists.cs.columbia.edu>;
- Thu, 14 Jan 2021 05:37:48 -0500 (EST)
+ with ESMTP id K8BTgMnEp7Nk for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 14 Jan 2021 05:37:53 -0500 (EST)
 Received: from us-smtp-delivery-124.mimecast.com
  (us-smtp-delivery-124.mimecast.com [63.128.21.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 449134B102
- for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jan 2021 05:37:48 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C085A4B145
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jan 2021 05:37:53 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1610620668;
+ s=mimecast20190719; t=1610620673;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=W1VhNL+LcOCt2GTdnGt+y0NRR3dOMq/QykWmNiUu9QY=;
- b=eRCzBEpHoi3p7BHr/XbYcSVq7GeUQvym3Ph0337GOuAVIhFRbFylbAOhcZ/A5MJoJ79J7k
- Amnl28iYwTP/IJ5MxC8zcxDnef0UB18ArnltXhVuSqP48g1KsaOgoMpwiLe5SDps6Dgnjt
- pxRvK3kAvt6QQ+0HezpSAAuXHT9eJyc=
+ bh=2Uf5hY6v/NV/gRDsCAVyz73OKrf+8fb0MqS39wgUdNY=;
+ b=R//14ahdkHP24B72nNyKqeodMzGdlv0QyiNL11xakmKynze3FJt6z8oShy8Upnhb8uICY2
+ 3DTfRNcjMRNHlEiXqUl6SEY8T49EGho48Aeuap+TcLcLFzIo0SyIOMsN9VKKfZhLk47D3l
+ 09110HDFpUzn0ttM5cENkqZCwihgBkY=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-570-sFZm2qP2M_qjKOIUCLiErA-1; Thu, 14 Jan 2021 05:37:46 -0500
-X-MC-Unique: sFZm2qP2M_qjKOIUCLiErA-1
+ us-mta-342-wLiTaTLGO2eG1D7j7Ja4qw-1; Thu, 14 Jan 2021 05:37:50 -0500
+X-MC-Unique: wLiTaTLGO2eG1D7j7Ja4qw-1
 Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com
  [10.5.11.11])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id E718E19251A2;
- Thu, 14 Jan 2021 10:37:44 +0000 (UTC)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 3B29819251A2;
+ Thu, 14 Jan 2021 10:37:48 +0000 (UTC)
 Received: from laptop.redhat.com (ovpn-114-165.ams2.redhat.com [10.36.114.165])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 19F3E12D7E;
- Thu, 14 Jan 2021 10:37:41 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 49DFB12D7E;
+ Thu, 14 Jan 2021 10:37:45 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com,
  linux-kernel@vger.kernel.org, kvm@vger.kernel.org,
  kvmarm@lists.cs.columbia.edu, maz@kernel.org, drjones@redhat.com
-Subject: [PATCH v2 7/9] KVM: arm64: Simplify argument passing to
- vgic_uaccess_[read|write]
-Date: Thu, 14 Jan 2021 11:37:06 +0100
-Message-Id: <20210114103708.26763-8-eric.auger@redhat.com>
+Subject: [PATCH v2 8/9] KVM: arm64: vgic-v3: Expose GICR_TYPER.Last for
+ userspace
+Date: Thu, 14 Jan 2021 11:37:07 +0100
+Message-Id: <20210114103708.26763-9-eric.auger@redhat.com>
 In-Reply-To: <20210114103708.26763-1-eric.auger@redhat.com>
 References: <20210114103708.26763-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -86,62 +86,66 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-vgic_uaccess() takes a struct vgic_io_device argument, converts it
-to a struct kvm_io_device and passes it to the read/write accessor
-functions, which convert it back to a struct vgic_io_device.
-Avoid the indirection by passing the struct vgic_io_device argument
-directly to vgic_uaccess_{read,write}.
+Commit 23bde34771f1 ("KVM: arm64: vgic-v3: Drop the
+reporting of GICR_TYPER.Last for userspace") temporarily fixed
+a bug identified when attempting to access the GICR_TYPER
+register before the redistributor region setting but dropped
+the support of the LAST bit. Emulating the GICR_TYPER.Last bit
+still makes sense for architecture compliance.
+
+This patch restores its support (if the redistributor region
+was set) while keeping the code safe.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-
 ---
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c | 7 ++++++-
+ include/kvm/arm_vgic.h             | 1 +
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-v1 -> v2:
-- reworded the commit message as suggested by Alexandru
----
- arch/arm64/kvm/vgic/vgic-mmio.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
-
-diff --git a/arch/arm64/kvm/vgic/vgic-mmio.c b/arch/arm64/kvm/vgic/vgic-mmio.c
-index b2d73fc0d1ef..48c6067fc5ec 100644
---- a/arch/arm64/kvm/vgic/vgic-mmio.c
-+++ b/arch/arm64/kvm/vgic/vgic-mmio.c
-@@ -938,10 +938,9 @@ vgic_get_mmio_region(struct kvm_vcpu *vcpu, struct vgic_io_device *iodev,
- 	return region;
+diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+index 987e366c8000..7ff23c153128 100644
+--- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+@@ -277,6 +277,8 @@ static unsigned long vgic_uaccess_read_v3r_typer(struct kvm_vcpu *vcpu,
+ 						 gpa_t addr, unsigned int len)
+ {
+ 	unsigned long mpidr = kvm_vcpu_get_mpidr_aff(vcpu);
++	struct vgic_cpu *vgic_cpu = &vcpu->arch.vgic_cpu;
++	struct vgic_redist_region *rdreg = vgic_cpu->rdreg;
+ 	int target_vcpu_id = vcpu->vcpu_id;
+ 	u64 value;
+ 
+@@ -286,7 +288,9 @@ static unsigned long vgic_uaccess_read_v3r_typer(struct kvm_vcpu *vcpu,
+ 	if (vgic_has_its(vcpu->kvm))
+ 		value |= GICR_TYPER_PLPIS;
+ 
+-	/* reporting of the Last bit is not supported for userspace */
++	if (rdreg && (vgic_cpu->rdreg_index == (rdreg->free_index - 1)))
++		value |= GICR_TYPER_LAST;
++
+ 	return extract_bytes(value, addr & 7, len);
  }
  
--static int vgic_uaccess_read(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
-+static int vgic_uaccess_read(struct kvm_vcpu *vcpu, struct vgic_io_device *iodev,
- 			     gpa_t addr, u32 *val)
- {
--	struct vgic_io_device *iodev = kvm_to_vgic_iodev(dev);
- 	const struct vgic_register_region *region;
- 	struct kvm_vcpu *r_vcpu;
+@@ -714,6 +718,7 @@ int vgic_register_redist_iodev(struct kvm_vcpu *vcpu)
+ 		return -EINVAL;
  
-@@ -960,10 +959,9 @@ static int vgic_uaccess_read(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
- 	return 0;
- }
+ 	vgic_cpu->rdreg = rdreg;
++	vgic_cpu->rdreg_index = rdreg->free_index;
  
--static int vgic_uaccess_write(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
-+static int vgic_uaccess_write(struct kvm_vcpu *vcpu, struct vgic_io_device *iodev,
- 			      gpa_t addr, const u32 *val)
- {
--	struct vgic_io_device *iodev = kvm_to_vgic_iodev(dev);
- 	const struct vgic_register_region *region;
- 	struct kvm_vcpu *r_vcpu;
+ 	rd_base = rdreg->base + rdreg->free_index * KVM_VGIC_V3_REDIST_SIZE;
  
-@@ -986,9 +984,9 @@ int vgic_uaccess(struct kvm_vcpu *vcpu, struct vgic_io_device *dev,
- 		 bool is_write, int offset, u32 *val)
- {
- 	if (is_write)
--		return vgic_uaccess_write(vcpu, &dev->dev, offset, val);
-+		return vgic_uaccess_write(vcpu, dev, offset, val);
- 	else
--		return vgic_uaccess_read(vcpu, &dev->dev, offset, val);
-+		return vgic_uaccess_read(vcpu, dev, offset, val);
- }
+diff --git a/include/kvm/arm_vgic.h b/include/kvm/arm_vgic.h
+index 3d74f1060bd1..ec621180ef09 100644
+--- a/include/kvm/arm_vgic.h
++++ b/include/kvm/arm_vgic.h
+@@ -322,6 +322,7 @@ struct vgic_cpu {
+ 	 */
+ 	struct vgic_io_device	rd_iodev;
+ 	struct vgic_redist_region *rdreg;
++	u32 rdreg_index;
  
- static int dispatch_mmio_read(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
+ 	/* Contains the attributes and gpa of the LPI pending tables. */
+ 	u64 pendbaser;
 -- 
 2.21.3
 
