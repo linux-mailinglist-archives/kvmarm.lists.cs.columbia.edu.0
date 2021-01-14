@@ -2,82 +2,101 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E711A2F67F9
-	for <lists+kvmarm@lfdr.de>; Thu, 14 Jan 2021 18:44:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 526F42F67B3
+	for <lists+kvmarm@lfdr.de>; Thu, 14 Jan 2021 18:32:38 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8C52C4B28A;
-	Thu, 14 Jan 2021 12:44:17 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 67D4B4B23A;
+	Thu, 14 Jan 2021 12:32:37 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@linaro.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Q13JK0DJvIn4; Thu, 14 Jan 2021 12:44:17 -0500 (EST)
+	with ESMTP id 4tNBdZqRCnlo; Thu, 14 Jan 2021 12:32:37 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 48DAC4B2A2;
-	Thu, 14 Jan 2021 12:44:08 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 340BB4B21A;
+	Thu, 14 Jan 2021 12:32:36 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 509E64B1F7
- for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jan 2021 12:25:07 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BEA254B1DA
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jan 2021 12:32:35 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 4kMQg2dvWqHO for <kvmarm@lists.cs.columbia.edu>;
- Thu, 14 Jan 2021 12:25:06 -0500 (EST)
-Received: from mail-qk1-f201.google.com (mail-qk1-f201.google.com
- [209.85.222.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id F06C04B1DA
- for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jan 2021 12:25:05 -0500 (EST)
-Received: by mail-qk1-f201.google.com with SMTP id g5so5317802qke.22
- for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jan 2021 09:25:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=sender:date:in-reply-to:message-id:mime-version:references:subject
- :from:to:cc; bh=YXhQEwM4fG5mPLi7ddEZelU/prRnj9ZlJQxcm9wGO9I=;
- b=ocfLSWvtV3KN6WMXdkErJME9pwHbHsDIhaB6A45Xbi5viDBTekc2sQFNbwwix6IOpp
- kjR8/5B+r4dbB4QXvTrtaOPVkyydPdeEVVv2sct4JgcSHrsV/K1mEmX3TXGmBWsW2dQ3
- iQZBdsiYYjfTSC9I8b9TIsC5Ir+azvRfgclgw5yoOacC9kdy9J1SsieN+Bl/9H04meDo
- JMl9uO9/ryLVay6doyDwnt63Iaq0CpjJargUlQB5Kf2HrK8tmDskvGBW4UcnA0UTzSHX
- 2RySlMZQ86ZwGgtj5kEGeUFJuLdHR0qhyUU2fqld3bCwEd6UIK4XR7IwI2n0NjkPKRY4
- sO2Q==
+ with ESMTP id 40WZxWWMNDKd for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 14 Jan 2021 12:32:34 -0500 (EST)
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com
+ [209.85.218.51])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7A4774B1B1
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jan 2021 12:32:34 -0500 (EST)
+Received: by mail-ej1-f51.google.com with SMTP id ga15so9393495ejb.4
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jan 2021 09:32:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=oaLk6K/ziP0JrSWjUd9yUznepJpKpHz8SodeDVZyc4g=;
+ b=GWCGEwBUT89R8ID7PJjuDrp5S3/2qLBz8lkSEggHBoncpJhuQX05ohgD3pibnBXJdi
+ W/wjaMWx6cX60jzbnFHzbnh6eCuUIEFyAJ6ZNJbjNBuZcpAFm30vEyoFX0OX7sLCfQ4H
+ VBGdlONQQCthSTN9lUkdHxVXmxa5Wwba+So89oDc3hDiAC9lD0o2w3oCuPt9V9T1dNVE
+ uS3KkqkupscVrlg43emIU6KBxshTWcjcSyN7OszKlUL3h/iedyxOlz6rn4DfD9f2hWu2
+ 37xuugp76VAJh3BP8R1ZQyS4EExUjFJSmBGIyEyPgIeSizJ4dmyBRr0xzwBjbW8Z19+S
+ 31VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
- :references:subject:from:to:cc;
- bh=YXhQEwM4fG5mPLi7ddEZelU/prRnj9ZlJQxcm9wGO9I=;
- b=NC4JFhceL33yxraVfJemsTffIo78mzGITgLjoSP/5Yr+K+xDXR619/j1qdNMO5z/HK
- 61UPt7WpYDQVa7VbXPWeChDJnnaIV5i+BdI1/D/YWcxvGA9lAhdTqZ6BSH68D/yk0+3u
- eiUUTv+gdZoziakeJVPMrTEaDt4naBoPsYaPqlvV+FB4uR9ChpeIv/OVLbznYZaJbFxY
- nH/N79uNv3Z5OJPreVMvrooFtwLBZypP7IrVgZPa2+0/pmdvUkPF09L07/zB4tRCANFn
- /ULb+dUQTRQy9+iWHt31qFLQcBqoNabVmaEM/pykaI0EYDlMTd4hnSZskUDqGi6HHDM/
- ClCg==
-X-Gm-Message-State: AOAM531c3GLd9k5h4uNyinE24SSN/S3Gqmk5kYopSgurRCjFc9mYGSyh
- YmVTYjmrnbWEFR5K/Emt4Ngf2RMjQ8OcB8cPRiuZooX7WWTQmLPuy7YaiKGTXcWUF3lA8lnQPmF
- 1lASKKb6H3lVHU7Cn7d0KiZnP7vdXQ9dwduH1C1f3qkIANSpQp46vCnT2IB+ocNIv53Fc+PB4
-X-Google-Smtp-Source: ABdhPJysInN8fr6eiFXQ3SJIsC4gBN+y924LMKNqqxgoWqNpwjKLBYzKoCyZbgLxQEkVrm1gF1iKxl7zvyHe
-X-Received: from beef.c.googlers.com ([fda3:e722:ac3:cc00:28:9cb1:c0a8:1091])
- (user=lenaptr job=sendgmr) by 2002:ad4:568a:: with SMTP id
- bc10mr8105925qvb.29.1610645105400; Thu, 14 Jan 2021 09:25:05 -0800 (PST)
-Date: Thu, 14 Jan 2021 17:23:39 +0000
-In-Reply-To: <20210114172338.2798389-1-lenaptr@google.com>
-Message-Id: <20210114172338.2798389-10-lenaptr@google.com>
-Mime-Version: 1.0
-References: <20210114172338.2798389-1-lenaptr@google.com>
-X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7-goog
-Subject: [PATCH v2 9/9] KVM: arm64: Add UBSan tests for PKVM.
-From: Elena Petrova <lenaptr@google.com>
-To: kvmarm@lists.cs.columbia.edu
-X-Mailman-Approved-At: Thu, 14 Jan 2021 12:44:06 -0500
-Cc: George-Aurelian Popescu <georgepope@google.com>,
- Elena Petrova <lenaptr@google.com>, Marc Zyngier <maz@kernel.org>,
- open list <linux-kernel@vger.kernel.org>, linux-arm-kernel@lists.infradead.org,
- George Popescu <george.apopescu97@gmail.com>
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=oaLk6K/ziP0JrSWjUd9yUznepJpKpHz8SodeDVZyc4g=;
+ b=NG6d04tLJ77X6FCa6+DCM55BaPopGG3zQ5TaNm3svHGghE6OWuc1yqfZvTS48RgyBF
+ jkdqLxB1xoFwmtEU9qdwkvnS3YtHmdy44y1VWC27m2MtxFwoJC4G+TXc7pUe8jCDLGhV
+ p7dsFYOStC1uGjn1TSkO0cRl7io4ZMMRJ2jnG6iEaL4R8GC4T2NDVbImtgDFfN3fkywb
+ VckdZ/VhO6stRldBEH6Ap1BQ0lk/gO4omP9OL2DZfNeDCCKf/cw/1HFLVRWCqTvwe51c
+ huqDK++o+fpP4iYYfNYUANYeo/4AwCJDQodZZEyzanvMUM62owo4G4wWNn0yyiTFH7/M
+ sHxQ==
+X-Gm-Message-State: AOAM531N1mUiK7YdwdJ8i3ZfNjTwUn+mQKpWs3jytbbEh14Jo6q5MY8F
+ 7wSuCnNm3iiHwm9ENhnRMVFpOA==
+X-Google-Smtp-Source: ABdhPJyWGuNgbGnfn6qKQQM5KwVrs3KxAw/sQ5/Phdx+0TwP4Nqgd8PsrwlAs/HuCHWwhAWmPewspQ==
+X-Received: by 2002:a17:906:17c3:: with SMTP id
+ u3mr5870629eje.304.1610645553317; 
+ Thu, 14 Jan 2021 09:32:33 -0800 (PST)
+Received: from larix.localdomain ([2001:1715:4e26:a7e0:ed35:e18a:5e36:8c84])
+ by smtp.gmail.com with ESMTPSA id n2sm2235623ejj.24.2021.01.14.09.32.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 Jan 2021 09:32:32 -0800 (PST)
+Date: Thu, 14 Jan 2021 18:33:17 +0100
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+To: Auger Eric <eric.auger@redhat.com>
+Subject: Re: [PATCH v13 07/15] iommu/smmuv3: Allow stage 1 invalidation with
+ unmanaged ASIDs
+Message-ID: <YACAXaG+opCwDFTL@larix.localdomain>
+References: <20201118112151.25412-8-eric.auger@redhat.com>
+ <1606829590-25924-1-git-send-email-wangxingang5@huawei.com>
+ <2e69adf5-8207-64f7-fa8e-9f2bd3a3c4e3@redhat.com>
+ <e10ad90dc5144c0d9df98a9a078091af@huawei.com>
+ <20201204095338.GA1912466@myrica>
+ <2de03a797517452cbfeab022e12612b7@huawei.com>
+ <0bf50dd6-ef3c-7aba-cbc1-1c2e17088470@redhat.com>
+ <d68b6269-ee99-9ed7-de30-867e4519d104@redhat.com>
+MIME-Version: 1.0
+Content-Disposition: inline
+In-Reply-To: <d68b6269-ee99-9ed7-de30-867e4519d104@redhat.com>
+Cc: Xieyingtai <xieyingtai@huawei.com>, wangxingang <wangxingang5@huawei.com>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "maz@kernel.org" <maz@kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "vivek.gautam@arm.com" <vivek.gautam@arm.com>,
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
+ "Zengtao \(B\)" <prime.zeng@hisilicon.com>,
+ qubingbing <qubingbing@hisilicon.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "robin.murphy@arm.com" <robin.murphy@arm.com>,
+ "will@kernel.org" <will@kernel.org>,
+ "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
+ "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -94,267 +113,22 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: George-Aurelian Popescu <georgepope@google.com>
+Hi Eric,
 
-Test the UBsan functionality inside hyp/nVHE.
-Because modules are not supported inside of hyp/nVHE code, the default
-testing module for UBSan can not be used.
-New functions have to be defined inside of hyp/nVHE.
-They are called in kvm_get_mdcr_el2, to test UBSAN whenever a VM starts.
+On Thu, Jan 14, 2021 at 05:58:27PM +0100, Auger Eric wrote:
+> >>  The uacce-devel branches from
+> >>> https://github.com/Linaro/linux-kernel-uadk do provide this at the moment
+> >>> (they track the latest sva/zip-devel branch
+> >>> https://jpbrucker.net/git/linux/ which is roughly based on mainline.)
+> As I plan to respin shortly, please could you confirm the best branch to
+> rebase on still is that one (uacce-devel from the linux-kernel-uadk git
+> repo). Is it up to date? Commits seem to be quite old there.
 
-Change-Id: Icf998da0af023c74d45be90788ac9f694e61c97c
-Signed-off-by: Elena Petrova <lenaptr@google.com>
----
- arch/arm64/include/asm/assembler.h          |  17 ++-
- arch/arm64/include/asm/kvm_debug_buffer.h   |  10 +-
- arch/arm64/include/asm/kvm_ubsan.h          |   2 +-
- arch/arm64/kvm/hyp/include/hyp/test_ubsan.h | 112 ++++++++++++++++++++
- arch/arm64/kvm/hyp/nvhe/hyp-main.c          |   3 +
- arch/arm64/kvm/kvm_ubsan_buffer.c           |   1 -
- 6 files changed, 128 insertions(+), 17 deletions(-)
- create mode 100644 arch/arm64/kvm/hyp/include/hyp/test_ubsan.h
+Right I meant the uacce-devel-X branches. The uacce-devel-5.11 branch
+currently has the latest patches
 
-diff --git a/arch/arm64/include/asm/assembler.h b/arch/arm64/include/asm/assembler.h
-index ebc18a8a0e1f..8422b0d925e8 100644
---- a/arch/arm64/include/asm/assembler.h
-+++ b/arch/arm64/include/asm/assembler.h
-@@ -259,16 +259,15 @@ alternative_endif
- 	.endm
- 
- 	/*
--         * @sym: The name of the per-cpu variable
--         * @reg: value to store
--         * @tmp1: scratch register
--         * @tmp2: scratch register
--         */
--        .macro str_this_cpu sym, reg, tmp1, tmp2
--        adr_this_cpu \tmp1, \sym, \tmp2
-+	 * @sym: The name of the per-cpu variable
-+	 * @reg: value to store
-+	 * @tmp1: scratch register
-+	 * @tmp2: scratch register
-+	 */
-+	.macro str_this_cpu sym, reg, tmp1, tmp2
-+	adr_this_cpu \tmp1, \sym, \tmp2
-         str \reg, [\tmp1]
--        .endm
--
-+	.endm
- /*
-  * vma_vm_mm - get mm pointer from vma pointer (vma->vm_mm)
-  */
-diff --git a/arch/arm64/include/asm/kvm_debug_buffer.h b/arch/arm64/include/asm/kvm_debug_buffer.h
-index e5375c2cff1a..361b473bb004 100644
---- a/arch/arm64/include/asm/kvm_debug_buffer.h
-+++ b/arch/arm64/include/asm/kvm_debug_buffer.h
-@@ -3,10 +3,8 @@
-  * Copyright 2020 Google LLC
-  * Author: George Popescu <georgepope@google.com>
-  */
--
- #include <linux/percpu-defs.h>
- 
--
- #define KVM_DEBUG_BUFFER_SIZE 1000
- 
- #ifdef __KVM_NVHE_HYPERVISOR__
-@@ -20,17 +18,17 @@
- #else
- #define DECLARE_KVM_DEBUG_BUFFER(type_name, buffer_name, write_ind, size)\
- 	DECLARE_KVM_NVHE_PER_CPU(type_name, buffer_name)[size]; 	\
--        DECLARE_KVM_NVHE_PER_CPU(unsigned long, write_ind);
-+	DECLARE_KVM_NVHE_PER_CPU(unsigned long, write_ind);
- #endif //__KVM_NVHE_HYPERVISOR__
- 
- #ifdef __ASSEMBLY__
- #include <asm/assembler.h>
- 
- .macro clear_buffer tmp1, tmp2, tmp3
--        mov \tmp1, 0
-+	mov \tmp1, 0
- #ifdef CONFIG_UBSAN
--        str_this_cpu kvm_ubsan_buff_wr_ind, \tmp1, \tmp2, \tmp3
-+	str_this_cpu kvm_ubsan_buff_wr_ind, \tmp1, \tmp2, \tmp3
- #endif //CONFIG_UBSAN
- .endm
- 
--#endif
-\ No newline at end of file
-+#endif
-diff --git a/arch/arm64/include/asm/kvm_ubsan.h b/arch/arm64/include/asm/kvm_ubsan.h
-index da4a3b4e28e0..0b8bed08d48e 100644
---- a/arch/arm64/include/asm/kvm_ubsan.h
-+++ b/arch/arm64/include/asm/kvm_ubsan.h
-@@ -9,7 +9,6 @@
- #define UBSAN_MAX_TYPE 6
- #define KVM_UBSAN_BUFFER_SIZE 1000
- 
--
- struct ubsan_values {
- 	void *lval;
- 	void *rval;
-@@ -18,6 +17,7 @@ struct ubsan_values {
- 
- struct kvm_ubsan_info {
- 	enum {
-+		UBSAN_NONE,
- 		UBSAN_OUT_OF_BOUNDS,
- 		UBSAN_UNREACHABLE_DATA,
- 		UBSAN_SHIFT_OUT_OF_BOUNDS,
-diff --git a/arch/arm64/kvm/hyp/include/hyp/test_ubsan.h b/arch/arm64/kvm/hyp/include/hyp/test_ubsan.h
-new file mode 100644
-index 000000000000..07759c0d1e0e
---- /dev/null
-+++ b/arch/arm64/kvm/hyp/include/hyp/test_ubsan.h
-@@ -0,0 +1,112 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+
-+#include <linux/ctype.h>
-+
-+typedef void(*test_ubsan_fp)(void);
-+
-+static void test_ubsan_add_overflow(void)
-+{
-+	volatile int val = INT_MAX;
-+
-+	val += 2;
-+}
-+
-+static void test_ubsan_sub_overflow(void)
-+{
-+	volatile int val = INT_MIN;
-+	volatile int val2 = 2;
-+
-+	val -= val2;
-+}
-+
-+static void test_ubsan_mul_overflow(void)
-+{
-+	volatile int val = INT_MAX / 2;
-+
-+	val *= 3;
-+}
-+
-+static void test_ubsan_negate_overflow(void)
-+{
-+	volatile int val = INT_MIN;
-+
-+	val = -val;
-+}
-+
-+static void test_ubsan_divrem_overflow(void)
-+{
-+	volatile int val = 16;
-+	volatile int val2 = 0;
-+
-+	val /= val2;
-+}
-+
-+static void test_ubsan_shift_out_of_bounds(void)
-+{
-+	volatile int val = -1;
-+	int val2 = 10;
-+
-+	val2 <<= val;
-+}
-+
-+static void test_ubsan_out_of_bounds(void)
-+{
-+	volatile int i = 4, j = 5;
-+	volatile int arr[4];
-+	
-+	arr[j] = i;
-+}
-+
-+static void test_ubsan_load_invalid_value(void)
-+{
-+	volatile char *dst, *src;
-+	bool val, val2, *ptr;
-+	char c = 4;
-+
-+	dst = (char *)&val;
-+	src = &c;
-+	*dst = *src;
-+
-+	ptr = &val2;
-+	val2 = val;
-+}
-+
-+static void test_ubsan_misaligned_access(void)
-+{
-+	volatile char arr[5] __aligned(4) = {1, 2, 3, 4, 5};
-+	volatile int *ptr, val = 6;
-+
-+	ptr = (int *)(arr + 1);
-+	*ptr = val;
-+}
-+
-+static void test_ubsan_object_size_mismatch(void)
-+{
-+	/* "((aligned(8)))" helps this not into be misaligned for ptr-access. */
-+	volatile int val __aligned(8) = 4;
-+	volatile long long *ptr, val2;
-+
-+	ptr = (long long *)&val;
-+	val2 = *ptr;
-+}
-+
-+static const test_ubsan_fp test_ubsan_array[] = {
-+	test_ubsan_out_of_bounds,
-+	test_ubsan_add_overflow,
-+	test_ubsan_sub_overflow,
-+	test_ubsan_mul_overflow,
-+	test_ubsan_negate_overflow,
-+	test_ubsan_divrem_overflow,
-+	test_ubsan_shift_out_of_bounds,
-+	test_ubsan_load_invalid_value,
-+	test_ubsan_misaligned_access,
-+	test_ubsan_object_size_mismatch,
-+};
-+
-+static void test_ubsan(void)
-+{
-+	unsigned int i;
-+	
-+	for (i = 0; i < ARRAY_SIZE(test_ubsan_array); i++)
-+		test_ubsan_array[i]();
-+}
-diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-index bde658d51404..459f5ebe5e18 100644
---- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-+++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-@@ -13,6 +13,7 @@
- #include <asm/kvm_mmu.h>
- 
- #include <nvhe/trap_handler.h>
-+#include <hyp/test_ubsan.h>
- 
- DEFINE_PER_CPU(struct kvm_nvhe_init_params, kvm_init_params);
- 
-@@ -90,6 +91,8 @@ static void handle___vgic_v3_init_lrs(struct kvm_cpu_context *host_ctxt)
- static void handle___kvm_get_mdcr_el2(struct kvm_cpu_context *host_ctxt)
- {
- 	cpu_reg(host_ctxt, 1) = __kvm_get_mdcr_el2();
-+	if (IS_ENABLED(CONFIG_TEST_UBSAN))
-+		test_ubsan();
- }
- 
- static void handle___vgic_v3_save_aprs(struct kvm_cpu_context *host_ctxt)
-diff --git a/arch/arm64/kvm/kvm_ubsan_buffer.c b/arch/arm64/kvm/kvm_ubsan_buffer.c
-index 2c7060cbb48b..49bedc9de139 100644
---- a/arch/arm64/kvm/kvm_ubsan_buffer.c
-+++ b/arch/arm64/kvm/kvm_ubsan_buffer.c
-@@ -11,7 +11,6 @@
- #include <asm/kvm_asm.h>
- #include <kvm/arm_pmu.h>
- 
--#include <ubsan.h>
- #include <asm/kvm_ubsan.h>
- 
- DECLARE_KVM_DEBUG_BUFFER(struct kvm_ubsan_info, kvm_ubsan_buffer,
--- 
-2.30.0.284.gd98b1dd5eaa7-goog
-
+Thanks,
+Jean
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
