@@ -2,82 +2,86 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id F34832F9DD8
-	for <lists+kvmarm@lfdr.de>; Mon, 18 Jan 2021 12:19:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 20F8B2F9D83
+	for <lists+kvmarm@lfdr.de>; Mon, 18 Jan 2021 12:06:52 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A807F4B235;
-	Mon, 18 Jan 2021 06:19:18 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7AEEE4B27D;
+	Mon, 18 Jan 2021 06:06:51 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.911
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@gmail.com
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KtD7jWL-KDZa; Mon, 18 Jan 2021 06:19:18 -0500 (EST)
+	with ESMTP id ZM8ubu3HcMwX; Mon, 18 Jan 2021 06:06:51 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CDF894B271;
-	Mon, 18 Jan 2021 06:19:16 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 721284B265;
+	Mon, 18 Jan 2021 06:06:47 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6E80A4B267
- for <kvmarm@lists.cs.columbia.edu>; Mon, 18 Jan 2021 04:31:50 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A4F874B269
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 18 Jan 2021 06:06:46 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 0xUh+8c0P9TA for <kvmarm@lists.cs.columbia.edu>;
- Mon, 18 Jan 2021 04:31:48 -0500 (EST)
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com
- [209.85.210.178])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2CFE34B266
- for <kvmarm@lists.cs.columbia.edu>; Mon, 18 Jan 2021 04:31:48 -0500 (EST)
-Received: by mail-pf1-f178.google.com with SMTP id o20so1455710pfu.0
- for <kvmarm@lists.cs.columbia.edu>; Mon, 18 Jan 2021 01:31:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=weNjZrEErNFXHPTaQIIiTw8hbCn51QM6hPaZLo2TDko=;
- b=d5iBcuanzwfbdvR36IQ+qsOR6a8QsF1WATdXJqKyaRnjqYi0Esw85UmGyK7zAL2x+7
- 1Auk0l2eCTBoGwSLjN1EvOMk6lBipyCw9ocuN8pUiO61PFXJJYN2UKIzGX6+YYaDV5Da
- cYiioEKebmXl+QkkRpOZMRtmkvJEOKZteVF73gDDJKMtwXds4a34CmWzUzEEw8P2jkOu
- SMhRPfUftfVc/9QEiflRheTKINE2Z3Py8Dc1AhrDglJO4ehV9wYgyfJHhu4VwzZaiyGD
- 5FirodtnY+RSGmmgw0y0yQ5jgj+pBO1TLQZ60GDldG3/7DJ+pt4WlSuIIrecD+emI4v5
- ICBw==
+ with ESMTP id GHkgmHlbF4PK for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 18 Jan 2021 06:06:44 -0500 (EST)
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com
+ [209.85.221.46])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C17784B265
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 18 Jan 2021 06:06:44 -0500 (EST)
+Received: by mail-wr1-f46.google.com with SMTP id v15so12374385wrx.4
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 18 Jan 2021 03:06:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=NnBFT8EP9V7MmU84deKSaC5Ci7/3yuRujoqea2uYBqU=;
+ b=S0v70/XeJSnyzyiifqGs12j42+wMyVfdZmFp9vAYkXCvNspcgkhHm/aAnQRXxVKwXn
+ xMc//0tppKYCReKyia6kMXMXxqRWsrWfKSwZ+LPj8fybmUm1d6i1vYA87dayQ08MyOUc
+ 0p6Akb3D1OU7oM6tdHFfjG3TkuwOE22g9Eqvgr8tCeZ9J9ESNatB5rJHEaL49J/XzUYf
+ qe/5UI+KoiKw5ugbwxf6Dph+sNadI0zgVCRMqckEhTL5F2NEWen6hNvI4IiTIZ5yzVvT
+ ko0skt3XiUtvAqGdh6+/oV51WMeZ7c1SEhK/K0YPo731oBI195bJhJXW106wUlun6yJy
+ 2TKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=weNjZrEErNFXHPTaQIIiTw8hbCn51QM6hPaZLo2TDko=;
- b=I7GOmU0GViMG4/TiObVZygNenZtQnuCCd17YUsmKKhN8WIZFok6sKJksEOIZAzE7Xj
- vBHnovOHvo4lAssX1x7OldAgU2wkZmv19BEE7QN1QrnpDvd6eb43TVePb0U0HjzPkSMz
- lEhP6UX/nmZJJ/bP6NcrYLsXEGBAovP7Ai8tEadye1HJZZZK/UaD9gDs8RgJwvpH0p5B
- 9LuyvHNcTuuWCPhj4UQK0jrskMQ+xGCgzVHwOzIbZHhB/4+OfBRoHmuAaft7FC7A7ydU
- oBB7fM4+Ax/SJcw9mRM8sUbti1J+ey5MmrdgSusTfyI84vtE0HbL9zaWW6omqYFyFe6m
- uSMw==
-X-Gm-Message-State: AOAM530DTC+/00MAS5S5i/dE5s+XhMgVItyelBCovaQJCfU/oW8t9uCr
- K3Ao0D9UwRwXqKJJOu3fM2M=
-X-Google-Smtp-Source: ABdhPJwWa+OnJ54swVw4LtN6TdwayZCIBZs0XWey0PmTyVWlKeAVuKwG5U+nZNRpYqEfkhTFCZyXLQ==
-X-Received: by 2002:a65:63c7:: with SMTP id n7mr25633698pgv.285.1610962307166; 
- Mon, 18 Jan 2021 01:31:47 -0800 (PST)
-Received: from localhost.localdomain ([122.10.161.207])
- by smtp.gmail.com with ESMTPSA id z13sm2828607pgf.89.2021.01.18.01.31.44
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 18 Jan 2021 01:31:46 -0800 (PST)
-From: Yejune Deng <yejune.deng@gmail.com>
-To: maz@kernel.org, james.morse@arm.com, julien.thierry.kdev@gmail.com,
- suzuki.poulose@arm.com, catalin.marinas@arm.com, will@kernel.org
-Subject: [PATCH] KVM: arm64: Fix the return value of smp_call_function_single()
-Date: Mon, 18 Jan 2021 17:31:37 +0800
-Message-Id: <20210118093137.3383-1-yejune.deng@gmail.com>
-X-Mailer: git-send-email 2.29.0
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=NnBFT8EP9V7MmU84deKSaC5Ci7/3yuRujoqea2uYBqU=;
+ b=WTyM3mQzKm2VH6fRRHluMOGsL1x5fBbZdZKug6wedfnfwL+y156xFNIwzbPfFPy1KI
+ xHsTaHXLcvTh5SVtuuiEbqGoxkJgQGg1wsxp7U5lFI1SMaq0lXJdRgftudxfNJIwUvPs
+ jdzJ1o243oKhFy8tGeOvs7Bg1mvBaW5Jpjzt2IZMN8poowE4Gx1Ss3dr6LsOGID9NnPG
+ nLxKM+9HNZg+F73amowc3NwlhBaL42/UzZUOcu0xdAWG1oXjG4avPrsvOLb8FKq+pwX2
+ u4H4YmBbWgE1NDRTtUdOjZd5PYRNjHPQalp/I09FKVbOZXOzeXQ7Mh6tCWHXJu1pLk+A
+ Npnw==
+X-Gm-Message-State: AOAM531ayyZu6xs8BC7Z+051hGeuWaPsERuDW/PjbYCV7tkyT6e9p764
+ lBesvkHEN6i5bUyCU/SIQ6qUCg==
+X-Google-Smtp-Source: ABdhPJwWGXCEWcvWmyWLYTOB7DQ3+9c+Y1HcC/heAJVGshcFFa64ZS5RxK5AbQjre5wgJBvYLRmsBQ==
+X-Received: by 2002:a5d:40ce:: with SMTP id b14mr24876133wrq.350.1610968003510; 
+ Mon, 18 Jan 2021 03:06:43 -0800 (PST)
+Received: from google.com ([2a01:4b00:8523:2d03:3d4d:985d:87b7:4d55])
+ by smtp.gmail.com with ESMTPSA id g1sm29961893wrq.30.2021.01.18.03.06.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 18 Jan 2021 03:06:42 -0800 (PST)
+Date: Mon, 18 Jan 2021 11:06:41 +0000
+From: David Brazdil <dbrazdil@google.com>
+To: Elena Petrova <lenaptr@google.com>
+Subject: Re: [PATCH v3 3/9] KVM: arm64: Enable UBSAN_BOUNDS for the both the
+ kernel and hyp/nVHE
+Message-ID: <20210118110641.ak4jlzu34lxzluzy@google.com>
+References: <20210115171830.3602110-1-lenaptr@google.com>
+ <20210115171830.3602110-4-lenaptr@google.com>
 MIME-Version: 1.0
-X-Mailman-Approved-At: Mon, 18 Jan 2021 06:19:16 -0500
-Cc: yejune.deng@gmail.com, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20210115171830.3602110-4-lenaptr@google.com>
+Cc: George Popescu <georgepope@google.com>, Marc Zyngier <maz@kernel.org>,
+ open list <linux-kernel@vger.kernel.org>, kvmarm@lists.cs.columbia.edu,
+ George Popescu <george.apopescu97@gmail.com>,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -94,54 +98,131 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-In smp_call_function_single(), the 3rd parameter isn't the return value
-and it's always positive. But it may return a negative value. So the
-'ret' is should be the return value of the smp_call_function_single().
+On Fri, Jan 15, 2021 at 05:18:24PM +0000, Elena Petrova wrote:
+> From: George Popescu <georgepope@google.com>
+> 
+> If an out of bounds happens inside the hyp/nVHE code, the ubsan_out_of_bounds
+> handler stores the logging data inside the kvm_ubsan_buffer. The one responsible
+> for printing is the kernel ubsan_out_of_bounds handler. The process of
+> decapsulating the data from the buffer is straightforward.
+> 
+> Signed-off-by: George Popescu <georgepope@google.com>
+> Signed-off-by: Elena Petrova <lenaptr@google.com>
+> ---
+>  arch/arm64/include/asm/kvm_ubsan.h | 19 ++++++++++++++++++-
+>  arch/arm64/kvm/hyp/nvhe/ubsan.c    | 14 ++++++++++++--
+>  arch/arm64/kvm/kvm_ubsan_buffer.c  | 10 ++++++++++
+>  3 files changed, 40 insertions(+), 3 deletions(-)
+> 
+> diff --git a/arch/arm64/include/asm/kvm_ubsan.h b/arch/arm64/include/asm/kvm_ubsan.h
+> index fb32c7fd65d4..4f471acb88b0 100644
+> --- a/arch/arm64/include/asm/kvm_ubsan.h
+> +++ b/arch/arm64/include/asm/kvm_ubsan.h
+> @@ -9,6 +9,23 @@
+>  #define UBSAN_MAX_TYPE 6
+>  #define KVM_UBSAN_BUFFER_SIZE 1000
+>  
+> +
+> +struct ubsan_values {
+> +	void *lval;
+> +	void *rval;
+> +	char op;
+> +};
+> +
+>  struct kvm_ubsan_info {
+> -	int type;
+> +	enum {
+> +		UBSAN_OUT_OF_BOUNDS,
+> +	} type;
+> +	union {
+> +		struct out_of_bounds_data out_of_bounds_data;
+> +	};
+> +	union {
+> +		struct ubsan_values u_val;
+> +	};
 
-In check_kvm_target_cpu(), 'phys_target' is more readable than 'ret'.
+I don't see this second union having more members later in the series.
+Remove it? Even the 'struct ubsan_values' seems redundant and we could just
+have those three fields directly here.
 
-Signed-off-by: Yejune Deng <yejune.deng@gmail.com>
----
- arch/arm64/kvm/arm.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+>  };
+> +
+> +void __ubsan_handle_out_of_bounds(void *_data, void *index);
+> diff --git a/arch/arm64/kvm/hyp/nvhe/ubsan.c b/arch/arm64/kvm/hyp/nvhe/ubsan.c
+> index 8a194fb1f6cf..55a8f6db8555 100644
+> --- a/arch/arm64/kvm/hyp/nvhe/ubsan.c
+> +++ b/arch/arm64/kvm/hyp/nvhe/ubsan.c
+> @@ -13,7 +13,6 @@
+>  #include <asm/kvm_ubsan.h>
+>  #include <asm/kvm_debug_buffer.h>
+>  #include <kvm/arm_pmu.h>
+> -#include <ubsan.h>
+>  
+>  DEFINE_KVM_DEBUG_BUFFER(struct kvm_ubsan_info, kvm_ubsan_buffer,
+>                  kvm_ubsan_buff_wr_ind, KVM_UBSAN_BUFFER_SIZE);
+> @@ -44,7 +43,18 @@ void __ubsan_handle_type_mismatch(struct type_mismatch_data *data, void *ptr) {}
+>  
+>  void __ubsan_handle_type_mismatch_v1(void *_data, void *ptr) {}
+>  
+> -void __ubsan_handle_out_of_bounds(void *_data, void *index) {}
+> +void __ubsan_handle_out_of_bounds(void *_data, void *index)
+> +{
+> +	struct kvm_ubsan_info *slot;
+> +	struct out_of_bounds_data *data = _data;
+> +
+> +	slot = kvm_ubsan_buffer_next_slot();
+> +	if (slot) {
+> +		slot->type = UBSAN_OUT_OF_BOUNDS;
+> +		slot->out_of_bounds_data = *data;
+> +		slot->u_val.lval = index;
+> +	}
+> +}
+>  
+>  void __ubsan_handle_shift_out_of_bounds(void *_data, void *lhs, void *rhs) {}
+>  
+> diff --git a/arch/arm64/kvm/kvm_ubsan_buffer.c b/arch/arm64/kvm/kvm_ubsan_buffer.c
+> index 4a1959ba9f68..a1523f86be3c 100644
+> --- a/arch/arm64/kvm/kvm_ubsan_buffer.c
+> +++ b/arch/arm64/kvm/kvm_ubsan_buffer.c
+> @@ -17,6 +17,15 @@
+>  DECLARE_KVM_DEBUG_BUFFER(struct kvm_ubsan_info, kvm_ubsan_buffer,
+>  		kvm_ubsan_buff_wr_ind, KVM_UBSAN_BUFFER_SIZE);
+>  
+> +void __kvm_check_ubsan_data(struct kvm_ubsan_info *slot)
+> +{
+> +	switch (slot->type) {
+> +	case UBSAN_OUT_OF_BOUNDS:
+> +		__ubsan_handle_out_of_bounds(&slot->out_of_bounds_data,
+> +				slot->u_val.lval);
+> +		break;
+> +	}
+> +}
+>  
+>  void iterate_kvm_ubsan_buffer(unsigned long left, unsigned long right)
+>  {
+> @@ -26,6 +35,7 @@ void iterate_kvm_ubsan_buffer(unsigned long left, unsigned long right)
+>  	slot = (struct kvm_ubsan_info *) this_cpu_ptr_nvhe_sym(kvm_ubsan_buffer);
+>  	for (i = left; i < right; ++i) {
+>  		/* check ubsan data */
+> +		__kvm_check_ubsan_data(slot + i);
 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 04c44853b103..5fa5c04106de 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -1815,9 +1815,9 @@ static int init_hyp_mode(void)
- 	return err;
- }
- 
--static void check_kvm_target_cpu(void *ret)
-+static void check_kvm_target_cpu(void *phys_target)
- {
--	*(int *)ret = kvm_target_cpu();
-+	*(int *)phys_target = kvm_target_cpu();
- }
- 
- struct kvm_vcpu *kvm_mpidr_to_vcpu(struct kvm *kvm, unsigned long mpidr)
-@@ -1879,7 +1879,7 @@ void kvm_arch_irq_bypass_start(struct irq_bypass_consumer *cons)
- int kvm_arch_init(void *opaque)
- {
- 	int err;
--	int ret, cpu;
-+	int ret, cpu, phys_target;
- 	bool in_hyp_mode;
- 
- 	if (!is_hyp_mode_available()) {
-@@ -1900,7 +1900,7 @@ int kvm_arch_init(void *opaque)
- 			 "Only trusted guests should be used on this system.\n");
- 
- 	for_each_online_cpu(cpu) {
--		smp_call_function_single(cpu, check_kvm_target_cpu, &ret, 1);
-+		ret = smp_call_function_single(cpu, check_kvm_target_cpu, &phys_target, 1);
- 		if (ret < 0) {
- 			kvm_err("Error, CPU %d not supported!\n", cpu);
- 			return -ENODEV;
--- 
-2.29.0
+Not sure why this is breaking out into another function. The code will not
+be shared with any other user.
 
+>  		slot[i].type = 0;
+
+This invalidation is redundant. The buffer's cursor will be reset on next
+hypercall, which will implicitly invalidate all entries.
+
+>  	}
+>  }
+> -- 
+> 2.30.0.296.g2bfb1c46d8-goog
+> 
+> _______________________________________________
+> kvmarm mailing list
+> kvmarm@lists.cs.columbia.edu
+> https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
