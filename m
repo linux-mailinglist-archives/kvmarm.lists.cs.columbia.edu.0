@@ -2,60 +2,70 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F3612F9743
-	for <lists+kvmarm@lfdr.de>; Mon, 18 Jan 2021 02:19:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 41CD02F9BF9
+	for <lists+kvmarm@lfdr.de>; Mon, 18 Jan 2021 10:46:11 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D03174B26B;
-	Sun, 17 Jan 2021 20:19:10 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EAAF64B28F;
+	Mon, 18 Jan 2021 04:46:10 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VvaUPOCeQ8fi; Sun, 17 Jan 2021 20:19:10 -0500 (EST)
+	with ESMTP id Lyv3XRkHiOnQ; Mon, 18 Jan 2021 04:46:09 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B415B4B25E;
-	Sun, 17 Jan 2021 20:19:09 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 923734B2A4;
+	Mon, 18 Jan 2021 04:46:08 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 414444B256
- for <kvmarm@lists.cs.columbia.edu>; Sun, 17 Jan 2021 20:19:08 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4DDA64B269
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 18 Jan 2021 04:46:06 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id JfjiCZIni-jJ for <kvmarm@lists.cs.columbia.edu>;
- Sun, 17 Jan 2021 20:19:06 -0500 (EST)
-Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3E7D94B254
- for <kvmarm@lists.cs.columbia.edu>; Sun, 17 Jan 2021 20:19:05 -0500 (EST)
-Received: from DGGEMS405-HUB.china.huawei.com (unknown [172.30.72.59])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4DJv6X6JWVzj3w7;
- Mon, 18 Jan 2021 09:17:56 +0800 (CST)
-Received: from [10.174.184.42] (10.174.184.42) by
- DGGEMS405-HUB.china.huawei.com (10.3.19.205) with Microsoft SMTP Server id
- 14.3.498.0; Mon, 18 Jan 2021 09:18:52 +0800
-Subject: Re: [PATCH] kvm: arm64: Properly align the end address of table walk
-To: Will Deacon <will@kernel.org>
-References: <20210115095307.12912-1-zhukeqian1@huawei.com>
- <20210115102334.GA14167@willie-the-truck>
-From: Keqian Zhu <zhukeqian1@huawei.com>
-Message-ID: <a184c21f-2b1f-bd00-5ca9-be7649b33ccd@huawei.com>
-Date: Mon, 18 Jan 2021 09:18:51 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+ with ESMTP id bpwEVayXRA0A for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 18 Jan 2021 04:46:03 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6C6174B228
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 18 Jan 2021 04:46:03 -0500 (EST)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id E235322240;
+ Mon, 18 Jan 2021 09:46:01 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1l1R6l-008RhD-GV; Mon, 18 Jan 2021 09:45:59 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ linux-kernel@vger.kernel.org
+Subject: [PATCH v4 00/21] arm64: Early CPU feature override,
+ and applications to VHE, BTI and PAuth
+Date: Mon, 18 Jan 2021 09:45:12 +0000
+Message-Id: <20210118094533.2874082-1-maz@kernel.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-In-Reply-To: <20210115102334.GA14167@willie-the-truck>
-X-Originating-IP: [10.174.184.42]
-X-CFilter-Loop: Reflected
-Cc: Andrew Morton <akpm@linux-foundation.org>, kvm@vger.kernel.org,
- Catalin Marinas <catalin.marinas@arm.com>, Joerg Roedel <joro@8bytes.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, linux-kernel@vger.kernel.org,
- Alexios Zavras <alexios.zavras@intel.com>, Marc Zyngier <maz@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>, Robin Murphy <robin.murphy@arm.com>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org,
+ catalin.marinas@arm.com, will@kernel.org, mark.rutland@arm.com,
+ dbrazdil@google.com, alexandru.elisei@arm.com, ardb@kernel.org,
+ jingzhangos@google.com, pajay@qti.qualcomm.com, psodagud@codeaurora.org,
+ sramana@codeaurora.org, james.morse@arm.com, julien.thierry.kdev@gmail.com,
+ suzuki.poulose@arm.com, kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Prasad Sodagudi <psodagud@codeaurora.org>,
+ Srinivas Ramana <sramana@codeaurora.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Ajay Patil <pajay@qti.qualcomm.com>,
+ kernel-team@android.com, Will Deacon <will@kernel.org>,
+ Ard Biesheuvel <ardb@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -72,51 +82,118 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+It recently came to light that there is a need to be able to override
+some CPU features very early on, before the kernel is fully up and
+running. The reasons for this range from specific feature support
+(such as using Protected KVM on VHE HW, which is the main motivation
+for this work) to errata workaround (a feature is broken on a CPU and
+needs to be turned off, or rather not enabled).
 
+This series tries to offer a limited framework for this kind of
+problems, by allowing a set of options to be passed on the
+command-line and altering the feature set that the cpufeature
+subsystem exposes to the rest of the kernel. Note that this doesn't
+change anything for code that directly uses the CPU ID registers.
 
-On 2021/1/15 18:23, Will Deacon wrote:
-> On Fri, Jan 15, 2021 at 05:53:07PM +0800, Keqian Zhu wrote:
->> When align the end address, ought to use its original value.
->>
->> Fixes: b1e57de62cfb ("KVM: arm64: Add stand-alone page-table walker infrastructure")
->> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
->> ---
->>  arch/arm64/kvm/hyp/pgtable.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
->> index bdf8e55ed308..670b0ef12440 100644
->> --- a/arch/arm64/kvm/hyp/pgtable.c
->> +++ b/arch/arm64/kvm/hyp/pgtable.c
->> @@ -296,7 +296,7 @@ int kvm_pgtable_walk(struct kvm_pgtable *pgt, u64 addr, u64 size,
->>  	struct kvm_pgtable_walk_data walk_data = {
->>  		.pgt	= pgt,
->>  		.addr	= ALIGN_DOWN(addr, PAGE_SIZE),
->> -		.end	= PAGE_ALIGN(walk_data.addr + size),
->> +		.end	= PAGE_ALIGN(addr + size),
->>  		.walker	= walker,
-> 
-> Hmm, this is a change in behaviour, no (consider the case where both 'addr'
-> and 'size' are misaligned)? The current code is consistent with the
-> kerneldoc in asm/kvm_pgtable.h, so I don't see the motivation to change it.
-> 
-> Did you hit a bug somewhere?
-> 
-> Will
-> .
->
-Not hit a bug, I just read the code to implement a new idea of stage2 DBM
-support [1]. Yes, according to doc, this is not an issue ("The offset of
-@addr within a page is ignored."). Sorry to disturb ;-).
+The series completely changes the way a VHE-capable system boots, by
+*always* booting non-VHE first, and then upgrading to VHE when deemed
+capable. Although it sounds scary, this is actually simple to
+implement (and I wish I had done that five years ago). The "upgrade to
+VHE" path is then conditioned on the VHE feature not being disabled
+from the command-line.
 
-[1] https://lore.kernel.org/kvmarm/fd26654b-8258-061c-2a69-90b961c1c71b@huawei.com/
+Said command-line parsing borrows a lot from the kaslr code, and
+subsequently allows the "nokaslr" option to be moved to the new
+infrastructure (though it all looks a bit... odd).
 
-Thanks,
-Keqian
+Further patches now add support for disabling BTI and PAuth, the
+latter being based on an initial series by Srinivas Ramana[0]. There
+is some ongoing discussions about being able to disable MTE, but no
+clear resolution on that subject yet.
 
+This has been tested on multiple VHE and non-VHE systems.
 
+* From v3 [3]:
+  - Fixed the VHE_RESTART stub (duh!)
+  - Switched to using arm64_ftr_safe_value() instead of the user
+    provided value
+  - Per-feature override warning
 
+* From v2 [2]:
+  - Simplify the VHE_RESTART stub
+  - Fixed a number of spelling mistakes, and hopefully introduced a
+    few more
+  - Override features in __read_sysreg_by_encoding()
+  - Allow both BTI and PAuth to be overridden on the command line
+  - Rebased on -rc3
 
+* From v1 [1]:
+  - Fix SPE init on VHE when EL2 doesn't own SPE
+  - Fix re-init when KASLR is used
+  - Handle the resume path
+  - Rebased to 5.11-rc2
+
+[0] https://lore.kernel.org/r/1610152163-16554-1-git-send-email-sramana@codeaurora.org
+[1] https://lore.kernel.org/r/20201228104958.1848833-1-maz@kernel.org
+[2] https://lore.kernel.org/r/20210104135011.2063104-1-maz@kernel.org
+[3] https://lore.kernel.org/r/20210111132811.2455113-1-maz@kernel.org
+
+Marc Zyngier (20):
+  arm64: Fix labels in el2_setup macros
+  arm64: Fix outdated TCR setup comment
+  arm64: Turn the MMU-on sequence into a macro
+  arm64: Provide an 'upgrade to VHE' stub hypercall
+  arm64: Initialise as nVHE before switching to VHE
+  arm64: Move VHE-specific SPE setup to mutate_to_vhe()
+  arm64: Simplify init_el2_state to be non-VHE only
+  arm64: Move SCTLR_EL1 initialisation to EL-agnostic code
+  arm64: cpufeature: Add global feature override facility
+  arm64: cpufeature: Use IDreg override in __read_sysreg_by_encoding()
+  arm64: Extract early FDT mapping from kaslr_early_init()
+  arm64: cpufeature: Add an early command-line cpufeature override
+    facility
+  arm64: Allow ID_AA64MMFR1_EL1.VH to be overridden from the command
+    line
+  arm64: Honor VHE being disabled from the command-line
+  arm64: Add an aliasing facility for the idreg override
+  arm64: Make kvm-arm.mode={nvhe,protected} an alias of
+    id_aa64mmfr1.vh=0
+  KVM: arm64: Document HVC_VHE_RESTART stub hypercall
+  arm64: Move "nokaslr" over to the early cpufeature infrastructure
+  arm64: cpufeatures: Allow disabling of BTI from the command-line
+  arm64: cpufeatures: Allow disabling of Pointer Auth from the
+    command-line
+
+Srinivas Ramana (1):
+  arm64: Defer enabling pointer authentication on boot core
+
+ .../admin-guide/kernel-parameters.txt         |   9 +
+ Documentation/virt/kvm/arm/hyp-abi.rst        |   9 +
+ arch/arm64/include/asm/assembler.h            |  17 ++
+ arch/arm64/include/asm/cpufeature.h           |  10 +
+ arch/arm64/include/asm/el2_setup.h            |  60 ++----
+ arch/arm64/include/asm/pointer_auth.h         |  10 +
+ arch/arm64/include/asm/setup.h                |  11 +
+ arch/arm64/include/asm/stackprotector.h       |   1 +
+ arch/arm64/include/asm/virt.h                 |   7 +-
+ arch/arm64/kernel/Makefile                    |   2 +-
+ arch/arm64/kernel/cpufeature.c                |  75 ++++++-
+ arch/arm64/kernel/head.S                      |  75 ++-----
+ arch/arm64/kernel/hyp-stub.S                  | 124 ++++++++++-
+ arch/arm64/kernel/idreg-override.c            | 199 ++++++++++++++++++
+ arch/arm64/kernel/kaslr.c                     |  44 +---
+ arch/arm64/kernel/setup.c                     |  15 ++
+ arch/arm64/kernel/sleep.S                     |   1 +
+ arch/arm64/kvm/arm.c                          |   3 +
+ arch/arm64/kvm/hyp/nvhe/hyp-init.S            |   2 +-
+ arch/arm64/mm/mmu.c                           |   2 +-
+ arch/arm64/mm/proc.S                          |  16 +-
+ 21 files changed, 523 insertions(+), 169 deletions(-)
+ create mode 100644 arch/arm64/include/asm/setup.h
+ create mode 100644 arch/arm64/kernel/idreg-override.c
+
+-- 
+2.29.2
 
 _______________________________________________
 kvmarm mailing list
