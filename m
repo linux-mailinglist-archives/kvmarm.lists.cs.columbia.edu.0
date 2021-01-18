@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 785C82F9C24
-	for <lists+kvmarm@lfdr.de>; Mon, 18 Jan 2021 11:00:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE4BC2F9C19
+	for <lists+kvmarm@lfdr.de>; Mon, 18 Jan 2021 11:00:12 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2D6DD4B27E;
-	Mon, 18 Jan 2021 05:00:48 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 49C224B275;
+	Mon, 18 Jan 2021 05:00:12 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,39 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id m41Ni8uxCY-L; Mon, 18 Jan 2021 05:00:47 -0500 (EST)
+	with ESMTP id DN-1Ykwg3hHl; Mon, 18 Jan 2021 05:00:12 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 550724B2BC;
-	Mon, 18 Jan 2021 05:00:39 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 048744B249;
+	Mon, 18 Jan 2021 05:00:11 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 83C1E4B230
- for <kvmarm@lists.cs.columbia.edu>; Mon, 18 Jan 2021 05:00:38 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 012CD4B1E2
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 18 Jan 2021 05:00:10 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id N3kMPbeb7jdp for <kvmarm@lists.cs.columbia.edu>;
- Mon, 18 Jan 2021 05:00:37 -0500 (EST)
+ with ESMTP id dHU-mL8Tmimd for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 18 Jan 2021 05:00:09 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 383F24B2A4
- for <kvmarm@lists.cs.columbia.edu>; Mon, 18 Jan 2021 05:00:34 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E01184B1D9
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 18 Jan 2021 05:00:08 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 382EF22B40;
- Mon, 18 Jan 2021 10:00:33 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id ADA53221FF;
+ Mon, 18 Jan 2021 10:00:07 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1l1R6w-008RhD-F5; Mon, 18 Jan 2021 09:46:11 +0000
+ id 1l1R6y-008RhD-61; Mon, 18 Jan 2021 09:46:12 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  linux-kernel@vger.kernel.org
-Subject: [PATCH v4 15/21] arm64: Add an aliasing facility for the idreg
- override
-Date: Mon, 18 Jan 2021 09:45:27 +0000
-Message-Id: <20210118094533.2874082-16-maz@kernel.org>
+Subject: [PATCH v4 16/21] arm64: Make kvm-arm.mode={nvhe,
+ protected} an alias of id_aa64mmfr1.vh=0
+Date: Mon, 18 Jan 2021 09:45:28 +0000
+Message-Id: <20210118094533.2874082-17-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210118094533.2874082-1-maz@kernel.org>
 References: <20210118094533.2874082-1-maz@kernel.org>
@@ -84,67 +84,62 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-In order to map the override of idregs to options that a user
-can easily understand, let's introduce yet another option
-array, which maps an option to the corresponding idreg options.
+Admitedly, passing id_aa64mmfr1.vh=0 on the command-line isn't
+that easy to understand, and it is likely that users would much
+prefer write "kvm-arm.mode=nvhe", or "...=protected".
+
+So here you go. This has the added advantage that we can now
+always honor the "kvm-arm.mode=protected" option, even when
+booting on a VHE system.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kernel/idreg-override.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ Documentation/admin-guide/kernel-parameters.txt | 3 +++
+ arch/arm64/kernel/idreg-override.c              | 2 ++
+ arch/arm64/kvm/arm.c                            | 3 +++
+ 3 files changed, 8 insertions(+)
 
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index 9e3cdb271d06..2786fd39a047 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -2257,6 +2257,9 @@
+ 	kvm-arm.mode=
+ 			[KVM,ARM] Select one of KVM/arm64's modes of operation.
+ 
++			nvhe: Standard nVHE-based mode, without support for
++			      protected guests.
++
+ 			protected: nVHE-based mode with support for guests whose
+ 				   state is kept private from the host.
+ 				   Not valid if the kernel is running in EL2.
 diff --git a/arch/arm64/kernel/idreg-override.c b/arch/arm64/kernel/idreg-override.c
-index 75d9845f489b..16bc8b3b93ae 100644
+index 16bc8b3b93ae..1db54878b2c4 100644
 --- a/arch/arm64/kernel/idreg-override.c
 +++ b/arch/arm64/kernel/idreg-override.c
-@@ -37,6 +37,12 @@ static const struct reg_desc * const regs[] __initdata = {
- 	&mmfr1,
+@@ -41,6 +41,8 @@ static const struct {
+ 	const char * const	alias;
+ 	const char * const	feature;
+ } aliases[] __initdata = {
++	{ "kvm-arm.mode=nvhe",		"id_aa64mmfr1.vh=0" },
++	{ "kvm-arm.mode=protected",	"id_aa64mmfr1.vh=0" },
  };
  
-+static const struct {
-+	const char * const	alias;
-+	const char * const	feature;
-+} aliases[] __initdata = {
-+};
-+
  static int __init find_field(const char *cmdline, const struct reg_desc *reg,
- 			     int f, u64 *v)
- {
-@@ -80,6 +86,18 @@ static void __init match_options(const char *cmdline)
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 04c44853b103..597565a65ca2 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -1966,6 +1966,9 @@ static int __init early_kvm_mode_cfg(char *arg)
+ 		return 0;
  	}
+ 
++	if (strcmp(arg, "nvhe") == 0 && !WARN_ON(is_kernel_in_hyp_mode()))
++		return 0;
++
+ 	return -EINVAL;
  }
- 
-+static __init void match_aliases(const char *cmdline)
-+{
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(aliases); i++) {
-+		char *str = strstr(cmdline, aliases[i].alias);
-+
-+		if ((str == cmdline || (str > cmdline && *(str - 1) == ' ')))
-+			match_options(aliases[i].feature);
-+	}
-+}
-+
- static __init void parse_cmdline(void)
- {
- 	if (!IS_ENABLED(CONFIG_CMDLINE_FORCE)) {
-@@ -100,6 +118,7 @@ static __init void parse_cmdline(void)
- 			goto out;
- 
- 		match_options(prop);
-+		match_aliases(prop);
- 
- 		if (!IS_ENABLED(CONFIG_CMDLINE_EXTEND))
- 			return;
-@@ -107,6 +126,7 @@ static __init void parse_cmdline(void)
- 
- out:
- 	match_options(CONFIG_CMDLINE);
-+	match_aliases(CONFIG_CMDLINE);
- }
- 
- void __init init_shadow_regs(void)
+ early_param("kvm-arm.mode", early_kvm_mode_cfg);
 -- 
 2.29.2
 
