@@ -2,66 +2,71 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C97052FEF5D
-	for <lists+kvmarm@lfdr.de>; Thu, 21 Jan 2021 16:47:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92B652FF27F
+	for <lists+kvmarm@lfdr.de>; Thu, 21 Jan 2021 18:54:32 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EC1E14B150;
-	Thu, 21 Jan 2021 10:47:30 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2A10E4B167;
+	Thu, 21 Jan 2021 12:54:31 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JCtyHlokvPES; Thu, 21 Jan 2021 10:47:30 -0500 (EST)
+	with ESMTP id HKzR3wG9+aGq; Thu, 21 Jan 2021 12:54:31 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B80204B12B;
-	Thu, 21 Jan 2021 10:47:29 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1101D4B15B;
+	Thu, 21 Jan 2021 12:54:30 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F16C4B140
- for <kvmarm@lists.cs.columbia.edu>; Thu, 21 Jan 2021 10:47:28 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1BE854B156
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 21 Jan 2021 12:54:28 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ZBu1eZBoJpum for <kvmarm@lists.cs.columbia.edu>;
- Thu, 21 Jan 2021 10:47:27 -0500 (EST)
+ with ESMTP id ex+eyCKSK23Y for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 21 Jan 2021 12:54:27 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 850684B0D2
- for <kvmarm@lists.cs.columbia.edu>; Thu, 21 Jan 2021 10:47:27 -0500 (EST)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 3963722C7B;
- Thu, 21 Jan 2021 15:47:26 +0000 (UTC)
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1l2cB9-009E2f-Vg; Thu, 21 Jan 2021 15:47:24 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [GIT PULL] KVM/arm64 fixes for 5.11, take #2
-Date: Thu, 21 Jan 2021 15:46:53 +0000
-Message-Id: <20210121154653.2907836-1-maz@kernel.org>
-X-Mailer: git-send-email 2.29.2
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id DDCBA4B0B6
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 21 Jan 2021 12:54:26 -0500 (EST)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 414C621973;
+ Thu, 21 Jan 2021 17:54:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1611251665;
+ bh=UoorRMvSGUceggy9m7jQ580i3cz0aYpDS1TAbvR/rEk=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=A08rRJRbcUEexudiHrvqmX6AgJwLL+HJOEIqjMdYrhGPSBMaRSmAp77HRfl/uEhJr
+ GDgqkSHYixgVJ6aZ3/d1//Rqo7o8dspi6AgBkV92oCVtU8OZWeDquOIjJBQlyHr9Jv
+ enuXyQFtAe1WvTAfA036bxCKVyOZtMOix7roLxWNR7rWsvWNXsmSt56F0bXEfuzusc
+ QjCarXuyOSzhmmsrD1QJxh3oASray65OGKXi5FJGAHdHBjt5uDnPGZOED7AjUNYlps
+ u58NTQShoDQr6IoCETUMwnJNU8EemE1sc/ErtHbnwHv4ZF969qqtAg1Ib3doLCmeSp
+ wp85wTVhx/DZg==
+Date: Thu, 21 Jan 2021 17:54:20 +0000
+From: Will Deacon <will@kernel.org>
+To: Ard Biesheuvel <ardb@kernel.org>
+Subject: Re: [PATCH v6 0/5] ARM: arm64: Add SMCCC TRNG entropy service
+Message-ID: <20210121175419.GA22963@willie-the-truck>
+References: <20210106103453.152275-1-andre.przywara@arm.com>
+ <161114590396.218530.9227813162726341261.b4-ty@kernel.org>
+ <CAMj1kXHW4gPdWXc93eAYpHNU3H+Whg-n2mcEKX=Zro0nANhgSg@mail.gmail.com>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: pbonzini@redhat.com, alexandru.elisei@arm.com,
- catalin.marinas@arm.com, dbrazdil@google.com, rick.p.edgecombe@intel.com,
- steven.price@arm.com, james.morse@arm.com, julien.thierry.kdev@gmail.com,
- suzuki.poulose@arm.com, kernel-team@android.com,
- linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- kvm@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: Rick Edgecombe <rick.p.edgecombe@intel.com>, kvm@vger.kernel.org,
- Catalin Marinas <catalin.marinas@arm.com>, Steven Price <steven.price@arm.com>,
- linux-arm-kernel@lists.infradead.org, kernel-team@android.com,
- kvmarm@lists.cs.columbia.edu
+Content-Disposition: inline
+In-Reply-To: <CAMj1kXHW4gPdWXc93eAYpHNU3H+Whg-n2mcEKX=Zro0nANhgSg@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+ Theodore Ts'o <tytso@mit.edu>, Marc Zyngier <maz@kernel.org>,
+ Linus Walleij <linus.walleij@linaro.org>, Sudeep Holla <sudeep.holla@arm.com>,
+ Russell King <linux@armlinux.org.uk>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Mark Brown <broonie@kernel.org>,
+ Andre Przywara <andre.przywara@arm.com>,
+ Android Kernel Team <kernel-team@android.com>,
+ kvmarm <kvmarm@lists.cs.columbia.edu>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -78,61 +83,41 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Paolo,
+On Wed, Jan 20, 2021 at 02:15:59PM +0100, Ard Biesheuvel wrote:
+> On Wed, 20 Jan 2021 at 14:01, Will Deacon <will@kernel.org> wrote:
+> >
+> > On Wed, 6 Jan 2021 10:34:48 +0000, Andre Przywara wrote:
+> > > a fix to v5, now *really* fixing the wrong priority of SMCCC vs. RNDR
+> > > in arch_get_random_seed_long_early(). Apologies for messing this up
+> > > in v5 and thanks to broonie for being on the watch!
+> > >
+> > > Will, Catalin: it would be much appreciated if you could consider taking
+> > > patch 1/5. This contains the common definitions, and is a prerequisite
+> > > for every other patch, although they are somewhat independent and likely
+> > > will need to go through different subsystems.
+> > >
+> > > [...]
+> >
+> > Applied the first patch only to arm64 (for-next/rng), thanks!
+> >
+> > [1/5] firmware: smccc: Add SMCCC TRNG function call IDs
+> >       https://git.kernel.org/arm64/c/67c6bb56b649
+> >
+> > What's the plan for the rest of the series, and I think the related
+> > change over at [1]?
+> >
+> 
+> Given that Ted seems to have lost interest in /dev/random patches, I
+> was hoping [1] could be taken via the arm64 tree instead. Without this
+> patch, I don't think we should expose the SMCCC RNG interface via
+> arch_get_random_seed(), given how insanely often it will be called in
+> that case.
 
-This is the second batch of fixes for 5.11. Mostly PMU fixes,
-but also a couple of memory tagging fixes as well as a PSCI
-firmware workaround.
+Ok, let's give that a shot -- I'll additionally pick patches 2 and 4 out
+of this series, and merge in the /dev/random change on its own branch in
+case there are any late objections.
 
-Please pull,
-
-	M.
-
-The following changes since commit 45ba7b195a369f35cb39094fdb32efe5908b34ad:
-
-  arm64: cpufeature: remove non-exist CONFIG_KVM_ARM_HOST (2021-01-05 13:22:07 +0000)
-
-are available in the Git repository at:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git tags/kvmarm-fixes-5.11-2
-
-for you to fetch changes up to 139bc8a6146d92822c866cf2fd410159c56b3648:
-
-  KVM: Forbid the use of tagged userspace addresses for memslots (2021-01-21 14:17:36 +0000)
-
-----------------------------------------------------------------
-KVM/arm64 fixes for 5.11, take #2
-
-- Don't allow tagged pointers to point to memslots
-- Filter out ARMv8.1+ PMU events on v8.0 hardware
-- Hide PMU registers from userspace when no PMU is configured
-- More PMU cleanups
-- Don't try to handle broken PSCI firmware
-- More sys_reg() to reg_to_encoding() conversions
-
-----------------------------------------------------------------
-Alexandru Elisei (1):
-      KVM: arm64: Use the reg_to_encoding() macro instead of sys_reg()
-
-David Brazdil (1):
-      KVM: arm64: Allow PSCI SYSTEM_OFF/RESET to return
-
-Marc Zyngier (4):
-      KVM: arm64: Hide PMU registers from userspace when not available
-      KVM: arm64: Simplify handling of absent PMU system registers
-      KVM: arm64: Filter out v8.1+ events on v8.0 HW
-      KVM: Forbid the use of tagged userspace addresses for memslots
-
-Steven Price (1):
-      KVM: arm64: Compute TPIDR_EL2 ignoring MTE tag
-
- Documentation/virt/kvm/api.rst       |  3 ++
- arch/arm64/kvm/arm.c                 |  3 +-
- arch/arm64/kvm/hyp/nvhe/psci-relay.c | 13 ++---
- arch/arm64/kvm/pmu-emul.c            | 10 ++--
- arch/arm64/kvm/sys_regs.c            | 93 ++++++++++++++++++++++--------------
- virt/kvm/kvm_main.c                  |  1 +
- 6 files changed, 74 insertions(+), 49 deletions(-)
+Will
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
