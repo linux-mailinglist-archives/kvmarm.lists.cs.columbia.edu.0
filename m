@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F2EE30046C
-	for <lists+kvmarm@lfdr.de>; Fri, 22 Jan 2021 14:42:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 18C003004D2
+	for <lists+kvmarm@lfdr.de>; Fri, 22 Jan 2021 15:06:24 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E7B084B1E7;
-	Fri, 22 Jan 2021 08:42:45 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 947644B1F7;
+	Fri, 22 Jan 2021 09:06:23 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.5
@@ -16,35 +16,35 @@ X-Spam-Status: No, score=-1.5 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id gjUg0M8P3SSK; Fri, 22 Jan 2021 08:42:45 -0500 (EST)
+	with ESMTP id BwMeJ1VObT08; Fri, 22 Jan 2021 09:06:23 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 999BA4B1AD;
-	Fri, 22 Jan 2021 08:42:44 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4EC894B1F4;
+	Fri, 22 Jan 2021 09:06:22 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AD9B74B184
- for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Jan 2021 08:42:42 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D818C4B1DC
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Jan 2021 09:06:20 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id rf5j-BWkh5Zv for <kvmarm@lists.cs.columbia.edu>;
- Fri, 22 Jan 2021 08:42:40 -0500 (EST)
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 360324B16C
- for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Jan 2021 08:42:40 -0500 (EST)
-Received: from dggeme706-chm.china.huawei.com (unknown [172.30.72.53])
- by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4DMgPd5CGmzW2p9;
- Fri, 22 Jan 2021 21:40:37 +0800 (CST)
+ with ESMTP id xDJfBcEFYRyb for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 22 Jan 2021 09:06:18 -0500 (EST)
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 62C094B1DB
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Jan 2021 09:06:16 -0500 (EST)
+Received: from dggeme710-chm.china.huawei.com (unknown [172.30.72.57])
+ by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4DMgxg5dpNz5KFb;
+ Fri, 22 Jan 2021 22:04:55 +0800 (CST)
 Received: from [10.174.187.128] (10.174.187.128) by
- dggeme706-chm.china.huawei.com (10.1.199.102) with Microsoft SMTP Server
+ dggeme710-chm.china.huawei.com (10.1.199.106) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.2106.2; Fri, 22 Jan 2021 21:42:28 +0800
+ 15.1.2106.2; Fri, 22 Jan 2021 22:06:03 +0800
 Subject: Re: [RFC PATCH v4 0/2] Some optimization for stage-2 translation
 To: Marc Zyngier <maz@kernel.org>
 References: <20210122101358.379956-1-wangyanan55@huawei.com>
  <a6d4d16574fa76c4e519cdbff70cf950@kernel.org>
 From: "wangyanan (Y)" <wangyanan55@huawei.com>
-Message-ID: <729ef2c3-a23a-6920-f4d1-9788b2e80bb7@huawei.com>
-Date: Fri, 22 Jan 2021 21:42:28 +0800
+Message-ID: <4adad05d-5ac5-e9e1-62ec-b5c5c6c42081@huawei.com>
+Date: Fri, 22 Jan 2021 22:06:03 +0800
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.4.0
 MIME-Version: 1.0
@@ -52,7 +52,7 @@ In-Reply-To: <a6d4d16574fa76c4e519cdbff70cf950@kernel.org>
 Content-Language: en-US
 X-Originating-IP: [10.174.187.128]
 X-ClientProxiedBy: dggeme704-chm.china.huawei.com (10.1.199.100) To
- dggeme706-chm.china.huawei.com (10.1.199.102)
+ dggeme710-chm.china.huawei.com (10.1.199.106)
 X-CFilter-Loop: Reflected
 Cc: kvm@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
  linux-kernel@vger.kernel.org, Will Deacon <will@kernel.org>,
@@ -68,16 +68,16 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============6282939879405221584=="
+Content-Type: multipart/mixed; boundary="===============8661503138971959168=="
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
---===============6282939879405221584==
+--===============8661503138971959168==
 Content-Type: multipart/alternative;
-	boundary="------------370E91ECCA083FFE805F24CC"
+	boundary="------------798572566FE0CA565F08FFDD"
 Content-Language: en-US
 
---------------370E91ECCA083FFE805F24CC
+--------------798572566FE0CA565F08FFDD
 Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 
@@ -115,20 +115,16 @@ On 2021/1/22 19:47, Marc Zyngier wrote:
 >
 >
 Actually, there is not much difference functionally for these two solutions.
-
 I just thought there was a bit more change relatively in v3 for the new 
 page-table framework.
-
 But I still respect your opinion, so v3 is fine enough.  :)
-
 
 Thanks,
 
 Yanan.
 
 
-
---------------370E91ECCA083FFE805F24CC
+--------------798572566FE0CA565F08FFDD
 Content-Type: text/html; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
@@ -203,31 +199,22 @@ Content-Transfer-Encoding: 8bit
       How bad is the spurious return to a vcpu?
       <br>
       <br>
-      <div align="justify"><br>
-      </div>
+      <br>
     </blockquote>
-    <p align="justify">Actually, there is not much difference
-      functionally for these two solutions.</p>
-    <p align="justify">I just thought there was a bit more change
-      relatively in v3 for <span style="color: rgb(32, 33, 36); font-family: arial, sans-serif; font-size: 28px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 249, 250); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;"></span>
-      the new page-table framework.<br>
-    </p>
-    <p align="justify">But I still respect your opinion, so v3 is fine
-      enough.  :)<br>
-    </p>
-    <p><br>
-    </p>
+    Actually, there is not much difference functionally for these two
+    solutions.<br>
+    I just thought there was a bit more change relatively in v3 for <span style="color: rgb(32, 33, 36); font-family: arial, sans-serif; font-size: 28px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 249, 250); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;"></span>
+    the new page-table framework.<br>
+    But I still respect your opinion, so v3 is fine enough.  :)<br>
     <p>Thanks,</p>
-    <p>Yanan.</p>
-    <p><br>
+    <p>Yanan.<br>
     </p>
-    <span style="color: rgb(32, 33, 36); font-family: arial, sans-serif; font-size: 28px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 249, 250); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;"></span>
   </body>
 </html>
 
---------------370E91ECCA083FFE805F24CC--
+--------------798572566FE0CA565F08FFDD--
 
---===============6282939879405221584==
+--===============8661503138971959168==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -238,4 +225,4 @@ kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
 https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
 
---===============6282939879405221584==--
+--===============8661503138971959168==--
