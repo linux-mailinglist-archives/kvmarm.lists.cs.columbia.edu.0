@@ -2,75 +2,52 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C4D712FFF6B
-	for <lists+kvmarm@lfdr.de>; Fri, 22 Jan 2021 10:45:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7C812FFFDE
+	for <lists+kvmarm@lfdr.de>; Fri, 22 Jan 2021 11:14:20 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1CD524B16F;
-	Fri, 22 Jan 2021 04:45:34 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 57F714B1A2;
+	Fri, 22 Jan 2021 05:14:20 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id U0moFwWCIhdM; Fri, 22 Jan 2021 04:45:34 -0500 (EST)
+	with ESMTP id aR8X4pH4uwS4; Fri, 22 Jan 2021 05:14:19 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AAE664B15E;
-	Fri, 22 Jan 2021 04:45:32 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 018EA4B1A0;
+	Fri, 22 Jan 2021 05:14:18 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8A6BB4B11D
- for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Jan 2021 04:45:31 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CA9994B18B
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Jan 2021 05:14:16 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id iryiPa7DUp-I for <kvmarm@lists.cs.columbia.edu>;
- Fri, 22 Jan 2021 04:45:30 -0500 (EST)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 492794B10F
- for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Jan 2021 04:45:30 -0500 (EST)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 045AE22DBF;
- Fri, 22 Jan 2021 09:45:29 +0000 (UTC)
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1l2t0Q-009NVo-MF; Fri, 22 Jan 2021 09:45:26 +0000
+ with ESMTP id EgGT-ePv2F4q for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 22 Jan 2021 05:14:14 -0500 (EST)
+Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6CF534B194
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Jan 2021 05:14:14 -0500 (EST)
+Received: from DGGEMS403-HUB.china.huawei.com (unknown [172.30.72.58])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4DMZp50tyzz15xFK;
+ Fri, 22 Jan 2021 18:13:01 +0800 (CST)
+Received: from DESKTOP-TMVL5KK.china.huawei.com (10.174.187.128) by
+ DGGEMS403-HUB.china.huawei.com (10.3.19.203) with Microsoft SMTP Server id
+ 14.3.498.0; Fri, 22 Jan 2021 18:14:02 +0800
+From: Yanan Wang <wangyanan55@huawei.com>
+To: Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>, "Catalin
+ Marinas" <catalin.marinas@arm.com>, <kvmarm@lists.cs.columbia.edu>,
+ <linux-arm-kernel@lists.infradead.org>, <kvm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>
+Subject: [RFC PATCH v4 0/2] Some optimization for stage-2 translation
+Date: Fri, 22 Jan 2021 18:13:56 +0800
+Message-ID: <20210122101358.379956-1-wangyanan55@huawei.com>
+X-Mailer: git-send-email 2.8.4.windows.1
 MIME-Version: 1.0
-Date: Fri, 22 Jan 2021 09:45:26 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: Keqian Zhu <zhukeqian1@huawei.com>
-Subject: Re: [RFC PATCH] kvm: arm64: Try stage2 block mapping for host device
- MMIO
-In-Reply-To: <20210122083650.21812-1-zhukeqian1@huawei.com>
-References: <20210122083650.21812-1-zhukeqian1@huawei.com>
-User-Agent: Roundcube Webmail/1.4.10
-Message-ID: <09d89355cdbbd19c456699774a9a980a@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: zhukeqian1@huawei.com, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, will@kernel.org, catalin.marinas@arm.com,
- mark.rutland@arm.com, james.morse@arm.com, robin.murphy@arm.com,
- joro@8bytes.org, daniel.lezcano@linaro.org, tglx@linutronix.de,
- suzuki.poulose@arm.com, julien.thierry.kdev@gmail.com,
- akpm@linux-foundation.org, alexios.zavras@intel.com,
- wanghaibin.wang@huawei.com, jiangkunkun@huawei.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: Andrew Morton <akpm@linux-foundation.org>, kvm@vger.kernel.org,
- Catalin Marinas <catalin.marinas@arm.com>, Joerg Roedel <joro@8bytes.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, linux-kernel@vger.kernel.org,
- Alexios Zavras <alexios.zavras@intel.com>,
- Thomas Gleixner <tglx@linutronix.de>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
- Robin Murphy <robin.murphy@arm.com>
+X-Originating-IP: [10.174.187.128]
+X-CFilter-Loop: Reflected
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -82,146 +59,105 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2021-01-22 08:36, Keqian Zhu wrote:
-> The MMIO region of a device maybe huge (GB level), try to use block
-> mapping in stage2 to speedup both map and unmap.
-> 
-> Especially for unmap, it performs TLBI right after each invalidation
-> of PTE. If all mapping is of PAGE_SIZE, it takes much time to handle
-> GB level range.
+Hi, Will, Marc,
+Is there any further comment on the v3 series I post previously?
+If they are not fine to you, then I think maybe we should just turn
+back to the original solution in v1, where I suggestted to filter out
+the case of only updating access permissions in the map handler and
+handle it right there.
 
-This is only on VM teardown, right? Or do you unmap the device more 
-ofet?
-Can you please quantify the speedup and the conditions this occurs in?
+Here are the reasons for my current opinion:
+With an errno returned from the map handler for this single case, there
+will be one more vcpu exit from guest and we also have to consider the
+spurious dirty pages. Besides, it seems that the EAGAIN errno has been
+chosen specially for this case and can not be used elsewhere for other
+reasons, as we will change this errno to zero at the end of the function.
 
-I have the feeling that we are just circling around another problem,
-which is that we could rely on a VM-wide TLBI when tearing down the
-guest. I worked on something like that[1] a long while ago, and parked
-it for some reason. Maybe it is worth reviving.
+The v1 solution looks like more concise at last, so I refine the diff
+and post the v4 with two patches here, just for a contrast.
 
-[1] 
-https://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git/log/?h=kvm-arm64/elide-cmo-tlbi
-
-> 
-> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
-> ---
->  arch/arm64/include/asm/kvm_pgtable.h | 11 +++++++++++
->  arch/arm64/kvm/hyp/pgtable.c         | 15 +++++++++++++++
->  arch/arm64/kvm/mmu.c                 | 12 ++++++++----
->  3 files changed, 34 insertions(+), 4 deletions(-)
-> 
-> diff --git a/arch/arm64/include/asm/kvm_pgtable.h
-> b/arch/arm64/include/asm/kvm_pgtable.h
-> index 52ab38db04c7..2266ac45f10c 100644
-> --- a/arch/arm64/include/asm/kvm_pgtable.h
-> +++ b/arch/arm64/include/asm/kvm_pgtable.h
-> @@ -82,6 +82,17 @@ struct kvm_pgtable_walker {
->  	const enum kvm_pgtable_walk_flags	flags;
->  };
-> 
-> +/**
-> + * kvm_supported_pgsize() - Get the max supported page size of a 
-> mapping.
-> + * @pgt:	Initialised page-table structure.
-> + * @addr:	Virtual address at which to place the mapping.
-> + * @end:	End virtual address of the mapping.
-> + * @phys:	Physical address of the memory to map.
-> + *
-> + * The smallest return value is PAGE_SIZE.
-> + */
-> +u64 kvm_supported_pgsize(struct kvm_pgtable *pgt, u64 addr, u64 end, 
-> u64 phys);
-> +
->  /**
->   * kvm_pgtable_hyp_init() - Initialise a hypervisor stage-1 
-> page-table.
->   * @pgt:	Uninitialised page-table structure to initialise.
-> diff --git a/arch/arm64/kvm/hyp/pgtable.c 
-> b/arch/arm64/kvm/hyp/pgtable.c
-> index bdf8e55ed308..ab11609b9b13 100644
-> --- a/arch/arm64/kvm/hyp/pgtable.c
-> +++ b/arch/arm64/kvm/hyp/pgtable.c
-> @@ -81,6 +81,21 @@ static bool kvm_block_mapping_supported(u64 addr,
-> u64 end, u64 phys, u32 level)
->  	return IS_ALIGNED(addr, granule) && IS_ALIGNED(phys, granule);
->  }
-> 
-> +u64 kvm_supported_pgsize(struct kvm_pgtable *pgt, u64 addr, u64 end, 
-> u64 phys)
-> +{
-> +	u32 lvl;
-> +	u64 pgsize = PAGE_SIZE;
-> +
-> +	for (lvl = pgt->start_level; lvl < KVM_PGTABLE_MAX_LEVELS; lvl++) {
-> +		if (kvm_block_mapping_supported(addr, end, phys, lvl)) {
-> +			pgsize = kvm_granule_size(lvl);
-> +			break;
-> +		}
-> +	}
-> +
-> +	return pgsize;
-> +}
-> +
->  static u32 kvm_pgtable_idx(struct kvm_pgtable_walk_data *data, u32 
-> level)
->  {
->  	u64 shift = kvm_granule_shift(level);
-> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> index 7d2257cc5438..80b403fc8e64 100644
-> --- a/arch/arm64/kvm/mmu.c
-> +++ b/arch/arm64/kvm/mmu.c
-> @@ -499,7 +499,8 @@ void kvm_free_stage2_pgd(struct kvm_s2_mmu *mmu)
->  int kvm_phys_addr_ioremap(struct kvm *kvm, phys_addr_t guest_ipa,
->  			  phys_addr_t pa, unsigned long size, bool writable)
->  {
-> -	phys_addr_t addr;
-> +	phys_addr_t addr, end;
-> +	unsigned long pgsize;
->  	int ret = 0;
->  	struct kvm_mmu_memory_cache cache = { 0, __GFP_ZERO, NULL, };
->  	struct kvm_pgtable *pgt = kvm->arch.mmu.pgt;
-> @@ -509,21 +510,24 @@ int kvm_phys_addr_ioremap(struct kvm *kvm,
-> phys_addr_t guest_ipa,
-> 
->  	size += offset_in_page(guest_ipa);
->  	guest_ipa &= PAGE_MASK;
-> +	end = guest_ipa + size;
-> 
-> -	for (addr = guest_ipa; addr < guest_ipa + size; addr += PAGE_SIZE) {
-> +	for (addr = guest_ipa; addr < end; addr += pgsize) {
->  		ret = kvm_mmu_topup_memory_cache(&cache,
->  						 kvm_mmu_cache_min_pages(kvm));
->  		if (ret)
->  			break;
-> 
-> +		pgsize = kvm_supported_pgsize(pgt, addr, end, pa);
-> +
->  		spin_lock(&kvm->mmu_lock);
-> -		ret = kvm_pgtable_stage2_map(pgt, addr, PAGE_SIZE, pa, prot,
-> +		ret = kvm_pgtable_stage2_map(pgt, addr, pgsize, pa, prot,
->  					     &cache);
->  		spin_unlock(&kvm->mmu_lock);
->  		if (ret)
->  			break;
-> 
-> -		pa += PAGE_SIZE;
-> +		pa += pgsize;
->  	}
-> 
->  	kvm_mmu_free_memory_cache(&cache);
-
-This otherwise looks neat enough.
+Which solution will you prefer now? Could you please let me know.
 
 Thanks,
+Yanan.
 
-         M.
+Links:
+v1: https://lore.kernel.org/lkml/20201211080115.21460-1-wangyanan55@huawei.com
+v2: https://lore.kernel.org/lkml/20201216122844.25092-1-wangyanan55@huawei.com
+v3: https://lore.kernel.org/lkml/20210114121350.123684-1-wangyanan55@huawei.com
+
+---
+
+About patch-1:
+Procedures of hyp stage-1 map and guest stage-2 map are quite different,
+but they are now tied closely by function kvm_set_valid_leaf_pte().
+So adjust the relative code for ease of code maintenance in the future.
+
+About patch-2:
+(1) During running time of a a VM with numbers of vCPUs, if some vCPUs
+access the same GPA almost at the same time and the stage-2 mapping of
+the GPA has not been built yet, as a result they will all cause
+translation faults. The first vCPU builds the mapping, and the followed
+ones end up updating the valid leaf PTE. Note that these vCPUs might
+want different access permissions (RO, RW, RX, RWX, etc.).
+
+(2) It's inevitable that we sometimes will update an existing valid leaf
+PTE in the map path, and we all perform break-before-make in this case.
+Then more unnecessary translation faults could be caused if the
+*break stage* of BBM is just catched by other vCPUs.
+
+With (1) and (2), something unsatisfactory could happen: vCPU A causes
+a translation fault and builds the mapping with RW permissions, vCPU B
+then update the valid leaf PTE with break-before-make and permissions
+are updated back to RO. Besides, *break stage* of BBM may trigger more
+translation faults. Finally, some useless small loops could occur.
+
+We can make some optimization to solve above problems: When we need to
+update a valid leaf PTE in the translation fault handler, let's filter
+out the case where this update only change access permissions that don't
+require break-before-make. If there have already been the permissions
+we want, don't bother to update. If still more permissions need to be
+added, then update the PTE directly without break-before-make.
+
+---
+
+Changelogs
+
+v4->v3:
+- Turn back to the original solution in v1 and refine the diff
+- Rebased on top of v5.11-rc4
+
+v2->v3:
+- Rebased on top of v5.11-rc3
+- Refine the commit messages
+- Make some adjustment about return value in patch-2 and patch-3
+
+v1->v2:
+- Make part of the diff a seperate patch (patch-1)
+- Add Will's Signed-off-by for patch-1
+- Return an errno when meeting changing permissions case in map path
+- Add a new patch (patch-3)
+
+---
+
+Yanan Wang (2):
+  KVM: arm64: Adjust partial code of hyp stage-1 map and guest stage-2
+    map
+  KVM: arm64: Filter out the case of only changing permissions from
+    stage-2 map path
+
+ arch/arm64/include/asm/kvm_pgtable.h |  4 ++
+ arch/arm64/kvm/hyp/pgtable.c         | 88 +++++++++++++++++++---------
+ 2 files changed, 63 insertions(+), 29 deletions(-)
+
 -- 
-Jazz is not dead. It just smells funny...
+2.19.1
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
