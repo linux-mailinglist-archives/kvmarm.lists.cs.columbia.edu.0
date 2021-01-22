@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 673FF300BDA
-	for <lists+kvmarm@lfdr.de>; Fri, 22 Jan 2021 19:53:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AEF68300BE2
+	for <lists+kvmarm@lfdr.de>; Fri, 22 Jan 2021 19:55:16 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E35374B141;
-	Fri, 22 Jan 2021 13:53:55 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 490534B134;
+	Fri, 22 Jan 2021 13:55:16 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,34 +15,34 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BLtvFnSJXCnR; Fri, 22 Jan 2021 13:53:55 -0500 (EST)
+	with ESMTP id k9srgG9CcudD; Fri, 22 Jan 2021 13:55:16 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C86434B11F;
-	Fri, 22 Jan 2021 13:53:54 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1CFA04B111;
+	Fri, 22 Jan 2021 13:55:15 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E98864B106
- for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Jan 2021 13:53:52 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9A48F4B0DB
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Jan 2021 13:55:13 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id TmjMBFPS6Zwi for <kvmarm@lists.cs.columbia.edu>;
- Fri, 22 Jan 2021 13:53:51 -0500 (EST)
+ with ESMTP id snnI7GgI0Tix for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 22 Jan 2021 13:55:12 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B0A984B0CA
- for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Jan 2021 13:53:51 -0500 (EST)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 0B8F623AC1;
- Fri, 22 Jan 2021 18:53:47 +0000 (UTC)
-Date: Fri, 22 Jan 2021 18:53:45 +0000
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id AD3E74B0CA
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Jan 2021 13:55:12 -0500 (EST)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 1211223AC2;
+ Fri, 22 Jan 2021 18:55:08 +0000 (UTC)
+Date: Fri, 22 Jan 2021 18:55:06 +0000
 From: Catalin Marinas <catalin.marinas@arm.com>
 To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v4 10/21] arm64: cpufeature: Use IDreg override in
- __read_sysreg_by_encoding()
-Message-ID: <20210122185344.GH8567@gaia>
+Subject: Re: [PATCH v4 11/21] arm64: Extract early FDT mapping from
+ kaslr_early_init()
+Message-ID: <20210122185506.GI8567@gaia>
 References: <20210118094533.2874082-1-maz@kernel.org>
- <20210118094533.2874082-11-maz@kernel.org>
+ <20210118094533.2874082-12-maz@kernel.org>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20210118094533.2874082-11-maz@kernel.org>
+In-Reply-To: <20210118094533.2874082-12-maz@kernel.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Cc: Prasad Sodagudi <psodagud@codeaurora.org>,
  Srinivas Ramana <sramana@codeaurora.org>, linux-kernel@vger.kernel.org,
@@ -65,82 +65,16 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Jan 18, 2021 at 09:45:22AM +0000, Marc Zyngier wrote:
-> __read_sysreg_by_encoding() is used by a bunch of cpufeature helpers,
-> which should take the feature override into account. Let's do that.
+On Mon, Jan 18, 2021 at 09:45:23AM +0000, Marc Zyngier wrote:
+> As we want to parse more options very early in the kernel lifetime,
+> let's always map the FDT early. This is achieved by moving that
+> code out of kaslr_early_init().
 > 
-> For a good measure (and because we are likely to need to further
-> down the line), make this helper available to the rest of the
-> non-modular kernel.
-> 
-> Code that needs to know the *real* features of a CPU can still
-> use read_sysreg_s(), and find the bare, ugly truth.
+> No functionnal change expected.
 > 
 > Signed-off-by: Marc Zyngier <maz@kernel.org>
-> ---
->  arch/arm64/include/asm/cpufeature.h |  1 +
->  arch/arm64/kernel/cpufeature.c      | 15 +++++++++++++--
->  2 files changed, 14 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/include/asm/cpufeature.h b/arch/arm64/include/asm/cpufeature.h
-> index 465d2cb63bfc..fe0130d6c0ff 100644
-> --- a/arch/arm64/include/asm/cpufeature.h
-> +++ b/arch/arm64/include/asm/cpufeature.h
-> @@ -602,6 +602,7 @@ void __init setup_cpu_features(void);
->  void check_local_cpu_capabilities(void);
->  
->  u64 read_sanitised_ftr_reg(u32 id);
-> +u64 __read_sysreg_by_encoding(u32 sys_id);
->  
->  static inline bool cpu_supports_mixed_endian_el0(void)
->  {
-> diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-> index aaa075c6f029..48a011935d8c 100644
-> --- a/arch/arm64/kernel/cpufeature.c
-> +++ b/arch/arm64/kernel/cpufeature.c
-> @@ -1149,14 +1149,17 @@ u64 read_sanitised_ftr_reg(u32 id)
->  EXPORT_SYMBOL_GPL(read_sanitised_ftr_reg);
->  
->  #define read_sysreg_case(r)	\
-> -	case r:		return read_sysreg_s(r)
-> +	case r:		val = read_sysreg_s(r); break;
->  
->  /*
->   * __read_sysreg_by_encoding() - Used by a STARTING cpu before cpuinfo is populated.
->   * Read the system register on the current CPU
->   */
-> -static u64 __read_sysreg_by_encoding(u32 sys_id)
-> +u64 __read_sysreg_by_encoding(u32 sys_id)
->  {
-> +	struct arm64_ftr_reg *regp;
-> +	u64 val;
-> +
->  	switch (sys_id) {
->  	read_sysreg_case(SYS_ID_PFR0_EL1);
->  	read_sysreg_case(SYS_ID_PFR1_EL1);
-> @@ -1199,6 +1202,14 @@ static u64 __read_sysreg_by_encoding(u32 sys_id)
->  		BUG();
->  		return 0;
->  	}
-> +
-> +	regp  = get_arm64_ftr_reg(sys_id);
-> +	if (regp && regp->override_mask && regp->override_val) {
-> +		val &= ~*regp->override_mask;
-> +		val |= (*regp->override_val & *regp->override_mask);
-> +	}
-> +
-> +	return val;
 
-Ah, now the previous patch makes more sense. I don't particularly like
-this but I can't tell how to work around it. I was hoping that the
-overriding feature behaves more like a secondary CPU that limits all the
-overridden features. However, this approach would fail for FTR_EXACT
-cases (like PAC, though I wonder whether it fails already with your
-previous patch since the boot CPU value won't match the override, hence
-dropping to the safe one).
-
--- 
-Catalin
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
