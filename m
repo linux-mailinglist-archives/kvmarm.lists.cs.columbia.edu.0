@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B89A03015A0
-	for <lists+kvmarm@lfdr.de>; Sat, 23 Jan 2021 15:04:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4487A3015A4
+	for <lists+kvmarm@lfdr.de>; Sat, 23 Jan 2021 15:08:04 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4AC454B161;
-	Sat, 23 Jan 2021 09:04:41 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B80734B15E;
+	Sat, 23 Jan 2021 09:08:03 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,34 +15,34 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7GUoN3J+leQn; Sat, 23 Jan 2021 09:04:41 -0500 (EST)
+	with ESMTP id DcDMWEaRFQYo; Sat, 23 Jan 2021 09:08:03 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 159004B157;
-	Sat, 23 Jan 2021 09:04:40 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9248E4B158;
+	Sat, 23 Jan 2021 09:08:02 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 665E74B14A
- for <kvmarm@lists.cs.columbia.edu>; Sat, 23 Jan 2021 09:04:39 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E3AAB4B14A
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 23 Jan 2021 09:08:00 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id wFoUzodEF4Er for <kvmarm@lists.cs.columbia.edu>;
- Sat, 23 Jan 2021 09:04:37 -0500 (EST)
+ with ESMTP id S+bTcf1Xp9Tl for <kvmarm@lists.cs.columbia.edu>;
+ Sat, 23 Jan 2021 09:07:59 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 87D644B08D
- for <kvmarm@lists.cs.columbia.edu>; Sat, 23 Jan 2021 09:04:37 -0500 (EST)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id D92B222B51;
- Sat, 23 Jan 2021 14:04:33 +0000 (UTC)
-Date: Sat, 23 Jan 2021 14:04:31 +0000
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id DE9394B0E9
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 23 Jan 2021 09:07:59 -0500 (EST)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 2961022B51;
+ Sat, 23 Jan 2021 14:07:56 +0000 (UTC)
+Date: Sat, 23 Jan 2021 14:07:53 +0000
 From: Catalin Marinas <catalin.marinas@arm.com>
 To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v4 13/21] arm64: Allow ID_AA64MMFR1_EL1.VH to be
- overridden from the command line
-Message-ID: <YAws76q0mEoB5NZh@Catalins-MacBook-Air.local>
+Subject: Re: [PATCH v4 14/21] arm64: Honor VHE being disabled from the
+ command-line
+Message-ID: <YAwtuZZpTwwoMqrk@Catalins-MacBook-Air.local>
 References: <20210118094533.2874082-1-maz@kernel.org>
- <20210118094533.2874082-14-maz@kernel.org>
+ <20210118094533.2874082-15-maz@kernel.org>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20210118094533.2874082-14-maz@kernel.org>
+In-Reply-To: <20210118094533.2874082-15-maz@kernel.org>
 Cc: Prasad Sodagudi <psodagud@codeaurora.org>,
  Srinivas Ramana <sramana@codeaurora.org>, linux-kernel@vger.kernel.org,
  Ard Biesheuvel <ardb@kernel.org>, Ajay Patil <pajay@qti.qualcomm.com>,
@@ -64,81 +64,42 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Jan 18, 2021 at 09:45:25AM +0000, Marc Zyngier wrote:
-> diff --git a/arch/arm64/include/asm/cpufeature.h b/arch/arm64/include/asm/cpufeature.h
-> index fe0130d6c0ff..80a5f423444e 100644
-> --- a/arch/arm64/include/asm/cpufeature.h
-> +++ b/arch/arm64/include/asm/cpufeature.h
-> @@ -814,6 +814,9 @@ static inline unsigned int get_vmid_bits(u64 mmfr1)
->  	return 8;
->  }
+On Mon, Jan 18, 2021 at 09:45:26AM +0000, Marc Zyngier wrote:
+> diff --git a/arch/arm64/kernel/hyp-stub.S b/arch/arm64/kernel/hyp-stub.S
+> index 59820f9b8522..bbab2148a2a2 100644
+> --- a/arch/arm64/kernel/hyp-stub.S
+> +++ b/arch/arm64/kernel/hyp-stub.S
+> @@ -77,13 +77,24 @@ SYM_CODE_END(el1_sync)
+>  SYM_CODE_START_LOCAL(mutate_to_vhe)
+>  	// Sanity check: MMU *must* be off
+>  	mrs	x0, sctlr_el2
+> -	tbnz	x0, #0, 1f
+> +	tbnz	x0, #0, 2f
 >  
-> +extern u64 id_aa64mmfr1_val;
-> +extern u64 id_aa64mmfr1_mask;
-> +
->  u32 get_kvm_ipa_limit(void);
->  void dump_cpu_features(void);
+>  	// Needs to be VHE capable, obviously
+>  	mrs	x0, id_aa64mmfr1_el1
+>  	ubfx	x0, x0, #ID_AA64MMFR1_VHE_SHIFT, #4
+> -	cbz	x0, 1f
+> +	cbz	x0, 2f
 >  
-> diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-> index 48a011935d8c..5b9343d2e9f0 100644
-> --- a/arch/arm64/kernel/cpufeature.c
-> +++ b/arch/arm64/kernel/cpufeature.c
-> @@ -555,6 +555,9 @@ static const struct arm64_ftr_bits ftr_raz[] = {
->  
->  #define ARM64_FTR_REG(id, table) ARM64_FTR_REG_OVERRIDE(id, table, NULL, NULL)
->  
-> +u64 id_aa64mmfr1_val;
-> +u64 id_aa64mmfr1_mask;
-> +
->  static const struct __ftr_reg_entry {
->  	u32			sys_id;
->  	struct arm64_ftr_reg 	*reg;
-> @@ -602,7 +605,8 @@ static const struct __ftr_reg_entry {
->  
->  	/* Op1 = 0, CRn = 0, CRm = 7 */
->  	ARM64_FTR_REG(SYS_ID_AA64MMFR0_EL1, ftr_id_aa64mmfr0),
-> -	ARM64_FTR_REG(SYS_ID_AA64MMFR1_EL1, ftr_id_aa64mmfr1),
-> +	ARM64_FTR_REG_OVERRIDE(SYS_ID_AA64MMFR1_EL1, ftr_id_aa64mmfr1,
-> +			       &id_aa64mmfr1_val, &id_aa64mmfr1_mask),
->  	ARM64_FTR_REG(SYS_ID_AA64MMFR2_EL1, ftr_id_aa64mmfr2),
->  
->  	/* Op1 = 0, CRn = 1, CRm = 2 */
-> diff --git a/arch/arm64/kernel/idreg-override.c b/arch/arm64/kernel/idreg-override.c
-> index 392f93b67103..75d9845f489b 100644
-> --- a/arch/arm64/kernel/idreg-override.c
-> +++ b/arch/arm64/kernel/idreg-override.c
-> @@ -10,6 +10,7 @@
->  #include <linux/libfdt.h>
->  
->  #include <asm/cacheflush.h>
-> +#include <asm/cpufeature.h>
->  #include <asm/setup.h>
->  
->  struct reg_desc {
-> @@ -22,7 +23,18 @@ struct reg_desc {
->  	} 			fields[];
->  };
->  
-> +static const struct reg_desc mmfr1 __initdata = {
-> +	.name		= "id_aa64mmfr1",
-> +	.val		= &id_aa64mmfr1_val,
-> +	.mask		= &id_aa64mmfr1_mask,
-> +	.fields		= {
-> +	        { "vh", ID_AA64MMFR1_VHE_SHIFT },
-> +		{}
-> +	},
-> +};
-> +
->  static const struct reg_desc * const regs[] __initdata = {
-> +	&mmfr1,
->  };
+> +	// Check whether VHE is disabled from the command line
+> +	adr_l	x1, id_aa64mmfr1_val
+> +	ldr	x0, [x1]
+> +	adr_l	x1, id_aa64mmfr1_mask
+> +	ldr	x1, [x1]
+> +	ubfx	x0, x0, #ID_AA64MMFR1_VHE_SHIFT, #4
+> +	ubfx	x1, x1, #ID_AA64MMFR1_VHE_SHIFT, #4
+> +	cbz	x1, 1f
+> +	and	x0, x0, x1
+> +	cbz	x0, 2f
+> +1:
 
-I'm ok in principle with how all these link together. I wonder however
-if we could skip the separate u64 variables and just have a struct
-reg_override with val and mask u64 rather than pointers. The
-ARM64_FTR_REG_OVERRIDE macro takes a pointer to this new struct
-reg_override and can access val/mask directly. Some 'const' may need to
-be dropped.
+I can see the advantage here in separate id_aa64mmfr1_val/mask but we
+could use some asm offsets here and keep the pointer indirection simpler
+in C code. You'd just need something like 'adr_l mmfr1_ovrd + VAL_OFFSET'.
+
+Anyway, if you have a strong preference for the current approach, leave
+it as is.
 
 -- 
 Catalin
