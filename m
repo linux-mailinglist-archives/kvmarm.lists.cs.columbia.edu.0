@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B358B301D5F
-	for <lists+kvmarm@lfdr.de>; Sun, 24 Jan 2021 16:59:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 299FD301D73
+	for <lists+kvmarm@lfdr.de>; Sun, 24 Jan 2021 17:21:57 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F05424B338;
-	Sun, 24 Jan 2021 10:59:14 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A09604B366;
+	Sun, 24 Jan 2021 11:21:56 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,43 +15,43 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 55CKAvTmEV3v; Sun, 24 Jan 2021 10:59:14 -0500 (EST)
+	with ESMTP id WcDMX9YAHAMM; Sun, 24 Jan 2021 11:21:56 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BD86E4B336;
-	Sun, 24 Jan 2021 10:59:13 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7251B4B361;
+	Sun, 24 Jan 2021 11:21:55 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D3D284B32B
- for <kvmarm@lists.cs.columbia.edu>; Sun, 24 Jan 2021 10:59:12 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CAC444B35E
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 24 Jan 2021 11:21:53 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id y6LITsbtOVm6 for <kvmarm@lists.cs.columbia.edu>;
- Sun, 24 Jan 2021 10:59:11 -0500 (EST)
+ with ESMTP id k6VlDaBnZyRz for <kvmarm@lists.cs.columbia.edu>;
+ Sun, 24 Jan 2021 11:21:52 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C67164B326
- for <kvmarm@lists.cs.columbia.edu>; Sun, 24 Jan 2021 10:59:11 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id AA6984B2BD
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 24 Jan 2021 11:21:52 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 9CDCB225A9;
- Sun, 24 Jan 2021 15:59:10 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 94703229F0;
+ Sun, 24 Jan 2021 16:21:51 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=wait-a-minute.misterjones.org)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1l3hnA-009kUq-H1; Sun, 24 Jan 2021 15:59:08 +0000
-Date: Sun, 24 Jan 2021 15:59:07 +0000
-Message-ID: <87wnw2jph0.wl-maz@kernel.org>
+ id 1l3i97-009kdA-Fk; Sun, 24 Jan 2021 16:21:49 +0000
+Date: Sun, 24 Jan 2021 16:21:47 +0000
+Message-ID: <87v9bmjof8.wl-maz@kernel.org>
 From: Marc Zyngier <maz@kernel.org>
 To: Catalin Marinas <catalin.marinas@arm.com>
-Subject: Re: [PATCH v4 14/21] arm64: Honor VHE being disabled from the
- command-line
-In-Reply-To: <YAwtuZZpTwwoMqrk@Catalins-MacBook-Air.local>
+Subject: Re: [PATCH v4 12/21] arm64: cpufeature: Add an early command-line
+ cpufeature override facility
+In-Reply-To: <YAwoGDODQKq3798H@Catalins-MacBook-Air.local>
 References: <20210118094533.2874082-1-maz@kernel.org>
- <20210118094533.2874082-15-maz@kernel.org>
- <YAwtuZZpTwwoMqrk@Catalins-MacBook-Air.local>
+ <20210118094533.2874082-13-maz@kernel.org>
+ <YAwoGDODQKq3798H@Catalins-MacBook-Air.local>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
  (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -88,49 +88,46 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Sat, 23 Jan 2021 14:07:53 +0000,
+On Sat, 23 Jan 2021 13:43:52 +0000,
 Catalin Marinas <catalin.marinas@arm.com> wrote:
 > 
-> On Mon, Jan 18, 2021 at 09:45:26AM +0000, Marc Zyngier wrote:
-> > diff --git a/arch/arm64/kernel/hyp-stub.S b/arch/arm64/kernel/hyp-stub.S
-> > index 59820f9b8522..bbab2148a2a2 100644
-> > --- a/arch/arm64/kernel/hyp-stub.S
-> > +++ b/arch/arm64/kernel/hyp-stub.S
-> > @@ -77,13 +77,24 @@ SYM_CODE_END(el1_sync)
-> >  SYM_CODE_START_LOCAL(mutate_to_vhe)
-> >  	// Sanity check: MMU *must* be off
-> >  	mrs	x0, sctlr_el2
-> > -	tbnz	x0, #0, 1f
-> > +	tbnz	x0, #0, 2f
-> >  
-> >  	// Needs to be VHE capable, obviously
-> >  	mrs	x0, id_aa64mmfr1_el1
-> >  	ubfx	x0, x0, #ID_AA64MMFR1_VHE_SHIFT, #4
-> > -	cbz	x0, 1f
-> > +	cbz	x0, 2f
-> >  
-> > +	// Check whether VHE is disabled from the command line
-> > +	adr_l	x1, id_aa64mmfr1_val
-> > +	ldr	x0, [x1]
-> > +	adr_l	x1, id_aa64mmfr1_mask
-> > +	ldr	x1, [x1]
-> > +	ubfx	x0, x0, #ID_AA64MMFR1_VHE_SHIFT, #4
-> > +	ubfx	x1, x1, #ID_AA64MMFR1_VHE_SHIFT, #4
-> > +	cbz	x1, 1f
-> > +	and	x0, x0, x1
-> > +	cbz	x0, 2f
-> > +1:
+> On Mon, Jan 18, 2021 at 09:45:24AM +0000, Marc Zyngier wrote:
+> > +struct reg_desc {
+> > +	const char * const	name;
+> > +	u64 * const		val;
+> > +	u64 * const		mask;
+> > +	struct {
+> > +		const char * const	name;
+> > +		u8			 shift;
+> > +	} 			fields[];
+> > +};
 > 
-> I can see the advantage here in separate id_aa64mmfr1_val/mask but we
-> could use some asm offsets here and keep the pointer indirection simpler
-> in C code. You'd just need something like 'adr_l mmfr1_ovrd + VAL_OFFSET'.
+> Sorry, I didn't see this earlier. Do we need to add all these consts
+> here? So you want the pointers to be const but why is 'shift' special
+> and not a const then? Is it modified later?
 > 
-> Anyway, if you have a strong preference for the current approach, leave
-> it as is.
+> Would this not work:
+> 
+> struct reg_desc {
+> 	const char	*name;
+> 	u64		*val;
+> 	u64		*mask;
+> 	struct {
+> 		const char	*name;
+> 		u8		shift;
+> 	} fields[];
+> };
+> 
+> > +static const struct reg_desc * const regs[] __initdata = {
+> 
+> as we already declare the whole struct reg_desc pointers here as const.
+> I may have confused myself...
 
-I've now moved over to a structure containing both val/mask, meaning
-that we only need to keep a single pointer around in the various
-feature descriptors. It certainly looks better.
+It definitely is better. Specially given that we throw all of this
+away right after boot, there is no harm in keeping it simple.
+
+I've also renamed "reg_desc" to "ftr_set_desc", because we don't
+always describe a register (like for kaslr).
 
 Thanks,
 
