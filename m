@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B4EE3027A3
-	for <lists+kvmarm@lfdr.de>; Mon, 25 Jan 2021 17:19:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 92C653027E6
+	for <lists+kvmarm@lfdr.de>; Mon, 25 Jan 2021 17:33:34 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B0C7B4B625;
-	Mon, 25 Jan 2021 11:18:59 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2919B4B5E8;
+	Mon, 25 Jan 2021 11:33:34 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,46 +15,52 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id lPbAQMaod7BW; Mon, 25 Jan 2021 11:18:59 -0500 (EST)
+	with ESMTP id RMkdxzp7BP0Q; Mon, 25 Jan 2021 11:33:34 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 980D44B61E;
-	Mon, 25 Jan 2021 11:18:58 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C1204B537;
+	Mon, 25 Jan 2021 11:33:33 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6DF1B4B614
- for <kvmarm@lists.cs.columbia.edu>; Mon, 25 Jan 2021 11:18:57 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5B02E4B526
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 25 Jan 2021 11:33:32 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id DsW44hnL0BkR for <kvmarm@lists.cs.columbia.edu>;
- Mon, 25 Jan 2021 11:18:56 -0500 (EST)
+ with ESMTP id QaUlT4H8cexc for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 25 Jan 2021 11:33:31 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7E3B24B45F
- for <kvmarm@lists.cs.columbia.edu>; Mon, 25 Jan 2021 11:18:56 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 685AD4B524
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 25 Jan 2021 11:33:31 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 61CCE229C5;
- Mon, 25 Jan 2021 16:18:55 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 5065F22510;
+ Mon, 25 Jan 2021 16:33:30 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=hot-poop.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1l44Zp-009uYc-Ce; Mon, 25 Jan 2021 16:18:53 +0000
+ id 1l44nw-009ujO-DD; Mon, 25 Jan 2021 16:33:28 +0000
 From: Marc Zyngier <maz@kernel.org>
-To: kvmarm@lists.cs.columbia.edu, Andrew Scull <ascull@google.com>,
- kernel-team@android.com
-Subject: Re: (subset) [PATCH 0/2] __do_hyp_init fix and tweak
-Date: Mon, 25 Jan 2021 16:18:44 +0000
-Message-Id: <161159149159.2330090.18058973818718400886.b4-ty@kernel.org>
+To: Catalin Marinas <catalin.marinas@arm.com>,
+ Yanan Wang <wangyanan55@huawei.com>, linux-arm-kernel@lists.infradead.org,
+ Will Deacon <will@kernel.org>, kvm@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 0/3] Some optimization for stage-2 translation
+Date: Mon, 25 Jan 2021 16:33:25 +0000
+Message-Id: <161159237705.2330282.4465806083809381814.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210125145415.122439-1-ascull@google.com>
-References: <20210125145415.122439-1-ascull@google.com>
+In-Reply-To: <20210114121350.123684-1-wangyanan55@huawei.com>
+References: <20210114121350.123684-1-wangyanan55@huawei.com>
 MIME-Version: 1.0
 X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, ascull@google.com,
- kernel-team@android.com
+X-SA-Exim-Rcpt-To: catalin.marinas@arm.com, wangyanan55@huawei.com,
+ linux-arm-kernel@lists.infradead.org, will@kernel.org, kvm@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org,
+ zhukeqian1@huawei.com, james.morse@arm.com, yuzenghui@huawei.com,
+ suzuki.poulose@arm.com, julien.thierry.kdev@gmail.com, yezengruan@huawei.com,
+ gshan@redhat.com, wanghaibin.wang@huawei.com, qperret@google.com
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
@@ -74,23 +80,24 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, 25 Jan 2021 14:54:13 +0000, Andrew Scull wrote:
-> These apply on 5.11-rc4. The second is a fix for a clobbered register,
-> the first is more cosmetic.
+On Thu, 14 Jan 2021 20:13:47 +0800, Yanan Wang wrote:
+> This patch series(v3) make some optimization for stage-2 translation.
 > 
-> Thanks, David, for helping with build and boot tests after my logistical
-> issues.
-> 
-> Andrew Scull (2):
->   KVM: arm64: Simplify __kvm_hyp_init HVC detection
->   KVM: arm64: Don't clobber x4 in __do_hyp_init
+> About patch-1:
+> Procedures of hyp stage-1 map and guest stage-2 map are quite different,
+> but they are now tied closely by function kvm_set_valid_leaf_pte().
+> So adjust the relative code for ease of code maintenance in the future.
 > 
 > [...]
 
-Applied to kvm-arm64/misc-5.12, thanks!
+Applied to kvm-arm64/concurrent-translation-fault, thanks!
 
-[1/2] KVM: arm64: Simplify __kvm_hyp_init HVC detection
-      commit: 87b26801f02ca9d7a110eb598dae8cd5d3bcace2
+[1/3] KVM: arm64: Adjust partial code of hyp stage-1 map and guest stage-2 map
+      commit: 8ed80051c8c31d1587722fdb3af16677eba9d693
+[2/3] KVM: arm64: Filter out the case of only changing permissions from stage-2 map path
+      commit: 694d071f8d85d504055540a27f0dbe9dbf44584e
+[3/3] KVM: arm64: Mark the page dirty only if the fault is handled successfully
+      commit: 509552e65ae8287178a5cdea2d734dcd2d6380ab
 
 Cheers,
 
