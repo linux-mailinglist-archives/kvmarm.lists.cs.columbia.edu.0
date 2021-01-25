@@ -2,59 +2,70 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A7405302089
-	for <lists+kvmarm@lfdr.de>; Mon, 25 Jan 2021 03:47:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 49B2B3023D9
+	for <lists+kvmarm@lfdr.de>; Mon, 25 Jan 2021 11:50:38 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2073C4B4FE;
-	Sun, 24 Jan 2021 21:47:02 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EDC1E4B5EB;
+	Mon, 25 Jan 2021 05:50:37 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Ek7Y8Cy9AmwV; Sun, 24 Jan 2021 21:47:02 -0500 (EST)
+	with ESMTP id zn3rIJryKd5j; Mon, 25 Jan 2021 05:50:36 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E10464B4E0;
-	Sun, 24 Jan 2021 21:47:00 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 69D1E4B5EE;
+	Mon, 25 Jan 2021 05:50:33 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A7AC84B45C
- for <kvmarm@lists.cs.columbia.edu>; Sun, 24 Jan 2021 21:46:59 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A7CC74B5D4
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 25 Jan 2021 05:50:32 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 3nJ0nPQDSHTk for <kvmarm@lists.cs.columbia.edu>;
- Sun, 24 Jan 2021 21:46:58 -0500 (EST)
-Received: from szxga06-in.huawei.com (szxga06-in.huawei.com [45.249.212.32])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8D6534B458
- for <kvmarm@lists.cs.columbia.edu>; Sun, 24 Jan 2021 21:46:57 -0500 (EST)
-Received: from DGGEMS409-HUB.china.huawei.com (unknown [172.30.72.58])
- by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4DPDkp1PRwzjBfN;
- Mon, 25 Jan 2021 10:45:54 +0800 (CST)
-Received: from DESKTOP-5IS4806.china.huawei.com (10.174.184.42) by
- DGGEMS409-HUB.china.huawei.com (10.3.19.209) with Microsoft SMTP Server id
- 14.3.498.0; Mon, 25 Jan 2021 10:46:45 +0800
-From: Keqian Zhu <zhukeqian1@huawei.com>
-To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <kvm@vger.kernel.org>, <kvmarm@lists.cs.columbia.edu>,
- <iommu@lists.linux-foundation.org>, Alex Williamson
- <alex.williamson@redhat.com>, Kirti Wankhede <kwankhede@nvidia.com>,
- "Cornelia Huck" <cohuck@redhat.com>
-Subject: [PATCH] vfio/iommu_type1: Mantainance a counter for non_pinned_groups
-Date: Mon, 25 Jan 2021 10:46:42 +0800
-Message-ID: <20210125024642.14604-1-zhukeqian1@huawei.com>
-X-Mailer: git-send-email 2.8.4.windows.1
+ with ESMTP id wJ-8cFmRvCZk for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 25 Jan 2021 05:50:29 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 342314B51F
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 25 Jan 2021 05:50:29 -0500 (EST)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id ED02821D81;
+ Mon, 25 Jan 2021 10:50:27 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1l3zRx-009rDe-N4; Mon, 25 Jan 2021 10:50:25 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ linux-kernel@vger.kernel.org
+Subject: [PATCH v5 00/21] arm64: Early CPU feature override,
+ and applications to VHE, BTI and PAuth
+Date: Mon, 25 Jan 2021 10:49:58 +0000
+Message-Id: <20210125105019.2946057-1-maz@kernel.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-X-Originating-IP: [10.174.184.42]
-X-CFilter-Loop: Reflected
-Cc: Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
- Joerg Roedel <joro@8bytes.org>, Daniel Lezcano <daniel.lezcano@linaro.org>,
- Alexios Zavras <alexios.zavras@intel.com>, Catalin
- Marinas <catalin.marinas@arm.com>, Thomas Gleixner <tglx@linutronix.de>,
- Robin Murphy <robin.murphy@arm.com>, Andrew Morton <akpm@linux-foundation.org>
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org,
+ catalin.marinas@arm.com, will@kernel.org, mark.rutland@arm.com,
+ dbrazdil@google.com, alexandru.elisei@arm.com, ardb@kernel.org,
+ jingzhangos@google.com, pajay@qti.qualcomm.com, psodagud@codeaurora.org,
+ sramana@codeaurora.org, james.morse@arm.com, julien.thierry.kdev@gmail.com,
+ suzuki.poulose@arm.com, kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Prasad Sodagudi <psodagud@codeaurora.org>,
+ Srinivas Ramana <sramana@codeaurora.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Ajay Patil <pajay@qti.qualcomm.com>,
+ kernel-team@android.com, Will Deacon <will@kernel.org>,
+ Ard Biesheuvel <ardb@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -71,117 +82,136 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-With this counter, we never need to traverse all groups to update
-pinned_scope of vfio_iommu.
+It recently came to light that there is a need to be able to override
+some CPU features very early on, before the kernel is fully up and
+running. The reasons for this range from specific feature support
+(such as using Protected KVM on VHE HW, which is the main motivation
+for this work) to errata workaround (a feature is broken on a CPU and
+needs to be turned off, or rather not enabled).
 
-Suggested-by: Alex Williamson <alex.williamson@redhat.com>
-Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
----
- drivers/vfio/vfio_iommu_type1.c | 40 +++++----------------------------
- 1 file changed, 5 insertions(+), 35 deletions(-)
+This series tries to offer a limited framework for this kind of
+problems, by allowing a set of options to be passed on the
+command-line and altering the feature set that the cpufeature
+subsystem exposes to the rest of the kernel. Note that this doesn't
+change anything for code that directly uses the CPU ID registers.
 
-diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
-index 0b4dedaa9128..bb4bbcc79101 100644
---- a/drivers/vfio/vfio_iommu_type1.c
-+++ b/drivers/vfio/vfio_iommu_type1.c
-@@ -73,7 +73,7 @@ struct vfio_iommu {
- 	bool			v2;
- 	bool			nesting;
- 	bool			dirty_page_tracking;
--	bool			pinned_page_dirty_scope;
-+	uint64_t		num_non_pinned_groups;
- };
- 
- struct vfio_domain {
-@@ -148,7 +148,6 @@ static int put_pfn(unsigned long pfn, int prot);
- static struct vfio_group *vfio_iommu_find_iommu_group(struct vfio_iommu *iommu,
- 					       struct iommu_group *iommu_group);
- 
--static void update_pinned_page_dirty_scope(struct vfio_iommu *iommu);
- /*
-  * This code handles mapping and unmapping of user data buffers
-  * into DMA'ble space using the IOMMU
-@@ -714,7 +713,7 @@ static int vfio_iommu_type1_pin_pages(void *iommu_data,
- 	group = vfio_iommu_find_iommu_group(iommu, iommu_group);
- 	if (!group->pinned_page_dirty_scope) {
- 		group->pinned_page_dirty_scope = true;
--		update_pinned_page_dirty_scope(iommu);
-+		iommu->num_non_pinned_groups--;
- 	}
- 
- 	goto pin_done;
-@@ -991,7 +990,7 @@ static int update_user_bitmap(u64 __user *bitmap, struct vfio_iommu *iommu,
- 	 * mark all pages dirty if any IOMMU capable device is not able
- 	 * to report dirty pages and all pages are pinned and mapped.
- 	 */
--	if (!iommu->pinned_page_dirty_scope && dma->iommu_mapped)
-+	if (iommu->num_non_pinned_groups && dma->iommu_mapped)
- 		bitmap_set(dma->bitmap, 0, nbits);
- 
- 	if (shift) {
-@@ -1622,33 +1621,6 @@ static struct vfio_group *vfio_iommu_find_iommu_group(struct vfio_iommu *iommu,
- 	return group;
- }
- 
--static void update_pinned_page_dirty_scope(struct vfio_iommu *iommu)
--{
--	struct vfio_domain *domain;
--	struct vfio_group *group;
--
--	list_for_each_entry(domain, &iommu->domain_list, next) {
--		list_for_each_entry(group, &domain->group_list, next) {
--			if (!group->pinned_page_dirty_scope) {
--				iommu->pinned_page_dirty_scope = false;
--				return;
--			}
--		}
--	}
--
--	if (iommu->external_domain) {
--		domain = iommu->external_domain;
--		list_for_each_entry(group, &domain->group_list, next) {
--			if (!group->pinned_page_dirty_scope) {
--				iommu->pinned_page_dirty_scope = false;
--				return;
--			}
--		}
--	}
--
--	iommu->pinned_page_dirty_scope = true;
--}
--
- static bool vfio_iommu_has_sw_msi(struct list_head *group_resv_regions,
- 				  phys_addr_t *base)
- {
-@@ -2057,8 +2029,6 @@ static int vfio_iommu_type1_attach_group(void *iommu_data,
- 			 * addition of a dirty tracking group.
- 			 */
- 			group->pinned_page_dirty_scope = true;
--			if (!iommu->pinned_page_dirty_scope)
--				update_pinned_page_dirty_scope(iommu);
- 			mutex_unlock(&iommu->lock);
- 
- 			return 0;
-@@ -2188,7 +2158,7 @@ static int vfio_iommu_type1_attach_group(void *iommu_data,
- 	 * demotes the iommu scope until it declares itself dirty tracking
- 	 * capable via the page pinning interface.
- 	 */
--	iommu->pinned_page_dirty_scope = false;
-+	iommu->num_non_pinned_groups++;
- 	mutex_unlock(&iommu->lock);
- 	vfio_iommu_resv_free(&group_resv_regions);
- 
-@@ -2416,7 +2386,7 @@ static void vfio_iommu_type1_detach_group(void *iommu_data,
- 	 * to be promoted.
- 	 */
- 	if (update_dirty_scope)
--		update_pinned_page_dirty_scope(iommu);
-+		iommu->num_non_pinned_groups--;
- 	mutex_unlock(&iommu->lock);
- }
- 
+The series completely changes the way a VHE-capable system boots, by
+*always* booting non-VHE first, and then upgrading to VHE when deemed
+capable. Although it sounds scary, this is actually simple to
+implement (and I wish I had done that five years ago). The "upgrade to
+VHE" path is then conditioned on the VHE feature not being disabled
+from the command-line.
+
+Said command-line parsing borrows a lot from the kaslr code, and
+subsequently allows the "nokaslr" option to be moved to the new
+infrastructure (though it all looks a bit... odd).
+
+Further patches now add support for disabling BTI and PAuth, the
+latter being based on an initial series by Srinivas Ramana[0]. There
+is some ongoing discussions about being able to disable MTE, but no
+clear resolution on that subject yet.
+
+This has been tested on multiple VHE and non-VHE systems.
+
+* From v4 [4]:
+  - Documentation fixes
+  - Moved the val/mask pair into a arm64_ftr_override structure,
+    leading to simpler code
+  - All arm64_ftr_reg now have a default override, which simplifies
+    the code a bit further
+  - Dropped some of the "const" attributes
+  - Renamed init_shadow_regs() to init_feature_override()
+  - Renamed struct reg_desc to struct ftr_set_desc
+  - Refactored command-line parsing
+  - Simplified handling of VHE being disabled on the cmdline
+  - Turn EL1 S1 MMU off on switch to VHE
+  - HVC_VHE_RESTART now returns an error code on failure
+  - Added missing asmlinkage and dummy prototypes
+  - Collected Acks and RBs from David, Catalin and Suzuki
+
+* From v3 [3]:
+  - Fixed the VHE_RESTART stub (duh!)
+  - Switched to using arm64_ftr_safe_value() instead of the user
+    provided value
+  - Per-feature override warning
+
+* From v2 [2]:
+  - Simplify the VHE_RESTART stub
+  - Fixed a number of spelling mistakes, and hopefully introduced a
+    few more
+  - Override features in __read_sysreg_by_encoding()
+  - Allow both BTI and PAuth to be overridden on the command line
+  - Rebased on -rc3
+
+* From v1 [1]:
+  - Fix SPE init on VHE when EL2 doesn't own SPE
+  - Fix re-init when KASLR is used
+  - Handle the resume path
+  - Rebased to 5.11-rc2
+
+[0] https://lore.kernel.org/r/1610152163-16554-1-git-send-email-sramana@codeaurora.org
+[1] https://lore.kernel.org/r/20201228104958.1848833-1-maz@kernel.org
+[2] https://lore.kernel.org/r/20210104135011.2063104-1-maz@kernel.org
+[3] https://lore.kernel.org/r/20210111132811.2455113-1-maz@kernel.org
+[4] https://lore.kernel.org/r/20210118094533.2874082-1-maz@kernel.org
+
+Marc Zyngier (20):
+  arm64: Fix labels in el2_setup macros
+  arm64: Fix outdated TCR setup comment
+  arm64: Turn the MMU-on sequence into a macro
+  arm64: Provide an 'upgrade to VHE' stub hypercall
+  arm64: Initialise as nVHE before switching to VHE
+  arm64: Move VHE-specific SPE setup to mutate_to_vhe()
+  arm64: Simplify init_el2_state to be non-VHE only
+  arm64: Move SCTLR_EL1 initialisation to EL-agnostic code
+  arm64: cpufeature: Add global feature override facility
+  arm64: cpufeature: Use IDreg override in __read_sysreg_by_encoding()
+  arm64: Extract early FDT mapping from kaslr_early_init()
+  arm64: cpufeature: Add an early command-line cpufeature override
+    facility
+  arm64: Allow ID_AA64MMFR1_EL1.VH to be overridden from the command
+    line
+  arm64: Honor VHE being disabled from the command-line
+  arm64: Add an aliasing facility for the idreg override
+  arm64: Make kvm-arm.mode={nvhe, protected} an alias of
+    id_aa64mmfr1.vh=0
+  KVM: arm64: Document HVC_VHE_RESTART stub hypercall
+  arm64: Move "nokaslr" over to the early cpufeature infrastructure
+  arm64: cpufeatures: Allow disabling of BTI from the command-line
+  arm64: cpufeatures: Allow disabling of Pointer Auth from the
+    command-line
+
+Srinivas Ramana (1):
+  arm64: Defer enabling pointer authentication on boot core
+
+ .../admin-guide/kernel-parameters.txt         |   9 +
+ Documentation/virt/kvm/arm/hyp-abi.rst        |   9 +
+ arch/arm64/include/asm/assembler.h            |  17 ++
+ arch/arm64/include/asm/cpufeature.h           |  11 +
+ arch/arm64/include/asm/el2_setup.h            |  60 ++----
+ arch/arm64/include/asm/pointer_auth.h         |  10 +
+ arch/arm64/include/asm/setup.h                |  11 +
+ arch/arm64/include/asm/stackprotector.h       |   1 +
+ arch/arm64/include/asm/virt.h                 |   7 +-
+ arch/arm64/kernel/Makefile                    |   2 +-
+ arch/arm64/kernel/asm-offsets.c               |   3 +
+ arch/arm64/kernel/cpufeature.c                |  70 +++++-
+ arch/arm64/kernel/head.S                      |  75 ++-----
+ arch/arm64/kernel/hyp-stub.S                  | 133 +++++++++++-
+ arch/arm64/kernel/idreg-override.c            | 202 ++++++++++++++++++
+ arch/arm64/kernel/kaslr.c                     |  43 +---
+ arch/arm64/kernel/setup.c                     |  15 ++
+ arch/arm64/kernel/sleep.S                     |   1 +
+ arch/arm64/kvm/arm.c                          |   3 +
+ arch/arm64/kvm/hyp/nvhe/hyp-init.S            |   2 +-
+ arch/arm64/mm/mmu.c                           |   2 +-
+ arch/arm64/mm/proc.S                          |  16 +-
+ 22 files changed, 532 insertions(+), 170 deletions(-)
+ create mode 100644 arch/arm64/include/asm/setup.h
+ create mode 100644 arch/arm64/kernel/idreg-override.c
+
 -- 
-2.19.1
+2.29.2
 
 _______________________________________________
 kvmarm mailing list
