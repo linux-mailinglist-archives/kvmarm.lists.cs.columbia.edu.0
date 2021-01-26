@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DBC56303F12
-	for <lists+kvmarm@lfdr.de>; Tue, 26 Jan 2021 14:43:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BFB2303F00
+	for <lists+kvmarm@lfdr.de>; Tue, 26 Jan 2021 14:42:24 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7AF834B297;
-	Tue, 26 Jan 2021 08:43:32 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CE3BD4B2B5;
+	Tue, 26 Jan 2021 08:42:23 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,36 +16,38 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZT0Ko7bgXmtY; Tue, 26 Jan 2021 08:43:32 -0500 (EST)
+	with ESMTP id s56syEi2N3nN; Tue, 26 Jan 2021 08:42:23 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4CC924B2B2;
-	Tue, 26 Jan 2021 08:43:31 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 974364B19D;
+	Tue, 26 Jan 2021 08:42:22 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4C4424B297
- for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Jan 2021 08:43:30 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 045894B166
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Jan 2021 08:42:21 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ZHnVavRXdK8O for <kvmarm@lists.cs.columbia.edu>;
- Tue, 26 Jan 2021 08:43:29 -0500 (EST)
+ with ESMTP id ONAXpOjbl-Nx for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 26 Jan 2021 08:42:18 -0500 (EST)
 Received: from szxga06-in.huawei.com (szxga06-in.huawei.com [45.249.212.32])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id DE9434B147
- for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Jan 2021 08:43:28 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9E9734B297
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Jan 2021 08:42:18 -0500 (EST)
 Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.60])
- by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4DQ7DT5ZtPzjCXP;
+ by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4DQ7DT5z5yzjCXS;
  Tue, 26 Jan 2021 21:41:13 +0800 (CST)
 Received: from DESKTOP-TMVL5KK.china.huawei.com (10.174.187.128) by
  DGGEMS406-HUB.china.huawei.com (10.3.19.206) with Microsoft SMTP Server id
- 14.3.498.0; Tue, 26 Jan 2021 21:42:04 +0800
+ 14.3.498.0; Tue, 26 Jan 2021 21:42:05 +0800
 From: Yanan Wang <wangyanan55@huawei.com>
 To: <kvmarm@lists.cs.columbia.edu>, <linux-arm-kernel@lists.infradead.org>,
  <kvm@vger.kernel.org>, <linux-kernel@vger.kernel.org>, Marc Zyngier
  <maz@kernel.org>, Will Deacon <will@kernel.org>, Catalin Marinas
  <catalin.marinas@arm.com>
-Subject: [RFC PATCH v1 0/5] Enable CPU TTRem feature for stage-2
-Date: Tue, 26 Jan 2021 21:41:57 +0800
-Message-ID: <20210126134202.381996-1-wangyanan55@huawei.com>
+Subject: [RFC PATCH v1 1/5] arm64: cpufeature: Detect the ARMv8.4 TTRem feature
+Date: Tue, 26 Jan 2021 21:41:58 +0800
+Message-ID: <20210126134202.381996-2-wangyanan55@huawei.com>
 X-Mailer: git-send-email 2.8.4.windows.1
+In-Reply-To: <20210126134202.381996-1-wangyanan55@huawei.com>
+References: <20210126134202.381996-1-wangyanan55@huawei.com>
 MIME-Version: 1.0
 X-Originating-IP: [10.174.187.128]
 X-CFilter-Loop: Reflected
@@ -65,56 +67,60 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi all,
-This series enable CPU TTRem feature for stage-2 page table and a RFC is sent
-for some comments, thanks.
-
 The ARMv8.4 TTRem feature offers 3 levels of support when changing block
-size without changing any other parameters that are listed as requiring use
-of break-before-make. And I found that maybe we can use this feature to make
-some improvement for stage-2 page table and the following explains what
-TTRem exactly does for the improvement.
+size without changing any other parameters that are listed as requiring
+use of break-before-make.
 
-If migration of a VM with hugepages is canceled midway, KVM will adjust the
-stage-2 table mappings back to block mappings. We currently use BBM to replace
-the table entry with a block entry. Take adjustment of 1G block mapping as an
-example, with BBM procedures, we have to invalidate the old table entry first,
-flush TLB and unmap the old table mappings, right before installing the new
-block entry.
+With level 0 supported, software must use break-before-make to avoid the
+possible hardware problems. With level 1 supported, besides use of BBM,
+software can also make use of the nT block translation entry. With level
+2 supported, besides approaches of BBM and nT, software can also directly
+change block size, but TLB conflicts possibly occur as a result.
 
-So there will be a bit long period when the old table entry is invalid before
-installation of the new block entry, if other vCPUs access any guest page within
-the 1G range during this period and find the table entry invalid, they will all
-exit from guest with a translation fault. Actually, these translation faults
-are not necessary, because the block mapping will be built later. Besides, KVM
-will still try to build 1G block mappings for these spurious translation faults,
-and will perform cache maintenance operations, page table walk, etc.
+We have found a place where TTRem can be used to improve the performance
+in guest stage-2 translation. So detact the TTRem feature here.
 
-In summary, the spurious faults are caused by invalidation in BBM procedures.
-Approaches of TTRem level 1,2 ensure that there will not be a moment when the
-old table entry is invalid before installation of the new block entry. However,
-level-2 method will possibly lead to a TLB conflict which is bothering, so we
-use nT both at level-1 and level-2 case to avoid handling TLB conflict aborts.
+Signed-off-by: Yanan Wang <wangyanan55@huawei.com>
+---
+ arch/arm64/include/asm/cpucaps.h |  3 ++-
+ arch/arm64/kernel/cpufeature.c   | 10 ++++++++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-For an implementation which meets level 1 or level 2, the CPU has two responses
-to choose when accessing a block table entry with nT bit set: Firstly, CPU will
-generate a translation fault, the effect of this response is simier to BBM.
-Secondly, CPU can use the block entry for translation. So with the second kind
-of implementation, the above described spurious translations can be prevented.
-
-Yanan Wang (5):
-  KVM: arm64: Detect the ARMv8.4 TTRem feature
-  KVM: arm64: Add an API to get level of TTRem supported by hardware
-  KVM: arm64: Support usage of TTRem in guest stage-2 translation
-  KVM: arm64: Add handling of coalescing tables into a block mapping
-  KVM: arm64: Adapt page-table code to new handling of coalescing tables
-
- arch/arm64/include/asm/cpucaps.h    |  3 +-
- arch/arm64/include/asm/cpufeature.h | 13 ++++++
- arch/arm64/kernel/cpufeature.c      | 10 +++++
- arch/arm64/kvm/hyp/pgtable.c        | 62 +++++++++++++++++++++++------
- 4 files changed, 74 insertions(+), 14 deletions(-)
-
+diff --git a/arch/arm64/include/asm/cpucaps.h b/arch/arm64/include/asm/cpucaps.h
+index b77d997b173b..e24570ea7444 100644
+--- a/arch/arm64/include/asm/cpucaps.h
++++ b/arch/arm64/include/asm/cpucaps.h
+@@ -66,7 +66,8 @@
+ #define ARM64_WORKAROUND_1508412		58
+ #define ARM64_HAS_LDAPR				59
+ #define ARM64_KVM_PROTECTED_MODE		60
++#define ARM64_HAS_ARMv8_4_TTREM			61
+ 
+-#define ARM64_NCAPS				61
++#define ARM64_NCAPS				62
+ 
+ #endif /* __ASM_CPUCAPS_H */
+diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
+index e99eddec0a46..8295dd1d450b 100644
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -1960,6 +1960,16 @@ static const struct arm64_cpu_capabilities arm64_features[] = {
+ 		.sign = FTR_UNSIGNED,
+ 		.min_field_value = ID_AA64ISAR0_TLB_RANGE,
+ 	},
++	{
++		.desc = "ARMv8.4 TTRem",
++		.type = ARM64_CPUCAP_SYSTEM_FEATURE,
++		.capability = ARM64_HAS_ARMv8_4_TTREM,
++		.sys_reg = SYS_ID_AA64MMFR2_EL1,
++		.sign = FTR_UNSIGNED,
++		.field_pos = ID_AA64MMFR2_BBM_SHIFT,
++		.min_field_value = 1,
++		.matches = has_cpuid_feature,
++	},
+ #ifdef CONFIG_ARM64_HW_AFDBM
+ 	{
+ 		/*
 -- 
 2.19.1
 
