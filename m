@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B638C303D70
-	for <lists+kvmarm@lfdr.de>; Tue, 26 Jan 2021 13:45:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6218303D6E
+	for <lists+kvmarm@lfdr.de>; Tue, 26 Jan 2021 13:45:26 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 661274B286;
-	Tue, 26 Jan 2021 07:45:32 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3A35C4B219;
+	Tue, 26 Jan 2021 07:45:21 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,36 +16,39 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rtrYt-2gRrvq; Tue, 26 Jan 2021 07:45:32 -0500 (EST)
+	with ESMTP id JmuWmRiRSqB7; Tue, 26 Jan 2021 07:45:21 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 286974B195;
-	Tue, 26 Jan 2021 07:45:31 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3FE784B281;
+	Tue, 26 Jan 2021 07:45:20 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D7484B28A
- for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Jan 2021 07:45:29 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CA7364B27C
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Jan 2021 07:45:18 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 5ZxuA3i21kTH for <kvmarm@lists.cs.columbia.edu>;
- Tue, 26 Jan 2021 07:45:28 -0500 (EST)
+ with ESMTP id qQck3xe3tTn9 for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 26 Jan 2021 07:45:16 -0500 (EST)
 Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3629B4B29A
- for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Jan 2021 07:45:26 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id CA13A4B21B
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Jan 2021 07:45:15 -0500 (EST)
 Received: from DGGEMS412-HUB.china.huawei.com (unknown [172.30.72.59])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4DQ5yR2C4WzjDdv;
+ by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4DQ5yR0MSnzjDYt;
  Tue, 26 Jan 2021 20:43:59 +0800 (CST)
 Received: from DESKTOP-5IS4806.china.huawei.com (10.174.184.42) by
  DGGEMS412-HUB.china.huawei.com (10.3.19.212) with Microsoft SMTP Server id
- 14.3.498.0; Tue, 26 Jan 2021 20:45:01 +0800
+ 14.3.498.0; Tue, 26 Jan 2021 20:45:02 +0800
 From: Keqian Zhu <zhukeqian1@huawei.com>
 To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
  <kvm@vger.kernel.org>, <kvmarm@lists.cs.columbia.edu>, Marc Zyngier
  <maz@kernel.org>, Will Deacon <will@kernel.org>, Catalin Marinas
  <catalin.marinas@arm.com>
-Subject: [RFC PATCH 0/7] kvm: arm64: Implement SW/HW combined dirty log
-Date: Tue, 26 Jan 2021 20:44:37 +0800
-Message-ID: <20210126124444.27136-1-zhukeqian1@huawei.com>
+Subject: [RFC PATCH 1/7] arm64: cpufeature: Add API to report system support
+ of HWDBM
+Date: Tue, 26 Jan 2021 20:44:38 +0800
+Message-ID: <20210126124444.27136-2-zhukeqian1@huawei.com>
 X-Mailer: git-send-email 2.8.4.windows.1
+In-Reply-To: <20210126124444.27136-1-zhukeqian1@huawei.com>
+References: <20210126124444.27136-1-zhukeqian1@huawei.com>
 MIME-Version: 1.0
 X-Originating-IP: [10.174.184.42]
 X-CFilter-Loop: Reflected
@@ -64,74 +67,48 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-VGhlIGludGVudGlvbjoKCk9uIGFybTY0IHBsYXRmb3JtLCB3ZSB0cmFja2luZyBkaXJ0eSBsb2cg
-b2YgdkNQVSB0aHJvdWdoIGd1ZXN0IG1lbW9yeSBhYm9ydC4KS1ZNIG9jY3VweXMgc29tZSB2Q1BV
-IHRpbWUgb2YgZ3Vlc3QgdG8gY2hhbmdlIHN0YWdlMiBtYXBwaW5nIGFuZCBtYXJrIGRpcnR5LgpU
-aGlzIGxlYWRzIHRvIGhlYXZ5IHNpZGUgZWZmZWN0IG9uIFZNLCBlc3BlY2lhbGx5IHdoZW4gbXVs
-dGkgdkNQVSByYWNlIGFuZApzb21lIG9mIHRoZW0gYmxvY2sgb24ga3ZtIG1tdV9sb2NrLgoKREJN
-IGlzIGEgSFcgYXV4aWxpYXJ5IGFwcHJvYWNoIHRvIGxvZyBkaXJ0eS4gTU1VIGNoYWdlcyBQVEUg
-dG8gYmUgd3JpdGFibGUgaWYKaXRzIERCTSBiaXQgaXMgc2V0LiBUaGVuIEtWTSBkb2Vzbid0IG9j
-Y3VweSB2Q1BVIHRpbWUgdG8gbG9nIGRpcnR5LgoKQWJvdXQgdGhpcyBwYXRjaCBzZXJpZXM6CgpU
-aGUgYmlnZ2VzdCBwcm9ibGVtIG9mIGFwcGx5IERCTSBmb3Igc3RhZ2UyIGlzIHRoYXQgc29mdHdh
-cmUgbXVzdCBzY2FuIFBUcyB0bwpjb2xsZWN0IGRpcnR5IHN0YXRlLCB3aGljaCBtYXkgY29zdCBt
-dWNoIHRpbWUgYW5kIGFmZmVjdCBkb3dudGltZSBvZiBtaWdyYXRpb24uCgpUaGlzIHNlcmllcyBy
-ZWFsaXplIGEgU1cvSFcgY29tYmluZWQgZGlydHkgbG9nIHRoYXQgY2FuIGVmZmVjdGl2ZWx5IHNv
-bHZlIHRoaXMKcHJvYmxlbSAoVGhlIHNtbXUgc2lkZSBjYW4gYWxzbyB1c2UgdGhpcyBhcHByb2Fj
-aCB0byBzb2x2ZSBkbWEgZGlydHkgbG9nIHRyYWNraW5nKS4KClRoZSBjb3JlIGlkZWEgaXMgdGhh
-dCB3ZSBkbyBub3QgZW5hYmxlIGhhcmR3YXJlIGRpcnR5IGF0IHN0YXJ0IChkbyBub3QgYWRkIERC
-TSBiaXQpLgpXaGVuIGEgYXJiaXRyYXJ5IFBUIG9jY3VycyBmYXVsdCwgd2UgZXhlY3V0ZSBzb2Z0
-IHRyYWNraW5nIGZvciB0aGlzIFBUIGFuZCBlbmFibGUKaGFyZHdhcmUgdHJhY2tpbmcgZm9yIGl0
-cyAqbmVhcmJ5KiBQVHMgKGUuZy4gQWRkIERCTSBiaXQgZm9yIG5lYXJieSAxNlBUcykuIFRoZW4g
-d2hlbgpzeW5jIGRpcnR5IGxvZywgd2UgaGF2ZSBrbm93biBhbGwgUFRzIHdpdGggaGFyZHdhcmUg
-ZGlydHkgZW5hYmxlZCwgc28gd2UgZG8gbm90IG5lZWQKdG8gc2NhbiBhbGwgUFRzLgoKICAgICAg
-ICBtZW0gYWJvcnQgcG9pbnQgICAgICAgICAgICAgbWVtIGFib3J0IHBvaW50CiAgICAgICAgICAg
-ICAg4oaTICAgICAgICAgICAgICAgICAgICAgICAgICAgIOKGkwotLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KICAgICAgICB8Kioq
-KioqKip8ICAgICAgICB8ICAgICAgICB8KioqKioqKip8ICAgICAgICB8ICAgICAgICB8Ci0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LQogICAgICAgICAgICAg4oaRICAgICAgICAgICAgICAgICAgICAgICAgICAgIOKGkQogICAgICAg
-IHNldCBEQk0gYml0IG9mICAgICAgICAgICAgICAgc2V0IERCTSBiaXQgb2YKICAgICB0aGlzIFBU
-IHNlY3Rpb24gKDY0UFRFcykgICAgICB0aGlzIFBUIHNlY3Rpb24gKDY0UFRFcykKCldlIG1heSB3
-b3JyeSB0aGF0IHdoZW4gZGlydHkgcmF0ZSBpcyBvdmVyLWhpZ2ggd2Ugc3RpbGwgbmVlZCB0byBz
-Y2FuIHRvbyBtdWNoIFBUcy4KV2UgbWFpbmx5IGNvbmNlcm4gdGhlIFZNIHN0b3AgdGltZS4gV2l0
-aCBRZW11IGRpcnR5IHJhdGUgdGhyb3R0bGluZywgdGhlIGRpcnR5IG1lbW9yeQppcyBjbG9zaW5n
-IHRvIHRoZSBWTSBzdG9wIHRocmVzaG9sZCwgc28gdGhlcmUgaXMgYSBsaXR0bGUgUFRzIHRvIHNj
-YW4gYWZ0ZXIgVk0gc3RvcC4KCkl0IGhhcyB0aGUgYWR2YW50YWdlcyBvZiBoYXJkd2FyZSB0cmFj
-a2luZyB0aGF0IG1pbmltaXplcyBzaWRlIGVmZmVjdCBvbiB2Q1BVLAphbmQgYWxzbyBoYXMgdGhl
-IGFkdmFudGFnZXMgb2Ygc29mdHdhcmUgdHJhY2tpbmcgdGhhdCBjb250cm9scyB2Q1BVIGRpcnR5
-IHJhdGUuCk1vcmVvdmVyLCBzb2Z0d2FyZSB0cmFja2luZyBoZWxwcyB1cyB0byBzY2FuIFBUcyBh
-dCBzb21lIGZpeGVkIHBvaW50cywgd2hpY2gKZ3JlYXRseSByZWR1Y2VzIHNjYW5uaW5nIHRpbWUu
-IEFuZCB0aGUgYmlnZ2VzdCBiZW5lZml0IGlzIHRoYXQgd2UgY2FuIGFwcGx5IHRoaXMKc29sdXRp
-b24gZm9yIGRtYSBkaXJ0eSB0cmFja2luZy4KClRlc3Q6CgpIb3N0OiBLdW5wZW5nIDkyMCB3aXRo
-IDEyOCBDUFUgNTEyRyBSQU0uIERpc2FibGUgVHJhbnNwYXJlbnQgSHVnZXBhZ2UgKEVuc3VyZSB0
-ZXN0IHJlc3VsdAogICAgICBpcyBub3QgZWZmZWN0ZWQgYnkgZGlzc29sdmUgb2YgYmxvY2sgcGFn
-ZSB0YWJsZSBhdCB0aGUgZWFybHkgc3RhZ2Ugb2YgbWlncmF0aW9uKS4KVk06ICAgMTYgQ1BVIDE2
-R0IgUkFNLiBSdW4gNCBwYWlyIG9mIChyZWRpc19iZW5jaG1hcmsrcmVkaXNfc2VydmVyKS4KCkVh
-Y2ggcnVuIDUgdGltZXMgZm9yIHNvZnR3YXJlIGRpcnR5IGxvZyBhbmQgU1cvSFcgY29uYmluZWQg
-ZGlydHkgbG9nLiAKClRlc3QgcmVzdWx0OgoKR2FpbiA1JX43JSBpbXByb3ZlbWVudCBvZiByZWRp
-cyBRUFMgZHVyaW5nIFZNIG1pZ3JhdGlvbi4KVk0gZG93bnRpbWUgaXMgbm90IGFmZmVjdGVkIGZ1
-bmRhbWVudGFsbHkuCkFib3V0IDU2LjclIG9mIERCTSBpcyBlZmZlY3RpdmVseSB1c2VkLgoKS2Vx
-aWFuIFpodSAoNyk6CiAgYXJtNjQ6IGNwdWZlYXR1cmU6IEFkZCBBUEkgdG8gcmVwb3J0IHN5c3Rl
-bSBzdXBwb3J0IG9mIEhXREJNCiAga3ZtOiBhcm02NDogVXNlIGF0b21pYyBvcGVyYXRpb24gd2hl
-biB1cGRhdGUgUFRFCiAga3ZtOiBhcm02NDogQWRkIGxldmVsX2FwcGx5IHBhcmFtZXRlciBmb3Ig
-c3RhZ2UyX2F0dHJfd2Fsa2VyCiAga3ZtOiBhcm02NDogQWRkIHNvbWUgSFdfREJNIHJlbGF0ZWQg
-cGd0YWJsZSBpbnRlcmZhY2VzCiAga3ZtOiBhcm02NDogQWRkIHNvbWUgSFdfREJNIHJlbGF0ZWQg
-bW11IGludGVyZmFjZXMKICBrdm06IGFybTY0OiBPbmx5IHdyaXRlIHByb3RlY3Qgc2VsZWN0ZWQg
-UFRFCiAga3ZtOiBhcm02NDogU3RhcnQgdXAgU1cvSFcgY29tYmluZWQgZGlydHkgbG9nCgogYXJj
-aC9hcm02NC9pbmNsdWRlL2FzbS9jcHVmZWF0dXJlLmggIHwgIDEyICsrKwogYXJjaC9hcm02NC9p
-bmNsdWRlL2FzbS9rdm1faG9zdC5oICAgIHwgICA2ICsrCiBhcmNoL2FybTY0L2luY2x1ZGUvYXNt
-L2t2bV9tbXUuaCAgICAgfCAgIDcgKysKIGFyY2gvYXJtNjQvaW5jbHVkZS9hc20va3ZtX3BndGFi
-bGUuaCB8ICA0NSArKysrKysrKysrCiBhcmNoL2FybTY0L2t2bS9hcm0uYyAgICAgICAgICAgICAg
-ICAgfCAxMjUgKysrKysrKysrKysrKysrKysrKysrKysrKysKIGFyY2gvYXJtNjQva3ZtL2h5cC9w
-Z3RhYmxlLmMgICAgICAgICB8IDEzMCArKysrKysrKysrKysrKysrKysrKysrLS0tLS0KIGFyY2gv
-YXJtNjQva3ZtL21tdS5jICAgICAgICAgICAgICAgICB8ICA0NyArKysrKysrKystCiBhcmNoL2Fy
-bTY0L2t2bS9yZXNldC5jICAgICAgICAgICAgICAgfCAgIDggKy0KIDggZmlsZXMgY2hhbmdlZCwg
-MzUxIGluc2VydGlvbnMoKyksIDI5IGRlbGV0aW9ucygtKQoKLS0gCjIuMTkuMQoKX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18Ka3ZtYXJtIG1haWxpbmcgbGlz
-dAprdm1hcm1AbGlzdHMuY3MuY29sdW1iaWEuZWR1Cmh0dHBzOi8vbGlzdHMuY3MuY29sdW1iaWEu
-ZWR1L21haWxtYW4vbGlzdGluZm8va3ZtYXJtCg==
+Though we already has a cpu capability named ARM64_HW_DBM, it's a
+LOCAL_CPU cap and conditionally compiled by CONFIG_ARM64_HW_AFDBM.
+
+This reports the system wide support of HW_DBM.
+
+Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
+---
+ arch/arm64/include/asm/cpufeature.h | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/arch/arm64/include/asm/cpufeature.h b/arch/arm64/include/asm/cpufeature.h
+index 9a555809b89c..dfded86c7684 100644
+--- a/arch/arm64/include/asm/cpufeature.h
++++ b/arch/arm64/include/asm/cpufeature.h
+@@ -664,6 +664,18 @@ static inline bool system_supports_mixed_endian(void)
+ 	return val == 0x1;
+ }
+ 
++static inline bool system_supports_hw_dbm(void)
++{
++	u64 mmfr1;
++	u32 val;
++
++	mmfr1 = read_sanitised_ftr_reg(SYS_ID_AA64MMFR1_EL1);
++	val = cpuid_feature_extract_unsigned_field(mmfr1,
++						ID_AA64MMFR1_HADBS_SHIFT);
++
++	return val == 0x2;
++}
++
+ static __always_inline bool system_supports_fpsimd(void)
+ {
+ 	return !cpus_have_const_cap(ARM64_HAS_NO_FPSIMD);
+-- 
+2.19.1
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
