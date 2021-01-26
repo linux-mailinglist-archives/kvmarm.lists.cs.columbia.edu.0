@@ -2,52 +2,55 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 44C08304203
-	for <lists+kvmarm@lfdr.de>; Tue, 26 Jan 2021 16:16:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 422CE304204
+	for <lists+kvmarm@lfdr.de>; Tue, 26 Jan 2021 16:16:16 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A7CF64B2FB;
-	Tue, 26 Jan 2021 10:16:14 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E63554B2E9;
+	Tue, 26 Jan 2021 10:16:15 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=ham
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id kUmURSG-3lju; Tue, 26 Jan 2021 10:16:14 -0500 (EST)
+	with ESMTP id L-vif-i6MaLf; Tue, 26 Jan 2021 10:16:14 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 904A54B2E9;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B0CC64B2CE;
 	Tue, 26 Jan 2021 10:16:13 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A53B24B2EB
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DC2324B2D2
  for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Jan 2021 10:16:11 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id CeF1YGxFT7ZF for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id 56-3R9guU3wN for <kvmarm@lists.cs.columbia.edu>;
  Tue, 26 Jan 2021 10:16:10 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C2AA44B2CE
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C1A454B29E
  for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Jan 2021 10:16:10 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id A610F206B5;
+ by mail.kernel.org (Postfix) with ESMTPSA id B82CC23109;
  Tue, 26 Jan 2021 15:16:09 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1l4Q4d-00A9nZ-Jk; Tue, 26 Jan 2021 15:16:07 +0000
+ id 1l4Q4e-00A9nZ-29; Tue, 26 Jan 2021 15:16:08 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org,
 	kvmarm@lists.cs.columbia.edu
-Subject: [PATCH 0/2] KVM: arm64: Prevent spurious PMU accesses when no
-Date: Tue, 26 Jan 2021 15:15:19 +0000
-Message-Id: <20210126151521.2958688-1-maz@kernel.org>
+Subject: [PATCH 1/2] KVM: arm64: Turn kvm_arm_support_pmu_v3() into a static
+ key
+Date: Tue, 26 Jan 2021 15:15:20 +0000
+Message-Id: <20210126151521.2958688-2-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20210126151521.2958688-1-maz@kernel.org>
+References: <20210126151521.2958688-1-maz@kernel.org>
 MIME-Version: 1.0
 X-SA-Exim-Connect-IP: 62.31.163.78
 X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
@@ -74,27 +77,104 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Yet another PMU bug that is only likely to hit under Nested Virt: we
-unconditionally access PMU registers without checking whether it
-actually is present.
+We currently find out about the presence of a HW PMU (or the handling
+of that PMU by perf, which amounts to the same thing) in a fairly
+roundabout way, by checking the number of counters available to perf.
+That's good enough for now, but we will soon need to find about about
+that on paths where perf is out of reach (in the world switch).
 
-Given that we already have a predicate for this, promote it to a
-static key, and use that in the world switch.
+Instead, let's turn kvm_arm_support_pmu_v3() into a static key.
 
-Thanks to Andre for the heads up!
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+---
+ arch/arm64/kvm/perf.c     | 10 ++++++++++
+ arch/arm64/kvm/pmu-emul.c | 10 ----------
+ include/kvm/arm_pmu.h     |  9 +++++++--
+ 3 files changed, 17 insertions(+), 12 deletions(-)
 
-Marc Zyngier (2):
-  KVM: arm64: Turn kvm_arm_support_pmu_v3() into a static key
-  KVM: arm64: Don't access PMSELR_EL0/PMUSERENR_EL0 when no PMU is
-    available
-
- arch/arm64/kernel/image-vars.h          |  3 +++
- arch/arm64/kvm/hyp/include/hyp/switch.h |  9 ++++++---
- arch/arm64/kvm/perf.c                   | 10 ++++++++++
- arch/arm64/kvm/pmu-emul.c               | 10 ----------
- include/kvm/arm_pmu.h                   |  9 +++++++--
- 5 files changed, 26 insertions(+), 15 deletions(-)
-
+diff --git a/arch/arm64/kvm/perf.c b/arch/arm64/kvm/perf.c
+index d45b8b9a4415..198fa4266b2d 100644
+--- a/arch/arm64/kvm/perf.c
++++ b/arch/arm64/kvm/perf.c
+@@ -11,6 +11,8 @@
+ 
+ #include <asm/kvm_emulate.h>
+ 
++DEFINE_STATIC_KEY_FALSE(kvm_arm_pmu_available);
++
+ static int kvm_is_in_guest(void)
+ {
+         return kvm_get_running_vcpu() != NULL;
+@@ -48,6 +50,14 @@ static struct perf_guest_info_callbacks kvm_guest_cbs = {
+ 
+ int kvm_perf_init(void)
+ {
++	/*
++	 * Check if HW_PERF_EVENTS are supported by checking the number of
++	 * hardware performance counters. This could ensure the presence of
++	 * a physical PMU and CONFIG_PERF_EVENT is selected.
++	 */
++	if (perf_num_counters() > 0)
++		static_branch_enable(&kvm_arm_pmu_available);
++
+ 	return perf_register_guest_info_callbacks(&kvm_guest_cbs);
+ }
+ 
+diff --git a/arch/arm64/kvm/pmu-emul.c b/arch/arm64/kvm/pmu-emul.c
+index 4ad66a532e38..44d500706ab9 100644
+--- a/arch/arm64/kvm/pmu-emul.c
++++ b/arch/arm64/kvm/pmu-emul.c
+@@ -813,16 +813,6 @@ u64 kvm_pmu_get_pmceid(struct kvm_vcpu *vcpu, bool pmceid1)
+ 	return val & mask;
+ }
+ 
+-bool kvm_arm_support_pmu_v3(void)
+-{
+-	/*
+-	 * Check if HW_PERF_EVENTS are supported by checking the number of
+-	 * hardware performance counters. This could ensure the presence of
+-	 * a physical PMU and CONFIG_PERF_EVENT is selected.
+-	 */
+-	return (perf_num_counters() > 0);
+-}
+-
+ int kvm_arm_pmu_v3_enable(struct kvm_vcpu *vcpu)
+ {
+ 	if (!kvm_vcpu_has_pmu(vcpu))
+diff --git a/include/kvm/arm_pmu.h b/include/kvm/arm_pmu.h
+index 8dcb3e1477bc..6fd3cda608e4 100644
+--- a/include/kvm/arm_pmu.h
++++ b/include/kvm/arm_pmu.h
+@@ -13,6 +13,13 @@
+ #define ARMV8_PMU_CYCLE_IDX		(ARMV8_PMU_MAX_COUNTERS - 1)
+ #define ARMV8_PMU_MAX_COUNTER_PAIRS	((ARMV8_PMU_MAX_COUNTERS + 1) >> 1)
+ 
++DECLARE_STATIC_KEY_FALSE(kvm_arm_pmu_available);
++
++static __always_inline bool kvm_arm_support_pmu_v3(void)
++{
++	return static_branch_likely(&kvm_arm_pmu_available);
++}
++
+ #ifdef CONFIG_HW_PERF_EVENTS
+ 
+ struct kvm_pmc {
+@@ -47,7 +54,6 @@ void kvm_pmu_software_increment(struct kvm_vcpu *vcpu, u64 val);
+ void kvm_pmu_handle_pmcr(struct kvm_vcpu *vcpu, u64 val);
+ void kvm_pmu_set_counter_event_type(struct kvm_vcpu *vcpu, u64 data,
+ 				    u64 select_idx);
+-bool kvm_arm_support_pmu_v3(void);
+ int kvm_arm_pmu_v3_set_attr(struct kvm_vcpu *vcpu,
+ 			    struct kvm_device_attr *attr);
+ int kvm_arm_pmu_v3_get_attr(struct kvm_vcpu *vcpu,
+@@ -87,7 +93,6 @@ static inline void kvm_pmu_software_increment(struct kvm_vcpu *vcpu, u64 val) {}
+ static inline void kvm_pmu_handle_pmcr(struct kvm_vcpu *vcpu, u64 val) {}
+ static inline void kvm_pmu_set_counter_event_type(struct kvm_vcpu *vcpu,
+ 						  u64 data, u64 select_idx) {}
+-static inline bool kvm_arm_support_pmu_v3(void) { return false; }
+ static inline int kvm_arm_pmu_v3_set_attr(struct kvm_vcpu *vcpu,
+ 					  struct kvm_device_attr *attr)
+ {
 -- 
 2.29.2
 
