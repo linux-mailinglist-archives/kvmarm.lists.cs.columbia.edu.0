@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A9782303D6F
-	for <lists+kvmarm@lfdr.de>; Tue, 26 Jan 2021 13:45:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DBC56303F12
+	for <lists+kvmarm@lfdr.de>; Tue, 26 Jan 2021 14:43:32 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5DB7E4B28E;
-	Tue, 26 Jan 2021 07:45:28 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7AF834B297;
+	Tue, 26 Jan 2021 08:43:32 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,45 +16,39 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id pELd+G6+tmZd; Tue, 26 Jan 2021 07:45:28 -0500 (EST)
+	with ESMTP id ZT0Ko7bgXmtY; Tue, 26 Jan 2021 08:43:32 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 090254B289;
-	Tue, 26 Jan 2021 07:45:27 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4CC924B2B2;
+	Tue, 26 Jan 2021 08:43:31 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 402204B2AA
- for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Jan 2021 07:45:25 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4C4424B297
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Jan 2021 08:43:30 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Khgf2KCupnII for <kvmarm@lists.cs.columbia.edu>;
- Tue, 26 Jan 2021 07:45:24 -0500 (EST)
-Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7F94E4B27C
- for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Jan 2021 07:45:23 -0500 (EST)
-Received: from DGGEMS412-HUB.china.huawei.com (unknown [172.30.72.60])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4DQ5yX1G7wzjDdr;
- Tue, 26 Jan 2021 20:44:04 +0800 (CST)
-Received: from DESKTOP-5IS4806.china.huawei.com (10.174.184.42) by
- DGGEMS412-HUB.china.huawei.com (10.3.19.212) with Microsoft SMTP Server id
- 14.3.498.0; Tue, 26 Jan 2021 20:45:07 +0800
-From: Keqian Zhu <zhukeqian1@huawei.com>
-To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <kvm@vger.kernel.org>, <kvmarm@lists.cs.columbia.edu>, Marc Zyngier
+ with ESMTP id ZHnVavRXdK8O for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 26 Jan 2021 08:43:29 -0500 (EST)
+Received: from szxga06-in.huawei.com (szxga06-in.huawei.com [45.249.212.32])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id DE9434B147
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Jan 2021 08:43:28 -0500 (EST)
+Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.60])
+ by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4DQ7DT5ZtPzjCXP;
+ Tue, 26 Jan 2021 21:41:13 +0800 (CST)
+Received: from DESKTOP-TMVL5KK.china.huawei.com (10.174.187.128) by
+ DGGEMS406-HUB.china.huawei.com (10.3.19.206) with Microsoft SMTP Server id
+ 14.3.498.0; Tue, 26 Jan 2021 21:42:04 +0800
+From: Yanan Wang <wangyanan55@huawei.com>
+To: <kvmarm@lists.cs.columbia.edu>, <linux-arm-kernel@lists.infradead.org>,
+ <kvm@vger.kernel.org>, <linux-kernel@vger.kernel.org>, Marc Zyngier
  <maz@kernel.org>, Will Deacon <will@kernel.org>, Catalin Marinas
  <catalin.marinas@arm.com>
-Subject: [RFC PATCH 7/7] kvm: arm64: Start up SW/HW combined dirty log
-Date: Tue, 26 Jan 2021 20:44:44 +0800
-Message-ID: <20210126124444.27136-8-zhukeqian1@huawei.com>
+Subject: [RFC PATCH v1 0/5] Enable CPU TTRem feature for stage-2
+Date: Tue, 26 Jan 2021 21:41:57 +0800
+Message-ID: <20210126134202.381996-1-wangyanan55@huawei.com>
 X-Mailer: git-send-email 2.8.4.windows.1
-In-Reply-To: <20210126124444.27136-1-zhukeqian1@huawei.com>
-References: <20210126124444.27136-1-zhukeqian1@huawei.com>
 MIME-Version: 1.0
-X-Originating-IP: [10.174.184.42]
+X-Originating-IP: [10.174.187.128]
 X-CFilter-Loop: Reflected
-Cc: yubihong@huawei.com, Cornelia Huck <cohuck@redhat.com>,
- Kirti Wankhede <kwankhede@nvidia.com>, zhengchuan@huawei.com,
- Alex Williamson <alex.williamson@redhat.com>,
- Robin Murphy <robin.murphy@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -71,232 +65,56 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-We do not enable hardware dirty at start (do not add DBM bit). When
-an arbitrary PT occurs fault, we execute soft tracking for this PT
-and enable hardware tracking for its nearby PTs (Add DBM bit for
-nearby 64PTs). Then when sync dirty log, we have known all PTs with
-hardware dirty enabled, so we do not need to scan all PTs.
+Hi all,
+This series enable CPU TTRem feature for stage-2 page table and a RFC is sent
+for some comments, thanks.
 
-Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
----
- arch/arm64/include/asm/kvm_host.h |   6 ++
- arch/arm64/kvm/arm.c              | 125 ++++++++++++++++++++++++++++++
- arch/arm64/kvm/mmu.c              |   7 +-
- arch/arm64/kvm/reset.c            |   8 +-
- 4 files changed, 141 insertions(+), 5 deletions(-)
+The ARMv8.4 TTRem feature offers 3 levels of support when changing block
+size without changing any other parameters that are listed as requiring use
+of break-before-make. And I found that maybe we can use this feature to make
+some improvement for stage-2 page table and the following explains what
+TTRem exactly does for the improvement.
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 8fcfab0c2567..e9ea5b546326 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -99,6 +99,8 @@ struct kvm_s2_mmu {
- };
- 
- struct kvm_arch_memory_slot {
-+	#define HWDBM_GRANULE_SHIFT 6  /* 64 pages per bit */
-+	unsigned long *hwdbm_bitmap;
- };
- 
- struct kvm_arch {
-@@ -565,6 +567,10 @@ struct kvm_vcpu_stat {
- 	u64 exits;
- };
- 
-+int kvm_arm_init_hwdbm_bitmap(struct kvm_memory_slot *memslot);
-+void kvm_arm_destroy_hwdbm_bitmap(struct kvm_memory_slot *memslot);
-+void kvm_arm_enable_nearby_hwdbm(struct kvm *kvm, gfn_t gfn);
-+
- int kvm_vcpu_preferred_target(struct kvm_vcpu_init *init);
- unsigned long kvm_arm_num_regs(struct kvm_vcpu *vcpu);
- int kvm_arm_copy_reg_indices(struct kvm_vcpu *vcpu, u64 __user *indices);
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 04c44853b103..9e05d45fa6be 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -1257,9 +1257,134 @@ long kvm_arch_vcpu_ioctl(struct file *filp,
- 	return r;
- }
- 
-+static unsigned long kvm_hwdbm_bitmap_bytes(struct kvm_memory_slot *memslot)
-+{
-+	unsigned long nbits = DIV_ROUND_UP(memslot->npages, 1 << HWDBM_GRANULE_SHIFT);
-+
-+	return ALIGN(nbits, BITS_PER_LONG) / 8;
-+}
-+
-+static unsigned long *kvm_second_hwdbm_bitmap(struct kvm_memory_slot *memslot)
-+{
-+	unsigned long len = kvm_hwdbm_bitmap_bytes(memslot);
-+
-+	return (void *)memslot->arch.hwdbm_bitmap + len;
-+}
-+
-+/*
-+ * Allocate twice space. Refer kvm_arch_sync_dirty_log() to see why the
-+ * second space is needed.
-+ */
-+int kvm_arm_init_hwdbm_bitmap(struct kvm_memory_slot *memslot)
-+{
-+	unsigned long bytes = 2 * kvm_hwdbm_bitmap_bytes(memslot);
-+
-+	if (!system_supports_hw_dbm())
-+		return 0;
-+
-+	if (memslot->arch.hwdbm_bitmap) {
-+		/* Inherited from old memslot */
-+		bitmap_clear(memslot->arch.hwdbm_bitmap, 0, bytes * 8);
-+	} else {
-+		memslot->arch.hwdbm_bitmap = kvzalloc(bytes, GFP_KERNEL_ACCOUNT);
-+		if (!memslot->arch.hwdbm_bitmap)
-+			return -ENOMEM;
-+	}
-+
-+	return 0;
-+}
-+
-+void kvm_arm_destroy_hwdbm_bitmap(struct kvm_memory_slot *memslot)
-+{
-+	if (!memslot->arch.hwdbm_bitmap)
-+		return;
-+
-+	kvfree(memslot->arch.hwdbm_bitmap);
-+	memslot->arch.hwdbm_bitmap = NULL;
-+}
-+
-+/* Add DBM for nearby pagetables but do not across memslot */
-+void kvm_arm_enable_nearby_hwdbm(struct kvm *kvm, gfn_t gfn)
-+{
-+	struct kvm_memory_slot *memslot;
-+
-+	memslot = gfn_to_memslot(kvm, gfn);
-+	if (memslot && kvm_slot_dirty_track_enabled(memslot) &&
-+	    memslot->arch.hwdbm_bitmap) {
-+		unsigned long rel_gfn = gfn - memslot->base_gfn;
-+		unsigned long dbm_idx = rel_gfn >> HWDBM_GRANULE_SHIFT;
-+		unsigned long start_page, npages;
-+
-+		if (!test_and_set_bit(dbm_idx, memslot->arch.hwdbm_bitmap)) {
-+			start_page = dbm_idx << HWDBM_GRANULE_SHIFT;
-+			npages = 1 << HWDBM_GRANULE_SHIFT;
-+			npages = min(memslot->npages - start_page, npages);
-+			kvm_stage2_set_dbm(kvm, memslot, start_page, npages);
-+		}
-+	}
-+}
-+
-+/*
-+ * We have to find a place to clear hwdbm_bitmap, and clear hwdbm_bitmap means
-+ * to clear DBM bit of all related pgtables. Note that between we clear DBM bit
-+ * and flush TLB, HW dirty log may occur, so we must scan all related pgtables
-+ * after flush TLB. Giving above, it's best choice to clear hwdbm_bitmap before
-+ * sync HW dirty log.
-+ */
- void kvm_arch_sync_dirty_log(struct kvm *kvm, struct kvm_memory_slot *memslot)
- {
-+	unsigned long *second_bitmap = kvm_second_hwdbm_bitmap(memslot);
-+	unsigned long start_page, npages;
-+	unsigned int end, rs, re;
-+	bool has_hwdbm = false;
-+
-+	if (!memslot->arch.hwdbm_bitmap)
-+		return;
- 
-+	end = kvm_hwdbm_bitmap_bytes(memslot) * 8;
-+	bitmap_clear(second_bitmap, 0, end);
-+
-+	spin_lock(&kvm->mmu_lock);
-+	bitmap_for_each_set_region(memslot->arch.hwdbm_bitmap, rs, re, 0, end) {
-+		has_hwdbm = true;
-+
-+		/*
-+		 * Must clear bitmap before clear DBM bit. During we clear DBM
-+		 * (it releases the mmu spinlock periodly), SW dirty tracking
-+		 * has chance to add DBM which overlaps what we are clearing. So
-+		 * if we clear bitmap after clear DBM, we will face a situation
-+		 * that bitmap is cleared but DBM are lefted, then we may have
-+		 * no chance to scan these lefted pgtables anymore.
-+		 */
-+		bitmap_clear(memslot->arch.hwdbm_bitmap, rs, re - rs);
-+
-+		/* Record the bitmap cleared */
-+		bitmap_set(second_bitmap, rs, re - rs);
-+
-+		start_page = rs << HWDBM_GRANULE_SHIFT;
-+		npages = (re - rs) << HWDBM_GRANULE_SHIFT;
-+		npages = min(memslot->npages - start_page, npages);
-+		kvm_stage2_clear_dbm(kvm, memslot, start_page, npages);
-+	}
-+	spin_unlock(&kvm->mmu_lock);
-+
-+	if (!has_hwdbm)
-+		return;
-+
-+	/*
-+	 * Ensure vcpu write-actions that occur after we clear hwdbm_bitmap can
-+	 * be catched by guest memory abort handler.
-+	 */
-+	kvm_flush_remote_tlbs(kvm);
-+
-+	spin_lock(&kvm->mmu_lock);
-+	bitmap_for_each_set_region(second_bitmap, rs, re, 0, end) {
-+		start_page = rs << HWDBM_GRANULE_SHIFT;
-+		npages = (re - rs) << HWDBM_GRANULE_SHIFT;
-+		npages = min(memslot->npages - start_page, npages);
-+		kvm_stage2_sync_dirty(kvm, memslot, start_page, npages);
-+	}
-+	spin_unlock(&kvm->mmu_lock);
- }
- 
- void kvm_arch_flush_remote_tlbs_memslot(struct kvm *kvm,
-diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 2f8c6770a4dc..1a8702035ddd 100644
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -939,6 +939,10 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 	 */
- 	if (fault_status == FSC_PERM && vma_pagesize == fault_granule) {
- 		ret = kvm_pgtable_stage2_relax_perms(pgt, fault_ipa, prot);
-+
-+		/* Put here with high probability that nearby PTEs are valid */
-+		if (!ret && vma_pagesize == PAGE_SIZE && writable)
-+			kvm_arm_enable_nearby_hwdbm(kvm, gfn);
- 	} else {
- 		ret = kvm_pgtable_stage2_map(pgt, fault_ipa, vma_pagesize,
- 					     __pfn_to_phys(pfn), prot,
-@@ -1407,11 +1411,12 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
- 	spin_unlock(&kvm->mmu_lock);
- out:
- 	mmap_read_unlock(current->mm);
--	return ret;
-+	return ret ? : kvm_arm_init_hwdbm_bitmap(memslot);
- }
- 
- void kvm_arch_free_memslot(struct kvm *kvm, struct kvm_memory_slot *slot)
- {
-+	kvm_arm_destroy_hwdbm_bitmap(slot);
- }
- 
- void kvm_arch_memslots_updated(struct kvm *kvm, u64 gen)
-diff --git a/arch/arm64/kvm/reset.c b/arch/arm64/kvm/reset.c
-index 47f3f035f3ea..231d11009db7 100644
---- a/arch/arm64/kvm/reset.c
-+++ b/arch/arm64/kvm/reset.c
-@@ -376,11 +376,11 @@ int kvm_arm_setup_stage2(struct kvm *kvm, unsigned long type)
- 	vtcr |= VTCR_EL2_LVLS_TO_SL0(lvls);
- 
- 	/*
--	 * Enable the Hardware Access Flag management, unconditionally
--	 * on all CPUs. The features is RES0 on CPUs without the support
--	 * and must be ignored by the CPUs.
-+	 * Enable the Hardware Access Flag and Dirty State management
-+	 * unconditionally on all CPUs. The features are RES0 on CPUs
-+	 * without the support and must be ignored by the CPUs.
- 	 */
--	vtcr |= VTCR_EL2_HA;
-+	vtcr |= VTCR_EL2_HA | VTCR_EL2_HD;
- 
- 	/* Set the vmid bits */
- 	vtcr |= (kvm_get_vmid_bits() == 16) ?
+If migration of a VM with hugepages is canceled midway, KVM will adjust the
+stage-2 table mappings back to block mappings. We currently use BBM to replace
+the table entry with a block entry. Take adjustment of 1G block mapping as an
+example, with BBM procedures, we have to invalidate the old table entry first,
+flush TLB and unmap the old table mappings, right before installing the new
+block entry.
+
+So there will be a bit long period when the old table entry is invalid before
+installation of the new block entry, if other vCPUs access any guest page within
+the 1G range during this period and find the table entry invalid, they will all
+exit from guest with a translation fault. Actually, these translation faults
+are not necessary, because the block mapping will be built later. Besides, KVM
+will still try to build 1G block mappings for these spurious translation faults,
+and will perform cache maintenance operations, page table walk, etc.
+
+In summary, the spurious faults are caused by invalidation in BBM procedures.
+Approaches of TTRem level 1,2 ensure that there will not be a moment when the
+old table entry is invalid before installation of the new block entry. However,
+level-2 method will possibly lead to a TLB conflict which is bothering, so we
+use nT both at level-1 and level-2 case to avoid handling TLB conflict aborts.
+
+For an implementation which meets level 1 or level 2, the CPU has two responses
+to choose when accessing a block table entry with nT bit set: Firstly, CPU will
+generate a translation fault, the effect of this response is simier to BBM.
+Secondly, CPU can use the block entry for translation. So with the second kind
+of implementation, the above described spurious translations can be prevented.
+
+Yanan Wang (5):
+  KVM: arm64: Detect the ARMv8.4 TTRem feature
+  KVM: arm64: Add an API to get level of TTRem supported by hardware
+  KVM: arm64: Support usage of TTRem in guest stage-2 translation
+  KVM: arm64: Add handling of coalescing tables into a block mapping
+  KVM: arm64: Adapt page-table code to new handling of coalescing tables
+
+ arch/arm64/include/asm/cpucaps.h    |  3 +-
+ arch/arm64/include/asm/cpufeature.h | 13 ++++++
+ arch/arm64/kernel/cpufeature.c      | 10 +++++
+ arch/arm64/kvm/hyp/pgtable.c        | 62 +++++++++++++++++++++++------
+ 4 files changed, 74 insertions(+), 14 deletions(-)
+
 -- 
 2.19.1
 
