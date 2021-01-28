@@ -2,64 +2,57 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C0FB307D7B
-	for <lists+kvmarm@lfdr.de>; Thu, 28 Jan 2021 19:12:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 85F3D307E40
+	for <lists+kvmarm@lfdr.de>; Thu, 28 Jan 2021 19:43:18 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8E00F4B14D;
-	Thu, 28 Jan 2021 13:11:59 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1237B4B198;
+	Thu, 28 Jan 2021 13:43:18 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id NorMyREh7gwp; Thu, 28 Jan 2021 13:11:59 -0500 (EST)
+	with ESMTP id 6IEU7CNabbsh; Thu, 28 Jan 2021 13:43:17 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 670404B11E;
-	Thu, 28 Jan 2021 13:11:58 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D2F724B19C;
+	Thu, 28 Jan 2021 13:43:16 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4C2504B11E
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Jan 2021 13:11:56 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F8724B191
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Jan 2021 13:43:15 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 8iPhxaZ6aDxk for <kvmarm@lists.cs.columbia.edu>;
- Thu, 28 Jan 2021 13:11:55 -0500 (EST)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4A76E4B112
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Jan 2021 13:11:55 -0500 (EST)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 2BA7F64E1D;
- Thu, 28 Jan 2021 18:11:54 +0000 (UTC)
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1l5Blo-00Affv-6K; Thu, 28 Jan 2021 18:11:52 +0000
+ with ESMTP id y+7pa28LevmA for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 28 Jan 2021 13:43:14 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3E8074B198
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Jan 2021 13:43:14 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BAA8E13A1;
+ Thu, 28 Jan 2021 10:43:13 -0800 (PST)
+Received: from slackpad.fritz.box (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A1B4D3F719;
+ Thu, 28 Jan 2021 10:43:12 -0800 (PST)
+Date: Thu, 28 Jan 2021 18:42:31 +0000
+From: Andre Przywara <andre.przywara@arm.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH 1/2] KVM: arm64: Turn kvm_arm_support_pmu_v3() into a
+ static key
+Message-ID: <20210128184231.711e0c54@slackpad.fritz.box>
+In-Reply-To: <9bf9be4149cfd0671fe5178ce553159b@kernel.org>
+References: <20210126151521.2958688-1-maz@kernel.org>
+ <20210126151521.2958688-2-maz@kernel.org>
+ <20210128151643.6e2c3668@slackpad.fritz.box>
+ <9bf9be4149cfd0671fe5178ce553159b@kernel.org>
+Organization: Arm Ltd.
+X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.31; x86_64-slackware-linux-gnu)
 MIME-Version: 1.0
-Date: Thu, 28 Jan 2021 18:11:52 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: Quentin Perret <qperret@google.com>
-Subject: Re: [PATCH] KVM: arm64: Move __hyp_set_vectors out of .hyp.text
-In-Reply-To: <20210128173850.2478161-1-qperret@google.com>
-References: <20210128173850.2478161-1-qperret@google.com>
-User-Agent: Roundcube Webmail/1.4.10
-Message-ID: <d64f85c885701719d5f607c3d2f12600@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: qperret@google.com, catalin.marinas@arm.com, will@kernel.org,
- linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: catalin.marinas@arm.com, kernel-team@android.com, will@kernel.org,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Cc: linux-arm-kernel@lists.infradead.org, kernel-team@android.com,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -71,56 +64,69 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2021-01-28 17:38, Quentin Perret wrote:
-> The .hyp.text section is supposed to be reserved for the nVHE EL2 code.
-> However, there is currently one occurrence of EL1 executing code 
-> located
-> in .hyp.text when calling __hyp_{re}set_vectors(), which happen to sit
-> next to the EL2 stub vectors. While not a problem yet, such patterns
-> will cause issues when removing the host kernel from the TCB, so a
-> cleaner split would be preferable.
+On Thu, 28 Jan 2021 16:56:01 +0000
+Marc Zyngier <maz@kernel.org> wrote:
+
+> On 2021-01-28 15:16, Andre Przywara wrote:
+> > On Tue, 26 Jan 2021 15:15:20 +0000
+> > Marc Zyngier <maz@kernel.org> wrote:
+> > 
+> > Hi Marc,
+> >   
+> >> We currently find out about the presence of a HW PMU (or the handling
+> >> of that PMU by perf, which amounts to the same thing) in a fairly
+> >> roundabout way, by checking the number of counters available to perf.
+> >> That's good enough for now, but we will soon need to find about about
+> >> that on paths where perf is out of reach (in the world switch).
+> >> 
+> >> Instead, let's turn kvm_arm_support_pmu_v3() into a static key.  
+> > 
+> > I am sure the pesky build bot has told you about it already, but this
+> > fails when ARM_PMU is not defined, as perf_num_counters() is not
+> > defined. It's  bit nasty, since it's a generic function, so we
+> > can't easily stub it in its original header.  
 > 
-> Fix this by delimiting the end of the .hyp.text section in hyp-stub.S.
+> No sign from the bot yet, but that's indeed a problem. Well spotted.
 > 
-> Signed-off-by: Quentin Perret <qperret@google.com>
-> ---
->  arch/arm64/kernel/hyp-stub.S | 2 ++
->  1 file changed, 2 insertions(+)
+> > Shall we find a place somewhere in arch/arm64 and provide a stub
+> > implementation there, #ifndef CONFIG_ARM_PMU? Sounds ugly, though.
+> > 
+> > Or something else entirely?  
 > 
-> diff --git a/arch/arm64/kernel/hyp-stub.S 
-> b/arch/arm64/kernel/hyp-stub.S
-> index 160f5881a0b7..8a60f9c586bb 100644
-> --- a/arch/arm64/kernel/hyp-stub.S
-> +++ b/arch/arm64/kernel/hyp-stub.S
-> @@ -85,6 +85,8 @@ SYM_CODE_END(\label)
->  	invalid_vector	el1_fiq_invalid
->  	invalid_vector	el1_error_invalid
+> How about:
 > 
-> +	.popsection
-> +
->  /*
->   * __hyp_set_vectors: Call this after boot to set the initial 
-> hypervisor
->   * vectors as part of hypervisor installation.  On an SMP system, this 
-> should
+> diff --git a/arch/arm64/kvm/perf.c b/arch/arm64/kvm/perf.c
+> index 198fa4266b2d..739164324afe 100644
+> --- a/arch/arm64/kvm/perf.c
+> +++ b/arch/arm64/kvm/perf.c
+> @@ -55,7 +55,7 @@ int kvm_perf_init(void)
+>   	 * hardware performance counters. This could ensure the presence of
+>   	 * a physical PMU and CONFIG_PERF_EVENT is selected.
+>   	 */
+> -	if (perf_num_counters() > 0)
+> +	if (IS_ENABLED(CONFIG_ARM_PMU) && perf_num_counters() > 0)
 
-Thanks for tracking this one down, Quentin.
+Neat!
 
-Catalin, Will: should you want to take this one via the arm64 tree,
-please add my
+That indeed compiles and works in both cases (w/ and w/o ARM_PMU),
+fixing the original BUG I saw when using this as the L1 kernel.
 
-Acked-by: Marc Zyngier <maz:kernel.org>
+Thanks!
+Andre
 
-Thanks,
+>   		static_branch_enable(&kvm_arm_pmu_available);
+> 
+>   	return perf_register_guest_info_callbacks(&kvm_guest_cbs);
+> 
+> It certainly compiles here.
+> 
+>          M.
 
-         M.
--- 
-Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
