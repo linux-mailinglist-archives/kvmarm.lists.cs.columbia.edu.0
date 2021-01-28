@@ -2,58 +2,66 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C361307968
-	for <lists+kvmarm@lfdr.de>; Thu, 28 Jan 2021 16:18:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F591307974
+	for <lists+kvmarm@lfdr.de>; Thu, 28 Jan 2021 16:21:41 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 501C84B18A;
-	Thu, 28 Jan 2021 10:18:26 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 96F8F4B205;
+	Thu, 28 Jan 2021 10:21:40 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id PaZeENpD59oe; Thu, 28 Jan 2021 10:18:25 -0500 (EST)
+	with ESMTP id TF1egCgv725A; Thu, 28 Jan 2021 10:21:40 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 28A9A4B225;
-	Thu, 28 Jan 2021 10:18:24 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3FFF74B203;
+	Thu, 28 Jan 2021 10:21:39 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DA9FB4B21A
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Jan 2021 10:18:22 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 67C594B185
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Jan 2021 10:21:38 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id h+rNYrAta83l for <kvmarm@lists.cs.columbia.edu>;
- Thu, 28 Jan 2021 10:18:21 -0500 (EST)
-Received: from szxga07-in.huawei.com (szxga07-in.huawei.com [45.249.212.35])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id ECCF24B133
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Jan 2021 10:18:18 -0500 (EST)
-Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.60])
- by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4DRPG05PCNz7c0H;
- Thu, 28 Jan 2021 23:16:56 +0800 (CST)
-Received: from DESKTOP-5IS4806.china.huawei.com (10.174.184.42) by
- DGGEMS413-HUB.china.huawei.com (10.3.19.213) with Microsoft SMTP Server id
- 14.3.498.0; Thu, 28 Jan 2021 23:18:03 +0800
+ with ESMTP id PS7xQTsstwqT for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 28 Jan 2021 10:21:37 -0500 (EST)
+Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7AF434B109
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Jan 2021 10:21:36 -0500 (EST)
+Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.59])
+ by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4DRPKs1ZVgzjFdr;
+ Thu, 28 Jan 2021 23:20:17 +0800 (CST)
+Received: from [10.174.184.42] (10.174.184.42) by
+ DGGEMS406-HUB.china.huawei.com (10.3.19.206) with Microsoft SMTP Server id
+ 14.3.498.0; Thu, 28 Jan 2021 23:21:20 +0800
+Subject: Re: [PATCH v3 2/2] vfio/iommu_type1: Fix some sanity checks in detach
+ group
+To: Alex Williamson <alex.williamson@redhat.com>
+References: <20210122092635.19900-1-zhukeqian1@huawei.com>
+ <20210122092635.19900-3-zhukeqian1@huawei.com>
+ <20210127164641.36e17bf5@omen.home.shazbot.org>
 From: Keqian Zhu <zhukeqian1@huawei.com>
-To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <kvm@vger.kernel.org>, <kvmarm@lists.cs.columbia.edu>,
- <iommu@lists.linux-foundation.org>, Will Deacon <will@kernel.org>, "Alex
- Williamson" <alex.williamson@redhat.com>, Marc Zyngier <maz@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>
-Subject: [RFC PATCH 11/11] vfio/iommu_type1: Add support for manual dirty log
- clear
-Date: Thu, 28 Jan 2021 23:17:42 +0800
-Message-ID: <20210128151742.18840-12-zhukeqian1@huawei.com>
-X-Mailer: git-send-email 2.8.4.windows.1
-In-Reply-To: <20210128151742.18840-1-zhukeqian1@huawei.com>
-References: <20210128151742.18840-1-zhukeqian1@huawei.com>
+Message-ID: <5093dace-4b8a-d455-ba16-d0c2da755573@huawei.com>
+Date: Thu, 28 Jan 2021 23:21:20 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
+In-Reply-To: <20210127164641.36e17bf5@omen.home.shazbot.org>
 X-Originating-IP: [10.174.184.42]
 X-CFilter-Loop: Reflected
-Cc: Cornelia Huck <cohuck@redhat.com>, lushenming@huawei.com,
- Kirti Wankhede <kwankhede@nvidia.com>, Robin Murphy <robin.murphy@arm.com>
+Cc: kvm@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
+ Kirti Wankhede <kwankhede@nvidia.com>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, Marc
+ Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Alexios Zavras <alexios.zavras@intel.com>,
+ Thomas Gleixner <tglx@linutronix.de>, linux-arm-kernel@lists.infradead.org,
+ Cornelia Huck <cohuck@redhat.com>, linux-kernel@vger.kernel.org,
+ iommu@lists.linux-foundation.org, Andrew Morton <akpm@linux-foundation.org>,
+ Robin Murphy <robin.murphy@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -70,251 +78,123 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: jiangkunkun <jiangkunkun@huawei.com>
 
-In the past, we clear dirty log immediately after sync dirty
-log to userspace. This may cause redundant dirty handling if
-userspace handles dirty log iteratively:
 
-After vfio clears dirty log, new dirty log starts to generate.
-These new dirty log will be reported to userspace even if they
-are generated before userspace handles the same dirty page.
+On 2021/1/28 7:46, Alex Williamson wrote:
+> On Fri, 22 Jan 2021 17:26:35 +0800
+> Keqian Zhu <zhukeqian1@huawei.com> wrote:
+> 
+>> vfio_sanity_check_pfn_list() is used to check whether pfn_list and
+>> notifier are empty when remove the external domain, so it makes a
+>> wrong assumption that only external domain will use the pinning
+>> interface.
+>>
+>> Now we apply the pfn_list check when a vfio_dma is removed and apply
+>> the notifier check when all domains are removed.
+>>
+>> Fixes: a54eb55045ae ("vfio iommu type1: Add support for mediated devices")
+>> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
+>> ---
+>>  drivers/vfio/vfio_iommu_type1.c | 33 ++++++++++-----------------------
+>>  1 file changed, 10 insertions(+), 23 deletions(-)
+>>
+>> diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
+>> index 161725395f2f..d8c10f508321 100644
+>> --- a/drivers/vfio/vfio_iommu_type1.c
+>> +++ b/drivers/vfio/vfio_iommu_type1.c
+>> @@ -957,6 +957,7 @@ static long vfio_unmap_unpin(struct vfio_iommu *iommu, struct vfio_dma *dma,
+>>  
+>>  static void vfio_remove_dma(struct vfio_iommu *iommu, struct vfio_dma *dma)
+>>  {
+>> +	WARN_ON(!RB_EMPTY_ROOT(&dma->pfn_list));
+>>  	vfio_unmap_unpin(iommu, dma, true);
+>>  	vfio_unlink_dma(iommu, dma);
+>>  	put_task_struct(dma->task);
+>> @@ -2250,23 +2251,6 @@ static void vfio_iommu_unmap_unpin_reaccount(struct vfio_iommu *iommu)
+>>  	}
+>>  }
+>>  
+>> -static void vfio_sanity_check_pfn_list(struct vfio_iommu *iommu)
+>> -{
+>> -	struct rb_node *n;
+>> -
+>> -	n = rb_first(&iommu->dma_list);
+>> -	for (; n; n = rb_next(n)) {
+>> -		struct vfio_dma *dma;
+>> -
+>> -		dma = rb_entry(n, struct vfio_dma, node);
+>> -
+>> -		if (WARN_ON(!RB_EMPTY_ROOT(&dma->pfn_list)))
+>> -			break;
+>> -	}
+>> -	/* mdev vendor driver must unregister notifier */
+>> -	WARN_ON(iommu->notifier.head);
+>> -}
+>> -
+>>  /*
+>>   * Called when a domain is removed in detach. It is possible that
+>>   * the removed domain decided the iova aperture window. Modify the
+>> @@ -2366,10 +2350,10 @@ static void vfio_iommu_type1_detach_group(void *iommu_data,
+>>  			kfree(group);
+>>  
+>>  			if (list_empty(&iommu->external_domain->group_list)) {
+>> -				vfio_sanity_check_pfn_list(iommu);
+>> -
+>> -				if (!IS_IOMMU_CAP_DOMAIN_IN_CONTAINER(iommu))
+>> +				if (!IS_IOMMU_CAP_DOMAIN_IN_CONTAINER(iommu)) {
+>> +					WARN_ON(iommu->notifier.head);
+>>  					vfio_iommu_unmap_unpin_all(iommu);
+>> +				}
+>>  
+>>  				kfree(iommu->external_domain);
+>>  				iommu->external_domain = NULL;
+>> @@ -2403,10 +2387,12 @@ static void vfio_iommu_type1_detach_group(void *iommu_data,
+>>  		 */
+>>  		if (list_empty(&domain->group_list)) {
+>>  			if (list_is_singular(&iommu->domain_list)) {
+>> -				if (!iommu->external_domain)
+>> +				if (!iommu->external_domain) {
+>> +					WARN_ON(iommu->notifier.head);
+>>  					vfio_iommu_unmap_unpin_all(iommu);
+>> -				else
+>> +				} else {
+>>  					vfio_iommu_unmap_unpin_reaccount(iommu);
+>> +				}
+>>  			}
+>>  			iommu_domain_free(domain->domain);
+>>  			list_del(&domain->next);
+>> @@ -2488,9 +2474,10 @@ static void vfio_iommu_type1_release(void *iommu_data)
+>>  	struct vfio_iommu *iommu = iommu_data;
+>>  	struct vfio_domain *domain, *domain_tmp;
+>>  
+>> +	WARN_ON(iommu->notifier.head);
+> 
+> I don't see that this does any harm, but isn't it actually redundant?
+> It seems vfio-core only calls the iommu backend release function after
+> removing all the groups, so the tests in _detach_group should catch all
+> cases.  We're expecting the vfio bus/mdev driver to remove the notifier
+> when a device is closed, which necessarily occurs before detaching the
+> group.  Thanks,
+> 
+> Alex
+Hi Alex,
 
-That's to say, we should minimize the time gap of dirty log
-clearing and dirty log handling. We can give userspace the
-interface to clear dirty log.
+Sorry that today I was busy at sending the smmu HTTU based dma dirty log tracking.
+I will reply you tomorrow. Thanks!
 
-Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
-Signed-off-by: Kunkun Jiang <jiangkunkun@huawei.com>
----
- drivers/vfio/vfio_iommu_type1.c | 103 ++++++++++++++++++++++++++++++--
- include/uapi/linux/vfio.h       |  28 ++++++++-
- 2 files changed, 126 insertions(+), 5 deletions(-)
+Keqian.
 
-diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
-index 1cd10f3e7ed4..a32dc684b86e 100644
---- a/drivers/vfio/vfio_iommu_type1.c
-+++ b/drivers/vfio/vfio_iommu_type1.c
-@@ -73,6 +73,7 @@ struct vfio_iommu {
- 	bool			v2;
- 	bool			nesting;
- 	bool			dirty_page_tracking;
-+	bool			dirty_log_manual_clear;
- 	bool			pinned_page_dirty_scope;
- 	uint64_t		num_non_hwdbm_groups;
- };
-@@ -1018,6 +1019,78 @@ static int vfio_iommu_dirty_log_clear(struct vfio_iommu *iommu,
- 	return 0;
- }
- 
-+static int vfio_iova_dirty_log_clear(u64 __user *bitmap,
-+				     struct vfio_iommu *iommu,
-+				     dma_addr_t iova, size_t size,
-+				     size_t pgsize)
-+{
-+	struct vfio_dma *dma;
-+	struct rb_node *n;
-+	dma_addr_t start_iova, end_iova, riova;
-+	unsigned long pgshift = __ffs(pgsize);
-+	unsigned long bitmap_size;
-+	unsigned long *bitmap_buffer = NULL;
-+	bool clear_valid;
-+	int rs, re, start, end, dma_offset;
-+	int ret = 0;
-+
-+	bitmap_size = DIRTY_BITMAP_BYTES(size >> pgshift);
-+	bitmap_buffer = kvmalloc(bitmap_size, GFP_KERNEL);
-+	if (!bitmap_buffer) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
-+
-+	if (copy_from_user(bitmap_buffer, bitmap, bitmap_size)) {
-+		ret = -EFAULT;
-+		goto out;
-+	}
-+
-+	for (n = rb_first(&iommu->dma_list); n; n = rb_next(n)) {
-+		dma = rb_entry(n, struct vfio_dma, node);
-+		if (!dma->iommu_mapped)
-+			continue;
-+		if ((dma->iova + dma->size - 1) < iova)
-+			continue;
-+		if (dma->iova > iova + size - 1)
-+			break;
-+
-+		start_iova = max(iova, dma->iova);
-+		end_iova = min(iova + size, dma->iova + dma->size);
-+
-+		/* Similar logic as the tail of vfio_iova_dirty_bitmap */
-+
-+		clear_valid = false;
-+		start = (start_iova - iova) >> pgshift;
-+		end = (end_iova - iova) >> pgshift;
-+		bitmap_for_each_set_region(bitmap_buffer, rs, re, start, end) {
-+			clear_valid = true;
-+			riova = iova + (rs << pgshift);
-+			dma_offset = (riova - dma->iova) >> pgshift;
-+			bitmap_clear(dma->bitmap, dma_offset, re - rs);
-+		}
-+
-+		if (clear_valid)
-+			vfio_dma_populate_bitmap(dma, pgsize);
-+
-+		if (clear_valid && !iommu->pinned_page_dirty_scope &&
-+		    dma->iommu_mapped && !iommu->num_non_hwdbm_groups) {
-+			ret = vfio_iommu_dirty_log_clear(iommu, start_iova,
-+					end_iova - start_iova,	bitmap_buffer,
-+					iova, pgsize);
-+			if (ret) {
-+				pr_warn("dma dirty log clear failed!\n");
-+				goto out;
-+			}
-+		}
-+
-+	}
-+
-+out:
-+	kfree(bitmap_buffer);
-+	return ret;
-+}
-+
- static int update_user_bitmap(u64 __user *bitmap, struct vfio_iommu *iommu,
- 			      struct vfio_dma *dma, dma_addr_t base_iova,
- 			      size_t pgsize)
-@@ -1067,6 +1140,10 @@ static int update_user_bitmap(u64 __user *bitmap, struct vfio_iommu *iommu,
- 			 DIRTY_BITMAP_BYTES(nbits + shift)))
- 		return -EFAULT;
- 
-+	if (shift && iommu->dirty_log_manual_clear)
-+		bitmap_shift_right(dma->bitmap, dma->bitmap, shift,
-+				   nbits + shift);
-+
- 	return 0;
- }
- 
-@@ -1105,6 +1182,9 @@ static int vfio_iova_dirty_bitmap(u64 __user *bitmap, struct vfio_iommu *iommu,
- 		if (ret)
- 			return ret;
- 
-+		if (iommu->dirty_log_manual_clear)
-+			continue;
-+
- 		/*
- 		 * Re-populate bitmap to include all pinned pages which are
- 		 * considered as dirty but exclude pages which are unpinned and
-@@ -2601,6 +2681,11 @@ static int vfio_iommu_type1_check_extension(struct vfio_iommu *iommu,
- 		if (!iommu)
- 			return 0;
- 		return vfio_domains_have_iommu_cache(iommu);
-+	case VFIO_DIRTY_LOG_MANUAL_CLEAR:
-+		if (!iommu)
-+			return 0;
-+		iommu->dirty_log_manual_clear = true;
-+		return 1;
- 	default:
- 		return 0;
- 	}
-@@ -2874,7 +2959,8 @@ static int vfio_iommu_type1_dirty_pages(struct vfio_iommu *iommu,
- 	struct vfio_iommu_type1_dirty_bitmap dirty;
- 	uint32_t mask = VFIO_IOMMU_DIRTY_PAGES_FLAG_START |
- 			VFIO_IOMMU_DIRTY_PAGES_FLAG_STOP |
--			VFIO_IOMMU_DIRTY_PAGES_FLAG_GET_BITMAP;
-+			VFIO_IOMMU_DIRTY_PAGES_FLAG_GET_BITMAP |
-+			VFIO_IOMMU_DIRTY_PAGES_FLAG_CLEAR_BITMAP;
- 	unsigned long minsz;
- 	int ret = 0;
- 
-@@ -2916,7 +3002,8 @@ static int vfio_iommu_type1_dirty_pages(struct vfio_iommu *iommu,
- 		}
- 		mutex_unlock(&iommu->lock);
- 		return 0;
--	} else if (dirty.flags & VFIO_IOMMU_DIRTY_PAGES_FLAG_GET_BITMAP) {
-+	} else if (dirty.flags & (VFIO_IOMMU_DIRTY_PAGES_FLAG_GET_BITMAP |
-+				VFIO_IOMMU_DIRTY_PAGES_FLAG_CLEAR_BITMAP)) {
- 		struct vfio_iommu_type1_dirty_bitmap_get range;
- 		unsigned long pgshift;
- 		size_t data_size = dirty.argsz - minsz;
-@@ -2959,13 +3046,21 @@ static int vfio_iommu_type1_dirty_pages(struct vfio_iommu *iommu,
- 			goto out_unlock;
- 		}
- 
--		if (iommu->dirty_page_tracking)
-+		if (!iommu->dirty_page_tracking) {
-+			ret = -EINVAL;
-+			goto out_unlock;
-+		}
-+
-+		if (dirty.flags & VFIO_IOMMU_DIRTY_PAGES_FLAG_GET_BITMAP)
- 			ret = vfio_iova_dirty_bitmap(range.bitmap.data,
- 						     iommu, range.iova,
- 						     range.size,
- 						     range.bitmap.pgsize);
- 		else
--			ret = -EINVAL;
-+			ret = vfio_iova_dirty_log_clear(range.bitmap.data,
-+							iommu, range.iova,
-+							range.size,
-+							range.bitmap.pgsize);
- out_unlock:
- 		mutex_unlock(&iommu->lock);
- 
-diff --git a/include/uapi/linux/vfio.h b/include/uapi/linux/vfio.h
-index d1812777139f..77a64ff38f64 100644
---- a/include/uapi/linux/vfio.h
-+++ b/include/uapi/linux/vfio.h
-@@ -46,6 +46,14 @@
-  */
- #define VFIO_NOIOMMU_IOMMU		8
- 
-+/*
-+ * The vfio_iommu driver may support user clears dirty log manually, which means
-+ * dirty log is not cleared automatically after dirty log is copied to userspace,
-+ * it's user's duty to clear dirty log. Note: when user queries this extension
-+ * and vfio_iommu driver supports it, then it is enabled.
-+ */
-+#define VFIO_DIRTY_LOG_MANUAL_CLEAR	9
-+
- /*
-  * The IOCTL interface is designed for extensibility by embedding the
-  * structure length (argsz) and flags into structures passed between
-@@ -1161,7 +1169,24 @@ struct vfio_iommu_type1_dma_unmap {
-  * actual bitmap. If dirty pages logging is not enabled, an error will be
-  * returned.
-  *
-- * Only one of the flags _START, _STOP and _GET may be specified at a time.
-+ * Calling the IOCTL with VFIO_IOMMU_DIRTY_PAGES_FLAG_CLEAR_BITMAP flag set,
-+ * instructs the IOMMU driver to clear the dirty status of pages in a bitmap
-+ * for IOMMU container for a given IOVA range. The user must specify the IOVA
-+ * range, the bitmap and the pgsize through the structure
-+ * vfio_iommu_type1_dirty_bitmap_get in the data[] portion. This interface
-+ * supports clearing a bitmap of the smallest supported pgsize only and can be
-+ * modified in future to clear a bitmap of any specified supported pgsize. The
-+ * user must provide a memory area for the bitmap memory and specify its size
-+ * in bitmap.size. One bit is used to represent one page consecutively starting
-+ * from iova offset. The user should provide page size in bitmap.pgsize field.
-+ * A bit set in the bitmap indicates that the page at that offset from iova is
-+ * cleared the dirty status, and dirty tracking is re-enabled for that page. The
-+ * caller must set argsz to a value including the size of structure
-+ * vfio_iommu_dirty_bitmap_get, but excluing the size of the actual bitmap. If
-+ * dirty pages logging is not enabled, an error will be returned.
-+ *
-+ * Only one of the flags _START, _STOP, _GET and _CLEAR may be specified at a
-+ * time.
-  *
-  */
- struct vfio_iommu_type1_dirty_bitmap {
-@@ -1170,6 +1195,7 @@ struct vfio_iommu_type1_dirty_bitmap {
- #define VFIO_IOMMU_DIRTY_PAGES_FLAG_START	(1 << 0)
- #define VFIO_IOMMU_DIRTY_PAGES_FLAG_STOP	(1 << 1)
- #define VFIO_IOMMU_DIRTY_PAGES_FLAG_GET_BITMAP	(1 << 2)
-+#define VFIO_IOMMU_DIRTY_PAGES_FLAG_CLEAR_BITMAP (1 << 3)
- 	__u8         data[];
- };
- 
--- 
-2.19.1
-
+> 
+>> +
+>>  	if (iommu->external_domain) {
+>>  		vfio_release_domain(iommu->external_domain, true);
+>> -		vfio_sanity_check_pfn_list(iommu);
+>>  		kfree(iommu->external_domain);
+>>  	}
+>>  
+> 
+> .
+> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
