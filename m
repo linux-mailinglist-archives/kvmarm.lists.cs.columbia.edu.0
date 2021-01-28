@@ -2,51 +2,49 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 67F75307966
-	for <lists+kvmarm@lfdr.de>; Thu, 28 Jan 2021 16:18:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A9C97307969
+	for <lists+kvmarm@lfdr.de>; Thu, 28 Jan 2021 16:18:27 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1C5C54B239;
-	Thu, 28 Jan 2021 10:18:24 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5E2474B167;
+	Thu, 28 Jan 2021 10:18:27 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zxw9Usbw8emR; Thu, 28 Jan 2021 10:18:24 -0500 (EST)
+	with ESMTP id WTtpIl5fGV+N; Thu, 28 Jan 2021 10:18:26 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0D7C74B23F;
-	Thu, 28 Jan 2021 10:18:22 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3E8DD4B23C;
+	Thu, 28 Jan 2021 10:18:25 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 608334B23B
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Jan 2021 10:18:21 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C2F8C4B222
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Jan 2021 10:18:23 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id LbEn6aNZdaOn for <kvmarm@lists.cs.columbia.edu>;
- Thu, 28 Jan 2021 10:18:20 -0500 (EST)
+ with ESMTP id LD2WLn1XZIvX for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 28 Jan 2021 10:18:22 -0500 (EST)
 Received: from szxga07-in.huawei.com (szxga07-in.huawei.com [45.249.212.35])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B1F254B216
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Jan 2021 10:18:18 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 297504B22E
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Jan 2021 10:18:21 -0500 (EST)
 Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.60])
- by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4DRPG05tyHz7cH8;
+ by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4DRPG04PzBz7bL1;
  Thu, 28 Jan 2021 23:16:56 +0800 (CST)
 Received: from DESKTOP-5IS4806.china.huawei.com (10.174.184.42) by
  DGGEMS413-HUB.china.huawei.com (10.3.19.213) with Microsoft SMTP Server id
- 14.3.498.0; Thu, 28 Jan 2021 23:18:00 +0800
+ 14.3.498.0; Thu, 28 Jan 2021 23:18:01 +0800
 From: Keqian Zhu <zhukeqian1@huawei.com>
 To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
  <kvm@vger.kernel.org>, <kvmarm@lists.cs.columbia.edu>,
  <iommu@lists.linux-foundation.org>, Will Deacon <will@kernel.org>, "Alex
  Williamson" <alex.williamson@redhat.com>, Marc Zyngier <maz@kernel.org>,
  Catalin Marinas <catalin.marinas@arm.com>
-Subject: [RFC PATCH 08/11] iommu/arm-smmu-v3: Add HWDBM device feature
- reporting
-Date: Thu, 28 Jan 2021 23:17:39 +0800
-Message-ID: <20210128151742.18840-9-zhukeqian1@huawei.com>
+Subject: [RFC PATCH 09/11] vfio/iommu_type1: Add HWDBM status maintanance
+Date: Thu, 28 Jan 2021 23:17:40 +0800
+Message-ID: <20210128151742.18840-10-zhukeqian1@huawei.com>
 X-Mailer: git-send-email 2.8.4.windows.1
 In-Reply-To: <20210128151742.18840-1-zhukeqian1@huawei.com>
 References: <20210128151742.18840-1-zhukeqian1@huawei.com>
@@ -73,44 +71,103 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: jiangkunkun <jiangkunkun@huawei.com>
 
-We have implemented these interfaces required to support iommu
-dirty log tracking. The last step is reporting this feature to
-upper user, then the user can perform higher policy base on it.
-This adds a new dev feature named IOMMU_DEV_FEAT_HWDBM in iommu
-layer. For arm smmuv3, it is equal to ARM_SMMU_FEAT_HTTU_HD.
+We are going to optimize dirty log tracking based on iommu
+HWDBM feature, but the dirty log from iommu is useful only
+when all iommu backed groups are connected to iommu with
+HWDBM feature. This maintains a counter for this feature.
 
 Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
 Signed-off-by: Kunkun Jiang <jiangkunkun@huawei.com>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 2 ++
- include/linux/iommu.h                       | 1 +
- 2 files changed, 3 insertions(+)
+ drivers/vfio/vfio_iommu_type1.c | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 0c24503d29d3..cbde0489cf31 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -2629,6 +2629,8 @@ static bool arm_smmu_dev_has_feature(struct device *dev,
- 	switch (feat) {
- 	case IOMMU_DEV_FEAT_SVA:
- 		return arm_smmu_master_sva_supported(master);
-+	case IOMMU_DEV_FEAT_HWDBM:
-+		return !!(master->smmu->features & ARM_SMMU_FEAT_HTTU_HD);
- 	default:
- 		return false;
- 	}
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index 1cb6cd0cfc7b..77e561ed57fd 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -160,6 +160,7 @@ struct iommu_resv_region {
- enum iommu_dev_features {
- 	IOMMU_DEV_FEAT_AUX,	/* Aux-domain feature */
- 	IOMMU_DEV_FEAT_SVA,	/* Shared Virtual Addresses */
-+	IOMMU_DEV_FEAT_HWDBM,	/* Hardware Dirty Bit Management */
+diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
+index 0b4dedaa9128..3b8522ebf955 100644
+--- a/drivers/vfio/vfio_iommu_type1.c
++++ b/drivers/vfio/vfio_iommu_type1.c
+@@ -74,6 +74,7 @@ struct vfio_iommu {
+ 	bool			nesting;
+ 	bool			dirty_page_tracking;
+ 	bool			pinned_page_dirty_scope;
++	uint64_t		num_non_hwdbm_groups;
  };
  
- #define IOMMU_PASID_INVALID	(-1U)
+ struct vfio_domain {
+@@ -102,6 +103,7 @@ struct vfio_group {
+ 	struct list_head	next;
+ 	bool			mdev_group;	/* An mdev group */
+ 	bool			pinned_page_dirty_scope;
++	bool			iommu_hwdbm;	/* Valid for non-mdev group */
+ };
+ 
+ struct vfio_iova {
+@@ -976,6 +978,27 @@ static void vfio_update_pgsize_bitmap(struct vfio_iommu *iommu)
+ 	}
+ }
+ 
++static int vfio_dev_has_feature(struct device *dev, void *data)
++{
++	enum iommu_dev_features *feat = data;
++
++	if (!iommu_dev_has_feature(dev, *feat))
++		return -ENODEV;
++
++	return 0;
++}
++
++static bool vfio_group_supports_hwdbm(struct vfio_group *group)
++{
++	enum iommu_dev_features feat = IOMMU_DEV_FEAT_HWDBM;
++
++	if (iommu_group_for_each_dev(group->iommu_group, &feat,
++				     vfio_dev_has_feature))
++		return false;
++
++	return true;
++}
++
+ static int update_user_bitmap(u64 __user *bitmap, struct vfio_iommu *iommu,
+ 			      struct vfio_dma *dma, dma_addr_t base_iova,
+ 			      size_t pgsize)
+@@ -2189,6 +2212,12 @@ static int vfio_iommu_type1_attach_group(void *iommu_data,
+ 	 * capable via the page pinning interface.
+ 	 */
+ 	iommu->pinned_page_dirty_scope = false;
++
++	/* Update the hwdbm status of group and iommu */
++	group->iommu_hwdbm = vfio_group_supports_hwdbm(group);
++	if (!group->iommu_hwdbm)
++		iommu->num_non_hwdbm_groups++;
++
+ 	mutex_unlock(&iommu->lock);
+ 	vfio_iommu_resv_free(&group_resv_regions);
+ 
+@@ -2342,6 +2371,7 @@ static void vfio_iommu_type1_detach_group(void *iommu_data,
+ 	struct vfio_domain *domain;
+ 	struct vfio_group *group;
+ 	bool update_dirty_scope = false;
++	bool update_iommu_hwdbm = false;
+ 	LIST_HEAD(iova_copy);
+ 
+ 	mutex_lock(&iommu->lock);
+@@ -2380,6 +2410,7 @@ static void vfio_iommu_type1_detach_group(void *iommu_data,
+ 
+ 		vfio_iommu_detach_group(domain, group);
+ 		update_dirty_scope = !group->pinned_page_dirty_scope;
++		update_iommu_hwdbm = !group->iommu_hwdbm;
+ 		list_del(&group->next);
+ 		kfree(group);
+ 		/*
+@@ -2417,6 +2448,8 @@ static void vfio_iommu_type1_detach_group(void *iommu_data,
+ 	 */
+ 	if (update_dirty_scope)
+ 		update_pinned_page_dirty_scope(iommu);
++	if (update_iommu_hwdbm)
++		iommu->num_non_hwdbm_groups--;
+ 	mutex_unlock(&iommu->lock);
+ }
+ 
 -- 
 2.19.1
 
