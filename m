@@ -2,55 +2,56 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B3C7830794B
-	for <lists+kvmarm@lfdr.de>; Thu, 28 Jan 2021 16:17:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CC57307957
+	for <lists+kvmarm@lfdr.de>; Thu, 28 Jan 2021 16:18:18 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2FBBD4B17D;
-	Thu, 28 Jan 2021 10:17:37 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2CF494B204;
+	Thu, 28 Jan 2021 10:18:18 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7B9lbaeunUbQ; Thu, 28 Jan 2021 10:17:37 -0500 (EST)
+	with ESMTP id gCgUVVKjoAfP; Thu, 28 Jan 2021 10:18:17 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DD5EB4B187;
-	Thu, 28 Jan 2021 10:17:35 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 981DB4B215;
+	Thu, 28 Jan 2021 10:18:16 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 888714B0F2
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Jan 2021 10:17:34 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 345244B1FF
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Jan 2021 10:18:15 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id btVCFO17tp4n for <kvmarm@lists.cs.columbia.edu>;
- Thu, 28 Jan 2021 10:17:33 -0500 (EST)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 511B64B0E4
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Jan 2021 10:17:33 -0500 (EST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BED061396;
- Thu, 28 Jan 2021 07:17:32 -0800 (PST)
-Received: from slackpad.fritz.box (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 81AA63F7C3;
- Thu, 28 Jan 2021 07:17:31 -0800 (PST)
-Date: Thu, 28 Jan 2021 15:16:43 +0000
-From: Andre Przywara <andre.przywara@arm.com>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH 1/2] KVM: arm64: Turn kvm_arm_support_pmu_v3() into a
- static key
-Message-ID: <20210128151643.6e2c3668@slackpad.fritz.box>
-In-Reply-To: <20210126151521.2958688-2-maz@kernel.org>
-References: <20210126151521.2958688-1-maz@kernel.org>
- <20210126151521.2958688-2-maz@kernel.org>
-Organization: Arm Ltd.
-X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.31; x86_64-slackware-linux-gnu)
+ with ESMTP id chCqqwcU1FEY for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 28 Jan 2021 10:18:13 -0500 (EST)
+Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0150B4B1F2
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Jan 2021 10:18:08 -0500 (EST)
+Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.58])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4DRPFQ4vV3zlC5j;
+ Thu, 28 Jan 2021 23:16:26 +0800 (CST)
+Received: from DESKTOP-5IS4806.china.huawei.com (10.174.184.42) by
+ DGGEMS413-HUB.china.huawei.com (10.3.19.213) with Microsoft SMTP Server id
+ 14.3.498.0; Thu, 28 Jan 2021 23:17:53 +0800
+From: Keqian Zhu <zhukeqian1@huawei.com>
+To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <kvm@vger.kernel.org>, <kvmarm@lists.cs.columbia.edu>,
+ <iommu@lists.linux-foundation.org>, Will Deacon <will@kernel.org>, "Alex
+ Williamson" <alex.williamson@redhat.com>, Marc Zyngier <maz@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>
+Subject: [RFC PATCH 00/11] vfio/iommu_type1: Implement dirty log tracking
+ based on smmuv3 HTTU
+Date: Thu, 28 Jan 2021 23:17:31 +0800
+Message-ID: <20210128151742.18840-1-zhukeqian1@huawei.com>
+X-Mailer: git-send-email 2.8.4.windows.1
 MIME-Version: 1.0
-Cc: linux-arm-kernel@lists.infradead.org, kernel-team@android.com,
- kvmarm@lists.cs.columbia.edu
+X-Originating-IP: [10.174.184.42]
+X-CFilter-Loop: Reflected
+Cc: Cornelia Huck <cohuck@redhat.com>, lushenming@huawei.com,
+ Kirti Wankhede <kwankhede@nvidia.com>, Robin Murphy <robin.murphy@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -62,129 +63,87 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, 26 Jan 2021 15:15:20 +0000
-Marc Zyngier <maz@kernel.org> wrote:
-
-Hi Marc,
-
-> We currently find out about the presence of a HW PMU (or the handling
-> of that PMU by perf, which amounts to the same thing) in a fairly
-> roundabout way, by checking the number of counters available to perf.
-> That's good enough for now, but we will soon need to find about about
-> that on paths where perf is out of reach (in the world switch).
-> 
-> Instead, let's turn kvm_arm_support_pmu_v3() into a static key.
-
-I am sure the pesky build bot has told you about it already, but this
-fails when ARM_PMU is not defined, as perf_num_counters() is not
-defined. It's  bit nasty, since it's a generic function, so we
-can't easily stub it in its original header.
-
-Shall we find a place somewhere in arch/arm64 and provide a stub
-implementation there, #ifndef CONFIG_ARM_PMU? Sounds ugly, though.
-
-Or something else entirely?
-
-Cheers,
-Andre
-
-> Signed-off-by: Marc Zyngier <maz@kernel.org>
-> ---
->  arch/arm64/kvm/perf.c     | 10 ++++++++++
->  arch/arm64/kvm/pmu-emul.c | 10 ----------
->  include/kvm/arm_pmu.h     |  9 +++++++--
->  3 files changed, 17 insertions(+), 12 deletions(-)
-> 
-> diff --git a/arch/arm64/kvm/perf.c b/arch/arm64/kvm/perf.c
-> index d45b8b9a4415..198fa4266b2d 100644
-> --- a/arch/arm64/kvm/perf.c
-> +++ b/arch/arm64/kvm/perf.c
-> @@ -11,6 +11,8 @@
->  
->  #include <asm/kvm_emulate.h>
->  
-> +DEFINE_STATIC_KEY_FALSE(kvm_arm_pmu_available);
-> +
->  static int kvm_is_in_guest(void)
->  {
->          return kvm_get_running_vcpu() != NULL;
-> @@ -48,6 +50,14 @@ static struct perf_guest_info_callbacks kvm_guest_cbs = {
->  
->  int kvm_perf_init(void)
->  {
-> +	/*
-> +	 * Check if HW_PERF_EVENTS are supported by checking the number of
-> +	 * hardware performance counters. This could ensure the presence of
-> +	 * a physical PMU and CONFIG_PERF_EVENT is selected.
-> +	 */
-> +	if (perf_num_counters() > 0)
-> +		static_branch_enable(&kvm_arm_pmu_available);
-> +
->  	return perf_register_guest_info_callbacks(&kvm_guest_cbs);
->  }
->  
-> diff --git a/arch/arm64/kvm/pmu-emul.c b/arch/arm64/kvm/pmu-emul.c
-> index 4ad66a532e38..44d500706ab9 100644
-> --- a/arch/arm64/kvm/pmu-emul.c
-> +++ b/arch/arm64/kvm/pmu-emul.c
-> @@ -813,16 +813,6 @@ u64 kvm_pmu_get_pmceid(struct kvm_vcpu *vcpu, bool pmceid1)
->  	return val & mask;
->  }
->  
-> -bool kvm_arm_support_pmu_v3(void)
-> -{
-> -	/*
-> -	 * Check if HW_PERF_EVENTS are supported by checking the number of
-> -	 * hardware performance counters. This could ensure the presence of
-> -	 * a physical PMU and CONFIG_PERF_EVENT is selected.
-> -	 */
-> -	return (perf_num_counters() > 0);
-> -}
-> -
->  int kvm_arm_pmu_v3_enable(struct kvm_vcpu *vcpu)
->  {
->  	if (!kvm_vcpu_has_pmu(vcpu))
-> diff --git a/include/kvm/arm_pmu.h b/include/kvm/arm_pmu.h
-> index 8dcb3e1477bc..6fd3cda608e4 100644
-> --- a/include/kvm/arm_pmu.h
-> +++ b/include/kvm/arm_pmu.h
-> @@ -13,6 +13,13 @@
->  #define ARMV8_PMU_CYCLE_IDX		(ARMV8_PMU_MAX_COUNTERS - 1)
->  #define ARMV8_PMU_MAX_COUNTER_PAIRS	((ARMV8_PMU_MAX_COUNTERS + 1) >> 1)
->  
-> +DECLARE_STATIC_KEY_FALSE(kvm_arm_pmu_available);
-> +
-> +static __always_inline bool kvm_arm_support_pmu_v3(void)
-> +{
-> +	return static_branch_likely(&kvm_arm_pmu_available);
-> +}
-> +
->  #ifdef CONFIG_HW_PERF_EVENTS
->  
->  struct kvm_pmc {
-> @@ -47,7 +54,6 @@ void kvm_pmu_software_increment(struct kvm_vcpu *vcpu, u64 val);
->  void kvm_pmu_handle_pmcr(struct kvm_vcpu *vcpu, u64 val);
->  void kvm_pmu_set_counter_event_type(struct kvm_vcpu *vcpu, u64 data,
->  				    u64 select_idx);
-> -bool kvm_arm_support_pmu_v3(void);
->  int kvm_arm_pmu_v3_set_attr(struct kvm_vcpu *vcpu,
->  			    struct kvm_device_attr *attr);
->  int kvm_arm_pmu_v3_get_attr(struct kvm_vcpu *vcpu,
-> @@ -87,7 +93,6 @@ static inline void kvm_pmu_software_increment(struct kvm_vcpu *vcpu, u64 val) {}
->  static inline void kvm_pmu_handle_pmcr(struct kvm_vcpu *vcpu, u64 val) {}
->  static inline void kvm_pmu_set_counter_event_type(struct kvm_vcpu *vcpu,
->  						  u64 data, u64 select_idx) {}
-> -static inline bool kvm_arm_support_pmu_v3(void) { return false; }
->  static inline int kvm_arm_pmu_v3_set_attr(struct kvm_vcpu *vcpu,
->  					  struct kvm_device_attr *attr)
->  {
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+SGkgYWxsLAoKVGhpcyBwYXRjaCBzZXJpZXMgaW1wbGVtZW50IGEgbmV3IGRpcnR5IGxvZyB0cmFj
+a2luZyBtZXRob2QgZm9yIHZmaW8gZG1hLgoKSW50ZW50aW9u77yaCgpBcyB3ZSBrbm93LCB2Zmlv
+IGxpdmUgbWlncmF0aW9uIGlzIGFuIGltcG9ydGFudCBhbmQgdmFsdWFibGUgZmVhdHVyZSwgYnV0
+IHRoZXJlCmFyZSBzdGlsbCBtYW55IGh1cmRsZXMgdG8gc29sdmUsIGluY2x1ZGluZyBtaWdyYXRp
+b24gb2YgaW50ZXJydXB0LCBkZXZpY2Ugc3RhdGUsCkRNQSBkaXJ0eSBsb2cgdHJhY2tpbmcsIGFu
+ZCBldGMuCgpGb3Igbm93LCB0aGUgb25seSBkaXJ0eSBsb2cgdHJhY2tpbmcgaW50ZXJmYWNlIGlz
+IHBpbm5pbmcuIEl0IGhhcyBzb21lIGRyYXdiYWNrczoKMS4gT25seSBzbWFydCB2ZW5kb3IgZHJp
+dmVycyBhcmUgYXdhcmUgb2YgdGhpcy4KMi4gSXQncyBjb2Fyc2UtZ3JhaW5lZCwgdGhlIHBpbm5l
+ZC1zY29wZSBpcyBnZW5lcmFsbHkgYmlnZ2VyIHRoYW4gd2hhdCB0aGUgZGV2aWNlIGFjdHVhbGx5
+IGFjY2Vzcy4KMy4gSXQgY2FuJ3QgdHJhY2sgZGlydHkgY29udGludW91c2x5IGFuZCBwcmVjaXNl
+bHksIHZmaW8gcG9wdWxhdGVzIGFsbCBwaW5uZWQtc2NvcGUgYXMgZGlydHkuCiAgIFNvIGl0IGRv
+ZXNuJ3Qgd29yayB3ZWxsIHdpdGggaXRlcmF0aXZlbHkgZGlydHkgbG9nIGhhbmRsaW5nLgoKQWJv
+dXQgU01NVSBIVFRVOgoKSFRUVSAoSGFyZHdhcmUgVHJhbnNsYXRpb24gVGFibGUgVXBkYXRlKSBp
+cyBhIGZlYXR1cmUgb2YgQVJNIFNNTVV2MywgaXQgY2FuIHVwZGF0ZQphY2Nlc3MgZmxhZyBvci9h
+bmQgZGlydHkgc3RhdGUgb2YgdGhlIFRURCAoVHJhbnNsYXRpb24gVGFibGUgRGVzY3JpcHRvcikg
+YnkgaGFyZHdhcmUuCldpdGggSFRUVSwgc3RhZ2UxIFRURCBpcyBjbGFzc2lmaWVkIGludG8gMyB0
+eXBlczoKICAgICAgICAgICAgICAgICAgICAgICAgREJNIGJpdCAgICAgICAgICAgICBBUFsyXShy
+ZWFkb25seSBiaXQpCjEuIHdyaXRhYmxlX2NsZWFuICAgICAgICAgMSAgICAgICAgICAgICAgICAg
+ICAgICAgMQoyLiB3cml0YWJsZV9kaXJ0eSAgICAgICAgIDEgICAgICAgICAgICAgICAgICAgICAg
+IDAKMy4gcmVhZG9ubHkgICAgICAgICAgICAgICAwICAgICAgICAgICAgICAgICAgICAgICAxCgpJ
+ZiBIVFRVX0hEIChtYW5hZ2UgZGlydHkgc3RhdGUpIGlzIGVuYWJsZWQsIHNtbXUgY2FuIGNoYW5n
+ZSBUVEQgZnJvbSB3cml0YWJsZV9jbGVhbiB0bwp3cml0YWJsZV9kaXJ0eS4gVGhlbiBzb2Z0d2Fy
+ZSBjYW4gc2NhbiBUVEQgdG8gc3luYyBkaXJ0eSBzdGF0ZSBpbnRvIGRpcnR5IGJpdG1hcC4gV2l0
+aAp0aGlzIGZlYXR1cmUsIHdlIGNhbiB0cmFjayB0aGUgZGlydHkgbG9nIG9mIERNQSBjb250aW51
+b3VzbHkgYW5kIHByZWNpc2VseS4KCkFib3V0IHRoaXMgc2VyaWVzOgoKUGF0Y2ggMS0zOiBBZGQg
+ZmVhdHVyZSBkZXRlY3Rpb24gZm9yIHNtbXUgSFRUVSBhbmQgZW5hYmxlIEhUVFUgZm9yIHNtbXUg
+c3RhZ2UxIG1hcHBpbmcuCiAgICAgICAgICAgQW5kIGFkZCBmZWF0dXJlIGRldGVjdGlvbiBmb3Ig
+c21tdSBCQk1MLiBXZSBuZWVkIHRvIHNwbGl0IGJsb2NrIG1hcHBpbmcgd2hlbgogICAgICAgICAg
+IHN0YXJ0IGRpcnR5IGxvZyB0cmFja2luZyBhbmQgbWVyZ2UgcGFnZSBtYXBwaW5nIHdoZW4gc3Rv
+cCBkaXJ0eSBsb2cgdHJhY2tpbmcsCgkJICAgd2hpY2ggcmVxdWlyZXMgYnJlYWstYmVmb3JlLW1h
+a2UgcHJvY2VkdXJlLiBCdXQgaXQgbWlnaHQgY2F1c2UgcHJvYmxlbXMgd2hlbiB0aGUKCQkgICBU
+VEQgaXMgYWxpdmUuIFRoZSBJL08gc3RyZWFtcyBtaWdodCBub3QgdG9sZXJhdGUgdHJhbnNsYXRp
+b24gZmF1bHRzLiBTbyBCQk1MCgkJICAgc2hvdWxkIGJlIHVzZWQuCgpQYXRjaCA0LTc6IEFkZCBm
+b3VyIGludGVyZmFjZXMgKHNwbGl0X2Jsb2NrLCBtZXJnZV9wYWdlLCBzeW5jX2RpcnR5X2xvZyBh
+bmQgY2xlYXJfZGlydHlfbG9nKQogICAgICAgICAgIGluIElPTU1VIGxheWVyLCB0aGV5IGFyZSBl
+c3NlbnRpYWwgdG8gaW1wbGVtZW50IGRtYSBkaXJ0eSBsb2cgdHJhY2tpbmcgZm9yIHZmaW8uCgkJ
+ICAgV2UgaW1wbGVtZW50IHRoZXNlIGludGVyZmFjZXMgZm9yIGFybSBzbW11djMuCgpQYXRjaCAg
+IDg6IEFkZCBIV0RCTSAoSGFyZHdhcmUgRGlydHkgQml0IE1hbmFnZW1lbnQpIGRldmljZSBmZWF0
+dXJlIHJlcG9ydGluZyBpbiBJT01NVSBsYXllci4KClBhdGNoOS0xMTogSW1wbGVtZW50IGEgbmV3
+IGRpcnR5IGxvZyB0cmFja2luZyBtZXRob2QgZm9yIHZmaW8gYmFzZWQgb24gaW9tbXUgaHdkYm0u
+IEEgbmV3CiAgICAgICAgICAgaW9jdGwgb3BlcmF0aW9uIG5hbWVkIFZGSU9fRElSVFlfTE9HX01B
+TlVBTF9DTEVBUiBpcyBhZGRlZCwgd2hpY2ggY2FuIGVsaW1pbmF0ZQoJCSAgIHNvbWUgcmVkdW5k
+YW50IGRpcnR5IGhhbmRsaW5nIG9mIHVzZXJzcGFjZS4KCk9wdGltaXphdGlvbnMgVE8gRG86Cgox
+LiBXZSByZWNvZ25pemVkIHRoYXQgZWFjaCBzbW11X2RvbWFpbiAoYSB2ZmlvX2NvbnRhaW5lciBt
+YXkgaGFzIHNldmVyYWwgc21tdV9kb21haW4pIGhhcyBpdHMKICAgb3duIHN0YWdlMSBtYXBwaW5n
+LCBhbmQgd2UgbXVzdCBzY2FuIGFsbCB0aGVzZSBtYXBwaW5nIHRvIHN5bmMgZGlydHkgc3RhdGUu
+IFdlIHBsYW4gdG8gcmVmYWN0b3IKICAgc21tdV9kb21haW4gdG8gc3VwcG9ydCBtb3JlIHRoYW4g
+b25lIHNtbXUgaW4gb25lIHNtbXVfZG9tYWluLCB0aGVuIHRoZXNlIHNtbXVzIGNhbiBzaGFyZSBh
+IHNhbWUKICAgc3RhZ2UxIG1hcHBpbmcuCjIuIFdlIGFsc28gcmVjb2duaXplZCB0aGF0IHNjYW4g
+VFREIGlzIGEgaG90c3BvdCBvZiBwZXJmb3JtYW5jZS4gUmVjZW50bHksIEkgaGF2ZSBpbXBsZW1l
+bnQgYQogICBTVy9IVyBjb25iaW5lZCBkaXJ0eSBsb2cgdHJhY2tpbmcgYXQgTU1VIHNpZGUgWzFd
+LCB3aGljaCBjYW4gZWZmZWN0aXZlbHkgc29sdmUgdGhpcyBwcm9ibGVtLgogICBUaGlzIGlkZWEg
+Y2FuIGJlIGFwcGxpZWQgdG8gc21tdSBzaWRlIHRvby4KClRoYW5rcywKS2VxaWFuCgoKWzFdIGh0
+dHBzOi8vbG9yZS5rZXJuZWwub3JnL2xpbnV4LWFybS1rZXJuZWwvMjAyMTAxMjYxMjQ0NDQuMjcx
+MzYtMS16aHVrZXFpYW4xQGh1YXdlaS5jb20vCgpqaWFuZ2t1bmt1biAoMTEpOgogIGlvbW11L2Fy
+bS1zbW11LXYzOiBBZGQgZmVhdHVyZSBkZXRlY3Rpb24gZm9yIEhUVFUKICBpb21tdS9hcm0tc21t
+dS12MzogRW5hYmxlIEhUVFUgZm9yIFNNTVUgc3RhZ2UxIG1hcHBpbmcKICBpb21tdS9hcm0tc21t
+dS12MzogQWRkIGZlYXR1cmUgZGV0ZWN0aW9uIGZvciBCQk1MCiAgaW9tbXUvYXJtLXNtbXUtdjM6
+IFNwbGl0IGJsb2NrIGRlc2NyaXB0b3IgdG8gYSBzcGFuIG9mIHBhZ2UKICBpb21tdS9hcm0tc21t
+dS12MzogTWVyZ2UgYSBzcGFuIG9mIHBhZ2UgdG8gYmxvY2sgZGVzY3JpcHRvcgogIGlvbW11L2Fy
+bS1zbW11LXYzOiBTY2FuIGxlYWYgVFREIHRvIHN5bmMgaGFyZHdhcmUgZGlydHkgbG9nCiAgaW9t
+bXUvYXJtLXNtbXUtdjM6IENsZWFyIGRpcnR5IGxvZyBhY2NvcmRpbmcgdG8gYml0bWFwCiAgaW9t
+bXUvYXJtLXNtbXUtdjM6IEFkZCBIV0RCTSBkZXZpY2UgZmVhdHVyZSByZXBvcnRpbmcKICB2Zmlv
+L2lvbW11X3R5cGUxOiBBZGQgSFdEQk0gc3RhdHVzIG1haW50YW5hbmNlCiAgdmZpby9pb21tdV90
+eXBlMTogT3B0aW1pemUgZGlydHkgYml0bWFwIHBvcHVsYXRpb24gYmFzZWQgb24gaW9tbXUKICAg
+IEhXREJNCiAgdmZpby9pb21tdV90eXBlMTogQWRkIHN1cHBvcnQgZm9yIG1hbnVhbCBkaXJ0eSBs
+b2cgY2xlYXIKCiBkcml2ZXJzL2lvbW11L2FybS9hcm0tc21tdS12My9hcm0tc21tdS12My5jIHwg
+MTM4ICsrKysrKy0KIGRyaXZlcnMvaW9tbXUvYXJtL2FybS1zbW11LXYzL2FybS1zbW11LXYzLmgg
+fCAgMTQgKwogZHJpdmVycy9pb21tdS9pby1wZ3RhYmxlLWFybS5jICAgICAgICAgICAgICB8IDM5
+MiArKysrKysrKysrKysrKysrKysrLQogZHJpdmVycy9pb21tdS9pb21tdS5jICAgICAgICAgICAg
+ICAgICAgICAgICB8IDIyNyArKysrKysrKysrKysKIGRyaXZlcnMvdmZpby92ZmlvX2lvbW11X3R5
+cGUxLmMgICAgICAgICAgICAgfCAyMzUgKysrKysrKysrKystCiBpbmNsdWRlL2xpbnV4L2lvLXBn
+dGFibGUuaCAgICAgICAgICAgICAgICAgIHwgIDE0ICsKIGluY2x1ZGUvbGludXgvaW9tbXUuaCAg
+ICAgICAgICAgICAgICAgICAgICAgfCAgNTUgKysrCiBpbmNsdWRlL3VhcGkvbGludXgvdmZpby5o
+ICAgICAgICAgICAgICAgICAgIHwgIDI4ICstCiA4IGZpbGVzIGNoYW5nZWQsIDEwOTMgaW5zZXJ0
+aW9ucygrKSwgMTAgZGVsZXRpb25zKC0pCgotLSAKMi4xOS4xCgpfX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBs
+aXN0cy5jcy5jb2x1bWJpYS5lZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1h
+bi9saXN0aW5mby9rdm1hcm0K
