@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B6178308A59
-	for <lists+kvmarm@lfdr.de>; Fri, 29 Jan 2021 17:37:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AB25D308A5A
+	for <lists+kvmarm@lfdr.de>; Fri, 29 Jan 2021 17:37:19 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 59C6B4B345;
-	Fri, 29 Jan 2021 11:37:17 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 53CA24B34D;
+	Fri, 29 Jan 2021 11:37:19 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -15,35 +15,35 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id k-CChZAxKYe5; Fri, 29 Jan 2021 11:37:16 -0500 (EST)
+	with ESMTP id yxj8q3oDqoKV; Fri, 29 Jan 2021 11:37:18 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9EE8D4B348;
-	Fri, 29 Jan 2021 11:37:14 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BCD264B35D;
+	Fri, 29 Jan 2021 11:37:16 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1E2ED4B2F4
- for <kvmarm@lists.cs.columbia.edu>; Fri, 29 Jan 2021 11:37:13 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6F00C4B2F2
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 29 Jan 2021 11:37:14 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id dBUko5PTj21K for <kvmarm@lists.cs.columbia.edu>;
- Fri, 29 Jan 2021 11:37:11 -0500 (EST)
+ with ESMTP id Ta78nDe0lzJO for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 29 Jan 2021 11:37:13 -0500 (EST)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AC7954B2F2
- for <kvmarm@lists.cs.columbia.edu>; Fri, 29 Jan 2021 11:37:11 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E47394B20F
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 29 Jan 2021 11:37:12 -0500 (EST)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4BBF61509;
- Fri, 29 Jan 2021 08:37:11 -0800 (PST)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BA7351515;
+ Fri, 29 Jan 2021 08:37:12 -0800 (PST)
 Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8BDE23F71B;
- Fri, 29 Jan 2021 08:37:10 -0800 (PST)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 81BA63F71B;
+ Fri, 29 Jan 2021 08:37:11 -0800 (PST)
 From: Alexandru Elisei <alexandru.elisei@arm.com>
 To: drjones@redhat.com,
 	kvm@vger.kernel.org,
 	kvmarm@lists.cs.columbia.edu
-Subject: [kvm-unit-tests PATCH v3 02/11] lib: arm/arm64: gicv2: Document
- existing barriers when sending IPIs
-Date: Fri, 29 Jan 2021 16:36:38 +0000
-Message-Id: <20210129163647.91564-3-alexandru.elisei@arm.com>
+Subject: [kvm-unit-tests PATCH v3 03/11] arm/arm64: gic: Remove SMP
+ synchronization from ipi_clear_active_handler()
+Date: Fri, 29 Jan 2021 16:36:39 +0000
+Message-Id: <20210129163647.91564-4-alexandru.elisei@arm.com>
 X-Mailer: git-send-email 2.30.0
 In-Reply-To: <20210129163647.91564-1-alexandru.elisei@arm.com>
 References: <20210129163647.91564-1-alexandru.elisei@arm.com>
@@ -65,84 +65,42 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-GICv2 generates IPIs with a MMIO write to the GICD_SGIR register. A common
-pattern for IPI usage is for the IPI receiver to read data written to
-memory by the sender. The armv7 and armv8 architectures implement a
-weakly-ordered memory model, which means that barriers are required to make
-sure that the expected values are observed.
+The gicv{2,3}-active test sends an IPI from the boot CPU to itself, then
+checks that the interrupt has been received as expected. There is no need
+to use inter-processor memory synchronization primitives on code that runs
+on the same CPU, so remove the unneeded memory barriers.
 
-Because the receiver CPU must observe the write to memory that generated
-the IPI when reading the GICC_IAR MMIO register, we only need to ensure
-ordering of memory accesses, and not completion. The same pattern can be
-observed in the Linux GICv2 irqchip driver (more details in commit
-8adbf57fc429 ("irqchip: gic: use dmb ishst instead of dsb when raising a
-softirq")).
-
-However, it turns out that no changes are needed to the way GICv2 sends
-IPIs because of the implicit barriers in the MMIO writel and readl
-functions. Writel executes a wmb() (DST ST) before the MMIO write, and
-readl executes a rmb() (DST LD) after the MMIO read. According to  ARM DDI
-0406C.d and ARM DDI 0487F.b, the DSB instruction:
-
-"[..] acts as a stronger barrier than a DMB and all ordering that is
-created by a DMB with specific options is also generated by a DSB with the
-same options."
-
-which means that the correct memory ordering is enforced.
-
-It's not immediately obvious that the proper barriers are in place, so add
-a comment explaining that correct memory synchronization is implemented.
-
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
 Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
 ---
- lib/arm/gic-v2.c | 6 ++++++
- arm/gic.c        | 7 +++++++
- 2 files changed, 13 insertions(+)
+ arm/gic.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/lib/arm/gic-v2.c b/lib/arm/gic-v2.c
-index dc6a97c600ec..786d6a4e4c6e 100644
---- a/lib/arm/gic-v2.c
-+++ b/lib/arm/gic-v2.c
-@@ -45,6 +45,11 @@ void gicv2_ipi_send_single(int irq, int cpu)
- {
- 	assert(cpu < 8);
- 	assert(irq < 16);
-+	/*
-+	 * The wmb() in writel and rmb() in readl() from gicv2_read_iar() are
-+	 * sufficient for ensuring that stores that happen in program order
-+	 * before the IPI will be visible after the interrupt is acknowledged.
-+	 */
- 	writel(1 << (cpu + 16) | irq, gicv2_dist_base() + GICD_SGIR);
- }
- 
-@@ -53,5 +58,6 @@ void gicv2_ipi_send_mask(int irq, const cpumask_t *dest)
- 	u8 tlist = (u8)cpumask_bits(dest)[0];
- 
- 	assert(irq < 16);
-+	/* No barriers needed, same situation as gicv2_ipi_send_single() */
- 	writel(tlist << 16 | irq, gicv2_dist_base() + GICD_SGIR);
- }
 diff --git a/arm/gic.c b/arm/gic.c
-index fee48f9b4ccb..e2e053aeb823 100644
+index e2e053aeb823..8bb804abf34d 100644
 --- a/arm/gic.c
 +++ b/arm/gic.c
-@@ -260,11 +260,18 @@ static void check_lpi_hits(int *expected, const char *msg)
+@@ -367,6 +367,7 @@ static struct gic gicv3 = {
+ 	},
+ };
  
- static void gicv2_ipi_send_self(void)
++/* Runs on the same CPU as the sender, no need for memory synchronization */
+ static void ipi_clear_active_handler(struct pt_regs *regs __unused)
  {
-+	/*
-+	 * The wmb() in writel and rmb() when acknowledging the interrupt are
-+	 * sufficient for ensuring that writes that happen in program order
-+	 * before the interrupt are observed in the interrupt handler after
-+	 * acknowledging the interrupt.
-+	 */
- 	writel(2 << 24 | IPI_IRQ, gicv2_dist_base() + GICD_SGIR);
- }
+ 	u32 irqstat = gic_read_iar();
+@@ -383,13 +384,10 @@ static void ipi_clear_active_handler(struct pt_regs *regs __unused)
  
- static void gicv2_ipi_send_broadcast(void)
- {
-+	/* No barriers are needed, same situation as gicv2_ipi_send_self() */
- 	writel(1 << 24 | IPI_IRQ, gicv2_dist_base() + GICD_SGIR);
+ 		writel(val, base + GICD_ICACTIVER);
+ 
+-		smp_rmb(); /* pairs with wmb in stats_reset */
+ 		++acked[smp_processor_id()];
+ 		check_irqnr(irqnr);
+-		smp_wmb(); /* pairs with rmb in check_acked */
+ 	} else {
+ 		++spurious[smp_processor_id()];
+-		smp_wmb();
+ 	}
  }
  
 -- 
