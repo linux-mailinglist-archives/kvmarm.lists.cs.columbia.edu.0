@@ -2,66 +2,50 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1229A3086AF
-	for <lists+kvmarm@lfdr.de>; Fri, 29 Jan 2021 08:47:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EADB4308A5C
+	for <lists+kvmarm@lfdr.de>; Fri, 29 Jan 2021 17:37:21 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 758674B273;
-	Fri, 29 Jan 2021 02:47:43 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 986064B347;
+	Fri, 29 Jan 2021 11:37:21 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YK6ZCymVyIrA; Fri, 29 Jan 2021 02:47:43 -0500 (EST)
+	with ESMTP id dNoywPtZzJjF; Fri, 29 Jan 2021 11:37:19 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4F0544B262;
-	Fri, 29 Jan 2021 02:47:42 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EB32F4B33E;
+	Fri, 29 Jan 2021 11:37:19 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AF5094B0CF
- for <kvmarm@lists.cs.columbia.edu>; Fri, 29 Jan 2021 02:47:41 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1435D4B334
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 29 Jan 2021 11:37:18 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id exBYjyZc0CBA for <kvmarm@lists.cs.columbia.edu>;
- Fri, 29 Jan 2021 02:47:39 -0500 (EST)
-Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 453454B0C4
- for <kvmarm@lists.cs.columbia.edu>; Fri, 29 Jan 2021 02:47:39 -0500 (EST)
-Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.60])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4DRqCb61DszjF9v;
- Fri, 29 Jan 2021 15:46:19 +0800 (CST)
-Received: from [10.174.184.42] (10.174.184.42) by
- DGGEMS406-HUB.china.huawei.com (10.3.19.206) with Microsoft SMTP Server id
- 14.3.498.0; Fri, 29 Jan 2021 15:47:27 +0800
-Subject: Re: [PATCH v3 2/2] vfio/iommu_type1: Fix some sanity checks in detach
- group
-To: Alex Williamson <alex.williamson@redhat.com>
-References: <20210122092635.19900-1-zhukeqian1@huawei.com>
- <20210122092635.19900-3-zhukeqian1@huawei.com>
- <20210127164641.36e17bf5@omen.home.shazbot.org>
-From: Keqian Zhu <zhukeqian1@huawei.com>
-Message-ID: <605515c3-baf6-83c0-b137-a721ea72c733@huawei.com>
-Date: Fri, 29 Jan 2021 15:47:26 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
+ with ESMTP id CUe8N4zidDmT for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 29 Jan 2021 11:37:16 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8B2BE4B340
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 29 Jan 2021 11:37:14 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2109913D5;
+ Fri, 29 Jan 2021 08:37:09 -0800 (PST)
+Received: from monolith.localdoman (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 47F063F71B;
+ Fri, 29 Jan 2021 08:37:07 -0800 (PST)
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+To: drjones@redhat.com,
+	kvm@vger.kernel.org,
+	kvmarm@lists.cs.columbia.edu
+Subject: [kvm-unit-tests PATCH v3 00/11] GIC fixes and improvements
+Date: Fri, 29 Jan 2021 16:36:36 +0000
+Message-Id: <20210129163647.91564-1-alexandru.elisei@arm.com>
+X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
-In-Reply-To: <20210127164641.36e17bf5@omen.home.shazbot.org>
-X-Originating-IP: [10.174.184.42]
-X-CFilter-Loop: Reflected
-Cc: kvm@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
- Kirti Wankhede <kwankhede@nvidia.com>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, Marc
- Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- Alexios Zavras <alexios.zavras@intel.com>,
- Thomas Gleixner <tglx@linutronix.de>, linux-arm-kernel@lists.infradead.org,
- Cornelia Huck <cohuck@redhat.com>, linux-kernel@vger.kernel.org,
- iommu@lists.linux-foundation.org, Andrew Morton <akpm@linux-foundation.org>,
- Robin Murphy <robin.murphy@arm.com>
+Cc: andre.przywara@arm.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -78,124 +62,120 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+What started this series is Andre's SPI and group interrupts tests [1],
+which prompted me to attempt to rewrite check_acked() so it's more flexible
+and not so complicated to review. When I was doing that I noticed that the
+message passing pattern for accesses to the acked, bad_irq and bad_sender
+arrays didn't look quite right, and that turned into the first 7 patches of
+the series. Even though the diffs are relatively small, they are not
+trivial and the reviewer can skip them for the more palatable patches that
+follow. I would still appreciate someone having a look at the memory
+ordering fixes.
 
+Patch #8 ("Split check_acked() into two functions") is where check_acked()
+is reworked with an eye towards supporting different timeout values or
+silent reporting without adding too many arguments to check_acked().
 
-On 2021/1/28 7:46, Alex Williamson wrote:
-> On Fri, 22 Jan 2021 17:26:35 +0800
-> Keqian Zhu <zhukeqian1@huawei.com> wrote:
-> 
->> vfio_sanity_check_pfn_list() is used to check whether pfn_list and
->> notifier are empty when remove the external domain, so it makes a
->> wrong assumption that only external domain will use the pinning
->> interface.
->>
->> Now we apply the pfn_list check when a vfio_dma is removed and apply
->> the notifier check when all domains are removed.
->>
->> Fixes: a54eb55045ae ("vfio iommu type1: Add support for mediated devices")
->> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
->> ---
->>  drivers/vfio/vfio_iommu_type1.c | 33 ++++++++++-----------------------
->>  1 file changed, 10 insertions(+), 23 deletions(-)
->>
->> diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
->> index 161725395f2f..d8c10f508321 100644
->> --- a/drivers/vfio/vfio_iommu_type1.c
->> +++ b/drivers/vfio/vfio_iommu_type1.c
->> @@ -957,6 +957,7 @@ static long vfio_unmap_unpin(struct vfio_iommu *iommu, struct vfio_dma *dma,
->>  
->>  static void vfio_remove_dma(struct vfio_iommu *iommu, struct vfio_dma *dma)
->>  {
->> +	WARN_ON(!RB_EMPTY_ROOT(&dma->pfn_list));
->>  	vfio_unmap_unpin(iommu, dma, true);
->>  	vfio_unlink_dma(iommu, dma);
->>  	put_task_struct(dma->task);
->> @@ -2250,23 +2251,6 @@ static void vfio_iommu_unmap_unpin_reaccount(struct vfio_iommu *iommu)
->>  	}
->>  }
->>  
->> -static void vfio_sanity_check_pfn_list(struct vfio_iommu *iommu)
->> -{
->> -	struct rb_node *n;
->> -
->> -	n = rb_first(&iommu->dma_list);
->> -	for (; n; n = rb_next(n)) {
->> -		struct vfio_dma *dma;
->> -
->> -		dma = rb_entry(n, struct vfio_dma, node);
->> -
->> -		if (WARN_ON(!RB_EMPTY_ROOT(&dma->pfn_list)))
->> -			break;
->> -	}
->> -	/* mdev vendor driver must unregister notifier */
->> -	WARN_ON(iommu->notifier.head);
->> -}
->> -
->>  /*
->>   * Called when a domain is removed in detach. It is possible that
->>   * the removed domain decided the iova aperture window. Modify the
->> @@ -2366,10 +2350,10 @@ static void vfio_iommu_type1_detach_group(void *iommu_data,
->>  			kfree(group);
->>  
->>  			if (list_empty(&iommu->external_domain->group_list)) {
->> -				vfio_sanity_check_pfn_list(iommu);
->> -
->> -				if (!IS_IOMMU_CAP_DOMAIN_IN_CONTAINER(iommu))
->> +				if (!IS_IOMMU_CAP_DOMAIN_IN_CONTAINER(iommu)) {
->> +					WARN_ON(iommu->notifier.head);
->>  					vfio_iommu_unmap_unpin_all(iommu);
->> +				}
->>  
->>  				kfree(iommu->external_domain);
->>  				iommu->external_domain = NULL;
->> @@ -2403,10 +2387,12 @@ static void vfio_iommu_type1_detach_group(void *iommu_data,
->>  		 */
->>  		if (list_empty(&domain->group_list)) {
->>  			if (list_is_singular(&iommu->domain_list)) {
->> -				if (!iommu->external_domain)
->> +				if (!iommu->external_domain) {
->> +					WARN_ON(iommu->notifier.head);
->>  					vfio_iommu_unmap_unpin_all(iommu);
->> -				else
->> +				} else {
->>  					vfio_iommu_unmap_unpin_reaccount(iommu);
->> +				}
->>  			}
->>  			iommu_domain_free(domain->domain);
->>  			list_del(&domain->next);
->> @@ -2488,9 +2474,10 @@ static void vfio_iommu_type1_release(void *iommu_data)
->>  	struct vfio_iommu *iommu = iommu_data;
->>  	struct vfio_domain *domain, *domain_tmp;
->>  
->> +	WARN_ON(iommu->notifier.head);
-> 
-> I don't see that this does any harm, but isn't it actually redundant?
-> It seems vfio-core only calls the iommu backend release function after
-> removing all the groups, so the tests in _detach_group should catch all
-> cases.  We're expecting the vfio bus/mdev driver to remove the notifier
-> when a device is closed, which necessarily occurs before detaching the
-> group.  Thanks,
-Right. Devices of a specific group must be closed before detach this group.
-Detach the last group have checked this, so vfio_iommu_type1_release doesn't
-need to do this check again.
+After changing the IPI tests, I turned my attention to the LPI tests, which
+followed the same memory synchronization patterns, but invented their own
+interrupt handler and testing functions. Instead of redoing the work that I
+did for the IPI tests, I decided to convert the LPI tests to use the same
+infrastructure.
 
-Could you please queue this patch and delete this check btw? Thanks. ;-)
+For v2, I ran tests on the following machines and didn't see any issues:
 
-Keqian.
+- Ampere EMAG: all arm64 tests 10,000+ times (combined) under qemu and
+  kvmtool.
 
-> 
-> Alex
-> 
->> +
->>  	if (iommu->external_domain) {
->>  		vfio_release_domain(iommu->external_domain, true);
->> -		vfio_sanity_check_pfn_list(iommu);
->>  		kfree(iommu->external_domain);
->>  	}
->>  
-> 
-> .
-> 
+- rockpro64: the arm GICv2 and GICv3 tests 10,000+ times under kvmtool (I
+  chose kvmtool because it's faster than qemu); the arm64 gic tests (GICv2
+  and GICv3) 5000+ times with qemu (didn't realize that ./run_tests.sh -g
+  gic doesn't include the its tests); the arm64 GICv2 and GICv3 and ITS
+  tests under kvmtool 13,000+ times.
+
+For v3, because the changes weren't too big, I ran ./run_tests.sh for arm
+and arm64 with qemu TCG on the my x86 machine; ran ./run_tests.sh for arm64
+on rockpro64; and ran all the gic tests for arm and arm64 under kvmtool on
+the rockpro64.
+
+Changes in v3:
+
+* Gathered Reviewed-by tags, thank you for the feedback!
+
+* Reworked patch #2 and renamed it to "lib: arm/arm64: gicv2: Document
+  existing barriers when sending IPIs". The necessary barriers were already in
+  place in writel/readl. Dropped the R-b tag.
+
+* Removed the GICv2 smp_rmb() barrier in #4 ("arm/arm64: gic: Remove unnecessary
+  synchronization with stats_reset") because of the rmb() already present in
+  readl() and reworded the commit message accordingly. Dropped the R-b tag.
+
+* Commented the extra delay in wait_for_interrupts() for patch #8
+  ("arm/arm64: gic: Split check_acked() into two functions").
+
+* Minor change to the commit message for #10 ("arm64: gic: its-trigger:
+  Don't trigger the LPI while it is pending") as per Andre's suggestion.
+
+* Dropped patch #11 ("lib: arm64: gic-v3-its: Add wmb() barrier before INT
+  command") because the wmb() was already present in __its_send_int() ->
+  its_send_single_command() -> its_post_commands() -> writeq().
+
+Changes in v2:
+
+* Gathered Reviewed-by tags, thank you for the feedback!
+
+* Modified code comments in #1 ("lib: arm/arm64: gicv3: Add missing barrier
+  when sending IPIs") as per review suggestions.
+
+* Moved the barrier() in gicv2_ipi_send_self() from #3 ("arm/arm64: gic:
+  Remove memory synchronization from ipi_clear_active_handler()") to #2
+  ("lib: arm/arm64: gicv2: Add missing barrier when sending IPIs").
+
+* Renamed #3, changed "[..] Remove memory synchronization [..]" to
+  "[..] Remove SMP synchronization [..]".
+
+* Moved the removal of smp_rmb() from check_spurious() from #5 ("arm/arm64:
+  gic: Use correct memory ordering for the IPI test") to patch #7
+  ("arm/arm64: gic: Wait for writes to acked or spurious to complete").
+
+* Fixed typos in #8 ("arm/arm64: gic: Split check_acked() into two
+  functions").
+
+* Patch #10 ("arm64: gic: its-trigger: Don't trigger the LPI while it is
+  pending") is new. It was added to fix an issue found in v1 [2].
+
+* Patch #11 ("lib: arm64: gic-v3-its: Add wmb() barrier before INT
+  command") is also new; it was split from #12 ("arm64: gic: Use IPI test
+  checking for the LPI tests") following review comments.
+
+* Removed the now redundant call to stats_reset() from its_prerequisites()
+  in #12 ("arm64: gic: Use IPI test checking for the LPI tests").
+
+[1] https://lists.cs.columbia.edu/pipermail/kvmarm/2019-November/037853.html
+[2] https://www.spinics.net/lists/kvm-arm/msg43628.html
+
+Alexandru Elisei (11):
+  lib: arm/arm64: gicv3: Add missing barrier when sending IPIs
+  lib: arm/arm64: gicv2: Document existing barriers when sending IPIs
+  arm/arm64: gic: Remove SMP synchronization from
+    ipi_clear_active_handler()
+  arm/arm64: gic: Remove unnecessary synchronization with stats_reset()
+  arm/arm64: gic: Use correct memory ordering for the IPI test
+  arm/arm64: gic: Check spurious and bad_sender in the active test
+  arm/arm64: gic: Wait for writes to acked or spurious to complete
+  arm/arm64: gic: Split check_acked() into two functions
+  arm/arm64: gic: Make check_acked() more generic
+  arm64: gic: its-trigger: Don't trigger the LPI while it is pending
+  arm64: gic: Use IPI test checking for the LPI tests
+
+ lib/arm/gic-v2.c |   6 +
+ lib/arm/gic-v3.c |   6 +
+ arm/gic.c        | 338 +++++++++++++++++++++++++----------------------
+ 3 files changed, 190 insertions(+), 160 deletions(-)
+
+-- 
+2.30.0
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
