@@ -2,48 +2,49 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2057F308A5D
-	for <lists+kvmarm@lfdr.de>; Fri, 29 Jan 2021 17:37:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C8289308A5F
+	for <lists+kvmarm@lfdr.de>; Fri, 29 Jan 2021 17:37:25 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BD1E34B2B0;
-	Fri, 29 Jan 2021 11:37:22 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6FBD04B309;
+	Fri, 29 Jan 2021 11:37:25 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 40gtn3xLotys; Fri, 29 Jan 2021 11:37:21 -0500 (EST)
+	with ESMTP id KiX+81nzqEMd; Fri, 29 Jan 2021 11:37:25 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 10C5E4B360;
-	Fri, 29 Jan 2021 11:37:20 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 504BD4B0DE;
+	Fri, 29 Jan 2021 11:37:22 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 38B954B334
- for <kvmarm@lists.cs.columbia.edu>; Fri, 29 Jan 2021 11:37:18 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C716F4B33E
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 29 Jan 2021 11:37:19 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id xUFiObjtJgTX for <kvmarm@lists.cs.columbia.edu>;
- Fri, 29 Jan 2021 11:37:16 -0500 (EST)
+ with ESMTP id 7pD3LYbBf6LG for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 29 Jan 2021 11:37:18 -0500 (EST)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6D3684B358
- for <kvmarm@lists.cs.columbia.edu>; Fri, 29 Jan 2021 11:37:16 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 75AF14B343
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 29 Jan 2021 11:37:17 -0500 (EST)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 13C731570;
- Fri, 29 Jan 2021 08:37:16 -0800 (PST)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 244AE1596;
+ Fri, 29 Jan 2021 08:37:17 -0800 (PST)
 Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DC6853F71B;
- Fri, 29 Jan 2021 08:37:14 -0800 (PST)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 485443F71B;
+ Fri, 29 Jan 2021 08:37:16 -0800 (PST)
 From: Alexandru Elisei <alexandru.elisei@arm.com>
 To: drjones@redhat.com,
 	kvm@vger.kernel.org,
 	kvmarm@lists.cs.columbia.edu
-Subject: [kvm-unit-tests PATCH v3 06/11] arm/arm64: gic: Check spurious and
- bad_sender in the active test
-Date: Fri, 29 Jan 2021 16:36:42 +0000
-Message-Id: <20210129163647.91564-7-alexandru.elisei@arm.com>
+Subject: [kvm-unit-tests PATCH v3 07/11] arm/arm64: gic: Wait for writes to
+ acked or spurious to complete
+Date: Fri, 29 Jan 2021 16:36:43 +0000
+Message-Id: <20210129163647.91564-8-alexandru.elisei@arm.com>
 X-Mailer: git-send-email 2.30.0
 In-Reply-To: <20210129163647.91564-1-alexandru.elisei@arm.com>
 References: <20210129163647.91564-1-alexandru.elisei@arm.com>
@@ -65,72 +66,64 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The gicv{2,3}-active test sends an IPI from the boot CPU to itself, then
-checks that the interrupt has been received as expected. The
-ipi_clear_active_handler() clears the active state of the interrupt with a
-write to the GICD_ICACTIVER register instead of writing the to EOI
-register.
+The IPI test has two parts: in the first part, it tests that the sender CPU
+can send an IPI to itself (ipi_test_self()), and in the second part it
+sends interrupts to even-numbered CPUs (ipi_test_smp()). When acknowledging
+an interrupt, if we read back a spurious interrupt ID (1023), the handler
+increments the index in the static array spurious corresponding to the CPU
+ID that the handler is running on; if we get the expected interrupt ID, we
+increment the same index in the acked array.
 
-When acknowledging the interrupt it is possible to get back an spurious
-interrupt ID (ID 1023), and the interrupt handler increments the number of
-spurious interrupts received on the current processor. However, this is not
-checked at the end of the test. Let's also check for spurious interrupts,
-like the IPI test does.
+Reads of the spurious and acked arrays are synchronized with writes
+performed before sending the IPI. The synchronization is done either in the
+IPI sender function (GICv3), either by creating a data dependency (GICv2).
 
-For IPIs on GICv2, the value returned by a read of the GICC_IAR register
-performed when acknowledging the interrupt also contains the sender CPU
-ID. Add a check for that too.
+At the end of the test, the sender CPU reads from the acked and spurious
+arrays to check against the expected behaviour. We need to make sure the
+that writes in ipi_handler() are observable by the sender CPU. Use a DSB
+ISHST to make sure that the writes have completed.
+
+One might rightfully argue that there are no guarantees regarding when the
+DSB instruction completes, just like there are no guarantees regarding when
+the value is observed by the other CPUs. However, let's do our best and
+instruct the CPU to complete the memory access when we know that it will be
+needed.
+
+We still need to follow the message passing pattern for the acked,
+respectively bad_irq and bad_sender, because DSB guarantees that all memory
+accesses that come before the barrier have completed, not that they have
+completed in program order.
 
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
 ---
- arm/gic.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arm/gic.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/arm/gic.c b/arm/gic.c
-index c1b6c94a5f5e..982c96681cf9 100644
+index 982c96681cf9..af4d4645c0ae 100644
 --- a/arm/gic.c
 +++ b/arm/gic.c
-@@ -125,12 +125,12 @@ static void check_spurious(void)
- 	}
- }
- 
--static void check_ipi_sender(u32 irqstat)
-+static void check_ipi_sender(u32 irqstat, int sender)
+@@ -117,7 +117,6 @@ static void check_spurious(void)
  {
- 	if (gic_version() == 2) {
- 		int src = (irqstat >> 10) & 7;
+ 	int cpu;
  
--		if (src != IPI_SENDER)
-+		if (src != sender)
- 			bad_sender[smp_processor_id()] = src;
- 	}
- }
-@@ -148,7 +148,7 @@ static void ipi_handler(struct pt_regs *regs __unused)
- 
- 	if (irqnr != GICC_INT_SPURIOUS) {
- 		gic_write_eoir(irqstat);
--		check_ipi_sender(irqstat);
-+		check_ipi_sender(irqstat, IPI_SENDER);
- 		check_irqnr(irqnr);
- 		smp_wmb(); /* pairs with smp_rmb in check_acked */
- 		++acked[smp_processor_id()];
-@@ -382,6 +382,7 @@ static void ipi_clear_active_handler(struct pt_regs *regs __unused)
- 
- 		writel(val, base + GICD_ICACTIVER);
- 
-+		check_ipi_sender(irqstat, smp_processor_id());
- 		check_irqnr(irqnr);
+-	smp_rmb();
+ 	for_each_present_cpu(cpu) {
+ 		if (spurious[cpu])
+ 			report_info("WARN: cpu%d got %d spurious interrupts",
+@@ -154,8 +153,10 @@ static void ipi_handler(struct pt_regs *regs __unused)
  		++acked[smp_processor_id()];
  	} else {
-@@ -394,6 +395,7 @@ static void run_active_clear_test(void)
- 	report_prefix_push("active");
- 	setup_irq(ipi_clear_active_handler);
- 	ipi_test_self();
-+	check_spurious();
- 	report_prefix_pop();
+ 		++spurious[smp_processor_id()];
+-		smp_wmb();
+ 	}
++
++	/* Wait for writes to acked/spurious to complete */
++	dsb(ishst);
  }
  
+ static void setup_irq(irq_handler_fn handler)
 -- 
 2.30.0
 
