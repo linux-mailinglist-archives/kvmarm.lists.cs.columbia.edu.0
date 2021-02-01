@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B79DF30AE23
-	for <lists+kvmarm@lfdr.de>; Mon,  1 Feb 2021 18:41:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 375AF30AE4D
+	for <lists+kvmarm@lfdr.de>; Mon,  1 Feb 2021 18:46:49 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 675104B3A6;
-	Mon,  1 Feb 2021 12:41:54 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AEEFD4B373;
+	Mon,  1 Feb 2021 12:46:48 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,44 +18,44 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id OQkslRkc5uh4; Mon,  1 Feb 2021 12:41:54 -0500 (EST)
+	with ESMTP id k98UnAeBA8-s; Mon,  1 Feb 2021 12:46:48 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 376F54B372;
-	Mon,  1 Feb 2021 12:41:53 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 866384B1CC;
+	Mon,  1 Feb 2021 12:46:47 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6C3064B334
- for <kvmarm@lists.cs.columbia.edu>; Mon,  1 Feb 2021 12:41:51 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 988A04B1CC
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  1 Feb 2021 12:46:46 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id y+RJm5g-8skn for <kvmarm@lists.cs.columbia.edu>;
- Mon,  1 Feb 2021 12:41:50 -0500 (EST)
+ with ESMTP id nv+Lph5JUbQd for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  1 Feb 2021 12:46:45 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6D79F4B2B1
- for <kvmarm@lists.cs.columbia.edu>; Mon,  1 Feb 2021 12:41:50 -0500 (EST)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 9F5E564E9C;
- Mon,  1 Feb 2021 17:41:46 +0000 (UTC)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B4A934B372
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  1 Feb 2021 12:46:45 -0500 (EST)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 01F2964E2A;
+ Mon,  1 Feb 2021 17:46:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1612201309;
- bh=Coy8GnAXaLr1Ite2Qp1Zmud9F/Xbq++8nLGERyWz1zs=;
+ s=k20201202; t=1612201604;
+ bh=+LG8JJC83lkhV2mXkT0DrcP7GWmpNTMsT8hay1pPWhg=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Pya8jRrCvkpzbzb7LfN8NfCpsjbcALtAvceTk+7uAToBACDZndGBfLqO0TvnRs4QD
- vJt3n3sYn90rFk6cR3ObT0dGnrXLHiHnbGUWRrnA4+sssDkD83ArGPBV8XlQ8+N95j
- sBDnYQKZQx63cDdgE3rBsE6ck17Mgtp3krhlE6j7VO+NZcoFY1537qQZ1ZpO6OeGif
- HtFGRpj6wB5J0oYBEf6AGjSOoOhtkpeYK0TEJNYx9zOn4eNiMWXpD1a920S2bMogcL
- 2MjQN0N5j5kJ+fm20uyeCk7W8G9Sa0NgxmKTm7oc445f0HL/SgjiAKCk3gK3mo7LRe
- zwKfv6/SlM7XQ==
-Date: Mon, 1 Feb 2021 17:41:43 +0000
+ b=Lq8FUTr3dPjyr2lA53+NzwaAZ6xMno3oS9wye3cjVCTF7C0RP9XfAL0ZeQUECfH6M
+ yRg6/JVHBih3p+LNNdST5NXyG4iQ/m3iyVYdnjDiSO3Htunc2NRf6NayMm4Ol9IiRT
+ ekz7ClGHRYPHXBi4zcf1xXUfMDmlMylwk4YCUjYDSV8h7/XcHphODxoH2SIdJNwmeL
+ DheBNhjve/Xx7i6XU7JPzDHuxojj9NNodM0vbjzqojXInQtfyv+n4V8r3ohBgXPcgr
+ 6gUZXJI2uceTQtnS1hVDRephIznxUrwSgYfo/QgtvaC2eRZzQ/5IqhCdCDxDCYEF0T
+ zFQ+KiVsfmtNw==
+Date: Mon, 1 Feb 2021 17:46:38 +0000
 From: Will Deacon <will@kernel.org>
 To: Quentin Perret <qperret@google.com>
-Subject: Re: [RFC PATCH v2 04/26] KVM: arm64: Initialize kvm_nvhe_init_params
- early
-Message-ID: <20210201174143.GB15632@willie-the-truck>
+Subject: Re: [RFC PATCH v2 05/26] KVM: arm64: Avoid free_page() in page-table
+ allocator
+Message-ID: <20210201174638.GC15632@willie-the-truck>
 References: <20210108121524.656872-1-qperret@google.com>
- <20210108121524.656872-5-qperret@google.com>
+ <20210108121524.656872-6-qperret@google.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20210108121524.656872-5-qperret@google.com>
+In-Reply-To: <20210108121524.656872-6-qperret@google.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Cc: devicetree@vger.kernel.org, kernel-team@android.com, android-kvm@google.com,
  Catalin Marinas <catalin.marinas@arm.com>, Fuad Tabba <tabba@google.com>,
@@ -78,41 +78,25 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Jan 08, 2021 at 12:15:02PM +0000, Quentin Perret wrote:
-> Move the initialization of kvm_nvhe_init_params in a dedicated function
-> that is run early, and only once during KVM init, rather than every time
-> the KVM vectors are set and reset.
+On Fri, Jan 08, 2021 at 12:15:03PM +0000, Quentin Perret wrote:
+> Currently, the KVM page-table allocator uses a mix of put_page() and
+> free_page() calls depending on the context even though page-allocation
+> is always achieved using variants of __get_free_page().
 > 
-> This also opens the opportunity for the hypervisor to change the init
-> structs during boot, hence simplifying the replacement of host-provided
-> page-tables and stacks by the ones the hypervisor will create for
-> itself.
+> Make the code consitent by using put_page() throughout, and reduce the
+
+typo: consistent
+
+> memory management API surface used by the page-table code. This will
+> ease factoring out page-alloction from pgtable.c, which is a
+> pre-requisite to creating page-tables at EL2.
 > 
 > Signed-off-by: Quentin Perret <qperret@google.com>
 > ---
->  arch/arm64/kvm/arm.c | 28 ++++++++++++++++++++--------
->  1 file changed, 20 insertions(+), 8 deletions(-)
-> 
-> diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-> index 04c44853b103..3ac0f3425833 100644
-> --- a/arch/arm64/kvm/arm.c
-> +++ b/arch/arm64/kvm/arm.c
+>  arch/arm64/kvm/hyp/pgtable.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
 
-[...]
-
-> @@ -1807,6 +1813,12 @@ static int init_hyp_mode(void)
->  			goto out_err;
->  	}
->  
-> +	/*
-> +	 * Prepare the CPU initialization parameters
-> +	 */
-> +	for_each_possible_cpu(cpu)
-> +		cpu_prepare_hyp_mode(cpu);
-> +
-
-This is the fifth for_each_possible_cpu() loop in this function; can any of
-them be merged together?
+Acked-by: Will Deacon <will@kernel.org>
 
 Will
 _______________________________________________
