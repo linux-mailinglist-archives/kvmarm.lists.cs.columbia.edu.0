@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F6D230A71B
-	for <lists+kvmarm@lfdr.de>; Mon,  1 Feb 2021 13:04:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A739630A71A
+	for <lists+kvmarm@lfdr.de>; Mon,  1 Feb 2021 13:04:28 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B21104B3D1;
-	Mon,  1 Feb 2021 07:04:30 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 572AC4B3D2;
+	Mon,  1 Feb 2021 07:04:28 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,38 +15,39 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id oCCb2y0jOck1; Mon,  1 Feb 2021 07:04:29 -0500 (EST)
+	with ESMTP id I2kZw0xRteId; Mon,  1 Feb 2021 07:04:27 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D4D64B3E3;
-	Mon,  1 Feb 2021 07:04:29 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7A3D34B455;
+	Mon,  1 Feb 2021 07:04:26 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 370734B405
- for <kvmarm@lists.cs.columbia.edu>; Mon,  1 Feb 2021 07:04:28 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1F8C24B3D2
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  1 Feb 2021 07:04:25 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id vC30huRrUr0l for <kvmarm@lists.cs.columbia.edu>;
- Mon,  1 Feb 2021 07:04:27 -0500 (EST)
+ with ESMTP id GpFs+j9Q89gT for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  1 Feb 2021 07:04:23 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 533AB4B3EA
- for <kvmarm@lists.cs.columbia.edu>; Mon,  1 Feb 2021 07:04:26 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0934B4B3C7
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  1 Feb 2021 07:04:23 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 5160A64E9B;
- Mon,  1 Feb 2021 12:04:25 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 223B264E9C;
+ Mon,  1 Feb 2021 12:04:22 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1l6XpB-00BG09-UF; Mon, 01 Feb 2021 11:56:59 +0000
+ id 1l6XpD-00BG09-LF; Mon, 01 Feb 2021 11:57:00 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  linux-kernel@vger.kernel.org
-Subject: [PATCH v6 14/21] arm64: Honor VHE being disabled from the command-line
-Date: Mon,  1 Feb 2021 11:56:30 +0000
-Message-Id: <20210201115637.3123740-15-maz@kernel.org>
+Subject: [PATCH v6 15/21] arm64: Add an aliasing facility for the idreg
+ override
+Date: Mon,  1 Feb 2021 11:56:31 +0000
+Message-Id: <20210201115637.3123740-16-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210201115637.3123740-1-maz@kernel.org>
 References: <20210201115637.3123740-1-maz@kernel.org>
@@ -83,53 +84,79 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Finally we can check whether VHE is disabled on the command line,
-and not enable it if that's the user's wish.
+In order to map the override of idregs to options that a user
+can easily understand, let's introduce yet another option
+array, which maps an option to the corresponding idreg options.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
 Acked-by: David Brazdil <dbrazdil@google.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
 ---
- arch/arm64/kernel/asm-offsets.c |  3 +++
- arch/arm64/kernel/hyp-stub.S    | 11 +++++++++++
- 2 files changed, 14 insertions(+)
+ arch/arm64/kernel/idreg-override.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/kernel/asm-offsets.c b/arch/arm64/kernel/asm-offsets.c
-index f42fd9e33981..1add0f21bffe 100644
---- a/arch/arm64/kernel/asm-offsets.c
-+++ b/arch/arm64/kernel/asm-offsets.c
-@@ -99,6 +99,9 @@ int main(void)
-   DEFINE(CPU_BOOT_STACK,	offsetof(struct secondary_data, stack));
-   DEFINE(CPU_BOOT_TASK,		offsetof(struct secondary_data, task));
-   BLANK();
-+  DEFINE(FTR_OVR_VAL_OFFSET,	offsetof(struct arm64_ftr_override, val));
-+  DEFINE(FTR_OVR_MASK_OFFSET,	offsetof(struct arm64_ftr_override, mask));
-+  BLANK();
- #ifdef CONFIG_KVM
-   DEFINE(VCPU_CONTEXT,		offsetof(struct kvm_vcpu, arch.ctxt));
-   DEFINE(VCPU_FAULT_DISR,	offsetof(struct kvm_vcpu, arch.fault.disr_el1));
-diff --git a/arch/arm64/kernel/hyp-stub.S b/arch/arm64/kernel/hyp-stub.S
-index 6b5c73cf9d52..aa7e8d592295 100644
---- a/arch/arm64/kernel/hyp-stub.S
-+++ b/arch/arm64/kernel/hyp-stub.S
-@@ -87,6 +87,17 @@ SYM_CODE_START_LOCAL(mutate_to_vhe)
- 	ubfx	x1, x1, #ID_AA64MMFR1_VHE_SHIFT, #4
- 	cbz	x1, 1f
+diff --git a/arch/arm64/kernel/idreg-override.c b/arch/arm64/kernel/idreg-override.c
+index 1e4671aa02c8..9658ad6c628a 100644
+--- a/arch/arm64/kernel/idreg-override.c
++++ b/arch/arm64/kernel/idreg-override.c
+@@ -16,6 +16,8 @@
  
-+	// Check whether VHE is disabled from the command line
-+	adr_l	x1, id_aa64mmfr1_override
-+	ldr	x2, [x1, FTR_OVR_VAL_OFFSET]
-+	ldr	x1, [x1, FTR_OVR_MASK_OFFSET]
-+	ubfx	x2, x2, #ID_AA64MMFR1_VHE_SHIFT, #4
-+	ubfx	x1, x1, #ID_AA64MMFR1_VHE_SHIFT, #4
-+	cmp	x1, xzr
-+	and	x2, x2, x1
-+	csinv	x2, x2, xzr, ne
-+	cbz	x2, 1f
+ #define FTR_DESC_NAME_LEN	20
+ #define FTR_DESC_FIELD_LEN	10
++#define FTR_ALIAS_NAME_LEN	30
++#define FTR_ALIAS_OPTION_LEN	80
+ 
+ struct ftr_set_desc {
+ 	char 				name[FTR_DESC_NAME_LEN];
+@@ -39,6 +41,12 @@ static const struct ftr_set_desc * const regs[] __initconst = {
+ 	&mmfr1,
+ };
+ 
++static const struct {
++	char	alias[FTR_ALIAS_NAME_LEN];
++	char	feature[FTR_ALIAS_OPTION_LEN];
++} aliases[] __initconst = {
++};
 +
- 	// Engage the VHE magic!
- 	mov_q	x0, HCR_HOST_VHE_FLAGS
- 	msr	hcr_el2, x0
+ static char *cmdline_contains_option(const char *cmdline, const char *option)
+ {
+ 	char *str = strstr(cmdline, option);
+@@ -95,7 +103,7 @@ static void __init match_options(const char *cmdline)
+ 	}
+ }
+ 
+-static __init void __parse_cmdline(const char *cmdline)
++static __init void __parse_cmdline(const char *cmdline, bool parse_aliases)
+ {
+ 	do {
+ 		char buf[256];
+@@ -119,6 +127,9 @@ static __init void __parse_cmdline(const char *cmdline)
+ 
+ 		match_options(buf);
+ 
++		for (i = 0; parse_aliases && i < ARRAY_SIZE(aliases); i++)
++			if (cmdline_contains_option(buf, aliases[i].alias))
++				__parse_cmdline(aliases[i].feature, false);
+ 	} while (1);
+ }
+ 
+@@ -141,14 +152,14 @@ static __init void parse_cmdline(void)
+ 		if (!prop)
+ 			goto out;
+ 
+-		__parse_cmdline(prop);
++		__parse_cmdline(prop, true);
+ 
+ 		if (!IS_ENABLED(CONFIG_CMDLINE_EXTEND))
+ 			return;
+ 	}
+ 
+ out:
+-	__parse_cmdline(CONFIG_CMDLINE);
++	__parse_cmdline(CONFIG_CMDLINE, true);
+ }
+ 
+ /* Keep checkers quiet */
 -- 
 2.29.2
 
