@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 141BC30A720
-	for <lists+kvmarm@lfdr.de>; Mon,  1 Feb 2021 13:04:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AA21430A716
+	for <lists+kvmarm@lfdr.de>; Mon,  1 Feb 2021 13:04:19 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BA8134B45C;
-	Mon,  1 Feb 2021 07:04:50 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3E4504B3C9;
+	Mon,  1 Feb 2021 07:04:19 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,39 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id mbQpCcNtTVDJ; Mon,  1 Feb 2021 07:04:49 -0500 (EST)
+	with ESMTP id VDPlCWOeFUMp; Mon,  1 Feb 2021 07:04:19 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4CBFF4B46B;
-	Mon,  1 Feb 2021 07:04:41 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E55604B3D9;
+	Mon,  1 Feb 2021 07:04:17 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 21E724B3CD
- for <kvmarm@lists.cs.columbia.edu>; Mon,  1 Feb 2021 07:04:39 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D7F3C4B3C7
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  1 Feb 2021 07:04:16 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id lcmuJzt4NVkP for <kvmarm@lists.cs.columbia.edu>;
- Mon,  1 Feb 2021 07:04:38 -0500 (EST)
+ with ESMTP id QAiT0lmMRz+U for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  1 Feb 2021 07:04:15 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5FF384B3DC
- for <kvmarm@lists.cs.columbia.edu>; Mon,  1 Feb 2021 07:04:37 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 852784B398
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  1 Feb 2021 07:04:15 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 6491964EA3;
- Mon,  1 Feb 2021 12:04:36 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 4696164E8F;
+ Mon,  1 Feb 2021 12:04:14 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1l6Xp8-00BG09-5W; Mon, 01 Feb 2021 11:56:54 +0000
+ id 1l6Xp9-00BG09-7b; Mon, 01 Feb 2021 11:56:55 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  linux-kernel@vger.kernel.org
-Subject: [PATCH v6 11/21] arm64: Extract early FDT mapping from
- kaslr_early_init()
-Date: Mon,  1 Feb 2021 11:56:27 +0000
-Message-Id: <20210201115637.3123740-12-maz@kernel.org>
+Subject: [PATCH v6 12/21] arm64: cpufeature: Add an early command-line
+ cpufeature override facility
+Date: Mon,  1 Feb 2021 11:56:28 +0000
+Message-Id: <20210201115637.3123740-13-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210201115637.3123740-1-maz@kernel.org>
 References: <20210201115637.3123740-1-maz@kernel.org>
@@ -84,123 +84,219 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-As we want to parse more options very early in the kernel lifetime,
-let's always map the FDT early. This is achieved by moving that
-code out of kaslr_early_init().
+In order to be able to override CPU features at boot time,
+let's add a command line parser that matches options of the
+form "cpureg.feature=value", and store the corresponding
+value into the override val/mask pair.
 
-No functionnal change expected.
+No features are currently defined, so no expected change in
+functionality.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
 Acked-by: David Brazdil <dbrazdil@google.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
 ---
- arch/arm64/include/asm/setup.h | 11 +++++++++++
- arch/arm64/kernel/head.S       |  3 ++-
- arch/arm64/kernel/kaslr.c      |  7 +++----
- arch/arm64/kernel/setup.c      | 15 +++++++++++++++
- 4 files changed, 31 insertions(+), 5 deletions(-)
- create mode 100644 arch/arm64/include/asm/setup.h
+ arch/arm64/kernel/Makefile         |   2 +-
+ arch/arm64/kernel/head.S           |   1 +
+ arch/arm64/kernel/idreg-override.c | 164 +++++++++++++++++++++++++++++
+ 3 files changed, 166 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm64/kernel/idreg-override.c
 
-diff --git a/arch/arm64/include/asm/setup.h b/arch/arm64/include/asm/setup.h
-new file mode 100644
-index 000000000000..d3320618ed14
---- /dev/null
-+++ b/arch/arm64/include/asm/setup.h
-@@ -0,0 +1,11 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#ifndef __ARM64_ASM_SETUP_H
-+#define __ARM64_ASM_SETUP_H
-+
-+#include <uapi/asm/setup.h>
-+
-+void *get_early_fdt_ptr(void);
-+void early_fdt_map(u64 dt_phys);
-+
-+#endif
+diff --git a/arch/arm64/kernel/Makefile b/arch/arm64/kernel/Makefile
+index 86364ab6f13f..2262f0392857 100644
+--- a/arch/arm64/kernel/Makefile
++++ b/arch/arm64/kernel/Makefile
+@@ -17,7 +17,7 @@ obj-y			:= debug-monitors.o entry.o irq.o fpsimd.o		\
+ 			   return_address.o cpuinfo.o cpu_errata.o		\
+ 			   cpufeature.o alternative.o cacheinfo.o		\
+ 			   smp.o smp_spin_table.o topology.o smccc-call.o	\
+-			   syscall.o proton-pack.o
++			   syscall.o proton-pack.o idreg-override.o
+ 
+ targets			+= efi-entry.o
+ 
 diff --git a/arch/arm64/kernel/head.S b/arch/arm64/kernel/head.S
-index b425d2587cdb..d74e5f84042e 100644
+index d74e5f84042e..3243e3ae9bd8 100644
 --- a/arch/arm64/kernel/head.S
 +++ b/arch/arm64/kernel/head.S
-@@ -433,6 +433,8 @@ SYM_FUNC_START_LOCAL(__primary_switched)
- 	bl	__pi_memset
- 	dsb	ishst				// Make zero page visible to PTW
+@@ -435,6 +435,7 @@ SYM_FUNC_START_LOCAL(__primary_switched)
  
-+	mov	x0, x21				// pass FDT address in x0
-+	bl	early_fdt_map			// Try mapping the FDT early
+ 	mov	x0, x21				// pass FDT address in x0
+ 	bl	early_fdt_map			// Try mapping the FDT early
++	bl	init_feature_override
  	bl	switch_to_vhe
  #if defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)
  	bl	kasan_early_init
-@@ -440,7 +442,6 @@ SYM_FUNC_START_LOCAL(__primary_switched)
- #ifdef CONFIG_RANDOMIZE_BASE
- 	tst	x23, ~(MIN_KIMG_ALIGN - 1)	// already running randomized?
- 	b.ne	0f
--	mov	x0, x21				// pass FDT address in x0
- 	bl	kaslr_early_init		// parse FDT for KASLR options
- 	cbz	x0, 0f				// KASLR disabled? just proceed
- 	orr	x23, x23, x0			// record KASLR offset
-diff --git a/arch/arm64/kernel/kaslr.c b/arch/arm64/kernel/kaslr.c
-index 1c74c45b9494..5fc86e7d01a1 100644
---- a/arch/arm64/kernel/kaslr.c
-+++ b/arch/arm64/kernel/kaslr.c
-@@ -19,6 +19,7 @@
- #include <asm/memory.h>
- #include <asm/mmu.h>
- #include <asm/sections.h>
+diff --git a/arch/arm64/kernel/idreg-override.c b/arch/arm64/kernel/idreg-override.c
+new file mode 100644
+index 000000000000..d8d0d3b25bc3
+--- /dev/null
++++ b/arch/arm64/kernel/idreg-override.c
+@@ -0,0 +1,164 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Early cpufeature override framework
++ *
++ * Copyright (C) 2020 Google LLC
++ * Author: Marc Zyngier <maz@kernel.org>
++ */
++
++#include <linux/ctype.h>
++#include <linux/kernel.h>
++#include <linux/libfdt.h>
++
++#include <asm/cacheflush.h>
 +#include <asm/setup.h>
- 
- enum kaslr_status {
- 	KASLR_ENABLED,
-@@ -92,12 +93,11 @@ static __init bool is_kaslr_disabled_cmdline(void *fdt)
-  * containing function pointers) to be reinitialized, and zero-initialized
-  * .bss variables will be reset to 0.
-  */
--u64 __init kaslr_early_init(u64 dt_phys)
-+u64 __init kaslr_early_init(void)
- {
- 	void *fdt;
- 	u64 seed, offset, mask, module_range;
- 	unsigned long raw;
--	int size;
- 
- 	/*
- 	 * Set a reasonable default for module_alloc_base in case
-@@ -111,8 +111,7 @@ u64 __init kaslr_early_init(u64 dt_phys)
- 	 * and proceed with KASLR disabled. We will make another
- 	 * attempt at mapping the FDT in setup_machine()
- 	 */
--	early_fixmap_init();
--	fdt = fixmap_remap_fdt(dt_phys, &size, PAGE_KERNEL);
-+	fdt = get_early_fdt_ptr();
- 	if (!fdt) {
- 		kaslr_status = KASLR_DISABLED_FDT_REMAP;
- 		return 0;
-diff --git a/arch/arm64/kernel/setup.c b/arch/arm64/kernel/setup.c
-index c18aacde8bb0..61845c0821d9 100644
---- a/arch/arm64/kernel/setup.c
-+++ b/arch/arm64/kernel/setup.c
-@@ -168,6 +168,21 @@ static void __init smp_build_mpidr_hash(void)
- 		pr_warn("Large number of MPIDR hash buckets detected\n");
- }
- 
-+static void *early_fdt_ptr __initdata;
 +
-+void __init *get_early_fdt_ptr(void)
++#define FTR_DESC_NAME_LEN	20
++#define FTR_DESC_FIELD_LEN	10
++
++struct ftr_set_desc {
++	char 				name[FTR_DESC_NAME_LEN];
++	struct arm64_ftr_override	*override;
++	struct {
++		char			name[FTR_DESC_FIELD_LEN];
++		u8			shift;
++	} 				fields[];
++};
++
++static const struct ftr_set_desc * const regs[] __initconst = {
++};
++
++static char *cmdline_contains_option(const char *cmdline, const char *option)
 +{
-+	return early_fdt_ptr;
++	char *str = strstr(cmdline, option);
++
++	if ((str == cmdline || (str > cmdline && isspace(*(str - 1)))))
++		return str;
++
++	return NULL;
 +}
 +
-+asmlinkage void __init early_fdt_map(u64 dt_phys)
++static int __init find_field(const char *cmdline,
++			     const struct ftr_set_desc *reg, int f, u64 *v)
 +{
-+	int fdt_size;
++	char opt[FTR_DESC_NAME_LEN + FTR_DESC_FIELD_LEN + 2], *str;
++	size_t len;
 +
-+	early_fixmap_init();
-+	early_fdt_ptr = fixmap_remap_fdt(dt_phys, &fdt_size, PAGE_KERNEL);
++	snprintf(opt, ARRAY_SIZE(opt), "%s.%s=", reg->name, reg->fields[f].name);
++
++	str = cmdline_contains_option(cmdline, opt);
++	if (!str)
++		return -1;
++
++	str += strlen(opt);
++	len = strcspn(str, " ");
++	len = min(len, ARRAY_SIZE(opt) - 1);
++	strncpy(opt, str, len);
++	opt[len] = 0;
++
++	return kstrtou64(opt, 0, v);
 +}
 +
- static void __init setup_machine_fdt(phys_addr_t dt_phys)
- {
- 	int size;
++static void __init match_options(const char *cmdline)
++{
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(regs); i++) {
++		int f;
++
++		if (!regs[i]->override)
++			continue;
++
++		for (f = 0; strlen(regs[i]->fields[f].name); f++) {
++			u64 shift = regs[i]->fields[f].shift;
++			u64 mask = 0xfUL << shift;
++			u64 v;
++
++			if (find_field(cmdline, regs[i], f, &v))
++				continue;
++
++			regs[i]->override->val  &= ~mask;
++			regs[i]->override->val  |= (v << shift) & mask;
++			regs[i]->override->mask |= mask;
++		}
++	}
++}
++
++static __init void __parse_cmdline(const char *cmdline)
++{
++	do {
++		char buf[256];
++		size_t len;
++		int i;
++
++		/* skip initial spaces */
++		len = strspn(cmdline, " \t\n\v\f\r");
++		cmdline += len;
++
++		/* substring length */
++		len = strcspn(cmdline, " \t\n\v\f\r");
++		if (!len)
++			return;
++
++		len = min(len, ARRAY_SIZE(buf) - 1);
++		strncpy(buf, cmdline, len);
++		buf[len] = 0;
++
++		cmdline += len;
++
++		match_options(buf);
++
++	} while (1);
++}
++
++static __init void parse_cmdline(void)
++{
++	if (!IS_ENABLED(CONFIG_CMDLINE_FORCE)) {
++		const u8 *prop;
++		void *fdt;
++		int node;
++
++		fdt = get_early_fdt_ptr();
++		if (!fdt)
++			goto out;
++
++		node = fdt_path_offset(fdt, "/chosen");
++		if (node < 0)
++			goto out;
++
++		prop = fdt_getprop(fdt, node, "bootargs", NULL);
++		if (!prop)
++			goto out;
++
++		__parse_cmdline(prop);
++
++		if (!IS_ENABLED(CONFIG_CMDLINE_EXTEND))
++			return;
++	}
++
++out:
++	__parse_cmdline(CONFIG_CMDLINE);
++}
++
++/* Keep checkers quiet */
++void init_feature_override(void);
++
++asmlinkage void __init init_feature_override(void)
++{
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(regs); i++) {
++		if (regs[i]->override) {
++			regs[i]->override->val  = 0;
++			regs[i]->override->mask = 0;
++		}
++	}
++
++	parse_cmdline();
++
++	for (i = 0; i < ARRAY_SIZE(regs); i++) {
++		if (regs[i]->override)
++			__flush_dcache_area(regs[i]->override,
++					    sizeof(*regs[i]->override));
++	}
++}
 -- 
 2.29.2
 
