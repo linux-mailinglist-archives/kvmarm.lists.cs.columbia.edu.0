@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D28030DC80
-	for <lists+kvmarm@lfdr.de>; Wed,  3 Feb 2021 15:19:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E86130DC81
+	for <lists+kvmarm@lfdr.de>; Wed,  3 Feb 2021 15:19:43 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8FF4C4B273;
-	Wed,  3 Feb 2021 09:19:40 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DEF7C4B289;
+	Wed,  3 Feb 2021 09:19:42 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,61 +14,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id g4TKscOGHkYW; Wed,  3 Feb 2021 09:19:40 -0500 (EST)
+	with ESMTP id SIokUFzDzq1r; Wed,  3 Feb 2021 09:19:41 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9F4B24B270;
-	Wed,  3 Feb 2021 09:19:39 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C22EB4B28D;
+	Wed,  3 Feb 2021 09:19:41 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EF0DE4B270
- for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Feb 2021 09:19:38 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 38F7B4B273
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Feb 2021 09:19:40 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id XgOSIQXOnHmR for <kvmarm@lists.cs.columbia.edu>;
- Wed,  3 Feb 2021 09:19:36 -0500 (EST)
-Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com
- [209.85.128.73])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0F0074B26D
- for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Feb 2021 09:19:36 -0500 (EST)
-Received: by mail-wm1-f73.google.com with SMTP id u15so1667852wmj.2
- for <kvmarm@lists.cs.columbia.edu>; Wed, 03 Feb 2021 06:19:36 -0800 (PST)
+ with ESMTP id gcFMWwQZfSdP for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  3 Feb 2021 09:19:37 -0500 (EST)
+Received: from mail-qk1-f201.google.com (mail-qk1-f201.google.com
+ [209.85.222.201])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6C0484B280
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Feb 2021 09:19:37 -0500 (EST)
+Received: by mail-qk1-f201.google.com with SMTP id c63so15318957qkd.1
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 03 Feb 2021 06:19:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=sender:date:message-id:mime-version:subject:from:to:cc;
- bh=2YqmStJHtmDLb9ca8pHnXTtS9p5W2yatBMAuEkk2twc=;
- b=swt8i8oh/CahxjCm1i2LWz1PAhEJPYcgCpXP0sqxpm2LUsKOEQR/Tv0qTZc/ayZXro
- fM/xy/OMrvadN/XfZfFqE9II1fKG4oA2GlksIBodsSYBYT2mQdY2QmCpAWh+A33rzzL5
- GBiuyPnm5s8VHkJgbxLVNkw+yIUI3Zicnnyitub/KQvWRFCUrkmL+zNaLx2zGrWCUXaC
- VxvambATQYjvSZI9oXIdrBvrKIuvZMvY2pdDM60IB/BE1kKNHUXBK29B6uGPOMVY+nc5
- fvb5tienhYATycUO0iLqHIzDap95urS27UIbmZIvUgzX0u7Xs21ZzMPJLuQDzcL3a4Gs
- 0Hwg==
+ h=sender:date:in-reply-to:message-id:mime-version:references:subject
+ :from:to:cc; bh=gdNxs8YaM69sWh4jREuvK0RFhtTc9iQ+3CErelD+Kuw=;
+ b=mapOjrW3gKFKnloS39F2W/uU3TREbERLKqranHIMK4eMaLBf9/3W3R/SSpftpGEZmX
+ v/mRBr3ytvTjl0sEkgsidsX/VDNWn/k1P/l0e3MfQgqHgtMUcTBpqKAKHaBoL7Nq4kHj
+ wFL3UWu/k8cMoyiGQwsIIeUMRoKQoSYr2i+qhXKvL/AKFFA8+qszCNQzfHVFjnmVe4jJ
+ tzHoSa3TdvGCDOGbg9U2CvbX94ij2yFbQiqLTa2BGRO1XYbWIw+xuAk6P26e9K/gxA4w
+ 5jWtkfQKy3/4xt+RUgH8l+8yT96jc/AWbu1WzuDjD2o+w1/e8y0E3Ix7JOiOSctW1+yq
+ 7tZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
- :to:cc;
- bh=2YqmStJHtmDLb9ca8pHnXTtS9p5W2yatBMAuEkk2twc=;
- b=Dgh90UUbb1mcb/TOcSzo8ejFU/9gLXFWLFRgzF6403uRgfFE5O+SuUOi4WtqahjKd5
- oT9axtuUaSkPnxA5HioAwWtK3E03wF+YpIgt3+UH/SBluNcYVG9ugD2FuH8txhh8RZLv
- j6h+G93wdH8MSg1sFgKG+Fyph0AgrDTJtdJxUd8zMQES6wzXe19G1DXb4eETfh87oW9l
- QCRpaT/sPAJWCugsrMQnktVF1OOfHKyKDi5XcczihWh9r+A8JiWbRol9zJJe/Ef95C45
- CJHF2injZ/RF5FP0Q9ugNs0f/jS8kCZx1oKD/JH0qdfMZz0L2EO02BHyA5a3E/El+dZt
- WcfA==
-X-Gm-Message-State: AOAM531Jmq7b0+rw+SWt+WNuWvjbRxAfPKkMMuDYkPKHCoRaRhRP3XuF
- LAAKPqUq/6PH3u5/yVPNcQQMFc7GYKww
-X-Google-Smtp-Source: ABdhPJzQ47fLWpATF9oviOBeGLZ6a+5wZlOoYomkHouoJDdnNHFlCRVtBHfc0HOJyC8UgG5y/ze+CK1Gxa5x
+ h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+ :references:subject:from:to:cc;
+ bh=gdNxs8YaM69sWh4jREuvK0RFhtTc9iQ+3CErelD+Kuw=;
+ b=bqs+CRLpQUuhtD7U63tnNcAbXXoXGRpMD5uvkaWEDhAOIypvl/J6uYq2Zbf9LqiqxF
+ 53USmuQRERw86jaeM/QdlE0Gb1r+ato4F+5N76fbObLQ4u4f41re5oSVuR/zYH5Oroem
+ zw8xetlEH6Z/QIkqYMsoyrnopaOFeetTTtsfZLOzAY1kcLchiXJvQ3iiiyVfO4SyXgFT
+ ygzlARdNrur+Hmf+bhL+i5srPrGIT7DTzxvbGNn3GyIJGGQRhoZ5AZ8xHkAroJVeZ1l9
+ zVv6u5TWiqkXo5Alh0V3xo9KKTw0ifkprKHeW9jDCUpRqe4vNrKFjofLTwSyPoN1LYF9
+ FMUQ==
+X-Gm-Message-State: AOAM532L0NSdDLIKlOBIUBuwcaMr0rWstYrtHgCBGY/ShfsbeoKn4hts
+ v8O8KgzvS/zN/M4B9luy9MYaUs5UHyYa
+X-Google-Smtp-Source: ABdhPJzB8Ow/F/CZOHVjcn9iuSTID9Tc1GsdyyhMrHAiA0JbUl8qtRteULcOWo7SJFI+fo/OhTgbHaHKfLBI
 X-Received: from r2d2-qp.c.googlers.com
  ([fda3:e722:ac3:cc00:28:9cb1:c0a8:1652])
- (user=qperret job=sendgmr) by 2002:a1c:4303:: with SMTP id
- q3mr3048441wma.3.1612361974461; Wed, 03 Feb 2021 06:19:34 -0800 (PST)
-Date: Wed,  3 Feb 2021 14:19:29 +0000
-Message-Id: <20210203141931.615898-1-qperret@google.com>
+ (user=qperret job=sendgmr) by 2002:a0c:83a4:: with SMTP id
+ k33mr3010478qva.1.1612361976798; Wed, 03 Feb 2021 06:19:36 -0800 (PST)
+Date: Wed,  3 Feb 2021 14:19:30 +0000
+In-Reply-To: <20210203141931.615898-1-qperret@google.com>
+Message-Id: <20210203141931.615898-2-qperret@google.com>
 Mime-Version: 1.0
+References: <20210203141931.615898-1-qperret@google.com>
 X-Mailer: git-send-email 2.30.0.365.g02bc693789-goog
-Subject: [PATCH 0/2] KVM: arm64: Stub exports in nvhe code
+Subject: [PATCH 1/2] asm-generic: export: Stub EXPORT_SYMBOL with
+ __DISABLE_EXPORTS
 From: Quentin Perret <qperret@google.com>
 To: arnd@arndb.de, maz@kernel.org, catalin.marinas@arm.com, will@kernel.org
 Cc: linux-arch@vger.kernel.org, linux-kernel@vger.kernel.org,
@@ -90,41 +93,33 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi all,
+It is currently possible to stub EXPORT_SYMBOL() macros in C code using
+__DISABLE_EXPORTS, which is necessary to run in constrained environments
+such as the EFI stub or the decompressor. But this currently doesn't
+apply to exports from assembly, which can lead to somewhat confusing
+situations.
 
-In the context of the currently ongoing work to remove the host kernel
-from the TCB under KVM/arm64, I have been trying to wrap the host kernel
-with a stage 2 page-table -- see [1].
+Consolidate the __DISABLE_EXPORTS infrastructure by checking it from
+asm-generic/export.h as well.
 
-Using this infrastructure, I attempted to unmap the .hyp. sections from
-the host stage 2 as it really shouldn't need to access them. But by
-doing so, I realized quickly the module loader was getting very confused
-by the usage of EXPORT_SYMBOL() macros in library functions that have
-been pulled into the EL2 object, and that we end up linking modules
-against the EL2 copy of e.g. memset. And so, this series essentially
-tries to fix this.
+Signed-off-by: Quentin Perret <qperret@google.com>
+---
+ include/asm-generic/export.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- - Patch 01 changes asm-generic/export.h to ensure we respect
-   __DISABLE_EXPORTS even for asm exports;
-
- - and patch 02 makes use of it for all of the nVHE EL2 code.
-
-This was tested on aml-s905x-cc, which now successfully loads kernel
-modules with .hyp.text unmapped from the host.
-
-Thanks,
-Quentin
-
-[1] https://lore.kernel.org/kvmarm/20210108121524.656872-1-qperret@google.com/
-
-Quentin Perret (2):
-  asm-generic: export: Stub EXPORT_SYMBOL with __DISABLE_EXPORTS
-  KVM: arm64: Stub EXPORT_SYMBOL for nVHE EL2 code
-
- arch/arm64/kvm/hyp/nvhe/Makefile | 4 ++--
- include/asm-generic/export.h     | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
-
+diff --git a/include/asm-generic/export.h b/include/asm-generic/export.h
+index 365345f9a9e3..07a36a874dca 100644
+--- a/include/asm-generic/export.h
++++ b/include/asm-generic/export.h
+@@ -33,7 +33,7 @@
+  */
+ 
+ .macro ___EXPORT_SYMBOL name,val,sec
+-#ifdef CONFIG_MODULES
++#if defined(CONFIG_MODULES) && !defined(__DISABLE_EXPORTS)
+ 	.section ___ksymtab\sec+\name,"a"
+ 	.balign KSYM_ALIGN
+ __ksymtab_\name:
 -- 
 2.30.0.365.g02bc693789-goog
 
