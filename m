@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7849230D9E4
-	for <lists+kvmarm@lfdr.de>; Wed,  3 Feb 2021 13:40:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E614F30DA64
+	for <lists+kvmarm@lfdr.de>; Wed,  3 Feb 2021 13:59:29 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 768AC4B24C;
-	Wed,  3 Feb 2021 07:39:59 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9ADF54B267;
+	Wed,  3 Feb 2021 07:59:29 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.209
@@ -18,64 +18,61 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id T-qSd110glD9; Wed,  3 Feb 2021 07:39:59 -0500 (EST)
+	with ESMTP id ZpaXfEXZLz8v; Wed,  3 Feb 2021 07:59:29 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 42E664B22C;
-	Wed,  3 Feb 2021 07:39:58 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 560744B250;
+	Wed,  3 Feb 2021 07:59:28 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4E8B24B22C
- for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Feb 2021 07:39:57 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 361904B250
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Feb 2021 07:59:27 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id FtgtiKNhzcM9 for <kvmarm@lists.cs.columbia.edu>;
- Wed,  3 Feb 2021 07:39:56 -0500 (EST)
+ with ESMTP id lyBbN6YMqB5g for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  3 Feb 2021 07:59:25 -0500 (EST)
 Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [63.128.21.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5D9504B22B
- for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Feb 2021 07:39:56 -0500 (EST)
+ (us-smtp-delivery-124.mimecast.com [216.205.24.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 232364B24F
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Feb 2021 07:59:25 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1612355996;
+ s=mimecast20190719; t=1612357164;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7I0Ccsfbksiom0KDSfGuPHiDPSZnaJLN1wCUx9nAHbU=;
- b=fp8BzVsJVMWkQyrLR9gEKiZ2yWwibxxGXKYz5jv2lrcI2TeMV9YcmUNVBcynzT8MD4aVni
- qMZiGg5I8ExARBHQGLKEIWQiu4+vUaeOhPvbCcoS3NiAJtSp7tHLO0Tu8Cprqa460yDtDJ
- 7sEApdxuZORCIHaWEz9TBxgTXtdEboQ=
+ bh=i8/mAF7tPJmuIVyni5K3ahZ5kwY4m05qM8J1tBKTUho=;
+ b=QRAV6G+DlbP1mo74zvO8NqAVnnmiG23iPht0bSJSlsPdrivZ6z5HL1B4vZMbLbcfslODM0
+ JlNKcHAL4Fo4hC2ZdhVcpIZkzQ5mCoxbTuFLBVEMj2a77g+Q8ekeMI1x0xrcfmhlnzp/XA
+ 9zTSzRA+7BxriA4CodA81CTV4uGppnw=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-576-wXH1N1duOtGpGOtTPjY5cg-1; Wed, 03 Feb 2021 07:39:52 -0500
-X-MC-Unique: wXH1N1duOtGpGOtTPjY5cg-1
+ us-mta-485-3IyS_6ztNSWoTM8amAuEaA-1; Wed, 03 Feb 2021 07:59:23 -0500
+X-MC-Unique: 3IyS_6ztNSWoTM8amAuEaA-1
 Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com
  [10.5.11.13])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id E54B419611C2;
- Wed,  3 Feb 2021 12:39:50 +0000 (UTC)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 93F5C18A0838;
+ Wed,  3 Feb 2021 12:59:17 +0000 (UTC)
 Received: from [10.36.113.43] (ovpn-113-43.ams2.redhat.com [10.36.113.43])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id AF0427770F;
- Wed,  3 Feb 2021 12:39:48 +0000 (UTC)
-Subject: Re: [PATCH v2 6/7] KVM: arm64: Upgrade PMU support to ARMv8.4
-To: Marc Zyngier <maz@kernel.org>
-References: <20210125122638.2947058-1-maz@kernel.org>
- <20210125122638.2947058-7-maz@kernel.org>
- <56041147-0bd8-dbb2-d1ca-550f3db7f05d@redhat.com>
- <adbdbfbcecb65a1eca21afa622679836@kernel.org>
- <7808bec4-2ac5-a36d-2960-b4b90574e0d2@redhat.com>
- <f6875f72511a69f9ac9a18ebf7698466@kernel.org>
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id CEA8E3828;
+ Wed,  3 Feb 2021 12:59:15 +0000 (UTC)
+Subject: Re: [kvm-unit-tests PATCH v3 05/11] arm/arm64: gic: Use correct
+ memory ordering for the IPI test
+To: Alexandru Elisei <alexandru.elisei@arm.com>, drjones@redhat.com,
+ kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
+References: <20210129163647.91564-1-alexandru.elisei@arm.com>
+ <20210129163647.91564-6-alexandru.elisei@arm.com>
 From: Auger Eric <eric.auger@redhat.com>
-Message-ID: <d9f8b79a-74de-0058-aa14-4ed5ec3b6aab@redhat.com>
-Date: Wed, 3 Feb 2021 13:39:47 +0100
+Message-ID: <84e3b198-399c-d0a1-e7de-8a70f60ba00c@redhat.com>
+Date: Wed, 3 Feb 2021 13:59:14 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.5.0
 MIME-Version: 1.0
-In-Reply-To: <f6875f72511a69f9ac9a18ebf7698466@kernel.org>
+In-Reply-To: <20210129163647.91564-6-alexandru.elisei@arm.com>
 Content-Language: en-US
 X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
-Cc: kvm@vger.kernel.org, kernel-team@android.com,
- linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu
+Cc: andre.przywara@arm.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -87,80 +84,140 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-SGksCgpPbiAyLzMvMjEgMTI6MjAgUE0sIE1hcmMgWnluZ2llciB3cm90ZToKPiBPbiAyMDIxLTAy
-LTAzIDExOjA3LCBBdWdlciBFcmljIHdyb3RlOgo+PiBIaSBNYXJjLAo+PiBPbiAyLzMvMjEgMTE6
-MzYgQU0sIE1hcmMgWnluZ2llciB3cm90ZToKPj4+IEhpIEVyaWMsCj4+Pgo+Pj4gT24gMjAyMS0w
-MS0yNyAxNzo1MywgQXVnZXIgRXJpYyB3cm90ZToKPj4+PiBIaSBNYXJjLAo+Pj4+Cj4+Pj4gT24g
-MS8yNS8yMSAxOjI2IFBNLCBNYXJjIFp5bmdpZXIgd3JvdGU6Cj4+Pj4+IFVwZ3JhZGluZyB0aGUg
-UE1VIGNvZGUgZnJvbSBBUk12OC4xIHRvIEFSTXY4LjQgdHVybnMgb3V0IHRvIGJlCj4+Pj4+IHBy
-ZXR0eSBlYXN5LiBBbGwgdGhhdCBpcyByZXF1aXJlZCBpcyBzdXBwb3J0IGZvciBQTU1JUl9FTDEs
-IHdoaWNoCj4+Pj4+IGlzIHJlYWQtb25seSwgYW5kIGZvciB3aGljaCByZXR1cm5pbmcgMCBpcyBh
-IHZhbGlkIG9wdGlvbiBhcyBsb25nCj4+Pj4+IGFzIHdlIGRvbid0IGFkdmVydGlzZSBTVEFMTF9T
-TE9UIGFzIGFuIGltcGxlbWVudGVkIGV2ZW50Lgo+Pj4+Pgo+Pj4+PiBMZXQncyBqdXN0IGRvIHRo
-YXQgYW5kIGFkanVzdCB3aGF0IHdlIHJldHVybiB0byB0aGUgZ3Vlc3QuCj4+Pj4+Cj4+Pj4+IFNp
-Z25lZC1vZmYtYnk6IE1hcmMgWnluZ2llciA8bWF6QGtlcm5lbC5vcmc+Cj4+Pj4+IC0tLQo+Pj4+
-PiDCoGFyY2gvYXJtNjQvaW5jbHVkZS9hc20vc3lzcmVnLmggfMKgIDMgKysrCj4+Pj4+IMKgYXJj
-aC9hcm02NC9rdm0vcG11LWVtdWwuY8KgwqDCoMKgwqDCoCB8wqAgNiArKysrKysKPj4+Pj4gwqBh
-cmNoL2FybTY0L2t2bS9zeXNfcmVncy5jwqDCoMKgwqDCoMKgIHwgMTEgKysrKysrKy0tLS0KPj4+
-Pj4gwqAzIGZpbGVzIGNoYW5nZWQsIDE2IGluc2VydGlvbnMoKyksIDQgZGVsZXRpb25zKC0pCj4+
-Pj4+Cj4+Pj4+IGRpZmYgLS1naXQgYS9hcmNoL2FybTY0L2luY2x1ZGUvYXNtL3N5c3JlZy5oCj4+
-Pj4+IGIvYXJjaC9hcm02NC9pbmNsdWRlL2FzbS9zeXNyZWcuaAo+Pj4+PiBpbmRleCA4YjVlN2U1
-YzNjYzguLjJmYjNmMzg2NTg4YyAxMDA2NDQKPj4+Pj4gLS0tIGEvYXJjaC9hcm02NC9pbmNsdWRl
-L2FzbS9zeXNyZWcuaAo+Pj4+PiArKysgYi9hcmNoL2FybTY0L2luY2x1ZGUvYXNtL3N5c3JlZy5o
-Cj4+Pj4+IEBAIC04NDYsNyArODQ2LDEwIEBACj4+Pj4+Cj4+Pj4+IMKgI2RlZmluZSBJRF9ERlIw
-X1BFUkZNT05fU0hJRlTCoMKgwqDCoMKgwqDCoCAyNAo+Pj4+Pgo+Pj4+PiArI2RlZmluZSBJRF9E
-RlIwX1BFUkZNT05fOF8wwqDCoMKgwqDCoMKgwqAgMHgzCj4+Pj4+IMKgI2RlZmluZSBJRF9ERlIw
-X1BFUkZNT05fOF8xwqDCoMKgwqDCoMKgwqAgMHg0Cj4+Pj4+ICsjZGVmaW5lIElEX0RGUjBfUEVS
-Rk1PTl84XzTCoMKgwqDCoMKgwqDCoCAweDUKPj4+Pj4gKyNkZWZpbmUgSURfREZSMF9QRVJGTU9O
-XzhfNcKgwqDCoMKgwqDCoMKgIDB4Ngo+Pj4+Pgo+Pj4+PiDCoCNkZWZpbmUgSURfSVNBUjRfU1dQ
-X0ZSQUNfU0hJRlTCoMKgwqDCoMKgwqDCoCAyOAo+Pj4+PiDCoCNkZWZpbmUgSURfSVNBUjRfUFNS
-X01fU0hJRlTCoMKgwqDCoMKgwqDCoCAyNAo+Pj4+PiBkaWZmIC0tZ2l0IGEvYXJjaC9hcm02NC9r
-dm0vcG11LWVtdWwuYyBiL2FyY2gvYXJtNjQva3ZtL3BtdS1lbXVsLmMKPj4+Pj4gaW5kZXggMzk4
-ZjZkZjFiYmU0Li43MmNkNzA0YTgzNjggMTAwNjQ0Cj4+Pj4+IC0tLSBhL2FyY2gvYXJtNjQva3Zt
-L3BtdS1lbXVsLmMKPj4+Pj4gKysrIGIvYXJjaC9hcm02NC9rdm0vcG11LWVtdWwuYwo+Pj4+PiBA
-QCAtNzk1LDYgKzc5NSwxMiBAQCB1NjQga3ZtX3BtdV9nZXRfcG1jZWlkKHN0cnVjdCBrdm1fdmNw
-dSAqdmNwdSwKPj4+Pj4gYm9vbCBwbWNlaWQxKQo+Pj4+PiDCoMKgwqDCoMKgwqDCoMKgIGJhc2Ug
-PSAwOwo+Pj4+PiDCoMKgwqDCoCB9IGVsc2Ugewo+Pj4+PiDCoMKgwqDCoMKgwqDCoMKgIHZhbCA9
-IHJlYWRfc3lzcmVnKHBtY2VpZDFfZWwwKTsKPj4+Pj4gK8KgwqDCoMKgwqDCoMKgIC8qCj4+Pj4+
-ICvCoMKgwqDCoMKgwqDCoMKgICogRG9uJ3QgYWR2ZXJ0aXNlIFNUQUxMX1NMT1QsIGFzIFBNTUlS
-X0VMMCBpcyBoYW5kbGVkCj4+Pj4+ICvCoMKgwqDCoMKgwqDCoMKgICogYXMgUkFaCj4+Pj4+ICvC
-oMKgwqDCoMKgwqDCoMKgICovCj4+Pj4+ICvCoMKgwqDCoMKgwqDCoCBpZiAodmNwdS0+a3ZtLT5h
-cmNoLnBtdXZlciA+PSBJRF9BQTY0REZSMF9QTVVWRVJfOF80KQo+Pj4+PiArwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoCB2YWwgJj0gfkJJVF9VTEwoQVJNVjhfUE1VVjNfUEVSRkNUUl9TVEFMTF9TTE9U
-IC0gMzIpOwo+Pj4+IHdoYXQgYWJvdXQgdGhlIFNUQUxMX1NMT1RfQkFDS0VORCBhbmQgRlJPTlRF
-TkQgZXZlbnRzIHRoZW4/Cj4+Pgo+Pj4gQXJlbid0IHRoZXNlIGEgbWFuZGF0b3J5IEFSTXY4LjEg
-ZmVhdHVyZT8gSSBkb24ndCBzZWUgYSByZWFzb24gdG8KPj4+IGRyb3AgdGhlbS4KPj4KPj4gSSB1
-bmRlcnN0YW5kIHRoZSAzIGFyZSBsaW5rZWQgdG9nZXRoZXIuCj4+Cj4+IEluIEQ3LjExIGl0IGlz
-IHNhaWQKPj4gIgo+PiBXaGVuIGFueSBvZiB0aGUgZm9sbG93aW5nIGNvbW1vbiBldmVudHMgYXJl
-IGltcGxlbWVudGVkLCBhbGwgdGhyZWUgb2YKPj4gdGhlbSBhcmUgaW1wbGVtZW50ZWQ6Cj4+IDB4
-MDAzRCAsIFNUQUxMX1NMT1RfQkFDS0VORCwgTm8gb3BlcmF0aW9uIHNlbnQgZm9yIGV4ZWN1dGlv
-biBvbiBhIFNsb3QKPj4gZHVlIHRvIHRoZSBiYWNrZW5kLAo+PiAweDAwM0UgLCBTVEFMTF9TTE9U
-X0ZST05URU5ELCBObyBvcGVyYXRpb24gc2VudCBmb3IgZXhlY3V0aW9uIG9uIGEgU2xvdAo+PiBk
-dWUgdG8gdGhlIGZyb250ZW5kLgo+PiAweDAwM0YgLCBTVEFMTF9TTE9ULCBObyBvcGVyYXRpb24g
-c2VudCBmb3IgZXhlY3V0aW9uIG9uIGEgU2xvdC4KPj4gIgo+IAo+IFRoZXkgYXJlIGxpbmtlZCBp
-biB0aGUgc2Vuc2UgdGhhdCB0aGV5IHJlcG9ydCByZWxhdGVkIGV2ZW50cywgYnV0IHRoZXkKPiBk
-b24ndCBoYXZlIHRvIGJlIGltcGxlbWVudGVkIGluIHRoZSBzYW1lIGxldmVsIG9mIHRoZSBhcmNo
-aXRlY3VyZSwgaWYgb25seQo+IGJlY2F1c2UgQkFDS0VORC9GUk9OVEVORCB3ZXJlIGludHJvZHVj
-ZWR3YXkgYmVmb3JlIEFSTXY4LjQuCj4gCj4gV2hhdCB0aGUgYXJjaGl0ZWN0dXJlIHNheXMgaXM6
-Cj4gCj4gLSBGb3IgRkVBVF9QTVV2M3AxIChBUk12OC4xKToKPiDCoCAiVGhlIFNUQUxMX0ZST05U
-RU5EIGFuZCBTVEFMTF9CQUNLRU5EIGV2ZW50cyBhcmUgcmVxdWlyZWQgdG8gYmUKPiDCoMKgIGlt
-cGxlbWVudGVkLiIgKEEyLjQuMSwgRERJMDQ4N0cuYSkKT0sKPiAKPiAtIEZvciBGRUFUX1BNVXYz
-cDQgKEFSTXY4LjQpOgo+IMKgICJJZiBGRUFUX1BNVXYzcDQgaXMgaW1wbGVtZW50ZWQ6Cj4gwqDC
-oCAtIElmIFNUQUxMX1NMT1QgaXMgbm90IGltcGxlbWVudGVkLCBpdCBpcyBJTVBMRU1FTlRBVElP
-TiBERUZJTkVECj4gd2hldGhlciB0aGUgUE1NSVIgU3lzdGVtIHJlZ2lzdGVycyBhcmUgaW1wbGVt
-ZW50ZWQuCj4gwqDCoCAtIElmIFNUQUxMX1NMT1QgaXMgaW1wbGVtZW50ZWQsIHRoZW4gdGhlIFBN
-TUlSIFN5c3RlbSByZWdpc3RlcnMgYXJlCj4gaW1wbGVtZW50ZWQuIiAoRDctMjg3MywgRERJMDQ4
-N0cuYSkKPiAKPiBTbyB3aGlsZSBCQUNLRU5EL0ZST05URU5EIGFyZSByZXF1aXJlZCBpbiBhbiBB
-Uk12OC40IGltcGxlbWVudGF0aW9uCj4gYnkgdmlydHVlIG9mIGJlaW5nIG1hbmRhdG9yeSBpbiBB
-Uk12OC4xLCBTVEFMTF9TTE9UIGlzbid0IGF0IGFueSBwb2ludC4KQnV0IHRoZW4gaG93IGRvIHlv
-dSB1bmRlcnN0YW5kICJXaGVuIGFueSBvZiB0aGUgZm9sbG93aW5nIGNvbW1vbiBldmVudHMKYXJl
-IGltcGxlbWVudGVkLCBhbGwgdGhyZWUgb2YgdGhlbSBhcmUgaW1wbGVtZW50ZWQiPwoKRXJpYwo+
-IAo+IFRoYW5rcywKPiAKPiDCoMKgwqDCoMKgwqDCoMKgIE0uCgpfX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBs
-aXN0cy5jcy5jb2x1bWJpYS5lZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1h
-bi9saXN0aW5mby9rdm1hcm0K
+Hi,
+
+On 1/29/21 5:36 PM, Alexandru Elisei wrote:
+> The IPI test works by sending IPIs to even numbered CPUs from the
+> IPI_SENDER CPU (CPU1), and then checking that the other CPUs received the
+> interrupts as expected. The check is done in check_acked() by the
+> IPI_SENDER CPU with the help of three arrays:
+> 
+> - acked, where acked[i] == 1 means that CPU i received the interrupt.
+> - bad_irq, where bad_irq[i] == -1 means that the interrupt received by CPU
+>   i had the expected interrupt number (IPI_IRQ).
+> - bad_sender, where bad_sender[i] == -1 means that the interrupt received
+>   by CPU i was from the expected sender (IPI_SENDER, GICv2 only).
+> 
+> The assumption made by check_acked() is that if a CPU acked an interrupt,
+> then bad_sender and bad_irq have also been updated. This is a common
+> inter-thread communication pattern called message passing.  For message
+> passing to work correctly on weakly consistent memory model architectures,
+> like arm and arm64, barriers or address dependencies are required. This is
+> described in ARM DDI 0487F.b, in "Armv7 compatible approaches for ordering,
+> using DMB and DSB barriers" (page K11-7993), in the section with a single
+> observer, which is in our case the IPI_SENDER CPU.
+> 
+> The IPI test attempts to enforce the correct ordering using memory
+> barriers, but it's not enough. For example, the program execution below is
+> valid from an architectural point of view:
+> 
+> 3 online CPUs, initial state (from stats_reset()):
+> 
+> acked[2] = 0;
+> bad_sender[2] = -1;
+> bad_irq[2] = -1;
+> 
+> CPU1 (in check_acked())		| CPU2 (in ipi_handler())
+> 				|
+> smp_rmb() // DMB ISHLD		| acked[2]++;
+> read 1 from acked[2]		|
+> nr_pass++ // nr_pass = 3	|
+> read -1 from bad_sender[2]	|
+> read -1 from bad_irq[2]		|
+> 				| // in check_ipi_sender()
+> 				| bad_sender[2] = <bad ipi sender>
+> 				| // in check_irqnr()
+> 				| bad_irq[2] = <bad irq number>
+> 				| smp_wmb() // DMB ISHST
+> nr_pass == nr_cpus, return	|
+> 
+> In this scenario, CPU1 will read the updated acked value, but it will read
+> the initial bad_sender and bad_irq values. This is permitted because the
+> memory barriers do not create a data dependency between the value read from
+> acked and the values read from bad_rq and bad_sender on CPU1, respectively
+> between the values written to acked, bad_sender and bad_irq on CPU2.
+> 
+> To avoid this situation, let's reorder the barriers and accesses to the
+> arrays to create the needed dependencies that ensure that message passing
+> behaves as expected.
+> 
+> In the interrupt handler, the writes to bad_sender and bad_irq are
+> reordered before the write to acked and a smp_wmb() barrier is added. This
+> ensures that if other PEs observe the write to acked, then they will also
+> observe the writes to the other two arrays.
+> 
+> In check_acked(), put the smp_rmb() barrier after the read from acked to
+> ensure that the subsequent reads from bad_sender, respectively bad_irq,
+> aren't reordered locally by the PE.
+> 
+> With these changes, the expected ordering of accesses is respected and we
+> end up with the pattern described in the Arm ARM and also in the Linux
+> litmus test MP+fencewmbonceonce+fencermbonceonce.litmus from
+> tools/memory-model/litmus-tests. More examples and explanations can be
+> found in the Linux source tree, in Documentation/memory-barriers.txt, in
+> the sections "SMP BARRIER PAIRING" and "READ MEMORY BARRIERS VS LOAD
+> SPECULATION".
+> 
+> For consistency with ipi_handler(), the array accesses in
+> ipi_clear_active_handler() have also been reordered. This shouldn't affect
+> the functionality of that test.
+> 
+> Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+> Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+
+Eric
+
+> ---
+>  arm/gic.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/arm/gic.c b/arm/gic.c
+> index db1417ae1ca1..c1b6c94a5f5e 100644
+> --- a/arm/gic.c
+> +++ b/arm/gic.c
+> @@ -72,9 +72,9 @@ static void check_acked(const char *testname, cpumask_t *mask)
+>  		mdelay(100);
+>  		nr_pass = 0;
+>  		for_each_present_cpu(cpu) {
+> -			smp_rmb();
+>  			nr_pass += cpumask_test_cpu(cpu, mask) ?
+>  				acked[cpu] == 1 : acked[cpu] == 0;
+> +			smp_rmb(); /* pairs with smp_wmb in ipi_handler */
+>  
+>  			if (bad_sender[cpu] != -1) {
+>  				printf("cpu%d received IPI from wrong sender %d\n",
+> @@ -148,10 +148,10 @@ static void ipi_handler(struct pt_regs *regs __unused)
+>  
+>  	if (irqnr != GICC_INT_SPURIOUS) {
+>  		gic_write_eoir(irqstat);
+> -		++acked[smp_processor_id()];
+>  		check_ipi_sender(irqstat);
+>  		check_irqnr(irqnr);
+> -		smp_wmb(); /* pairs with rmb in check_acked */
+> +		smp_wmb(); /* pairs with smp_rmb in check_acked */
+> +		++acked[smp_processor_id()];
+>  	} else {
+>  		++spurious[smp_processor_id()];
+>  		smp_wmb();
+> @@ -382,8 +382,8 @@ static void ipi_clear_active_handler(struct pt_regs *regs __unused)
+>  
+>  		writel(val, base + GICD_ICACTIVER);
+>  
+> -		++acked[smp_processor_id()];
+>  		check_irqnr(irqnr);
+> +		++acked[smp_processor_id()];
+>  	} else {
+>  		++spurious[smp_processor_id()];
+>  	}
+> 
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
