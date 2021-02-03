@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E86130DC81
-	for <lists+kvmarm@lfdr.de>; Wed,  3 Feb 2021 15:19:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7650A30DC82
+	for <lists+kvmarm@lfdr.de>; Wed,  3 Feb 2021 15:19:45 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DEF7C4B289;
-	Wed,  3 Feb 2021 09:19:42 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 21C5D4B270;
+	Wed,  3 Feb 2021 09:19:45 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,64 +14,63 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SIokUFzDzq1r; Wed,  3 Feb 2021 09:19:41 -0500 (EST)
+	with ESMTP id yqn51k7b-jvS; Wed,  3 Feb 2021 09:19:45 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C22EB4B28D;
-	Wed,  3 Feb 2021 09:19:41 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DCD5A4B28D;
+	Wed,  3 Feb 2021 09:19:43 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 38F7B4B273
- for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Feb 2021 09:19:40 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BD3894B276
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Feb 2021 09:19:42 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id gcFMWwQZfSdP for <kvmarm@lists.cs.columbia.edu>;
- Wed,  3 Feb 2021 09:19:37 -0500 (EST)
-Received: from mail-qk1-f201.google.com (mail-qk1-f201.google.com
- [209.85.222.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6C0484B280
- for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Feb 2021 09:19:37 -0500 (EST)
-Received: by mail-qk1-f201.google.com with SMTP id c63so15318957qkd.1
- for <kvmarm@lists.cs.columbia.edu>; Wed, 03 Feb 2021 06:19:37 -0800 (PST)
+ with ESMTP id BoWd0V+bh0e2 for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  3 Feb 2021 09:19:40 -0500 (EST)
+Received: from mail-wr1-f74.google.com (mail-wr1-f74.google.com
+ [209.85.221.74])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A44194B270
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Feb 2021 09:19:40 -0500 (EST)
+Received: by mail-wr1-f74.google.com with SMTP id x7so14697516wrp.9
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 03 Feb 2021 06:19:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=sender:date:in-reply-to:message-id:mime-version:references:subject
- :from:to:cc; bh=gdNxs8YaM69sWh4jREuvK0RFhtTc9iQ+3CErelD+Kuw=;
- b=mapOjrW3gKFKnloS39F2W/uU3TREbERLKqranHIMK4eMaLBf9/3W3R/SSpftpGEZmX
- v/mRBr3ytvTjl0sEkgsidsX/VDNWn/k1P/l0e3MfQgqHgtMUcTBpqKAKHaBoL7Nq4kHj
- wFL3UWu/k8cMoyiGQwsIIeUMRoKQoSYr2i+qhXKvL/AKFFA8+qszCNQzfHVFjnmVe4jJ
- tzHoSa3TdvGCDOGbg9U2CvbX94ij2yFbQiqLTa2BGRO1XYbWIw+xuAk6P26e9K/gxA4w
- 5jWtkfQKy3/4xt+RUgH8l+8yT96jc/AWbu1WzuDjD2o+w1/e8y0E3Ix7JOiOSctW1+yq
- 7tZQ==
+ :from:to:cc; bh=3+fgEg8CcwEZPzx5ba9dQiG1Bbp/LPpxkX/DyY7YReU=;
+ b=ECa2T6w6Xzk+c+UXae/1//JfQrHaqmwEkNwbH6t+u9iPQ+/taS5oBKC8Gdqmp/aqiS
+ aWV1vP6sIY7I+36pxfKtp6BYAhvNYVM64tQOefQf3JpLHeq5B5y7sSNryppKrNjWC09F
+ KQQw/1A6xu6SK5Ii45Ua8ZLlMnDnoZjIvHpqAo5Dh84Q+1sfak9uVyPdlgkGcyuMPrAI
+ wB88GN04WPUz/e/1yHNgAd0LN897HqvJADs9WusShW2qlUqp7oHeS/3lUgZFXR+SgmIx
+ 5TRBYFlfBEMGsSEHF4P6X7W+Hdy05RHZMqLi2jrB0fCxInNLjLcZo1WaTrAND7O1t9AA
+ BuBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=gdNxs8YaM69sWh4jREuvK0RFhtTc9iQ+3CErelD+Kuw=;
- b=bqs+CRLpQUuhtD7U63tnNcAbXXoXGRpMD5uvkaWEDhAOIypvl/J6uYq2Zbf9LqiqxF
- 53USmuQRERw86jaeM/QdlE0Gb1r+ato4F+5N76fbObLQ4u4f41re5oSVuR/zYH5Oroem
- zw8xetlEH6Z/QIkqYMsoyrnopaOFeetTTtsfZLOzAY1kcLchiXJvQ3iiiyVfO4SyXgFT
- ygzlARdNrur+Hmf+bhL+i5srPrGIT7DTzxvbGNn3GyIJGGQRhoZ5AZ8xHkAroJVeZ1l9
- zVv6u5TWiqkXo5Alh0V3xo9KKTw0ifkprKHeW9jDCUpRqe4vNrKFjofLTwSyPoN1LYF9
- FMUQ==
-X-Gm-Message-State: AOAM532L0NSdDLIKlOBIUBuwcaMr0rWstYrtHgCBGY/ShfsbeoKn4hts
- v8O8KgzvS/zN/M4B9luy9MYaUs5UHyYa
-X-Google-Smtp-Source: ABdhPJzB8Ow/F/CZOHVjcn9iuSTID9Tc1GsdyyhMrHAiA0JbUl8qtRteULcOWo7SJFI+fo/OhTgbHaHKfLBI
+ bh=3+fgEg8CcwEZPzx5ba9dQiG1Bbp/LPpxkX/DyY7YReU=;
+ b=J0YCcaHaWFb5mLAqtHn7Cg4nFULKRbARgim6TwvV01TNqkyXW5HMZ13rKN48GTohmG
+ dQf4171RcEOhoGeGwIqQxY133ShHcSSNUNMBZrvmUHspEXAPys8bCfVFhBJ1mOpmJfOU
+ ZocMQ6/ej+hIQcHSM5Bnqc+B7Xe4ITJlyighyeVv+8q6WMcfPtJgzY3TwHSfx7yIlGAr
+ 35N/ehVp43Yasvlfl7EwpPeaAEYli4VKY2jujDh+lquGG7f3pYiSo3b3baV7gz8WETT4
+ afoGMPAK/kNnLgWaCUyJJhHPnHuFdXEGO0GaL+ESfAouKvUMC9225si/aZS6s9yqGBdr
+ booQ==
+X-Gm-Message-State: AOAM532UuQTKs7c9JSRMqzaMMUGCH82fji/107ztthTbIoQE7VDLLwc0
+ fiYyO+z4f/ltU5xq3vbPvJ2xyeYDB3sW
+X-Google-Smtp-Source: ABdhPJyxHdPdDI/OtCdUuxvsWAYFicQkJiykIbbaVqcEXDzFTBrAuOyz3VUX4A/8Da4tuA80b98i9u7Cj/PZ
 X-Received: from r2d2-qp.c.googlers.com
  ([fda3:e722:ac3:cc00:28:9cb1:c0a8:1652])
- (user=qperret job=sendgmr) by 2002:a0c:83a4:: with SMTP id
- k33mr3010478qva.1.1612361976798; Wed, 03 Feb 2021 06:19:36 -0800 (PST)
-Date: Wed,  3 Feb 2021 14:19:30 +0000
+ (user=qperret job=sendgmr) by 2002:a7b:c044:: with SMTP id
+ u4mr1036932wmc.1.1612361978973; Wed, 03 Feb 2021 06:19:38 -0800 (PST)
+Date: Wed,  3 Feb 2021 14:19:31 +0000
 In-Reply-To: <20210203141931.615898-1-qperret@google.com>
-Message-Id: <20210203141931.615898-2-qperret@google.com>
+Message-Id: <20210203141931.615898-3-qperret@google.com>
 Mime-Version: 1.0
 References: <20210203141931.615898-1-qperret@google.com>
 X-Mailer: git-send-email 2.30.0.365.g02bc693789-goog
-Subject: [PATCH 1/2] asm-generic: export: Stub EXPORT_SYMBOL with
- __DISABLE_EXPORTS
+Subject: [PATCH 2/2] KVM: arm64: Stub EXPORT_SYMBOL for nVHE EL2 code
 From: Quentin Perret <qperret@google.com>
 To: arnd@arndb.de, maz@kernel.org, catalin.marinas@arm.com, will@kernel.org
 Cc: linux-arch@vger.kernel.org, linux-kernel@vger.kernel.org,
@@ -93,33 +92,32 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-It is currently possible to stub EXPORT_SYMBOL() macros in C code using
-__DISABLE_EXPORTS, which is necessary to run in constrained environments
-such as the EFI stub or the decompressor. But this currently doesn't
-apply to exports from assembly, which can lead to somewhat confusing
-situations.
+In order to ensure the module loader does not get confused if a symbol
+is exported in EL2 nVHE code (as will be the case when we will compile
+e.g. lib/memset.S into the EL2 object), make sure to stub all exports
+using __DISABLE_EXPORTS in the nvhe folder.
 
-Consolidate the __DISABLE_EXPORTS infrastructure by checking it from
-asm-generic/export.h as well.
-
+Suggested-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Quentin Perret <qperret@google.com>
 ---
- include/asm-generic/export.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/hyp/nvhe/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/asm-generic/export.h b/include/asm-generic/export.h
-index 365345f9a9e3..07a36a874dca 100644
---- a/include/asm-generic/export.h
-+++ b/include/asm-generic/export.h
-@@ -33,7 +33,7 @@
-  */
+diff --git a/arch/arm64/kvm/hyp/nvhe/Makefile b/arch/arm64/kvm/hyp/nvhe/Makefile
+index 1f1e351c5fe2..c9c121c8d5de 100644
+--- a/arch/arm64/kvm/hyp/nvhe/Makefile
++++ b/arch/arm64/kvm/hyp/nvhe/Makefile
+@@ -3,8 +3,8 @@
+ # Makefile for Kernel-based Virtual Machine module, HYP/nVHE part
+ #
  
- .macro ___EXPORT_SYMBOL name,val,sec
--#ifdef CONFIG_MODULES
-+#if defined(CONFIG_MODULES) && !defined(__DISABLE_EXPORTS)
- 	.section ___ksymtab\sec+\name,"a"
- 	.balign KSYM_ALIGN
- __ksymtab_\name:
+-asflags-y := -D__KVM_NVHE_HYPERVISOR__
+-ccflags-y := -D__KVM_NVHE_HYPERVISOR__
++asflags-y := -D__KVM_NVHE_HYPERVISOR__ -D__DISABLE_EXPORTS
++ccflags-y := -D__KVM_NVHE_HYPERVISOR__ -D__DISABLE_EXPORTS
+ 
+ obj-y := timer-sr.o sysreg-sr.o debug-sr.o switch.o tlb.o hyp-init.o host.o \
+ 	 hyp-main.o hyp-smp.o psci-relay.o
 -- 
 2.30.0.365.g02bc693789-goog
 
