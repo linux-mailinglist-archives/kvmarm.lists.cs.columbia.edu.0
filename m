@@ -2,84 +2,63 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6187230F4E2
-	for <lists+kvmarm@lfdr.de>; Thu,  4 Feb 2021 15:26:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A514730F4F6
+	for <lists+kvmarm@lfdr.de>; Thu,  4 Feb 2021 15:31:23 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E42204B1D4;
-	Thu,  4 Feb 2021 09:26:42 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3C1954B25C;
+	Thu,  4 Feb 2021 09:31:23 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YyViuOgfE-b8; Thu,  4 Feb 2021 09:26:42 -0500 (EST)
+	with ESMTP id iS70-rtF02qn; Thu,  4 Feb 2021 09:31:23 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CB43B4B20E;
-	Thu,  4 Feb 2021 09:26:41 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E63974B258;
+	Thu,  4 Feb 2021 09:31:21 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9E4554B0F7
- for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Feb 2021 09:26:40 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 101F34B21C
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Feb 2021 09:31:20 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id mRhmvPb9DZAw for <kvmarm@lists.cs.columbia.edu>;
- Thu,  4 Feb 2021 09:26:39 -0500 (EST)
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com
- [209.85.128.52])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 81AE34B0D8
- for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Feb 2021 09:26:39 -0500 (EST)
-Received: by mail-wm1-f52.google.com with SMTP id l12so3300942wmq.2
- for <kvmarm@lists.cs.columbia.edu>; Thu, 04 Feb 2021 06:26:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=WHxuqsEXEN4au8FdhV49UEllGtCSQh/DCdcron9InCc=;
- b=Pg47DSWBlJxWDTyOy0uhMGzKVxdYFLXQWQS0K5+zxLWQojmzL5h6ffmzz8z8JphFg+
- GGQnNvn4zYaBYDPyC6oVULe1wxqtXA5XmivtJVmAw1gi3hAHI9cxbYJ8QeLjDxBqhN2z
- sfjDy3JiEEXoc6s37Q0mTdakrkoM5BHiSvuWBi3o11isnRp8muh/HasfGTLX1h7INMPE
- eu5FT15vPLlyQyL95luBYGKr7scOfYg8dDnnK/YcunKE0eaIWI/fCuGuv0YDlc808WV5
- I+uMW4rSIiz6w0P13aivINkdIWrIx32dUc9bZPEOpmtG5xjHFd+ejnKzad1gnP1Q9wvP
- 8ztg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=WHxuqsEXEN4au8FdhV49UEllGtCSQh/DCdcron9InCc=;
- b=tKvD0e+fzuSFazp3PMgXW0N0Seru2CyYPwI0j34SgxENPOk6Fm3lRZQjbg4PPGNa+r
- qCwt5iK6gxuwIV7//jK9FB/NTvRURaDGw0xT21RlMR/1cTTnv5NmAuuEOpuRVfDFBp7e
- LMRukdUAPJXnx0aVAXX3LURow8w6t2/xneR91gIYhazsDQJXYR1U6r4yzIESftwkIONh
- Newvuz8gARygAuRUx0VUXtUuaXjdvnYrKvI1fF/uAjAxlwfgbHpT290wunrDM9HqR0S/
- MZA0JBooF4i2ntzPptqQoYePABFx0g/z73BirvtK6n7+ZZtzooUTtHU2PKxz4goDeQV2
- he2A==
-X-Gm-Message-State: AOAM530P0FeYgF7uN1B/7ziENLuwq8Ewt2ovfbao2K4qRMbx+qFmDtYf
- 5hbO4RjqCTrroGtdtdFJR/i5WA==
-X-Google-Smtp-Source: ABdhPJz8JyfdFBQ/Eq1UMUYtaCSGJYG+KqzKASSPlnHSKDldVsKHnk3I1lXTriVT3KNvdGryo6FBXw==
-X-Received: by 2002:a05:600c:4f13:: with SMTP id
- l19mr7619926wmq.70.1612448798327; 
- Thu, 04 Feb 2021 06:26:38 -0800 (PST)
-Received: from google.com (230.69.233.35.bc.googleusercontent.com.
- [35.233.69.230])
- by smtp.gmail.com with ESMTPSA id u3sm9286516wre.54.2021.02.04.06.26.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Feb 2021 06:26:37 -0800 (PST)
-Date: Thu, 4 Feb 2021 14:26:35 +0000
-From: Quentin Perret <qperret@google.com>
-To: Will Deacon <will@kernel.org>
-Subject: Re: [RFC PATCH v2 26/26] KVM: arm64: Wrap the host with a stage 2
-Message-ID: <YBwEGx1tv8hob9ho@google.com>
+ with ESMTP id 05HlYGf9GmEo for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  4 Feb 2021 09:31:15 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1306D4B1FE
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Feb 2021 09:31:15 -0500 (EST)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 5F6F564DDD;
+ Thu,  4 Feb 2021 14:31:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1612449074;
+ bh=Q3tSj3k5RgYOiGbv7iOvJxUQ4L1+b07VOWx7Yec4fvs=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=aDwGuOreW092lBC4s22o/u/Ou7dzP5kXPOcjuc/uEmPD0+dKb01WWUDchmpaYgf+l
+ ucvAb+KoWg19k6IB4/71zGDBzCLu065P9vDjbJiYRccdPp3C+Wb2ylir8ejqoAtU0E
+ 8B29egoR1qiIUCUuJxZv/2JNmH2mnSKtF3OKV2L5AlYp1PZAiCtgFd+B6qtSAjNLQa
+ wHzG8rydoLlYFfSZ+puE/2qfx0ihpVkDYX1VbIieI7rIETSjhYZxmLIXdjqa71xIxe
+ /7ErNUVL2gN24XCOsmJUik9XTtOhKJsZ/1RylLAZPsS13KbJ4o2y1lX030Igy78GyE
+ +GxQ0S/63GbGg==
+Date: Thu, 4 Feb 2021 14:31:08 +0000
+From: Will Deacon <will@kernel.org>
+To: Quentin Perret <qperret@google.com>
+Subject: Re: [RFC PATCH v2 12/26] KVM: arm64: Introduce a Hyp buddy page
+ allocator
+Message-ID: <20210204143106.GA20792@willie-the-truck>
 References: <20210108121524.656872-1-qperret@google.com>
- <20210108121524.656872-27-qperret@google.com>
- <20210203161146.GJ18974@willie-the-truck>
+ <20210108121524.656872-13-qperret@google.com>
+ <20210202181307.GA17311@willie-the-truck>
+ <YBrsep4xK1F4YRWb@google.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20210203161146.GJ18974@willie-the-truck>
+In-Reply-To: <YBrsep4xK1F4YRWb@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Cc: devicetree@vger.kernel.org, kernel-team@android.com, android-kvm@google.com,
  Catalin Marinas <catalin.marinas@arm.com>, Fuad Tabba <tabba@google.com>,
  linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
@@ -101,55 +80,81 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wednesday 03 Feb 2021 at 16:11:47 (+0000), Will Deacon wrote:
-> On Fri, Jan 08, 2021 at 12:15:24PM +0000, Quentin Perret wrote:
-> > When KVM runs in protected nVHE mode, make use of a stage 2 page-table
-> > to give the hypervisor some control over the host memory accesses. At
-> > the moment all memory aborts from the host will be instantly idmapped
-> > RWX at stage 2 in a lazy fashion. Later patches will make use of that
-> > infrastructure to implement access control restrictions to e.g. protect
-> > guest memory from the host.
+On Wed, Feb 03, 2021 at 06:33:30PM +0000, Quentin Perret wrote:
+> On Tuesday 02 Feb 2021 at 18:13:08 (+0000), Will Deacon wrote:
+> > On Fri, Jan 08, 2021 at 12:15:10PM +0000, Quentin Perret wrote:
+> > > + *   __find_buddy(pool, page 0, order 0) => page 1
+> > > + *   __find_buddy(pool, page 0, order 1) => page 2
+> > > + *   __find_buddy(pool, page 1, order 0) => page 0
+> > > + *   __find_buddy(pool, page 2, order 0) => page 3
+> > > + */
+> > > +static struct hyp_page *__find_buddy(struct hyp_pool *pool, struct hyp_page *p,
+> > > +				     unsigned int order)
+> > > +{
+> > > +	phys_addr_t addr = hyp_page_to_phys(p);
+> > > +
+> > > +	addr ^= (PAGE_SIZE << order);
+> > > +	if (addr < pool->range_start || addr >= pool->range_end)
+> > > +		return NULL;
 > > 
-> > Signed-off-by: Quentin Perret <qperret@google.com>
-> > ---
-> >  arch/arm64/include/asm/kvm_cpufeature.h       |   2 +
-> >  arch/arm64/kernel/image-vars.h                |   3 +
-> >  arch/arm64/kvm/hyp/include/nvhe/mem_protect.h |  33 +++
-> >  arch/arm64/kvm/hyp/nvhe/Makefile              |   2 +-
-> >  arch/arm64/kvm/hyp/nvhe/hyp-init.S            |   1 +
-> >  arch/arm64/kvm/hyp/nvhe/hyp-main.c            |   6 +
-> >  arch/arm64/kvm/hyp/nvhe/mem_protect.c         | 191 ++++++++++++++++++
-> >  arch/arm64/kvm/hyp/nvhe/setup.c               |   6 +
-> >  arch/arm64/kvm/hyp/nvhe/switch.c              |   7 +-
-> >  arch/arm64/kvm/hyp/nvhe/tlb.c                 |   4 +-
-> >  10 files changed, 248 insertions(+), 7 deletions(-)
-> >  create mode 100644 arch/arm64/kvm/hyp/include/nvhe/mem_protect.h
-> >  create mode 100644 arch/arm64/kvm/hyp/nvhe/mem_protect.c
+> > Are these range checks only needed because the pool isn't required to be
+> > an exact power-of-2 pages in size? If so, maybe it would be more
+> > straightforward to limit the max order on a per-pool basis depending upon
+> > its size?
 > 
-> [...]
-> 
-> > +void handle_host_mem_abort(struct kvm_cpu_context *host_ctxt)
-> > +{
-> > +	enum kvm_pgtable_prot prot;
-> > +	u64 far, hpfar, esr, ipa;
-> > +	int ret;
-> > +
-> > +	esr = read_sysreg_el2(SYS_ESR);
-> > +	if (!__get_fault_info(esr, &far, &hpfar))
-> > +		hyp_panic();
-> > +
-> > +	prot = KVM_PGTABLE_PROT_R | KVM_PGTABLE_PROT_W | KVM_PGTABLE_PROT_X;
-> > +	ipa = (hpfar & HPFAR_MASK) << 8;
-> > +	ret = host_stage2_map(ipa, PAGE_SIZE, prot);
-> 
-> Can we try to put down a block mapping if the whole thing falls within
-> memory?
+> More importantly, it is because pages outside of the pool are not
+> guaranteed to be covered by the hyp_vmemmap, so I really need to make
+> sure I don't dereference them.
 
-Yes we can! And in fact we can do that outside of memory too. It's
-queued for v3 already, so stay tuned ... :)
+Wouldn't having a per-pool max order help with that?
 
-Thanks,
-Quentin
+> > > +	return hyp_phys_to_page(addr);
+> > > +}
+> > > +
+> > > +static void __hyp_attach_page(struct hyp_pool *pool,
+> > > +			      struct hyp_page *p)
+> > > +{
+> > > +	unsigned int order = p->order;
+> > > +	struct hyp_page *buddy;
+> > > +
+> > > +	p->order = HYP_NO_ORDER;
+> > 
+> > Why is this needed?
+> 
+> If p->order is say 3, I may be able to coalesce with the buddy of order
+> 3 to form a higher order page of order 4. And that higher order page
+> will be represented by the 'first' of the two order-3 pages (let's call
+> it the head), and the other order 3 page (let's say the tail) will be
+> assigned 'HYP_NO_ORDER'.
+> 
+> And basically at this point I don't know if 'p' is going be the head or
+> the tail, so I set it to HYP_NO_ORDER a priori so I don't have to think
+> about this in the loop below. Is that helping?
+> 
+> I suppose this could use more comments as well ...
+
+Comments would definitely help, but perhaps even having a simple function to
+do the coalescing, which you could call from the loop body and which would
+deal with marking the tail pages as HYP_NO_ORDER?
+
+> > > +	for (; order < HYP_MAX_ORDER; order++) {
+> > > +		/* Nothing to do if the buddy isn't in a free-list */
+> > > +		buddy = __find_buddy(pool, p, order);
+> > > +		if (!buddy || list_empty(&buddy->node) || buddy->order != order)
+> > 
+> > Could we move the "buddy->order" check into __find_buddy()?
+> 
+> I think might break __hyp_extract_page() below. The way I think about
+> __find_buddy() is as a low level function which gives you the buddy page
+> blindly if it exists in the hyp_vmemmap, and it's up to the callers to
+> decide whether the buddy is in the right state for their use or not.
+
+Just feels a bit backwards having __find_buddy() take an order parameter,
+yet then return a page of the wrong order! __hyp_extract_page() always
+passes the p->order as the order, so I think it would be worth having a
+separate function that just takes the pool and the page for that.
+
+Will
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
