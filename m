@@ -2,85 +2,60 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id EF9513107BA
-	for <lists+kvmarm@lfdr.de>; Fri,  5 Feb 2021 10:26:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F050031075C
+	for <lists+kvmarm@lfdr.de>; Fri,  5 Feb 2021 10:10:57 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3B2344B3BA;
-	Fri,  5 Feb 2021 04:26:18 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 663E44B39C;
+	Fri,  5 Feb 2021 04:10:57 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@chromium.org
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id aUw5vD3FK9-G; Fri,  5 Feb 2021 04:26:17 -0500 (EST)
+	with ESMTP id vURmPlHbQZ6n; Fri,  5 Feb 2021 04:10:57 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 006E54B398;
-	Fri,  5 Feb 2021 04:26:15 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DC6644B37B;
+	Fri,  5 Feb 2021 04:10:55 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9264F4B309
- for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Feb 2021 00:58:51 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EDA5F4B35C
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Feb 2021 04:10:54 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 0bMegk3tEyjZ for <kvmarm@lists.cs.columbia.edu>;
- Fri,  5 Feb 2021 00:58:50 -0500 (EST)
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com
- [209.85.222.180])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 58CE94B2C8
- for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Feb 2021 00:58:50 -0500 (EST)
-Received: by mail-qk1-f180.google.com with SMTP id u20so5886996qku.7
- for <kvmarm@lists.cs.columbia.edu>; Thu, 04 Feb 2021 21:58:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chromium.org; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=SZ0GQLJipF2hQIt0oYg/b3YND75QYohdSOPgCgGvmtI=;
- b=oPGsTQx7+FdG6LRGl1TD3o+RbriHfudMdPEUWdoVcGtiFVzJyADmDY4/qjjG1+UIcy
- wjKL99cqQfoIL+mWKhEojF7j3xy7b/FwNrgzFcnaC4VE2BI5tBDFbEYcfnximoQpd7Bo
- foetOy+pvkseCt44S1+fCOI+yg3iGoGzvmkUU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=SZ0GQLJipF2hQIt0oYg/b3YND75QYohdSOPgCgGvmtI=;
- b=QA0qJ3a9sOcjZLdDyhykimHdHLXeDastX7xU4T41GjjJNPniE9awu/33myfq3DKI+b
- PEyTsOlR+kRKDLbib/VWnsGZkBQpzll2KA/tr18P66W8ySyk6IrMrKmNx833EFYBi832
- tqQOW0K4kjMoV4BvK3oTpoZRQE39W7zK3UExuV1v0Nk2/hn0B3QNv9md8mbGEAZCHB43
- VdKK5mp+x+8lvnyLnEGm415OqwzbU0+XDLqhTCtEz+MF3UFR2tDhCsxjfuL8ldZzsyaA
- tkeKfFCmXi5uMB5xBd183tROyMLC1HnGJxsUp9iEmWQ7bs9t8rTDYY3R7D3B7ymZvqtu
- dNzQ==
-X-Gm-Message-State: AOAM531vNKiAUe5+WUKK+Sc0CRkbAXpVSFTtuLV/NOlhjHK8obxInHGw
- IZRwe780VdxAF5n2P1hCkxuQdCdLL5x8iRP0EfZrHQ==
-X-Google-Smtp-Source: ABdhPJwYA73lftjBriOP+37YGUdH+MFOawlYakwpkyiHcFfBQsl9Chfbewfaer8b9y41czh2lCGjkNZ6cshLgPPsL0I=
-X-Received: by 2002:a37:73c3:: with SMTP id o186mr2728785qkc.194.1612504730031; 
- Thu, 04 Feb 2021 21:58:50 -0800 (PST)
+ with ESMTP id uZGFn5m+PvMV for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  5 Feb 2021 04:10:53 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 60B3A4B366
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Feb 2021 04:10:53 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8964731B;
+ Fri,  5 Feb 2021 01:10:52 -0800 (PST)
+Received: from [192.168.1.179] (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CC14D3F73B;
+ Fri,  5 Feb 2021 01:10:48 -0800 (PST)
+Subject: Re: [PATCH v17 1/7] arm/arm64: Probe for the presence of KVM
+ hypervisor
+To: Marc Zyngier <maz@kernel.org>, netdev@vger.kernel.org, yangbo.lu@nxp.com, 
+ john.stultz@linaro.org, tglx@linutronix.de, pbonzini@redhat.com,
+ seanjc@google.com, richardcochran@gmail.com, Mark.Rutland@arm.com,
+ will@kernel.org, suzuki.poulose@arm.com, Andre.Przywara@arm.com
+References: <20210202141204.3134855-1-maz@kernel.org>
+ <20210202141204.3134855-2-maz@kernel.org>
+From: Steven Price <steven.price@arm.com>
+Message-ID: <d5765ade-7199-2d1e-6d59-d3de6a52c6ce@arm.com>
+Date: Fri, 5 Feb 2021 09:11:00 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-References: <20210128060515.1732758-1-stevensd@google.com>
- <c01b01dc-c636-1d1b-fb42-df718e23d20a@redhat.com>
-In-Reply-To: <c01b01dc-c636-1d1b-fb42-df718e23d20a@redhat.com>
-From: David Stevens <stevensd@chromium.org>
-Date: Fri, 5 Feb 2021 14:58:38 +0900
-Message-ID: <CAD=HUj5sKKnckSqBjjR8paGegLfSujk03C5uDwzfh=PAaj5BZA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] KVM: x86/mmu: Skip mmu_notifier changes when
- possible
-To: Paolo Bonzini <pbonzini@redhat.com>
-X-Mailman-Approved-At: Fri, 05 Feb 2021 04:26:13 -0500
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- David Hildenbrand <david@redhat.com>, David Stevens <stevensd@google.com>,
- linux-mips@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
- Claudio Imbrenda <imbrenda@linux.ibm.com>, kvmarm@lists.cs.columbia.edu,
- Janosch Frank <frankja@linux.ibm.com>, Marc Zyngier <maz@kernel.org>,
- Joerg Roedel <joro@8bytes.org>, Huacai Chen <chenhuacai@kernel.org>,
- Christian Borntraeger <borntraeger@de.ibm.com>,
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>, kvm-ppc@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
- Sean Christopherson <seanjc@google.com>, Cornelia Huck <cohuck@redhat.com>,
- open list <linux-kernel@vger.kernel.org>,
- Vitaly Kuznetsov <vkuznets@redhat.com>
+In-Reply-To: <20210202141204.3134855-2-maz@kernel.org>
+Content-Language: en-GB
+Cc: justin.he@arm.com, kvm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ kernel-team@android.com, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -92,48 +67,219 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-These patches might be responsible for some instability in one of our
-stress tests. I'll send an update once I figure out what's going on.
+On 02/02/2021 14:11, Marc Zyngier wrote:
+> From: Will Deacon <will@kernel.org>
+> 
+> Although the SMCCC specification provides some limited functionality for
+> describing the presence of hypervisor and firmware services, this is
+> generally applicable only to functions designated as "Arm Architecture
+> Service Functions" and no portable discovery mechanism is provided for
+> standard hypervisor services, despite having a designated range of
+> function identifiers reserved by the specification.
+> 
+> In an attempt to avoid the need for additional firmware changes every
+> time a new function is added, introduce a UID to identify the service
+> provider as being compatible with KVM. Once this has been established,
+> additional services can be discovered via a feature bitmap.
+> 
+> Signed-off-by: Will Deacon <will@kernel.org>
+> Signed-off-by: Jianyong Wu <jianyong.wu@arm.com>
+> [maz: move code to its own file, plug it into PSCI]
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
+> Link: https://lore.kernel.org/r/20201209060932.212364-2-jianyong.wu@arm.com
+> ---
+>   arch/arm/include/asm/hypervisor.h   |  3 ++
+>   arch/arm64/include/asm/hypervisor.h |  3 ++
+>   drivers/firmware/psci/psci.c        |  2 ++
+>   drivers/firmware/smccc/Makefile     |  2 +-
+>   drivers/firmware/smccc/kvm_guest.c  | 51 +++++++++++++++++++++++++++++
+>   drivers/firmware/smccc/smccc.c      |  1 +
+>   include/linux/arm-smccc.h           | 25 ++++++++++++++
+>   7 files changed, 86 insertions(+), 1 deletion(-)
+>   create mode 100644 drivers/firmware/smccc/kvm_guest.c
+> 
+> diff --git a/arch/arm/include/asm/hypervisor.h b/arch/arm/include/asm/hypervisor.h
+> index df8524365637..bd61502b9715 100644
+> --- a/arch/arm/include/asm/hypervisor.h
+> +++ b/arch/arm/include/asm/hypervisor.h
+> @@ -4,4 +4,7 @@
+>   
+>   #include <asm/xen/hypervisor.h>
+>   
+> +void kvm_init_hyp_services(void);
+> +bool kvm_arm_hyp_service_available(u32 func_id);
+> +
+>   #endif
+> diff --git a/arch/arm64/include/asm/hypervisor.h b/arch/arm64/include/asm/hypervisor.h
+> index f9cc1d021791..0ae427f352c8 100644
+> --- a/arch/arm64/include/asm/hypervisor.h
+> +++ b/arch/arm64/include/asm/hypervisor.h
+> @@ -4,4 +4,7 @@
+>   
+>   #include <asm/xen/hypervisor.h>
+>   
+> +void kvm_init_hyp_services(void);
+> +bool kvm_arm_hyp_service_available(u32 func_id);
+> +
+>   #endif
+> diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+> index f5fc429cae3f..69e296f02902 100644
+> --- a/drivers/firmware/psci/psci.c
+> +++ b/drivers/firmware/psci/psci.c
+> @@ -23,6 +23,7 @@
+>   
+>   #include <asm/cpuidle.h>
+>   #include <asm/cputype.h>
+> +#include <asm/hypervisor.h>
+>   #include <asm/system_misc.h>
+>   #include <asm/smp_plat.h>
+>   #include <asm/suspend.h>
+> @@ -498,6 +499,7 @@ static int __init psci_probe(void)
+>   		psci_init_cpu_suspend();
+>   		psci_init_system_suspend();
+>   		psci_init_system_reset2();
+> +		kvm_init_hyp_services();
+>   	}
+>   
+>   	return 0;
+> diff --git a/drivers/firmware/smccc/Makefile b/drivers/firmware/smccc/Makefile
+> index 72ab84042832..40d19144a860 100644
+> --- a/drivers/firmware/smccc/Makefile
+> +++ b/drivers/firmware/smccc/Makefile
+> @@ -1,4 +1,4 @@
+>   # SPDX-License-Identifier: GPL-2.0
+>   #
+> -obj-$(CONFIG_HAVE_ARM_SMCCC_DISCOVERY)	+= smccc.o
+> +obj-$(CONFIG_HAVE_ARM_SMCCC_DISCOVERY)	+= smccc.o kvm_guest.o
+>   obj-$(CONFIG_ARM_SMCCC_SOC_ID)	+= soc_id.o
+> diff --git a/drivers/firmware/smccc/kvm_guest.c b/drivers/firmware/smccc/kvm_guest.c
+> new file mode 100644
+> index 000000000000..23ce1ded88b4
+> --- /dev/null
+> +++ b/drivers/firmware/smccc/kvm_guest.c
+> @@ -0,0 +1,51 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +
+> +#define pr_fmt(fmt) "smccc: KVM: " fmt
+> +
+> +#include <linux/init.h>
+> +#include <linux/arm-smccc.h>
+> +#include <linux/kernel.h>
+> +#include <linux/string.h>
+> +
+> +static DECLARE_BITMAP(__kvm_arm_hyp_services, ARM_SMCCC_KVM_NUM_FUNCS) __ro_after_init = { };
+> +
+> +void __init kvm_init_hyp_services(void)
+> +{
+> +	int i;
+> +	struct arm_smccc_res res;
+> +
+> +	if (arm_smccc_1_1_get_conduit() != SMCCC_CONDUIT_HVC)
+> +		return;
+> +
+> +	arm_smccc_1_1_invoke(ARM_SMCCC_VENDOR_HYP_CALL_UID_FUNC_ID, &res);
+> +	if (res.a0 != ARM_SMCCC_VENDOR_HYP_UID_KVM_REG_0 ||
+> +	    res.a1 != ARM_SMCCC_VENDOR_HYP_UID_KVM_REG_1 ||
+> +	    res.a2 != ARM_SMCCC_VENDOR_HYP_UID_KVM_REG_2 ||
+> +	    res.a3 != ARM_SMCCC_VENDOR_HYP_UID_KVM_REG_3)
+> +		return;
+> +
+> +	memset(&res, 0, sizeof(res));
+> +	arm_smccc_1_1_invoke(ARM_SMCCC_VENDOR_HYP_KVM_FEATURES_FUNC_ID, &res);
+> +	for (i = 0; i < 32; ++i) {
+> +		if (res.a0 & (i))
+> +			set_bit(i + (32 * 0), __kvm_arm_hyp_services);
+> +		if (res.a1 & (i))
+> +			set_bit(i + (32 * 1), __kvm_arm_hyp_services);
+> +		if (res.a2 & (i))
+> +			set_bit(i + (32 * 2), __kvm_arm_hyp_services);
+> +		if (res.a3 & (i))
+> +			set_bit(i + (32 * 3), __kvm_arm_hyp_services);
 
-Thanks,
-David
+The bit shifts are missing, the tests should be of the form:
 
-On Thu, Jan 28, 2021 at 9:48 PM Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> On 28/01/21 07:05, David Stevens wrote:
-> > These patches reduce how often mmu_notifier updates block guest page
-> > faults. The primary benefit of this is the reduction in the likelihood
-> > of extreme latency when handling a page fault due to another thread
-> > having been preempted while modifying host virtual addresses.
-> >
-> > v2 -> v3:
-> >   - Added patch to skip check for MMIO page faults
-> >   - Style changes
-> >
-> > David Stevens (1):
-> >    KVM: x86/mmu: Consider the hva in mmu_notifier retry
-> >
-> > Sean Christopherson (1):
-> >    KVM: x86/mmu: Skip mmu_notifier check when handling MMIO page fault
-> >
-> >   arch/powerpc/kvm/book3s_64_mmu_hv.c    |  2 +-
-> >   arch/powerpc/kvm/book3s_64_mmu_radix.c |  2 +-
-> >   arch/x86/kvm/mmu/mmu.c                 | 16 ++++++++------
-> >   arch/x86/kvm/mmu/paging_tmpl.h         |  7 ++++---
-> >   include/linux/kvm_host.h               | 25 +++++++++++++++++++++-
-> >   virt/kvm/kvm_main.c                    | 29 ++++++++++++++++++++++----
-> >   6 files changed, 65 insertions(+), 16 deletions(-)
-> >
->
-> Queued, thanks.
->
-> Paolo
->
+	if (res.a0 & (1 << i))
+
+Or indeed using a BIT() macro.
+
+Steve
+
+> +	}
+> +
+> +	pr_info("hypervisor services detected (0x%08lx 0x%08lx 0x%08lx 0x%08lx)\n",
+> +		 res.a3, res.a2, res.a1, res.a0);
+> +}
+> +
+> +bool kvm_arm_hyp_service_available(u32 func_id)
+> +{
+> +	if (func_id >= ARM_SMCCC_KVM_NUM_FUNCS)
+> +		return -EINVAL;
+> +
+> +	return test_bit(func_id, __kvm_arm_hyp_services);
+> +}
+> +EXPORT_SYMBOL_GPL(kvm_arm_hyp_service_available);
+> diff --git a/drivers/firmware/smccc/smccc.c b/drivers/firmware/smccc/smccc.c
+> index 00c88b809c0c..94eca6ffda05 100644
+> --- a/drivers/firmware/smccc/smccc.c
+> +++ b/drivers/firmware/smccc/smccc.c
+> @@ -7,6 +7,7 @@
+>   
+>   #include <linux/init.h>
+>   #include <linux/arm-smccc.h>
+> +#include <linux/kernel.h>
+>   
+>   static u32 smccc_version = ARM_SMCCC_VERSION_1_0;
+>   static enum arm_smccc_conduit smccc_conduit = SMCCC_CONDUIT_NONE;
+> diff --git a/include/linux/arm-smccc.h b/include/linux/arm-smccc.h
+> index f860645f6512..74e90b65b489 100644
+> --- a/include/linux/arm-smccc.h
+> +++ b/include/linux/arm-smccc.h
+> @@ -55,6 +55,8 @@
+>   #define ARM_SMCCC_OWNER_TRUSTED_OS	50
+>   #define ARM_SMCCC_OWNER_TRUSTED_OS_END	63
+>   
+> +#define ARM_SMCCC_FUNC_QUERY_CALL_UID  0xff01
+> +
+>   #define ARM_SMCCC_QUIRK_NONE		0
+>   #define ARM_SMCCC_QUIRK_QCOM_A6		1 /* Save/restore register a6 */
+>   
+> @@ -87,6 +89,29 @@
+>   			   ARM_SMCCC_SMC_32,				\
+>   			   0, 0x7fff)
+>   
+> +#define ARM_SMCCC_VENDOR_HYP_CALL_UID_FUNC_ID				\
+> +	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,				\
+> +			   ARM_SMCCC_SMC_32,				\
+> +			   ARM_SMCCC_OWNER_VENDOR_HYP,			\
+> +			   ARM_SMCCC_FUNC_QUERY_CALL_UID)
+> +
+> +/* KVM UID value: 28b46fb6-2ec5-11e9-a9ca-4b564d003a74 */
+> +#define ARM_SMCCC_VENDOR_HYP_UID_KVM_REG_0	0xb66fb428U
+> +#define ARM_SMCCC_VENDOR_HYP_UID_KVM_REG_1	0xe911c52eU
+> +#define ARM_SMCCC_VENDOR_HYP_UID_KVM_REG_2	0x564bcaa9U
+> +#define ARM_SMCCC_VENDOR_HYP_UID_KVM_REG_3	0x743a004dU
+> +
+> +/* KVM "vendor specific" services */
+> +#define ARM_SMCCC_KVM_FUNC_FEATURES		0
+> +#define ARM_SMCCC_KVM_FUNC_FEATURES_2		127
+> +#define ARM_SMCCC_KVM_NUM_FUNCS			128
+> +
+> +#define ARM_SMCCC_VENDOR_HYP_KVM_FEATURES_FUNC_ID			\
+> +	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,				\
+> +			   ARM_SMCCC_SMC_32,				\
+> +			   ARM_SMCCC_OWNER_VENDOR_HYP,			\
+> +			   ARM_SMCCC_KVM_FUNC_FEATURES)
+> +
+>   #define SMCCC_ARCH_WORKAROUND_RET_UNAFFECTED	1
+>   
+>   /* Paravirtualised time calls (defined by ARM DEN0057A) */
+> 
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
