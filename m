@@ -2,73 +2,65 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 568F8310C6E
-	for <lists+kvmarm@lfdr.de>; Fri,  5 Feb 2021 15:04:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3AD4C310DA2
+	for <lists+kvmarm@lfdr.de>; Fri,  5 Feb 2021 17:11:16 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C61BB4B3F5;
-	Fri,  5 Feb 2021 09:04:36 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 674714B420;
+	Fri,  5 Feb 2021 11:11:15 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1nTZq9rvClyb; Fri,  5 Feb 2021 09:04:36 -0500 (EST)
+	with ESMTP id bsiuskASLAir; Fri,  5 Feb 2021 11:11:15 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 673914B3D9;
-	Fri,  5 Feb 2021 09:04:35 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C810E4B41F;
+	Fri,  5 Feb 2021 11:11:13 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E41FC4B36D
- for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Feb 2021 09:04:33 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C785D4B41A
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Feb 2021 11:11:12 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id VQvO9zXCpVgY for <kvmarm@lists.cs.columbia.edu>;
- Fri,  5 Feb 2021 09:04:32 -0500 (EST)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 994984B2B8
- for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Feb 2021 09:04:32 -0500 (EST)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 37A8D64FCB;
- Fri,  5 Feb 2021 14:04:31 +0000 (UTC)
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1l81in-00CHIk-17; Fri, 05 Feb 2021 14:04:29 +0000
+ with ESMTP id BSSWpraNrtJt for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  5 Feb 2021 11:11:11 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 169BC4B3CA
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Feb 2021 11:11:11 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8AD8431B;
+ Fri,  5 Feb 2021 08:11:10 -0800 (PST)
+Received: from [10.57.49.26] (unknown [10.57.49.26])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 60A403F719;
+ Fri,  5 Feb 2021 08:11:07 -0800 (PST)
+Subject: Re: [RFC PATCH 01/11] iommu/arm-smmu-v3: Add feature detection for
+ HTTU
+From: Robin Murphy <robin.murphy@arm.com>
+To: Keqian Zhu <zhukeqian1@huawei.com>, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu, iommu@lists.linux-foundation.org,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>
+References: <20210128151742.18840-1-zhukeqian1@huawei.com>
+ <20210128151742.18840-2-zhukeqian1@huawei.com>
+ <f8be5718-d4d9-0565-eaf0-b5a128897d15@arm.com>
+ <df1b8fb2-b853-e797-0072-9dbdffc4ff67@huawei.com>
+ <5ada4a8b-8852-f83c-040a-9ef5dac51de2@arm.com>
+Message-ID: <94375ed6-1e25-b592-8bb0-e433e7a09b4c@arm.com>
+Date: Fri, 5 Feb 2021 16:11:06 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
 MIME-Version: 1.0
-Date: Fri, 05 Feb 2021 14:04:28 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: Hector Martin 'marcan' <marcan@marcan.st>
-Subject: Re: [PATCH v6 05/21] arm64: Initialise as nVHE before switching to VHE
-In-Reply-To: <1dbffcd4-5b20-404c-94af-c985a96785e2@marcan.st>
-References: <20210201115637.3123740-1-maz@kernel.org>
- <20210201115637.3123740-6-maz@kernel.org>
- <1dbffcd4-5b20-404c-94af-c985a96785e2@marcan.st>
-User-Agent: Roundcube Webmail/1.4.10
-Message-ID: <2f93bbfa7159f135252c6df870a652cc@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: marcan@marcan.st, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org,
- mark.rutland@arm.com, jingzhangos@google.com, psodagud@codeaurora.org,
- sramana@codeaurora.org, suzuki.poulose@arm.com, catalin.marinas@arm.com,
- alexandru.elisei@arm.com, james.morse@arm.com, pajay@qti.qualcomm.com,
- kernel-team@android.com, dbrazdil@google.com, will@kernel.org, ardb@kernel.org,
- julien.thierry.kdev@gmail.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com, Srinivas Ramana <sramana@codeaurora.org>,
- Catalin Marinas <catalin.marinas@arm.com>, linux-kernel@vger.kernel.org,
- Ard Biesheuvel <ardb@kernel.org>, Will Deacon <will@kernel.org>,
- Ajay Patil <pajay@qti.qualcomm.com>, Prasad Sodagudi <psodagud@codeaurora.org>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+In-Reply-To: <5ada4a8b-8852-f83c-040a-9ef5dac51de2@arm.com>
+Content-Language: en-GB
+Cc: "Tian, Kevin" <kevin.tian@intel.com>, Marc Zyngier <maz@kernel.org>,
+ Cornelia Huck <cohuck@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>, lushenming@huawei.com,
+ Kirti Wankhede <kwankhede@nvidia.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -80,169 +72,164 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Hector,
-
-On 2021-02-05 12:01, Hector Martin 'marcan' wrote:
-> On 01/02/2021 20.56, Marc Zyngier wrote:
->> As we are aiming to be able to control whether we enable VHE or
->> not, let's always drop down to EL1 first, and only then upgrade
->> to VHE if at all possible.
->> 
->> This means that if the kernel is booted at EL2, we always start
->> with a nVHE init, drop to EL1 to initialise the the kernel, and
->> only then upgrade the kernel EL to EL2 if possible (the process
->> is obviously shortened for secondary CPUs).
-> 
-> Unfortunately, this is going to break on Apple SoCs, where it turns
-> out HCR_EL2.E2H is hard-wired to 1 - there is no nVHE mode. :(
-
-#facepalm
-
-Thanks for the heads up. That's a blatant violation of the architecture,
-as the only fixed value allowed is 0. I guess it was tempting for them
-to ignore about half of the architecture... Oh well.
-
-Here's a terrible hack on top of this series. It really doesn't
-play nicely with the rest of the override stuff, but that's the
-least of your worries at this stage. I've boot-tested it in a model
-with E2H artificially forced, and nothing caught fire. YMMV.
-
-It also means that if/when we merge the support for this CPU,
-CONFIG_ARM64_VHE will becomes more or less mandatory...
-
-Please let me know if this helps.
-
-Thanks,
-
-         M.
-
-diff --git a/arch/arm64/kernel/head.S b/arch/arm64/kernel/head.S
-index 2e116ef255e1..bce66d6bda74 100644
---- a/arch/arm64/kernel/head.S
-+++ b/arch/arm64/kernel/head.S
-@@ -477,14 +477,13 @@ EXPORT_SYMBOL(kimage_vaddr)
-   * booted in EL1 or EL2 respectively.
-   */
-  SYM_FUNC_START(init_kernel_el)
--	mov_q	x0, INIT_SCTLR_EL1_MMU_OFF
--	msr	sctlr_el1, x0
--
-  	mrs	x0, CurrentEL
-  	cmp	x0, #CurrentEL_EL2
-  	b.eq	init_el2
-
-  SYM_INNER_LABEL(init_el1, SYM_L_LOCAL)
-+	mov_q	x0, INIT_SCTLR_EL1_MMU_OFF
-+	msr	sctlr_el1, x0
-  	isb
-  	mov_q	x0, INIT_PSTATE_EL1
-  	msr	spsr_el1, x0
-@@ -504,6 +503,34 @@ SYM_INNER_LABEL(init_el2, SYM_L_LOCAL)
-  	msr	vbar_el2, x0
-  	isb
-
-+	/*
-+	 * Fruity CPUs seem to have HCR_EL2.E2H set to RES1,
-+	 * making it impossible to start in nVHE mode. Is that
-+	 * compliant with the architecture? Absolutely not!
-+	 */
-+	mrs	x0, hcr_el2
-+	and	x0, x0, #HCR_E2H
-+	cbz	x0, 1f
-+
-+	/* Switching to VHE requires a sane SCTLR_EL1 as a start */
-+	mov_q	x0, INIT_SCTLR_EL1_MMU_OFF
-+	msr_s	SYS_SCTLR_EL12, x0
-+
-+	/*
-+	 * Force an eret into a helper "function", and let it return
-+	 * to our original caller... This makes sure that we have
-+	 * initialised the basic PSTATE state.
-+	 */
-+	mov	x0, #INIT_PSTATE_EL2
-+	msr	spsr_el1, x0
-+	adr_l	x0, stick_to_vhe
-+	msr	elr_el1, x0
-+	eret
-+
-+1:
-+	mov_q	x0, INIT_SCTLR_EL1_MMU_OFF
-+	msr	sctlr_el1, x0
-+
-  	msr	elr_el2, lr
-  	mov	w0, #BOOT_CPU_MODE_EL2
-  	eret
-diff --git a/arch/arm64/kernel/hyp-stub.S b/arch/arm64/kernel/hyp-stub.S
-index 3e08dcc924b5..109a555a1068 100644
---- a/arch/arm64/kernel/hyp-stub.S
-+++ b/arch/arm64/kernel/hyp-stub.S
-@@ -27,12 +27,12 @@ SYM_CODE_START(__hyp_stub_vectors)
-  	ventry	el2_fiq_invalid			// FIQ EL2t
-  	ventry	el2_error_invalid		// Error EL2t
-
--	ventry	el2_sync_invalid		// Synchronous EL2h
-+	ventry	elx_sync			// Synchronous EL2h
-  	ventry	el2_irq_invalid			// IRQ EL2h
-  	ventry	el2_fiq_invalid			// FIQ EL2h
-  	ventry	el2_error_invalid		// Error EL2h
-
--	ventry	el1_sync			// Synchronous 64-bit EL1
-+	ventry	elx_sync			// Synchronous 64-bit EL1
-  	ventry	el1_irq_invalid			// IRQ 64-bit EL1
-  	ventry	el1_fiq_invalid			// FIQ 64-bit EL1
-  	ventry	el1_error_invalid		// Error 64-bit EL1
-@@ -45,7 +45,7 @@ SYM_CODE_END(__hyp_stub_vectors)
-
-  	.align 11
-
--SYM_CODE_START_LOCAL(el1_sync)
-+SYM_CODE_START_LOCAL(elx_sync)
-  	cmp	x0, #HVC_SET_VECTORS
-  	b.ne	1f
-  	msr	vbar_el2, x1
-@@ -71,7 +71,7 @@ SYM_CODE_START_LOCAL(el1_sync)
-
-  9:	mov	x0, xzr
-  	eret
--SYM_CODE_END(el1_sync)
-+SYM_CODE_END(elx_sync)
-
-  // nVHE? No way! Give me the real thing!
-  SYM_CODE_START_LOCAL(mutate_to_vhe)
-@@ -227,3 +227,24 @@ SYM_FUNC_START(switch_to_vhe)
-  #endif
-  	ret
-  SYM_FUNC_END(switch_to_vhe)
-+
-+SYM_FUNC_START(stick_to_vhe)
-+	/*
-+	 * Make sure the switch to VHE cannot fail, by overriding the
-+	 * override. This is hilarious.
-+	 */
-+	adr_l	x1, id_aa64mmfr1_override
-+	add	x1, x1, #FTR_OVR_MASK_OFFSET
-+	dc 	civac, x1
-+	dsb	sy
-+	isb
-+	ldr	x0, [x1]
-+	bic	x0, x0, #(0xf << ID_AA64MMFR1_VHE_SHIFT)
-+	str	x0, [x1]
-+
-+	mov	x0, #HVC_VHE_RESTART
-+	hvc	#0
-+	mov	x0, #BOOT_CPU_MODE_EL2
-+	ret
-+SYM_FUNC_END(stick_to_vhe)
-+
-
--- 
-Jazz is not dead. It just smells funny...
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+T24gMjAyMS0wMi0wNSAxMTo0OCwgUm9iaW4gTXVycGh5IHdyb3RlOgo+IE9uIDIwMjEtMDItMDUg
+MDk6MTMsIEtlcWlhbiBaaHUgd3JvdGU6Cj4+IEhpIFJvYmluIGFuZCBKZWFuLAo+Pgo+PiBPbiAy
+MDIxLzIvNSAzOjUwLCBSb2JpbiBNdXJwaHkgd3JvdGU6Cj4+PiBPbiAyMDIxLTAxLTI4IDE1OjE3
+LCBLZXFpYW4gWmh1IHdyb3RlOgo+Pj4+IEZyb206IGppYW5na3Vua3VuIDxqaWFuZ2t1bmt1bkBo
+dWF3ZWkuY29tPgo+Pj4+Cj4+Pj4gVGhlIFNNTVUgd2hpY2ggc3VwcG9ydHMgSFRUVSAoSGFyZHdh
+cmUgVHJhbnNsYXRpb24gVGFibGUgVXBkYXRlKSBjYW4KPj4+PiB1cGRhdGUgdGhlIGFjY2VzcyBm
+bGFnIGFuZCB0aGUgZGlydHkgc3RhdGUgb2YgVFREIGJ5IGhhcmR3YXJlLiBJdCBpcwo+Pj4+IGVz
+c2VudGlhbCB0byB0cmFjayBkaXJ0eSBwYWdlcyBvZiBETUEuCj4+Pj4KPj4+PiBUaGlzIGFkZHMg
+ZmVhdHVyZSBkZXRlY3Rpb24sIG5vbmUgZnVuY3Rpb25hbCBjaGFuZ2UuCj4+Pj4KPj4+PiBDby1k
+ZXZlbG9wZWQtYnk6IEtlcWlhbiBaaHUgPHpodWtlcWlhbjFAaHVhd2VpLmNvbT4KPj4+PiBTaWdu
+ZWQtb2ZmLWJ5OiBLdW5rdW4gSmlhbmcgPGppYW5na3Vua3VuQGh1YXdlaS5jb20+Cj4+Pj4gLS0t
+Cj4+Pj4gwqDCoCBkcml2ZXJzL2lvbW11L2FybS9hcm0tc21tdS12My9hcm0tc21tdS12My5jIHwg
+MTYgKysrKysrKysrKysrKysrKwo+Pj4+IMKgwqAgZHJpdmVycy9pb21tdS9hcm0vYXJtLXNtbXUt
+djMvYXJtLXNtbXUtdjMuaCB8wqAgOCArKysrKysrKwo+Pj4+IMKgwqAgaW5jbHVkZS9saW51eC9p
+by1wZ3RhYmxlLmjCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoCAxICsKPj4+
+PiDCoMKgIDMgZmlsZXMgY2hhbmdlZCwgMjUgaW5zZXJ0aW9ucygrKQo+Pj4+Cj4+Pj4gZGlmZiAt
+LWdpdCBhL2RyaXZlcnMvaW9tbXUvYXJtL2FybS1zbW11LXYzL2FybS1zbW11LXYzLmMgCj4+Pj4g
+Yi9kcml2ZXJzL2lvbW11L2FybS9hcm0tc21tdS12My9hcm0tc21tdS12My5jCj4+Pj4gaW5kZXgg
+OGNhNzQxNWQ3ODVkLi4wZjBmZTcxY2MxMGQgMTAwNjQ0Cj4+Pj4gLS0tIGEvZHJpdmVycy9pb21t
+dS9hcm0vYXJtLXNtbXUtdjMvYXJtLXNtbXUtdjMuYwo+Pj4+ICsrKyBiL2RyaXZlcnMvaW9tbXUv
+YXJtL2FybS1zbW11LXYzL2FybS1zbW11LXYzLmMKPj4+PiBAQCAtMTk4Nyw2ICsxOTg3LDcgQEAg
+c3RhdGljIGludCBhcm1fc21tdV9kb21haW5fZmluYWxpc2Uoc3RydWN0IAo+Pj4+IGlvbW11X2Rv
+bWFpbiAqZG9tYWluLAo+Pj4+IMKgwqDCoMKgwqDCoMKgwqDCoMKgIC5wZ3NpemVfYml0bWFwwqDC
+oMKgID0gc21tdS0+cGdzaXplX2JpdG1hcCwKPj4+PiDCoMKgwqDCoMKgwqDCoMKgwqDCoCAuaWFz
+wqDCoMKgwqDCoMKgwqAgPSBpYXMsCj4+Pj4gwqDCoMKgwqDCoMKgwqDCoMKgwqAgLm9hc8KgwqDC
+oMKgwqDCoMKgID0gb2FzLAo+Pj4+ICvCoMKgwqDCoMKgwqDCoCAuaHR0dV9oZMKgwqDCoCA9IHNt
+bXUtPmZlYXR1cmVzICYgQVJNX1NNTVVfRkVBVF9IVFRVX0hELAo+Pj4+IMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIC5jb2hlcmVudF93YWxrwqDCoMKgID0gc21tdS0+ZmVhdHVyZXMgJiAKPj4+PiBBUk1f
+U01NVV9GRUFUX0NPSEVSRU5DWSwKPj4+PiDCoMKgwqDCoMKgwqDCoMKgwqDCoCAudGxiwqDCoMKg
+wqDCoMKgwqAgPSAmYXJtX3NtbXVfZmx1c2hfb3BzLAo+Pj4+IMKgwqDCoMKgwqDCoMKgwqDCoMKg
+IC5pb21tdV9kZXbCoMKgwqAgPSBzbW11LT5kZXYsCj4+Pj4gQEAgLTMyMjQsNiArMzIyNSwyMSBA
+QCBzdGF0aWMgaW50IGFybV9zbW11X2RldmljZV9od19wcm9iZShzdHJ1Y3QgCj4+Pj4gYXJtX3Nt
+bXVfZGV2aWNlICpzbW11KQo+Pj4+IMKgwqDCoMKgwqDCoCBpZiAocmVnICYgSURSMF9IWVApCj4+
+Pj4gwqDCoMKgwqDCoMKgwqDCoMKgwqAgc21tdS0+ZmVhdHVyZXMgfD0gQVJNX1NNTVVfRkVBVF9I
+WVA7Cj4+Pj4gwqDCoCArwqDCoMKgIHN3aXRjaCAoRklFTERfR0VUKElEUjBfSFRUVSwgcmVnKSkg
+ewo+Pj4KPj4+IFdlIG5lZWQgdG8gYWNjb21tb2RhdGUgdGhlIGZpcm13YXJlIG92ZXJyaWRlIGFz
+IHdlbGwgaWYgd2UgbmVlZCB0aGlzIAo+Pj4gdG8gYmUgbWVhbmluZ2Z1bC4gSmVhbi1QaGlsaXBw
+ZSBpcyBhbHJlYWR5IGNhcnJ5aW5nIGEgc3VpdGFibGUgcGF0Y2ggCj4+PiBpbiB0aGUgU1ZBIHN0
+YWNrWzFdLgo+PiBSb2JpbiwgVGhhbmtzIGZvciBwb2ludGluZyBpdCBvdXQuCj4+Cj4+IEplYW4s
+IEkgc2VlIHRoYXQgdGhlIElPUlQgSFRUVSBmbGFnIG92ZXJyaWRlcyB0aGUgaGFyZHdhcmUgcmVn
+aXN0ZXIgCj4+IGluZm8gdW5jb25kaXRpb25hbGx5LiBJIGhhdmUgc29tZSBjb25jZXJuIGFib3V0
+IGl0Ogo+Pgo+PiBJZiB0aGUgb3ZlcnJpZGUgZmxhZyBoYXMgSFRUVSBidXQgaGFyZHdhcmUgZG9l
+c24ndCBzdXBwb3J0IGl0LCB0aGVuIAo+PiBkcml2ZXIgd2lsbCB1c2UgdGhpcyBmZWF0dXJlIGJ1
+dCByZWNlaXZlIGFjY2VzcyBmYXVsdCBvciBwZXJtaXNzaW9uIAo+PiBmYXVsdCBmcm9tIFNNTVUg
+dW5leHBlY3RlZGx5Lgo+PiAxKSBJZiBJT1BGIGlzIG5vdCBzdXBwb3J0ZWQsIHRoZW4ga2VybmVs
+IGNhbiBub3Qgd29yayBub3JtYWxseS4KPj4gMikgSWYgSU9QRiBpcyBzdXBwb3J0ZWQsIGtlcm5l
+bCB3aWxsIHBlcmZvcm0gdXNlbGVzcyBhY3Rpb25zLCBzdWNoIGFzIAo+PiBIVFRVIGJhc2VkIGRt
+YSBkaXJ0eSB0cmFja2luZyAodGhpcyBzZXJpZXMpLgo+IAo+IFllcywgaWYgdGhlIElPUlQgZGVz
+Y3JpYmVzIHRoZSBTTU1VIGluY29ycmVjdGx5LCB0aGluZ3Mgd2lsbCBub3Qgd29yayAKPiB3ZWxs
+LiBKdXN0IGxpa2UgaWYgaXQgZGVzY3JpYmVzIHRoZSB3cm9uZyBiYXNlIGFkZHJlc3Mgb3IgdGhl
+IHdyb25nIAo+IGludGVycnVwdCBudW1iZXJzLCB0aGluZ3Mgd2lsbCBhbHNvIG5vdCB3b3JrIHdl
+bGwuIFRoZSBwb2ludCBpcyB0aGF0IAo+IGluY29ycmVjdCBmaXJtd2FyZSBjYW4gYmUgdXBkYXRl
+ZCBpbiB0aGUgZmllbGQgZmFpcmx5IGVhc2lseTsgaW5jb3JyZWN0IAo+IGhhcmR3YXJlIGNhbiBu
+b3QuCj4gCj4gU2F5IHRoZSBTTU1VIGRlc2lnbmVyIGhhcmQtY29kZXMgdGhlIElEIHJlZ2lzdGVy
+IGZpZWxkIHRvIDB4MiBiZWNhdXNlIAo+IHRoZSBTTU1VIGl0c2VsZiBpcyBjYXBhYmxlIG9mIEhU
+VFUsIGFuZCB0aGV5IGFzc3VtZSBpdCdzIGFsd2F5cyBnb2luZyB0byAKPiBiZSB3aXJlZCB1cCBj
+b2hlcmVudGx5LCBidXQgdGhlbiBhIGN1c3RvbWVyIGludGVncmF0ZXMgaXQgdG8gYSAKPiBub24t
+Y29oZXJlbnQgaW50ZXJjb25uZWN0LiBGaXJtd2FyZSBuZWVkcyB0byBvdmVycmlkZSB0aGF0IHZh
+bHVlIHRvIAo+IHByZXZlbnQgYW4gT1MgdGhpbmtpbmcgdGhhdCB0aGUgY2xhaW1lZCBIVFRVIGNh
+cGFiaWxpdHkgaXMgZXZlciBnb2luZyB0byAKPiB3b3JrLgo+IAo+IE9yIHNheSB0aGUgU01NVSAq
+aXMqIGludGVncmF0ZWQgY29ycmVjdGx5LCBidXQgZHVlIHRvIGFuIGVycmF0dW0gCj4gZGlzY292
+ZXJlZCBsYXRlciBpbiB0aGUgaW50ZXJjb25uZWN0IG9yIFNNTVUgaXRzZWxmLCBpdCB0dXJucyBv
+dXQgREJNIAo+IGRvZXNuJ3QgYWx3YXlzIHdvcmsgcmVsaWFibHksIGJ1dCBBRiBpcyBzdGlsbCBP
+Sy4gRmlybXdhcmUgbmVlZHMgdG8gCj4gZG93bmdyYWRlIHRoZSBpbmRpY2F0ZWQgbGV2ZWwgb2Yg
+c3VwcG9ydCBmcm9tIHRoYXQgd2hpY2ggd2FzIGludGVuZGVkIHRvIAo+IHRoYXQgd2hpY2ggd29y
+a3MgcmVsaWFibHkuCj4gCj4gT3Igc2F5IHNvbWVvbmUgZm9yZ2V0cyB0byBzZXQgYW4gaW50ZWdy
+YXRpb24gdGllb2ZmIHNvIHRoZWlyIFNNTVUgCj4gcmVwb3J0cyAweDAgZXZlbiB0aG91Z2ggaXQg
+YW5kIHRoZSBpbnRlcmNvbm5lY3QgKmNhbiogaGFwcGlseSBzdXBwb3J0IAo+IEhUVFUuIEluIHRo
+YXQgY2FzZSwgZmlybXdhcmUgbWF5IHdhbnQgdG8gdXBncmFkZSB0aGUgdmFsdWUgdG8gKmFsbG93
+KiBhbiAKPiBPUyB0byB1c2UgSFRUVSBkZXNwaXRlIHRoZSBJRCByZWdpc3RlciBiZWluZyB3cm9u
+Zy4KPiAKPj4gQXMgdGhlIElPUlQgc3BlYyBkb2Vzbid0IGdpdmUgYW4gZXhwbGljaXQgZXhwbGFu
+YXRpb24gZm9yIEhUVFUgCj4+IG92ZXJyaWRlLCBjYW4gd2UgY29tcHJlaGVuZCBpdCBhcyBhIG1h
+c2sgZm9yIEhUVFUgcmVsYXRlZCBoYXJkd2FyZSAKPj4gcmVnaXN0ZXI/Cj4+IFNvIHRoZSBsb2dp
+YyBiZWNvbWVzOiBzbW11LT5mZWF0dXJlID0gSFRUVSBvdmVycmlkZSAmIElEUjBfSFRUVTsKPiAK
+PiBObywgaXQgbGl0ZXJhbGx5IHN0YXRlcyB0aGF0IHRoZSBPUyBtdXN0IHVzZSB0aGUgdmFsdWUg
+b2YgdGhlIGZpcm13YXJlIAo+IGZpZWxkICppbnN0ZWFkKiBvZiB0aGUgdmFsdWUgZnJvbSB0aGUg
+aGFyZHdhcmUgZmllbGQuCgpPb3BzLCBhcG9sb2dpZXMgZm9yIGFuIG92ZXJzaWdodCB0aGVyZSAt
+IEkndmUgYmVlbiByZXZpZXdpbmcgSU9SVCBzcGVjIAp1cGRhdGVzIGxhdGVseSBzbyBuYXR1cmFs
+bHkgaGFkIHRoZSBuZXdlc3QgdmVyc2lvbiBvcGVuIGFscmVhZHkuIFR1cm5zIApvdXQgdGhlc2Ug
+ZGVzY3JpcHRpb25zIHdlcmUgb25seSBjbGFyaWZpZWQgaW4gdGhlIG1vc3QgcmVjZW50IHJlbGVh
+c2UsIApzbyBpZiB5b3Ugd2VyZSBsb29raW5nIGF0IGFuIG9sZGVyIGRvY3VtZW50IHRoZXkgKndl
+cmUqIGhvcnJpYmx5IHZhZ3VlLgoKUm9iaW4uCgo+Pj4+ICvCoMKgwqAgY2FzZSBJRFIwX0hUVFVf
+Tk9ORToKPj4+PiArwqDCoMKgwqDCoMKgwqAgYnJlYWs7Cj4+Pj4gK8KgwqDCoCBjYXNlIElEUjBf
+SFRUVV9IQToKPj4+PiArwqDCoMKgwqDCoMKgwqAgc21tdS0+ZmVhdHVyZXMgfD0gQVJNX1NNTVVf
+RkVBVF9IVFRVX0hBOwo+Pj4+ICvCoMKgwqDCoMKgwqDCoCBicmVhazsKPj4+PiArwqDCoMKgIGNh
+c2UgSURSMF9IVFRVX0hBRDoKPj4+PiArwqDCoMKgwqDCoMKgwqAgc21tdS0+ZmVhdHVyZXMgfD0g
+QVJNX1NNTVVfRkVBVF9IVFRVX0hBOwo+Pj4+ICvCoMKgwqDCoMKgwqDCoCBzbW11LT5mZWF0dXJl
+cyB8PSBBUk1fU01NVV9GRUFUX0hUVFVfSEQ7Cj4+Pj4gK8KgwqDCoMKgwqDCoMKgIGJyZWFrOwo+
+Pj4+ICvCoMKgwqAgZGVmYXVsdDoKPj4+PiArwqDCoMKgwqDCoMKgwqAgZGV2X2VycihzbW11LT5k
+ZXYsICJ1bmtub3duL3Vuc3VwcG9ydGVkIEhUVFUhXG4iKTsKPj4+PiArwqDCoMKgwqDCoMKgwqAg
+cmV0dXJuIC1FTlhJTzsKPj4+PiArwqDCoMKgIH0KPj4+PiArCj4+Pj4gwqDCoMKgwqDCoMKgIC8q
+Cj4+Pj4gwqDCoMKgwqDCoMKgwqAgKiBUaGUgY29oZXJlbmN5IGZlYXR1cmUgYXMgc2V0IGJ5IEZX
+IGlzIHVzZWQgaW4gcHJlZmVyZW5jZSAKPj4+PiB0byB0aGUgSUQKPj4+PiDCoMKgwqDCoMKgwqDC
+oCAqIHJlZ2lzdGVyLCBidXQgd2FybiBvbiBtaXNtYXRjaC4KPj4+PiBkaWZmIC0tZ2l0IGEvZHJp
+dmVycy9pb21tdS9hcm0vYXJtLXNtbXUtdjMvYXJtLXNtbXUtdjMuaCAKPj4+PiBiL2RyaXZlcnMv
+aW9tbXUvYXJtL2FybS1zbW11LXYzL2FybS1zbW11LXYzLmgKPj4+PiBpbmRleCA5NmMyZTk1NjVl
+MDAuLmU5MWJlYTQ0NTE5ZSAxMDA2NDQKPj4+PiAtLS0gYS9kcml2ZXJzL2lvbW11L2FybS9hcm0t
+c21tdS12My9hcm0tc21tdS12My5oCj4+Pj4gKysrIGIvZHJpdmVycy9pb21tdS9hcm0vYXJtLXNt
+bXUtdjMvYXJtLXNtbXUtdjMuaAo+Pj4+IEBAIC0zMyw2ICszMywxMCBAQAo+Pj4+IMKgwqAgI2Rl
+ZmluZSBJRFIwX0FTSUQxNsKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgKDEgPDwgMTIpCj4+Pj4gwqDC
+oCAjZGVmaW5lIElEUjBfQVRTwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAoMSA8PCAxMCkKPj4+PiDC
+oMKgICNkZWZpbmUgSURSMF9IWVDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICgxIDw8IDkpCj4+Pj4g
+KyNkZWZpbmUgSURSMF9IVFRVwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBHRU5NQVNLKDcsIDYpCj4+
+Pj4gKyNkZWZpbmUgSURSMF9IVFRVX05PTkXCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIDAKPj4+PiAr
+I2RlZmluZSBJRFIwX0hUVFVfSEHCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIDEKPj4+PiArI2RlZmlu
+ZSBJRFIwX0hUVFVfSEFEwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAyCj4+Pj4gwqDCoCAjZGVmaW5l
+IElEUjBfQ09IQUNDwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAoMSA8PCA0KQo+Pj4+IMKgwqAgI2Rl
+ZmluZSBJRFIwX1RURsKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgR0VOTUFTSygzLCAyKQo+Pj4+IMKg
+wqAgI2RlZmluZSBJRFIwX1RURl9BQVJDSDY0wqDCoMKgwqDCoMKgwqAgMgo+Pj4+IEBAIC0yODYs
+NiArMjkwLDggQEAKPj4+PiDCoMKgICNkZWZpbmUgQ1RYREVTQ19DRF8wX1RDUl9UQkkwwqDCoMKg
+wqDCoMKgwqAgKDFVTEwgPDwgMzgpCj4+Pj4gwqDCoMKgwqAgI2RlZmluZSBDVFhERVNDX0NEXzBf
+QUE2NMKgwqDCoMKgwqDCoMKgICgxVUwgPDwgNDEpCj4+Pj4gKyNkZWZpbmUgQ1RYREVTQ19DRF8w
+X0hEwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAoMVVMIDw8IDQyKQo+Pj4+ICsjZGVmaW5lIENUWERF
+U0NfQ0RfMF9IQcKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgKDFVTCA8PCA0MykKPj4+PiDCoMKgICNk
+ZWZpbmUgQ1RYREVTQ19DRF8wX1PCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICgxVUwgPDwgNDQpCj4+
+Pj4gwqDCoCAjZGVmaW5lIENUWERFU0NfQ0RfMF9SwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAoMVVM
+IDw8IDQ1KQo+Pj4+IMKgwqAgI2RlZmluZSBDVFhERVNDX0NEXzBfQcKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgKDFVTCA8PCA0NikKPj4+PiBAQCAtNjA0LDYgKzYxMCw4IEBAIHN0cnVjdCBhcm1fc21t
+dV9kZXZpY2Ugewo+Pj4+IMKgwqAgI2RlZmluZSBBUk1fU01NVV9GRUFUX1JBTkdFX0lOVsKgwqDC
+oMKgwqDCoMKgICgxIDw8IDE1KQo+Pj4+IMKgwqAgI2RlZmluZSBBUk1fU01NVV9GRUFUX0JUTcKg
+wqDCoMKgwqDCoMKgICgxIDw8IDE2KQo+Pj4+IMKgwqAgI2RlZmluZSBBUk1fU01NVV9GRUFUX1NW
+QcKgwqDCoMKgwqDCoMKgICgxIDw8IDE3KQo+Pj4+ICsjZGVmaW5lIEFSTV9TTU1VX0ZFQVRfSFRU
+VV9IQcKgwqDCoMKgwqDCoMKgICgxIDw8IDE4KQo+Pj4+ICsjZGVmaW5lIEFSTV9TTU1VX0ZFQVRf
+SFRUVV9IRMKgwqDCoMKgwqDCoMKgICgxIDw8IDE5KQo+Pj4+IMKgwqDCoMKgwqDCoCB1MzLCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgZmVhdHVyZXM7Cj4+Pj4gwqDCoMKgwqAgI2RlZmlu
+ZSBBUk1fU01NVV9PUFRfU0tJUF9QUkVGRVRDSMKgwqDCoCAoMSA8PCAwKQo+Pj4+IGRpZmYgLS1n
+aXQgYS9pbmNsdWRlL2xpbnV4L2lvLXBndGFibGUuaCBiL2luY2x1ZGUvbGludXgvaW8tcGd0YWJs
+ZS5oCj4+Pj4gaW5kZXggZWE3MjdlYjFhMWE5Li4xYTAwZWE4NTYyYzcgMTAwNjQ0Cj4+Pj4gLS0t
+IGEvaW5jbHVkZS9saW51eC9pby1wZ3RhYmxlLmgKPj4+PiArKysgYi9pbmNsdWRlL2xpbnV4L2lv
+LXBndGFibGUuaAo+Pj4+IEBAIC05Nyw2ICs5Nyw3IEBAIHN0cnVjdCBpb19wZ3RhYmxlX2NmZyB7
+Cj4+Pj4gwqDCoMKgwqDCoMKgIHVuc2lnbmVkIGxvbmfCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHBn
+c2l6ZV9iaXRtYXA7Cj4+Pj4gwqDCoMKgwqDCoMKgIHVuc2lnbmVkIGludMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqAgaWFzOwo+Pj4+IMKgwqDCoMKgwqDCoCB1bnNpZ25lZCBpbnTCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIG9hczsKPj4+PiArwqDCoMKgIGJvb2zCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgaHR0dV9oZDsKPj4+Cj4+PiBUaGlzIGlzIHZlcnkgc3BlY2lmaWMgdG8gdGhlIEFBcmNo
+NjQgc3RhZ2UgMSBmb3JtYXQsIG5vdCBhIGdlbmVyaWMgCj4+PiBjYXBhYmlsaXR5IC0gSSB0aGlu
+ayBpdCBzaG91bGQgYmUgYSBxdWlyayBmbGFnIHJhdGhlciB0aGFuIGEgY29tbW9uIAo+Pj4gZmll
+bGQuCj4+IE9LLCBzbyBCQk1MIHNob3VsZCBiZSBhIHF1aXJrIGZsYWcgdG9vPwo+Pgo+PiBUaG91
+Z2ggdGhlIHdvcmQgInF1aXJrIiBpcyBub3Qgc3VpdGFibGUgZm9yIEhUVFUgYW5kIEJCTUwsIHdl
+IGhhdmUgbm8gCj4+IG90aGVyIHBsYWNlIHRvIGNvbnZleSBzbW11IGZlYXR1cmUgdG8gaW8tcGd0
+YWJsZS4KPiAKPiBJbmRlZWQgdGhlc2UgZmVhdHVyZXMgYXJlbid0IGRlY29yYXRpdmUgZ3Jvb3Zl
+cyBvbiBhIHBpZWNlIG9mIGZ1cm5pdHVyZSwgCj4gYnV0IGluIHRoZSBjYXNlIG9mIGlvLXBndGFi
+bGUgd2UncmUgbWVyZWx5IHVzaW5nICJxdWlyayIgaW4gaXRzIGJyb2FkZXN0IAo+IHNlbnNlIHRv
+IGltcGx5IHNvbWV0aGluZyB0aGF0IGRpZmZlcnMgZnJvbSB0aGUgYmFzZWxpbmUgZGVmYXVsdCAK
+PiBiZWhhdmlvdXIgLSBBUk1fTVRLX0VYVCwgQVJNX1RUQlIxIGFuZCBBUk1fT1VURVJfV0JXQSAo
+b3Igd2hhdGV2ZXIgaXQncyAKPiBjYWxsZWQgdGhpcyB3ZWVrKSBhcmUgYWxsIGp1c3QgaW5kaWNh
+dGluZyBleHRyYSBoYXJkd2FyZSBmZWF0dXJlcyAKPiBlbnRpcmVseSBjb21wYXJhYmxlIHRvIEhU
+VFU7IE5PTl9TVFJJQ1QgaXMgZGVzY3JpYmluZyBhIHNpbWlsYXJseSAKPiBpbnRlbnRpb25hbCBh
+bmQgZGVzaXJlZCBzb2Z0d2FyZSBiZWhhdmlvdXIuIEluIGZhY3Qgb25seSBBUk1fTlMgCj4gcmVw
+cmVzZW50cyBzb21ldGhpbmcgdGhhdCBjb3VsZCBiZSBjb25zaWRlcmVkIGEgIndvcmthcm91bmQi
+Lgo+IAo+IFJvYmluLgo+IF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fCj4gaW9tbXUgbWFpbGluZyBsaXN0Cj4gaW9tbXVAbGlzdHMubGludXgtZm91bmRhdGlv
+bi5vcmcKPiBodHRwczovL2xpc3RzLmxpbnV4Zm91bmRhdGlvbi5vcmcvbWFpbG1hbi9saXN0aW5m
+by9pb21tdQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwpr
+dm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1bWJpYS5lZHUKaHR0cHM6Ly9s
+aXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9rdm1hcm0K
