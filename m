@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1392D312E5A
-	for <lists+kvmarm@lfdr.de>; Mon,  8 Feb 2021 11:04:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 42DCF312E58
+	for <lists+kvmarm@lfdr.de>; Mon,  8 Feb 2021 11:04:32 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B766D4B673;
-	Mon,  8 Feb 2021 05:04:42 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E714B4B35C;
+	Mon,  8 Feb 2021 05:04:31 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,39 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SKpVDklvZ2Fu; Mon,  8 Feb 2021 05:04:42 -0500 (EST)
+	with ESMTP id SpUScziRSgYR; Mon,  8 Feb 2021 05:04:31 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 882194B640;
-	Mon,  8 Feb 2021 05:04:40 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2A3EB4B59E;
+	Mon,  8 Feb 2021 05:04:28 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 532424B5A2
- for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Feb 2021 05:04:39 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5EC264B5F1
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Feb 2021 05:04:26 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id w2UYld15gK7s for <kvmarm@lists.cs.columbia.edu>;
- Mon,  8 Feb 2021 05:04:35 -0500 (EST)
+ with ESMTP id 4ronSL8SIT+b for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  8 Feb 2021 05:04:25 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 20D4C4B55E
- for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Feb 2021 05:04:31 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 500744B59E
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Feb 2021 05:04:24 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 2C6E164E9A;
- Mon,  8 Feb 2021 10:04:30 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 570C564E88;
+ Mon,  8 Feb 2021 10:04:23 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1l93Is-00Ck14-9h; Mon, 08 Feb 2021 09:57:58 +0000
+ id 1l93Is-00Ck14-W6; Mon, 08 Feb 2021 09:57:59 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  linux-kernel@vger.kernel.org
-Subject: [PATCH v7 10/23] arm64: cpufeature: Add global feature override
- facility
-Date: Mon,  8 Feb 2021 09:57:19 +0000
-Message-Id: <20210208095732.3267263-11-maz@kernel.org>
+Subject: [PATCH v7 11/23] arm64: cpufeature: Use IDreg override in
+ __read_sysreg_by_encoding()
+Date: Mon,  8 Feb 2021 09:57:20 +0000
+Message-Id: <20210208095732.3267263-12-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210208095732.3267263-1-maz@kernel.org>
 References: <20210208095732.3267263-1-maz@kernel.org>
@@ -84,120 +84,76 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add a facility to globally override a feature, no matter what
-the HW says. Yes, this sounds dangerous, but we do respect the
-"safe" value for a given feature. This doesn't mean the user
-doesn't need to know what they are doing.
+__read_sysreg_by_encoding() is used by a bunch of cpufeature helpers,
+which should take the feature override into account. Let's do that.
 
-Nothing uses this yet, so we are pretty safe. For now.
+For a good measure (and because we are likely to need to further
+down the line), make this helper available to the rest of the
+non-modular kernel.
+
+Code that needs to know the *real* features of a CPU can still
+use read_sysreg_s(), and find the bare, ugly truth.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
 Acked-by: David Brazdil <dbrazdil@google.com>
 Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
 ---
- arch/arm64/include/asm/cpufeature.h |  6 ++++
- arch/arm64/kernel/cpufeature.c      | 45 +++++++++++++++++++++++++----
- 2 files changed, 45 insertions(+), 6 deletions(-)
+ arch/arm64/include/asm/cpufeature.h |  1 +
+ arch/arm64/kernel/cpufeature.c      | 15 +++++++++++++--
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/include/asm/cpufeature.h b/arch/arm64/include/asm/cpufeature.h
-index 9a555809b89c..b1f53147e2b2 100644
+index b1f53147e2b2..b5bf7af68691 100644
 --- a/arch/arm64/include/asm/cpufeature.h
 +++ b/arch/arm64/include/asm/cpufeature.h
-@@ -63,6 +63,11 @@ struct arm64_ftr_bits {
- 	s64		safe_val; /* safe value for FTR_EXACT features */
- };
+@@ -606,6 +606,7 @@ void __init setup_cpu_features(void);
+ void check_local_cpu_capabilities(void);
  
-+struct arm64_ftr_override {
-+	u64		val;
-+	u64		mask;
-+};
-+
- /*
-  * @arm64_ftr_reg - Feature register
-  * @strict_mask		Bits which should match across all CPUs for sanity.
-@@ -74,6 +79,7 @@ struct arm64_ftr_reg {
- 	u64				user_mask;
- 	u64				sys_val;
- 	u64				user_val;
-+	struct arm64_ftr_override	*override;
- 	const struct arm64_ftr_bits	*ftr_bits;
- };
+ u64 read_sanitised_ftr_reg(u32 id);
++u64 __read_sysreg_by_encoding(u32 sys_id);
  
+ static inline bool cpu_supports_mixed_endian_el0(void)
+ {
 diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-index e99eddec0a46..a4e5c619a516 100644
+index a4e5c619a516..97da9ed4b79d 100644
 --- a/arch/arm64/kernel/cpufeature.c
 +++ b/arch/arm64/kernel/cpufeature.c
-@@ -352,9 +352,12 @@ static const struct arm64_ftr_bits ftr_ctr[] = {
- 	ARM64_FTR_END,
- };
+@@ -1148,14 +1148,17 @@ u64 read_sanitised_ftr_reg(u32 id)
+ EXPORT_SYMBOL_GPL(read_sanitised_ftr_reg);
  
-+static struct arm64_ftr_override __ro_after_init no_override = { };
+ #define read_sysreg_case(r)	\
+-	case r:		return read_sysreg_s(r)
++	case r:		val = read_sysreg_s(r); break;
+ 
+ /*
+  * __read_sysreg_by_encoding() - Used by a STARTING cpu before cpuinfo is populated.
+  * Read the system register on the current CPU
+  */
+-static u64 __read_sysreg_by_encoding(u32 sys_id)
++u64 __read_sysreg_by_encoding(u32 sys_id)
+ {
++	struct arm64_ftr_reg *regp;
++	u64 val;
 +
- struct arm64_ftr_reg arm64_ftr_reg_ctrel0 = {
- 	.name		= "SYS_CTR_EL0",
--	.ftr_bits	= ftr_ctr
-+	.ftr_bits	= ftr_ctr,
-+	.override	= &no_override,
- };
- 
- static const struct arm64_ftr_bits ftr_id_mmfr0[] = {
-@@ -544,13 +547,16 @@ static const struct arm64_ftr_bits ftr_raz[] = {
- 	ARM64_FTR_END,
- };
- 
--#define ARM64_FTR_REG(id, table) {		\
--	.sys_id = id,				\
--	.reg = 	&(struct arm64_ftr_reg){	\
--		.name = #id,			\
--		.ftr_bits = &((table)[0]),	\
-+#define ARM64_FTR_REG_OVERRIDE(id, table, ovr) {		\
-+		.sys_id = id,					\
-+		.reg = 	&(struct arm64_ftr_reg){		\
-+			.name = #id,				\
-+			.override = (ovr),			\
-+			.ftr_bits = &((table)[0]),		\
- 	}}
- 
-+#define ARM64_FTR_REG(id, table) ARM64_FTR_REG_OVERRIDE(id, table, &no_override)
+ 	switch (sys_id) {
+ 	read_sysreg_case(SYS_ID_PFR0_EL1);
+ 	read_sysreg_case(SYS_ID_PFR1_EL1);
+@@ -1198,6 +1201,14 @@ static u64 __read_sysreg_by_encoding(u32 sys_id)
+ 		BUG();
+ 		return 0;
+ 	}
 +
- static const struct __ftr_reg_entry {
- 	u32			sys_id;
- 	struct arm64_ftr_reg 	*reg;
-@@ -770,6 +776,33 @@ static void __init init_cpu_ftr_reg(u32 sys_reg, u64 new)
- 	for (ftrp = reg->ftr_bits; ftrp->width; ftrp++) {
- 		u64 ftr_mask = arm64_ftr_mask(ftrp);
- 		s64 ftr_new = arm64_ftr_value(ftrp, new);
-+		s64 ftr_ovr = arm64_ftr_value(ftrp, reg->override->val);
++	regp  = get_arm64_ftr_reg(sys_id);
++	if (regp) {
++		val &= ~regp->override->mask;
++		val |= (regp->override->val & regp->override->mask);
++	}
 +
-+		if ((ftr_mask & reg->override->mask) == ftr_mask) {
-+			s64 tmp = arm64_ftr_safe_value(ftrp, ftr_ovr, ftr_new);
-+			char *str = NULL;
-+
-+			if (ftr_ovr != tmp) {
-+				/* Unsafe, remove the override */
-+				reg->override->mask &= ~ftr_mask;
-+				reg->override->val &= ~ftr_mask;
-+				tmp = ftr_ovr;
-+				str = "ignoring override";
-+			} else if (ftr_new != tmp) {
-+				/* Override was valid */
-+				ftr_new = tmp;
-+				str = "forced";
-+			} else if (ftr_ovr == tmp) {
-+				/* Override was the safe value */
-+				str = "already set";
-+			}
-+
-+			if (str)
-+				pr_warn("%s[%d:%d]: %s to %llx\n",
-+					reg->name,
-+					ftrp->shift + ftrp->width - 1,
-+					ftrp->shift, str, tmp);
-+		}
++	return val;
+ }
  
- 		val = arm64_ftr_set_value(ftrp, val, ftr_new);
- 
+ #include <linux/irqchip/arm-gic-v3.h>
 -- 
 2.29.2
 
