@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AA3E312E14
-	for <lists+kvmarm@lfdr.de>; Mon,  8 Feb 2021 10:58:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2731A312E15
+	for <lists+kvmarm@lfdr.de>; Mon,  8 Feb 2021 10:58:07 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 324794B555;
-	Mon,  8 Feb 2021 04:58:05 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CC1524B3DB;
+	Mon,  8 Feb 2021 04:58:06 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,38 +15,38 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vv9jYJx9k17m; Mon,  8 Feb 2021 04:58:05 -0500 (EST)
+	with ESMTP id 59PhYQhRUZ3l; Mon,  8 Feb 2021 04:58:05 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5F5644B50A;
-	Mon,  8 Feb 2021 04:58:02 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7CCA54B52B;
+	Mon,  8 Feb 2021 04:58:03 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 172C34B19C
- for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Feb 2021 04:58:01 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DD0E84B1AD
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Feb 2021 04:58:02 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id MUzSQRoHuYPR for <kvmarm@lists.cs.columbia.edu>;
- Mon,  8 Feb 2021 04:57:59 -0500 (EST)
+ with ESMTP id 5ltMZkBotM74 for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  8 Feb 2021 04:58:02 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9AD0F4B52A
- for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Feb 2021 04:57:57 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id EE2714B439
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Feb 2021 04:57:58 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id A42E464E88;
- Mon,  8 Feb 2021 09:57:56 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id DDA1864E8A;
+ Mon,  8 Feb 2021 09:57:57 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1l93Io-00Ck14-Ru; Mon, 08 Feb 2021 09:57:54 +0000
+ id 1l93Ip-00Ck14-K3; Mon, 08 Feb 2021 09:57:56 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  linux-kernel@vger.kernel.org
-Subject: [PATCH v7 06/23] arm64: Drop early setting of MDSCR_EL2.TPMS
-Date: Mon,  8 Feb 2021 09:57:15 +0000
-Message-Id: <20210208095732.3267263-7-maz@kernel.org>
+Subject: [PATCH v7 07/23] arm64: Move VHE-specific SPE setup to mutate_to_vhe()
+Date: Mon,  8 Feb 2021 09:57:16 +0000
+Message-Id: <20210208095732.3267263-8-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210208095732.3267263-1-maz@kernel.org>
 References: <20210208095732.3267263-1-maz@kernel.org>
@@ -83,39 +83,45 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-When running VHE, we set MDSCR_EL2.TPMS very early on to force
-the trapping of EL1 SPE accesses to EL2.
+There isn't much that a VHE kernel needs on top of whatever has
+been done for nVHE, so let's move the little we need to the
+VHE stub (the SPE setup), and drop the init_el2_state macro.
 
-However:
-- we are running with HCR_EL2.{E2H,TGE}={1,1}, meaning that there
-  is no EL1 to trap from
-
-- before entering a guest, we call kvm_arm_setup_debug(), which
-  sets MDCR_EL2_TPMS in the per-vcpu shadow mdscr_el2, which gets
-  applied on entry by __activate_traps_common().
-
-The early setting of MDSCR_EL2.TPMS is therefore useless and can
-be dropped.
+No expected functional change.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
+Acked-by: David Brazdil <dbrazdil@google.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
 ---
- arch/arm64/include/asm/el2_setup.h | 3 ---
- 1 file changed, 3 deletions(-)
+ arch/arm64/kernel/hyp-stub.S | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/include/asm/el2_setup.h b/arch/arm64/include/asm/el2_setup.h
-index 540116de80bf..56c9e1cef180 100644
---- a/arch/arm64/include/asm/el2_setup.h
-+++ b/arch/arm64/include/asm/el2_setup.h
-@@ -66,9 +66,6 @@
- 	mov	x0, #(MDCR_EL2_E2PB_MASK << MDCR_EL2_E2PB_SHIFT)
- 	orr	x2, x2, x0			// If we don't have VHE, then
- 						// use EL1&0 translation.
--.else
--	orr	x2, x2, #MDCR_EL2_TPMS		// For VHE, use EL2 translation
--						// and disable access from EL1
- .endif
+diff --git a/arch/arm64/kernel/hyp-stub.S b/arch/arm64/kernel/hyp-stub.S
+index 373ed2213e1d..6229315d533d 100644
+--- a/arch/arm64/kernel/hyp-stub.S
++++ b/arch/arm64/kernel/hyp-stub.S
+@@ -92,9 +92,6 @@ SYM_CODE_START_LOCAL(mutate_to_vhe)
+ 	msr	hcr_el2, x0
+ 	isb
  
- .Lskip_spe_\@:
+-	// Doesn't do much on VHE, but still, worth a shot
+-	init_el2_state vhe
+-
+ 	// Use the EL1 allocated stack, per-cpu offset
+ 	mrs	x0, sp_el1
+ 	mov	sp, x0
+@@ -107,6 +104,11 @@ SYM_CODE_START_LOCAL(mutate_to_vhe)
+ 	mrs_s	x0, SYS_VBAR_EL12
+ 	msr	vbar_el1, x0
+ 
++	// Use EL2 translations for SPE and disable access from EL1
++	mrs	x0, mdcr_el2
++	bic	x0, x0, #(MDCR_EL2_E2PB_MASK << MDCR_EL2_E2PB_SHIFT)
++	msr	mdcr_el2, x0
++
+ 	// Transfer the MM state from EL1 to EL2
+ 	mrs_s	x0, SYS_TCR_EL12
+ 	msr	tcr_el1, x0
 -- 
 2.29.2
 
