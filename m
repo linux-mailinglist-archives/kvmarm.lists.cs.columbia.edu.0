@@ -2,74 +2,66 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 30DD3313376
-	for <lists+kvmarm@lfdr.de>; Mon,  8 Feb 2021 14:40:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D7604313538
+	for <lists+kvmarm@lfdr.de>; Mon,  8 Feb 2021 15:33:00 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D4CF24B68C;
-	Mon,  8 Feb 2021 08:40:48 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6E6C24B5A8;
+	Mon,  8 Feb 2021 09:33:00 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Nq+YNCkh+jU1; Mon,  8 Feb 2021 08:40:48 -0500 (EST)
+	with ESMTP id 20DL04lCh6VZ; Mon,  8 Feb 2021 09:33:00 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 53E4C4B6BF;
-	Mon,  8 Feb 2021 08:40:47 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4B4BF4B245;
+	Mon,  8 Feb 2021 09:32:59 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 85CC44B644
- for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Feb 2021 08:40:45 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 544714B1A4
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Feb 2021 09:32:58 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id bG+8vE0EfWdX for <kvmarm@lists.cs.columbia.edu>;
- Mon,  8 Feb 2021 08:40:44 -0500 (EST)
+ with ESMTP id 0pIMlqnN4F4t for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  8 Feb 2021 09:32:57 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2F74A4B68E
- for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Feb 2021 08:40:42 -0500 (EST)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 3106664E60;
- Mon,  8 Feb 2021 13:40:41 +0000 (UTC)
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1l96mN-00Cn0C-DF; Mon, 08 Feb 2021 13:40:39 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: netdev@vger.kernel.org, yangbo.lu@nxp.com, john.stultz@linaro.org,
- tglx@linutronix.de, pbonzini@redhat.com, seanjc@google.com,
- richardcochran@gmail.com, Mark.Rutland@arm.com, will@kernel.org,
- suzuki.poulose@arm.com, Andre.Przywara@arm.com, steven.price@arm.com,
- lorenzo.pieralisi@arm.com, sudeep.holla@arm.com
-Subject: [PATCH v18 7/7] ptp: arm/arm64: Enable ptp_kvm for arm/arm64
-Date: Mon,  8 Feb 2021 13:40:29 +0000
-Message-Id: <20210208134029.3269384-8-maz@kernel.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210208134029.3269384-1-maz@kernel.org>
-References: <20210208134029.3269384-1-maz@kernel.org>
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 24CF24B0F1
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Feb 2021 09:32:57 -0500 (EST)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id DF0E464E30;
+ Mon,  8 Feb 2021 14:32:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1612794776;
+ bh=6KdzPmYqB+bGvxQs/MeqN8+No+/dd/gL7m2Dw37//uo=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=YRxcx/CzDqmm4c++0Yqjr8ULS70s5iUOjyryFfltC8Nh1jciCm4FVQCFWeC6lf2l/
+ NCxLd1tT3BNbg4MKtkYidcnaLY0NZV0KKXXJMJDKvBkcvsUh2N2qjunOr0EZSEUZo2
+ 5ol0kGGH+7wX+DPe1MLj7koxS0sUJJoVUjuWrB795/sQhFe4fczU8cmM6BSeFYHOgr
+ CCH0NA/qYle0yA0DxCBrBvu5TMjLax1+Ti+xUKyuIoKbsrj33arc3d7FFfRNnrBEUj
+ /pFtS3a8uvOELDElhswdUPrmFfnScr9Q3DXldE0Y62WcypCettcUoOX8LDuap+CWFQ
+ dl/NkZ6/RmH2Q==
+Date: Mon, 8 Feb 2021 14:32:49 +0000
+From: Will Deacon <will@kernel.org>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH v7 00/23] arm64: Early CPU feature override, and
+ applications to VHE, BTI and PAuth
+Message-ID: <20210208143248.GA25934@willie-the-truck>
+References: <20210208095732.3267263-1-maz@kernel.org>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: netdev@vger.kernel.org, yangbo.lu@nxp.com,
- john.stultz@linaro.org, tglx@linutronix.de, pbonzini@redhat.com,
- seanjc@google.com, richardcochran@gmail.com, Mark.Rutland@arm.com,
- will@kernel.org, suzuki.poulose@arm.com, Andre.Przywara@arm.com,
- steven.price@arm.com, lorenzo.pieralisi@arm.com, sudeep.holla@arm.com,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, Steve.Capper@arm.com,
- justin.he@arm.com, jianyong.wu@arm.com, kernel-team@android.com,
- mark.rutland@arm.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: justin.he@arm.com, kvm@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel-team@android.com, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+Content-Disposition: inline
+In-Reply-To: <20210208095732.3267263-1-maz@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: Prasad Sodagudi <psodagud@codeaurora.org>,
+ Srinivas Ramana <sramana@codeaurora.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Hector Martin <marcan@marcan.st>,
+ linux-kernel@vger.kernel.org, Ard Biesheuvel <ardb@kernel.org>,
+ Ajay Patil <pajay@qti.qualcomm.com>, kernel-team@android.com,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -86,202 +78,67 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Jianyong Wu <jianyong.wu@arm.com>
+Hi Marc,
 
-Currently, there is no mechanism to keep time sync between guest and host
-in arm/arm64 virtualization environment. Time in guest will drift compared
-with host after boot up as they may both use third party time sources
-to correct their time respectively. The time deviation will be in order
-of milliseconds. But in some scenarios,like in cloud environment, we ask
-for higher time precision.
+On Mon, Feb 08, 2021 at 09:57:09AM +0000, Marc Zyngier wrote:
+> It recently came to light that there is a need to be able to override
+> some CPU features very early on, before the kernel is fully up and
+> running. The reasons for this range from specific feature support
+> (such as using Protected KVM on VHE HW, which is the main motivation
+> for this work) to errata workaround (a feature is broken on a CPU and
+> needs to be turned off, or rather not enabled).
+> 
+> This series tries to offer a limited framework for this kind of
+> problems, by allowing a set of options to be passed on the
+> command-line and altering the feature set that the cpufeature
+> subsystem exposes to the rest of the kernel. Note that this doesn't
+> change anything for code that directly uses the CPU ID registers.
 
-kvm ptp clock, which chooses the host clock source as a reference
-clock to sync time between guest and host, has been adopted by x86
-which takes the time sync order from milliseconds to nanoseconds.
+I applied this locally, but I'm seeing consistent boot failure under QEMU when
+KASAN is enabled. I tried sprinkling some __no_sanitize_address annotations
+around (see below) but it didn't help. The culprit appears to be
+early_fdt_map(), but looking a bit more closely, I'm really nervous about the
+way we call into C functions from __primary_switched. Remember -- this code
+runs _twice_ when KASLR is active: before and after the randomization. This
+also means that any memory writes the first time around can be lost due to
+the D-cache invalidation when (re-)creating the kernel page-tables.
 
-This patch enables kvm ptp clock for arm/arm64 and improves clock sync precision
-significantly.
+Will
 
-Test result comparisons between with kvm ptp clock and without it in arm/arm64
-are as follows. This test derived from the result of command 'chronyc
-sources'. we should take more care of the last sample column which shows
-the offset between the local clock and the source at the last measurement.
+--->8
 
-no kvm ptp in guest:
-MS Name/IP address   Stratum Poll Reach LastRx Last sample
-========================================================================
-^* dns1.synet.edu.cn      2   6   377    13  +1040us[+1581us] +/-   21ms
-^* dns1.synet.edu.cn      2   6   377    21  +1040us[+1581us] +/-   21ms
-^* dns1.synet.edu.cn      2   6   377    29  +1040us[+1581us] +/-   21ms
-^* dns1.synet.edu.cn      2   6   377    37  +1040us[+1581us] +/-   21ms
-^* dns1.synet.edu.cn      2   6   377    45  +1040us[+1581us] +/-   21ms
-^* dns1.synet.edu.cn      2   6   377    53  +1040us[+1581us] +/-   21ms
-^* dns1.synet.edu.cn      2   6   377    61  +1040us[+1581us] +/-   21ms
-^* dns1.synet.edu.cn      2   6   377     4   -130us[ +796us] +/-   21ms
-^* dns1.synet.edu.cn      2   6   377    12   -130us[ +796us] +/-   21ms
-^* dns1.synet.edu.cn      2   6   377    20   -130us[ +796us] +/-   21ms
-
-in host:
-MS Name/IP address   Stratum Poll Reach LastRx Last sample
-========================================================================
-^* 120.25.115.20          2   7   377    72   -470us[ -603us] +/-   18ms
-^* 120.25.115.20          2   7   377    92   -470us[ -603us] +/-   18ms
-^* 120.25.115.20          2   7   377   112   -470us[ -603us] +/-   18ms
-^* 120.25.115.20          2   7   377     2   +872ns[-6808ns] +/-   17ms
-^* 120.25.115.20          2   7   377    22   +872ns[-6808ns] +/-   17ms
-^* 120.25.115.20          2   7   377    43   +872ns[-6808ns] +/-   17ms
-^* 120.25.115.20          2   7   377    63   +872ns[-6808ns] +/-   17ms
-^* 120.25.115.20          2   7   377    83   +872ns[-6808ns] +/-   17ms
-^* 120.25.115.20          2   7   377   103   +872ns[-6808ns] +/-   17ms
-^* 120.25.115.20          2   7   377   123   +872ns[-6808ns] +/-   17ms
-
-The dns1.synet.edu.cn is the network reference clock for guest and
-120.25.115.20 is the network reference clock for host. we can't get the
-clock error between guest and host directly, but a roughly estimated value
-will be in order of hundreds of us to ms.
-
-with kvm ptp in guest:
-chrony has been disabled in host to remove the disturb by network clock.
-
-MS Name/IP address         Stratum Poll Reach LastRx Last sample
-========================================================================
-* PHC0                    0   3   377     8     -7ns[   +1ns] +/-    3ns
-* PHC0                    0   3   377     8     +1ns[  +16ns] +/-    3ns
-* PHC0                    0   3   377     6     -4ns[   -0ns] +/-    6ns
-* PHC0                    0   3   377     6     -8ns[  -12ns] +/-    5ns
-* PHC0                    0   3   377     5     +2ns[   +4ns] +/-    4ns
-* PHC0                    0   3   377    13     +2ns[   +4ns] +/-    4ns
-* PHC0                    0   3   377    12     -4ns[   -6ns] +/-    4ns
-* PHC0                    0   3   377    11     -8ns[  -11ns] +/-    6ns
-* PHC0                    0   3   377    10    -14ns[  -20ns] +/-    4ns
-* PHC0                    0   3   377     8     +4ns[   +5ns] +/-    4ns
-
-The PHC0 is the ptp clock which choose the host clock as its source
-clock. So we can see that the clock difference between host and guest
-is in order of ns.
-
-Cc: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Jianyong Wu <jianyong.wu@arm.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20201209060932.212364-8-jianyong.wu@arm.com
----
- drivers/clocksource/arm_arch_timer.c | 34 ++++++++++++++++++++++++++++
- drivers/ptp/Kconfig                  |  2 +-
- drivers/ptp/Makefile                 |  1 +
- drivers/ptp/ptp_kvm_arm.c            | 28 +++++++++++++++++++++++
- 4 files changed, 64 insertions(+), 1 deletion(-)
- create mode 100644 drivers/ptp/ptp_kvm_arm.c
-
-diff --git a/drivers/clocksource/arm_arch_timer.c b/drivers/clocksource/arm_arch_timer.c
-index 8f12e223703f..e0f167e5e792 100644
---- a/drivers/clocksource/arm_arch_timer.c
-+++ b/drivers/clocksource/arm_arch_timer.c
-@@ -25,6 +25,8 @@
- #include <linux/sched/clock.h>
- #include <linux/sched_clock.h>
- #include <linux/acpi.h>
-+#include <linux/arm-smccc.h>
-+#include <linux/ptp_kvm.h>
+diff --git a/arch/arm64/kernel/idreg-override.c b/arch/arm64/kernel/idreg-override.c
+index dffb16682330..751ed55261b5 100644
+--- a/arch/arm64/kernel/idreg-override.c
++++ b/arch/arm64/kernel/idreg-override.c
+@@ -195,7 +195,7 @@ static __init void parse_cmdline(void)
+ /* Keep checkers quiet */
+ void init_feature_override(void);
  
- #include <asm/arch_timer.h>
- #include <asm/virt.h>
-@@ -1659,3 +1661,35 @@ static int __init arch_timer_acpi_init(struct acpi_table_header *table)
+-asmlinkage void __init init_feature_override(void)
++asmlinkage void __init __no_sanitize_address init_feature_override(void)
+ {
+        int i;
+ 
+diff --git a/arch/arm64/kernel/setup.c b/arch/arm64/kernel/setup.c
+index 61845c0821d9..33581de05d2e 100644
+--- a/arch/arm64/kernel/setup.c
++++ b/arch/arm64/kernel/setup.c
+@@ -170,12 +170,12 @@ static void __init smp_build_mpidr_hash(void)
+ 
+ static void *early_fdt_ptr __initdata;
+ 
+-void __init *get_early_fdt_ptr(void)
++void __init __no_sanitize_address *get_early_fdt_ptr(void)
+ {
+        return early_fdt_ptr;
  }
- TIMER_ACPI_DECLARE(arch_timer, ACPI_SIG_GTDT, arch_timer_acpi_init);
- #endif
-+
-+int kvm_arch_ptp_get_crosststamp(u64 *cycle, struct timespec64 *ts,
-+				 struct clocksource **cs)
-+{
-+	struct arm_smccc_res hvc_res;
-+	u32 ptp_counter;
-+	ktime_t ktime;
-+
-+	if (!IS_ENABLED(CONFIG_HAVE_ARM_SMCCC_DISCOVERY))
-+		return -EOPNOTSUPP;
-+
-+	if (arch_timer_uses_ppi == ARCH_TIMER_VIRT_PPI)
-+		ptp_counter = KVM_PTP_VIRT_COUNTER;
-+	else
-+		ptp_counter = KVM_PTP_PHYS_COUNTER;
-+
-+	arm_smccc_1_1_invoke(ARM_SMCCC_VENDOR_HYP_KVM_PTP_FUNC_ID,
-+			     ptp_counter, &hvc_res);
-+
-+	if ((int)(hvc_res.a0) < 0)
-+		return -EOPNOTSUPP;
-+
-+	ktime = (u64)hvc_res.a0 << 32 | hvc_res.a1;
-+	*ts = ktime_to_timespec64(ktime);
-+	if (cycle)
-+		*cycle = (u64)hvc_res.a2 << 32 | hvc_res.a3;
-+	if (cs)
-+		*cs = &clocksource_counter;
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(kvm_arch_ptp_get_crosststamp);
-diff --git a/drivers/ptp/Kconfig b/drivers/ptp/Kconfig
-index f2edef0df40f..8c20e524e9ad 100644
---- a/drivers/ptp/Kconfig
-+++ b/drivers/ptp/Kconfig
-@@ -108,7 +108,7 @@ config PTP_1588_CLOCK_PCH
- config PTP_1588_CLOCK_KVM
- 	tristate "KVM virtual PTP clock"
- 	depends on PTP_1588_CLOCK
--	depends on KVM_GUEST && X86
-+	depends on (KVM_GUEST && X86) || (HAVE_ARM_SMCCC_DISCOVERY && ARM_ARCH_TIMER)
- 	default y
- 	help
- 	  This driver adds support for using kvm infrastructure as a PTP
-diff --git a/drivers/ptp/Makefile b/drivers/ptp/Makefile
-index d11eeb5811d1..8673d1743faa 100644
---- a/drivers/ptp/Makefile
-+++ b/drivers/ptp/Makefile
-@@ -5,6 +5,7 @@
  
- ptp-y					:= ptp_clock.o ptp_chardev.o ptp_sysfs.o
- ptp_kvm-$(CONFIG_X86)			:= ptp_kvm_x86.o ptp_kvm_common.o
-+ptp_kvm-$(CONFIG_HAVE_ARM_SMCCC)	:= ptp_kvm_arm.o ptp_kvm_common.o
- obj-$(CONFIG_PTP_1588_CLOCK)		+= ptp.o
- obj-$(CONFIG_PTP_1588_CLOCK_DTE)	+= ptp_dte.o
- obj-$(CONFIG_PTP_1588_CLOCK_INES)	+= ptp_ines.o
-diff --git a/drivers/ptp/ptp_kvm_arm.c b/drivers/ptp/ptp_kvm_arm.c
-new file mode 100644
-index 000000000000..b7d28c8dfb84
---- /dev/null
-+++ b/drivers/ptp/ptp_kvm_arm.c
-@@ -0,0 +1,28 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ *  Virtual PTP 1588 clock for use with KVM guests
-+ *  Copyright (C) 2019 ARM Ltd.
-+ *  All Rights Reserved
-+ */
-+
-+#include <linux/arm-smccc.h>
-+#include <linux/ptp_kvm.h>
-+
-+#include <asm/arch_timer.h>
-+#include <asm/hypervisor.h>
-+
-+int kvm_arch_ptp_init(void)
-+{
-+	int ret;
-+
-+	ret = kvm_arm_hyp_service_available(ARM_SMCCC_KVM_FUNC_PTP);
-+	if (ret <= 0)
-+		return -EOPNOTSUPP;
-+
-+	return 0;
-+}
-+
-+int kvm_arch_ptp_get_clock(struct timespec64 *ts)
-+{
-+	return kvm_arch_ptp_get_crosststamp(NULL, ts, NULL);
-+}
--- 
-2.29.2
+-asmlinkage void __init early_fdt_map(u64 dt_phys)
++asmlinkage void __init __no_sanitize_address early_fdt_map(u64 dt_phys)
+ {
+        int fdt_size;
+ 
 
 _______________________________________________
 kvmarm mailing list
