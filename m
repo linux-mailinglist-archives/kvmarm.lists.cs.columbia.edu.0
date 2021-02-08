@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D7604313538
-	for <lists+kvmarm@lfdr.de>; Mon,  8 Feb 2021 15:33:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 82FAC313562
+	for <lists+kvmarm@lfdr.de>; Mon,  8 Feb 2021 15:40:51 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6E6C24B5A8;
-	Mon,  8 Feb 2021 09:33:00 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 02B784B696;
+	Mon,  8 Feb 2021 09:40:51 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,50 +18,60 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 20DL04lCh6VZ; Mon,  8 Feb 2021 09:33:00 -0500 (EST)
+	with ESMTP id CKCpAaMH5k7k; Mon,  8 Feb 2021 09:40:50 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4B4BF4B245;
-	Mon,  8 Feb 2021 09:32:59 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BD58E4B680;
+	Mon,  8 Feb 2021 09:40:49 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 544714B1A4
- for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Feb 2021 09:32:58 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4822E4B53B
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Feb 2021 09:40:48 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 0pIMlqnN4F4t for <kvmarm@lists.cs.columbia.edu>;
- Mon,  8 Feb 2021 09:32:57 -0500 (EST)
+ with ESMTP id hdgNZAe2N4dS for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  8 Feb 2021 09:40:47 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 24CF24B0F1
- for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Feb 2021 09:32:57 -0500 (EST)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id DF0E464E30;
- Mon,  8 Feb 2021 14:32:52 +0000 (UTC)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 39EB44B19A
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Feb 2021 09:40:47 -0500 (EST)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 00C4464E75
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Feb 2021 14:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1612794776;
- bh=6KdzPmYqB+bGvxQs/MeqN8+No+/dd/gL7m2Dw37//uo=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=YRxcx/CzDqmm4c++0Yqjr8ULS70s5iUOjyryFfltC8Nh1jciCm4FVQCFWeC6lf2l/
- NCxLd1tT3BNbg4MKtkYidcnaLY0NZV0KKXXJMJDKvBkcvsUh2N2qjunOr0EZSEUZo2
- 5ol0kGGH+7wX+DPe1MLj7koxS0sUJJoVUjuWrB795/sQhFe4fczU8cmM6BSeFYHOgr
- CCH0NA/qYle0yA0DxCBrBvu5TMjLax1+Ti+xUKyuIoKbsrj33arc3d7FFfRNnrBEUj
- /pFtS3a8uvOELDElhswdUPrmFfnScr9Q3DXldE0Y62WcypCettcUoOX8LDuap+CWFQ
- dl/NkZ6/RmH2Q==
-Date: Mon, 8 Feb 2021 14:32:49 +0000
-From: Will Deacon <will@kernel.org>
-To: Marc Zyngier <maz@kernel.org>
+ s=k20201202; t=1612795246;
+ bh=uzVP/yUTZ26j2flqJpYpKjVHor/lpsoGXsqXFjLI8Ac=;
+ h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+ b=qcMSda+hMlq6oiVFD7V7aK7jrnYayHkeWCwg6mSQSQC4KSe68pSYAhQ9MLQxRHhSp
+ 7cnuxD90DJ6ukwjMLeq16FJJ9bqf4suMkJipKYJo71DMqcRK1fX6o8PpiDIkgR4w8v
+ hiZ68kFrY6oAMB/WH3Dk/mEfC4lsSrq5WjSZdmT6MKhhLzej/oHkShYc0zNah/IBmZ
+ DtrS+HRpa2aPFbvOUepqfj/xU09Xz1zaO/u0jRTx99Swb5v87m8k3s2Pdlodof9dkV
+ FWwwsyOr+bW0uxzNpongew++F50MbGErul6TGcEWMv3VRT/st9ZTAwG9GtnXD0WFin
+ o6P/x1TELi3Wg==
+Received: by mail-ot1-f54.google.com with SMTP id e5so7512967otb.11
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 08 Feb 2021 06:40:45 -0800 (PST)
+X-Gm-Message-State: AOAM530qQc+pHS8r06H2u5jaJFe63XzU4pbKUyvP1B23mEVVSNsTfAA8
+ gRdSZvkZekwDmw6wNa8ZgDZNltoGwfAXsP7OJas=
+X-Google-Smtp-Source: ABdhPJwfnlQb1L3cCjYD7p80QTVblCNgqmsUFh18POCp3XEUcxiYvTt3HkWHqjqqd4APNtXMrcvFuIgfQrKN7vEYCsA=
+X-Received: by 2002:a05:6830:13ce:: with SMTP id
+ e14mr1791419otq.108.1612795245250; 
+ Mon, 08 Feb 2021 06:40:45 -0800 (PST)
+MIME-Version: 1.0
+References: <20210208095732.3267263-1-maz@kernel.org>
+ <20210208143248.GA25934@willie-the-truck>
+In-Reply-To: <20210208143248.GA25934@willie-the-truck>
+From: Ard Biesheuvel <ardb@kernel.org>
+Date: Mon, 8 Feb 2021 15:40:33 +0100
+X-Gmail-Original-Message-ID: <CAMj1kXGu_CLPiJDSzTkvdVNiDcRpo4se_fR8zqVgxyfERtgoAw@mail.gmail.com>
+Message-ID: <CAMj1kXGu_CLPiJDSzTkvdVNiDcRpo4se_fR8zqVgxyfERtgoAw@mail.gmail.com>
 Subject: Re: [PATCH v7 00/23] arm64: Early CPU feature override, and
  applications to VHE, BTI and PAuth
-Message-ID: <20210208143248.GA25934@willie-the-truck>
-References: <20210208095732.3267263-1-maz@kernel.org>
-MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20210208095732.3267263-1-maz@kernel.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+To: Will Deacon <will@kernel.org>
 Cc: Prasad Sodagudi <psodagud@codeaurora.org>,
- Srinivas Ramana <sramana@codeaurora.org>,
- Catalin Marinas <catalin.marinas@arm.com>, Hector Martin <marcan@marcan.st>,
- linux-kernel@vger.kernel.org, Ard Biesheuvel <ardb@kernel.org>,
- Ajay Patil <pajay@qti.qualcomm.com>, kernel-team@android.com,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+ Srinivas Ramana <sramana@codeaurora.org>, Marc Zyngier <maz@kernel.org>,
+ Hector Martin <marcan@marcan.st>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Ajay Patil <pajay@qti.qualcomm.com>,
+ Android Kernel Team <kernel-team@android.com>,
+ kvmarm <kvmarm@lists.cs.columbia.edu>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -78,68 +88,38 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Marc,
+On Mon, 8 Feb 2021 at 15:32, Will Deacon <will@kernel.org> wrote:
+>
+> Hi Marc,
+>
+> On Mon, Feb 08, 2021 at 09:57:09AM +0000, Marc Zyngier wrote:
+> > It recently came to light that there is a need to be able to override
+> > some CPU features very early on, before the kernel is fully up and
+> > running. The reasons for this range from specific feature support
+> > (such as using Protected KVM on VHE HW, which is the main motivation
+> > for this work) to errata workaround (a feature is broken on a CPU and
+> > needs to be turned off, or rather not enabled).
+> >
+> > This series tries to offer a limited framework for this kind of
+> > problems, by allowing a set of options to be passed on the
+> > command-line and altering the feature set that the cpufeature
+> > subsystem exposes to the rest of the kernel. Note that this doesn't
+> > change anything for code that directly uses the CPU ID registers.
+>
+> I applied this locally, but I'm seeing consistent boot failure under QEMU when
+> KASAN is enabled. I tried sprinkling some __no_sanitize_address annotations
+> around (see below) but it didn't help. The culprit appears to be
+> early_fdt_map(), but looking a bit more closely, I'm really nervous about the
+> way we call into C functions from __primary_switched. Remember -- this code
+> runs _twice_ when KASLR is active: before and after the randomization. This
+> also means that any memory writes the first time around can be lost due to
+> the D-cache invalidation when (re-)creating the kernel page-tables.
+>
 
-On Mon, Feb 08, 2021 at 09:57:09AM +0000, Marc Zyngier wrote:
-> It recently came to light that there is a need to be able to override
-> some CPU features very early on, before the kernel is fully up and
-> running. The reasons for this range from specific feature support
-> (such as using Protected KVM on VHE HW, which is the main motivation
-> for this work) to errata workaround (a feature is broken on a CPU and
-> needs to be turned off, or rather not enabled).
-> 
-> This series tries to offer a limited framework for this kind of
-> problems, by allowing a set of options to be passed on the
-> command-line and altering the feature set that the cpufeature
-> subsystem exposes to the rest of the kernel. Note that this doesn't
-> change anything for code that directly uses the CPU ID registers.
+Not just cache invalidation - BSS gets wiped again as well.
 
-I applied this locally, but I'm seeing consistent boot failure under QEMU when
-KASAN is enabled. I tried sprinkling some __no_sanitize_address annotations
-around (see below) but it didn't help. The culprit appears to be
-early_fdt_map(), but looking a bit more closely, I'm really nervous about the
-way we call into C functions from __primary_switched. Remember -- this code
-runs _twice_ when KASLR is active: before and after the randomization. This
-also means that any memory writes the first time around can be lost due to
-the D-cache invalidation when (re-)creating the kernel page-tables.
-
-Will
-
---->8
-
-diff --git a/arch/arm64/kernel/idreg-override.c b/arch/arm64/kernel/idreg-override.c
-index dffb16682330..751ed55261b5 100644
---- a/arch/arm64/kernel/idreg-override.c
-+++ b/arch/arm64/kernel/idreg-override.c
-@@ -195,7 +195,7 @@ static __init void parse_cmdline(void)
- /* Keep checkers quiet */
- void init_feature_override(void);
- 
--asmlinkage void __init init_feature_override(void)
-+asmlinkage void __init __no_sanitize_address init_feature_override(void)
- {
-        int i;
- 
-diff --git a/arch/arm64/kernel/setup.c b/arch/arm64/kernel/setup.c
-index 61845c0821d9..33581de05d2e 100644
---- a/arch/arm64/kernel/setup.c
-+++ b/arch/arm64/kernel/setup.c
-@@ -170,12 +170,12 @@ static void __init smp_build_mpidr_hash(void)
- 
- static void *early_fdt_ptr __initdata;
- 
--void __init *get_early_fdt_ptr(void)
-+void __init __no_sanitize_address *get_early_fdt_ptr(void)
- {
-        return early_fdt_ptr;
- }
- 
--asmlinkage void __init early_fdt_map(u64 dt_phys)
-+asmlinkage void __init __no_sanitize_address early_fdt_map(u64 dt_phys)
- {
-        int fdt_size;
- 
-
+-- 
+Ard.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
