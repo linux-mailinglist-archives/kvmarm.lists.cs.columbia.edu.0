@@ -2,72 +2,69 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 02EF6314F6E
-	for <lists+kvmarm@lfdr.de>; Tue,  9 Feb 2021 13:49:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 98A64314F6F
+	for <lists+kvmarm@lfdr.de>; Tue,  9 Feb 2021 13:49:41 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8E4894B6F5;
-	Tue,  9 Feb 2021 07:49:37 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 46B814B6C6;
+	Tue,  9 Feb 2021 07:49:41 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bdA1iHVBlLQ0; Tue,  9 Feb 2021 07:49:37 -0500 (EST)
+	with ESMTP id QDfZC4MSzgsY; Tue,  9 Feb 2021 07:49:37 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B72924B6D9;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D213D4B6E1;
 	Tue,  9 Feb 2021 07:49:35 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1492C4B6B8
- for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Feb 2021 07:03:36 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 554804B6F6
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Feb 2021 07:08:08 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id rIybkOEOCanK for <kvmarm@lists.cs.columbia.edu>;
- Tue,  9 Feb 2021 07:03:34 -0500 (EST)
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 09DB64A19F
- for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Feb 2021 07:03:33 -0500 (EST)
-IronPort-SDR: 6o4EgJ00IOnKhyshvPnpWJAEzQYtDgGPSnZB8/7NPILRUZlkLhFci5npKWTeXwd7VZYn23JIVw
- 8xWcdSrGSg/Q==
-X-IronPort-AV: E=McAfee;i="6000,8403,9889"; a="182012862"
-X-IronPort-AV: E=Sophos;i="5.81,164,1610438400"; d="scan'208";a="182012862"
+ with ESMTP id 7rNFR6hNO-U0 for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  9 Feb 2021 07:08:06 -0500 (EST)
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 48D1D4B4BC
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Feb 2021 07:08:06 -0500 (EST)
+IronPort-SDR: V2WJgtV8th67XvtJ+out3k1ev857z5jCP7g43Hi2Izf2cq7oWKr4g9zzHrvNB5ZJD6lzPuedeE
+ DyUDPfrFnWLA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9889"; a="178359031"
+X-IronPort-AV: E=Sophos;i="5.81,164,1610438400"; d="scan'208";a="178359031"
 Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Feb 2021 04:03:16 -0800
-IronPort-SDR: 0ieoaeAKU7d3c11pykydksMQ7vj3nDDcGmtrF0t/KBBgWNh9lq8KKHEiw0mCbglS6xKJI2v75a
- mLYjV2Vco98Q==
-X-IronPort-AV: E=Sophos;i="5.81,164,1610438400"; d="scan'208";a="396093725"
+ by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Feb 2021 04:08:04 -0800
+IronPort-SDR: EkElaaO7PCIBA7u/r7+YS4trpQvRbTAKGLXQ9dXFuJaQMYuagqKw+/nG+EKN+fuOkgJwNMxnEj
+ bFzIa3t3AiOA==
+X-IronPort-AV: E=Sophos;i="5.81,164,1610438400"; d="scan'208";a="396095446"
 Received: from yisun1-ubuntu.bj.intel.com (HELO yi.y.sun) ([10.238.156.116])
  by orsmga008-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-SHA256;
- 09 Feb 2021 04:03:10 -0800
-Date: Tue, 9 Feb 2021 19:57:44 +0800
+ 09 Feb 2021 04:07:59 -0800
+Date: Tue, 9 Feb 2021 20:02:31 +0800
 From: Yi Sun <yi.y.sun@linux.intel.com>
-To: Keqian Zhu <zhukeqian1@huawei.com>
+To: Robin Murphy <robin.murphy@arm.com>
 Subject: Re: [RFC PATCH 10/11] vfio/iommu_type1: Optimize dirty bitmap
  population based on iommu HWDBM
-Message-ID: <20210209115744.GB28580@yi.y.sun>
+Message-ID: <20210209120231.GC28580@yi.y.sun>
 References: <20210128151742.18840-1-zhukeqian1@huawei.com>
  <20210128151742.18840-11-zhukeqian1@huawei.com>
  <20210207095630.GA28580@yi.y.sun>
- <407d28db-1f86-8d4f-ab15-3c3ac56bbe7f@huawei.com>
+ <8150bd3a-dbb9-2e2b-386b-04e66f4b68dc@arm.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <407d28db-1f86-8d4f-ab15-3c3ac56bbe7f@huawei.com>
+In-Reply-To: <8150bd3a-dbb9-2e2b-386b-04e66f4b68dc@arm.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 X-Mailman-Approved-At: Tue, 09 Feb 2021 07:49:35 -0500
-Cc: kvm@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
- Kirti Wankhede <kwankhede@nvidia.com>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, Marc Zyngier <maz@kernel.org>,
- kevin.tian@intel.com, yan.y.zhao@intel.com,
- Alex Williamson <alex.williamson@redhat.com>,
- linux-arm-kernel@lists.infradead.org, Cornelia Huck <cohuck@redhat.com>,
+Cc: kevin.tian@intel.com, Cornelia Huck <cohuck@redhat.com>,
+ yan.y.zhao@intel.com, kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ Alex Williamson <alex.williamson@redhat.com>, iommu@lists.linux-foundation.org,
  linux-kernel@vger.kernel.org, lushenming@huawei.com,
- iommu@lists.linux-foundation.org, Robin Murphy <robin.murphy@arm.com>,
- baolu.lu@linux.intel.com
+ Kirti Wankhede <kwankhede@nvidia.com>, Marc Zyngier <maz@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -84,51 +81,116 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 21-02-07 18:40:36, Keqian Zhu wrote:
-> Hi Yi,
+On 21-02-09 11:16:08, Robin Murphy wrote:
+> On 2021-02-07 09:56, Yi Sun wrote:
+> >Hi,
+> >
+> >On 21-01-28 23:17:41, Keqian Zhu wrote:
+> >
+> >[...]
+> >
+> >>+static void vfio_dma_dirty_log_start(struct vfio_iommu *iommu,
+> >>+				     struct vfio_dma *dma)
+> >>+{
+> >>+	struct vfio_domain *d;
+> >>+
+> >>+	list_for_each_entry(d, &iommu->domain_list, next) {
+> >>+		/* Go through all domain anyway even if we fail */
+> >>+		iommu_split_block(d->domain, dma->iova, dma->size);
+> >>+	}
+> >>+}
+> >
+> >This should be a switch to prepare for dirty log start. Per Intel
+> >Vtd spec, there is SLADE defined in Scalable-Mode PASID Table Entry.
+> >It enables Accessed/Dirty Flags in second-level paging entries.
+> >So, a generic iommu interface here is better. For Intel iommu, it
+> >enables SLADE. For ARM, it splits block.
 > 
-> On 2021/2/7 17:56, Yi Sun wrote:
-> > Hi,
-> > 
-> > On 21-01-28 23:17:41, Keqian Zhu wrote:
-> > 
-> > [...]
-> > 
-> >> +static void vfio_dma_dirty_log_start(struct vfio_iommu *iommu,
-> >> +				     struct vfio_dma *dma)
-> >> +{
-> >> +	struct vfio_domain *d;
-> >> +
-> >> +	list_for_each_entry(d, &iommu->domain_list, next) {
-> >> +		/* Go through all domain anyway even if we fail */
-> >> +		iommu_split_block(d->domain, dma->iova, dma->size);
-> >> +	}
-> >> +}
-> > 
-> > This should be a switch to prepare for dirty log start. Per Intel
-> > Vtd spec, there is SLADE defined in Scalable-Mode PASID Table Entry.
-> > It enables Accessed/Dirty Flags in second-level paging entries.
-> > So, a generic iommu interface here is better. For Intel iommu, it
-> > enables SLADE. For ARM, it splits block.
-> Indeed, a generic interface name is better.
+> From a quick look, VT-D's SLADE and SMMU's HTTU appear to be the
+> exact same thing. This step isn't about enabling or disabling that
+> feature itself (the proposal for SMMU is to simply leave HTTU
+> enabled all the time), it's about controlling the granularity at
+> which the dirty status can be detected/reported at all, since that's
+> tied to the pagetable structure.
 > 
-> The vendor iommu driver plays vendor's specific actions to start dirty log, and Intel iommu and ARM smmu may differ. Besides, we may add more actions in ARM smmu driver in future.
+> However, if an IOMMU were to come along with some other way of
+> reporting dirty status that didn't depend on the granularity of
+> individual mappings, then indeed it wouldn't need this operation.
 > 
-> One question: Though I am not familiar with Intel iommu, I think it also should split block mapping besides enable SLADE. Right?
-> 
-I am not familiar with ARM smmu. :) So I want to clarify if the block
-in smmu is big page, e.g. 2M page? Intel Vtd manages the memory per
-page, 4KB/2MB/1GB. There are two ways to manage dirty pages.
-1. Keep default granularity. Just set SLADE to enable the dirty track.
-2. Split big page to 4KB to get finer granularity.
+Per my thought, we can use these two start/stop interfaces to make
+user space decide when to start/stop the dirty tracking. For Intel
+SLADE, I think we can enable this bit when this start interface is
+called by user space. I don't think leave SLADE enabled all the time
+is necessary for Intel Vt-d. So I suggest a generic interface here.
+Thanks!
 
-But question about the second solution is if it can benefit the user
-space, e.g. live migration. If my understanding about smmu block (i.e.
-the big page) is correct, have you collected some performance data to
-prove that the split can improve performance? Thanks!
-
-> Thanks,
-> Keqian
+> Robin.
+> 
+> >>+
+> >>+static void vfio_dma_dirty_log_stop(struct vfio_iommu *iommu,
+> >>+				    struct vfio_dma *dma)
+> >>+{
+> >>+	struct vfio_domain *d;
+> >>+
+> >>+	list_for_each_entry(d, &iommu->domain_list, next) {
+> >>+		/* Go through all domain anyway even if we fail */
+> >>+		iommu_merge_page(d->domain, dma->iova, dma->size,
+> >>+				 d->prot | dma->prot);
+> >>+	}
+> >>+}
+> >
+> >Same as above comment, a generic interface is required here.
+> >
+> >>+
+> >>+static void vfio_iommu_dirty_log_switch(struct vfio_iommu *iommu, bool start)
+> >>+{
+> >>+	struct rb_node *n;
+> >>+
+> >>+	/* Split and merge even if all iommu don't support HWDBM now */
+> >>+	for (n = rb_first(&iommu->dma_list); n; n = rb_next(n)) {
+> >>+		struct vfio_dma *dma = rb_entry(n, struct vfio_dma, node);
+> >>+
+> >>+		if (!dma->iommu_mapped)
+> >>+			continue;
+> >>+
+> >>+		/* Go through all dma range anyway even if we fail */
+> >>+		if (start)
+> >>+			vfio_dma_dirty_log_start(iommu, dma);
+> >>+		else
+> >>+			vfio_dma_dirty_log_stop(iommu, dma);
+> >>+	}
+> >>+}
+> >>+
+> >>  static int vfio_iommu_type1_dirty_pages(struct vfio_iommu *iommu,
+> >>  					unsigned long arg)
+> >>  {
+> >>@@ -2812,8 +2900,10 @@ static int vfio_iommu_type1_dirty_pages(struct vfio_iommu *iommu,
+> >>  		pgsize = 1 << __ffs(iommu->pgsize_bitmap);
+> >>  		if (!iommu->dirty_page_tracking) {
+> >>  			ret = vfio_dma_bitmap_alloc_all(iommu, pgsize);
+> >>-			if (!ret)
+> >>+			if (!ret) {
+> >>  				iommu->dirty_page_tracking = true;
+> >>+				vfio_iommu_dirty_log_switch(iommu, true);
+> >>+			}
+> >>  		}
+> >>  		mutex_unlock(&iommu->lock);
+> >>  		return ret;
+> >>@@ -2822,6 +2912,7 @@ static int vfio_iommu_type1_dirty_pages(struct vfio_iommu *iommu,
+> >>  		if (iommu->dirty_page_tracking) {
+> >>  			iommu->dirty_page_tracking = false;
+> >>  			vfio_dma_bitmap_free_all(iommu);
+> >>+			vfio_iommu_dirty_log_switch(iommu, false);
+> >>  		}
+> >>  		mutex_unlock(&iommu->lock);
+> >>  		return 0;
+> >>-- 
+> >>2.19.1
+> >_______________________________________________
+> >iommu mailing list
+> >iommu@lists.linux-foundation.org
+> >https://lists.linuxfoundation.org/mailman/listinfo/iommu
+> >
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
