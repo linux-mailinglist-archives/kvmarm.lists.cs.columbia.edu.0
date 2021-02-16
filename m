@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 65CBE31D041
-	for <lists+kvmarm@lfdr.de>; Tue, 16 Feb 2021 19:34:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2438B31D099
+	for <lists+kvmarm@lfdr.de>; Tue, 16 Feb 2021 20:03:25 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D3D3F4B50F;
-	Tue, 16 Feb 2021 13:34:22 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A8F394B327;
+	Tue, 16 Feb 2021 14:03:24 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,43 +15,42 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id P5Myix1nvxko; Tue, 16 Feb 2021 13:34:22 -0500 (EST)
+	with ESMTP id pr1Rzpylw8a2; Tue, 16 Feb 2021 14:03:24 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EB03E4B50C;
-	Tue, 16 Feb 2021 13:34:18 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6095A4B4F7;
+	Tue, 16 Feb 2021 14:03:23 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 765804B4D7
- for <kvmarm@lists.cs.columbia.edu>; Tue, 16 Feb 2021 13:34:17 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id F26F44B2F8
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 16 Feb 2021 14:03:21 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id D9eoMvuXyFla for <kvmarm@lists.cs.columbia.edu>;
- Tue, 16 Feb 2021 13:34:15 -0500 (EST)
+ with ESMTP id 3s+RBu3mJb7D for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 16 Feb 2021 14:03:20 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 73EB94B4A9
- for <kvmarm@lists.cs.columbia.edu>; Tue, 16 Feb 2021 13:34:15 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B88664B2E3
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 16 Feb 2021 14:03:20 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 5B85864E2B;
- Tue, 16 Feb 2021 18:34:14 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id C8A7364E28;
+ Tue, 16 Feb 2021 19:03:17 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.misterjones.org)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1lC5Aq-00ETE3-Bj; Tue, 16 Feb 2021 18:34:12 +0000
-Date: Tue, 16 Feb 2021 18:34:11 +0000
-Message-ID: <87mtw3q2u4.wl-maz@kernel.org>
+ id 1lC5cx-00ETSL-MA; Tue, 16 Feb 2021 19:03:15 +0000
+Date: Tue, 16 Feb 2021 19:03:15 +0000
+Message-ID: <87lfbnq1ho.wl-maz@kernel.org>
 From: Marc Zyngier <maz@kernel.org>
 To: Haibo Xu <haibo.xu@linaro.org>
-Subject: Re: [PATCH v3 33/66] KVM: arm64: nv: Support multiple nested Stage-2
- mmu structures
-In-Reply-To: <CAJc+Z1F5rvhWkWzbi2JrfSaETUg_qxiiLBVhrVcw7Da5=Yo2GQ@mail.gmail.com>
+Subject: Re: [PATCH v3 63/66] KVM: arm64: nv: Allocate VNCR page when required
+In-Reply-To: <CAJc+Z1G6QEEiUh=KLdS6Xut7q63zZ6zQxfpGCkCtY5tTSXPeZw@mail.gmail.com>
 References: <20201210160002.1407373-1-maz@kernel.org>
- <20201210160002.1407373-34-maz@kernel.org>
- <CAJc+Z1F5rvhWkWzbi2JrfSaETUg_qxiiLBVhrVcw7Da5=Yo2GQ@mail.gmail.com>
+ <20201210160002.1407373-64-maz@kernel.org>
+ <CAJc+Z1G6QEEiUh=KLdS6Xut7q63zZ6zQxfpGCkCtY5tTSXPeZw@mail.gmail.com>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
  (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -82,83 +81,105 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, 21 Jan 2021 02:59:13 +0000,
+On Thu, 21 Jan 2021 02:47:45 +0000,
 Haibo Xu <haibo.xu@linaro.org> wrote:
 > 
 > On Fri, 11 Dec 2020 at 00:04, Marc Zyngier <maz@kernel.org> wrote:
-
-[...]
-
+> >
+> > If running a NV guest on an ARMv8.4-NV capable system, let's
+> > allocate an additional page that will be used by the hypervisor
+> > to fulfill system register accesses.
+> >
+> > Signed-off-by: Marc Zyngier <maz@kernel.org>
+> > ---
+> >  arch/arm64/include/asm/kvm_host.h | 3 ++-
+> >  arch/arm64/kvm/nested.c           | 8 ++++++++
+> >  arch/arm64/kvm/reset.c            | 1 +
+> >  3 files changed, 11 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+> > index 78630bd5124d..dada0678c28e 100644
+> > --- a/arch/arm64/include/asm/kvm_host.h
+> > +++ b/arch/arm64/include/asm/kvm_host.h
+> > @@ -523,7 +523,8 @@ struct kvm_vcpu_arch {
+> >   */
+> >  static inline u64 *__ctxt_sys_reg(const struct kvm_cpu_context *ctxt, int r)
+> >  {
+> > -       if (unlikely(r >= __VNCR_START__ && ctxt->vncr_array))
+> > +       if (unlikely(cpus_have_final_cap(ARM64_HAS_ENHANCED_NESTED_VIRT) &&
+> > +                    r >= __VNCR_START__ && ctxt->vncr_array))
+> >                 return &ctxt->vncr_array[r - __VNCR_START__];
+> >
+> >         return (u64 *)&ctxt->sys_regs[r];
 > > diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
-> > index 9fb44bc7db3f..8e85d2ef24d9 100644
+> > index eef8f9873814..88147ec99755 100644
 > > --- a/arch/arm64/kvm/nested.c
 > > +++ b/arch/arm64/kvm/nested.c
-> > @@ -19,12 +19,177 @@
-> >  #include <linux/kvm.h>
-> >  #include <linux/kvm_host.h>
+> > @@ -47,6 +47,12 @@ int kvm_vcpu_init_nested(struct kvm_vcpu *vcpu)
+> >         if (!cpus_have_final_cap(ARM64_HAS_NESTED_VIRT))
+> >                 return -EINVAL;
 > >
-> > +#include <asm/kvm_arm.h>
-> >  #include <asm/kvm_emulate.h>
-> > +#include <asm/kvm_mmu.h>
-> >  #include <asm/kvm_nested.h>
-> >  #include <asm/sysreg.h>
-> >
-> >  #include "sys_regs.h"
-> >
-> > +void kvm_init_nested(struct kvm *kvm)
-> > +{
-> > +       kvm->arch.nested_mmus = NULL;
-> > +       kvm->arch.nested_mmus_size = 0;
-> > +}
+> > +       if (cpus_have_final_cap(ARM64_HAS_ENHANCED_NESTED_VIRT)) {
+> > +               vcpu->arch.ctxt.vncr_array = (u64 *)__get_free_page(GFP_KERNEL | __GFP_ZERO);
+> > +               if (!vcpu->arch.ctxt.vncr_array)
+> > +                       return -ENOMEM;
+> > +       }
 > > +
-> > +int kvm_vcpu_init_nested(struct kvm_vcpu *vcpu)
-> > +{
-> > +       struct kvm *kvm = vcpu->kvm;
-> > +       struct kvm_s2_mmu *tmp;
-> > +       int num_mmus;
-> > +       int ret = -ENOMEM;
-> > +
-> > +       if (!test_bit(KVM_ARM_VCPU_HAS_EL2, vcpu->arch.features))
-> > +               return 0;
-> > +
-> > +       if (!cpus_have_final_cap(ARM64_HAS_NESTED_VIRT))
-> > +               return -EINVAL;
 > 
-> nit: returning a "not supported" kind of errno?
+> If KVM_ARM_VCPU_INIT was called multiple times, the above codes
+> would try to allocate a new page without free-ing the previous
+> one. Besides that, the following kvm_free_stage2_pgd() call would
 
-I think this is consistent with what we otherwise return when there is
-a mismatch between requested features from userspace and host
-capabilities (such as asking for a 32bit guest on a 64bit only CPU).
+I assume you mean kvm_init_stage2_mmu() here.
 
-What seems to be missing though is a way to *advertise* the feature to
-userspace as such:
+> fail in the second call with the error message "kvm_arch already
+> initialized?".  I think a possible fix is to add a new flag to
+> indicate whether the NV related meta data have been initialized, and
+> only initialize them for the first call.
 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 97d377265d8e..0225b81d3434 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -243,6 +243,9 @@ int kvm_vm_ioctl_check_extension(struct kvm *kvm, long ext)
- 	case KVM_CAP_ARM_EL1_32BIT:
- 		r = cpus_have_const_cap(ARM64_HAS_32BIT_EL1);
- 		break;
-+	case KVM_CAP_ARM_EL2:
-+		r = cpus_have_const_cap(ARM64_HAS_NESTED_VIRT);
-+		break;
- 	case KVM_CAP_GUEST_DEBUG_HW_BPS:
- 		r = get_num_brps();
- 		break;
-diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
-index 374c67875cdb..555a60ac00d8 100644
---- a/include/uapi/linux/kvm.h
-+++ b/include/uapi/linux/kvm.h
-@@ -1058,6 +1058,7 @@ struct kvm_ppc_resize_hpt {
- #define KVM_CAP_ENFORCE_PV_FEATURE_CPUID 190
- #define KVM_CAP_SYS_HYPERV_CPUID 191
- #define KVM_CAP_DIRTY_LOG_RING 192
-+#define KVM_CAP_ARM_EL2 193
+Good catch. But I think we have all the data we need at this stage to
+avoid this issue:
+
+diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+index abb0669bdd4c..baff7373863f 100644
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -390,7 +390,20 @@ int kvm_init_stage2_mmu(struct kvm *kvm, struct kvm_s2_mmu *mmu)
+ 	int cpu, err;
+ 	struct kvm_pgtable *pgt;
  
- #ifdef KVM_CAP_IRQ_ROUTING
++	/*
++	 * If we already have our page tables in place, and that the
++	 * MMU context is the canonical one, we have a bug somewhere,
++	 * as this is only supposed to ever happen once per VM.
++	 *
++	 * Otherwise, we're building nested page tables, and that's
++	 * probably because userspace called KVM_ARM_VCPU_INIT more
++	 * than once on the same vcpu. Since that's actually legal,
++	 * don't kick a fuss and leave gracefully.
++	 */
+ 	if (mmu->pgt != NULL) {
++		if (&kvm->arch.mmu != mmu)
++			return 0;
++
+ 		kvm_err("kvm_arch already initialized?\n");
+ 		return -EINVAL;
+ 	}
+diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
+index 88147ec99755..3b21ea57fbce 100644
+--- a/arch/arm64/kvm/nested.c
++++ b/arch/arm64/kvm/nested.c
+@@ -48,7 +48,9 @@ int kvm_vcpu_init_nested(struct kvm_vcpu *vcpu)
+ 		return -EINVAL;
  
+ 	if (cpus_have_final_cap(ARM64_HAS_ENHANCED_NESTED_VIRT)) {
+-		vcpu->arch.ctxt.vncr_array = (u64 *)__get_free_page(GFP_KERNEL | __GFP_ZERO);
++		if (!vcpu->arch.ctxt.vncr_array)
++			vcpu->arch.ctxt.vncr_array = (u64 *)__get_free_page(GFP_KERNEL | __GFP_ZERO);
++
+ 		if (!vcpu->arch.ctxt.vncr_array)
+ 			return -ENOMEM;
+ 	}
 
 Thanks,
 
