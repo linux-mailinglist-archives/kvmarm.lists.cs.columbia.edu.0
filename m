@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 003B132A305
-	for <lists+kvmarm@lfdr.de>; Tue,  2 Mar 2021 16:00:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2426C32A306
+	for <lists+kvmarm@lfdr.de>; Tue,  2 Mar 2021 16:01:03 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A3B4E4B0D7;
-	Tue,  2 Mar 2021 10:00:59 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C76874B691;
+	Tue,  2 Mar 2021 10:01:02 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,57 +19,59 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id h-jJBUgGtwf4; Tue,  2 Mar 2021 10:00:58 -0500 (EST)
+	with ESMTP id Rb4kLVo6UE42; Tue,  2 Mar 2021 10:01:01 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 986C94B68D;
-	Tue,  2 Mar 2021 10:00:58 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BC12E4B64A;
+	Tue,  2 Mar 2021 10:01:01 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6CD654B658
- for <kvmarm@lists.cs.columbia.edu>; Tue,  2 Mar 2021 10:00:57 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9CB1A4B42B
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  2 Mar 2021 10:01:00 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id SNTjUPZCmicO for <kvmarm@lists.cs.columbia.edu>;
- Tue,  2 Mar 2021 10:00:56 -0500 (EST)
-Received: from mail-qt1-f202.google.com (mail-qt1-f202.google.com
- [209.85.160.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 478E24B67E
- for <kvmarm@lists.cs.columbia.edu>; Tue,  2 Mar 2021 10:00:56 -0500 (EST)
-Received: by mail-qt1-f202.google.com with SMTP id a41so13353959qtk.0
- for <kvmarm@lists.cs.columbia.edu>; Tue, 02 Mar 2021 07:00:56 -0800 (PST)
+ with ESMTP id rotxI2woa070 for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  2 Mar 2021 10:00:59 -0500 (EST)
+Received: from mail-wr1-f73.google.com (mail-wr1-f73.google.com
+ [209.85.221.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8DF564B68B
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  2 Mar 2021 10:00:59 -0500 (EST)
+Received: by mail-wr1-f73.google.com with SMTP id v13so10265319wrs.21
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 02 Mar 2021 07:00:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=sender:date:in-reply-to:message-id:mime-version:references:subject
- :from:to:cc; bh=VoWvRhVqzXHkQ0OsvxSGeS/VJPiNA3/g3FAmYYygOdw=;
- b=AjUn7I37yjHmuqeaXLfgA7dtYSSQwwN/4mcAzk8HpWqk8XmE81BG8HC75qZhUGfls/
- M0UchiZU+6VwuNndrGxdk2BjIPU+8enIfuinKdzPQa6PWDKoVD3qVJDHHGjdE6lUFUFm
- xROrWqmqeI6LH01tc3+3KqZwIQDZDeWu20eRjLkzQT7gxd/alLd29IAr46KfDHDLfQcB
- r0h8AcNcvuZw2QoF5e09oSwkTD8PSMKtQa5NUUlkyhGhG24SVC+dv1fuFYkLXn2SaIp8
- jRsY6UXZUSmEu2kqopQE9vx8d5HAX6OtZIq9auAHd5qMkR6/zmg55RGtssFV8WLZh1QH
- eXcw==
+ :from:to:cc; bh=eue23Q78bOa6+/qbv0+6w883I/AngR/tMntsoJXpnuQ=;
+ b=nXDl1eBiQI2Aja03chUT9gTykyTfm89UeBlE5QXB1z3z62rESZY1NMmtIQrrBv8WOF
+ Ass0zOOFiuM+77TewQc5zQ9f+75XlVxMT9kaHRSFP5pdy5PGn8GGHcVrFZ/Dn8X0pSDl
+ zAxJ+7yMDdHK5Hubnm4RtSb+mytr0rfVYMT0DDBLLEV2kdB3bjFW48XozEWVs1ckcr3N
+ dDr5smJaj/nTDAeNxI35YfwpklQwX+z7ZLIMRdSwDbzl0Vce1qAdeTeoJb2lQi68my3Y
+ yyWI94ahVEOhCs2D1coNOmWYjpek8J80PGFS3oGu7r+aS3BF/QiUyFoyeeaOb2T+gs2+
+ HY0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=VoWvRhVqzXHkQ0OsvxSGeS/VJPiNA3/g3FAmYYygOdw=;
- b=d7tvyHCYU0N7D2roSxcpG3mHxM9VgHjwWxJBfRrrmWQNiN2tGTdqWVdBUcNt2m0L/5
- ICHCNwWbgz84y8UAiXCBVBHNPpOnWxEqfPNm6s+1/WKKRurNRv6JTpQaPHxAw/s3EZNv
- JDyDIo7y1Su6TuGAVh5Inc0UxXM8PAiAdr21uI7Uu3uaUa7A8hYjgheh+4s9ANb3mEWA
- DnVEb2AL4hJim97MfwXink8zUXZW0P34bQ9nXyuIYr6/gt7TDJD1na+Lsw3RyWc7i1NK
- R8MRE/bHqz3Tgp/A9KXNIJxVLR2KLSoT26JLAAnr9Z8VIZeH/U8Qz6c7P7jW1OV2aeyA
- SqSA==
-X-Gm-Message-State: AOAM531FEUsPoVfWbFRrPHeMEUPMtLQ1kwdQ59jb9BDDKUo8wWMcGLPJ
- HKCLkCdG99HhnROb7Wy/va/QIzt735nq
-X-Google-Smtp-Source: ABdhPJx8y0kZKpPj1sFhkhggFZKcZCCqwCconUOz/jXAArtDcupPU7deynqeh0MVM45/MhZGwK2ChR5h6DCc
-X-Received: from r2d2-qp.c.googlers.com ([fda3:e722:ac3:10:28:9cb1:c0a8:1652])
- (user=qperret job=sendgmr) by 2002:ad4:5901:: with SMTP id
- ez1mr3999273qvb.38.1614697255713; Tue, 02 Mar 2021 07:00:55 -0800 (PST)
-Date: Tue,  2 Mar 2021 14:59:52 +0000
+ bh=eue23Q78bOa6+/qbv0+6w883I/AngR/tMntsoJXpnuQ=;
+ b=GD8Vp44tRgny0nYba7SRBmH+rzk8phsxxLJFqXHxMvBnQglJce1SIoyFbJ89aEE9Oj
+ ksB5Dbe84VUqIYpDrQvx8JEg5sOlsDv3p3CkzLR+msH6TnkRUSLgk/PLxM5P97AFaVvG
+ yJN/UGp7Alko5hoJngp9eAUAszed/PwGorJgDPAItYAPwCRm+e1qllKQUsGU2SsbGlHU
+ AZUXGj9ca2BwRyV0JNM9/hvSSd6PtmwCCxkh6zX1h5dXmSlIcFwWJQ8IqEtHFLaDzrlH
+ RtiGB4OeVpB4m36etre2BW1Zsdk8STSAcEKAXBUK3kOxFXQ3MtuIs/tzUmsh0VniNsIM
+ dx/w==
+X-Gm-Message-State: AOAM530w5idNbdDAVuibF9iu4i1xAFzrc49mN6dRdEejmppmyC80eO4z
+ FmEu4kj4yQmaNSCYuh2YiwejyjxVT0eH
+X-Google-Smtp-Source: ABdhPJxEqIQZb2BYYx4oJbXqcI8pQfBowRyHhxZCpcsx84Q/DAuukPbVQiX0S9b4CaaJzjpiugoRR377rmIT
+X-Received: from r2d2-qp.c.googlers.com
+ ([fda3:e722:ac3:cc00:28:9cb1:c0a8:1652])
+ (user=qperret job=sendgmr) by 2002:a1c:b6d7:: with SMTP id
+ g206mr4472055wmf.123.1614697257976; Tue, 02 Mar 2021 07:00:57 -0800 (PST)
+Date: Tue,  2 Mar 2021 14:59:53 +0000
 In-Reply-To: <20210302150002.3685113-1-qperret@google.com>
-Message-Id: <20210302150002.3685113-23-qperret@google.com>
+Message-Id: <20210302150002.3685113-24-qperret@google.com>
 Mime-Version: 1.0
 References: <20210302150002.3685113-1-qperret@google.com>
 X-Mailer: git-send-email 2.30.1.766.gb4fecdf3b7-goog
-Subject: [PATCH v3 22/32] KVM: arm64: Refactor __populate_fault_info()
+Subject: [PATCH v3 23/32] KVM: arm64: Make memcache anonymous in pgtable
+ allocator
 From: Quentin Perret <qperret@google.com>
 To: catalin.marinas@arm.com, will@kernel.org, maz@kernel.org, 
  james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com
@@ -93,74 +95,64 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Refactor __populate_fault_info() to introduce __get_fault_info() which
-will be used once the host is wrapped in a stage 2.
+The current stage2 page-table allocator uses a memcache to get
+pre-allocated pages when it needs any. To allow re-using this code at
+EL2 which uses a concept of memory pools, make the memcache argument of
+kvm_pgtable_stage2_map() anonymous, and let the mm_ops zalloc_page()
+callbacks use it the way they need to.
 
 Signed-off-by: Quentin Perret <qperret@google.com>
 ---
- arch/arm64/kvm/hyp/include/hyp/switch.h | 37 ++++++++++++++-----------
- 1 file changed, 21 insertions(+), 16 deletions(-)
+ arch/arm64/include/asm/kvm_pgtable.h | 6 +++---
+ arch/arm64/kvm/hyp/pgtable.c         | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/kvm/hyp/include/hyp/switch.h b/arch/arm64/kvm/hyp/include/hyp/switch.h
-index 6c1f51f25eb3..1f017c9851bb 100644
---- a/arch/arm64/kvm/hyp/include/hyp/switch.h
-+++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
-@@ -160,19 +160,9 @@ static inline bool __translate_far_to_hpfar(u64 far, u64 *hpfar)
- 	return true;
- }
+diff --git a/arch/arm64/include/asm/kvm_pgtable.h b/arch/arm64/include/asm/kvm_pgtable.h
+index 21e0985d2e00..9935dbae2cc1 100644
+--- a/arch/arm64/include/asm/kvm_pgtable.h
++++ b/arch/arm64/include/asm/kvm_pgtable.h
+@@ -213,8 +213,8 @@ void kvm_pgtable_stage2_destroy(struct kvm_pgtable *pgt);
+  * @size:	Size of the mapping.
+  * @phys:	Physical address of the memory to map.
+  * @prot:	Permissions and attributes for the mapping.
+- * @mc:		Cache of pre-allocated GFP_PGTABLE_USER memory from which to
+- *		allocate page-table pages.
++ * @mc:		Cache of pre-allocated and zeroed memory from which to allocate
++ *		page-table pages.
+  *
+  * The offset of @addr within a page is ignored, @size is rounded-up to
+  * the next page boundary and @phys is rounded-down to the previous page
+@@ -236,7 +236,7 @@ void kvm_pgtable_stage2_destroy(struct kvm_pgtable *pgt);
+  */
+ int kvm_pgtable_stage2_map(struct kvm_pgtable *pgt, u64 addr, u64 size,
+ 			   u64 phys, enum kvm_pgtable_prot prot,
+-			   struct kvm_mmu_memory_cache *mc);
++			   void *mc);
  
--static inline bool __populate_fault_info(struct kvm_vcpu *vcpu)
-+static inline bool __get_fault_info(u64 esr, struct kvm_vcpu_fault_info *fault)
+ /**
+  * kvm_pgtable_stage2_unmap() - Remove a mapping from a guest stage-2 page-table.
+diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
+index 296675e5600d..bdd6e3d4eeb6 100644
+--- a/arch/arm64/kvm/hyp/pgtable.c
++++ b/arch/arm64/kvm/hyp/pgtable.c
+@@ -445,7 +445,7 @@ struct stage2_map_data {
+ 	kvm_pte_t			*anchor;
+ 
+ 	struct kvm_s2_mmu		*mmu;
+-	struct kvm_mmu_memory_cache	*memcache;
++	void				*memcache;
+ 
+ 	struct kvm_pgtable_mm_ops	*mm_ops;
+ };
+@@ -669,7 +669,7 @@ static int stage2_map_walker(u64 addr, u64 end, u32 level, kvm_pte_t *ptep,
+ 
+ int kvm_pgtable_stage2_map(struct kvm_pgtable *pgt, u64 addr, u64 size,
+ 			   u64 phys, enum kvm_pgtable_prot prot,
+-			   struct kvm_mmu_memory_cache *mc)
++			   void *mc)
  {
--	u8 ec;
--	u64 esr;
--	u64 hpfar, far;
--
--	esr = vcpu->arch.fault.esr_el2;
--	ec = ESR_ELx_EC(esr);
--
--	if (ec != ESR_ELx_EC_DABT_LOW && ec != ESR_ELx_EC_IABT_LOW)
--		return true;
--
--	far = read_sysreg_el2(SYS_FAR);
-+	fault->far_el2 = read_sysreg_el2(SYS_FAR);
- 
- 	/*
- 	 * The HPFAR can be invalid if the stage 2 fault did not
-@@ -188,14 +178,29 @@ static inline bool __populate_fault_info(struct kvm_vcpu *vcpu)
- 	if (!(esr & ESR_ELx_S1PTW) &&
- 	    (cpus_have_final_cap(ARM64_WORKAROUND_834220) ||
- 	     (esr & ESR_ELx_FSC_TYPE) == FSC_PERM)) {
--		if (!__translate_far_to_hpfar(far, &hpfar))
-+		if (!__translate_far_to_hpfar(fault->far_el2, &fault->hpfar_el2))
- 			return false;
- 	} else {
--		hpfar = read_sysreg(hpfar_el2);
-+		fault->hpfar_el2 = read_sysreg(hpfar_el2);
- 	}
- 
--	vcpu->arch.fault.far_el2 = far;
--	vcpu->arch.fault.hpfar_el2 = hpfar;
-+	return true;
-+}
-+
-+static inline bool __populate_fault_info(struct kvm_vcpu *vcpu)
-+{
-+	u8 ec;
-+	u64 esr;
-+
-+	esr = vcpu->arch.fault.esr_el2;
-+	ec = ESR_ELx_EC(esr);
-+
-+	if (ec != ESR_ELx_EC_DABT_LOW && ec != ESR_ELx_EC_IABT_LOW)
-+		return true;
-+
-+	if (!__get_fault_info(esr, &vcpu->arch.fault))
-+		return false;
-+
- 	return true;
- }
- 
+ 	int ret;
+ 	struct stage2_map_data map_data = {
 -- 
 2.30.1.766.gb4fecdf3b7-goog
 
