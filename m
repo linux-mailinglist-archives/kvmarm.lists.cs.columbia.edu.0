@@ -2,63 +2,53 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A4E232B79A
-	for <lists+kvmarm@lfdr.de>; Wed,  3 Mar 2021 12:49:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 81D3C32B890
+	for <lists+kvmarm@lfdr.de>; Wed,  3 Mar 2021 15:19:00 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0FEE94B751;
-	Wed,  3 Mar 2021 06:49:37 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id ECC144B236;
+	Wed,  3 Mar 2021 09:18:59 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id m2Alj1+VkYr4; Wed,  3 Mar 2021 06:49:36 -0500 (EST)
+	with ESMTP id jMhYz2QN5zjV; Wed,  3 Mar 2021 09:18:59 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C53074B69D;
-	Wed,  3 Mar 2021 06:49:35 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 803524B233;
+	Wed,  3 Mar 2021 09:18:58 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C6EFB4B64F
- for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Mar 2021 06:49:34 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 46F164B21F
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Mar 2021 09:18:57 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id VQZyPN916R7t for <kvmarm@lists.cs.columbia.edu>;
- Wed,  3 Mar 2021 06:49:33 -0500 (EST)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C4FCA4B5F1
- for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Mar 2021 06:49:33 -0500 (EST)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 5B67164EDE;
- Wed,  3 Mar 2021 11:49:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1614772172;
- bh=Ij+AIShpeMAYkd5iWPOBrQjZXlkiW/5YIu+UuS8glCU=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=foFVp21i4EfsQIt8xvEyoy9aciANAodw7gEORSgUZaZw9WjHCDXEPv2fBv7EBQS9/
- EoVtXyjL7zUZpCeVedc8Rz4n6eLhzkaBD/3UsBf5tI+bQ4x+D9l92frKV579p8fvJF
- ygoLD0BfY0OjGVhYCK3EhYgjypX8Tt0nMSQUy0ChnMNQChVe5F6UNfeuB/EXa/uNej
- VkWCOKhelIUHw6mCRcsc2k01d/i64zJS23cuMbInzMR0vyg4qyu99RuKNP3nd0OZ2U
- DeR/JHSYIFPgrk70zakPbRx3SYLcS0OD/8boKw67k81RZq1ZO5nI/FDzs+E2ASENq7
- 7HYOnD8klGLOg==
-Date: Wed, 3 Mar 2021 11:49:24 +0000
-From: Will Deacon <will@kernel.org>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH] KVM: arm64: Fix unaligned addr case in mmu walking
-Message-ID: <20210303114924.GB18452@willie-the-truck>
-References: <20210303024225.2591-1-justin.he@arm.com>
- <87sg5czhny.wl-maz@kernel.org>
+ with ESMTP id yuEpMQ0jJ0jF for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  3 Mar 2021 09:18:55 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BE1624B21E
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  3 Mar 2021 09:18:55 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4ABB631B;
+ Wed,  3 Mar 2021 06:18:55 -0800 (PST)
+Received: from slackpad.fritz.box (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5C4E73F766;
+ Wed,  3 Mar 2021 06:18:54 -0800 (PST)
+Date: Wed, 3 Mar 2021 14:18:46 +0000
+From: Andre Przywara <andre.przywara@arm.com>
+To: Alexandru Elisei <alexandru.elisei@arm.com>
+Subject: Re: [kvm-unit-tests PATCH] configure: arm/arm64: Add --earlycon
+ option to set UART type and address
+Message-ID: <20210303141846.0bcc0d2c@slackpad.fritz.box>
+In-Reply-To: <20210219163718.109101-1-alexandru.elisei@arm.com>
+References: <20210219163718.109101-1-alexandru.elisei@arm.com>
+Organization: Arm Ltd.
+X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.31; x86_64-slackware-linux-gnu)
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <87sg5czhny.wl-maz@kernel.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: Jia He <justin.he@arm.com>, Catalin Marinas <catalin.marinas@arm.com>,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu
+Cc: pbonzini@redhat.com, kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -75,53 +65,132 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Mar 03, 2021 at 09:54:25AM +0000, Marc Zyngier wrote:
-> Hi Jia,
-> 
-> On Wed, 03 Mar 2021 02:42:25 +0000,
-> Jia He <justin.he@arm.com> wrote:
-> > 
-> > If the start addr is not aligned with the granule size of that level.
-> > loop step size should be adjusted to boundary instead of simple
-> > kvm_granual_size(level) increment. Otherwise, some mmu entries might miss
-> > the chance to be walked through.
-> > E.g. Assume the unmap range [data->addr, data->end] is
-> > [0xff00ab2000,0xff00cb2000] in level 2 walking and NOT block mapping.
-> 
-> When does this occur? Upgrade from page mappings to block? Swap out?
-> 
-> > And the 1st part of that pmd entry is [0xff00ab2000,0xff00c00000]. The
-> > pmd value is 0x83fbd2c1002 (not valid entry). In this case, data->addr
-> > should be adjusted to 0xff00c00000 instead of 0xff00cb2000.
-> 
-> Let me see if I understand this. Assuming 4k pages, the region
-> described above spans *two* 2M entries:
-> 
-> (a) ff00ab2000-ff00c00000, part of ff00a00000-ff00c00000
-> (b) ff00c00000-ff00db2000, part of ff00c00000-ff00e00000
-> 
-> (a) has no valid mapping, but (b) does. Because we fail to correctly
-> align on a block boundary when skipping (a), we also skip (b), which
-> is then left mapped.
-> 
-> Did I get it right? If so, yes, this is... annoying.
-> 
-> Understanding the circumstances this triggers in would be most
-> interesting. This current code seems to assume that we get ranges
-> aligned to mapping boundaries, but I seem to remember that the old
-> code did use the stage2_*_addr_end() helpers to deal with this case.
-> 
-> Will: I don't think things have changed in that respect, right?
+On Fri, 19 Feb 2021 16:37:18 +0000
+Alexandru Elisei <alexandru.elisei@arm.com> wrote:
 
-We've maintained stage2_pgd_addr_end() for the top-level iterator, but
-it looks like we're failing to do the rounding in __kvm_pgtable_visit()
-when hitting a leaf entry, so the caller (__kvm_pgtable_walk()) will
-terminate early.
+> Currently, the UART early address is set indirectly with the --vmm option
+> and there are only two possible values: if the VMM is qemu (the default),
+> then the UART address is set to 0x09000000; if the VMM is kvmtool, then the
+> UART address is set to 0x3f8.
+> 
+> There several efforts under way to change the kvmtool UART address, and
+> kvm-unit-tests so far hasn't had mechanism to let the user set a specific
+> address, which means that the early UART won't be available.
+> 
+> This situation will only become worse as kvm-unit-tests gains support to
+> run as an EFI app, as each platform will have their own UART type and
+> address.
+> 
+> To address both issues, a new configure option is added, --earlycon. The
+> syntax and semantics are identical to the kernel parameter with the same
+> name.
 
-I agree that it's annoying, as you'd have expected us to run into this
-earlier on.
+Nice one! I like that reusing of an existing scheme.
 
-Will
+> Specifying this option will overwrite the UART address set by --vmm.
+> 
+> At the moment, the UART type and register width parameters are ignored
+> since both qemu's and kvmtool's UART emulation use the same offset for the
+> TX register and no other registers are used by kvm-unit-tests, but the
+> parameters will become relevant once EFI support is added.
+> 
+> Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
+> ---
+> The kvmtool patches I was referring to are the patches to unify ioport and
+> MMIO emulation [1] and to allow the user to specify a custom memory layout
+> for the VM [2] (these patches are very old, but I plan to revive them after
+> the ioport and MMIO unification series are merged).
+> 
+> [1] https://lore.kernel.org/kvm/20201210142908.169597-1-andre.przywara@arm.com/T/#t
+> [2] https://lore.kernel.org/kvm/1569245722-23375-1-git-send-email-alexandru.elisei@arm.com/
+> 
+>  configure | 35 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 35 insertions(+)
+> 
+> diff --git a/configure b/configure
+> index cdcd34e94030..d94b92255088 100755
+> --- a/configure
+> +++ b/configure
+> @@ -26,6 +26,7 @@ errata_force=0
+>  erratatxt="$srcdir/errata.txt"
+>  host_key_document=
+>  page_size=
+> +earlycon=
+>  
+>  usage() {
+>      cat <<-EOF
+> @@ -54,6 +55,17 @@ usage() {
+>  	    --page-size=PAGE_SIZE
+>  	                           Specify the page size (translation granule) (4k, 16k or
+>  	                           64k, default is 64k, arm64 only)
+> +	    --earlycon=EARLYCON
+> +	                           Specify the UART name, type and address (optional, arm and
+> +	                           arm64 only). The specified address will overwrite the UART
+> +	                           address set by the --vmm option. EARLYCON can be on of (case
+> +	                           sensitive):
+> +	               uart[8250],mmio,ADDR
+> +	                           Specify an 8250 compatible UART at address ADDR. Supported
+> +	                           register stride is 8 bit only.
+> +	               pl011,mmio,ADDR
+> +	                           Specify a PL011 compatible UART at address ADDR. Supported
+> +	                           register stride is 8 bit only.
+
+I think the PL011 only ever specified 32-bit register accesses? I just
+see that we actually do a writeb() for puts, that is not guaranteed to
+work on a hardware PL011, AFAIK. I guess QEMU just doesn't care ...
+Looks like we should fix this, maybe we get mmio32 for uart8250 for
+free, then.
+
+The kernel specifies "pl011,mmio32,ADDR" or "pl011,ADDR", so I think we
+should keep it compatible. "mmio[32]" is pretty much redundant on the
+PL011 (no port I/O), I think it's just for consistency with the 8250.
+Can you tweak the routine below to make this optional, and also accept
+mmio32?
+
+Cheers,
+Andre
+
+>  EOF
+>      exit 1
+>  }
+> @@ -112,6 +124,9 @@ while [[ "$1" = -* ]]; do
+>  	--page-size)
+>  	    page_size="$arg"
+>  	    ;;
+> +	--earlycon)
+> +	    earlycon="$arg"
+> +	    ;;
+>  	--help)
+>  	    usage
+>  	    ;;
+> @@ -170,6 +185,26 @@ elif [ "$arch" = "arm" ] || [ "$arch" = "arm64" ]; then
+>          echo '--vmm must be one of "qemu" or "kvmtool"!'
+>          usage
+>      fi
+> +
+> +    if [ "$earlycon" ]; then
+> +        name=$(echo $earlycon|cut -d',' -f1)
+> +        if [ "$name" != "uart" ] && [ "$name" != "uart8250" ] &&
+> +                [ "$name" != "pl011" ]; then
+> +            echo "unknown earlycon name: $name"
+> +            usage
+> +        fi
+> +        type=$(echo $earlycon|cut -d',' -f2)
+> +        if [ "$type" != "mmio" ]; then
+> +            echo "unknown earlycon type: $type"
+> +            usage
+> +        fi
+> +        addr=$(echo $earlycon|cut -d',' -f3)
+> +        if [ -z "$addr" ]; then
+> +            echo "missing earlycon address"
+> +            usage
+> +        fi
+> +        arm_uart_early_addr=$addr
+> +    fi
+>  elif [ "$arch" = "ppc64" ]; then
+>      testdir=powerpc
+>      firmware="$testdir/boot_rom.bin"
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
