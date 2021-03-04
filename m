@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FA5232DCA7
+	by mail.lfdr.de (Postfix) with ESMTP id DAB9C32DCA8
 	for <lists+kvmarm@lfdr.de>; Thu,  4 Mar 2021 23:02:17 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7B0104B64A;
-	Thu,  4 Mar 2021 17:02:16 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8CBC84B4D1;
+	Thu,  4 Mar 2021 17:02:17 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,69 +14,70 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2mgR9xwvAEZu; Thu,  4 Mar 2021 17:02:16 -0500 (EST)
+	with ESMTP id J4cCIywp3vR5; Thu,  4 Mar 2021 17:02:16 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 90FA04B5E9;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AF8764B64F;
 	Thu,  4 Mar 2021 17:02:14 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C0D8C4B624
- for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Mar 2021 13:45:49 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C56334B132
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Mar 2021 16:25:54 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id zNMzo--DM4zd for <kvmarm@lists.cs.columbia.edu>;
- Thu,  4 Mar 2021 13:45:48 -0500 (EST)
-Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com
- [209.85.216.73])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A1C484B622
- for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Mar 2021 13:45:48 -0500 (EST)
-Received: by mail-pj1-f73.google.com with SMTP id w2so8090485pjk.4
- for <kvmarm@lists.cs.columbia.edu>; Thu, 04 Mar 2021 10:45:48 -0800 (PST)
+ with ESMTP id B8gilKDkyc+5 for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  4 Mar 2021 16:25:53 -0500 (EST)
+Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com
+ [209.85.222.53])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 932E34B12A
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Mar 2021 16:25:53 -0500 (EST)
+Received: by mail-ua1-f53.google.com with SMTP id u13so8056uap.8
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 04 Mar 2021 13:25:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=sender:date:message-id:mime-version:subject:from:to:cc;
- bh=FHJbv/IQitHrDrqVV5Zv3feuTlL4Ima66irM/2+LBrM=;
- b=wRgnh5UtXhuDMEX4WcxzBYAuLiE44UoxjjEiFelNA/MY0cFHVj48pME9fSr35jrMFE
- tSuyPw2CTDTdDIuy2+baTjYoz/wY8tQa6exgABVRCswBJrn+hjSwzUZWXny19wggiVrw
- ivQTLxairGocBLde57e2olP4slyQ5tt92+sSshb63VLs1P9CrtqXtbWWE4wQEonyL86d
- uOhNhNe3NpndX/wFly+2qibRgAe2Q1QOjFOJNAJ6S1weKBl9tZmhscVg489lt3wLn8wB
- IlD2/WxJkMUZ/Nvsb6yivdGf5ni3Beh+AXoUzorwOrU/794T4T4gKoxVoQDad1XkunUz
- wRVw==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=pCwoe+nr6h8/KUCkhmMjNpvzna+/assXUeU6NY8XPQw=;
+ b=qNfhikGP/Y+wem+C6aP2zxL/0tWtf9IiSe6JA9ksOlB1STeGcs3MOep8E8xqEXHUUV
+ 08n7jU8Ti46BVhcBp5UcIw1VhqPrNv+3tFzjpM0dcg2rtOrTDbvjkRhq+atik1A0mWBa
+ w9Vl0ueK6N/SLNESzCtvoaVKG8DSYp94p5JXIHT+uUvbqxpFeEBR6dbugzDA2WyYEHpx
+ NEf1lXg3klrbeaHNWugn/3ftddgDTXgGBPxAAIusRbhizy+RPdxBP6JziO28z8fP6HBZ
+ l88Zi3sMqiDBdiaxwWiLlDzhK4zNFu8tuKOF3ZbE6D0PSfR8mVWzp6QTuujWkyTQld/h
+ P9Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
- :to:cc;
- bh=FHJbv/IQitHrDrqVV5Zv3feuTlL4Ima66irM/2+LBrM=;
- b=EBw9RSK1xgv111rHLGZhlHYnp7zUXDGfFwlQuiaHWOVkSOkxXzM5jWHtarPsaGL2Zz
- wG7XPYsIDZ9nBslf1Gwk6E6BrkYrDu6sbYlPg5NjvXqgBKD2Dd6N8cwlViC2C+P9mZ8g
- B9OxeZu/GeRqdEjce9dtY2eMHiU0lCI7mvJvdYOXVmTZAmiO6U0YF1Vh7GaKj8/f3cz0
- pxf2PXUhJR6h3KKu62kUBhTgN6VO+i064CdukdI2n2zrOWJl0Q/+LnMq2NzuKX6Qo2Zq
- cNvOf6NphmW2IXci11jrZqvcfQFFBB6iuLUhFVNCEgOPEaJ+4hGSFYb/npnCydB4b2EH
- AhvQ==
-X-Gm-Message-State: AOAM531GD1YSER4ZfuKyM4Vzn+0jm59neJGm/wjzMYVLzh6BL79VfQSL
- 9W7KzYC1+3g59nffM6YWmPjeCzv3K8sRQvt+dTQ=
-X-Google-Smtp-Source: ABdhPJwfgFOcLFg9DksNl5+x+5Ik41PWFI2fJWyTU8ahVjM+/AOUwJrkCCQX7ndFdpkYHpBGBfgJrt3sQ6pNyQya1sQ=
-X-Received: from samitolvanen1.mtv.corp.google.com
- ([2620:15c:201:2:c931:40c9:b7a5:6cc8])
- (user=samitolvanen job=sendgmr) by 2002:a17:90b:1b46:: with SMTP id
- nv6mr5948244pjb.45.1614883547630; Thu, 04 Mar 2021 10:45:47 -0800 (PST)
-Date: Thu,  4 Mar 2021 10:45:44 -0800
-Message-Id: <20210304184544.2014171-1-samitolvanen@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.30.1.766.gb4fecdf3b7-goog
-Subject: [PATCH] KVM: arm64: Disable LTO in hyp
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=pCwoe+nr6h8/KUCkhmMjNpvzna+/assXUeU6NY8XPQw=;
+ b=s2stD1eNMvpPMaBrDdrWgbDUbHrnVxFWnm0xou19CJK7MbDkvN67G9U6V2bL1OH0Gh
+ zefZ632ff2oS1Dul7LI09q4VhxlXnluAbyUDPdgq/tNLSPKfS+/tnPj3u8rX9qO2UbTX
+ jtOqmRcUcSGJrO4bEIZfA2AUJwAvo7Zj2KlZPvC1ayB617j7VeX3dw1RVIVNoITaEDRy
+ FEM0RFy2PLNlatZK33qNGNZsEI89j6oLJC3vZrook0K4OQJ/QgAxNHbcdnA/xGzcEixH
+ SZq2ohHB8MMoRboDie+Hb3zSZ39gx5yZxBnBTg83ScMgeemyPsN4vt3f40FnmE0YNoJa
+ KBPA==
+X-Gm-Message-State: AOAM531mpMfIIG/wzhSZwFJdgbZTszEJXL3VP7eqUPvFaqrSmf4o/1XQ
+ Akf1PocnqN3QucBmmB8DPpm77wHhQmaXIsbOiq6fKA==
+X-Google-Smtp-Source: ABdhPJy/oonaLJwQYkh03ssEj0zP6DykmvSGVfCb4vLaenGZYrlXd7G63N7OJvZ/l0mjcOAbE1mlQEK9CcmrkmWhq5E=
+X-Received: by 2002:ab0:5ead:: with SMTP id y45mr3705042uag.33.1614893152797; 
+ Thu, 04 Mar 2021 13:25:52 -0800 (PST)
+MIME-Version: 1.0
+References: <20210304184544.2014171-1-samitolvanen@google.com>
+ <87k0qmzq5u.wl-maz@kernel.org>
+In-Reply-To: <87k0qmzq5u.wl-maz@kernel.org>
 From: Sami Tolvanen <samitolvanen@google.com>
-To: Marc Zyngier <maz@kernel.org>, James Morse <james.morse@arm.com>
+Date: Thu, 4 Mar 2021 13:25:41 -0800
+Message-ID: <CABCJKufmjMT8+hGEnL3aJM7-OSwhYSHiJA=i8e7dHSGDWXYtsg@mail.gmail.com>
+Subject: Re: [PATCH] KVM: arm64: Disable LTO in hyp
+To: Marc Zyngier <maz@kernel.org>, Fangrui Song <maskray@google.com>, 
+ Nick Desaulniers <ndesaulniers@google.com>
 X-Mailman-Approved-At: Thu, 04 Mar 2021 17:02:13 -0500
 Cc: Kees Cook <keescook@chromium.org>,
- Catalin Marinas <catalin.marinas@arm.com>, linux-kernel@vger.kernel.org,
- Nathan Chancellor <nathan@kernel.org>, linux-arm-kernel@lists.infradead.org,
- Sami Tolvanen <samitolvanen@google.com>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu
+ Catalin Marinas <catalin.marinas@arm.com>, LKML <linux-kernel@vger.kernel.org>,
+ Nathan Chancellor <nathan@kernel.org>,
+ linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -93,46 +94,89 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-allmodconfig + CONFIG_LTO_CLANG_THIN=y fails to build due to following
-linker errors:
+On Thu, Mar 4, 2021 at 11:15 AM Marc Zyngier <maz@kernel.org> wrote:
+>
+> On Thu, 04 Mar 2021 18:45:44 +0000,
+> Sami Tolvanen <samitolvanen@google.com> wrote:
+> >
+> > allmodconfig + CONFIG_LTO_CLANG_THIN=y fails to build due to following
+> > linker errors:
+> >
+> >   ld.lld: error: irqbypass.c:(function __guest_enter: .text+0x21CC):
+>
+> I assume this message is only an oddity, right? Because
+> __guest_enter() is as far as you can imagine from irqbypass.c...
 
-  ld.lld: error: irqbypass.c:(function __guest_enter: .text+0x21CC):
-  relocation R_AARCH64_CONDBR19 out of range: 2031220 is not in
-  [-1048576, 1048575]; references hyp_panic
-  >>> defined in vmlinux.o
+I'm not sure what's up with the filename in the error message. Fangrui
+or Nick probably have a better idea.
 
-  ld.lld: error: irqbypass.c:(function __guest_enter: .text+0x21E0):
-  relocation R_AARCH64_ADR_PREL_LO21 out of range: 2031200 is not in
-  [-1048576, 1048575]; references hyp_panic
-  >>> defined in vmlinux.o
+> >   relocation R_AARCH64_CONDBR19 out of range: 2031220 is not in
+> >   [-1048576, 1048575]; references hyp_panic
+> >   >>> defined in vmlinux.o
+> >
+> >   ld.lld: error: irqbypass.c:(function __guest_enter: .text+0x21E0):
+> >   relocation R_AARCH64_ADR_PREL_LO21 out of range: 2031200 is not in
+> >   [-1048576, 1048575]; references hyp_panic
+> >   >>> defined in vmlinux.o
+> >
+> > As LTO is not really necessary for the hypervisor code, disable it for
+> > the hyp directory to fix the build.
+>
+> Can you shed some light on what the problem is exactly?
 
-As LTO is not really necessary for the hypervisor code, disable it for
-the hyp directory to fix the build.
+I assume hyp_panic() ends up being placed too far from __guest_enter()
+when the kernel is large enough. Possibly something to do with LLVM
+always splitting functions into separate sections with LTO. I'm not
+sure why the linker cannot shuffle things around to make everyone
+happy in this case, but I confirmed that this patch also fixes the
+build issue for me:
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1317
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
----
- arch/arm64/kvm/hyp/Makefile | 3 +++
- 1 file changed, 3 insertions(+)
+diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
+index af8e940d0f03..128197b7c794 100644
+--- a/arch/arm64/kvm/hyp/vhe/switch.c
++++ b/arch/arm64/kvm/hyp/vhe/switch.c
+@@ -214,7 +214,7 @@ static void __hyp_call_panic(u64 spsr, u64 elr, u64 par)
+ }
+ NOKPROBE_SYMBOL(__hyp_call_panic);
 
-diff --git a/arch/arm64/kvm/hyp/Makefile b/arch/arm64/kvm/hyp/Makefile
-index 687598e41b21..e8116016e6a8 100644
---- a/arch/arm64/kvm/hyp/Makefile
-+++ b/arch/arm64/kvm/hyp/Makefile
-@@ -11,3 +11,6 @@ subdir-ccflags-y := -I$(incdir)				\
- 		    $(DISABLE_STACKLEAK_PLUGIN)
- 
- obj-$(CONFIG_KVM) += vhe/ nvhe/ pgtable.o
-+
-+# Disable LTO for the files in this directory
-+KBUILD_CFLAGS := $(filter-out $(CC_FLAGS_LTO), $(KBUILD_CFLAGS))
+-void __noreturn hyp_panic(void)
++void __noreturn hyp_panic(void) __section(".text")
+ {
+        u64 spsr = read_sysreg_el2(SYS_SPSR);
+        u64 elr = read_sysreg_el2(SYS_ELR);
 
-base-commit: f69d02e37a85645aa90d18cacfff36dba370f797
--- 
-2.30.1.766.gb4fecdf3b7-goog
+> >
+> > Link: https://github.com/ClangBuiltLinux/linux/issues/1317
+> > Reported-by: Nathan Chancellor <nathan@kernel.org>
+> > Tested-by: Nathan Chancellor <nathan@kernel.org>
+> > Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+> > ---
+> >  arch/arm64/kvm/hyp/Makefile | 3 +++
+> >  1 file changed, 3 insertions(+)
+> >
+> > diff --git a/arch/arm64/kvm/hyp/Makefile b/arch/arm64/kvm/hyp/Makefile
+> > index 687598e41b21..e8116016e6a8 100644
+> > --- a/arch/arm64/kvm/hyp/Makefile
+> > +++ b/arch/arm64/kvm/hyp/Makefile
+> > @@ -11,3 +11,6 @@ subdir-ccflags-y := -I$(incdir)                             \
+> >                   $(DISABLE_STACKLEAK_PLUGIN)
+> >
+> >  obj-$(CONFIG_KVM) += vhe/ nvhe/ pgtable.o
+> > +
+> > +# Disable LTO for the files in this directory
+> > +KBUILD_CFLAGS := $(filter-out $(CC_FLAGS_LTO), $(KBUILD_CFLAGS))
+> >
+> > base-commit: f69d02e37a85645aa90d18cacfff36dba370f797
+>
+> Can this be reduced to the nvhe part of the tree? The rest of the
+> hypervisor should support being built with LTO, I'd expect. Or am I
+> missing something more significant?
 
+No, this error appears to be about hyp_panic() in the vhe code. While
+I'm not sure how beneficial LTO is in hypervisor code, there shouldn't
+be any other reason we can't use it there.
+
+Sami
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
