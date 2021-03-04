@@ -2,98 +2,84 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 028BE32F124
-	for <lists+kvmarm@lfdr.de>; Fri,  5 Mar 2021 18:27:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD14832F350
+	for <lists+kvmarm@lfdr.de>; Fri,  5 Mar 2021 19:58:36 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 438E74B5B7;
-	Fri,  5 Mar 2021 12:27:47 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 415F34B318;
+	Fri,  5 Mar 2021 13:58:36 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.209
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id d3jZpnK9og1x; Fri,  5 Mar 2021 12:27:47 -0500 (EST)
+	with ESMTP id v6ZmhL0TZMI0; Fri,  5 Mar 2021 13:58:36 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 132BB4B5B5;
-	Fri,  5 Mar 2021 12:27:46 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 64A374B297;
+	Fri,  5 Mar 2021 13:58:34 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2600D4B56A
- for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Mar 2021 12:27:45 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 401724B3D7
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Mar 2021 17:34:31 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id mMHxawV4ZXlX for <kvmarm@lists.cs.columbia.edu>;
- Fri,  5 Mar 2021 12:27:44 -0500 (EST)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [63.128.21.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1D5514B54E
- for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Mar 2021 12:27:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1614965263;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bLxB2l1qRKkq52ZoCU3NDR4MPkAT8Rs45+g/2VRl+rw=;
- b=aUPT5RB7+1gNVEYyJZ8WywzUs3l9MMH3fbSZX+PAgHyGEnTcENGEZGUukyB3VvERyWhmN+
- 0CDl1M/dF0Myo/Pj9I22Y6ksPj6q2gdMlm8x6DhvKsf8EUWG395q5Fmc6mGgp1rVfeUxcP
- YursdeskdAs09zRNMIF5DaQlWMyuMWE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-462-AcJL3infN8qroLedBa2JpQ-1; Fri, 05 Mar 2021 12:27:40 -0500
-X-MC-Unique: AcJL3infN8qroLedBa2JpQ-1
-Received: by mail-wm1-f71.google.com with SMTP id m17so661514wml.3
- for <kvmarm@lists.cs.columbia.edu>; Fri, 05 Mar 2021 09:27:39 -0800 (PST)
+ with ESMTP id gJEEEH5cfFQV for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  4 Mar 2021 17:34:30 -0500 (EST)
+Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com
+ [209.85.221.176])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2AFC34B3D6
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Mar 2021 17:34:30 -0500 (EST)
+Received: by mail-vk1-f176.google.com with SMTP id j188so64453vke.13
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 04 Mar 2021 14:34:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=Rajd7yQJWJDe7aYct9nFV0g6FXEt/vXGJuGQS9x6yXw=;
+ b=oUka736fvVmqzp5RZlMPVQlOWSDNz4htaYj7uuL247K09QoorKATvBeitoXWE8gl+X
+ r94pJWxWaxqv79liStuj+r+wOq9fKTa2NVLKprtxD75cZnVmt9BEMnKCn4Xd9zs4UWJ6
+ CQ6jtxH67C/5rnyDzukP5k1FYOYfssSHIFSyNA7WdjiO/frwnnkVeZoO7o+Gc9I57FTo
+ u/S0ZsgZwgdx5YNwzOLc4j3eZMAZpI2wZLGK5WsqjQgS6eiEvoJewqz2ADLgJI4oWCKz
+ gj3GrX4nrKqtReA0fKuEEoPzn+FxbRqEKhIr5E0rCzeUqMUCAyfLv51punQn6wxGiPA0
+ JyeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=bLxB2l1qRKkq52ZoCU3NDR4MPkAT8Rs45+g/2VRl+rw=;
- b=fk4OwGuyroFq8JzXhOTxAlpmyCs9vIvFE28mZrLj09NRA0P+sFOaKRQ3ivwwlEdTcK
- //1Oc8iRNuZBCyCB88WBJbK4iw1Mx+DLtuDWLQdZXzthbztxoop8j/zjlljpfltgNFO6
- wP8TszMXCxrdVfWEtLvgCgd7ktvZ9ENqhqkplUj7oluux8RcGE8m3Q+Ebi1sQRhgLGl6
- qYl51PUpYGQdkN4GY1XHX0/DtFfufvp8WNJ2eykpcvrAdxy+YOMBNXfmIkypXZaDO6Tk
- wQULQw6oRDULyufQFdUEZ3pWNcGOXFJZFqnBzd18GFOywN7r85ChQoot5KIg5VwLZDfx
- 1Reg==
-X-Gm-Message-State: AOAM532CouB9qXraGRAXo9SsCWsGDOuoJ/W4h2KZ19agDkqwOsUHBvP6
- 8Xi6S5aaGHaTPslspqPZqOnFlkktb0r6hw6nN7ORFwk2Ngyz1Qrtz6KH+T9q8aug0UfvfV8GaDf
- NUCZPK5AzGdwKSwZ6tqozYQY4
-X-Received: by 2002:a5d:63d2:: with SMTP id c18mr10413766wrw.277.1614965258863; 
- Fri, 05 Mar 2021 09:27:38 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJxkbOTMiAdDixzDlmyw0o+BrvOtsI4Mh4wmSTXrH0tuUAuSZrSvkdc9LdEhdcKIKd6WWY0CAA==
-X-Received: by 2002:a5d:63d2:: with SMTP id c18mr10413736wrw.277.1614965258679; 
- Fri, 05 Mar 2021 09:27:38 -0800 (PST)
-Received: from ?IPv6:2001:b07:6468:f312:c8dd:75d4:99ab:290a?
- ([2001:b07:6468:f312:c8dd:75d4:99ab:290a])
- by smtp.gmail.com with ESMTPSA id n5sm5001272wmq.7.2021.03.05.09.27.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 05 Mar 2021 09:27:37 -0800 (PST)
-Subject: Re: [GIT PULL] KVM/arm64 fixes for 5.12, take #1
-To: Marc Zyngier <maz@kernel.org>
-References: <20210305164944.3729910-1-maz@kernel.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <847417af-fdab-9ca1-3edc-39f1d77cb6cb@redhat.com>
-Date: Fri, 5 Mar 2021 18:27:36 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.0
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=Rajd7yQJWJDe7aYct9nFV0g6FXEt/vXGJuGQS9x6yXw=;
+ b=eOCD7fS5BntJixUsFeyna5f/ZDHddvMM86NRo5wpvC0OW/a15gJsf6CXaVUcYDTJaf
+ hctuYJT+E3g/gLL8heV8T9o2V6/dKsJc74xoGwMSHTLvtw82ZOD185MYiu7oUZ49G3DH
+ II8aAwSxkqBc1B+tAsjffo/8GyMpRvPqYeUbsrUavqaYJBQF45/FMVBQrmtA7sE/nqUX
+ g9dpyjwMru2kBjgKavAf5VbVhgVem++WRbX1qdq1WTpIKSlGysXsgruBOoNs8AtMZszu
+ IFkT4OqZbGXGpwKx3jPs3e4/BU1yZ31malwrKcBsjkfdECGZEjFt2ygGORHXKsNnzAmO
+ yusA==
+X-Gm-Message-State: AOAM532//n4QGFpIr1tw5dQZUK3jx6n6j0pqrITNawR3+9ThA3wdIPjH
+ L982jbdG5cy4vS0f9FtQbSnhDjon/IFiUmhM2EXEuA==
+X-Google-Smtp-Source: ABdhPJw9hVzk/M0ZP7TpOX5Yz4NgqYdBHM97WKO8NA9JuMXAIsUjqPbiWDl2C+auPNVj7KxAWJlH8sBOEJlhhiJycZs=
+X-Received: by 2002:a1f:99c2:: with SMTP id b185mr4516009vke.3.1614897269361; 
+ Thu, 04 Mar 2021 14:34:29 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20210305164944.3729910-1-maz@kernel.org>
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pbonzini@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Cc: kernel-team@android.com, Jia He <justin.he@arm.com>, kvm@vger.kernel.org,
- Will Deacon <will@kernel.org>, Andre Przywara <andre.przywara@arm.com>,
- Howard Zhang <Howard.Zhang@arm.com>, Catalin Marinas <catalin.marinas@arm.com>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+References: <20210304184544.2014171-1-samitolvanen@google.com>
+ <87k0qmzq5u.wl-maz@kernel.org>
+ <CABCJKufmjMT8+hGEnL3aJM7-OSwhYSHiJA=i8e7dHSGDWXYtsg@mail.gmail.com>
+ <878s72sgwt.wl-maz@kernel.org>
+In-Reply-To: <878s72sgwt.wl-maz@kernel.org>
+From: Sami Tolvanen <samitolvanen@google.com>
+Date: Thu, 4 Mar 2021 14:34:18 -0800
+Message-ID: <CABCJKud1EmXmmQj-YOUNCFhE3P1W6Uhqpwe1G0zcR5zw71ksJA@mail.gmail.com>
+Subject: Re: [PATCH] KVM: arm64: Disable LTO in hyp
+To: Marc Zyngier <maz@kernel.org>
+X-Mailman-Approved-At: Fri, 05 Mar 2021 13:58:33 -0500
+Cc: Kees Cook <keescook@chromium.org>, Fangrui Song <maskray@google.com>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ Nick Desaulniers <ndesaulniers@google.com>,
+ LKML <linux-kernel@vger.kernel.org>, Nathan Chancellor <nathan@kernel.org>,
+ linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -105,101 +91,80 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 05/03/21 17:49, Marc Zyngier wrote:
-> Hi Paolo,
-> 
-> Here's the first batch of fixes for 5.12. We have a handful of low
-> level world-switch regressions, a page table walker fix, more PMU
-> tidying up, and a workaround for systems with creative firmware.
-> 
-> Note that this is based on -rc1 despite the breakage, as I didn't feel
-> like holding these patches until -rc2.
-> 
-> Please pull,
-> 
-> 	M.
-> 
-> The following changes since commit fe07bfda2fb9cdef8a4d4008a409bb02f35f1bd8:
-> 
->    Linux 5.12-rc1 (2021-02-28 16:05:19 -0800)
-> 
-> are available in the Git repository at:
-> 
->    git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git tags/kvmarm-fixes-5.12-1
-> 
-> for you to fetch changes up to e85583b3f1fe62c9b371a3100c1c91af94005ca9:
-> 
->    KVM: arm64: Fix range alignment when walking page tables (2021-03-04 09:54:12 +0000)
+On Thu, Mar 4, 2021 at 2:17 PM Marc Zyngier <maz@kernel.org> wrote:
+>
+> On Thu, 04 Mar 2021 21:25:41 +0000,
+> Sami Tolvanen <samitolvanen@google.com> wrote:
+> >
+> > On Thu, Mar 4, 2021 at 11:15 AM Marc Zyngier <maz@kernel.org> wrote:
+> > >
+> > > On Thu, 04 Mar 2021 18:45:44 +0000,
+> > > Sami Tolvanen <samitolvanen@google.com> wrote:
+> > > >
+> > > > allmodconfig + CONFIG_LTO_CLANG_THIN=y fails to build due to following
+> > > > linker errors:
+> > > >
+> > > >   ld.lld: error: irqbypass.c:(function __guest_enter: .text+0x21CC):
+> > >
+> > > I assume this message is only an oddity, right? Because
+> > > __guest_enter() is as far as you can imagine from irqbypass.c...
+> >
+> > I'm not sure what's up with the filename in the error message. Fangrui
+> > or Nick probably have a better idea.
+> >
+> > > >   relocation R_AARCH64_CONDBR19 out of range: 2031220 is not in
+> > > >   [-1048576, 1048575]; references hyp_panic
+> > > >   >>> defined in vmlinux.o
+> > > >
+> > > >   ld.lld: error: irqbypass.c:(function __guest_enter: .text+0x21E0):
+> > > >   relocation R_AARCH64_ADR_PREL_LO21 out of range: 2031200 is not in
+> > > >   [-1048576, 1048575]; references hyp_panic
+> > > >   >>> defined in vmlinux.o
+> > > >
+> > > > As LTO is not really necessary for the hypervisor code, disable it for
+> > > > the hyp directory to fix the build.
+> > >
+> > > Can you shed some light on what the problem is exactly?
+> >
+> > I assume hyp_panic() ends up being placed too far from __guest_enter()
+> > when the kernel is large enough. Possibly something to do with LLVM
+> > always splitting functions into separate sections with LTO. I'm not
+> > sure why the linker cannot shuffle things around to make everyone
+> > happy in this case, but I confirmed that this patch also fixes the
+> > build issue for me:
+> >
+> > diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
+> > index af8e940d0f03..128197b7c794 100644
+> > --- a/arch/arm64/kvm/hyp/vhe/switch.c
+> > +++ b/arch/arm64/kvm/hyp/vhe/switch.c
+> > @@ -214,7 +214,7 @@ static void __hyp_call_panic(u64 spsr, u64 elr, u64 par)
+> >  }
+> >  NOKPROBE_SYMBOL(__hyp_call_panic);
+> >
+> > -void __noreturn hyp_panic(void)
+> > +void __noreturn hyp_panic(void) __section(".text")
+> >  {
+> >         u64 spsr = read_sysreg_el2(SYS_SPSR);
+> >         u64 elr = read_sysreg_el2(SYS_ELR);
+> >
+>
+> We're getting into black-magic territory here. Why wouldn't hyp_panic
+> be in the .text section already?
 
-Hi Marc,
+It's not quite black magic. LLVM essentially flips on
+-ffunction-sections with LTO and therefore, hyp_panic() will be in
+.text.hyp_panic in vmlinux.o, while __guest_enter() will be in .text.
+Everything ends up in .text when we link vmlinux, of course.
 
-due to a severe data corruption bug in 5.12-rc1, Linus suggested not 
-including 5.12-rc1 in trees to avoid it eating our filesystems 
-unwittingly during future bisections.
+$ readelf --sections vmlinux.o | grep hyp_panic
+  [3936] .text.hyp_panic   PROGBITS         0000000000000000  004b56e4
 
-Would it be a problem for you to rebase on top of your merge window pull 
-request?  If there are conflicts, another possibility is for you to just 
-send me the patch series.  I will handle all the topic branch juggling.
-
-This will mean rewriting kvmarm.git's history, but it does seem to be 
-the lesser (or the most future-proof) evil.
-
-Thanks,
-
-Paolo
-
-> ----------------------------------------------------------------
-> KVM/arm64 fixes for 5.12, take #1
-> 
-> - Fix SPE context save/restore on nVHE
-> - Fix some subtle host context corruption on vcpu exit
-> - Fix panic handling on nVHE
-> - Prevent the hypervisor from accessing PMU registers when there is none
-> - Workaround broken firmwares advertising bogus GICv2 compatibility
-> - Fix Stage-2 unaligned range unmapping
-> 
-> ----------------------------------------------------------------
-> Andrew Scull (1):
->        KVM: arm64: Fix nVHE hyp panic host context restore
-> 
-> Jia He (1):
->        KVM: arm64: Fix range alignment when walking page tables
-> 
-> Marc Zyngier (4):
->        KVM: arm64: Turn kvm_arm_support_pmu_v3() into a static key
->        KVM: arm64: Don't access PMSELR_EL0/PMUSERENR_EL0 when no PMU is available
->        KVM: arm64: Rename __vgic_v3_get_ich_vtr_el2() to __vgic_v3_get_gic_config()
->        KVM: arm64: Workaround firmware wrongly advertising GICv2-on-v3 compatibility
-> 
-> Suzuki K Poulose (1):
->        KVM: arm64: nvhe: Save the SPE context early
-> 
-> Will Deacon (1):
->        KVM: arm64: Avoid corrupting vCPU context register in guest exit
-> 
->   arch/arm64/include/asm/kvm_asm.h        |  4 ++--
->   arch/arm64/include/asm/kvm_hyp.h        |  8 ++++++-
->   arch/arm64/kernel/image-vars.h          |  3 +++
->   arch/arm64/kvm/hyp/entry.S              |  2 +-
->   arch/arm64/kvm/hyp/include/hyp/switch.h |  9 +++++---
->   arch/arm64/kvm/hyp/nvhe/debug-sr.c      | 12 ++++++++--
->   arch/arm64/kvm/hyp/nvhe/host.S          | 15 +++++++------
->   arch/arm64/kvm/hyp/nvhe/hyp-main.c      |  6 ++---
->   arch/arm64/kvm/hyp/nvhe/switch.c        | 14 +++++++++---
->   arch/arm64/kvm/hyp/pgtable.c            |  1 +
->   arch/arm64/kvm/hyp/vgic-v3-sr.c         | 40 +++++++++++++++++++++++++++++++--
->   arch/arm64/kvm/perf.c                   | 10 +++++++++
->   arch/arm64/kvm/pmu-emul.c               | 10 ---------
->   arch/arm64/kvm/vgic/vgic-v3.c           | 12 +++++++---
->   include/kvm/arm_pmu.h                   |  9 ++++++--
->   15 files changed, 116 insertions(+), 39 deletions(-)
-> 
-
+Sami
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
