@@ -2,88 +2,74 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 31A9D32F353
-	for <lists+kvmarm@lfdr.de>; Fri,  5 Mar 2021 19:58:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C40F32F31E
+	for <lists+kvmarm@lfdr.de>; Fri,  5 Mar 2021 19:47:53 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D567F4B1F6;
-	Fri,  5 Mar 2021 13:58:38 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 13EF24B6C4;
+	Fri,  5 Mar 2021 13:47:53 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8lVE2B3CC7kQ; Fri,  5 Mar 2021 13:58:37 -0500 (EST)
+	with ESMTP id SrNP375x+uF2; Fri,  5 Mar 2021 13:47:52 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AEEE04B662;
-	Fri,  5 Mar 2021 13:58:34 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C91B84B6D2;
+	Fri,  5 Mar 2021 13:47:51 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C24454B21E
- for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Mar 2021 11:55:55 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A8A6A4B6C4
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Mar 2021 13:47:50 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id q0M293qn3vG1 for <kvmarm@lists.cs.columbia.edu>;
- Fri,  5 Mar 2021 11:55:54 -0500 (EST)
-Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com
- [209.85.217.46])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6C5E24B204
- for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Mar 2021 11:55:54 -0500 (EST)
-Received: by mail-vs1-f46.google.com with SMTP id b189so1319208vsd.0
- for <kvmarm@lists.cs.columbia.edu>; Fri, 05 Mar 2021 08:55:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=NKf5oBBu2KISuo5V0ahvjDLUwLWiqpHm4voeGNA9XVQ=;
- b=MFc/EgDeUn5T82qMVlgRjQ8BfFaLSo8y39d7Tq6SwZJoyUiEUORWtASykVvNbxEIyF
- FP1J8f+/4QHcuUIRn7KvRoG1BoNPrbI5TsXRA8ViSu6CusWjgPcQfCW+Xzu8vHu6LOYr
- jOi/jbaJQlMBxQ8PPc1CaXyub0rqamP3K9ttcvy0W+UfRQ9XKeeqbvYX72/5dzAtnpr6
- /7pMt32h3e5jH2DgdcjfdxCLx5DInK3o3UhTtsenKKiGCKFKfyzYTI8e/2jFriUSO6yL
- 40xvLUDycCVb4xx0SgkLpiYwK14bnT68fRLDitnsudT4vHsxFbW/obrkBY5ISbUWs5AE
- 2Arw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=NKf5oBBu2KISuo5V0ahvjDLUwLWiqpHm4voeGNA9XVQ=;
- b=OOXg+yKP0gGIhLUszHHnwyl39sI5D9JlJf6h2i1O5IpsoCoK0lgOMo3JaK0hkB7FN5
- 5E8YQHXrzD8I5i33ajdqgBKZkyZhF98K+Y+vithKqNJaSWK5tqmhBi8nBU5BqUE1TwCs
- 7G7uGORb0rMtuHyyZkcXNPPAp3+5sz3E0P2R7KSR6HO2q9y+K/Fmy1PQWQ43Ap8yqxeX
- EY11zDZu+QtCZP1wAhW+RWFhr11Hqhpj9gJS1V2XUNYq9x1vsb5Xc6ki9rvCtoJjAmGP
- 1hGHYl5cGQGAS7NZ12frW5P4UaQmpZW+aI8YeVYepOPP59NBzKPiw9objDkFaBpBBC39
- lmbQ==
-X-Gm-Message-State: AOAM530+nFMozdiJozgOSeTD9YztTB5lSqOraznQ/VFMOxf/kndc+8Pt
- MbVYSTbm0AnsKG4WM+c3LduTZXqg2MoQwDoxcLrgog==
-X-Google-Smtp-Source: ABdhPJzpfWrcs5DxykHEI6KERA5BOBknmIj6EemM4VWPPImoQO4fG5rdh8rsez5jUuFficqkpwK3BC3QFLegheMWHTs=
-X-Received: by 2002:a67:ed4a:: with SMTP id m10mr7437760vsp.14.1614963353636; 
- Fri, 05 Mar 2021 08:55:53 -0800 (PST)
-MIME-Version: 1.0
-References: <20210304184544.2014171-1-samitolvanen@google.com>
- <87k0qmzq5u.wl-maz@kernel.org>
- <CABCJKufmjMT8+hGEnL3aJM7-OSwhYSHiJA=i8e7dHSGDWXYtsg@mail.gmail.com>
- <878s72sgwt.wl-maz@kernel.org>
- <CABCJKud1EmXmmQj-YOUNCFhE3P1W6Uhqpwe1G0zcR5zw71ksJA@mail.gmail.com>
- <CABCJKudvzBggE7AZQERto5Wo_LoL0G2sNee7_1R7h2TnGhjq8A@mail.gmail.com>
- <87im65zvb9.wl-maz@kernel.org>
- <CAMj1kXEg2cwyJ4BnPq9nWKkG0rcBJhUZasTLThba4Fnt+3e9Vw@mail.gmail.com>
-In-Reply-To: <CAMj1kXEg2cwyJ4BnPq9nWKkG0rcBJhUZasTLThba4Fnt+3e9Vw@mail.gmail.com>
-From: Sami Tolvanen <samitolvanen@google.com>
-Date: Fri, 5 Mar 2021 08:55:42 -0800
-Message-ID: <CABCJKud2eSr8ZfPxwa3XVTaJvAfYgydsWUu-AKo2gtNStQshFQ@mail.gmail.com>
-Subject: Re: [PATCH] KVM: arm64: Disable LTO in hyp
-To: Ard Biesheuvel <ardb@kernel.org>
-X-Mailman-Approved-At: Fri, 05 Mar 2021 13:58:33 -0500
-Cc: Kees Cook <keescook@chromium.org>, Fangrui Song <maskray@google.com>,
- Marc Zyngier <maz@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>,
- LKML <linux-kernel@vger.kernel.org>, Nathan Chancellor <nathan@kernel.org>,
- linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- kvmarm <kvmarm@lists.cs.columbia.edu>
+ with ESMTP id S8G5vXswOjIk for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  5 Mar 2021 13:47:48 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id AC5994B6C1
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Mar 2021 13:47:48 -0500 (EST)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id BB0586508B;
+ Fri,  5 Mar 2021 18:47:45 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1lIFUF-00HYCq-KG; Fri, 05 Mar 2021 18:47:43 +0000
+Date: Fri, 05 Mar 2021 18:47:42 +0000
+Message-ID: <87eegtzbch.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [GIT PULL] KVM/arm64 fixes for 5.12, take #1
+In-Reply-To: <847417af-fdab-9ca1-3edc-39f1d77cb6cb@redhat.com>
+References: <20210305164944.3729910-1-maz@kernel.org>
+ <847417af-fdab-9ca1-3edc-39f1d77cb6cb@redhat.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: pbonzini@redhat.com, alexandru.elisei@arm.com,
+ andre.przywara@arm.com, ascull@google.com, catalin.marinas@arm.com,
+ christoffer.dall@arm.com, Howard.Zhang@arm.com, justin.he@arm.com,
+ mark.rutland@arm.com, qperret@google.com, shameerali.kolothum.thodi@huawei.com,
+ suzuki.poulose@arm.com, will@kernel.org, james.morse@arm.com,
+ julien.thierry.kdev@gmail.com, kernel-team@android.com,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com, Jia He <justin.he@arm.com>, kvm@vger.kernel.org,
+ Will Deacon <will@kernel.org>, Andre Przywara <andre.przywara@arm.com>,
+ Howard Zhang <Howard.Zhang@arm.com>, Catalin Marinas <catalin.marinas@arm.com>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -100,165 +86,63 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Mar 5, 2021 at 6:22 AM Ard Biesheuvel <ardb@kernel.org> wrote:
->
-> On Fri, 5 Mar 2021 at 12:38, Marc Zyngier <maz@kernel.org> wrote:
-> >
-> > On Fri, 05 Mar 2021 02:38:17 +0000,
-> > Sami Tolvanen <samitolvanen@google.com> wrote:
-> > >
-> > > On Thu, Mar 4, 2021 at 2:34 PM Sami Tolvanen <samitolvanen@google.com> wrote:
-> > > >
-> > > > On Thu, Mar 4, 2021 at 2:17 PM Marc Zyngier <maz@kernel.org> wrote:
-> > > > >
-> > > > > On Thu, 04 Mar 2021 21:25:41 +0000,
-> > > > > Sami Tolvanen <samitolvanen@google.com> wrote:
-> >
-> > [...]
-> >
-> > > > > > I assume hyp_panic() ends up being placed too far from __guest_enter()
-> > > > > > when the kernel is large enough. Possibly something to do with LLVM
-> > > > > > always splitting functions into separate sections with LTO. I'm not
-> > > > > > sure why the linker cannot shuffle things around to make everyone
-> > > > > > happy in this case, but I confirmed that this patch also fixes the
-> > > > > > build issue for me:
-> > > > > >
-> > > > > > diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
-> > > > > > index af8e940d0f03..128197b7c794 100644
-> > > > > > --- a/arch/arm64/kvm/hyp/vhe/switch.c
-> > > > > > +++ b/arch/arm64/kvm/hyp/vhe/switch.c
-> > > > > > @@ -214,7 +214,7 @@ static void __hyp_call_panic(u64 spsr, u64 elr, u64 par)
-> > > > > >  }
-> > > > > >  NOKPROBE_SYMBOL(__hyp_call_panic);
-> > > > > >
-> > > > > > -void __noreturn hyp_panic(void)
-> > > > > > +void __noreturn hyp_panic(void) __section(".text")
-> > > > > >  {
-> > > > > >         u64 spsr = read_sysreg_el2(SYS_SPSR);
-> > > > > >         u64 elr = read_sysreg_el2(SYS_ELR);
-> > > > > >
-> > > > >
-> > > > > We're getting into black-magic territory here. Why wouldn't hyp_panic
-> > > > > be in the .text section already?
-> > > >
-> > > > It's not quite black magic. LLVM essentially flips on
-> > > > -ffunction-sections with LTO and therefore, hyp_panic() will be in
-> > > > .text.hyp_panic in vmlinux.o, while __guest_enter() will be in .text.
-> > > > Everything ends up in .text when we link vmlinux, of course.
-> > > >
-> > > > $ readelf --sections vmlinux.o | grep hyp_panic
-> > > >   [3936] .text.hyp_panic   PROGBITS         0000000000000000  004b56e4
-> > >
-> > > Note that disabling LTO here has essentially the same effect as using
-> > > __section(".text"). It stops the compiler from splitting these
-> > > functions into .text.* sections and makes it less likely that
-> > > hyp_panic() ends up too far away from __guest_enter().
-> > >
-> > > If neither of these workarounds sound appealing, I suppose we could
-> > > alternatively change hyp/entry.S to use adr_l for hyp_panic. Thoughts?
-> >
-> > That would be an actual fix instead of a workaround, as it would
-> > remove existing assumptions about the relative locations of the two
-> > objects. I guess you need to fix both instances with something such
-> > as:
-> >
-> > diff --git a/arch/arm64/kvm/hyp/entry.S b/arch/arm64/kvm/hyp/entry.S
-> > index b0afad7a99c6..a43e1f7ee354 100644
-> > --- a/arch/arm64/kvm/hyp/entry.S
-> > +++ b/arch/arm64/kvm/hyp/entry.S
-> > @@ -85,8 +85,10 @@ SYM_INNER_LABEL(__guest_exit_panic, SYM_L_GLOBAL)
-> >
-> >         // If the hyp context is loaded, go straight to hyp_panic
-> >         get_loaded_vcpu x0, x1
-> > -       cbz     x0, hyp_panic
-> > -
-> > +       cbnz    x0, 1f
-> > +       adr_l   x0, hyp_panic
-> > +       br      x0
-> > +1:
->
-> Agree with replacing the conditional branches that refer to external
-> symbols: the compiler never emits those, for the reason we are seeing
-> here, i.e., the range is simply insufficient.
->
-> But let's just use 'b hyp_panic' instead, no?
+Hi Paolo,
 
-Alright, this seems to work for me:
+On Fri, 05 Mar 2021 17:27:36 +0000,
+Paolo Bonzini <pbonzini@redhat.com> wrote:
+> 
+> On 05/03/21 17:49, Marc Zyngier wrote:
+> > Hi Paolo,
+> > 
+> > Here's the first batch of fixes for 5.12. We have a handful of low
+> > level world-switch regressions, a page table walker fix, more PMU
+> > tidying up, and a workaround for systems with creative firmware.
+> > 
+> > Note that this is based on -rc1 despite the breakage, as I didn't feel
+> > like holding these patches until -rc2.
+> > 
+> > Please pull,
+> > 
+> > 	M.
+> > 
+> > The following changes since commit fe07bfda2fb9cdef8a4d4008a409bb02f35f1bd8:
+> > 
+> >    Linux 5.12-rc1 (2021-02-28 16:05:19 -0800)
+> > 
+> > are available in the Git repository at:
+> > 
+> >    git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git tags/kvmarm-fixes-5.12-1
+> > 
+> > for you to fetch changes up to e85583b3f1fe62c9b371a3100c1c91af94005ca9:
+> > 
+> >    KVM: arm64: Fix range alignment when walking page tables (2021-03-04 09:54:12 +0000)
+> 
+> Hi Marc,
+> 
+> due to a severe data corruption bug in 5.12-rc1, Linus suggested not
+> including 5.12-rc1 in trees to avoid it eating our filesystems
+> unwittingly during future bisections.
+> 
+> Would it be a problem for you to rebase on top of your merge window
+> pull request?  If there are conflicts, another possibility is for you
+> to just send me the patch series.  I will handle all the topic branch
+> juggling.
+> 
+> This will mean rewriting kvmarm.git's history, but it does seem to be
+> the lesser (or the most future-proof) evil.
 
-diff --git a/arch/arm64/kvm/hyp/entry.S b/arch/arm64/kvm/hyp/entry.S
-index b0afad7a99c6..c62265951467 100644
---- a/arch/arm64/kvm/hyp/entry.S
-+++ b/arch/arm64/kvm/hyp/entry.S
-@@ -85,8 +85,10 @@ SYM_INNER_LABEL(__guest_exit_panic, SYM_L_GLOBAL)
+The problem is that this is not only kvmarm, but also the Android
+tree, which directly pulls from the kvmarm stable branches. I guess
+we'll have to live with it.
 
-        // If the hyp context is loaded, go straight to hyp_panic
-        get_loaded_vcpu x0, x1
--       cbz     x0, hyp_panic
-+       cbnz    x0, 1f
-+       b       hyp_panic
+I'll reply to this email with the patch series.
 
-+1:
-        // The hyp context is saved so make sure it is restored to allow
-        // hyp_panic to run at hyp and, subsequently, panic to run in the host.
-        // This makes use of __guest_exit to avoid duplication but sets the
-@@ -94,7 +96,7 @@ SYM_INNER_LABEL(__guest_exit_panic, SYM_L_GLOBAL)
-        // current state is saved to the guest context but it will only be
-        // accurate if the guest had been completely restored.
-        adr_this_cpu x0, kvm_hyp_ctxt, x1
--       adr     x1, hyp_panic
-+       adr_l   x1, hyp_panic
-        str     x1, [x0, #CPU_XREG_OFFSET(30)]
+Thanks,
 
-        get_vcpu_ptr    x1, x0
+	M.
 
-But when I say work, I mean this fixes the allmodconfig build with
-LTO, and my kernel boots at EL2. I don't actually have a way to
-properly test KVM on arm64. If nobody sees obvious issues here, I can
-send a proper patch a bit later.
-
-> >         // The hyp context is saved so make sure it is restored to allow
-> >         // hyp_panic to run at hyp and, subsequently, panic to run in the host.
-> >         // This makes use of __guest_exit to avoid duplication but sets the
-> > @@ -94,7 +96,7 @@ SYM_INNER_LABEL(__guest_exit_panic, SYM_L_GLOBAL)
-> >         // current state is saved to the guest context but it will only be
-> >         // accurate if the guest had been completely restored.
-> >         adr_this_cpu x0, kvm_hyp_ctxt, x1
-> > -       adr     x1, hyp_panic
-> > +       adr_l   x1, hyp_panic
-> >         str     x1, [x0, #CPU_XREG_OFFSET(30)]
-> >
-> >         get_vcpu_ptr    x1, x0
-> >
-> > which is completely untested. I wouldn't be surprised if there were
-> > more of these somewhere.
-> >
->
-> A quick grep gives me
->
-> $ objdump -r vmlinux.o |grep BR19
-> 000000000005b6e0 R_AARCH64_CONDBR19  hyp_panic
-> 0000000000418e08 R_AARCH64_CONDBR19  __memcpy
-> 0000000000418e14 R_AARCH64_CONDBR19  __memcpy
-
-These two are in __memmove. This shouldn't be an issue, at least with LTO.
-
-> 0000000000003818 R_AARCH64_CONDBR19  __kvm_nvhe___guest_exit_panic
-> 0000000000003898 R_AARCH64_CONDBR19  __kvm_nvhe___guest_exit_panic
-> 0000000000003918 R_AARCH64_CONDBR19  __kvm_nvhe___guest_exit_panic
-> 0000000000003998 R_AARCH64_CONDBR19  __kvm_nvhe___guest_exit_panic
-> 0000000000003a18 R_AARCH64_CONDBR19  __kvm_nvhe___guest_exit_panic
-> 0000000000003a98 R_AARCH64_CONDBR19  __kvm_nvhe___guest_exit_panic
-> 0000000000003b18 R_AARCH64_CONDBR19  __kvm_nvhe___guest_exit_panic
-> 0000000000003b98 R_AARCH64_CONDBR19  __kvm_nvhe___guest_exit_panic
-> 0000000000003c10 R_AARCH64_CONDBR19  __kvm_nvhe___host_exit
-> 0000000000003c1c R_AARCH64_CONDBR19  __kvm_nvhe___host_exit
-> 00000000000064f0 R_AARCH64_CONDBR19  __kvm_nvhe_hyp_panic
-> 000000000000078c R_AARCH64_CONDBR19  __kvm_nvhe___kvm_handle_stub_hvc
-
-It looks like all the nvhe code is linked together into kvm_nvhe.o, so
-I don't think these will cause problems either.
-
-Sami
+-- 
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
