@@ -2,77 +2,63 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E5DFA331669
-	for <lists+kvmarm@lfdr.de>; Mon,  8 Mar 2021 19:43:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 903D433181D
+	for <lists+kvmarm@lfdr.de>; Mon,  8 Mar 2021 21:08:56 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 707754B472;
-	Mon,  8 Mar 2021 13:43:58 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 092E64B5B1;
+	Mon,  8 Mar 2021 15:08:56 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YAgsoluhBhuT; Mon,  8 Mar 2021 13:43:58 -0500 (EST)
+	with ESMTP id l05tXsGVVvKg; Mon,  8 Mar 2021 15:08:55 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EAA5E4B442;
-	Mon,  8 Mar 2021 13:43:56 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 629C14B5BC;
+	Mon,  8 Mar 2021 15:08:54 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1BF684B3D2
- for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Mar 2021 13:43:55 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EB45A4B2A7
+ for <kvmarm@lists.cs.columbia.edu>; Sat,  6 Mar 2021 23:35:55 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id No5NmwW-RBO6 for <kvmarm@lists.cs.columbia.edu>;
- Mon,  8 Mar 2021 13:43:53 -0500 (EST)
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com
- [209.85.167.48])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D20164B108
- for <kvmarm@lists.cs.columbia.edu>; Mon,  8 Mar 2021 13:43:52 -0500 (EST)
-Received: by mail-lf1-f48.google.com with SMTP id u4so22697429lfs.0
- for <kvmarm@lists.cs.columbia.edu>; Mon, 08 Mar 2021 10:43:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=oWJi9TTK3RpTTf/7yDpb3oKd8vTmZ+hAd/ZIvo399K0=;
- b=VDtPSQXlEcN+q/UYFT4QEKwBkymIGMbNymOpTZqlJp1yVZszjOrHhcSGx9SoKLjNHv
- vjU+4cVg3NgBi4iN4aWrHKfSupE3huSJ5oxnbVMdLKVlNtdW7gH3r0pnlQxXtvwBLzma
- 0l0hIsr07cNuqnswsLmBM3Gauey8bhBHBunRF28DNV48YBMtjmJxqtS5uhAB61E7/H3P
- HqbTxcX1jXT/pG138l1FiXJJZbp3yf8SWcFeMsF401pmqJ+ZFiCgtQLaG3y/ZT6FQa76
- yKWLOvST0TKWWT0+pS58+dcMSWRgqN60nODXwRKRF6U6gKoC4p/ywvSRi21HfY0+TwMJ
- qXCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=oWJi9TTK3RpTTf/7yDpb3oKd8vTmZ+hAd/ZIvo399K0=;
- b=fxN0r+YVTlyJAEv2HvKl1KrhBZq40wF//htIj+D+OGXBlu1QGxpYkA1UW1v+EfXy0g
- 3g9SpbgnIJC5Z2ty+ilmCtB/KWDHwsEyy4WezdsmGQMRiSICmOQ8zTdps3MDx7S8PPcx
- 2xGraMiO5SMW9dr5I99osxef/FD/zVE5QHYdw6C1DCFhmTAtE9P6weJDozL6KtqKTUuk
- Ku6LIkQ4oCgG/H/BXgXksx4409sEFe+EkZBKEP+By3nhdVPsW7wtS1Q2AToXiERDePLU
- Gv3huN5naij3XTYBv14xtXPDeO12wtXIdpkhvL8h2RdbHgKFL++sOCVDJYnavUTT9wPl
- 1vfw==
-X-Gm-Message-State: AOAM532XdJyph/lOE6AaV/O35YEZJOR7/RX4Dd5yOwJMerzNeWokMe7o
- sunK6hWHwzCi2PbHjz0cemvUf+XrM8ZP1qO8GrtucQ==
-X-Google-Smtp-Source: ABdhPJxNiNBgvk6wXCSYzNgULfRUBJt1pMh/Hd/bhT6XXmFMIkmzLRDwOxVJYiu9798wXBq4uKOEtpr5D7uRIIY6MY4=
-X-Received: by 2002:ac2:5ca7:: with SMTP id e7mr15135284lfq.646.1615229030939; 
- Mon, 08 Mar 2021 10:43:50 -0800 (PST)
+ with ESMTP id mM06e+vE-w8r for <kvmarm@lists.cs.columbia.edu>;
+ Sat,  6 Mar 2021 23:35:52 -0500 (EST)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 21AE34B2A2
+ for <kvmarm@lists.cs.columbia.edu>; Sat,  6 Mar 2021 23:35:52 -0500 (EST)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 56F4A650B1;
+ Sun,  7 Mar 2021 04:35:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1615091750;
+ bh=bGnLAzbseG7Hvf7WtaKuqW98AvCQaRA0f3+tjl5et9E=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=sFwb35J2J3JEUCV2LRfNrkdeFOfSy4v9lut+kKnrsezWVzqi7r4QweZekd8H9ONh5
+ Cn6vKiY2baFCmc18EBSCXD1sfuitp7kpTY5IOMdDQ449mxPdO6OrOemiSREy0cQT7f
+ 11MkmSdeLdGyO5WiAv/NBsolD6PLwg8fm4DVlzmHwQtQ3ZlyOk2K2O7LYuf5QpYRP0
+ 9DAA2Kahj0yKcN+hCBl81TFzC6qgWmyqe/8qgYooCNNtSRw/jOetQXT/LbzSzNpuSh
+ 0TIvkSblicdnSpUtsr4ZYqfBiuMfd8P4Wmh+he7JxvDHNL5YxWfy6NY8zKWtuLTc13
+ oO7CIDNN2otAg==
+Date: Sat, 6 Mar 2021 21:35:45 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Sami Tolvanen <samitolvanen@google.com>
+Subject: Re: [PATCH] KVM: arm64: Don't use cbz/adr with external symbols
+Message-ID: <20210307043545.pyxy22z3rktgof4m@archlinux-ax161>
+References: <20210305202124.3768527-1-samitolvanen@google.com>
 MIME-Version: 1.0
-References: <20210205044403.1559010-1-jingzhangos@google.com>
- <20210308164902.GA26772@willie-the-truck>
-In-Reply-To: <20210308164902.GA26772@willie-the-truck>
-From: Jing Zhang <jingzhangos@google.com>
-Date: Mon, 8 Mar 2021 12:43:40 -0600
-Message-ID: <CAAdAUtjhye2f5uHQjmYdfU8HD+c0WvxvbaLg3AKzu28tEDkDhQ@mail.gmail.com>
-Subject: Re: [PATCH] KVM: arm64: Remove redundant check for S2FWB
-To: Will Deacon <will@kernel.org>
-Cc: Marc Zyngier <maz@kernel.org>, linux-arm-kernel@lists.infradead.org,
- Catalin Marinas <catalin.marinas@arm.com>, kvmarm@lists.cs.columbia.edu
+Content-Disposition: inline
+In-Reply-To: <20210305202124.3768527-1-samitolvanen@google.com>
+X-Mailman-Approved-At: Mon, 08 Mar 2021 15:08:53 -0500
+Cc: Kees Cook <keescook@chromium.org>, Marc Zyngier <maz@kernel.org>,
+ Nick Desaulniers <ndesaulniers@google.com>, linux-kernel@vger.kernel.org,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -89,93 +75,73 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Will,
+On Fri, Mar 05, 2021 at 12:21:24PM -0800, Sami Tolvanen wrote:
+> allmodconfig + CONFIG_LTO_CLANG_THIN=y fails to build due to following
+> linker errors:
+> 
+>   ld.lld: error: irqbypass.c:(function __guest_enter: .text+0x21CC):
+>   relocation R_AARCH64_CONDBR19 out of range: 2031220 is not in
+>   [-1048576, 1048575]; references hyp_panic
+>   >>> defined in vmlinux.o
+> 
+>   ld.lld: error: irqbypass.c:(function __guest_enter: .text+0x21E0):
+>   relocation R_AARCH64_ADR_PREL_LO21 out of range: 2031200 is not in
+>   [-1048576, 1048575]; references hyp_panic
+>   >>> defined in vmlinux.o
+> 
+> This is because with LTO, the compiler ends up placing hyp_panic()
+> more than 1MB away from __guest_enter(). Use an unconditional branch
+> and adr_l instead to fix the issue.
+> 
+> Link: https://github.com/ClangBuiltLinux/linux/issues/1317
+> Reported-by: Nathan Chancellor <nathan@kernel.org>
+> Suggested-by: Marc Zyngier <maz@kernel.org>
+> Suggested-by: Ard Biesheuvel <ardb@kernel.org>
+> Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
 
-On Mon, Mar 8, 2021 at 10:49 AM Will Deacon <will@kernel.org> wrote:
->
-> On Fri, Feb 05, 2021 at 04:44:03AM +0000, Jing Zhang wrote:
-> > Remove redundant check for CPU feature S2FWB in dcache flush code
-> > to save some CPU cycles for every memslot flush and unmapping.
-> > And move the S2FWB check to outer functions to avoid future
-> > redundancy and keep consistent with other usage like in
-> > access_dcsw and kvm_arch_prepare_memory_region.
-> >
-> > Signed-off-by: Jing Zhang <jingzhangos@google.com>
-> > ---
-> >  arch/arm64/kvm/hyp/pgtable.c | 9 ++-------
-> >  arch/arm64/kvm/mmu.c         | 3 ++-
-> >  2 files changed, 4 insertions(+), 8 deletions(-)
-> >
-> > diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
-> > index bdf8e55ed308..afd57564b1cb 100644
-> > --- a/arch/arm64/kvm/hyp/pgtable.c
-> > +++ b/arch/arm64/kvm/hyp/pgtable.c
-> > @@ -642,9 +642,6 @@ int kvm_pgtable_stage2_map(struct kvm_pgtable *pgt, u64 addr, u64 size,
-> >
-> >  static void stage2_flush_dcache(void *addr, u64 size)
-> >  {
-> > -     if (cpus_have_const_cap(ARM64_HAS_STAGE2_FWB))
-> > -             return;
-> > -
-> >       __flush_dcache_area(addr, size);
-> >  }
-> >
-> > @@ -670,7 +667,8 @@ static int stage2_unmap_walker(u64 addr, u64 end, u32 level, kvm_pte_t *ptep,
-> >
-> >               if (page_count(virt_to_page(childp)) != 1)
-> >                       return 0;
-> > -     } else if (stage2_pte_cacheable(pte)) {
-> > +     } else if (stage2_pte_cacheable(pte) &&
-> > +                     !cpus_have_const_cap(ARM64_HAS_STAGE2_FWB)) {
-> >               need_flush = true;
-> >       }
-> >
-> > @@ -846,9 +844,6 @@ int kvm_pgtable_stage2_flush(struct kvm_pgtable *pgt, u64 addr, u64 size)
-> >               .flags  = KVM_PGTABLE_WALK_LEAF,
-> >       };
-> >
-> > -     if (cpus_have_const_cap(ARM64_HAS_STAGE2_FWB))
-> > -             return 0;
-> > -
-> >       return kvm_pgtable_walk(pgt, addr, size, &walker);
-> >  }
->
-> I think we should leave pgtable.c as it is: there's no benefit from this
-> change on the unmap path, and the other path involves the case where the
-> caller has asked for a flush and we can elide it.
-Agreed.
->
-> > diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> > index 7d2257cc5438..53130ed23304 100644
-> > --- a/arch/arm64/kvm/mmu.c
-> > +++ b/arch/arm64/kvm/mmu.c
-> > @@ -1458,7 +1458,8 @@ void kvm_toggle_cache(struct kvm_vcpu *vcpu, bool was_enabled)
-> >        * If switching it off, need to clean the caches.
-> >        * Clean + invalidate does the trick always.
-> >        */
-> > -     if (now_enabled != was_enabled)
-> > +     if (now_enabled != was_enabled &&
-> > +                     !cpus_have_const_cap(ARM64_HAS_STAGE2_FWB))
-> >               stage2_flush_vm(vcpu->kvm);
->
-> This change looks fine, but I don't grok the justification in your follow-up
-> email. You say:
->
->   | The saving is from the code path of memslot flush. The S2FWB check was
->   | in stage2_flush_dcache, in which case, for a memslot flush, the check
->   | was done for every page.
->
-> but I don't see where this is called for every page. It looks to me like it's
-> called for every pgd in the range, which is a very different kettle of frogs.
->
-> What am I missing?
-You are right. It is called for every pgd in the range instead of for
-every page.
->
-> Will
+I booted an kernel with this patch in it on my Raspberry Pi 4 and booted
+a kernel under KVM without any issues.
 
-Thanks,
-Jing
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+
+> ---
+>  arch/arm64/kvm/hyp/entry.S | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/kvm/hyp/entry.S b/arch/arm64/kvm/hyp/entry.S
+> index b0afad7a99c6..c62265951467 100644
+> --- a/arch/arm64/kvm/hyp/entry.S
+> +++ b/arch/arm64/kvm/hyp/entry.S
+> @@ -85,8 +85,10 @@ SYM_INNER_LABEL(__guest_exit_panic, SYM_L_GLOBAL)
+>  
+>  	// If the hyp context is loaded, go straight to hyp_panic
+>  	get_loaded_vcpu x0, x1
+> -	cbz	x0, hyp_panic
+> +	cbnz	x0, 1f
+> +	b	hyp_panic
+>  
+> +1:
+>  	// The hyp context is saved so make sure it is restored to allow
+>  	// hyp_panic to run at hyp and, subsequently, panic to run in the host.
+>  	// This makes use of __guest_exit to avoid duplication but sets the
+> @@ -94,7 +96,7 @@ SYM_INNER_LABEL(__guest_exit_panic, SYM_L_GLOBAL)
+>  	// current state is saved to the guest context but it will only be
+>  	// accurate if the guest had been completely restored.
+>  	adr_this_cpu x0, kvm_hyp_ctxt, x1
+> -	adr	x1, hyp_panic
+> +	adr_l	x1, hyp_panic
+>  	str	x1, [x0, #CPU_XREG_OFFSET(30)]
+>  
+>  	get_vcpu_ptr	x1, x0
+> 
+> base-commit: 280d542f6ffac0e6d65dc267f92191d509b13b64
+> -- 
+> 2.30.1.766.gb4fecdf3b7-goog
+> 
+> _______________________________________________
+> kvmarm mailing list
+> kvmarm@lists.cs.columbia.edu
+> https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
