@@ -2,64 +2,75 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3005F333A49
-	for <lists+kvmarm@lfdr.de>; Wed, 10 Mar 2021 11:42:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 66C0F333ADD
+	for <lists+kvmarm@lfdr.de>; Wed, 10 Mar 2021 11:59:01 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D7E274B640;
-	Wed, 10 Mar 2021 05:42:31 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CF8324B467;
+	Wed, 10 Mar 2021 05:59:00 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qJV0HB8RuZpy; Wed, 10 Mar 2021 05:42:31 -0500 (EST)
+	with ESMTP id KLMg7cK5e1Cu; Wed, 10 Mar 2021 05:59:00 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BFC5A4B663;
-	Wed, 10 Mar 2021 05:42:29 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BCF534B498;
+	Wed, 10 Mar 2021 05:58:59 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 70AC04B639
- for <kvmarm@lists.cs.columbia.edu>; Wed, 10 Mar 2021 05:42:28 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7D6D94B2BC
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 10 Mar 2021 05:58:58 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id n9sYGi+MbiEg for <kvmarm@lists.cs.columbia.edu>;
- Wed, 10 Mar 2021 05:42:26 -0500 (EST)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 639634B633
- for <kvmarm@lists.cs.columbia.edu>; Wed, 10 Mar 2021 05:42:26 -0500 (EST)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ with ESMTP id AZcRfSDEyhQk for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 10 Mar 2021 05:58:57 -0500 (EST)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [216.205.24.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 896AC4B2AA
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 10 Mar 2021 05:58:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1615373937;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=adwrvd9iCZQ2p6SHxT/WFVR0wYYyROHqLlc5N4YbBd4=;
+ b=EAdGfMHTz3Te9Gz2J0QYVeRBe713H2Ji9x7npCG2PvlSm8S2+uaU7deKnGsbLxlJxYYT/h
+ 9k34oOTiNvo+C9CsC+t4wiaJO/+ePaxF1Mk2tscgwqvd27cK9jKnByBKQ6nIKub+l3FSvB
+ XGQfkCfYbT16T4Njp5U4Gh9EOMHABxE=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-353-06h5cfBuNhS2RDj-Vp_Ozw-1; Wed, 10 Mar 2021 05:58:53 -0500
+X-MC-Unique: 06h5cfBuNhS2RDj-Vp_Ozw-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com
+ [10.5.11.11])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 250D264F77;
- Wed, 10 Mar 2021 10:42:25 +0000 (UTC)
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1lJwIJ-000jdD-5G; Wed, 10 Mar 2021 10:42:23 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- kvm@vger.kernel.org
-Subject: [PATCH v2 2/2] KVM: arm64: Fix exclusive limit for IPA size
-Date: Wed, 10 Mar 2021 10:42:08 +0000
-Message-Id: <20210310104208.3819061-3-maz@kernel.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210310104208.3819061-1-maz@kernel.org>
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id DD20584BA40;
+ Wed, 10 Mar 2021 10:58:50 +0000 (UTC)
+Received: from [10.36.112.254] (ovpn-112-254.ams2.redhat.com [10.36.112.254])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 046B06062F;
+ Wed, 10 Mar 2021 10:58:46 +0000 (UTC)
+Subject: Re: [PATCH v2 2/2] KVM: arm64: Fix exclusive limit for IPA size
+To: Marc Zyngier <maz@kernel.org>, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
 References: <20210310104208.3819061-1-maz@kernel.org>
+ <20210310104208.3819061-3-maz@kernel.org>
+From: Auger Eric <eric.auger@redhat.com>
+Message-ID: <ddcb2d37-c16b-6972-b0c3-d98a957828d7@redhat.com>
+Date: Wed, 10 Mar 2021 11:58:45 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, james.morse@arm.com,
- julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com, will@kernel.org,
- drjones@redhat.com, eric.auger@redhat.com, alexandru.elisei@arm.com,
- kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
+In-Reply-To: <20210310104208.3819061-3-maz@kernel.org>
+Content-Language: en-US
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
 Cc: kernel-team@android.com, Will Deacon <will@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -77,39 +88,48 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-When registering a memslot, we check the size and location of that
-memslot against the IPA size to ensure that we can provide guest
-access to the whole of the memory.
+Hi Marc,
 
-Unfortunately, this check rejects memslot that end-up at the exact
-limit of the addressing capability for a given IPA size. For example,
-it refuses the creatrion of a 2GB memslot at 0x8000000 with a 32bit
-IPA space.
+On 3/10/21 11:42 AM, Marc Zyngier wrote:
+> When registering a memslot, we check the size and location of that
+> memslot against the IPA size to ensure that we can provide guest
+> access to the whole of the memory.
+> 
+> Unfortunately, this check rejects memslot that end-up at the exact
+> limit of the addressing capability for a given IPA size. For example,
+> it refuses the creatrion of a 2GB memslot at 0x8000000 with a 32bit
+creation
+> IPA space.
+> 
+> Fix it by relaxing the check to accept a memslot reaching the
+> limit of the IPA space.
+> 
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
+stable + Fixes?
+> ---
+>  arch/arm64/kvm/mmu.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> index 77cb2d28f2a4..8711894db8c2 100644
+> --- a/arch/arm64/kvm/mmu.c
+> +++ b/arch/arm64/kvm/mmu.c
+> @@ -1312,8 +1312,7 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
+>  	 * Prevent userspace from creating a memory region outside of the IPA
+>  	 * space addressable by the KVM guest IPA space.
+>  	 */
+> -	if (memslot->base_gfn + memslot->npages >=
+> -	    (kvm_phys_size(kvm) >> PAGE_SHIFT))
+> +	if ((memslot->base_gfn + memslot->npages) > (kvm_phys_size(kvm) >> PAGE_SHIFT))
+>  		return -EFAULT;
+>  
+>  	mmap_read_lock(current->mm);
+> 
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-Fix it by relaxing the check to accept a memslot reaching the
-limit of the IPA space.
+Thanks
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/kvm/mmu.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 77cb2d28f2a4..8711894db8c2 100644
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -1312,8 +1312,7 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
- 	 * Prevent userspace from creating a memory region outside of the IPA
- 	 * space addressable by the KVM guest IPA space.
- 	 */
--	if (memslot->base_gfn + memslot->npages >=
--	    (kvm_phys_size(kvm) >> PAGE_SHIFT))
-+	if ((memslot->base_gfn + memslot->npages) > (kvm_phys_size(kvm) >> PAGE_SHIFT))
- 		return -EFAULT;
- 
- 	mmap_read_lock(current->mm);
--- 
-2.29.2
+Eric
 
 _______________________________________________
 kvmarm mailing list
