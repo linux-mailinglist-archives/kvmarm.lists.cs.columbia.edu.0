@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C9BA4337923
-	for <lists+kvmarm@lfdr.de>; Thu, 11 Mar 2021 17:21:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0552C33792E
+	for <lists+kvmarm@lfdr.de>; Thu, 11 Mar 2021 17:22:18 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 567D84B621;
-	Thu, 11 Mar 2021 11:21:32 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A6E5F4B68F;
+	Thu, 11 Mar 2021 11:22:17 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,44 +18,43 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BYLwDNkiGnF4; Thu, 11 Mar 2021 11:21:32 -0500 (EST)
+	with ESMTP id kT5gIGXdAfGO; Thu, 11 Mar 2021 11:22:17 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 528494B5EB;
-	Thu, 11 Mar 2021 11:21:28 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 83F3E4B6B8;
+	Thu, 11 Mar 2021 11:22:13 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6F3664B5EB
- for <kvmarm@lists.cs.columbia.edu>; Thu, 11 Mar 2021 11:21:27 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4FC504B621
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 11 Mar 2021 11:22:12 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id hoiwOnujqMjC for <kvmarm@lists.cs.columbia.edu>;
- Thu, 11 Mar 2021 11:21:22 -0500 (EST)
+ with ESMTP id XYJv-u1I9fZJ for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 11 Mar 2021 11:22:10 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4A5C94B548
- for <kvmarm@lists.cs.columbia.edu>; Thu, 11 Mar 2021 11:21:22 -0500 (EST)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 753FC6146B;
- Thu, 11 Mar 2021 16:21:17 +0000 (UTC)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 070424B548
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 11 Mar 2021 11:22:09 -0500 (EST)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id BEB776146B;
+ Thu, 11 Mar 2021 16:22:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1615479681;
- bh=T+Bt7gZGUjrxDrEQ2211vo0Svgs66BNqHKZT8ttELhs=;
+ s=k20201202; t=1615479728;
+ bh=1VYaodho3Fb2my+EoZ2QcmI2TzkSbTeXP60JfAHZD8E=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=msyy8vEG3L5NnRfp90UsA3PFVsDk+faHyWPzudfFi2aM/2Lvau5b/GnFNFcjIXYZ4
- /FPfplr6+dJ+Ygyxek9GF75aVSIKUAhjFY2DwV7sWVm97x5FwS8KoEB8jv0f+eOe5r
- D+CB5H+c+4unbcsz4kmfZUKT6e4dOQsekhttSnJwJ+Gu+i2j6CiZKKViTJq3oSyeGj
- 9AHJddEqOypI8jb3iT3JG8m/gWS/Dj0XdFiyEnFY3k24jWWUF64Kk2DzTpcsNKGuQO
- DVxwDWaJDzz/tETwYwz9YuW6E9q1MifTBV3A3QBKQr83A1938NCDySQy65h8ppgjBl
- 2vXAIC0pBrEsg==
-Date: Thu, 11 Mar 2021 16:21:13 +0000
+ b=LMKLdG1n8750gfq5NUbVfRcgOwLwtLSBp3+oVjApFw4OYSxxjnjWcqHa03ztA92Lz
+ aIt3vMqS5PAIsqZ/1Tc5fgLYV01t5Qpa1vW/trKAd1UbcPQHhuHQQJyRhoOmHN+9FE
+ CwQFfFya4qUmSQ+mjHGeeHKoSJNPNZJp3O2uOR+PJKFSW5ItcWOZBHoGHMEsX6krZu
+ 7aA2bw3TkZPz3opFzfInaDpCUrGBjXnzjSRj6mBdmfms6NdwbP2xM1rlIivbNrhOnZ
+ rIy1RttdU7npdm8PONdNhLosyN+ckCZnw1kWirSPCqXBI10DjY5YUnSEuezjQeLpze
+ P3xanJ9ns49jw==
+Date: Thu, 11 Mar 2021 16:22:01 +0000
 From: Will Deacon <will@kernel.org>
 To: Quentin Perret <qperret@google.com>
-Subject: Re: [PATCH v4 16/34] KVM: arm64: Prepare the creation of s1 mappings
- at EL2
-Message-ID: <20210311162112.GD31206@willie-the-truck>
+Subject: Re: [PATCH v4 15/34] arm64: asm: Provide set_sctlr_el2 macro
+Message-ID: <20210311162201.GE31206@willie-the-truck>
 References: <20210310175751.3320106-1-qperret@google.com>
- <20210310175751.3320106-17-qperret@google.com>
+ <20210310175751.3320106-16-qperret@google.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20210310175751.3320106-17-qperret@google.com>
+In-Reply-To: <20210310175751.3320106-16-qperret@google.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Cc: android-kvm@google.com, catalin.marinas@arm.com, mate.toth-pal@arm.com,
  seanjc@google.com, tabba@google.com, linux-kernel@vger.kernel.org,
@@ -77,66 +76,15 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Mar 10, 2021 at 05:57:33PM +0000, Quentin Perret wrote:
-> When memory protection is enabled, the EL2 code needs the ability to
-> create and manage its own page-table. To do so, introduce a new set of
-> hypercalls to bootstrap a memory management system at EL2.
+On Wed, Mar 10, 2021 at 05:57:32PM +0000, Quentin Perret wrote:
+> We will soon need to turn the EL2 stage 1 MMU on and off in nVHE
+> protected mode, so refactor the set_sctlr_el1 macro to make it usable
+> for that purpose.
 > 
-> This leads to the following boot flow in nVHE Protected mode:
-> 
->  1. the host allocates memory for the hypervisor very early on, using
->     the memblock API;
-> 
->  2. the host creates a set of stage 1 page-table for EL2, installs the
->     EL2 vectors, and issues the __pkvm_init hypercall;
-> 
->  3. during __pkvm_init, the hypervisor re-creates its stage 1 page-table
->     and stores it in the memory pool provided by the host;
-> 
->  4. the hypervisor then extends its stage 1 mappings to include a
->     vmemmap in the EL2 VA space, hence allowing to use the buddy
->     allocator introduced in a previous patch;
-> 
->  5. the hypervisor jumps back in the idmap page, switches from the
->     host-provided page-table to the new one, and wraps up its
->     initialization by enabling the new allocator, before returning to
->     the host.
-> 
->  6. the host can free the now unused page-table created for EL2, and
->     will now need to issue hypercalls to make changes to the EL2 stage 1
->     mappings instead of modifying them directly.
-> 
-> Note that for the sake of simplifying the review, this patch focuses on
-> the hypervisor side of things. In other words, this only implements the
-> new hypercalls, but does not make use of them from the host yet. The
-> host-side changes will follow in a subsequent patch.
-> 
-> Credits to Will for __pkvm_init_switch_pgd.
-> 
-> Co-authored-by: Will Deacon <will@kernel.org>
-> Signed-off-by: Will Deacon <will@kernel.org>
 > Signed-off-by: Quentin Perret <qperret@google.com>
 > ---
->  arch/arm64/include/asm/kvm_asm.h     |   4 +
->  arch/arm64/include/asm/kvm_host.h    |   7 +
->  arch/arm64/include/asm/kvm_hyp.h     |   8 ++
->  arch/arm64/include/asm/kvm_pgtable.h |   2 +
->  arch/arm64/kernel/image-vars.h       |  16 +++
->  arch/arm64/kvm/hyp/Makefile          |   2 +-
->  arch/arm64/kvm/hyp/include/nvhe/mm.h |  71 ++++++++++
->  arch/arm64/kvm/hyp/nvhe/Makefile     |   4 +-
->  arch/arm64/kvm/hyp/nvhe/hyp-init.S   |  27 ++++
->  arch/arm64/kvm/hyp/nvhe/hyp-main.c   |  49 +++++++
->  arch/arm64/kvm/hyp/nvhe/mm.c         | 173 +++++++++++++++++++++++
->  arch/arm64/kvm/hyp/nvhe/setup.c      | 197 +++++++++++++++++++++++++++
->  arch/arm64/kvm/hyp/pgtable.c         |   2 -
->  arch/arm64/kvm/hyp/reserved_mem.c    |  92 +++++++++++++
->  arch/arm64/mm/init.c                 |   3 +
->  15 files changed, 652 insertions(+), 5 deletions(-)
->  create mode 100644 arch/arm64/kvm/hyp/include/nvhe/mm.h
->  create mode 100644 arch/arm64/kvm/hyp/nvhe/mm.c
->  create mode 100644 arch/arm64/kvm/hyp/nvhe/setup.c
->  create mode 100644 arch/arm64/kvm/hyp/reserved_mem.c
+>  arch/arm64/include/asm/assembler.h | 14 +++++++++++---
+>  1 file changed, 11 insertions(+), 3 deletions(-)
 
 Acked-by: Will Deacon <will@kernel.org>
 
