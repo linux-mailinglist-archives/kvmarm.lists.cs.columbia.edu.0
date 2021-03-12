@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 95866338A7F
-	for <lists+kvmarm@lfdr.de>; Fri, 12 Mar 2021 11:47:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 70A24338A89
+	for <lists+kvmarm@lfdr.de>; Fri, 12 Mar 2021 11:48:49 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1F57B4B6EC;
-	Fri, 12 Mar 2021 05:47:22 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 02D204B1A4;
+	Fri, 12 Mar 2021 05:48:49 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,41 +16,41 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bWWXibyEzaiu; Fri, 12 Mar 2021 05:47:22 -0500 (EST)
+	with ESMTP id 1XxaSJJoOEe4; Fri, 12 Mar 2021 05:48:48 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1471C4B66A;
-	Fri, 12 Mar 2021 05:47:21 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5F1B24B2DE;
+	Fri, 12 Mar 2021 05:48:46 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6114A4B4C5
- for <kvmarm@lists.cs.columbia.edu>; Fri, 12 Mar 2021 05:47:19 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 07D004B1A4
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 12 Mar 2021 05:48:45 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Zfqqq6z7W1lG for <kvmarm@lists.cs.columbia.edu>;
- Fri, 12 Mar 2021 05:47:16 -0500 (EST)
-Received: from szxga07-in.huawei.com (szxga07-in.huawei.com [45.249.212.35])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 80D394B424
- for <kvmarm@lists.cs.columbia.edu>; Fri, 12 Mar 2021 05:47:16 -0500 (EST)
-Received: from DGGEMS403-HUB.china.huawei.com (unknown [172.30.72.59])
- by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4DxjBr137Kz8x4p;
- Fri, 12 Mar 2021 18:45:24 +0800 (CST)
+ with ESMTP id Hh4Zy2DWEBum for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 12 Mar 2021 05:48:42 -0500 (EST)
+Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 425274B199
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 12 Mar 2021 05:48:41 -0500 (EST)
+Received: from DGGEMS404-HUB.china.huawei.com (unknown [172.30.72.60])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4DxjCv5Q4pzmWPx;
+ Fri, 12 Mar 2021 18:46:19 +0800 (CST)
 Received: from [10.174.184.135] (10.174.184.135) by
- DGGEMS403-HUB.china.huawei.com (10.3.19.203) with Microsoft SMTP Server id
- 14.3.498.0; Fri, 12 Mar 2021 18:47:04 +0800
-Subject: Re: [PATCH v3 2/4] KVM: arm64: GICv4.1: Try to save hw pending state
- in save_pending_tables
+ DGGEMS404-HUB.china.huawei.com (10.3.19.204) with Microsoft SMTP Server id
+ 14.3.498.0; Fri, 12 Mar 2021 18:48:29 +0800
+Subject: Re: [PATCH v3 3/4] KVM: arm64: GICv4.1: Restore VLPI's pending state
+ to physical side
 To: Marc Zyngier <maz@kernel.org>
 References: <20210127121337.1092-1-lushenming@huawei.com>
- <20210127121337.1092-3-lushenming@huawei.com> <87v99yf450.wl-maz@kernel.org>
- <3b47598f-0795-a165-1a64-abe02258b306@huawei.com>
- <87lfasg2wt.wl-maz@kernel.org>
+ <20210127121337.1092-4-lushenming@huawei.com> <87tupif3x3.wl-maz@kernel.org>
+ <0820f429-4c29-acd6-d9e0-af9f6deb68e4@huawei.com>
+ <87k0qcg2s6.wl-maz@kernel.org>
 From: Shenming Lu <lushenming@huawei.com>
-Message-ID: <f43021d8-81f5-81ee-4561-7cfa52ae8023@huawei.com>
-Date: Fri, 12 Mar 2021 18:47:04 +0800
+Message-ID: <aecfbf72-c653-e967-b539-89f629b52cde@huawei.com>
+Date: Fri, 12 Mar 2021 18:48:29 +0800
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.2.2
 MIME-Version: 1.0
-In-Reply-To: <87lfasg2wt.wl-maz@kernel.org>
+In-Reply-To: <87k0qcg2s6.wl-maz@kernel.org>
 Content-Language: en-US
 X-Originating-IP: [10.174.184.135]
 X-CFilter-Loop: Reflected
@@ -69,59 +69,57 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2021/3/12 17:02, Marc Zyngier wrote:
-> On Thu, 11 Mar 2021 12:31:48 +0000,
-> Shenming Lu <lushenming@huawei.com> wrote:
->>
->> On 2021/3/11 17:09, Marc Zyngier wrote:
-> 
->>> I have asked that question in the past: is it actually safe to remap
->>> the vPEs and expect them to be runnable
->>
->> In my opinion, logically it can work, but there might be problems like the
->> one below that I didn't notice...
-> 
-> One thing is that you will have lost interrupts in the meantime
-> (assuming your devices are still alive). How will you make up for
-> that?
-
-I think that devices should be paused for (not only) saving interrupt states,
-and in fact, that's exactly what such as VFIO devices do...
-
-> 
->>
->>>
->>> Also, the current code assumes that VMAPP.PTZ can be advertised if a
->>> VPT is mapped for the first time. Clearly, it is unlikely that the VPT
->>> will be only populated with 0s, so you'll end up with state corruption
->>> on the first remap.
->>
->> Oh, thanks for pointing it out.
->> And if we always signal PTZ when alloc = 1, does it mean that we
->> can't remap the vPE when the VPT is not empty, thus there is no
->> chance to get the VLPI state?  Could we just assume that the VPT is
->> not empty when first mapping the vPE?
-> 
-> I think we should drop the setting of PTZ altogether. It is a silly
-> micro-optimisation, and if the HW can't parse the VPT efficiently when
-> it is empty, then the HW is pretty bad, PTZ or not.
-
-agree :-)
-
-Thanks,
-Shenming
-
-> 
-> Thanks,
-> 
-> 	M.
-> 
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+T24gMjAyMS8zLzEyIDE3OjA1LCBNYXJjIFp5bmdpZXIgd3JvdGU6Cj4gT24gVGh1LCAxMSBNYXIg
+MjAyMSAxMjozMjowNyArMDAwMCwKPiBTaGVubWluZyBMdSA8bHVzaGVubWluZ0BodWF3ZWkuY29t
+PiB3cm90ZToKPj4KPj4gT24gMjAyMS8zLzExIDE3OjE0LCBNYXJjIFp5bmdpZXIgd3JvdGU6Cj4+
+PiBPbiBXZWQsIDI3IEphbiAyMDIxIDEyOjEzOjM2ICswMDAwLAo+Pj4gU2hlbm1pbmcgTHUgPGx1
+c2hlbm1pbmdAaHVhd2VpLmNvbT4gd3JvdGU6Cj4+Pj4KPj4+PiBGcm9tOiBaZW5naHVpIFl1IDx5
+dXplbmdodWlAaHVhd2VpLmNvbT4KPj4+Pgo+Pj4+IFdoZW4gc2V0dGluZyB0aGUgZm9yd2FyZGlu
+ZyBwYXRoIG9mIGEgVkxQSSAoc3dpdGNoIHRvIHRoZSBIVyBtb2RlKSwKPj4+PiB3ZSBjb3VsZCBh
+bHNvIHRyYW5zZmVyIHRoZSBwZW5kaW5nIHN0YXRlIGZyb20gaXJxLT5wZW5kaW5nX2xhdGNoIHRv
+Cj4+Pj4gVlBUIChlc3BlY2lhbGx5IGluIG1pZ3JhdGlvbiwgdGhlIHBlbmRpbmcgc3RhdGVzIG9m
+IFZMUElzIGFyZSByZXN0b3JlZAo+Pj4+IGludG8ga3Zt4oCZcyB2Z2ljIGZpcnN0KS4gQW5kIHdl
+IGN1cnJlbnRseSBzZW5kICJJTlQrVlNZTkMiIHRvIHRyaWdnZXIKPj4+PiBhIFZMUEkgdG8gcGVu
+ZGluZy4KPj4+Pgo+Pj4+IFNpZ25lZC1vZmYtYnk6IFplbmdodWkgWXUgPHl1emVuZ2h1aUBodWF3
+ZWkuY29tPgo+Pj4+IFNpZ25lZC1vZmYtYnk6IFNoZW5taW5nIEx1IDxsdXNoZW5taW5nQGh1YXdl
+aS5jb20+Cj4+Pj4gLS0tCj4+Pj4gIGFyY2gvYXJtNjQva3ZtL3ZnaWMvdmdpYy12NC5jIHwgMTQg
+KysrKysrKysrKysrKysKPj4+PiAgMSBmaWxlIGNoYW5nZWQsIDE0IGluc2VydGlvbnMoKykKPj4+
+Pgo+Pj4+IGRpZmYgLS1naXQgYS9hcmNoL2FybTY0L2t2bS92Z2ljL3ZnaWMtdjQuYyBiL2FyY2gv
+YXJtNjQva3ZtL3ZnaWMvdmdpYy12NC5jCj4+Pj4gaW5kZXggYWMwMjliYTNkMzM3Li5hMzU0MmFm
+NmYwNGEgMTAwNjQ0Cj4+Pj4gLS0tIGEvYXJjaC9hcm02NC9rdm0vdmdpYy92Z2ljLXY0LmMKPj4+
+PiArKysgYi9hcmNoL2FybTY0L2t2bS92Z2ljL3ZnaWMtdjQuYwo+Pj4+IEBAIC00NDksNiArNDQ5
+LDIwIEBAIGludCBrdm1fdmdpY192NF9zZXRfZm9yd2FyZGluZyhzdHJ1Y3Qga3ZtICprdm0sIGlu
+dCB2aXJxLAo+Pj4+ICAJaXJxLT5ob3N0X2lycQk9IHZpcnE7Cj4+Pj4gIAlhdG9taWNfaW5jKCZt
+YXAudnBlLT52bHBpX2NvdW50KTsKPj4+PiAgCj4+Pj4gKwkvKiBUcmFuc2ZlciBwZW5kaW5nIHN0
+YXRlICovCj4+Pj4gKwlpZiAoaXJxLT5wZW5kaW5nX2xhdGNoKSB7Cj4+Pj4gKwkJcmV0ID0gaXJx
+X3NldF9pcnFjaGlwX3N0YXRlKGlycS0+aG9zdF9pcnEsCj4+Pj4gKwkJCQkJICAgIElSUUNISVBf
+U1RBVEVfUEVORElORywKPj4+PiArCQkJCQkgICAgaXJxLT5wZW5kaW5nX2xhdGNoKTsKPj4+PiAr
+CQlXQVJOX1JBVEVMSU1JVChyZXQsICJJUlEgJWQiLCBpcnEtPmhvc3RfaXJxKTsKPj4+PiArCj4+
+Pj4gKwkJLyoKPj4+PiArCQkgKiBMZXQgaXQgYmUgcHJ1bmVkIGZyb20gYXBfbGlzdCBsYXRlciBh
+bmQgZG9uJ3QgYm90aGVyCj4+Pj4gKwkJICogdGhlIExpc3QgUmVnaXN0ZXIuCj4+Pj4gKwkJICov
+Cj4+Pj4gKwkJaXJxLT5wZW5kaW5nX2xhdGNoID0gZmFsc2U7Cj4+Pgo+Pj4gTkFLLiBJZiB0aGUg
+aW50ZXJydXB0IGlzIG9uIHRoZSBBUCBsaXN0LCBpdCBtdXN0IGJlIHBydW5lZCBmcm9tIGl0Cj4+
+PiAqaW1tZWRpYXRlbHkqLiBUaGUgb25seSBjYXNlIHdoZXJlIGl0IGNhbiBiZSAhcGVuZGluZyBh
+bmQgc3RpbGwgb24gdGhlCj4+PiBBUCBsaXN0IGlzIGluIGludGVydmFsIGJldHdlZW4gc3luYyBh
+bmQgcHJ1bmUuIElmIHdlIHN0YXJ0IG1lc3NpbmcKPj4+IHdpdGggdGhpcywgd2UgY2FuJ3QgcmVh
+c29uIGFib3V0IHRoZSBzdGF0ZSBvZiB0aGlzIGxpc3QgYW55bW9yZS4KPj4+Cj4+PiBDb25zaWRl
+ciBjYWxsaW5nIHZnaWNfcXVldWVfaXJxX3VubG9jaygpIGhlcmUuCj4+Cj4+IFRoYW5rcyBmb3Ig
+Z2l2aW5nIGEgaGludCwgYnV0IGl0IHNlZW1zIHRoYXQgdmdpY19xdWV1ZV9pcnFfdW5sb2NrKCkg
+b25seQo+PiBxdWV1ZXMgYW4gSVJRIGFmdGVyIGNoZWNraW5nLCBkaWQgeW91IG1lYW4gdmdpY19w
+cnVuZV9hcF9saXN0KCkgaW5zdGVhZD8KPiAKPiBObywgSSByZWFsbHkgbWVhbiB2Z2ljX3F1ZXVl
+X2lycV91bmxvY2soKS4gSXQgY2FuIGJlIHVzZWQgdG8gcmVtb3ZlCj4gdGhlIHBlbmRpbmcgc3Rh
+dGUgZnJvbSBhbiBpbnRlcnJ1cHQsIGFuZCBkcm9wIGl0IGZyb20gdGhlIEFQCj4gbGlzdC4gVGhp
+cyBpcyBleGFjdGx5IHdoYXQgaGFwcGVucyB3aGVuIGNsZWFyaW5nIHRoZSBwZW5kaW5nIHN0YXRl
+IG9mCj4gYSBsZXZlbCBpbnRlcnJ1cHQsIGZvciBleGFtcGxlLgoKSGksIEkgaGF2ZSBnb25lIHRo
+cm91Z2ggdmdpY19xdWV1ZV9pcnFfdW5sb2NrIG1vcmUgdGhhbiBvbmNlLCBidXQgc3RpbGwgY2Fu
+J3QKZmluZCB0aGUgcGxhY2UgaW4gaXQgdG8gZHJvcCBhbiBJUlEgZnJvbSB0aGUgQVAgbGlzdC4u
+LiBEaWQgSSBtaXNzIHNvbWV0aGluZyA/Li4uCk9yIGNvdWxkIHlvdSBoZWxwIHRvIHBvaW50IGl0
+IG91dD8gVGhhbmtzIHZlcnkgbXVjaCBmb3IgdGhpcyEKClNoZW5taW5nCgo+IAo+IAlNLgo+IApf
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwprdm1hcm0gbWFp
+bGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1bWJpYS5lZHUKaHR0cHM6Ly9saXN0cy5jcy5j
+b2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9rdm1hcm0K
