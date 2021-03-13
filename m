@@ -2,58 +2,117 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 30152339CFB
-	for <lists+kvmarm@lfdr.de>; Sat, 13 Mar 2021 09:40:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB5C5339D5A
+	for <lists+kvmarm@lfdr.de>; Sat, 13 Mar 2021 10:35:32 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D77C44B574;
-	Sat, 13 Mar 2021 03:40:01 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 47F9C4B4DF;
+	Sat, 13 Mar 2021 04:35:32 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id znpy1pBj8LYu; Sat, 13 Mar 2021 03:40:01 -0500 (EST)
+	with ESMTP id RzJobj8AcNRo; Sat, 13 Mar 2021 04:35:32 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D9D744B561;
-	Sat, 13 Mar 2021 03:40:00 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 345924B4D7;
+	Sat, 13 Mar 2021 04:35:31 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D94244B531
- for <kvmarm@lists.cs.columbia.edu>; Sat, 13 Mar 2021 03:39:58 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3208A4B4BF
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 13 Mar 2021 04:35:29 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id PiXeHxIbX3Ub for <kvmarm@lists.cs.columbia.edu>;
- Sat, 13 Mar 2021 03:39:58 -0500 (EST)
-Received: from szxga07-in.huawei.com (szxga07-in.huawei.com [45.249.212.35])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 500EC4B53E
- for <kvmarm@lists.cs.columbia.edu>; Sat, 13 Mar 2021 03:39:57 -0500 (EST)
-Received: from DGGEMS401-HUB.china.huawei.com (unknown [172.30.72.59])
- by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4DyGKT1s8bz8x02;
- Sat, 13 Mar 2021 16:38:05 +0800 (CST)
-Received: from DESKTOP-7FEPK9S.china.huawei.com (10.174.184.135) by
- DGGEMS401-HUB.china.huawei.com (10.3.19.201) with Microsoft SMTP Server id
- 14.3.498.0; Sat, 13 Mar 2021 16:39:47 +0800
-From: Shenming Lu <lushenming@huawei.com>
-To: Marc Zyngier <maz@kernel.org>, Eric Auger <eric.auger@redhat.com>, "Will
- Deacon" <will@kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <kvmarm@lists.cs.columbia.edu>, <kvm@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: [PATCH v4 6/6] KVM: arm64: GICv4.1: Give a chance to save VLPI state
-Date: Sat, 13 Mar 2021 16:39:00 +0800
-Message-ID: <20210313083900.234-7-lushenming@huawei.com>
-X-Mailer: git-send-email 2.27.0.windows.1
-In-Reply-To: <20210313083900.234-1-lushenming@huawei.com>
-References: <20210313083900.234-1-lushenming@huawei.com>
+ with ESMTP id UuqXAEGZdS+v for <kvmarm@lists.cs.columbia.edu>;
+ Sat, 13 Mar 2021 04:35:28 -0500 (EST)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 29D634B485
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 13 Mar 2021 04:35:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1615628127;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GEXvJoFIMtu03gnrQoXoMyZklbH+XrN6f9pUvJEic0Q=;
+ b=ZmbRXPzonAcM+GAumrgs+G0WXIAu1aUFgYdM3OWDkUg+I2V2JkyBEBajcQZwKjTT3qKtiN
+ c2V7L6EXJTc3JIuRhAzjDSZlQNxl8LU1NSWwyN/GIKF81T2MQ36aPwuVM4JZMYgAUT2Pot
+ SeG5gAMxqsIO0Lw5zy0FxkGhYHPT3XA=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-2-Qf-FhoTpM-uX3B2NJr7A4Q-1; Sat, 13 Mar 2021 04:35:24 -0500
+X-MC-Unique: Qf-FhoTpM-uX3B2NJr7A4Q-1
+Received: by mail-wr1-f70.google.com with SMTP id g5so12311982wrd.22
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 13 Mar 2021 01:35:24 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:to:cc:references:from:subject:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=GEXvJoFIMtu03gnrQoXoMyZklbH+XrN6f9pUvJEic0Q=;
+ b=YZq4I/5FKjedAhrJrc6qREksyzfa8YMQr6p2HCPYB0UuXTlYrJy7LhwDSV9YAw4QxR
+ +j79Y/ND6Kz5xN79Jlf2w4WSrHA3sQtg/FQsmZDRJyNtAAxQAlCqnWgu4ulEv+WKs0fz
+ AlwyDKD6vX8BRsEvT3C11/rLUwhFZmqCEdxglPT2Kzv7GEkSqsfy25PYFdfKXj0HKJ/n
+ vWSqZV7fJ1C1x3ZL7UMqame2Csdyq99aAdvWyWzTQ69SsjxmZ1lYZ7fIt3PQJQ9K+5Lc
+ QQ2xAfXuECK+V1+eEtK5woeELSZ98l54BJhwh5n6vwLXT9OdIm/h9oD5hL3b5hUJca0H
+ y5Bw==
+X-Gm-Message-State: AOAM532wmgFC7GH70djFj2jjWSYWHv9c8UOxBOj4Xuz/vNvJUFwftdja
+ qObPip+9sqUAlf2Dh3+UGw8w93ea2yhh4ojdl3NF76Rg/gBa4voAiGeHp5rq9PrFQfxkmrv99F4
+ KdGr8jvj7JRp7RGp/9f49F13m
+X-Received: by 2002:a1c:6a05:: with SMTP id f5mr17111376wmc.184.1615628123491; 
+ Sat, 13 Mar 2021 01:35:23 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJxZPtEFloConQy5tT04Uy7VF5TWLNu7KM1ZAXfW/KGrUv9L+W1l/kfjlKPOTxYm+VdwnnAdmg==
+X-Received: by 2002:a1c:6a05:: with SMTP id f5mr17111339wmc.184.1615628123265; 
+ Sat, 13 Mar 2021 01:35:23 -0800 (PST)
+Received: from ?IPv6:2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e?
+ ([2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e])
+ by smtp.gmail.com with ESMTPSA id b17sm11575008wrt.17.2021.03.13.01.35.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 13 Mar 2021 01:35:22 -0800 (PST)
+To: Jing Zhang <jingzhangos@google.com>
+References: <20210310003024.2026253-1-jingzhangos@google.com>
+ <20210310003024.2026253-4-jingzhangos@google.com>
+ <bb03107c-a413-50da-e228-d338dd471fb3@redhat.com>
+ <CAAdAUtjj52+cAhD4KUzAaqrMSJXHD0g=ecQNG-a92Mqn3BCxiQ@mail.gmail.com>
+ <ac7462de-1531-5428-5dca-4e3dfb897000@redhat.com>
+ <CAAdAUtjV67hx5BAd31-RG6tjgfZ6tdyu_yLhkbR0d-3qm59mMA@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [RFC PATCH 3/4] KVM: stats: Add ioctl commands to pull statistics
+ in binary format
+Message-ID: <01a4619a-b36c-c08e-ff6e-7f8bc4d32771@redhat.com>
+Date: Sat, 13 Mar 2021 10:35:19 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
 MIME-Version: 1.0
-X-Originating-IP: [10.174.184.135]
-X-CFilter-Loop: Reflected
-Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
- Cornelia Huck <cohuck@redhat.com>, lushenming@huawei.com,
- Alex Williamson <alex.williamson@redhat.com>
+In-Reply-To: <CAAdAUtjV67hx5BAd31-RG6tjgfZ6tdyu_yLhkbR0d-3qm59mMA@mail.gmail.com>
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pbonzini@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Cc: KVM <kvm@vger.kernel.org>, David Hildenbrand <david@redhat.com>,
+ Paul Mackerras <paulus@ozlabs.org>,
+ Linux kselftest <linux-kselftest@vger.kernel.org>,
+ Claudio Imbrenda <imbrenda@linux.ibm.com>, Will Deacon <will@kernel.org>,
+ KVM ARM <kvmarm@lists.cs.columbia.edu>,
+ Emanuele Giuseppe Esposito <eesposit@redhat.com>,
+ Linux S390 <linux-s390@vger.kernel.org>, Janosch Frank <frankja@linux.ibm.com>,
+ Oliver Upton <oupton@google.com>, Marc Zyngier <maz@kernel.org>,
+ Huacai Chen <chenhuacai@kernel.org>,
+ Christian Borntraeger <borntraeger@de.ibm.com>,
+ Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
+ David Rientjes <rientjes@google.com>, KVM PPC <kvm-ppc@vger.kernel.org>,
+ Jim Mattson <jmattson@google.com>,
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+ Sean Christopherson <seanjc@google.com>, Cornelia Huck <cohuck@redhat.com>,
+ Peter Shier <pshier@google.com>, Linux MIPS <linux-mips@vger.kernel.org>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -65,45 +124,53 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-QmVmb3JlIEdJQ3Y0LjEsIHdlIGRvbid0IGhhdmUgZGlyZWN0IGFjY2VzcyB0byB0aGUgVkxQSSBz
-dGF0ZS4gU28Kd2Ugc2ltcGx5IGxldCBpdCBmYWlsIGVhcmx5IHdoZW4gZW5jb3VudGVyaW5nIGFu
-eSBWTFBJIGluIHNhdmluZy4KCkJ1dCBub3cgd2UgZG9uJ3QgaGF2ZSB0byByZXR1cm4gLUVBQ0NF
-UyBkaXJlY3RseSBpZiBvbiBHSUN2NC4xLiBMZXTigJlzCmNoYW5nZSB0aGUgaGFyZCBjb2RlIGFu
-ZCBnaXZlIGEgY2hhbmNlIHRvIHNhdmUgdGhlIFZMUEkgc3RhdGUgKGFuZApwcmVzZXJ2ZSB0aGUg
-VUFQSSkuCgpTaWduZWQtb2ZmLWJ5OiBTaGVubWluZyBMdSA8bHVzaGVubWluZ0BodWF3ZWkuY29t
-PgotLS0KIERvY3VtZW50YXRpb24vdmlydC9rdm0vZGV2aWNlcy9hcm0tdmdpYy1pdHMucnN0IHwg
-MiArLQogYXJjaC9hcm02NC9rdm0vdmdpYy92Z2ljLWl0cy5jICAgICAgICAgICAgICAgICAgfCA2
-ICsrKy0tLQogMiBmaWxlcyBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKyksIDQgZGVsZXRpb25zKC0p
-CgpkaWZmIC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi92aXJ0L2t2bS9kZXZpY2VzL2FybS12Z2ljLWl0
-cy5yc3QgYi9Eb2N1bWVudGF0aW9uL3ZpcnQva3ZtL2RldmljZXMvYXJtLXZnaWMtaXRzLnJzdApp
-bmRleCA2YzMwNGZkMmIxYjQuLmQyNTdlZGRiYWUyOSAxMDA2NDQKLS0tIGEvRG9jdW1lbnRhdGlv
-bi92aXJ0L2t2bS9kZXZpY2VzL2FybS12Z2ljLWl0cy5yc3QKKysrIGIvRG9jdW1lbnRhdGlvbi92
-aXJ0L2t2bS9kZXZpY2VzL2FybS12Z2ljLWl0cy5yc3QKQEAgLTgwLDcgKzgwLDcgQEAgS1ZNX0RF
-Vl9BUk1fVkdJQ19HUlBfQ1RSTAogICAgIC1FRkFVTFQgIEludmFsaWQgZ3Vlc3QgcmFtIGFjY2Vz
-cwogICAgIC1FQlVTWSAgIE9uZSBvciBtb3JlIFZDUFVTIGFyZSBydW5uaW5nCiAgICAgLUVBQ0NF
-UyAgVGhlIHZpcnR1YWwgSVRTIGlzIGJhY2tlZCBieSBhIHBoeXNpY2FsIEdJQ3Y0IElUUywgYW5k
-IHRoZQotCSAgICAgc3RhdGUgaXMgbm90IGF2YWlsYWJsZQorCSAgICAgc3RhdGUgaXMgbm90IGF2
-YWlsYWJsZSB3aXRob3V0IEdJQ3Y0LjEKICAgICA9PT09PT09ICA9PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiAKIEtWTV9ERVZfQVJNX1ZH
-SUNfR1JQX0lUU19SRUdTCmRpZmYgLS1naXQgYS9hcmNoL2FybTY0L2t2bS92Z2ljL3ZnaWMtaXRz
-LmMgYi9hcmNoL2FybTY0L2t2bS92Z2ljL3ZnaWMtaXRzLmMKaW5kZXggNDBjYmFjYTgxMzMzLi5l
-Yzc1NDNhOTYxN2MgMTAwNjQ0Ci0tLSBhL2FyY2gvYXJtNjQva3ZtL3ZnaWMvdmdpYy1pdHMuYwor
-KysgYi9hcmNoL2FybTY0L2t2bS92Z2ljL3ZnaWMtaXRzLmMKQEAgLTIyMTgsMTAgKzIyMTgsMTAg
-QEAgc3RhdGljIGludCB2Z2ljX2l0c19zYXZlX2l0dChzdHJ1Y3QgdmdpY19pdHMgKml0cywgc3Ry
-dWN0IGl0c19kZXZpY2UgKmRldmljZSkKIAkJLyoKIAkJICogSWYgYW4gTFBJIGNhcnJpZXMgdGhl
-IEhXIGJpdCwgdGhpcyBtZWFucyB0aGF0IHRoaXMKIAkJICogaW50ZXJydXB0IGlzIGNvbnRyb2xs
-ZWQgYnkgR0lDdjQsIGFuZCB3ZSBkbyBub3QKLQkJICogaGF2ZSBkaXJlY3QgYWNjZXNzIHRvIHRo
-YXQgc3RhdGUuIExldCdzIHNpbXBseSBmYWlsCi0JCSAqIHRoZSBzYXZlIG9wZXJhdGlvbi4uLgor
-CQkgKiBoYXZlIGRpcmVjdCBhY2Nlc3MgdG8gdGhhdCBzdGF0ZSB3aXRob3V0IEdJQ3Y0LjEuCisJ
-CSAqIExldCdzIHNpbXBseSBmYWlsIHRoZSBzYXZlIG9wZXJhdGlvbi4uLgogCQkgKi8KLQkJaWYg
-KGl0ZS0+aXJxLT5odykKKwkJaWYgKGl0ZS0+aXJxLT5odyAmJiAha3ZtX3ZnaWNfZ2xvYmFsX3N0
-YXRlLmhhc19naWN2NF8xKQogCQkJcmV0dXJuIC1FQUNDRVM7CiAKIAkJcmV0ID0gdmdpY19pdHNf
-c2F2ZV9pdGUoaXRzLCBkZXZpY2UsIGl0ZSwgZ3BhLCBpdGVfZXN6KTsKLS0gCjIuMTkuMQoKX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18Ka3ZtYXJtIG1haWxp
-bmcgbGlzdAprdm1hcm1AbGlzdHMuY3MuY29sdW1iaWEuZWR1Cmh0dHBzOi8vbGlzdHMuY3MuY29s
-dW1iaWEuZWR1L21haWxtYW4vbGlzdGluZm8va3ZtYXJtCg==
+On 12/03/21 23:27, Jing Zhang wrote:
+>>>> 4 bytes flags (always zero)
+> Could you give some potential use for this flag?
+
+No idea, honestly.  It probably would signal the presence of more fields 
+after "offset of the first stat value".  In general it's better to leave 
+some room for extension.
+
+>>>> 4 bytes number of statistics
+>>>> 4 bytes offset of the first stat description
+>>>> 4 bytes offset of the first stat value
+>>>> stat descriptions:
+>>>>     - 4 bytes for the type (for now always zero: uint64_t)
+> Potential use for this type? Should we move this outside descriptor? Since
+> all stats probably have the same size.
+
+Yes, all stats should be 8 bytes.  But for example:
+
+- 0 = uint64_t
+
+- 1 = int64_t
+
+- 0x80000000 | n: enum with n different values, which are stored after 
+the name
+
+>>>>     - 4 bytes for the flags (for now always zero)
+> Potential use for this flag?
+
+Looking back at Emanuele's statsfs, it could be:
+
+- bit 0: can be cleared (by writing eight zero bytes in the statistics' 
+offset)
+
+- bit 1: cumulative value (count of events, can only grow) vs. 
+instantaneous value (can go up or down)
+
+This is currently stored in the debugfs mode, so we can already use 
+these flags.
+
+Paolo
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
