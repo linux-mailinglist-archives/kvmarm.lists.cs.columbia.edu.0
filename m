@@ -2,49 +2,48 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 04DF8339CF8
-	for <lists+kvmarm@lfdr.de>; Sat, 13 Mar 2021 09:39:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FAB3339CF9
+	for <lists+kvmarm@lfdr.de>; Sat, 13 Mar 2021 09:39:57 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id ACD934B533;
-	Sat, 13 Mar 2021 03:39:55 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D7C864B40A;
+	Sat, 13 Mar 2021 03:39:56 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ErzLlUkXk5qi; Sat, 13 Mar 2021 03:39:55 -0500 (EST)
+	with ESMTP id J25Y0IpmuMrm; Sat, 13 Mar 2021 03:39:55 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9F9CB4B3D6;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BA56A4B4A3;
 	Sat, 13 Mar 2021 03:39:54 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5C0394B4B2
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 956934B4B2
  for <kvmarm@lists.cs.columbia.edu>; Sat, 13 Mar 2021 03:39:53 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Vzxlk2s2QJBD for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id caHjQ32L37Xu for <kvmarm@lists.cs.columbia.edu>;
  Sat, 13 Mar 2021 03:39:52 -0500 (EST)
 Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 39F324B52C
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 80B0F4B529
  for <kvmarm@lists.cs.columbia.edu>; Sat, 13 Mar 2021 03:39:52 -0500 (EST)
 Received: from DGGEMS401-HUB.china.huawei.com (unknown [172.30.72.60])
- by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4DyGKM5fQYz17KRS;
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4DyGKM61grz17KSR;
  Sat, 13 Mar 2021 16:37:59 +0800 (CST)
 Received: from DESKTOP-7FEPK9S.china.huawei.com (10.174.184.135) by
  DGGEMS401-HUB.china.huawei.com (10.3.19.201) with Microsoft SMTP Server id
- 14.3.498.0; Sat, 13 Mar 2021 16:39:41 +0800
+ 14.3.498.0; Sat, 13 Mar 2021 16:39:42 +0800
 From: Shenming Lu <lushenming@huawei.com>
 To: Marc Zyngier <maz@kernel.org>, Eric Auger <eric.auger@redhat.com>, "Will
  Deacon" <will@kernel.org>, <linux-arm-kernel@lists.infradead.org>,
  <kvmarm@lists.cs.columbia.edu>, <kvm@vger.kernel.org>,
  <linux-kernel@vger.kernel.org>
-Subject: [PATCH v4 2/6] irqchip/gic-v3-its: Drop the setting of PTZ altogether
-Date: Sat, 13 Mar 2021 16:38:56 +0800
-Message-ID: <20210313083900.234-3-lushenming@huawei.com>
+Subject: [PATCH v4 3/6] KVM: arm64: GICv4.1: Add function to get VLPI state
+Date: Sat, 13 Mar 2021 16:38:57 +0800
+Message-ID: <20210313083900.234-4-lushenming@huawei.com>
 X-Mailer: git-send-email 2.27.0.windows.1
 In-Reply-To: <20210313083900.234-1-lushenming@huawei.com>
 References: <20210313083900.234-1-lushenming@huawei.com>
@@ -70,41 +69,57 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-GICv4.1 gives a way to get the VLPI state, which needs to map the
-vPE first, and after the state read, we may remap the vPE back while
-the VPT is not empty. So we can't assume that the VPT is empty at
-the first map. Besides, the optimization of PTZ is probably limited
-since the HW should be fairly efficient to parse the empty VPT. Let's
-drop the setting of PTZ altogether.
+With GICv4.1 and the vPE unmapped, which indicates the invalidation
+of any VPT caches associated with the vPE, we can get the VLPI state
+by peeking at the VPT. So we add a function for this.
 
 Signed-off-by: Shenming Lu <lushenming@huawei.com>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/vgic/vgic-v4.c | 19 +++++++++++++++++++
+ arch/arm64/kvm/vgic/vgic.h    |  1 +
+ 2 files changed, 20 insertions(+)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 4eb907f65bd0..c8b5a88ac31c 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -794,8 +794,16 @@ static struct its_vpe *its_build_vmapp_cmd(struct its_node *its,
+diff --git a/arch/arm64/kvm/vgic/vgic-v4.c b/arch/arm64/kvm/vgic/vgic-v4.c
+index 66508b03094f..ac029ba3d337 100644
+--- a/arch/arm64/kvm/vgic/vgic-v4.c
++++ b/arch/arm64/kvm/vgic/vgic-v4.c
+@@ -203,6 +203,25 @@ void vgic_v4_configure_vsgis(struct kvm *kvm)
+ 	kvm_arm_resume_guest(kvm);
+ }
  
- 	its_encode_alloc(cmd, alloc);
++/*
++ * Must be called with GICv4.1 and the vPE unmapped, which
++ * indicates the invalidation of any VPT caches associated
++ * with the vPE, thus we can get the VLPI state by peeking
++ * at the VPT.
++ */
++void vgic_v4_get_vlpi_state(struct vgic_irq *irq, bool *val)
++{
++	struct its_vpe *vpe = &irq->target_vcpu->arch.vgic_cpu.vgic_v3.its_vpe;
++	int mask = BIT(irq->intid % BITS_PER_BYTE);
++	void *va;
++	u8 *ptr;
++
++	va = page_address(vpe->vpt_page);
++	ptr = va + irq->intid / BITS_PER_BYTE;
++
++	*val = !!(*ptr & mask);
++}
++
+ /**
+  * vgic_v4_init - Initialize the GICv4 data structures
+  * @kvm:	Pointer to the VM being initialized
+diff --git a/arch/arm64/kvm/vgic/vgic.h b/arch/arm64/kvm/vgic/vgic.h
+index 64fcd7511110..d8cfd360838c 100644
+--- a/arch/arm64/kvm/vgic/vgic.h
++++ b/arch/arm64/kvm/vgic/vgic.h
+@@ -317,5 +317,6 @@ bool vgic_supports_direct_msis(struct kvm *kvm);
+ int vgic_v4_init(struct kvm *kvm);
+ void vgic_v4_teardown(struct kvm *kvm);
+ void vgic_v4_configure_vsgis(struct kvm *kvm);
++void vgic_v4_get_vlpi_state(struct vgic_irq *irq, bool *val);
  
--	/* We can only signal PTZ when alloc==1. Why do we have two bits? */
--	its_encode_ptz(cmd, alloc);
-+	/*
-+	 * We can only signal PTZ when alloc==1. Why do we have two bits?
-+	 * GICv4.1 gives a way to get the VLPI state, which needs the vPE
-+	 * to be unmapped first, and in this case, we may remap the vPE
-+	 * back while the VPT is not empty. So we can't assume that the
-+	 * VPT is empty at the first map. Besides, the optimization of PTZ
-+	 * is probably limited since the HW should be fairly efficient to
-+	 * parse the empty VPT. Let's drop the setting of PTZ altogether.
-+	 */
-+	its_encode_ptz(cmd, false);
- 	its_encode_vconf_addr(cmd, vconf_addr);
- 	its_encode_vmapp_default_db(cmd, desc->its_vmapp_cmd.vpe->vpe_db_lpi);
- 
+ #endif
 -- 
 2.19.1
 
