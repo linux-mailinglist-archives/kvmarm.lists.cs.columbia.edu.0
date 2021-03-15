@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AEE933BCD1
-	for <lists+kvmarm@lfdr.de>; Mon, 15 Mar 2021 15:36:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C471233BCD5
+	for <lists+kvmarm@lfdr.de>; Mon, 15 Mar 2021 15:36:03 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 39CFA4B5FB;
-	Mon, 15 Mar 2021 10:36:02 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 729424B60C;
+	Mon, 15 Mar 2021 10:36:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,62 +14,63 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id nXHEoMgeH0Vl; Mon, 15 Mar 2021 10:36:01 -0400 (EDT)
+	with ESMTP id GuhFYgJcvwLn; Mon, 15 Mar 2021 10:36:03 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 805374B5E2;
-	Mon, 15 Mar 2021 10:35:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A65724B61E;
+	Mon, 15 Mar 2021 10:36:00 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 265104B5E7
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 10:35:57 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 09D3C4B3AF
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 10:36:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id n1PySeZWSZTB for <kvmarm@lists.cs.columbia.edu>;
- Mon, 15 Mar 2021 10:35:56 -0400 (EDT)
-Received: from mail-wr1-f74.google.com (mail-wr1-f74.google.com
- [209.85.221.74])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 019244B5A3
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 10:35:55 -0400 (EDT)
-Received: by mail-wr1-f74.google.com with SMTP id y5so15186588wrp.2
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 07:35:55 -0700 (PDT)
+ with ESMTP id rRtqFnKfwtzu for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 15 Mar 2021 10:35:59 -0400 (EDT)
+Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com
+ [209.85.128.74])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 231C04B498
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 10:35:58 -0400 (EDT)
+Received: by mail-wm1-f74.google.com with SMTP id m17so2910123wml.3
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 07:35:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=YZ/TJ8544r/cIimuF4tq7iBp2nvTUzw9xctrN4cslBs=;
- b=AY/u1mH3eVDmBX/B+MsmEGCoOU7pNrDV50CkR9fKMMsr+Oif7cI1ajXFxedjQgKt/y
- sKiDwfguHqTx0q/Po/HlIfnqyNAQTdKKW2E5vsN8bhGESmg93UAuYpr4HjO4SvTsyc5G
- tHC0QwzKY1MH3pP5UkPhiYZgiBC9cRJA9aW6QlewRpYeaC+X7iF7v2REapg7+u997Jpw
- Q22qFiPBqAkQeT2QBerbaxaG8Hb/3DA+TiUqF8ZhgqDi8fW7zTdp3FAVfpbmbGzBlw7X
- IRroZXfO5gNcib48xFvyRz+2ehEymI9c2D3If9a3IsT6iIiTA0NFfUy81HHOuCkLAhh8
- aaug==
+ :cc; bh=+iu0t5BZID9srTWBP+2VrUQDFbl6lTqyuwf0tKjg+JE=;
+ b=eCfaDc/7sIi6ERqTbQYAo0T/MGESaou7EUDhXwnQrsDwamnC9YlqfgIGWyi8fqO8yO
+ nTiawzHfVoaGMYlQk9s/eR4POgKLB8f5IkHNxi6muO5P+/FDSHukbR3UQzYNUZH+9RNt
+ RI0isey48BJvIiy7xK7jk3qVM28DXl+YCeu3jI2fLFYrAWJqy0tzVaTanAh6qbjLcAlw
+ eaFZc759FNLxBsxtgNJ4BfAQRFbHA5fOqbOU+BobykofhZI/QjUT3Zm/RCejnFg7Bv28
+ MzfvvCmCqN1yIauigRfpZiyXbb/q0yuJN8t/XhF4fSGvwRd53BMDgZoUAxXmwjS03SVW
+ XjMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=YZ/TJ8544r/cIimuF4tq7iBp2nvTUzw9xctrN4cslBs=;
- b=lgyqZ7ZzxpdV5yZFaG2YI7X+/gJJ9UKY2A1j3bI8+fSNtbGZYbwoCNQEaUWazhJTge
- gPXjOF2SuL36LhNfEYhYsFgWHQNh6WVDUjqyM4olm9ubOqT6gE95UWShM+Tu4X1v3nPS
- y21zkAYATnXOgeE0Eb9tJkxKCIIi5BWE78OvZmTKJ/syy0PAXtlDNSLuPd4wHJKloH5h
- C3joY5SVG7s9/PXUvvn2om+6YkTpT9W9/JXxr5qQfKDMTaMXG8cgmYc0tZZuh55QHIeO
- xPAayUrzOrKJjkcBxEKk0z7f/mQWYrvF8MroaAwD8LeGyZtfPV0K7D3AH2nNxLSZCbbc
- X2qg==
-X-Gm-Message-State: AOAM532dFUPaFs5yc4xMSnW0Rxjf4ljCWbcj0a0+7lg93bg3kSU27bxZ
- ZPF1z333Hm9JAnT6QXbqExJc/39z+PN+
-X-Google-Smtp-Source: ABdhPJzAP8GDMniHB+e8vB07G0Y5zSCnWugrj1o8MSaeFFNRNtxQgBGxeuDVNS2WyBRWX3zDHwOC4aE58S0l
+ bh=+iu0t5BZID9srTWBP+2VrUQDFbl6lTqyuwf0tKjg+JE=;
+ b=eCxNDFBwG2yE6gJd8P8i0npLH3bJF1k3K8cxybuHBOQVOg7OC3r7edNCY4r82PXJqM
+ cXDlraxgeUCFOTR7SW992yDXk4yfU7XFDRxSwY5YUrDuPpl+lzpBpgh4dMTWIue/AmgW
+ W6giF8DNTywxQ48nQbRK14dPELGgzOaOrFor0VkVJgAHyp1fDMIeIwH2Rs02CHsHWZ6I
+ xg6ov/9V3Y78YbiaxfhMhMQkwgwRfAIqsmtRHR5QUUjCdBZG3DdQp/IC7gLVvVumYWEO
+ fCtRn9l0MkTIeWzyk67IE4pw+tlb3KvuzcHIJjOEG0kI2qdX58PHY6DGRwE6iAJ8n/0Q
+ /1gw==
+X-Gm-Message-State: AOAM530+QYh4gX5tiqtTuVAIW77DHXpWRFtvXn6hty8Ifk9kk/vA9nlC
+ ZkOac4xHB3XL6xuR5NWdYU4UEURV7+F5
+X-Google-Smtp-Source: ABdhPJxCgwITDTWF8jM+n9TA0U3rRomDUbTmfz8t0MMwY2a20uS8WWMoTr0wvdf1I/4Avmktbd6EQAwHuiCo
 X-Received: from r2d2-qp.c.googlers.com ([fda3:e722:ac3:10:28:9cb1:c0a8:1652])
- (user=qperret job=sendgmr) by 2002:a1c:df46:: with SMTP id
- w67mr12007wmg.176.1615818955131; Mon, 15 Mar 2021 07:35:55 -0700 (PDT)
-Date: Mon, 15 Mar 2021 14:35:07 +0000
+ (user=qperret job=sendgmr) by 2002:a1c:c20a:: with SMTP id
+ s10mr21383wmf.144.1615818957308; Mon, 15 Mar 2021 07:35:57 -0700 (PDT)
+Date: Mon, 15 Mar 2021 14:35:08 +0000
 In-Reply-To: <20210315143536.214621-1-qperret@google.com>
-Message-Id: <20210315143536.214621-8-qperret@google.com>
+Message-Id: <20210315143536.214621-9-qperret@google.com>
 Mime-Version: 1.0
 References: <20210315143536.214621-1-qperret@google.com>
 X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620-goog
-Subject: [PATCH v5 07/36] KVM: arm64: Introduce a BSS section for use at Hyp
+Subject: [PATCH v5 08/36] KVM: arm64: Make kvm_call_hyp() a function call at
+ Hyp
 From: Quentin Perret <qperret@google.com>
 To: catalin.marinas@arm.com, will@kernel.org, maz@kernel.org, 
  james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com
@@ -93,162 +94,43 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Currently, the hyp code cannot make full use of a bss, as the kernel
-section is mapped read-only.
+kvm_call_hyp() has some logic to issue a function call or a hypercall
+depending on the EL at which the kernel is running. However, all the
+code compiled under __KVM_NVHE_HYPERVISOR__ is guaranteed to only run
+at EL2 which allows us to simplify.
 
-While this mapping could simply be changed to read-write, it would
-intermingle even more the hyp and kernel state than they currently are.
-Instead, introduce a __hyp_bss section, that uses reserved pages, and
-create the appropriate RW hyp mappings during KVM init.
+Add ifdefery to kvm_host.h to simplify kvm_call_hyp() in .hyp.text.
 
 Acked-by: Will Deacon <will@kernel.org>
 Signed-off-by: Quentin Perret <qperret@google.com>
 ---
- arch/arm64/include/asm/sections.h |  1 +
- arch/arm64/kernel/vmlinux.lds.S   | 52 ++++++++++++++++++++-----------
- arch/arm64/kvm/arm.c              | 14 ++++++++-
- arch/arm64/kvm/hyp/nvhe/hyp.lds.S |  1 +
- 4 files changed, 49 insertions(+), 19 deletions(-)
+ arch/arm64/include/asm/kvm_host.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm64/include/asm/sections.h b/arch/arm64/include/asm/sections.h
-index 2f36b16a5b5d..e4ad9db53af1 100644
---- a/arch/arm64/include/asm/sections.h
-+++ b/arch/arm64/include/asm/sections.h
-@@ -13,6 +13,7 @@ extern char __hyp_idmap_text_start[], __hyp_idmap_text_end[];
- extern char __hyp_text_start[], __hyp_text_end[];
- extern char __hyp_rodata_start[], __hyp_rodata_end[];
- extern char __hyp_reloc_begin[], __hyp_reloc_end[];
-+extern char __hyp_bss_start[], __hyp_bss_end[];
- extern char __idmap_text_start[], __idmap_text_end[];
- extern char __initdata_begin[], __initdata_end[];
- extern char __inittext_begin[], __inittext_end[];
-diff --git a/arch/arm64/kernel/vmlinux.lds.S b/arch/arm64/kernel/vmlinux.lds.S
-index 7eea7888bb02..e96173ce211b 100644
---- a/arch/arm64/kernel/vmlinux.lds.S
-+++ b/arch/arm64/kernel/vmlinux.lds.S
-@@ -5,24 +5,7 @@
-  * Written by Martin Mares <mj@atrey.karlin.mff.cuni.cz>
-  */
+diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+index 3d10e6527f7d..06ca4828005f 100644
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -591,6 +591,7 @@ int kvm_test_age_hva(struct kvm *kvm, unsigned long hva);
+ void kvm_arm_halt_guest(struct kvm *kvm);
+ void kvm_arm_resume_guest(struct kvm *kvm);
  
--#define RO_EXCEPTION_TABLE_ALIGN	8
--#define RUNTIME_DISCARD_EXIT
--
--#include <asm-generic/vmlinux.lds.h>
--#include <asm/cache.h>
- #include <asm/hyp_image.h>
--#include <asm/kernel-pgtable.h>
--#include <asm/memory.h>
--#include <asm/page.h>
--
--#include "image.h"
--
--OUTPUT_ARCH(aarch64)
--ENTRY(_text)
--
--jiffies = jiffies_64;
--
--
- #ifdef CONFIG_KVM
- #define HYPERVISOR_EXTABLE					\
- 	. = ALIGN(SZ_8);					\
-@@ -51,13 +34,43 @@ jiffies = jiffies_64;
- 		__hyp_reloc_end = .;				\
- 	}
++#ifndef __KVM_NVHE_HYPERVISOR__
+ #define kvm_call_hyp_nvhe(f, ...)						\
+ 	({								\
+ 		struct arm_smccc_res res;				\
+@@ -630,6 +631,11 @@ void kvm_arm_resume_guest(struct kvm *kvm);
+ 									\
+ 		ret;							\
+ 	})
++#else /* __KVM_NVHE_HYPERVISOR__ */
++#define kvm_call_hyp(f, ...) f(__VA_ARGS__)
++#define kvm_call_hyp_ret(f, ...) f(__VA_ARGS__)
++#define kvm_call_hyp_nvhe(f, ...) f(__VA_ARGS__)
++#endif /* __KVM_NVHE_HYPERVISOR__ */
  
-+#define BSS_FIRST_SECTIONS					\
-+	__hyp_bss_start = .;					\
-+	*(HYP_SECTION_NAME(.bss))				\
-+	. = ALIGN(PAGE_SIZE);					\
-+	__hyp_bss_end = .;
-+
-+/*
-+ * We require that __hyp_bss_start and __bss_start are aligned, and enforce it
-+ * with an assertion. But the BSS_SECTION macro places an empty .sbss section
-+ * between them, which can in some cases cause the linker to misalign them. To
-+ * work around the issue, force a page alignment for __bss_start.
-+ */
-+#define SBSS_ALIGN			PAGE_SIZE
- #else /* CONFIG_KVM */
- #define HYPERVISOR_EXTABLE
- #define HYPERVISOR_DATA_SECTIONS
- #define HYPERVISOR_PERCPU_SECTION
- #define HYPERVISOR_RELOC_SECTION
-+#define SBSS_ALIGN			0
- #endif
- 
-+#define RO_EXCEPTION_TABLE_ALIGN	8
-+#define RUNTIME_DISCARD_EXIT
-+
-+#include <asm-generic/vmlinux.lds.h>
-+#include <asm/cache.h>
-+#include <asm/kernel-pgtable.h>
-+#include <asm/memory.h>
-+#include <asm/page.h>
-+
-+#include "image.h"
-+
-+OUTPUT_ARCH(aarch64)
-+ENTRY(_text)
-+
-+jiffies = jiffies_64;
-+
- #define HYPERVISOR_TEXT					\
- 	/*						\
- 	 * Align to 4 KB so that			\
-@@ -276,7 +289,7 @@ SECTIONS
- 	__pecoff_data_rawsize = ABSOLUTE(. - __initdata_begin);
- 	_edata = .;
- 
--	BSS_SECTION(0, 0, 0)
-+	BSS_SECTION(SBSS_ALIGN, 0, 0)
- 
- 	. = ALIGN(PAGE_SIZE);
- 	init_pg_dir = .;
-@@ -324,6 +337,9 @@ ASSERT(__hibernate_exit_text_end - (__hibernate_exit_text_start & ~(SZ_4K - 1))
- ASSERT((__entry_tramp_text_end - __entry_tramp_text_start) == PAGE_SIZE,
- 	"Entry trampoline text too big")
- #endif
-+#ifdef CONFIG_KVM
-+ASSERT(__hyp_bss_start == __bss_start, "HYP and Host BSS are misaligned")
-+#endif
- /*
-  * If padding is applied before .head.text, virt<->phys conversions will fail.
-  */
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 2d1e7ef69c04..3f8bcf8db036 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -1770,7 +1770,19 @@ static int init_hyp_mode(void)
- 		goto out_err;
- 	}
- 
--	err = create_hyp_mappings(kvm_ksym_ref(__bss_start),
-+	/*
-+	 * .hyp.bss is guaranteed to be placed at the beginning of the .bss
-+	 * section thanks to an assertion in the linker script. Map it RW and
-+	 * the rest of .bss RO.
-+	 */
-+	err = create_hyp_mappings(kvm_ksym_ref(__hyp_bss_start),
-+				  kvm_ksym_ref(__hyp_bss_end), PAGE_HYP);
-+	if (err) {
-+		kvm_err("Cannot map hyp bss section: %d\n", err);
-+		goto out_err;
-+	}
-+
-+	err = create_hyp_mappings(kvm_ksym_ref(__hyp_bss_end),
- 				  kvm_ksym_ref(__bss_stop), PAGE_HYP_RO);
- 	if (err) {
- 		kvm_err("Cannot map bss section\n");
-diff --git a/arch/arm64/kvm/hyp/nvhe/hyp.lds.S b/arch/arm64/kvm/hyp/nvhe/hyp.lds.S
-index cd119d82d8e3..f4562f417d3f 100644
---- a/arch/arm64/kvm/hyp/nvhe/hyp.lds.S
-+++ b/arch/arm64/kvm/hyp/nvhe/hyp.lds.S
-@@ -25,4 +25,5 @@ SECTIONS {
- 	BEGIN_HYP_SECTION(.data..percpu)
- 		PERCPU_INPUT(L1_CACHE_BYTES)
- 	END_HYP_SECTION
-+	HYP_SECTION(.bss)
- }
+ void force_vm_exit(const cpumask_t *mask);
+ void kvm_mmu_wp_memory_region(struct kvm *kvm, int slot);
 -- 
 2.31.0.rc2.261.g7f71774620-goog
 
