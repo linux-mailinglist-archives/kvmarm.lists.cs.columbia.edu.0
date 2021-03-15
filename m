@@ -2,58 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A1BE33B21C
-	for <lists+kvmarm@lfdr.de>; Mon, 15 Mar 2021 13:07:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 372DD33B268
+	for <lists+kvmarm@lfdr.de>; Mon, 15 Mar 2021 13:22:01 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B4EFD4B522;
-	Mon, 15 Mar 2021 08:07:46 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9B7774B573;
+	Mon, 15 Mar 2021 08:22:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@linuxfoundation.org
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2L44d7Lnphek; Mon, 15 Mar 2021 08:07:46 -0400 (EDT)
+	with ESMTP id SfYD8diHBwrQ; Mon, 15 Mar 2021 08:22:00 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 68CC64B511;
-	Mon, 15 Mar 2021 08:07:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5ADA04B511;
+	Mon, 15 Mar 2021 08:21:59 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 99FAB4B503
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 08:07:44 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id F22094B4FE
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 08:21:57 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id fhVMnlQyCmHR for <kvmarm@lists.cs.columbia.edu>;
- Mon, 15 Mar 2021 08:07:43 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 572194B4AD
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 08:07:43 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 97E4764E27;
- Mon, 15 Mar 2021 12:07:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1615810062;
- bh=vM8x/V/80btoDH0FlvPjCge1t8yEhaW77QScR8zl05Y=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=bdbJOgCbj1xEP2D3DEilMOIjRGD4jB58O0KhLJFQsQgswxgh3sm1F59ffHk6H3ehP
- WMNmpbonXrH6IjjlVXJMTmDJGnH6uq1Q/YsVLzrAHg0WCPoQpR3rclukYgz0VZesyM
- Yj4O0evrVxDWCkcjWG0Zx1IzGgk7t/aUizT1IHtM=
-Date: Mon, 15 Mar 2021 13:07:39 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH][stable-4.{4,9}] KVM: arm64: Fix exclusive limit for IPA
- size
-Message-ID: <YE9OCxeXXilxCjhB@kroah.com>
-References: <20210315114646.4137198-1-maz@kernel.org>
-MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20210315114646.4137198-1-maz@kernel.org>
-Cc: kernel-team@android.com, kvmarm@lists.cs.columbia.edu,
- stable@vger.kernel.org
+ with ESMTP id ZIvBIDpuu8jX for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 15 Mar 2021 08:21:56 -0400 (EDT)
+Received: from mail-wr1-f74.google.com (mail-wr1-f74.google.com
+ [209.85.221.74])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B96174B4FB
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 08:21:56 -0400 (EDT)
+Received: by mail-wr1-f74.google.com with SMTP id l10so15040701wry.16
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 05:21:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=rWGHkQq4CRrUt+Oq/fI3HH/oNurXWdCCzpIoEn9t8do=;
+ b=u4PtRZRvqvHXmKXvdHZye7vbc0gPFgjiMAS5YHeyfe0v+wdt8PIUqok1c7LIHKk/xu
+ wNip/k1M0ttzYMa6AgXAspCsVSrzb9K4xBxk4Z0ToeTO260FgnJF1ufq0TVGUf/gUa8p
+ p2S7jTL37pwjDc3ntUQoPdgegA4s/0X1/5CvMGXNTFTzxoZlzx1IYgi2lWanBhcP4X85
+ 1xO6QJDk3sdX7hUbK/hr0UWUBRygdtSn/YC6Ut0KkYBpz3fidTF9DbFsWtwp752CzbGi
+ Hhis1bakRGkt7+4ZFvh49kfI87qxKDw/Ut0Sjn08Z11ifwrn8skNvDaErWJTeu+Q8mjT
+ Swbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=rWGHkQq4CRrUt+Oq/fI3HH/oNurXWdCCzpIoEn9t8do=;
+ b=OtaWn5wGeXX9JgdkBpQIhhVk1zNtkRtCpGYQLlvrr59PzU6DhAvJvcm7wPRXCtVay3
+ yJQA5aAPZZQf2awq91nPSQ1/RgVelgaB+pD3vCn5hE2wzOzdDbUOe95W1QOE842eRy+W
+ ARpxcB35+HusELJm99h1ON03SN30M8n1HyTuJV6YZ+Wf/Xg5HnBIjfg++vzU1TG9SCxS
+ PmL3VMT0mUHYaEWehKzTiZxJfF9zJnIpj6cjkKoWc92Icb0llGqBBXBVoUQNe8WmD88K
+ 8sWFevJO+71l/5NSd2+dVYWHgJX3Q5eFMa+hEf3dfbHTNYiRc4x6coorl7udD2CVHdIW
+ 5UnQ==
+X-Gm-Message-State: AOAM531q2mAmr6I1+oq7cm77CRNgTn73ViWJfcvm8WrMgoswfcIbQ70h
+ scILUE/d/kmyrYLxUTmXXesuwbqVzNDTgXekDzPtYHuoaosVMqJRmeZNGjHD42002RfpW3yiFRc
+ dgtshtjPclx5dHZf6MUhXkJPqMuRmCAYxXF3FaRsum8pxlWGeP7N9O29ZtAPhzXU3ytudVQ==
+X-Google-Smtp-Source: ABdhPJy7ZiF4nGEuc1Kdo9S3yPKlqtOccjvtqDjuN/rKVIVZn45Ks8svIp3ww68gBKQIjbUhQxWF6fSF84c=
+X-Received: from ascull.c.googlers.com ([fda3:e722:ac3:10:28:9cb1:c0a8:1510])
+ (user=ascull job=sendgmr) by 2002:a5d:6144:: with SMTP id
+ y4mr27134912wrt.203.1615810915443; 
+ Mon, 15 Mar 2021 05:21:55 -0700 (PDT)
+Date: Mon, 15 Mar 2021 12:21:36 +0000
+Message-Id: <20210315122136.1687370-1-ascull@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620-goog
+Subject: [PATCH] KVM: arm64: Fix nVHE hyp panic host context restore
+From: Andrew Scull <ascull@google.com>
+To: kvmarm@lists.cs.columbia.edu
+Cc: maz@kernel.org, kernel-team@android.com, stable@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -70,34 +88,113 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Mar 15, 2021 at 11:46:46AM +0000, Marc Zyngier wrote:
-> Commit 262b003d059c6671601a19057e9fe1a5e7f23722 upstream.
-> 
-> When registering a memslot, we check the size and location of that
-> memslot against the IPA size to ensure that we can provide guest
-> access to the whole of the memory.
-> 
-> Unfortunately, this check rejects memslot that end-up at the exact
-> limit of the addressing capability for a given IPA size. For example,
-> it refuses the creation of a 2GB memslot at 0x8000000 with a 32bit
-> IPA space.
-> 
-> Fix it by relaxing the check to accept a memslot reaching the
-> limit of the IPA space.
-> 
-> Fixes: c3058d5da222 ("arm/arm64: KVM: Ensure memslots are within KVM_PHYS_SIZE")
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Marc Zyngier <maz@kernel.org>
-> Cc: stable@vger.kernel.org # 4.4, 4.9
-> Reviewed-by: Andrew Jones <drjones@redhat.com>
-> Link: https://lore.kernel.org/r/20210311100016.3830038-3-maz@kernel.org
-> ---
->  arch/arm/kvm/mmu.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Commit c4b000c3928d4f20acef79dccf3a65ae3795e0b0 upstream.
 
-That worked, now queued up, thanks!
+When panicking from the nVHE hyp and restoring the host context, x29 is
+expected to hold a pointer to the host context. This wasn't being done
+so fix it to make sure there's a valid pointer the host context being
+used.
 
-greg k-h
+Rather than passing a boolean indicating whether or not the host context
+should be restored, instead pass the pointer to the host context. NULL
+is passed to indicate that no context should be restored.
+
+Fixes: a2e102e20fd6 ("KVM: arm64: nVHE: Handle hyp panics")
+Cc: stable@vger.kernel.org # 5.11.y only
+Signed-off-by: Andrew Scull <ascull@google.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20210219122406.1337626-1-ascull@google.com
+---
+ arch/arm64/include/asm/kvm_hyp.h |  3 ++-
+ arch/arm64/kvm/hyp/nvhe/host.S   | 20 ++++++++++----------
+ arch/arm64/kvm/hyp/nvhe/switch.c |  3 +--
+ 3 files changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/arch/arm64/include/asm/kvm_hyp.h b/arch/arm64/include/asm/kvm_hyp.h
+index c0450828378b..fb8404fefd1f 100644
+--- a/arch/arm64/include/asm/kvm_hyp.h
++++ b/arch/arm64/include/asm/kvm_hyp.h
+@@ -97,7 +97,8 @@ bool kvm_host_psci_handler(struct kvm_cpu_context *host_ctxt);
+ 
+ void __noreturn hyp_panic(void);
+ #ifdef __KVM_NVHE_HYPERVISOR__
+-void __noreturn __hyp_do_panic(bool restore_host, u64 spsr, u64 elr, u64 par);
++void __noreturn __hyp_do_panic(struct kvm_cpu_context *host_ctxt, u64 spsr,
++			       u64 elr, u64 par);
+ #endif
+ 
+ #endif /* __ARM64_KVM_HYP_H__ */
+diff --git a/arch/arm64/kvm/hyp/nvhe/host.S b/arch/arm64/kvm/hyp/nvhe/host.S
+index a820dfdc9c25..3a06085aab6f 100644
+--- a/arch/arm64/kvm/hyp/nvhe/host.S
++++ b/arch/arm64/kvm/hyp/nvhe/host.S
+@@ -71,10 +71,15 @@ SYM_FUNC_START(__host_enter)
+ SYM_FUNC_END(__host_enter)
+ 
+ /*
+- * void __noreturn __hyp_do_panic(bool restore_host, u64 spsr, u64 elr, u64 par);
++ * void __noreturn __hyp_do_panic(struct kvm_cpu_context *host_ctxt, u64 spsr,
++ * 				  u64 elr, u64 par);
+  */
+ SYM_FUNC_START(__hyp_do_panic)
+-	/* Load the format arguments into x1-7 */
++	mov	x29, x0
++
++	/* Load the format string into x0 and arguments into x1-7 */
++	ldr	x0, =__hyp_panic_string
++
+ 	mov	x6, x3
+ 	get_vcpu_ptr x7, x3
+ 
+@@ -89,13 +94,8 @@ SYM_FUNC_START(__hyp_do_panic)
+ 	ldr	lr, =panic
+ 	msr	elr_el2, lr
+ 
+-	/*
+-	 * Set the panic format string and enter the host, conditionally
+-	 * restoring the host context.
+-	 */
+-	cmp	x0, xzr
+-	ldr	x0, =__hyp_panic_string
+-	b.eq	__host_enter_without_restoring
++	/* Enter the host, conditionally restoring the host context. */
++	cbz	x29, __host_enter_without_restoring
+ 	b	__host_enter_for_panic
+ SYM_FUNC_END(__hyp_do_panic)
+ 
+@@ -150,7 +150,7 @@ SYM_FUNC_END(__hyp_do_panic)
+ 
+ .macro invalid_host_el1_vect
+ 	.align 7
+-	mov	x0, xzr		/* restore_host = false */
++	mov	x0, xzr		/* host_ctxt = NULL */
+ 	mrs	x1, spsr_el2
+ 	mrs	x2, elr_el2
+ 	mrs	x3, par_el1
+diff --git a/arch/arm64/kvm/hyp/nvhe/switch.c b/arch/arm64/kvm/hyp/nvhe/switch.c
+index f3d0e9eca56c..038147b7674b 100644
+--- a/arch/arm64/kvm/hyp/nvhe/switch.c
++++ b/arch/arm64/kvm/hyp/nvhe/switch.c
+@@ -257,7 +257,6 @@ void __noreturn hyp_panic(void)
+ 	u64 spsr = read_sysreg_el2(SYS_SPSR);
+ 	u64 elr = read_sysreg_el2(SYS_ELR);
+ 	u64 par = read_sysreg_par();
+-	bool restore_host = true;
+ 	struct kvm_cpu_context *host_ctxt;
+ 	struct kvm_vcpu *vcpu;
+ 
+@@ -271,7 +270,7 @@ void __noreturn hyp_panic(void)
+ 		__sysreg_restore_state_nvhe(host_ctxt);
+ 	}
+ 
+-	__hyp_do_panic(restore_host, spsr, elr, par);
++	__hyp_do_panic(host_ctxt, spsr, elr, par);
+ 	unreachable();
+ }
+ 
+-- 
+2.31.0.rc2.261.g7f71774620-goog
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
