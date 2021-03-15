@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E9B1933AD04
-	for <lists+kvmarm@lfdr.de>; Mon, 15 Mar 2021 09:04:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 73B8C33AD4F
+	for <lists+kvmarm@lfdr.de>; Mon, 15 Mar 2021 09:25:34 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 794E94B525;
-	Mon, 15 Mar 2021 04:04:50 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DABAA4B430;
+	Mon, 15 Mar 2021 04:25:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,38 +16,39 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id f5y+wyd21YjY; Mon, 15 Mar 2021 04:04:50 -0400 (EDT)
+	with ESMTP id VV9z7FUVEMY1; Mon, 15 Mar 2021 04:25:33 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 654374B495;
-	Mon, 15 Mar 2021 04:04:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D13AD4B428;
+	Mon, 15 Mar 2021 04:25:32 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5A6AE4B486
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 04:04:48 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6C0304B41C
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 04:25:31 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id LvU4BfHld22Y for <kvmarm@lists.cs.columbia.edu>;
- Mon, 15 Mar 2021 04:04:46 -0400 (EDT)
-Received: from szxga07-in.huawei.com (szxga07-in.huawei.com [45.249.212.35])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B51DE4B481
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 04:04:46 -0400 (EDT)
-Received: from DGGEMS411-HUB.china.huawei.com (unknown [172.30.72.60])
- by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4DzTRw1Y4nz8y3T;
- Mon, 15 Mar 2021 16:02:52 +0800 (CST)
+ with ESMTP id LhbS0U8zHj1Z for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 15 Mar 2021 04:25:29 -0400 (EDT)
+Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D386D4B41A
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 04:25:28 -0400 (EDT)
+Received: from DGGEMS407-HUB.china.huawei.com (unknown [172.30.72.58])
+ by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4DzTvB1C1JzMkdD;
+ Mon, 15 Mar 2021 16:23:02 +0800 (CST)
 Received: from [10.174.184.42] (10.174.184.42) by
- DGGEMS411-HUB.china.huawei.com (10.3.19.211) with Microsoft SMTP Server id
- 14.3.498.0; Mon, 15 Mar 2021 16:04:40 +0800
-Subject: Re: [PATCH 2/4] KVM: arm64: Use find_vma_intersection()
+ DGGEMS407-HUB.china.huawei.com (10.3.19.207) with Microsoft SMTP Server id
+ 14.3.498.0; Mon, 15 Mar 2021 16:25:19 +0800
+Subject: Re: [PATCH 4/4] KVM: arm64: Don't retrieve memory slot again in page
+ fault handler
 To: Gavin Shan <gshan@redhat.com>, <kvmarm@lists.cs.columbia.edu>
 References: <20210315041844.64915-1-gshan@redhat.com>
- <20210315041844.64915-3-gshan@redhat.com>
+ <20210315041844.64915-5-gshan@redhat.com>
 From: Keqian Zhu <zhukeqian1@huawei.com>
-Message-ID: <65dfdca3-af94-7d5a-86fe-24825301655b@huawei.com>
-Date: Mon, 15 Mar 2021 16:04:39 +0800
+Message-ID: <30073114-339f-33dd-0168-b4d6bfbe88bc@huawei.com>
+Date: Mon, 15 Mar 2021 16:25:19 +0800
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.7.1
 MIME-Version: 1.0
-In-Reply-To: <20210315041844.64915-3-gshan@redhat.com>
+In-Reply-To: <20210315041844.64915-5-gshan@redhat.com>
 X-Originating-IP: [10.174.184.42]
 X-CFilter-Loop: Reflected
 Cc: maz@kernel.org, will@kernel.org, linux-kernel@vger.kernel.org,
@@ -71,55 +72,50 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 Hi Gavin,
 
 On 2021/3/15 12:18, Gavin Shan wrote:
-> find_vma_intersection() has been existing to search the intersected
-> vma. This uses the function where it's applicable, to simplify the
-> code.
+> We needn't retrieve the memory slot again in user_mem_abort() because
+> the corresponding memory slot has been passed from the caller. This
+I think you are right, though fault_ipa will be adjusted when we try to use block mapping,
+the fault_supports_stage2_huge_mapping() makes sure we're not trying to map anything
+not covered by the memslot, so the adjusted fault_ipa still belongs to the memslot.
+
+> would save some CPU cycles. For example, the time used to write 1GB
+> memory, which is backed by 2MB hugetlb pages and write-protected, is
+> dropped by 6.8% from 928ms to 864ms.
 > 
 > Signed-off-by: Gavin Shan <gshan@redhat.com>
 > ---
->  arch/arm64/kvm/mmu.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+>  arch/arm64/kvm/mmu.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 > 
 > diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> index 84e70f953de6..286b603ed0d3 100644
+> index a5a8ade9fde4..4a4abcccfafb 100644
 > --- a/arch/arm64/kvm/mmu.c
 > +++ b/arch/arm64/kvm/mmu.c
-> @@ -421,10 +421,11 @@ static void stage2_unmap_memslot(struct kvm *kvm,
->  	 *     +--------------------------------------------+
+> @@ -846,7 +846,8 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
 >  	 */
->  	do {
-> -		struct vm_area_struct *vma = find_vma(current->mm, hva);
-> +		struct vm_area_struct *vma;
->  		hva_t vm_start, vm_end;
+>  	smp_rmb();
 >  
-> -		if (!vma || vma->vm_start >= reg_end)
-> +		vma = find_vma_intersection(current->mm, hva, reg_end);
-Nit: Keep a same style may be better(Assign vma when declare it).
-Other looks good to me.
+> -	pfn = gfn_to_pfn_prot(kvm, gfn, write_fault, &writable);
+> +	pfn = __gfn_to_pfn_memslot(memslot, gfn, false, NULL,
+> +				   write_fault, &writable, NULL);
+It's better to update the code comments at same time.
 
-Thank,
-Keqian
-
-
-> +		if (!vma)
->  			break;
+>  	if (pfn == KVM_PFN_ERR_HWPOISON) {
+>  		kvm_send_hwpoison_signal(hva, vma_shift);
+>  		return 0;
+> @@ -912,7 +913,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+>  	/* Mark the page dirty only if the fault is handled successfully */
+>  	if (writable && !ret) {
+>  		kvm_set_pfn_dirty(pfn);
+> -		mark_page_dirty(kvm, gfn);
+> +		mark_page_dirty_in_slot(kvm, memslot, gfn);
+>  	}
 >  
->  		/*
-> @@ -1330,10 +1331,11 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
->  	 *     +--------------------------------------------+
->  	 */
->  	do {
-> -		struct vm_area_struct *vma = find_vma(current->mm, hva);
-> +		struct vm_area_struct *vma;
->  		hva_t vm_start, vm_end;
->  
-> -		if (!vma || vma->vm_start >= reg_end)
-> +		vma = find_vma_intersection(current->mm, hva, reg_end);
-> +		if (!vma)
->  			break;
->  
->  		/*
+>  out_unlock:
 > 
+
+Thanks,
+Keqian.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
