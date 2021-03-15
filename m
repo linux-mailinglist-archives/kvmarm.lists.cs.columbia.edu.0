@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 10F4F33B12D
-	for <lists+kvmarm@lfdr.de>; Mon, 15 Mar 2021 12:31:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C2D833B131
+	for <lists+kvmarm@lfdr.de>; Mon, 15 Mar 2021 12:31:41 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B42D24B4FC;
-	Mon, 15 Mar 2021 07:31:15 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 35BD64B36B;
+	Mon, 15 Mar 2021 07:31:41 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.592
@@ -18,38 +18,38 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@linuxfoundation.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Zpp4at9onEve; Mon, 15 Mar 2021 07:31:15 -0400 (EDT)
+	with ESMTP id Y5W9S57mYNV9; Mon, 15 Mar 2021 07:31:41 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 848394B555;
-	Mon, 15 Mar 2021 07:31:14 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D6A834B511;
+	Mon, 15 Mar 2021 07:31:39 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0635F4B515
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 07:31:13 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 28EAF4B37C
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 07:31:38 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 93DEy8yIZfo7 for <kvmarm@lists.cs.columbia.edu>;
- Mon, 15 Mar 2021 07:31:12 -0400 (EDT)
+ with ESMTP id MTHE82+LoA2L for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 15 Mar 2021 07:31:36 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id EB0A74B462
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 07:31:11 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 9B9F364E61;
- Mon, 15 Mar 2021 11:31:10 +0000 (UTC)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C32204B36B
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 07:31:36 -0400 (EDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 7C45E64E20;
+ Mon, 15 Mar 2021 11:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1615807871;
- bh=+2xMWo+2W9gHdyJ7hBxIUlcrPtH53aYMF/D4GkeJTxo=;
+ s=korg; t=1615807896;
+ bh=Tp/8cxPYy6uoZjugqW4LEVvFCf4bhLADbMlG345LuZ4=;
  h=Subject:To:Cc:From:Date:In-Reply-To:From;
- b=AojJkVR4J4KjWAeAl25zqEhMz6KoGsNMCNGcJ959mR1cIi+yvjNUm71kiamn9UmEU
- BwkHuwAhmkchNqRoli1+BiB1xvii5eGhvUYLZBuYBkkHfuIIJy47p/Kvdk/LXmZ8Uh
- U/DNhRisAYprbq16HP+UAFRHDPDBMFD5uzePlnGk=
-Subject: Patch "KVM: arm64: Fix exclusive limit for IPA size" has been added
- to the 4.19-stable tree
+ b=2HaIKzJRRK65kgMoHEvvSUOPHPBVM4MjyhUx9JrTzIVeBuSeiiNzjUEVBKQ9mZRDg
+ TeramdTm7KT78MDCNkWta+x9CL6YFKJl2cmt9JnpFKHPby+1p3etDcihasZNIsPhKb
+ 1mwY1o2x9rxJtIlixealq326Jj3ZPeXa4gq+bIgQ=
+Subject: Patch "KVM: arm64: Reject VM creation when the default IPA size is
+ unsupported" has been added to the 5.4-stable tree
 To: drjones@redhat.com, eric.auger@redhat.com, gregkh@linuxfoundation.org,
  kernel-team@android.com, kvmarm@lists.cs.columbia.edu, maz@kernel.org
 From: <gregkh@linuxfoundation.org>
-Date: Mon, 15 Mar 2021 12:31:08 +0100
-In-Reply-To: <20210315110833.4135927-1-maz@kernel.org>
-Message-ID: <161580786826222@kroah.com>
+Date: Mon, 15 Mar 2021 12:31:25 +0100
+In-Reply-To: <20210315110952.4136142-1-maz@kernel.org>
+Message-ID: <161580788522249@kroah.com>
 MIME-Version: 1.0
 X-stable: commit
 X-Patchwork-Hint: ignore 
@@ -73,70 +73,117 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 This is a note to let you know that I've just added the patch titled
 
-    KVM: arm64: Fix exclusive limit for IPA size
+    KVM: arm64: Reject VM creation when the default IPA size is unsupported
 
-to the 4.19-stable tree which can be found at:
+to the 5.4-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     kvm-arm64-fix-exclusive-limit-for-ipa-size.patch
-and it can be found in the queue-4.19 subdirectory.
+     kvm-arm64-reject-vm-creation-when-the-default-ipa-size-is-unsupported.patch
+and it can be found in the queue-5.4 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From foo@baz Mon Mar 15 12:28:26 PM CET 2021
+From foo@baz Mon Mar 15 12:27:54 PM CET 2021
 From: Marc Zyngier <maz@kernel.org>
-Date: Mon, 15 Mar 2021 11:08:33 +0000
-Subject: KVM: arm64: Fix exclusive limit for IPA size
+Date: Mon, 15 Mar 2021 11:09:52 +0000
+Subject: KVM: arm64: Reject VM creation when the default IPA size is unsupported
 To: gregkh@linuxfoundation.org
-Cc: kvmarm@lists.cs.columbia.edu, kernel-team@android.com, Eric Auger <eric.auger@redhat.com>, stable@vger.kernel.org, Andrew Jones <drjones@redhat.com>
-Message-ID: <20210315110833.4135927-1-maz@kernel.org>
+Cc: kvmarm@lists.cs.columbia.edu, kernel-team@android.com, stable@vger.kernel.org, Andrew Jones <drjones@redhat.com>, Eric Auger <eric.auger@redhat.com>
+Message-ID: <20210315110952.4136142-1-maz@kernel.org>
 
 From: Marc Zyngier <maz@kernel.org>
 
-Commit 262b003d059c6671601a19057e9fe1a5e7f23722 upstream.
+Commit 7d717558dd5ef10d28866750d5c24ff892ea3778 upstream.
 
-When registering a memslot, we check the size and location of that
-memslot against the IPA size to ensure that we can provide guest
-access to the whole of the memory.
+KVM/arm64 has forever used a 40bit default IPA space, partially
+due to its 32bit heritage (where the only choice is 40bit).
 
-Unfortunately, this check rejects memslot that end-up at the exact
-limit of the addressing capability for a given IPA size. For example,
-it refuses the creation of a 2GB memslot at 0x8000000 with a 32bit
-IPA space.
+However, there are implementations in the wild that have a *cough*
+much smaller *cough* IPA space, which leads to a misprogramming of
+VTCR_EL2, and a guest that is stuck on its first memory access
+if userspace dares to ask for the default IPA setting (which most
+VMMs do).
 
-Fix it by relaxing the check to accept a memslot reaching the
-limit of the IPA space.
+Instead, blundly reject the creation of such VM, as we can't
+satisfy the requirements from userspace (with a one-off warning).
+Also clarify the boot warning, and document that the VM creation
+will fail when an unsupported IPA size is provided.
 
-Fixes: c3058d5da222 ("arm/arm64: KVM: Ensure memslots are within KVM_PHYS_SIZE")
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Although this is an ABI change, it doesn't really change much
+for userspace:
+
+- the guest couldn't run before this change, but no error was
+  returned. At least userspace knows what is happening.
+
+- a memory slot that was accepted because it did fit the default
+  IPA space now doesn't even get a chance to be registered.
+
+The other thing that is left doing is to convince userspace to
+actually use the IPA space setting instead of relying on the
+antiquated default.
+
+Fixes: 233a7cb23531 ("kvm: arm64: Allow tuning the physical address size for VM")
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org # 4.4, 4.9, 4.14, 4.19
+Cc: stable@vger.kernel.org
 Reviewed-by: Andrew Jones <drjones@redhat.com>
-Link: https://lore.kernel.org/r/20210311100016.3830038-3-maz@kernel.org
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Link: https://lore.kernel.org/r/20210311100016.3830038-2-maz@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/arm/mmu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/virt/kvm/api.txt |    3 +++
+ arch/arm64/kvm/reset.c         |   11 ++++++++---
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
---- a/virt/kvm/arm/mmu.c
-+++ b/virt/kvm/arm/mmu.c
-@@ -2080,7 +2080,7 @@ int kvm_arch_prepare_memory_region(struc
- 	 * Prevent userspace from creating a memory region outside of the IPA
- 	 * space addressable by the KVM guest IPA space.
- 	 */
--	if (memslot->base_gfn + memslot->npages >=
-+	if (memslot->base_gfn + memslot->npages >
- 	    (KVM_PHYS_SIZE >> PAGE_SHIFT))
- 		return -EFAULT;
+--- a/Documentation/virt/kvm/api.txt
++++ b/Documentation/virt/kvm/api.txt
+@@ -172,6 +172,9 @@ is dependent on the CPU capability and t
+ be retrieved using KVM_CAP_ARM_VM_IPA_SIZE of the KVM_CHECK_EXTENSION
+ ioctl() at run-time.
  
++Creation of the VM will fail if the requested IPA size (whether it is
++implicit or explicit) is unsupported on the host.
++
+ Please note that configuring the IPA size does not affect the capability
+ exposed by the guest CPUs in ID_AA64MMFR0_EL1[PARange]. It only affects
+ size of the address translated by the stage2 level (guest physical to
+--- a/arch/arm64/kvm/reset.c
++++ b/arch/arm64/kvm/reset.c
+@@ -378,10 +378,10 @@ void kvm_set_ipa_limit(void)
+ 		pr_info("kvm: Limiting the IPA size due to kernel %s Address limit\n",
+ 			(va_max < pa_max) ? "Virtual" : "Physical");
+ 
+-	WARN(ipa_max < KVM_PHYS_SHIFT,
+-	     "KVM IPA limit (%d bit) is smaller than default size\n", ipa_max);
+ 	kvm_ipa_limit = ipa_max;
+-	kvm_info("IPA Size Limit: %dbits\n", kvm_ipa_limit);
++	kvm_info("IPA Size Limit: %d bits%s\n", kvm_ipa_limit,
++		 ((kvm_ipa_limit < KVM_PHYS_SHIFT) ?
++		  " (Reduced IPA size, limited VM/VMM compatibility)" : ""));
+ }
+ 
+ /*
+@@ -408,6 +408,11 @@ int kvm_arm_setup_stage2(struct kvm *kvm
+ 			return -EINVAL;
+ 	} else {
+ 		phys_shift = KVM_PHYS_SHIFT;
++		if (phys_shift > kvm_ipa_limit) {
++			pr_warn_once("%s using unsupported default IPA limit, upgrade your VMM\n",
++				     current->comm);
++			return -EINVAL;
++		}
+ 	}
+ 
+ 	parange = read_sanitised_ftr_reg(SYS_ID_AA64MMFR0_EL1) & 7;
 
 
 Patches currently in stable-queue which might be from maz@kernel.org are
 
-queue-4.19/kvm-arm64-fix-exclusive-limit-for-ipa-size.patch
+queue-5.4/kvm-arm64-reject-vm-creation-when-the-default-ipa-size-is-unsupported.patch
+queue-5.4/kvm-arm64-ensure-i-cache-isolation-between-vcpus-of-a-same-vm.patch
+queue-5.4/kvm-arm64-fix-exclusive-limit-for-ipa-size.patch
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
