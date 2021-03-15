@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FAFA33B130
-	for <lists+kvmarm@lfdr.de>; Mon, 15 Mar 2021 12:31:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B57C633B132
+	for <lists+kvmarm@lfdr.de>; Mon, 15 Mar 2021 12:31:49 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 237E54B560;
-	Mon, 15 Mar 2021 07:31:33 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 63D1E4B5B5;
+	Mon, 15 Mar 2021 07:31:49 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,39 +18,39 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@linuxfoundation.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KZ8LBWKHqHxV; Mon, 15 Mar 2021 07:31:33 -0400 (EDT)
+	with ESMTP id dtGOjirbH43E; Mon, 15 Mar 2021 07:31:49 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AF7BD4B511;
-	Mon, 15 Mar 2021 07:31:31 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0269D4B592;
+	Mon, 15 Mar 2021 07:31:48 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0BCCE4B4F4
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 07:31:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 98AC24B503
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 07:31:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id z+QM95qepoBv for <kvmarm@lists.cs.columbia.edu>;
- Mon, 15 Mar 2021 07:31:28 -0400 (EDT)
+ with ESMTP id POtl9+GCBFd7 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 15 Mar 2021 07:31:45 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9DFD64B4DB
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 07:31:28 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 41D0F64E20;
- Mon, 15 Mar 2021 11:31:27 +0000 (UTC)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 196C04B37C
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 07:31:45 -0400 (EDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D4BF164E20;
+ Mon, 15 Mar 2021 11:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1615807887;
- bh=Xtcz6Cdi80C8BslFptWm9BjYu079ITJ4g1hVWoqHe/g=;
+ s=korg; t=1615807904;
+ bh=8RFKLy71jl2pEUsc0sBXhll5suL94CI9oeNXK+2ifYk=;
  h=Subject:To:Cc:From:Date:In-Reply-To:From;
- b=lDDKfcHmaFWclmqOjpLWZU9Q8BjvuSsWs0+FSxTj6T0qIsERQNAtjaZ2wbqnZq9bZ
- fHls0/0Q+CtgTZgPlqbPvHqyTcHyBwVHKT8+hXdvElSPDndyzAcwX0i5qXMwoZuNJU
- 4t0JPfIDq2iZSh6EpzXY4JDkwfry0kjJUEywVoPE=
+ b=pxc+uYieT+7RKaFaQ8wpShuSNnW9KHtdcSRgbfkxb0+bPdxQk4ABZTEWgvV9VlGLI
+ 2HWyHZB58N35X5M1Lni18+fgBZxC7VafrWRdopRGapZCoRg+BrRJYISKxfyZJUtQy3
+ mAMftLrR2DYOgSEHliENxMnPWT7/fw6tCmmYO5KA=
 Subject: Patch "KVM: arm64: Ensure I-cache isolation between vcpus of a same
- VM" has been added to the 5.4-stable tree
+ VM" has been added to the 5.10-stable tree
 To: catalin.marinas@arm.com, gregkh@linuxfoundation.org,
  kernel-team@android.com, kvmarm@lists.cs.columbia.edu, maz@kernel.org,
  will@kernel.org
 From: <gregkh@linuxfoundation.org>
-Date: Mon, 15 Mar 2021 12:31:25 +0100
-In-Reply-To: <20210315111000.4136196-1-maz@kernel.org>
-Message-ID: <1615807885173250@kroah.com>
+Date: Mon, 15 Mar 2021 12:31:42 +0100
+In-Reply-To: <20210315111111.4136402-1-maz@kernel.org>
+Message-ID: <161580790264124@kroah.com>
 MIME-Version: 1.0
 X-stable: commit
 X-Patchwork-Hint: ignore 
@@ -76,24 +76,24 @@ This is a note to let you know that I've just added the patch titled
 
     KVM: arm64: Ensure I-cache isolation between vcpus of a same VM
 
-to the 5.4-stable tree which can be found at:
+to the 5.10-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
      kvm-arm64-ensure-i-cache-isolation-between-vcpus-of-a-same-vm.patch
-and it can be found in the queue-5.4 subdirectory.
+and it can be found in the queue-5.10 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From foo@baz Mon Mar 15 12:27:33 PM CET 2021
+From foo@baz Mon Mar 15 12:27:09 PM CET 2021
 From: Marc Zyngier <maz@kernel.org>
-Date: Mon, 15 Mar 2021 11:10:00 +0000
+Date: Mon, 15 Mar 2021 11:11:11 +0000
 Subject: KVM: arm64: Ensure I-cache isolation between vcpus of a same VM
 To: gregkh@linuxfoundation.org
 Cc: kvmarm@lists.cs.columbia.edu, kernel-team@android.com, stable@vger.kernel.org, Will Deacon <will@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>
-Message-ID: <20210315111000.4136196-1-maz@kernel.org>
+Message-ID: <20210315111111.4136402-1-maz@kernel.org>
 
 From: Marc Zyngier <maz@kernel.org>
 
@@ -127,81 +127,42 @@ Signed-off-by: Marc Zyngier <maz@kernel.org>
 Acked-by: Will Deacon <will@kernel.org>
 Acked-by: Catalin Marinas <catalin.marinas@arm.com>
 Link: https://lore.kernel.org/r/20210303164505.68492-1-maz@kernel.org
-[maz: added 32bit ARM support]
-Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/include/asm/kvm_asm.h   |    2 +-
- arch/arm/kvm/hyp/tlb.c           |    3 ++-
- arch/arm64/include/asm/kvm_asm.h |    2 +-
- arch/arm64/kvm/hyp/tlb.c         |    3 ++-
- virt/kvm/arm/arm.c               |    8 +++++++-
- 5 files changed, 13 insertions(+), 5 deletions(-)
+ arch/arm64/include/asm/kvm_asm.h   |    4 ++--
+ arch/arm64/kvm/arm.c               |    7 ++++++-
+ arch/arm64/kvm/hyp/nvhe/hyp-main.c |    4 ++--
+ arch/arm64/kvm/hyp/nvhe/tlb.c      |    3 ++-
+ arch/arm64/kvm/hyp/vhe/tlb.c       |    3 ++-
+ 5 files changed, 14 insertions(+), 7 deletions(-)
 
---- a/arch/arm/include/asm/kvm_asm.h
-+++ b/arch/arm/include/asm/kvm_asm.h
-@@ -56,7 +56,7 @@ extern char __kvm_hyp_init_end[];
- extern void __kvm_flush_vm_context(void);
- extern void __kvm_tlb_flush_vmid_ipa(struct kvm *kvm, phys_addr_t ipa);
- extern void __kvm_tlb_flush_vmid(struct kvm *kvm);
--extern void __kvm_tlb_flush_local_vmid(struct kvm_vcpu *vcpu);
-+extern void __kvm_flush_cpu_context(struct kvm_vcpu *vcpu);
- 
- extern void __kvm_timer_set_cntvoff(u32 cntvoff_low, u32 cntvoff_high);
- 
---- a/arch/arm/kvm/hyp/tlb.c
-+++ b/arch/arm/kvm/hyp/tlb.c
-@@ -45,7 +45,7 @@ void __hyp_text __kvm_tlb_flush_vmid_ipa
- 	__kvm_tlb_flush_vmid(kvm);
- }
- 
--void __hyp_text __kvm_tlb_flush_local_vmid(struct kvm_vcpu *vcpu)
-+void __hyp_text __kvm_flush_cpu_context(struct kvm_vcpu *vcpu)
- {
- 	struct kvm *kvm = kern_hyp_va(kern_hyp_va(vcpu)->kvm);
- 
-@@ -54,6 +54,7 @@ void __hyp_text __kvm_tlb_flush_local_vm
- 	isb();
- 
- 	write_sysreg(0, TLBIALL);
-+	write_sysreg(0, ICIALLU);
- 	dsb(nsh);
- 	isb();
- 
 --- a/arch/arm64/include/asm/kvm_asm.h
 +++ b/arch/arm64/include/asm/kvm_asm.h
-@@ -60,7 +60,7 @@ extern char __kvm_hyp_vector[];
+@@ -49,7 +49,7 @@
+ #define __KVM_HOST_SMCCC_FUNC___kvm_flush_vm_context		2
+ #define __KVM_HOST_SMCCC_FUNC___kvm_tlb_flush_vmid_ipa		3
+ #define __KVM_HOST_SMCCC_FUNC___kvm_tlb_flush_vmid		4
+-#define __KVM_HOST_SMCCC_FUNC___kvm_tlb_flush_local_vmid	5
++#define __KVM_HOST_SMCCC_FUNC___kvm_flush_cpu_context		5
+ #define __KVM_HOST_SMCCC_FUNC___kvm_timer_set_cntvoff		6
+ #define __KVM_HOST_SMCCC_FUNC___kvm_enable_ssbs			7
+ #define __KVM_HOST_SMCCC_FUNC___vgic_v3_get_ich_vtr_el2		8
+@@ -180,10 +180,10 @@ DECLARE_KVM_HYP_SYM(__bp_harden_hyp_vecs
+ #define __bp_harden_hyp_vecs	CHOOSE_HYP_SYM(__bp_harden_hyp_vecs)
+ 
  extern void __kvm_flush_vm_context(void);
- extern void __kvm_tlb_flush_vmid_ipa(struct kvm *kvm, phys_addr_t ipa);
- extern void __kvm_tlb_flush_vmid(struct kvm *kvm);
--extern void __kvm_tlb_flush_local_vmid(struct kvm_vcpu *vcpu);
-+extern void __kvm_flush_cpu_context(struct kvm_vcpu *vcpu);
++extern void __kvm_flush_cpu_context(struct kvm_s2_mmu *mmu);
+ extern void __kvm_tlb_flush_vmid_ipa(struct kvm_s2_mmu *mmu, phys_addr_t ipa,
+ 				     int level);
+ extern void __kvm_tlb_flush_vmid(struct kvm_s2_mmu *mmu);
+-extern void __kvm_tlb_flush_local_vmid(struct kvm_s2_mmu *mmu);
  
- extern void __kvm_timer_set_cntvoff(u32 cntvoff_low, u32 cntvoff_high);
+ extern void __kvm_timer_set_cntvoff(u64 cntvoff);
  
---- a/arch/arm64/kvm/hyp/tlb.c
-+++ b/arch/arm64/kvm/hyp/tlb.c
-@@ -182,7 +182,7 @@ void __hyp_text __kvm_tlb_flush_vmid(str
- 	__tlb_switch_to_host(kvm, &cxt);
- }
- 
--void __hyp_text __kvm_tlb_flush_local_vmid(struct kvm_vcpu *vcpu)
-+void __hyp_text __kvm_flush_cpu_context(struct kvm_vcpu *vcpu)
- {
- 	struct kvm *kvm = kern_hyp_va(kern_hyp_va(vcpu)->kvm);
- 	struct tlb_inv_context cxt;
-@@ -191,6 +191,7 @@ void __hyp_text __kvm_tlb_flush_local_vm
- 	__tlb_switch_to_guest(kvm, &cxt);
- 
- 	__tlbi(vmalle1);
-+	asm volatile("ic iallu");
- 	dsb(nsh);
- 	isb();
- 
---- a/virt/kvm/arm/arm.c
-+++ b/virt/kvm/arm/arm.c
-@@ -373,11 +373,17 @@ void kvm_arch_vcpu_load(struct kvm_vcpu
- 	cpu_data = this_cpu_ptr(&kvm_host_data);
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -352,11 +352,16 @@ void kvm_arch_vcpu_load(struct kvm_vcpu
+ 	last_ran = this_cpu_ptr(mmu->last_vcpu_ran);
  
  	/*
 +	 * We guarantee that both TLBs and I-cache are private to each
@@ -209,23 +170,79 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +	 * previously run on the same physical CPU, call into the
 +	 * hypervisor code to nuke the relevant contexts.
 +	 *
-+         * We might get preempted before the vCPU actually runs, but
  	 * We might get preempted before the vCPU actually runs, but
  	 * over-invalidation doesn't affect correctness.
  	 */
  	if (*last_ran != vcpu->vcpu_id) {
--		kvm_call_hyp(__kvm_tlb_flush_local_vmid, vcpu);
-+		kvm_call_hyp(__kvm_flush_cpu_context, vcpu);
+-		kvm_call_hyp(__kvm_tlb_flush_local_vmid, mmu);
++		kvm_call_hyp(__kvm_flush_cpu_context, mmu);
  		*last_ran = vcpu->vcpu_id;
  	}
+ 
+--- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
++++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+@@ -46,11 +46,11 @@ static void handle_host_hcall(unsigned l
+ 		__kvm_tlb_flush_vmid(kern_hyp_va(mmu));
+ 		break;
+ 	}
+-	case KVM_HOST_SMCCC_FUNC(__kvm_tlb_flush_local_vmid): {
++	case KVM_HOST_SMCCC_FUNC(__kvm_flush_cpu_context): {
+ 		unsigned long r1 = host_ctxt->regs.regs[1];
+ 		struct kvm_s2_mmu *mmu = (struct kvm_s2_mmu *)r1;
+ 
+-		__kvm_tlb_flush_local_vmid(kern_hyp_va(mmu));
++		__kvm_flush_cpu_context(kern_hyp_va(mmu));
+ 		break;
+ 	}
+ 	case KVM_HOST_SMCCC_FUNC(__kvm_timer_set_cntvoff): {
+--- a/arch/arm64/kvm/hyp/nvhe/tlb.c
++++ b/arch/arm64/kvm/hyp/nvhe/tlb.c
+@@ -123,7 +123,7 @@ void __kvm_tlb_flush_vmid(struct kvm_s2_
+ 	__tlb_switch_to_host(&cxt);
+ }
+ 
+-void __kvm_tlb_flush_local_vmid(struct kvm_s2_mmu *mmu)
++void __kvm_flush_cpu_context(struct kvm_s2_mmu *mmu)
+ {
+ 	struct tlb_inv_context cxt;
+ 
+@@ -131,6 +131,7 @@ void __kvm_tlb_flush_local_vmid(struct k
+ 	__tlb_switch_to_guest(mmu, &cxt);
+ 
+ 	__tlbi(vmalle1);
++	asm volatile("ic iallu");
+ 	dsb(nsh);
+ 	isb();
+ 
+--- a/arch/arm64/kvm/hyp/vhe/tlb.c
++++ b/arch/arm64/kvm/hyp/vhe/tlb.c
+@@ -127,7 +127,7 @@ void __kvm_tlb_flush_vmid(struct kvm_s2_
+ 	__tlb_switch_to_host(&cxt);
+ }
+ 
+-void __kvm_tlb_flush_local_vmid(struct kvm_s2_mmu *mmu)
++void __kvm_flush_cpu_context(struct kvm_s2_mmu *mmu)
+ {
+ 	struct tlb_inv_context cxt;
+ 
+@@ -135,6 +135,7 @@ void __kvm_tlb_flush_local_vmid(struct k
+ 	__tlb_switch_to_guest(mmu, &cxt);
+ 
+ 	__tlbi(vmalle1);
++	asm volatile("ic iallu");
+ 	dsb(nsh);
+ 	isb();
  
 
 
 Patches currently in stable-queue which might be from maz@kernel.org are
 
-queue-5.4/kvm-arm64-reject-vm-creation-when-the-default-ipa-size-is-unsupported.patch
-queue-5.4/kvm-arm64-ensure-i-cache-isolation-between-vcpus-of-a-same-vm.patch
-queue-5.4/kvm-arm64-fix-exclusive-limit-for-ipa-size.patch
+queue-5.10/kvm-arm64-fix-range-alignment-when-walking-page-tables.patch
+queue-5.10/kvm-arm64-nvhe-save-the-spe-context-early.patch
+queue-5.10/kvm-arm64-reject-vm-creation-when-the-default-ipa-size-is-unsupported.patch
+queue-5.10/kvm-arm64-ensure-i-cache-isolation-between-vcpus-of-a-same-vm.patch
+queue-5.10/kvm-arm64-fix-exclusive-limit-for-ipa-size.patch
+queue-5.10/kvm-arm64-avoid-corrupting-vcpu-context-register-in-guest-exit.patch
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
