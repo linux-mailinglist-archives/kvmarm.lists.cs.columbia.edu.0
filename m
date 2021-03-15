@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C1E4433B207
-	for <lists+kvmarm@lfdr.de>; Mon, 15 Mar 2021 13:05:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CD2133B20C
+	for <lists+kvmarm@lfdr.de>; Mon, 15 Mar 2021 13:05:24 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4918B4B56D;
-	Mon, 15 Mar 2021 08:05:02 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B0C344B5A1;
+	Mon, 15 Mar 2021 08:05:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.592
@@ -18,38 +18,38 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@linuxfoundation.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qsHXiSmNUJzC; Mon, 15 Mar 2021 08:05:02 -0400 (EDT)
+	with ESMTP id wlFFq1KT72pO; Mon, 15 Mar 2021 08:05:23 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DD3CC4B48E;
-	Mon, 15 Mar 2021 08:05:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 064BC4B51F;
+	Mon, 15 Mar 2021 08:05:21 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 27E2C4B217
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 08:05:00 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1E0CE4B3B7
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 08:05:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id nzwlZraqUS1a for <kvmarm@lists.cs.columbia.edu>;
- Mon, 15 Mar 2021 08:04:59 -0400 (EDT)
+ with ESMTP id qpIWqli7Ne1p for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 15 Mar 2021 08:05:18 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E5B9E4B3AA
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 08:04:58 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 198B864E27;
- Mon, 15 Mar 2021 12:04:56 +0000 (UTC)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 353ED4B303
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Mar 2021 08:05:18 -0400 (EDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id BE0D164E27;
+ Mon, 15 Mar 2021 12:05:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1615809897;
- bh=x0DCfMN0KGUOzMNOthD4rlq6/mkqCfTM+pPFbd35crQ=;
+ s=korg; t=1615809917;
+ bh=Ucgr26O655G9zvpy/2yT7RFG7mpvNolazblT4bHOwq8=;
  h=Subject:To:Cc:From:Date:In-Reply-To:From;
- b=Ks9yWQapQ8dTPao5u7xHiuUstYHcQYMhDcBzqZWPs71wQRyACXv3ZZ+Gq9ELcMi2n
- kGGT+DrnK1/rssCVK0EIiVgwCO4LFAMW6lZA59VhwiPu2ZBxqiRLcYKGE6zItCBChr
- ZlvvGtBBeZ4gKItTMzh3nFLQLHw/XC5YSDI+YvKs=
+ b=ojKvNqPwsQh0g3iQs/BLw5uEMrvvEMEoArg4KXl/BzOC7oleicvHpclSI6i3nbLex
+ zchzr/QJwBMuMXzSBvnYQ+1spRe2aMe8veSGr5/FrdwgAMCdHWnOF4crH2Wme4tbag
+ eHEK0ziYnycC+rScW9VQW/WO4+ZyD3pLBc6HLasw=
 Subject: Patch "KVM: arm64: Fix exclusive limit for IPA size" has been added
- to the 4.4-stable tree
+ to the 4.9-stable tree
 To: drjones@redhat.com, eric.auger@redhat.com, gregkh@linuxfoundation.org,
  kernel-team@android.com, kvmarm@lists.cs.columbia.edu, maz@kernel.org
 From: <gregkh@linuxfoundation.org>
-Date: Mon, 15 Mar 2021 13:04:54 +0100
+Date: Mon, 15 Mar 2021 13:05:14 +0100
 In-Reply-To: <20210315114646.4137198-1-maz@kernel.org>
-Message-ID: <16158098949648@kroah.com>
+Message-ID: <1615809914198247@kroah.com>
 MIME-Version: 1.0
 X-stable: commit
 X-Patchwork-Hint: ignore 
@@ -75,18 +75,18 @@ This is a note to let you know that I've just added the patch titled
 
     KVM: arm64: Fix exclusive limit for IPA size
 
-to the 4.4-stable tree which can be found at:
+to the 4.9-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
      kvm-arm64-fix-exclusive-limit-for-ipa-size.patch
-and it can be found in the queue-4.4 subdirectory.
+and it can be found in the queue-4.9 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From foo@baz Mon Mar 15 01:04:46 PM CET 2021
+From foo@baz Mon Mar 15 01:04:48 PM CET 2021
 From: Marc Zyngier <maz@kernel.org>
 Date: Mon, 15 Mar 2021 11:46:46 +0000
 Subject: KVM: arm64: Fix exclusive limit for IPA size
@@ -123,7 +123,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/arch/arm/kvm/mmu.c
 +++ b/arch/arm/kvm/mmu.c
-@@ -1789,7 +1789,7 @@ int kvm_arch_prepare_memory_region(struc
+@@ -1834,7 +1834,7 @@ int kvm_arch_prepare_memory_region(struc
  	 * Prevent userspace from creating a memory region outside of the IPA
  	 * space addressable by the KVM guest IPA space.
  	 */
@@ -136,7 +136,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 Patches currently in stable-queue which might be from maz@kernel.org are
 
-queue-4.4/kvm-arm64-fix-exclusive-limit-for-ipa-size.patch
+queue-4.9/kvm-arm64-fix-exclusive-limit-for-ipa-size.patch
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
