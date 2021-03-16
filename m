@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 941C333D39E
-	for <lists+kvmarm@lfdr.de>; Tue, 16 Mar 2021 13:17:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A041133D3A0
+	for <lists+kvmarm@lfdr.de>; Tue, 16 Mar 2021 13:18:24 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 089304B5D9;
-	Tue, 16 Mar 2021 08:17:16 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3E49A4B5F3;
+	Tue, 16 Mar 2021 08:18:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,43 +15,43 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 984jQNo5XHr6; Tue, 16 Mar 2021 08:17:15 -0400 (EDT)
+	with ESMTP id v7J-8rpkRdQc; Tue, 16 Mar 2021 08:18:24 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EA7164B5CA;
-	Tue, 16 Mar 2021 08:17:14 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2DC2D4B5CA;
+	Tue, 16 Mar 2021 08:18:23 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 763C44B571
- for <kvmarm@lists.cs.columbia.edu>; Tue, 16 Mar 2021 08:17:13 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5D7CF4B5AA
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 16 Mar 2021 08:18:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id YWN7KdMQ3PhP for <kvmarm@lists.cs.columbia.edu>;
- Tue, 16 Mar 2021 08:17:12 -0400 (EDT)
+ with ESMTP id Jyicx0olysvr for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 16 Mar 2021 08:18:20 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8FF6C4B555
- for <kvmarm@lists.cs.columbia.edu>; Tue, 16 Mar 2021 08:17:12 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 786BD4B555
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 16 Mar 2021 08:18:20 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 60FD064FE0;
- Tue, 16 Mar 2021 12:17:11 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 8E6E464FE0;
+ Tue, 16 Mar 2021 12:18:18 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.misterjones.org)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1lM8dJ-001xW3-7h; Tue, 16 Mar 2021 12:17:09 +0000
-Date: Tue, 16 Mar 2021 12:17:08 +0000
-Message-ID: <87blbjfg3f.wl-maz@kernel.org>
+ id 1lM8eO-001xWm-HL; Tue, 16 Mar 2021 12:18:16 +0000
+Date: Tue, 16 Mar 2021 12:18:15 +0000
+Message-ID: <87a6r3fg1k.wl-maz@kernel.org>
 From: Marc Zyngier <maz@kernel.org>
 To: Quentin Perret <qperret@google.com>
-Subject: Re: [PATCH 01/10] KVM: arm64: Provide KVM's own save/restore SVE
- primitives
-In-Reply-To: <YFCJEgjUZ5cnq0AK@google.com>
+Subject: Re: [PATCH 08/10] KVM: arm64: Add a nVHE-specific SVE VQ reset
+ hypercall
+In-Reply-To: <YFCMY2TDl4/6++PJ@google.com>
 References: <20210316101312.102925-1-maz@kernel.org>
- <20210316101312.102925-2-maz@kernel.org>
- <YFCJEgjUZ5cnq0AK@google.com>
+ <20210316101312.102925-9-maz@kernel.org>
+ <YFCMY2TDl4/6++PJ@google.com>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
  (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -85,39 +85,27 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, 16 Mar 2021 10:31:46 +0000,
+On Tue, 16 Mar 2021 10:45:55 +0000,
 Quentin Perret <qperret@google.com> wrote:
 > 
-> On Tuesday 16 Mar 2021 at 10:13:03 (+0000), Marc Zyngier wrote:
-> > diff --git a/arch/arm64/kvm/hyp/fpsimd.S b/arch/arm64/kvm/hyp/fpsimd.S
-> > index 01f114aa47b0..e4010d1acb79 100644
-> > --- a/arch/arm64/kvm/hyp/fpsimd.S
-> > +++ b/arch/arm64/kvm/hyp/fpsimd.S
-> > @@ -19,3 +19,13 @@ SYM_FUNC_START(__fpsimd_restore_state)
-> >  	fpsimd_restore	x0, 1
-> >  	ret
-> >  SYM_FUNC_END(__fpsimd_restore_state)
-> > +
-> > +SYM_FUNC_START(__sve_restore_state)
-> > +	sve_load 0, x1, x2, 3, x4
-> > +	ret
-> > +SYM_FUNC_END(__sve_restore_state)
+> On Tuesday 16 Mar 2021 at 10:13:10 (+0000), Marc Zyngier wrote:
+> > diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+> > index c4afe3d3397f..9108ccc80653 100644
+> > --- a/arch/arm64/include/asm/kvm_host.h
+> > +++ b/arch/arm64/include/asm/kvm_host.h
+> > @@ -593,7 +593,9 @@ int kvm_test_age_hva(struct kvm *kvm, unsigned long hva);
+> >  void kvm_arm_halt_guest(struct kvm *kvm);
+> >  void kvm_arm_resume_guest(struct kvm *kvm);
+> >  
+> > -#define kvm_call_hyp_nvhe(f, ...)						\
+> > +static inline void __kvm_reset_sve_vq(void) {}
 > 
-> Nit: maybe this could be named __sve_load_state() for consistency with
-> the EL1 version?
+> Why is this one needed? With an explicit call to kvm_call_hyp_nvhe() you
+> shouldn't need to provide a VHE implementation I think.
 
-Well, we already have the discrepancy for fpsimd in the same file, so
-I opted for another kind of consistency...
+Did I mention that I positively hate kvm_call_hyp_nvhe()? ;-)
 
-> 
-> > +SYM_FUNC_START(__sve_save_state)
-> > +	sve_save 0, x1, 2
-> > +	ret
-> > +SYM_FUNC_END(__sve_restore_state)
-> 
-> SYM_FUNC_END(__sve_save_state) here?
-
-Yup, good catch.
+But yes, you are right, this can be further simplified.
 
 Thanks,
 
