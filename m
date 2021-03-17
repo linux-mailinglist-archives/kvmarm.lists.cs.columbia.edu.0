@@ -2,56 +2,63 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 205DF33F3E5
-	for <lists+kvmarm@lfdr.de>; Wed, 17 Mar 2021 16:17:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C104633F4E0
+	for <lists+kvmarm@lfdr.de>; Wed, 17 Mar 2021 17:01:24 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8B3564B680;
-	Wed, 17 Mar 2021 11:17:33 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 10C384B3BF;
+	Wed, 17 Mar 2021 12:01:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vEYY4Dpaa4TV; Wed, 17 Mar 2021 11:17:33 -0400 (EDT)
+	with ESMTP id P6HwNt4w97v6; Wed, 17 Mar 2021 12:01:23 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D4F64B67B;
-	Wed, 17 Mar 2021 11:17:32 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E6E054B678;
+	Wed, 17 Mar 2021 12:01:22 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 178B74B670
- for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Mar 2021 11:17:31 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BD3784B666
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Mar 2021 12:01:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id EYoz+jdOqLAj for <kvmarm@lists.cs.columbia.edu>;
- Wed, 17 Mar 2021 11:17:29 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C31064B651
- for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Mar 2021 11:17:29 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3F569D6E;
- Wed, 17 Mar 2021 08:17:29 -0700 (PDT)
-Received: from [192.168.0.110] (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 437E43F792;
- Wed, 17 Mar 2021 08:17:28 -0700 (PDT)
-Subject: Re: [PATCH kvmtool v3 20/22] arm: Reorganise and document memory map
-To: Andre Przywara <andre.przywara@arm.com>, Will Deacon <will@kernel.org>,
- Julien Thierry <julien.thierry.kdev@gmail.com>
-References: <20210315153350.19988-1-andre.przywara@arm.com>
- <20210315153350.19988-21-andre.przywara@arm.com>
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-Message-ID: <7b96fc7a-9078-cabc-85bc-8cdfcd37d791@arm.com>
-Date: Wed, 17 Mar 2021 15:17:53 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+ with ESMTP id KJO0NGtCfDeJ for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 17 Mar 2021 12:01:20 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D2A184B3BF
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Mar 2021 12:01:20 -0400 (EDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id DD39D64E61;
+ Wed, 17 Mar 2021 16:01:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1615996878;
+ bh=we520fPnvR+Rv9m8n4m+wndrb+dnrLpZXA3mdbq49uQ=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=pPj0efyieA0yEzJ70ka3Gx5g46Q7tkHPeNCzVS+hZCHJG9DAz5vtsER1hfFPzGjFl
+ QLgrDP8Y+IIAfUM7FrzRIiHJOFHwyGmGtphz4nqL3ld80zE1CsNKVZ0QbspYDO/mXW
+ IMrqhSFfmAmQczE45DKGzHw3TyqDRcpjOtFvhNLTEgZRVHJI4uWmNOkeJtK/Zisc1e
+ H74duv2v6hYqIF/ocoWF/KdfM1cYz9K5q2diQzmsT+YLN9PInv/c2U8JwvTsQeZ/bR
+ 1jtAoWfjBUEhyiR4p7Rs3bSgkIIDHBQhCE62fzV0mXGpH1BLvztQauk//LiRUUunEw
+ WSdHWXVl813aw==
+Date: Wed, 17 Mar 2021 16:01:12 +0000
+From: Will Deacon <will@kernel.org>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH 06/10] KVM: arm64: Map SVE context at EL2 when available
+Message-ID: <20210317160112.GA5556@willie-the-truck>
+References: <20210316101312.102925-1-maz@kernel.org>
+ <20210316101312.102925-7-maz@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20210315153350.19988-21-andre.przywara@arm.com>
-Content-Language: en-US
-Cc: Marc Zyngier <maz@kernel.org>, Sami Mujawar <sami.mujawar@arm.com>,
- kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20210316101312.102925-7-maz@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: kvm@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
+ kvmarm@lists.cs.columbia.edu, broonie@kernel.org, kernel-team@android.com,
+ dave.martin@arm.com, linux-arm-kernel@lists.infradead.org, daniel.kiss@arm.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -68,104 +75,31 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Andre,
-
-On 3/15/21 3:33 PM, Andre Przywara wrote:
-> The hardcoded memory map we expose to a guest is currently described
-> using a series of partially interconnected preprocessor constants,
-> which is hard to read and follow.
->
-> In preparation for moving the UART and RTC to some different MMIO
-> region, document the current map with some ASCII art, and clean up the
-> definition of the sections.
->
-> This changes the only internally used value of ARM_MMIO_AREA, to better
-> align with its actual meaning and future extensions.
->
-> No functional change.
-
-Looks good, the values in the map match the defines, and there's no forward
-declaration of the serial or RTC MMIO regions:
-
-Reviewed-by: Alexandru Elisei <alexandru.elisei@arm.com>
-
-Thanks,
-
-Alex
-
-> Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+On Tue, Mar 16, 2021 at 10:13:08AM +0000, Marc Zyngier wrote:
+> When running on nVHE, and that the vcpu supports SVE, map the
+> SVE state at EL2 so that KVM can access it.
+> 
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
 > ---
->  arm/include/arm-common/kvm-arch.h | 41 ++++++++++++++++++++++---------
->  1 file changed, 29 insertions(+), 12 deletions(-)
->
-> diff --git a/arm/include/arm-common/kvm-arch.h b/arm/include/arm-common/kvm-arch.h
-> index d84e50cd..a2e32953 100644
-> --- a/arm/include/arm-common/kvm-arch.h
-> +++ b/arm/include/arm-common/kvm-arch.h
-> @@ -7,14 +7,33 @@
+>  arch/arm64/kvm/fpsimd.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+> 
+> diff --git a/arch/arm64/kvm/fpsimd.c b/arch/arm64/kvm/fpsimd.c
+> index b7e36a506d3d..84afca5ed6f2 100644
+> --- a/arch/arm64/kvm/fpsimd.c
+> +++ b/arch/arm64/kvm/fpsimd.c
+> @@ -43,6 +43,17 @@ int kvm_arch_vcpu_run_map_fp(struct kvm_vcpu *vcpu)
+>  	if (ret)
+>  		goto error;
 >  
->  #include "arm-common/gic.h"
->  
-> +/*
-> + * The memory map used for ARM guests (not to scale):
-> + *
-> + * 0      64K  16M     32M     48M            1GB       2GB
-> + * +-------+----+-------+-------+--------+-----+---------+---......
-> + * |  PCI  |////| plat  |       |        |     |         |
-> + * |  I/O  |////| MMIO  | Flash | virtio | GIC |   PCI   |  DRAM
-> + * | space |////|       |       |  MMIO  |     |  (AXI)  |
-> + * |       |////|       |       |        |     |         |
-> + * +-------+----+-------+-------+--------+-----+---------+---......
-> + */
+> +	if (vcpu->arch.sve_state) {
+> +		void *sve_end;
 > +
->  #define ARM_IOPORT_AREA		_AC(0x0000000000000000, UL)
-> -#define ARM_FLASH_AREA		_AC(0x0000000002000000, UL)
-> -#define ARM_MMIO_AREA		_AC(0x0000000003000000, UL)
-> +#define ARM_MMIO_AREA		_AC(0x0000000001000000, UL)
->  #define ARM_AXI_AREA		_AC(0x0000000040000000, UL)
->  #define ARM_MEMORY_AREA		_AC(0x0000000080000000, UL)
->  
-> -#define ARM_LOMAP_MAX_MEMORY	((1ULL << 32) - ARM_MEMORY_AREA)
-> -#define ARM_HIMAP_MAX_MEMORY	((1ULL << 40) - ARM_MEMORY_AREA)
-> +#define KVM_IOPORT_AREA		ARM_IOPORT_AREA
-> +#define ARM_IOPORT_SIZE		(1U << 16)
-> +
-> +
-> +#define KVM_FLASH_MMIO_BASE	(ARM_MMIO_AREA + 0x1000000)
-> +#define KVM_FLASH_MAX_SIZE	0x1000000
-> +
-> +#define KVM_VIRTIO_MMIO_AREA	(KVM_FLASH_MMIO_BASE + KVM_FLASH_MAX_SIZE)
-> +#define ARM_VIRTIO_MMIO_SIZE	(ARM_AXI_AREA - \
-> +				(KVM_VIRTIO_MMIO_AREA + ARM_GIC_SIZE))
->  
->  #define ARM_GIC_DIST_BASE	(ARM_AXI_AREA - ARM_GIC_DIST_SIZE)
->  #define ARM_GIC_CPUI_BASE	(ARM_GIC_DIST_BASE - ARM_GIC_CPUI_SIZE)
-> @@ -22,19 +41,17 @@
->  #define ARM_GIC_DIST_SIZE	0x10000
->  #define ARM_GIC_CPUI_SIZE	0x20000
->  
-> -#define KVM_FLASH_MMIO_BASE	ARM_FLASH_AREA
-> -#define KVM_FLASH_MAX_SIZE	(ARM_MMIO_AREA - ARM_FLASH_AREA)
->  
-> -#define ARM_IOPORT_SIZE		(1U << 16)
-> -#define ARM_VIRTIO_MMIO_SIZE	(ARM_AXI_AREA - (ARM_MMIO_AREA + ARM_GIC_SIZE))
-> +#define KVM_PCI_CFG_AREA	ARM_AXI_AREA
->  #define ARM_PCI_CFG_SIZE	(1ULL << 24)
-> +#define KVM_PCI_MMIO_AREA	(KVM_PCI_CFG_AREA + ARM_PCI_CFG_SIZE)
->  #define ARM_PCI_MMIO_SIZE	(ARM_MEMORY_AREA - \
->  				(ARM_AXI_AREA + ARM_PCI_CFG_SIZE))
->  
-> -#define KVM_IOPORT_AREA		ARM_IOPORT_AREA
-> -#define KVM_PCI_CFG_AREA	ARM_AXI_AREA
-> -#define KVM_PCI_MMIO_AREA	(KVM_PCI_CFG_AREA + ARM_PCI_CFG_SIZE)
-> -#define KVM_VIRTIO_MMIO_AREA	ARM_MMIO_AREA
-> +
-> +#define ARM_LOMAP_MAX_MEMORY	((1ULL << 32) - ARM_MEMORY_AREA)
-> +#define ARM_HIMAP_MAX_MEMORY	((1ULL << 40) - ARM_MEMORY_AREA)
-> +
->  
->  #define KVM_IOEVENTFD_HAS_PIO	0
->  
+> +		sve_end = vcpu->arch.sve_state + vcpu_sve_state_size(vcpu) + 1;
+
+Why do you need the '+ 1' here?
+
+Will
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
