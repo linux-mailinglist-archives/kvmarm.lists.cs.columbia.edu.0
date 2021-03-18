@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1746834056E
-	for <lists+kvmarm@lfdr.de>; Thu, 18 Mar 2021 13:26:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9189F34056D
+	for <lists+kvmarm@lfdr.de>; Thu, 18 Mar 2021 13:25:59 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BE4CE4B760;
-	Thu, 18 Mar 2021 08:26:01 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 44B454B77F;
+	Thu, 18 Mar 2021 08:25:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,38 +15,39 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VPFltcVc+6YC; Thu, 18 Mar 2021 08:25:59 -0400 (EDT)
+	with ESMTP id fGDgrfgMulph; Thu, 18 Mar 2021 08:25:59 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6D8E04B758;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 546EF4B74D;
 	Thu, 18 Mar 2021 08:25:56 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CC9E64B752
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A9ADE4B757
  for <kvmarm@lists.cs.columbia.edu>; Thu, 18 Mar 2021 08:25:54 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id dZYFD2Ep6DxH for <kvmarm@lists.cs.columbia.edu>;
- Thu, 18 Mar 2021 08:25:54 -0400 (EDT)
+ with ESMTP id 55orXgG9RTJL for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 18 Mar 2021 08:25:53 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5501A4B769
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1ABCF4B766
  for <kvmarm@lists.cs.columbia.edu>; Thu, 18 Mar 2021 08:25:50 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 6D1A264F75;
+ by mail.kernel.org (Postfix) with ESMTPSA id 39F0464F72;
  Thu, 18 Mar 2021 12:25:49 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1lMrik-002OZW-SY; Thu, 18 Mar 2021 12:25:46 +0000
+ id 1lMril-002OZW-EV; Thu, 18 Mar 2021 12:25:47 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
  kvm@vger.kernel.org
-Subject: [PATCH v2 07/11] KVM: arm64: Map SVE context at EL2 when available
-Date: Thu, 18 Mar 2021 12:25:28 +0000
-Message-Id: <20210318122532.505263-8-maz@kernel.org>
+Subject: [PATCH v2 08/11] KVM: arm64: Save guest's ZCR_EL1 before saving the
+ FPSIMD state
+Date: Thu, 18 Mar 2021 12:25:29 +0000
+Message-Id: <20210318122532.505263-9-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210318122532.505263-1-maz@kernel.org>
 References: <20210318122532.505263-1-maz@kernel.org>
@@ -80,36 +81,32 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-When running on nVHE, and that the vcpu supports SVE, map the
-SVE state at EL2 so that KVM can access it.
+Make sure the guest's ZCR_EL1 is saved before we save/flush the
+state. This will be useful in later patches.
 
+Acked-by: Will Deacon <will@kernel.org>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/fpsimd.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ arch/arm64/kvm/fpsimd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/kvm/fpsimd.c b/arch/arm64/kvm/fpsimd.c
-index b7e36a506d3d..3c37a419fa82 100644
+index 3c37a419fa82..14ea05c5134a 100644
 --- a/arch/arm64/kvm/fpsimd.c
 +++ b/arch/arm64/kvm/fpsimd.c
-@@ -43,6 +43,17 @@ int kvm_arch_vcpu_run_map_fp(struct kvm_vcpu *vcpu)
- 	if (ret)
- 		goto error;
+@@ -121,10 +121,10 @@ void kvm_arch_vcpu_put_fp(struct kvm_vcpu *vcpu)
+ 	local_irq_save(flags);
  
-+	if (vcpu->arch.sve_state) {
-+		void *sve_end;
+ 	if (vcpu->arch.flags & KVM_ARM64_FP_ENABLED) {
+-		fpsimd_save_and_flush_cpu_state();
+-
+ 		if (guest_has_sve)
+ 			__vcpu_sys_reg(vcpu, ZCR_EL1) = read_sysreg_el1(SYS_ZCR);
 +
-+		sve_end = vcpu->arch.sve_state + vcpu_sve_state_size(vcpu);
-+
-+		ret = create_hyp_mappings(vcpu->arch.sve_state, sve_end,
-+					  PAGE_HYP);
-+		if (ret)
-+			goto error;
-+	}
-+
- 	vcpu->arch.host_thread_info = kern_hyp_va(ti);
- 	vcpu->arch.host_fpsimd_state = kern_hyp_va(fpsimd);
- error:
++		fpsimd_save_and_flush_cpu_state();
+ 	} else if (host_has_sve) {
+ 		/*
+ 		 * The FPSIMD/SVE state in the CPU has not been touched, and we
 -- 
 2.29.2
 
