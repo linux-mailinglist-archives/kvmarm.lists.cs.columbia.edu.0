@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9189F34056D
-	for <lists+kvmarm@lfdr.de>; Thu, 18 Mar 2021 13:25:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 52D9D34056F
+	for <lists+kvmarm@lfdr.de>; Thu, 18 Mar 2021 13:26:07 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 44B454B77F;
-	Thu, 18 Mar 2021 08:25:59 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D28CE4B758;
+	Thu, 18 Mar 2021 08:26:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,39 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id fGDgrfgMulph; Thu, 18 Mar 2021 08:25:59 -0400 (EDT)
+	with ESMTP id P8XpATw5XtlO; Thu, 18 Mar 2021 08:26:00 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 546EF4B74D;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 88A484B752;
 	Thu, 18 Mar 2021 08:25:56 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A9ADE4B757
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E072B4B757
  for <kvmarm@lists.cs.columbia.edu>; Thu, 18 Mar 2021 08:25:54 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 55orXgG9RTJL for <kvmarm@lists.cs.columbia.edu>;
- Thu, 18 Mar 2021 08:25:53 -0400 (EDT)
+ with ESMTP id K+ZXLCZhQMnr for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 18 Mar 2021 08:25:54 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1ABCF4B766
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9554E4B759
  for <kvmarm@lists.cs.columbia.edu>; Thu, 18 Mar 2021 08:25:50 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 39F0464F72;
+ by mail.kernel.org (Postfix) with ESMTPSA id BEC2C64F74;
  Thu, 18 Mar 2021 12:25:49 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1lMril-002OZW-EV; Thu, 18 Mar 2021 12:25:47 +0000
+ id 1lMrim-002OZW-29; Thu, 18 Mar 2021 12:25:48 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
  kvm@vger.kernel.org
-Subject: [PATCH v2 08/11] KVM: arm64: Save guest's ZCR_EL1 before saving the
- FPSIMD state
-Date: Thu, 18 Mar 2021 12:25:29 +0000
-Message-Id: <20210318122532.505263-9-maz@kernel.org>
+Subject: [PATCH v2 09/11] KVM: arm64: Trap host SVE accesses when the FPSIMD
+ state is dirty
+Date: Thu, 18 Mar 2021 12:25:30 +0000
+Message-Id: <20210318122532.505263-10-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210318122532.505263-1-maz@kernel.org>
 References: <20210318122532.505263-1-maz@kernel.org>
@@ -81,32 +81,65 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Make sure the guest's ZCR_EL1 is saved before we save/flush the
-state. This will be useful in later patches.
+ZCR_EL2 controls the upper bound for ZCR_EL1, and is set to
+a potentially lower limit when the guest uses SVE. In order
+to restore the SVE state on the EL1 host, we must first
+reset ZCR_EL2 to its original value.
 
-Acked-by: Will Deacon <will@kernel.org>
+To make it as lazy as possible on the EL1 host side, set
+the SVE trapping in place when returning exiting from
+the guest. On the first EL1 access to SVE, ZCR_EL2 will
+be restored to its full glory.
+
+Suggested-by: Andrew Scull <ascull@google.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/fpsimd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/hyp/nvhe/hyp-main.c | 4 ++++
+ arch/arm64/kvm/hyp/nvhe/switch.c   | 9 +++++++--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/kvm/fpsimd.c b/arch/arm64/kvm/fpsimd.c
-index 3c37a419fa82..14ea05c5134a 100644
---- a/arch/arm64/kvm/fpsimd.c
-+++ b/arch/arm64/kvm/fpsimd.c
-@@ -121,10 +121,10 @@ void kvm_arch_vcpu_put_fp(struct kvm_vcpu *vcpu)
- 	local_irq_save(flags);
+diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+index f012f8665ecc..8d04d69edd15 100644
+--- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
++++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
+@@ -177,6 +177,10 @@ void handle_trap(struct kvm_cpu_context *host_ctxt)
+ 	case ESR_ELx_EC_SMC64:
+ 		handle_host_smc(host_ctxt);
+ 		break;
++	case ESR_ELx_EC_SVE:
++		sve_cond_update_zcr_vq(ZCR_ELx_LEN_MASK, SYS_ZCR_EL2);
++		sysreg_clear_set(cptr_el2, CPTR_EL2_TZ, 0);
++		break;
+ 	default:
+ 		hyp_panic();
+ 	}
+diff --git a/arch/arm64/kvm/hyp/nvhe/switch.c b/arch/arm64/kvm/hyp/nvhe/switch.c
+index f3d0e9eca56c..60adc7ff4caa 100644
+--- a/arch/arm64/kvm/hyp/nvhe/switch.c
++++ b/arch/arm64/kvm/hyp/nvhe/switch.c
+@@ -68,7 +68,7 @@ static void __activate_traps(struct kvm_vcpu *vcpu)
+ static void __deactivate_traps(struct kvm_vcpu *vcpu)
+ {
+ 	extern char __kvm_hyp_host_vector[];
+-	u64 mdcr_el2;
++	u64 mdcr_el2, cptr;
  
- 	if (vcpu->arch.flags & KVM_ARM64_FP_ENABLED) {
--		fpsimd_save_and_flush_cpu_state();
--
- 		if (guest_has_sve)
- 			__vcpu_sys_reg(vcpu, ZCR_EL1) = read_sysreg_el1(SYS_ZCR);
+ 	___deactivate_traps(vcpu);
+ 
+@@ -101,7 +101,12 @@ static void __deactivate_traps(struct kvm_vcpu *vcpu)
+ 		write_sysreg(HCR_HOST_NVHE_PROTECTED_FLAGS, hcr_el2);
+ 	else
+ 		write_sysreg(HCR_HOST_NVHE_FLAGS, hcr_el2);
+-	write_sysreg(CPTR_EL2_DEFAULT, cptr_el2);
 +
-+		fpsimd_save_and_flush_cpu_state();
- 	} else if (host_has_sve) {
- 		/*
- 		 * The FPSIMD/SVE state in the CPU has not been touched, and we
++	cptr = CPTR_EL2_DEFAULT;
++	if (vcpu_has_sve(vcpu) && (vcpu->arch.flags & KVM_ARM64_FP_ENABLED))
++		cptr |= CPTR_EL2_TZ;
++
++	write_sysreg(cptr, cptr_el2);
+ 	write_sysreg(__kvm_hyp_host_vector, vbar_el2);
+ }
+ 
 -- 
 2.29.2
 
