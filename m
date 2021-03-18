@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 831F834056A
-	for <lists+kvmarm@lfdr.de>; Thu, 18 Mar 2021 13:25:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E66F434056B
+	for <lists+kvmarm@lfdr.de>; Thu, 18 Mar 2021 13:25:57 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3228E4B74A;
-	Thu, 18 Mar 2021 08:25:55 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9A4AD4B761;
+	Thu, 18 Mar 2021 08:25:57 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,38 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9C6r+q5oE+Ly; Thu, 18 Mar 2021 08:25:55 -0400 (EDT)
+	with ESMTP id KRJA8jfgsx-D; Thu, 18 Mar 2021 08:25:57 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EA8564B750;
-	Thu, 18 Mar 2021 08:25:52 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2BD354B749;
+	Thu, 18 Mar 2021 08:25:53 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 393DC4B644
- for <kvmarm@lists.cs.columbia.edu>; Thu, 18 Mar 2021 08:25:49 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3CED64B767
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 18 Mar 2021 08:25:50 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Fup580GwMPKz for <kvmarm@lists.cs.columbia.edu>;
- Thu, 18 Mar 2021 08:25:48 -0400 (EDT)
+ with ESMTP id kWfH4bJmsfp2 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 18 Mar 2021 08:25:49 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 637624B72F
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E7C444B6C5
  for <kvmarm@lists.cs.columbia.edu>; Thu, 18 Mar 2021 08:25:48 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 891E364F6D;
- Thu, 18 Mar 2021 12:25:47 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 1BA9664F6F;
+ Thu, 18 Mar 2021 12:25:48 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1lMrij-002OZW-N2; Thu, 18 Mar 2021 12:25:45 +0000
+ id 1lMrik-002OZW-AQ; Thu, 18 Mar 2021 12:25:46 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
  kvm@vger.kernel.org
-Subject: [PATCH v2 05/11] arm64: sve: Provide a conditional update accessor
- for ZCR_ELx
-Date: Thu, 18 Mar 2021 12:25:26 +0000
-Message-Id: <20210318122532.505263-6-maz@kernel.org>
+Subject: [PATCH v2 06/11] KVM: arm64: Rework SVE host-save/guest-restore
+Date: Thu, 18 Mar 2021 12:25:27 +0000
+Message-Id: <20210318122532.505263-7-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210318122532.505263-1-maz@kernel.org>
 References: <20210318122532.505263-1-maz@kernel.org>
@@ -81,37 +80,136 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-A common pattern is to conditionally update ZCR_ELx in order
-to avoid the "self-synchronizing" effect that writing to this
-register has.
+In order to keep the code readable, move the host-save/guest-restore
+sequences in their own functions, with the following changes:
+- the hypervisor ZCR is now set from C code
+- ZCR_EL2 is always used as the EL2 accessor
 
-Let's provide an accessor that does exactly this.
+This results in some minor assembler macro rework.
+No functional change intended.
 
+Acked-by: Will Deacon <will@kernel.org>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/fpsimd.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm64/include/asm/fpsimdmacros.h   |  8 +++--
+ arch/arm64/include/asm/kvm_hyp.h        |  2 +-
+ arch/arm64/kvm/hyp/fpsimd.S             |  2 +-
+ arch/arm64/kvm/hyp/include/hyp/switch.h | 40 +++++++++++++++----------
+ 4 files changed, 32 insertions(+), 20 deletions(-)
 
-diff --git a/arch/arm64/include/asm/fpsimd.h b/arch/arm64/include/asm/fpsimd.h
-index bec5f14b622a..05c9c55768b8 100644
---- a/arch/arm64/include/asm/fpsimd.h
-+++ b/arch/arm64/include/asm/fpsimd.h
-@@ -130,6 +130,15 @@ static inline void sve_user_enable(void)
- 	sysreg_clear_set(cpacr_el1, 0, CPACR_EL1_ZEN_EL0EN);
+diff --git a/arch/arm64/include/asm/fpsimdmacros.h b/arch/arm64/include/asm/fpsimdmacros.h
+index e9b72d35b867..a2563992d2dc 100644
+--- a/arch/arm64/include/asm/fpsimdmacros.h
++++ b/arch/arm64/include/asm/fpsimdmacros.h
+@@ -232,8 +232,7 @@
+ 		str		w\nxtmp, [\xpfpsr, #4]
+ .endm
+ 
+-.macro sve_load nxbase, xpfpsr, xvqminus1, nxtmp, xtmp2
+-		sve_load_vq	\xvqminus1, x\nxtmp, \xtmp2
++.macro __sve_load nxbase, xpfpsr, nxtmp
+  _for n, 0, 31,	_sve_ldr_v	\n, \nxbase, \n - 34
+ 		_sve_ldr_p	0, \nxbase
+ 		_sve_wrffr	0
+@@ -244,3 +243,8 @@
+ 		ldr		w\nxtmp, [\xpfpsr, #4]
+ 		msr		fpcr, x\nxtmp
+ .endm
++
++.macro sve_load nxbase, xpfpsr, xvqminus1, nxtmp, xtmp2
++		sve_load_vq	\xvqminus1, x\nxtmp, \xtmp2
++		__sve_load	\nxbase, \xpfpsr, \nxtmp
++.endm
+diff --git a/arch/arm64/include/asm/kvm_hyp.h b/arch/arm64/include/asm/kvm_hyp.h
+index e8b0f7fcd86b..a3e89424ae63 100644
+--- a/arch/arm64/include/asm/kvm_hyp.h
++++ b/arch/arm64/include/asm/kvm_hyp.h
+@@ -86,7 +86,7 @@ void __debug_switch_to_host(struct kvm_vcpu *vcpu);
+ void __fpsimd_save_state(struct user_fpsimd_state *fp_regs);
+ void __fpsimd_restore_state(struct user_fpsimd_state *fp_regs);
+ void __sve_save_state(void *sve_pffr, u32 *fpsr);
+-void __sve_restore_state(void *sve_pffr, u32 *fpsr, unsigned int vqminus1);
++void __sve_restore_state(void *sve_pffr, u32 *fpsr);
+ 
+ #ifndef __KVM_NVHE_HYPERVISOR__
+ void activate_traps_vhe_load(struct kvm_vcpu *vcpu);
+diff --git a/arch/arm64/kvm/hyp/fpsimd.S b/arch/arm64/kvm/hyp/fpsimd.S
+index 95b22e10996c..3c635929771a 100644
+--- a/arch/arm64/kvm/hyp/fpsimd.S
++++ b/arch/arm64/kvm/hyp/fpsimd.S
+@@ -21,7 +21,7 @@ SYM_FUNC_START(__fpsimd_restore_state)
+ SYM_FUNC_END(__fpsimd_restore_state)
+ 
+ SYM_FUNC_START(__sve_restore_state)
+-	sve_load 0, x1, x2, 3, x4
++	__sve_load 0, x1, 2
+ 	ret
+ SYM_FUNC_END(__sve_restore_state)
+ 
+diff --git a/arch/arm64/kvm/hyp/include/hyp/switch.h b/arch/arm64/kvm/hyp/include/hyp/switch.h
+index fb68271c1a0f..8071e1cad289 100644
+--- a/arch/arm64/kvm/hyp/include/hyp/switch.h
++++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
+@@ -196,6 +196,24 @@ static inline bool __populate_fault_info(struct kvm_vcpu *vcpu)
+ 	return true;
  }
  
-+#define sve_cond_update_zcr_vq(val, reg)		\
-+	do {						\
-+		u64 __zcr = read_sysreg_s((reg));	\
-+		u64 __new = __zcr & ~ZCR_ELx_LEN_MASK;	\
-+		__new |= (val) & ZCR_ELx_LEN_MASK;	\
-+		if (__zcr != __new)			\
-+			write_sysreg_s(__new, (reg));	\
-+	} while (0)
++static inline void __hyp_sve_save_host(struct kvm_vcpu *vcpu)
++{
++	struct thread_struct *thread;
 +
- /*
-  * Probing and setup functions.
-  * Calls to these functions must be serialised with one another.
++	thread = container_of(vcpu->arch.host_fpsimd_state, struct thread_struct,
++			      uw.fpsimd_state);
++
++	__sve_save_state(sve_pffr(thread), &vcpu->arch.host_fpsimd_state->fpsr);
++}
++
++static inline void __hyp_sve_restore_guest(struct kvm_vcpu *vcpu)
++{
++	sve_cond_update_zcr_vq(vcpu_sve_max_vq(vcpu) - 1, SYS_ZCR_EL2);
++	__sve_restore_state(vcpu_sve_pffr(vcpu),
++			    &vcpu->arch.ctxt.fp_regs.fpsr);
++	write_sysreg_el1(__vcpu_sys_reg(vcpu, ZCR_EL1), SYS_ZCR);
++}
++
+ /* Check for an FPSIMD/SVE trap and handle as appropriate */
+ static inline bool __hyp_handle_fpsimd(struct kvm_vcpu *vcpu)
+ {
+@@ -251,28 +269,18 @@ static inline bool __hyp_handle_fpsimd(struct kvm_vcpu *vcpu)
+ 		 * In the SVE case, VHE is assumed: it is enforced by
+ 		 * Kconfig and kvm_arch_init().
+ 		 */
+-		if (sve_host) {
+-			struct thread_struct *thread = container_of(
+-				vcpu->arch.host_fpsimd_state,
+-				struct thread_struct, uw.fpsimd_state);
+-
+-			__sve_save_state(sve_pffr(thread),
+-					 &vcpu->arch.host_fpsimd_state->fpsr);
+-		} else {
++		if (sve_host)
++			__hyp_sve_save_host(vcpu);
++		else
+ 			__fpsimd_save_state(vcpu->arch.host_fpsimd_state);
+-		}
+ 
+ 		vcpu->arch.flags &= ~KVM_ARM64_FP_HOST;
+ 	}
+ 
+-	if (sve_guest) {
+-		__sve_restore_state(vcpu_sve_pffr(vcpu),
+-				    &vcpu->arch.ctxt.fp_regs.fpsr,
+-				    vcpu_sve_vq(vcpu) - 1);
+-		write_sysreg_el1(__vcpu_sys_reg(vcpu, ZCR_EL1), SYS_ZCR);
+-	} else {
++	if (sve_guest)
++		__hyp_sve_restore_guest(vcpu);
++	else
+ 		__fpsimd_restore_state(&vcpu->arch.ctxt.fp_regs);
+-	}
+ 
+ 	/* Skip restoring fpexc32 for AArch64 guests */
+ 	if (!(read_sysreg(hcr_el2) & HCR_RW))
 -- 
 2.29.2
 
