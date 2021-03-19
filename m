@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id ADE8C341943
-	for <lists+kvmarm@lfdr.de>; Fri, 19 Mar 2021 11:03:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EB34341941
+	for <lists+kvmarm@lfdr.de>; Fri, 19 Mar 2021 11:03:06 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5BA484B77E;
-	Fri, 19 Mar 2021 06:03:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 32FDB4B759;
+	Fri, 19 Mar 2021 06:03:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,63 +14,62 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id G-q+JicHeZvm; Fri, 19 Mar 2021 06:03:08 -0400 (EDT)
+	with ESMTP id HGjzXacdVmPJ; Fri, 19 Mar 2021 06:03:05 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 640894B682;
-	Fri, 19 Mar 2021 06:03:07 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3ED2B4B757;
+	Fri, 19 Mar 2021 06:03:05 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4435E4B739
- for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Mar 2021 06:03:06 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C7D824B69B
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Mar 2021 06:03:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id eS5AcVo6QtG9 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 19 Mar 2021 06:03:01 -0400 (EDT)
-Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com
- [209.85.128.74])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6B0DD4B6FD
- for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Mar 2021 06:03:01 -0400 (EDT)
-Received: by mail-wm1-f74.google.com with SMTP id v5so12693607wml.9
- for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Mar 2021 03:03:01 -0700 (PDT)
+ with ESMTP id P5fJpog3QP2J for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 19 Mar 2021 06:03:03 -0400 (EDT)
+Received: from mail-qv1-f74.google.com (mail-qv1-f74.google.com
+ [209.85.219.74])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id EACB84B682
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Mar 2021 06:03:02 -0400 (EDT)
+Received: by mail-qv1-f74.google.com with SMTP id k4so31803439qvf.8
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Mar 2021 03:03:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=n6oA03qLjjcwBcDPSDV80wKa+1IBsnhq2bkZWDiODR0=;
- b=TBtrGf5J9GSkUt3b2QMHJgjotxPiRgZJPd7t0Rl9i8F+OSnh0QlipR4VWyCkBIBE1/
- w9n80rWnVXqQOCU+0BPNn93dUIAuOiwEl2SSrONUZWjNuUoC48DwYVV4Vc+pka17RdJw
- YwmYzsL/FA1poINK+D45uXb7866EOkTqngIueW545/vd60y59pVB5ZY8OJKdD/6QdQtQ
- Zu4vGCwDv3N/+AtOwtettFL0mhuTkxWJdfksr/cQjWHTNgy959u6NYrmBz4cD2xUxXh2
- BxJpKQ/VN+NwtBQpqQ3eJ8xZshcVIw5cHOeZbiN/Wsffafzm+SDb4bZYqzX2kBVYdqWD
- ITXg==
+ :cc; bh=72klzlc424mmLnO4+mJQoCgQ9qRpj0AFz2PNi4O1btg=;
+ b=TMZfoBWZybpbOvmfNQdWuKj+QVKLPZzdehM7jBlnqDYUOKYV3P/bzmuXd9DoW51F8R
+ H6kFU8L0dmMyPxVo6VKzl0acSAKA4miwiVfDJC2HaQLLKPJVKpVuNECdOvffl0h20EGZ
+ dki+nPIqygOPTh07KcxIji93rqNvHQ/YplTidtBxHrXcga0uelpTSZ2ciZ26j4uc0BiH
+ HGy7Ctq2zMR9RMv3+Nww1SOu1DedI/hlRfgdFh1lRqoBGPGSb0v4Eu5hpQ/sOow7W0QU
+ BiB9P1/vWKs+V5Dv34S8S2KeMqtEpLRBiF45IC2HkWJWzyyj0By+9TDBtYVd88DAn7ux
+ XhiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=n6oA03qLjjcwBcDPSDV80wKa+1IBsnhq2bkZWDiODR0=;
- b=ul02jajETkXecs3u4Vek0RNT+K8n209fan7Dr9/Xd1E4arQfncdcylgJHcI+BdYoXn
- ioaMVBChpLWExw/tsytns8nNi8Af2ztJPosNbO4W/yI5HOPx4U85UaI6rlmHqsd3lh9Y
- z7dlR3W7rIeCVDnn7H876rraCvaLr1ZrLqfZgSt0wjo/d0VfhunfV7Xyup+QDM6xNCpS
- VuUuB/ytAkie6TEGurSgSUJcaxpEwzpQUCXqviUwnphyYmG/1CSjQmSO/9J9HOv/NP9g
- EZYiVBLuSqowrdZu280sOtdH1CqUVX0PldNjiBsTWYTbgvux4J4c6yQGrxfHTwzla/8U
- I4Pg==
-X-Gm-Message-State: AOAM533dRKiY+qdxQywwDIEeNpivPn8lllB+ZLxNQvIq9Zf8fJeFpFJI
- SyH7zwFWZHWiWofX5OH9Vnw193rLk4Sj
-X-Google-Smtp-Source: ABdhPJwV6AcbNU8vjqv/vxj6ZmaNuK9vPiNcReyF8MlFlNm0j8dC0O+RJqRpgMWskICkLeA+1c+B+RkdnB4S
+ bh=72klzlc424mmLnO4+mJQoCgQ9qRpj0AFz2PNi4O1btg=;
+ b=OCWetifX+xiRlwpMjVzJg2tUTOK5FCSivWd5HdGWerwSh2sxdWaeuj592MSMIfAwpX
+ P080wXoloCxbR7/ntxow7Acsrsry8bTcQFbjjH7Y+wXG/Rqv5416PU+eHGN12V+TfV5h
+ w2XXnK14c9JKaRu1HLNLF4WIsVtWCwD5e2zj91V/6mFUmtIbORECTYZUevnWuQ30r3Dc
+ lp9e1+5t9yjTR8gEdT1OhVHxGK9fbdSgOpq/32g0ITM1snp+pTDHtubYZDmQJKOabAQV
+ kqD/qqTBOgZQj2P6u1xybCcYgxPbz7umz3WRh3jnwGVV1DnNSNau6UYAxAJPKt9O1HMX
+ tigA==
+X-Gm-Message-State: AOAM530j7NGYujSdY0n4H/D5nK6kIQ77/eWeFWretC00Hz/LI/WJykNg
+ 8ouLmHvFXRNffA7Snps7lWpvscSabLla
+X-Google-Smtp-Source: ABdhPJz5Nn0SRzIcLJbprGdjasWPY3TTPXoVZ8gwqBfwupsjTDVeieeAgP/GqFP3q3tkNq0mnFuOA6wwnW1X
 X-Received: from r2d2-qp.c.googlers.com ([fda3:e722:ac3:10:28:9cb1:c0a8:1652])
- (user=qperret job=sendgmr) by 2002:a1c:4e12:: with SMTP id
- g18mr2881922wmh.56.1616148180533; Fri, 19 Mar 2021 03:03:00 -0700 (PDT)
-Date: Fri, 19 Mar 2021 10:01:41 +0000
+ (user=qperret job=sendgmr) by 2002:a05:6214:15d1:: with SMTP id
+ p17mr8491639qvz.28.1616148182510; Fri, 19 Mar 2021 03:03:02 -0700 (PDT)
+Date: Fri, 19 Mar 2021 10:01:42 +0000
 In-Reply-To: <20210319100146.1149909-1-qperret@google.com>
-Message-Id: <20210319100146.1149909-34-qperret@google.com>
+Message-Id: <20210319100146.1149909-35-qperret@google.com>
 Mime-Version: 1.0
 References: <20210319100146.1149909-1-qperret@google.com>
 X-Mailer: git-send-email 2.31.0.rc2.261.g7f71774620-goog
-Subject: [PATCH v6 33/38] KVM: arm64: Introduce KVM_PGTABLE_S2_IDMAP stage 2
- flag
+Subject: [PATCH v6 34/38] KVM: arm64: Provide sanitized mmfr* registers at EL2
 From: Quentin Perret <qperret@google.com>
 To: catalin.marinas@arm.com, will@kernel.org, maz@kernel.org, 
  james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com
@@ -94,48 +93,55 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Introduce a new stage 2 configuration flag to specify that all mappings
-in a given page-table will be identity-mapped, as will be the case for
-the host. This allows to introduce sanity checks in the map path and to
-avoid programming errors.
+We will need to read sanitized values of mmfr{0,1}_el1 at EL2 soon, so
+add them to the list of copied variables.
 
-Suggested-by: Will Deacon <will@kernel.org>
+Acked-by: Will Deacon <will@kernel.org>
 Signed-off-by: Quentin Perret <qperret@google.com>
 ---
- arch/arm64/include/asm/kvm_pgtable.h | 2 ++
- arch/arm64/kvm/hyp/pgtable.c         | 3 +++
- 2 files changed, 5 insertions(+)
+ arch/arm64/include/asm/kvm_cpufeature.h | 2 ++
+ arch/arm64/kvm/hyp/nvhe/hyp-smp.c       | 2 ++
+ arch/arm64/kvm/sys_regs.c               | 2 ++
+ 3 files changed, 6 insertions(+)
 
-diff --git a/arch/arm64/include/asm/kvm_pgtable.h b/arch/arm64/include/asm/kvm_pgtable.h
-index 55452f4831d2..c3674c47d48c 100644
---- a/arch/arm64/include/asm/kvm_pgtable.h
-+++ b/arch/arm64/include/asm/kvm_pgtable.h
-@@ -60,9 +60,11 @@ struct kvm_pgtable_mm_ops {
-  * enum kvm_pgtable_stage2_flags - Stage-2 page-table flags.
-  * @KVM_PGTABLE_S2_NOFWB:	Don't enforce Normal-WB even if the CPUs have
-  *				ARM64_HAS_STAGE2_FWB.
-+ * @KVM_PGTABLE_S2_IDMAP:	Only use identity mappings.
+diff --git a/arch/arm64/include/asm/kvm_cpufeature.h b/arch/arm64/include/asm/kvm_cpufeature.h
+index c2e7735f502b..ff302d15e840 100644
+--- a/arch/arm64/include/asm/kvm_cpufeature.h
++++ b/arch/arm64/include/asm/kvm_cpufeature.h
+@@ -20,5 +20,7 @@
+ #endif
+ 
+ DECLARE_KVM_HYP_CPU_FTR_REG(arm64_ftr_reg_ctrel0);
++DECLARE_KVM_HYP_CPU_FTR_REG(arm64_ftr_reg_id_aa64mmfr0_el1);
++DECLARE_KVM_HYP_CPU_FTR_REG(arm64_ftr_reg_id_aa64mmfr1_el1);
+ 
+ #endif
+diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-smp.c b/arch/arm64/kvm/hyp/nvhe/hyp-smp.c
+index 71f00aca90e7..17ad1b3a9530 100644
+--- a/arch/arm64/kvm/hyp/nvhe/hyp-smp.c
++++ b/arch/arm64/kvm/hyp/nvhe/hyp-smp.c
+@@ -13,6 +13,8 @@
+  * Copies of the host's CPU features registers holding sanitized values.
   */
- enum kvm_pgtable_stage2_flags {
- 	KVM_PGTABLE_S2_NOFWB			= BIT(0),
-+	KVM_PGTABLE_S2_IDMAP			= BIT(1),
+ DEFINE_KVM_HYP_CPU_FTR_REG(arm64_ftr_reg_ctrel0);
++DEFINE_KVM_HYP_CPU_FTR_REG(arm64_ftr_reg_id_aa64mmfr0_el1);
++DEFINE_KVM_HYP_CPU_FTR_REG(arm64_ftr_reg_id_aa64mmfr1_el1);
+ 
+ /*
+  * nVHE copy of data structures tracking available CPU cores.
+diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+index 3ec34c25e877..dfb3b4f9ca84 100644
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -2784,6 +2784,8 @@ struct __ftr_reg_copy_entry {
+ 	struct arm64_ftr_reg	*dst;
+ } hyp_ftr_regs[] __initdata = {
+ 	CPU_FTR_REG_HYP_COPY(SYS_CTR_EL0, arm64_ftr_reg_ctrel0),
++	CPU_FTR_REG_HYP_COPY(SYS_ID_AA64MMFR0_EL1, arm64_ftr_reg_id_aa64mmfr0_el1),
++	CPU_FTR_REG_HYP_COPY(SYS_ID_AA64MMFR1_EL1, arm64_ftr_reg_id_aa64mmfr1_el1),
  };
  
- /**
-diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
-index b22b4860630c..c37c1dc4feaf 100644
---- a/arch/arm64/kvm/hyp/pgtable.c
-+++ b/arch/arm64/kvm/hyp/pgtable.c
-@@ -760,6 +760,9 @@ int kvm_pgtable_stage2_map(struct kvm_pgtable *pgt, u64 addr, u64 size,
- 		.arg		= &map_data,
- 	};
- 
-+	if (WARN_ON((pgt->flags & KVM_PGTABLE_S2_IDMAP) && (addr != phys)))
-+		return -EINVAL;
-+
- 	ret = stage2_set_prot_attr(pgt, prot, &map_data.attr);
- 	if (ret)
- 		return ret;
+ void __init setup_kvm_el2_caps(void)
 -- 
 2.31.0.rc2.261.g7f71774620-goog
 
