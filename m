@@ -2,63 +2,50 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0954D3423B8
-	for <lists+kvmarm@lfdr.de>; Fri, 19 Mar 2021 18:53:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 74092342D06
+	for <lists+kvmarm@lfdr.de>; Sat, 20 Mar 2021 14:28:57 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6AA0C4B320;
-	Fri, 19 Mar 2021 13:53:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EAA434B169;
+	Sat, 20 Mar 2021 09:28:56 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id fDqDoDCdP7j5; Fri, 19 Mar 2021 13:53:58 -0400 (EDT)
+	with ESMTP id CQxXmR5IFrGH; Sat, 20 Mar 2021 09:28:55 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 533B24B2DF;
-	Fri, 19 Mar 2021 13:53:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 72B8D4B2C2;
+	Sat, 20 Mar 2021 09:28:54 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6CD6B4B27C
- for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Mar 2021 13:53:56 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 015454B606
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Mar 2021 12:18:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ePY-uPFhymO6 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 19 Mar 2021 13:53:55 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7D8A54B276
- for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Mar 2021 13:53:55 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 0D6BF61941;
- Fri, 19 Mar 2021 17:53:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1616176433;
- bh=zrcL9MRIFXU8BSdXA3iKVsYRz6r0TE1XU84YXfluHhs=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=JleX4Ku9BTUuHpkzuztNMHZyK1I2gm5G53d+jG4H7cBYdMIjEiP67A5Tsti0YJwcE
- +2vFKmppEYuF8Ys8Iedf6E1rDo2tJfOjSGi5f7ZCrbfOLiFmXyU6Rv8lfh100O9cGj
- Y2SU9l+MGa64aSPP03m7Izg/2nj+qrNf9WxtqVA8Rio8bVfL0x2K12RTlSqXFZWYRF
- HgA0Rn+IkXa8HCboaJP1wDgpSdjXAyhh98yyGNOkC7s49JGayvEwdXuUruBs2xxTIi
- w+5zqc9aAFJFDVkhek2UGBZuw7yRknjLO1W7bnmzHcy9ZmjKfeHhBa6mdedqVpSNjw
- mXPZikZXDBn+Q==
-Date: Fri, 19 Mar 2021 17:53:49 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v2 00/11] KVM: arm64: Enable SVE support on nVHE systems
-Message-ID: <20210319175349.GK5619@sirena.org.uk>
-References: <20210318122532.505263-1-maz@kernel.org>
-MIME-Version: 1.0
-In-Reply-To: <20210318122532.505263-1-maz@kernel.org>
-X-Cookie: No purchase necessary.
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: kernel-team@android.com, kvm@vger.kernel.org,
- Catalin Marinas <catalin.marinas@arm.com>, kvmarm@lists.cs.columbia.edu,
- Will Deacon <will@kernel.org>, dave.martin@arm.com,
- linux-arm-kernel@lists.infradead.org, daniel.kiss@arm.com
+ with ESMTP id 5ISm2BQ5o3ET for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 19 Mar 2021 12:17:58 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C52264B5E6
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Mar 2021 12:17:58 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id F35EA31B;
+ Fri, 19 Mar 2021 09:17:57 -0700 (PDT)
+Received: from yoan-MS-7758.Home (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id A17803F718;
+ Fri, 19 Mar 2021 09:17:56 -0700 (PDT)
+From: Yoan Picchi <yoan.picchi@arm.com>
+To: maz@kernel.org, james.morse@arm.com, julien.thierry.kdev@gmail.com,
+ suzuki.poulose@arm.com, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu
+Subject: [PATCH 0/7] KVM: arm64: add more event counters for kvm_stat
+Date: Fri, 19 Mar 2021 16:17:04 +0000
+Message-Id: <20210319161711.24972-1-yoan.picchi@arm.com>
+X-Mailer: git-send-email 2.17.1
+X-Mailman-Approved-At: Sat, 20 Mar 2021 09:28:53 -0400
+Cc: catalin.marinas@arm.com, Yoan Picchi <yoan.picchi@arm.com>, will@kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -70,69 +57,53 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============7337390302713275998=="
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+Hi all,
 
---===============7337390302713275998==
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="aqWxf8ydqYKP8htK"
-Content-Disposition: inline
+As mentioned in the KVM forum talk from 2019 
+(https://kvmforum2019.sched.com/event/Tmwf/kvmstat-and-beyond-past-present-and-future-of-performance-monitoring-christian-borntrager-ibm page 10),
+there is few event counters for kvm_stat in the arm64 version of kvm when
+you compare it to something like the x86 version.
+Those counters are used in kvm_stat by kernel/driver developers to
+have a rough idea of the impact of their patches on the general performance.
+An example would be to make sure a patch don't increase to much the amount
+of interruptions. Those patches aim to add more counters to make the use of
+kvm_stat more relevant when measuring performance impact.
 
+I am new in working on kernel-related things and I am learning kvm as I go.
+Some of the counter I added early (memory_slot_unmaped, stage2_unmap_vm)
+no longer seems relevant because while they do interesting things, they
+happens in very specific scenarios. Instead of just deleting them, I prefer
+to ask weither a little-used counter or no counter is the best.
+I can also use some suggestion on how to test those counters as some like 
+remote_tlb_flush which mostly happen when fixing up a race condition; or
+what uncovered event could be worth adding in a future patch set.
 
---aqWxf8ydqYKP8htK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Yoan Picchi (7):
+  KVM: arm64: Add two page mapping counters for kvm_stat
+  KVM: arm64: Add remote_tlb_flush counter for kvm_stat
+  KVM: arm64: Add cached_page_invalidated counter for kvm_stat
+  KVM: arm64: Add flush_all_cache_lines counter for kvm_stat
+  KVM: arm64: Add memory_slot_unmaped counter for kvm_stat
+  KVM: arm64: Add stage2_unmap_vm counter for kvm_stat
+  KVM: arm64: Add irq_inject counter for kvm_stat
 
-On Thu, Mar 18, 2021 at 12:25:21PM +0000, Marc Zyngier wrote:
+ arch/arm64/include/asm/kvm_host.h |  8 ++++++++
+ arch/arm64/kvm/arm.c              |  2 ++
+ arch/arm64/kvm/guest.c            |  9 +++++++++
+ arch/arm64/kvm/mmu.c              | 27 ++++++++++++++++++++++++++-
+ arch/arm64/kvm/vgic/vgic.c        |  2 ++
+ 5 files changed, 47 insertions(+), 1 deletion(-)
 
-> Most of this series only repaints things so that VHE and nVHE look as
-> similar as possible, the ZCR_EL2 management being the most visible
-> exception. This results in a bunch of preparatory patches that aim at
-> making the code slightly more readable.
-
-That readability stuff is definitely helping from my PoV.
-
-Reviewed-by: Mark Brown <broonie@kernel.org>
-
-(FWIW, from the SVE side)
-
-> This has been tested on a FVP model with both VHE/nVHE configurations
-> using the string tests included with the "optimized-routines"
-> library[2].
-
-There's also some tests Dave wrote which got upstreamed in kselftest
-now, some normal kselftests and also a stress test that sits and
-writes/reads bit patterns into the registers and is pretty good at
-picking up any context switch issues.
-
---aqWxf8ydqYKP8htK
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmBU5SwACgkQJNaLcl1U
-h9AN5wf+P7ae7UEos5cVKTOeBLoAWzSixqcgUVEwBW/KICbwvz0XROUxMt7whp9r
-3Tw/PL3WZ4lUkWYFvvB3tVnjQk1JvolP4ZD07/28uKOuokUk1lCitqDpEwpi3y58
-TTfo6q89G0Z8n6bMMeRPe1WrajTzkfkGHsScPrOaH2OWWjPwv4YfgtfsLCtXTiWH
-XI+Jd6NOtPjSMMSYTnje4qFyPmn9Y7OzkbEXj/3wKP4qBYw4lhQ4pZ4jF38ngSve
-SvXbki6zREpP5U4BpqQcMzu1D1/DN/Xz0YeBi2MKNQrIrEVY+z8kQZ1BMSXZ5xi/
-sQ3P3aJ6VfsbW0AQmgZoAknknjcdaw==
-=Q9m5
------END PGP SIGNATURE-----
-
---aqWxf8ydqYKP8htK--
-
---===============7337390302713275998==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+-- 
+2.17.1
 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
 https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
-
---===============7337390302713275998==--
