@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4AA02342D0B
-	for <lists+kvmarm@lfdr.de>; Sat, 20 Mar 2021 14:29:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D37A5343906
+	for <lists+kvmarm@lfdr.de>; Mon, 22 Mar 2021 07:02:37 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E54BA4B2D6;
-	Sat, 20 Mar 2021 09:28:59 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6DA834B414;
+	Mon, 22 Mar 2021 02:02:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,39 +16,42 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id sBG3UngqWHrI; Sat, 20 Mar 2021 09:28:59 -0400 (EDT)
+	with ESMTP id IcxvC8biq75F; Mon, 22 Mar 2021 02:02:36 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F40AB4B390;
-	Sat, 20 Mar 2021 09:28:54 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1DB134B40A;
+	Mon, 22 Mar 2021 02:02:35 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9900E4B66E
- for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Mar 2021 12:18:10 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 07E1C4B403
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 22 Mar 2021 02:02:34 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id yLj+OU7Kl5f7 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 19 Mar 2021 12:18:09 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6B2554B664
- for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Mar 2021 12:18:09 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 23191101E;
- Fri, 19 Mar 2021 09:18:09 -0700 (PDT)
-Received: from yoan-MS-7758.Home (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id C95FA3F718;
- Fri, 19 Mar 2021 09:18:07 -0700 (PDT)
-From: Yoan Picchi <yoan.picchi@arm.com>
-To: maz@kernel.org, james.morse@arm.com, julien.thierry.kdev@gmail.com,
- suzuki.poulose@arm.com, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu
-Subject: [PATCH 7/7] KVM: arm64: Add irq_inject counter for kvm_stat
-Date: Fri, 19 Mar 2021 16:17:11 +0000
-Message-Id: <20210319161711.24972-8-yoan.picchi@arm.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210319161711.24972-1-yoan.picchi@arm.com>
-References: <20210319161711.24972-1-yoan.picchi@arm.com>
-X-Mailman-Approved-At: Sat, 20 Mar 2021 09:28:53 -0400
-Cc: catalin.marinas@arm.com, Yoan Picchi <yoan.picchi@arm.com>, will@kernel.org
+ with ESMTP id UlmAktXVcEgd for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 22 Mar 2021 02:02:32 -0400 (EDT)
+Received: from szxga06-in.huawei.com (szxga06-in.huawei.com [45.249.212.32])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C6FC74B401
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 22 Mar 2021 02:02:31 -0400 (EDT)
+Received: from DGGEMS412-HUB.china.huawei.com (unknown [172.30.72.59])
+ by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4F3kPv4k4tzkdDV;
+ Mon, 22 Mar 2021 14:00:51 +0800 (CST)
+Received: from DESKTOP-7FEPK9S.china.huawei.com (10.174.184.135) by
+ DGGEMS412-HUB.china.huawei.com (10.3.19.212) with Microsoft SMTP Server id
+ 14.3.498.0; Mon, 22 Mar 2021 14:02:18 +0800
+From: Shenming Lu <lushenming@huawei.com>
+To: Marc Zyngier <maz@kernel.org>, Eric Auger <eric.auger@redhat.com>, "Will
+ Deacon" <will@kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <kvmarm@lists.cs.columbia.edu>, <kvm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>
+Subject: [PATCH v5 0/6] KVM: arm64: Add VLPI migration support on GICv4.1
+Date: Mon, 22 Mar 2021 14:01:52 +0800
+Message-ID: <20210322060158.1584-1-lushenming@huawei.com>
+X-Mailer: git-send-email 2.27.0.windows.1
+MIME-Version: 1.0
+X-Originating-IP: [10.174.184.135]
+X-CFilter-Loop: Reflected
+Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+ Cornelia Huck <cohuck@redhat.com>, lushenming@huawei.com,
+ Alex Williamson <alex.williamson@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -60,85 +63,107 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add a counter for interrupt injections. That is when kvm relay an
-interrupt to the guest (for instance a timer, or a device interrupt
-like from a network card)
+Hi,
 
-Signed-off-by: Yoan Picchi <yoan.picchi@arm.com>
----
- arch/arm64/include/asm/kvm_host.h | 2 ++
- arch/arm64/kvm/arm.c              | 2 ++
- arch/arm64/kvm/guest.c            | 2 ++
- arch/arm64/kvm/vgic/vgic.c        | 2 ++
- 4 files changed, 8 insertions(+)
+In GICv4.1, migration has been supported except for (directly-injected)
+VLPI. And GICv4.1 Spec explicitly gives a way to get the VLPI's pending
+state (which was crucially missing in GICv4.0). So we make VLPI migration
+capable on GICv4.1 in this series.
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index fa59b669c..253acb8c2 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -551,6 +551,7 @@ struct kvm_vm_stat {
- 	ulong memory_slot_unmaped;
- 	ulong stage2_unmap_vm;
- 	ulong cached_page_invalidated;
-+	ulong irq_inject;
- };
- 
- struct kvm_vcpu_stat {
-@@ -567,6 +568,7 @@ struct kvm_vcpu_stat {
- 	u64 mmio_exit_kernel;
- 	u64 regular_page_mapped;
- 	u64 huge_page_mapped;
-+	u64 irq_inject;
- 	u64 exits;
- };
- 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index fc4c95dd2..841551f14 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -895,6 +895,8 @@ static int vcpu_interrupt_line(struct kvm_vcpu *vcpu, int number, bool level)
- 	bool set;
- 	unsigned long *hcr;
- 
-+	vcpu->stat.irq_inject++;
-+
- 	if (number == KVM_ARM_IRQ_CPU_IRQ)
- 		bit_index = __ffs(HCR_VI);
- 	else /* KVM_ARM_IRQ_CPU_FIQ */
-diff --git a/arch/arm64/kvm/guest.c b/arch/arm64/kvm/guest.c
-index 129c0d53d..f663b03ae 100644
---- a/arch/arm64/kvm/guest.c
-+++ b/arch/arm64/kvm/guest.c
-@@ -45,6 +45,8 @@ struct kvm_stats_debugfs_item debugfs_entries[] = {
- 	VM_STAT("memory_slot_unmaped", memory_slot_unmaped),
- 	VM_STAT("stage2_unmap_vm", stage2_unmap_vm),
- 	VM_STAT("cached_page_invalidated", cached_page_invalidated),
-+	VM_STAT("irq_inject", irq_inject),
-+	VCPU_STAT("irq_inject", irq_inject),
- 	VCPU_STAT("exits", exits),
- 	VCPU_STAT("halt_poll_success_ns", halt_poll_success_ns),
- 	VCPU_STAT("halt_poll_fail_ns", halt_poll_fail_ns),
-diff --git a/arch/arm64/kvm/vgic/vgic.c b/arch/arm64/kvm/vgic/vgic.c
-index 1c597c988..9e504243b 100644
---- a/arch/arm64/kvm/vgic/vgic.c
-+++ b/arch/arm64/kvm/vgic/vgic.c
-@@ -458,6 +458,8 @@ int kvm_vgic_inject_irq(struct kvm *kvm, int cpuid, unsigned int intid,
- 
- 	raw_spin_lock_irqsave(&irq->irq_lock, flags);
- 
-+	kvm->stat.irq_inject++;
-+
- 	if (!vgic_validate_injection(irq, level, owner)) {
- 		/* Nothing to see here, move along... */
- 		raw_spin_unlock_irqrestore(&irq->irq_lock, flags);
+In order to support VLPI migration, we need to save and restore all
+required configuration information and pending states of VLPIs. But
+in fact, the configuration information of VLPIs has already been saved
+(or will be reallocated on the dst host...) in vgic(kvm) migration.
+So we only have to migrate the pending states of VLPIs specially.
+
+Below is the related workflow in migration.
+
+On the save path:
+	In migration completion:
+		pause all vCPUs
+				|
+		call each VM state change handler:
+			pause other devices (just keep from sending interrupts, and
+			such as VFIO migration protocol has already realized it [1])
+					|
+			flush ITS tables into guest RAM
+					|
+			flush RDIST pending tables (also flush VLPI pending states here)
+				|
+		...
+On the resume path:
+	load each device's state:
+		restore ITS tables (include pending tables) from guest RAM
+				|
+		for other (PCI) devices (paused), if configured to have VLPIs,
+		establish the forwarding paths of their VLPIs (and transfer
+		the pending states from kvm's vgic to VPT here)
+
+We have tested this series in VFIO migration, and found some related
+issues in QEMU [2].
+
+Links:
+[1] vfio: UAPI for migration interface for device state:
+    https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a8a24f3f6e38103b77cf399c38eb54e1219d00d6
+[2] vfio: Some fixes and optimizations for VFIO migration:
+    https://patchwork.ozlabs.org/project/qemu-devel/cover/20210310030233.1133-1-lushenming@huawei.com/
+
+History:
+
+v4 -> v5
+ - Lock the whole pending state read/write sequence. (in Patch 5, from Marc)
+
+v3 -> v4
+ - Nit fixes.
+ - Add a CPU cache invalidation right after unmapping the vPE. (Patch 1)
+ - Drop the setting of PTZ altogether. (Patch 2)
+ - Bail out if spot !vgic_initialized(). (in Patch 4)
+ - Communicate the state change (clear pending_latch) via
+   vgic_queue_irq_unlock. (in Patch 5)
+
+Thanks a lot for the suggestions from Marc!
+
+v2 -> v3
+ - Add the vgic initialized check to ensure that the allocation and enabling
+   of the doorbells have already been done before unmapping the vPEs.
+ - Check all get_vlpi_state related conditions in save_pending_tables in one place.
+ - Nit fixes.
+
+v1 -> v2:
+ - Get the VLPI state from the KVM side.
+ - Nit fixes.
+
+Thanks,
+Shenming
+
+
+Marc Zyngier (1):
+  irqchip/gic-v3-its: Add a cache invalidation right after vPE unmapping
+
+Shenming Lu (4):
+  irqchip/gic-v3-its: Drop the setting of PTZ altogether
+  KVM: arm64: GICv4.1: Add function to get VLPI state
+  KVM: arm64: GICv4.1: Try to save VLPI state in save_pending_tables
+  KVM: arm64: GICv4.1: Give a chance to save VLPI state
+
+Zenghui Yu (1):
+  KVM: arm64: GICv4.1: Restore VLPI pending state to physical side
+
+ .../virt/kvm/devices/arm-vgic-its.rst         |  2 +-
+ arch/arm64/kvm/vgic/vgic-its.c                |  6 +-
+ arch/arm64/kvm/vgic/vgic-v3.c                 | 66 +++++++++++++++++--
+ arch/arm64/kvm/vgic/vgic-v4.c                 | 38 +++++++++++
+ arch/arm64/kvm/vgic/vgic.h                    |  1 +
+ drivers/irqchip/irq-gic-v3-its.c              | 21 +++++-
+ 6 files changed, 122 insertions(+), 12 deletions(-)
+
 -- 
-2.17.1
+2.19.1
 
 _______________________________________________
 kvmarm mailing list
