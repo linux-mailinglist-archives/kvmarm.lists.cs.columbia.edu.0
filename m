@@ -2,88 +2,58 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E7A79345B47
-	for <lists+kvmarm@lfdr.de>; Tue, 23 Mar 2021 10:47:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CE2CB345D5A
+	for <lists+kvmarm@lfdr.de>; Tue, 23 Mar 2021 12:52:55 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 967364B3F2;
-	Tue, 23 Mar 2021 05:47:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 63D014B320;
+	Tue, 23 Mar 2021 07:52:55 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jnhU+o07XWDD; Tue, 23 Mar 2021 05:47:57 -0400 (EDT)
+	with ESMTP id 8RYy3hOahBrA; Tue, 23 Mar 2021 07:52:55 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8A2ED4B3F9;
-	Tue, 23 Mar 2021 05:47:56 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 34ADE4B32F;
+	Tue, 23 Mar 2021 07:52:54 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D5C724B3E8
- for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Mar 2021 05:47:54 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A21E04B31F
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Mar 2021 07:52:52 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id svhVcfUY+EI8 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 23 Mar 2021 05:47:54 -0400 (EDT)
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com
- [209.85.221.41])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E6E3E4B3E5
- for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Mar 2021 05:47:53 -0400 (EDT)
-Received: by mail-wr1-f41.google.com with SMTP id e9so20055060wrw.10
- for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Mar 2021 02:47:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=CFy34a5oRP6FBo34jkzCBDrM18ET5oxeV6C09KGor/M=;
- b=fLnTZIW+ncV0V4pak/1zB/4eGA2vCG0u8582JlaRuKJaekepck3Hi51f15dz/ZWlxz
- sQUvU6WQ+PnQl5ejeXthi6pN4WHunjYv9+RVag/vl+JjIlaFfcjUiJj2SdcFMJdSpcEN
- 4fbKMtXCvaxkH5oqnf983GkVGeMgxjerVGs3H0Xnw48l0XHHV5AgEkQisTeP3US4wJ1i
- M+MOMHNzAbxPAZ1zFxg5Qx8q7oLZhxqoomj51Gs9va0UXqRKA9cDLvg/wDDQO7/9rCI2
- aYm0pJQgp8mSu9HyMPZBMGm3YhgaA2hVcvcQWQrBNUheqOFP+G6LTR1Y+m4Bp5w1e9+H
- feMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=CFy34a5oRP6FBo34jkzCBDrM18ET5oxeV6C09KGor/M=;
- b=BLoeM01rVTZClkPC9Npk75rXfNnlem+P1S2FHLTEChBxLLgEY+xzRM/wT2fb4VzQKc
- NRx1UZ6XLC5HC3OB/BqIglsgIedKYbAlaTZLStjTxoLDRWxQpEowkAo8r5n7WCIYd0jS
- OLNW5Y/8p/YjKVKCXoZa2UAlwgREGh9oR8w3oxBLiqzGJjHaq90PcUOvPZe0StfQmEbU
- oIdyHKY1X1CAUlXRtLIYH+7jj2RXCoHH2O/YnpXW5C/tPMz1+uTrI3CvwvoHIzcExSGb
- x4pcqnP+n6u6JukGZYgOhWLWuBpT8uC9i/6XZmuGLRhUmFv3qXhqJphFmweGSAsZpGyT
- xBmg==
-X-Gm-Message-State: AOAM5304v7QLucBSqXCIOgV6JyGQR/XWbMWgyjALZk5MPw+pNV9r4a99
- hAIsJW97FnTNr6BBkvdj0DqcJA==
-X-Google-Smtp-Source: ABdhPJy48bd7zMN/7IQI/7qwsmEMtZoUKMwW7NIyR6X4/+xBeETwQsu0Z7rjmuADJ6dWg+IBGOQErA==
-X-Received: by 2002:a05:6000:4b:: with SMTP id
- k11mr3023308wrx.35.1616492873041; 
- Tue, 23 Mar 2021 02:47:53 -0700 (PDT)
-Received: from google.com (230.69.233.35.bc.googleusercontent.com.
- [35.233.69.230])
- by smtp.gmail.com with ESMTPSA id h62sm2322264wmf.37.2021.03.23.02.47.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Mar 2021 02:47:52 -0700 (PDT)
-Date: Tue, 23 Mar 2021 09:47:50 +0000
-From: Quentin Perret <qperret@google.com>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v2 3/3] KVM: arm64: Drop the CPU_FTR_REG_HYP_COPY
- infrastructure
-Message-ID: <YFm5Rsz8HlKo2sss@google.com>
-References: <20210322175639.801566-1-maz@kernel.org>
- <20210322175639.801566-4-maz@kernel.org>
+ with ESMTP id vA0C55HXa7IJ for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 23 Mar 2021 07:52:49 -0400 (EDT)
+Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B43974B29E
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Mar 2021 07:52:49 -0400 (EDT)
+Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.59])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4F4V7933ccz19Gd0;
+ Tue, 23 Mar 2021 19:50:45 +0800 (CST)
+Received: from [10.174.184.42] (10.174.184.42) by
+ DGGEMS406-HUB.china.huawei.com (10.3.19.206) with Microsoft SMTP Server id
+ 14.3.498.0; Tue, 23 Mar 2021 19:52:38 +0800
+Subject: Re: [PATCH 1/7] KVM: arm64: Add two page mapping counters for kvm_stat
+To: Yoan Picchi <yoan.picchi@arm.com>, <maz@kernel.org>,
+ <james.morse@arm.com>, <julien.thierry.kdev@gmail.com>,
+ <suzuki.poulose@arm.com>, <linux-arm-kernel@lists.infradead.org>,
+ <kvmarm@lists.cs.columbia.edu>
+References: <20210319161711.24972-1-yoan.picchi@arm.com>
+ <20210319161711.24972-2-yoan.picchi@arm.com>
+From: Keqian Zhu <zhukeqian1@huawei.com>
+Message-ID: <fe120fea-b2a3-d80f-38df-2430a0b2029e@huawei.com>
+Date: Tue, 23 Mar 2021 19:52:38 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.1
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20210322175639.801566-4-maz@kernel.org>
-Cc: android-kvm@google.com, catalin.marinas@arm.com, mate.toth-pal@arm.com,
- tabba@google.com, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, seanjc@google.com,
- kernel-team@android.com, kvmarm@lists.cs.columbia.edu
+In-Reply-To: <20210319161711.24972-2-yoan.picchi@arm.com>
+X-Originating-IP: [10.174.184.42]
+X-CFilter-Loop: Reflected
+Cc: catalin.marinas@arm.com, will@kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -100,20 +70,71 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Monday 22 Mar 2021 at 17:56:39 (+0000), Marc Zyngier wrote:
-> Now that the read_ctr macro has been specialised for nVHE,
-> the whole CPU_FTR_REG_HYP_COPY infrastrcture looks completely
-> overengineered.
-> 
-> Simplify it by populating the two u64 quantities (MMFR0 and 1)
-> that the hypervisor need.
-> 
-> Signed-off-by: Marc Zyngier <maz@kernel.org>
+Hi Yoan,
 
-Reviewed-by: Quentin Perret <qperret@google.com>
+On 2021/3/20 0:17, Yoan Picchi wrote:
+> Add a counter for when a regular page is mapped, and another
+> for when a huge page is mapped.
+> 
+> Signed-off-by: Yoan Picchi <yoan.picchi@arm.com>
+> ---
+>  arch/arm64/include/asm/kvm_host.h | 2 ++
+>  arch/arm64/kvm/guest.c            | 2 ++
+>  arch/arm64/kvm/mmu.c              | 7 +++++++
+>  3 files changed, 11 insertions(+)
+> 
+> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+> index 3d10e6527..863603285 100644
+> --- a/arch/arm64/include/asm/kvm_host.h
+> +++ b/arch/arm64/include/asm/kvm_host.h
+> @@ -561,6 +561,8 @@ struct kvm_vcpu_stat {
+>  	u64 wfi_exit_stat;
+>  	u64 mmio_exit_user;
+>  	u64 mmio_exit_kernel;
+> +	u64 regular_page_mapped;
+> +	u64 huge_page_mapped;
+>  	u64 exits;
+>  };
+>  
+> diff --git a/arch/arm64/kvm/guest.c b/arch/arm64/kvm/guest.c
+> index 9bbd30e62..14b15fb8f 100644
+> --- a/arch/arm64/kvm/guest.c
+> +++ b/arch/arm64/kvm/guest.c
+> @@ -38,6 +38,8 @@ struct kvm_stats_debugfs_item debugfs_entries[] = {
+>  	VCPU_STAT("wfi_exit_stat", wfi_exit_stat),
+>  	VCPU_STAT("mmio_exit_user", mmio_exit_user),
+>  	VCPU_STAT("mmio_exit_kernel", mmio_exit_kernel),
+> +	VCPU_STAT("regular_page_mapped", regular_page_mapped),
+> +	VCPU_STAT("huge_page_mapped", huge_page_mapped),
+>  	VCPU_STAT("exits", exits),
+>  	VCPU_STAT("halt_poll_success_ns", halt_poll_success_ns),
+>  	VCPU_STAT("halt_poll_fail_ns", halt_poll_fail_ns),
+> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> index 77cb2d28f..3996b28da 100644
+> --- a/arch/arm64/kvm/mmu.c
+> +++ b/arch/arm64/kvm/mmu.c
+> @@ -914,6 +914,13 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+>  		mark_page_dirty(kvm, gfn);
+>  	}
+>  
+> +	if (ret >= 0) {
+> +		if (vma_pagesize == PAGE_SIZE) {
+> +			vcpu->stat.regular_page_mapped++;
+> +		} else {
+> +			vcpu->stat.huge_page_mapped++;
+> +		}
+> +	}
+This looks too simple, as we don't always map a new regular_page or huge_page here.
+We may just relax permission or change mapping size, etc. If we mix these operations,
+the stat result seems not very valuable...
 
 Thanks,
-Quentin
+Keqian
+
+>  out_unlock:
+>  	spin_unlock(&kvm->mmu_lock);
+>  	kvm_set_pfn_accessed(pfn);
+> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
