@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 03B85346672
-	for <lists+kvmarm@lfdr.de>; Tue, 23 Mar 2021 18:33:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF1DA346675
+	for <lists+kvmarm@lfdr.de>; Tue, 23 Mar 2021 18:34:04 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5AD6E4B3C0;
-	Tue, 23 Mar 2021 13:33:11 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6CDAF4B24D;
+	Tue, 23 Mar 2021 13:34:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,42 +15,41 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XlRmW-Vvhbud; Tue, 23 Mar 2021 13:33:11 -0400 (EDT)
+	with ESMTP id Qw1ibRDWZhKH; Tue, 23 Mar 2021 13:34:04 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 182C04B3D3;
-	Tue, 23 Mar 2021 13:33:10 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 48B9C4B233;
+	Tue, 23 Mar 2021 13:34:03 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B79134B3C8
- for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Mar 2021 13:33:08 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 906734B217
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Mar 2021 13:34:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id D4ySldzPBSsk for <kvmarm@lists.cs.columbia.edu>;
- Tue, 23 Mar 2021 13:33:07 -0400 (EDT)
+ with ESMTP id Xjv9ZhBAqHXS for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 23 Mar 2021 13:34:00 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8FCDE4B3C0
- for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Mar 2021 13:33:07 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A60F84B211
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Mar 2021 13:34:00 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 7CA55619B7;
- Tue, 23 Mar 2021 17:33:06 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 94EB1619C1;
+ Tue, 23 Mar 2021 17:33:59 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.misterjones.org)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1lOkts-003MBA-P5; Tue, 23 Mar 2021 17:33:04 +0000
-Date: Tue, 23 Mar 2021 17:33:04 +0000
-Message-ID: <87o8f9kc6n.wl-maz@kernel.org>
+ id 1lOkuj-003MBV-Pp; Tue, 23 Mar 2021 17:33:57 +0000
+Date: Tue, 23 Mar 2021 17:33:57 +0000
+Message-ID: <87mtutkc56.wl-maz@kernel.org>
 From: Marc Zyngier <maz@kernel.org>
 To: Yoan Picchi <yoan.picchi@arm.com>
-Subject: Re: [PATCH 5/7] KVM: arm64: Add memory_slot_unmaped counter for
- kvm_stat
-In-Reply-To: <20210319161711.24972-6-yoan.picchi@arm.com>
+Subject: Re: [PATCH 6/7] KVM: arm64: Add stage2_unmap_vm counter for kvm_stat
+In-Reply-To: <20210319161711.24972-7-yoan.picchi@arm.com>
 References: <20210319161711.24972-1-yoan.picchi@arm.com>
- <20210319161711.24972-6-yoan.picchi@arm.com>
+ <20210319161711.24972-7-yoan.picchi@arm.com>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
  (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -81,63 +80,15 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, 19 Mar 2021 16:17:09 +0000,
+On Fri, 19 Mar 2021 16:17:10 +0000,
 Yoan Picchi <yoan.picchi@arm.com> wrote:
 > 
-> Add a counter for when a memory slot is unmapped, meaning that all
-> memory belonging to a specific VM is made available to be mapped for
-> anoother VM.
+> Add a counter for when the one want to unmap all the ram of a VM.
+> This mostly happens when one restart a VM so we make sure to clear
+> the ram and free the memory for other VMs.
 
-No. It just means it is unmapped from the guest. The VMM still has the
-pages.
-
-> A memory slot is the memory that can be used to hold a
-> guest's pages and can be made available by Qemu for instance. For
-> now the memory slot are only unmapped when a vm restarts.
-> 
-> Signed-off-by: Yoan Picchi <yoan.picchi@arm.com>
-> ---
->  arch/arm64/include/asm/kvm_host.h | 1 +
->  arch/arm64/kvm/guest.c            | 1 +
->  arch/arm64/kvm/mmu.c              | 1 +
->  3 files changed, 3 insertions(+)
-> 
-> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-> index e6967951f..76c81aa79 100644
-> --- a/arch/arm64/include/asm/kvm_host.h
-> +++ b/arch/arm64/include/asm/kvm_host.h
-> @@ -548,6 +548,7 @@ static inline bool __vcpu_write_sys_reg_to_cpu(u64 val, int reg)
->  struct kvm_vm_stat {
->  	ulong remote_tlb_flush;
->  	ulong flush_all_cache_lines;
-> +	ulong memory_slot_unmaped;
->  	ulong cached_page_invalidated;
->  };
->  
-> diff --git a/arch/arm64/kvm/guest.c b/arch/arm64/kvm/guest.c
-> index d948c3bd2..cd227136e 100644
-> --- a/arch/arm64/kvm/guest.c
-> +++ b/arch/arm64/kvm/guest.c
-> @@ -42,6 +42,7 @@ struct kvm_stats_debugfs_item debugfs_entries[] = {
->  	VCPU_STAT("huge_page_mapped", huge_page_mapped),
->  	VM_STAT("remote_tlb_flush", remote_tlb_flush),
->  	VM_STAT("flush_all_cache_lines", flush_all_cache_lines),
-> +	VM_STAT("memory_slot_unmaped", memory_slot_unmaped),
->  	VM_STAT("cached_page_invalidated", cached_page_invalidated),
->  	VCPU_STAT("exits", exits),
->  	VCPU_STAT("halt_poll_success_ns", halt_poll_success_ns),
-> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> index 985b048df..1e8aeafc2 100644
-> --- a/arch/arm64/kvm/mmu.c
-> +++ b/arch/arm64/kvm/mmu.c
-> @@ -419,6 +419,7 @@ static void stage2_unmap_memslot(struct kvm *kvm,
->  	phys_addr_t addr = memslot->base_gfn << PAGE_SHIFT;
->  	phys_addr_t size = PAGE_SIZE * memslot->npages;
->  	hva_t reg_end = hva + size;
-> +	kvm->stat.memory_slot_unmaped++;
-
-Why is that a relevant thing to track? You even increment the counter
-before even checking whether this will unmap anything... :-(
+Again: unmapping memory from a VM doesn't make it free for anyone
+else.
 
 	M.
 
