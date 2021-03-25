@@ -2,65 +2,71 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AC6B349116
-	for <lists+kvmarm@lfdr.de>; Thu, 25 Mar 2021 12:44:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2901734958B
+	for <lists+kvmarm@lfdr.de>; Thu, 25 Mar 2021 16:31:48 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 262654B455;
-	Thu, 25 Mar 2021 07:44:55 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 665D54B44A;
+	Thu, 25 Mar 2021 11:31:47 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xnoN2MOLXVVH; Thu, 25 Mar 2021 07:44:55 -0400 (EDT)
+	with ESMTP id Tpfbd6ktytBQ; Thu, 25 Mar 2021 11:31:47 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D7AF74B399;
-	Thu, 25 Mar 2021 07:44:53 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3BB7F4B455;
+	Thu, 25 Mar 2021 11:31:46 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CE10F4B239
- for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Mar 2021 07:44:52 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DAE724B44C
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Mar 2021 11:31:44 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id jEPMjgZBThl6 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 25 Mar 2021 07:44:51 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id CE06B4B236
- for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Mar 2021 07:44:51 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ with ESMTP id fnMydEpGP7HM for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 25 Mar 2021 11:31:40 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [216.205.24.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5FA1C4B44A
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Mar 2021 11:31:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1616686300;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9lOheegThOe4f6tto8O/gDarjNWvBXusi2vH5rKfbyc=;
+ b=dV8MyI0/BCG4lfGN3CvzrqDQVrE5gV22Z4XxnJngyVWnRyRvUxIteoQw0HaUWC6eSQWMy+
+ AqXqkBxdfMoMXf7SDlt0+0ukNN6vMTEN8uyKbuPK5MtC3b/aYwjX5WTWsTUkTmmo7RkBh3
+ 2qVw9tEhuD6oHJyGVNft/ctQtdG9Ydw=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-335-17YbFbogPT-bI07iPINu9w-1; Thu, 25 Mar 2021 11:31:35 -0400
+X-MC-Unique: 17YbFbogPT-bI07iPINu9w-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com
+ [10.5.11.22])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id AB1BE6191D;
- Thu, 25 Mar 2021 11:44:50 +0000 (UTC)
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1lPOPw-003jQY-B6; Thu, 25 Mar 2021 11:44:48 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [GIT PULL] KVM/arm64 fixes for 5.12, take #3
-Date: Thu, 25 Mar 2021 11:44:30 +0000
-Message-Id: <20210325114430.940449-1-maz@kernel.org>
-X-Mailer: git-send-email 2.29.2
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 3DF2B8EDBE1;
+ Thu, 25 Mar 2021 15:31:34 +0000 (UTC)
+Received: from kamzik.brq.redhat.com (unknown [10.40.194.23])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id B6AF010013D7;
+ Thu, 25 Mar 2021 15:31:32 +0000 (UTC)
+Date: Thu, 25 Mar 2021 16:31:29 +0100
+From: Andrew Jones <drjones@redhat.com>
+To: Alexandru Elisei <alexandru.elisei@arm.com>
+Subject: Re: [kvm-unit-tests PATCH v2 0/6] Misc assembly fixes and cleanups
+Message-ID: <20210325153129.lgeffmlqfrrkinra@kamzik.brq.redhat.com>
+References: <20210322150641.58878-1-alexandru.elisei@arm.com>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: pbonzini@redhat.com, catalin.marinas@arm.com,
- mark.rutland@arm.com, shameerali.kolothum.thodi@huawei.com,
- suzuki.poulose@arm.com, will@kernel.org, james.morse@arm.com,
- julien.thierry.kdev@gmail.com, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com, kvm@vger.kernel.org,
- Catalin Marinas <catalin.marinas@arm.com>,
- linux-arm-kernel@lists.infradead.org, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu
+Content-Disposition: inline
+In-Reply-To: <20210322150641.58878-1-alexandru.elisei@arm.com>
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
+Cc: andre.przywara@arm.com, kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -77,49 +83,61 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Paolo,
+On Mon, Mar 22, 2021 at 03:06:35PM +0000, Alexandru Elisei wrote:
+> This series is mostly fixes and cleanups for things I found when playing
+> with EFI support. Most of them I hope are fairly self-explanatory.
+> 
+> What is clearly aimed at running on baremetal is patch #2 ("arm/arm64:
+> Remove dcache_line_size global variable"), which is needed because the
+> startup environment is different for EFI apps and we're going to need to do
+> cache maintenance before setup() is run.
+> 
+> Patch #4 ("lib: arm64: Consolidate register definitions to sysreg.h") is
+> there to make importing register definitions and other header files from
+> Linux (like el2_setup.h) easier by switching to the same layout. And arm
+> is already using sysreg.h for SCTLR fields.
+> 
+> Changes in v2:
+> * Gathered Reviewed-by tags, thank you!
+> * For patch #2 ("arm/arm64: Remove dcache_line_size global variable"), I've
+>   modified the commit message to mention the change in parameters for
+>   dcache_by_line_op, I've added the proper header guards to
+>   lib/arm/asm/assembler.h and I've changed raw_dcache_line_size to use ubfx
+>   instead of ubfm.
+> 
+> Alexandru Elisei (6):
+>   arm64: Remove unnecessary ISB when writing to SPSel
+>   arm/arm64: Remove dcache_line_size global variable
+>   arm/arm64: Remove unnecessary ISB when doing dcache maintenance
+>   lib: arm64: Consolidate register definitions to sysreg.h
+>   arm64: Configure SCTLR_EL1 at boot
+>   arm64: Disable TTBR1_EL1 translation table walks
+> 
+>  lib/arm/asm/assembler.h       | 53 ++++++++++++++++++++++++++++++++++
+>  lib/arm/asm/processor.h       |  7 -----
+>  lib/arm64/asm/arch_gicv3.h    |  6 ----
+>  lib/arm64/asm/assembler.h     | 54 +++++++++++++++++++++++++++++++++++
+>  lib/arm64/asm/pgtable-hwdef.h |  1 +
+>  lib/arm64/asm/processor.h     | 17 -----------
+>  lib/arm64/asm/sysreg.h        | 24 ++++++++++++++++
+>  lib/arm/setup.c               |  7 -----
+>  arm/cstart.S                  | 19 ++----------
+>  arm/cstart64.S                | 28 +++++++-----------
+>  10 files changed, 145 insertions(+), 71 deletions(-)
+>  create mode 100644 lib/arm/asm/assembler.h
+>  create mode 100644 lib/arm64/asm/assembler.h
+> 
+> -- 
+> 2.31.0
+>
 
-Here's another set of fixes for KVM/arm64 in 5.12.
+Applied to arm/queue
 
-One patch fixes a GICv3 MMIO regression introduced when working around
-a firmware bug. The last two patches prevent the guest from messing
-with the ARMv8.4 tracing, a new feature that was introduced in 5.12.
+https://gitlab.com/rhdrjones/kvm-unit-tests/-/commits/arm/queue
 
-Please pull,
+Thanks,
+drew
 
-	M.
-
-The following changes since commit 1e28eed17697bcf343c6743f0028cc3b5dd88bf0:
-
-  Linux 5.12-rc3 (2021-03-14 14:41:02 -0700)
-
-are available in the Git repository at:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git tags/kvmarm-fixes-5.12-3
-
-for you to fetch changes up to af22df997d71c32304d6835a8b690281063b8010:
-
-  KVM: arm64: Fix CPU interface MMIO compatibility detection (2021-03-24 17:26:38 +0000)
-
-----------------------------------------------------------------
-KVM/arm64 fixes for 5.12, take #3
-
-- Fix GICv3 MMIO compatibility probing
-- Prevent guests from using the ARMv8.4 self-hosted tracing extension
-
-----------------------------------------------------------------
-Marc Zyngier (1):
-      KVM: arm64: Fix CPU interface MMIO compatibility detection
-
-Suzuki K Poulose (2):
-      KVM: arm64: Hide system instruction access to Trace registers
-      KVM: arm64: Disable guest access to trace filter controls
-
- arch/arm64/include/asm/kvm_arm.h | 1 +
- arch/arm64/kernel/cpufeature.c   | 1 -
- arch/arm64/kvm/debug.c           | 2 ++
- arch/arm64/kvm/hyp/vgic-v3-sr.c  | 9 +++++++++
- 4 files changed, 12 insertions(+), 1 deletion(-)
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
