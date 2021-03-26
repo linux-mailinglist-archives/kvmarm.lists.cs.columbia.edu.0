@@ -2,72 +2,89 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 20B4C349EA2
-	for <lists+kvmarm@lfdr.de>; Fri, 26 Mar 2021 02:25:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F67D34A909
+	for <lists+kvmarm@lfdr.de>; Fri, 26 Mar 2021 14:54:27 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8B77C4B45E;
-	Thu, 25 Mar 2021 21:25:14 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8D59F4B4D3;
+	Fri, 26 Mar 2021 09:54:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 11aVARJHcNmS; Thu, 25 Mar 2021 21:25:14 -0400 (EDT)
+	with ESMTP id rk0dtv1x23ri; Fri, 26 Mar 2021 09:54:26 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 186724B478;
-	Thu, 25 Mar 2021 21:25:13 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D9234B47D;
+	Fri, 26 Mar 2021 09:54:25 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 052304B45F
- for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Mar 2021 21:25:12 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 46AB84B46C
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Mar 2021 22:20:12 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id kh38oNdilwJs for <kvmarm@lists.cs.columbia.edu>;
- Thu, 25 Mar 2021 21:25:09 -0400 (EDT)
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6B7AA4B45E
- for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Mar 2021 21:25:08 -0400 (EDT)
-Received: from dggeml406-hub.china.huawei.com (unknown [172.30.72.57])
- by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4F643T5XHTz5j2k;
- Fri, 26 Mar 2021 09:23:01 +0800 (CST)
-Received: from dggpemm500023.china.huawei.com (7.185.36.83) by
- dggeml406-hub.china.huawei.com (10.3.17.50) with Microsoft SMTP Server (TLS)
- id 14.3.498.0; Fri, 26 Mar 2021 09:24:59 +0800
-Received: from [10.174.187.128] (10.174.187.128) by
- dggpemm500023.china.huawei.com (7.185.36.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id
- 15.1.2106.2; Fri, 26 Mar 2021 09:24:59 +0800
-Subject: Re: [RFC PATCH 4/4] KVM: arm64: Distinguish cases of memcache
- allocations completely
-To: Alexandru Elisei <alexandru.elisei@arm.com>, Marc Zyngier
- <maz@kernel.org>, Will Deacon <will@kernel.org>, Catalin Marinas
- <catalin.marinas@arm.com>, James Morse <james.morse@arm.com>, Julien Thierry
- <julien.thierry.kdev@gmail.com>, Suzuki K Poulose <suzuki.poulose@arm.com>,
- Gavin Shan <gshan@redhat.com>, Quentin Perret <qperret@google.com>,
- <kvmarm@lists.cs.columbia.edu>, <linux-arm-kernel@lists.infradead.org>,
- <kvm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20210208112250.163568-1-wangyanan55@huawei.com>
- <20210208112250.163568-5-wangyanan55@huawei.com>
- <2c65bff2-be7f-b20c-9265-939bc73185b6@arm.com>
-From: "wangyanan (Y)" <wangyanan55@huawei.com>
-Message-ID: <24b3f625-4d9c-cabe-5758-cfa9a1a2ce18@huawei.com>
-Date: Fri, 26 Mar 2021 09:24:58 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.0
-MIME-Version: 1.0
-In-Reply-To: <2c65bff2-be7f-b20c-9265-939bc73185b6@arm.com>
-Content-Language: en-US
-X-Originating-IP: [10.174.187.128]
-X-ClientProxiedBy: dggeme720-chm.china.huawei.com (10.1.199.116) To
- dggpemm500023.china.huawei.com (7.185.36.83)
-X-CFilter-Loop: Reflected
+ with ESMTP id q3GvmoBruXsS for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 25 Mar 2021 22:20:11 -0400 (EDT)
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com
+ [209.85.219.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E701E4B466
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Mar 2021 22:20:10 -0400 (EDT)
+Received: by mail-yb1-f202.google.com with SMTP id g9so8287045ybc.19
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Mar 2021 19:20:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=reply-to:date:message-id:mime-version:subject:from:to:cc;
+ bh=H54os4ygqofHn1WGMEZDcGVdM5o6qUhwH/wT9+rGWSk=;
+ b=ecGB21RKe7x71J+6hRcQeYU5JJ7wFAYU9S5q0hjnh5cFdjsPshHHo+BbrBLobCCFKv
+ NZKCDM+RhzB7lqPfAOQS3wauBG9Wt6dz84hgF6QN0gdxezNEhe2IHZ9vnbrRjrQZmatX
+ aA6unphmRZB9N8MgD7gtQcsLImor+8acXPyEPXdyuDiz+MgeWawbq8OlTcav3Ozoecet
+ jA89TWp1kJjZ1yiJ5iklCOGzc1mwEVvY5U1Bo/RoRvmKHnulFKlRQcuSDWeTploTW+Ib
+ p9YcLsgB2yhWz6jRMLj6HbocX9JL7d0WI1vXfS58F6E5owlm0a29FNCvV5oX9+xsL/Wl
+ SB1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:reply-to:date:message-id:mime-version:subject
+ :from:to:cc;
+ bh=H54os4ygqofHn1WGMEZDcGVdM5o6qUhwH/wT9+rGWSk=;
+ b=CS0E0ThFUJh1rkRoMITpBeRQbdPukso5jilYdH5CxiMxQWLWKznVRJnDq6r7CaeLD2
+ Wl0oxC6tCTpWuI1y2JI5iLDm8eBXLx/Q6Uy2uJKFDIa2wa7YXqLWgmTVxSQJZI32Yg4V
+ 56KXwFLPn405TBxWumCfRhOoFlqPH+8B3BU+Ni/PddZ5JXTIac/ikX+UP+tgug9c7vL2
+ X6BTKt/c8SY6pOIBT0CJ9SjZtp3nguQLAAti5pVZFZXawfSDY0Oiw4v9u5YhAHQqBAbR
+ 9FzRWpvNBeXIiBPBaP7V4jcUvxz08TkahIolh1CMzirQyYBJWAu1+5oAyTBzZM9VzY0F
+ d0iQ==
+X-Gm-Message-State: AOAM530pBW1qWM6cD/hhxMkniddpMPt4UNfPZXgr/dtj0O6zedmSwddS
+ QVKAtoxltr3Rvg4F8hbCC0v/7NNIG/k=
+X-Google-Smtp-Source: ABdhPJyiUWYORNUHyA8HYU5z2Afa3KK2uvzs30OB8QjgL1a1U3zQY52m5lnijJTDVWnHZyILMRS2XSl6DRU=
+X-Received: from seanjc798194.pdx.corp.google.com
+ ([2620:15c:f:10:b1bb:fab2:7ef5:fc7d])
+ (user=seanjc job=sendgmr) by 2002:a5b:18d:: with SMTP id
+ r13mr17361673ybl.184.1616725210248; 
+ Thu, 25 Mar 2021 19:20:10 -0700 (PDT)
+Date: Thu, 25 Mar 2021 19:19:39 -0700
+Message-Id: <20210326021957.1424875-1-seanjc@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.31.0.291.g576ba9dcdaf-goog
+Subject: [PATCH 00/18] KVM: Consolidate and optimize MMU notifiers
+From: Sean Christopherson <seanjc@google.com>
+To: Marc Zyngier <maz@kernel.org>, Huacai Chen <chenhuacai@kernel.org>, 
+ Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
+ Paul Mackerras <paulus@ozlabs.org>, Paolo Bonzini <pbonzini@redhat.com>
+X-Mailman-Approved-At: Fri, 26 Mar 2021 09:54:23 -0400
+Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
+ Sean Christopherson <seanjc@google.com>, Joerg Roedel <joro@8bytes.org>,
+ linux-mips@vger.kernel.org, kvm-ppc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ Ben Gardon <bgardon@google.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ kvmarm@lists.cs.columbia.edu, Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
+Reply-To: Sean Christopherson <seanjc@google.com>
 List-Id: Where KVM/ARM decisions are made <kvmarm.lists.cs.columbia.edu>
 List-Unsubscribe: <https://lists.cs.columbia.edu/mailman/options/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=unsubscribe>
@@ -76,106 +93,131 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Alex,
+The end goal of this series is to optimize the MMU notifiers to take
+mmu_lock if and only if the notification is relevant to KVM, i.e. the hva
+range overlaps a memslot.   Large VMs (hundreds of vCPUs) are very
+sensitive to mmu_lock being taken for write at inopportune times, and
+such VMs also tend to be "static", e.g. backed by HugeTLB with minimal
+page shenanigans.  The vast majority of notifications for these VMs will
+be spurious (for KVM), and eliding mmu_lock for spurious notifications
+avoids an otherwise unacceptable disruption to the guest.
 
-On 2021/3/26 1:26, Alexandru Elisei wrote:
-> Hi Yanan,
->
-> On 2/8/21 11:22 AM, Yanan Wang wrote:
->> With a guest translation fault, the memcache pages are not needed if KVM
->> is only about to install a new leaf entry into the existing page table.
->> And with a guest permission fault, the memcache pages are also not needed
->> for a write_fault in dirty-logging time if KVM is only about to update
->> the existing leaf entry instead of collapsing a block entry into a table.
->>
->> By comparing fault_granule and vma_pagesize, cases that require allocations
->> from memcache and cases that don't can be distinguished completely.
->>
->> Signed-off-by: Yanan Wang <wangyanan55@huawei.com>
->> ---
->>   arch/arm64/kvm/mmu.c | 25 ++++++++++++-------------
->>   1 file changed, 12 insertions(+), 13 deletions(-)
->>
->> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
->> index d151927a7d62..550498a9104e 100644
->> --- a/arch/arm64/kvm/mmu.c
->> +++ b/arch/arm64/kvm/mmu.c
->> @@ -815,19 +815,6 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
->>   	gfn = fault_ipa >> PAGE_SHIFT;
->>   	mmap_read_unlock(current->mm);
->>   
->> -	/*
->> -	 * Permission faults just need to update the existing leaf entry,
->> -	 * and so normally don't require allocations from the memcache. The
->> -	 * only exception to this is when dirty logging is enabled at runtime
->> -	 * and a write fault needs to collapse a block entry into a table.
->> -	 */
->> -	if (fault_status != FSC_PERM || (logging_active && write_fault)) {
->> -		ret = kvm_mmu_topup_memory_cache(memcache,
->> -						 kvm_mmu_cache_min_pages(kvm));
->> -		if (ret)
->> -			return ret;
->> -	}
->> -
->>   	mmu_seq = vcpu->kvm->mmu_notifier_seq;
->>   	/*
->>   	 * Ensure the read of mmu_notifier_seq happens before we call
->> @@ -887,6 +874,18 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
->>   	else if (cpus_have_const_cap(ARM64_HAS_CACHE_DIC))
->>   		prot |= KVM_PGTABLE_PROT_X;
->>   
->> +	/*
->> +	 * Allocations from the memcache are required only when granule of the
->> +	 * lookup level where the guest fault happened exceeds vma_pagesize,
->> +	 * which means new page tables will be created in the fault handlers.
->> +	 */
->> +	if (fault_granule > vma_pagesize) {
->> +		ret = kvm_mmu_topup_memory_cache(memcache,
->> +						 kvm_mmu_cache_min_pages(kvm));
->> +		if (ret)
->> +			return ret;
->> +	}
-> I distinguish three situations:
->
-> 1. fault_granule == vma_pagesize. If the stage 2 fault occurs at the leaf level,
-> then it means that all the tables that the translation table walker traversed
-> until the leaf are valid. No need to allocate a new page, as stage 2 will only
-> change the leaf to point to a valid PA.
->
-> 2. fault_granule > vma_pagesize. This means that there's a table missing at some
-> point in the table walk, so we're going to need to allocate at least one table to
-> hold the leaf entry. We need to topup the memory cache.
->
-> 3. fault_granule < vma_pagesize. From our discussion in patch #3, this can happen
-> only if the userspace translation tables use a block mapping, dirty page logging
-> is enabled, the fault_ipa is mapped as a last level entry, dirty page logging gets
-> disabled and then we get a fault. In this case, the PTE table will be coalesced
-> into a PMD block mapping, and the PMD table entry that pointed to the PTE table
-> will be changed to a block mapping. No table will be allocated.
->
-> Looks to me like this patch is valid, but getting it wrong can break a VM and I
-> would feel a lot more comfortable if someone who is more familiar with the code
-> would have a look.
-Thanks for your explanation here. Above is also what I thought about 
-this patch.
+To get there without potentially degrading performance, e.g. due to
+multiple memslot lookups, especially on non-x86 where the use cases are
+largely unknown (from my perspective), first consolidate the MMU notifier
+logic by moving the hva->gfn lookups into common KVM.
 
-Thanks,
-Yanan
->
-> Thanks,
->
-> Alex
->
->> +
->>   	/*
->>   	 * Under the premise of getting a FSC_PERM fault, we just need to relax
->>   	 * permissions only if vma_pagesize equals fault_granule. Otherwise,
-> .
+Applies on my TDP MMU TLB flushing bug fixes[*], which conflict horribly
+with the TDP MMU changes in this series.  That code applies on kvm/queue
+(commit 4a98623d5d90, "KVM: x86/mmu: Mark the PAE roots as decrypted for
+shadow paging").
+
+Speaking of conflicts, Ben will soon be posting a series to convert a
+bunch of TDP MMU flows to take mmu_lock only for read.  Presumably there
+will be an absurd number of conflicts; Ben and I will sort out the
+conflicts in whichever series loses the race.
+
+Well tested on Intel and AMD.  Compile tested for arm64, MIPS, PPC,
+PPC e500, and s390.  Absolutely needs to be tested for real on non-x86,
+I give it even odds that I introduced an off-by-one bug somewhere.
+
+[*] https://lkml.kernel.org/r/20210325200119.1359384-1-seanjc@google.com
+
+
+Patches 1-7 are x86 specific prep patches to play nice with moving
+the hva->gfn memslot lookups into common code.  There ended up being waaay
+more of these than I expected/wanted, but I had a hell of a time getting
+the flushing logic right when shuffling the memslot and address space
+loops.  In the end, I was more confident I got things correct by batching
+the flushes.
+
+Patch 8 moves the existing API prototypes into common code.  It could
+technically be dropped since the old APIs are gone in the end, but I
+thought the switch to the new APIs would suck a bit less this way.
+
+Patch 9 moves arm64's MMU notifier tracepoints into common code so that
+they are not lost when arm64 is converted to the new APIs, and so that all
+architectures can benefit.
+
+Patch 10 moves x86's memslot walkers into common KVM.  I chose x86 purely
+because I could actually test it.  All architectures use nearly identical
+code, so I don't think it actually matters in the end.
+
+Patches 11-13 move arm64, MIPS, and PPC to the new APIs.
+
+Patch 14 yanks out the old APIs.
+
+Patch 15 adds the mmu_lock elision, but only for unpaired notifications.
+
+Patch 16 adds mmu_lock elision for paired .invalidate_range_{start,end}().
+This is quite nasty and no small part of me thinks the patch should be
+burned with fire (I won't spoil it any further), but it's also the most
+problematic scenario for our particular use case.  :-/
+
+Patches 17-18 are additional x86 cleanups.
+
+Sean Christopherson (18):
+  KVM: x86/mmu: Coalesce TDP MMU TLB flushes when zapping collapsible
+    SPTEs
+  KVM: x86/mmu: Move flushing for "slot" handlers to caller for legacy
+    MMU
+  KVM: x86/mmu: Coalesce TLB flushes when zapping collapsible SPTEs
+  KVM: x86/mmu: Coalesce TLB flushes across address spaces for gfn range
+    zap
+  KVM: x86/mmu: Pass address space ID to __kvm_tdp_mmu_zap_gfn_range()
+  KVM: x86/mmu: Pass address space ID to TDP MMU root walkers
+  KVM: x86/mmu: Use leaf-only loop for walking TDP SPTEs when changing
+    SPTE
+  KVM: Move prototypes for MMU notifier callbacks to generic code
+  KVM: Move arm64's MMU notifier trace events to generic code
+  KVM: Move x86's MMU notifier memslot walkers to generic code
+  KVM: arm64: Convert to the gfn-based MMU notifier callbacks
+  KVM: MIPS/MMU: Convert to the gfn-based MMU notifier callbacks
+  KVM: PPC: Convert to the gfn-based MMU notifier callbacks
+  KVM: Kill off the old hva-based MMU notifier callbacks
+  KVM: Take mmu_lock when handling MMU notifier iff the hva hits a
+    memslot
+  KVM: Don't take mmu_lock for range invalidation unless necessary
+  KVM: x86/mmu: Allow yielding during MMU notifier unmap/zap, if
+    possible
+  KVM: x86/mmu: Drop trace_kvm_age_page() tracepoint
+
+ arch/arm64/include/asm/kvm_host.h             |   5 -
+ arch/arm64/kvm/mmu.c                          | 118 ++----
+ arch/arm64/kvm/trace_arm.h                    |  66 ----
+ arch/mips/include/asm/kvm_host.h              |   5 -
+ arch/mips/kvm/mmu.c                           |  97 +----
+ arch/powerpc/include/asm/kvm_book3s.h         |  12 +-
+ arch/powerpc/include/asm/kvm_host.h           |   7 -
+ arch/powerpc/include/asm/kvm_ppc.h            |   9 +-
+ arch/powerpc/kvm/book3s.c                     |  18 +-
+ arch/powerpc/kvm/book3s.h                     |  10 +-
+ arch/powerpc/kvm/book3s_64_mmu_hv.c           |  98 ++---
+ arch/powerpc/kvm/book3s_64_mmu_radix.c        |  25 +-
+ arch/powerpc/kvm/book3s_hv.c                  |  12 +-
+ arch/powerpc/kvm/book3s_pr.c                  |  56 +--
+ arch/powerpc/kvm/e500_mmu_host.c              |  29 +-
+ arch/powerpc/kvm/trace_booke.h                |  15 -
+ arch/x86/include/asm/kvm_host.h               |   6 +-
+ arch/x86/kvm/mmu/mmu.c                        | 180 ++++-----
+ arch/x86/kvm/mmu/mmu_internal.h               |  10 +
+ arch/x86/kvm/mmu/tdp_mmu.c                    | 344 +++++++-----------
+ arch/x86/kvm/mmu/tdp_mmu.h                    |  31 +-
+ include/linux/kvm_host.h                      |  22 +-
+ include/trace/events/kvm.h                    |  90 +++--
+ tools/testing/selftests/kvm/lib/kvm_util.c    |   4 -
+ .../selftests/kvm/lib/x86_64/processor.c      |   2 +
+ virt/kvm/kvm_main.c                           | 312 ++++++++++++----
+ 26 files changed, 697 insertions(+), 886 deletions(-)
+
+-- 
+2.31.0.291.g576ba9dcdaf-goog
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
