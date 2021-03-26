@@ -2,56 +2,54 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9028634A02A
-	for <lists+kvmarm@lfdr.de>; Fri, 26 Mar 2021 04:17:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3915034AED8
+	for <lists+kvmarm@lfdr.de>; Fri, 26 Mar 2021 19:57:07 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3C0494B46B;
-	Thu, 25 Mar 2021 23:17:44 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 71FA84B4E3;
+	Fri, 26 Mar 2021 14:57:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KhB5xn0Sbgnz; Thu, 25 Mar 2021 23:17:43 -0400 (EDT)
+	with ESMTP id c0VaoNQRWzPp; Fri, 26 Mar 2021 14:57:06 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B77A44B480;
-	Thu, 25 Mar 2021 23:17:42 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 31DD04B4A8;
+	Fri, 26 Mar 2021 14:57:05 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D5194B459
- for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Mar 2021 23:17:41 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D5FAC4B46C
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 26 Mar 2021 14:57:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id SkDUQ6czqfO9 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 25 Mar 2021 23:17:40 -0400 (EDT)
-Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2F5924B0E4
- for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Mar 2021 23:17:40 -0400 (EDT)
-Received: from DGGEMS409-HUB.china.huawei.com (unknown [172.30.72.60])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4F66YP5pkqzyNyM;
- Fri, 26 Mar 2021 11:15:37 +0800 (CST)
-Received: from DESKTOP-TMVL5KK.china.huawei.com (10.174.187.128) by
- DGGEMS409-HUB.china.huawei.com (10.3.19.209) with Microsoft SMTP Server id
- 14.3.498.0; Fri, 26 Mar 2021 11:17:28 +0800
-From: Yanan Wang <wangyanan55@huawei.com>
-To: Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>, "Alexandru
- Elisei" <alexandru.elisei@arm.com>, Catalin Marinas
- <catalin.marinas@arm.com>, <kvmarm@lists.cs.columbia.edu>,
- <linux-arm-kernel@lists.infradead.org>, <kvm@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: [RFC PATCH v3 2/2] KVM: arm64: Distinguish cases of memcache
- allocations completely
-Date: Fri, 26 Mar 2021 11:16:54 +0800
-Message-ID: <20210326031654.3716-3-wangyanan55@huawei.com>
-X-Mailer: git-send-email 2.8.4.windows.1
-In-Reply-To: <20210326031654.3716-1-wangyanan55@huawei.com>
-References: <20210326031654.3716-1-wangyanan55@huawei.com>
+ with ESMTP id KyVzJeGKcVaF for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 26 Mar 2021 14:57:02 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 840364B466
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 26 Mar 2021 14:57:02 -0400 (EDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9F6AA619F7;
+ Fri, 26 Mar 2021 18:56:56 +0000 (UTC)
+Date: Fri, 26 Mar 2021 18:56:54 +0000
+From: Catalin Marinas <catalin.marinas@arm.com>
+To: Steven Price <steven.price@arm.com>
+Subject: Re: [PATCH v10 1/6] arm64: mte: Sync tags for pages where PTE is
+ untagged
+Message-ID: <20210326185653.GG5126@arm.com>
+References: <20210312151902.17853-1-steven.price@arm.com>
+ <20210312151902.17853-2-steven.price@arm.com>
 MIME-Version: 1.0
-X-Originating-IP: [10.174.187.128]
-X-CFilter-Loop: Reflected
+Content-Disposition: inline
+In-Reply-To: <20210312151902.17853-2-steven.price@arm.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: "Dr. David Alan Gilbert" <dgilbert@redhat.com>, qemu-devel@nongnu.org,
+ Marc Zyngier <maz@kernel.org>, Juan Quintela <quintela@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, linux-kernel@vger.kernel.org,
+ Dave Martin <Dave.Martin@arm.com>, linux-arm-kernel@lists.infradead.org,
+ Thomas Gleixner <tglx@linutronix.de>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -68,66 +66,49 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-With a guest translation fault, the memcache pages are not needed if KVM
-is only about to install a new leaf entry into the existing page table.
-And with a guest permission fault, the memcache pages are also not needed
-for a write_fault in dirty-logging time if KVM is only about to update
-the existing leaf entry instead of collapsing a block entry into a table.
+Hi Steven,
 
-By comparing fault_granule and vma_pagesize, cases that require allocations
-from memcache and cases that don't can be distinguished completely.
+On Fri, Mar 12, 2021 at 03:18:57PM +0000, Steven Price wrote:
+> A KVM guest could store tags in a page even if the VMM hasn't mapped
+> the page with PROT_MTE. So when restoring pages from swap we will
+> need to check to see if there are any saved tags even if !pte_tagged().
+> 
+> However don't check pages which are !pte_valid_user() as these will
+> not have been swapped out.
+> 
+> Signed-off-by: Steven Price <steven.price@arm.com>
+> ---
+>  arch/arm64/include/asm/pgtable.h |  2 +-
+>  arch/arm64/kernel/mte.c          | 16 ++++++++++++----
+>  2 files changed, 13 insertions(+), 5 deletions(-)
+> 
+> diff --git a/arch/arm64/include/asm/pgtable.h b/arch/arm64/include/asm/pgtable.h
+> index e17b96d0e4b5..84166625c989 100644
+> --- a/arch/arm64/include/asm/pgtable.h
+> +++ b/arch/arm64/include/asm/pgtable.h
+> @@ -312,7 +312,7 @@ static inline void set_pte_at(struct mm_struct *mm, unsigned long addr,
+>  		__sync_icache_dcache(pte);
+>  
+>  	if (system_supports_mte() &&
+> -	    pte_present(pte) && pte_tagged(pte) && !pte_special(pte))
+> +	    pte_present(pte) && pte_valid_user(pte) && !pte_special(pte))
+>  		mte_sync_tags(ptep, pte);
 
-Signed-off-by: Yanan Wang <wangyanan55@huawei.com>
----
- arch/arm64/kvm/mmu.c | 25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+With the EPAN patches queued in for-next/epan, pte_valid_user()
+disappeared as its semantics weren't very clear.
 
-diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 1eec9f63bc6f..05af40dc60c1 100644
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -810,19 +810,6 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 	gfn = fault_ipa >> PAGE_SHIFT;
- 	mmap_read_unlock(current->mm);
- 
--	/*
--	 * Permission faults just need to update the existing leaf entry,
--	 * and so normally don't require allocations from the memcache. The
--	 * only exception to this is when dirty logging is enabled at runtime
--	 * and a write fault needs to collapse a block entry into a table.
--	 */
--	if (fault_status != FSC_PERM || (logging_active && write_fault)) {
--		ret = kvm_mmu_topup_memory_cache(memcache,
--						 kvm_mmu_cache_min_pages(kvm));
--		if (ret)
--			return ret;
--	}
--
- 	mmu_seq = vcpu->kvm->mmu_notifier_seq;
- 	/*
- 	 * Ensure the read of mmu_notifier_seq happens before we call
-@@ -880,6 +867,18 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 	else if (cpus_have_const_cap(ARM64_HAS_CACHE_DIC))
- 		prot |= KVM_PGTABLE_PROT_X;
- 
-+	/*
-+	 * Allocations from the memcache are required only when granule of the
-+	 * lookup level where the guest fault happened exceeds vma_pagesize,
-+	 * which means new page tables will be created in the fault handlers.
-+	 */
-+	if (fault_granule > vma_pagesize) {
-+		ret = kvm_mmu_topup_memory_cache(memcache,
-+						 kvm_mmu_cache_min_pages(kvm));
-+		if (ret)
-+			return ret;
-+	}
-+
- 	/*
- 	 * Under the premise of getting a FSC_PERM fault, we just need to relax
- 	 * permissions only if vma_pagesize equals fault_granule. Otherwise,
+So this relies on the set_pte_at() being done on the VMM address space.
+I wonder, if the VMM did an mprotect(PROT_NONE), can the VM still access
+it via stage 2? If yes, the pte_valid_user() test wouldn't work. We need
+something like pte_present() && addr <= user_addr_max().
+
+BTW, ignoring virtualisation, can we ever bring a page in from swap on a
+PROT_NONE mapping (say fault-around)? It's not too bad if we keep the
+metadata around for when the pte becomes accessible but I suspect we
+remove it if the page is removed from swap.
+
 -- 
-2.19.1
-
+Catalin
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
