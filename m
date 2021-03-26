@@ -2,92 +2,57 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 666D534A91B
-	for <lists+kvmarm@lfdr.de>; Fri, 26 Mar 2021 14:54:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4821234A029
+	for <lists+kvmarm@lfdr.de>; Fri, 26 Mar 2021 04:17:43 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0B39A4B497;
-	Fri, 26 Mar 2021 09:54:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id ADDF94B484;
+	Thu, 25 Mar 2021 23:17:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id daHry64pD+VB; Fri, 26 Mar 2021 09:54:43 -0400 (EDT)
+	with ESMTP id 75noAegFr9wH; Thu, 25 Mar 2021 23:17:42 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 515104B4EC;
-	Fri, 26 Mar 2021 09:54:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 957474B469;
+	Thu, 25 Mar 2021 23:17:41 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2874F4B46C
- for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Mar 2021 22:20:53 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 203694B44C
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Mar 2021 23:17:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id KuhIl4cNeS9W for <kvmarm@lists.cs.columbia.edu>;
- Thu, 25 Mar 2021 22:20:52 -0400 (EDT)
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com
- [209.85.219.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2666C4B478
- for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Mar 2021 22:20:52 -0400 (EDT)
-Received: by mail-yb1-f201.google.com with SMTP id l83so8333220ybf.22
- for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Mar 2021 19:20:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=reply-to:date:in-reply-to:message-id:mime-version:references
- :subject:from:to:cc;
- bh=EpijQ6V8FeVDkD7HX5egdlZ4dc07ENH1xKoxF44zfAY=;
- b=vurensVFR3hrXyY1NMdpbwaru8VIWvzupZGNxIORfKUkaj6cZcAwrW4S7ZbldvFW0e
- 1pj7Sjtemz800HdNKoZvFp6F7/aMexhzotPHhhv54wbWGG2b5JKTkMRv9BDbN2E4Ey9T
- 8eW4Z03xVOLOX0hzRddgLv1Chs8SDkxnX6z2o6MpxhGggyvr5FcOq858GvWl6ZoPED7P
- ykGFvoJ6wUIWXZYSEL8RaJGkOTiUZy0E1yO+uZS3qT3g2YOPbNYhWH0rLNLhU1rTGhtk
- ls/hhgkUIDYTaauJwhgRarI2uGASQOz/snbsTpI3O7d7JXOpGXiLwzhMRARvAh1o2E/F
- NZog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:reply-to:date:in-reply-to:message-id
- :mime-version:references:subject:from:to:cc;
- bh=EpijQ6V8FeVDkD7HX5egdlZ4dc07ENH1xKoxF44zfAY=;
- b=CMt73E6uevIiZmvE4EHYLCuugq2QBK6CGEkl3b7/ZNQtlzSCNIGFR/Te+9vxaL92em
- nQwCN/G4Gfma1laEOXk5YGmec+P1HXvCphAaeuUL40O84N5SVULSvEpkvfGkwnh3mmZu
- mkVXzX6691GSztXqQVQexGRPfjUJEHIaTM5Vrwiq6s7oSJc3cdbzH8sjSzmsEGbmtVDc
- mqQmsVy1MzblZx5XaD7gWJNj1X7NcS6oRe4j0Dkk+DXh7PMc6TA5FZI6ihyF4ZRj1tPz
- YFmGl9tdjut/33prJQMo5CzTuNAuu0IMBROhU0lqOSgVIO11T/ZrfStPkLsTiQ1Cs5sw
- PkPg==
-X-Gm-Message-State: AOAM530pKUKXETgHMqLnP/ubcv9M8pT4CubHzWROQjXv2HmqUqTOa9VR
- 159UXgYO0UymgeQl6E3GKdStb+Uo8sw=
-X-Google-Smtp-Source: ABdhPJzbNsIM618ZsZ/2M+kNXws+VM2rkDgsqZ/Jk+w2Zs+6fUW+W9XFuUI0Kj8VYAgdnJCOOVd45R9L9lU=
-X-Received: from seanjc798194.pdx.corp.google.com
- ([2620:15c:f:10:b1bb:fab2:7ef5:fc7d])
- (user=seanjc job=sendgmr) by 2002:a25:adc5:: with SMTP id
- d5mr15715734ybe.361.1616725251714; 
- Thu, 25 Mar 2021 19:20:51 -0700 (PDT)
-Date: Thu, 25 Mar 2021 19:19:57 -0700
-In-Reply-To: <20210326021957.1424875-1-seanjc@google.com>
-Message-Id: <20210326021957.1424875-19-seanjc@google.com>
-Mime-Version: 1.0
-References: <20210326021957.1424875-1-seanjc@google.com>
-X-Mailer: git-send-email 2.31.0.291.g576ba9dcdaf-goog
-Subject: [PATCH 18/18] KVM: x86/mmu: Drop trace_kvm_age_page() tracepoint
-From: Sean Christopherson <seanjc@google.com>
-To: Marc Zyngier <maz@kernel.org>, Huacai Chen <chenhuacai@kernel.org>, 
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
- Paul Mackerras <paulus@ozlabs.org>, Paolo Bonzini <pbonzini@redhat.com>
-X-Mailman-Approved-At: Fri, 26 Mar 2021 09:54:23 -0400
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- Sean Christopherson <seanjc@google.com>, Joerg Roedel <joro@8bytes.org>,
- linux-mips@vger.kernel.org, kvm-ppc@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- Ben Gardon <bgardon@google.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
- kvmarm@lists.cs.columbia.edu, Jim Mattson <jmattson@google.com>
+ with ESMTP id vLQVoik6DWpN for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 25 Mar 2021 23:17:37 -0400 (EDT)
+Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 617C54B0E4
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 25 Mar 2021 23:17:37 -0400 (EDT)
+Received: from DGGEMS409-HUB.china.huawei.com (unknown [172.30.72.60])
+ by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4F66Xg5MWCzPmsB;
+ Fri, 26 Mar 2021 11:14:59 +0800 (CST)
+Received: from DESKTOP-TMVL5KK.china.huawei.com (10.174.187.128) by
+ DGGEMS409-HUB.china.huawei.com (10.3.19.209) with Microsoft SMTP Server id
+ 14.3.498.0; Fri, 26 Mar 2021 11:17:25 +0800
+From: Yanan Wang <wangyanan55@huawei.com>
+To: Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>, "Alexandru
+ Elisei" <alexandru.elisei@arm.com>, Catalin Marinas
+ <catalin.marinas@arm.com>, <kvmarm@lists.cs.columbia.edu>,
+ <linux-arm-kernel@lists.infradead.org>, <kvm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>
+Subject: [RFC PATCH v3 0/2] KVM: arm64: Improve efficiency of stage2 page table
+Date: Fri, 26 Mar 2021 11:16:52 +0800
+Message-ID: <20210326031654.3716-1-wangyanan55@huawei.com>
+X-Mailer: git-send-email 2.8.4.windows.1
+MIME-Version: 1.0
+X-Originating-IP: [10.174.187.128]
+X-CFilter-Loop: Reflected
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
-Reply-To: Sean Christopherson <seanjc@google.com>
 List-Id: Where KVM/ARM decisions are made <kvmarm.lists.cs.columbia.edu>
 List-Unsubscribe: <https://lists.cs.columbia.edu/mailman/options/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=unsubscribe>
@@ -101,81 +66,95 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Remove x86's trace_kvm_age_page() tracepoint.  It's mostly redundant with
-the common trace_kvm_age_hva() tracepoint, and if there is a need for the
-extra details, e.g. gfn, referenced, etc... those details should be added
-to the common tracepoint so that all architectures and MMUs benefit from
-the info.
+Hi,
 
-Signed-off-by: Sean Christopherson <seanjc@google.com>
----
- arch/x86/kvm/mmu/mmu.c     |  1 -
- arch/x86/kvm/mmu/tdp_mmu.c |  2 --
- include/trace/events/kvm.h | 24 ------------------------
- 3 files changed, 27 deletions(-)
+This is a new version of the series [1] that I have posted before. It makes some
+efficiency improvement of stage2 page table code and there are some test results
+to quantify the benefit of each patch.
+[1] v2: https://lore.kernel.org/lkml/20210310094319.18760-1-wangyanan55@huawei.com/
 
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 2070c7a91fdd..9eded46785b5 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -1467,7 +1467,6 @@ static bool kvm_age_rmapp(struct kvm *kvm, struct kvm_rmap_head *rmap_head,
- 	for_each_rmap_spte(rmap_head, &iter, sptep)
- 		young |= mmu_spte_age(sptep);
- 
--	trace_kvm_age_page(gfn, level, slot, young);
- 	return young;
- }
- 
-diff --git a/arch/x86/kvm/mmu/tdp_mmu.c b/arch/x86/kvm/mmu/tdp_mmu.c
-index 21bb8b68a553..2941beb6559a 100644
---- a/arch/x86/kvm/mmu/tdp_mmu.c
-+++ b/arch/x86/kvm/mmu/tdp_mmu.c
-@@ -949,8 +949,6 @@ static bool age_gfn_range(struct kvm *kvm, struct tdp_iter *iter,
- 
- 	tdp_mmu_set_spte_no_acc_track(kvm, iter, new_spte);
- 
--	trace_kvm_age_page(iter->gfn, iter->level, range->slot, true);
--
- 	return true;
- }
- 
-diff --git a/include/trace/events/kvm.h b/include/trace/events/kvm.h
-index 200eb7465530..37e1e1a2d67d 100644
---- a/include/trace/events/kvm.h
-+++ b/include/trace/events/kvm.h
-@@ -255,30 +255,6 @@ TRACE_EVENT(kvm_fpu,
- 	TP_printk("%s", __print_symbolic(__entry->load, kvm_fpu_load_symbol))
- );
- 
--TRACE_EVENT(kvm_age_page,
--	TP_PROTO(ulong gfn, int level, struct kvm_memory_slot *slot, int ref),
--	TP_ARGS(gfn, level, slot, ref),
--
--	TP_STRUCT__entry(
--		__field(	u64,	hva		)
--		__field(	u64,	gfn		)
--		__field(	u8,	level		)
--		__field(	u8,	referenced	)
--	),
--
--	TP_fast_assign(
--		__entry->gfn		= gfn;
--		__entry->level		= level;
--		__entry->hva		= ((gfn - slot->base_gfn) <<
--					    PAGE_SHIFT) + slot->userspace_addr;
--		__entry->referenced	= ref;
--	),
--
--	TP_printk("hva %llx gfn %llx level %u %s",
--		  __entry->hva, __entry->gfn, __entry->level,
--		  __entry->referenced ? "YOUNG" : "OLD")
--);
--
- #ifdef CONFIG_KVM_ASYNC_PF
- DECLARE_EVENT_CLASS(kvm_async_get_page_class,
- 
+Although there hasn't been any feedback about v2, I am certain that there should
+be a big change for the series after plenty of discussion with Alexandru Elisei.
+A conclusion was drew that CMOs are still needed for the scenario of coalescing
+tables, and as a result the benefit of patch #3 in v2 becomes rather little
+judging from the test results. So drop this patch and keep the others which
+still remain meaningful.
+
+Changelogs:
+v2->v3:
+- drop patch #3 in v2
+- retest v3 based on v5.12-rc2
+
+v1->v2:
+- rebased on top of mainline v5.12-rc2
+- also move CMOs of I-cache to the fault handlers
+- retest v2 based on v5.12-rc2
+- v1: https://lore.kernel.org/lkml/20210208112250.163568-1-wangyanan55@huawei.com/
+
+About this v3 series:
+Patch #1:
+We currently uniformly permorm CMOs of D-cache and I-cache in function
+user_mem_abort before calling the fault handlers. If we get concurrent
+guest faults(e.g. translation faults, permission faults) or some really
+unnecessary guest faults caused by BBM, CMOs for the first vcpu are
+necessary while the others later are not.
+
+By moving CMOs to the fault handlers, we can easily identify conditions
+where they are really needed and avoid the unnecessary ones. As it's a
+time consuming process to perform CMOs especially when flushing a block
+range, so this solution reduces much load of kvm and improve efficiency
+of the page table code.
+
+So let's move both clean of D-cache and invalidation of I-cache to the
+map path and move only invalidation of I-cache to the permission path.
+Since the original APIs for CMOs in mmu.c are only called in function
+user_mem_abort, we now also move them to pgtable.c.
+
+The following results represent the benefit of patch #1 alone, and they
+were tested by [2] (kvm/selftest) that I have posted recently.
+[2] https://lore.kernel.org/lkml/20210302125751.19080-1-wangyanan55@huawei.com/
+
+When there are muitiple vcpus concurrently accessing the same memory region,
+we can test the execution time of KVM creating new mappings, updating the
+permissions of old mappings from RO to RW, and rebuilding the blocks after
+they have been split.
+
+hardware platform: HiSilicon Kunpeng920 Server
+host kernel: Linux mainline v5.12-rc2
+
+cmdline: ./kvm_page_table_test -m 4 -s anonymous -b 1G -v 80
+           (80 vcpus, 1G memory, page mappings(normal 4K))
+KVM_CREATE_MAPPINGS: before 104.35s -> after  90.42s  +13.35%
+KVM_UPDATE_MAPPINGS: before  78.64s -> after  75.45s  + 4.06%
+
+cmdline: ./kvm_page_table_test -m 4 -s anonymous_thp -b 20G -v 40
+           (40 vcpus, 20G memory, block mappings(THP 2M))
+KVM_CREATE_MAPPINGS: before  15.66s -> after   6.92s  +55.80%
+KVM_UPDATE_MAPPINGS: before 178.80s -> after 123.35s  +31.00%
+KVM_REBUILD_BLOCKS:  before 187.34s -> after 131.76s  +30.65%
+
+cmdline: ./kvm_page_table_test -m 4 -s anonymous_hugetlb_1gb -b 20G -v 40
+           (40 vcpus, 20G memory, block mappings(HUGETLB 1G))
+KVM_CREATE_MAPPINGS: before 104.54s -> after   3.70s  +96.46%
+KVM_UPDATE_MAPPINGS: before 174.20s -> after 115.94s  +33.44%
+KVM_REBUILD_BLOCKS:  before 103.95s -> after   2.96s  +97.15%
+
+Patch #2:
+A new method to distinguish cases of memcache allocations is introduced.
+By comparing fault_granule and vma_pagesize, cases that require allocations
+from memcache and cases that don't can be distinguished completely.
+
+Yanan Wang (2):
+  KVM: arm64: Move CMOs from user_mem_abort to the fault handlers
+  KVM: arm64: Distinguish cases of memcache allocations completely
+
+ arch/arm64/include/asm/kvm_mmu.h | 31 ---------------
+ arch/arm64/kvm/hyp/pgtable.c     | 68 +++++++++++++++++++++++++-------
+ arch/arm64/kvm/mmu.c             | 48 ++++++++--------------
+ 3 files changed, 69 insertions(+), 78 deletions(-)
+
 -- 
-2.31.0.291.g576ba9dcdaf-goog
+2.19.1
 
 _______________________________________________
 kvmarm mailing list
