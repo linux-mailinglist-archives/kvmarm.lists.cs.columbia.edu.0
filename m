@@ -2,92 +2,67 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D4EF34F20E
-	for <lists+kvmarm@lfdr.de>; Tue, 30 Mar 2021 22:21:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 647AF34F1F5
+	for <lists+kvmarm@lfdr.de>; Tue, 30 Mar 2021 22:07:31 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B22EA4B330;
-	Tue, 30 Mar 2021 16:21:07 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E36644B32F;
+	Tue, 30 Mar 2021 16:07:30 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id W3HVwq1lQ-Iz; Tue, 30 Mar 2021 16:21:06 -0400 (EDT)
+	with ESMTP id D5qncl39UvAs; Tue, 30 Mar 2021 16:07:30 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2621D4B33C;
-	Tue, 30 Mar 2021 16:21:05 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 590F34B329;
+	Tue, 30 Mar 2021 16:07:29 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 970244B326
- for <kvmarm@lists.cs.columbia.edu>; Tue, 30 Mar 2021 15:58:26 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 97C3F4B323
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 30 Mar 2021 16:07:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id NnvwNpt+7xm1 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 30 Mar 2021 15:58:25 -0400 (EDT)
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com
- [209.85.210.173])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 765244B325
- for <kvmarm@lists.cs.columbia.edu>; Tue, 30 Mar 2021 15:58:25 -0400 (EDT)
-Received: by mail-pf1-f173.google.com with SMTP id g15so12902180pfq.3
- for <kvmarm@lists.cs.columbia.edu>; Tue, 30 Mar 2021 12:58:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=wTEyxuaapP4d1SHF7RcerzFayP475kgkIctZEDORCvY=;
- b=envgQwKOhZLGzYbrjTo3+nEI/ILCJz7AV2GNZ37sA4tCFJ/jO9jwiK5voJwg3r/eds
- n/zOAXzsVLcOacfLuS5VHUc/Z+MqB19zQ52tsRetZLD7hBDRRdqbtww6YeIzEisRIyMw
- UnfTrppUFQicAdk3Yb3QZQbrg/qIsNA3dGPVEIftHW0s1SOq7Hgyee3Ke9l4JB7cfcim
- WfxyAvKImmJ2KZPyBj2tHvhaebrjJjZxU5509A9Ch4WA/EkIVJwDkd6/BmVOdrShBU9j
- tfeAKC2/dsPTX8UPAidLNUSrGVz0OIl962YLH0QZ9VroDrpQvyJk5f+1O5KmnTp/LVWY
- h0QA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=wTEyxuaapP4d1SHF7RcerzFayP475kgkIctZEDORCvY=;
- b=BUbMfew+eleK5vHebpx4PwnbbIj56O52DJ0mj0m8LOr6wNNNSO9q/C6FE7Cs9TcmHK
- KVEp0ZqK72LcP9qXGMxjrYgtvxHfa1jTxXxBNq9vHweHZZiPTpdM133hPNqSVdnA+FIs
- td+C5eB2iOgvSCta9WwPWAAJGeKbaGLdO0DbKasCLYsTVa4FWVQewSwPNY3/5fc085Nx
- +YM11ZAINIhdmDXiPm3zMaMbfrWkcQxgC6khYpQNC37PwOxDRk6ETFqW6WdqNu1JETxd
- kYv/wLOymM6NGlDp8XQE2i8cbS+NbSVoPs9PcrxzNBMCukfSc1Vbf0ZtOwZYrmawf5Va
- 0FNg==
-X-Gm-Message-State: AOAM530XkSqZPkdiQIeM4hsc2a8yS99ZF+B0abLx+VEg2ZsSp5Kqevkp
- Aj4wKo90pDUYPb/eAcb0m/TMIA==
-X-Google-Smtp-Source: ABdhPJy/H3xYrm77zteXXmXwOlrnRIg3rQpdyEYIba7syOVncG/8FqBI2t2hNnALYH3MbklxzEVjZA==
-X-Received: by 2002:a63:5361:: with SMTP id t33mr29952003pgl.439.1617134304318; 
- Tue, 30 Mar 2021 12:58:24 -0700 (PDT)
-Received: from google.com (240.111.247.35.bc.googleusercontent.com.
- [35.247.111.240])
- by smtp.gmail.com with ESMTPSA id f16sm10723866pfj.220.2021.03.30.12.58.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Mar 2021 12:58:23 -0700 (PDT)
-Date: Tue, 30 Mar 2021 19:58:19 +0000
-From: Sean Christopherson <seanjc@google.com>
-To: Ben Gardon <bgardon@google.com>
-Subject: Re: [PATCH 00/18] KVM: Consolidate and optimize MMU notifiers
-Message-ID: <YGOC2wqn5k9WkY39@google.com>
-References: <20210326021957.1424875-1-seanjc@google.com>
- <CANgfPd_gpWsa4F3VdcpoBYqPR4dSBWNYCW1YdeOnu1wQdUz+0A@mail.gmail.com>
-MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <CANgfPd_gpWsa4F3VdcpoBYqPR4dSBWNYCW1YdeOnu1wQdUz+0A@mail.gmail.com>
-X-Mailman-Approved-At: Tue, 30 Mar 2021 16:21:03 -0400
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm <kvm@vger.kernel.org>,
- Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- Huacai Chen <chenhuacai@kernel.org>, linux-mips@vger.kernel.org,
- kvm-ppc@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
- Paul Mackerras <paulus@ozlabs.org>,
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
- linux-arm-kernel@lists.infradead.org, Paolo Bonzini <pbonzini@redhat.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, kvmarm@lists.cs.columbia.edu,
- Jim Mattson <jmattson@google.com>
+ with ESMTP id izw7m8m5Muil for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 30 Mar 2021 16:07:26 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E7DD24B309
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 30 Mar 2021 16:07:25 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id AF06361864;
+ Tue, 30 Mar 2021 20:07:24 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=wait-a-minute.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1lRKe2-004lFo-Iy; Tue, 30 Mar 2021 21:07:22 +0100
+Date: Tue, 30 Mar 2021 21:07:21 +0100
+Message-ID: <87k0pofls6.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Alexandru Elisei <alexandru.elisei@arm.com>
+Subject: Re: [PATCH v2] KVM: arm64: Initialize VCPU mdcr_el2 before loading it
+In-Reply-To: <5cfd4870-db31-cd7d-699f-bd70a1ab90fe@arm.com>
+References: <20210323180057.263356-1-alexandru.elisei@arm.com>
+ <87sg4dq83r.wl-maz@kernel.org>
+ <5cfd4870-db31-cd7d-699f-bd70a1ab90fe@arm.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: alexandru.elisei@arm.com,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -104,70 +79,215 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, Mar 30, 2021, Ben Gardon wrote:
-> On Thu, Mar 25, 2021 at 7:20 PM Sean Christopherson <seanjc@google.com> wrote:
-> > Patch 10 moves x86's memslot walkers into common KVM.  I chose x86 purely
-> > because I could actually test it.  All architectures use nearly identical
-> > code, so I don't think it actually matters in the end.
+On Tue, 30 Mar 2021 18:13:07 +0100,
+Alexandru Elisei <alexandru.elisei@arm.com> wrote:
 > 
-> I'm still reviewing 10 and 14-18. 10 is a huge change and the diff is
-> pretty hard to parse.
-
-Ya :-/  I don't see an easy way to break it up without creating a massive diff,
-e.g. it could be staged in x86 and moved to common, but I don't think that would
-fundamentally change the diff.  Although I admittedly didn't spend _that_ much
-time thinking about how to break it up.
-
-> > Patches 11-13 move arm64, MIPS, and PPC to the new APIs.
+> Hi Marc,
+> 
+> Thanks for having a look!
+> 
+> On 3/30/21 10:55 AM, Marc Zyngier wrote:
+> > Hi Alex,
 > >
-> > Patch 14 yanks out the old APIs.
+> > On Tue, 23 Mar 2021 18:00:57 +0000,
+> > Alexandru Elisei <alexandru.elisei@arm.com> wrote:
+> >> When a VCPU is created, the kvm_vcpu struct is initialized to zero in
+> >> kvm_vm_ioctl_create_vcpu(). On VHE systems, the first time
+> >> vcpu.arch.mdcr_el2 is loaded on hardware is in vcpu_load(), before it is
+> >> set to a sensible value in kvm_arm_setup_debug() later in the run loop. The
+> >> result is that KVM executes for a short time with MDCR_EL2 set to zero.
+> >>
+> >> This has several unintended consequences:
+> >>
+> >> * Setting MDCR_EL2.HPMN to 0 is constrained unpredictable according to ARM
+> >>   DDI 0487G.a, page D13-3820. The behavior specified by the architecture
+> >>   in this case is for the PE to behave as if MDCR_EL2.HPMN is set to a
+> >>   value less than or equal to PMCR_EL0.N, which means that an unknown
+> >>   number of counters are now disabled by MDCR_EL2.HPME, which is zero.
+> >>
+> >> * The host configuration for the other debug features controlled by
+> >>   MDCR_EL2 is temporarily lost. This has been harmless so far, as Linux
+> >>   doesn't use the other fields, but that might change in the future.
+> >>
+> >> Let's avoid both issues by initializing the VCPU's mdcr_el2 field in
+> >> kvm_vcpu_vcpu_first_run_init(), thus making sure that the MDCR_EL2 register
+> >> has a consistent value after each vcpu_load().
+> >>
+> >> Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
+> > This looks strangely similar to 4942dc6638b0 ("KVM: arm64: Write
+> > arch.mdcr_el2 changes since last vcpu_load on VHE"), just at a
+> > different point. Probably worth a Fixes tag.
+> 
+> This bug is present in the commit you are mentioning, and from what
+> I can tell it's also present in the commit it's fixing (d5a21bcc2995
+> ("KVM: arm64: Move common VHE/non-VHE trap config in separate
+> functions")) - vcpu->arch.mdcr_el2 is computed in
+> kvm_arm_setup_debug(), which is called after vcpu_load(). My guess
+> is that this bug is from VHE support was added (or soon after).
+
+Right. Can you please add a Fixes: tag for the same commit? At least
+that'd be consistent.
+
+> I can dig further, how far back in time should I aim for?
+> 
 > >
-> > Patch 15 adds the mmu_lock elision, but only for unpaired notifications.
+> >> ---
+> >> Found by code inspection. Based on v5.12-rc4.
+> >>
+> >> Tested on an odroid-c4 with VHE. vcpu->arch.mdcr_el2 is calculated to be
+> >> 0x4e66. Without this patch, reading MDCR_EL2 after the first vcpu_load() in
+> >> kvm_arch_vcpu_ioctl_run() returns 0; with this patch it returns the correct
+> >> value, 0xe66 (FEAT_SPE is not implemented by the PE).
+> >>
+> >> This patch was initially part of the KVM SPE series [1], but those patches
+> >> haven't seen much activity, so I thought it would be a good idea to send
+> >> this patch separately to draw more attention to it.
+> >>
+> >> Changes in v2:
+> >> * Moved kvm_arm_vcpu_init_debug() earlier in kvm_vcpu_first_run_init() so
+> >>   vcpu->arch.mdcr_el2 is calculated even if kvm_vgic_map_resources() fails.
+> >> * Added comment to kvm_arm_setup_mdcr_el2 to explain what testing
+> >>   vcpu->guest_debug means.
+> >>
+> >> [1] https://www.spinics.net/lists/kvm-arm/msg42959.html
+> >>
+> >>  arch/arm64/include/asm/kvm_host.h |  1 +
+> >>  arch/arm64/kvm/arm.c              |  3 +-
+> >>  arch/arm64/kvm/debug.c            | 82 +++++++++++++++++++++----------
+> >>  3 files changed, 59 insertions(+), 27 deletions(-)
+> >>
+> >> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+> >> index 3d10e6527f7d..858c2fcfc043 100644
+> >> --- a/arch/arm64/include/asm/kvm_host.h
+> >> +++ b/arch/arm64/include/asm/kvm_host.h
+> >> @@ -713,6 +713,7 @@ static inline void kvm_arch_sched_in(struct kvm_vcpu *vcpu, int cpu) {}
+> >>  static inline void kvm_arch_vcpu_block_finish(struct kvm_vcpu *vcpu) {}
+> >>  
+> >>  void kvm_arm_init_debug(void);
+> >> +void kvm_arm_vcpu_init_debug(struct kvm_vcpu *vcpu);
+> >>  void kvm_arm_setup_debug(struct kvm_vcpu *vcpu);
+> >>  void kvm_arm_clear_debug(struct kvm_vcpu *vcpu);
+> >>  void kvm_arm_reset_debug_ptr(struct kvm_vcpu *vcpu);
+> >> diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+> >> index 7f06ba76698d..7088d8fe7186 100644
+> >> --- a/arch/arm64/kvm/arm.c
+> >> +++ b/arch/arm64/kvm/arm.c
+> >> @@ -580,6 +580,8 @@ static int kvm_vcpu_first_run_init(struct kvm_vcpu *vcpu)
+> >>  
+> >>  	vcpu->arch.has_run_once = true;
+> >>  
+> >> +	kvm_arm_vcpu_init_debug(vcpu);
+> >> +
+> >>  	if (likely(irqchip_in_kernel(kvm))) {
+> >>  		/*
+> >>  		 * Map the VGIC hardware resources before running a vcpu the
+> >> @@ -791,7 +793,6 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
+> >>  		}
+> >>  
+> >>  		kvm_arm_setup_debug(vcpu);
+> >> -
+> > Spurious change?
 > 
-> Reading through all this code and considering the changes I'm
-> preparing for the TDP MMU have me wondering if it might help to have a
-> more general purpose MMU lock context struct which could be embedded
-> in the structs added in this patch. I'm thinking something like:
-> enum kvm_mmu_lock_mode {
->     KVM_MMU_LOCK_NONE,
->     KVM_MMU_LOCK_READ,
->     KVM_MMU_LOCK_WRITE,
-> };
+> Definitely, thank you for spotting it.
 > 
-> struct kvm_mmu_lock_context {
->     enum kvm_mmu_lock_mode lock_mode;
->     bool can_block;
->     bool can_yield;
-
-Not that it matters right now, but can_block and can_yield are the same thing.
-I considered s/can_yield/can_block to make it all consistent, but that felt like
-unnecessary thrash.
-
->     bool flush;
-
-Drat.  This made me realize that the 'struct kvm_gfn_range' passed to arch code
-isn't tagged 'const'.  I thought I had done that, but obviously not.
-
-Anyways, what I was going to say before that realization is that the downside to
-putting flush into kvm_gfn_range is that it would have to lose its 'const'
-qualifier.  That's all a moot point if it's not easily constified though.
-
-Const aside, my gut reaction is that it will probably be cleaner to keep the
-flush stuff in arch code, separate from the kvm_gfn_range passed in by common
-KVM.  Looping 'flush' back into the helpers is x86 specific at this point, and
-AFAICT that's not likely to change any time soon.
-
-For rwlock support, if we get to the point where kvm_age_gfn() and/or
-kvm_test_age_gfn() can take mmu_lock for read, then it definitely makes sense to
-track locking in kvm_gfn_range, assuming it isn't the sole entity that prevents
-consifying kvm_range_range.
-
-> };
+> >
+> >>  		/**************************************************************
+> >>  		 * Enter the guest
+> >>  		 */
+> >> diff --git a/arch/arm64/kvm/debug.c b/arch/arm64/kvm/debug.c
+> >> index 7a7e425616b5..3626d03354f6 100644
+> >> --- a/arch/arm64/kvm/debug.c
+> >> +++ b/arch/arm64/kvm/debug.c
+> >> @@ -68,6 +68,60 @@ void kvm_arm_init_debug(void)
+> >>  	__this_cpu_write(mdcr_el2, kvm_call_hyp_ret(__kvm_get_mdcr_el2));
+> >>  }
+> >>  
+> >> +/**
+> >> + * kvm_arm_setup_mdcr_el2 - configure vcpu mdcr_el2 value
+> >> + *
+> >> + * @vcpu:	the vcpu pointer
+> >> + * @host_mdcr:  host mdcr_el2 value
+> >> + *
+> >> + * This ensures we will trap access to:
+> >> + *  - Performance monitors (MDCR_EL2_TPM/MDCR_EL2_TPMCR)
+> >> + *  - Debug ROM Address (MDCR_EL2_TDRA)
+> >> + *  - OS related registers (MDCR_EL2_TDOSA)
+> >> + *  - Statistical profiler (MDCR_EL2_TPMS/MDCR_EL2_E2PB)
+> >> + */
+> >> +static void kvm_arm_setup_mdcr_el2(struct kvm_vcpu *vcpu, u32 host_mdcr)
+> >> +{
+> >> +	bool trap_debug = !(vcpu->arch.flags & KVM_ARM64_DEBUG_DIRTY);
+> >> +
+> >> +	/*
+> >> +	 * This also clears MDCR_EL2_E2PB_MASK to disable guest access
+> >> +	 * to the profiling buffer.
+> >> +	 */
+> >> +	vcpu->arch.mdcr_el2 = host_mdcr & MDCR_EL2_HPMN_MASK;
+> >> +	vcpu->arch.mdcr_el2 |= (MDCR_EL2_TPM |
+> >> +				MDCR_EL2_TPMS |
+> >> +				MDCR_EL2_TPMCR |
+> >> +				MDCR_EL2_TDRA |
+> >> +				MDCR_EL2_TDOSA);
+> >> +
+> >> +	/* Is the VM being debugged by userspace? */
+> >> +	if (vcpu->guest_debug) {
+> >> +		/* Route all software debug exceptions to EL2 */
+> >> +		vcpu->arch.mdcr_el2 |= MDCR_EL2_TDE;
+> >> +		if (vcpu->guest_debug & KVM_GUESTDBG_USE_HW)
+> >> +			trap_debug = true;
+> >> +	}
+> >> +
+> >> +	/* Trap debug register access */
+> >> +	if (trap_debug)
+> >> +		vcpu->arch.mdcr_el2 |= MDCR_EL2_TDA;
+> >> +
+> >> +	trace_kvm_arm_set_dreg32("MDCR_EL2", vcpu->arch.mdcr_el2);
+> >> +}
+> >> +
+> >> +/**
+> >> + * kvm_arm_vcpu_init_debug - setup vcpu debug traps
+> >> + *
+> >> + * @vcpu:	the vcpu pointer
+> >> + *
+> >> + * Set vcpu initial mdcr_el2 value.
+> >> + */
+> >> +void kvm_arm_vcpu_init_debug(struct kvm_vcpu *vcpu)
+> >> +{
+> >> +	kvm_arm_setup_mdcr_el2(vcpu, this_cpu_read(mdcr_el2));
+> > Given that kvm_arm_setup_mdcr_el2() always takes the current host
+> > value for mdcr_el2, why not moving the read into it and be done with
+> > it?
 > 
-> This could yield some grossly long lines, but it would also have
-> potential to unify a bunch of ad-hoc handling.
-> The above struct could also fit into a single byte, so it'd be pretty
-> easy to pass it around.
+> kvm_arm_setup_debug() is called with preemption disabled, and it can
+> use __this_cpu_read(). kvm_arm_vcpu_init_debug() is called with
+> preemption enabled, so it must use this_cpu_read(). I wanted to make
+> the distinction because kvm_arm_setup_debug() is in the run loop.
+
+I think it would be absolutely fine to make the slow path of
+kvm_vcpu_first_run_init() run with preempt disabled. This happens so
+rarely that that it isn't worth thinking about it.
+
+Please give it a lockdep run though! ;-)
+
+> 
+> >
+> > Also, do we really need an extra wrapper?
+> 
+> I can remove the wrapper and have kvm_arm_setup_mdcr_el2() use
+> this_cpu_read() for the host's mdcr_el2 value at the cost of a
+> preempt disable/enable in the run loop when preemption is
+> disabled. If you think that would make the code easier to follow, I
+> can certainly do that.
+
+As explained above, I'd rather you keep the __this_cpu_read() and make
+kvm_vcpu_first_run_init() preemption safe.
+
+Thanks,
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
