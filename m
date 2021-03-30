@@ -2,54 +2,84 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F21934F012
-	for <lists+kvmarm@lfdr.de>; Tue, 30 Mar 2021 19:49:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 153BF34F20D
+	for <lists+kvmarm@lfdr.de>; Tue, 30 Mar 2021 22:21:07 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B73E14B32D;
-	Tue, 30 Mar 2021 13:49:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9B86E4B32E;
+	Tue, 30 Mar 2021 16:21:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WkymIZtD23ON; Tue, 30 Mar 2021 13:49:26 -0400 (EDT)
+	with ESMTP id QFdditd8KwMU; Tue, 30 Mar 2021 16:21:06 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 63F224B321;
-	Tue, 30 Mar 2021 13:49:25 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 079274B336;
+	Tue, 30 Mar 2021 16:21:05 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CB06A4B2EB
- for <kvmarm@lists.cs.columbia.edu>; Tue, 30 Mar 2021 13:49:24 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 16B834B2D2
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 30 Mar 2021 14:32:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Ixf4Z0TrDUa2 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 30 Mar 2021 13:49:23 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5AC0F4A3B4
- for <kvmarm@lists.cs.columbia.edu>; Tue, 30 Mar 2021 13:49:23 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C5CDED6E;
- Tue, 30 Mar 2021 10:49:22 -0700 (PDT)
-Received: from [192.168.0.110] (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4B8223F694;
- Tue, 30 Mar 2021 10:49:22 -0700 (PDT)
-Subject: Re: [PATCH v2] KVM: arm64: Initialize VCPU mdcr_el2 before loading it
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-To: Marc Zyngier <maz@kernel.org>
-References: <20210323180057.263356-1-alexandru.elisei@arm.com>
- <87sg4dq83r.wl-maz@kernel.org> <5cfd4870-db31-cd7d-699f-bd70a1ab90fe@arm.com>
-Message-ID: <5c90a3b2-c9a8-640b-fb6a-7a09d397ba7f@arm.com>
-Date: Tue, 30 Mar 2021 18:49:54 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+ with ESMTP id S72FDh9fzjSG for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 30 Mar 2021 14:32:34 -0400 (EDT)
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com
+ [209.85.166.48])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A33364B28F
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 30 Mar 2021 14:32:34 -0400 (EDT)
+Received: by mail-io1-f48.google.com with SMTP id k8so17434448iop.12
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 30 Mar 2021 11:32:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=Ry6+wSaahnTAtySVVADqpebYg77xvyK52stUUFNcEOE=;
+ b=LdVURA+kcNmnzr/OmxvAldswhg5Hv5K+yZBcwCjQoMugQeFaMm3UMyYuNoBFuURK7x
+ wW9jUPDk/lN2NWOWWx0C+HM8fHbdwPVXOoGeR3GF2krU9rJukM386cGHQW8I5mKRlRhl
+ FK944SqBcaNxe9bg0srb4MmcOByctpvvrYF/uEDGOooXDy9x7lW0dq8OJxF2/6wG6mh8
+ QUtdaXz6D2omEiXIzbRACVWnf7gARf2rCWDNFLpUCSjV3bjZ6TrZFZVX7zDhTaQ1xch3
+ f/yGaKwbqEli9Uvqsxq31Y2h/cqT4iY2RLC+2faOt9pr4StzcjyvoFLtPEvayIi0J9vr
+ 40BA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=Ry6+wSaahnTAtySVVADqpebYg77xvyK52stUUFNcEOE=;
+ b=VwBC8wU+7FpEivrNJej62Ag6qS4VEEMIU7F+fO3wrr/FL5NvVM5XN5H69mDb9yYcXw
+ jfK0nN/BIeFvfmwG0iY7J03C+M1pYdVNfWR4lxnBuMsN59HvyTa1bruZvYjweu14w6Zq
+ NaPIxJnXRBenONgJkZckNWEW4pKPM8gTvFz9Eb8S7VZ8Q33r6drEksEfoOL7YBCANACj
+ gfXnZvlUdiW2WRpoh0lYJ8AXymTrXGgTgS+emIPJ5SWgguaOVfyuEKffIlAvbzwZ5DiA
+ 1domjJHpZq1y3cnrxp8rU/8YFhgSG62wUcTkM9bjCWJ1r5P8p79yjzq5GyecC2sts7NV
+ wnfw==
+X-Gm-Message-State: AOAM531ls8JdUZ/hgqWMVzCKjd3bPVOOEndv7FuI/TawRp/xgnzYl/eA
+ b914rTXtVOKGM0LUxmvnrwiXKy1Up3VSjjgMtvzvHQ==
+X-Google-Smtp-Source: ABdhPJydba/r9kFe0x64VHG21TaCqRbVPKRpUh3kGFyYZT4VeQOXcqv0jV6nWOmc06Khu/5vhjH/mZsKNTnmLddBUEQ=
+X-Received: by 2002:a5d:9959:: with SMTP id v25mr26278546ios.189.1617129153795; 
+ Tue, 30 Mar 2021 11:32:33 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <5cfd4870-db31-cd7d-699f-bd70a1ab90fe@arm.com>
-Content-Language: en-US
-Cc: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+References: <20210326021957.1424875-1-seanjc@google.com>
+In-Reply-To: <20210326021957.1424875-1-seanjc@google.com>
+From: Ben Gardon <bgardon@google.com>
+Date: Tue, 30 Mar 2021 11:32:22 -0700
+Message-ID: <CANgfPd_gpWsa4F3VdcpoBYqPR4dSBWNYCW1YdeOnu1wQdUz+0A@mail.gmail.com>
+Subject: Re: [PATCH 00/18] KVM: Consolidate and optimize MMU notifiers
+To: Sean Christopherson <seanjc@google.com>
+X-Mailman-Approved-At: Tue, 30 Mar 2021 16:21:03 -0400
+Cc: Wanpeng Li <wanpengli@tencent.com>, kvm <kvm@vger.kernel.org>,
+ Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+ Huacai Chen <chenhuacai@kernel.org>, linux-mips@vger.kernel.org,
+ kvm-ppc@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+ Paul Mackerras <paulus@ozlabs.org>,
+ Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
+ linux-arm-kernel@lists.infradead.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, kvmarm@lists.cs.columbia.edu,
+ Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -61,109 +91,165 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-SGkgTWFyYywKCk9uIDMvMzAvMjEgNjoxMyBQTSwgQWxleGFuZHJ1IEVsaXNlaSB3cm90ZToKPiBb
-Li5dCj4+PiArfQo+Pj4gKwo+Pj4gIC8qKgo+Pj4gICAqIGt2bV9hcm1fcmVzZXRfZGVidWdfcHRy
-IC0gcmVzZXQgdGhlIGRlYnVnIHB0ciB0byBwb2ludCB0byB0aGUgdmNwdSBzdGF0ZQo+Pj4gICAq
-Lwo+Pj4gQEAgLTgzLDEyICsxMzcsNyBAQCB2b2lkIGt2bV9hcm1fcmVzZXRfZGVidWdfcHRyKHN0
-cnVjdCBrdm1fdmNwdSAqdmNwdSkKPj4+ICAgKiBAdmNwdToJdGhlIHZjcHUgcG9pbnRlcgo+Pj4g
-ICAqCj4+PiAgICogVGhpcyBpcyBjYWxsZWQgYmVmb3JlIGVhY2ggZW50cnkgaW50byB0aGUgaHlw
-ZXJ2aXNvciB0byBzZXR1cCBhbnkKPj4+IC0gKiBkZWJ1ZyByZWxhdGVkIHJlZ2lzdGVycy4gQ3Vy
-cmVudGx5IHRoaXMganVzdCBlbnN1cmVzIHdlIHdpbGwgdHJhcAo+Pj4gLSAqIGFjY2VzcyB0bzoK
-Pj4+IC0gKiAgLSBQZXJmb3JtYW5jZSBtb25pdG9ycyAoTURDUl9FTDJfVFBNL01EQ1JfRUwyX1RQ
-TUNSKQo+Pj4gLSAqICAtIERlYnVnIFJPTSBBZGRyZXNzIChNRENSX0VMMl9URFJBKQo+Pj4gLSAq
-ICAtIE9TIHJlbGF0ZWQgcmVnaXN0ZXJzIChNRENSX0VMMl9URE9TQSkKPj4+IC0gKiAgLSBTdGF0
-aXN0aWNhbCBwcm9maWxlciAoTURDUl9FTDJfVFBNUy9NRENSX0VMMl9FMlBCKQo+Pj4gKyAqIGRl
-YnVnIHJlbGF0ZWQgcmVnaXN0ZXJzLgo+Pj4gICAqCj4+PiAgICogQWRkaXRpb25hbGx5LCBLVk0g
-b25seSB0cmFwcyBndWVzdCBhY2Nlc3NlcyB0byB0aGUgZGVidWcgcmVnaXN0ZXJzIGlmCj4+PiAg
-ICogdGhlIGd1ZXN0IGlzIG5vdCBhY3RpdmVseSB1c2luZyB0aGVtIChzZWUgdGhlIEtWTV9BUk02
-NF9ERUJVR19ESVJUWQo+Pj4gQEAgLTEwMCwyNyArMTQ5LDE0IEBAIHZvaWQga3ZtX2FybV9yZXNl
-dF9kZWJ1Z19wdHIoc3RydWN0IGt2bV92Y3B1ICp2Y3B1KQo+Pj4gIAo+Pj4gIHZvaWQga3ZtX2Fy
-bV9zZXR1cF9kZWJ1ZyhzdHJ1Y3Qga3ZtX3ZjcHUgKnZjcHUpCj4+PiAgewo+Pj4gLQlib29sIHRy
-YXBfZGVidWcgPSAhKHZjcHUtPmFyY2guZmxhZ3MgJiBLVk1fQVJNNjRfREVCVUdfRElSVFkpOwo+
-Pj4gIAl1bnNpZ25lZCBsb25nIG1kc2NyLCBvcmlnX21kY3JfZWwyID0gdmNwdS0+YXJjaC5tZGNy
-X2VsMjsKPj4+ICAKPj4+ICAJdHJhY2Vfa3ZtX2FybV9zZXR1cF9kZWJ1Zyh2Y3B1LCB2Y3B1LT5n
-dWVzdF9kZWJ1Zyk7Cj4+PiAgCj4+PiAtCS8qCj4+PiAtCSAqIFRoaXMgYWxzbyBjbGVhcnMgTURD
-Ul9FTDJfRTJQQl9NQVNLIHRvIGRpc2FibGUgZ3Vlc3QgYWNjZXNzCj4+PiAtCSAqIHRvIHRoZSBw
-cm9maWxpbmcgYnVmZmVyLgo+Pj4gLQkgKi8KPj4+IC0JdmNwdS0+YXJjaC5tZGNyX2VsMiA9IF9f
-dGhpc19jcHVfcmVhZChtZGNyX2VsMikgJiBNRENSX0VMMl9IUE1OX01BU0s7Cj4+PiAtCXZjcHUt
-PmFyY2gubWRjcl9lbDIgfD0gKE1EQ1JfRUwyX1RQTSB8Cj4+PiAtCQkJCU1EQ1JfRUwyX1RQTVMg
-fAo+Pj4gLQkJCQlNRENSX0VMMl9UUE1DUiB8Cj4+PiAtCQkJCU1EQ1JfRUwyX1REUkEgfAo+Pj4g
-LQkJCQlNRENSX0VMMl9URE9TQSk7Cj4+PiArCWt2bV9hcm1fc2V0dXBfbWRjcl9lbDIodmNwdSwg
-X190aGlzX2NwdV9yZWFkKG1kY3JfZWwyKSk7Cj4+PiAgCj4+PiAgCS8qIElzIEd1ZXN0IGRlYnVn
-Z2luZyBpbiBlZmZlY3Q/ICovCj4+PiAgCWlmICh2Y3B1LT5ndWVzdF9kZWJ1Zykgewo+Pj4gLQkJ
-LyogUm91dGUgYWxsIHNvZnR3YXJlIGRlYnVnIGV4Y2VwdGlvbnMgdG8gRUwyICovCj4+PiAtCQl2
-Y3B1LT5hcmNoLm1kY3JfZWwyIHw9IE1EQ1JfRUwyX1RERTsKPj4+IC0KPj4+ICAJCS8qIFNhdmUg
-Z3Vlc3QgZGVidWcgc3RhdGUgKi8KPj4+ICAJCXNhdmVfZ3Vlc3RfZGVidWdfcmVncyh2Y3B1KTsK
-Pj4+ICAKPj4+IEBAIC0xNzQsNyArMjEwLDYgQEAgdm9pZCBrdm1fYXJtX3NldHVwX2RlYnVnKHN0
-cnVjdCBrdm1fdmNwdSAqdmNwdSkKPj4+ICAKPj4+ICAJCQl2Y3B1LT5hcmNoLmRlYnVnX3B0ciA9
-ICZ2Y3B1LT5hcmNoLmV4dGVybmFsX2RlYnVnX3N0YXRlOwo+Pj4gIAkJCXZjcHUtPmFyY2guZmxh
-Z3MgfD0gS1ZNX0FSTTY0X0RFQlVHX0RJUlRZOwo+Pj4gLQkJCXRyYXBfZGVidWcgPSB0cnVlOwo+
-PiBUaGVyZSBpcyBzb21ldGhpbmcgdGhhdCBzbGlnaHRseSB3b3JyaWVzIG1lIGhlcmU6IHRoZXJl
-IGlzIG5vdyBhCj4+IGRpc2Nvbm5lY3QgYmV0d2VlbiBmbGFnZ2luZyBkZWJ1ZyBhcyBkaXJ0eSBh
-bmQgc2V0dGluZyB0aGUKPj4gdHJhcHBpbmcuIEFuZCBhY3R1YWxseSwgeW91IG5vdyBjaGVjayBm
-b3IgS1ZNX0FSTTY0X0RFQlVHX0RJUlRZIGFuZAo+PiBzZXQgdGhlIHRyYXAgYml0cyAqYmVmb3Jl
-KiBzZXR0aW5nIHRoZSBkaXJ0eSBiaXQgaXRzZWxmLgo+Pgo+PiBIZXJlLCBJIGJlbGlldmUgeW91
-IGVuZCB1cCB3aXRoIGd1ZXN0L2hvc3QgY29uZnVzaW9uIG9mIGJyZWFrcG9pbnRzLAo+PiB3aGlj
-aCBpc24ndCBncmVhdC4gT3IgZGlkIEkgbWlzcyBzb21ldGhpbmc/Cj4gSSdtIHNvcnJ5LCBidXQg
-SSBkb24ndCB1bmRlcnN0YW5kIHdoYXQgeW91IG1lYW4uIFRoaXMgaXMgbXkgdW5kZXJzdGFuZGlu
-ZyBvZiB3aGF0Cj4gaXMgaGFwcGVuaW5nLgo+Cj4gV2l0aG91dCB0aGlzIHBhdGNoLCB0cmFwX2Rl
-YnVnIGlzIHNldCB0byB0cnVlIGFuZCB0aGUgS1ZNX0FSTTY0X0RFQlVHX0RJUlRZIGZsYWcKPiBp
-cyBzZXQgaWYgdmNwdS0+Z3Vlc3RfZGVidWcgJiBLVk1fR1VFU1REQkdfVVNFX0hXLiBGdXJ0aGVy
-IGRvd24sIHRyYXAgZGVidWcgaXMKPiBvbmx5IHVzZWQgd2hlbiBjb21wdXRpbmcgbWRjcl9lbDIu
-Cj4KPiBXaXRoIHRoaXMgcGF0Y2gsIHRyYXBfZGVidWcgaXMgc2V0IHRvIHRydWUgaWYgdmNwdS0+
-Z3Vlc3RfZGVidWcgJgo+IEtWTV9HVUVTVERCR19VU0VfSFcgYW5kIGl0J3MgYWxzbyB1c2VkIGZv
-ciBjb21wdXRpbmcgbWRjcl9lbDIsIGJ1dCB0aGlzIGhhcHBlbnMgaW4KPiBrdm1fYXJtX3NldHVw
-X21kY3JfZWwyKCksIHdoaWNoIGlzIGNhbGxlZCBhdCB0aGUgc3RhcnQgb2Yga3ZtX2FybV9zZXR1
-cF9kZWJ1ZygpLgo+IFRoZSBLVk1fQVJNX0RFQlVHX0RJUlRZIGZsYWdzIGlzIHN0aWxsIHNldCBp
-biBrdm1fYXJtX3NldHVwX2RlYnVnKCkgaWYKPiB2Y3B1LT5ndWVzdF9kZWJ1ZyAmIEtWTV9HVUVT
-VERCR19VU0VfSFcsIGxpa2UgYmVmb3JlLgo+Cj4gVGhlIGd1ZXN0IG5ldmVyIHJ1bnMgd2l0aCB0
-aGUgdmFsdWUgY29tcHV0ZWQgaW4ga3ZtX3ZjcHVfZmlyc3RfcnVuX2luaXQoKSB1bmxlc3MKPiBp
-dCdzIGlkZW50aWNhbCB3aXRoIHRoZSB2YWx1ZSByZWNvbXB1dGVkIGluIGt2bV9hcm1fc2V0dXBf
-ZGVidWcoKS4KPgo+IFRoZSBvbmx5IGRpZmZlcmVuY2UgSSBzZWUgaXMgdGhhdCBtZGNyX2VsMiBp
-cyBjb21wdXRlZCBhdCB0aGUgc3RhcnQgb2YKPiBrdm1fYXJtX3NldHVwX2RlYnVnKCkuIEkgZ2V0
-IHRoZSBmZWVsaW5nIEknbSBhbHNvIG1pc3Npbmcgc29tZXRoaW5nLgoKSSB0aGluayBJIHVuZGVy
-c3RhbmQgd2hhdCB5b3UgbWVhbiwgeW91IGFyZSB3b3JyaWVkIHRoYXQgd2Ugd29uJ3Qgc2V0IHRo
-ZSBiaXQgaW4KbWRjcl9lbDIgdG8gdHJhcCBkZWJ1ZyBpbiB0aGUgc2FtZSBwbGFjZSB3aGVyZSB3
-ZSBzZXQgdGhlIGRlYnVnIGRpcnR5IGZsYWcuIElmCnRoYXQncyB0aGUgY2FzZSwgdGhlbiBJIGNh
-biBtb3ZlIGt2bV9hcm1fc2V0dXBfbWRjcl9lbDIgcmlnaHQgYWZ0ZXIgdGhlIEJVR19PTigpCmFu
-ZCByZW1vdmUgdGhlIEtWTV9HVUVTVERCR19VU0VfSFcgY2hlY2sgYmVjYXVzZSB0aGUgS1ZNX0FS
-TV9ERUJVR19ESVJUWSB3b3VsZCBiZQphbHJlYWR5IHNldC4KClF1ZXN0aW9uIHRob3VnaCwgaWYg
-bWRjcl9lbDIgaXMgdGllZCB0byB0aGUgZGVidWcgZGlydHkgZmxhZywgd2UgaWdub3JlIHRoZSBm
-bGFnCmhlcmUgKGNvZGUgd2l0aG91dCB0aGlzIHBhdGNoKToKCsKgwqDCoCBCVUdfT04oIXZjcHUt
-Pmd1ZXN0X2RlYnVnICYmCsKgwqDCoCDCoMKgwqAgdmNwdS0+YXJjaC5kZWJ1Z19wdHIgIT0gJnZj
-cHUtPmFyY2gudmNwdV9kZWJ1Z19zdGF0ZSk7CgrCoMKgwqAgLyogVHJhcCBkZWJ1ZyByZWdpc3Rl
-ciBhY2Nlc3MgKi8KwqDCoMKgIGlmICh0cmFwX2RlYnVnKQrCoMKgwqAgwqDCoMKgIHZjcHUtPmFy
-Y2gubWRjcl9lbDIgfD0gTURDUl9FTDJfVERBOwoKwqDCoMKgIC8qIElmIEtERSBvciBNREUgYXJl
-IHNldCwgcGVyZm9ybSBhIGZ1bGwgc2F2ZS9yZXN0b3JlIGN5Y2xlLiAqLwrCoMKgwqAgaWYgKHZj
-cHVfcmVhZF9zeXNfcmVnKHZjcHUsIE1EU0NSX0VMMSkgJiAoREJHX01EU0NSX0tERSB8IERCR19N
-RFNDUl9NREUpKQrCoMKgwqAgwqDCoMKgIHZjcHUtPmFyY2guZmxhZ3MgfD0gS1ZNX0FSTTY0X0RF
-QlVHX0RJUlRZOwoKSSBzdXBwb3NlIHRoZXJlJ3Mgc29tZXRoaW5nIEkgZG9uJ3QgdW5kZXJzdGFu
-ZCB5ZXQgYWJvdXQgaG93IHRoaXMgaXMgc3VwcG9zZWQgdG8gd29yay4KClRoYW5rcywKCkFsZXgK
-Cj4KPiBUaGFua3MsCj4KPiBBbGV4Cj4KPj4+ICAKPj4+ICAJCQl0cmFjZV9rdm1fYXJtX3NldF9y
-ZWdzZXQoIkJLUFRTIiwgZ2V0X251bV9icnBzKCksCj4+PiAgCQkJCQkJJnZjcHUtPmFyY2guZGVi
-dWdfcHRyLT5kYmdfYmNyWzBdLAo+Pj4gQEAgLTE4OSwxMCArMjI0LDYgQEAgdm9pZCBrdm1fYXJt
-X3NldHVwX2RlYnVnKHN0cnVjdCBrdm1fdmNwdSAqdmNwdSkKPj4+ICAJQlVHX09OKCF2Y3B1LT5n
-dWVzdF9kZWJ1ZyAmJgo+Pj4gIAkJdmNwdS0+YXJjaC5kZWJ1Z19wdHIgIT0gJnZjcHUtPmFyY2gu
-dmNwdV9kZWJ1Z19zdGF0ZSk7Cj4+PiAgCj4+PiAtCS8qIFRyYXAgZGVidWcgcmVnaXN0ZXIgYWNj
-ZXNzICovCj4+PiAtCWlmICh0cmFwX2RlYnVnKQo+Pj4gLQkJdmNwdS0+YXJjaC5tZGNyX2VsMiB8
-PSBNRENSX0VMMl9UREE7Cj4+PiAtCj4+PiAgCS8qIElmIEtERSBvciBNREUgYXJlIHNldCwgcGVy
-Zm9ybSBhIGZ1bGwgc2F2ZS9yZXN0b3JlIGN5Y2xlLiAqLwo+Pj4gIAlpZiAodmNwdV9yZWFkX3N5
-c19yZWcodmNwdSwgTURTQ1JfRUwxKSAmIChEQkdfTURTQ1JfS0RFIHwgREJHX01EU0NSX01ERSkp
-Cj4+PiAgCQl2Y3B1LT5hcmNoLmZsYWdzIHw9IEtWTV9BUk02NF9ERUJVR19ESVJUWTsKPj4+IEBA
-IC0yMDEsNyArMjMyLDYgQEAgdm9pZCBrdm1fYXJtX3NldHVwX2RlYnVnKHN0cnVjdCBrdm1fdmNw
-dSAqdmNwdSkKPj4+ICAJaWYgKGhhc192aGUoKSAmJiBvcmlnX21kY3JfZWwyICE9IHZjcHUtPmFy
-Y2gubWRjcl9lbDIpCj4+PiAgCQl3cml0ZV9zeXNyZWcodmNwdS0+YXJjaC5tZGNyX2VsMiwgbWRj
-cl9lbDIpOwo+Pj4gIAo+Pj4gLQl0cmFjZV9rdm1fYXJtX3NldF9kcmVnMzIoIk1EQ1JfRUwyIiwg
-dmNwdS0+YXJjaC5tZGNyX2VsMik7Cj4+PiAgCXRyYWNlX2t2bV9hcm1fc2V0X2RyZWczMigiTURT
-Q1JfRUwxIiwgdmNwdV9yZWFkX3N5c19yZWcodmNwdSwgTURTQ1JfRUwxKSk7Cj4+PiAgfQo+PiBU
-aGFua3MsCj4+Cj4+IAlNLgo+Pgo+IF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fCj4ga3ZtYXJtIG1haWxpbmcgbGlzdAo+IGt2bWFybUBsaXN0cy5jcy5jb2x1
-bWJpYS5lZHUKPiBodHRwczovL2xpc3RzLmNzLmNvbHVtYmlhLmVkdS9tYWlsbWFuL2xpc3RpbmZv
-L2t2bWFybQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwpr
-dm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1bWJpYS5lZHUKaHR0cHM6Ly9s
-aXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9rdm1hcm0K
+On Thu, Mar 25, 2021 at 7:20 PM Sean Christopherson <seanjc@google.com> wrote:
+>
+> The end goal of this series is to optimize the MMU notifiers to take
+> mmu_lock if and only if the notification is relevant to KVM, i.e. the hva
+> range overlaps a memslot.   Large VMs (hundreds of vCPUs) are very
+> sensitive to mmu_lock being taken for write at inopportune times, and
+> such VMs also tend to be "static", e.g. backed by HugeTLB with minimal
+> page shenanigans.  The vast majority of notifications for these VMs will
+> be spurious (for KVM), and eliding mmu_lock for spurious notifications
+> avoids an otherwise unacceptable disruption to the guest.
+>
+> To get there without potentially degrading performance, e.g. due to
+> multiple memslot lookups, especially on non-x86 where the use cases are
+> largely unknown (from my perspective), first consolidate the MMU notifier
+> logic by moving the hva->gfn lookups into common KVM.
+>
+> Applies on my TDP MMU TLB flushing bug fixes[*], which conflict horribly
+> with the TDP MMU changes in this series.  That code applies on kvm/queue
+> (commit 4a98623d5d90, "KVM: x86/mmu: Mark the PAE roots as decrypted for
+> shadow paging").
+>
+> Speaking of conflicts, Ben will soon be posting a series to convert a
+> bunch of TDP MMU flows to take mmu_lock only for read.  Presumably there
+> will be an absurd number of conflicts; Ben and I will sort out the
+> conflicts in whichever series loses the race.
+>
+> Well tested on Intel and AMD.  Compile tested for arm64, MIPS, PPC,
+> PPC e500, and s390.  Absolutely needs to be tested for real on non-x86,
+> I give it even odds that I introduced an off-by-one bug somewhere.
+>
+> [*] https://lkml.kernel.org/r/20210325200119.1359384-1-seanjc@google.com
+>
+>
+> Patches 1-7 are x86 specific prep patches to play nice with moving
+> the hva->gfn memslot lookups into common code.  There ended up being waaay
+> more of these than I expected/wanted, but I had a hell of a time getting
+> the flushing logic right when shuffling the memslot and address space
+> loops.  In the end, I was more confident I got things correct by batching
+> the flushes.
+>
+> Patch 8 moves the existing API prototypes into common code.  It could
+> technically be dropped since the old APIs are gone in the end, but I
+> thought the switch to the new APIs would suck a bit less this way.
+
+Patches 1-8 look good to me. Feel free to add my Reviewed-by tag to those.
+I appreciate the care you took to make all those changes tiny and reviewable.
+
+>
+> Patch 9 moves arm64's MMU notifier tracepoints into common code so that
+> they are not lost when arm64 is converted to the new APIs, and so that all
+> architectures can benefit.
+>
+> Patch 10 moves x86's memslot walkers into common KVM.  I chose x86 purely
+> because I could actually test it.  All architectures use nearly identical
+> code, so I don't think it actually matters in the end.
+
+I'm still reviewing 10 and 14-18. 10 is a huge change and the diff is
+pretty hard to parse.
+
+>
+> Patches 11-13 move arm64, MIPS, and PPC to the new APIs.
+>
+> Patch 14 yanks out the old APIs.
+>
+> Patch 15 adds the mmu_lock elision, but only for unpaired notifications.
+
+Reading through all this code and considering the changes I'm
+preparing for the TDP MMU have me wondering if it might help to have a
+more general purpose MMU lock context struct which could be embedded
+in the structs added in this patch. I'm thinking something like:
+enum kvm_mmu_lock_mode {
+    KVM_MMU_LOCK_NONE,
+    KVM_MMU_LOCK_READ,
+    KVM_MMU_LOCK_WRITE,
+};
+
+struct kvm_mmu_lock_context {
+    enum kvm_mmu_lock_mode lock_mode;
+    bool can_block;
+    bool can_yield;
+    bool flush;
+};
+
+This could yield some grossly long lines, but it would also have
+potential to unify a bunch of ad-hoc handling.
+The above struct could also fit into a single byte, so it'd be pretty
+easy to pass it around.
+
+>
+> Patch 16 adds mmu_lock elision for paired .invalidate_range_{start,end}().
+> This is quite nasty and no small part of me thinks the patch should be
+> burned with fire (I won't spoil it any further), but it's also the most
+> problematic scenario for our particular use case.  :-/
+>
+> Patches 17-18 are additional x86 cleanups.
+>
+> Sean Christopherson (18):
+>   KVM: x86/mmu: Coalesce TDP MMU TLB flushes when zapping collapsible
+>     SPTEs
+>   KVM: x86/mmu: Move flushing for "slot" handlers to caller for legacy
+>     MMU
+>   KVM: x86/mmu: Coalesce TLB flushes when zapping collapsible SPTEs
+>   KVM: x86/mmu: Coalesce TLB flushes across address spaces for gfn range
+>     zap
+>   KVM: x86/mmu: Pass address space ID to __kvm_tdp_mmu_zap_gfn_range()
+>   KVM: x86/mmu: Pass address space ID to TDP MMU root walkers
+>   KVM: x86/mmu: Use leaf-only loop for walking TDP SPTEs when changing
+>     SPTE
+>   KVM: Move prototypes for MMU notifier callbacks to generic code
+>   KVM: Move arm64's MMU notifier trace events to generic code
+>   KVM: Move x86's MMU notifier memslot walkers to generic code
+>   KVM: arm64: Convert to the gfn-based MMU notifier callbacks
+>   KVM: MIPS/MMU: Convert to the gfn-based MMU notifier callbacks
+>   KVM: PPC: Convert to the gfn-based MMU notifier callbacks
+>   KVM: Kill off the old hva-based MMU notifier callbacks
+>   KVM: Take mmu_lock when handling MMU notifier iff the hva hits a
+>     memslot
+>   KVM: Don't take mmu_lock for range invalidation unless necessary
+>   KVM: x86/mmu: Allow yielding during MMU notifier unmap/zap, if
+>     possible
+>   KVM: x86/mmu: Drop trace_kvm_age_page() tracepoint
+>
+>  arch/arm64/include/asm/kvm_host.h             |   5 -
+>  arch/arm64/kvm/mmu.c                          | 118 ++----
+>  arch/arm64/kvm/trace_arm.h                    |  66 ----
+>  arch/mips/include/asm/kvm_host.h              |   5 -
+>  arch/mips/kvm/mmu.c                           |  97 +----
+>  arch/powerpc/include/asm/kvm_book3s.h         |  12 +-
+>  arch/powerpc/include/asm/kvm_host.h           |   7 -
+>  arch/powerpc/include/asm/kvm_ppc.h            |   9 +-
+>  arch/powerpc/kvm/book3s.c                     |  18 +-
+>  arch/powerpc/kvm/book3s.h                     |  10 +-
+>  arch/powerpc/kvm/book3s_64_mmu_hv.c           |  98 ++---
+>  arch/powerpc/kvm/book3s_64_mmu_radix.c        |  25 +-
+>  arch/powerpc/kvm/book3s_hv.c                  |  12 +-
+>  arch/powerpc/kvm/book3s_pr.c                  |  56 +--
+>  arch/powerpc/kvm/e500_mmu_host.c              |  29 +-
+>  arch/powerpc/kvm/trace_booke.h                |  15 -
+>  arch/x86/include/asm/kvm_host.h               |   6 +-
+>  arch/x86/kvm/mmu/mmu.c                        | 180 ++++-----
+>  arch/x86/kvm/mmu/mmu_internal.h               |  10 +
+>  arch/x86/kvm/mmu/tdp_mmu.c                    | 344 +++++++-----------
+>  arch/x86/kvm/mmu/tdp_mmu.h                    |  31 +-
+>  include/linux/kvm_host.h                      |  22 +-
+>  include/trace/events/kvm.h                    |  90 +++--
+>  tools/testing/selftests/kvm/lib/kvm_util.c    |   4 -
+>  .../selftests/kvm/lib/x86_64/processor.c      |   2 +
+>  virt/kvm/kvm_main.c                           | 312 ++++++++++++----
+>  26 files changed, 697 insertions(+), 886 deletions(-)
+>
+> --
+> 2.31.0.291.g576ba9dcdaf-goog
+>
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
