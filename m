@@ -2,56 +2,54 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8567C34E52B
-	for <lists+kvmarm@lfdr.de>; Tue, 30 Mar 2021 12:13:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65CB534E559
+	for <lists+kvmarm@lfdr.de>; Tue, 30 Mar 2021 12:23:16 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 08AF94B1B4;
-	Tue, 30 Mar 2021 06:13:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D219A4B1DD;
+	Tue, 30 Mar 2021 06:23:15 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0a3HLrOEaWXk; Tue, 30 Mar 2021 06:13:25 -0400 (EDT)
+	with ESMTP id G1TreS8SB9Q2; Tue, 30 Mar 2021 06:23:15 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8F54A4B2D9;
-	Tue, 30 Mar 2021 06:13:24 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id ADFE64B2CD;
+	Tue, 30 Mar 2021 06:23:14 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 072994B299
- for <kvmarm@lists.cs.columbia.edu>; Tue, 30 Mar 2021 06:13:23 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1C20E4B23E
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 30 Mar 2021 06:23:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id vGpi79nAIVkt for <kvmarm@lists.cs.columbia.edu>;
- Tue, 30 Mar 2021 06:13:21 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9C8ED4B1B4
- for <kvmarm@lists.cs.columbia.edu>; Tue, 30 Mar 2021 06:13:21 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 67A2D61864;
- Tue, 30 Mar 2021 10:13:17 +0000 (UTC)
-Date: Tue, 30 Mar 2021 11:13:14 +0100
-From: Catalin Marinas <catalin.marinas@arm.com>
-To: Steven Price <steven.price@arm.com>
-Subject: Re: [PATCH v10 1/6] arm64: mte: Sync tags for pages where PTE is
- untagged
-Message-ID: <20210330101314.GC18075@arm.com>
-References: <20210312151902.17853-1-steven.price@arm.com>
- <20210312151902.17853-2-steven.price@arm.com>
- <20210326185653.GG5126@arm.com>
- <21842e4d-7935-077c-3d6f-fced89b7f2bb@arm.com>
+ with ESMTP id y8SSvAr9nZYb for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 30 Mar 2021 06:23:12 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B3F8B4B1DD
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 30 Mar 2021 06:23:12 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3193EED1;
+ Tue, 30 Mar 2021 03:23:12 -0700 (PDT)
+Received: from [192.168.2.22] (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C59BE3F792;
+ Tue, 30 Mar 2021 03:23:11 -0700 (PDT)
+Subject: Re: KVM/ARM64: Booting KVM on FVP/fastmodels
+To: "yinhua_chen@outlook.com" <yinhua_chen@outlook.com>,
+ "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>
+References: <OSYPR01MB54317CECC49E872ACFD9D84B817E9@OSYPR01MB5431.jpnprd01.prod.outlook.com>
+From: =?UTF-8?Q?Andr=c3=a9_Przywara?= <andre.przywara@arm.com>
+Organization: ARM Ltd.
+Message-ID: <0bbea123-7bea-3a2e-70ae-30f43df3000e@arm.com>
+Date: Tue, 30 Mar 2021 11:22:50 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <21842e4d-7935-077c-3d6f-fced89b7f2bb@arm.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: "Dr. David Alan Gilbert" <dgilbert@redhat.com>, qemu-devel@nongnu.org,
- Marc Zyngier <maz@kernel.org>, Juan Quintela <quintela@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, linux-kernel@vger.kernel.org,
- Dave Martin <Dave.Martin@arm.com>, linux-arm-kernel@lists.infradead.org,
- Thomas Gleixner <tglx@linutronix.de>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu
+In-Reply-To: <OSYPR01MB54317CECC49E872ACFD9D84B817E9@OSYPR01MB5431.jpnprd01.prod.outlook.com>
+Content-Language: en-GB
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -68,93 +66,47 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Mar 29, 2021 at 04:55:29PM +0100, Steven Price wrote:
-> On 26/03/2021 18:56, Catalin Marinas wrote:
-> > On Fri, Mar 12, 2021 at 03:18:57PM +0000, Steven Price wrote:
-> > > A KVM guest could store tags in a page even if the VMM hasn't mapped
-> > > the page with PROT_MTE. So when restoring pages from swap we will
-> > > need to check to see if there are any saved tags even if !pte_tagged().
-> > > 
-> > > However don't check pages which are !pte_valid_user() as these will
-> > > not have been swapped out.
-> > > 
-> > > Signed-off-by: Steven Price <steven.price@arm.com>
-> > > ---
-> > >   arch/arm64/include/asm/pgtable.h |  2 +-
-> > >   arch/arm64/kernel/mte.c          | 16 ++++++++++++----
-> > >   2 files changed, 13 insertions(+), 5 deletions(-)
-> > > 
-> > > diff --git a/arch/arm64/include/asm/pgtable.h b/arch/arm64/include/asm/pgtable.h
-> > > index e17b96d0e4b5..84166625c989 100644
-> > > --- a/arch/arm64/include/asm/pgtable.h
-> > > +++ b/arch/arm64/include/asm/pgtable.h
-> > > @@ -312,7 +312,7 @@ static inline void set_pte_at(struct mm_struct *mm, unsigned long addr,
-> > >   		__sync_icache_dcache(pte);
-> > >   	if (system_supports_mte() &&
-> > > -	    pte_present(pte) && pte_tagged(pte) && !pte_special(pte))
-> > > +	    pte_present(pte) && pte_valid_user(pte) && !pte_special(pte))
-> > >   		mte_sync_tags(ptep, pte);
-> > 
-> > With the EPAN patches queued in for-next/epan, pte_valid_user()
-> > disappeared as its semantics weren't very clear.
+On 29/03/2021 13:13, yinhua_chen@outlook.com wrote:
+
+Hi,
+
+> I want to boot KVM on simulators.
 > 
-> Thanks for pointing that out.
+> I don't want to use QEMU since some features are only supported on
+> FVP/fastmodels now.
 > 
-> > So this relies on the set_pte_at() being done on the VMM address space.
-> > I wonder, if the VMM did an mprotect(PROT_NONE), can the VM still access
-> > it via stage 2? If yes, the pte_valid_user() test wouldn't work. We need
-> > something like pte_present() && addr <= user_addr_max().
+> However, I cannot find documents/blogs/wiki about booting KVM on
+> FVP/fastmodels.
 > 
-> AFAIUI the stage 2 matches the VMM's address space (for the subset that has
-> memslots). So mprotect(PROT_NONE) would cause the stage 2 mapping to be
-> invalidated and a subsequent fault would exit to the VMM to sort out. This
-> sort of thing is done for the lazy migration use case (i.e. pages are
-> fetched as the VM tries to access them).
+> Does KVM support running on FVP?
 
-There's also the protected KVM case which IIUC wouldn't provide any
-mapping of the guest memory to the host (or maybe the host still thinks
-it's there but cannot access it without a Stage 2 fault). At least in
-this case it wouldn't swap pages out and it would be the responsibility
-of the EL2 code to clear the tags when giving pages to the guest
-(user_mem_abort() must not touch the page).
+The FVP emulates the full architecture, including all exception levels
+(so also EL2), and the virtualization support of the GIC and the Generic
+Timer.
+So yes, the models fully support KVM (or any other hypervisor, for that
+matter), and are in fact often used for developing KVM support of new
+hardware features.
 
-So basically we either have a valid, accessible mapping in the VMM and
-we can handle the tags via set_pte_at() or we leave it to whatever is
-running at EL2 in the pKVM case.
+So what are the problems that you are facing? Just running a kernel like
+you would normally do on the model should work out of the box.
+If you describe your setup and the error messages, we can probably help
+you better.
 
-I don't remember whether we had a clear conclusion in the past: have we
-ruled out requiring the VMM to map the guest memory with PROT_MTE
-entirely? IIRC a potential problem was the VMM using MTE itself and
-having to disable it when accessing the guest memory.
+Cheers,
+Andre
 
-Another potential issue (I haven't got my head around it yet) is a race
-in mte_sync_tags() as we now defer the PG_mte_tagged bit setting until
-after the tags had been restored. Can we have the same page mapped by
-two ptes, each attempting to restore it from swap and one gets it first
-and starts modifying it? Given that we set the actual pte after setting
-PG_mte_tagged, it's probably alright but I think we miss some barriers.
-
-Also, if a page is not a swap one, we currently clear the tags if mapped
-as pte_tagged() (prior to this patch). We'd need something similar when
-mapping it in the guest so that we don't leak tags but to avoid any page
-ending up with PG_mte_tagged, I think you moved the tag clearing to
-user_mem_abort() in the KVM code. I presume set_pte_at() in the VMM
-would be called first and then set in Stage 2.
-
-> > BTW, ignoring virtualisation, can we ever bring a page in from swap on a
-> > PROT_NONE mapping (say fault-around)? It's not too bad if we keep the
-> > metadata around for when the pte becomes accessible but I suspect we
-> > remove it if the page is removed from swap.
 > 
-> There are two stages of bringing data from swap. First is populating the
-> swap cache by doing the physical read from swap. The second is actually
-> restoring the page table entries.
+> Appreciate for your help!
+> 
+> Sincerely,
+> Yinhua
+> 
+> _______________________________________________
+> kvmarm mailing list
+> kvmarm@lists.cs.columbia.edu
+> https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+> 
 
-When is the page metadata removed? I want to make sure we don't drop it
-for some pte attributes.
-
--- 
-Catalin
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
