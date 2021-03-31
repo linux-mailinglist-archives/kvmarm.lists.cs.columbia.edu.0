@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 09CB3351206
+	by mail.lfdr.de (Postfix) with ESMTP id BC7EC351207
 	for <lists+kvmarm@lfdr.de>; Thu,  1 Apr 2021 11:28:24 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 310544B622;
-	Thu,  1 Apr 2021 05:28:23 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 65B3A4B616;
+	Thu,  1 Apr 2021 05:28:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,74 +14,77 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vQBpnb3BBxf5; Thu,  1 Apr 2021 05:28:23 -0400 (EDT)
+	with ESMTP id NyObvznSuQlN; Thu,  1 Apr 2021 05:28:23 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E93474B630;
-	Thu,  1 Apr 2021 05:28:18 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0B2D64B633;
+	Thu,  1 Apr 2021 05:28:19 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 13BFE4B4B3
- for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 16:52:19 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 581464B4C0
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 17:05:55 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id clG1366gr0If for <kvmarm@lists.cs.columbia.edu>;
- Wed, 31 Mar 2021 16:52:17 -0400 (EDT)
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com
- [209.85.216.52])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D2D114B48D
- for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 16:52:17 -0400 (EDT)
-Received: by mail-pj1-f52.google.com with SMTP id
- nh23-20020a17090b3657b02900c0d5e235a8so1935175pjb.0
- for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 13:52:17 -0700 (PDT)
+ with ESMTP id 9ZwoTNL0r0Tk for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 31 Mar 2021 17:05:54 -0400 (EDT)
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com
+ [209.85.215.179])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 253A24B4AF
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 17:05:54 -0400 (EDT)
+Received: by mail-pg1-f179.google.com with SMTP id t140so146747pgb.13
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 14:05:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:from:to:cc:subject:message-id:references:mime-version
  :content-disposition:in-reply-to;
- bh=yoJglSBv69WpXRq5eWsDMsVvLVSgKRL+uxkOtmCkPv4=;
- b=ADUqKKQ3BT9AZj97LO1eTtS3t9SA7Iz5Y9gKCHGjYiSKaRi0OjZsNbCEZHlTHVsUK2
- RNZXwtrgWGKiRwRERUqUQHhNjNE4avYwBTOHTNeXUrFuBOZpSNcUgsrOMnNOFrF4Qmmx
- O6VxlothBKh2mwj18o5erYydCBdLp41Jx1ACR3P2G4E6KTzIjQwXv0iNU/NOfDyTFFnS
- 200CcWoWmbjT9IdQc2M/KYaGZJ9MQ4swwqQjH/lVhVw8kM/Yif9KbXdwfMKqqTFBCtHd
- qG+c+KtKeKb557k9yYsai7I+C2YdTVQm/TDzi18tNlIaNowK9yiwFIR0cMG4QxaUuNJ2
- ySUw==
+ bh=OsMJWVQ5QwySc9J0D6/CmIltvLje627dYrulaN3pAYw=;
+ b=Wc7aKMlkMupX5QKCwfzZVYqMCo1X7BRsT/Kkkx7EwXhoN5RNV7t4FFC66e9PTmv1hx
+ B5fa6/ZZRBlZ7u8xuFDL9LYZr/z14+WE4xRb24HmRER5FPe8woSMl7enlu5vXfvWMl1b
+ ME7U4jYEdyICvfRyN6+B26dJ3dEizwHNQsWpWevkiP4PnR+3Jmdg2xy/JJIDOEUUXaQ0
+ ltEvaex2B8+pIp7NiAF68Y5qiyuu4234eP6u6hPNTVxaQ9AE8rdIKMAy3U8FEPBYR1GF
+ 8MWtaTrm5lKR+WYnx0BpHgfhq0fkF/UBhRko1T8H4itpPFwtvOhfmo0NCytN/FJUUsy1
+ 332w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to;
- bh=yoJglSBv69WpXRq5eWsDMsVvLVSgKRL+uxkOtmCkPv4=;
- b=As8nUZtwCIWgDJk0resshmpGKPWVniWDPpHoeha2xtrwhI7dFvLRLLrIFFBKliaxIY
- ninBKolUASt4nOUucTdzqBtdP7LhQiVa/8URUaYdzCQDzpWT4QcA4tLkrttqLKpJx707
- OmnUC/+OEjxsFlBIYIA4Xo/2u9x+56T4TTW33T3ez2qaToJumJzjblLeyVwCXv3lRBk8
- rANVJw8WxehfMnhgXvpgahrjEeEWv/cem7MTT02hTLaTKgQwclAjO4Z/gjC04k0Z2Ko4
- FfEF9Fi9f95RlrXLifYUw7YwskIWVFoDPTe+IPsbtgWXUYdQzXD/aK259/WWV1OE3Opc
- zVsg==
-X-Gm-Message-State: AOAM532PDSNm3+5r0QhkhO39+Vlxo4nwOromO+9lvz+ENd+Kg81L39q3
- XalkTtljS7+g75ggkF5t4efirw==
-X-Google-Smtp-Source: ABdhPJyf4HLSrowxJceov6XASpdTMiPhuzoLXLjATJzpx1nt33JVlntT/l7g0VYbcVhhGtzPXPv8aQ==
-X-Received: by 2002:a17:902:d4cd:b029:e5:dd6d:f9b3 with SMTP id
- o13-20020a170902d4cdb02900e5dd6df9b3mr4527204plg.43.1617223936594; 
- Wed, 31 Mar 2021 13:52:16 -0700 (PDT)
+ bh=OsMJWVQ5QwySc9J0D6/CmIltvLje627dYrulaN3pAYw=;
+ b=OciDjBKNd872mInsbKpW4KWDfbb4tkvGTFu7vmICCoAh0MfLL7+j+eG4Lw+w0SwNGD
+ fkE3yFCRKADNT3BceVdyYcXuxYGFXb9pXTKuQ5VOysrD8LNO8Ts33E2WO3t1HKwjsDCV
+ ZTGDIJ7ulev/thGyHARwrMCvnG73NwxtDqAdRSP7GE+4wc1+08CyjU4U/8R76wjtXBV+
+ S7Ix72LFBwDChyeDDsSwqzYKxbFhGh/rWgsF8zAoxoh/iYPLETlZ1305ZRyriCthmwfb
+ WZrzHO/J8KL+eDj0K+sW9nzbm+Lwt6kIcmprY3PgrvLJgLaLEo3GpQ1SRxE4l4GkW8ZN
+ PD5Q==
+X-Gm-Message-State: AOAM5319kuoiJNhmRUw0qMLTQsZ18MShIrkWQYA544tG5tdJxobrvuK6
+ omvVGbaYgKc1M9JFroSM42jj0A==
+X-Google-Smtp-Source: ABdhPJyf0uPjw7GKqed+RHpnFRPgnZODnH1LNH3LjT1TYsTNjhWE3dnO3pT+GkRqgzOjMV1yU6flMQ==
+X-Received: by 2002:a62:6497:0:b029:220:d96a:8a79 with SMTP id
+ y145-20020a6264970000b0290220d96a8a79mr4625909pfb.23.1617224752934; 
+ Wed, 31 Mar 2021 14:05:52 -0700 (PDT)
 Received: from google.com (240.111.247.35.bc.googleusercontent.com.
  [35.247.111.240])
- by smtp.gmail.com with ESMTPSA id s28sm3246776pfd.155.2021.03.31.13.52.15
+ by smtp.gmail.com with ESMTPSA id na18sm2894150pjb.30.2021.03.31.14.05.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Mar 2021 13:52:16 -0700 (PDT)
-Date: Wed, 31 Mar 2021 20:52:12 +0000
+ Wed, 31 Mar 2021 14:05:52 -0700 (PDT)
+Date: Wed, 31 Mar 2021 21:05:48 +0000
 From: Sean Christopherson <seanjc@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Subject: Re: [PATCH 16/18] KVM: Don't take mmu_lock for range invalidation
  unless necessary
-Message-ID: <YGTg/AWdieMM/mS7@google.com>
+Message-ID: <YGTkLMAzk88wOiZm@google.com>
 References: <20210326021957.1424875-1-seanjc@google.com>
  <20210326021957.1424875-17-seanjc@google.com>
  <6e7dc7d0-f5dc-85d9-1c50-d23b761b5ff3@redhat.com>
+ <YGSmMeSOPcjxRwf6@google.com>
+ <56ea69fe-87b0-154b-e286-efce9233864e@redhat.com>
+ <YGTRzf/4i9Y8XR2c@google.com>
+ <0e30625f-934d-9084-e293-cb3bcbc9e4b8@redhat.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <6e7dc7d0-f5dc-85d9-1c50-d23b761b5ff3@redhat.com>
+In-Reply-To: <0e30625f-934d-9084-e293-cb3bcbc9e4b8@redhat.com>
 X-Mailman-Approved-At: Thu, 01 Apr 2021 05:28:17 -0400
 Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
  Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
@@ -109,25 +112,34 @@ Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 On Wed, Mar 31, 2021, Paolo Bonzini wrote:
-> On 26/03/21 03:19, Sean Christopherson wrote:
-> Also, related to the first part of the series, perhaps you could structure
-> the series in a slightly different way:
+> On 31/03/21 21:47, Sean Christopherson wrote:
+> > Rereading things, a small chunk of the rwsem nastiness can go away.  I don't see
+> > any reason to use rw_semaphore instead of rwlock_t.
 > 
-> 1) introduce the HVA walking API in common code, complete with on_lock and
-> patch 15, so that you can use on_lock to increase mmu_notifier_seq
-> 
-> 2) then migrate all architectures including x86 to the new API
-> 
-> IOW, first half of patch 10 and all of patch 15; then the second half of
-> patch 10; then patches 11-14.
+> Wouldn't it be incorrect to lock a mutex (e.g. inside *another* MMU
+> notifier's invalidate callback) while holding an rwlock_t?  That makes sense
+> because anybody that's busy waiting in write_lock potentially cannot be
+> preempted until the other task gets the mutex.  This is a potential
+> deadlock.
 
-100% agree with introducing on_lock separately from the conditional locking.
+Yes?  I don't think I follow your point though.  Nesting a spinlock or rwlock
+inside a rwlock is ok, so long as the locks are always taken in the same order,
+i.e. it's never mmu_lock -> mmu_notifier_slots_lock.
 
-Not so sure about introducing conditional locking and then converting non-x86
-archs.  I'd prefer to keep the conditional locking after arch conversion.
-If something does go awry, it would be nice to be able to preciesly bisect to
-the conditional locking.  Ditto if it needs to be reverted because it breaks an
-arch.
+> I also thought of busy waiting on down_read_trylock if the MMU notifier
+> cannot block, but that would also be invalid for the opposite reason (the
+> down_write task might be asleep, waiting for other readers to release the
+> task, and the down_read_trylock busy loop might not let that task run).
+> 
+> > And that's _already_ the worst case since notifications are currently
+> > serialized by mmu_lock.
+> 
+> But right now notifications are not a single critical section, they're two,
+> aren't they?
+
+Ah, crud, yes.  Holding a spinlock across the entire start() ... end() would be
+bad, especially when the notifier can block since that opens up the possibility
+of the task sleeping/blocking/yielding while the spinlock is held.  Bummer.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
