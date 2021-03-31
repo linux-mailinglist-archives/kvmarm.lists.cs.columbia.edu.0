@@ -2,67 +2,85 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 647AF34F1F5
-	for <lists+kvmarm@lfdr.de>; Tue, 30 Mar 2021 22:07:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA28A34FA51
+	for <lists+kvmarm@lfdr.de>; Wed, 31 Mar 2021 09:35:04 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E36644B32F;
-	Tue, 30 Mar 2021 16:07:30 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1019B4B3DC;
+	Wed, 31 Mar 2021 03:34:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id D5qncl39UvAs; Tue, 30 Mar 2021 16:07:30 -0400 (EDT)
+	with ESMTP id 8vHacSrK6bGT; Wed, 31 Mar 2021 03:34:58 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 590F34B329;
-	Tue, 30 Mar 2021 16:07:29 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AF2AF4B3D7;
+	Wed, 31 Mar 2021 03:34:57 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 97C3F4B323
- for <kvmarm@lists.cs.columbia.edu>; Tue, 30 Mar 2021 16:07:27 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C3E874B3B6
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 03:34:56 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id izw7m8m5Muil for <kvmarm@lists.cs.columbia.edu>;
- Tue, 30 Mar 2021 16:07:26 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E7DD24B309
- for <kvmarm@lists.cs.columbia.edu>; Tue, 30 Mar 2021 16:07:25 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ with ESMTP id wNy4LTgRcRYy for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 31 Mar 2021 03:34:55 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A5AB14B3B0
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 03:34:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1617176095;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Rw79CBvMLi5mEY0tcvp9kTn6CghMbW3t144/yxRDUX4=;
+ b=HvURMu1hUDFg7UEMiYVY4j7YvBeOgTeyQEAZ7Q1eG9jmWhni9ntk9RV4nzdd988o4QXnSr
+ ezxT42ztPe4w11EqctwdLowVCBvliDNyoRdiFSdqLOg0EEos8qvkqFQGZUyFghuy/2Ctj7
+ MujZpK9uFLuHNNZrAE712v83HG/N3Ns=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-260-Q4AVGFAoNCuvO8_eHBIvbQ-1; Wed, 31 Mar 2021 03:34:52 -0400
+X-MC-Unique: Q4AVGFAoNCuvO8_eHBIvbQ-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.phx2.redhat.com
+ [10.5.11.16])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id AF06361864;
- Tue, 30 Mar 2021 20:07:24 +0000 (UTC)
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=wait-a-minute.misterjones.org)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1lRKe2-004lFo-Iy; Tue, 30 Mar 2021 21:07:22 +0100
-Date: Tue, 30 Mar 2021 21:07:21 +0100
-Message-ID: <87k0pofls6.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Alexandru Elisei <alexandru.elisei@arm.com>
-Subject: Re: [PATCH v2] KVM: arm64: Initialize VCPU mdcr_el2 before loading it
-In-Reply-To: <5cfd4870-db31-cd7d-699f-bd70a1ab90fe@arm.com>
-References: <20210323180057.263356-1-alexandru.elisei@arm.com>
- <87sg4dq83r.wl-maz@kernel.org>
- <5cfd4870-db31-cd7d-699f-bd70a1ab90fe@arm.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
- (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: alexandru.elisei@arm.com,
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 87C43108BD09;
+ Wed, 31 Mar 2021 07:34:50 +0000 (UTC)
+Received: from [10.36.113.60] (ovpn-113-60.ams2.redhat.com [10.36.113.60])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 5582D5C5AE;
+ Wed, 31 Mar 2021 07:34:45 +0000 (UTC)
+To: Catalin Marinas <catalin.marinas@arm.com>,
+ Steven Price <steven.price@arm.com>
+References: <20210312151902.17853-1-steven.price@arm.com>
+ <20210312151902.17853-3-steven.price@arm.com>
+ <20210327152324.GA28167@arm.com> <20210328122131.GB17535@arm.com>
+ <e0b88560-34e1-dcc4-aaa7-9a7a5b771824@arm.com>
+ <20210330103013.GD18075@arm.com>
+From: David Hildenbrand <david@redhat.com>
+Organization: Red Hat GmbH
+Subject: Re: [PATCH v10 2/6] arm64: kvm: Introduce MTE VM feature
+Message-ID: <8977120b-841d-4882-2472-6e403bc9c797@redhat.com>
+Date: Wed, 31 Mar 2021 09:34:44 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
+MIME-Version: 1.0
+In-Reply-To: <20210330103013.GD18075@arm.com>
+Content-Language: en-US
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+Cc: Marc Zyngier <maz@kernel.org>, Juan Quintela <quintela@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Dr. David Alan Gilbert" <dgilbert@redhat.com>, qemu-devel@nongnu.org,
  linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+ Thomas Gleixner <tglx@linutronix.de>, Will Deacon <will@kernel.org>,
+ Dave Martin <Dave.Martin@arm.com>, linux-kernel@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -74,220 +92,114 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, 30 Mar 2021 18:13:07 +0100,
-Alexandru Elisei <alexandru.elisei@arm.com> wrote:
-> 
-> Hi Marc,
-> 
-> Thanks for having a look!
-> 
-> On 3/30/21 10:55 AM, Marc Zyngier wrote:
-> > Hi Alex,
-> >
-> > On Tue, 23 Mar 2021 18:00:57 +0000,
-> > Alexandru Elisei <alexandru.elisei@arm.com> wrote:
-> >> When a VCPU is created, the kvm_vcpu struct is initialized to zero in
-> >> kvm_vm_ioctl_create_vcpu(). On VHE systems, the first time
-> >> vcpu.arch.mdcr_el2 is loaded on hardware is in vcpu_load(), before it is
-> >> set to a sensible value in kvm_arm_setup_debug() later in the run loop. The
-> >> result is that KVM executes for a short time with MDCR_EL2 set to zero.
-> >>
-> >> This has several unintended consequences:
-> >>
-> >> * Setting MDCR_EL2.HPMN to 0 is constrained unpredictable according to ARM
-> >>   DDI 0487G.a, page D13-3820. The behavior specified by the architecture
-> >>   in this case is for the PE to behave as if MDCR_EL2.HPMN is set to a
-> >>   value less than or equal to PMCR_EL0.N, which means that an unknown
-> >>   number of counters are now disabled by MDCR_EL2.HPME, which is zero.
-> >>
-> >> * The host configuration for the other debug features controlled by
-> >>   MDCR_EL2 is temporarily lost. This has been harmless so far, as Linux
-> >>   doesn't use the other fields, but that might change in the future.
-> >>
-> >> Let's avoid both issues by initializing the VCPU's mdcr_el2 field in
-> >> kvm_vcpu_vcpu_first_run_init(), thus making sure that the MDCR_EL2 register
-> >> has a consistent value after each vcpu_load().
-> >>
-> >> Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
-> > This looks strangely similar to 4942dc6638b0 ("KVM: arm64: Write
-> > arch.mdcr_el2 changes since last vcpu_load on VHE"), just at a
-> > different point. Probably worth a Fixes tag.
-> 
-> This bug is present in the commit you are mentioning, and from what
-> I can tell it's also present in the commit it's fixing (d5a21bcc2995
-> ("KVM: arm64: Move common VHE/non-VHE trap config in separate
-> functions")) - vcpu->arch.mdcr_el2 is computed in
-> kvm_arm_setup_debug(), which is called after vcpu_load(). My guess
-> is that this bug is from VHE support was added (or soon after).
+On 30.03.21 12:30, Catalin Marinas wrote:
+> On Mon, Mar 29, 2021 at 05:06:51PM +0100, Steven Price wrote:
+>> On 28/03/2021 13:21, Catalin Marinas wrote:
+>>> On Sat, Mar 27, 2021 at 03:23:24PM +0000, Catalin Marinas wrote:
+>>>> On Fri, Mar 12, 2021 at 03:18:58PM +0000, Steven Price wrote:
+>>>>> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+>>>>> index 77cb2d28f2a4..b31b7a821f90 100644
+>>>>> --- a/arch/arm64/kvm/mmu.c
+>>>>> +++ b/arch/arm64/kvm/mmu.c
+>>>>> @@ -879,6 +879,22 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+>>>>>    	if (vma_pagesize == PAGE_SIZE && !force_pte)
+>>>>>    		vma_pagesize = transparent_hugepage_adjust(memslot, hva,
+>>>>>    							   &pfn, &fault_ipa);
+>>>>> +
+>>>>> +	if (fault_status != FSC_PERM && kvm_has_mte(kvm) && pfn_valid(pfn)) {
+>>>>> +		/*
+>>>>> +		 * VM will be able to see the page's tags, so we must ensure
+>>>>> +		 * they have been initialised. if PG_mte_tagged is set, tags
+>>>>> +		 * have already been initialised.
+>>>>> +		 */
+>>>>> +		struct page *page = pfn_to_page(pfn);
+>>>>> +		unsigned long i, nr_pages = vma_pagesize >> PAGE_SHIFT;
+>>>>> +
+>>>>> +		for (i = 0; i < nr_pages; i++, page++) {
+>>>>> +			if (!test_and_set_bit(PG_mte_tagged, &page->flags))
+>>>>> +				mte_clear_page_tags(page_address(page));
+>>>>> +		}
+>>>>> +	}
+>>>>
+>>>> This pfn_valid() check may be problematic. Following commit eeb0753ba27b
+>>>> ("arm64/mm: Fix pfn_valid() for ZONE_DEVICE based memory"), it returns
+>>>> true for ZONE_DEVICE memory but such memory is allowed not to support
+>>>> MTE.
+>>>
+>>> Some more thinking, this should be safe as any ZONE_DEVICE would be
+>>> mapped as untagged memory in the kernel linear map. It could be slightly
+>>> inefficient if it unnecessarily tries to clear tags in ZONE_DEVICE,
+>>> untagged memory. Another overhead is pfn_valid() which will likely end
+>>> up calling memblock_is_map_memory().
+>>>
+>>> However, the bigger issue is that Stage 2 cannot disable tagging for
+>>> Stage 1 unless the memory is Non-cacheable or Device at S2. Is there a
+>>> way to detect what gets mapped in the guest as Normal Cacheable memory
+>>> and make sure it's only early memory or hotplug but no ZONE_DEVICE (or
+>>> something else like on-chip memory)?  If we can't guarantee that all
+>>> Cacheable memory given to a guest supports tags, we should disable the
+>>> feature altogether.
+>>
+>> In stage 2 I believe we only have two types of mapping - 'normal' or
+>> DEVICE_nGnRE (see stage2_map_set_prot_attr()). Filtering out the latter is a
+>> case of checking the 'device' variable, and makes sense to avoid the
+>> overhead you describe.
+>>
+>> This should also guarantee that all stage-2 cacheable memory supports tags,
+>> as kvm_is_device_pfn() is simply !pfn_valid(), and pfn_valid() should only
+>> be true for memory that Linux considers "normal".
 
-Right. Can you please add a Fixes: tag for the same commit? At least
-that'd be consistent.
-
-> I can dig further, how far back in time should I aim for?
-> 
-> >
-> >> ---
-> >> Found by code inspection. Based on v5.12-rc4.
-> >>
-> >> Tested on an odroid-c4 with VHE. vcpu->arch.mdcr_el2 is calculated to be
-> >> 0x4e66. Without this patch, reading MDCR_EL2 after the first vcpu_load() in
-> >> kvm_arch_vcpu_ioctl_run() returns 0; with this patch it returns the correct
-> >> value, 0xe66 (FEAT_SPE is not implemented by the PE).
-> >>
-> >> This patch was initially part of the KVM SPE series [1], but those patches
-> >> haven't seen much activity, so I thought it would be a good idea to send
-> >> this patch separately to draw more attention to it.
-> >>
-> >> Changes in v2:
-> >> * Moved kvm_arm_vcpu_init_debug() earlier in kvm_vcpu_first_run_init() so
-> >>   vcpu->arch.mdcr_el2 is calculated even if kvm_vgic_map_resources() fails.
-> >> * Added comment to kvm_arm_setup_mdcr_el2 to explain what testing
-> >>   vcpu->guest_debug means.
-> >>
-> >> [1] https://www.spinics.net/lists/kvm-arm/msg42959.html
-> >>
-> >>  arch/arm64/include/asm/kvm_host.h |  1 +
-> >>  arch/arm64/kvm/arm.c              |  3 +-
-> >>  arch/arm64/kvm/debug.c            | 82 +++++++++++++++++++++----------
-> >>  3 files changed, 59 insertions(+), 27 deletions(-)
-> >>
-> >> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-> >> index 3d10e6527f7d..858c2fcfc043 100644
-> >> --- a/arch/arm64/include/asm/kvm_host.h
-> >> +++ b/arch/arm64/include/asm/kvm_host.h
-> >> @@ -713,6 +713,7 @@ static inline void kvm_arch_sched_in(struct kvm_vcpu *vcpu, int cpu) {}
-> >>  static inline void kvm_arch_vcpu_block_finish(struct kvm_vcpu *vcpu) {}
-> >>  
-> >>  void kvm_arm_init_debug(void);
-> >> +void kvm_arm_vcpu_init_debug(struct kvm_vcpu *vcpu);
-> >>  void kvm_arm_setup_debug(struct kvm_vcpu *vcpu);
-> >>  void kvm_arm_clear_debug(struct kvm_vcpu *vcpu);
-> >>  void kvm_arm_reset_debug_ptr(struct kvm_vcpu *vcpu);
-> >> diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-> >> index 7f06ba76698d..7088d8fe7186 100644
-> >> --- a/arch/arm64/kvm/arm.c
-> >> +++ b/arch/arm64/kvm/arm.c
-> >> @@ -580,6 +580,8 @@ static int kvm_vcpu_first_run_init(struct kvm_vcpu *vcpu)
-> >>  
-> >>  	vcpu->arch.has_run_once = true;
-> >>  
-> >> +	kvm_arm_vcpu_init_debug(vcpu);
-> >> +
-> >>  	if (likely(irqchip_in_kernel(kvm))) {
-> >>  		/*
-> >>  		 * Map the VGIC hardware resources before running a vcpu the
-> >> @@ -791,7 +793,6 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
-> >>  		}
-> >>  
-> >>  		kvm_arm_setup_debug(vcpu);
-> >> -
-> > Spurious change?
-> 
-> Definitely, thank you for spotting it.
-> 
-> >
-> >>  		/**************************************************************
-> >>  		 * Enter the guest
-> >>  		 */
-> >> diff --git a/arch/arm64/kvm/debug.c b/arch/arm64/kvm/debug.c
-> >> index 7a7e425616b5..3626d03354f6 100644
-> >> --- a/arch/arm64/kvm/debug.c
-> >> +++ b/arch/arm64/kvm/debug.c
-> >> @@ -68,6 +68,60 @@ void kvm_arm_init_debug(void)
-> >>  	__this_cpu_write(mdcr_el2, kvm_call_hyp_ret(__kvm_get_mdcr_el2));
-> >>  }
-> >>  
-> >> +/**
-> >> + * kvm_arm_setup_mdcr_el2 - configure vcpu mdcr_el2 value
-> >> + *
-> >> + * @vcpu:	the vcpu pointer
-> >> + * @host_mdcr:  host mdcr_el2 value
-> >> + *
-> >> + * This ensures we will trap access to:
-> >> + *  - Performance monitors (MDCR_EL2_TPM/MDCR_EL2_TPMCR)
-> >> + *  - Debug ROM Address (MDCR_EL2_TDRA)
-> >> + *  - OS related registers (MDCR_EL2_TDOSA)
-> >> + *  - Statistical profiler (MDCR_EL2_TPMS/MDCR_EL2_E2PB)
-> >> + */
-> >> +static void kvm_arm_setup_mdcr_el2(struct kvm_vcpu *vcpu, u32 host_mdcr)
-> >> +{
-> >> +	bool trap_debug = !(vcpu->arch.flags & KVM_ARM64_DEBUG_DIRTY);
-> >> +
-> >> +	/*
-> >> +	 * This also clears MDCR_EL2_E2PB_MASK to disable guest access
-> >> +	 * to the profiling buffer.
-> >> +	 */
-> >> +	vcpu->arch.mdcr_el2 = host_mdcr & MDCR_EL2_HPMN_MASK;
-> >> +	vcpu->arch.mdcr_el2 |= (MDCR_EL2_TPM |
-> >> +				MDCR_EL2_TPMS |
-> >> +				MDCR_EL2_TPMCR |
-> >> +				MDCR_EL2_TDRA |
-> >> +				MDCR_EL2_TDOSA);
-> >> +
-> >> +	/* Is the VM being debugged by userspace? */
-> >> +	if (vcpu->guest_debug) {
-> >> +		/* Route all software debug exceptions to EL2 */
-> >> +		vcpu->arch.mdcr_el2 |= MDCR_EL2_TDE;
-> >> +		if (vcpu->guest_debug & KVM_GUESTDBG_USE_HW)
-> >> +			trap_debug = true;
-> >> +	}
-> >> +
-> >> +	/* Trap debug register access */
-> >> +	if (trap_debug)
-> >> +		vcpu->arch.mdcr_el2 |= MDCR_EL2_TDA;
-> >> +
-> >> +	trace_kvm_arm_set_dreg32("MDCR_EL2", vcpu->arch.mdcr_el2);
-> >> +}
-> >> +
-> >> +/**
-> >> + * kvm_arm_vcpu_init_debug - setup vcpu debug traps
-> >> + *
-> >> + * @vcpu:	the vcpu pointer
-> >> + *
-> >> + * Set vcpu initial mdcr_el2 value.
-> >> + */
-> >> +void kvm_arm_vcpu_init_debug(struct kvm_vcpu *vcpu)
-> >> +{
-> >> +	kvm_arm_setup_mdcr_el2(vcpu, this_cpu_read(mdcr_el2));
-> > Given that kvm_arm_setup_mdcr_el2() always takes the current host
-> > value for mdcr_el2, why not moving the read into it and be done with
-> > it?
-> 
-> kvm_arm_setup_debug() is called with preemption disabled, and it can
-> use __this_cpu_read(). kvm_arm_vcpu_init_debug() is called with
-> preemption enabled, so it must use this_cpu_read(). I wanted to make
-> the distinction because kvm_arm_setup_debug() is in the run loop.
-
-I think it would be absolutely fine to make the slow path of
-kvm_vcpu_first_run_init() run with preempt disabled. This happens so
-rarely that that it isn't worth thinking about it.
-
-Please give it a lockdep run though! ;-)
+If you think "normal" == "normal System RAM", that's wrong; see below.
 
 > 
-> >
-> > Also, do we really need an extra wrapper?
+> That's the problem. With Anshuman's commit I mentioned above,
+> pfn_valid() returns true for ZONE_DEVICE mappings (e.g. persistent
+> memory, not talking about some I/O mapping that requires Device_nGnRE).
+> So kvm_is_device_pfn() is false for such memory and it may be mapped as
+> Normal but it is not guaranteed to support tagging.
+
+pfn_valid() means "there is a struct page"; if you do pfn_to_page() and 
+touch the page, you won't fault. So Anshuman's commit is correct.
+
+pfn_to_online_page() means, "there is a struct page and it's system RAM 
+that's in use; the memmap has a sane content"
+
 > 
-> I can remove the wrapper and have kvm_arm_setup_mdcr_el2() use
-> this_cpu_read() for the host's mdcr_el2 value at the cost of a
-> preempt disable/enable in the run loop when preemption is
-> disabled. If you think that would make the code easier to follow, I
-> can certainly do that.
+> For user MTE, we get away with this as the MAP_ANONYMOUS requirement
+> would filter it out while arch_add_memory() will ensure it's mapped as
+> untagged in the linear map. See another recent fix for hotplugged
+> memory: d15dfd31384b ("arm64: mte: Map hotplugged memory as Normal
+> Tagged"). We needed to ensure that ZONE_DEVICE doesn't end up as tagged,
+> only hoplugged memory. Both handled via arch_add_memory() in the arch
+> code with ZONE_DEVICE starting at devm_memremap_pages().
+> 
+>>>> I now wonder if we can get a MAP_ANONYMOUS mapping of ZONE_DEVICE pfn
+>>>> even without virtualisation.
+>>>
+>>> I haven't checked all the code paths but I don't think we can get a
+>>> MAP_ANONYMOUS mapping of ZONE_DEVICE memory as we normally need a file
+>>> descriptor.
+>>
+>> I certainly hope this is the case - it's the weird corner cases of device
+>> drivers that worry me. E.g. I know i915 has a "hidden" mmap behind an ioctl
+>> (see i915_gem_mmap_ioctl(), although this case is fine - it's MAP_SHARED).
+>> Mali's kbase did something similar in the past.
+> 
+> I think this should be fine since it's not a MAP_ANONYMOUS (we do allow
+> MAP_SHARED to be tagged).
+> 
 
-As explained above, I'd rather you keep the __this_cpu_read() and make
-kvm_vcpu_first_run_init() preemption safe.
-
-Thanks,
-
-	M.
 
 -- 
-Without deviation from the norm, progress is not possible.
+Thanks,
+
+David / dhildenb
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
