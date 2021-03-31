@@ -2,67 +2,98 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CE2F34FCF6
-	for <lists+kvmarm@lfdr.de>; Wed, 31 Mar 2021 11:34:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A89F134FD1F
+	for <lists+kvmarm@lfdr.de>; Wed, 31 Mar 2021 11:41:14 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9977C4B3F1;
-	Wed, 31 Mar 2021 05:34:13 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 22FD84B414;
+	Wed, 31 Mar 2021 05:41:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id nh95E-4xV3sq; Wed, 31 Mar 2021 05:34:13 -0400 (EDT)
+	with ESMTP id rhbCwn08thUh; Wed, 31 Mar 2021 05:41:14 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 73AE04B3D1;
-	Wed, 31 Mar 2021 05:34:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EBF764B411;
+	Wed, 31 Mar 2021 05:41:12 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6BDD44B3A3
- for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 05:34:10 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7953E4B3A5
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 05:41:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id fsApYpn9xq6R for <kvmarm@lists.cs.columbia.edu>;
- Wed, 31 Mar 2021 05:34:05 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B4F324B395
- for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 05:34:05 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id BC20061874;
- Wed, 31 Mar 2021 09:34:04 +0000 (UTC)
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1lRXEg-004ruN-N0; Wed, 31 Mar 2021 10:34:02 +0100
-MIME-Version: 1.0
-Date: Wed, 31 Mar 2021 10:34:02 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
+ with ESMTP id HyPouQH5YJmi for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 31 Mar 2021 05:41:10 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [216.205.24.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9932D4B38F
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 05:41:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1617183670;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=13ETPGXsf76nLgxQSYUcOfnDRwF5dXOwh3DpIOsgydE=;
+ b=RI1K6Fssqt7hUlhyzbMKI4QBb13TuCj0sR1qxdT2zpsJX5eEBTwH41nrGg66jFIFLks5cj
+ wCA6xSTfgSkES/2Pm4VJzUOZgswA9oFGBYwpb5jxIlH51xia4Lg1awqDbGr1lQIba67LE1
+ H3Cr9eOiXaYTJa6fel6vf9JWsjenQoY=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-257-QvUkYT_pPPSM7J-rXrPY1w-1; Wed, 31 Mar 2021 05:41:08 -0400
+X-MC-Unique: QvUkYT_pPPSM7J-rXrPY1w-1
+Received: by mail-ej1-f69.google.com with SMTP id k16so541356ejg.9
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 02:41:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=13ETPGXsf76nLgxQSYUcOfnDRwF5dXOwh3DpIOsgydE=;
+ b=RxirGsRxPNqYy4xsro8BpYrbVrYvLFhKE7l/SI3q36CBbLEls9OiGXIIPtZQhezC8G
+ l8K1NSMxjD3ddTgV6iwDqwzCfiOY4FnJ1yPUbb3jCNKawDBErzbSXBySNQZR5fOtYF1U
+ i9LgcAzRNrOm+qSfeezXPbSsklplgICv7hCPpMnQFa815FdzQ+BAwiyM76kqS8Z/XZaq
+ 7l3jeWK6pwSPnSVjO8m6tPBFeiidN8C8O+vkdqPukRWKJ5nq9W+ThdkZR7zyIx2dXZVf
+ CpdtzDNqJ3zrqtRTbTdARx9TJERDySmlxIONs8BKCV1k93zfV7PdRTOoeY3gxpCVJxfR
+ WdGA==
+X-Gm-Message-State: AOAM532XUURaeSeMp50RPfuy+CP1ceXGx5LmqZtqUM2cyDJe3gMb+6yu
+ UBpKsh2w1kupqc2ug7xKLf1gedyCjWTWWmwxefpFk6RHTV/kler7Z7CNEIco5KJMh8x6zh2Lf9r
+ wMqKUO6kJGGIF8ddmHGXCznNH
+X-Received: by 2002:a17:906:2bc3:: with SMTP id
+ n3mr2580939ejg.418.1617183667290; 
+ Wed, 31 Mar 2021 02:41:07 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJwSsS0Tsx00ZWZ0/lu50AT1LbGXR9x8m5wdROjQWRD+Wcg6SCBEWtjgSLJ9LavhsubZOMOLAQ==
+X-Received: by 2002:a17:906:2bc3:: with SMTP id
+ n3mr2580906ejg.418.1617183667053; 
+ Wed, 31 Mar 2021 02:41:07 -0700 (PDT)
+Received: from ?IPv6:2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e?
+ ([2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e])
+ by smtp.gmail.com with ESMTPSA id t15sm1151761edc.34.2021.03.31.02.41.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 31 Mar 2021 02:41:05 -0700 (PDT)
 Subject: Re: [PATCH 00/18] KVM: Consolidate and optimize MMU notifiers
-In-Reply-To: <a2ca8cb2-5c91-b971-9b6e-65cf9ee97ffa@redhat.com>
+To: Marc Zyngier <maz@kernel.org>
 References: <20210326021957.1424875-1-seanjc@google.com>
  <a2ca8cb2-5c91-b971-9b6e-65cf9ee97ffa@redhat.com>
-User-Agent: Roundcube Webmail/1.4.11
-Message-ID: <e50f6f28c0446cd328e475859ef05dc4@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: pbonzini@redhat.com, seanjc@google.com,
- chenhuacai@kernel.org, aleksandar.qemu.devel@gmail.com, paulus@ozlabs.org,
- james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
- vkuznets@redhat.com, wanpengli@tencent.com, jmattson@google.com,
- joro@8bytes.org, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, linux-mips@vger.kernel.org, kvm@vger.kernel.org,
- kvm-ppc@vger.kernel.org, linux-kernel@vger.kernel.org, bgardon@google.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
+ <e50f6f28c0446cd328e475859ef05dc4@kernel.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <569a089e-471f-8182-cdb2-74188f0cc81d@redhat.com>
+Date: Wed, 31 Mar 2021 11:41:04 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
+MIME-Version: 1.0
+In-Reply-To: <e50f6f28c0446cd328e475859ef05dc4@kernel.org>
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pbonzini@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
 Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
  Sean Christopherson <seanjc@google.com>, Joerg Roedel <joro@8bytes.org>,
  Huacai Chen <chenhuacai@kernel.org>, linux-mips@vger.kernel.org,
@@ -83,29 +114,24 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2021-03-31 08:57, Paolo Bonzini wrote:
-
-> Queued and 1-9 and 18, thanks.  There's a small issue in patch 10 that
-> prevented me from committing 10-15, but they mostly look good.
-
-Can you please push the resulting merge somewhere?
-
-I'm concerned that it will conflict in interesting way with other stuff
-that is on its way on the arm64 side, not to mentiobn that this hasn't
-been tested at all on anything but x86 (and given the series was posted
-on Friday, that's a bit of a short notice).
-
-Thanks,
-
-         M.
--- 
-Jazz is not dead. It just smells funny...
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+T24gMzEvMDMvMjEgMTE6MzQsIE1hcmMgWnluZ2llciB3cm90ZToKPiAKPj4gUXVldWVkIGFuZCAx
+LTkgYW5kIDE4LCB0aGFua3MuwqAgVGhlcmUncyBhIHNtYWxsIGlzc3VlIGluIHBhdGNoIDEwIHRo
+YXQKPj4gcHJldmVudGVkIG1lIGZyb20gY29tbWl0dGluZyAxMC0xNSwgYnV0IHRoZXkgbW9zdGx5
+IGxvb2sgZ29vZC4KPiAKPiBDYW4geW91IHBsZWFzZSBwdXNoIHRoZSByZXN1bHRpbmcgbWVyZ2Ug
+c29tZXdoZXJlPwo+IAo+IEknbSBjb25jZXJuZWQgdGhhdCBpdCB3aWxsIGNvbmZsaWN0IGluIGlu
+dGVyZXN0aW5nIHdheSB3aXRoIG90aGVyIHN0dWZmCj4gdGhhdCBpcyBvbiBpdHMgd2F5IG9uIHRo
+ZSBhcm02NCBzaWRlLCBub3QgdG8gbWVudGlvYm4gdGhhdCB0aGlzIGhhc24ndAo+IGJlZW4gdGVz
+dGVkIGF0IGFsbCBvbiBhbnl0aGluZyBidXQgeDg2IChhbmQgZ2l2ZW4gdGhlIHNlcmllcyB3YXMg
+cG9zdGVkCj4gb24gRnJpZGF5LCB0aGF0J3MgYSBiaXQgb2YgYSBzaG9ydCBub3RpY2UpLgoKWWVz
+LCBJIHdpbGwgcHVzaCBpdCBzaG9ydGx5IHRvIGt2bS9xdWV1ZS4gIE5vdGUgdGhhdCB0aGUgcGF0
+Y2hlcyBJIGhhdmUgCnB1c2hlZCBhcmUgeDg2IG9ubHkgYXBhcnQgZnJvbSBjaGFuZ2VzIHRvIHRy
+YWNlcG9pbnRzLiAgVGhlIHJlc3Qgd2lsbCAKY2VydGFpbmx5IG5lZWQgYSBsb3QgbW9yZSBiYWtp
+bmcsIHdoaWNoIGlzIGFsc28gd2h5IEkgZ290IHJpZCBxdWlja2x5IG9mIAp0aGUgZWFzeSBvbmVz
+LgoKUGFvbG8KCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+Cmt2bWFybSBtYWlsaW5nIGxpc3QKa3ZtYXJtQGxpc3RzLmNzLmNvbHVtYmlhLmVkdQpodHRwczov
+L2xpc3RzLmNzLmNvbHVtYmlhLmVkdS9tYWlsbWFuL2xpc3RpbmZvL2t2bWFybQo=
