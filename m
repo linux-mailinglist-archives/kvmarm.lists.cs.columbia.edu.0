@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 99465351201
-	for <lists+kvmarm@lfdr.de>; Thu,  1 Apr 2021 11:28:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03560351203
+	for <lists+kvmarm@lfdr.de>; Thu,  1 Apr 2021 11:28:22 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 15DF34B640;
-	Thu,  1 Apr 2021 05:28:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 998624B628;
+	Thu,  1 Apr 2021 05:28:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,72 +14,73 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Vu65X-+5zCOq; Thu,  1 Apr 2021 05:28:19 -0400 (EDT)
+	with ESMTP id GgRkoNYixWph; Thu,  1 Apr 2021 05:28:20 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 89C3E4B61F;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A59004B626;
 	Thu,  1 Apr 2021 05:28:18 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 55F9C4B48A
- for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 12:20:27 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 00FDA4B491
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 12:41:28 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Wg8CsbGNvx9P for <kvmarm@lists.cs.columbia.edu>;
- Wed, 31 Mar 2021 12:20:26 -0400 (EDT)
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com
- [209.85.210.175])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3D4364B486
- for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 12:20:26 -0400 (EDT)
-Received: by mail-pf1-f175.google.com with SMTP id h3so14896400pfr.12
- for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 09:20:26 -0700 (PDT)
+ with ESMTP id N8ltjuozVoXy for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 31 Mar 2021 12:41:26 -0400 (EDT)
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com
+ [209.85.210.182])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B37E84B47F
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 12:41:26 -0400 (EDT)
+Received: by mail-pf1-f182.google.com with SMTP id m11so14939192pfc.11
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 09:41:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:from:to:cc:subject:message-id:references:mime-version
  :content-disposition:in-reply-to;
- bh=hbFgBS0tsmLZecdBb34MxnZHD2vsOnYlgFmBhEC+AGM=;
- b=W6gYHfyq+FLodOWhD9srXTh8aaio7ufLJGiEJEiMEepafRE4jD5CPt2u6zyCqNkmEf
- RBW97ptdPXvm5UekA+1t/rKsqmWK0oYE75ZvbG8qPcwUeH2CNY8N2JYzQdJbcC/FqLox
- DcD9DWu45srgtpcHvYUIYloa787DwMs9RQszqMJAGT7a/cdNDkSzvp8GETRb/h8dEjgP
- 8s6cZSDU08hOz+njpFIAcEg7jI2UFPlQ/B0ogtWJ4tAdwpEoVAvBIo0c7kJY+qV4PKbI
- 5JrEg5cZ6lg6SU1xy6TAmWN7lx027fNcjkiELq9jkPTEPVzyTbPPJIMZcf+zN1WRmx+V
- ubUw==
+ bh=iR0wTKyQqrCYG4Q831SOK/hJxQXD0DTeg7JGIplTxaE=;
+ b=pDOL/AXp1YZDHSJM55VWmMHEXRZyEKHoWUfLiwu43sQHWLgrvb2clWRDjjyCUh0dsJ
+ bNDMyWcbeueU/GKG4kOjx3b7egix4+sMYZfIS9I0MmjVVx1rcp5WszmjK7+6YeQKCfOM
+ 2FXvSyhaSnZkWSZYBa+Zf13p0L3I/egR0XklyggIPr+PefBGDyB7ynzXrNWFqXB2lvPg
+ VgGQ2uiEQdyQFwKIAdbJTxKQSwskTj3uIlVQzOZzPoiS3tMYr2MmjzSdDZfHyKUb7IXo
+ nUd7C6HDGQOQomM2rO6UOTojM3AlSltwg6FTYiW5B9h7N+cvmdJr9MHgjJMW5v34nPiS
+ VoEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to;
- bh=hbFgBS0tsmLZecdBb34MxnZHD2vsOnYlgFmBhEC+AGM=;
- b=XX72Wf3AvTrTAB1TfasbHZs4pmwlfr43v2w3ViAaP38Y5gVRnB7ybdyoXe3yPH5WcP
- bWbB/SQZkCJk0wzUppToR115J7zLOsyauF1J8s0gNS85EkL3TJJ5biHJxgdKnlXAUHRj
- d7ev9sPHkdz1j+eKVHtdBQiG/h0jj/63mPVmRWIZzw/fZMJDOEGcDwyzJ0Hbtx2j2FKc
- +RbKX8T2l7iRy8xJ8uNnbI9tfchI/QZ5F9xgUk5NTtUANfHnxL6x2rNvBWjWESvdq2In
- 26g5G7/+EvQQy7xVkc41TTH3+nCiY/4+Ug+m/SN6H5r+487nS3Tu0E7JjTaxmyLOQo5u
- yxPg==
-X-Gm-Message-State: AOAM531bwTFb4FQLVjmQ0s/0A4qQIQshRxAt9fAHHtgiLsHIQ7DPadTz
- pAw9tveN5PheTdIZbiEOqm/KQw==
-X-Google-Smtp-Source: ABdhPJyEnoIvLhWAi7NNGEWROpPtFz0kvkUm7Uq+sDDKk3AwLz6Jre1P4F3JOHb9hmWMRVWQ5USifw==
-X-Received: by 2002:a65:428b:: with SMTP id j11mr3941343pgp.47.1617207624928; 
- Wed, 31 Mar 2021 09:20:24 -0700 (PDT)
+ bh=iR0wTKyQqrCYG4Q831SOK/hJxQXD0DTeg7JGIplTxaE=;
+ b=nf9fmYtW3G9xecvC+Iyz5vO2UY+yfEkhrmDdX+zZCALsnsZbMZLPUoGHpF3QPB78u5
+ 0weXfHZIcJdE/KahNgrJKsG3ME3kWnpPr5v2tyQ33JWcMXNphdw2onWSeeuDeCCt2vNr
+ S7V3MA2dL++HgES7y0btuOy7qI5OX1mKNyak+3pr3UKx36HsDumnGBGhquWokNNsLglI
+ b1MIc6oR64feoT+EVhCj9qt7DNbWGaLnbmuRZnVC8d0V1bST9AeZ1lXFJbUxgqW2fpNX
+ COgxlqbYvVhhTPXkdi8m+UQ117hm2adReW6E7Z0AZBQG810glKRl94o4jiGs6L7FAYEn
+ 5JgQ==
+X-Gm-Message-State: AOAM532vqRJXvhUDWbjg0qNA4eZH1uzYx6PBTQ4ByDocCD1K/s1HeUas
+ F0eO3WNJ/eOQ6n3S5Pu63OzY/w==
+X-Google-Smtp-Source: ABdhPJwZrE+nqFXUOYwl468wAhlBPq8DZI8v9hc2mHxYO0VlQq5depEehdtkJEVYztZyBSLt0lNXHA==
+X-Received: by 2002:aa7:86c1:0:b029:203:900:2813 with SMTP id
+ h1-20020aa786c10000b029020309002813mr3647646pfo.35.1617208885458; 
+ Wed, 31 Mar 2021 09:41:25 -0700 (PDT)
 Received: from google.com (240.111.247.35.bc.googleusercontent.com.
  [35.247.111.240])
- by smtp.gmail.com with ESMTPSA id h19sm2862436pfc.172.2021.03.31.09.20.24
+ by smtp.gmail.com with ESMTPSA id a13sm2933328pgm.43.2021.03.31.09.41.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Mar 2021 09:20:24 -0700 (PDT)
-Date: Wed, 31 Mar 2021 16:20:20 +0000
+ Wed, 31 Mar 2021 09:41:24 -0700 (PDT)
+Date: Wed, 31 Mar 2021 16:41:21 +0000
 From: Sean Christopherson <seanjc@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 10/18] KVM: Move x86's MMU notifier memslot walkers to
- generic code
-Message-ID: <YGShRP9E49p3vcos@google.com>
+Subject: Re: [PATCH 16/18] KVM: Don't take mmu_lock for range invalidation
+ unless necessary
+Message-ID: <YGSmMeSOPcjxRwf6@google.com>
 References: <20210326021957.1424875-1-seanjc@google.com>
- <20210326021957.1424875-11-seanjc@google.com>
- <ba3f7a9c-0b59-cbeb-5d46-4236cde2c51f@redhat.com>
+ <20210326021957.1424875-17-seanjc@google.com>
+ <6e7dc7d0-f5dc-85d9-1c50-d23b761b5ff3@redhat.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <ba3f7a9c-0b59-cbeb-5d46-4236cde2c51f@redhat.com>
+In-Reply-To: <6e7dc7d0-f5dc-85d9-1c50-d23b761b5ff3@redhat.com>
 X-Mailman-Approved-At: Thu, 01 Apr 2021 05:28:17 -0400
 Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
  Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
@@ -108,89 +109,106 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 On Wed, Mar 31, 2021, Paolo Bonzini wrote:
 > On 26/03/21 03:19, Sean Christopherson wrote:
-> > +#ifdef KVM_ARCH_WANT_NEW_MMU_NOTIFIER_APIS
-> > +	kvm_handle_hva_range(mn, address, address + 1, pte, kvm_set_spte_gfn);
-> > +#else
-> >   	struct kvm *kvm = mmu_notifier_to_kvm(mn);
-> >   	int idx;
-> >  	trace_kvm_set_spte_hva(address);
-> > 	idx = srcu_read_lock(&kvm->srcu);
-> > 
-> > 	KVM_MMU_LOCK(kvm);
-> > 
-> > 	kvm->mmu_notifier_seq++;
-> > 
-> > 	if (kvm_set_spte_hva(kvm, address, pte))
-> > 		kvm_flush_remote_tlbs(kvm);
-> > 
-> >   	KVM_MMU_UNLOCK(kvm);
-> >   	srcu_read_unlock(&kvm->srcu, idx);
+> > +	/*
+> > +	 * Reset the lock used to prevent memslot updates between MMU notifier
+> > +	 * range_start and range_end.  At this point no more MMU notifiers will
+> > +	 * run, but the lock could still be held if KVM's notifier was removed
+> > +	 * between range_start and range_end.  No threads can be waiting on the
+> > +	 * lock as the last reference on KVM has been dropped.  If the lock is
+> > +	 * still held, freeing memslots will deadlock.
+> > +	 */
+> > +	init_rwsem(&kvm->mmu_notifier_slots_lock);
+> 
+> I was going to say that this is nasty,
+
+Heh, I still think it's nasty.
+
+> then I noticed that
+> mmu_notifier_unregister uses SRCU to ensure completion of concurrent calls
+> to the MMU notifier.  So I guess it's fine, but it's better to point it out:
+> 
+> 	/*
+> 	 * At this point no more MMU notifiers will run and pending
+> 	 * calls to range_start have completed, but the lock would
+> 	 * still be held and never released if the MMU notifier was
+> 	 * removed between range_start and range_end.  Since the last
+> 	 * reference to the struct kvm has been dropped, no threads can
+> 	 * be waiting on the lock, but we might still end up taking it
+> 	 * when freeing memslots in kvm_arch_destroy_vm.  Reset the lock
+> 	 * to avoid deadlocks.
+> 	 */
+> 
+> That said, the easiest way to avoid this would be to always update
+> mmu_notifier_count.
+
+Updating mmu_notifier_count requires taking mmu_lock, which would defeat the
+purpose of these shenanigans.  I think it could be made atomic, since mmu_lock
+would be taken before the elevated count _must_ be visible, but that would
+break the mmu_notifier_range_{start,end} optimization that was recently added.
+
+Or did I completely misunderstand what you're suggesting?
+
+> I don't mind the rwsem, but at least I suggest that you
+> split the patch in two---the first one keeping the mmu_notifier_count update
+> unconditional, and the second one introducing the rwsem and the on_lock
+> function kvm_inc_notifier_count.  Please document the new lock in
+> Documentation/virt/kvm/locking.rst too.
+
+Note, will update docs.
+
+> Also, related to the first part of the series, perhaps you could structure
+> the series in a slightly different way:
+> 
+> 1) introduce the HVA walking API in common code, complete with on_lock and
+> patch 15, so that you can use on_lock to increase mmu_notifier_seq
+> 
+> 2) then migrate all architectures including x86 to the new API
+> 
+> IOW, first half of patch 10 and all of patch 15; then the second half of
+> patch 10; then patches 11-14.
+> 
+> > +#if defined(CONFIG_MMU_NOTIFIER) && defined(KVM_ARCH_WANT_MMU_NOTIFIER)
+> > +	down_write(&kvm->mmu_notifier_slots_lock);
+> > +#endif
+> >  	rcu_assign_pointer(kvm->memslots[as_id], slots);
+> > +#if defined(CONFIG_MMU_NOTIFIER) && defined(KVM_ARCH_WANT_MMU_NOTIFIER)
+> > +	up_write(&kvm->mmu_notifier_slots_lock);
 > > +#endif
 > 
-> The kvm->mmu_notifier_seq is missing in the new API side.  I guess you can
-> add an argument to __kvm_handle_hva_range and handle it also in patch 15
-> ("KVM: Take mmu_lock when handling MMU notifier iff the hva hits a
-> memslot").
+> Please do this unconditionally, the cost is minimal if the rwsem is not
+> contended (as is the case if the architecture doesn't use MMU notifiers at
+> all).
 
-Yikes.  Superb eyes!
+It's not the cost, it's that mmu_notifier_slots_lock doesn't exist.  That's an
+easily solved problem, but then the lock wouldn't be initialized since
+kvm_init_mmu_notifier() is a nop.  That's again easy to solve, but IMO would
+look rather weird.  I guess the counter argument is that __kvm_memslots()
+wouldn't need #ifdeffery.
 
-That does bring up an oddity I discovered when digging into this.  Every call
-to .change_pte() is bookended by .invalidate_range_{start,end}(), i.e. the above
-missing kvm->mmu_notifier_seq++ is benign because kvm->mmu_notifier_count is
-guaranteed to be non-zero.
+These are the to ideas I've come up with:
 
-I'm also fairly certain it means kvm_set_spte_gfn() is effectively dead code on
-_all_ architectures.  x86 and MIPS are clearcut nops if the old SPTE is
-not-present, and that's guaranteed due to the prior invalidation.  PPC simply
-unmaps the SPTE, which again should be a nop due to the invalidation.  arm64 is
-a bit murky, but if I'm reading the code correctly, it's also a nop because
-kvm_pgtable_stage2_map() is called without a cache pointer, which I think means
-it will map an entry if and only if an existing PTE was found.
+Option 1:
+	static int kvm_init_mmu_notifier(struct kvm *kvm)
+	{
+		init_rwsem(&kvm->mmu_notifier_slots_lock);
 
-I haven't actually tested the above analysis, e.g. by asserting that
-kvm->mmu_notifier_count is indeed non-zero.  I'll do that sooner than later.
-But, given the shortlog of commit:
+	#if defined(CONFIG_MMU_NOTIFIER) && defined(KVM_ARCH_WANT_MMU_NOTIFIER)
+		kvm->mmu_notifier.ops = &kvm_mmu_notifier_ops;
+		return mmu_notifier_register(&kvm->mmu_notifier, current->mm);
+	#else
+		return 0;
+	#endif
+	}
 
-  6bdb913f0a70 ("mm: wrap calls to set_pte_at_notify with invalidate_range_start
-                 and invalidate_range_end")
 
-I'm fairly confident my analysis is correct.  And if so, it also means that the
-whole point of adding .change_pte() in the first place (for KSM, commit
-828502d30073, "ksm: add mmu_notifier set_pte_at_notify()"), has since been lost.
+Option 2:
+	kvm_mmu_notifier_lock(kvm);
+	rcu_assign_pointer(kvm->memslots[as_id], slots);
+	kvm_mmu_notifier_unlock(kvm);
 
-When it was originally added, .change_pte() was a pure alternative to
-invalidating the entry.
 
-  void __mmu_notifier_change_pte(struct mm_struct *mm, unsigned long address,
-                               pte_t pte)
-  {
-        struct mmu_notifier *mn;
-        struct hlist_node *n;
 
-        rcu_read_lock();
-        hlist_for_each_entry_rcu(mn, n, &mm->mmu_notifier_mm->list, hlist) {
-                if (mn->ops->change_pte)
-                        mn->ops->change_pte(mn, mm, address, pte);
-                /*
-                 * Some drivers don't have change_pte,
-                 * so we must call invalidate_page in that case.
-                 */
-                else if (mn->ops->invalidate_page)
-                        mn->ops->invalidate_page(mn, mm, address);
-        }
-        rcu_read_unlock();
-  }
 
-The aforementioned commit 6bdb913f0a70 wrapped set_pte_at_notify() with
-invalidate_range_{start,end}() so that .invalidate_page() implementations could
-sleep.  But, no one noticed that in doing so, .change_pte() was completely
-neutered.
-
-Assuming all of the above is correct, I'm very tempted to rip out .change_pte()
-entirely.  It's been dead weight for 8+ years and no one has complained about
-KSM+KVM performance (I'd also be curious to know how much performance was gained
-by shaving VM-Exits).  As KVM is the only user of .change_pte(), dropping it in
-KVM would mean the entire MMU notifier could also go away.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
