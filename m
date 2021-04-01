@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1450F351589
-	for <lists+kvmarm@lfdr.de>; Thu,  1 Apr 2021 16:08:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BBC2A351587
+	for <lists+kvmarm@lfdr.de>; Thu,  1 Apr 2021 16:08:17 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BC3284B6C0;
-	Thu,  1 Apr 2021 10:08:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6AC774B52E;
+	Thu,  1 Apr 2021 10:08:17 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.209
@@ -18,50 +18,50 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4ZQwgBsVzzgp; Thu,  1 Apr 2021 10:08:18 -0400 (EDT)
+	with ESMTP id fb7PC4UO2VdB; Thu,  1 Apr 2021 10:08:16 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DFF8C4B6D2;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 956394B6C9;
 	Thu,  1 Apr 2021 10:08:11 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AC0A94B64D
- for <kvmarm@lists.cs.columbia.edu>; Thu,  1 Apr 2021 09:56:20 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 291F44B604
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  1 Apr 2021 09:56:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id uUMTcVB7GUqv for <kvmarm@lists.cs.columbia.edu>;
- Thu,  1 Apr 2021 09:56:19 -0400 (EDT)
+ with ESMTP id JaT-YxcD0hpc for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  1 Apr 2021 09:56:03 -0400 (EDT)
 Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [63.128.21.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C5C3F4B604
- for <kvmarm@lists.cs.columbia.edu>; Thu,  1 Apr 2021 09:56:19 -0400 (EDT)
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5195C4B692
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  1 Apr 2021 09:56:03 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1617285379;
+ s=mimecast20190719; t=1617285363;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YJJ/VJwoWhfLVBiD22ep1zPpQ5T3CblMOlviKAdv9s8=;
- b=PP9gfJZVXnYgJUKaoT182ou6HXAJqnBAxAnImbRZl1gfzsRcbpfHnS0VKTBBjdVp5Miahs
- DEeDDO8+xRhAktc29vJ2qs4ptUhgoZyG1m0R1rEAIyGBIMXaCPv2I388zATvnXvjz5Uz8t
- 3mPW6e6XfMda5H4t5esfV+KYaha1/78=
+ bh=GMwVPIRuutm/mg4jT4wBYpyFXiE89KqV/L7ffhzIn/0=;
+ b=bwigFyndywvkkU5RT+no76OFwj0eeNo9mDcoC0SPj/gAUA0Gj33cgdgb8laXcB5i8Kskid
+ kGmTIS6Co2yc17lv7JYb18NEIntz9SvASFeHLN8Kc4FsQsCpebAK4pDP26GsbN4tcsaVWF
+ Gi4agcn+UkjsowNynZV9dfgwyuyfAYY=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-266-zfj5oBFjNH2EltbB_XYNcA-1; Thu, 01 Apr 2021 09:55:30 -0400
-X-MC-Unique: zfj5oBFjNH2EltbB_XYNcA-1
+ us-mta-442-1O5aWV9lOwaPC3HfHnwHug-1; Thu, 01 Apr 2021 09:55:36 -0400
+X-MC-Unique: 1O5aWV9lOwaPC3HfHnwHug-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.phx2.redhat.com
  [10.5.11.15])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 54D93108598B;
- Thu,  1 Apr 2021 13:55:23 +0000 (UTC)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id C8B2419251A0;
+ Thu,  1 Apr 2021 13:55:31 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.35.206.58])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 9288A5D6B1;
- Thu,  1 Apr 2021 13:55:11 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id B4C4D5D6B1;
+ Thu,  1 Apr 2021 13:55:23 +0000 (UTC)
 From: Maxim Levitsky <mlevitsk@redhat.com>
 To: kvm@vger.kernel.org
-Subject: [PATCH v2 2/9] KVM: introduce KVM_CAP_SET_GUEST_DEBUG2
-Date: Thu,  1 Apr 2021 16:54:44 +0300
-Message-Id: <20210401135451.1004564-3-mlevitsk@redhat.com>
+Subject: [PATCH v2 3/9] KVM: x86: implement KVM_CAP_SET_GUEST_DEBUG2
+Date: Thu,  1 Apr 2021 16:54:45 +0300
+Message-Id: <20210401135451.1004564-4-mlevitsk@redhat.com>
 In-Reply-To: <20210401135451.1004564-1-mlevitsk@redhat.com>
 References: <20210401135451.1004564-1-mlevitsk@redhat.com>
 MIME-Version: 1.0
@@ -104,41 +104,48 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-This capability will allow the user to know which KVM_GUESTDBG_* bits
-are supported.
+Store the supported bits into KVM_GUESTDBG_VALID_MASK
+macro, similar to how arm does this.
 
 Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
 ---
- Documentation/virt/kvm/api.rst | 3 +++
- include/uapi/linux/kvm.h       | 1 +
- 2 files changed, 4 insertions(+)
+ arch/x86/include/asm/kvm_host.h | 9 +++++++++
+ arch/x86/kvm/x86.c              | 2 ++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
-index 38e327d4b479..9778b2434c03 100644
---- a/Documentation/virt/kvm/api.rst
-+++ b/Documentation/virt/kvm/api.rst
-@@ -3357,6 +3357,9 @@ indicating the number of supported registers.
- For ppc, the KVM_CAP_PPC_GUEST_DEBUG_SSTEP capability indicates whether
- the single-step debug event (KVM_GUESTDBG_SINGLESTEP) is supported.
+diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+index a52f973bdff6..cc7c82a449d5 100644
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -221,6 +221,15 @@ enum x86_intercept_stage;
+ #define DR7_FIXED_1	0x00000400
+ #define DR7_VOLATILE	0xffff2bff
  
-+Also when supported, KVM_CAP_SET_GUEST_DEBUG2 capability indicates the
-+supported KVM_GUESTDBG_* bits in the control field.
++#define KVM_GUESTDBG_VALID_MASK \
++	(KVM_GUESTDBG_ENABLE | \
++	KVM_GUESTDBG_SINGLESTEP | \
++	KVM_GUESTDBG_USE_HW_BP | \
++	KVM_GUESTDBG_USE_SW_BP | \
++	KVM_GUESTDBG_INJECT_BP | \
++	KVM_GUESTDBG_INJECT_DB)
 +
- When debug events exit the main run loop with the reason
- KVM_EXIT_DEBUG with the kvm_debug_exit_arch part of the kvm_run
- structure containing architecture specific debug information.
-diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
-index f6afee209620..727010788eff 100644
---- a/include/uapi/linux/kvm.h
-+++ b/include/uapi/linux/kvm.h
-@@ -1078,6 +1078,7 @@ struct kvm_ppc_resize_hpt {
- #define KVM_CAP_DIRTY_LOG_RING 192
- #define KVM_CAP_X86_BUS_LOCK_EXIT 193
- #define KVM_CAP_PPC_DAWR1 194
-+#define KVM_CAP_SET_GUEST_DEBUG2 195
- 
- #ifdef KVM_CAP_IRQ_ROUTING
- 
++
+ #define PFERR_PRESENT_BIT 0
+ #define PFERR_WRITE_BIT 1
+ #define PFERR_USER_BIT 2
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index a9d95f90a048..956e8e0bd6af 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -3798,6 +3798,8 @@ int kvm_vm_ioctl_check_extension(struct kvm *kvm, long ext)
+ 	case KVM_CAP_ENFORCE_PV_FEATURE_CPUID:
+ 		r = 1;
+ 		break;
++	case KVM_CAP_SET_GUEST_DEBUG2:
++		return KVM_GUESTDBG_VALID_MASK;
+ #ifdef CONFIG_KVM_XEN
+ 	case KVM_CAP_XEN_HVM:
+ 		r = KVM_XEN_HVM_CONFIG_HYPERCALL_MSR |
 -- 
 2.26.2
 
