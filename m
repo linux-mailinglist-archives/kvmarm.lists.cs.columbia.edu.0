@@ -2,101 +2,63 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 43B5C351209
-	for <lists+kvmarm@lfdr.de>; Thu,  1 Apr 2021 11:28:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D96D43511FB
+	for <lists+kvmarm@lfdr.de>; Thu,  1 Apr 2021 11:26:22 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E32964B624;
-	Thu,  1 Apr 2021 05:28:25 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6A8924B616;
+	Thu,  1 Apr 2021 05:26:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZeAbDwxChcQs; Thu,  1 Apr 2021 05:28:24 -0400 (EDT)
+	with ESMTP id trIykpLFniDA; Thu,  1 Apr 2021 05:26:22 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 336434B638;
-	Thu,  1 Apr 2021 05:28:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3C0A34B5F7;
+	Thu,  1 Apr 2021 05:26:21 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8E43D4B50F
- for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 17:47:57 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DA5FC4B5F7
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  1 Apr 2021 05:26:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id SB-JQPhqU+gv for <kvmarm@lists.cs.columbia.edu>;
- Wed, 31 Mar 2021 17:47:56 -0400 (EDT)
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com
- [209.85.214.176])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 766114B468
- for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 17:47:56 -0400 (EDT)
-Received: by mail-pl1-f176.google.com with SMTP id f17so8600385plr.0
- for <kvmarm@lists.cs.columbia.edu>; Wed, 31 Mar 2021 14:47:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=8xelLMkxcC6WtOofiMih6F32tqKnPtSyw2jgK+CDHu4=;
- b=lRekl3fx/1xVTY4VSWAcqWY60kFcYfE3ex87ZMiyF3YMama3alXemQAvey4ua2Q2NU
- eIzwbu8ulmg+dSFPJ/LLw9M8TUwNtZ6Kf+zsLYX2btGWc+Mt6r+WqI3nE4cuuPodpDWB
- vkPyVKuV4l3DmqBnpyedy5K2ELlMSQALGThaUNGPrMsL7lsHqmcjeklTCzt6GLWxXFOh
- fcNEDPnE/MDmfK1tIflC1u5mhPxRa8t1lqjHjJZcz8mlLg7SmVa3KnKTiibQ3TVoVdfM
- W0WQ/smihKucHGWCEceoSVORhE99fiU+/wSW3je405yKPyFBfEyxm9lRJkvzLqkv3YeD
- nlyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=8xelLMkxcC6WtOofiMih6F32tqKnPtSyw2jgK+CDHu4=;
- b=n4jNfKGCauHGKToVcjNlehu2k199SGW1KdKRlNHzIlGe1Ij5qh3Stu9v/+MmMguyVe
- vDaaZhbLhY8GZcOgfd3gkAImaJnLy3t6lbk71XHLY+ZbuTK5dyuUmjwsU4fPJYti8Oju
- 7qhPQFjC275Nf8gMeXLzKssxm+L5QqXclmWkyCMj23VXr2Y4BBNqwy4FXn3+uJyoBANf
- oFFXlTvjXxjGr58tI6wOfGPgVJeq58jOwOIn3TCJ3WnozpluVdqUi0A8iFfXuhiQoDo8
- 1rrYG+xn4tPQk00J4DmwrLoVhUmupt3VYDGkm5O5PmiNuzGe7wlMR0F9eILtcMJ+T+OB
- Ztnw==
-X-Gm-Message-State: AOAM530I0Y9552xifdW0REwY3Azy6J/8nfWzjegEQ7sFOwceXHCLeWl6
- z+fyMcZjtiEoXeiWBWtwlxr+oA==
-X-Google-Smtp-Source: ABdhPJyZugl5lfedBulyUfvB1YGfF9LGCaOpUeSH521YqKnnt+A07YJz3hlU79HRomGEJDuqkrmSZg==
-X-Received: by 2002:a17:90b:1987:: with SMTP id
- mv7mr5273831pjb.152.1617227275455; 
- Wed, 31 Mar 2021 14:47:55 -0700 (PDT)
-Received: from google.com (240.111.247.35.bc.googleusercontent.com.
- [35.247.111.240])
- by smtp.gmail.com with ESMTPSA id a30sm3300970pfr.66.2021.03.31.14.47.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Mar 2021 14:47:54 -0700 (PDT)
-Date: Wed, 31 Mar 2021 21:47:51 +0000
-From: Sean Christopherson <seanjc@google.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 16/18] KVM: Don't take mmu_lock for range invalidation
- unless necessary
-Message-ID: <YGTuB3/JRvUwH64K@google.com>
-References: <20210326021957.1424875-1-seanjc@google.com>
- <20210326021957.1424875-17-seanjc@google.com>
- <6e7dc7d0-f5dc-85d9-1c50-d23b761b5ff3@redhat.com>
- <YGSmMeSOPcjxRwf6@google.com>
- <56ea69fe-87b0-154b-e286-efce9233864e@redhat.com>
- <YGTRzf/4i9Y8XR2c@google.com>
- <0e30625f-934d-9084-e293-cb3bcbc9e4b8@redhat.com>
- <YGTkLMAzk88wOiZm@google.com>
- <345ab567-386f-9080-f9cb-0e17fa90a852@redhat.com>
+ with ESMTP id AqsZZ4XMjRaV for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  1 Apr 2021 05:26:18 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 00AB44B602
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  1 Apr 2021 05:26:17 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id DAC93610C7;
+ Thu,  1 Apr 2021 09:26:15 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=hot-poop.lan)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1lRtaf-0054Xq-J8; Thu, 01 Apr 2021 10:26:13 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: Andrew Scull <ascull@google.com>,
+	kvmarm@lists.cs.columbia.edu
+Subject: Re: [PATCH v3 0/5] Debug info for nVHE hyp panics
+Date: Thu,  1 Apr 2021 10:26:10 +0100
+Message-Id: <161726915832.4086905.3828966333080829088.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.30.0
+In-Reply-To: <20210318143311.839894-1-ascull@google.com>
+References: <20210318143311.839894-1-ascull@google.com>
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <345ab567-386f-9080-f9cb-0e17fa90a852@redhat.com>
-X-Mailman-Approved-At: Thu, 01 Apr 2021 05:28:17 -0400
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- Huacai Chen <chenhuacai@kernel.org>, linux-mips@vger.kernel.org,
- kvm-ppc@vger.kernel.org, linux-kernel@vger.kernel.org,
- Paul Mackerras <paulus@ozlabs.org>,
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
- linux-arm-kernel@lists.infradead.org, Ben Gardon <bgardon@google.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, kvmarm@lists.cs.columbia.edu,
- Jim Mattson <jmattson@google.com>
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: ascull@google.com, kvmarm@lists.cs.columbia.edu,
+ kernel-team@android.com, catalin.marinas@arm.com, will@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: catalin.marinas@arm.com, kernel-team@android.com, will@kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -113,40 +75,37 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Mar 31, 2021, Paolo Bonzini wrote:
-> On 31/03/21 23:05, Sean Christopherson wrote:
-> > > Wouldn't it be incorrect to lock a mutex (e.g. inside*another*  MMU
-> > > notifier's invalidate callback) while holding an rwlock_t?  That makes sense
-> > > because anybody that's busy waiting in write_lock potentially cannot be
-> > > preempted until the other task gets the mutex.  This is a potential
-> > > deadlock.
-> > 
-> > Yes?  I don't think I follow your point though.  Nesting a spinlock or rwlock
-> > inside a rwlock is ok, so long as the locks are always taken in the same order,
-> > i.e. it's never mmu_lock -> mmu_notifier_slots_lock.
+On Thu, 18 Mar 2021 14:33:06 +0000, Andrew Scull wrote:
+> Panics from arm64's nVHE hyp mode are hard to interpret. This series
+> adds some more debug info to help with diagnosis.
 > 
-> *Another* MMU notifier could nest a mutex inside KVM's rwlock.
+> Using BUG() in nVHE hyp gives a meaningful address to locate invariants
+> that fail to hold. The host can also look up the bug to provide the file
+> and line, if the debug configs are enabled. Otherwise a kimg address is
+> much more useful than a hyp VA since it can be looked up in vmlinux.
 > 
-> But... is it correct that the MMU notifier invalidate callbacks are always
-> called with the mmap_sem taken (sometimes for reading, e.g.
-> try_to_merge_with_ksm_page->try_to_merge_one_page->write_protect_page)?
+> [...]
 
-No :-(
+Applied to kvm-arm64/nvhe-panic-info, thanks!
 
-File-based invalidations through the rmaps do not take mmap_sem.  They get at
-the VMAs via the address_space's interval tree, which is protected by its own
-i_mmap_rwsem.
+[1/5] bug: Remove redundant condition check in report_bug
+      commit: 3ad1a6cb0abc63d036fc866bd7c2c5983516dec5
+[2/5] bug: Factor out a getter for a bug's file line
+      commit: 26dbc7e299c7ebbb6a95e2c620b21b5280b37c57
+[3/5] bug: Assign values once in bug_get_file_line()
+      commit: 5b8be5d875a996776708ba174fcd08c8bcd721a5
+[4/5] KVM: arm64: Use BUG and BUG_ON in nVHE hyp
+      commit: f79e616f27ab6cd74deb0995a8eead3d1c9d65af
+[5/5] KVM: arm64: Log source when panicking from nVHE hyp
+      commit: aec0fae62e47050019474936248a311a0ab08705
 
-E.g. try_to_unmap() -> rmap_walk_file() -> try_to_unmap_one() 
+Cheers,
 
-> We could take it temporarily in install_memslots, since the MMU notifier's mm
-> is stored in kvm->mm.
-> 
-> In this case, a pair of kvm_mmu_notifier_lock/unlock functions would be the
-> best way to abstract it.
-> 
-> Paolo
-> 
+	M.
+-- 
+Without deviation from the norm, progress is not possible.
+
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
