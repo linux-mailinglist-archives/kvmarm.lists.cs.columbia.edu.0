@@ -2,63 +2,83 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D96D43511FB
-	for <lists+kvmarm@lfdr.de>; Thu,  1 Apr 2021 11:26:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E89F8351271
+	for <lists+kvmarm@lfdr.de>; Thu,  1 Apr 2021 11:38:39 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6A8924B616;
-	Thu,  1 Apr 2021 05:26:22 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7B8614B615;
+	Thu,  1 Apr 2021 05:38:39 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id trIykpLFniDA; Thu,  1 Apr 2021 05:26:22 -0400 (EDT)
+	with ESMTP id wLcmgzEjUV7e; Thu,  1 Apr 2021 05:38:39 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3C0A34B5F7;
-	Thu,  1 Apr 2021 05:26:21 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6CF9C4B60F;
+	Thu,  1 Apr 2021 05:38:38 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DA5FC4B5F7
- for <kvmarm@lists.cs.columbia.edu>; Thu,  1 Apr 2021 05:26:19 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4B8044B5F8
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  1 Apr 2021 05:38:37 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id AqsZZ4XMjRaV for <kvmarm@lists.cs.columbia.edu>;
- Thu,  1 Apr 2021 05:26:18 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 00AB44B602
- for <kvmarm@lists.cs.columbia.edu>; Thu,  1 Apr 2021 05:26:17 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ with ESMTP id 7g+BYLHmq0Pv for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  1 Apr 2021 05:38:36 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [216.205.24.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6CD964B5A6
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  1 Apr 2021 05:38:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1617269916;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3Hn127n4+W9QT98rMhYkTztLXr0yp9CQW2nFtLHdNsg=;
+ b=d4Z95KKoEwCMl/HS/89evr5HV4UsIT7BpqxKrPrkosXYZyDkByV08MJmfXyj6Erw/fRKxE
+ 4x+0eC9Ybhx67eIq4tFQU1j9RYitT4+zv10uJcHiC7VraJOn/Pdbo/XZodhs6I/HYO7c1u
+ q/tNLZZpebjpWkDtt7jZANHnjSRytNM=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-577-duJBAVOJMpCjeWyJ694eNA-1; Thu, 01 Apr 2021 05:38:34 -0400
+X-MC-Unique: duJBAVOJMpCjeWyJ694eNA-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.phx2.redhat.com
+ [10.5.11.16])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id DAC93610C7;
- Thu,  1 Apr 2021 09:26:15 +0000 (UTC)
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=hot-poop.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1lRtaf-0054Xq-J8; Thu, 01 Apr 2021 10:26:13 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: Andrew Scull <ascull@google.com>,
-	kvmarm@lists.cs.columbia.edu
-Subject: Re: [PATCH v3 0/5] Debug info for nVHE hyp panics
-Date: Thu,  1 Apr 2021 10:26:10 +0100
-Message-Id: <161726915832.4086905.3828966333080829088.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.30.0
-In-Reply-To: <20210318143311.839894-1-ascull@google.com>
-References: <20210318143311.839894-1-ascull@google.com>
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id EBE96107B7C3;
+ Thu,  1 Apr 2021 09:38:30 +0000 (UTC)
+Received: from [10.36.112.13] (ovpn-112-13.ams2.redhat.com [10.36.112.13])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 189EB5C8AB;
+ Thu,  1 Apr 2021 09:38:18 +0000 (UTC)
+Subject: Re: [PATCH v14 06/13] iommu/smmuv3: Allow stage 1 invalidation with
+ unmanaged ASIDs
+To: Zenghui Yu <yuzenghui@huawei.com>
+References: <20210223205634.604221-1-eric.auger@redhat.com>
+ <20210223205634.604221-7-eric.auger@redhat.com>
+ <7a270196-2a8d-1b23-ee5f-f977c53d2134@huawei.com>
+From: Auger Eric <eric.auger@redhat.com>
+Message-ID: <8350e4e2-4607-cfd7-b1a7-1470bf18da6d@redhat.com>
+Date: Thu, 1 Apr 2021 11:38:16 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: ascull@google.com, kvmarm@lists.cs.columbia.edu,
- kernel-team@android.com, catalin.marinas@arm.com, will@kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: catalin.marinas@arm.com, kernel-team@android.com, will@kernel.org
+In-Reply-To: <7a270196-2a8d-1b23-ee5f-f977c53d2134@huawei.com>
+Content-Language: en-US
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
+Cc: kvm@vger.kernel.org, vivek.gautam@arm.com, kvmarm@lists.cs.columbia.edu,
+ eric.auger.pro@gmail.com, jean-philippe@linaro.org, yi.l.liu@intel.com,
+ wangxingang5@huawei.com, maz@kernel.org, joro@8bytes.org, vsethi@nvidia.com,
+ zhangfei.gao@linaro.org, jacob.jun.pan@linux.intel.com, will@kernel.org,
+ nicoleotsuka@gmail.com, alex.williamson@redhat.com,
+ linux-kernel@vger.kernel.org, lushenming@huawei.com,
+ iommu@lists.linux-foundation.org, robin.murphy@arm.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -70,43 +90,28 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, 18 Mar 2021 14:33:06 +0000, Andrew Scull wrote:
-> Panics from arm64's nVHE hyp mode are hard to interpret. This series
-> adds some more debug info to help with diagnosis.
-> 
-> Using BUG() in nVHE hyp gives a meaningful address to locate invariants
-> that fail to hold. The host can also look up the bug to provide the file
-> and line, if the debug configs are enabled. Otherwise a kimg address is
-> much more useful than a hyp VA since it can be looked up in vmlinux.
-> 
-> [...]
-
-Applied to kvm-arm64/nvhe-panic-info, thanks!
-
-[1/5] bug: Remove redundant condition check in report_bug
-      commit: 3ad1a6cb0abc63d036fc866bd7c2c5983516dec5
-[2/5] bug: Factor out a getter for a bug's file line
-      commit: 26dbc7e299c7ebbb6a95e2c620b21b5280b37c57
-[3/5] bug: Assign values once in bug_get_file_line()
-      commit: 5b8be5d875a996776708ba174fcd08c8bcd721a5
-[4/5] KVM: arm64: Use BUG and BUG_ON in nVHE hyp
-      commit: f79e616f27ab6cd74deb0995a8eead3d1c9d65af
-[5/5] KVM: arm64: Log source when panicking from nVHE hyp
-      commit: aec0fae62e47050019474936248a311a0ab08705
-
-Cheers,
-
-	M.
--- 
-Without deviation from the norm, progress is not possible.
-
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+SGkgWmVuZ2h1aSwKCk9uIDMvMzAvMjEgMTE6MTcgQU0sIFplbmdodWkgWXUgd3JvdGU6Cj4gT24g
+MjAyMS8yLzI0IDQ6NTYsIEVyaWMgQXVnZXIgd3JvdGU6Cj4+IEBAIC0xOTM2LDcgKzE5NTAsMTIg
+QEAgc3RhdGljIHZvaWQKPj4gYXJtX3NtbXVfdGxiX2ludl9yYW5nZV9kb21haW4odW5zaWduZWQg
+bG9uZyBpb3ZhLCBzaXplX3Qgc2l6ZSwKPj4gwqDCoMKgwqDCoMKgwqDCoMKgIH0sCj4+IMKgwqDC
+oMKgwqAgfTsKPj4gwqAgLcKgwqDCoCBpZiAoc21tdV9kb21haW4tPnN0YWdlID09IEFSTV9TTU1V
+X0RPTUFJTl9TMSkgewo+PiArwqDCoMKgIGlmIChleHRfYXNpZCA+PSAwKSB7wqAgLyogZ3Vlc3Qg
+c3RhZ2UgMSBpbnZhbGlkYXRpb24gKi8KPj4gK8KgwqDCoMKgwqDCoMKgIGNtZC5vcGNvZGXCoMKg
+wqAgPSBzbW11X2RvbWFpbi0+c21tdS0+ZmVhdHVyZXMgJgo+PiBBUk1fU01NVV9GRUFUX0UySCA/
+Cj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIENNRFFfT1BfVExCSV9FTDJf
+VkEgOiBDTURRX09QX1RMQklfTkhfVkE7Cj4gCj4gSWYgSSB1bmRlcnN0YW5kIGl0IGNvcnJlY3Rs
+eSwgdGhlIHRydWUgbmVzdGVkIG1vZGUgZWZmZWN0aXZlbHkgZ2l2ZXMgdXMKPiBhICpOUy1FTDEq
+IFN0cmVhbVdvcmxkLiBXZSBzaG91bGQgdGhlcmVmb3JlIHVzZSBDTURRX09QX1RMQklfTkhfVkEg
+dG8KPiBpbnZhbGlkYXRlIHRoZSBzdGFnZS0xIE5TLUVMMSBlbnRyaWVzLCBubyBtYXR0ZXIgRTJI
+IGlzIHNlbGVjdGVkIG9yIG5vdC4KPiAKClllcyBhdCB0aGUgbW9tZW50IHlvdSdyZSByaWdodC4g
+U3VwcG9ydCBmb3IgbmVzdGVkIHZpcnQgbWF5IGluZHVjZSBzb21lCmNoYW5nZXMgaGVyZSBidXQg
+d2UgYXJlIG5vdCB0aGVyZS4gSSB3aWxsIGZpeCBpdCBhbmQgYWRkIGEgY29tbWVudC4KVGhhbmsg
+eW91IQoKQmVzdCBSZWdhcmRzCgpFcmljCgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1
+bWJpYS5lZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9r
+dm1hcm0K
