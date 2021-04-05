@@ -2,37 +2,37 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F018354561
-	for <lists+kvmarm@lfdr.de>; Mon,  5 Apr 2021 18:40:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BFDA354562
+	for <lists+kvmarm@lfdr.de>; Mon,  5 Apr 2021 18:40:23 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F2A8C4BC42;
-	Mon,  5 Apr 2021 12:40:21 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1AD9C4B9C1;
+	Mon,  5 Apr 2021 12:40:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.209
 X-Spam-Level: 
 X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7IirUzD9PQrk; Mon,  5 Apr 2021 12:40:21 -0400 (EDT)
+	with ESMTP id dXkhRytQhBo3; Mon,  5 Apr 2021 12:40:22 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D6B274BABB;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F21584BC15;
 	Mon,  5 Apr 2021 12:40:20 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1F7674B97A
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 638934B9C1
  for <kvmarm@lists.cs.columbia.edu>; Mon,  5 Apr 2021 12:40:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id TxMd8QJFhFWK for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id 5AtPd6WGu42h for <kvmarm@lists.cs.columbia.edu>;
  Mon,  5 Apr 2021 12:40:18 -0400 (EDT)
 Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 488314BB15
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 855D14B3FA
  for <kvmarm@lists.cs.columbia.edu>; Mon,  5 Apr 2021 12:40:18 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1617640818;
@@ -40,32 +40,32 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=q2vyb2KEZ7b1rOARt2VnTGJGBkqDHtOIhkMjjuhsVvY=;
- b=cgeM1ttzQf5BV0GSdWiB0Lc2SbqyNS+h1ihKqYpeFV2ywJiKUQduR7pRTuW2ePRAdKeXYC
- 7edQJIK7cyqvZwoQuUvNaAHCDXyy2ys5IJBmFLFBY0hIhkxXY5WCR4InyXhm+kU68Z4dqB
- JazeYp1hjAu7007sxwG8Wz/lIMpZzT0=
+ bh=ByjtabHi3qP6F5UkQNQxBF2bES6muJXwq+B7lZjhBgQ=;
+ b=J2NlHmUAyEBQNt5N42ZKqHTPV9N5XtPOkdCE/3kFY38jaB/dWGSnfHne/ia/0YZ/wWCvHI
+ wdMqLbSW5+2+I4Rkwf0zme8a9rdkuuTAHDjqTA6EQiDonZIW0uV2G2dkOexygJTUt33ITv
+ D1fsmWpSHx1AGI+O+tnJ8RBUzJbyWaA=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-367-_4Q0O9tSMOaCB-9TEMrOYg-1; Mon, 05 Apr 2021 12:40:14 -0400
-X-MC-Unique: _4Q0O9tSMOaCB-9TEMrOYg-1
+ us-mta-332--ZEmmk2JPAWBeZQel086qg-1; Mon, 05 Apr 2021 12:40:17 -0400
+X-MC-Unique: -ZEmmk2JPAWBeZQel086qg-1
 Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com
  [10.5.11.23])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id AAACC87A83A;
- Mon,  5 Apr 2021 16:40:12 +0000 (UTC)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id ADE91108BD0A;
+ Mon,  5 Apr 2021 16:40:15 +0000 (UTC)
 Received: from laptop.redhat.com (ovpn-112-13.ams2.redhat.com [10.36.112.13])
- by smtp.corp.redhat.com (Postfix) with ESMTP id E3B6019715;
- Mon,  5 Apr 2021 16:40:05 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 0ABEE19715;
+ Mon,  5 Apr 2021 16:40:12 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com,
  linux-kernel@vger.kernel.org, kvm@vger.kernel.org,
  kvmarm@lists.cs.columbia.edu, maz@kernel.org, drjones@redhat.com,
  alexandru.elisei@arm.com
-Subject: [PATCH v6 5/9] docs: kvm: devices/arm-vgic-v3: enhance
- KVM_DEV_ARM_VGIC_CTRL_INIT doc
-Date: Mon,  5 Apr 2021 18:39:37 +0200
-Message-Id: <20210405163941.510258-6-eric.auger@redhat.com>
+Subject: [PATCH v6 6/9] KVM: arm64: Simplify argument passing to
+ vgic_uaccess_[read|write]
+Date: Mon,  5 Apr 2021 18:39:38 +0200
+Message-Id: <20210405163941.510258-7-eric.auger@redhat.com>
 In-Reply-To: <20210405163941.510258-1-eric.auger@redhat.com>
 References: <20210405163941.510258-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -87,35 +87,62 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-kvm_arch_vcpu_precreate() returns -EBUSY if the vgic is
-already initialized. So let's document that KVM_DEV_ARM_VGIC_CTRL_INIT
-must be called after all vcpu creations.
+vgic_uaccess() takes a struct vgic_io_device argument, converts it
+to a struct kvm_io_device and passes it to the read/write accessor
+functions, which convert it back to a struct vgic_io_device.
+Avoid the indirection by passing the struct vgic_io_device argument
+directly to vgic_uaccess_{read,write}.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 
 ---
 
 v1 -> v2:
-- Must be called after all vcpu creations ->
-  Must be called after all VCPUs have been created as per
-  Alexandru's suggestion
+- reworded the commit message as suggested by Alexandru
 ---
- Documentation/virt/kvm/devices/arm-vgic-v3.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/vgic/vgic-mmio.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/virt/kvm/devices/arm-vgic-v3.rst b/Documentation/virt/kvm/devices/arm-vgic-v3.rst
-index 5dd3bff51978..51e5e5762571 100644
---- a/Documentation/virt/kvm/devices/arm-vgic-v3.rst
-+++ b/Documentation/virt/kvm/devices/arm-vgic-v3.rst
-@@ -228,7 +228,7 @@ Groups:
+diff --git a/arch/arm64/kvm/vgic/vgic-mmio.c b/arch/arm64/kvm/vgic/vgic-mmio.c
+index b2d73fc0d1ef..48c6067fc5ec 100644
+--- a/arch/arm64/kvm/vgic/vgic-mmio.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio.c
+@@ -938,10 +938,9 @@ vgic_get_mmio_region(struct kvm_vcpu *vcpu, struct vgic_io_device *iodev,
+ 	return region;
+ }
  
-     KVM_DEV_ARM_VGIC_CTRL_INIT
-       request the initialization of the VGIC, no additional parameter in
--      kvm_device_attr.addr.
-+      kvm_device_attr.addr. Must be called after all VCPUs have been created.
-     KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES
-       save all LPI pending bits into guest RAM pending tables.
+-static int vgic_uaccess_read(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
++static int vgic_uaccess_read(struct kvm_vcpu *vcpu, struct vgic_io_device *iodev,
+ 			     gpa_t addr, u32 *val)
+ {
+-	struct vgic_io_device *iodev = kvm_to_vgic_iodev(dev);
+ 	const struct vgic_register_region *region;
+ 	struct kvm_vcpu *r_vcpu;
  
+@@ -960,10 +959,9 @@ static int vgic_uaccess_read(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
+ 	return 0;
+ }
+ 
+-static int vgic_uaccess_write(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
++static int vgic_uaccess_write(struct kvm_vcpu *vcpu, struct vgic_io_device *iodev,
+ 			      gpa_t addr, const u32 *val)
+ {
+-	struct vgic_io_device *iodev = kvm_to_vgic_iodev(dev);
+ 	const struct vgic_register_region *region;
+ 	struct kvm_vcpu *r_vcpu;
+ 
+@@ -986,9 +984,9 @@ int vgic_uaccess(struct kvm_vcpu *vcpu, struct vgic_io_device *dev,
+ 		 bool is_write, int offset, u32 *val)
+ {
+ 	if (is_write)
+-		return vgic_uaccess_write(vcpu, &dev->dev, offset, val);
++		return vgic_uaccess_write(vcpu, dev, offset, val);
+ 	else
+-		return vgic_uaccess_read(vcpu, &dev->dev, offset, val);
++		return vgic_uaccess_read(vcpu, dev, offset, val);
+ }
+ 
+ static int dispatch_mmio_read(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
 -- 
 2.26.3
 
