@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FCFD354460
-	for <lists+kvmarm@lfdr.de>; Mon,  5 Apr 2021 18:05:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84614354464
+	for <lists+kvmarm@lfdr.de>; Mon,  5 Apr 2021 18:05:23 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 18C6A4B96E;
-	Mon,  5 Apr 2021 12:05:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1D1464BA64;
+	Mon,  5 Apr 2021 12:05:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,43 +18,43 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VbKNzZNi+iCd; Mon,  5 Apr 2021 12:05:07 -0400 (EDT)
+	with ESMTP id Y1hKk+ZJkqbw; Mon,  5 Apr 2021 12:05:23 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B72894BA64;
-	Mon,  5 Apr 2021 12:05:06 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DDE224B974;
+	Mon,  5 Apr 2021 12:05:21 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8982B4B960
- for <kvmarm@lists.cs.columbia.edu>; Mon,  5 Apr 2021 12:05:05 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 10E954B38B
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  5 Apr 2021 12:05:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 5pEdfcHfiDJj for <kvmarm@lists.cs.columbia.edu>;
- Mon,  5 Apr 2021 12:05:04 -0400 (EDT)
+ with ESMTP id zJmFZKa9vbsI for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  5 Apr 2021 12:05:20 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4EB964B7DC
- for <kvmarm@lists.cs.columbia.edu>; Mon,  5 Apr 2021 12:05:04 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 93E2A613EB;
- Mon,  5 Apr 2021 16:05:02 +0000 (UTC)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0F1874B389
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  5 Apr 2021 12:05:20 -0400 (EDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 240E6613EE;
+ Mon,  5 Apr 2021 16:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1617638703;
- bh=rXcocIxf7KQVMKaPU8Y9qfB8X7sLiBezInsSrh7HPL8=;
+ s=k20201202; t=1617638719;
+ bh=U0NkCqrtt2/5zmQhJfG2/sgeLgus2MBC9ny/6oHh/0c=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ahKdEAfV3r/2xy9yYfm0y3bbijMcrahsS+Jw9OdhUYC0rnBRkNh0VevCsm56HKTaW
- yzQ1cGv2N/jY9WuPBjAmtusraw+K4MBM+jQZp1tZNIL2JxzlZXhCsc9EZPVmHIvXcQ
- k5Vcux70Vuiyn4fyt/2iZQKepxy+D/IOmjFm+eybEfaUzWuG5zza8UFjYUwnmvd2CQ
- nRAhLVmBH6mrmdOFBfnQL30XL4bQSsaSn+e+gjkT4Feg4RmAzH3Cs7IZ5ohvqpChoQ
- HiPVerT8RPWMDlSAm6JH4Y7T3L0Uu7etYHTRaC/5cAs4sw4tbsuyWvCrvfYO8Baaxx
- gO+RFVPMDSA3g==
+ b=cO8TdGzRw58OdpcUPQvXwhToA7XW285ZAJGZGiqKeDSiRyoDuEt19bN0msKoOA/RV
+ ISDVWy/D6FY7ZfQIptNanWY7SYLgbcZl0GdvflJpkM0gkhfzVF4qq3QAKxDscWqWiL
+ TfTY381yvmaBxFSPE8j0MN8VaSJK9d3h6UXxZylaP5fvOy4PU19MefTGZ3r8Gkx8TF
+ 2xvqKjl3Hk0evZt4A1KvtkmJW5lX6S5uk6bAAnKYlpz9m3gRQcvZpEryw6ZA/YFNZH
+ D3F4IWJvjgQNe3y0Wj1+Dg306iz80yyA/JIYsSpXfCFsuNT4dmkUnVnpqD1QtCQQ7X
+ GqD4oFv3tTPDg==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 03/13] KVM: arm64: Disable guest access to trace
+Subject: [PATCH AUTOSEL 4.19 2/8] KVM: arm64: Disable guest access to trace
  filter controls
-Date: Mon,  5 Apr 2021 12:04:48 -0400
-Message-Id: <20210405160459.268794-3-sashal@kernel.org>
+Date: Mon,  5 Apr 2021 12:05:09 -0400
+Message-Id: <20210405160515.269020-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210405160459.268794-1-sashal@kernel.org>
-References: <20210405160459.268794-1-sashal@kernel.org>
+In-Reply-To: <20210405160515.269020-1-sashal@kernel.org>
+References: <20210405160515.269020-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -103,10 +103,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  2 files changed, 3 insertions(+)
 
 diff --git a/arch/arm64/include/asm/kvm_arm.h b/arch/arm64/include/asm/kvm_arm.h
-index a4ffd9b55e72..9be64c0ad31f 100644
+index a3b6f58d188c..6d43f7901da2 100644
 --- a/arch/arm64/include/asm/kvm_arm.h
 +++ b/arch/arm64/include/asm/kvm_arm.h
-@@ -276,6 +276,7 @@
+@@ -198,6 +198,7 @@
  #define CPTR_EL2_DEFAULT	CPTR_EL2_RES1
  
  /* Hyp Debug Configuration Register bits */
@@ -115,10 +115,10 @@ index a4ffd9b55e72..9be64c0ad31f 100644
  #define MDCR_EL2_E2PB_MASK	(UL(0x3))
  #define MDCR_EL2_E2PB_SHIFT	(UL(12))
 diff --git a/arch/arm64/kvm/debug.c b/arch/arm64/kvm/debug.c
-index 7a7e425616b5..dbc890511631 100644
+index 4e722d73a3c3..3606f6b89094 100644
 --- a/arch/arm64/kvm/debug.c
 +++ b/arch/arm64/kvm/debug.c
-@@ -89,6 +89,7 @@ void kvm_arm_reset_debug_ptr(struct kvm_vcpu *vcpu)
+@@ -100,6 +100,7 @@ void kvm_arm_reset_debug_ptr(struct kvm_vcpu *vcpu)
   *  - Debug ROM Address (MDCR_EL2_TDRA)
   *  - OS related registers (MDCR_EL2_TDOSA)
   *  - Statistical profiler (MDCR_EL2_TPMS/MDCR_EL2_E2PB)
@@ -126,7 +126,7 @@ index 7a7e425616b5..dbc890511631 100644
   *
   * Additionally, KVM only traps guest accesses to the debug registers if
   * the guest is not actively using them (see the KVM_ARM64_DEBUG_DIRTY
-@@ -112,6 +113,7 @@ void kvm_arm_setup_debug(struct kvm_vcpu *vcpu)
+@@ -123,6 +124,7 @@ void kvm_arm_setup_debug(struct kvm_vcpu *vcpu)
  	vcpu->arch.mdcr_el2 = __this_cpu_read(mdcr_el2) & MDCR_EL2_HPMN_MASK;
  	vcpu->arch.mdcr_el2 |= (MDCR_EL2_TPM |
  				MDCR_EL2_TPMS |
