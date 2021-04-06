@@ -2,54 +2,62 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 02E96355495
-	for <lists+kvmarm@lfdr.de>; Tue,  6 Apr 2021 15:10:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBA913554C0
+	for <lists+kvmarm@lfdr.de>; Tue,  6 Apr 2021 15:13:48 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 98F864B9BD;
-	Tue,  6 Apr 2021 09:10:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 612814BA68;
+	Tue,  6 Apr 2021 09:13:48 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id gg3kTgTRumTZ; Tue,  6 Apr 2021 09:09:58 -0400 (EDT)
+	with ESMTP id y5GahGKKzzL3; Tue,  6 Apr 2021 09:13:48 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 839C54B9DD;
-	Tue,  6 Apr 2021 09:09:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 37A9E4B9E0;
+	Tue,  6 Apr 2021 09:13:47 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6A4384B8E7
- for <kvmarm@lists.cs.columbia.edu>; Tue,  6 Apr 2021 08:21:07 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E4D424B9C2
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  6 Apr 2021 09:13:45 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id xXQOU5C4O28Z for <kvmarm@lists.cs.columbia.edu>;
- Tue,  6 Apr 2021 08:21:05 -0400 (EDT)
-Received: from szxga06-in.huawei.com (szxga06-in.huawei.com [45.249.212.32])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A1B1B4B64D
- for <kvmarm@lists.cs.columbia.edu>; Tue,  6 Apr 2021 08:21:05 -0400 (EDT)
-Received: from DGGEMS411-HUB.china.huawei.com (unknown [172.30.72.60])
- by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4FF65S1DsFzkhLv;
- Tue,  6 Apr 2021 20:19:08 +0800 (CST)
-Received: from huawei.com (10.175.112.208) by DGGEMS411-HUB.china.huawei.com
- (10.3.19.211) with Microsoft SMTP Server id 14.3.498.0; Tue, 6 Apr 2021
- 20:20:43 +0800
-From: Wang Wensheng <wangwensheng4@huawei.com>
-To: <maz@kernel.org>, <james.morse@arm.com>, <alexandru.elisei@arm.com>,
- <suzuki.poulose@arm.com>, <catalin.marinas@arm.com>, <will@kernel.org>,
- <dbrazdil@google.com>, <linux-arm-kernel@lists.infradead.org>,
- <kvmarm@lists.cs.columbia.edu>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH -next] KVM: arm64: Fix error return code in init_hyp_mode()
-Date: Tue, 6 Apr 2021 12:17:59 +0000
-Message-ID: <20210406121759.5407-1-wangwensheng4@huawei.com>
-X-Mailer: git-send-email 2.9.4
+ with ESMTP id K-pdYhwG6yOE for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  6 Apr 2021 09:13:43 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 067504B783
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  6 Apr 2021 09:13:43 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 18F65613B7;
+ Tue,  6 Apr 2021 13:13:41 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1lTlWV-005rdB-4i; Tue, 06 Apr 2021 14:13:39 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: linux-arm-kernel@lists.infradead.org,
+	kvmarm@lists.cs.columbia.edu
+Subject: [PATCH] KVM: arm64: Mark the kvmarm ML as moderated for
+ non-subscribers
+Date: Tue,  6 Apr 2021 14:13:36 +0100
+Message-Id: <20210406131336.1077633-1-maz@kernel.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-X-Originating-IP: [10.175.112.208]
-X-CFilter-Loop: Reflected
-X-Mailman-Approved-At: Tue, 06 Apr 2021 09:09:56 -0400
-Cc: rui.xiang@huawei.com
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, james.morse@arm.com, suzuki.poulose@arm.com,
+ alexandru.elisei@arm.com, kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -66,34 +74,31 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Fix to return a negative error code from the error handling
-case instead of 0, as done elsewhere in this function.
+The kvmarm mailing list is moderated for non-subscriber, but that
+was never advertised. Fix this with the hope that people will
+eventually subscribe before posting, saving me the hassle of
+letting their post through eventually.
 
-Fixes: eeeee7193df0 ("KVM: arm64: Bootstrap PSCI SMC handler in nVHE EL2")
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Wang Wensheng <wangwensheng4@huawei.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/arm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 76a7de1..41e0b2a 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -1877,8 +1877,10 @@ static int init_hyp_mode(void)
- 	if (is_protected_kvm_enabled()) {
- 		init_cpu_logical_map();
- 
--		if (!init_psci_relay())
-+		if (!init_psci_relay()) {
-+			err = -ENODEV;
- 			goto out_err;
-+		}
- 	}
- 
- 	if (is_protected_kvm_enabled()) {
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 803bd0551512..54b4f2bcfe19 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -9768,7 +9768,7 @@ R:	James Morse <james.morse@arm.com>
+ R:	Alexandru Elisei <alexandru.elisei@arm.com>
+ R:	Suzuki K Poulose <suzuki.poulose@arm.com>
+ L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+-L:	kvmarm@lists.cs.columbia.edu
++L:	kvmarm@lists.cs.columbia.edu (moderated for non-subscribers)
+ S:	Maintained
+ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git
+ F:	arch/arm64/include/asm/kvm*
 -- 
-2.9.4
+2.29.2
 
 _______________________________________________
 kvmarm mailing list
