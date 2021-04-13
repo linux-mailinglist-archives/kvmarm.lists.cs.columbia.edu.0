@@ -2,66 +2,82 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 702B135E0EB
-	for <lists+kvmarm@lfdr.de>; Tue, 13 Apr 2021 16:05:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A76235E3AE
+	for <lists+kvmarm@lfdr.de>; Tue, 13 Apr 2021 18:19:59 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A94B04B9A5;
-	Tue, 13 Apr 2021 10:05:51 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 622774B729;
+	Tue, 13 Apr 2021 12:19:58 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@linaro.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8Zb+kEeOO0tQ; Tue, 13 Apr 2021 10:05:51 -0400 (EDT)
+	with ESMTP id eKxWMO3u1AYP; Tue, 13 Apr 2021 12:19:58 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D4F64B779;
-	Tue, 13 Apr 2021 10:05:50 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3F9304B65F;
+	Tue, 13 Apr 2021 12:19:57 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id BDED74B58B
- for <kvmarm@lists.cs.columbia.edu>; Tue, 13 Apr 2021 10:05:49 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id AB2C24B6C4
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 13 Apr 2021 12:19:55 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id YxoTFLHCDgQg for <kvmarm@lists.cs.columbia.edu>;
- Tue, 13 Apr 2021 10:05:48 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C94C94B573
- for <kvmarm@lists.cs.columbia.edu>; Tue, 13 Apr 2021 10:05:48 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id CA1C261242;
- Tue, 13 Apr 2021 14:05:47 +0000 (UTC)
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=hot-poop.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1lWJfl-007FMf-M4; Tue, 13 Apr 2021 15:05:45 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: james.morse@arm.com, eric.auger.pro@gmail.com,
- kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org,
- alexandru.elisei@arm.com, kvm@vger.kernel.org,
- Eric Auger <eric.auger@redhat.com>, suzuki.poulose@arm.com
-Subject: Re: [PATCH] KVM: arm/arm64: Fix KVM_VGIC_V3_ADDR_TYPE_REDIST read
-Date: Tue, 13 Apr 2021 15:05:41 +0100
-Message-Id: <161832273337.3709196.17485368965759835272.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210412150034.29185-1-eric.auger@redhat.com>
-References: <20210412150034.29185-1-eric.auger@redhat.com>
+ with ESMTP id 0bq+YxobnC5x for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 13 Apr 2021 12:19:54 -0400 (EDT)
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com
+ [209.85.210.174])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BF9534B47F
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 13 Apr 2021 12:19:54 -0400 (EDT)
+Received: by mail-pf1-f174.google.com with SMTP id w8so8272628pfn.9
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 13 Apr 2021 09:19:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=VAnLORvlHA0CqhWSiodUxhmbW4p+mlvry+H7OH+CbM8=;
+ b=jkoKZqeVIYBjCxInSCYoqSg0XQ8Pbkd85pgdZVfgriZ3+PtrG6vMzyERgsyDYVR0Rz
+ N+ygGl/63+WJjWzlJkMhAinycxSYkctyxOz60d2KAL8Ky0aVrdGE9EGExwLLR6+b8ER2
+ ByaeDBLWwQMAzmm7dFaYBvMkGmHz1PBdF94wh4XM45OwdzuQIhRpIqZXxOsIcy+oUpl/
+ SJbkATsW2YHWO5ctZdCbJDe8HAuCucGS6odzRhBvr3c+y4JOZf1wGcjzyVyI3g2cHVFH
+ idFnV3Z67WlQcWMA8wPrdxF489fIFJBgcthrL8e6n0UadnUf7o1u011q9LriqTASXr8t
+ JXoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=VAnLORvlHA0CqhWSiodUxhmbW4p+mlvry+H7OH+CbM8=;
+ b=SeRmP+csTwJk/ZxMhT40R6GW6TvFX4uJZpaafGALKGnniYG4ZprPKRp3UfL6zlyXi5
+ UPGHAljntJiSs/g/q0hLgSns+ZRYK7WP0imAP3CKxqUlaQZN06bO2ggNgnE/r3HB6qFa
+ +Ii+WwGzzv9l72+qh86nyOBM5pBBK3NlscvJ9lRE0OhV4xrL4E3QIOyvNCVUf5PwskNs
+ B++xzuFWoHAn98AnMO7nMtBE/7g302TcEOFQX6MiPsBUWvC6le5cHtVfQV+MY2myQ5ln
+ qxJdUMnoiK/w5W/Yt5Ou45AtvkNYudaCijMjw1l3SXHYutQis54TANJjGn2fo6+RIyjE
+ GyQg==
+X-Gm-Message-State: AOAM532p8Il8VqUgEUpZCfRT6hD9YIoXv0N5Tza9C6zzK9+/8E2/JggF
+ ss1RdSRK78470q+xoqMCeGU4cQ==
+X-Google-Smtp-Source: ABdhPJz8SAQ/o/1a7/grAkz4uQOp6weGn0EjgYR/mhwyip2GjzJeZ2A2HlSdnlBLwWS/wRs+FLWmvQ==
+X-Received: by 2002:aa7:86c9:0:b029:245:1c62:3499 with SMTP id
+ h9-20020aa786c90000b02902451c623499mr24759311pfo.74.1618330793766; 
+ Tue, 13 Apr 2021 09:19:53 -0700 (PDT)
+Received: from xps15.cg.shawcable.net (S0106889e681aac74.cg.shawcable.net.
+ [68.147.0.187])
+ by smtp.gmail.com with ESMTPSA id s16sm9718172pfw.94.2021.04.13.09.19.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Apr 2021 09:19:53 -0700 (PDT)
+From: Mathieu Poirier <mathieu.poirier@linaro.org>
+To: maz@kernel.org
+Subject: [GIT PULL] coresight: Fixes for ETE and TRBE
+Date: Tue, 13 Apr 2021 10:19:52 -0600
+Message-Id: <20210413161952.750262-1-mathieu.poirier@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: james.morse@arm.com, eric.auger.pro@gmail.com,
- kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org,
- alexandru.elisei@arm.com, kvm@vger.kernel.org, eric.auger@redhat.com,
- suzuki.poulose@arm.com, gshan@redhat.com, drjones@redhat.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
+Cc: anshuman.khandual@arm.com, gregkh@linuxfoundation.org,
+ coresight@lists.linaro.org, linux-kernel@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -78,28 +94,38 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, 12 Apr 2021 17:00:34 +0200, Eric Auger wrote:
-> When reading the base address of the a REDIST region
-> through KVM_VGIC_V3_ADDR_TYPE_REDIST we expect the
-> redistributor region list to be populated with a single
-> element.
-> 
-> However list_first_entry() expects the list to be non empty.
-> Instead we should use list_first_entry_or_null which effectively
-> returns NULL if the list is empty.
+The following changes since commit 4fb13790417a7bf726f3867a5d2b9723efde488b:
 
-Applied to kvm-arm64/vgic-5.13, thanks!
+  dts: bindings: Document device tree bindings for Arm TRBE (2021-04-06 16:05:38 -0600)
 
-[1/1] KVM: arm/arm64: Fix KVM_VGIC_V3_ADDR_TYPE_REDIST read
-      commit: 94ac0835391efc1a30feda6fc908913ec012951e
+are available in the Git repository at:
 
-Cheers,
+  git@gitolite.kernel.org:pub/scm/linux/kernel/git/coresight/linux.git next-ETE-TRBE
 
-	M.
--- 
-Without deviation from the norm, progress is not possible.
+for you to fetch changes up to 68d400c079978f649e7f63aba966d219743edd64:
 
+  coresight: trbe: Fix return value check in arm_trbe_register_coresight_cpu() (2021-04-13 09:46:27 -0600)
 
+----------------------------------------------------------------
+Hi Marc,
+
+Please consider these two patches, they are ETE/TRBE fixes found by bots.
+
+Let me know if you want me to rebase on your next branch and send the
+pull request from that.
+
+Thanks,
+Mathieu
+
+----------------------------------------------------------------
+
+Wei Yongjun (2):
+      coresight: core: Make symbol 'csdev_sink' static
+      coresight: trbe: Fix return value check in arm_trbe_register_coresight_cpu()
+
+ drivers/hwtracing/coresight/coresight-core.c | 2 +-
+ drivers/hwtracing/coresight/coresight-trbe.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
