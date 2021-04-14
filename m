@@ -2,47 +2,47 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 213F235F233
-	for <lists+kvmarm@lfdr.de>; Wed, 14 Apr 2021 13:25:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3077535F235
+	for <lists+kvmarm@lfdr.de>; Wed, 14 Apr 2021 13:25:25 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C46244B6AB;
-	Wed, 14 Apr 2021 07:25:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D88684B66D;
+	Wed, 14 Apr 2021 07:25:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Ff87QlWwqGNS; Wed, 14 Apr 2021 07:25:20 -0400 (EDT)
+	with ESMTP id 81hprb0ms3hA; Wed, 14 Apr 2021 07:25:23 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8EA394B12D;
-	Wed, 14 Apr 2021 07:25:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C99594B6E8;
+	Wed, 14 Apr 2021 07:25:22 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 43CC04B6D7
- for <kvmarm@lists.cs.columbia.edu>; Wed, 14 Apr 2021 07:25:18 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 485B24B34F
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 14 Apr 2021 07:25:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id TohEkn0g52of for <kvmarm@lists.cs.columbia.edu>;
- Wed, 14 Apr 2021 07:25:17 -0400 (EDT)
-Received: from szxga06-in.huawei.com (szxga06-in.huawei.com [45.249.212.32])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A81CC4B688
- for <kvmarm@lists.cs.columbia.edu>; Wed, 14 Apr 2021 07:25:16 -0400 (EDT)
-Received: from DGGEMS414-HUB.china.huawei.com (unknown [172.30.72.60])
- by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4FL0TQ3NHCzkjcG;
- Wed, 14 Apr 2021 19:23:22 +0800 (CST)
+ with ESMTP id ZnL+tOJi-1M3 for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 14 Apr 2021 07:25:21 -0400 (EDT)
+Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3298C4B5AC
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 14 Apr 2021 07:25:21 -0400 (EDT)
+Received: from DGGEMS414-HUB.china.huawei.com (unknown [172.30.72.59])
+ by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4FL0T259cvztWGR;
+ Wed, 14 Apr 2021 19:23:02 +0800 (CST)
 Received: from S00345302A-PC.china.huawei.com (10.47.82.32) by
  DGGEMS414-HUB.china.huawei.com (10.3.19.214) with Microsoft SMTP Server id
- 14.3.498.0; Wed, 14 Apr 2021 19:25:04 +0800
+ 14.3.498.0; Wed, 14 Apr 2021 19:25:08 +0800
 From: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 To: <linux-arm-kernel@lists.infradead.org>, <kvmarm@lists.cs.columbia.edu>,
  <linux-kernel@vger.kernel.org>
-Subject: [PATCH v4 10/16] arm64/mm: Split the arm64_mm_context_get/put
-Date: Wed, 14 Apr 2021 12:23:06 +0100
-Message-ID: <20210414112312.13704-11-shameerali.kolothum.thodi@huawei.com>
+Subject: [PATCH v4 11/16] arm64/mm: Introduce a callback to flush the local
+ context
+Date: Wed, 14 Apr 2021 12:23:07 +0100
+Message-ID: <20210414112312.13704-12-shameerali.kolothum.thodi@huawei.com>
 X-Mailer: git-send-email 2.12.0.windows.1
 In-Reply-To: <20210414112312.13704-1-shameerali.kolothum.thodi@huawei.com>
 References: <20210414112312.13704-1-shameerali.kolothum.thodi@huawei.com>
@@ -67,120 +67,63 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Keep only the mm specific part in arm64_mm_context_get/put
-and move the rest to generic functions.
+From: Julien Grall <julien.grall@arm.com>
 
+Flushing the local context will vary depending on the actual user
+of the ASID allocator. Introduce a new callback to flush the local
+context and move the call to flush local TLB in it.
+
+Signed-off-by: Julien Grall <julien.grall@arm.com>
 Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 ---
- arch/arm64/mm/context.c | 53 +++++++++++++++++++++++++++--------------
- 1 file changed, 35 insertions(+), 18 deletions(-)
+ arch/arm64/mm/context.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/mm/context.c b/arch/arm64/mm/context.c
-index 40ef013c90c3..901472a57b5d 100644
+index 901472a57b5d..ee446f7535a3 100644
 --- a/arch/arm64/mm/context.c
 +++ b/arch/arm64/mm/context.c
-@@ -307,20 +307,21 @@ void check_and_switch_context(struct mm_struct *mm)
- 		cpu_switch_mm(mm->pgd, mm);
- }
+@@ -32,6 +32,8 @@ static struct asid_info
+ 	unsigned long		*pinned_map;
+ 	unsigned long		max_pinned_asids;
+ 	unsigned long		nr_pinned_asids;
++	/* Callback to locally flush the context. */
++	void			(*flush_cpu_ctxt_cb)(void);
+ } asid_info;
  
--unsigned long arm64_mm_context_get(struct mm_struct *mm)
-+static unsigned long asid_context_pinned_get(struct asid_info *info,
-+					     atomic64_t *pasid,
-+					     refcount_t *pinned)
- {
- 	unsigned long flags;
- 	u64 asid;
--	struct asid_info *info = &asid_info;
- 
- 	if (!info->pinned_map)
- 		return 0;
- 
- 	raw_spin_lock_irqsave(&info->lock, flags);
- 
--	asid = atomic64_read(&mm->context.id);
-+	asid = atomic64_read(pasid);
- 
--	if (refcount_inc_not_zero(&mm->context.pinned))
-+	if (refcount_inc_not_zero(pinned))
- 		goto out_unlock;
- 
- 	if (info->nr_pinned_asids >= info->max_pinned_asids) {
-@@ -333,45 +334,61 @@ unsigned long arm64_mm_context_get(struct mm_struct *mm)
- 		 * We went through one or more rollover since that ASID was
- 		 * used. Ensure that it is still valid, or generate a new one.
- 		 */
--		asid = new_context(info, &mm->context.id, &mm->context.pinned);
--		atomic64_set(&mm->context.id, asid);
-+		asid = new_context(info, pasid, pinned);
-+		atomic64_set(pasid, asid);
+ #define active_asid(info, cpu)	 (*per_cpu_ptr((info)->active, cpu))
+@@ -245,8 +247,9 @@ static void asid_new_context(struct asid_info *info, atomic64_t *pasid,
+ 		atomic64_set(pasid, asid);
  	}
  
- 	info->nr_pinned_asids++;
- 	__set_bit(asid2idx(info, asid), info->pinned_map);
--	refcount_set(&mm->context.pinned, 1);
-+	refcount_set(pinned, 1);
+-	if (cpumask_test_and_clear_cpu(cpu, &info->flush_pending))
+-		local_flush_tlb_all();
++	if (cpumask_test_and_clear_cpu(cpu, &info->flush_pending) &&
++	    info->flush_cpu_ctxt_cb)
++		info->flush_cpu_ctxt_cb();
  
- out_unlock:
+ 	atomic64_set(&active_asid(info, cpu), asid);
  	raw_spin_unlock_irqrestore(&info->lock, flags);
--
- 	asid &= ~ASID_MASK(info);
--
--	/* Set the equivalent of USER_ASID_BIT */
--	if (asid && arm64_kernel_unmapped_at_el0())
--		asid |= 1;
--
- 	return asid;
+@@ -427,6 +430,11 @@ void cpu_do_switch_mm(phys_addr_t pgd_phys, struct mm_struct *mm)
+ 	post_ttbr_update_workaround();
  }
--EXPORT_SYMBOL_GPL(arm64_mm_context_get);
  
--void arm64_mm_context_put(struct mm_struct *mm)
-+static void asid_context_pinned_put(struct asid_info *info, atomic64_t *pasid,
-+				    refcount_t *pinned)
++static void asid_flush_cpu_ctxt(void)
++{
++	local_flush_tlb_all();
++}
++
+ static int asids_update_limit(void)
  {
- 	unsigned long flags;
--	struct asid_info *info = &asid_info;
--	u64 asid = atomic64_read(&mm->context.id);
-+	u64 asid = atomic64_read(pasid);
+ 	struct asid_info *info = &asid_info;
+@@ -499,6 +507,7 @@ static int asids_init(void)
  
- 	if (!info->pinned_map)
- 		return;
+ 	info->active = &active_asids;
+ 	info->reserved = &reserved_asids;
++	info->flush_cpu_ctxt_cb = asid_flush_cpu_ctxt;
  
- 	raw_spin_lock_irqsave(&info->lock, flags);
- 
--	if (refcount_dec_and_test(&mm->context.pinned)) {
-+	if (refcount_dec_and_test(pinned)) {
- 		__clear_bit(asid2idx(info, asid), info->pinned_map);
- 		info->nr_pinned_asids--;
- 	}
- 
- 	raw_spin_unlock_irqrestore(&info->lock, flags);
- }
-+
-+unsigned long arm64_mm_context_get(struct mm_struct *mm)
-+{
-+	u64 asid;
-+	struct asid_info *info = &asid_info;
-+
-+	asid = asid_context_pinned_get(info, &mm->context.id,
-+				       &mm->context.pinned);
-+
-+	/* Set the equivalent of USER_ASID_BIT */
-+	if (asid && arm64_kernel_unmapped_at_el0())
-+		asid |= 1;
-+
-+	return asid;
-+}
-+EXPORT_SYMBOL_GPL(arm64_mm_context_get);
-+
-+void arm64_mm_context_put(struct mm_struct *mm)
-+{
-+	struct asid_info *info = &asid_info;
-+
-+	asid_context_pinned_put(info, &mm->context.id, &mm->context.pinned);
-+}
- EXPORT_SYMBOL_GPL(arm64_mm_context_put);
- 
- /* Errata workaround post TTBRx_EL1 update. */
+ 	/*
+ 	 * We cannot call set_reserved_asid_bits() here because CPU
 -- 
 2.17.1
 
