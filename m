@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2369D35F50F
-	for <lists+kvmarm@lfdr.de>; Wed, 14 Apr 2021 15:44:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62B5635F511
+	for <lists+kvmarm@lfdr.de>; Wed, 14 Apr 2021 15:44:33 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B972A4B688;
-	Wed, 14 Apr 2021 09:44:30 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 11B514B76A;
+	Wed, 14 Apr 2021 09:44:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,39 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jSeCiVuBKPBF; Wed, 14 Apr 2021 09:44:29 -0400 (EDT)
+	with ESMTP id hpY8IW9jHIPt; Wed, 14 Apr 2021 09:44:32 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8D7AA4B691;
-	Wed, 14 Apr 2021 09:44:28 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D37864B6DA;
+	Wed, 14 Apr 2021 09:44:30 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 97C0C4B5E8
- for <kvmarm@lists.cs.columbia.edu>; Wed, 14 Apr 2021 09:44:26 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DC34A4B677
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 14 Apr 2021 09:44:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id roqywYZiD1Is for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id iq825GDC0oDJ for <kvmarm@lists.cs.columbia.edu>;
  Wed, 14 Apr 2021 09:44:25 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7D20A4B58E
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id AFDFB4B64D
  for <kvmarm@lists.cs.columbia.edu>; Wed, 14 Apr 2021 09:44:25 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 18C22611F0;
+ by mail.kernel.org (Postfix) with ESMTPSA id E341A6120E;
  Wed, 14 Apr 2021 13:44:24 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1lWfoc-007RSZ-Cq; Wed, 14 Apr 2021 14:44:22 +0100
+ id 1lWfod-007RSZ-5a; Wed, 14 Apr 2021 14:44:23 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
  linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
  linux-s390@vger.kernel.org, linux-sh@vger.kernel.org
-Subject: [PATCH 1/5] KVM: arm64: Divorce the perf code from oprofile helpers
-Date: Wed, 14 Apr 2021 14:44:05 +0100
-Message-Id: <20210414134409.1266357-2-maz@kernel.org>
+Subject: [PATCH 2/5] arm64: Get rid of oprofile leftovers
+Date: Wed, 14 Apr 2021 14:44:06 +0100
+Message-Id: <20210414134409.1266357-3-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210414134409.1266357-1-maz@kernel.org>
 References: <20210414134409.1266357-1-maz@kernel.org>
@@ -85,70 +85,61 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-KVM/arm64 is the sole user of perf_num_counters(), and really
-could do without it. Stop using the obsolete API by relying on
-the existing probing code.
+perf_pmu_name() and perf_num_counters() are now unused. Drop them.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/perf.c     | 7 +------
- arch/arm64/kvm/pmu-emul.c | 2 +-
- include/kvm/arm_pmu.h     | 4 ++++
- 3 files changed, 6 insertions(+), 7 deletions(-)
+ drivers/perf/arm_pmu.c | 30 ------------------------------
+ 1 file changed, 30 deletions(-)
 
-diff --git a/arch/arm64/kvm/perf.c b/arch/arm64/kvm/perf.c
-index 739164324afe..b8b398670ef2 100644
---- a/arch/arm64/kvm/perf.c
-+++ b/arch/arm64/kvm/perf.c
-@@ -50,12 +50,7 @@ static struct perf_guest_info_callbacks kvm_guest_cbs = {
- 
- int kvm_perf_init(void)
- {
--	/*
--	 * Check if HW_PERF_EVENTS are supported by checking the number of
--	 * hardware performance counters. This could ensure the presence of
--	 * a physical PMU and CONFIG_PERF_EVENT is selected.
--	 */
--	if (IS_ENABLED(CONFIG_ARM_PMU) && perf_num_counters() > 0)
-+	if (kvm_pmu_probe_pmuver() != 0xf)
- 		static_branch_enable(&kvm_arm_pmu_available);
- 
- 	return perf_register_guest_info_callbacks(&kvm_guest_cbs);
-diff --git a/arch/arm64/kvm/pmu-emul.c b/arch/arm64/kvm/pmu-emul.c
-index e32c6e139a09..fd167d4f4215 100644
---- a/arch/arm64/kvm/pmu-emul.c
-+++ b/arch/arm64/kvm/pmu-emul.c
-@@ -739,7 +739,7 @@ void kvm_pmu_set_counter_event_type(struct kvm_vcpu *vcpu, u64 data,
- 	kvm_pmu_create_perf_event(vcpu, select_idx);
- }
- 
--static int kvm_pmu_probe_pmuver(void)
-+int kvm_pmu_probe_pmuver(void)
- {
- 	struct perf_event_attr attr = { };
- 	struct perf_event *event;
-diff --git a/include/kvm/arm_pmu.h b/include/kvm/arm_pmu.h
-index 6fd3cda608e4..864b9997efb2 100644
---- a/include/kvm/arm_pmu.h
-+++ b/include/kvm/arm_pmu.h
-@@ -61,6 +61,7 @@ int kvm_arm_pmu_v3_get_attr(struct kvm_vcpu *vcpu,
- int kvm_arm_pmu_v3_has_attr(struct kvm_vcpu *vcpu,
- 			    struct kvm_device_attr *attr);
- int kvm_arm_pmu_v3_enable(struct kvm_vcpu *vcpu);
-+int kvm_pmu_probe_pmuver(void);
- #else
- struct kvm_pmu {
+diff --git a/drivers/perf/arm_pmu.c b/drivers/perf/arm_pmu.c
+index 2d10d84fb79c..d4f7f1f9cc77 100644
+--- a/drivers/perf/arm_pmu.c
++++ b/drivers/perf/arm_pmu.c
+@@ -581,33 +581,6 @@ static const struct attribute_group armpmu_common_attr_group = {
+ 	.attrs = armpmu_common_attrs,
  };
-@@ -116,6 +117,9 @@ static inline u64 kvm_pmu_get_pmceid(struct kvm_vcpu *vcpu, bool pmceid1)
- {
- 	return 0;
- }
-+
-+static inline int kvm_pmu_probe_pmuver(void) { return 0xf; }
-+
- #endif
  
- #endif
+-/* Set at runtime when we know what CPU type we are. */
+-static struct arm_pmu *__oprofile_cpu_pmu;
+-
+-/*
+- * Despite the names, these two functions are CPU-specific and are used
+- * by the OProfile/perf code.
+- */
+-const char *perf_pmu_name(void)
+-{
+-	if (!__oprofile_cpu_pmu)
+-		return NULL;
+-
+-	return __oprofile_cpu_pmu->name;
+-}
+-EXPORT_SYMBOL_GPL(perf_pmu_name);
+-
+-int perf_num_counters(void)
+-{
+-	int max_events = 0;
+-
+-	if (__oprofile_cpu_pmu != NULL)
+-		max_events = __oprofile_cpu_pmu->num_events;
+-
+-	return max_events;
+-}
+-EXPORT_SYMBOL_GPL(perf_num_counters);
+-
+ static int armpmu_count_irq_users(const int irq)
+ {
+ 	int cpu, count = 0;
+@@ -979,9 +952,6 @@ int armpmu_register(struct arm_pmu *pmu)
+ 	if (ret)
+ 		goto out_destroy;
+ 
+-	if (!__oprofile_cpu_pmu)
+-		__oprofile_cpu_pmu = pmu;
+-
+ 	pr_info("enabled with %s PMU driver, %d counters available%s\n",
+ 		pmu->name, pmu->num_events,
+ 		has_nmi ? ", using NMIs" : "");
 -- 
 2.29.2
 
