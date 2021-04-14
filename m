@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 26BF235F510
-	for <lists+kvmarm@lfdr.de>; Wed, 14 Apr 2021 15:44:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D94235F512
+	for <lists+kvmarm@lfdr.de>; Wed, 14 Apr 2021 15:44:35 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CC9034B718;
-	Wed, 14 Apr 2021 09:44:31 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E52EE4B699;
+	Wed, 14 Apr 2021 09:44:34 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,39 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id muu037K7zYgd; Wed, 14 Apr 2021 09:44:30 -0400 (EDT)
+	with ESMTP id 5RlNfWsf4b1M; Wed, 14 Apr 2021 09:44:33 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A82BF4B6BA;
-	Wed, 14 Apr 2021 09:44:28 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F08F64B723;
+	Wed, 14 Apr 2021 09:44:30 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D0D14B663
- for <kvmarm@lists.cs.columbia.edu>; Wed, 14 Apr 2021 09:44:27 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 022AF4B666
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 14 Apr 2021 09:44:28 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id d-aOkCfAgCpX for <kvmarm@lists.cs.columbia.edu>;
- Wed, 14 Apr 2021 09:44:26 -0400 (EDT)
+ with ESMTP id AFn6TM0k2Afc for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 14 Apr 2021 09:44:27 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5A7EE4B66D
- for <kvmarm@lists.cs.columbia.edu>; Wed, 14 Apr 2021 09:44:26 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 17ECA4B5E8
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 14 Apr 2021 09:44:27 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 9BEFC611C9;
- Wed, 14 Apr 2021 13:44:25 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 6BC26611B0;
+ Wed, 14 Apr 2021 13:44:26 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1lWfod-007RSZ-Vw; Wed, 14 Apr 2021 14:44:24 +0100
+ id 1lWfoe-007RSZ-OI; Wed, 14 Apr 2021 14:44:24 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
  linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
  linux-s390@vger.kernel.org, linux-sh@vger.kernel.org
-Subject: [PATCH 3/5] s390: Get rid of oprofile leftovers
-Date: Wed, 14 Apr 2021 14:44:07 +0100
-Message-Id: <20210414134409.1266357-4-maz@kernel.org>
+Subject: [PATCH 4/5] sh: Get rid of oprofile leftovers
+Date: Wed, 14 Apr 2021 14:44:08 +0100
+Message-Id: <20210414134409.1266357-5-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210414134409.1266357-1-maz@kernel.org>
 References: <20210414134409.1266357-1-maz@kernel.org>
@@ -89,41 +89,38 @@ perf_pmu_name() and perf_num_counters() are unused. Drop them.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/s390/kernel/perf_event.c | 21 ---------------------
- 1 file changed, 21 deletions(-)
+ arch/sh/kernel/perf_event.c | 18 ------------------
+ 1 file changed, 18 deletions(-)
 
-diff --git a/arch/s390/kernel/perf_event.c b/arch/s390/kernel/perf_event.c
-index 1e75cc983546..ea7729bebaa0 100644
---- a/arch/s390/kernel/perf_event.c
-+++ b/arch/s390/kernel/perf_event.c
-@@ -23,27 +23,6 @@
- #include <asm/sysinfo.h>
- #include <asm/unwind.h>
+diff --git a/arch/sh/kernel/perf_event.c b/arch/sh/kernel/perf_event.c
+index 445e3ece4c23..1d2507f22437 100644
+--- a/arch/sh/kernel/perf_event.c
++++ b/arch/sh/kernel/perf_event.c
+@@ -57,24 +57,6 @@ static inline int sh_pmu_initialized(void)
+ 	return !!sh_pmu;
+ }
  
 -const char *perf_pmu_name(void)
 -{
--	if (cpum_cf_avail() || cpum_sf_avail())
--		return "CPU-Measurement Facilities (CPU-MF)";
--	return "pmu";
+-	if (!sh_pmu)
+-		return NULL;
+-
+-	return sh_pmu->name;
 -}
--EXPORT_SYMBOL(perf_pmu_name);
+-EXPORT_SYMBOL_GPL(perf_pmu_name);
 -
 -int perf_num_counters(void)
 -{
--	int num = 0;
+-	if (!sh_pmu)
+-		return 0;
 -
--	if (cpum_cf_avail())
--		num += PERF_CPUM_CF_MAX_CTR;
--	if (cpum_sf_avail())
--		num += PERF_CPUM_SF_MAX_CTR;
--
--	return num;
+-	return sh_pmu->num_events;
 -}
--EXPORT_SYMBOL(perf_num_counters);
+-EXPORT_SYMBOL_GPL(perf_num_counters);
 -
- static struct kvm_s390_sie_block *sie_block(struct pt_regs *regs)
- {
- 	struct stack_frame *stack = (struct stack_frame *) regs->gprs[15];
+ /*
+  * Release the PMU if this is the last perf_event.
+  */
 -- 
 2.29.2
 
