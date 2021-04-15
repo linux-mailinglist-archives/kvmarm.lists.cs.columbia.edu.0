@@ -2,48 +2,49 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 14D25360B56
-	for <lists+kvmarm@lfdr.de>; Thu, 15 Apr 2021 16:04:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57D00360B5A
+	for <lists+kvmarm@lfdr.de>; Thu, 15 Apr 2021 16:04:04 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BAFDC4B508;
-	Thu, 15 Apr 2021 10:04:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0A2644B6A3;
+	Thu, 15 Apr 2021 10:04:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id e65uHHgzLWUh; Thu, 15 Apr 2021 10:03:55 -0400 (EDT)
+	with ESMTP id J-o4oCSgm+wi; Thu, 15 Apr 2021 10:04:03 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B29E94B6CB;
-	Thu, 15 Apr 2021 10:03:54 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D55754B632;
+	Thu, 15 Apr 2021 10:04:02 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 856E84B4FC
- for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Apr 2021 10:03:53 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B7BAE4B43F
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Apr 2021 10:04:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id xGgQgNw-bNbH for <kvmarm@lists.cs.columbia.edu>;
- Thu, 15 Apr 2021 10:03:52 -0400 (EDT)
+ with ESMTP id QqDpC6pB-Fck for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 15 Apr 2021 10:03:59 -0400 (EDT)
 Received: from szxga06-in.huawei.com (szxga06-in.huawei.com [45.249.212.32])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8FD634B43F
- for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Apr 2021 10:03:51 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1D5A34B4AC
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Apr 2021 10:03:59 -0400 (EDT)
 Received: from DGGEMS402-HUB.china.huawei.com (unknown [172.30.72.60])
- by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4FLgxq0bhHzkjn6;
+ by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4FLgxq05rgzkjm9;
  Thu, 15 Apr 2021 22:01:51 +0800 (CST)
 Received: from DESKTOP-5IS4806.china.huawei.com (10.174.187.224) by
  DGGEMS402-HUB.china.huawei.com (10.3.19.202) with Microsoft SMTP Server id
- 14.3.498.0; Thu, 15 Apr 2021 22:03:33 +0800
+ 14.3.498.0; Thu, 15 Apr 2021 22:03:34 +0800
 From: Keqian Zhu <zhukeqian1@huawei.com>
 To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
  <kvm@vger.kernel.org>, <kvmarm@lists.cs.columbia.edu>, Marc Zyngier
  <maz@kernel.org>
-Subject: [PATCH v4 1/2] kvm/arm64: Remove the creation time's mapping of MMIO
- regions
-Date: Thu, 15 Apr 2021 22:03:27 +0800
-Message-ID: <20210415140328.24200-2-zhukeqian1@huawei.com>
+Subject: [PATCH v4 2/2] kvm/arm64: Try stage2 block mapping for host device
+ MMIO
+Date: Thu, 15 Apr 2021 22:03:28 +0800
+Message-ID: <20210415140328.24200-3-zhukeqian1@huawei.com>
 X-Mailer: git-send-email 2.8.4.windows.1
 In-Reply-To: <20210415140328.24200-1-zhukeqian1@huawei.com>
 References: <20210415140328.24200-1-zhukeqian1@huawei.com>
@@ -66,92 +67,135 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The MMIO regions may be unmapped for many reasons and can be remapped
-by stage2 fault path. Map MMIO regions at creation time becomes a
-minor optimization and makes these two mapping path hard to sync.
+The MMIO region of a device maybe huge (GB level), try to use
+block mapping in stage2 to speedup both map and unmap.
 
-Remove the mapping code while keep the useful sanity check.
+Compared to normal memory mapping, we should consider two more
+points when try block mapping for MMIO region:
+
+1. For normal memory mapping, the PA(host physical address) and
+HVA have same alignment within PUD_SIZE or PMD_SIZE when we use
+the HVA to request hugepage, so we don't need to consider PA
+alignment when verifing block mapping. But for device memory
+mapping, the PA and HVA may have different alignment.
+
+2. For normal memory mapping, we are sure hugepage size properly
+fit into vma, so we don't check whether the mapping size exceeds
+the boundary of vma. But for device memory mapping, we should pay
+attention to this.
+
+This adds get_vma_page_shift() to get page shift for both normal
+memory and device MMIO region, and check these two points when
+selecting block mapping size for MMIO region.
 
 Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
 ---
- arch/arm64/kvm/mmu.c | 38 +++-----------------------------------
- 1 file changed, 3 insertions(+), 35 deletions(-)
+ arch/arm64/kvm/mmu.c | 61 ++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 51 insertions(+), 10 deletions(-)
 
 diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 8711894db8c2..c59af5ca01b0 100644
+index c59af5ca01b0..5a1cc7751e6d 100644
 --- a/arch/arm64/kvm/mmu.c
 +++ b/arch/arm64/kvm/mmu.c
-@@ -1301,7 +1301,6 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
- {
- 	hva_t hva = mem->userspace_addr;
- 	hva_t reg_end = hva + mem->memory_size;
--	bool writable = !(mem->flags & KVM_MEM_READONLY);
- 	int ret = 0;
- 
- 	if (change != KVM_MR_CREATE && change != KVM_MR_MOVE &&
-@@ -1318,8 +1317,7 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
- 	mmap_read_lock(current->mm);
- 	/*
- 	 * A memory region could potentially cover multiple VMAs, and any holes
--	 * between them, so iterate over all of them to find out if we can map
--	 * any of them right now.
-+	 * between them, so iterate over all of them.
- 	 *
- 	 *     +--------------------------------------------+
- 	 * +---------------+----------------+   +----------------+
-@@ -1330,50 +1328,20 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
- 	 */
- 	do {
- 		struct vm_area_struct *vma = find_vma(current->mm, hva);
--		hva_t vm_start, vm_end;
- 
- 		if (!vma || vma->vm_start >= reg_end)
- 			break;
- 
--		/*
--		 * Take the intersection of this VMA with the memory region
--		 */
--		vm_start = max(hva, vma->vm_start);
--		vm_end = min(reg_end, vma->vm_end);
--
- 		if (vma->vm_flags & VM_PFNMAP) {
--			gpa_t gpa = mem->guest_phys_addr +
--				    (vm_start - mem->userspace_addr);
--			phys_addr_t pa;
--
--			pa = (phys_addr_t)vma->vm_pgoff << PAGE_SHIFT;
--			pa += vm_start - vma->vm_start;
--
- 			/* IO region dirty page logging not allowed */
- 			if (memslot->flags & KVM_MEM_LOG_DIRTY_PAGES) {
- 				ret = -EINVAL;
--				goto out;
--			}
--
--			ret = kvm_phys_addr_ioremap(kvm, gpa, pa,
--						    vm_end - vm_start,
--						    writable);
--			if (ret)
- 				break;
-+			}
- 		}
--		hva = vm_end;
-+		hva = min(reg_end, vma->vm_end);
- 	} while (hva < reg_end);
- 
--	if (change == KVM_MR_FLAGS_ONLY)
--		goto out;
--
--	spin_lock(&kvm->mmu_lock);
--	if (ret)
--		unmap_stage2_range(&kvm->arch.mmu, mem->guest_phys_addr, mem->memory_size);
--	else if (!cpus_have_final_cap(ARM64_HAS_STAGE2_FWB))
--		stage2_flush_memslot(kvm, memslot);
--	spin_unlock(&kvm->mmu_lock);
--out:
- 	mmap_read_unlock(current->mm);
- 	return ret;
+@@ -738,6 +738,35 @@ transparent_hugepage_adjust(struct kvm_memory_slot *memslot,
+ 	return PAGE_SIZE;
  }
+ 
++static int get_vma_page_shift(struct vm_area_struct *vma, unsigned long hva)
++{
++	unsigned long pa;
++
++	if (is_vm_hugetlb_page(vma) && !(vma->vm_flags & VM_PFNMAP))
++		return huge_page_shift(hstate_vma(vma));
++
++	if (!(vma->vm_flags & VM_PFNMAP))
++		return PAGE_SHIFT;
++
++	VM_BUG_ON(is_vm_hugetlb_page(vma));
++
++	pa = (vma->vm_pgoff << PAGE_SHIFT) + (hva - vma->vm_start);
++
++#ifndef __PAGETABLE_PMD_FOLDED
++	if ((hva & (PUD_SIZE - 1)) == (pa & (PUD_SIZE - 1)) &&
++	    ALIGN_DOWN(hva, PUD_SIZE) >= vma->vm_start &&
++	    ALIGN(hva, PUD_SIZE) <= vma->vm_end)
++		return PUD_SHIFT;
++#endif
++
++	if ((hva & (PMD_SIZE - 1)) == (pa & (PMD_SIZE - 1)) &&
++	    ALIGN_DOWN(hva, PMD_SIZE) >= vma->vm_start &&
++	    ALIGN(hva, PMD_SIZE) <= vma->vm_end)
++		return PMD_SHIFT;
++
++	return PAGE_SHIFT;
++}
++
+ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 			  struct kvm_memory_slot *memslot, unsigned long hva,
+ 			  unsigned long fault_status)
+@@ -769,7 +798,10 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 		return -EFAULT;
+ 	}
+ 
+-	/* Let's check if we will get back a huge page backed by hugetlbfs */
++	/*
++	 * Let's check if we will get back a huge page backed by hugetlbfs, or
++	 * get block mapping for device MMIO region.
++	 */
+ 	mmap_read_lock(current->mm);
+ 	vma = find_vma_intersection(current->mm, hva, hva + 1);
+ 	if (unlikely(!vma)) {
+@@ -778,15 +810,15 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 		return -EFAULT;
+ 	}
+ 
+-	if (is_vm_hugetlb_page(vma))
+-		vma_shift = huge_page_shift(hstate_vma(vma));
+-	else
+-		vma_shift = PAGE_SHIFT;
+-
+-	if (logging_active ||
+-	    (vma->vm_flags & VM_PFNMAP)) {
++	/*
++	 * logging_active is guaranteed to never be true for VM_PFNMAP
++	 * memslots.
++	 */
++	if (logging_active) {
+ 		force_pte = true;
+ 		vma_shift = PAGE_SHIFT;
++	} else {
++		vma_shift = get_vma_page_shift(vma, hva);
+ 	}
+ 
+ 	switch (vma_shift) {
+@@ -854,8 +886,17 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 		return -EFAULT;
+ 
+ 	if (kvm_is_device_pfn(pfn)) {
++		/*
++		 * If the page was identified as device early by looking at
++		 * the VMA flags, vma_pagesize is already representing the
++		 * largest quantity we can map.  If instead it was mapped
++		 * via gfn_to_pfn_prot(), vma_pagesize is set to PAGE_SIZE
++		 * and must not be upgraded.
++		 *
++		 * In both cases, we don't let transparent_hugepage_adjust()
++		 * change things at the last minute.
++		 */
+ 		device = true;
+-		force_pte = true;
+ 	} else if (logging_active && !write_fault) {
+ 		/*
+ 		 * Only actually map the page as writable if this was a write
+@@ -876,7 +917,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 	 * If we are not forced to use page mapping, check if we are
+ 	 * backed by a THP and thus use block mapping if possible.
+ 	 */
+-	if (vma_pagesize == PAGE_SIZE && !force_pte)
++	if (vma_pagesize == PAGE_SIZE && !(force_pte || device))
+ 		vma_pagesize = transparent_hugepage_adjust(memslot, hva,
+ 							   &pfn, &fault_ipa);
+ 	if (writable)
 -- 
 2.19.1
 
