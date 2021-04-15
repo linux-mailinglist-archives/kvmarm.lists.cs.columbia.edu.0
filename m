@@ -2,70 +2,101 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5830D360778
-	for <lists+kvmarm@lfdr.de>; Thu, 15 Apr 2021 12:47:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B62653607EC
+	for <lists+kvmarm@lfdr.de>; Thu, 15 Apr 2021 13:03:51 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D0B714B6FA;
-	Thu, 15 Apr 2021 06:47:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 351E64B6FA;
+	Thu, 15 Apr 2021 07:03:51 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@ibm.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cw+n1kOaXh+8; Thu, 15 Apr 2021 06:47:34 -0400 (EDT)
+	with ESMTP id xQV5XMD9eh-O; Thu, 15 Apr 2021 07:03:51 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A79164B6BD;
-	Thu, 15 Apr 2021 06:47:33 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3083F4B6D3;
+	Thu, 15 Apr 2021 07:03:50 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C68444B6A4
- for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Apr 2021 06:47:31 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BAA3B4B6A1
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Apr 2021 06:39:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id swbeH9p5Q3UP for <kvmarm@lists.cs.columbia.edu>;
- Thu, 15 Apr 2021 06:47:31 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E35F14B6A0
- for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Apr 2021 06:47:30 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id D806D61139;
- Thu, 15 Apr 2021 10:47:29 +0000 (UTC)
-Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
- helo=why.misterjones.org)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1lWzWx-007cd1-Sb; Thu, 15 Apr 2021 11:47:28 +0100
-Date: Thu, 15 Apr 2021 11:47:26 +0100
-Message-ID: <87fszrn7sx.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Heiko Carstens <hca@linux.ibm.com>
+ with ESMTP id IVC5WBw7D4cm for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 15 Apr 2021 06:39:13 -0400 (EDT)
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C888A4B6A2
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Apr 2021 06:39:13 -0400 (EDT)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.43/8.16.0.43) with SMTP id
+ 13FAXmM5008654; Thu, 15 Apr 2021 06:38:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=date : from : to : cc :
+ subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=pp1; bh=psn3DZgaprlJLV0BRJ/BAVGKz59VmYfg2eUMYc2+zS4=;
+ b=jCHrO7la0kfaud/8GLiCl3bYA0PeNVY5T4wUo8iFVA0wkJh5EMq1mOwpyFzNbHnoXuZ4
+ 71UHRqy3RhRHVV0gEKj6NkivCvxLQsIQ7LtSq1jIbMiXfk6UQYeQ75S4AB6tk0UbgDOc
+ p0+9Dx7kfKLlDpMnTppC7saA9uP0P04ry2Dk7QiE8gbVrshbWRuR643Rins+PssnhvWE
+ miOmsYkcnYwnjSXJzD2Be6IhqS2jTgzdy4SQmakLu3fOQTsLPz7yTZvXf4JbMRhBAkjd
+ XVn4g7yC0HO3wSzn5sslRzDr0H2esBUAboxlUPok35Hbqcnaq7ba6apn5zUTjRcj71xz 5Q== 
+Received: from ppma06fra.de.ibm.com (48.49.7a9f.ip4.static.sl-reverse.com
+ [159.122.73.72])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 37xbqk3rdm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 15 Apr 2021 06:38:58 -0400
+Received: from pps.filterd (ppma06fra.de.ibm.com [127.0.0.1])
+ by ppma06fra.de.ibm.com (8.16.0.43/8.16.0.43) with SMTP id 13FAXt48018949;
+ Thu, 15 Apr 2021 10:38:56 GMT
+Received: from b06cxnps4074.portsmouth.uk.ibm.com
+ (d06relay11.portsmouth.uk.ibm.com [9.149.109.196])
+ by ppma06fra.de.ibm.com with ESMTP id 37u39ha245-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 15 Apr 2021 10:38:56 +0000
+Received: from d06av25.portsmouth.uk.ibm.com (d06av25.portsmouth.uk.ibm.com
+ [9.149.105.61])
+ by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 13FAcsQR9830768
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 15 Apr 2021 10:38:54 GMT
+Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E81F611C054;
+ Thu, 15 Apr 2021 10:38:53 +0000 (GMT)
+Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 22E6B11C04A;
+ Thu, 15 Apr 2021 10:38:53 +0000 (GMT)
+Received: from osiris (unknown [9.171.3.254])
+ by d06av25.portsmouth.uk.ibm.com (Postfix) with ESMTPS;
+ Thu, 15 Apr 2021 10:38:53 +0000 (GMT)
+Date: Thu, 15 Apr 2021 12:38:52 +0200
+From: Heiko Carstens <hca@linux.ibm.com>
+To: Marc Zyngier <maz@kernel.org>
 Subject: Re: [PATCH 3/5] s390: Get rid of oprofile leftovers
-In-Reply-To: <YHgXvFCLh0Ls0b9t@osiris>
+Message-ID: <YHgXvFCLh0Ls0b9t@osiris>
 References: <20210414134409.1266357-1-maz@kernel.org>
- <20210414134409.1266357-4-maz@kernel.org> <YHgXvFCLh0Ls0b9t@osiris>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
- (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-X-SA-Exim-Connect-IP: 62.31.163.78
-X-SA-Exim-Rcpt-To: hca@linux.ibm.com, kvm@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, linux-s390@vger.kernel.org,
- linux-sh@vger.kernel.org, mark.rutland@arm.com, will@kernel.org,
- dalias@libc.org, ysato@users.sourceforge.jp, peterz@infradead.org,
- acme@kernel.org, borntraeger@de.ibm.com, nathan@kernel.org,
- viresh.kumar@linaro.org, james.morse@arm.com, suzuki.poulose@arm.com,
- alexandru.elisei@arm.com, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
+ <20210414134409.1266357-4-maz@kernel.org>
+MIME-Version: 1.0
+Content-Disposition: inline
+In-Reply-To: <20210414134409.1266357-4-maz@kernel.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 0anE4PGcxBYlU4oJrE2IcbTp6vUyz4kt
+X-Proofpoint-ORIG-GUID: 0anE4PGcxBYlU4oJrE2IcbTp6vUyz4kt
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391, 18.0.761
+ definitions=2021-04-15_03:2021-04-15,
+ 2021-04-15 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011
+ priorityscore=1501 spamscore=0 suspectscore=0 phishscore=0
+ lowpriorityscore=0 adultscore=0 mlxlogscore=721 bulkscore=0 malwarescore=0
+ impostorscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2104060000 definitions=main-2104150064
+X-Mailman-Approved-At: Thu, 15 Apr 2021 07:03:48 -0400
 Cc: linux-s390@vger.kernel.org, Rich Felker <dalias@libc.org>,
  Yoshinori Sato <ysato@users.sourceforge.jp>, kvm@vger.kernel.org,
  linux-sh@vger.kernel.org, Peter Zijlstra <peterz@infradead.org>,
@@ -90,30 +121,17 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, 15 Apr 2021 11:38:52 +0100,
-Heiko Carstens <hca@linux.ibm.com> wrote:
+On Wed, Apr 14, 2021 at 02:44:07PM +0100, Marc Zyngier wrote:
+> perf_pmu_name() and perf_num_counters() are unused. Drop them.
 > 
-> On Wed, Apr 14, 2021 at 02:44:07PM +0100, Marc Zyngier wrote:
-> > perf_pmu_name() and perf_num_counters() are unused. Drop them.
-> > 
-> > Signed-off-by: Marc Zyngier <maz@kernel.org>
-> > ---
-> >  arch/s390/kernel/perf_event.c | 21 ---------------------
-> >  1 file changed, 21 deletions(-)
-> 
-> Acked-by: Heiko Carstens <hca@linux.ibm.com>
-> 
-> ...or do you want me to pick this up and route via the s390 tree(?).
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
+> ---
+>  arch/s390/kernel/perf_event.c | 21 ---------------------
+>  1 file changed, 21 deletions(-)
 
-Either way work for me, but I just want to make sure the last patch
-doesn't get applied before the previous ones.
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
 
-Thanks,
-
-	M.
-
--- 
-Without deviation from the norm, progress is not possible.
+...or do you want me to pick this up and route via the s390 tree(?).
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
