@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 61D4B365A23
-	for <lists+kvmarm@lfdr.de>; Tue, 20 Apr 2021 15:31:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 704B3365A97
+	for <lists+kvmarm@lfdr.de>; Tue, 20 Apr 2021 15:52:18 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DE4804B386;
-	Tue, 20 Apr 2021 09:31:18 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EFEAC4B39B;
+	Tue, 20 Apr 2021 09:52:17 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,42 +15,42 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yddA70ZF8s8O; Tue, 20 Apr 2021 09:31:18 -0400 (EDT)
+	with ESMTP id xW-TOD1HopZJ; Tue, 20 Apr 2021 09:52:17 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 032704B39F;
-	Tue, 20 Apr 2021 09:31:15 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B2AE74B39F;
+	Tue, 20 Apr 2021 09:52:16 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5572D4B369
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Apr 2021 09:31:13 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 551174B393
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Apr 2021 09:52:15 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id lMYNuQLHDC5j for <kvmarm@lists.cs.columbia.edu>;
- Tue, 20 Apr 2021 09:31:09 -0400 (EDT)
+ with ESMTP id g6edBGGILemD for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 20 Apr 2021 09:52:11 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1AD9D4B354
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Apr 2021 09:31:09 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1A9944B38F
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Apr 2021 09:52:11 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id E56606101C;
- Tue, 20 Apr 2021 13:31:07 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id E89956113C;
+ Tue, 20 Apr 2021 13:52:09 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.misterjones.org)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1lYqT3-008V1Z-QB; Tue, 20 Apr 2021 14:31:06 +0100
-Date: Tue, 20 Apr 2021 14:31:05 +0100
-Message-ID: <877dkxqe06.wl-maz@kernel.org>
+ id 1lYqnP-008VHj-SZ; Tue, 20 Apr 2021 14:52:07 +0100
+Date: Tue, 20 Apr 2021 14:52:07 +0100
+Message-ID: <875z0hqd14.wl-maz@kernel.org>
 From: Marc Zyngier <maz@kernel.org>
 To: Yoan Picchi <yoan.picchi@arm.com>
-Subject: Re: [PATCH v2 1/3] KVM: arm64: Add a stage2 page fault counter for
+Subject: Re: [PATCH v2 2/3] KVM: arm64: Add two page mapping counters for
  kvm_stat
-In-Reply-To: <20210420130825.15585-2-yoan.picchi@arm.com>
+In-Reply-To: <20210420130825.15585-3-yoan.picchi@arm.com>
 References: <20210420130825.15585-1-yoan.picchi@arm.com>
- <20210420130825.15585-2-yoan.picchi@arm.com>
+ <20210420130825.15585-3-yoan.picchi@arm.com>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
  (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -81,76 +81,104 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, 20 Apr 2021 14:08:23 +0100,
+On Tue, 20 Apr 2021 14:08:24 +0100,
 Yoan Picchi <yoan.picchi@arm.com> wrote:
 > 
-> This counter is meant to detect stage 2 page fault exits. This is meant to
-> measure how much those page fault influence the performance (by comparing
-> this number of exits to some other exit causes).
-> For now this counter is generic, but some more granularity is planned in
-> the next commits so that one know how much of the page fault are for memory
-> allocation, or for mmio for instance. The idea being that one using this
-> counter can get a better idea of what is trigerring those exits to try to
-> fix it.
+> This patch adds regular_page_mapped and huge_page_mapped.
+> regular_page_mapped is increased when a page of the smallest granularity
+> is mapped. This is usually a 4k, 16k or 64k page.
+> huge_page_mapped is increased when a huge page of any size other than the
+> smallest granularity is mapped.
+> Those counters only count pages allocated for the data and doesn't count
+> the pages/blocks allocated to the page tables as I don't see where those
+> might be needed to be recorded
+> 
+> I can see two usecases for those counters :
+> 	We can detect memory pressure in the host when the guest gets
+> regular pages instead of huge ones.
+> 	May help detecting an abnormal memory usage like some recurring
+> allocs past the kernel and a few program starts.
+> With the previous patch about stage2_abort_exit, it have the added
+> benefit of specifying the second main cause of stage 2 page fault (the
+> other being mmio access)
+> 
+> To test this patch I did start a guest VM and monitor the page allocation.
+> By default it only allocate huge pages. Then I tried to disable the huge
+> pages with : echo never > /sys/kernel/mm/transparent_hugepage/enabled
+> Starting the VM, it no longer allocate any huge page, but only regular
+> pages.
+> 
+> I can't log into the guess because it doesn't recognize my keyboard.
+
+Maybe you should consider having a look at what is going wrong
+here. If your guest isn't working correctly, trying to account for
+page allocation is a bit... irrelevant.
+
+> To
+> circumvent that I added some command to the init script that need some
+> memory : cat /dev/zero | head -c 1000m | tail
+> This take 1GiB of memory before finishing.
+> From memory, it allocate 525 or so huge table which is around what I would
+> expect with 2MB pages.
+> 
+> I did check the relation between stage 2 exits, mmio exits and
+> allocation. The mmio + allocation account for almost all the stage 2 exit
+> as expected. There was only about 20 exits that was neither a mmio or an
+> alloc during the kernel boot. I did not look what they are, but it can be
+> a memory permission relaxation, or resizing a page.
+> 
+> My main concern here is about the case where we replace a page/block by
+> another/resize a block. I don't fully understand the mechanism yet and
+> so don't know if it should be counted as an allocation or not. For now I
+> don't account it.
+
+None of this discussion belongs to a commit message.
+
 > 
 > Signed-off-by: Yoan Picchi <yoan.picchi@arm.com>
 > ---
->  arch/arm64/include/asm/kvm_host.h | 1 +
->  arch/arm64/kvm/guest.c            | 1 +
->  arch/arm64/kvm/mmu.c              | 2 ++
->  3 files changed, 4 insertions(+)
+>  arch/arm64/include/asm/kvm_host.h | 2 ++
+>  arch/arm64/kvm/guest.c            | 2 ++
+>  arch/arm64/kvm/hyp/pgtable.c      | 5 +++++
+>  3 files changed, 9 insertions(+)
 > 
 > diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-> index 3d10e6527..02891ce94 100644
+> index 02891ce94..8f9d27571 100644
 > --- a/arch/arm64/include/asm/kvm_host.h
 > +++ b/arch/arm64/include/asm/kvm_host.h
-> @@ -561,6 +561,7 @@ struct kvm_vcpu_stat {
->  	u64 wfi_exit_stat;
->  	u64 mmio_exit_user;
->  	u64 mmio_exit_kernel;
-> +	u64 stage2_abort_exit;
->  	u64 exits;
+> @@ -547,6 +547,8 @@ static inline bool __vcpu_write_sys_reg_to_cpu(u64 val, int reg)
+>  
+>  struct kvm_vm_stat {
+>  	ulong remote_tlb_flush;
+> +	ulong regular_page_mapped;
+> +	ulong huge_page_mapped;
 >  };
 >  
+>  struct kvm_vcpu_stat {
 > diff --git a/arch/arm64/kvm/guest.c b/arch/arm64/kvm/guest.c
-> index 9bbd30e62..82a4b6275 100644
+> index 82a4b6275..41316b30e 100644
 > --- a/arch/arm64/kvm/guest.c
 > +++ b/arch/arm64/kvm/guest.c
-> @@ -38,6 +38,7 @@ struct kvm_stats_debugfs_item debugfs_entries[] = {
->  	VCPU_STAT("wfi_exit_stat", wfi_exit_stat),
->  	VCPU_STAT("mmio_exit_user", mmio_exit_user),
->  	VCPU_STAT("mmio_exit_kernel", mmio_exit_kernel),
-> +	VCPU_STAT("stage2_abort_exit", stage2_abort_exit),
+> @@ -42,6 +42,8 @@ struct kvm_stats_debugfs_item debugfs_entries[] = {
 >  	VCPU_STAT("exits", exits),
 >  	VCPU_STAT("halt_poll_success_ns", halt_poll_success_ns),
 >  	VCPU_STAT("halt_poll_fail_ns", halt_poll_fail_ns),
-> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> index 77cb2d28f..c3527ccf6 100644
-> --- a/arch/arm64/kvm/mmu.c
-> +++ b/arch/arm64/kvm/mmu.c
-> @@ -966,6 +966,7 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu)
->  	fault_ipa = kvm_vcpu_get_fault_ipa(vcpu);
->  	is_iabt = kvm_vcpu_trap_is_iabt(vcpu);
->  
-> +
+> +	VM_STAT("regular_page_mapped", regular_page_mapped),
+> +	VM_STAT("huge_page_mapped", huge_page_mapped),
 
-Please proofread your patches, and don't add spurious blank lines.
+As pointed out in the previous review, two sizes don't quite fit
+all. There is a continuum of page, contiguous pages and block mappings
+of various sizes (although KVM doesn't support the contiguous hint at
+S2 yet).
 
->  	/* Synchronous External Abort? */
->  	if (kvm_vcpu_abt_issea(vcpu)) {
->  		/*
-> @@ -980,6 +981,7 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu)
->  
->  	trace_kvm_guest_fault(*vcpu_pc(vcpu), kvm_vcpu_get_esr(vcpu),
->  			      kvm_vcpu_get_hfar(vcpu), fault_ipa);
-> +	vcpu->stat.stage2_abort_exit++;
+For this information to be useful, you'd have to at least distinguish
+between 2M and 1G mappings when operating with a 4k base granule
+size. Because if I have enough memory to get contiguous 1G chunks, I
+surely don't want them to show up as 2M mappings because I messed up
+the userspace alignment requirements, and this counter can't
+distinguish between these cases.
 
-What is the benefit of this counter over, say, the tracepoint that is
-already in place? This tracepoint allows you to count these exits, and
-to actually find *why* you are exiting.
-
-If the purpose of this patch is to identify exit reasons, I'd say that
-the tracepoint is vastly superior in that respect.
+Thanks,
 
 	M.
 
