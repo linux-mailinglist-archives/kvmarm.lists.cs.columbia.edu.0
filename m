@@ -2,48 +2,47 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AB9F365A37
-	for <lists+kvmarm@lfdr.de>; Tue, 20 Apr 2021 15:34:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7238365A38
+	for <lists+kvmarm@lfdr.de>; Tue, 20 Apr 2021 15:34:11 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C7E44B3F9;
-	Tue, 20 Apr 2021 09:34:10 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 474CA4B3A3;
+	Tue, 20 Apr 2021 09:34:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3ze2lUbpym58; Tue, 20 Apr 2021 09:34:09 -0400 (EDT)
+	with ESMTP id r7hoRX51Z1nk; Tue, 20 Apr 2021 09:34:10 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 955674B3D5;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id ABF914B393;
 	Tue, 20 Apr 2021 09:34:07 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3FED24B342
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Apr 2021 09:08:52 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8FE094B360
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Apr 2021 09:08:53 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id jGkopj19dKa7 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 20 Apr 2021 09:08:48 -0400 (EDT)
+ with ESMTP id szwfPpas0nVB for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 20 Apr 2021 09:08:49 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EBDC44B399
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Apr 2021 09:08:47 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 528BD4B382
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Apr 2021 09:08:49 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 50B6514BF;
- Tue, 20 Apr 2021 06:08:47 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E3C221478;
+ Tue, 20 Apr 2021 06:08:48 -0700 (PDT)
 Received: from yoan-MS-7758.Home (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id EA5FB3F792;
- Tue, 20 Apr 2021 06:08:45 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 8A57F3F792;
+ Tue, 20 Apr 2021 06:08:47 -0700 (PDT)
 From: Yoan Picchi <yoan.picchi@arm.com>
 To: maz@kernel.org, james.morse@arm.com, julien.thierry.kdev@gmail.com,
  suzuki.poulose@arm.com, linux-arm-kernel@lists.infradead.org,
  kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v2 2/3] KVM: arm64: Add two page mapping counters for kvm_stat
-Date: Tue, 20 Apr 2021 14:08:24 +0100
-Message-Id: <20210420130825.15585-3-yoan.picchi@arm.com>
+Subject: [PATCH v2 3/3] KVM: arm64: Add irq_exit counter for kvm_stat
+Date: Tue, 20 Apr 2021 14:08:25 +0100
+Message-Id: <20210420130825.15585-4-yoan.picchi@arm.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20210420130825.15585-1-yoan.picchi@arm.com>
 References: <20210420130825.15585-1-yoan.picchi@arm.com>
@@ -66,97 +65,57 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-This patch adds regular_page_mapped and huge_page_mapped.
-regular_page_mapped is increased when a page of the smallest granularity
-is mapped. This is usually a 4k, 16k or 64k page.
-huge_page_mapped is increased when a huge page of any size other than the
-smallest granularity is mapped.
-Those counters only count pages allocated for the data and doesn't count
-the pages/blocks allocated to the page tables as I don't see where those
-might be needed to be recorded
-
-I can see two usecases for those counters :
-	We can detect memory pressure in the host when the guest gets
-regular pages instead of huge ones.
-	May help detecting an abnormal memory usage like some recurring
-allocs past the kernel and a few program starts.
-With the previous patch about stage2_abort_exit, it have the added
-benefit of specifying the second main cause of stage 2 page fault (the
-other being mmio access)
-
-To test this patch I did start a guest VM and monitor the page allocation.
-By default it only allocate huge pages. Then I tried to disable the huge
-pages with : echo never > /sys/kernel/mm/transparent_hugepage/enabled
-Starting the VM, it no longer allocate any huge page, but only regular
-pages.
-
-I can't log into the guess because it doesn't recognize my keyboard. To
-circumvent that I added some command to the init script that need some
-memory : cat /dev/zero | head -c 1000m | tail
-This take 1GiB of memory before finishing.
-From memory, it allocate 525 or so huge table which is around what I would
-expect with 2MB pages.
-
-I did check the relation between stage 2 exits, mmio exits and
-allocation. The mmio + allocation account for almost all the stage 2 exit
-as expected. There was only about 20 exits that was neither a mmio or an
-alloc during the kernel boot. I did not look what they are, but it can be
-a memory permission relaxation, or resizing a page.
-
-My main concern here is about the case where we replace a page/block by
-another/resize a block. I don't fully understand the mechanism yet and
-so don't know if it should be counted as an allocation or not. For now I
-don't account it.
+This counter is meant to detect when the guest vm exits due to an
+interrupt. Those interrupts might be unrelated to the guest VM (say, some
+network packet arrived, and such) but they still trigger an exit which is
+recorded by the "exit" counter. The main purpose of this counter is to
+give some more granularity to this base exit counter so that one can have
+a rough idea of where those exits comes from and so, if those general
+exits happen because of the host or of the guest.
 
 Signed-off-by: Yoan Picchi <yoan.picchi@arm.com>
 ---
- arch/arm64/include/asm/kvm_host.h | 2 ++
- arch/arm64/kvm/guest.c            | 2 ++
- arch/arm64/kvm/hyp/pgtable.c      | 5 +++++
- 3 files changed, 9 insertions(+)
+ arch/arm64/include/asm/kvm_host.h | 1 +
+ arch/arm64/kvm/guest.c            | 1 +
+ arch/arm64/kvm/handle_exit.c      | 1 +
+ 3 files changed, 3 insertions(+)
 
 diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 02891ce94..8f9d27571 100644
+index 8f9d27571..185e707fb 100644
 --- a/arch/arm64/include/asm/kvm_host.h
 +++ b/arch/arm64/include/asm/kvm_host.h
-@@ -547,6 +547,8 @@ static inline bool __vcpu_write_sys_reg_to_cpu(u64 val, int reg)
- 
- struct kvm_vm_stat {
- 	ulong remote_tlb_flush;
-+	ulong regular_page_mapped;
-+	ulong huge_page_mapped;
+@@ -565,6 +565,7 @@ struct kvm_vcpu_stat {
+ 	u64 mmio_exit_kernel;
+ 	u64 stage2_abort_exit;
+ 	u64 exits;
++	u64 irq_exits;
  };
  
- struct kvm_vcpu_stat {
+ int kvm_vcpu_preferred_target(struct kvm_vcpu_init *init);
 diff --git a/arch/arm64/kvm/guest.c b/arch/arm64/kvm/guest.c
-index 82a4b6275..41316b30e 100644
+index 41316b30e..eb4c24b7a 100644
 --- a/arch/arm64/kvm/guest.c
 +++ b/arch/arm64/kvm/guest.c
-@@ -42,6 +42,8 @@ struct kvm_stats_debugfs_item debugfs_entries[] = {
+@@ -42,6 +42,7 @@ struct kvm_stats_debugfs_item debugfs_entries[] = {
  	VCPU_STAT("exits", exits),
  	VCPU_STAT("halt_poll_success_ns", halt_poll_success_ns),
  	VCPU_STAT("halt_poll_fail_ns", halt_poll_fail_ns),
-+	VM_STAT("regular_page_mapped", regular_page_mapped),
-+	VM_STAT("huge_page_mapped", huge_page_mapped),
++	VCPU_STAT("irq_exits", irq_exits),
+ 	VM_STAT("regular_page_mapped", regular_page_mapped),
+ 	VM_STAT("huge_page_mapped", huge_page_mapped),
  	{ NULL }
- };
+diff --git a/arch/arm64/kvm/handle_exit.c b/arch/arm64/kvm/handle_exit.c
+index cebe39f3b..7e5dbc5ff 100644
+--- a/arch/arm64/kvm/handle_exit.c
++++ b/arch/arm64/kvm/handle_exit.c
+@@ -244,6 +244,7 @@ int handle_exit(struct kvm_vcpu *vcpu, int exception_index)
  
-diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
-index 4d177ce1d..2aba2b636 100644
---- a/arch/arm64/kvm/hyp/pgtable.c
-+++ b/arch/arm64/kvm/hyp/pgtable.c
-@@ -498,6 +498,11 @@ static int stage2_map_walker_try_leaf(u64 addr, u64 end, u32 level,
- 	smp_store_release(ptep, new);
- 	get_page(page);
- 	data->phys += granule;
-+	if (level == KVM_PGTABLE_MAX_LEVELS - 1)
-+		data->mmu->kvm->stat.regular_page_mapped++;
-+	else
-+		data->mmu->kvm->stat.huge_page_mapped++;
-+
- 	return 0;
- }
- 
+ 	switch (exception_index) {
+ 	case ARM_EXCEPTION_IRQ:
++		vcpu->stat.irq_exits++;
+ 		return 1;
+ 	case ARM_EXCEPTION_EL1_SERROR:
+ 		return 1;
 -- 
 2.17.1
 
