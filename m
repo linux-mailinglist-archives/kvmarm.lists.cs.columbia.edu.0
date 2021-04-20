@@ -2,103 +2,51 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 09910365CC4
-	for <lists+kvmarm@lfdr.de>; Tue, 20 Apr 2021 18:01:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A109D365CF3
+	for <lists+kvmarm@lfdr.de>; Tue, 20 Apr 2021 18:13:23 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 72B0F4B3D5;
-	Tue, 20 Apr 2021 12:01:06 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3F8234B381;
+	Tue, 20 Apr 2021 12:13:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.209
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id J75mfe9EuGME; Tue, 20 Apr 2021 12:01:06 -0400 (EDT)
+	with ESMTP id VybawIktmHAM; Tue, 20 Apr 2021 12:13:19 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 08A294B3C6;
-	Tue, 20 Apr 2021 12:01:05 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8777A4B3D3;
+	Tue, 20 Apr 2021 12:13:15 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5BF5B4B3A2
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Apr 2021 12:01:03 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1E4074B3CA
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Apr 2021 12:13:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id BsTJJHPfDr0z for <kvmarm@lists.cs.columbia.edu>;
- Tue, 20 Apr 2021 12:01:02 -0400 (EDT)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 202874B39C
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Apr 2021 12:01:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1618934462;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1VLwDHA1T1kECXFVXDoESN93Xu3CIGiC8uj+j3Bh2ag=;
- b=OVJt8vxLRxX1RPh2uCKKaBjF/u8knBUuGmri9JdijQj8jHZM6tvLm/gt57XZI2Nud4OWUW
- G8D+/NCn/T8frXvVC2k5qNB11iPw5rUT/ucb6JRJvjdh4GpI2jNe2Pat4Y6JkTjR2vqDEv
- pglPVvKfuanWK1QpUxYPt9qTcLypdkU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-71-1RmknzwwPy25pL0HWbaYgA-1; Tue, 20 Apr 2021 12:00:57 -0400
-X-MC-Unique: 1RmknzwwPy25pL0HWbaYgA-1
-Received: by mail-wm1-f70.google.com with SMTP id
- y82-20020a1ce1550000b02901262158f1e9so5844797wmg.8
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Apr 2021 09:00:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:organization
- :message-id:date:user-agent:mime-version:in-reply-to
- :content-language:content-transfer-encoding;
- bh=1VLwDHA1T1kECXFVXDoESN93Xu3CIGiC8uj+j3Bh2ag=;
- b=nl4ybj6ASsbB1g9+GhBt2ObBZ6O7nFxffRTSYGaxxfKDY9iVwl2vvFAge52dBeNSlQ
- vbzMiJS2QUf28a6byiLVdrOS3Lkgh4j5P6AlKGIy+VwYXf+Ja32mqDzXvQBVZ4XrFijF
- jRvaWXh5d42/if3nneAQB6AwF1219BPmwPb1YHm/mmIHPhfcmR2/8SLHt7P/LZ98vD0y
- uTQ0NScdnVP3jGqE92B0C/GS5Do8SsNN7RLBEmdKURDOkA19i1k9qoKa7H04r15CtVEN
- wM2JHJV5ALuZsbK9jYsYaCKofhiLYb+wQlNW5wSEL01JWo7IMdHo74D5caH/RNe8o1XL
- UkTQ==
-X-Gm-Message-State: AOAM532QfcDeT6PAxMz0lgqn6ncLZk6Ak9PMOaY+FhtdWbOTzz5tcRlU
- HcqFJ4JhHuVL6ibG4et5f+9jSo3dY/be9SuSp56NmapxOwVIKnztD2hMH/4SiaCcMTPtXvISADv
- m8XR2Tr/Er2ChMA70Bjhnv8gA
-X-Received: by 2002:adf:d0cc:: with SMTP id z12mr21739747wrh.18.1618934456651; 
- Tue, 20 Apr 2021 09:00:56 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJxr5kh0sjqy8wW7F/IAJRwsgXm3O7rTTKuYEi9XNs0Np8ms/WxZijQLIJublkxDKy/HuPS98A==
-X-Received: by 2002:adf:d0cc:: with SMTP id z12mr21739705wrh.18.1618934456321; 
- Tue, 20 Apr 2021 09:00:56 -0700 (PDT)
-Received: from [192.168.3.132] (p4ff2390a.dip0.t-ipconnect.de. [79.242.57.10])
- by smtp.gmail.com with ESMTPSA id
- o4sm9592968wrn.81.2021.04.20.09.00.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Apr 2021 09:00:56 -0700 (PDT)
-Subject: Re: [PATCH v1 4/4] arm64: drop pfn_valid_within() and simplify
- pfn_valid()
-To: Mike Rapoport <rppt@kernel.org>, linux-arm-kernel@lists.infradead.org
-References: <20210420090925.7457-1-rppt@kernel.org>
- <20210420090925.7457-5-rppt@kernel.org>
-From: David Hildenbrand <david@redhat.com>
-Organization: Red Hat
-Message-ID: <8e7171e7-a85c-6066-4ab6-d2bc98ec103b@redhat.com>
-Date: Tue, 20 Apr 2021 18:00:55 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+ with ESMTP id mSMI1hIjXx4l for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 20 Apr 2021 12:13:10 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A653B4B35A
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Apr 2021 12:13:10 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E1B751474;
+ Tue, 20 Apr 2021 09:13:09 -0700 (PDT)
+Received: from monolith.localdoman (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1BF7C3F73B;
+ Tue, 20 Apr 2021 09:13:08 -0700 (PDT)
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+To: drjones@redhat.com,
+	kvm@vger.kernel.org,
+	kvmarm@lists.cs.columbia.edu
+Subject: [kvm-unit-tests RFC PATCH 0/1] configure: arm: Replace --vmm with
+ --target
+Date: Tue, 20 Apr 2021 17:13:37 +0100
+Message-Id: <20210420161338.70914-1-alexandru.elisei@arm.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-In-Reply-To: <20210420090925.7457-5-rppt@kernel.org>
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=david@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>,
- Catalin Marinas <catalin.marinas@arm.com>, linux-kernel@vger.kernel.org,
- Mike Rapoport <rppt@linux.ibm.com>, linux-mm@kvack.org,
- kvmarm@lists.cs.columbia.edu, Marc Zyngier <maz@kernel.org>,
- Will Deacon <will@kernel.org>
+Cc: pbonzini@redhat.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -110,92 +58,42 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 20.04.21 11:09, Mike Rapoport wrote:
-> From: Mike Rapoport <rppt@linux.ibm.com>
-> 
-> The arm64's version of pfn_valid() differs from the generic because of two
-> reasons:
-> 
-> * Parts of the memory map are freed during boot. This makes it necessary to
->    verify that there is actual physical memory that corresponds to a pfn
->    which is done by querying memblock.
-> 
-> * There are NOMAP memory regions. These regions are not mapped in the
->    linear map and until the previous commit the struct pages representing
->    these areas had default values.
-> 
-> As the consequence of absence of the special treatment of NOMAP regions in
-> the memory map it was necessary to use memblock_is_map_memory() in
-> pfn_valid() and to have pfn_valid_within() aliased to pfn_valid() so that
-> generic mm functionality would not treat a NOMAP page as a normal page.
-> 
-> Since the NOMAP regions are now marked as PageReserved(), pfn walkers and
-> the rest of core mm will treat them as unusable memory and thus
-> pfn_valid_within() is no longer required at all and can be disabled by
-> removing CONFIG_HOLES_IN_ZONE on arm64.
-> 
-> pfn_valid() can be slightly simplified by replacing
-> memblock_is_map_memory() with memblock_is_memory().
-> 
-> Signed-off-by: Mike Rapoport <rppt@linux.ibm.com>
-> ---
->   arch/arm64/Kconfig   | 3 ---
->   arch/arm64/mm/init.c | 4 ++--
->   2 files changed, 2 insertions(+), 5 deletions(-)
-> 
-> diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-> index e4e1b6550115..58e439046d05 100644
-> --- a/arch/arm64/Kconfig
-> +++ b/arch/arm64/Kconfig
-> @@ -1040,9 +1040,6 @@ config NEED_PER_CPU_EMBED_FIRST_CHUNK
->   	def_bool y
->   	depends on NUMA
->   
-> -config HOLES_IN_ZONE
-> -	def_bool y
-> -
->   source "kernel/Kconfig.hz"
->   
->   config ARCH_SPARSEMEM_ENABLE
-> diff --git a/arch/arm64/mm/init.c b/arch/arm64/mm/init.c
-> index c54e329aca15..370f33765b64 100644
-> --- a/arch/arm64/mm/init.c
-> +++ b/arch/arm64/mm/init.c
-> @@ -243,7 +243,7 @@ int pfn_valid(unsigned long pfn)
->   
->   	/*
->   	 * ZONE_DEVICE memory does not have the memblock entries.
-> -	 * memblock_is_map_memory() check for ZONE_DEVICE based
-> +	 * memblock_is_memory() check for ZONE_DEVICE based
->   	 * addresses will always fail. Even the normal hotplugged
->   	 * memory will never have MEMBLOCK_NOMAP flag set in their
->   	 * memblock entries. Skip memblock search for all non early
-> @@ -254,7 +254,7 @@ int pfn_valid(unsigned long pfn)
->   		return pfn_section_valid(ms, pfn);
->   }
->   #endif
-> -	return memblock_is_map_memory(addr);
-> +	return memblock_is_memory(addr);
->   }
->   EXPORT_SYMBOL(pfn_valid);
->   
-> 
+This is an RFC because it's not exactly clear to me that this is the best
+approach. I'm also open to using a different name for the new option, maybe
+something like --platform if it makes more sense.
 
-What are the steps needed to get rid of custom pfn_valid() completely?
+I see two use cases for the patch:
 
-I'd assume we would have to stop freeing parts of the mem map during 
-boot. How relevant is that for arm64 nowadays, especially with reduced 
-section sizes?
+1. Using different files when compiling kvm-unit-tests to run as an EFI app
+as opposed to a KVM guest (described in the commit message).
+
+2. This is speculation on my part, but I can see extending
+arm/unittests.cfg with a "target" test option which can be used to decide
+which tests need to be run based on the configure --target value. For
+example, migration tests don't make much sense on kvmtool, which doesn't
+have migration support. Similarly, the micro-bench test doesn't make much
+sense (to me, at least) as an EFI app. Of course, this is only useful if
+there are automated scripts to run the tests under kvmtool or EFI, which
+doesn't look likely at the moment, so I left it out of the commit message.
+
+Using --vmm will trigger a warning. I was thinking about removing it entirely in
+a about a year's time, but that's not set in stone. Note that qemu users
+(probably the vast majority of people) will not be affected by this change as
+long as they weren't setting --vmm explicitely to its default value of "qemu".
+
+Alexandru Elisei (1):
+  configure: arm: Replace --vmm with --target
+
+ configure | 30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
 -- 
-Thanks,
-
-David / dhildenb
+2.31.1
 
 _______________________________________________
 kvmarm mailing list
