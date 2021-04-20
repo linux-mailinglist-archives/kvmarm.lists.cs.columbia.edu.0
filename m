@@ -2,54 +2,62 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id ECFBD365CF2
-	for <lists+kvmarm@lfdr.de>; Tue, 20 Apr 2021 18:13:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 374B5365D28
+	for <lists+kvmarm@lfdr.de>; Tue, 20 Apr 2021 18:20:07 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 41CB64B3BB;
-	Tue, 20 Apr 2021 12:13:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A9F694B3D5;
+	Tue, 20 Apr 2021 12:20:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SVZQ+5puLhsp; Tue, 20 Apr 2021 12:13:19 -0400 (EDT)
+	with ESMTP id JpU93kKMcVTd; Tue, 20 Apr 2021 12:20:06 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6D85A4B3CD;
-	Tue, 20 Apr 2021 12:13:15 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A1B8C4B3C3;
+	Tue, 20 Apr 2021 12:20:02 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1C2664B3C3
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Apr 2021 12:13:14 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id F339B4B22A
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Apr 2021 12:20:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id eM7NA+wmiZ0w for <kvmarm@lists.cs.columbia.edu>;
- Tue, 20 Apr 2021 12:13:11 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A15D04B3BB
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Apr 2021 12:13:11 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EAC3214BF;
- Tue, 20 Apr 2021 09:13:10 -0700 (PDT)
-Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 280633F73B;
- Tue, 20 Apr 2021 09:13:10 -0700 (PDT)
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-To: drjones@redhat.com,
-	kvm@vger.kernel.org,
-	kvmarm@lists.cs.columbia.edu
-Subject: [kvm-unit-tests RFC PATCH 1/1] configure: arm: Replace --vmm with
- --target
-Date: Tue, 20 Apr 2021 17:13:38 +0100
-Message-Id: <20210420161338.70914-2-alexandru.elisei@arm.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210420161338.70914-1-alexandru.elisei@arm.com>
-References: <20210420161338.70914-1-alexandru.elisei@arm.com>
+ with ESMTP id cUW+jag4b08T for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 20 Apr 2021 12:19:57 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7AE5F4B228
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Apr 2021 12:19:57 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 8B345613C9;
+ Tue, 20 Apr 2021 16:19:55 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=hot-poop.lan)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1lYt6P-008Wwz-Fi; Tue, 20 Apr 2021 17:19:53 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ Zenghui Yu <yuzenghui@huawei.com>
+Subject: Re: [PATCH] KVM: arm64: Fix Function ID typo for PTP_KVM service
+Date: Tue, 20 Apr 2021 17:19:50 +0100
+Message-Id: <161893556835.531653.5778639003429203651.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20210417113804.1992-1-yuzenghui@huawei.com>
+References: <20210417113804.1992-1-yuzenghui@huawei.com>
 MIME-Version: 1.0
-Cc: pbonzini@redhat.com
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, yuzenghui@huawei.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -66,108 +74,22 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The --vmm configure option was added to distinguish between the two virtual
-machine managers that kvm-unit-tests supports, qemu or kvmtool. There are
-plans to make kvm-unit-tests work as an EFI app, which will require changes
-to the way tests are compiled. Instead of adding a new configure option
-specifically for EFI and have it coexist with --vmm, or overloading the
-semantics of the existing --vmm option, let's replace --vmm with the more
-generic name --target.
+On Sat, 17 Apr 2021 19:38:04 +0800, Zenghui Yu wrote:
+> Per include/linux/arm-smccc.h, the Function ID of PTP_KVM service is
+> defined as ARM_SMCCC_VENDOR_HYP_KVM_PTP_FUNC_ID. Fix the typo in
+> documentation to keep the git grep consistent.
 
---vmm has been kept for now as to avoid breaking existing users, but it has
-been modified to shadow value of --target and a message will be displayed
-to notify users that it will be removed at some point in the future.
+Applied to kvm-arm64/ptp, thanks!
 
-Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
----
- configure | 30 +++++++++++++++++++++++-------
- 1 file changed, 23 insertions(+), 7 deletions(-)
+[1/1] KVM: arm64: Fix Function ID typo for PTP_KVM service
+      commit: 182a71a3653c4324672fd87e4384fae2fbd63269
 
-diff --git a/configure b/configure
-index 01a0b262a9f2..71d6dc9490df 100755
---- a/configure
-+++ b/configure
-@@ -21,7 +21,8 @@ pretty_print_stacks=yes
- environ_default=yes
- u32_long=
- wa_divide=
--vmm="qemu"
-+vmm=
-+target="qemu"
- errata_force=0
- erratatxt="$srcdir/errata.txt"
- host_key_document=
-@@ -35,8 +36,11 @@ usage() {
- 	Options include:
- 	    --arch=ARCH            architecture to compile for ($arch)
- 	    --processor=PROCESSOR  processor to compile for ($arch)
--	    --vmm=VMM              virtual machine monitor to compile for (qemu
--	                           or kvmtool, default is qemu) (arm/arm64 only)
-+	    --target=TARGET        target platform that the tests will be running on (qemu or
-+	                           kvmtool, default is qemu) (arm/arm64 only)
-+	    --vmm=VMM              virtual machine monitor to compile for (qemu or kvmtool).
-+	                           If specified, it must have the same value as the --target
-+	                           option (arm/arm64 only) (deprecated)
- 	    --cross-prefix=PREFIX  cross compiler prefix
- 	    --cc=CC		   c compiler to use ($cc)
- 	    --ld=LD		   ld linker to use ($ld)
-@@ -58,7 +62,7 @@ usage() {
- 	    --earlycon=EARLYCON
- 	                           Specify the UART name, type and address (optional, arm and
- 	                           arm64 only). The specified address will overwrite the UART
--	                           address set by the --vmm option. EARLYCON can be one of
-+	                           address set by the --target option. EARLYCON can be one of
- 	                           (case sensitive):
- 	               uart[8250],mmio,ADDR
- 	                           Specify an 8250 compatible UART at address ADDR. Supported
-@@ -91,6 +95,9 @@ while [[ "$1" = -* ]]; do
- 	--vmm)
- 	    vmm="$arg"
- 	    ;;
-+	--target)
-+	    target="$arg"
-+	    ;;
- 	--cross-prefix)
- 	    cross_prefix="$arg"
- 	    ;;
-@@ -177,16 +184,24 @@ if [ "$arch" = "i386" ] || [ "$arch" = "x86_64" ]; then
-     testdir=x86
- elif [ "$arch" = "arm" ] || [ "$arch" = "arm64" ]; then
-     testdir=arm
--    if [ "$vmm" = "qemu" ]; then
-+    if [ "$target" = "qemu" ]; then
-         arm_uart_early_addr=0x09000000
--    elif [ "$vmm" = "kvmtool" ]; then
-+    elif [ "$target" = "kvmtool" ]; then
-         arm_uart_early_addr=0x3f8
-         errata_force=1
-     else
--        echo '--vmm must be one of "qemu" or "kvmtool"!'
-+        echo '--target must be one of "qemu" or "kvmtool"!'
-         usage
-     fi
- 
-+    if [ -n "$vmm" ]; then
-+        echo "INFO: --vmm is deprecated and will be removed in future versions"
-+        if [  "$vmm" != "$target" ]; then
-+            echo "--vmm must have the same value as --target ($target)"
-+            usage
-+        fi
-+    fi
-+
-     if [ "$earlycon" ]; then
-         IFS=, read -r name type_addr addr <<<"$earlycon"
-         if [ "$name" != "uart" ] && [ "$name" != "uart8250" ] &&
-@@ -317,6 +332,7 @@ U32_LONG_FMT=$u32_long
- WA_DIVIDE=$wa_divide
- GENPROTIMG=${GENPROTIMG-genprotimg}
- HOST_KEY_DOCUMENT=$host_key_document
-+TARGET=$target
- EOF
- 
- cat <<EOF > lib/config.h
+Cheers,
+
+	M.
 -- 
-2.31.1
+Without deviation from the norm, progress is not possible.
+
 
 _______________________________________________
 kvmarm mailing list
