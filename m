@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CFF1E366995
-	for <lists+kvmarm@lfdr.de>; Wed, 21 Apr 2021 12:59:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A8503669A8
+	for <lists+kvmarm@lfdr.de>; Wed, 21 Apr 2021 13:06:07 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 570A44B47D;
-	Wed, 21 Apr 2021 06:59:04 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DEDA84B4B6;
+	Wed, 21 Apr 2021 07:06:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,39 +16,39 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id weeWxFQjORJW; Wed, 21 Apr 2021 06:59:04 -0400 (EDT)
+	with ESMTP id kNRHlmpmm1Nl; Wed, 21 Apr 2021 07:06:06 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F311D4B49E;
-	Wed, 21 Apr 2021 06:59:02 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E54104B4CE;
+	Wed, 21 Apr 2021 07:06:02 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6C8194B47D
- for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Apr 2021 06:59:02 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 755E54B4B6
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Apr 2021 07:06:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id WrkoBCtWVr6X for <kvmarm@lists.cs.columbia.edu>;
- Wed, 21 Apr 2021 06:59:01 -0400 (EDT)
+ with ESMTP id DJT9Xr7oa-ev for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 21 Apr 2021 07:06:00 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1D1D14B453
- for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Apr 2021 06:59:01 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 33B1B4B49B
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Apr 2021 07:06:00 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B2E3F113E;
- Wed, 21 Apr 2021 03:59:00 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B0223113E;
+ Wed, 21 Apr 2021 04:05:59 -0700 (PDT)
 Received: from [10.163.74.228] (unknown [10.163.74.228])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C99953F73B;
- Wed, 21 Apr 2021 03:58:56 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 678AC3F73B;
+ Wed, 21 Apr 2021 04:05:55 -0700 (PDT)
 From: Anshuman Khandual <anshuman.khandual@arm.com>
-Subject: Re: [PATCH v2 3/4] arm64: decouple check whether pfn is in linear map
- from pfn_valid()
+Subject: Re: [PATCH v2 4/4] arm64: drop pfn_valid_within() and simplify
+ pfn_valid()
 To: Mike Rapoport <rppt@kernel.org>, linux-arm-kernel@lists.infradead.org
 References: <20210421065108.1987-1-rppt@kernel.org>
- <20210421065108.1987-4-rppt@kernel.org>
-Message-ID: <0a7cc0d4-5d3d-7d6d-f4c3-bb2965b810e6@arm.com>
-Date: Wed, 21 Apr 2021 16:29:48 +0530
+ <20210421065108.1987-5-rppt@kernel.org>
+Message-ID: <66d50afe-77e6-70ee-6b51-5db28a086c68@arm.com>
+Date: Wed, 21 Apr 2021 16:36:46 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <20210421065108.1987-4-rppt@kernel.org>
+In-Reply-To: <20210421065108.1987-5-rppt@kernel.org>
 Content-Language: en-US
 Cc: David Hildenbrand <david@redhat.com>,
  Catalin Marinas <catalin.marinas@arm.com>, linux-kernel@vger.kernel.org,
@@ -75,107 +75,87 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 On 4/21/21 12:21 PM, Mike Rapoport wrote:
 > From: Mike Rapoport <rppt@linux.ibm.com>
 > 
-> The intended semantics of pfn_valid() is to verify whether there is a
-> struct page for the pfn in question and nothing else.
+> The arm64's version of pfn_valid() differs from the generic because of two
+> reasons:
 > 
-> Yet, on arm64 it is used to distinguish memory areas that are mapped in the
-> linear map vs those that require ioremap() to access them.
+> * Parts of the memory map are freed during boot. This makes it necessary to
+>   verify that there is actual physical memory that corresponds to a pfn
+>   which is done by querying memblock.
 > 
-> Introduce a dedicated pfn_is_map_memory() wrapper for
-> memblock_is_map_memory() to perform such check and use it where
-> appropriate.
+> * There are NOMAP memory regions. These regions are not mapped in the
+>   linear map and until the previous commit the struct pages representing
+>   these areas had default values.
 > 
-> Using a wrapper allows to avoid cyclic include dependencies.
+> As the consequence of absence of the special treatment of NOMAP regions in
+> the memory map it was necessary to use memblock_is_map_memory() in
+> pfn_valid() and to have pfn_valid_within() aliased to pfn_valid() so that
+> generic mm functionality would not treat a NOMAP page as a normal page.
+> 
+> Since the NOMAP regions are now marked as PageReserved(), pfn walkers and
+> the rest of core mm will treat them as unusable memory and thus
+> pfn_valid_within() is no longer required at all and can be disabled by
+> removing CONFIG_HOLES_IN_ZONE on arm64.
+
+This makes sense.
+
+> 
+> pfn_valid() can be slightly simplified by replacing
+> memblock_is_map_memory() with memblock_is_memory().
 > 
 > Signed-off-by: Mike Rapoport <rppt@linux.ibm.com>
 > ---
->  arch/arm64/include/asm/memory.h |  2 +-
->  arch/arm64/include/asm/page.h   |  1 +
->  arch/arm64/kvm/mmu.c            |  2 +-
->  arch/arm64/mm/init.c            | 11 +++++++++++
->  arch/arm64/mm/ioremap.c         |  4 ++--
->  arch/arm64/mm/mmu.c             |  2 +-
->  6 files changed, 17 insertions(+), 5 deletions(-)
+>  arch/arm64/Kconfig   | 3 ---
+>  arch/arm64/mm/init.c | 4 ++--
+>  2 files changed, 2 insertions(+), 5 deletions(-)
 > 
-> diff --git a/arch/arm64/include/asm/memory.h b/arch/arm64/include/asm/memory.h
-> index 0aabc3be9a75..194f9f993d30 100644
-> --- a/arch/arm64/include/asm/memory.h
-> +++ b/arch/arm64/include/asm/memory.h
-> @@ -351,7 +351,7 @@ static inline void *phys_to_virt(phys_addr_t x)
+> diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+> index e4e1b6550115..58e439046d05 100644
+> --- a/arch/arm64/Kconfig
+> +++ b/arch/arm64/Kconfig
+> @@ -1040,9 +1040,6 @@ config NEED_PER_CPU_EMBED_FIRST_CHUNK
+>  	def_bool y
+>  	depends on NUMA
 >  
->  #define virt_addr_valid(addr)	({					\
->  	__typeof__(addr) __addr = __tag_reset(addr);			\
-> -	__is_lm_address(__addr) && pfn_valid(virt_to_pfn(__addr));	\
-> +	__is_lm_address(__addr) && pfn_is_map_memory(virt_to_pfn(__addr));	\
->  })
->  
->  void dump_mem_limit(void);
-> diff --git a/arch/arm64/include/asm/page.h b/arch/arm64/include/asm/page.h
-> index 012cffc574e8..99a6da91f870 100644
-> --- a/arch/arm64/include/asm/page.h
-> +++ b/arch/arm64/include/asm/page.h
-> @@ -38,6 +38,7 @@ void copy_highpage(struct page *to, struct page *from);
->  typedef struct page *pgtable_t;
->  
->  extern int pfn_valid(unsigned long);
-> +extern int pfn_is_map_memory(unsigned long);
+> -config HOLES_IN_ZONE
+> -	def_bool y
+> -
 
-Check patch is complaining about this.
+Right.
 
-WARNING: function definition argument 'unsigned long' should also have an identifier name
-#50: FILE: arch/arm64/include/asm/page.h:41:
-+extern int pfn_is_map_memory(unsigned long);
-
-
+>  source "kernel/Kconfig.hz"
 >  
->  #include <asm/memory.h>
->  
-> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> index 8711894db8c2..23dd99e29b23 100644
-> --- a/arch/arm64/kvm/mmu.c
-> +++ b/arch/arm64/kvm/mmu.c
-> @@ -85,7 +85,7 @@ void kvm_flush_remote_tlbs(struct kvm *kvm)
->  
->  static bool kvm_is_device_pfn(unsigned long pfn)
->  {
-> -	return !pfn_valid(pfn);
-> +	return !pfn_is_map_memory(pfn);
->  }
->  
->  /*
+>  config ARCH_SPARSEMEM_ENABLE
 > diff --git a/arch/arm64/mm/init.c b/arch/arm64/mm/init.c
-> index 3685e12aba9b..dc03bdc12c0f 100644
+> index dc03bdc12c0f..eb3f56fb8c7c 100644
 > --- a/arch/arm64/mm/init.c
 > +++ b/arch/arm64/mm/init.c
-> @@ -258,6 +258,17 @@ int pfn_valid(unsigned long pfn)
+> @@ -243,7 +243,7 @@ int pfn_valid(unsigned long pfn)
+>  
+>  	/*
+>  	 * ZONE_DEVICE memory does not have the memblock entries.
+> -	 * memblock_is_map_memory() check for ZONE_DEVICE based
+> +	 * memblock_is_memory() check for ZONE_DEVICE based
+>  	 * addresses will always fail. Even the normal hotplugged
+>  	 * memory will never have MEMBLOCK_NOMAP flag set in their
+>  	 * memblock entries. Skip memblock search for all non early
+> @@ -254,7 +254,7 @@ int pfn_valid(unsigned long pfn)
+>  		return pfn_section_valid(ms, pfn);
+>  }
+>  #endif
+> -	return memblock_is_map_memory(addr);
+> +	return memblock_is_memory(addr);
+
+Wondering if MEMBLOCK_NOMAP is now being treated similarly to other
+memory pfns for page table walking purpose but with PageReserved(),
+why memblock_is_memory() is still required ? At this point, should
+not we just return valid for early_section() memory. As pfn_valid()
+now just implies that pfn has a struct page backing which has been
+already verified with valid_section() etc.
+
 >  }
 >  EXPORT_SYMBOL(pfn_valid);
 >  
-> +int pfn_is_map_memory(unsigned long pfn)
-> +{
-> +	phys_addr_t addr = PFN_PHYS(pfn);
-> +
-
-Should also bring with it, the comment regarding upper bits in
-the pfn from arm64 pfn_valid().
-
-> +	if (PHYS_PFN(addr) != pfn)
-> +		return 0;
-> +	
-
- ^^^^^ trailing spaces here.
-
-ERROR: trailing whitespace
-#81: FILE: arch/arm64/mm/init.c:263:
-+^I$
-
-> +	return memblock_is_map_memory(addr);
-> +}
-> +EXPORT_SYMBOL(pfn_is_map_memory);
-> +
-
-Is the EXPORT_SYMBOL() required to build drivers which will use
-pfn_is_map_memory() but currently use pfn_valid() ?
+> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
