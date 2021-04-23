@@ -2,10 +2,10 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 712A236A079
+	by mail.lfdr.de (Postfix) with ESMTP id 9D70136A07A
 	for <lists+kvmarm@lfdr.de>; Sat, 24 Apr 2021 11:10:47 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 16A374B4F0;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 40DE04B41C;
 	Sat, 24 Apr 2021 05:10:47 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
@@ -14,124 +14,107 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.908 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
 	RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01]
-	autolearn=no
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@nvidia.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id T8kvTIuNxUZi; Sat, 24 Apr 2021 05:10:46 -0400 (EDT)
+	with ESMTP id wW83xCon9Pje; Sat, 24 Apr 2021 05:10:47 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 90AEE4B23F;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AC05C4B50A;
 	Sat, 24 Apr 2021 05:10:44 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 385094B31F
- for <kvmarm@lists.cs.columbia.edu>; Fri, 23 Apr 2021 13:58:27 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 01AA84B39F
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 23 Apr 2021 14:20:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id dPP864rNuyaT for <kvmarm@lists.cs.columbia.edu>;
- Fri, 23 Apr 2021 13:58:26 -0400 (EDT)
-Received: from NAM02-CY1-obe.outbound.protection.outlook.com
- (mail-eopbgr760073.outbound.protection.outlook.com [40.107.76.73])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 068794B31C
- for <kvmarm@lists.cs.columbia.edu>; Fri, 23 Apr 2021 13:58:25 -0400 (EDT)
+ with ESMTP id 8GUBWaLE9WIl for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 23 Apr 2021 14:20:07 -0400 (EDT)
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com
+ (mail-dm6nam10on2088.outbound.protection.outlook.com [40.107.93.88])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id EE18A4B365
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 23 Apr 2021 14:20:06 -0400 (EDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=DmuU2kiubABk2tq3cuZ5umGbizUhcScIlGCyf/Ohr/r3Lpg/u0ZJwUajAyykEKLwaQNN8FLWtJsM8DigS6pYz+fwLW7BEN7Qtd/1Twq0wwXTPdoUFQsyJBTvusEkUshaQki6goqYUeSjYrW8vUXKvwrjyJKg4P/tq8SkCeP8sv4DcP4pF06XfbgRb3jih2SXJUUu8WhhHIuSmhEZl3YI4Lu8/EeZdwVh58PUIRx1Mt/Z9eOQz9AQHVBQtDf+4vEzsgmhCPeIdUpreKpTN9tQLL7ck9GJUJQd7YCRNOe+pudhXkZ1VlzyS9FDzzJdMKMSV9nv3+pHf653yCKuIkkkbA==
+ b=jj9mff3G82fkv+HxwZqig2/SQDTEP+YwYP2vo/c95OYN/Sis4ODHGnvjr13YiOHkTUcR2mSdYlriMEKp6KAf92bgakxlggEeiZn0/6L0kYDRmZzar7EwTr0V9eQczpNtD7B+vaYnFBCNpPdgXlLsXxUvhYtPsxo0RkWIH80fD72IAPdpWjcM0COqVQkvHFnQ2fKnaUHJPTCH6kMxxt55H+PJRBMy8RlvknoucAsyf0nBgpwK+Nij447p6EURZ/e+L31sDociCipGfGHKH/lnin0+wGOrOIskm8M7mEgoPgtuatRCEPoUSk5hfkW5XvWpiQ2FR+UrrnTjSOkoIH4ieA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0ETihwrnD2hkjOyt1L6VBmHvDfneQw3gu3rq/Ra9h2A=;
- b=bC2uIDAHUGvmFpC2b0qmF7jLiRcY86/eb5I9593FuefHUCIER6CEWlv0gJnApwvsARCUQQMjxfOutHa9ug3w4Pf+I3ehAPqOxIzC4mSSNYCdVWq6Q2T9bDU2NBGs1XSrP96Dz1NOyAVP450hDTr84BoylpA97aaDrWXtQYsvtTfyD6JZvSwnShS2lsQtBBAPYfOQlFkN+u1+vVpL1ZrN6B4hJW5eGwJflu3czr+XYapsjXWISyYM4R7lUIcQKQ3wh2135n9UBegpEDl0/BoS89mKCpmIa4RnGbJJrfIKj9e3aEGRDicy4FSH0PTsi9mjzay8U7kus16wVdw786t9/Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
+ bh=Gapqk/8XKWL22oJQJG50Al6RLHuefx1vqDFPK/US01E=;
+ b=Evot1KWRRGN/jwqHSGEyK/eYUfI+n9mp2zaZ3f2XfV1K4A4M+VbBEIf3QBwYtiaFM+X66p+VvtL+bL/ZOhW9xrkkNwM5QptC64TQTvLcugaA18CIN8WntHkctb9h9j2WMDkBrHF1vfcy/ExOUPrezpzqAv3qEXzTkU62RHWGtl8v8yv3acrGIbrP8fk6FHDtfbEaVamilrnCm0oS1jwHUrcYKP8UZgHwsBTqs5T81Y2eOXFDqJOCY5ErIkYRU4K718+asLcU9e6siKsklbTI/KVAjuHg3gAhUH7Sr9Vgz5lJHxktv0J2YMLT2B5MO71nvqqk51+dvDfSVqyD1RINow==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.112.34) smtp.rcpttodomain=8bytes.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0ETihwrnD2hkjOyt1L6VBmHvDfneQw3gu3rq/Ra9h2A=;
- b=jh999Ba05ksUYBYX1tFlznW3iTqknzlDMbdIjmGa8cHWYDXCfcrgPQ2yj4CCq3HjOiKnm/1+7ASS7+Kblb37XCfANvBEKVe4SQ0m/EuxJC6Cii5PmOkpCa1EbCVpvPqFr2C0LjFm2pgygDeW8w0f1e7JdlHEyxh1SZ0y+rv6YxqrQss6+YDCnCv5P7Ys5Gg7INrZKX38LJRU625QRqbpT21cbZoEDelpNDNrbnja/kmAeTrKuUbk+DzwwC+RmxFZs/DizFr3URIqXrXqFUVCK0jCUNWksG8AdpSo7z7cd6OU7tzkBuv4jGAepwrJsWpxxbZRBsI7A2paS3OUp+Cx7Q==
-Received: from BY5PR12MB3764.namprd12.prod.outlook.com (2603:10b6:a03:1ac::17)
- by BY5PR12MB4066.namprd12.prod.outlook.com (2603:10b6:a03:207::22)
+ bh=Gapqk/8XKWL22oJQJG50Al6RLHuefx1vqDFPK/US01E=;
+ b=oIjhLevVwq0uY60B2XIcS2Hj93TQkWlc52f1UFa6FCle+oWUlWJm/hB1gGopPmTn1Kz949SE7KLqu7r0AkiFVqB6c2GySAQDgRkTnUKvnxWeI6cNo7YXxbP9e4Y1srD9W5iv90vIDnSUPVHHIvkxpfTLPid/YpB941EHh6B06hY+ETw01ZZoNz35UBJ9Qh+IvSeSW9bhX8eUYwU3bnFov0lDrlGB+MfyyaFlUAQm88KwcyqUuwLsqJADlQ4b4zlkZt/KgXrDQIafvUtLRNQ7nyAHadvsbMmy2g70QkJBt8mjZ/yENEBkiF2sDhUUJKmLGhSJ7uOGJNBzRi7zo9AgMw==
+Received: from BN7PR02CA0015.namprd02.prod.outlook.com (2603:10b6:408:20::28)
+ by BN9PR12MB5196.namprd12.prod.outlook.com (2603:10b6:408:11d::17)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4065.21; Fri, 23 Apr
- 2021 17:58:23 +0000
-Received: from BY5PR12MB3764.namprd12.prod.outlook.com
- ([fe80::11bb:b39e:3f42:d2af]) by BY5PR12MB3764.namprd12.prod.outlook.com
- ([fe80::11bb:b39e:3f42:d2af%7]) with mapi id 15.20.4042.024; Fri, 23 Apr 2021
- 17:58:23 +0000
-From: Krishna Reddy <vdumpa@nvidia.com>
-To: Sumit Gupta <sumitg@nvidia.com>, Jean-Philippe Brucker
+ 2021 18:20:05 +0000
+Received: from BN8NAM11FT056.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:408:20:cafe::f1) by BN7PR02CA0015.outlook.office365.com
+ (2603:10b6:408:20::28) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4065.21 via Frontend
+ Transport; Fri, 23 Apr 2021 18:20:05 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.112.34)
+ smtp.mailfrom=nvidia.com; 8bytes.org; dkim=none (message not signed)
+ header.d=none;8bytes.org; dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.112.34 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.112.34; helo=mail.nvidia.com;
+Received: from mail.nvidia.com (216.228.112.34) by
+ BN8NAM11FT056.mail.protection.outlook.com (10.13.177.26) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.20.4065.21 via Frontend Transport; Fri, 23 Apr 2021 18:20:05 +0000
+Received: from [10.41.23.128] (172.20.145.6) by HQMAIL107.nvidia.com
+ (172.20.187.13) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Fri, 23 Apr
+ 2021 18:19:58 +0000
+Subject: Re: [PATCH v14 00/13] SMMUv3 Nested Stage Setup (IOMMU part)
+To: Krishna Reddy <vdumpa@nvidia.com>, Jean-Philippe Brucker
  <jean-philippe@linaro.org>
-Subject: RE: [PATCH v14 00/13] SMMUv3 Nested Stage Setup (IOMMU part)
-Thread-Topic: [PATCH v14 00/13] SMMUv3 Nested Stage Setup (IOMMU part)
-Thread-Index: AQHXCiaNb89RqsuC2kys/alJ4AtXCKppDBUAgFfxPgCAAW+8AIAAR1QAgAAFwgA=
-Date: Fri, 23 Apr 2021 17:58:23 +0000
-Message-ID: <BY5PR12MB37642B9AC7E5D907F5A664F6B3459@BY5PR12MB3764.namprd12.prod.outlook.com>
 References: <f99d8af1-425b-f1d5-83db-20e32b856143@redhat.com>
  <1619103878-6664-1-git-send-email-sumitg@nvidia.com>
  <YILFAJ50aqvkQaT/@myrica> <5a8825bc-286e-b316-515f-3bd3c9c70a80@nvidia.com>
-In-Reply-To: <5a8825bc-286e-b316-515f-3bd3c9c70a80@nvidia.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: nvidia.com; dkim=none (message not signed)
- header.d=none;nvidia.com; dmarc=none action=none header.from=nvidia.com;
-x-originating-ip: [216.228.112.21]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 5ccd24c6-ff54-411f-aaaf-08d906816320
-x-ms-traffictypediagnostic: BY5PR12MB4066:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <BY5PR12MB4066AD24F00DC3A4E4BD44E6B3459@BY5PR12MB4066.namprd12.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: RmOefzP9ahVShSNknDUeyp2zBkLZI3OizmVuQs+CePStx0MgTnAidKu0o8sSgaT8YObGd7eTI4vj/rZueogAVh+Rii5Q5i2CsKb9kDko/bgCRvxcVHeFDfh7m76gssj4jDsJ53FWJD64iKArMvGQH9aj3Uz61ctAiULM2B2Pg6H2nd2osXL0G5S79pxIfuKnXugmGk875jzwBIBQGx7jrxBfCPJAPkg1YCbhEfgaMvNPzaVh2YNjwlh8LFLPKydhUjnqwujbMKsHxyzzx6ClydnHgHAn2GxO7Pwx8qIdnO77ulvE59TSOPJ5046VThOsIE2VzM89RRaQf4V264DZ4AJ+1KVWMu0fcdn+W5WptjL10d/3Zjv7FzQfR1qsI7WHgVRPtTYrLKbsik8RbsAAzwkq8yhn7aWSjCjiifO7NkVX1Unbcy9UiHoCtfJ0ys5BFobEd4IfSXY9TzX67f6QS4IwA/dDlS27EXBdFp5bQbl29N2a+L8SQMdFuqG0LwZnHYY4cSKrqoozXh2iNILEeEmuBuRjd6dggFJz2znul02BnMcg/lWVLSNhc01x/EVsOaH0yVgQhurDQwZ+L15Dc4hLXMcLHvshmiyTrfnPV6I=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BY5PR12MB3764.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(4636009)(396003)(366004)(136003)(39860400002)(376002)(346002)(26005)(7696005)(71200400001)(54906003)(66446008)(5660300002)(6506007)(86362001)(2906002)(186003)(8936002)(122000001)(66476007)(38100700002)(64756008)(52536014)(33656002)(9686003)(4326008)(7416002)(83380400001)(66556008)(8676002)(107886003)(66946007)(110136005)(76116006)(55016002)(478600001)(316002);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata: =?utf-8?B?RDc2blRYQWZvZzRyMjdQbHZDWEQ0ZzJqWG5sdlNZZGNDbTJiVnduSjRGd1Br?=
- =?utf-8?B?K01vdUJKTHZDU0g1QmE3VGJFOEV6UDJyNmNFSk8yVHcrVWRSN3JPZnRUU2JO?=
- =?utf-8?B?ZWdMTzYzeCtmeE9kU3k5ZWl4RlZncTZkMU9nRy9kVTlHUCtrK2greTBKSVAy?=
- =?utf-8?B?RTRSWjJ6cktCU0k0NUg5WEtWSGp6Wlg0Q0ZGcStuYjdKQ29hTTByNFVXdkJj?=
- =?utf-8?B?THFkcDYwL09FOWVBd0ltZURjUVI2eENRVU1Wb3RGcWFJNTNSdjd5ZGVKd08r?=
- =?utf-8?B?MTlXMXNneUpwL081QW02Sk0zZEpxMlh3SS9PVVJOSEg1OGYxWExsN3czVFZw?=
- =?utf-8?B?WHFPRG5zZnFHbDduRGVwTzU2R01OT2VOa1d5aktQSVNRM29ibmxzSkxVT08x?=
- =?utf-8?B?RzB1THN5YnlhNWxXQkpSZFlsZkF6ZUM2NGJxWWEzYVpZRjZtMXo2U1phbjc5?=
- =?utf-8?B?a2FYYnhLZ1RobndoMDI2eEg5eTlSR1ZBR1dYNGtqNmc4cWZXaTAwSmxUUE9F?=
- =?utf-8?B?V2w4M21GblMxeEU0VjBtZWVlVmprbW00MTY2OURxUkdyeFNJZkxzNHFSdHVY?=
- =?utf-8?B?MU1xVlE2ZnRmQjgrSUV6KzcvUE9vT3hlb3NDdDJ3NW5QSVg3eGlDdWJEeEFG?=
- =?utf-8?B?MmVQZ1EzNnhETHhsaXV2NHJIZG85QnVNUzZGaCt1YWJJZVdUamlTS2h2ZkVv?=
- =?utf-8?B?Mk5QRkUveGpNUGE4QjlrbW5QdVNkMEVVNGVjT2dZaks1YWZuRG14Y0kycVVw?=
- =?utf-8?B?UTNrU29jVjlzOFZ1dS9obU4xeXp4UjcyZ3ZIb0JhMU9mS2UwZjBXMjk5eW1Q?=
- =?utf-8?B?dmVRMS9NWGRwVUZvM0x6Zm9QL3FxM2t4OWZiWCtIUG5FSVlQQVJTdDBJNW9D?=
- =?utf-8?B?R1k1V3FoWTZMKzJhblpoelJzbzMyNVRVNVdVc2V6MkdkWU5UNlRrRkd2emlR?=
- =?utf-8?B?bmgyWnA3cmRiZnM0SjRBeEdHUEtTMTl5cTRQdXc4WS9mZVpYSzdCWjBjWUZE?=
- =?utf-8?B?WmNZS3ZoSVBnWnZGVUdoSWlhR0xId3JQaVBvYjliRUphZjZMUjhMMU40dlZH?=
- =?utf-8?B?dVlSNTVBbk54S25BTXhHK2MvMnpOeHF2UWxNZFQ4aTlIKzI5eThWeGk2UU81?=
- =?utf-8?B?SWNrbGdjL2JZZ0szK2xMb3g0Yng0SCtxNFpZd21yMjZMQUViRzNoZXZ2RjVZ?=
- =?utf-8?B?dlRaU0IwYXNWazlMY0RTTlJUd3lxYTFpRkpwQjFib0xmYWE4a2FCc05hU0RT?=
- =?utf-8?B?SFl1MFZTaTRheW9ZK1JseWhpYWNvalAvZkRMZURmYlNaK21SRXFRMjVNTWJs?=
- =?utf-8?B?VGNtMVNqZVU1dTRGTUVrTE0wSjhhVlo5cHdQeW41MnduVE96eGsydTU0WHpW?=
- =?utf-8?B?Sy9oSzJzMVZXN0VFYlRKNkdYQmN4Tjg3TmVVdHBhVU9iY0RibUdDZjVoYk4w?=
- =?utf-8?B?SlRqSmthV3JXVmJacHQyTy81b2o3b3lUcWpzYXh3RXB4S1lrSk81M2oxemlZ?=
- =?utf-8?B?L2gwODFPNHUwbEdkNEdydDZmR3lZSjdrYm00S3J6RnVjMi84ek0xUzJINFZv?=
- =?utf-8?B?SnRYYUVKWldzQkkycCtJcjZtUWZOYWR0NW16MEJ4TnBWcjNMb2xXOTRoRUZs?=
- =?utf-8?B?NmFoMzVlWXpSaFRha3VtV01OcXNOVXNwQ1pUSjgxZGtsYmYyTk1ZWjdNM0Vp?=
- =?utf-8?B?THpXQzl4VEJKWEVHdmpqOExVTDY1R0lidHQyeW1rSzYvTk4veEU0OXVYZ2R5?=
- =?utf-8?Q?wFBLADQOBqizlAMsviMqKegVZDDw27PvP6YnXi4?=
+ <BY5PR12MB37642B9AC7E5D907F5A664F6B3459@BY5PR12MB3764.namprd12.prod.outlook.com>
+From: Sumit Gupta <sumitg@nvidia.com>
+Message-ID: <467c95cd-3ba5-519e-cdac-9f477da86ecb@nvidia.com>
+Date: Fri, 23 Apr 2021 23:49:55 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
+In-Reply-To: <BY5PR12MB37642B9AC7E5D907F5A664F6B3459@BY5PR12MB3764.namprd12.prod.outlook.com>
+Content-Language: en-US
+X-Originating-IP: [172.20.145.6]
+X-ClientProxiedBy: HQMAIL107.nvidia.com (172.20.187.13) To
+ HQMAIL107.nvidia.com (172.20.187.13)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: b097732a-0214-45a3-b625-08d906846b48
+X-MS-TrafficTypeDiagnostic: BN9PR12MB5196:
+X-Microsoft-Antispam-PRVS: <BN9PR12MB51961A3DB446833C4BF166C0B9459@BN9PR12MB5196.namprd12.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:9508;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: s7clLpzt7EUCUrBWYbruNWLmcrUC57NihX8c0LjC34rXtHll6TifhtX6u5kjk2G+p4tGGREF194u5FUM8VKEDkvgcqSkUVkVQwnN1JE94t9u+WxAgWwgmHXy/rgAm8oGlic3CWyiEX/vrNmS7irLSHc8r8rKiz0IYSYqHj03sqwqcNwrEhdfXy8T3zYIpFku1zTNQe6okX0GzZ0weBue2NDq6pJ82lfDmt57WZSd76FJ3F+BOkM25jUYMiqzvx/ia7lujQmhKH24Jb6bAtZlBGlfMJsItxbYswwYKaUFIWcLTiKHBnUmxx0yH0G3GCla229BUb6sRzf4Ak9VPfl6+sxk5muF/5ohgDkFaUuG9aIEmWdzkQ1UBmYzvmJIH+YqXV8yUtHwnJyqNkGXm3WgvyUdUhtAbwRsU58FDxmThKiWdvRu9o6sTSmnYgNyCD0wOFrVRTy5KmgFfnWqgLLb+gPmAxkyHPcjtBAKzPg1ci/DdgXS68L9sq1ntj5wXpiH6bRUuY3v5cLhBrbg8+t3Korr6poJOauLnrxhdANpyDc4MRXCdx3nSrJcEwbEgaygk3XAaUrGzBnSs3sX0qWcn93as3rbkxkkwEAU+1/D93TqzmdUPHCXpq8xiJrnq/gHORLJEKhSXoYjVeWBRlPFDFfW4m4eABEVcYTpXpqE/wYN+b2icnc0/3UPyr86DX7R
+X-Forefront-Antispam-Report: CIP:216.228.112.34; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:schybrid03.nvidia.com; CAT:NONE;
+ SFS:(4636009)(346002)(376002)(396003)(39860400002)(136003)(46966006)(36840700001)(70586007)(82310400003)(36756003)(5660300002)(31686004)(356005)(7636003)(54906003)(6666004)(107886003)(110136005)(82740400003)(70206006)(316002)(7416002)(26005)(31696002)(16526019)(16576012)(426003)(83380400001)(2906002)(2616005)(186003)(86362001)(478600001)(36906005)(36860700001)(336012)(4326008)(8676002)(8936002)(47076005)(43740500002);
+ DIR:OUT; SFP:1101; 
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR12MB3764.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5ccd24c6-ff54-411f-aaaf-08d906816320
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Apr 2021 17:58:23.2149 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: HQ7qomwuPNRWxgQWp9YB0j1lHgnRy3VwzBE7uw6gmreIGykbDpo+OY7mQW+e72WSqEOo/JoqULHl0+ZM2ATOyQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4066
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Apr 2021 18:20:05.3193 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b097732a-0214-45a3-b625-08d906846b48
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.112.34];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN8NAM11FT056.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN9PR12MB5196
 X-Mailman-Approved-At: Sat, 24 Apr 2021 05:10:43 -0400
 Cc: "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
  "vivek.gautam@arm.com" <vivek.gautam@arm.com>,
@@ -143,7 +126,8 @@ Cc: "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
  "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
  Vikram Sethi <vsethi@nvidia.com>, Bibek Basu <bbasu@nvidia.com>,
  "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- Shanker Donthineni <sdonthineni@nvidia.com>, Sachin Nikam <Snikam@nvidia.com>,
+ Sumit Gupta <sumitg@nvidia.com>, Shanker Donthineni <sdonthineni@nvidia.com>,
+ Sachin Nikam <Snikam@nvidia.com>,
  "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
  "lushenming@huawei.com" <lushenming@huawei.com>,
  "iommu@lists.linux-foundation.org" <iommu@lists.linux-foundation.org>,
@@ -159,35 +143,39 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
->> Did that patch cause any issue, or is it just not needed on your system?
->> It fixes an hypothetical problem with the way ATS is implemented. 
->> Maybe I actually observed it on an old software model, I don't 
->> remember. Either way it's unlikely to go upstream but I'd like to know 
->> if I should drop it from my tree.
 
-> Had to revert same patch "mm: notify remote TLBs when dirtying a PTE" to
-> avoid below crash[1]. I am not sure about the cause yet.
 
-I have noticed this issue earlier with patch pointed here and root caused the issue as below.
-It happens after vfio_mmap request from QEMU for the PCIe device and during the access of VA when
-PTE access flags are updated. 
+>>> Did that patch cause any issue, or is it just not needed on your system?
+>>> It fixes an hypothetical problem with the way ATS is implemented.
+>>> Maybe I actually observed it on an old software model, I don't
+>>> remember. Either way it's unlikely to go upstream but I'd like to know
+>>> if I should drop it from my tree.
+> 
+>> Had to revert same patch "mm: notify remote TLBs when dirtying a PTE" to
+>> avoid below crash[1]. I am not sure about the cause yet.
+> 
+> I have noticed this issue earlier with patch pointed here and root caused the issue as below.
+> It happens after vfio_mmap request from QEMU for the PCIe device and during the access of VA when
+> PTE access flags are updated.
+> 
+> kvm_mmu_notifier_change_pte() --> kvm_set_spte_hve() --> kvm_set_spte_hva() --> clean_dcache_guest_page()
+> 
+> The validation model doesn't have FWB capability supported.
+> __clean_dcache_guest_page() attempts to perform dcache flush on pcie bar address(not a valid_pfn()) through page_address(),
+> which doesn't have page table mapping and leads to exception.
+> 
+> I have worked around the issue by filtering out the request if the pfn is not valid in  __clean_dcache_guest_page().
+> As the patch wasn't posted in the community, reverted it as well.
 
-kvm_mmu_notifier_change_pte() --> kvm_set_spte_hve() --> kvm_set_spte_hva() --> clean_dcache_guest_page()
+Thank you Krishna for sharing the analysis.
 
-The validation model doesn't have FWB capability supported.
-__clean_dcache_guest_page() attempts to perform dcache flush on pcie bar address(not a valid_pfn()) through page_address(),
-which doesn't have page table mapping and leads to exception.
-
-I have worked around the issue by filtering out the request if the pfn is not valid in  __clean_dcache_guest_page(). 
-As the patch wasn't posted in the community, reverted it as well.
-
--KR
-
+Best Regards,
+Sumit Gupta
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
