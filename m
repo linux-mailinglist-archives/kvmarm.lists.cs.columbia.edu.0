@@ -2,80 +2,84 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C93437040F
-	for <lists+kvmarm@lfdr.de>; Sat,  1 May 2021 01:24:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C40D237069A
+	for <lists+kvmarm@lfdr.de>; Sat,  1 May 2021 11:30:32 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2EF884B45B;
-	Fri, 30 Apr 2021 19:24:25 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F143E4B513;
+	Sat,  1 May 2021 05:30:31 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XdefCQkFAyvj; Fri, 30 Apr 2021 19:24:25 -0400 (EDT)
+	with ESMTP id PbUWhMiYNLFw; Sat,  1 May 2021 05:30:31 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F1AA14B4BA;
-	Fri, 30 Apr 2021 19:24:22 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 640714B4F2;
+	Sat,  1 May 2021 05:30:30 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C96364B4B3
- for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Apr 2021 19:24:20 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C55744B4DC
+ for <kvmarm@lists.cs.columbia.edu>; Sat,  1 May 2021 05:30:28 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id CP6ANTXSQ64a for <kvmarm@lists.cs.columbia.edu>;
- Fri, 30 Apr 2021 19:24:19 -0400 (EDT)
-Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com
- [209.85.215.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 531724B4A5
- for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Apr 2021 19:24:19 -0400 (EDT)
-Received: by mail-pg1-f201.google.com with SMTP id
- w5-20020a63a7450000b029020ee691d6a0so7365910pgo.13
- for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Apr 2021 16:24:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=CHatLD5Tl1lQJpmZw15smommPJOJbCh71D4e3ytfPPM=;
- b=LsaA1Zdru8LDIWkutXfR0M+1JQaI6nR3ERROJfusNV8jG9Jdnuyh6QBsHP66RxdymB
- 2fDPdGwnAqkjHj8Q+auocilZp6lr226veLKd1NUGvM7JRaDxxhJLNE9gcPcv36I3Ir8S
- 36b75n62rb+3mUfcsQJB2vpqocaWuXYG5JRr++evzEGUZ8lPCFkQRm0VGr/KHl0rjtFU
- SlWMNCfLIvVebiGreX1jVxCTrUTjruWxrq35v8huRCwmrOvhvwe5wU4+a5Hw5Nct8fXn
- KZHSNPO5GR9wAQ7geHhpeC5uVeVph03jNvLBGHGG9FL4hoizQh9McpNpsSmSpc7q5+Mh
- yj+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:in-reply-to:message-id:mime-version
- :references:subject:from:to:cc;
- bh=CHatLD5Tl1lQJpmZw15smommPJOJbCh71D4e3ytfPPM=;
- b=IeNzCrI6Vyojziaovuv926DdhzQsbg5mSDXBWEVe9O4/IRyATciPhtX5X41NVcTPtg
- /AYMpjFohzpFR7wFvAOhub/qmleeJHMzE7jNuLhWr9afWxNdCq4x3xCtluVFbFJkv4k2
- hRtvdKBEv5F+6qmYBMc/HiicHW+I60UTN5MXShS2vkEvwJcjslEZTgFY4gc6Z/A63dYU
- RURjEUacOw7AlGKjy8a1Sr1BnNGV142d1qhDw16iNap0ERDKADyhOIUXmjHI+oP4BnQi
- 03np9AY+OSRGu5sA2ZsRUssutXFXyJuM/JQWuT09fg8jxq7B1cT5v6Qzq2ZAHdao6dnU
- TOYQ==
-X-Gm-Message-State: AOAM533TsiA0uFLRHUH8PYxALdSa85bcNWLinz0zMjV5Q2iCvQBzVBQ9
- D4C2zD9ecBsdj96YNwDI0hLE6vBq3yfKHg==
-X-Google-Smtp-Source: ABdhPJwfRBRfmVe1PvF+YWxvfmPKVAdRl4oeIaz0SUG/en2i/NpSYWQ93G2BtLw4SZ4+7TioAUGyhdCZvWeGrg==
-X-Received: from ricarkol2.c.googlers.com
- ([fda3:e722:ac3:10:24:72f4:c0a8:62fe])
- (user=ricarkol job=sendgmr) by 2002:aa7:908c:0:b029:250:b584:a406 with SMTP
- id i12-20020aa7908c0000b0290250b584a406mr7014636pfa.44.1619825058460; Fri, 30
- Apr 2021 16:24:18 -0700 (PDT)
-Date: Fri, 30 Apr 2021 16:24:07 -0700
-In-Reply-To: <20210430232408.2707420-1-ricarkol@google.com>
-Message-Id: <20210430232408.2707420-6-ricarkol@google.com>
-Mime-Version: 1.0
-References: <20210430232408.2707420-1-ricarkol@google.com>
-X-Mailer: git-send-email 2.31.1.527.g47e6f16901-goog
-Subject: [PATCH v2 5/5] KVM: selftests: Add aarch64/debug-exceptions test
-From: Ricardo Koller <ricarkol@google.com>
-To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
-Cc: maz@kernel.org, pbonzini@redhat.com
+ with ESMTP id f+UH8LZElZjJ for <kvmarm@lists.cs.columbia.edu>;
+ Sat,  1 May 2021 05:30:27 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3BB8F4B4D1
+ for <kvmarm@lists.cs.columbia.edu>; Sat,  1 May 2021 05:30:27 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 32D206141E;
+ Sat,  1 May 2021 09:30:26 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=wait-a-minute.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
+ (envelope-from <maz@kernel.org>)
+ id 1lclx9-00AJhV-T1; Sat, 01 May 2021 10:30:24 +0100
+Date: Sat, 01 May 2021 10:30:22 +0100
+Message-ID: <87eeeqvm1d.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Vikram Sethi <vsethi@nvidia.com>
+Subject: Re: [RFC 1/2] vfio/pci: keep the prefetchable attribute of a BAR
+ region in VMA
+In-Reply-To: <BL0PR12MB2532CC436EBF626966B15994BD5E9@BL0PR12MB2532.namprd12.prod.outlook.com>
+References: <20210429162906.32742-1-sdonthineni@nvidia.com>
+ <20210429162906.32742-2-sdonthineni@nvidia.com>
+ <20210429122840.4f98f78e@redhat.com>
+ <470360a7-0242-9ae5-816f-13608f957bf6@nvidia.com>
+ <20210429134659.321a5c3c@redhat.com>
+ <e3d7fda8-5263-211c-3686-f699765ab715@nvidia.com>
+ <87czucngdc.wl-maz@kernel.org>
+ <1edb2c4e-23f0-5730-245b-fc6d289951e1@nvidia.com>
+ <878s4zokll.wl-maz@kernel.org>
+ <BL0PR12MB2532CC436EBF626966B15994BD5E9@BL0PR12MB2532.namprd12.prod.outlook.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: vsethi@nvidia.com, sdonthineni@nvidia.com,
+ alex.williamson@redhat.com, will@kernel.org, catalin.marinas@arm.com,
+ christoffer.dall@arm.com, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org,
+ kvm@vger.kernel.org, jsequeira@nvidia.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ Shanker Donthineni <sdonthineni@nvidia.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Jason Sequeira <jsequeira@nvidia.com>, Will Deacon <will@kernel.org>,
+ "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -87,324 +91,91 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Covers fundamental tests for debug exceptions. The guest installs and
-handle its debug exceptions itself, without KVM_SET_GUEST_DEBUG.
-
-Signed-off-by: Ricardo Koller <ricarkol@google.com>
----
- tools/testing/selftests/kvm/.gitignore        |   1 +
- tools/testing/selftests/kvm/Makefile          |   1 +
- .../selftests/kvm/aarch64/debug-exceptions.c  | 244 ++++++++++++++++++
- .../selftests/kvm/include/aarch64/processor.h |  14 +-
- 4 files changed, 254 insertions(+), 6 deletions(-)
- create mode 100644 tools/testing/selftests/kvm/aarch64/debug-exceptions.c
-
-diff --git a/tools/testing/selftests/kvm/.gitignore b/tools/testing/selftests/kvm/.gitignore
-index e65d5572aefc..f09ed908422b 100644
---- a/tools/testing/selftests/kvm/.gitignore
-+++ b/tools/testing/selftests/kvm/.gitignore
-@@ -1,4 +1,5 @@
- # SPDX-License-Identifier: GPL-2.0-only
-+/aarch64/debug-exceptions
- /aarch64/get-reg-list
- /aarch64/get-reg-list-sve
- /aarch64/vgic_init
-diff --git a/tools/testing/selftests/kvm/Makefile b/tools/testing/selftests/kvm/Makefile
-index 618c5903f478..2f92442c0cc9 100644
---- a/tools/testing/selftests/kvm/Makefile
-+++ b/tools/testing/selftests/kvm/Makefile
-@@ -73,6 +73,7 @@ TEST_GEN_PROGS_x86_64 += memslot_modification_stress_test
- TEST_GEN_PROGS_x86_64 += set_memory_region_test
- TEST_GEN_PROGS_x86_64 += steal_time
- 
-+TEST_GEN_PROGS_aarch64 += aarch64/debug-exceptions
- TEST_GEN_PROGS_aarch64 += aarch64/get-reg-list
- TEST_GEN_PROGS_aarch64 += aarch64/get-reg-list-sve
- TEST_GEN_PROGS_aarch64 += aarch64/vgic_init
-diff --git a/tools/testing/selftests/kvm/aarch64/debug-exceptions.c b/tools/testing/selftests/kvm/aarch64/debug-exceptions.c
-new file mode 100644
-index 000000000000..87352ee09211
---- /dev/null
-+++ b/tools/testing/selftests/kvm/aarch64/debug-exceptions.c
-@@ -0,0 +1,244 @@
-+// SPDX-License-Identifier: GPL-2.0
-+#include <test_util.h>
-+#include <kvm_util.h>
-+#include <processor.h>
-+
-+#define VCPU_ID 0
-+
-+#define MDSCR_KDE	(1 << 13)
-+#define MDSCR_MDE	(1 << 15)
-+#define MDSCR_SS	(1 << 0)
-+
-+#define DBGBCR_LEN8	(0xff << 5)
-+#define DBGBCR_EXEC	(0x0 << 3)
-+#define DBGBCR_EL1	(0x1 << 1)
-+#define DBGBCR_E	(0x1 << 0)
-+
-+#define DBGWCR_LEN8	(0xff << 5)
-+#define DBGWCR_RD	(0x1 << 3)
-+#define DBGWCR_WR	(0x2 << 3)
-+#define DBGWCR_EL1	(0x1 << 1)
-+#define DBGWCR_E	(0x1 << 0)
-+
-+extern unsigned char sw_bp, hw_bp, bp_svc, bp_brk, hw_wp, ss_start;
-+static volatile uint64_t sw_bp_addr, hw_bp_addr;
-+static volatile uint64_t wp_addr, wp_data_addr;
-+static volatile uint64_t svc_addr;
-+static volatile uint64_t ss_addr[4], ss_idx;
-+#define  PC(v)  ((uint64_t)&(v))
-+
-+static void reset_debug_state(void)
-+{
-+	asm volatile("msr daifset, #8");
-+
-+	write_sysreg(osdlr_el1, 0);
-+	write_sysreg(oslar_el1, 0);
-+	asm volatile("isb" : : : "memory");
-+
-+	write_sysreg(mdscr_el1, 0);
-+	/* This test only uses the first bp and wp slot. */
-+	write_sysreg(dbgbvr0_el1, 0);
-+	write_sysreg(dbgbcr0_el1, 0);
-+	write_sysreg(dbgwcr0_el1, 0);
-+	write_sysreg(dbgwvr0_el1, 0);
-+	asm volatile("isb" : : : "memory");
-+}
-+
-+static void install_wp(uint64_t addr)
-+{
-+	uint32_t wcr;
-+	uint32_t mdscr;
-+
-+	wcr = DBGWCR_LEN8 | DBGWCR_RD | DBGWCR_WR | DBGWCR_EL1 | DBGWCR_E;
-+	write_sysreg(dbgwcr0_el1, wcr);
-+	write_sysreg(dbgwvr0_el1, addr);
-+	asm volatile("isb" : : : "memory");
-+
-+	asm volatile("msr daifclr, #8");
-+
-+	mdscr = read_sysreg(mdscr_el1) | MDSCR_KDE | MDSCR_MDE;
-+	write_sysreg(mdscr_el1, mdscr);
-+}
-+
-+static void install_hw_bp(uint64_t addr)
-+{
-+	uint32_t bcr;
-+	uint32_t mdscr;
-+
-+	bcr = DBGBCR_LEN8 | DBGBCR_EXEC | DBGBCR_EL1 | DBGBCR_E;
-+	write_sysreg(dbgbcr0_el1, bcr);
-+	write_sysreg(dbgbvr0_el1, addr);
-+	asm volatile("isb" : : : "memory");
-+
-+	asm volatile("msr daifclr, #8");
-+
-+	mdscr = read_sysreg(mdscr_el1) | MDSCR_KDE | MDSCR_MDE;
-+	write_sysreg(mdscr_el1, mdscr);
-+}
-+
-+static void install_ss(void)
-+{
-+	uint32_t mdscr;
-+
-+	asm volatile("msr daifclr, #8");
-+
-+	mdscr = read_sysreg(mdscr_el1) | MDSCR_KDE | MDSCR_SS;
-+	write_sysreg(mdscr_el1, mdscr);
-+}
-+
-+static volatile char write_data;
-+
-+static void guest_code(void)
-+{
-+	GUEST_SYNC(0);
-+
-+	/* Software-breakpoint */
-+	asm volatile("sw_bp: brk #0");
-+	GUEST_ASSERT_EQ(sw_bp_addr, PC(sw_bp));
-+
-+	GUEST_SYNC(1);
-+
-+	/* Hardware-breakpoint */
-+	reset_debug_state();
-+	install_hw_bp(PC(hw_bp));
-+	asm volatile("hw_bp: nop");
-+	GUEST_ASSERT_EQ(hw_bp_addr, PC(hw_bp));
-+
-+	GUEST_SYNC(2);
-+
-+	/* Hardware-breakpoint + svc */
-+	reset_debug_state();
-+	install_hw_bp(PC(bp_svc));
-+	asm volatile("bp_svc: svc #0");
-+	GUEST_ASSERT_EQ(hw_bp_addr, PC(bp_svc));
-+	GUEST_ASSERT_EQ(svc_addr, PC(bp_svc) + 4);
-+
-+	GUEST_SYNC(3);
-+
-+	/* Hardware-breakpoint + software-breakpoint */
-+	reset_debug_state();
-+	install_hw_bp(PC(bp_brk));
-+	asm volatile("bp_brk: brk #0");
-+	GUEST_ASSERT_EQ(sw_bp_addr, PC(bp_brk));
-+	GUEST_ASSERT_EQ(hw_bp_addr, PC(bp_brk));
-+
-+	GUEST_SYNC(4);
-+
-+	/* Watchpoint */
-+	reset_debug_state();
-+	install_wp(PC(write_data));
-+	write_data = 'x';
-+	GUEST_ASSERT_EQ(write_data, 'x');
-+	GUEST_ASSERT_EQ(wp_data_addr, PC(write_data));
-+
-+	GUEST_SYNC(5);
-+
-+	/* Single-step */
-+	reset_debug_state();
-+	install_ss();
-+	ss_idx = 0;
-+	asm volatile("ss_start:\n"
-+		     "mrs x0, esr_el1\n"
-+		     "add x0, x0, #1\n"
-+		     "msr daifset, #8\n"
-+		     : : : "x0");
-+	GUEST_ASSERT_EQ(ss_addr[0], PC(ss_start));
-+	GUEST_ASSERT_EQ(ss_addr[1], PC(ss_start) + 4);
-+	GUEST_ASSERT_EQ(ss_addr[2], PC(ss_start) + 8);
-+
-+	GUEST_DONE();
-+}
-+
-+static void guest_sw_bp_handler(struct ex_regs *regs)
-+{
-+	sw_bp_addr = regs->pc;
-+	regs->pc += 4;
-+}
-+
-+static void guest_hw_bp_handler(struct ex_regs *regs)
-+{
-+	hw_bp_addr = regs->pc;
-+	regs->pstate |= SPSR_D;
-+}
-+
-+static void guest_wp_handler(struct ex_regs *regs)
-+{
-+	wp_data_addr = read_sysreg(far_el1);
-+	wp_addr = regs->pc;
-+	regs->pstate |= SPSR_D;
-+}
-+
-+static void guest_ss_handler(struct ex_regs *regs)
-+{
-+	GUEST_ASSERT_1(ss_idx < 4, ss_idx);
-+	ss_addr[ss_idx++] = regs->pc;
-+	regs->pstate |= SPSR_SS;
-+}
-+
-+static void guest_svc_handler(struct ex_regs *regs)
-+{
-+	svc_addr = regs->pc;
-+}
-+
-+static int debug_version(struct kvm_vm *vm)
-+{
-+	uint64_t id_aa64dfr0;
-+
-+	get_reg(vm, VCPU_ID, ARM64_SYS_REG(ID_AA64DFR0_EL1), &id_aa64dfr0);
-+	return id_aa64dfr0 & 0xf;
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+	struct kvm_vm *vm;
-+	struct ucall uc;
-+	int stage;
-+
-+	vm = vm_create_default(VCPU_ID, 0, guest_code);
-+	ucall_init(vm, NULL);
-+
-+	vm_init_descriptor_tables(vm);
-+	vcpu_init_descriptor_tables(vm, VCPU_ID);
-+
-+	if (debug_version(vm) < 6) {
-+		print_skip("Armv8 debug architecture not supported.");
-+		kvm_vm_free(vm);
-+		exit(KSFT_SKIP);
-+	}
-+
-+	vm_install_exception_handler(vm, VECTOR_SYNC_CURRENT,
-+				ESR_EC_BRK_INS, guest_sw_bp_handler);
-+	vm_install_exception_handler(vm, VECTOR_SYNC_CURRENT,
-+				ESR_EC_HW_BP_CURRENT, guest_hw_bp_handler);
-+	vm_install_exception_handler(vm, VECTOR_SYNC_CURRENT,
-+				ESR_EC_WP_CURRENT, guest_wp_handler);
-+	vm_install_exception_handler(vm, VECTOR_SYNC_CURRENT,
-+				ESR_EC_SSTEP_CURRENT, guest_ss_handler);
-+	vm_install_exception_handler(vm, VECTOR_SYNC_CURRENT,
-+				ESR_EC_SVC64, guest_svc_handler);
-+
-+	for (stage = 0; stage < 7; stage++) {
-+		vcpu_run(vm, VCPU_ID);
-+
-+		switch (get_ucall(vm, VCPU_ID, &uc)) {
-+		case UCALL_SYNC:
-+			TEST_ASSERT(uc.args[1] == stage,
-+				"Stage %d: Unexpected sync ucall, got %lx",
-+				stage, (ulong)uc.args[1]);
-+			break;
-+		case UCALL_ABORT:
-+			TEST_FAIL("%s at %s:%ld\n\tvalues: %#lx, %#lx",
-+				(const char *)uc.args[0],
-+				__FILE__, uc.args[1], uc.args[2], uc.args[3]);
-+			break;
-+		case UCALL_DONE:
-+			goto done;
-+		default:
-+			TEST_FAIL("Unknown ucall %lu", uc.cmd);
-+		}
-+	}
-+
-+done:
-+	kvm_vm_free(vm);
-+	return 0;
-+}
-diff --git a/tools/testing/selftests/kvm/include/aarch64/processor.h b/tools/testing/selftests/kvm/include/aarch64/processor.h
-index 40aae31b4afc..a3ebef8e88c7 100644
---- a/tools/testing/selftests/kvm/include/aarch64/processor.h
-+++ b/tools/testing/selftests/kvm/include/aarch64/processor.h
-@@ -14,12 +14,14 @@
- #define ARM64_CORE_REG(x) (KVM_REG_ARM64 | KVM_REG_SIZE_U64 | \
- 			   KVM_REG_ARM_CORE | KVM_REG_ARM_CORE_REG(x))
- 
--#define CPACR_EL1	3, 0,  1, 0, 2
--#define TCR_EL1		3, 0,  2, 0, 2
--#define MAIR_EL1	3, 0, 10, 2, 0
--#define TTBR0_EL1	3, 0,  2, 0, 0
--#define SCTLR_EL1	3, 0,  1, 0, 0
--#define VBAR_EL1	3, 0, 12, 0, 0
-+#define CPACR_EL1               3, 0,  1, 0, 2
-+#define TCR_EL1                 3, 0,  2, 0, 2
-+#define MAIR_EL1                3, 0, 10, 2, 0
-+#define TTBR0_EL1               3, 0,  2, 0, 0
-+#define SCTLR_EL1               3, 0,  1, 0, 0
-+#define VBAR_EL1                3, 0, 12, 0, 0
-+
-+#define ID_AA64DFR0_EL1         3, 0,  0, 5, 0
- 
- /*
-  * Default MAIR
--- 
-2.31.1.527.g47e6f16901-goog
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+SGkgVmlrcmFtLAoKT24gRnJpLCAzMCBBcHIgMjAyMSAxNzo1NzoxNCArMDEwMCwKVmlrcmFtIFNl
+dGhpIDx2c2V0aGlAbnZpZGlhLmNvbT4gd3JvdGU6Cj4gCj4gSGkgTWFyYywgCj4gCj4gPiAtLS0t
+LU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQo+ID4gRnJvbTogTWFyYyBaeW5naWVyIDxtYXpAa2VybmVs
+Lm9yZz4KPiA+IFNlbnQ6IEZyaWRheSwgQXByaWwgMzAsIDIwMjEgMTA6MzEgQU0KPiA+IE9uIEZy
+aSwgMzAgQXByIDIwMjEgMTU6NTg6MTQgKzAxMDAsCj4gPiBTaGFua2VyIFIgRG9udGhpbmVuaSA8
+c2RvbnRoaW5lbmlAbnZpZGlhLmNvbT4gd3JvdGU6Cj4gPiA+Cj4gPiA+IEhpIE1hcmMsCj4gPiA+
+Cj4gPiA+IE9uIDQvMzAvMjEgNjo0NyBBTSwgTWFyYyBaeW5naWVyIHdyb3RlOgo+ID4gPiA+Cj4g
+PiA+ID4+Pj4gV2UndmUgdHdvIGNvbmNlcm5zIGhlcmU6Cj4gPiA+ID4+Pj4gICAgLSBQZXJmb3Jt
+YW5jZSBpbXBhY3RzIGZvciBwYXNzLXRocm91Z2ggZGV2aWNlcy4KPiA+ID4gPj4+PiAgICAtIFRo
+ZSBkZWZpbml0aW9uIG9mIGlvcmVtYXBfd2MoKSBmdW5jdGlvbiBkb2Vzbid0IG1hdGNoIHRoZQo+
+ID4gPiA+Pj4+IGhvc3Qga2VybmVsIG9uIEFSTTY0Cj4gPiA+ID4+PiBQZXJmb3JtYW5jZSBJIGNh
+biB1bmRlcnN0YW5kLCBidXQgSSB0aGluayB5b3UncmUgYWxzbyB1c2luZyBpdCB0bwo+ID4gPiA+
+Pj4gbWFzayBhIGRyaXZlciBidWcgd2hpY2ggc2hvdWxkIGJlIHJlc29sdmVkIGZpcnN0LiAgVGhh
+bmsKPiA+ID4gPj4gV2XigJl2ZSBhbHJlYWR5IGluc3RydW1lbnRlZCB0aGUgZHJpdmVyIGNvZGUg
+YW5kIGZvdW5kIHRoZSBjb2RlIHBhdGgKPiA+ID4gPj4gZm9yIHRoZSB1bmFsaWduZWQgYWNjZXNz
+ZXMuIFdl4oCZbGwgZml4IHRoaXMgaXNzdWUgaWYgaXTigJlzIG5vdAo+ID4gPiA+PiBmb2xsb3dp
+bmcgV0Mgc2VtYW50aWNzLgo+ID4gPiA+Pgo+ID4gPiA+PiBGaXhpbmcgdGhlIHBlcmZvcm1hbmNl
+IGNvbmNlcm4gd2lsbCBiZSB1bmRlciBLVk0gc3RhZ2UtMiBwYWdlLXRhYmxlCj4gPiA+ID4+IGNv
+bnRyb2wuIFdlJ3JlIGxvb2tpbmcgZm9yIGEgZ3VpZGFuY2Uvc29sdXRpb24gZm9yIHVwZGF0aW5n
+IHN0YWdlLTIKPiA+ID4gPj4gUFRFIGJhc2VkIG9uIFBDSS1CQVIgYXR0cmlidXRlLgo+ID4gPiA+
+IEJlZm9yZSB3ZSBzdGFydCBkaXNjdXNzaW5nIHRoZSAqaG93KiwgSSdkIGxpa2UgdG8gY2xlYXJs
+eSB1bmRlcnN0YW5kCj4gPiA+ID4gd2hhdCAqYXJtNjQqIG1lbW9yeSBhdHRyaWJ1dGVzIHlvdSBh
+cmUgcmVseWluZyBvbi4gV2UgYWxyZWFkeSBoYXZlCj4gPiA+ID4gZXN0YWJsaXNoZWQgdGhhdCB0
+aGUgdW5hbGlnbmVkIGFjY2VzcyB3YXMgYSBidWcsIHdoaWNoIHdhcyB0aGUKPiA+ID4gPiBiaWdn
+ZXN0IGFyZ3VtZW50IGluIGZhdm91ciBvZiBOT1JNQUxfTkMuIFdoYXQgYXJlIHRoZSBvdGhlcgo+
+ID4gcmVxdWlyZW1lbnRzPwo+ID4gPiBTb3JyeSwgbXkgZWFybGllciByZXNwb25zZSB3YXMgbm90
+IGNvbXBsZXRlLi4uCj4gPiA+Cj4gPiA+IEFSTXY4IGFyY2hpdGVjdHVyZSBoYXMgdHdvIGZlYXR1
+cmVzIEdhdGhlcmluZyBhbmQgUmVvcmRlcgo+ID4gPiB0cmFuc2FjdGlvbnMsIHZlcnkgaW1wb3J0
+YW50IGZyb20gYSBwZXJmb3JtYW5jZSBwb2ludCBvZiB2aWV3LiBTbWFsbAo+ID4gPiBpbmxpbmUg
+cGFja2V0cyBmb3IgTklDIGNhcmRzIGFuZCBhY2Nlc3NlcyB0byBHUFUncyBmcmFtZSBidWZmZXIg
+YXJlCj4gPiA+IENQVS1ib3VuZCBvcGVyYXRpb25zLiBXZSB3YW50IHRvIHRha2UgYWR2YW50YWdl
+cyBvZiBHUkUgZmVhdHVyZXMgdG8KPiA+ID4gYWNoaWV2ZSBoaWdoZXIgcGVyZm9ybWFuY2UuCj4g
+PiA+Cj4gPiA+IEJvdGggdGhlc2UgZmVhdHVyZXMgYXJlIGRpc2FibGVkIGZvciBwcmVmZXRjaGFi
+bGUgQkFScyBpbiBWTSBiZWNhdXNlCj4gPiA+IG1lbW9yeS10eXBlIE1UX0RFVklDRV9uR25SRSBl
+bmZvcmNlZCBpbiBzdGFnZS0yLgo+ID4gCj4gPiBSaWdodCwgc28gTm9ybWFsX05DIGlzIGEgcmVk
+IGhlcnJpbmcsIGFuZCBpdCBpcyBEZXZpY2VfR1JFIHRoYXQKPiA+IHlvdSByZWFsbHkgYXJlIGFm
+dGVyLCByaWdodD8KPiA+IAo+IEkgdGhpbmsgRGV2aWNlIEdSRSBoYXMgc29tZSBwcmFjdGljYWwg
+cHJvYmxlbXMuCj4gMS4gQSBsb3Qgb2YgdXNlcnNwYWNlIGNvZGUgd2hpY2ggaXMgdXNlZCB0byBn
+ZXR0aW5nIHdyaXRlIGNvbWJpbmVkCj4gbWFwcGluZ3MgdG8gR1BVIG1lbW9yeSBmcm9tIGtlcm5l
+bCBkcml2ZXJzIGRvZXMgbWVtY3B5L21lbXNldCBvbiBpdAo+IHdoaWNoIGNhbiBpbnNlcnQgbGRw
+L3N0cCB3aGljaCBjYW4gY3Jhc2ggb24gRGV2aWNlIE1lbW9yeSBUeXBlLiBGcm9tCj4gYSBxdWlj
+ayBzZWFyY2ggSSBkaWRuJ3QgZmluZCBhIG1lbWNweV9pbyBvciBtZW1zZXRfaW8gaW4KPiBnbGli
+Yy4gUGVyaGFwcyB0aGVyZSBhcmUgc29tZSBvdGhlciBmdW5jdGlvbnMgYXZhaWxhYmxlLCBidXQg
+YSBsb3QKPiBvZiB1c2Vyc3BhY2UgYXBwbGljYXRpb25zIHRoYXQgd29yayBvbiB4ODYgYW5kIEFS
+TSBiYXJlbWV0YWwgd29uJ3QKPiB3b3JrIG9uIEFSTSBWTXMgd2l0aG91dCBzdWNoIGNoYW5nZXMu
+IENoYW5nZXMgdG8gYWxsIG9mIHVzZXJzcGFjZQo+IG1heSBub3QgYWx3YXlzIGJlIHByYWN0aWNh
+bCwgc3BlY2lhbGx5IGlmIGxpbmtpbmcgdG8gYmluYXJpZXMKClRoaXMgc2VlbXMgdG8gZ28gYWdh
+aW5zdCB3aGF0IEFsZXggd2FzIGhpbnRpbmcgYXQgZWFybGllciwgd2hpY2ggaXMKdGhhdCB1bmFs
+aWduZWQgYWNjZXNzZXMgd2VyZSBub3QgZXhwZWN0ZWQgb24gcHJlZmV0Y2hhYmxlIHJlZ2lvbnMs
+IGFuZApTaGFua2VyIGxhdHRlciBjb25maXJtaW5nIHRoYXQgaXQgd2FzIGFuIGFjdHVhbCBidWcu
+IFdoZXJlIGRvIHdlIHN0YW5kCmhlcmU/Cgo+IAo+IDIuIFNvbWV0aW1lcyBldmVuIGlmIGFwcGxp
+Y2F0aW9uIGlzIG5vdCB1c2luZyBtZW1zZXQvbWVtY3B5IGRpcmVjdGx5LCAKPiBnY2MgbWF5IGlu
+c2VydCBhIGJ1aWx0aW4gbWVtY3B5L21lbXNldC4gCj4gCj4gMy4gUmVjb21waWxpbmcgYWxsIGFw
+cGxpY2F0aW9ucyB3aXRoIGdjYyAtbSBzdHJpY3QtYWxpZ24gaGFzCj4gcGVyZm9ybWFuY2UgaXNz
+dWVzLiAgSW4gb3VyIGV4cGVyaW1lbnRzIHRoYXQgcmVzdWx0ZWQgaW4gYW4gaW5jcmVhc2UKPiBp
+biBjb2RlIHNpemUsIGFuZCBhbHNvIDMtNSUgcGVyZm9ybWFuY2UgZGVjcmVhc2UgcmVsaWFibHku
+ICBBbHNvLCBpdAo+IGlzIG5vdCBhbHdheXMgcHJhY3RpY2FsIHRvIHJlY29tcGlsZSBhbGwgb2Yg
+dXNlcnNwYWNlLCBkZXBlbmRpbmcgb24KPiB3aG8gb3ducyB0aGUgY29kZS9saW5rZWQgYmluYXJp
+ZXMgZXRjLgo+IAo+IEZyb20gS1ZNLUFSTSBwb2ludCBvZiB2aWV3LCB3aGF0IGlzIGl0IGFib3V0
+IE5vcm1hbCBOQyBhdCBzdGFnZSAyCj4gZm9yIFByZWZldGNoYWJsZSBCQVIgKGhvd2V2ZXIgS1ZN
+IGdldHMgdGhlIGhpbnQsIHdoZXRoZXIgZnJvbQo+IHVzZXJzcGFjZSBvciBWTUEpIHRoYXQgaXMg
+dW5kZXNpcmFibGUgdnMgRGV2aWNlIEdSRT8gSSBjb3VsZG4ndAo+IHRoaW5rIG9mIGEgZGlmZmVy
+ZW5jZSB0byBkZXZpY2VzIHdoZXRoZXIgdGhlIGNvbWJpbmluZyBvcgo+IHByZWZldGNoaW5nIG9y
+IHJlb3JkZXJpbmcgaGFwcGVuZWQgYmVjYXVzZSBvZiBvbmUgb3IgdGhlIG90aGVyLgoKVGhlIHBy
+b2JsZW0gSSBzZWUgaXMgdGhhdCB3ZSBoYXZlIFZNIGFuZCB1c2Vyc3BhY2UgYmVpbmcgd3JpdHRl
+biBpbgp0ZXJtcyBvZiBXcml0ZS1Db21iaW5lLCB3aGljaCBpczoKCi0gbG9vc2VseSBkZWZpbmVk
+IGV2ZW4gb24geDg2CgotIHN1YmplY3QgdG8gaW50ZXJwcmV0YXRpb25zIGluIHRoZSB3YXkgaXQg
+bWFwcyB0byBQQ0kKCi0gaGFzIG5vIGRpcmVjdCBlcXVpdmFsZW50IGluIHRoZSBBUk12OCBjb2xs
+ZWN0aW9uIG9mIG1lbW9yeQogIGF0dHJpYnV0ZXMgKGFuZCBOb3JtYWxfTkMgY29tZXMgd2l0aCBz
+cGVjdWxhdGlvbiBjYXBhYmlsaXRpZXMgd2hpY2gKICBzdHJpa2VzIG1lIGFzIGV4dHJlbWVseSB1
+bmRlc2lyYWJsZSBvbiBhcmJpdHJhcnkgZGV2aWNlcykKCkhvdyBkbyB3ZSB0cmFuc2xhdGUgdGhp
+cyBpbnRvIHNvbWV0aGluZyBjb25zaXN0ZW50PyBJJ2QgbGlrZSB0byBzZWUgYW4KYWN0dWFsIGRl
+c2NyaXB0aW9uIG9mIHdoYXQgd2UgKnJlYWxseSogZXhwZWN0IGZyb20gV0Mgb24gcHJlZmV0Y2hh
+YmxlClBDSSByZWdpb25zLCB0dXJuIHRoYXQgaW50byBhIGRvY3VtZW50ZWQgZGVmaW5pdGlvbiBh
+Z3JlZWQgYWNyb3NzCmFyY2hpdGVjdHVyZXMsIGFuZCB0aGVuIHdlIGNhbiBsb29rIGF0IGltcGxl
+bWVudGluZyBpdCB3aXRoIG9uZSBtZW1vcnkKdHlwZSBvciBhbm90aGVyIG9uIGFybTY0LgoKQmVj
+YXVzZSBvbmNlIHdlIGV4cG9zZSB0aGF0IG1lbW9yeSB0eXBlIGF0IFMyIGZvciBLVk0gZ3Vlc3Rz
+LCBpdApiZWNvbWVzIEFCSSBhbmQgdGhlcmUgaXMgbm8gdHVybmluZyBiYWNrLiBTbyBJIHdhbnQg
+dG8gZ2V0IGl0IHJpZ2h0Cm9uY2UgYW5kIGZvciBhbGwuCgpUaGFua3MsCgoJTS4KCi0tIApXaXRo
+b3V0IGRldmlhdGlvbiBmcm9tIHRoZSBub3JtLCBwcm9ncmVzcyBpcyBub3QgcG9zc2libGUuCl9f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCmt2bWFybSBtYWls
+aW5nIGxpc3QKa3ZtYXJtQGxpc3RzLmNzLmNvbHVtYmlhLmVkdQpodHRwczovL2xpc3RzLmNzLmNv
+bHVtYmlhLmVkdS9tYWlsbWFuL2xpc3RpbmZvL2t2bWFybQo=
