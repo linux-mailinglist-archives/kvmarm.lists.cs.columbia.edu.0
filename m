@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CDA403742EA
-	for <lists+kvmarm@lfdr.de>; Wed,  5 May 2021 18:48:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BCDCF3742F5
+	for <lists+kvmarm@lfdr.de>; Wed,  5 May 2021 18:49:48 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 546304B45E;
-	Wed,  5 May 2021 12:48:59 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 70F9A4B43F;
+	Wed,  5 May 2021 12:49:48 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,42 +15,42 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yoiLdJUWS8ST; Wed,  5 May 2021 12:48:59 -0400 (EDT)
+	with ESMTP id KOpaiSxUPv6E; Wed,  5 May 2021 12:49:48 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1BE814B417;
-	Wed,  5 May 2021 12:48:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 50B2B4B41E;
+	Wed,  5 May 2021 12:49:47 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 24F354B381
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 May 2021 12:48:57 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id F08064B381
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 May 2021 12:49:45 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id mSX7oQyKjrH2 for <kvmarm@lists.cs.columbia.edu>;
- Wed,  5 May 2021 12:48:56 -0400 (EDT)
+ with ESMTP id 8LQmwCsnj8Sj for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  5 May 2021 12:49:44 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1E86C4B362
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 May 2021 12:48:56 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D678F4B362
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 May 2021 12:49:44 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id E679D610FB;
- Wed,  5 May 2021 16:48:54 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id E926B61157;
+ Wed,  5 May 2021 16:49:43 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.misterjones.org)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94)
  (envelope-from <maz@kernel.org>)
- id 1leKhg-00B3AR-80; Wed, 05 May 2021 17:48:52 +0100
-Date: Wed, 05 May 2021 17:48:51 +0100
-Message-ID: <874kfhnn2k.wl-maz@kernel.org>
+ id 1leKiT-00B3BN-RZ; Wed, 05 May 2021 17:49:41 +0100
+Date: Wed, 05 May 2021 17:49:41 +0100
+Message-ID: <8735v1nn16.wl-maz@kernel.org>
 From: Marc Zyngier <maz@kernel.org>
 To: Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH AUTOSEL 5.11 036/104] KVM: arm64: Use BUG and BUG_ON in
+Subject: Re: [PATCH AUTOSEL 5.12 039/116] KVM: arm64: Use BUG and BUG_ON in
  nVHE hyp
-In-Reply-To: <20210505163413.3461611-36-sashal@kernel.org>
-References: <20210505163413.3461611-1-sashal@kernel.org>
- <20210505163413.3461611-36-sashal@kernel.org>
+In-Reply-To: <20210505163125.3460440-39-sashal@kernel.org>
+References: <20210505163125.3460440-1-sashal@kernel.org>
+ <20210505163125.3460440-39-sashal@kernel.org>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
  (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -81,9 +81,7 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Sasha,
-
-On Wed, 05 May 2021 17:33:05 +0100,
+On Wed, 05 May 2021 17:30:07 +0100,
 Sasha Levin <sashal@kernel.org> wrote:
 > 
 > From: Andrew Scull <ascull@google.com>
@@ -103,12 +101,7 @@ Sasha Levin <sashal@kernel.org> wrote:
 > Link: https://lore.kernel.org/r/20210318143311.839894-5-ascull@google.com
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
 
-This has no chance of working without the patches that enable BUG()
-support at EL2, and *really* isn't stable material.
-
-Please drop this patch.
-
-Thanks,
+Same this for this patch.
 
 	M.
 
