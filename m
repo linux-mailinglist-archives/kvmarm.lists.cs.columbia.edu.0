@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id AFDF53770D4
-	for <lists+kvmarm@lfdr.de>; Sat,  8 May 2021 11:18:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FA233770D0
+	for <lists+kvmarm@lfdr.de>; Sat,  8 May 2021 11:15:45 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 470C14B802;
-	Sat,  8 May 2021 05:18:17 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BD33D4B196;
+	Sat,  8 May 2021 05:15:44 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,47 +15,64 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ML9VG89aFGAG; Sat,  8 May 2021 05:18:17 -0400 (EDT)
+	with ESMTP id a-2UI0ek4d5p; Sat,  8 May 2021 05:15:44 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 38C244B813;
-	Sat,  8 May 2021 05:18:14 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8F6114B14A;
+	Sat,  8 May 2021 05:15:43 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7375F4B81A
- for <kvmarm@lists.cs.columbia.edu>; Sat,  8 May 2021 03:17:52 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7A4F64B122
+ for <kvmarm@lists.cs.columbia.edu>; Sat,  8 May 2021 05:15:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 1ZxrXGHvrFcT for <kvmarm@lists.cs.columbia.edu>;
- Sat,  8 May 2021 03:17:51 -0400 (EDT)
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id BD16F4B30C
- for <kvmarm@lists.cs.columbia.edu>; Sat,  8 May 2021 03:17:50 -0400 (EDT)
-IronPort-SDR: cdwYiZyvVYU4oS9Jhw05efvdAVx/TuvWXjG9KIc+HY3gBm3e6zz4beMF3L3a3BLSTszr6isnra
- K0eM1SU0NJJA==
-X-IronPort-AV: E=McAfee;i="6200,9189,9977"; a="219793800"
-X-IronPort-AV: E=Sophos;i="5.82,283,1613462400"; d="scan'208";a="219793800"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 May 2021 00:17:48 -0700
-IronPort-SDR: tsgzUZs8tvIizuU72JMmEcN+UYuWGP/CHbcmGM8z+23NbbZK5biOyHJbY9Jc5+K3XprAjh2AvC
- lg6GkNlVctWg==
-X-IronPort-AV: E=Sophos;i="5.82,283,1613462400"; d="scan'208";a="435267317"
-Received: from unknown (HELO localhost.localdomain.bj.intel.com)
- ([10.240.193.73])
- by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 May 2021 00:17:45 -0700
-From: Zhu Lingshan <lingshan.zhu@intel.com>
-To: jasowang@redhat.com, mst@redhat.com, maz@kernel.org,
- alex.williamson@redhat.com
-Subject: [PATCH] Revert "irqbypass: do not start cons/prod when failed connect"
-Date: Sat,  8 May 2021 15:11:52 +0800
-Message-Id: <20210508071152.722425-1-lingshan.zhu@intel.com>
-X-Mailer: git-send-email 2.27.0
-MIME-Version: 1.0
-X-Mailman-Approved-At: Sat, 08 May 2021 05:18:12 -0400
-Cc: kvm@vger.kernel.org, cohuck@redhat.com, stable@vger.kernel.org,
- Zhu Lingshan <lingshan.zhu@intel.com>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+ with ESMTP id Ie3st88yqhJr for <kvmarm@lists.cs.columbia.edu>;
+ Sat,  8 May 2021 05:15:41 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1B6724B10B
+ for <kvmarm@lists.cs.columbia.edu>; Sat,  8 May 2021 05:15:41 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id D14EE6135D;
+ Sat,  8 May 2021 09:15:39 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=wait-a-minute.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1lfJ3h-0005Lz-HK; Sat, 08 May 2021 10:15:37 +0100
+Date: Sat, 08 May 2021 10:15:36 +0100
+Message-ID: <874kfdvb5z.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Jason Wang <jasowang@redhat.com>
+Subject: Re: Question on guest enable msi fail when using GICv4/4.1
+In-Reply-To: <373c70d3-eda3-8e84-d138-2f90d4e55217@redhat.com>
+References: <3a2c66d6-6ca0-8478-d24b-61e8e3241b20@hisilicon.com>
+ <87k0oaq5jf.wl-maz@kernel.org>
+ <cf870bcf-1173-a70b-2b55-4209abcbcbc3@hisilicon.com>
+ <878s4qq00u.wl-maz@kernel.org> <874kfepht4.wl-maz@kernel.org>
+ <373c70d3-eda3-8e84-d138-2f90d4e55217@redhat.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: jasowang@redhat.com, lingshan.zhu@intel.com,
+ zhangshaokun@hisilicon.com, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
+ linux-pci@vger.kernel.org, alex.williamson@redhat.com, cohuck@redhat.com,
+ tangnianyao@huawei.com, bhelgaas@google.com, eric.auger@redhat.com,
+ mst@redhat.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvm@vger.kernel.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ linux-pci@vger.kernel.org, Cornelia Huck <cohuck@redhat.com>,
+ Shaokun Zhang <zhangshaokun@hisilicon.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Bjorn Helgaas <bhelgaas@google.com>, Zhu Lingshan <lingshan.zhu@intel.com>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -67,58 +84,46 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-This reverts commit a979a6aa009f3c99689432e0cdb5402a4463fb88.
-
-The reverted commit may cause VM freeze on arm64 platform.
-Because on arm64 platform, stop a consumer will suspend the VM,
-the VM will freeze without a start consumer
-
-Signed-off-by: Zhu Lingshan <lingshan.zhu@intel.com>
----
- virt/lib/irqbypass.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
-
-diff --git a/virt/lib/irqbypass.c b/virt/lib/irqbypass.c
-index c9bb3957f58a..28fda42e471b 100644
---- a/virt/lib/irqbypass.c
-+++ b/virt/lib/irqbypass.c
-@@ -40,21 +40,17 @@ static int __connect(struct irq_bypass_producer *prod,
- 	if (prod->add_consumer)
- 		ret = prod->add_consumer(prod, cons);
- 
--	if (ret)
--		goto err_add_consumer;
--
--	ret = cons->add_producer(cons, prod);
--	if (ret)
--		goto err_add_producer;
-+	if (!ret) {
-+		ret = cons->add_producer(cons, prod);
-+		if (ret && prod->del_consumer)
-+			prod->del_consumer(prod, cons);
-+	}
- 
- 	if (cons->start)
- 		cons->start(cons);
- 	if (prod->start)
- 		prod->start(prod);
--err_add_producer:
--	if (prod->del_consumer)
--		prod->del_consumer(prod, cons);
--err_add_consumer:
-+
- 	return ret;
- }
- 
--- 
-2.27.0
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+T24gU2F0LCAwOCBNYXkgMjAyMSAwMjo1MTozOSArMDEwMCwKSmFzb24gV2FuZyA8amFzb3dhbmdA
+cmVkaGF0LmNvbT4gd3JvdGU6Cj4gCj4gCj4g5ZyoIDIwMjEvNS84IOS4iuWNiDE6MzYsIE1hcmMg
+WnluZ2llciDlhpnpgZM6CgpbLi4uXQoKPiA+IEFkZGluZyBaaHUsIEphc29uLCBNU1QgdG8gdGhl
+IHBhcnR5LiBJdCBhbGwgc2VlbXMgdG8gYmUgY2F1c2VkIGJ5IHRoaXMKPiA+IGNvbW1pdDoKPiA+
+IAo+ID4gY29tbWl0IGE5NzlhNmFhMDA5ZjNjOTk2ODk0MzJlMGNkYjU0MDJhNDQ2M2ZiODgKPiA+
+IEF1dGhvcjogWmh1IExpbmdzaGFuIDxsaW5nc2hhbi56aHVAaW50ZWwuY29tPgo+ID4gRGF0ZTog
+ICBGcmkgSnVsIDMxIDE0OjU1OjMzIDIwMjAgKzA4MDAKPiA+IAo+ID4gICAgICBpcnFieXBhc3M6
+IGRvIG5vdCBzdGFydCBjb25zL3Byb2Qgd2hlbiBmYWlsZWQgY29ubmVjdAo+ID4gICAgICAgICAg
+IElmIGZhaWxlZCB0byBjb25uZWN0LCB0aGVyZSBpcyBubyBuZWVkIHRvIHN0YXJ0IGNvbnN1bWVy
+Cj4gPiBub3IKPiA+ICAgICAgcHJvZHVjZXIuCj4gPiAgICAgICAgICAgU2lnbmVkLW9mZi1ieTog
+Wmh1IExpbmdzaGFuIDxsaW5nc2hhbi56aHVAaW50ZWwuY29tPgo+ID4gICAgICBTdWdnZXN0ZWQt
+Ynk6IEphc29uIFdhbmcgPGphc293YW5nQHJlZGhhdC5jb20+Cj4gPiAgICAgIExpbms6IGh0dHBz
+Oi8vbG9yZS5rZXJuZWwub3JnL3IvMjAyMDA3MzEwNjU1MzMuNDE0NC03LWxpbmdzaGFuLnpodUBp
+bnRlbC5jb20KPiA+ICAgICAgU2lnbmVkLW9mZi1ieTogTWljaGFlbCBTLiBUc2lya2luIDxtc3RA
+cmVkaGF0LmNvbT4KPiA+IAo+ID4gCj4gPiBaaHUsIEknZCByZWFsbHkgbGlrZSB0byB1bmRlcnN0
+YW5kIHdoeSB5b3UgdGhpbmsgaXQgaXMgT0sgbm90IHRvCj4gPiByZXN0YXJ0IGNvbnN1bWVyIGFu
+ZCBwcm9kdWNlcnMgd2hlbiBhIGNvbm5lY3Rpb24gaGFzIGZhaWxlZCB0byBiZQo+ID4gZXN0YWJs
+aXNoZWQgYmV0d2VlbiB0aGUgdHdvPwo+IAo+IAo+IE15IGJhZCwgSSBkaWRuJ3QgY2hlY2sgQVJN
+IGNvZGUgYnV0IGl0J3Mgbm90IGVhc3kgdG8gaW5mZXIgdGhhdCB0aGUKPiBjb25zLT5zdGFydC9z
+dG9wIGlzIG5vdCBhIHBlciBjb25zdW1lciBzcGVjaWZpYyBvcGVyYXRpb24gYnV0IGEgZ2xvYmFs
+Cj4gb25lIGxpa2UgVk0gaGFsdGluZy9yZXN1bWluZy4KCkkgZG9uJ3QgZGlzYWdyZWUgdGhhdCBp
+dCBpcyBhIGJpdCBvZiBhbiBvZGQgYmVoYXZpb3VyLCBhbmQgbWF5YmUgd2UKY2FuIGV2ZW50dWFs
+bHkgcmVsYXggdGhpcy4gSG93ZXZlciwgbXkgcnVsZSBvZiB0aHVtYiBmb3IgZXJyb3IKaGFuZGxp
+bmcgaXMgdG8gdHJ5IGFuZCBwdXQgdGhpbmdzIGJhY2sgaW4gdGhlIHN0YXRlIHlvdSBmb3VuZCB0
+aGVtLgoKSXQgaXMgYWxzbyB1bmZvcnR1bmF0ZSB0aGF0IHRoaXMgc2FtZSBjb21taXQgaW50cm9k
+dWNlcyBhbiBpbnRlcmVzdGluZwpidWcgYnkgdW5jb25kaXRpb25hbGx5IGNhbGxpbmcgZGVsX3By
+b2R1Y2VyKCksIGV2ZW4gaWYgdGhlCnByb2R1Y2VyL2NvbnN1bWVyIGNvbm5lY3Rpb24gaGFzIHN1
+Y2NlZWRlZC4gSSBndWVzcyBpdCBpcyBhIGdvb2QgdGhpbmcKdGhhdCBub2JvZHkgc2VlbSB0byBp
+bXBsZW1lbnQgYW55IG9mIHRoZSBwcm9kdWNlciBjYWxsYmFja3MuCgo+ID4gSW4gdGhlIGNhc2Ug
+b2YgS1ZNL2FybTY0LCB0aGlzIHJlc3VsdHMgaW4gdGhlIGd1ZXN0IGJlaW5nIGZvcmV2ZXIKPiA+
+IHN1c3BlbmRlZCBhbmQgbmV2ZXIgcmVzdW1lZC4gVGhhdCdzIG9idmlvdXNseSBub3QgYW4gYWNj
+ZXB0YWJsZQo+ID4gcmVncmVzc2lvbiwgYXMgdGhlcmUgaXMgYSBudW1iZXIgb2YgYmVuaWduIHJl
+YXNvbnMgZm9yIGEgY29ubmVjdCB0bwo+ID4gZmFpbC4KPiAKPiAKPiBMZXQncyByZXZlcnQgdGhp
+cyBjb21taXQuCgpUaGFua3MsCgoJTS4KCi0tIApXaXRob3V0IGRldmlhdGlvbiBmcm9tIHRoZSBu
+b3JtLCBwcm9ncmVzcyBpcyBub3QgcG9zc2libGUuCl9fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fCmt2bWFybSBtYWlsaW5nIGxpc3QKa3ZtYXJtQGxpc3RzLmNz
+LmNvbHVtYmlhLmVkdQpodHRwczovL2xpc3RzLmNzLmNvbHVtYmlhLmVkdS9tYWlsbWFuL2xpc3Rp
+bmZvL2t2bWFybQo=
