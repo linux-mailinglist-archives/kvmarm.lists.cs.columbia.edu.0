@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 952E9378E26
-	for <lists+kvmarm@lfdr.de>; Mon, 10 May 2021 15:49:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD5E1378E25
+	for <lists+kvmarm@lfdr.de>; Mon, 10 May 2021 15:49:36 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 471604B836;
-	Mon, 10 May 2021 09:49:38 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8A0DB4B796;
+	Mon, 10 May 2021 09:49:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,39 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DMtEWO22HdJO; Mon, 10 May 2021 09:49:37 -0400 (EDT)
+	with ESMTP id tKBLUupFjbp4; Mon, 10 May 2021 09:49:36 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D74EE4B7B5;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BC2374B842;
 	Mon, 10 May 2021 09:49:29 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9FC8A4B721
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3F0CD4B83C
  for <kvmarm@lists.cs.columbia.edu>; Mon, 10 May 2021 09:49:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Yq9lQA-FJSwp for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id oOei39x4BWVI for <kvmarm@lists.cs.columbia.edu>;
  Mon, 10 May 2021 09:49:26 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 33B074B456
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 22F944B6EB
  for <kvmarm@lists.cs.columbia.edu>; Mon, 10 May 2021 09:49:26 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 679676157E;
+ by mail.kernel.org (Postfix) with ESMTPSA id E8CF86157F;
  Mon, 10 May 2021 13:49:25 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1lg6Hj-000Rol-OF; Mon, 10 May 2021 14:49:23 +0100
+ id 1lg6Hk-000Rol-7i; Mon, 10 May 2021 14:49:24 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
  kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v3 8/9] KVM: arm64: timer: Add support for SW-based
- deactivation
-Date: Mon, 10 May 2021 14:48:23 +0100
-Message-Id: <20210510134824.1910399-9-maz@kernel.org>
+Subject: [PATCH v3 9/9] irqchip/apple-aic: Advertise some level of vGICv3
+ compatibility
+Date: Mon, 10 May 2021 14:48:24 +0100
+Message-Id: <20210510134824.1910399-10-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210510134824.1910399-1-maz@kernel.org>
 References: <20210510134824.1910399-1-maz@kernel.org>
@@ -77,160 +77,50 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-In order to deal with the lack of active state, we need to use
-the mask/unmask primitives (after all, the active state is just an
-additional mask on top of the normal one).
+The CPUs in the Apple M1 SoC partially implement a virtual GICv3
+CPU interface, although one that is incapable of HW deactivation
+of interrupts.
 
-To avoid adding a bunch of ugly conditionals in the timer and vgic
-code, let's use a timer-specific irqdomain to deal with the state
-conversion. Yes, this is an unexpected use of irqdomains, but
-there is no reason not to be just as creative as the designers
-of the HW...
-
-This involves overloading the vcpu_affinity, set_irqchip_state
-and eoi callbacks so that the rest of the KVM code can continue
-ignoring the oddities of the underlying platform.
+Advertise the support to KVM.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/arch_timer.c | 100 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 96 insertions(+), 4 deletions(-)
+ drivers/irqchip/irq-apple-aic.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/kvm/arch_timer.c b/arch/arm64/kvm/arch_timer.c
-index 7fa4f446456a..4c24cbb19ba1 100644
---- a/arch/arm64/kvm/arch_timer.c
-+++ b/arch/arm64/kvm/arch_timer.c
-@@ -9,6 +9,7 @@
- #include <linux/kvm_host.h>
- #include <linux/interrupt.h>
- #include <linux/irq.h>
-+#include <linux/irqdomain.h>
- #include <linux/uaccess.h>
- 
- #include <clocksource/arm_arch_timer.h>
-@@ -973,6 +974,77 @@ static int kvm_timer_dying_cpu(unsigned int cpu)
+diff --git a/drivers/irqchip/irq-apple-aic.c b/drivers/irqchip/irq-apple-aic.c
+index c179e27062fd..a44370c018e2 100644
+--- a/drivers/irqchip/irq-apple-aic.c
++++ b/drivers/irqchip/irq-apple-aic.c
+@@ -50,6 +50,7 @@
+ #include <linux/cpuhotplug.h>
+ #include <linux/io.h>
+ #include <linux/irqchip.h>
++#include <linux/irqchip/arm-vgic-info.h>
+ #include <linux/irqdomain.h>
+ #include <linux/limits.h>
+ #include <linux/of_address.h>
+@@ -787,6 +788,11 @@ static int aic_init_cpu(unsigned int cpu)
  	return 0;
  }
  
-+static int timer_irq_set_vcpu_affinity(struct irq_data *d, void *vcpu)
-+{
-+	if (vcpu)
-+		irqd_set_forwarded_to_vcpu(d);
-+	else
-+		irqd_clr_forwarded_to_vcpu(d);
-+
-+	return 0;
-+}
-+
-+static int timer_irq_set_irqchip_state(struct irq_data *d,
-+				       enum irqchip_irq_state which, bool val)
-+{
-+	if (which != IRQCHIP_STATE_ACTIVE || !irqd_is_forwarded_to_vcpu(d))
-+		return irq_chip_set_parent_state(d, which, val);
-+
-+	if (val)
-+		irq_chip_mask_parent(d);
-+	else
-+		irq_chip_unmask_parent(d);
-+
-+	return 0;
-+}
-+
-+static void timer_irq_eoi(struct irq_data *d)
-+{
-+	if (!irqd_is_forwarded_to_vcpu(d))
-+		irq_chip_eoi_parent(d);
-+}
-+
-+static void timer_irq_ack(struct irq_data *d)
-+{
-+	d = d->parent_data;
-+	if (d->chip->irq_ack)
-+		d->chip->irq_ack(d);
-+}
-+
-+static struct irq_chip timer_chip = {
-+	.name			= "KVM",
-+	.irq_ack		= timer_irq_ack,
-+	.irq_mask		= irq_chip_mask_parent,
-+	.irq_unmask		= irq_chip_unmask_parent,
-+	.irq_eoi		= timer_irq_eoi,
-+	.irq_set_type		= irq_chip_set_type_parent,
-+	.irq_set_vcpu_affinity	= timer_irq_set_vcpu_affinity,
-+	.irq_set_irqchip_state	= timer_irq_set_irqchip_state,
++static struct gic_kvm_info vgic_info __initdata = {
++	.type			= GIC_V3,
++	.no_hw_deactivation	= true,
 +};
 +
-+static int timer_irq_domain_alloc(struct irq_domain *domain, unsigned int virq,
-+				  unsigned int nr_irqs, void *arg)
-+{
-+	irq_hw_number_t hwirq = (uintptr_t)arg;
-+
-+	return irq_domain_set_hwirq_and_chip(domain, virq, hwirq,
-+					     &timer_chip, NULL);
-+}
-+
-+static void timer_irq_domain_free(struct irq_domain *domain, unsigned int virq,
-+				  unsigned int nr_irqs)
-+{
-+}
-+
-+static const struct irq_domain_ops timer_domain_ops = {
-+	.alloc	= timer_irq_domain_alloc,
-+	.free	= timer_irq_domain_free,
-+};
-+
-+static struct irq_ops arch_timer_irq_ops = {
-+	.get_input_level = kvm_arch_timer_get_input_level,
-+};
-+
- static void kvm_irq_fixup_flags(unsigned int virq, u32 *flags)
+ static int __init aic_of_ic_init(struct device_node *node, struct device_node *parent)
  {
- 	*flags = irq_get_trigger_type(virq);
-@@ -998,9 +1070,33 @@ static int kvm_irq_init(struct arch_timer_kvm_info *info)
- 	host_vtimer_irq = info->virtual_irq;
- 	kvm_irq_fixup_flags(host_vtimer_irq, &host_vtimer_irq_flags);
+ 	int i;
+@@ -843,6 +849,8 @@ static int __init aic_of_ic_init(struct device_node *node, struct device_node *p
+ 			  "irqchip/apple-aic/ipi:starting",
+ 			  aic_init_cpu, NULL);
  
-+	if (kvm_vgic_global_state.no_hw_deactivation) {
-+		fwnode = irq_domain_alloc_named_fwnode("kvm-timer");
-+		if (!fwnode)
-+			return -ENOMEM;
++	vgic_set_kvm_info(&vgic_info);
 +
-+		/* Assume both vtimer and ptimer in the same parent */
-+		data = irq_get_irq_data(host_vtimer_irq);
-+		domain = irq_domain_create_hierarchy(data->domain, 0,
-+						     NR_KVM_TIMERS, fwnode,
-+						     &timer_domain_ops, NULL);
-+		if (!domain) {
-+			irq_domain_free_fwnode(fwnode);
-+			return -ENOMEM;
-+		}
-+
-+		arch_timer_irq_ops.flags |= VGIC_IRQ_SW_RESAMPLE;
-+		WARN_ON(irq_domain_push_irq(domain, host_vtimer_irq,
-+					    (void *)TIMER_VTIMER));
-+	}
-+
- 	if (info->physical_irq > 0) {
- 		host_ptimer_irq = info->physical_irq;
- 		kvm_irq_fixup_flags(host_ptimer_irq, &host_ptimer_irq_flags);
-+
-+		if (domain)
-+			WARN_ON(irq_domain_push_irq(domain, host_ptimer_irq,
-+						    (void *)TIMER_PTIMER));
- 	}
+ 	pr_info("Initialized with %d IRQs, %d FIQs, %d vIPIs\n",
+ 		irqc->nr_hw, AIC_NR_FIQ, AIC_NR_SWIPI);
  
- 	return 0;
-@@ -1129,10 +1225,6 @@ bool kvm_arch_timer_get_input_level(int vintid)
- 	return kvm_timer_should_fire(timer);
- }
- 
--static struct irq_ops arch_timer_irq_ops = {
--	.get_input_level = kvm_arch_timer_get_input_level,
--};
--
- int kvm_timer_enable(struct kvm_vcpu *vcpu)
- {
- 	struct arch_timer_cpu *timer = vcpu_timer(vcpu);
 -- 
 2.29.2
 
