@@ -2,55 +2,63 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C0454379396
-	for <lists+kvmarm@lfdr.de>; Mon, 10 May 2021 18:19:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 198CB3794B8
+	for <lists+kvmarm@lfdr.de>; Mon, 10 May 2021 18:59:49 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 232BB4B441;
-	Mon, 10 May 2021 12:19:17 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B49854B6C7;
+	Mon, 10 May 2021 12:59:48 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LAStjHYQclVJ; Mon, 10 May 2021 12:19:17 -0400 (EDT)
+	with ESMTP id 6aSDTYVNj4kn; Mon, 10 May 2021 12:59:47 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 94FEF4B41F;
-	Mon, 10 May 2021 12:19:15 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 795114B6F9;
+	Mon, 10 May 2021 12:59:45 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id F16954B413
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 May 2021 12:19:13 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1C6384B41D
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 10 May 2021 12:59:44 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id M+HRiD8uxSKn for <kvmarm@lists.cs.columbia.edu>;
- Mon, 10 May 2021 12:19:12 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6A2DB4B410
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 May 2021 12:19:12 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C6F31168F;
- Mon, 10 May 2021 09:19:11 -0700 (PDT)
-Received: from C02TD0UTHF1T.local (unknown [10.57.4.9])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 063FE3F73B;
- Mon, 10 May 2021 09:19:09 -0700 (PDT)
-Date: Mon, 10 May 2021 17:19:07 +0100
-From: Mark Rutland <mark.rutland@arm.com>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v3 3/9] KVM: arm64: vgic: Be tolerant to the lack of
- maintenance interrupt
-Message-ID: <20210510161907.GD92897@C02TD0UTHF1T.local>
-References: <20210510134824.1910399-1-maz@kernel.org>
- <20210510134824.1910399-4-maz@kernel.org>
+ with ESMTP id 8PM4hT6xmpwz for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 10 May 2021 12:59:42 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 460C74B25E
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 10 May 2021 12:59:42 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 079E3611CE;
+ Mon, 10 May 2021 16:59:41 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1lg9Fq-000Uqg-Qy; Mon, 10 May 2021 17:59:39 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
+Subject: [PATCH v4 00/66] KVM: arm64: ARMv8.3/8.4 Nested Virtualization support
+Date: Mon, 10 May 2021 17:58:14 +0100
+Message-Id: <20210510165920.1913477-1-maz@kernel.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20210510134824.1910399-4-maz@kernel.org>
-Cc: kvm@vger.kernel.org, kernel-team@android.com,
- Hector Martin <marcan@marcan.st>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, andre.przywara@arm.com,
+ christoffer.dall@arm.com, jintack@cs.columbia.edu, haibo.xu@linaro.org,
+ james.morse@arm.com, suzuki.poulose@arm.com, alexandru.elisei@arm.com,
+ kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com, Andre Przywara <andre.przywara@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -67,75 +75,163 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, May 10, 2021 at 02:48:18PM +0100, Marc Zyngier wrote:
-> As it turns out, not all the interrupt controllers are able to
-> expose a vGIC maintenance interrupt as a distrete signal.
-> And to be fair, it doesn't really matter as all we require is
-> for *something* to kick us out of guest mode out way or another.
-> 
-> On systems that do not expose a maintenance interrupt as such,
-> there are two outcomes:
-> 
-> - either the virtual CPUIF does generate an interrupt, and
->   by the time we are back to the host the interrupt will have long
->   been disabled (as we set ICH_HCR_EL2.EN to 0 on exit). In this case,
->   interrupt latency is as good as it gets.
-> 
-> - or some other event (physical timer) will take us out of the guest
->   anyway, and the only drawback is a bad interrupt latency.
+Here the bi-annual drop of the KVM/arm64 NV support code.
 
-IIRC we won't have a a guaranteed schedular tick for NO_HZ_FULL, so in
-that case we'll either need to set a period software maintenance
-interrupt, or reject this combination at runtime (either when trying to
-isolate the dynticks CPUs, or when trying to create a VM).
+Not a lot has changed since [1], except for a discovery mechanism for
+the EL2 support, some tidying up in the idreg emulation, dropping RMR
+support, and a rebase on top of 5.13-rc1.
 
-Otherwise, it's very likely that something will take us out of the guest
-from time to time, but we won't have a strict guarantee (e.g. if all
-guest memory is pinned).
+As usual, blame me for any bug, and nobody else.
 
-Thanks,
-Mark.
+It is still massively painful to run on the FVP, but if you have a
+Neoverse V1 or N2 system that is collecting dust, I have the right
+stuff to keep it busy!
 
-> 
-> So let's be tolerant to the lack of maintenance interrupt, and just let
-> the user know that their mileage may vary...
-> 
-> Signed-off-by: Marc Zyngier <maz@kernel.org>
-> ---
->  arch/arm64/kvm/vgic/vgic-init.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/arch/arm64/kvm/vgic/vgic-init.c b/arch/arm64/kvm/vgic/vgic-init.c
-> index 2fdb65529594..9fd23f32aa54 100644
-> --- a/arch/arm64/kvm/vgic/vgic-init.c
-> +++ b/arch/arm64/kvm/vgic/vgic-init.c
-> @@ -524,11 +524,6 @@ int kvm_vgic_hyp_init(void)
->  	if (!gic_kvm_info)
->  		return -ENODEV;
->  
-> -	if (!gic_kvm_info->maint_irq) {
-> -		kvm_err("No vgic maintenance irq\n");
-> -		return -ENXIO;
-> -	}
-> -
->  	switch (gic_kvm_info->type) {
->  	case GIC_V2:
->  		ret = vgic_v2_probe(gic_kvm_info);
-> @@ -552,6 +547,11 @@ int kvm_vgic_hyp_init(void)
->  	if (ret)
->  		return ret;
->  
-> +	if (!kvm_vgic_global_state.maint_irq) {
-> +		kvm_err("No maintenance interrupt available, fingers crossed...\n");
-> +		return 0;
-> +	}
-> +
->  	ret = request_percpu_irq(kvm_vgic_global_state.maint_irq,
->  				 vgic_maintenance_handler,
->  				 "vgic", kvm_get_running_vcpus());
-> -- 
-> 2.29.2
-> 
+	M.
+
+[1] https://lore.kernel.org/r/20201210160002.1407373-1-maz@kernel.org
+
+Andre Przywara (1):
+  KVM: arm64: nv: vgic: Allow userland to set VGIC maintenance IRQ
+
+Christoffer Dall (15):
+  KVM: arm64: nv: Introduce nested virtualization VCPU feature
+  KVM: arm64: nv: Reset VCPU to EL2 registers if VCPU nested virt is set
+  KVM: arm64: nv: Allow userspace to set PSR_MODE_EL2x
+  KVM: arm64: nv: Add nested virt VCPU primitives for vEL2 VCPU state
+  KVM: arm64: nv: Reset VMPIDR_EL2 and VPIDR_EL2 to sane values
+  KVM: arm64: nv: Handle trapped ERET from virtual EL2
+  KVM: arm64: nv: Emulate PSTATE.M for a guest hypervisor
+  KVM: arm64: nv: Trap EL1 VM register accesses in virtual EL2
+  KVM: arm64: nv: Only toggle cache for virtual EL2 when SCTLR_EL2
+    changes
+  KVM: arm64: nv: Implement nested Stage-2 page table walk logic
+  KVM: arm64: nv: Unmap/flush shadow stage 2 page tables
+  KVM: arm64: nv: arch_timer: Support hyp timer emulation
+  KVM: arm64: nv: vgic: Emulate the HW bit in software
+  KVM: arm64: nv: Add nested GICv3 tracepoints
+  KVM: arm64: nv: Sync nested timer state with ARMv8.4
+
+Jintack Lim (18):
+  arm64: Add ARM64_HAS_NESTED_VIRT cpufeature
+  KVM: arm64: nv: Handle HCR_EL2.NV system register traps
+  KVM: arm64: nv: Support virtual EL2 exceptions
+  KVM: arm64: nv: Inject HVC exceptions to the virtual EL2
+  KVM: arm64: nv: Trap SPSR_EL1, ELR_EL1 and VBAR_EL1 from virtual EL2
+  KVM: arm64: nv: Trap CPACR_EL1 access in virtual EL2
+  KVM: arm64: nv: Handle PSCI call via smc from the guest
+  KVM: arm64: nv: Respect virtual HCR_EL2.TWX setting
+  KVM: arm64: nv: Respect virtual CPTR_EL2.{TFP,FPEN} settings
+  KVM: arm64: nv: Respect the virtual HCR_EL2.NV bit setting
+  KVM: arm64: nv: Respect virtual HCR_EL2.TVM and TRVM settings
+  KVM: arm64: nv: Respect the virtual HCR_EL2.NV1 bit setting
+  KVM: arm64: nv: Emulate EL12 register accesses from the virtual EL2
+  KVM: arm64: nv: Configure HCR_EL2 for nested virtualization
+  KVM: arm64: nv: Introduce sys_reg_desc.forward_trap
+  KVM: arm64: nv: Set a handler for the system instruction traps
+  KVM: arm64: nv: Trap and emulate AT instructions from virtual EL2
+  KVM: arm64: nv: Nested GICv3 Support
+
+Marc Zyngier (32):
+  KVM: arm64: nv: Add EL2 system registers to vcpu context
+  KVM: arm64: nv: Add non-VHE-EL2->EL1 translation helpers
+  KVM: arm64: nv: Handle virtual EL2 registers in
+    vcpu_read/write_sys_reg()
+  KVM: arm64: nv: Handle SPSR_EL2 specially
+  KVM: arm64: nv: Handle HCR_EL2.E2H specially
+  KVM: arm64: nv: Save/Restore vEL2 sysregs
+  KVM: arm64: nv: Forward debug traps to the nested guest
+  KVM: arm64: nv: Filter out unsupported features from ID regs
+  KVM: arm64: nv: Hide RAS from nested guests
+  KVM: arm64: nv: Support multiple nested Stage-2 mmu structures
+  KVM: arm64: nv: Handle shadow stage 2 page faults
+  KVM: arm64: nv: Restrict S2 RD/WR permissions to match the guest's
+  KVM: arm64: nv: Trap and emulate TLBI instructions from virtual EL2
+  KVM: arm64: nv: Fold guest's HCR_EL2 configuration into the host's
+  KVM: arm64: nv: Add handling of EL2-specific timer registers
+  KVM: arm64: nv: Load timer before the GIC
+  KVM: arm64: nv: Don't load the GICv4 context on entering a nested
+    guest
+  KVM: arm64: nv: Implement maintenance interrupt forwarding
+  KVM: arm64: nv: Allow userspace to request KVM_ARM_VCPU_NESTED_VIRT
+  KVM: arm64: nv: Add handling of ARMv8.4-TTL TLB invalidation
+  KVM: arm64: nv: Invalidate TLBs based on shadow S2 TTL-like
+    information
+  KVM: arm64: Allow populating S2 SW bits
+  KVM: arm64: nv: Tag shadow S2 entries with nested level
+  KVM: arm64: nv: Add include containing the VNCR_EL2 offsets
+  KVM: arm64: Map VNCR-capable registers to a separate page
+  KVM: arm64: nv: Move nested vgic state into the sysreg file
+  KVM: arm64: Add ARMv8.4 Enhanced Nested Virt cpufeature
+  KVM: arm64: nv: Synchronize PSTATE early on exit
+  KVM: arm64: nv: Allocate VNCR page when required
+  KVM: arm64: nv: Enable ARMv8.4-NV support
+  KVM: arm64: nv: Fast-track 'InHost' exception returns
+  KVM: arm64: nv: Fast-track EL1 TLBIs for VHE guests
+
+ .../admin-guide/kernel-parameters.txt         |    4 +
+ .../virt/kvm/devices/arm-vgic-v3.rst          |   12 +-
+ arch/arm64/include/asm/cpucaps.h              |    2 +
+ arch/arm64/include/asm/esr.h                  |    6 +
+ arch/arm64/include/asm/kvm_arm.h              |   28 +-
+ arch/arm64/include/asm/kvm_asm.h              |    4 +
+ arch/arm64/include/asm/kvm_emulate.h          |  145 +-
+ arch/arm64/include/asm/kvm_host.h             |  174 ++-
+ arch/arm64/include/asm/kvm_hyp.h              |    2 +
+ arch/arm64/include/asm/kvm_mmu.h              |   18 +-
+ arch/arm64/include/asm/kvm_nested.h           |  152 +++
+ arch/arm64/include/asm/kvm_pgtable.h          |   10 +
+ arch/arm64/include/asm/sysreg.h               |  105 +-
+ arch/arm64/include/asm/vncr_mapping.h         |   73 +
+ arch/arm64/include/uapi/asm/kvm.h             |    2 +
+ arch/arm64/kernel/cpufeature.c                |   35 +
+ arch/arm64/kvm/Makefile                       |    4 +-
+ arch/arm64/kvm/arch_timer.c                   |  189 ++-
+ arch/arm64/kvm/arm.c                          |   37 +-
+ arch/arm64/kvm/at.c                           |  231 ++++
+ arch/arm64/kvm/emulate-nested.c               |  186 +++
+ arch/arm64/kvm/guest.c                        |    6 +
+ arch/arm64/kvm/handle_exit.c                  |   81 +-
+ arch/arm64/kvm/hyp/exception.c                |   45 +-
+ arch/arm64/kvm/hyp/include/hyp/switch.h       |   28 +-
+ arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h    |   28 +-
+ arch/arm64/kvm/hyp/nvhe/switch.c              |   10 +-
+ arch/arm64/kvm/hyp/nvhe/sysreg-sr.c           |    2 +-
+ arch/arm64/kvm/hyp/pgtable.c                  |    6 +
+ arch/arm64/kvm/hyp/vgic-v3-sr.c               |    2 +-
+ arch/arm64/kvm/hyp/vhe/switch.c               |  207 ++-
+ arch/arm64/kvm/hyp/vhe/sysreg-sr.c            |  125 +-
+ arch/arm64/kvm/hyp/vhe/tlb.c                  |   83 ++
+ arch/arm64/kvm/inject_fault.c                 |   63 +-
+ arch/arm64/kvm/mmu.c                          |  191 ++-
+ arch/arm64/kvm/nested.c                       |  910 ++++++++++++
+ arch/arm64/kvm/reset.c                        |   14 +-
+ arch/arm64/kvm/sys_regs.c                     | 1215 ++++++++++++++++-
+ arch/arm64/kvm/sys_regs.h                     |    8 +
+ arch/arm64/kvm/trace_arm.h                    |   65 +-
+ arch/arm64/kvm/vgic/vgic-init.c               |   30 +
+ arch/arm64/kvm/vgic/vgic-kvm-device.c         |   22 +
+ arch/arm64/kvm/vgic/vgic-nested-trace.h       |  137 ++
+ arch/arm64/kvm/vgic/vgic-v3-nested.c          |  240 ++++
+ arch/arm64/kvm/vgic/vgic-v3.c                 |   39 +-
+ arch/arm64/kvm/vgic/vgic.c                    |   44 +
+ arch/arm64/kvm/vgic/vgic.h                    |   10 +
+ include/kvm/arm_arch_timer.h                  |    7 +
+ include/kvm/arm_vgic.h                        |   16 +
+ include/uapi/linux/kvm.h                      |    1 +
+ tools/arch/arm/include/uapi/asm/kvm.h         |    1 +
+ 51 files changed, 4893 insertions(+), 162 deletions(-)
+ create mode 100644 arch/arm64/include/asm/kvm_nested.h
+ create mode 100644 arch/arm64/include/asm/vncr_mapping.h
+ create mode 100644 arch/arm64/kvm/at.c
+ create mode 100644 arch/arm64/kvm/emulate-nested.c
+ create mode 100644 arch/arm64/kvm/nested.c
+ create mode 100644 arch/arm64/kvm/vgic/vgic-nested-trace.h
+ create mode 100644 arch/arm64/kvm/vgic/vgic-v3-nested.c
+
+-- 
+2.29.2
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
