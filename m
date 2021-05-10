@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D730377C75
-	for <lists+kvmarm@lfdr.de>; Mon, 10 May 2021 08:40:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 89D21377D71
+	for <lists+kvmarm@lfdr.de>; Mon, 10 May 2021 09:51:16 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5ED294B315;
-	Mon, 10 May 2021 02:40:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 16D614B6F3;
+	Mon, 10 May 2021 03:51:16 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.209
@@ -18,79 +18,86 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id b60qfEL-KUO9; Mon, 10 May 2021 02:40:58 -0400 (EDT)
+	with ESMTP id fWVavy1bxqdB; Mon, 10 May 2021 03:51:15 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 124AB4B2A0;
-	Mon, 10 May 2021 02:40:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E3B934B337;
+	Mon, 10 May 2021 03:51:14 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D6B6C4B276
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 May 2021 02:40:55 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C4A714B36A
+ for <kvmarm@lists.cs.columbia.edu>; Sun,  9 May 2021 22:43:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id MEVVdGYjHuVR for <kvmarm@lists.cs.columbia.edu>;
- Mon, 10 May 2021 02:40:54 -0400 (EDT)
+ with ESMTP id Vni7u3EOCvXW for <kvmarm@lists.cs.columbia.edu>;
+ Sun,  9 May 2021 22:43:41 -0400 (EDT)
 Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C357A4B26C
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 May 2021 02:40:54 -0400 (EDT)
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EED524B369
+ for <kvmarm@lists.cs.columbia.edu>; Sun,  9 May 2021 22:43:40 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1620628854;
+ s=mimecast20190719; t=1620614620;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AhkvvC0oMUJmsEQCW6Q1nd0/KwtGO4qGTTgVWNfA7vM=;
- b=Igt4ggngxHsZbauKxw5vh7cAinzcxm62D2vZwqr0uoIV54LBWzrgjWXnP9rv6NudvYw7rA
- rfLi1+waPi4eMP3iUPXcjbgW+cBKYBHFTW+98aJpMNRSkaZ/zcYFJOPBoZCRIyKDjHP1w3
- u0fPJw0W9wbR/3vHxAbhIWULqT2o2Yo=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-39-ukc9ir8fOIaFkiZjK0lK0w-1; Mon, 10 May 2021 02:40:52 -0400
-X-MC-Unique: ukc9ir8fOIaFkiZjK0lK0w-1
-Received: by mail-ed1-f69.google.com with SMTP id
- w20-20020aa7dcd40000b02903886b9b0013so8531079edu.22
- for <kvmarm@lists.cs.columbia.edu>; Sun, 09 May 2021 23:40:52 -0700 (PDT)
+ bh=mulqbmYCJzxkz4O6WDiZBqOQpSapir8tgrTEx7eXEf0=;
+ b=Axa8yYLqG9hpbZairLIdSziPh7fOqHaoghp9oEcTCEZ3EaoVoVMMDToXDzTFShwA6omjK2
+ N9i6+/uMdil5RtrYRqPFMJH7wB+S4y07Uqqv3LNRjefR7yWWRKbMIWQnLLzvAWeDOc911V
+ tf7rwGp4CT8CnRvj5anbqfKJmm++dyg=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-392-f_ksaRwxOgeaNCXaTL-WVw-1; Sun, 09 May 2021 22:43:39 -0400
+X-MC-Unique: f_ksaRwxOgeaNCXaTL-WVw-1
+Received: by mail-pj1-f71.google.com with SMTP id
+ u13-20020a17090a3fcdb0290155c6507e67so10002864pjm.6
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 09 May 2021 19:43:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=AhkvvC0oMUJmsEQCW6Q1nd0/KwtGO4qGTTgVWNfA7vM=;
- b=NF1nXoWLu3CDLnZALaMRKbuHwHOEigU7NMkoOzhFRljHm/5oTXiFh9N1HkO3xnjwat
- kngEPFlov6Xaa6s4w51hKhY6afHtIxprstahtioa4j1HnVG/kDPWjojFMxnXCd5QWu5X
- tFJUMVbvz5LPSzvGzLVNoonlUWeR7w1hra43ellxgCLZD9EGtW1PERBLUR5KQeN7gTIp
- +QY4dO6uKECTAJvaNYDcZznyoLaCxjQPNxmhBcnx8fn+WhoWkQXVC9pZ/SZVgCR6peOL
- Eer0WPo4v7rF64GwiKfUmCknkoJgezAWF0ojGqMV/r9+SH2EdplA936c6/E2cx6BHGMY
- dxQQ==
-X-Gm-Message-State: AOAM533Im6mzjhAfi8VmH5P70m/lvYVQVVhd7oHdw0yzaK5TfqmISLJk
- ChyETDkXyKsyOpZrTmn5ACKerY7wRVfmPrK2a1AlL8gDr3qnsbccygBfvkwxC2GjdWed3dpD/JH
- X241yJvowb5OqNi3M3O6nxVCh
-X-Received: by 2002:a05:6402:3585:: with SMTP id
- y5mr27515702edc.233.1620628851386; 
- Sun, 09 May 2021 23:40:51 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJy79W7vGg+HWZl+58lL8SGrEdJrYPWGAcRD5CxRhKSms3qnClb4ZaME1e4VxVzhNQ90K2UDtw==
-X-Received: by 2002:a05:6402:3585:: with SMTP id
- y5mr27515677edc.233.1620628851164; 
- Sun, 09 May 2021 23:40:51 -0700 (PDT)
-Received: from gator (cst2-174-132.cust.vodafone.cz. [31.30.174.132])
- by smtp.gmail.com with ESMTPSA id g11sm2970883edt.85.2021.05.09.23.40.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 09 May 2021 23:40:50 -0700 (PDT)
-Date: Mon, 10 May 2021 08:40:48 +0200
-From: Andrew Jones <drjones@redhat.com>
-To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
-Subject: Re: [PATCH 4/6] KVM: arm64: selftests: get-reg-list: Provide config
- selection option
-Message-ID: <20210510064048.m7ezciiratbesqjj@gator>
-References: <20210507200416.198055-1-drjones@redhat.com>
- <20210507200416.198055-5-drjones@redhat.com>
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=mulqbmYCJzxkz4O6WDiZBqOQpSapir8tgrTEx7eXEf0=;
+ b=OEj9UGWra6dc3N3E1zI07KjNt0aAp5AXUF/1GXur0C873PMjBCsjUA5/X3wopzp9oa
+ GS/Ig+vMiT5Eaqdnscgf5rml5GK6CanVTlAwxRk+LTyTZD5+MU2Qew6/ZQHt7IjkacIn
+ Y2fcjWRylnGjDKnGXSwFTzaUEfpCPC405RMbaKYP44+Elldxzh87tbcGjt+Xsv1oDJSK
+ xV0nFmQB/ka+Yu2FnBhyHJ5bl+Lv5RcYGegm9xcQjQrCD8a3/0mFYkSOf2z7Gc7W77XE
+ V1bltpoaB0RUKCu6pEgB6eKTET7Qpdc60T+JWnCk6445mZjYQbVVZ4QnIj+q9TODKBka
+ rlhA==
+X-Gm-Message-State: AOAM532T/U6B66WBiUJdYB7j0bWcCj5OOPnikhutPvOxCi42MuOMQcxK
+ V26rE/5BlXK7vLsB9R5Yzk3rV/HLqW0WFLeTZhJ5KiETVL+fIHIPiH8XsmeSUh4jnBU6YKb4GkX
+ 0jnfEiCV0mHdWk1fZ4S0Q8dei
+X-Received: by 2002:a17:90b:31cc:: with SMTP id
+ jv12mr25766747pjb.33.1620614617982; 
+ Sun, 09 May 2021 19:43:37 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJybC1NO/4Q9cZqXH0xZRhpzh1PaT5pm26/xrlPVsxZSmPdWLQ9Q2jknen5avHzgs4cCcc2RFA==
+X-Received: by 2002:a17:90b:31cc:: with SMTP id
+ jv12mr25766727pjb.33.1620614617731; 
+ Sun, 09 May 2021 19:43:37 -0700 (PDT)
+Received: from wangxiaodeMacBook-Air.local ([209.132.188.80])
+ by smtp.gmail.com with ESMTPSA id c13sm11716971pjc.43.2021.05.09.19.43.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 09 May 2021 19:43:34 -0700 (PDT)
+Subject: Re: [PATCH] Revert "irqbypass: do not start cons/prod when failed
+ connect"
+To: Zhu Lingshan <lingshan.zhu@intel.com>, mst@redhat.com, maz@kernel.org,
+ alex.williamson@redhat.com
+References: <20210508071152.722425-1-lingshan.zhu@intel.com>
+From: Jason Wang <jasowang@redhat.com>
+Message-ID: <b309c02d-9570-6400-9a0c-63030aed7ff7@redhat.com>
+Date: Mon, 10 May 2021 10:43:23 +0800
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.10.1
 MIME-Version: 1.0
-In-Reply-To: <20210507200416.198055-5-drjones@redhat.com>
+In-Reply-To: <20210508071152.722425-1-lingshan.zhu@intel.com>
 Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=drjones@redhat.com
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=jasowang@redhat.com
 X-Mimecast-Spam-Score: 0
 X-Mimecast-Originator: redhat.com
-Content-Disposition: inline
-Cc: maz@kernel.org, pbonzini@redhat.com
+Content-Language: en-US
+X-Mailman-Approved-At: Mon, 10 May 2021 03:51:13 -0400
+Cc: stable@vger.kernel.org, cohuck@redhat.com,
+ linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -102,68 +109,36 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="gbk"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, May 07, 2021 at 10:04:14PM +0200, Andrew Jones wrote:
-> Add a new command line option that allows the user to select a specific
-> configuration, e.g. --config:sve will give the sve config. Also provide
-> help text and the --help/-h options.
-> 
-> Signed-off-by: Andrew Jones <drjones@redhat.com>
-> ---
->  .../selftests/kvm/aarch64/get-reg-list.c      | 76 +++++++++++++++++--
->  1 file changed, 70 insertions(+), 6 deletions(-)
-> 
-> diff --git a/tools/testing/selftests/kvm/aarch64/get-reg-list.c b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
-> index 68d3be86d490..f5e122b6b257 100644
-> --- a/tools/testing/selftests/kvm/aarch64/get-reg-list.c
-> +++ b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
-> @@ -38,6 +38,17 @@
->  #define reg_list_sve() (false)
->  #endif
->  
-> +enum {
-> +	VREGS,
-> +	SVE,
-> +};
-> +
-> +static char * const vcpu_config_names[] = {
-> +	[VREGS] = "vregs",
-> +	[SVE] = "sve",
-> +	NULL
-> +};
-> +
->  static struct kvm_reg_list *reg_list;
->  static __u64 *blessed_reg, blessed_n;
->  
-> @@ -502,34 +513,87 @@ static void run_test(struct vcpu_config *c)
->  	kvm_vm_free(vm);
->  }
->  
-> +static void help(void)
-> +{
-> +	char * const *n;
-> +
-> +	printf(
-> +	"\n"
-> +	"usage: get-reg-list [--config:<selection>[,<selection>...]] [--list] [--list-filtered] [--core-reg-fixup]\n\n"
-> +	" --config:<selection>[,<selection>...] Used to select a specific vcpu configuration for the test/listing\n"
-
-I just realized I left this <selection>[,<selection>...] help text and
-some other kruft, like the vcpu_config_names[] array, from a different
-design I scrapped. That design, which used getsubopt(), was more
-complicated than it was worth.
-
-I'll send a v2 to get this cleaned up, but I'll wait a day or so first
-for more comments.
-
-Thanks,
-drew
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+CtTaIDIwMjEvNS84IM/CzuczOjExLCBaaHUgTGluZ3NoYW4g0LS1wDoKPiBUaGlzIHJldmVydHMg
+Y29tbWl0IGE5NzlhNmFhMDA5ZjNjOTk2ODk0MzJlMGNkYjU0MDJhNDQ2M2ZiODguCj4KPiBUaGUg
+cmV2ZXJ0ZWQgY29tbWl0IG1heSBjYXVzZSBWTSBmcmVlemUgb24gYXJtNjQgcGxhdGZvcm0uCj4g
+QmVjYXVzZSBvbiBhcm02NCBwbGF0Zm9ybSwgc3RvcCBhIGNvbnN1bWVyIHdpbGwgc3VzcGVuZCB0
+aGUgVk0sCj4gdGhlIFZNIHdpbGwgZnJlZXplIHdpdGhvdXQgYSBzdGFydCBjb25zdW1lcgo+Cj4g
+U2lnbmVkLW9mZi1ieTogWmh1IExpbmdzaGFuIDxsaW5nc2hhbi56aHVAaW50ZWwuY29tPgoKCkFj
+a2VkLWJ5OiBKYXNvbiBXYW5nIDxqYXNvd2FuZ0ByZWRoYXQuY29tPgoKUGxlYXNlIHJlc3VibWl0
+IHdpdGggdGhlIGZvcm1hbCBwcm9jZXNzIG9mIHN0YWJsZSAoc3RhYmxlLWtlcm5lbC1ydWxlcy5y
+c3QpLgoKVGhhbmtzCgoKPiAtLS0KPiAgIHZpcnQvbGliL2lycWJ5cGFzcy5jIHwgMTYgKysrKysr
+LS0tLS0tLS0tLQo+ICAgMSBmaWxlIGNoYW5nZWQsIDYgaW5zZXJ0aW9ucygrKSwgMTAgZGVsZXRp
+b25zKC0pCj4KPiBkaWZmIC0tZ2l0IGEvdmlydC9saWIvaXJxYnlwYXNzLmMgYi92aXJ0L2xpYi9p
+cnFieXBhc3MuYwo+IGluZGV4IGM5YmIzOTU3ZjU4YS4uMjhmZGE0MmU0NzFiIDEwMDY0NAo+IC0t
+LSBhL3ZpcnQvbGliL2lycWJ5cGFzcy5jCj4gKysrIGIvdmlydC9saWIvaXJxYnlwYXNzLmMKPiBA
+QCAtNDAsMjEgKzQwLDE3IEBAIHN0YXRpYyBpbnQgX19jb25uZWN0KHN0cnVjdCBpcnFfYnlwYXNz
+X3Byb2R1Y2VyICpwcm9kLAo+ICAgCWlmIChwcm9kLT5hZGRfY29uc3VtZXIpCj4gICAJCXJldCA9
+IHByb2QtPmFkZF9jb25zdW1lcihwcm9kLCBjb25zKTsKPiAgIAo+IC0JaWYgKHJldCkKPiAtCQln
+b3RvIGVycl9hZGRfY29uc3VtZXI7Cj4gLQo+IC0JcmV0ID0gY29ucy0+YWRkX3Byb2R1Y2VyKGNv
+bnMsIHByb2QpOwo+IC0JaWYgKHJldCkKPiAtCQlnb3RvIGVycl9hZGRfcHJvZHVjZXI7Cj4gKwlp
+ZiAoIXJldCkgewo+ICsJCXJldCA9IGNvbnMtPmFkZF9wcm9kdWNlcihjb25zLCBwcm9kKTsKPiAr
+CQlpZiAocmV0ICYmIHByb2QtPmRlbF9jb25zdW1lcikKPiArCQkJcHJvZC0+ZGVsX2NvbnN1bWVy
+KHByb2QsIGNvbnMpOwo+ICsJfQo+ICAgCj4gICAJaWYgKGNvbnMtPnN0YXJ0KQo+ICAgCQljb25z
+LT5zdGFydChjb25zKTsKPiAgIAlpZiAocHJvZC0+c3RhcnQpCj4gICAJCXByb2QtPnN0YXJ0KHBy
+b2QpOwo+IC1lcnJfYWRkX3Byb2R1Y2VyOgo+IC0JaWYgKHByb2QtPmRlbF9jb25zdW1lcikKPiAt
+CQlwcm9kLT5kZWxfY29uc3VtZXIocHJvZCwgY29ucyk7Cj4gLWVycl9hZGRfY29uc3VtZXI6Cj4g
+Kwo+ICAgCXJldHVybiByZXQ7Cj4gICB9Cj4gICAKCl9fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fCmt2bWFybSBtYWlsaW5nIGxpc3QKa3ZtYXJtQGxpc3RzLmNz
+LmNvbHVtYmlhLmVkdQpodHRwczovL2xpc3RzLmNzLmNvbHVtYmlhLmVkdS9tYWlsbWFuL2xpc3Rp
+bmZvL2t2bWFybQo=
