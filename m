@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 527CE3795D7
-	for <lists+kvmarm@lfdr.de>; Mon, 10 May 2021 19:29:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 510C03795D0
+	for <lists+kvmarm@lfdr.de>; Mon, 10 May 2021 19:29:01 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 029FE4B8AB;
-	Mon, 10 May 2021 13:29:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EF6694B871;
+	Mon, 10 May 2021 13:29:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,38 +15,39 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id B3vwMFl4+w6j; Mon, 10 May 2021 13:29:10 -0400 (EDT)
+	with ESMTP id d-yHWQyqVKoX; Mon, 10 May 2021 13:28:59 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9518E4B873;
-	Mon, 10 May 2021 13:29:10 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EDB694B896;
+	Mon, 10 May 2021 13:28:58 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 535FE4B4C1
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 May 2021 13:29:09 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DD16B4B847
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 10 May 2021 13:28:56 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 54OHEbCVU5mI for <kvmarm@lists.cs.columbia.edu>;
- Mon, 10 May 2021 13:29:08 -0400 (EDT)
+ with ESMTP id 6qQhyszEqWDm for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 10 May 2021 13:28:55 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D96D84B880
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 May 2021 13:29:07 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 32C544B2E6
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 10 May 2021 13:28:54 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id F3D0F61469;
- Mon, 10 May 2021 17:29:06 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 7599F6157E;
+ Mon, 10 May 2021 17:28:53 +0000 (UTC)
 Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
  helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1lg9Gk-000Uqg-Sq; Mon, 10 May 2021 18:00:35 +0100
+ id 1lg9Gl-000Uqg-GO; Mon, 10 May 2021 18:00:36 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH v4 55/66] KVM: arm64: Allow populating S2 SW bits
-Date: Mon, 10 May 2021 17:59:09 +0100
-Message-Id: <20210510165920.1913477-56-maz@kernel.org>
+Subject: [PATCH v4 56/66] KVM: arm64: nv: Tag shadow S2 entries with nested
+ level
+Date: Mon, 10 May 2021 17:59:10 +0100
+Message-Id: <20210510165920.1913477-57-maz@kernel.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20210510165920.1913477-1-maz@kernel.org>
 References: <20210510165920.1913477-1-maz@kernel.org>
@@ -77,78 +78,61 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The S2 page table code doesn't use the SW bits yet, but we are about
-to need them to encode some guest Stage-2 information (its mapping size
-in the form of the TTL encoding).
-
-Propagate the SW bits specified by the caller, and store them into
-the corresponding entry.
+Populate bits [56:55] of the leaf entry with the level provided
+by the guest's S2 translation.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/kvm_pgtable.h | 10 ++++++++++
- arch/arm64/kvm/hyp/pgtable.c         |  6 ++++++
- 2 files changed, 16 insertions(+)
+ arch/arm64/include/asm/kvm_nested.h | 8 ++++++++
+ arch/arm64/kvm/mmu.c                | 6 ++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/arch/arm64/include/asm/kvm_pgtable.h b/arch/arm64/include/asm/kvm_pgtable.h
-index c3674c47d48c..4f432ea3094c 100644
---- a/arch/arm64/include/asm/kvm_pgtable.h
-+++ b/arch/arm64/include/asm/kvm_pgtable.h
-@@ -92,6 +92,10 @@ struct kvm_pgtable {
-  * @KVM_PGTABLE_PROT_W:		Write permission.
-  * @KVM_PGTABLE_PROT_R:		Read permission.
-  * @KVM_PGTABLE_PROT_DEVICE:	Device attributes.
-+ * @KVM_PGTABLE_PROT_S2_SW0:	SW bit 0.
-+ * @KVM_PGTABLE_PROT_S2_SW1:	SW bit 1.
-+ * @KVM_PGTABLE_PROT_S2_SW2:	SW bit 2.
-+ * @KVM_PGTABLE_PROT_S2_SW3:	SW bit 3.
-  */
- enum kvm_pgtable_prot {
- 	KVM_PGTABLE_PROT_X			= BIT(0),
-@@ -99,6 +103,12 @@ enum kvm_pgtable_prot {
- 	KVM_PGTABLE_PROT_R			= BIT(2),
+diff --git a/arch/arm64/include/asm/kvm_nested.h b/arch/arm64/include/asm/kvm_nested.h
+index 34499c496ae6..36f2cd2c6fdf 100644
+--- a/arch/arm64/include/asm/kvm_nested.h
++++ b/arch/arm64/include/asm/kvm_nested.h
+@@ -5,6 +5,8 @@
+ #include <linux/bitfield.h>
+ #include <linux/kvm_host.h>
  
- 	KVM_PGTABLE_PROT_DEVICE			= BIT(3),
++#include <asm/kvm_pgtable.h>
 +
-+	/* Cunningly, this matches the PTE bits... */
-+	KVM_PGTABLE_PROT_S2_SW0			= BIT(55),
-+	KVM_PGTABLE_PROT_S2_SW1			= BIT(56),
-+	KVM_PGTABLE_PROT_S2_SW2			= BIT(57),
-+	KVM_PGTABLE_PROT_S2_SW3			= BIT(58),
- };
+ static inline bool nested_virt_in_use(const struct kvm_vcpu *vcpu)
+ {
+ 	return (!__is_defined(__KVM_NVHE_HYPERVISOR__) &&
+@@ -135,4 +137,10 @@ void access_nested_id_reg(struct kvm_vcpu *v, struct sys_reg_params *p,
  
- #define PAGE_HYP		(KVM_PGTABLE_PROT_R | KVM_PGTABLE_PROT_W)
-diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
-index c37c1dc4feaf..fa85da30c9b8 100644
---- a/arch/arm64/kvm/hyp/pgtable.c
-+++ b/arch/arm64/kvm/hyp/pgtable.c
-@@ -43,6 +43,7 @@
- #define KVM_PTE_LEAF_ATTR_HI_S1_XN	BIT(54)
+ #define KVM_NV_GUEST_MAP_SZ	GENMASK_ULL(56, 55)
  
- #define KVM_PTE_LEAF_ATTR_HI_S2_XN	BIT(54)
-+#define KVM_PTE_LEAF_ATTR_HI_S2_SW	GENMASK(58, 55)
- 
- #define KVM_PTE_LEAF_ATTR_S2_PERMS	(KVM_PTE_LEAF_ATTR_LO_S2_S2AP_R | \
- 					 KVM_PTE_LEAF_ATTR_LO_S2_S2AP_W | \
-@@ -539,6 +540,7 @@ static int stage2_set_prot_attr(struct kvm_pgtable *pgt, enum kvm_pgtable_prot p
- 
- 	attr |= FIELD_PREP(KVM_PTE_LEAF_ATTR_LO_S2_SH, sh);
- 	attr |= KVM_PTE_LEAF_ATTR_LO_S2_AF;
-+	attr |= prot & KVM_PTE_LEAF_ATTR_HI_S2_SW;
- 	*ptep = attr;
- 
- 	return 0;
-@@ -975,6 +977,10 @@ int kvm_pgtable_stage2_relax_perms(struct kvm_pgtable *pgt, u64 addr,
- 	if (prot & KVM_PGTABLE_PROT_X)
- 		clr |= KVM_PTE_LEAF_ATTR_HI_S2_XN;
- 
-+	/* Always propagate the SW bits */
-+	clr |= FIELD_PREP(KVM_PTE_LEAF_ATTR_HI_S2_SW, 0xf);
-+	set |= prot & KVM_PTE_LEAF_ATTR_HI_S2_SW;
++static inline u64 kvm_encode_nested_level(struct kvm_s2_trans *trans)
++{
++	return FIELD_PREP(KVM_PGTABLE_PROT_S2_SW1 | KVM_PGTABLE_PROT_S2_SW0,
++			  trans->level);
++}
 +
- 	ret = stage2_update_leaf_attrs(pgt, addr, 1, set, clr, NULL, &level);
- 	if (!ret)
- 		kvm_call_hyp(__kvm_tlb_flush_vmid_ipa, pgt->mmu, addr, level);
+ #endif /* __ARM64_KVM_NESTED_H */
+diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+index 91cadd8ed57e..c1c360cf1857 100644
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -1024,11 +1024,17 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 	 * Potentially reduce shadow S2 permissions to match the guest's own
+ 	 * S2. For exec faults, we'd only reach this point if the guest
+ 	 * actually allowed it (see kvm_s2_handle_perm_fault).
++	 *
++	 * Also encode the level of the nested translation in the SW bits of
++	 * the PTE/PMD/PUD. This will be retrived on TLB invalidation from
++	 * the guest.
+ 	 */
+ 	if (kvm_is_shadow_s2_fault(vcpu)) {
+ 		writable &= kvm_s2_trans_writable(nested);
+ 		if (!kvm_s2_trans_readable(nested))
+ 			prot &= ~KVM_PGTABLE_PROT_R;
++
++		prot |= kvm_encode_nested_level(nested);
+ 	}
+ 
+ 	spin_lock(&kvm->mmu_lock);
 -- 
 2.29.2
 
