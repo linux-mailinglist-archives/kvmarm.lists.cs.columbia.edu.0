@@ -2,71 +2,62 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 81C70378C8C
-	for <lists+kvmarm@lfdr.de>; Mon, 10 May 2021 15:04:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75869378E20
+	for <lists+kvmarm@lfdr.de>; Mon, 10 May 2021 15:49:31 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EC16B4B276;
-	Mon, 10 May 2021 09:04:28 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 145654B839;
+	Mon, 10 May 2021 09:49:31 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.502
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.502 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	SPF_HELO_PASS=-0.001] autolearn=unavailable
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Yg2p32spG7+E; Mon, 10 May 2021 09:04:28 -0400 (EDT)
+	with ESMTP id QZWOB-8SagFE; Mon, 10 May 2021 09:49:29 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3A9924B703;
-	Mon, 10 May 2021 09:04:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2E8534B808;
+	Mon, 10 May 2021 09:49:27 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0F5774B4BA
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 May 2021 06:38:16 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E945C4B6EB
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 10 May 2021 09:49:25 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id NwbG4xFGEZ9e for <kvmarm@lists.cs.columbia.edu>;
- Mon, 10 May 2021 06:38:14 -0400 (EDT)
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D19AA4B490
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 May 2021 06:38:13 -0400 (EDT)
-IronPort-SDR: Fqie5WVYzVluEl9KsmBZo9k1Pu589Ic8QXjTR2Q+5MdwEn5YE6rS/jf6sYrZXmxUjROvqi8LOZ
- G9WLULsYEn4w==
-X-IronPort-AV: E=McAfee;i="6200,9189,9979"; a="178751746"
-X-IronPort-AV: E=Sophos;i="5.82,287,1613462400"; d="scan'208";a="178751746"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
- by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 May 2021 03:38:12 -0700
-IronPort-SDR: JU9em1rwG53c9I2GxwySruTaXdECp0gSZmcOso56Md1N0uhUomogH00vC9OTP7tlBwt4Y3xl/N
- uFOmBnvwbipg==
-X-IronPort-AV: E=Sophos;i="5.82,287,1613462400"; d="scan'208";a="470754705"
-Received: from lingshan-mobl5.ccr.corp.intel.com (HELO [10.254.212.136])
- ([10.254.212.136])
- by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 May 2021 03:38:05 -0700
-Subject: Re: [PATCH] Revert "irqbypass: do not start cons/prod when failed
- connect"
-To: Marc Zyngier <maz@kernel.org>
-References: <20210508071152.722425-1-lingshan.zhu@intel.com>
- <b309c02d-9570-6400-9a0c-63030aed7ff7@redhat.com>
- <a659fc6f-2c7a-23d2-9c34-0044d5a31861@intel.com>
- <e5d63867-7a4a-963f-9fbd-741ccd3ec360@redhat.com>
- <b822cde1-7970-dac0-26cc-da1daa0b622f@intel.com>
- <feee2889-6e91-46f3-123f-826a9c4ef43c@intel.com>
- <87wns6oqn1.wl-maz@kernel.org>
-From: "Zhu, Lingshan" <lingshan.zhu@intel.com>
-Message-ID: <dc75cd9b-cbab-41f1-bf92-71047f628389@intel.com>
-Date: Mon, 10 May 2021 18:37:52 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.0
+ with ESMTP id zvLDz5g-g4Ef for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 10 May 2021 09:49:24 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9950A4B5AC
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 10 May 2021 09:49:24 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id DBC1A61076;
+ Mon, 10 May 2021 13:49:21 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.lan) by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1lg6Hf-000Rol-LV; Mon, 10 May 2021 14:49:19 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu
+Subject: [PATCH v3 0/9] KVM: arm64: Initial host support for the Apple M1
+Date: Mon, 10 May 2021 14:48:15 +0100
+Message-Id: <20210510134824.1910399-1-maz@kernel.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-In-Reply-To: <87wns6oqn1.wl-maz@kernel.org>
-Content-Language: en-US
-X-Mailman-Approved-At: Mon, 10 May 2021 09:04:26 -0400
-Cc: kvm@vger.kernel.org, mst@redhat.com, Jason Wang <jasowang@redhat.com>,
- cohuck@redhat.com, stable@vger.kernel.org, alex.williamson@redhat.com,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu, james.morse@arm.com, suzuki.poulose@arm.com,
+ alexandru.elisei@arm.com, eric.auger@redhat.com, marcan@marcan.st,
+ mark.rutland@arm.com, kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com, Hector Martin <marcan@marcan.st>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -78,42 +69,65 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset="utf-8"; Format="flowed"
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-CgpPbiA1LzEwLzIwMjEgNjowMCBQTSwgTWFyYyBaeW5naWVyIHdyb3RlOgo+IE9uIE1vbiwgMTAg
-TWF5IDIwMjEgMDk6MzI6NTQgKzAxMDAsCj4gIlpodSwgTGluZ3NoYW4iIDxsaW5nc2hhbi56aHVA
-aW50ZWwuY29tPiB3cm90ZToKPj4KPj4KPj4gT24gNS8xMC8yMDIxIDM6MDkgUE0sIFpodSwgTGlu
-Z3NoYW4gd3JvdGU6Cj4+Pgo+Pj4gT24gNS8xMC8yMDIxIDEyOjM0IFBNLCBKYXNvbiBXYW5nIHdy
-b3RlOgo+Pj4+IOWcqCAyMDIxLzUvMTAg5LiK5Y2IMTE6MDAsIFpodSwgTGluZ3NoYW4g5YaZ6YGT
-Ogo+Pj4+Pgo+Pj4+PiBPbiA1LzEwLzIwMjEgMTA6NDMgQU0sIEphc29uIFdhbmcgd3JvdGU6Cj4+
-Pj4+PiDlnKggMjAyMS81Lzgg5LiL5Y2IMzoxMSwgWmh1IExpbmdzaGFuIOWGmemBkzoKPj4+Pj4+
-PiBUaGlzIHJldmVydHMgY29tbWl0IGE5NzlhNmFhMDA5ZjNjOTk2ODk0MzJlMGNkYjU0MDJhNDQ2
-M2ZiODguCj4+Pj4+Pj4KPj4+Pj4+PiBUaGUgcmV2ZXJ0ZWQgY29tbWl0IG1heSBjYXVzZSBWTSBm
-cmVlemUgb24gYXJtNjQgcGxhdGZvcm0uCj4+Pj4+Pj4gQmVjYXVzZSBvbiBhcm02NCBwbGF0Zm9y
-bSwgc3RvcCBhIGNvbnN1bWVyIHdpbGwgc3VzcGVuZCB0aGUgVk0sCj4+Pj4+Pj4gdGhlIFZNIHdp
-bGwgZnJlZXplIHdpdGhvdXQgYSBzdGFydCBjb25zdW1lcgo+Pj4+Pj4+Cj4+Pj4+Pj4gU2lnbmVk
-LW9mZi1ieTogWmh1IExpbmdzaGFuIDxsaW5nc2hhbi56aHVAaW50ZWwuY29tPgo+Pj4+Pj4KPj4+
-Pj4+IEFja2VkLWJ5OiBKYXNvbiBXYW5nIDxqYXNvd2FuZ0ByZWRoYXQuY29tPgo+Pj4+Pj4KPj4+
-Pj4+IFBsZWFzZSByZXN1Ym1pdCB3aXRoIHRoZSBmb3JtYWwgcHJvY2VzcyBvZiBzdGFibGUKPj4+
-Pj4+IChzdGFibGUta2VybmVsLXJ1bGVzLnJzdCkuCj4+Pj4+IHN1cmUsIEkgd2lsbCByZS1zdWJt
-aXQgaXQgdG8gc3RhYmxlIGtlcm5lbCBvbmNlIGl0IGlzIG1lcmdlZCBpbnRvCj4+Pj4+IExpbnVz
-IHRyZWUuCj4+Pj4+Cj4+Pj4+IFRoYW5rcwo+Pj4+Cj4+Pj4gSSB0aGluayBpdCdzIGJldHRlciB0
-byByZXN1Ym1pdCAob3B0aW9uIDEpLCBzZWUgaG93Cj4+Pj4gc3RhYmxlLWtlcm5lbC1ydWxlcy5y
-c3Qgc2FpZDoKPj4+Pgo+Pj4+ICIiCj4+Pj4KPj4+PiA6cmVmOmBvcHRpb25fMWAgaXMgKipzdHJv
-bmdseSoqIHByZWZlcnJlZCwgaXMgdGhlIGVhc2llc3QgYW5kIG1vc3QKPj4+PiBjb21tb24uCj4+
-Pj4gOnJlZjpgb3B0aW9uXzJgIGFuZCA6cmVmOmBvcHRpb25fM2AgYXJlIG1vcmUgdXNlZnVsIGlm
-IHRoZSBwYXRjaAo+Pj4+IGlzbid0IGRlZW1lZAo+Pj4+IHdvcnRoeSBhdCB0aGUgdGltZSBpdCBp
-cyBhcHBsaWVkIHRvIGEgcHVibGljIGdpdCB0cmVlIChmb3IKPj4+PiBpbnN0YW5jZSwgYmVjYXVz
-ZQo+Pj4+IGl0IGRlc2VydmVzIG1vcmUgcmVncmVzc2lvbiB0ZXN0aW5nIGZpcnN0KS4KPj4+Pgo+
-Pj4+ICIiIgo+Pj4+Cj4+Pj4gVGhhbmtzCj4+PiBPSywgd29ya3MgZm9yIG1lLCBJIHdpbGwgYWRk
-IGNjIHN0YWJsZSwgYW5kIHJlc3VibWl0IGl0IHNvb24KPj4+Cj4+PiBUaGFua3MhCj4+IEkganVz
-dCBzZWVNYXJjIGhhcyBhbHJlYWR5IGFkZGVkICJDYzogc3RhYmxlQHZnZXIua2VybmVsLm9yZyIs
-IGFuZAo+PiBoZSB3b3VsZCB0YWtlIHRoZSBwYXRjaCBpbiBoaXMgdHJlZSwgc28gSSB0aGluayBu
-byBuZWVkIHRvIHJlc2VuZC4KPiBUaGF0J3MgZmluZSwgSSBjYW4gZml4IHRoaW5ncyB1cCBteXNl
-bGYgYW5kIHF1ZXVlIHRoZSBmaXggZm9yIC1yYzIuClRoYW5rcyBNYXJjIQo+Cj4gVGhhbmtzLAo+
-Cj4gCU0uCj4KCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-Cmt2bWFybSBtYWlsaW5nIGxpc3QKa3ZtYXJtQGxpc3RzLmNzLmNvbHVtYmlhLmVkdQpodHRwczov
-L2xpc3RzLmNzLmNvbHVtYmlhLmVkdS9tYWlsbWFuL2xpc3RpbmZvL2t2bWFybQo=
+This is a new version of the series previously posted at [2], reworking
+the vGIC and timer code to cope with the M1 braindead^Wamusing nature.
+
+Hardly any change this time around, mostly rebased on top of upstream
+now that the dependencies have made it in.
+
+Tested with multiple concurrent VMs running from an initramfs.
+
+* From v2:
+  - Rebased on 5.13-rc1
+  - Fixed a couple of nits in the GIC registration code
+
+* From v1 [1]:
+  - Rebased on Hector's v4 posting[0]
+  - Dropped a couple of patches that have been merged in the above series
+  - Fixed irq_ack callback on the timer path
+
+[0] https://lore.kernel.org/r/20210402090542.131194-1-marcan@marcan.st
+[1] https://lore.kernel.org/r/20210316174617.173033-1-maz@kernel.org
+[2] https://lore.kernel.org/r/20210403112931.1043452-1-maz@kernel.org
+
+Marc Zyngier (9):
+  irqchip/gic: Split vGIC probing information from the GIC code
+  KVM: arm64: Handle physical FIQ as an IRQ while running a guest
+  KVM: arm64: vgic: Be tolerant to the lack of maintenance interrupt
+  KVM: arm64: vgic: Let an interrupt controller advertise lack of HW
+    deactivation
+  KVM: arm64: vgic: move irq->get_input_level into an ops structure
+  KVM: arm64: vgic: Implement SW-driven deactivation
+  KVM: arm64: timer: Refactor IRQ configuration
+  KVM: arm64: timer: Add support for SW-based deactivation
+  irqchip/apple-aic: Advertise some level of vGICv3 compatibility
+
+ arch/arm64/kvm/arch_timer.c            | 161 +++++++++++++++++++++----
+ arch/arm64/kvm/hyp/hyp-entry.S         |   6 +-
+ arch/arm64/kvm/vgic/vgic-init.c        |  34 +++++-
+ arch/arm64/kvm/vgic/vgic-v2.c          |  19 ++-
+ arch/arm64/kvm/vgic/vgic-v3.c          |  19 ++-
+ arch/arm64/kvm/vgic/vgic.c             |  14 +--
+ drivers/irqchip/irq-apple-aic.c        |   8 ++
+ drivers/irqchip/irq-gic-common.c       |  13 --
+ drivers/irqchip/irq-gic-common.h       |   2 -
+ drivers/irqchip/irq-gic-v3.c           |   6 +-
+ drivers/irqchip/irq-gic.c              |   6 +-
+ include/kvm/arm_vgic.h                 |  41 +++++--
+ include/linux/irqchip/arm-gic-common.h |  25 +---
+ include/linux/irqchip/arm-vgic-info.h  |  43 +++++++
+ 14 files changed, 291 insertions(+), 106 deletions(-)
+ create mode 100644 include/linux/irqchip/arm-vgic-info.h
+
+-- 
+2.29.2
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
