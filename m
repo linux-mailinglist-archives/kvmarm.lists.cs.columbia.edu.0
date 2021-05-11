@@ -2,77 +2,57 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DDC7337A48B
-	for <lists+kvmarm@lfdr.de>; Tue, 11 May 2021 12:26:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8D4D37A582
+	for <lists+kvmarm@lfdr.de>; Tue, 11 May 2021 13:13:34 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 74B084B4BC;
-	Tue, 11 May 2021 06:26:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 08BC04B510;
+	Tue, 11 May 2021 07:13:34 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BjiOfkh4ipns; Tue, 11 May 2021 06:26:27 -0400 (EDT)
+	with ESMTP id EqNif4zc8moj; Tue, 11 May 2021 07:13:33 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 337734B4B2;
-	Tue, 11 May 2021 06:26:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A76AC4B455;
+	Tue, 11 May 2021 07:13:32 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9C7A24B2D0
- for <kvmarm@lists.cs.columbia.edu>; Tue, 11 May 2021 06:26:24 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 483F34B371
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 11 May 2021 07:13:31 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id nqf4LmfeRaeh for <kvmarm@lists.cs.columbia.edu>;
- Tue, 11 May 2021 06:26:23 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4FEA84B2CE
- for <kvmarm@lists.cs.columbia.edu>; Tue, 11 May 2021 06:26:23 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2848D610C9
- for <kvmarm@lists.cs.columbia.edu>; Tue, 11 May 2021 10:26:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1620728782;
- bh=95zZVK7qfIh+tOUiU4moyxlDwWV95Vmvl6IczEmpWaQ=;
- h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=jB28dGoEQZhWVX4kG3NoWMrOUOJqKxtGnVTy20zjRDxZSYi5HDoH9X4KG04ToeloA
- cDtUs47l0amh5owyQHo9Y71oQ4LjdMeLKiJKekCv6EqMBcFAvE6kFY+zLTpnzK2c02
- 7NweGlJAUMef4+eX+40tudEHBQhgb9TWfDjReYJgblgVGGMr9/GmZ/91vitXEd782t
- g9xjaa2eZafJ5DzGUi2oT6AyQqRubnfU9TEwg5H9ElYCJfxuOahiwURSuGFYl4ZES1
- rQXX3sG+FHbaG+SB1zpITPkwnC4j3iSe7CdYaT/+XuyT3ovBDEvX1eDXOge37ZUbm5
- 6GXvX4c06Mn7w==
-Received: by mail-ot1-f45.google.com with SMTP id
- i23-20020a9d68d70000b02902dc19ed4c15so13082223oto.0
- for <kvmarm@lists.cs.columbia.edu>; Tue, 11 May 2021 03:26:22 -0700 (PDT)
-X-Gm-Message-State: AOAM5312xq5SFRfxKkVn5UIDC0nUXK8JF5zFnnI38WRMwCZ0eg7740XL
- olKIPyo093ZJZO9chbQeBv+GJe6bQA7mpkYDiww=
-X-Google-Smtp-Source: ABdhPJx7OAWZjUg75AH1MONFkX/rKqoEq6W+l0O8JhjgsRoszXYlOPWDD3ytFXdgmlzvdYrIN3iUwS6soQhwbypE0Tw=
-X-Received: by 2002:a9d:7cd8:: with SMTP id r24mr13558179otn.90.1620728781371; 
- Tue, 11 May 2021 03:26:21 -0700 (PDT)
+ with ESMTP id cI5ZMst4L2Sz for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 11 May 2021 07:13:30 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E538D4B35F
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 11 May 2021 07:13:29 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4A638169E;
+ Tue, 11 May 2021 04:13:14 -0700 (PDT)
+Received: from C02TD0UTHF1T.local (unknown [10.57.29.91])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E11043F719;
+ Tue, 11 May 2021 04:13:06 -0700 (PDT)
+Date: Tue, 11 May 2021 12:13:03 +0100
+From: Mark Rutland <mark.rutland@arm.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH v3 3/9] KVM: arm64: vgic: Be tolerant to the lack of
+ maintenance interrupt
+Message-ID: <20210511111303.GE6152@C02TD0UTHF1T.local>
+References: <20210510134824.1910399-1-maz@kernel.org>
+ <20210510134824.1910399-4-maz@kernel.org>
+ <20210510161907.GD92897@C02TD0UTHF1T.local>
+ <87sg2uo54e.wl-maz@kernel.org>
 MIME-Version: 1.0
-References: <20210511100550.28178-1-rppt@kernel.org>
- <20210511100550.28178-5-rppt@kernel.org>
-In-Reply-To: <20210511100550.28178-5-rppt@kernel.org>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Tue, 11 May 2021 12:26:10 +0200
-X-Gmail-Original-Message-ID: <CAMj1kXE=XMhr6WB+DUZYN9Fr95azn6t_B7VS3BckMPNTn_ohkg@mail.gmail.com>
-Message-ID: <CAMj1kXE=XMhr6WB+DUZYN9Fr95azn6t_B7VS3BckMPNTn_ohkg@mail.gmail.com>
-Subject: Re: [PATCH v4 4/4] arm64: drop pfn_valid_within() and simplify
- pfn_valid()
-To: Mike Rapoport <rppt@kernel.org>
-Cc: David Hildenbrand <david@redhat.com>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Anshuman Khandual <anshuman.khandual@arm.com>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Mike Rapoport <rppt@linux.ibm.com>,
- Linux Memory Management List <linux-mm@kvack.org>,
- Marc Zyngier <maz@kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
- Will Deacon <will@kernel.org>, kvmarm <kvmarm@lists.cs.columbia.edu>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+Content-Disposition: inline
+In-Reply-To: <87sg2uo54e.wl-maz@kernel.org>
+Cc: kvm@vger.kernel.org, kernel-team@android.com,
+ Hector Martin <marcan@marcan.st>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -89,77 +69,56 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, 11 May 2021 at 12:06, Mike Rapoport <rppt@kernel.org> wrote:
->
-> From: Mike Rapoport <rppt@linux.ibm.com>
->
-> The arm64's version of pfn_valid() differs from the generic because of two
-> reasons:
->
-> * Parts of the memory map are freed during boot. This makes it necessary to
->   verify that there is actual physical memory that corresponds to a pfn
->   which is done by querying memblock.
->
-> * There are NOMAP memory regions. These regions are not mapped in the
->   linear map and until the previous commit the struct pages representing
->   these areas had default values.
->
-> As the consequence of absence of the special treatment of NOMAP regions in
-> the memory map it was necessary to use memblock_is_map_memory() in
-> pfn_valid() and to have pfn_valid_within() aliased to pfn_valid() so that
-> generic mm functionality would not treat a NOMAP page as a normal page.
->
-> Since the NOMAP regions are now marked as PageReserved(), pfn walkers and
-> the rest of core mm will treat them as unusable memory and thus
-> pfn_valid_within() is no longer required at all and can be disabled by
-> removing CONFIG_HOLES_IN_ZONE on arm64.
->
-> pfn_valid() can be slightly simplified by replacing
-> memblock_is_map_memory() with memblock_is_memory().
->
-> Signed-off-by: Mike Rapoport <rppt@linux.ibm.com>
-> Acked-by: David Hildenbrand <david@redhat.com>
+On Mon, May 10, 2021 at 06:44:49PM +0100, Marc Zyngier wrote:
+> On Mon, 10 May 2021 17:19:07 +0100,
+> Mark Rutland <mark.rutland@arm.com> wrote:
+> > 
+> > On Mon, May 10, 2021 at 02:48:18PM +0100, Marc Zyngier wrote:
+> > > As it turns out, not all the interrupt controllers are able to
+> > > expose a vGIC maintenance interrupt as a distrete signal.
+> > > And to be fair, it doesn't really matter as all we require is
+> > > for *something* to kick us out of guest mode out way or another.
+> > > 
+> > > On systems that do not expose a maintenance interrupt as such,
+> > > there are two outcomes:
+> > > 
+> > > - either the virtual CPUIF does generate an interrupt, and
+> > >   by the time we are back to the host the interrupt will have long
+> > >   been disabled (as we set ICH_HCR_EL2.EN to 0 on exit). In this case,
+> > >   interrupt latency is as good as it gets.
+> > > 
+> > > - or some other event (physical timer) will take us out of the guest
+> > >   anyway, and the only drawback is a bad interrupt latency.
+> > 
+> > IIRC we won't have a a guaranteed schedular tick for NO_HZ_FULL, so in
+> > that case we'll either need to set a period software maintenance
+> > interrupt, or reject this combination at runtime (either when trying to
+> > isolate the dynticks CPUs, or when trying to create a VM).
+> 
+> That's a good point.
+> 
+> On sensible systems, the maintenance interrupt is a standard GIC PPI
+> that requires enabling, and that is all that KVM requires (the
+> maintenance interrupt is only used as an exit mechanism and will be
+> disabled before reaching the handler).
+> 
+> On the M1, owing to the lack of a per-CPU interrupt controller, there
+> is nothing to enable. The virtual CPU interface will fire at will and
+> take us out of the guest in a timely manner.
 
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Ah, so the M1 does have a maintenance interrupt, but you can't silence
+it at the irqchip level.
 
-... and many thanks for cleaning this up.
+> So maybe instead of relaxing the requirement for a maintenance
+> interrupt, we should only bypass the checks if the root interrupt
+> controller advertises that it is safe to do so, making it a
+> M1-specific hack.
 
+That certainly sounds safer than permitting running without any
+maintenance interrupt at all.
 
-> ---
->  arch/arm64/Kconfig   | 3 ---
->  arch/arm64/mm/init.c | 2 +-
->  2 files changed, 1 insertion(+), 4 deletions(-)
->
-> diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-> index 9f1d8566bbf9..d7dc8698cf8e 100644
-> --- a/arch/arm64/Kconfig
-> +++ b/arch/arm64/Kconfig
-> @@ -1052,9 +1052,6 @@ config NEED_PER_CPU_EMBED_FIRST_CHUNK
->         def_bool y
->         depends on NUMA
->
-> -config HOLES_IN_ZONE
-> -       def_bool y
-> -
->  source "kernel/Kconfig.hz"
->
->  config ARCH_SPARSEMEM_ENABLE
-> diff --git a/arch/arm64/mm/init.c b/arch/arm64/mm/init.c
-> index 798f74f501d5..fb07218da2c0 100644
-> --- a/arch/arm64/mm/init.c
-> +++ b/arch/arm64/mm/init.c
-> @@ -251,7 +251,7 @@ int pfn_valid(unsigned long pfn)
->         if (!early_section(ms))
->                 return pfn_section_valid(ms, pfn);
->
-> -       return memblock_is_map_memory(addr);
-> +       return memblock_is_memory(addr);
->  }
->  EXPORT_SYMBOL(pfn_valid);
->
-> --
-> 2.28.0
->
+Thanks,
+Mark.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
