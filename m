@@ -2,60 +2,68 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D37237BD91
-	for <lists+kvmarm@lfdr.de>; Wed, 12 May 2021 15:00:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A9B237BE69
+	for <lists+kvmarm@lfdr.de>; Wed, 12 May 2021 15:43:37 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 05A474B4A3;
-	Wed, 12 May 2021 09:00:39 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A7BA24B544;
+	Wed, 12 May 2021 09:43:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id inl12QqULRWu; Wed, 12 May 2021 09:00:38 -0400 (EDT)
+	with ESMTP id EKse8YCA5Vk9; Wed, 12 May 2021 09:43:36 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AEDCE4B6C8;
-	Wed, 12 May 2021 09:00:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 645A04B53D;
+	Wed, 12 May 2021 09:43:35 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3AA804B28E
- for <kvmarm@lists.cs.columbia.edu>; Wed, 12 May 2021 09:00:36 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B0EA84B4BE
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 12 May 2021 09:43:34 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 5Zbwgw1+ZH-c for <kvmarm@lists.cs.columbia.edu>;
- Wed, 12 May 2021 09:00:35 -0400 (EDT)
-Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6C81A4B838
- for <kvmarm@lists.cs.columbia.edu>; Wed, 12 May 2021 09:00:11 -0400 (EDT)
-Received: from DGGEMS413-HUB.china.huawei.com (unknown [172.30.72.58])
- by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4FgFF34cb2z1BLCm;
- Wed, 12 May 2021 20:57:27 +0800 (CST)
-Received: from [10.174.185.179] (10.174.185.179) by
- DGGEMS413-HUB.china.huawei.com (10.3.19.213) with Microsoft SMTP Server id
- 14.3.498.0; Wed, 12 May 2021 20:59:59 +0800
+ with ESMTP id zfbBJlDQUI5N for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 12 May 2021 09:43:33 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BEC694B4B4
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 12 May 2021 09:43:33 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 96582613D3;
+ Wed, 12 May 2021 13:43:30 +0000 (UTC)
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1lgp96-000uPv-82; Wed, 12 May 2021 14:43:28 +0100
+MIME-Version: 1.0
+Date: Wed, 12 May 2021 14:43:28 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: Zenghui Yu <yuzenghui@huawei.com>
 Subject: Re: [PATCH v2 4/5] KVM: selftests: Add exception handling support for
  aarch64
-To: Auger Eric <eric.auger@redhat.com>
+In-Reply-To: <4f7f81f9-8da0-b4ef-49e2-7d87b5c23b15@huawei.com>
 References: <20210430232408.2707420-1-ricarkol@google.com>
- <20210430232408.2707420-5-ricarkol@google.com> <87a6pcumyg.wl-maz@kernel.org>
- <YJBLFVoRmsehRJ1N@google.com>
+ <20210430232408.2707420-5-ricarkol@google.com>
+ <87a6pcumyg.wl-maz@kernel.org> <YJBLFVoRmsehRJ1N@google.com>
  <20915a2f-d07c-2e61-3cce-ff385e98e796@redhat.com>
-From: Zenghui Yu <yuzenghui@huawei.com>
-Message-ID: <4f7f81f9-8da0-b4ef-49e2-7d87b5c23b15@huawei.com>
-Date: Wed, 12 May 2021 20:59:59 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
-MIME-Version: 1.0
-In-Reply-To: <20915a2f-d07c-2e61-3cce-ff385e98e796@redhat.com>
-Content-Language: en-US
-X-Originating-IP: [10.174.185.179]
-X-CFilter-Loop: Reflected
-Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>, pbonzini@redhat.com,
- kvmarm@lists.cs.columbia.edu
+ <4f7f81f9-8da0-b4ef-49e2-7d87b5c23b15@huawei.com>
+User-Agent: Roundcube Webmail/1.4.11
+Message-ID: <a5ad32abf4ff6f80764ee31f16a5e3fc@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: yuzenghui@huawei.com, eric.auger@redhat.com,
+ ricarkol@google.com, kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
+ pbonzini@redhat.com, drjones@redhat.com, alexandru.elisei@arm.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvm@vger.kernel.org, pbonzini@redhat.com, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -72,29 +80,32 @@ Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Eric,
-
-On 2021/5/6 20:30, Auger Eric wrote:
-> running the test on 5.12 I get
+On 2021-05-12 13:59, Zenghui Yu wrote:
+> Hi Eric,
 > 
-> ==== Test Assertion Failure ====
->   aarch64/debug-exceptions.c:232: false
->   pid=6477 tid=6477 errno=4 - Interrupted system call
->      1	0x000000000040147b: main at debug-exceptions.c:230
->      2	0x000003ff8aa60de3: ?? ??:0
->      3	0x0000000000401517: _start at :?
->   Failed guest assert: hw_bp_addr == PC(hw_bp) at
-> aarch64/debug-exceptions.c:105
-> 	values: 0, 0x401794
+> On 2021/5/6 20:30, Auger Eric wrote:
+>> running the test on 5.12 I get
+>> 
+>> ==== Test Assertion Failure ====
+>>   aarch64/debug-exceptions.c:232: false
+>>   pid=6477 tid=6477 errno=4 - Interrupted system call
+>>      1	0x000000000040147b: main at debug-exceptions.c:230
+>>      2	0x000003ff8aa60de3: ?? ??:0
+>>      3	0x0000000000401517: _start at :?
+>>   Failed guest assert: hw_bp_addr == PC(hw_bp) at
+>> aarch64/debug-exceptions.c:105
+>> 	values: 0, 0x401794
+> 
+> FYI I can also reproduce it on my VHE box. And Drew's suggestion [*]
+> seemed to work for me. Is the ISB a requirement of architecture?
 
-FYI I can also reproduce it on my VHE box. And Drew's suggestion [*]
-seemed to work for me. Is the ISB a requirement of architecture?
+Very much so. Given that there is no context synchronisation (such as
+ERET or an interrupt) in this code, the CPU is perfectly allowed to
+delay the system register effect as long as it can.
 
-[*] https://lore.kernel.org/kvm/20210503124925.wxdcyzharpyzeu4v@gator.home/
-
-
-Thanks,
-Zenghui
+         M.
+-- 
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
