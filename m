@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 34D5C37F396
-	for <lists+kvmarm@lfdr.de>; Thu, 13 May 2021 09:35:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 219EE37F3DA
+	for <lists+kvmarm@lfdr.de>; Thu, 13 May 2021 10:05:55 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AF5884B524;
-	Thu, 13 May 2021 03:35:43 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 761794B835;
+	Thu, 13 May 2021 04:05:54 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.209
@@ -18,73 +18,73 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QxLWMqHsQFnW; Thu, 13 May 2021 03:35:43 -0400 (EDT)
+	with ESMTP id LnHpfxqvr1qY; Thu, 13 May 2021 04:05:54 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A88CE4B49F;
-	Thu, 13 May 2021 03:35:42 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6B1CE4B7D4;
+	Thu, 13 May 2021 04:05:53 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 69F654B48F
- for <kvmarm@lists.cs.columbia.edu>; Thu, 13 May 2021 03:35:41 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 892B74B765
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 13 May 2021 04:05:51 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id HGDgf3wZQWvm for <kvmarm@lists.cs.columbia.edu>;
- Thu, 13 May 2021 03:35:40 -0400 (EDT)
+ with ESMTP id FoNBYE3Qr5Rl for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 13 May 2021 04:05:50 -0400 (EDT)
 Received: from us-smtp-delivery-124.mimecast.com
  (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9769A4B477
- for <kvmarm@lists.cs.columbia.edu>; Thu, 13 May 2021 03:35:40 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 88D484B388
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 13 May 2021 04:05:50 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1620891340;
+ s=mimecast20190719; t=1620893150;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=zTEQQXsAJQxZUo5zOYVOBC+x54vGh0Ue0rC0kRz9wp8=;
- b=GvSFwA75ZZAscu9I2FhpmKHWO7Pfd89FeMGYOBB44QeNYuynOIOfa678ylPJ1iwgJaz7N7
- PBz+5apFDXmo2fqdpHQw5GMghCUCBkKsSYs55uJoKh1hVWqE7Gn1jCmxv/G0Hh1qKnwvcE
- tke0lcaujWEFhQcUgn4juyJKl6pmi6E=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-486-H1VdOz66MtuCircf1OnlCg-1; Thu, 13 May 2021 03:35:38 -0400
-X-MC-Unique: H1VdOz66MtuCircf1OnlCg-1
-Received: by mail-ed1-f70.google.com with SMTP id
- y17-20020a0564023591b02903886c26ada4so14206118edc.5
- for <kvmarm@lists.cs.columbia.edu>; Thu, 13 May 2021 00:35:38 -0700 (PDT)
+ bh=VDqpVG5nZvDDm4obyS6Icgk8AYhvJi0sT/Vy0U5YIZs=;
+ b=f+P+KQhJR6nV1iYXPYfGXy9IBgFOYhotXf9uVkNwN8t6iSkYQOg4zLXyCckIfbwEmxu3OZ
+ 4vA4rJxTkQW92mzrFPdwpZ0EjPxBeK5ZNceJ5HFmgIfthI0Gq16sR3wBKOS2jiZEXPNqJ+
+ 9XUkrN+y9T/JAkRg2mGBFJE9bbThbzQ=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-40-R8pz_6p2M_-V8HGetuL63w-1; Thu, 13 May 2021 04:05:48 -0400
+X-MC-Unique: R8pz_6p2M_-V8HGetuL63w-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ g19-20020a0564021813b029038811907178so14195257edy.14
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 13 May 2021 01:05:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to;
- bh=zTEQQXsAJQxZUo5zOYVOBC+x54vGh0Ue0rC0kRz9wp8=;
- b=UHZ6qG9F1+WjTf9sL5OuC8mVUt81CPtc2f4xnjmb0NyB2F8b5y/Xtc/VdcGQnVm+kF
- UXqhvWMnk4yf/PPPHzKE4RcWHVd4t+Ri5KyDme/dXk/+xSvew/0GquxbSrGbrd/ZaAFW
- p6EBllzPnihYZy4cVkyDxp+rnWEwLkhaQoDgC+X5CTx+TEreYU8obzl1jfw+AIGwxej2
- grSimpMGDuQebTS1pEV45+ajBk8iLhc8KFNOWtAKge/C6OFmF/QYUy/qveKlIR3NcV+r
- XtFsdyoI4xRr5ilXV4+i9IYGolng2kvaJuHTdcoKDL9QmM1aUKTiMImfy9G7QT7n0IFX
- KpTQ==
-X-Gm-Message-State: AOAM533Fl+/hg705QL1uNMf4emv+ZxgHJA/bEaeuNHbmKklOk2filOgS
- 6f6J3gSSMDxZs3NVGHJXjCKxbI+3j8CbljdL+mij/G10+w9nBQ8Vghk7lPS1GlJvq0YfC83IoWo
- tHTHZ57E9CABLTqE9dtE4R3p3
-X-Received: by 2002:a05:6402:1547:: with SMTP id
- p7mr48873035edx.319.1620891337823; 
- Thu, 13 May 2021 00:35:37 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJy4fQrV1jLbyyYnaAc4rghuBIVhv9b9kqKDT7Ao5odjIT9s+5ushZxRP+CITFR79rGJjFXT+w==
-X-Received: by 2002:a05:6402:1547:: with SMTP id
- p7mr48873016edx.319.1620891337666; 
- Thu, 13 May 2021 00:35:37 -0700 (PDT)
+ bh=VDqpVG5nZvDDm4obyS6Icgk8AYhvJi0sT/Vy0U5YIZs=;
+ b=T8mkpLM/qOFOKetmI7h0ikLPPr09KG+0fcA5cxaiJOVRIUQQbFE3R85WCq3qTbBr1G
+ 7egnPx+k9PVVj8HB5aD5zuB96Dpld85aU3V+J1nQoY51TwgUkdUdPYClJm5WdOCxKf7j
+ UfhBSzjanGY1ZVhtO7YS7UcJvv1zSMYu9uEwIyuKDUfnnRtTgEiaY46N0sLZyeC/sI3M
+ BwNxwSSKAsTo/U1LRWQsmbNjfZBtTh+QaWixXSxMdZX9S/8Y7cUmcUOsvJyq7CCM7KM6
+ FP2Niir2bQMgeyvtkmtolIXT3LqFMvbmTsIdRsNhGngqosCCxg4U1Fg7ZcsuEf5kvTna
+ 87DA==
+X-Gm-Message-State: AOAM532T8ldOOgP/U3maHp6NbhJhvP3ib02hnn6qb7lHfvNB2pM1sIcO
+ YedErNT2ISqi9gxmfto5/GwTLld4DQae6WPQ8mrCFMOnnxBOlGMDchT7vpzZwPyATVOf7oAk5Q4
+ mBLdprEyNLfWqWDgDYYS4XbDE
+X-Received: by 2002:a17:907:ea6:: with SMTP id
+ ho38mr7937145ejc.357.1620893147399; 
+ Thu, 13 May 2021 01:05:47 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJxOCHK0tMO9+mnC0XSGsxFUlqtyPsrTEwy2/rOnVkz5KReRdAulhVI/0zOM/TLdCxoXrucHhQ==
+X-Received: by 2002:a17:907:ea6:: with SMTP id
+ ho38mr7937128ejc.357.1620893147226; 
+ Thu, 13 May 2021 01:05:47 -0700 (PDT)
 Received: from gator (cst2-174-132.cust.vodafone.cz. [31.30.174.132])
- by smtp.gmail.com with ESMTPSA id da25sm1869559edb.38.2021.05.13.00.35.37
+ by smtp.gmail.com with ESMTPSA id c9sm1848819edv.24.2021.05.13.01.05.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 May 2021 00:35:37 -0700 (PDT)
-Date: Thu, 13 May 2021 09:35:30 +0200
+ Thu, 13 May 2021 01:05:46 -0700 (PDT)
+Date: Thu, 13 May 2021 10:05:39 +0200
 From: Andrew Jones <drjones@redhat.com>
 To: Ricardo Koller <ricarkol@google.com>
-Subject: Re: [PATCH v3 3/5] KVM: selftests: Move GUEST_ASSERT_EQ to utils
- header
-Message-ID: <20210513073530.ajehgqt55o4faxul@gator>
+Subject: Re: [PATCH v3 4/5] KVM: selftests: Add exception handling support
+ for aarch64
+Message-ID: <20210513080539.iruamqsbiykqig3w@gator>
 References: <20210513002802.3671838-1-ricarkol@google.com>
- <20210513002802.3671838-4-ricarkol@google.com>
+ <20210513002802.3671838-5-ricarkol@google.com>
 MIME-Version: 1.0
-In-Reply-To: <20210513002802.3671838-4-ricarkol@google.com>
+In-Reply-To: <20210513002802.3671838-5-ricarkol@google.com>
 Authentication-Results: relay.mimecast.com;
  auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=drjones@redhat.com
 X-Mimecast-Spam-Score: 0
@@ -108,16 +108,25 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, May 12, 2021 at 05:28:00PM -0700, Ricardo Koller wrote:
-> Move GUEST_ASSERT_EQ to a common header, kvm_util.h, for other
-> architectures and tests to use. Also modify __GUEST_ASSERT so it can be
-> reused to implement GUEST_ASSERT_EQ.
+On Wed, May 12, 2021 at 05:28:01PM -0700, Ricardo Koller wrote:
+> Add the infrastructure needed to enable exception handling in aarch64
+> selftests. The exception handling defaults to an unhandled-exception
+> handler which aborts the test, just like x86. These handlers can be
+> overridden by calling vm_install_vector_handler(vector) or
+> vm_install_exception_handler(vector, ec). The unhandled exception
+> reporting from the guest is done using the ucall type introduced in a
+> previous commit, UCALL_UNHANDLED.
+> 
+> The exception handling code is heavily inspired on kvm-unit-tests.
 > 
 > Signed-off-by: Ricardo Koller <ricarkol@google.com>
 > ---
->  .../testing/selftests/kvm/include/kvm_util.h  | 22 ++++++++++---------
->  .../selftests/kvm/x86_64/tsc_msrs_test.c      |  9 --------
->  2 files changed, 12 insertions(+), 19 deletions(-)
+>  tools/testing/selftests/kvm/Makefile          |   2 +-
+>  .../selftests/kvm/include/aarch64/processor.h |  63 +++++++++
+>  .../selftests/kvm/lib/aarch64/handlers.S      | 124 +++++++++++++++++
+>  .../selftests/kvm/lib/aarch64/processor.c     | 131 ++++++++++++++++++
+>  4 files changed, 319 insertions(+), 1 deletion(-)
+>  create mode 100644 tools/testing/selftests/kvm/lib/aarch64/handlers.S
 >
 
 Reviewed-by: Andrew Jones <drjones@redhat.com>
