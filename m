@@ -2,76 +2,79 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B76EF37F322
-	for <lists+kvmarm@lfdr.de>; Thu, 13 May 2021 08:37:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B76A637F3B9
+	for <lists+kvmarm@lfdr.de>; Thu, 13 May 2021 09:49:29 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1DF744B81F;
-	Thu, 13 May 2021 02:37:46 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 10DBB4B827;
+	Thu, 13 May 2021 03:49:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.209
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Hm0GykvM8YBU; Thu, 13 May 2021 02:37:46 -0400 (EDT)
+	with ESMTP id 0mbZB-SVgCqy; Thu, 13 May 2021 03:49:28 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D95394B71F;
-	Thu, 13 May 2021 02:37:44 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 63BFE4B7CE;
+	Thu, 13 May 2021 03:49:26 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5E5514B5E0
- for <kvmarm@lists.cs.columbia.edu>; Thu, 13 May 2021 02:37:43 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 81EFD4B768
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 12 May 2021 23:44:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id wfGE4yIGyo7P for <kvmarm@lists.cs.columbia.edu>;
- Thu, 13 May 2021 02:37:42 -0400 (EDT)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 40D064B7D4
- for <kvmarm@lists.cs.columbia.edu>; Thu, 13 May 2021 02:37:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1620887861;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=o9mkTkonP9uztCISBGQUSTSH31laLWa1RLov7sxsUUU=;
- b=ekRafYStxNB+6BlKTfmYtkHTOhE4Iu58A2K582ODUirySApWn5Dt2IOepHDlfRV1vAWLGR
- GiDUgp0Joxf6wBBMi2nqj/63xk4xfgVakyIfQrFI9UAg3pl04GB4nmoKligRxdiY13b+kN
- d79Yul2i8SiaFmN7Zr28jCupk1jjSVA=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-383-VoixZ2QuPGi4mitFYrQpGQ-1; Thu, 13 May 2021 02:37:38 -0400
-X-MC-Unique: VoixZ2QuPGi4mitFYrQpGQ-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com
- [10.5.11.23])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 339B31008545;
- Thu, 13 May 2021 06:37:37 +0000 (UTC)
-Received: from [10.36.112.87] (ovpn-112-87.ams2.redhat.com [10.36.112.87])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 8615D6D8C0;
- Thu, 13 May 2021 06:37:35 +0000 (UTC)
-Subject: Re: [PATCH v3 0/5] KVM: selftests: arm64 exception handling and debug
- test
-To: Ricardo Koller <ricarkol@google.com>, kvm@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu
-References: <20210513002802.3671838-1-ricarkol@google.com>
-From: Auger Eric <eric.auger@redhat.com>
-Message-ID: <aeeec52e-5a13-be39-3b9c-cf25a27b97b1@redhat.com>
-Date: Thu, 13 May 2021 08:37:33 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.0
+ with ESMTP id LVS1EvwJI1UT for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 12 May 2021 23:44:09 -0400 (EDT)
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id ED6A84AEDC
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 12 May 2021 23:44:08 -0400 (EDT)
+Received: from dggeml706-chm.china.huawei.com (unknown [172.30.72.55])
+ by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4Fgcs9178GzYjKj;
+ Thu, 13 May 2021 11:41:33 +0800 (CST)
+Received: from dggpemm500001.china.huawei.com (7.185.36.107) by
+ dggeml706-chm.china.huawei.com (10.3.17.144) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
+ 15.1.2176.2; Thu, 13 May 2021 11:44:01 +0800
+Received: from [10.174.177.243] (10.174.177.243) by
+ dggpemm500001.china.huawei.com (7.185.36.107) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.2; Thu, 13 May 2021 11:44:01 +0800
+Subject: Re: arm32: panic in move_freepages (Was [PATCH v2 0/4] arm64: drop
+ pfn_valid_within() and simplify pfn_valid())
+To: Mike Rapoport <rppt@kernel.org>
+References: <24b37c01-fc75-d459-6e61-d67e8f0cf043@redhat.com>
+ <YI+32ocTbec5Rm4e@kernel.org>
+ <82cfbb7f-dd4f-12d8-dc76-847f06172200@huawei.com>
+ <b077916e-d3f7-ec6c-8c80-b5b642ee111f@huawei.com>
+ <YJUWywpGwOpM8hzo@kernel.org>
+ <33c67e13-dc48-9a2f-46d8-a532e17380fb@huawei.com>
+ <YJd6QXcmVl+HM4Ob@kernel.org>
+ <b91cd653-842b-0e77-5c00-17a0ac9c4b50@huawei.com>
+ <YJpEwF2cGjS5mKma@kernel.org>
+ <c3006cd0-fff6-ab45-da83-a216d40388f2@huawei.com>
+ <YJuRPVWubjQKyKBj@kernel.org>
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
+Message-ID: <f0034620-b95b-3ba5-f7a2-c8be33d842c7@huawei.com>
+Date: Thu, 13 May 2021 11:44:00 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-In-Reply-To: <20210513002802.3671838-1-ricarkol@google.com>
+In-Reply-To: <YJuRPVWubjQKyKBj@kernel.org>
 Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
-Cc: pbonzini@redhat.com, maz@kernel.org
+X-Originating-IP: [10.174.177.243]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ dggpemm500001.china.huawei.com (7.185.36.107)
+X-CFilter-Loop: Reflected
+X-Mailman-Approved-At: Thu, 13 May 2021 03:49:25 -0400
+Cc: wangkefeng.wang@huawei.com, Anshuman Khandual <anshuman.khandual@arm.com>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org, Mike
+ Rapoport <rppt@linux.ibm.com>, linux-mm@kvack.org, kvmarm@lists.cs.columbia.edu,
+ Marc Zyngier <maz@kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
+ Will Deacon <will@kernel.org>, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -83,90 +86,195 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Ricardo,
 
-On 5/13/21 2:27 AM, Ricardo Koller wrote:
-> Hi,
-> 
-> These patches add a debug exception test in aarch64 KVM selftests while
-> also adding basic exception handling support.
-> 
-> The structure of the exception handling is based on its x86 counterpart.
-> Tests use the same calls to initialize exception handling and both
-> architectures allow tests to override the handler for a particular
-> vector, or (vector, ec) for synchronous exceptions in the arm64 case.
-> 
-> The debug test is similar to x86_64/debug_regs, except that the x86 one
-> controls the debugging from outside the VM. This proposed arm64 test
-> controls and handles debug exceptions from the inside.
-> 
-> Thanks,
-> Ricardo
-> 
-> v2 -> v3:
-> 
-> Addressed comments from Andrew and Marc (thanks again). Also, many thanks for
-> the reviews and tests from Eric and Zenghui.
-You are welcome. This version does not fail anymore on Cavium Sabre so
-this looks to fix the previously reported issue.
 
-Thanks
+On 2021/5/12 16:26, Mike Rapoport wrote:
+> On Wed, May 12, 2021 at 11:08:14AM +0800, Kefeng Wang wrote:
+>>
+>> On 2021/5/11 16:48, Mike Rapoport wrote:
+>>> On Mon, May 10, 2021 at 11:10:20AM +0800, Kefeng Wang wrote:
+>>>>
+>>>>>> The memory is not continuous, see MEMBLOCK:
+>>>>>>     memory size = 0x4c0fffff reserved size = 0x027ef058
+>>>>>>     memory.cnt  = 0xa
+>>>>>>     memory[0x0]    [0x80a00000-0x855fffff], 0x04c00000 bytes flags: 0x0
+>>>>>>     memory[0x1]    [0x86a00000-0x87dfffff], 0x01400000 bytes flags: 0x0
+>>>>>>     memory[0x2]    [0x8bd00000-0x8c4fffff], 0x00800000 bytes flags: 0x0
+>>>>>>     memory[0x3]    [0x8e300000-0x8ecfffff], 0x00a00000 bytes flags: 0x0
+>>>>>>     memory[0x4]    [0x90d00000-0xbfffffff], 0x2f300000 bytes flags: 0x0
+>>>>>>     memory[0x5]    [0xcc000000-0xdc9fffff], 0x10a00000 bytes flags: 0x0
+>>>>>>     memory[0x6]    [0xde700000-0xde9fffff], 0x00300000 bytes flags: 0x0
+>>>>>> ...
+>>>>>>
+>>>>>> The pfn_range [0xde600,0xde700] => addr_range [0xde600000,0xde700000]
+>>>>>> is not available memory, and we won't create memmap , so with or without
+>>>>>> your patch, we can't see the range in free_memmap(), right?
+>>>>>
+>>>>> This is not available memory and we won't see the reange in free_memmap(),
+>>>>> but we still should create memmap for it and that's what my patch tried to
+>>>>> do.
+>>>>>
+>>>>> There are a lot of places in core mm that operate on pageblocks and
+>>>>> free_unused_memmap() should make sure that any pageblock has a valid memory
+>>>>> map.
+>>>>>
+>>>>> Currently, that's not the case when SPARSEMEM=y and my patch tried to fix
+>>>>> it.
+>>>>>
+>>>>> Can you please send log with my patch applied and with the printing of
+>>>>> ranges that are freed in free_unused_memmap() you've used in previous
+>>>>> mails?
+>>>
+>>>> with your patch[1] and debug print in free_memmap,
+>>>> ----> free_memmap, start_pfn = 85800,  85800000 end_pfn = 86800, 86800000
+>>>> ----> free_memmap, start_pfn = 8c800,  8c800000 end_pfn = 8e000, 8e000000
+>>>> ----> free_memmap, start_pfn = 8f000,  8f000000 end_pfn = 90000, 90000000
+>>>> ----> free_memmap, start_pfn = dcc00,  dcc00000 end_pfn = de400, de400000
+>>>> ----> free_memmap, start_pfn = dec00,  dec00000 end_pfn = e0000, e0000000
+>>>> ----> free_memmap, start_pfn = e0c00,  e0c00000 end_pfn = e4000, e4000000
+>>>> ----> free_memmap, start_pfn = f7000,  f7000000 end_pfn = f8000, f8000000
+>>>
+>>> It seems that freeing of the memory map is suboptimal still because that
+>>> code was not designed for memory layout that has more holes than Swiss
+>>> cheese.
+>>>
+>>> Still, the range [0xde600,0xde700] is not freed and there should be struct
+>>> pages for this range.
+>>>
+>>> Can you add
+>>>
+>>> 	dump_page(pfn_to_page(0xde600), "");
+>>>
+>>> say, in the end of memblock_free_all()?
+>>>
+>> The range [0xde600,0xde700] is not memory, so it won't create struct page
+>> for it when sparse_init?
+> 
+> sparse_init() indeed does not create memory map for unpopulated memory, but
+> it has pretty coarse granularity, i.e. 64M in your configuration. A hole
+> should be at least 64M in order to skip allocation of the memory map for
+> it.
+> 
+> For example, your memory layout has a hole of 192M at pfn 0xc0000 and this
+> hole won't have the memory map.
+> 
+> However the hole 0xdca00 - 0xde70 will still have a memory map in the
+> section  that covers 0xdc000 - 0xe0000.
+> 
+> I've tried outline this in a sketch below, hope it helps.
+> 
+> Memory:
+>                            c0000      cc000                      dca00
+> --------------------------+          +--------------------------+ +----+
+>   memory bank              |<- hole ->| memory bank              | | mb |
+> --------------------------+          +--------------------------+ +----+
+>                                                                  de700  dea00
+> 
+> Memory map:
+> 
+> b0000    b4000            c0000      cc000   d0000    d8000    dc000
+> +--------+--------+- ... -+          +--------+- ... -+--------+---------+
+> | memmap | memmap | ...   |<- hole ->| memmap |  ...  | memmap | memmap  |
+> +--------+--------+- ... -+          +--------+- ... -+--------+---------+
+> 
+> 
+Thanks for the sketch, it is more clear,
 
-Eric
-> - add missing ISBs after writing into debug registers.
-> - not store/restore of sp_el0 on exceptions.
-> - add default handlers for Error and FIQ.
-> - change multiple TEST_ASSERT(false, ...) to TEST_FAIL.
-> - use Andrew's suggestion regarding __GUEST_ASSERT modifications
->   in order to easier implement GUEST_ASSERT_EQ (Thanks Andrew).
+>> After apply patch[1], the dump_page log,
+>>
+>> page:ef3cc000 is uninitialized and poisoned
+>> raw: ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+>> page dumped because:
 > 
-> v1 -> v2:
+> This means that there is a memory map entry, and it got poisoned during the
+> initialization and never got reinitialized to sensible values, which would
+> be PageReserved() in this case.
 > 
-> Addressed comments from Andrew and Marc (thank you very much):
-> - rename vm_handle_exception in all tests.
-> - introduce UCALL_UNHANDLED in x86 first.
-> - move GUEST_ASSERT_EQ to common utils header.
-> - handle sync and other exceptions separately: use two tables (like
->   kvm-unit-tests).
-> - add two separate functions for installing sync versus other exceptions
-> - changes in handlers.S: use the same layout as user_pt_regs, treat the
->   EL1t vectors as invalid, refactor the vector table creation to not use
->   manual numbering, add comments, remove LR from the stored registers.
-> - changes in debug-exceptions.c: remove unused headers, use the common
->   GUEST_ASSERT_EQ, use vcpu_run instead of _vcpu_run.
-> - changes in processor.h: write_sysreg with support for xzr, replace EL1
->   with current in macro names, define ESR_EC_MASK as ESR_EC_NUM-1.
+> I believe this was fixed by commit 0740a50b9baa ("mm/page_alloc.c: refactor
+> initialization of struct page for holes in memory layout") in the mainline
+> tree.
 > 
-> Ricardo Koller (5):
->   KVM: selftests: Rename vm_handle_exception
->   KVM: selftests: Introduce UCALL_UNHANDLED for unhandled vector
->     reporting
->   KVM: selftests: Move GUEST_ASSERT_EQ to utils header
->   KVM: selftests: Add exception handling support for aarch64
->   KVM: selftests: Add aarch64/debug-exceptions test
-> 
->  tools/testing/selftests/kvm/.gitignore        |   1 +
->  tools/testing/selftests/kvm/Makefile          |   3 +-
->  .../selftests/kvm/aarch64/debug-exceptions.c  | 250 ++++++++++++++++++
->  .../selftests/kvm/include/aarch64/processor.h |  83 +++++-
->  .../testing/selftests/kvm/include/kvm_util.h  |  23 +-
->  .../selftests/kvm/include/x86_64/processor.h  |   4 +-
->  .../selftests/kvm/lib/aarch64/handlers.S      | 124 +++++++++
->  .../selftests/kvm/lib/aarch64/processor.c     | 131 +++++++++
->  .../selftests/kvm/lib/x86_64/processor.c      |  22 +-
->  .../selftests/kvm/x86_64/kvm_pv_test.c        |   2 +-
->  .../selftests/kvm/x86_64/tsc_msrs_test.c      |   9 -
->  .../kvm/x86_64/userspace_msr_exit_test.c      |   8 +-
->  .../selftests/kvm/x86_64/xapic_ipi_test.c     |   2 +-
->  13 files changed, 615 insertions(+), 47 deletions(-)
->  create mode 100644 tools/testing/selftests/kvm/aarch64/debug-exceptions.c
->  create mode 100644 tools/testing/selftests/kvm/lib/aarch64/handlers.S
-> 
+> Can you backport it to your 5.10 tree and check if it helps?
+>   
+Hi Mike, the 0740a50b9baa is already in 5.10, tags/v5.10.24~5
+
+commit 4c84191cbc3eff49568d3c5cccb628fa382cf7fb
+Author: Mike Rapoport <rppt@kernel.org>
+Date:   Fri Mar 12 21:07:12 2021 -0800
+
+     mm/page_alloc.c: refactor initialization of struct page for holes 
+in memory layout
+
+     commit 0740a50b9baa4472cfb12442df4b39e2712a64a4 upstream.
+
+but check init_unavailable_range(), we need deal with the hole in the
+range of one pageblock.
+
+For our scene, pageblock range: 0xde600,0xde7ff, but the available pfn 
+begin with 0xde700.
+
+If pfn(eg, 0xde600) is not valid, the step in init_unavailable_range is
+pageblock_nr_pages, and ALIGN_DOWN(pfn, pageblock_nr_pages) from 0xde600
+to 0xde700 is same, so the page range for pfn [0xde600,0xde700] won't be
+initialized.
+
+After add the following patch, the oom test could passed,
+
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index aaa1655cf682..0c7e04f86f9f 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -6484,13 +6484,14 @@ static u64 __meminit 
+init_unavailable_range(unsigned long spfn,
+                                             unsigned long epfn,
+                                             int zone, int node)
+  {
+-       unsigned long pfn;
++       unsigned long pfn, pfn_down;
++       unsigned long epfn_down = ALIGN_DOWN(epfn, pageblock_nr_pages);
+         u64 pgcnt = 0;
+
+         for (pfn = spfn; pfn < epfn; pfn++) {
+-               if (!pfn_valid(ALIGN_DOWN(pfn, pageblock_nr_pages))) {
+-                       pfn = ALIGN_DOWN(pfn, pageblock_nr_pages)
+-                               + pageblock_nr_pages - 1;
++               pfn_down = ALIGN_DOWN(pfn, pageblock_nr_pages);
++               if (!pfn_valid(pfn_down) && pfn_down != epfn_down) {
++                       pfn = pfn_down + pageblock_nr_pages - 1;
+                         continue;
+                 }
+                 __init_single_page(pfn_to_page(pfn), pfn, zone, node);
+
+
+Before:
+On node 0 totalpages: 311551
+   Normal zone: 1230 pages used for memmap
+   Normal zone: 0 pages reserved
+   Normal zone: 157440 pages, LIFO batch:31
+   Normal zone: 16384 pages in unavailable ranges
+   HighMem zone: 154111 pages, LIFO batch:31
+   HighMem zone: 1 pages in unavailable ranges
+
+page:ef3cc000 is uninitialized and poisoned
+raw: ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
+
+After:
+On node 0 totalpages: 311551
+   Normal zone: 1230 pages used for memmap
+   Normal zone: 0 pages reserved
+   Normal zone: 157440 pages, LIFO batch:31
+   Normal zone: 17152 pages in unavailable ranges
+   HighMem zone: 154111 pages, LIFO batch:31
+   HighMem zone: 513 pages in unavailable ranges
+...
+page:(ptrval) refcount:1 mapcount:0 mapping:00000000 index:0x0 pfn:0xde600
+flags: 0xdd001000(reserved)
+raw: dd001000 ef3cc004 ef3cc004 00000000 00000000 00000000 ffffffff 00000001
 
 _______________________________________________
 kvmarm mailing list
