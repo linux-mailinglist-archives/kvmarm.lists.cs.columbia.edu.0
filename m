@@ -2,64 +2,64 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 347ED37F60E
-	for <lists+kvmarm@lfdr.de>; Thu, 13 May 2021 12:57:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C865437F68A
+	for <lists+kvmarm@lfdr.de>; Thu, 13 May 2021 13:14:29 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BCA064B89F;
-	Thu, 13 May 2021 06:57:47 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4702A4B8B0;
+	Thu, 13 May 2021 07:14:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id mg13ey68CE0s; Thu, 13 May 2021 06:57:47 -0400 (EDT)
+	with ESMTP id YZdji11kZZdT; Thu, 13 May 2021 07:14:29 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5AB794B89D;
-	Thu, 13 May 2021 06:57:46 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0D5634B8AA;
+	Thu, 13 May 2021 07:14:28 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E06964B85D
- for <kvmarm@lists.cs.columbia.edu>; Thu, 13 May 2021 06:57:44 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 889E64B74F
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 13 May 2021 07:14:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id cz5TnRIhScdn for <kvmarm@lists.cs.columbia.edu>;
- Thu, 13 May 2021 06:57:43 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4BDE74B5DE
- for <kvmarm@lists.cs.columbia.edu>; Thu, 13 May 2021 06:57:43 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D1D2F1476;
- Thu, 13 May 2021 03:57:42 -0700 (PDT)
-Received: from [192.168.1.179] (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 487D43F73B;
- Thu, 13 May 2021 03:57:40 -0700 (PDT)
-Subject: Re: [PATCH v11 2/6] arm64: kvm: Introduce MTE VM feature
-To: Catalin Marinas <catalin.marinas@arm.com>
-References: <20210416154309.22129-1-steven.price@arm.com>
- <20210416154309.22129-3-steven.price@arm.com> <20210428170705.GB4022@arm.com>
- <c3293d47-a5f2-ea4a-6730-f5cae26d8a7e@arm.com> <YJGHApOCXl811VK3@arm.com>
- <329286e8-a8f3-ea1a-1802-58813255a4a5@arm.com>
- <20210507182538.GF26528@arm.com> <20210510183506.GA10910@arm.com>
- <c891d4eb-b388-1658-8c8a-e76477062463@arm.com>
- <20210512174502.GC12391@arm.com>
-From: Steven Price <steven.price@arm.com>
-Message-ID: <7c1cb7c8-6ab4-62bd-fa17-2fb7be6d7f09@arm.com>
-Date: Thu, 13 May 2021 11:57:39 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+ with ESMTP id Yttr8U9vkk7M for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 13 May 2021 07:14:25 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5606A4B739
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 13 May 2021 07:14:25 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 448E7613CB;
+ Thu, 13 May 2021 11:14:24 +0000 (UTC)
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1lh9IM-001C2V-Cr; Thu, 13 May 2021 12:14:22 +0100
 MIME-Version: 1.0
-In-Reply-To: <20210512174502.GC12391@arm.com>
-Content-Language: en-GB
-Cc: "Dr. David Alan Gilbert" <dgilbert@redhat.com>, qemu-devel@nongnu.org,
- Marc Zyngier <maz@kernel.org>, Juan Quintela <quintela@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, linux-kernel@vger.kernel.org,
- Dave Martin <Dave.Martin@arm.com>, linux-arm-kernel@lists.infradead.org,
- Thomas Gleixner <tglx@linutronix.de>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu
+Date: Thu, 13 May 2021 12:14:22 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: Gavin Shan <gshan@redhat.com>
+Subject: Re: [PATCH] KVM: arm64: selftests: Request PMU feature in get-reg-list
+In-Reply-To: <20210513130655.73154-1-gshan@redhat.com>
+References: <20210513130655.73154-1-gshan@redhat.com>
+User-Agent: Roundcube Webmail/1.4.11
+Message-ID: <d717b9272cce16c62a4e3e671bb1f068@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: gshan@redhat.com, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org, linux-kernel@vger.kernel.org, drjones@redhat.com,
+ pbonzini@redhat.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: pbonzini@redhat.com, kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -71,172 +71,62 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 12/05/2021 18:45, Catalin Marinas wrote:
-> On Wed, May 12, 2021 at 04:46:48PM +0100, Steven Price wrote:
->> On 10/05/2021 19:35, Catalin Marinas wrote:
->>> On Fri, May 07, 2021 at 07:25:39PM +0100, Catalin Marinas wrote:
->>>> On Thu, May 06, 2021 at 05:15:25PM +0100, Steven Price wrote:
->>>>> On 04/05/2021 18:40, Catalin Marinas wrote:
->>>>>> On Thu, Apr 29, 2021 at 05:06:41PM +0100, Steven Price wrote:
->>>>>>> Given the changes to set_pte_at() which means that tags are restored from
->>>>>>> swap even if !PROT_MTE, the only race I can see remaining is the creation of
->>>>>>> new PROT_MTE mappings. As you mention an attempt to change mappings in the
->>>>>>> VMM memory space should involve a mmu notifier call which I think serialises
->>>>>>> this. So the remaining issue is doing this in a separate address space.
->>>>>>>
->>>>>>> So I guess the potential problem is:
->>>>>>>
->>>>>>>    * allocate memory MAP_SHARED but !PROT_MTE
->>>>>>>    * fork()
->>>>>>>    * VM causes a fault in parent address space
->>>>>>>    * child does a mprotect(PROT_MTE)
->>>>>>>
->>>>>>> With the last two potentially racing. Sadly I can't see a good way of
->>>>>>> handling that.
-> [...]
->>> Options:
->>>
->>> 1. Change the mte_sync_tags() code path to set the flag after clearing
->>>     and avoid reading stale tags. We document that mprotect() on
->>>     MAP_SHARED may lead to tag loss. Maybe we can intercept this in the
->>>     arch code and return an error.
->>
->> This is the best option I've come up with so far - but it's not a good
->> one! We can replace the set_bit() with a test_and_set_bit() to catch the
->> race after it has occurred - but I'm not sure what we can do about it
->> then (we've already wiped the data). Returning an error doesn't seem
->> particularly useful at that point, a message in dmesg is about the best
->> I can come up with.
+On 2021-05-13 14:06, Gavin Shan wrote:
+> Since the following commit, PMU registers are hidden from user until
+> it's explicitly requested by feeding feature (KVM_ARM_VCPU_PMU_V3).
+> Otherwise, 74 missing PMU registers are missing as the following
+> log indicates.
 > 
-> What I meant about intercepting is on something like
-> arch_validate_flags() to prevent VM_SHARED and VM_MTE together but only
-> for mprotect(), not mmap(). However, arch_validate_flags() is currently
-> called on both mmap() and mprotect() paths.
-
-I think even if we were to restrict mprotect() there would be corner
-cases around swapping in. For example if a page mapped VM_SHARED|VM_MTE
-is faulted simultaneously in both processes then we have the same situation:
-
- * with test_and_set_bit() one process could potentially see the tags
-before they have been restored - i.e. a data leak.
-
- * with separated test and set then one process could write to the tags
-before the second restore has completed causing a lost update.
-
-Obviously completely banning VM_SHARED|VM_MTE might work, but I don't
-think that's a good idea.
-
-> We can't do much in set_pte_at() to prevent the race with only a single
-> bit.
+>    11663111cd49 ("KVM: arm64: Hide PMU registers from userspace when
+> not available")
 > 
->>> 2. Figure out some other locking in the core code. However, if
->>>     mprotect() in one process can race with a handle_pte_fault() in
->>>     another, on the same shared mapping, it's not trivial.
->>>     filemap_map_pages() would take the page lock before calling
->>>     do_set_pte(), so mprotect() would need the same page lock.
->>
->> I can't see how this is going to work without harming the performance of
->> non-MTE work. Ultimately we're trying to add some sort of locking for
->> two (mostly) unrelated processes doing page table operations, which will
->> hurt scalability.
+>    # ./get-reg-list
+>    Number blessed registers:   308
+>    Number registers:           238
 > 
-> Another option is to have an arch callback to force re-faulting on the
-> pte. That means we don't populate it back after the invalidation in the
-> change_protection() path. We could do this only if the new pte is tagged
-> and the page doesn't have PG_mte_tagged. The faulting path takes the
-> page lock IIUC.
-
-As above - I don't think this race is just on the change_protection() path.
-
-> Well, at least for stage 1, I haven't thought much about stage 2.
+>    There are 74 missing registers.
+>    The following lines are missing registers:
 > 
->>> 3. Use another PG_arch_3 bit as a lock to spin on in the arch code (i.e.
->>>     set it around the other PG_arch_* bit setting).
->>
->> This is certainly tempting, although sadly the existing
->> wait_on_page_bit() is sleeping - so this would either be a literal spin,
->> or we'd need to implement a new non-sleeping wait mechanism.
+>       	ARM64_SYS_REG(3, 0, 9, 14, 1),
+> 	ARM64_SYS_REG(3, 0, 9, 14, 2),
+>              :
+> 	ARM64_SYS_REG(3, 3, 14, 15, 7),
 > 
-> Yeah, it would have to be a custom spinning mechanism, something like:
+> This fixes the issue of wrongly reported missing PMU registers by
+> requesting it explicitly.
 > 
-> 	/* lock the page */
-> 	while (test_and_set_bit(PG_arch_3, &page->flags))
-> 		smp_cond_load_relaxed(&page->flags, !(VAL & PG_arch_3));
-> 	...
-> 	/* unlock the page */
-> 	clear_bit(PG_arch_3, &page->flags);
-
-Presumably we'd also need to ensure interrupts are disabled to ensure
-we're not pre-empted in the middle and potentially deadlock. It's
-doable, but I'd prefer not to invent a new lock type if possible.
-
->> 4. Sledgehammer locking in mte_sync_page_tags(), add a spinlock only for
->> the MTE case where we have to sync tags (see below). What the actual
->> performance impact of this is I've no idea. It could certainly be bad
->> if there are a lot of pages with MTE enabled, which sadly is exactly
->> the case if KVM is used with MTE :(
->>
->> --->8----
->> diff --git a/arch/arm64/kernel/mte.c b/arch/arm64/kernel/mte.c
->> index 0d320c060ebe..389ad40256f6 100644
->> --- a/arch/arm64/kernel/mte.c
->> +++ b/arch/arm64/kernel/mte.c
->> @@ -25,23 +25,33 @@
->>  u64 gcr_kernel_excl __ro_after_init;
->>  static bool report_fault_once = true;
->> +static spinlock_t tag_sync_lock;
->>  static void mte_sync_page_tags(struct page *page, pte_t *ptep, bool check_swap,
->>  			       bool pte_is_tagged)
->>  {
->>  	pte_t old_pte = READ_ONCE(*ptep);
->> +	if (!is_swap_pte(old_pte) && !pte_is_tagged)
->> +		return;
->> +
->> +	spin_lock_irqsave(&tag_sync_lock, flags);
->> +
->> +	/* Recheck with the lock held */
->> +	if (test_bit(PG_mte_tagged, &page->flags))
->> +		goto out;
+> Signed-off-by: Gavin Shan <gshan@redhat.com>
+> ---
+>  tools/testing/selftests/kvm/aarch64/get-reg-list.c | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> Can we skip the lock if the page already has the PG_mte_tagged set?
-> That's assuming that we set the flag only after clearing the tags. The
-> normal case where mprotect() is called on a page already mapped with
-> PROT_MTE would not be affected.
+> diff --git a/tools/testing/selftests/kvm/aarch64/get-reg-list.c
+> b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
+> index 486932164cf2..6c6bdc6f5dc3 100644
+> --- a/tools/testing/selftests/kvm/aarch64/get-reg-list.c
+> +++ b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
+> @@ -314,6 +314,8 @@ static void core_reg_fixup(void)
 > 
+>  static void prepare_vcpu_init(struct kvm_vcpu_init *init)
+>  {
+> +	init->features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
+> +
+>  	if (reg_list_sve())
+>  		init->features[0] |= 1 << KVM_ARM_VCPU_SVE;
+>  }
 
-It was missing from the diff context (sorry, should have double checked
-that), but I was keeping the check in mte_sync_tags():
+Please see Andrew's series[1], which actually deals with options.
 
-  void mte_sync_tags(pte_t *ptep, pte_t pte)
-  {
-	struct page *page = pte_page(pte);
-	long i, nr_pages = compound_nr(page);
-	bool check_swap = nr_pages == 1;
-	bool pte_is_tagged = pte_tagged(pte);
-	unsigned long flags;
+         M.
 
-	/* Early out if there's nothing to do */
-	if (!check_swap && !pte_is_tagged)
-		return;
-
-	/* if PG_mte_tagged is set, tags have already been initialised */
-	for (i = 0; i < nr_pages; i++, page++) {
-		if (!test_bit(PG_mte_tagged, &page->flags))
-			mte_sync_page_tags(page, ptep, check_swap,
-					   pte_is_tagged);
-	}
-  }
-
-So the hit is only taken if !PG_mte_tagged - hence the "recheck" comment
-in mte_sync_page_tags() once the lock is held. I guess if I'm going this
-route it would make sense to refactor this to be a bit clearer.
-
-Steve
+[1] https://lore.kernel.org/r/20210507200416.198055-1-drjones@redhat.com
+-- 
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
