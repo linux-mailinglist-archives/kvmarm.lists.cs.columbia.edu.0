@@ -2,50 +2,94 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C4370383071
-	for <lists+kvmarm@lfdr.de>; Mon, 17 May 2021 16:26:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51F103832CD
+	for <lists+kvmarm@lfdr.de>; Mon, 17 May 2021 16:53:30 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 73E6B4B2A9;
-	Mon, 17 May 2021 10:26:43 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0361E4B736;
+	Mon, 17 May 2021 10:53:30 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=no
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SfJuyFgWz6Mk; Mon, 17 May 2021 10:26:43 -0400 (EDT)
+	with ESMTP id 6DfEd2+jFgIn; Mon, 17 May 2021 10:53:28 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9E3ED4B43B;
-	Mon, 17 May 2021 10:26:39 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 101DD4B808;
+	Mon, 17 May 2021 10:53:26 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A9A544B281
- for <kvmarm@lists.cs.columbia.edu>; Mon, 17 May 2021 10:26:38 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6ACBC4B535
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 17 May 2021 10:53:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id OUh5rFHEZCK1 for <kvmarm@lists.cs.columbia.edu>;
- Mon, 17 May 2021 10:26:34 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5D74B4B27D
- for <kvmarm@lists.cs.columbia.edu>; Mon, 17 May 2021 10:26:34 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0A045139F;
- Mon, 17 May 2021 07:26:34 -0700 (PDT)
-Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1339D3F73B;
- Mon, 17 May 2021 07:26:32 -0700 (PDT)
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-To: stable@vger.kernel.org, maz@kernel.org,
- linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu
-Subject: [PATCH for-stable-5.4] KVM: arm64: Initialize VCPU mdcr_el2 before
- loading it
-Date: Mon, 17 May 2021 15:27:13 +0100
-Message-Id: <20210517142713.400651-1-alexandru.elisei@arm.com>
-X-Mailer: git-send-email 2.31.1
-MIME-Version: 1.0
+ with ESMTP id l4-aF8lGKasG for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 17 May 2021 10:53:20 -0400 (EDT)
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com
+ [209.85.219.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 28AE44B531
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 17 May 2021 10:53:20 -0400 (EDT)
+Received: by mail-yb1-f202.google.com with SMTP id
+ o6-20020a5b06460000b02905004326697dso9560890ybq.22
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 17 May 2021 07:53:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=4HJ66++ZeWXgUMvYaSH59XIw9b5t7+bKx/IVCdRe4G0=;
+ b=tEchB3/NvHaS2iYBDSPPFoO6QDvpctN/kh8GNdmz+3BV51fgxznShQgFUWKmVHsnCB
+ aIexAfoWXg6sUKvOWx3mQ0ROzie/dXZfhTjzynlDE/FK5ic3y2TmhEJfI8B7wwhTPFpn
+ 5h+DUByZwY/YPA72ASBm/UMCFkrOZA/0KTlulemK4yZ/LlMl38QNjbYECaAyv39jZ2PN
+ kDcNISNoaDXMKrAuVsEts6T5iHO9gRSmdqijjd9/w146GvRse1G4R+oaPhYi9pQfgSH5
+ oDg000282+nVSW7qP3y3olOlbJ9JWfuRlxcA2Gv3VnuXIzwfdrZZ4BCdlEpRaNi4S8X0
+ BP7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=4HJ66++ZeWXgUMvYaSH59XIw9b5t7+bKx/IVCdRe4G0=;
+ b=LY3ZdJ24r6iO3Of0u5cfwKA8gyGcsTgK04HOstelmWz0d3M5GT7pBplo/wgugctVZg
+ mg4g158q9Z0OuzwrVdQ6ICwMY4lwTTcslGh8PlrVXG/QW8xgei7aFhzXo2kOR0RLT8Py
+ kUQZjwUKgh7duoj6Bs3V8FaXTL4t0RqljEMU/KutJGHYwG0JP1Cwk+olfSa4eOKnXYDL
+ wdoP1pFl4jUNcWPZI83/QjKau8n7MvJsgc2xUMQyBJxzsQo/xqjlN0N1JgmVeh7EynY4
+ xcXR593uQlxv2FPimpII51vlRelquycHnhMnCcYcNP3L8bW/QBIQOzWTd6zVnBlGjrbA
+ 0iyA==
+X-Gm-Message-State: AOAM532ap+qe+AoThz/u+H7t/AbW/Q/OjuSSKMwBGVkPW3kU4qyRQSDj
+ /xNqYmhfr016NA2z6Rwq6RPxphE0x69K9GxdNQ==
+X-Google-Smtp-Source: ABdhPJxVSYPxCoq4VDHfaNcpUYnOeavMMHtUfXfKI9+aR8ach/FPO0fxCU0HVpVBmnunXxkvJEfDJDgTUXDf+b1H8A==
+X-Received: from jgzg.c.googlers.com ([fda3:e722:ac3:10:7f:e700:c0a8:1acf])
+ (user=jingzhangos job=sendgmr) by 2002:a5b:1c8:: with SMTP id
+ f8mr317938ybp.44.1621263199546; Mon, 17 May 2021 07:53:19 -0700 (PDT)
+Date: Mon, 17 May 2021 14:53:10 +0000
+Message-Id: <20210517145314.157626-1-jingzhangos@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.31.1.751.gd2f1c929bd-goog
+Subject: [PATCH v5 0/4] KVM statistics data fd-based binary interface
+From: Jing Zhang <jingzhangos@google.com>
+To: KVM <kvm@vger.kernel.org>, KVMARM <kvmarm@lists.cs.columbia.edu>, 
+ LinuxMIPS <linux-mips@vger.kernel.org>, KVMPPC <kvm-ppc@vger.kernel.org>, 
+ LinuxS390 <linux-s390@vger.kernel.org>, 
+ Linuxkselftest <linux-kselftest@vger.kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Marc Zyngier <maz@kernel.org>, James Morse <james.morse@arm.com>, 
+ Julien Thierry <julien.thierry.kdev@gmail.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>, 
+ Will Deacon <will@kernel.org>, Huacai Chen <chenhuacai@kernel.org>, 
+ Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>, 
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+ Paul Mackerras <paulus@ozlabs.org>, 
+ Christian Borntraeger <borntraeger@de.ibm.com>,
+ Janosch Frank <frankja@linux.ibm.com>, 
+ David Hildenbrand <david@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
+ Claudio Imbrenda <imbrenda@linux.ibm.com>,
+ Sean Christopherson <seanjc@google.com>, 
+ Vitaly Kuznetsov <vkuznets@redhat.com>, Jim Mattson <jmattson@google.com>, 
+ Peter Shier <pshier@google.com>, Oliver Upton <oupton@google.com>, 
+ David Rientjes <rientjes@google.com>,
+ Emanuele Giuseppe Esposito <eesposit@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -62,223 +106,94 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-[ Upstream commit 263d6287da1433aba11c5b4046388f2cdf49675c ]
+This patchset provides a file descriptor for every VM and VCPU to read
+KVM statistics data in binary format.
+It is meant to provide a lightweight, flexible, scalable and efficient
+lock-free solution for user space telemetry applications to pull the
+statistics data periodically for large scale systems. The pulling
+frequency could be as high as a few times per second.
+In this patchset, every statistics data are treated to have some
+attributes as below:
+  * architecture dependent or common
+  * VM statistics data or VCPU statistics data
+  * type: cumulative, instantaneous,
+  * unit: none for simple counter, nanosecond, microsecond,
+    millisecond, second, Byte, KiByte, MiByte, GiByte. Clock Cycles
+Since no lock/synchronization is used, the consistency between all
+the statistics data is not guaranteed. That means not all statistics
+data are read out at the exact same time, since the statistics date
+are still being updated by KVM subsystems while they are read out.
 
-When a VCPU is created, the kvm_vcpu struct is initialized to zero in
-kvm_vm_ioctl_create_vcpu(). On VHE systems, the first time
-vcpu.arch.mdcr_el2 is loaded on hardware is in vcpu_load(), before it is
-set to a sensible value in kvm_arm_setup_debug() later in the run loop. The
-result is that KVM executes for a short time with MDCR_EL2 set to zero.
-
-This has several unintended consequences:
-
-* Setting MDCR_EL2.HPMN to 0 is constrained unpredictable according to ARM
-  DDI 0487G.a, page D13-3820. The behavior specified by the architecture
-  in this case is for the PE to behave as if MDCR_EL2.HPMN is set to a
-  value less than or equal to PMCR_EL0.N, which means that an unknown
-  number of counters are now disabled by MDCR_EL2.HPME, which is zero.
-
-* The host configuration for the other debug features controlled by
-  MDCR_EL2 is temporarily lost. This has been harmless so far, as Linux
-  doesn't use the other fields, but that might change in the future.
-
-Let's avoid both issues by initializing the VCPU's mdcr_el2 field in
-kvm_vcpu_vcpu_first_run_init(), thus making sure that the MDCR_EL2 register
-has a consistent value after each vcpu_load().
-
-[ v5.4 backport: added stub for KVM/arm that fixes compilation errors ]
-
-Fixes: d5a21bcc2995 ("KVM: arm64: Move common VHE/non-VHE trap config in separate functions")
-Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20210407144857.199746-3-alexandru.elisei@arm.com
 ---
- arch/arm/include/asm/kvm_host.h   |  1 +
- arch/arm64/include/asm/kvm_host.h |  1 +
- arch/arm64/kvm/debug.c            | 88 +++++++++++++++++++++----------
- virt/kvm/arm/arm.c                |  2 +
- 4 files changed, 64 insertions(+), 28 deletions(-)
 
-diff --git a/arch/arm/include/asm/kvm_host.h b/arch/arm/include/asm/kvm_host.h
-index dd03d5e01a94..32564b017ba0 100644
---- a/arch/arm/include/asm/kvm_host.h
-+++ b/arch/arm/include/asm/kvm_host.h
-@@ -335,6 +335,7 @@ static inline void kvm_arch_sched_in(struct kvm_vcpu *vcpu, int cpu) {}
- static inline void kvm_arch_vcpu_block_finish(struct kvm_vcpu *vcpu) {}
- 
- static inline void kvm_arm_init_debug(void) {}
-+static inline void kvm_arm_vcpu_init_debug(struct kvm_vcpu *vcpu) {}
- static inline void kvm_arm_setup_debug(struct kvm_vcpu *vcpu) {}
- static inline void kvm_arm_clear_debug(struct kvm_vcpu *vcpu) {}
- static inline void kvm_arm_reset_debug_ptr(struct kvm_vcpu *vcpu) {}
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index dfa6dc4575be..697702a1a1ff 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -552,6 +552,7 @@ static inline void kvm_arch_sched_in(struct kvm_vcpu *vcpu, int cpu) {}
- static inline void kvm_arch_vcpu_block_finish(struct kvm_vcpu *vcpu) {}
- 
- void kvm_arm_init_debug(void);
-+void kvm_arm_vcpu_init_debug(struct kvm_vcpu *vcpu);
- void kvm_arm_setup_debug(struct kvm_vcpu *vcpu);
- void kvm_arm_clear_debug(struct kvm_vcpu *vcpu);
- void kvm_arm_reset_debug_ptr(struct kvm_vcpu *vcpu);
-diff --git a/arch/arm64/kvm/debug.c b/arch/arm64/kvm/debug.c
-index dbc890511631..2484b2cca74b 100644
---- a/arch/arm64/kvm/debug.c
-+++ b/arch/arm64/kvm/debug.c
-@@ -68,6 +68,64 @@ void kvm_arm_init_debug(void)
- 	__this_cpu_write(mdcr_el2, kvm_call_hyp_ret(__kvm_get_mdcr_el2));
- }
- 
-+/**
-+ * kvm_arm_setup_mdcr_el2 - configure vcpu mdcr_el2 value
-+ *
-+ * @vcpu:	the vcpu pointer
-+ *
-+ * This ensures we will trap access to:
-+ *  - Performance monitors (MDCR_EL2_TPM/MDCR_EL2_TPMCR)
-+ *  - Debug ROM Address (MDCR_EL2_TDRA)
-+ *  - OS related registers (MDCR_EL2_TDOSA)
-+ *  - Statistical profiler (MDCR_EL2_TPMS/MDCR_EL2_E2PB)
-+ *  - Self-hosted Trace Filter controls (MDCR_EL2_TTRF)
-+ */
-+static void kvm_arm_setup_mdcr_el2(struct kvm_vcpu *vcpu)
-+{
-+	/*
-+	 * This also clears MDCR_EL2_E2PB_MASK to disable guest access
-+	 * to the profiling buffer.
-+	 */
-+	vcpu->arch.mdcr_el2 = __this_cpu_read(mdcr_el2) & MDCR_EL2_HPMN_MASK;
-+	vcpu->arch.mdcr_el2 |= (MDCR_EL2_TPM |
-+				MDCR_EL2_TPMS |
-+				MDCR_EL2_TTRF |
-+				MDCR_EL2_TPMCR |
-+				MDCR_EL2_TDRA |
-+				MDCR_EL2_TDOSA);
-+
-+	/* Is the VM being debugged by userspace? */
-+	if (vcpu->guest_debug)
-+		/* Route all software debug exceptions to EL2 */
-+		vcpu->arch.mdcr_el2 |= MDCR_EL2_TDE;
-+
-+	/*
-+	 * Trap debug register access when one of the following is true:
-+	 *  - Userspace is using the hardware to debug the guest
-+	 *  (KVM_GUESTDBG_USE_HW is set).
-+	 *  - The guest is not using debug (KVM_ARM64_DEBUG_DIRTY is clear).
-+	 */
-+	if ((vcpu->guest_debug & KVM_GUESTDBG_USE_HW) ||
-+	    !(vcpu->arch.flags & KVM_ARM64_DEBUG_DIRTY))
-+		vcpu->arch.mdcr_el2 |= MDCR_EL2_TDA;
-+
-+	trace_kvm_arm_set_dreg32("MDCR_EL2", vcpu->arch.mdcr_el2);
-+}
-+
-+/**
-+ * kvm_arm_vcpu_init_debug - setup vcpu debug traps
-+ *
-+ * @vcpu:	the vcpu pointer
-+ *
-+ * Set vcpu initial mdcr_el2 value.
-+ */
-+void kvm_arm_vcpu_init_debug(struct kvm_vcpu *vcpu)
-+{
-+	preempt_disable();
-+	kvm_arm_setup_mdcr_el2(vcpu);
-+	preempt_enable();
-+}
-+
- /**
-  * kvm_arm_reset_debug_ptr - reset the debug ptr to point to the vcpu state
-  */
-@@ -83,13 +141,7 @@ void kvm_arm_reset_debug_ptr(struct kvm_vcpu *vcpu)
-  * @vcpu:	the vcpu pointer
-  *
-  * This is called before each entry into the hypervisor to setup any
-- * debug related registers. Currently this just ensures we will trap
-- * access to:
-- *  - Performance monitors (MDCR_EL2_TPM/MDCR_EL2_TPMCR)
-- *  - Debug ROM Address (MDCR_EL2_TDRA)
-- *  - OS related registers (MDCR_EL2_TDOSA)
-- *  - Statistical profiler (MDCR_EL2_TPMS/MDCR_EL2_E2PB)
-- *  - Self-hosted Trace Filter controls (MDCR_EL2_TTRF)
-+ * debug related registers.
-  *
-  * Additionally, KVM only traps guest accesses to the debug registers if
-  * the guest is not actively using them (see the KVM_ARM64_DEBUG_DIRTY
-@@ -101,28 +153,14 @@ void kvm_arm_reset_debug_ptr(struct kvm_vcpu *vcpu)
- 
- void kvm_arm_setup_debug(struct kvm_vcpu *vcpu)
- {
--	bool trap_debug = !(vcpu->arch.flags & KVM_ARM64_DEBUG_DIRTY);
- 	unsigned long mdscr, orig_mdcr_el2 = vcpu->arch.mdcr_el2;
- 
- 	trace_kvm_arm_setup_debug(vcpu, vcpu->guest_debug);
- 
--	/*
--	 * This also clears MDCR_EL2_E2PB_MASK to disable guest access
--	 * to the profiling buffer.
--	 */
--	vcpu->arch.mdcr_el2 = __this_cpu_read(mdcr_el2) & MDCR_EL2_HPMN_MASK;
--	vcpu->arch.mdcr_el2 |= (MDCR_EL2_TPM |
--				MDCR_EL2_TPMS |
--				MDCR_EL2_TTRF |
--				MDCR_EL2_TPMCR |
--				MDCR_EL2_TDRA |
--				MDCR_EL2_TDOSA);
-+	kvm_arm_setup_mdcr_el2(vcpu);
- 
- 	/* Is Guest debugging in effect? */
- 	if (vcpu->guest_debug) {
--		/* Route all software debug exceptions to EL2 */
--		vcpu->arch.mdcr_el2 |= MDCR_EL2_TDE;
--
- 		/* Save guest debug state */
- 		save_guest_debug_regs(vcpu);
- 
-@@ -176,7 +214,6 @@ void kvm_arm_setup_debug(struct kvm_vcpu *vcpu)
- 
- 			vcpu->arch.debug_ptr = &vcpu->arch.external_debug_state;
- 			vcpu->arch.flags |= KVM_ARM64_DEBUG_DIRTY;
--			trap_debug = true;
- 
- 			trace_kvm_arm_set_regset("BKPTS", get_num_brps(),
- 						&vcpu->arch.debug_ptr->dbg_bcr[0],
-@@ -191,10 +228,6 @@ void kvm_arm_setup_debug(struct kvm_vcpu *vcpu)
- 	BUG_ON(!vcpu->guest_debug &&
- 		vcpu->arch.debug_ptr != &vcpu->arch.vcpu_debug_state);
- 
--	/* Trap debug register access */
--	if (trap_debug)
--		vcpu->arch.mdcr_el2 |= MDCR_EL2_TDA;
--
- 	/* If KDE or MDE are set, perform a full save/restore cycle. */
- 	if (vcpu_read_sys_reg(vcpu, MDSCR_EL1) & (DBG_MDSCR_KDE | DBG_MDSCR_MDE))
- 		vcpu->arch.flags |= KVM_ARM64_DEBUG_DIRTY;
-@@ -203,7 +236,6 @@ void kvm_arm_setup_debug(struct kvm_vcpu *vcpu)
- 	if (has_vhe() && orig_mdcr_el2 != vcpu->arch.mdcr_el2)
- 		write_sysreg(vcpu->arch.mdcr_el2, mdcr_el2);
- 
--	trace_kvm_arm_set_dreg32("MDCR_EL2", vcpu->arch.mdcr_el2);
- 	trace_kvm_arm_set_dreg32("MDSCR_EL1", vcpu_read_sys_reg(vcpu, MDSCR_EL1));
- }
- 
-diff --git a/virt/kvm/arm/arm.c b/virt/kvm/arm/arm.c
-index 2e7d2b3f2907..4af85605730e 100644
---- a/virt/kvm/arm/arm.c
-+++ b/virt/kvm/arm/arm.c
-@@ -579,6 +579,8 @@ static int kvm_vcpu_first_run_init(struct kvm_vcpu *vcpu)
- 
- 	vcpu->arch.has_run_once = true;
- 
-+	kvm_arm_vcpu_init_debug(vcpu);
-+
- 	if (likely(irqchip_in_kernel(kvm))) {
- 		/*
- 		 * Map the VGIC hardware resources before running a vcpu the
+* v4 -> v5
+  - Rebase to kvm/queue, commit a4345a7cecfb ("Merge tag
+    'kvmarm-fixes-5.13-1'")
+  - Change maximum stats name length to 48
+  - Replace VM_STATS_COMMON/VCPU_STATS_COMMON macros with stats
+    descriptor definition macros.
+  - Fixed some errors/warnings reported by checkpatch.pl
+
+* v3 -> v4
+  - Rebase to kvm/queue, commit 9f242010c3b4 ("KVM: avoid "deadlock"
+    between install_new_memslots and MMU notifier")
+  - Use C-stype comments in the whole patch
+  - Fix wrong count for x86 VCPU stats descriptors
+  - Fix KVM stats data size counting and validity check in selftest
+
+* v2 -> v3
+  - Rebase to kvm/queue, commit edf408f5257b ("KVM: avoid "deadlock"
+    between install_new_memslots and MMU notifier")
+  - Resolve some nitpicks about format
+
+* v1 -> v2
+  - Use ARRAY_SIZE to count the number of stats descriptors
+  - Fix missing `size` field initialization in macro STATS_DESC
+
+[1] https://lore.kernel.org/kvm/20210402224359.2297157-1-jingzhangos@google.com
+[2] https://lore.kernel.org/kvm/20210415151741.1607806-1-jingzhangos@google.com
+[3] https://lore.kernel.org/kvm/20210423181727.596466-1-jingzhangos@google.com
+[4] https://lore.kernel.org/kvm/20210429203740.1935629-1-jingzhangos@google.com
+
+---
+
+Jing Zhang (4):
+  KVM: stats: Separate common stats from architecture specific ones
+  KVM: stats: Add fd-based API to read binary stats data
+  KVM: stats: Add documentation for statistics data binary interface
+  KVM: selftests: Add selftest for KVM statistics data binary interface
+
+ Documentation/virt/kvm/api.rst                | 171 ++++++++
+ arch/arm64/include/asm/kvm_host.h             |   9 +-
+ arch/arm64/kvm/guest.c                        |  38 +-
+ arch/mips/include/asm/kvm_host.h              |   9 +-
+ arch/mips/kvm/mips.c                          |  64 ++-
+ arch/powerpc/include/asm/kvm_host.h           |   9 +-
+ arch/powerpc/kvm/book3s.c                     |  64 ++-
+ arch/powerpc/kvm/book3s_hv.c                  |  12 +-
+ arch/powerpc/kvm/book3s_pr.c                  |   2 +-
+ arch/powerpc/kvm/book3s_pr_papr.c             |   2 +-
+ arch/powerpc/kvm/booke.c                      |  59 ++-
+ arch/s390/include/asm/kvm_host.h              |   9 +-
+ arch/s390/kvm/kvm-s390.c                      | 129 +++++-
+ arch/x86/include/asm/kvm_host.h               |   9 +-
+ arch/x86/kvm/x86.c                            |  67 +++-
+ include/linux/kvm_host.h                      | 136 ++++++-
+ include/linux/kvm_types.h                     |  12 +
+ include/uapi/linux/kvm.h                      |  50 +++
+ tools/testing/selftests/kvm/.gitignore        |   1 +
+ tools/testing/selftests/kvm/Makefile          |   3 +
+ .../testing/selftests/kvm/include/kvm_util.h  |   3 +
+ .../selftests/kvm/kvm_bin_form_stats.c        | 379 ++++++++++++++++++
+ tools/testing/selftests/kvm/lib/kvm_util.c    |  12 +
+ virt/kvm/kvm_main.c                           | 237 ++++++++++-
+ 24 files changed, 1396 insertions(+), 90 deletions(-)
+ create mode 100644 tools/testing/selftests/kvm/kvm_bin_form_stats.c
+
+
+base-commit: a4345a7cecfb91ae78cd43d26b0c6a956420761a
 -- 
-2.31.1
+2.31.1.751.gd2f1c929bd-goog
 
 _______________________________________________
 kvmarm mailing list
