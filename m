@@ -2,73 +2,59 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A7F9E388FEB
-	for <lists+kvmarm@lfdr.de>; Wed, 19 May 2021 16:07:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26CE1388FF6
+	for <lists+kvmarm@lfdr.de>; Wed, 19 May 2021 16:09:43 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 520F04B53D;
-	Wed, 19 May 2021 10:07:54 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id ADB834B522;
+	Wed, 19 May 2021 10:09:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.209
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rmmdlICvlITO; Wed, 19 May 2021 10:07:54 -0400 (EDT)
+	with ESMTP id 85zTerGRrTOD; Wed, 19 May 2021 10:09:42 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E44684B4FE;
-	Wed, 19 May 2021 10:07:52 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5427D4B6A8;
+	Wed, 19 May 2021 10:09:41 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 30F4C4B53D
- for <kvmarm@lists.cs.columbia.edu>; Wed, 19 May 2021 10:07:50 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C64C24B522
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 19 May 2021 10:09:39 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Qlf82djF+Glh for <kvmarm@lists.cs.columbia.edu>;
- Wed, 19 May 2021 10:07:49 -0400 (EDT)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 118F14B857
- for <kvmarm@lists.cs.columbia.edu>; Wed, 19 May 2021 10:07:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1621433268;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VetHpOvSuMU3AdKm021OKbp+xK/DKJ2+j6hSKQ3/iF4=;
- b=VWwP5mR4uv4PMYqfQ5j0T6ZWvvJsReLjpYjBzf2jTguNZ8vVQvKStZEMQljAuXxCboLFYH
- fr0W/SHl9qRUJX+dNMKTOpiTXgm07Pt+aHilZNPwv3hag3PgknhrVoQlVgCdANeXKyU253
- T6fVO3daLgLZuyUybbqBXg0+5nBCfh4=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-303-gxnZUfH5PjmZ1jK3oq6IaA-1; Wed, 19 May 2021 10:07:47 -0400
-X-MC-Unique: gxnZUfH5PjmZ1jK3oq6IaA-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com
- [10.5.11.22])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 39750107ACC7;
- Wed, 19 May 2021 14:07:46 +0000 (UTC)
-Received: from gator.redhat.com (unknown [10.40.192.248])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 722E010013C1;
- Wed, 19 May 2021 14:07:44 +0000 (UTC)
-From: Andrew Jones <drjones@redhat.com>
-To: kvm@vger.kernel.org,
-	kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v2 5/5] KVM: arm64: selftests: get-reg-list: Split base and
- pmu registers
-Date: Wed, 19 May 2021 16:07:26 +0200
-Message-Id: <20210519140726.892632-6-drjones@redhat.com>
-In-Reply-To: <20210519140726.892632-1-drjones@redhat.com>
-References: <20210519140726.892632-1-drjones@redhat.com>
+ with ESMTP id NBn33KksOWfA for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 19 May 2021 10:09:38 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5D7DA4B4FE
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 19 May 2021 10:09:38 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D3F6431B;
+ Wed, 19 May 2021 07:09:37 -0700 (PDT)
+Received: from [192.168.1.179] (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5F3503F73B;
+ Wed, 19 May 2021 07:09:35 -0700 (PDT)
+Subject: Re: [PATCH v12 8/8] KVM: arm64: Document MTE capability and ioctl
+To: Marc Zyngier <maz@kernel.org>
+References: <20210517123239.8025-1-steven.price@arm.com>
+ <20210517123239.8025-9-steven.price@arm.com> <87r1i5teou.wl-maz@kernel.org>
+From: Steven Price <steven.price@arm.com>
+Message-ID: <3b4cca00-e81d-322e-6f65-4d0850aac5a5@arm.com>
+Date: Wed, 19 May 2021 15:09:23 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
-Cc: maz@kernel.org, pbonzini@redhat.com
+In-Reply-To: <87r1i5teou.wl-maz@kernel.org>
+Content-Language: en-GB
+Cc: "Dr. David Alan Gilbert" <dgilbert@redhat.com>, qemu-devel@nongnu.org,
+ Catalin Marinas <catalin.marinas@arm.com>, Juan Quintela <quintela@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, linux-kernel@vger.kernel.org,
+ Dave Martin <Dave.Martin@arm.com>, linux-arm-kernel@lists.infradead.org,
+ Thomas Gleixner <tglx@linutronix.de>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -85,157 +71,117 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Since KVM commit 11663111cd49 ("KVM: arm64: Hide PMU registers from
-userspace when not available") the get-reg-list* tests have been
-failing with
+On 17/05/2021 19:09, Marc Zyngier wrote:
+> On Mon, 17 May 2021 13:32:39 +0100,
+> Steven Price <steven.price@arm.com> wrote:
+>>
+>> A new capability (KVM_CAP_ARM_MTE) identifies that the kernel supports
+>> granting a guest access to the tags, and provides a mechanism for the
+>> VMM to enable it.
+>>
+>> A new ioctl (KVM_ARM_MTE_COPY_TAGS) provides a simple way for a VMM to
+>> access the tags of a guest without having to maintain a PROT_MTE mapping
+>> in userspace. The above capability gates access to the ioctl.
+>>
+>> Signed-off-by: Steven Price <steven.price@arm.com>
+>> ---
+>>  Documentation/virt/kvm/api.rst | 53 ++++++++++++++++++++++++++++++++++
+>>  1 file changed, 53 insertions(+)
+>>
+>> diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
+>> index 22d077562149..a31661b870ba 100644
+>> --- a/Documentation/virt/kvm/api.rst
+>> +++ b/Documentation/virt/kvm/api.rst
+>> @@ -5034,6 +5034,40 @@ see KVM_XEN_VCPU_SET_ATTR above.
+>>  The KVM_XEN_VCPU_ATTR_TYPE_RUNSTATE_ADJUST type may not be used
+>>  with the KVM_XEN_VCPU_GET_ATTR ioctl.
+>>  
+>> +4.130 KVM_ARM_MTE_COPY_TAGS
+>> +---------------------------
+>> +
+>> +:Capability: KVM_CAP_ARM_MTE
+>> +:Architectures: arm64
+>> +:Type: vm ioctl
+>> +:Parameters: struct kvm_arm_copy_mte_tags
+>> +:Returns: 0 on success, < 0 on error
+>> +
+>> +::
+>> +
+>> +  struct kvm_arm_copy_mte_tags {
+>> +	__u64 guest_ipa;
+>> +	__u64 length;
+>> +	union {
+>> +		void __user *addr;
+>> +		__u64 padding;
+>> +	};
+>> +	__u64 flags;
+>> +	__u64 reserved[2];
+>> +  };
+> 
+> This doesn't exactly match the structure in the previous patch :-(.
 
-  ...
-  ... There are 74 missing registers.
-  The following lines are missing registers:
-  ...
+:( I knew there was a reason I didn't include it in the documentation
+for the first 9 versions... I'll fix this up, thanks for spotting it.
 
-where the 74 missing registers are all PMU registers. This isn't a
-bug in KVM that the selftest found, even though it's true that a
-KVM userspace that wasn't setting the KVM_ARM_VCPU_PMU_V3 VCPU
-flag, but still expecting the PMU registers to be in the reg-list,
-would suddenly no longer have their expectations met. In that case,
-the expectations were wrong, though, so that KVM userspace needs to
-be fixed, and so does this selftest. The fix for this selftest is to
-pull the PMU registers out of the base register sublist into their
-own sublist and then create new, pmu-enabled vcpu configs which can
-be tested.
+>> +
+>> +Copies Memory Tagging Extension (MTE) tags to/from guest tag memory. The
+>> +``guest_ipa`` and ``length`` fields must be ``PAGE_SIZE`` aligned. The ``addr``
+>> +fieldmust point to a buffer which the tags will be copied to or from.
+>> +
+>> +``flags`` specifies the direction of copy, either ``KVM_ARM_TAGS_TO_GUEST`` or
+>> +``KVM_ARM_TAGS_FROM_GUEST``.
+>> +
+>> +The size of the buffer to store the tags is ``(length / MTE_GRANULE_SIZE)``
+> 
+> Should we add a UAPI definition for MTE_GRANULE_SIZE?
 
-Signed-off-by: Andrew Jones <drjones@redhat.com>
----
- .../selftests/kvm/aarch64/get-reg-list.c      | 46 +++++++++++++++----
- 1 file changed, 38 insertions(+), 8 deletions(-)
+I wasn't sure whether to export this or not. The ioctl is based around
+the existing ptrace interface (PTRACE_{PEEK,POKE}MTETAGS) which doesn't
+expose a UAPI definition. Admittedly the documentation there also just
+says "16-byte granule" rather than MTE_GRANULE_SIZE.
 
-diff --git a/tools/testing/selftests/kvm/aarch64/get-reg-list.c b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
-index dc06a28bfb74..78d8949bddbd 100644
---- a/tools/testing/selftests/kvm/aarch64/get-reg-list.c
-+++ b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
-@@ -47,6 +47,7 @@ struct reg_sublist {
- struct vcpu_config {
- 	const char *name;
- 	bool sve;
-+	bool pmu;
- 	struct reg_sublist sublists[];
- };
- 
-@@ -328,6 +329,8 @@ static void prepare_vcpu_init(struct vcpu_config *c, struct kvm_vcpu_init *init)
- {
- 	if (c->sve)
- 		init->features[0] |= 1 << KVM_ARM_VCPU_SVE;
-+	if (c->pmu)
-+		init->features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
- }
- 
- static void finalize_vcpu(struct kvm_vm *vm, uint32_t vcpuid, struct vcpu_config *c)
-@@ -346,6 +349,10 @@ static void check_supported(struct vcpu_config *c)
- 		fprintf(stderr, "%s: SVE not available, skipping tests\n", c->name);
- 		exit(KSFT_SKIP);
- 	}
-+	if (c->pmu && !kvm_check_cap(KVM_CAP_ARM_PMU_V3)) {
-+		fprintf(stderr, "%s: PMU not available, skipping tests\n", c->name);
-+		exit(KSFT_SKIP);
-+	}
- }
- 
- static bool print_list;
-@@ -588,7 +595,7 @@ int main(int ac, char **av)
-  * The current blessed list was primed with the output of kernel version
-  * v4.15 with --core-reg-fixup and then later updated with new registers.
-  *
-- * The blessed list is up to date with kernel version v5.10-rc5
-+ * The blessed list is up to date with kernel version 5.13.0-rc2
-  */
- static __u64 base_regs[] = {
- 	KVM_REG_ARM64 | KVM_REG_SIZE_U64 | KVM_REG_ARM_CORE | KVM_REG_ARM_CORE_REG(regs.regs[0]),
-@@ -780,8 +787,6 @@ static __u64 base_regs[] = {
- 	ARM64_SYS_REG(3, 0, 5, 2, 0),	/* ESR_EL1 */
- 	ARM64_SYS_REG(3, 0, 6, 0, 0),	/* FAR_EL1 */
- 	ARM64_SYS_REG(3, 0, 7, 4, 0),	/* PAR_EL1 */
--	ARM64_SYS_REG(3, 0, 9, 14, 1),	/* PMINTENSET_EL1 */
--	ARM64_SYS_REG(3, 0, 9, 14, 2),	/* PMINTENCLR_EL1 */
- 	ARM64_SYS_REG(3, 0, 10, 2, 0),	/* MAIR_EL1 */
- 	ARM64_SYS_REG(3, 0, 10, 3, 0),	/* AMAIR_EL1 */
- 	ARM64_SYS_REG(3, 0, 12, 0, 0),	/* VBAR_EL1 */
-@@ -790,6 +795,16 @@ static __u64 base_regs[] = {
- 	ARM64_SYS_REG(3, 0, 13, 0, 4),	/* TPIDR_EL1 */
- 	ARM64_SYS_REG(3, 0, 14, 1, 0),	/* CNTKCTL_EL1 */
- 	ARM64_SYS_REG(3, 2, 0, 0, 0),	/* CSSELR_EL1 */
-+	ARM64_SYS_REG(3, 3, 13, 0, 2),	/* TPIDR_EL0 */
-+	ARM64_SYS_REG(3, 3, 13, 0, 3),	/* TPIDRRO_EL0 */
-+	ARM64_SYS_REG(3, 4, 3, 0, 0),	/* DACR32_EL2 */
-+	ARM64_SYS_REG(3, 4, 5, 0, 1),	/* IFSR32_EL2 */
-+	ARM64_SYS_REG(3, 4, 5, 3, 0),	/* FPEXC32_EL2 */
-+};
-+
-+static __u64 pmu_regs[] = {
-+	ARM64_SYS_REG(3, 0, 9, 14, 1),	/* PMINTENSET_EL1 */
-+	ARM64_SYS_REG(3, 0, 9, 14, 2),	/* PMINTENCLR_EL1 */
- 	ARM64_SYS_REG(3, 3, 9, 12, 0),	/* PMCR_EL0 */
- 	ARM64_SYS_REG(3, 3, 9, 12, 1),	/* PMCNTENSET_EL0 */
- 	ARM64_SYS_REG(3, 3, 9, 12, 2),	/* PMCNTENCLR_EL0 */
-@@ -799,8 +814,6 @@ static __u64 base_regs[] = {
- 	ARM64_SYS_REG(3, 3, 9, 13, 0),	/* PMCCNTR_EL0 */
- 	ARM64_SYS_REG(3, 3, 9, 14, 0),	/* PMUSERENR_EL0 */
- 	ARM64_SYS_REG(3, 3, 9, 14, 3),	/* PMOVSSET_EL0 */
--	ARM64_SYS_REG(3, 3, 13, 0, 2),	/* TPIDR_EL0 */
--	ARM64_SYS_REG(3, 3, 13, 0, 3),	/* TPIDRRO_EL0 */
- 	ARM64_SYS_REG(3, 3, 14, 8, 0),
- 	ARM64_SYS_REG(3, 3, 14, 8, 1),
- 	ARM64_SYS_REG(3, 3, 14, 8, 2),
-@@ -864,9 +877,6 @@ static __u64 base_regs[] = {
- 	ARM64_SYS_REG(3, 3, 14, 15, 5),
- 	ARM64_SYS_REG(3, 3, 14, 15, 6),
- 	ARM64_SYS_REG(3, 3, 14, 15, 7),	/* PMCCFILTR_EL0 */
--	ARM64_SYS_REG(3, 4, 3, 0, 0),	/* DACR32_EL2 */
--	ARM64_SYS_REG(3, 4, 5, 0, 1),	/* IFSR32_EL2 */
--	ARM64_SYS_REG(3, 4, 5, 3, 0),	/* FPEXC32_EL2 */
- };
- 
- static __u64 vregs[] = {
-@@ -970,6 +980,15 @@ static struct vcpu_config vregs_config = {
- 	{0},
- 	},
- };
-+static struct vcpu_config vregs_pmu_config = {
-+	"vregs+pmu", .pmu = true,
-+	.sublists = {
-+	{ base_regs,	ARRAY_SIZE(base_regs), },
-+	{ vregs,	ARRAY_SIZE(vregs), },
-+	{ pmu_regs,	ARRAY_SIZE(pmu_regs), },
-+	{0},
-+	},
-+};
- static struct vcpu_config sve_config = {
- 	"sve", .sve = true,
- 	.sublists = {
-@@ -978,9 +997,20 @@ static struct vcpu_config sve_config = {
- 	{0},
- 	},
- };
-+static struct vcpu_config sve_pmu_config = {
-+	"sve+pmu", .sve = true, .pmu = true,
-+	.sublists = {
-+	{ base_regs,	ARRAY_SIZE(base_regs), },
-+	{ sve_regs,	ARRAY_SIZE(sve_regs),	sve_rejects_set,	ARRAY_SIZE(sve_rejects_set), },
-+	{ pmu_regs,	ARRAY_SIZE(pmu_regs), },
-+	{0},
-+	},
-+};
- 
- static struct vcpu_config *vcpu_configs[] = {
- 	&vregs_config,
-+	&vregs_pmu_config,
- 	&sve_config,
-+	&sve_pmu_config,
- };
- static int vcpu_configs_n = ARRAY_SIZE(vcpu_configs);
--- 
-2.30.2
+So I'll just remove the reference to MTE_GRANULE_SIZE in the
+documentation unless you feel that we should have a UAPI definition.
 
+>> +bytes (i.e. 1/16th of the corresponding size). Each byte contains a single tag
+>> +value. This matches the format of ``PTRACE_PEEKMTETAGS`` and
+>> +``PTRACE_POKEMTETAGS``.
+>> +
+>>  5. The kvm_run structure
+>>  ========================
+>>  
+>> @@ -6362,6 +6396,25 @@ default.
+>>  
+>>  See Documentation/x86/sgx/2.Kernel-internals.rst for more details.
+>>  
+>> +7.26 KVM_CAP_ARM_MTE
+>> +--------------------
+>> +
+>> +:Architectures: arm64
+>> +:Parameters: none
+>> +
+>> +This capability indicates that KVM (and the hardware) supports exposing the
+>> +Memory Tagging Extensions (MTE) to the guest. It must also be enabled by the
+>> +VMM before the guest will be granted access.
+>> +
+>> +When enabled the guest is able to access tags associated with any memory given
+>> +to the guest. KVM will ensure that the pages are flagged ``PG_mte_tagged`` so
+>> +that the tags are maintained during swap or hibernation of the host; however
+>> +the VMM needs to manually save/restore the tags as appropriate if the VM is
+>> +migrated.
+>> +
+>> +When enabled the VMM may make use of the ``KVM_ARM_MTE_COPY_TAGS`` ioctl to
+>> +perform a bulk copy of tags to/from the guest.
+>> +
+> 
+> Missing limitation to AArch64 guests.
+
+As mentioned previously it's not technically limited to AArch64, but
+I'll expand this to make it clear that MTE isn't usable from a AArch32 VCPU.
+
+Thanks,
+
+Steve
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
