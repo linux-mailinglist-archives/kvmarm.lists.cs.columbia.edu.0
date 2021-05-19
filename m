@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B3F0E389C6C
-	for <lists+kvmarm@lfdr.de>; Thu, 20 May 2021 06:22:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A5D338A064
+	for <lists+kvmarm@lfdr.de>; Thu, 20 May 2021 10:58:04 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2B27E4B832;
-	Thu, 20 May 2021 00:22:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2A1E14B7FB;
+	Thu, 20 May 2021 04:58:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,67 +19,60 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SFFPGAeMYZZO; Thu, 20 May 2021 00:22:00 -0400 (EDT)
+	with ESMTP id bZe2px36T1oY; Thu, 20 May 2021 04:58:04 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A5B204B80C;
-	Thu, 20 May 2021 00:21:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A46444B750;
+	Thu, 20 May 2021 04:58:02 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 61EF44B7DB
- for <kvmarm@lists.cs.columbia.edu>; Thu, 20 May 2021 00:21:57 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3AE694B83A
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 19 May 2021 12:57:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id bE-q8bH-MnH6 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 20 May 2021 00:21:56 -0400 (EDT)
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com
- [209.85.210.170])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id EF1BC4B5C6
- for <kvmarm@lists.cs.columbia.edu>; Thu, 20 May 2021 00:21:55 -0400 (EDT)
-Received: by mail-pf1-f170.google.com with SMTP id g18so9761974pfr.2
- for <kvmarm@lists.cs.columbia.edu>; Wed, 19 May 2021 21:21:55 -0700 (PDT)
+ with ESMTP id 4p1uj6pvR6Gp for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 19 May 2021 12:57:57 -0400 (EDT)
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com
+ [209.85.208.171])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A63C24B832
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 19 May 2021 12:57:57 -0400 (EDT)
+Received: by mail-lj1-f171.google.com with SMTP id w15so16429269ljo.10
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 19 May 2021 09:57:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=DoLjvzR9Ycpjqcta0VpSiJR4Bdnq46dPXdEKwxdkZyE=;
- b=KhAuP9uJ0n9pmyTFOxYfvk0m31c9RU1ZSXij+ksAklnEMQOxYzFB8F2NghHrxa0v/q
- wL/kdDf2JVSyJJnvOnZAZnOHIQwbe3g3IwaONeGKzObQDxihAExXUsj1UNM+FeUaxaCB
- cs3C6C6BObrMp27EBsoNGKxVfSeEpoLskJddVXnFZCV4+9TX18AgZvLNSOzUDsw9nUkg
- P0OgZzuc4/aPq+MHVU37o5Rsxp6/Gh/tbpXovUKYmvQmUWUws3uSDkvk9k13v3DQr1VX
- qJrP3ehBjk3P/TTsuttFjfSyzxtdq7PiNymDcP30iofWSZVHWs4jHZoUb0uN7/oXndKL
- vkZw==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=nXnRBFRSdAWxCxN1vjVIJlzYFA0xQryLk10gJy9ij6Q=;
+ b=pS95ZLgayqQwxXeQu8ZyQ8ycWuDd16ElGeC0xgVYQUfHCnl9JqIwvNsLMVzYfpTn+u
+ 4ylD5YuNNMfyuo+nPoA6mEIO3YGuJw8E4wG16u8d2PGReQu3zyMBFOG9ta3vUoParUt6
+ VBwXR6Hnm+iQwRnaU0ju2zrO6HTCf5g6XRrEE6GN7GeKRDvFqs8MA2sHf3MHccHnaFE6
+ ORhUxGYQAZe4Mt2I3W23avCfWFCIsSeLgpToUJu3q8FEeX7qIfxWlQVpVKoxLVNKcUB2
+ Ks0pVOb7sy0MIfXP21Iz0SORueBfNACFXhk9ZAJiTR3OgxcxbO7w5lPRXdyc8yjPaELJ
+ 4K6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=DoLjvzR9Ycpjqcta0VpSiJR4Bdnq46dPXdEKwxdkZyE=;
- b=TviKSZJZQxAKaVbqo7ukt7Ti6ACj4X1/cCWOkPPQvFmCrQnHvSR4mLQp7T+kYZw25K
- POMtoerrlABCFEEoKxSi+TkfYj3UWe7tAWESmAiCFFavPW5KbN30Rj/+1IFhIPqWA2Mp
- Xf+qhb729KHQsiGW4aMFo680sx0VSrT0SJ3GC6nggPb2+ABxPAUlnfNpbs9gZoAq2UuO
- lmAA0YqJCGXqxmkYNvrUCuu5A0d0MWe4hnwY+OFnaCUpNVm3/+RfHGgfUlhrgELrGLBK
- /xftdtSobNGN8zmeIQ1uyz0QYDYhhaQcZPYUoU7GdqxshnUAPg/TAO71uGI6mgT8xzoB
- 0fqQ==
-X-Gm-Message-State: AOAM531Tp08Zm5l8ge76y/ciTxOnSq6AeAwKhKRmft7v3awW4idOb8Zs
- MywWGgUo7sFQ57qzpKF/7Q/hDQ==
-X-Google-Smtp-Source: ABdhPJyUT/W5KKf6QPkIVjnToQh3ryfQCsYn+WRFe/r3PlLYmoitMteeLZgd2ATqkGcuRlOqcbdSDw==
-X-Received: by 2002:a62:860b:0:b029:28e:d45b:4d2e with SMTP id
- x11-20020a62860b0000b029028ed45b4d2emr2616829pfd.70.1621484514603; 
- Wed, 19 May 2021 21:21:54 -0700 (PDT)
-Received: from google.com (150.12.83.34.bc.googleusercontent.com.
- [34.83.12.150])
- by smtp.gmail.com with ESMTPSA id j23sm738541pfh.179.2021.05.19.21.21.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 May 2021 21:21:53 -0700 (PDT)
-Date: Wed, 19 May 2021 21:21:50 -0700
-From: Ricardo Koller <ricarkol@google.com>
-To: Jing Zhang <jingzhangos@google.com>
-Subject: Re: [PATCH v5 2/4] KVM: stats: Add fd-based API to read binary stats
- data
-Message-ID: <YKXj3gHvUoLnojzB@google.com>
-References: <20210517145314.157626-1-jingzhangos@google.com>
- <20210517145314.157626-3-jingzhangos@google.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=nXnRBFRSdAWxCxN1vjVIJlzYFA0xQryLk10gJy9ij6Q=;
+ b=T0PbW2ryCbHh+OghROiFDie8TAOoITG41MCXnS0n2OJ3HYAeJh55iv+m8Fayh8Hh95
+ IXr94BAgN81lkhHzGr8sHvmw+QoX/2oax+BbSaYieBOwXbPDdjGrGusglSAB+H1Mj2XR
+ vhbktatK1rSBFQUHRKZ+QN/lJ9e6XKYydAXPyOmkM5+GBXmU98HnE3q/qmYTsf5Dlm5n
+ 2cx/0FSpP5ZOjLU6CLjksV3QKAO3Khd/CsvirdZ53G8g08Q6dbfLcYXpVZOoburrXaqX
+ fnFw0kLlBZzB0kg05JDzKfug6mqfLhqhi6z8HotyVSrytQcrMi4OjcfihLAMk512dgOl
+ qT5Q==
+X-Gm-Message-State: AOAM530NFxZSTbhXa5fbNOkjvuL/t/o9706KGyzLVORiZ6IenCGYB0qA
+ RI9d5niOGsKgkdv21IEz1BoeHgTwpYJSe8O5mauIDw==
+X-Google-Smtp-Source: ABdhPJzI+2nDatir7SSjGH9vGdaZ94OaqoLrJ65pr7UMe9dwtydU4yzOQkWodFVnPMXpww81DjPTXpOxM5ET8qLqvAo=
+X-Received: by 2002:a2e:5d7:: with SMTP id 206mr151620ljf.448.1621443475884;
+ Wed, 19 May 2021 09:57:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20210517145314.157626-3-jingzhangos@google.com>
+References: <20210517145314.157626-1-jingzhangos@google.com>
+ <20210517145314.157626-4-jingzhangos@google.com>
+In-Reply-To: <20210517145314.157626-4-jingzhangos@google.com>
+From: David Matlack <dmatlack@google.com>
+Date: Wed, 19 May 2021 09:57:29 -0700
+Message-ID: <CALzav=e9iLLzZyccXq6gTM0nv6n=6qEUO+VYQ-RzJ44tNK30NQ@mail.gmail.com>
+Subject: Re: [PATCH v5 3/4] KVM: stats: Add documentation for statistics data
+ binary interface
+To: Jing Zhang <jingzhangos@google.com>
+X-Mailman-Approved-At: Thu, 20 May 2021 04:58:01 -0400
 Cc: KVM <kvm@vger.kernel.org>, David Hildenbrand <david@redhat.com>,
  Paul Mackerras <paulus@ozlabs.org>,
  Linuxkselftest <linux-kselftest@vger.kernel.org>,
@@ -113,242 +106,249 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, May 17, 2021 at 02:53:12PM +0000, Jing Zhang wrote:
-> Provides a file descriptor per VM to read VM stats info/data.
-> Provides a file descriptor per vCPU to read vCPU stats info/data.
-> 
+On Mon, May 17, 2021 at 9:25 AM Jing Zhang <jingzhangos@google.com> wrote:
+>
+> Update KVM API documentation for binary statistics.
+>
 > Signed-off-by: Jing Zhang <jingzhangos@google.com>
 > ---
->  arch/arm64/kvm/guest.c    |  26 +++++
->  arch/mips/kvm/mips.c      |  52 +++++++++
->  arch/powerpc/kvm/book3s.c |  52 +++++++++
->  arch/powerpc/kvm/booke.c  |  45 ++++++++
->  arch/s390/kvm/kvm-s390.c  | 117 ++++++++++++++++++++
->  arch/x86/kvm/x86.c        |  53 +++++++++
->  include/linux/kvm_host.h  | 127 ++++++++++++++++++++++
->  include/uapi/linux/kvm.h  |  50 +++++++++
->  virt/kvm/kvm_main.c       | 223 ++++++++++++++++++++++++++++++++++++++
->  9 files changed, 745 insertions(+)
-> 
-  
-> +static ssize_t kvm_vcpu_stats_read(struct file *file, char __user *user_buffer,
-> +			      size_t size, loff_t *offset)
-> +{
-> +	char id[KVM_STATS_ID_MAXLEN];
-> +	struct kvm_vcpu *vcpu = file->private_data;
-> +	ssize_t copylen, len, remain = size;
-> +	size_t size_header, size_desc, size_stats;
-> +	loff_t pos = *offset;
-> +	char __user *dest = user_buffer;
-> +	void *src;
+>  Documentation/virt/kvm/api.rst | 171 +++++++++++++++++++++++++++++++++
+>  1 file changed, 171 insertions(+)
+>
+> diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
+> index 7fcb2fd38f42..9a6aa9770dfd 100644
+> --- a/Documentation/virt/kvm/api.rst
+> +++ b/Documentation/virt/kvm/api.rst
+> @@ -5034,6 +5034,169 @@ see KVM_XEN_VCPU_SET_ATTR above.
+>  The KVM_XEN_VCPU_ATTR_TYPE_RUNSTATE_ADJUST type may not be used
+>  with the KVM_XEN_VCPU_GET_ATTR ioctl.
+>
+> +4.130 KVM_STATS_GETFD
+> +---------------------
+> +
+> +:Capability: KVM_CAP_STATS_BINARY_FD
+> +:Architectures: all
+> +:Type: vm ioctl, vcpu ioctl
+> +:Parameters: none
+> +:Returns: statistics file descriptor on success, < 0 on error
+> +
+> +Errors:
+> +
+> +  ======     ======================================================
+> +  ENOMEM     if the fd could not be created due to lack of memory
+> +  EMFILE     if the number of opened files exceeds the limit
+> +  ======     ======================================================
+> +
+> +The file descriptor can be used to read VM/vCPU statistics data in binary
+> +format. The file data is organized into three blocks as below:
+> ++-------------+
+> +|   Header    |
+> ++-------------+
+> +| Descriptors |
+> ++-------------+
+> +| Stats Data  |
+> ++-------------+
+> +
+> +The Header block is always at the start of the file. It is only needed to be
+> +read one time after a system boot.
 
-Nit. Better to do pointer arithmetic on a "char *".  Note that gcc and
-clang will do the expected thing.
+By system boot do you mean the host or the VM? If the host then it's
+probably just cleaner to omit that part entirely and just say "It is
+only needed to be read once.".
+
+> +It is in the form of ``struct kvm_stats_header`` as below::
+> +
+> +       #define KVM_STATS_ID_MAXLEN             64
+> +
+> +       struct kvm_stats_header {
+> +               char id[KVM_STATS_ID_MAXLEN];
+> +               __u32 name_size;
+> +               __u32 count;
+> +               __u32 desc_offset;
+> +               __u32 data_offset;
+> +       };
+> +
+> +The ``id`` field is identification for the corresponding KVM statistics. For
+> +KVM statistics, it is in the form of "kvm-{kvm pid}", like "kvm-12345". For
+
+Should this say "For VM statistics, ..." instead?
+
+> +VCPU statistics, it is in the form of "kvm-{kvm pid}/vcpu-{vcpu id}", like
+> +"kvm-12345/vcpu-12".
+> +
+> +The ``name_size`` field is the size (byte) of the statistics name string
+> +(including trailing '\0') appended to the end of every statistics descriptor.
+> +
+> +The ``count`` field is the number of statistics.
+> +
+> +The ``desc_offset`` field is the offset of the Descriptors block from the start
+> +of the file indicated by the file descriptor.
+> +
+> +The ``data_offset`` field is the offset of the Stats Data block from the start
+> +of the file indicated by the file descriptor.
+> +
+> +The Descriptors block is only needed to be read once after a system boot. It is
+
+Ditto here about system boot.
+
+> +an array of ``struct kvm_stats_desc`` as below::
+
+Consider omitting these macros from the documentation, or moving them
+to later. Readers right here are expecting to see the struct
+kvm_stats_desc given the previous line.
 
 > +
-> +	snprintf(id, sizeof(id), "kvm-%d/vcpu-%d",
-> +			task_pid_nr(current), vcpu->vcpu_id);
-> +	size_header = sizeof(kvm_vcpu_stats_header);
-> +	size_desc =
-> +		kvm_vcpu_stats_header.count * sizeof(struct _kvm_stats_desc);
-> +	size_stats = sizeof(vcpu->stat);
+> +       #define KVM_STATS_TYPE_SHIFT            0
+> +       #define KVM_STATS_TYPE_MASK             (0xF << KVM_STATS_TYPE_SHIFT)
+> +       #define KVM_STATS_TYPE_CUMULATIVE       (0x0 << KVM_STATS_TYPE_SHIFT)
+> +       #define KVM_STATS_TYPE_INSTANT          (0x1 << KVM_STATS_TYPE_SHIFT)
+> +       #define KVM_STATS_TYPE_MAX              KVM_STATS_TYPE_INSTANT
 > +
-> +	len = sizeof(id) + size_header + size_desc + size_stats - pos;
-> +	len = min(len, remain);
-> +	if (len <= 0)
-> +		return 0;
-> +	remain = len;
+> +       #define KVM_STATS_UNIT_SHIFT            4
+> +       #define KVM_STATS_UNIT_MASK             (0xF << KVM_STATS_UNIT_SHIFT)
+> +       #define KVM_STATS_UNIT_NONE             (0x0 << KVM_STATS_UNIT_SHIFT)
+> +       #define KVM_STATS_UNIT_BYTES            (0x1 << KVM_STATS_UNIT_SHIFT)
+> +       #define KVM_STATS_UNIT_SECONDS          (0x2 << KVM_STATS_UNIT_SHIFT)
+> +       #define KVM_STATS_UNIT_CYCLES           (0x3 << KVM_STATS_UNIT_SHIFT)
+> +       #define KVM_STATS_UNIT_MAX              KVM_STATS_UNIT_CYCLES
+> +
+> +       #define KVM_STATS_SCALE_SHIFT           8
+> +       #define KVM_STATS_SCALE_MASK            (0xF << KVM_STATS_SCALE_SHIFT)
+> +       #define KVM_STATS_SCALE_POW10           (0x0 << KVM_STATS_SCALE_SHIFT)
+> +       #define KVM_STATS_SCALE_POW2            (0x1 << KVM_STATS_SCALE_SHIFT)
+> +       #define KVM_STATS_SCALE_MAX             KVM_STATS_SCALE_POW2
 
-If 'desc_offset' is not right after the header, then the 'len'
-calculation is missing the gap into account. For example, assuming there
-is a gap of 0x1000000 between the header and the descriptors:
-
-	desc_offset = sizeof(id) + size_header + 0x1000000
-
-and the user calls the ioctl with enough space for the whole file,
-including the gap:
-
-	*offset = 0
-	size = sizeof(id) + size_header + size_desc + size_stats + 0x1000000
-
-then 'remain' gets the wrong size:
-
-	remain = sizeof(id) + size_header + size_desc + size_stats
-
-and ... (more below)
+Terminology nit: I think usually this part is called the "base". e.g.
+when you decompose a number X into N * B^E, B is the "base" and E is
+the "exponent". I see you're using "exponent" already but it might
+make sense to change "scale" to "base" throughout this series.
 
 > +
-> +	/* Copy kvm vcpu stats header id string */
-> +	copylen = sizeof(id) - pos;
-> +	copylen = min(copylen, remain);
-> +	if (copylen > 0) {
-> +		src = (void *)id + pos;
-> +		if (copy_to_user(dest, src, copylen))
-> +			return -EFAULT;
-> +		remain -= copylen;
-> +		pos += copylen;
-> +		dest += copylen;
-> +	}
-> +	/* Copy kvm vcpu stats header */
-> +	copylen = sizeof(id) + size_header - pos;
-> +	copylen = min(copylen, remain);
-> +	if (copylen > 0) {
-> +		src = (void *)&kvm_vcpu_stats_header;
-> +		src += pos - sizeof(id);
-> +		if (copy_to_user(dest, src, copylen))
-> +			return -EFAULT;
-> +		remain -= copylen;
-> +		pos += copylen;
-> +		dest += copylen;
-> +	}
-> +	/* Copy kvm vcpu stats descriptors */
-> +	copylen = kvm_vcpu_stats_header.desc_offset + size_desc - pos;
-
-This would be the state at this point:
-
-	pos	= sizeof(id) + size_header
-	copylen	= sizeof(id) + size_header + 0x1000000 + size_desc - (sizeof(id) + size_header)
-		= 0x1000000 + size_desc
-	remain	= size_desc + size_stats
-
-> +	copylen = min(copylen, remain);
-
-	copylen = size_desc + size_stats
-
-which is not enough to copy the descriptors (and the data).
-
-> +	if (copylen > 0) {
-> +		src = (void *)&kvm_vcpu_stats_desc;
-> +		src += pos - kvm_vcpu_stats_header.desc_offset;
-
-Moreover, src also needs to take the gap into account.
-
-	src	= &kvm_vcpu_stats_desc + (sizeof(id) + size_header) - (sizeof(id) + size_header + 0x1000000)
-		= &kvm_vcpu_stats_desc - 0x1000000
-
-Otherwise, src ends up pointing at the wrong place.
-
-> +		if (copy_to_user(dest, src, copylen))
-> +			return -EFAULT;
-> +		remain -= copylen;
-> +		pos += copylen;
-> +		dest += copylen;
-> +	}
-> +	/* Copy kvm vcpu stats values */
-> +	copylen = kvm_vcpu_stats_header.data_offset + size_stats - pos;
-
-The same problem occurs here. There is a potential gap before
-data_offset that needs to be taken into account for src and len.
-
-Would it be possible to just ensure that there is no gap? maybe even
-remove data_offset and desc_offset and always place them adjacent, and
-have the descriptors right after the header.
-
-> +	copylen = min(copylen, remain);
-> +	if (copylen > 0) {
-> +		src = (void *)&vcpu->stat;
-> +		src += pos - kvm_vcpu_stats_header.data_offset;
-> +		if (copy_to_user(dest, src, copylen))
-> +			return -EFAULT;
-> +		remain -= copylen;
-> +		pos += copylen;
-> +		dest += copylen;
-> +	}
+> +       struct kvm_stats_desc {
+> +               __u32 flags;
+> +               __s16 exponent;
+> +               __u16 size;
+> +               __u32 unused1;
+> +               __u32 unused2;
+> +               char name[0];
+> +       };
 > +
-> +	*offset = pos;
-> +	return len;
-> +}
-> +
->  
+> +The ``flags`` field contains the type and unit of the statistics data described
+> +by this descriptor. The following flags are supported:
 
+nit: Suggest breaking this list out into separate lists so readers can
+differentiate between the type, unit, and scale. Something like:
 
+Bits 0-3 of ``flags`` encode the type:
 
-> +static ssize_t kvm_vm_stats_read(struct file *file, char __user *user_buffer,
-> +			      size_t size, loff_t *offset)
-> +{
+* ``KVM_STATS_TYPE_CUMULATIVE`` ...
+* ``KVM_STATS_TYPE_INSTANT`` ...
 
-Consider moving the common code between kvm_vcpu_stats_read and this one
-into some function that takes pointers to header, desc, and data. Unless
-there is something vcpu or vm specific besides that.
+Bits 4-7 of ``flags encode the unit:
 
-> +	char id[KVM_STATS_ID_MAXLEN];
-> +	struct kvm *kvm = file->private_data;
-> +	ssize_t copylen, len, remain = size;
-> +	size_t size_header, size_desc, size_stats;
-> +	loff_t pos = *offset;
-> +	char __user *dest = user_buffer;
-> +	void *src;
+* ``KVM_STATS_UNIT_NONE`` ...
+...
+etc.
+
+> +  * ``KVM_STATS_TYPE_CUMULATIVE``
+> +    The statistics data is cumulative. The value of data can only be increased.
+> +    Most of the counters used in KVM are of this type.
+> +    The corresponding ``count`` filed for this type is always 1.
+> +  * ``KVM_STATS_TYPE_INSTANT``
+> +    The statistics data is instantaneous. Its value can be increased or
+> +    decreased. This type is usually used as a measurement of some resources,
+> +    like the number of dirty pages, the number of large pages, etc.
+> +    The corresponding ``count`` field for this type is always 1.
+> +  * ``KVM_STATS_UNIT_NONE``
+> +    There is no unit for the value of statistics data. This usually means that
+> +    the value is a simple counter of an event.
+> +  * ``KVM_STATS_UNIT_BYTES``
+> +    It indicates that the statistics data is used to measure memory size, in the
+> +    unit of Byte, KiByte, MiByte, GiByte, etc. The unit of the data is
+> +    determined by the ``exponent`` field in the descriptor. The
+> +    ``KVM_STATS_SCALE_POW2`` flag is valid in this case. The unit of the data is
+> +    determined by ``pow(2, exponent)``. For example, if value is 10,
+> +    ``exponent`` is 20, which means the unit of statistics data is MiByte, we
+> +    can get the statistics data in the unit of Byte by
+> +    ``value * pow(2, exponent) = 10 * pow(2, 20) = 10 MiByte`` which is
+> +    10 * 1024 * 1024 Bytes.
+> +  * ``KVM_STATS_UNIT_SECONDS``
+> +    It indicates that the statistics data is used to measure time/latency, in
+> +    the unit of nanosecond, microsecond, millisecond and second. The unit of the
+> +    data is determined by the ``exponent`` field in the descriptor. The
+> +    ``KVM_STATS_SCALE_POW10`` flag is valid in this case. The unit of the data
+> +    is determined by ``pow(10, exponent)``. For example, if value is 2000000,
+> +    ``exponent`` is -6, which means the unit of statistics data is microsecond,
+> +    we can get the statistics data in the unit of second by
+> +    ``value * pow(10, exponent) = 2000000 * pow(10, -6) = 2 seconds``.
+> +  * ``KVM_STATS_UNIT_CYCLES``
+> +    It indicates that the statistics data is used to measure CPU clock cycles.
+> +    The ``KVM_STATS_SCALE_POW10`` flag is valid in this case. For example, if
+> +    value is 200, ``exponent`` is 4, we can get the number of CPU clock cycles
+> +    by ``value * pow(10, exponent) = 200 * pow(10, 4) = 2000000``.
 > +
-> +	snprintf(id, sizeof(id), "kvm-%d", task_pid_nr(current));
-> +	size_header = sizeof(kvm_vm_stats_header);
-> +	size_desc = kvm_vm_stats_header.count * sizeof(struct _kvm_stats_desc);
-> +	size_stats = sizeof(kvm->stat);
+> +The ``exponent`` field is the scale of corresponding statistics data. It has two
+> +values as follows:
+> +  * ``KVM_STATS_SCALE_POW10``
+
+I thought the scale was encoded in ``flags`` not ``exponent``? Isn't
+the exponent the
+
+> +    The scale is based on power of 10. It is used for measurement of time and
+> +    CPU clock cycles.
+> +  * ``KVM_STATS_SCALE_POW2``
+> +    The scale is based on power of 2. It is used for measurement of memory size.
+
+It might be useful to give an example of how to use the exponent field
+in practice.
+
 > +
-> +	len = sizeof(id) + size_header + size_desc + size_stats - pos;
-> +	len = min(len, remain);
-> +	if (len <= 0)
-> +		return 0;
-> +	remain = len;
+> +The ``size`` field is the number of values of this statistics data. It is in the
+> +unit of ``unsigned long`` for VCPU or ``__u64`` for VM.
 > +
-> +	/* Copy kvm vm stats header id string */
-> +	copylen = sizeof(id) - pos;
-> +	copylen = min(copylen, remain);
-> +	if (copylen > 0) {
-> +		src = (void *)id + pos;
-> +		if (copy_to_user(dest, src, copylen))
-> +			return -EFAULT;
-> +		remain -= copylen;
-> +		pos += copylen;
-> +		dest += copylen;
-> +	}
-> +	/* Copy kvm vm stats header */
-> +	copylen = sizeof(id) + size_header - pos;
-> +	copylen = min(copylen, remain);
-> +	if (copylen > 0) {
-> +		src = (void *)&kvm_vm_stats_header;
-> +		src += pos - sizeof(id);
-> +		if (copy_to_user(dest, src, copylen))
-> +			return -EFAULT;
-> +		remain -= copylen;
-> +		pos += copylen;
-> +		dest += copylen;
-> +	}
-> +	/* Copy kvm vm stats descriptors */
-> +	copylen = kvm_vm_stats_header.desc_offset + size_desc - pos;
-> +	copylen = min(copylen, remain);
-> +	if (copylen > 0) {
-> +		src = (void *)&kvm_vm_stats_desc;
-> +		src += pos - kvm_vm_stats_header.desc_offset;
-> +		if (copy_to_user(dest, src, copylen))
-> +			return -EFAULT;
-> +		remain -= copylen;
-> +		pos += copylen;
-> +		dest += copylen;
-> +	}
-> +	/* Copy kvm vm stats values */
-> +	copylen = kvm_vm_stats_header.data_offset + size_stats - pos;
-> +	copylen = min(copylen, remain);
-> +	if (copylen > 0) {
-> +		src = (void *)&kvm->stat;
-> +		src += pos - kvm_vm_stats_header.data_offset;
-> +		if (copy_to_user(dest, src, copylen))
-> +			return -EFAULT;
-> +		remain -= copylen;
-> +		pos += copylen;
-> +		dest += copylen;
-> +	}
+> +The ``unused1`` and ``unused2`` fields are reserved for future
+> +support for other types of statistics data, like log/linear histogram.
 > +
-> +	*offset = pos;
-> +	return len;
-> +}
+> +The ``name`` field points to the name string of the statistics data. The name
+> +string starts at the end of ``struct kvm_stats_desc``.
+> +The maximum length (including trailing '\0') is indicated by ``name_size``
+> +in ``struct kvm_stats_header``.
 > +
-> -- 
+> +The Stats Data block contains an array of data values of type ``struct
+> +kvm_vm_stats_data`` or ``struct kvm_vcpu_stats_data``. It would be read by
+> +user space periodically to pull statistics data.
+> +The order of data value in Stats Data block is the same as the order of
+> +descriptors in Descriptors block.
+> +  * Statistics data for VM::
+> +
+> +       struct kvm_vm_stats_data {
+> +               unsigned long value[0];
+> +       };
+> +
+> +  * Statistics data for VCPU::
+> +
+> +       struct kvm_vcpu_stats_data {
+> +               __u64 value[0];
+> +       };
+> +
+>  5. The kvm_run structure
+>  ========================
+>
+> @@ -6891,3 +7054,11 @@ This capability is always enabled.
+>  This capability indicates that the KVM virtual PTP service is
+>  supported in the host. A VMM can check whether the service is
+>  available to the guest on migration.
+> +
+> +8.33 KVM_CAP_STATS_BINARY_FD
+> +----------------------------
+> +
+> +:Architectures: all
+> +
+> +This capability indicates the feature that user space can create get a file
+> +descriptor for every VM and VCPU to read statistics data in binary format.
+> --
 > 2.31.1.751.gd2f1c929bd-goog
-> 
-> _______________________________________________
-> kvmarm mailing list
-> kvmarm@lists.cs.columbia.edu
-> https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+>
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
