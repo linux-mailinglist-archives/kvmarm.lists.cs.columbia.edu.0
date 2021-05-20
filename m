@@ -2,95 +2,95 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6912538A065
-	for <lists+kvmarm@lfdr.de>; Thu, 20 May 2021 10:58:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64841389FF6
+	for <lists+kvmarm@lfdr.de>; Thu, 20 May 2021 10:37:36 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 17CBF4B82D;
-	Thu, 20 May 2021 04:58:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9E0ED4B750;
+	Thu, 20 May 2021 04:37:30 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: 0.208
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.208 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@kroah.com
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@messagingengine.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tOM6Ru5rMjSE; Thu, 20 May 2021 04:58:07 -0400 (EDT)
+	with ESMTP id 0z6F5vpaQ5fi; Thu, 20 May 2021 04:37:30 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 03D6B4B712;
-	Thu, 20 May 2021 04:58:03 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 63A204B731;
+	Thu, 20 May 2021 04:37:29 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E718F4B84C
- for <kvmarm@lists.cs.columbia.edu>; Wed, 19 May 2021 13:22:17 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 08E014B5D2
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 20 May 2021 04:37:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id hYuXrFSeQSZV for <kvmarm@lists.cs.columbia.edu>;
- Wed, 19 May 2021 13:22:16 -0400 (EDT)
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com
- [209.85.167.45])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 220CA4B84B
- for <kvmarm@lists.cs.columbia.edu>; Wed, 19 May 2021 13:22:16 -0400 (EDT)
-Received: by mail-lf1-f45.google.com with SMTP id i22so20113490lfl.10
- for <kvmarm@lists.cs.columbia.edu>; Wed, 19 May 2021 10:22:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=76L6ww8XbybjMK/0TY0eGaqevPfaVzkw1PkvlOSemV0=;
- b=HL/kZWs09TYOvGWhINWpUg6FBuMTVU128n/bnrU/Q6+oL422jh55Bq2Fta5ivzFcxl
- 77HLxB/ibYsoDPpWO+XAr0hF0XS9gE3EVFf9ckwMgvaOV+CBKbX0+DqMRP0zSpDY4LNf
- 5rOYo1khmX9evl2u6ocCIOTWuKQosF14ZcNALHv5CLw0NfutyNw8WsCsOz+tmS72mZPU
- XQWo/3vjkwEFtFuI8gSoXs1lvNSvYrHYMuV4dP3kbDRfPFvcUFWBbUP0wwmhbzhd0hNa
- G8wSsR4BKPtP7u+KBMjoygyFTFp3InZY32ge7iNuwWa9ICQY3J7VZPC8K1Oj9ui3oUuT
- knFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=76L6ww8XbybjMK/0TY0eGaqevPfaVzkw1PkvlOSemV0=;
- b=fyBGfkRS5r+XoTRAvFiWGAQ8AOIA/OESSW9MSNCk5yCHWYN8erp9VPNRQGGPKNQ+Gv
- 7R5LZRCMOXIwrVBe144OTrV5RC3MlrgUnLdv2GnOEispo4Nk//20UKdIHWfKTrN4FMpB
- d1T9c1vkgJg1lpIQ0C4ROJn5ZWMBqB7y5U5CTqF87hk7fEQ82A8JCbIgvnXASkFENh6g
- 2VxmPGCOx3QSE8Y8LOzZPGh2qS6NI27DXv4gYFhp16fpM6ptRB4oonXscbJKZMUsXZYd
- EqqXoQ610M1rpLmsmsir8imi/gaxrw9Lh/ANQubOqmQ+lTLaUuhokx01H21RUXYwGT5v
- rpQg==
-X-Gm-Message-State: AOAM531+314YCJXBrIBWN5u32POrevcMSwCZPZ6F7Cc2J/4zKfUd+a38
- i5WIEelxm2tfAMthGMfSBSxJ023fAnmwny5dz+DsCQ==
-X-Google-Smtp-Source: ABdhPJwkoLojL/mrvncpRMeM/tlX+hUDPvIKxDRkU9fl17sVbhjVljh3hIhpBNaFBS+b+dPIWkcpR0i9JoTWLJIMCvk=
-X-Received: by 2002:a05:6512:22d5:: with SMTP id
- g21mr407870lfu.80.1621444934457; 
- Wed, 19 May 2021 10:22:14 -0700 (PDT)
+ with ESMTP id kWj588glhidM for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 20 May 2021 04:37:28 -0400 (EDT)
+Received: from new4-smtp.messagingengine.com (new4-smtp.messagingengine.com
+ [66.111.4.230])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 04CC94B5D0
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 20 May 2021 04:37:28 -0400 (EDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+ by mailnew.nyi.internal (Postfix) with ESMTP id 2D397580725;
+ Thu, 20 May 2021 04:37:26 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute6.internal (MEProxy); Thu, 20 May 2021 04:37:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm3; bh=uN/paZHT/wy9V60QgAgEZGhZMfE
+ PAIFK3VT5m0X1P1w=; b=DyqElVP72T2h8KWo4m3edK/aFE1RVet81qHItJSF6ZY
+ W7atc0Ie/fysmc55BnsCOHQ+HAuNn7KFiXpTgGFw7mJGSm+3yO78hsmxZAGIj9tQ
+ eoMRa3RnD5YYiFCcSdKHooFbto9MI27/KqFGDoOqQ413QGXIM3suDi0ry66hqIA4
+ 6w/PlTQMjOPeTV1v7ZLP2TKRLYNJX35UHfneIyClQf4/Po/6qQU4PRQtOlvkI6DN
+ cRNKwisZ0B+h8haOu4rLWw4eYsz0sFLBGTIbjOgp0h5Y0hf1skqRw/MNQad5l9qA
+ MTdLjLAzf2Ml0rzWaYKHINcnRk4fcOf378GeSIuI+QQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=uN/paZ
+ HT/wy9V60QgAgEZGhZMfEPAIFK3VT5m0X1P1w=; b=vmeNFnj30tGwQ4olc3Hf7G
+ aH0n45x7g4dT9U5lCFSrgfr1fnsJmzyXOBhTHEwzxbsMVx0WHyAW1QxTXtVjyqfs
+ qM9HQ+CmfgCi/CpeBl64QY+4SXVqrHqIsXA6ra0D4V9JQ3rtWf70BQVo6yi8WpyB
+ bLmmeFqrVgi1x32UVSp5YBz+fR+initDRjHJMLSJu0+oFGM/cCgvcNgvEDeRgXZe
+ AxpcK7qjDHSGhaL1XGludZb19p60Hx5jOJbDNmC7G8wwaATtwsRiUrlPkeNornps
+ uT1r41JCA/4gdtxzt5Up6X4mMe9W4Mbpc0ti4S4InCtLW3VgQXLfboM+46CXKPDA
+ ==
+X-ME-Sender: <xms:xB-mYBcX-bP9zl8pwOjgEa0faf1i9zHCeIur-PWgffpIoDvtqbpyFA>
+ <xme:xB-mYPOa9-4WHSTXwAnoMk7ooaCASkL1wO_ek7I-HZnXOZaWp27XKjr9KTYuZnBKh
+ sGsqLSxOPhk0w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrvdejuddgtdehucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepfffhvffukfhfgggtuggjsehttdortddttddvnecuhfhrohhmpefirhgvghcu
+ mffjuceoghhrvghgsehkrhhorghhrdgtohhmqeenucggtffrrghtthgvrhhnpeevhefgje
+ eitdfffefhvdegleeigeejgeeiffekieffjeeflefhieegtefhudejueenucfkphepkeef
+ rdekiedrjeegrdeigeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+ hlfhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
+X-ME-Proxy: <xmx:xR-mYKijB76mo5krd25P4UK9_y5r6g3eryM_Yt5-un5I3JS0Fyw-vg>
+ <xmx:xR-mYK8KDZq6L6FDyYMditMPW49tYEeGn6bP8dmCCrpFZRFEf8LowQ>
+ <xmx:xR-mYNuKviavCH9znzZLAzol0taNSLruz7LKtS9o_54-AufGOW8klA>
+ <xmx:xh-mYJEWESWYFyLWwYDncUDJn5PcU4uW-GHG06OMz7LL-7grdmA-GQ>
+Received: from localhost (83-86-74-64.cable.dynamic.v4.ziggo.nl [83.86.74.64])
+ by mail.messagingengine.com (Postfix) with ESMTPA;
+ Thu, 20 May 2021 04:37:24 -0400 (EDT)
+Date: Thu, 20 May 2021 10:37:22 +0200
+From: Greg KH <greg@kroah.com>
+To: Alexandru Elisei <alexandru.elisei@arm.com>
+Subject: Re: [PATCH for-stable-5.4] KVM: arm64: Initialize VCPU mdcr_el2
+ before loading it
+Message-ID: <YKYfwqrZsAVniGsD@kroah.com>
+References: <20210517142713.400651-1-alexandru.elisei@arm.com>
 MIME-Version: 1.0
-References: <20210517145314.157626-1-jingzhangos@google.com>
- <20210517145314.157626-5-jingzhangos@google.com>
-In-Reply-To: <20210517145314.157626-5-jingzhangos@google.com>
-From: David Matlack <dmatlack@google.com>
-Date: Wed, 19 May 2021 10:21:47 -0700
-Message-ID: <CALzav=cMvQ6njtjS+SEZ=tx4nV+7+v7S2i8sn0+=agdDu+OtjQ@mail.gmail.com>
-Subject: Re: [PATCH v5 4/4] KVM: selftests: Add selftest for KVM statistics
- data binary interface
-To: Jing Zhang <jingzhangos@google.com>
-X-Mailman-Approved-At: Thu, 20 May 2021 04:58:01 -0400
-Cc: KVM <kvm@vger.kernel.org>, David Hildenbrand <david@redhat.com>,
- Paul Mackerras <paulus@ozlabs.org>,
- Linuxkselftest <linux-kselftest@vger.kernel.org>,
- Claudio Imbrenda <imbrenda@linux.ibm.com>, Will Deacon <will@kernel.org>,
- KVMARM <kvmarm@lists.cs.columbia.edu>,
- Emanuele Giuseppe Esposito <eesposit@redhat.com>,
- LinuxS390 <linux-s390@vger.kernel.org>, Janosch Frank <frankja@linux.ibm.com>,
- Oliver Upton <oupton@google.com>, Marc Zyngier <maz@kernel.org>,
- Huacai Chen <chenhuacai@kernel.org>,
- Christian Borntraeger <borntraeger@de.ibm.com>,
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
- David Rientjes <rientjes@google.com>, KVMPPC <kvm-ppc@vger.kernel.org>,
- Jim Mattson <jmattson@google.com>,
- Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
- Sean Christopherson <seanjc@google.com>, Cornelia Huck <cohuck@redhat.com>,
- Peter Shier <pshier@google.com>, LinuxMIPS <linux-mips@vger.kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>
+Content-Disposition: inline
+In-Reply-To: <20210517142713.400651-1-alexandru.elisei@arm.com>
+Cc: maz@kernel.org, stable@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -107,488 +107,36 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, May 17, 2021 at 9:24 AM Jing Zhang <jingzhangos@google.com> wrote:
->
-> Add selftest to check KVM stats descriptors validity.
->
-> Signed-off-by: Jing Zhang <jingzhangos@google.com>
-> ---
->  tools/testing/selftests/kvm/.gitignore        |   1 +
->  tools/testing/selftests/kvm/Makefile          |   3 +
->  .../testing/selftests/kvm/include/kvm_util.h  |   3 +
->  .../selftests/kvm/kvm_bin_form_stats.c        | 379 ++++++++++++++++++
->  tools/testing/selftests/kvm/lib/kvm_util.c    |  12 +
->  5 files changed, 398 insertions(+)
->  create mode 100644 tools/testing/selftests/kvm/kvm_bin_form_stats.c
->
-> diff --git a/tools/testing/selftests/kvm/.gitignore b/tools/testing/selftests/kvm/.gitignore
-> index bd83158e0e0b..35796667c944 100644
-> --- a/tools/testing/selftests/kvm/.gitignore
-> +++ b/tools/testing/selftests/kvm/.gitignore
-> @@ -43,3 +43,4 @@
->  /memslot_modification_stress_test
->  /set_memory_region_test
->  /steal_time
-> +/kvm_bin_form_stats
-> diff --git a/tools/testing/selftests/kvm/Makefile b/tools/testing/selftests/kvm/Makefile
-> index e439d027939d..2984c86c848a 100644
-> --- a/tools/testing/selftests/kvm/Makefile
-> +++ b/tools/testing/selftests/kvm/Makefile
-> @@ -76,6 +76,7 @@ TEST_GEN_PROGS_x86_64 += kvm_page_table_test
->  TEST_GEN_PROGS_x86_64 += memslot_modification_stress_test
->  TEST_GEN_PROGS_x86_64 += set_memory_region_test
->  TEST_GEN_PROGS_x86_64 += steal_time
-> +TEST_GEN_PROGS_x86_64 += kvm_bin_form_stats
->
->  TEST_GEN_PROGS_aarch64 += aarch64/get-reg-list
->  TEST_GEN_PROGS_aarch64 += aarch64/get-reg-list-sve
-> @@ -87,6 +88,7 @@ TEST_GEN_PROGS_aarch64 += kvm_create_max_vcpus
->  TEST_GEN_PROGS_aarch64 += kvm_page_table_test
->  TEST_GEN_PROGS_aarch64 += set_memory_region_test
->  TEST_GEN_PROGS_aarch64 += steal_time
-> +TEST_GEN_PROGS_aarch64 += kvm_bin_form_stats
->
->  TEST_GEN_PROGS_s390x = s390x/memop
->  TEST_GEN_PROGS_s390x += s390x/resets
-> @@ -96,6 +98,7 @@ TEST_GEN_PROGS_s390x += dirty_log_test
->  TEST_GEN_PROGS_s390x += kvm_create_max_vcpus
->  TEST_GEN_PROGS_s390x += kvm_page_table_test
->  TEST_GEN_PROGS_s390x += set_memory_region_test
-> +TEST_GEN_PROGS_s390x += kvm_bin_form_stats
->
->  TEST_GEN_PROGS += $(TEST_GEN_PROGS_$(UNAME_M))
->  LIBKVM += $(LIBKVM_$(UNAME_M))
-> diff --git a/tools/testing/selftests/kvm/include/kvm_util.h b/tools/testing/selftests/kvm/include/kvm_util.h
-> index a8f022794ce3..ee01a67022d9 100644
-> --- a/tools/testing/selftests/kvm/include/kvm_util.h
-> +++ b/tools/testing/selftests/kvm/include/kvm_util.h
-> @@ -387,4 +387,7 @@ uint64_t get_ucall(struct kvm_vm *vm, uint32_t vcpu_id, struct ucall *uc);
->  #define GUEST_ASSERT_4(_condition, arg1, arg2, arg3, arg4) \
->         __GUEST_ASSERT((_condition), 4, (arg1), (arg2), (arg3), (arg4))
->
-> +int vm_get_statsfd(struct kvm_vm *vm);
-> +int vcpu_get_statsfd(struct kvm_vm *vm, uint32_t vcpuid);
-> +
->  #endif /* SELFTEST_KVM_UTIL_H */
-> diff --git a/tools/testing/selftests/kvm/kvm_bin_form_stats.c b/tools/testing/selftests/kvm/kvm_bin_form_stats.c
-> new file mode 100644
-> index 000000000000..dae44397d0f4
-> --- /dev/null
-> +++ b/tools/testing/selftests/kvm/kvm_bin_form_stats.c
-> @@ -0,0 +1,379 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * kvm_bin_form_stats
-> + *
-> + * Copyright (C) 2021, Google LLC.
-> + *
-> + * Test the fd-based interface for KVM statistics.
-> + */
-> +
-> +#define _GNU_SOURCE /* for program_invocation_short_name */
-> +#include <fcntl.h>
-> +#include <stdio.h>
-> +#include <stdlib.h>
-> +#include <string.h>
-> +#include <errno.h>
-> +
-> +#include "test_util.h"
-> +
-> +#include "kvm_util.h"
-> +#include "asm/kvm.h"
-> +#include "linux/kvm.h"
-> +
-> +int vm_stats_test(struct kvm_vm *vm)
-> +{
-> +       ssize_t ret;
-> +       int i, stats_fd, err = -1;
-> +       size_t size_desc, size_data = 0;
-> +       struct kvm_stats_header header;
-> +       struct kvm_stats_desc *stats_desc, *pdesc;
-> +       struct kvm_vm_stats_data *stats_data;
-> +
-> +       /* Get fd for VM stats */
-> +       stats_fd = vm_get_statsfd(vm);
-> +       if (stats_fd < 0) {
-> +               perror("Get VM stats fd");
-> +               return err;
-> +       }
-> +       /* Read kvm vm stats header */
-> +       ret = read(stats_fd, &header, sizeof(header));
-> +       if (ret != sizeof(header)) {
-> +               perror("Read VM stats header");
-> +               goto out_close_fd;
-> +       }
-> +       size_desc = sizeof(*stats_desc) + header.name_size;
-> +       /* Check id string in header, that should start with "kvm" */
-> +       if (strncmp(header.id, "kvm", 3) ||
-> +                       strlen(header.id) >= KVM_STATS_ID_MAXLEN) {
-> +               printf("Invalid KVM VM stats type!\n");
-> +               goto out_close_fd;
+On Mon, May 17, 2021 at 03:27:13PM +0100, Alexandru Elisei wrote:
+> [ Upstream commit 263d6287da1433aba11c5b4046388f2cdf49675c ]
+> 
+> When a VCPU is created, the kvm_vcpu struct is initialized to zero in
+> kvm_vm_ioctl_create_vcpu(). On VHE systems, the first time
+> vcpu.arch.mdcr_el2 is loaded on hardware is in vcpu_load(), before it is
+> set to a sensible value in kvm_arm_setup_debug() later in the run loop. The
+> result is that KVM executes for a short time with MDCR_EL2 set to zero.
+> 
+> This has several unintended consequences:
+> 
+> * Setting MDCR_EL2.HPMN to 0 is constrained unpredictable according to ARM
+>   DDI 0487G.a, page D13-3820. The behavior specified by the architecture
+>   in this case is for the PE to behave as if MDCR_EL2.HPMN is set to a
+>   value less than or equal to PMCR_EL0.N, which means that an unknown
+>   number of counters are now disabled by MDCR_EL2.HPME, which is zero.
+> 
+> * The host configuration for the other debug features controlled by
+>   MDCR_EL2 is temporarily lost. This has been harmless so far, as Linux
+>   doesn't use the other fields, but that might change in the future.
+> 
+> Let's avoid both issues by initializing the VCPU's mdcr_el2 field in
+> kvm_vcpu_vcpu_first_run_init(), thus making sure that the MDCR_EL2 register
+> has a consistent value after each vcpu_load().
+> 
+> [ v5.4 backport: added stub for KVM/arm that fixes compilation errors ]
 
-Is there a reason why you are not using TEST_ASSERT for these checks?
-The memory will get cleaned up when the test process exits, so there's
-no need to do the careful error handling and goto statements.
+Thanks for both backports, now queued up.
 
-(This applies throughout this whole test.)
-
-> +       }
-> +       /* Sanity check for other fields in header */
-> +       if (header.count == 0) {
-> +               err = 0;
-> +               goto out_close_fd;
-> +       }
-> +       /* Check overlap */
-> +       if (header.desc_offset == 0 || header.data_offset == 0 ||
-> +                       header.desc_offset < sizeof(header) ||
-> +                       header.data_offset < sizeof(header)) {
-> +               printf("Invalid offset fields in header!\n");
-> +               goto out_close_fd;
-> +       }
-> +       if (header.desc_offset < header.data_offset &&
-> +                       (header.desc_offset + size_desc * header.count >
-> +                       header.data_offset)) {
-> +               printf("VM Descriptor block is overlapped with data block!\n");
-> +               goto out_close_fd;
-> +       }
-> +
-> +       /* Allocate memory for stats descriptors */
-> +       stats_desc = calloc(header.count, size_desc);
-> +       if (!stats_desc) {
-> +               perror("Allocate memory for VM stats descriptors");
-> +               goto out_close_fd;
-> +       }
-> +       /* Read kvm vm stats descriptors */
-> +       ret = pread(stats_fd, stats_desc,
-> +                       size_desc * header.count, header.desc_offset);
-> +       if (ret != size_desc * header.count) {
-> +               perror("Read KVM VM stats descriptors");
-> +               goto out_free_desc;
-> +       }
-> +       /* Sanity check for fields in descriptors */
-> +       for (i = 0; i < header.count; ++i) {
-> +               pdesc = (void *)stats_desc + i * size_desc;
-> +               /* Check type,unit,scale boundaries */
-> +               if ((pdesc->flags & KVM_STATS_TYPE_MASK) > KVM_STATS_TYPE_MAX) {
-> +                       printf("Unknown KVM stats type!\n");
-> +                       goto out_free_desc;
-> +               }
-> +               if ((pdesc->flags & KVM_STATS_UNIT_MASK) > KVM_STATS_UNIT_MAX) {
-> +                       printf("Unknown KVM stats unit!\n");
-> +                       goto out_free_desc;
-> +               }
-> +               if ((pdesc->flags & KVM_STATS_SCALE_MASK) >
-> +                               KVM_STATS_SCALE_MAX) {
-> +                       printf("Unknown KVM stats scale!\n");
-> +                       goto out_free_desc;
-> +               }
-> +               /* Check exponent for stats unit
-> +                * Exponent for counter should be greater than or equal to 0
-> +                * Exponent for unit bytes should be greater than or equal to 0
-> +                * Exponent for unit seconds should be less than or equal to 0
-> +                * Exponent for unit clock cycles should be greater than or
-> +                * equal to 0
-> +                */
-> +               switch (pdesc->flags & KVM_STATS_UNIT_MASK) {
-> +               case KVM_STATS_UNIT_NONE:
-> +               case KVM_STATS_UNIT_BYTES:
-> +               case KVM_STATS_UNIT_CYCLES:
-> +                       if (pdesc->exponent < 0) {
-> +                               printf("Unsupported KVM stats unit!\n");
-> +                               goto out_free_desc;
-> +                       }
-> +                       break;
-> +               case KVM_STATS_UNIT_SECONDS:
-> +                       if (pdesc->exponent > 0) {
-> +                               printf("Unsupported KVM stats unit!\n");
-> +                               goto out_free_desc;
-> +                       }
-> +                       break;
-> +               }
-> +               /* Check name string */
-> +               if (strlen(pdesc->name) >= header.name_size) {
-> +                       printf("KVM stats name(%s) too long!\n", pdesc->name);
-> +                       goto out_free_desc;
-> +               }
-> +               /* Check size field, which should not be zero */
-> +               if (pdesc->size == 0) {
-> +                       printf("KVM descriptor(%s) with size of 0!\n",
-> +                                       pdesc->name);
-> +                       goto out_free_desc;
-> +               }
-> +               size_data += pdesc->size * sizeof(stats_data->value[0]);
-> +       }
-> +       /* Check overlap */
-> +       if (header.data_offset < header.desc_offset &&
-> +               header.data_offset + size_data > header.desc_offset) {
-> +               printf("Data block is overlapped with Descriptor block!\n");
-> +               goto out_free_desc;
-> +       }
-> +       /* Check validity of all stats data size */
-> +       if (size_data < header.count * sizeof(stats_data->value[0])) {
-> +               printf("Data size is not correct!\n");
-> +               goto out_free_desc;
-> +       }
-> +
-> +       /* Allocate memory for stats data */
-> +       stats_data = malloc(size_data);
-> +       if (!stats_data) {
-> +               perror("Allocate memory for VM stats data");
-> +               goto out_free_desc;
-> +       }
-> +       /* Read kvm vm stats data */
-> +       ret = pread(stats_fd, stats_data, size_data, header.data_offset);
-> +       if (ret != size_data) {
-> +               perror("Read KVM VM stats data");
-> +               goto out_free_data;
-> +       }
-> +
-> +       err = 0;
-> +out_free_data:
-> +       free(stats_data);
-> +out_free_desc:
-> +       free(stats_desc);
-> +out_close_fd:
-> +       close(stats_fd);
-> +       return err;
-> +}
-> +
-> +int vcpu_stats_test(struct kvm_vm *vm, int vcpu_id)
-> +{
-> +       ssize_t ret;
-> +       int i, stats_fd, err = -1;
-> +       size_t size_desc, size_data = 0;
-> +       struct kvm_stats_header header;
-> +       struct kvm_stats_desc *stats_desc, *pdesc;
-> +       struct kvm_vcpu_stats_data *stats_data;
-> +
-> +       /* Get fd for VCPU stats */
-> +       stats_fd = vcpu_get_statsfd(vm, vcpu_id);
-> +       if (stats_fd < 0) {
-> +               perror("Get VCPU stats fd");
-> +               return err;
-> +       }
-> +       /* Read kvm vcpu stats header */
-> +       ret = read(stats_fd, &header, sizeof(header));
-> +       if (ret != sizeof(header)) {
-> +               perror("Read VCPU stats header");
-> +               goto out_close_fd;
-> +       }
-> +       size_desc = sizeof(*stats_desc) + header.name_size;
-> +       /* Check id string in header, that should start with "kvm" */
-> +       if (strncmp(header.id, "kvm", 3) ||
-> +                       strlen(header.id) >= KVM_STATS_ID_MAXLEN) {
-> +               printf("Invalid KVM VCPU stats type!\n");
-> +               goto out_close_fd;
-> +       }
-> +       /* Sanity check for other fields in header */
-> +       if (header.count == 0) {
-> +               err = 0;
-> +               goto out_close_fd;
-> +       }
-> +       /* Check overlap */
-> +       if (header.desc_offset == 0 || header.data_offset == 0 ||
-> +                       header.desc_offset < sizeof(header) ||
-> +                       header.data_offset < sizeof(header)) {
-> +               printf("Invalid offset fields in header!\n");
-> +               goto out_close_fd;
-> +       }
-> +       if (header.desc_offset < header.data_offset &&
-> +                       (header.desc_offset + size_desc * header.count >
-> +                       header.data_offset)) {
-> +               printf("VCPU Descriptor block is overlapped with data block!\n");
-> +               goto out_close_fd;
-> +       }
-> +
-> +       /* Allocate memory for stats descriptors */
-> +       stats_desc = calloc(header.count, size_desc);
-> +       if (!stats_desc) {
-> +               perror("Allocate memory for VCPU stats descriptors");
-> +               goto out_close_fd;
-> +       }
-> +       /* Read kvm vcpu stats descriptors */
-> +       ret = pread(stats_fd, stats_desc,
-> +                       size_desc * header.count, header.desc_offset);
-> +       if (ret != size_desc * header.count) {
-> +               perror("Read KVM VCPU stats descriptors");
-> +               goto out_free_desc;
-> +       }
-> +       /* Sanity check for fields in descriptors */
-> +       for (i = 0; i < header.count; ++i) {
-> +               pdesc = (void *)stats_desc + i * size_desc;
-> +               /* Check boundaries */
-> +               if ((pdesc->flags & KVM_STATS_TYPE_MASK) > KVM_STATS_TYPE_MAX) {
-> +                       printf("Unknown KVM stats type!\n");
-> +                       goto out_free_desc;
-> +               }
-> +               if ((pdesc->flags & KVM_STATS_UNIT_MASK) > KVM_STATS_UNIT_MAX) {
-> +                       printf("Unknown KVM stats unit!\n");
-> +                       goto out_free_desc;
-> +               }
-> +               if ((pdesc->flags & KVM_STATS_SCALE_MASK) >
-> +                               KVM_STATS_SCALE_MAX) {
-> +                       printf("Unknown KVM stats scale!\n");
-> +                       goto out_free_desc;
-> +               }
-> +               /* Check exponent for stats unit
-> +                * Exponent for counter should be greater than or equal to 0
-> +                * Exponent for unit bytes should be greater than or equal to 0
-> +                * Exponent for unit seconds should be less than or equal to 0
-> +                * Exponent for unit clock cycles should be greater than or
-> +                * equal to 0
-> +                */
-> +               switch (pdesc->flags & KVM_STATS_UNIT_MASK) {
-> +               case KVM_STATS_UNIT_NONE:
-> +               case KVM_STATS_UNIT_BYTES:
-> +               case KVM_STATS_UNIT_CYCLES:
-> +                       if (pdesc->exponent < 0) {
-> +                               printf("Unsupported KVM stats unit!\n");
-> +                               goto out_free_desc;
-> +                       }
-> +                       break;
-> +               case KVM_STATS_UNIT_SECONDS:
-> +                       if (pdesc->exponent > 0) {
-> +                               printf("Unsupported KVM stats unit!\n");
-> +                               goto out_free_desc;
-> +                       }
-> +                       break;
-> +               }
-> +               /* Check name string */
-> +               if (strlen(pdesc->name) >= header.name_size) {
-> +                       printf("KVM stats name(%s) too long!\n", pdesc->name);
-> +                       goto out_free_desc;
-> +               }
-> +               /* Check size field, which should not be zero */
-> +               if (pdesc->size == 0) {
-> +                       printf("KVM descriptor(%s) with size of 0!\n",
-> +                                       pdesc->name);
-> +                       goto out_free_desc;
-> +               }
-> +               size_data += pdesc->size * sizeof(stats_data->value[0]);
-> +       }
-> +       /* Check overlap */
-> +       if (header.data_offset < header.desc_offset &&
-> +               header.data_offset + size_data > header.desc_offset) {
-> +               printf("Data block is overlapped with Descriptor block!\n");
-> +               goto out_free_desc;
-> +       }
-> +       /* Check validity of all stats data size */
-> +       if (size_data < header.count * sizeof(stats_data->value[0])) {
-> +               printf("Data size is not correct!\n");
-> +               goto out_free_desc;
-> +       }
-> +
-> +       /* Allocate memory for stats data */
-> +       stats_data = malloc(size_data);
-> +       if (!stats_data) {
-> +               perror("Allocate memory for VCPU stats data");
-> +               goto out_free_desc;
-> +       }
-> +       /* Read kvm vcpu stats data */
-> +       ret = pread(stats_fd, stats_data, size_data, header.data_offset);
-> +       if (ret != size_data) {
-> +               perror("Read KVM VCPU stats data");
-> +               goto out_free_data;
-> +       }
-> +
-> +       err = 0;
-> +out_free_data:
-> +       free(stats_data);
-> +out_free_desc:
-> +       free(stats_desc);
-> +out_close_fd:
-> +       close(stats_fd);
-> +       return err;
-> +}
-> +
-> +/*
-> + * Usage: kvm_bin_form_stats [#vm] [#vcpu]
-> + * The first parameter #vm set the number of VMs being created.
-> + * The second parameter #vcpu set the number of VCPUs being created.
-> + * By default, 1 VM and 1 VCPU for the VM would be created for testing.
-> + */
-
-Consider setting the default to something higher so people running
-this test with default arguments get more test coverage?
-
-> +
-> +int main(int argc, char *argv[])
-> +{
-> +       int max_vm = 1, max_vcpu = 1, ret, i, j, err = -1;
-> +       struct kvm_vm **vms;
-> +
-> +       /* Get the number of VMs and VCPUs that would be created for testing. */
-> +       if (argc > 1) {
-> +               max_vm = strtol(argv[1], NULL, 0);
-> +               if (max_vm <= 0)
-> +                       max_vm = 1;
-> +       }
-> +       if (argc > 2) {
-> +               max_vcpu = strtol(argv[2], NULL, 0);
-> +               if (max_vcpu <= 0)
-> +                       max_vcpu = 1;
-> +       }
-> +
-> +       /* Check the extension for binary stats */
-> +       ret = kvm_check_cap(KVM_CAP_STATS_BINARY_FD);
-> +       if (ret < 0) {
-> +               printf("Binary form statistics interface is not supported!\n");
-> +               return err;
-> +       }
-> +
-> +       /* Create VMs and VCPUs */
-> +       vms = malloc(sizeof(vms[0]) * max_vm);
-> +       if (!vms) {
-> +               perror("Allocate memory for storing VM pointers");
-> +               return err;
-> +       }
-> +       for (i = 0; i < max_vm; ++i) {
-> +               vms[i] = vm_create(VM_MODE_DEFAULT,
-> +                               DEFAULT_GUEST_PHY_PAGES, O_RDWR);
-> +               for (j = 0; j < max_vcpu; ++j)
-> +                       vm_vcpu_add(vms[i], j);
-> +       }
-> +
-> +       /* Check stats read for every VM and VCPU */
-> +       for (i = 0; i < max_vm; ++i) {
-> +               if (vm_stats_test(vms[i]))
-> +                       goto out_free_vm;
-> +               for (j = 0; j < max_vcpu; ++j) {
-> +                       if (vcpu_stats_test(vms[i], j))
-> +                               goto out_free_vm;
-> +               }
-> +       }
-> +
-> +       err = 0;
-> +out_free_vm:
-> +       for (i = 0; i < max_vm; ++i)
-> +               kvm_vm_free(vms[i]);
-> +       free(vms);
-> +       return err;
-> +}
-> diff --git a/tools/testing/selftests/kvm/lib/kvm_util.c b/tools/testing/selftests/kvm/lib/kvm_util.c
-> index fc83f6c5902d..d9e0b2c8b906 100644
-> --- a/tools/testing/selftests/kvm/lib/kvm_util.c
-> +++ b/tools/testing/selftests/kvm/lib/kvm_util.c
-> @@ -2090,3 +2090,15 @@ unsigned int vm_calc_num_guest_pages(enum vm_guest_mode mode, size_t size)
->         n = DIV_ROUND_UP(size, vm_guest_mode_params[mode].page_size);
->         return vm_adjust_num_guest_pages(mode, n);
->  }
-> +
-> +int vm_get_statsfd(struct kvm_vm *vm)
-> +{
-> +       return ioctl(vm->fd, KVM_STATS_GETFD, NULL);
-> +}
-> +
-> +int vcpu_get_statsfd(struct kvm_vm *vm, uint32_t vcpuid)
-> +{
-> +       struct vcpu *vcpu = vcpu_find(vm, vcpuid);
-> +
-> +       return ioctl(vcpu->fd, KVM_STATS_GETFD, NULL);
-> +}
-> --
-> 2.31.1.751.gd2f1c929bd-goog
->
+greg k-h
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
