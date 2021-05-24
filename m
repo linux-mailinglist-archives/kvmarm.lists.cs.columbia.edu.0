@@ -2,56 +2,100 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A62BC38E474
-	for <lists+kvmarm@lfdr.de>; Mon, 24 May 2021 12:45:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39BF338E669
+	for <lists+kvmarm@lfdr.de>; Mon, 24 May 2021 14:15:02 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 597964B1A3;
-	Mon, 24 May 2021 06:45:50 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D8B1F4B170;
+	Mon, 24 May 2021 08:15:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id aE-ucrn2IvBV; Mon, 24 May 2021 06:45:50 -0400 (EDT)
+	with ESMTP id i98-DjSjm-5M; Mon, 24 May 2021 08:15:00 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 129234B18A;
-	Mon, 24 May 2021 06:45:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BA6FD4B16C;
+	Mon, 24 May 2021 08:14:59 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B953C4B186
- for <kvmarm@lists.cs.columbia.edu>; Mon, 24 May 2021 06:45:47 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 901594B0EA
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 24 May 2021 08:14:58 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id uXM22UCpUVXR for <kvmarm@lists.cs.columbia.edu>;
- Mon, 24 May 2021 06:45:46 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9DB0F4B197
- for <kvmarm@lists.cs.columbia.edu>; Mon, 24 May 2021 06:45:46 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2984831B;
- Mon, 24 May 2021 03:45:46 -0700 (PDT)
-Received: from e112269-lin.arm.com (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6C6ED3F719;
- Mon, 24 May 2021 03:45:43 -0700 (PDT)
-From: Steven Price <steven.price@arm.com>
-To: Catalin Marinas <catalin.marinas@arm.com>, Marc Zyngier <maz@kernel.org>,
- Will Deacon <will@kernel.org>
-Subject: [PATCH v13 8/8] KVM: arm64: Document MTE capability and ioctl
-Date: Mon, 24 May 2021 11:45:13 +0100
-Message-Id: <20210524104513.13258-9-steven.price@arm.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20210524104513.13258-1-steven.price@arm.com>
-References: <20210524104513.13258-1-steven.price@arm.com>
+ with ESMTP id XLW2pmTZOUyJ for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 24 May 2021 08:14:57 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [216.205.24.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 82DD84B0E3
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 24 May 2021 08:14:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1621858497;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6VKp1xofZhd/+4tFw02ffWXfwhEtsPe1dVI9fvTfESM=;
+ b=JiY7ZDWxMr8dtjKbS5Us40gqWc2IjcgupS8KRIayqY3FiwvefA2l7u2YVERLZSP0ri3sQq
+ Yghe/2nu0YRy2WH2H0CfaDBY3qEdy45J8RJkPbhM3GyS8FLsGBeR9BYCI6xYBJjV1sj3/R
+ DxUTGiLo1cjBMfqQ8oMfPkhphCOTlw8=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-365-qeZ-RUO2PHi9C6XyQ00oGg-1; Mon, 24 May 2021 08:14:55 -0400
+X-MC-Unique: qeZ-RUO2PHi9C6XyQ00oGg-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ cn20-20020a0564020cb4b029038d0b0e183fso15502991edb.22
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 24 May 2021 05:14:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=6VKp1xofZhd/+4tFw02ffWXfwhEtsPe1dVI9fvTfESM=;
+ b=Fd1iU7WSpl4SM6HpSPVxAcuM3gsOjmLpz/c3Ut2UaFvxf7PYXEqa+LIR2//5qj2RaQ
+ 5mcHOj6n6OdQVUY1oRdgBsqylM4sV7uSFikMaZVftjISHX3RMNxTdlRrtMlfTsFHwmer
+ FiSLK8nVdvZp0/7vaf/5ENz0ys7gK7eJvpowJTliiheigQHh3776St+bZLSKlO8SiFb6
+ 8GvV3BsVd8jRRNYHNFwFZUJltJbRlr6+BznzCGTVEtT9utaD+yNeQeJg7hzB3LbpsBhv
+ 0CgdNOU6yKjo4C3s51imAOU6Ylzp1JC+098uUwWy9mjGb5BfcWWjDcIC3FLLN1fO9i+4
+ Lmwg==
+X-Gm-Message-State: AOAM532DTrz8Lz1j5O72JkEHOJg8/qjrJZ63QUGRniLAjtwJ3Sh0D77R
+ nTEKXUOGD02JKU7alp7/8GnhXTUP8zWVWOl/tPo6e7xqx/KOY84unt5jB9RsWnqmgc0Pr3oXKQ/
+ 9NAUwonSHVpaSluKL5Ag9ijUn
+X-Received: by 2002:a17:906:eb10:: with SMTP id
+ mb16mr23517149ejb.209.1621858494184; 
+ Mon, 24 May 2021 05:14:54 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJxk+0l0weiOvjyF1AGyYnOo0VG6EnvzCZZGMcmr4Lu8V//fg+XmZ0li0ktd4Yb2OtYjlpR1Ug==
+X-Received: by 2002:a17:906:eb10:: with SMTP id
+ mb16mr23517131ejb.209.1621858494009; 
+ Mon, 24 May 2021 05:14:54 -0700 (PDT)
+Received: from ?IPv6:2001:b07:6468:f312:c8dd:75d4:99ab:290a?
+ ([2001:b07:6468:f312:c8dd:75d4:99ab:290a])
+ by smtp.gmail.com with ESMTPSA id v23sm9221937edx.31.2021.05.24.05.14.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 May 2021 05:14:53 -0700 (PDT)
+Subject: Re: [PATCH v2 0/5] KVM: selftests: arm64 exception handling and debug
+ test
+To: Ricardo Koller <ricarkol@google.com>, kvm@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu
+References: <20210430232408.2707420-1-ricarkol@google.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <362e360d-40c3-1e50-18b0-a2f4297d3746@redhat.com>
+Date: Mon, 24 May 2021 14:14:52 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Cc: "Dr. David Alan Gilbert" <dgilbert@redhat.com>, qemu-devel@nongnu.org,
- Dave Martin <Dave.Martin@arm.com>, Juan Quintela <quintela@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, linux-kernel@vger.kernel.org,
- Steven Price <steven.price@arm.com>, Thomas Gleixner <tglx@linutronix.de>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+In-Reply-To: <20210430232408.2707420-1-ricarkol@google.com>
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pbonzini@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Cc: maz@kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -63,96 +107,77 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-A new capability (KVM_CAP_ARM_MTE) identifies that the kernel supports
-granting a guest access to the tags, and provides a mechanism for the
-VMM to enable it.
+On 01/05/21 01:24, Ricardo Koller wrote:
+> Hi,
+> 
+> These patches add a debug exception test in aarch64 KVM selftests while
+> also adding basic exception handling support.
+> 
+> The structure of the exception handling is based on its x86 counterpart.
+> Tests use the same calls to initialize exception handling and both
+> architectures allow tests to override the handler for a particular
+> vector, or (vector, ec) for synchronous exceptions in the arm64 case.
+> 
+> The debug test is similar to x86_64/debug_regs, except that the x86 one
+> controls the debugging from outside the VM. This proposed arm64 test
+> controls and handles debug exceptions from the inside.
+> 
+> Thanks,
+> Ricardo
 
-A new ioctl (KVM_ARM_MTE_COPY_TAGS) provides a simple way for a VMM to
-access the tags of a guest without having to maintain a PROT_MTE mapping
-in userspace. The above capability gates access to the ioctl.
+Marc, are you going to queue this in your tree?
 
-Signed-off-by: Steven Price <steven.price@arm.com>
----
- Documentation/virt/kvm/api.rst | 52 ++++++++++++++++++++++++++++++++++
- 1 file changed, 52 insertions(+)
+Thanks,
 
-diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
-index 22d077562149..ab45d7fe2aa5 100644
---- a/Documentation/virt/kvm/api.rst
-+++ b/Documentation/virt/kvm/api.rst
-@@ -5034,6 +5034,37 @@ see KVM_XEN_VCPU_SET_ATTR above.
- The KVM_XEN_VCPU_ATTR_TYPE_RUNSTATE_ADJUST type may not be used
- with the KVM_XEN_VCPU_GET_ATTR ioctl.
- 
-+4.130 KVM_ARM_MTE_COPY_TAGS
-+---------------------------
-+
-+:Capability: KVM_CAP_ARM_MTE
-+:Architectures: arm64
-+:Type: vm ioctl
-+:Parameters: struct kvm_arm_copy_mte_tags
-+:Returns: 0 on success, < 0 on error
-+
-+::
-+
-+  struct kvm_arm_copy_mte_tags {
-+	__u64 guest_ipa;
-+	__u64 length;
-+	void __user *addr;
-+	__u64 flags;
-+	__u64 reserved[2];
-+  };
-+
-+Copies Memory Tagging Extension (MTE) tags to/from guest tag memory. The
-+``guest_ipa`` and ``length`` fields must be ``PAGE_SIZE`` aligned. The ``addr``
-+fieldmust point to a buffer which the tags will be copied to or from.
-+
-+``flags`` specifies the direction of copy, either ``KVM_ARM_TAGS_TO_GUEST`` or
-+``KVM_ARM_TAGS_FROM_GUEST``.
-+
-+The size of the buffer to store the tags is ``(length / 16)`` bytes
-+(granules in MTE are 16 bytes long). Each byte contains a single tag
-+value. This matches the format of ``PTRACE_PEEKMTETAGS`` and
-+``PTRACE_POKEMTETAGS``.
-+
- 5. The kvm_run structure
- ========================
- 
-@@ -6362,6 +6393,27 @@ default.
- 
- See Documentation/x86/sgx/2.Kernel-internals.rst for more details.
- 
-+7.26 KVM_CAP_ARM_MTE
-+--------------------
-+
-+:Architectures: arm64
-+:Parameters: none
-+
-+This capability indicates that KVM (and the hardware) supports exposing the
-+Memory Tagging Extensions (MTE) to the guest. It must also be enabled by the
-+VMM before creating any VCPUs to allow the guest access. Note that MTE is only
-+available to a guest running in AArch64 mode and enabling this capability will
-+cause attempts to create AArch32 VCPUs to fail.
-+
-+When enabled the guest is able to access tags associated with any memory given
-+to the guest. KVM will ensure that the pages are flagged ``PG_mte_tagged`` so
-+that the tags are maintained during swap or hibernation of the host; however
-+the VMM needs to manually save/restore the tags as appropriate if the VM is
-+migrated.
-+
-+When enabled the VMM may make use of the ``KVM_ARM_MTE_COPY_TAGS`` ioctl to
-+perform a bulk copy of tags to/from the guest.
-+
- 8. Other capabilities.
- ======================
- 
--- 
-2.20.1
+Paolo
+
+> v1 -> v2:
+> 
+> Addressed comments from Andrew and Marc (thank you very much):
+> - rename vm_handle_exception in all tests.
+> - introduce UCALL_UNHANDLED in x86 first.
+> - move GUEST_ASSERT_EQ to common utils header.
+> - handle sync and other exceptions separately: use two tables (like
+>    kvm-unit-tests).
+> - add two separate functions for installing sync versus other exceptions
+> - changes in handlers.S: use the same layout as user_pt_regs, treat the
+>    EL1t vectors as invalid, refactor the vector table creation to not use
+>    manual numbering, add comments, remove LR from the stored registers.
+> - changes in debug-exceptions.c: remove unused headers, use the common
+>    GUEST_ASSERT_EQ, use vcpu_run instead of _vcpu_run.
+> - changes in processor.h: write_sysreg with support for xzr, replace EL1
+>    with current in macro names, define ESR_EC_MASK as ESR_EC_NUM-1.
+> 
+> Ricardo Koller (5):
+>    KVM: selftests: Rename vm_handle_exception
+>    KVM: selftests: Introduce UCALL_UNHANDLED for unhandled vector
+>      reporting
+>    KVM: selftests: Move GUEST_ASSERT_EQ to utils header
+>    KVM: selftests: Add exception handling support for aarch64
+>    KVM: selftests: Add aarch64/debug-exceptions test
+> 
+>   tools/testing/selftests/kvm/.gitignore        |   1 +
+>   tools/testing/selftests/kvm/Makefile          |   3 +-
+>   .../selftests/kvm/aarch64/debug-exceptions.c  | 244 ++++++++++++++++++
+>   .../selftests/kvm/include/aarch64/processor.h |  90 ++++++-
+>   .../testing/selftests/kvm/include/kvm_util.h  |  10 +
+>   .../selftests/kvm/include/x86_64/processor.h  |   4 +-
+>   .../selftests/kvm/lib/aarch64/handlers.S      | 130 ++++++++++
+>   .../selftests/kvm/lib/aarch64/processor.c     | 124 +++++++++
+>   .../selftests/kvm/lib/x86_64/processor.c      |  19 +-
+>   .../selftests/kvm/x86_64/kvm_pv_test.c        |   2 +-
+>   .../selftests/kvm/x86_64/tsc_msrs_test.c      |   9 -
+>   .../kvm/x86_64/userspace_msr_exit_test.c      |   8 +-
+>   .../selftests/kvm/x86_64/xapic_ipi_test.c     |   2 +-
+>   13 files changed, 611 insertions(+), 35 deletions(-)
+>   create mode 100644 tools/testing/selftests/kvm/aarch64/debug-exceptions.c
+>   create mode 100644 tools/testing/selftests/kvm/lib/aarch64/handlers.S
+> 
 
 _______________________________________________
 kvmarm mailing list
