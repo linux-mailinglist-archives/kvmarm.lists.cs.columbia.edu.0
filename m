@@ -2,95 +2,97 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CE8313912A9
-	for <lists+kvmarm@lfdr.de>; Wed, 26 May 2021 10:45:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1362D391118
+	for <lists+kvmarm@lfdr.de>; Wed, 26 May 2021 08:57:37 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7D04E49FE6;
-	Wed, 26 May 2021 04:45:48 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5D17F4086A;
+	Wed, 26 May 2021 02:57:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id imUMNIfJzBLd; Wed, 26 May 2021 04:45:47 -0400 (EDT)
+	with ESMTP id IxVpgOCYOPQC; Wed, 26 May 2021 02:57:36 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 573514A2E5;
-	Wed, 26 May 2021 04:45:40 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B44CC407A0;
+	Wed, 26 May 2021 02:57:34 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5E6F34B09A
- for <kvmarm@lists.cs.columbia.edu>; Tue, 25 May 2021 18:09:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7490E40642
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 26 May 2021 02:57:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id f5kCqKHZia9y for <kvmarm@lists.cs.columbia.edu>;
- Tue, 25 May 2021 18:09:28 -0400 (EDT)
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com
- [209.85.208.174])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9DB3E4B091
- for <kvmarm@lists.cs.columbia.edu>; Tue, 25 May 2021 18:09:28 -0400 (EDT)
-Received: by mail-lj1-f174.google.com with SMTP id w15so40179592ljo.10
- for <kvmarm@lists.cs.columbia.edu>; Tue, 25 May 2021 15:09:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=zu4atpVfcEeRxsKH6Xmh4O5SM+I3rjn7K6w7Qfcp4FU=;
- b=Wf24gd/RtjVtLVP04vJH/51vC2HCQrqeAdZ+KH0Zr9KB3h1V58wkLo0QXktbvMnPLf
- 0hKVqdS1sEO1Myle/7BnLqSuRjusn38C1pyQTArCWRj8kXygYYlhcwl2eu7/QYoopz3a
- 27PZdTt8ZtiCDPHqJin7wCVYxdZbb/iOEQzH3pRVc/ClHPHLx5I6XYNA4jfjVF+fbGlf
- 0FedhfTtgM3voBHtKzTnlvhfUhP5b6NMj1xNHah1FaPR/7Shm6Ci5ImHCDztLydigFTw
- dlBgEfsYWrA1txLEnBmkZLlx9UHrML8tHYX4gGyOFta2Z3bU8eUQQvXT3GKi9vVQHmQH
- 9HIQ==
+ with ESMTP id uzP2Ik7j9aKY for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 26 May 2021 02:57:32 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [216.205.24.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1202E405A9
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 26 May 2021 02:57:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1622012251;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gZt/78b9E0Mn5efYKHSVxpMzVKaf5ArhTjnMdIGx+ys=;
+ b=GSKRrKuUxLvS9/sMgvPD5Nyue9tdsIPWN2qsZ0VBmn3YcQ7DLg1Q5miM63kLjBpRuynKQk
+ DtM/etb1cCvQZRXRHbkksq7/UhpseQUNemTNrOuxxGvspeCM2smDJ7+PUo88wloCr5UkSm
+ FqnLqZJNMjR7LAYrQyBejdIsvx8fF4k=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-557-JWMRN-3vNVKP_DViOhuj3w-1; Wed, 26 May 2021 02:57:28 -0400
+X-MC-Unique: JWMRN-3vNVKP_DViOhuj3w-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ d8-20020a0564020008b0290387d38e3ce0so18798edu.1
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 25 May 2021 23:57:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=zu4atpVfcEeRxsKH6Xmh4O5SM+I3rjn7K6w7Qfcp4FU=;
- b=E4R1/jt6n8a14j2tFFFRzgFuPhP/xY4fjH1MoJi66nHPKBI+cxR5QQkf0OFRShJ37w
- mH4ImoZZ4GAvhbm0rcJJMFGca7IrwSKPFg+Ug3UZ5O83ZlOT93xNf/xwGX7kQJu5sxKH
- 70SUOANUnXwN05DKFtQnKB01HLr+3sHjUaFE/B19REISzG+8XyWqSuk9hNbNhkvpvple
- zG0c1e5BpaaKThgsu+cMGF/hK4Ob7n4VxEIluWUASJfoHBicNbp74zR55NW+/g2du+7P
- 5QNLqMR139JN7AT0UOBKjstSK2Av+MgEXDoSxmwPxoZcuPBoQwDi1iGh0rro6x4GEmwV
- YtJQ==
-X-Gm-Message-State: AOAM532w3pOCHqxd/HJdaBFF784cGnkTyIYFr7aZmKs3PpXzfC4SSA0h
- wI64I9APpDsLq63NuplXH+No/GFD5ZHyrseR2F1X/Q==
-X-Google-Smtp-Source: ABdhPJw53+Euqn/MIRhed3HXAdIMUEKL1410gRd4mipuidR63HbpTSijx6DENLAC22s4NkxHKaUUm5o+iEqk50Mf5O8=
-X-Received: by 2002:a2e:5d7:: with SMTP id 206mr23236435ljf.448.1621980567011; 
- Tue, 25 May 2021 15:09:27 -0700 (PDT)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=gZt/78b9E0Mn5efYKHSVxpMzVKaf5ArhTjnMdIGx+ys=;
+ b=gWseR1vhFW1N86nXEQuooWOesiwRNKmBdGa2PfSHEHCXulzjXKxVD4Q77hkoRn13+z
+ dmMOXDq2yCImb8in96YV8fIGRvQ7Qr8vNvS5agYIV7RbpAZg8QeawcbswBReNBKWTIWC
+ G9vlg/2XNVmgHVs6OcHXNR4l9aoqjCUmMyt4r2HDVwkkXjE31e3Ls/d5JroMxxukYhr/
+ 3AnkgH7OUoi/eG5c+QpTF/qia6592z9XCITpaSb4RWQRrWMJC3DWqZ5lPEBMGuJcm1UB
+ yk6KyzJEehG+/sQrWWkuva76jWD98aDyK1UwdLlKV7oMzfBQT19deebjBVy5dl3qImTj
+ 8P/w==
+X-Gm-Message-State: AOAM531LVZedm8QK88JasuVOpEwQkMafTXuZSbVwrKeBRoxqYOOykGU7
+ bquuKZJCTuALORatsI57SdZy9u4xgwUV9VmrlR7w4ReW2R8Da9MO5npYp1LrfP99zz3SxKDI08r
+ HExvekm1QtvIRiOjzCmzMFH40
+X-Received: by 2002:a17:906:2ec6:: with SMTP id
+ s6mr32026722eji.65.1622012246832; 
+ Tue, 25 May 2021 23:57:26 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJwhPq8SdNrjADFqrVzJgDpb3cS5SqR/RGkCmodlewr7RVLMZ4m5CY/r4/YTrlyRDt5VoC3TvQ==
+X-Received: by 2002:a17:906:2ec6:: with SMTP id
+ s6mr32026703eji.65.1622012246542; 
+ Tue, 25 May 2021 23:57:26 -0700 (PDT)
+Received: from gator.home (cst2-174-132.cust.vodafone.cz. [31.30.174.132])
+ by smtp.gmail.com with ESMTPSA id y27sm9898401ejf.104.2021.05.25.23.57.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 25 May 2021 23:57:25 -0700 (PDT)
+Date: Wed, 26 May 2021 08:57:24 +0200
+From: Andrew Jones <drjones@redhat.com>
+To: Ricardo Koller <ricarkol@google.com>
+Subject: Re: [PATCH v2 5/5] KVM: arm64: selftests: get-reg-list: Split base
+ and pmu registers
+Message-ID: <20210526065724.3qb3fz5idwlskhpx@gator.home>
+References: <20210519140726.892632-1-drjones@redhat.com>
+ <20210519140726.892632-6-drjones@redhat.com>
+ <YK1ZcqgyLFSDH14+@google.com>
 MIME-Version: 1.0
-References: <20210524151828.4113777-1-jingzhangos@google.com>
- <20210524151828.4113777-5-jingzhangos@google.com>
-In-Reply-To: <20210524151828.4113777-5-jingzhangos@google.com>
-From: David Matlack <dmatlack@google.com>
-Date: Tue, 25 May 2021 15:09:00 -0700
-Message-ID: <CALzav=eoZ6AAwZi2jh11zFmsGqL_tDCpvvntm=tV_u1rP1Hb=g@mail.gmail.com>
-Subject: Re: [PATCH v6 4/4] KVM: selftests: Add selftest for KVM statistics
- data binary interface
-To: Jing Zhang <jingzhangos@google.com>
-X-Mailman-Approved-At: Wed, 26 May 2021 04:45:38 -0400
-Cc: KVM <kvm@vger.kernel.org>, David Hildenbrand <david@redhat.com>,
- Paul Mackerras <paulus@ozlabs.org>,
- Linuxkselftest <linux-kselftest@vger.kernel.org>,
- Claudio Imbrenda <imbrenda@linux.ibm.com>, Will Deacon <will@kernel.org>,
- KVMARM <kvmarm@lists.cs.columbia.edu>,
- Emanuele Giuseppe Esposito <eesposit@redhat.com>,
- LinuxS390 <linux-s390@vger.kernel.org>, Janosch Frank <frankja@linux.ibm.com>,
- Oliver Upton <oupton@google.com>, Marc Zyngier <maz@kernel.org>,
- Huacai Chen <chenhuacai@kernel.org>,
- Christian Borntraeger <borntraeger@de.ibm.com>,
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
- David Rientjes <rientjes@google.com>, KVMPPC <kvm-ppc@vger.kernel.org>,
- Krish Sadhukhan <krish.sadhukhan@oracle.com>,
- Jim Mattson <jmattson@google.com>,
- Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
- Sean Christopherson <seanjc@google.com>, Cornelia Huck <cohuck@redhat.com>,
- Peter Shier <pshier@google.com>, LinuxMIPS <linux-mips@vger.kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>
+In-Reply-To: <YK1ZcqgyLFSDH14+@google.com>
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=drjones@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Disposition: inline
+Cc: kvm@vger.kernel.org, maz@kernel.org, pbonzini@redhat.com,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -107,319 +109,253 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, May 24, 2021 at 8:18 AM Jing Zhang <jingzhangos@google.com> wrote:
->
-> Add selftest to check KVM stats descriptors validity.
->
-> Reviewed-by: David Matlack <dmatlack@google.com>
-> Reviewed-by: Ricardo Koller <ricarkol@google.com>
-> Signed-off-by: Jing Zhang <jingzhangos@google.com>
+On Tue, May 25, 2021 at 01:09:22PM -0700, Ricardo Koller wrote:
+> On Wed, May 19, 2021 at 04:07:26PM +0200, Andrew Jones wrote:
+> > Since KVM commit 11663111cd49 ("KVM: arm64: Hide PMU registers from
+> > userspace when not available") the get-reg-list* tests have been
+> > failing with
+> > 
+> >   ...
+> >   ... There are 74 missing registers.
+> >   The following lines are missing registers:
+> >   ...
+> > 
+> > where the 74 missing registers are all PMU registers. This isn't a
+> > bug in KVM that the selftest found, even though it's true that a
+> > KVM userspace that wasn't setting the KVM_ARM_VCPU_PMU_V3 VCPU
+> > flag, but still expecting the PMU registers to be in the reg-list,
+> > would suddenly no longer have their expectations met. In that case,
+> > the expectations were wrong, though, so that KVM userspace needs to
+> > be fixed, and so does this selftest. The fix for this selftest is to
+> > pull the PMU registers out of the base register sublist into their
+> > own sublist and then create new, pmu-enabled vcpu configs which can
+> > be tested.
+> > 
+> > Signed-off-by: Andrew Jones <drjones@redhat.com>
+> > ---
+> >  .../selftests/kvm/aarch64/get-reg-list.c      | 46 +++++++++++++++----
+> >  1 file changed, 38 insertions(+), 8 deletions(-)
+> > 
+> > diff --git a/tools/testing/selftests/kvm/aarch64/get-reg-list.c b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
+> > index dc06a28bfb74..78d8949bddbd 100644
+> > --- a/tools/testing/selftests/kvm/aarch64/get-reg-list.c
+> > +++ b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
+> > @@ -47,6 +47,7 @@ struct reg_sublist {
+> >  struct vcpu_config {
+> >  	const char *name;
+> >  	bool sve;
+> > +	bool pmu;
+> >  	struct reg_sublist sublists[];
+> >  };
+> 
+> I think it's possible that the number of sublists keeps increasing: it
+> would be very nice/useful if KVM allowed enabling/disabling more
+> features from userspace (besides SVE, PMU etc). In that case, it might
+> be easier if adding a new feature to get-reg-list just requires defining
+> a new config and not dealing with the internals of vcpu_config.
 
-Reviewed-by: David Matlack <dmatlack@google.com>
+Yes, adding the bools is a bit ugly, but how will we easily check if a
+given feature is present in a given config? We could put a copy of the
+vcpu_init features bitmap in vcpu_config, but I'm not sure if not touching
+the vcpu_config structure is worth having to use test_bit() and friends
+everywhere.
 
-> ---
->  tools/testing/selftests/kvm/.gitignore        |   1 +
->  tools/testing/selftests/kvm/Makefile          |   3 +
->  .../testing/selftests/kvm/include/kvm_util.h  |   3 +
->  .../selftests/kvm/kvm_bin_form_stats.c        | 216 ++++++++++++++++++
->  tools/testing/selftests/kvm/lib/kvm_util.c    |  12 +
->  5 files changed, 235 insertions(+)
->  create mode 100644 tools/testing/selftests/kvm/kvm_bin_form_stats.c
->
-> diff --git a/tools/testing/selftests/kvm/.gitignore b/tools/testing/selftests/kvm/.gitignore
-> index bd83158e0e0b..35796667c944 100644
-> --- a/tools/testing/selftests/kvm/.gitignore
-> +++ b/tools/testing/selftests/kvm/.gitignore
-> @@ -43,3 +43,4 @@
->  /memslot_modification_stress_test
->  /set_memory_region_test
->  /steal_time
-> +/kvm_bin_form_stats
-> diff --git a/tools/testing/selftests/kvm/Makefile b/tools/testing/selftests/kvm/Makefile
-> index e439d027939d..2984c86c848a 100644
-> --- a/tools/testing/selftests/kvm/Makefile
-> +++ b/tools/testing/selftests/kvm/Makefile
-> @@ -76,6 +76,7 @@ TEST_GEN_PROGS_x86_64 += kvm_page_table_test
->  TEST_GEN_PROGS_x86_64 += memslot_modification_stress_test
->  TEST_GEN_PROGS_x86_64 += set_memory_region_test
->  TEST_GEN_PROGS_x86_64 += steal_time
-> +TEST_GEN_PROGS_x86_64 += kvm_bin_form_stats
->
->  TEST_GEN_PROGS_aarch64 += aarch64/get-reg-list
->  TEST_GEN_PROGS_aarch64 += aarch64/get-reg-list-sve
-> @@ -87,6 +88,7 @@ TEST_GEN_PROGS_aarch64 += kvm_create_max_vcpus
->  TEST_GEN_PROGS_aarch64 += kvm_page_table_test
->  TEST_GEN_PROGS_aarch64 += set_memory_region_test
->  TEST_GEN_PROGS_aarch64 += steal_time
-> +TEST_GEN_PROGS_aarch64 += kvm_bin_form_stats
->
->  TEST_GEN_PROGS_s390x = s390x/memop
->  TEST_GEN_PROGS_s390x += s390x/resets
-> @@ -96,6 +98,7 @@ TEST_GEN_PROGS_s390x += dirty_log_test
->  TEST_GEN_PROGS_s390x += kvm_create_max_vcpus
->  TEST_GEN_PROGS_s390x += kvm_page_table_test
->  TEST_GEN_PROGS_s390x += set_memory_region_test
-> +TEST_GEN_PROGS_s390x += kvm_bin_form_stats
->
->  TEST_GEN_PROGS += $(TEST_GEN_PROGS_$(UNAME_M))
->  LIBKVM += $(LIBKVM_$(UNAME_M))
-> diff --git a/tools/testing/selftests/kvm/include/kvm_util.h b/tools/testing/selftests/kvm/include/kvm_util.h
-> index a8f022794ce3..ee01a67022d9 100644
-> --- a/tools/testing/selftests/kvm/include/kvm_util.h
-> +++ b/tools/testing/selftests/kvm/include/kvm_util.h
-> @@ -387,4 +387,7 @@ uint64_t get_ucall(struct kvm_vm *vm, uint32_t vcpu_id, struct ucall *uc);
->  #define GUEST_ASSERT_4(_condition, arg1, arg2, arg3, arg4) \
->         __GUEST_ASSERT((_condition), 4, (arg1), (arg2), (arg3), (arg4))
->
-> +int vm_get_statsfd(struct kvm_vm *vm);
-> +int vcpu_get_statsfd(struct kvm_vm *vm, uint32_t vcpuid);
+> 
+> Do you think it's possible in general to associate a sublist to a
+> capability and a feature? It works for the PMU and SVE. If that is
+> possible, what do you think of something like this? this would be the
+> config for sve+pmu:
+> 
+> static struct vcpu_config sve_pmu_config = {
+>       "sve+pmu",
+>        .sublists = {
+>        { "base", true, 0, 0, false, base_regs, ARRAY_SIZE(base_regs), },
+>        { "sve", false, KVM_ARM_VCPU_SVE, KVM_CAP_ARM_SVE, true, sve_regs, ARRAY_SIZE(sve_regs), sve_rejects_set, ARRAY_SIZE(sve_rejects_set), },
+>        { "pmu", false, KVM_ARM_VCPU_PMU_V3, KVM_CAP_ARM_PMU_V3, false, pmu_regs, ARRAY_SIZE(pmu_regs), },
+>        {0},
+>        },
+> };
+> 
+> Appended a rough patch at the end to make this idea more concrete.
+
+Comments below
+
+> diff --git a/tools/testing/selftests/kvm/aarch64/get-reg-list.c b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
+> index 78d8949bddbd..33b8735bdb15 100644
+> --- a/tools/testing/selftests/kvm/aarch64/get-reg-list.c
+> +++ b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
+> @@ -38,6 +38,11 @@ static struct kvm_reg_list *reg_list;
+>  static __u64 *blessed_reg, blessed_n;
+>  
+>  struct reg_sublist {
+> +       const char *name;
+> +       bool base;
+> +       int feature;
+> +       int capability;
+> +       bool finalize;
+>         __u64 *regs;
+>         __u64 regs_n;
+>         __u64 *rejects_set;
+> @@ -46,8 +51,6 @@ struct reg_sublist {
+>  
+>  struct vcpu_config {
+>         const char *name;
+> -       bool sve;
+> -       bool pmu;
+>         struct reg_sublist sublists[];
+>  };
+>  
+> @@ -257,10 +260,7 @@ static void print_reg(struct vcpu_config *c, __u64 id)
+>                 printf("\tKVM_REG_ARM_FW_REG(%lld),\n", id & 0xffff);
+>                 break;
+>         case KVM_REG_ARM64_SVE:
+> -               if (c->sve)
+> -                       printf("\t%s,\n", sve_id_to_str(c, id));
+> -               else
+> -                       TEST_FAIL("%s: KVM_REG_ARM64_SVE is an unexpected coproc type in reg id: 0x%llx", c->name, id);
+> +               printf("\t%s,\n", sve_id_to_str(c, id));
+
+I'd rather not lose this test. What we were doing here is making sure we
+don't see registers with KVM_REG_ARM64_SVE when sve is not enabled.
+
+>                 break;
+>         default:
+>                 TEST_FAIL("%s: Unexpected coproc type: 0x%llx in reg id: 0x%llx",
+> @@ -327,31 +327,42 @@ static void core_reg_fixup(void)
+>  
+>  static void prepare_vcpu_init(struct vcpu_config *c, struct kvm_vcpu_init *init)
+>  {
+> -       if (c->sve)
+> -               init->features[0] |= 1 << KVM_ARM_VCPU_SVE;
+> -       if (c->pmu)
+> -               init->features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
+> +       struct reg_sublist *s;
 > +
->  #endif /* SELFTEST_KVM_UTIL_H */
-> diff --git a/tools/testing/selftests/kvm/kvm_bin_form_stats.c b/tools/testing/selftests/kvm/kvm_bin_form_stats.c
-> new file mode 100644
-> index 000000000000..09e12c5838af
-> --- /dev/null
-> +++ b/tools/testing/selftests/kvm/kvm_bin_form_stats.c
-> @@ -0,0 +1,216 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * kvm_bin_form_stats
-> + *
-> + * Copyright (C) 2021, Google LLC.
-> + *
-> + * Test the fd-based interface for KVM statistics.
-> + */
-> +
-> +#define _GNU_SOURCE /* for program_invocation_short_name */
-> +#include <fcntl.h>
-> +#include <stdio.h>
-> +#include <stdlib.h>
-> +#include <string.h>
-> +#include <errno.h>
-> +
-> +#include "test_util.h"
-> +
-> +#include "kvm_util.h"
-> +#include "asm/kvm.h"
-> +#include "linux/kvm.h"
-> +
-> +int stats_test(int stats_fd, int size_stat)
-> +{
-> +       ssize_t ret;
-> +       int i;
-> +       size_t size_desc, size_data = 0;
-> +       struct kvm_stats_header header;
-> +       struct kvm_stats_desc *stats_desc, *pdesc;
-> +       void *stats_data;
-> +
-> +       /* Read kvm stats header */
-> +       ret = read(stats_fd, &header, sizeof(header));
-> +       TEST_ASSERT(ret == sizeof(header), "Read stats header");
-> +       size_desc = sizeof(*stats_desc) + header.name_size;
-> +
-> +       /* Check id string in header, that should start with "kvm" */
-> +       TEST_ASSERT(!strncmp(header.id, "kvm", 3) &&
-> +                       strlen(header.id) < KVM_STATS_ID_MAXLEN,
-> +                       "Invalid KVM stats type");
-> +
-> +       /* Sanity check for other fields in header */
-> +       if (header.count == 0)
-> +               return 0;
-> +       /* Check overlap */
-> +       TEST_ASSERT(header.desc_offset > 0 && header.data_offset > 0
-> +                       && header.desc_offset >= sizeof(header)
-> +                       && header.data_offset >= sizeof(header),
-> +                       "Invalid offset fields in header");
-> +       TEST_ASSERT(header.desc_offset > header.data_offset
-> +                       || (header.desc_offset + size_desc * header.count <=
-> +                               header.data_offset),
-> +                       "Descriptor block is overlapped with data block");
-> +
-> +       /* Allocate memory for stats descriptors */
-> +       stats_desc = calloc(header.count, size_desc);
-> +       TEST_ASSERT(stats_desc, "Allocate memory for stats descriptors");
-> +       /* Read kvm stats descriptors */
-> +       ret = pread(stats_fd, stats_desc,
-> +                       size_desc * header.count, header.desc_offset);
-> +       TEST_ASSERT(ret == size_desc * header.count,
-> +                       "Read KVM stats descriptors");
-> +
-> +       /* Sanity check for fields in descriptors */
-> +       for (i = 0; i < header.count; ++i) {
-> +               pdesc = (void *)stats_desc + i * size_desc;
-> +               /* Check type,unit,base boundaries */
-> +               TEST_ASSERT((pdesc->flags & KVM_STATS_TYPE_MASK)
-> +                               <= KVM_STATS_TYPE_MAX, "Unknown KVM stats type");
-> +               TEST_ASSERT((pdesc->flags & KVM_STATS_UNIT_MASK)
-> +                               <= KVM_STATS_UNIT_MAX, "Unknown KVM stats unit");
-> +               TEST_ASSERT((pdesc->flags & KVM_STATS_BASE_MASK)
-> +                               <= KVM_STATS_BASE_MAX, "Unknown KVM stats base");
-> +               /* Check exponent for stats unit
-> +                * Exponent for counter should be greater than or equal to 0
-> +                * Exponent for unit bytes should be greater than or equal to 0
-> +                * Exponent for unit seconds should be less than or equal to 0
-> +                * Exponent for unit clock cycles should be greater than or
-> +                * equal to 0
-> +                */
-> +               switch (pdesc->flags & KVM_STATS_UNIT_MASK) {
-> +               case KVM_STATS_UNIT_NONE:
-> +               case KVM_STATS_UNIT_BYTES:
-> +               case KVM_STATS_UNIT_CYCLES:
-> +                       TEST_ASSERT(pdesc->exponent >= 0,
-> +                                       "Unsupported KVM stats unit");
-> +                       break;
-> +               case KVM_STATS_UNIT_SECONDS:
-> +                       TEST_ASSERT(pdesc->exponent <= 0,
-> +                                       "Unsupported KVM stats unit");
-> +                       break;
-> +               }
-> +               /* Check name string */
-> +               TEST_ASSERT(strlen(pdesc->name) < header.name_size,
-> +                               "KVM stats name(%s) too long", pdesc->name);
-> +               /* Check size field, which should not be zero */
-> +               TEST_ASSERT(pdesc->size, "KVM descriptor(%s) with size of 0",
-> +                               pdesc->name);
-> +               size_data += pdesc->size * size_stat;
+> +       for_each_sublist(c, s) {
+> +               if (s->base)
+> +                       continue;
+> +               init->features[0] |= 1 << s->feature;
 > +       }
-> +       /* Check overlap */
-> +       TEST_ASSERT(header.data_offset >= header.desc_offset
-> +                       || header.data_offset + size_data <= header.desc_offset,
-> +                       "Data block is overlapped with Descriptor block");
-> +       /* Check validity of all stats data size */
-> +       TEST_ASSERT(size_data >= header.count * size_stat,
-> +                       "Data size is not correct");
-> +
-> +       /* Allocate memory for stats data */
-> +       stats_data = malloc(size_data);
-> +       TEST_ASSERT(stats_data, "Allocate memory for stats data");
-> +       /* Read kvm stats data as a bulk */
-> +       ret = pread(stats_fd, stats_data, size_data, header.data_offset);
-> +       TEST_ASSERT(ret == size_data, "Read KVM stats data");
-> +       /* Read kvm stats data one by one */
-> +       size_data = 0;
-> +       for (i = 0; i < header.count; ++i) {
-> +               pdesc = (void *)stats_desc + i * size_desc;
-> +               ret = pread(stats_fd, stats_data, pdesc->size * size_stat,
-> +                               header.data_offset + size_data);
-> +               TEST_ASSERT(ret == pdesc->size * size_stat,
-> +                               "Read data of KVM stats: %s", pdesc->name);
-> +               size_data += pdesc->size * size_stat;
-> +       }
-> +
-> +       free(stats_data);
-> +       free(stats_desc);
-> +       return 0;
-> +}
-> +
-> +
-> +int vm_stats_test(struct kvm_vm *vm)
-> +{
-> +       int stats_fd;
-> +       struct kvm_vm_stats_data *stats_data;
-> +
-> +       /* Get fd for VM stats */
-> +       stats_fd = vm_get_statsfd(vm);
-> +       TEST_ASSERT(stats_fd >= 0, "Get VM stats fd");
-> +
-> +       stats_test(stats_fd, sizeof(stats_data->value[0]));
-> +       close(stats_fd);
-> +
-> +       return 0;
-> +}
-> +
-> +int vcpu_stats_test(struct kvm_vm *vm, int vcpu_id)
-> +{
-> +       int stats_fd;
-> +       struct kvm_vcpu_stats_data *stats_data;
-> +
-> +       /* Get fd for VCPU stats */
-> +       stats_fd = vcpu_get_statsfd(vm, vcpu_id);
-> +       TEST_ASSERT(stats_fd >= 0, "Get VCPU stats fd");
-> +
-> +       stats_test(stats_fd, sizeof(stats_data->value[0]));
-> +       close(stats_fd);
-> +
-> +       return 0;
-> +}
-> +
-> +#define DEFAULT_NUM_VM         4
-> +#define DEFAULT_NUM_VCPU       4
-> +
-> +/*
-> + * Usage: kvm_bin_form_stats [#vm] [#vcpu]
-> + * The first parameter #vm set the number of VMs being created.
-> + * The second parameter #vcpu set the number of VCPUs being created.
-> + * By default, DEFAULT_NUM_VM VM and DEFAULT_NUM_VCPU VCPU for the VM would be
-> + * created for testing.
-> + */
-> +
-> +int main(int argc, char *argv[])
-> +{
-> +       int max_vm = DEFAULT_NUM_VM, max_vcpu = DEFAULT_NUM_VCPU, ret, i, j;
-> +       struct kvm_vm **vms;
-> +
-> +       /* Get the number of VMs and VCPUs that would be created for testing. */
-> +       if (argc > 1) {
-> +               max_vm = strtol(argv[1], NULL, 0);
-> +               if (max_vm <= 0)
-> +                       max_vm = DEFAULT_NUM_VM;
-> +       }
-> +       if (argc > 2) {
-> +               max_vcpu = strtol(argv[2], NULL, 0);
-> +               if (max_vcpu <= 0)
-> +                       max_vcpu = DEFAULT_NUM_VCPU;
-> +       }
-> +
-> +       /* Check the extension for binary stats */
-> +       ret = kvm_check_cap(KVM_CAP_STATS_BINARY_FD);
-> +       TEST_ASSERT(ret >= 0,
-> +                       "Binary form statistics interface is not supported");
-> +
-> +       /* Create VMs and VCPUs */
-> +       vms = malloc(sizeof(vms[0]) * max_vm);
-> +       TEST_ASSERT(vms, "Allocate memory for storing VM pointers");
-> +       for (i = 0; i < max_vm; ++i) {
-> +               vms[i] = vm_create(VM_MODE_DEFAULT,
-> +                               DEFAULT_GUEST_PHY_PAGES, O_RDWR);
-> +               for (j = 0; j < max_vcpu; ++j)
-> +                       vm_vcpu_add(vms[i], j);
-> +       }
-> +
-> +       /* Check stats read for every VM and VCPU */
-> +       for (i = 0; i < max_vm; ++i) {
-> +               vm_stats_test(vms[i]);
-> +               for (j = 0; j < max_vcpu; ++j)
-> +                       vcpu_stats_test(vms[i], j);
-> +       }
-> +
-> +       for (i = 0; i < max_vm; ++i)
-> +               kvm_vm_free(vms[i]);
-> +       free(vms);
-> +       return 0;
-> +}
-> diff --git a/tools/testing/selftests/kvm/lib/kvm_util.c b/tools/testing/selftests/kvm/lib/kvm_util.c
-> index fc83f6c5902d..d9e0b2c8b906 100644
-> --- a/tools/testing/selftests/kvm/lib/kvm_util.c
-> +++ b/tools/testing/selftests/kvm/lib/kvm_util.c
-> @@ -2090,3 +2090,15 @@ unsigned int vm_calc_num_guest_pages(enum vm_guest_mode mode, size_t size)
->         n = DIV_ROUND_UP(size, vm_guest_mode_params[mode].page_size);
->         return vm_adjust_num_guest_pages(mode, n);
+
+If we want this to be general then we should ensure s->feature is < 32,
+otherwise we need to move to the next word. Granted we only have a few
+features so far for all the years we've had Arm KVM, so we probably don't
+need to worry about this any time soon...
+
 >  }
+>  
+>  static void finalize_vcpu(struct kvm_vm *vm, uint32_t vcpuid, struct vcpu_config *c)
+>  {
+> +       struct reg_sublist *s;
+>         int feature;
+>  
+> -       if (c->sve) {
+> -               feature = KVM_ARM_VCPU_SVE;
+> -               vcpu_ioctl(vm, vcpuid, KVM_ARM_VCPU_FINALIZE, &feature);
+> +       for_each_sublist(c, s) {
+> +               if (s->base)
+> +                       continue;
+
+Probably don't need the if (s->base) continue, since base registers won't
+have s->finalize.
+
+> +               if (s->finalize) {
+> +                       feature = s->feature;
+> +                       vcpu_ioctl(vm, vcpuid, KVM_ARM_VCPU_FINALIZE, &feature);
+> +               }
+>         }
+>  }
+>  
+>  static void check_supported(struct vcpu_config *c)
+>  {
+> -       if (c->sve && !kvm_check_cap(KVM_CAP_ARM_SVE)) {
+> -               fprintf(stderr, "%s: SVE not available, skipping tests\n", c->name);
+> -               exit(KSFT_SKIP);
+> -       }
+> -       if (c->pmu && !kvm_check_cap(KVM_CAP_ARM_PMU_V3)) {
+> -               fprintf(stderr, "%s: PMU not available, skipping tests\n", c->name);
+> -               exit(KSFT_SKIP);
+> +       struct reg_sublist *s;
 > +
-> +int vm_get_statsfd(struct kvm_vm *vm)
-> +{
-> +       return ioctl(vm->fd, KVM_STATS_GETFD, NULL);
-> +}
+> +       for_each_sublist(c, s) {
+> +               if (s->base)
+> +                       continue;
+
+Also don't need the if (s->base) continue, since base registers won't have
+capabilities.
+
+> +               if (!kvm_check_cap(s->capability)) {
+> +                       fprintf(stderr, "%s: %s not available, skipping tests\n", c->name, s->name);
+> +                       exit(KSFT_SKIP);
 > +
-> +int vcpu_get_statsfd(struct kvm_vm *vm, uint32_t vcpuid)
-> +{
-> +       struct vcpu *vcpu = vcpu_find(vm, vcpuid);
-> +
-> +       return ioctl(vcpu->fd, KVM_STATS_GETFD, NULL);
-> +}
-> --
-> 2.31.1.818.g46aad6cb9e-goog
->
+> +               }
+>         }
+>  }
+>  
+> @@ -975,34 +986,34 @@ static __u64 sve_rejects_set[] = {
+>  static struct vcpu_config vregs_config = {
+>         "vregs",
+>         .sublists = {
+> -       { base_regs,    ARRAY_SIZE(base_regs), },
+> -       { vregs,        ARRAY_SIZE(vregs), },
+> +       { "base", true, 0, 0, false, base_regs, ARRAY_SIZE(base_regs), },
+> +       { "vregs", true, 0, 0, false, vregs, ARRAY_SIZE(vregs), },
+>         {0},
+>         },
+>  };
+>  static struct vcpu_config vregs_pmu_config = {
+> -       "vregs+pmu", .pmu = true,
+> +       "vregs+pmu",
+>         .sublists = {
+> -       { base_regs,    ARRAY_SIZE(base_regs), },
+> -       { vregs,        ARRAY_SIZE(vregs), },
+> -       { pmu_regs,     ARRAY_SIZE(pmu_regs), },
+> +       { "base", true, 0, 0, false, base_regs, ARRAY_SIZE(base_regs), },
+> +       { "vregs", true, 0, 0, false, vregs, ARRAY_SIZE(vregs), },
+> +       { "pmu", false, KVM_ARM_VCPU_PMU_V3, KVM_CAP_ARM_PMU_V3, false, pmu_regs, ARRAY_SIZE(pmu_regs), },
+>         {0},
+>         },
+>  };
+>  static struct vcpu_config sve_config = {
+> -       "sve", .sve = true,
+> +       "sve",
+>         .sublists = {
+> -       { base_regs,    ARRAY_SIZE(base_regs), },
+> -       { sve_regs,     ARRAY_SIZE(sve_regs),   sve_rejects_set,        ARRAY_SIZE(sve_rejects_set), },
+> +       { "base", true, 0, 0, false, base_regs, ARRAY_SIZE(base_regs), },
+> +       { "sve", false, KVM_ARM_VCPU_SVE, KVM_CAP_ARM_SVE, true, sve_regs, ARRAY_SIZE(sve_regs), sve_rejects_set, ARRAY_SIZE(sve_rejects_set), },
+>         {0},
+>         },
+>  };
+>  static struct vcpu_config sve_pmu_config = {
+> -       "sve+pmu", .sve = true, .pmu = true,
+> +       "sve+pmu",
+>         .sublists = {
+> -       { base_regs,    ARRAY_SIZE(base_regs), },
+> -       { sve_regs,     ARRAY_SIZE(sve_regs),   sve_rejects_set,        ARRAY_SIZE(sve_rejects_set), },
+> -       { pmu_regs,     ARRAY_SIZE(pmu_regs), },
+> +       { "base", true, 0, 0, false, base_regs, ARRAY_SIZE(base_regs), },
+> +       { "sve", false, KVM_ARM_VCPU_SVE, KVM_CAP_ARM_SVE, true, sve_regs, ARRAY_SIZE(sve_regs), sve_rejects_set, ARRAY_SIZE(sve_rejects_set), },
+> +       { "pmu", false, KVM_ARM_VCPU_PMU_V3, KVM_CAP_ARM_PMU_V3, false, pmu_regs, ARRAY_SIZE(pmu_regs), },
+>         {0},
+>         },
+>  };
+> 
+
+It looks pretty good to me. While I don't really care about needing to add
+booleans to vcpu_config, the biggest advantage I see is not needing to
+modify prepare_vcpu_init, finalize_vcpu, and check_supported, and that the
+feature bits and caps are better associated with the sublists.
+
+These tables are getting wordy, though, so we'll probably want some
+macros.
+
+I'll experiment with this to see if I can integrate some of your
+suggestions into a v3.
+
+Thanks,
+drew
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
