@@ -2,81 +2,72 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E557939857C
-	for <lists+kvmarm@lfdr.de>; Wed,  2 Jun 2021 11:44:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96415398655
+	for <lists+kvmarm@lfdr.de>; Wed,  2 Jun 2021 12:20:05 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8D9304A4C0;
-	Wed,  2 Jun 2021 05:44:18 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F3BE94A3BF;
+	Wed,  2 Jun 2021 06:20:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id X3m0nJE4uAZf; Wed,  2 Jun 2021 05:44:18 -0400 (EDT)
+	with ESMTP id V+RGYWxr92Et; Wed,  2 Jun 2021 06:20:04 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id ADF824A7FD;
-	Wed,  2 Jun 2021 05:44:11 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A17CF4A023;
+	Wed,  2 Jun 2021 06:20:00 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 54C8B406E0
- for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Jun 2021 05:44:10 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5C73249F6C
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Jun 2021 06:19:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id tqha1Lr0nkfM for <kvmarm@lists.cs.columbia.edu>;
- Wed,  2 Jun 2021 05:44:09 -0400 (EDT)
-Received: from mail-qk1-f202.google.com (mail-qk1-f202.google.com
- [209.85.222.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A4A344A19F
- for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Jun 2021 05:44:06 -0400 (EDT)
-Received: by mail-qk1-f202.google.com with SMTP id
- a24-20020a05620a1038b02902fa6ba180ffso1264724qkk.0
- for <kvmarm@lists.cs.columbia.edu>; Wed, 02 Jun 2021 02:44:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=6BW7fDsTteROuo6K5BqDbcxWDf5UHuxhaiKaGg5d2Mc=;
- b=T6g1G1dBfUxc5a4uRyN0WITPLWnvNi8vRjaU0WxUeXxRylqlrnTDVZ76WleGEclLOB
- bFAArsvkYHz97FjuhdnCCh+WEkLIwWDbGPN8HcQ78O37UJm4EoCDSqpQXeqPvmiYy6nr
- yIq1GGdZJktTkGB8wQ4EBTglMjSXseqlhcwtjeBXe9GBq8u46ny++nQ2E4bWDjknAAve
- 2U2O/hlxHUJkYkpUskkdnrYRyPf0c1V6lmQnl8jnqVfGA3zTVMsoKNxQl4+tCdCbeRIj
- UPVn2XdYfC7UcpIUefZVUauC2ueC83iZpRd9bxE+tL/DUwpCrqaQCV3dz1x9aDI/G7rx
- MDvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:in-reply-to:message-id:mime-version
- :references:subject:from:to:cc;
- bh=6BW7fDsTteROuo6K5BqDbcxWDf5UHuxhaiKaGg5d2Mc=;
- b=TzIvb8K08PmLlOUqDBXQbG4+Z6Cut8fKlHm4W/HHYUmYHMwX2vMK4g7wl15LnY0Cd5
- +EEsQw06r6viPeV5Qry9WGkWYqBdi3an8qqj7umDcRzCM0VbRDxDVdgxMfLpN+DP/do4
- jfWkGQFwfoBL+xMyQSHQg2IKwKlMHTQINVrPQSimMZYQaYSsYdzTtxTpIihCv0QAKZkC
- cfyX/isJGcy5tKEX5uMyW0MZNLaUj4HtcFSW4tdTXibCJq7kWIFaqgdtaLzBha7ZDnGR
- TJ9cjWOg8uzY9vL50x8ZARr08gwy7tBo5IMFDxq7I6zPTSoFOYoJxi6rWN66n4z12unV
- CCMw==
-X-Gm-Message-State: AOAM530tOmB1c/C2swgSX9AHJIJjEAKcM8IifuJO1XtTRmgfcWsLd67L
- YoDT4QpnG/IlHTwv03GNjO8jAmTBJ2LT
-X-Google-Smtp-Source: ABdhPJxl+MLQjn8yPrKOU2bQi1i+tyBz/2Fy9EQ5GBW0rZbYDu246jiWjDU3i6n0uX5Qndx78NtlHv8adJah
-X-Received: from r2d2-qp.c.googlers.com
- ([fda3:e722:ac3:cc00:28:9cb1:c0a8:1652])
- (user=qperret job=sendgmr) by 2002:a0c:e8cd:: with SMTP id
- m13mr6368320qvo.52.1622627046193; Wed, 02 Jun 2021 02:44:06 -0700 (PDT)
-Date: Wed,  2 Jun 2021 09:43:47 +0000
-In-Reply-To: <20210602094347.3730846-1-qperret@google.com>
-Message-Id: <20210602094347.3730846-8-qperret@google.com>
-Mime-Version: 1.0
-References: <20210602094347.3730846-1-qperret@google.com>
-X-Mailer: git-send-email 2.32.0.rc0.204.g9fa02ecfa5-goog
-Subject: [PATCH v2 7/7] KVM: arm64: Use less bits for hyp_page refcount
-From: Quentin Perret <qperret@google.com>
-To: maz@kernel.org, will@kernel.org, james.morse@arm.com, 
- alexandru.elisei@arm.com, catalin.marinas@arm.com, suzuki.poulose@arm.com
-Cc: kernel-team@android.com, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+ with ESMTP id XTuBE8rQJDWh for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  2 Jun 2021 06:19:55 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 38A6A49F8F
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Jun 2021 06:19:55 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id D8487613BA;
+ Wed,  2 Jun 2021 10:19:53 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1loNyZ-0050AU-C9; Wed, 02 Jun 2021 11:19:51 +0100
+Date: Wed, 02 Jun 2021 11:19:49 +0100
+Message-ID: <877djc1sca.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Yanan Wang <wangyanan55@huawei.com>
+Subject: Re: [PATCH v5 2/6] KVM: arm64: Move D-cache flush to the fault
+ handlers
+In-Reply-To: <20210415115032.35760-3-wangyanan55@huawei.com>
+References: <20210415115032.35760-1-wangyanan55@huawei.com>
+ <20210415115032.35760-3-wangyanan55@huawei.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: wangyanan55@huawei.com, will@kernel.org, qperret@google.com,
+ alexandru.elisei@arm.com, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, catalin.marinas@arm.com, james.morse@arm.com,
+ julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com, gshan@redhat.com,
+ wanghaibin.wang@huawei.com, zhukeqian1@huawei.com, yuzenghui@huawei.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
+ linux-kernel@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -93,47 +84,176 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The hyp_page refcount is currently encoded on 4 bytes even though we
-never need to count that many objects in a page. Make it 2 bytes to save
-some space in the vmemmap.
+On Thu, 15 Apr 2021 12:50:28 +0100,
+Yanan Wang <wangyanan55@huawei.com> wrote:
+> 
+> We currently uniformly permorm CMOs of D-cache and I-cache in function
+> user_mem_abort before calling the fault handlers. If we get concurrent
+> guest faults(e.g. translation faults, permission faults) or some really
+> unnecessary guest faults caused by BBM, CMOs for the first vcpu are
+> necessary while the others later are not.
+> 
+> By moving CMOs to the fault handlers, we can easily identify conditions
+> where they are really needed and avoid the unnecessary ones. As it's a
+> time consuming process to perform CMOs especially when flushing a block
+> range, so this solution reduces much load of kvm and improve efficiency
+> of the page table code.
+> 
+> This patch only moves clean of D-cache to the map path, and drop the
+> original APIs in mmu.c/mmu.h for D-cache maintenance by using what we
+> already have in pgtable.c. Change about the I-side will come from a
+> later patch.
 
-As overflows are more likely to happen as well, make sure to catch those
-with a BUG in the increment function.
+But this means that until patch #5, this is broken (invalidation on
+the i-side will happen before the clean to PoU on the d-side). You
+need to keep the series bisectable and not break things in the middle.
+It would be OK to have two set of D-cache CMOs in the interval, for
+example.
 
-Signed-off-by: Quentin Perret <qperret@google.com>
----
- arch/arm64/kvm/hyp/include/nvhe/memory.h | 2 +-
- arch/arm64/kvm/hyp/nvhe/page_alloc.c     | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+> 
+> Signed-off-by: Yanan Wang <wangyanan55@huawei.com>
+> ---
+>  arch/arm64/include/asm/kvm_mmu.h | 16 ----------------
+>  arch/arm64/kvm/hyp/pgtable.c     | 20 ++++++++++++++------
+>  arch/arm64/kvm/mmu.c             | 14 +++-----------
+>  3 files changed, 17 insertions(+), 33 deletions(-)
+> 
+> diff --git a/arch/arm64/include/asm/kvm_mmu.h b/arch/arm64/include/asm/kvm_mmu.h
+> index 25ed956f9af1..e9b163c5f023 100644
+> --- a/arch/arm64/include/asm/kvm_mmu.h
+> +++ b/arch/arm64/include/asm/kvm_mmu.h
+> @@ -187,22 +187,6 @@ static inline bool vcpu_has_cache_enabled(struct kvm_vcpu *vcpu)
+>  	return (vcpu_read_sys_reg(vcpu, SCTLR_EL1) & 0b101) == 0b101;
+>  }
+>  
+> -static inline void __clean_dcache_guest_page(kvm_pfn_t pfn, unsigned long size)
+> -{
+> -	void *va = page_address(pfn_to_page(pfn));
+> -
+> -	/*
+> -	 * With FWB, we ensure that the guest always accesses memory using
+> -	 * cacheable attributes, and we don't have to clean to PoC when
+> -	 * faulting in pages. Furthermore, FWB implies IDC, so cleaning to
+> -	 * PoU is not required either in this case.
+> -	 */
+> -	if (cpus_have_const_cap(ARM64_HAS_STAGE2_FWB))
+> -		return;
+> -
+> -	kvm_flush_dcache_to_poc(va, size);
+> -}
+> -
+>  static inline void __invalidate_icache_guest_page(kvm_pfn_t pfn,
+>  						  unsigned long size)
+>  {
+> diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
+> index c37c1dc4feaf..e3606c9dcec7 100644
+> --- a/arch/arm64/kvm/hyp/pgtable.c
+> +++ b/arch/arm64/kvm/hyp/pgtable.c
+> @@ -562,6 +562,12 @@ static bool stage2_pte_is_counted(kvm_pte_t pte)
+>  	return !!pte;
+>  }
+>  
+> +static bool stage2_pte_cacheable(struct kvm_pgtable *pgt, kvm_pte_t pte)
+> +{
+> +	u64 memattr = pte & KVM_PTE_LEAF_ATTR_LO_S2_MEMATTR;
+> +	return memattr == KVM_S2_MEMATTR(pgt, NORMAL);
+> +}
+> +
+>  static void stage2_put_pte(kvm_pte_t *ptep, struct kvm_s2_mmu *mmu, u64 addr,
+>  			   u32 level, struct kvm_pgtable_mm_ops *mm_ops)
+>  {
+> @@ -583,6 +589,7 @@ static int stage2_map_walker_try_leaf(u64 addr, u64 end, u32 level,
+>  {
+>  	kvm_pte_t new, old = *ptep;
+>  	u64 granule = kvm_granule_size(level), phys = data->phys;
+> +	struct kvm_pgtable *pgt = data->mmu->pgt;
+>  	struct kvm_pgtable_mm_ops *mm_ops = data->mm_ops;
+>  
+>  	if (!kvm_block_mapping_supported(addr, end, phys, level))
+> @@ -606,6 +613,13 @@ static int stage2_map_walker_try_leaf(u64 addr, u64 end, u32 level,
+>  		stage2_put_pte(ptep, data->mmu, addr, level, mm_ops);
+>  	}
+>  
+> +	/* Perform CMOs before installation of the guest stage-2 PTE */
+> +	if (pgt->flags & KVM_PGTABLE_S2_GUEST) {
+> +		if (stage2_pte_cacheable(pgt, new) && !stage2_has_fwb(pgt))
+> +			__flush_dcache_area(mm_ops->phys_to_virt(phys),
+> +					    granule);
+> +	}
 
-diff --git a/arch/arm64/kvm/hyp/include/nvhe/memory.h b/arch/arm64/kvm/hyp/include/nvhe/memory.h
-index 3fe34fa30ea4..592b7edb3edb 100644
---- a/arch/arm64/kvm/hyp/include/nvhe/memory.h
-+++ b/arch/arm64/kvm/hyp/include/nvhe/memory.h
-@@ -8,7 +8,7 @@
- #include <linux/types.h>
- 
- struct hyp_page {
--	unsigned int refcount;
-+	unsigned short refcount;
- 	unsigned short order;
- };
- 
-diff --git a/arch/arm64/kvm/hyp/nvhe/page_alloc.c b/arch/arm64/kvm/hyp/nvhe/page_alloc.c
-index be07055bbc10..41fc25bdfb34 100644
---- a/arch/arm64/kvm/hyp/nvhe/page_alloc.c
-+++ b/arch/arm64/kvm/hyp/nvhe/page_alloc.c
-@@ -146,6 +146,7 @@ static struct hyp_page *__hyp_extract_page(struct hyp_pool *pool,
- 
- static inline void hyp_page_ref_inc(struct hyp_page *p)
- {
-+	BUG_ON(p->refcount == USHRT_MAX);
- 	p->refcount++;
- }
- 
+Rather than this, why not provide new callbacks in mm_ops, even if we
+have to provide one that is specific to guests (and let the protected
+stuff do its own thing)?
+
+One thing I really dislike though is that the page-table code is
+starting to be littered with things that are not directly related to
+page tables. We are re-creating the user_mem_abort() mess in a
+different place.
+
+> +
+>  	smp_store_release(ptep, new);
+>  	if (stage2_pte_is_counted(new))
+>  		mm_ops->get_page(ptep);
+> @@ -798,12 +812,6 @@ int kvm_pgtable_stage2_set_owner(struct kvm_pgtable *pgt, u64 addr, u64 size,
+>  	return ret;
+>  }
+>  
+> -static bool stage2_pte_cacheable(struct kvm_pgtable *pgt, kvm_pte_t pte)
+> -{
+> -	u64 memattr = pte & KVM_PTE_LEAF_ATTR_LO_S2_MEMATTR;
+> -	return memattr == KVM_S2_MEMATTR(pgt, NORMAL);
+> -}
+> -
+>  static int stage2_unmap_walker(u64 addr, u64 end, u32 level, kvm_pte_t *ptep,
+>  			       enum kvm_pgtable_walk_flags flag,
+>  			       void * const arg)
+> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> index 2cfcfc5f4e4e..86f7dd1c234f 100644
+> --- a/arch/arm64/kvm/mmu.c
+> +++ b/arch/arm64/kvm/mmu.c
+> @@ -694,11 +694,6 @@ void kvm_arch_mmu_enable_log_dirty_pt_masked(struct kvm *kvm,
+>  	kvm_mmu_write_protect_pt_masked(kvm, slot, gfn_offset, mask);
+>  }
+>  
+> -static void clean_dcache_guest_page(kvm_pfn_t pfn, unsigned long size)
+> -{
+> -	__clean_dcache_guest_page(pfn, size);
+> -}
+> -
+>  static void invalidate_icache_guest_page(kvm_pfn_t pfn, unsigned long size)
+>  {
+>  	__invalidate_icache_guest_page(pfn, size);
+> @@ -972,9 +967,6 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+>  	if (writable)
+>  		prot |= KVM_PGTABLE_PROT_W;
+>  
+> -	if (fault_status != FSC_PERM && !device)
+> -		clean_dcache_guest_page(pfn, vma_pagesize);
+> -
+>  	if (exec_fault) {
+>  		prot |= KVM_PGTABLE_PROT_X;
+>  		invalidate_icache_guest_page(pfn, vma_pagesize);
+> @@ -1234,10 +1226,10 @@ int kvm_set_spte_hva(struct kvm *kvm, unsigned long hva, pte_t pte)
+>  	trace_kvm_set_spte_hva(hva);
+>  
+>  	/*
+> -	 * We've moved a page around, probably through CoW, so let's treat it
+> -	 * just like a translation fault and clean the cache to the PoC.
+> +	 * We've moved a page around, probably through CoW, so let's treat
+> +	 * it just like a translation fault and the map handler will clean
+> +	 * the cache to the PoC.
+>  	 */
+> -	clean_dcache_guest_page(pfn, PAGE_SIZE);
+>  	handle_hva_to_gpa(kvm, hva, end, &kvm_set_spte_handler, &pfn);
+>  	return 0;
+>  }
+
+Thanks,
+
+	M.
+
 -- 
-2.32.0.rc0.204.g9fa02ecfa5-goog
-
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
