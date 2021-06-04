@@ -2,57 +2,54 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CB72F39BA9A
-	for <lists+kvmarm@lfdr.de>; Fri,  4 Jun 2021 16:06:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21FAE39BAAE
+	for <lists+kvmarm@lfdr.de>; Fri,  4 Jun 2021 16:09:28 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 52E9A4B113;
-	Fri,  4 Jun 2021 10:06:03 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A6D6C4B0F6;
+	Fri,  4 Jun 2021 10:09:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id nMUF+tuL4smR; Fri,  4 Jun 2021 10:06:03 -0400 (EDT)
+	with ESMTP id 2hcPr62W3IwB; Fri,  4 Jun 2021 10:09:27 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 392774B0F9;
-	Fri,  4 Jun 2021 10:05:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C13FE4B0F8;
+	Fri,  4 Jun 2021 10:09:22 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5A7AA4B0DA
- for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 10:05:57 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9F0A24B0EB
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 10:09:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id t5OYzTSBaOiN for <kvmarm@lists.cs.columbia.edu>;
- Fri,  4 Jun 2021 10:05:51 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0D4D64B09E
- for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 10:05:51 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 148D4613FF;
- Fri,  4 Jun 2021 14:05:46 +0000 (UTC)
-Date: Fri, 4 Jun 2021 15:05:44 +0100
-From: Catalin Marinas <catalin.marinas@arm.com>
-To: Steven Price <steven.price@arm.com>
-Subject: Re: [PATCH v13 4/8] KVM: arm64: Introduce MTE VM feature
-Message-ID: <20210604140544.GF31173@arm.com>
-References: <20210524104513.13258-1-steven.price@arm.com>
- <20210524104513.13258-5-steven.price@arm.com>
- <20210603160031.GE20338@arm.com>
- <a0810f3b-4f13-e8b5-7057-a9de1201887a@arm.com>
- <20210604113658.GD31173@arm.com>
- <2265cbf6-d643-9122-79a8-90198ea16c64@arm.com>
+ with ESMTP id nFvSd6xnC3oT for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  4 Jun 2021 10:09:16 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 53AF54B09E
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 10:09:16 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6678B2B;
+ Fri,  4 Jun 2021 07:09:15 -0700 (PDT)
+Received: from C02TD0UTHF1T.local (unknown [10.57.6.137])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4CE513F774;
+ Fri,  4 Jun 2021 07:09:12 -0700 (PDT)
+Date: Fri, 4 Jun 2021 15:09:09 +0100
+From: Mark Rutland <mark.rutland@arm.com>
+To: Will Deacon <will@kernel.org>
+Subject: Re: [PATCH 2/4] KVM: arm64: Extend comment in has_vhe()
+Message-ID: <20210604140909.GB69333@C02TD0UTHF1T.local>
+References: <20210603183347.1695-1-will@kernel.org>
+ <20210603183347.1695-3-will@kernel.org>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <2265cbf6-d643-9122-79a8-90198ea16c64@arm.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: "Dr. David Alan Gilbert" <dgilbert@redhat.com>, qemu-devel@nongnu.org,
- Marc Zyngier <maz@kernel.org>, Juan Quintela <quintela@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, linux-kernel@vger.kernel.org,
- Dave Martin <Dave.Martin@arm.com>, linux-arm-kernel@lists.infradead.org,
- Thomas Gleixner <tglx@linutronix.de>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu
+In-Reply-To: <20210603183347.1695-3-will@kernel.org>
+Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+ linux-arm-kernel@lists.infradead.org, Sean Christopherson <seanjc@google.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -69,43 +66,44 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Jun 04, 2021 at 01:51:38PM +0100, Steven Price wrote:
-> On 04/06/2021 12:36, Catalin Marinas wrote:
-> > On Fri, Jun 04, 2021 at 11:42:11AM +0100, Steven Price wrote:
-> >> On 03/06/2021 17:00, Catalin Marinas wrote:
-> >>> On Mon, May 24, 2021 at 11:45:09AM +0100, Steven Price wrote:
-> >>>> @@ -971,8 +1007,13 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> >>>>  	if (writable)
-> >>>>  		prot |= KVM_PGTABLE_PROT_W;
-> >>>>  
-> >>>> -	if (fault_status != FSC_PERM && !device)
-> >>>> +	if (fault_status != FSC_PERM && !device) {
-> >>>> +		ret = sanitise_mte_tags(kvm, pfn, vma_pagesize);
-> >>>> +		if (ret)
-> >>>> +			goto out_unlock;
-> >>>
-> >>> Maybe it was discussed in a previous version, why do we need this in
-> >>> addition to kvm_set_spte_gfn()?
-> >>
-> >> kvm_set_spte_gfn() is only used for the MMU notifier path (e.g. if a
-> >> memslot is changed by the VMM). For the initial access we will normally
-> >> fault the page into stage 2 with user_mem_abort().
-> > 
-> > Right. Can we move the sanitise_mte_tags() call to
-> > kvm_pgtable_stage2_map() instead or we don't have the all the
-> > information needed?
+On Thu, Jun 03, 2021 at 07:33:45PM +0100, Will Deacon wrote:
+> has_vhe() expands to a compile-time constant when evaluated from the VHE
+> or nVHE code, alternatively checking a static key when called from
+> elsewhere in the kernel. On face value, this looks like a case of
+> premature optimization, but in fact this allows symbol references on
+> VHE-specific code paths to be dropped from the nVHE object.
 > 
-> I tried that before: kvm_pgtable_stage2_map() is shared with the
-> hypervisor so sadly we can't go poking around in the host as this breaks
-> on nVHE. I mentioned it in the v12 cover letter but it was in a wall of
-> text:
+> Expand the comment in has_vhe() to make this clearer, hopefully
+> discouraging anybody from simplifying the code.
+> 
+> Cc: David Brazdil <dbrazdil@google.com>
+> Signed-off-by: Will Deacon <will@kernel.org>
 
-Ah, I missed this in the cover letter (haven't read it).
+Acked-by: Mark Rutland <mark.rutland@arm.com>
 
-So, apart from the nitpick with the early return for less indentation,
-feel free to add:
+Mark.
 
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+> ---
+>  arch/arm64/include/asm/virt.h | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/arch/arm64/include/asm/virt.h b/arch/arm64/include/asm/virt.h
+> index 7379f35ae2c6..3218ca17f819 100644
+> --- a/arch/arm64/include/asm/virt.h
+> +++ b/arch/arm64/include/asm/virt.h
+> @@ -111,6 +111,9 @@ static __always_inline bool has_vhe(void)
+>  	/*
+>  	 * Code only run in VHE/NVHE hyp context can assume VHE is present or
+>  	 * absent. Otherwise fall back to caps.
+> +	 * This allows the compiler to discard VHE-specific code from the
+> +	 * nVHE object, reducing the number of external symbol references
+> +	 * needed to link.
+>  	 */
+>  	if (is_vhe_hyp_code())
+>  		return true;
+> -- 
+> 2.32.0.rc0.204.g9fa02ecfa5-goog
+> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
