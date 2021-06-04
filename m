@@ -2,90 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 881F639BBDE
-	for <lists+kvmarm@lfdr.de>; Fri,  4 Jun 2021 17:29:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1728539BBDC
+	for <lists+kvmarm@lfdr.de>; Fri,  4 Jun 2021 17:27:54 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2FEF64B10E;
-	Fri,  4 Jun 2021 11:29:17 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 79C334B0EE;
+	Fri,  4 Jun 2021 11:27:53 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@chromium.org
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id pz0s2bllbKvR; Fri,  4 Jun 2021 11:29:13 -0400 (EDT)
+	with ESMTP id oHs8BFnh2HPI; Fri,  4 Jun 2021 11:27:53 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 335204B10D;
-	Fri,  4 Jun 2021 11:29:09 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BBBB64B0FE;
+	Fri,  4 Jun 2021 11:27:48 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C8D454B0C4
- for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 05:22:14 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B567D4B0EE
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 11:27:47 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id A0o4Lm7HGi96 for <kvmarm@lists.cs.columbia.edu>;
- Fri,  4 Jun 2021 05:22:10 -0400 (EDT)
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com
- [209.85.210.169])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A0F114B0C1
- for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 05:22:10 -0400 (EDT)
-Received: by mail-pf1-f169.google.com with SMTP id k15so7023963pfp.6
- for <kvmarm@lists.cs.columbia.edu>; Fri, 04 Jun 2021 02:22:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chromium.org; s=google;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=pcVIrrrWEUuSA+N6NdZCH+jzIyXyj1HQeo01ZwpdXxY=;
- b=T6vUk/4jMaY1sFB+ktO56Tu+hSYK1wiZBd79Qpkt7cR3wdk6RgqpEA+MqmoApExn4u
- Ki+XTdzY1lKdvlx+de9gaG+wdCW5+FLPTTH3w22d8er65zizi+PUDGgUHvaCEEPTouoT
- LUIBuV5Az0wlga/c+czm/LVkend9CKDw/kZwQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=pcVIrrrWEUuSA+N6NdZCH+jzIyXyj1HQeo01ZwpdXxY=;
- b=rl4taqg32eNmEugsgEZHQo+bM87Ywb1vT+hyrTK7zK9ckluXGpGoubhy67QammScsF
- uZ7Z0xJ3LkDVJY5iBm1bhBSyUi0GVA9D9itv5669f+3IXTzNmJHY0qjfUp01ZquzuemZ
- 4OefLbZp4/yM+Vkhg1k2KD04t6HyLj7WXhrJMlCnPTwMszxZTm0jM4xfHbcBOl2Z7sg0
- RkyJJ7rO8OT/HPePMEhghJInAoDw9GOXisnSntrsyeW6MrzKAcxy9IrwPlRikIiWZJXw
- UQGbJlilmKhjuDiD8WrJWUt6uGeOw/mjq3Jx/comks93BVvIRDrt8mpIMSuoYzHlywQk
- uZMw==
-X-Gm-Message-State: AOAM530u01jskx99765hMHvRjCiw4He0fy9jAP605Jja4rtlPaPkrcVH
- U6tIttweBD6zlTCkdLoIxBUwlg==
-X-Google-Smtp-Source: ABdhPJyN+y7mCRzpjZlapAyCgZr6LbpUALEaLKem6t6vFwqQAQV8qZmVYl6DOYQnER784of3HxKE+Q==
-X-Received: by 2002:aa7:82cb:0:b029:2e6:f397:d248 with SMTP id
- f11-20020aa782cb0000b02902e6f397d248mr3647517pfn.52.1622798529641; 
- Fri, 04 Jun 2021 02:22:09 -0700 (PDT)
-Received: from google.com ([2409:10:2e40:5100:36b:f5b6:c380:9ccf])
- by smtp.gmail.com with ESMTPSA id d15sm4208168pjr.47.2021.06.04.02.22.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jun 2021 02:22:09 -0700 (PDT)
-Date: Fri, 4 Jun 2021 18:22:02 +0900
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [RFC][PATCH] kvm: add suspend pm-notifier
-Message-ID: <YLnwum6AtcURNlRL@google.com>
-References: <20210603164315.682994-1-senozhatsky@chromium.org>
- <87a6o614dn.fsf@vitty.brq.redhat.com>
- <e4b4e872-4b22-82b7-57fc-65a7d10482c0@redhat.com>
-MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <e4b4e872-4b22-82b7-57fc-65a7d10482c0@redhat.com>
-X-Mailman-Approved-At: Fri, 04 Jun 2021 11:29:07 -0400
-Cc: linux-s390@vger.kernel.org, x86@kernel.org, kvm@vger.kernel.org,
- Christian Borntraeger <borntraeger@de.ibm.com>, Marc Zyngier <maz@kernel.org>,
- Huacai Chen <chenhuacai@kernel.org>, linux-kernel@vger.kernel.org,
- kvm-ppc@vger.kernel.org, linux-mips@vger.kernel.org,
- Paul Mackerras <paulus@ozlabs.org>,
- Sergey Senozhatsky <senozhatsky@chromium.org>,
- Sean Christopherson <seanjc@google.com>,
- Suleiman Souhlal <suleiman@google.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
- Jim Mattson <jmattson@google.com>
+ with ESMTP id PIbcQl6Vvv5M for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  4 Jun 2021 11:27:43 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4CB0C4B0EC
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 11:27:43 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 1852361400;
+ Fri,  4 Jun 2021 15:27:42 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=wait-a-minute.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1lpBjY-005VVs-2h; Fri, 04 Jun 2021 16:27:40 +0100
+Date: Fri, 04 Jun 2021 16:27:39 +0100
+Message-ID: <87lf7ptztg.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Subject: Re: [RFC PATCH 0/3] kvm/arm: New VMID allocator based on asid(2nd
+ approach) 
+In-Reply-To: <95bb84ffdb0f4db3b64b38cc3b651f90@huawei.com>
+References: <20210506165232.1969-1-shameerali.kolothum.thodi@huawei.com>
+ <e62829990c50479292af94c4152011fc@huawei.com>
+ <87sg1xzqea.wl-maz@kernel.org>
+ <95bb84ffdb0f4db3b64b38cc3b651f90@huawei.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: shameerali.kolothum.thodi@huawei.com,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ linux-kernel@vger.kernel.org, will@kernel.org, catalin.marinas@arm.com,
+ james.morse@arm.com, julien.thierry.kdev@gmail.com, suzuki.poulose@arm.com,
+ jean-philippe@linaro.org, Alexandru.Elisei@arm.com, linuxarm@huawei.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+ "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ Linuxarm <linuxarm@huawei.com>, "will@kernel.org" <will@kernel.org>,
+ "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -102,20 +88,109 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On (21/06/04 09:24), Paolo Bonzini wrote:
-> On 04/06/21 09:21, Vitaly Kuznetsov wrote:
-> > >   	preempt_notifier_inc();
-> > > +	kvm_init_pm_notifier(kvm);
-> > You've probably thought it through and I didn't but wouldn't it be
-> > easier to have one global pm_notifier call for KVM which would go
-> > through the list of VMs instead of registering/deregistering a
-> > pm_notifier call for every created/destroyed VM?
+On Fri, 04 Jun 2021 15:51:29 +0100,
+Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com> wrote:
 > 
-> That raises questions on the locking, i.e. if we can we take the kvm_lock
-> safely from the notifier.
+> Hi Marc,
+> 
+> > -----Original Message-----
+> > From: Marc Zyngier [mailto:maz@kernel.org]
+> > Sent: 04 June 2021 14:55
+> > To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+> > Cc: linux-arm-kernel@lists.infradead.org; kvmarm@lists.cs.columbia.edu;
+> > linux-kernel@vger.kernel.org; will@kernel.org; catalin.marinas@arm.com;
+> > james.morse@arm.com; julien.thierry.kdev@gmail.com;
+> > suzuki.poulose@arm.com; jean-philippe@linaro.org; Alexandru Elisei
+> > <Alexandru.Elisei@arm.com>; Linuxarm <linuxarm@huawei.com>
+> > Subject: Re: [RFC PATCH 0/3] kvm/arm: New VMID allocator based on asid(2nd
+> > approach)
+> > 
+> > On Fri, 04 Jun 2021 09:13:10 +0100,
+> > Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+> > wrote:
+> > >
+> > > Hi,
+> > >
+> > > > -----Original Message-----
+> > > > From: Shameerali Kolothum Thodi
+> > > > Sent: 06 May 2021 17:52
+> > > > To: linux-arm-kernel@lists.infradead.org; kvmarm@lists.cs.columbia.edu;
+> > > > linux-kernel@vger.kernel.org
+> > > > Cc: maz@kernel.org; will@kernel.org; catalin.marinas@arm.com;
+> > > > james.morse@arm.com; julien.thierry.kdev@gmail.com;
+> > > > suzuki.poulose@arm.com; jean-philippe@linaro.org; Linuxarm
+> > > > <linuxarm@huawei.com>
+> > > > Subject: [RFC PATCH 0/3] kvm/arm: New VMID allocator based on asid(2nd
+> > > > approach)
+> > > >
+> > > > This is based on a suggestion from Will [0] to try out the asid
+> > > > based kvm vmid solution as a separate VMID allocator instead of
+> > > > the shared lib approach attempted in v4[1].
+> > > >
+> > > > The idea is to compare both the approaches and see whether the
+> > > > shared lib solution with callbacks make sense or not.
+> > >
+> > > A gentle ping on this. Please take a look and let me know.
+> > 
+> > I had a look and I don't overly dislike it. I'd like to see the code
+> > without the pinned stuff though, at least to ease the reviewing. I
+> > haven't tested it in anger, but I have pushed the rebased code at [1]
+> > as it really didn't apply to 5.13-rc4.
+> 
+> Thanks for taking a look and the rebase. I will remove the pinned stuff
+> in the next revision as that was added just to compare against the previous
+> version.
+> 
+> > 
+> > One thing I'm a bit worried about is that we so far relied on VMID 0
+> > never being allocated to a guest, which is now crucial for protected
+> > KVM. I can't really convince myself that this can never happen with
+> > this.
+> 
+> Hmm..not sure I quite follow that. As per the current logic vmid 0 is
+> reserved and is not allocated to Guest.
 
-Right, I wanted to take the VM lock, rather than subsystem lock
-(kvm_lock).
+And that's the bit I'm struggling to validate here. I guess it works
+because cur_idx is set to 1 in new_vmid().
+
+> 
+> > Plus, I've found this nugget:
+> > 
+> > <quote
+> > 	max_pinned_vmids = NUM_USER_VMIDS - num_possible_cpus() - 2;
+> > </quote>
+> > 
+> > What is this "- 2"? My hunch is that it should really be "- 1" as VMID
+> > 0 is reserved, and we have no equivalent of KPTI for S2.
+> 
+> I think this is more related to the "pinned vmid" stuff and was borrowed from
+> the asid_update_limit() fn in arch/arm64/mm/context.c. But I missed the
+> comment that explains the reason behind it. It says,
+> 
+> ---x---
+> 	/*
+> 	 * There must always be an ASID available after rollover. Ensure that,
+> 	 * even if all CPUs have a reserved ASID and the maximum number of ASIDs
+> 	 * are pinned, there still is at least one empty slot in the ASID map.
+> 	 */
+> 	max_pinned_asids = num_available_asids - num_possible_cpus() - 2;
+> ---x---
+> 
+> So this is to make sure we will have at least one VMID available
+> after rollover in case we have pinned the max number of VMIDs. I
+> will include that comment to make it clear.
+
+That doesn't really explain the -2. Or is that that we have one for
+the extra empty slot, and one for the reserved?
+
+Jean-Philippe?
+
+Thanks,
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
