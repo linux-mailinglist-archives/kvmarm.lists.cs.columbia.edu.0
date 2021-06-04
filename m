@@ -2,100 +2,75 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EB9339B537
-	for <lists+kvmarm@lfdr.de>; Fri,  4 Jun 2021 10:52:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 081E039B523
+	for <lists+kvmarm@lfdr.de>; Fri,  4 Jun 2021 10:47:11 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 992EB4B10D;
-	Fri,  4 Jun 2021 04:52:07 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 656F54B100;
+	Fri,  4 Jun 2021 04:47:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.209
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DTWj3sjypGO1; Fri,  4 Jun 2021 04:52:07 -0400 (EDT)
+	with ESMTP id iFsKOqrsLZB7; Fri,  4 Jun 2021 04:47:10 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 22E894A5A0;
-	Fri,  4 Jun 2021 04:51:55 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2C5CE4B0F9;
+	Fri,  4 Jun 2021 04:47:06 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C72334B0AC
- for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 03:22:05 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2BF474B0D8
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 04:47:05 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id rLehoM7DYhRA for <kvmarm@lists.cs.columbia.edu>;
- Fri,  4 Jun 2021 03:22:04 -0400 (EDT)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7FA2F49E8A
- for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 03:22:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1622791324;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=orYq01Q31Yc39qB3ORg0nxtfa/WHWL4qWvUfOGPRsP0=;
- b=Um3hnnF0P0HQ6LnOC7AVL7hi+qh1huwDpRi+Ij/orEQ/m/jqLJuZ6H+9gv+iS9cvyy9O0x
- ivuli4dq1BquxYpj9P1lw9+ppsz5/Hn6kSC3eJUqC/5dMRt+gQi+yL2vhIhFj5YNeeuzP9
- 8xgD9AUxT0yxUsKNI22rmXC4Xz195Ps=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-569-CtH5UGfqPGCncWT_uNjikA-1; Fri, 04 Jun 2021 03:22:00 -0400
-X-MC-Unique: CtH5UGfqPGCncWT_uNjikA-1
-Received: by mail-ed1-f70.google.com with SMTP id
- z16-20020aa7d4100000b029038feb83da57so4542986edq.4
- for <kvmarm@lists.cs.columbia.edu>; Fri, 04 Jun 2021 00:22:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
- :message-id:mime-version;
- bh=orYq01Q31Yc39qB3ORg0nxtfa/WHWL4qWvUfOGPRsP0=;
- b=ruL9GHgoXmQ/k8GKX5Sk4+s2XXX0LUZls7mpAdgPuxy0hThKNXpDVCHZok11YjU5JV
- Ss2Aoc6swu47gwR/skYuZ6hfcxQh4w8Uuskz8dIkA6kuZUKfoVI3NM83g7PkxFfTI1uw
- Pblif5SiUaEIgnzJZBWVX4cti4D7Kt39KwSxw1C6i3USZWNGE63wV3QF6qpZK0mir8RK
- 9xgBFr3IVeMnX8Bvz7pjlrkp/a9r/vF2KC+t2YDAeppo2IfFZ7zdPoQeVkCYoWqeoB8c
- 502XkTuurN4nWSixmQEa9/qYTfnn86czTcyQEdbQDHsp/mUrgN2rHftNjCrIt3pN9f6S
- k9Ew==
-X-Gm-Message-State: AOAM531zjzkLYLfS5wpQ6CvDTalUq+wh6sOuwAkQp5u5+bBP9wdI1IsZ
- sH7nT0glIce7wa1SUB5Zuay+7a4qMAJwqVUswSQn0UZRz6BqN9wiVvmI/A+cdHWr0y02i7g33MJ
- DwIQ/JIOoVPRgqV29NKMj0dWR
-X-Received: by 2002:a17:906:3042:: with SMTP id
- d2mr2962225ejd.234.1622791319625; 
- Fri, 04 Jun 2021 00:21:59 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJye48vq4jhWt3rfSGy/IZIfVkJe+CPcNZKJdo8nz+4VSYXPjlnXO0JZDmfdCwTwFNTDbvESog==
-X-Received: by 2002:a17:906:3042:: with SMTP id
- d2mr2962196ejd.234.1622791319297; 
- Fri, 04 Jun 2021 00:21:59 -0700 (PDT)
-Received: from vitty.brq.redhat.com (g-server-2.ign.cz. [91.219.240.2])
- by smtp.gmail.com with ESMTPSA id gx23sm2456681ejb.125.2021.06.04.00.21.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Jun 2021 00:21:58 -0700 (PDT)
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
+ with ESMTP id WQeqvJsgZEfW for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  4 Jun 2021 04:47:01 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0B1324B0BA
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 04:47:01 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id BE38F61208;
+ Fri,  4 Jun 2021 08:46:59 +0000 (UTC)
+Received: from 78.163-31-62.static.virginmediabusiness.co.uk ([62.31.163.78]
+ helo=why.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1lp5Tl-005RCV-NT; Fri, 04 Jun 2021 09:46:57 +0100
+Date: Fri, 04 Jun 2021 09:46:48 +0100
+Message-ID: <87v96uyq2v.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
 To: Sergey Senozhatsky <senozhatsky@chromium.org>
 Subject: Re: [RFC][PATCH] kvm: add suspend pm-notifier
 In-Reply-To: <20210603164315.682994-1-senozhatsky@chromium.org>
 References: <20210603164315.682994-1-senozhatsky@chromium.org>
-Date: Fri, 04 Jun 2021 09:21:56 +0200
-Message-ID: <87a6o614dn.fsf@vitty.brq.redhat.com>
-MIME-Version: 1.0
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=vkuznets@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-X-Mailman-Approved-At: Fri, 04 Jun 2021 04:51:53 -0400
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 62.31.163.78
+X-SA-Exim-Rcpt-To: senozhatsky@chromium.org, pbonzini@redhat.com,
+ seanjc@google.com, vkuznets@redhat.com, jmattson@google.com,
+ chenhuacai@kernel.org, paulus@ozlabs.org, borntraeger@de.ibm.com,
+ suleiman@google.com, x86@kernel.org, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org,
+ linux-mips@vger.kernel.org, kvm@vger.kernel.org, kvm-ppc@vger.kernel.org,
+ linux-s390@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
 Cc: linux-s390@vger.kernel.org, x86@kernel.org, kvm@vger.kernel.org,
- Sergey Senozhatsky <senozhatsky@chromium.org>, Marc Zyngier <maz@kernel.org>,
- Huacai Chen <chenhuacai@kernel.org>, linux-kernel@vger.kernel.org,
- kvm-ppc@vger.kernel.org, linux-mips@vger.kernel.org,
- Paul Mackerras <paulus@ozlabs.org>,
+ Sean Christopherson <seanjc@google.com>, Huacai Chen <chenhuacai@kernel.org>,
+ linux-kernel@vger.kernel.org, kvm-ppc@vger.kernel.org,
+ linux-mips@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
  Christian Borntraeger <borntraeger@de.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Suleiman Souhlal <suleiman@google.com>,
- Sean Christopherson <seanjc@google.com>, kvmarm@lists.cs.columbia.edu,
+ Suleiman Souhlal <suleiman@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, kvmarm@lists.cs.columbia.edu,
  linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -113,16 +88,17 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Sergey Senozhatsky <senozhatsky@chromium.org> writes:
-
+On Thu, 03 Jun 2021 17:43:15 +0100,
+Sergey Senozhatsky <senozhatsky@chromium.org> wrote:
+> 
 > Add KVM suspend/hibernate PM-notifier which lets architectures
 > to implement arch-specific VM suspend code. For instance, on x86
 > this sets PVCLOCK_GUEST_STOPPED on all the VCPUs.
->
+> 
 > Our case is that user puts the host system into sleep multiple
 > times a day (e.g. closes the laptop's lid) so we need a reliable
 > way to suspend VMs properly.
->
+> 
 > Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 > ---
 >  arch/arm64/kvm/arm.c       |  4 ++++
@@ -133,7 +109,7 @@ Sergey Senozhatsky <senozhatsky@chromium.org> writes:
 >  include/linux/kvm_host.h   |  8 ++++++++
 >  virt/kvm/kvm_main.c        | 40 ++++++++++++++++++++++++++++++++++++++
 >  7 files changed, 85 insertions(+)
->
+> 
 > diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
 > index 1126eae27400..547dbe44d039 100644
 > --- a/arch/arm64/kvm/arm.c
@@ -214,6 +190,9 @@ Sergey Senozhatsky <senozhatsky@chromium.org> writes:
 > +
 > +		if (!vcpu)
 > +			continue;
+
+Wouldn't kvm_for_each_vcpu() avoid this kind of checks?
+
 > +		r = kvm_set_guest_paused(vcpu);
 > +		if (!r)
 > +			continue;
@@ -247,6 +226,12 @@ Sergey Senozhatsky <senozhatsky@chromium.org> writes:
 > +#ifdef CONFIG_PM
 > +	struct notifier_block pm_notifier;
 > +#endif
+
+I'd certainly like to be able to opt out from this on architectures
+that do not implement anything useful in the PM callbacks. Please
+consider making this an independent config option that individual
+archs can buy into.
+
 >  };
 >  
 >  #define kvm_err(fmt, ...) \
@@ -286,6 +271,10 @@ Sergey Senozhatsky <senozhatsky@chromium.org> writes:
 > +	case PM_HIBERNATION_PREPARE:
 > +	case PM_SUSPEND_PREPARE:
 > +		kvm_arch_pm_notifier(kvm);
+
+How about passing the state to the notifier callback? I'd expect it to
+be useful to do something on resume too.
+
 > +		break;
 > +	}
 > +	return NOTIFY_DONE;
@@ -295,6 +284,9 @@ Sergey Senozhatsky <senozhatsky@chromium.org> writes:
 > +{
 > +	kvm->pm_notifier.notifier_call = kvm_pm_notifier_call;
 > +	kvm->pm_notifier.priority = INT_MAX;
+
+How is this priority determined?
+
 > +	register_pm_notifier(&kvm->pm_notifier);
 > +}
 > +
@@ -321,12 +313,6 @@ Sergey Senozhatsky <senozhatsky@chromium.org> writes:
 >  	preempt_notifier_inc();
 > +	kvm_init_pm_notifier(kvm);
 >  
-
-You've probably thought it through and I didn't but wouldn't it be
-easier to have one global pm_notifier call for KVM which would go
-through the list of VMs instead of registering/deregistering a
-pm_notifier call for every created/destroyed VM?
-
 >  	return kvm;
 >  
 > @@ -1009,6 +1048,7 @@ static void kvm_destroy_vm(struct kvm *kvm)
@@ -338,9 +324,12 @@ pm_notifier call for every created/destroyed VM?
 >  	kvm_destroy_vm_debugfs(kvm);
 >  	kvm_arch_sync_events(kvm);
 
--- 
-Vitaly
+Thanks,
 
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
