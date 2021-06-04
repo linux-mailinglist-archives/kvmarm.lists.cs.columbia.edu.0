@@ -2,100 +2,61 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 37CC539AC79
-	for <lists+kvmarm@lfdr.de>; Thu,  3 Jun 2021 23:14:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C14E939B2D4
+	for <lists+kvmarm@lfdr.de>; Fri,  4 Jun 2021 08:49:07 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BF79B4B127;
-	Thu,  3 Jun 2021 17:14:44 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CCF444B0F3;
+	Fri,  4 Jun 2021 02:49:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id AFj2Nce0wlxH; Thu,  3 Jun 2021 17:14:44 -0400 (EDT)
+	with ESMTP id TSsz8Rl1Ch+N; Fri,  4 Jun 2021 02:49:06 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A49FE4B10F;
-	Thu,  3 Jun 2021 17:14:41 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0F8EB4B0F4;
+	Fri,  4 Jun 2021 02:49:03 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DB76C4B0F2
- for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Jun 2021 17:14:39 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A29984B0DC
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 02:49:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id W-Tz3l9Elikx for <kvmarm@lists.cs.columbia.edu>;
- Thu,  3 Jun 2021 17:14:38 -0400 (EDT)
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com
- [209.85.219.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 13EDD4B0C3
- for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Jun 2021 17:14:38 -0400 (EDT)
-Received: by mail-yb1-f201.google.com with SMTP id
- g9-20020a25ae490000b029052f9e5b7d3fso9017281ybe.4
- for <kvmarm@lists.cs.columbia.edu>; Thu, 03 Jun 2021 14:14:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=RQfw/+XX+rRGzzoKUUXS7FvasOKRxalsaSvhmIlWcm4=;
- b=N026WALQwOdnYn3d8XDhx/mBm5Cmn8Zb6l2xp2XYXtl0p04rJK2cKwBvkR9ioBKy1H
- 3D8YSOYWdX5jeTMw5KCIwMIi1TByh7CT+s46cFVRsXW0neiRN5FbBbQB1e9u4NNBFq8I
- HLAZkeaqT0rY0QuLVnIOdqwiRdNjMa3QNXb1vm0F68oc16AdU7HvXDrtHcMj8yOV2xoe
- aFHb9iqmI9KwmBBkzZmkkQphtvF9NBky6dc5AP1cfD5enwH8pNNwHzfCVzeOvn2ce8uh
- Y5MrEmD2oyUheASfysn8vf3ENS4+pFgsQZG3aGZ7HCuPSgdqPya7UDnroFx2Cza3hCHX
- 1NJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:in-reply-to:message-id:mime-version
- :references:subject:from:to:cc;
- bh=RQfw/+XX+rRGzzoKUUXS7FvasOKRxalsaSvhmIlWcm4=;
- b=DZ9Flo0gu5o0FVpuqMCmzK58WJlDGpOZrw47qaZk2Te2Q1BfCkEaOYJmNNhG8ZJOAH
- 6pSLDD+KvtAYVnzY7KkrJUx2Iy3Dof7eI/ciT6FHDFZJd38EhVEORiIErh75Dx5CuSEQ
- w3WGuFR4ktzlQ0cZvIi4ywBYahAMpABtyh9OBN87tdRtA2w5qM4wt3kYOcAFi2im0Saw
- 3UfvMQIXoLz3QeBD5y7DaXRP+7Ko5XSpX0xgsv5QyFOpU2f137ectR7yLV3w3tDbT1UC
- rRrG/7BcmEtXcuCdFonXhUl/XcYvxSyOdRjVNni8HZ07DWNJQxy1ya1SSFfLsOpNZmLC
- 8ieg==
-X-Gm-Message-State: AOAM532tbyuK3FYo/ihfE9lHGDDvOzps6m6xo13zCLTWZ6tF7qhPZKJF
- 8mSDESyBwHT8Vax3XepqP/lDrNtk7kOY6btGUg==
-X-Google-Smtp-Source: ABdhPJwD9dQ3KT/TwvL5vNu/S4Tg0PNVroan413gkqa8lTQ/BT9gphOEqOY+zMMw7no8pccs2g97e7ND9h0oKiGIjg==
-X-Received: from jgzg.c.googlers.com ([fda3:e722:ac3:10:7f:e700:c0a8:1acf])
- (user=jingzhangos job=sendgmr) by 2002:a25:d6c8:: with SMTP id
- n191mr702161ybg.358.1622754877533; Thu, 03 Jun 2021 14:14:37 -0700 (PDT)
-Date: Thu,  3 Jun 2021 21:14:26 +0000
-In-Reply-To: <20210603211426.790093-1-jingzhangos@google.com>
-Message-Id: <20210603211426.790093-5-jingzhangos@google.com>
-Mime-Version: 1.0
-References: <20210603211426.790093-1-jingzhangos@google.com>
-X-Mailer: git-send-email 2.32.0.rc1.229.g3e70b5a671-goog
-Subject: [PATCH v7 4/4] KVM: selftests: Add selftest for KVM statistics data
- binary interface
-From: Jing Zhang <jingzhangos@google.com>
-To: KVM <kvm@vger.kernel.org>, KVMARM <kvmarm@lists.cs.columbia.edu>, 
- LinuxMIPS <linux-mips@vger.kernel.org>, KVMPPC <kvm-ppc@vger.kernel.org>, 
- LinuxS390 <linux-s390@vger.kernel.org>, 
- Linuxkselftest <linux-kselftest@vger.kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Marc Zyngier <maz@kernel.org>, James Morse <james.morse@arm.com>, 
- Julien Thierry <julien.thierry.kdev@gmail.com>,
- Suzuki K Poulose <suzuki.poulose@arm.com>, 
- Will Deacon <will@kernel.org>, Huacai Chen <chenhuacai@kernel.org>, 
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>, 
- Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
- Paul Mackerras <paulus@ozlabs.org>, 
- Christian Borntraeger <borntraeger@de.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>, 
- David Hildenbrand <david@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
- Claudio Imbrenda <imbrenda@linux.ibm.com>,
- Sean Christopherson <seanjc@google.com>, 
- Vitaly Kuznetsov <vkuznets@redhat.com>, Jim Mattson <jmattson@google.com>, 
- Peter Shier <pshier@google.com>, Oliver Upton <oupton@google.com>, 
- David Rientjes <rientjes@google.com>,
- Emanuele Giuseppe Esposito <eesposit@redhat.com>, 
- David Matlack <dmatlack@google.com>, Ricardo Koller <ricarkol@google.com>, 
- Krish Sadhukhan <krish.sadhukhan@oracle.com>
+ with ESMTP id PxhI5h2YCm8J for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  4 Jun 2021 02:48:57 -0400 (EDT)
+Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1D2FF4B0CF
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 02:48:57 -0400 (EDT)
+Received: from dggemv703-chm.china.huawei.com (unknown [172.30.72.54])
+ by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4FxCtp2bjyz68ZN;
+ Fri,  4 Jun 2021 14:45:06 +0800 (CST)
+Received: from dggpemm500022.china.huawei.com (7.185.36.162) by
+ dggemv703-chm.china.huawei.com (10.3.19.46) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.2; Fri, 4 Jun 2021 14:48:49 +0800
+Received: from DESKTOP-7FEPK9S.china.huawei.com (10.174.185.220) by
+ dggpemm500022.china.huawei.com (7.185.36.162) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.2; Fri, 4 Jun 2021 14:48:48 +0800
+From: Shenming Lu <lushenming@huawei.com>
+To: Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>,
+ <linux-arm-kernel@lists.infradead.org>, <kvmarm@lists.cs.columbia.edu>,
+ <linux-kernel@vger.kernel.org>
+Subject: [PATCH] KVM: arm64: vgic: Communicate a change of the IRQ state via
+ vgic_queue_irq_unlock
+Date: Fri, 4 Jun 2021 14:48:28 +0800
+Message-ID: <20210604064828.1497-1-lushenming@huawei.com>
+X-Mailer: git-send-email 2.27.0.windows.1
+MIME-Version: 1.0
+X-Originating-IP: [10.174.185.220]
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ dggpemm500022.china.huawei.com (7.185.36.162)
+X-CFilter-Loop: Reflected
+Cc: lushenming@huawei.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -112,312 +73,195 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add selftest to check KVM stats descriptors validity.
+Hi Marc,
 
-Reviewed-by: David Matlack <dmatlack@google.com>
-Reviewed-by: Ricardo Koller <ricarkol@google.com>
-Signed-off-by: Jing Zhang <jingzhangos@google.com>
+Some time ago, you suggested that we should communicate a change
+of the IRQ state via vgic_queue_irq_unlock [1], which needs to
+include dropping the IRQ from the VCPU's ap_list if the IRQ is
+not pending or enabled but on the ap_list. And I additionally
+add a case where the IRQ has to be migrated to another ap_list.
+
+(maybe you forget this...)
+Does this patch match your thought at the time?
+
+[1] https://lore.kernel.org/patchwork/patch/1371884/
+
+Signed-off-by: Shenming Lu <lushenming@huawei.com>
 ---
- tools/testing/selftests/kvm/.gitignore        |   1 +
- tools/testing/selftests/kvm/Makefile          |   3 +
- .../testing/selftests/kvm/include/kvm_util.h  |   3 +
- .../selftests/kvm/kvm_binary_stats_test.c     | 215 ++++++++++++++++++
- tools/testing/selftests/kvm/lib/kvm_util.c    |  12 +
- 5 files changed, 234 insertions(+)
- create mode 100644 tools/testing/selftests/kvm/kvm_binary_stats_test.c
+ arch/arm64/kvm/vgic/vgic.c | 116 ++++++++++++++++++++++++-------------
+ 1 file changed, 75 insertions(+), 41 deletions(-)
 
-diff --git a/tools/testing/selftests/kvm/.gitignore b/tools/testing/selftests/kvm/.gitignore
-index bd83158e0e0b..d1c3ee7d3e41 100644
---- a/tools/testing/selftests/kvm/.gitignore
-+++ b/tools/testing/selftests/kvm/.gitignore
-@@ -43,3 +43,4 @@
- /memslot_modification_stress_test
- /set_memory_region_test
- /steal_time
-+/kvm_binary_stats_test
-diff --git a/tools/testing/selftests/kvm/Makefile b/tools/testing/selftests/kvm/Makefile
-index e439d027939d..0cd46d6d1e15 100644
---- a/tools/testing/selftests/kvm/Makefile
-+++ b/tools/testing/selftests/kvm/Makefile
-@@ -76,6 +76,7 @@ TEST_GEN_PROGS_x86_64 += kvm_page_table_test
- TEST_GEN_PROGS_x86_64 += memslot_modification_stress_test
- TEST_GEN_PROGS_x86_64 += set_memory_region_test
- TEST_GEN_PROGS_x86_64 += steal_time
-+TEST_GEN_PROGS_x86_64 += kvm_binary_stats_test
+diff --git a/arch/arm64/kvm/vgic/vgic.c b/arch/arm64/kvm/vgic/vgic.c
+index 15b666200f0b..9b88d49aa439 100644
+--- a/arch/arm64/kvm/vgic/vgic.c
++++ b/arch/arm64/kvm/vgic/vgic.c
+@@ -326,8 +326,9 @@ static bool vgic_validate_injection(struct vgic_irq *irq, bool level, void *owne
  
- TEST_GEN_PROGS_aarch64 += aarch64/get-reg-list
- TEST_GEN_PROGS_aarch64 += aarch64/get-reg-list-sve
-@@ -87,6 +88,7 @@ TEST_GEN_PROGS_aarch64 += kvm_create_max_vcpus
- TEST_GEN_PROGS_aarch64 += kvm_page_table_test
- TEST_GEN_PROGS_aarch64 += set_memory_region_test
- TEST_GEN_PROGS_aarch64 += steal_time
-+TEST_GEN_PROGS_aarch64 += kvm_binary_stats_test
+ /*
+  * Check whether an IRQ needs to (and can) be queued to a VCPU's ap list.
+- * Do the queuing if necessary, taking the right locks in the right order.
+- * Returns true when the IRQ was queued, false otherwise.
++ * Do the queuing, dropping or migrating if necessary, taking the right
++ * locks in the right order. Returns true when the IRQ was queued, false
++ * otherwise.
+  *
+  * Needs to be entered with the IRQ lock already held, but will return
+  * with all locks dropped.
+@@ -335,49 +336,38 @@ static bool vgic_validate_injection(struct vgic_irq *irq, bool level, void *owne
+ bool vgic_queue_irq_unlock(struct kvm *kvm, struct vgic_irq *irq,
+ 			   unsigned long flags)
+ {
++	struct kvm_vcpu *target_vcpu;
+ 	struct kvm_vcpu *vcpu;
++	bool ret = false;
  
- TEST_GEN_PROGS_s390x = s390x/memop
- TEST_GEN_PROGS_s390x += s390x/resets
-@@ -96,6 +98,7 @@ TEST_GEN_PROGS_s390x += dirty_log_test
- TEST_GEN_PROGS_s390x += kvm_create_max_vcpus
- TEST_GEN_PROGS_s390x += kvm_page_table_test
- TEST_GEN_PROGS_s390x += set_memory_region_test
-+TEST_GEN_PROGS_s390x += kvm_binary_stats_test
+ 	lockdep_assert_held(&irq->irq_lock);
  
- TEST_GEN_PROGS += $(TEST_GEN_PROGS_$(UNAME_M))
- LIBKVM += $(LIBKVM_$(UNAME_M))
-diff --git a/tools/testing/selftests/kvm/include/kvm_util.h b/tools/testing/selftests/kvm/include/kvm_util.h
-index a8f022794ce3..96d15da3d72e 100644
---- a/tools/testing/selftests/kvm/include/kvm_util.h
-+++ b/tools/testing/selftests/kvm/include/kvm_util.h
-@@ -387,4 +387,7 @@ uint64_t get_ucall(struct kvm_vm *vm, uint32_t vcpu_id, struct ucall *uc);
- #define GUEST_ASSERT_4(_condition, arg1, arg2, arg3, arg4) \
- 	__GUEST_ASSERT((_condition), 4, (arg1), (arg2), (arg3), (arg4))
+ retry:
+-	vcpu = vgic_target_oracle(irq);
+-	if (irq->vcpu || !vcpu) {
++	target_vcpu = vgic_target_oracle(irq);
++	vcpu = irq->vcpu;
++	if (target_vcpu == vcpu) {
+ 		/*
+-		 * If this IRQ is already on a VCPU's ap_list, then it
+-		 * cannot be moved or modified and there is no more work for
++		 * If this IRQ's state is consistent with whether on
++		 * the right ap_lsit or not, there is no more work for
+ 		 * us to do.
+-		 *
+-		 * Otherwise, if the irq is not pending and enabled, it does
+-		 * not need to be inserted into an ap_list and there is also
+-		 * no more work for us to do.
+ 		 */
+ 		raw_spin_unlock_irqrestore(&irq->irq_lock, flags);
+-
+-		/*
+-		 * We have to kick the VCPU here, because we could be
+-		 * queueing an edge-triggered interrupt for which we
+-		 * get no EOI maintenance interrupt. In that case,
+-		 * while the IRQ is already on the VCPU's AP list, the
+-		 * VCPU could have EOI'ed the original interrupt and
+-		 * won't see this one until it exits for some other
+-		 * reason.
+-		 */
+-		if (vcpu) {
+-			kvm_make_request(KVM_REQ_IRQ_PENDING, vcpu);
+-			kvm_vcpu_kick(vcpu);
+-		}
+-		return false;
++		goto out;
+ 	}
  
-+int vm_get_stats_fd(struct kvm_vm *vm);
-+int vcpu_get_stats_fd(struct kvm_vm *vm, uint32_t vcpuid);
-+
- #endif /* SELFTEST_KVM_UTIL_H */
-diff --git a/tools/testing/selftests/kvm/kvm_binary_stats_test.c b/tools/testing/selftests/kvm/kvm_binary_stats_test.c
-new file mode 100644
-index 000000000000..081983110dc5
---- /dev/null
-+++ b/tools/testing/selftests/kvm/kvm_binary_stats_test.c
-@@ -0,0 +1,215 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * kvm_binary_stats_test
-+ *
-+ * Copyright (C) 2021, Google LLC.
-+ *
-+ * Test the fd-based interface for KVM statistics.
-+ */
-+
-+#define _GNU_SOURCE /* for program_invocation_short_name */
-+#include <fcntl.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <errno.h>
-+
-+#include "test_util.h"
-+
-+#include "kvm_util.h"
-+#include "asm/kvm.h"
-+#include "linux/kvm.h"
-+
-+void stats_test(int stats_fd, int size_stat)
-+{
-+	ssize_t ret;
-+	int i;
-+	size_t size_desc, size_data = 0;
-+	struct kvm_stats_header header;
-+	struct kvm_stats_desc *stats_desc, *pdesc;
-+	void *stats_data;
-+
-+	/* Read kvm stats header */
-+	ret = read(stats_fd, &header, sizeof(header));
-+	TEST_ASSERT(ret == sizeof(header), "Read stats header");
-+	size_desc = sizeof(*stats_desc) + header.name_size;
-+
-+	/* Check id string in header, that should start with "kvm" */
-+	TEST_ASSERT(!strncmp(header.id, "kvm", 3) &&
-+			strlen(header.id) < KVM_STATS_ID_MAXLEN,
-+			"Invalid KVM stats type");
-+
-+	/* Sanity check for other fields in header */
-+	if (header.count == 0) {
-+		printf("No KVM stats defined!");
-+		return;
-+	}
-+	/* Check overlap */
-+	TEST_ASSERT(header.desc_offset > 0 && header.data_offset > 0
-+			&& header.desc_offset >= sizeof(header)
-+			&& header.data_offset >= sizeof(header),
-+			"Invalid offset fields in header");
-+	TEST_ASSERT(header.desc_offset > header.data_offset
-+			|| (header.desc_offset + size_desc * header.count <=
-+				header.data_offset),
-+			"Descriptor block is overlapped with data block");
-+
-+	/* Allocate memory for stats descriptors */
-+	stats_desc = calloc(header.count, size_desc);
-+	TEST_ASSERT(stats_desc, "Allocate memory for stats descriptors");
-+	/* Read kvm stats descriptors */
-+	ret = pread(stats_fd, stats_desc,
-+			size_desc * header.count, header.desc_offset);
-+	TEST_ASSERT(ret == size_desc * header.count,
-+			"Read KVM stats descriptors");
-+
-+	/* Sanity check for fields in descriptors */
-+	for (i = 0; i < header.count; ++i) {
-+		pdesc = (void *)stats_desc + i * size_desc;
-+		/* Check type,unit,base boundaries */
-+		TEST_ASSERT((pdesc->flags & KVM_STATS_TYPE_MASK)
-+				<= KVM_STATS_TYPE_MAX, "Unknown KVM stats type");
-+		TEST_ASSERT((pdesc->flags & KVM_STATS_UNIT_MASK)
-+				<= KVM_STATS_UNIT_MAX, "Unknown KVM stats unit");
-+		TEST_ASSERT((pdesc->flags & KVM_STATS_BASE_MASK)
-+				<= KVM_STATS_BASE_MAX, "Unknown KVM stats base");
-+		/* Check exponent for stats unit
-+		 * Exponent for counter should be greater than or equal to 0
-+		 * Exponent for unit bytes should be greater than or equal to 0
-+		 * Exponent for unit seconds should be less than or equal to 0
-+		 * Exponent for unit clock cycles should be greater than or
-+		 * equal to 0
+ 	/*
+ 	 * We must unlock the irq lock to take the ap_list_lock where
+-	 * we are going to insert this new pending interrupt.
++	 * we are going to insert/drop this IRQ.
+ 	 */
+ 	raw_spin_unlock_irqrestore(&irq->irq_lock, flags);
+ 
+ 	/* someone can do stuff here, which we re-check below */
+ 
+-	raw_spin_lock_irqsave(&vcpu->arch.vgic_cpu.ap_list_lock, flags);
++	if (target_vcpu)
++		raw_spin_lock_irqsave(&target_vcpu->arch.vgic_cpu.ap_list_lock,
++				      flags);
++	if (vcpu)
++		raw_spin_lock_irqsave(&vcpu->arch.vgic_cpu.ap_list_lock, flags);
+ 	raw_spin_lock(&irq->irq_lock);
+ 
+ 	/*
+@@ -392,30 +382,74 @@ bool vgic_queue_irq_unlock(struct kvm *kvm, struct vgic_irq *irq,
+ 	 * In both cases, drop the locks and retry.
+ 	 */
+ 
+-	if (unlikely(irq->vcpu || vcpu != vgic_target_oracle(irq))) {
++	if (unlikely(target_vcpu != vgic_target_oracle(irq) ||
++		     vcpu != irq->vcpu)) {
+ 		raw_spin_unlock(&irq->irq_lock);
+-		raw_spin_unlock_irqrestore(&vcpu->arch.vgic_cpu.ap_list_lock,
+-					   flags);
++		if (target_vcpu)
++			raw_spin_unlock_irqrestore(&target_vcpu->arch.vgic_cpu.ap_list_lock,
++						   flags);
++		if (vcpu)
++			raw_spin_unlock_irqrestore(&vcpu->arch.vgic_cpu.ap_list_lock,
++						   flags);
+ 
+ 		raw_spin_lock_irqsave(&irq->irq_lock, flags);
+ 		goto retry;
+ 	}
+ 
+-	/*
+-	 * Grab a reference to the irq to reflect the fact that it is
+-	 * now in the ap_list.
+-	 */
+-	vgic_get_irq_kref(irq);
+-	list_add_tail(&irq->ap_list, &vcpu->arch.vgic_cpu.ap_list_head);
+-	irq->vcpu = vcpu;
++	if (!vcpu && target_vcpu) {
++		/*
++		 * Insert this new pending interrupt.
++		 * Grab a reference to the irq to reflect the fact that
++		 * it is now in the ap_list.
 +		 */
-+		switch (pdesc->flags & KVM_STATS_UNIT_MASK) {
-+		case KVM_STATS_UNIT_NONE:
-+		case KVM_STATS_UNIT_BYTES:
-+		case KVM_STATS_UNIT_CYCLES:
-+			TEST_ASSERT(pdesc->exponent >= 0,
-+					"Unsupported KVM stats unit");
-+			break;
-+		case KVM_STATS_UNIT_SECONDS:
-+			TEST_ASSERT(pdesc->exponent <= 0,
-+					"Unsupported KVM stats unit");
-+			break;
-+		}
-+		/* Check name string */
-+		TEST_ASSERT(strlen(pdesc->name) < header.name_size,
-+				"KVM stats name(%s) too long", pdesc->name);
-+		/* Check size field, which should not be zero */
-+		TEST_ASSERT(pdesc->size, "KVM descriptor(%s) with size of 0",
-+				pdesc->name);
-+		size_data += pdesc->size * size_stat;
++		vgic_get_irq_kref(irq);
++		list_add_tail(&irq->ap_list,
++			      &target_vcpu->arch.vgic_cpu.ap_list_head);
++		irq->vcpu = target_vcpu;
++		ret = true;
++	} else if (vcpu && !target_vcpu) {
++		/*
++		 * This IRQ is not pending or enabled but on the ap_list,
++		 * drop it from the ap_list.
++		 */
++		list_del(&irq->ap_list);
++		irq->vcpu = NULL;
++		raw_spin_unlock(&irq->irq_lock);
++		vgic_put_irq(vcpu->kvm, irq);
++		raw_spin_unlock_irqrestore(&vcpu->arch.vgic_cpu.ap_list_lock,
++					   flags);
++		goto out;
++	} else {
++		/* This IRQ looks like it has to be migrated. */
++		list_del(&irq->ap_list);
++		list_add_tail(&irq->ap_list,
++			      &target_vcpu->arch.vgic_cpu.ap_list_head);
++		irq->vcpu = target_vcpu;
 +	}
-+	/* Check overlap */
-+	TEST_ASSERT(header.data_offset >= header.desc_offset
-+			|| header.data_offset + size_data <= header.desc_offset,
-+			"Data block is overlapped with Descriptor block");
-+	/* Check validity of all stats data size */
-+	TEST_ASSERT(size_data >= header.count * size_stat,
-+			"Data size is not correct");
-+
-+	/* Allocate memory for stats data */
-+	stats_data = malloc(size_data);
-+	TEST_ASSERT(stats_data, "Allocate memory for stats data");
-+	/* Read kvm stats data as a bulk */
-+	ret = pread(stats_fd, stats_data, size_data, header.data_offset);
-+	TEST_ASSERT(ret == size_data, "Read KVM stats data");
-+	/* Read kvm stats data one by one */
-+	size_data = 0;
-+	for (i = 0; i < header.count; ++i) {
-+		pdesc = (void *)stats_desc + i * size_desc;
-+		ret = pread(stats_fd, stats_data, pdesc->size * size_stat,
-+				header.data_offset + size_data);
-+		TEST_ASSERT(ret == pdesc->size * size_stat,
-+				"Read data of KVM stats: %s", pdesc->name);
-+		size_data += pdesc->size * size_stat;
+ 
+ 	raw_spin_unlock(&irq->irq_lock);
+-	raw_spin_unlock_irqrestore(&vcpu->arch.vgic_cpu.ap_list_lock, flags);
++	if (target_vcpu)
++		raw_spin_unlock_irqrestore(&target_vcpu->arch.vgic_cpu.ap_list_lock,
++					   flags);
++	if (vcpu)
++		raw_spin_unlock_irqrestore(&vcpu->arch.vgic_cpu.ap_list_lock, flags);
+ 
+-	kvm_make_request(KVM_REQ_IRQ_PENDING, vcpu);
+-	kvm_vcpu_kick(vcpu);
++out:
++	/*
++	 * Even for the already queuing rightly case we have
++	 * to kick the VCPU, because we could be queueing an
++	 * edge-triggered interrupt for which we get no EOI
++	 * maintenance interrupt. In that case, while the IRQ
++	 * is already on the VCPU's AP list, the VCPU could
++	 * have EOI'ed the original interrupt and won't see
++	 * this one until it exits for some other reason.
++	 */
++	if (target_vcpu) {
++		kvm_make_request(KVM_REQ_IRQ_PENDING, target_vcpu);
++		kvm_vcpu_kick(target_vcpu);
 +	}
-+
-+	free(stats_data);
-+	free(stats_desc);
-+}
-+
-+
-+void vm_stats_test(struct kvm_vm *vm)
-+{
-+	int stats_fd;
-+	struct kvm_vm_stats_data *stats_data;
-+
-+	/* Get fd for VM stats */
-+	stats_fd = vm_get_stats_fd(vm);
-+	TEST_ASSERT(stats_fd >= 0, "Get VM stats fd");
-+
-+	stats_test(stats_fd, sizeof(stats_data->value[0]));
-+	close(stats_fd);
-+	TEST_ASSERT(fcntl(stats_fd, F_GETFD) == -1, "Stats fd not freed");
-+}
-+
-+void vcpu_stats_test(struct kvm_vm *vm, int vcpu_id)
-+{
-+	int stats_fd;
-+	struct kvm_vcpu_stats_data *stats_data;
-+
-+	/* Get fd for VCPU stats */
-+	stats_fd = vcpu_get_stats_fd(vm, vcpu_id);
-+	TEST_ASSERT(stats_fd >= 0, "Get VCPU stats fd");
-+
-+	stats_test(stats_fd, sizeof(stats_data->value[0]));
-+	close(stats_fd);
-+	TEST_ASSERT(fcntl(stats_fd, F_GETFD) == -1, "Stats fd not freed");
-+}
-+
-+#define DEFAULT_NUM_VM		4
-+#define DEFAULT_NUM_VCPU	4
-+
-+/*
-+ * Usage: kvm_bin_form_stats [#vm] [#vcpu]
-+ * The first parameter #vm set the number of VMs being created.
-+ * The second parameter #vcpu set the number of VCPUs being created.
-+ * By default, DEFAULT_NUM_VM VM and DEFAULT_NUM_VCPU VCPU for the VM would be
-+ * created for testing.
-+ */
-+
-+int main(int argc, char *argv[])
-+{
-+	int max_vm = DEFAULT_NUM_VM, max_vcpu = DEFAULT_NUM_VCPU, ret, i, j;
-+	struct kvm_vm **vms;
-+
-+	/* Get the number of VMs and VCPUs that would be created for testing. */
-+	if (argc > 1) {
-+		max_vm = strtol(argv[1], NULL, 0);
-+		if (max_vm <= 0)
-+			max_vm = DEFAULT_NUM_VM;
-+	}
-+	if (argc > 2) {
-+		max_vcpu = strtol(argv[2], NULL, 0);
-+		if (max_vcpu <= 0)
-+			max_vcpu = DEFAULT_NUM_VCPU;
-+	}
-+
-+	/* Check the extension for binary stats */
-+	ret = kvm_check_cap(KVM_CAP_STATS_BINARY_FD);
-+	TEST_ASSERT(ret >= 0,
-+			"Binary form statistics interface is not supported");
-+
-+	/* Create VMs and VCPUs */
-+	vms = malloc(sizeof(vms[0]) * max_vm);
-+	TEST_ASSERT(vms, "Allocate memory for storing VM pointers");
-+	for (i = 0; i < max_vm; ++i) {
-+		vms[i] = vm_create(VM_MODE_DEFAULT,
-+				DEFAULT_GUEST_PHY_PAGES, O_RDWR);
-+		for (j = 0; j < max_vcpu; ++j)
-+			vm_vcpu_add(vms[i], j);
-+	}
-+
-+	/* Check stats read for every VM and VCPU */
-+	for (i = 0; i < max_vm; ++i) {
-+		vm_stats_test(vms[i]);
-+		for (j = 0; j < max_vcpu; ++j)
-+			vcpu_stats_test(vms[i], j);
-+	}
-+
-+	for (i = 0; i < max_vm; ++i)
-+		kvm_vm_free(vms[i]);
-+	free(vms);
-+	return 0;
-+}
-diff --git a/tools/testing/selftests/kvm/lib/kvm_util.c b/tools/testing/selftests/kvm/lib/kvm_util.c
-index fc83f6c5902d..10385b76fe11 100644
---- a/tools/testing/selftests/kvm/lib/kvm_util.c
-+++ b/tools/testing/selftests/kvm/lib/kvm_util.c
-@@ -2090,3 +2090,15 @@ unsigned int vm_calc_num_guest_pages(enum vm_guest_mode mode, size_t size)
- 	n = DIV_ROUND_UP(size, vm_guest_mode_params[mode].page_size);
- 	return vm_adjust_num_guest_pages(mode, n);
+ 
+-	return true;
++	return ret;
  }
-+
-+int vm_get_stats_fd(struct kvm_vm *vm)
-+{
-+	return ioctl(vm->fd, KVM_GET_STATS_FD, NULL);
-+}
-+
-+int vcpu_get_stats_fd(struct kvm_vm *vm, uint32_t vcpuid)
-+{
-+	struct vcpu *vcpu = vcpu_find(vm, vcpuid);
-+
-+	return ioctl(vcpu->fd, KVM_GET_STATS_FD, NULL);
-+}
+ 
+ /**
 -- 
-2.32.0.rc1.229.g3e70b5a671-goog
+2.19.1
 
 _______________________________________________
 kvmarm mailing list
