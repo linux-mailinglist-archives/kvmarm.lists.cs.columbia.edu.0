@@ -2,74 +2,88 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 83C9939BB2F
-	for <lists+kvmarm@lfdr.de>; Fri,  4 Jun 2021 16:51:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5EA539BBDD
+	for <lists+kvmarm@lfdr.de>; Fri,  4 Jun 2021 17:29:13 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0E2794B0BC;
-	Fri,  4 Jun 2021 10:51:50 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7367F4B108;
+	Fri,  4 Jun 2021 11:29:13 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.501
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@chromium.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YjMBNGq1itm1; Fri,  4 Jun 2021 10:51:49 -0400 (EDT)
+	with ESMTP id 8JN1Y97a4JiL; Fri,  4 Jun 2021 11:29:13 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6FC704B0FC;
-	Fri,  4 Jun 2021 10:51:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 165F94B104;
+	Fri,  4 Jun 2021 11:29:09 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C84084B0BC
- for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 10:51:43 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D618F4B0C4
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 05:20:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id n-uC7LpEXoOx for <kvmarm@lists.cs.columbia.edu>;
- Fri,  4 Jun 2021 10:51:39 -0400 (EDT)
-Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B36534B097
- for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 10:51:38 -0400 (EDT)
-Received: from dggemv703-chm.china.huawei.com (unknown [172.30.72.53])
- by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4FxQZZ31Y7z1BHbD;
- Fri,  4 Jun 2021 22:46:46 +0800 (CST)
-Received: from dggpeml500024.china.huawei.com (7.185.36.10) by
- dggemv703-chm.china.huawei.com (10.3.19.46) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2176.2; Fri, 4 Jun 2021 22:51:32 +0800
-Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
- dggpeml500024.china.huawei.com (7.185.36.10) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2176.2; Fri, 4 Jun 2021 22:51:31 +0800
-Received: from lhreml710-chm.china.huawei.com ([169.254.81.184]) by
- lhreml710-chm.china.huawei.com ([169.254.81.184]) with mapi id
- 15.01.2176.012; Fri, 4 Jun 2021 15:51:29 +0100
-From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+ with ESMTP id bsa8BOfl3nOm for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  4 Jun 2021 05:20:36 -0400 (EDT)
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com
+ [209.85.216.41])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A68AB4B0C1
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  4 Jun 2021 05:20:36 -0400 (EDT)
+Received: by mail-pj1-f41.google.com with SMTP id
+ fy24-20020a17090b0218b029016c5a59021fso562062pjb.0
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 04 Jun 2021 02:20:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chromium.org; s=google;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=mBAEhjZZRv7Jcy7Zua0pi2TsECX3PFBDfNxkyFGsLO0=;
+ b=GFzrB6mDdP8QDUkM5E2D3SpI1YuNW543kJ1Zx1kk0NuEJ9dY60dkreacgqq7B7HMEs
+ uqcy1p2HaKtSeecuRPdMc+ZpGU/OEc3CdNONynbGrv/3vMYyT7bl4zUw0YUQ9/GOQcn/
+ p9MzmRmMsJwpomp+rOKp0w+JG2E9nloY+xf18=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=mBAEhjZZRv7Jcy7Zua0pi2TsECX3PFBDfNxkyFGsLO0=;
+ b=ZQaDotc/iiIWYi83tzHYdM73jdcnFx34bQDRT/QsgoGl0iDClVD9LhR4625NJLFPId
+ TZ6eclYDw/vCcXeOeainFFbKVw+29GRGDC2OqjJdAmhpr6vw7YnBE0/ojlS37ahH7lF8
+ Tnk1YbSqI+KBRhn4zitKxSb6Tuun6DWPFUtrRDElVqDMvT/mGtH8BrdQlKXeuCSEVk2F
+ b7vVRMEzWfbOHQukhBFKfHem7tCBiTUS/xOelvBvCiTTc4NLC6oyBww5rkgeeX5RcAJ5
+ bRA+lW56ZmW63XKazQe/71FwrcNK1ALb02huxUEhAfQ1Wi4d4IVnmNMy1kk31pTqvR2x
+ lIdg==
+X-Gm-Message-State: AOAM532ygLjJze74yTTOhlY3k4vBDUGJPV4boS/VjFTCf7kd3m+c0k2Z
+ 48FZy4gRHO5vz5bBbX2Nj/vshw==
+X-Google-Smtp-Source: ABdhPJxqC/sFmH8NWFwbR+x7mytZyDKEx7TFmgf8/+UGv7fZox1XEZk3IYhTIOf3hSBOmUz/xertuQ==
+X-Received: by 2002:a17:90b:607:: with SMTP id gb7mr3845129pjb.5.1622798435671; 
+ Fri, 04 Jun 2021 02:20:35 -0700 (PDT)
+Received: from google.com ([2409:10:2e40:5100:36b:f5b6:c380:9ccf])
+ by smtp.gmail.com with ESMTPSA id p19sm4236799pjv.21.2021.06.04.02.20.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Jun 2021 02:20:34 -0700 (PDT)
+Date: Fri, 4 Jun 2021 18:20:28 +0900
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 To: Marc Zyngier <maz@kernel.org>
-Subject: RE: [RFC PATCH 0/3] kvm/arm: New VMID allocator based on asid(2nd
- approach) 
-Thread-Topic: [RFC PATCH 0/3] kvm/arm: New VMID allocator based on asid(2nd
- approach) 
-Thread-Index: AQHXQph5pwodb0a/4kShAMz7Pnc+rqsDq0rQgABREYCAABlY4A==
-Date: Fri, 4 Jun 2021 14:51:29 +0000
-Message-ID: <95bb84ffdb0f4db3b64b38cc3b651f90@huawei.com>
-References: <20210506165232.1969-1-shameerali.kolothum.thodi@huawei.com>
- <e62829990c50479292af94c4152011fc@huawei.com> <87sg1xzqea.wl-maz@kernel.org>
-In-Reply-To: <87sg1xzqea.wl-maz@kernel.org>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.47.88.52]
+Subject: Re: [RFC][PATCH] kvm: add suspend pm-notifier
+Message-ID: <YLnwXD5pPplTrmoZ@google.com>
+References: <20210603164315.682994-1-senozhatsky@chromium.org>
+ <87v96uyq2v.wl-maz@kernel.org>
 MIME-Version: 1.0
-X-CFilter-Loop: Reflected
-Cc: "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
- "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Linuxarm <linuxarm@huawei.com>, "will@kernel.org" <will@kernel.org>,
- "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
- "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
+Content-Disposition: inline
+In-Reply-To: <87v96uyq2v.wl-maz@kernel.org>
+X-Mailman-Approved-At: Fri, 04 Jun 2021 11:29:07 -0400
+Cc: linux-s390@vger.kernel.org, x86@kernel.org, kvm@vger.kernel.org,
+ Christian Borntraeger <borntraeger@de.ibm.com>,
+ Sean Christopherson <seanjc@google.com>, Huacai Chen <chenhuacai@kernel.org>,
+ linux-kernel@vger.kernel.org, kvm-ppc@vger.kernel.org,
+ linux-mips@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
+ Sergey Senozhatsky <senozhatsky@chromium.org>,
+ Suleiman Souhlal <suleiman@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -86,103 +100,90 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Marc,
-
-> -----Original Message-----
-> From: Marc Zyngier [mailto:maz@kernel.org]
-> Sent: 04 June 2021 14:55
-> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-> Cc: linux-arm-kernel@lists.infradead.org; kvmarm@lists.cs.columbia.edu;
-> linux-kernel@vger.kernel.org; will@kernel.org; catalin.marinas@arm.com;
-> james.morse@arm.com; julien.thierry.kdev@gmail.com;
-> suzuki.poulose@arm.com; jean-philippe@linaro.org; Alexandru Elisei
-> <Alexandru.Elisei@arm.com>; Linuxarm <linuxarm@huawei.com>
-> Subject: Re: [RFC PATCH 0/3] kvm/arm: New VMID allocator based on asid(2nd
-> approach)
+On (21/06/04 09:46), Marc Zyngier wrote:
+[..]
+> > +void kvm_arch_pm_notifier(struct kvm *kvm)
+> > +{
+> > +#ifdef CONFIG_PM
+> > +	int c;
+> > +
+> > +	mutex_lock(&kvm->lock);
+> > +	for (c = 0; c < kvm->created_vcpus; c++) {
+> > +		struct kvm_vcpu *vcpu = kvm->vcpus[c];
+> > +		int r;
+> > +
+> > +		if (!vcpu)
+> > +			continue;
 > 
-> On Fri, 04 Jun 2021 09:13:10 +0100,
-> Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-> wrote:
-> >
-> > Hi,
-> >
-> > > -----Original Message-----
-> > > From: Shameerali Kolothum Thodi
-> > > Sent: 06 May 2021 17:52
-> > > To: linux-arm-kernel@lists.infradead.org; kvmarm@lists.cs.columbia.edu;
-> > > linux-kernel@vger.kernel.org
-> > > Cc: maz@kernel.org; will@kernel.org; catalin.marinas@arm.com;
-> > > james.morse@arm.com; julien.thierry.kdev@gmail.com;
-> > > suzuki.poulose@arm.com; jean-philippe@linaro.org; Linuxarm
-> > > <linuxarm@huawei.com>
-> > > Subject: [RFC PATCH 0/3] kvm/arm: New VMID allocator based on asid(2nd
-> > > approach)
-> > >
-> > > This is based on a suggestion from Will [0] to try out the asid
-> > > based kvm vmid solution as a separate VMID allocator instead of
-> > > the shared lib approach attempted in v4[1].
-> > >
-> > > The idea is to compare both the approaches and see whether the
-> > > shared lib solution with callbacks make sense or not.
-> >
-> > A gentle ping on this. Please take a look and let me know.
+> Wouldn't kvm_for_each_vcpu() avoid this kind of checks?
+
+Right, that's what I do in v2, which I haven't posted yet.
+
+[..]
+> > +#include <linux/notifier.h>
+> > +
+> >  #ifndef KVM_MAX_VCPU_ID
+> >  #define KVM_MAX_VCPU_ID KVM_MAX_VCPUS
+> >  #endif
+> > @@ -579,6 +581,10 @@ struct kvm {
+> >  	pid_t userspace_pid;
+> >  	unsigned int max_halt_poll_ns;
+> >  	u32 dirty_ring_size;
+> > +
+> > +#ifdef CONFIG_PM
+> > +	struct notifier_block pm_notifier;
+> > +#endif
 > 
-> I had a look and I don't overly dislike it. I'd like to see the code
-> without the pinned stuff though, at least to ease the reviewing. I
-> haven't tested it in anger, but I have pushed the rebased code at [1]
-> as it really didn't apply to 5.13-rc4.
+> I'd certainly like to be able to opt out from this on architectures
+> that do not implement anything useful in the PM callbacks.
 
-Thanks for taking a look and the rebase. I will remove the pinned stuff
-in the next revision as that was added just to compare against the previous
-version.
+Well on the other hand PM-callbacks are harmless on those archs, they
+won't overload the __weak function.
 
+> Please consider making this an independent config option that individual
+> archs can buy into.
+
+Sure, I can take a look into this, but how is this better than __weak
+function? (that's a real question)
+
+[..]
+> > +#ifdef CONFIG_PM
+> > +static int kvm_pm_notifier_call(struct notifier_block *bl,
+> > +				unsigned long state,
+> > +				void *unused)
+> > +{
+> > +	struct kvm *kvm = container_of(bl, struct kvm, pm_notifier);
+> > +
+> > +	switch (state) {
+> > +	case PM_HIBERNATION_PREPARE:
+> > +	case PM_SUSPEND_PREPARE:
+> > +		kvm_arch_pm_notifier(kvm);
 > 
-> One thing I'm a bit worried about is that we so far relied on VMID 0
-> never being allocated to a guest, which is now crucial for protected
-> KVM. I can't really convince myself that this can never happen with
-> this.
+> How about passing the state to the notifier callback? I'd expect it to
+> be useful to do something on resume too.
 
-Hmm..not sure I quite follow that. As per the current logic vmid 0 is
-reserved and is not allocated to Guest. 
+For different states we can have different kvm_arch functions instead.
+kvm_arch_pm_notifier() can be renamed to kvm_arch_suspend_notifier(),
+so that we don't need to have `switch (state)` in every arch-code. Then
+for resume/post resume states we can have kvm_arch_resume_notifier()
+arch functions.
 
-> Plus, I've found this nugget:
+> > +		break;
+> > +	}
+> > +	return NOTIFY_DONE;
+> > +}
+> > +
+> > +static void kvm_init_pm_notifier(struct kvm *kvm)
+> > +{
+> > +	kvm->pm_notifier.notifier_call = kvm_pm_notifier_call;
+> > +	kvm->pm_notifier.priority = INT_MAX;
 > 
-> <quote
-> 	max_pinned_vmids = NUM_USER_VMIDS - num_possible_cpus() - 2;
-> </quote>
-> 
-> What is this "- 2"? My hunch is that it should really be "- 1" as VMID
-> 0 is reserved, and we have no equivalent of KPTI for S2.
+> How is this priority determined?
 
-I think this is more related to the "pinned vmid" stuff and was borrowed from
-the asid_update_limit() fn in arch/arm64/mm/context.c. But I missed the
-comment that explains the reason behind it. It says,
-
----x---
-	/*
-	 * There must always be an ASID available after rollover. Ensure that,
-	 * even if all CPUs have a reserved ASID and the maximum number of ASIDs
-	 * are pinned, there still is at least one empty slot in the ASID map.
-	 */
-	max_pinned_asids = num_available_asids - num_possible_cpus() - 2;
----x---
-
-So this is to make sure we will have at least one VMID available after rollover
-in case we have pinned the max number of VMIDs. I will include that comment
-to make it clear.
-
-Thanks,
-Shameer
-
-> 
-> 	M.
-> 
-> [1]
-> https://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git/log/?h
-> =kvm-arm64/mmu/vmid
-> 
-> --
-> Without deviation from the norm, progress is not possible.
+Nothing magical here. I want this to be executed first, before we suspend
+ftrace, RCU and the like. Besides KVM is usually the last one to register
+its PM callbacks, so there can be something on the notifier list that
+returns NOTIFY_STOP_MASK in front of KVM PM-notifier list entry.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
