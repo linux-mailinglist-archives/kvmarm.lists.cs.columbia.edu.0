@@ -2,87 +2,54 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9028339E51A
-	for <lists+kvmarm@lfdr.de>; Mon,  7 Jun 2021 19:17:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0606339E4E8
+	for <lists+kvmarm@lfdr.de>; Mon,  7 Jun 2021 19:07:28 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4113B4B09E;
-	Mon,  7 Jun 2021 13:17:18 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8D4194B09C;
+	Mon,  7 Jun 2021 13:07:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id aFwwnZenIvtJ; Mon,  7 Jun 2021 13:17:17 -0400 (EDT)
+	with ESMTP id LbAf4OuBwk6R; Mon,  7 Jun 2021 13:07:27 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 93C334B093;
-	Mon,  7 Jun 2021 13:17:15 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D8ECC4B088;
+	Mon,  7 Jun 2021 13:07:23 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8F8644A173
- for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Jun 2021 12:07:52 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 95DB249E8C
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Jun 2021 13:07:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 5JPaJob+jr9a for <kvmarm@lists.cs.columbia.edu>;
- Mon,  7 Jun 2021 12:07:46 -0400 (EDT)
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com
- [209.85.210.177])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7E80049E5F
- for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Jun 2021 12:07:46 -0400 (EDT)
-Received: by mail-pf1-f177.google.com with SMTP id m7so503657pfa.10
- for <kvmarm@lists.cs.columbia.edu>; Mon, 07 Jun 2021 09:07:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=4pT+fPdmYDqDMFuFLXYZiJ/4/kBu8OXPCoDOzFw+hto=;
- b=s8B6/VkuyXq4qdYRCmbgDg+SuezH6hOi58cGFA8q/J9XqHQlocG8YjLu7ejgMWS/xX
- fed8XbG0wA0QUN4lym+108KLQDsbNs4KIbRKYo6ilZOvq0o+d6UyoR//aLXn1Hu/vlAq
- yP1ZP+cxFayYOfDE9LeAJPdGGrWedrAAUYMHZSd48ZxJfOHA8eMFXyZJhu15By4aWLpE
- wE70dG4QXBHkg2XblNgK4vtxL/COW5tWSLBPuBynh4Db6gExW4b3XTknI75Gwm8TIZ5b
- 4pEaSRuON5OtGFW4NYQDPLWQvFtE4A0IvVd/m1uWCVKDTMruHgrAinkwRR9JPq0A+Iss
- gf/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=4pT+fPdmYDqDMFuFLXYZiJ/4/kBu8OXPCoDOzFw+hto=;
- b=Q0fMHe8kiO/T6nDSFUDWipW0ZU/32NuSqEsJzPClGibe8RmP4jxe2dHR4zgKZHfnTi
- /L6K9mU8mPgetEiMXwGqwPH8yIyacXEl4FF6jDPKbbmwGv5vlvcnAxx1IQSaOWOxVGsc
- 7m95dN5mLouNkMb+c7JbC20aXla/dkFi1aKDoVjwMZ+ZswkPupYPHloUZBPfeuwkY+ms
- L4hlu4XxgRIQ4bR3mT/aILTvLR5Rhf+GXbnhlKUbMVcB5PWb2adNWHqiINK35qB/2X5Q
- lyPwGe7DLBsqn3qqBEoJHsHgZc6StJINqOHlUYkz7CTJNTsr+oDesamYVwqeUUHfWkYA
- UwZQ==
-X-Gm-Message-State: AOAM530oq6rCRcoPiFfKhriwzGylxXc54KBvB0KSC8zma4s10JEOurRi
- 5BgrTNaJ+55zaK2qUXzcpvqXyg==
-X-Google-Smtp-Source: ABdhPJwlwJ6AkmZNuLpzKISd0pSadI1yVpmHR5ZCOBmzeB1TAshfbuXw/bugo1uFnF0tkAOa9I2F0g==
-X-Received: by 2002:a62:8204:0:b029:2ea:2647:bb4f with SMTP id
- w4-20020a6282040000b02902ea2647bb4fmr17635905pfd.23.1623082065121; 
- Mon, 07 Jun 2021 09:07:45 -0700 (PDT)
-Received: from google.com (240.111.247.35.bc.googleusercontent.com.
- [35.247.111.240])
- by smtp.gmail.com with ESMTPSA id g63sm8580661pfb.55.2021.06.07.09.07.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Jun 2021 09:07:44 -0700 (PDT)
-Date: Mon, 7 Jun 2021 16:07:40 +0000
-From: Sean Christopherson <seanjc@google.com>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH] KVM: selftests: Rename vm_handle_exception in evmcs test
-Message-ID: <YL5ETJatW+BM9vKS@google.com>
-References: <20210604181833.1769900-1-ricarkol@google.com>
- <YLqanpE8tdiNeoaN@google.com> <YLqzI9THXBX2dWDE@google.com>
- <6d1f569a5260612eb0704e31655d168d@kernel.org>
+ with ESMTP id GUyAPdx9+5hN for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  7 Jun 2021 13:07:21 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3A8A840617
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Jun 2021 13:07:21 -0400 (EDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 48E3B6101A;
+ Mon,  7 Jun 2021 17:07:17 +0000 (UTC)
+Date: Mon, 7 Jun 2021 18:07:14 +0100
+From: Catalin Marinas <catalin.marinas@arm.com>
+To: Steven Price <steven.price@arm.com>
+Subject: Re: [PATCH v14 2/8] arm64: Handle MTE tags zeroing in
+ __alloc_zeroed_user_highpage()
+Message-ID: <20210607170714.GA17957@arm.com>
+References: <20210607110816.25762-1-steven.price@arm.com>
+ <20210607110816.25762-3-steven.price@arm.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <6d1f569a5260612eb0704e31655d168d@kernel.org>
-X-Mailman-Approved-At: Mon, 07 Jun 2021 13:17:14 -0400
-Cc: kvm@vger.kernel.org, kernel test robot <oliver.sang@intel.com>,
- pbonzini@redhat.com, kvmarm@lists.cs.columbia.edu
+In-Reply-To: <20210607110816.25762-3-steven.price@arm.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: "Dr. David Alan Gilbert" <dgilbert@redhat.com>, qemu-devel@nongnu.org,
+ Marc Zyngier <maz@kernel.org>, Juan Quintela <quintela@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, linux-kernel@vger.kernel.org,
+ Dave Martin <Dave.Martin@arm.com>, linux-arm-kernel@lists.infradead.org,
+ Thomas Gleixner <tglx@linutronix.de>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -99,15 +66,26 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Sun, Jun 06, 2021, Marc Zyngier wrote:
-> This is becoming a bit messy. I'd rather drop the whole series from
-> -next, and get something that doesn't break in the middle. Please
-> resend the series tested on top of -rc4.
+On Mon, Jun 07, 2021 at 12:08:10PM +0100, Steven Price wrote:
+> From: Catalin Marinas <catalin.marinas@arm.com>
+> 
+> Currently, on an anonymous page fault, the kernel allocates a zeroed
+> page and maps it in user space. If the mapping is tagged (PROT_MTE),
+> set_pte_at() additionally clears the tags under a spinlock to avoid a
+> race on the page->flags. In order to optimise the lock, clear the page
+> tags on allocation in __alloc_zeroed_user_highpage() if the vma flags
+> have VM_MTE set.
+> 
+> Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+> Signed-off-by: Steven Price <steven.price@arm.com>
 
-That'd be my preference too.  I almost asked if it could be (temporarily)
-dropped, but I assumed the hashes in -next are intended to be stable.
+I think you can drop this patch now that Peter's series has been queued
+via the arm64 tree:
 
-Thanks!
+https://lore.kernel.org/r/20210602235230.3928842-4-pcc@google.com
+
+-- 
+Catalin
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
