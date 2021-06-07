@@ -2,64 +2,84 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 92BD739CE92
-	for <lists+kvmarm@lfdr.de>; Sun,  6 Jun 2021 12:31:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CC5B39D6B5
+	for <lists+kvmarm@lfdr.de>; Mon,  7 Jun 2021 10:05:10 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E78854A483;
-	Sun,  6 Jun 2021 06:31:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8F9DD4B08B;
+	Mon,  7 Jun 2021 04:05:09 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id EklKMZ+lSIta; Sun,  6 Jun 2021 06:31:26 -0400 (EDT)
+	with ESMTP id hDqyTK0A48v0; Mon,  7 Jun 2021 04:05:09 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BFC6A4A173;
-	Sun,  6 Jun 2021 06:31:25 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F04CB4AC78;
+	Mon,  7 Jun 2021 04:05:04 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1390740799
- for <kvmarm@lists.cs.columbia.edu>; Sun,  6 Jun 2021 06:31:25 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6396D4A173
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Jun 2021 04:05:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id dL2TQ+U8dHbQ for <kvmarm@lists.cs.columbia.edu>;
- Sun,  6 Jun 2021 06:31:24 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 08D3B405A9
- for <kvmarm@lists.cs.columbia.edu>; Sun,  6 Jun 2021 06:31:24 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 01CE4613EF;
- Sun,  6 Jun 2021 10:31:23 +0000 (UTC)
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1lpq3s-005kHi-V4; Sun, 06 Jun 2021 11:31:21 +0100
-MIME-Version: 1.0
-Date: Sun, 06 Jun 2021 11:31:20 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: Quentin Perret <qperret@google.com>
+ with ESMTP id U3-5IyUGcdJa for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  7 Jun 2021 04:04:57 -0400 (EDT)
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com
+ [209.85.128.48])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4742449FB0
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Jun 2021 04:04:57 -0400 (EDT)
+Received: by mail-wm1-f48.google.com with SMTP id
+ f16-20020a05600c1550b02901b00c1be4abso1606339wmg.2
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 07 Jun 2021 01:04:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=45tZHTOhPWrMm2QuGwxst35nsbkg8Cc+rbe4pv2DS3s=;
+ b=kIsPzVm/6HfQ2rSo6tvkvnj7PQ6cJswWvGgwdkdgaH6igE7n3GHPEMG2vp4Z472uwB
+ +KsYt5wzp2s9ftXX/i4EIBLcJJxmFL4qHM5xrQibJ27PSXZLrogYgU+O7HQZGR+iyAcp
+ ENqqFR0FScR0zbmHj60qWp3rM2QnSbnXLNJCCWzx48KNOVPLofYBkXxm2MKyVbnpoaEi
+ VJ0S4j/02+fK0RKfpkMJgSC1sOAzhVdo9mdLOvhwevYnuhSQzcP/zVsLUUlTiGrBi8mP
+ Z7vBYKauVcdW7lLENQosyuNUX/zVoCIl0Ac6KBIXKDIAfV+f1nQstXLthFWW2QDqXWoB
+ sxHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=45tZHTOhPWrMm2QuGwxst35nsbkg8Cc+rbe4pv2DS3s=;
+ b=TjUOe2hRua+A4lvZBhUrmqDBSQn+j4d/nqn9+1Vn1YtRXwqfj6LJOFaLQrZT4CnSox
+ F6I0TAr5SmlilGojMwUXCRR3s4s7enlD81sucBFuDvX43/gr7l+8aoYAGOjjCRbyxdPt
+ SOniJNMgTlcXpvVEhCUWmQeCZKESdHAwHXrSrgMHMgll4aZdITDjRgGg8h9/DIkvFEMd
+ gbwfi6K9qiOlvYz7EDzwMW0dne/6bLA6yOEbRKXLop4izit1lBdPkmX6xL+Yhm7rEGx2
+ mfZ/rUZ0TsKkChWcLYy97EaUS5J4yZ6ayarZ1euyOGFyJvOrzYw16Y3DGNggIUpxfnT6
+ utjg==
+X-Gm-Message-State: AOAM530VA2hKK0vRUsoY0uSw8FaPzbAyhOwDYB3zZ1m3ZRpA0hBA36fz
+ BaX797A4+QOqjiLhcvhmHnCPXg==
+X-Google-Smtp-Source: ABdhPJxhLwD0/g3fyDKT04YjO9SBSS50dsCkWXljDRLq8PTa8wtbKxGm26XKKJlsPURCnhuE70CeEQ==
+X-Received: by 2002:a7b:c098:: with SMTP id r24mr15440340wmh.35.1623053096135; 
+ Mon, 07 Jun 2021 01:04:56 -0700 (PDT)
+Received: from google.com (105.168.195.35.bc.googleusercontent.com.
+ [35.195.168.105])
+ by smtp.gmail.com with ESMTPSA id k5sm275646wmk.11.2021.06.07.01.04.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 07 Jun 2021 01:04:55 -0700 (PDT)
+Date: Mon, 7 Jun 2021 08:04:52 +0000
+From: Quentin Perret <qperret@google.com>
+To: Marc Zyngier <maz@kernel.org>
 Subject: Re: [PATCH v2 4/7] KVM: arm64: Unify MMIO and mem host stage-2 pools
-In-Reply-To: <20210602094347.3730846-5-qperret@google.com>
+Message-ID: <YL3TJDlMNCyq7JK3@google.com>
 References: <20210602094347.3730846-1-qperret@google.com>
  <20210602094347.3730846-5-qperret@google.com>
-User-Agent: Roundcube Webmail/1.4.11
-Message-ID: <b4e4647166447d8fd22b360369de4acb@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: qperret@google.com, will@kernel.org, james.morse@arm.com,
- alexandru.elisei@arm.com, catalin.marinas@arm.com, suzuki.poulose@arm.com,
- linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- kernel-team@android.com, linux-kernel@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
+ <b4e4647166447d8fd22b360369de4acb@kernel.org>
+MIME-Version: 1.0
+Content-Disposition: inline
+In-Reply-To: <b4e4647166447d8fd22b360369de4acb@kernel.org>
 Cc: kernel-team@android.com, catalin.marinas@arm.com,
  linux-kernel@vger.kernel.org, will@kernel.org, kvmarm@lists.cs.columbia.edu,
  linux-arm-kernel@lists.infradead.org
@@ -74,38 +94,40 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2021-06-02 10:43, Quentin Perret wrote:
-> We currently maintain two separate memory pools for the host stage-2,
-> one for pages used in the page-table when mapping memory regions, and
-> the other to map MMIO regions. The former is large enough to map all of
-> memory with page granularity and the latter can cover an arbitrary
-> portion of IPA space, but allows to 'recycle' pages.
+On Sunday 06 Jun 2021 at 11:31:20 (+0100), Marc Zyngier wrote:
+> On 2021-06-02 10:43, Quentin Perret wrote:
+> > We currently maintain two separate memory pools for the host stage-2,
+> > one for pages used in the page-table when mapping memory regions, and
+> > the other to map MMIO regions. The former is large enough to map all of
+> > memory with page granularity and the latter can cover an arbitrary
+> > portion of IPA space, but allows to 'recycle' pages.
+> > 
+> > However, this split makes accounting difficult to manage as pages at
+> > intermediate levels of the page-table may be used to map both memory and
+> > MMIO regions. Simplify the scheme by merging both pools into one. This
+> > means we can now hit the -ENOMEM case in the memory abort path, but
+> > we're still guaranteed forward-progress in the worst case by unmapping
+> > MMIO regions. On the plus side this also means we can usually map a lot
+> > more MMIO space at once if memory ranges happen to be mapped with block
+> > mappings.
+> > 
+> > Signed-off-by: Quentin Perret <qperret@google.com>
 > 
-> However, this split makes accounting difficult to manage as pages at
-> intermediate levels of the page-table may be used to map both memory 
-> and
-> MMIO regions. Simplify the scheme by merging both pools into one. This
-> means we can now hit the -ENOMEM case in the memory abort path, but
-> we're still guaranteed forward-progress in the worst case by unmapping
-> MMIO regions. On the plus side this also means we can usually map a lot
-> more MMIO space at once if memory ranges happen to be mapped with block
-> mappings.
+> This patch fails to apply on top of -rc4. Did you use some more exotic
+> base or, as I suspect, a development tree?
 > 
-> Signed-off-by: Quentin Perret <qperret@google.com>
+> Please check and respin the series if necessary.
 
-This patch fails to apply on top of -rc4. Did you use some more exotic
-base or, as I suspect, a development tree?
+I used kvmarm/next, but clearly an out-of-date one. I'll respin -- sorry
+about that.
 
-Please check and respin the series if necessary.
-
-         M.
--- 
-Jazz is not dead. It just smells funny...
+Thanks,
+Quentin
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
