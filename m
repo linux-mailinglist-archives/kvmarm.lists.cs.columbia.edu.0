@@ -2,56 +2,84 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 66F653A4736
-	for <lists+kvmarm@lfdr.de>; Fri, 11 Jun 2021 18:58:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B09E3A4E48
+	for <lists+kvmarm@lfdr.de>; Sat, 12 Jun 2021 13:11:13 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E1EE24B0DC;
-	Fri, 11 Jun 2021 12:58:35 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CA21349E93;
+	Sat, 12 Jun 2021 07:11:12 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.911
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@gmail.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YNdDwZNiP6hm; Fri, 11 Jun 2021 12:58:35 -0400 (EDT)
+	with ESMTP id gbCc62WCvgo5; Sat, 12 Jun 2021 07:11:12 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8F4EC4B0CF;
-	Fri, 11 Jun 2021 12:58:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8067940CF8;
+	Sat, 12 Jun 2021 07:11:11 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 85DE44B0C5
- for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Jun 2021 12:58:33 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 579DD40874
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 12 Jun 2021 07:00:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id lp5m6v0XPtul for <kvmarm@lists.cs.columbia.edu>;
- Fri, 11 Jun 2021 12:58:32 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5AAE84B0BA
- for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Jun 2021 12:58:32 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id F31CFD6E;
- Fri, 11 Jun 2021 09:58:31 -0700 (PDT)
-Received: from [192.168.0.110] (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 81E6B3F719;
- Fri, 11 Jun 2021 09:58:30 -0700 (PDT)
-Subject: Re: [PATCH v4 3/9] KVM: arm64: vgic: Be tolerant to the lack of
- maintenance interrupt masking
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-To: Marc Zyngier <maz@kernel.org>, linux-arm-kernel@lists.infradead.org,
- kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
-References: <20210601104005.81332-1-maz@kernel.org>
- <20210601104005.81332-4-maz@kernel.org>
- <a02e67c6-fceb-ed6a-fc73-8649d8d18dd8@arm.com>
-Message-ID: <b0b941ae-cd22-4454-a987-04baf5473c5e@arm.com>
-Date: Fri, 11 Jun 2021 17:59:26 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+ with ESMTP id 6ifDnEvq4SCq for <kvmarm@lists.cs.columbia.edu>;
+ Sat, 12 Jun 2021 07:00:22 -0400 (EDT)
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com
+ [209.85.210.180])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B040E406AD
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 12 Jun 2021 07:00:21 -0400 (EDT)
+Received: by mail-pf1-f180.google.com with SMTP id k15so6578430pfp.6
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 12 Jun 2021 04:00:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+ :user-agent; bh=8iFz8MxPZLy39szDaTinyyt9MSbr8V1d4abH/6Oyi34=;
+ b=dsAZPKVtBd9FNW3PfmVk3BX6RVgYyNpg0Raa2+UAkDpXioHz+z76oMr8eGi8viVXKL
+ LiNViHV8bVXfGjz0w4vn5sST0m+1oEkawdQVH6VFf3HTzWn9mgM8simVoLWywHcmAjtQ
+ Z5oDevv6bonmRxRv8y3Qfal5SfB/GcuD4YJ10Dy3ZuM/P1CR/PAsmHRit8p9LNXwuzmt
+ 96fq9jE3x5LClunwOps24irJn4iE69mURhQPk9sMhixglFpgcmI6JMUnDtFcCVSWfkUr
+ bM+PHdzbUsRyDk8Oj5BS4EVg53CAaiJBGtekU/CtFElLbP/5IYTNvijdZPAefdDb70V8
+ tRmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+ :content-disposition:user-agent;
+ bh=8iFz8MxPZLy39szDaTinyyt9MSbr8V1d4abH/6Oyi34=;
+ b=LCX3dJEo7DX1TH6lZ/xMR/0WtC1wvsc9IPpJeZgkNBxAAlPvAdwMfUBPk2fMBORlcf
+ r/WlzEtR3w9SMD40V1PvPh0j0f5mjpinzpwsmex89PJeudqFANwnijZM/LxG4g7i5yvJ
+ RA3KEl4+pgayPNS2n0FHf6n3/405EK9NNaz1qb5HEsaTG1yOK0CCb0q3uOM8TlqN0r9r
+ ftark4unhzOqHCB211jhKBzEcPJ6/p+OqMQRG/fjLZXC5+8Tv5ZM6ewuWWodgXLWrDxi
+ HpuEIyy+6jqiK6y42n+IF/7WYqVM6Qb4qe0lZyE55fMWggnkitNfwNg939OKH/9X3ylN
+ 2R7Q==
+X-Gm-Message-State: AOAM532S5roqswLTi2qrqQ/rfdle8kc7++lbx87i/g4VQ/eotQSqNdzY
+ IaOS94wCU3fjHnE7pL+ZW/g=
+X-Google-Smtp-Source: ABdhPJxX8jxHPklTMEHdOxhkDMwNRN9obBLTCd8K9iuKwSlL5men33m5itr/QfiIZGiD/H4CqQ9vhA==
+X-Received: by 2002:a62:7e05:0:b029:2ea:57f:ec86 with SMTP id
+ z5-20020a627e050000b02902ea057fec86mr12613918pfc.37.1623495621051; 
+ Sat, 12 Jun 2021 04:00:21 -0700 (PDT)
+Received: from raspberrypi ([125.141.84.155])
+ by smtp.gmail.com with ESMTPSA id v15sm8060992pgf.26.2021.06.12.04.00.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 12 Jun 2021 04:00:20 -0700 (PDT)
+Date: Sat, 12 Jun 2021 12:00:14 +0100
+From: Austin Kim <austindh.kim@gmail.com>
+To: maz@kernel.org, james.morse@arm.com, alexandru.elisei@arm.com,
+ suzuki.poulose@arm.com, catalin.marinas@arm.com, will@kernel.org
+Subject: [PATCH] KVM: arm64: vgic: declear local variable 'flags' before for
+ loop starts
+Message-ID: <20210612110014.GA1211@raspberrypi>
 MIME-Version: 1.0
-In-Reply-To: <a02e67c6-fceb-ed6a-fc73-8649d8d18dd8@arm.com>
-Content-Language: en-US
-Cc: Hector Martin <marcan@marcan.st>, kernel-team@android.com
+Content-Disposition: inline
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Mailman-Approved-At: Sat, 12 Jun 2021 07:11:10 -0400
+Cc: austindh.kim@gmail.com, austin.kim@lge.com, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -68,53 +96,73 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Marc,
+From: Austin Kim <austin.kim@lge.com>
 
-On 6/11/21 5:38 PM, Alexandru Elisei wrote:
-> Hi Marc,
->
-> On 6/1/21 11:39 AM, Marc Zyngier wrote:
->> As it turns out, not all the interrupt controllers are able to
->> expose a vGIC maintenance interrupt that can be independently
->> enabled/disabled.
->>
->> And to be fair, it doesn't really matter as all we require is
->> for the interrupt to kick us out of guest mode out way or another.
->>
->> To that effect, add gic_kvm_info.no_maint_irq_mask for an interrupt
->> controller to advertise the lack of masking.
->>
->> Signed-off-by: Marc Zyngier <maz@kernel.org>
->> ---
->>  arch/arm64/kvm/vgic/vgic-init.c       | 8 +++++++-
->>  include/linux/irqchip/arm-vgic-info.h | 2 ++
->>  2 files changed, 9 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/kvm/vgic/vgic-init.c b/arch/arm64/kvm/vgic/vgic-init.c
->> index 2fdb65529594..6752d084934d 100644
->> --- a/arch/arm64/kvm/vgic/vgic-init.c
->> +++ b/arch/arm64/kvm/vgic/vgic-init.c
->> @@ -519,12 +519,15 @@ void kvm_vgic_init_cpu_hardware(void)
->>   */
->>  int kvm_vgic_hyp_init(void)
->>  {
->> +	bool has_mask;
->>  	int ret;
->>  
->>  	if (!gic_kvm_info)
->>  		return -ENODEV;
->>  
->> -	if (!gic_kvm_info->maint_irq) {
->> +	has_mask = !gic_kvm_info->no_maint_irq_mask;
-> This double negative is pretty awkward, I suppose this was done to avoid changes
-> to the gic drivers, because the default value is 0 (false). Just an idea, maybe
-> renaming it to maint_irq_unmaskable would be more readable?
+Normally local variable 'flags' is defined out of for loop,
+when 'flags' is used as the second parameter in a call to
+spinlock_irq[save/restore] function.
 
-Actually, after another look, the current name stopped looking awkward to me.
+So it had better declear local variable 'flags' ahead of for loop.
 
-Thanks,
+Signed-off-by: Austin Kim <austin.kim@lge.com>
+---
+ arch/arm64/kvm/vgic/vgic-mmio.c | 2 +-
+ arch/arm64/kvm/vgic/vgic-v4.c   | 5 ++---
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
-Alex
+diff --git a/arch/arm64/kvm/vgic/vgic-mmio.c b/arch/arm64/kvm/vgic/vgic-mmio.c
+index 48c6067fc5ec..ae32428d9f87 100644
+--- a/arch/arm64/kvm/vgic/vgic-mmio.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio.c
+@@ -232,11 +232,11 @@ unsigned long vgic_mmio_read_pending(struct kvm_vcpu *vcpu,
+ 	u32 intid = VGIC_ADDR_TO_INTID(addr, 1);
+ 	u32 value = 0;
+ 	int i;
++	unsigned long flags;
+ 
+ 	/* Loop over all IRQs affected by this read */
+ 	for (i = 0; i < len * 8; i++) {
+ 		struct vgic_irq *irq = vgic_get_irq(vcpu->kvm, vcpu, intid + i);
+-		unsigned long flags;
+ 		bool val;
+ 
+ 		raw_spin_lock_irqsave(&irq->irq_lock, flags);
+diff --git a/arch/arm64/kvm/vgic/vgic-v4.c b/arch/arm64/kvm/vgic/vgic-v4.c
+index c1845d8f5f7e..a0c743f83bbe 100644
+--- a/arch/arm64/kvm/vgic/vgic-v4.c
++++ b/arch/arm64/kvm/vgic/vgic-v4.c
+@@ -116,7 +116,7 @@ static void vgic_v4_enable_vsgis(struct kvm_vcpu *vcpu)
+ {
+ 	struct its_vpe *vpe = &vcpu->arch.vgic_cpu.vgic_v3.its_vpe;
+ 	int i;
+-
++	unsigned long flags;
+ 	/*
+ 	 * With GICv4.1, every virtual SGI can be directly injected. So
+ 	 * let's pretend that they are HW interrupts, tied to a host
+@@ -125,7 +125,6 @@ static void vgic_v4_enable_vsgis(struct kvm_vcpu *vcpu)
+ 	for (i = 0; i < VGIC_NR_SGIS; i++) {
+ 		struct vgic_irq *irq = vgic_get_irq(vcpu->kvm, vcpu, i);
+ 		struct irq_desc *desc;
+-		unsigned long flags;
+ 		int ret;
+ 
+ 		raw_spin_lock_irqsave(&irq->irq_lock, flags);
+@@ -158,11 +157,11 @@ static void vgic_v4_enable_vsgis(struct kvm_vcpu *vcpu)
+ static void vgic_v4_disable_vsgis(struct kvm_vcpu *vcpu)
+ {
+ 	int i;
++	unsigned long flags;
+ 
+ 	for (i = 0; i < VGIC_NR_SGIS; i++) {
+ 		struct vgic_irq *irq = vgic_get_irq(vcpu->kvm, vcpu, i);
+ 		struct irq_desc *desc;
+-		unsigned long flags;
+ 		int ret;
+ 
+ 		raw_spin_lock_irqsave(&irq->irq_lock, flags);
+-- 
+2.20.1
 
 _______________________________________________
 kvmarm mailing list
