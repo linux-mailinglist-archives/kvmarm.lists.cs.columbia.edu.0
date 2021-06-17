@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 475B13AB27C
-	for <lists+kvmarm@lfdr.de>; Thu, 17 Jun 2021 13:25:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C2713AB2CD
+	for <lists+kvmarm@lfdr.de>; Thu, 17 Jun 2021 13:40:08 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CA54C4A3B4;
-	Thu, 17 Jun 2021 07:25:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0D8454A49C;
+	Thu, 17 Jun 2021 07:40:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.209
@@ -18,79 +18,79 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WlAfbEnuM3Gn; Thu, 17 Jun 2021 07:25:20 -0400 (EDT)
+	with ESMTP id ntX3tcFGVn8q; Thu, 17 Jun 2021 07:40:07 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9A2664A319;
-	Thu, 17 Jun 2021 07:25:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E72B349FB7;
+	Thu, 17 Jun 2021 07:40:06 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 30F7E49F6C
- for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Jun 2021 07:25:18 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D9EBB40895
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Jun 2021 07:40:05 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ijhEh1m5XdN2 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 17 Jun 2021 07:25:17 -0400 (EDT)
+ with ESMTP id JPkkNgB5toHO for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 17 Jun 2021 07:40:04 -0400 (EDT)
 Received: from us-smtp-delivery-124.mimecast.com
  (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3CF1449E93
- for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Jun 2021 07:25:17 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E065949FB7
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Jun 2021 07:40:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1623929117;
+ s=mimecast20190719; t=1623930004;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QeoOEjtdTbZHikE6qVHZkIHtsqJ8oL1MWdn59al3yJU=;
- b=DUeLKaVDYL9/Rgj3kY9YNcFzll+kwG4+S+LdL+3lZJuGDFndTyQONBILL1NI2tzpg4gIgY
- f9VFHB+RC0P3/agOHg/RX4mWdhBqomlSuYvCXTb+vxKWkQKBlrkkoaXqF8cae8m5ZrkSK0
- jl3SMPDbkmDnzq9bnZh2NcugMSaBN4E=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-515-6Y8QA1ARMlCiVtMhLiKwfA-1; Thu, 17 Jun 2021 07:25:16 -0400
-X-MC-Unique: 6Y8QA1ARMlCiVtMhLiKwfA-1
-Received: by mail-ed1-f71.google.com with SMTP id
- f12-20020a056402150cb029038fdcfb6ea2so1300236edw.14
- for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Jun 2021 04:25:14 -0700 (PDT)
+ bh=VmCLvCRTlrH58yubKa8HF1xENLoVvDewdsvG/LgtDCE=;
+ b=Hbnw17cNBFLAb0Ev5LLadVB/xu5K/s/dPXU8cxiotUGZ92vFC2khCwksCgNdJJJ1uKI0Ae
+ gbTancehgIMUepj8DHd4seA1lWhTZfsqWhl5eI9JLGYXHDNAOovml/xbCnrJlAXRHzStDM
+ L4axasrUxI0GRvFiGhzR3zguQdfCE9Y=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-171-DpWSOZmiMfCXSPVZmU4B2w-1; Thu, 17 Jun 2021 07:40:03 -0400
+X-MC-Unique: DpWSOZmiMfCXSPVZmU4B2w-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ jw19-20020a17090776b3b0290481592f1fc4so389692ejc.2
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Jun 2021 04:40:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:subject:to:cc:references:from:message-id:date
  :user-agent:mime-version:in-reply-to:content-language
  :content-transfer-encoding;
- bh=QeoOEjtdTbZHikE6qVHZkIHtsqJ8oL1MWdn59al3yJU=;
- b=aerLviMmV4HYfFcr4GHBhPA7bqY7nfJjAir8CPZ7QcGlYbxQP+4CJSV80QMbCTk4wB
- iP4kQ2yimUs7G6P6LG+H8trpRL9Jp62OzmvR7kC8IoPd3sOwjCjtTnozUqScpLljIrN6
- UdLtb7bmyFa6Z6kHOcf0mmZ87ASxZiQph6jvj/y/sGY6XetW9mq22HKTiuZAzVSmM2DL
- WIOxvw8OLsFtVJSJFVZ4zid2Ot8ELOtMCQ3OK61HbVD8HIRw1aY9EP2dDGt8FYgtP4Bb
- l0UcnX4msZe5wCruHYyAUb90tgBcgSEvQpCl+B5HwvRTgz+SSQHr8Nepy36KMhm3xGEw
- oCZA==
-X-Gm-Message-State: AOAM533fZ7pArj2Nl2Gk62n5ADkKMJ6jt2JnRatXeb8GiWAFufk5ExiY
- d93Bqct/KIgtY1O6iB31/zWhM45+U1MndtmjsrPTPGjdExbEOJJvdlOvrP4Z7XKmzF9odL6xGTd
- 3is0aZk4r1FWQMTetJHyOj2f2
-X-Received: by 2002:a05:6402:268f:: with SMTP id
- w15mr5799073edd.228.1623928793222; 
- Thu, 17 Jun 2021 04:19:53 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJzc8lc8kbfFsQbKsVnuEADgPqEmYVAvmC/1IvjtxjrXOO4gKYpFUgt0NPkDolV15GoZuo9rTg==
-X-Received: by 2002:a05:6402:268f:: with SMTP id
- w15mr5799027edd.228.1623928793011; 
- Thu, 17 Jun 2021 04:19:53 -0700 (PDT)
+ bh=VmCLvCRTlrH58yubKa8HF1xENLoVvDewdsvG/LgtDCE=;
+ b=Faw0k7Klt90eBoUmpXJDqA7BhNqKUmFskhhxVuWi4UOB8tYp/VShfQok9SuYu0AeKg
+ qYs7j6Sq2RaDhUaLagy3u8BjBaIfFo+NKMnHF513pMra1qjdjbhG/mrB57qRuLXoEW5j
+ oIh0x38V+IEK9KSxsQkLCZfIV4tT7NxzZSBIRtn7EN+zQyk/GZOHiPfojpminamIbYv9
+ bKCct+/T1IpSePmOirjw7rQ/Kpyrc1hxOy5abTfUNPwsceCE/K84sqGCzguz1kb0ks/8
+ 8PP0A9OqT/gt9+oo50Le5KNepqaO8te1jZOxxuKBFJvgdUIKi0KZUQXKYaI0GnlFn0Dw
+ NhNg==
+X-Gm-Message-State: AOAM533bByn/S1IMfmsWxau7w+bkwtvmbUP8L5Jx9Co8ShocK7/gkFoo
+ DORb7nuxN5aM70+byD15zS2dFd35Kr4c/quC/Wh/asmKikyknGbN0k7fhLu0BVaBua5BlrfA/1M
+ nykXfZwiTGL0GwY7Ujtz9OAiC
+X-Received: by 2002:a17:906:b317:: with SMTP id
+ n23mr4753243ejz.324.1623929020562; 
+ Thu, 17 Jun 2021 04:23:40 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJzhbQ8ssqFmZsWb8sMpnt1Xu4dlg8VyEm5RPjNu6NQPEN0NLgvmdDkk7J48/7gKKGpvO8cI2w==
+X-Received: by 2002:a17:906:b317:: with SMTP id
+ n23mr4753201ejz.324.1623929020383; 
+ Thu, 17 Jun 2021 04:23:40 -0700 (PDT)
 Received: from ?IPv6:2001:b07:6468:f312:c8dd:75d4:99ab:290a?
  ([2001:b07:6468:f312:c8dd:75d4:99ab:290a])
- by smtp.gmail.com with ESMTPSA id e18sm3537900ejh.64.2021.06.17.04.19.51
+ by smtp.gmail.com with ESMTPSA id by23sm3167995ejc.85.2021.06.17.04.23.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Jun 2021 04:19:52 -0700 (PDT)
-Subject: Re: [PATCH v10 3/5] KVM: stats: Add documentation for binary
- statistics interface
-To: Greg KH <gregkh@linuxfoundation.org>, Jing Zhang <jingzhangos@google.com>
+ Thu, 17 Jun 2021 04:23:39 -0700 (PDT)
+Subject: Re: [PATCH v10 2/5] KVM: stats: Add fd-based API to read binary stats
+ data
+To: Greg KH <greg@kroah.com>, Jing Zhang <jingzhangos@google.com>
 References: <20210617044146.2667540-1-jingzhangos@google.com>
- <20210617044146.2667540-4-jingzhangos@google.com>
- <YMrmqOxDWJ2/8sfD@kroah.com>
+ <20210617044146.2667540-3-jingzhangos@google.com>
+ <YMrzzYEkDQNCpnP7@kroah.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <be506135-5bc3-31bd-1b20-063f01f41df1@redhat.com>
-Date: Thu, 17 Jun 2021 13:19:50 +0200
+Message-ID: <d8ca6601-e3b7-e6b1-5992-12ae106de951@redhat.com>
+Date: Thu, 17 Jun 2021 13:23:35 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.10.1
 MIME-Version: 1.0
-In-Reply-To: <YMrmqOxDWJ2/8sfD@kroah.com>
+In-Reply-To: <YMrzzYEkDQNCpnP7@kroah.com>
 Authentication-Results: relay.mimecast.com;
  auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pbonzini@redhat.com
 X-Mimecast-Spam-Score: 0
@@ -129,24 +129,38 @@ Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 17/06/21 08:07, Greg KH wrote:
->> The statistics data itself could be read out by userspace telemetry
->> periodically without any extra parsing or setup effort.
-> Do you have a pointer to userspace code that can do such a thing that
-> others can use?  We do not like adding apis to the kernel without at
-> least seeing the user of those apis, especially for complex things like
-> this.
+On 17/06/21 09:03, Greg KH wrote:
+>> 3. Fd-based solution provides the possibility that a telemetry can
+>>     read KVM stats in a less privileged situation.
+> "possiblity"?  Does this work or not?  Have you tested it?
 > 
-> Ideally you would include some library code in the kernel tree itself
-> that everyone can use for this for their own programs.  You have
-> provided a test which is great, but how do we know it works for "real"
-> usages?
 
-I am pretty sure that Google is using this internally, but we are also 
-going to work on QEMU and Libvirt support for this.
+I think this is essentially s/that/for/.  But more precisely:
 
-As for the rest, thanks for the review---I'll let Jing act on it and 
-only add my own remarks in a couple places.
+3. Compared for example to a ioctl, a separate file descriptor makes it 
+possible for an external program to read statistics, while maintaining 
+privilege separation between VMM and telemetry code.
+
+>>
+>> +	snprintf(&kvm_vm_stats_header.id[0], sizeof(kvm_vm_stats_header.id),
+>> +			"kvm-%d", task_pid_nr(current));
+> 
+> Why do you write to this static variable for EVERY read?  Shouldn't you
+> just do it once at open?  How can it change?
+> 
+> Wait, it's a single shared variable, what happens when multiple tasks
+> open this thing and read from it?  You race between writing to this
+> variable here and then:
+> 
+>> +	return kvm_stats_read(&kvm_vm_stats_header, &kvm_vm_stats_desc[0],
+>> +		&kvm->stat, sizeof(kvm->stat), user_buffer, size, offset);
+> 
+> Accessing it here.
+> 
+> So how is this really working?
+
+It's not - Jing, kvm_vm_stats_header is small enough that you can store 
+a copy in struct kvm.
 
 Paolo
 
