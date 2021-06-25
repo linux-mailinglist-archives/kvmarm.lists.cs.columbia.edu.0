@@ -2,99 +2,90 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E9CFD3B4131
-	for <lists+kvmarm@lfdr.de>; Fri, 25 Jun 2021 12:11:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 040A03B4132
+	for <lists+kvmarm@lfdr.de>; Fri, 25 Jun 2021 12:11:54 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5F43C4B121;
-	Fri, 25 Jun 2021 06:11:52 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 978314B17D;
+	Fri, 25 Jun 2021 06:11:53 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.911
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@gmail.com
+	(fail, message has been altered) header.i=@chromium.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YgkaaFNKnC7N; Fri, 25 Jun 2021 06:11:52 -0400 (EDT)
+	with ESMTP id iouIZJ9L7mqX; Fri, 25 Jun 2021 06:11:52 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 122934B17D;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2C2A34B196;
 	Fri, 25 Jun 2021 06:11:51 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C6CD74B16F
- for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Jun 2021 20:20:39 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 22D4F4B14D
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 25 Jun 2021 03:37:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id rirnuZYmAOz8 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 24 Jun 2021 20:20:38 -0400 (EDT)
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com
- [209.85.210.173])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7CE784B13A
- for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Jun 2021 20:20:38 -0400 (EDT)
-Received: by mail-pf1-f173.google.com with SMTP id c8so6631850pfp.5
- for <kvmarm@lists.cs.columbia.edu>; Thu, 24 Jun 2021 17:20:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:subject:to:cc:references:in-reply-to:mime-version
- :message-id:content-transfer-encoding;
- bh=QS1Ns1WqNL5is+0vi/ZTUFuxlVcqVbsqm8g6SHrti5w=;
- b=esFkhH15NMc8wS4V/cwcupYK/DM+pO31de2/rn7330Vbdh9CSH9nvb+7DxAuWpBq5q
- I7HhRjIAf3sfraAsSUg5Y3qXSa9eVE9+YVQ00KJALtXy9kkDyH52E89nrtf01dGKriH8
- b00IMLN+V/HOLpi8TtU0LZ1hk9cAx0kkRlMaPdbbDzt+jClVFu+NXDMdkVwZY7xsN+Pb
- tP4yZoVaJBNxRaG8tctEZTIYWsIItqZBewSg9WSZ8LdCnbR+ioG4SZD7hACLKDcVik91
- hFNd/jFL7BVxEVmattHQ7LktCFlqiNNlX/MEUpDQB/QeQIQwm0YNoc++AkYkd7w7Rqkx
- Ypjg==
+ with ESMTP id IPxsYzoqSDhZ for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 25 Jun 2021 03:37:18 -0400 (EDT)
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com
+ [209.85.216.41])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D00224B13A
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 25 Jun 2021 03:37:18 -0400 (EDT)
+Received: by mail-pj1-f41.google.com with SMTP id l11so4957885pji.5
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 25 Jun 2021 00:37:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chromium.org; s=google;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=arS0mKVzVlqtqVfiVwhtHqUqhLwMsArq/fcDdatjRgU=;
+ b=dHO26QDY5LUMI+Tc2XZzsgpXZDpORNAX7YyZkCQ5xy7oSytr1O3oUF01CG9gH6yL5q
+ Y3La01kqEVPP9WWTMrMPMSLK8aydIT/ocZATNuL06J51ec4Okfq4Nv5ekqNB14ZWBhjL
+ tL88LfPKWlydh9eprQr48AASmItpc0PiVGEJE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:subject:to:cc:references:in-reply-to
- :mime-version:message-id:content-transfer-encoding;
- bh=QS1Ns1WqNL5is+0vi/ZTUFuxlVcqVbsqm8g6SHrti5w=;
- b=I7iuQbj2AV+V8qCfBDfxziAU56Rt6n7N0BLhvQKGFexaVY43gsPwBMibOtohCZQbbO
- NHTrMn8A2hD6PrYG6D0zGaFLL2ObhedCZe31l5oqMBmua18wvuKGC5vawVtplcBcEecn
- /BtJd+D46vEyA7E5iNgVumbIpSwRsGNtJNL30rtZfDZauTju7+Jn+5qkilXVGuL5F5gj
- REzwje6ql+ulhhK1WmhTybEK+faK3qbZ2UXF8FhfUscn6uBWTh22Jugerix/NdN3MZ9q
- VsK4Fq8ZiqcqKOfPdfgIZRcqSfsyUsdah9QI3Y64XJjfr9ukWLkgvMhwBbl3vi0uPtoC
- MacQ==
-X-Gm-Message-State: AOAM530flPsljUzVhnHDwI+bhiX9SWbE9xQK5MgnKs2RAE+d1k8u5j6T
- nhcWvmP0n+dmEn8CWlXCXcg=
-X-Google-Smtp-Source: ABdhPJxQU7+bPuGhEylfTnovn9GkVLr4KlmlOjHYTX0Un3AOHd4dWxP2gfr/obThDIjB30qffkhRJQ==
-X-Received: by 2002:a62:2fc1:0:b029:305:fd1e:e3f4 with SMTP id
- v184-20020a622fc10000b0290305fd1ee3f4mr4774381pfv.17.1624580437511; 
- Thu, 24 Jun 2021 17:20:37 -0700 (PDT)
-Received: from localhost (60-242-147-73.tpgi.com.au. [60.242.147.73])
- by smtp.gmail.com with ESMTPSA id z18sm3630623pfe.214.2021.06.24.17.20.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Jun 2021 17:20:37 -0700 (PDT)
-Date: Fri, 25 Jun 2021 10:20:32 +1000
-From: Nicholas Piggin <npiggin@gmail.com>
-Subject: Re: [PATCH 0/6] KVM: Remove uses of struct page from x86 and arm64 MMU
-To: Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>, Huacai Chen
- <chenhuacai@kernel.org>, Marc Zyngier <maz@kernel.org>, Paul Mackerras
- <paulus@ozlabs.org>, Paolo Bonzini <pbonzini@redhat.com>, David Stevens
- <stevensd@chromium.org>, Zhenyu Wang <zhenyuw@linux.intel.com>, Zhi Wang
- <zhi.a.wang@intel.com>
-References: <20210624035749.4054934-1-stevensd@google.com>
- <1624530624.8jff1f4u11.astroid@bobo.none>
- <1624534759.nj0ylor2eh.astroid@bobo.none>
- <0d3a699a-15eb-9f1b-0735-79d14736f38c@redhat.com>
- <1624539354.6zggpdrdbw.astroid@bobo.none>
- <81d99029-ec40-19c5-5647-20607d78dab0@redhat.com>
-In-Reply-To: <81d99029-ec40-19c5-5647-20607d78dab0@redhat.com>
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=arS0mKVzVlqtqVfiVwhtHqUqhLwMsArq/fcDdatjRgU=;
+ b=S6iD8SdSmVZ0Tz8nkTfnNuWX1eJs+BnHDdxJdLRCp/QUCHkn97FdrGcKMZygigDkRM
+ ZjBYZV/nAOl/JufvbsQKgGYD29YkRajj0JAZ7gVS/P6ISdA+CflflBUX7nVcxpKtZYYx
+ COuDxBBNb8z+kWQ8u9O+BYKY8xyVmsJJQVE3gZltodeIaUp3Hue+gc4KanLo5G/IVbKl
+ 6IYsnWmMAWzv5FCi8edpSxMpX9uIptmZWqd4w1dR4r1ch0XvWeiHXPFOZLOWqh/7PQ60
+ 9z32eztMBKg3qFnnW88XaNp+oTup2UUzbgHzQ67BtlAc/MuudQi/UBbVrKmTnR5l7+PX
+ eUGQ==
+X-Gm-Message-State: AOAM533JEpnTXHPckU2uGSIb2jeccJYZ8Li7CfAQYMiu3GcoKAz6vowT
+ 8K7Kl2Z9vkwrtJjc1hpUhUBvNg==
+X-Google-Smtp-Source: ABdhPJzJyYhoE1B9Fk5Wy7zlre5sRlAATH1Tds+i1SalCyUSMMBey0lep4anSoEg3on5gb5KkCMm2Q==
+X-Received: by 2002:a17:902:c947:b029:125:34d4:249d with SMTP id
+ i7-20020a170902c947b029012534d4249dmr7925026pla.3.1624606637340; 
+ Fri, 25 Jun 2021 00:37:17 -0700 (PDT)
+Received: from localhost ([2401:fa00:8f:203:1492:9d4f:19fa:df61])
+ by smtp.gmail.com with UTF8SMTPSA id a9sm9986991pjm.51.2021.06.25.00.37.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Jun 2021 00:37:16 -0700 (PDT)
+From: David Stevens <stevensd@chromium.org>
+X-Google-Original-From: David Stevens <stevensd@google.com>
+To: Marc Zyngier <maz@kernel.org>, Huacai Chen <chenhuacai@kernel.org>,
+ Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
+ Paul Mackerras <paulus@ozlabs.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Nick Piggin <npiggin@gmail.com>
+Subject: [PATCH v2 0/5] Remove uses of struct page from x86 and arm64 MMU
+Date: Fri, 25 Jun 2021 16:36:11 +0900
+Message-Id: <20210625073616.2184426-1-stevensd@google.com>
+X-Mailer: git-send-email 2.32.0.93.g670b81a890-goog
 MIME-Version: 1.0
-Message-Id: <1624580015.hf7udh0vc3.astroid@bobo.none>
 X-Mailman-Approved-At: Fri, 25 Jun 2021 06:11:50 -0400
 Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- David Stevens <stevensd@google.com>, intel-gfx@lists.freedesktop.org,
- linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- dri-devel@lists.freedesktop.org, kvmarm@lists.cs.columbia.edu,
- Will Deacon <will@kernel.org>, kvm-ppc@vger.kernel.org,
- Sean Christopherson <seanjc@google.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, linux-mips@vger.kernel.org,
- intel-gvt-dev@lists.freedesktop.org, Joerg Roedel <joro@8bytes.org>,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>
+ dri-devel@lists.freedesktop.org, linux-mips@vger.kernel.org,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ Joerg Roedel <joro@8bytes.org>, David Stevens <stevensd@google.com>,
+ Zhi Wang <zhi.a.wang@intel.com>, intel-gfx@lists.freedesktop.org,
+ kvm-ppc@vger.kernel.org, Zhenyu Wang <zhenyuw@linux.intel.com>,
+ intel-gvt-dev@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
+ Jim Mattson <jmattson@google.com>, Sean Christopherson <seanjc@google.com>,
+ linux-kernel@vger.kernel.org, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ linuxppc-dev@lists.ozlabs.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -111,37 +102,58 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Excerpts from Paolo Bonzini's message of June 25, 2021 1:35 am:
-> On 24/06/21 14:57, Nicholas Piggin wrote:
->> KVM: Fix page ref underflow for regions with valid but non-refcounted pages
-> 
-> It doesn't really fix the underflow, it disallows mapping them in the 
-> first place.  Since in principle things can break, I'd rather be 
-> explicit, so let's go with "KVM: do not allow mapping valid but 
-> non-reference-counted pages".
-> 
->> It's possible to create a region which maps valid but non-refcounted
->> pages (e.g., tail pages of non-compound higher order allocations). These
->> host pages can then be returned by gfn_to_page, gfn_to_pfn, etc., family
->> of APIs, which take a reference to the page, which takes it from 0 to 1.
->> When the reference is dropped, this will free the page incorrectly.
->> 
->> Fix this by only taking a reference on the page if it was non-zero,
-> 
-> s/on the page/on valid pages/ (makes clear that invalid pages are fine 
-> without refcounting).
+KVM supports mapping VM_IO and VM_PFNMAP memory into the guest by using
+follow_pte in gfn_to_pfn. However, the resolved pfns may not have
+assoicated struct pages, so they should not be passed to pfn_to_page.
+This series removes such calls from the x86 and arm64 secondary MMU. To
+do this, this series introduces gfn_to_pfn_page functions that parallel
+the gfn_to_pfn functions. These functions take an extra out parameter
+which  contains the page if the hva was resovled by gup. This allows the
+caller to call put_page only when necessated by gup.
 
-That seems okay, you can adjust the title or changelog as you like.
+The gfn_to_pfn functions are depreciated. For now the functions remain
+with identical behavior to before, but callers should be migrated to the
+new gfn_to_pfn_page functions. I added new functions instead of simply
+adding another parameter to the existing functions to make it easier to
+track down users of the deprecated functions.
 
-> Thank you *so* much, I'm awful at Linux mm.
+I have migrated the x86 and arm64 secondary MMUs to the new
+gfn_to_pfn_page functions.
 
-Glad to help. Easy to see why you were taking this approach because the 
-API really does need to be improved and even a pretty intwined with mm 
-subsystem like KVM shouldn't _really_ be doing this kind of trick (and
-it should go away when old API is removed).
+This addresses CVE-2021-22543 on x86 and arm64.
 
-Thanks,
-Nick
+v1 -> v2:
+ - Introduce new gfn_to_pfn_page functions instead of modifying the
+   behavior of existing gfn_to_pfn functions, to make the change less
+   invasive.
+ - Drop changes to mmu_audit.c
+ - Include Nicholas Piggin's patch to avoid corrupting refcount in the
+   follow_pte case, and use it in depreciated gfn_to_pfn functions.
+ - Rebase on kvm/next
+
+David Stevens (4):
+  KVM: mmu: introduce new gfn_to_pfn_page functions
+  KVM: x86/mmu: use gfn_to_pfn_page
+  KVM: arm64/mmu: use gfn_to_pfn_page
+  KVM: mmu: remove over-aggressive warnings
+
+Nicholas Piggin (1):
+  KVM: do not allow mapping valid but non-refcounted pages
+
+ arch/arm64/kvm/mmu.c            |  26 +++--
+ arch/x86/kvm/mmu/mmu.c          |  50 ++++-----
+ arch/x86/kvm/mmu/mmu_internal.h |   3 +-
+ arch/x86/kvm/mmu/paging_tmpl.h  |  23 +++--
+ arch/x86/kvm/mmu/tdp_mmu.c      |   6 +-
+ arch/x86/kvm/mmu/tdp_mmu.h      |   4 +-
+ arch/x86/kvm/x86.c              |   6 +-
+ include/linux/kvm_host.h        |  17 +++
+ virt/kvm/kvm_main.c             | 177 +++++++++++++++++++++++++-------
+ 9 files changed, 222 insertions(+), 90 deletions(-)
+
+-- 
+2.32.0.93.g670b81a890-goog
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
