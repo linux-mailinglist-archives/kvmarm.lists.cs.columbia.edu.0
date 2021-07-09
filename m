@@ -2,76 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 129693C2189
+	by mail.lfdr.de (Postfix) with ESMTP id E42433C218A
 	for <lists+kvmarm@lfdr.de>; Fri,  9 Jul 2021 11:25:46 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7DAB94A4CD;
-	Fri,  9 Jul 2021 05:25:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 926064B088;
+	Fri,  9 Jul 2021 05:25:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@chromium.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Y6HI6c+pxxF9; Fri,  9 Jul 2021 05:25:45 -0400 (EDT)
+	with ESMTP id 4EuXptDmAz-x; Fri,  9 Jul 2021 05:25:45 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4FD274A2E5;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 63EB74A4A4;
 	Fri,  9 Jul 2021 05:25:44 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7B17240870
- for <kvmarm@lists.cs.columbia.edu>; Fri,  9 Jul 2021 00:37:35 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CD43140870
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  9 Jul 2021 00:37:37 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id yYmDEJeduzXC for <kvmarm@lists.cs.columbia.edu>;
- Fri,  9 Jul 2021 00:37:34 -0400 (EDT)
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com
- [209.85.214.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 59BA440808
- for <kvmarm@lists.cs.columbia.edu>; Fri,  9 Jul 2021 00:37:34 -0400 (EDT)
-Received: by mail-pl1-f172.google.com with SMTP id x16so3493811plg.3
- for <kvmarm@lists.cs.columbia.edu>; Thu, 08 Jul 2021 21:37:34 -0700 (PDT)
+ with ESMTP id XpZR7bsTAjNU for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  9 Jul 2021 00:37:36 -0400 (EDT)
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com
+ [209.85.210.179])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B5EF340808
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  9 Jul 2021 00:37:36 -0400 (EDT)
+Received: by mail-pf1-f179.google.com with SMTP id a127so7590602pfa.10
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 08 Jul 2021 21:37:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chromium.org; s=google;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=H/LklQaJdTOXWeUT+mprxaDKrVkD8A9UO7oJUzmViNQ=;
- b=BG8tocLa4Fc6GVIjbj/83MmQ562w43ne1yivFCQz30vkd1c2tWv5D71ctj9JMn0a/s
- 3wZbh/hEhgz+vSrVvnrhuxUH9Rizx7klC2gPGSSX658M5KU/uGIgxQsLZ4tLgMU56Apd
- b3soeKez7tuOdGuGTWH0hrCgVZXgsByXKESZM=
+ h=from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=eBdDu50tMNuB7A6waM/ZyWIMl2LOJYIC1/NpalUridM=;
+ b=C655qxBGfJlYMHH9QBFLbhyK4uAmvdwzkJEVRuHMZB1mKz3O4MEfvXbS4szocXmsQx
+ XIZA71qy/kDzskTcV6GbpzRzk8XHO4KV9K7Cf1kSB9kEBsdsJHCYou1sWIlHT4aU7d8n
+ oO+1zOGotRjyCjPehfvMbg1+d41s4nllzJJ4o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=H/LklQaJdTOXWeUT+mprxaDKrVkD8A9UO7oJUzmViNQ=;
- b=tjP64mEXu61oS2otobt+0GMRbtVUtEjEx1WApN8ikGwDmVQ9nujzUnfDl5fW/JDzpD
- AC2+JSgt3cNqz1Yr4zEq/N8zlVq6UJ3SutYgeksurPq/zT9C0PCTu704fX5wQupqT4vN
- z/fxI87+D3SEyKi8re+iYmsOKvcfpt9idbRfHkeWv95k+UyehiDXzBFdpGB68+8j30CX
- K1C9tj7BjE4x88JQNLZwOvw2wpzCR0Hxo+GUB50Jza2+Vg1SFSpSf98Nv0gnlYrvi20t
- L91Eep2im7X+PietCLEVmeG1W/dyocBaVavs8RNXPFa0PjfyWhFcjk0x4xisiwVW56eS
- R2qQ==
-X-Gm-Message-State: AOAM530FYevpLMBq8hOWSycGfA158nIjI3eBa5lmo571+wyetDW+POXk
- sFpXF5YwR0+ObNjAv2YwrCWdfg==
-X-Google-Smtp-Source: ABdhPJwQ4+9mQudHLFskGBug4FzGh1FHXv+U9yzd3L1gcLu6YE9FOXHurMSqd0ktQwQkYJA/TWJ0/Q==
-X-Received: by 2002:a17:90a:ff0d:: with SMTP id
- ce13mr2922178pjb.157.1625805453217; 
- Thu, 08 Jul 2021 21:37:33 -0700 (PDT)
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+ :references:mime-version:content-transfer-encoding;
+ bh=eBdDu50tMNuB7A6waM/ZyWIMl2LOJYIC1/NpalUridM=;
+ b=aIAbelOhF3gRe5+25UnS/HiJQVnRNgBbaVhtfUyt1hLsns1oT2/pwENYRtG/K0qWlc
+ euhWBs1rKY2sVj53WA+9DkXeXIQOS7Sv9rMYCiBoVeYrxcc11GUthESJkLelrzIwn0m5
+ NoYQs65G83mXHS6dROLKHCKWgUcA3mYx27imV9/qYQzkQSmEmPhMa37Mm1ePy3KufVIe
+ 7LwD/H0l7A8cRaM7a3qHHVvvgzjWomadIRh4aBCjdC3wEx8S7237fF/WTz7fCBLN0PQI
+ c6RiDZBIgrGpKl1Q5Z3rh9BuN6d8xS45+YhSvKM0EIfBWBgIjBIAxuceh4FPVFZdnUx/
+ qf3Q==
+X-Gm-Message-State: AOAM530PL+UOZrIDzmQtxBlyk3MpWfBtedr8fA7qLNWigg0Ghw6rf6O5
+ LZp0jkfeMqbZTpX38SC5M2BXmw==
+X-Google-Smtp-Source: ABdhPJyU5pINJoX/AogKYgRXTY5MbyhKXColfNbeIbVpm0ISXAwe7bj9tLDDjqgSf+cAP3MHB+R6Wg==
+X-Received: by 2002:a63:4e4d:: with SMTP id o13mr35755196pgl.361.1625805455971; 
+ Thu, 08 Jul 2021 21:37:35 -0700 (PDT)
 Received: from senozhatsky.flets-east.jp
  ([2409:10:2e40:5100:a30d:fc4:7834:ee08])
- by smtp.gmail.com with ESMTPSA id y4sm4420760pfa.14.2021.07.08.21.37.30
+ by smtp.gmail.com with ESMTPSA id y4sm4420760pfa.14.2021.07.08.21.37.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Jul 2021 21:37:32 -0700 (PDT)
+ Thu, 08 Jul 2021 21:37:35 -0700 (PDT)
 From: Sergey Senozhatsky <senozhatsky@chromium.org>
 To: Marc Zyngier <maz@kernel.org>,
 	Will Deacon <will@kernel.org>
-Subject: [PATCHv2 0/4] arm64:kvm: teach guest sched that VCPUs can be preempted
-Date: Fri,  9 Jul 2021 13:37:09 +0900
-Message-Id: <20210709043713.887098-1-senozhatsky@chromium.org>
+Subject: [PATCHv2 1/4] arm64: smccc: Add SMCCC pv-vcpu-state function call IDs
+Date: Fri,  9 Jul 2021 13:37:10 +0900
+Message-Id: <20210709043713.887098-2-senozhatsky@chromium.org>
 X-Mailer: git-send-email 2.32.0.93.g670b81a890-goog
+In-Reply-To: <20210709043713.887098-1-senozhatsky@chromium.org>
+References: <20210709043713.887098-1-senozhatsky@chromium.org>
 MIME-Version: 1.0
 X-Mailman-Approved-At: Fri, 09 Jul 2021 05:25:42 -0400
 Cc: Joel Fernandes <joelaf@google.com>, linux-kernel@vger.kernel.org,
@@ -95,39 +96,43 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hello,
+Add the definitions of the SMCCC functions that will be
+used to paravirt VCPU state configuration.
 
-This patch set adds a simple vcpu_is_preempted() implementation so
-that scheduler can make better decisions when it search for the idle
-(v)CPU.
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+---
+ include/linux/arm-smccc.h | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-For sched benchmarks please refer to [0].
-
-[0] https://github.com/sergey-senozhatsky/arm64-vcpu_is_preempted
-
-v2:
-- 5.13 rebase (static calls, etc)
-- simplified and reworked some bits
-
-Sergey Senozhatsky (4):
-  arm64: smccc: Add SMCCC pv-vcpu-state function call IDs
-  arm64: add guest pvstate support
-  arm64: do not use dummy vcpu_is_preempted()
-  arm64: add host pv-vcpu-state support
-
- arch/arm64/include/asm/kvm_host.h | 23 ++++++++
- arch/arm64/include/asm/paravirt.h | 19 +++++++
- arch/arm64/include/asm/spinlock.h | 18 +++---
- arch/arm64/kernel/paravirt.c      | 94 +++++++++++++++++++++++++++++++
- arch/arm64/kernel/smp.c           |  4 ++
- arch/arm64/kvm/Makefile           |  3 +-
- arch/arm64/kvm/arm.c              |  3 +
- arch/arm64/kvm/hypercalls.c       | 11 ++++
- arch/arm64/kvm/pv-vcpu-state.c    | 64 +++++++++++++++++++++
- include/linux/arm-smccc.h         | 18 ++++++
- 10 files changed, 248 insertions(+), 9 deletions(-)
- create mode 100644 arch/arm64/kvm/pv-vcpu-state.c
-
+diff --git a/include/linux/arm-smccc.h b/include/linux/arm-smccc.h
+index 7d1cabe15262..dbf0d658e54a 100644
+--- a/include/linux/arm-smccc.h
++++ b/include/linux/arm-smccc.h
+@@ -177,6 +177,24 @@
+ 			   ARM_SMCCC_OWNER_STANDARD,		\
+ 			   0x53)
+ 
++#define ARM_SMCCC_HV_PV_VCPU_STATE_FEATURES			\
++	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,			\
++			   ARM_SMCCC_SMC_64,			\
++			   ARM_SMCCC_OWNER_STANDARD_HYP,	\
++			   0x60)
++
++#define ARM_SMCCC_HV_PV_VCPU_STATE_INIT			\
++	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,			\
++			   ARM_SMCCC_SMC_64,			\
++			   ARM_SMCCC_OWNER_STANDARD_HYP,	\
++			   0x61)
++
++#define ARM_SMCCC_HV_PV_VCPU_STATE_RELEASE			\
++	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,			\
++			   ARM_SMCCC_SMC_64,			\
++			   ARM_SMCCC_OWNER_STANDARD_HYP,	\
++			   0x62)
++
+ /*
+  * Return codes defined in ARM DEN 0070A
+  * ARM DEN 0070A is now merged/consolidated into ARM DEN 0028 C
 -- 
 2.32.0.93.g670b81a890-goog
 
