@@ -2,82 +2,62 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E08053C5DF9
-	for <lists+kvmarm@lfdr.de>; Mon, 12 Jul 2021 16:08:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54FAC3C5DFA
+	for <lists+kvmarm@lfdr.de>; Mon, 12 Jul 2021 16:08:49 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0CCFE49DE3;
-	Mon, 12 Jul 2021 10:08:48 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 03F2F4086C;
+	Mon, 12 Jul 2021 10:08:49 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
+	autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, body has been altered) header.i=@163.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id PewowIi-Xc6y; Mon, 12 Jul 2021 10:08:47 -0400 (EDT)
+	with ESMTP id ltfu-fAf7KJe; Mon, 12 Jul 2021 10:08:48 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D82E940CF8;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F2AFA49D50;
 	Mon, 12 Jul 2021 10:08:46 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id ADD234029C
- for <kvmarm@lists.cs.columbia.edu>; Sun, 11 Jul 2021 12:59:02 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1E5B840667
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 12 Jul 2021 08:50:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id iQUvWT4dwxYq for <kvmarm@lists.cs.columbia.edu>;
- Sun, 11 Jul 2021 12:58:59 -0400 (EDT)
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com
- [209.85.222.174])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9A04C40287
- for <kvmarm@lists.cs.columbia.edu>; Sun, 11 Jul 2021 12:58:59 -0400 (EDT)
-Received: by mail-qk1-f174.google.com with SMTP id e14so15374119qkl.9
- for <kvmarm@lists.cs.columbia.edu>; Sun, 11 Jul 2021 09:58:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=WBrOScKV3V16Gyn7bGSSQx+6TsqpJhHYRyGGGXA76Gw=;
- b=XDFA9W2l1rFNr7zIb0SxhYtrGZi0uF2umXU/lKQCUzrolek4SiNuvCz8QlhhppcOQA
- x9j0221CuPLl2I0O4BiflTtMbarRMobfBt+5l2bTLfAfG+Ywex5sQuHCJqTdIoXfnLoO
- CHpgwOGgkdaZqWTMoJfSA9JjfVYRw6Xv22o6kRJ/MjYm6deqSp6TRD0WgS9DuwyBtTCb
- fuigYcMH87jTxs5XBY56KByk8PnjJO/AhHvfcTRG1NM7cyWfFJL5XM1MjlHcD0q49cP6
- 4w6Mj+4CiFZz1JEaBhJ35SSJ7LDplkfgDIoi2YzFvUEgxxmBz8NTIoLy+LrOLPnMlWhO
- IQUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=WBrOScKV3V16Gyn7bGSSQx+6TsqpJhHYRyGGGXA76Gw=;
- b=uUp1/aU0clgxTSes1OUD8dGmv+CZuTrlynRSeaxD1OZvP6df2zFbJK5vmKG9T0nz6s
- fkdGm1Hk8kZpLYcDyDzG2a3M0tETtX1lMaRk4oxFYdrzHiCP2Pq/MlKeXA/LPWDKAw4Z
- xZXBOcvsdtoxaEGyXmh0Rv8smG2VBP0DN+GT7VR4r2A2A/xWra0mQ0AxjMCc+AR3RaP5
- NE2qUFH1aMI+rhMWRIIeL80L7xVKcwX7poV+m5ld+QgZhScYJRLDGddVrVYipCGnbYb4
- Ni3U10pOaawhPsfat6MigExkwtvPXVgcVxjLfZzUlByhyLHARYVF1va7O3IO083mZNW9
- RoBQ==
-X-Gm-Message-State: AOAM533cjOn2QixQap48UEPUsI+Yam32aVLy6TwFWPrYKd3opmAzT/CX
- 29CHT/7L/GLeQwJ0m2HHVFgF3u2KowJ/s0PMeUf6tA==
-X-Google-Smtp-Source: ABdhPJxXCOIObgL8OrlRPXQtRuJlWZZ+YUWJD9kYGloo0i/JQjCzHExS9EJkLyVI5sIdVJoID4+63EbWKLVtdPFxhl8=
-X-Received: by 2002:ae9:dd43:: with SMTP id r64mr47648567qkf.216.1626022738963; 
- Sun, 11 Jul 2021 09:58:58 -0700 (PDT)
+ with ESMTP id NA4BIq9vLThZ for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 12 Jul 2021 08:50:19 -0400 (EDT)
+Received: from m12-17.163.com (m12-17.163.com [220.181.12.17])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 641CC40489
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 12 Jul 2021 08:50:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=Zth9h
+ lybNni3WiyPDF7Xh8+1u3A/Ia/7eIAU4c+0rIs=; b=D+Q7spXUyaCO8GzgXO/Tf
+ uS/LeReS2G663ePC9/5x8QiJ9Kz4svPBvaWUO9n+3bbbBTg1nuM/Ke/OuCCl1cF6
+ Hl+PUQZVvt8wqepT5NRyUAcgsLWTRP60ypC86SSmS15/VD2ucumj4+euG0brsq5L
+ 5teTl3AdlBe5jF29i9mjRQ=
+Received: from localhost (unknown [180.169.253.136])
+ by smtp13 (Coremail) with SMTP id EcCowAAHSYp+Ouxg3lXNAQ--.49872S2;
+ Mon, 12 Jul 2021 20:50:07 +0800 (CST)
+From: John Gong <johngong0791@163.com>
+To: maz@kernel.org
+Subject: [PATCH] KVM/ARM: vgic: Delete the redundant lines of code
+Date: Mon, 12 Jul 2021 20:49:33 +0800
+Message-Id: <20210712124933.1153992-1-johngong0791@163.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20210709043713.887098-1-senozhatsky@chromium.org>
- <20210709043713.887098-3-senozhatsky@chromium.org>
- <CAJWu+opFedsq6CdgUYErnxsv3-Pr7MHi0vz9=hhpMCujFPp8+A@mail.gmail.com>
- <YOjFWZzgQxjPWaXw@google.com>
-In-Reply-To: <YOjFWZzgQxjPWaXw@google.com>
-From: Joel Fernandes <joelaf@google.com>
-Date: Sun, 11 Jul 2021 12:58:47 -0400
-Message-ID: <CAJWu+op31kGH9BpHS5+8ARPuote4n_3XUB=W6YF8yS0ePS1dMA@mail.gmail.com>
-Subject: Re: [PATCHv2 2/4] arm64: add guest pvstate support
-To: Sergey Senozhatsky <senozhatsky@chromium.org>
+X-CM-TRANSID: EcCowAAHSYp+Ouxg3lXNAQ--.49872S2
+X-Coremail-Antispam: 1Uf129KBjvdXoW7Xw1UZw4fWw1xCrykCrWDCFg_yoWxCrX_A3
+ yIgw1aqFW8Cr1Iqw4Y93yfCrnFg34DJryYgF1q9rZ5trn8Zw4YkrWDXFsIgFy5W34agrs3
+ A39rAry5tw18WjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IU0Hv3UUUUUU==
+X-Originating-IP: [180.169.253.136]
+X-CM-SenderInfo: xmrk0wxrqjilizr6il2tof0z/1tbiWR-NhVWBvHsZewAAs-
 X-Mailman-Approved-At: Mon, 12 Jul 2021 10:08:46 -0400
-Cc: Marc Zyngier <maz@kernel.org>, linux-kernel@vger.kernel.org,
- virtualization@lists.linux-foundation.org,
- Suleiman Souhlal <suleiman@google.com>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Cc: John Gong <johngong0791@163.com>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -94,68 +74,30 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Jul 9, 2021 at 5:53 PM Sergey Senozhatsky
-<senozhatsky@chromium.org> wrote:
+delete redundant lines of code
 
-> > > +DECLARE_STATIC_CALL(pv_vcpu_is_preempted, dummy_vcpu_is_preempted);
-> > > +
-> > > +static inline bool paravirt_vcpu_is_preempted(unsigned int cpu)
-> > > +{
-> > > +       return static_call(pv_vcpu_is_preempted)(cpu);
-> > > +}
-> > > +
-> > > +int __init pv_vcpu_state_init(void);
-> > > +
-> > >  #else
-> > >
-> > > +#define pv_vcpu_state_init() do {} while (0)
-> > > +
-> > >  #define pv_time_init() do {} while (0)
-> > >
-> > >  #endif // CONFIG_PARAVIRT
-> > > diff --git a/arch/arm64/kernel/paravirt.c b/arch/arm64/kernel/paravirt.c
-> > > index 75fed4460407..d8fc46795d94 100644
-> > > --- a/arch/arm64/kernel/paravirt.c
-> > > +++ b/arch/arm64/kernel/paravirt.c
-> > > @@ -40,6 +40,11 @@ struct pv_time_stolen_time_region {
-> > >
-> > >  static DEFINE_PER_CPU(struct pv_time_stolen_time_region, stolen_time_region);
-> > >
-> > > +static DEFINE_PER_CPU(struct vcpu_state, vcpus_states);
-> > > +struct static_key pv_vcpu_is_preempted_enabled;
-> > > +
-> > > +DEFINE_STATIC_CALL(pv_vcpu_is_preempted, dummy_vcpu_is_preempted);
-> >
-> > Could we use DEFINE_STATIC_CALL_NULL and get rid of the dummy
-> > function? I believe that makes the function trampoline as return
-> > instruction, till it is updated.
->
-> Is DEFINE_STATIC_CALL_NULL for cases when function returns void?
->
-> We need something that returns `false` to vcpu_is_preempted() or
-> per_cpu(vcpus_states) once pv vcpu-state is initialised.
+Signed-off-by: John Gong <johngong0791@163.com>
+---
+ arch/arm64/kvm/vgic/vgic-mmio.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-Ah, that might be problematic. In which case what you did is fine. Thanks,
-
-- Joel
+diff --git a/arch/arm64/kvm/vgic/vgic-mmio.c b/arch/arm64/kvm/vgic/vgic-mmio.c
+index 48c6067fc5ec..19cf661c451e 100644
+--- a/arch/arm64/kvm/vgic/vgic-mmio.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio.c
+@@ -1004,8 +1004,6 @@ static int dispatch_mmio_read(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
+ 
+ 	switch (iodev->iodev_type) {
+ 	case IODEV_CPUIF:
+-		data = region->read(vcpu, addr, len);
+-		break;
+ 	case IODEV_DIST:
+ 		data = region->read(vcpu, addr, len);
+ 		break;
+-- 
+2.25.1
 
 
-
->
-> [..]
-> > > +static bool __vcpu_is_preempted(unsigned int cpu)
-> > > +{
-> > > +       struct vcpu_state *st;
-> > > +
-> > > +       st = &per_cpu(vcpus_states, cpu);
-> > > +       return READ_ONCE(st->preempted);
-> >
-> > I guess you could just do:
-> > {
-> >   return READ_ONCE(per_cpu(vcpus_states, cpu).preempted);
-> > }
->
-> Ack.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
