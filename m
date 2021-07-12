@@ -2,62 +2,61 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 54FAC3C5DFA
-	for <lists+kvmarm@lfdr.de>; Mon, 12 Jul 2021 16:08:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 611743C5E21
+	for <lists+kvmarm@lfdr.de>; Mon, 12 Jul 2021 16:16:20 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 03F2F4086C;
-	Mon, 12 Jul 2021 10:08:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D3C3049F83;
+	Mon, 12 Jul 2021 10:16:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
-	autolearn=no
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, body has been altered) header.i=@163.com
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ltfu-fAf7KJe; Mon, 12 Jul 2021 10:08:48 -0400 (EDT)
+	with ESMTP id 4QKsvCjy8x9O; Mon, 12 Jul 2021 10:16:19 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F2AFA49D50;
-	Mon, 12 Jul 2021 10:08:46 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D0ECD4086F;
+	Mon, 12 Jul 2021 10:16:16 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1E5B840667
- for <kvmarm@lists.cs.columbia.edu>; Mon, 12 Jul 2021 08:50:23 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 18AC040821
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 12 Jul 2021 10:16:16 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id NA4BIq9vLThZ for <kvmarm@lists.cs.columbia.edu>;
- Mon, 12 Jul 2021 08:50:19 -0400 (EDT)
-Received: from m12-17.163.com (m12-17.163.com [220.181.12.17])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 641CC40489
- for <kvmarm@lists.cs.columbia.edu>; Mon, 12 Jul 2021 08:50:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=Zth9h
- lybNni3WiyPDF7Xh8+1u3A/Ia/7eIAU4c+0rIs=; b=D+Q7spXUyaCO8GzgXO/Tf
- uS/LeReS2G663ePC9/5x8QiJ9Kz4svPBvaWUO9n+3bbbBTg1nuM/Ke/OuCCl1cF6
- Hl+PUQZVvt8wqepT5NRyUAcgsLWTRP60ypC86SSmS15/VD2ucumj4+euG0brsq5L
- 5teTl3AdlBe5jF29i9mjRQ=
-Received: from localhost (unknown [180.169.253.136])
- by smtp13 (Coremail) with SMTP id EcCowAAHSYp+Ouxg3lXNAQ--.49872S2;
- Mon, 12 Jul 2021 20:50:07 +0800 (CST)
-From: John Gong <johngong0791@163.com>
-To: maz@kernel.org
-Subject: [PATCH] KVM/ARM: vgic: Delete the redundant lines of code
-Date: Mon, 12 Jul 2021 20:49:33 +0800
-Message-Id: <20210712124933.1153992-1-johngong0791@163.com>
-X-Mailer: git-send-email 2.25.1
+ with ESMTP id qxSKBRSSU1m5 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 12 Jul 2021 10:16:15 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E40E6407ED
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 12 Jul 2021 10:16:14 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id C1603610CB;
+ Mon, 12 Jul 2021 14:16:13 +0000 (UTC)
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1m2wjD-00Cqee-Qq; Mon, 12 Jul 2021 15:16:11 +0100
 MIME-Version: 1.0
-X-CM-TRANSID: EcCowAAHSYp+Ouxg3lXNAQ--.49872S2
-X-Coremail-Antispam: 1Uf129KBjvdXoW7Xw1UZw4fWw1xCrykCrWDCFg_yoWxCrX_A3
- yIgw1aqFW8Cr1Iqw4Y93yfCrnFg34DJryYgF1q9rZ5trn8Zw4YkrWDXFsIgFy5W34agrs3
- A39rAry5tw18WjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IU0Hv3UUUUUU==
-X-Originating-IP: [180.169.253.136]
-X-CM-SenderInfo: xmrk0wxrqjilizr6il2tof0z/1tbiWR-NhVWBvHsZewAAs-
-X-Mailman-Approved-At: Mon, 12 Jul 2021 10:08:46 -0400
-Cc: John Gong <johngong0791@163.com>, kvmarm@lists.cs.columbia.edu
+Date: Mon, 12 Jul 2021 15:16:11 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: John Gong <johngong0791@163.com>
+Subject: Re: [PATCH] KVM/ARM: vgic: Delete the redundant lines of code
+In-Reply-To: <20210712124933.1153992-1-johngong0791@163.com>
+References: <20210712124933.1153992-1-johngong0791@163.com>
+User-Agent: Roundcube Webmail/1.4.11
+Message-ID: <a97545a9e80c6799507a9f9d93817625@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: johngong0791@163.com, kvmarm@lists.cs.columbia.edu
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -69,35 +68,41 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-delete redundant lines of code
+On 2021-07-12 13:49, John Gong wrote:
+> delete redundant lines of code
+> 
+> Signed-off-by: John Gong <johngong0791@163.com>
+> ---
+>  arch/arm64/kvm/vgic/vgic-mmio.c | 2 --
+>  1 file changed, 2 deletions(-)
+> 
+> diff --git a/arch/arm64/kvm/vgic/vgic-mmio.c 
+> b/arch/arm64/kvm/vgic/vgic-mmio.c
+> index 48c6067fc5ec..19cf661c451e 100644
+> --- a/arch/arm64/kvm/vgic/vgic-mmio.c
+> +++ b/arch/arm64/kvm/vgic/vgic-mmio.c
+> @@ -1004,8 +1004,6 @@ static int dispatch_mmio_read(struct kvm_vcpu
+> *vcpu, struct kvm_io_device *dev,
+> 
+>  	switch (iodev->iodev_type) {
+>  	case IODEV_CPUIF:
+> -		data = region->read(vcpu, addr, len);
+> -		break;
+>  	case IODEV_DIST:
+>  		data = region->read(vcpu, addr, len);
+>  		break;
 
-Signed-off-by: John Gong <johngong0791@163.com>
----
- arch/arm64/kvm/vgic/vgic-mmio.c | 2 --
- 1 file changed, 2 deletions(-)
+I'm not overly keen on this. Why isn't the write path treated the same 
+way?
 
-diff --git a/arch/arm64/kvm/vgic/vgic-mmio.c b/arch/arm64/kvm/vgic/vgic-mmio.c
-index 48c6067fc5ec..19cf661c451e 100644
---- a/arch/arm64/kvm/vgic/vgic-mmio.c
-+++ b/arch/arm64/kvm/vgic/vgic-mmio.c
-@@ -1004,8 +1004,6 @@ static int dispatch_mmio_read(struct kvm_vcpu *vcpu, struct kvm_io_device *dev,
- 
- 	switch (iodev->iodev_type) {
- 	case IODEV_CPUIF:
--		data = region->read(vcpu, addr, len);
--		break;
- 	case IODEV_DIST:
- 		data = region->read(vcpu, addr, len);
- 		break;
+         M.
 -- 
-2.25.1
-
-
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
