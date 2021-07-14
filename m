@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4281E3C8307
-	for <lists+kvmarm@lfdr.de>; Wed, 14 Jul 2021 12:39:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2A9E3C8345
+	for <lists+kvmarm@lfdr.de>; Wed, 14 Jul 2021 12:53:49 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BCAB64B089;
-	Wed, 14 Jul 2021 06:39:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7523D4B08C;
+	Wed, 14 Jul 2021 06:53:49 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,41 +15,51 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id l62BLDZWPOQG; Wed, 14 Jul 2021 06:39:37 -0400 (EDT)
+	with ESMTP id KhbY8DFpCraW; Wed, 14 Jul 2021 06:53:49 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 71C194ACC9;
-	Wed, 14 Jul 2021 06:39:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3E52F4A98B;
+	Wed, 14 Jul 2021 06:53:48 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 00A014A195
- for <kvmarm@lists.cs.columbia.edu>; Wed, 14 Jul 2021 06:39:35 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 359C94A4A4
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 14 Jul 2021 06:53:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 5K8srJyBiA3K for <kvmarm@lists.cs.columbia.edu>;
- Wed, 14 Jul 2021 06:39:33 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C773849F83
- for <kvmarm@lists.cs.columbia.edu>; Wed, 14 Jul 2021 06:39:33 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6E1C7D6E;
- Wed, 14 Jul 2021 03:39:33 -0700 (PDT)
-Received: from [192.168.0.110] (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 865253F774;
- Wed, 14 Jul 2021 03:39:32 -0700 (PDT)
-Subject: Re: [PATCH 3/5] KVM: arm64: Rename __vcpu_sys_reg -> vcpu_sys_reg
-To: Marc Zyngier <maz@kernel.org>
-References: <20210714095601.184854-1-alexandru.elisei@arm.com>
- <20210714095601.184854-4-alexandru.elisei@arm.com>
- <87k0lt6vnr.wl-maz@kernel.org>
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-Message-ID: <1ec785be-799f-12ea-e9f7-5e4d06b02145@arm.com>
-Date: Wed, 14 Jul 2021 11:40:35 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+ with ESMTP id 9E27m5DQuHoo for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 14 Jul 2021 06:53:45 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 39A10407F4
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 14 Jul 2021 06:53:45 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 4320E6117A;
+ Wed, 14 Jul 2021 10:53:44 +0000 (UTC)
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1m3cWL-00DGry-4a; Wed, 14 Jul 2021 11:53:41 +0100
 MIME-Version: 1.0
-In-Reply-To: <87k0lt6vnr.wl-maz@kernel.org>
-Content-Language: en-US
-Cc: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Date: Wed, 14 Jul 2021 11:53:41 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: Andrew Jones <drjones@redhat.com>
+Subject: Re: [PATCH 2/2] KVM: arm64: selftests: get-reg-list: actually enable
+ pmu regs in pmu sublist
+In-Reply-To: <20210713203742.29680-3-drjones@redhat.com>
+References: <20210713203742.29680-1-drjones@redhat.com>
+ <20210713203742.29680-3-drjones@redhat.com>
+User-Agent: Roundcube Webmail/1.4.11
+Message-ID: <c06f2f53614fa7f98e33a43d117a267a@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: drjones@redhat.com, kvm@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu, pbonzini@redhat.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: pbonzini@redhat.com, kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -61,55 +71,54 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Marc,
+On 2021-07-13 21:37, Andrew Jones wrote:
+> We reworked get-reg-list to make it easier to enable optional register
+> sublists by parametrizing their vcpu feature flags as well as making
+> other generalizations. That was all to make sure we enable the PMU
+> registers when we want to test them. Somehow we forgot to actually
+> include the PMU feature flag in the PMU sublist description though!
+> Do that now.
 
-On 7/14/21 11:23 AM, Marc Zyngier wrote:
-> Hi Alex,
->
-> On Wed, 14 Jul 2021 10:55:59 +0100,
-> Alexandru Elisei <alexandru.elisei@arm.com> wrote:
->> There are two macros to access a specific system register from a known
->> kvm_cpu_context: __ctxt_sys_reg(), which returns a pointer to the register,
->> and ctxt_sys_reg(), which deferences the pointer returned by
->> __ctxt_sys_reg().
->>
->> __vcpu_sys_reg() serves a similar purpose, with the difference being that
->> it takes a struct kvm_vcpu as a parameter. __vcpu_sys_reg(), although it
->> looks like __ctxt_sys_reg(), it dereferences the pointer to the register,
->> like ctxt_sys_reg() does, and indeed it is defined as an abstraction over
->> ctxt_sys_reg().
->>
->> Let's remove this naming inconsistency by renaming __vcpu_sys_reg() to
->> vcpu_sys_reg(), to make it clear it behaves like ctxt_sys_reg(), and not
->> like __ctxt_sys_reg().
-> I can't say I'm keen on this change.
->
-> The leading underscores really are there to outline that *this is
-> dangerous*, as you really need to know which context you are in.
-> Dropping the leading '__' may give the false impression that this is
-> safe, and not actually a primitive that requires careful thinking
-> before use.
->
-> ctxt_sys_reg() is, on the other hand, clearly something that acts
-> solely on memory because it takes a context structure, and not a
-> vcpu. At least that's what the 'ctxt' prefix is supposed to convey
-> (not very successfully, apparently).
+Ah! :D
 
-Oh, so that's the real reason for the leading underscores, I assumed that the
-comment was warning enough. Since the 3 macros were right next to each other, and
-__vcpu_sys_reg() is a wrapper over ctxt_sys_reg(), I thought they're there to
-differentiate between returning a reference and returning a value. I'll drop this
-patch and the one after it.
+> 
+> Fixes: 313673bad871 ("KVM: arm64: selftests: get-reg-list: Split base
+> and pmu registers")
+> Signed-off-by: Andrew Jones <drjones@redhat.com>
+> ---
+>  tools/testing/selftests/kvm/aarch64/get-reg-list.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/tools/testing/selftests/kvm/aarch64/get-reg-list.c
+> b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
+> index a16c8f05366c..cc898181faab 100644
+> --- a/tools/testing/selftests/kvm/aarch64/get-reg-list.c
+> +++ b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
+> @@ -1019,7 +1019,8 @@ static __u64 sve_rejects_set[] = {
+>  #define VREGS_SUBLIST \
+>  	{ "vregs", .regs = vregs, .regs_n = ARRAY_SIZE(vregs), }
+>  #define PMU_SUBLIST \
+> -	{ "pmu", .regs = pmu_regs, .regs_n = ARRAY_SIZE(pmu_regs), }
+> +	{ "pmu", .capability = KVM_CAP_ARM_PMU_V3, .feature = 
+> KVM_ARM_VCPU_PMU_V3, \
+> +	  .regs = pmu_regs, .regs_n = ARRAY_SIZE(pmu_regs), }
+>  #define SVE_SUBLIST \
+>  	{ "sve", .capability = KVM_CAP_ARM_SVE, .feature = KVM_ARM_VCPU_SVE,
+> .finalize = true, \
+>  	  .regs = sve_regs, .regs_n = ARRAY_SIZE(sve_regs), \
+
+Good timing, I'm queuing fixes. I'll pick those in a moment.
 
 Thanks,
 
-Alex
-
+         M.
+-- 
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
