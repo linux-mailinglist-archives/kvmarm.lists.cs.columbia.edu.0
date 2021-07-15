@@ -2,52 +2,51 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E6F43CA26A
-	for <lists+kvmarm@lfdr.de>; Thu, 15 Jul 2021 18:32:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 682233CA270
+	for <lists+kvmarm@lfdr.de>; Thu, 15 Jul 2021 18:32:33 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 410A14B09A;
-	Thu, 15 Jul 2021 12:32:29 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1A95A4B0BD;
+	Thu, 15 Jul 2021 12:32:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.193
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.193 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5, UPPERCASE_50_75=0.008]
-	autolearn=unavailable
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8vLauGp7qYkm; Thu, 15 Jul 2021 12:32:28 -0400 (EDT)
+	with ESMTP id ZFZtx10w8kMg; Thu, 15 Jul 2021 12:32:32 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 37A914B0B3;
-	Thu, 15 Jul 2021 12:32:22 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8B6874B0B7;
+	Thu, 15 Jul 2021 12:32:26 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 18A304B08B
- for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Jul 2021 12:32:21 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E2E314B09C
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Jul 2021 12:32:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 9OP7nywHioPE for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id yJ0goA++Ez1o for <kvmarm@lists.cs.columbia.edu>;
  Thu, 15 Jul 2021 12:32:20 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id DC1CC4B099
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id DAC9F4B098
  for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Jul 2021 12:32:19 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id B693D613FB;
- Thu, 15 Jul 2021 16:32:18 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 1208E613FD;
+ Thu, 15 Jul 2021 16:32:19 +0000 (UTC)
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1m44HZ-00DYjr-3w; Thu, 15 Jul 2021 17:32:17 +0100
+ id 1m44HZ-00DYjr-Ei; Thu, 15 Jul 2021 17:32:17 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 07/16] KVM: arm64: Wire MMIO guard hypercalls
-Date: Thu, 15 Jul 2021 17:31:50 +0100
-Message-Id: <20210715163159.1480168-8-maz@kernel.org>
+Subject: [PATCH 08/16] KVM: arm64: Add tracepoint for failed MMIO guard check
+Date: Thu, 15 Jul 2021 17:31:51 +0100
+Message-Id: <20210715163159.1480168-9-maz@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210715163159.1480168-1-maz@kernel.org>
 References: <20210715163159.1480168-1-maz@kernel.org>
@@ -80,103 +79,59 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Plumb in the hypercall interface to allow a guest to discover,
-enroll, map and unmap MMIO regions.
+In order to make debugging easier, expose a new trace point
+that triggers when a MMIO check fails.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/hypercalls.c | 20 ++++++++++++++++++++
- include/linux/arm-smccc.h   | 28 ++++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+)
+ arch/arm64/kvm/mmu.c       |  4 +++-
+ arch/arm64/kvm/trace_arm.h | 17 +++++++++++++++++
+ 2 files changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/hypercalls.c b/arch/arm64/kvm/hypercalls.c
-index 30da78f72b3b..a3deeb907fdd 100644
---- a/arch/arm64/kvm/hypercalls.c
-+++ b/arch/arm64/kvm/hypercalls.c
-@@ -5,6 +5,7 @@
- #include <linux/kvm_host.h>
+diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+index 638827c8842b..c2a23457552b 100644
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -1229,8 +1229,10 @@ bool kvm_check_ioguard_page(struct kvm_vcpu *vcpu, gpa_t ipa)
+ 	ret = __check_ioguard_page(vcpu, ipa & PAGE_MASK);
+ 	spin_unlock(&vcpu->kvm->mmu_lock);
  
- #include <asm/kvm_emulate.h>
-+#include <asm/kvm_mmu.h>
+-	if (!ret)
++	if (!ret) {
++		trace_kvm_failed_mmio_check(*vcpu_pc(vcpu), ipa);
+ 		kvm_inject_dabt(vcpu, kvm_vcpu_get_hfar(vcpu));
++	}
  
- #include <kvm/arm_hypercalls.h>
- #include <kvm/arm_psci.h>
-@@ -129,10 +130,29 @@ int kvm_hvc_call_handler(struct kvm_vcpu *vcpu)
- 	case ARM_SMCCC_VENDOR_HYP_KVM_FEATURES_FUNC_ID:
- 		val[0] = BIT(ARM_SMCCC_KVM_FUNC_FEATURES);
- 		val[0] |= BIT(ARM_SMCCC_KVM_FUNC_PTP);
-+		val[0] |= BIT(ARM_SMCCC_KVM_FUNC_MMIO_GUARD_INFO);
-+		val[0] |= BIT(ARM_SMCCC_KVM_FUNC_MMIO_GUARD_ENROLL);
-+		val[0] |= BIT(ARM_SMCCC_KVM_FUNC_MMIO_GUARD_MAP);
-+		val[0] |= BIT(ARM_SMCCC_KVM_FUNC_MMIO_GUARD_UNMAP);
- 		break;
- 	case ARM_SMCCC_VENDOR_HYP_KVM_PTP_FUNC_ID:
- 		kvm_ptp_get_time(vcpu, val);
- 		break;
-+	case ARM_SMCCC_VENDOR_HYP_KVM_MMIO_GUARD_INFO_FUNC_ID:
-+		val[0] = PAGE_SIZE;
-+		break;
-+	case ARM_SMCCC_VENDOR_HYP_KVM_MMIO_GUARD_ENROLL_FUNC_ID:
-+		set_bit(KVM_ARCH_FLAG_MMIO_GUARD, &vcpu->kvm->arch.flags);
-+		val[0] = SMCCC_RET_SUCCESS;
-+		break;
-+	case ARM_SMCCC_VENDOR_HYP_KVM_MMIO_GUARD_MAP_FUNC_ID:
-+		if (kvm_install_ioguard_page(vcpu, vcpu_get_reg(vcpu, 1)))
-+			val[0] = SMCCC_RET_SUCCESS;
-+		break;
-+	case ARM_SMCCC_VENDOR_HYP_KVM_MMIO_GUARD_UNMAP_FUNC_ID:
-+		if (kvm_remove_ioguard_page(vcpu, vcpu_get_reg(vcpu, 1)))
-+			val[0] = SMCCC_RET_SUCCESS;
-+		break;
- 	case ARM_SMCCC_TRNG_VERSION:
- 	case ARM_SMCCC_TRNG_FEATURES:
- 	case ARM_SMCCC_TRNG_GET_UUID:
-diff --git a/include/linux/arm-smccc.h b/include/linux/arm-smccc.h
-index 7d1cabe15262..4aab2078d8d3 100644
---- a/include/linux/arm-smccc.h
-+++ b/include/linux/arm-smccc.h
-@@ -107,6 +107,10 @@
- /* KVM "vendor specific" services */
- #define ARM_SMCCC_KVM_FUNC_FEATURES		0
- #define ARM_SMCCC_KVM_FUNC_PTP			1
-+#define ARM_SMCCC_KVM_FUNC_MMIO_GUARD_INFO	2
-+#define ARM_SMCCC_KVM_FUNC_MMIO_GUARD_ENROLL	3
-+#define ARM_SMCCC_KVM_FUNC_MMIO_GUARD_MAP	4
-+#define ARM_SMCCC_KVM_FUNC_MMIO_GUARD_UNMAP	5
- #define ARM_SMCCC_KVM_FUNC_FEATURES_2		127
- #define ARM_SMCCC_KVM_NUM_FUNCS			128
+ 	return ret;
+ }
+diff --git a/arch/arm64/kvm/trace_arm.h b/arch/arm64/kvm/trace_arm.h
+index 33e4e7dd2719..e40cfeb251ad 100644
+--- a/arch/arm64/kvm/trace_arm.h
++++ b/arch/arm64/kvm/trace_arm.h
+@@ -89,6 +89,23 @@ TRACE_EVENT(kvm_access_fault,
+ 	TP_printk("IPA: %lx", __entry->ipa)
+ );
  
-@@ -133,6 +137,30 @@
- #define KVM_PTP_VIRT_COUNTER			0
- #define KVM_PTP_PHYS_COUNTER			1
- 
-+#define ARM_SMCCC_VENDOR_HYP_KVM_MMIO_GUARD_INFO_FUNC_ID		\
-+	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,				\
-+			   ARM_SMCCC_SMC_64,				\
-+			   ARM_SMCCC_OWNER_VENDOR_HYP,			\
-+			   ARM_SMCCC_KVM_FUNC_MMIO_GUARD_INFO)
++TRACE_EVENT(kvm_failed_mmio_check,
++	TP_PROTO(unsigned long vcpu_pc, unsigned long ipa),
++	TP_ARGS(vcpu_pc, ipa),
 +
-+#define ARM_SMCCC_VENDOR_HYP_KVM_MMIO_GUARD_ENROLL_FUNC_ID		\
-+	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,				\
-+			   ARM_SMCCC_SMC_64,				\
-+			   ARM_SMCCC_OWNER_VENDOR_HYP,			\
-+			   ARM_SMCCC_KVM_FUNC_MMIO_GUARD_ENROLL)
++	TP_STRUCT__entry(
++		__field(	unsigned long,	vcpu_pc		)
++		__field(	unsigned long,	ipa		)
++	),
 +
-+#define ARM_SMCCC_VENDOR_HYP_KVM_MMIO_GUARD_MAP_FUNC_ID			\
-+	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,				\
-+			   ARM_SMCCC_SMC_64,				\
-+			   ARM_SMCCC_OWNER_VENDOR_HYP,			\
-+			   ARM_SMCCC_KVM_FUNC_MMIO_GUARD_MAP)
++	TP_fast_assign(
++		__entry->vcpu_pc	= vcpu_pc;
++		__entry->ipa		= ipa;
++	),
 +
-+#define ARM_SMCCC_VENDOR_HYP_KVM_MMIO_GUARD_UNMAP_FUNC_ID		\
-+	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,				\
-+			   ARM_SMCCC_SMC_64,				\
-+			   ARM_SMCCC_OWNER_VENDOR_HYP,			\
-+			   ARM_SMCCC_KVM_FUNC_MMIO_GUARD_UNMAP)
++	TP_printk("PC: %lx IPA: %lx", __entry->vcpu_pc, __entry->ipa)
++);
 +
- /* Paravirtualised time calls (defined by ARM DEN0057A) */
- #define ARM_SMCCC_HV_PV_TIME_FEATURES				\
- 	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,			\
+ TRACE_EVENT(kvm_irq_line,
+ 	TP_PROTO(unsigned int type, int vcpu_idx, int irq_num, int level),
+ 	TP_ARGS(type, vcpu_idx, irq_num, level),
 -- 
 2.30.2
 
