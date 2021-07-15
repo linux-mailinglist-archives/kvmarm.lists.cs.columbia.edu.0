@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id F24153CA359
-	for <lists+kvmarm@lfdr.de>; Thu, 15 Jul 2021 18:54:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 578663CA352
+	for <lists+kvmarm@lfdr.de>; Thu, 15 Jul 2021 18:54:03 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 92F6D4B0A3;
-	Thu, 15 Jul 2021 12:54:10 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 08F034B08A;
+	Thu, 15 Jul 2021 12:54:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,39 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BsvX0IIYxVjS; Thu, 15 Jul 2021 12:54:09 -0400 (EDT)
+	with ESMTP id qJSig5oiaOMJ; Thu, 15 Jul 2021 12:54:01 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 57C3F4B09C;
-	Thu, 15 Jul 2021 12:54:09 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EA25D4B08D;
+	Thu, 15 Jul 2021 12:54:01 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D0BA4B08A
- for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Jul 2021 12:54:08 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D44FF4B08D
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Jul 2021 12:54:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id kFT-gpxvWJVC for <kvmarm@lists.cs.columbia.edu>;
- Thu, 15 Jul 2021 12:54:07 -0400 (EDT)
+ with ESMTP id c1zBnWXr-p0m for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 15 Jul 2021 12:53:59 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0B5CB4B090
- for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Jul 2021 12:54:07 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 37B104B08A
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Jul 2021 12:53:59 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 4B8456128D;
- Thu, 15 Jul 2021 16:54:06 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 84887613E9;
+ Thu, 15 Jul 2021 16:53:58 +0000 (UTC)
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1m44Ha-00DYjr-Ou; Thu, 15 Jul 2021 17:32:18 +0100
+ id 1m44Hb-00DYjr-4J; Thu, 15 Jul 2021 17:32:19 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 12/16] mm/ioremap: Add arch-specific callbacks on
- ioremap/iounmap calls
-Date: Thu, 15 Jul 2021 17:31:55 +0100
-Message-Id: <20210715163159.1480168-13-maz@kernel.org>
+Subject: [PATCH 13/16] arm64: Implement ioremap/iounmap hooks calling into
+ KVM's MMIO guard
+Date: Thu, 15 Jul 2021 17:31:56 +0100
+Message-Id: <20210715163159.1480168-14-maz@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210715163159.1480168-1-maz@kernel.org>
 References: <20210715163159.1480168-1-maz@kernel.org>
@@ -80,90 +80,88 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add a pair of hooks (ioremap_page_range_hook/iounmap_page_range_hook)
-that can be implemented by an architecture.
+Implement the previously defined ioremap/iounmap hooks for arm64,
+calling into KVM's MMIO guard if available.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- include/linux/io.h |  3 +++
- mm/ioremap.c       | 13 ++++++++++++-
- mm/vmalloc.c       |  8 ++++++++
- 3 files changed, 23 insertions(+), 1 deletion(-)
+ arch/arm64/mm/ioremap.c | 56 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
 
-diff --git a/include/linux/io.h b/include/linux/io.h
-index 9595151d800d..0ffc265f114c 100644
---- a/include/linux/io.h
-+++ b/include/linux/io.h
-@@ -21,6 +21,9 @@ void __ioread32_copy(void *to, const void __iomem *from, size_t count);
- void __iowrite64_copy(void __iomem *to, const void *from, size_t count);
+diff --git a/arch/arm64/mm/ioremap.c b/arch/arm64/mm/ioremap.c
+index b7c81dacabf0..0801fd92f0e3 100644
+--- a/arch/arm64/mm/ioremap.c
++++ b/arch/arm64/mm/ioremap.c
+@@ -9,13 +9,69 @@
+  * Copyright (C) 2012 ARM Ltd.
+  */
  
- #ifdef CONFIG_MMU
-+void ioremap_page_range_hook(unsigned long addr, unsigned long end,
-+			     phys_addr_t phys_addr, pgprot_t prot);
-+void iounmap_page_range_hook(phys_addr_t phys_addr, size_t size);
- int ioremap_page_range(unsigned long addr, unsigned long end,
- 		       phys_addr_t phys_addr, pgprot_t prot);
- #else
-diff --git a/mm/ioremap.c b/mm/ioremap.c
-index 8ee0136f8cb0..bd77a86088f2 100644
---- a/mm/ioremap.c
-+++ b/mm/ioremap.c
-@@ -28,10 +28,21 @@ early_param("nohugeiomap", set_nohugeiomap);
- static const unsigned int iomap_max_page_shift = PAGE_SHIFT;
- #endif	/* CONFIG_HAVE_ARCH_HUGE_VMAP */
++#define pr_fmt(fmt)	"ioremap: " fmt
++
+ #include <linux/export.h>
+ #include <linux/mm.h>
+ #include <linux/vmalloc.h>
+ #include <linux/io.h>
++#include <linux/arm-smccc.h>
  
-+void __weak ioremap_page_range_hook(unsigned long addr, unsigned long end,
-+				    phys_addr_t phys_addr, pgprot_t prot)
-+{
-+}
-+
- int ioremap_page_range(unsigned long addr,
- 		       unsigned long end, phys_addr_t phys_addr, pgprot_t prot)
- {
--	return vmap_range(addr, end, phys_addr, prot, iomap_max_page_shift);
-+	int ret;
-+
-+	ret = vmap_range(addr, end, phys_addr, prot, iomap_max_page_shift);
-+	if (!ret)
-+		ioremap_page_range_hook(addr, end, phys_addr, prot);
-+
-+	return ret;
- }
- 
- #ifdef CONFIG_GENERIC_IOREMAP
-diff --git a/mm/vmalloc.c b/mm/vmalloc.c
-index d5cd52805149..af18a6141093 100644
---- a/mm/vmalloc.c
-+++ b/mm/vmalloc.c
-@@ -38,6 +38,7 @@
- #include <linux/pgtable.h>
- #include <linux/uaccess.h>
- #include <linux/hugetlb.h>
-+#include <linux/io.h>
+ #include <asm/fixmap.h>
  #include <asm/tlbflush.h>
- #include <asm/shmparam.h>
- 
-@@ -2551,6 +2552,10 @@ static void vm_remove_mappings(struct vm_struct *area, int deallocate_pages)
- 	set_area_direct_map(area, set_direct_map_default_noflush);
- }
- 
-+void __weak iounmap_page_range_hook(phys_addr_t phys_addr, size_t size)
++#include <asm/hypervisor.h>
++
++static DEFINE_STATIC_KEY_FALSE(ioremap_guard_key);
++
++void ioremap_page_range_hook(unsigned long addr, unsigned long end,
++			     phys_addr_t phys_addr, pgprot_t prot)
 +{
++	size_t size = end - addr;
++
++	if (!static_branch_unlikely(&ioremap_guard_key))
++		return;
++
++	if (pfn_valid(__phys_to_pfn(phys_addr)))
++		return;
++
++	while (size) {
++		struct arm_smccc_res res;
++
++		arm_smccc_1_1_hvc(ARM_SMCCC_VENDOR_HYP_KVM_MMIO_GUARD_MAP_FUNC_ID,
++				  phys_addr, prot, &res);
++		if (res.a0 != SMCCC_RET_SUCCESS) {
++			pr_warn_ratelimited("Failed to register %llx\n",
++					    phys_addr);
++			return;
++		}
++
++		size -= PAGE_SIZE;
++		phys_addr += PAGE_SIZE;
++	}
 +}
 +
- static void __vunmap(const void *addr, int deallocate_pages)
- {
- 	struct vm_struct *area;
-@@ -2574,6 +2579,9 @@ static void __vunmap(const void *addr, int deallocate_pages)
- 
- 	kasan_poison_vmalloc(area->addr, get_vm_area_size(area));
- 
-+	if (area->flags & VM_IOREMAP)
-+		iounmap_page_range_hook(area->phys_addr, get_vm_area_size(area));
++void iounmap_page_range_hook(phys_addr_t phys_addr, size_t size)
++{
++	if (!static_branch_unlikely(&ioremap_guard_key))
++		return;
 +
- 	vm_remove_mappings(area, deallocate_pages);
++	VM_BUG_ON(phys_addr & ~PAGE_MASK || size & ~PAGE_MASK);
++
++	while (size) {
++		struct arm_smccc_res res;
++
++		arm_smccc_1_1_hvc(ARM_SMCCC_VENDOR_HYP_KVM_MMIO_GUARD_UNMAP_FUNC_ID,
++				  phys_addr, &res);
++		if (res.a0 != SMCCC_RET_SUCCESS) {
++			pr_warn_ratelimited("Failed to unregister %llx\n",
++					    phys_addr);
++			return;
++		}
++
++		size -= PAGE_SIZE;
++		phys_addr += PAGE_SIZE;
++	}
++}
  
- 	if (deallocate_pages) {
+ static void __iomem *__ioremap_caller(phys_addr_t phys_addr, size_t size,
+ 				      pgprot_t prot, void *caller)
 -- 
 2.30.2
 
