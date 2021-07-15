@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3891E3CA35A
-	for <lists+kvmarm@lfdr.de>; Thu, 15 Jul 2021 18:54:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BDC973CA358
+	for <lists+kvmarm@lfdr.de>; Thu, 15 Jul 2021 18:54:08 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D94F54B08F;
-	Thu, 15 Jul 2021 12:54:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 701604B0B4;
+	Thu, 15 Jul 2021 12:54:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,38 +15,38 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ClvGzJd7glqw; Thu, 15 Jul 2021 12:54:11 -0400 (EDT)
+	with ESMTP id WMpuyu2pMs6I; Thu, 15 Jul 2021 12:54:08 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7634E4B0C3;
-	Thu, 15 Jul 2021 12:54:11 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3B4144B09F;
+	Thu, 15 Jul 2021 12:54:07 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 171574B0BB
- for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Jul 2021 12:54:10 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A73054B098
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Jul 2021 12:54:05 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 51e2qHfGKMJ2 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 15 Jul 2021 12:54:09 -0400 (EDT)
+ with ESMTP id fo2DVPOLzOJN for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 15 Jul 2021 12:54:04 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E54384B09F
- for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Jul 2021 12:54:08 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B13A64B090
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 15 Jul 2021 12:54:04 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 444DE613E9;
- Thu, 15 Jul 2021 16:54:08 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 104B6613F9;
+ Thu, 15 Jul 2021 16:54:04 +0000 (UTC)
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1m44Hb-00DYjr-EA; Thu, 15 Jul 2021 17:32:19 +0100
+ id 1m44Hb-00DYjr-Pg; Thu, 15 Jul 2021 17:32:19 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 14/16] arm64: Enroll into KVM's MMIO guard if required
-Date: Thu, 15 Jul 2021 17:31:57 +0100
-Message-Id: <20210715163159.1480168-15-maz@kernel.org>
+Subject: [PATCH 15/16] arm64: Add a helper to retrieve the PTE of a fixmap
+Date: Thu, 15 Jul 2021 17:31:58 +0100
+Message-Id: <20210715163159.1480168-16-maz@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210715163159.1480168-1-maz@kernel.org>
 References: <20210715163159.1480168-1-maz@kernel.org>
@@ -79,112 +79,55 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Should a guest desire to enroll into the MMIO guard, allow it to
-do so with a command-line option.
+In order to transfer the early mapping state into KVM's MMIO
+guard infrastucture, provide a small helper that will retrieve
+the associated PTE.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- .../admin-guide/kernel-parameters.txt         |  3 ++
- arch/arm64/include/asm/hypervisor.h           |  1 +
- arch/arm64/kernel/setup.c                     |  6 +++
- arch/arm64/mm/ioremap.c                       | 38 +++++++++++++++++++
- 4 files changed, 48 insertions(+)
+ arch/arm64/include/asm/fixmap.h |  2 ++
+ arch/arm64/mm/mmu.c             | 15 +++++++++++++++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index bdb22006f713..a398585bed90 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -2062,6 +2062,9 @@
- 			1 - Bypass the IOMMU for DMA.
- 			unset - Use value of CONFIG_IOMMU_DEFAULT_PASSTHROUGH.
+diff --git a/arch/arm64/include/asm/fixmap.h b/arch/arm64/include/asm/fixmap.h
+index 4335800201c9..1aae625b944f 100644
+--- a/arch/arm64/include/asm/fixmap.h
++++ b/arch/arm64/include/asm/fixmap.h
+@@ -105,6 +105,8 @@ void __init early_fixmap_init(void);
  
-+	ioremap_guard	[ARM64] enable the KVM MMIO guard functionality
-+			if available.
+ extern void __set_fixmap(enum fixed_addresses idx, phys_addr_t phys, pgprot_t prot);
+ 
++extern pte_t *__get_fixmap_pte(enum fixed_addresses idx);
 +
- 	io7=		[HW] IO7 for Marvel-based Alpha systems
- 			See comment before marvel_specify_io7 in
- 			arch/alpha/kernel/core_marvel.c.
-diff --git a/arch/arm64/include/asm/hypervisor.h b/arch/arm64/include/asm/hypervisor.h
-index 8e77f411903f..b130c7b82eaa 100644
---- a/arch/arm64/include/asm/hypervisor.h
-+++ b/arch/arm64/include/asm/hypervisor.h
-@@ -7,5 +7,6 @@
- void kvm_init_hyp_services(void);
- bool kvm_arm_hyp_service_available(u32 func_id);
- void kvm_arm_init_hyp_services(void);
-+void kvm_init_ioremap_services(void);
+ #include <asm-generic/fixmap.h>
  
- #endif
-diff --git a/arch/arm64/kernel/setup.c b/arch/arm64/kernel/setup.c
-index be5f85b0a24d..c325647f675f 100644
---- a/arch/arm64/kernel/setup.c
-+++ b/arch/arm64/kernel/setup.c
-@@ -49,6 +49,7 @@
- #include <asm/tlbflush.h>
- #include <asm/traps.h>
- #include <asm/efi.h>
-+#include <asm/hypervisor.h>
- #include <asm/xen/hypervisor.h>
- #include <asm/mmu_context.h>
- 
-@@ -445,3 +446,8 @@ static int __init register_arm64_panic_block(void)
- 	return 0;
+ #endif /* !__ASSEMBLY__ */
+diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
+index d74586508448..f1b7abd04025 100644
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -1286,6 +1286,21 @@ void __set_fixmap(enum fixed_addresses idx,
+ 	}
  }
- device_initcall(register_arm64_panic_block);
-+
-+void kvm_arm_init_hyp_services(void)
-+{
-+	kvm_init_ioremap_services();
-+}
-diff --git a/arch/arm64/mm/ioremap.c b/arch/arm64/mm/ioremap.c
-index 0801fd92f0e3..d82b63bcc554 100644
---- a/arch/arm64/mm/ioremap.c
-+++ b/arch/arm64/mm/ioremap.c
-@@ -23,6 +23,44 @@
  
- static DEFINE_STATIC_KEY_FALSE(ioremap_guard_key);
- 
-+static bool ioremap_guard;
-+static int __init ioremap_guard_setup(char *str)
++pte_t *__get_fixmap_pte(enum fixed_addresses idx)
 +{
-+	ioremap_guard = true;
++	unsigned long 	addr = __fix_to_virt(idx);
++	pte_t *ptep;
 +
-+	return 0;
-+}
-+early_param("ioremap_guard", ioremap_guard_setup);
++	BUG_ON(idx <= FIX_HOLE || idx >= __end_of_fixed_addresses);
 +
-+void kvm_init_ioremap_services(void)
-+{
-+	struct arm_smccc_res res;
++	ptep = fixmap_pte(addr);
 +
-+	if (!ioremap_guard)
-+		return;
++	if (!pte_valid(*ptep))
++		return NULL;
 +
-+	/* We need all the functions to be implemented */
-+	if (!kvm_arm_hyp_service_available(ARM_SMCCC_KVM_FUNC_MMIO_GUARD_INFO) ||
-+	    !kvm_arm_hyp_service_available(ARM_SMCCC_KVM_FUNC_MMIO_GUARD_ENROLL) ||
-+	    !kvm_arm_hyp_service_available(ARM_SMCCC_KVM_FUNC_MMIO_GUARD_MAP) ||
-+	    !kvm_arm_hyp_service_available(ARM_SMCCC_KVM_FUNC_MMIO_GUARD_UNMAP))
-+		return;
-+
-+	arm_smccc_1_1_invoke(ARM_SMCCC_VENDOR_HYP_KVM_MMIO_GUARD_INFO_FUNC_ID,
-+			     &res);
-+	if (res.a0 != PAGE_SIZE)
-+		return;
-+
-+	arm_smccc_1_1_invoke(ARM_SMCCC_VENDOR_HYP_KVM_MMIO_GUARD_ENROLL_FUNC_ID,
-+			     &res);
-+	if (res.a0 == SMCCC_RET_SUCCESS) {
-+		static_branch_enable(&ioremap_guard_key);
-+		pr_info("Using KVM MMIO guard for ioremap\n");
-+	} else {
-+		pr_warn("KVM MMIO guard registration failed (%ld)\n", res.a0);
-+	}
++	return ptep;
 +}
 +
- void ioremap_page_range_hook(unsigned long addr, unsigned long end,
- 			     phys_addr_t phys_addr, pgprot_t prot)
+ void *__init fixmap_remap_fdt(phys_addr_t dt_phys, int *size, pgprot_t prot)
  {
+ 	const u64 dt_virt_base = __fix_to_virt(FIX_FDT);
 -- 
 2.30.2
 
