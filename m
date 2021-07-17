@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 00E993CC245
-	for <lists+kvmarm@lfdr.de>; Sat, 17 Jul 2021 11:56:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AFB113CC246
+	for <lists+kvmarm@lfdr.de>; Sat, 17 Jul 2021 11:56:20 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A489C4B101;
-	Sat, 17 Jul 2021 05:56:18 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 639D74B0D5;
+	Sat, 17 Jul 2021 05:56:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,38 +15,38 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id oHXQpsLjBiHZ; Sat, 17 Jul 2021 05:56:18 -0400 (EDT)
+	with ESMTP id xeG+TWywVwh2; Sat, 17 Jul 2021 05:56:19 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6C8DB4B0F3;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9088D4B0FB;
 	Sat, 17 Jul 2021 05:56:14 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7541A49D50
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E3E7249D50
  for <kvmarm@lists.cs.columbia.edu>; Sat, 17 Jul 2021 05:56:13 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id HkuEWnhkmjcR for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id yCULcrEm17UC for <kvmarm@lists.cs.columbia.edu>;
  Sat, 17 Jul 2021 05:56:12 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9199B4B0DB
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D56DB4B0D6
  for <kvmarm@lists.cs.columbia.edu>; Sat, 17 Jul 2021 05:56:12 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id CEEC0613EB;
- Sat, 17 Jul 2021 09:56:11 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 365016115A;
+ Sat, 17 Jul 2021 09:56:12 +0000 (UTC)
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1m4h3K-00DvkH-6c; Sat, 17 Jul 2021 10:56:10 +0100
+ id 1m4h3K-00DvkH-Go; Sat, 17 Jul 2021 10:56:10 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
  kvmarm@lists.cs.columbia.edu, linux-mm@kvack.org
-Subject: [PATCH 4/5] KVM: arm64: Use get_page() instead of kvm_get_pfn()
-Date: Sat, 17 Jul 2021 10:55:40 +0100
-Message-Id: <20210717095541.1486210-5-maz@kernel.org>
+Subject: [PATCH 5/5] KVM: Get rid of kvm_get_pfn()
+Date: Sat, 17 Jul 2021 10:55:41 +0100
+Message-Id: <20210717095541.1486210-6-maz@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210717095541.1486210-1-maz@kernel.org>
 References: <20210717095541.1486210-1-maz@kernel.org>
@@ -79,29 +79,53 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-When mapping a THP, we are guaranteed that the page isn't reserved,
-and we can safely avoid the kvm_is_reserved_pfn() call.
-
-Replace kvm_get_pfn() with get_page(pfn_to_page()).
+Nobody is using kvm_get_pfn() anymore. Get rid of it.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/mmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/kvm_host.h | 1 -
+ virt/kvm/kvm_main.c      | 9 +--------
+ 2 files changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index c036a480ca27..0e8dab124cbd 100644
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -852,7 +852,7 @@ transparent_hugepage_adjust(struct kvm *kvm, struct kvm_memory_slot *memslot,
- 		*ipap &= PMD_MASK;
- 		kvm_release_pfn_clean(pfn);
- 		pfn &= ~(PTRS_PER_PMD - 1);
--		kvm_get_pfn(pfn);
-+		get_page(pfn_to_page(pfn));
- 		*pfnp = pfn;
+diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+index ae7735b490b4..9818d271c2a1 100644
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -824,7 +824,6 @@ void kvm_release_pfn_clean(kvm_pfn_t pfn);
+ void kvm_release_pfn_dirty(kvm_pfn_t pfn);
+ void kvm_set_pfn_dirty(kvm_pfn_t pfn);
+ void kvm_set_pfn_accessed(kvm_pfn_t pfn);
+-void kvm_get_pfn(kvm_pfn_t pfn);
  
- 		return PMD_SIZE;
+ void kvm_release_pfn(kvm_pfn_t pfn, bool dirty, struct gfn_to_pfn_cache *cache);
+ int kvm_read_guest_page(struct kvm *kvm, gfn_t gfn, void *data, int offset,
+diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+index 2e410a8a6a67..0284418c4400 100644
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -2215,7 +2215,7 @@ static int hva_to_pfn_remapped(struct vm_area_struct *vma,
+ 	 * Get a reference here because callers of *hva_to_pfn* and
+ 	 * *gfn_to_pfn* ultimately call kvm_release_pfn_clean on the
+ 	 * returned pfn.  This is only needed if the VMA has VM_MIXEDMAP
+-	 * set, but the kvm_get_pfn/kvm_release_pfn_clean pair will
++	 * set, but the kvm_try_get_pfn/kvm_release_pfn_clean pair will
+ 	 * simply do nothing for reserved pfns.
+ 	 *
+ 	 * Whoever called remap_pfn_range is also going to call e.g.
+@@ -2612,13 +2612,6 @@ void kvm_set_pfn_accessed(kvm_pfn_t pfn)
+ }
+ EXPORT_SYMBOL_GPL(kvm_set_pfn_accessed);
+ 
+-void kvm_get_pfn(kvm_pfn_t pfn)
+-{
+-	if (!kvm_is_reserved_pfn(pfn))
+-		get_page(pfn_to_page(pfn));
+-}
+-EXPORT_SYMBOL_GPL(kvm_get_pfn);
+-
+ static int next_segment(unsigned long len, int offset)
+ {
+ 	if (len > PAGE_SIZE - offset)
 -- 
 2.30.2
 
