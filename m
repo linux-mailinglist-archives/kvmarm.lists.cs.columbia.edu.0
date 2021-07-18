@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id AFB113CC246
-	for <lists+kvmarm@lfdr.de>; Sat, 17 Jul 2021 11:56:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33A0C3CC8A8
+	for <lists+kvmarm@lfdr.de>; Sun, 18 Jul 2021 12:55:37 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 639D74B0D5;
-	Sat, 17 Jul 2021 05:56:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4E57C4A7FD;
+	Sun, 18 Jul 2021 06:55:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,54 +15,51 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xeG+TWywVwh2; Sat, 17 Jul 2021 05:56:19 -0400 (EDT)
+	with ESMTP id Ma9ewaTWFUEr; Sun, 18 Jul 2021 06:55:36 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9088D4B0FB;
-	Sat, 17 Jul 2021 05:56:14 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3148E4A4C0;
+	Sun, 18 Jul 2021 06:55:35 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E3E7249D50
- for <kvmarm@lists.cs.columbia.edu>; Sat, 17 Jul 2021 05:56:13 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CEAA849E5F
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 18 Jul 2021 06:55:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id yCULcrEm17UC for <kvmarm@lists.cs.columbia.edu>;
- Sat, 17 Jul 2021 05:56:12 -0400 (EDT)
+ with ESMTP id Sh0hHfzZCgfr for <kvmarm@lists.cs.columbia.edu>;
+ Sun, 18 Jul 2021 06:55:32 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D56DB4B0D6
- for <kvmarm@lists.cs.columbia.edu>; Sat, 17 Jul 2021 05:56:12 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B89344086C
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 18 Jul 2021 06:55:32 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 365016115A;
- Sat, 17 Jul 2021 09:56:12 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id A8C2D60E09;
+ Sun, 18 Jul 2021 10:55:31 +0000 (UTC)
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1m4h3K-00DvkH-Go; Sat, 17 Jul 2021 10:56:10 +0100
+ id 1m54SH-00E3PG-Gb; Sun, 18 Jul 2021 11:55:29 +0100
 From: Marc Zyngier <maz@kernel.org>
-To: linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, linux-mm@kvack.org
-Subject: [PATCH 5/5] KVM: Get rid of kvm_get_pfn()
-Date: Sat, 17 Jul 2021 10:55:41 +0100
-Message-Id: <20210717095541.1486210-6-maz@kernel.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Subject: [GIT PULL] KVM/arm64 fixes for 5.14, take #1
+Date: Sun, 18 Jul 2021 11:55:22 +0100
+Message-Id: <20210718105522.1490392-1-maz@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210717095541.1486210-1-maz@kernel.org>
-References: <20210717095541.1486210-1-maz@kernel.org>
 MIME-Version: 1.0
 X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, linux-mm@kvack.org, seanjc@google.com,
- willy@infradead.org, pbonzini@redhat.com, will@kernel.org, qperret@google.com,
- james.morse@arm.com, suzuki.poulose@arm.com, alexandru.elisei@arm.com,
- kernel-team@android.com
+X-SA-Exim-Rcpt-To: pbonzini@redhat.com, drjones@redhat.com,
+ catalin.marinas@arm.com, steven.price@arm.com, james.morse@arm.com,
+ suzuki.poulose@arm.com, alexandru.elisei@arm.com,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org, kernel-team@android.com
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
-Cc: kernel-team@android.com, Sean Christopherson <seanjc@google.com>,
- Matthew Wilcox <willy@infradead.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Will Deacon <will@kernel.org>
+Cc: kernel-team@android.com, kvm@vger.kernel.org,
+ Catalin Marinas <catalin.marinas@arm.com>, Steven Price <steven.price@arm.com>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -79,56 +76,49 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Nobody is using kvm_get_pfn() anymore. Get rid of it.
+Hi Paolo,
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- include/linux/kvm_host.h | 1 -
- virt/kvm/kvm_main.c      | 9 +--------
- 2 files changed, 1 insertion(+), 9 deletions(-)
+Here's the first batch of KVM/arm64 fixes for 5.14. The most important
+one is an embarrassing MTE one-liner, but we also have a couple of
+selftest changes courtesy of Andrew.
 
-diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-index ae7735b490b4..9818d271c2a1 100644
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -824,7 +824,6 @@ void kvm_release_pfn_clean(kvm_pfn_t pfn);
- void kvm_release_pfn_dirty(kvm_pfn_t pfn);
- void kvm_set_pfn_dirty(kvm_pfn_t pfn);
- void kvm_set_pfn_accessed(kvm_pfn_t pfn);
--void kvm_get_pfn(kvm_pfn_t pfn);
- 
- void kvm_release_pfn(kvm_pfn_t pfn, bool dirty, struct gfn_to_pfn_cache *cache);
- int kvm_read_guest_page(struct kvm *kvm, gfn_t gfn, void *data, int offset,
-diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-index 2e410a8a6a67..0284418c4400 100644
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -2215,7 +2215,7 @@ static int hva_to_pfn_remapped(struct vm_area_struct *vma,
- 	 * Get a reference here because callers of *hva_to_pfn* and
- 	 * *gfn_to_pfn* ultimately call kvm_release_pfn_clean on the
- 	 * returned pfn.  This is only needed if the VMA has VM_MIXEDMAP
--	 * set, but the kvm_get_pfn/kvm_release_pfn_clean pair will
-+	 * set, but the kvm_try_get_pfn/kvm_release_pfn_clean pair will
- 	 * simply do nothing for reserved pfns.
- 	 *
- 	 * Whoever called remap_pfn_range is also going to call e.g.
-@@ -2612,13 +2612,6 @@ void kvm_set_pfn_accessed(kvm_pfn_t pfn)
- }
- EXPORT_SYMBOL_GPL(kvm_set_pfn_accessed);
- 
--void kvm_get_pfn(kvm_pfn_t pfn)
--{
--	if (!kvm_is_reserved_pfn(pfn))
--		get_page(pfn_to_page(pfn));
--}
--EXPORT_SYMBOL_GPL(kvm_get_pfn);
--
- static int next_segment(unsigned long len, int offset)
- {
- 	if (len > PAGE_SIZE - offset)
--- 
-2.30.2
+Please pull,
 
+	M.
+
+The following changes since commit e73f0f0ee7541171d89f2e2491130c7771ba58d3:
+
+  Linux 5.14-rc1 (2021-07-11 15:07:40 -0700)
+
+are available in the Git repository at:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git tags/kvmarm-fixes-5.14-1
+
+for you to fetch changes up to 5cf17746b302aa32a4f200cc6ce38865bfe4cf94:
+
+  KVM: arm64: selftests: get-reg-list: actually enable pmu regs in pmu sublist (2021-07-14 11:55:18 +0100)
+
+----------------------------------------------------------------
+KVM/arm64 fixes for 5.14, take #1
+
+- Fix MTE shared page detection
+
+- Fix selftest use of obsolete pthread_yield() in favour of sched_yield()
+
+- Enable selftest's use of PMU registers when asked to
+
+----------------------------------------------------------------
+Andrew Jones (2):
+      KVM: selftests: change pthread_yield to sched_yield
+      KVM: arm64: selftests: get-reg-list: actually enable pmu regs in pmu sublist
+
+Marc Zyngier (1):
+      KVM: arm64: Fix detection of shared VMAs on guest fault
+
+ arch/arm64/kvm/mmu.c                               | 2 +-
+ tools/testing/selftests/kvm/aarch64/get-reg-list.c | 3 ++-
+ tools/testing/selftests/kvm/steal_time.c           | 2 +-
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
