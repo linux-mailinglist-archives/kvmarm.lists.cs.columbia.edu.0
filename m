@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DC5EA3CD238
-	for <lists+kvmarm@lfdr.de>; Mon, 19 Jul 2021 12:48:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8042C3CD239
+	for <lists+kvmarm@lfdr.de>; Mon, 19 Jul 2021 12:48:13 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8BBAF4B0C0;
-	Mon, 19 Jul 2021 06:48:10 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 20E514B0E6;
+	Mon, 19 Jul 2021 06:48:13 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,64 +14,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5kAMhsEBY-QL; Mon, 19 Jul 2021 06:48:09 -0400 (EDT)
+	with ESMTP id hBVmN+1kXw6a; Mon, 19 Jul 2021 06:48:13 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3A8EE4B0BB;
-	Mon, 19 Jul 2021 06:48:09 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 522CC4B0D8;
+	Mon, 19 Jul 2021 06:48:11 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D297E40808
- for <kvmarm@lists.cs.columbia.edu>; Mon, 19 Jul 2021 06:48:07 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 872294B0AD
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 19 Jul 2021 06:48:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id t5d-PPuv-4M5 for <kvmarm@lists.cs.columbia.edu>;
- Mon, 19 Jul 2021 06:48:06 -0400 (EDT)
-Received: from mail-qv1-f74.google.com (mail-qv1-f74.google.com
- [209.85.219.74])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C5E214A193
- for <kvmarm@lists.cs.columbia.edu>; Mon, 19 Jul 2021 06:48:06 -0400 (EDT)
-Received: by mail-qv1-f74.google.com with SMTP id
- l4-20020a0ce8440000b02902d89f797d08so14786767qvo.17
- for <kvmarm@lists.cs.columbia.edu>; Mon, 19 Jul 2021 03:48:06 -0700 (PDT)
+ with ESMTP id o0-6N3b3KXOy for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 19 Jul 2021 06:48:09 -0400 (EDT)
+Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com
+ [209.85.128.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 509314B0DE
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 19 Jul 2021 06:48:09 -0400 (EDT)
+Received: by mail-wm1-f73.google.com with SMTP id
+ j141-20020a1c23930000b0290212502cb19aso5289052wmj.0
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 19 Jul 2021 03:48:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=+nFhosBzSZV7qNAcnaziksYJNq5Oy+qXrjjFGFJtf38=;
- b=NVj8E5o746nTD4LMKyEjLfcN0+iNKd4Q3+ARDYWcQq2Bc1tygxtGoghORVPHuz55fr
- 6XRVVKrCybVPnQoQ1dqIiRNFFsZO8Z9BJgYIHQDMxMPYPfrqI4GGFGxB1LTirahtqKgF
- xAKvcu5plneJQWJFaJ2c5xabR1g5t5l+kwW/aZ2D/8oPbSsqYoKBcR7AgbnOKB7FMw3S
- X7XC0MCHbF0+T/+/kcIrOaIFYgnutjaITulomfUfEJjKZS9PqaUiCF++55pWMzZV9q2E
- BJsPLP9JbGxG1U4PRz6OPrAsYUQlxu7PGOUlltDvQ/zsstSFZALQC40mm9bEPB4ctH8U
- aEWQ==
+ :cc; bh=ToM5LGd9yFKNtYUInCRmxwlv14Vkpcedx2OC69eyExs=;
+ b=jnbKDcOAOk2tJlEDs7bcxicOHljH0PrDLCq6CekugM0fVJCMwyzhRuLj4A8f+YzI4k
+ IS7HwNRyj/txJNtmBi3fSo+YWQO3G/y4I3hjNMrK82HChzpG1HG0eZg0NWQmq4+LdBvK
+ TQoiF+yO977gzIwlRBvykOORvCiNONiIq8EQHTaZxsykqzty35HsNCsVHtGzhM+agh6G
+ uVUko0WhrSePAfAFzBuE3K0avxRFAUk2dDQemDZg6Ny+lm308lycNC3bbS1uNX5TrPAi
+ 3C0ZsBtVJ57MYpkE8fJYxgc3GCMoYnLbLD7BAzbqf25uvdCwEEMDm60CeCvqf0KglcbB
+ UxTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=+nFhosBzSZV7qNAcnaziksYJNq5Oy+qXrjjFGFJtf38=;
- b=sz5oZwCzPIgJBmcjkiieN4E3yXqO1ujsCaS1BEGJaWufeZA9rxolAuGauzFJ+Q51nY
- 6YaKUgsXYrUzOBcfJ+5NQU2SID9rAMAzpyHDgKk7zGKrdK68yUd0Sc2kxiIT2esblVa+
- WmJmRU+Kygph9W4KRWrR6Ct9afB5nsaG9gSQ9A3/GlTpoZ0JVgJ/m3UuQ8QzOtraOHZZ
- tOt3VlFK65WQgsyP/uD7H9GIIZQNLgA9svr7AVvQegVMBtKUJMtqJ691ixanCecN2az2
- U+7DzpT1cSriPyUNe7nTXu3C1ZtQf8OoMPTJ5v+Y/tCki4/nTB+nH1LO9NNjLvfyaOcb
- bq0g==
-X-Gm-Message-State: AOAM533H/Ye4ZBv6l07sEfbW5JoGlIVfwy6qE/iruR0bLeWGVhLZjk0a
- tqYxIR0xc/D4J9swm8fT4VpEENlJPhYS
-X-Google-Smtp-Source: ABdhPJwNiWUH69H9j/rg7cEvViy/uJINohR7ix2A2F0PALIs2gR1NMlLOsKLwVie0SGTwrZNmWFRI0oB0D9I
+ bh=ToM5LGd9yFKNtYUInCRmxwlv14Vkpcedx2OC69eyExs=;
+ b=TyyI+DI9aT7Rpk8BXjQ/wy1Fq7r7V+RVT8tfoPqtutHdF+j8sknxNFKuPt2kWQ/onM
+ OuQnRqaE9d+Qn4BknZHJmQKRDAvdEEHUYaQjgFvmoj2GOPSOH4oCE/yzIBmRDfHbGFgX
+ pMyamOwgYxhPRJYa68qOdLY9Yk8UG/NJvi4bxi0n35ECn9Ap9NjPqcbeI+XFjgok+Xv7
+ pUw/KklT/NrqyXwvOIbNOMdneCQvc0YbyYO77O9wTpBBynoawdbwQVM5IGw/YMu2hNcF
+ hXIdzSUabkaYHzwcKqhOP8xbD6wK1xLYP3G5iTELFieRHHmipGj5hsPI6wtGEgpY6Gtc
+ JNFQ==
+X-Gm-Message-State: AOAM533Hv+bai3zIS89vkBam5i2mZsVjVkBJwjkrU6vo6AdN9peP3mqf
+ 4GNpsAapjj7ZndB0XasNoOSVWJev+98P
+X-Google-Smtp-Source: ABdhPJzgGJdAU0vtVnZruVhBnynMubFOxTgk0bZvp5vOKD+WWRlzrEeRgKopwaNKW+lR3zpb/2mloTXM4Szz
 X-Received: from luke.lon.corp.google.com
  ([2a00:79e0:d:210:1a96:a43f:6c2e:bb5a])
- (user=qperret job=sendgmr) by 2002:a0c:e313:: with SMTP id
- s19mr23719350qvl.26.1626691686389; Mon, 19 Jul 2021 03:48:06 -0700 (PDT)
-Date: Mon, 19 Jul 2021 11:47:32 +0100
+ (user=qperret job=sendgmr) by 2002:a05:600c:214a:: with SMTP id
+ v10mr25899621wml.67.1626691688581; Mon, 19 Jul 2021 03:48:08 -0700 (PDT)
+Date: Mon, 19 Jul 2021 11:47:33 +0100
 In-Reply-To: <20210719104735.3681732-1-qperret@google.com>
-Message-Id: <20210719104735.3681732-12-qperret@google.com>
+Message-Id: <20210719104735.3681732-13-qperret@google.com>
 Mime-Version: 1.0
 References: <20210719104735.3681732-1-qperret@google.com>
 X-Mailer: git-send-email 2.32.0.402.g57bb445576-goog
-Subject: [PATCH 11/14] KVM: arm64: Expose kvm_pte_valid() helper
+Subject: [PATCH 12/14] KVM: arm64: Refactor pkvm_pgtable locking
 From: Quentin Perret <qperret@google.com>
 To: maz@kernel.org, james.morse@arm.com, alexandru.elisei@arm.com, 
  suzuki.poulose@arm.com, catalin.marinas@arm.com, will@kernel.org
@@ -94,60 +94,70 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The KVM pgtable API exposes the kvm_pgtable_walk() function to allow
-the definition of walkers outside of pgtable.c. However, it is not easy
-to implement any of those walkers without some of the low-level helpers,
-such as kvm_pte_valid(). Make it static inline, and move it to the
-header file to allow its re-use in other places.
+Refactor the hypervisor stage-1 locking in nVHE protected mode to expose
+a new pkvm_create_mappings_locked() function. This will be used in later
+patches to allow walking and changing the hypervisor stage-1 without
+releasing the lock.
 
 Signed-off-by: Quentin Perret <qperret@google.com>
 ---
- arch/arm64/include/asm/kvm_pgtable.h | 7 +++++++
- arch/arm64/kvm/hyp/pgtable.c         | 6 ------
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ arch/arm64/kvm/hyp/include/nvhe/mm.h |  1 +
+ arch/arm64/kvm/hyp/nvhe/mm.c         | 16 ++++++++++++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_pgtable.h b/arch/arm64/include/asm/kvm_pgtable.h
-index 1aa49d6aabb7..8240c881ae1e 100644
---- a/arch/arm64/include/asm/kvm_pgtable.h
-+++ b/arch/arm64/include/asm/kvm_pgtable.h
-@@ -25,6 +25,13 @@ static inline u64 kvm_get_parange(u64 mmfr0)
- 
- typedef u64 kvm_pte_t;
- 
-+#define KVM_PTE_VALID			BIT(0)
-+
-+static inline bool kvm_pte_valid(kvm_pte_t pte)
-+{
-+	return pte & KVM_PTE_VALID;
-+}
-+
- /**
-  * struct kvm_pgtable_mm_ops - Memory management callbacks.
-  * @zalloc_page:		Allocate a single zeroed memory page.
-diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
-index c7120797404a..e0ae57dca827 100644
---- a/arch/arm64/kvm/hyp/pgtable.c
-+++ b/arch/arm64/kvm/hyp/pgtable.c
-@@ -11,7 +11,6 @@
- #include <asm/kvm_pgtable.h>
- #include <asm/stage2_pgtable.h>
- 
--#define KVM_PTE_VALID			BIT(0)
- 
- #define KVM_PTE_TYPE			BIT(1)
- #define KVM_PTE_TYPE_BLOCK		0
-@@ -135,11 +134,6 @@ static u32 kvm_pgd_pages(u32 ia_bits, u32 start_level)
- 	return __kvm_pgd_page_idx(&pgt, -1ULL) + 1;
+diff --git a/arch/arm64/kvm/hyp/include/nvhe/mm.h b/arch/arm64/kvm/hyp/include/nvhe/mm.h
+index 8ec3a5a7744b..c76d7136ed9b 100644
+--- a/arch/arm64/kvm/hyp/include/nvhe/mm.h
++++ b/arch/arm64/kvm/hyp/include/nvhe/mm.h
+@@ -23,6 +23,7 @@ int hyp_map_vectors(void);
+ int hyp_back_vmemmap(phys_addr_t phys, unsigned long size, phys_addr_t back);
+ int pkvm_cpu_set_vector(enum arm64_hyp_spectre_vector slot);
+ int pkvm_create_mappings(void *from, void *to, enum kvm_pgtable_prot prot);
++int pkvm_create_mappings_locked(void *from, void *to, enum kvm_pgtable_prot prot);
+ int __pkvm_create_mappings(unsigned long start, unsigned long size,
+ 			   unsigned long phys, enum kvm_pgtable_prot prot);
+ unsigned long __pkvm_create_private_mapping(phys_addr_t phys, size_t size,
+diff --git a/arch/arm64/kvm/hyp/nvhe/mm.c b/arch/arm64/kvm/hyp/nvhe/mm.c
+index a8efdf0f9003..dde22e2a322a 100644
+--- a/arch/arm64/kvm/hyp/nvhe/mm.c
++++ b/arch/arm64/kvm/hyp/nvhe/mm.c
+@@ -67,7 +67,7 @@ unsigned long __pkvm_create_private_mapping(phys_addr_t phys, size_t size,
+ 	return addr;
  }
  
--static bool kvm_pte_valid(kvm_pte_t pte)
--{
--	return pte & KVM_PTE_VALID;
--}
--
- static bool kvm_pte_table(kvm_pte_t pte, u32 level)
+-int pkvm_create_mappings(void *from, void *to, enum kvm_pgtable_prot prot)
++int pkvm_create_mappings_locked(void *from, void *to, enum kvm_pgtable_prot prot)
  {
- 	if (level == KVM_PGTABLE_MAX_LEVELS - 1)
+ 	unsigned long start = (unsigned long)from;
+ 	unsigned long end = (unsigned long)to;
+@@ -81,7 +81,8 @@ int pkvm_create_mappings(void *from, void *to, enum kvm_pgtable_prot prot)
+ 		int err;
+ 
+ 		phys = hyp_virt_to_phys((void *)virt_addr);
+-		err = __pkvm_create_mappings(virt_addr, PAGE_SIZE, phys, prot);
++		err = kvm_pgtable_hyp_map(&pkvm_pgtable, virt_addr, PAGE_SIZE,
++					  phys, prot);
+ 		if (err)
+ 			return err;
+ 	}
+@@ -89,6 +90,17 @@ int pkvm_create_mappings(void *from, void *to, enum kvm_pgtable_prot prot)
+ 	return 0;
+ }
+ 
++int pkvm_create_mappings(void *from, void *to, enum kvm_pgtable_prot prot)
++{
++	int ret;
++
++	hyp_spin_lock(&pkvm_pgd_lock);
++	ret = pkvm_create_mappings_locked(from, to, prot);
++	hyp_spin_unlock(&pkvm_pgd_lock);
++
++	return ret;
++}
++
+ int hyp_back_vmemmap(phys_addr_t phys, unsigned long size, phys_addr_t back)
+ {
+ 	unsigned long start, end;
 -- 
 2.32.0.402.g57bb445576-goog
 
