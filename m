@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E149D3CF8AA
-	for <lists+kvmarm@lfdr.de>; Tue, 20 Jul 2021 13:14:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C943D3CF8B0
+	for <lists+kvmarm@lfdr.de>; Tue, 20 Jul 2021 13:16:28 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7625E4B0C0;
-	Tue, 20 Jul 2021 07:14:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5DFB24B0C5;
+	Tue, 20 Jul 2021 07:16:28 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,71 +19,68 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Med-lDAAx8Mf; Tue, 20 Jul 2021 07:14:58 -0400 (EDT)
+	with ESMTP id ZWSjqA84IrbM; Tue, 20 Jul 2021 07:16:28 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7A7D34B0AD;
-	Tue, 20 Jul 2021 07:14:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B024A4B0BF;
+	Tue, 20 Jul 2021 07:16:24 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 00DEB4A193
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Jul 2021 07:14:56 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 58FED4A193
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Jul 2021 07:16:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ggq8Jd-ICW4f for <kvmarm@lists.cs.columbia.edu>;
- Tue, 20 Jul 2021 07:14:55 -0400 (EDT)
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com
- [209.85.128.49])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 02B7B40808
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Jul 2021 07:14:54 -0400 (EDT)
-Received: by mail-wm1-f49.google.com with SMTP id
- u5-20020a7bc0450000b02901480e40338bso1355366wmc.1
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Jul 2021 04:14:54 -0700 (PDT)
+ with ESMTP id QiI6Zy5QQgJ1 for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 20 Jul 2021 07:16:22 -0400 (EDT)
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com
+ [209.85.221.42])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4AC0440808
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Jul 2021 07:16:22 -0400 (EDT)
+Received: by mail-wr1-f42.google.com with SMTP id l7so25561691wrv.7
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Jul 2021 04:16:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:from:to:cc:subject:message-id:references:mime-version
  :content-disposition:in-reply-to;
- bh=Scwye6C+1Um7vvUcoTZkRoyEhyT2SXL6uA5lCU/qAvo=;
- b=LMlxufPUPb2baVXBQ3VbdR5xUqZGe2i72q3p54Pd5N2AVVhCquwFd4vXoKMg94uLVz
- /DBufDYbJzPrm5yrCS7IHjx3emOa9cb1Q0XM2TNV21BgR6KoqX8NA7w21Ha2Cb8Bd+hV
- lYjoz7AFqJBKqgDZ1an+6fpOGpIp7utuszeDBxbe9tnYmbci25MtjjS1Z0BA9D7tUugc
- K+XnVi6J14aPrCi7ed8GeyQkKM6l5EkOw0hkLlsLXvhfBYVtPkFnZCVPZ08omY+DF4JU
- K5NO5ElFz242783F1DGmAGs4XfB2LfvVZcGvHX1zo46qXqGaitIlyqU1ZFEg27srQi13
- DbPA==
+ bh=lpz51H3kvzr0DXJiE5RSxJNphxVtTP/JsLlCDtT69nE=;
+ b=qIC8S+W4YEqX+/j1F2FfOOKMPB60fsBSS7jpd0cT0fUpSNivYVwV9Lc7AMV3WoXmMw
+ v9CgSh/vI2qWbAPurBZw5TN+KhWhe340MqIv4ApDr2YkuHg+Csl3bWm9i8QeClaaikDF
+ uMaiwpDXgtAjXyOpfnmR2iYIblGFLYIY3j+yTDSwccOVQiIL8S3kXlqDClfWK41H+kgw
+ kmra3575DBZwkejSgK4e4RWzFoz1f0sOdv7uO07ytjh1dww1naA5hdZhhZFRFHVDi3Yj
+ hQdxBPLQFqiPS5CCQ0OE+yh0ewTntdOyy+voxTzTeMDdMan7IlXYk0lQLYB1dMXeHg6A
+ /60Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to;
- bh=Scwye6C+1Um7vvUcoTZkRoyEhyT2SXL6uA5lCU/qAvo=;
- b=Hn4+tdCcZNxcWRCzYOLBzggZE4bZ4vfXULy5wx2AL9IgX8TMvLSwswIVM1jO+mUMx8
- 64eykzgoJhyIRB+xbXtboUplOJ2iHiQk7pAbggKPOI2sGyAt2O5PLXyTLq3k14SLo13J
- 6d414IZEX9GKRQ6kSG7wN1u5F/SPKnzExmU9QJ4txiQUS0biRDGLg8a6Azg50DZJDMv/
- jQq+CeCEpzAAZRpYTivqpM8LaitjVyr3Lk0PjWbDeQH38qbQknxpYyTpYT6LbUxPVpZ8
- 5cD/qZkKI5803VThI8GYI7zEzxXfP57pUDTu/Qnc4Bbm1o7iR2J//jxwbLc6GWbfsOG6
- llzg==
-X-Gm-Message-State: AOAM532eKJB76rPxsXXyDDfE2uKZddPsNxngYzpxWYbYppWiw9mzaWeH
- BPxSZQrS4ug80O5hqkzvCtoofA==
-X-Google-Smtp-Source: ABdhPJzLUrGFdy1juyhle9qtZp590ppxip5Hwthbwjk+yQgROG4vDqXreJVzBkI8J/0J3xXVMKtb6Q==
-X-Received: by 2002:a1c:7314:: with SMTP id d20mr30516940wmb.167.1626779693865; 
- Tue, 20 Jul 2021 04:14:53 -0700 (PDT)
+ bh=lpz51H3kvzr0DXJiE5RSxJNphxVtTP/JsLlCDtT69nE=;
+ b=qH9L5V6J7uup0596RzOS7kHHT5Urt0EDn/ZYQCRQfPemLWDLWTe+v9OE1UEF2/jvgW
+ r9iMUC3rYp+Ncvnv+BKtQNq/KL6ZutDlDKZ6NdWVWTw40HPJmvcOvJjcVvFu0nsmXfsK
+ X3RscXawwAn8/nWlTEXmWddlxde4lXS8uYOBzsAdp6ULwYvXB76ZcDKiEeozyIW0gFoB
+ qvEQ7TiiBN1A4M1idPlUi8icgYq29ttJAf3Dqpa1IIFms/lz8HsMRGso5z55W5oYOuBR
+ n4haezGd9ge2Yat4z7skNdeI2qfB3ICSZ6rmsKw9RG8INWzQVlb/4WekKE+wmuP6AKL1
+ stqQ==
+X-Gm-Message-State: AOAM533MEJixE9b90YNi4bVROHDUCfFHuCOkFr9UTriPPw7j/VboVEsD
+ XDwPDutBlDLiJb0pNHYiLn/vYA==
+X-Google-Smtp-Source: ABdhPJzyDbPtX+5Q7MPnRmTCUDtOQw0hbyz28e4E5BQ9dsfjysvHdxUpebOfYRKz9mVC05s+yeb7VQ==
+X-Received: by 2002:a05:6000:102:: with SMTP id
+ o2mr35120793wrx.299.1626779781184; 
+ Tue, 20 Jul 2021 04:16:21 -0700 (PDT)
 Received: from google.com ([2a00:79e0:d:210:83e0:11ac:c870:2b97])
- by smtp.gmail.com with ESMTPSA id s13sm23219117wrm.13.2021.07.20.04.14.53
+ by smtp.gmail.com with ESMTPSA id a8sm23462978wrt.61.2021.07.20.04.16.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Jul 2021 04:14:53 -0700 (PDT)
-Date: Tue, 20 Jul 2021 12:14:50 +0100
+ Tue, 20 Jul 2021 04:16:20 -0700 (PDT)
+Date: Tue, 20 Jul 2021 12:16:17 +0100
 From: Quentin Perret <qperret@google.com>
-To: Fuad Tabba <tabba@google.com>
-Subject: Re: [PATCH 06/14] KVM: arm64: Tolerate re-creating hyp mappings to
- set ignored bits
-Message-ID: <YPawKkT2ZdVzQbM6@google.com>
-References: <20210719104735.3681732-1-qperret@google.com>
- <20210719104735.3681732-7-qperret@google.com>
- <CA+EHjTzjT2iv=9jsTNquSAD-_AWqpyCKVPiuCBWGzpxcAkWf9w@mail.gmail.com>
- <YPalr09gA6tGYVtl@google.com>
- <CA+EHjTz__zjYY2D8+nEPq2F8__saxC0kApnn7_rs0r2VCR2Nzg@mail.gmail.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH 15/16] arm64: Add a helper to retrieve the PTE of a fixmap
+Message-ID: <YPawgYJYfD+EfXBW@google.com>
+References: <20210715163159.1480168-1-maz@kernel.org>
+ <20210715163159.1480168-16-maz@kernel.org>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <CA+EHjTz__zjYY2D8+nEPq2F8__saxC0kApnn7_rs0r2VCR2Nzg@mail.gmail.com>
-Cc: kernel-team@android.com, qwandor@google.com, maz@kernel.org,
- linux-kernel@vger.kernel.org, catalin.marinas@arm.com, will@kernel.org,
+In-Reply-To: <20210715163159.1480168-16-maz@kernel.org>
+Cc: kernel-team@android.com, kvm@vger.kernel.org,
+ Srivatsa Vaddagiri <vatsa@codeaurora.org>, linux-kernel@vger.kernel.org,
+ Shanker R Donthineni <sdonthineni@nvidia.com>, will@kernel.org,
  kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -101,15 +98,62 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tuesday 20 Jul 2021 at 11:59:27 (+0100), Fuad Tabba wrote:
-> Thanks for the clarification. It makes sense to preserve the existing
-> behavior, but I was wondering if a comment would be good, describing
-> what merits a "needs update"?
+On Thursday 15 Jul 2021 at 17:31:58 (+0100), Marc Zyngier wrote:
+> In order to transfer the early mapping state into KVM's MMIO
+> guard infrastucture, provide a small helper that will retrieve
+> the associated PTE.
+> 
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
+> ---
+>  arch/arm64/include/asm/fixmap.h |  2 ++
+>  arch/arm64/mm/mmu.c             | 15 +++++++++++++++
+>  2 files changed, 17 insertions(+)
+> 
+> diff --git a/arch/arm64/include/asm/fixmap.h b/arch/arm64/include/asm/fixmap.h
+> index 4335800201c9..1aae625b944f 100644
+> --- a/arch/arm64/include/asm/fixmap.h
+> +++ b/arch/arm64/include/asm/fixmap.h
+> @@ -105,6 +105,8 @@ void __init early_fixmap_init(void);
+>  
+>  extern void __set_fixmap(enum fixed_addresses idx, phys_addr_t phys, pgprot_t prot);
+>  
+> +extern pte_t *__get_fixmap_pte(enum fixed_addresses idx);
+> +
+>  #include <asm-generic/fixmap.h>
+>  
+>  #endif /* !__ASSEMBLY__ */
+> diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
+> index d74586508448..f1b7abd04025 100644
+> --- a/arch/arm64/mm/mmu.c
+> +++ b/arch/arm64/mm/mmu.c
+> @@ -1286,6 +1286,21 @@ void __set_fixmap(enum fixed_addresses idx,
+>  	}
+>  }
+>  
+> +pte_t *__get_fixmap_pte(enum fixed_addresses idx)
+> +{
+> +	unsigned long 	addr = __fix_to_virt(idx);
 
-Sure thing, I'll add something for v2.
+Nit: odd spacing here.
 
-Cheers,
-Quentin
+> +	pte_t *ptep;
+> +
+> +	BUG_ON(idx <= FIX_HOLE || idx >= __end_of_fixed_addresses);
+> +
+> +	ptep = fixmap_pte(addr);
+> +
+> +	if (!pte_valid(*ptep))
+> +		return NULL;
+> +
+> +	return ptep;
+> +}
+> +
+>  void *__init fixmap_remap_fdt(phys_addr_t dt_phys, int *size, pgprot_t prot)
+>  {
+>  	const u64 dt_virt_base = __fix_to_virt(FIX_FDT);
+> -- 
+> 2.30.2
+> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
