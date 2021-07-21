@@ -2,63 +2,99 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A3E163D1345
-	for <lists+kvmarm@lfdr.de>; Wed, 21 Jul 2021 18:06:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35FC53D13A0
+	for <lists+kvmarm@lfdr.de>; Wed, 21 Jul 2021 18:16:45 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 006EB4B100;
-	Wed, 21 Jul 2021 12:06:24 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B0AE54B12B;
+	Wed, 21 Jul 2021 12:16:44 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WKfXig-M1UEN; Wed, 21 Jul 2021 12:06:23 -0400 (EDT)
+	with ESMTP id oH-Bs+fSwVmm; Wed, 21 Jul 2021 12:16:44 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8AE2C4B0EA;
-	Wed, 21 Jul 2021 12:06:22 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 54E3A4B11A;
+	Wed, 21 Jul 2021 12:16:43 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0F2E94B0D9
- for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 12:06:22 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 19B724B113
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 12:16:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 4+WC27n9PB6S for <kvmarm@lists.cs.columbia.edu>;
- Wed, 21 Jul 2021 12:06:20 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C92DF4A522
- for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 12:06:20 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id B12C061009;
- Wed, 21 Jul 2021 16:06:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1626883579;
- bh=jFGg/EUoFFDeElbsqd3XeBtL8WBcmWuSIesI5JRpX/I=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=AqJbLMlGvsJ7Pp4AP0n4iw/SiwiUoudllglRPtqA2qlSRRRu3pZrA6TqryBk+5CvN
- F6Mm6/jZ48eixJcgXX8iNqAQzJbjKKzXLMmKD2oF071IircKwGO0vyhdCH5xdZttLd
- fWDEraMW4tECn6BBRIbe4TBbJlRPlMb53bKkR7WNcT3UISf5yRpRjLMnoKC+j2l8jo
- +WkDnDr1VwnV/ifU9b5qSpBrdoj3AxXyKtn+TavPCMzc/tFujnInDoTkD4BT/DO8+x
- uKEAhZWQMHUj46xs1+++igYBrQiRt+POXC5lRcIRIWrm4HRQ05dxd1KT6PF+Fa2CnZ
- XY+TYOxzDDQsw==
-Date: Wed, 21 Jul 2021 17:06:14 +0100
-From: Will Deacon <will@kernel.org>
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Subject: Re: [PATCH v2 2/3] kvm/arm: Introduce a new vmid allocator for KVM
-Message-ID: <20210721160614.GC11003@willie-the-truck>
-References: <20210616155606.2806-1-shameerali.kolothum.thodi@huawei.com>
- <20210616155606.2806-3-shameerali.kolothum.thodi@huawei.com>
+ with ESMTP id HnIZkYifTcU8 for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 21 Jul 2021 12:16:38 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [216.205.24.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A712B4B112
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 12:16:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1626884198;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=IcSV6p3DsGPg3q7H9uG8rdf3PK9RYtHNWHXgMTJFgSw=;
+ b=iz/YaBB3GoJdlSbRhPlRZmcUj53TqAkB7sVbRkMpGhAiDP+QJLv7+eL+xIqHqwABCULDPD
+ nCINtfpqqyqaS1DusxTEg3zJJG0eusLxj44Qm6VFXC90yxokmXzxSlvnsUTDreYW3t2S90
+ jFvgnB207zV61285VN1TsW8eE6/lvpQ=
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
+ [209.85.166.200]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-279-h010vPBXMPqIdqMOf4TiTA-1; Wed, 21 Jul 2021 12:16:35 -0400
+X-MC-Unique: h010vPBXMPqIdqMOf4TiTA-1
+Received: by mail-il1-f200.google.com with SMTP id
+ a13-20020a92c54d0000b0290216ae9088ffso1860849ilj.9
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 09:16:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=IcSV6p3DsGPg3q7H9uG8rdf3PK9RYtHNWHXgMTJFgSw=;
+ b=qNICCnDVd7E2QWDVPNBINdqG4NEX28PAR04UZPFLXOt7fkwrd6dhMIodTq7qtlGfSQ
+ PAsaw6Fpfaw8NZnZ8v8bsFGmFz4u3BtEJTiZUiboz6nHL6XAHOV24lQZ14WFjFcddOaX
+ D3YwVvkFqX6vTrMusGHylpr+hHk4pPzuqZ8gRVQKF59dqQAlFXw9Y/rf9tMFHPYZ7bSG
+ SvFMdHPaJc1PaPy8owVEdgVGWEe6lHxeeshLfJAYmR30ljun+cIqL+QZpAs+3WHITewy
+ McOcEVye+zq0R5gQymGUJeB3lxA5PBr4Pc+HqOkXN41FvuNfKufT+SII6zuEq5hzYqxi
+ l9jA==
+X-Gm-Message-State: AOAM531BPUKQOzS9G0m20AdPgwa/SUDIfpPvEeA92tWqjGy2JJ0EdmXb
+ LFAxO4Z2QPbrZ5tauvveuO/JRBiOQ/c66uS9QzOiUM6Tqavx+c04g9VPUgVJGN4Z3QwsO+b0kHB
+ qO+EIhvVq4rCgRQrmZVbTuZjI
+X-Received: by 2002:a05:6e02:ea9:: with SMTP id
+ u9mr24497386ilj.174.1626884194626; 
+ Wed, 21 Jul 2021 09:16:34 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJy/IBOod66B4GglMJLgXKr35GBUPC3amMbq6Jd0LtCJ6mFrJw0uOyg05WtQr7pLrGObTD7EEQ==
+X-Received: by 2002:a05:6e02:ea9:: with SMTP id
+ u9mr24497370ilj.174.1626884194383; 
+ Wed, 21 Jul 2021 09:16:34 -0700 (PDT)
+Received: from gator ([140.82.166.162])
+ by smtp.gmail.com with ESMTPSA id w14sm10296889ilj.76.2021.07.21.09.16.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 21 Jul 2021 09:16:33 -0700 (PDT)
+Date: Wed, 21 Jul 2021 18:16:31 +0200
+From: Andrew Jones <drjones@redhat.com>
+To: Oliver Upton <oupton@google.com>
+Subject: Re: [PATCH v3 08/12] KVM: arm64: Allow userspace to configure a
+ vCPU's virtual offset
+Message-ID: <20210721161631.mrfiuusc5zou4we5@gator>
+References: <20210719184949.1385910-1-oupton@google.com>
+ <20210719184949.1385910-9-oupton@google.com>
 MIME-Version: 1.0
+In-Reply-To: <20210719184949.1385910-9-oupton@google.com>
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=drjones@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
 Content-Disposition: inline
-In-Reply-To: <20210616155606.2806-3-shameerali.kolothum.thodi@huawei.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: jean-philippe@linaro.org, maz@kernel.org, linux-kernel@vger.kernel.org,
- linuxarm@huawei.com, catalin.marinas@arm.com, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+ Raghavendra Rao Anata <rananta@google.com>, Peter Shier <pshier@google.com>,
+ Sean Christopherson <seanjc@google.com>, David Matlack <dmatlack@google.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -75,130 +111,178 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Jun 16, 2021 at 04:56:05PM +0100, Shameer Kolothum wrote:
-> A new VMID allocator for arm64 KVM use. This is based on
-> arm64 asid allocator algorithm.
+On Mon, Jul 19, 2021 at 06:49:45PM +0000, Oliver Upton wrote:
+> Add a new vCPU attribute that allows userspace to directly manipulate
+> the virtual counter-timer offset. Exposing such an interface allows for
+> the precise migration of guest virtual counter-timers, as it is an
+> indepotent interface.
 > 
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> Uphold the existing behavior of writes to CNTVOFF_EL2 for this new
+> interface, wherein a write to a single vCPU is broadcasted to all vCPUs
+> within a VM.
+> 
+> Signed-off-by: Oliver Upton <oupton@google.com>
 > ---
->  arch/arm64/include/asm/kvm_host.h |   4 +
->  arch/arm64/kvm/vmid.c             | 206 ++++++++++++++++++++++++++++++
->  2 files changed, 210 insertions(+)
->  create mode 100644 arch/arm64/kvm/vmid.c
-
-Generally, I prefer this to the alternative of creating a library. However,
-I'd probably remove all the duplicated comments in favour of a reference
-to the ASID allocator. That way, we can just comment any VMID-specific
-behaviour in here.
-
-Some comments below...
-
-> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-> index 7cd7d5c8c4bc..75a7e8071012 100644
-> --- a/arch/arm64/include/asm/kvm_host.h
-> +++ b/arch/arm64/include/asm/kvm_host.h
-> @@ -680,6 +680,10 @@ int kvm_arm_pvtime_get_attr(struct kvm_vcpu *vcpu,
->  int kvm_arm_pvtime_has_attr(struct kvm_vcpu *vcpu,
->  			    struct kvm_device_attr *attr);
+>  Documentation/virt/kvm/devices/vcpu.rst | 22 ++++++++
+>  arch/arm64/include/uapi/asm/kvm.h       |  1 +
+>  arch/arm64/kvm/arch_timer.c             | 68 ++++++++++++++++++++++++-
+>  3 files changed, 89 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/virt/kvm/devices/vcpu.rst b/Documentation/virt/kvm/devices/vcpu.rst
+> index b46d5f742e69..7b57cba3416a 100644
+> --- a/Documentation/virt/kvm/devices/vcpu.rst
+> +++ b/Documentation/virt/kvm/devices/vcpu.rst
+> @@ -139,6 +139,28 @@ configured values on other VCPUs.  Userspace should configure the interrupt
+>  numbers on at least one VCPU after creating all VCPUs and before running any
+>  VCPUs.
 >  
-> +int kvm_arm_vmid_alloc_init(void);
-> +void kvm_arm_vmid_alloc_free(void);
-> +void kvm_arm_update_vmid(atomic64_t *id);
+> +2.2. ATTRIBUTE: KVM_ARM_VCPU_TIMER_OFFSET_VTIMER
+> +------------------------------------------------
 > +
->  static inline void kvm_arm_pvtime_vcpu_init(struct kvm_vcpu_arch *vcpu_arch)
+> +:Parameters: Pointer to a 64-bit unsigned counter-timer offset.
+> +
+> +Returns:
+> +
+> +	 ======= ======================================
+> +	 -EFAULT Error reading/writing the provided
+> +	 	 parameter address
+> +	 -ENXIO  Attribute not supported
+> +	 ======= ======================================
+> +
+> +Specifies the guest's virtual counter-timer offset from the host's
+> +virtual counter. The guest's virtual counter is then derived by
+> +the following equation:
+> +
+> +  guest_cntvct = host_cntvct - KVM_ARM_VCPU_TIMER_OFFSET_VTIMER
+> +
+> +KVM does not allow the use of varying offset values for different vCPUs;
+> +the last written offset value will be broadcasted to all vCPUs in a VM.
+> +
+>  3. GROUP: KVM_ARM_VCPU_PVTIME_CTRL
+>  ==================================
+>  
+> diff --git a/arch/arm64/include/uapi/asm/kvm.h b/arch/arm64/include/uapi/asm/kvm.h
+> index b3edde68bc3e..008d0518d2b1 100644
+> --- a/arch/arm64/include/uapi/asm/kvm.h
+> +++ b/arch/arm64/include/uapi/asm/kvm.h
+> @@ -365,6 +365,7 @@ struct kvm_arm_copy_mte_tags {
+>  #define KVM_ARM_VCPU_TIMER_CTRL		1
+>  #define   KVM_ARM_VCPU_TIMER_IRQ_VTIMER		0
+>  #define   KVM_ARM_VCPU_TIMER_IRQ_PTIMER		1
+> +#define   KVM_ARM_VCPU_TIMER_OFFSET_VTIMER	2
+>  #define KVM_ARM_VCPU_PVTIME_CTRL	2
+>  #define   KVM_ARM_VCPU_PVTIME_IPA	0
+>  
+> diff --git a/arch/arm64/kvm/arch_timer.c b/arch/arm64/kvm/arch_timer.c
+> index 3df67c127489..d2b1b13af658 100644
+> --- a/arch/arm64/kvm/arch_timer.c
+> +++ b/arch/arm64/kvm/arch_timer.c
+> @@ -1305,7 +1305,7 @@ static void set_timer_irqs(struct kvm *kvm, int vtimer_irq, int ptimer_irq)
+>  	}
+>  }
+>  
+> -int kvm_arm_timer_set_attr(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
+> +int kvm_arm_timer_set_attr_irq(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
 >  {
->  	vcpu_arch->steal.base = GPA_INVALID;
-> diff --git a/arch/arm64/kvm/vmid.c b/arch/arm64/kvm/vmid.c
-> new file mode 100644
-> index 000000000000..687e18d33130
-> --- /dev/null
-> +++ b/arch/arm64/kvm/vmid.c
-> @@ -0,0 +1,206 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * VMID allocator.
-> + *
-> + * Based on arch/arm64/mm/context.c
-> + *
-> + * Copyright (C) 2002-2003 Deep Blue Solutions Ltd, all rights reserved.
-> + * Copyright (C) 2012 ARM Ltd.
-> + */
-> +
-> +#include <linux/bitfield.h>
-> +#include <linux/bitops.h>
-> +
-> +#include <asm/kvm_asm.h>
-> +#include <asm/kvm_mmu.h>
-> +
-> +static u32 vmid_bits;
-> +static DEFINE_RAW_SPINLOCK(cpu_vmid_lock);
-> +
-> +static atomic64_t vmid_generation;
-> +static unsigned long *vmid_map;
-> +
-> +static DEFINE_PER_CPU(atomic64_t, active_vmids);
-> +static DEFINE_PER_CPU(u64, reserved_vmids);
-> +static cpumask_t tlb_flush_pending;
-> +
-> +#define VMID_MASK		(~GENMASK(vmid_bits - 1, 0))
-> +#define VMID_FIRST_VERSION	(1UL << vmid_bits)
-> +
-> +#define NUM_USER_VMIDS		VMID_FIRST_VERSION
-> +#define vmid2idx(vmid)		((vmid) & ~VMID_MASK)
-> +#define idx2vmid(idx)		vmid2idx(idx)
-> +
-> +#define vmid_gen_match(vmid) \
-> +	(!(((vmid) ^ atomic64_read(&vmid_generation)) >> vmid_bits))
-> +
-> +static void flush_context(void)
+>  	int __user *uaddr = (int __user *)(long)attr->addr;
+>  	struct arch_timer_context *vtimer = vcpu_vtimer(vcpu);
+> @@ -1338,7 +1338,39 @@ int kvm_arm_timer_set_attr(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
+>  	return 0;
+>  }
+>  
+> -int kvm_arm_timer_get_attr(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
+> +int kvm_arm_timer_set_attr_offset(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
 > +{
-> +	int cpu;
-> +	u64 vmid;
+> +	u64 __user *uaddr = (u64 __user *)(long)attr->addr;
+> +	u64 offset;
 > +
-> +	bitmap_clear(vmid_map, 0, NUM_USER_VMIDS);
+> +	if (get_user(offset, uaddr))
+> +		return -EFAULT;
 > +
-> +	for_each_possible_cpu(cpu) {
-> +		vmid = atomic64_xchg_relaxed(&per_cpu(active_vmids, cpu), 0);
-> +		/*
-> +		 * If this CPU has already been through a
-> +		 * rollover, but hasn't run another task in
-> +		 * the meantime, we must preserve its reserved
-> +		 * VMID, as this is the only trace we have of
-> +		 * the process it is still running.
-> +		 */
-> +		if (vmid == 0)
-> +			vmid = per_cpu(reserved_vmids, cpu);
-> +		__set_bit(vmid2idx(vmid), vmid_map);
-> +		per_cpu(reserved_vmids, cpu) = vmid;
+> +	switch (attr->attr) {
+> +	case KVM_ARM_VCPU_TIMER_OFFSET_VTIMER:
+> +		update_vtimer_cntvoff(vcpu, offset);
+> +		break;
+> +	default:
+> +		return -ENXIO;
 > +	}
-
-Hmm, so here we're copying the active_vmids into the reserved_vmids on a
-rollover, but I wonder if that's overly pessismistic? For the ASID
-allocator, every CPU tends to have a current task so it makes sense, but
-I'm not sure it's necessarily the case that every CPU tends to have a
-vCPU as the current task. For example, imagine you have a nasty 128-CPU
-system with 8-bit VMIDs and each CPU has at some point run a vCPU. Then,
-on rollover, we'll immediately reserve half of the VMID space, even if
-those vCPUs don't even exist any more.
-
-Not sure if it's worth worrying about, but I wanted to mention it.
-
-> +void kvm_arm_update_vmid(atomic64_t *id)
+> +
+> +	return 0;
+> +}
+> +
+> +int kvm_arm_timer_set_attr(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
 > +{
-
-Take the kvm_vmid here? That would make:
-
-> +	/* Check that our VMID belongs to the current generation. */
-> +	vmid = atomic64_read(id);
-> +	if (!vmid_gen_match(vmid)) {
-> +		vmid = new_vmid(id);
-> +		atomic64_set(id, vmid);
+> +	switch (attr->attr) {
+> +	case KVM_ARM_VCPU_TIMER_IRQ_VTIMER:
+> +	case KVM_ARM_VCPU_TIMER_IRQ_PTIMER:
+> +		return kvm_arm_timer_set_attr_irq(vcpu, attr);
+> +	case KVM_ARM_VCPU_TIMER_OFFSET_VTIMER:
+> +		return kvm_arm_timer_set_attr_offset(vcpu, attr);
 > +	}
+> +
+> +	return -ENXIO;
+> +}
+> +
+> +int kvm_arm_timer_get_attr_irq(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
+>  {
+>  	int __user *uaddr = (int __user *)(long)attr->addr;
+>  	struct arch_timer_context *timer;
+> @@ -1359,11 +1391,43 @@ int kvm_arm_timer_get_attr(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
+>  	return put_user(irq, uaddr);
+>  }
+>  
+> +int kvm_arm_timer_get_attr_offset(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
+> +{
+> +	u64 __user *uaddr = (u64 __user *)(long)attr->addr;
+> +	struct arch_timer_context *timer;
+> +	u64 offset;
+> +
+> +	switch (attr->attr) {
+> +	case KVM_ARM_VCPU_TIMER_OFFSET_VTIMER:
+> +		timer = vcpu_vtimer(vcpu);
+> +		break;
+> +	default:
+> +		return -ENXIO;
+> +	}
+> +
+> +	offset = timer_get_offset(timer);
+> +	return put_user(offset, uaddr);
+> +}
+> +
+> +int kvm_arm_timer_get_attr(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
+> +{
+> +	switch (attr->attr) {
+> +	case KVM_ARM_VCPU_TIMER_IRQ_VTIMER:
+> +	case KVM_ARM_VCPU_TIMER_IRQ_PTIMER:
+> +		return kvm_arm_timer_get_attr_irq(vcpu, attr);
+> +	case KVM_ARM_VCPU_TIMER_OFFSET_VTIMER:
+> +		return kvm_arm_timer_get_attr_offset(vcpu, attr);
+> +	}
+> +
+> +	return -ENXIO;
+> +}
+> +
+>  int kvm_arm_timer_has_attr(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr)
+>  {
+>  	switch (attr->attr) {
+>  	case KVM_ARM_VCPU_TIMER_IRQ_VTIMER:
+>  	case KVM_ARM_VCPU_TIMER_IRQ_PTIMER:
+> +	case KVM_ARM_VCPU_TIMER_OFFSET_VTIMER:
+>  		return 0;
+>  	}
+>  
+> -- 
+> 2.32.0.402.g57bb445576-goog
+> 
+> _______________________________________________
+> kvmarm mailing list
+> kvmarm@lists.cs.columbia.edu
+> https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+>
 
-A bit more readable, as you could pass the pointer directly to new_vmid
-for initialisation.
+ 
+Reviewed-by: Andrew Jones <drjones@redhat.com>
 
-Will
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
