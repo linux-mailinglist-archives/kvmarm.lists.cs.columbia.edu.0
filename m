@@ -2,79 +2,79 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 952173D0EBB
-	for <lists+kvmarm@lfdr.de>; Wed, 21 Jul 2021 14:20:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 595D83D0EBC
+	for <lists+kvmarm@lfdr.de>; Wed, 21 Jul 2021 14:20:11 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EC4574B111;
-	Wed, 21 Jul 2021 08:20:09 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0AA7D4B116;
+	Wed, 21 Jul 2021 08:20:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@chromium.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id HHryd1sP2J8n; Wed, 21 Jul 2021 08:20:09 -0400 (EDT)
+	with ESMTP id 2dYEynKMHo5o; Wed, 21 Jul 2021 08:20:09 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 244504B141;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 397094B144;
 	Wed, 21 Jul 2021 08:20:06 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E07754A483
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Jul 2021 22:06:41 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 26A084B114
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 04:48:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id mPwQhjNYs+dj for <kvmarm@lists.cs.columbia.edu>;
- Tue, 20 Jul 2021 22:06:40 -0400 (EDT)
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com
- [209.85.214.179])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C6D184048A
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Jul 2021 22:06:40 -0400 (EDT)
-Received: by mail-pl1-f179.google.com with SMTP id d1so229832plg.0
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Jul 2021 19:06:40 -0700 (PDT)
+ with ESMTP id W+dkx1HXKyru for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 21 Jul 2021 04:47:59 -0400 (EDT)
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com
+ [209.85.210.181])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 361A34B109
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 04:47:59 -0400 (EDT)
+Received: by mail-pf1-f181.google.com with SMTP id c1so1676332pfc.13
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 01:47:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chromium.org; s=google;
  h=date:from:to:cc:subject:message-id:references:mime-version
  :content-disposition:in-reply-to;
- bh=K5SBha3zR6HnIGPpTHePt7MeaM9Z7zyuvBLYdC04w6M=;
- b=F/V3TL3EIkA+1SPfKpp4W3wIkSZjEdimZxQlJZaxKweBLdvt7CsRSJQ/QxgTsA08vP
- Ff3IblbrLlK/KFckX65genz9i8/AG0pZbUyer9R18KnioTwNWwM1jYwvtopwKZrLRC2f
- OLQRbQcEpEOhmsaN3Ex9d/9KCXsOKFY5qanZY=
+ bh=FQYxugu8t7vqF745nuDd0P6UH3tWWI/YKaDa8xctYR4=;
+ b=XU4l682naheW6tuKnH+MytrNWxbdp9Yxn32GC8utg8SR/VPsrXfeSXRbqRr2ldZE4B
+ agGAumGKQbhn9UkIWNjFal/Uww+gAiAZu8Z3sjcQXOJaizdwTd05HLwGTXLiYmvvKoEM
+ khZ1dzPT0dikZFlNKTmeXUrCafw53Wxs2a5eU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to;
- bh=K5SBha3zR6HnIGPpTHePt7MeaM9Z7zyuvBLYdC04w6M=;
- b=o7VOQFZeKFrNE8ckLxX0bLiw9zyLXLB7++VW6ncJuABzSDh5HqxNrbLEY2NP8t1ez9
- wiJup1+bitNL9b5/xVF2igjOaX3o3V78cAWcrQdxzRA7Z4dFLwQGrluRk5KJ+QqSOyt1
- lD0D+6czPd+6vnCZ0Q32qdOTKsH0lzrVRzkR/lSALI862aCvCBLgz7OHmUno6I7bxAHX
- VnAcF6AbCcnxdxqvp59I6apOGa0gZHPb3d+heA4BjW6l02sBOqEKsvvvCJe8zvMo/6OV
- zPStBe8OSqZo7arIeUjPqJf/kGSW44LwiJseySLcyR45H52OskyffEVhb9NhQYpwcaof
- AJZg==
-X-Gm-Message-State: AOAM533dF4WGhQfhkxpL0JbBVC6oapE3NA3PEwnB/mQ4r4S7rzN6ViIp
- 39DQMEIj84+dWv03ipf98BsUmg==
-X-Google-Smtp-Source: ABdhPJwo6hl98vCtoCJtqUlnEf/MD/LBM1QEly8wtPd1ZqxMrJU4eNKrvrWI9kd/HRAIwvTyhyDIQQ==
-X-Received: by 2002:a17:90a:1704:: with SMTP id
- z4mr1378336pjd.213.1626833199843; 
- Tue, 20 Jul 2021 19:06:39 -0700 (PDT)
-Received: from google.com ([2409:10:2e40:5100:808c:1a13:1159:8184])
- by smtp.gmail.com with ESMTPSA id m18sm25367726pfd.42.2021.07.20.19.06.36
+ bh=FQYxugu8t7vqF745nuDd0P6UH3tWWI/YKaDa8xctYR4=;
+ b=rlwker7tHSc/EI51aRZ0V8U69isJpUsgJGnK97m0EWuEz0u+pO4DBh1NeY1nBM1ZgK
+ K7DOg8xzk1r5abmlfOTP5ouUKLG/NeJ4RbXk6nz5cqQajFSlhVtlNybGsp/qAr1ojz75
+ 0E+A1LPFVK+GzDFTn+wjMVrQ/4Ai4R1Uu3feOdRhjsxG1b6zC9l5SQBshPQ3FVvlCz/Q
+ dAYF3ILXwH9DrXoNdIDqWRFw2AiOM+Dox+I9LYKkqg72sIocn0H8aFzn25F6gN9u6+xY
+ b6mJ20xcOUdiYabcXAam368Am+s0uVWR6cp9Df9FtVtClPsVdFc7NX/IHPu+3+bQB478
+ ktow==
+X-Gm-Message-State: AOAM532UTcCHi3eywnEmSsylVoIsXh6NSNPzlSJtRFREtGlOa80tmwmW
+ ta+QjptwDWuTOcmznuCsjQ/rrA==
+X-Google-Smtp-Source: ABdhPJx2D4LSvi7V3G0rkeLs5yU/EesBkZYFpPqRMSteyEvOP3OhnjDDojnYkSbfYTT48DGn/kEOHg==
+X-Received: by 2002:a63:4f21:: with SMTP id d33mr3274287pgb.144.1626857278147; 
+ Wed, 21 Jul 2021 01:47:58 -0700 (PDT)
+Received: from google.com ([2409:10:2e40:5100:f1b2:269f:996b:b71a])
+ by smtp.gmail.com with ESMTPSA id b10sm25785133pfi.122.2021.07.21.01.47.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Jul 2021 19:06:39 -0700 (PDT)
-Date: Wed, 21 Jul 2021 11:06:34 +0900
+ Wed, 21 Jul 2021 01:47:57 -0700 (PDT)
+Date: Wed, 21 Jul 2021 17:47:52 +0900
 From: Sergey Senozhatsky <senozhatsky@chromium.org>
 To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCHv2 3/4] arm64: do not use dummy vcpu_is_preempted()
-Message-ID: <YPeBKqIS+OTrVKBO@google.com>
+Subject: Re: [PATCHv2 2/4] arm64: add guest pvstate support
+Message-ID: <YPffONafHdke/O3l@google.com>
 References: <20210709043713.887098-1-senozhatsky@chromium.org>
- <20210709043713.887098-4-senozhatsky@chromium.org>
- <875yxf356w.wl-maz@kernel.org>
+ <20210709043713.887098-3-senozhatsky@chromium.org>
+ <877dhv35ea.wl-maz@kernel.org> <YPeA5ReGSwBvWGSa@google.com>
+ <87im142i0b.wl-maz@kernel.org>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <875yxf356w.wl-maz@kernel.org>
+In-Reply-To: <87im142i0b.wl-maz@kernel.org>
 X-Mailman-Approved-At: Wed, 21 Jul 2021 08:20:04 -0400
 Cc: Joel Fernandes <joelaf@google.com>, linux-kernel@vger.kernel.org,
  virtualization@lists.linux-foundation.org,
@@ -97,27 +97,49 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On (21/07/12 16:47), Marc Zyngier wrote:
-> >  #include <asm/qspinlock.h>
-> >  #include <asm/qrwlock.h>
-> > +#include <asm/paravirt.h>
-> >  
-> >  /* See include/linux/spinlock.h */
-> >  #define smp_mb__after_spinlock()	smp_mb()
-> >  
-> > -/*
-> > - * Changing this will break osq_lock() thanks to the call inside
-> > - * smp_cond_load_relaxed().
-> > - *
-> > - * See:
-> > - * https://lore.kernel.org/lkml/20200110100612.GC2827@hirez.programming.kicks-ass.net
-> > - */
+On (21/07/21 09:22), Marc Zyngier wrote:
+> On Wed, 21 Jul 2021 03:05:25 +0100,
+> Sergey Senozhatsky <senozhatsky@chromium.org> wrote:
+> > 
+> > On (21/07/12 16:42), Marc Zyngier wrote:
+> > > > 
+> > > > PV-vcpu-state is a per-CPU struct, which, for the time being,
+> > > > holds boolean `preempted' vCPU state. During the startup,
+> > > > given that host supports PV-state, each guest vCPU sends
+> > > > a pointer to its per-CPU variable to the host as a payload
+> > > 
+> > > What is the expected memory type for this memory region? What is its
+> > > life cycle? Where is it allocated from?
+> > 
+> > Guest per-CPU area, which physical addresses is shared with the
+> > host.
 > 
-> Why are you deleting this? Please explain your reasoning in the commit
-> message. It seems to me that it still makes complete sense when
-> CONFIG_PARAVIRT is not defined.
+> Again: what are the memory types you expect this to be used with?
 
-You are right. I'll move it to !PARAVIRT #else-branch.
+I heard your questions, I'm trying to figure out the answers now.
+
+As of memory type - I presume you are talking about coherent vs
+non-coherent memory. Can guest per-CPU memory be non-coherent? Guest
+never writes anything to the region of memory it shares with the host,
+it only reads what the host writes to it. All reads and writes are
+done from CPU (no devices DMA access, etc).
+
+Do we need any cache flushes/syncs in this case?
+
+> When will the hypervisor ever stop accessing this?
+
+KVM always access it for the vcpus that are getting scheduled out or
+scheduled in on the host side.
+
+> How does it work across reset?
+
+I need to figure out what happens during reset/migration in the first
+place.
+
+> I'm sorry to be that pressing, but these are the gory details that
+> actually matter if you want this thing to be maintainable.
+
+Sure, no problem.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
