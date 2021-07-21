@@ -2,87 +2,100 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DF3273D0EBD
-	for <lists+kvmarm@lfdr.de>; Wed, 21 Jul 2021 14:20:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58BB63D0EBE
+	for <lists+kvmarm@lfdr.de>; Wed, 21 Jul 2021 14:20:13 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6101C4B130;
-	Wed, 21 Jul 2021 08:20:11 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0A3A84B11C;
+	Wed, 21 Jul 2021 08:20:13 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: 0.911
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, FREEMAIL_FROM=0.001,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@chromium.org
+	(fail, message has been altered) header.i=@gmail.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qJgLUSk8Qn+X; Wed, 21 Jul 2021 08:20:11 -0400 (EDT)
+	with ESMTP id pS7W6-zQkfQJ; Wed, 21 Jul 2021 08:20:12 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4EC384B110;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 734F74B14A;
 	Wed, 21 Jul 2021 08:20:06 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C0BC14AEE2
- for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 06:38:47 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6D8B94B100
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 07:57:15 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id qMxMukimS3NR for <kvmarm@lists.cs.columbia.edu>;
- Wed, 21 Jul 2021 06:38:46 -0400 (EDT)
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com
- [209.85.210.175])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B54A04AED4
- for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 06:38:46 -0400 (EDT)
-Received: by mail-pf1-f175.google.com with SMTP id j199so1899176pfd.7
- for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 03:38:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chromium.org; s=google;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=EIbOGymDYcRaNQxjueCe6a1zJ8aY0naaP0fQUkEZuv8=;
- b=Ov5r12ynseBnyTNRKsKx9w8I9twMbxcSJ1f73zH2iop1yQASsh3BfriyZofnrwgGPb
- JWsBYE6ZU5a3lBHKbfhG01blBS2BP/AHgilqkL+QG/cbbprBm/Aw4GR7gpJVVtkbNURP
- IGrlGE+9rwKA79Of6P2jRijrEqbvnRi+5RyzY=
+ with ESMTP id aGF7DSrACo4B for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 21 Jul 2021 07:57:14 -0400 (EDT)
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com
+ [209.85.215.178])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 599F74B0FF
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 07:57:14 -0400 (EDT)
+Received: by mail-pg1-f178.google.com with SMTP id i16so1623918pgi.9
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 04:57:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=to:cc:references:from:subject:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=1aayxhP7LR5pbpYNWPExB3m6iym6gHf5XQMlRKlxp94=;
+ b=Gb3sYMtxc/kWDCMnCmYUN5o70Tvt9W/hvjABaQVw6GepiW6AF7jJcANbzNBRV1gq0H
+ KVgsqId2MY+RXzDpDGY6dPw0M9zOWZUAQNGPy7PM2rys/HzrGgdYJ1JWxUE1QI9btZVV
+ O6Nge5AQbsqTmzXcQomJIje10kgbOVDLOw6CAEgavNSXA2gO45gvZInn+kY7JYMZv+qO
+ 7oKYPWFeZHS6IplBXQIb7MGoEHkzU7p7v5SEAUS6Qb0XpyY5ciKG5wbqqw5mBV2thXmN
+ kc5wkdciG83RddYCL0ig7AXvXY6vLlAn6fNTtakKWWWjb2B/kLBoNRRLEWJHhmSw7M5h
+ laRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=EIbOGymDYcRaNQxjueCe6a1zJ8aY0naaP0fQUkEZuv8=;
- b=S26HZTUVqRCIFNbFUTVmT2V7X+AYArrjRzZZPskNOEoTofjiU2G9+WEiGIs+lSj+Tc
- Lz42H6weqAl16DO2u6xDVjHwLL5vecEaajS4bK5SPiy6+6riJ1jbPuzsPFuabD20IQv/
- wrIQf8HWVAg8fKJfwCbPzvdOLlleyXO3Rsq6/U7Mm8+A9e5oXYY36xRdiCG2f2JtX45k
- s0zscHCWXNOA+9GAneZhKVOtA/dKAqZN25hVtIyp9YYOCAR5+ZFBC3WGyadV4DABsD75
- RapZzmcO/XLubKeRkJGVflNfopK/NoN3MwY5A+DEEFgLPLUbw4ot6xCk0ePvLwC7+e5+
- ri0Q==
-X-Gm-Message-State: AOAM532t4ugoXCWipzVZVSRW8ImiDp16WMxrHCaZH1FN48b7RxY7Wt3z
- U9BCKIpHwUUEjl5lh4sZ4SrTBQ==
-X-Google-Smtp-Source: ABdhPJwG3zXjqu/tpj5VxqRx6FmJchnrD4hFB2OoBNGmAOcVyTAxWZv9VdpXTlSzk5yhFw1PCfmBEw==
-X-Received: by 2002:aa7:81c5:0:b029:2f7:d4e3:78e9 with SMTP id
- c5-20020aa781c50000b02902f7d4e378e9mr36527927pfn.31.1626863925613; 
- Wed, 21 Jul 2021 03:38:45 -0700 (PDT)
-Received: from google.com ([2409:10:2e40:5100:f1b2:269f:996b:b71a])
- by smtp.gmail.com with ESMTPSA id z16sm5586915pgu.21.2021.07.21.03.38.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Jul 2021 03:38:45 -0700 (PDT)
-Date: Wed, 21 Jul 2021 19:38:40 +0900
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCHv2 4/4] arm64: add host pv-vcpu-state support
-Message-ID: <YPf5MFV99zPdTu/U@google.com>
-References: <20210709043713.887098-1-senozhatsky@chromium.org>
- <20210709043713.887098-5-senozhatsky@chromium.org>
- <874kcz33g5.wl-maz@kernel.org>
- <CAJWu+oqCyj3H0=1KNo3c+crdcktYinFoTQJ5jHgU8gjeF4d2yA@mail.gmail.com>
- <87h7go2h69.wl-maz@kernel.org>
+ h=x-gm-message-state:to:cc:references:from:subject:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=1aayxhP7LR5pbpYNWPExB3m6iym6gHf5XQMlRKlxp94=;
+ b=ofY78W1gejSJrSE1N9COG/HXMw6HrRgWRXO9PHcKAsx2sd3LZ8TLlgaNxjfSVvUwac
+ xNQynS4c5xVaL7TwDWjKMDmPHWZKo40caELvHZjnbumMAUluTAhEY6zdT40byUen6NZn
+ VyCRzWwdPQ9lphOj4ZyT3KeU0xK7SCcL4xtT5hGiXctyrdh3ACuxkpOJtYtF06EK/tDI
+ njdiiSNJE21c+mv2Tph6M05UVsgBe6wUPzE2yrhXf5CxvIFBqfS8EslBhebcA/cf7nn+
+ K2PyKEnCy9aNxU5FcYfBNObLSLCKvIDQdJLRKcNKEUcir0MSwnmIhqvBulXwSK7Qj4qN
+ QPUw==
+X-Gm-Message-State: AOAM5327BWgp5DDOO9TKVsjzZbmitCZEZ7kU/c8YJMTxLHbMaXOrkIKO
+ XSP4JmiwXgUpCul/AoFqtdA=
+X-Google-Smtp-Source: ABdhPJx8Jc6D+8J2xe+jplPG6WjflufBXyqLNydLZmg9K2ukmxfm1tClEJcFPfqxf5GDpWMtdTO8gQ==
+X-Received: by 2002:a63:a01:: with SMTP id 1mr35267098pgk.360.1626868633306;
+ Wed, 21 Jul 2021 04:57:13 -0700 (PDT)
+Received: from Likes-MacBook-Pro.local ([103.7.29.32])
+ by smtp.gmail.com with ESMTPSA id j12sm25930570pfj.208.2021.07.21.04.57.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 21 Jul 2021 04:57:12 -0700 (PDT)
+To: Zhu Lingshan <lingshan.zhu@intel.com>
+References: <20210716085325.10300-1-lingshan.zhu@intel.com>
+ <20210716085325.10300-2-lingshan.zhu@intel.com>
+From: Like Xu <like.xu.linux@gmail.com>
+Subject: Re: [PATCH V8 01/18] perf/core: Use static_call to optimize
+ perf_guest_info_callbacks
+Message-ID: <fd117e37-8063-63a4-43cd-7cb555e5bab5@gmail.com>
+Date: Wed, 21 Jul 2021 19:57:01 +0800
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <87h7go2h69.wl-maz@kernel.org>
+In-Reply-To: <20210716085325.10300-2-lingshan.zhu@intel.com>
+Content-Language: en-US
 X-Mailman-Approved-At: Wed, 21 Jul 2021 08:20:04 -0400
-Cc: Joel Fernandes <joelaf@google.com>, linux-kernel@vger.kernel.org,
- virtualization@lists.linux-foundation.org,
- Sergey Senozhatsky <senozhatsky@chromium.org>,
- Suleiman Souhlal <suleiman@google.com>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Cc: wanpengli@tencent.com, Like Xu <like.xu@linux.intel.com>,
+ Peter Zijlstra <peterz@infradead.org>, eranian@google.com,
+ Guo Ren <guoren@kernel.org>, linux-riscv@lists.infradead.org,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ kan.liang@linux.intel.com, ak@linux.intel.com, kvm@vger.kernel.org,
+ Marc Zyngier <maz@kernel.org>, joro@8bytes.org, x86@kernel.org,
+ linux-csky@vger.kernel.org, wei.w.wang@intel.com,
+ linux-arm-kernel@lists.infradead.org, xen-devel@lists.xenproject.org,
+ liuxiangdong5@huawei.com, bp@alien8.de,
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ Boris Ostrovsky <boris.ostrovsky@oracle.com>, boris.ostrvsky@oracle.com,
+ jmattson@google.com, Nick Hu <nickhu@andestech.com>, seanjc@google.com,
+ linux-kernel@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ vkuznets@redhat.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -94,32 +107,23 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On (21/07/21 09:40), Marc Zyngier wrote:
-> > 
-> > Can that be cured by just checking vcpu->preempted before calling
-> > kvm_update_vcpu_preempted() ?
-> 
-> It isn't obvious to me that this is the right thing to do.
-> vcpu->preempted is always updated on sched-out from the preempt
-> notifier if the vcpu was on the run-queue, so my guess is that it will
-> always be set when switching to another task.
-> 
-> What you probably want is to check whether the vcpu is blocked by
-> introspecting the wait-queue with:
-> 
-> 	scuwait_active(kvm_arch_vcpu_get_wait(vcpu)
-> 
-> which will tell you whether you are blocking or not. We are already
-> using a similar construct for arming a background timer in this case.
-
-Can we examine if vcpu->run->exit_reason == WFE/WFI and avoid setting
-preempted state if so?
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+T24gMTYvNy8yMDIxIDQ6NTMgcG0sIFpodSBMaW5nc2hhbiB3cm90ZToKPiArCX0gZWxzZSBpZiAo
+eGVucG11X2RhdGEtPnBtdS5yLnJlZ3MuY3BsICYgMykKCkxpbmdzaGFuLCBzZXJpb3VzIGZvciB0
+aGlzIHZlcnNpb24gPwoKYXJjaC94ODYveGVuL3BtdS5jOjQzODo5OiBlcnJvcjogZXhwZWN0ZWQg
+aWRlbnRpZmllciBvciDigJgo4oCZIGJlZm9yZSDigJhyZXR1cm7igJkKICAgNDM4IHwgICAgICAg
+ICByZXR1cm4gc3RhdGU7CiAgICAgICB8ICAgICAgICAgXn5+fn5+CmFyY2gveDg2L3hlbi9wbXUu
+Yzo0Mzk6MTogZXJyb3I6IGV4cGVjdGVkIGlkZW50aWZpZXIgb3Ig4oCYKOKAmSBiZWZvcmUg4oCY
+feKAmSB0b2tlbgogICA0MzkgfCB9CiAgICAgICB8IF4KYXJjaC94ODYveGVuL3BtdS5jOiBJbiBm
+dW5jdGlvbiDigJh4ZW5fZ3Vlc3Rfc3RhdGXigJk6CmFyY2gveDg2L3hlbi9wbXUuYzo0MzY6OTog
+ZXJyb3I6IGNvbnRyb2wgcmVhY2hlcyBlbmQgb2Ygbm9uLXZvaWQgCmZ1bmN0aW9uIFstV2Vycm9y
+PXJldHVybi10eXBlXQogICA0MzYgfCAgICAgICAgIH0KICAgICAgIHwgICAgICAgICBeCmNjMTog
+c29tZSB3YXJuaW5ncyBiZWluZyB0cmVhdGVkIGFzIGVycm9ycwoKPiArCQkJc3RhdGUgfD0gUEVS
+Rl9HVUVTVF9VU0VSOwo+ICAgCX0KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX18Ka3ZtYXJtIG1haWxpbmcgbGlzdAprdm1hcm1AbGlzdHMuY3MuY29sdW1iaWEu
+ZWR1Cmh0dHBzOi8vbGlzdHMuY3MuY29sdW1iaWEuZWR1L21haWxtYW4vbGlzdGluZm8va3ZtYXJt
+Cg==
