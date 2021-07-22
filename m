@@ -2,45 +2,44 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 098443D1FAC
-	for <lists+kvmarm@lfdr.de>; Thu, 22 Jul 2021 10:11:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 260B03D1FAD
+	for <lists+kvmarm@lfdr.de>; Thu, 22 Jul 2021 10:11:50 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AC1D24B0D9;
-	Thu, 22 Jul 2021 04:11:48 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C675E4B102;
+	Thu, 22 Jul 2021 04:11:49 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
-	autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3] autolearn=no
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id K8zvpUnjN-jf; Thu, 22 Jul 2021 04:11:48 -0400 (EDT)
+	with ESMTP id oy5uXxGsyNyz; Thu, 22 Jul 2021 04:11:48 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 63ACF4AEDC;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7E7D64B0E0;
 	Thu, 22 Jul 2021 04:11:47 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D522E4B0F3
- for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 22:38:13 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9F51B4AED4
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 23:03:58 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id HB5K1j6SgnJe for <kvmarm@lists.cs.columbia.edu>;
- Wed, 21 Jul 2021 22:38:11 -0400 (EDT)
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A33CB4A3BF
- for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 22:38:11 -0400 (EDT)
-X-IronPort-AV: E=McAfee;i="6200,9189,10052"; a="198825015"
-X-IronPort-AV: E=Sophos;i="5.84,259,1620716400"; d="scan'208";a="198825015"
+ with ESMTP id gzLMIvYzvfT7 for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 21 Jul 2021 23:03:56 -0400 (EDT)
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 596F34A95C
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 23:03:56 -0400 (EDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10052"; a="272670257"
+X-IronPort-AV: E=Sophos;i="5.84,259,1620716400"; d="scan'208";a="272670257"
 Received: from fmsmga002.fm.intel.com ([10.253.24.26])
- by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Jul 2021 19:38:09 -0700
-X-IronPort-AV: E=Sophos;i="5.84,259,1620716400"; d="scan'208";a="512014134"
+ by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Jul 2021 20:03:54 -0700
+X-IronPort-AV: E=Sophos;i="5.84,259,1620716400"; d="scan'208";a="512019825"
 Received: from lingshan-mobl5.ccr.corp.intel.com (HELO [10.255.29.38])
  ([10.255.29.38])
  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Jul 2021 19:38:02 -0700
+ 21 Jul 2021 20:03:46 -0700
 Subject: Re: [PATCH V8 01/18] perf/core: Use static_call to optimize
  perf_guest_info_callbacks
 To: Like Xu <like.xu.linux@gmail.com>
@@ -48,8 +47,8 @@ References: <20210716085325.10300-1-lingshan.zhu@intel.com>
  <20210716085325.10300-2-lingshan.zhu@intel.com>
  <fd117e37-8063-63a4-43cd-7cb555e5bab5@gmail.com>
 From: "Zhu, Lingshan" <lingshan.zhu@intel.com>
-Message-ID: <c5fad2b5-2c2f-9b06-6f45-629776a690fa@intel.com>
-Date: Thu, 22 Jul 2021 10:38:00 +0800
+Message-ID: <e8a7de91-fe48-c570-3cea-a296278a7c8a@intel.com>
+Date: Thu, 22 Jul 2021 11:03:44 +0800
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Firefox/78.0 Thunderbird/78.12.0
 MIME-Version: 1.0
@@ -88,19 +87,19 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 CgpPbiA3LzIxLzIwMjEgNzo1NyBQTSwgTGlrZSBYdSB3cm90ZToKPiBPbiAxNi83LzIwMjEgNDo1
 MyBwbSwgWmh1IExpbmdzaGFuIHdyb3RlOgo+PiArwqDCoMKgIH0gZWxzZSBpZiAoeGVucG11X2Rh
-dGEtPnBtdS5yLnJlZ3MuY3BsICYgMykKb2gsIG15IHR5cG8sIHdpbGwgZml4IGluIFY5CgpUaGFu
-a3MKPgo+IExpbmdzaGFuLCBzZXJpb3VzIGZvciB0aGlzIHZlcnNpb24gPwo+Cj4gYXJjaC94ODYv
-eGVuL3BtdS5jOjQzODo5OiBlcnJvcjogZXhwZWN0ZWQgaWRlbnRpZmllciBvciDigJgo4oCZIGJl
-Zm9yZSAKPiDigJhyZXR1cm7igJkKPiDCoCA0MzggfMKgwqDCoMKgwqDCoMKgwqAgcmV0dXJuIHN0
-YXRlOwo+IMKgwqDCoMKgwqAgfMKgwqDCoMKgwqDCoMKgwqAgXn5+fn5+Cj4gYXJjaC94ODYveGVu
-L3BtdS5jOjQzOToxOiBlcnJvcjogZXhwZWN0ZWQgaWRlbnRpZmllciBvciDigJgo4oCZIGJlZm9y
-ZSDigJh94oCZIAo+IHRva2VuCj4gwqAgNDM5IHwgfQo+IMKgwqDCoMKgwqAgfCBeCj4gYXJjaC94
-ODYveGVuL3BtdS5jOiBJbiBmdW5jdGlvbiDigJh4ZW5fZ3Vlc3Rfc3RhdGXigJk6Cj4gYXJjaC94
-ODYveGVuL3BtdS5jOjQzNjo5OiBlcnJvcjogY29udHJvbCByZWFjaGVzIGVuZCBvZiBub24tdm9p
-ZCAKPiBmdW5jdGlvbiBbLVdlcnJvcj1yZXR1cm4tdHlwZV0KPiDCoCA0MzYgfMKgwqDCoMKgwqDC
-oMKgwqAgfQo+IMKgwqDCoMKgwqAgfMKgwqDCoMKgwqDCoMKgwqAgXgo+IGNjMTogc29tZSB3YXJu
-aW5ncyBiZWluZyB0cmVhdGVkIGFzIGVycm9ycwo+Cj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-IHN0YXRlIHw9IFBFUkZfR1VFU1RfVVNFUjsKPj4gwqDCoMKgwqDCoCB9CgpfX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2
-bWFybUBsaXN0cy5jcy5jb2x1bWJpYS5lZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUv
-bWFpbG1hbi9saXN0aW5mby9rdm1hcm0K
+dGEtPnBtdS5yLnJlZ3MuY3BsICYgMykKPgo+IExpbmdzaGFuLCBzZXJpb3VzIGZvciB0aGlzIHZl
+cnNpb24gPwo+Cj4gYXJjaC94ODYveGVuL3BtdS5jOjQzODo5OiBlcnJvcjogZXhwZWN0ZWQgaWRl
+bnRpZmllciBvciDigJgo4oCZIGJlZm9yZSAKPiDigJhyZXR1cm7igJkKPiDCoCA0MzggfMKgwqDC
+oMKgwqDCoMKgwqAgcmV0dXJuIHN0YXRlOwo+IMKgwqDCoMKgwqAgfMKgwqDCoMKgwqDCoMKgwqAg
+Xn5+fn5+Cj4gYXJjaC94ODYveGVuL3BtdS5jOjQzOToxOiBlcnJvcjogZXhwZWN0ZWQgaWRlbnRp
+ZmllciBvciDigJgo4oCZIGJlZm9yZSDigJh94oCZIAo+IHRva2VuCj4gwqAgNDM5IHwgfQo+IMKg
+wqDCoMKgwqAgfCBeCj4gYXJjaC94ODYveGVuL3BtdS5jOiBJbiBmdW5jdGlvbiDigJh4ZW5fZ3Vl
+c3Rfc3RhdGXigJk6Cj4gYXJjaC94ODYveGVuL3BtdS5jOjQzNjo5OiBlcnJvcjogY29udHJvbCBy
+ZWFjaGVzIGVuZCBvZiBub24tdm9pZCAKPiBmdW5jdGlvbiBbLVdlcnJvcj1yZXR1cm4tdHlwZV0K
+PiDCoCA0MzYgfMKgwqDCoMKgwqDCoMKgwqAgfQo+IMKgwqDCoMKgwqAgfMKgwqDCoMKgwqDCoMKg
+wqAgXgo+IGNjMTogc29tZSB3YXJuaW5ncyBiZWluZyB0cmVhdGVkIGFzIGVycm9ycwo+Cj4+ICvC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIHN0YXRlIHw9IFBFUkZfR1VFU1RfVVNFUjsKPj4gwqDCoMKg
+wqDCoCB9CmZvcmdvdCB0byBlbmFibGUgWEVOIGJ1aWxkIGluIC5jb25maWcsIFY5IGZpeGVzIHRo
+aXMgd2lsbCBjb21lIHNvb24KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX18Ka3ZtYXJtIG1haWxpbmcgbGlzdAprdm1hcm1AbGlzdHMuY3MuY29sdW1iaWEuZWR1
+Cmh0dHBzOi8vbGlzdHMuY3MuY29sdW1iaWEuZWR1L21haWxtYW4vbGlzdGluZm8va3ZtYXJtCg==
