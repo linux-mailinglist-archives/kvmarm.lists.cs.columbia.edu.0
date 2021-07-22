@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DEC663D1E74
-	for <lists+kvmarm@lfdr.de>; Thu, 22 Jul 2021 08:45:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 098443D1FAC
+	for <lists+kvmarm@lfdr.de>; Thu, 22 Jul 2021 10:11:49 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5CD7E4A51D;
-	Thu, 22 Jul 2021 02:45:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AC1D24B0D9;
+	Thu, 22 Jul 2021 04:11:48 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.501
@@ -16,58 +16,60 @@ X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id G2o6vPv01gSp; Thu, 22 Jul 2021 02:45:26 -0400 (EDT)
+	with ESMTP id K8zvpUnjN-jf; Thu, 22 Jul 2021 04:11:48 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F3CD14B0FC;
-	Thu, 22 Jul 2021 02:45:24 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 63ACF4AEDC;
+	Thu, 22 Jul 2021 04:11:47 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E02514B0B1
- for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Jul 2021 02:45:23 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D522E4B0F3
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 22:38:13 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id L9YYNYmpZktc for <kvmarm@lists.cs.columbia.edu>;
- Thu, 22 Jul 2021 02:45:22 -0400 (EDT)
-Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7D1A14A51D
- for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Jul 2021 02:45:21 -0400 (EDT)
-Received: from dggems704-chm.china.huawei.com (unknown [172.30.72.60])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4GVjWW3rB9zPy7X;
- Thu, 22 Jul 2021 14:40:39 +0800 (CST)
-Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
- dggems704-chm.china.huawei.com (10.3.19.181) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2176.2; Thu, 22 Jul 2021 14:45:16 +0800
-Received: from lhreml710-chm.china.huawei.com ([169.254.81.184]) by
- lhreml710-chm.china.huawei.com ([169.254.81.184]) with mapi id
- 15.01.2176.012; Thu, 22 Jul 2021 07:45:14 +0100
-From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-To: Will Deacon <will@kernel.org>
-Subject: RE: [PATCH v2 3/3] kvm/arm: Align the VMID allocation with the arm64
- ASID one
-Thread-Topic: [PATCH v2 3/3] kvm/arm: Align the VMID allocation with the arm64
- ASID one
-Thread-Index: AQHXYshdKTToNwJp/0KRL8OlJabnS6tNxW6AgAD8jbA=
-Date: Thu, 22 Jul 2021 06:45:14 +0000
-Message-ID: <f7d708704fb84380af85298a98f7a48c@huawei.com>
-References: <20210616155606.2806-1-shameerali.kolothum.thodi@huawei.com>
- <20210616155606.2806-4-shameerali.kolothum.thodi@huawei.com>
- <20210721163138.GD11003@willie-the-truck>
-In-Reply-To: <20210721163138.GD11003@willie-the-truck>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.47.80.98]
+ with ESMTP id HB5K1j6SgnJe for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 21 Jul 2021 22:38:11 -0400 (EDT)
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A33CB4A3BF
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 21 Jul 2021 22:38:11 -0400 (EDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10052"; a="198825015"
+X-IronPort-AV: E=Sophos;i="5.84,259,1620716400"; d="scan'208";a="198825015"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+ by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Jul 2021 19:38:09 -0700
+X-IronPort-AV: E=Sophos;i="5.84,259,1620716400"; d="scan'208";a="512014134"
+Received: from lingshan-mobl5.ccr.corp.intel.com (HELO [10.255.29.38])
+ ([10.255.29.38])
+ by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Jul 2021 19:38:02 -0700
+Subject: Re: [PATCH V8 01/18] perf/core: Use static_call to optimize
+ perf_guest_info_callbacks
+To: Like Xu <like.xu.linux@gmail.com>
+References: <20210716085325.10300-1-lingshan.zhu@intel.com>
+ <20210716085325.10300-2-lingshan.zhu@intel.com>
+ <fd117e37-8063-63a4-43cd-7cb555e5bab5@gmail.com>
+From: "Zhu, Lingshan" <lingshan.zhu@intel.com>
+Message-ID: <c5fad2b5-2c2f-9b06-6f45-629776a690fa@intel.com>
+Date: Thu, 22 Jul 2021 10:38:00 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Firefox/78.0 Thunderbird/78.12.0
 MIME-Version: 1.0
-X-CFilter-Loop: Reflected
-Cc: "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
- "maz@kernel.org" <maz@kernel.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Linuxarm <linuxarm@huawei.com>,
- "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
- "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
- "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
+In-Reply-To: <fd117e37-8063-63a4-43cd-7cb555e5bab5@gmail.com>
+Content-Language: en-US
+X-Mailman-Approved-At: Thu, 22 Jul 2021 04:11:46 -0400
+Cc: wanpengli@tencent.com, Like Xu <like.xu@linux.intel.com>,
+ Peter Zijlstra <peterz@infradead.org>, eranian@google.com,
+ Guo Ren <guoren@kernel.org>, linux-riscv@lists.infradead.org,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ kan.liang@linux.intel.com, ak@linux.intel.com, kvm@vger.kernel.org,
+ Marc Zyngier <maz@kernel.org>, joro@8bytes.org, x86@kernel.org,
+ linux-csky@vger.kernel.org, wei.w.wang@intel.com,
+ linux-arm-kernel@lists.infradead.org, xen-devel@lists.xenproject.org,
+ liuxiangdong5@huawei.com, bp@alien8.de,
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ Boris Ostrovsky <boris.ostrovsky@oracle.com>, boris.ostrvsky@oracle.com,
+ jmattson@google.com, Nick Hu <nickhu@andestech.com>, seanjc@google.com,
+ linux-kernel@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ vkuznets@redhat.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -79,163 +81,26 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-
-
-> -----Original Message-----
-> From: Will Deacon [mailto:will@kernel.org]
-> Sent: 21 July 2021 17:32
-> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-> Cc: linux-arm-kernel@lists.infradead.org; kvmarm@lists.cs.columbia.edu;
-> linux-kernel@vger.kernel.org; maz@kernel.org; catalin.marinas@arm.com;
-> james.morse@arm.com; julien.thierry.kdev@gmail.com;
-> suzuki.poulose@arm.com; jean-philippe@linaro.org;
-> Alexandru.Elisei@arm.com; Linuxarm <linuxarm@huawei.com>;
-> qperret@google.com
-> Subject: Re: [PATCH v2 3/3] kvm/arm: Align the VMID allocation with the
-> arm64 ASID one
-> 
-> [+Quentin]
-> 
-> On Wed, Jun 16, 2021 at 04:56:06PM +0100, Shameer Kolothum wrote:
-> > From: Julien Grall <julien.grall@arm.com>
-> >
-> > At the moment, the VMID algorithm will send an SGI to all the CPUs to
-> > force an exit and then broadcast a full TLB flush and I-Cache
-> > invalidation.
-> >
-> > This patch use the new VMID allocator. The
-> > benefits are:
-> >     - CPUs are not forced to exit at roll-over. Instead the VMID will be
-> >     marked reserved and the context will be flushed at next exit. This
-> >     will reduce the IPIs traffic.
-> >     - Context invalidation is now per-CPU rather than broadcasted.
-> >     - Catalin has a formal model of the ASID allocator.
-> >
-> > With the new algo, the code is now adapted:
-> >     - The function __kvm_flush_vm_context() has been renamed to
-> >     __kvm_tlb_flush_local_all() and now only flushing the current CPU
-> >     context.
-> >     - The call to update_vmid() will be done with preemption disabled
-> >     as the new algo requires to store information per-CPU.
-> >     - The TLBs associated to EL1 will be flushed when booting a CPU to
-> >     deal with stale information. This was previously done on the
-> >     allocation of the first VMID of a new generation.
-> >
-> > Signed-off-by: Julien Grall <julien.grall@arm.com>
-> > Signed-off-by: Shameer Kolothum
-> <shameerali.kolothum.thodi@huawei.com>
-> > ---
-> >  arch/arm64/include/asm/kvm_asm.h      |   4 +-
-> >  arch/arm64/include/asm/kvm_host.h     |   6 +-
-> >  arch/arm64/include/asm/kvm_mmu.h      |   3 +-
-> >  arch/arm64/kvm/Makefile               |   2 +-
-> >  arch/arm64/kvm/arm.c                  | 115 +++++++-------------------
-> >  arch/arm64/kvm/hyp/nvhe/hyp-main.c    |   6 +-
-> >  arch/arm64/kvm/hyp/nvhe/mem_protect.c |   3 +-
-> >  arch/arm64/kvm/hyp/nvhe/tlb.c         |  10 +--
-> >  arch/arm64/kvm/hyp/vhe/tlb.c          |  10 +--
-> >  arch/arm64/kvm/mmu.c                  |   1 -
-> >  10 files changed, 52 insertions(+), 108 deletions(-)
-> 
-> [...]
-> 
-> > diff --git a/arch/arm64/include/asm/kvm_host.h
-> b/arch/arm64/include/asm/kvm_host.h
-> > index 75a7e8071012..d96284da8571 100644
-> > --- a/arch/arm64/include/asm/kvm_host.h
-> > +++ b/arch/arm64/include/asm/kvm_host.h
-> > @@ -70,9 +70,7 @@ int kvm_reset_vcpu(struct kvm_vcpu *vcpu);
-> >  void kvm_arm_vcpu_destroy(struct kvm_vcpu *vcpu);
-> >
-> >  struct kvm_vmid {
-> > -	/* The VMID generation used for the virt. memory system */
-> > -	u64    vmid_gen;
-> > -	u32    vmid;
-> > +	atomic64_t id;
-> 
-> Maybe a typedef would be better if this is the only member of the structure?
-
-Ok.
-
-> 
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/mem_protect.c
-> b/arch/arm64/kvm/hyp/nvhe/mem_protect.c
-> > index 4b60c0056c04..a02c4877a055 100644
-> > --- a/arch/arm64/kvm/hyp/nvhe/mem_protect.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/mem_protect.c
-> > @@ -106,8 +106,7 @@ int kvm_host_prepare_stage2(void *mem_pgt_pool,
-> void *dev_pgt_pool)
-> >  	mmu->pgd_phys = __hyp_pa(host_kvm.pgt.pgd);
-> >  	mmu->arch = &host_kvm.arch;
-> >  	mmu->pgt = &host_kvm.pgt;
-> > -	mmu->vmid.vmid_gen = 0;
-> > -	mmu->vmid.vmid = 0;
-> > +	atomic64_set(&mmu->vmid.id, 0);
-> 
-> I think this is the first atomic64 use in the EL2 object, which may pull in
-> some fatal KCSAN instrumentation. Quentin, have you run into this before?
-> 
-> Might be simple just to zero-initialise mmu for now, if it isn't already.
-
-I will check that.
-
-> 
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/tlb.c
-> b/arch/arm64/kvm/hyp/nvhe/tlb.c
-> > index 83dc3b271bc5..42df9931ed9a 100644
-> > --- a/arch/arm64/kvm/hyp/nvhe/tlb.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/tlb.c
-> > @@ -140,10 +140,10 @@ void __kvm_flush_cpu_context(struct
-> kvm_s2_mmu *mmu)
-> >  	__tlb_switch_to_host(&cxt);
-> >  }
-> >
-> > -void __kvm_flush_vm_context(void)
-> > +void __kvm_tlb_flush_local_all(void)
-> >  {
-> > -	dsb(ishst);
-> > -	__tlbi(alle1is);
-> > +	dsb(nshst);
-> > +	__tlbi(alle1);
-> >
-> >  	/*
-> >  	 * VIPT and PIPT caches are not affected by VMID, so no maintenance
-> > @@ -155,7 +155,7 @@ void __kvm_flush_vm_context(void)
-> >  	 *
-> >  	 */
-> >  	if (icache_is_vpipt())
-> > -		asm volatile("ic ialluis");
-> > +		asm volatile("ic iallu" : : );
-> >
-> > -	dsb(ish);
-> > +	dsb(nsh);
-> 
-> Hmm, I'm wondering whether having this local stuff really makes sense for
-> VMIDs. For ASIDs, where rollover can be frequent and TLBI could result in
-> IPI on 32-bit, the local option was important, but here rollover is less
-> frequent, DVM is relied upon to work and the cost of a hypercall is
-> significant with nVHE.
-> 
-> So I do think you could simplify patch 2 slightly to drop the
-> flush_pending and just issue inner-shareable invalidation on rollover.
-> With that, it might also make it straightforward to clear active_asids
-> when scheduling out a vCPU, which would solve the other problem I
-> mentioned
-> about unnecessarily reserving a bunch of the VMID space.
-
-Ok. I will try out the above suggestion. Hope it will be acceptable for 8 bit 
-VMID systems as well as there is a higher chance for rollover especially
-when we introduce pinned VMIDs(I am not sure such platforms care about
-Pinned VMID or not. If not, we could limit Pinned VMIDs to 16 bit systems).
-
-Thanks,
-Shameer
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+CgpPbiA3LzIxLzIwMjEgNzo1NyBQTSwgTGlrZSBYdSB3cm90ZToKPiBPbiAxNi83LzIwMjEgNDo1
+MyBwbSwgWmh1IExpbmdzaGFuIHdyb3RlOgo+PiArwqDCoMKgIH0gZWxzZSBpZiAoeGVucG11X2Rh
+dGEtPnBtdS5yLnJlZ3MuY3BsICYgMykKb2gsIG15IHR5cG8sIHdpbGwgZml4IGluIFY5CgpUaGFu
+a3MKPgo+IExpbmdzaGFuLCBzZXJpb3VzIGZvciB0aGlzIHZlcnNpb24gPwo+Cj4gYXJjaC94ODYv
+eGVuL3BtdS5jOjQzODo5OiBlcnJvcjogZXhwZWN0ZWQgaWRlbnRpZmllciBvciDigJgo4oCZIGJl
+Zm9yZSAKPiDigJhyZXR1cm7igJkKPiDCoCA0MzggfMKgwqDCoMKgwqDCoMKgwqAgcmV0dXJuIHN0
+YXRlOwo+IMKgwqDCoMKgwqAgfMKgwqDCoMKgwqDCoMKgwqAgXn5+fn5+Cj4gYXJjaC94ODYveGVu
+L3BtdS5jOjQzOToxOiBlcnJvcjogZXhwZWN0ZWQgaWRlbnRpZmllciBvciDigJgo4oCZIGJlZm9y
+ZSDigJh94oCZIAo+IHRva2VuCj4gwqAgNDM5IHwgfQo+IMKgwqDCoMKgwqAgfCBeCj4gYXJjaC94
+ODYveGVuL3BtdS5jOiBJbiBmdW5jdGlvbiDigJh4ZW5fZ3Vlc3Rfc3RhdGXigJk6Cj4gYXJjaC94
+ODYveGVuL3BtdS5jOjQzNjo5OiBlcnJvcjogY29udHJvbCByZWFjaGVzIGVuZCBvZiBub24tdm9p
+ZCAKPiBmdW5jdGlvbiBbLVdlcnJvcj1yZXR1cm4tdHlwZV0KPiDCoCA0MzYgfMKgwqDCoMKgwqDC
+oMKgwqAgfQo+IMKgwqDCoMKgwqAgfMKgwqDCoMKgwqDCoMKgwqAgXgo+IGNjMTogc29tZSB3YXJu
+aW5ncyBiZWluZyB0cmVhdGVkIGFzIGVycm9ycwo+Cj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+IHN0YXRlIHw9IFBFUkZfR1VFU1RfVVNFUjsKPj4gwqDCoMKgwqDCoCB9CgpfX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2
+bWFybUBsaXN0cy5jcy5jb2x1bWJpYS5lZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUv
+bWFpbG1hbi9saXN0aW5mby9rdm1hcm0K
