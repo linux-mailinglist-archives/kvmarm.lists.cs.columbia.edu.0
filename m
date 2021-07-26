@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 379493D5684
-	for <lists+kvmarm@lfdr.de>; Mon, 26 Jul 2021 11:29:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E858E3D5686
+	for <lists+kvmarm@lfdr.de>; Mon, 26 Jul 2021 11:29:26 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DAD2249F83;
-	Mon, 26 Jul 2021 05:29:23 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8C96E4A2E5;
+	Mon, 26 Jul 2021 05:29:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,64 +14,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id RIwOi8TnrdSK; Mon, 26 Jul 2021 05:29:23 -0400 (EDT)
+	with ESMTP id cKmq8LpfxaRn; Mon, 26 Jul 2021 05:29:25 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B1BA74A4C0;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E914749DE3;
 	Mon, 26 Jul 2021 05:29:22 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C197449F5D
- for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Jul 2021 05:29:19 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 95BD04A2E5
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Jul 2021 05:29:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id h6ZTQI03757s for <kvmarm@lists.cs.columbia.edu>;
- Mon, 26 Jul 2021 05:29:18 -0400 (EDT)
-Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com
- [209.85.128.74])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id ABBEC4A2E5
- for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Jul 2021 05:29:18 -0400 (EDT)
-Received: by mail-wm1-f74.google.com with SMTP id
- 25-20020a05600c0219b029024ebb12928cso2266321wmi.3
- for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Jul 2021 02:29:18 -0700 (PDT)
+ with ESMTP id X7524VO9Cnx4 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 26 Jul 2021 05:29:20 -0400 (EDT)
+Received: from mail-qk1-f202.google.com (mail-qk1-f202.google.com
+ [209.85.222.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6FB9E49F5D
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Jul 2021 05:29:20 -0400 (EDT)
+Received: by mail-qk1-f202.google.com with SMTP id
+ y3-20020ae9f4030000b02903b916ae903fso8482777qkl.6
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Jul 2021 02:29:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=q1zqD73fJkFVmAAq4dO3uZVcGUuPFE+HczOzBsWKqIA=;
- b=MGESZEF7diylBA6Kx1cQU7HsTAr2Dx3Sx2H/5ckbKa1+lNzUwqXNq3+HyK7pQ7t+79
- GdSkBeHZk2on8PnJvvmF7eeNr3gYvaA4hb2R/vEdxFXLjdIYQMs6dXGIAgcJKAFuJuvk
- 9YIEBUcgIAThdYkh3hLGPnW+J4a2ufP8TaR5xvj7I7smpbQd6k81PXyf0wIvDOjPHSnO
- GsUi68byOHXQ1RiabG7/pQ9xq3UZP89oLuQwZsRgH0Szp0DpmeIOIEA518pldBB0RMru
- b5fxHNLKCpJtoYgrOEFncCNUgrmp+YvtHf1zA5RkIxmDYe9WMiYoGQg0yzNbKzMtuKKm
- B4xw==
+ :cc; bh=84HOeXnU0pbF9G+lxWpLi5LmB45NE4KeQQD7BXdPsl8=;
+ b=cMHNjgNR6iYTCg9SnlXd5JprFEBC42R2JR6JBPVmKO5+6SCNE5EZLYh4v7UTkvUfN6
+ t6wkyF9CKlEI5cXxhmXYMDFSOZYDO0AAckEXNLRWd6H6gEiNQPN6wMMeyDir/HKshs1+
+ FCPT5va21Vb13pSxl8fS6/iXkR+tjTYdUEjbxVBdLTbShgstSgqjPL86AcHc+Ye+ue49
+ VjuwZWfQB//83w9P76K/E4i6WCjZD9lZY9GImVnLwIRXaLmUJVjuwN/AlDId+x29ZZUg
+ tCi2TqTjQ4JURKMRHBqh3A98VQyq/2IqxxOJQwm1erdvNictsIMzafbusfyAQSrOMvBm
+ NPzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=q1zqD73fJkFVmAAq4dO3uZVcGUuPFE+HczOzBsWKqIA=;
- b=Qoh/hARaPR2HueCGK6NK/mTgnEJXX/If8J07ACH4h4U5Kg+qLwuXVSvOzdVGpskV5p
- m327RZlmHAZOM6W2gbxubn9mGUAo0hEnYtYXaI2Jdx0097+W/xjcPC7LyauiDbvl6SaB
- dktLjmI5F0Wn13g+2qX8FJ0W/iRfRGBrTYs6PZDcwzawOXVUjP5GBZXSlL4Bbs4ebvs2
- /p+RthQqA8AG6EdJScM/nn7bByAtuvenk0N83qB7q2upF+0GRov5Vkn7RCf34b8X1UwX
- TulNxrmXUw7RoIjS0qqJV5vTQOX6Uhf3abGMrRqcedDikTdMc2Bnzup3sFAh+SGXXT3T
- Vr6A==
-X-Gm-Message-State: AOAM533KZKQSB6rwfoxUsaKpaEX+h8VXHn/aEOhyMQ5/5yLJCXZEmZdB
- INV6lYI2vWxu53U5/0VfiOrC7uz+NUe1
-X-Google-Smtp-Source: ABdhPJx1wCuqsWbjKEjDSr1O9R264wGcMnHVqFdGsLki/Uzi81IzUAaHKQtIg2C1kDCAaUPziAz6p3UcRgZ0
+ bh=84HOeXnU0pbF9G+lxWpLi5LmB45NE4KeQQD7BXdPsl8=;
+ b=iskWWVxcDVx0bDCc/m1Qrwxx4RPjiLwip/xh/Kuf24fHj043FYuWkWR0X9UIbFTouS
+ XrT/Yxa/jBXD6KAKJa4EBAhCdBN50qrqzMROxAUekIA1f9Z6eIa/kVf8GHuS+S7bTobY
+ oktLkZs1mYM4ux4SFwzNuB4xcwEJ2kLGwmH+mKY5CbNRTSDVa3XmZyT9ezuiGsV1Tl0b
+ o0DZQBqzOOS8kgAGgjxoskn5z01ME7zajpoTN+Ri4OcYkqonxw86NTHv/Yb0cuwdzEoS
+ MUXBo/icbSKrhx2uCLOEI8G/sPkELNCkcToYy3RnvGurOPOfWwwazyBbK7a10c8yemyQ
+ TkIg==
+X-Gm-Message-State: AOAM533jRtPsB9jJ0FNaBmUvEZSbgxzGQjqlRgWE/ddSbNnIgrUqLtrl
+ Fjh6FAomXd7HwSct5JPenDkWKggNMLLe
+X-Google-Smtp-Source: ABdhPJyfe1AhRkOctDL7NrTZYRv4fXMomxCCFPgiSVK1+oOT3FvNCUPlQ7/f+TViZ8GyJREQgbWtnan1Sdjn
 X-Received: from luke.lon.corp.google.com
  ([2a00:79e0:d:210:23a0:2f14:433:e6cb])
- (user=qperret job=sendgmr) by 2002:a05:6000:120f:: with SMTP id
- e15mr17783536wrx.399.1627291757591; Mon, 26 Jul 2021 02:29:17 -0700 (PDT)
-Date: Mon, 26 Jul 2021 10:28:52 +0100
+ (user=qperret job=sendgmr) by 2002:a05:6214:a62:: with SMTP id
+ ef2mr868179qvb.56.1627291760042; Mon, 26 Jul 2021 02:29:20 -0700 (PDT)
+Date: Mon, 26 Jul 2021 10:28:53 +0100
 In-Reply-To: <20210726092905.2198501-1-qperret@google.com>
-Message-Id: <20210726092905.2198501-4-qperret@google.com>
+Message-Id: <20210726092905.2198501-5-qperret@google.com>
 Mime-Version: 1.0
 References: <20210726092905.2198501-1-qperret@google.com>
 X-Mailer: git-send-email 2.32.0.432.gabb21c7263-goog
-Subject: [PATCH v2 03/16] KVM: arm64: Expose page-table helpers
+Subject: [PATCH v2 04/16] KVM: arm64: Optimize host memory aborts
 From: Quentin Perret <qperret@google.com>
 To: maz@kernel.org, james.morse@arm.com, alexandru.elisei@arm.com, 
  suzuki.poulose@arm.com, catalin.marinas@arm.com, will@kernel.org
@@ -94,113 +94,225 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The KVM pgtable API exposes the kvm_pgtable_walk() function to allow
-the definition of walkers outside of pgtable.c. However, it is not easy
-to implement any of those walkers without some of the low-level helpers.
-Move some of them to the header file to allow re-use from other places.
+The kvm_pgtable_stage2_find_range() function is used in the host memory
+abort path to try and look for the largest block mapping that can be
+used to map the faulting address. In order to do so, the function
+currently walks the stage-2 page-table and looks for existing
+incompatible mappings within the range of the largest possible block.
+If incompatible mappings are found, it tries the same procedure again,
+but using a smaller block range, and repeats until a matching range is
+found (potentially up to page granularity). While this approach has
+benefits (mostly in the fact that it proactively coalesces host stage-2
+mappings), it can be slow if the ranges are fragmented, and it isn't
+optimized to deal with CPUs faulting on the same IPA as all of them will
+do all the work every time.
+
+To avoid these issues, remove kvm_pgtable_stage2_find_range(), and walk
+the page-table only once in the host_mem_abort() path to find the
+closest leaf to the input address. With this, use the corresponding
+range if it is invalid and not owned by another entity. If a valid leaf
+is found, return -EAGAIN similar to what is done in the
+kvm_pgtable_stage2_map() path to optimize concurrent faults.
 
 Signed-off-by: Quentin Perret <qperret@google.com>
 ---
- arch/arm64/include/asm/kvm_pgtable.h | 27 +++++++++++++++++++++++++++
- arch/arm64/kvm/hyp/pgtable.c         | 26 --------------------------
- 2 files changed, 27 insertions(+), 26 deletions(-)
+ arch/arm64/include/asm/kvm_pgtable.h  | 30 -----------
+ arch/arm64/kvm/hyp/nvhe/mem_protect.c | 39 +++++++++++++-
+ arch/arm64/kvm/hyp/pgtable.c          | 74 ---------------------------
+ 3 files changed, 38 insertions(+), 105 deletions(-)
 
 diff --git a/arch/arm64/include/asm/kvm_pgtable.h b/arch/arm64/include/asm/kvm_pgtable.h
-index 082b9d65f40b..5a7a13bbd4a1 100644
+index 5a7a13bbd4a1..cec76a49f521 100644
 --- a/arch/arm64/include/asm/kvm_pgtable.h
 +++ b/arch/arm64/include/asm/kvm_pgtable.h
-@@ -25,6 +25,33 @@ static inline u64 kvm_get_parange(u64 mmfr0)
+@@ -141,16 +141,6 @@ enum kvm_pgtable_prot {
+ #define PAGE_HYP_RO		(KVM_PGTABLE_PROT_R)
+ #define PAGE_HYP_DEVICE		(PAGE_HYP | KVM_PGTABLE_PROT_DEVICE)
  
- typedef u64 kvm_pte_t;
- 
-+#define KVM_PTE_VALID			BIT(0)
-+
-+static inline bool kvm_pte_valid(kvm_pte_t pte)
-+{
-+	return pte & KVM_PTE_VALID;
-+}
-+
-+static inline u64 kvm_granule_shift(u32 level)
-+{
-+	/* Assumes KVM_PGTABLE_MAX_LEVELS is 4 */
-+	return ARM64_HW_PGTABLE_LEVEL_SHIFT(level);
-+}
-+
-+static inline u64 kvm_granule_size(u32 level)
-+{
-+	return BIT(kvm_granule_shift(level));
-+}
-+
-+static inline bool kvm_level_supports_block_mapping(u32 level)
-+{
-+	/*
-+	 * Reject invalid block mappings and don't bother with 4TB mappings for
-+	 * 52-bit PAs.
-+	 */
-+	return !(level == 0 || (PAGE_SIZE != SZ_4K && level == 1));
-+}
-+
+-/**
+- * struct kvm_mem_range - Range of Intermediate Physical Addresses
+- * @start:	Start of the range.
+- * @end:	End of the range.
+- */
+-struct kvm_mem_range {
+-	u64 start;
+-	u64 end;
+-};
+-
  /**
-  * struct kvm_pgtable_mm_ops - Memory management callbacks.
-  * @zalloc_page:		Allocate a single zeroed memory page.
+  * enum kvm_pgtable_walk_flags - Flags to control a depth-first page-table walk.
+  * @KVM_PGTABLE_WALK_LEAF:		Visit leaf entries, including invalid
+@@ -477,24 +467,4 @@ int kvm_pgtable_walk(struct kvm_pgtable *pgt, u64 addr, u64 size,
+  */
+ int kvm_pgtable_get_leaf(struct kvm_pgtable *pgt, u64 addr,
+ 			 kvm_pte_t *ptep, u32 *level);
+-
+-/**
+- * kvm_pgtable_stage2_find_range() - Find a range of Intermediate Physical
+- *				     Addresses with compatible permission
+- *				     attributes.
+- * @pgt:	Page-table structure initialised by kvm_pgtable_stage2_init*().
+- * @addr:	Address that must be covered by the range.
+- * @prot:	Protection attributes that the range must be compatible with.
+- * @range:	Range structure used to limit the search space at call time and
+- *		that will hold the result.
+- *
+- * The offset of @addr within a page is ignored. An IPA is compatible with @prot
+- * iff its corresponding stage-2 page-table entry has default ownership and, if
+- * valid, is mapped with protection attributes identical to @prot.
+- *
+- * Return: 0 on success, negative error code on failure.
+- */
+-int kvm_pgtable_stage2_find_range(struct kvm_pgtable *pgt, u64 addr,
+-				  enum kvm_pgtable_prot prot,
+-				  struct kvm_mem_range *range);
+ #endif	/* __ARM64_KVM_PGTABLE_H__ */
+diff --git a/arch/arm64/kvm/hyp/nvhe/mem_protect.c b/arch/arm64/kvm/hyp/nvhe/mem_protect.c
+index 871149246f5f..01700a908bb7 100644
+--- a/arch/arm64/kvm/hyp/nvhe/mem_protect.c
++++ b/arch/arm64/kvm/hyp/nvhe/mem_protect.c
+@@ -159,6 +159,11 @@ static int host_stage2_unmap_dev_all(void)
+ 	return kvm_pgtable_stage2_unmap(pgt, addr, BIT(pgt->ia_bits) - addr);
+ }
+ 
++struct kvm_mem_range {
++	u64 start;
++	u64 end;
++};
++
+ static bool find_mem_range(phys_addr_t addr, struct kvm_mem_range *range)
+ {
+ 	int cur, left = 0, right = hyp_memblock_nr;
+@@ -227,6 +232,38 @@ static inline int __host_stage2_idmap(u64 start, u64 end,
+ 		__ret;							\
+ 	 })
+ 
++static int host_stage2_find_range(u64 addr, struct kvm_mem_range *range)
++{
++	u64 granule, start, end;
++	kvm_pte_t pte;
++	u32 level;
++	int ret;
++
++	ret = kvm_pgtable_get_leaf(&host_kvm.pgt, addr, &pte, &level);
++	if (ret)
++		return ret;
++
++	if (kvm_pte_valid(pte))
++		return -EAGAIN;
++
++	if (pte)
++		return -EPERM;
++
++	do {
++		granule = kvm_granule_size(level);
++		start = ALIGN_DOWN(addr, granule);
++		end = start + granule;
++		level++;
++	} while ((level < KVM_PGTABLE_MAX_LEVELS) &&
++			(!kvm_level_supports_block_mapping(level) ||
++			 start < range->start || range->end < end));
++
++	range->start = start;
++	range->end = end;
++
++	return 0;
++}
++
+ static int host_stage2_idmap(u64 addr)
+ {
+ 	enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R | KVM_PGTABLE_PROT_W;
+@@ -238,7 +275,7 @@ static int host_stage2_idmap(u64 addr)
+ 		prot |= KVM_PGTABLE_PROT_X;
+ 
+ 	hyp_spin_lock(&host_kvm.lock);
+-	ret = kvm_pgtable_stage2_find_range(&host_kvm.pgt, addr, prot, &range);
++	ret = host_stage2_find_range(addr, &range);
+ 	if (ret)
+ 		goto unlock;
+ 
 diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
-index 78f36bd5df6c..2c5d4d3e31cc 100644
+index 2c5d4d3e31cc..55199e579863 100644
 --- a/arch/arm64/kvm/hyp/pgtable.c
 +++ b/arch/arm64/kvm/hyp/pgtable.c
-@@ -11,7 +11,6 @@
- #include <asm/kvm_pgtable.h>
- #include <asm/stage2_pgtable.h>
- 
--#define KVM_PTE_VALID			BIT(0)
- 
- #define KVM_PTE_TYPE			BIT(1)
- #define KVM_PTE_TYPE_BLOCK		0
-@@ -61,17 +60,6 @@ struct kvm_pgtable_walk_data {
- 	u64				end;
- };
- 
--static u64 kvm_granule_shift(u32 level)
--{
--	/* Assumes KVM_PGTABLE_MAX_LEVELS is 4 */
--	return ARM64_HW_PGTABLE_LEVEL_SHIFT(level);
--}
--
--static u64 kvm_granule_size(u32 level)
--{
--	return BIT(kvm_granule_shift(level));
--}
--
- #define KVM_PHYS_INVALID (-1ULL)
- 
- static bool kvm_phys_is_valid(u64 phys)
-@@ -79,15 +67,6 @@ static bool kvm_phys_is_valid(u64 phys)
- 	return phys < BIT(id_aa64mmfr0_parange_to_phys_shift(ID_AA64MMFR0_PARANGE_MAX));
+@@ -1115,77 +1115,3 @@ void kvm_pgtable_stage2_destroy(struct kvm_pgtable *pgt)
+ 	pgt->mm_ops->free_pages_exact(pgt->pgd, pgd_sz);
+ 	pgt->pgd = NULL;
  }
- 
--static bool kvm_level_supports_block_mapping(u32 level)
+-
+-#define KVM_PTE_LEAF_S2_COMPAT_MASK	(KVM_PTE_LEAF_ATTR_S2_PERMS | \
+-					 KVM_PTE_LEAF_ATTR_LO_S2_MEMATTR | \
+-					 KVM_PTE_LEAF_ATTR_S2_IGNORED)
+-
+-static int stage2_check_permission_walker(u64 addr, u64 end, u32 level,
+-					  kvm_pte_t *ptep,
+-					  enum kvm_pgtable_walk_flags flag,
+-					  void * const arg)
 -{
+-	kvm_pte_t old_attr, pte = *ptep, *new_attr = arg;
+-
 -	/*
--	 * Reject invalid block mappings and don't bother with 4TB mappings for
--	 * 52-bit PAs.
+-	 * Compatible mappings are either invalid and owned by the page-table
+-	 * owner (whose id is 0), or valid with matching permission attributes.
 -	 */
--	return !(level == 0 || (PAGE_SIZE != SZ_4K && level == 1));
+-	if (kvm_pte_valid(pte)) {
+-		old_attr = pte & KVM_PTE_LEAF_S2_COMPAT_MASK;
+-		if (old_attr != *new_attr)
+-			return -EEXIST;
+-	} else if (pte) {
+-		return -EEXIST;
+-	}
+-
+-	return 0;
 -}
 -
- static bool kvm_block_mapping_supported(u64 addr, u64 end, u64 phys, u32 level)
- {
- 	u64 granule = kvm_granule_size(level);
-@@ -135,11 +114,6 @@ static u32 kvm_pgd_pages(u32 ia_bits, u32 start_level)
- 	return __kvm_pgd_page_idx(&pgt, -1ULL) + 1;
- }
- 
--static bool kvm_pte_valid(kvm_pte_t pte)
+-int kvm_pgtable_stage2_find_range(struct kvm_pgtable *pgt, u64 addr,
+-				  enum kvm_pgtable_prot prot,
+-				  struct kvm_mem_range *range)
 -{
--	return pte & KVM_PTE_VALID;
--}
+-	kvm_pte_t attr;
+-	struct kvm_pgtable_walker check_perm_walker = {
+-		.cb		= stage2_check_permission_walker,
+-		.flags		= KVM_PGTABLE_WALK_LEAF,
+-		.arg		= &attr,
+-	};
+-	u64 granule, start, end;
+-	u32 level;
+-	int ret;
 -
- static bool kvm_pte_table(kvm_pte_t pte, u32 level)
- {
- 	if (level == KVM_PGTABLE_MAX_LEVELS - 1)
+-	ret = stage2_set_prot_attr(pgt, prot, &attr);
+-	if (ret)
+-		return ret;
+-	attr &= KVM_PTE_LEAF_S2_COMPAT_MASK;
+-
+-	for (level = pgt->start_level; level < KVM_PGTABLE_MAX_LEVELS; level++) {
+-		granule = kvm_granule_size(level);
+-		start = ALIGN_DOWN(addr, granule);
+-		end = start + granule;
+-
+-		if (!kvm_level_supports_block_mapping(level))
+-			continue;
+-
+-		if (start < range->start || range->end < end)
+-			continue;
+-
+-		/*
+-		 * Check the presence of existing mappings with incompatible
+-		 * permissions within the current block range, and try one level
+-		 * deeper if one is found.
+-		 */
+-		ret = kvm_pgtable_walk(pgt, start, granule, &check_perm_walker);
+-		if (ret != -EEXIST)
+-			break;
+-	}
+-
+-	if (!ret) {
+-		range->start = start;
+-		range->end = end;
+-	}
+-
+-	return ret;
+-}
 -- 
 2.32.0.432.gabb21c7263-goog
 
