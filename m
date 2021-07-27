@@ -2,67 +2,87 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B05403D5D23
-	for <lists+kvmarm@lfdr.de>; Mon, 26 Jul 2021 17:36:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C230C3D733B
+	for <lists+kvmarm@lfdr.de>; Tue, 27 Jul 2021 12:29:59 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5F8D24A1FA;
-	Mon, 26 Jul 2021 11:36:06 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1F3CB4A534;
+	Tue, 27 Jul 2021 06:29:57 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id mTSZGgtnz7Ky; Mon, 26 Jul 2021 11:36:05 -0400 (EDT)
+	with ESMTP id KvVLyl+IkAZ3; Tue, 27 Jul 2021 06:29:57 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2DDA74A483;
-	Mon, 26 Jul 2021 11:36:03 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 03E4A4A500;
+	Tue, 27 Jul 2021 06:29:56 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D9D5F4A1A7
- for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Jul 2021 11:36:00 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5B0D24A023
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 27 Jul 2021 06:29:54 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id FrLVhuDBue0E for <kvmarm@lists.cs.columbia.edu>;
- Mon, 26 Jul 2021 11:36:00 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E47C74A1B0
- for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Jul 2021 11:35:59 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 3C1DD60F58;
- Mon, 26 Jul 2021 15:35:59 +0000 (UTC)
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1m82e5-001511-JT; Mon, 26 Jul 2021 16:35:57 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, linux-mm@kvack.org
-Subject: [PATCH v2 6/6] KVM: Get rid of kvm_get_pfn()
-Date: Mon, 26 Jul 2021 16:35:52 +0100
-Message-Id: <20210726153552.1535838-7-maz@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210726153552.1535838-1-maz@kernel.org>
+ with ESMTP id dQ7nx08zVT2X for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 27 Jul 2021 06:29:53 -0400 (EDT)
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com
+ [209.85.221.51])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3BCAB49F6C
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 27 Jul 2021 06:29:53 -0400 (EDT)
+Received: by mail-wr1-f51.google.com with SMTP id p5so9473574wro.7
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 27 Jul 2021 03:29:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=sEVmfuf6SAseKM7IhWi4Jb0Zlgwxa7yzUBD2vot0gXo=;
+ b=jbMwd6Vf/veIiSMmFyck6MkZinWyb8unn2adULZu5hHXgBtUJvqcr7kHGRoDFsLTVF
+ Ht499ehIBB/nonP+vrMAjoWud6FMfahyup+Xc0MfU/qds5iHMcnX9oDDtGxhXfsmw2jQ
+ bOA+6T18uhuWrPr7HOF9DqvemNutUfebyAiFbMmlsk90+4cfzU35BkGVuzCOjlJzHABS
+ Cpt4iwJFPDMjI6lmrKwLeQlrPdYPUWBMpzRnzxhv7u586fgB5yOFDr74Z++FKEHYj7hv
+ vjMZy3Xh3I1JPjwJNfnFXsagRYMzf2VQSW6ySqNJ1lvGEY6NX0bBn2Dlb5HaqspF7peF
+ dfMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=sEVmfuf6SAseKM7IhWi4Jb0Zlgwxa7yzUBD2vot0gXo=;
+ b=WLHe96BYlltJ8e1e68H+SeBNouErDwa4Ev5MVgiv48zl0x1aqEIOX5jDq+7sCWQTjD
+ o37R6TRZRwV3s/6t9WSbR1a1viHSNq3u+XxlbFv5WY1wvSnkrgYgX/zR4yjt8zA25x25
+ qCBqC7yhPHcbIe6I7dsysBrql4xWfdoOqNMXGZISrkuyMfK5bUbbGRUOUp6YIYkFyahx
+ MZGUkBM+NRfjb9QzaSJWsjL/1EpPgBVhFhTgvBl0DtYVJ9GA6FmIfGkCEFBxgKdnTNDI
+ X2FS7OOaTgTuHFbCu6N5JuSTNFCKMbylqgSbr13YgUJauQz5ez4JUP2Nv2fPbC6WYA/4
+ ZpNA==
+X-Gm-Message-State: AOAM532V8+oLeuzhprcFk0cec9BFEqXBs0VvbUmUHI7ZSHg++zFMClhN
+ e8/sWexfM0yv3R9qUBSCb6J2ag==
+X-Google-Smtp-Source: ABdhPJyl4ddC3yvRFr3OUCBwgPccE+P0sn15kKofTfKQowfSw6BB1YRonRXV/ZY3mD3e5qu7Ph1vew==
+X-Received: by 2002:adf:f64b:: with SMTP id x11mr14340461wrp.155.1627381791958; 
+ Tue, 27 Jul 2021 03:29:51 -0700 (PDT)
+Received: from google.com ([2a00:79e0:d:210:c468:e033:fa2b:3a6])
+ by smtp.gmail.com with ESMTPSA id w18sm2928774wrg.68.2021.07.27.03.29.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Jul 2021 03:29:51 -0700 (PDT)
+Date: Tue, 27 Jul 2021 11:29:48 +0100
+From: Quentin Perret <qperret@google.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH v2 1/6] KVM: arm64: Introduce helper to retrieve a PTE
+ and its level
+Message-ID: <YP/gHGfhXgBBe7iD@google.com>
 References: <20210726153552.1535838-1-maz@kernel.org>
+ <20210726153552.1535838-2-maz@kernel.org>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, linux-mm@kvack.org, seanjc@google.com,
- willy@infradead.org, pbonzini@redhat.com, will@kernel.org, qperret@google.com,
- james.morse@arm.com, suzuki.poulose@arm.com, alexandru.elisei@arm.com,
- kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com, Sean Christopherson <seanjc@google.com>,
- Matthew Wilcox <willy@infradead.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Will Deacon <will@kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20210726153552.1535838-2-maz@kernel.org>
+Cc: kernel-team@android.com, kvm@vger.kernel.org,
+ Sean Christopherson <seanjc@google.com>, Matthew Wilcox <willy@infradead.org>,
+ linux-mm@kvack.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -79,57 +99,14 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Nobody is using kvm_get_pfn() anymore. Get rid of it.
+On Monday 26 Jul 2021 at 16:35:47 (+0100), Marc Zyngier wrote:
+> It is becoming a common need to fetch the PTE for a given address
+> together with its level. Add such a helper.
 
-Acked-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- include/linux/kvm_host.h | 1 -
- virt/kvm/kvm_main.c      | 9 +--------
- 2 files changed, 1 insertion(+), 9 deletions(-)
+Reviewed-by: Quentin Perret <qperret@google.com>
 
-diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-index ae7735b490b4..9818d271c2a1 100644
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -824,7 +824,6 @@ void kvm_release_pfn_clean(kvm_pfn_t pfn);
- void kvm_release_pfn_dirty(kvm_pfn_t pfn);
- void kvm_set_pfn_dirty(kvm_pfn_t pfn);
- void kvm_set_pfn_accessed(kvm_pfn_t pfn);
--void kvm_get_pfn(kvm_pfn_t pfn);
- 
- void kvm_release_pfn(kvm_pfn_t pfn, bool dirty, struct gfn_to_pfn_cache *cache);
- int kvm_read_guest_page(struct kvm *kvm, gfn_t gfn, void *data, int offset,
-diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-index 956ef6ddce7f..54bf3a14958a 100644
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -2215,7 +2215,7 @@ static int hva_to_pfn_remapped(struct vm_area_struct *vma,
- 	 * Get a reference here because callers of *hva_to_pfn* and
- 	 * *gfn_to_pfn* ultimately call kvm_release_pfn_clean on the
- 	 * returned pfn.  This is only needed if the VMA has VM_MIXEDMAP
--	 * set, but the kvm_get_pfn/kvm_release_pfn_clean pair will
-+	 * set, but the kvm_try_get_pfn/kvm_release_pfn_clean pair will
- 	 * simply do nothing for reserved pfns.
- 	 *
- 	 * Whoever called remap_pfn_range is also going to call e.g.
-@@ -2612,13 +2612,6 @@ void kvm_set_pfn_accessed(kvm_pfn_t pfn)
- }
- EXPORT_SYMBOL_GPL(kvm_set_pfn_accessed);
- 
--void kvm_get_pfn(kvm_pfn_t pfn)
--{
--	if (!kvm_is_reserved_pfn(pfn))
--		get_page(pfn_to_page(pfn));
--}
--EXPORT_SYMBOL_GPL(kvm_get_pfn);
--
- static int next_segment(unsigned long len, int offset)
- {
- 	if (len > PAGE_SIZE - offset)
--- 
-2.30.2
-
+Thanks,
+Quentin
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
