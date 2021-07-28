@@ -2,57 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 26FDB3D90EB
-	for <lists+kvmarm@lfdr.de>; Wed, 28 Jul 2021 16:51:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C70B3D920A
+	for <lists+kvmarm@lfdr.de>; Wed, 28 Jul 2021 17:32:45 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 75F4D4A483;
-	Wed, 28 Jul 2021 10:51:07 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8EBF34AED4;
+	Wed, 28 Jul 2021 11:32:44 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9lFfEXlJuDQR; Wed, 28 Jul 2021 10:51:07 -0400 (EDT)
+	with ESMTP id cj7Lyyck-fpI; Wed, 28 Jul 2021 11:32:44 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 336E74B081;
-	Wed, 28 Jul 2021 10:51:06 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9B1AA4ACC9;
+	Wed, 28 Jul 2021 11:32:43 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 67B3D4A483
- for <kvmarm@lists.cs.columbia.edu>; Wed, 28 Jul 2021 10:51:05 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6028740CC5
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 28 Jul 2021 11:32:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id lWoOM5TJmPOe for <kvmarm@lists.cs.columbia.edu>;
- Wed, 28 Jul 2021 10:51:04 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0993340463
- for <kvmarm@lists.cs.columbia.edu>; Wed, 28 Jul 2021 10:51:04 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 86FDB1042;
- Wed, 28 Jul 2021 07:51:03 -0700 (PDT)
-Received: from [192.168.1.179] (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8FDC63F70D;
- Wed, 28 Jul 2021 07:51:01 -0700 (PDT)
-Subject: Re: [PATCH 01/16] KVM: arm64: Generalise VM features into a set of
- flags
-To: Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>
-References: <20210715163159.1480168-1-maz@kernel.org>
- <20210715163159.1480168-2-maz@kernel.org>
- <20210727181026.GA19173@willie-the-truck> <875ywuepxv.wl-maz@kernel.org>
-From: Steven Price <steven.price@arm.com>
-Message-ID: <716fffdb-580a-bc70-478a-a54912a77c82@arm.com>
-Date: Wed, 28 Jul 2021 15:51:00 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <875ywuepxv.wl-maz@kernel.org>
-Content-Language: en-GB
-Cc: kvm@vger.kernel.org, kernel-team@android.com,
- Srivatsa Vaddagiri <vatsa@codeaurora.org>, linux-kernel@vger.kernel.org,
- Shanker R Donthineni <sdonthineni@nvidia.com>, kvmarm@lists.cs.columbia.edu,
+ with ESMTP id dG0nf-PGGQTn for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 28 Jul 2021 11:32:41 -0400 (EDT)
+Received: from mail-wm1-f74.google.com (mail-wm1-f74.google.com
+ [209.85.128.74])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6A830407A0
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 28 Jul 2021 11:32:41 -0400 (EDT)
+Received: by mail-wm1-f74.google.com with SMTP id
+ 132-20020a1c018a0000b029025005348905so1060718wmb.7
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 28 Jul 2021 08:32:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=woxBdtlGB6zB1Cvm58/DELTClL+Pi4ueOkLDe2VMF2M=;
+ b=epz07g1EaavCivdoVuxcYOGCNXaoqnHhC/UGhLJRF+Pky/IvXdl3JWJ/nFWpj1Ynvf
+ KjegyFAa2rqJf5VkvBzIf5tCpmdFnEuEi+3GKS+sfYVz+flelYUipvnrD5flmnVoNSdp
+ HYObj4QGfiMOQmAIe3/I4itJkSqJwj8bKMkVQhbx8UQejc84bFjgnN//b2YSK0Shovvv
+ 3TSYIRoZRvbXhh+oXXVNHCOqLH/Neby0qKwUGuDd+xPKZOK21+GKxBiI4nRE4D8Ba8dS
+ O7SJsrFOZwe9huviD1vNwjgYFKYApbdca566DIHnHOgoMQmwf7QVMBBFhB6CARGzEuDw
+ sotQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=woxBdtlGB6zB1Cvm58/DELTClL+Pi4ueOkLDe2VMF2M=;
+ b=DeYLCNAIH4DCrsSdyClG5w+1k8HmS54kEevr/b0FXRDEDr55l10OvP0C85kGqkY7jv
+ PjLARmq0BnVWCyKsJF9p0Famy7haZCQwLp0wBLnQP5uJOWyRkHJ8f9SEHP1cUiYg/YAg
+ PhCZIiW7oje+Pamsgui+6DElGGtia1eOAOPs2BW2qe5qkRpqupIBMqO/r0980JQ7s7l1
+ eZhPQDwMBlMgcFI324aVD9hxV5ZWgobqJ4XgDecSca1/wP0vW4LZDgmuErTFl/ifwx9B
+ +Vx8L1Ontaw05m8aUyYy60aBhA63GhMeY3XcQqeIPu9Lb+7psQtwN+LDMGJLe6PBE1uC
+ STVg==
+X-Gm-Message-State: AOAM533Rg3Q6cI+Dv/GXWp6Uk2bjSjhX2iM5LAdcwEaodVoHl/rr1MCn
+ 3KEDMM5kF9ONdxJh8UCG94FYSLyyibreCqH4+MOjlJ93Ha/m47UovdDL/zXxxVG/oCddVjFEf1M
+ pxcOD+9vm3auGeYdWd8BW7HLcxBsjlPB8qHzfmSwL0Y4XaJrJ+IpP2wb5RIqQeGhnKxfhaoXOHU
+ 8=
+X-Google-Smtp-Source: ABdhPJxcC9G+bs+7QxWK7qVmeijPTYfUQ0BkmUenPrMR4B9UrgEdp6IuwoWBJPGRXAZh21n0pgqNMUrPMGxJ/g==
+X-Received: from dbrazdil.c.googlers.com ([fda3:e722:ac3:10:28:9cb1:c0a8:7f9b])
+ (user=dbrazdil job=sendgmr) by 2002:a1c:7c04:: with SMTP id
+ x4mr331814wmc.48.1627486360245; Wed, 28 Jul 2021 08:32:40 -0700 (PDT)
+Date: Wed, 28 Jul 2021 15:32:30 +0000
+Message-Id: <20210728153232.1018911-1-dbrazdil@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.32.0.432.gabb21c7263-goog
+Subject: [PATCH 0/2] Fix off-by-one in range_is_memory
+From: David Brazdil <dbrazdil@google.com>
+To: kvmarm@lists.cs.columbia.edu
+Cc: Marc Zyngier <maz@kernel.org>, linux-kernel@vger.kernel.org,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
  linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -70,91 +91,19 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 28/07/2021 10:41, Marc Zyngier wrote:
-> On Tue, 27 Jul 2021 19:10:27 +0100,
-> Will Deacon <will@kernel.org> wrote:
->>
->> On Thu, Jul 15, 2021 at 05:31:44PM +0100, Marc Zyngier wrote:
->>> We currently deal with a set of booleans for VM features,
->>> while they could be better represented as set of flags
->>> contained in an unsigned long, similarily to what we are
->>> doing on the CPU side.
->>>
->>> Signed-off-by: Marc Zyngier <maz@kernel.org>
->>> ---
->>>  arch/arm64/include/asm/kvm_host.h | 12 +++++++-----
->>>  arch/arm64/kvm/arm.c              |  5 +++--
->>>  arch/arm64/kvm/mmio.c             |  3 ++-
->>>  3 files changed, 12 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
->>> index 41911585ae0c..4add6c27251f 100644
->>> --- a/arch/arm64/include/asm/kvm_host.h
->>> +++ b/arch/arm64/include/asm/kvm_host.h
->>> @@ -122,7 +122,10 @@ struct kvm_arch {
->>>  	 * should) opt in to this feature if KVM_CAP_ARM_NISV_TO_USER is
->>>  	 * supported.
->>>  	 */
->>> -	bool return_nisv_io_abort_to_user;
->>> +#define KVM_ARCH_FLAG_RETURN_NISV_IO_ABORT_TO_USER	0
->>> +	/* Memory Tagging Extension enabled for the guest */
->>> +#define KVM_ARCH_FLAG_MTE_ENABLED			1
->>> +	unsigned long flags;
->>
->> One downside of packing all these together is that updating 'flags' now
->> requires an atomic rmw sequence (i.e. set_bit()). Then again, that's
->> probably for the best anyway given that kvm_vm_ioctl_enable_cap() looks
->> like it doesn't hold any locks.
-> 
-> That, and these operations are supposed to be extremely rare anyway.
-> 
->>
->>>  	/*
->>>  	 * VM-wide PMU filter, implemented as a bitmap and big enough for
->>> @@ -133,9 +136,6 @@ struct kvm_arch {
->>>  
->>>  	u8 pfr0_csv2;
->>>  	u8 pfr0_csv3;
->>> -
->>> -	/* Memory Tagging Extension enabled for the guest */
->>> -	bool mte_enabled;
->>>  };
->>>  
->>>  struct kvm_vcpu_fault_info {
->>> @@ -777,7 +777,9 @@ bool kvm_arm_vcpu_is_finalized(struct kvm_vcpu *vcpu);
->>>  #define kvm_arm_vcpu_sve_finalized(vcpu) \
->>>  	((vcpu)->arch.flags & KVM_ARM64_VCPU_SVE_FINALIZED)
->>>  
->>> -#define kvm_has_mte(kvm) (system_supports_mte() && (kvm)->arch.mte_enabled)
->>> +#define kvm_has_mte(kvm)					\
->>> +	(system_supports_mte() &&				\
->>> +	 test_bit(KVM_ARCH_FLAG_MTE_ENABLED, &(kvm)->arch.flags))
->>
->> Not an issue with this patch, but I just noticed that the
->> system_supports_mte() check is redundant here as we only allow the flag to
->> be set if that's already the case.
-> 
-> It allows us to save a memory access if system_supports_mte() is false
-> (it is eventually implemented as a static key). On the other hand,
-> there is so much inlining due to it being a non-final cap that we
-> probably lose on that too...
+Hi, here is an off-by-one bug fix and a very minor improvement for
+the range_is_memory function in hyp.
 
-My original logic was that system_supports_mte() checks
-IS_ENABLED(CONFIG_ARM64_MTE) - so this enables the code guarded with
-kvm_has_mte() to be compiled out if CONFIG_ARM64_MTE is disabled.
+David Brazdil (2):
+  KVM: arm64: Fix off-by-one in range_is_memory
+  KVM: arm64: Minor optimization of range_is_memory
 
-Indeed it turns at we currently rely on this (with CONFIG_ARM64_MTE
-disabled):
+ arch/arm64/kvm/hyp/nvhe/mem_protect.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-aarch64-linux-gnu-ld: arch/arm64/kvm/mmu.o: in function `sanitise_mte_tags':
-/home/stepri01/work/linux/arch/arm64/kvm/mmu.c:887: undefined reference to `mte_clear_page_tags'
-aarch64-linux-gnu-ld: arch/arm64/kvm/guest.o: in function `kvm_vm_ioctl_mte_copy_tags':
-/home/stepri01/work/linux/arch/arm64/kvm/guest.c:1066: undefined reference to `mte_copy_tags_to_user'
-aarch64-linux-gnu-ld: /home/stepri01/work/linux/arch/arm64/kvm/guest.c:1074: undefined reference to `mte_copy_tags_from_user'
+-- 
+2.32.0.432.gabb21c7263-goog
 
-Obviously we could pull just the IS_ENABLED() into kvm_has_mte() instead.
-
-Steve
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
