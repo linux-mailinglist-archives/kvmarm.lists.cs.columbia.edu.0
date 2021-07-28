@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C27FF3D8BA3
-	for <lists+kvmarm@lfdr.de>; Wed, 28 Jul 2021 12:21:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 539BD3D8BFE
+	for <lists+kvmarm@lfdr.de>; Wed, 28 Jul 2021 12:38:43 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4C23F4B0B7;
-	Wed, 28 Jul 2021 06:21:59 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 93EE14B0C9;
+	Wed, 28 Jul 2021 06:38:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,42 +15,41 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Lj-HpuzMccbl; Wed, 28 Jul 2021 06:21:59 -0400 (EDT)
+	with ESMTP id BxRD8izoeJHb; Wed, 28 Jul 2021 06:38:42 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2D8B74B09B;
-	Wed, 28 Jul 2021 06:21:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 61C844B09B;
+	Wed, 28 Jul 2021 06:38:41 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 728D64B089
- for <kvmarm@lists.cs.columbia.edu>; Wed, 28 Jul 2021 06:21:57 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 049084A534
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 28 Jul 2021 06:38:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id olZLNoDXqnlz for <kvmarm@lists.cs.columbia.edu>;
- Wed, 28 Jul 2021 06:21:56 -0400 (EDT)
+ with ESMTP id De0NpiPPwxV1 for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 28 Jul 2021 06:38:39 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 55EC04A00B
- for <kvmarm@lists.cs.columbia.edu>; Wed, 28 Jul 2021 06:21:56 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D020C407A0
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 28 Jul 2021 06:38:38 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 5AA0160524;
- Wed, 28 Jul 2021 10:21:55 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id D598C60F9B;
+ Wed, 28 Jul 2021 10:38:37 +0000 (UTC)
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1m8ghF-001VRt-94; Wed, 28 Jul 2021 11:21:53 +0100
-Date: Wed, 28 Jul 2021 11:21:52 +0100
-Message-ID: <87y29qd9hb.wl-maz@kernel.org>
+ id 1m8gxP-001VeA-OZ; Wed, 28 Jul 2021 11:38:35 +0100
+Date: Wed, 28 Jul 2021 11:38:35 +0100
+Message-ID: <87wnpad8pg.wl-maz@kernel.org>
 From: Marc Zyngier <maz@kernel.org>
 To: Will Deacon <will@kernel.org>
-Subject: Re: [PATCH 05/16] KVM: arm64: Plumb MMIO checking into the fault
- handling
-In-Reply-To: <20210727181120.GD19173@willie-the-truck>
+Subject: Re: [PATCH 06/16] KVM: arm64: Force a full unmap on vpcu reinit
+In-Reply-To: <20210727181132.GE19173@willie-the-truck>
 References: <20210715163159.1480168-1-maz@kernel.org>
- <20210715163159.1480168-6-maz@kernel.org>
- <20210727181120.GD19173@willie-the-truck>
+ <20210715163159.1480168-7-maz@kernel.org>
+ <20210727181132.GE19173@willie-the-truck>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
  (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
@@ -84,67 +83,57 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, 27 Jul 2021 19:11:21 +0100,
+On Tue, 27 Jul 2021 19:11:33 +0100,
 Will Deacon <will@kernel.org> wrote:
 > 
-> On Thu, Jul 15, 2021 at 05:31:48PM +0100, Marc Zyngier wrote:
-> > Plumb the MMIO checking code into the MMIO fault handling code.
-> > Nothing allows a region to be registered yet, so there should be
-> > no funtional change either.
-> 
-> Typo: functional
-> 
+> On Thu, Jul 15, 2021 at 05:31:49PM +0100, Marc Zyngier wrote:
+> > As we now keep information in the S2PT, we must be careful not
+> > to keep it across a VM reboot, which could otherwise lead to
+> > interesting problems.
+> > 
+> > Make sure that the S2 is completely discarded on reset of
+> > a vcpu, and remove the flag that enforces the MMIO check.
+> > 
 > > Signed-off-by: Marc Zyngier <maz@kernel.org>
 > > ---
-> >  arch/arm64/kvm/mmio.c | 10 ++++++++++
-> >  1 file changed, 10 insertions(+)
+> >  arch/arm64/kvm/arm.c | 8 +++++++-
+> >  1 file changed, 7 insertions(+), 1 deletion(-)
 > > 
-> > diff --git a/arch/arm64/kvm/mmio.c b/arch/arm64/kvm/mmio.c
-> > index 3dd38a151d2a..fd5747279d27 100644
-> > --- a/arch/arm64/kvm/mmio.c
-> > +++ b/arch/arm64/kvm/mmio.c
-> > @@ -6,6 +6,7 @@
-> >  
-> >  #include <linux/kvm_host.h>
-> >  #include <asm/kvm_emulate.h>
-> > +#include <asm/kvm_mmu.h>
-> >  #include <trace/events/kvm.h>
-> >  
-> >  #include "trace.h"
-> > @@ -130,6 +131,10 @@ int io_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa)
-> >  	int len;
-> >  	u8 data_buf[8];
-> >  
-> > +	/* Check failed? Return to the guest for debriefing... */
-> > +	if (!kvm_check_ioguard_page(vcpu, fault_ipa))
-> > +		return 1;
+> > diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+> > index 97ab1512c44f..b0d2225190d2 100644
+> > --- a/arch/arm64/kvm/arm.c
+> > +++ b/arch/arm64/kvm/arm.c
+> > @@ -1096,12 +1096,18 @@ static int kvm_arch_vcpu_ioctl_vcpu_init(struct kvm_vcpu *vcpu,
+> >  	 * ensuring that the data side is always coherent. We still
+> >  	 * need to invalidate the I-cache though, as FWB does *not*
+> >  	 * imply CTR_EL0.DIC.
+> > +	 *
+> > +	 * If the MMIO guard was enabled, we pay the price of a full
+> > +	 * unmap to get back to a sane state (and clear the flag).
+> >  	 */
+> >  	if (vcpu->arch.has_run_once) {
+> > -		if (!cpus_have_final_cap(ARM64_HAS_STAGE2_FWB))
+> > +		if (!cpus_have_final_cap(ARM64_HAS_STAGE2_FWB) ||
+> > +		    test_bit(KVM_ARCH_FLAG_MMIO_GUARD, &vcpu->kvm->arch.flags))
+> >  			stage2_unmap_vm(vcpu->kvm);
+> >  		else
+> >  			icache_inval_all_pou();
 > > +
-> >  	/*
-> >  	 * No valid syndrome? Ask userspace for help if it has
-> >  	 * volunteered to do so, and bail out otherwise.
-> > @@ -156,6 +161,11 @@ int io_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa)
-> >  	len = kvm_vcpu_dabt_get_as(vcpu);
-> >  	rt = kvm_vcpu_dabt_get_rd(vcpu);
-> >  
-> > +	/* If we cross a page boundary, check that too... */
-> > +	if (((fault_ipa + len - 1) & PAGE_MASK) != (fault_ipa & PAGE_MASK) &&
-> > +	    !kvm_check_ioguard_page(vcpu, fault_ipa + len - 1))
-> > +		return 1;
-> > +
+> > +		clear_bit(KVM_ARCH_FLAG_MMIO_GUARD, &vcpu->kvm->arch.flags);
 > 
-> I find this a little odd as the checks straddle the invalid syndrome check,
-> meaning that the relative priorities of KVM_ARCH_FLAG_MMIO_GUARD and
-> KVM_ARCH_FLAG_RETURN_NISV_IO_ABORT_TO_USER are unclear.
+> What prevents this racing with another vCPU trying to set the bit?
 
-Good point. And the combination of both flags on its own is odd. Maybe
-KVM_ARCH_FLAG_RETURN_NISV_IO_ABORT_TO_USER should be ignored or deemed
-incompatible with the MMIO guard feature.
+Not much. We could take the kvm lock on both ends to serialize it, but
+that's pretty ugly. And should we care? What is the semantic of
+resetting a vcpu while another is still running?
 
-The lack of syndrome information means that we cannot really test for
-the boundaries of the access (len is invalid), so I'd be tempted to
-inject an abort in this case.
+If we want to support this sort of behaviour, then our tracking is
+totally bogus, because it is VM-wide. And you don't even have to play
+with that bit from another vcpu: all the information is lost at the
+point where we unmap the S2 PTs.
 
-Thoughts?
+Maybe an alternative is to move this to the halt/reboot PSCI handlers,
+making it clearer what we expect?
 
 	M.
 
