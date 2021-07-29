@@ -2,98 +2,88 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5232D3DAA7C
-	for <lists+kvmarm@lfdr.de>; Thu, 29 Jul 2021 19:45:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15F9D3DAD99
+	for <lists+kvmarm@lfdr.de>; Thu, 29 Jul 2021 22:29:51 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D158D4B0F4;
-	Thu, 29 Jul 2021 13:45:35 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 975704B0CE;
+	Thu, 29 Jul 2021 16:29:50 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.209
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id wJkLtPdUuWOK; Thu, 29 Jul 2021 13:45:35 -0400 (EDT)
+	with ESMTP id H1cO-k8c7OaO; Thu, 29 Jul 2021 16:29:50 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A72D04B0F1;
-	Thu, 29 Jul 2021 13:45:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 800F84B0C2;
+	Thu, 29 Jul 2021 16:29:49 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 378D34B0E8
- for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Jul 2021 13:45:33 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 873C14B0C5
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Jul 2021 14:15:35 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Mh9RohUfevSJ for <kvmarm@lists.cs.columbia.edu>;
- Thu, 29 Jul 2021 13:45:32 -0400 (EDT)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2BF7F4B0E3
- for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Jul 2021 13:45:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1627580732;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rT316eGUa2+7b7jjZkTlKN4mfhqRrOL4B5+LcpVHIKo=;
- b=grfq1yWAxVB+Fkz4WU+waEqqQcTqYWn+KNZuuBsdsyp302Y8/S6jr1Z7RLbTBHGUes9+pi
- cKS5c0IByFr6cKR8bX1OFxCrW3iTq8uxpbZfZ4ojVy0/qQUc/sWl0iYFtDj44qgUZwGoj9
- nWyf1OZ5XGU7PJSwAElrW0sE4YJpe/w=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-275-ibzkHwCTN6KLTLESwQKzfg-1; Thu, 29 Jul 2021 13:45:29 -0400
-X-MC-Unique: ibzkHwCTN6KLTLESwQKzfg-1
-Received: by mail-io1-f70.google.com with SMTP id
- z17-20020a0566022051b0290528db19d5b3so4267716iod.5
- for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Jul 2021 10:45:29 -0700 (PDT)
+ with ESMTP id e8la-b3pK6AT for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 29 Jul 2021 14:15:33 -0400 (EDT)
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com
+ [209.85.216.44])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2A2324B0B2
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Jul 2021 14:15:33 -0400 (EDT)
+Received: by mail-pj1-f44.google.com with SMTP id
+ ds11-20020a17090b08cbb0290172f971883bso16999288pjb.1
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Jul 2021 11:15:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=1VgSvIUg18Pmu6bXQr/jLLZHZW93wmUUl7jcbNMrRlE=;
+ b=c7Xg5u/SFv0fecvDSkWBz6Or6adxwzBui7Dq/4a59U/xMEjg8w8P/kAEQXWhvAovjQ
+ mih0wxsqaaPUB38HpOf6y50jYJ1C6e8XQM9falOaY4Fd0q17yJ/nhIkfIDEuzVcsxbRz
+ kvROAVdZuCjR8xG4APDxgAbdiPartFPWfak43cWy4fPI+1UJB5FUXt+eLbQsvvXBFlfp
+ B4KDcEVK3fIjhSOHocLlUFwNxs/i6Dp7v1xyvKf9Drcyw2B00s539e59q+vyeXJnKl6W
+ O1sHXA7YJOKy+Vsb8WiCC5HtnjMZRby+Aq/UMM4dG8IMO5uDH8jNlPd1eWPoHzr0e+QL
+ ppyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to;
- bh=rT316eGUa2+7b7jjZkTlKN4mfhqRrOL4B5+LcpVHIKo=;
- b=dkmE7h1SJ/S+jacW1HhPhP2TAp5aiJf67DIyOmX/6WCv6s4C0jvRW336TYkz3ntQF6
- w1bchWK775JccV8p2PqeCLuHkAtdwkWyFeQ23eqnongAQwNKuaYO1IYhzCho9bPiYJHu
- h3q5uAcHim7f3ASP5h6tU2lsdvYP3XHy+MXIJlNvnDFE29LFonP+lujrKFfIrNamIUJN
- bV9gANCGzq+jz5hvH4bKUEXY0A/1Eog05/4fBax6tcjR8Rf0ndrvEtx6sSmRoEVJiqND
- fGtEhtHjOW7tP12GtelSMt9jFZrVtkItOkTie+NAXnuNQRM6GeoQCHtIUqhTuk4ibruw
- Xsyw==
-X-Gm-Message-State: AOAM530mFdICFdu8+r/FpEtL1PRy20olAkmrfInn/XCWblWn0ZkoVF2/
- CNMaOtQabyeiW4trc8tfgKQLxyISKnppnfDnz1VOD4Y8iDFd8L6nIkQ2KpB1r0ogjIgE5L3CPak
- 2zmYAh/EgC1kLZZsONSzLTwLl
-X-Received: by 2002:a05:6638:3a12:: with SMTP id
- j18mr5555698jaj.75.1627580729307; 
- Thu, 29 Jul 2021 10:45:29 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJyf77LhlT9YvfAjMD/rhjDi5lGqSzYugzzvfmOLDdrWVhTSAaNJZlRA4FN/MoqzmCofE6vzAQ==
-X-Received: by 2002:a05:6638:3a12:: with SMTP id
- j18mr5555679jaj.75.1627580729171; 
- Thu, 29 Jul 2021 10:45:29 -0700 (PDT)
-Received: from gator ([140.82.166.162])
- by smtp.gmail.com with ESMTPSA id j18sm2589446ioa.53.2021.07.29.10.45.27
+ bh=1VgSvIUg18Pmu6bXQr/jLLZHZW93wmUUl7jcbNMrRlE=;
+ b=s/uwhBDzhHzTI+gMRVVfRZIMNcezjfIECUDzZqUtx/tKCz47ybv65M9Dle5zMKoISO
+ DD1trBLB+SHf1RxWQsbiMGEZLMJc4dZo10fzbubzefekxrwbZ7vO627+2NgOv20Lc/P6
+ 4380YqfvrNXM7QPiezf5pC73DhCoNU4lbwkecZdhsvlJ6+Vs4nhJxS2qVbQ7UMlhFOCc
+ 6WjXc4QyQ8cqmePACLdG5Xfnm5G5GSWuV/hkM+dA0UnDfuY0q5corP71MZY5rn6sfyoD
+ dmR9qYbO4d0Z20gdAK2yItCWHdc4+OB9y5F39jiewkaMx7x4Gf/gIEk6+dw+ew4Heb42
+ UNiw==
+X-Gm-Message-State: AOAM533XiMa5ayEwB2uLEzUSCbnyC2Yf+CQJdwJCzgnLB8II2aoYhqUJ
+ +B+8Sl6uhasB94j2PVhrtVxRrQ==
+X-Google-Smtp-Source: ABdhPJxeL54Xfvacu7ArTo3B5iH93qHeEnG4cdgRdD0aAvS5WWEXUwctrS4C2oSGWKL/TIsmgOIT0A==
+X-Received: by 2002:a17:902:c402:b029:12b:5175:1ddd with SMTP id
+ k2-20020a170902c402b029012b51751dddmr5870494plk.67.1627582531986; 
+ Thu, 29 Jul 2021 11:15:31 -0700 (PDT)
+Received: from google.com (157.214.185.35.bc.googleusercontent.com.
+ [35.185.214.157])
+ by smtp.gmail.com with ESMTPSA id i8sm4638520pfk.18.2021.07.29.11.15.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jul 2021 10:45:28 -0700 (PDT)
-Date: Thu, 29 Jul 2021 19:45:16 +0200
-From: Andrew Jones <drjones@redhat.com>
-To: Oliver Upton <oupton@google.com>
-Subject: Re: [PATCH v5 13/13] selftests: KVM: Add counter emulation benchmark
-Message-ID: <20210729174516.nje54y7c5iy5qyn4@gator>
-References: <20210729173300.181775-1-oupton@google.com>
- <20210729173300.181775-14-oupton@google.com>
+ Thu, 29 Jul 2021 11:15:31 -0700 (PDT)
+Date: Thu, 29 Jul 2021 18:15:27 +0000
+From: Sean Christopherson <seanjc@google.com>
+To: Ricardo Koller <ricarkol@google.com>
+Subject: Re: [PATCH v4 3/6] KVM: selftests: Introduce UCALL_UNHANDLED for
+ unhandled vector reporting
+Message-ID: <YQLwP9T4hevAqa7w@google.com>
+References: <20210611011020.3420067-1-ricarkol@google.com>
+ <20210611011020.3420067-4-ricarkol@google.com>
 MIME-Version: 1.0
-In-Reply-To: <20210729173300.181775-14-oupton@google.com>
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=drjones@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
 Content-Disposition: inline
-Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
- Raghavendra Rao Anata <rananta@google.com>, Peter Shier <pshier@google.com>,
- Sean Christopherson <seanjc@google.com>, David Matlack <dmatlack@google.com>,
- Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>
+In-Reply-To: <20210611011020.3420067-4-ricarkol@google.com>
+X-Mailman-Approved-At: Thu, 29 Jul 2021 16:29:47 -0400
+Cc: kvm@vger.kernel.org, maz@kernel.org, pbonzini@redhat.com,
+ vkuznets@redhat.com, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -110,27 +100,54 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Jul 29, 2021 at 05:33:00PM +0000, Oliver Upton wrote:
-> Add a test case for counter emulation on arm64. A side effect of how KVM
-> handles physical counter offsetting on non-ECV systems is that the
-> virtual counter will always hit hardware and the physical could be
-> emulated. Force emulation by writing a nonzero offset to the physical
-> counter and compare the elapsed cycles to a direct read of the hardware
-> register.
+On Thu, Jun 10, 2021, Ricardo Koller wrote:
+> diff --git a/tools/testing/selftests/kvm/include/kvm_util.h b/tools/testing/selftests/kvm/include/kvm_util.h
+> index fcd8e3855111..beb76d6deaa9 100644
+> --- a/tools/testing/selftests/kvm/include/kvm_util.h
+> +++ b/tools/testing/selftests/kvm/include/kvm_util.h
+> @@ -349,6 +349,7 @@ enum {
+>  	UCALL_SYNC,
+>  	UCALL_ABORT,
+>  	UCALL_DONE,
+> +	UCALL_UNHANDLED,
+>  };
+
+...
+
+> @@ -1254,16 +1254,13 @@ void vm_install_exception_handler(struct kvm_vm *vm, int vector,
+>  
+>  void assert_on_unhandled_exception(struct kvm_vm *vm, uint32_t vcpuid)
+>  {
+> -	if (vcpu_state(vm, vcpuid)->exit_reason == KVM_EXIT_IO
+> -		&& vcpu_state(vm, vcpuid)->io.port == UNEXPECTED_VECTOR_PORT
+> -		&& vcpu_state(vm, vcpuid)->io.size == 4) {
+> -		/* Grab pointer to io data */
+> -		uint32_t *data = (void *)vcpu_state(vm, vcpuid)
+> -			+ vcpu_state(vm, vcpuid)->io.data_offset;
+> -
+> -		TEST_ASSERT(false,
+> -			    "Unexpected vectored event in guest (vector:0x%x)",
+> -			    *data);
+> +	struct ucall uc;
+> +
+> +	if (get_ucall(vm, vcpuid, &uc) == UCALL_UNHANDLED) {
+
+UCALL_UNHANDLED is a bit of an odd name.  Without the surrounding context, I would
+have no idea that it's referring to an unhandled event, e.g. my gut reaction would
+be that it means the ucall itself was unhandled.  Maybe UCALL_UNHANDLED_EVENT?
+It's rather long, but I don't think that will be problematic for any of the code.
+
+
+> +		uint64_t vector = uc.args[0];
+> +
+> +		TEST_FAIL("Unexpected vectored event in guest (vector:0x%lx)",
+> +			  vector);
+>  	}
+>  }
+>  
+> -- 
+> 2.32.0.272.g935e593368-goog
 > 
-> Cc: Andrew Jones <drjones@redhat.com>
-> Reviewed-by: Ricardo Koller <ricarkol@google.com>
-> Signed-off-by: Oliver Upton <oupton@google.com>
-> ---
->  tools/testing/selftests/kvm/.gitignore        |   1 +
->  tools/testing/selftests/kvm/Makefile          |   1 +
->  .../kvm/aarch64/counter_emulation_benchmark.c | 207 ++++++++++++++++++
->  3 files changed, 209 insertions(+)
->  create mode 100644 tools/testing/selftests/kvm/aarch64/counter_emulation_benchmark.c
->
-
-Reviewed-by: Andrew Jones <drjones@redhat.com>
-
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
