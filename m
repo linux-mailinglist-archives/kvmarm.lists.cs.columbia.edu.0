@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8565C3DAEA7
-	for <lists+kvmarm@lfdr.de>; Fri, 30 Jul 2021 00:09:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75B723DAEA9
+	for <lists+kvmarm@lfdr.de>; Fri, 30 Jul 2021 00:09:33 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2C2764B0D8;
-	Thu, 29 Jul 2021 18:09:31 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2499D4B0D7;
+	Thu, 29 Jul 2021 18:09:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,66 +14,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IVhInR+G6HUJ; Thu, 29 Jul 2021 18:09:31 -0400 (EDT)
+	with ESMTP id GTDPt8LSVMaY; Thu, 29 Jul 2021 18:09:32 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E86474B0EC;
-	Thu, 29 Jul 2021 18:09:29 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0F5334025B;
+	Thu, 29 Jul 2021 18:09:32 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E4A114B0D2
- for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Jul 2021 18:09:28 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8480C4025B
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Jul 2021 18:09:30 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 5xkTgN2c+8UT for <kvmarm@lists.cs.columbia.edu>;
- Thu, 29 Jul 2021 18:09:28 -0400 (EDT)
-Received: from mail-io1-f74.google.com (mail-io1-f74.google.com
- [209.85.166.74])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1557C4B0D5
- for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Jul 2021 18:09:28 -0400 (EDT)
-Received: by mail-io1-f74.google.com with SMTP id
- k20-20020a6b6f140000b029053817be16cdso4653540ioc.3
- for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Jul 2021 15:09:28 -0700 (PDT)
+ with ESMTP id IAjU6+N6JQ-4 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 29 Jul 2021 18:09:29 -0400 (EDT)
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com
+ [209.85.219.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 159C04B0D2
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Jul 2021 18:09:29 -0400 (EDT)
+Received: by mail-yb1-f202.google.com with SMTP id
+ j9-20020a2581490000b02905897d81c63fso2617118ybm.8
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 29 Jul 2021 15:09:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=OUDEC1vqPr7sdUdf2B7zr2nu10+QX6s5o8FUl8jn128=;
- b=afE61tmFlcKYV3syP0+ocrz06Dzk453aCfpsM5SdLvc9pXlbGValTdHId9+zvt7H+M
- wYkB0MblDqvsjNJQs3xi0hlRFhf5T2vW5CS2ZIv7ezpfpvzRtWEk9hygtiKge9mN1F9U
- WnKUVDYfMwPaMVDB778tT5OjBgssPZfqJsShDS+S+hY3M/4XbAe07rjzHqhnrsB3QOlh
- oDO1n0Hr+y+GJtvHFGUarcecAb9fZi4NVCmTTOKOsxmhlfSrIW1+GQ/kW8St9S68/pH6
- ZZ3P18M07QIcvNF07ClKQqYPgHfSkbBLFtoN8V027CGEypWH8yATHh6g3uqpDKBhxT3p
- U58w==
+ :cc; bh=Ol+FzPmhNMEWcf/ywMIJRhViVzXRwXAQpsvgYkKHWL8=;
+ b=rMkpaQypttkvOTlv0Yu0PJmHWsRFvCYfneyQu7XZAtrdjGpFfNfWqGn18dsvnXx69o
+ PZKA+4rEXvIPkfayg+sTbiz/r2c2jFqjggsWxPnHu2UvNAE/TxUYORkliLZz8+Unip/t
+ 8u26bRuYDYcAGouDHhdj3sGiQeLcyUoht6c3vAIWVzH75s2ci3VOmqFxR/seNYXNYlu8
+ /AUeM/FGUiGx2BfOL8T7HKYlAbBrzpWfI02ULYgSN6TnmoTbeZ41S7ebJMuFU2smbXuw
+ xnez5Awds1TMNx/arUH4gXwb9PyM5txGUSIjEvN0bYU7LVM0JasjEqcZuf3NxC0uOWP+
+ uZnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=OUDEC1vqPr7sdUdf2B7zr2nu10+QX6s5o8FUl8jn128=;
- b=O8MlUBtPs8Qs8ZCUg0gGDH84TJvvlvqWty6bFivRalkMcoRUL+lCPgZ48C7m+8Zard
- JbaqZufdENY8Vrg/9nTiv0QGYAISFWhU/S1DNe7LtiCunrFWEQTYnUrtzPx8vetl1WIK
- 9H6N/9cxaiNTZ8DenzlaJdAMq3ncENdo1DHSVve4Fqlg6SinQSAnMsOFGpodmGbu/qip
- vJptp5j6eMAlSYr3N5p3nFtRMO7uf8/0h94UjvRa9kTADuPBtzkRYJmaH8QpNE+Twuux
- a61yhbUosvVnuOHnG6NuW+4XuFQGXQYFK1ezTivshLpCI3VCyyidqKUhLDQeEKHUC6Av
- LV+w==
-X-Gm-Message-State: AOAM530g6jYJkTqyqLC+zPwBT8xfscfKOwhkVtvCTztQcmoxbWMViwwc
- RMw5/ZnT5ZBkv7DIa1tN1jsPcmzkR83uOkRynGERu40hGd3YagpHzM1EWwAv0bWqHNKWsre9xfh
- 12+/GRGwnV7Ka13CluPEBCcplkt2d8p3qeGRFUH0NRmPFd3tK9cEjvem37fEhpYkN+jLGsA==
-X-Google-Smtp-Source: ABdhPJynKEKZCh3Kk0HnLCvNi7Sc5MHDpzqm8Ql84cT0T630dSbB3HhwdbM09/xE2CFjkssQ6KG4bWN3Y/U=
+ bh=Ol+FzPmhNMEWcf/ywMIJRhViVzXRwXAQpsvgYkKHWL8=;
+ b=Nb844j9c1Zhults21bkhSdvQYvi8J+TwY9Yrfh+Q61EZn0cprRyTLpEDIcvw+C90ra
+ LZHNAbBH9FGRgYJjQW0uBAkBMvssJTJ3u+RF4MhrSCv3LqgvA4DtBuBc27qNdIhnWrST
+ esqyCpXxCbiaHZ96T+c0ju3M53FR4j/376iYMEREaOvGdK83f5vDLjRaI9wWUad2y/S1
+ SeH2LIvvXGeuB/eh4S7mpFuM8VF8usnq0cUF4kZRX/H3VDfvMTrWUC/4FyUV+CSm9Ib1
+ w7by24fUwlsumE8SV+cPC9sv2cQY6FIDs8sijaNDDMJhNXQxensUW0vq6A07bKoXf5Nd
+ Bbcw==
+X-Gm-Message-State: AOAM532Tnhy7FBRIwylJXOtazv/3O3SMVMP+wN0MP1C6KZNHGbKl9xWJ
+ Cb3d+fdUZHp9pHhxUbpvheX32e0r4BU+QRdnIhdQ3V7BvF7Pu4cBfvZEm3oIH1q/7rIny+s8/6S
+ RJ9z0PDyxaU43ADGrT4vzj3dFq9e2R+5uZPUw00LMoZY7NwNFm/8bK0gCxhRjWHzSwUMobQ==
+X-Google-Smtp-Source: ABdhPJzutKBCdlIcisOY4xmX+bS3I+7VYGny6icfY80fNWnWdBzJeRY3xCP1/YQ+2mjVREH1XV6dtDLEzkk=
 X-Received: from oupton.c.googlers.com ([fda3:e722:ac3:cc00:2b:ff92:c0a8:404])
- (user=oupton job=sendgmr) by 2002:a02:b058:: with SMTP id
- q24mr117122jah.88.1627596567382; 
- Thu, 29 Jul 2021 15:09:27 -0700 (PDT)
-Date: Thu, 29 Jul 2021 22:09:15 +0000
+ (user=oupton job=sendgmr) by 2002:a25:e64a:: with SMTP id
+ d71mr9565726ybh.142.1627596568495; 
+ Thu, 29 Jul 2021 15:09:28 -0700 (PDT)
+Date: Thu, 29 Jul 2021 22:09:16 +0000
 In-Reply-To: <20210729220916.1672875-1-oupton@google.com>
-Message-Id: <20210729220916.1672875-3-oupton@google.com>
+Message-Id: <20210729220916.1672875-4-oupton@google.com>
 Mime-Version: 1.0
 References: <20210729220916.1672875-1-oupton@google.com>
 X-Mailer: git-send-email 2.32.0.554.ge1b32706d8-goog
-Subject: [PATCH v2 2/3] entry: KVM: Allow use of generic KVM entry w/o full
- generic support
+Subject: [PATCH v2 3/3] KVM: arm64: Use generic KVM xfer to guest work function
 From: Oliver Upton <oupton@google.com>
 To: kvmarm@lists.cs.columbia.edu
 Cc: Shakeel Butt <shakeelb@google.com>, kvm@vger.kernel.org,
@@ -99,36 +98,96 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Some architectures (e.g. arm64) have yet to adopt the generic entry
-infrastructure. Despite that, it would be nice to use some common
-plumbing for guest entry/exit handling. For example, KVM/arm64 currently
-does not handle TIF_NOTIFY_PENDING correctly.
+Clean up handling of checks for pending work by switching to the generic
+infrastructure to do so.
 
-Allow use of only the generic KVM entry code by tightening up the
-include list. No functional change intended.
+We pick up handling for TIF_NOTIFY_RESUME from this switch, meaning that
+task work will be correctly handled.
 
 Signed-off-by: Oliver Upton <oupton@google.com>
 ---
- include/linux/entry-kvm.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/Kconfig |  1 +
+ arch/arm64/kvm/arm.c   | 27 ++++++++++++++-------------
+ 2 files changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/include/linux/entry-kvm.h b/include/linux/entry-kvm.h
-index 136b8d97d8c0..0d7865a0731c 100644
---- a/include/linux/entry-kvm.h
-+++ b/include/linux/entry-kvm.h
-@@ -2,7 +2,11 @@
- #ifndef __LINUX_ENTRYKVM_H
- #define __LINUX_ENTRYKVM_H
+diff --git a/arch/arm64/kvm/Kconfig b/arch/arm64/kvm/Kconfig
+index a4eba0908bfa..8bc1fac5fa26 100644
+--- a/arch/arm64/kvm/Kconfig
++++ b/arch/arm64/kvm/Kconfig
+@@ -26,6 +26,7 @@ menuconfig KVM
+ 	select HAVE_KVM_ARCH_TLB_FLUSH_ALL
+ 	select KVM_MMIO
+ 	select KVM_GENERIC_DIRTYLOG_READ_PROTECT
++	select KVM_XFER_TO_GUEST_WORK
+ 	select SRCU
+ 	select KVM_VFIO
+ 	select HAVE_KVM_EVENTFD
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 60d0a546d7fd..9762e2129813 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -6,6 +6,7 @@
  
--#include <linux/entry-common.h>
-+#include <linux/static_call_types.h>
-+#include <linux/tracehook.h>
-+#include <linux/syscalls.h>
-+#include <linux/seccomp.h>
-+#include <linux/sched.h>
- #include <linux/tick.h>
+ #include <linux/bug.h>
+ #include <linux/cpu_pm.h>
++#include <linux/entry-kvm.h>
+ #include <linux/errno.h>
+ #include <linux/err.h>
+ #include <linux/kvm_host.h>
+@@ -714,6 +715,13 @@ static bool vcpu_mode_is_bad_32bit(struct kvm_vcpu *vcpu)
+ 		static_branch_unlikely(&arm64_mismatched_32bit_el0);
+ }
  
- /* Transfer to guest mode work */
++static bool kvm_vcpu_exit_request(struct kvm_vcpu *vcpu)
++{
++	return kvm_request_pending(vcpu) ||
++			need_new_vmid_gen(&vcpu->arch.hw_mmu->vmid) ||
++			xfer_to_guest_mode_work_pending();
++}
++
+ /**
+  * kvm_arch_vcpu_ioctl_run - the main VCPU run function to execute guest code
+  * @vcpu:	The VCPU pointer
+@@ -757,7 +765,11 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
+ 		/*
+ 		 * Check conditions before entering the guest
+ 		 */
+-		cond_resched();
++		if (__xfer_to_guest_mode_work_pending()) {
++			ret = xfer_to_guest_mode_handle_work(vcpu);
++			if (!ret)
++				ret = 1;
++		}
+ 
+ 		update_vmid(&vcpu->arch.hw_mmu->vmid);
+ 
+@@ -776,16 +788,6 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
+ 
+ 		kvm_vgic_flush_hwstate(vcpu);
+ 
+-		/*
+-		 * Exit if we have a signal pending so that we can deliver the
+-		 * signal to user space.
+-		 */
+-		if (signal_pending(current)) {
+-			ret = -EINTR;
+-			run->exit_reason = KVM_EXIT_INTR;
+-			++vcpu->stat.signal_exits;
+-		}
+-
+ 		/*
+ 		 * If we're using a userspace irqchip, then check if we need
+ 		 * to tell a userspace irqchip about timer or PMU level
+@@ -809,8 +811,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
+ 		 */
+ 		smp_store_mb(vcpu->mode, IN_GUEST_MODE);
+ 
+-		if (ret <= 0 || need_new_vmid_gen(&vcpu->arch.hw_mmu->vmid) ||
+-		    kvm_request_pending(vcpu)) {
++		if (ret <= 0 || kvm_vcpu_exit_request(vcpu)) {
+ 			vcpu->mode = OUTSIDE_GUEST_MODE;
+ 			isb(); /* Ensure work in x_flush_hwstate is committed */
+ 			kvm_pmu_sync_hwstate(vcpu);
 -- 
 2.32.0.554.ge1b32706d8-goog
 
