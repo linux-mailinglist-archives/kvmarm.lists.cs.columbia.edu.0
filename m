@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CD2A3DBDF8
-	for <lists+kvmarm@lfdr.de>; Fri, 30 Jul 2021 19:52:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 358A33DC570
+	for <lists+kvmarm@lfdr.de>; Sat, 31 Jul 2021 11:33:58 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BDDF44B0E3;
-	Fri, 30 Jul 2021 13:52:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D3DCF4B0A3;
+	Sat, 31 Jul 2021 05:33:57 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,70 +19,73 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id eHj8V9nuDKtt; Fri, 30 Jul 2021 13:52:34 -0400 (EDT)
+	with ESMTP id wgsq6hLpXRX5; Sat, 31 Jul 2021 05:33:57 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A08454B0D0;
-	Fri, 30 Jul 2021 13:52:33 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4C1F14B0B5;
+	Sat, 31 Jul 2021 05:33:53 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 48C5C4B0B6
- for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Jul 2021 13:52:32 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3FD944B0E6
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Jul 2021 14:08:35 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id rc2Q0LUdnh00 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 30 Jul 2021 13:52:30 -0400 (EDT)
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com
- [209.85.167.54])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5123A4A51D
- for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Jul 2021 13:52:30 -0400 (EDT)
-Received: by mail-lf1-f54.google.com with SMTP id h14so19432862lfv.7
- for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Jul 2021 10:52:30 -0700 (PDT)
+ with ESMTP id k3-EwQADc72G for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 30 Jul 2021 14:08:31 -0400 (EDT)
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com
+ [209.85.216.50])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E70B14B0E5
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Jul 2021 14:08:30 -0400 (EDT)
+Received: by mail-pj1-f50.google.com with SMTP id
+ e2-20020a17090a4a02b029016f3020d867so15512502pjh.3
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 30 Jul 2021 11:08:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=w74FCyABGqlKztmmT/szhNY9h5zAocpT2ax3CC8sfng=;
- b=DMrMZW03lBg/IWAb0IutYWMvCcEgS9xE5oJAt+jb+XBSyYmWnF1bbfCrZjz7dswIwD
- 3v09mJ2EWLLHzJdjDf1awDYZg7EXnIFc+cImRm3dt9ORzBzqc6NkD+G5XTaI0Zcen3XU
- 4cCh5vSyAZ7M/7ch8OPmEQSoGVBqGVkmlSuoAz2i+3aMHhE16KOplP7P7310dJvFMc7r
- 473AiUM6s5r/ikkrJBXsLg/dLLccX9P/NPC+CEdOheJvLrqF2WWEkzYeBpo55NGME49y
- 5MFHPpccGBKyttRw8SZHiN1GNbFcg1Rwcwr0J/jQi6dJrksfxK2UQM3qkKKIKTimvKSi
- 4mKg==
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=U22IQhYTRPCkpysTSxxrY3OXIOUsjrcBM5qAQtaDVGA=;
+ b=BJssnUAjT5z70MZ1iYT6dX4sF9p17EqqxIOWql+F9Uk8seuT1Mmsl7bvn2fUo1Pxfs
+ C0mI9NqkKrBsVLH21YczNMMZWnEb00G/LeWP+XWxMl9sekNLaTj2vC3Vnm74nx/G0dMn
+ eNiQ1lqpoxIHiIUv6WBxrWXpe/VXZLNqKGHiwmR5kARWiynI3rNGZ1js4fLeXV5ynjeg
+ 6EPIuYKuAoyH8YJ7gJSSc90S35Rxgbrix/L5TDPDQWBMyyFfmmrNWLdpJnEQDHoj1xaA
+ PzOZepFRIe5aFLECjxaqVYxxkEyfC6P5u5zunGvK2WGla6dONwBDm1nEg60N/MesbBpP
+ 35pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=w74FCyABGqlKztmmT/szhNY9h5zAocpT2ax3CC8sfng=;
- b=HJxwQFW/qLn3G76u7298zVJuoyLX5Z8YHbVffwkFm5jHSJj8YRie5RqcuQ0BYzXyQC
- j0zTAA6k8xYkCxayFbMXDuUDM7vPT50xhxTctv9dPsgoNBnSEyOPy2yOql21Fmq3iXjh
- FGxuNwW4kzYChqXKMuevu0rbG0xk2RgReD9Vb8kDYi/Xb6+JK79Ai5GBP9dXPNwx1Efc
- fmDNp4ZMKxEH49uLFZMeynGtYp+3p95O4qA6DRuxhJipwJzHfRvle9xyR+2DqL1z15vd
- w/ARZOk+8BJtYVIQQr/jygY7YYaISRpRbsAYdMsuzyUN7kQvamic1FFRAmo1BnvfZ7pl
- hlrA==
-X-Gm-Message-State: AOAM533bqVFQBPseuUTVs6pN2t7yVPSggkULxe5T54mdnEdC/rVHQIXi
- JYDB6LwZwvstZsHTe4BwEceoTBS6of46dhoIueDDXw==
-X-Google-Smtp-Source: ABdhPJz0PS/v5uJNj45dAFVPDlHbQva1oT/iA2HWlKW9EoPtntJYtcQmwoF/lTYfoxBt8w02Z4/+/RsU10oVF052rmE=
-X-Received: by 2002:a05:6512:3d26:: with SMTP id
- d38mr2541587lfv.411.1627667548598; 
- Fri, 30 Jul 2021 10:52:28 -0700 (PDT)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=U22IQhYTRPCkpysTSxxrY3OXIOUsjrcBM5qAQtaDVGA=;
+ b=BRLEXmYLDmqX2fc3u3juzMO/lLEp3HXPmfgB/1yaK7W1ZEN5hRkSpoC6VL52VvbYfh
+ KYe3L/hdQpmQvvlRVfVLVqswb42PRfyARjH0/3+vxW2eB7u/fsoNq1jQs3dfH+vLCOGX
+ HIs0AGs574TegHPuG4FdqKHsyuQ1YltPSuYNKqUa8ZVnQ1Jvuir2w/pLddPIyUFsc2WE
+ 5TiFP92MtLSibkgKSYUGbdt/6fjVRiObKjic9x2HhVfMLN+jPddY2uMLb70i81aPKl2x
+ qX66aR0DLSfKiLja1YkcqeUYTb5gO7dHFw9ROrmvtGiOAF9zz57HyX9h/NrOU4cU/DM3
+ f5Xg==
+X-Gm-Message-State: AOAM533sCtUJODXzaVFyjrGSHaTmc9+9V8FNC/Rh7IA2QMrUNmxRS+ek
+ spQpS3oa7q2L7TmGNFlbZCOD/g==
+X-Google-Smtp-Source: ABdhPJzMaCyOmywV/AHhhMPn1KKKBoyFNH+eqA4FYc+b1MRy4AW0ZMGXtjZhMOgw+LQ8/a9GL5IIXQ==
+X-Received: by 2002:a17:90b:250f:: with SMTP id
+ ns15mr4291311pjb.26.1627668509611; 
+ Fri, 30 Jul 2021 11:08:29 -0700 (PDT)
+Received: from google.com (157.214.185.35.bc.googleusercontent.com.
+ [35.185.214.157])
+ by smtp.gmail.com with ESMTPSA id h7sm1368044pjs.38.2021.07.30.11.08.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 30 Jul 2021 11:08:29 -0700 (PDT)
+Date: Fri, 30 Jul 2021 18:08:25 +0000
+From: Sean Christopherson <seanjc@google.com>
+To: Oliver Upton <oupton@google.com>
+Subject: Re: [PATCH v5 02/13] KVM: x86: Refactor tsc synchronization code
+Message-ID: <YQRAGSJ1PxwXA2m/@google.com>
+References: <20210729173300.181775-1-oupton@google.com>
+ <20210729173300.181775-3-oupton@google.com>
 MIME-Version: 1.0
-References: <20210729220916.1672875-1-oupton@google.com>
- <20210729220916.1672875-4-oupton@google.com>
- <878s1o2l6j.wl-maz@kernel.org>
- <CAOQ_QsjFzdjYgYSxNLH=8O84FJB+O8KtH0VnzdQ9HnLZwxwpNQ@mail.gmail.com>
- <YQQvT7vAnRrcAcx/@google.com>
-In-Reply-To: <YQQvT7vAnRrcAcx/@google.com>
-From: Oliver Upton <oupton@google.com>
-Date: Fri, 30 Jul 2021 10:52:17 -0700
-Message-ID: <CAOQ_Qsjzp785QCnu9rzkuEMH9Q7tee-edJpKNgD_14t3NpaS5w@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] KVM: arm64: Use generic KVM xfer to guest work
- function
-To: Sean Christopherson <seanjc@google.com>
-Cc: Shakeel Butt <shakeelb@google.com>, kvm@vger.kernel.org,
- Peter Zijlstra <peterz@infradead.org>, Marc Zyngier <maz@kernel.org>,
- Peter Shier <pshier@google.com>, linux-kernel@vger.kernel.org,
- Guangyu Shi <guangyus@google.com>, Will Deacon <will@kernel.org>,
- Andy Lutomirski <luto@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Gleixner <tglx@linutronix.de>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Content-Disposition: inline
+In-Reply-To: <20210729173300.181775-3-oupton@google.com>
+X-Mailman-Approved-At: Sat, 31 Jul 2021 05:33:51 -0400
+Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+ Peter Shier <pshier@google.com>, Raghavendra Rao Anata <rananta@google.com>,
+ David Matlack <dmatlack@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
+ Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -99,50 +102,111 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Jul 30, 2021 at 9:56 AM Sean Christopherson <seanjc@google.com> wrote:
->
-> On Fri, Jul 30, 2021, Oliver Upton wrote:
-> >
-> > On Fri, Jul 30, 2021 at 2:41 AM Marc Zyngier <maz@kernel.org> wrote:
-> > >
-> > > On Thu, 29 Jul 2021 23:09:16 +0100, Oliver Upton <oupton@google.com> wrote:
-> > > > @@ -714,6 +715,13 @@ static bool vcpu_mode_is_bad_32bit(struct kvm_vcpu *vcpu)
-> > > >               static_branch_unlikely(&arm64_mismatched_32bit_el0);
-> > > >  }
-> > > >
-> > > > +static bool kvm_vcpu_exit_request(struct kvm_vcpu *vcpu)
-> > > > +{
-> > > > +     return kvm_request_pending(vcpu) ||
-> > > > +                     need_new_vmid_gen(&vcpu->arch.hw_mmu->vmid) ||
-> > > > +                     xfer_to_guest_mode_work_pending();
-> > >
-> > > Here's what xfer_to_guest_mode_work_pending() says:
-> > >
-> > > <quote>
-> > >  * Has to be invoked with interrupts disabled before the transition to
-> > >  * guest mode.
-> > > </quote>
-> > >
-> > > At the point where you call this, we already are in guest mode, at
-> > > least in the KVM sense.
-> >
-> > I believe the comment is suggestive of guest mode in the hardware
-> > sense, not KVM's vcpu->mode designation. I got this from
-> > arch/x86/kvm/x86.c:vcpu_enter_guest() to infer the author's
-> > intentions.
->
-> Yeah, the comment is referring to hardware guest mode.  The intent is to verify
-> there is no work to be done before making the expensive world switch.  There's
-> no meaningful interaction with vcpu->mode, on x86 it's simply more convenient
-> from a code perspective to throw it into kvm_vcpu_exit_request().
+On Thu, Jul 29, 2021, Oliver Upton wrote:
+> Refactor kvm_synchronize_tsc to make a new function that allows callers
+> to specify TSC parameters (offset, value, nanoseconds, etc.) explicitly
+> for the sake of participating in TSC synchronization.
+> 
+> This changes the locking semantics around TSC writes.
 
-Yep, the same is true for ARM as well, doing it the way it appears in
-this patch allows for the recycling of the block to enable irqs and
-preemption.
+"refactor" and "changes the locking semantics" are somewhat contradictory.  The
+correct way to do this is to first change the locking semantics, then extract the
+helper you want.  That makes review and archaeology easier, and isolates the
+locking change in case it isn't so safe after all.
 
---
-Thanks,
-Oliver
+> Writes to the TSC will now take the pvclock gtod lock while holding the tsc
+> write lock, whereas before these locks were disjoint.
+> 
+> Reviewed-by: David Matlack <dmatlack@google.com>
+> Signed-off-by: Oliver Upton <oupton@google.com>
+> ---
+> +/*
+> + * Infers attempts to synchronize the guest's tsc from host writes. Sets the
+> + * offset for the vcpu and tracks the TSC matching generation that the vcpu
+> + * participates in.
+> + *
+> + * Must hold kvm->arch.tsc_write_lock to call this function.
+
+Drop this blurb, lockdep assertions exist for a reason :-)
+
+> + */
+> +static void __kvm_synchronize_tsc(struct kvm_vcpu *vcpu, u64 offset, u64 tsc,
+> +				  u64 ns, bool matched)
+> +{
+> +	struct kvm *kvm = vcpu->kvm;
+> +	bool already_matched;
+
+Eww, not your code, but "matched" and "already_matched" are not helpful names,
+e.g. they don't provide a clue as to _what_ matched, and thus don't explain why
+there are two separate variables.  And I would expect an "already" variant to
+come in from the caller, not the other way 'round.
+
+  matched         => freq_matched
+  already_matched => gen_matched
+
+> +	unsigned long flags;
+> +
+> +	lockdep_assert_held(&kvm->arch.tsc_write_lock);
+> +
+> +	already_matched =
+> +	       (vcpu->arch.this_tsc_generation == kvm->arch.cur_tsc_generation);
+> +
+> +	/*
+> +	 * We track the most recent recorded KHZ, write and time to
+> +	 * allow the matching interval to be extended at each write.
+> +	 */
+> +	kvm->arch.last_tsc_nsec = ns;
+> +	kvm->arch.last_tsc_write = tsc;
+> +	kvm->arch.last_tsc_khz = vcpu->arch.virtual_tsc_khz;
+> +
+> +	vcpu->arch.last_guest_tsc = tsc;
+> +
+> +	/* Keep track of which generation this VCPU has synchronized to */
+> +	vcpu->arch.this_tsc_generation = kvm->arch.cur_tsc_generation;
+> +	vcpu->arch.this_tsc_nsec = kvm->arch.cur_tsc_nsec;
+> +	vcpu->arch.this_tsc_write = kvm->arch.cur_tsc_write;
+> +
+> +	kvm_vcpu_write_tsc_offset(vcpu, offset);
+> +
+> +	spin_lock_irqsave(&kvm->arch.pvclock_gtod_sync_lock, flags);
+
+I believe this can be spin_lock(), since AFAICT the caller _must_ disable IRQs
+when taking tsc_write_lock, i.e. we know IRQs are disabled at this point.
+
+> +	if (!matched) {
+> +		/*
+> +		 * We split periods of matched TSC writes into generations.
+> +		 * For each generation, we track the original measured
+> +		 * nanosecond time, offset, and write, so if TSCs are in
+> +		 * sync, we can match exact offset, and if not, we can match
+> +		 * exact software computation in compute_guest_tsc()
+> +		 *
+> +		 * These values are tracked in kvm->arch.cur_xxx variables.
+> +		 */
+> +		kvm->arch.nr_vcpus_matched_tsc = 0;
+> +		kvm->arch.cur_tsc_generation++;
+> +		kvm->arch.cur_tsc_nsec = ns;
+> +		kvm->arch.cur_tsc_write = tsc;
+> +		kvm->arch.cur_tsc_offset = offset;
+
+IMO, adjusting kvm->arch.cur_tsc_* belongs outside of pvclock_gtod_sync_lock.
+Based on the existing code, it is protected by tsc_write_lock.  I don't care
+about the extra work while holding pvclock_gtod_sync_lock, but it's very confusing
+to see code that reads variables outside of a lock, then take a lock and write
+those same variables without first rechecking.
+
+> +		matched = false;
+
+What's the point of clearing "matched"?  It's already false...
+
+> +	} else if (!already_matched) {
+> +		kvm->arch.nr_vcpus_matched_tsc++;
+> +	}
+> +
+> +	kvm_track_tsc_matching(vcpu);
+> +	spin_unlock_irqrestore(&kvm->arch.pvclock_gtod_sync_lock, flags);
+> +}
+> +
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
