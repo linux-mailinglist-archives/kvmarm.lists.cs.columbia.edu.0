@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id F2D603DDE01
-	for <lists+kvmarm@lfdr.de>; Mon,  2 Aug 2021 18:52:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB5EB3DDE04
+	for <lists+kvmarm@lfdr.de>; Mon,  2 Aug 2021 18:52:47 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5B8D14A32E;
-	Mon,  2 Aug 2021 12:52:24 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 78C1C4A2E5;
+	Mon,  2 Aug 2021 12:52:47 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,34 +15,34 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id l9xUcN46bxwr; Mon,  2 Aug 2021 12:52:24 -0400 (EDT)
+	with ESMTP id AgpcpCt2U-cb; Mon,  2 Aug 2021 12:52:47 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 294A140895;
-	Mon,  2 Aug 2021 12:52:23 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 50A1B4083E;
+	Mon,  2 Aug 2021 12:52:46 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8194340667
- for <kvmarm@lists.cs.columbia.edu>; Mon,  2 Aug 2021 12:52:21 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4281E40617
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  2 Aug 2021 12:52:45 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id uUwSWOqzuQwM for <kvmarm@lists.cs.columbia.edu>;
- Mon,  2 Aug 2021 12:52:20 -0400 (EDT)
+ with ESMTP id kRcTbMV-dyBI for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  2 Aug 2021 12:52:44 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6C60040623
- for <kvmarm@lists.cs.columbia.edu>; Mon,  2 Aug 2021 12:52:20 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 89CCB610FF;
- Mon,  2 Aug 2021 16:52:17 +0000 (UTC)
-Date: Mon, 2 Aug 2021 17:52:14 +0100
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 57ECE40489
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  2 Aug 2021 12:52:44 -0400 (EDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id CD63D610FF;
+ Mon,  2 Aug 2021 16:52:41 +0000 (UTC)
+Date: Mon, 2 Aug 2021 17:52:39 +0100
 From: Catalin Marinas <catalin.marinas@arm.com>
 To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v2 2/2] KVM: arm64: Unregister HYP sections from kmemleak
- in protected mode
-Message-ID: <20210802165214.GK18685@arm.com>
+Subject: Re: [PATCH v2 1/2] arm64: Move .hyp.rodata outside of the
+ _sdata.._edata range
+Message-ID: <20210802165238.GL18685@arm.com>
 References: <20210802123830.2195174-1-maz@kernel.org>
- <20210802123830.2195174-3-maz@kernel.org>
+ <20210802123830.2195174-2-maz@kernel.org>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20210802123830.2195174-3-maz@kernel.org>
+In-Reply-To: <20210802123830.2195174-2-maz@kernel.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Cc: kernel-team@android.com, kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
  stable@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
@@ -63,25 +63,20 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Aug 02, 2021 at 01:38:30PM +0100, Marc Zyngier wrote:
-> Booting a KVM host in protected mode with kmemleak quickly results
-> in a pretty bad crash, as kmemleak doesn't know that the HYP sections
-> have been taken away. This is specially true for the BSS section,
-> which is part of the kernel BSS section and registered at boot time
-> by kmemleak itself.
+On Mon, Aug 02, 2021 at 01:38:29PM +0100, Marc Zyngier wrote:
+> The HYP rodata section is currently lumped together with the BSS,
+> which isn't exactly what is expected (it gets registered with
+> kmemleak, for example).
 > 
-> Unregister the HYP part of the BSS before making that section
-> HYP-private. The rest of the HYP-specific data is obtained via
-> the page allocator or lives in other sections, none of which is
-> subjected to kmemleak.
+> Move it away so that it is actually marked RO. As an added
+> benefit, it isn't registered with kmemleak anymore.
 > 
-> Fixes: 90134ac9cabb ("KVM: arm64: Protect the .hyp sections from the host")
-> Reviewed-by: Quentin Perret <qperret@google.com>
+> Fixes: 380e18ade4a5 ("KVM: arm64: Introduce a BSS section for use at Hyp")
+> Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
 > Signed-off-by: Marc Zyngier <maz@kernel.org>
-> Cc: Catalin Marinas <catalin.marinas@arm.com>
-> Cc: stable@vger.kernel.org # 5.13
+> Cc: stable@vger.kernel.org #5.13
 
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
