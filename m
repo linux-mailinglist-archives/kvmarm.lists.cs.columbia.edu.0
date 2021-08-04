@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B4183DFD62
-	for <lists+kvmarm@lfdr.de>; Wed,  4 Aug 2021 10:58:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E8383DFD65
+	for <lists+kvmarm@lfdr.de>; Wed,  4 Aug 2021 10:58:43 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2E8284A483;
-	Wed,  4 Aug 2021 04:58:41 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2DC3E4A3A3;
+	Wed,  4 Aug 2021 04:58:43 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,63 +14,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id i0mu7xmlTvTK; Wed,  4 Aug 2021 04:58:40 -0400 (EDT)
+	with ESMTP id JnCyyrT+4Lj5; Wed,  4 Aug 2021 04:58:43 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 707D34A3A3;
-	Wed,  4 Aug 2021 04:58:38 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 941DD4A531;
+	Wed,  4 Aug 2021 04:58:41 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6BE914086C
- for <kvmarm@lists.cs.columbia.edu>; Wed,  4 Aug 2021 04:58:37 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C609740870
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  4 Aug 2021 04:58:39 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id gHCs30A2JqrS for <kvmarm@lists.cs.columbia.edu>;
- Wed,  4 Aug 2021 04:58:36 -0400 (EDT)
-Received: from mail-qv1-f73.google.com (mail-qv1-f73.google.com
- [209.85.219.73])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6F76040856
- for <kvmarm@lists.cs.columbia.edu>; Wed,  4 Aug 2021 04:58:36 -0400 (EDT)
-Received: by mail-qv1-f73.google.com with SMTP id
- v16-20020a0562140510b029032511e85975so1258117qvw.23
- for <kvmarm@lists.cs.columbia.edu>; Wed, 04 Aug 2021 01:58:36 -0700 (PDT)
+ with ESMTP id qzYuHuZ9bwgl for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  4 Aug 2021 04:58:38 -0400 (EDT)
+Received: from mail-il1-f201.google.com (mail-il1-f201.google.com
+ [209.85.166.201])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E7FC04086C
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  4 Aug 2021 04:58:37 -0400 (EDT)
+Received: by mail-il1-f201.google.com with SMTP id
+ p9-20020a92d2890000b02902221165b777so604806ilp.19
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 04 Aug 2021 01:58:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=9z0ILel/nmHkGUMptTPmpCG4j9f031MAvczP47Mkt78=;
- b=AGG526CClu6IqHFTOxS7+h3HvPWXLqKYwyxWDqhy8O1Cl7kRhpnrrXFTY0kzLPlJzo
- NTLuHbzcLYaYfAWrM32xY1DL6EHrQH4/2lErBCn8/ZGON8Be4/Pp9eWnRrHfI5ABkk+e
- cUAX5/1tP6hG7xgE0KZ69uOsXKCWECXSJndhcqwqutNTyGslSd/lvGhdMfdY1YZV67+W
- DWELveZd0WTMUmICxJLUctfDxryaN/y9+D66dBcuvb4CitoE5kvYTWemb+5QNRxgHI0j
- rWPx8EeySutkqhAJYHR/vC6ZOVzwZ3vF7onQk6tkqzA+Opb0I7MhtY7K0lwaz97Zb10g
- jtsQ==
+ :cc; bh=K7pLZDgIPuV12HPJ9thky4TOXLt6Z7al5u7GtuvUBZA=;
+ b=by4LiJhYPpMwogtLXJ7fjEm8BONAI58MOYgbyTmmvv9mv9oTtLGatcNERorAuv0dmW
+ UC3XjcBEb+sx3noaVxjS+QVNRj+biM3Lo1eV/RlruKJ50GC+iadfF6aaHguozUNiI3b8
+ YVhEsnwcNXmmJJqaEt39Vf/k1B6m654tV9mllpPUiOfRIYnAY37fY/gsmCSkNxueDDY4
+ CHN0wKT96CZGFhb8xqQkHDHbLL8+lrMg5+vDb+3rcZNwb2534M5p+W2BHQjONV2mDibP
+ t5YC7m8i/+Un2HWG0r/tiICiXyhzpxJRCRei0WxRWZFxrCaI8v+wY5+1CvTYu5q7gqWn
+ QVGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=9z0ILel/nmHkGUMptTPmpCG4j9f031MAvczP47Mkt78=;
- b=YUno83JjnODcBAzKKtyb2UoG/jIwHPTrg+VQLHxgeV6jOnCYf/rmx8h8A2j8BHSKo2
- ZEmCwyDXzKZnit++9vMtpTx0Ip3+zdJpNQFZ+sJ+wWgmOns91dYFOhn85QWYmp5WuQKg
- fohx55iT00C3sgCDDwlv0M7hQe659B83weKQO6+yWFf9KHKy+M9NbJYEXgv3ZAY0hD9s
- kakzE8DJ7jrwr5hQr0C17JESzRAtjMnlm4sfhNGL2iv3q0gcr9KKg4dd4G0CJDbqlYWR
- 6QVDT5B6Ttjy91MVVJ7E9AohUkEOYOM55Z6F/0fo5lf/2QCdX9k0c3qCyEeYWQsqgG57
- xeJg==
-X-Gm-Message-State: AOAM5335rW/zjYaSEXexRdnQpV4LwsrlPz2UmZkxry6L9Vi5ljxAek9T
- Fan3469icJLw99rcfa72nN8cIYPkkRc=
-X-Google-Smtp-Source: ABdhPJzxzqd5PN7eP88ZrBpXcJ5Qw54s+lcbwp2wfv6KXhmpgwkZOP22ITfr7gZ3p1xKgG6E9IZ8pxMUSks=
+ bh=K7pLZDgIPuV12HPJ9thky4TOXLt6Z7al5u7GtuvUBZA=;
+ b=rq4/O0Ga16tlUT/09NkCX49ZCOG21tBkwwV6I6sr5hlNK//8T5TJNxSFGGZFPukcRX
+ 2RF4XpQoCR9oOcoGiRV2gcJjDa7y7YJW3J9vF2VcoAyYokf0ipXU5dMADbQoH7tBs/V5
+ Tfu6BSexBKuGyUfbuYYbsq8OExpiHx3acaDfwd8d6cCC2YvO6X8ITERbJv3oFVOPrcF4
+ 90G5Aa0LCTyR6+JBv4R2TEv6G2mJO0TabMFO7K8715YIub6SVsn+keAAxvW7lZhOG5kq
+ bajWIPRKCfbC59uUuQcuntzMvjTeZ28SM8z/wiJ74JoAloyjQrGgZDdMWmQZ+ITpVpQw
+ kEWw==
+X-Gm-Message-State: AOAM530AnrQp7M3Z9FWnsAA38YeVCjjol7/OkvF1mGGDaGjrYBC8h+a+
+ hK0lmIJmndT8WciDJFlYz2cgquzUwAY=
+X-Google-Smtp-Source: ABdhPJz2W1LC0u615gdgeVlOBMaE1ErBs2fgBK7IpnYekTHQRjIlezwcsg27qu68TXmnKqnX9nsOS4p49MQ=
 X-Received: from oupton.c.googlers.com ([fda3:e722:ac3:cc00:2b:ff92:c0a8:404])
- (user=oupton job=sendgmr) by 2002:a05:6214:332:: with SMTP id
- j18mr25863430qvu.21.1628067515916; Wed, 04 Aug 2021 01:58:35 -0700 (PDT)
-Date: Wed,  4 Aug 2021 08:57:59 +0000
+ (user=oupton job=sendgmr) by 2002:a5d:824e:: with SMTP id
+ n14mr394806ioo.134.1628067517220; 
+ Wed, 04 Aug 2021 01:58:37 -0700 (PDT)
+Date: Wed,  4 Aug 2021 08:58:00 +0000
 In-Reply-To: <20210804085819.846610-1-oupton@google.com>
-Message-Id: <20210804085819.846610-2-oupton@google.com>
+Message-Id: <20210804085819.846610-3-oupton@google.com>
 Mime-Version: 1.0
 References: <20210804085819.846610-1-oupton@google.com>
 X-Mailer: git-send-email 2.32.0.605.g8dce9f2422-goog
-Subject: [PATCH v6 01/21] KVM: x86: Fix potential race in KVM_GET_CLOCK
+Subject: [PATCH v6 02/21] KVM: x86: Report host tsc and realtime values in
+ KVM_GET_CLOCK
 From: Oliver Upton <oupton@google.com>
 To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
 Cc: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
@@ -94,98 +96,296 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Sean noticed that KVM_GET_CLOCK was checking kvm_arch.use_master_clock
-outside of the pvclock sync lock. This is problematic, as the clock
-value written to the user may or may not actually correspond to a stable
-TSC.
+Handling the migration of TSCs correctly is difficult, in part because
+Linux does not provide userspace with the ability to retrieve a (TSC,
+realtime) clock pair for a single instant in time. In lieu of a more
+convenient facility, KVM can report similar information in the kvm_clock
+structure.
 
-Fix the race by populating the entire kvm_clock_data structure behind
-the pvclock_gtod_sync_lock.
+Provide userspace with a host TSC & realtime pair iff the realtime clock
+is based on the TSC. If userspace provides KVM_SET_CLOCK with a valid
+realtime value, advance the KVM clock by the amount of elapsed time. Do
+not step the KVM clock backwards, though, as it is a monotonic
+oscillator.
 
-Suggested-by: Sean Christopherson <seanjc@google.com>
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Oliver Upton <oupton@google.com>
 ---
- arch/x86/kvm/x86.c | 39 ++++++++++++++++++++++++++++-----------
- 1 file changed, 28 insertions(+), 11 deletions(-)
+ Documentation/virt/kvm/api.rst  |  42 ++++++++---
+ arch/x86/include/asm/kvm_host.h |   3 +
+ arch/x86/kvm/x86.c              | 127 ++++++++++++++++++--------------
+ include/uapi/linux/kvm.h        |   7 +-
+ 4 files changed, 112 insertions(+), 67 deletions(-)
 
+diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
+index dae68e68ca23..8d4a3471ad9e 100644
+--- a/Documentation/virt/kvm/api.rst
++++ b/Documentation/virt/kvm/api.rst
+@@ -993,20 +993,34 @@ such as migration.
+ When KVM_CAP_ADJUST_CLOCK is passed to KVM_CHECK_EXTENSION, it returns the
+ set of bits that KVM can return in struct kvm_clock_data's flag member.
+ 
+-The only flag defined now is KVM_CLOCK_TSC_STABLE.  If set, the returned
+-value is the exact kvmclock value seen by all VCPUs at the instant
+-when KVM_GET_CLOCK was called.  If clear, the returned value is simply
+-CLOCK_MONOTONIC plus a constant offset; the offset can be modified
+-with KVM_SET_CLOCK.  KVM will try to make all VCPUs follow this clock,
+-but the exact value read by each VCPU could differ, because the host
+-TSC is not stable.
++FLAGS:
++
++KVM_CLOCK_TSC_STABLE.  If set, the returned value is the exact kvmclock
++value seen by all VCPUs at the instant when KVM_GET_CLOCK was called.
++If clear, the returned value is simply CLOCK_MONOTONIC plus a constant
++offset; the offset can be modified with KVM_SET_CLOCK.  KVM will try
++to make all VCPUs follow this clock, but the exact value read by each
++VCPU could differ, because the host TSC is not stable.
++
++KVM_CLOCK_REALTIME.  If set, the `realtime` field in the kvm_clock_data
++structure is populated with the value of the host's real time
++clocksource at the instant when KVM_GET_CLOCK was called. If clear,
++the `realtime` field does not contain a value.
++
++KVM_CLOCK_HOST_TSC.  If set, the `host_tsc` field in the kvm_clock_data
++structure is populated with the value of the host's timestamp counter (TSC)
++at the instant when KVM_GET_CLOCK was called. If clear, the `host_tsc` field
++does not contain a value.
+ 
+ ::
+ 
+   struct kvm_clock_data {
+ 	__u64 clock;  /* kvmclock current value */
+ 	__u32 flags;
+-	__u32 pad[9];
++	__u32 pad0;
++	__u64 realtime;
++	__u64 host_tsc;
++	__u32 pad[4];
+   };
+ 
+ 
+@@ -1023,12 +1037,22 @@ Sets the current timestamp of kvmclock to the value specified in its parameter.
+ In conjunction with KVM_GET_CLOCK, it is used to ensure monotonicity on scenarios
+ such as migration.
+ 
++FLAGS:
++
++KVM_CLOCK_REALTIME.  If set, KVM will compare the value of the `realtime` field
++with the value of the host's real time clocksource at the instant when
++KVM_SET_CLOCK was called. The difference in elapsed time is added to the final
++kvmclock value that will be provided to guests.
++
+ ::
+ 
+   struct kvm_clock_data {
+ 	__u64 clock;  /* kvmclock current value */
+ 	__u32 flags;
+-	__u32 pad[9];
++	__u32 pad0;
++	__u64 realtime;
++	__u64 host_tsc;
++	__u32 pad[4];
+   };
+ 
+ 
+diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+index 6818095dd157..d6376ca8efce 100644
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1926,4 +1926,7 @@ int kvm_cpu_dirty_log_size(void);
+ 
+ int alloc_all_memslots_rmaps(struct kvm *kvm);
+ 
++#define KVM_CLOCK_VALID_FLAGS						\
++	(KVM_CLOCK_TSC_STABLE | KVM_CLOCK_REALTIME | KVM_CLOCK_HOST_TSC)
++
+ #endif /* _ASM_X86_KVM_HOST_H */
 diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 8cdf4ac6990b..34287c522f4e 100644
+index 34287c522f4e..26f1fa263192 100644
 --- a/arch/x86/kvm/x86.c
 +++ b/arch/x86/kvm/x86.c
-@@ -2782,19 +2782,20 @@ static void kvm_gen_update_masterclock(struct kvm *kvm)
- #endif
- }
+@@ -2804,10 +2804,20 @@ static void get_kvmclock(struct kvm *kvm, struct kvm_clock_data *data)
+ 	get_cpu();
  
--u64 get_kvmclock_ns(struct kvm *kvm)
-+static void get_kvmclock(struct kvm *kvm, struct kvm_clock_data *data)
- {
- 	struct kvm_arch *ka = &kvm->arch;
- 	struct pvclock_vcpu_time_info hv_clock;
- 	unsigned long flags;
--	u64 ret;
- 
- 	spin_lock_irqsave(&ka->pvclock_gtod_sync_lock, flags);
- 	if (!ka->use_master_clock) {
- 		spin_unlock_irqrestore(&ka->pvclock_gtod_sync_lock, flags);
--		return get_kvmclock_base_ns() + ka->kvmclock_offset;
-+		data->clock = get_kvmclock_base_ns() + ka->kvmclock_offset;
-+		return;
- 	}
- 
-+	data->flags |= KVM_CLOCK_TSC_STABLE;
- 	hv_clock.tsc_timestamp = ka->master_cycle_now;
- 	hv_clock.system_time = ka->master_kernel_ns + ka->kvmclock_offset;
- 	spin_unlock_irqrestore(&ka->pvclock_gtod_sync_lock, flags);
-@@ -2806,13 +2807,26 @@ u64 get_kvmclock_ns(struct kvm *kvm)
+ 	if (__this_cpu_read(cpu_tsc_khz)) {
++#ifdef CONFIG_X86_64
++		struct timespec64 ts;
++
++		if (kvm_get_walltime_and_clockread(&ts, &data->host_tsc)) {
++			data->realtime = ts.tv_nsec + NSEC_PER_SEC * ts.tv_sec;
++			data->flags |= KVM_CLOCK_REALTIME | KVM_CLOCK_HOST_TSC;
++		} else
++#endif
++		data->host_tsc = rdtsc();
++
  		kvm_get_time_scale(NSEC_PER_SEC, __this_cpu_read(cpu_tsc_khz) * 1000LL,
  				   &hv_clock.tsc_shift,
  				   &hv_clock.tsc_to_system_mul);
--		ret = __pvclock_read_cycles(&hv_clock, rdtsc());
--	} else
--		ret = get_kvmclock_base_ns() + ka->kvmclock_offset;
-+		data->clock = __pvclock_read_cycles(&hv_clock, rdtsc());
-+	} else {
-+		data->clock = get_kvmclock_base_ns() + ka->kvmclock_offset;
-+	}
+-		data->clock = __pvclock_read_cycles(&hv_clock, rdtsc());
++		data->clock = __pvclock_read_cycles(&hv_clock, data->host_tsc);
+ 	} else {
+ 		data->clock = get_kvmclock_base_ns() + ka->kvmclock_offset;
+ 	}
+@@ -4047,7 +4057,7 @@ int kvm_vm_ioctl_check_extension(struct kvm *kvm, long ext)
+ 		r = KVM_SYNC_X86_VALID_FIELDS;
+ 		break;
+ 	case KVM_CAP_ADJUST_CLOCK:
+-		r = KVM_CLOCK_TSC_STABLE;
++		r = KVM_CLOCK_VALID_FLAGS;
+ 		break;
+ 	case KVM_CAP_X86_DISABLE_EXITS:
+ 		r |=  KVM_X86_DISABLE_EXITS_HLT | KVM_X86_DISABLE_EXITS_PAUSE |
+@@ -5834,6 +5844,60 @@ int kvm_arch_pm_notifier(struct kvm *kvm, unsigned long state)
+ }
+ #endif /* CONFIG_HAVE_KVM_PM_NOTIFIER */
  
- 	put_cpu();
-+}
- 
--	return ret;
-+u64 get_kvmclock_ns(struct kvm *kvm)
++static int kvm_vm_ioctl_get_clock(struct kvm *kvm, void __user *argp)
 +{
 +	struct kvm_clock_data data;
 +
-+	/*
-+	 * Zero flags as it's accessed RMW, leave everything else uninitialized
-+	 * as clock is always written and no other fields are consumed.
-+	 */
-+	data.flags = 0;
-+
++	memset(&data, 0, sizeof(data));
 +	get_kvmclock(kvm, &data);
-+	return data.clock;
- }
- 
- static void kvm_setup_pvclock_page(struct kvm_vcpu *v,
-@@ -6104,11 +6118,14 @@ long kvm_arch_vm_ioctl(struct file *filp,
- 	}
- 	case KVM_GET_CLOCK: {
- 		struct kvm_clock_data user_ns;
--		u64 now_ns;
- 
--		now_ns = get_kvmclock_ns(kvm);
--		user_ns.clock = now_ns;
--		user_ns.flags = kvm->arch.use_master_clock ? KVM_CLOCK_TSC_STABLE : 0;
++
++	if (copy_to_user(argp, &data, sizeof(data)))
++		return -EFAULT;
++
++	return 0;
++}
++
++static int kvm_vm_ioctl_set_clock(struct kvm *kvm, void __user *argp)
++{
++	struct kvm_arch *ka = &kvm->arch;
++	struct kvm_clock_data data;
++	u64 now_raw_ns;
++
++	if (copy_from_user(&data, argp, sizeof(data)))
++		return -EFAULT;
++
++	if (data.flags & ~KVM_CLOCK_REALTIME)
++		return -EINVAL;
++
++	/*
++	 * TODO: userspace has to take care of races with VCPU_RUN, so
++	 * kvm_gen_update_masterclock() can be cut down to locked
++	 * pvclock_update_vm_gtod_copy().
++	 */
++	kvm_gen_update_masterclock(kvm);
++
++	spin_lock_irq(&ka->pvclock_gtod_sync_lock);
++	if (data.flags & KVM_CLOCK_REALTIME) {
++		u64 now_real_ns = ktime_get_real_ns();
++
 +		/*
-+		 * Zero flags as it is accessed RMW, leave everything else
-+		 * uninitialized as clock is always written and no other fields
-+		 * are consumed.
++		 * Avoid stepping the kvmclock backwards.
 +		 */
-+		user_ns.flags = 0;
-+		get_kvmclock(kvm, &user_ns);
- 		memset(&user_ns.pad, 0, sizeof(user_ns.pad));
++		if (now_real_ns > data.realtime)
++			data.clock += now_real_ns - data.realtime;
++	}
++
++	if (ka->use_master_clock)
++		now_raw_ns = ka->master_kernel_ns;
++	else
++		now_raw_ns = get_kvmclock_base_ns();
++	ka->kvmclock_offset = data.clock - now_raw_ns;
++	spin_unlock_irq(&ka->pvclock_gtod_sync_lock);
++
++	kvm_make_all_cpus_request(kvm, KVM_REQ_CLOCK_UPDATE);
++	return 0;
++}
++
+ long kvm_arch_vm_ioctl(struct file *filp,
+ 		       unsigned int ioctl, unsigned long arg)
+ {
+@@ -6077,63 +6141,12 @@ long kvm_arch_vm_ioctl(struct file *filp,
+ 		break;
+ 	}
+ #endif
+-	case KVM_SET_CLOCK: {
+-		struct kvm_arch *ka = &kvm->arch;
+-		struct kvm_clock_data user_ns;
+-		u64 now_ns;
+-
+-		r = -EFAULT;
+-		if (copy_from_user(&user_ns, argp, sizeof(user_ns)))
+-			goto out;
+-
+-		r = -EINVAL;
+-		if (user_ns.flags)
+-			goto out;
+-
+-		r = 0;
+-		/*
+-		 * TODO: userspace has to take care of races with VCPU_RUN, so
+-		 * kvm_gen_update_masterclock() can be cut down to locked
+-		 * pvclock_update_vm_gtod_copy().
+-		 */
+-		kvm_gen_update_masterclock(kvm);
+-
+-		/*
+-		 * This pairs with kvm_guest_time_update(): when masterclock is
+-		 * in use, we use master_kernel_ns + kvmclock_offset to set
+-		 * unsigned 'system_time' so if we use get_kvmclock_ns() (which
+-		 * is slightly ahead) here we risk going negative on unsigned
+-		 * 'system_time' when 'user_ns.clock' is very small.
+-		 */
+-		spin_lock_irq(&ka->pvclock_gtod_sync_lock);
+-		if (kvm->arch.use_master_clock)
+-			now_ns = ka->master_kernel_ns;
+-		else
+-			now_ns = get_kvmclock_base_ns();
+-		ka->kvmclock_offset = user_ns.clock - now_ns;
+-		spin_unlock_irq(&ka->pvclock_gtod_sync_lock);
+-
+-		kvm_make_all_cpus_request(kvm, KVM_REQ_CLOCK_UPDATE);
++	case KVM_SET_CLOCK:
++		r = kvm_vm_ioctl_set_clock(kvm, argp);
+ 		break;
+-	}
+-	case KVM_GET_CLOCK: {
+-		struct kvm_clock_data user_ns;
+-
+-		/*
+-		 * Zero flags as it is accessed RMW, leave everything else
+-		 * uninitialized as clock is always written and no other fields
+-		 * are consumed.
+-		 */
+-		user_ns.flags = 0;
+-		get_kvmclock(kvm, &user_ns);
+-		memset(&user_ns.pad, 0, sizeof(user_ns.pad));
+-
+-		r = -EFAULT;
+-		if (copy_to_user(argp, &user_ns, sizeof(user_ns)))
+-			goto out;
+-		r = 0;
++	case KVM_GET_CLOCK:
++		r = kvm_vm_ioctl_get_clock(kvm, argp);
+ 		break;
+-	}
+ 	case KVM_MEMORY_ENCRYPT_OP: {
+ 		r = -ENOTTY;
+ 		if (kvm_x86_ops.mem_enc_op)
+diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
+index d9e4aabcb31a..53a49cb8616a 100644
+--- a/include/uapi/linux/kvm.h
++++ b/include/uapi/linux/kvm.h
+@@ -1223,11 +1223,16 @@ struct kvm_irqfd {
  
- 		r = -EFAULT;
+ /* Do not use 1, KVM_CHECK_EXTENSION returned it before we had flags.  */
+ #define KVM_CLOCK_TSC_STABLE		2
++#define KVM_CLOCK_REALTIME		(1 << 2)
++#define KVM_CLOCK_HOST_TSC		(1 << 3)
+ 
+ struct kvm_clock_data {
+ 	__u64 clock;
+ 	__u32 flags;
+-	__u32 pad[9];
++	__u32 pad0;
++	__u64 realtime;
++	__u64 host_tsc;
++	__u32 pad[4];
+ };
+ 
+ /* For KVM_CAP_SW_TLB */
 -- 
 2.32.0.605.g8dce9f2422-goog
 
