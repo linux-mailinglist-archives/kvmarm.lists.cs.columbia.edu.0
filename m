@@ -2,90 +2,70 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B9133E2B71
-	for <lists+kvmarm@lfdr.de>; Fri,  6 Aug 2021 15:34:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B679A3E2C6A
+	for <lists+kvmarm@lfdr.de>; Fri,  6 Aug 2021 16:21:29 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E274B4B0E4;
-	Fri,  6 Aug 2021 09:34:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 253BA4B0E6;
+	Fri,  6 Aug 2021 10:21:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.799
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=0.799 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001]
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
 	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id b2-rLtQv0h3A; Fri,  6 Aug 2021 09:34:37 -0400 (EDT)
+	with ESMTP id qB5gclB3HDRw; Fri,  6 Aug 2021 10:21:29 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 11B3E4B0EB;
-	Fri,  6 Aug 2021 09:34:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EDED64B0EE;
+	Fri,  6 Aug 2021 10:21:26 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8788C4B0E1
- for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Aug 2021 09:03:31 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9E0E24B0D9
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Aug 2021 09:38:37 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id kxNH176EFJ7j for <kvmarm@lists.cs.columbia.edu>;
- Fri,  6 Aug 2021 09:03:29 -0400 (EDT)
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com
- [209.85.210.42])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8AF7F4B0DD
- for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Aug 2021 09:03:29 -0400 (EDT)
-Received: by mail-ot1-f42.google.com with SMTP id
- c2-20020a0568303482b029048bcf4c6bd9so8800232otu.8
- for <kvmarm@lists.cs.columbia.edu>; Fri, 06 Aug 2021 06:03:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=mQZg74DqD2RRayKwo8xi/nCmcKRT5stcmPaaT9jyiYk=;
- b=c4jBQe/2b5p5qq2PT1tD+ikuRSGM8bJPwo9ShH/ShvwsLjd46ONlFPbNmP+XbIY0Qu
- xyDJXsiltvNx5tI1EGgQZD6vp3hEsJugRbJlp1FHwQNiqrT1fWpdfg76RJm5eD2Av7zs
- jDOwMz4K5phoZecjqbCzDFu3jFA7zBpv/xLMWHOcY2jjd25JTZm4tZBvfwMu6G3BRtSU
- vzc7cNwvj8O3Q9kX8WhIFBUe/unBR0Guq3D97uNZ+E+/S0/ZFROBqM3d3rdFOKgI56X9
- 3xv+2BMzmzmD29F174ensT88NfJbwFxh+ULjHOFDvN5hnzO6NdkcCapOCH4tpsrVb3uM
- 288w==
-X-Gm-Message-State: AOAM533ld7DsYjc3GEMu+v/PfOLjkILvmP1MsSK809Afz/RC7ziWIqi9
- sOa/AKQV46V0CNjw3KCNOQiT24ksV3cY1Cnob/g=
-X-Google-Smtp-Source: ABdhPJyXq1aMvvaZ4ngrFxXupDSFJDszy9bR8Lbk1NJThFKdrvLYTJaDsYx4blvqLwricckeLCngMBoV0X2Bh3cErko=
-X-Received: by 2002:a05:6830:1f59:: with SMTP id
- u25mr7551053oth.321.1628255008758; 
- Fri, 06 Aug 2021 06:03:28 -0700 (PDT)
+ with ESMTP id n702tnLMd8yP for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  6 Aug 2021 09:38:35 -0400 (EDT)
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 24F194B0AD
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Aug 2021 09:38:35 -0400 (EDT)
+X-IronPort-AV: E=McAfee;i="6200,9189,10067"; a="214353906"
+X-IronPort-AV: E=Sophos;i="5.84,300,1620716400"; d="scan'208";a="214353906"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+ by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Aug 2021 06:38:26 -0700
+X-IronPort-AV: E=Sophos;i="5.84,300,1620716400"; d="scan'208";a="523463320"
+Received: from vmm_a4_icx.sh.intel.com (HELO localhost.localdomain)
+ ([10.239.53.245])
+ by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Aug 2021 06:38:20 -0700
+From: Zhu Lingshan <lingshan.zhu@intel.com>
+To: peterz@infradead.org,
+	pbonzini@redhat.com
+Subject: [PATCH V10 01/18] perf/core: Use static_call to optimize
+ perf_guest_info_callbacks
+Date: Fri,  6 Aug 2021 21:37:45 +0800
+Message-Id: <20210806133802.3528-2-lingshan.zhu@intel.com>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20210806133802.3528-1-lingshan.zhu@intel.com>
+References: <20210806133802.3528-1-lingshan.zhu@intel.com>
 MIME-Version: 1.0
-References: <20210802063737.22733-1-rppt@kernel.org>
-In-Reply-To: <20210802063737.22733-1-rppt@kernel.org>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Fri, 6 Aug 2021 15:03:17 +0200
-Message-ID: <CAJZ5v0gPEcEy4T8EGCMOw6w+RfU6PBV4EAU+BVHzkTuB1NUjCQ@mail.gmail.com>
-Subject: Re: [PATCH v2] memblock: make memblock_find_in_range method private
-To: Mike Rapoport <rppt@kernel.org>
-X-Mailman-Approved-At: Fri, 06 Aug 2021 09:34:34 -0400
-Cc: Peter Zijlstra <peterz@infradead.org>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Dave Hansen <dave.hansen@linux.intel.com>, linux-mips@vger.kernel.org,
- Linux Memory Management List <linux-mm@kvack.org>,
- Will Deacon <will@kernel.org>, "H. Peter Anvin" <hpa@zytor.com>,
- linux-riscv@lists.infradead.org, Frank Rowand <frowand.list@gmail.com>,
- kvmarm@lists.cs.columbia.edu, linux-s390@vger.kernel.org,
- ACPI Devel Maling List <linux-acpi@vger.kernel.org>,
- Marc Zyngier <maz@kernel.org>, the arch/x86 maintainers <x86@kernel.org>,
- Russell King <linux@armlinux.org.uk>, Mike Rapoport <rppt@linux.ibm.com>,
- Christian Borntraeger <borntraeger@de.ibm.com>, Ingo Molnar <mingo@redhat.com>,
- Len Brown <lenb@kernel.org>,
- "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
- <devicetree@vger.kernel.org>, Albert Ou <aou@eecs.berkeley.edu>,
- Vasily Gorbik <gor@linux.ibm.com>, Heiko Carstens <hca@linux.ibm.com>,
- Rob Herring <robh+dt@kernel.org>, Borislav Petkov <bp@alien8.de>,
- Andy Lutomirski <luto@kernel.org>, Paul Walmsley <paul.walmsley@sifive.com>,
- "Kirill A. Shutemov" <kirill@shutemov.name>,
- Thomas Gleixner <tglx@linutronix.de>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>,
- Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- "Rafael J. Wysocki" <rjw@rjwysocki.net>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Andrew Morton <akpm@linux-foundation.org>
+X-Mailman-Approved-At: Fri, 06 Aug 2021 10:21:25 -0400
+Cc: wanpengli@tencent.com, Like Xu <like.xu@linux.intel.com>,
+ eranian@google.com, Guo Ren <guoren@kernel.org>,
+ linux-riscv@lists.infradead.org, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, kan.liang@linux.intel.com, ak@linux.intel.com,
+ kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>, joro@8bytes.org,
+ x86@kernel.org, linux-csky@vger.kernel.org, wei.w.wang@intel.com,
+ linux-arm-kernel@lists.infradead.org, xen-devel@lists.xenproject.org,
+ liuxiangdong5@huawei.com, bp@alien8.de,
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+ Zhu Lingshan <lingshan.zhu@intel.com>, boris.ostrvsky@oracle.com,
+ jmattson@google.com, like.xu.linux@gmail.com, Nick Hu <nickhu@andestech.com>,
+ seanjc@google.com, linux-kernel@vger.kernel.org, vkuznets@redhat.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -102,538 +82,628 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Aug 2, 2021 at 8:37 AM Mike Rapoport <rppt@kernel.org> wrote:
->
-> From: Mike Rapoport <rppt@linux.ibm.com>
->
-> There are a lot of uses of memblock_find_in_range() along with
-> memblock_reserve() from the times memblock allocation APIs did not exist.
->
-> memblock_find_in_range() is the very core of memblock allocations, so any
-> future changes to its internal behaviour would mandate updates of all the
-> users outside memblock.
->
-> Replace the calls to memblock_find_in_range() with an equivalent calls to
-> memblock_phys_alloc() and memblock_phys_alloc_range() and make
-> memblock_find_in_range() private method of memblock.
->
-> This simplifies the callers, ensures that (unlikely) errors in
-> memblock_reserve() are handled and improves maintainability of
-> memblock_find_in_range().
->
-> Signed-off-by: Mike Rapoport <rppt@linux.ibm.com>
+From: Like Xu <like.xu@linux.intel.com>
 
-For the ACPI part:
+For "struct perf_guest_info_callbacks", the two fields "is_in_guest"
+and "is_user_mode" are replaced with a new multiplexed member named
+"state", and the "get_guest_ip" field will be renamed to "get_ip".
 
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+For arm64, xen and kvm/x86, the application of DEFINE_STATIC_CALL_RET0
+could make all that perf_guest_cbs stuff suck less. For arm, csky, nds32,
+and riscv, just applied some renamed refactoring.
 
-> ---
-> v2: don't change error message in arm::reserve_crashkernel(), per Russell
-> v1: https://lore.kernel.org/lkml/20210730104039.7047-1-rppt@kernel.org
->
->  arch/arm/kernel/setup.c           | 18 +++++--------
->  arch/arm64/kvm/hyp/reserved_mem.c |  9 +++----
->  arch/arm64/mm/init.c              | 36 ++++++++-----------------
->  arch/mips/kernel/setup.c          | 14 +++++-----
->  arch/riscv/mm/init.c              | 44 ++++++++++---------------------
->  arch/s390/kernel/setup.c          | 10 ++++---
->  arch/x86/kernel/aperture_64.c     |  5 ++--
->  arch/x86/mm/init.c                | 21 +++++++++------
->  arch/x86/mm/numa.c                |  5 ++--
->  arch/x86/mm/numa_emulation.c      |  5 ++--
->  arch/x86/realmode/init.c          |  2 +-
->  drivers/acpi/tables.c             |  5 ++--
->  drivers/base/arch_numa.c          |  5 +---
->  drivers/of/of_reserved_mem.c      | 12 ++++++---
->  include/linux/memblock.h          |  2 --
->  mm/memblock.c                     |  2 +-
->  16 files changed, 78 insertions(+), 117 deletions(-)
->
-> diff --git a/arch/arm/kernel/setup.c b/arch/arm/kernel/setup.c
-> index f97eb2371672..67f5421b2af7 100644
-> --- a/arch/arm/kernel/setup.c
-> +++ b/arch/arm/kernel/setup.c
-> @@ -1012,31 +1012,25 @@ static void __init reserve_crashkernel(void)
->                 unsigned long long lowmem_max = __pa(high_memory - 1) + 1;
->                 if (crash_max > lowmem_max)
->                         crash_max = lowmem_max;
-> -               crash_base = memblock_find_in_range(CRASH_ALIGN, crash_max,
-> -                                                   crash_size, CRASH_ALIGN);
-> +
-> +               crash_base = memblock_phys_alloc_range(crash_size, CRASH_ALIGN,
-> +                                                      CRASH_ALIGN, crash_max);
->                 if (!crash_base) {
->                         pr_err("crashkernel reservation failed - No suitable area found.\n");
->                         return;
->                 }
->         } else {
-> +               unsigned long long crash_max = crash_base + crash_size;
->                 unsigned long long start;
->
-> -               start = memblock_find_in_range(crash_base,
-> -                                              crash_base + crash_size,
-> -                                              crash_size, SECTION_SIZE);
-> +               start = memblock_phys_alloc_range(crash_size, SECTION_SIZE,
-> +                                                 crash_base, crash_max);
->                 if (start != crash_base) {
->                         pr_err("crashkernel reservation failed - memory is in use.\n");
->                         return;
->                 }
->         }
->
-> -       ret = memblock_reserve(crash_base, crash_size);
-> -       if (ret < 0) {
-> -               pr_warn("crashkernel reservation failed - memory is in use (0x%lx)\n",
-> -                       (unsigned long)crash_base);
-> -               return;
-> -       }
-> -
->         pr_info("Reserving %ldMB of memory at %ldMB for crashkernel (System RAM: %ldMB)\n",
->                 (unsigned long)(crash_size >> 20),
->                 (unsigned long)(crash_base >> 20),
-> diff --git a/arch/arm64/kvm/hyp/reserved_mem.c b/arch/arm64/kvm/hyp/reserved_mem.c
-> index d654921dd09b..578670e3f608 100644
-> --- a/arch/arm64/kvm/hyp/reserved_mem.c
-> +++ b/arch/arm64/kvm/hyp/reserved_mem.c
-> @@ -92,12 +92,10 @@ void __init kvm_hyp_reserve(void)
->          * this is unmapped from the host stage-2, and fallback to PAGE_SIZE.
->          */
->         hyp_mem_size = hyp_mem_pages << PAGE_SHIFT;
-> -       hyp_mem_base = memblock_find_in_range(0, memblock_end_of_DRAM(),
-> -                                             ALIGN(hyp_mem_size, PMD_SIZE),
-> -                                             PMD_SIZE);
-> +       hyp_mem_base = memblock_phys_alloc(ALIGN(hyp_mem_size, PMD_SIZE),
-> +                                          PMD_SIZE);
->         if (!hyp_mem_base)
-> -               hyp_mem_base = memblock_find_in_range(0, memblock_end_of_DRAM(),
-> -                                                     hyp_mem_size, PAGE_SIZE);
-> +               hyp_mem_base = memblock_phys_alloc(hyp_mem_size, PAGE_SIZE);
->         else
->                 hyp_mem_size = ALIGN(hyp_mem_size, PMD_SIZE);
->
-> @@ -105,7 +103,6 @@ void __init kvm_hyp_reserve(void)
->                 kvm_err("Failed to reserve hyp memory\n");
->                 return;
->         }
-> -       memblock_reserve(hyp_mem_base, hyp_mem_size);
->
->         kvm_info("Reserved %lld MiB at 0x%llx\n", hyp_mem_size >> 20,
->                  hyp_mem_base);
-> diff --git a/arch/arm64/mm/init.c b/arch/arm64/mm/init.c
-> index 8490ed2917ff..d566478a06dd 100644
-> --- a/arch/arm64/mm/init.c
-> +++ b/arch/arm64/mm/init.c
-> @@ -74,6 +74,7 @@ phys_addr_t arm64_dma_phys_limit __ro_after_init;
->  static void __init reserve_crashkernel(void)
->  {
->         unsigned long long crash_base, crash_size;
-> +       unsigned long crash_max = arm64_dma_phys_limit;
->         int ret;
->
->         ret = parse_crashkernel(boot_command_line, memblock_phys_mem_size(),
-> @@ -84,33 +85,18 @@ static void __init reserve_crashkernel(void)
->
->         crash_size = PAGE_ALIGN(crash_size);
->
-> -       if (crash_base == 0) {
-> -               /* Current arm64 boot protocol requires 2MB alignment */
-> -               crash_base = memblock_find_in_range(0, arm64_dma_phys_limit,
-> -                               crash_size, SZ_2M);
-> -               if (crash_base == 0) {
-> -                       pr_warn("cannot allocate crashkernel (size:0x%llx)\n",
-> -                               crash_size);
-> -                       return;
-> -               }
-> -       } else {
-> -               /* User specifies base address explicitly. */
-> -               if (!memblock_is_region_memory(crash_base, crash_size)) {
-> -                       pr_warn("cannot reserve crashkernel: region is not memory\n");
-> -                       return;
-> -               }
-> +       /* User specifies base address explicitly. */
-> +       if (crash_base)
-> +               crash_max = crash_base + crash_size;
->
-> -               if (memblock_is_region_reserved(crash_base, crash_size)) {
-> -                       pr_warn("cannot reserve crashkernel: region overlaps reserved memory\n");
-> -                       return;
-> -               }
-> -
-> -               if (!IS_ALIGNED(crash_base, SZ_2M)) {
-> -                       pr_warn("cannot reserve crashkernel: base address is not 2MB aligned\n");
-> -                       return;
-> -               }
-> +       /* Current arm64 boot protocol requires 2MB alignment */
-> +       crash_base = memblock_phys_alloc_range(crash_size, SZ_2M,
-> +                                              crash_base, crash_max);
-> +       if (!crash_base) {
-> +               pr_warn("cannot allocate crashkernel (size:0x%llx)\n",
-> +                       crash_size);
-> +               return;
->         }
-> -       memblock_reserve(crash_base, crash_size);
->
->         pr_info("crashkernel reserved: 0x%016llx - 0x%016llx (%lld MB)\n",
->                 crash_base, crash_base + crash_size, crash_size >> 20);
-> diff --git a/arch/mips/kernel/setup.c b/arch/mips/kernel/setup.c
-> index 23a140327a0b..f979adfd4fc2 100644
-> --- a/arch/mips/kernel/setup.c
-> +++ b/arch/mips/kernel/setup.c
-> @@ -452,8 +452,9 @@ static void __init mips_parse_crashkernel(void)
->                 return;
->
->         if (crash_base <= 0) {
-> -               crash_base = memblock_find_in_range(CRASH_ALIGN, CRASH_ADDR_MAX,
-> -                                                       crash_size, CRASH_ALIGN);
-> +               crash_base = memblock_phys_alloc_range(crash_size, CRASH_ALIGN,
-> +                                                      CRASH_ALIGN,
-> +                                                      CRASH_ADDR_MAX);
->                 if (!crash_base) {
->                         pr_warn("crashkernel reservation failed - No suitable area found.\n");
->                         return;
-> @@ -461,8 +462,9 @@ static void __init mips_parse_crashkernel(void)
->         } else {
->                 unsigned long long start;
->
-> -               start = memblock_find_in_range(crash_base, crash_base + crash_size,
-> -                                               crash_size, 1);
-> +               start = memblock_phys_alloc_range(crash_size, 1,
-> +                                                 crash_base,
-> +                                                 crash_base + crash_size);
->                 if (start != crash_base) {
->                         pr_warn("Invalid memory region reserved for crash kernel\n");
->                         return;
-> @@ -656,10 +658,6 @@ static void __init arch_mem_init(char **cmdline_p)
->         mips_reserve_vmcore();
->
->         mips_parse_crashkernel();
-> -#ifdef CONFIG_KEXEC
-> -       if (crashk_res.start != crashk_res.end)
-> -               memblock_reserve(crashk_res.start, resource_size(&crashk_res));
-> -#endif
->         device_tree_init();
->
->         /*
-> diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
-> index a14bf3910eec..88649337c568 100644
-> --- a/arch/riscv/mm/init.c
-> +++ b/arch/riscv/mm/init.c
-> @@ -812,38 +812,22 @@ static void __init reserve_crashkernel(void)
->
->         crash_size = PAGE_ALIGN(crash_size);
->
-> -       if (crash_base == 0) {
-> -               /*
-> -                * Current riscv boot protocol requires 2MB alignment for
-> -                * RV64 and 4MB alignment for RV32 (hugepage size)
-> -                */
-> -               crash_base = memblock_find_in_range(search_start, search_end,
-> -                                                   crash_size, PMD_SIZE);
-> -
-> -               if (crash_base == 0) {
-> -                       pr_warn("crashkernel: couldn't allocate %lldKB\n",
-> -                               crash_size >> 10);
-> -                       return;
-> -               }
-> -       } else {
-> -               /* User specifies base address explicitly. */
-> -               if (!memblock_is_region_memory(crash_base, crash_size)) {
-> -                       pr_warn("crashkernel: requested region is not memory\n");
-> -                       return;
-> -               }
-> -
-> -               if (memblock_is_region_reserved(crash_base, crash_size)) {
-> -                       pr_warn("crashkernel: requested region is reserved\n");
-> -                       return;
-> -               }
-> -
-> +       if (crash_base) {
-> +               search_start = crash_base;
-> +               search_end = crash_base + crash_size;
-> +       }
->
-> -               if (!IS_ALIGNED(crash_base, PMD_SIZE)) {
-> -                       pr_warn("crashkernel: requested region is misaligned\n");
-> -                       return;
-> -               }
-> +       /*
-> +        * Current riscv boot protocol requires 2MB alignment for
-> +        * RV64 and 4MB alignment for RV32 (hugepage size)
-> +        */
-> +       crash_base = memblock_phys_alloc_range(crash_size, PMD_SIZE,
-> +                                              search_start, search_end);
-> +       if (crash_base == 0) {
-> +               pr_warn("crashkernel: couldn't allocate %lldKB\n",
-> +                       crash_size >> 10);
-> +               return;
->         }
-> -       memblock_reserve(crash_base, crash_size);
->
->         pr_info("crashkernel: reserved 0x%016llx - 0x%016llx (%lld MB)\n",
->                 crash_base, crash_base + crash_size, crash_size >> 20);
-> diff --git a/arch/s390/kernel/setup.c b/arch/s390/kernel/setup.c
-> index ff0f9e838916..3d9efee0f43c 100644
-> --- a/arch/s390/kernel/setup.c
-> +++ b/arch/s390/kernel/setup.c
-> @@ -626,8 +626,9 @@ static void __init reserve_crashkernel(void)
->                         return;
->                 }
->                 low = crash_base ?: low;
-> -               crash_base = memblock_find_in_range(low, high, crash_size,
-> -                                                   KEXEC_CRASH_MEM_ALIGN);
-> +               crash_base = memblock_phys_alloc_range(crash_size,
-> +                                                      KEXEC_CRASH_MEM_ALIGN,
-> +                                                      low, high);
->         }
->
->         if (!crash_base) {
-> @@ -636,14 +637,15 @@ static void __init reserve_crashkernel(void)
->                 return;
->         }
->
-> -       if (register_memory_notifier(&kdump_mem_nb))
-> +       if (register_memory_notifier(&kdump_mem_nb)) {
-> +               memblock_free(crash_base, crash_size);
->                 return;
-> +       }
->
->         if (!OLDMEM_BASE && MACHINE_IS_VM)
->                 diag10_range(PFN_DOWN(crash_base), PFN_DOWN(crash_size));
->         crashk_res.start = crash_base;
->         crashk_res.end = crash_base + crash_size - 1;
-> -       memblock_remove(crash_base, crash_size);
->         pr_info("Reserving %lluMB of memory at %lluMB "
->                 "for crashkernel (System RAM: %luMB)\n",
->                 crash_size >> 20, crash_base >> 20,
-> diff --git a/arch/x86/kernel/aperture_64.c b/arch/x86/kernel/aperture_64.c
-> index 294ed4392a0e..10562885f5fc 100644
-> --- a/arch/x86/kernel/aperture_64.c
-> +++ b/arch/x86/kernel/aperture_64.c
-> @@ -109,14 +109,13 @@ static u32 __init allocate_aperture(void)
->          * memory. Unfortunately we cannot move it up because that would
->          * make the IOMMU useless.
->          */
-> -       addr = memblock_find_in_range(GART_MIN_ADDR, GART_MAX_ADDR,
-> -                                     aper_size, aper_size);
-> +       addr = memblock_phys_alloc_range(aper_size, aper_size,
-> +                                        GART_MIN_ADDR, GART_MAX_ADDR);
->         if (!addr) {
->                 pr_err("Cannot allocate aperture memory hole [mem %#010lx-%#010lx] (%uKB)\n",
->                        addr, addr + aper_size - 1, aper_size >> 10);
->                 return 0;
->         }
-> -       memblock_reserve(addr, aper_size);
->         pr_info("Mapping aperture over RAM [mem %#010lx-%#010lx] (%uKB)\n",
->                 addr, addr + aper_size - 1, aper_size >> 10);
->         register_nosave_region(addr >> PAGE_SHIFT,
-> diff --git a/arch/x86/mm/init.c b/arch/x86/mm/init.c
-> index 75ef19aa8903..1152a29ce109 100644
-> --- a/arch/x86/mm/init.c
-> +++ b/arch/x86/mm/init.c
-> @@ -26,6 +26,7 @@
->  #include <asm/pti.h>
->  #include <asm/text-patching.h>
->  #include <asm/memtype.h>
-> +#include <xen/xen.h>
->
->  /*
->   * We need to define the tracepoints somewhere, and tlb.c
-> @@ -127,14 +128,12 @@ __ref void *alloc_low_pages(unsigned int num)
->                 unsigned long ret = 0;
->
->                 if (min_pfn_mapped < max_pfn_mapped) {
-> -                       ret = memblock_find_in_range(
-> +                       ret = memblock_phys_alloc_range(
-> +                                       PAGE_SIZE * num, PAGE_SIZE,
->                                         min_pfn_mapped << PAGE_SHIFT,
-> -                                       max_pfn_mapped << PAGE_SHIFT,
-> -                                       PAGE_SIZE * num , PAGE_SIZE);
-> +                                       max_pfn_mapped << PAGE_SHIFT);
->                 }
-> -               if (ret)
-> -                       memblock_reserve(ret, PAGE_SIZE * num);
-> -               else if (can_use_brk_pgt)
-> +               if (!ret && can_use_brk_pgt)
->                         ret = __pa(extend_brk(PAGE_SIZE * num, PAGE_SIZE));
->
->                 if (!ret)
-> @@ -610,9 +609,15 @@ static void __init memory_map_top_down(unsigned long map_start,
->         unsigned long addr;
->         unsigned long mapped_ram_size = 0;
->
-> +       real_end = ALIGN_DOWN(map_end, PMD_SIZE);
-> +
->         /* xen has big range in reserved near end of ram, skip it at first.*/
-> -       addr = memblock_find_in_range(map_start, map_end, PMD_SIZE, PMD_SIZE);
-> -       real_end = addr + PMD_SIZE;
-> +       if (xen_domain()) {
-> +               addr = memblock_phys_alloc_range(PMD_SIZE, PMD_SIZE,
-> +                                                map_start, map_end);
-> +               memblock_free(addr, PMD_SIZE);
-> +               real_end = addr + PMD_SIZE;
-> +       }
->
->         /* step_size need to be small so pgt_buf from BRK could cover it */
->         step_size = PMD_SIZE;
-> diff --git a/arch/x86/mm/numa.c b/arch/x86/mm/numa.c
-> index e94da744386f..a1b5c71099e6 100644
-> --- a/arch/x86/mm/numa.c
-> +++ b/arch/x86/mm/numa.c
-> @@ -376,15 +376,14 @@ static int __init numa_alloc_distance(void)
->         cnt++;
->         size = cnt * cnt * sizeof(numa_distance[0]);
->
-> -       phys = memblock_find_in_range(0, PFN_PHYS(max_pfn_mapped),
-> -                                     size, PAGE_SIZE);
-> +       phys = memblock_phys_alloc_range(size, PAGE_SIZE, 0,
-> +                                        PFN_PHYS(max_pfn_mapped));
->         if (!phys) {
->                 pr_warn("Warning: can't allocate distance table!\n");
->                 /* don't retry until explicitly reset */
->                 numa_distance = (void *)1LU;
->                 return -ENOMEM;
->         }
-> -       memblock_reserve(phys, size);
->
->         numa_distance = __va(phys);
->         numa_distance_cnt = cnt;
-> diff --git a/arch/x86/mm/numa_emulation.c b/arch/x86/mm/numa_emulation.c
-> index 87d77cc52f86..737491b13728 100644
-> --- a/arch/x86/mm/numa_emulation.c
-> +++ b/arch/x86/mm/numa_emulation.c
-> @@ -447,13 +447,12 @@ void __init numa_emulation(struct numa_meminfo *numa_meminfo, int numa_dist_cnt)
->         if (numa_dist_cnt) {
->                 u64 phys;
->
-> -               phys = memblock_find_in_range(0, PFN_PHYS(max_pfn_mapped),
-> -                                             phys_size, PAGE_SIZE);
-> +               phys = memblock_phys_alloc_range(phys_size, PAGE_SIZE, 0,
-> +                                                PFN_PHYS(max_pfn_mapped));
->                 if (!phys) {
->                         pr_warn("NUMA: Warning: can't allocate copy of distance table, disabling emulation\n");
->                         goto no_emu;
->                 }
-> -               memblock_reserve(phys, phys_size);
->                 phys_dist = __va(phys);
->
->                 for (i = 0; i < numa_dist_cnt; i++)
-> diff --git a/arch/x86/realmode/init.c b/arch/x86/realmode/init.c
-> index 6534c92d0f83..31b5856010cb 100644
-> --- a/arch/x86/realmode/init.c
-> +++ b/arch/x86/realmode/init.c
-> @@ -28,7 +28,7 @@ void __init reserve_real_mode(void)
->         WARN_ON(slab_is_available());
->
->         /* Has to be under 1M so we can execute real-mode AP code. */
-> -       mem = memblock_find_in_range(0, 1<<20, size, PAGE_SIZE);
-> +       mem = memblock_phys_alloc_range(size, PAGE_SIZE, 0, 1<<20);
->         if (!mem)
->                 pr_info("No sub-1M memory is available for the trampoline\n");
->         else
-> diff --git a/drivers/acpi/tables.c b/drivers/acpi/tables.c
-> index a37a1532a575..f9383736fa0f 100644
-> --- a/drivers/acpi/tables.c
-> +++ b/drivers/acpi/tables.c
-> @@ -583,8 +583,8 @@ void __init acpi_table_upgrade(void)
->         }
->
->         acpi_tables_addr =
-> -               memblock_find_in_range(0, ACPI_TABLE_UPGRADE_MAX_PHYS,
-> -                                      all_tables_size, PAGE_SIZE);
-> +               memblock_phys_alloc_range(all_tables_size, PAGE_SIZE,
-> +                                         0, ACPI_TABLE_UPGRADE_MAX_PHYS);
->         if (!acpi_tables_addr) {
->                 WARN_ON(1);
->                 return;
-> @@ -599,7 +599,6 @@ void __init acpi_table_upgrade(void)
->          * Both memblock_reserve and e820__range_add (via arch_reserve_mem_area)
->          * works fine.
->          */
-> -       memblock_reserve(acpi_tables_addr, all_tables_size);
->         arch_reserve_mem_area(acpi_tables_addr, all_tables_size);
->
->         /*
-> diff --git a/drivers/base/arch_numa.c b/drivers/base/arch_numa.c
-> index 4cc4e117727d..46c503486e96 100644
-> --- a/drivers/base/arch_numa.c
-> +++ b/drivers/base/arch_numa.c
-> @@ -279,13 +279,10 @@ static int __init numa_alloc_distance(void)
->         int i, j;
->
->         size = nr_node_ids * nr_node_ids * sizeof(numa_distance[0]);
-> -       phys = memblock_find_in_range(0, PFN_PHYS(max_pfn),
-> -                                     size, PAGE_SIZE);
-> +       phys = memblock_phys_alloc_range(size, PAGE_SIZE, 0, PFN_PHYS(max_pfn));
->         if (WARN_ON(!phys))
->                 return -ENOMEM;
->
-> -       memblock_reserve(phys, size);
-> -
->         numa_distance = __va(phys);
->         numa_distance_cnt = nr_node_ids;
->
-> diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
-> index fd3964d24224..59c1390cdf42 100644
-> --- a/drivers/of/of_reserved_mem.c
-> +++ b/drivers/of/of_reserved_mem.c
-> @@ -33,18 +33,22 @@ static int __init early_init_dt_alloc_reserved_memory_arch(phys_addr_t size,
->         phys_addr_t *res_base)
->  {
->         phys_addr_t base;
-> +       int err = 0;
->
->         end = !end ? MEMBLOCK_ALLOC_ANYWHERE : end;
->         align = !align ? SMP_CACHE_BYTES : align;
-> -       base = memblock_find_in_range(start, end, size, align);
-> +       base = memblock_phys_alloc_range(size, align, start, end);
->         if (!base)
->                 return -ENOMEM;
->
->         *res_base = base;
-> -       if (nomap)
-> -               return memblock_mark_nomap(base, size);
-> +       if (nomap) {
-> +               err = memblock_mark_nomap(base, size);
-> +               if (err)
-> +                       memblock_free(base, size);
-> +       }
->
-> -       return memblock_reserve(base, size);
-> +       return err;
->  }
->
->  /*
-> diff --git a/include/linux/memblock.h b/include/linux/memblock.h
-> index 4a53c3ca86bd..b066024c62e3 100644
-> --- a/include/linux/memblock.h
-> +++ b/include/linux/memblock.h
-> @@ -99,8 +99,6 @@ void memblock_discard(void);
->  static inline void memblock_discard(void) {}
->  #endif
->
-> -phys_addr_t memblock_find_in_range(phys_addr_t start, phys_addr_t end,
-> -                                  phys_addr_t size, phys_addr_t align);
->  void memblock_allow_resize(void);
->  int memblock_add_node(phys_addr_t base, phys_addr_t size, int nid);
->  int memblock_add(phys_addr_t base, phys_addr_t size);
-> diff --git a/mm/memblock.c b/mm/memblock.c
-> index de7b553baa50..28a813d9e955 100644
-> --- a/mm/memblock.c
-> +++ b/mm/memblock.c
-> @@ -315,7 +315,7 @@ static phys_addr_t __init_memblock memblock_find_in_range_node(phys_addr_t size,
->   * Return:
->   * Found address on success, 0 on failure.
->   */
-> -phys_addr_t __init_memblock memblock_find_in_range(phys_addr_t start,
-> +static phys_addr_t __init_memblock memblock_find_in_range(phys_addr_t start,
->                                         phys_addr_t end, phys_addr_t size,
->                                         phys_addr_t align)
->  {
->
-> base-commit: ff1176468d368232b684f75e82563369208bc371
-> --
-> 2.28.0
->
+Cc: Will Deacon <will@kernel.org>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Guo Ren <guoren@kernel.org>
+Cc: Nick Hu <nickhu@andestech.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: kvmarm@lists.cs.columbia.edu
+Cc: linux-csky@vger.kernel.org
+Cc: linux-riscv@lists.infradead.org
+Cc: xen-devel@lists.xenproject.org
+Suggested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Original-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Like Xu <like.xu@linux.intel.com>
+Signed-off-by: Zhu Lingshan <lingshan.zhu@intel.com>
+Reviewed-by: Boris Ostrovsky <boris.ostrvsky@oracle.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+---
+ arch/arm/kernel/perf_callchain.c   | 16 +++++++-----
+ arch/arm64/kernel/perf_callchain.c | 29 +++++++++++++++++-----
+ arch/arm64/kvm/perf.c              | 22 ++++++++---------
+ arch/csky/kernel/perf_callchain.c  |  4 +--
+ arch/nds32/kernel/perf_event_cpu.c | 16 +++++++-----
+ arch/riscv/kernel/perf_callchain.c |  4 +--
+ arch/x86/events/core.c             | 39 ++++++++++++++++++++++++------
+ arch/x86/events/intel/core.c       |  7 +++---
+ arch/x86/include/asm/kvm_host.h    |  2 +-
+ arch/x86/kvm/pmu.c                 |  2 +-
+ arch/x86/kvm/x86.c                 | 37 +++++++++++++++-------------
+ arch/x86/xen/pmu.c                 | 33 ++++++++++---------------
+ include/linux/perf_event.h         | 12 ++++++---
+ kernel/events/core.c               |  9 +++++++
+ 14 files changed, 144 insertions(+), 88 deletions(-)
+
+diff --git a/arch/arm/kernel/perf_callchain.c b/arch/arm/kernel/perf_callchain.c
+index 3b69a76d341e..1ce30f86d6c7 100644
+--- a/arch/arm/kernel/perf_callchain.c
++++ b/arch/arm/kernel/perf_callchain.c
+@@ -64,7 +64,7 @@ perf_callchain_user(struct perf_callchain_entry_ctx *entry, struct pt_regs *regs
+ {
+ 	struct frame_tail __user *tail;
+ 
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest()) {
++	if (perf_guest_cbs && perf_guest_cbs->state()) {
+ 		/* We don't support guest os callchain now */
+ 		return;
+ 	}
+@@ -100,7 +100,7 @@ perf_callchain_kernel(struct perf_callchain_entry_ctx *entry, struct pt_regs *re
+ {
+ 	struct stackframe fr;
+ 
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest()) {
++	if (perf_guest_cbs && perf_guest_cbs->state()) {
+ 		/* We don't support guest os callchain now */
+ 		return;
+ 	}
+@@ -111,8 +111,8 @@ perf_callchain_kernel(struct perf_callchain_entry_ctx *entry, struct pt_regs *re
+ 
+ unsigned long perf_instruction_pointer(struct pt_regs *regs)
+ {
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest())
+-		return perf_guest_cbs->get_guest_ip();
++	if (perf_guest_cbs && perf_guest_cbs->state())
++		return perf_guest_cbs->get_ip();
+ 
+ 	return instruction_pointer(regs);
+ }
+@@ -120,9 +120,13 @@ unsigned long perf_instruction_pointer(struct pt_regs *regs)
+ unsigned long perf_misc_flags(struct pt_regs *regs)
+ {
+ 	int misc = 0;
++	unsigned int state = 0;
+ 
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest()) {
+-		if (perf_guest_cbs->is_user_mode())
++	if (perf_guest_cbs)
++		state = perf_guest_cbs->state();
++
++	if (perf_guest_cbs && state) {
++		if (state & PERF_GUEST_USER)
+ 			misc |= PERF_RECORD_MISC_GUEST_USER;
+ 		else
+ 			misc |= PERF_RECORD_MISC_GUEST_KERNEL;
+diff --git a/arch/arm64/kernel/perf_callchain.c b/arch/arm64/kernel/perf_callchain.c
+index 4a72c2727309..1b344e23fd2f 100644
+--- a/arch/arm64/kernel/perf_callchain.c
++++ b/arch/arm64/kernel/perf_callchain.c
+@@ -5,6 +5,7 @@
+  * Copyright (C) 2015 ARM Limited
+  */
+ #include <linux/perf_event.h>
++#include <linux/static_call.h>
+ #include <linux/uaccess.h>
+ 
+ #include <asm/pointer_auth.h>
+@@ -99,10 +100,25 @@ compat_user_backtrace(struct compat_frame_tail __user *tail,
+ }
+ #endif /* CONFIG_COMPAT */
+ 
++DEFINE_STATIC_CALL_RET0(arm64_guest_state, *(perf_guest_cbs->state));
++DEFINE_STATIC_CALL_RET0(arm64_guest_get_ip, *(perf_guest_cbs->get_ip));
++
++void arch_perf_update_guest_cbs(void)
++{
++	static_call_update(arm64_guest_state, (void *)&__static_call_return0);
++	static_call_update(arm64_guest_get_ip, (void *)&__static_call_return0);
++
++	if (perf_guest_cbs && perf_guest_cbs->state)
++		static_call_update(arm64_guest_state, perf_guest_cbs->state);
++
++	if (perf_guest_cbs && perf_guest_cbs->get_ip)
++		static_call_update(arm64_guest_get_ip, perf_guest_cbs->get_ip);
++}
++
+ void perf_callchain_user(struct perf_callchain_entry_ctx *entry,
+ 			 struct pt_regs *regs)
+ {
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest()) {
++	if (static_call(arm64_guest_state)()) {
+ 		/* We don't support guest os callchain now */
+ 		return;
+ 	}
+@@ -149,7 +165,7 @@ void perf_callchain_kernel(struct perf_callchain_entry_ctx *entry,
+ {
+ 	struct stackframe frame;
+ 
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest()) {
++	if (static_call(arm64_guest_state)()) {
+ 		/* We don't support guest os callchain now */
+ 		return;
+ 	}
+@@ -160,8 +176,8 @@ void perf_callchain_kernel(struct perf_callchain_entry_ctx *entry,
+ 
+ unsigned long perf_instruction_pointer(struct pt_regs *regs)
+ {
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest())
+-		return perf_guest_cbs->get_guest_ip();
++	if (static_call(arm64_guest_state)())
++		return static_call(arm64_guest_get_ip)();
+ 
+ 	return instruction_pointer(regs);
+ }
+@@ -169,9 +185,10 @@ unsigned long perf_instruction_pointer(struct pt_regs *regs)
+ unsigned long perf_misc_flags(struct pt_regs *regs)
+ {
+ 	int misc = 0;
++	unsigned int guest = static_call(arm64_guest_state)();
+ 
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest()) {
+-		if (perf_guest_cbs->is_user_mode())
++	if (guest) {
++		if (guest & PERF_GUEST_USER)
+ 			misc |= PERF_RECORD_MISC_GUEST_USER;
+ 		else
+ 			misc |= PERF_RECORD_MISC_GUEST_KERNEL;
+diff --git a/arch/arm64/kvm/perf.c b/arch/arm64/kvm/perf.c
+index 151c31fb9860..8a3387e58f42 100644
+--- a/arch/arm64/kvm/perf.c
++++ b/arch/arm64/kvm/perf.c
+@@ -13,21 +13,20 @@
+ 
+ DEFINE_STATIC_KEY_FALSE(kvm_arm_pmu_available);
+ 
+-static int kvm_is_in_guest(void)
+-{
+-        return kvm_get_running_vcpu() != NULL;
+-}
+-
+-static int kvm_is_user_mode(void)
++static unsigned int kvm_guest_state(void)
+ {
+ 	struct kvm_vcpu *vcpu;
++	unsigned int state = 0;
++
++	if (kvm_get_running_vcpu())
++		state |= PERF_GUEST_ACTIVE;
+ 
+ 	vcpu = kvm_get_running_vcpu();
+ 
+-	if (vcpu)
+-		return !vcpu_mode_priv(vcpu);
++	if (vcpu && !vcpu_mode_priv(vcpu))
++		state |= PERF_GUEST_USER;
+ 
+-	return 0;
++	return state;
+ }
+ 
+ static unsigned long kvm_get_guest_ip(void)
+@@ -43,9 +42,8 @@ static unsigned long kvm_get_guest_ip(void)
+ }
+ 
+ static struct perf_guest_info_callbacks kvm_guest_cbs = {
+-	.is_in_guest	= kvm_is_in_guest,
+-	.is_user_mode	= kvm_is_user_mode,
+-	.get_guest_ip	= kvm_get_guest_ip,
++	.state		= kvm_guest_state,
++	.get_ip		= kvm_get_guest_ip,
+ };
+ 
+ int kvm_perf_init(void)
+diff --git a/arch/csky/kernel/perf_callchain.c b/arch/csky/kernel/perf_callchain.c
+index ab55e98ee8f6..3e42239dd1b2 100644
+--- a/arch/csky/kernel/perf_callchain.c
++++ b/arch/csky/kernel/perf_callchain.c
+@@ -89,7 +89,7 @@ void perf_callchain_user(struct perf_callchain_entry_ctx *entry,
+ 	unsigned long fp = 0;
+ 
+ 	/* C-SKY does not support virtualization. */
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest())
++	if (perf_guest_cbs && perf_guest_cbs->state())
+ 		return;
+ 
+ 	fp = regs->regs[4];
+@@ -113,7 +113,7 @@ void perf_callchain_kernel(struct perf_callchain_entry_ctx *entry,
+ 	struct stackframe fr;
+ 
+ 	/* C-SKY does not support virtualization. */
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest()) {
++	if (perf_guest_cbs && perf_guest_cbs->state()) {
+ 		pr_warn("C-SKY does not support perf in guest mode!");
+ 		return;
+ 	}
+diff --git a/arch/nds32/kernel/perf_event_cpu.c b/arch/nds32/kernel/perf_event_cpu.c
+index 0ce6f9f307e6..1dc32ba842ce 100644
+--- a/arch/nds32/kernel/perf_event_cpu.c
++++ b/arch/nds32/kernel/perf_event_cpu.c
+@@ -1371,7 +1371,7 @@ perf_callchain_user(struct perf_callchain_entry_ctx *entry,
+ 
+ 	leaf_fp = 0;
+ 
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest()) {
++	if (perf_guest_cbs && perf_guest_cbs->state()) {
+ 		/* We don't support guest os callchain now */
+ 		return;
+ 	}
+@@ -1481,7 +1481,7 @@ perf_callchain_kernel(struct perf_callchain_entry_ctx *entry,
+ {
+ 	struct stackframe fr;
+ 
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest()) {
++	if (perf_guest_cbs && perf_guest_cbs->state()) {
+ 		/* We don't support guest os callchain now */
+ 		return;
+ 	}
+@@ -1494,8 +1494,8 @@ perf_callchain_kernel(struct perf_callchain_entry_ctx *entry,
+ unsigned long perf_instruction_pointer(struct pt_regs *regs)
+ {
+ 	/* However, NDS32 does not support virtualization */
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest())
+-		return perf_guest_cbs->get_guest_ip();
++	if (perf_guest_cbs && perf_guest_cbs->state())
++		return perf_guest_cbs->get_ip();
+ 
+ 	return instruction_pointer(regs);
+ }
+@@ -1503,10 +1503,14 @@ unsigned long perf_instruction_pointer(struct pt_regs *regs)
+ unsigned long perf_misc_flags(struct pt_regs *regs)
+ {
+ 	int misc = 0;
++	unsigned int state = 0;
++
++	if (perf_guest_cbs)
++		state = perf_guest_cbs->state();
+ 
+ 	/* However, NDS32 does not support virtualization */
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest()) {
+-		if (perf_guest_cbs->is_user_mode())
++	if (perf_guest_cbs && state) {
++		if (state & PERF_GUEST_USER)
+ 			misc |= PERF_RECORD_MISC_GUEST_USER;
+ 		else
+ 			misc |= PERF_RECORD_MISC_GUEST_KERNEL;
+diff --git a/arch/riscv/kernel/perf_callchain.c b/arch/riscv/kernel/perf_callchain.c
+index 0bb1854dce83..ea63f70cae5d 100644
+--- a/arch/riscv/kernel/perf_callchain.c
++++ b/arch/riscv/kernel/perf_callchain.c
+@@ -59,7 +59,7 @@ void perf_callchain_user(struct perf_callchain_entry_ctx *entry,
+ 	unsigned long fp = 0;
+ 
+ 	/* RISC-V does not support perf in guest mode. */
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest())
++	if (perf_guest_cbs && perf_guest_cbs->state())
+ 		return;
+ 
+ 	fp = regs->s0;
+@@ -79,7 +79,7 @@ void perf_callchain_kernel(struct perf_callchain_entry_ctx *entry,
+ 			   struct pt_regs *regs)
+ {
+ 	/* RISC-V does not support perf in guest mode. */
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest()) {
++	if (perf_guest_cbs && perf_guest_cbs->state()) {
+ 		pr_warn("RISC-V does not support perf in guest mode!");
+ 		return;
+ 	}
+diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+index 1eb45139fcc6..9a908631f6cc 100644
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -90,6 +90,28 @@ DEFINE_STATIC_CALL_NULL(x86_pmu_pebs_aliases, *x86_pmu.pebs_aliases);
+  */
+ DEFINE_STATIC_CALL_RET0(x86_pmu_guest_get_msrs, *x86_pmu.guest_get_msrs);
+ 
++DEFINE_STATIC_CALL_RET0(x86_guest_state, *(perf_guest_cbs->state));
++DEFINE_STATIC_CALL_RET0(x86_guest_get_ip, *(perf_guest_cbs->get_ip));
++DEFINE_STATIC_CALL_RET0(x86_guest_handle_intel_pt_intr, *(perf_guest_cbs->handle_intel_pt_intr));
++
++void arch_perf_update_guest_cbs(void)
++{
++	static_call_update(x86_guest_state, (void *)&__static_call_return0);
++	static_call_update(x86_guest_get_ip, (void *)&__static_call_return0);
++	static_call_update(x86_guest_handle_intel_pt_intr, (void *)&__static_call_return0);
++
++	if (perf_guest_cbs && perf_guest_cbs->state)
++		static_call_update(x86_guest_state, perf_guest_cbs->state);
++
++	if (perf_guest_cbs && perf_guest_cbs->get_ip)
++		static_call_update(x86_guest_get_ip, perf_guest_cbs->get_ip);
++
++	if (perf_guest_cbs && perf_guest_cbs->handle_intel_pt_intr) {
++		static_call_update(x86_guest_handle_intel_pt_intr,
++				   perf_guest_cbs->handle_intel_pt_intr);
++	}
++}
++
+ u64 __read_mostly hw_cache_event_ids
+ 				[PERF_COUNT_HW_CACHE_MAX]
+ 				[PERF_COUNT_HW_CACHE_OP_MAX]
+@@ -2764,7 +2786,7 @@ perf_callchain_kernel(struct perf_callchain_entry_ctx *entry, struct pt_regs *re
+ 	struct unwind_state state;
+ 	unsigned long addr;
+ 
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest()) {
++	if (static_call(x86_guest_state)()) {
+ 		/* TODO: We don't support guest os callchain now */
+ 		return;
+ 	}
+@@ -2867,7 +2889,7 @@ perf_callchain_user(struct perf_callchain_entry_ctx *entry, struct pt_regs *regs
+ 	struct stack_frame frame;
+ 	const struct stack_frame __user *fp;
+ 
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest()) {
++	if (static_call(x86_guest_state)()) {
+ 		/* TODO: We don't support guest os callchain now */
+ 		return;
+ 	}
+@@ -2944,18 +2966,21 @@ static unsigned long code_segment_base(struct pt_regs *regs)
+ 
+ unsigned long perf_instruction_pointer(struct pt_regs *regs)
+ {
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest())
+-		return perf_guest_cbs->get_guest_ip();
++	unsigned long ip = static_call(x86_guest_get_ip)();
++
++	if (likely(!ip))
++		ip = regs->ip + code_segment_base(regs);
+ 
+-	return regs->ip + code_segment_base(regs);
++	return ip;
+ }
+ 
+ unsigned long perf_misc_flags(struct pt_regs *regs)
+ {
++	unsigned int guest = static_call(x86_guest_state)();
+ 	int misc = 0;
+ 
+-	if (perf_guest_cbs && perf_guest_cbs->is_in_guest()) {
+-		if (perf_guest_cbs->is_user_mode())
++	if (guest) {
++		if (guest & PERF_GUEST_USER)
+ 			misc |= PERF_RECORD_MISC_GUEST_USER;
+ 		else
+ 			misc |= PERF_RECORD_MISC_GUEST_KERNEL;
+diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+index fca7a6e2242f..fb1bd7a0e1a6 100644
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -2782,6 +2782,8 @@ static void intel_pmu_reset(void)
+ 	local_irq_restore(flags);
+ }
+ 
++DECLARE_STATIC_CALL(x86_guest_handle_intel_pt_intr, *(perf_guest_cbs->handle_intel_pt_intr));
++
+ static int handle_pmi_common(struct pt_regs *regs, u64 status)
+ {
+ 	struct perf_sample_data data;
+@@ -2852,10 +2854,7 @@ static int handle_pmi_common(struct pt_regs *regs, u64 status)
+ 	 */
+ 	if (__test_and_clear_bit(GLOBAL_STATUS_TRACE_TOPAPMI_BIT, (unsigned long *)&status)) {
+ 		handled++;
+-		if (unlikely(perf_guest_cbs && perf_guest_cbs->is_in_guest() &&
+-			perf_guest_cbs->handle_intel_pt_intr))
+-			perf_guest_cbs->handle_intel_pt_intr();
+-		else
++		if (!static_call(x86_guest_handle_intel_pt_intr)())
+ 			intel_pt_interrupt();
+ 	}
+ 
+diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+index 974cbfb1eefe..128e2dd9c944 100644
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1884,7 +1884,7 @@ int kvm_skip_emulated_instruction(struct kvm_vcpu *vcpu);
+ int kvm_complete_insn_gp(struct kvm_vcpu *vcpu, int err);
+ void __kvm_request_immediate_exit(struct kvm_vcpu *vcpu);
+ 
+-int kvm_is_in_guest(void);
++unsigned int kvm_guest_state(void);
+ 
+ void __user *__x86_set_memory_region(struct kvm *kvm, int id, gpa_t gpa,
+ 				     u32 size);
+diff --git a/arch/x86/kvm/pmu.c b/arch/x86/kvm/pmu.c
+index 827886c12c16..2dcbd1b30004 100644
+--- a/arch/x86/kvm/pmu.c
++++ b/arch/x86/kvm/pmu.c
+@@ -87,7 +87,7 @@ static void kvm_perf_overflow_intr(struct perf_event *perf_event,
+ 		 * woken up. So we should wake it, but this is impossible from
+ 		 * NMI context. Do it from irq work instead.
+ 		 */
+-		if (!kvm_is_in_guest())
++		if (!kvm_guest_state())
+ 			irq_work_queue(&pmc_to_pmu(pmc)->irq_work);
+ 		else
+ 			kvm_make_request(KVM_REQ_PMI, pmc->vcpu);
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index e5d5c5ed7dd4..efd11702465c 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -8268,44 +8268,47 @@ static void kvm_timer_init(void)
+ DEFINE_PER_CPU(struct kvm_vcpu *, current_vcpu);
+ EXPORT_PER_CPU_SYMBOL_GPL(current_vcpu);
+ 
+-int kvm_is_in_guest(void)
++unsigned int kvm_guest_state(void)
+ {
+-	return __this_cpu_read(current_vcpu) != NULL;
+-}
+-
+-static int kvm_is_user_mode(void)
+-{
+-	int user_mode = 3;
++	struct kvm_vcpu *vcpu = __this_cpu_read(current_vcpu);
++	unsigned int state = 0;
+ 
+-	if (__this_cpu_read(current_vcpu))
+-		user_mode = static_call(kvm_x86_get_cpl)(__this_cpu_read(current_vcpu));
++	if (vcpu) {
++		state |= PERF_GUEST_ACTIVE;
++		if (static_call(kvm_x86_get_cpl)(vcpu))
++			state |= PERF_GUEST_USER;
++	}
+ 
+-	return user_mode != 0;
++	return state;
+ }
+ 
+-static unsigned long kvm_get_guest_ip(void)
++static unsigned long kvm_guest_get_ip(void)
+ {
++	struct kvm_vcpu *vcpu = __this_cpu_read(current_vcpu);
+ 	unsigned long ip = 0;
+ 
+-	if (__this_cpu_read(current_vcpu))
+-		ip = kvm_rip_read(__this_cpu_read(current_vcpu));
++	if (vcpu)
++		ip = kvm_rip_read(vcpu);
+ 
+ 	return ip;
+ }
+ 
+-static void kvm_handle_intel_pt_intr(void)
++static unsigned int kvm_handle_intel_pt_intr(void)
+ {
+ 	struct kvm_vcpu *vcpu = __this_cpu_read(current_vcpu);
+ 
++	if (!vcpu)
++		return 0;
++
+ 	kvm_make_request(KVM_REQ_PMI, vcpu);
+ 	__set_bit(MSR_CORE_PERF_GLOBAL_OVF_CTRL_TRACE_TOPA_PMI_BIT,
+ 			(unsigned long *)&vcpu->arch.pmu.global_status);
++	return 1;
+ }
+ 
+ static struct perf_guest_info_callbacks kvm_guest_cbs = {
+-	.is_in_guest		= kvm_is_in_guest,
+-	.is_user_mode		= kvm_is_user_mode,
+-	.get_guest_ip		= kvm_get_guest_ip,
++	.state			= kvm_guest_state,
++	.get_ip			= kvm_guest_get_ip,
+ 	.handle_intel_pt_intr	= kvm_handle_intel_pt_intr,
+ };
+ 
+diff --git a/arch/x86/xen/pmu.c b/arch/x86/xen/pmu.c
+index e13b0b49fcdf..85c6e6f6f422 100644
+--- a/arch/x86/xen/pmu.c
++++ b/arch/x86/xen/pmu.c
+@@ -413,34 +413,28 @@ int pmu_apic_update(uint32_t val)
+ }
+ 
+ /* perf callbacks */
+-static int xen_is_in_guest(void)
++static unsigned int xen_guest_state(void)
+ {
+ 	const struct xen_pmu_data *xenpmu_data = get_xenpmu_data();
++	unsigned int state = 0;
+ 
+ 	if (!xenpmu_data) {
+ 		pr_warn_once("%s: pmudata not initialized\n", __func__);
+-		return 0;
++		return state;
+ 	}
+ 
+ 	if (!xen_initial_domain() || (xenpmu_data->domain_id >= DOMID_SELF))
+-		return 0;
++		return state;
+ 
+-	return 1;
+-}
++	state |= PERF_GUEST_ACTIVE;
+ 
+-static int xen_is_user_mode(void)
+-{
+-	const struct xen_pmu_data *xenpmu_data = get_xenpmu_data();
++	if (xenpmu_data->pmu.pmu_flags & PMU_SAMPLE_PV) {
++		if (xenpmu_data->pmu.pmu_flags & PMU_SAMPLE_USER)
++			state |= PERF_GUEST_USER;
++	} else if (xenpmu_data->pmu.r.regs.cpl & 3)
++			state |= PERF_GUEST_USER;
+ 
+-	if (!xenpmu_data) {
+-		pr_warn_once("%s: pmudata not initialized\n", __func__);
+-		return 0;
+-	}
+-
+-	if (xenpmu_data->pmu.pmu_flags & PMU_SAMPLE_PV)
+-		return (xenpmu_data->pmu.pmu_flags & PMU_SAMPLE_USER);
+-	else
+-		return !!(xenpmu_data->pmu.r.regs.cpl & 3);
++	return state;
+ }
+ 
+ static unsigned long xen_get_guest_ip(void)
+@@ -456,9 +450,8 @@ static unsigned long xen_get_guest_ip(void)
+ }
+ 
+ static struct perf_guest_info_callbacks xen_guest_cbs = {
+-	.is_in_guest            = xen_is_in_guest,
+-	.is_user_mode           = xen_is_user_mode,
+-	.get_guest_ip           = xen_get_guest_ip,
++	.state                  = xen_guest_state,
++	.get_ip			= xen_get_guest_ip,
+ };
+ 
+ /* Convert registers from Xen's format to Linux' */
+diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
+index 2d510ad750ed..e823677a214c 100644
+--- a/include/linux/perf_event.h
++++ b/include/linux/perf_event.h
+@@ -26,11 +26,13 @@
+ # include <asm/local64.h>
+ #endif
+ 
++#define PERF_GUEST_ACTIVE	0x01
++#define PERF_GUEST_USER	0x02
++
+ struct perf_guest_info_callbacks {
+-	int				(*is_in_guest)(void);
+-	int				(*is_user_mode)(void);
+-	unsigned long			(*get_guest_ip)(void);
+-	void				(*handle_intel_pt_intr)(void);
++	unsigned int			(*state)(void);
++	unsigned long			(*get_ip)(void);
++	unsigned int			(*handle_intel_pt_intr)(void);
+ };
+ 
+ #ifdef CONFIG_HAVE_HW_BREAKPOINT
+@@ -1237,6 +1239,8 @@ extern void perf_event_bpf_event(struct bpf_prog *prog,
+ 				 u16 flags);
+ 
+ extern struct perf_guest_info_callbacks *perf_guest_cbs;
++extern void __weak arch_perf_update_guest_cbs(void);
++
+ extern int perf_register_guest_info_callbacks(struct perf_guest_info_callbacks *callbacks);
+ extern int perf_unregister_guest_info_callbacks(struct perf_guest_info_callbacks *callbacks);
+ 
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 464917096e73..e466fc8176e1 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -6489,9 +6489,18 @@ static void perf_pending_event(struct irq_work *entry)
+  */
+ struct perf_guest_info_callbacks *perf_guest_cbs;
+ 
++/* explicitly use __weak to fix duplicate symbol error */
++void __weak arch_perf_update_guest_cbs(void)
++{
++}
++
+ int perf_register_guest_info_callbacks(struct perf_guest_info_callbacks *cbs)
+ {
++	if (WARN_ON_ONCE(perf_guest_cbs))
++		return -EBUSY;
++
+ 	perf_guest_cbs = cbs;
++	arch_perf_update_guest_cbs();
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(perf_register_guest_info_callbacks);
+-- 
+2.27.0
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
