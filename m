@@ -2,50 +2,72 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 645F73E2A36
-	for <lists+kvmarm@lfdr.de>; Fri,  6 Aug 2021 13:59:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 680CF3E2A80
+	for <lists+kvmarm@lfdr.de>; Fri,  6 Aug 2021 14:24:51 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E29204B0D2;
-	Fri,  6 Aug 2021 07:59:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id ED7CC4B0E4;
+	Fri,  6 Aug 2021 08:24:50 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: -1.501
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=-1.501 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5tU8Rb9sSYPT; Fri,  6 Aug 2021 07:59:36 -0400 (EDT)
+	with ESMTP id nJ51iM9+ZoOc; Fri,  6 Aug 2021 08:24:50 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CCA534B0DC;
-	Fri,  6 Aug 2021 07:59:35 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9BA0F4B0DF;
+	Fri,  6 Aug 2021 08:24:49 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B3A024A1FA
- for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Aug 2021 07:59:34 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DDAD54B0D2
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Aug 2021 08:24:48 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id I1T7fataPWym for <kvmarm@lists.cs.columbia.edu>;
- Fri,  6 Aug 2021 07:59:33 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9DD2D49E5F
- for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Aug 2021 07:59:33 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 1E754610FF;
- Fri,  6 Aug 2021 11:59:30 +0000 (UTC)
-Date: Fri, 6 Aug 2021 12:59:28 +0100
-From: Catalin Marinas <catalin.marinas@arm.com>
+ with ESMTP id r5tLGOFP+UyU for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  6 Aug 2021 08:24:45 -0400 (EDT)
+Received: from szxga06-in.huawei.com (szxga06-in.huawei.com [45.249.212.32])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id DF7C84B0CA
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Aug 2021 08:24:44 -0400 (EDT)
+Received: from dggems706-chm.china.huawei.com (unknown [172.30.72.60])
+ by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4Gh4Mr5HQgzmnmx;
+ Fri,  6 Aug 2021 20:21:28 +0800 (CST)
+Received: from lhreml710-chm.china.huawei.com (10.201.108.61) by
+ dggems706-chm.china.huawei.com (10.3.19.183) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.2; Fri, 6 Aug 2021 20:24:38 +0800
+Received: from lhreml710-chm.china.huawei.com ([169.254.81.184]) by
+ lhreml710-chm.china.huawei.com ([169.254.81.184]) with mapi id
+ 15.01.2176.012; Fri, 6 Aug 2021 13:24:36 +0100
+From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
 To: Will Deacon <will@kernel.org>
-Subject: Re: [PATCH 1/4] arm64: mm: Fix TLBI vs ASID rollover
-Message-ID: <20210806115927.GJ6719@arm.com>
-References: <20210806113109.2475-1-will@kernel.org>
- <20210806113109.2475-2-will@kernel.org>
+Subject: RE: [PATCH v3 4/4] KVM: arm64: Clear active_vmids on vCPU schedule out
+Thread-Topic: [PATCH v3 4/4] KVM: arm64: Clear active_vmids on vCPU schedule
+ out
+Thread-Index: AQHXhGar1JrryboKrU+7h+yU/0K2/6thny2AgAAaZCCAACXigIAAEl3QgAR0ioA=
+Date: Fri, 6 Aug 2021 12:24:36 +0000
+Message-ID: <b2146ea5db47485f8410a4c1ab0c15fe@huawei.com>
+References: <20210729104009.382-1-shameerali.kolothum.thodi@huawei.com>
+ <20210729104009.382-5-shameerali.kolothum.thodi@huawei.com>
+ <20210803114034.GB30853@willie-the-truck>
+ <ee2863107d614ef8a36006b5aa912eca@huawei.com>
+ <20210803153036.GA31125@willie-the-truck> 
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.47.89.202]
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20210806113109.2475-2-will@kernel.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: linux-arch@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
- stable@vger.kernel.org, kernel-team@android.com, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org, Jade Alglave <jade.alglave@arm.com>
+X-CFilter-Loop: Reflected
+Cc: "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+ "maz@kernel.org" <maz@kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ Linuxarm <linuxarm@huawei.com>,
+ "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
+ "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -62,38 +84,197 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Aug 06, 2021 at 12:31:04PM +0100, Will Deacon wrote:
-> diff --git a/arch/arm64/include/asm/mmu.h b/arch/arm64/include/asm/mmu.h
-> index 75beffe2ee8a..e9c30859f80c 100644
-> --- a/arch/arm64/include/asm/mmu.h
-> +++ b/arch/arm64/include/asm/mmu.h
-> @@ -27,11 +27,32 @@ typedef struct {
->  } mm_context_t;
->  
->  /*
-> - * This macro is only used by the TLBI and low-level switch_mm() code,
-> - * neither of which can race with an ASID change. We therefore don't
-> - * need to reload the counter using atomic64_read().
-> + * We use atomic64_read() here because the ASID for an 'mm_struct' can
-> + * be reallocated when scheduling one of its threads following a
-> + * rollover event (see new_context() and flush_context()). In this case,
-> + * a concurrent TLBI (e.g. via try_to_unmap_one() and ptep_clear_flush())
-> + * may use a stale ASID. This is fine in principle as the new ASID is
-> + * guaranteed to be clean in the TLB, but the TLBI routines have to take
-> + * care to handle the following race:
-> + *
-> + *    CPU 0                    CPU 1                          CPU 2
-> + *
-> + *    // ptep_clear_flush(mm)
-> + *    xchg_relaxed(pte, 0)
-> + *    DSB ISHST
-> + *    old = ASID(mm)
 
-We'd need specs clarified (ARM ARM, cat model) that the DSB ISHST is
-sufficient to order the pte write with the subsequent ASID read.
-Otherwise the patch looks fine to me:
 
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+> -----Original Message-----
+> From: Shameerali Kolothum Thodi
+> Sent: 03 August 2021 16:57
+> To: 'Will Deacon' <will@kernel.org>
+> Cc: linux-arm-kernel@lists.infradead.org; kvmarm@lists.cs.columbia.edu;
+> linux-kernel@vger.kernel.org; maz@kernel.org; catalin.marinas@arm.com;
+> james.morse@arm.com; julien.thierry.kdev@gmail.com;
+> suzuki.poulose@arm.com; jean-philippe@linaro.org;
+> Alexandru.Elisei@arm.com; qperret@google.com; Linuxarm
+> <linuxarm@huawei.com>
+> Subject: RE: [PATCH v3 4/4] KVM: arm64: Clear active_vmids on vCPU
+> schedule out
+> 
+> 
+> 
+> > -----Original Message-----
+> > From: Will Deacon [mailto:will@kernel.org]
+> > Sent: 03 August 2021 16:31
+> > To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+> > Cc: linux-arm-kernel@lists.infradead.org; kvmarm@lists.cs.columbia.edu;
+> > linux-kernel@vger.kernel.org; maz@kernel.org; catalin.marinas@arm.com;
+> > james.morse@arm.com; julien.thierry.kdev@gmail.com;
+> > suzuki.poulose@arm.com; jean-philippe@linaro.org;
+> > Alexandru.Elisei@arm.com; qperret@google.com; Linuxarm
+> > <linuxarm@huawei.com>
+> > Subject: Re: [PATCH v3 4/4] KVM: arm64: Clear active_vmids on vCPU
+> > schedule out
+> >
+> > On Tue, Aug 03, 2021 at 12:55:25PM +0000, Shameerali Kolothum Thodi
+> > wrote:
+> > > > > diff --git a/arch/arm64/kvm/vmid.c b/arch/arm64/kvm/vmid.c
+> > > > > index 5584e84aed95..5fd51f5445c1 100644
+> > > > > --- a/arch/arm64/kvm/vmid.c
+> > > > > +++ b/arch/arm64/kvm/vmid.c
+> > > > > @@ -116,6 +116,12 @@ static u64 new_vmid(struct kvm_vmid
+> > > > *kvm_vmid)
+> > > > >  	return idx2vmid(vmid) | generation;
+> > > > >  }
+> > > > >
+> > > > > +/* Call with preemption disabled */
+> > > > > +void kvm_arm_vmid_clear_active(void)
+> > > > > +{
+> > > > > +	atomic64_set(this_cpu_ptr(&active_vmids), 0);
+> > > > > +}
+> > > >
+> > > > I think this is very broken, as it will force everybody to take the
+> > > > slow-path when they see an active_vmid of 0.
+> > >
+> > > Yes. I have seen that happening in my test setup.
+> >
+> > Why didn't you say so?!
+> 
+> Sorry. I thought of getting some performance numbers with and
+> without this patch and measure the impact. But didn't quite get time
+> to finish it yet.
+
+These are some test numbers with and without this patch, run on two
+different test setups.
+
+
+a)Test Setup -1
+-----------------------
+
+Platform: HiSilicon D06 with 128 CPUs, VMID bits = 16
+Run 128 VMs concurrently each with 2 vCPUs. Each Guest will execute hackbench
+5 times before exiting.
+
+Measurements taken avg. of 10 Runs.
+
+Image : 5.14-rc3
+---------------------------
+  Time(s)       44.43813888
+  No. of exits    145,348,264
+
+Image: 5.14-rc3 + vmid-v3
+----------------------------------------
+  Time(s)        46.59789034
+  No. of exits     133,587,307
+
+%diff against 5.14-rc3
+  Time: 4.8% more
+  Exits: 8% less 
+
+Image: 5.14-rc3 + vmid-v3 + Without active_asid clear
+---------------------------------------------------------------------------
+  Time(s)         44.5031782
+  No. of exits      144,443,188
+
+%diff against 5.14-rc3
+  Time: 0.15% more
+  Exits: 2.42% less
+
+b)Test Setup -2
+-----------------------
+
+Platform: HiSilicon D06 + Kernel with maxcpus set to 8 and VMID bits set to 4.
+Run 40 VMs concurrently each with 2 vCPUs. Each Guest will execute hackbench
+5 times before exiting.
+
+Measurements taken avg. of 10 Runs.
+
+Image : 5.14-rc3-vmid4bit
+------------------------------------
+  Time(s)        46.19963266
+  No. of exits     23,699,546
+
+Image: 5.14-rc3-vmid4bit + vmid-v3
+---------------------------------------------------
+  Time(s)          45.83307736
+  No. of exits      23,260,203
+
+%diff against 5.14-rc3-vmid4bit
+  Time: 0.8% less
+  Exits: 1.85% less 
+
+Image: 5.14-rc3-vmid4bit + vmid-v3 + Without active_asid clear
+-----------------------------------------------------------------------------------------
+  Time(s)           44.5031782
+  No. of exits        144,443,188
+
+%diff against 5.14-rc3-vmid4bit
+  Time: 1.05% less
+  Exits: 2.06% less
+
+As expected, the active_asid clear on schedule out is not helping.
+But without this patch, the numbers seems to be better than the
+vanilla kernel when we force the setup(cpus=8, vmd=4bits)
+to perform rollover.
+
+Please let me know your thoughts.
+
+Thanks,
+Shameer
+
+> 
+> >
+> > > > It also doesn't solve the issue I mentioned before, as an active_vmid of 0
+> > > > means that the reserved vmid is preserved.
+> > > >
+> > > > Needs more thought...
+> > >
+> > > How about we clear all the active_vmids in kvm_arch_free_vm() if it
+> > > matches the kvm_vmid->id ? But we may have to hold the lock
+> > > there
+> >
+> > I think we have to be really careful not to run into the "suspended
+> > animation" problem described in ae120d9edfe9 ("ARM: 7767/1: let the ASID
+> > allocator handle suspended animation") if we go down this road.
+> 
+> 
+> Ok. I will go through that.
+> 
+> > Maybe something along the lines of:
+> >
+> > ROLLOVER
+> >
+> >   * Take lock
+> >   * Inc generation
+> >     => This will force everybody down the slow path
+> >   * Record active VMIDs
+> >   * Broadcast TLBI
+> >     => Only active VMIDs can be dirty
+> >     => Reserve active VMIDs and mark as allocated
+> >
+> > VCPU SCHED IN
+> >
+> >   * Set active VMID
+> >   * Check generation
+> >   * If mismatch then:
+> >         * Take lock
+> >         * Try to match a reserved VMID
+> >         * If no reserved VMID, allocate new
+> >
+> > VCPU SCHED OUT
+> >
+> >   * Clear active VMID
+> >
+> > but I'm not daft enough to think I got it right first time. I think it
+> > needs both implementing *and* modelling in TLA+ before we merge it!
+> >
+> 
+> Ok. I need some time to digest the above first :).
+> 
+> On another note, how serious do you think is the problem of extra
+> reservation of the VMID space? Just wondering if we can skip this
+> patch for now or not..
+> 
+> Thanks,
+> Shameer
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
