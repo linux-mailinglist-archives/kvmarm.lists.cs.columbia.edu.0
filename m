@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F4773E398C
-	for <lists+kvmarm@lfdr.de>; Sun,  8 Aug 2021 10:23:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 46E893E462D
+	for <lists+kvmarm@lfdr.de>; Mon,  9 Aug 2021 15:09:30 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C8C5F40573;
-	Sun,  8 Aug 2021 04:23:24 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7CB414B0D2;
+	Mon,  9 Aug 2021 09:09:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,53 +18,55 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id h69eznoJub2Q; Sun,  8 Aug 2021 04:23:24 -0400 (EDT)
+	with ESMTP id 66vJvGerdV2b; Mon,  9 Aug 2021 09:09:29 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 691444B0A3;
-	Sun,  8 Aug 2021 04:23:22 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A52D64B0CC;
+	Mon,  9 Aug 2021 09:09:27 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 315E44048A
- for <kvmarm@lists.cs.columbia.edu>; Sun,  8 Aug 2021 04:23:21 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 473EB4A126
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Aug 2021 09:09:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 04iiROO6fGaH for <kvmarm@lists.cs.columbia.edu>;
- Sun,  8 Aug 2021 04:23:17 -0400 (EDT)
+ with ESMTP id xelcZXwuL+kl for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  9 Aug 2021 09:09:24 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6ED1B40463
- for <kvmarm@lists.cs.columbia.edu>; Sun,  8 Aug 2021 04:23:17 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 7E6A860EE9;
- Sun,  8 Aug 2021 08:23:12 +0000 (UTC)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5277A40FC7
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Aug 2021 09:09:24 -0400 (EDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0BE6E60EC0;
+ Mon,  9 Aug 2021 13:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1628410996;
- bh=zhCNdgw/mYWOZ9DqYDjenjpLs/lZQV8K6NnmUuIdhpU=;
+ s=k20201202; t=1628514563;
+ bh=c6YJj4mhhNAXx6eVWt/9O44DDuMRQSozD29Cp4nkeC4=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=hxFnOZyjcmwZqd3mCVjgbL1nsIFWan2gjbIz5LSGxdHj1yXahtapkDvBgiCYcsHKX
- m4QWL4TNRbSBo+smfSQjyWEnGKF9YVlf8xT8x1irSxBGEgFA6tGCjzUWIEATBf9VFB
- nZZ6HDQaDDw5gEbOL/GkSdSNddXXyq19QvKohyhds33z12zOIHlfTBkX8mbtcWLKH7
- YJRNbu3MTuxGUbVMArVa8yuYwJ3hDm3IeXpgHXMD0QdI5NsnzoVDtDAJ9M8CxQkfGK
- ENoLz5aLp31iOlDRcNOzwE/EJ7+9vWlB3PNfXgF9LCzuYHpAHNQrnq9U5ou8/nzRc9
- 2v71OP1WH34Ng==
-Date: Sun, 8 Aug 2021 11:23:08 +0300
-From: Mike Rapoport <rppt@kernel.org>
-To: Zi Yan <ziy@nvidia.com>
-Subject: Re: [RFC PATCH 14/15] mm: introduce MIN_MAX_ORDER to replace
- MAX_ORDER as compile time constant.
-Message-ID: <YQ+UbJtSWciIVqr4@kernel.org>
-References: <20210805190253.2795604-1-zi.yan@sent.com>
- <20210805190253.2795604-15-zi.yan@sent.com>
+ b=dFUthAbq5qF7TRptNmUkrRcgE3Pm/TgwlG5vaCI/Ih4nOb914rc2Bq7Gr9nus0F8/
+ Vsa6CRs0lYZSkOP9/cr4LkgbhSuVGenhJwpPSL7P2PaET/jZr7ZHKDhDihvmLtxQDc
+ s9TJwQeB4dhkYTlAmkI9sJ3tMFKGKQabR2B3WVd25EP1h1RJq2dnn29Q+xNHxqc9i8
+ nXswAkf6pI0o8d0y/fWall3OsWwIywpekINKrCHLjLruXzjGu1X0TBO9T9nbENsCZJ
+ R+N2mE4pZfJGPXm1KU6tzZPY/5bXitA5fG8vCUna4bQwd/FOr8dvIAeZ/EGqSoHRzv
+ D2cYdhCIQBTXQ==
+Date: Mon, 9 Aug 2021 14:09:17 +0100
+From: Will Deacon <will@kernel.org>
+To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Subject: Re: [PATCH v3 4/4] KVM: arm64: Clear active_vmids on vCPU schedule out
+Message-ID: <20210809130917.GA1207@willie-the-truck>
+References: <20210729104009.382-1-shameerali.kolothum.thodi@huawei.com>
+ <20210729104009.382-5-shameerali.kolothum.thodi@huawei.com>
+ <20210803114034.GB30853@willie-the-truck>
+ <ee2863107d614ef8a36006b5aa912eca@huawei.com>
+ <20210803153036.GA31125@willie-the-truck>
+ <b2146ea5db47485f8410a4c1ab0c15fe@huawei.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20210805190253.2795604-15-zi.yan@sent.com>
-Cc: linux-arm-kernel@lists.infradead.org,
- Catalin Marinas <catalin.marinas@arm.com>,
- David Hildenbrand <david@redhat.com>, John Hubbard <jhubbard@nvidia.com>,
- linux-kernel@vger.kernel.org, Matthew Wilcox <willy@infradead.org>,
- Michal Hocko <mhocko@kernel.org>, linux-mm@kvack.org,
- Vlastimil Babka <vbabka@suse.cz>, Marc Zyngier <maz@kernel.org>,
- Christoph Lameter <cl@linux.com>, kvmarm@lists.cs.columbia.edu,
- "Kirill A . Shutemov" <kirill.shutemov@linux.intel.com>,
- Mike Kravetz <mike.kravetz@oracle.com>
+In-Reply-To: <b2146ea5db47485f8410a4c1ab0c15fe@huawei.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+ "maz@kernel.org" <maz@kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ Linuxarm <linuxarm@huawei.com>,
+ "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
+ "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -81,192 +83,93 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Aug 05, 2021 at 03:02:52PM -0400, Zi Yan wrote:
-> From: Zi Yan <ziy@nvidia.com>
+On Fri, Aug 06, 2021 at 12:24:36PM +0000, Shameerali Kolothum Thodi wrote:
+> These are some test numbers with and without this patch, run on two
+> different test setups.
 > 
-> For other MAX_ORDER uses (described below), there is no need or too much
-> hassle to convert certain static array to dynamic ones. Add
-> MIN_MAX_ORDER to serve as compile time constant in place of MAX_ORDER.
 > 
-> ARM64 hypervisor maintains its own free page list and does not import
-> any core kernel symbols, so soon-to-be runtime variable MAX_ORDER is not
-> accessible in ARM64 hypervisor code. Also there is no need to allocating
-> very large pages.
+> a)Test Setup -1
+> -----------------------
 > 
-> In SLAB/SLOB/SLUB, 2-D array kmalloc_caches uses MAX_ORDER in its second
-> dimension. It is too much hassle to allocate memory for kmalloc_caches
-> before any proper memory allocator is set up.
+> Platform: HiSilicon D06 with 128 CPUs, VMID bits = 16
+> Run 128 VMs concurrently each with 2 vCPUs. Each Guest will execute hackbench
+> 5 times before exiting.
 > 
-> Signed-off-by: Zi Yan <ziy@nvidia.com>
-> Cc: Marc Zyngier <maz@kernel.org>
-> Cc: Catalin Marinas <catalin.marinas@arm.com>
-> Cc: Christoph Lameter <cl@linux.com>
-> Cc: Vlastimil Babka <vbabka@suse.cz>
-> Cc: Quentin Perret <qperret@google.com>
-> Cc: linux-arm-kernel@lists.infradead.org
-> Cc: kvmarm@lists.cs.columbia.edu
-> Cc: linux-mm@kvack.org
-> Cc: linux-kernel@vger.kernel.org
-> ---
->  arch/arm64/kvm/hyp/include/nvhe/gfp.h | 2 +-
->  arch/arm64/kvm/hyp/nvhe/page_alloc.c  | 3 ++-
->  include/linux/mmzone.h                | 3 +++
->  include/linux/slab.h                  | 8 ++++----
->  mm/slab.c                             | 2 +-
->  mm/slub.c                             | 7 ++++---
->  6 files changed, 15 insertions(+), 10 deletions(-)
+> Measurements taken avg. of 10 Runs.
 > 
-> diff --git a/arch/arm64/kvm/hyp/include/nvhe/gfp.h b/arch/arm64/kvm/hyp/include/nvhe/gfp.h
-> index fb0f523d1492..c774b4a98336 100644
-> --- a/arch/arm64/kvm/hyp/include/nvhe/gfp.h
-> +++ b/arch/arm64/kvm/hyp/include/nvhe/gfp.h
-> @@ -16,7 +16,7 @@ struct hyp_pool {
->  	 * API at EL2.
->  	 */
->  	hyp_spinlock_t lock;
-> -	struct list_head free_area[MAX_ORDER];
-> +	struct list_head free_area[MIN_MAX_ORDER];
->  	phys_addr_t range_start;
->  	phys_addr_t range_end;
->  	unsigned short max_order;
-> diff --git a/arch/arm64/kvm/hyp/nvhe/page_alloc.c b/arch/arm64/kvm/hyp/nvhe/page_alloc.c
-> index 41fc25bdfb34..a1cc1b648de0 100644
-> --- a/arch/arm64/kvm/hyp/nvhe/page_alloc.c
-> +++ b/arch/arm64/kvm/hyp/nvhe/page_alloc.c
-> @@ -226,7 +226,8 @@ int hyp_pool_init(struct hyp_pool *pool, u64 pfn, unsigned int nr_pages,
->  	int i;
->  
->  	hyp_spin_lock_init(&pool->lock);
-> -	pool->max_order = min(MAX_ORDER, get_order(nr_pages << PAGE_SHIFT));
-> +
-> +	pool->max_order = min(MIN_MAX_ORDER, get_order(nr_pages << PAGE_SHIFT));
->  	for (i = 0; i < pool->max_order; i++)
->  		INIT_LIST_HEAD(&pool->free_area[i]);
->  	pool->range_start = phys;
-> diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-> index 09aafc05aef4..379dada82d4b 100644
-> --- a/include/linux/mmzone.h
-> +++ b/include/linux/mmzone.h
-> @@ -27,11 +27,14 @@
->  #ifndef CONFIG_ARCH_FORCE_MAX_ORDER
->  #ifdef CONFIG_SET_MAX_ORDER
->  #define MAX_ORDER CONFIG_SET_MAX_ORDER
-> +#define MIN_MAX_ORDER CONFIG_SET_MAX_ORDER
->  #else
->  #define MAX_ORDER 11
-> +#define MIN_MAX_ORDER MAX_ORDER
->  #endif /* CONFIG_SET_MAX_ORDER */
->  #else
->  #define MAX_ORDER CONFIG_ARCH_FORCE_MAX_ORDER
-> +#define MIN_MAX_ORDER CONFIG_ARCH_FORCE_MAX_ORDER
->  #endif /* CONFIG_ARCH_FORCE_MAX_ORDER */
->  #define MAX_ORDER_NR_PAGES (1 << (MAX_ORDER - 1))
-
-The end result of this #ifdef explosion looks entirely unreadable:
-
-/* Free memory management - zoned buddy allocator.  */
-#ifndef CONFIG_ARCH_FORCE_MAX_ORDER
-#ifdef CONFIG_SET_MAX_ORDER
-/* Defined in mm/page_alloc.c */
-extern int buddy_alloc_max_order;
-
-#define MAX_ORDER buddy_alloc_max_order
-#define MIN_MAX_ORDER CONFIG_SET_MAX_ORDER
-#else
-#define MAX_ORDER 11
-#define MIN_MAX_ORDER MAX_ORDER
-#endif /* CONFIG_SET_MAX_ORDER */
-#else
-
-#ifdef CONFIG_SPARSEMEM_VMEMMAP
-/* Defined in mm/page_alloc.c */
-extern int buddy_alloc_max_order;
-
-#define MAX_ORDER buddy_alloc_max_order
-#else
-#define MAX_ORDER CONFIG_ARCH_FORCE_MAX_ORDER
-#endif /* CONFIG_SPARSEMEM_VMEMMAP */
-#define MIN_MAX_ORDER CONFIG_ARCH_FORCE_MAX_ORDER
-#endif /* CONFIG_ARCH_FORCE_MAX_ORDER */
-
-> diff --git a/include/linux/slab.h b/include/linux/slab.h
-> index 2c0d80cca6b8..d8747c158db6 100644
-> --- a/include/linux/slab.h
-> +++ b/include/linux/slab.h
-> @@ -244,8 +244,8 @@ static inline void __check_heap_object(const void *ptr, unsigned long n,
->   * to do various tricks to work around compiler limitations in order to
->   * ensure proper constant folding.
->   */
-> -#define KMALLOC_SHIFT_HIGH	((MAX_ORDER + PAGE_SHIFT - 1) <= 25 ? \
-> -				(MAX_ORDER + PAGE_SHIFT - 1) : 25)
-> +#define KMALLOC_SHIFT_HIGH	((MIN_MAX_ORDER + PAGE_SHIFT - 1) <= 25 ? \
-> +				(MIN_MAX_ORDER + PAGE_SHIFT - 1) : 25)
->  #define KMALLOC_SHIFT_MAX	KMALLOC_SHIFT_HIGH
->  #ifndef KMALLOC_SHIFT_LOW
->  #define KMALLOC_SHIFT_LOW	5
-> @@ -258,7 +258,7 @@ static inline void __check_heap_object(const void *ptr, unsigned long n,
->   * (PAGE_SIZE*2).  Larger requests are passed to the page allocator.
->   */
->  #define KMALLOC_SHIFT_HIGH	(PAGE_SHIFT + 1)
-> -#define KMALLOC_SHIFT_MAX	(MAX_ORDER + PAGE_SHIFT - 1)
-> +#define KMALLOC_SHIFT_MAX	(MIN_MAX_ORDER + PAGE_SHIFT - 1)
->  #ifndef KMALLOC_SHIFT_LOW
->  #define KMALLOC_SHIFT_LOW	3
->  #endif
-> @@ -271,7 +271,7 @@ static inline void __check_heap_object(const void *ptr, unsigned long n,
->   * be allocated from the same page.
->   */
->  #define KMALLOC_SHIFT_HIGH	PAGE_SHIFT
-> -#define KMALLOC_SHIFT_MAX	(MAX_ORDER + PAGE_SHIFT - 1)
-> +#define KMALLOC_SHIFT_MAX	(MIN_MAX_ORDER + PAGE_SHIFT - 1)
->  #ifndef KMALLOC_SHIFT_LOW
->  #define KMALLOC_SHIFT_LOW	3
->  #endif
-> diff --git a/mm/slab.c b/mm/slab.c
-> index d0f725637663..0041de8ec0e9 100644
-> --- a/mm/slab.c
-> +++ b/mm/slab.c
-> @@ -466,7 +466,7 @@ static int __init slab_max_order_setup(char *str)
->  {
->  	get_option(&str, &slab_max_order);
->  	slab_max_order = slab_max_order < 0 ? 0 :
-> -				min(slab_max_order, MAX_ORDER - 1);
-> +				min(slab_max_order, MIN_MAX_ORDER - 1);
->  	slab_max_order_set = true;
->  
->  	return 1;
-> diff --git a/mm/slub.c b/mm/slub.c
-> index b6c5205252eb..228e4a77c678 100644
-> --- a/mm/slub.c
-> +++ b/mm/slub.c
-> @@ -3564,8 +3564,9 @@ static inline int calculate_order(unsigned int size)
->  	/*
->  	 * Doh this slab cannot be placed using slub_max_order.
->  	 */
-> -	order = slab_order(size, 1, MAX_ORDER, 1);
-> -	if (order < MAX_ORDER)
-> +
-> +	order = slab_order(size, 1, MIN_MAX_ORDER, 1);
-> +	if (order < MIN_MAX_ORDER)
->  		return order;
->  	return -ENOSYS;
->  }
-> @@ -4079,7 +4080,7 @@ __setup("slub_min_order=", setup_slub_min_order);
->  static int __init setup_slub_max_order(char *str)
->  {
->  	get_option(&str, (int *)&slub_max_order);
-> -	slub_max_order = min(slub_max_order, (unsigned int)MAX_ORDER - 1);
-> +	slub_max_order = min(slub_max_order, (unsigned int)MIN_MAX_ORDER - 1);
->  
->  	return 1;
->  }
-> -- 
-> 2.30.2
+> Image : 5.14-rc3
+> ---------------------------
+>   Time(s)       44.43813888
+>   No. of exits    145,348,264
 > 
+> Image: 5.14-rc3 + vmid-v3
+> ----------------------------------------
+>   Time(s)        46.59789034
+>   No. of exits     133,587,307
+> 
+> %diff against 5.14-rc3
+>   Time: 4.8% more
+>   Exits: 8% less 
+> 
+> Image: 5.14-rc3 + vmid-v3 + Without active_asid clear
+> ---------------------------------------------------------------------------
+>   Time(s)         44.5031782
+>   No. of exits      144,443,188
+> 
+> %diff against 5.14-rc3
+>   Time: 0.15% more
+>   Exits: 2.42% less
+> 
+> b)Test Setup -2
+> -----------------------
+> 
+> Platform: HiSilicon D06 + Kernel with maxcpus set to 8 and VMID bits set to 4.
+> Run 40 VMs concurrently each with 2 vCPUs. Each Guest will execute hackbench
+> 5 times before exiting.
+> 
+> Measurements taken avg. of 10 Runs.
+> 
+> Image : 5.14-rc3-vmid4bit
+> ------------------------------------
+>   Time(s)        46.19963266
+>   No. of exits     23,699,546
+> 
+> Image: 5.14-rc3-vmid4bit + vmid-v3
+> ---------------------------------------------------
+>   Time(s)          45.83307736
+>   No. of exits      23,260,203
+> 
+> %diff against 5.14-rc3-vmid4bit
+>   Time: 0.8% less
+>   Exits: 1.85% less 
+> 
+> Image: 5.14-rc3-vmid4bit + vmid-v3 + Without active_asid clear
+> -----------------------------------------------------------------------------------------
+>   Time(s)           44.5031782
+>   No. of exits        144,443,188
 
--- 
-Sincerely yours,
-Mike.
+Really? The *exact* same numbers as the "Image: 5.14-rc3 + vmid-v3 + Without
+active_asid clear" configuration? Guessing a copy-paste error here.
+
+> %diff against 5.14-rc3-vmid4bit
+>   Time: 1.05% less
+>   Exits: 2.06% less
+> 
+> As expected, the active_asid clear on schedule out is not helping.
+> But without this patch, the numbers seems to be better than the
+> vanilla kernel when we force the setup(cpus=8, vmd=4bits)
+> to perform rollover.
+
+I'm struggling a bit to understand these numbers. Are you saying that
+clearing the active_asid helps in the 16-bit VMID case but not in the
+4-bit case?
+
+Why would the active_asid clear have any impact on the number of exits?
+
+The problem I see with not having the active_asid clear is that we will
+roll over more frequently as the number of reserved VMIDs increases.
+
+Will
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
