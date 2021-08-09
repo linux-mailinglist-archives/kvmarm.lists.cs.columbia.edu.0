@@ -2,149 +2,103 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C1623E5DE4
-	for <lists+kvmarm@lfdr.de>; Tue, 10 Aug 2021 16:28:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13EA23E4CAE
+	for <lists+kvmarm@lfdr.de>; Mon,  9 Aug 2021 21:06:52 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A07084B0E9;
-	Tue, 10 Aug 2021 10:28:31 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 827D64B0E1;
+	Mon,  9 Aug 2021 15:06:51 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	MSGID_FROM_MTA_HEADER=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
-	SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01] autolearn=unavailable
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@nvidia.com
+	(fail, message has been altered) header.i=@gmail.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xHEiclD0TWaE; Tue, 10 Aug 2021 10:28:31 -0400 (EDT)
+	with ESMTP id 5XchT6IBROX3; Mon,  9 Aug 2021 15:06:51 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CF55D4A523;
-	Tue, 10 Aug 2021 10:28:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7EBF64B0DD;
+	Mon,  9 Aug 2021 15:06:47 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5748C4B0F9
- for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Aug 2021 11:35:51 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D9F6449F6C
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Aug 2021 15:06:45 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id lyDXoq92g5HZ for <kvmarm@lists.cs.columbia.edu>;
- Mon,  9 Aug 2021 11:35:49 -0400 (EDT)
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com
- (mail-mw2nam10on2079.outbound.protection.outlook.com [40.107.94.79])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A7FF44B0F8
- for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Aug 2021 11:35:49 -0400 (EDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Wkxl7zXcwx6x5pGY4qMJYgTpjgNDanH0/g7CodZe+RMDMUq9RKCXmJlymkXtKG3iC4Fv+zytpGKQCvhPdkmVkjNT1YGhnBuSP7uzLRBJ4FqqIbvHNvyoRQmqF9SbtU6HoS6Jc//nXSL05PvjmibJRxea91WiPENtE8ak5x7dHjify/X+Ca8PdZ8lF3bAKAaFotdMamPOWq9Os1nhlMP+RWQb1I5Fk8qKHVsYqI8vqY83BVLXWl9vQpWtOrhIBz5Y5lXD0DDQlJXiPwWlItN9WdHkJQITib+cTd6lm4TURpXZAHxp7c9sPiY1u3e4i1SifHuWfb4la6SpW65Dpz4leA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Mvp/x8s0Eq+oMJ1wW2gDN65tItXzRZ6IGgy6hBtvUDI=;
- b=k9mkyibx/R7lEgCcqkuThPXH1HlF3f7MyP4DET0LC1LSBe8tC+MH6OxCJU02O3vigx16Soct4Eh1frGzQgU4Ye07bfrw1TD3HM9+ixDDOQAdULnYH09XrTXK4VCG1cOvWSXnguqSnvRXAV3AeJUA6Hz0joGGvmjOYIY6H2G/PoBSeURUML1j37a3izi9zna60jcDetYzr4yRvYk3jDG2IIhtOnYpWbTmfEkbJxW1P7XnR9LojntK+l8hv+nb2pmUxKw4lL2g2Zstu8eHJ68Z1m8MBzsHPeRlASSrsTM1lJ4GrWyWKoSX4IGnwLF2nm3keld8v79pbeYauhuAOZ5T4w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Mvp/x8s0Eq+oMJ1wW2gDN65tItXzRZ6IGgy6hBtvUDI=;
- b=f4oqWCOaVUgqFdu0ZKrlI4mIV5kl1aNc3IExqD3kZFT68OWwdBPuV1A1giOfQwjlogEHOQQOZ7K08+uKp88oXlqaT6L9NOnwA1KFYcg9wNbSOlZmSK1qR5jw4WrPpqZaPFGsiF2l4DBL5t/crII3dSPPpzaNoNqCdFGFClJh0cMssC/rJQ4/ubixRSfcGsdxrRc5UITB9wHEoMby45ncW6ATTnQolqsdz/CFzoJC+tWmq0Po4Yn+9IVHxGW1xj5G9jQS5hqZPYnJuQAKzlC6np9u2bMlgBAclguDbKEInjPvuX9R1beNFDWZmjXG4qLYCVodDrbU7zZeAxT6vwlw9A==
-Authentication-Results: kernel.org; dkim=none (message not signed)
- header.d=none;kernel.org; dmarc=none action=none header.from=nvidia.com;
-Received: from MN2PR12MB3823.namprd12.prod.outlook.com (2603:10b6:208:168::26)
- by MN2PR12MB4080.namprd12.prod.outlook.com (2603:10b6:208:1d9::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4394.21; Mon, 9 Aug
- 2021 15:35:46 +0000
-Received: from MN2PR12MB3823.namprd12.prod.outlook.com
- ([fe80::dcee:535c:30e:95f4]) by MN2PR12MB3823.namprd12.prod.outlook.com
- ([fe80::dcee:535c:30e:95f4%6]) with mapi id 15.20.4394.023; Mon, 9 Aug 2021
- 15:35:46 +0000
-From: Zi Yan <ziy@nvidia.com>
+ with ESMTP id 0eAlXusZ75AL for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  9 Aug 2021 15:06:44 -0400 (EDT)
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com
+ [209.85.210.45])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 93CBC49DE7
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  9 Aug 2021 15:06:44 -0400 (EDT)
+Received: by mail-ot1-f45.google.com with SMTP id
+ d10-20020a9d4f0a0000b02904f51c5004e3so14780462otl.9
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 09 Aug 2021 12:06:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=cpWtdrg0Pds7qmeMB9y3OlMrvJ16ctKZqCW37RmKfMg=;
+ b=lwHvyTKVOPwrS8cZe0zzXXK67hgOLK/AZZuO980UcdbVuZJ18j9rNLCJh3yj4cGBNg
+ VYtO1NG5n2C+tA+URW3LJCSxr1Be50oIFR54bqyCuyPwSgCQsXJTmpwjchulTCkHj2q/
+ CiENbdhDANNeHSMs+zKn0v/5IAPN1ZMPLzRi4btIuH4XLvKc+2Dj2qAWIFlgCTbjG8dK
+ ZumfTSen0MVhXfEyU7glmAZng0YuitppixTN04WkOipG2qpwIwY319FPXi37+J5L170y
+ 94bRfvbC66KgAvr+pJb7KKDHSBxLm42bQlS1p/jUJJJewfD2ULzDGE2sCReFCnhlI7GB
+ sVyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+ :references:mime-version:content-disposition:in-reply-to;
+ bh=cpWtdrg0Pds7qmeMB9y3OlMrvJ16ctKZqCW37RmKfMg=;
+ b=Vo+KyS+EyNI5LvmEdsfRBi7hyVR8rxjxP0QWI8rfh7pcS81H+MjnzRyWLf8kAIfVbi
+ CP70cJ/akCuEHqb6/nQ3jGLm/64gXc8Xk59cYwATSgKZkLOU2naOiYC7hvNYmOCf5pmh
+ g60A1CXLPKIsH0vg/DJchKXjvRBO5cT21RJrMwIZRl0Q5BgDKJNzXn9GnJ8c9d1dWnV3
+ GIbc1rTQxdN/dWNkoIVeijvydMad0OVya0aHPt1nBN8MZ2MsfoeM1vsEY2hViec5G4+F
+ kw7KDc/2LBEXpp7fzr8Cx53r0YIlOwpoeMjGmQxk2B2gqjeIezhX7fsjgNbQcs/i8kZ5
+ CFoA==
+X-Gm-Message-State: AOAM5339jKOKCokZCld21pLSOdoUKcBjfPWrUnEQlecfmsr+Hj/EtsRC
+ k6kJ66eajRreuxe4gPEDyKw=
+X-Google-Smtp-Source: ABdhPJw51Q8sQoLTe3KKK8sm3DKSF8kf3hu75pVBEYkMMXwbqFHQuKE5VwtKRwWjLFH1mriDS5/pzg==
+X-Received: by 2002:a05:6830:1f59:: with SMTP id
+ u25mr18262623oth.321.1628536003855; 
+ Mon, 09 Aug 2021 12:06:43 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ be15sm3464317oib.18.2021.08.09.12.06.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Aug 2021 12:06:43 -0700 (PDT)
+Date: Mon, 9 Aug 2021 12:06:41 -0700
+From: Guenter Roeck <linux@roeck-us.net>
 To: Mike Rapoport <rppt@kernel.org>
-Subject: Re: [RFC PATCH 14/15] mm: introduce MIN_MAX_ORDER to replace
- MAX_ORDER as compile time constant.
-Date: Mon, 09 Aug 2021 11:35:39 -0400
-X-Mailer: MailMate (1.14r5820)
-Message-ID: <D69C9107-F7ED-4E18-86D8-77877992F08F@nvidia.com>
-In-Reply-To: <YQ+UbJtSWciIVqr4@kernel.org>
-References: <20210805190253.2795604-1-zi.yan@sent.com>
- <20210805190253.2795604-15-zi.yan@sent.com> <YQ+UbJtSWciIVqr4@kernel.org>
-X-ClientProxiedBy: BL1P222CA0016.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:208:2c7::21) To MN2PR12MB3823.namprd12.prod.outlook.com
- (2603:10b6:208:168::26)
+Subject: Re: [PATCH v3] memblock: make memblock_find_in_range method private
+Message-ID: <20210809190641.GA1176508@roeck-us.net>
+References: <20210803064218.6611-1-rppt@kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from [10.2.60.152] (216.228.112.21) by
- BL1P222CA0016.NAMP222.PROD.OUTLOOK.COM (2603:10b6:208:2c7::21) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4394.17 via Frontend Transport; Mon, 9 Aug 2021 15:35:42 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 615ac12c-7c4c-4ab2-8624-08d95b4b5b64
-X-MS-TrafficTypeDiagnostic: MN2PR12MB4080:
-X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <MN2PR12MB4080117513DC649CA321542CC2F69@MN2PR12MB4080.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:8882;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: tXrRjzkyQ4LcfLy4bJJwJyiZAnjM/RokXMpaUJW3Pk72QQhwTL4cUnCDtzjHafx9NBDWFKi0O22keLi48Tq+1JuiPxoz22V4y+XcZl3Gl6ri2/yjTlZj78SyBhT7PociyDisPoWQq2yVz5upUPIqmQwCuB9FFGNhgkt7sX9mxMlh62R5P5yFKJkFppwZBNKS6v/D96yMInRNh26SKb+z2lXaNq2vMGaZQNgY8Qn+7bVFohXvfPqMqo8vt9twSaVlYNu5tu0JYBxf6YR8IR/1/uVJYuUfVhdC41Vh3/BfMnnE88BNWTvdjZ3L12/E5NlI44z3pNXMr9AFfyYGO+6j4otDL76BjicG/3KMSvsBuNUJ+5ETIOMnbidFx1wHSIG5vJp9YbSgZLD3In/F8+otkk2irVyAB4ISUTfcw/ExToYhwqCG11RgX3/Z202k7V3En455p2bkA3Igl7Caz2yPK2SWA2EKTx1ng6IhXiZivMkY/wUQU4zqRLvTTEMZEYkVjZMniaT677Ie+ekoA+9/PzfR/vjuRUmjRU2d7fn3vTLTvBl+/9N1CSBNyCGbCBlsfW/7fDQgvQcFcEDT3z+m9dYxdfHZsPsYH+em7YoG8I9U4/7LcPIe3VEZN6AD3NyEjlW3R1Q6+dqzqZDGAFtlahhhXYMaYQEB/Z/c04MfKfiv5qaR8s3zNrGdBGNAueczW1sTVONitZjayLpC8Ccj/eVMnuGhL4lC9j4Zj52uIGU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MN2PR12MB3823.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(4636009)(346002)(366004)(376002)(39860400002)(396003)(136003)(66946007)(66476007)(21480400003)(5660300002)(2906002)(235185007)(186003)(66574015)(6486002)(26005)(6666004)(83380400001)(66556008)(36756003)(8676002)(33964004)(478600001)(8936002)(38100700002)(4326008)(956004)(2616005)(33656002)(7416002)(16576012)(316002)(86362001)(53546011)(54906003)(6916009)(45980500001)(72826004);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZEd4dzQyemVOMmtuNHBmZDBlcjNzUTlTcWRoemc4MHl3Snp5VU5WdEV2RnZi?=
- =?utf-8?B?QlN3SmRxdlE4Y01YeDk3L0RJWUpYdUlHSVY0WE41RThHTTBsTEJDYUh0bGx3?=
- =?utf-8?B?YWl2U09mZ1F5azNHeUhuY3hhN1FFZXRvTFArUGdYQ0JDWDAwUzRpeDhId2J2?=
- =?utf-8?B?SGwwVTdCcmJBeENxeVN2ZG91Z0tiSURDRXdwRDg3MEdGa1BGb2NjT1ZMM2JV?=
- =?utf-8?B?Nk16Q0p5b3UwaVp0eU5IaVNnVXVVYzdkNDM0dDBnNFpvQVhSaERZSUc0NnNY?=
- =?utf-8?B?U0tRdXZJem5SWXYrM1VQaXM0TzFsNEtCTjd4Uml2YktvRVl4U2w5OEhNU1Ez?=
- =?utf-8?B?RnpFK2ErT0l5aUJkMmtEUGlQY1VDUEpVSjZJeCtmaHVLYnlRUVhXZFRjTVZo?=
- =?utf-8?B?a3hWNE5qMzdvWTdJUG9iVWEyTWJaK2lJaFVlSllNcFlUa0pGVmNKZTVMS3Fs?=
- =?utf-8?B?elI1MmFGNW4yaWgxeEtzWFhBd09pUEtiU2I1cU5MTG5xZ0Y0Yk9OamEvZ0RD?=
- =?utf-8?B?ZnZGMklrSk1CbWkzSGJSYXJISitzNEVhNnZTS2p0QzRiOVloZHYxenJXV2th?=
- =?utf-8?B?U05KQmNwbm1tRzZpS1c1cEVkamZqc2tLdnFkeGlhWlpwcm5UL294b1F2bGVN?=
- =?utf-8?B?M2piY2RleDFwMEwwVW5JaHpIU1RMdWxldERla1A0cEtERzNzNzdVMmJpSXBj?=
- =?utf-8?B?R2d1ZXVCZ1Bmb0RqZkVXK1ZmUE5TRDM4UXpBeFJkMnFobjlHSnl1UEIrWWZw?=
- =?utf-8?B?OHlyajdDSHdYUUFXMm9CeVhOT3dFb2ZXMDJVRVZYSnN6eExOZFNwNjh4eThU?=
- =?utf-8?B?UVNOU1d4RHFWTWQ4MUdjaHhsOU1ueUh6NEIraHFmaVhqQkZkMXlJUFhqcFMv?=
- =?utf-8?B?NCthaVM3YkRzTmk5dmc4d05GQlArb1UybXlRVEgzbkNLNkYrUWNnOWR4Tmg4?=
- =?utf-8?B?anByOEJOQ1cxd3ptRTBPTks2SmwwSzVaQ21NbmlaOTFOWnJLSU54NEFXZ0lZ?=
- =?utf-8?B?ejBmcWFLR3luRWtDaEkxaUtqckFJdmlHZlJSQzFZZG9PRW9Vc2I4RmZvcUd5?=
- =?utf-8?B?ODZ2VVJJWUxHb2tEVllxaTBMUVRxb2VwUU9KSUM2OUhLaHVXcWkwMHI0UUNt?=
- =?utf-8?B?UXZrNTVhSEdGblRiTFZQT0hKRG5TNDY2OWhrdU9aUzR2a3ZLcTcrZkNaKzgy?=
- =?utf-8?B?L0l1N0xobzN2aUE5Z3JxaDhWNENnb3k0YzRRUytBbTdqSmVFQTJ0N3laNTQv?=
- =?utf-8?B?WkpVODdaeXcwblFQTHhyNnhEUStDTW9DL3R5L1hoQ0RPMHZ6S0ZLejdRb2pS?=
- =?utf-8?B?OGVITW1SUEVtTU5VaVIydi85Q0IrZGY1bXVSMEpVNENNUFJrS1hYYTRQMFVo?=
- =?utf-8?B?Y0tsVS9QQTdZMGxEcFcxTUw3VnYyMlM5d2tkd0w0UXFlR1lzQnJ3V0xtQXhN?=
- =?utf-8?B?UG1GVURCWVczZWxpbkpyRitHbG9ZMEU3UVdpelZjMThMbnFaYWV6aDFxNUM2?=
- =?utf-8?B?b0kxZDJFb0lCMkplbk1KdWo1QkJLWXBOWHRvMFA3WGlHelpSQURwU2IrbzF0?=
- =?utf-8?B?Ui9raDhmNzUyK2NpdHR3bmxDbE1mNFYwWWtUNGh1M2xtMG13N0YrdkI0UXVj?=
- =?utf-8?B?SFhJWG50eG95aEwrMSs5NWtjRFppRms0a01QTkpyWmhMMStSeWd3eXVnNFZ0?=
- =?utf-8?B?MitTK3NCWm1lUDFiVFBoVGZKSXFaVzNpTjM3WGNpckY0K2RCNEdKczlOQlUw?=
- =?utf-8?Q?dlpYmh6REs58cPPWus9oUldMEmKPsW3VgixVOGB?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 615ac12c-7c4c-4ab2-8624-08d95b4b5b64
-X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3823.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Aug 2021 15:35:46.5903 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: SRJ53KmhIU4qN1z6998AIaihV+iwsM42Z8L157KIw/AgyKjDS3zKWndBH6AVDYLa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4080
-X-Mailman-Approved-At: Tue, 10 Aug 2021 10:28:25 -0400
-Cc: linux-arm-kernel@lists.infradead.org,
+Content-Disposition: inline
+In-Reply-To: <20210803064218.6611-1-rppt@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>,
  Catalin Marinas <catalin.marinas@arm.com>,
- David Hildenbrand <david@redhat.com>, John Hubbard <jhubbard@nvidia.com>,
- linux-kernel@vger.kernel.org, Matthew Wilcox <willy@infradead.org>,
- Michal Hocko <mhocko@kernel.org>, linux-mm@kvack.org,
- Vlastimil Babka <vbabka@suse.cz>, Marc Zyngier <maz@kernel.org>,
- Christoph Lameter <cl@linux.com>, kvmarm@lists.cs.columbia.edu,
- "Kirill A . Shutemov" <kirill.shutemov@linux.intel.com>,
- Mike Kravetz <mike.kravetz@oracle.com>
+ Dave Hansen <dave.hansen@linux.intel.com>, linux-kernel@vger.kernel.org,
+ linux-mm@kvack.org, "H. Peter Anvin" <hpa@zytor.com>,
+ linux-riscv@lists.infradead.org, Frank Rowand <frowand.list@gmail.com>,
+ kvmarm@lists.cs.columbia.edu, linux-s390@vger.kernel.org,
+ Vasily Gorbik <gor@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@de.ibm.com>, Marc Zyngier <maz@kernel.org>,
+ x86@kernel.org, Russell King <linux@armlinux.org.uk>,
+ Mike Rapoport <rppt@linux.ibm.com>, linux-acpi@vger.kernel.org,
+ Ingo Molnar <mingo@redhat.com>, Len Brown <lenb@kernel.org>,
+ devicetree@vger.kernel.org, Albert Ou <aou@eecs.berkeley.edu>,
+ Will Deacon <will@kernel.org>, Heiko Carstens <hca@linux.ibm.com>,
+ Rob Herring <robh+dt@kernel.org>, Borislav Petkov <bp@alien8.de>,
+ Andy Lutomirski <luto@kernel.org>, Paul Walmsley <paul.walmsley@sifive.com>,
+ "Kirill A. Shutemov" <kirill@shutemov.name>,
+ Thomas Gleixner <tglx@linutronix.de>, linux-arm-kernel@lists.infradead.org,
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ "Rafael J. Wysocki" <rjw@rjwysocki.net>, linux-mips@vger.kernel.org,
+ Palmer Dabbelt <palmer@dabbelt.com>, Andrew Morton <akpm@linux-foundation.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -156,288 +110,99 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============1920106160284520078=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
---===============1920106160284520078==
-Content-Type: multipart/signed;
- boundary="=_MailMate_C2137725-FB75-444B-91CC-971BC3B89A78_=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
+On Tue, Aug 03, 2021 at 09:42:18AM +0300, Mike Rapoport wrote:
+> From: Mike Rapoport <rppt@linux.ibm.com>
+> 
+> There are a lot of uses of memblock_find_in_range() along with
+> memblock_reserve() from the times memblock allocation APIs did not exist.
+> 
+> memblock_find_in_range() is the very core of memblock allocations, so any
+> future changes to its internal behaviour would mandate updates of all the
+> users outside memblock.
+> 
+> Replace the calls to memblock_find_in_range() with an equivalent calls to
+> memblock_phys_alloc() and memblock_phys_alloc_range() and make
+> memblock_find_in_range() private method of memblock.
+> 
+> This simplifies the callers, ensures that (unlikely) errors in
+> memblock_reserve() are handled and improves maintainability of
+> memblock_find_in_range().
+> 
+> Signed-off-by: Mike Rapoport <rppt@linux.ibm.com>
 
---=_MailMate_C2137725-FB75-444B-91CC-971BC3B89A78_=
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+I see a number of crashes in next-20210806 when booting x86 images from efi.
 
-On 8 Aug 2021, at 4:23, Mike Rapoport wrote:
+[    0.000000] efi: EFI v2.70 by EDK II
+[    0.000000] efi: SMBIOS=0x1fbcc000 ACPI=0x1fbfa000 ACPI 2.0=0x1fbfa014 MEMATTR=0x1f25f018
+[    0.000000] SMBIOS 2.8 present.
+[    0.000000] DMI: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+[    0.000000] last_pfn = 0x1ff50 max_arch_pfn = 0x400000000
+[    0.000000] x86/PAT: Configuration [0-7]: WB  WC  UC- UC  WB  WP  UC- WT
+[    0.000000] Kernel panic - not syncing: alloc_low_pages: can not alloc memory
+[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 5.14.0-rc4-next-20210806 #1
+[    0.000000] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+[    0.000000] Call Trace:
+[    0.000000]  ? dump_stack_lvl+0x57/0x7d
+[    0.000000]  ? panic+0xfc/0x2c6
+[    0.000000]  ? alloc_low_pages+0x117/0x156
+[    0.000000]  ? phys_pmd_init+0x234/0x342
+[    0.000000]  ? phys_pud_init+0x171/0x337
+[    0.000000]  ? __kernel_physical_mapping_init+0xec/0x276
+[    0.000000]  ? init_memory_mapping+0x1ea/0x2aa
+[    0.000000]  ? init_range_memory_mapping+0xdf/0x12e
+[    0.000000]  ? init_mem_mapping+0x1e9/0x26f
+[    0.000000]  ? setup_arch+0x5ff/0xb6d
+[    0.000000]  ? start_kernel+0x71/0x6b4
+[    0.000000]  ? secondary_startup_64_no_verify+0xc2/0xcb
 
-> On Thu, Aug 05, 2021 at 03:02:52PM -0400, Zi Yan wrote:
->> From: Zi Yan <ziy@nvidia.com>
->>
->> For other MAX_ORDER uses (described below), there is no need or too mu=
-ch
->> hassle to convert certain static array to dynamic ones. Add
->> MIN_MAX_ORDER to serve as compile time constant in place of MAX_ORDER.=
+Bisect points to this patch. Reverting it fixes the problem. Key seems to
+be the amount of memory configured in qemu; the problem is not seen if
+there is 1G or more of memory, but it is seen with all test boots with
+512M or 256M of memory. It is also seen with almost all 32-bit efi boots.
 
->>
->> ARM64 hypervisor maintains its own free page list and does not import
->> any core kernel symbols, so soon-to-be runtime variable MAX_ORDER is n=
-ot
->> accessible in ARM64 hypervisor code. Also there is no need to allocati=
-ng
->> very large pages.
->>
->> In SLAB/SLOB/SLUB, 2-D array kmalloc_caches uses MAX_ORDER in its seco=
-nd
->> dimension. It is too much hassle to allocate memory for kmalloc_caches=
+The problem is not seen when booting without efi.
 
->> before any proper memory allocator is set up.
->>
->> Signed-off-by: Zi Yan <ziy@nvidia.com>
->> Cc: Marc Zyngier <maz@kernel.org>
->> Cc: Catalin Marinas <catalin.marinas@arm.com>
->> Cc: Christoph Lameter <cl@linux.com>
->> Cc: Vlastimil Babka <vbabka@suse.cz>
->> Cc: Quentin Perret <qperret@google.com>
->> Cc: linux-arm-kernel@lists.infradead.org
->> Cc: kvmarm@lists.cs.columbia.edu
->> Cc: linux-mm@kvack.org
->> Cc: linux-kernel@vger.kernel.org
->> ---
->>  arch/arm64/kvm/hyp/include/nvhe/gfp.h | 2 +-
->>  arch/arm64/kvm/hyp/nvhe/page_alloc.c  | 3 ++-
->>  include/linux/mmzone.h                | 3 +++
->>  include/linux/slab.h                  | 8 ++++----
->>  mm/slab.c                             | 2 +-
->>  mm/slub.c                             | 7 ++++---
->>  6 files changed, 15 insertions(+), 10 deletions(-)
->>
->> diff --git a/arch/arm64/kvm/hyp/include/nvhe/gfp.h b/arch/arm64/kvm/hy=
-p/include/nvhe/gfp.h
->> index fb0f523d1492..c774b4a98336 100644
->> --- a/arch/arm64/kvm/hyp/include/nvhe/gfp.h
->> +++ b/arch/arm64/kvm/hyp/include/nvhe/gfp.h
->> @@ -16,7 +16,7 @@ struct hyp_pool {
->>  	 * API at EL2.
->>  	 */
->>  	hyp_spinlock_t lock;
->> -	struct list_head free_area[MAX_ORDER];
->> +	struct list_head free_area[MIN_MAX_ORDER];
->>  	phys_addr_t range_start;
->>  	phys_addr_t range_end;
->>  	unsigned short max_order;
->> diff --git a/arch/arm64/kvm/hyp/nvhe/page_alloc.c b/arch/arm64/kvm/hyp=
-/nvhe/page_alloc.c
->> index 41fc25bdfb34..a1cc1b648de0 100644
->> --- a/arch/arm64/kvm/hyp/nvhe/page_alloc.c
->> +++ b/arch/arm64/kvm/hyp/nvhe/page_alloc.c
->> @@ -226,7 +226,8 @@ int hyp_pool_init(struct hyp_pool *pool, u64 pfn, =
-unsigned int nr_pages,
->>  	int i;
->>
->>  	hyp_spin_lock_init(&pool->lock);
->> -	pool->max_order =3D min(MAX_ORDER, get_order(nr_pages << PAGE_SHIFT)=
-);
->> +
->> +	pool->max_order =3D min(MIN_MAX_ORDER, get_order(nr_pages << PAGE_SH=
-IFT));
->>  	for (i =3D 0; i < pool->max_order; i++)
->>  		INIT_LIST_HEAD(&pool->free_area[i]);
->>  	pool->range_start =3D phys;
->> diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
->> index 09aafc05aef4..379dada82d4b 100644
->> --- a/include/linux/mmzone.h
->> +++ b/include/linux/mmzone.h
->> @@ -27,11 +27,14 @@
->>  #ifndef CONFIG_ARCH_FORCE_MAX_ORDER
->>  #ifdef CONFIG_SET_MAX_ORDER
->>  #define MAX_ORDER CONFIG_SET_MAX_ORDER
->> +#define MIN_MAX_ORDER CONFIG_SET_MAX_ORDER
->>  #else
->>  #define MAX_ORDER 11
->> +#define MIN_MAX_ORDER MAX_ORDER
->>  #endif /* CONFIG_SET_MAX_ORDER */
->>  #else
->>  #define MAX_ORDER CONFIG_ARCH_FORCE_MAX_ORDER
->> +#define MIN_MAX_ORDER CONFIG_ARCH_FORCE_MAX_ORDER
->>  #endif /* CONFIG_ARCH_FORCE_MAX_ORDER */
->>  #define MAX_ORDER_NR_PAGES (1 << (MAX_ORDER - 1))
->
-> The end result of this #ifdef explosion looks entirely unreadable:
+Guenter
 
-Just to clarify the use of #ifdef:
+---
+Bisect log:
 
-MAX_ORDER is changed to a boot time variable and it cannot be used
-for static array declaration, so I added MIN_MAX_ORDER.
-
-At the moment, there are three cases of setting MAX_ORDER and
-MIN_MAX_ORDER:
-
-1. CONFIG_ARCH_FORCE_MAX_ORDER tells the MAX_ORDER certain arch
-needs at compilation time.
-2. CONFIG_SET_MAX_ORDER allows to change MAX_ORDER when an arch
-does not set its MAX_ORER and SPARSEMEM_VMEMMAP is set.
-3. !SPARSEMEM_VMEMMAP and no CONFIG_ARCH_FORCE_MAX_ORDER, then
-MAX_ORDER is set to 11 by default.
-
-I agree the code is hard to read, I will clean this up.
-
-
->
-> /* Free memory management - zoned buddy allocator.  */
-> #ifndef CONFIG_ARCH_FORCE_MAX_ORDER
-> #ifdef CONFIG_SET_MAX_ORDER
-> /* Defined in mm/page_alloc.c */
-> extern int buddy_alloc_max_order;
->
-> #define MAX_ORDER buddy_alloc_max_order
-> #define MIN_MAX_ORDER CONFIG_SET_MAX_ORDER
-> #else
-> #define MAX_ORDER 11
-> #define MIN_MAX_ORDER MAX_ORDER
-> #endif /* CONFIG_SET_MAX_ORDER */
-> #else
->
-> #ifdef CONFIG_SPARSEMEM_VMEMMAP
-> /* Defined in mm/page_alloc.c */
-> extern int buddy_alloc_max_order;
->
-> #define MAX_ORDER buddy_alloc_max_order
-> #else
-> #define MAX_ORDER CONFIG_ARCH_FORCE_MAX_ORDER
-> #endif /* CONFIG_SPARSEMEM_VMEMMAP */
-> #define MIN_MAX_ORDER CONFIG_ARCH_FORCE_MAX_ORDER
-> #endif /* CONFIG_ARCH_FORCE_MAX_ORDER */
->
->> diff --git a/include/linux/slab.h b/include/linux/slab.h
->> index 2c0d80cca6b8..d8747c158db6 100644
->> --- a/include/linux/slab.h
->> +++ b/include/linux/slab.h
->> @@ -244,8 +244,8 @@ static inline void __check_heap_object(const void =
-*ptr, unsigned long n,
->>   * to do various tricks to work around compiler limitations in order =
-to
->>   * ensure proper constant folding.
->>   */
->> -#define KMALLOC_SHIFT_HIGH	((MAX_ORDER + PAGE_SHIFT - 1) <=3D 25 ? \
->> -				(MAX_ORDER + PAGE_SHIFT - 1) : 25)
->> +#define KMALLOC_SHIFT_HIGH	((MIN_MAX_ORDER + PAGE_SHIFT - 1) <=3D 25 =
-? \
->> +				(MIN_MAX_ORDER + PAGE_SHIFT - 1) : 25)
->>  #define KMALLOC_SHIFT_MAX	KMALLOC_SHIFT_HIGH
->>  #ifndef KMALLOC_SHIFT_LOW
->>  #define KMALLOC_SHIFT_LOW	5
->> @@ -258,7 +258,7 @@ static inline void __check_heap_object(const void =
-*ptr, unsigned long n,
->>   * (PAGE_SIZE*2).  Larger requests are passed to the page allocator.
->>   */
->>  #define KMALLOC_SHIFT_HIGH	(PAGE_SHIFT + 1)
->> -#define KMALLOC_SHIFT_MAX	(MAX_ORDER + PAGE_SHIFT - 1)
->> +#define KMALLOC_SHIFT_MAX	(MIN_MAX_ORDER + PAGE_SHIFT - 1)
->>  #ifndef KMALLOC_SHIFT_LOW
->>  #define KMALLOC_SHIFT_LOW	3
->>  #endif
->> @@ -271,7 +271,7 @@ static inline void __check_heap_object(const void =
-*ptr, unsigned long n,
->>   * be allocated from the same page.
->>   */
->>  #define KMALLOC_SHIFT_HIGH	PAGE_SHIFT
->> -#define KMALLOC_SHIFT_MAX	(MAX_ORDER + PAGE_SHIFT - 1)
->> +#define KMALLOC_SHIFT_MAX	(MIN_MAX_ORDER + PAGE_SHIFT - 1)
->>  #ifndef KMALLOC_SHIFT_LOW
->>  #define KMALLOC_SHIFT_LOW	3
->>  #endif
->> diff --git a/mm/slab.c b/mm/slab.c
->> index d0f725637663..0041de8ec0e9 100644
->> --- a/mm/slab.c
->> +++ b/mm/slab.c
->> @@ -466,7 +466,7 @@ static int __init slab_max_order_setup(char *str)
->>  {
->>  	get_option(&str, &slab_max_order);
->>  	slab_max_order =3D slab_max_order < 0 ? 0 :
->> -				min(slab_max_order, MAX_ORDER - 1);
->> +				min(slab_max_order, MIN_MAX_ORDER - 1);
->>  	slab_max_order_set =3D true;
->>
->>  	return 1;
->> diff --git a/mm/slub.c b/mm/slub.c
->> index b6c5205252eb..228e4a77c678 100644
->> --- a/mm/slub.c
->> +++ b/mm/slub.c
->> @@ -3564,8 +3564,9 @@ static inline int calculate_order(unsigned int s=
-ize)
->>  	/*
->>  	 * Doh this slab cannot be placed using slub_max_order.
->>  	 */
->> -	order =3D slab_order(size, 1, MAX_ORDER, 1);
->> -	if (order < MAX_ORDER)
->> +
->> +	order =3D slab_order(size, 1, MIN_MAX_ORDER, 1);
->> +	if (order < MIN_MAX_ORDER)
->>  		return order;
->>  	return -ENOSYS;
->>  }
->> @@ -4079,7 +4080,7 @@ __setup("slub_min_order=3D", setup_slub_min_orde=
-r);
->>  static int __init setup_slub_max_order(char *str)
->>  {
->>  	get_option(&str, (int *)&slub_max_order);
->> -	slub_max_order =3D min(slub_max_order, (unsigned int)MAX_ORDER - 1);=
-
->> +	slub_max_order =3D min(slub_max_order, (unsigned int)MIN_MAX_ORDER -=
- 1);
->>
->>  	return 1;
->>  }
->> -- =
-
->> 2.30.2
->>
->
-> -- =
-
-> Sincerely yours,
-> Mike.
-
-
-=E2=80=94
-Best Regards,
-Yan, Zi
-
---=_MailMate_C2137725-FB75-444B-91CC-971BC3B89A78_=
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQJDBAEBCgAtFiEEh7yFAW3gwjwQ4C9anbJR82th+ooFAmERS0sPHHppeUBudmlk
-aWEuY29tAAoJEJ2yUfNrYfqKP2MQAKvlLqyN8YT/m8eUCmoSnNHzcukGKeh5MVde
-/lNE1TGyGVyhqRb3SG1SbbTcp/BL56Hh54K178gNs1TrD5herman8TPZyRnYw3Rp
-J0OZOej150aLip0edg1VOEJeeOzwP04S9nos1AjhRIjfUmL7J6mPms0xpe62tpu4
-Yci6dpf6XpYVbpdfAr9lSZCF52QFWroIRmCIzvOok9EUpTylXBSlIiuZ6xBslp8U
-cbRhMcml2g6Gi9M+qtdb0UxmJtoWzecadyYKXKnGb6PtODKXFeMrpCtCMu4/jl61
-/Pz529Q3wgP00kWjEE57DQmgnY97qUy6JPIdQnVClsqK28b8Myq4qfDl3HWhMFIK
-jB51Z0tx38BAKZi9TWVJfIDXiPQJTyT2hI8P2ryl/zZMwvH+wYwCzeffYhKW9CkU
-7JnHADbwqtVKn8Su8k3sAYTW7Jvgj4E9I03byYLh4QsUWTVq4dz2MUs6HQRFapfe
-YZpFBiu7S8zEMfy3mCRV8D7ctouEuc5AG/L5h+oyrZbHBBtFtas1JVqJsdvO5sn+
-E+lN/7Ln8s06aVw8Up5aF0WaXV0/3l2B/Vmc0JZhZaB4hlGW1crp4tlzmmMePAVs
-3CFc9oxAmqXeEIl14rRNHABGvfkwdSNyz0U6yDLCDj0PfxlUpz/sGql2oH1Agmcm
-Upo59qtp
-=4zJc
------END PGP SIGNATURE-----
-
---=_MailMate_C2137725-FB75-444B-91CC-971BC3B89A78_=--
-
---===============1920106160284520078==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+# bad: [da454ebf578f6c542ba9f5b3ddb98db3ede109c1] Add linux-next specific files for 20210809
+# good: [36a21d51725af2ce0700c6ebcb6b9594aac658a6] Linux 5.14-rc5
+git bisect start 'HEAD' 'v5.14-rc5'
+# good: [d22fda64bea5f33000e31e5b7e4ba876bca37436] Merge remote-tracking branch 'crypto/master'
+git bisect good d22fda64bea5f33000e31e5b7e4ba876bca37436
+# good: [b084da3a98fad27a39ed5ca64106b86df0417851] Merge remote-tracking branch 'irqchip/irq/irqchip-next'
+git bisect good b084da3a98fad27a39ed5ca64106b86df0417851
+# good: [a5383d1f57190a33c6afc25c62b9907d84ba2bc6] Merge remote-tracking branch 'staging/staging-next'
+git bisect good a5383d1f57190a33c6afc25c62b9907d84ba2bc6
+# good: [a439da3e6abeb054f4e6b0d37814e762b7340196] Merge remote-tracking branch 'seccomp/for-next/seccomp'
+git bisect good a439da3e6abeb054f4e6b0d37814e762b7340196
+# bad: [9801f3c0890c7b992b45a5c2afcb16c5cdc8388e] mm/idle_page_tracking: Make PG_idle reusable
+git bisect bad 9801f3c0890c7b992b45a5c2afcb16c5cdc8388e
+# good: [b4f7f4a9b542836683308d48ffdd18471c6f3e76] lazy-tlb-allow-lazy-tlb-mm-refcounting-to-be-configurable-fix
+git bisect good b4f7f4a9b542836683308d48ffdd18471c6f3e76
+# good: [e30842a48c36f094271eea0984bb861b49c49c87] mm/vmscan: add 'else' to remove check_pending label
+git bisect good e30842a48c36f094271eea0984bb861b49c49c87
+# bad: [65300b20a21214fb2043419d4e5da1d9947c6e15] mm/madvise: add MADV_WILLNEED to process_madvise()
+git bisect bad 65300b20a21214fb2043419d4e5da1d9947c6e15
+# bad: [7348da7a8c244d1a755bc5838b04cb9b1b6ee06c] memblock: make memblock_find_in_range method private
+git bisect bad 7348da7a8c244d1a755bc5838b04cb9b1b6ee06c
+# good: [98f8c467fe2ba8e553b450b2a3294d69f1f2027f] mm-mempolicy-convert-from-atomic_t-to-refcount_t-on-mempolicy-refcnt-fix
+git bisect good 98f8c467fe2ba8e553b450b2a3294d69f1f2027f
+# good: [760ded422ebe4f8899905b752d8378c44f2a78f3] mm/memplicy: add page allocation function for MPOL_PREFERRED_MANY policy
+git bisect good 760ded422ebe4f8899905b752d8378c44f2a78f3
+# good: [fbfa0492d9639b67119d3d94b7a6a3f85e064260] mm/mempolicy: advertise new MPOL_PREFERRED_MANY
+git bisect good fbfa0492d9639b67119d3d94b7a6a3f85e064260
+# good: [ff6d5759a871883aeea38309fb16d91666179328] mm/mempolicy: unify the create() func for bind/interleave/prefer-many policies
+git bisect good ff6d5759a871883aeea38309fb16d91666179328
+# first bad commit: [7348da7a8c244d1a755bc5838b04cb9b1b6ee06c] memblock: make memblock_find_in_range method private
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
 https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
-
---===============1920106160284520078==--
