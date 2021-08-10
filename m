@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id BEC3F3E5408
-	for <lists+kvmarm@lfdr.de>; Tue, 10 Aug 2021 09:02:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 440FC3E540A
+	for <lists+kvmarm@lfdr.de>; Tue, 10 Aug 2021 09:02:24 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 629414B0E4;
-	Tue, 10 Aug 2021 03:02:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EC10B4B0CE;
+	Tue, 10 Aug 2021 03:02:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,33 +15,32 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rS-ru6iw+71z; Tue, 10 Aug 2021 03:02:16 -0400 (EDT)
+	with ESMTP id 0keTJZqG-AXE; Tue, 10 Aug 2021 03:02:19 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6A4CA4B0C9;
-	Tue, 10 Aug 2021 03:02:13 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8C5A64B0CC;
+	Tue, 10 Aug 2021 03:02:19 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8D23040874
- for <kvmarm@lists.cs.columbia.edu>; Tue, 10 Aug 2021 03:02:11 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 092DA4B0D7
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 10 Aug 2021 03:02:18 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 7o-xaGDOv382 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 10 Aug 2021 03:02:07 -0400 (EDT)
+ with ESMTP id NBL06iEBHYWD for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 10 Aug 2021 03:02:13 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 192914B08B
- for <kvmarm@lists.cs.columbia.edu>; Tue, 10 Aug 2021 03:02:07 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 65BE54B0C1
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 10 Aug 2021 03:02:11 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D39AB1042;
- Tue, 10 Aug 2021 00:02:06 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 22D0FD6E;
+ Tue, 10 Aug 2021 00:02:11 -0700 (PDT)
 Received: from p8cg001049571a15.arm.com (unknown [10.163.67.89])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 76C913F718;
- Tue, 10 Aug 2021 00:02:03 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 7158B3F718;
+ Tue, 10 Aug 2021 00:02:07 -0700 (PDT)
 From: Anshuman Khandual <anshuman.khandual@arm.com>
 To: linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 1/5] KVM: arm64: Drop direct PAGE_[SHIFT|SIZE] usage as page
- size
-Date: Tue, 10 Aug 2021 12:32:37 +0530
-Message-Id: <1628578961-29097-2-git-send-email-anshuman.khandual@arm.com>
+Subject: [PATCH 2/5] KVM: arm64: Drop init_common_resources()
+Date: Tue, 10 Aug 2021 12:32:38 +0530
+Message-Id: <1628578961-29097-3-git-send-email-anshuman.khandual@arm.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1628578961-29097-1-git-send-email-anshuman.khandual@arm.com>
 References: <1628578961-29097-1-git-send-email-anshuman.khandual@arm.com>
@@ -65,9 +64,9 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-All instances here could just directly test against CONFIG_ARM64_XXK_PAGES
-instead of evaluating via PAGE_SHIFT or PAGE_SIZE. With this change, there
-will be no such usage left.
+Could do without this additional indirection via init_common_resources() by
+just calling kvm_set_ipa_limit() directly instead. This change saves memory
+and cycles.
 
 Cc: Marc Zyngier <maz@kernel.org>
 Cc: James Morse <james.morse@arm.com>
@@ -80,54 +79,34 @@ Cc: kvmarm@lists.cs.columbia.edu
 Cc: linux-kernel@vger.kernel.org
 Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
 ---
- arch/arm64/kvm/hyp/pgtable.c | 6 +++---
- arch/arm64/mm/mmu.c          | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/kvm/arm.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
-index 05321f4165e3..a6112b6d6ef6 100644
---- a/arch/arm64/kvm/hyp/pgtable.c
-+++ b/arch/arm64/kvm/hyp/pgtable.c
-@@ -85,7 +85,7 @@ static bool kvm_level_supports_block_mapping(u32 level)
- 	 * Reject invalid block mappings and don't bother with 4TB mappings for
- 	 * 52-bit PAs.
- 	 */
--	return !(level == 0 || (PAGE_SIZE != SZ_4K && level == 1));
-+	return !(level == 0 || (!IS_ENABLED(CONFIG_ARM64_4K_PAGES) && level == 1));
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index e9a2b8f27792..19560e457c11 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -1696,11 +1696,6 @@ static bool init_psci_relay(void)
+ 	return true;
  }
  
- static bool kvm_block_mapping_supported(u64 addr, u64 end, u64 phys, u32 level)
-@@ -155,7 +155,7 @@ static u64 kvm_pte_to_phys(kvm_pte_t pte)
+-static int init_common_resources(void)
+-{
+-	return kvm_set_ipa_limit();
+-}
+-
+ static int init_subsystems(void)
  {
- 	u64 pa = pte & KVM_PTE_ADDR_MASK;
+ 	int err = 0;
+@@ -2102,7 +2097,7 @@ int kvm_arch_init(void *opaque)
+ 		}
+ 	}
  
--	if (PAGE_SHIFT == 16)
-+	if (IS_ENABLED(CONFIG_ARM64_64K_PAGES))
- 		pa |= FIELD_GET(KVM_PTE_ADDR_51_48, pte) << 48;
+-	err = init_common_resources();
++	err = kvm_set_ipa_limit();
+ 	if (err)
+ 		return err;
  
- 	return pa;
-@@ -165,7 +165,7 @@ static kvm_pte_t kvm_phys_to_pte(u64 pa)
- {
- 	kvm_pte_t pte = pa & KVM_PTE_ADDR_MASK;
- 
--	if (PAGE_SHIFT == 16)
-+	if (IS_ENABLED(CONFIG_ARM64_64K_PAGES))
- 		pte |= FIELD_PREP(KVM_PTE_ADDR_51_48, pa >> 48);
- 
- 	return pte;
-diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
-index 9ff0de1b2b93..8fdfca179815 100644
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -296,7 +296,7 @@ static void alloc_init_cont_pmd(pud_t *pudp, unsigned long addr,
- static inline bool use_1G_block(unsigned long addr, unsigned long next,
- 			unsigned long phys)
- {
--	if (PAGE_SHIFT != 12)
-+	if (!IS_ENABLED(CONFIG_ARM64_4K_PAGES))
- 		return false;
- 
- 	if (((addr | next | phys) & ~PUD_MASK) != 0)
 -- 
 2.20.1
 
