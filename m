@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 186F83E5BC1
-	for <lists+kvmarm@lfdr.de>; Tue, 10 Aug 2021 15:33:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 860963E5F0A
+	for <lists+kvmarm@lfdr.de>; Tue, 10 Aug 2021 17:00:26 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9B78F4AC78;
-	Tue, 10 Aug 2021 09:33:31 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EC925406E7;
+	Tue, 10 Aug 2021 11:00:25 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,55 +15,44 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3ZeaI6dzN6W1; Tue, 10 Aug 2021 09:33:31 -0400 (EDT)
+	with ESMTP id 9qlzS3xE0AXz; Tue, 10 Aug 2021 11:00:25 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 120F54A4CD;
-	Tue, 10 Aug 2021 09:33:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 702E64A3A5;
+	Tue, 10 Aug 2021 11:00:21 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7370C40630
- for <kvmarm@lists.cs.columbia.edu>; Tue, 10 Aug 2021 09:33:25 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BFCB6406E0
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 10 Aug 2021 11:00:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 2CnDaDivkW8G for <kvmarm@lists.cs.columbia.edu>;
- Tue, 10 Aug 2021 09:33:21 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E53B04029C
- for <kvmarm@lists.cs.columbia.edu>; Tue, 10 Aug 2021 09:33:20 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id EDFE960FDA;
- Tue, 10 Aug 2021 13:33:19 +0000 (UTC)
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1mDRsb-0044Ei-UE; Tue, 10 Aug 2021 14:33:18 +0100
+ with ESMTP id WLqnFjTQ-WBE for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 10 Aug 2021 11:00:16 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B608A4A2E5
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 10 Aug 2021 11:00:16 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D818F1FB;
+ Tue, 10 Aug 2021 08:00:15 -0700 (PDT)
+Received: from [10.163.67.89] (unknown [10.163.67.89])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2B4943F718;
+ Tue, 10 Aug 2021 08:00:12 -0700 (PDT)
+Subject: Re: [PATCH] arm64/perf: Replace '0xf' instances with
+ ID_AA64DFR0_PMUVER_IMP_DEF
+To: Will Deacon <will@kernel.org>
+References: <1628571998-13634-1-git-send-email-anshuman.khandual@arm.com>
+ <20210810133101.GD2946@willie-the-truck>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
+Message-ID: <995fce58-d1fa-9f0f-b8bd-05e689330482@arm.com>
+Date: Tue, 10 Aug 2021 20:31:05 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Date: Tue, 10 Aug 2021 14:33:17 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: Anshuman Khandual <anshuman.khandual@arm.com>
-Subject: Re: [PATCH 1/5] KVM: arm64: Drop direct PAGE_[SHIFT|SIZE] usage as
- page size
-In-Reply-To: <1628578961-29097-2-git-send-email-anshuman.khandual@arm.com>
-References: <1628578961-29097-1-git-send-email-anshuman.khandual@arm.com>
- <1628578961-29097-2-git-send-email-anshuman.khandual@arm.com>
-User-Agent: Roundcube Webmail/1.4.11
-Message-ID: <25ee7799069492f2501003faec7f9732@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: anshuman.khandual@arm.com,
- linux-arm-kernel@lists.infradead.org, james.morse@arm.com,
- alexandru.elisei@arm.com, suzuki.poulose@arm.com, catalin.marinas@arm.com,
- will@kernel.org, kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: Will Deacon <will@kernel.org>, linux-kernel@vger.kernel.org,
- Catalin Marinas <catalin.marinas@arm.com>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+In-Reply-To: <20210810133101.GD2946@willie-the-truck>
+Content-Language: en-US
+Cc: Peter Zijlstra <peterz@infradead.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, linux-kernel@vger.kernel.org,
+ linux-perf-users@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -75,96 +64,41 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2021-08-10 08:02, Anshuman Khandual wrote:
-> All instances here could just directly test against 
-> CONFIG_ARM64_XXK_PAGES
-> instead of evaluating via PAGE_SHIFT or PAGE_SIZE. With this change, 
-> there
-> will be no such usage left.
-> 
-> Cc: Marc Zyngier <maz@kernel.org>
-> Cc: James Morse <james.morse@arm.com>
-> Cc: Alexandru Elisei <alexandru.elisei@arm.com>
-> Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
-> Cc: Catalin Marinas <catalin.marinas@arm.com>
-> Cc: Will Deacon <will@kernel.org>
-> Cc: linux-arm-kernel@lists.infradead.org
-> Cc: kvmarm@lists.cs.columbia.edu
-> Cc: linux-kernel@vger.kernel.org
-> Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-> ---
->  arch/arm64/kvm/hyp/pgtable.c | 6 +++---
->  arch/arm64/mm/mmu.c          | 2 +-
->  2 files changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/arch/arm64/kvm/hyp/pgtable.c 
-> b/arch/arm64/kvm/hyp/pgtable.c
-> index 05321f4165e3..a6112b6d6ef6 100644
-> --- a/arch/arm64/kvm/hyp/pgtable.c
-> +++ b/arch/arm64/kvm/hyp/pgtable.c
-> @@ -85,7 +85,7 @@ static bool kvm_level_supports_block_mapping(u32 
-> level)
->  	 * Reject invalid block mappings and don't bother with 4TB mappings 
-> for
->  	 * 52-bit PAs.
->  	 */
-> -	return !(level == 0 || (PAGE_SIZE != SZ_4K && level == 1));
-> +	return !(level == 0 || (!IS_ENABLED(CONFIG_ARM64_4K_PAGES) && level 
-> == 1));
->  }
-> 
->  static bool kvm_block_mapping_supported(u64 addr, u64 end, u64 phys, 
-> u32 level)
-> @@ -155,7 +155,7 @@ static u64 kvm_pte_to_phys(kvm_pte_t pte)
->  {
->  	u64 pa = pte & KVM_PTE_ADDR_MASK;
-> 
-> -	if (PAGE_SHIFT == 16)
-> +	if (IS_ENABLED(CONFIG_ARM64_64K_PAGES))
->  		pa |= FIELD_GET(KVM_PTE_ADDR_51_48, pte) << 48;
-> 
->  	return pa;
-> @@ -165,7 +165,7 @@ static kvm_pte_t kvm_phys_to_pte(u64 pa)
->  {
->  	kvm_pte_t pte = pa & KVM_PTE_ADDR_MASK;
-> 
-> -	if (PAGE_SHIFT == 16)
-> +	if (IS_ENABLED(CONFIG_ARM64_64K_PAGES))
->  		pte |= FIELD_PREP(KVM_PTE_ADDR_51_48, pa >> 48);
-> 
->  	return pte;
-> diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
-> index 9ff0de1b2b93..8fdfca179815 100644
-> --- a/arch/arm64/mm/mmu.c
-> +++ b/arch/arm64/mm/mmu.c
-> @@ -296,7 +296,7 @@ static void alloc_init_cont_pmd(pud_t *pudp,
-> unsigned long addr,
->  static inline bool use_1G_block(unsigned long addr, unsigned long 
-> next,
->  			unsigned long phys)
->  {
-> -	if (PAGE_SHIFT != 12)
-> +	if (!IS_ENABLED(CONFIG_ARM64_4K_PAGES))
->  		return false;
-> 
->  	if (((addr | next | phys) & ~PUD_MASK) != 0)
 
-I personally find it a lot less readable.
 
-Also, there is no evaluation whatsoever. All the code guarded
-by a PAGE_SIZE/PAGE_SHIFT that doesn't match the configuration
-is dropped at compile time.
+On 8/10/21 7:01 PM, Will Deacon wrote:
+> On Tue, Aug 10, 2021 at 10:36:38AM +0530, Anshuman Khandual wrote:
+>> ID_AA64DFR0_PMUVER_IMP_DEF which indicate implementation defined PMU, never
+>> actually gets used although there are '0xf' instances scattered all around.
+>> Just do the macro replacement to improve readability.
+>>
+>> Cc: Catalin Marinas <catalin.marinas@arm.com>
+>> Cc: Will Deacon <will@kernel.org>
+>> Cc: Mark Rutland <mark.rutland@arm.com>
+>> Cc: Peter Zijlstra <peterz@infradead.org>
+>> Cc: Marc Zyngier <maz@kernel.org>
+>> Cc: linux-perf-users@vger.kernel.org
+>> Cc: linux-arm-kernel@lists.infradead.org
+>> Cc: kvmarm@lists.cs.columbia.edu
+>> Cc: linux-kernel@vger.kernel.org
+>> Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+>> ---
+>> This applies on v5.14-rc5
+>>
+>>  arch/arm64/include/asm/cpufeature.h | 2 +-
+>>  arch/arm64/kernel/perf_event.c      | 2 +-
+>>  arch/arm64/kvm/perf.c               | 2 +-
+>>  arch/arm64/kvm/pmu-emul.c           | 6 +++---
+>>  4 files changed, 6 insertions(+), 6 deletions(-)
+> 
+> Please can you split this with the KVM parts in their own patch?
 
-Thanks,
-
-         M.
--- 
-Jazz is not dead. It just smells funny...
+Sure, will do.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
