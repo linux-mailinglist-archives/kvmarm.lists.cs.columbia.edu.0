@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id AD91B3EA0E9
-	for <lists+kvmarm@lfdr.de>; Thu, 12 Aug 2021 10:46:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AF533EA125
+	for <lists+kvmarm@lfdr.de>; Thu, 12 Aug 2021 10:59:09 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 294CB49F8F;
-	Thu, 12 Aug 2021 04:46:17 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 027864A2E5;
+	Thu, 12 Aug 2021 04:59:09 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,45 +18,44 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0cF24CmbCLeq; Thu, 12 Aug 2021 04:46:17 -0400 (EDT)
+	with ESMTP id 0HMfES4MtaMq; Thu, 12 Aug 2021 04:59:08 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 022CA49F5F;
-	Thu, 12 Aug 2021 04:46:13 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D11C84A198;
+	Thu, 12 Aug 2021 04:59:07 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 299B340856
- for <kvmarm@lists.cs.columbia.edu>; Thu, 12 Aug 2021 04:46:11 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3B6BA4083E
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 12 Aug 2021 04:59:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id lLFu8+iddPLm for <kvmarm@lists.cs.columbia.edu>;
- Thu, 12 Aug 2021 04:46:08 -0400 (EDT)
+ with ESMTP id 5XEJBkcrnsa8 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 12 Aug 2021 04:59:05 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 30BCA40825
- for <kvmarm@lists.cs.columbia.edu>; Thu, 12 Aug 2021 04:46:08 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id BDB6960724;
- Thu, 12 Aug 2021 08:46:04 +0000 (UTC)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3F53440839
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 12 Aug 2021 04:59:05 -0400 (EDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id E52A860C3F;
+ Thu, 12 Aug 2021 08:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1628757967;
- bh=bkl8tFQVs/zWYEgsZnhecDk9futAxtTTe8bCKKSsTbM=;
+ s=k20201202; t=1628758744;
+ bh=8mYYilhUDGBXxNyWqQd1m1A2djqb4Kt850ntLHj3+nM=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Z2xEWPhGXCC3hYjkoOwVu5NNCZixMYARc4Obyms3/6Sll6y15fu++5hzxXpe19DRx
- EhYSelrSgMUtSRqyyDWoF8aU53SNNBsMCsz/oE1a4Uuykg/PmfSuwKpWM4U79UjcjE
- +FBepWdxQ0UofglZOQAgBIFc0zgMNmwtCFs5QKkE1WVMSyRs6H81uDgVkBCE3TMCQT
- y2qrz0rXzvSbQ/LZ9GLhqbQZvxvyXibIhBqjF+zWrad975+NrHB7Dkuo6l4SolV8BY
- tYsvlHdHLIUVh0obkeNpkUiMjQxgXhdLk7xcfRf7X1DIiR/ZBnWyhOL0KdnJb9n2dq
- AxUNUinPIaNCg==
-Date: Thu, 12 Aug 2021 09:46:01 +0100
+ b=cB3WXrqd2g2o2zLlMVgOof5kb6v2wUXjrmPiRTDMJAG6qx2L45YQlz5w+2UVzNNip
+ d40do10DEn9Xht7JKb3ZXJitrqiu5j7dpfeR46IK6OyMAc+t5LjyJz/nitneMzOQ1q
+ dJ/aimBjHaXS65TgwT2SbRa9NcBUs9p9E0WdPaRkS+OyiFSd3CseSTAsaFkOCh9Pyb
+ AsP0Zwhr+7PbLUQ9X2mMqaFW7/hH4vvXD+jZDaASFKPYd4xmcWN47nDZ5D97XDTnN+
+ aW0rqHhx9b4YdJ02zfBJbQRECQk/qV++h0er6pbNvim0F1vEAZpjz/LIuHGc0r8Yga
+ ocOZPiukOqkHQ==
+Date: Thu, 12 Aug 2021 09:58:58 +0100
 From: Will Deacon <will@kernel.org>
 To: Fuad Tabba <tabba@google.com>
-Subject: Re: [PATCH v3 06/15] KVM: arm64: Restore mdcr_el2 from vcpu
-Message-ID: <20210812084600.GA5912@willie-the-truck>
+Subject: Re: [PATCH v3 01/15] KVM: arm64: placeholder to check if VM is
+ protected
+Message-ID: <20210812085857.GB5912@willie-the-truck>
 References: <20210719160346.609914-1-tabba@google.com>
- <20210719160346.609914-7-tabba@google.com>
- <20210720145258.axhqog3abdvtpqhw@gator>
- <CA+EHjTweLPu+DQ8hR9kEW0LrawtaoAoXR_+HmSEZpP-XOEm2qg@mail.gmail.com>
+ <20210719160346.609914-2-tabba@google.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <CA+EHjTweLPu+DQ8hR9kEW0LrawtaoAoXR_+HmSEZpP-XOEm2qg@mail.gmail.com>
+In-Reply-To: <20210719160346.609914-2-tabba@google.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Cc: kernel-team@android.com, kvm@vger.kernel.org, maz@kernel.org,
  pbonzini@redhat.com, kvmarm@lists.cs.columbia.edu,
@@ -77,35 +76,25 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Jul 21, 2021 at 08:37:21AM +0100, Fuad Tabba wrote:
-> On Tue, Jul 20, 2021 at 3:53 PM Andrew Jones <drjones@redhat.com> wrote:
-> >
-> > On Mon, Jul 19, 2021 at 05:03:37PM +0100, Fuad Tabba wrote:
-> > > On deactivating traps, restore the value of mdcr_el2 from the
-> > > newly created and preserved host value vcpu context, rather than
-> > > directly reading the hardware register.
-> > >
-> > > Up until and including this patch the two values are the same,
-> > > i.e., the hardware register and the vcpu one. A future patch will
-> > > be changing the value of mdcr_el2 on activating traps, and this
-> > > ensures that its value will be restored.
-> > >
-> > > No functional change intended.
-> >
-> > I'm probably missing something, but I can't convince myself that the host
-> > will end up with the same mdcr_el2 value after deactivating traps after
-> > this patch as before. We clearly now restore whatever we had when
-> > activating traps (presumably whatever we configured at init_el2_state
-> > time), but is that equivalent to what we had before with the masking and
-> > ORing that this patch drops?
+On Mon, Jul 19, 2021 at 05:03:32PM +0100, Fuad Tabba wrote:
+> Add a function to check whether a VM is protected (under pKVM).
+> Since the creation of protected VMs isn't enabled yet, this is a
+> placeholder that always returns false. The intention is for this
+> to become a check for protected VMs in the future (see Will's RFC
+> [*]).
 > 
-> You're right. I thought that these were actually being initialized to
-> the same values, but having a closer look at the code the mdcr values
-> are not the same as pre-patch. I will fix this.
+> No functional change intended.
+> 
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+> 
+> [*] https://lore.kernel.org/kvmarm/20210603183347.1695-1-will@kernel.org/
 
-Can you elaborate on the issue here, please? I was just looking at this
-but aren't you now relying on __init_el2_debug to configure this, which
-should be fine?
+You can make this a Link: tag.
+
+Anyway, I think it makes lots of sense to decouple this from the user-ABI
+series:
+
+Acked-by: Will Deacon <will@kernel.org>
 
 Will
 _______________________________________________
