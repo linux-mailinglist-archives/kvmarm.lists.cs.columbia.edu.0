@@ -2,59 +2,84 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CCC303EB5EF
-	for <lists+kvmarm@lfdr.de>; Fri, 13 Aug 2021 15:03:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A30E3EBBA5
+	for <lists+kvmarm@lfdr.de>; Fri, 13 Aug 2021 19:46:30 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3EEA94B0AC;
-	Fri, 13 Aug 2021 09:03:53 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B1E0E4A524;
+	Fri, 13 Aug 2021 13:46:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Q6b-95DY4wxW; Fri, 13 Aug 2021 09:03:53 -0400 (EDT)
+	with ESMTP id S5NYaB0IxNTI; Fri, 13 Aug 2021 13:46:29 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2E27E4A1A5;
-	Fri, 13 Aug 2021 09:03:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B79B84B0BE;
+	Fri, 13 Aug 2021 13:46:25 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7102E49E8A
- for <kvmarm@lists.cs.columbia.edu>; Fri, 13 Aug 2021 09:03:47 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 27B064A319
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 13 Aug 2021 13:46:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 0fYmkzqY3ZqY for <kvmarm@lists.cs.columbia.edu>;
- Fri, 13 Aug 2021 09:03:46 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2EAED49DE3
- for <kvmarm@lists.cs.columbia.edu>; Fri, 13 Aug 2021 09:03:46 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id A28BC61038;
- Fri, 13 Aug 2021 13:03:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1628859824;
- bh=tFqwEo6YGudMe5fJLJdVzGsKgcRZXqP4SRV88c+qNQY=;
- h=From:To:Cc:Subject:Date:From;
- b=JbHFMesbZmqN2FZKavkCMG4rmhppA4Vm7183sy8uB2kAGKXKXYg/fNjD9/OMN3MpF
- 96wS+E7dyFuSzlCOwGuk3xRTJozBAJuCe5wkfxlQRjIeOQUfxr5UibLxYNIXFTcKqw
- 1OIwkg9q6PdR0drQReFh3kDKp8j6/ONM93Z2HX68+AzIQka0+tifmJErOrlaidjTA9
- PCG0PJfWbfA+/Z1mXaSVUsguhnhlxeVHtcog+pWTNWDzvxPDylqEU2ma9gmVUsw0kS
- Xz4uDGI8g5Sarz9/2fkCwXu3BUR4wahSPgFRtrq+wCaT/gzY4o/N7uymXXj20Wq+Rn
- L2SjlTLkoxuIA==
-From: Will Deacon <will@kernel.org>
-To: maz@kernel.org
-Subject: [PATCH] KVM: arm64: Make hyp_panic() more robust when protected mode
- is enabled
-Date: Fri, 13 Aug 2021 14:03:36 +0100
-Message-Id: <20210813130336.8139-1-will@kernel.org>
-X-Mailer: git-send-email 2.20.1
+ with ESMTP id InyvwSOo0VHe for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 13 Aug 2021 13:46:23 -0400 (EDT)
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com
+ [209.85.208.176])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0B0844086D
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 13 Aug 2021 13:46:23 -0400 (EDT)
+Received: by mail-lj1-f176.google.com with SMTP id h11so16673923ljo.12
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 13 Aug 2021 10:46:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=f8Holqm94msH8zwwttqnwNNIb5GP1G9/99qvE2v+dcU=;
+ b=FPBviLCHTYpGAqgTfZCCThlPsy3SvDQxjuebC13p0iXhj0OeNzcrk8YOeVtI5XtpMF
+ Uz75WPbJwSvlgpLB3W9qk6PHRin4VdhT9qA8BJG5ghCMldOJLsqDkm82fAq0EG8X/9BU
+ 8X0Jhf6XqawQsbRgFF6RRyadIjhI2BKj4pTGDmuYTJyYsiQMyLxObkqnuD976ng/AB8v
+ NgMtefW1nPUJFOW/t+mhBlXgdY58Unh1X9nWpqYWjWqlYtWMHQ7OFlwxbWE6Xg1lIYrk
+ MK78YUyYD35s7G1H9/bmzRptli+3Oa4ZmwL653IleMYkjHZaiwFDmBcZfA+TZ/gXbrXs
+ WVhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=f8Holqm94msH8zwwttqnwNNIb5GP1G9/99qvE2v+dcU=;
+ b=Ojfru4IJxLIDPZLRtHyJ7Ix9e8ob+JpFofIDBY4wiwBtbILl0dC2EeF27mF9H0mqnv
+ 51c+HWk/jM7ZS/tx8vdso00PCJIwztJxfHYWwgiSKjvbHPlccyGRrb2l478QwV0YCopH
+ 0dIvW39q/rBjCtReQFzAJxHMC/+s0GicC/fVwjsQnAGqhizzHo94Ko0HsNkHv5I46+oj
+ kBAFbB1R2Gv+QMEds/bwOKQe5W0e57AIDyXHyiAX6at8u7zn94bST33/kzKAoPd4KW7E
+ L8CewqzrvwNFZznEFnAcH9DRUdEXSMSo78Y4LQTkZggzD4LCjtr9wCLFttbTzkcvGowj
+ UC1A==
+X-Gm-Message-State: AOAM533Jn1Us9ujUvbEHWbCsJj9uZ1Enuypce4HIqWrWnYExdu7eNjOL
+ QI1hJudByE02wj6Fk29uxNtefWzhiOzRvb3fNYg8CA==
+X-Google-Smtp-Source: ABdhPJx8HrYl3U2RpJvJAW94Qnm4I1248XWC/aFD75EZtnwMe+a7ZCPJypazWWRAKqrHLiT2BB63moMkioDJPlkcPDc=
+X-Received: by 2002:a2e:a5c1:: with SMTP id n1mr2653235ljp.65.1628876781486;
+ Fri, 13 Aug 2021 10:46:21 -0700 (PDT)
 MIME-Version: 1.0
-Cc: Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+References: <20210804085819.846610-1-oupton@google.com>
+ <20210804085819.846610-2-oupton@google.com>
+ <78eeaf83-2bfa-8452-1301-a607fba7fa0c@redhat.com>
+ <CAOQ_QsiwzKpaXUadGR6cWC2k0pg1P4QgkAxNdo0gpVAP1P3hSQ@mail.gmail.com>
+ <0b415872-7a67-d38b-ae01-62c38b365be0@redhat.com>
+In-Reply-To: <0b415872-7a67-d38b-ae01-62c38b365be0@redhat.com>
+From: Oliver Upton <oupton@google.com>
+Date: Fri, 13 Aug 2021 10:46:10 -0700
+Message-ID: <CAOQ_Qsjs7MOeh8ZGx3_CdgpedFwb9pYG_tQ4insdPwaqhAY=6g@mail.gmail.com>
+Subject: Re: [PATCH v6 01/21] KVM: x86: Fix potential race in KVM_GET_CLOCK
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>, kvm@vger.kernel.org,
+ Will Deacon <will@kernel.org>, Sean Christopherson <seanjc@google.com>,
+ Raghavendra Rao Anata <rananta@google.com>, Peter Shier <pshier@google.com>,
+ Marc Zyngier <maz@kernel.org>, David Matlack <dmatlack@google.com>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
+ Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -71,133 +96,32 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-When protected mode is enabled, the host is unable to access most parts
-of the EL2 hypervisor image, including 'hyp_physvirt_offset' and the
-contents of the hypervisor's '.rodata.str' section. Unfortunately,
-nvhe_hyp_panic_handler() tries to read from both of these locations when
-handling a BUG() triggered at EL2; the former for converting the ELR to
-a physical address and the latter for displaying the name of the source
-file where the BUG() occurred.
+On Fri, Aug 13, 2021 at 3:44 AM Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> On 13/08/21 12:39, Oliver Upton wrote:
+> > Might it make sense to fix this issue under the existing locking
+> > scheme, then shift to what you're proposing? I say that, but the
+> > locking change in 03/21 would most certainly have a short lifetime
+> > until this patch supersedes it.
+>
+> Yes, definitely.  The seqcount change would definitely go in much later.
+>   Extracting KVM_{GET,SET}_CLOCK to separate function would also be a
+> patch of its own.  Give me a few more days of frantic KVM Forum
+> preparation. :)
 
-Hack the EL2 panic asm to pass both physical and virtual ELR values to
-the host and utilise the newly introduced CONFIG_NVHE_EL2_DEBUG so that
-we disable stage-2 protection for the host before returning to the EL1
-panic handler. If the debug option is not enabled, display the address
-instead of the source file:line information.
+Sounds good :-) I'm probably going to send this out once more, in
+three separate series:
 
-Cc: Andrew Scull <ascull@google.com>
-Cc: Quentin Perret <qperret@google.com>
-Signed-off-by: Will Deacon <will@kernel.org>
----
+- x86 (no changes, just rebasing)
+- arm64 (address some comments, bugs)
+- selftests (no changes)
 
-Based on kvmarm/next for CONFIG_NVHE_EL2_DEBUG although still applies
-without that config option.
+--
+Thanks,
+Oliver
 
- arch/arm64/kvm/handle_exit.c   | 23 ++++++++++++++---------
- arch/arm64/kvm/hyp/nvhe/host.S | 21 +++++++++++++++++----
- 2 files changed, 31 insertions(+), 13 deletions(-)
-
-diff --git a/arch/arm64/kvm/handle_exit.c b/arch/arm64/kvm/handle_exit.c
-index 6f48336b1d86..04ebab299aa4 100644
---- a/arch/arm64/kvm/handle_exit.c
-+++ b/arch/arm64/kvm/handle_exit.c
-@@ -292,11 +292,12 @@ void handle_exit_early(struct kvm_vcpu *vcpu, int exception_index)
- 		kvm_handle_guest_serror(vcpu, kvm_vcpu_get_esr(vcpu));
- }
- 
--void __noreturn __cold nvhe_hyp_panic_handler(u64 esr, u64 spsr, u64 elr,
-+void __noreturn __cold nvhe_hyp_panic_handler(u64 esr, u64 spsr,
-+					      u64 elr_virt, u64 elr_phys,
- 					      u64 par, uintptr_t vcpu,
- 					      u64 far, u64 hpfar) {
--	u64 elr_in_kimg = __phys_to_kimg(__hyp_pa(elr));
--	u64 hyp_offset = elr_in_kimg - kaslr_offset() - elr;
-+	u64 elr_in_kimg = __phys_to_kimg(elr_phys);
-+	u64 hyp_offset = elr_in_kimg - kaslr_offset() - elr_virt;
- 	u64 mode = spsr & PSR_MODE_MASK;
- 
- 	/*
-@@ -309,20 +310,24 @@ void __noreturn __cold nvhe_hyp_panic_handler(u64 esr, u64 spsr, u64 elr,
- 		kvm_err("Invalid host exception to nVHE hyp!\n");
- 	} else if (ESR_ELx_EC(esr) == ESR_ELx_EC_BRK64 &&
- 		   (esr & ESR_ELx_BRK64_ISS_COMMENT_MASK) == BUG_BRK_IMM) {
--		struct bug_entry *bug = find_bug(elr_in_kimg);
- 		const char *file = NULL;
- 		unsigned int line = 0;
- 
- 		/* All hyp bugs, including warnings, are treated as fatal. */
--		if (bug)
--			bug_get_file_line(bug, &file, &line);
-+		if (!is_protected_kvm_enabled() ||
-+		    IS_ENABLED(CONFIG_NVHE_EL2_DEBUG)) {
-+			struct bug_entry *bug = find_bug(elr_in_kimg);
-+
-+			if (bug)
-+				bug_get_file_line(bug, &file, &line);
-+		}
- 
- 		if (file)
- 			kvm_err("nVHE hyp BUG at: %s:%u!\n", file, line);
- 		else
--			kvm_err("nVHE hyp BUG at: %016llx!\n", elr + hyp_offset);
-+			kvm_err("nVHE hyp BUG at: %016llx!\n", elr_virt + hyp_offset);
- 	} else {
--		kvm_err("nVHE hyp panic at: %016llx!\n", elr + hyp_offset);
-+		kvm_err("nVHE hyp panic at: %016llx!\n", elr_virt + hyp_offset);
- 	}
- 
- 	/*
-@@ -334,5 +339,5 @@ void __noreturn __cold nvhe_hyp_panic_handler(u64 esr, u64 spsr, u64 elr,
- 	kvm_err("Hyp Offset: 0x%llx\n", hyp_offset);
- 
- 	panic("HYP panic:\nPS:%08llx PC:%016llx ESR:%08llx\nFAR:%016llx HPFAR:%016llx PAR:%016llx\nVCPU:%016lx\n",
--	      spsr, elr, esr, far, hpfar, par, vcpu);
-+	      spsr, elr_virt, esr, far, hpfar, par, vcpu);
- }
-diff --git a/arch/arm64/kvm/hyp/nvhe/host.S b/arch/arm64/kvm/hyp/nvhe/host.S
-index 2b23400e0fb3..4b652ffb591d 100644
---- a/arch/arm64/kvm/hyp/nvhe/host.S
-+++ b/arch/arm64/kvm/hyp/nvhe/host.S
-@@ -7,6 +7,7 @@
- #include <linux/linkage.h>
- 
- #include <asm/assembler.h>
-+#include <asm/kvm_arm.h>
- #include <asm/kvm_asm.h>
- #include <asm/kvm_mmu.h>
- 
-@@ -85,12 +86,24 @@ SYM_FUNC_START(__hyp_do_panic)
- 
- 	mov	x29, x0
- 
-+#ifdef CONFIG_NVHE_EL2_DEBUG
-+	/* Ensure host stage-2 is disabled */
-+	mrs	x0, hcr_el2
-+	bic	x0, x0, #HCR_VM
-+	msr	hcr_el2, x0
-+	isb
-+	tlbi	vmalls12e1
-+	dsb	nsh
-+#endif
-+
- 	/* Load the panic arguments into x0-7 */
- 	mrs	x0, esr_el2
--	get_vcpu_ptr x4, x5
--	mrs	x5, far_el2
--	mrs	x6, hpfar_el2
--	mov	x7, xzr			// Unused argument
-+	mov	x4, x3
-+	mov	x3, x2
-+	hyp_pa	x3, x6
-+	get_vcpu_ptr x5, x6
-+	mrs	x6, far_el2
-+	mrs	x7, hpfar_el2
- 
- 	/* Enter the host, conditionally restoring the host context. */
- 	cbz	x29, __host_enter_without_restoring
--- 
-2.33.0.rc1.237.g0d66db33f3-goog
-
+> Paolo
+>
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
