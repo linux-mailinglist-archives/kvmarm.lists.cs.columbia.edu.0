@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A2FF03EE814
+	by mail.lfdr.de (Postfix) with ESMTP id 094393EE813
 	for <lists+kvmarm@lfdr.de>; Tue, 17 Aug 2021 10:11:51 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2D3584B157;
-	Tue, 17 Aug 2021 04:11:46 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 903904B14C;
+	Tue, 17 Aug 2021 04:11:50 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,59 +19,60 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id v592y8CDSJbg; Tue, 17 Aug 2021 04:11:46 -0400 (EDT)
+	with ESMTP id RoJD6BmzomKv; Tue, 17 Aug 2021 04:11:50 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 28ED64B13F;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5ED584B152;
 	Tue, 17 Aug 2021 04:11:42 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5B0C24B142
- for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Aug 2021 04:11:40 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 71B864B13E
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Aug 2021 04:11:41 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id PBEenkV7Iuhz for <kvmarm@lists.cs.columbia.edu>;
- Tue, 17 Aug 2021 04:11:39 -0400 (EDT)
-Received: from mail-ed1-f73.google.com (mail-ed1-f73.google.com
- [209.85.208.73])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1553D4B141
- for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Aug 2021 04:11:39 -0400 (EDT)
-Received: by mail-ed1-f73.google.com with SMTP id
- di3-20020a056402318300b003bebf0828a2so6169183edb.8
- for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Aug 2021 01:11:39 -0700 (PDT)
+ with ESMTP id DoVqOsag4K31 for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 17 Aug 2021 04:11:40 -0400 (EDT)
+Received: from mail-qv1-f73.google.com (mail-qv1-f73.google.com
+ [209.85.219.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6E1484B141
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Aug 2021 04:11:40 -0400 (EDT)
+Received: by mail-qv1-f73.google.com with SMTP id
+ r14-20020a0c8d0e0000b02902e82df307f0so14313998qvb.4
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Aug 2021 01:11:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=+tR0t5ZUJ91bnVp6oIhXSHEsqTp4Y29yczYOBvuJUDo=;
- b=NkOZvmbOv9x7PRjOB97t/mkx29EdEllMNyS1WbW9rr6vvm55DXlOL+NC8ig0QTdjE7
- B0GabQwAfdMe6C43xuYpSxLYBcoRBhgVbUE0tQTQNimpEflvOT0w067ujp74lgdKdM7C
- nhEpQC/34RYPE7t0RpUBx0dsexU9U+VkSgvni3sZDem72nxGUMRPHl/zo1gU0f3hSGGU
- J3aQFvR+GkR6+FEd70H9mmM3ItdbPf//Moto1u1lGfTs1BaNShyRYEJlz5Tb1+HR5gMl
- qq6ICC9g/Chjg/h/fHkx+qUV4mU3zz+0fDGprCZaV4GaQ1BTYrLvpbHHFmUfXnAFGhAk
- vowQ==
+ :cc; bh=gw2LswsJmGwYXUvemUxTnggwwTkhoQCT+deYh5e54GU=;
+ b=IvyYurtwJCZW0dkFujHS6ilPFANox0AtHkdYRyiKJCtJ4973Eso0xUyexV0vfmzgs2
+ 7o386Y9WY1mm0cmgG9RC9amfrRtuCbPVCQ2C/eRwIk88QzxGonk9hA/22vGzDOHPmdAU
+ dVS3o36GV566Rg5ZaLyKERcqv1hYP7WpCWZqEoGne3aYYHrvkQoKYvBFKPPuCfGn+MfN
+ pwKF71bqOZoGFZ1tVpTMYhrXQjRYP8EnW5XgIBvImeout1vK3T7MlcnrWnSgXqL7co66
+ 0xYQngJRfHHibCgF/64bHJCcsGYuBoOtej+9PWwthQiMwn68ajx0PSncD6C+gMt774KJ
+ Z5Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=+tR0t5ZUJ91bnVp6oIhXSHEsqTp4Y29yczYOBvuJUDo=;
- b=WXxxrLKENYLncovfJaESo+qU4VLFOWGznmDyKPkga86i4VPUYNPXuQ/p9Fak3wL0vN
- f5qXMEyrp7yShJPNlnFB8TSxPlXIYAqvd0zALdm2gJMYYDEMa1xrvBFBwmuqBUXgHEQS
- 5dgUjIRMt9/ySK0FW94uCuL5QIrxc5D5e1ZYU93IxvyYnRH6FV5gDtkKyPr4DaQjVILJ
- bulAvJMtXFdbXE3Z8IlIrVtt5t+8bpEM3dUEfcUutnNijJV/TwTp7M1kh79OWQWh1ND8
- CvOVCk975IzOTMeiypUXiVce6UUYiri1PEt9Aw9IP8p6bFp/Hj54E4bxBrOntDUyyJFL
- nYfg==
-X-Gm-Message-State: AOAM531uncj+IvfJx3jR4ey/SOn7Cr+UvA7MJcNc4sL8N96VhmIVmjf/
- S8JW8AkrD4Tlz6LqYNfvUvc4BowA2dT9FvBbj2aKwwtNyWWiHlela3jD4EX+LlHYwmesTkRO/9/
- 1cmyhGr1xTgLtP70geQWYNiEhF+X+u69JC7Dydg3Nclyh+jaSER8qtr9LV4joHoEfWJI=
-X-Google-Smtp-Source: ABdhPJxrm0L18Up0kCD8WqZDsdLtZDpsbuBf9GX5oRdLeJAUH+fDDBpze0tGJ+Zd9PZQHh79BqPRr1gzjg==
+ bh=gw2LswsJmGwYXUvemUxTnggwwTkhoQCT+deYh5e54GU=;
+ b=Z5V2BlgraQjPfwSLPs6nvytjnwfqDC396dCiE2Q0BC9o8yVuATjFXIpgwlQ5ZUUgiF
+ ZO/B4FI+N5XEt5DYNB4zQ6f5GDU1sHUNV2l/0DVwjLU70qX6NtHB61nWqCFcpz0QlNTj
+ JJVuV3Gz0R2/U8mH8zU+X/QSpU70RV6dx5FUViqAanxP56ATqRGd6WsEQSK+mIzkorbi
+ gUbwjM3MJjOnjqrGGb4kex1Ijfl8+2im0x06QJtLTKVd/5YTurcg899sUUPmxkz8HbIV
+ 3I/Uc5dZm7Gez4ViClNTdvvs3cWvubUpW6VVdNPUcSwGUA5ATFqFc/RXgFjVCt640hza
+ 6dgw==
+X-Gm-Message-State: AOAM533AXysZCTYq3176wem4uv9YTk6N4NS1+4upUQGRzCvgA2wE3kAz
+ /9KdRwfCUG7a7Dsq3678noVcZ6uCNNwJDWUB7JOWPpQkF7mHIxJcnrznWWdR3HiZD1JEaRi33AB
+ 3LsGGT857cln4WLymaZ+zrLOFW7aamcTO/cNKJnHgELv0iH5znP8HVDj8oSG0lvFJPQw=
+X-Google-Smtp-Source: ABdhPJwEf+noobKDIMb8yGxWg5hsBK+Cx5/cHbuKhsdc9IPXIZtXX4a8CpfwqCj/Z6egtP8X7XkIYRMzCQ==
 X-Received: from tabba.c.googlers.com ([fda3:e722:ac3:cc00:28:9cb1:c0a8:482])
- (user=tabba job=sendgmr) by 2002:a17:907:1750:: with SMTP id
- lf16mr2655793ejc.242.1629187898060; Tue, 17 Aug 2021 01:11:38 -0700 (PDT)
-Date: Tue, 17 Aug 2021 09:11:20 +0100
+ (user=tabba job=sendgmr) by 2002:ad4:58cc:: with SMTP id
+ dh12mr2069199qvb.32.1629187899986; 
+ Tue, 17 Aug 2021 01:11:39 -0700 (PDT)
+Date: Tue, 17 Aug 2021 09:11:21 +0100
 In-Reply-To: <20210817081134.2918285-1-tabba@google.com>
-Message-Id: <20210817081134.2918285-2-tabba@google.com>
+Message-Id: <20210817081134.2918285-3-tabba@google.com>
 Mime-Version: 1.0
 References: <20210817081134.2918285-1-tabba@google.com>
 X-Mailer: git-send-email 2.33.0.rc1.237.g0d66db33f3-goog
-Subject: [PATCH v4 01/15] KVM: arm64: placeholder to check if VM is protected
+Subject: [PATCH v4 02/15] KVM: arm64: Remove trailing whitespace in comment
 From: Fuad Tabba <tabba@google.com>
 To: kvmarm@lists.cs.columbia.edu
 Cc: kernel-team@android.com, kvm@vger.kernel.org, maz@kernel.org,
@@ -92,37 +93,37 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add a function to check whether a VM is protected (under pKVM).
-Since the creation of protected VMs isn't enabled yet, this is a
-placeholder that always returns false. The intention is for this
-to become a check for protected VMs in the future (see Will's RFC).
+Remove trailing whitespace from comment in trap_dbgauthstatus_el1().
 
 No functional change intended.
 
 Acked-by: Will Deacon <will@kernel.org>
 Signed-off-by: Fuad Tabba <tabba@google.com>
-
-Link: https://lore.kernel.org/kvmarm/20210603183347.1695-1-will@kernel.org/
 ---
- arch/arm64/include/asm/kvm_host.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/kvm/sys_regs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 41911585ae0c..347781f99b6a 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -771,6 +771,11 @@ void kvm_arch_free_vm(struct kvm *kvm);
- 
- int kvm_arm_setup_stage2(struct kvm *kvm, unsigned long type);
- 
-+static inline bool kvm_vm_is_protected(struct kvm *kvm)
-+{
-+	return false;
-+}
-+
- int kvm_arm_vcpu_finalize(struct kvm_vcpu *vcpu, int feature);
- bool kvm_arm_vcpu_is_finalized(struct kvm_vcpu *vcpu);
- 
+diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+index f6f126eb6ac1..80a6e41cadad 100644
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -318,14 +318,14 @@ static bool trap_dbgauthstatus_el1(struct kvm_vcpu *vcpu,
+ /*
+  * We want to avoid world-switching all the DBG registers all the
+  * time:
+- * 
++ *
+  * - If we've touched any debug register, it is likely that we're
+  *   going to touch more of them. It then makes sense to disable the
+  *   traps and start doing the save/restore dance
+  * - If debug is active (DBG_MDSCR_KDE or DBG_MDSCR_MDE set), it is
+  *   then mandatory to save/restore the registers, as the guest
+  *   depends on them.
+- * 
++ *
+  * For this, we use a DIRTY bit, indicating the guest has modified the
+  * debug registers, used as follow:
+  *
 -- 
 2.33.0.rc1.237.g0d66db33f3-goog
 
