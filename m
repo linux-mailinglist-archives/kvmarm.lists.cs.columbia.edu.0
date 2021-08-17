@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B3883EE825
-	for <lists+kvmarm@lfdr.de>; Tue, 17 Aug 2021 10:12:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA7123EE827
+	for <lists+kvmarm@lfdr.de>; Tue, 17 Aug 2021 10:12:22 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2ACDD4B16F;
-	Tue, 17 Aug 2021 04:12:21 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D2D94B179;
+	Tue, 17 Aug 2021 04:12:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,59 +19,60 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8Y-SyE4y1xbd; Tue, 17 Aug 2021 04:12:17 -0400 (EDT)
+	with ESMTP id 8Vn5rbpHxG0v; Tue, 17 Aug 2021 04:12:21 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4E7D84B161;
-	Tue, 17 Aug 2021 04:12:11 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 80DC14B169;
+	Tue, 17 Aug 2021 04:12:12 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2CFFC4B15F
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 62E3C4B160
  for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Aug 2021 04:12:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id QDR+vh6NtQEl for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id uR9lnLDDjwCR for <kvmarm@lists.cs.columbia.edu>;
  Tue, 17 Aug 2021 04:12:09 -0400 (EDT)
-Received: from mail-qv1-f74.google.com (mail-qv1-f74.google.com
- [209.85.219.74])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D35484B181
- for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Aug 2021 04:11:57 -0400 (EDT)
-Received: by mail-qv1-f74.google.com with SMTP id
- r14-20020a0c8d0e0000b02902e82df307f0so14314407qvb.4
- for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Aug 2021 01:11:57 -0700 (PDT)
+Received: from mail-wr1-f74.google.com (mail-wr1-f74.google.com
+ [209.85.221.74])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 92C624B14D
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Aug 2021 04:12:00 -0400 (EDT)
+Received: by mail-wr1-f74.google.com with SMTP id
+ p4-20020a5d59a4000000b00156992180dbso3978115wrr.10
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Aug 2021 01:12:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=a1FkHacsvxlpxAzLdiQ+8Ppyqt1oFw+G4RPgD2elyDM=;
- b=t0d/tLo4vOpJ97R2R+WJ7E/Mn4CRyatYvLNI5+XDc6d/D+D+iLgcP9l1mJgMMW9YmC
- kVwXzlYCgOVFk41QkuGxihN3Ogbvf8N7scHCRdnhB4nAXWmv7IzXURY2zHD/BEaiAYQ6
- TjllHsJE6UJZxmu5jPld1CQCptRH4i9F1tLftMV5Up+OoJBqprQPLjcmAPDwjY/fPrPm
- MgayAcPlA5qUJ9BfoFBR4cwAWBAWBStqE38TrSHqPxMV2Y/TZ/+xqz54kWQ1t5U7JoFY
- tyqZiyJQxEAJV5Ngl04xPkh8FINI1IP4yATCktZ30SJa5aIxa3ns9CXj2hbSkYio9nU2
- 0ZrQ==
+ :cc; bh=wCAlPucxwkxQDsZjrMwYYiCi5QbYeNWxBim5zrWnq2Y=;
+ b=Aakqhp0ujPFBkz2t9XKF2sWAACl4G7B5hxJDrt2uXINVbL4SDQRXJFOegBUQ1cWZ/J
+ 0jUUeLw9Od7HUTBaHF2bEbcWHbDSiLs7WOuMmHvkgQ9aKAKEc1Se9jaIc0RdmvVOh0fO
+ 2EN/wB6tJc5Zuqxbzk63h/bmcGOdULfseyFm4sZABt1qcXnPvBSlGoCTvs5yVR6Y8Yo1
+ YMuBWKj78N9MEBXEHK0yav34qJ6J/ferOrSpzyXe15duHhdaVH3IinJtQB7TmOXkIdhf
+ EGOlFmuP1fTlBQFW97lGVUPjXY5ipiWvG/UMC6271totgCudngPKM0tiXwaU5gQ9KdQm
+ 5UzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=a1FkHacsvxlpxAzLdiQ+8Ppyqt1oFw+G4RPgD2elyDM=;
- b=tlah8/wie9WX7k9wIdT2SZf4kmm5tB+ArGCSWwkxcIQGbxTlKmbbbemduCcxA4JZqR
- 7k5rxUI7XWFgVVdspasp5xByV8N73cwSs08BlDxjZDxnacV5kHXIXN9m8T9H626ZC5v9
- lYVhovee2Xobyzf1JI5mdhZgC6NsZnTD0E6x7F1k9QI/T59KTJFCVymNcsnN0XlCoaW8
- kvPYugPYpsBxfcMEuuRnUW0B0i7nOC3hu/oq67HTIOco4pQFZcWlFBF9pUokjuCgV8oN
- y5vIbxyGyhXgyrJy6Av6u9lrtCxFjuR9aRj3FRFRKCvi7tdo8y2BVkkYTPUQXjcTBXnq
- 9VXg==
-X-Gm-Message-State: AOAM532KfJFyp3I1SlXEmL7dOIiH1qVXHxcR/MRoIIFUJiL7jYam6h6r
- /Eqii2qjT1tb3VrKHKZI/lb4nwEITV3HM4UChcktuMKqRaGvFJdIEdEsIot/yb4h9nFHHZ6iNcG
- J100CyLnFQrjbmYnBBRJwUldrZ/TLNhWh7ynkHkJmb5ZjsC32N7X0TFTSiD+J2a30Ew4=
-X-Google-Smtp-Source: ABdhPJxzcsyia+26TWJ1TMac1dWdSAXLmVDa71Pii4xoLoi/YWFmQv5nVNTZT9RkOEJvlwiLzHDZH4e6Ug==
+ bh=wCAlPucxwkxQDsZjrMwYYiCi5QbYeNWxBim5zrWnq2Y=;
+ b=KBenN3PKiW8DwOLkZhmYI2Qr+FClswOa/4IkFpLQT9hW16V8qxksUmklLJnuwbmu3E
+ NRBUB7xizhcmaO5bRXJ24kPfnZrehc4MrspSS32dcIskCy9S8QRTe1IZYZRwF1EICezY
+ 2n2YLNQL6vnuzAac3re5tXSnDpN1mkIpTMaIS8d+iHzUzW9Mq1fM0ezjD8vyOLMMSP7V
+ iXsU/ngtGPdAnmM/4dmbD5LB8/ocepem7oqZfJFRbWvgaWJCYInwrdxqoH94VAgE4UkY
+ HKD0ErItswEAuaerI+f4SRjhayHo12RjNDhNOtfioCI3eTTloglWDiOJB2i2BFVdxx1y
+ YamQ==
+X-Gm-Message-State: AOAM532xZMYfeUCGQrtHNiq2bNezqdsFHhz4BZ/JcTAY5kJJcUXhpSV3
+ ah+2lw8M7q0ZgdWoal3nLj1VA0OCdnEuEWUnFNEaWZZ7WFlP7ItwmdibX8IvSDzIzX/ZYtZqe44
+ +Vfvb4/86hk5bW6S8EHIlvHOGGIu71xVG+001nyCEnzHKVG9hraLr9zRRP3mP1x1pmBA=
+X-Google-Smtp-Source: ABdhPJyYTcbz4UVboGo7zKDmnSidrFF2RAjsx5lYf6M4UE4X0H/bCAlk0j+kiCGYLkR2pXqzSg2USK4ZwA==
 X-Received: from tabba.c.googlers.com ([fda3:e722:ac3:cc00:28:9cb1:c0a8:482])
- (user=tabba job=sendgmr) by 2002:a05:6214:10c4:: with SMTP id
- r4mr2134444qvs.58.1629187917427; Tue, 17 Aug 2021 01:11:57 -0700 (PDT)
-Date: Tue, 17 Aug 2021 09:11:29 +0100
+ (user=tabba job=sendgmr) by 2002:a1c:c914:: with SMTP id
+ f20mr2057147wmb.140.1629187919570; 
+ Tue, 17 Aug 2021 01:11:59 -0700 (PDT)
+Date: Tue, 17 Aug 2021 09:11:30 +0100
 In-Reply-To: <20210817081134.2918285-1-tabba@google.com>
-Message-Id: <20210817081134.2918285-11-tabba@google.com>
+Message-Id: <20210817081134.2918285-12-tabba@google.com>
 Mime-Version: 1.0
 References: <20210817081134.2918285-1-tabba@google.com>
 X-Mailer: git-send-email 2.33.0.rc1.237.g0d66db33f3-goog
-Subject: [PATCH v4 10/15] KVM: arm64: Add config register bit definitions
+Subject: [PATCH v4 11/15] KVM: arm64: Guest exit handlers for nVHE hyp
 From: Fuad Tabba <tabba@google.com>
 To: kvmarm@lists.cs.columbia.edu
 Cc: kernel-team@android.com, kvm@vger.kernel.org, maz@kernel.org,
@@ -92,79 +93,128 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add hardware configuration register bit definitions for HCR_EL2
-and MDCR_EL2. Future patches toggle these hyp configuration
-register bits to trap on certain accesses.
+Add an array of pointers to handlers for various trap reasons in
+nVHE code.
 
-No functional change intended.
+The current code selects how to fixup a guest on exit based on a
+series of if/else statements. Future patches will also require
+different handling for guest exists. Create an array of handlers
+to consolidate them.
+
+No functional change intended as the array isn't populated yet.
 
 Acked-by: Will Deacon <will@kernel.org>
 Signed-off-by: Fuad Tabba <tabba@google.com>
 ---
- arch/arm64/include/asm/kvm_arm.h | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ arch/arm64/kvm/hyp/include/hyp/switch.h | 43 +++++++++++++++++++++++++
+ arch/arm64/kvm/hyp/nvhe/switch.c        | 33 +++++++++++++++++++
+ 2 files changed, 76 insertions(+)
 
-diff --git a/arch/arm64/include/asm/kvm_arm.h b/arch/arm64/include/asm/kvm_arm.h
-index a928b2dc0b0f..327120c0089f 100644
---- a/arch/arm64/include/asm/kvm_arm.h
-+++ b/arch/arm64/include/asm/kvm_arm.h
-@@ -12,8 +12,13 @@
- #include <asm/types.h>
+diff --git a/arch/arm64/kvm/hyp/include/hyp/switch.h b/arch/arm64/kvm/hyp/include/hyp/switch.h
+index a0e78a6027be..5a2b89b96c67 100644
+--- a/arch/arm64/kvm/hyp/include/hyp/switch.h
++++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
+@@ -409,6 +409,46 @@ static inline bool __hyp_handle_ptrauth(struct kvm_vcpu *vcpu)
+ 	return true;
+ }
  
- /* Hyp Configuration Register (HCR) bits */
++typedef int (*exit_handle_fn)(struct kvm_vcpu *);
 +
-+#define HCR_TID5	(UL(1) << 58)
-+#define HCR_DCT		(UL(1) << 57)
- #define HCR_ATA_SHIFT	56
- #define HCR_ATA		(UL(1) << HCR_ATA_SHIFT)
-+#define HCR_AMVOFFEN	(UL(1) << 51)
-+#define HCR_FIEN	(UL(1) << 47)
- #define HCR_FWB		(UL(1) << 46)
- #define HCR_API		(UL(1) << 41)
- #define HCR_APK		(UL(1) << 40)
-@@ -56,6 +61,7 @@
- #define HCR_PTW		(UL(1) << 2)
- #define HCR_SWIO	(UL(1) << 1)
- #define HCR_VM		(UL(1) << 0)
-+#define HCR_RES0	((UL(1) << 48) | (UL(1) << 39))
- 
++exit_handle_fn kvm_get_nvhe_exit_handler(struct kvm_vcpu *vcpu);
++
++static exit_handle_fn kvm_get_hyp_exit_handler(struct kvm_vcpu *vcpu)
++{
++	return is_nvhe_hyp_code() ? kvm_get_nvhe_exit_handler(vcpu) : NULL;
++}
++
++/*
++ * Allow the hypervisor to handle the exit with an exit handler if it has one.
++ *
++ * Returns true if the hypervisor handled the exit, and control should go back
++ * to the guest, or false if it hasn't.
++ */
++static bool kvm_hyp_handle_exit(struct kvm_vcpu *vcpu)
++{
++	bool is_handled = false;
++	exit_handle_fn exit_handler = kvm_get_hyp_exit_handler(vcpu);
++
++	if (exit_handler) {
++		/*
++		 * There's limited vcpu context here since it's not synced yet.
++		 * Ensure that relevant vcpu context that might be used by the
++		 * exit_handler is in sync before it's called and if handled.
++		 */
++		*vcpu_pc(vcpu) = read_sysreg_el2(SYS_ELR);
++		*vcpu_cpsr(vcpu) = read_sysreg_el2(SYS_SPSR);
++
++		is_handled = exit_handler(vcpu);
++
++		if (is_handled) {
++			write_sysreg_el2(*vcpu_pc(vcpu), SYS_ELR);
++			write_sysreg_el2(*vcpu_cpsr(vcpu), SYS_SPSR);
++		}
++	}
++
++	return is_handled;
++}
++
  /*
-  * The bits we set in HCR:
-@@ -277,11 +283,21 @@
- #define CPTR_EL2_TZ	(1 << 8)
- #define CPTR_NVHE_EL2_RES1	0x000032ff /* known RES1 bits in CPTR_EL2 (nVHE) */
- #define CPTR_EL2_DEFAULT	CPTR_NVHE_EL2_RES1
-+#define CPTR_NVHE_EL2_RES0	(GENMASK(63, 32) |	\
-+				 GENMASK(29, 21) |	\
-+				 GENMASK(19, 14) |	\
-+				 BIT(11))
+  * Return true when we were able to fixup the guest exit and should return to
+  * the guest, false when we should restore the host state and return to the
+@@ -496,6 +536,9 @@ static inline bool fixup_guest_exit(struct kvm_vcpu *vcpu, u64 *exit_code)
+ 			goto guest;
+ 	}
  
- /* Hyp Debug Configuration Register bits */
- #define MDCR_EL2_E2TB_MASK	(UL(0x3))
- #define MDCR_EL2_E2TB_SHIFT	(UL(24))
-+#define MDCR_EL2_HPMFZS		(UL(1) << 36)
-+#define MDCR_EL2_HPMFZO		(UL(1) << 29)
-+#define MDCR_EL2_MTPME		(UL(1) << 28)
-+#define MDCR_EL2_TDCC		(UL(1) << 27)
-+#define MDCR_EL2_HCCD		(UL(1) << 23)
- #define MDCR_EL2_TTRF		(UL(1) << 19)
-+#define MDCR_EL2_HPMD		(UL(1) << 17)
- #define MDCR_EL2_TPMS		(UL(1) << 14)
- #define MDCR_EL2_E2PB_MASK	(UL(0x3))
- #define MDCR_EL2_E2PB_SHIFT	(UL(12))
-@@ -293,6 +309,12 @@
- #define MDCR_EL2_TPM		(UL(1) << 6)
- #define MDCR_EL2_TPMCR		(UL(1) << 5)
- #define MDCR_EL2_HPMN_MASK	(UL(0x1F))
-+#define MDCR_EL2_RES0		(GENMASK(63, 37) |	\
-+				 GENMASK(35, 30) |	\
-+				 GENMASK(25, 24) |	\
-+				 GENMASK(22, 20) |	\
-+				 BIT(18) |		\
-+				 GENMASK(16, 15))
++	/* Check if there's an exit handler and allow it to handle the exit. */
++	if (kvm_hyp_handle_exit(vcpu))
++		goto guest;
+ exit:
+ 	/* Return to the host kernel and handle the exit */
+ 	return false;
+diff --git a/arch/arm64/kvm/hyp/nvhe/switch.c b/arch/arm64/kvm/hyp/nvhe/switch.c
+index 86f3d6482935..b7f25307a7b9 100644
+--- a/arch/arm64/kvm/hyp/nvhe/switch.c
++++ b/arch/arm64/kvm/hyp/nvhe/switch.c
+@@ -158,6 +158,39 @@ static void __pmu_switch_to_host(struct kvm_cpu_context *host_ctxt)
+ 		write_sysreg(pmu->events_host, pmcntenset_el0);
+ }
  
- /* For compatibility with fault code shared with 32-bit */
- #define FSC_FAULT	ESR_ELx_FSC_FAULT
++static exit_handle_fn hyp_exit_handlers[] = {
++	[0 ... ESR_ELx_EC_MAX]		= NULL,
++	[ESR_ELx_EC_WFx]		= NULL,
++	[ESR_ELx_EC_CP15_32]		= NULL,
++	[ESR_ELx_EC_CP15_64]		= NULL,
++	[ESR_ELx_EC_CP14_MR]		= NULL,
++	[ESR_ELx_EC_CP14_LS]		= NULL,
++	[ESR_ELx_EC_CP14_64]		= NULL,
++	[ESR_ELx_EC_HVC32]		= NULL,
++	[ESR_ELx_EC_SMC32]		= NULL,
++	[ESR_ELx_EC_HVC64]		= NULL,
++	[ESR_ELx_EC_SMC64]		= NULL,
++	[ESR_ELx_EC_SYS64]		= NULL,
++	[ESR_ELx_EC_SVE]		= NULL,
++	[ESR_ELx_EC_IABT_LOW]		= NULL,
++	[ESR_ELx_EC_DABT_LOW]		= NULL,
++	[ESR_ELx_EC_SOFTSTP_LOW]	= NULL,
++	[ESR_ELx_EC_WATCHPT_LOW]	= NULL,
++	[ESR_ELx_EC_BREAKPT_LOW]	= NULL,
++	[ESR_ELx_EC_BKPT32]		= NULL,
++	[ESR_ELx_EC_BRK64]		= NULL,
++	[ESR_ELx_EC_FP_ASIMD]		= NULL,
++	[ESR_ELx_EC_PAC]		= NULL,
++};
++
++exit_handle_fn kvm_get_nvhe_exit_handler(struct kvm_vcpu *vcpu)
++{
++	u32 esr = kvm_vcpu_get_esr(vcpu);
++	u8 esr_ec = ESR_ELx_EC(esr);
++
++	return hyp_exit_handlers[esr_ec];
++}
++
+ /* Switch to the guest for legacy non-VHE systems */
+ int __kvm_vcpu_run(struct kvm_vcpu *vcpu)
+ {
 -- 
 2.33.0.rc1.237.g0d66db33f3-goog
 
