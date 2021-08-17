@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id ED1C03EE0E3
-	for <lists+kvmarm@lfdr.de>; Tue, 17 Aug 2021 02:27:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB27F3EE812
+	for <lists+kvmarm@lfdr.de>; Tue, 17 Aug 2021 10:11:50 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 51B224B0CB;
-	Mon, 16 Aug 2021 20:27:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 694E74B146;
+	Tue, 17 Aug 2021 04:11:50 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,67 +14,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id relTLXXJ5D5T; Mon, 16 Aug 2021 20:27:00 -0400 (EDT)
+	with ESMTP id XcHbcgzKj7WO; Tue, 17 Aug 2021 04:11:46 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4C15F4B0E9;
-	Mon, 16 Aug 2021 20:26:56 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 470544B14C;
+	Tue, 17 Aug 2021 04:11:42 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 740AB4B0BC
- for <kvmarm@lists.cs.columbia.edu>; Mon, 16 Aug 2021 20:26:55 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 66E064B13F
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Aug 2021 04:11:41 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id NJT-Y6hHWuTJ for <kvmarm@lists.cs.columbia.edu>;
- Mon, 16 Aug 2021 20:26:54 -0400 (EDT)
-Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com
- [209.85.214.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2DACB4B0EC
- for <kvmarm@lists.cs.columbia.edu>; Mon, 16 Aug 2021 20:26:54 -0400 (EDT)
-Received: by mail-pl1-f201.google.com with SMTP id
- p7-20020a170902b087b029012c2879a885so11891894plr.6
- for <kvmarm@lists.cs.columbia.edu>; Mon, 16 Aug 2021 17:26:54 -0700 (PDT)
+ with ESMTP id XZNXUkdWCYsL for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 17 Aug 2021 04:11:37 -0400 (EDT)
+Received: from mail-wr1-f73.google.com (mail-wr1-f73.google.com
+ [209.85.221.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2DD9D4B13E
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Aug 2021 04:11:37 -0400 (EDT)
+Received: by mail-wr1-f73.google.com with SMTP id
+ d12-20020a056000186cb02901548bff164dso6289104wri.18
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 17 Aug 2021 01:11:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:message-id:mime-version:subject:from:to:cc;
- bh=GmFYFWgSJqnYvi5uzE7wopljyXsB3O7OfGsKWKCJGuY=;
- b=b4f1FMtWLjJ9VYPvJ9oT6EDEBvLQnL/BGyFRDQvrfDTfhb/IPPcBSbd2AzesdLwfxg
- bxUJuh3+aPqAi8foBEiinZTVoFhUv176g47LSxpy9liUchTLJS9ngNH4whJOedOlHVTZ
- 8Uvq00WwgvyiWrrWjeESLEcjTBevgNer8H7o2acqcvKM7ZHizu6tzw2EuOC/4HvamaRq
- 0f6W98eLb2ofHtM1vizH8yxC7vt5oLiyCDEWUFE6qi0w5T+G9fyc5IDG7DwL3kw/rCKM
- zmrv739kbhLM5gPECbcHsF2HwQp0SgyKQwe/guyHZBFK0EAKNWGHtZZDTsOvlDPAA8Cx
- iYBg==
+ bh=/ckzLK+CffvqCGULa3qCpG0UYTxjxawmLkBAgkfDEXo=;
+ b=QOcUVIAb0RL4/R1D1DYehkMtW7KrbfAD8MNMIwVla7JNYR+f6jzkGj6rSjT3ZmeTHO
+ GPEFJhHixBMI9s2i5d7CtxWNjMqeEIQejNcYWI/z4lJe19jLkGCIurEKoWvSiUEepAtG
+ 7Xn7k3jUN3q6jRmTvQBqT+qVZP5krTphbRhrY+C2WKz34C+vt8tBpQv5f7o0Xcm9HKTE
+ 2uzPyqfEpgWbJPxoOFus4v7UpFLrllCbZ8jk6z24Y3KlE/YZ+PyahxHg+1dgXl33TEho
+ E6lDZmLUBetNANo05xelrS3c/hSvaUjO22o2FRok6NKLLqH3S4NHs82nkYymOjBQMvy8
+ rvAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
- bh=GmFYFWgSJqnYvi5uzE7wopljyXsB3O7OfGsKWKCJGuY=;
- b=ZtPPR2rRr5StwWNX1GKKrFZRiTtGkG/J3lU/b/Yi/pwVM3mU+873iMRiL4B09tWZRE
- YBXUMu3EDIncX534F+mcxeTZu/wyJfZoJVyS114miIXQF0zVqyDo8ZUqEoJDJZyRIL5B
- qY1ffrsDdDYIVsUOmBxgWSu6+R204UpW7VXc1F+mn31KFS7bsgKkZAq5odR6lO2cAOWp
- stUfyfMLdDD5vSBQfG7xflbnsBjTMdeb8ydfPHBngF5Y6onJG1gmxrb5DQ1wv5cVdMbD
- AuMJOGBE3MgHhZQdv4d0dMV3o/vO4PO3+K6RUL0limWWJjjKlG36lqIiWMLg3XrNwBn/
- NqIQ==
-X-Gm-Message-State: AOAM5305xpEhl+zg1lLSbcojnXmtfi2GLPuYmRqb+pzEQzDpm/G4d7WN
- OUVjRNLIiix/9MGTK7jGSTZRfOXXikD9grHHAw==
-X-Google-Smtp-Source: ABdhPJyFaF0EVkxwXDmU6xb8bee1RXFu3kmq7woIq1DfWxoQUoXXuCJt0ujRSFs/vD/RyaMoFKYq5CC/RLU8ApIr4Q==
-X-Received: from jgzg.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:1acf])
- (user=jingzhangos job=sendgmr) by
- 2002:a17:902:cec3:b0:12d:92c4:1ea6 with
- SMTP id d3-20020a170902cec300b0012d92c41ea6mr563343plg.36.1629160013007; Mon,
- 16 Aug 2021 17:26:53 -0700 (PDT)
-Date: Tue, 17 Aug 2021 00:26:39 +0000
-Message-Id: <20210817002639.3856694-1-jingzhangos@google.com>
+ bh=/ckzLK+CffvqCGULa3qCpG0UYTxjxawmLkBAgkfDEXo=;
+ b=EWEYfGEvS3YBqNEmMyJJL+dN3ajR/AswYUXhRqt8idgzBubO7K8CFyEQiXKra3SGiO
+ 4bFq2yeEAZcR0BXfmmIe4yVuSWT/nd+doZG9GJf/nWUAVCZyYULwn8EsCss5uyXmeNDA
+ 5B1S18sxXI6Gwrv4ddnMuTzUZxL/YfkjLekbdD2NBw6xKZ/bVt55Y2WKByUjo7bPP3UF
+ s1ZmHAu0LGTiIH/2+GPnJQyhL7kYXSTxT8nLUrmkZdI1kNieyF+SOieGErJ/ktbXT8mt
+ 0dlY2CgjWwY8xchHJaw86ZEVl0n4T5sWEMbt2pOhDM/TxIoHhfCkT41XwPJrT4uo6Q/a
+ kX7g==
+X-Gm-Message-State: AOAM533eehjEmzoHCF/DyepUtz1Y3C6eHJdX4rZylnvizBoO6n/JD2tU
+ w9ZjqqY//v+KDQ8gwdC5Gx4dCX0PCElbgmY6cd55w7J+2osz3902JIAcpO0EmKIQhbJr1lp/wot
+ OF3hOQNAPhy0OvF5/waQ6EYB4iJ9GnMFzKTnNlwhLJBtcLls5pApNbW9Lgw+OkF8Zg5g=
+X-Google-Smtp-Source: ABdhPJzfKxBuOWNyF4P/P/98BI2zZOeQMB4OaOrC7slEfd9Q9lbLcP35IKx3h5EiaGgEeUX6MQmU7zDtxg==
+X-Received: from tabba.c.googlers.com ([fda3:e722:ac3:cc00:28:9cb1:c0a8:482])
+ (user=tabba job=sendgmr) by 2002:a05:600c:2213:: with SMTP id
+ z19mr2027642wml.6.1629187895964; Tue, 17 Aug 2021 01:11:35 -0700 (PDT)
+Date: Tue, 17 Aug 2021 09:11:19 +0100
+Message-Id: <20210817081134.2918285-1-tabba@google.com>
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.33.0.rc1.237.g0d66db33f3-goog
-Subject: [PATCH] KVM: stats: Add VM stat for remote tlb flush requests
-From: Jing Zhang <jingzhangos@google.com>
-To: KVM <kvm@vger.kernel.org>, KVMARM <kvmarm@lists.cs.columbia.edu>, 
- Paolo Bonzini <pbonzini@redhat.com>, David Matlack <dmatlack@google.com>, 
- Peter Shier <pshier@google.com>, Oliver Upton <oupton@google.com>,
- Marc Zyngier <maz@kernel.org>
+Subject: [PATCH v4 00/15] KVM: arm64: Fixed features for protected VMs
+From: Fuad Tabba <tabba@google.com>
+To: kvmarm@lists.cs.columbia.edu
+Cc: kernel-team@android.com, kvm@vger.kernel.org, maz@kernel.org,
+ pbonzini@redhat.com, will@kernel.org, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -91,71 +89,129 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add a new stat that counts the number of times a remote TLB flush is
-requested, regardless of whether it kicks vCPUs out of guest mode. This
-allows us to look at how often flushes are initiated.
+Hi,
 
-Original-by: David Matlack <dmatlack@google.com>
-Signed-off-by: Jing Zhang <jingzhangos@google.com>
----
- arch/arm64/kvm/mmu.c      | 1 +
- include/linux/kvm_host.h  | 3 ++-
- include/linux/kvm_types.h | 1 +
- virt/kvm/kvm_main.c       | 1 +
- 4 files changed, 5 insertions(+), 1 deletion(-)
+Changes since v3 [1]:
+- Redid calculating restricted values of feature register fields, ensuring that
+  the code distinguishes between unsigned and (potentially in the future)
+  signed fields (Will)
+- Refactoring and fixes (Drew, Will)
+- More documentation and comments (Oliver, Will)
+- Dropped patch "Restrict protected VM capabilities", since it should come with
+  or after the user ABI series for pKVM (Will)
+- Carried Will's acks
 
-diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 0625bf2353c2..f5bb235bbb59 100644
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -80,6 +80,7 @@ static bool memslot_is_logging(struct kvm_memory_slot *memslot)
-  */
- void kvm_flush_remote_tlbs(struct kvm *kvm)
- {
-+	++kvm->stat.generic.remote_tlb_flush_requests;
- 	kvm_call_hyp(__kvm_tlb_flush_vmid, &kvm->arch.mmu);
- }
- 
-diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-index d447b21cdd73..27cb69e564cb 100644
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -1444,7 +1444,8 @@ struct _kvm_stats_desc {
- 		KVM_STATS_BASE_POW10, -9, sz)
- 
- #define KVM_GENERIC_VM_STATS()						       \
--	STATS_DESC_COUNTER(VM_GENERIC, remote_tlb_flush)
-+	STATS_DESC_COUNTER(VM_GENERIC, remote_tlb_flush),		       \
-+	STATS_DESC_COUNTER(VM_GENERIC, remote_tlb_flush_requests)
- 
- #define KVM_GENERIC_VCPU_STATS()					       \
- 	STATS_DESC_COUNTER(VCPU_GENERIC, halt_successful_poll),		       \
-diff --git a/include/linux/kvm_types.h b/include/linux/kvm_types.h
-index de7fb5f364d8..2237abb93ccd 100644
---- a/include/linux/kvm_types.h
-+++ b/include/linux/kvm_types.h
-@@ -80,6 +80,7 @@ struct kvm_mmu_memory_cache {
- 
- struct kvm_vm_stat_generic {
- 	u64 remote_tlb_flush;
-+	u64 remote_tlb_flush_requests;
- };
- 
- struct kvm_vcpu_stat_generic {
-diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-index 3e67c93ca403..26b77ab98a04 100644
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -318,6 +318,7 @@ void kvm_flush_remote_tlbs(struct kvm *kvm)
- 	 */
- 	long dirty_count = smp_load_acquire(&kvm->tlbs_dirty);
- 
-+	++kvm->stat.generic.remote_tlb_flush_requests;
- 	/*
- 	 * We want to publish modifications to the page tables before reading
- 	 * mode. Pairs with a memory barrier in arch-specific code.
+Changes since v2 [2]:
+- Both trapping and setting of feature id registers are toggled by an allowed
+  features bitmap of the feature id registers (Will)
+- Documentation explaining the rationale behind allowed/blocked features (Drew)
+- Restrict protected VM features by checking and restricting VM capabilities
+- Misc small fixes and tidying up (mostly Will)
+- Remove dependency on Will's protected VM user ABI series [3]
+- Rebase on 5.14-rc2
+- Carried Will's acks
 
-base-commit: a3e0b8bd99ab098514bde2434301fa6fde040da2
+Changes since v1 [4]:
+- Restrict protected VM features based on an allowed features rather than
+  rejected ones (Drew)
+- Add more background describing protected KVM to the cover letter (Alex)
+
+This patch series adds support for restricting CPU features for protected VMs
+in KVM (pKVM) [5].
+
+Various VM feature configurations are allowed in KVM/arm64, each requiring
+specific handling logic to deal with traps, context-switching and potentially
+emulation. Achieving feature parity in pKVM therefore requires either elevating
+this logic to EL2 (and substantially increasing the TCB) or continuing to trust
+the host handlers at EL1. Since neither of these options are especially
+appealing, pKVM instead limits the CPU features exposed to a guest to a fixed
+configuration based on the underlying hardware and which can mostly be provided
+straightforwardly by EL2.
+
+This series approaches that by restricting CPU features exposed to protected
+guests. Features advertised through feature registers are limited, which pKVM
+enforces by trapping register accesses and instructions associated with these
+features.
+
+This series is based on 5.14-rc2. You can find the applied series here [6].
+
+Cheers,
+/fuad
+
+[1] https://lore.kernel.org/kvmarm/20210719160346.609914-1-tabba@google.com/
+
+[2] https://lore.kernel.org/kvmarm/20210615133950.693489-1-tabba@google.com/
+
+[3] https://lore.kernel.org/kvmarm/20210603183347.1695-1-will@kernel.org/
+
+[4] https://lore.kernel.org/kvmarm/20210608141141.997398-1-tabba@google.com/
+
+[5] Once complete, protected KVM adds the ability to create protected VMs.
+These protected VMs are protected from the host Linux kernel (and from other
+VMs), where the host does not have access to guest memory,even if compromised.
+Normal (nVHE) guests can still be created and run in parallel with protected
+VMs. Their functionality should not be affected.
+
+For protected VMs, the host should not even have access to a protected guest's
+state or anything that would enable it to manipulate it (e.g., vcpu register
+context and el2 system registers); only hyp would have that access. If the host
+could access that state, then it might be able to get around the protection
+provided.  Therefore, anything that is sensitive and that would require such
+access needs to happen at hyp, hence the code in nvhe running only at hyp.
+
+For more details about pKVM, please refer to Will's talk at KVM Forum 2020:
+https://mirrors.edge.kernel.org/pub/linux/kernel/people/will/slides/kvmforum-2020-edited.pdf
+https://www.youtube.com/watch?v=edqJSzsDRxk
+
+[6] https://android-kvm.googlesource.com/linux/+/refs/heads/tabba/el2_fixed_feature_v4
+
+Fuad Tabba (15):
+  KVM: arm64: placeholder to check if VM is protected
+  KVM: arm64: Remove trailing whitespace in comment
+  KVM: arm64: MDCR_EL2 is a 64-bit register
+  KVM: arm64: Fix names of config register fields
+  KVM: arm64: Refactor sys_regs.h,c for nVHE reuse
+  KVM: arm64: Restore mdcr_el2 from vcpu
+  KVM: arm64: Keep mdcr_el2's value as set by __init_el2_debug
+  KVM: arm64: Track value of cptr_el2 in struct kvm_vcpu_arch
+  KVM: arm64: Add feature register flag definitions
+  KVM: arm64: Add config register bit definitions
+  KVM: arm64: Guest exit handlers for nVHE hyp
+  KVM: arm64: Add trap handlers for protected VMs
+  KVM: arm64: Move sanitized copies of CPU features
+  KVM: arm64: Trap access to pVM restricted features
+  KVM: arm64: Handle protected guests at 32 bits
+
+ arch/arm64/include/asm/cpufeature.h       |   4 +-
+ arch/arm64/include/asm/kvm_arm.h          |  54 ++-
+ arch/arm64/include/asm/kvm_asm.h          |   2 +-
+ arch/arm64/include/asm/kvm_fixed_config.h | 170 +++++++++
+ arch/arm64/include/asm/kvm_host.h         |  15 +-
+ arch/arm64/include/asm/kvm_hyp.h          |   5 +-
+ arch/arm64/include/asm/sysreg.h           |  17 +-
+ arch/arm64/kernel/cpufeature.c            |   8 +-
+ arch/arm64/kvm/Makefile                   |   2 +-
+ arch/arm64/kvm/arm.c                      |  12 +
+ arch/arm64/kvm/debug.c                    |   2 +-
+ arch/arm64/kvm/hyp/include/hyp/switch.h   |  52 ++-
+ arch/arm64/kvm/hyp/nvhe/Makefile          |   2 +-
+ arch/arm64/kvm/hyp/nvhe/debug-sr.c        |   2 +-
+ arch/arm64/kvm/hyp/nvhe/mem_protect.c     |   6 -
+ arch/arm64/kvm/hyp/nvhe/switch.c          |  87 ++++-
+ arch/arm64/kvm/hyp/nvhe/sys_regs.c        | 432 ++++++++++++++++++++++
+ arch/arm64/kvm/hyp/vhe/debug-sr.c         |   2 +-
+ arch/arm64/kvm/hyp/vhe/switch.c           |  12 +-
+ arch/arm64/kvm/hyp/vhe/sysreg-sr.c        |   2 +-
+ arch/arm64/kvm/pkvm.c                     | 185 +++++++++
+ arch/arm64/kvm/sys_regs.c                 |  64 +---
+ arch/arm64/kvm/sys_regs.h                 |  31 ++
+ 23 files changed, 1059 insertions(+), 109 deletions(-)
+ create mode 100644 arch/arm64/include/asm/kvm_fixed_config.h
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/sys_regs.c
+ create mode 100644 arch/arm64/kvm/pkvm.c
+
+
+base-commit: c500bee1c5b2f1d59b1081ac879d73268ab0ff17
 -- 
 2.33.0.rc1.237.g0d66db33f3-goog
 
