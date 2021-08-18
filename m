@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id F30073EFFBC
-	for <lists+kvmarm@lfdr.de>; Wed, 18 Aug 2021 10:57:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2706C3F0010
+	for <lists+kvmarm@lfdr.de>; Wed, 18 Aug 2021 11:11:12 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7DAD04B0BE;
-	Wed, 18 Aug 2021 04:57:48 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9FB804B0CB;
+	Wed, 18 Aug 2021 05:11:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,52 +15,49 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8H0nk7t+ifDF; Wed, 18 Aug 2021 04:57:48 -0400 (EDT)
+	with ESMTP id WofYQtJkLTGd; Wed, 18 Aug 2021 05:11:11 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8FB3F4B0BC;
-	Wed, 18 Aug 2021 04:57:44 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8903A4B0C2;
+	Wed, 18 Aug 2021 05:11:10 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5F25B4B08B
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 04:57:43 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EC2194B0B7
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 05:11:09 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 9xTQLSSJkw0s for <kvmarm@lists.cs.columbia.edu>;
- Wed, 18 Aug 2021 04:57:42 -0400 (EDT)
+ with ESMTP id eTJ176gW66gK for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 18 Aug 2021 05:10:48 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 70AF949F5F
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 04:57:42 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3F5544A4A4
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 05:10:48 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 76BA761075;
- Wed, 18 Aug 2021 08:57:41 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 470D26103A;
+ Wed, 18 Aug 2021 09:10:47 +0000 (UTC)
 Received: from sofa.misterjones.org ([185.219.108.64] helo=hot-poop.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1mGHOF-005hti-Px; Wed, 18 Aug 2021 09:57:39 +0100
+ id 1mGHav-005i8N-8F; Wed, 18 Aug 2021 10:10:45 +0100
 From: Marc Zyngier <maz@kernel.org>
-To: linux-arm-kernel@lists.infradead.org,
- Anshuman Khandual <anshuman.khandual@arm.com>
-Subject: Re: [PATCH V2 0/5] KVM: arm64: General cleanups
-Date: Wed, 18 Aug 2021 09:57:37 +0100
-Message-Id: <162927703840.2372.14610953148314715293.b4-ty@kernel.org>
+To: Will Deacon <will@kernel.org>
+Subject: Re: [PATCH] KVM: arm64: Make hyp_panic() more robust when protected
+ mode is enabled
+Date: Wed, 18 Aug 2021 10:10:40 +0100
+Message-Id: <162927783509.2863.13074937375734887703.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <1628744994-16623-1-git-send-email-anshuman.khandual@arm.com>
-References: <1628744994-16623-1-git-send-email-anshuman.khandual@arm.com>
+In-Reply-To: <20210813130336.8139-1-will@kernel.org>
+References: <20210813130336.8139-1-will@kernel.org>
 MIME-Version: 1.0
 X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
- anshuman.khandual@arm.com, suzuki.poulose@arm.com, catalin.marinas@arm.com,
- kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org,
- james.morse@arm.com, alexandru.elisei@arm.com, will@kernel.org
+X-SA-Exim-Rcpt-To: will@kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
-Cc: Will Deacon <will@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
- linux-kernel@vger.kernel.org, kvmarm@lists.cs.columbia.edu
+Cc: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -77,31 +74,21 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, 12 Aug 2021 10:39:49 +0530, Anshuman Khandual wrote:
-> This series contains mostly unrelated general cleanups. This series applies
-> on v5.14-rc5 and has been boot tested with different page sized guests.
-> 
-> Changes in V2:
-> 
-> - Dropped the first patch regarding PAGE_[SHIFT|SIZE] per Marc
-> - Added remaining ID_AA64MMFR0_PARANGE_ macros and ARM64_MIN_PARANGE_BITS per Marc
-> - Dropped memory and cycle reference from commit message in [PATCH 3/5]
-> - Changed return value as u32 in kvm_target_cpu() per Will
+On Fri, 13 Aug 2021 14:03:36 +0100, Will Deacon wrote:
+> When protected mode is enabled, the host is unable to access most parts
+> of the EL2 hypervisor image, including 'hyp_physvirt_offset' and the
+> contents of the hypervisor's '.rodata.str' section. Unfortunately,
+> nvhe_hyp_panic_handler() tries to read from both of these locations when
+> handling a BUG() triggered at EL2; the former for converting the ELR to
+> a physical address and the latter for displaying the name of the source
+> file where the BUG() occurred.
 > 
 > [...]
 
-Applied to next, thanks!
+Applied to kvm-arm64/mmu/el2-tracking, thanks!
 
-[1/5] arm64/mm: Add remaining ID_AA64MMFR0_PARANGE_ macros
-      commit: 504c6295b998effa682089747a96d7bb5933d4db
-[2/5] KVM: arm64: Use ARM64_MIN_PARANGE_BITS as the minimum supported IPA
-      commit: 9788c14060f3c179c376b2a87af1a430d4d84973
-[3/5] KVM: arm64: Drop init_common_resources()
-      commit: bf249d9e362f1011a839d57e771b4b1a7eed9656
-[4/5] KVM: arm64: Drop check_kvm_target_cpu() based percpu probe
-      commit: 6b7982fefc1fdcaa31b712f5fbc2e993cc99ad23
-[5/5] KVM: arm64: Drop unused REQUIRES_VIRT
-      commit: 9329752bc8659e3934e2b13434b2fddb0df0bb13
+[1/1] KVM: arm64: Make hyp_panic() more robust when protected mode is enabled
+      commit: ccac96977243d7916053550f62e6489760ad0adc
 
 Cheers,
 
