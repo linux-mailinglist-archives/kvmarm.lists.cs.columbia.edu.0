@@ -2,64 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 243573F0AED
-	for <lists+kvmarm@lfdr.de>; Wed, 18 Aug 2021 20:14:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A59B3F0C43
+	for <lists+kvmarm@lfdr.de>; Wed, 18 Aug 2021 21:59:53 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5A51E4A523;
-	Wed, 18 Aug 2021 14:14:46 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D308B4B0DD;
+	Wed, 18 Aug 2021 15:59:52 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id odKc28CEZXur; Wed, 18 Aug 2021 14:14:46 -0400 (EDT)
+	with ESMTP id pb-WKyGULvm4; Wed, 18 Aug 2021 15:59:52 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 58C3A4B08D;
-	Wed, 18 Aug 2021 14:14:42 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CE0224B0E4;
+	Wed, 18 Aug 2021 15:59:48 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 349914A4A3
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 14:14:41 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3977A4099E
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 14:41:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id YDJZCZ2-JwEr for <kvmarm@lists.cs.columbia.edu>;
- Wed, 18 Aug 2021 14:14:39 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5BC5C4A49C
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 14:14:39 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 2E17860E09;
- Wed, 18 Aug 2021 18:14:38 +0000 (UTC)
-Received: from sofa.misterjones.org ([185.219.108.64] helo=hot-poop.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1mGQ5E-005oZa-4d; Wed, 18 Aug 2021 19:14:36 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- kvm@vger.kernel.org
-Subject: [PATCH] KVM: arm64: vgic: Resample HW pending state on deactivation
-Date: Wed, 18 Aug 2021 19:14:32 +0100
-Message-Id: <20210818181432.432256-1-maz@kernel.org>
-X-Mailer: git-send-email 2.30.2
-MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, james.morse@arm.com,
- suzuki.poulose@arm.com, alexandru.elisei@arm.com, andre.przywara@arm.com,
- eric.auger@redhat.com, oupton@google.com, ricarkol@google.com,
- kernel-team@android.com, rananta@google.com, stable@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com, Andre Przywara <andre.przywara@arm.com>,
- stable@vger.kernel.org, Raghavendra Rao Ananta <rananta@google.com>
+ with ESMTP id eHNBzkHBGRbF for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 18 Aug 2021 14:41:09 -0400 (EDT)
+Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com
+ [209.85.214.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C670A407E7
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 14:41:09 -0400 (EDT)
+Received: by mail-pl1-f202.google.com with SMTP id
+ s3-20020a1709029883b029012b41197000so760533plp.16
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 11:41:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=xD+scnBT+0IdTxaCEWT+M7b4WeM+uY6s3ymzr0wpIrU=;
+ b=XDOamdUDVTxzgoy91NR4R5K1937svZezTPcmRNRvFChxWiMpWCXBj5vtbAdtGEMk26
+ 7TBu0t81eUXbGwbzaQDLjL5dL+w2ezC8Y53ItdpJZvslYDnA7PCsehCL5ljF4afeAYqc
+ BH4iJBbnJ5ogOjFFOztgb0mesXs3E2yt21Gbaew+a3CY38PIqfGsfyCGBz3b2A6123v9
+ CHnRw5y84RdfqqgD4uCGLZGPb+JJtqpi5MH5x60oufXLoa3n9fv5YWWdFfhJOADTsQdb
+ sgERAulmKSh6Q5CzSXtnc02MJShDgccMPMp7ULVGtXcuRQLwuIV/cs96Uo5L0W+ZJpGl
+ 7/jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=xD+scnBT+0IdTxaCEWT+M7b4WeM+uY6s3ymzr0wpIrU=;
+ b=hSY2WmMgfl/UDsAxaq0gGS7LSLxk2gOnnlT7b2hkZhBrBjYdf+uMNWwYHXWUcC4cNM
+ +NuKCFnb3Fw2dV+Nu7D37WSKSW5wNvemz+Gw974fu0pj8QhQ3LZRnxqOwpM8F49pt1gF
+ 6gfTNW0YnWsUfQZnjiBww0bry3WjvNsi1MPnVqvC5lqo6MyvxLGGakbPuIbQuaI5la3s
+ cDIDgfu51PSyhoFzg0qc+0W1viM0mO4jbzUFt+bOtclRQxoVB1Tdt580uvCKG7kWl48X
+ nYGnPzViRyZmVKVF9VdFsBRngo5ckbOT4FjGaWiFO8Imz+Ue9YKfVR57jcp4Cj/f6Ll0
+ quiA==
+X-Gm-Message-State: AOAM533xU4IQEyKArUn0U3Nl4S37D+FgeOnaqd/V+Zh/HheFew2/ICV8
+ EKT3SVypAIUXKv9YtabL7lcPRbFEVBnw
+X-Google-Smtp-Source: ABdhPJz3j5oyASlGWvT7bl3fJWxHQ5lxymCMwaigmkTyurZ0vcaXcz9a3YEpDp30nvtiqYJJbAG/3JUcDknM
+X-Received: from rananta-virt.c.googlers.com
+ ([fda3:e722:ac3:cc00:7f:e700:c0a8:1bcc])
+ (user=rananta job=sendgmr) by 2002:a17:90a:43a7:: with SMTP id
+ r36mr91295pjg.1.1629312068379; Wed, 18 Aug 2021 11:41:08 -0700 (PDT)
+Date: Wed, 18 Aug 2021 18:40:57 +0000
+Message-Id: <20210818184057.515187-1-rananta@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.33.0.rc1.237.g0d66db33f3-goog
+Subject: KVM: arm64: vgic: Resample HW pending state on deactivation
+From: Raghavendra Rao Ananta <rananta@google.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>
+X-Mailman-Approved-At: Wed, 18 Aug 2021 15:59:47 -0400
+Cc: kvm@vger.kernel.org, Peter Shier <pshier@google.com>,
+ Raghavendra Rao Anata <rananta@google.com>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -75,6 +89,8 @@ Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
+
+From: Marc Zyngier <maz@kernel.org>
 
 When a mapped level interrupt (a timer, for example) is deactivated
 by the guest, the corresponding host interrupt is equally deactivated.
@@ -92,17 +108,15 @@ interrupts are always possible), we can improve the emulation by
 detecting the deactivation-while-pending case and resample the
 interrupt.
 
-Fixes: e40cc57bac79 ("KVM: arm/arm64: vgic: Support level-triggered mapped interrupts")
 Reported-by: Raghavendra Rao Ananta <rananta@google.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
 ---
  arch/arm64/kvm/vgic/vgic-v2.c | 25 ++++++++++++++++++-------
  arch/arm64/kvm/vgic/vgic-v3.c | 25 ++++++++++++++++++-------
  2 files changed, 36 insertions(+), 14 deletions(-)
 
 diff --git a/arch/arm64/kvm/vgic/vgic-v2.c b/arch/arm64/kvm/vgic/vgic-v2.c
-index 2c580204f1dc..3e52ea86a87f 100644
+index 2c580204f1dc9..3e52ea86a87ff 100644
 --- a/arch/arm64/kvm/vgic/vgic-v2.c
 +++ b/arch/arm64/kvm/vgic/vgic-v2.c
 @@ -60,6 +60,7 @@ void vgic_v2_fold_lr_state(struct kvm_vcpu *vcpu)
@@ -159,7 +173,7 @@ index 2c580204f1dc..3e52ea86a87f 100644
  
  			if (resample)
 diff --git a/arch/arm64/kvm/vgic/vgic-v3.c b/arch/arm64/kvm/vgic/vgic-v3.c
-index 66004f61cd83..74f9aefffd5e 100644
+index 66004f61cd83d..74f9aefffd5e0 100644
 --- a/arch/arm64/kvm/vgic/vgic-v3.c
 +++ b/arch/arm64/kvm/vgic/vgic-v3.c
 @@ -46,6 +46,7 @@ void vgic_v3_fold_lr_state(struct kvm_vcpu *vcpu)
@@ -216,7 +230,7 @@ index 66004f61cd83..74f9aefffd5e 100644
  
  			if (resample)
 -- 
-2.30.2
+cgit 1.2.3-1.el7
 
 _______________________________________________
 kvmarm mailing list
