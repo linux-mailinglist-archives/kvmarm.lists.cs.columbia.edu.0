@@ -2,62 +2,69 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 90ABE3F0485
-	for <lists+kvmarm@lfdr.de>; Wed, 18 Aug 2021 15:22:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 693F13F06C2
+	for <lists+kvmarm@lfdr.de>; Wed, 18 Aug 2021 16:32:34 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1C83B4B0E5;
-	Wed, 18 Aug 2021 09:22:09 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D089049E57;
+	Wed, 18 Aug 2021 10:32:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.091
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vYHKdoZMgLfh; Wed, 18 Aug 2021 09:22:09 -0400 (EDT)
+	with ESMTP id YVxfaJQOY1Ta; Wed, 18 Aug 2021 10:32:33 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 708894A524;
-	Wed, 18 Aug 2021 09:22:05 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 431EB4B0E0;
+	Wed, 18 Aug 2021 10:32:30 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C0AA406E0
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 09:22:05 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 24A6E4A523
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 10:32:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id wP5SLT9h8hDc for <kvmarm@lists.cs.columbia.edu>;
- Wed, 18 Aug 2021 09:22:04 -0400 (EDT)
+ with ESMTP id pDkjIAUXNvAM for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 18 Aug 2021 10:32:28 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 12C0240256
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 09:22:04 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 974B560232;
- Wed, 18 Aug 2021 13:22:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1629292923;
- bh=sPj+IO31w+5a8e1Hoa/GlytzFKIw6PQM72kgo1I8pd4=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=jo1gxH3HkFdM8PKOw/vCByec43EbCwMJpYviJkjPOL+xuM8TgJRQdLCBoGOAhhPC3
- l1I23oJKKFzo7ou8pq0FJZuH4Ke4AWT8vIb+EEK6KwRxGJn1r5KuKljdvgnB7mKlre
- ixHdL0qoVpvk2tNty3cWxB59hW+ZSsPdhPWaXfn5/dL5jbTms3jA2NgpR00XrA1CmS
- byEsAzcSeN//PGf28zcvt/fSNCfWbL82UQQweuXEI7zydF7m84eJwvjGZXMD5OGFG2
- T6RGp82aoiUSsl3SXgtJHrIlF0iMYf/tNUdN2RenhG5R3NgfB6IBrAaDYVXhvdz7ov
- 2Il+IiAHRNhqg==
-Date: Wed, 18 Aug 2021 14:21:57 +0100
-From: Will Deacon <will@kernel.org>
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0A88E49FB0
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 10:32:28 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id E4F3460FBF;
+ Wed, 18 Aug 2021 14:32:26 +0000 (UTC)
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1mGMcD-005mEI-0q; Wed, 18 Aug 2021 15:32:25 +0100
+Date: Wed, 18 Aug 2021 15:32:24 +0100
+Message-ID: <87k0kisu13.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
 To: Fuad Tabba <tabba@google.com>
-Subject: Re: [PATCH v4 09/15] KVM: arm64: Add feature register flag definitions
-Message-ID: <20210818132156.GF14107@willie-the-truck>
+Subject: Re: [PATCH v4 03/15] KVM: arm64: MDCR_EL2 is a 64-bit register
+In-Reply-To: <20210817081134.2918285-4-tabba@google.com>
 References: <20210817081134.2918285-1-tabba@google.com>
- <20210817081134.2918285-10-tabba@google.com>
-MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20210817081134.2918285-10-tabba@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: kernel-team@android.com, kvm@vger.kernel.org, maz@kernel.org,
- pbonzini@redhat.com, kvmarm@lists.cs.columbia.edu,
+ <20210817081134.2918285-4-tabba@google.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: tabba@google.com, kvmarm@lists.cs.columbia.edu,
+ will@kernel.org, james.morse@arm.com, alexandru.elisei@arm.com,
+ suzuki.poulose@arm.com, mark.rutland@arm.com, christoffer.dall@arm.com,
+ pbonzini@redhat.com, drjones@redhat.com, oupton@google.com, qperret@google.com,
+ kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com, kvm@vger.kernel.org, pbonzini@redhat.com,
+ will@kernel.org, kvmarm@lists.cs.columbia.edu,
  linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -75,27 +82,96 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, Aug 17, 2021 at 09:11:28AM +0100, Fuad Tabba wrote:
-> Add feature register flag definitions to clarify which features
-> might be supported.
+On Tue, 17 Aug 2021 09:11:22 +0100,
+Fuad Tabba <tabba@google.com> wrote:
 > 
-> Consolidate the various ID_AA64PFR0_ELx flags for all ELs.
+> Fix the places in KVM that treat MDCR_EL2 as a 32-bit register.
+> More recent features (e.g., FEAT_SPEv1p2) use bits above 31.
 > 
 > No functional change intended.
 > 
+> Acked-by: Will Deacon <will@kernel.org>
 > Signed-off-by: Fuad Tabba <tabba@google.com>
 > ---
->  arch/arm64/include/asm/cpufeature.h |  4 ++--
->  arch/arm64/include/asm/sysreg.h     | 12 ++++++++----
->  arch/arm64/kernel/cpufeature.c      |  8 ++++----
->  3 files changed, 14 insertions(+), 10 deletions(-)
+>  arch/arm64/include/asm/kvm_arm.h   | 20 ++++++++++----------
+>  arch/arm64/include/asm/kvm_asm.h   |  2 +-
+>  arch/arm64/include/asm/kvm_host.h  |  2 +-
+>  arch/arm64/kvm/debug.c             |  2 +-
+>  arch/arm64/kvm/hyp/nvhe/debug-sr.c |  2 +-
+>  arch/arm64/kvm/hyp/vhe/debug-sr.c  |  2 +-
+>  6 files changed, 15 insertions(+), 15 deletions(-)
+> 
+> diff --git a/arch/arm64/include/asm/kvm_arm.h b/arch/arm64/include/asm/kvm_arm.h
+> index d436831dd706..6a523ec83415 100644
+> --- a/arch/arm64/include/asm/kvm_arm.h
+> +++ b/arch/arm64/include/asm/kvm_arm.h
+> @@ -281,18 +281,18 @@
+>  /* Hyp Debug Configuration Register bits */
+>  #define MDCR_EL2_E2TB_MASK	(UL(0x3))
+>  #define MDCR_EL2_E2TB_SHIFT	(UL(24))
+> -#define MDCR_EL2_TTRF		(1 << 19)
+> -#define MDCR_EL2_TPMS		(1 << 14)
+> +#define MDCR_EL2_TTRF		(UL(1) << 19)
+> +#define MDCR_EL2_TPMS		(UL(1) << 14)
+>  #define MDCR_EL2_E2PB_MASK	(UL(0x3))
+>  #define MDCR_EL2_E2PB_SHIFT	(UL(12))
+> -#define MDCR_EL2_TDRA		(1 << 11)
+> -#define MDCR_EL2_TDOSA		(1 << 10)
+> -#define MDCR_EL2_TDA		(1 << 9)
+> -#define MDCR_EL2_TDE		(1 << 8)
+> -#define MDCR_EL2_HPME		(1 << 7)
+> -#define MDCR_EL2_TPM		(1 << 6)
+> -#define MDCR_EL2_TPMCR		(1 << 5)
+> -#define MDCR_EL2_HPMN_MASK	(0x1F)
+> +#define MDCR_EL2_TDRA		(UL(1) << 11)
+> +#define MDCR_EL2_TDOSA		(UL(1) << 10)
+> +#define MDCR_EL2_TDA		(UL(1) << 9)
+> +#define MDCR_EL2_TDE		(UL(1) << 8)
+> +#define MDCR_EL2_HPME		(UL(1) << 7)
+> +#define MDCR_EL2_TPM		(UL(1) << 6)
+> +#define MDCR_EL2_TPMCR		(UL(1) << 5)
+> +#define MDCR_EL2_HPMN_MASK	(UL(0x1F))
+>  
+>  /* For compatibility with fault code shared with 32-bit */
+>  #define FSC_FAULT	ESR_ELx_FSC_FAULT
+> diff --git a/arch/arm64/include/asm/kvm_asm.h b/arch/arm64/include/asm/kvm_asm.h
+> index 9f0bf2109be7..63ead9060ab5 100644
+> --- a/arch/arm64/include/asm/kvm_asm.h
+> +++ b/arch/arm64/include/asm/kvm_asm.h
+> @@ -210,7 +210,7 @@ extern u64 __vgic_v3_read_vmcr(void);
+>  extern void __vgic_v3_write_vmcr(u32 vmcr);
+>  extern void __vgic_v3_init_lrs(void);
+>  
+> -extern u32 __kvm_get_mdcr_el2(void);
+> +extern u64 __kvm_get_mdcr_el2(void);
+>  
+>  #define __KVM_EXTABLE(from, to)						\
+>  	"	.pushsection	__kvm_ex_table, \"a\"\n"		\
+> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+> index 347781f99b6a..4d2d974c1522 100644
+> --- a/arch/arm64/include/asm/kvm_host.h
+> +++ b/arch/arm64/include/asm/kvm_host.h
+> @@ -289,7 +289,7 @@ struct kvm_vcpu_arch {
+>  
+>  	/* HYP configuration */
+>  	u64 hcr_el2;
+> -	u32 mdcr_el2;
+> +	u64 mdcr_el2;
 
-Thanks, looks better now:
+This breaks an existing trace in debug.c::kvm_arm_setup_mdcr_el2():
 
-Acked-by: Will Deacon <will@kernel.org>
+	trace_kvm_arm_set_dreg32("MDCR_EL2", vcpu->arch.mdcr_el2);
 
-Will
+which expects a 32bit value. I guess we could add an equivalent 64bit
+version, or silently upgrade the tracepoint to take a 64bit value.
+None of them are good solutions, but hey, something has to give...
 
+Thanks,
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
