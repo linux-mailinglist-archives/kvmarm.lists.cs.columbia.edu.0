@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B7D43F0C45
-	for <lists+kvmarm@lfdr.de>; Wed, 18 Aug 2021 21:59:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E5403F0C46
+	for <lists+kvmarm@lfdr.de>; Wed, 18 Aug 2021 22:00:01 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 145234B0CD;
-	Wed, 18 Aug 2021 15:59:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0AD8A4B099;
+	Wed, 18 Aug 2021 16:00:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,61 +14,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yERpfOFOzbjh; Wed, 18 Aug 2021 15:59:56 -0400 (EDT)
+	with ESMTP id 7k18qZwLxnAC; Wed, 18 Aug 2021 15:59:57 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1748E4B0EF;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 32A024B0F3;
 	Wed, 18 Aug 2021 15:59:49 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id F19A349E57
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 14:43:17 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4941B400D5
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 14:43:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 5Kjovvc2gKvA for <kvmarm@lists.cs.columbia.edu>;
- Wed, 18 Aug 2021 14:43:16 -0400 (EDT)
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com
- [209.85.219.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id DEBEC4099E
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 14:43:16 -0400 (EDT)
-Received: by mail-yb1-f201.google.com with SMTP id
- j9-20020a2581490000b02905897d81c63fso3851021ybm.8
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 11:43:16 -0700 (PDT)
+ with ESMTP id 7D2ztX7LmZoW for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 18 Aug 2021 14:43:20 -0400 (EDT)
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com
+ [209.85.210.201])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4256440162
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 14:43:20 -0400 (EDT)
+Received: by mail-pf1-f201.google.com with SMTP id
+ o3-20020a625a030000b02903c9ba4d8a70so1780767pfb.12
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 Aug 2021 11:43:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:message-id:mime-version:subject:from:to:cc;
- bh=l9Ep8m3SAn8ZPERlomDWGpbLnUSGIc8n7kJ/7XvQr3I=;
- b=oIzGtBG58c+wvTDLuFazeHcg/gPwfiCk99Ee97zl4k8+L1dKwwmXs34v0QUT+bnKvT
- zy2wQkhJznKa9FoL9aYZvaWbFcmaNuQ5HC7MaQIo23e5A65KMd5QY9coe3o8Cz+JX2Ho
- M4liQQY7ZD2n0JX+hAYWOcsYpcRw2GjnmE5vvhh4PuKMCSZjcvAR2RROiVsvHax1lE4k
- MLEjVq9Gc7d//PDBCATacOIlXbDaZkjxQbM6IRbd57wJS36WL/Hma0q8f7uJ+i9VgVs8
- Aa6/Rq3XxQ3+WcbKhYrsxs6dcXxbPlqk2kbX+K1Bj7/unA4RNBS4ewt+qC1CPtFoKXdc
- TMTg==
+ h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+ :cc; bh=sybk7YcBeZufJ2AiOux9y0QLju0ZjmiMoQ+rDeqF05I=;
+ b=KyWRMVB2YjHXSj3SrlXBQ1vUcQjS4upaB1ecKlUekeQMP3aw4uhnG6uXijlPT/31ui
+ Z28ax39JzZAx1Z7J8FJei5MIVv98GH6r7vIQCEG3PfaFCvB4WEuqVRxab5ga+fSTQmeY
+ j5QUx4OUcKTj4AdUaQMpWPvrugwRMTrM64LTE1De5ouxE5IHLW5fPrrULhaBEHdcoHGo
+ hmbDITScovX72Zyu4nY8lVbvpgAGK8k1T0EtpyvDMXvLOlNKXz+0BX/BgPjyaT1zNHnT
+ rqsSfheHhwSn27ZcOd/7GIFehJ32fm81DLLxjUIGrGL2qdhydKSCw30/2SGJncJylHge
+ 2juw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
- bh=l9Ep8m3SAn8ZPERlomDWGpbLnUSGIc8n7kJ/7XvQr3I=;
- b=ppRTNzjap2Hg8KFKG/oc1lH+/oV8LPqVDD7ul7NJ2I4jIFsNuGZtJKTooV4UR3Z/Ug
- f/qWjBqu7lospfVUEkBpgFfuCgPPo8kZg4rPgeOSd8DBAsxXwTZ8CBqkSuqPnnzgUkZi
- 0F2mF/uEyXTMltedtgofUe8GEdYm0iWH1jeNeHMoj0oyNMXAXXxsV0LU73mMSPQYwGEW
- BI+hxM75Z8G21EvdmzErEPgIsiul+K77rzzBCm4ozptdfStMtEgAGSz8IrlN8LlGGG0u
- pvKGtJB4Xo8gRytPxVHwa7vhbgrI+y4Xs+ZyTs/sOvEdn9uBhTj1nxUwsGD5IcoRXlNT
- s40g==
-X-Gm-Message-State: AOAM530143lRb6H0l6Vo8RJIz9MzVbOlQbuGqVppQx2fbExBOESjVas0
- Pm3i91y8nGXZ4X9yIEYLyS5Sj9rKYiuv
-X-Google-Smtp-Source: ABdhPJzL1rSeACANcoAXaGAe6gCJ9waFOyb6BJmgH5pkNGv5e5te1StvfFWXP1m0l6m9UcT33XY90MOeQG06
+ h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+ :references:subject:from:to:cc;
+ bh=sybk7YcBeZufJ2AiOux9y0QLju0ZjmiMoQ+rDeqF05I=;
+ b=U1KG2rSFJG0X3mcyzaSaGXdC50uAOcJgB5dY3u9T3W9mshsXHbfz39UcIfnkOMOfg0
+ TZLYnykL9JANIYuZCNs2Ojz0xt/Mc4Bh/lzgyOnBmcpIXZkovvPiugoGGb0ZQr6O8zmm
+ rw167eqO+buYsl9/P1Zgms0A6ybXITRraPSRQ7A4DxNjNJsY9bCS2LbHxDVDKZvbLYYy
+ GK9ZHavrdB7AKHLrMKEkGJCk39s4GFFkbwmql/0/Z+cougnz4tvtBiXAWGna8eLlK4nj
+ dd5YIarBbLVwtE9IeqHS91HBjrHP91M71uvN/OHM3U1Lh1zT+2vTup8LGAKlPZdVMsi1
+ ddAw==
+X-Gm-Message-State: AOAM532/Va1ynAN+LKir96wTN4JG0SUmxEoZzUXoYr90LszhTyTdRNHU
+ Ku/5PHZbHZRuiuzc3fi8EecMKzZsYip2
+X-Google-Smtp-Source: ABdhPJwpulpudlfIiB7CO8SfhZeZ9mfxxExEhDLOhAm5IzLeR7emCgSi+C7ROeGvaAWlJ6EMz8iciBV4Xt6V
 X-Received: from rananta-virt.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:1bcc])
- (user=rananta job=sendgmr) by 2002:a05:6902:547:: with SMTP id
- z7mr4683235ybs.303.1629312196319; Wed, 18 Aug 2021 11:43:16 -0700 (PDT)
-Date: Wed, 18 Aug 2021 18:43:01 +0000
-Message-Id: <20210818184311.517295-1-rananta@google.com>
+ (user=rananta job=sendgmr) by 2002:a17:90b:396:: with SMTP id
+ ga22mr92005pjb.0.1629312198788; Wed, 18 Aug 2021 11:43:18 -0700 (PDT)
+Date: Wed, 18 Aug 2021 18:43:02 +0000
+In-Reply-To: <20210818184311.517295-1-rananta@google.com>
+Message-Id: <20210818184311.517295-2-rananta@google.com>
 Mime-Version: 1.0
+References: <20210818184311.517295-1-rananta@google.com>
 X-Mailer: git-send-email 2.33.0.rc1.237.g0d66db33f3-goog
-Subject: [PATCH v2 00/10] KVM: arm64: selftests: Introduce arch_timer selftest
+Subject: [PATCH v2 01/10] KVM: arm64: selftests: Add MMIO readl/writel support
 From: Raghavendra Rao Ananta <rananta@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>
 X-Mailman-Approved-At: Wed, 18 Aug 2021 15:59:47 -0400
@@ -90,77 +93,72 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hello,
+Define the readl() and writel() functions for the guests to
+access (4-byte) the MMIO region.
 
-The patch series adds a KVM selftest to validate the behavior of
-ARM's generic timer (patch-9). The test programs the timer IRQs
-periodically, and for each interrupt, it validates the behaviour
-against the architecture specifications. The test further provides
-a command-line interface to configure the number of vCPUs, the
-period of the timer, and the number of iterations that the test
-has to run for.
+The routines, and their dependents, are inspired from the kernel's
+arch/arm64/include/asm/io.h and arch/arm64/include/asm/barrier.h.
 
-Since the test heavily depends on interrupts, the patch series also
-adds a basic support for ARM Generic Interrupt Controller v3 (GICv3)
-to the KVM selftest framework (patch-8).
+Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
+---
+ .../selftests/kvm/include/aarch64/processor.h | 45 ++++++++++++++++++-
+ 1 file changed, 44 insertions(+), 1 deletion(-)
 
-Furthermore, additional processor utilities such as accessing the MMIO
-(via readl/writel), read/write to assembler unsupported registers,
-basic delay generation, enable/disable local IRQs, and so on, are also
-introduced that the test/GICv3 takes advantage of (patches 1 through 7).
-
-The patch series, specifically the library support, is derived from the
-kvm-unit-tests and the kernel itself.
-
-Regards,
-Raghavendra
-
-v1 -> v2:
-
-Addressed comments from Zenghui in include/aarch64/arch_timer.h:
-- Correct the header description
-- Remove unnecessary inclusion of linux/sizes.h
-- Re-arrange CTL_ defines in ascending order
-- Remove inappropriate 'return' from timer_set_* functions, which
-  returns 'void'.
-
-Raghavendra Rao Ananta (10):
-  KVM: arm64: selftests: Add MMIO readl/writel support
-  KVM: arm64: selftests: Add write_sysreg_s and read_sysreg_s
-  KVM: arm64: selftests: Add support for cpu_relax
-  KVM: arm64: selftests: Add basic support for arch_timers
-  KVM: arm64: selftests: Add basic support to generate delays
-  KVM: arm64: selftests: Add support to disable and enable local IRQs
-  KVM: arm64: selftests: Add support to get the vcpuid from MPIDR_EL1
-  KVM: arm64: selftests: Add light-weight spinlock support
-  KVM: arm64: selftests: Add basic GICv3 support
-  KVM: arm64: selftests: Add arch_timer test
-
- tools/testing/selftests/kvm/.gitignore        |   1 +
- tools/testing/selftests/kvm/Makefile          |   3 +-
- .../selftests/kvm/aarch64/arch_timer.c        | 382 ++++++++++++++++++
- .../kvm/include/aarch64/arch_timer.h          | 142 +++++++
- .../selftests/kvm/include/aarch64/delay.h     |  25 ++
- .../selftests/kvm/include/aarch64/gic.h       |  21 +
- .../selftests/kvm/include/aarch64/processor.h | 140 ++++++-
- .../selftests/kvm/include/aarch64/spinlock.h  |  13 +
- tools/testing/selftests/kvm/lib/aarch64/gic.c |  93 +++++
- .../selftests/kvm/lib/aarch64/gic_private.h   |  21 +
- .../selftests/kvm/lib/aarch64/gic_v3.c        | 240 +++++++++++
- .../selftests/kvm/lib/aarch64/gic_v3.h        |  70 ++++
- .../selftests/kvm/lib/aarch64/spinlock.c      |  27 ++
- 13 files changed, 1176 insertions(+), 2 deletions(-)
- create mode 100644 tools/testing/selftests/kvm/aarch64/arch_timer.c
- create mode 100644 tools/testing/selftests/kvm/include/aarch64/arch_timer.h
- create mode 100644 tools/testing/selftests/kvm/include/aarch64/delay.h
- create mode 100644 tools/testing/selftests/kvm/include/aarch64/gic.h
- create mode 100644 tools/testing/selftests/kvm/include/aarch64/spinlock.h
- create mode 100644 tools/testing/selftests/kvm/lib/aarch64/gic.c
- create mode 100644 tools/testing/selftests/kvm/lib/aarch64/gic_private.h
- create mode 100644 tools/testing/selftests/kvm/lib/aarch64/gic_v3.c
- create mode 100644 tools/testing/selftests/kvm/lib/aarch64/gic_v3.h
- create mode 100644 tools/testing/selftests/kvm/lib/aarch64/spinlock.c
-
+diff --git a/tools/testing/selftests/kvm/include/aarch64/processor.h b/tools/testing/selftests/kvm/include/aarch64/processor.h
+index 27dc5c2e56b9..14f68bf55036 100644
+--- a/tools/testing/selftests/kvm/include/aarch64/processor.h
++++ b/tools/testing/selftests/kvm/include/aarch64/processor.h
+@@ -127,6 +127,49 @@ void vm_install_sync_handler(struct kvm_vm *vm,
+ 	val;								  \
+ })
+ 
+-#define isb()	asm volatile("isb" : : : "memory")
++#define isb()		asm volatile("isb" : : : "memory")
++#define dsb(opt)	asm volatile("dsb " #opt : : : "memory")
++#define dmb(opt)	asm volatile("dmb " #opt : : : "memory")
++
++#define dma_wmb()	dmb(oshst)
++#define __iowmb()	dma_wmb()
++
++#define dma_rmb()	dmb(oshld)
++
++#define __iormb(v)							\
++({									\
++	unsigned long tmp;						\
++									\
++	dma_rmb();							\
++									\
++	/*								\
++	 * Courtesy of arch/arm64/include/asm/io.h:			\
++	 * Create a dummy control dependency from the IO read to any	\
++	 * later instructions. This ensures that a subsequent call	\
++	 * to udelay() will be ordered due to the ISB in __delay().	\
++	 */								\
++	asm volatile("eor	%0, %1, %1\n"				\
++		     "cbnz	%0, ."					\
++		     : "=r" (tmp) : "r" ((unsigned long)(v))		\
++		     : "memory");					\
++})
++
++static __always_inline void __raw_writel(u32 val, volatile void *addr)
++{
++	asm volatile("str %w0, [%1]" : : "rZ" (val), "r" (addr));
++}
++
++static __always_inline u32 __raw_readl(const volatile void *addr)
++{
++	u32 val;
++	asm volatile("ldr %w0, [%1]" : "=r" (val) : "r" (addr));
++	return val;
++}
++
++#define writel_relaxed(v,c)	((void)__raw_writel((__force u32)cpu_to_le32(v),(c)))
++#define readl_relaxed(c)	({ u32 __r = le32_to_cpu((__force __le32)__raw_readl(c)); __r; })
++
++#define writel(v,c)		({ __iowmb(); writel_relaxed((v),(c));})
++#define readl(c)		({ u32 __v = readl_relaxed(c); __iormb(__v); __v; })
+ 
+ #endif /* SELFTEST_KVM_PROCESSOR_H */
 -- 
 2.33.0.rc1.237.g0d66db33f3-goog
 
