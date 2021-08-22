@@ -2,63 +2,75 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C9F373F4044
-	for <lists+kvmarm@lfdr.de>; Sun, 22 Aug 2021 17:25:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C9753F415A
+	for <lists+kvmarm@lfdr.de>; Sun, 22 Aug 2021 21:56:35 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 662144B1F0;
-	Sun, 22 Aug 2021 11:25:44 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 66ABE4B1F1;
+	Sun, 22 Aug 2021 15:56:34 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id s+Kosly1LdVT; Sun, 22 Aug 2021 11:25:40 -0400 (EDT)
+	with ESMTP id MClTeacZXN35; Sun, 22 Aug 2021 15:56:34 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EDADA4B1FC;
-	Sun, 22 Aug 2021 11:25:38 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6624A4B229;
+	Sun, 22 Aug 2021 15:56:30 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 793CB4B1F7
- for <kvmarm@lists.cs.columbia.edu>; Sun, 22 Aug 2021 11:25:37 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5A5D74B200
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 22 Aug 2021 15:56:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Ihq-h+sd2NUV for <kvmarm@lists.cs.columbia.edu>;
- Sun, 22 Aug 2021 11:25:36 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7FF584B1B6
- for <kvmarm@lists.cs.columbia.edu>; Sun, 22 Aug 2021 11:25:36 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id B399561261;
- Sun, 22 Aug 2021 15:25:35 +0000 (UTC)
-Received: from sofa.misterjones.org ([185.219.108.64] helo=hot-poop.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1mHpLq-006VTo-3A; Sun, 22 Aug 2021 16:25:34 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v2 3/3] kvmtool: arm64: Configure VM with the minimal required
- IPA space
-Date: Sun, 22 Aug 2021 16:25:26 +0100
-Message-Id: <20210822152526.1291918-4-maz@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210822152526.1291918-1-maz@kernel.org>
-References: <20210822152526.1291918-1-maz@kernel.org>
+ with ESMTP id GdWkGKMb0pua for <kvmarm@lists.cs.columbia.edu>;
+ Sun, 22 Aug 2021 15:56:26 -0400 (EDT)
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com
+ [209.85.167.42])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 887444B1F1
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 22 Aug 2021 15:56:26 -0400 (EDT)
+Received: by mail-lf1-f42.google.com with SMTP id o10so33276782lfr.11
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 22 Aug 2021 12:56:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=8EvprDUUqsYUgGbr+CUCRWV+3LEbs3hnD+fZ87zhZtk=;
+ b=Yg0NsfcTNyrDqZJOESZ0zS4B8ms6dqrIZBjjTU/jkhkIkNh33wD67YtPQupdsGPWRC
+ UtIyQRyUVmLF/ZYwdTmHX+3E4xAPRSJdEAKVb6qPz3JOCjAn98VJ01VnUwL9GUWp+9ND
+ fJH8BYww140lSRwIA/ijPyisQhN9ljGkwQpTHvLUAPdQzROE7nr/Asz92pHS1a+j3/FK
+ ADGlb4t1KG0ln+eGIvvG+TiZCWSCXaE5x8tGU5ippqNyKMvYC3IHYYLlI3C3xsdcRd2+
+ f7qPBX8sc4Dn9QyLu4CGjHJAeZHMVIV9rGq8tr0u0w0lHaKAGDW8tQ9EWFCl/myJYeXp
+ j5xA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=8EvprDUUqsYUgGbr+CUCRWV+3LEbs3hnD+fZ87zhZtk=;
+ b=saPSPzG0yD6Hucv2vtThAsYb/O+ZYwBw/s+v+zMzyeQ7ssqaZtmWWfkyImebWKX0ce
+ ln/FAa7YrpQAAr0akMXr8cBBDJmhHcdYyKrJhT5kJj4zBJUdq+vx57LbUgFgvcjB7g3Q
+ Qs7ZFynm7Xc7XuZLFOt8t0qrCVCxGCRRICf60jhvxJ7SpLTroxlD4X3C5Q2+n2a1jP+k
+ erAlmqWNJk0moFftSesEA+xiD3a5kcAZp48/s3MszMb2T+OB/G4BENeRr0u5qRamBNeY
+ lFfSMS48tGMRhNzMpjapIkolImoWS3kd7ujQS+N8YaLxo7/sEReXpSNmJuv9x8EXktXq
+ 2gEQ==
+X-Gm-Message-State: AOAM533JbAObV54qgWogCaXZh36aOo3+TCENDr0s7Oj5/ohi2+BgsHD6
+ k99MQY5paV2igye3IaP9prve9Eiiun7PwjVDmSw/bw==
+X-Google-Smtp-Source: ABdhPJxK2ZKevjpY+Lj+EO4GHgYci/sC4siRXi3L+At0+wMEzqARiWLLWTshUd5QuzhAUgR2/ZulCBYsQ1zifvUPf1M=
+X-Received: by 2002:a19:f718:: with SMTP id z24mr5922854lfe.57.1629662184795; 
+ Sun, 22 Aug 2021 12:56:24 -0700 (PDT)
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, andre.przywara@arm.com,
- alexandru.elisei@arm.com, will@kernel.org, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: Andre Przywara <andre.przywara@arm.com>, kernel-team@android.com,
- Will Deacon <will@kernel.org>
+References: <20210819223640.3564975-1-oupton@google.com>
+In-Reply-To: <20210819223640.3564975-1-oupton@google.com>
+From: Oliver Upton <oupton@google.com>
+Date: Sun, 22 Aug 2021 12:56:13 -0700
+Message-ID: <CAOQ_QsgaACbcW276TAqrmq2E5ne-C2JiEDVGjVXg9-WRds8ZQA@mail.gmail.com>
+Subject: Re: [PATCH 0/6] KVM: arm64: Implement PSCI SYSTEM_SUSPEND support
+To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
+Cc: Marc Zyngier <maz@kernel.org>, Peter Shier <pshier@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -75,56 +87,85 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-There is some value in keeping the IPA space small, as it reduces
-the size of the stage-2 page tables.
+Marc,
 
-Let's compute the required space at VM creation time, and inform
-the kernel of our requirements.
+On Thu, Aug 19, 2021 at 3:36 PM Oliver Upton <oupton@google.com> wrote:
+>
+> Certain VMMs/operators may wish to give their guests the ability to
+> initiate a system suspend that could result in the VM being saved to
+> persistent storage to be resumed at a later time. The PSCI v1.0
+> specification describes an SMC, SYSTEM_SUSPEND, that allows a kernel to
+> request a system suspend. This call is optional for v1.0, and KVM
+> elected to not support the call in its v1.0 implementation.
+>
+> This series adds support for the SYSTEM_SUSPEND PSCI call to KVM/arm64.
+> Since this is a system-scoped event, KVM cannot quiesce the VM on its
+> own. We add a new system exit type in this series to clue in userspace
+> that a suspend was requested. Per the KVM_EXIT_SYSTEM_EVENT ABI, a VMM
+> that doesn't care about this event can simply resume the guest without
+> issue (we set up the calling vCPU to come out of reset correctly on next
+> KVM_RUN).
+>
+> Patch 1 is unrelated, and is a fix for "KVM: arm64: Enforce reserved
+> bits for PSCI target affinities" on the kvmarm/next branch. Nothing
+> particularly hairy, just an unused param.
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arm/aarch64/kvm.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+Title line may not have been clear on this series, Patch 1 is a fix
+for the PSCI CPU_ON series that's in kvmarm/next to suppress a
+compiler warning.
 
-diff --git a/arm/aarch64/kvm.c b/arm/aarch64/kvm.c
-index d03a27f2..4e66a22e 100644
---- a/arm/aarch64/kvm.c
-+++ b/arm/aarch64/kvm.c
-@@ -3,6 +3,7 @@
- #include <asm/image.h>
- 
- #include <linux/byteorder.h>
-+#include <kvm/util.h>
- 
- /*
-  * Return the TEXT_OFFSET value that the guest kernel expects. Note
-@@ -59,5 +60,22 @@ int kvm__arch_get_ipa_limit(struct kvm *kvm)
- 
- int kvm__get_vm_type(struct kvm *kvm)
- {
--	return KVM_VM_TYPE_ARM_IPA_SIZE(kvm__arch_get_ipa_limit(kvm));
-+	unsigned int ipa_bits, max_ipa_bits;
-+	unsigned long max_ipa;
-+
-+	/* If we're running on an old kernel, use 0 as the VM type */
-+	max_ipa_bits = kvm__arch_get_ipa_limit(kvm);
-+	if (!max_ipa_bits)
-+		return 0;
-+
-+	/* Otherwise, compute the minimal required IPA size */
-+	max_ipa = ARM_MEMORY_AREA + kvm->cfg.ram_size - 1;
-+	ipa_bits = max(32, fls_long(max_ipa));
-+	pr_debug("max_ipa %lx ipa_bits %d max_ipa_bits %d",
-+		 max_ipa, ipa_bits, max_ipa_bits);
-+
-+	if (ipa_bits > max_ipa_bits)
-+		die("Memory too large for this system (needs %d bits, %d available)", ipa_bits, max_ipa_bits);
-+
-+	return KVM_VM_TYPE_ARM_IPA_SIZE(ipa_bits);
- }
--- 
-2.30.2
+> Patch 2 simplifies the function to check if KVM allows a particular PSCI
+> function. We can generally disallow any PSCI function that sets the
+> SMC64 bit in the PSCI function ID.
+>
+> Patch 3 wraps up the PSCI reset logic used for CPU_ON, which will be
+> needed later to queue up a reset on the vCPU that requested the system
+> suspend.
+>
+> Patch 4 brings in the new UAPI and PSCI call, guarded behind a VM
+> capability for backwards compatibility.
+>
+> Patch 5 is indirectly related to this series, and avoids compiler
+> reordering on PSCI calls in the selftest introduced by "selftests: KVM:
+> Introduce psci_cpu_on_test".
 
+This too is a fix for the PSCI CPU_ON series. Just wanted to raise it
+to your attention beyond the new feature I'm working on here.
+
+--
+Thanks,
+Oliver
+
+> Finally, patch 6 extends the PSCI selftest to verify the
+> SYSTEM_SUSPEND PSCI call behaves as intended.
+>
+> These patches apply cleanly to kvmarm/next at the following commit:
+>
+> f2267b87ecd5 ("Merge branch kvm-arm64/misc-5.15 into kvmarm-master/next")
+>
+> The series is intentionally based on kvmarm/next for the sake of fixing
+> patches only present there in [1/6] and [5/6]. Tested on QEMU (ick)
+> since my Mt. Jade box is out to lunch at the moment and for some unknown
+> reason the toolchain on my work computer doesn't play nice with the FVP.
+>
+> Oliver Upton (6):
+>   KVM: arm64: Drop unused vcpu param to kvm_psci_valid_affinity()
+>   KVM: arm64: Clean up SMC64 PSCI filtering for AArch32 guests
+>   KVM: arm64: Encapsulate reset request logic in a helper function
+>   KVM: arm64: Add support for SYSTEM_SUSPEND PSCI call
+>   selftests: KVM: Promote PSCI hypercalls to asm volatile
+>   selftests: KVM: Test SYSTEM_SUSPEND PSCI call
+>
+>  arch/arm64/include/asm/kvm_host.h             |   3 +
+>  arch/arm64/kvm/arm.c                          |   5 +
+>  arch/arm64/kvm/psci.c                         | 134 +++++++++++++-----
+>  include/uapi/linux/kvm.h                      |   2 +
+>  .../selftests/kvm/aarch64/psci_cpu_on_test.c  | 126 +++++++++++-----
+>  5 files changed, 202 insertions(+), 68 deletions(-)
+>
+> --
+> 2.33.0.rc2.250.ged5fa647cd-goog
+>
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
