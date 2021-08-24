@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B9BF83F61C7
-	for <lists+kvmarm@lfdr.de>; Tue, 24 Aug 2021 17:36:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31F343F61E9
+	for <lists+kvmarm@lfdr.de>; Tue, 24 Aug 2021 17:44:26 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3D1334B1C7;
-	Tue, 24 Aug 2021 11:36:54 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A81754B210;
+	Tue, 24 Aug 2021 11:44:25 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,41 +15,37 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id NFtE8zrq9ghL; Tue, 24 Aug 2021 11:36:54 -0400 (EDT)
+	with ESMTP id 9VSTaKLTMA23; Tue, 24 Aug 2021 11:44:25 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 130E04B1DA;
-	Tue, 24 Aug 2021 11:36:50 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B885F4B1F5;
+	Tue, 24 Aug 2021 11:44:20 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3F71E4B15E
- for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Aug 2021 11:36:48 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 29BD04B1E7
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Aug 2021 11:44:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 28iCJRx38wts for <kvmarm@lists.cs.columbia.edu>;
- Tue, 24 Aug 2021 11:36:46 -0400 (EDT)
+ with ESMTP id 6sD+E4sVrI81 for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 24 Aug 2021 11:44:14 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E53C44B13C
- for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Aug 2021 11:36:46 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3A6274B1DB
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 24 Aug 2021 11:44:14 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5CBC631B;
- Tue, 24 Aug 2021 08:36:46 -0700 (PDT)
-Received: from [192.168.0.110] (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4B10A3F766;
- Tue, 24 Aug 2021 08:36:45 -0700 (PDT)
-Subject: Re: [PATCH] arm64: Do not trap PMSNEVFR_EL1
-To: Mark Brown <broonie@kernel.org>
-References: <20210824132459.562923-1-alexandru.elisei@arm.com>
- <20210824151015.GB4393@sirena.org.uk>
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A040231B;
+ Tue, 24 Aug 2021 08:44:13 -0700 (PDT)
+Received: from monolith.cable.virginm.net (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 227D53F766;
+ Tue, 24 Aug 2021 08:44:11 -0700 (PDT)
 From: Alexandru Elisei <alexandru.elisei@arm.com>
-Message-ID: <95ae126a-8fc2-1db1-a1fd-d6811644f507@arm.com>
-Date: Tue, 24 Aug 2021 16:30:58 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+To: catalin.marinas@arm.com, will@kernel.org, maz@kernel.org,
+ james.morse@arm.com, suzuki.poulose@arm.com,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ broonie@kernel.org
+Subject: [PATCH v2] arm64: Do not trap PMSNEVFR_EL1
+Date: Tue, 24 Aug 2021 16:45:23 +0100
+Message-Id: <20210824154523.906270-1-alexandru.elisei@arm.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-In-Reply-To: <20210824151015.GB4393@sirena.org.uk>
-Content-Language: en-US
-Cc: maz@kernel.org, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -61,55 +57,60 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="windows-1252"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Mark,
+Commit 31c00d2aeaa2 ("arm64: Disable fine grained traps on boot") zeroed
+the fine grained trap registers to prevent unwanted register traps from
+occuring. However, for the PMSNEVFR_EL1 register, the corresponding
+HDFG{R,W}TR_EL2.nPMSNEVFR_EL1 fields must be 1 to disable trapping. Set
+both fields to 1 if FEAT_SPEv1p2 is detected to disable read and write
+traps.
 
-On 8/24/21 4:10 PM, Mark Brown wrote:
-> On Tue, Aug 24, 2021 at 02:24:59PM +0100, Alexandru Elisei wrote:
->
->> Commit 31c00d2aeaa2 ("arm64: Disable fine grained traps on boot") zeroed
->> the fine grained trap registers to prevent unwanted register traps from
->> occuring. However, for the PMSNEVFR_EL1 register, the corresponding
->> HDFGRTR_EL2.nPMSNEVFR_EL1 field must be 1 to disable trapping. Set the
->> field to 1 if FEAT_SPEv1p2 is detected.
-> Oh, that's a shame :/  I wonder why this feature is different to the
-> others, I just had a quick check and didn't see any other issues but...
->
->> Based on v5.14-rc7. Also, we could write 1 << 62 to HDFGRTR_EL2 uncondit=
-ionally
->> since the field is RAZ/WI if !FEAT_SPEv1p2. I don't have a strong prefer=
-ence for
->> either approaches, but I chose this implementation because it's clearer =
-(even
->> though it's more verbose and it's one extra trap on NV).
-> Yes, the explicit feature check is both clearer and more conservative -
-> it's unlikely to have a practical impact but =
+Fixes: 31c00d2aeaa2 ("arm64: Disable fine grained traps on boot")
+Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
+---
+Based on v5.14-rc7. Tested on the model, using boot-wrapper built from
+commit 5cd6238ec4ef ("aarch32: fix .globl replacement"). Without this
+patch, in NVHE mode, the model freezes when I try to access PMSNEVFR_EL1.
+With this patch, the model doesn't hang anymore.
 
->
->> At this point, I am inclined to think it's a model bug because reading w=
-orks,
->> but writing causes a hang and that looks very suspicious to me. I'm goin=
-g to
->> open a model bug internally and see what comes of it.
-> ...are you sure this isn't that the same issue also exists with the
-> equivalent field HDFGWTR_EL2 - glancing at the XML it appears to have
-> the same issue?  One of the fine grained aspects of fine grained traps
-> is that there's separate read and write traps!
+Changes since v1:
 
-Yes, you are right, when I read the MSR PMSNEVFR_EL1, <Xt> pseudocode I mis=
-sed the
-fact that for writes the trap is controlled by HDFG*W*TR_EL1, not by
-HDFG*R*TR_EL1. I set=A0 the nPMSNEVFR_EL1 bit in HDFGWRTR_EL1, and Linux do=
-esn't
-hang anymore when I try to write to the register. Will send v2 shortly.
+* Set the corresponding bit in HDFGWRTR_EL2 to also disable write traps. My
+  thanks to Mark for pointing it out.
 
-Thanks,
+ arch/arm64/include/asm/el2_setup.h | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-Alex
+diff --git a/arch/arm64/include/asm/el2_setup.h b/arch/arm64/include/asm/el2_setup.h
+index b83fb24954b7..3198acb2aad8 100644
+--- a/arch/arm64/include/asm/el2_setup.h
++++ b/arch/arm64/include/asm/el2_setup.h
+@@ -149,8 +149,17 @@
+ 	ubfx	x1, x1, #ID_AA64MMFR0_FGT_SHIFT, #4
+ 	cbz	x1, .Lskip_fgt_\@
+ 
+-	msr_s	SYS_HDFGRTR_EL2, xzr
+-	msr_s	SYS_HDFGWTR_EL2, xzr
++	mov	x0, xzr
++	mrs	x1, id_aa64dfr0_el1
++	ubfx	x1, x1, #ID_AA64DFR0_PMSVER_SHIFT, #4
++	cmp	x1, #3
++	b.lt	.Lset_fgt_\@
++	/* Disable PMSNEVFR_EL1 read and write traps */
++	orr	x0, x0, #(1 << 62)
++
++.Lset_fgt_\@:
++	msr_s	SYS_HDFGRTR_EL2, x0
++	msr_s	SYS_HDFGWTR_EL2, x0
+ 	msr_s	SYS_HFGRTR_EL2, xzr
+ 	msr_s	SYS_HFGWTR_EL2, xzr
+ 	msr_s	SYS_HFGITR_EL2, xzr
+-- 
+2.33.0
 
 _______________________________________________
 kvmarm mailing list
