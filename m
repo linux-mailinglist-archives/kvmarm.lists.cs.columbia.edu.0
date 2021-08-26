@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 42CC23F8E23
-	for <lists+kvmarm@lfdr.de>; Thu, 26 Aug 2021 20:49:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 829F13F8FCB
+	for <lists+kvmarm@lfdr.de>; Thu, 26 Aug 2021 23:09:52 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C280A4B103;
-	Thu, 26 Aug 2021 14:49:39 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DFDC54B0D2;
+	Thu, 26 Aug 2021 17:09:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,71 +19,80 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id gxyjiigb2KVp; Thu, 26 Aug 2021 14:49:39 -0400 (EDT)
+	with ESMTP id CcKZAQurn7U9; Thu, 26 Aug 2021 17:09:46 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D39944B0DB;
-	Thu, 26 Aug 2021 14:49:35 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D85384B0EB;
+	Thu, 26 Aug 2021 17:09:42 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A24C94B0C3
- for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Aug 2021 14:49:33 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0A0744B0CD
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Aug 2021 15:59:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 72qXBKlC0yt3 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 26 Aug 2021 14:49:32 -0400 (EDT)
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com
- [209.85.166.48])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7016E4B0BA
- for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Aug 2021 14:49:32 -0400 (EDT)
-Received: by mail-io1-f48.google.com with SMTP id a21so5037793ioq.6
- for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Aug 2021 11:49:32 -0700 (PDT)
+ with ESMTP id QqwtsP2QR4lO for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 26 Aug 2021 15:59:18 -0400 (EDT)
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com
+ [209.85.215.180])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7DB954B0CC
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Aug 2021 15:59:18 -0400 (EDT)
+Received: by mail-pg1-f180.google.com with SMTP id k24so3957450pgh.8
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 Aug 2021 12:59:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:from:to:cc:subject:message-id:references:mime-version
  :content-disposition:in-reply-to;
- bh=RVUTQwfXwIWJ8KSHNLLKmgxbQdeuJteYiwLVXKrHs2E=;
- b=RlH7+pWHb6AHxbU3UBBJJ37bcoBxFJ+OtQc00AVbSygJknZ/usx11UO93s13G1kXX9
- CcZJrRyf0UdTbKCwUaojenkX5SVnXL9NHwvsqqAY/zQ//p0C+YM4cQD7FneQjJ3tB8Aa
- cMrJUpb9BQzx2jUWBC1kV31Q8634J4jt38JtglF1vnnYuD+EgmbxuiAdKNe0yIPy5viO
- tbjYlVlNGUw9dtSd01/0cTaV2aGVOlCz1pzGl7CAV/zNmDWjdq1bz6VMh9cU5i4GYnxj
- 4F3MA1cOOAlb0UtfQ1G0jAbM/WTqp+4jaVkgoa7ZNZ7B4nBPcn1mEfwDWFAId+KT8PYw
- UaHw==
+ bh=Xc1szHQOZDqB0AYr925levUtn3vNJA/QIKkPEhre7Pk=;
+ b=rAH1RZhEJy3MVfBUURq1C3iW4ra2alS9qAREXLkrJFEHcf7iDXDJip4aX5r35skET+
+ jo8PoQ7D1SWj6xQfgikhRkl1CH3MaymS1zddz++K76rpR+himQM4eRquOL09b9DEA3zi
+ k1GwvAYBbvUNls5+AXaN8glJCjF7KIFEFQhoKckGnN93S31/oYpDxN/8g8Ng4pR7mIlZ
+ 9PgGk1EPPpJEnhqaB0anqRNL1VkcMXUzqFbZwSiDCOTTGHP0JVVcjlrSX45dE9oUOrpr
+ J6hngXVZBF1o5LZ9dJoHWVzIqoA8ysZ3JGu2pnoEjug6L81eTykL5MQK90BtvdNATJv2
+ Oyzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to;
- bh=RVUTQwfXwIWJ8KSHNLLKmgxbQdeuJteYiwLVXKrHs2E=;
- b=dF1gpkP+ZN3yCZvPHTIpaumNKsMcAj1NboE7nO0hV3l2Pgc/fVEQWgNoClnzA6IWdT
- fcAi1a8scDO43HeCZvnXPqCWUjfRM9T1KJe9w4EGs05w8uKSQJaXi73fEmFNCJ2lNw7N
- bI1+q+XpvVpeCo8e+GHqK98wl94vg8GpkWffIQWm+TqcGcNG3IhwBCpTYwXYWquJrH/H
- BGE1SybRSaUa45y2kwmmlEqcE/0qq8YxxKGgQzdqRW9QyD21ovpb5etcKrHJcj3TGZOM
- TusWrXia8fPfUOv9fqMW4VelzyL+bnuwHZSjdIGnbTB5AuZ7/deCdkBHDLZo1Zh/pPiO
- GiVw==
-X-Gm-Message-State: AOAM5309L+LC0+LdZHe62cpOMaxSgRC9PZvROzZsu4+DQj4tEMDZ6lIv
- VqQcM3/XyCTt4xAynguixOUfrw==
-X-Google-Smtp-Source: ABdhPJx5cxoJqj5jt4PGdlUhbRpwDMVgyY3ef2R2HYspFPIJb/ORtT336DtZE2lfPru1xakwQbOqEA==
-X-Received: by 2002:a6b:3c16:: with SMTP id k22mr4252523iob.130.1630003771571; 
- Thu, 26 Aug 2021 11:49:31 -0700 (PDT)
-Received: from google.com (194.225.68.34.bc.googleusercontent.com.
- [34.68.225.194])
- by smtp.gmail.com with ESMTPSA id a11sm2067749ilf.79.2021.08.26.11.49.30
+ bh=Xc1szHQOZDqB0AYr925levUtn3vNJA/QIKkPEhre7Pk=;
+ b=pWZBpGZSYrYeMCogGUHDzSCfF/EOrl5o5+BfmA/7rLi7AOFHAj7xVQNcrroLMj4sZ2
+ GZuJXzglEueMPOg+ZKxRNfU4/IlDQ79WB1NjY7EbBBFDsWad7a2QolI4nhQrgnALiHNo
+ EkLAaGpSA43PXkoE66iavMzUhdNtKxFy2HEoTYxr0guUZlYnTVrHCVhrg+FbJbze6sYq
+ v7mL/xBSv8HT+sgrGDX8I1acpO8HkQkkz9TS1aDvyUd6Kah6y1v0RV2aAoIdGdI4sLX/
+ 7oOUcc3PJJq8iP1r5zxQk7EzL6+fdcieoaGpy5cvSjHZ9AepG66R8QKELZ4bYlZ1RvMS
+ VdIw==
+X-Gm-Message-State: AOAM531oMSbveqlugRlVyeRDX+AKDSMwp8g9w7v7DqOYOjjlxdXuIwvO
+ 6FulhYQ1zyq6Q+jLmabAJaZ1qA==
+X-Google-Smtp-Source: ABdhPJw2eYzVN0czVrpB+FQtPqgZRmO7Z9UXayRPLlAY9AEDiGK/tSK4hOJrAmd1TCnyunzzfHMaVw==
+X-Received: by 2002:a62:1b97:0:b0:3ed:d347:fcac with SMTP id
+ b145-20020a621b97000000b003edd347fcacmr5420756pfb.65.1630007957263; 
+ Thu, 26 Aug 2021 12:59:17 -0700 (PDT)
+Received: from google.com (157.214.185.35.bc.googleusercontent.com.
+ [35.185.214.157])
+ by smtp.gmail.com with ESMTPSA id o9sm4017917pfh.217.2021.08.26.12.59.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Aug 2021 11:49:30 -0700 (PDT)
-Date: Thu, 26 Aug 2021 18:49:27 +0000
-From: Oliver Upton <oupton@google.com>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: KVM/arm64: Guest ABI changes do not appear rollback-safe
-Message-ID: <YSfiN3Xq1vUzHeap@google.com>
-References: <YSVhV+UIMY12u2PW@google.com> <87mtp5q3gx.wl-maz@kernel.org>
- <CAOQ_QshSaEm_cMYQfRTaXJwnVqeoN29rMLBej-snWd6_0HsgGw@mail.gmail.com>
- <87fsuxq049.wl-maz@kernel.org>
- <20210825150713.5rpwzm4grfn7akcw@gator.home>
- <CAOQ_QsgWiw9-BuGTUFpHqBw3simUaM4Tweb9y5_oz1UHdr4ELg@mail.gmail.com>
- <877dg8ppnt.wl-maz@kernel.org>
+ Thu, 26 Aug 2021 12:59:16 -0700 (PDT)
+Date: Thu, 26 Aug 2021 19:59:13 +0000
+From: Sean Christopherson <seanjc@google.com>
+To: Zhu Lingshan <lingshan.zhu@intel.com>
+Subject: Re: [PATCH V10 01/18] perf/core: Use static_call to optimize
+ perf_guest_info_callbacks
+Message-ID: <YSfykbECnC6J02Yk@google.com>
+References: <20210806133802.3528-1-lingshan.zhu@intel.com>
+ <20210806133802.3528-2-lingshan.zhu@intel.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <877dg8ppnt.wl-maz@kernel.org>
-Cc: kvm@vger.kernel.org, pshier@google.com, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+In-Reply-To: <20210806133802.3528-2-lingshan.zhu@intel.com>
+X-Mailman-Approved-At: Thu, 26 Aug 2021 17:09:41 -0400
+Cc: wanpengli@tencent.com, Like Xu <like.xu@linux.intel.com>,
+ peterz@infradead.org, eranian@google.com, Guo Ren <guoren@kernel.org>,
+ linux-riscv@lists.infradead.org, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, kan.liang@linux.intel.com, ak@linux.intel.com,
+ kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>, joro@8bytes.org,
+ x86@kernel.org, linux-csky@vger.kernel.org, wei.w.wang@intel.com,
+ linux-arm-kernel@lists.infradead.org, xen-devel@lists.xenproject.org,
+ liuxiangdong5@huawei.com, bp@alien8.de,
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ Boris Ostrovsky <boris.ostrovsky@oracle.com>, boris.ostrvsky@oracle.com,
+ jmattson@google.com, like.xu.linux@gmail.com, Nick Hu <nickhu@andestech.com>,
+ linux-kernel@vger.kernel.org, pbonzini@redhat.com, vkuznets@redhat.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -100,85 +109,139 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Aug 26, 2021 at 09:37:42AM +0100, Marc Zyngier wrote:
-> On Wed, 25 Aug 2021 19:14:59 +0100,
-> Oliver Upton <oupton@google.com> wrote:
-> > 
-> > On Wed, Aug 25, 2021 at 8:07 AM Andrew Jones <drjones@redhat.com> wrote:
-> 
-> [...]
-> 
-> > > Thanks for including me Marc. I think you've mentioned all the examples
-> > > of why we don't generally expect N+1 -> N migrations to work that I
-> > > can think of. While some of the examples like get-reg-list could
-> > > eventually be eliminated if we had CPU models to tighten our machine type
-> > > state, I think N+1 -> N migrations will always be best effort at most.
-> > >
-> > > I agree with giving userspace control over the exposer of the hypercalls
-> > > though. Using pseudo-registers for that purpose rather than a pile of
-> > > CAPs also seems reasonable to me.
-> > >
-> > > And, while I don't think this patch is going to proceed, I thought I'd
-> > > point out that the opt-out approach doesn't help much with expanding
-> > > our migration support unless we require the VMM to be upgraded first.
-> > >
-> > > And, even then, the (N_kern, N+1_vmm) -> (N+1_kern, N_vmm) case won't
-> > > work as expected, since the source enforce opt-out, but the destination
-> > > won't.
-> > 
-> > Right, there's going to need to be a fence in both kernel and VMM
-> > versions. Before the fence, you can't rollback with either component.
-> > Once on the other side of the fence, the user may freely migrate
-> > between kernel + VMM combinations.
-> >
-> > > Also, since the VMM doesn't key off the kernel version, for the
-> > > most part N+1 VMMs won't know when they're supposed to opt-out or not,
-> > > leaving it to the user to ensure they consider everything. opt-in
-> > > usually only needs the user to consider what machine type they want to
-> > > launch.
-> > 
-> > Going the register route will implicitly require opt-out for all old
-> > hypercalls. We exposed them unconditionally to the guest before, and
-> > we must uphold that behavior. The default value for the bitmap will
-> > have those features set. Any hypercalls added after that register
-> > interface will then require explicit opt-in from userspace.
-> 
-> I disagree here. This makes the ABI inconsistent, and means that no
-> feature can be implemented without changing userspace. If you can deal
-> with the existing features, you should be able to deal with the next
-> lot.
->
-> > With regards to the pseudoregister interface, how would a VMM discover
-> > new bits? From my perspective, you need to have two bitmaps that the
-> > VMM can get at: the set of supported feature bits and the active
-> > bitmap of features for a running guest.
-> 
-> My proposal is that we have a single pseudo-register exposing the list
-> of implemented by the kernel. Clear the bits you don't want, and write
-> back the result. As long as you haven't written anything, you have the
-> full feature set. That's pretty similar to the virtio feature
-> negotiation.
+TL;DR: Please don't merge this patch, it's broken and is also built on a shoddy
+       foundation that I would like to fix.
 
-Ah, yes I agree. Thinking about it more we will not need something
-similar to KVM_GET_SUPPORTED_CPUID.
+On Fri, Aug 06, 2021, Zhu Lingshan wrote:
+> diff --git a/kernel/events/core.c b/kernel/events/core.c
+> index 464917096e73..e466fc8176e1 100644
+> --- a/kernel/events/core.c
+> +++ b/kernel/events/core.c
+> @@ -6489,9 +6489,18 @@ static void perf_pending_event(struct irq_work *entry)
+>   */
+>  struct perf_guest_info_callbacks *perf_guest_cbs;
+>  
+> +/* explicitly use __weak to fix duplicate symbol error */
+> +void __weak arch_perf_update_guest_cbs(void)
+> +{
+> +}
+> +
+>  int perf_register_guest_info_callbacks(struct perf_guest_info_callbacks *cbs)
+>  {
+> +	if (WARN_ON_ONCE(perf_guest_cbs))
+> +		return -EBUSY;
+> +
+>  	perf_guest_cbs = cbs;
+> +	arch_perf_update_guest_cbs();
 
-So then, for any register where userspace/KVM need to negotiate
-features, the default value will return the maximum feature set that is
-supported. If userspace wants to constrain features, read out the
-register, make sure everything you want is there, and write it back
-blowing away the superfluous bits. Given this should we enforce ordering
-on feature registers, such that a VMM can only write to the registers
-before a VM is started?
+This is horribly broken, it fails to cleanup the static calls when KVM unregisters
+the callbacks, which happens when the vendor module, e.g. kvm_intel, is unloaded.
+The explosion doesn't happen until 'kvm' is unloaded because the functions are
+implemented in 'kvm', i.e. the use-after-free is deferred a bit.
 
-Also, Reiji is working on making the identity registers writable for the
-sake of feature restriction. The suggested negotiation interface would
-be applicable there too, IMO.
+  BUG: unable to handle page fault for address: ffffffffa011bb90
+  #PF: supervisor instruction fetch in kernel mode
+  #PF: error_code(0x0010) - not-present page
+  PGD 6211067 P4D 6211067 PUD 6212063 PMD 102b99067 PTE 0
+  Oops: 0010 [#1] PREEMPT SMP
+  CPU: 0 PID: 1047 Comm: rmmod Not tainted 5.14.0-rc2+ #460
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  RIP: 0010:0xffffffffa011bb90
+  Code: Unable to access opcode bytes at RIP 0xffffffffa011bb66.
+  Call Trace:
+   <NMI>
+   ? perf_misc_flags+0xe/0x50
+   ? perf_prepare_sample+0x53/0x6b0
+   ? perf_event_output_forward+0x67/0x160
+   ? kvm_clock_read+0x14/0x30
+   ? kvm_sched_clock_read+0x5/0x10
+   ? sched_clock_cpu+0xd/0xd0
+   ? __perf_event_overflow+0x52/0xf0
+   ? handle_pmi_common+0x1f2/0x2d0
+   ? __flush_tlb_all+0x30/0x30
+   ? intel_pmu_handle_irq+0xcf/0x410
+   ? nmi_handle+0x5/0x260
+   ? perf_event_nmi_handler+0x28/0x50
+   ? nmi_handle+0xc7/0x260
+   ? lock_release+0x2b0/0x2b0
+   ? default_do_nmi+0x6b/0x170
+   ? exc_nmi+0x103/0x130
+   ? end_repeat_nmi+0x16/0x1f
+   ? lock_release+0x2b0/0x2b0
+   ? lock_release+0x2b0/0x2b0
+   ? lock_release+0x2b0/0x2b0
+   </NMI>
+  Modules linked in: irqbypass [last unloaded: kvm]
 
-Many thanks to both you and Drew for working this out with me.
+Even more fun, the existing perf_guest_cbs framework is also broken, though it's
+much harder to get it to fail, and probably impossible to get it to fail without
+some help.  The issue is that perf_guest_cbs is global, which means that it can
+be nullified by KVM (during module unload) while the callbacks are being accessed
+by a PMI handler on a different CPU.
 
---
-Best,
-Oliver
+The bug has escaped notice because all dererfences of perf_guest_cbs follow the
+same "perf_guest_cbs && perf_guest_cbs->is_in_guest()" pattern, and AFAICT the
+compiler never reload perf_guest_cbs in this sequence.  The compiler does reload
+perf_guest_cbs for any future dereferences, but the ->is_in_guest() guard all but
+guarantees the PMI handler will win the race, e.g. to nullify perf_guest_cbs,
+KVM has to completely exit the guest and teardown down all VMs before it can be
+unloaded.
+
+But with a help, e.g. RAED_ONCE(perf_guest_cbs), unloading kvm_intel can trigger
+a NULL pointer derference, e.g. this tweak
+
+diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+index 1eb45139fcc6..202e5ad97f82 100644
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -2954,7 +2954,7 @@ unsigned long perf_misc_flags(struct pt_regs *regs)
+ {
+        int misc = 0;
+
+-       if (perf_guest_cbs && perf_guest_cbs->is_in_guest()) {
++       if (READ_ONCE(perf_guest_cbs) && READ_ONCE(perf_guest_cbs)->is_in_guest()) {
+                if (perf_guest_cbs->is_user_mode())
+                        misc |= PERF_RECORD_MISC_GUEST_USER;
+                else
+
+
+while spamming module load/unload leads to:
+
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 0 P4D 0
+  Oops: 0000 [#1] PREEMPT SMP
+  CPU: 6 PID: 1825 Comm: stress Not tainted 5.14.0-rc2+ #459
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  RIP: 0010:perf_misc_flags+0x1c/0x70
+  Call Trace:
+   perf_prepare_sample+0x53/0x6b0
+   perf_event_output_forward+0x67/0x160
+   __perf_event_overflow+0x52/0xf0
+   handle_pmi_common+0x207/0x300
+   intel_pmu_handle_irq+0xcf/0x410
+   perf_event_nmi_handler+0x28/0x50
+   nmi_handle+0xc7/0x260
+   default_do_nmi+0x6b/0x170
+   exc_nmi+0x103/0x130
+   asm_exc_nmi+0x76/0xbf
+
+
+The good news is that I have a series that should fix both the existing NULL pointer
+bug and mostly obviate the need for static calls.  The bad news is that my approach,
+making perf_guest_cbs per-CPU, likely complicates turning these into static calls,
+though I'm guessing it's still a solvable problem.
+
+Tangentially related, IMO we should make architectures opt-in to getting
+perf_guest_cbs and nuke all of the code in the below files.  Except for arm,
+which recently lost KVM support, it's all a bunch of useless copy-paste code that
+serves no purpose and just complicates cleanups like this.
+
+>  arch/arm/kernel/perf_callchain.c   | 16 +++++++-----
+>  arch/csky/kernel/perf_callchain.c  |  4 +--
+>  arch/nds32/kernel/perf_event_cpu.c | 16 +++++++-----
+>  arch/riscv/kernel/perf_callchain.c |  4 +--
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
