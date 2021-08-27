@@ -2,72 +2,86 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C6E393F9B32
-	for <lists+kvmarm@lfdr.de>; Fri, 27 Aug 2021 16:57:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 99F123F9B97
+	for <lists+kvmarm@lfdr.de>; Fri, 27 Aug 2021 17:20:33 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3094F4B12B;
-	Fri, 27 Aug 2021 10:57:35 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0631A4B13B;
+	Fri, 27 Aug 2021 11:20:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.391
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.391 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@infradead.org
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tydg5mF3bAc9; Fri, 27 Aug 2021 10:57:35 -0400 (EDT)
+	with ESMTP id XjpAYnn6qlec; Fri, 27 Aug 2021 11:20:31 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0503D4B118;
-	Fri, 27 Aug 2021 10:57:31 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DE9954B129;
+	Fri, 27 Aug 2021 11:20:30 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D4D94B0A5
- for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 10:57:29 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7353A4B121
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 10:58:41 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id KPUstyP3Rj7p for <kvmarm@lists.cs.columbia.edu>;
- Fri, 27 Aug 2021 10:57:24 -0400 (EDT)
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id AB7014B09C
- for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 10:57:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=NSdJTnTrDORwb+LwDd1YsYwMgPCJRxx0pXYK8FlAauE=; b=Fa7lAXZuZMGlhMkvCLlAaInQ0M
- LvZMAI9dgp92KcFz4u2w541+/Nu67i2Ea3rAZpKD6Q1P9ILjKx8E7vJPC9Yy4BHzufUafcmzb+2zu
- XEqetUQrDWVmWgUJbeWVLi3VrFACkcynBo/GAIrkEDlonwYXZkgrnKNPnvuRXhzSenXsmorxKXv3b
- UaLmP8193HgPXArb5Wp1c/mrxTLlf/21JEFOup9O58miZONiwbcuapmO9GWG87OVfsWhj7CHiSkGX
- N5n6bqMpN0VhS93yWvq33V/48j5w+oHy6eCsh396wVtLrGJfjfA+JtKu/NF0o3UbeTizVS7b6v5Pe
- Ifw0PqQQ==;
-Received: from j217100.upc-j.chello.nl ([24.132.217.100]
- helo=noisy.programming.kicks-ass.net)
- by desiato.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
- id 1mJdHk-00DX6q-CH; Fri, 27 Aug 2021 14:56:48 +0000
-Received: from hirez.programming.kicks-ass.net
- (hirez.programming.kicks-ass.net [192.168.1.225])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
- (Client did not present a certificate)
- by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 06096300DEF;
- Fri, 27 Aug 2021 16:56:46 +0200 (CEST)
-Received: by hirez.programming.kicks-ass.net (Postfix, from userid 1000)
- id DA39829CFAC0B; Fri, 27 Aug 2021 16:56:45 +0200 (CEST)
-Date: Fri, 27 Aug 2021 16:56:45 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: Sean Christopherson <seanjc@google.com>
-Subject: Re: [PATCH 05/15] perf: Track guest callbacks on a per-CPU basis
-Message-ID: <YSj9LQfbKxOhxqcP@hirez.programming.kicks-ass.net>
+ with ESMTP id eReEIY+WsKM4 for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 27 Aug 2021 10:58:40 -0400 (EDT)
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com
+ [209.85.214.176])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 71D194B120
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 10:58:40 -0400 (EDT)
+Received: by mail-pl1-f176.google.com with SMTP id e15so4090932plh.8
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 07:58:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=uRFFUbAhELNbaSp6/gZa0c8lVubPxa9shGc4LpwPEKA=;
+ b=LaTxPm5alTPx3ec48IA6+ZkyOejP1tGYjt5wY+p50UOfksJNBKAzDXOzoDDiJpQJ7C
+ 7ZlQ2CaQrXUZrhEVe/+L/sf91LGMM0vWjp8eP3YRAXU34kmcSmT/loEOx2KY28gVVCsl
+ oNwRHnusQG6CUmxymYZ58t9NT8p9wB0iZAAe71TUcHWHnrhk4i1QLthTClskPP73rEx7
+ 8W5oVGVmckueDqbKs0mB5YdxIHBLQgh+JwU0k3CO0TH8YixDpwG1SB6F/loD+NPrNZ2l
+ 0CosQb5gLTnLJ9MX51KpbZFvZYLNN8TvF8Ol0HP7oCHqmHClmMDvOIzUAi7IGzMuFHXf
+ oANw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=uRFFUbAhELNbaSp6/gZa0c8lVubPxa9shGc4LpwPEKA=;
+ b=nCs/obEnA81qM9g0vCt7p4X/NtgHsjLC2sfiiP7XwMkxExItpkgtmKIA4qguarO8pD
+ Byy3FHbhGQEER0/mhjLtGfVUB8SLNNWRUCttybNhRTk5RqcRH2DIVEbU+m2AD1h2xdpY
+ h0dx+nvw2TK46hNsZHmpbg5gW0JYj5ukX/LL9vS/6bXO+ruC1PhjeXmKEKADTcIdaS0v
+ 9GHoBJBGruBmuD1ddB9X97q9fpcokUiAlwY59Cy3tXlYZ+WxTAlK21g64zA9oynbBBkF
+ QJsFilH7/Vl5q6OYxsn+G4A6kVYcR8KT/jFccgKa1tPiaG/0CQhMupRZRV4Fh4eE9RWK
+ D5yQ==
+X-Gm-Message-State: AOAM53132zuwPkJYwLSp/7cDzaevsbmxFRY3fzxt0eDJ2zDklpi0poof
+ jnDHTURBJkGlGhFguNT9WKX79g==
+X-Google-Smtp-Source: ABdhPJzgh09WISpUzNhO7TIEv2MEhpi/JDC49fmE6awwyfv/L0ffcVcqSZUNcnR7TJ7/0hyFRiQ/2g==
+X-Received: by 2002:a17:902:e20a:b0:134:221f:657d with SMTP id
+ u10-20020a170902e20a00b00134221f657dmr9134631plb.78.1630076319283; 
+ Fri, 27 Aug 2021 07:58:39 -0700 (PDT)
+Received: from google.com (157.214.185.35.bc.googleusercontent.com.
+ [35.185.214.157])
+ by smtp.gmail.com with ESMTPSA id e11sm6590628pfn.49.2021.08.27.07.58.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 27 Aug 2021 07:58:38 -0700 (PDT)
+Date: Fri, 27 Aug 2021 14:58:35 +0000
+From: Sean Christopherson <seanjc@google.com>
+To: Peter Zijlstra <peterz@infradead.org>
+Subject: Re: [PATCH 07/15] KVM: Use dedicated flag to track if KVM is
+ handling an NMI from guest
+Message-ID: <YSj9mz4F2NDSKaas@google.com>
 References: <20210827005718.585190-1-seanjc@google.com>
- <20210827005718.585190-6-seanjc@google.com>
- <YSiRBQQE7md7ZrNC@hirez.programming.kicks-ass.net>
- <YSj7jq32U8Euf38o@google.com>
+ <20210827005718.585190-8-seanjc@google.com>
+ <YSiUnDbi/aZ3nunT@hirez.programming.kicks-ass.net>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <YSj7jq32U8Euf38o@google.com>
+In-Reply-To: <YSiUnDbi/aZ3nunT@hirez.programming.kicks-ass.net>
+X-Mailman-Approved-At: Fri, 27 Aug 2021 11:20:29 -0400
 Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
  Alexander Shishkin <alexander.shishkin@linux.intel.com>,
  Catalin Marinas <catalin.marinas@arm.com>, Guo Ren <guoren@kernel.org>,
@@ -105,38 +119,37 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Aug 27, 2021 at 02:49:50PM +0000, Sean Christopherson wrote:
-> On Fri, Aug 27, 2021, Peter Zijlstra wrote:
-> > On Thu, Aug 26, 2021 at 05:57:08PM -0700, Sean Christopherson wrote:
-> > > Use a per-CPU pointer to track perf's guest callbacks so that KVM can set
-> > > the callbacks more precisely and avoid a lurking NULL pointer dereference.
-> > 
-> > I'm completely failing to see how per-cpu helps anything here...
+On Fri, Aug 27, 2021, Peter Zijlstra wrote:
+> On Thu, Aug 26, 2021 at 05:57:10PM -0700, Sean Christopherson wrote:
+> > diff --git a/arch/x86/kvm/x86.h b/arch/x86/kvm/x86.h
+> > index 5cedc0e8a5d5..4c5ba4128b38 100644
+> > --- a/arch/x86/kvm/x86.h
+> > +++ b/arch/x86/kvm/x86.h
+> > @@ -395,9 +395,10 @@ static inline void kvm_unregister_perf_callbacks(void)
+> >  
+> >  DECLARE_PER_CPU(struct kvm_vcpu *, current_vcpu);
+> >  
+> > -static inline void kvm_before_interrupt(struct kvm_vcpu *vcpu)
+> > +static inline void kvm_before_interrupt(struct kvm_vcpu *vcpu, bool is_nmi)
+> >  {
+> >  	__this_cpu_write(current_vcpu, vcpu);
+> > +	WRITE_ONCE(vcpu->arch.handling_nmi_from_guest, is_nmi);
+> >  
+> >  	kvm_register_perf_callbacks();
+> >  }
+> > @@ -406,6 +407,7 @@ static inline void kvm_after_interrupt(struct kvm_vcpu *vcpu)
+> >  {
+> >  	kvm_unregister_perf_callbacks();
+> >  
+> > +	WRITE_ONCE(vcpu->arch.handling_nmi_from_guest, false);
+> >  	__this_cpu_write(current_vcpu, NULL);
+> >  }
 > 
-> It doesn't help until KVM is converted to set the per-cpu pointer in flows that
-> are protected against preemption, and more specifically when KVM only writes to
-> the pointer from the owning CPU.  
+> Does this rely on kvm_{,un}register_perf_callback() being a function
+> call and thus implying a sequence point to order the stores? 
 
-So the 'problem' I have with this is that sane (!KVM using) people, will
-still have to suffer that load, whereas with the static_call() we patch
-in an 'xor %rax,%rax' and only have immediate code flow.
-
-> Ignoring static call for the moment, I don't see how the unreg side can be safe
-> using a bare single global pointer.  There is no way for KVM to prevent an NMI
-> from running in parallel on a different CPU.  If there's a more elegant solution,
-> especially something that can be backported, e.g. an rcu-protected pointer, I'm
-> all for it.  I went down the per-cpu path because it allowed for cleanups in KVM,
-> but similar cleanups can be done without per-cpu perf callbacks.
-
-If all the perf_guest_cbs dereferences are with preemption disabled
-(IRQs disabled, IRQ context, NMI context included), then the sequence:
-
-	WRITE_ONCE(perf_guest_cbs, NULL);
-	synchronize_rcu();
-
-Ensures that all prior observers of perf_guest_csb will have completed
-and future observes must observe the NULL value.
-
+No, I'm just terrible at remembering which macros provide what ordering guarantees,
+i.e. I was thinking WRITE_ONCE provided guarantees against compiler reordering.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
