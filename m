@@ -2,71 +2,71 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B7373F952A
-	for <lists+kvmarm@lfdr.de>; Fri, 27 Aug 2021 09:34:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E8C33F9533
+	for <lists+kvmarm@lfdr.de>; Fri, 27 Aug 2021 09:35:27 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AC1264B08A;
-	Fri, 27 Aug 2021 03:34:02 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F17374B08A;
+	Fri, 27 Aug 2021 03:35:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.391
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.391 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@infradead.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YzUmbfXQY5g6; Fri, 27 Aug 2021 03:34:02 -0400 (EDT)
+	with ESMTP id Fp1O09D8Sodu; Fri, 27 Aug 2021 03:35:26 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 83E914B0F2;
-	Fri, 27 Aug 2021 03:33:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C72B84B0F2;
+	Fri, 27 Aug 2021 03:35:22 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CD0774B093
- for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 03:33:57 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C81F74B093
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 03:35:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id w0XO7cwVabIi for <kvmarm@lists.cs.columbia.edu>;
- Fri, 27 Aug 2021 03:33:53 -0400 (EDT)
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C7D544B08A
- for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 03:33:53 -0400 (EDT)
+ with ESMTP id itelsiWZdI-C for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 27 Aug 2021 03:35:17 -0400 (EDT)
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7729A4B08A
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 03:35:17 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+ d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
  References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
  Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=pX/U+rVEPbfrs2KxIK3fTT5zek69Vi8l41Blp4tBLok=; b=Yc/w61MYBYU/2XovOdaG/1LI+3
- ofvXZY72T/bqQpEDQIopTT41ymuCj9LCYB3YpGsaZsw8I7lr88Q2nTCRx2MpWUAJi2+3qnashJI4R
- pq0hm4wrqjtQzjgnu14Y0Hv71MTmXVlwUtR00yaCrR+u7hNfiDC4NQgkVvvO74M9TS46PVdKtznHr
- cI35oR72a6g4a2mZG68PMOuldBKtE8eyE5BYPjhe0gvPrNhQPT9HfquqIFtVn1+9kmnU1uaROxDf6
- T9v8X9G4zCE0HsYiDhrr3Coe9vaArCNE5m8ZWnIbYQ2Ri33yjkJEKLCpR695YXtWTkmMXBqMBOcvc
- uj1qfSCA==;
+ bh=izDnqED+aJquV8WBbT3PBDJAf7VsEW4nw5GoC1n7INc=; b=UOw1aDagqxomBMB4/E9tMZZeGZ
+ A/CYxlrxnk/GSFFTbkLbsgVxAuCRJ0uxvjo85Tp7zy3Yucv+ZpTHwn2CnmihrOCVC9Yk2QeIxRvll
+ 8MnpnhG7WUlGGdapVfBrt4tzxXst/XpS+6PVp1qeaC1d0oim3gjAqiP/J5cmTZJlCyx1iWNeP4Wlf
+ Z5XcBWL/yaYx+cHADlH6fZPiBRXj4hqI2YfdR4gAT6GCyITtnmu8zkenZdgkEqz4Y+YyeesKIgXPY
+ axH5wRDh5FK6agDysTznL69fRm4hurQ8dCd9r5S54VhnaYDGtyqnIDvt5i5hP/qBNuObffeCu3FEh
+ v14rcs9Q==;
 Received: from j217100.upc-j.chello.nl ([24.132.217.100]
  helo=noisy.programming.kicks-ass.net)
- by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
- id 1mJWJz-00EFo3-0q; Fri, 27 Aug 2021 07:30:56 +0000
+ by desiato.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+ id 1mJWNp-00DRSP-E8; Fri, 27 Aug 2021 07:34:39 +0000
 Received: from hirez.programming.kicks-ass.net
  (hirez.programming.kicks-ass.net [192.168.1.225])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (Client did not present a certificate)
- by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 0C6F23005AD;
- Fri, 27 Aug 2021 09:30:37 +0200 (CEST)
+ by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id CFD57300DEF;
+ Fri, 27 Aug 2021 09:34:35 +0200 (CEST)
 Received: by hirez.programming.kicks-ass.net (Postfix, from userid 1000)
- id E07822C6670E9; Fri, 27 Aug 2021 09:30:36 +0200 (CEST)
-Date: Fri, 27 Aug 2021 09:30:36 +0200
+ id B14D22C6670EA; Fri, 27 Aug 2021 09:34:35 +0200 (CEST)
+Date: Fri, 27 Aug 2021 09:34:35 +0200
 From: Peter Zijlstra <peterz@infradead.org>
 To: Sean Christopherson <seanjc@google.com>
-Subject: Re: [PATCH 07/15] KVM: Use dedicated flag to track if KVM is
- handling an NMI from guest
-Message-ID: <YSiUnDbi/aZ3nunT@hirez.programming.kicks-ass.net>
+Subject: Re: [PATCH 11/15] KVM: x86: Move Intel Processor Trace interrupt
+ handler to vmx.c
+Message-ID: <YSiVi+jxNpFLE4gn@hirez.programming.kicks-ass.net>
 References: <20210827005718.585190-1-seanjc@google.com>
- <20210827005718.585190-8-seanjc@google.com>
+ <20210827005718.585190-12-seanjc@google.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20210827005718.585190-8-seanjc@google.com>
+In-Reply-To: <20210827005718.585190-12-seanjc@google.com>
 Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
  Alexander Shishkin <alexander.shishkin@linux.intel.com>,
  Catalin Marinas <catalin.marinas@arm.com>, Guo Ren <guoren@kernel.org>,
@@ -104,33 +104,18 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Aug 26, 2021 at 05:57:10PM -0700, Sean Christopherson wrote:
-> diff --git a/arch/x86/kvm/x86.h b/arch/x86/kvm/x86.h
-> index 5cedc0e8a5d5..4c5ba4128b38 100644
-> --- a/arch/x86/kvm/x86.h
-> +++ b/arch/x86/kvm/x86.h
-> @@ -395,9 +395,10 @@ static inline void kvm_unregister_perf_callbacks(void)
->  
->  DECLARE_PER_CPU(struct kvm_vcpu *, current_vcpu);
->  
-> -static inline void kvm_before_interrupt(struct kvm_vcpu *vcpu)
-> +static inline void kvm_before_interrupt(struct kvm_vcpu *vcpu, bool is_nmi)
+On Thu, Aug 26, 2021 at 05:57:14PM -0700, Sean Christopherson wrote:
+> diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+> index 13c4f58a75e5..e0b1c9386926 100644
+> --- a/virt/kvm/kvm_main.c
+> +++ b/virt/kvm/kvm_main.c
+> @@ -5498,6 +5498,7 @@ void kvm_set_intel_pt_intr_handler(void (*handler)(void))
 >  {
->  	__this_cpu_write(current_vcpu, vcpu);
-> +	WRITE_ONCE(vcpu->arch.handling_nmi_from_guest, is_nmi);
->  
->  	kvm_register_perf_callbacks();
+>  	kvm_guest_cbs.handle_intel_pt_intr = handler;
 >  }
-> @@ -406,6 +407,7 @@ static inline void kvm_after_interrupt(struct kvm_vcpu *vcpu)
->  {
->  	kvm_unregister_perf_callbacks();
->  
-> +	WRITE_ONCE(vcpu->arch.handling_nmi_from_guest, false);
->  	__this_cpu_write(current_vcpu, NULL);
->  }
+> +EXPORT_SYMBOL_GPL(kvm_set_intel_pt_intr_handler);
 
-Does this rely on kvm_{,un}register_perf_callback() being a function
-call and thus implying a sequence point to order the stores? 
+This is another one of those broken exports.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
