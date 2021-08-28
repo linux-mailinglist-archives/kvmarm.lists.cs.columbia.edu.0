@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 01DF63FA4AD
-	for <lists+kvmarm@lfdr.de>; Sat, 28 Aug 2021 11:21:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 580E03FA4B2
+	for <lists+kvmarm@lfdr.de>; Sat, 28 Aug 2021 11:21:17 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9C0064B14F;
-	Sat, 28 Aug 2021 05:21:07 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E315C4B10F;
+	Sat, 28 Aug 2021 05:21:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,62 +19,62 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 38cyYtabG1Xt; Sat, 28 Aug 2021 05:21:03 -0400 (EDT)
+	with ESMTP id wNI8gUFqDKgi; Sat, 28 Aug 2021 05:21:07 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F7894B153;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AEE9E4B15A;
 	Sat, 28 Aug 2021 05:20:55 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9F5504B116
- for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 20:36:34 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DEF6A4B0DD
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 20:36:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id vMdgF-oNJ6M0 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 27 Aug 2021 20:36:30 -0400 (EDT)
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com
- [209.85.219.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 82E384B127
- for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 20:36:30 -0400 (EDT)
-Received: by mail-yb1-f202.google.com with SMTP id
- a62-20020a254d410000b0290592f360b0ccso8241954ybb.14
- for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 17:36:30 -0700 (PDT)
+ with ESMTP id 76JIVA5jLFEH for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 27 Aug 2021 20:36:32 -0400 (EDT)
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com
+ [209.85.219.201])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id CB4B74B133
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 20:36:32 -0400 (EDT)
+Received: by mail-yb1-f201.google.com with SMTP id
+ f64-20020a2538430000b0290593bfc4b046so8277192yba.9
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 17:36:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=reply-to:date:in-reply-to:message-id:mime-version:references
  :subject:from:to:cc;
- bh=J1gV9tKuEUW347bCpCRKYVIA3sPFQNKnByLeTysAe1c=;
- b=QQC9kCQqRwL40ouGUsJ6vhRZON2TPobzHX8Wq8NP7Mf7/RKw30MhddUWUdztQM8ka7
- Ewe++e/HjV2jGw30ZO9LaCG2WpwNsAvCft0FNwp9j2VxNuY0jXVJogAA4hui8IIZ1qr9
- T7Ay+2a4aRkadNU1ca0JCC87XvjH4ea9fD4ReM/qOgy67MxneR4EHRBEt1lUd0VOX2+/
- aMIald+U354j6b4DBU7OSxpd/vJmRGaMfQXYZFeXtKK7qkfMyGqETcknapO+6PjS0TvX
- f2FLBBpeqGMiBMtBIznPS2E0O9iUn3iZeMA1csLuIwLQaPaZSBmpT2biwVLtTLrwW9db
- 1vRg==
+ bh=oqmEir0ICv/3G92ai+heTZuDyr/2G3d8WRYAGw86atk=;
+ b=PcPAOihT8OlOhhUR4O32+YWwPzAPmLXJ1HEV+moJpFC1Qy84KcVrj+ajHpTlQK+a3F
+ iyxUIoBJmALw6qqcNEgkIBWBH6GlQPAe+u7xlbyeAychGYyySNpy/bvcaaDuenDkzBb1
+ Tjlhu6cHuXug1LfrtevGrfztVaOuMtHQ1BbUdWdKfT8tes9/0JNecwDm/BWfVrT79Qhh
+ U/SjMl4oOYlt5v38Pnm8Mc6W1SnA5LO9EWqHnie5e5sXhbuMbSanMYmcJC2M9uljBuiN
+ FTc3AiajdilK67F7Z2gaOx4+/6EEfK+b8GQmcjFFKC29NzjAngrdpD9yW51Odds/BoDr
+ blsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:reply-to:date:in-reply-to:message-id
  :mime-version:references:subject:from:to:cc;
- bh=J1gV9tKuEUW347bCpCRKYVIA3sPFQNKnByLeTysAe1c=;
- b=mrNuJvkCgZjw0WghrjLIT/OnOfndckygmiJqY/OyfgSi4Fzfc2AVo055Xo0j6CqSLY
- t3IjWuTwWZl7At2LgNwrgORCEwrzTddCl+XTZbD58tR/Lv7Aw7oJKKl9cvDfEDuuG283
- Toldq8rRjTuvsL0U+474NwrsK8ToLU7q9p/9yGAmxHI6AR9oU7/iaXeBoAGvm1toF8WJ
- sCGvlofN/yJUjzykOXFrNSL9NYa2gxAAkvD2vcC3lib8T5MHO+JjDw2IeUFgUGGaO964
- lfIO2S4Q2vbu96DPL+s1Qep3qEPakN18WCdPqcLo0ZnCJn0umvXsSspa8NkYSA87h3yc
- 1NmQ==
-X-Gm-Message-State: AOAM530bf0PDkZO0d0qhH25Dg0vN7MJWV1bOti55AKSepIsKI7Ss/R91
- ZEkiJp38+E63DsH7pbRI0U01XYny+Ns=
-X-Google-Smtp-Source: ABdhPJycwxh1le3BAg4292rl1ZqiFoDJidbv03xd08RKtKGj0W0JQHpqPcTgq5axIHXDILJ1EM67ZM2iLac=
+ bh=oqmEir0ICv/3G92ai+heTZuDyr/2G3d8WRYAGw86atk=;
+ b=Wht1E6wZRMXXJCuSJ/4jPbHhlzw7z/+NTxVniE3vECtOLkKXsrdz+OZ6Nk8sY6HkOk
+ ECgYqpVQTTd8T6zkkwWPSsnIeZgHkBWoWlaeowh/1IvUh/RovvKUXsMiic3UbnK2lOvA
+ SbUWS/GzGHAohOllhBVdtaoiFLQ13+9liHUOiAkyiFrTm1uNQWkYwmaglsCsOviE3SFq
+ MsaKetLBO0zUQ9/ukSuXilk2flBkNAayBQ3Uq5ZaaHRa1Evy0QMr8AzH9uXINo0P/0sb
+ SPe+8g8gVOFhgfIjHkrpN9DcS1H46I/pKuTXSPH5W6JKcmjdyVSaOod0AtV7PzA7Sibs
+ wHtQ==
+X-Gm-Message-State: AOAM531hXcaRn/ry04xQHtOEETh13I62O8TTAi6LGfHbMaaXuZ4Ut+j8
+ PHdGnoLdAD4MgefVTcJobDNeapk+nFI=
+X-Google-Smtp-Source: ABdhPJyTmAQoKJ2tjPvfJaPWBN34/RS1O5zwXSkZLsm9h521rPpR1j//umIRZ/UqerB16AfCO1AGIAPsHvE=
 X-Received: from seanjc798194.pdx.corp.google.com
  ([2620:15c:90:200:f66c:b851:7e79:7ed4])
- (user=seanjc job=sendgmr) by 2002:a25:d307:: with SMTP id
- e7mr8478177ybf.119.1630110990084; 
- Fri, 27 Aug 2021 17:36:30 -0700 (PDT)
-Date: Fri, 27 Aug 2021 17:35:47 -0700
+ (user=seanjc job=sendgmr) by 2002:a25:4545:: with SMTP id
+ s66mr8318615yba.191.1630110992229; 
+ Fri, 27 Aug 2021 17:36:32 -0700 (PDT)
+Date: Fri, 27 Aug 2021 17:35:48 -0700
 In-Reply-To: <20210828003558.713983-1-seanjc@google.com>
-Message-Id: <20210828003558.713983-3-seanjc@google.com>
+Message-Id: <20210828003558.713983-4-seanjc@google.com>
 Mime-Version: 1.0
 References: <20210828003558.713983-1-seanjc@google.com>
 X-Mailer: git-send-email 2.33.0.259.gc128427fd7-goog
-Subject: [PATCH v2 02/13] KVM: x86: Register perf callbacks after calling
- vendor's hardware_setup()
+Subject: [PATCH v2 03/13] KVM: x86: Register Processor Trace interrupt hook
+ iff PT enabled in guest
 From: Sean Christopherson <seanjc@google.com>
 To: Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, 
  Arnaldo Carvalho de Melo <acme@kernel.org>, Will Deacon <will@kernel.org>,
@@ -118,63 +118,77 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Wait to register perf callbacks until after doing vendor hardaware setup.
-VMX's hardware_setup() configures Intel Processor Trace (PT) mode, and a
-future fix to register the Intel PT guest interrupt hook if and only if
-Intel PT is exposed to the guest will consume the configured PT mode.
+Override the Processor Trace (PT) interrupt handler for guest mode if and
+only if PT is configured for host+guest mode, i.e. is being used
+independently by both host and guest.  If PT is configured for system
+mode, the host fully controls PT and must handle all events.
 
-Delaying registration to hardware setup is effectively a nop as KVM's perf
-hooks all pivot on the per-CPU current_vcpu, which is non-NULL only when
-KVM is handling an IRQ/NMI in a VM-Exit path.  I.e. current_vcpu will be
-NULL throughout both kvm_arch_init() and kvm_arch_hardware_setup().
-
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Artem Kashkanov <artem.kashkanov@intel.com>
+Fixes: 8479e04e7d6b ("KVM: x86: Inject PMI for KVM guest")
 Cc: stable@vger.kernel.org
+Cc: Like Xu <like.xu.linux@gmail.com>
+Reported-by: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Reported-by: Artem Kashkanov <artem.kashkanov@intel.com>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 ---
- arch/x86/kvm/x86.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/x86/include/asm/kvm_host.h | 1 +
+ arch/x86/kvm/vmx/vmx.c          | 1 +
+ arch/x86/kvm/x86.c              | 5 ++++-
+ 3 files changed, 6 insertions(+), 1 deletion(-)
 
+diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+index 09b256db394a..1ea4943a73d7 100644
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1494,6 +1494,7 @@ struct kvm_x86_init_ops {
+ 	int (*disabled_by_bios)(void);
+ 	int (*check_processor_compatibility)(void);
+ 	int (*hardware_setup)(void);
++	bool (*intel_pt_intr_in_guest)(void);
+ 
+ 	struct kvm_x86_ops *runtime_ops;
+ };
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index fada1055f325..f19d72136f77 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -7896,6 +7896,7 @@ static struct kvm_x86_init_ops vmx_init_ops __initdata = {
+ 	.disabled_by_bios = vmx_disabled_by_bios,
+ 	.check_processor_compatibility = vmx_check_processor_compat,
+ 	.hardware_setup = hardware_setup,
++	.intel_pt_intr_in_guest = vmx_pt_mode_is_host_guest,
+ 
+ 	.runtime_ops = &vmx_x86_ops,
+ };
 diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 86539c1686fa..fb6015f97f9e 100644
+index fb6015f97f9e..ffc6c2d73508 100644
 --- a/arch/x86/kvm/x86.c
 +++ b/arch/x86/kvm/x86.c
-@@ -8426,8 +8426,6 @@ int kvm_arch_init(void *opaque)
+@@ -8305,7 +8305,7 @@ static struct perf_guest_info_callbacks kvm_guest_cbs = {
+ 	.is_in_guest		= kvm_is_in_guest,
+ 	.is_user_mode		= kvm_is_user_mode,
+ 	.get_guest_ip		= kvm_get_guest_ip,
+-	.handle_intel_pt_intr	= kvm_handle_intel_pt_intr,
++	.handle_intel_pt_intr	= NULL,
+ };
  
- 	kvm_timer_init();
- 
--	perf_register_guest_info_callbacks(&kvm_guest_cbs);
--
- 	if (boot_cpu_has(X86_FEATURE_XSAVE)) {
- 		host_xcr0 = xgetbv(XCR_XFEATURE_ENABLED_MASK);
- 		supported_xcr0 = host_xcr0 & KVM_SUPPORTED_XCR0;
-@@ -8461,7 +8459,6 @@ void kvm_arch_exit(void)
- 		clear_hv_tscchange_cb();
- #endif
- 	kvm_lapic_exit();
--	perf_unregister_guest_info_callbacks(&kvm_guest_cbs);
- 
- 	if (!boot_cpu_has(X86_FEATURE_CONSTANT_TSC))
- 		cpufreq_unregister_notifier(&kvmclock_cpufreq_notifier_block,
-@@ -11064,6 +11061,8 @@ int kvm_arch_hardware_setup(void *opaque)
+ #ifdef CONFIG_X86_64
+@@ -11061,6 +11061,8 @@ int kvm_arch_hardware_setup(void *opaque)
  	memcpy(&kvm_x86_ops, ops->runtime_ops, sizeof(kvm_x86_ops));
  	kvm_ops_static_call_update();
  
-+	perf_register_guest_info_callbacks(&kvm_guest_cbs);
-+
++	if (ops->intel_pt_intr_in_guest && ops->intel_pt_intr_in_guest())
++		kvm_guest_cbs.handle_intel_pt_intr = kvm_handle_intel_pt_intr;
+ 	perf_register_guest_info_callbacks(&kvm_guest_cbs);
+ 
  	if (!kvm_cpu_cap_has(X86_FEATURE_XSAVES))
- 		supported_xss = 0;
- 
-@@ -11091,6 +11090,8 @@ int kvm_arch_hardware_setup(void *opaque)
- 
+@@ -11091,6 +11093,7 @@ int kvm_arch_hardware_setup(void *opaque)
  void kvm_arch_hardware_unsetup(void)
  {
-+	perf_unregister_guest_info_callbacks(&kvm_guest_cbs);
-+
+ 	perf_unregister_guest_info_callbacks(&kvm_guest_cbs);
++	kvm_guest_cbs.handle_intel_pt_intr = NULL;
+ 
  	static_call(kvm_x86_hardware_unsetup)();
  }
- 
 -- 
 2.33.0.259.gc128427fd7-goog
 
