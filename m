@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 140C33FA153
-	for <lists+kvmarm@lfdr.de>; Fri, 27 Aug 2021 23:58:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D47F33FA4AA
+	for <lists+kvmarm@lfdr.de>; Sat, 28 Aug 2021 11:20:59 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 961644B161;
-	Fri, 27 Aug 2021 17:58:41 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4143A4B130;
+	Sat, 28 Aug 2021 05:20:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,67 +19,87 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1eoV8TjHvZxj; Fri, 27 Aug 2021 17:58:41 -0400 (EDT)
+	with ESMTP id QcQo0VFf5-qg; Sat, 28 Aug 2021 05:20:59 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2B7CC4B153;
-	Fri, 27 Aug 2021 17:58:38 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 458B44B13A;
+	Sat, 28 Aug 2021 05:20:55 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A317B4B13A
- for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 17:58:36 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 04B9B4B116
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 20:36:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id B6sPp+J2vSqi for <kvmarm@lists.cs.columbia.edu>;
- Fri, 27 Aug 2021 17:58:35 -0400 (EDT)
-Received: from mail-qk1-f202.google.com (mail-qk1-f202.google.com
- [209.85.222.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A12C94B10B
- for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 17:58:35 -0400 (EDT)
-Received: by mail-qk1-f202.google.com with SMTP id
- h7-20020a37b707000000b003fa4d25d9d0so414911qkf.17
- for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 14:58:35 -0700 (PDT)
+ with ESMTP id u1of2QbOWkaJ for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 27 Aug 2021 20:36:25 -0400 (EDT)
+Received: from mail-qv1-f74.google.com (mail-qv1-f74.google.com
+ [209.85.219.74])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BB4A64B0DD
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 20:36:25 -0400 (EDT)
+Received: by mail-qv1-f74.google.com with SMTP id
+ w6-20020a0cfc46000000b00370b0997afeso1505092qvp.15
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 27 Aug 2021 17:36:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=cnx8MV/iIdfnNKhivOjhJ2a0G3hLtk8JhdyLdiJTHU4=;
- b=LtCeEPuf1s00VFa7aOcMIfwN9jnd75qkZ9gzNqNQcwWEniYjs/3D83bO9UERdXmvO5
- oKO4gs34e+D0zEuC72QhnZ20J7YtfCJqOFD8TNukOsGZV3UDmxFtnw4ezBuz88Z9iSGx
- J44TeYACFHGC7svMAzgfZf4iXmRaJJr9ITLzBgtCKxN1i35WammzXpmheHhpsMCypyUB
- 3t05X8MQx/o65j+lj6xtcFotBr8utSSOjLvAQGjMfGvGdSaeV3tw6xAh4LlZzayASEMf
- vPMlSXiIYMBgIZE7L0RqsKIN51viU0dZkXU6c92hws6Uk/kfRLXh2AKkeAqZ77olLufS
- wMWA==
+ h=reply-to:date:message-id:mime-version:subject:from:to:cc;
+ bh=xh3b83AHgc+X5acCCZf2iVRK+ee8SLHX2uHx4t+xrBY=;
+ b=FsrBDBj81I24PUYsfqY9aNe2Br6Cge4C10V9fErKyzcL9jN9JzP/kqqqUHGaBFgQcQ
+ 0U9g5lP31TKw2LT3YjTlFAgoG4AS3SMwwYaB+iZ9VL+rH1PuDacZvkVF5TZDPvt+SCVp
+ hoVnB9YrhsLy30buyfkioR3VRr/U9QgKrM+qQnkI0aZ8yrDkdgGSixnrY69JIAMGRumH
+ CIa10muamcOBBpjShGeSCvzY0V1rXxFeRJk/BexUgt5cyg06R0PXRjlCeTWZrE9Yduwb
+ tvUde2o7UVIgOctvxLjj8VW7xpdvOez/m4ccG77zN+autZ2tCUck8ZbNdlcpaKwRcScv
+ Xlrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:in-reply-to:message-id:mime-version
- :references:subject:from:to:cc;
- bh=cnx8MV/iIdfnNKhivOjhJ2a0G3hLtk8JhdyLdiJTHU4=;
- b=aD1uznv8VxL12R06Q94642YP4ZKObZ1FhyMlHVNJKQX58cnEMR1CfVf3ojtkonP8zO
- Z/dQI8seDtkEkPbVUVnvpYQaKHm6bxMMmKH2bErFyYCaDp5YXbIDXNiaBJRCK0bUzAFk
- iyX3Tg1h5YxxXyNyWzfgytKnqrld2045+uKg46PfXwWkR/VPvrX03ANGOjXV0KM1ZDcf
- mTDLNsU3K5duLKnqw2RQ68npL9Vz0csUVuJqRse12uPL4uz3CpQVECSK9l0KCguY4NDz
- y7/ajEWQa0R7xN2Aw3g0qbGhBZYZS3+WKTajy8p68GIw5aqAhuzpWhXtBcbpWKJZNFe+
- u1xQ==
-X-Gm-Message-State: AOAM533rRd2J+kqRtVeApLwRIleYCcP7t1SmibbRBSpolpijNOAgDMVn
- KTOc3mkQIwmhMcZMV/ihJpqYYEKMKLU=
-X-Google-Smtp-Source: ABdhPJxlN8oeb0z4aA4E8CXHbvnDa6MT2IGvjTVLccWcC0CvIbwsk0TsHuuWIaBNDYgrU4hQng0Vn3csM6U=
-X-Received: from oupton.c.googlers.com ([fda3:e722:ac3:cc00:2b:ff92:c0a8:404])
- (user=oupton job=sendgmr) by 2002:a05:6214:1843:: with SMTP id
- d3mr12228530qvy.10.1630101515145; Fri, 27 Aug 2021 14:58:35 -0700 (PDT)
-Date: Fri, 27 Aug 2021 21:58:27 +0000
-In-Reply-To: <20210827215827.3774670-1-oupton@google.com>
-Message-Id: <20210827215827.3774670-3-oupton@google.com>
+ h=x-gm-message-state:reply-to:date:message-id:mime-version:subject
+ :from:to:cc;
+ bh=xh3b83AHgc+X5acCCZf2iVRK+ee8SLHX2uHx4t+xrBY=;
+ b=GeB0r9gg0fhCdkrKlfRIEKK6UQzBI3kdl0FQZxMo/Fl3up8vAkjFHBh1QITWiMD0fb
+ te1qG/9YVounLwlMp1FQ0KNGeKB0zZrv8t5951sbdm5VsjLcRpIgxb5Z/GSNnUdeMa6N
+ kiuwhQ9t/D5lOLiEy7a1BO65vraKC+4/8tsyQtG2xKDKENgw8mA4X1NB3CMTUaI2fQzq
+ Hy7nXn5Paddsnnl2wZ4AKCvVcBIkd/QvT5cqZP7qCQno5dehnjvAMc5ny5GpJH3pDESv
+ E0bkocxz6kr5R1RVLL0uij44PrMf1lHCbOlCySJaw6ae2LwXkNISlIjpNmnqmuJjqu09
+ dRwg==
+X-Gm-Message-State: AOAM530z80rDMIpwd2mTRnez+jksA8/l1o8Y1mS32Pia3GIFnboPBzsK
+ rbqnzdg9hdVq16WGlZ1ScXjhV/mjPBI=
+X-Google-Smtp-Source: ABdhPJzkOydjwKSx1IUjIGSvBy+QMF11RiN4xe9UgjoUhzwRgFrcyVUOeAZyVTnBYwiNIqVlWoCONvUze1Q=
+X-Received: from seanjc798194.pdx.corp.google.com
+ ([2620:15c:90:200:f66c:b851:7e79:7ed4])
+ (user=seanjc job=sendgmr) by 2002:a05:6214:10c4:: with SMTP id
+ r4mr12642407qvs.58.1630110985252; Fri, 27 Aug 2021 17:36:25 -0700 (PDT)
+Date: Fri, 27 Aug 2021 17:35:45 -0700
+Message-Id: <20210828003558.713983-1-seanjc@google.com>
 Mime-Version: 1.0
-References: <20210819223640.3564975-1-oupton@google.com>
- <20210827215827.3774670-1-oupton@google.com>
 X-Mailer: git-send-email 2.33.0.259.gc128427fd7-goog
-Subject: [RFC kvmtool PATCH 2/2] arm64: Add support for
- KVM_CAP_ARM_SYSTEM_SUSPEND
-From: Oliver Upton <oupton@google.com>
-To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
-Cc: Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
- Peter Shier <pshier@google.com>
+Subject: [PATCH v2 00/13] perf: KVM: Fix, optimize, and clean up callbacks
+From: Sean Christopherson <seanjc@google.com>
+To: Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, 
+ Arnaldo Carvalho de Melo <acme@kernel.org>, Will Deacon <will@kernel.org>,
+ Mark Rutland <mark.rutland@arm.com>, 
+ Catalin Marinas <catalin.marinas@arm.com>, Marc Zyngier <maz@kernel.org>,
+ Guo Ren <guoren@kernel.org>, 
+ Nick Hu <nickhu@andestech.com>, Greentime Hu <green.hu@gmail.com>, 
+ Vincent Chen <deanbo422@gmail.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Thomas Gleixner <tglx@linutronix.de>, Borislav Petkov <bp@alien8.de>,
+ x86@kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Boris Ostrovsky <boris.ostrovsky@oracle.com>, 
+ Juergen Gross <jgross@suse.com>
+X-Mailman-Approved-At: Sat, 28 Aug 2021 05:20:53 -0400
+Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ "H. Peter Anvin" <hpa@zytor.com>, linux-riscv@lists.infradead.org,
+ Jiri Olsa <jolsa@redhat.com>, kvmarm@lists.cs.columbia.edu,
+ Stefano Stabellini <sstabellini@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+ linux-csky@vger.kernel.org, xen-devel@lists.xenproject.org,
+ Zhu Lingshan <lingshan.zhu@intel.com>, Namhyung Kim <namhyung@kernel.org>,
+ Artem Kashkanov <artem.kashkanov@intel.com>,
+ linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
+ Like Xu <like.xu.linux@gmail.com>, Sean Christopherson <seanjc@google.com>,
+ linux-kernel@vger.kernel.org, linux-perf-users@vger.kernel.org,
+ Vitaly Kuznetsov <vkuznets@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
+Reply-To: Sean Christopherson <seanjc@google.com>
 List-Id: Where KVM/ARM decisions are made <kvmarm.lists.cs.columbia.edu>
 List-Unsubscribe: <https://lists.cs.columbia.edu/mailman/options/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=unsubscribe>
@@ -93,89 +113,98 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-KVM now allows a guest to issue the SYSTEM_SUSPEND PSCI call with buy-in
-from the VMM. Opt in to the new capability and handle the
-KVM_SYSTEM_EVENT_SUSPEND exit subtype by ignoring the guest request and
-entering KVM again. Since KVM has already configured the guest to
-resume, this will result in the guest immediately coming out of reset.
+This is a combination of ~2 series to fix bugs in the perf+KVM callbacks,
+optimize the callbacks by employing static_call, and do a variety of
+cleanup in both perf and KVM.
 
-Signed-off-by: Oliver Upton <oupton@google.com>
----
- arm/kvm.c         | 12 ++++++++++++
- include/kvm/kvm.h |  1 +
- kvm-cpu.c         |  5 +++++
- kvm.c             |  7 +++++++
- 4 files changed, 25 insertions(+)
+Patch 1 fixes a mostly-theoretical bug where perf can deref a NULL
+pointer if KVM unregisters its callbacks while they're being accessed.
+In practice, compilers tend to avoid problematic reloads of the pointer
+and the PMI handler doesn't lose the race against module unloading,
+i.e doesn't hit a use-after-free.
 
-diff --git a/arm/kvm.c b/arm/kvm.c
-index 5aea18f..0a53c46 100644
---- a/arm/kvm.c
-+++ b/arm/kvm.c
-@@ -59,6 +59,18 @@ void kvm__arch_set_cmdline(char *cmdline, bool video)
- 
- void kvm__arch_init(struct kvm *kvm, const char *hugetlbfs_path, u64 ram_size)
- {
-+	if (kvm__supports_vm_extension(kvm, KVM_CAP_ARM_SYSTEM_SUSPEND)) {
-+		struct kvm_enable_cap cap = {
-+			.cap = KVM_CAP_ARM_SYSTEM_SUSPEND
-+		};
-+		int err;
-+
-+		err = kvm__enable_vm_extension(kvm, &cap);
-+		if (err)
-+			die("Failed to enable KVM_CAP_ARM_SYSTEM_SUSPEND "
-+			    "[err %d]", err);
-+	}
-+
- 	/*
- 	 * Allocate guest memory. We must align our buffer to 64K to
- 	 * correlate with the maximum guest page size for virtio-mmio.
-diff --git a/include/kvm/kvm.h b/include/kvm/kvm.h
-index 56e9c8e..c797516 100644
---- a/include/kvm/kvm.h
-+++ b/include/kvm/kvm.h
-@@ -236,6 +236,7 @@ static inline bool host_ptr_in_ram(struct kvm *kvm, void *p)
- 
- bool kvm__supports_extension(struct kvm *kvm, unsigned int extension);
- bool kvm__supports_vm_extension(struct kvm *kvm, unsigned int extension);
-+int kvm__enable_vm_extension(struct kvm *kvm, struct kvm_enable_cap *cap);
- 
- static inline void kvm__set_thread_name(const char *name)
- {
-diff --git a/kvm-cpu.c b/kvm-cpu.c
-index 7dec088..1fedacf 100644
---- a/kvm-cpu.c
-+++ b/kvm-cpu.c
-@@ -236,6 +236,11 @@ int kvm_cpu__start(struct kvm_cpu *cpu)
- 				 */
- 				kvm__reboot(cpu->kvm);
- 				goto exit_kvm;
-+			case KVM_SYSTEM_EVENT_SUSPEND:
-+				/*
-+				 * Ignore the guest; kvm will resume it normally
-+				 */
-+				break;
- 			};
- 			break;
- 		default: {
-diff --git a/kvm.c b/kvm.c
-index e327541..66815b4 100644
---- a/kvm.c
-+++ b/kvm.c
-@@ -123,6 +123,13 @@ bool kvm__supports_vm_extension(struct kvm *kvm, unsigned int extension)
- 	return ret;
- }
- 
-+int kvm__enable_vm_extension(struct kvm *kvm, struct kvm_enable_cap *cap)
-+{
-+	int ret = ioctl(kvm->vm_fd, KVM_ENABLE_CAP, cap);
-+
-+	return ret ? errno : 0;
-+}
-+
- bool kvm__supports_extension(struct kvm *kvm, unsigned int extension)
- {
- 	int ret;
+Patches 2 and 3 fix an Intel PT handling bug where KVM incorrectly
+eats PT interrupts when PT is supposed to be owned entirely by the host.
+
+Patches 4-7 clean up perf's callback infrastructure and switch to
+static_call for arm64 and x86 (the only survivors).
+
+Patches 8-13 clean up related KVM code and unify the arm64/x86 callbacks.
+
+Based on "git://git.kernel.org/pub/scm/virt/kvm/kvm.git queue", commit
+680c7e3be6a3 ("KVM: x86: Exit to userspace ...").
+
+v2 (relatively to static_call v10)
+  - Split the patch into the semantic change (multiplexed ->state) and
+    introduction of static_call.
+  - Don't use '0' for "not a guest RIP".
+  - Handle unregister path.
+  - Drop changes for architectures that can be culled entirely.
+
+v2 (relative to v1)
+  - Drop per-cpu approach. [Peter]
+  - Fix mostly-theoretical reload and use-after-free with READ_ONCE(),
+    WRITE_ONCE(), and synchronize_rcu(). [Peter]
+  - Avoid new exports like the plague. [Peter]
+
+v1:
+  - https://lkml.kernel.org/r/20210827005718.585190-1-seanjc@google.com
+
+v10 static_call:
+  - https://lkml.kernel.org/r/20210806133802.3528-2-lingshan.zhu@intel.com
+
+Like Xu (2):
+  perf/core: Rework guest callbacks to prepare for static_call support
+  perf/core: Use static_call to optimize perf_guest_info_callbacks
+
+Sean Christopherson (11):
+  perf: Ensure perf_guest_cbs aren't reloaded between !NULL check and
+    deref
+  KVM: x86: Register perf callbacks after calling vendor's
+    hardware_setup()
+  KVM: x86: Register Processor Trace interrupt hook iff PT enabled in
+    guest
+  perf: Stop pretending that perf can handle multiple guest callbacks
+  perf: Force architectures to opt-in to guest callbacks
+  KVM: x86: Drop current_vcpu for kvm_running_vcpu + kvm_arch_vcpu
+    variable
+  KVM: x86: More precisely identify NMI from guest when handling PMI
+  KVM: Move x86's perf guest info callbacks to generic KVM
+  KVM: x86: Move Intel Processor Trace interrupt handler to vmx.c
+  KVM: arm64: Convert to the generic perf callbacks
+  KVM: arm64: Drop perf.c and fold its tiny bits of code into arm.c /
+    pmu.c
+
+ arch/arm/kernel/perf_callchain.c   | 28 ++------------
+ arch/arm64/Kconfig                 |  1 +
+ arch/arm64/include/asm/kvm_host.h  | 13 ++++++-
+ arch/arm64/kernel/perf_callchain.c | 28 +++++++++++---
+ arch/arm64/kvm/Makefile            |  2 +-
+ arch/arm64/kvm/arm.c               | 11 +++++-
+ arch/arm64/kvm/perf.c              | 62 ------------------------------
+ arch/arm64/kvm/pmu.c               |  8 ++++
+ arch/csky/kernel/perf_callchain.c  | 10 -----
+ arch/nds32/kernel/perf_event_cpu.c | 29 ++------------
+ arch/riscv/kernel/perf_callchain.c | 10 -----
+ arch/x86/Kconfig                   |  1 +
+ arch/x86/events/core.c             | 36 ++++++++++++++---
+ arch/x86/events/intel/core.c       |  7 ++--
+ arch/x86/include/asm/kvm_host.h    |  8 +++-
+ arch/x86/kvm/pmu.c                 |  2 +-
+ arch/x86/kvm/svm/svm.c             |  2 +-
+ arch/x86/kvm/vmx/vmx.c             | 25 +++++++++++-
+ arch/x86/kvm/x86.c                 | 58 +++++-----------------------
+ arch/x86/kvm/x86.h                 | 17 ++++++--
+ arch/x86/xen/pmu.c                 | 32 +++++++--------
+ include/kvm/arm_pmu.h              |  1 +
+ include/linux/kvm_host.h           | 10 +++++
+ include/linux/perf_event.h         | 26 ++++++++-----
+ init/Kconfig                       |  3 ++
+ kernel/events/core.c               | 24 ++++++------
+ virt/kvm/kvm_main.c                | 40 +++++++++++++++++++
+ 27 files changed, 245 insertions(+), 249 deletions(-)
+ delete mode 100644 arch/arm64/kvm/perf.c
+
 -- 
 2.33.0.259.gc128427fd7-goog
 
