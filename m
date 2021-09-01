@@ -2,10 +2,10 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CF1893FE4A7
-	for <lists+kvmarm@lfdr.de>; Wed,  1 Sep 2021 23:14:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 033373FE4A9
+	for <lists+kvmarm@lfdr.de>; Wed,  1 Sep 2021 23:14:36 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 80B6E4B199;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9F1C94B1AA;
 	Wed,  1 Sep 2021 17:14:35 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
@@ -14,65 +14,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4d1UrxY344+0; Wed,  1 Sep 2021 17:14:31 -0400 (EDT)
+	with ESMTP id dVI1swJNxu1u; Wed,  1 Sep 2021 17:14:35 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AD1CC4B1D7;
-	Wed,  1 Sep 2021 17:14:28 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C77304B1DA;
+	Wed,  1 Sep 2021 17:14:29 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D29AD4B149
- for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Sep 2021 17:14:26 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 116734B19A
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Sep 2021 17:14:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id pwsFWnhTmhXE for <kvmarm@lists.cs.columbia.edu>;
- Wed,  1 Sep 2021 17:14:25 -0400 (EDT)
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com
- [209.85.219.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D42B74B150
- for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Sep 2021 17:14:25 -0400 (EDT)
-Received: by mail-yb1-f201.google.com with SMTP id
- 131-20020a251489000000b0059bdeb10a84so841749ybu.15
- for <kvmarm@lists.cs.columbia.edu>; Wed, 01 Sep 2021 14:14:25 -0700 (PDT)
+ with ESMTP id XZBCo-J6XDPC for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  1 Sep 2021 17:14:28 -0400 (EDT)
+Received: from mail-qv1-f74.google.com (mail-qv1-f74.google.com
+ [209.85.219.74])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3A5314B19D
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Sep 2021 17:14:28 -0400 (EDT)
+Received: by mail-qv1-f74.google.com with SMTP id
+ ib9-20020a0562141c8900b003671c3a1243so959812qvb.21
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 01 Sep 2021 14:14:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=NynU0VsFkQhJQXqud91+TUp51z++5EuhmTtoJ8VM9vA=;
- b=qxxM6e/f9pWYsiuH2KBdjm/QJz59IOabtX0q2PBaontEeisBXxrqs2rUX+tExYWnQC
- +BfAxtddJnpKm2BqubT6De6arWo1cO9OCTfcEPhKVHvuI6f3jqj8AIVjs7jYgobkIm0T
- 6qHQEztZlWua/EDfjcGSetqRERlMqLhCV81u4U3FYVuuFwWqPvnI3TLlvSTa5OQiCcT0
- kWayz4MmD832Owoowm0OulpTJTXnIx0JBJD/WMInIQuMCbsWafNlF/rcFoTGXQjbhKVM
- lFW7WJdx7p7jLw5vZmElbvDunRWvOCyQCKNFC0lfyBT5cU7FMaIO3SRTvnPI3AY0zLmq
- Yl5Q==
+ :cc; bh=Isvx4DjIyZ95UhyLPtghW+KyLIgzd4+t6VBStaNZel4=;
+ b=qyxdd1Im2YrMFUu2970w/b6BrYgp0K2RtFaSPBbFajB/Z4ILFmH5RtNIhZahtm5Owk
+ aezBt9A1JRyOWIRSYlCyfnap0LuVFZ7p20vC3ErhfaylqfBt3hKgkpE6HkPGooQtsfS2
+ DI8qbreTIGfFkQ04tVXq7jD6kr9SV0BoxM5RCoRCzxeNpi21SrJ2DUoVDXg/xrRkEeJ0
+ bXprxLBdvjeVfEFi6WQvG3MoEvTutHilR+thPeWgioFEqV+DY0IcuYzJuK95PjuHGUAR
+ CyVYsF8IsaDRkVxuM2uo4sczHkZ4yguHAb1PkC10Tdr6G6RJxMBQY+tGevXPPcPsVhK5
+ OlWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=NynU0VsFkQhJQXqud91+TUp51z++5EuhmTtoJ8VM9vA=;
- b=CfeipqQtynv8pcU/AFn+WiHFJWxD47YKuWVIMBrQQiVsWgKH8ZLPVzciMv2EoVxDIL
- 5qscIbTN3OMt/hR6C9WVfAa7/TtsvZJpyRiSuxNrjaoiqRWLKw8Izwzt0w5xxDeHCHvP
- ioWbQo7aTRBmapM7iAXyarvvkZnKQVxJvx69NkiJskHKuHMkcXS0wa77FA1vlK73NxGl
- FAQwTsF8TzfZ/FCgWmYLjBSwbOZ3pMTDQ3p7IDy+c8hElgrEKZ4rF0K/2Ozg3xQNDIlC
- Ki/4yJ/NAGB+HF5n6yg8UY0uB1h2OwD5pBKW5dpxTnQMVGrSVVDszVW9KvRbLcug7rRt
- KxVg==
-X-Gm-Message-State: AOAM531vYhxOgjoowmImdz60aIyjrGEuLX+Q3Wrga/JRKS6d1g6y3yeN
- +2S4K4Dv3i/V2YB6HEhA9BCtr8MXWVV9
-X-Google-Smtp-Source: ABdhPJwzoSNSMY4AoIgePcfbWrmdrKkF0HMq2vl5cRhEhWI4zgAXPrcPYKV3maPtzwS1olSJmbGt1RseS5bc
+ bh=Isvx4DjIyZ95UhyLPtghW+KyLIgzd4+t6VBStaNZel4=;
+ b=Zlr29EkVV+ciOG6GU/on4Xg4ABYGAtTV6nY7dBAfZ82nzSSYZDPLIfOh2kUfotUGuH
+ rxaMOes654GErM+xSABIT9l65rpczLOYOyVVU9vzYR6omlJFfe1w75sd9Et1QneG40JP
+ CBy+jMLcK/6eqKQmY3zAqA+jFNQFu1/tpzGxKTa3fcSCHtsm3Bo21TxkKboQu5fvSC3T
+ Iaczq9ycplR327EAE8L0L/+fUj7zeYVGo6uQPPbHSu4TI9MNOKNtdrrOAAmxVp8J7f7M
+ JHTBPzYbnu5FzmAX+FybEB94+iqKvc3pv7iGksg2dGwP3IMI5UsKQBCjRQgbTbuXuNuo
+ iG5w==
+X-Gm-Message-State: AOAM531T7AZubYMjLjapbVe5Kl/rOgQ5t8BxZ5tSRAgRPtHUbH4cAnO4
+ JzaQmIapk40HDyw74BeDP1Mhi5plHfN3
+X-Google-Smtp-Source: ABdhPJwlth2Eo5IAldYMKFCB7G6X17abdCy5ScWqLZRgKQwhrRMlUTBR9716k8Lrh7gJV88fgE5xC5aFUA+J
 X-Received: from rananta-virt.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:1bcc])
- (user=rananta job=sendgmr) by 2002:a05:6902:1008:: with SMTP id
- w8mr2179650ybt.183.1630530865464; Wed, 01 Sep 2021 14:14:25 -0700 (PDT)
-Date: Wed,  1 Sep 2021 21:14:02 +0000
+ (user=rananta job=sendgmr) by 2002:a0c:9c4d:: with SMTP id
+ w13mr1802546qve.43.1630530867766; Wed, 01 Sep 2021 14:14:27 -0700 (PDT)
+Date: Wed,  1 Sep 2021 21:14:03 +0000
 In-Reply-To: <20210901211412.4171835-1-rananta@google.com>
-Message-Id: <20210901211412.4171835-3-rananta@google.com>
+Message-Id: <20210901211412.4171835-4-rananta@google.com>
 Mime-Version: 1.0
 References: <20210901211412.4171835-1-rananta@google.com>
 X-Mailer: git-send-email 2.33.0.153.gba50c8fa24-goog
-Subject: [PATCH v3 02/12] KVM: arm64: selftests: Add write_sysreg_s and
- read_sysreg_s
+Subject: [PATCH v3 03/12] KVM: arm64: selftests: Add support for cpu_relax
 From: Raghavendra Rao Ananta <rananta@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>, 
  James Morse <james.morse@arm.com>, Alexandru Elisei <alexandru.elisei@arm.com>,
@@ -97,90 +96,33 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-For register names that are unsupported by the assembler or the ones
-without architectural names, add the macros write_sysreg_s and
-read_sysreg_s to support them.
+Implement the guest helper routine, cpu_relax(), to yield
+the processor to other tasks.
 
-The functionality is derived from kvm-unit-tests and kernel's
-arch/arm64/include/asm/sysreg.h.
+The function was derived from
+arch/arm64/include/asm/vdso/processor.h.
 
 Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
 ---
- .../selftests/kvm/include/aarch64/processor.h | 61 +++++++++++++++++++
- 1 file changed, 61 insertions(+)
+ tools/testing/selftests/kvm/include/aarch64/processor.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/tools/testing/selftests/kvm/include/aarch64/processor.h b/tools/testing/selftests/kvm/include/aarch64/processor.h
-index 3cbaf5c1e26b..082cc97ad8d3 100644
+index 082cc97ad8d3..78df059dc974 100644
 --- a/tools/testing/selftests/kvm/include/aarch64/processor.h
 +++ b/tools/testing/selftests/kvm/include/aarch64/processor.h
-@@ -118,6 +118,67 @@ void vm_install_exception_handler(struct kvm_vm *vm,
- void vm_install_sync_handler(struct kvm_vm *vm,
- 		int vector, int ec, handler_fn handler);
+@@ -191,6 +191,11 @@ asm(
+ 	val;								  \
+ })
  
-+/*
-+ * ARMv8 ARM reserves the following encoding for system registers:
-+ * (Ref: ARMv8 ARM, Section: "System instruction class encoding overview",
-+ *  C5.2, version:ARM DDI 0487A.f)
-+ *	[20-19] : Op0
-+ *	[18-16] : Op1
-+ *	[15-12] : CRn
-+ *	[11-8]  : CRm
-+ *	[7-5]   : Op2
-+ */
-+#define Op0_shift	19
-+#define Op0_mask	0x3
-+#define Op1_shift	16
-+#define Op1_mask	0x7
-+#define CRn_shift	12
-+#define CRn_mask	0xf
-+#define CRm_shift	8
-+#define CRm_mask	0xf
-+#define Op2_shift	5
-+#define Op2_mask	0x7
++static inline void cpu_relax(void)
++{
++	asm volatile("yield" ::: "memory");
++}
 +
-+/*
-+ * When accessed from guests, the ARM64_SYS_REG() doesn't work since it
-+ * generates a different encoding for additional KVM processing, and is
-+ * only suitable for userspace to access the register via ioctls.
-+ * Hence, define a 'pure' sys_reg() here to generate the encodings as per spec.
-+ */
-+#define sys_reg(op0, op1, crn, crm, op2) \
-+	(((op0) << Op0_shift) | ((op1) << Op1_shift) | \
-+	 ((crn) << CRn_shift) | ((crm) << CRm_shift) | \
-+	 ((op2) << Op2_shift))
-+
-+asm(
-+"	.irp	num,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30\n"
-+"	.equ	.L__reg_num_x\\num, \\num\n"
-+"	.endr\n"
-+"	.equ	.L__reg_num_xzr, 31\n"
-+"\n"
-+"	.macro	mrs_s, rt, sreg\n"
-+"	.inst	0xd5200000|(\\sreg)|(.L__reg_num_\\rt)\n"
-+"	.endm\n"
-+"\n"
-+"	.macro	msr_s, sreg, rt\n"
-+"	.inst	0xd5000000|(\\sreg)|(.L__reg_num_\\rt)\n"
-+"	.endm\n"
-+);
-+
-+/*
-+ * read_sysreg_s() and write_sysreg_s()'s 'reg' has to be encoded via sys_reg()
-+ */
-+#define read_sysreg_s(reg) ({						\
-+	u64 __val;							\
-+	asm volatile("mrs_s %0, "__stringify(reg) : "=r" (__val));	\
-+	__val;								\
-+})
-+
-+#define write_sysreg_s(reg, val) do {					\
-+	u64 __val = (u64)val;						\
-+	asm volatile("msr_s "__stringify(reg) ", %x0" : : "rZ" (__val));\
-+} while (0)
-+
- #define write_sysreg(reg, val)						  \
- ({									  \
- 	u64 __val = (u64)(val);						  \
+ #define isb()		asm volatile("isb" : : : "memory")
+ #define dsb(opt)	asm volatile("dsb " #opt : : : "memory")
+ #define dmb(opt)	asm volatile("dmb " #opt : : : "memory")
 -- 
 2.33.0.153.gba50c8fa24-goog
 
