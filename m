@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E98313FF53E
-	for <lists+kvmarm@lfdr.de>; Thu,  2 Sep 2021 23:01:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B1633FF53F
+	for <lists+kvmarm@lfdr.de>; Thu,  2 Sep 2021 23:01:23 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5DA254B120;
-	Thu,  2 Sep 2021 17:01:21 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D93F4B11A;
+	Thu,  2 Sep 2021 17:01:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,71 +14,72 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id sLcCtPYr+SD0; Thu,  2 Sep 2021 17:01:21 -0400 (EDT)
+	with ESMTP id nRTFSr9FlP+g; Thu,  2 Sep 2021 17:01:21 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0AE444B11E;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 277804B126;
 	Thu,  2 Sep 2021 17:01:20 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D71934B10A
- for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Sep 2021 15:21:47 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4BAE54B10A
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Sep 2021 15:22:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id RhUVyMCfe1Km for <kvmarm@lists.cs.columbia.edu>;
- Thu,  2 Sep 2021 15:21:46 -0400 (EDT)
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com
- [209.85.215.178])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C45D54A524
- for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Sep 2021 15:21:46 -0400 (EDT)
-Received: by mail-pg1-f178.google.com with SMTP id e7so3059963pgk.2
- for <kvmarm@lists.cs.columbia.edu>; Thu, 02 Sep 2021 12:21:46 -0700 (PDT)
+ with ESMTP id cnZkpUFxE2uX for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  2 Sep 2021 15:22:44 -0400 (EDT)
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com
+ [209.85.214.178])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B4B214A524
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Sep 2021 15:22:44 -0400 (EDT)
+Received: by mail-pl1-f178.google.com with SMTP id q21so1841205plq.3
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 02 Sep 2021 12:22:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=date:from:to:cc:subject:message-id:references:mime-version
  :content-disposition:in-reply-to;
- bh=bTPb2LtwY0BuCTlFiP191M1j/fLfSg4VVRY2NYVbQM8=;
- b=S/7EM5Sy//hkeACCvKyqm5sVVqBrQaqsdvxj8V+pqH+VLsMswwElPvPODqMd7fVjBQ
- 5i230e6v/OtvAgnS/CLoAsXnvILeltliV0s92h56yoUA0fUf11fzBxIPynn5EMbuXXRb
- gl5wjP5M2Lau95yABeHZjPjOapP29zLMK0IS+/+ygST5fVXgaJPDUEEdyNeVz93uhZ/d
- 85dVXSxIWc3ixj4OrK1qCnh5UqmWozTZAXAk8AOj9Av8RLaDEsT6WgMig+7/yc9yTAd0
- QUPr4LbBjx9ibxnCt7BKdmJvrZfo0aFFeURS5oDPX3mGs2EAYO6KWacDYmpbuNM4tQl0
- b25A==
+ bh=uNPtW+6uA+IorMmx89tZvAje5LA6sRmLTggdZeiUpKQ=;
+ b=DUPBVsET97fo8gZE+12RRIe3oBglmGvYRDpWjPC2p+hbEXLBsAYdQvDjInkq6gYd9W
+ aD0keO3ba193KwUAVcMMcw+goFfB2DAN7bF6mvu7quwJ39X0u0GDdq6d0OOhIGbnCvNx
+ jE0qJTjzRRm6E8cO1WHrwHdmnAAbN2EB+EIKY49b88wbvHWGVELVHCLjaPF8+CX3gjAG
+ a4OToBU85qyLrfFq90ge6iKk8oVInT2Lj4C0lF3v/U7veqJLjRlG/5Jd9L1Rhtw1lTsU
+ qi+PWSS7OrPNvrRmJQp/0Rnc2emt5+f/oh+VuZc/SgzPRcMJG/Qe1jrYCg1dxv07hOOU
+ Ae6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to;
- bh=bTPb2LtwY0BuCTlFiP191M1j/fLfSg4VVRY2NYVbQM8=;
- b=VBM2eeSA0Ixx1B7csZ+clTRHooOnCh8Zp9AvV1Fi+iK0zaP8Jksy7M+mZSN4V4sA9E
- 50gIcXeyVqT+Sb9M5tdOUohl9mNm1tzzDrRhRwDhXxGCenWszkQZutHNHTAxcOnYq10S
- JmXllvzYiEwXwtlRQY4Vz3PlJggJf4y6QxTrUMvzQ8I/g0SEF2pUYiHhhevCw/F6p6yK
- ZQqVqG4MifC0pEr0awOPi0FggWWbmJ7Lj4k8mvMUiS3Y5X6RUIoi7m5MbMCQ4MoFHFCL
- tVc4k+jApKMold5aMTs3fAC+NkQQudr5rxXbWxrvzIVeV/h0fVG1SOtIM47Hbqgsk0Np
- w6Rg==
-X-Gm-Message-State: AOAM532kB0NjM+0atllSkRy6qJAHT306ZXzGWfSWs0l0t9t3YaafLMxC
- I/VIJNKlrSFINaI/kmuOAvYFEg==
-X-Google-Smtp-Source: ABdhPJyHmQYfdDfH5nHCWTHDLHiMkKrNuJmjtl34uxM72CrPEH11VQku3MHYEgMhSvkmPIwPWS9zAg==
-X-Received: by 2002:aa7:85d8:0:b0:408:78f4:a5fe with SMTP id
- z24-20020aa785d8000000b0040878f4a5femr4725944pfn.2.1630610505325; 
- Thu, 02 Sep 2021 12:21:45 -0700 (PDT)
+ bh=uNPtW+6uA+IorMmx89tZvAje5LA6sRmLTggdZeiUpKQ=;
+ b=mvvF1TBIg63VekM9ONNp1talZ1g2Jzg26va9QpP9PapIf5G09p4nBopCe/2TTARBVW
+ PnZheS3qhCjd2f/zy2gCBipseKfgfOo/D4sQkqjmZ7/AsCqPe5e2bRmTvxhsEVs4sj0R
+ zO87Hs2h4k8+4coNmYM5bmKZqfG8b1Q2ezOBnIS+8DGvfRuakWTS2CZ2HYk96zLW9i8m
+ 12qKybXx+JwmbOPgVzrokLivxm+xUwxyPnx9yblwLmYGgM7C/esq0B+CsMmLz45AgKwX
+ jd2op2J4Sauzoo3Xbldi0ZPWVRksoIybqDBLTWI6ZAzY70+1w+1XFPOBFzICL8HyVA4E
+ 7h4A==
+X-Gm-Message-State: AOAM530IdhFcdvEi/XWVFAJCh5c9gD17YV77vC4kVHQpAKe1EXq2jAKR
+ RQlP4cb2AVFvfHkEtZQJW8JdGQ==
+X-Google-Smtp-Source: ABdhPJyA+Ul43RLuBvaJkLgS2mR6ljKmyKfNqIQzvT0/kC56lZBa3GlaBfo3GRItE1F4k7nstvQBhg==
+X-Received: by 2002:a17:90a:ad02:: with SMTP id
+ r2mr5529728pjq.182.1630610563431; 
+ Thu, 02 Sep 2021 12:22:43 -0700 (PDT)
 Received: from google.com (157.214.185.35.bc.googleusercontent.com.
  [35.185.214.157])
- by smtp.gmail.com with ESMTPSA id 6sm3086990pjz.8.2021.09.02.12.21.44
+ by smtp.gmail.com with ESMTPSA id x75sm3674726pgx.43.2021.09.02.12.22.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Sep 2021 12:21:44 -0700 (PDT)
-Date: Thu, 2 Sep 2021 19:21:41 +0000
+ Thu, 02 Sep 2021 12:22:42 -0700 (PDT)
+Date: Thu, 2 Sep 2021 19:22:39 +0000
 From: Sean Christopherson <seanjc@google.com>
 To: Oliver Upton <oupton@google.com>
-Subject: Re: [PATCH v7 5/6] KVM: x86: Refactor tsc synchronization code
-Message-ID: <YTEkRfTFyoh+HQyT@google.com>
+Subject: Re: [PATCH v7 4/6] KVM: x86: Take the pvclock sync lock behind the
+ tsc_write_lock
+Message-ID: <YTEkf3wn/PbVpYni@google.com>
 References: <20210816001130.3059564-1-oupton@google.com>
- <20210816001130.3059564-6-oupton@google.com>
+ <20210816001130.3059564-5-oupton@google.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20210816001130.3059564-6-oupton@google.com>
+In-Reply-To: <20210816001130.3059564-5-oupton@google.com>
 X-Mailman-Approved-At: Thu, 02 Sep 2021 17:01:18 -0400
 Cc: Catalin Marinas <catalin.marinas@arm.com>, kvm@vger.kernel.org,
  Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
@@ -102,84 +103,74 @@ Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 On Mon, Aug 16, 2021, Oliver Upton wrote:
-> Refactor kvm_synchronize_tsc to make a new function that allows callers
-> to specify TSC parameters (offset, value, nanoseconds, etc.) explicitly
-> for the sake of participating in TSC synchronization.
+> A later change requires that the pvclock sync lock be taken while
+> holding the tsc_write_lock. Change the locking in kvm_synchronize_tsc()
+> to align with the requirement to isolate the locking change to its own
+> commit.
 > 
+> Cc: Sean Christopherson <seanjc@google.com>
 > Signed-off-by: Oliver Upton <oupton@google.com>
 > ---
-> +	struct kvm *kvm = vcpu->kvm;
-> +	bool already_matched;
+>  Documentation/virt/kvm/locking.rst | 11 +++++++++++
+>  arch/x86/kvm/x86.c                 |  2 +-
+>  2 files changed, 12 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/virt/kvm/locking.rst b/Documentation/virt/kvm/locking.rst
+> index 8138201efb09..0bf346adac2a 100644
+> --- a/Documentation/virt/kvm/locking.rst
+> +++ b/Documentation/virt/kvm/locking.rst
+> @@ -36,6 +36,9 @@ On x86:
+>    holding kvm->arch.mmu_lock (typically with ``read_lock``, otherwise
+>    there's no need to take kvm->arch.tdp_mmu_pages_lock at all).
+>  
+> +- kvm->arch.tsc_write_lock is taken outside
+> +  kvm->arch.pvclock_gtod_sync_lock
 > +
-> +	lockdep_assert_held(&kvm->arch.tsc_write_lock);
+>  Everything else is a leaf: no other lock is taken inside the critical
+>  sections.
+>  
+> @@ -222,6 +225,14 @@ time it will be set using the Dirty tracking mechanism described above.
+>  :Comment:	'raw' because hardware enabling/disabling must be atomic /wrt
+>  		migration.
+>  
+> +:Name:		kvm_arch::pvclock_gtod_sync_lock
+> +:Type:		raw_spinlock_t
+> +:Arch:		x86
+> +:Protects:	kvm_arch::{cur_tsc_generation,cur_tsc_nsec,cur_tsc_write,
+> +			cur_tsc_offset,nr_vcpus_matched_tsc}
+> +:Comment:	'raw' because updating the kvm master clock must not be
+> +		preempted.
 > +
-> +	already_matched =
-> +	       (vcpu->arch.this_tsc_generation == kvm->arch.cur_tsc_generation);
-> +
+>  :Name:		kvm_arch::tsc_write_lock
+>  :Type:		raw_spinlock
+>  :Arch:		x86
+> diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+> index b1e9a4885be6..f1434cd388b9 100644
+> --- a/arch/x86/kvm/x86.c
+> +++ b/arch/x86/kvm/x86.c
+> @@ -2533,7 +2533,6 @@ static void kvm_synchronize_tsc(struct kvm_vcpu *vcpu, u64 data)
+>  	vcpu->arch.this_tsc_write = kvm->arch.cur_tsc_write;
+>  
+>  	kvm_vcpu_write_tsc_offset(vcpu, offset);
+> -	raw_spin_unlock_irqrestore(&kvm->arch.tsc_write_lock, flags);
+>  
+>  	spin_lock_irqsave(&kvm->arch.pvclock_gtod_sync_lock, flags);
+>  	if (!matched) {
+> @@ -2544,6 +2543,7 @@ static void kvm_synchronize_tsc(struct kvm_vcpu *vcpu, u64 data)
+>  
+>  	kvm_track_tsc_matching(vcpu);
+>  	spin_unlock_irqrestore(&kvm->arch.pvclock_gtod_sync_lock, flags);
 
-...
+Drop the irqsave/irqrestore in this patch instead of doing so while refactoring
+the code in the next patch.
 
-> +	if (!matched) {
-> +		/*
-> +		 * We split periods of matched TSC writes into generations.
-> +		 * For each generation, we track the original measured
-> +		 * nanosecond time, offset, and write, so if TSCs are in
-> +		 * sync, we can match exact offset, and if not, we can match
-> +		 * exact software computation in compute_guest_tsc()
-> +		 *
-> +		 * These values are tracked in kvm->arch.cur_xxx variables.
-> +		 */
-> +		kvm->arch.cur_tsc_generation++;
-> +		kvm->arch.cur_tsc_nsec = ns;
-> +		kvm->arch.cur_tsc_write = tsc;
-> +		kvm->arch.cur_tsc_offset = offset;
-> +
-> +		spin_lock(&kvm->arch.pvclock_gtod_sync_lock);
-> +		kvm->arch.nr_vcpus_matched_tsc = 0;
-> +	} else if (!already_matched) {
-> +		spin_lock(&kvm->arch.pvclock_gtod_sync_lock);
-> +		kvm->arch.nr_vcpus_matched_tsc++;
-> +	}
-> +
-> +	kvm_track_tsc_matching(vcpu);
-> +	spin_unlock(&kvm->arch.pvclock_gtod_sync_lock);
-
-This unlock is imbalanced if matched and already_matched are both true.  It's not
-immediately obvious that that _can't_ happen, and if it truly can't happen then
-conditionally locking is pointless (because it's not actually conditional).
-
-The previous code took the lock unconditionally, I don't see a strong argument
-to change that, e.g. holding it for a few extra cycles while kvm->arch.cur_tsc_*
-are updated is unlikely to be noticable.
-
-If you really want to delay taking the locking, you could do
-
-	if (!matched) {
-		kvm->arch.cur_tsc_generation++;
-		kvm->arch.cur_tsc_nsec = ns;
-		kvm->arch.cur_tsc_write = data;
-		kvm->arch.cur_tsc_offset = offset;
-	}
-
-	spin_lock(&kvm->arch.pvclock_gtod_sync_lock);
-	if (!matched)
-		kvm->arch.nr_vcpus_matched_tsc = 0;
-	else if (!already_matched)
-		kvm->arch.nr_vcpus_matched_tsc++;
-	spin_unlock(&kvm->arch.pvclock_gtod_sync_lock);
-
-or if you want to get greedy
-
-	if (!matched || !already_matched) {
-		spin_lock(&kvm->arch.pvclock_gtod_sync_lock);
-		if (!matched)
-			kvm->arch.nr_vcpus_matched_tsc = 0;
-		else
-			kvm->arch.nr_vcpus_matched_tsc++;
-		spin_unlock(&kvm->arch.pvclock_gtod_sync_lock);
-	}
-
-Though I'm not sure the minor complexity is worth avoiding spinlock contention.
+> +	raw_spin_unlock_irqrestore(&kvm->arch.tsc_write_lock, flags);
+>  }
+>  
+>  static inline void adjust_tsc_offset_guest(struct kvm_vcpu *vcpu,
+> -- 
+> 2.33.0.rc1.237.g0d66db33f3-goog
+> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
