@@ -2,74 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 69D6440002C
-	for <lists+kvmarm@lfdr.de>; Fri,  3 Sep 2021 15:08:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66806400033
+	for <lists+kvmarm@lfdr.de>; Fri,  3 Sep 2021 15:08:34 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D5AE74B1ED;
-	Fri,  3 Sep 2021 09:08:30 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 189764B1F6;
+	Fri,  3 Sep 2021 09:08:34 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.391
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.391 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@suse.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Adkcz4E7t+Jj; Fri,  3 Sep 2021 09:08:30 -0400 (EDT)
+	with ESMTP id M6FLkPew4WMT; Fri,  3 Sep 2021 09:08:32 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C31014B1EC;
-	Fri,  3 Sep 2021 09:08:29 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E395B4B1F2;
+	Fri,  3 Sep 2021 09:08:32 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id F32FF4B1AB
- for <kvmarm@lists.cs.columbia.edu>; Fri,  3 Sep 2021 09:08:28 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BF5974B1F0
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  3 Sep 2021 09:08:31 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id X06ZdcCTVNyR for <kvmarm@lists.cs.columbia.edu>;
- Fri,  3 Sep 2021 09:08:27 -0400 (EDT)
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D59184B1A0
- for <kvmarm@lists.cs.columbia.edu>; Fri,  3 Sep 2021 09:08:27 -0400 (EDT)
+ with ESMTP id eczQ35mz+p1J for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  3 Sep 2021 09:08:30 -0400 (EDT)
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B68C84B1DC
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  3 Sep 2021 09:08:29 -0400 (EDT)
 Received: from imap1.suse-dmz.suse.de (imap1.suse-dmz.suse.de [192.168.254.73])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 7E4AD226F0;
- Fri,  3 Sep 2021 13:08:26 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 037C11FD88;
+ Fri,  3 Sep 2021 13:08:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1630674506; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=NN5HIyhd2hnMW2pPqHYMruB3Bj3fGyUnsWK7Hj00imw=;
- b=T6lLGd6FQmb5ouXURJN/wpryYuxVyDYwFIXSM5ovqZU54Zy7M5ma6Mo9+sCnCBUy9rnA2y
- B1RFvgVp76vfG6u/8j7GCV8SVom0jO5vLkNpBSOJYRirwRZwHOpSqDORiG15hcaHLLMD+9
- aaEe5Z5h7+o8DLK+z5EBLnk6ybOdLxE=
+ t=1630674509; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GYBAeJZ/jt0gKsW8sstxDlF07qX0fOSGC+9QZTZ20e0=;
+ b=Fk7784k4btp/8V70SaI0iDfzk5vtAKnClPvggrNn9pWx2neT3VOma8ioBe8Rt+GWVBIRcr
+ caxdOnEd5dt/G9EZKCOgzCHgzYs4WyjSRQXmiC7Rgj28X9VCwdRdiHjn4aeb//Wf3otPbe
+ iCB/I4lAiPDDChf/M5lnqFnJ0FpPfWA=
 Received: from imap1.suse-dmz.suse.de (imap1.suse-dmz.suse.de [192.168.254.73])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
  (No client certificate requested)
- by imap1.suse-dmz.suse.de (Postfix) with ESMTPS id BDFEF137D4;
- Fri,  3 Sep 2021 13:08:25 +0000 (UTC)
+ by imap1.suse-dmz.suse.de (Postfix) with ESMTPS id 4F2A4137D4;
+ Fri,  3 Sep 2021 13:08:28 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
- by imap1.suse-dmz.suse.de with ESMTPSA id MJjBLEkeMmHYOAAAGKfGzw
- (envelope-from <jgross@suse.com>); Fri, 03 Sep 2021 13:08:25 +0000
+ by imap1.suse-dmz.suse.de with ESMTPSA id eD3FEUweMmHYOAAAGKfGzw
+ (envelope-from <jgross@suse.com>); Fri, 03 Sep 2021 13:08:28 +0000
 From: Juergen Gross <jgross@suse.com>
-To: kvm@vger.kernel.org, x86@kernel.org, linux-kernel@vger.kernel.org,
- linux-doc@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2 0/6] x86/kvm: add boot parameters for max vcpu configs
-Date: Fri,  3 Sep 2021 15:08:01 +0200
-Message-Id: <20210903130808.30142-1-jgross@suse.com>
+To: kvm@vger.kernel.org, x86@kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org
+Subject: [PATCH v2 4/6] kvm: use kvfree() in kvm_arch_free_vm()
+Date: Fri,  3 Sep 2021 15:08:05 +0200
+Message-Id: <20210903130808.30142-5-jgross@suse.com>
 X-Mailer: git-send-email 2.26.2
+In-Reply-To: <20210903130808.30142-1-jgross@suse.com>
+References: <20210903130808.30142-1-jgross@suse.com>
 MIME-Version: 1.0
 Cc: Juergen Gross <jgross@suse.com>, Wanpeng Li <wanpengli@tencent.com>,
- ehabkost@redhat.com, Will Deacon <will@kernel.org>,
- Jonathan Corbet <corbet@lwn.net>, maz@kernel.org,
- Joerg Roedel <joro@8bytes.org>, "H. Peter Anvin" <hpa@zytor.com>,
- kvmarm@lists.cs.columbia.edu, Catalin Marinas <catalin.marinas@arm.com>,
- Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
- Sean Christopherson <seanjc@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ ehabkost@redhat.com, Will Deacon <will@kernel.org>, maz@kernel.org,
+ Joerg Roedel <joro@8bytes.org>, Sean Christopherson <seanjc@google.com>,
+ "H. Peter Anvin" <hpa@zytor.com>, kvmarm@lists.cs.columbia.edu,
+ Ingo Molnar <mingo@redhat.com>, Catalin Marinas <catalin.marinas@arm.com>,
+ Borislav Petkov <bp@alien8.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Vitaly Kuznetsov <vkuznets@redhat.com>, Thomas Gleixner <tglx@linutronix.de>,
  Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
@@ -88,52 +91,106 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-In order to be able to have a single kernel for supporting even huge
-numbers of vcpus per guest some arrays should be sized dynamically.
+By switching from kfree() to kvfree() in kvm_arch_free_vm() Arm64 can
+use the common variant. This can be accomplished by adding another
+macro __KVM_HAVE_ARCH_VM_FREE, which will be used only by x86 for now.
 
-The easiest way to do that is to add boot parameters for the maximum
-number of vcpus and to calculate the maximum vcpu-id from that using
-either the host topology or a topology hint via another boot parameter.
+Further simplification can be achieved by adding __kvm_arch_free_vm()
+doing the common part.
 
-This patch series is doing that for x86. The same scheme can be easily
-adapted to other architectures, but I don't want to do that in the
-first iteration.
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+---
+V2:
+- new patch
+---
+ arch/arm64/include/asm/kvm_host.h | 1 -
+ arch/arm64/kvm/arm.c              | 8 --------
+ arch/x86/include/asm/kvm_host.h   | 2 ++
+ arch/x86/kvm/x86.c                | 2 +-
+ include/linux/kvm_host.h          | 9 ++++++++-
+ 5 files changed, 11 insertions(+), 11 deletions(-)
 
-In the long term I'd suggest to have a per-guest setting of the two
-parameters allowing to spare some memory for smaller guests. OTOH this
-would require new ioctl()s and respective qemu modifications, so I let
-those away for now.
-
-I've tested the series not to break normal guest operation and the new
-parameters to be effective on x86. For Arm64 I did a compile test only.
-
-Changes in V2:
-- removed old patch 1, as already applied
-- patch 1 (old patch 2) only for reference, as the patch is already in
-  the kvm tree
-- switch patch 2 (old patch 3) to calculate vcpu-id
-- added patch 4
-
-Juergen Gross (6):
-  x86/kvm: remove non-x86 stuff from arch/x86/kvm/ioapic.h
-  x86/kvm: add boot parameter for adding vcpu-id bits
-  x86/kvm: introduce per cpu vcpu masks
-  kvm: use kvfree() in kvm_arch_free_vm()
-  kvm: allocate vcpu pointer array separately
-  x86/kvm: add boot parameter for setting max number of vcpus per guest
-
- .../admin-guide/kernel-parameters.txt         | 25 ++++++
- arch/arm64/include/asm/kvm_host.h             |  1 -
- arch/arm64/kvm/arm.c                          | 23 ++++--
- arch/x86/include/asm/kvm_host.h               | 26 +++++--
- arch/x86/kvm/hyperv.c                         | 25 ++++--
- arch/x86/kvm/ioapic.c                         | 12 ++-
- arch/x86/kvm/ioapic.h                         |  8 +-
- arch/x86/kvm/irq_comm.c                       |  9 ++-
- arch/x86/kvm/x86.c                            | 78 ++++++++++++++++++-
- include/linux/kvm_host.h                      | 26 ++++++-
- 10 files changed, 198 insertions(+), 35 deletions(-)
-
+diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+index 41911585ae0c..39601fb87e69 100644
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -767,7 +767,6 @@ int kvm_set_ipa_limit(void);
+ 
+ #define __KVM_HAVE_ARCH_VM_ALLOC
+ struct kvm *kvm_arch_alloc_vm(void);
+-void kvm_arch_free_vm(struct kvm *kvm);
+ 
+ int kvm_arm_setup_stage2(struct kvm *kvm, unsigned long type);
+ 
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 0ca72f5cda41..38fff5963d9f 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -299,14 +299,6 @@ struct kvm *kvm_arch_alloc_vm(void)
+ 	return vzalloc(sizeof(struct kvm));
+ }
+ 
+-void kvm_arch_free_vm(struct kvm *kvm)
+-{
+-	if (!has_vhe())
+-		kfree(kvm);
+-	else
+-		vfree(kvm);
+-}
+-
+ int kvm_arch_vcpu_precreate(struct kvm *kvm, unsigned int id)
+ {
+ 	if (irqchip_in_kernel(kvm) && vgic_initialized(kvm))
+diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+index a809a9e4fa5c..f16fadfc030a 100644
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1521,6 +1521,8 @@ static inline struct kvm *kvm_arch_alloc_vm(void)
+ {
+ 	return __vmalloc(kvm_x86_ops.vm_size, GFP_KERNEL_ACCOUNT | __GFP_ZERO);
+ }
++
++#define __KVM_HAVE_ARCH_VM_FREE
+ void kvm_arch_free_vm(struct kvm *kvm);
+ 
+ #define __KVM_HAVE_ARCH_FLUSH_REMOTE_TLB
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index fd19b72a5733..cc552763f0e4 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -11129,7 +11129,7 @@ void kvm_arch_sched_in(struct kvm_vcpu *vcpu, int cpu)
+ void kvm_arch_free_vm(struct kvm *kvm)
+ {
+ 	kfree(to_kvm_hv(kvm)->hv_pa_pg);
+-	vfree(kvm);
++	__kvm_arch_free_vm(kvm);
+ }
+ 
+ 
+diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+index ae7735b490b4..d75e9c2a00b1 100644
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -1044,10 +1044,17 @@ static inline struct kvm *kvm_arch_alloc_vm(void)
+ {
+ 	return kzalloc(sizeof(struct kvm), GFP_KERNEL);
+ }
++#endif
++
++static inline void __kvm_arch_free_vm(struct kvm *kvm)
++{
++	kvfree(kvm);
++}
+ 
++#ifndef __KVM_HAVE_ARCH_VM_FREE
+ static inline void kvm_arch_free_vm(struct kvm *kvm)
+ {
+-	kfree(kvm);
++	__kvm_arch_free_vm(kvm);
+ }
+ #endif
+ 
 -- 
 2.26.2
 
