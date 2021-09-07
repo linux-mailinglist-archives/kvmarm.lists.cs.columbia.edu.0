@@ -2,78 +2,92 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 01561402E3A
-	for <lists+kvmarm@lfdr.de>; Tue,  7 Sep 2021 20:14:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69BB1402E47
+	for <lists+kvmarm@lfdr.de>; Tue,  7 Sep 2021 20:17:48 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 854294B149;
-	Tue,  7 Sep 2021 14:14:16 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F35774B10B;
+	Tue,  7 Sep 2021 14:17:47 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id eTAxbq5AVbXm; Tue,  7 Sep 2021 14:14:16 -0400 (EDT)
+	with ESMTP id gUmEViN7JzaV; Tue,  7 Sep 2021 14:17:47 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 41D624B0FC;
-	Tue,  7 Sep 2021 14:14:15 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EA4CE4B0EF;
+	Tue,  7 Sep 2021 14:17:46 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 22B6F4B0D7
- for <kvmarm@lists.cs.columbia.edu>; Tue,  7 Sep 2021 14:14:14 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 120664B0D7
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  7 Sep 2021 14:17:45 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id HtNbWXPmfOyi for <kvmarm@lists.cs.columbia.edu>;
- Tue,  7 Sep 2021 14:14:13 -0400 (EDT)
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com
- [209.85.208.176])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id BF7244B0C3
- for <kvmarm@lists.cs.columbia.edu>; Tue,  7 Sep 2021 14:14:12 -0400 (EDT)
-Received: by mail-lj1-f176.google.com with SMTP id w4so17933371ljh.13
- for <kvmarm@lists.cs.columbia.edu>; Tue, 07 Sep 2021 11:14:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=22psKZppfuCAffbrjrbw25DXVA7uHKusFcTh62wjOrA=;
- b=ZsPluqlohe8YzCmrUxmZMF/+jjRmjT5KYoRJs1opsmNsf3Bp4ae3ForwixHWgEgCeY
- 5Y8I9R0Cz5x2Xma89hhMFvqu6DQxARrBceZRsr3XFr/WM5wtjuJoW0GHaFhNzAXwFhhI
- S1EkHrF5JrPEWMWAGZjUnkxdYtLDIUE7KMwMyn4xYU4QeBH/t8iIaHdO2kpHUqQE7RbN
- RL8K3WMYRyk4pFWxhzkrYv3BNPmMYdweSvLfB9g+HYjS108Vu9oxTz0gG+Iszdc9QpNp
- o7ntk257yaGK+2j+yToa9OxS2zAfN7wH4SwuVmKDeGT+RLp6l+BxSBfGS7/9x8i9T/P6
- V4bg==
+ with ESMTP id ABDFp6HTft0d for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  7 Sep 2021 14:17:41 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [216.205.24.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A3A844B0C3
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  7 Sep 2021 14:17:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1631038661;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VSRbOlY+OHZP5PtEtcC0z8g882/C6wUmRhyO/ff6igM=;
+ b=SuPtcux2xgsXHdal657FWJGy47b6x4JCrQ6yOUJhWFevfjs6iepIAHy/lB5JsVw0oT8B0j
+ vavdf40eeiul/OHm9PtcByD6UrdjFpcS00repK027iGEbClsbMVjY7lkr4O+emeNuq2vyZ
+ Hj2PNDfSslZxWgsRMD2luUe+Tn/e8z4=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-527-78_d-ooMNACHzNIAdkTe4Q-1; Tue, 07 Sep 2021 14:17:40 -0400
+X-MC-Unique: 78_d-ooMNACHzNIAdkTe4Q-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ y19-20020a056402441300b003cd8ce2b987so5765912eda.6
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 07 Sep 2021 11:17:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=22psKZppfuCAffbrjrbw25DXVA7uHKusFcTh62wjOrA=;
- b=OA+MmFxoCb8BAxHR3Bh8F9SrfpIPR4SJYl7iHI7+YQwqdCiMrle7Z6YHS3uDzxmQPI
- Hgkk98S+FpDWuE9Npilxz3O+Oy96GDxhPJ4np6St4bjLLMHTxId8kC6337A0Vl/S/i2I
- 8hLHxbL7ZjbPEj6dCxgQf54I1SGE83D1GTJyZsAJnN88m3OUeLnCM209xoWgprc3xkho
- VAF8lx5fOeZfuD5yj/R3ccj7ZISBZ1vC2eq8zkQQKKJRWHUt0T9GXm26BV398wVIIQN3
- 3/xlTRN1n8ZgHwssspE9S5T5lzt0mhSzRrBCVTNBOLglF1GYYFHdSsCoLzPZMsh3cWeM
- FUVw==
-X-Gm-Message-State: AOAM533dQmP1kmu5JjBsqEI6YWkgYpYiwLaAfoUVh3DPgAxVZQsC0xaO
- U6Q9qPyhThvhuXo40ldx2E7Ck7eGWBgFJbNgMoy/DA==
-X-Google-Smtp-Source: ABdhPJxpRADUwGV2bBvnW+3ObzfFz4JybOlhXviFqaZUe/0MV2VIaZSPxY+osoNDQi1BW1Iz/9zAmiTORRFOB6YNqaQ=
-X-Received: by 2002:a2e:154e:: with SMTP id 14mr16249321ljv.374.1631038451111; 
- Tue, 07 Sep 2021 11:14:11 -0700 (PDT)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=VSRbOlY+OHZP5PtEtcC0z8g882/C6wUmRhyO/ff6igM=;
+ b=eoP8S8U8QbaOdfFAmfLSk60r/pI5pNrUkaQYfVXKum4gmge5ET42tJIzwow3/edUeU
+ e3SQ93gLclNFgyuuSyiggM8fmAJXTBOvH/rKRk+I9eYBU3NMjUBOhK8Oaqv+7KyBU/9B
+ PHcGjb09O2NXYe7FGHy2wkgG8N8WWdpwX39f3twXXSCqEaUMovu+3cFy+4cfvdFQu4cR
+ O7nZ9jqnoloqkyfg8NNFcIzyjkTFkPoKNUGBjxScjtGT/p8gVtDuHo9/4XKexN+YNC0o
+ AhEz3n/z5TJUIfb8dYDGF+/HVSfaoycgX86Rckee1/wBRd4LJR9WIpNA3dj6JnNwheLM
+ zTFw==
+X-Gm-Message-State: AOAM533isJzuoHQkOQsYDhXHOL7uahvX7ZfugU+Zn5097ywvmWUpGY/D
+ c3X7oLafnlyJ/FqAu+pKWFP/AwXEPYMXoswcKITL6BzFjOI4EJzIr5UvY7UKPwV9G/wLNRLn4R8
+ n0epBuDFVLN9SyK19w2cI62OL
+X-Received: by 2002:a50:bae1:: with SMTP id x88mr794588ede.345.1631038659288; 
+ Tue, 07 Sep 2021 11:17:39 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJxaCEmwQmWDQZJpKuWe8E9uHqzGgJWY6tNPoUhVwCP6oeVzBnMbBzTJRsKnGs5tkZpfATBS/A==
+X-Received: by 2002:a50:bae1:: with SMTP id x88mr794565ede.345.1631038659056; 
+ Tue, 07 Sep 2021 11:17:39 -0700 (PDT)
+Received: from gator.home (cst2-174-132.cust.vodafone.cz. [31.30.174.132])
+ by smtp.gmail.com with ESMTPSA id e18sm5706473ejx.46.2021.09.07.11.17.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 07 Sep 2021 11:17:38 -0700 (PDT)
+Date: Tue, 7 Sep 2021 20:17:37 +0200
+From: Andrew Jones <drjones@redhat.com>
+To: Ricardo Koller <ricarkol@google.com>
+Subject: Re: [PATCH v2 0/2] KVM: selftests: enable the memslot tests in ARM64
+Message-ID: <20210907181737.jrg35l3d342zgikt@gator.home>
+References: <20210907180957.609966-1-ricarkol@google.com>
 MIME-Version: 1.0
-References: <20210819223640.3564975-1-oupton@google.com>
- <87ilzecbkj.wl-maz@kernel.org>
- <CAOQ_QsgOtufyB6_qGAs4fQf6kd81FSMSj44uiVRgoFQWOf3nRA@mail.gmail.com>
- <87a6kocmcx.wl-maz@kernel.org>
-In-Reply-To: <87a6kocmcx.wl-maz@kernel.org>
-From: Oliver Upton <oupton@google.com>
-Date: Tue, 7 Sep 2021 13:14:00 -0500
-Message-ID: <CAOQ_QshZe8ay03XqCo4DkM6zUaOuEoS5bRbrOy+FsuXaJ=YyKA@mail.gmail.com>
-Subject: Re: [PATCH 0/6] KVM: arm64: Implement PSCI SYSTEM_SUSPEND support
-To: Marc Zyngier <maz@kernel.org>
-Cc: kvm@vger.kernel.org, Peter Shier <pshier@google.com>,
+In-Reply-To: <20210907180957.609966-1-ricarkol@google.com>
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=drjones@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Disposition: inline
+Cc: kvm@vger.kernel.org, maz@kernel.org, pshier@google.com,
+ Paolo Bonzini <pbonzini@redhat.com>, maciej.szmigiero@oracle.com,
  kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -91,118 +105,37 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, Sep 7, 2021 at 12:43 PM Marc Zyngier <maz@kernel.org> wrote:
-> > > Although the definition of SYSTEM_SUSPEND is very simple from a PSCI
-> > > perspective, I don't think it is that simple at the system level,
-> > > because PSCI is only concerned with the CPU.
-> > >
-> > > For example, what is a wake-up event? My first approach would be to
-> > > consider interrupts to be such events. However, this approach suffers
-> > > from at least two issues:
-> > >
-> > > - How do you define which interrupts are actual wake-up events?
-> > >   Nothing in the GIC architecture defines what a wake-up is (let alone
-> > >   a wake-up event).
-> >
-> > Good point.
-> >
-> > One possible implementation of suspend could just be a `WFI` in a
-> > higher EL. In this case, KVM could emulate WFI wake up events
-> > according to D1.16.2 in DDI 0487G.a. But I agree, it isn't entirely
-> > clear what constitutes a wakeup from powered down state.
->
-> It isn't, and it is actually IMPDEF (there isn't much in the ARM ARM
-> in terms of what constitutes a low power state). And even if you
-> wanted to emulate a WFI in userspace, the problem of interrupts that
-> have their source in the kernel remains. How to you tell userspace
-> that such an event has occurred if the vcpu thread isn't in the
-> kernel?
+On Tue, Sep 07, 2021 at 11:09:55AM -0700, Ricardo Koller wrote:
+> Enable memslot_modification_stress_test and memslot_perf_test in ARM64
+> (second patch). memslot_modification_stress_test builds and runs in
+> aarch64 without any modification. memslot_perf_test needs some nits
+> regarding ucalls (first patch).
+> 
+> Can anybody try these two tests in s390, please?
+> 
+> Changes:
+> v2: Makefile tests in the right order (from Andrew).
 
-Well, are there any objections to saying for the KVM implementation we
-observe the WFI wake-up events per the cited section of the ARM ARM?
+Hi Ricardo,
 
-> > > It looks to me that your implementation can only work with userspace
-> > > provided events, which is pretty limited.
-> >
-> > Right. I implemented this from the mindset that userspace may do
-> > something heavyweight when a guest suspends, like save it to a
-> > persistent store to resume later on. No matter what we do in KVM, I
-> > think it's probably best to give userspace the right of first refusal
-> > to handle the suspension.
->
-> Maybe. But if you want to handle wake-up from interrupts to actually
-> work, you must return to the kernel for the wake-up to occurs.
->
-> The problem is that you piggyback on an existing feature (suspend) to
-> implement something else (opportunistic save/restore?). Oddly enough
-> the stars don't exactly align! ;-)
->
-> I have the feeling that a solution to this problem would be to exit to
-> userspace with something indicating an *intent* to suspend. At this
-> stage, userspace can do two things:
->
-> - resume the guest: the guest may have been moved to some other
->   machine, cold storage, whatever... The important thing is that the
->   guest is directly runnable without any extra event
->
-> - confirm the suspension by returning to the kernel, which will
->   execute a blocking WFI on behalf of the guest
->
-> With this, you end-up with something that is works from an interrupt
-> perspective (even for directly injected interrupts), and you can save
-> your guest on suspend.
+You could have collected all the r-b's too.
 
-This is exactly what I was trying to get at with my last mail,
-although not quite as eloquently stated. So I completely agree.
-
-Just to check understanding for v2:
-
-We agree that an exit to userspace is fine so it has the opportunity
-to do something crazy when the guest attempts a suspend. If a VMM does
-nothing and immediately re-enters the kernel, we emulate the suspend
-there by waiting for some event to fire, which for our purposes we
-will say is an interrupt originating from userspace or the kernel
-(WFI). In all, the SUSPEND exit type does not indicate that emulation
-terminates with the VMM. It only indicates we are about to block in
-the kernel.
-
-If there is some IMPDEF event specific to the VMM, it should signal
-the vCPU thread to kick it out of the kernel, make it runnable, and
-re-enter. No need to do anything special from the kernel perspective
-for this. This is only for the case where we decide to block in the
-kernel.
-
->
-> >
-> > > Other items worth considering: ongoing DMA, state of the caches at
-> > > suspend time, device state in general All of this really needs to be
-> > > defined before we can move forward with this feature.
-> >
-> > I believe it is largely up to the caller to get devices in a quiesced
-> > state appropriate for a system suspend, but PSCI is delightfully vague
-> > on this topic.
->
-> Indeed, it only deals with the CPU. Oh look, another opportunity to
-> write a new spec! :)
->
-> > On the contrary, it is up to KVM's implementation to
-> > guarantee caches are clean when servicing the guest request.
->
-> This last point is pretty unclear to me. If the guest doesn't clean to
-> the PoC (or even to one of the PoPs) when it calls into suspend,
-> that's a clear indication that it doesn't care about its data. Why
-> should KVM be more conservative here? It shouldn't be in the business
-> of working around guest bugs.
-
-PSCI is vague on this, sadly. DEN0022D.b, 5.4.8 "Implementation
-responsibilities: Cache and coherency management states" that for
-CPU_SUSPEND, the PSCI implementation must perform a cache clean
-operation before entering the powerdown state. I don't see any reason
-why SYSTEM_SUSPEND should be excluded from this requirement.
-
---
 Thanks,
-Oliver
+drew
+
+> 
+> Ricardo Koller (2):
+>   KVM: selftests: make memslot_perf_test arch independent
+>   KVM: selftests: build the memslot tests for arm64
+> 
+>  tools/testing/selftests/kvm/Makefile          |  2 +
+>  .../testing/selftests/kvm/memslot_perf_test.c | 56 +++++++++++--------
+>  2 files changed, 36 insertions(+), 22 deletions(-)
+> 
+> -- 
+> 2.33.0.153.gba50c8fa24-goog
+> 
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
