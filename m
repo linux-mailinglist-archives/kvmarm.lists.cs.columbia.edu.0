@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 29FF44042CC
-	for <lists+kvmarm@lfdr.de>; Thu,  9 Sep 2021 03:38:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C0544042CE
+	for <lists+kvmarm@lfdr.de>; Thu,  9 Sep 2021 03:38:42 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BC8544B090;
-	Wed,  8 Sep 2021 21:38:35 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C9EAA4B134;
+	Wed,  8 Sep 2021 21:38:41 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,61 +19,59 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LSxe-uTWGm9D; Wed,  8 Sep 2021 21:38:35 -0400 (EDT)
+	with ESMTP id GkCWSGU5jWlf; Wed,  8 Sep 2021 21:38:41 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 873D14B10C;
-	Wed,  8 Sep 2021 21:38:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CDE984A5A0;
+	Wed,  8 Sep 2021 21:38:40 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4AD074A49C
- for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Sep 2021 21:38:33 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C2A4C4B091
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Sep 2021 21:38:39 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id uJPW3Om61nhj for <kvmarm@lists.cs.columbia.edu>;
- Wed,  8 Sep 2021 21:38:32 -0400 (EDT)
+ with ESMTP id IVVboV-s4uUn for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  8 Sep 2021 21:38:38 -0400 (EDT)
 Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com
  [209.85.219.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5B25D4B0ED
- for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Sep 2021 21:38:32 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id DAF954B0E2
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  8 Sep 2021 21:38:34 -0400 (EDT)
 Received: by mail-yb1-f202.google.com with SMTP id
- 63-20020a250d42000000b0059dc43162c9so343927ybn.23
- for <kvmarm@lists.cs.columbia.edu>; Wed, 08 Sep 2021 18:38:32 -0700 (PDT)
+ v66-20020a25abc8000000b0059ef57c3386so440269ybi.1
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 08 Sep 2021 18:38:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=AmUNmW1zNN82NWDCZCOv1ajU/78+UJITtNZym/5TLfk=;
- b=nVLRqzD6wmqrvZ7NzKkwjTUiJua5Ei6ADvZu1xGt4iE5FUDbOxGNmsNlVUqk+djoq1
- oU6mj2WrVuYDdr9KTXNHa+nyASgxa29IHf2VIQ6Fnl3TgQmZiBiozmJVSwDqw4sIiTB7
- luu/462mdgVrDsXpZO71HDSayore8Y16aeYYJZ+2TERLRPHJgAiSbWINpP22ZdSRYXHH
- IgFkvfSQnyZtI99PM3ia16/uLcBfn3nJ7qBqF2uiyIMAq+PBrMDUq/E1h/GQ9pTDacYn
- 2UeMfEjtC9bugHyi6PXpoyqVTIxDroIpEu/6Zlz/FSvPPE1bMRkAODU8HzUr6ZAUAJiE
- +mPA==
+ :cc; bh=zNHqAFnuHiggwZ7jn9N18KxilmXmaHVrWak3lSk+d74=;
+ b=rKFntGWT7Zlr1j69UYRUvBr32BT0o9bmx5mTs/dXAaJ7tGkNGtdvXB7ckiyofZChKV
+ 7n52lUMs/NChF+8iAfWGVFmty6jb+kLonv/JDmnQso092hq5b3v+Rn6dR2u9pNlcJb32
+ vyDtjMYhsYXNh/ccaY792PP4q4YjoqfVydlQw2NSiNBjJlVPLuidRcTObpascm5hLwn3
+ x8aviO8LNf3odytaZJ7XuCObuChS5xmrQQIOr/xsJeiFeAvbvOMUF3HZBZV0Zp5KrxTi
+ 9xnbF76qFJKkIoIsC7tdccHakdVT2nlJz/kVIfoAIwNxLcl0JHNmxQ0Th6vOjH+sHCwy
+ lJTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=AmUNmW1zNN82NWDCZCOv1ajU/78+UJITtNZym/5TLfk=;
- b=1QgOYQRXxslOOmaBdAo9smR7REiMZ7n9qxX0M/jXFxZM3qq0X6Qht5D/eXC0MBiV7Q
- g6HWNeZ69PzvcnXD3ZlqMU3MPfkbpxVOhyTKMgyQXjmZ6kkp1cA6yyLUETfiT8LGKZaQ
- aM8dg/eksTKGCYc3faZaf6+3p7FjUrJ1gEOQCvOsQfavFK1NawUKAzxiipl97VZOF5R4
- GxK6RCwx9dtejCDoyou6zIxYKNamaHpITFxPrrlpAKbKaClCQY54bPGVoWrO6uDFIB6d
- On0CKz2mfnT04N/QPxQyXmDMyMXIhKOIHrNs//G1N5Ktip4YLLWE/NQu4Z+cw98BHW6+
- dTMw==
-X-Gm-Message-State: AOAM532jwbe58ZF6T4fqiheRhKGZg4lMwIlDqlacFtKoK/zWVtPDQCy0
- Aqy3hf8OUaBvleWtRMFWOboxSm61tK0y
-X-Google-Smtp-Source: ABdhPJyBAxT0YEGXKFY4c0vPYLsbHcErA9CrWCZOdmxwg4Yk6E8km+9UKdjBl253uqZRUYIktzqR1LSF8MqU
+ bh=zNHqAFnuHiggwZ7jn9N18KxilmXmaHVrWak3lSk+d74=;
+ b=Pr2aHapNgZFNggwdqa0Hrvx8adM1n23O5t1RSFYUe9mivxOa6tgAtnlSZWfLgL6ACM
+ O/P/NGCjKV8m5/n1h0x513RxrQSezwTTSRqg5ZHa+v+cesjavzFWJMqqtB5VD9AgRWiC
+ FYmqaVWzx9HPJPV8YdoQR2JirDExxfH2f8o75m3vJSB+UiJqUfypbByZk/bO8FQoprNR
+ HcOXvHlKYavQtNZ5bqluD3JP5RZSFj5WOKe74Kxeu7GJei/pikGn1sKWOQKpWIESP1OI
+ +hNUhWTPH3WUfs/XbZnYnLE6BfucbqdW6dUKVCmZaXUulsiy4n8efY95M8nErtq8UYwz
+ A7FA==
+X-Gm-Message-State: AOAM530p8QdhwLfAmjy5KXG4u2/yifLtYnZmwR3vpB4PPgRHemDhfPRF
+ 932JMGVIi7PzDzF3573H7FioqpZbEUQd
+X-Google-Smtp-Source: ABdhPJzqGHIW5BlqjxrpUF6cFXd1RySHNQzV5SgkIh3LB+LBsAvRqWs0V+o2D2lg90iac2o/nK8DBUg+bdAv
 X-Received: from rananta-virt.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:1bcc])
- (user=rananta job=sendgmr) by 2002:a25:804:: with SMTP id
- 4mr522844ybi.346.1631151511813; 
- Wed, 08 Sep 2021 18:38:31 -0700 (PDT)
-Date: Thu,  9 Sep 2021 01:38:03 +0000
+ (user=rananta job=sendgmr) by 2002:a25:1845:: with SMTP id
+ 66mr543521yby.396.1631151514456; Wed, 08 Sep 2021 18:38:34 -0700 (PDT)
+Date: Thu,  9 Sep 2021 01:38:04 +0000
 In-Reply-To: <20210909013818.1191270-1-rananta@google.com>
-Message-Id: <20210909013818.1191270-4-rananta@google.com>
+Message-Id: <20210909013818.1191270-5-rananta@google.com>
 Mime-Version: 1.0
 References: <20210909013818.1191270-1-rananta@google.com>
 X-Mailer: git-send-email 2.33.0.153.gba50c8fa24-goog
-Subject: [PATCH v4 03/18] KVM: arm64: selftests: Use read/write definitions
- from sysreg.h
+Subject: [PATCH v4 04/18] KVM: arm64: selftests: Introduce ARM64_SYS_KVM_REG
 From: Raghavendra Rao Ananta <rananta@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>, 
  Andrew Jones <drjones@redhat.com>, James Morse <james.morse@arm.com>, 
@@ -99,121 +97,43 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Make use of the register read/write definitions from
-sysreg.h, instead of the existing definitions. A syntax
-correction is needed for the files that use write_sysreg()
-to make it compliant with the new (kernel's) syntax.
+With the inclusion of sysreg.h, that brings in system register
+encodings, it would be redundant to re-define register encodings
+again in processor.h to use it with ARM64_SYS_REG for the KVM
+functions such as set_reg() or get_reg(). Hence, add helper macro,
+ARM64_SYS_KVM_REG, that converts SYS_* definitions in sysreg.h
+into ARM64_SYS_REG definitions.
 
 Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
 ---
- .../selftests/kvm/aarch64/debug-exceptions.c  | 28 +++++++++----------
- .../selftests/kvm/include/aarch64/processor.h | 13 +--------
- 2 files changed, 15 insertions(+), 26 deletions(-)
+ .../selftests/kvm/include/aarch64/processor.h      | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/tools/testing/selftests/kvm/aarch64/debug-exceptions.c b/tools/testing/selftests/kvm/aarch64/debug-exceptions.c
-index e5e6c92b60da..11fd23e21cb4 100644
---- a/tools/testing/selftests/kvm/aarch64/debug-exceptions.c
-+++ b/tools/testing/selftests/kvm/aarch64/debug-exceptions.c
-@@ -34,16 +34,16 @@ static void reset_debug_state(void)
- {
- 	asm volatile("msr daifset, #8");
- 
--	write_sysreg(osdlr_el1, 0);
--	write_sysreg(oslar_el1, 0);
-+	write_sysreg(0, osdlr_el1);
-+	write_sysreg(0, oslar_el1);
- 	isb();
- 
--	write_sysreg(mdscr_el1, 0);
-+	write_sysreg(0, mdscr_el1);
- 	/* This test only uses the first bp and wp slot. */
--	write_sysreg(dbgbvr0_el1, 0);
--	write_sysreg(dbgbcr0_el1, 0);
--	write_sysreg(dbgwcr0_el1, 0);
--	write_sysreg(dbgwvr0_el1, 0);
-+	write_sysreg(0, dbgbvr0_el1);
-+	write_sysreg(0, dbgbcr0_el1);
-+	write_sysreg(0, dbgwcr0_el1);
-+	write_sysreg(0, dbgwvr0_el1);
- 	isb();
- }
- 
-@@ -53,14 +53,14 @@ static void install_wp(uint64_t addr)
- 	uint32_t mdscr;
- 
- 	wcr = DBGWCR_LEN8 | DBGWCR_RD | DBGWCR_WR | DBGWCR_EL1 | DBGWCR_E;
--	write_sysreg(dbgwcr0_el1, wcr);
--	write_sysreg(dbgwvr0_el1, addr);
-+	write_sysreg(wcr, dbgwcr0_el1);
-+	write_sysreg(addr, dbgwvr0_el1);
- 	isb();
- 
- 	asm volatile("msr daifclr, #8");
- 
- 	mdscr = read_sysreg(mdscr_el1) | MDSCR_KDE | MDSCR_MDE;
--	write_sysreg(mdscr_el1, mdscr);
-+	write_sysreg(mdscr, mdscr_el1);
- 	isb();
- }
- 
-@@ -70,14 +70,14 @@ static void install_hw_bp(uint64_t addr)
- 	uint32_t mdscr;
- 
- 	bcr = DBGBCR_LEN8 | DBGBCR_EXEC | DBGBCR_EL1 | DBGBCR_E;
--	write_sysreg(dbgbcr0_el1, bcr);
--	write_sysreg(dbgbvr0_el1, addr);
-+	write_sysreg(bcr, dbgbcr0_el1);
-+	write_sysreg(addr, dbgbvr0_el1);
- 	isb();
- 
- 	asm volatile("msr daifclr, #8");
- 
- 	mdscr = read_sysreg(mdscr_el1) | MDSCR_KDE | MDSCR_MDE;
--	write_sysreg(mdscr_el1, mdscr);
-+	write_sysreg(mdscr, mdscr_el1);
- 	isb();
- }
- 
-@@ -88,7 +88,7 @@ static void install_ss(void)
- 	asm volatile("msr daifclr, #8");
- 
- 	mdscr = read_sysreg(mdscr_el1) | MDSCR_KDE | MDSCR_SS;
--	write_sysreg(mdscr_el1, mdscr);
-+	write_sysreg(mdscr, mdscr_el1);
- 	isb();
- }
- 
 diff --git a/tools/testing/selftests/kvm/include/aarch64/processor.h b/tools/testing/selftests/kvm/include/aarch64/processor.h
-index 96578bd46a85..bed4ffa70905 100644
+index bed4ffa70905..ac8b63f8aab7 100644
 --- a/tools/testing/selftests/kvm/include/aarch64/processor.h
 +++ b/tools/testing/selftests/kvm/include/aarch64/processor.h
-@@ -8,6 +8,7 @@
- #define SELFTEST_KVM_PROCESSOR_H
+@@ -26,6 +26,20 @@
  
- #include "kvm_util.h"
-+#include "sysreg.h"
- #include <linux/stringify.h>
- #include <linux/types.h>
+ #define ID_AA64DFR0_EL1         3, 0,  0, 5, 0
  
-@@ -119,18 +120,6 @@ void vm_install_exception_handler(struct kvm_vm *vm,
- void vm_install_sync_handler(struct kvm_vm *vm,
- 		int vector, int ec, handler_fn handler);
- 
--#define write_sysreg(reg, val)						  \
--({									  \
--	u64 __val = (u64)(val);						  \
--	asm volatile("msr " __stringify(reg) ", %x0" : : "rZ" (__val));	  \
--})
--
--#define read_sysreg(reg)						  \
--({	u64 val;							  \
--	asm volatile("mrs %0, "__stringify(reg) : "=r"(val) : : "memory");\
--	val;								  \
--})
--
- #define isb()		asm volatile("isb" : : : "memory")
- #define dsb(opt)	asm volatile("dsb " #opt : : : "memory")
- #define dmb(opt)	asm volatile("dmb " #opt : : : "memory")
++/*
++ * ARM64_SYS_KVM_REG(sys_reg_id): Helper macro to convert
++ * SYS_* register definitions in sysreg.h to use in KVM
++ * calls such as get_reg() and set_reg().
++ */
++#define ARM64_SYS_KVM_REG(sys_reg_id)			\
++({							\
++	ARM64_SYS_REG(sys_reg_Op0(sys_reg_id),		\
++			sys_reg_Op1(sys_reg_id),	\
++			sys_reg_CRn(sys_reg_id),	\
++			sys_reg_CRm(sys_reg_id),	\
++			sys_reg_Op2(sys_reg_id));	\
++})
++
+ /*
+  * Default MAIR
+  *                  index   attribute
 -- 
 2.33.0.153.gba50c8fa24-goog
 
