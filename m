@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DD88A409E63
-	for <lists+kvmarm@lfdr.de>; Mon, 13 Sep 2021 22:49:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6995D409E64
+	for <lists+kvmarm@lfdr.de>; Mon, 13 Sep 2021 22:50:00 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 912894B202;
-	Mon, 13 Sep 2021 16:49:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 132824B1F3;
+	Mon, 13 Sep 2021 16:50:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,60 +19,59 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id NXPXUdOQG3kp; Mon, 13 Sep 2021 16:49:58 -0400 (EDT)
+	with ESMTP id k7sapRPKScqk; Mon, 13 Sep 2021 16:49:59 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B73D54B200;
-	Mon, 13 Sep 2021 16:49:55 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D5A114B1E9;
+	Mon, 13 Sep 2021 16:49:58 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8BB8F4B1A2
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Sep 2021 16:49:54 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B3FE24B1DF
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Sep 2021 16:49:57 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id VNyLH+lRdXNE for <kvmarm@lists.cs.columbia.edu>;
- Mon, 13 Sep 2021 16:49:53 -0400 (EDT)
+ with ESMTP id keEH1SwlcMB7 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 13 Sep 2021 16:49:56 -0400 (EDT)
 Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com
  [209.85.215.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 482524B1DF
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Sep 2021 16:49:52 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A95794B1A2
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Sep 2021 16:49:54 -0400 (EDT)
 Received: by mail-pg1-f202.google.com with SMTP id
- u5-20020a63d3450000b029023a5f6e6f9bso8001539pgi.21
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Sep 2021 13:49:52 -0700 (PDT)
+ g15-20020a63564f000000b00261998c1b70so8041322pgm.5
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Sep 2021 13:49:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=J+UZgLtkT0rQ8p2ueSvfgRY85aAri08pX6i+sTry8qo=;
- b=kYI7sNDVIbxwnV0J0tSouCecaOLh6bJUJo6OEQxZUwL8svsmSV//6HuEXitEL+2XYE
- R2wigQlIYNJhjGfZl1l9wxymXToyngp3wOhTJBN9WVDEnWUcTyR4xcqxt/LjlwJkpRwJ
- LDa8vBLHtC9XoC5K3nxcAA4Cq3SNJTrwxOGrlt9gxQsnks7NV6rGWMpdDijXB9Gng0CH
- 69Md17+BJa2cPMwJEIEZBtKXlKQPtMWCDVmcwa1kSZVOacvh0Jab9lkqNN7sneWPbNsv
- FjUWJtMcycwMcFN6FOibV4HxdUnre2jnnPsgm7jtofOybWxeDOBTjP9cEkDXelOk5xKh
- i84A==
+ :cc; bh=VREX88yx9xWzleHW1ZEh6k892sL/xPpdGpps/n5mOO0=;
+ b=jXfd6Ifbv2PUpHnXkJKAouWhIx2rYsNCCmG89uNRrOlOzCsjeYdmZPzk7mQuLwmR6r
+ HOnftjjdFpgdyeyrS9r1+xeyl+Z5dbnbGGrObV6o+HbKo1FTge0yKCDMgwpOj14py+V1
+ BFJnXQbJTaKi2YgBbos4ghKJeyONx2b2NwHcB1YLf2Ijco6HnidQU1ZWLXg2T0xYYU9o
+ aAJIP0FW5mCUmEVJD3qU1APMqM3FiNktBmol28OLolIw4CyTzcnpvwgA1ZDMgNYpUokQ
+ UkGiNSM75gqzCAq7jQEGsroFKM6zUAUvJ1nDq6vWGlhJj7QmBIuX2XcKbZcz1qhZ+1NU
+ FCIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=J+UZgLtkT0rQ8p2ueSvfgRY85aAri08pX6i+sTry8qo=;
- b=YOuk10xFKQTfjqoIE6DJa6ZjuCUXZwWiOiu2WRRwVL/q2Fj9W2x5f4yYC9+cyi+o5W
- JOA9naxYAogyEE8iabyCyhHdlBTpsLPG3GI6oiwh6Ib9S+d9fub1IQXrOdLEBEVdpoQ+
- 1R/CmeXu4Bj18R0jdXe+YkByTpdp2v7POLB97DahnTVW41+QJXxD6F5bhCKu2gVcW45b
- JrIobZRxjFdKADZAz/XGPwqG4tI4v4ehJlye6Qv5ubuXZ5mQKJDEpyRdLk4af+Qp5Qny
- AM7xjYd9yt6WpNT37LuIZnQYXwGhh121cSCfsfFPQoU6EqPW8zIlwHw/9u+W8q7OgKyk
- h5ZQ==
-X-Gm-Message-State: AOAM530GkxYZRLeftWYVXldSbTT+8oC7W5iXRHny5aOYqOZ9356Fh66g
- WJqELQ3F6E7GsQaPaL2HSRvuP/nRBt0P
-X-Google-Smtp-Source: ABdhPJyaPGL919n4c5yeIs0vF3dUOPgfcGkWrYTJ1T5pUk1sfZjFSZxUUMKN/XJG8IUwnNfcV/43rKPZ9zzK
+ bh=VREX88yx9xWzleHW1ZEh6k892sL/xPpdGpps/n5mOO0=;
+ b=aybQOjOmRmwENvEqhoOVZ86KwfRJs7CF/rK64R9MZtLjICw8ze20U0JWv0T+bmFP0D
+ ZIWlOf66ggxFVcErwLZk09l/0B08rb0zTaT6TsPxEK0FBlLDXrFAib0CDh41MRFd+Wfs
+ UxgClLvIcBOTbmSGRV+2iumArGo1KB76EOKvuMRYCxSZD1qY9Jsln7OCP/idReuBQGv5
+ ciORuS2hlUYnxko/Nj29zQT/nsu04EW4lDl4KW9YQ3xBEKT8EOIRE+l6lEHKi/S5ru5i
+ BCAzzcc+zarRUkLEquqxmfxdh0tcwANwtFgpPrQdZtxPLCaMymKqKx+W1ugiVJ49sGvr
+ BSmw==
+X-Gm-Message-State: AOAM532GzvxuEivviFdT2i9qOUP+KkkpcO/69V515gcnDLbP14cVzfeU
+ MRhozd26Xvi1288BRdM2LhRuPr5Nw1Pm
+X-Google-Smtp-Source: ABdhPJz6fEdV2KzMR0VbG5Fihm2AW9Am9+ncpGXvD07/3wOpr20Yhs6cZzmeUf6DUvnyDHdc3aA+w846Q2BW
 X-Received: from rananta-virt.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:1bcc])
- (user=rananta job=sendgmr) by 2002:a17:902:aa88:b0:13a:95d:d059 with SMTP id
- d8-20020a170902aa8800b0013a095dd059mr12117525plr.65.1631566191454; Mon, 13
- Sep 2021 13:49:51 -0700 (PDT)
-Date: Mon, 13 Sep 2021 20:49:20 +0000
+ (user=rananta job=sendgmr) by 2002:a63:6e03:: with SMTP id
+ j3mr12719146pgc.465.1631566193824; Mon, 13 Sep 2021 13:49:53 -0700 (PDT)
+Date: Mon, 13 Sep 2021 20:49:21 +0000
 In-Reply-To: <20210913204930.130715-1-rananta@google.com>
-Message-Id: <20210913204930.130715-5-rananta@google.com>
+Message-Id: <20210913204930.130715-6-rananta@google.com>
 Mime-Version: 1.0
 References: <20210913204930.130715-1-rananta@google.com>
 X-Mailer: git-send-email 2.33.0.309.g3052b89438-goog
-Subject: [PATCH v5 04/14] KVM: arm64: selftests: Introduce ARM64_SYS_KVM_REG
+Subject: [PATCH v5 05/14] KVM: arm64: selftests: Add support for cpu_relax
 From: Raghavendra Rao Ananta <rananta@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>, 
  Andrew Jones <drjones@redhat.com>, James Morse <james.morse@arm.com>, 
@@ -98,124 +97,35 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-With the inclusion of sysreg.h, that brings in system register
-encodings, it would be redundant to re-define register encodings
-again in processor.h to use it with ARM64_SYS_REG for the KVM
-functions such as set_reg() or get_reg(). Hence, add helper macro,
-ARM64_SYS_KVM_REG, that converts SYS_* definitions in sysreg.h
-into ARM64_SYS_REG definitions.
+Implement the guest helper routine, cpu_relax(), to yield
+the processor to other tasks.
 
-Also replace all the users of ARM64_SYS_REG, relying on
-the encodings created in processor.h, with ARM64_SYS_KVM_REG and
-remove the definitions.
+The function was derived from
+arch/arm64/include/asm/vdso/processor.h.
 
 Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
+Reviewed-by: Oliver Upton <oupton@google.com>
+Reviewed-by: Andrew Jones <drjones@redhat.com>
 ---
- .../selftests/kvm/aarch64/debug-exceptions.c  |  2 +-
- .../selftests/kvm/aarch64/psci_cpu_on_test.c  |  2 +-
- .../selftests/kvm/include/aarch64/processor.h | 20 ++++++++++---------
- .../selftests/kvm/lib/aarch64/processor.c     | 16 +++++++--------
- 4 files changed, 21 insertions(+), 19 deletions(-)
+ tools/testing/selftests/kvm/include/aarch64/processor.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tools/testing/selftests/kvm/aarch64/debug-exceptions.c b/tools/testing/selftests/kvm/aarch64/debug-exceptions.c
-index 11fd23e21cb4..ea189d83abf7 100644
---- a/tools/testing/selftests/kvm/aarch64/debug-exceptions.c
-+++ b/tools/testing/selftests/kvm/aarch64/debug-exceptions.c
-@@ -190,7 +190,7 @@ static int debug_version(struct kvm_vm *vm)
- {
- 	uint64_t id_aa64dfr0;
- 
--	get_reg(vm, VCPU_ID, ARM64_SYS_REG(ID_AA64DFR0_EL1), &id_aa64dfr0);
-+	get_reg(vm, VCPU_ID, KVM_ARM64_SYS_REG(SYS_ID_AA64DFR0_EL1), &id_aa64dfr0);
- 	return id_aa64dfr0 & 0xf;
- }
- 
-diff --git a/tools/testing/selftests/kvm/aarch64/psci_cpu_on_test.c b/tools/testing/selftests/kvm/aarch64/psci_cpu_on_test.c
-index 018c269990e1..4c5f6814030f 100644
---- a/tools/testing/selftests/kvm/aarch64/psci_cpu_on_test.c
-+++ b/tools/testing/selftests/kvm/aarch64/psci_cpu_on_test.c
-@@ -91,7 +91,7 @@ int main(void)
- 	init.features[0] |= (1 << KVM_ARM_VCPU_POWER_OFF);
- 	aarch64_vcpu_add_default(vm, VCPU_ID_TARGET, &init, guest_main);
- 
--	get_reg(vm, VCPU_ID_TARGET, ARM64_SYS_REG(MPIDR_EL1), &target_mpidr);
-+	get_reg(vm, VCPU_ID_TARGET, KVM_ARM64_SYS_REG(SYS_MPIDR_EL1), &target_mpidr);
- 	vcpu_args_set(vm, VCPU_ID_SOURCE, 1, target_mpidr & MPIDR_HWID_BITMASK);
- 	vcpu_run(vm, VCPU_ID_SOURCE);
- 
 diff --git a/tools/testing/selftests/kvm/include/aarch64/processor.h b/tools/testing/selftests/kvm/include/aarch64/processor.h
-index 7989e832cafb..93797783abad 100644
+index 93797783abad..265054c24481 100644
 --- a/tools/testing/selftests/kvm/include/aarch64/processor.h
 +++ b/tools/testing/selftests/kvm/include/aarch64/processor.h
-@@ -16,15 +16,17 @@
- #define ARM64_CORE_REG(x) (KVM_REG_ARM64 | KVM_REG_SIZE_U64 | \
- 			   KVM_REG_ARM_CORE | KVM_REG_ARM_CORE_REG(x))
+@@ -122,6 +122,11 @@ void vm_install_exception_handler(struct kvm_vm *vm,
+ void vm_install_sync_handler(struct kvm_vm *vm,
+ 		int vector, int ec, handler_fn handler);
  
--#define CPACR_EL1               3, 0,  1, 0, 2
--#define TCR_EL1                 3, 0,  2, 0, 2
--#define MAIR_EL1                3, 0, 10, 2, 0
--#define MPIDR_EL1               3, 0,  0, 0, 5
--#define TTBR0_EL1               3, 0,  2, 0, 0
--#define SCTLR_EL1               3, 0,  1, 0, 0
--#define VBAR_EL1                3, 0, 12, 0, 0
--
--#define ID_AA64DFR0_EL1         3, 0,  0, 5, 0
-+/*
-+ * KVM_ARM64_SYS_REG(sys_reg_id): Helper macro to convert
-+ * SYS_* register definitions in asm/sysreg.h to use in KVM
-+ * calls such as get_reg() and set_reg().
-+ */
-+#define KVM_ARM64_SYS_REG(sys_reg_id)			\
-+	ARM64_SYS_REG(sys_reg_Op0(sys_reg_id),		\
-+			sys_reg_Op1(sys_reg_id),	\
-+			sys_reg_CRn(sys_reg_id),	\
-+			sys_reg_CRm(sys_reg_id),	\
-+			sys_reg_Op2(sys_reg_id))
- 
- /*
-  * Default MAIR
-diff --git a/tools/testing/selftests/kvm/lib/aarch64/processor.c b/tools/testing/selftests/kvm/lib/aarch64/processor.c
-index 632b74d6b3ca..db64ee206064 100644
---- a/tools/testing/selftests/kvm/lib/aarch64/processor.c
-+++ b/tools/testing/selftests/kvm/lib/aarch64/processor.c
-@@ -232,10 +232,10 @@ void aarch64_vcpu_setup(struct kvm_vm *vm, int vcpuid, struct kvm_vcpu_init *ini
- 	 * Enable FP/ASIMD to avoid trapping when accessing Q0-Q15
- 	 * registers, which the variable argument list macros do.
- 	 */
--	set_reg(vm, vcpuid, ARM64_SYS_REG(CPACR_EL1), 3 << 20);
-+	set_reg(vm, vcpuid, KVM_ARM64_SYS_REG(SYS_CPACR_EL1), 3 << 20);
- 
--	get_reg(vm, vcpuid, ARM64_SYS_REG(SCTLR_EL1), &sctlr_el1);
--	get_reg(vm, vcpuid, ARM64_SYS_REG(TCR_EL1), &tcr_el1);
-+	get_reg(vm, vcpuid, KVM_ARM64_SYS_REG(SYS_SCTLR_EL1), &sctlr_el1);
-+	get_reg(vm, vcpuid, KVM_ARM64_SYS_REG(SYS_TCR_EL1), &tcr_el1);
- 
- 	switch (vm->mode) {
- 	case VM_MODE_P52V48_4K:
-@@ -273,10 +273,10 @@ void aarch64_vcpu_setup(struct kvm_vm *vm, int vcpuid, struct kvm_vcpu_init *ini
- 	tcr_el1 |= (1 << 8) | (1 << 10) | (3 << 12);
- 	tcr_el1 |= (64 - vm->va_bits) /* T0SZ */;
- 
--	set_reg(vm, vcpuid, ARM64_SYS_REG(SCTLR_EL1), sctlr_el1);
--	set_reg(vm, vcpuid, ARM64_SYS_REG(TCR_EL1), tcr_el1);
--	set_reg(vm, vcpuid, ARM64_SYS_REG(MAIR_EL1), DEFAULT_MAIR_EL1);
--	set_reg(vm, vcpuid, ARM64_SYS_REG(TTBR0_EL1), vm->pgd);
-+	set_reg(vm, vcpuid, KVM_ARM64_SYS_REG(SYS_SCTLR_EL1), sctlr_el1);
-+	set_reg(vm, vcpuid, KVM_ARM64_SYS_REG(SYS_TCR_EL1), tcr_el1);
-+	set_reg(vm, vcpuid, KVM_ARM64_SYS_REG(SYS_MAIR_EL1), DEFAULT_MAIR_EL1);
-+	set_reg(vm, vcpuid, KVM_ARM64_SYS_REG(SYS_TTBR0_EL1), vm->pgd);
- }
- 
- void vcpu_dump(FILE *stream, struct kvm_vm *vm, uint32_t vcpuid, uint8_t indent)
-@@ -362,7 +362,7 @@ void vcpu_init_descriptor_tables(struct kvm_vm *vm, uint32_t vcpuid)
- {
- 	extern char vectors;
- 
--	set_reg(vm, vcpuid, ARM64_SYS_REG(VBAR_EL1), (uint64_t)&vectors);
-+	set_reg(vm, vcpuid, KVM_ARM64_SYS_REG(SYS_VBAR_EL1), (uint64_t)&vectors);
- }
- 
- void route_exception(struct ex_regs *regs, int vector)
++static inline void cpu_relax(void)
++{
++	asm volatile("yield" ::: "memory");
++}
++
+ #define isb()		asm volatile("isb" : : : "memory")
+ #define dsb(opt)	asm volatile("dsb " #opt : : : "memory")
+ #define dmb(opt)	asm volatile("dmb " #opt : : : "memory")
 -- 
 2.33.0.309.g3052b89438-goog
 
