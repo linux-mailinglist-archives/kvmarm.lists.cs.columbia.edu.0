@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4489040E9B1
-	for <lists+kvmarm@lfdr.de>; Thu, 16 Sep 2021 20:16:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C15B840E9AF
+	for <lists+kvmarm@lfdr.de>; Thu, 16 Sep 2021 20:16:13 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E45954B1BD;
-	Thu, 16 Sep 2021 14:16:14 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 746A94B187;
+	Thu, 16 Sep 2021 14:16:13 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,58 +19,58 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1AflZ7RC0+Uc; Thu, 16 Sep 2021 14:16:14 -0400 (EDT)
+	with ESMTP id jgcbIYOOMbxj; Thu, 16 Sep 2021 14:16:13 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 94D6A4B200;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5D8404B1F4;
 	Thu, 16 Sep 2021 14:16:12 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D2874B163
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1BD724B0D0
  for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Sep 2021 14:16:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 0if2pk1zfKGy for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id 1HEuk-iSgQho for <kvmarm@lists.cs.columbia.edu>;
  Thu, 16 Sep 2021 14:16:10 -0400 (EDT)
-Received: from mail-qv1-f73.google.com (mail-qv1-f73.google.com
- [209.85.219.73])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 140E54B0CB
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Sep 2021 14:16:07 -0400 (EDT)
-Received: by mail-qv1-f73.google.com with SMTP id
- u6-20020ad449a6000000b003798010ad14so63132786qvx.10
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Sep 2021 11:16:07 -0700 (PDT)
+Received: from mail-qt1-f201.google.com (mail-qt1-f201.google.com
+ [209.85.160.201])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2CD174B163
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Sep 2021 14:16:08 -0400 (EDT)
+Received: by mail-qt1-f201.google.com with SMTP id
+ o9-20020ac80249000000b002a0c9fd54d5so63171229qtg.4
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Sep 2021 11:16:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=Jo3jDqyeYJxHTghdjTSap/sGN1bxajOYxVwklxu7bWA=;
- b=pWQvEGHm7bH1GMoSyq55V3ReY1YWle4IuUb8kruzdacZ4VmBhZuy/dsiBGld1eWAWu
- VnM5YsMlT2tx4amwEWzQa8jFI64K9cvTtbU6T4xKWsrb6eMWZdta8qPZt+mTwfHlOVG/
- URpoaWL8fEaqR3YJNWi2jYhsvuEItlvyALgXgVoNGNF1fxJsn0yIAPK5W2qTD4NoiQqX
- FzLf1I955MRZRQ776dVyXYg27ZXw99UzznImKCa+BGMtyBG8fBTeWHNjWix36y39YIZE
- FR7Y8D1hyWKwco9OmQgDTvlhdJh6b1zwLMSu8omzxXZHNeLZxA8fTSm1DvM0PGIGDi9/
- RiRA==
+ :cc; bh=Xw4+tgKVLmvm8JQWsGHVEpFbMf77zCGqq8rbz5yrSuw=;
+ b=aqj3HRCmfQvWoQtSN5RzC1ysFfx+mQMpaBU2bf9JiwokiR0SsR1mjFVZwlMsYRWd5F
+ S1wO4hvUJBxqXeG0m7E3iOLmvRhccSonfYKnGvnrmcxRXwiajJF8WrW/0OjYx2jBhPNg
+ mSeQYdEI69TgXBb0UzLjUrlsKeOQachsm67AH76Wx+H8gHYl2PSGhNNq6W7jYvQM/XC3
+ LXaisjjlREFlx0rMPKJ2YsgTBksZdWAA2o3kTilLBfa1XqxawES6tGn2os4UI+BOIu19
+ gZFLCmlXEaeNDs7eyflXYmGj3j9j1rvbHboi2PjGfs2Sd46TUcfd88SDJvadas/9BxEe
+ FnxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=Jo3jDqyeYJxHTghdjTSap/sGN1bxajOYxVwklxu7bWA=;
- b=epX7koefLEtzuvGkSzsuhHb2Uu2CJsmpUwn69kBCGPkucPbwKNUSOEpM8au9QSvqVl
- BKaUnRdS5BOc03KMEKzhoun3SRHORj+Tpbm9D2drz6adkOxRc8hA1YXYvXYFMSYw7qF+
- KjrYU2WohQRyv33wP5B+WI/5c7OdP3at4KhTcd70tqr1svfrAttvyx9nNWh5w4Kx7Mot
- UKsP15JeW4fzxOmJQiRpZNZdf3j/L8ZT9Ar3lTzkfwJiT7S4MPINXndi+s7LcLROjKb0
- a1iws8gZ9pq+BkRhGwS6hdtE6pq9iWDnkFks9TLrWixnn5woiAiJmrBudO4k5ADAh9wg
- PpQA==
-X-Gm-Message-State: AOAM533kX+LAd9Ijjr6VexfiKNyoanTfo2+q5WlmRn9FK+pWKFhK/PiX
- y2u3S6sJdK1a6K0gJ7R4gdcXZL1a1bU=
-X-Google-Smtp-Source: ABdhPJwDiSi0ZPRJseGEFzbAQlsEdEq5dnm1i+UY0kiUdKyUyLjB/6Jh3NrJjzqszbTMYIxokAGG2QBgAjw=
+ bh=Xw4+tgKVLmvm8JQWsGHVEpFbMf77zCGqq8rbz5yrSuw=;
+ b=L6HmrvCIFbCTbVINdf9MZdBLSjj9lXqgdpZKhqFN7RBG2rQZy8z7Du4mw+HpBue6MV
+ 0xco3SF8h+9zdvpnXmAfnLCQyCP0vZqvSvol2V4gztqrMULQkj1lkCJKQ2LOqppHoP/9
+ sH1Im/tcD6KmSVy9RIY0y70hEPUeit+m6NdIixXN7TiLZkWiF8Lw5mt4YaOkhj+0Mk9e
+ phaNsBPHP1DWvMBwFCIBhcxK/IARrOSeUdyffdv+0jeMZ9iqBvSNpFaLBsbBF4DGuAfb
+ vYRxhFX+Uv4D3p7pUPPYkBfXyZiO5lq6A9OmH0I3fDCQ2QpCUp+e8HCVa3/VmrZ1mfq4
+ lJRA==
+X-Gm-Message-State: AOAM533Mh/CRTwrRmSVBe9Az1Pnl6vaicORAek4Q04axKcZJILn7KDNA
+ KN9BAlB+ItaSNVB2qdHbeujn+IWtwWA=
+X-Google-Smtp-Source: ABdhPJwwEMjf9bn2Y68JHX2UcSLI5bYpoUc13K4VaVdU55eP01YXVcQ93R0zLYLdVbktp7FtkAMXNw1xICs=
 X-Received: from oupton.c.googlers.com ([fda3:e722:ac3:cc00:2b:ff92:c0a8:404])
- (user=oupton job=sendgmr) by 2002:a05:6214:431:: with SMTP id
- a17mr6551202qvy.48.1631816166794; Thu, 16 Sep 2021 11:16:06 -0700 (PDT)
-Date: Thu, 16 Sep 2021 18:15:54 +0000
+ (user=oupton job=sendgmr) by 2002:a05:6214:1372:: with SMTP id
+ c18mr4801098qvw.28.1631816167832; Thu, 16 Sep 2021 11:16:07 -0700 (PDT)
+Date: Thu, 16 Sep 2021 18:15:55 +0000
 In-Reply-To: <20210916181555.973085-1-oupton@google.com>
-Message-Id: <20210916181555.973085-9-oupton@google.com>
+Message-Id: <20210916181555.973085-10-oupton@google.com>
 Mime-Version: 1.0
 References: <20210916181555.973085-1-oupton@google.com>
 X-Mailer: git-send-email 2.33.0.464.g1972c5931b-goog
-Subject: [PATCH v8 8/9] selftests: KVM: Add counter emulation benchmark
+Subject: [PATCH v8 9/9] selftests: KVM: Test vtimer offset reg in get-reg-list
 From: Oliver Upton <oupton@google.com>
 To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
 Cc: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
@@ -94,258 +94,114 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add a test case for counter emulation on arm64. A side effect of how KVM
-handles physical counter offsetting on non-ECV systems is that the
-virtual counter will always hit hardware and the physical could be
-emulated. Force emulation by writing a nonzero offset to the physical
-counter and compare the elapsed cycles to a direct read of the hardware
-register.
+Assert that KVM exposes KVM_REG_ARM_TIMER_OFFSET in the KVM_GET_REG_LIST
+ioctl when userspace buys in to the new behavior.
 
-Reviewed-by: Ricardo Koller <ricarkol@google.com>
 Signed-off-by: Oliver Upton <oupton@google.com>
-Reviewed-by: Andrew Jones <drjones@redhat.com>
 ---
- tools/testing/selftests/kvm/.gitignore        |   1 +
- tools/testing/selftests/kvm/Makefile          |   1 +
- .../kvm/aarch64/counter_emulation_benchmark.c | 207 ++++++++++++++++++
- 3 files changed, 209 insertions(+)
- create mode 100644 tools/testing/selftests/kvm/aarch64/counter_emulation_benchmark.c
+ .../selftests/kvm/aarch64/get-reg-list.c      | 42 +++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
-diff --git a/tools/testing/selftests/kvm/.gitignore b/tools/testing/selftests/kvm/.gitignore
-index aa5a5197716e..ae2564b27af0 100644
---- a/tools/testing/selftests/kvm/.gitignore
-+++ b/tools/testing/selftests/kvm/.gitignore
-@@ -1,4 +1,5 @@
- # SPDX-License-Identifier: GPL-2.0-only
-+/aarch64/counter_emulation_benchmark
- /aarch64/debug-exceptions
- /aarch64/get-reg-list
- /aarch64/psci_cpu_on_test
-diff --git a/tools/testing/selftests/kvm/Makefile b/tools/testing/selftests/kvm/Makefile
-index fd61d0063c50..3c80899b40ee 100644
---- a/tools/testing/selftests/kvm/Makefile
-+++ b/tools/testing/selftests/kvm/Makefile
-@@ -86,6 +86,7 @@ TEST_GEN_PROGS_x86_64 += steal_time
- TEST_GEN_PROGS_x86_64 += kvm_binary_stats_test
- TEST_GEN_PROGS_x86_64 += system_counter_offset_test
+diff --git a/tools/testing/selftests/kvm/aarch64/get-reg-list.c b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
+index cc898181faab..4f337d8b793a 100644
+--- a/tools/testing/selftests/kvm/aarch64/get-reg-list.c
++++ b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
+@@ -40,6 +40,7 @@ static __u64 *blessed_reg, blessed_n;
+ struct reg_sublist {
+ 	const char *name;
+ 	long capability;
++	long enable_capability;
+ 	int feature;
+ 	bool finalize;
+ 	__u64 *regs;
+@@ -397,6 +398,19 @@ static void check_supported(struct vcpu_config *c)
+ 	}
+ }
  
-+TEST_GEN_PROGS_aarch64 += aarch64/counter_emulation_benchmark
- TEST_GEN_PROGS_aarch64 += aarch64/debug-exceptions
- TEST_GEN_PROGS_aarch64 += aarch64/get-reg-list
- TEST_GEN_PROGS_aarch64 += aarch64/psci_cpu_on_test
-diff --git a/tools/testing/selftests/kvm/aarch64/counter_emulation_benchmark.c b/tools/testing/selftests/kvm/aarch64/counter_emulation_benchmark.c
-new file mode 100644
-index 000000000000..48dbd9459102
---- /dev/null
-+++ b/tools/testing/selftests/kvm/aarch64/counter_emulation_benchmark.c
-@@ -0,0 +1,207 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * counter_emulation_benchmark.c -- test to measure the effects of counter
-+ * emulation on guest reads of the physical counter.
-+ *
-+ * Copyright (c) 2021, Google LLC.
-+ */
-+
-+#define _GNU_SOURCE
-+#include <asm/kvm.h>
-+#include <linux/kvm.h>
-+#include <stdio.h>
-+#include <stdint.h>
-+#include <stdlib.h>
-+#include <unistd.h>
-+
-+#include "kvm_util.h"
-+#include "processor.h"
-+#include "test_util.h"
-+
-+#define VCPU_ID 0
-+
-+static struct counter_values {
-+	uint64_t cntvct_start;
-+	uint64_t cntpct;
-+	uint64_t cntvct_end;
-+} counter_values;
-+
-+static uint64_t nr_iterations = 1000;
-+
-+static void do_test(void)
++static void enable_caps(struct kvm_vm *vm, struct vcpu_config *c)
 +{
-+	/*
-+	 * Open-coded approach instead of using helper methods to keep a tight
-+	 * interval around the physical counter read.
-+	 */
-+	asm volatile("isb\n\t"
-+		     "mrs %[cntvct_start], cntvct_el0\n\t"
-+		     "isb\n\t"
-+		     "mrs %[cntpct], cntpct_el0\n\t"
-+		     "isb\n\t"
-+		     "mrs %[cntvct_end], cntvct_el0\n\t"
-+		     "isb\n\t"
-+		     : [cntvct_start] "=r"(counter_values.cntvct_start),
-+		     [cntpct] "=r"(counter_values.cntpct),
-+		     [cntvct_end] "=r"(counter_values.cntvct_end));
-+}
++	struct kvm_enable_cap cap = {0};
++	struct reg_sublist *s;
 +
-+static void guest_main(void)
-+{
-+	int i;
-+
-+	for (i = 0; i < nr_iterations; i++) {
-+		do_test();
-+		GUEST_SYNC(i);
-+	}
-+
-+	for (i = 0; i < nr_iterations; i++) {
-+		do_test();
-+		GUEST_SYNC(i);
-+	}
-+}
-+
-+static void enter_guest(struct kvm_vm *vm)
-+{
-+	struct ucall uc;
-+
-+	vcpu_ioctl(vm, VCPU_ID, KVM_RUN, NULL);
-+
-+	switch (get_ucall(vm, VCPU_ID, &uc)) {
-+	case UCALL_SYNC:
-+		break;
-+	case UCALL_ABORT:
-+		TEST_ASSERT(false, "%s at %s:%ld", (const char *)uc.args[0],
-+			    __FILE__, uc.args[1]);
-+		break;
-+	default:
-+		TEST_ASSERT(false, "unexpected exit: %s",
-+			    exit_reason_str(vcpu_state(vm, VCPU_ID)->exit_reason));
-+		break;
-+	}
-+}
-+
-+static double counter_frequency(void)
-+{
-+	uint32_t freq;
-+
-+	asm volatile("mrs %0, cntfrq_el0"
-+		     : "=r" (freq));
-+
-+	return freq / 1000000.0;
-+}
-+
-+static void log_csv(FILE *csv, bool trapped)
-+{
-+	double freq = counter_frequency();
-+
-+	fprintf(csv, "%s,%.02f,%lu,%lu,%lu\n",
-+		trapped ? "true" : "false", freq,
-+		counter_values.cntvct_start,
-+		counter_values.cntpct,
-+		counter_values.cntvct_end);
-+}
-+
-+static double run_loop(struct kvm_vm *vm, FILE *csv, bool trapped)
-+{
-+	double avg = 0;
-+	int i;
-+
-+	for (i = 0; i < nr_iterations; i++) {
-+		uint64_t delta;
-+
-+		enter_guest(vm);
-+		sync_global_from_guest(vm, counter_values);
-+
-+		if (csv)
-+			log_csv(csv, trapped);
-+
-+		delta = counter_values.cntvct_end - counter_values.cntvct_start;
-+		avg = ((avg * i) + delta) / (i + 1);
-+	}
-+
-+	return avg;
-+}
-+
-+static void setup_counter(struct kvm_vm *vm, uint64_t offset)
-+{
-+	vcpu_access_device_attr(vm, VCPU_ID, KVM_ARM_VCPU_TIMER_CTRL,
-+				KVM_ARM_VCPU_TIMER_PHYS_OFFSET, &offset,
-+				true);
-+}
-+
-+static void run_tests(struct kvm_vm *vm, FILE *csv)
-+{
-+	double avg_trapped, avg_native, freq;
-+
-+	freq = counter_frequency();
-+
-+	if (csv)
-+		fputs("trapped,freq_mhz,cntvct_start,cntpct,cntvct_end\n", csv);
-+
-+	/* no physical offsetting; kvm allows reads of cntpct_el0 */
-+	setup_counter(vm, 0);
-+	avg_native = run_loop(vm, csv, false);
-+
-+	/* force emulation of the physical counter */
-+	setup_counter(vm, 1);
-+	avg_trapped = run_loop(vm, csv, true);
-+
-+	pr_info("%lu iterations: average cycles (@%.02fMHz) native: %.02f, trapped: %.02f\n",
-+		nr_iterations, freq, avg_native, avg_trapped);
-+}
-+
-+static void usage(const char *program_name)
-+{
-+	fprintf(stderr,
-+		"Usage: %s [-h] [-o csv_file] [-n iterations]\n"
-+		"  -h prints this message\n"
-+		"  -n number of test iterations (default: %lu)\n"
-+		"  -o csv file to write data\n",
-+		program_name, nr_iterations);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+	struct kvm_vm *vm;
-+	FILE *csv = NULL;
-+	int opt;
-+
-+	while ((opt = getopt(argc, argv, "hn:o:")) != -1) {
-+		switch (opt) {
-+		case 'o':
-+			csv = fopen(optarg, "w");
-+			if (!csv) {
-+				fprintf(stderr, "failed to open file '%s': %d\n",
-+					optarg, errno);
-+				exit(1);
-+			}
-+			break;
-+		case 'n':
-+			nr_iterations = strtoul(optarg, NULL, 0);
-+			break;
-+		default:
-+			fprintf(stderr, "unrecognized option: '-%c'\n", opt);
-+			/* fallthrough */
-+		case 'h':
-+			usage(argv[0]);
-+			exit(1);
++	for_each_sublist(c, s) {
++		if (s->enable_capability) {
++			cap.cap = s->enable_capability;
++			vm_enable_cap(vm, &cap);
 +		}
 +	}
-+
-+	vm = vm_create_default(VCPU_ID, 0, guest_main);
-+	sync_global_to_guest(vm, nr_iterations);
-+	ucall_init(vm, NULL);
-+
-+	if (_vcpu_has_device_attr(vm, VCPU_ID, KVM_ARM_VCPU_TIMER_CTRL,
-+				  KVM_ARM_VCPU_TIMER_PHYS_OFFSET)) {
-+		print_skip("KVM_ARM_VCPU_TIMER_PHYS_OFFSET not supported.");
-+		exit(KSFT_SKIP);
-+	}
-+
-+	run_tests(vm, csv);
-+	kvm_vm_free(vm);
-+
-+	if (csv)
-+		fclose(csv);
 +}
++
+ static bool print_list;
+ static bool print_filtered;
+ static bool fixup_core_regs;
+@@ -412,6 +426,8 @@ static void run_test(struct vcpu_config *c)
+ 	check_supported(c);
+ 
+ 	vm = vm_create(VM_MODE_DEFAULT, DEFAULT_GUEST_PHY_PAGES, O_RDWR);
++	enable_caps(vm, c);
++
+ 	prepare_vcpu_init(c, &init);
+ 	aarch64_vcpu_add_default(vm, 0, &init, NULL);
+ 	finalize_vcpu(vm, 0, c);
+@@ -1014,6 +1030,10 @@ static __u64 sve_rejects_set[] = {
+ 	KVM_REG_ARM64_SVE_VLS,
+ };
+ 
++static __u64 vtimer_offset_regs[] = {
++	KVM_REG_ARM_TIMER_OFFSET,
++};
++
+ #define BASE_SUBLIST \
+ 	{ "base", .regs = base_regs, .regs_n = ARRAY_SIZE(base_regs), }
+ #define VREGS_SUBLIST \
+@@ -1025,6 +1045,10 @@ static __u64 sve_rejects_set[] = {
+ 	{ "sve", .capability = KVM_CAP_ARM_SVE, .feature = KVM_ARM_VCPU_SVE, .finalize = true, \
+ 	  .regs = sve_regs, .regs_n = ARRAY_SIZE(sve_regs), \
+ 	  .rejects_set = sve_rejects_set, .rejects_set_n = ARRAY_SIZE(sve_rejects_set), }
++#define VTIMER_OFFSET_SUBLIST \
++	{ "vtimer_offset", .capability = KVM_CAP_ARM_VTIMER_OFFSET, \
++	  .enable_capability = KVM_CAP_ARM_VTIMER_OFFSET, .regs = vtimer_offset_regs, \
++	  .regs_n = ARRAY_SIZE(vtimer_offset_regs), }
+ 
+ static struct vcpu_config vregs_config = {
+ 	.sublists = {
+@@ -1041,6 +1065,14 @@ static struct vcpu_config vregs_pmu_config = {
+ 	{0},
+ 	},
+ };
++static struct vcpu_config vregs_vtimer_config = {
++	.sublists = {
++	BASE_SUBLIST,
++	VREGS_SUBLIST,
++	VTIMER_OFFSET_SUBLIST,
++	{0},
++	},
++};
+ static struct vcpu_config sve_config = {
+ 	.sublists = {
+ 	BASE_SUBLIST,
+@@ -1056,11 +1088,21 @@ static struct vcpu_config sve_pmu_config = {
+ 	{0},
+ 	},
+ };
++static struct vcpu_config sve_vtimer_config = {
++	.sublists = {
++	BASE_SUBLIST,
++	SVE_SUBLIST,
++	VTIMER_OFFSET_SUBLIST,
++	{0},
++	},
++};
+ 
+ static struct vcpu_config *vcpu_configs[] = {
+ 	&vregs_config,
+ 	&vregs_pmu_config,
++	&vregs_vtimer_config,
+ 	&sve_config,
+ 	&sve_pmu_config,
++	&sve_vtimer_config,
+ };
+ static int vcpu_configs_n = ARRAY_SIZE(vcpu_configs);
 -- 
 2.33.0.464.g1972c5931b-goog
 
