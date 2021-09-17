@@ -2,68 +2,107 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 38D5641078F
-	for <lists+kvmarm@lfdr.de>; Sat, 18 Sep 2021 18:17:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5411F410B12
+	for <lists+kvmarm@lfdr.de>; Sun, 19 Sep 2021 12:09:15 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 724464B08B;
-	Sat, 18 Sep 2021 12:17:56 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BEFBC40573;
+	Sun, 19 Sep 2021 06:09:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.391
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.391 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@armlinux.org.uk
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id V8kNIyM1+8Nv; Sat, 18 Sep 2021 12:17:56 -0400 (EDT)
+	with ESMTP id qx9DxPBmwIxI; Sun, 19 Sep 2021 06:09:14 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 10CE04A524;
-	Sat, 18 Sep 2021 12:17:55 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7267E49E93;
+	Sun, 19 Sep 2021 06:09:10 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B04FB49E5F
- for <kvmarm@lists.cs.columbia.edu>; Sat, 18 Sep 2021 12:17:53 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4E49E4A00B
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 17 Sep 2021 12:53:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id LM0ULT2Ab8nB for <kvmarm@lists.cs.columbia.edu>;
- Sat, 18 Sep 2021 12:17:52 -0400 (EDT)
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 06F0C40C88
- for <kvmarm@lists.cs.columbia.edu>; Sat, 18 Sep 2021 12:17:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=armlinux.org.uk; s=pandora-2019; h=Sender:Content-Type:MIME-Version:
- Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
- Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
- List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=72laBgllLDvPPa2HfsaMPLygXh5K0JehqshRy10whlY=; b=ZTkaeV2R+oaPcuuO5Pm/NzZiPl
- wxPGSGhljHUAHbjxgWz04hQIljJMoZzyNNSn0XLtWKp8AFrP7o0+5p0JeLoAEyL/2sSFmE9V3WuNR
- 3whi7jZZ09yrvQNHhzmAR0EwqVLUWe58qL2l+12TsdfXeKIQiwwIa9yNWuQKsfwopR+5miv1fFZIu
- CeJXfaPzGp6OqCCkAK1QgdqIeVQyOhMw+WaUQqmVrDob1FT6j8sUjfhq7Zmrx9IvkEEQbYO9EXAUI
- yjayHJyEitoKoLlPQaEh+HS0N3x2U4rCfFJuRcSvuPE8yyAartBF9Phg+Ih8A8S7hDzP3RLj+Yxb0
- y0JBZyNQ==;
-Received: from shell.armlinux.org.uk
- ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:54638)
- by pandora.armlinux.org.uk with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <linux@armlinux.org.uk>)
- id 1mRd2D-0000Nl-Gb; Sat, 18 Sep 2021 17:17:49 +0100
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
- (envelope-from <linux@shell.armlinux.org.uk>)
- id 1mRd29-0000Wl-UH; Sat, 18 Sep 2021 17:17:45 +0100
-Date: Sat, 18 Sep 2021 17:17:45 +0100
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu
-Subject: REGRESSION: Upgrading host kernel from 5.11 to 5.13 breaks QEMU
- guests - perf/fw_devlink/kvm
-Message-ID: <YUYRKVflRtUytzy5@shell.armlinux.org.uk>
+ with ESMTP id AFdbJlEWk4CG for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 17 Sep 2021 12:53:58 -0400 (EDT)
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com
+ [209.85.215.169])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 242114064F
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 17 Sep 2021 12:53:58 -0400 (EDT)
+Received: by mail-pg1-f169.google.com with SMTP id e7so10176677pgk.2
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 17 Sep 2021 09:53:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=fRMxd8azh7E1BFxsMIqGYJmHYephRNLnlBlA+X7n5iE=;
+ b=OCd2JnsFm+PC0WRg9Dy8nwrv0xb6S01W9Op4r/ZIu2wiEWDdIoF9l2WbVBKByhSPPF
+ pgrkna7a3wLYVWEKuAik8asYNbpDEgJtdjZ+5dk4g6kfSL2XrdSoKcoPwqesfcoOwhOu
+ WWbUTglAWniqlHYXmzaYzrF0F49uRRMs/V59Ek2JYLZBnMp92N934h45zumxZj/0PpGD
+ /zvBIntmv3EDlaS6KVxhx1MfK4sOMy/cLwcByoT+tkw90D/Cj3jlQCjxNda2rrqk2GSV
+ L6ETbBTdUnfohyRSi9IUyYAHcI9Z9pYHZQ5tjcYdmN/t6vpNHZYY3PO0hm+uRnpvMlkD
+ xKpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=fRMxd8azh7E1BFxsMIqGYJmHYephRNLnlBlA+X7n5iE=;
+ b=bKHCbNIdcB+CGcM8sVSkvpxD2vgnGbTgFHtvyWRNHIFmuRWMWnj1t9s/+4ZUCKrc8C
+ tClqjXmDxfwhSOWVbAvBlEXSQmfJ7QKDMJyF5iauFOC+Ba7zrbT2/1BaZ0PSevTjF0Pb
+ /+tY4TYSaiRK4uE9tT+XJWaorU0kwWRcZ+NspdJuYZvEPJOwVLta1HLxQgsi2LuNni3+
+ LWwBOAXeQ5+QVuvOT/6iKT6tLjZagE2BiC7VUvdIRNorFdCOcTFOde9VGkuYjCbBwotG
+ u0Zd+i6KuifM/i242F1qXAnYTmOx5WsYZ3JG/VTjaeeNR/U9Pqndev9hx+VlvlYuCgSX
+ Bflg==
+X-Gm-Message-State: AOAM532LnGwkI9q99CsDgSL+5q/yw85rTibgBtx2SIiCsr964IQt6ywo
+ sqfpKd0IC+H+967M8nPiYL2gNQ==
+X-Google-Smtp-Source: ABdhPJyVPh/MP+xok4eNnL6IICz9yFWugy2q7G+GDgXi8Z/wRNwWTua9Dj2q+LfRii59WPG0Vad6Iw==
+X-Received: by 2002:a05:6a00:174a:b0:433:9589:bdb5 with SMTP id
+ j10-20020a056a00174a00b004339589bdb5mr11713777pfc.5.1631897636965; 
+ Fri, 17 Sep 2021 09:53:56 -0700 (PDT)
+Received: from google.com (157.214.185.35.bc.googleusercontent.com.
+ [35.185.214.157])
+ by smtp.gmail.com with ESMTPSA id h21sm6580708pfc.118.2021.09.17.09.53.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 17 Sep 2021 09:53:56 -0700 (PDT)
+Date: Fri, 17 Sep 2021 16:53:52 +0000
+From: Sean Christopherson <seanjc@google.com>
+To: Peter Zijlstra <peterz@infradead.org>
+Subject: Re: [PATCH v2 00/13] perf: KVM: Fix, optimize, and clean up callbacks
+Message-ID: <YUTIIG4ZCKMbqrFi@google.com>
+References: <20210828003558.713983-1-seanjc@google.com>
+ <20210828201336.GD4353@worktop.programming.kicks-ass.net>
+ <YUO5J/jTMa2KGbsq@google.com>
+ <YURDqVZ1UXKCiKPV@hirez.programming.kicks-ass.net>
 MIME-Version: 1.0
 Content-Disposition: inline
-Cc: Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>
+In-Reply-To: <YURDqVZ1UXKCiKPV@hirez.programming.kicks-ass.net>
+X-Mailman-Approved-At: Sun, 19 Sep 2021 06:09:08 -0400
+Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Guo Ren <guoren@kernel.org>,
+ "H. Peter Anvin" <hpa@zytor.com>, linux-riscv@lists.infradead.org,
+ Vincent Chen <deanbo422@gmail.com>, Jiri Olsa <jolsa@redhat.com>,
+ Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+ Stefano Stabellini <sstabellini@kernel.org>, xen-devel@lists.xenproject.org,
+ Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>, x86@kernel.org,
+ linux-csky@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
+ Ingo Molnar <mingo@redhat.com>, Like Xu <like.xu.linux@gmail.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Zhu Lingshan <lingshan.zhu@intel.com>,
+ Will Deacon <will@kernel.org>, Arnaldo Carvalho de Melo <acme@kernel.org>,
+ Borislav Petkov <bp@alien8.de>, Greentime Hu <green.hu@gmail.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Namhyung Kim <namhyung@kernel.org>,
+ Thomas Gleixner <tglx@linutronix.de>,
+ Artem Kashkanov <artem.kashkanov@intel.com>,
+ linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
+ Juergen Gross <jgross@suse.com>, Nick Hu <nickhu@andestech.com>,
+ linux-kernel@vger.kernel.org, linux-perf-users@vger.kernel.org,
+ Palmer Dabbelt <palmer@dabbelt.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -80,100 +119,31 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi,
+On Fri, Sep 17, 2021, Peter Zijlstra wrote:
+> On Thu, Sep 16, 2021 at 09:37:43PM +0000, Sean Christopherson wrote:
+> So I don't mind exporting __static_call_return0, but exporting a raw
+> static_call is much like exporting a function pointer :/
 
-This morning, I upgraded my VM host from Debian Buster to Debian
-Bullseye. This host (Armada 8040) runs libvirt. I placed all the VMs
-into managedsave, which basically means their state is saved out by
-QEMU ready to be resumed once the upgrade is complete.
+Ya, that part is quite gross.
 
-Initially, I was running 5.11 on the host, which didn't have POSIX
-ACLs enabled on tmpfs. Sadly, upgrading to Bullseye now requires
-this to be enabled, so I upgraded the kernel to 5.13 to avoid this
-problem - without POSIX ACLs on tmpfs, qemu refuses to even start.
+> > The unregister path would also need its own synchronize_rcu().  In general, I
+> > don't love duplicating the logic, but it's not the end of the world.
+> > 
+> > Either way works for me.  Paolo or Peter, do either of you have a preference?
+> 
+> Can we de-feature kvm as a module and only have this PT functionality
+> when built-in? :-)
 
-Under Bullseye with 5.13, I could start new VMs, but I could not
-resume the saved VMs - it would spit out:
+I agree that many of the for-KVM exports are ugly, especially several of the
+perf exports, but I will fight tooth and nail to keep KVM-as-a-module.  It is
+invaluable for development and testing, and in the not-too-distant future there
+is KVM-maintenance related functionality that we'd like to implement that relies
+on KVM being a module.
 
-2021-09-18T11:14:14.456227Z qemu-system-aarch64: Invalid value 236 expecting positive value <= 162
-2021-09-18T11:14:14.456269Z qemu-system-aarch64: Failed to load cpu:cpreg_vmstate_array_len
-2021-09-18T11:14:14.456279Z qemu-system-aarch64: error while loading state for instance 0x0 of device 'cpu'
-2021-09-18T11:14:14.456887Z qemu-system-aarch64: load of migration failed: Invalid argument
-
-Essentially, what this is complaining about is that the register
-list returned by the KVM_GET_REG_LIST ioctl has reduced in size,
-meaning that the saved VM has more registers that need to be set
-(236 of them, after QEMU's filtering) than those which are actually
-available under 5.13 (162 after QEMU's filtering).
-
-After much debugging, and writing a program to create a VM and CPU,
-and retrieve the register list etc, I have finally tracked down
-exactly what is going on...
-
-Under 5.13, KVM believes there is no PMU, so it doesn't advertise the
-PMU registers, despite the hardware having a PMU and the kernel
-having support.
-
-kvm_arm_support_pmu_v3() determines whether the PMU_V3 feature is
-available or not.
-
-Under 5.11, this was determined via:
-
-	perf_num_counters() > 0
-
-which in turn was derived from (essentially):
-
-	__oprofile_cpu_pmu && __oprofile_cpu_pmu->num_events > 0
-
-__oprofile_cpu_pmu can be set at any time when the PMU has been
-initialised, and due to initialisation ordering, it appears to happen
-much later in the kernel boot.
-
-However, under 5.13, oprofile has been removed, and this test is no
-longer present. Instead, kvm attempts to determine the availability
-of PMUv3 when it initialises, and fails to because the PMU has not
-yet been initialised. If there is no PMU at the point KVM initialises,
-then KVM will never advertise a PMU.
-
-This change of behaviour is what breaks KVM on Armada 8040, causing
-a userspace regression.
-
-What makes this more confusing is the PMU errors have gone:
-
-5.13:
-[    0.170514] PCI: CLS 0 bytes, default 64
-[    0.171085] kvm [1]: IPA Size Limit: 44 bits
-[    0.172532] kvm [1]: vgic interrupt IRQ9
-[    0.172650] kvm: pmu event creation failed -2
-[    0.172688] kvm [1]: Hyp mode initialized successfully
-...
-[    1.479833] hw perfevents: enabled with armv8_cortex_a72 PMU driver, 7 counters available
-
-5.11:
-[    0.138831] PCI: CLS 0 bytes, default 64
-[    0.139245] hw perfevents: unable to count PMU IRQs
-[    0.139251] hw perfevents: /ap806/config-space@f0000000/pmu: failed to register PMU devices!
-[    0.139503] kvm [1]: IPA Size Limit: 44 bits
-[    0.140735] kvm [1]: vgic interrupt IRQ9
-[    0.140836] kvm [1]: Hyp mode initialized successfully
-...
-[    1.447789] hw perfevents: enabled with armv8_cortex_a72 PMU driver, 7 counters available
-
-Overall, what this means is that the only way to safely upgrade from
-5.11 to 5.13 (I don't know where 5.12 fits in this) is to completely
-shut down all your VMs. You can't even migrate them to another
-identical machine across these kernels. You have to completely shut
-them down.
-
-I did manage to eventually rescue my VMs after many hours, by booting
-back into 5.11, and then screwing around with bind mounts to replace
-/dev with a filesystem that did have POSIX ACLs enabled, so libvirt
-and qemu could then resume the VMs and cleanly shut them down all
-down.
-
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 40Mbps down 10Mbps up. Decent connectivity at last!
+I would be more than happy to help explore approaches that reduce the for-KVM
+exports, but I am strongly opposed to defeaturing KVM-as-a-module.  I have a few
+nascent ideas for eliminating a handful of a random exports, but no clever ideas
+for eliminating perf's for-KVM exports.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
