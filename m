@@ -2,82 +2,92 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C15B840E9AF
-	for <lists+kvmarm@lfdr.de>; Thu, 16 Sep 2021 20:16:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C922840F344
+	for <lists+kvmarm@lfdr.de>; Fri, 17 Sep 2021 09:29:43 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 746A94B187;
-	Thu, 16 Sep 2021 14:16:13 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3D03B4B0B4;
+	Fri, 17 Sep 2021 03:29:43 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: -1.391
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+X-Spam-Status: No, score=-1.391 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@infradead.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jgcbIYOOMbxj; Thu, 16 Sep 2021 14:16:13 -0400 (EDT)
+	with ESMTP id w5A-d6HJQ1VR; Fri, 17 Sep 2021 03:29:43 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5D8404B1F4;
-	Thu, 16 Sep 2021 14:16:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CC4E74B090;
+	Fri, 17 Sep 2021 03:29:41 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1BD724B0D0
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Sep 2021 14:16:11 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7781D4A2E5
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 17 Sep 2021 03:29:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 1HEuk-iSgQho for <kvmarm@lists.cs.columbia.edu>;
- Thu, 16 Sep 2021 14:16:10 -0400 (EDT)
-Received: from mail-qt1-f201.google.com (mail-qt1-f201.google.com
- [209.85.160.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2CD174B163
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Sep 2021 14:16:08 -0400 (EDT)
-Received: by mail-qt1-f201.google.com with SMTP id
- o9-20020ac80249000000b002a0c9fd54d5so63171229qtg.4
- for <kvmarm@lists.cs.columbia.edu>; Thu, 16 Sep 2021 11:16:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=Xw4+tgKVLmvm8JQWsGHVEpFbMf77zCGqq8rbz5yrSuw=;
- b=aqj3HRCmfQvWoQtSN5RzC1ysFfx+mQMpaBU2bf9JiwokiR0SsR1mjFVZwlMsYRWd5F
- S1wO4hvUJBxqXeG0m7E3iOLmvRhccSonfYKnGvnrmcxRXwiajJF8WrW/0OjYx2jBhPNg
- mSeQYdEI69TgXBb0UzLjUrlsKeOQachsm67AH76Wx+H8gHYl2PSGhNNq6W7jYvQM/XC3
- LXaisjjlREFlx0rMPKJ2YsgTBksZdWAA2o3kTilLBfa1XqxawES6tGn2os4UI+BOIu19
- gZFLCmlXEaeNDs7eyflXYmGj3j9j1rvbHboi2PjGfs2Sd46TUcfd88SDJvadas/9BxEe
- FnxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:date:in-reply-to:message-id:mime-version
- :references:subject:from:to:cc;
- bh=Xw4+tgKVLmvm8JQWsGHVEpFbMf77zCGqq8rbz5yrSuw=;
- b=L6HmrvCIFbCTbVINdf9MZdBLSjj9lXqgdpZKhqFN7RBG2rQZy8z7Du4mw+HpBue6MV
- 0xco3SF8h+9zdvpnXmAfnLCQyCP0vZqvSvol2V4gztqrMULQkj1lkCJKQ2LOqppHoP/9
- sH1Im/tcD6KmSVy9RIY0y70hEPUeit+m6NdIixXN7TiLZkWiF8Lw5mt4YaOkhj+0Mk9e
- phaNsBPHP1DWvMBwFCIBhcxK/IARrOSeUdyffdv+0jeMZ9iqBvSNpFaLBsbBF4DGuAfb
- vYRxhFX+Uv4D3p7pUPPYkBfXyZiO5lq6A9OmH0I3fDCQ2QpCUp+e8HCVa3/VmrZ1mfq4
- lJRA==
-X-Gm-Message-State: AOAM533Mh/CRTwrRmSVBe9Az1Pnl6vaicORAek4Q04axKcZJILn7KDNA
- KN9BAlB+ItaSNVB2qdHbeujn+IWtwWA=
-X-Google-Smtp-Source: ABdhPJwwEMjf9bn2Y68JHX2UcSLI5bYpoUc13K4VaVdU55eP01YXVcQ93R0zLYLdVbktp7FtkAMXNw1xICs=
-X-Received: from oupton.c.googlers.com ([fda3:e722:ac3:cc00:2b:ff92:c0a8:404])
- (user=oupton job=sendgmr) by 2002:a05:6214:1372:: with SMTP id
- c18mr4801098qvw.28.1631816167832; Thu, 16 Sep 2021 11:16:07 -0700 (PDT)
-Date: Thu, 16 Sep 2021 18:15:55 +0000
-In-Reply-To: <20210916181555.973085-1-oupton@google.com>
-Message-Id: <20210916181555.973085-10-oupton@google.com>
-Mime-Version: 1.0
-References: <20210916181555.973085-1-oupton@google.com>
-X-Mailer: git-send-email 2.33.0.464.g1972c5931b-goog
-Subject: [PATCH v8 9/9] selftests: KVM: Test vtimer offset reg in get-reg-list
-From: Oliver Upton <oupton@google.com>
-To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
-Cc: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Marc Zyngier <maz@kernel.org>, Peter Shier <pshier@google.com>,
- Sean Christopherson <seanjc@google.com>, David Matlack <dmatlack@google.com>,
- Paolo Bonzini <pbonzini@redhat.com>, linux-arm-kernel@lists.infradead.org,
- Jim Mattson <jmattson@google.com>
+ with ESMTP id Ml1A6-7QDdgr for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 17 Sep 2021 03:29:36 -0400 (EDT)
+Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C3BD64A198
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 17 Sep 2021 03:29:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
+ References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=17mkqfuKdfnPg9YSAeGWHc/O4GLOFEnsaFTJ4hUb1Qc=; b=R175PzEhjMPDTuiig9T+/8FvBN
+ wCwITbQjI86keC2UZcKL3oHklcXqScPxlhfsprjzgtQHXNUwlN8OYqdLQ7ztxGmPqLPGGL1HvK5TW
+ 8un1CwadAtDZMXP8kHm7KJ60CKQlzq6kBsXmSOCidcFaqUG49FGQ/Q91WQSCSzrudnHUpN1n/dtAK
+ 3oCiHTPea1eYl35kiZcqB3afHwTSqwkSRYpje8CyTQKsMtTXOUjDfhQXOeCpbGDLw3jXUuiLQwU+o
+ fpmbPjE5lGD64IJe7KimQfKhdgCV7/TWkKj798HvtN0fT0soP/DzPI91f4RdvEreoDEx02Cp2qq0O
+ NM1LgiIg==;
+Received: from j217100.upc-j.chello.nl ([24.132.217.100]
+ helo=noisy.programming.kicks-ass.net)
+ by desiato.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+ id 1mR8Ig-003p42-0g; Fri, 17 Sep 2021 07:28:46 +0000
+Received: from hirez.programming.kicks-ass.net
+ (hirez.programming.kicks-ass.net [192.168.1.225])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ (Client did not present a certificate)
+ by noisy.programming.kicks-ass.net (Postfix) with ESMTPS id 64E5430031A;
+ Fri, 17 Sep 2021 09:28:42 +0200 (CEST)
+Received: by hirez.programming.kicks-ass.net (Postfix, from userid 1000)
+ id EBC3F2B27F98D; Fri, 17 Sep 2021 09:28:41 +0200 (CEST)
+Date: Fri, 17 Sep 2021 09:28:41 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Sean Christopherson <seanjc@google.com>
+Subject: Re: [PATCH v2 00/13] perf: KVM: Fix, optimize, and clean up callbacks
+Message-ID: <YURDqVZ1UXKCiKPV@hirez.programming.kicks-ass.net>
+References: <20210828003558.713983-1-seanjc@google.com>
+ <20210828201336.GD4353@worktop.programming.kicks-ass.net>
+ <YUO5J/jTMa2KGbsq@google.com>
+MIME-Version: 1.0
+Content-Disposition: inline
+In-Reply-To: <YUO5J/jTMa2KGbsq@google.com>
+Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Guo Ren <guoren@kernel.org>,
+ "H. Peter Anvin" <hpa@zytor.com>, linux-riscv@lists.infradead.org,
+ Vincent Chen <deanbo422@gmail.com>, Jiri Olsa <jolsa@redhat.com>,
+ Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+ Stefano Stabellini <sstabellini@kernel.org>, xen-devel@lists.xenproject.org,
+ Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>, x86@kernel.org,
+ linux-csky@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
+ Ingo Molnar <mingo@redhat.com>, Like Xu <like.xu.linux@gmail.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Zhu Lingshan <lingshan.zhu@intel.com>,
+ Will Deacon <will@kernel.org>, Arnaldo Carvalho de Melo <acme@kernel.org>,
+ Borislav Petkov <bp@alien8.de>, Greentime Hu <green.hu@gmail.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Namhyung Kim <namhyung@kernel.org>,
+ Thomas Gleixner <tglx@linutronix.de>,
+ Artem Kashkanov <artem.kashkanov@intel.com>,
+ linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
+ Juergen Gross <jgross@suse.com>, Nick Hu <nickhu@andestech.com>,
+ linux-kernel@vger.kernel.org, linux-perf-users@vger.kernel.org,
+ Palmer Dabbelt <palmer@dabbelt.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -94,117 +104,57 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Assert that KVM exposes KVM_REG_ARM_TIMER_OFFSET in the KVM_GET_REG_LIST
-ioctl when userspace buys in to the new behavior.
+On Thu, Sep 16, 2021 at 09:37:43PM +0000, Sean Christopherson wrote:
+> On Sat, Aug 28, 2021, Peter Zijlstra wrote:
 
-Signed-off-by: Oliver Upton <oupton@google.com>
----
- .../selftests/kvm/aarch64/get-reg-list.c      | 42 +++++++++++++++++++
- 1 file changed, 42 insertions(+)
+> Argh, sorry, I somehow managed to miss all of your replies.  I'll get back to
+> this series next week.  Thanks for the quick response!
+> 
+> > Lets keep the whole intel_pt crud inside x86...
+> 
+> In theory, I like the idea of burying intel_pt inside x86 (and even in
+> Intel+VMX code for the most part), but the actual implementation is a
+> bit gross.  Because of the whole "KVM can be a module" thing,
 
-diff --git a/tools/testing/selftests/kvm/aarch64/get-reg-list.c b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
-index cc898181faab..4f337d8b793a 100644
---- a/tools/testing/selftests/kvm/aarch64/get-reg-list.c
-+++ b/tools/testing/selftests/kvm/aarch64/get-reg-list.c
-@@ -40,6 +40,7 @@ static __u64 *blessed_reg, blessed_n;
- struct reg_sublist {
- 	const char *name;
- 	long capability;
-+	long enable_capability;
- 	int feature;
- 	bool finalize;
- 	__u64 *regs;
-@@ -397,6 +398,19 @@ static void check_supported(struct vcpu_config *c)
- 	}
- }
- 
-+static void enable_caps(struct kvm_vm *vm, struct vcpu_config *c)
-+{
-+	struct kvm_enable_cap cap = {0};
-+	struct reg_sublist *s;
-+
-+	for_each_sublist(c, s) {
-+		if (s->enable_capability) {
-+			cap.cap = s->enable_capability;
-+			vm_enable_cap(vm, &cap);
-+		}
-+	}
-+}
-+
- static bool print_list;
- static bool print_filtered;
- static bool fixup_core_regs;
-@@ -412,6 +426,8 @@ static void run_test(struct vcpu_config *c)
- 	check_supported(c);
- 
- 	vm = vm_create(VM_MODE_DEFAULT, DEFAULT_GUEST_PHY_PAGES, O_RDWR);
-+	enable_caps(vm, c);
-+
- 	prepare_vcpu_init(c, &init);
- 	aarch64_vcpu_add_default(vm, 0, &init, NULL);
- 	finalize_vcpu(vm, 0, c);
-@@ -1014,6 +1030,10 @@ static __u64 sve_rejects_set[] = {
- 	KVM_REG_ARM64_SVE_VLS,
- };
- 
-+static __u64 vtimer_offset_regs[] = {
-+	KVM_REG_ARM_TIMER_OFFSET,
-+};
-+
- #define BASE_SUBLIST \
- 	{ "base", .regs = base_regs, .regs_n = ARRAY_SIZE(base_regs), }
- #define VREGS_SUBLIST \
-@@ -1025,6 +1045,10 @@ static __u64 sve_rejects_set[] = {
- 	{ "sve", .capability = KVM_CAP_ARM_SVE, .feature = KVM_ARM_VCPU_SVE, .finalize = true, \
- 	  .regs = sve_regs, .regs_n = ARRAY_SIZE(sve_regs), \
- 	  .rejects_set = sve_rejects_set, .rejects_set_n = ARRAY_SIZE(sve_rejects_set), }
-+#define VTIMER_OFFSET_SUBLIST \
-+	{ "vtimer_offset", .capability = KVM_CAP_ARM_VTIMER_OFFSET, \
-+	  .enable_capability = KVM_CAP_ARM_VTIMER_OFFSET, .regs = vtimer_offset_regs, \
-+	  .regs_n = ARRAY_SIZE(vtimer_offset_regs), }
- 
- static struct vcpu_config vregs_config = {
- 	.sublists = {
-@@ -1041,6 +1065,14 @@ static struct vcpu_config vregs_pmu_config = {
- 	{0},
- 	},
- };
-+static struct vcpu_config vregs_vtimer_config = {
-+	.sublists = {
-+	BASE_SUBLIST,
-+	VREGS_SUBLIST,
-+	VTIMER_OFFSET_SUBLIST,
-+	{0},
-+	},
-+};
- static struct vcpu_config sve_config = {
- 	.sublists = {
- 	BASE_SUBLIST,
-@@ -1056,11 +1088,21 @@ static struct vcpu_config sve_pmu_config = {
- 	{0},
- 	},
- };
-+static struct vcpu_config sve_vtimer_config = {
-+	.sublists = {
-+	BASE_SUBLIST,
-+	SVE_SUBLIST,
-+	VTIMER_OFFSET_SUBLIST,
-+	{0},
-+	},
-+};
- 
- static struct vcpu_config *vcpu_configs[] = {
- 	&vregs_config,
- 	&vregs_pmu_config,
-+	&vregs_vtimer_config,
- 	&sve_config,
- 	&sve_pmu_config,
-+	&sve_vtimer_config,
- };
- static int vcpu_configs_n = ARRAY_SIZE(vcpu_configs);
--- 
-2.33.0.464.g1972c5931b-goog
+ARGH!! we should really fix that. I've heard other archs have made much
+better choices here.
 
+> either
+> the static call and __static_call_return0 would need to be exported,
+> or a new register/unregister pair would have to be exported.
+
+So I don't mind exporting __static_call_return0, but exporting a raw
+static_call is much like exporting a function pointer :/
+
+> The unregister path would also need its own synchronize_rcu().  In general, I
+> don't love duplicating the logic, but it's not the end of the world.
+> 
+> Either way works for me.  Paolo or Peter, do either of you have a preference?
+
+Can we de-feature kvm as a module and only have this PT functionality
+when built-in? :-)
+
+
+> > ---
+> > Index: linux-2.6/arch/x86/events/core.c
+> > ===================================================================
+> > --- linux-2.6.orig/arch/x86/events/core.c
+> > +++ linux-2.6/arch/x86/events/core.c
+> > @@ -92,7 +92,7 @@ DEFINE_STATIC_CALL_RET0(x86_pmu_guest_ge
+> >  
+> >  DEFINE_STATIC_CALL_RET0(x86_guest_state, *(perf_guest_cbs->state));
+> >  DEFINE_STATIC_CALL_RET0(x86_guest_get_ip, *(perf_guest_cbs->get_ip));
+> > -DEFINE_STATIC_CALL_RET0(x86_guest_handle_intel_pt_intr, *(perf_guest_cbs->handle_intel_pt_intr));
+> > +DEFINE_STATIC_CALL_RET0(x86_guest_handle_intel_pt_intr, unsigned int (*)(void));
+> 
+> FWIW, the param needs to be a raw function, not a function pointer. 
+
+Yeah, I keep making that mistake.. and I wrote the bloody thing :/
+
+I have a 'fix' for that, but I need to finish that and also flag-day
+change :-(
+
+  https://lkml.kernel.org/r/YS+0eIeAJsRRArk4@hirez.programming.kicks-ass.net
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
