@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D3D99411E2E
-	for <lists+kvmarm@lfdr.de>; Mon, 20 Sep 2021 19:27:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43142411EC3
+	for <lists+kvmarm@lfdr.de>; Mon, 20 Sep 2021 19:33:40 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2C9284B090;
-	Mon, 20 Sep 2021 13:27:39 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C55D3401A2;
+	Mon, 20 Sep 2021 13:33:39 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.091
@@ -18,39 +18,39 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@linuxfoundation.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id B8wxcFurTb9T; Mon, 20 Sep 2021 13:27:39 -0400 (EDT)
+	with ESMTP id dpFhONTC1qRX; Mon, 20 Sep 2021 13:33:39 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C56CC4025B;
-	Mon, 20 Sep 2021 13:27:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 97E354048A;
+	Mon, 20 Sep 2021 13:33:38 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D17D24025B
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Sep 2021 13:27:36 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A5320401A2
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Sep 2021 13:33:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Oa4m4cgS8FIF for <kvmarm@lists.cs.columbia.edu>;
- Mon, 20 Sep 2021 13:27:35 -0400 (EDT)
+ with ESMTP id 4f5aid8ccuto for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 20 Sep 2021 13:33:35 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 352BD49DE7
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Sep 2021 13:27:35 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 987B8632FA;
- Mon, 20 Sep 2021 17:27:33 +0000 (UTC)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 70BA940191
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Sep 2021 13:33:35 -0400 (EDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 27A766335C;
+ Mon, 20 Sep 2021 17:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1632158854;
- bh=Y8+9tCBQVls13rEL6Xs1lf2KcOsG+GSp0ZpACO/oVfY=;
+ s=korg; t=1632159213;
+ bh=CR846wXXXHl/Ng8G88sA14qia9OWfF1CL4/79f+daRE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=XS1rEveY7x2lURzz0FEQRxzWneogijiQnPaQCY0FWm0SNNOqyyhcfPMYjePEXfPS4
- s/fhp5ABCq1V6lFmhr7gRVTc6E4CdXJgq+zG+uZu32gcf6k0sIY9PW47yKI3MOTtOv
- nONPRe6A8wswAl8gPYURiZPo239Dufy9PDSUYOkA=
+ b=Sj/8i3yKeaZ3/Re7XqH4Mjpd3N1Ux+fZgKS0DP1PmUh3W7jF5KdNmVPALncZcTHxi
+ 4e2R3HoO6cWU+F0z3wnFnA0o/6Mv77mu3QTb4BBEPqoyeYwvt0foxTOq5zR+eekusg
+ P204089QZ+FWIwK8lrgvTRBmIHGsAH11ZlWHz+20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: linux-kernel@vger.kernel.org
-Subject: [PATCH 5.10 086/122] KVM: arm64: Restrict IPA size to maximum 48 bits
+Subject: [PATCH 5.14 127/168] KVM: arm64: Restrict IPA size to maximum 48 bits
  on 4K and 16K page size
-Date: Mon, 20 Sep 2021 18:44:18 +0200
-Message-Id: <20210920163918.608984519@linuxfoundation.org>
+Date: Mon, 20 Sep 2021 18:44:25 +0200
+Message-Id: <20210920163925.839290093@linuxfoundation.org>
 X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20210920163915.757887582@linuxfoundation.org>
-References: <20210920163915.757887582@linuxfoundation.org>
+In-Reply-To: <20210920163921.633181900@linuxfoundation.org>
+References: <20210920163921.633181900@linuxfoundation.org>
 User-Agent: quilt/0.66
 MIME-Version: 1.0
 Cc: Sasha Levin <sashal@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
@@ -107,10 +107,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 8 insertions(+)
 
 diff --git a/arch/arm64/kvm/reset.c b/arch/arm64/kvm/reset.c
-index b969c2157ad2..6058a80ec9ec 100644
+index cba7872d69a8..78d4bd897fbc 100644
 --- a/arch/arm64/kvm/reset.c
 +++ b/arch/arm64/kvm/reset.c
-@@ -366,6 +366,14 @@ int kvm_set_ipa_limit(void)
+@@ -317,6 +317,14 @@ int kvm_set_ipa_limit(void)
  	mmfr0 = read_sanitised_ftr_reg(SYS_ID_AA64MMFR0_EL1);
  	parange = cpuid_feature_extract_unsigned_field(mmfr0,
  				ID_AA64MMFR0_PARANGE_SHIFT);
