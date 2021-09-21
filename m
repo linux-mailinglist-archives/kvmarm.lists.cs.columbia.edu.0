@@ -2,97 +2,70 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6402E412F3C
-	for <lists+kvmarm@lfdr.de>; Tue, 21 Sep 2021 09:19:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 208F04130E3
+	for <lists+kvmarm@lfdr.de>; Tue, 21 Sep 2021 11:45:31 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CDD3D4ACC9;
-	Tue, 21 Sep 2021 03:19:13 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 73FD54B0C2;
+	Tue, 21 Sep 2021 05:45:30 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.209
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qYnkHHXcCzNn; Tue, 21 Sep 2021 03:19:13 -0400 (EDT)
+	with ESMTP id 8TVsP06a-VP4; Tue, 21 Sep 2021 05:45:30 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A81684A3A5;
-	Tue, 21 Sep 2021 03:19:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0CCA94B0A0;
+	Tue, 21 Sep 2021 05:45:29 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EFA0249F5D
- for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Sep 2021 03:19:10 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D8C784B08D
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Sep 2021 05:45:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 7PdEb5QyOZcV for <kvmarm@lists.cs.columbia.edu>;
- Tue, 21 Sep 2021 03:19:10 -0400 (EDT)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 039604079A
- for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Sep 2021 03:19:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1632208749;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vd756pui6KEC1UbpIk1pqZxBtMYyZDzhx0CEGUXBa3g=;
- b=gCm1hs7A7EefNvG2JMRJntP6f/kJ408bMnGSt+dRoC4l1Z4Jjpn04Ne+y662hsULpWHlox
- G0b1bsOjiYwYOrhrXnnooWlDYWllvo4rcjQiAMn+rkLpMOsB1ssI2fbmu8uwNBAoqLrsHo
- 8Xh3SxvfP6hwwFrGUiWb6XqZtBApC18=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-62-eLjnAkPFMG6fywSiEWFyIA-1; Tue, 21 Sep 2021 03:19:08 -0400
-X-MC-Unique: eLjnAkPFMG6fywSiEWFyIA-1
-Received: by mail-ed1-f71.google.com with SMTP id
- j6-20020aa7de86000000b003d4ddaf2bf9so18099691edv.7
- for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Sep 2021 00:19:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=vd756pui6KEC1UbpIk1pqZxBtMYyZDzhx0CEGUXBa3g=;
- b=1ieWtLCU6kRT0ZGgVtmuehBVCiYrtd9MM6mskJOVrRykZKDLMLHu+YMFSd+A1EO83B
- ANToeucp8ebtYMbIjUceXY6hpIc6vgEOtf2sjVhc3lOfKdyDvZvGU9J3lOVUvmRndikV
- d0Hkk+U4I9OGJvv0RY7A+6DgQqtmNTI643/PJvLTB8RGcTO4cVkkfZ0vj8TjA9Vs8L+K
- UsxSStZAGVcQVuN/EbEOI3dkCQZ/BH4sffObPwseK6sFJwTu/aWM/39Ka0go+JYGpIt1
- eTTPqZL0vuJNGj97zTAMXsIpI5tF9P+1sY13OuCnMFYgrGzKL+xQNHtM9M5gOQPlKjxJ
- ivwA==
-X-Gm-Message-State: AOAM531TCFzuctJ2kU5uf5psJemtuQbUhGzl+fF1dWuVfsfhd5YvU1T+
- UDf29F4OUjQwYy51j4fi+zR1Iy1VD7E5H328cetSLjy9eHUv6n+0uAHvZB8+ZjVLXLydpmPD2aD
- OPZu05Dy025Gr9KYliUs5mWnP
-X-Received: by 2002:a17:906:39cb:: with SMTP id
- i11mr34466637eje.168.1632208747404; 
- Tue, 21 Sep 2021 00:19:07 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJwI0XEybugInECb0uqIoYxDJZLvNGiDElvnIwBQk5rwedeJJwROpvlubrUCVRAUxU8E/axZ8g==
-X-Received: by 2002:a17:906:39cb:: with SMTP id
- i11mr34466616eje.168.1632208747251; 
- Tue, 21 Sep 2021 00:19:07 -0700 (PDT)
-Received: from gator.home (cst2-174-28.cust.vodafone.cz. [31.30.174.28])
- by smtp.gmail.com with ESMTPSA id bf28sm8078306edb.45.2021.09.21.00.19.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 21 Sep 2021 00:19:06 -0700 (PDT)
-Date: Tue, 21 Sep 2021 09:19:04 +0200
-From: Andrew Jones <drjones@redhat.com>
+ with ESMTP id 8TCUJlvRGxUL for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 21 Sep 2021 05:45:26 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5F1764A19A
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Sep 2021 05:45:26 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 4FFD860F6E;
+ Tue, 21 Sep 2021 09:45:25 +0000 (UTC)
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1mScL5-00C0mJ-AC; Tue, 21 Sep 2021 10:45:23 +0100
+Date: Tue, 21 Sep 2021 10:45:22 +0100
+Message-ID: <87k0jauurx.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
 To: Oliver Upton <oupton@google.com>
-Subject: Re: [PATCH 2/2] selftests: KVM: Fix 'asm-operand-width' warnings in
- steal_time.c
-Message-ID: <20210921071904.5irj3q5yiquoubj2@gator.home>
-References: <20210921010120.1256762-1-oupton@google.com>
- <20210921010120.1256762-3-oupton@google.com>
-MIME-Version: 1.0
-In-Reply-To: <20210921010120.1256762-3-oupton@google.com>
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=drjones@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Disposition: inline
-Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
- Sean Christopherson <seanjc@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
- kvmarm@lists.cs.columbia.edu, Jim Mattson <jmattson@google.com>
+Subject: Re: [PATCH 0/6] KVM: arm64: Implement PSCI SYSTEM_SUSPEND support
+In-Reply-To: <CAOQ_QshZe8ay03XqCo4DkM6zUaOuEoS5bRbrOy+FsuXaJ=YyKA@mail.gmail.com>
+References: <20210819223640.3564975-1-oupton@google.com>
+ <87ilzecbkj.wl-maz@kernel.org>
+ <CAOQ_QsgOtufyB6_qGAs4fQf6kd81FSMSj44uiVRgoFQWOf3nRA@mail.gmail.com>
+ <87a6kocmcx.wl-maz@kernel.org>
+ <CAOQ_QshZe8ay03XqCo4DkM6zUaOuEoS5bRbrOy+FsuXaJ=YyKA@mail.gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: oupton@google.com, kvm@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu, pshier@google.com, ricarkol@google.com,
+ jingzhangos@google.com, rananta@google.com, james.morse@arm.com,
+ Alexandru.Elisei@arm.com, suzuki.poulose@arm.com, drjones@redhat.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvm@vger.kernel.org, Peter Shier <pshier@google.com>,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -109,68 +82,164 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, Sep 21, 2021 at 01:01:20AM +0000, Oliver Upton wrote:
-> Building steal_time.c for arm64 with clang throws the following:
-> 
-> >> steal_time.c:130:22: error: value size does not match register size specified by the constraint and modifier [-Werror,-Wasm-operand-widths]
->           : "=r" (ret) : "r" (func), "r" (arg) :
->                               ^
-> >> steal_time.c:130:34: error: value size does not match register size specified by the constraint and modifier [-Werror,-Wasm-operand-widths]
->           : "=r" (ret) : "r" (func), "r" (arg) :
->                                           ^
-> 
-> Silence by casting operands to 64 bits.
-> 
-> Signed-off-by: Oliver Upton <oupton@google.com>
-> ---
->  tools/testing/selftests/kvm/steal_time.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/tools/testing/selftests/kvm/steal_time.c b/tools/testing/selftests/kvm/steal_time.c
-> index ecec30865a74..eb75b31122c5 100644
-> --- a/tools/testing/selftests/kvm/steal_time.c
-> +++ b/tools/testing/selftests/kvm/steal_time.c
-> @@ -127,7 +127,7 @@ static int64_t smccc(uint32_t func, uint32_t arg)
->  		"mov	x1, %2\n"
->  		"hvc	#0\n"
->  		"mov	%0, x0\n"
-> -	: "=r" (ret) : "r" (func), "r" (arg) :
-> +	: "=r" (ret) : "r" ((uint64_t)func), "r" ((uint64_t)arg) :
+Hi Oliver,
 
-Actually, I think I'd rather fix this smccc implementation to match the
-spec, which I think should be done like this
+On Tue, 07 Sep 2021 19:14:00 +0100,
+Oliver Upton <oupton@google.com> wrote:
+> 
+> On Tue, Sep 7, 2021 at 12:43 PM Marc Zyngier <maz@kernel.org> wrote:
+> > > > Although the definition of SYSTEM_SUSPEND is very simple from a PSCI
+> > > > perspective, I don't think it is that simple at the system level,
+> > > > because PSCI is only concerned with the CPU.
+> > > >
+> > > > For example, what is a wake-up event? My first approach would be to
+> > > > consider interrupts to be such events. However, this approach suffers
+> > > > from at least two issues:
+> > > >
+> > > > - How do you define which interrupts are actual wake-up events?
+> > > >   Nothing in the GIC architecture defines what a wake-up is (let alone
+> > > >   a wake-up event).
+> > >
+> > > Good point.
+> > >
+> > > One possible implementation of suspend could just be a `WFI` in a
+> > > higher EL. In this case, KVM could emulate WFI wake up events
+> > > according to D1.16.2 in DDI 0487G.a. But I agree, it isn't entirely
+> > > clear what constitutes a wakeup from powered down state.
+> >
+> > It isn't, and it is actually IMPDEF (there isn't much in the ARM ARM
+> > in terms of what constitutes a low power state). And even if you
+> > wanted to emulate a WFI in userspace, the problem of interrupts that
+> > have their source in the kernel remains. How to you tell userspace
+> > that such an event has occurred if the vcpu thread isn't in the
+> > kernel?
+> 
+> Well, are there any objections to saying for the KVM implementation we
+> observe the WFI wake-up events per the cited section of the ARM ARM?
 
-diff --git a/tools/testing/selftests/kvm/steal_time.c b/tools/testing/selftests/kvm/steal_time.c
-index ecec30865a74..7da957259ce4 100644
---- a/tools/testing/selftests/kvm/steal_time.c
-+++ b/tools/testing/selftests/kvm/steal_time.c
-@@ -118,12 +118,12 @@ struct st_time {
-        uint64_t st_time;
- };
- 
--static int64_t smccc(uint32_t func, uint32_t arg)
-+static int64_t smccc(uint32_t func, uint64_t arg)
- {
-        unsigned long ret;
- 
-        asm volatile(
--               "mov    x0, %1\n"
-+               "mov    w0, %w1\n"
-                "mov    x1, %2\n"
-                "hvc    #0\n"
-                "mov    %0, x0\n"
+These are fine. However, what of the GIC, for example? Can any GIC
+interrupt wake-up the guest? I'm happy to say "yes" to this, but I
+suspect others will have a different idea, and the thought of
+introducing an IMPDEF wake-up interrupt controller doesn't fill me
+with joy.
 
+> > > > It looks to me that your implementation can only work with userspace
+> > > > provided events, which is pretty limited.
+> > >
+> > > Right. I implemented this from the mindset that userspace may do
+> > > something heavyweight when a guest suspends, like save it to a
+> > > persistent store to resume later on. No matter what we do in KVM, I
+> > > think it's probably best to give userspace the right of first refusal
+> > > to handle the suspension.
+> >
+> > Maybe. But if you want to handle wake-up from interrupts to actually
+> > work, you must return to the kernel for the wake-up to occurs.
+> >
+> > The problem is that you piggyback on an existing feature (suspend) to
+> > implement something else (opportunistic save/restore?). Oddly enough
+> > the stars don't exactly align! ;-)
+> >
+> > I have the feeling that a solution to this problem would be to exit to
+> > userspace with something indicating an *intent* to suspend. At this
+> > stage, userspace can do two things:
+> >
+> > - resume the guest: the guest may have been moved to some other
+> >   machine, cold storage, whatever... The important thing is that the
+> >   guest is directly runnable without any extra event
+> >
+> > - confirm the suspension by returning to the kernel, which will
+> >   execute a blocking WFI on behalf of the guest
+> >
+> > With this, you end-up with something that is works from an interrupt
+> > perspective (even for directly injected interrupts), and you can save
+> > your guest on suspend.
+> 
+> This is exactly what I was trying to get at with my last mail,
+> although not quite as eloquently stated. So I completely agree.
+
+Ah! Good! :D
+
+> Just to check understanding for v2:
+> 
+> We agree that an exit to userspace is fine so it has the opportunity
+> to do something crazy when the guest attempts a suspend. If a VMM does
+> nothing and immediately re-enters the kernel, we emulate the suspend
+> there by waiting for some event to fire, which for our purposes we
+> will say is an interrupt originating from userspace or the kernel
+> (WFI). In all, the SUSPEND exit type does not indicate that emulation
+> terminates with the VMM. It only indicates we are about to block in
+> the kernel.
+> 
+> If there is some IMPDEF event specific to the VMM, it should signal
+> the vCPU thread to kick it out of the kernel, make it runnable, and
+> re-enter. No need to do anything special from the kernel perspective
+> for this. This is only for the case where we decide to block in the
+> kernel.
+
+This looks sensible. One question though: I think there is an implicit
+requirement that the guest should be "migratable" in that state. How
+does the above handles it? If the "suspend state" is solely held in
+the kernel, we need to be able to snapshot it, and I don't like the
+sound of that...
+
+We could instead keep the "suspend state" in the VMM:
+
+On PSCI_SUSPEND, the guest exits to userspace. If the VMM wants to
+honour the supend request, it reenters the guest with RUN+SUSPEND,
+which results in a WFI. On each wake-up, the guest exits to userspace,
+and it is the VMM responsibility to either perform the wake-up (RUN)
+or stay in suspend (RUN+SUSPEND).
+
+This ensures that the guest never transitions out of suspend without
+the VMM knowing, and the VMM can always force a resume by kicking the
+thread back to userspace.
+
+Thoughts?
+
+> > > > Other items worth considering: ongoing DMA, state of the caches at
+> > > > suspend time, device state in general All of this really needs to be
+> > > > defined before we can move forward with this feature.
+> > >
+> > > I believe it is largely up to the caller to get devices in a quiesced
+> > > state appropriate for a system suspend, but PSCI is delightfully vague
+> > > on this topic.
+> >
+> > Indeed, it only deals with the CPU. Oh look, another opportunity to
+> > write a new spec! :)
+> >
+> > > On the contrary, it is up to KVM's implementation to
+> > > guarantee caches are clean when servicing the guest request.
+> >
+> > This last point is pretty unclear to me. If the guest doesn't clean to
+> > the PoC (or even to one of the PoPs) when it calls into suspend,
+> > that's a clear indication that it doesn't care about its data. Why
+> > should KVM be more conservative here? It shouldn't be in the business
+> > of working around guest bugs.
+> 
+> PSCI is vague on this, sadly. DEN0022D.b, 5.4.8 "Implementation
+> responsibilities: Cache and coherency management states" that for
+> CPU_SUSPEND, the PSCI implementation must perform a cache clean
+> operation before entering the powerdown state. I don't see any reason
+> why SYSTEM_SUSPEND should be excluded from this requirement.
+
+I'm not sure that's the case. CPU_SUSPEND may not use the resume
+entry-point if the suspend results is a shallower state than expected
+(i.e. the call just returns instead of behaving like a CPU boot).
+
+However, a successful SYSTEM_SUSPEND always results in the deepest
+possible state. The guest should know that. There is also the fact
+that performing a full clean to the PoC is going to be pretty
+expensive, and I'd like to avoid that.
+
+I'll try and reach out to some of the ARM folks for clarification on
+the matter.
 
 Thanks,
-drew
 
->  	  "x0", "x1", "x2", "x3");
->  
->  	return ret;
-> -- 
-> 2.33.0.464.g1972c5931b-goog
-> 
+	M.
 
+-- 
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
