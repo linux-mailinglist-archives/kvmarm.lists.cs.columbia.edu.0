@@ -2,77 +2,97 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D1F74412FD0
-	for <lists+kvmarm@lfdr.de>; Tue, 21 Sep 2021 09:55:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F4AD412F15
+	for <lists+kvmarm@lfdr.de>; Tue, 21 Sep 2021 09:09:26 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 61DB54A524;
-	Tue, 21 Sep 2021 03:55:39 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D13449E5F;
+	Tue, 21 Sep 2021 03:09:25 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@chromium.org
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id M86wSqOuJK4W; Tue, 21 Sep 2021 03:55:39 -0400 (EDT)
+	with ESMTP id Gp3tznOogduN; Tue, 21 Sep 2021 03:09:25 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 63C854A5A0;
-	Tue, 21 Sep 2021 03:55:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 867724A19A;
+	Tue, 21 Sep 2021 03:09:24 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C03244079D
- for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Sep 2021 02:27:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 52D2749E5F
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Sep 2021 03:09:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id EtN0jx9nLaQM for <kvmarm@lists.cs.columbia.edu>;
- Tue, 21 Sep 2021 02:27:28 -0400 (EDT)
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com
- [209.85.222.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E7D6A4079A
- for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Sep 2021 02:27:28 -0400 (EDT)
-Received: by mail-qk1-f172.google.com with SMTP id f22so51226571qkm.5
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Sep 2021 23:27:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chromium.org; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=bx2qLnibyjBQP3Cwq2rxTrw1KpHuF4QRllMp6t6UiFc=;
- b=a+vdvt88RTaFWVh/6GdGX0TUYAxYiZBTFwUXiduLzzBGBA58aeJyJ/WH5xNmFBtn/r
- xRrBAFTpOUiBaElOXIFY/I4e5GBgQG1E7dSqBD6oh6smn7vW7enSkUx1VLFh//geJ+8v
- J1VEIrYJ11fBZTo5/LP/PXnOJJLTqTREpTQLE=
+ with ESMTP id K5nOpXoc1BhQ for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 21 Sep 2021 03:09:22 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6F75F49E57
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Sep 2021 03:09:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1632208162;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=XjFX8TMy06JKFo29b5wtP7D4GUJciYA0H9pKx9SvMnM=;
+ b=WUVw2YBM04u+n1R5RZxzSPXjc8JVZ8m34jvQU48kV+HuSE9AIzwAY4zopgAp57OZDcl8Qf
+ k5GWj9ofPaTLpk84x/uFs8dERDUgCG5ZjItaH/MfoJHimUpm0FGcPm70qYsttpfOAaVWWT
+ 6Vra+p3yQE3kJ7EU0tNrsBn7g28rSTc=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-184-7l3ddAt7NXeUlvpHS3oANQ-1; Tue, 21 Sep 2021 03:09:19 -0400
+X-MC-Unique: 7l3ddAt7NXeUlvpHS3oANQ-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ l29-20020a50d6dd000000b003d80214566cso13723780edj.21
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Sep 2021 00:09:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=bx2qLnibyjBQP3Cwq2rxTrw1KpHuF4QRllMp6t6UiFc=;
- b=qhMJCM/LARmoZJ7zuh7zkWU/hbzqnoZddhnaHygz6CqnP31w2Ki9RJzEitFcrYu2I7
- dEmRcnNECVeQx7B5TSVxJ7E8hsXjULSpjLCNmZ2KATeYOCttKTlh3dZ/JXLzfMjIF8Ba
- fV63nah+pIN4l5/gTVUgUCPLuI3stjP0je+A8HM33ktV4c8KGo708IaVtgyYMP6H/Jbe
- e32/rvNr8a8zU4Z0rfWv4FY4luvS/ImcaNHNsjvdVeaOxePMEvKCoh0uOcuyVvF8XkPq
- SlQzFO+PRdOkNcHyJv6UUvUmwNMwScCrBOiZpiKS6iku5g2VWuA9QS62/3BZaYQu0y+x
- ZrOg==
-X-Gm-Message-State: AOAM5307lQls/fjLtBtjh2ic+Su5hDeWgBPIokMZo/0xR7WXZ4wxWmie
- tgWVMq6bNEu8mjLNukzyb96Xy9tMQNdqCgjolIR20A==
-X-Google-Smtp-Source: ABdhPJwqv0yS1pJjqGFDkqVh9BDwoNusU5NQWtDRZgLijPyw8WvND8LS4z/Pgwym+MF/bGjXyf5kg/pSdTblO8nOE/I=
-X-Received: by 2002:a05:6902:1547:: with SMTP id
- r7mr34266227ybu.72.1632205647689; 
- Mon, 20 Sep 2021 23:27:27 -0700 (PDT)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=XjFX8TMy06JKFo29b5wtP7D4GUJciYA0H9pKx9SvMnM=;
+ b=X5MybkYplWSTalkp67kir4lWy8b8r+zGsHDRwkMxmL1+S3hWckPN2/ku3pCtUI5X4t
+ BIicdq+EF8kzpRlv6BxlTzhwiGfJOa7MP8S0JbFqYITUNBIO3SoTuSbQbv/dQqQxaygP
+ Rf0Go39Qn9lQHo5tgqNBZhS2nzpz25DhVjmRbigVT1+FfULoWnHU0bpXwoLiuPtPk7wG
+ 1wH/+bQdik1m2k4Rms6kdgzTTrc+xlKJK7gwgbkRKxC1pUyBxvv0T4dj24R6z28ScBSm
+ voRqE4iwjmpyTqj6Nl3QnwfYRuhsYroT2j9M2f/HkvNYDsZSftUx9IPfcWAjwvQefnDO
+ SCwg==
+X-Gm-Message-State: AOAM533nHq7+jsUx3/fx/PbitHEdGhftpZuSk85iViFftZRW7REYEziM
+ yy7Ega4xyYDCP3dDdMPyIdSwX79tUw24PKZFh7AIr8yTVlR0RpVcIWDzuhJ6FdxZskB4kDLB/Ae
+ TU73ywChlr0kn5ro+L5TCWJmy
+X-Received: by 2002:a05:6402:5186:: with SMTP id
+ q6mr34420809edd.64.1632208158778; 
+ Tue, 21 Sep 2021 00:09:18 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJyp+nqzB/L7XPOlCkV3Kf+TstkeUZIEG99Ro+U4OsVAaj3p8YvQky54QCUhsjWONz2ie8sFMw==
+X-Received: by 2002:a05:6402:5186:: with SMTP id
+ q6mr34420775edd.64.1632208158565; 
+ Tue, 21 Sep 2021 00:09:18 -0700 (PDT)
+Received: from gator.home (cst2-174-28.cust.vodafone.cz. [31.30.174.28])
+ by smtp.gmail.com with ESMTPSA id x7sm3936808ede.86.2021.09.21.00.09.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 21 Sep 2021 00:09:17 -0700 (PDT)
+Date: Tue, 21 Sep 2021 09:09:15 +0200
+From: Andrew Jones <drjones@redhat.com>
+To: Oliver Upton <oupton@google.com>
+Subject: Re: [PATCH 1/2] selftests: KVM: Fix compiler warning in
+ demand_paging_test
+Message-ID: <20210921070915.mmubmdqqkf2qsit6@gator.home>
+References: <20210921010120.1256762-1-oupton@google.com>
+ <20210921010120.1256762-2-oupton@google.com>
 MIME-Version: 1.0
-References: <20210825025009.2081060-1-stevensd@google.com>
-In-Reply-To: <20210825025009.2081060-1-stevensd@google.com>
-From: David Stevens <stevensd@chromium.org>
-Date: Tue, 21 Sep 2021 15:27:16 +0900
-Message-ID: <CAD=HUj6_CFE0ZjexVMQMansmVcFRm3-udG=_12ROKfWDroNt-g@mail.gmail.com>
-Subject: Re: [PATCH v3 0/4] KVM: allow mapping non-refcounted pages
-To: Marc Zyngier <maz@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>
-X-Mailman-Approved-At: Tue, 21 Sep 2021 03:55:36 -0400
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- Will Deacon <will@kernel.org>, Sean Christopherson <seanjc@google.com>,
- Joerg Roedel <joro@8bytes.org>, open list <linux-kernel@vger.kernel.org>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
- Jim Mattson <jmattson@google.com>
+In-Reply-To: <20210921010120.1256762-2-oupton@google.com>
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=drjones@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Disposition: inline
+Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+ Sean Christopherson <seanjc@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ kvmarm@lists.cs.columbia.edu, Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -89,67 +109,49 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Is there any feedback on these patches? CVE-2021-22543 was fixed by
-disallowing mapping of non-refcounted memory. These patches add proper
-support for mapping that type of memory.
+On Tue, Sep 21, 2021 at 01:01:19AM +0000, Oliver Upton wrote:
+> Building demand_paging_test.c with clang throws the following warning:
+> 
+> >> demand_paging_test.c:182:7: error: logical not is only applied to the left hand side of this bitwise operator [-Werror,-Wlogical-not-parentheses]
+>                   if (!pollfd[0].revents & POLLIN)
+> 
+> Silence the warning by placing the bitwise operation within parentheses.
+> 
+> Signed-off-by: Oliver Upton <oupton@google.com>
+> ---
+>  tools/testing/selftests/kvm/demand_paging_test.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/tools/testing/selftests/kvm/demand_paging_test.c b/tools/testing/selftests/kvm/demand_paging_test.c
+> index e79c1b64977f..10edae425ab3 100644
+> --- a/tools/testing/selftests/kvm/demand_paging_test.c
+> +++ b/tools/testing/selftests/kvm/demand_paging_test.c
+> @@ -179,7 +179,7 @@ static void *uffd_handler_thread_fn(void *arg)
+>  			return NULL;
+>  		}
+>  
+> -		if (!pollfd[0].revents & POLLIN)
+> +		if (!(pollfd[0].revents & POLLIN))
 
--David
+That's a bug fix. If revents was e.g. POLLPRI then this logic
+wouldn't have done what it's supposed to do. Maybe we should
+better call out that this is a fix in the summary and add a
+fixes tag?
 
-On Wed, Aug 25, 2021 at 11:50 AM David Stevens <stevensd@chromium.org> wrote:
->
-> From: David Stevens <stevensd@chromium.org>
->
-> This patch series adds support for mapping non-refcount VM_IO and
-> VM_PFNMAP memory into the guest.
->
-> Currently, the gfn_to_pfn functions require being able to pin the target
-> pfn, so they will fail if the pfn returned by follow_pte isn't a
-> ref-counted page.  However, the KVM secondary MMUs do not require that
-> the pfn be pinned, since they are integrated with the mmu notifier API.
-> This series adds a new set of gfn_to_pfn_page functions which parallel
-> the gfn_to_pfn functions but do not pin the pfn. The new functions
-> return the page from gup if it was present, so callers can use it and
-> call put_page when done.
->
-> The gfn_to_pfn functions should be depreciated, since as they are unsafe
-> due to relying on trying to obtain a struct page from a pfn returned by
-> follow_pte. I added new functions instead of simply adding another
-> optional parameter to the existing functions to make it easier to track
-> down users of the deprecated functions.
->
-> This series updates x86 and arm64 secondary MMUs to the new API.
->
-> v2 -> v3:
->  - rebase on kvm next branch
-> v1 -> v2:
->  - Introduce new gfn_to_pfn_page functions instead of modifying the
->    behavior of existing gfn_to_pfn functions, to make the change less
->    invasive.
->  - Drop changes to mmu_audit.c
->  - Include Nicholas Piggin's patch to avoid corrupting refcount in the
->    follow_pte case, and use it in depreciated gfn_to_pfn functions.
->  - Rebase on kvm/next
->
-> David Stevens (4):
->   KVM: mmu: introduce new gfn_to_pfn_page functions
->   KVM: x86/mmu: use gfn_to_pfn_page
->   KVM: arm64/mmu: use gfn_to_pfn_page
->   KVM: mmu: remove over-aggressive warnings
->
->  arch/arm64/kvm/mmu.c            |  26 +++--
->  arch/x86/kvm/mmu/mmu.c          |  50 +++++----
->  arch/x86/kvm/mmu/mmu_internal.h |   3 +-
->  arch/x86/kvm/mmu/paging_tmpl.h  |  23 ++--
->  arch/x86/kvm/mmu/tdp_mmu.c      |   6 +-
->  arch/x86/kvm/mmu/tdp_mmu.h      |   4 +-
->  arch/x86/kvm/x86.c              |   6 +-
->  include/linux/kvm_host.h        |  17 +++
->  virt/kvm/kvm_main.c             | 188 +++++++++++++++++++++++---------
->  9 files changed, 220 insertions(+), 103 deletions(-)
->
-> --
-> 2.33.0.rc2.250.ged5fa647cd-goog
->
+Anyway,
+
+Reviewed-by: Andrew Jones <drjones@redhat.com>
+
+Thanks,
+drew
+
+>  			continue;
+>  
+>  		r = read(uffd, &msg, sizeof(msg));
+> -- 
+> 2.33.0.464.g1972c5931b-goog
+> 
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
