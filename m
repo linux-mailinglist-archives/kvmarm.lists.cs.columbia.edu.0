@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 10B28414A4D
-	for <lists+kvmarm@lfdr.de>; Wed, 22 Sep 2021 15:12:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F18F8414972
+	for <lists+kvmarm@lfdr.de>; Wed, 22 Sep 2021 14:47:11 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B369D4B13D;
-	Wed, 22 Sep 2021 09:12:28 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5A80E4B092;
+	Wed, 22 Sep 2021 08:47:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,93 +14,69 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id uYybfYjapTCV; Wed, 22 Sep 2021 09:12:26 -0400 (EDT)
+	with ESMTP id RigZ+SOozD3q; Wed, 22 Sep 2021 08:47:11 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D31814B1DC;
-	Wed, 22 Sep 2021 09:11:55 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1E6924B08A;
+	Wed, 22 Sep 2021 08:47:10 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 129764048B
- for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Sep 2021 20:06:20 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4FF5A406E7
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Sep 2021 08:47:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id fJX7BoHExZyG for <kvmarm@lists.cs.columbia.edu>;
- Tue, 21 Sep 2021 20:06:19 -0400 (EDT)
-Received: from mail-qt1-f202.google.com (mail-qt1-f202.google.com
- [209.85.160.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2B8E44A3A5
- for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Sep 2021 20:06:19 -0400 (EDT)
-Received: by mail-qt1-f202.google.com with SMTP id
- o9-20020ac80249000000b002a0c9fd54d5so5602939qtg.4
- for <kvmarm@lists.cs.columbia.edu>; Tue, 21 Sep 2021 17:06:19 -0700 (PDT)
+ with ESMTP id wVv1doHnxQDk for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 22 Sep 2021 08:47:07 -0400 (EDT)
+Received: from mail-qk1-f202.google.com (mail-qk1-f202.google.com
+ [209.85.222.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3EE3A4024F
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Sep 2021 08:47:07 -0400 (EDT)
+Received: by mail-qk1-f202.google.com with SMTP id
+ t18-20020a05620a0b1200b003f8729fdd04so10434505qkg.5
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Sep 2021 05:47:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=reply-to:date:in-reply-to:message-id:mime-version:references
- :subject:from:to:cc;
- bh=4BBDHyzTmFJD2PGtjmXQGbVqPzRCZc8ppu5cY3KZ5Y8=;
- b=i1hLF6bC7QippVnwD+QfcurzwPql0DTYdtvpNMOXEcTNGevY7UnIQHp4F8TFxhWOcC
- y5khcTlTsxcY03DM6I7OGwJdsNRusHePnZs48VJgz9iDl9BCd/WdBAHgBd08BkVlEctl
- qgkp34acvdJvQRinIA310i906+1pI4VRGGbTHUSEWOTyISF582eEBN0uohWrXglJ4Vha
- UiRiAJR9+rHm1hSoN64l3MLHm8i51hrtd5lKdh0LN16chuzJEtOj6NO2pvuQiZZnchZT
- 2+/Nzn1kX3D5dvOeb3mhXnOtnZBTLnXfaqpsFhvkCaK7qjG4cSZxh2Y/t71DvQNuI5L1
- pIfA==
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=yFOEbvnmLRE/MkTldpqRjjZcedskEwLRag9pY/Gsti8=;
+ b=lqFiVOFnQ+0KhLoph58xwAtl+YvZwPQXFz7TkOFZ5ID33rHZ8/wh5S8eX3QOIhQI3s
+ AvBhm2vjK6T/lB7ri+u4Pl81oSKqbJWOlGbpOaAMArLOz8DRgLT2whq7bHmNeBIJ+zcT
+ 8HmFgRKSCbVoNfjXt41sG9VIEHy+P7U4k4tkHp0OPQ70jwdeJEdrEYqdlRqHdcVyN83N
+ S5YkaxfymReqcbqI1j5CnxWnBzo7oYAR4jj1cW0rbOoYiySu109OviCq05WzH2nZcnLp
+ 1bPohbKzJ+hJ5cd12GyXd3+GE3UCd76qxejPwwDTh1Zz8j98F8TPUhH+PLu8gIPsHuX6
+ oCUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:reply-to:date:in-reply-to:message-id
- :mime-version:references:subject:from:to:cc;
- bh=4BBDHyzTmFJD2PGtjmXQGbVqPzRCZc8ppu5cY3KZ5Y8=;
- b=BjIpcNC70AznS/Y9V8d5b7P8GFfvnuxgE4SbwhMnkzPDVu/eg2eIHTvLyzRJDEhyzP
- C+sa5jXPOIRALol0gZBTO6ALyBImoATF+ZmgyelhevdEUlaGzybcsalaTYxdyQHlGAxJ
- EsghznMh+cRcnd/7lIlJ37JPeyQbRXcDyrdQzYu6YjTJ3kURn33JHJvHtbMc9UGZrKPM
- 190g9HuNg09kBksTb5iPX/csY+omH0QgWWbm8EABpHr9EwCXnWfe6lrzgnkySRsRrgOc
- Id3OFVX0k0trwJwRB7dDZJWcHMJVtSmfF26SCayAYtfjFuuevxgWtiZEHoUzRYt+eph3
- twwg==
-X-Gm-Message-State: AOAM532IZr0rTHMFWWstiKhTaAk8AXxHECpEGmwOgXs7ppawuxsN6k3h
- LbAvcL9HhrLD5NiOdP8hZcW8Pk6qA6w=
-X-Google-Smtp-Source: ABdhPJzV8/bAA+bVdBd7d54Vy+1c6C23hub/FF/gkHwdARHRitfqPelJ1Pr98qSi4K4qg/f1+Xhzcbcxu/4=
-X-Received: from seanjc798194.pdx.corp.google.com
- ([2620:15c:90:200:b022:92d6:d37b:686c])
- (user=seanjc job=sendgmr) by 2002:ad4:466a:: with SMTP id
- z10mr32596974qvv.47.1632269178759; 
- Tue, 21 Sep 2021 17:06:18 -0700 (PDT)
-Date: Tue, 21 Sep 2021 17:05:33 -0700
-In-Reply-To: <20210922000533.713300-1-seanjc@google.com>
-Message-Id: <20210922000533.713300-17-seanjc@google.com>
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=yFOEbvnmLRE/MkTldpqRjjZcedskEwLRag9pY/Gsti8=;
+ b=r6WnsgYUcKjTHuZHnz7t9aI95TOR7aVfQC7pcwQFQYeHut6QMOd/rrIuvxDmr9YQ66
+ 1EWw8h94FL01VDO8Q0vvTDvTFsLjaJEtAgbYJlh5K3Npw4nWVfxwHP7V6tql+U22WB+k
+ Kyk7jBgCI1ak7IINcM7DS9GN+YmwMyCYbq3lqwJbkd1TQ6VKnVZ8bDJU6VkrZiKAD8kn
+ E11EfE/TR7C5fOYOe+WNo626Wv4bN48jXmF3T9YfOhicIcSJG7KMkojjVl/BKewCkPM1
+ 1Qx6JY9q4tgliXbYeMyAwtmkuLhOaU12uM4B6ER2AYoQsUKYjJ/rRmTgItYQu+9mrUmn
+ wPdw==
+X-Gm-Message-State: AOAM533fvQC+2xzTYpoCybZ/jdStp1W7IKOqiAqpG3qNq/ICcclrrxIu
+ hfiLWdQlb2axuPVtqASSOQoH4avy2XP0j8kLBRT33dTM6xnfQsEAp95f3rdGXlO/Zo1yluIBBwT
+ kl10R8gHexegQs+vxCovBA/dKZkwwwItjQGhGoBAxK80k9Q89pAN9eiTWBvx6rS4tLck=
+X-Google-Smtp-Source: ABdhPJyoWFoyStmCkS24R7d0GBY3bV8l/thty5+34iLzeNvMU3bFfF8UZu0rNinvkttL3hXSDtynpikIVA==
+X-Received: from tabba.c.googlers.com ([fda3:e722:ac3:cc00:28:9cb1:c0a8:482])
+ (user=tabba job=sendgmr) by 2002:ad4:5554:: with SMTP id
+ v20mr36606923qvy.16.1632314826731; 
+ Wed, 22 Sep 2021 05:47:06 -0700 (PDT)
+Date: Wed, 22 Sep 2021 13:46:52 +0100
+Message-Id: <20210922124704.600087-1-tabba@google.com>
 Mime-Version: 1.0
-References: <20210922000533.713300-1-seanjc@google.com>
 X-Mailer: git-send-email 2.33.0.464.g1972c5931b-goog
-Subject: [PATCH v3 16/16] perf: Drop guest callback (un)register stubs
-From: Sean Christopherson <seanjc@google.com>
-To: Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, 
- Arnaldo Carvalho de Melo <acme@kernel.org>, Will Deacon <will@kernel.org>,
- Mark Rutland <mark.rutland@arm.com>, 
- Marc Zyngier <maz@kernel.org>, Guo Ren <guoren@kernel.org>,
- Nick Hu <nickhu@andestech.com>, 
- Greentime Hu <green.hu@gmail.com>, Vincent Chen <deanbo422@gmail.com>, 
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Paolo Bonzini <pbonzini@redhat.com>, 
- Boris Ostrovsky <boris.ostrovsky@oracle.com>, Juergen Gross <jgross@suse.com>
-X-Mailman-Approved-At: Wed, 22 Sep 2021 09:11:52 -0400
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- linux-riscv@lists.infradead.org, Jiri Olsa <jolsa@redhat.com>,
- kvmarm@lists.cs.columbia.edu, Stefano Stabellini <sstabellini@kernel.org>,
- Joerg Roedel <joro@8bytes.org>, linux-csky@vger.kernel.org,
- xen-devel@lists.xenproject.org, Zhu Lingshan <lingshan.zhu@intel.com>,
- Namhyung Kim <namhyung@kernel.org>,
- Artem Kashkanov <artem.kashkanov@intel.com>,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
- Like Xu <like.xu.linux@gmail.com>, Sean Christopherson <seanjc@google.com>,
- linux-kernel@vger.kernel.org, linux-perf-users@vger.kernel.org,
- Vitaly Kuznetsov <vkuznets@redhat.com>
+Subject: [PATCH v6 00/12] KVM: arm64: Fixed features for protected VMs
+From: Fuad Tabba <tabba@google.com>
+To: kvmarm@lists.cs.columbia.edu
+Cc: kernel-team@android.com, kvm@vger.kernel.org, maz@kernel.org,
+ pbonzini@redhat.com, will@kernel.org, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
-Reply-To: Sean Christopherson <seanjc@google.com>
 List-Id: Where KVM/ARM decisions are made <kvmarm.lists.cs.columbia.edu>
 List-Unsubscribe: <https://lists.cs.columbia.edu/mailman/options/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=unsubscribe>
@@ -114,33 +90,69 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Drop perf's stubs for (un)registering guest callbacks now that KVM
-registration of callbacks is hidden behind GUEST_PERF_EVENTS=y.  The only
-other user is x86 XEN_PV, and x86 unconditionally selects PERF_EVENTS.
+Hi,
 
-No functional change intended.
+Changes since v5 [1]:
+- Rebase on 5.15-rc2
+- Include Marc's early exception handlers in the series
+- Refactoring and fixes (Drew, Marc)
 
-Signed-off-by: Sean Christopherson <seanjc@google.com>
----
- include/linux/perf_event.h | 5 -----
- 1 file changed, 5 deletions(-)
+This patch series adds support for restricting CPU features for protected VMs
+in KVM (pKVM). For more background, please refer to the previous series [1].
 
-diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
-index d582dfeb4e20..20327d1046bb 100644
---- a/include/linux/perf_event.h
-+++ b/include/linux/perf_event.h
-@@ -1505,11 +1505,6 @@ perf_sw_event(u32 event_id, u64 nr, struct pt_regs *regs, u64 addr)	{ }
- static inline void
- perf_bp_event(struct perf_event *event, void *data)			{ }
- 
--static inline void perf_register_guest_info_callbacks
--(struct perf_guest_info_callbacks *cbs)					{ }
--static inline void perf_unregister_guest_info_callbacks
--(struct perf_guest_info_callbacks *cbs)					{ }
--
- static inline void perf_event_mmap(struct vm_area_struct *vma)		{ }
- 
- typedef int (perf_ksymbol_get_name_f)(char *name, int name_len, void *data);
+This series is based on 5.15-rc2. You can find the applied series here [2].
+
+Cheers,
+/fuad
+
+[1] https://lore.kernel.org/kvmarm/20210827101609.2808181-1-tabba@google.com/
+
+[2] https://android-kvm.googlesource.com/linux/+/refs/heads/tabba/el2_fixed_feature_v6
+
+Fuad Tabba (9):
+  KVM: arm64: Add missing FORCE prerequisite in Makefile
+  KVM: arm64: Pass struct kvm to per-EC handlers
+  KVM: arm64: Add missing field descriptor for MDCR_EL2
+  KVM: arm64: Simplify masking out MTE in feature id reg
+  KVM: arm64: Add handlers for protected VM System Registers
+  KVM: arm64: Initialize trap registers for protected VMs
+  KVM: arm64: Move sanitized copies of CPU features
+  KVM: arm64: Trap access to pVM restricted features
+  KVM: arm64: Handle protected guests at 32 bits
+
+Marc Zyngier (3):
+  KVM: arm64: Move __get_fault_info() and co into their own include file
+  KVM: arm64: Don't include switch.h into nvhe/kvm-main.c
+  KVM: arm64: Move early handlers to per-EC handlers
+
+ arch/arm64/include/asm/kvm_arm.h           |   1 +
+ arch/arm64/include/asm/kvm_asm.h           |   1 +
+ arch/arm64/include/asm/kvm_fixed_config.h  | 195 ++++++++
+ arch/arm64/include/asm/kvm_host.h          |   2 +
+ arch/arm64/include/asm/kvm_hyp.h           |   5 +
+ arch/arm64/kvm/arm.c                       |  13 +
+ arch/arm64/kvm/hyp/include/hyp/fault.h     |  75 ++++
+ arch/arm64/kvm/hyp/include/hyp/switch.h    | 221 ++++-----
+ arch/arm64/kvm/hyp/include/nvhe/pkvm.h     |  14 +
+ arch/arm64/kvm/hyp/include/nvhe/sys_regs.h |  28 ++
+ arch/arm64/kvm/hyp/nvhe/Makefile           |   4 +-
+ arch/arm64/kvm/hyp/nvhe/hyp-main.c         |  12 +-
+ arch/arm64/kvm/hyp/nvhe/mem_protect.c      |   8 +-
+ arch/arm64/kvm/hyp/nvhe/pkvm.c             | 186 ++++++++
+ arch/arm64/kvm/hyp/nvhe/switch.c           | 117 +++++
+ arch/arm64/kvm/hyp/nvhe/sys_regs.c         | 494 +++++++++++++++++++++
+ arch/arm64/kvm/hyp/vhe/switch.c            |  17 +
+ arch/arm64/kvm/sys_regs.c                  |  10 +-
+ 18 files changed, 1257 insertions(+), 146 deletions(-)
+ create mode 100644 arch/arm64/include/asm/kvm_fixed_config.h
+ create mode 100644 arch/arm64/kvm/hyp/include/hyp/fault.h
+ create mode 100644 arch/arm64/kvm/hyp/include/nvhe/pkvm.h
+ create mode 100644 arch/arm64/kvm/hyp/include/nvhe/sys_regs.h
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/pkvm.c
+ create mode 100644 arch/arm64/kvm/hyp/nvhe/sys_regs.c
+
+
+base-commit: e4e737bb5c170df6135a127739a9e6148ee3da82
 -- 
 2.33.0.464.g1972c5931b-goog
 
