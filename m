@@ -2,84 +2,105 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CBC8415B9C
-	for <lists+kvmarm@lfdr.de>; Thu, 23 Sep 2021 11:59:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E04E3415B3F
+	for <lists+kvmarm@lfdr.de>; Thu, 23 Sep 2021 11:44:59 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1DAB44B11A;
-	Thu, 23 Sep 2021 05:59:15 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5237A4B104;
+	Thu, 23 Sep 2021 05:44:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 61urelSbb3Q2; Thu, 23 Sep 2021 05:59:15 -0400 (EDT)
+	with ESMTP id rtuX0us2sxbz; Thu, 23 Sep 2021 05:44:59 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D4D174B092;
-	Thu, 23 Sep 2021 05:59:13 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 451DD4B11E;
+	Thu, 23 Sep 2021 05:44:58 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4B0254B0C2
- for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Sep 2021 19:22:42 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9FA614B0C0
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 23 Sep 2021 05:44:57 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Ap-Dl1yx8HOs for <kvmarm@lists.cs.columbia.edu>;
- Wed, 22 Sep 2021 19:22:41 -0400 (EDT)
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com
- [209.85.167.49])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E1A0C4B08D
- for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Sep 2021 19:22:40 -0400 (EDT)
-Received: by mail-lf1-f49.google.com with SMTP id z24so19057761lfu.13
- for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Sep 2021 16:22:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=yk3ZBWr1n5IrjSyR0cfU0vmtzd7r3a9rIjQQ1A/kKAg=;
- b=NuR7toXGRAmohK70NQ8+rh5MJHstn1edKRlUfHuMXDCyh/4jiSX3eoOPwcCQ/kXAtp
- 4A7I/88gBVm0lqRdfzTaYE1wlbXdh4rYxDFyknD6AFzjhHQ6LDk1gs/io20fIR77ePDz
- YSvMW6K8/GF67iYX/JNVaqv61sdTFh0CjFsf7ejKlOW5B60MtJHTA/5T+f6QRjB+LDYp
- vKcsz5hcy0/QWSI6eM5+toi/NprVxiGknAJ5HnHUlHtg9wTym7ppshn6n+3A6u6AX66L
- kFWq49gBQ0f6w7SGqF9Ay2WKEYF6wrgy+w3CF4arSV5qy+iReJ+qj4AwhbquLWAHlmy1
- 64pw==
+ with ESMTP id eT9VIn+baocg for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 23 Sep 2021 05:44:56 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [216.205.24.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id ABE774B0BE
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 23 Sep 2021 05:44:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1632390296;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Op2qoA0X6Ury/zosiAJXrERLFd0OXj6FZBc06wzqmPc=;
+ b=B2AOMBIx2iD1GXOzpT19Ku/fNVXKwazwKfbFG2Mu92fj/aR3BWGZEPJ0rn7yRifp6YHZFm
+ ut+zOKgVoBSCIz/Q9urtZNyH0Fx9yKMhXXaCnHxcJSLFHrEnfx1MAxAJA9P3O6g+oYOnOK
+ IO+E/shgXpTToSCuGO8eca77lAL8nKQ=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-175-rOlD_5QWPOOXsvtGZgCwgg-1; Thu, 23 Sep 2021 05:44:54 -0400
+X-MC-Unique: rOlD_5QWPOOXsvtGZgCwgg-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ a6-20020a50c306000000b003da30a380e1so1488290edb.23
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 23 Sep 2021 02:44:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=yk3ZBWr1n5IrjSyR0cfU0vmtzd7r3a9rIjQQ1A/kKAg=;
- b=mbCDb8MYq7MqlzUHDPK04xYtOk33Rrxhjomg5Ogw/mkqHuV0I6gKbKLVSpIqiSI1+r
- wfgflBWL+pFewaVZmg9F4vn04WJ3A8I+fQxdq3S+0PaAEGkGP2//msgCnu0lEC7gqKhs
- VZXqZK0GZxkuAE/D+FCJDDqa8i1QSjhzPIdX/5HSMsq0UOJIEV9POYQW2FN0PXuGaf5T
- AVtaHwOn/XUzgc7JnMJrdY4UlF0pHbJ5DOO47N+OUxBMaDT38d8j1IK0FZ+aIZiPE3L1
- z1vS2AGlD/7ex9LGkl5f2wRauGXjYWffkUtc6nQ038nSEr63e+QWRKdcpPlYHh8ZT3xX
- JRtw==
-X-Gm-Message-State: AOAM531RF/JX5JeJaey6DD92wVPDujUsoDsnqHzdqLcm7mnfMpZEL781
- abPiaLYu+jjuiY+a6ohrR19ZTgeTEW/r5DxaQfkM1Q==
-X-Google-Smtp-Source: ABdhPJzytAbhMPWX5aemlDWfYpMTXy90obCR37PCue90R2xsux+omJEqhaIYYSOZgMm9tzBFn5bjFgmBbMT77dy0a7Q=
-X-Received: by 2002:a05:6512:3f91:: with SMTP id
- x17mr1463436lfa.518.1632352959485; 
- Wed, 22 Sep 2021 16:22:39 -0700 (PDT)
-MIME-Version: 1.0
+ h=x-gm-message-state:to:cc:references:from:subject:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=Op2qoA0X6Ury/zosiAJXrERLFd0OXj6FZBc06wzqmPc=;
+ b=CncP6qxcLwRM8qAyCY00hclS0k6APCsOtjjkQ12GyA9/XdNYcBJ7q3yXbZWZAf59uS
+ WijTkbMcXp7Akt3BmY/lBqD2ctcM1h2YzqMIOBJeYUlsptMJIbaRjQ6N2qLYRtbE+s0v
+ GDQzs89C5+Z4Orpm19haJejO30R3WjZ3+/QRCyb4J6BpKA1+4VS7GmfKPFEPLfX+fwsZ
+ cncFzXV66xS9CEhDQgthb3SbsGUtu/9hZWucBg6gqlhCwGh4Yq+6cKjQcKv0HERLsGds
+ pzc5gj1EuO7Mda3knbqICddhBG5121ABYPmGKUD11ja+UG2vmoLZtNEu0pryMLHTR7/Q
+ 7JIQ==
+X-Gm-Message-State: AOAM530LeXsk3aMuv+3Pdrt/SJWto2gz74zSTD38rAoZ/pGiYOs9vddT
+ JL/xx6FrnS9YikvjmktbdsyolUFa9rk9B3A4VQlkjsreDl6F9aEZ1sN6UCF1CoDKa0FetUoKViO
+ 6E7Bip6yKiBgUGYFi4lDoOJ9M
+X-Received: by 2002:a50:d88a:: with SMTP id p10mr4332450edj.274.1632390293739; 
+ Thu, 23 Sep 2021 02:44:53 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJyPCN0OqTken5jvVkYlVKwejgNBxL3gEDAFz0FGtJBhVhqwLaHEpc/KSsW/W8jn3S34zdGMNA==
+X-Received: by 2002:a50:d88a:: with SMTP id p10mr4332419edj.274.1632390293499; 
+ Thu, 23 Sep 2021 02:44:53 -0700 (PDT)
+Received: from ?IPv6:2001:b07:6468:f312:c8dd:75d4:99ab:290a?
+ ([2001:b07:6468:f312:c8dd:75d4:99ab:290a])
+ by smtp.gmail.com with ESMTPSA id bj10sm2653827ejb.17.2021.09.23.02.44.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 23 Sep 2021 02:44:52 -0700 (PDT)
+To: Marc Zyngier <maz@kernel.org>
 References: <20210922010851.2312845-1-jingzhangos@google.com>
  <20210922010851.2312845-3-jingzhangos@google.com>
  <87czp0voqg.wl-maz@kernel.org>
  <d16ecbd2-2bc9-2691-a21d-aef4e6f007b9@redhat.com>
  <YUtyVEpMBityBBNl@google.com> <875yusv3vm.wl-maz@kernel.org>
-In-Reply-To: <875yusv3vm.wl-maz@kernel.org>
-From: David Matlack <dmatlack@google.com>
-Date: Wed, 22 Sep 2021 16:22:12 -0700
-Message-ID: <CALzav=cuzT=u6G0TCVZUfEgAKOCKTSCDE8x2v5qc-Gd_NL-pzg@mail.gmail.com>
+ <a1e77794-de94-1fb7-c7d3-a80c34f770a4@redhat.com>
+ <8735pvvip9.wl-maz@kernel.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Subject: Re: [PATCH v1 3/3] KVM: arm64: Add histogram stats for handling time
  of arch specific exit reasons
-To: Marc Zyngier <maz@kernel.org>
-X-Mailman-Approved-At: Thu, 23 Sep 2021 05:59:13 -0400
+Message-ID: <2120a93b-2e15-117d-349c-9045cef23439@redhat.com>
+Date: Thu, 23 Sep 2021 11:44:49 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <8735pvvip9.wl-maz@kernel.org>
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pbonzini@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
 Cc: Aaron Lewis <aaronlewis@google.com>, KVM <kvm@vger.kernel.org>,
  Venkatesh Srinivas <venkateshs@google.com>, Peter Shier <pshier@google.com>,
- Ben Gardon <bgardon@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Ben Gardon <bgardon@google.com>, David Matlack <dmatlack@google.com>,
  Will Deacon <will@kernel.org>, KVMARM <kvmarm@lists.cs.columbia.edu>,
  Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
@@ -93,100 +114,54 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Sep 22, 2021 at 11:53 AM Marc Zyngier <maz@kernel.org> wrote:
->
-> On Wed, 22 Sep 2021 19:13:40 +0100,
-> Sean Christopherson <seanjc@google.com> wrote:
->
-> > Stepping back a bit, this is one piece of the larger issue of how to
-> > modernize KVM for hyperscale usage.  BPF and tracing are great when
-> > the debugger has root access to the machine and can rerun the
-> > failing workload at will.  They're useless for identifying trends
-> > across large numbers of machines, triaging failures after the fact,
-> > debugging performance issues with workloads that the debugger
-> > doesn't have direct access to, etc...
->
-> Which is why I suggested the use of trace points as kernel module
-> hooks to perform whatever accounting you require. This would give you
-> the same level of detail this series exposes.
+On 23/09/21 09:45, Marc Zyngier wrote:
+> On Thu, 23 Sep 2021 07:36:21 +0100,
+> Paolo Bonzini <pbonzini@redhat.com> wrote:
+>>
+>> On 22/09/21 20:53, Marc Zyngier wrote:
+>>> I definitely regret adding the current KVM trace points, as they
+>>> don't show what I need, and I can't change them as they are ABI.
+>>
+>> I disagree that they are ABI.  And even if you don't want to change
+>> them, you can always add parameters or remove them.
+> 
+> We'll have to agree to disagree here. Experience has told me that
+> anything that gets exposed to userspace has to stay forever. There are
+> countless examples of that on the arm64 side (cue the bogomips debate,
+> the recent /proc/interrupts repainting).
 
-How would a kernel module (or BPF program) get the data to userspace?
-The KVM stats interface that Jing added requires KVM to know how to
-get the data when handling the read() syscall.
+Files certainly have the problem that there are countless ways to parse 
+them, most of them wrong.  This for example was taken into account when 
+designing the binary stats format, where it's clear that the only fixed 
+format (ABI) is the description of the stats themselves.
 
->
-> And I'm all for adding these hooks where it matters as long as they
-> are not considered ABI and don't appear in /sys/debug/tracing (in
-> general, no userspace visibility).
->
-> The scheduler is a interesting example of this, as it exposes all sort
-> of hooks for people to look under the hood. No user of the hook? No
-> overhead, no additional memory used. I may have heard that Android
-> makes heavy use of this.
->
-> Because I'm pretty sure that whatever stat we expose, every cloud
-> vendor will want their own variant, so we may just as well put the
-> matter in their own hands.
+However yeah, you're right that what constitutes an API is complicated. 
+  Tracepoints and binary stats make it trivial to add stuff (including 
+adding more info in the case of a tracepoint), but removing is tricky.
 
-I think this can be mitigated by requiring sufficient justification
-when adding a new stat to KVM. There has to be a real use-case and it
-has to be explained in the changelog. If a stat has a use-case for one
-cloud provider, it will likely be useful to other cloud providers as
-well.
+Another important aspect is whether there are at all any tools using the 
+tracepoints.  In the case of the block subsystem there's blktrace, but 
+KVM doesn't have anything fancy (tracing is really only used by humans 
+via trace-cmd, or by kvmstat which doesn't care about which tracepoints 
+are there).
 
->
-> I also wouldn't discount BPF as a possibility. You could perfectly
-> have permanent BPF programs running from the moment you boot the
-> system, and use that to generate your histograms. This isn't necessary
-> a one off, debug only solution.
->
-> > Logging is a similar story, e.g. using _ratelimited() printk to aid
-> > debug works well when there are a very limited number of VMs and
-> > there is a human that can react to arbitrary kernel messages, but
-> > it's basically useless when there are 10s or 100s of VMs and taking
-> > action on a kernel message requires a prior knowledge of the
-> > message.
->
-> I'm not sure logging is remotely the same. For a start, the kernel
-> should not log anything unless something has oopsed (and yes, I still
-> have some bits to clean on the arm64 side). I'm not even sure what you
-> would want to log. I'd like to understand the need here, because I
-> feel like I'm missing something.
->
-> > I'm certainly not expecting other people to solve our challenges,
-> > and I fully appreciate that there are many KVM users that don't care
-> > at all about scalability, but I'm hoping we can get the community at
-> > large, and especially maintainers and reviewers, to also consider
-> > at-scale use cases when designing, implementing, reviewing, etc...
->
-> My take is that scalability has to go with flexibility. Anything that
-> gets hardcoded will quickly become a burden: I definitely regret
-> adding the current KVM trace points, as they don't show what I need,
-> and I can't change them as they are ABI.
+> We had that discussion a few KSs ago (triggered by this[1] if I
+> remember correctly), and I don't think anything has changed since.
+> 
+> As for removing them, that would probably be best for some (if not
+> most) of them.
 
-This brings up a good discussion topic: To what extent are the KVM
-stats themselves an ABI? I don't think this is documented anywhere.
-The API itself is completely dynamic and does not hardcode a list of
-stats or metadata about them. Userspace has to read stats fd to see
-what's there.
+I'd say just go ahead.  System calls are removed every now and then if 
+they are considered obsolete or a failed experiment.  Tracepoints are in 
+the same boat.
 
-Fwiw we just deleted the lpages stat without any drama.
+Paolo
 
-
-
-
->
-> Thanks,
->
->         M.
->
-> --
-> Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
