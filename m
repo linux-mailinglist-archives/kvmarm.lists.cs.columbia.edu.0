@@ -2,107 +2,58 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E04E3415B3F
-	for <lists+kvmarm@lfdr.de>; Thu, 23 Sep 2021 11:44:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5407F415CC0
+	for <lists+kvmarm@lfdr.de>; Thu, 23 Sep 2021 13:23:07 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5237A4B104;
-	Thu, 23 Sep 2021 05:44:59 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AC4E44A19A;
+	Thu, 23 Sep 2021 07:23:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.209
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rtuX0us2sxbz; Thu, 23 Sep 2021 05:44:59 -0400 (EDT)
+	with ESMTP id dcl99W2K1qnG; Thu, 23 Sep 2021 07:23:06 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 451DD4B11E;
-	Thu, 23 Sep 2021 05:44:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AA7624B107;
+	Thu, 23 Sep 2021 07:23:05 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9FA614B0C0
- for <kvmarm@lists.cs.columbia.edu>; Thu, 23 Sep 2021 05:44:57 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C06CB4A19A
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 23 Sep 2021 07:23:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id eT9VIn+baocg for <kvmarm@lists.cs.columbia.edu>;
- Thu, 23 Sep 2021 05:44:56 -0400 (EDT)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id ABE774B0BE
- for <kvmarm@lists.cs.columbia.edu>; Thu, 23 Sep 2021 05:44:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1632390296;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Op2qoA0X6Ury/zosiAJXrERLFd0OXj6FZBc06wzqmPc=;
- b=B2AOMBIx2iD1GXOzpT19Ku/fNVXKwazwKfbFG2Mu92fj/aR3BWGZEPJ0rn7yRifp6YHZFm
- ut+zOKgVoBSCIz/Q9urtZNyH0Fx9yKMhXXaCnHxcJSLFHrEnfx1MAxAJA9P3O6g+oYOnOK
- IO+E/shgXpTToSCuGO8eca77lAL8nKQ=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-175-rOlD_5QWPOOXsvtGZgCwgg-1; Thu, 23 Sep 2021 05:44:54 -0400
-X-MC-Unique: rOlD_5QWPOOXsvtGZgCwgg-1
-Received: by mail-ed1-f69.google.com with SMTP id
- a6-20020a50c306000000b003da30a380e1so1488290edb.23
- for <kvmarm@lists.cs.columbia.edu>; Thu, 23 Sep 2021 02:44:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:to:cc:references:from:subject:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=Op2qoA0X6Ury/zosiAJXrERLFd0OXj6FZBc06wzqmPc=;
- b=CncP6qxcLwRM8qAyCY00hclS0k6APCsOtjjkQ12GyA9/XdNYcBJ7q3yXbZWZAf59uS
- WijTkbMcXp7Akt3BmY/lBqD2ctcM1h2YzqMIOBJeYUlsptMJIbaRjQ6N2qLYRtbE+s0v
- GDQzs89C5+Z4Orpm19haJejO30R3WjZ3+/QRCyb4J6BpKA1+4VS7GmfKPFEPLfX+fwsZ
- cncFzXV66xS9CEhDQgthb3SbsGUtu/9hZWucBg6gqlhCwGh4Yq+6cKjQcKv0HERLsGds
- pzc5gj1EuO7Mda3knbqICddhBG5121ABYPmGKUD11ja+UG2vmoLZtNEu0pryMLHTR7/Q
- 7JIQ==
-X-Gm-Message-State: AOAM530LeXsk3aMuv+3Pdrt/SJWto2gz74zSTD38rAoZ/pGiYOs9vddT
- JL/xx6FrnS9YikvjmktbdsyolUFa9rk9B3A4VQlkjsreDl6F9aEZ1sN6UCF1CoDKa0FetUoKViO
- 6E7Bip6yKiBgUGYFi4lDoOJ9M
-X-Received: by 2002:a50:d88a:: with SMTP id p10mr4332450edj.274.1632390293739; 
- Thu, 23 Sep 2021 02:44:53 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJyPCN0OqTken5jvVkYlVKwejgNBxL3gEDAFz0FGtJBhVhqwLaHEpc/KSsW/W8jn3S34zdGMNA==
-X-Received: by 2002:a50:d88a:: with SMTP id p10mr4332419edj.274.1632390293499; 
- Thu, 23 Sep 2021 02:44:53 -0700 (PDT)
-Received: from ?IPv6:2001:b07:6468:f312:c8dd:75d4:99ab:290a?
- ([2001:b07:6468:f312:c8dd:75d4:99ab:290a])
- by smtp.gmail.com with ESMTPSA id bj10sm2653827ejb.17.2021.09.23.02.44.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Sep 2021 02:44:52 -0700 (PDT)
-To: Marc Zyngier <maz@kernel.org>
-References: <20210922010851.2312845-1-jingzhangos@google.com>
- <20210922010851.2312845-3-jingzhangos@google.com>
- <87czp0voqg.wl-maz@kernel.org>
- <d16ecbd2-2bc9-2691-a21d-aef4e6f007b9@redhat.com>
- <YUtyVEpMBityBBNl@google.com> <875yusv3vm.wl-maz@kernel.org>
- <a1e77794-de94-1fb7-c7d3-a80c34f770a4@redhat.com>
- <8735pvvip9.wl-maz@kernel.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v1 3/3] KVM: arm64: Add histogram stats for handling time
- of arch specific exit reasons
-Message-ID: <2120a93b-2e15-117d-349c-9045cef23439@redhat.com>
-Date: Thu, 23 Sep 2021 11:44:49 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+ with ESMTP id l9P6R86-KmeZ for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 23 Sep 2021 07:23:03 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C399F4079A
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 23 Sep 2021 07:23:03 -0400 (EDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 33FF860EC0;
+ Thu, 23 Sep 2021 11:23:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1632396182;
+ bh=Lf3j0RI6dBAAadEUBstWTKcsG6r3BLFrYbLMIIdq9rI=;
+ h=From:To:Cc:Subject:Date:From;
+ b=nX69TkQH8ABpT3mauT5UkvOP0zX03qI6KiAt1zfmGl2dsK10sAfCojDPznQwCx0Y8
+ nv+kBGyFQGzlfJQhPCEYLw7WRHhHNEZ669mpf4DvLA0BYw2YRYWRH1FRtdeQ9QLP8H
+ py84L6nM+XyN6orHFTyWxaf1tL9A+8AvK0MFizcX3VpEnXgVSyf1TvATTPnUHMUXRL
+ W3DeXBS+jD/jlDJFQEyCmx2Ge9U/jsw+Da8OV7oDTWfo/ots072ukRZpjl/ZbxKwd+
+ kt8QmM5H2iOCRhACtfQ1s+KoLJ4ngLbd8FpDNyB01FX4m3za/guuqFCcWdcPAa7bZF
+ yhqd1oNjQDwHg==
+From: Will Deacon <will@kernel.org>
+To: linux-arm-kernel@lists.infradead.org
+Subject: [PATCH 0/5] KVM: arm64: Restrict host hypercalls when pKVM is enabled
+Date: Thu, 23 Sep 2021 12:22:51 +0100
+Message-Id: <20210923112256.15767-1-will@kernel.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <8735pvvip9.wl-maz@kernel.org>
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pbonzini@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Cc: Aaron Lewis <aaronlewis@google.com>, KVM <kvm@vger.kernel.org>,
- Venkatesh Srinivas <venkateshs@google.com>, Peter Shier <pshier@google.com>,
- Ben Gardon <bgardon@google.com>, David Matlack <dmatlack@google.com>,
- Will Deacon <will@kernel.org>, KVMARM <kvmarm@lists.cs.columbia.edu>,
- Jim Mattson <jmattson@google.com>
+Cc: Marc Zyngier <maz@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -114,53 +65,57 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 23/09/21 09:45, Marc Zyngier wrote:
-> On Thu, 23 Sep 2021 07:36:21 +0100,
-> Paolo Bonzini <pbonzini@redhat.com> wrote:
->>
->> On 22/09/21 20:53, Marc Zyngier wrote:
->>> I definitely regret adding the current KVM trace points, as they
->>> don't show what I need, and I can't change them as they are ABI.
->>
->> I disagree that they are ABI.  And even if you don't want to change
->> them, you can always add parameters or remove them.
-> 
-> We'll have to agree to disagree here. Experience has told me that
-> anything that gets exposed to userspace has to stay forever. There are
-> countless examples of that on the arm64 side (cue the bogomips debate,
-> the recent /proc/interrupts repainting).
+Hi folks,
 
-Files certainly have the problem that there are countless ways to parse 
-them, most of them wrong.  This for example was taken into account when 
-designing the binary stats format, where it's clear that the only fixed 
-format (ABI) is the description of the stats themselves.
+This series restricts the hypercalls available to the KVM host on arm64
+when pKVM is enabled so that it is not possible for the host to use them
+to replace the EL2 component with something else.
 
-However yeah, you're right that what constitutes an API is complicated. 
-  Tracepoints and binary stats make it trivial to add stuff (including 
-adding more info in the case of a tracepoint), but removing is tricky.
+This occurs in two stages: when switching to the pKVM vectors, the stub
+hypercalls are removed and then later when pKVM is finalised, the pKVM
+init hypercalls are removed.
 
-Another important aspect is whether there are at all any tools using the 
-tracepoints.  In the case of the block subsystem there's blktrace, but 
-KVM doesn't have anything fancy (tracing is really only used by humans 
-via trace-cmd, or by kvmstat which doesn't care about which tracepoints 
-are there).
+There are still a few dubious calls remaining in terms of protecting the
+guest (e.g. __kvm_adjust_pc) but these will be dealt with later when we
+have more VM state at EL2 to play with.
 
-> We had that discussion a few KSs ago (triggered by this[1] if I
-> remember correctly), and I don't think anything has changed since.
-> 
-> As for removing them, that would probably be best for some (if not
-> most) of them.
+Patches based on -rc2. Feedback welcome.
 
-I'd say just go ahead.  System calls are removed every now and then if 
-they are considered obsolete or a failed experiment.  Tracepoints are in 
-the same boat.
+Cheers,
 
-Paolo
+Will
+
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Quentin Perret <qperret@google.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Alexandru Elisei <alexandru.elisei@arm.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: kvmarm@lists.cs.columbia.edu
+
+--->8
+
+Will Deacon (5):
+  arm64: Prevent kexec and hibernation if is_protected_kvm_enabled()
+  KVM: arm64: Reject stub hypercalls after pKVM has been initialised
+  KVM: arm64: Propagate errors from __pkvm_prot_finalize hypercall
+  KVM: arm64: Prevent re-finalisation of pKVM for a given CPU
+  KVM: arm64: Disable privileged hypercalls after pKVM finalisation
+
+ arch/arm64/include/asm/kvm_asm.h      | 43 ++++++++++---------
+ arch/arm64/kernel/smp.c               |  3 +-
+ arch/arm64/kvm/arm.c                  | 61 ++++++++++++++++++---------
+ arch/arm64/kvm/hyp/nvhe/host.S        | 26 ++++++++----
+ arch/arm64/kvm/hyp/nvhe/hyp-main.c    | 26 +++++++-----
+ arch/arm64/kvm/hyp/nvhe/mem_protect.c |  3 ++
+ 6 files changed, 103 insertions(+), 59 deletions(-)
+
+-- 
+2.33.0.464.g1972c5931b-goog
 
 _______________________________________________
 kvmarm mailing list
