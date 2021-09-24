@@ -2,65 +2,103 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DDA3D416DAD
-	for <lists+kvmarm@lfdr.de>; Fri, 24 Sep 2021 10:26:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B06A9416DC6
+	for <lists+kvmarm@lfdr.de>; Fri, 24 Sep 2021 10:31:11 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8961B4B131;
-	Fri, 24 Sep 2021 04:26:02 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2325E4B10E;
+	Fri, 24 Sep 2021 04:31:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4DjNqIq1krUg; Fri, 24 Sep 2021 04:26:01 -0400 (EDT)
+	with ESMTP id vcljXkTgFwcP; Fri, 24 Sep 2021 04:31:11 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 25FD94A4C0;
-	Fri, 24 Sep 2021 04:26:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DF0434B10A;
+	Fri, 24 Sep 2021 04:31:09 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5F1FF4A4C0
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 04:25:56 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 482D14B093
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 04:31:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id qIL93V8DqrfD for <kvmarm@lists.cs.columbia.edu>;
- Fri, 24 Sep 2021 04:25:55 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 30C804B0E7
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 04:25:55 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 2EBD261250;
- Fri, 24 Sep 2021 08:25:54 +0000 (UTC)
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1mTgWm-00ChmL-I6; Fri, 24 Sep 2021 09:25:52 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 5/5] KVM: arm64: vgic-v3: Align emulated cpuif LPI state
- machine with the pseudocode
-Date: Fri, 24 Sep 2021 09:25:42 +0100
-Message-Id: <20210924082542.2766170-6-maz@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210924082542.2766170-1-maz@kernel.org>
-References: <20210924082542.2766170-1-maz@kernel.org>
+ with ESMTP id pLqq8xX-IJtl for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 24 Sep 2021 04:31:07 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 11BAB4057F
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 04:31:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1632472266;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XSnZGJCbTcSJO6rG4phjkfI1j3OdPwdw6IlhGD/k0Oo=;
+ b=bgDyA7Lovh1YWtEh0MKOkNqunUlaeV3k+FS+Xh0RAxSIsecWg9sy3rebqraOM8SsM35Zo1
+ vi5Cnzt3qQc55KYl9ckMYjN74dqubiVIp2qZZX7yOqHTN5SNMNjhTBNa4E6nQ/c+pvrIT7
+ lv0/aATCuEk6GTsH3qjZz7qEcJ0d3Zs=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-174-QlYPSsYqOZar-yZ6PWw18A-1; Fri, 24 Sep 2021 04:31:03 -0400
+X-MC-Unique: QlYPSsYqOZar-yZ6PWw18A-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ q17-20020a50c351000000b003d81427d25cso9450443edb.15
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 01:31:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+ :content-language:to:cc:references:from:in-reply-to
+ :content-transfer-encoding;
+ bh=XSnZGJCbTcSJO6rG4phjkfI1j3OdPwdw6IlhGD/k0Oo=;
+ b=z2QhP7uS69PPgTgXj/fRZjnWvhRL9h32hECXCCG2y0u2IIq6XKT0CecgwAYmsUyhyK
+ mGn/lLZNul4vQYreFWcw4eyT4yA3xZXQSPW71wwIcDebf3x5zcWR+Q613bf4NqygJeF7
+ O8SepgLTrrauj9XpdzBWpAgIZDfPYo9L+aCZXXZfwYH/KHZPXEoQnENf5TLY8l9pLfO9
+ RWiESF3TofyBsLf/K/Y6UrMfuLg+TpMk1qp7ZOZafzJ+UeQooZZI4KcruTF8DtAt5WQs
+ iBwSQrj8dWF+JhhWHLLmfo4XCT5hA67G1mp+9D17IXay9Q3pFs0NeXEcxfAbCea9/4MV
+ 8SyQ==
+X-Gm-Message-State: AOAM530F8Iq+QXXMVfWOLNYTXFSqv/5rrWztzo0eYMLpQ76SZJgKMpT1
+ RPg8j7XkNNektiaJ+UK600mBgC7B3Y5BSC5jXHYZrvUbPvzUCxZguKCuw8VJ/043wNVHAfdvNEa
+ oA0tsd9ui1LikTg+IvFc/vm4i
+X-Received: by 2002:a50:cf48:: with SMTP id d8mr3594334edk.293.1632472262401; 
+ Fri, 24 Sep 2021 01:31:02 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJxB6fhbrACM6SNmaKLXqckkt9a//IZZDZktY0WH+vM3AOK0/WS0xxZ16zy87K95z3GoU0t8WQ==
+X-Received: by 2002:a50:cf48:: with SMTP id d8mr3594312edk.293.1632472262220; 
+ Fri, 24 Sep 2021 01:31:02 -0700 (PDT)
+Received: from ?IPV6:2001:b07:6468:f312:c8dd:75d4:99ab:290a?
+ ([2001:b07:6468:f312:c8dd:75d4:99ab:290a])
+ by smtp.gmail.com with ESMTPSA id eg39sm5347244edb.16.2021.09.24.01.31.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 Sep 2021 01:31:01 -0700 (PDT)
+Message-ID: <82950bfb-4624-b90d-0533-f62aeeb1b7de@redhat.com>
+Date: Fri, 24 Sep 2021 10:30:59 +0200
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, james.morse@arm.com,
- suzuki.poulose@arm.com, alexandru.elisei@arm.com, eric.auger@redhat.com,
- christoffer.dall@arm.com, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.0
+Subject: Re: [PATCH v7 3/6] KVM: x86: Report host tsc and realtime values in
+ KVM_GET_CLOCK
+To: Marcelo Tosatti <mtosatti@redhat.com>, Oliver Upton <oupton@google.com>
+References: <20210816001130.3059564-1-oupton@google.com>
+ <20210816001130.3059564-4-oupton@google.com>
+ <20210820124611.GA77176@fuller.cnet>
+From: Paolo Bonzini <pbonzini@redhat.com>
+In-Reply-To: <20210820124611.GA77176@fuller.cnet>
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pbonzini@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Cc: Catalin Marinas <catalin.marinas@arm.com>, kvm@vger.kernel.org,
+ Will Deacon <will@kernel.org>, Peter Shier <pshier@google.com>,
+ Marc Zyngier <maz@kernel.org>, David Matlack <dmatlack@google.com>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
+ Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -72,69 +110,38 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Having realised that a virtual LPI does transition through an active
-state that does not exist on bare metal, align the CPU interface
-emulation with the behaviour specified in the architecture pseudocode.
+On 20/08/21 14:46, Marcelo Tosatti wrote:
+> On Mon, Aug 16, 2021 at 12:11:27AM +0000, Oliver Upton wrote:
+>> Handling the migration of TSCs correctly is difficult, in part because
+>> Linux does not provide userspace with the ability to retrieve a (TSC,
+>> realtime) clock pair for a single instant in time. In lieu of a more
+>> convenient facility, KVM can report similar information in the kvm_clock
+>> structure.
+>>
+>> Provide userspace with a host TSC & realtime pair iff the realtime clock
+>> is based on the TSC. If userspace provides KVM_SET_CLOCK with a valid
+>> realtime value, advance the KVM clock by the amount of elapsed time. Do
+>> not step the KVM clock backwards, though, as it is a monotonic
+>> oscillator.
+>>
+>> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+>> Signed-off-by: Oliver Upton <oupton@google.com>
+> 
+> This is a good idea. Userspace could check if host and destination
+> clocks are up to a certain difference and not use the feature if
+> not appropriate.
+> 
+> Is there a qemu patch for it?
 
-The LPIs now transition to active on IAR read, and to inactive on
-EOI write. Special care is taken not to increment the EOIcount for
-an LPI that isn't present in the LRs.
+Not yet, but Maxim had a patch for a similar series (though with a 
+different userspace API).
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/kvm/hyp/vgic-v3-sr.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
-
-diff --git a/arch/arm64/kvm/hyp/vgic-v3-sr.c b/arch/arm64/kvm/hyp/vgic-v3-sr.c
-index b3b50de496a3..20db2f281cf2 100644
---- a/arch/arm64/kvm/hyp/vgic-v3-sr.c
-+++ b/arch/arm64/kvm/hyp/vgic-v3-sr.c
-@@ -695,9 +695,7 @@ static void __vgic_v3_read_iar(struct kvm_vcpu *vcpu, u32 vmcr, int rt)
- 		goto spurious;
- 
- 	lr_val &= ~ICH_LR_STATE;
--	/* No active state for LPIs */
--	if ((lr_val & ICH_LR_VIRTUAL_ID_MASK) <= VGIC_MAX_SPI)
--		lr_val |= ICH_LR_ACTIVE_BIT;
-+	lr_val |= ICH_LR_ACTIVE_BIT;
- 	__gic_v3_set_lr(lr_val, lr);
- 	__vgic_v3_set_active_priority(lr_prio, vmcr, grp);
- 	vcpu_set_reg(vcpu, rt, lr_val & ICH_LR_VIRTUAL_ID_MASK);
-@@ -764,20 +762,18 @@ static void __vgic_v3_write_eoir(struct kvm_vcpu *vcpu, u32 vmcr, int rt)
- 	/* Drop priority in any case */
- 	act_prio = __vgic_v3_clear_highest_active_priority();
- 
--	/* If EOIing an LPI, no deactivate to be performed */
--	if (vid >= VGIC_MIN_LPI)
--		return;
--
--	/* EOImode == 1, nothing to be done here */
--	if (vmcr & ICH_VMCR_EOIM_MASK)
--		return;
--
- 	lr = __vgic_v3_find_active_lr(vcpu, vid, &lr_val);
- 	if (lr == -1) {
--		__vgic_v3_bump_eoicount();
-+		/* Do not bump EOIcount for LPIs that aren't in the LRs */
-+		if (!(vid >= VGIC_MIN_LPI))
-+			__vgic_v3_bump_eoicount();
- 		return;
- 	}
- 
-+	/* EOImode == 1 and not an LPI, nothing to be done here */
-+	if ((vmcr & ICH_VMCR_EOIM_MASK) && !(vid >= VGIC_MIN_LPI))
-+		return;
-+
- 	lr_prio = (lr_val & ICH_LR_PRIORITY_MASK) >> ICH_LR_PRIORITY_SHIFT;
- 
- 	/* If priorities or group do not match, the guest has fscked-up. */
--- 
-2.30.2
+Paolo
 
 _______________________________________________
 kvmarm mailing list
