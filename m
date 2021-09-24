@@ -2,65 +2,103 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D48FD416E19
-	for <lists+kvmarm@lfdr.de>; Fri, 24 Sep 2021 10:38:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C8A2416EDF
+	for <lists+kvmarm@lfdr.de>; Fri, 24 Sep 2021 11:28:43 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D9834B0AC;
-	Fri, 24 Sep 2021 04:38:55 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 979134B115;
+	Fri, 24 Sep 2021 05:28:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ICP7fA1G36Kk; Fri, 24 Sep 2021 04:38:55 -0400 (EDT)
+	with ESMTP id rD9+A8R-EqPB; Fri, 24 Sep 2021 05:28:42 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 118F74B110;
-	Fri, 24 Sep 2021 04:38:54 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 944124B110;
+	Fri, 24 Sep 2021 05:28:41 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8B0E44B10B
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 04:38:52 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A1FAA4B101
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 05:28:39 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id PobGyLgggWc1 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 24 Sep 2021 04:38:50 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id ACE904B10A
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 04:38:50 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id AB31B61211;
- Fri, 24 Sep 2021 08:38:49 +0000 (UTC)
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1mTgjH-00Ci2m-O5; Fri, 24 Sep 2021 09:38:47 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [GIT PULL] KVM/arm64 fixes for 5.15, take #1
-Date: Fri, 24 Sep 2021 09:38:29 +0100
-Message-Id: <20210924083829.2766529-1-maz@kernel.org>
-X-Mailer: git-send-email 2.30.2
+ with ESMTP id B9ensnydqX1s for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 24 Sep 2021 05:28:35 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [216.205.24.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 372BF406E7
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 05:28:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1632475715;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IoDPw1naO7tilFKWpbIB0mjp/4gXU+WPMdM7pLJKoHA=;
+ b=CoMAtPViKwhvpZCGGlddeE2FnHzAHeTK9S76iJBv8v+ngCMq+6LzBQY1g/+9xPBOBT0k+/
+ Ko3a0PlxIvqPy/K/44oFl+TPj50In5hXV9D146z/soDHURjLcOsK1iyyHKDQFpXLswBqWl
+ plx3VyIyIw2AGBSe2q4xWs4tAlXs4c8=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-53-ulLUIzJAOkCVKrPbnNDpPg-1; Fri, 24 Sep 2021 05:28:31 -0400
+X-MC-Unique: ulLUIzJAOkCVKrPbnNDpPg-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ c7-20020a05640227c700b003d27f41f1d4so9587384ede.16
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 02:28:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+ :content-language:to:cc:references:from:in-reply-to
+ :content-transfer-encoding;
+ bh=IoDPw1naO7tilFKWpbIB0mjp/4gXU+WPMdM7pLJKoHA=;
+ b=gUExxyCWM/msyKK9swmFtlEJvV55PNt96pwJWrgEmyziVVA+nsh6ieb8USlEciyNsa
+ WGX0u5TWoO10os4cQpiTZ6NQ3MBzYFjFcX0QB6ZIL7TsN0xIOBEzj5xSZGWCEbSQEuHu
+ gqLTpsaL05x56u0skDV/E207YBiYG1Cwl1j/QBX5ckdF631F3AXutrcg8li3lRRr/bD9
+ u9c67kOqIGr351pgo/UUDAWTrm6npHD4cb6kkQCqeZlYleDZKCBMQ27ZGM0cElqbRxCq
+ LDbQ/RKSbH7c9jOlAuByMMwT61J8u20tsluNdbmnVTylFyxtoAfk2kXTWFHhYupv7ZW/
+ XefQ==
+X-Gm-Message-State: AOAM531iPjOJsz99YJEV16d1+Uawm5jXlqQtCXu56+kkkc5AeiL/xqvv
+ pthygZ9a+nlvyrMWmFFl0GLVcnFo2X5rLt9Pf/haPWZUJEi//aDA5/+fU2nBgVcMo3sdmf0fgvO
+ IsbS0jHWNo+/F5LcqYEQGMbh2
+X-Received: by 2002:a05:6402:397:: with SMTP id
+ o23mr3937693edv.59.1632475710478; 
+ Fri, 24 Sep 2021 02:28:30 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJxh74xZ8KOA0BU0tWlr2IZ19X6YEnrfIAboOpOI5qSEDDf3VV5te0ekyXZWkyb0hkI6Io5dng==
+X-Received: by 2002:a05:6402:397:: with SMTP id
+ o23mr3937667edv.59.1632475710253; 
+ Fri, 24 Sep 2021 02:28:30 -0700 (PDT)
+Received: from ?IPV6:2001:b07:6468:f312:c8dd:75d4:99ab:290a?
+ ([2001:b07:6468:f312:c8dd:75d4:99ab:290a])
+ by smtp.gmail.com with ESMTPSA id b14sm5403970edy.56.2021.09.24.02.28.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 Sep 2021 02:28:29 -0700 (PDT)
+Message-ID: <de3ff2de-da79-fd0c-c90b-f767414b0b69@redhat.com>
+Date: Fri, 24 Sep 2021 11:28:28 +0200
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: pbonzini@redhat.com, dbrazdil@google.com,
- masahiroy@kernel.org, rmk+kernel@armlinux.org.uk, yuzenghui@huawei.com,
- will@kernel.org, james.morse@arm.com, suzuki.poulose@arm.com,
- alexandru.elisei@arm.com, kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com, kvm@vger.kernel.org,
- Masahiro Yamada <masahiroy@kernel.org>,
- Russell King <rmk+kernel@armlinux.org.uk>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.0
+Subject: Re: [PATCH v7 5/6] KVM: x86: Refactor tsc synchronization code
+To: Sean Christopherson <seanjc@google.com>, Oliver Upton <oupton@google.com>
+References: <20210816001130.3059564-1-oupton@google.com>
+ <20210816001130.3059564-6-oupton@google.com> <YTEkRfTFyoh+HQyT@google.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+In-Reply-To: <YTEkRfTFyoh+HQyT@google.com>
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pbonzini@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Cc: Catalin Marinas <catalin.marinas@arm.com>, kvm@vger.kernel.org,
+ Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
+ Peter Shier <pshier@google.com>, David Matlack <dmatlack@google.com>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
+ Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -72,53 +110,38 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Paolo,
+On 02/09/21 21:21, Sean Christopherson wrote:
+> 
+>> +	if (!matched) {
+>> +		...
+>> +		spin_lock(&kvm->arch.pvclock_gtod_sync_lock);
+>> +		kvm->arch.nr_vcpus_matched_tsc = 0;
+>> +	} else if (!already_matched) {
+>> +		spin_lock(&kvm->arch.pvclock_gtod_sync_lock);
+>> +		kvm->arch.nr_vcpus_matched_tsc++;
+>> +	}
+>> +
+>> +	kvm_track_tsc_matching(vcpu);
+>> +	spin_unlock(&kvm->arch.pvclock_gtod_sync_lock);
+>
+> This unlock is imbalanced if matched and already_matched are both true.  It's not
+> immediately obvious that that_can't_  happen, and if it truly can't happen then
+> conditionally locking is pointless (because it's not actually conditional).
 
-Only two fixes so far for KVM/arm64: one patch squashing a Kbuild
-warning, and a fix for a regression when probing the availability of a
-PMU.
+This is IMO another reason to unify tsc_write_lock and 
+pvclock_gtod_sync_lock.  The chances of contention are pretty slim.  As 
+soon as I sort out the next -rc3 pull request I'll send out my version 
+of Oliver's patches.
 
-Please pull,
+Thanks,
 
-	M.
+Paolo
 
-The following changes since commit 6880fa6c56601bb8ed59df6c30fd390cc5f6dd8f:
-
-  Linux 5.15-rc1 (2021-09-12 16:28:37 -0700)
-
-are available in the Git repository at:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git tags/kvmarm-fixes-5.15-1
-
-for you to fetch changes up to e840f42a49925707fca90e6c7a4095118fdb8c4d:
-
-  KVM: arm64: Fix PMU probe ordering (2021-09-20 12:43:34 +0100)
-
-----------------------------------------------------------------
-KVM/arm64 fixes for 5.15, take #1
-
-- Add missing FORCE target when building the EL2 object
-- Fix a PMU probe regression on some platforms
-
-----------------------------------------------------------------
-Marc Zyngier (1):
-      KVM: arm64: Fix PMU probe ordering
-
-Zenghui Yu (1):
-      KVM: arm64: nvhe: Fix missing FORCE for hyp-reloc.S build rule
-
- arch/arm64/kvm/hyp/nvhe/Makefile | 2 +-
- arch/arm64/kvm/perf.c            | 3 ---
- arch/arm64/kvm/pmu-emul.c        | 9 ++++++++-
- drivers/perf/arm_pmu.c           | 2 ++
- include/kvm/arm_pmu.h            | 3 ---
- include/linux/perf/arm_pmu.h     | 6 ++++++
- 6 files changed, 17 insertions(+), 8 deletions(-)
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
