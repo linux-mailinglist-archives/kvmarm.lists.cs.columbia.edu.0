@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 04E6941734E
-	for <lists+kvmarm@lfdr.de>; Fri, 24 Sep 2021 14:54:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C8AB41734F
+	for <lists+kvmarm@lfdr.de>; Fri, 24 Sep 2021 14:55:01 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 675694B20F;
-	Fri, 24 Sep 2021 08:54:56 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id ED6834B1FE;
+	Fri, 24 Sep 2021 08:55:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,64 +14,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id c8Yq42Wqlu-g; Fri, 24 Sep 2021 08:54:56 -0400 (EDT)
+	with ESMTP id GubLL2oWloRq; Fri, 24 Sep 2021 08:54:59 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E2B0C4B20B;
-	Fri, 24 Sep 2021 08:54:54 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2037A4B1FC;
+	Fri, 24 Sep 2021 08:54:57 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 32C614B1BA
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 08:54:53 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 203F04B156
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 08:54:56 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id tHB6I7Xz22TX for <kvmarm@lists.cs.columbia.edu>;
- Fri, 24 Sep 2021 08:54:52 -0400 (EDT)
-Received: from mail-qk1-f202.google.com (mail-qk1-f202.google.com
- [209.85.222.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 508BE4B1F5
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 08:54:52 -0400 (EDT)
-Received: by mail-qk1-f202.google.com with SMTP id
- s18-20020a05620a255200b00433885d4fa7so32697410qko.4
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 05:54:52 -0700 (PDT)
+ with ESMTP id FSVHeQzuy7Gi for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 24 Sep 2021 08:54:54 -0400 (EDT)
+Received: from mail-qv1-f74.google.com (mail-qv1-f74.google.com
+ [209.85.219.74])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 50A134B186
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 08:54:54 -0400 (EDT)
+Received: by mail-qv1-f74.google.com with SMTP id
+ z8-20020a056214040800b00380dea65c01so31191177qvx.4
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 05:54:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=AJoOKnLyUcMeZ4bJL08afGQB1XmHWoCmbvvxsT90R1w=;
- b=TMcksozilNhor18k73HxG4gyzfpGIMQctnpgCoaFfUQvCdISS/VjwUjfT8F/wp9IsG
- PSTiJU2S+0umLVLDZpYsMf1X3pMpaNn1K70khBdD2PsgT9nUFaSWbqDDz8wWIAjd3R4y
- /7Ix41f24yh5cDWqxan5dgEUP+g+Bo06EILO7FWcopUsktqWgXUJKfnWaJu6p5D5A487
- lIeMXBorGqKldcdOiUFmwoM5kyBRg8Qc7dDf/ZIiCMR3KJ7Uus5G7B0UWsPVzQESkXiF
- i4fjNfKyLfq1Hj9F3RZ2SsYLfw6L37gMokU2uTeaiLZVuxDA75sy3iTlTonCGSWvpuEB
- lnGg==
+ :cc; bh=h7avwCelVLDXrW65ivowhx5L97uC6oG1q5eldj7v03E=;
+ b=HSj7gZGfE1Et2vmg3ht8IP44LkLd1mywKH9lU+M+SaqxPAhQomtoiMQDSdpuE1jlH0
+ VjMgAJVQhNWJ6IR0dBYuKqen9a8e6ZwcErT6sKmrbHkSet6C+kMNx2fpZCShgK7tJ8i5
+ Tfkk+GKBNixa2P/T7o4dn5RBzfOEocv2ZLWrqxfAOv+pXLMVKoRwTppWAkyyYZsYu5JF
+ HdwISigqSEVHD9UFMlP8vbCfGs7HYpwttcpvRskdAZxLkbT4Mu8udkC7KtNx1ZUP139m
+ RIxeaVjv2wRJ0JACk4h1lm/7OGP26Nfp3hla/AqHq6Sdwt8v4aXZ36GDhNxuFubJoe7E
+ mwCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=AJoOKnLyUcMeZ4bJL08afGQB1XmHWoCmbvvxsT90R1w=;
- b=jZDWs/ztcVVVWD1XYi2ytfkuK1qUJlbZhtIwsjmIe3COA0pbz2lA2dwQlkOXtwlXlc
- KV0qowOYgVzeiOyBCkfrnhgNf7zqIe11cVgSLL9ym4DaromeMcD2YA6uf347g85IqyfN
- 15sTp9DH82x+Vo4xfs7P1j1As7HQjEipJjimIbEDwGLx+1zKzVPW/FYhsWt/HOcIUIkn
- 4TtRMO5zSM69dwQYzTWM+rlSNI9cgiwBnhtKQTKxolFJCHhvz0O6OEovBlWJYJVyovVG
- D5YQGit/CnggrpWZuZCFP0Egc0G0mrN6HFZjQok/eCWJn911Y0fqWCsIMtVYdpJBlPo9
- DxoQ==
-X-Gm-Message-State: AOAM531YltvB9q+9tAUAYWg2jDQJn5QlthqXeaNeObRrj4AjUrT8smAV
- +L5nLDSYRUpnI3fR9UnbtAXPrI3B7Phbni4v2QM0mr4+sD/Q9Q9nlxzpG7vhnh/JjGjGb2GzBlS
- aGpE48qp0qvPvFEUQEuPxdLWzkhCLQ6F0fjl6UKCZL/OocIGun6Na4iOqXnlnoFEei+A=
-X-Google-Smtp-Source: ABdhPJwRKEEdsILouY64mZAty9UzcrpjyOPrwEYFLAfse6nGd0/Ta0E8nqaALjj/ZCs3Dfp6mLzP+gYXZA==
+ bh=h7avwCelVLDXrW65ivowhx5L97uC6oG1q5eldj7v03E=;
+ b=R9FUQpt61DkQweBbzZQdQ9FvgJvrHarQjgXws9vJoy0XBByJ+MIjcK8H1y3uuMyKHU
+ +anuVIDP7ZnLuT5Xy6oWAloVV/vnTzMA01dDNARN8f8Z/4LBHisE3gR928qLPuYbWLWO
+ 2S3wpP7jTL/YSOwvvuYZF3ftqDhjeBH7K0HGBCuyRWiModm5PyPThPXHRvDmMzl1YW9J
+ EiufYX3or8MpI8CgxMHfRUDBKbZO84VTb+cdt+w6v9mf8ERIe4I8DCCCJDhMiqNTIXNh
+ CFTZ09R0Eph0ONe7CnqnJi+PqvbO8tf4tLqzmS/Uj0W2GuaT4PJU0kwEp7HdonAPtXoD
+ MgTw==
+X-Gm-Message-State: AOAM532m8EPwX+ds5qWBXIvy63cC24JH93/G2fwdPKJUIRt7vRN3x3aV
+ T39jka4TvH7mucNiJjDRinLUUCGkJ9yIop2cMSKq3Yj0puuZcNaQs2rC/lKzVznvlshNC/ySUh6
+ +tr9K8OlmAC5h1EfBSJ5HuINVtHTR94F0AbiTOOWWKwDDPgiRUTbkZOBdOlWAMvqZFAo=
+X-Google-Smtp-Source: ABdhPJyL0t+coFpdVZMGEPsDbytWRe779HP4gPBcO06ejSv04CQaDTyhghz78sdKCUcnBSSiAMc7iJUGkA==
 X-Received: from tabba.c.googlers.com ([fda3:e722:ac3:cc00:28:9cb1:c0a8:482])
- (user=tabba job=sendgmr) by 2002:a05:6214:492:: with SMTP id
- ay18mr9625511qvb.4.1632488091905; Fri, 24 Sep 2021 05:54:51 -0700 (PDT)
-Date: Fri, 24 Sep 2021 13:53:53 +0100
+ (user=tabba job=sendgmr) by 2002:a0c:d989:: with SMTP id
+ y9mr9535459qvj.67.1632488093954; 
+ Fri, 24 Sep 2021 05:54:53 -0700 (PDT)
+Date: Fri, 24 Sep 2021 13:53:54 +0100
 In-Reply-To: <20210924125359.2587041-1-tabba@google.com>
-Message-Id: <20210924125359.2587041-25-tabba@google.com>
+Message-Id: <20210924125359.2587041-26-tabba@google.com>
 Mime-Version: 1.0
 References: <20210924125359.2587041-1-tabba@google.com>
 X-Mailer: git-send-email 2.33.0.685.g46640cef36-goog
-Subject: [RFC PATCH v1 24/30] KVM: arm64: remove unused functions
+Subject: [RFC PATCH v1 25/30] KVM: arm64: separate kvm_run() for protected VMs
 From: Fuad Tabba <tabba@google.com>
 To: kvmarm@lists.cs.columbia.edu
 Cc: kernel-team@android.com, kvm@vger.kernel.org, maz@kernel.org,
@@ -92,39 +93,163 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-__vcpu_write_spsr*() functions are not used anymore.
+Split kvm_run() for protected and non-protected VMs. Protected
+VMs support fewer features, separating it out will ease the
+refactoring and simplify the code.
+
+This patch starts only by replicated the code from the
+non-protected case, to make it easier to diff against future
+patches.
 
 Signed-off-by: Fuad Tabba <tabba@google.com>
 ---
- arch/arm64/kvm/hyp/exception.c | 15 ---------------
- 1 file changed, 15 deletions(-)
+ arch/arm64/kvm/hyp/nvhe/switch.c | 119 ++++++++++++++++++++++++++++++-
+ 1 file changed, 116 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/kvm/hyp/exception.c b/arch/arm64/kvm/hyp/exception.c
-index bb0bc1f5568c..fdfc809f61b8 100644
---- a/arch/arm64/kvm/hyp/exception.c
-+++ b/arch/arm64/kvm/hyp/exception.c
-@@ -67,21 +67,6 @@ static inline void __vcpu_write_sys_reg(struct kvm_vcpu *vcpu, u64 val, int reg)
- 	__ctxt_write_sys_reg(&vcpu_ctxt(vcpu), val, reg);
+diff --git a/arch/arm64/kvm/hyp/nvhe/switch.c b/arch/arm64/kvm/hyp/nvhe/switch.c
+index b90ec8db5864..9e79f97ba49e 100644
+--- a/arch/arm64/kvm/hyp/nvhe/switch.c
++++ b/arch/arm64/kvm/hyp/nvhe/switch.c
+@@ -119,7 +119,7 @@ static void __hyp_vgic_save_state(struct kvm_vcpu *vcpu)
+ 	}
  }
  
--static void __vcpu_write_spsr(struct kvm_vcpu *vcpu, u64 val)
--{
--	__ctxt_write_spsr(&vcpu_ctxt(vcpu), val);
--}
--
--static void __vcpu_write_spsr_abt(struct kvm_vcpu *vcpu, u64 val)
--{
--	__ctxt_write_spsr_abt(&vcpu_ctxt(vcpu), val);
--}
--
--static void __vcpu_write_spsr_und(struct kvm_vcpu *vcpu, u64 val)
--{
--	__ctxt_write_spsr_und(&vcpu_ctxt(vcpu), val);
--}
--
- /*
-  * This performs the exception entry at a given EL (@target_mode), stashing PC
-  * and PSTATE into ELR and SPSR respectively, and compute the new PC/PSTATE.
+-/* Restore VGICv3 state on non_VEH systems */
++/* Restore VGICv3 state on nVHE systems */
+ static void __hyp_vgic_restore_state(struct kvm_vcpu *vcpu)
+ {
+ 	if (static_branch_unlikely(&kvm_vgic_global_state.gicv3_cpuif)) {
+@@ -166,8 +166,110 @@ static void __pmu_switch_to_host(struct kvm_cpu_context *host_ctxt)
+ 		write_sysreg(pmu->events_host, pmcntenset_el0);
+ }
+ 
+-/* Switch to the guest for legacy non-VHE systems */
+-int __kvm_vcpu_run(struct kvm_vcpu *vcpu)
++/* Switch to the non-protected guest */
++static int __kvm_vcpu_run_nvhe(struct kvm_vcpu *vcpu)
++{
++	struct vcpu_hyp_state *vcpu_hyps = &vcpu->arch.hyp_state;
++	struct kvm_cpu_context *vcpu_ctxt = &vcpu->arch.ctxt;
++	struct kvm *kvm = kern_hyp_va(vcpu->kvm);
++	struct vgic_dist *vgic = &kvm->arch.vgic;
++	struct kvm_cpu_context *host_ctxt;
++	struct kvm_cpu_context *guest_ctxt;
++	bool pmu_switch_needed;
++	u64 exit_code;
++
++	/*
++	 * Having IRQs masked via PMR when entering the guest means the GIC
++	 * will not signal the CPU of interrupts of lower priority, and the
++	 * only way to get out will be via guest exceptions.
++	 * Naturally, we want to avoid this.
++	 */
++	if (system_uses_irq_prio_masking()) {
++		gic_write_pmr(GIC_PRIO_IRQON | GIC_PRIO_PSR_I_SET);
++		pmr_sync();
++	}
++
++	host_ctxt = &this_cpu_ptr(&kvm_host_data)->host_ctxt;
++	set_hyp_running_vcpu(host_ctxt, vcpu);
++	guest_ctxt = &vcpu->arch.ctxt;
++
++	pmu_switch_needed = __pmu_switch_to_guest(host_ctxt);
++
++	__sysreg_save_state_nvhe(host_ctxt);
++	/*
++	 * We must flush and disable the SPE buffer for nVHE, as
++	 * the translation regime(EL1&0) is going to be loaded with
++	 * that of the guest. And we must do this before we change the
++	 * translation regime to EL2 (via MDCR_EL2_E2PB == 0) and
++	 * before we load guest Stage1.
++	 */
++	__debug_save_host_buffers_nvhe(vcpu);
++
++	kvm_adjust_pc(vcpu_ctxt, vcpu_hyps);
++
++	/*
++	 * We must restore the 32-bit state before the sysregs, thanks
++	 * to erratum #852523 (Cortex-A57) or #853709 (Cortex-A72).
++	 *
++	 * Also, and in order to be able to deal with erratum #1319537 (A57)
++	 * and #1319367 (A72), we must ensure that all VM-related sysreg are
++	 * restored before we enable S2 translation.
++	 */
++	__sysreg32_restore_state(vcpu);
++	__sysreg_restore_state_nvhe(guest_ctxt);
++
++	__load_guest_stage2(kern_hyp_va(vcpu->arch.hw_mmu));
++	__activate_traps(vcpu);
++
++	__hyp_vgic_restore_state(vcpu);
++	__timer_enable_traps();
++
++	__debug_switch_to_guest(vcpu);
++
++	do {
++		struct kvm_cpu_context *hyp_ctxt = this_cpu_ptr(&kvm_hyp_ctxt);
++		set_hyp_running_vcpu(hyp_ctxt, vcpu);
++
++		/* Jump in the fire! */
++		exit_code = __guest_enter(guest_ctxt);
++
++		/* And we're baaack! */
++	} while (fixup_guest_exit(vcpu, vgic, &exit_code));
++
++	__sysreg_save_state_nvhe(guest_ctxt);
++	__sysreg32_save_state(vcpu);
++	__timer_disable_traps();
++	__hyp_vgic_save_state(vcpu);
++
++	__deactivate_traps(vcpu_hyps);
++	__load_host_stage2();
++
++	__sysreg_restore_state_nvhe(host_ctxt);
++
++	if (hyp_state_flags(vcpu_hyps) & KVM_ARM64_FP_ENABLED)
++		__fpsimd_save_fpexc32(vcpu);
++
++	__debug_switch_to_host(vcpu);
++	/*
++	 * This must come after restoring the host sysregs, since a non-VHE
++	 * system may enable SPE here and make use of the TTBRs.
++	 */
++	__debug_restore_host_buffers_nvhe(vcpu);
++
++	if (pmu_switch_needed)
++		__pmu_switch_to_host(host_ctxt);
++
++	/* Returning to host will clear PSR.I, remask PMR if needed */
++	if (system_uses_irq_prio_masking())
++		gic_write_pmr(GIC_PRIO_IRQOFF);
++
++	set_hyp_running_vcpu(host_ctxt, NULL);
++
++	return exit_code;
++}
++
++/* Switch to the protected guest */
++static int __kvm_vcpu_run_pvm(struct kvm_vcpu *vcpu)
+ {
+ 	struct vcpu_hyp_state *vcpu_hyps = &hyp_state(vcpu);
+ 	struct kvm_cpu_context *vcpu_ctxt = &vcpu_ctxt(vcpu);
+@@ -268,6 +370,17 @@ int __kvm_vcpu_run(struct kvm_vcpu *vcpu)
+ 	return exit_code;
+ }
+ 
++/* Switch to the guest for non-VHE and protected KVM systems */
++int __kvm_vcpu_run(struct kvm_vcpu *vcpu)
++{
++	vcpu = kern_hyp_va(vcpu);
++
++	if (likely(!kvm_vm_is_protected(kern_hyp_va(vcpu->kvm))))
++		return __kvm_vcpu_run_nvhe(vcpu);
++	else
++		return __kvm_vcpu_run_pvm(vcpu);
++}
++
+ void __noreturn hyp_panic(void)
+ {
+ 	u64 spsr = read_sysreg_el2(SYS_SPSR);
 -- 
 2.33.0.685.g46640cef36-goog
 
