@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 94827416DA9
-	for <lists+kvmarm@lfdr.de>; Fri, 24 Sep 2021 10:25:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B0108416DAC
+	for <lists+kvmarm@lfdr.de>; Fri, 24 Sep 2021 10:26:01 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 035464B118;
-	Fri, 24 Sep 2021 04:25:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 56AB04B133;
+	Fri, 24 Sep 2021 04:26:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,42 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id EiLlYfkRrC2X; Fri, 24 Sep 2021 04:25:56 -0400 (EDT)
+	with ESMTP id fZcsDdtHoTAb; Fri, 24 Sep 2021 04:26:00 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A6FF24B115;
-	Fri, 24 Sep 2021 04:25:56 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 06C5A4B08D;
+	Fri, 24 Sep 2021 04:26:00 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6E1D74B10D
- for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 04:25:55 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1EE1F4B09C
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 04:25:56 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id PSP-sCEcHhvT for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id 0r0FdNVuvTBa for <kvmarm@lists.cs.columbia.edu>;
  Fri, 24 Sep 2021 04:25:54 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4FAF74B09C
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 50E6E4B0DF
  for <kvmarm@lists.cs.columbia.edu>; Fri, 24 Sep 2021 04:25:54 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 3631F61090;
+ by mail.kernel.org (Postfix) with ESMTPSA id 407D361214;
  Fri, 24 Sep 2021 08:25:53 +0000 (UTC)
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1mTgWl-00ChmL-1s; Fri, 24 Sep 2021 09:25:51 +0100
+ id 1mTgWl-00ChmL-DQ; Fri, 24 Sep 2021 09:25:51 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 0/5] KVM: arm64: Assorted vgic-v3 fixes
-Date: Fri, 24 Sep 2021 09:25:37 +0100
-Message-Id: <20210924082542.2766170-1-maz@kernel.org>
+Subject: [PATCH 1/5] KVM: arm64: Force ID_AA64PFR0_EL1.GIC=1 when exposing a
+ virtual GICv3
+Date: Fri, 24 Sep 2021 09:25:38 +0100
+Message-Id: <20210924082542.2766170-2-maz@kernel.org>
 X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20210924082542.2766170-1-maz@kernel.org>
+References: <20210924082542.2766170-1-maz@kernel.org>
 MIME-Version: 1.0
 X-SA-Exim-Connect-IP: 185.219.108.64
 X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
@@ -74,43 +77,40 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Here's a bunch of vgic-v3 fixes I have been sitting on for some
-time. None of them are critical, though some are rather entertaining.
+Until now, we always let ID_AA64PFR0_EL1.GIC reflect the value
+visible on the host, even if we were running a GICv2-enabled VM
+on a GICv3+compat host.
 
-The first one is a leftover from the initial Apple-M1 enablement,
-which doesn't advertise the GIC support via ID_AA64PFR0_EL1 (which is
-expected, as it only has half a GIC...). We address it by forcefully
-advertising the feature if the guest has a GICv3.
+That's fine, but we also now have the case of a host that does not
+expose ID_AA64PFR0_EL1.GIC==1 despite having a vGIC. Yes, this is
+confusing. Thank you M1.
 
-The second patch is really fun, and shows how things can go wrong when
-they are badly specified. The gist of it is that on systems that
-advertise ICH_VTR_EL2.SEIS, we need to fallback to the full GICv3
-cpuif emulation. The third patch is a direct consequence of the
-previous one.
+Let's go back to first principles and expose ID_AA64PFR0_EL1.GIC=1
+when a GICv3 is exposed to the guest. This also hides a GICv4.1
+CPU interface from the guest which has no business knowing about
+the v4.1 extension.
 
-The last two patches are more of a harmless oddity: virtual LPIs
-happen to have an active state buried into the pseudocode (and only
-there). Fun!  Nothing goes wrong with that, but we can perform a minor
-optimisation, and we need to align the emulation to match the
-pseudocode.
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+---
+ arch/arm64/kvm/sys_regs.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-All of this is only targeting 5.16, and I don't plan to backport any
-of it.
-
-Marc Zyngier (5):
-  KVM: arm64: Force ID_AA64PFR0_EL1.GIC=1 when exposing a virtual GICv3
-  KVM: arm64: Work around GICv3 locally generated SErrors
-  KVM: arm64: vgic-v3: Don't advertise ICC_CTLR_EL1.SEIS
-  KVM: arm64: vgic-v3: Don't propagate LPI active state from LRs into
-    the distributor
-  KVM: arm64: vgic-v3: Align emulated cpuif LPI state machine with the
-    pseudocode
-
- arch/arm64/kvm/hyp/vgic-v3-sr.c | 22 ++++++++--------------
- arch/arm64/kvm/sys_regs.c       |  5 +++++
- arch/arm64/kvm/vgic/vgic-v3.c   | 11 ++++++++++-
- 3 files changed, 23 insertions(+), 15 deletions(-)
-
+diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+index 1d46e185f31e..0e8fc29df19c 100644
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -1075,6 +1075,11 @@ static u64 read_id_reg(const struct kvm_vcpu *vcpu,
+ 		val |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR0_CSV2), (u64)vcpu->kvm->arch.pfr0_csv2);
+ 		val &= ~ARM64_FEATURE_MASK(ID_AA64PFR0_CSV3);
+ 		val |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR0_CSV3), (u64)vcpu->kvm->arch.pfr0_csv3);
++		if (irqchip_in_kernel(vcpu->kvm) &&
++		    vcpu->kvm->arch.vgic.vgic_model == KVM_DEV_TYPE_ARM_VGIC_V3) {
++			val &= ~ARM64_FEATURE_MASK(ID_AA64PFR0_GIC);
++			val |= FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64PFR0_GIC), 1);
++		}
+ 		break;
+ 	case SYS_ID_AA64PFR1_EL1:
+ 		val &= ~ARM64_FEATURE_MASK(ID_AA64PFR1_MTE);
 -- 
 2.30.2
 
