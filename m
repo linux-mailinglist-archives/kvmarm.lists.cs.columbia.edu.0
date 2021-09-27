@@ -2,99 +2,146 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 800CC41A9A3
-	for <lists+kvmarm@lfdr.de>; Tue, 28 Sep 2021 09:24:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8091B41AC0B
+	for <lists+kvmarm@lfdr.de>; Tue, 28 Sep 2021 11:37:28 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C85014B0F5;
-	Tue, 28 Sep 2021 03:24:18 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0833D4B10E;
+	Tue, 28 Sep 2021 05:37:28 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.209
+X-Spam-Score: 0.908
 X-Spam-Level: 
-X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.908 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, body has been altered) header.i=@nvidia.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Br6KZ6vsHtBk; Tue, 28 Sep 2021 03:24:18 -0400 (EDT)
+	with ESMTP id dms3SdhaoSFR; Tue, 28 Sep 2021 05:37:27 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 778754B0D7;
-	Tue, 28 Sep 2021 03:24:17 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CC1D44B0BD;
+	Tue, 28 Sep 2021 05:37:26 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0A5D24A19F
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 03:24:16 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A9AA74A98B
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Sep 2021 17:18:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id X6D6Gtxh4dzK for <kvmarm@lists.cs.columbia.edu>;
- Tue, 28 Sep 2021 03:24:15 -0400 (EDT)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EF97240762
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 03:24:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1632813854;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=bWGC7oTmfGjxKcdKJd504L6aMYPeDx74J8LvM7PKm0s=;
- b=UXBo4Vt/JmParNzdvclNOlkKETqIKNyFTWuwxu3pVmo4OFfvkgo2VjvF0GIZm1G1GYKWNZ
- lSXVg92tivzGbB6sNWbLvM/tN8U+e+ip1pfFCASlKlepE00ORvFo7FM1SSGsAuupxEu8X5
- Pfs/RHRrMdlDxkEQPY+M0v2eRdw2P2A=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-568-DXRZQwoiOqixlgcozkqGHg-1; Tue, 28 Sep 2021 03:24:13 -0400
-X-MC-Unique: DXRZQwoiOqixlgcozkqGHg-1
-Received: by mail-ed1-f72.google.com with SMTP id
- s12-20020a05640217cc00b003cde58450f1so20808957edy.9
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 00:24:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=bWGC7oTmfGjxKcdKJd504L6aMYPeDx74J8LvM7PKm0s=;
- b=NbEavWjojoFlOZNLVYnI1rCzCFw0D7Hm55KE5yJMY6gB4jrDFMYJRIjly7SfQYHqUH
- XFyaSXCY+NIRjBy5/KsrPfo59C2qo2PEEJ7GCgu9OaMaACVwpZtlNN0/TgKyMMa2n0GA
- UWQ/xWGakx+MZJEwgN3XLVMX5IXPWdGpH6+Tsxf65iCdZkcjlOvCpOlJGCI6Wxnwy3tl
- WYxP9RvueTEDt9nw+xUcU0uljdojg5xvpnrvA/UKMV8z2uFjmHDyJL5kpqOMd5xwrWo5
- EKk+3h51PW/e0oOVq8KJYS9//+MCVQxLfiE7cnm+6irEMncR634hslms4aXk/C3pdPy3
- JpwA==
-X-Gm-Message-State: AOAM530p3GcXBrRAJbEbh1p+l5oPrnb0B8VmkU4ZqdwaLemWJw9NU324
- oeSNvhm12Pg+YGWix2ooVRJCKMrNiKuxe/hk1BE8Qv4uwA2h0bTslBVzU39zPeX8ByGVvU0BH4u
- oCeYb74vz+dfl3Qll4zgFhJRv
-X-Received: by 2002:a17:906:6c83:: with SMTP id
- s3mr5124256ejr.13.1632813852137; 
- Tue, 28 Sep 2021 00:24:12 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJxAUxOXAqxe7tw2Hl4EfMfwGMkveziu4koresAVxFaRgDKbcZMqmqP/pKKJj5b+3QAkJO8dxg==
-X-Received: by 2002:a17:906:6c83:: with SMTP id
- s3mr5124236ejr.13.1632813851955; 
- Tue, 28 Sep 2021 00:24:11 -0700 (PDT)
-Received: from gator.home (cst2-174-28.cust.vodafone.cz. [31.30.174.28])
- by smtp.gmail.com with ESMTPSA id q12sm9791038ejs.58.2021.09.28.00.24.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Sep 2021 00:24:11 -0700 (PDT)
-Date: Tue, 28 Sep 2021 09:24:09 +0200
-From: Andrew Jones <drjones@redhat.com>
-To: Sean Christopherson <seanjc@google.com>
-Subject: Re: [PATCH] selftests: KVM: Call ucall_init when setting up in
- rseq_test
-Message-ID: <20210928072409.ks6b6u3rs7qngije@gator.home>
-References: <20210923220033.4172362-1-oupton@google.com>
- <YU0XIoeYpfm1Oy0j@google.com>
- <20210924064732.xqv2xjya3pxgmwr2@gator.home>
- <YVIj+gExrHrjlQEm@google.com>
+ with ESMTP id aTi6VIm3w5A7 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 27 Sep 2021 17:17:59 -0400 (EDT)
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com
+ (mail-bn8nam11on2070.outbound.protection.outlook.com [40.107.236.70])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 881254B086
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Sep 2021 17:17:59 -0400 (EDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=GJoJxTD98ynnerUW6M1DAbK82VbD3WEpdz9K2ZhTl6URjVzPdm7+Wdgx1nDrqxF2wcqkxk9tmZ8VbH/h/H9NNx0HZt2f9xznftta09hhCm8jwXim6V3TgGekDy8bU3Zb5uPHimAFGXMJpHQmQFjsxuVcRqVmhAG7sybXh0irzuB7vMiOUNsCzCnpYiNKDW8NcHNEKZwBOKPXAtq+6TJdAzm7UDdzYzR/RpGck19nW8sedP7/YuUvyVBYvlnYub1Ew9MQFflHFUTyuNc6V/Tj2bFWqCjGzyH30qwtG+BhtjG3LRDUm69rieKKy6hR7LSu2C6GMaxvsxPhjhVzXJwwjw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version; 
+ bh=KXJKXO7aCP1ZaNstUxrXrlmW773SZvHodmQeBZ/1xcI=;
+ b=Bk3tIvcPYXK+MH05hgdQT+oyqGMKza3qNW/q5qm1Fi5EqhxwX5i+V2izKs/uWE4Vhsop221Phdd2UxO9zstHQEb8JwEruTqqMhjtAsuCXMG8nFVzvStF1pkzBMq1hZoScc8eWx5+khQ9oBBvZDRJCdvc73h+eSr/2ENyJkzbb+bDdGnx/tvNkU1e7tMCaXtnagigle3c+JcRWB5L84+tef5/opztffCByzZ9G5Zi+T2fAPj3kv2I42NlUu2o8j8kJhZ4E/M1Lp/xeLD1JWSW//9Dh5o4RhNhSJYZYl1cBMaGycwrmLDTOf3MsyRzyZpqqR+u9jHS/65dJCZBMVnLfA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=KXJKXO7aCP1ZaNstUxrXrlmW773SZvHodmQeBZ/1xcI=;
+ b=jnxQIJk3OLH4S/FYE09BYxcsJxvRZRtKTzNJWT15g2wSjFv47+4vyXwyyiKPVRtUKPbTmCgwm1eAD0P70cn4uMoG6FQsnNYgcSLWtgszsSvLsRONMpjP8CZthZYz5trp7LxPJQue/ui1UthwkzwuLn23lH7qoO85p+pgIaKZwefsnEC3LbtS0gJkNThxsF8ehuOtmhSurqZDGIc2ZdaPV5M3Aeg7dtSWyOswj1ve5nkmfmflHk7hxGlORfCk9v6wHnCm+NYQWk4n9P+yf8Vm7TYjmEWrEXQkgyhZv7+em9VnPFj939BPHRMSZo1L1ExeXuIUAMB6JR9niks63VCDxg==
+Received: from BY5PR12MB3764.namprd12.prod.outlook.com (2603:10b6:a03:1ac::17)
+ by BY5PR12MB4950.namprd12.prod.outlook.com (2603:10b6:a03:1d9::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4544.20; Mon, 27 Sep
+ 2021 21:17:56 +0000
+Received: from BY5PR12MB3764.namprd12.prod.outlook.com
+ ([fe80::1d09:e72:91fd:ef05]) by BY5PR12MB3764.namprd12.prod.outlook.com
+ ([fe80::1d09:e72:91fd:ef05%7]) with mapi id 15.20.4544.021; Mon, 27 Sep 2021
+ 21:17:56 +0000
+From: Krishna Reddy <vdumpa@nvidia.com>
+To: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
+ <eric.auger.pro@gmail.com>, "iommu@lists.linux-foundation.org"
+ <iommu@lists.linux-foundation.org>, "linux-kernel@vger.kernel.org"
+ <linux-kernel@vger.kernel.org>, "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+ "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
+ "will@kernel.org" <will@kernel.org>, "maz@kernel.org" <maz@kernel.org>,
+ "robin.murphy@arm.com" <robin.murphy@arm.com>, "joro@8bytes.org"
+ <joro@8bytes.org>, "alex.williamson@redhat.com" <alex.williamson@redhat.com>, 
+ "tn@semihalf.com" <tn@semihalf.com>, "zhukeqian1@huawei.com"
+ <zhukeqian1@huawei.com>
+Subject: RE: [PATCH v15 00/12] SMMUv3 Nested Stage Setup (IOMMU part)
+Thread-Topic: [PATCH v15 00/12] SMMUv3 Nested Stage Setup (IOMMU part)
+Thread-Index: AQHXLsOhPIy4yfhMckeIjXIKtBMRG6u5a1sQ
+Date: Mon, 27 Sep 2021 21:17:56 +0000
+Message-ID: <BY5PR12MB37640C26FEBC8AC6E3EDF40BB3A79@BY5PR12MB3764.namprd12.prod.outlook.com>
+References: <20210411111228.14386-1-eric.auger@redhat.com>
+In-Reply-To: <20210411111228.14386-1-eric.auger@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: redhat.com; dkim=none (message not signed)
+ header.d=none;redhat.com; dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 3c005d6c-1a94-4ddd-599d-08d981fc467e
+x-ms-traffictypediagnostic: BY5PR12MB4950:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BY5PR12MB495083C7E96B53C231859EA5B3A79@BY5PR12MB4950.namprd12.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:5797;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: Cu/2mMwCOGEYEmLkBvHMuU7xqFiQi1U1VBgAAo5vz9BxqOZQVEl+z1Bh1Vfo5IFY9UUZ1YE0zbGDJbIlF79bUUVNeXTQEC7nUm/fpw5PugRKiR4xTR9tIR1VgEL+wIDjuFA51coeTHVqNUuQTjHdSTbGzqpG2cXbkDlSuhmQRf5Vh2NgXiC+/xWemBDrWarfaj+ckXJakISGCbEy2J733w4o3NIcb1qU+VJc1c5YLImYwLcFQVtItbP5lr1qngJnshep/uKG0NrIgsSeh3pT3cUkwQ+psrL+HrtPwH2WNUD3P1gI8khNEhomiAHEGJgJ6U+iDJDzGI+aXp/PnqDGUD3ZxPz3mjYkMpKiPrTjHNy/FXsdKKY0id8hwBXVPcJhsG3bjHLKdCk32CVeLgvH9oFuPfkIRgMCd/8Cf30eacv+G7D1lzoMQmY9ArPjzeqKU3kIsA8/+NU1JrJyoikEAbRkT/YDhIdGzaXCY7DyrsZCc9zbA93Y1/k/6+MFRrPCpDzwqzeHWJintRwaniExsNhBQj+6k+kQ7jV9Ouhm6cSNvkGqCYDh4Tj+aHokWru6BF4HebHRCGQRajSyi5paFH3l7eSKHTEcSpbWWIJrQROZ/knDlJxMyEtVplxzafiO45ZCWI9RbCJR2d2mpEztYCGJFp4kU88RZTrUUJPuhc28hejvuFZSWcuSGXbqUdKKIq0jkWDu9ANGlrE59dnkvrBPn5OmQNpMnyGi0GvreRZAjYAfqN6lnQPdOhFtuOVZagxpGEE03FE0gioHCihD5adv/qwwrw8LTeU2ubJtKIA=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BY5PR12MB3764.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(366004)(52536014)(5660300002)(76116006)(110136005)(8676002)(54906003)(508600001)(316002)(9686003)(4326008)(8936002)(66946007)(26005)(66446008)(2906002)(64756008)(66556008)(66476007)(7416002)(55016002)(186003)(33656002)(7696005)(38070700005)(71200400001)(966005)(122000001)(86362001)(921005)(6506007)(38100700002)(4744005);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?Ypv8R93JZLG4spc4z1S4nCItxENoHjn2+YQeOs0VVjeNtnBzdbd3/RB7/9+2?=
+ =?us-ascii?Q?1/DgDcVovoGgDzCJYlke2rFD60ZVMuXsjX174/h+A3d0n863Xua3gMrfVgJV?=
+ =?us-ascii?Q?5dNgtmUcK0Y+ihPj9EdQuCN0qBKdEyCBhi4dHQKel5cn/H1b4koYnX7SfpWO?=
+ =?us-ascii?Q?0B0uq+o0pXMA1PVqk+iety3dd9EMK1gnk7lvd75R6RXV3DRwsLTyYW1HWApu?=
+ =?us-ascii?Q?wZGS+yL30bLlXopn7veWnMr6d9my5lNLwNVrSiCB0Exb0QwvL78GhspJic9y?=
+ =?us-ascii?Q?Pln3RnLRdHiJP/qK8CjFpG2p2OewkWz2YWL8QX8faI7NScuk0GU+1f18ueuQ?=
+ =?us-ascii?Q?Q8miUhOvd0hVOVAgFLU+yi0DkDpHhi5+8IoAKMgcyyN1ypPqLnbeKnswJt6Y?=
+ =?us-ascii?Q?+Bado/JwxR9uVclnkHp+4uDjnHtSpqdSDxn0eKlDlykglYpcIYl4qzd8mkNU?=
+ =?us-ascii?Q?ONg5wB5HrfE4bfnL7WY69UPUJbAAuYU+yfB1b6jV+f0NXW1YMCPCNDprz1uO?=
+ =?us-ascii?Q?F2PZ5Vmctus7GkVB0gX+qfQO2R33b7Z8laznCdY+71EYK9/jIiJxk/SfwwQV?=
+ =?us-ascii?Q?8CI7XlP0DqSU/TLjERnJIKXWaJBWg1BibokveBPi5+NTH1odQs7T7se5J2UK?=
+ =?us-ascii?Q?ErqdScTP24T0aEKhBZklgfEz79L/hwc5aYSYW2O0XmZahncVLMpRZMVe+Q4b?=
+ =?us-ascii?Q?H4GwNClYCE/Kne7qB5M50KDEpR9ucxHPEB5WPILL94lvT1t7vw6rtdnJcalC?=
+ =?us-ascii?Q?RaXzj7i8NSGPz8kYvl8YK0bEPUxOSVgWKLzSEXo74YD7FKPFaokvPwSSm8F7?=
+ =?us-ascii?Q?mKPQ9DyXOaz8zFH0/RkExBb7iUT9Bnqud5OzKRye61MNUVanslU1Ir6bo1xj?=
+ =?us-ascii?Q?tvqfSqJlXXjPoLJ+Fl8AnF6L2scMBtLru6dLa957GJL8R/zECDrP3afqgk8k?=
+ =?us-ascii?Q?+lZEafkrc4M3E850prCtf7L3PDni0iPS/YIyL2snswbwclKlwrdlAmNiHTGT?=
+ =?us-ascii?Q?WBa/yN4/UnGT79vuooISxFMqQBDkanL8JkClbLv4bFFk+fwLrErN0sDEEj2p?=
+ =?us-ascii?Q?ZhEAUzOWPzx2Ek1dOUU4aqvUtLakGqXIMzcC0Br9XPDh7wKf/SJSfEmb5vH9?=
+ =?us-ascii?Q?H7Gg3N6QtSJxoHXsgRuBJ+4KEns8FwGSz5AG9qlCv2+4uek3KL1ynLUqNPTH?=
+ =?us-ascii?Q?outczxiz0yiwsvdy54EddbD3XkJPLN3g66//7k6DZDdcfV1F0pqWLsbNBuSn?=
+ =?us-ascii?Q?c8kSiLOz0VoFe38t59A++97pO60OQUDvwdhpYX0dg9XRgObFTXQ0BXyvqJV5?=
+ =?us-ascii?Q?O0+6eg8Gcr0uJOkcsCTalHd9?=
 MIME-Version: 1.0
-In-Reply-To: <YVIj+gExrHrjlQEm@google.com>
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=drjones@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Disposition: inline
-Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu,
- Jim Mattson <jmattson@google.com>
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR12MB3764.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3c005d6c-1a94-4ddd-599d-08d981fc467e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Sep 2021 21:17:56.3733 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: yF27nB9jPxKNNPvx/xuAT/gkbt7Zkui37ZRGKkN1hS6uK2IoezKy6+sTgBKYxHD0dv1LJ6SoUgfxVeQCu1x+dw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4950
+X-Mailman-Approved-At: Tue, 28 Sep 2021 05:37:24 -0400
+Cc: "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+ "jacob.jun.pan@linux.intel.com" <jacob.jun.pan@linux.intel.com>,
+ "wangxingang5@huawei.com" <wangxingang5@huawei.com>,
+ "lushenming@huawei.com" <lushenming@huawei.com>,
+ "chenxiang66@hisilicon.com" <chenxiang66@hisilicon.com>,
+ "nicoleotsuka@gmail.com" <nicoleotsuka@gmail.com>,
+ "vivek.gautam@arm.com" <vivek.gautam@arm.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>, Vikram Sethi <vsethi@nvidia.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -111,87 +158,17 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Sep 27, 2021 at 08:05:14PM +0000, Sean Christopherson wrote:
-> On Fri, Sep 24, 2021, Andrew Jones wrote:
-> > On Fri, Sep 24, 2021 at 12:09:06AM +0000, Sean Christopherson wrote:
-> > > On Thu, Sep 23, 2021, Oliver Upton wrote:
-> > > > While x86 does not require any additional setup to use the ucall
-> > > > infrastructure, arm64 needs to set up the MMIO address used to signal a
-> > > > ucall to userspace. rseq_test does not initialize the MMIO address,
-> > > > resulting in the test spinning indefinitely.
-> > > > 
-> > > > Fix the issue by calling ucall_init() during setup.
-> > > > 
-> > > > Fixes: 61e52f1630f5 ("KVM: selftests: Add a test for KVM_RUN+rseq to detect task migration bugs")
-> > > > Signed-off-by: Oliver Upton <oupton@google.com>
-> > > > ---
-> > > >  tools/testing/selftests/kvm/rseq_test.c | 1 +
-> > > >  1 file changed, 1 insertion(+)
-> > > > 
-> > > > diff --git a/tools/testing/selftests/kvm/rseq_test.c b/tools/testing/selftests/kvm/rseq_test.c
-> > > > index 060538bd405a..c5e0dd664a7b 100644
-> > > > --- a/tools/testing/selftests/kvm/rseq_test.c
-> > > > +++ b/tools/testing/selftests/kvm/rseq_test.c
-> > > > @@ -180,6 +180,7 @@ int main(int argc, char *argv[])
-> > > >  	 * CPU affinity.
-> > > >  	 */
-> > > >  	vm = vm_create_default(VCPU_ID, 0, guest_code);
-> > > > +	ucall_init(vm, NULL);
-> > > 
-> > > Any reason not to do this automatically in vm_create()?  There is 0% chance I'm
-> > > going to remember to add this next time I write a common selftest, arm64 is the
-> > > oddball here.
-> 
-> Ugh, reading through arm64's ucall_init(), moving this to vm_create() is a bad
-> idea.  If a test creates memory regions at hardcoded address, the test could
-> randomly fail if ucall_init() selects a conflicting address.  More below.
-> 
-> > Yes, please. But, it'll take more than just adding a ucall_init(vm, NULL)
-> > call to vm_create. We should also modify aarch64's ucall_init to allow
-> > a *new* explicit mapping to be made. It already allows an explicit mapping
-> > when arg != NULL, but we'll need to unmap the default mapping first, now.
-> > The reason is that a unit test may not be happy with the automatically
-> > selected address (that hasn't happened yet, but...) and want to set its
-> > own.
-> 
-> My vote would be to rework arm64's ucall_init() as a prep patch and drop the param
-> in the process.  There are zero tests that provide a non-NULL value, but that's
-> likely because tests that care deliberately defer ucall_init() until after memory
-> regions and page tables have been configured.
-> 
-> IMO, arm64's approach is unnecessarily complex (that's a common theme for KVM's
-> selftests...).  The code attempts to avoid magic numbers by not hardcoding the MMIO
-> range, but in doing so makes the end result even more magical, e.g. starting at
-> 5/8ths of min(MAX_PA, MAX_VA).
-> 
-> E.g. why not put the ucall MMIO range immediately after the so called "default"
-> memory region added at the end of vm_create()?  That way the location of the ucall
-> range is completely predictable, and while still arbitrary, less magical.
+Hi Eric,
+> This is based on Jean-Philippe's
+> [PATCH v14 00/10] iommu: I/O page faults for SMMUv3
+> https://www.spinics.net/lists/arm-kernel/msg886518.html
+> (including the patches that were not pulled for 5.13)
 >
 
-While we do hardcode zero as the guest physical base address, we don't
-require tests to use DEFAULT_GUEST_PHY_PAGES for slot0. They only get
-that if they use vm_create_default* to create the vm. While trying to
-keep the framework flexible for the unit tests does lead to complexity,
-I think the ucall mmio address really needs to be something that can move.
-It's not part of the test setup, i.e. whatever the unit test wants to
-test, it's just part of the framework. It needs to stay out of the way.
+Jean's patches have been merged to v5.14.
+Do you anticipate IOMMU/VFIO part patches getting into upstream kernel soon?
 
-You're right that we can't improve things by adding ucall_init to
-vm_create though, even if we added my suggestion of changing ucall_init
-to be an unmap-old, map-new type of thing, since we'd still always need
-the deferred ucall_init call to be sure we got it right.
-
-We could replace the mmio address search with a hardcoded default address
-though, probably the start address of the search (most likely that's the
-one that's always used). Then, if there's a problem with that address,
-an explicit ucall_init with its optional argument would need to be
-provided in the unit test, along with a comment explaining why it's
-there to ensure nobody removes it.
-
-Thanks,
-drew
-
+-KR
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
