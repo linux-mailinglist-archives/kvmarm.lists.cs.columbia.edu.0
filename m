@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 28D7B419957
-	for <lists+kvmarm@lfdr.de>; Mon, 27 Sep 2021 18:40:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F840419DC6
+	for <lists+kvmarm@lfdr.de>; Mon, 27 Sep 2021 20:02:52 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A89A34B0D6;
-	Mon, 27 Sep 2021 12:40:10 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D48F4B0B6;
+	Mon, 27 Sep 2021 14:02:51 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,68 +19,74 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id laoHH96ZwkfL; Mon, 27 Sep 2021 12:40:10 -0400 (EDT)
+	with ESMTP id UR1nFt+uTaxw; Mon, 27 Sep 2021 14:02:51 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9257E4B08A;
-	Mon, 27 Sep 2021 12:40:09 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4FEAE4B0AC;
+	Mon, 27 Sep 2021 14:02:50 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 34F1740762
- for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Sep 2021 12:40:08 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id ED88440C88
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Sep 2021 12:59:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id x644mJgmY9O7 for <kvmarm@lists.cs.columbia.edu>;
- Mon, 27 Sep 2021 12:40:07 -0400 (EDT)
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com
- [209.85.221.43])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2BDF94057F
- for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Sep 2021 12:40:07 -0400 (EDT)
-Received: by mail-wr1-f43.google.com with SMTP id u18so53084247wrg.5
- for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Sep 2021 09:40:07 -0700 (PDT)
+ with ESMTP id 3HtaPCEudci5 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 27 Sep 2021 12:59:19 -0400 (EDT)
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com
+ [209.85.167.49])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BCA874086F
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Sep 2021 12:59:19 -0400 (EDT)
+Received: by mail-lf1-f49.google.com with SMTP id u8so79267333lff.9
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Sep 2021 09:59:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=uBxEi6AYAf/IDfN1v8J251RrBh4CFzk1e5mArk5PNvU=;
- b=ShmHcW7/EwN9y31VztAl5sWbgy+qbrOKhzAJBDeQTwUbLr3EqJa1zCP54fk27oJaHN
- nX+uDlhxuiJm3MuzUgDfp71rKNZvZ/NtJgJoIXrNrdO1oET1vtkPUCJFKKuxcfL8Kd9r
- 9pXlnfVc5BbCh9f1BDvaKpeLDgurgmakIcGdrEJt87/+j7UM2g/CJGgDD7aJQz60TKkw
- D2LnDAOLUSm1coZM2D8JKP+EklxtaxFNBRJkjvZzmhDBc8X374FhqrUFYc/mz4WbES3t
- YNN1I+kET1+Jp/qfcCwCE5u8Mu+wX/3NCdC6+iqAiUdPwtk043eGTxBDETr8YPgo4a85
- +beg==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=boyhOy7c3Zv3+YHD3yPMRV9jTZZHINKXKipnorJKcwg=;
+ b=EFsgbbFE2kAt7wByLaFcasmCsfVIgNxk/m8G/nDr+HQQCPZquhtvMBtAa+Duc5+kXQ
+ UtY1CeMLlZTD94anpjzQv4K2YgUm9xVsItVLuyYt7PzuN+o60dJjWiO6ZURLbhkP7mzD
+ l/1wphgAzzIFt+bnAvBUh1vmO0XgUCFQbkR5nyhNqwPHp4lRcD3QYQpAbbn7KH5W/ysv
+ OQmlCYcjYrF8BVfGjUkclx0OrNnd/IdHMhsMfPOv7/HS8Qxd6WyABtIhI1iDB0FR5uaE
+ W0Ua9w0Kzy0A9r7i69bL0pt1y0fFyfV6OwYtL3O/7ZJwWx+dXki0Z+PUBsXBMwLQP/I9
+ ShZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=uBxEi6AYAf/IDfN1v8J251RrBh4CFzk1e5mArk5PNvU=;
- b=dgaKUuAeMdPlnygbeUtTpTBe2DfHF6U8Nsm4HTvSLTNo19XqnKqlxt61HSMzmHYQhN
- D+YJJhUsq67eecwxwdkRFkNe8QYnQ8GxulR1oBHKkYja/9olWE6xVfYsgCWkgd/V80Wz
- LL1ahPuzDCwE3WyqOQ0QouhU1wQXa0q+ggrO+MC7GVYk4be7BzBywdHMDGSdGf19lRUt
- tvu9kHJBU1Nf26jMwE2jlKlPju/oTstWXLkCcAIuvccVMPNkgWY1PmEyfVNJhYh9xbxv
- f8OBCeB7sapWzx8UMXczBgTcJboCGlTL7TMKRsdq8CAEbCcelBQawNjcq2Pjc9mEsBNZ
- LSyw==
-X-Gm-Message-State: AOAM532ekKrnHX9hdAkEsxn64W0aja1mIFeUIh6zn44i3VOZXDCOBvtq
- Z5UNijgMaLkhwcuTGdq432+5kQ==
-X-Google-Smtp-Source: ABdhPJxeIsgFjgYqOUquyC+YdPRjFg7ImEHfUd+nnFiThBHOZhs4dFClXfQIVL5NXC3K9mRijFdtDA==
-X-Received: by 2002:adf:f48b:: with SMTP id l11mr977771wro.254.1632760806108; 
- Mon, 27 Sep 2021 09:40:06 -0700 (PDT)
-Received: from google.com ([2a00:79e0:d:210:fa68:b369:184:c5a])
- by smtp.gmail.com with ESMTPSA id x4sm18967wmi.22.2021.09.27.09.40.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Sep 2021 09:40:05 -0700 (PDT)
-Date: Mon, 27 Sep 2021 17:40:03 +0100
-From: Quentin Perret <qperret@google.com>
-To: Fuad Tabba <tabba@google.com>
-Subject: Re: [RFC PATCH v1 12/30] KVM: arm64: COCCI: add_hypstate.cocci
- use_hypstate.cocci: Reduce scope of functions to hyp_state
-Message-ID: <YVHz48IuvHsHRaiG@google.com>
-References: <20210924125359.2587041-1-tabba@google.com>
- <20210924125359.2587041-13-tabba@google.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=boyhOy7c3Zv3+YHD3yPMRV9jTZZHINKXKipnorJKcwg=;
+ b=uA2naR7OsIE/Hy8lYn3aObkmZymJ9p5JfnnIjumZjL+DCxUucLn2s9G7Onqo/mzlvQ
+ JCRIZxHdGvaTfzbkUeCPGU85gLVLd1MSHqzwJysHyRSGIMnTjtudwNOw6HUq52ZjoL0v
+ gmb+fwcmgfhmtjOQOiRIhEMR53t5RI3K+XdiY/Px0IArJsPaVA10jg+snoNUyiGJrVa9
+ 6pDlMPdwQIazz7cb6NRLb+AsrEFYkQFDBr5VT/khoJKkgvb98wE5QfDiS7FPiq6/8TCm
+ y1xJiKak0dI7HN54xtoS1j/4vOKeEYdZwx9gSXyZqn+OPJcYsmdbTnxhilo9kSl4LMzk
+ p3VQ==
+X-Gm-Message-State: AOAM533txBJElSvIwz+FWk8lJqIpzFhkhHlvs0KN+ceSiGhq01PYnBpp
+ KUPPcXJa6vV2t7LOWKOXgS8d3x3EQoHS7i5ibel4Uw==
+X-Google-Smtp-Source: ABdhPJyvrc2iIXbcC8YaiVkzYO41Psj9zevIrEPYYOmLf26TIPB4wujR7R6xkm6OJn238QJWJUKaISQGVYiRf4/ylng=
+X-Received: by 2002:a19:c349:: with SMTP id t70mr843112lff.102.1632761958145; 
+ Mon, 27 Sep 2021 09:59:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20210924125359.2587041-13-tabba@google.com>
-Cc: kernel-team@android.com, kvm@vger.kernel.org, maz@kernel.org,
- will@kernel.org, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+References: <20210925005528.1145584-1-seanjc@google.com>
+ <03f2f5ab-e809-2ba5-bd98-3393c3b843d2@de.ibm.com>
+ <YVHcY6y1GmvGJnMg@google.com>
+ <f37ab68c-61ce-b6fb-7a49-831bacfc7424@redhat.com>
+ <43e42f5c-9d9f-9e8b-3a61-9a053a818250@de.ibm.com>
+In-Reply-To: <43e42f5c-9d9f-9e8b-3a61-9a053a818250@de.ibm.com>
+From: David Matlack <dmatlack@google.com>
+Date: Mon, 27 Sep 2021 09:58:51 -0700
+Message-ID: <CALzav=cxeYieTkKJhT0kFZOjdv6k5eCZXKWs=ZQGCJg0x-oFjQ@mail.gmail.com>
+Subject: Re: disabling halt polling broken? (was Re: [PATCH 00/14] KVM:
+ Halt-polling fixes, cleanups and a new stat)
+To: Christian Borntraeger <borntraeger@de.ibm.com>
+X-Mailman-Approved-At: Mon, 27 Sep 2021 14:02:49 -0400
+Cc: Wanpeng Li <wanpengli@tencent.com>, kvm list <kvm@vger.kernel.org>,
+ David Hildenbrand <david@redhat.com>, LKML <linux-kernel@vger.kernel.org>,
+ Paul Mackerras <paulus@ozlabs.org>, Claudio Imbrenda <imbrenda@linux.ibm.com>,
+ KVMARM <kvmarm@lists.cs.columbia.edu>, Janosch Frank <frankja@linux.ibm.com>,
+ Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+ Huacai Chen <chenhuacai@kernel.org>,
+ Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
+ Jon Cargille <jcargill@google.com>, KVMPPC <kvm-ppc@vger.kernel.org>,
+ linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
+ Cornelia Huck <cohuck@redhat.com>, LinuxMIPS <linux-mips@vger.kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -97,29 +103,61 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Friday 24 Sep 2021 at 13:53:41 (+0100), Fuad Tabba wrote:
-> Many functions don't need access to the vcpu structure, but only
-> the hyp_state. Reduce their scope.
-> 
-> This applies the semantic patches with the following commands:
-> FILES="$(find arch/arm64/kvm/hyp -name "*.[ch]" ! -name "debug-sr*") arch/arm64/include/asm/kvm_hyp.h"
-> spatch --sp-file cocci_refactor/add_hypstate.cocci $FILES --in-place
-> spatch --sp-file cocci_refactor/use_hypstate.cocci $FILES --in-place
-> 
-> This patch adds variables that may be unused. These will be
-> removed at the end of this patch series.
+On Mon, Sep 27, 2021 at 8:17 AM Christian Borntraeger
+<borntraeger@de.ibm.com> wrote:
+>
+>
+>
+> Am 27.09.21 um 17:03 schrieb Paolo Bonzini:
+> > On 27/09/21 16:59, Sean Christopherson wrote:
+> >>> commit acd05785e48c01edb2c4f4d014d28478b5f19fb5
+> >>> Author:     David Matlack<dmatlack@google.com>
+> >>> AuthorDate: Fri Apr 17 15:14:46 2020 -0700
+> >>> Commit:     Paolo Bonzini<pbonzini@redhat.com>
+> >>> CommitDate: Fri Apr 24 12:53:17 2020 -0400
+> >>>
+> >>>      kvm: add capability for halt polling
+> >>>
+> >>> broke the possibility for an admin to disable halt polling for already running KVM guests.
+> >>> In past times doing
+> >>> echo 0 > /sys/module/kvm/parameters/halt_poll_ns
+> >>>
+> >>> stopped polling system wide.
+> >>> Now all KVM guests will use the halt_poll_ns value that was active during
+> >>> startup - even those that do not use KVM_CAP_HALT_POLL.
+> >>>
+> >>> I guess this was not intended?
+> >
+> > No, but...
+> >
+> >> I would go so far as to say that halt_poll_ns should be a hard limit on
+> >> the capability
+> >
+> > ... this would not be a good idea I think.  Anything that wants to do a lot of polling can just do "for (;;)".
 
-I'm guessing you decided to separate things out to make sure this patch
-is purely the result of a coccinelle run w/o manual changes?
+I agree. It would also be a maintenance burden and subtle "gotcha" to
+have to increase halt_poll_ns anytime one wants to increase
+KVM_CAP_HALT_POLL.
 
-It looks like the patch to remove the unused variables is a 'COCCI'
-patch too, so maybe it would make sense to run it here directly after
-the first coccinelle run, and squash the result into this patch? The
-resulting patch would still be entirely auto-generated, and wouldn't
-have these somewhat odd unused variables. Thoughts?
+> >
+> > So I think there are two possibilities that makes sense:
+> >
+> > * track what is using KVM_CAP_HALT_POLL, and make writes to halt_poll_ns follow that
+>
+> what about using halt_poll_ns for those VMs that did not uses KVM_CAP_HALT_POLL and the private number for those that did.
 
-Thanks,
-Quentin
+None of these options would cover Christian's original use-case
+though. (Write to module to disable halt-polling system-wide.)
+
+What about adding a writable "enable_halt_polling" module parameter
+that affects all VMs? Once that is in place we could also consider
+getting rid of halt_poll_ns entirely.
+
+> >
+> > * just make halt_poll_ns read-only.
+> >
+> > Paolo
+> >
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
