@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 95B38419CD8
-	for <lists+kvmarm@lfdr.de>; Mon, 27 Sep 2021 19:33:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6275C419FBB
+	for <lists+kvmarm@lfdr.de>; Mon, 27 Sep 2021 22:05:24 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 242534B0CE;
-	Mon, 27 Sep 2021 13:33:50 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A7C8E4B0C2;
+	Mon, 27 Sep 2021 16:05:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,87 +19,70 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9RxCMgN-YIgF; Mon, 27 Sep 2021 13:33:50 -0400 (EDT)
+	with ESMTP id LTEL3EeSP130; Mon, 27 Sep 2021 16:05:23 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EE4ED4B0A0;
-	Mon, 27 Sep 2021 13:33:48 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5D0CB4B0A3;
+	Mon, 27 Sep 2021 16:05:22 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9A5934A7FD
- for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Sep 2021 13:33:47 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 32BA74B08A
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Sep 2021 16:05:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id f2hiBYvietZh for <kvmarm@lists.cs.columbia.edu>;
- Mon, 27 Sep 2021 13:33:46 -0400 (EDT)
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com
- [209.85.216.43])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8BC8849F8F
- for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Sep 2021 13:33:46 -0400 (EDT)
-Received: by mail-pj1-f43.google.com with SMTP id
- lb1-20020a17090b4a4100b001993f863df2so603878pjb.5
- for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Sep 2021 10:33:46 -0700 (PDT)
+ with ESMTP id MT2fGexgxk9K for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 27 Sep 2021 16:05:20 -0400 (EDT)
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com
+ [209.85.210.175])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1D0CB4A98B
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Sep 2021 16:05:20 -0400 (EDT)
+Received: by mail-pf1-f175.google.com with SMTP id k26so12309665pfi.5
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Sep 2021 13:05:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:from:to:cc:subject:message-id:references:mime-version
  :content-disposition:in-reply-to;
- bh=QVPOqaNlq7I3lDhzzEE0LSlmqb5BJv1DMZ8alEx/1nI=;
- b=d285SG2vMoj7fWGLcc6kCiR/YbFmwFZ0r8FCUF/olwvOpdIeZoqHfRZvaCPNzDsw+I
- DXfTdpdYvY1o3+xwclpJFqsOx9rx8gXxXILEPFDMXqDFGp4BJoLLTpbwH1u1XP+r1Qam
- 5szAUX8Uoct9SyiacXSLIaEMZeN1EKkEAgcpyL12gNGSfsGKRyH2m+hvt+6VnU5P+65Q
- 0VTTYCcD9hk6ReQ9O9Swq7+ugPD0ecGhrBD3WfyuwTtr/uZVPNTBMwKAB7m8BgvxcC2+
- 1ahXM7yNRUThnsg8QBfYfkaFmzHfumEXxhUu0VeZLeiCqPy+iDDU2pSUPBkNE2SVw6+C
- hGgg==
+ bh=J1OTP+7DOGmeKvtWkpynSAHibvAphxBoBf7TlJ1W75g=;
+ b=nJh8y9Ji6F34ZL+jQC5GvuQsdn5mLwOEp8jloJUDmMe6dn3HrdoI/S/FslqkPVgtgh
+ xKjv46ot3H+sEkrUr3qHSBTFbHa+owZkstZR5JBmM58W4ka0J3+XU890WfZgQ92ELms3
+ 7Ifyncde5P2FEeumN+HL3eg3VYKdnsuCVs905IJP3D9NGkuCAk49lQ286dmIV/zoeuY1
+ OH5jdcRW0CDNLKmGnDLvIbx0GIPiSvh6mteEIVaa2231AnsJFSjZHYarcSnZexORgcFx
+ ipYHtuIOyhe5oHruK/O8EBryz6Vd9zZzKrqJ894QDcOvAG845h6P2g9WYbpb5HD74Ui/
+ IKvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to;
- bh=QVPOqaNlq7I3lDhzzEE0LSlmqb5BJv1DMZ8alEx/1nI=;
- b=zppHQfTk/ilaVS490ZljxfhjyP7rmKBgnVq6Tq/dAxR/hbLm8xKkTXbe+SpQMhIudw
- FXpp3kS8EpBEJxTc5JEbUZW/ofHAwNlQCCWnocgGcQAvhyTcyLr0QpbRc5CR2hy8o8L4
- 6R1ieLhDD1GsuSCEzJmoPMjWE9LzDBLNDa09YXHvh6D3jij9q377wXqMta+AxW4ux+Wv
- lySThboFmwOzH5+udTuISD5H6TOZOivdPgMfdXLqx5puYs7+vF0qaeV0fzA5gbE6cmOc
- 5SMF9GTfaG9oifdxqcPsQ35A1V0vsogK/cED37C4UVi12RzTpV48tATCw4Fqj36PB/rk
- F89A==
-X-Gm-Message-State: AOAM531bhUz2wy0uqq9VdkDecQaGxZWw5n0S8oEZ/2WKcvVroe+TtgzL
- qlhCpS7vqLvRmS0WIHRep9hKPg==
-X-Google-Smtp-Source: ABdhPJyGE9PssoIO8hd/mc9M/bvKl7HfH1PbwL6q6ROscf2AvxLZZUXzLqFUTTNdwUlFUFuHe69vkw==
-X-Received: by 2002:a17:90b:224b:: with SMTP id
- hk11mr253513pjb.231.1632764025351; 
- Mon, 27 Sep 2021 10:33:45 -0700 (PDT)
+ bh=J1OTP+7DOGmeKvtWkpynSAHibvAphxBoBf7TlJ1W75g=;
+ b=G8R9NfOAdXbU7jx81pspFWtqEB2/SY2nkFcCZ4dFZqMwTkoXfwmTFZIFJY+C4bczu1
+ ZtngawtxUYy5qizl8mBBK0d7SgqexO8QeQYGgH6ltPpYL3o56EnBFjoIFZ5y2J/0rd2T
+ qlV87ueY8yvYMJRDxXaV9r4nIS0g3YKp345eJ7H4U/YgENO4Hi8xeJ2hC1NYqiNEyo6o
+ EwMNgR3H5++HgygxLgWD9unxBUJe3gziAryqxCsLHptKVW/b3/5foAO3MA/O8NbJ1JfJ
+ 2dduWCLoeWp0ZQh/X77y+Dh+AZnK1xEMq+wAypZQFeCveTin50HuOWH6xrZ+wYlAMt8C
+ rV5A==
+X-Gm-Message-State: AOAM532PttXHx+0AvxCl4LSHysEwQBKe7+5IOz9Voaq/JJdRBum93BVp
+ S1TU5YbLQgSEm7jrqUd1c5LwlQ==
+X-Google-Smtp-Source: ABdhPJxTlxHvtc5rugG/tFQUBdwxNnPR3lb994WAssd3KxL7MTB0W9h/Ymf1p6dZMMoJeUKmlzLzpA==
+X-Received: by 2002:a63:4f0f:: with SMTP id d15mr1226386pgb.464.1632773118918; 
+ Mon, 27 Sep 2021 13:05:18 -0700 (PDT)
 Received: from google.com (157.214.185.35.bc.googleusercontent.com.
  [35.185.214.157])
- by smtp.gmail.com with ESMTPSA id o17sm18385346pfp.126.2021.09.27.10.33.44
+ by smtp.gmail.com with ESMTPSA id 2sm252633pjt.23.2021.09.27.13.05.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Sep 2021 10:33:44 -0700 (PDT)
-Date: Mon, 27 Sep 2021 17:33:41 +0000
+ Mon, 27 Sep 2021 13:05:18 -0700 (PDT)
+Date: Mon, 27 Sep 2021 20:05:14 +0000
 From: Sean Christopherson <seanjc@google.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: disabling halt polling broken? (was Re: [PATCH 00/14] KVM:
- Halt-polling fixes, cleanups and a new stat)
-Message-ID: <YVIAdVxc+q2UWB+J@google.com>
-References: <20210925005528.1145584-1-seanjc@google.com>
- <03f2f5ab-e809-2ba5-bd98-3393c3b843d2@de.ibm.com>
- <YVHcY6y1GmvGJnMg@google.com>
- <f37ab68c-61ce-b6fb-7a49-831bacfc7424@redhat.com>
- <43e42f5c-9d9f-9e8b-3a61-9a053a818250@de.ibm.com>
- <CABgObfYtS6wiQe=BhF3t5usr7J6q4PWE4=rwZMMukfC9wT_6fA@mail.gmail.com>
+To: Andrew Jones <drjones@redhat.com>
+Subject: Re: [PATCH] selftests: KVM: Call ucall_init when setting up in
+ rseq_test
+Message-ID: <YVIj+gExrHrjlQEm@google.com>
+References: <20210923220033.4172362-1-oupton@google.com>
+ <YU0XIoeYpfm1Oy0j@google.com>
+ <20210924064732.xqv2xjya3pxgmwr2@gator.home>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <CABgObfYtS6wiQe=BhF3t5usr7J6q4PWE4=rwZMMukfC9wT_6fA@mail.gmail.com>
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm <kvm@vger.kernel.org>,
- David Hildenbrand <david@redhat.com>, "Kernel Mailing List,
- Linux" <linux-kernel@vger.kernel.org>, Paul Mackerras <paulus@ozlabs.org>,
- Claudio Imbrenda <imbrenda@linux.ibm.com>,
- KVM ARM <kvmarm@lists.cs.columbia.edu>, Janosch Frank <frankja@linux.ibm.com>,
- Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- Huacai Chen <chenhuacai@kernel.org>,
- Christian Borntraeger <borntraeger@de.ibm.com>,
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
- Jon Cargille <jcargill@google.com>, kvm-ppc <kvm-ppc@vger.kernel.org>,
- David Matlack <dmatlack@google.com>,
- linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
- Jim Mattson <jmattson@google.com>, Cornelia Huck <cohuck@redhat.com>,
- "open list:MIPS" <linux-mips@vger.kernel.org>,
- Vitaly Kuznetsov <vkuznets@redhat.com>
+In-Reply-To: <20210924064732.xqv2xjya3pxgmwr2@gator.home>
+Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu,
+ Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -116,53 +99,61 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Sep 27, 2021, Paolo Bonzini wrote:
-> On Mon, Sep 27, 2021 at 5:17 PM Christian Borntraeger
-> <borntraeger@de.ibm.com> wrote:
-> > > So I think there are two possibilities that makes sense:
-> > >
-> > > * track what is using KVM_CAP_HALT_POLL, and make writes to halt_poll_ns follow that
-> >
-> > what about using halt_poll_ns for those VMs that did not uses KVM_CAP_HALT_POLL and the private number for those that did.
-> 
-> Yes, that's what I meant.  David pointed out that doesn't allow you to
-> disable halt polling altogether, but for that you can always ask each
-> VM's userspace one by one, or just not use KVM_CAP_HALT_POLL. (Also, I
-> don't know about Google's usecase, but mine was actually more about
-> using KVM_CAP_HALT_POLL to *disable* halt polling on some VMs!).
+On Fri, Sep 24, 2021, Andrew Jones wrote:
+> On Fri, Sep 24, 2021 at 12:09:06AM +0000, Sean Christopherson wrote:
+> > On Thu, Sep 23, 2021, Oliver Upton wrote:
+> > > While x86 does not require any additional setup to use the ucall
+> > > infrastructure, arm64 needs to set up the MMIO address used to signal a
+> > > ucall to userspace. rseq_test does not initialize the MMIO address,
+> > > resulting in the test spinning indefinitely.
+> > > 
+> > > Fix the issue by calling ucall_init() during setup.
+> > > 
+> > > Fixes: 61e52f1630f5 ("KVM: selftests: Add a test for KVM_RUN+rseq to detect task migration bugs")
+> > > Signed-off-by: Oliver Upton <oupton@google.com>
+> > > ---
+> > >  tools/testing/selftests/kvm/rseq_test.c | 1 +
+> > >  1 file changed, 1 insertion(+)
+> > > 
+> > > diff --git a/tools/testing/selftests/kvm/rseq_test.c b/tools/testing/selftests/kvm/rseq_test.c
+> > > index 060538bd405a..c5e0dd664a7b 100644
+> > > --- a/tools/testing/selftests/kvm/rseq_test.c
+> > > +++ b/tools/testing/selftests/kvm/rseq_test.c
+> > > @@ -180,6 +180,7 @@ int main(int argc, char *argv[])
+> > >  	 * CPU affinity.
+> > >  	 */
+> > >  	vm = vm_create_default(VCPU_ID, 0, guest_code);
+> > > +	ucall_init(vm, NULL);
+> > 
+> > Any reason not to do this automatically in vm_create()?  There is 0% chance I'm
+> > going to remember to add this next time I write a common selftest, arm64 is the
+> > oddball here.
 
-I kinda like the idea if special-casing halt_poll_ns=0, e.g. for testing or
-in-the-field mitigation if halt-polling is broken.  It'd be trivial to support, e.g.
+Ugh, reading through arm64's ucall_init(), moving this to vm_create() is a bad
+idea.  If a test creates memory regions at hardcoded address, the test could
+randomly fail if ucall_init() selects a conflicting address.  More below.
 
-@@ -3304,19 +3304,23 @@ void kvm_vcpu_halt(struct kvm_vcpu *vcpu)
-                update_halt_poll_stats(vcpu, start, poll_end, !waited);
+> Yes, please. But, it'll take more than just adding a ucall_init(vm, NULL)
+> call to vm_create. We should also modify aarch64's ucall_init to allow
+> a *new* explicit mapping to be made. It already allows an explicit mapping
+> when arg != NULL, but we'll need to unmap the default mapping first, now.
+> The reason is that a unit test may not be happy with the automatically
+> selected address (that hasn't happened yet, but...) and want to set its
+> own.
 
-        if (halt_poll_allowed) {
-+               max_halt_poll_ns = vcpu->kvm->max_halt_poll_ns;
-+               if (!max_halt_poll_ns || !halt_poll_ns)  <------ squish the max if halt_poll_ns==0
-+                       max_halt_poll_ns = halt_poll_ns;
-+
-                if (!vcpu_valid_wakeup(vcpu)) {
-                        shrink_halt_poll_ns(vcpu);
--               } else if (vcpu->kvm->max_halt_poll_ns) {
-+               } else if (max_halt_poll_ns) {
-                        if (halt_ns <= vcpu->halt_poll_ns)
-                                ;
-                        /* we had a long block, shrink polling */
-                        else if (vcpu->halt_poll_ns &&
--                                halt_ns > vcpu->kvm->max_halt_poll_ns)
-+                                halt_ns > max_halt_poll_ns)
-                                shrink_halt_poll_ns(vcpu);
-                        /* we had a short halt and our poll time is too small */
--                       else if (vcpu->halt_poll_ns < vcpu->kvm->max_halt_poll_ns &&
--                                halt_ns < vcpu->kvm->max_halt_poll_ns)
--                               grow_halt_poll_ns(vcpu);
-+                       else if (vcpu->halt_poll_ns < max_halt_poll_ns &&
-+                                halt_ns < max_halt_poll_ns)
-+                               grow_halt_poll_ns(vcpu, max_halt_poll_ns);
-                } else {
-                        vcpu->halt_poll_ns = 0;
-                }
+My vote would be to rework arm64's ucall_init() as a prep patch and drop the param
+in the process.  There are zero tests that provide a non-NULL value, but that's
+likely because tests that care deliberately defer ucall_init() until after memory
+regions and page tables have been configured.
+
+IMO, arm64's approach is unnecessarily complex (that's a common theme for KVM's
+selftests...).  The code attempts to avoid magic numbers by not hardcoding the MMIO
+range, but in doing so makes the end result even more magical, e.g. starting at
+5/8ths of min(MAX_PA, MAX_VA).
+
+E.g. why not put the ucall MMIO range immediately after the so called "default"
+memory region added at the end of vm_create()?  That way the location of the ucall
+range is completely predictable, and while still arbitrary, less magical.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
