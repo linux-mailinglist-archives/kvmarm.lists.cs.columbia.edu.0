@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C5A041BFA0
-	for <lists+kvmarm@lfdr.de>; Wed, 29 Sep 2021 09:12:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4844A41BFA1
+	for <lists+kvmarm@lfdr.de>; Wed, 29 Sep 2021 09:12:44 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8D16F4B173;
-	Wed, 29 Sep 2021 03:12:42 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E33AB4B0FB;
+	Wed, 29 Sep 2021 03:12:43 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,72 +14,73 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BCEyUgnznYke; Wed, 29 Sep 2021 03:12:42 -0400 (EDT)
+	with ESMTP id Jkci4ag8Yx8Z; Wed, 29 Sep 2021 03:12:42 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3E23C4B12E;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5AE124B133;
 	Wed, 29 Sep 2021 03:12:41 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 258764B101
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 14:57:55 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3F14449F5D
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 15:01:44 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id W6uXycousGb6 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 28 Sep 2021 14:57:54 -0400 (EDT)
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com
- [209.85.215.178])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id F2B9E4B0C0
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 14:57:53 -0400 (EDT)
-Received: by mail-pg1-f178.google.com with SMTP id g184so70618pgc.6
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 11:57:53 -0700 (PDT)
+ with ESMTP id E1Pq-piTtTdP for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 28 Sep 2021 15:01:43 -0400 (EDT)
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com
+ [209.85.216.41])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1B16649DE3
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 15:01:43 -0400 (EDT)
+Received: by mail-pj1-f41.google.com with SMTP id
+ k23-20020a17090a591700b001976d2db364so3590130pji.2
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 12:01:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:from:to:cc:subject:message-id:references:mime-version
  :content-disposition:in-reply-to;
- bh=hbmr+iwzxjrwsm+tEChOCbQhDq6UlfLy+47j+9ocUio=;
- b=LIUKsJb5csfGXRweUbuDpDidwcU5eWp7I/BC8UyxJljOvp53d1+D8/lVafchjWnTQ0
- UFJ3m7MEw7wR7ZRxd8ACwxPZ0m52bD6vj7TVNWZMtZNMTJOZwlD3eAWWyH1Qjhl43L3U
- W1FytngggVEVCnX/gF5j3GcAVm16wdtULlRYpFUEUDEjCyafanTtEjpuUFGcRp39K4zP
- 8bcEH690dj17b/WyNjFuFNPEP5hGpR8USgdsDcq9O2S4cVlCSktUAxA777RgXT/lt+Vv
- Bzig6jNqwzLE2GfeCQZTnW8FZN7tYmEiOfv/wCyJ4cPc56oImH3Qexl4IlFXY6fcK+dx
- 1HLw==
+ bh=xt0gEcyOTVXB3cbfAORCeU0aPfpfHLNMXNfI9X69CVQ=;
+ b=P2WbyomAz9CC+YDhARNtEQPob4jnZ2g2oykK3Tx9s3ZzF3kIhs4M8u5I6nL6TYVoGq
+ rrOLmGGUE/wsUTWlv/vaHIT0qruIxiC5Hconls6bpVJIAswiiw3izm0NUdKLNEX/vTj1
+ hNuCFj8rB/KJEKNYPyTIjrwmUxsuMdqXz/A3MzGuI1a3Kwyq70MOLXcjCuAwjRmB7Dhb
+ kf47CJCAyIoWzJus9Q6TAK/lSg8ZsxvgmyTdZgT9A2DiUE772alKYF35OPb474XMP0BJ
+ 1g92CPbM5JIG9MA0Bz7RxJUC/t1T7o89IaaifLPvH7z+3t2ti9exdaFi/jE6y9Sz0Jjp
+ UImg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to;
- bh=hbmr+iwzxjrwsm+tEChOCbQhDq6UlfLy+47j+9ocUio=;
- b=ryzhm+tG7N8adzPxJHGtb44az0idwWjRzdKJv0wuagr8rbM9lNSblIi4UZuWX3P4wF
- Pqz55qnxVkvNA96RQvIGjhx7GakDpQezFNvmpGl4xeQmNWY8tMsl6A+hOzdHM+bjisJ9
- Z/V1Fng3xwsQ8+auQ9rkmrRv3VTXOjq8eFLIKrWR7USMxVhIf+UUELc+K8iCqLb2U143
- qMMbB+AVIn+a6Yzwz6+PkB8j+MEfswDvmmKSG0QSCRC/etnJEpInk4YU8I+YIsuEnhMU
- 0RBtV1AxsR0HoqP8cmjbSqdbkDjNY6z+liduHBq2Cni2u6Ho6DTp1IkFeAzDRHSppH+7
- BGqw==
-X-Gm-Message-State: AOAM531RM7jHByyC6lJK6GAqIeiYaFONpG2SyTkPqL7FrRqg+6lTon/O
- y45n5HezxBwaKkxnktlfoFG30Q==
-X-Google-Smtp-Source: ABdhPJzvJEVMFLwNuCMQ/B/wkbjy954+2YLM0705uJahpnQn4hlzIhG6+toRk9qgzctw/+QJEMGtgw==
-X-Received: by 2002:a62:7ccf:0:b0:444:9264:dbcd with SMTP id
- x198-20020a627ccf000000b004449264dbcdmr7051691pfc.50.1632855472798; 
- Tue, 28 Sep 2021 11:57:52 -0700 (PDT)
+ bh=xt0gEcyOTVXB3cbfAORCeU0aPfpfHLNMXNfI9X69CVQ=;
+ b=szGcR1jXH42pQ3RtCVRMlcQR61dPtNF/dt/SgblpJGzeCbvODYiHW55gZnpHC8Uo1f
+ 4mAVejnyeuIv4oHN9h9CPcTgn3w5c0++I6EZMivhB6Vz0jJdqroLfhfniaIw9HqgwhrH
+ Zf/KB8rsvS0DkRK/HvNsk2P0HD6OtIkmTc2kvHyXvX0BKqQ0tMq327svWPueEmoFZ8wO
+ dcR15mwP5TrbQRhFWZPq2JszkvFjpucNm3jCCora09rKZrtdolmDqKVd9NZK2ns1BR7I
+ sGw5bGQ1b3aUjbGYuNj+J4uUVCNmar5Dv/cHo7z/cEBIPTxrYDhLMzVrt/aUCHPy34LE
+ fZhw==
+X-Gm-Message-State: AOAM531miCuz1L+pDwhFOnz33OCjzHaaNkgqeqzueKjIpiES0Ff5aRyK
+ 35fE2S3ek89PnHDcW4WYh02LUQ==
+X-Google-Smtp-Source: ABdhPJwN22eVEV+ILvTVZFxrClU0H39RaKFVj+LTEdtXecOP9yW45Z7Ldv9r7U41GdYk3WWGVE+ldw==
+X-Received: by 2002:a17:902:b909:b0:13a:2d8e:12bc with SMTP id
+ bf9-20020a170902b90900b0013a2d8e12bcmr6453208plb.6.1632855701799; 
+ Tue, 28 Sep 2021 12:01:41 -0700 (PDT)
 Received: from google.com (254.80.82.34.bc.googleusercontent.com.
  [34.82.80.254])
- by smtp.gmail.com with ESMTPSA id f16sm21088582pfk.110.2021.09.28.11.57.52
+ by smtp.gmail.com with ESMTPSA id j24sm20993011pfh.65.2021.09.28.12.01.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Sep 2021 11:57:52 -0700 (PDT)
-Date: Tue, 28 Sep 2021 18:57:46 +0000
+ Tue, 28 Sep 2021 12:01:41 -0700 (PDT)
+Date: Tue, 28 Sep 2021 19:01:38 +0000
 From: David Matlack <dmatlack@google.com>
 To: Sean Christopherson <seanjc@google.com>
-Subject: Re: [PATCH 02/14] KVM: Update halt-polling stats if and only if
- halt-polling was attempted
-Message-ID: <YVNlqgEKluDRVGv0@google.com>
+Subject: Re: [PATCH 03/14] KVM: Refactor and document halt-polling stats
+ update helper
+Message-ID: <YVNmkuaUYwYvlbaY@google.com>
 References: <20210925005528.1145584-1-seanjc@google.com>
- <20210925005528.1145584-3-seanjc@google.com>
+ <20210925005528.1145584-4-seanjc@google.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20210925005528.1145584-3-seanjc@google.com>
+In-Reply-To: <20210925005528.1145584-4-seanjc@google.com>
 X-Mailman-Approved-At: Wed, 29 Sep 2021 03:12:40 -0400
 Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
  David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org,
@@ -108,53 +109,66 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Sep 24, 2021 at 05:55:16PM -0700, Sean Christopherson wrote:
-> Don't update halt-polling stats if halt-polling wasn't attempted.  This
-> is a nop as @poll_ns is guaranteed to be '0' (poll_end == start), but it
-> will allow a future patch to move the histogram stats into the helper to
-> resolve a discrepancy in what is considered a "successful" halt-poll.
+On Fri, Sep 24, 2021 at 05:55:17PM -0700, Sean Christopherson wrote:
+> Add a comment to document that halt-polling is considered successful even
+> if the polling loop itself didn't detect a wake event, i.e. if a wake
+> event was detect in the final kvm_vcpu_check_block().  Invert the param
+> to the update helper so that the helper is a dumb function that is "told"
+> whether or not polling was successful, as opposed to having it determinine
+> success/failure based on blocking behavior.
+> 
+> Opportunistically tweak the params to the update helper to reduce the
+> line length for the call site so that it fits on a single line, and so
+> that the prototype conforms to the more traditional kernel style.
 > 
 > No functional change intended.
 > 
-> Cc: David Matlack <dmatlack@google.com>
 > Signed-off-by: Sean Christopherson <seanjc@google.com>
 
 Reviewed-by: David Matlack <dmatlack@google.com>
 
 > ---
->  virt/kvm/kvm_main.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+>  virt/kvm/kvm_main.c | 20 +++++++++++++-------
+>  1 file changed, 13 insertions(+), 7 deletions(-)
 > 
 > diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-> index 768a4cbb26a6..8b33f5045b4d 100644
+> index 8b33f5045b4d..12fe91a0a4c8 100644
 > --- a/virt/kvm/kvm_main.c
 > +++ b/virt/kvm/kvm_main.c
-> @@ -3214,6 +3214,7 @@ update_halt_poll_stats(struct kvm_vcpu *vcpu, u64 poll_ns, bool waited)
->  void kvm_vcpu_block(struct kvm_vcpu *vcpu)
+> @@ -3199,13 +3199,15 @@ static int kvm_vcpu_check_block(struct kvm_vcpu *vcpu)
+>  	return ret;
+>  }
+>  
+> -static inline void
+> -update_halt_poll_stats(struct kvm_vcpu *vcpu, u64 poll_ns, bool waited)
+> +static inline void update_halt_poll_stats(struct kvm_vcpu *vcpu, ktime_t start,
+> +					  ktime_t end, bool success)
 >  {
->  	bool halt_poll_allowed = !kvm_arch_no_poll(vcpu);
-> +	bool do_halt_poll = halt_poll_allowed && vcpu->halt_poll_ns;
->  	ktime_t start, cur, poll_end;
->  	bool waited = false;
->  	u64 block_ns;
-> @@ -3221,7 +3222,7 @@ void kvm_vcpu_block(struct kvm_vcpu *vcpu)
->  	kvm_arch_vcpu_blocking(vcpu);
+> -	if (waited)
+> -		vcpu->stat.generic.halt_poll_fail_ns += poll_ns;
+> -	else
+> +	u64 poll_ns = ktime_to_ns(ktime_sub(end, start));
+> +
+> +	if (success)
+>  		vcpu->stat.generic.halt_poll_success_ns += poll_ns;
+> +	else
+> +		vcpu->stat.generic.halt_poll_fail_ns += poll_ns;
+>  }
 >  
->  	start = cur = poll_end = ktime_get();
-> -	if (vcpu->halt_poll_ns && halt_poll_allowed) {
-> +	if (do_halt_poll) {
->  		ktime_t stop = ktime_add_ns(ktime_get(), vcpu->halt_poll_ns);
->  
->  		++vcpu->stat.generic.halt_attempted_poll;
-> @@ -3273,8 +3274,9 @@ void kvm_vcpu_block(struct kvm_vcpu *vcpu)
+>  /*
+> @@ -3274,9 +3276,13 @@ void kvm_vcpu_block(struct kvm_vcpu *vcpu)
 >  	kvm_arch_vcpu_unblocking(vcpu);
 >  	block_ns = ktime_to_ns(cur) - ktime_to_ns(start);
 >  
-> -	update_halt_poll_stats(
-> -		vcpu, ktime_to_ns(ktime_sub(poll_end, start)), waited);
-> +	if (do_halt_poll)
-> +		update_halt_poll_stats(
-> +			vcpu, ktime_to_ns(ktime_sub(poll_end, start)), waited);
+> +	/*
+> +	 * Note, halt-polling is considered successful so long as the vCPU was
+> +	 * never actually scheduled out, i.e. even if the wake event arrived
+> +	 * after of the halt-polling loop itself, but before the full wait.
+> +	 */
+>  	if (do_halt_poll)
+> -		update_halt_poll_stats(
+> -			vcpu, ktime_to_ns(ktime_sub(poll_end, start)), waited);
+> +		update_halt_poll_stats(vcpu, start, poll_end, !waited);
 >  
 >  	if (halt_poll_allowed) {
 >  		if (!vcpu_valid_wakeup(vcpu)) {
