@@ -2,91 +2,99 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A86A41BC86
-	for <lists+kvmarm@lfdr.de>; Wed, 29 Sep 2021 04:00:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C5A041BFA0
+	for <lists+kvmarm@lfdr.de>; Wed, 29 Sep 2021 09:12:43 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0D93B4A534;
-	Tue, 28 Sep 2021 22:00:48 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8D16F4B173;
+	Wed, 29 Sep 2021 03:12:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.209
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0uYwx6Y8wIyf; Tue, 28 Sep 2021 22:00:47 -0400 (EDT)
+	with ESMTP id BCEyUgnznYke; Wed, 29 Sep 2021 03:12:42 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B0A1C4B0A3;
-	Tue, 28 Sep 2021 22:00:46 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3E23C4B12E;
+	Wed, 29 Sep 2021 03:12:41 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C9D9140C88
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 22:00:45 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 258764B101
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 14:57:55 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ik2C3Bgmlvjn for <kvmarm@lists.cs.columbia.edu>;
- Tue, 28 Sep 2021 22:00:44 -0400 (EDT)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B993F4079A
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 22:00:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1632880844;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pRRvXL56lvx+b1IEHFzyuqqjMSM8W6yOIfAd+0ml9wc=;
- b=F1ogymx6uh7YvPowPFenezdgCOGFGO7SdpdO7P3T7SNTy60WsFn8ZgJ37Gki+44lLbzikd
- 0JfXsjwlvHWhAmhwWTDYXEeFWqylOtT+QmH0lKoKxWqLPKrB0D9TIonb8vPMieByARXUL1
- ImLbQ9KSzjv5g1Q2M1/hwmsjPBi4ViI=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-167-yykYCFaJPoWmlLBHCf06NQ-1; Tue, 28 Sep 2021 22:00:42 -0400
-X-MC-Unique: yykYCFaJPoWmlLBHCf06NQ-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com
- [10.5.11.22])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 9093B36307;
- Wed, 29 Sep 2021 02:00:40 +0000 (UTC)
-Received: from [10.64.54.16] (vpn2-54-16.bne.redhat.com [10.64.54.16])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 6F69A100164A;
- Wed, 29 Sep 2021 02:00:34 +0000 (UTC)
-Subject: Re: [PATCH v2 2/2] of, numa: Fetch empty NUMA node ID from distance
- map
-To: Rob Herring <robh@kernel.org>
-References: <20210927064119.127285-1-gshan@redhat.com>
- <20210927064119.127285-3-gshan@redhat.com>
- <CAL_JsqL8+_Q690-c3J4TS6LBF-mCUBxbhTfr994=Fwffqab0_w@mail.gmail.com>
- <c101363f-1de7-1d56-a8d9-243f003b48c1@redhat.com>
- <CAL_JsqJtckde=Ngfhr7u3f_xsccavo+4Pt-v9o_nGHTX+wD91w@mail.gmail.com>
-From: Gavin Shan <gshan@redhat.com>
-Message-ID: <9b22a8a8-02ae-5ad0-0295-00fd65923587@redhat.com>
-Date: Wed, 29 Sep 2021 12:00:31 +1000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.0
+ with ESMTP id W6uXycousGb6 for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 28 Sep 2021 14:57:54 -0400 (EDT)
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com
+ [209.85.215.178])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id F2B9E4B0C0
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 14:57:53 -0400 (EDT)
+Received: by mail-pg1-f178.google.com with SMTP id g184so70618pgc.6
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 11:57:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=hbmr+iwzxjrwsm+tEChOCbQhDq6UlfLy+47j+9ocUio=;
+ b=LIUKsJb5csfGXRweUbuDpDidwcU5eWp7I/BC8UyxJljOvp53d1+D8/lVafchjWnTQ0
+ UFJ3m7MEw7wR7ZRxd8ACwxPZ0m52bD6vj7TVNWZMtZNMTJOZwlD3eAWWyH1Qjhl43L3U
+ W1FytngggVEVCnX/gF5j3GcAVm16wdtULlRYpFUEUDEjCyafanTtEjpuUFGcRp39K4zP
+ 8bcEH690dj17b/WyNjFuFNPEP5hGpR8USgdsDcq9O2S4cVlCSktUAxA777RgXT/lt+Vv
+ Bzig6jNqwzLE2GfeCQZTnW8FZN7tYmEiOfv/wCyJ4cPc56oImH3Qexl4IlFXY6fcK+dx
+ 1HLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=hbmr+iwzxjrwsm+tEChOCbQhDq6UlfLy+47j+9ocUio=;
+ b=ryzhm+tG7N8adzPxJHGtb44az0idwWjRzdKJv0wuagr8rbM9lNSblIi4UZuWX3P4wF
+ Pqz55qnxVkvNA96RQvIGjhx7GakDpQezFNvmpGl4xeQmNWY8tMsl6A+hOzdHM+bjisJ9
+ Z/V1Fng3xwsQ8+auQ9rkmrRv3VTXOjq8eFLIKrWR7USMxVhIf+UUELc+K8iCqLb2U143
+ qMMbB+AVIn+a6Yzwz6+PkB8j+MEfswDvmmKSG0QSCRC/etnJEpInk4YU8I+YIsuEnhMU
+ 0RBtV1AxsR0HoqP8cmjbSqdbkDjNY6z+liduHBq2Cni2u6Ho6DTp1IkFeAzDRHSppH+7
+ BGqw==
+X-Gm-Message-State: AOAM531RM7jHByyC6lJK6GAqIeiYaFONpG2SyTkPqL7FrRqg+6lTon/O
+ y45n5HezxBwaKkxnktlfoFG30Q==
+X-Google-Smtp-Source: ABdhPJzvJEVMFLwNuCMQ/B/wkbjy954+2YLM0705uJahpnQn4hlzIhG6+toRk9qgzctw/+QJEMGtgw==
+X-Received: by 2002:a62:7ccf:0:b0:444:9264:dbcd with SMTP id
+ x198-20020a627ccf000000b004449264dbcdmr7051691pfc.50.1632855472798; 
+ Tue, 28 Sep 2021 11:57:52 -0700 (PDT)
+Received: from google.com (254.80.82.34.bc.googleusercontent.com.
+ [34.82.80.254])
+ by smtp.gmail.com with ESMTPSA id f16sm21088582pfk.110.2021.09.28.11.57.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Sep 2021 11:57:52 -0700 (PDT)
+Date: Tue, 28 Sep 2021 18:57:46 +0000
+From: David Matlack <dmatlack@google.com>
+To: Sean Christopherson <seanjc@google.com>
+Subject: Re: [PATCH 02/14] KVM: Update halt-polling stats if and only if
+ halt-polling was attempted
+Message-ID: <YVNlqgEKluDRVGv0@google.com>
+References: <20210925005528.1145584-1-seanjc@google.com>
+ <20210925005528.1145584-3-seanjc@google.com>
 MIME-Version: 1.0
-In-Reply-To: <CAL_JsqJtckde=Ngfhr7u3f_xsccavo+4Pt-v9o_nGHTX+wD91w@mail.gmail.com>
-Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
-Cc: devicetree@vger.kernel.org, linux-efi <linux-efi@vger.kernel.org>,
- Marc Zyngier <maz@kernel.org>, Randy Dunlap <rdunlap@infradead.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- shan.gavin@gmail.com, Catalin Marinas <catalin.marinas@arm.com>,
- Will Deacon <will@kernel.org>,
- "open list:KERNEL VIRTUAL MACHINE FOR ARM64 \(KVM/arm64\)"
- <kvmarm@lists.cs.columbia.edu>,
- linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
+Content-Disposition: inline
+In-Reply-To: <20210925005528.1145584-3-seanjc@google.com>
+X-Mailman-Approved-At: Wed, 29 Sep 2021 03:12:40 -0400
+Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
+ David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org,
+ Paul Mackerras <paulus@ozlabs.org>, Claudio Imbrenda <imbrenda@linux.ibm.com>,
+ kvmarm@lists.cs.columbia.edu, Janosch Frank <frankja@linux.ibm.com>,
+ Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+ Huacai Chen <chenhuacai@kernel.org>,
+ Christian Borntraeger <borntraeger@de.ibm.com>,
+ Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>, kvm-ppc@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
+ Cornelia Huck <cohuck@redhat.com>, linux-mips@vger.kernel.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
-Reply-To: Gavin Shan <gshan@redhat.com>
 List-Id: Where KVM/ARM decisions are made <kvmarm.lists.cs.columbia.edu>
 List-Unsubscribe: <https://lists.cs.columbia.edu/mailman/options/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=unsubscribe>
@@ -95,91 +103,64 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 9/29/21 3:22 AM, Rob Herring wrote:
-> On Mon, Sep 27, 2021 at 6:59 PM Gavin Shan <gshan@redhat.com> wrote:
->> On 9/28/21 12:49 AM, Rob Herring wrote:
->>> On Mon, Sep 27, 2021 at 1:42 AM Gavin Shan <gshan@redhat.com> wrote:
->>>>
->>>> There is no device node for the empty NUMA node. However, the
->>>> corresponding NUMA node ID and distance map is still valid in
->>>> "numa-distance-map-v1" compatible device node.
->>>>
->>>> This fetches the NUMA node ID and distance map for these empty
->>>> NUMA node from "numa-distance-map-v1" compatible device node.
->>>
->>> This is much nicer.
->>>
->>
->> Indeed, thanks for your suggestions :)
->>
->>>> Signed-off-by: Gavin Shan <gshan@redhat.com>
->>>> ---
->>>>    drivers/of/of_numa.c | 2 ++
->>>>    1 file changed, 2 insertions(+)
->>>>
->>>> diff --git a/drivers/of/of_numa.c b/drivers/of/of_numa.c
->>>> index fe6b13608e51..5949829a1b00 100644
->>>> --- a/drivers/of/of_numa.c
->>>> +++ b/drivers/of/of_numa.c
->>>> @@ -111,6 +111,8 @@ static int __init of_numa_parse_distance_map_v1(struct device_node *map)
->>>>                           return -EINVAL;
->>>>                   }
->>>>
->>>> +               node_set(nodea, numa_nodes_parsed);
->>>> +
->>>
->>> With this, couldn't we remove of_numa_parse_cpu_nodes() as the only
->>> thing it does is node_set()?
->>>
->>
->> I don't think so for couple of reasons:
->>
->> (1) With problematic device-tree, the distance map node might be missed
->>       or incomplete. In this case, of_numa_parse_cpu_nodes() still helps.
+On Fri, Sep 24, 2021 at 05:55:16PM -0700, Sean Christopherson wrote:
+> Don't update halt-polling stats if halt-polling wasn't attempted.  This
+> is a nop as @poll_ns is guaranteed to be '0' (poll_end == start), but it
+> will allow a future patch to move the histogram stats into the helper to
+> resolve a discrepancy in what is considered a "successful" halt-poll.
 > 
-> It's not the kernel's job to validate the DT (if it was, it is doing a
-> terrible job). I would suggest writing some checks for dtc if we're
-> worried about correctness. (The schemas don't work too well for cross
-> node checks.)
+> No functional change intended.
 > 
+> Cc: David Matlack <dmatlack@google.com>
+> Signed-off-by: Sean Christopherson <seanjc@google.com>
 
-I didn't look into dtc's code and not sure if dtc has this sort of validation.
-Besides, dtc is out of scope when QEMU is involved. The device-tree blob isn't
-produced by dtc in QEMU.
+Reviewed-by: David Matlack <dmatlack@google.com>
 
-
->> (2) @numa_nodes_parsed is also updated when the memory nodes are iterated
->>       in of_numa_parse_memory_nodes() and numa_add_memblk().
->>
->> So @numa_nodes_parsed, which is synchronized to @node_possible_map afterwards,
->> is the gathering output of CPU nodes, memory nodes and distance map node.
+> ---
+>  virt/kvm/kvm_main.c | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
 > 
-> Is it valid to have node id's that are not in the distance map?
+> diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+> index 768a4cbb26a6..8b33f5045b4d 100644
+> --- a/virt/kvm/kvm_main.c
+> +++ b/virt/kvm/kvm_main.c
+> @@ -3214,6 +3214,7 @@ update_halt_poll_stats(struct kvm_vcpu *vcpu, u64 poll_ns, bool waited)
+>  void kvm_vcpu_block(struct kvm_vcpu *vcpu)
+>  {
+>  	bool halt_poll_allowed = !kvm_arch_no_poll(vcpu);
+> +	bool do_halt_poll = halt_poll_allowed && vcpu->halt_poll_ns;
+>  	ktime_t start, cur, poll_end;
+>  	bool waited = false;
+>  	u64 block_ns;
+> @@ -3221,7 +3222,7 @@ void kvm_vcpu_block(struct kvm_vcpu *vcpu)
+>  	kvm_arch_vcpu_blocking(vcpu);
+>  
+>  	start = cur = poll_end = ktime_get();
+> -	if (vcpu->halt_poll_ns && halt_poll_allowed) {
+> +	if (do_halt_poll) {
+>  		ktime_t stop = ktime_add_ns(ktime_get(), vcpu->halt_poll_ns);
+>  
+>  		++vcpu->stat.generic.halt_attempted_poll;
+> @@ -3273,8 +3274,9 @@ void kvm_vcpu_block(struct kvm_vcpu *vcpu)
+>  	kvm_arch_vcpu_unblocking(vcpu);
+>  	block_ns = ktime_to_ns(cur) - ktime_to_ns(start);
+>  
+> -	update_halt_poll_stats(
+> -		vcpu, ktime_to_ns(ktime_sub(poll_end, start)), waited);
+> +	if (do_halt_poll)
+> +		update_halt_poll_stats(
+> +			vcpu, ktime_to_ns(ktime_sub(poll_end, start)), waited);
+>  
+>  	if (halt_poll_allowed) {
+>  		if (!vcpu_valid_wakeup(vcpu)) {
+> -- 
+> 2.33.0.685.g46640cef36-goog
 > 
-
-Yes, it's valid from the kernel's perspective. The default distance
-matrix, where the local and remote distances are 10 and 20, is applied
-if the distance map is missed in device-tree. The code can be found from
-drivers/base/arch_numa.c::numa_alloc_distance()
-
-Besides, it's possible that the distance map isn't populated by QEMU.
-However, I'm going to improve the situation so the distance map will
-be populated unconditionally.
-
-The following option is supported by QEMU, to specify the distance
-between two NUMA nodes. However, it's not mandatory. The distance
-map in device-tree won't be populated if the option is missed.
-
-     -numa dist,a=<src_numa_node>,b=<dst_numa_node>,val=<distance>
-
-Thanks,
-Gavin
-
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
