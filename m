@@ -2,96 +2,82 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A10741BFAA
-	for <lists+kvmarm@lfdr.de>; Wed, 29 Sep 2021 09:12:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37F5941BFAB
+	for <lists+kvmarm@lfdr.de>; Wed, 29 Sep 2021 09:12:53 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B718C4B0E6;
-	Wed, 29 Sep 2021 03:12:51 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D484B4B0D9;
+	Wed, 29 Sep 2021 03:12:52 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@chromium.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yM4fYU5ZrKP0; Wed, 29 Sep 2021 03:12:50 -0400 (EDT)
+	with ESMTP id I+3UMVuBrHxN; Wed, 29 Sep 2021 03:12:51 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 512314A5A0;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 654C54B161;
 	Wed, 29 Sep 2021 03:12:42 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B63804057F
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 18:15:00 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7DB3D4B08E
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 29 Sep 2021 00:29:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id yq9jGgNkqx1q for <kvmarm@lists.cs.columbia.edu>;
- Tue, 28 Sep 2021 18:14:59 -0400 (EDT)
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com
- [209.85.215.171])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A3E724031F
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 18:14:59 -0400 (EDT)
-Received: by mail-pg1-f171.google.com with SMTP id g184so545401pgc.6
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 15:14:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=oDTEp4uXq7wouuQuWuPnWVQXCIo6P8LpvQajseAha48=;
- b=BnufAkDaSqbvE0tuVagV8WXp+XHOA8rRfAQGH7v7vq47FtDaVwPb2gV3pg84col7Jn
- wiWxSJtOhRHOZ1OnBfK1IusCBeqHNprdHmkCTk9hwy1TjpFLJ2o37qhbCK64RU58wR+/
- NVNuIOjncjEgaNz1Aji8RAKlyT10kUNAthNYDNVDkepM7EAAeST1QgAUJgZz9JV6W8pQ
- Ga3dyZRVb1TCTPcNFYt7tNYB7fChJLmzpTPIY1149VIXRC09i0vUfJF6BV+ql+c0RWWW
- CLk/XS24h5X+HgfBHwpw+x6pOo0ByCwKeOnP2OHqWK6fByzx9dwNkhyWHGw0eQ1hWxHI
- bubg==
+ with ESMTP id o0scm3KjDyAx for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 29 Sep 2021 00:29:32 -0400 (EDT)
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com
+ [209.85.210.176])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5DE004A98B
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 29 Sep 2021 00:29:32 -0400 (EDT)
+Received: by mail-pf1-f176.google.com with SMTP id u7so847860pfg.13
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 21:29:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chromium.org; s=google;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=QkzreDQI8QXcNj6KF3HsvP+QbXFPHw1Mmnt63rKUKkA=;
+ b=SUgnMZX/AWTndTbWHhZMsZ/Q8rq2mha6o26G7OvAkCmtpgykvlWgC91PFYQimoCXyV
+ v8PubmTDiQJMqehVuvd15V+PbUnLDyYAlOhEqLeGTkimABHe/8DNH5GMjyR3wqkwUf4N
+ LrwHmT0opEc0XBq0yUrUiNhN23ksP4p5EJqgE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=oDTEp4uXq7wouuQuWuPnWVQXCIo6P8LpvQajseAha48=;
- b=6jZVPd33LSUu10e/XGZx0EohYlPwK/PRmcjnd3XCGCMwzS7tMB51j179RReFZzNHeh
- N4kFB6s7t2pcqL9VvJkAfMWK0/2PhQDrZEZ0ZXsRWf/Ft2AsE98qyyfy9ygNwsO3dSQx
- N1iK8BLNMl3fWZEqf8yfTaZ2Cp7t28Llau38KvETfUn7eKmRyg6grdg0Uh0E3kjfN1dX
- mvByf2H6QgEwQoa5Ldo292rwmfDRz/yAcRqhLJlaI2rfGUq4Zojdcbm58FclpIV4YDDW
- 4D+Bb/EKU4ezfOKtfB1aXPynhxDoCRaaFh/i0X8kNKSs5dbnvxoBBPuJpWzDcY5Id/St
- PuHw==
-X-Gm-Message-State: AOAM530mmSL2u9WIMB0p5Ve1u6ca8E7u/NegUYONT2t2T071mdidxUwj
- rj2jOBS2YPd8MiuHAm/WHdSuTA==
-X-Google-Smtp-Source: ABdhPJxBJllV/6MHwH/O4bupLMykTY/L8aml4vOWRLyRzjZbQcPh2xbpVAvFMm0QwWZGt6UvJ4KliA==
-X-Received: by 2002:a62:dd0a:0:b0:44b:bd85:9387 with SMTP id
- w10-20020a62dd0a000000b0044bbd859387mr2015835pff.49.1632867298411; 
- Tue, 28 Sep 2021 15:14:58 -0700 (PDT)
-Received: from google.com (254.80.82.34.bc.googleusercontent.com.
- [34.82.80.254])
- by smtp.gmail.com with ESMTPSA id d7sm142548pfq.43.2021.09.28.15.14.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Sep 2021 15:14:57 -0700 (PDT)
-Date: Tue, 28 Sep 2021 22:14:54 +0000
-From: David Matlack <dmatlack@google.com>
-To: Sean Christopherson <seanjc@google.com>
-Subject: Re: [PATCH 14/14] KVM: x86: Invoke kvm_vcpu_block() directly for
- non-HALTED wait states
-Message-ID: <YVOT3gj1ulBTNSw3@google.com>
-References: <20210925005528.1145584-1-seanjc@google.com>
- <20210925005528.1145584-15-seanjc@google.com>
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=QkzreDQI8QXcNj6KF3HsvP+QbXFPHw1Mmnt63rKUKkA=;
+ b=CknlR17ZMyTZrD/ytBPQe4s52qXou4jN5G6UACxieaRXIDEJJaEQoxZD1rCWgvTMm3
+ WNiYbYujRn0WfZ0BlLdO5giy5kWOhYQTCYYGB+pb3qdksJKAxcirAg8YCSEgigtomcqc
+ zkTd6P0Pe+fg6LXs1QrLFofyv+yorJTjwTwCrjrty6hixD+zXV/naZ8N6Mhcod2jr/0Q
+ tpTfJS9qCzg+r9h/eSTugCoqD0OwuqBH0po56+xicDhHLstgDHmy1zf3Oi2GjzB1aCoY
+ Id9+4gR5xaVLfaCXljivlSe1JWX2fP57xAw/tDnonBLR0D4cZwlXlWPwGoklzCUyhuAR
+ Rx6A==
+X-Gm-Message-State: AOAM530ezAzfzgFJH5j/LMmGJtGMZsilHuMzzfdbXvJuQf9x0M96kWSC
+ Zbl3Osx9b8lUMAUnjeXk8+1BSg==
+X-Google-Smtp-Source: ABdhPJwdVPiqe25K8PElzE9sWsXwBxyck9GIaCUbQQkjXlHvGKR9mvFoORzocViMa6RYiKVWceOf5A==
+X-Received: by 2002:a63:e741:: with SMTP id j1mr7938740pgk.86.1632889771324;
+ Tue, 28 Sep 2021 21:29:31 -0700 (PDT)
+Received: from localhost ([2401:fa00:8f:203:f818:368:93ef:fa36])
+ by smtp.gmail.com with UTF8SMTPSA id b5sm261924pjk.18.2021.09.28.21.29.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Sep 2021 21:29:30 -0700 (PDT)
+From: David Stevens <stevensd@chromium.org>
+X-Google-Original-From: David Stevens <stevensd@google.com>
+To: Marc Zyngier <maz@kernel.org>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v4 0/4] KVM: allow mapping non-refcounted pages
+Date: Wed, 29 Sep 2021 13:29:04 +0900
+Message-Id: <20210929042908.1313874-1-stevensd@google.com>
+X-Mailer: git-send-email 2.33.0.685.g46640cef36-goog
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20210925005528.1145584-15-seanjc@google.com>
 X-Mailman-Approved-At: Wed, 29 Sep 2021 03:12:40 -0400
 Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org,
- Paul Mackerras <paulus@ozlabs.org>, Claudio Imbrenda <imbrenda@linux.ibm.com>,
- kvmarm@lists.cs.columbia.edu, Janosch Frank <frankja@linux.ibm.com>,
- Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- Huacai Chen <chenhuacai@kernel.org>,
- Christian Borntraeger <borntraeger@de.ibm.com>,
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>, kvm-ppc@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
- Cornelia Huck <cohuck@redhat.com>, linux-mips@vger.kernel.org,
- Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>
+ Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+ linux-kernel@vger.kernel.org, David Stevens <stevensd@chromium.org>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
+ Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -108,48 +94,62 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Sep 24, 2021 at 05:55:28PM -0700, Sean Christopherson wrote:
-> Call kvm_vcpu_block() directly for all wait states except HALTED so that
-> kvm_vcpu_halt() is no longer a misnomer on x86.
-> 
-> Functionally, this means KVM will never attempt halt-polling or adjust
-> vcpu->halt_poll_ns for INIT_RECEIVED (a.k.a. Wait-For-SIPI (WFS)) or
-> AP_RESET_HOLD; UNINITIALIZED is handled in kvm_arch_vcpu_ioctl_run(),
-> and x86 doesn't use any other "wait" states.
-> 
-> As mentioned above, the motivation of this is purely so that "halt" isn't
-> overloaded on x86, e.g. in KVM's stats.  Skipping halt-polling for WFS
-> (and RESET_HOLD) has no meaningful effect on guest performance as there
-> are typically single-digit numbers of INIT-SIPI sequences per AP vCPU,
-> per boot, versus thousands of HLTs just to boot to console.
-> 
-> Signed-off-by: Sean Christopherson <seanjc@google.com>
+From: David Stevens <stevensd@chromium.org>
 
-Reviewed-by: David Matlack <dmatlack@google.com>
+This patch series adds support for mapping non-refcount VM_IO and
+VM_PFNMAP memory into the guest.
 
-> ---
->  arch/x86/kvm/x86.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-> index b444f9315766..a0f313c4bc49 100644
-> --- a/arch/x86/kvm/x86.c
-> +++ b/arch/x86/kvm/x86.c
-> @@ -9893,7 +9893,10 @@ static inline int vcpu_block(struct kvm *kvm, struct kvm_vcpu *vcpu)
->  	if (!kvm_arch_vcpu_runnable(vcpu) &&
->  	    (!kvm_x86_ops.pre_block || static_call(kvm_x86_pre_block)(vcpu) == 0)) {
->  		srcu_read_unlock(&kvm->srcu, vcpu->srcu_idx);
-> -		kvm_vcpu_halt(vcpu);
-> +		if (vcpu->arch.mp_state == KVM_MP_STATE_HALTED)
-> +			kvm_vcpu_halt(vcpu);
-> +		else
-> +			kvm_vcpu_block(vcpu);
->  		vcpu->srcu_idx = srcu_read_lock(&kvm->srcu);
->  
->  		if (kvm_x86_ops.post_block)
-> -- 
-> 2.33.0.685.g46640cef36-goog
-> 
+Currently, the gfn_to_pfn functions require being able to pin the target
+pfn, so they will fail if the pfn returned by follow_pte isn't a
+ref-counted page.  However, the KVM secondary MMUs do not require that
+the pfn be pinned, since they are integrated with the mmu notifier API.
+This series adds a new set of gfn_to_pfn_page functions which parallel
+the gfn_to_pfn functions but do not pin the pfn. The new functions
+return the page from gup if it was present, so callers can use it and
+call put_page when done.
+
+The gfn_to_pfn functions should be depreciated, since as they are unsafe
+due to relying on trying to obtain a struct page from a pfn returned by
+follow_pte. I added new functions instead of simply adding another
+optional parameter to the existing functions to make it easier to track
+down users of the deprecated functions.
+
+This series updates x86 and arm64 secondary MMUs to the new API.
+
+v3 -> v4:
+ - rebase on kvm next branch again
+ - Add some more context to a comment in ensure_pfn_ref
+v2 -> v3:
+ - rebase on kvm next branch
+v1 -> v2:
+ - Introduce new gfn_to_pfn_page functions instead of modifying the
+   behavior of existing gfn_to_pfn functions, to make the change less
+   invasive.
+ - Drop changes to mmu_audit.c
+ - Include Nicholas Piggin's patch to avoid corrupting refcount in the
+   follow_pte case, and use it in depreciated gfn_to_pfn functions.
+ - Rebase on kvm/next
+
+David Stevens (4):
+  KVM: mmu: introduce new gfn_to_pfn_page functions
+  KVM: x86/mmu: use gfn_to_pfn_page
+  KVM: arm64/mmu: use gfn_to_pfn_page
+  KVM: mmu: remove over-aggressive warnings
+
+ arch/arm64/kvm/mmu.c            |  27 +++--
+ arch/x86/kvm/mmu/mmu.c          |  50 ++++----
+ arch/x86/kvm/mmu/mmu_internal.h |   3 +-
+ arch/x86/kvm/mmu/paging_tmpl.h  |  23 ++--
+ arch/x86/kvm/mmu/tdp_mmu.c      |   6 +-
+ arch/x86/kvm/mmu/tdp_mmu.h      |   4 +-
+ arch/x86/kvm/x86.c              |   6 +-
+ include/linux/kvm_host.h        |  17 +++
+ virt/kvm/kvm_main.c             | 198 +++++++++++++++++++++++---------
+ 9 files changed, 231 insertions(+), 103 deletions(-)
+
+-- 
+2.33.0.685.g46640cef36-goog
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
