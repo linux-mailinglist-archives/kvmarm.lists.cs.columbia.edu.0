@@ -2,85 +2,127 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1861841BFAF
-	for <lists+kvmarm@lfdr.de>; Wed, 29 Sep 2021 09:12:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3029441BF64
+	for <lists+kvmarm@lfdr.de>; Wed, 29 Sep 2021 08:57:11 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 961504B13D;
-	Wed, 29 Sep 2021 03:12:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 82B0140762;
+	Wed, 29 Sep 2021 02:57:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@chromium.org
+	(fail, message has been altered) header.i=@ibm.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yunRwUSu8TJ8; Wed, 29 Sep 2021 03:12:56 -0400 (EDT)
+	with ESMTP id tz4L13-9DRdn; Wed, 29 Sep 2021 02:57:10 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E835D4B0BD;
-	Wed, 29 Sep 2021 03:12:42 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2C0484B0BD;
+	Wed, 29 Sep 2021 02:57:09 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 697F2405EE
- for <kvmarm@lists.cs.columbia.edu>; Wed, 29 Sep 2021 00:29:52 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4BC024086D
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 29 Sep 2021 02:57:07 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id iA1tprzoC-F9 for <kvmarm@lists.cs.columbia.edu>;
- Wed, 29 Sep 2021 00:29:51 -0400 (EDT)
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com
- [209.85.216.41])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 621934048B
- for <kvmarm@lists.cs.columbia.edu>; Wed, 29 Sep 2021 00:29:51 -0400 (EDT)
-Received: by mail-pj1-f41.google.com with SMTP id pg10so250979pjb.5
- for <kvmarm@lists.cs.columbia.edu>; Tue, 28 Sep 2021 21:29:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chromium.org; s=google;
- h=from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=bA6NN/73uMxgRf2do26zZix4NIbIajvF9h0MlhypsP0=;
- b=D0DhDCankrqgNpGj/wZQ1bIG5lFpI686lVV9x5x7cV5N+TTyY6WG29/QP3px1+RW2E
- qkDXyIM7HJuu7S2dzfC6MbZIJyGpSQFXEArdEgLZLzeDhs9Fxl+nCbS+mIb+M1NN/nsX
- 2IiV0ctP8MYuEYzwCB0TW+zCzwm3c2ngkt59k=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
- :references:mime-version:content-transfer-encoding;
- bh=bA6NN/73uMxgRf2do26zZix4NIbIajvF9h0MlhypsP0=;
- b=dF15TTTMvUb/j9h3CLMsDf27fR+PeELk7O7rrzREVPGtukUdfEdYKByrGvX+L+4Yxf
- uZLvHL+saaokvXTIuQ95qQtkgg1Iaq8kpp6TYYuzHYa1kM17K3L1rSXgtGw+GkcUaVZl
- DR5rH4clVf5A5FIs7suHWTdJqOULeWJKNSsG0RLxDtCYeZvy8Sa6EDtPr1EAMJh4NRr/
- Co3oRux/nxJvQ1JzHHGYdZ4O1M/z0xOX3WLEfNODIWoO1yHy8wX3JxdAZV1gPZXkix60
- Vhpg10VnF+YiOzr8R4RHewuNP4FAeD+SQeGly7MR38YO8uet5PClH3P2qGRGFrv7Pecw
- vpcg==
-X-Gm-Message-State: AOAM533yGy8Dt4/3OQHeIiM+pjKf5fm4B/NgPr+ba5b5M2/mwWL7MsQB
- Z7F69MOMU3JbUT7TmURUDI2kBg==
-X-Google-Smtp-Source: ABdhPJxDITqPEpm4RXGmxbl4ubLf862UOuk9hpD6Czqg5k8tUb7xT3tmlnO8vUsHmwXIgQt1huUhKw==
-X-Received: by 2002:a17:90a:f98f:: with SMTP id
- cq15mr4146513pjb.74.1632889790661; 
- Tue, 28 Sep 2021 21:29:50 -0700 (PDT)
-Received: from localhost ([2401:fa00:8f:203:f818:368:93ef:fa36])
- by smtp.gmail.com with UTF8SMTPSA id c206sm652324pfc.220.2021.09.28.21.29.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Sep 2021 21:29:50 -0700 (PDT)
-From: David Stevens <stevensd@chromium.org>
-X-Google-Original-From: David Stevens <stevensd@google.com>
-To: Marc Zyngier <maz@kernel.org>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v4 4/4] KVM: mmu: remove over-aggressive warnings
-Date: Wed, 29 Sep 2021 13:29:08 +0900
-Message-Id: <20210929042908.1313874-5-stevensd@google.com>
-X-Mailer: git-send-email 2.33.0.685.g46640cef36-goog
-In-Reply-To: <20210929042908.1313874-1-stevensd@google.com>
-References: <20210929042908.1313874-1-stevensd@google.com>
+ with ESMTP id QyH3482h5RZQ for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 29 Sep 2021 02:57:06 -0400 (EDT)
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1BB8740762
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 29 Sep 2021 02:57:06 -0400 (EDT)
+Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 18T5SkVo022659; 
+ Wed, 29 Sep 2021 02:57:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=Yeu3khHTm5BupXM7O0QrFwzJN1blGbA0zJSQEfZsP6w=;
+ b=Kdjclkf7M3yIt4TgwLA0CDrQVxbB9lQXRk6NU5oMIkWijuVNijCDFlohxJ1bqF/n10Ms
+ zbNo2ZzwcMGfSAUsZsxilnklDSay4eXI+0K1wbkiW3LnU83/If3DgfeYyIfIpsKs3ve0
+ fyEDGHnHMxvocZ84XnUC+eaADB9nooNU4bojiMygTBnd3Rc8tb62dOoZdpaF+BIqtH2X
+ vRgUg8wEO9rvnY86Nfx4eap52M53/ojKPlZa2kGqar+SFg/xO84NLCD8uQA2aMnRNU0r
+ s/cLIQrKVXV231iG5rpz7g9fUGwmAnZUpmzyDRCSOSDYVuYk8pe9GUAMhdTzl3jvNdpz KQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3bcj1k1pdv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 29 Sep 2021 02:57:00 -0400
+Received: from m0098421.ppops.net (m0098421.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 18T6VVRm004893;
+ Wed, 29 Sep 2021 02:56:59 -0400
+Received: from ppma04ams.nl.ibm.com (63.31.33a9.ip4.static.sl-reverse.com
+ [169.51.49.99])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3bcj1k1pd3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 29 Sep 2021 02:56:58 -0400
+Received: from pps.filterd (ppma04ams.nl.ibm.com [127.0.0.1])
+ by ppma04ams.nl.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 18T6pPq5021643;
+ Wed, 29 Sep 2021 06:56:56 GMT
+Received: from b06cxnps4076.portsmouth.uk.ibm.com
+ (d06relay13.portsmouth.uk.ibm.com [9.149.109.198])
+ by ppma04ams.nl.ibm.com with ESMTP id 3b9ud9vjg6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 29 Sep 2021 06:56:56 +0000
+Received: from d06av23.portsmouth.uk.ibm.com (d06av23.portsmouth.uk.ibm.com
+ [9.149.105.59])
+ by b06cxnps4076.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 18T6uql7066264
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 29 Sep 2021 06:56:52 GMT
+Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ADD5CA4055;
+ Wed, 29 Sep 2021 06:56:52 +0000 (GMT)
+Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0A55DA4057;
+ Wed, 29 Sep 2021 06:56:51 +0000 (GMT)
+Received: from li-43c5434c-23b8-11b2-a85c-c4958fb47a68.ibm.com (unknown
+ [9.171.68.197])
+ by d06av23.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Wed, 29 Sep 2021 06:56:50 +0000 (GMT)
+Subject: Re: disabling halt polling broken? (was Re: [PATCH 00/14] KVM:
+ Halt-polling fixes, cleanups and a new stat)
+To: David Matlack <dmatlack@google.com>
+References: <20210925005528.1145584-1-seanjc@google.com>
+ <03f2f5ab-e809-2ba5-bd98-3393c3b843d2@de.ibm.com>
+ <YVHcY6y1GmvGJnMg@google.com>
+ <f37ab68c-61ce-b6fb-7a49-831bacfc7424@redhat.com>
+ <43e42f5c-9d9f-9e8b-3a61-9a053a818250@de.ibm.com>
+ <CALzav=cxeYieTkKJhT0kFZOjdv6k5eCZXKWs=ZQGCJg0x-oFjQ@mail.gmail.com>
+From: Christian Borntraeger <borntraeger@de.ibm.com>
+Message-ID: <c64d0810-3563-928e-55c1-e50da8639808@de.ibm.com>
+Date: Wed, 29 Sep 2021 08:56:50 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-X-Mailman-Approved-At: Wed, 29 Sep 2021 03:12:40 -0400
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- linux-kernel@vger.kernel.org, David Stevens <stevensd@chromium.org>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
- Jim Mattson <jmattson@google.com>
+In-Reply-To: <CALzav=cxeYieTkKJhT0kFZOjdv6k5eCZXKWs=ZQGCJg0x-oFjQ@mail.gmail.com>
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: oGT42cAErGJFR7G6oCrTzoCuADqRL6rZ
+X-Proofpoint-ORIG-GUID: eXsFnYoOLfQdZT2uYY5Pes1aFc7SZbXJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.391,FMLib:17.0.607.475
+ definitions=2021-09-29_02,2021-09-28_01,2020-04-07_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 phishscore=0
+ mlxlogscore=999 mlxscore=0 spamscore=0 priorityscore=1501 clxscore=1015
+ impostorscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2109230001 definitions=main-2109290038
+Cc: Wanpeng Li <wanpengli@tencent.com>, kvm list <kvm@vger.kernel.org>,
+ David Hildenbrand <david@redhat.com>, LKML <linux-kernel@vger.kernel.org>,
+ Paul Mackerras <paulus@ozlabs.org>, Claudio Imbrenda <imbrenda@linux.ibm.com>,
+ KVMARM <kvmarm@lists.cs.columbia.edu>, Janosch Frank <frankja@linux.ibm.com>,
+ Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+ Huacai Chen <chenhuacai@kernel.org>,
+ Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
+ Jon Cargille <jcargill@google.com>, KVMPPC <kvm-ppc@vger.kernel.org>,
+ linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
+ Cornelia Huck <cohuck@redhat.com>, LinuxMIPS <linux-mips@vger.kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -92,55 +134,76 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: David Stevens <stevensd@chromium.org>
 
-Remove two warnings that require ref counts for pages to be non-zero, as
-mapped pfns from follow_pfn may not have an initialized ref count.
 
-Signed-off-by: David Stevens <stevensd@chromium.org>
----
- arch/x86/kvm/mmu/mmu.c | 7 -------
- virt/kvm/kvm_main.c    | 2 +-
- 2 files changed, 1 insertion(+), 8 deletions(-)
+Am 27.09.21 um 18:58 schrieb David Matlack:
+> On Mon, Sep 27, 2021 at 8:17 AM Christian Borntraeger
+> <borntraeger@de.ibm.com> wrote:
+>>
+>>
+>>
+>> Am 27.09.21 um 17:03 schrieb Paolo Bonzini:
+>>> On 27/09/21 16:59, Sean Christopherson wrote:
+>>>>> commit acd05785e48c01edb2c4f4d014d28478b5f19fb5
+>>>>> Author:     David Matlack<dmatlack@google.com>
+>>>>> AuthorDate: Fri Apr 17 15:14:46 2020 -0700
+>>>>> Commit:     Paolo Bonzini<pbonzini@redhat.com>
+>>>>> CommitDate: Fri Apr 24 12:53:17 2020 -0400
+>>>>>
+>>>>>       kvm: add capability for halt polling
+>>>>>
+>>>>> broke the possibility for an admin to disable halt polling for already running KVM guests.
+>>>>> In past times doing
+>>>>> echo 0 > /sys/module/kvm/parameters/halt_poll_ns
+>>>>>
+>>>>> stopped polling system wide.
+>>>>> Now all KVM guests will use the halt_poll_ns value that was active during
+>>>>> startup - even those that do not use KVM_CAP_HALT_POLL.
+>>>>>
+>>>>> I guess this was not intended?
+>>>
+>>> No, but...
+>>>
+>>>> I would go so far as to say that halt_poll_ns should be a hard limit on
+>>>> the capability
+>>>
+>>> ... this would not be a good idea I think.  Anything that wants to do a lot of polling can just do "for (;;)".
+> 
+> I agree. It would also be a maintenance burden and subtle "gotcha" to
+> have to increase halt_poll_ns anytime one wants to increase
+> KVM_CAP_HALT_POLL.
 
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 5a1adcc9cfbc..3b469df63bcf 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -617,13 +617,6 @@ static int mmu_spte_clear_track_bits(struct kvm *kvm, u64 *sptep)
- 
- 	pfn = spte_to_pfn(old_spte);
- 
--	/*
--	 * KVM does not hold the refcount of the page used by
--	 * kvm mmu, before reclaiming the page, we should
--	 * unmap it from mmu first.
--	 */
--	WARN_ON(!kvm_is_reserved_pfn(pfn) && !page_count(pfn_to_page(pfn)));
--
- 	if (is_accessed_spte(old_spte))
- 		kvm_set_pfn_accessed(pfn);
- 
-diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-index 421146bd1360..c72ad995a359 100644
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -168,7 +168,7 @@ bool kvm_is_zone_device_pfn(kvm_pfn_t pfn)
- 	 * the device has been pinned, e.g. by get_user_pages().  WARN if the
- 	 * page_count() is zero to help detect bad usage of this helper.
- 	 */
--	if (!pfn_valid(pfn) || WARN_ON_ONCE(!page_count(pfn_to_page(pfn))))
-+	if (!pfn_valid(pfn) || !page_count(pfn_to_page(pfn)))
- 		return false;
- 
- 	return is_zone_device_page(pfn_to_page(pfn));
--- 
-2.33.0.685.g46640cef36-goog
+I think the idea of the upper bound is not about preventing wasting CPUs
+but to reconfigure existing poll intervals on a global level. So I think
+this idea is a bad idea in itself. Especially as the admin might not have
+access to the monitor of user QEMUs.
+
+>>>
+>>> So I think there are two possibilities that makes sense:
+>>>
+>>> * track what is using KVM_CAP_HALT_POLL, and make writes to halt_poll_ns follow that
+>>
+>> what about using halt_poll_ns for those VMs that did not uses KVM_CAP_HALT_POLL and the private number for those that did.
+> 
+> None of these options would cover Christian's original use-case
+> though. (Write to module to disable halt-polling system-wide.)
+> 
+> What about adding a writable "enable_halt_polling" module parameter
+
+that would then affect both classes with and without KVM_CAP_HALT_POLL.
+
+> that affects all VMs? Once that is in place we could also consider
+> getting rid of halt_poll_ns entirely.
+
+As far as I can tell QEMU does not yet use KVM_CAP_HALT_POLL.
+So having a system wide halt_poll_ns makes sense. And I think for all
+processes not using KVM_CAP_HALT_POLL we should really follow what
+halt_poll_ns is NOW and not what it used to be.
 
 _______________________________________________
 kvmarm mailing list
