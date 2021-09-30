@@ -2,79 +2,79 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 969EB41E049
-	for <lists+kvmarm@lfdr.de>; Thu, 30 Sep 2021 19:41:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6189A41E22E
+	for <lists+kvmarm@lfdr.de>; Thu, 30 Sep 2021 21:23:47 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 125AC4B0C0;
-	Thu, 30 Sep 2021 13:41:02 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1186F4B0ED;
+	Thu, 30 Sep 2021 15:23:47 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dJYPRVpecO0Q; Thu, 30 Sep 2021 13:41:01 -0400 (EDT)
+	with ESMTP id n60LFELapkAc; Thu, 30 Sep 2021 15:23:45 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7AFE74A7FD;
-	Thu, 30 Sep 2021 13:41:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EDD914B0DB;
+	Thu, 30 Sep 2021 15:23:43 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 15B114A1B0
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Sep 2021 13:40:59 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E812C4B08A
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Sep 2021 15:23:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id TPMe145KrwmR for <kvmarm@lists.cs.columbia.edu>;
- Thu, 30 Sep 2021 13:40:57 -0400 (EDT)
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com
- [209.85.167.45])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6AEAC40762
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Sep 2021 13:40:57 -0400 (EDT)
-Received: by mail-lf1-f45.google.com with SMTP id y26so28772075lfa.11
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Sep 2021 10:40:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=WfYS2qC2BUxBFwaeuNq9CBr5/hOzTpoKNHPOYb/kb0U=;
- b=JKOucH0Du6brC9cHP3/TotgojGp8LvQ0DMjfh+4pMkJa8EDUlrn4MCuup217MRnbtM
- UnmffJdlH1fl2YlbuvzNR+9444tEuDfLh+qCZG+WWSdE8WzYDD/VStajkRwRwwb5Tr6B
- VmGZXLRZn0LuEnninqKhQHYwjOa60lkiQWgL7OTVZEW72Mhma+VjGwfDTQZ6ob1NibV6
- TdkjDFFZMyynHJyKSZjOmG8levpV02JLMKZq1dI0EEsV0Dj/yaGxczKT/I3dtlX/g0WN
- e1RdYYuGRdJLlCn1j9YQ4CEhBlxLhGp7TCRplUHrZgs+qRKZEFUqNX5ABhJ2I4zMgLC5
- APmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=WfYS2qC2BUxBFwaeuNq9CBr5/hOzTpoKNHPOYb/kb0U=;
- b=J+0n1NbOgWwLQnCOGNF+YFPSWDseRxsObIlf4fmTyY2KCcu1v8CCsUVNDU3HuQmHhR
- gW9EBAQueUXzjEsdxumoZCAmGshSCGAJMGiX3OAyZ/ShSjGPgF0WexHdmp5biguAeraf
- r94y/Iu4Wn+rNGfpvwnBkqT/nSIwIJxpoNymR5j82j7zsvEhZ817iZyGCExO7saY2Ver
- tX8dglpFVeBinXzxl8sXGNg+qeQw7QqddUntaF1hzwKTTnVhgmBOqofasUBvyqKYc0Hx
- 8SBJPRCnHXZBYQ817Wh34U9CEcEK3SjOoKQZmbMMCFRtlqHOFQx/jndqkKqlBFl1a0H3
- qnlA==
-X-Gm-Message-State: AOAM530xCBUwe+cNZ0t3qW+rS7LfKLrA3V7zyl8LzGOII9kcgRIwvNTK
- oy92dDft+wErEiRvX0LcCf0whlIfWPPOxZMoAVqQBQ==
-X-Google-Smtp-Source: ABdhPJzWA0qKlJoVZVk1oBbIoYZxtKHd4J6jrwGqjgUe48P4FMnSxdWiBL7ysJHErdOjAZyPxzB9ODFI8q09GafGkHI=
-X-Received: by 2002:a2e:5c88:: with SMTP id q130mr7096148ljb.170.1633023654249; 
- Thu, 30 Sep 2021 10:40:54 -0700 (PDT)
+ with ESMTP id XBiJR7ZLwPFs for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 30 Sep 2021 15:23:41 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8AAA54B0D0
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Sep 2021 15:23:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1633029821;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=69/2vnynzrwmO+C/hMNu41y0Mcok+R2//sJsybWafFQ=;
+ b=MZKJXP1uGpkn881/ZOMK7xkGZV0z2PXwuo2Ue4jIe91t7vPE91SahmyquBGXR4XtokY0vT
+ GblMMPiQumG+RxEo4LFemXUkyB7e90+Ge621UNAcD4+FW9NNuQcarvvjRGnfG0jgX4ziiN
+ I1oiiTiw0shC1QL7Mr0Agvr6I+pGkR8=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-90-_87xpljDPliji9Qtl4v77g-1; Thu, 30 Sep 2021 15:23:37 -0400
+X-MC-Unique: _87xpljDPliji9Qtl4v77g-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com
+ [10.5.11.11])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id A72E5101872F;
+ Thu, 30 Sep 2021 19:23:35 +0000 (UTC)
+Received: from fuller.cnet (ovpn-112-4.gru2.redhat.com [10.97.112.4])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id C752C76C1F;
+ Thu, 30 Sep 2021 19:23:34 +0000 (UTC)
+Received: by fuller.cnet (Postfix, from userid 1000)
+ id A57B1416CE5D; Thu, 30 Sep 2021 14:51:07 -0300 (-03)
+Date: Thu, 30 Sep 2021 14:51:07 -0300
+From: Marcelo Tosatti <mtosatti@redhat.com>
+To: Oliver Upton <oupton@google.com>
+Subject: Re: [PATCH v8 5/7] kvm: x86: protect masterclock with a seqcount
+Message-ID: <20210930175107.GA15071@fuller.cnet>
+References: <20210916181538.968978-1-oupton@google.com>
+ <20210916181538.968978-6-oupton@google.com>
 MIME-Version: 1.0
-References: <20210923191610.3814698-1-oupton@google.com>
- <20210923191610.3814698-7-oupton@google.com>
- <877deytfes.wl-maz@kernel.org>
-In-Reply-To: <877deytfes.wl-maz@kernel.org>
-From: Oliver Upton <oupton@google.com>
-Date: Thu, 30 Sep 2021 10:40:43 -0700
-Message-ID: <CAOQ_QsjjhTg5usW3DS1P+Uin4ApjvbHwwpmXyEo0bzHe6RGL5g@mail.gmail.com>
-Subject: Re: [PATCH v2 06/11] KVM: arm64: Add support for SYSTEM_SUSPEND PSCI
- call
-To: Marc Zyngier <maz@kernel.org>
-Cc: kvm@vger.kernel.org, Peter Shier <pshier@google.com>,
- kvmarm@lists.cs.columbia.edu
+Content-Disposition: inline
+In-Reply-To: <20210916181538.968978-6-oupton@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+Cc: Catalin Marinas <catalin.marinas@arm.com>, kvm@vger.kernel.org,
+ Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
+ Peter Shier <pshier@google.com>, David Matlack <dmatlack@google.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -91,280 +91,255 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Sep 30, 2021 at 5:29 AM Marc Zyngier <maz@kernel.org> wrote:
->
-> Hi Oliver,
->
-> On Thu, 23 Sep 2021 20:16:05 +0100,
-> Oliver Upton <oupton@google.com> wrote:
-> >
-> > ARM DEN0022D 5.19 "SYSTEM_SUSPEND" describes a PSCI call that may be
-> > used to request a system be suspended. This is optional for PSCI v1.0
-> > and to date KVM has elected to not implement the call. However, a
-> > VMM/operator may wish to provide their guests with the ability to
-> > suspend/resume, necessitating this PSCI call.
-> >
-> > Implement support for SYSTEM_SUSPEND according to the prescribed
-> > behavior in the specification. Add a new system event exit type,
-> > KVM_SYSTEM_EVENT_SUSPEND, to notify userspace when a VM has requested a
-> > system suspend. Make KVM_MP_STATE_HALTED a valid state on arm64.
->
-> KVM_MP_STATE_HALTED is a per-CPU state on x86 (it denotes HLT). Does
-> it make really sense to hijack this for something that is more of a
-> VM-wide state? I can see that it is tempting to do so as we're using
-> the WFI semantics (which are close to HLT's, in a twisted kind of
-> way), but I'm also painfully aware that gluing x86 expectations on
-> arm64 rarely leads to a palatable result.
->
-> > Userspace can set this to request an in-kernel emulation of the suspend.
-> >
-> > Signed-off-by: Oliver Upton <oupton@google.com>
-> > ---
-> >  Documentation/virt/kvm/api.rst    |  6 ++++
-> >  arch/arm64/include/asm/kvm_host.h |  3 ++
-> >  arch/arm64/kvm/arm.c              |  8 +++++
-> >  arch/arm64/kvm/psci.c             | 60 +++++++++++++++++++++++++++++++
-> >  include/uapi/linux/kvm.h          |  2 ++
-> >  5 files changed, 79 insertions(+)
->
-> This patch needs splitting. PSCI interface in one, mpstate stuff in
-> another, userspace management last.
->
-> >
-> > diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
-> > index a6729c8cf063..361a57061b8f 100644
-> > --- a/Documentation/virt/kvm/api.rst
-> > +++ b/Documentation/virt/kvm/api.rst
-> > @@ -5656,6 +5656,7 @@ should put the acknowledged interrupt vector into the 'epr' field.
-> >    #define KVM_SYSTEM_EVENT_SHUTDOWN       1
-> >    #define KVM_SYSTEM_EVENT_RESET          2
-> >    #define KVM_SYSTEM_EVENT_CRASH          3
-> > +  #define KVM_SYSTEM_EVENT_SUSPEND        4
-> >                       __u32 type;
-> >                       __u64 flags;
-> >               } system_event;
-> > @@ -5680,6 +5681,11 @@ Valid values for 'type' are:
-> >     has requested a crash condition maintenance. Userspace can choose
-> >     to ignore the request, or to gather VM memory core dump and/or
-> >     reset/shutdown of the VM.
-> > + - KVM_SYSTEM_EVENT_SUSPEND -- the guest has requested that the VM
-> > +   suspends. Userspace is not obliged to honor this, and may call KVM_RUN
-> > +   again. Doing so will cause the guest to resume at its requested entry
-> > +   point. For ARM64, userspace can request in-kernel suspend emulation
-> > +   by setting the vCPU's MP state to KVM_MP_STATE_HALTED.
-> >
-> >  ::
-> >
-> > diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-> > index 1beda1189a15..441eb6fa7adc 100644
-> > --- a/arch/arm64/include/asm/kvm_host.h
-> > +++ b/arch/arm64/include/asm/kvm_host.h
-> > @@ -137,6 +137,9 @@ struct kvm_arch {
-> >
-> >       /* Memory Tagging Extension enabled for the guest */
-> >       bool mte_enabled;
-> > +
-> > +     /* PSCI SYSTEM_SUSPEND call enabled for the guest */
-> > +     bool suspend_enabled;
-> >  };
-> >
-> >  struct kvm_vcpu_fault_info {
-> > diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-> > index f1a375648e25..d875d3bcf3c5 100644
-> > --- a/arch/arm64/kvm/arm.c
-> > +++ b/arch/arm64/kvm/arm.c
-> > @@ -101,6 +101,10 @@ int kvm_vm_ioctl_enable_cap(struct kvm *kvm,
-> >               }
-> >               mutex_unlock(&kvm->lock);
-> >               break;
-> > +     case KVM_CAP_ARM_SYSTEM_SUSPEND:
-> > +             r = 0;
-> > +             kvm->arch.suspend_enabled = true;
->
-> I don't really fancy adding another control here. Given that we now
-> have the PSCI version being controlled by a firmware pseudo-register,
-> I'd rather have that there.
->
-> And if we do that, I wonder whether there would be any benefit in
-> bumping the PSCI version to 1.1.
->
-> > +             break;
-> >       default:
-> >               r = -EINVAL;
-> >               break;
-> > @@ -215,6 +219,7 @@ int kvm_vm_ioctl_check_extension(struct kvm *kvm, long ext)
-> >       case KVM_CAP_SET_GUEST_DEBUG:
-> >       case KVM_CAP_VCPU_ATTRIBUTES:
-> >       case KVM_CAP_PTP_KVM:
-> > +     case KVM_CAP_ARM_SYSTEM_SUSPEND:
-> >               r = 1;
-> >               break;
-> >       case KVM_CAP_SET_GUEST_DEBUG2:
-> > @@ -470,6 +475,9 @@ int kvm_arch_vcpu_ioctl_set_mpstate(struct kvm_vcpu *vcpu,
-> >       int ret = 0;
-> >
-> >       switch (mp_state->mp_state) {
-> > +     case KVM_MP_STATE_HALTED:
-> > +             kvm_make_request(KVM_REQ_SUSPEND, vcpu);
-> > +             fallthrough;
-> >       case KVM_MP_STATE_RUNNABLE:
-> >               vcpu->arch.power_off = false;
-> >               break;
->
-> > diff --git a/arch/arm64/kvm/psci.c b/arch/arm64/kvm/psci.c
-> > index d453666ddb83..cf869f1f8615 100644
-> > --- a/arch/arm64/kvm/psci.c
-> > +++ b/arch/arm64/kvm/psci.c
-> > @@ -203,6 +203,46 @@ static void kvm_psci_system_reset(struct kvm_vcpu *vcpu)
-> >       kvm_prepare_system_event(vcpu, KVM_SYSTEM_EVENT_RESET);
-> >  }
-> >
-> > +static int kvm_psci_system_suspend(struct kvm_vcpu *vcpu)
-> > +{
-> > +     unsigned long entry_addr, context_id;
-> > +     struct kvm *kvm = vcpu->kvm;
-> > +     unsigned long psci_ret = 0;
-> > +     struct kvm_vcpu *tmp;
-> > +     int ret = 0;
-> > +     int i;
-> > +
-> > +     /*
-> > +      * The SYSTEM_SUSPEND PSCI call requires that all vCPUs (except the
-> > +      * calling vCPU) be in an OFF state, as determined by the
-> > +      * implementation.
-> > +      *
-> > +      * See ARM DEN0022D, 5.19 "SYSTEM_SUSPEND" for more details.
-> > +      */
-> > +     mutex_lock(&kvm->lock);
-> > +     kvm_for_each_vcpu(i, tmp, kvm) {
-> > +             if (tmp != vcpu && !tmp->arch.power_off) {
-> > +                     psci_ret = PSCI_RET_DENIED;
-> > +                     ret = 1;
-> > +                     goto out;
-> > +             }
-> > +     }
-> > +
-> > +     entry_addr = smccc_get_arg1(vcpu);
-> > +     context_id = smccc_get_arg2(vcpu);
-> > +
-> > +     kvm_psci_vcpu_request_reset(vcpu, entry_addr, context_id,
-> > +                                 kvm_vcpu_is_be(vcpu));
->
-> So even if userspace doesn't want to honor the suspend request, the
-> CPU ends up resetting? That's not wrong, but maybe a bit surprising.
->
-> > +
-> > +     memset(&vcpu->run->system_event, 0, sizeof(vcpu->run->system_event));
-> > +     vcpu->run->system_event.type = KVM_SYSTEM_EVENT_SUSPEND;
-> > +     vcpu->run->exit_reason = KVM_EXIT_SYSTEM_EVENT;
->
-> Consider spinning out a helper common to this and kvm_prepare_system_event().
->
-> > +out:
-> > +     mutex_unlock(&kvm->lock);
-> > +     smccc_set_retval(vcpu, psci_ret, 0, 0, 0);
-> > +     return ret;
-> > +}
-> > +
-> >  static void kvm_psci_narrow_to_32bit(struct kvm_vcpu *vcpu)
-> >  {
-> >       int i;
-> > @@ -223,6 +263,14 @@ static unsigned long kvm_psci_check_allowed_function(struct kvm_vcpu *vcpu, u32
-> >       if ((fn & PSCI_0_2_64BIT) && vcpu_mode_is_32bit(vcpu))
-> >               return PSCI_RET_NOT_SUPPORTED;
-> >
-> > +     switch (fn) {
-> > +     case PSCI_1_0_FN_SYSTEM_SUSPEND:
-> > +     case PSCI_1_0_FN64_SYSTEM_SUSPEND:
-> > +             if (!vcpu->kvm->arch.suspend_enabled)
-> > +                     return PSCI_RET_NOT_SUPPORTED;
-> > +             break;
-> > +     }
-> > +
-> >       return 0;
-> >  }
-> >
-> > @@ -316,6 +364,10 @@ static int kvm_psci_1_0_call(struct kvm_vcpu *vcpu)
-> >       unsigned long val;
-> >       int ret = 1;
-> >
-> > +     val = kvm_psci_check_allowed_function(vcpu, psci_fn);
-> > +     if (val)
-> > +             goto out;
-> > +
-> >       switch(psci_fn) {
-> >       case PSCI_0_2_FN_PSCI_VERSION:
-> >               val = KVM_ARM_PSCI_1_0;
-> > @@ -339,6 +391,8 @@ static int kvm_psci_1_0_call(struct kvm_vcpu *vcpu)
-> >               case PSCI_0_2_FN_SYSTEM_OFF:
-> >               case PSCI_0_2_FN_SYSTEM_RESET:
-> >               case PSCI_1_0_FN_PSCI_FEATURES:
-> > +             case PSCI_1_0_FN_SYSTEM_SUSPEND:
-> > +             case PSCI_1_0_FN64_SYSTEM_SUSPEND:
-> >               case ARM_SMCCC_VERSION_FUNC_ID:
-> >                       val = 0;
-> >                       break;
-> > @@ -347,10 +401,16 @@ static int kvm_psci_1_0_call(struct kvm_vcpu *vcpu)
-> >                       break;
-> >               }
-> >               break;
-> > +     case PSCI_1_0_FN_SYSTEM_SUSPEND:
-> > +             kvm_psci_narrow_to_32bit(vcpu);
-> > +             fallthrough;
-> > +     case PSCI_1_0_FN64_SYSTEM_SUSPEND:
-> > +             return kvm_psci_system_suspend(vcpu);
-> >       default:
-> >               return kvm_psci_0_2_call(vcpu);
-> >       }
-> >
-> > +out:
-> >       smccc_set_retval(vcpu, val, 0, 0, 0);
-> >       return ret;
-> >  }
-> > diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
-> > index a067410ebea5..052b0e717b08 100644
-> > --- a/include/uapi/linux/kvm.h
-> > +++ b/include/uapi/linux/kvm.h
-> > @@ -433,6 +433,7 @@ struct kvm_run {
-> >  #define KVM_SYSTEM_EVENT_SHUTDOWN       1
-> >  #define KVM_SYSTEM_EVENT_RESET          2
-> >  #define KVM_SYSTEM_EVENT_CRASH          3
-> > +#define KVM_SYSTEM_EVENT_SUSPEND        4
-> >                       __u32 type;
-> >                       __u64 flags;
-> >               } system_event;
-> > @@ -1112,6 +1113,7 @@ struct kvm_ppc_resize_hpt {
-> >  #define KVM_CAP_BINARY_STATS_FD 203
-> >  #define KVM_CAP_EXIT_ON_EMULATION_FAILURE 204
-> >  #define KVM_CAP_ARM_MTE 205
-> > +#define KVM_CAP_ARM_SYSTEM_SUSPEND 206
-> >
-> >  #ifdef KVM_CAP_IRQ_ROUTING
-> >
->
-> I think there is an additional feature we need, which is to give
-> control back to userspace every time a wake-up condition occurs (I did
-> touch on that in [1]). This would give the opportunity to the VMM to
-> do whatever it needs to perform.
->
-> A typical use case would be to implement wake-up from certain
-> interrupts only (mask non-wake-up IRQs on suspend request, return to
-> the guest for WFI, wake-up returns to the VMM to restore the previous
-> interrupt configuration, resume).
->
-> Userspace would be free to clear the suspend state and resume the
-> guest, or to reenter WFI.
+On Thu, Sep 16, 2021 at 06:15:36PM +0000, Oliver Upton wrote:
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> 
+> Protect the reference point for kvmclock with a seqcount, so that
+> kvmclock updates for all vCPUs can proceed in parallel.  Xen runstate
+> updates will also run in parallel and not bounce the kvmclock cacheline.
+> 
+> nr_vcpus_matched_tsc is updated outside pvclock_update_vm_gtod_copy
+> though, so a spinlock must be kept for that one.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> [Oliver - drop unused locals, don't double acquire tsc_write_lock]
+> Signed-off-by: Oliver Upton <oupton@google.com>
+> ---
+>  arch/x86/include/asm/kvm_host.h |  7 ++-
+>  arch/x86/kvm/x86.c              | 83 +++++++++++++++++----------------
+>  2 files changed, 49 insertions(+), 41 deletions(-)
+> 
+> diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+> index 9c34b5b63e39..5accfe7246ce 100644
+> --- a/arch/x86/include/asm/kvm_host.h
+> +++ b/arch/x86/include/asm/kvm_host.h
+> @@ -1087,6 +1087,11 @@ struct kvm_arch {
+>  
+>  	unsigned long irq_sources_bitmap;
+>  	s64 kvmclock_offset;
+> +
+> +	/*
+> +	 * This also protects nr_vcpus_matched_tsc which is read from a
+> +	 * preemption-disabled region, so it must be a raw spinlock.
+> +	 */
+>  	raw_spinlock_t tsc_write_lock;
+>  	u64 last_tsc_nsec;
+>  	u64 last_tsc_write;
+> @@ -1097,7 +1102,7 @@ struct kvm_arch {
+>  	u64 cur_tsc_generation;
+>  	int nr_vcpus_matched_tsc;
+>  
+> -	spinlock_t pvclock_gtod_sync_lock;
+> +	seqcount_raw_spinlock_t pvclock_sc;
+>  	bool use_master_clock;
+>  	u64 master_kernel_ns;
+>  	u64 master_cycle_now;
+> diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+> index cb5d5cad5124..29156c49cd11 100644
+> --- a/arch/x86/kvm/x86.c
+> +++ b/arch/x86/kvm/x86.c
+> @@ -2533,9 +2533,7 @@ static void kvm_synchronize_tsc(struct kvm_vcpu *vcpu, u64 data)
+>  	vcpu->arch.this_tsc_write = kvm->arch.cur_tsc_write;
+>  
+>  	kvm_vcpu_write_tsc_offset(vcpu, offset);
+> -	raw_spin_unlock_irqrestore(&kvm->arch.tsc_write_lock, flags);
+>  
+> -	spin_lock_irqsave(&kvm->arch.pvclock_gtod_sync_lock, flags);
+>  	if (!matched) {
+>  		kvm->arch.nr_vcpus_matched_tsc = 0;
+>  	} else if (!already_matched) {
+> @@ -2543,7 +2541,7 @@ static void kvm_synchronize_tsc(struct kvm_vcpu *vcpu, u64 data)
+>  	}
+>  
+>  	kvm_track_tsc_matching(vcpu);
+> -	spin_unlock_irqrestore(&kvm->arch.pvclock_gtod_sync_lock, flags);
+> +	raw_spin_unlock_irqrestore(&kvm->arch.tsc_write_lock, flags);
+>  }
+>  
+>  static inline void adjust_tsc_offset_guest(struct kvm_vcpu *vcpu,
+> @@ -2731,9 +2729,6 @@ static void pvclock_update_vm_gtod_copy(struct kvm *kvm)
+>  	int vclock_mode;
+>  	bool host_tsc_clocksource, vcpus_matched;
+>  
+> -	vcpus_matched = (ka->nr_vcpus_matched_tsc + 1 ==
+> -			atomic_read(&kvm->online_vcpus));
+> -
+>  	/*
+>  	 * If the host uses TSC clock, then passthrough TSC as stable
+>  	 * to the guest.
+> @@ -2742,6 +2737,10 @@ static void pvclock_update_vm_gtod_copy(struct kvm *kvm)
+>  					&ka->master_kernel_ns,
+>  					&ka->master_cycle_now);
+>  
+> +	lockdep_assert_held(&kvm->arch.tsc_write_lock);
+> +	vcpus_matched = (ka->nr_vcpus_matched_tsc + 1 ==
+> +			atomic_read(&kvm->online_vcpus));
+> +
+>  	ka->use_master_clock = host_tsc_clocksource && vcpus_matched
+>  				&& !ka->backwards_tsc_observed
+>  				&& !ka->boot_vcpu_runs_old_kvmclock;
+> @@ -2760,14 +2759,18 @@ static void kvm_make_mclock_inprogress_request(struct kvm *kvm)
+>  	kvm_make_all_cpus_request(kvm, KVM_REQ_MCLOCK_INPROGRESS);
+>  }
+>  
+> -static void kvm_start_pvclock_update(struct kvm *kvm)
+> +static void __kvm_start_pvclock_update(struct kvm *kvm)
+>  {
+> -	struct kvm_arch *ka = &kvm->arch;
+> +	raw_spin_lock_irq(&kvm->arch.tsc_write_lock);
+> +	write_seqcount_begin(&kvm->arch.pvclock_sc);
+> +}
+>  
+> +static void kvm_start_pvclock_update(struct kvm *kvm)
+> +{
+>  	kvm_make_mclock_inprogress_request(kvm);
+>  
+>  	/* no guest entries from this point */
+> -	spin_lock_irq(&ka->pvclock_gtod_sync_lock);
+> +	__kvm_start_pvclock_update(kvm);
+>  }
+>  
+>  static void kvm_end_pvclock_update(struct kvm *kvm)
+> @@ -2776,7 +2779,8 @@ static void kvm_end_pvclock_update(struct kvm *kvm)
+>  	struct kvm_vcpu *vcpu;
+>  	int i;
+>  
+> -	spin_unlock_irq(&ka->pvclock_gtod_sync_lock);
+> +	write_seqcount_end(&ka->pvclock_sc);
+> +	raw_spin_unlock_irq(&ka->tsc_write_lock);
+>  	kvm_for_each_vcpu(i, vcpu, kvm)
+>  		kvm_make_request(KVM_REQ_CLOCK_UPDATE, vcpu);
+>  
+> @@ -2797,20 +2801,12 @@ static void get_kvmclock(struct kvm *kvm, struct kvm_clock_data *data)
+>  {
+>  	struct kvm_arch *ka = &kvm->arch;
+>  	struct pvclock_vcpu_time_info hv_clock;
+> -	unsigned long flags;
+>  
+> -	spin_lock_irqsave(&ka->pvclock_gtod_sync_lock, flags);
+>  	if (!ka->use_master_clock) {
+> -		spin_unlock_irqrestore(&ka->pvclock_gtod_sync_lock, flags);
+>  		data->clock = get_kvmclock_base_ns() + ka->kvmclock_offset;
+>  		return;
+>  	}
+>  
+> -	data->flags |= KVM_CLOCK_TSC_STABLE;
+> -	hv_clock.tsc_timestamp = ka->master_cycle_now;
+> -	hv_clock.system_time = ka->master_kernel_ns + ka->kvmclock_offset;
+> -	spin_unlock_irqrestore(&ka->pvclock_gtod_sync_lock, flags);
+> -
+>  	/* both __this_cpu_read() and rdtsc() should be on the same cpu */
+>  	get_cpu();
+>  
+> @@ -2825,6 +2821,9 @@ static void get_kvmclock(struct kvm *kvm, struct kvm_clock_data *data)
+>  #endif
+>  		data->host_tsc = rdtsc();
+>  
+> +		data->flags |= KVM_CLOCK_TSC_STABLE;
+> +		hv_clock.tsc_timestamp = ka->master_cycle_now;
+> +		hv_clock.system_time = ka->master_kernel_ns + ka->kvmclock_offset;
+>  		kvm_get_time_scale(NSEC_PER_SEC, __this_cpu_read(cpu_tsc_khz) * 1000LL,
+>  				   &hv_clock.tsc_shift,
+>  				   &hv_clock.tsc_to_system_mul);
+> @@ -2839,14 +2838,14 @@ static void get_kvmclock(struct kvm *kvm, struct kvm_clock_data *data)
+>  u64 get_kvmclock_ns(struct kvm *kvm)
+>  {
+>  	struct kvm_clock_data data;
+> +	struct kvm_arch *ka = &kvm->arch;
+> +	unsigned seq;
+>  
+> -	/*
+> -	 * Zero flags as it's accessed RMW, leave everything else uninitialized
+> -	 * as clock is always written and no other fields are consumed.
+> -	 */
+> -	data.flags = 0;
+> -
+> -	get_kvmclock(kvm, &data);
+> +	do {
+> +		seq = read_seqcount_begin(&ka->pvclock_sc);
+> +		data.flags = 0;
+> +		get_kvmclock(kvm, &data);
+> +	} while (read_seqcount_retry(&ka->pvclock_sc, seq));
+>  	return data.clock;
+>  }
+>  
+> @@ -2912,6 +2911,7 @@ static void kvm_setup_pvclock_page(struct kvm_vcpu *v,
+>  static int kvm_guest_time_update(struct kvm_vcpu *v)
+>  {
+>  	unsigned long flags, tgt_tsc_khz;
+> +	unsigned seq;
+>  	struct kvm_vcpu_arch *vcpu = &v->arch;
+>  	struct kvm_arch *ka = &v->kvm->arch;
+>  	s64 kernel_ns;
+> @@ -2926,13 +2926,14 @@ static int kvm_guest_time_update(struct kvm_vcpu *v)
+>  	 * If the host uses TSC clock, then passthrough TSC as stable
+>  	 * to the guest.
+>  	 */
+> -	spin_lock_irqsave(&ka->pvclock_gtod_sync_lock, flags);
+> -	use_master_clock = ka->use_master_clock;
+> -	if (use_master_clock) {
+> -		host_tsc = ka->master_cycle_now;
+> -		kernel_ns = ka->master_kernel_ns;
+> -	}
+> -	spin_unlock_irqrestore(&ka->pvclock_gtod_sync_lock, flags);
+> +	seq = read_seqcount_begin(&ka->pvclock_sc);
+> +	do {
+> +		use_master_clock = ka->use_master_clock;
+> +		if (use_master_clock) {
+> +			host_tsc = ka->master_cycle_now;
+> +			kernel_ns = ka->master_kernel_ns;
+> +		}
+> +	} while (read_seqcount_retry(&ka->pvclock_sc, seq));
+>  
+>  	/* Keep irq disabled to prevent changes to the clock */
+>  	local_irq_save(flags);
+> @@ -5855,10 +5856,15 @@ int kvm_arch_pm_notifier(struct kvm *kvm, unsigned long state)
+>  
+>  static int kvm_vm_ioctl_get_clock(struct kvm *kvm, void __user *argp)
+>  {
+> -	struct kvm_clock_data data;
+> +	struct kvm_clock_data data = { 0 };
+> +	unsigned seq;
+> +
+> +	do {
+> +		seq = read_seqcount_begin(&kvm->arch.pvclock_sc);
+> +		data.flags = 0;
+> +		get_kvmclock(kvm, &data);
+> +	} while (read_seqcount_retry(&kvm->arch.pvclock_sc, seq));
+>  
+> -	memset(&data, 0, sizeof(data));
+> -	get_kvmclock(kvm, &data);
+>  	if (copy_to_user(argp, &data, sizeof(data)))
+>  		return -EFAULT;
+>  
+> @@ -8159,9 +8165,7 @@ static void kvm_hyperv_tsc_notifier(void)
+>  	kvm_max_guest_tsc_khz = tsc_khz;
+>  
+>  	list_for_each_entry(kvm, &vm_list, vm_list) {
+> -		struct kvm_arch *ka = &kvm->arch;
+> -
+> -		spin_lock_irq(&ka->pvclock_gtod_sync_lock);
+> +		__kvm_start_pvclock_update(kvm);
+>  		pvclock_update_vm_gtod_copy(kvm);
+>  		kvm_end_pvclock_update(kvm);
+>  	}
+> @@ -11188,8 +11192,7 @@ int kvm_arch_init_vm(struct kvm *kvm, unsigned long type)
+>  
+>  	raw_spin_lock_init(&kvm->arch.tsc_write_lock);
+>  	mutex_init(&kvm->arch.apic_map_lock);
+> -	spin_lock_init(&kvm->arch.pvclock_gtod_sync_lock);
+> -
+> +	seqcount_raw_spinlock_init(&kvm->arch.pvclock_sc, &kvm->arch.tsc_write_lock);
+>  	kvm->arch.kvmclock_offset = -get_kvmclock_base_ns();
+>  	pvclock_update_vm_gtod_copy(kvm);
+>  
+> -- 
+> 2.33.0.309.g3052b89438-goog
+> 
+> 
 
-Yeah, this is definitely needed for the series.
+ACK
 
-Just to make sure it's clear, what should the default behavior be if
-userspace doesn't touch state at all and it calls KVM_RUN again? It
-would seem to me that we should resume the guest by default, much like
-we would do for the SUSPEND event exit.
-
---
-Thanks,
-Oliver
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
