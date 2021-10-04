@@ -2,63 +2,82 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 38BF64202EF
-	for <lists+kvmarm@lfdr.de>; Sun,  3 Oct 2021 18:46:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 378EC4207C4
+	for <lists+kvmarm@lfdr.de>; Mon,  4 Oct 2021 11:03:46 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DC1A84B214;
-	Sun,  3 Oct 2021 12:46:21 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7292A4B264;
+	Mon,  4 Oct 2021 05:03:45 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, body has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id D5mPAUg9r5Dm; Sun,  3 Oct 2021 12:46:21 -0400 (EDT)
+	with ESMTP id VZs+OCb3OXXy; Mon,  4 Oct 2021 05:03:45 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CE9694B234;
-	Sun,  3 Oct 2021 12:46:18 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 617C24B261;
+	Mon,  4 Oct 2021 05:03:44 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9673E4B209
- for <kvmarm@lists.cs.columbia.edu>; Sun,  3 Oct 2021 12:46:17 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 30E664B236
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Oct 2021 05:03:43 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id b3oeivk5NGUC for <kvmarm@lists.cs.columbia.edu>;
- Sun,  3 Oct 2021 12:46:16 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2EFC14B223
- for <kvmarm@lists.cs.columbia.edu>; Sun,  3 Oct 2021 12:46:13 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 389AC61A38;
- Sun,  3 Oct 2021 16:46:12 +0000 (UTC)
-Received: from sofa.misterjones.org ([185.219.108.64] helo=hot-poop.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1mX4cs-00EUhe-LX; Sun, 03 Oct 2021 17:46:10 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH v2 5/5] hw/arm/virt: Disable highmem devices that don't fit in
- the PA range
-Date: Sun,  3 Oct 2021 17:46:05 +0100
-Message-Id: <20211003164605.3116450-6-maz@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20211003164605.3116450-1-maz@kernel.org>
-References: <20211003164605.3116450-1-maz@kernel.org>
-MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: qemu-devel@nongnu.org, drjones@redhat.com,
- eric.auger@redhat.com, peter.maydell@linaro.org, kvmarm@lists.cs.columbia.edu,
- kvm@vger.kernel.org, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kvm@vger.kernel.org, kernel-team@android.com, kvmarm@lists.cs.columbia.edu
+ with ESMTP id if9e6Dh0vxaM for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  4 Oct 2021 05:03:41 -0400 (EDT)
+Received: from mail-ed1-f74.google.com (mail-ed1-f74.google.com
+ [209.85.208.74])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 367B84B211
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Oct 2021 05:03:41 -0400 (EDT)
+Received: by mail-ed1-f74.google.com with SMTP id
+ n19-20020a509353000000b003dad185759bso8586793eda.6
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 04 Oct 2021 02:03:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=YjTsD/0+blx8dzSzzvYPEmIwxWymL2rSsPmT9WrblMQ=;
+ b=cDeVBbd8fmjR3GX4XwCizTRj0hWM50iHttru8PTyFUbxfI+Srq2N/f14A83cswDquw
+ OE9TAuHD7lC8c+ic+i+yiOl6IQ6FAVHQZxmdzAY67B5j4gFWr8hZMA+WN6zXBqBp6NTN
+ jgffafFQATGQHreUOq5eYQplEJ9eQJEWTkXjY37D/dAoaHfL9y81mvc9j/2KYhMfZYvq
+ RdaZVd1Kr3Cd1Kg1HvlNAfRBfG/lGsC3tDKyTZS9O4kJQFviWp6aWFtCosLSaivreQ82
+ eKsskutGnKtrjVhwwPVOhTRNgee+YZb0n732fTRei79zPf1IOd2rllBdb10/PIjLrgC6
+ sr5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=YjTsD/0+blx8dzSzzvYPEmIwxWymL2rSsPmT9WrblMQ=;
+ b=qJTtYbxcMNmc6IUmbGM1jDEL4pLwYJrMuuU7AlEdgRXxVmIQe3SCT1VbZNjcOuDOOL
+ RYoawZpNCGduw05DJgNdeIZdzvQLv+z+UPWTKuk+ygLg8fAHGcYqlXjL8U06z/gW2v3c
+ fYFdX3ZlLnGK0p418t1WAYHF9xCZo7uhkRY6l4OzrNw12w70KBG2wfQ1KCwRfix6MgC8
+ XPkouiQahafBxM1gZkjzOzZhj9O9fPNPOXpifBbJVDy7KESSi2i0KPw3aDyugTus2mOY
+ 9epoOKr4KmK5zHwO3jvnM6czvwjOFUqHFWxhqTuIuRt+nEMIcrr+xhfk6hlhHtDbnmoJ
+ T6sw==
+X-Gm-Message-State: AOAM533Ihsmq3+j1NUMN6Elcop1fRBGnDUZrnddNlaUQK2mPZqnufP53
+ EDKNAa4LZmiwU4h0tLl/M9WWFodV8GL3
+X-Google-Smtp-Source: ABdhPJwMBTgk+xzHhrOf7diiO6pKvFsFa+nBGQazRqVB1zzwDjDYGzDQkOsS9ibLYzZ2nicgVL/MVG58Ll6W
+X-Received: from luke.lon.corp.google.com
+ ([2a00:79e0:d:210:669b:5b16:60b7:a3d4])
+ (user=qperret job=sendgmr) by 2002:a17:906:8281:: with SMTP id
+ h1mr15169765ejx.352.1633338219898; Mon, 04 Oct 2021 02:03:39 -0700 (PDT)
+Date: Mon,  4 Oct 2021 10:03:12 +0100
+Message-Id: <20211004090328.540941-1-qperret@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.33.0.800.g4c38ced690-goog
+Subject: [PATCH 0/2] A couple of EL2 refcounts fixes
+From: Quentin Perret <qperret@google.com>
+To: Marc Zyngier <maz@kernel.org>, James Morse <james.morse@arm.com>, 
+ Alexandru Elisei <alexandru.elisei@arm.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>, 
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+ Quentin Perret <qperret@google.com>, Fuad Tabba <tabba@google.com>, 
+ David Brazdil <dbrazdil@google.com>, linux-arm-kernel@lists.infradead.org, 
+ kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org
+Cc: kernel-team@android.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -75,30 +94,29 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Make sure both the highmem PCIe and GICv3 regions are disabled when
-they don't fully fit in the PA range.
+Hi all,
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- hw/arm/virt.c | 3 +++
- 1 file changed, 3 insertions(+)
+This addresses a couple of issues Will has found with the refcounting of
+page-tables at EL2. Patch 01 fixes a nasty bug, and probably wants to go
+in -stable. Patch 02 fixes a small inconsistency which made it harder to
+find refcount-related bugs at EL2.
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index a572e0c9d9..756f67b6c8 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1673,6 +1673,9 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
-     if (base <= BIT_ULL(pa_bits)) {
-         vms->highest_gpa = base -1;
-     } else {
-+        /* Advertise that we have disabled the highmem devices */
-+        vms->highmem_ecam = false;
-+        vms->highmem_redists = false;
-         vms->highest_gpa = memtop - 1;
-     }
- 
+Feedback welcome !
+
+Thanks,
+Quentin
+
+Quentin Perret (2):
+  KVM: arm64: Fix host stage-2 PGD refcount
+  KVM: arm64: Report corrupted refcount at EL2
+
+ arch/arm64/kvm/hyp/include/nvhe/gfp.h |  1 +
+ arch/arm64/kvm/hyp/nvhe/mem_protect.c |  6 +++++-
+ arch/arm64/kvm/hyp/nvhe/page_alloc.c  | 15 +++++++++++++++
+ 3 files changed, 21 insertions(+), 1 deletion(-)
+
 -- 
-2.30.2
+2.33.0.800.g4c38ced690-goog
 
 _______________________________________________
 kvmarm mailing list
