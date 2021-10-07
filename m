@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 53895426070
-	for <lists+kvmarm@lfdr.de>; Fri,  8 Oct 2021 01:35:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1B0D426073
+	for <lists+kvmarm@lfdr.de>; Fri,  8 Oct 2021 01:35:11 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DC4E34B279;
-	Thu,  7 Oct 2021 19:35:04 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 689174B1BA;
+	Thu,  7 Oct 2021 19:35:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,65 +14,66 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+	T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id aJHj26KSUuQn; Thu,  7 Oct 2021 19:35:04 -0400 (EDT)
+	with ESMTP id 8W+PM3gR7I1P; Thu,  7 Oct 2021 19:35:10 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 92BD54B1BA;
-	Thu,  7 Oct 2021 19:35:03 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DED744B2BB;
+	Thu,  7 Oct 2021 19:35:08 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B52FA4B2A6
- for <kvmarm@lists.cs.columbia.edu>; Thu,  7 Oct 2021 19:35:01 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8C1044086F
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  7 Oct 2021 19:35:07 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id YBEMF6nkbvNy for <kvmarm@lists.cs.columbia.edu>;
- Thu,  7 Oct 2021 19:35:00 -0400 (EDT)
-Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com
- [209.85.214.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C0C6E4086F
- for <kvmarm@lists.cs.columbia.edu>; Thu,  7 Oct 2021 19:34:59 -0400 (EDT)
-Received: by mail-pl1-f201.google.com with SMTP id
- h3-20020a170902704300b0013dbfc88e14so3936308plt.13
- for <kvmarm@lists.cs.columbia.edu>; Thu, 07 Oct 2021 16:34:59 -0700 (PDT)
+ with ESMTP id 3PiCXm3fQPC7 for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  7 Oct 2021 19:35:06 -0400 (EDT)
+Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com
+ [209.85.215.201])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id AC4804B1DA
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  7 Oct 2021 19:35:03 -0400 (EDT)
+Received: by mail-pg1-f201.google.com with SMTP id
+ z7-20020a63c047000000b0026b13e40309so566459pgi.19
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 07 Oct 2021 16:35:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=QCcnWTVJdJc/WAVPcR4BCLp4hc0ky0D9nmZjxgNJgVQ=;
- b=J5Xmgczz4lCb1dmoGGK6T6UZMU3ZtPCtrRXDQAc6dfW6LAwT8mz2PBkLySX1KSf/0g
- iQZqLnqge4KAsH/UvJmnm/n3CQOLLG6pAJ0Cx5rukprVcc6cwYVvpz1bOqENfeEaaruC
- X20RMPoyACae29WQ+cawAHGZUYS82Efud+HKLHfSPV7Fl3rX+lDN94Ld9EwLH5IRfDEq
- pk9ZtxsGNPChSqqouYSArHov4QBv8UxeeWA7gIvtLlb1k9ECUSkk30AR+dZfbUZyXc5z
- fkn0kyfE5037sVahR8CYLc/NjJuhH+AeLPd+7KRl0+Bg6KW4twZcZJQpKqPUoIIgeyjP
- JE9g==
+ :cc; bh=9PSgeQegZjMs5aQbS9f355ca1mIB9gCuDVJX98/wgi4=;
+ b=CUwm009NcsfB4wM2HwUbkEBpfaskzb1HDELJnrL5vLcniu64pkiWZOUAYCZ9j+U8bI
+ EgotwZOdqbR28vF+Nv0332HFuIhlfS41yXvGgqyT2eDqfuLMsU3Dmq05PLYC6/Kwmo0G
+ IbYP1Aev1mmhP77pUr3coXtrRpU4az6/J0qcizA1EeWvzPjDUmC+EZ1Q6OgsL1KNXyAe
+ fVlMzQt39+yoHpu+RYwCqk5FjboaKRY9YlwwbD1TY3aCP7pHaAUzBR2XHA7B7o8v8RyL
+ AUJO6D1xPiR0RCgM6VO43qrccSA7ZNSAkkbyXrm5ub7UDqS071f0tANipuPAaYI4w0yH
+ CtBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=QCcnWTVJdJc/WAVPcR4BCLp4hc0ky0D9nmZjxgNJgVQ=;
- b=ADpAm1ccNPcBZ44SeWcDOGAGZwMcGIIf76gcdSxrAaHx2j9AhFLGCvvgiKzHbcjNZ6
- q3IwknCZw21MRFlDNP4bxB73vBCmJf8JpF3ZnrI891ei6Nx0VwJwXYlC41TDM85Fi0R9
- 0GgDnIZdjTgDe9Kbn5U7HZ6jZGPhUBAnBXmmnx/MY1t6JEtpDrESVhZg9QIuIM81cyTE
- Tl/uZIjnI2yzfQSfdySFcRvB+ZkmMzVqt8WqFJNMTGnEK79/IXYjMFp/z6lflEF9GTVe
- aiAPtzwCl26QyWVq+3IV5KitTmbZr0Gjw2RksgtS/5zCmoITPWVbGPgSfUI/lsSvNgt6
- aMEA==
-X-Gm-Message-State: AOAM533XICPhmdlzKh+Xne8E+j6LDrml9cWCklCYCIyGUC7o9Rz0/hgK
- /FQYpYb6g77nlMjKGa+cZUIBQpmCpKa6
-X-Google-Smtp-Source: ABdhPJyGGErVlG3DR0iUPDgUz2iB0THZPL0Jyz4yWpFGkWw4/28sh4UQq1A0wYRTefCNFOZlSuAEIlv+DBxt
+ bh=9PSgeQegZjMs5aQbS9f355ca1mIB9gCuDVJX98/wgi4=;
+ b=5wbLJhDpTaGVnbSzs1kmFI7GLCg48SE/Df9fZ7M9ah6cf6VJ91RdgIqvDZ8lCMrgJu
+ zMyeVxgCWfDCeH5xwgcXGrCOmlzsAf6jyNMs0ZEJ6cOgEvSHhzj5EoFVdc1+nqTolvFW
+ 27EpcKdaPeELc2CAqdaYiMsZkU+V/Y2q0ED0VJitkIFZ7YnCngxvy5WZz5qQH9ArGwjc
+ f/fzkSZhTE3jyb54j4D4H9/YOMY9VZ7ie0syp+tNNmXOrIBIloGtfwAWPyl3BPpBE5/p
+ jZaQ1j5nWswWB2trA/9jMqQLd7q9pVl6Pqn7HB/FE7lkAP/5UVbZu/woeIah987vVlI8
+ luyA==
+X-Gm-Message-State: AOAM531NQ12xD4+8KtLc5YmNCYLTzH3UySQieFY8/POzk3pFR6WDd3iS
+ tFCmII/Jox87X6iJjfk4SfdEK8RrDBmd
+X-Google-Smtp-Source: ABdhPJxhkF+2VPtnNSdk96r8KkKJxaChFzDmys+zm7/iP86cpUiUQc6Wlzq48Ikt+T6nlvuKb1fEWVupdVGv
 X-Received: from rananta-virt.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:1bcc])
- (user=rananta job=sendgmr) by 2002:a17:902:a3c1:b0:13a:47a:1c5a with SMTP id
- q1-20020a170902a3c100b0013a047a1c5amr6510759plb.13.1633649698763; Thu, 07 Oct
- 2021 16:34:58 -0700 (PDT)
-Date: Thu,  7 Oct 2021 23:34:29 +0000
+ (user=rananta job=sendgmr) by 2002:a17:902:ee93:b0:13e:c846:c902 with SMTP id
+ a19-20020a170902ee9300b0013ec846c902mr6617482pld.88.1633649702684; Thu, 07
+ Oct 2021 16:35:02 -0700 (PDT)
+Date: Thu,  7 Oct 2021 23:34:30 +0000
 In-Reply-To: <20211007233439.1826892-1-rananta@google.com>
-Message-Id: <20211007233439.1826892-6-rananta@google.com>
+Message-Id: <20211007233439.1826892-7-rananta@google.com>
 Mime-Version: 1.0
 References: <20211007233439.1826892-1-rananta@google.com>
 X-Mailer: git-send-email 2.33.0.882.g93a45727a2-goog
-Subject: [PATCH v8 05/15] KVM: arm64: selftests: Add support for cpu_relax
+Subject: [PATCH v8 06/15] KVM: arm64: selftests: Add basic support for
+ arch_timers
 From: Raghavendra Rao Ananta <rananta@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>, 
  Andrew Jones <drjones@redhat.com>, James Morse <james.morse@arm.com>, 
@@ -98,35 +99,165 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Implement the guest helper routine, cpu_relax(), to yield
-the processor to other tasks.
-
-The function was derived from
-arch/arm64/include/asm/vdso/processor.h.
+Add a minimalistic library support to access the virtual timers,
+that can be used for simple timing functionalities, such as
+introducing delays in the guest.
 
 Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
-Reviewed-by: Oliver Upton <oupton@google.com>
 Reviewed-by: Andrew Jones <drjones@redhat.com>
 ---
- tools/testing/selftests/kvm/include/aarch64/processor.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ .../kvm/include/aarch64/arch_timer.h          | 142 ++++++++++++++++++
+ 1 file changed, 142 insertions(+)
+ create mode 100644 tools/testing/selftests/kvm/include/aarch64/arch_timer.h
 
-diff --git a/tools/testing/selftests/kvm/include/aarch64/processor.h b/tools/testing/selftests/kvm/include/aarch64/processor.h
-index 93797783abad..265054c24481 100644
---- a/tools/testing/selftests/kvm/include/aarch64/processor.h
-+++ b/tools/testing/selftests/kvm/include/aarch64/processor.h
-@@ -122,6 +122,11 @@ void vm_install_exception_handler(struct kvm_vm *vm,
- void vm_install_sync_handler(struct kvm_vm *vm,
- 		int vector, int ec, handler_fn handler);
- 
-+static inline void cpu_relax(void)
+diff --git a/tools/testing/selftests/kvm/include/aarch64/arch_timer.h b/tools/testing/selftests/kvm/include/aarch64/arch_timer.h
+new file mode 100644
+index 000000000000..cb7c03de3a21
+--- /dev/null
++++ b/tools/testing/selftests/kvm/include/aarch64/arch_timer.h
+@@ -0,0 +1,142 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * ARM Generic Timer specific interface
++ */
++
++#ifndef SELFTEST_KVM_ARCH_TIMER_H
++#define SELFTEST_KVM_ARCH_TIMER_H
++
++#include "processor.h"
++
++enum arch_timer {
++	VIRTUAL,
++	PHYSICAL,
++};
++
++#define CTL_ENABLE	(1 << 0)
++#define CTL_IMASK	(1 << 1)
++#define CTL_ISTATUS	(1 << 2)
++
++#define msec_to_cycles(msec)	\
++	(timer_get_cntfrq() * (uint64_t)(msec) / 1000)
++
++#define usec_to_cycles(usec)	\
++	(timer_get_cntfrq() * (uint64_t)(usec) / 1000000)
++
++#define cycles_to_usec(cycles) \
++	((uint64_t)(cycles) * 1000000 / timer_get_cntfrq())
++
++static inline uint32_t timer_get_cntfrq(void)
 +{
-+	asm volatile("yield" ::: "memory");
++	return read_sysreg(cntfrq_el0);
 +}
 +
- #define isb()		asm volatile("isb" : : : "memory")
- #define dsb(opt)	asm volatile("dsb " #opt : : : "memory")
- #define dmb(opt)	asm volatile("dmb " #opt : : : "memory")
++static inline uint64_t timer_get_cntct(enum arch_timer timer)
++{
++	isb();
++
++	switch (timer) {
++	case VIRTUAL:
++		return read_sysreg(cntvct_el0);
++	case PHYSICAL:
++		return read_sysreg(cntpct_el0);
++	default:
++		GUEST_ASSERT_1(0, timer);
++	}
++
++	/* We should not reach here */
++	return 0;
++}
++
++static inline void timer_set_cval(enum arch_timer timer, uint64_t cval)
++{
++	switch (timer) {
++	case VIRTUAL:
++		write_sysreg(cval, cntv_cval_el0);
++		break;
++	case PHYSICAL:
++		write_sysreg(cval, cntp_cval_el0);
++		break;
++	default:
++		GUEST_ASSERT_1(0, timer);
++	}
++
++	isb();
++}
++
++static inline uint64_t timer_get_cval(enum arch_timer timer)
++{
++	switch (timer) {
++	case VIRTUAL:
++		return read_sysreg(cntv_cval_el0);
++	case PHYSICAL:
++		return read_sysreg(cntp_cval_el0);
++	default:
++		GUEST_ASSERT_1(0, timer);
++	}
++
++	/* We should not reach here */
++	return 0;
++}
++
++static inline void timer_set_tval(enum arch_timer timer, uint32_t tval)
++{
++	switch (timer) {
++	case VIRTUAL:
++		write_sysreg(tval, cntv_tval_el0);
++		break;
++	case PHYSICAL:
++		write_sysreg(tval, cntp_tval_el0);
++		break;
++	default:
++		GUEST_ASSERT_1(0, timer);
++	}
++
++	isb();
++}
++
++static inline void timer_set_ctl(enum arch_timer timer, uint32_t ctl)
++{
++	switch (timer) {
++	case VIRTUAL:
++		write_sysreg(ctl, cntv_ctl_el0);
++		break;
++	case PHYSICAL:
++		write_sysreg(ctl, cntp_ctl_el0);
++		break;
++	default:
++		GUEST_ASSERT_1(0, timer);
++	}
++
++	isb();
++}
++
++static inline uint32_t timer_get_ctl(enum arch_timer timer)
++{
++	switch (timer) {
++	case VIRTUAL:
++		return read_sysreg(cntv_ctl_el0);
++	case PHYSICAL:
++		return read_sysreg(cntp_ctl_el0);
++	default:
++		GUEST_ASSERT_1(0, timer);
++	}
++
++	/* We should not reach here */
++	return 0;
++}
++
++static inline void timer_set_next_cval_ms(enum arch_timer timer, uint32_t msec)
++{
++	uint64_t now_ct = timer_get_cntct(timer);
++	uint64_t next_ct = now_ct + msec_to_cycles(msec);
++
++	timer_set_cval(timer, next_ct);
++}
++
++static inline void timer_set_next_tval_ms(enum arch_timer timer, uint32_t msec)
++{
++	timer_set_tval(timer, msec_to_cycles(msec));
++}
++
++#endif /* SELFTEST_KVM_ARCH_TIMER_H */
 -- 
 2.33.0.882.g93a45727a2-goog
 
