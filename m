@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FD8B426072
-	for <lists+kvmarm@lfdr.de>; Fri,  8 Oct 2021 01:35:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59EB8426074
+	for <lists+kvmarm@lfdr.de>; Fri,  8 Oct 2021 01:35:13 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1F35E4B25C;
-	Thu,  7 Oct 2021 19:35:10 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EDE814B26A;
+	Thu,  7 Oct 2021 19:35:12 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,61 +19,60 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id I-WvVU3IT3Cy; Thu,  7 Oct 2021 19:35:09 -0400 (EDT)
+	with ESMTP id NS5kRMNjlbyW; Thu,  7 Oct 2021 19:35:12 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C5A784086F;
-	Thu,  7 Oct 2021 19:35:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 12A344B2CF;
+	Thu,  7 Oct 2021 19:35:10 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 72F934B19D
- for <kvmarm@lists.cs.columbia.edu>; Thu,  7 Oct 2021 19:35:07 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 752434B1DA
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  7 Oct 2021 19:35:09 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id FJPExdhqsPNK for <kvmarm@lists.cs.columbia.edu>;
- Thu,  7 Oct 2021 19:35:06 -0400 (EDT)
-Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com
- [209.85.215.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D4F5C4B1BA
- for <kvmarm@lists.cs.columbia.edu>; Thu,  7 Oct 2021 19:35:05 -0400 (EDT)
-Received: by mail-pg1-f202.google.com with SMTP id
- d6-20020a63d646000000b00268d368ead8so587109pgj.6
- for <kvmarm@lists.cs.columbia.edu>; Thu, 07 Oct 2021 16:35:05 -0700 (PDT)
+ with ESMTP id yr4TvMadWfSA for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  7 Oct 2021 19:35:08 -0400 (EDT)
+Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com
+ [209.85.216.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1D2364B19D
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  7 Oct 2021 19:35:08 -0400 (EDT)
+Received: by mail-pj1-f73.google.com with SMTP id
+ b17-20020a17090a551100b001a03bb6c4f1so2713646pji.5
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 07 Oct 2021 16:35:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=zdzYxOXw6HRBi/j9Q4Djh6DlKsT7KOqy9GkRVsRm4i4=;
- b=PvCCl4ZEQDsLP+V4LSuwH3sCogQbp1B9/TjEPTV8Nu5kiq6lYaDWIAyAbL60TcCriO
- TvK03v2M+Fk6kFFH8ucJeeM6OQTB1aTWP1gmvUqjbGltaij4+2MAeHFGuX4HCenQLwzT
- nNb/riJFKx1B2mLcVjIq+qwj1R8H7LegcugghClZjUKpaskRXhrO4DA6ZdCJfuB/XTnL
- 62oIU8it2w+FC9kvR7JrAZq4iWZLeYlkl7mTVgjJLhcU+nP2uohiXmICjub5LWvb1ad8
- TRrchyPGubtZPJSPWL/JIdDssStNCNcvQo8H2EqT/ReRwJw2ZJutddbBu7KoJPNit/CD
- +M+g==
+ :cc; bh=ii6HvMNSDW3BECmvGstwgeSfkGwZjjRRnxyRpuZ+gSA=;
+ b=Z+0lI+jtnSx8SUemH3b2pgvauES0Ucd5KziWgSI89l0ig5r8XtisCnFktIPqEwwa+v
+ hKDJf57FdnosDHfhcObFHEjYaQ+3t6pZCwTE85sMEcnc6JxtznxnQzFTzHOFEGbFFt4+
+ N8f2bkng2JTK87mrc1T/8dLn8Kw+f2zatc65wShnQY4y09db5OpeXQTwSXscOi779xs4
+ Tr2LXQqqG5+aPy8/DXYq8IubgajqT6SEfWb1n+aaNkrpwvmJwiy8aocWwQ5joTgJiyi1
+ JokJlT5zZlCRa4Vmet3RO/QPrA5oMfrre19vU9zDXBwjCPuFb1XSzKtS7OR02CLfNwGx
+ +tfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=zdzYxOXw6HRBi/j9Q4Djh6DlKsT7KOqy9GkRVsRm4i4=;
- b=rp4EKijXxYz0bdRziIFt5R4ohlhaJHiAWA1arRZnQJMkEditeQZkunB55x7tMHT/Ha
- x5zd5MAebCBSz2S+iUl0YM4OLa0RMHRkozsKRwqHip9UpS5S66jz4NsM88PgWcMkJqkK
- KY77i9uI5GCo8AgMGrM998TCv02HeJ90CtHhHJBjVlOHP2+DRlFdxuBGvW3ng0yQVIC2
- xhxkYw0CiRk9FFOqXPnkBLHbHPfIp3e2ZeEqkuOIHdM0ARoV4LTNAHDHIWGCt7e6tyL3
- THtTHJhnr5BYony/aRmIgegS54+G4W7tmTBfwSkE9IUAnzsNfyiFLg3MvcjC1x7kHvDH
- XWIQ==
-X-Gm-Message-State: AOAM532CaRe0UIUnba8C2LaKoLGSRxVaQ8t9V2JwGCJkmk+YxFsd/OUf
- woSS+BXjj1TLhUnv+7+W0m3e6DTkB3rq
-X-Google-Smtp-Source: ABdhPJyilhCRZk0a0SoW62S+ez80OkitwK2J0PNfM9M/q/wH8V2CCWfESNfQOqN3LyPJYXZ7p4mJxSOzXVdc
+ bh=ii6HvMNSDW3BECmvGstwgeSfkGwZjjRRnxyRpuZ+gSA=;
+ b=fWptfydgH7bNJFDAVV7fsP5cIqsvdDj/pkd2b1mI/qxyoT5yG7G7lAmpVUGDVi+sNa
+ a5kLBbFn40PBGglQaqN35wrqsPy+uwcCkeUxcwnwCzLjDbbg1odh0Yhpc/yDAQYSgCqd
+ WSzP1bUsGxJdy0xRTm9veTWlvd/umI6F2tY+0ba2NBNhG+vJOQS2Dmzb+z20NyP6PUtf
+ hqzlf/cP4dsvPDjHDkxjRpwlht0qk8IiLNnL/SlI+5Gp9e4AH1P1dbVLtq7xOgjsFT3V
+ Qa77lb0Lq2t+879PBArqkgDKMfyPXDZeR/H0PBhSmWdV3tb69sjB0+Y9xdAzcpKGF03e
+ n16A==
+X-Gm-Message-State: AOAM532emaCj232o4MzCyz3mCAnfeuMmq8d7RSp+AQFXRSYulTSPVxoJ
+ UYM3ynDLJkWVBwW4pwxZdC3e00fFWZDM
+X-Google-Smtp-Source: ABdhPJwRp5MH/8qbQoCZh65bLmby+gfdQyt8NwHGByXSBx4EmaopUZA+ULvoOqaFJ97bqMwaMnmuIlGdKs0S
 X-Received: from rananta-virt.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:1bcc])
- (user=rananta job=sendgmr) by 2002:a17:902:b093:b029:12c:843:b55a with SMTP
- id p19-20020a170902b093b029012c0843b55amr6613361plr.83.1633649704900; Thu, 07
- Oct 2021 16:35:04 -0700 (PDT)
-Date: Thu,  7 Oct 2021 23:34:31 +0000
+ (user=rananta job=sendgmr) by 2002:a17:90a:d254:: with SMTP id
+ o20mr8508742pjw.226.1633649707151; Thu, 07 Oct 2021 16:35:07 -0700 (PDT)
+Date: Thu,  7 Oct 2021 23:34:32 +0000
 In-Reply-To: <20211007233439.1826892-1-rananta@google.com>
-Message-Id: <20211007233439.1826892-8-rananta@google.com>
+Message-Id: <20211007233439.1826892-9-rananta@google.com>
 Mime-Version: 1.0
 References: <20211007233439.1826892-1-rananta@google.com>
 X-Mailer: git-send-email 2.33.0.882.g93a45727a2-goog
-Subject: [PATCH v8 07/15] KVM: arm64: selftests: Add basic support to generate
- delays
+Subject: [PATCH v8 08/15] KVM: arm64: selftests: Add support to disable and
+ enable local IRQs
 From: Raghavendra Rao Ananta <rananta@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>, 
  Andrew Jones <drjones@redhat.com>, James Morse <james.morse@arm.com>, 
@@ -99,50 +98,35 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add udelay() support to generate a delay in the guest.
-
-The routines are derived and simplified from kernel's
-arch/arm64/lib/delay.c.
+Add functions local_irq_enable() and local_irq_disable() to
+enable and disable the IRQs from the guest, respectively.
 
 Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
-Reviewed-by: Andrew Jones <drjones@redhat.com>
 Reviewed-by: Oliver Upton <oupton@google.com>
+Reviewed-by: Andrew Jones <drjones@redhat.com>
 ---
- .../selftests/kvm/include/aarch64/delay.h     | 25 +++++++++++++++++++
- 1 file changed, 25 insertions(+)
- create mode 100644 tools/testing/selftests/kvm/include/aarch64/delay.h
+ .../testing/selftests/kvm/include/aarch64/processor.h  | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/tools/testing/selftests/kvm/include/aarch64/delay.h b/tools/testing/selftests/kvm/include/aarch64/delay.h
-new file mode 100644
-index 000000000000..329e4f5079ea
---- /dev/null
-+++ b/tools/testing/selftests/kvm/include/aarch64/delay.h
-@@ -0,0 +1,25 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * ARM simple delay routines
-+ */
-+
-+#ifndef SELFTEST_KVM_ARM_DELAY_H
-+#define SELFTEST_KVM_ARM_DELAY_H
-+
-+#include "arch_timer.h"
-+
-+static inline void __delay(uint64_t cycles)
+diff --git a/tools/testing/selftests/kvm/include/aarch64/processor.h b/tools/testing/selftests/kvm/include/aarch64/processor.h
+index 265054c24481..515d04a3c27d 100644
+--- a/tools/testing/selftests/kvm/include/aarch64/processor.h
++++ b/tools/testing/selftests/kvm/include/aarch64/processor.h
+@@ -172,4 +172,14 @@ static __always_inline u32 __raw_readl(const volatile void *addr)
+ #define writel(v,c)		({ __iowmb(); writel_relaxed((v),(c));})
+ #define readl(c)		({ u32 __v = readl_relaxed(c); __iormb(__v); __v; })
+ 
++static inline void local_irq_enable(void)
 +{
-+	enum arch_timer timer = VIRTUAL;
-+	uint64_t start = timer_get_cntct(timer);
-+
-+	while ((timer_get_cntct(timer) - start) < cycles)
-+		cpu_relax();
++	asm volatile("msr daifclr, #3" : : : "memory");
 +}
 +
-+static inline void udelay(unsigned long usec)
++static inline void local_irq_disable(void)
 +{
-+	__delay(usec_to_cycles(usec));
++	asm volatile("msr daifset, #3" : : : "memory");
 +}
 +
-+#endif /* SELFTEST_KVM_ARM_DELAY_H */
+ #endif /* SELFTEST_KVM_PROCESSOR_H */
 -- 
 2.33.0.882.g93a45727a2-goog
 
