@@ -2,10 +2,10 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E94C426C39
-	for <lists+kvmarm@lfdr.de>; Fri,  8 Oct 2021 15:59:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1917F426C3A
+	for <lists+kvmarm@lfdr.de>; Fri,  8 Oct 2021 15:59:04 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0B8A44B156;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BD4054B172;
 	Fri,  8 Oct 2021 09:59:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
@@ -18,39 +18,39 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id e6z+mRWdcjED; Fri,  8 Oct 2021 09:59:02 -0400 (EDT)
+	with ESMTP id A6EhgfoY9zLW; Fri,  8 Oct 2021 09:59:03 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D9DC4B0BE;
-	Fri,  8 Oct 2021 09:59:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BD3104B168;
+	Fri,  8 Oct 2021 09:59:02 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 342814B0BE
- for <kvmarm@lists.cs.columbia.edu>; Fri,  8 Oct 2021 09:58:59 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3C4D94B0BF
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  8 Oct 2021 09:59:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id X1MHgGd81LAc for <kvmarm@lists.cs.columbia.edu>;
- Fri,  8 Oct 2021 09:58:58 -0400 (EDT)
+ with ESMTP id bGhsG6vXc1xd for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  8 Oct 2021 09:59:00 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4F1054B154
- for <kvmarm@lists.cs.columbia.edu>; Fri,  8 Oct 2021 09:58:58 -0400 (EDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 1166C60FD8;
- Fri,  8 Oct 2021 13:58:55 +0000 (UTC)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4B4684B0B8
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  8 Oct 2021 09:59:00 -0400 (EDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 09CE661108;
+ Fri,  8 Oct 2021 13:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1633701537;
- bh=d3wFH/yIetGiq5uriHxlgYqLTUnj/21bzxMY8KFLvuE=;
+ s=k20201202; t=1633701539;
+ bh=JQ2vDfTTUv2kZVaFhWcuP9yI9JIJ01mjGFz/l+UPtH8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=gSvmFTxBs3Yv3TsWi3tqX1+3UZfMC5nAidDqLeOMgNhiZwKO3rcX0xDtnTVSqPls8
- 1WKd7E2cNsrWEuJUcNOegtncGN3biwCWV9+kWuY+DF//z2s+v/+z4t1ZMsq5P5Coey
- SEG96mqW3SKMHFVwCLFTaWJ7OrBHJqMhfdwIhehq9bA9zvPrcHNM7YbuLTTS4SH9qv
- uW3OC9bISzBwlAwH5griMOPP3/kdXkWfKVHe8Xga07syTnDPDf9bgxMHUFnzHIDPlU
- HI1lJZ9b5xg3SDUVuU/nnIT1yCZGYK3XGDbZXXrEyaFTtKBI7T2FJbsxxSWjN4I2MC
- ZMDtaCgbISNZQ==
+ b=o/yRBasuRkcPigzfjLMem83YshHKzzOmSqGMLIlAEeW8n0D+VR73we+TgbGPgGGBA
+ RsiJUjoaqyL7pnTLLD1C8Uj6E4KOYfxDVjIxeVs9GtLOvfwsSeugN5jJ9K2O5BFcmK
+ RK5ghodcW6948U7XQ3890/eL1dtGhJjZu8vb7orzTwxg+jTHE+SKOsa3Eez5Xe8F3p
+ zMuUDru32bs6CeCQAvc5qfxBuUmK86GZm7iuWuDVhkaOZqU5J1uHTsWurF3nPV6i2b
+ SxdX+3UYFjKSeKUtvj063j2vjgJ46CN6BJgHiRzA0ClwLK+GF4PG5su57HflyJQ2NV
+ 8+21lXlOvaJiQ==
 From: Will Deacon <will@kernel.org>
 To: linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v3 4/6] KVM: arm64: Propagate errors from __pkvm_prot_finalize
- hypercall
-Date: Fri,  8 Oct 2021 14:58:37 +0100
-Message-Id: <20211008135839.1193-5-will@kernel.org>
+Subject: [PATCH v3 5/6] KVM: arm64: Prevent re-finalisation of pKVM for a
+ given CPU
+Date: Fri,  8 Oct 2021 14:58:38 +0100
+Message-Id: <20211008135839.1193-6-will@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20211008135839.1193-1-will@kernel.org>
 References: <20211008135839.1193-1-will@kernel.org>
@@ -73,69 +73,34 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-If the __pkvm_prot_finalize hypercall returns an error, we WARN but fail
-to propagate the failure code back to kvm_arch_init().
+__pkvm_prot_finalize() completes the deprivilege of the host when pKVM
+is in use by installing a stage-2 translation table for the calling CPU.
 
-Pass a pointer to a zero-initialised return variable so that failure
-to finalise the pKVM protections on a host CPU can be reported back to
-KVM.
+Issuing the hypercall multiple times for a given CPU makes little sense,
+but in such a case just return early with -EPERM rather than go through
+the whole page-table dance again.
 
 Cc: Marc Zyngier <maz@kernel.org>
 Cc: Quentin Perret <qperret@google.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 ---
- arch/arm64/kvm/arm.c | 30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ arch/arm64/kvm/hyp/nvhe/mem_protect.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 9506cf88fa0e..13bbf35896cd 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -1986,9 +1986,25 @@ static int init_hyp_mode(void)
- 	return err;
- }
+diff --git a/arch/arm64/kvm/hyp/nvhe/mem_protect.c b/arch/arm64/kvm/hyp/nvhe/mem_protect.c
+index bacd493a4eac..cafe17e5fa8f 100644
+--- a/arch/arm64/kvm/hyp/nvhe/mem_protect.c
++++ b/arch/arm64/kvm/hyp/nvhe/mem_protect.c
+@@ -123,6 +123,9 @@ int __pkvm_prot_finalize(void)
+ 	struct kvm_s2_mmu *mmu = &host_kvm.arch.mmu;
+ 	struct kvm_nvhe_init_params *params = this_cpu_ptr(&kvm_init_params);
  
--static void _kvm_host_prot_finalize(void *discard)
-+static void _kvm_host_prot_finalize(void *arg)
- {
--	WARN_ON(kvm_call_hyp_nvhe(__pkvm_prot_finalize));
-+	int *err = arg;
++	if (params->hcr_el2 & HCR_VM)
++		return -EPERM;
 +
-+	if (WARN_ON(kvm_call_hyp_nvhe(__pkvm_prot_finalize)))
-+		WRITE_ONCE(*err, -EINVAL);
-+}
-+
-+static int pkvm_drop_host_privileges(void)
-+{
-+	int ret = 0;
-+
-+	/*
-+	 * Flip the static key upfront as that may no longer be possible
-+	 * once the host stage 2 is installed.
-+	 */
-+	static_branch_enable(&kvm_protected_mode_initialized);
-+	on_each_cpu(_kvm_host_prot_finalize, &ret, 1);
-+	return ret;
- }
- 
- static int finalize_hyp_mode(void)
-@@ -2002,15 +2018,7 @@ static int finalize_hyp_mode(void)
- 	 * None of other sections should ever be introspected.
- 	 */
- 	kmemleak_free_part(__hyp_bss_start, __hyp_bss_end - __hyp_bss_start);
--
--	/*
--	 * Flip the static key upfront as that may no longer be possible
--	 * once the host stage 2 is installed.
--	 */
--	static_branch_enable(&kvm_protected_mode_initialized);
--	on_each_cpu(_kvm_host_prot_finalize, NULL, 1);
--
--	return 0;
-+	return pkvm_drop_host_privileges();
- }
- 
- struct kvm_vcpu *kvm_mpidr_to_vcpu(struct kvm *kvm, unsigned long mpidr)
+ 	params->vttbr = kvm_get_vttbr(mmu);
+ 	params->vtcr = host_kvm.arch.vtcr;
+ 	params->hcr_el2 |= HCR_VM;
 -- 
 2.33.0.882.g93a45727a2-goog
 
