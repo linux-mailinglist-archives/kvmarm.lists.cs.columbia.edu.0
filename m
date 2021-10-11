@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A47842890A
-	for <lists+kvmarm@lfdr.de>; Mon, 11 Oct 2021 10:43:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 828BC428985
+	for <lists+kvmarm@lfdr.de>; Mon, 11 Oct 2021 11:18:13 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 682204B0D6;
-	Mon, 11 Oct 2021 04:43:47 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D066B4B10D;
+	Mon, 11 Oct 2021 05:18:12 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,55 +15,52 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dD4VmJ1xDWn7; Mon, 11 Oct 2021 04:43:47 -0400 (EDT)
+	with ESMTP id ZwwUYqlTFONo; Mon, 11 Oct 2021 05:18:12 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 35AEC4B0CC;
-	Mon, 11 Oct 2021 04:43:46 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 021054B0D6;
+	Mon, 11 Oct 2021 05:18:10 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CAE814B08A
- for <kvmarm@lists.cs.columbia.edu>; Mon, 11 Oct 2021 04:43:44 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F2A84B0C0
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 11 Oct 2021 05:18:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id SICF3sPQ8EI2 for <kvmarm@lists.cs.columbia.edu>;
- Mon, 11 Oct 2021 04:43:43 -0400 (EDT)
+ with ESMTP id kP9RWMB4vRp0 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 11 Oct 2021 05:18:07 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A4E874A19F
- for <kvmarm@lists.cs.columbia.edu>; Mon, 11 Oct 2021 04:43:43 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5A5024B0BF
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 11 Oct 2021 05:18:07 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id A87B760EE3;
- Mon, 11 Oct 2021 08:43:42 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 5BAB960EB6;
+ Mon, 11 Oct 2021 09:18:06 +0000 (UTC)
 Received: from sofa.misterjones.org ([185.219.108.64] helo=hot-poop.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1mZquK-00Fxvk-E6; Mon, 11 Oct 2021 09:43:40 +0100
+ id 1mZrRb-00FyGH-Lk; Mon, 11 Oct 2021 10:18:03 +0100
 From: Marc Zyngier <maz@kernel.org>
-To: eric.auger@redhat.com, kvm@vger.kernel.org, drjones@redhat.com,
- alexandru.elisei@arm.com, kvmarm@lists.cs.columbia.edu,
- Ricardo Koller <ricarkol@google.com>
-Subject: Re: [PATCH v4 00/11] KVM: arm64: vgic: Missing checks for REDIST/CPU
- and ITS regions above the VM IPA size
-Date: Mon, 11 Oct 2021 09:43:33 +0100
-Message-Id: <163394180347.585098.13155475812069497023.b4-ty@kernel.org>
+To: linux-arm-kernel@lists.infradead.org, Marc Zyngier <maz@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
+Subject: Re: [PATCH v2] KVM: arm64: Allow KVM to be disabled from the command
+ line
+Date: Mon, 11 Oct 2021 10:18:00 +0100
+Message-Id: <163394386541.587062.2414212384225711646.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20211005011921.437353-1-ricarkol@google.com>
-References: <20211005011921.437353-1-ricarkol@google.com>
+In-Reply-To: <20211001170553.3062988-1-maz@kernel.org>
+References: <20211001170553.3062988-1-maz@kernel.org>
 MIME-Version: 1.0
 X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: eric.auger@redhat.com, kvm@vger.kernel.org,
- drjones@redhat.com, alexandru.elisei@arm.com, kvmarm@lists.cs.columbia.edu,
- ricarkol@google.com, pshier@google.com, jingzhangos@google.com,
- rananta@google.com, reijiw@google.com, shuah@kernel.org,
- suzuki.poulose@arm.com, james.morse@arm.com, pbonzini@redhat.com,
- oupton@google.com
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org, maz@kernel.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, alexandru.elisei@arm.com,
+ will@kernel.org, dbrazdil@google.com, suzuki.poulose@arm.com,
+ kernel-team@android.com, james.morse@arm.com
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
-Cc: pshier@google.com, Paolo Bonzini <pbonzini@redhat.com>, shuah@kernel.org
+Cc: kernel-team@android.com, Will Deacon <will@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -80,41 +77,19 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, 4 Oct 2021 18:19:10 -0700, Ricardo Koller wrote:
-> KVM doesn't check for redist, CPU interface, and ITS regions that extend
-> partially above the guest addressable IPA range (phys_size).  This can happen
-> when using the V[2|3]_ADDR_TYPE_CPU, ADDR_TYPE_REDIST[_REGION], or
-> ITS_ADDR_TYPE attributes to set a new region that extends partially above
-> phys_size (with the base below phys_size).  The issue is that vcpus can
-> potentially run into a situation where some redistributors are addressable and
-> others are not, or just the first half of the ITS is addressable.
+On Fri, 1 Oct 2021 18:05:53 +0100, Marc Zyngier wrote:
+> Although KVM can be compiled out of the kernel, it cannot be disabled
+> at runtime. Allow this possibility by introducing a new mode that
+> will prevent KVM from initialising.
 > 
-> [...]
+> This is useful in the (limited) circumstances where you don't want
+> KVM to be available (what is wrong with you?), or when you want
+> to install another hypervisor instead (good luck with that).
 
 Applied to next, thanks!
 
-[01/11] kvm: arm64: vgic: Introduce vgic_check_iorange
-        commit: f25c5e4dafd859b941a4654cbab9eb83ff994bcd
-[02/11] KVM: arm64: vgic-v3: Check redist region is not above the VM IPA size
-        commit: 4612d98f58c73ad63928200fd332f75c8e524dae
-[03/11] KVM: arm64: vgic-v2: Check cpu interface region is not above the VM IPA size
-        commit: c56a87da0a7fa14180082249ac954c7ebc9e74e1
-[04/11] KVM: arm64: vgic-v3: Check ITS region is not above the VM IPA size
-        commit: 2ec02f6c64f043a249850c835ca7975c3a155d8b
-[05/11] KVM: arm64: vgic: Drop vgic_check_ioaddr()
-        commit: 96e903896969679104c7fef2c776ed1b5b09584f
-[06/11] KVM: arm64: selftests: Make vgic_init gic version agnostic
-        commit: 3f4db37e203b0562d9ebae575af13ea159fbd077
-[07/11] KVM: arm64: selftests: Make vgic_init/vm_gic_create version agnostic
-        commit: 46fb941bc04d3541776c09c2bf641e7f34e62a01
-[08/11] KVM: arm64: selftests: Add some tests for GICv2 in vgic_init
-        commit: c44df5f9ff31daaa72b3a673422d5cca03a1fd02
-[09/11] KVM: arm64: selftests: Add tests for GIC redist/cpuif partially above IPA range
-        commit: 2dcd9aa1c3a5d3c90047d67efd08f0518f915449
-[10/11] KVM: arm64: selftests: Add test for legacy GICv3 REDIST base partially above IPA range
-        commit: 1883458638979531fc4fcbc26d15fec3e51e1734
-[11/11] KVM: arm64: selftests: Add init ITS device test
-        commit: 3e197f17b23ba7c1a3c7cb1d27f7494444aa42e3
+[1/1] KVM: arm64: Allow KVM to be disabled from the command line
+      commit: b6a68b97af23cc75781bed38221ce73144ac2e39
 
 Cheers,
 
