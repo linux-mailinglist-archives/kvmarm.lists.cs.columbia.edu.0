@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D8D8142BF7B
-	for <lists+kvmarm@lfdr.de>; Wed, 13 Oct 2021 14:04:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D4AD42BF74
+	for <lists+kvmarm@lfdr.de>; Wed, 13 Oct 2021 14:04:07 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7D96B4B132;
-	Wed, 13 Oct 2021 08:04:10 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AE7C94B16F;
+	Wed, 13 Oct 2021 08:04:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,38 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TBOu0RuKPhrz; Wed, 13 Oct 2021 08:04:09 -0400 (EDT)
+	with ESMTP id u7b9N2i+1Ttp; Wed, 13 Oct 2021 08:04:05 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BB4D14B0B4;
-	Wed, 13 Oct 2021 08:04:06 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 545B44B132;
+	Wed, 13 Oct 2021 08:04:04 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 96FE84B121
- for <kvmarm@lists.cs.columbia.edu>; Wed, 13 Oct 2021 08:04:03 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5CBEF4B0D7
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 13 Oct 2021 08:04:02 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id pu3Zegpj1gUE for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id ai8OpEInuus9 for <kvmarm@lists.cs.columbia.edu>;
  Wed, 13 Oct 2021 08:04:01 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3524A4B0FB
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 83B2F4B119
  for <kvmarm@lists.cs.columbia.edu>; Wed, 13 Oct 2021 08:04:01 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 821616109E;
+ by mail.kernel.org (Postfix) with ESMTPSA id CFB39610E7;
  Wed, 13 Oct 2021 12:04:00 +0000 (UTC)
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1maczG-00GTgY-NZ; Wed, 13 Oct 2021 13:03:58 +0100
+ id 1maczH-00GTgY-3E; Wed, 13 Oct 2021 13:03:59 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v9 14/22] KVM: arm64: pkvm: Make the ERR/ERX*_EL1 registers
- RAZ/WI
-Date: Wed, 13 Oct 2021 13:03:38 +0100
-Message-Id: <20211013120346.2926621-4-maz@kernel.org>
+Subject: [PATCH v9 15/22] KVM: arm64: pkvm: Drop AArch32-specific registers
+Date: Wed, 13 Oct 2021 13:03:39 +0100
+Message-Id: <20211013120346.2926621-5-maz@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20211013120346.2926621-1-maz@kernel.org>
 References: <20211010145636.1950948-12-tabba@google.com>
@@ -79,82 +78,29 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The ERR*/ERX* registers should be handled as RAZ/WI, and there
-should be no need to involve EL1 for that.
-
-Add a helper that handles such registers, and repaint the sysreg
-table to declare these registers as RAZ/WI.
+All the SYS_*32_EL2 registers are AArch32-specific. Since we forbid
+AArch32, there is no need to handle those in any way.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/hyp/nvhe/sys_regs.c | 33 ++++++++++++++++++++----------
- 1 file changed, 22 insertions(+), 11 deletions(-)
+ arch/arm64/kvm/hyp/nvhe/sys_regs.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
 diff --git a/arch/arm64/kvm/hyp/nvhe/sys_regs.c b/arch/arm64/kvm/hyp/nvhe/sys_regs.c
-index f125d6a52880..042a1c0be7e0 100644
+index 042a1c0be7e0..e2b3a9e167da 100644
 --- a/arch/arm64/kvm/hyp/nvhe/sys_regs.c
 +++ b/arch/arm64/kvm/hyp/nvhe/sys_regs.c
-@@ -248,6 +248,16 @@ static u64 read_id_reg(const struct kvm_vcpu *vcpu,
- 	return pvm_read_id_reg(vcpu, reg_to_encoding(r));
- }
+@@ -452,10 +452,6 @@ static const struct sys_reg_desc pvm_sys_reg_descs[] = {
+ 	HOST_HANDLED(SYS_CNTP_CVAL_EL0),
  
-+/* Handler to RAZ/WI sysregs */
-+static bool pvm_access_raz_wi(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
-+			      const struct sys_reg_desc *r)
-+{
-+	if (!p->is_write)
-+		p->regval = 0;
-+
-+	return true;
-+}
-+
- /*
-  * Accessor for AArch32 feature id registers.
-  *
-@@ -270,9 +280,7 @@ static bool pvm_access_id_aarch32(struct kvm_vcpu *vcpu,
- 	BUILD_BUG_ON(FIELD_GET(ARM64_FEATURE_MASK(ID_AA64PFR0_EL1),
- 		     PVM_ID_AA64PFR0_RESTRICT_UNSIGNED) > ID_AA64PFR0_ELx_64BIT_ONLY);
- 
--	/* Use 0 for architecturally "unknown" values. */
--	p->regval = 0;
--	return true;
-+	return pvm_access_raz_wi(vcpu, p, r);
- }
+ 	/* Performance Monitoring Registers are restricted. */
+-
+-	HOST_HANDLED(SYS_DACR32_EL2),
+-	HOST_HANDLED(SYS_IFSR32_EL2),
+-	HOST_HANDLED(SYS_FPEXC32_EL2),
+ };
  
  /*
-@@ -301,6 +309,9 @@ static bool pvm_access_id_aarch64(struct kvm_vcpu *vcpu,
- /* Mark the specified system register as an AArch64 feature id register. */
- #define AARCH64(REG) { SYS_DESC(REG), .access = pvm_access_id_aarch64 }
- 
-+/* Mark the specified system register as Read-As-Zero/Write-Ignored */
-+#define RAZ_WI(REG) { SYS_DESC(REG), .access = pvm_access_raz_wi }
-+
- /* Mark the specified system register as not being handled in hyp. */
- #define HOST_HANDLED(REG) { SYS_DESC(REG), .access = NULL }
- 
-@@ -388,14 +399,14 @@ static const struct sys_reg_desc pvm_sys_reg_descs[] = {
- 	HOST_HANDLED(SYS_AFSR1_EL1),
- 	HOST_HANDLED(SYS_ESR_EL1),
- 
--	HOST_HANDLED(SYS_ERRIDR_EL1),
--	HOST_HANDLED(SYS_ERRSELR_EL1),
--	HOST_HANDLED(SYS_ERXFR_EL1),
--	HOST_HANDLED(SYS_ERXCTLR_EL1),
--	HOST_HANDLED(SYS_ERXSTATUS_EL1),
--	HOST_HANDLED(SYS_ERXADDR_EL1),
--	HOST_HANDLED(SYS_ERXMISC0_EL1),
--	HOST_HANDLED(SYS_ERXMISC1_EL1),
-+	RAZ_WI(SYS_ERRIDR_EL1),
-+	RAZ_WI(SYS_ERRSELR_EL1),
-+	RAZ_WI(SYS_ERXFR_EL1),
-+	RAZ_WI(SYS_ERXCTLR_EL1),
-+	RAZ_WI(SYS_ERXSTATUS_EL1),
-+	RAZ_WI(SYS_ERXADDR_EL1),
-+	RAZ_WI(SYS_ERXMISC0_EL1),
-+	RAZ_WI(SYS_ERXMISC1_EL1),
- 
- 	HOST_HANDLED(SYS_TFSR_EL1),
- 	HOST_HANDLED(SYS_TFSRE0_EL1),
 -- 
 2.30.2
 
