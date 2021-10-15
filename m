@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 358B642ED43
-	for <lists+kvmarm@lfdr.de>; Fri, 15 Oct 2021 11:10:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31A7742ED46
+	for <lists+kvmarm@lfdr.de>; Fri, 15 Oct 2021 11:10:25 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D95684B137;
-	Fri, 15 Oct 2021 05:10:21 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D4B2E4B163;
+	Fri, 15 Oct 2021 05:10:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,39 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id RpRvI5Xea91I; Fri, 15 Oct 2021 05:10:19 -0400 (EDT)
+	with ESMTP id G4CXV+6fJRW5; Fri, 15 Oct 2021 05:10:23 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5E2C14B162;
-	Fri, 15 Oct 2021 05:10:18 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BA0B94B19D;
+	Fri, 15 Oct 2021 05:10:21 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 27C844B0C5
- for <kvmarm@lists.cs.columbia.edu>; Fri, 15 Oct 2021 05:10:17 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2443C4B135
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 15 Oct 2021 05:10:18 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id xhXQ8vf-U-65 for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id KYXxBOxSU7Y0 for <kvmarm@lists.cs.columbia.edu>;
  Fri, 15 Oct 2021 05:10:16 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2E4854B0BE
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3209E4B137
  for <kvmarm@lists.cs.columbia.edu>; Fri, 15 Oct 2021 05:10:16 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 96ED2611CC;
+ by mail.kernel.org (Postfix) with ESMTPSA id D2FD861208;
  Fri, 15 Oct 2021 09:10:14 +0000 (UTC)
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1mbJEC-00GvHX-Sb; Fri, 15 Oct 2021 10:10:12 +0100
+ id 1mbJED-00GvHX-4o; Fri, 15 Oct 2021 10:10:13 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 2/5] KVM: arm64: Move kvm_arch_vcpu_run_pid_change() out of
- line
-Date: Fri, 15 Oct 2021 10:08:19 +0100
-Message-Id: <20211015090822.2994920-3-maz@kernel.org>
+Subject: [PATCH 3/5] KVM: arm64: Merge kvm_arch_vcpu_run_pid_change() and
+ kvm_vcpu_first_run_init()
+Date: Fri, 15 Oct 2021 10:08:20 +0100
+Message-Id: <20211015090822.2994920-4-maz@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20211015090822.2994920-1-maz@kernel.org>
 References: <20211015090822.2994920-1-maz@kernel.org>
@@ -77,50 +77,72 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Having kvm_arch_vcpu_run_pid_change() inline doesn't bring anything
-to the table. Move it next to kvm_vcpu_first_run_init(), which will
-be convenient for what is next to come.
+The kvm_arch_vcpu_run_pid_change() helper gets called on each PID
+change. The kvm_vcpu_first_run_init() helper gets run on the...
+first run(!) of a vcpu.
+
+As it turns out, the first run of a vcpu also triggers a PID change
+event (vcpu->pid is initially NULL).
+
+Use this property to merge these two helpers and get rid of another
+arm64-specific oddity.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/kvm_host.h | 7 +------
- arch/arm64/kvm/arm.c              | 5 +++++
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/kvm/arm.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index f8be56d5342b..d7107d627c54 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -748,12 +748,7 @@ static inline bool kvm_pmu_counter_deferred(struct perf_event_attr *attr)
- void kvm_arch_vcpu_load_debug_state_flags(struct kvm_vcpu *vcpu);
- void kvm_arch_vcpu_put_debug_state_flags(struct kvm_vcpu *vcpu);
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index ccb59ac54976..30692497c4ea 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -583,22 +583,26 @@ static void update_vmid(struct kvm_vmid *vmid)
+ 	spin_unlock(&kvm_vmid_lock);
+ }
  
--#ifdef CONFIG_KVM /* Avoid conflicts with core headers if CONFIG_KVM=n */
--static inline int kvm_arch_vcpu_run_pid_change(struct kvm_vcpu *vcpu)
++/*
++ * Handle both the initialisation that is being done when the vcpu is
++ * run for the first time, as well as the updates that must be
++ * performed each time we get a new thread dealing with this vcpu.
++ */
+ int kvm_arch_vcpu_run_pid_change(struct kvm_vcpu *vcpu)
 -{
 -	return kvm_arch_vcpu_run_map_fp(vcpu);
 -}
 -
-+#ifdef CONFIG_KVM
- void kvm_set_pmu_events(u32 set, struct perf_event_attr *attr);
- void kvm_clr_pmu_events(u32 clr);
- 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index fe102cd2e518..ccb59ac54976 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -583,6 +583,11 @@ static void update_vmid(struct kvm_vmid *vmid)
- 	spin_unlock(&kvm_vmid_lock);
- }
- 
-+int kvm_arch_vcpu_run_pid_change(struct kvm_vcpu *vcpu)
-+{
-+	return kvm_arch_vcpu_run_map_fp(vcpu);
-+}
-+
- static int kvm_vcpu_first_run_init(struct kvm_vcpu *vcpu)
+-static int kvm_vcpu_first_run_init(struct kvm_vcpu *vcpu)
  {
  	struct kvm *kvm = vcpu->kvm;
+-	int ret = 0;
+-
+-	if (likely(vcpu->arch.has_run_once))
+-		return 0;
++	int ret;
+ 
+ 	if (!kvm_arm_vcpu_is_finalized(vcpu))
+ 		return -EPERM;
+ 
++	ret = kvm_arch_vcpu_run_map_fp(vcpu);
++	if (ret)
++		return ret;
++
++	if (likely(vcpu->arch.has_run_once))
++		return 0;
++
+ 	vcpu->arch.has_run_once = true;
+ 
+ 	kvm_arm_vcpu_init_debug(vcpu);
+@@ -778,10 +782,6 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
+ 	if (unlikely(!kvm_vcpu_initialized(vcpu)))
+ 		return -ENOEXEC;
+ 
+-	ret = kvm_vcpu_first_run_init(vcpu);
+-	if (ret)
+-		return ret;
+-
+ 	if (run->exit_reason == KVM_EXIT_MMIO) {
+ 		ret = kvm_handle_mmio_return(vcpu);
+ 		if (ret)
 -- 
 2.30.2
 
