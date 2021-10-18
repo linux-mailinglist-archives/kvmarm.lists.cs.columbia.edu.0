@@ -2,64 +2,83 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A8FE4328E0
-	for <lists+kvmarm@lfdr.de>; Mon, 18 Oct 2021 23:12:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 501F4432A8B
+	for <lists+kvmarm@lfdr.de>; Tue, 19 Oct 2021 01:54:51 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0AE474B1C8;
-	Mon, 18 Oct 2021 17:12:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9E8A14B1CB;
+	Mon, 18 Oct 2021 19:54:50 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id kj-fP7dNYiRT; Mon, 18 Oct 2021 17:12:19 -0400 (EDT)
+	with ESMTP id HfEe6O3zJJxE; Mon, 18 Oct 2021 19:54:50 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BCFAF4B17C;
-	Mon, 18 Oct 2021 17:12:18 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 853614B199;
+	Mon, 18 Oct 2021 19:54:49 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B31844B1A4
- for <kvmarm@lists.cs.columbia.edu>; Mon, 18 Oct 2021 17:12:14 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A81734B199
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 18 Oct 2021 19:54:48 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id UDzMUjW+qYyx for <kvmarm@lists.cs.columbia.edu>;
- Mon, 18 Oct 2021 17:12:13 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 85E504B1C8
- for <kvmarm@lists.cs.columbia.edu>; Mon, 18 Oct 2021 17:12:13 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 9206A6112D;
- Mon, 18 Oct 2021 21:12:12 +0000 (UTC)
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1mcZvW-0004Sc-RY; Mon, 18 Oct 2021 22:12:10 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2 5/5] KVM: arm64: Drop vcpu->arch.has_run_once for vcpu->pid
-Date: Mon, 18 Oct 2021 22:11:58 +0100
-Message-Id: <20211018211158.3050779-6-maz@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20211018211158.3050779-1-maz@kernel.org>
-References: <20211018211158.3050779-1-maz@kernel.org>
+ with ESMTP id ZtK-T8tSQBzA for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 18 Oct 2021 19:54:46 -0400 (EDT)
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com
+ [209.85.215.178])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id AF1F54B192
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 18 Oct 2021 19:54:46 -0400 (EDT)
+Received: by mail-pg1-f178.google.com with SMTP id r2so17679553pgl.10
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 18 Oct 2021 16:54:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=ynOhmjUOkwSpnrJ88zMEmxNB0eI9c/2L1iHrpBkEpk4=;
+ b=EFOaBD2lQnyqIAAG5lrCqU/8zu6qACMCiE/0CRBR75mPq/VJ6w6L8PDbEje9d0OiaJ
+ 5eFaONYYZuOumyI17zC4o/vaZRO8CjnVUYDishxFaY6QkQVZDEZKaPF4TfWTBEQQ2bZn
+ nIHOqtbKge9kX9oRaTxIs5lD1nsPmp3dlb+5vQxOA00ewEMo3WgiF3MVdQ2E5CEV+Jem
+ mkZOcvGaZ1UHqdF+6hvJIiM4mBZDZBNWf9PxZ5clWM2kplQwTSaA87Z5+H13SX/2aGFn
+ 6QkehEXNPY3Kf07patc7zcFiBrweGIjWJwpXKYeQxGjWkE4SWH6Gd2wXEN2x6YReAs6M
+ fLlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=ynOhmjUOkwSpnrJ88zMEmxNB0eI9c/2L1iHrpBkEpk4=;
+ b=MuGOoYjI+TDAjy6gu6XYLm9q5m0e7uXWTRIFp/mFnLsEq/aCLvmoXEedCrjlmkfAJS
+ bYDrZ70/V6ungHFwti971/3bqL8QpzghC+oLnq++PEzM7ffO/M/mmlN361OxwQmRHWQZ
+ 1dXgl85eboCs/4WjwxCbfZaHCpd5UkeBu0b3qOeAWWT/wHhwbbWJAXx4Eh5i+EqTP2Sn
+ keN5j91doOCJtuWwluON4YGHP+Va32Kl0PYlfELkwpYVQfEAFbdhXkqbBTDY9K8UrHa9
+ shwUdZ2dEaZiUgSBuw8lexZTSciKvGUC0eM0eGKBz3oFDGcCP198IodmwKaoNkoGALnI
+ GBMw==
+X-Gm-Message-State: AOAM530i1SA/8s9+UxKKeIDQZZOu8Mdd+wOVVN4/kbDtd4LcvPzkXlx2
+ E2zx+w9/yB3vcbxQcoOVuTOXJkL52f4yvJZEnZ9msQ==
+X-Google-Smtp-Source: ABdhPJzVbYDhkj/gRXc6UEHpqQBV4tybyVWFXS4+PBSGTI/Gq/Fn+h+wfokG4GSqJyDfn5rly0rCn5FHhXPB3vizLTc=
+X-Received: by 2002:a63:d806:: with SMTP id b6mr26403649pgh.395.1634601285698; 
+ Mon, 18 Oct 2021 16:54:45 -0700 (PDT)
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, james.morse@arm.com,
- suzuki.poulose@arm.com, alexandru.elisei@arm.com, qperret@google.com,
- will@kernel.org, drjones@redhat.com, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com, Will Deacon <will@kernel.org>
+References: <20211012043535.500493-1-reijiw@google.com>
+ <20211012043535.500493-3-reijiw@google.com>
+ <20211015130918.ezlygga73doepbw6@gator>
+ <CAAeT=Fx9zUet2HvFe8dwhXjyozuggn+qcQBoyb_8hUGJNKFNTQ@mail.gmail.com>
+ <20211018143040.nhkv67cxni6ind6k@gator.home>
+In-Reply-To: <20211018143040.nhkv67cxni6ind6k@gator.home>
+From: Reiji Watanabe <reijiw@google.com>
+Date: Mon, 18 Oct 2021 16:54:29 -0700
+Message-ID: <CAAeT=FzK1dNaJvR9u98-M63pPdeou=KfKoxHE+WN0cadeQUKHw@mail.gmail.com>
+Subject: Re: [RFC PATCH 02/25] KVM: arm64: Save ID registers' sanitized value
+ per vCPU
+To: Andrew Jones <drjones@redhat.com>
+Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+ Peter Shier <pshier@google.com>, Will Deacon <will@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -76,101 +95,27 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-With the transition to kvm_arch_vcpu_run_pid_change() to handle
-the "run once" activities, it becomes obvious that has_run_once
-is now an exact shadow of vcpu->pid.
+> > > > +static void reset_id_reg(struct kvm_vcpu *vcpu, const struct sys_reg_desc *rd)
+> > >
+> > > Since not all ID registers will use this, then maybe name it
+> > > reset_sanitised_id_reg?
+> >
+> > Thank you for the suggestion.
+> >
+> > I named it 'reset_id_reg' according to the naming conventions of
+> > set_id_reg, get_id_reg, and access_id_reg which are used for the same
+> > set of ID registers (ID_SANITISED ones) as reset_id_reg.
+> > I would think it's better to use consistent names for all of them.
+> > So, I am a bit reluctant to change only the name of reset_id_reg.
+> >
+> > What do you think about the names of those other three functions ?
+>
+> I think I like the shorter names, so please disregard my suggestion.
 
-Replace vcpu->arch.has_run_once with a new vcpu_has_run_once()
-helper that directly checks for vcpu->pid, and get rid of the
-now unused field.
+Thank you for the confirmation. I will keep those names as they are.
 
-Reviewed-by: Andrew Jones <drjones@redhat.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/include/asm/kvm_host.h | 5 ++---
- arch/arm64/kvm/arm.c              | 8 +++-----
- arch/arm64/kvm/vgic/vgic-init.c   | 2 +-
- 3 files changed, 6 insertions(+), 9 deletions(-)
-
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index d7107d627c54..e0de761ecbf2 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -366,9 +366,6 @@ struct kvm_vcpu_arch {
- 	int target;
- 	DECLARE_BITMAP(features, KVM_VCPU_MAX_FEATURES);
- 
--	/* Detect first run of a vcpu */
--	bool has_run_once;
--
- 	/* Virtual SError ESR to restore when HCR_EL2.VSE is set */
- 	u64 vsesr_el2;
- 
-@@ -605,6 +602,8 @@ int __kvm_arm_vcpu_set_events(struct kvm_vcpu *vcpu,
- void kvm_arm_halt_guest(struct kvm *kvm);
- void kvm_arm_resume_guest(struct kvm *kvm);
- 
-+#define vcpu_has_run_once(vcpu)	!!rcu_access_pointer((vcpu)->pid)
-+
- #ifndef __KVM_NVHE_HYPERVISOR__
- #define kvm_call_hyp_nvhe(f, ...)						\
- 	({								\
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index a52f6a76485d..222aabd57147 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -350,7 +350,7 @@ void kvm_arch_vcpu_postcreate(struct kvm_vcpu *vcpu)
- 
- void kvm_arch_vcpu_destroy(struct kvm_vcpu *vcpu)
- {
--	if (vcpu->arch.has_run_once && unlikely(!irqchip_in_kernel(vcpu->kvm)))
-+	if (vcpu_has_run_once(vcpu) && unlikely(!irqchip_in_kernel(vcpu->kvm)))
- 		static_branch_dec(&userspace_irqchip_in_use);
- 
- 	kvm_mmu_free_memory_cache(&vcpu->arch.mmu_page_cache);
-@@ -608,7 +608,7 @@ int kvm_arch_vcpu_run_pid_change(struct kvm_vcpu *vcpu)
- 	if (ret)
- 		return ret;
- 
--	if (likely(vcpu->arch.has_run_once))
-+	if (likely(vcpu_has_run_once(vcpu)))
- 		return 0;
- 
- 	kvm_arm_vcpu_init_debug(vcpu);
-@@ -639,8 +639,6 @@ int kvm_arch_vcpu_run_pid_change(struct kvm_vcpu *vcpu)
- 		static_branch_inc(&userspace_irqchip_in_use);
- 	}
- 
--	vcpu->arch.has_run_once = true;
--
- 	return ret;
- }
- 
-@@ -1123,7 +1121,7 @@ static int kvm_arch_vcpu_ioctl_vcpu_init(struct kvm_vcpu *vcpu,
- 	 * need to invalidate the I-cache though, as FWB does *not*
- 	 * imply CTR_EL0.DIC.
- 	 */
--	if (vcpu->arch.has_run_once) {
-+	if (vcpu_has_run_once(vcpu)) {
- 		if (!cpus_have_final_cap(ARM64_HAS_STAGE2_FWB))
- 			stage2_unmap_vm(vcpu->kvm);
- 		else
-diff --git a/arch/arm64/kvm/vgic/vgic-init.c b/arch/arm64/kvm/vgic/vgic-init.c
-index 340c51d87677..8d89ca15f613 100644
---- a/arch/arm64/kvm/vgic/vgic-init.c
-+++ b/arch/arm64/kvm/vgic/vgic-init.c
-@@ -91,7 +91,7 @@ int kvm_vgic_create(struct kvm *kvm, u32 type)
- 		return ret;
- 
- 	kvm_for_each_vcpu(i, vcpu, kvm) {
--		if (vcpu->arch.has_run_once)
-+		if (vcpu_has_run_once(vcpu))
- 			goto out_unlock;
- 	}
- 	ret = 0;
--- 
-2.30.2
-
+Regards,
+Reiji
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
