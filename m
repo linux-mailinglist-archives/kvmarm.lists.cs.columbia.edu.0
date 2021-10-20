@@ -2,93 +2,87 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 19616434D88
-	for <lists+kvmarm@lfdr.de>; Wed, 20 Oct 2021 16:27:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BE01434D89
+	for <lists+kvmarm@lfdr.de>; Wed, 20 Oct 2021 16:27:51 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8AC3F4B14D;
-	Wed, 20 Oct 2021 10:27:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C8504B17B;
+	Wed, 20 Oct 2021 10:27:51 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@chromium.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vlMfJMTL3lY5; Wed, 20 Oct 2021 10:27:49 -0400 (EDT)
+	with ESMTP id VhTX49QVqCEt; Wed, 20 Oct 2021 10:27:49 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 25AFF40C88;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 415244B136;
 	Wed, 20 Oct 2021 10:27:48 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CFC214B0A3
- for <kvmarm@lists.cs.columbia.edu>; Wed, 20 Oct 2021 08:04:49 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6CEE74B0A0
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 20 Oct 2021 08:04:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id LdnfYb1Hc4mw for <kvmarm@lists.cs.columbia.edu>;
- Wed, 20 Oct 2021 08:04:48 -0400 (EDT)
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com
- [209.85.216.47])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8BB4D4B0A0
- for <kvmarm@lists.cs.columbia.edu>; Wed, 20 Oct 2021 08:04:48 -0400 (EDT)
-Received: by mail-pj1-f47.google.com with SMTP id
- e5-20020a17090a804500b001a116ad95caso2293827pjw.2
- for <kvmarm@lists.cs.columbia.edu>; Wed, 20 Oct 2021 05:04:48 -0700 (PDT)
+ with ESMTP id Rz+NnAy2xNIW for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 20 Oct 2021 08:04:58 -0400 (EDT)
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com
+ [209.85.210.176])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 49FD54B12C
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 20 Oct 2021 08:04:58 -0400 (EDT)
+Received: by mail-pf1-f176.google.com with SMTP id o133so2774367pfg.7
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 20 Oct 2021 05:04:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chromium.org; s=google;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=BCKWEoi8FeeBRDvl5EymVEm69MjyykXFzH9HAs/kyO4=;
- b=cuiutl2QAAxfwD56hLItqR8kvhCEQ7NLO3pkxhfHS9+G/fMLr1/t8rKVJEqmHJiNpb
- CZ21EE6qwrk20h7kpm27tNC/c4jVdseWv2S9gIsftsOTHCsJLoVZJc0mJkI8+oObIRwY
- pMNdJZGPHl1m5HRFt9dwroghBaTQXLkVX66aE=
+ h=from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=pU7j7Xk9+/byWORMoTjuh+PtfIleRNtFNR9pisRaOIs=;
+ b=V++5qWbqy5428E4+L8MN0z76u0WFToo1W/QPmRiz3Y2mC128yoEwYEbB+FWVhgenuB
+ n+q6iWsUMxoBq63k7TZlDaAFsLpNQMhhMZKNtAvJHVTqVAJ9VUojVmNE8vYiYx8R+ufz
+ cVJPMZ5WhVbo7SnHuHoClSMPP6oZyFSv/o/vg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=BCKWEoi8FeeBRDvl5EymVEm69MjyykXFzH9HAs/kyO4=;
- b=GEM2o5Ulo61ZyIERKDz7tfimFmm5ixeE7sSKccrB/OhjvoHwBFSYS0CPaXEJEIp62b
- P8Ln0fTloyHuS7jBI3gDbkajvpd29eGWf6Hv9jJ3scDt1DwRvTIv9sphhyTSipYZ8IrQ
- XYviSAGrCj5NJRClTM7NqbScjmpeVOV11IianyJsYXuMLIHr6BJBQAHR3XEsqkrZCoQo
- CNa4PUv/cGC7MDTqiENUA0a64niOYUruiVyd62wqG9bKGx4rqnHKYQ1UXQuk+PpQNPM5
- ygyqwKgBacvFA12VM30Sfen7gCyfQUEjnHkbLQqWxz29xWc35Skmq7OqyZOHDxQO3xUu
- 0gvg==
-X-Gm-Message-State: AOAM530yo8rI0L8zGNDBCW9yzReyElPglXHHkroLLRCqqcGIhukEZVxK
- wLarKQCwzkV8B7qBDLHyJ0pCAQ==
-X-Google-Smtp-Source: ABdhPJzr2LjWMqwdO+RhWupttHiFUwdUh98FJ2jVhkMKr665jMBIQfRoeEZuFCiB3w1/PLoDsOA18Q==
-X-Received: by 2002:a17:90a:c206:: with SMTP id
- e6mr6827339pjt.193.1634731487726; 
- Wed, 20 Oct 2021 05:04:47 -0700 (PDT)
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+ :references:mime-version:content-transfer-encoding;
+ bh=pU7j7Xk9+/byWORMoTjuh+PtfIleRNtFNR9pisRaOIs=;
+ b=GvSxxF65M8TozxHIyGokd3J1K6ohHFhws2ZB97Ty8Q913af7jFNVjVq9sX2yHS5HCw
+ RkBIGG66jFEwmNajoGfW2V5uCs9Ao8XSfaGaa6Vfo3FjVegw/O6IpJ59xIGHy6YPYLqu
+ KNGeceUcCy5qEwdy1PtUBKLEq83XNYfLOgC+nEGF+p5n9KNII42yjxUe5ivoou4R/7b/
+ It7hvw3SBj4h6U2LX/zkmenTe4BOGmdxdf3DwCK+924xRBTQeZ/5gKJiP8TxrlNtBkKO
+ fwxTmw2qrVqQfQYJq54QmmneUaL0EjNocRAQJ47ZoujTiA1QIpfKpBEMBw2/lXiswdQv
+ D9pw==
+X-Gm-Message-State: AOAM532g/u5kBRkY1CEXnUIf56UdSm0bGRAel2F1zR0wN0mbvueNHpA+
+ Qwj/klwpbDoc1xfaY8rR/Z8/wA==
+X-Google-Smtp-Source: ABdhPJxaf4wQew/0fxehgf4we7eoDadSQ+ziLebkvEYdeY0bf6NB9PnUwEUIMDvlNw3FihCdjsAaDA==
+X-Received: by 2002:a63:710d:: with SMTP id m13mr33036191pgc.467.1634731496586; 
+ Wed, 20 Oct 2021 05:04:56 -0700 (PDT)
 Received: from localhost ([2401:fa00:8f:203:e516:d575:e6f:a526])
- by smtp.gmail.com with UTF8SMTPSA id fh3sm5721784pjb.8.2021.10.20.05.04.40
+ by smtp.gmail.com with UTF8SMTPSA id i12sm2108246pgd.56.2021.10.20.05.04.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 Oct 2021 05:04:47 -0700 (PDT)
+ Wed, 20 Oct 2021 05:04:56 -0700 (PDT)
 From: Hikaru Nishida <hikalium@chromium.org>
 To: linux-kernel@vger.kernel.org, dme@dme.org, tglx@linutronix.de,
  mlevitsk@redhat.com, linux@roeck-us.net, pbonzini@redhat.com,
  vkuznets@redhat.com, maz@kernel.org, will@kernel.org
-Subject: [RFC PATCH v3 0/5] x86/kvm: Virtual suspend time injection support
-Date: Wed, 20 Oct 2021 21:04:25 +0900
-Message-Id: <20211020120431.776494-1-hikalium@chromium.org>
+Subject: [RFC PATCH v3 1/5] timekeeping: Expose tk->offs_boot via
+ ktime_get_offs_boot_ns
+Date: Wed, 20 Oct 2021 21:04:26 +0900
+Message-Id: <20211020210348.RFC.v3.1.Ic2211981441d0504581923b8770809f0750a4d0d@changeid>
 X-Mailer: git-send-email 2.33.0.1079.g6e70778dc9-goog
+In-Reply-To: <20211020120431.776494-1-hikalium@chromium.org>
+References: <20211020120431.776494-1-hikalium@chromium.org>
 MIME-Version: 1.0
 X-Mailman-Approved-At: Wed, 20 Oct 2021 10:27:47 -0400
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- linux-doc@vger.kernel.org, Peter Zijlstra <peterz@infradead.org>,
+Cc: Ingo Molnar <mingo@kernel.org>, John Stultz <john.stultz@linaro.org>,
+ Arnd Bergmann <arnd@arndb.de>, Stephen Boyd <sboyd@kernel.org>,
  Linus Walleij <linus.walleij@linaro.org>,
- Dave Hansen <dave.hansen@linux.intel.com>, "H. Peter Anvin" <hpa@zytor.com>,
- senozhatsky@google.com, Ingo Molnar <mingo@kernel.org>,
- kvmarm@lists.cs.columbia.edu, Jonathan Corbet <corbet@lwn.net>,
- Joerg Roedel <joro@8bytes.org>, x86@kernel.org,
- Hikaru Nishida <hikalium@chromium.org>, Ingo Molnar <mingo@redhat.com>,
+ Hikaru Nishida <hikalium@chromium.org>,
  Geert Uytterhoeven <geert@linux-m68k.org>, suleiman@google.com,
- Kees Cook <keescook@chromium.org>, Arnd Bergmann <arnd@arndb.de>,
- Lai Jiangshan <laijs@linux.alibaba.com>, John Stultz <john.stultz@linaro.org>,
- Andy Lutomirski <luto@kernel.org>, linux-arm-kernel@lists.infradead.org,
- Jim Mattson <jmattson@google.com>, Juergen Gross <jgross@suse.com>,
- Stephen Boyd <sboyd@kernel.org>, Borislav Petkov <bp@alien8.de>
+ senozhatsky@google.com, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -105,65 +99,52 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+Expose tk->offs_boot to be used in kvm virtual suspend injection.
 
-Hi,
-
-This patch series adds virtual suspend time injection support to KVM.
-It is an updated version of the following series:
-v2:
-https://lore.kernel.org/kvm/20210806100710.2425336-1-hikalium@chromium.org/
-v1:
-https://lore.kernel.org/kvm/20210426090644.2218834-1-hikalium@chromium.org/
-
-Please take a look again.
-
-To kvm/arm64 folks:
-I'm going to implement this mechanism to ARM64 as well but not
-sure which function should be used to make an IRQ (like kvm_apic_set_irq
-in x86) and if it is okay to use kvm_gfn_to_hva_cache /
-kvm_write_guest_cached for sharing the suspend duration.
-Please let me know if there is other suitable way or any suggestions.
-
-Thanks,
-
-Hikaru Nishida
-
+Signed-off-by: Hikaru Nishida <hikalium@chromium.org>
+---
 
 Changes in v3:
-- Used PM notifier instead of modifying timekeeping_resume()
-  - This avoids holding kvm_lock under interrupt disabled context.
-- Used KVM_REQ_* to make a request for vcpus.
-- Reused HYPERVISOR_CALLBACK_VECTOR IRQ instead of adding a new one.
-- Extracted arch-independent parts.
-- Fixed other reviewed points.
+- Added this patch.
 
-Hikaru Nishida (5):
-  timekeeping: Expose tk->offs_boot via ktime_get_offs_boot_ns
-  kvm/x86: Include asm/pvclock.h in asm/kvmclock.h
-  kvm/x86: virtual suspend time injection: Add common definitions
-  kvm/x86: virtual suspend time injection: Implement host side
-  kvm/x86: virtual suspend time injection: Implement guest side
+ include/linux/timekeeping.h |  2 ++
+ kernel/time/timekeeping.c   | 10 ++++++++++
+ 2 files changed, 12 insertions(+)
 
- Documentation/virt/kvm/cpuid.rst     |   3 +
- Documentation/virt/kvm/msr.rst       |  30 ++++++++
- arch/x86/Kconfig                     |  13 ++++
- arch/x86/include/asm/idtentry.h      |   2 +-
- arch/x86/include/asm/kvm_host.h      |   2 +
- arch/x86/include/asm/kvmclock.h      |  11 +++
- arch/x86/include/uapi/asm/kvm_para.h |   6 ++
- arch/x86/kernel/kvm.c                |  14 +++-
- arch/x86/kernel/kvmclock.c           |  26 +++++++
- arch/x86/kvm/Kconfig                 |  13 ++++
- arch/x86/kvm/cpuid.c                 |   4 +
- arch/x86/kvm/x86.c                   | 109 +++++++++++++++++++++++++++
- arch/x86/mm/fault.c                  |   2 +-
- include/linux/kvm_host.h             |  48 ++++++++++++
- include/linux/timekeeper_internal.h  |   5 ++
- include/linux/timekeeping.h          |   6 ++
- kernel/time/timekeeping.c            |  56 ++++++++++++++
- virt/kvm/kvm_main.c                  |  88 +++++++++++++++++++++
- 18 files changed, 432 insertions(+), 6 deletions(-)
-
+diff --git a/include/linux/timekeeping.h b/include/linux/timekeeping.h
+index 78a98bdff76d..f7be69c81dab 100644
+--- a/include/linux/timekeeping.h
++++ b/include/linux/timekeeping.h
+@@ -179,6 +179,8 @@ extern u64 ktime_get_raw_fast_ns(void);
+ extern u64 ktime_get_boot_fast_ns(void);
+ extern u64 ktime_get_real_fast_ns(void);
+ 
++extern u64 ktime_get_offs_boot_ns(void);
++
+ /*
+  * timespec64/time64_t interfaces utilizing the ktime based ones
+  * for API completeness, these could be implemented more efficiently
+diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
+index b348749a9fc6..e77580d9f8c1 100644
+--- a/kernel/time/timekeeping.c
++++ b/kernel/time/timekeeping.c
+@@ -565,6 +565,16 @@ u64 ktime_get_real_fast_ns(void)
+ }
+ EXPORT_SYMBOL_GPL(ktime_get_real_fast_ns);
+ 
++/**
++ * ktime_get_offs_boot_ns - boottime offset to monotonic.
++ * Return: boottime offset in nanoseconds.
++ */
++u64 ktime_get_offs_boot_ns(void)
++{
++	return ktime_to_ns(tk_core.timekeeper.offs_boot);
++}
++EXPORT_SYMBOL_GPL(ktime_get_offs_boot_ns);
++
+ /**
+  * ktime_get_fast_timestamps: - NMI safe timestamps
+  * @snapshot:	Pointer to timestamp storage
 -- 
 2.33.0.1079.g6e70778dc9-goog
 
