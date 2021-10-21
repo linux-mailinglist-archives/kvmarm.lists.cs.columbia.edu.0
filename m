@@ -2,65 +2,62 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 11C7E436543
-	for <lists+kvmarm@lfdr.de>; Thu, 21 Oct 2021 17:11:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EDE8A43661B
+	for <lists+kvmarm@lfdr.de>; Thu, 21 Oct 2021 17:24:33 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5327E4B186;
-	Thu, 21 Oct 2021 11:11:38 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6F8154B18F;
+	Thu, 21 Oct 2021 11:24:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jpwHW27H2Dql; Thu, 21 Oct 2021 11:11:38 -0400 (EDT)
+	with ESMTP id GjwxNIXPm-wQ; Thu, 21 Oct 2021 11:24:33 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EBE304B161;
-	Thu, 21 Oct 2021 11:11:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 110714B161;
+	Thu, 21 Oct 2021 11:24:32 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id ED30E4B161
- for <kvmarm@lists.cs.columbia.edu>; Thu, 21 Oct 2021 11:11:35 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 423134B159
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 21 Oct 2021 11:24:31 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id O75rWfcA6w8m for <kvmarm@lists.cs.columbia.edu>;
- Thu, 21 Oct 2021 11:11:34 -0400 (EDT)
+ with ESMTP id 9mhSA7AFXsSV for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 21 Oct 2021 11:24:30 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D79CA4B0ED
- for <kvmarm@lists.cs.columbia.edu>; Thu, 21 Oct 2021 11:11:34 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 3712861251;
- Thu, 21 Oct 2021 15:11:33 +0000 (UTC)
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1mdZj9-000jKD-DK; Thu, 21 Oct 2021 16:11:31 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 4/4] arm64/fpsimd: Document the use of TIF_FOREIGN_FPSTATE by
- KVM
-Date: Thu, 21 Oct 2021 16:11:24 +0100
-Message-Id: <20211021151124.3098113-5-maz@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20211021151124.3098113-1-maz@kernel.org>
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 21D2249FB7
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 21 Oct 2021 11:24:30 -0400 (EDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A1C4161183;
+ Thu, 21 Oct 2021 15:24:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1634829869;
+ bh=tUrSTzrgcnXRxuolPC5YiqjKQYQV19z+OKGtoBE//Ew=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=pEad02ay6+Bct21u4Vr3aCBZdjlooRsUJnBfQvsnjOD7ouqCLu2106vDuZdol0SI9
+ CXD6az+sk29AOvUuVipq6vF9bGcBcU6mEv43pCJwPUx1uRGndrx14G7P7sKLiuczJV
+ xFjHPuLwzKyr0YYKOvKy7lLEPLxjrPRnnbyA1p9z6wv6nUagqIzBaxw0n+8uY7aLyG
+ 5rgzto4O73JpcwCWJjRrecfjMxUR7idrJ2lPtI1OfeisTMkjmxi5fduCdKwFTbhFfw
+ QLNo56f+Nakx3mmfJuDqZgudQ9cidMlkk9aD4+/opn2bt73Mk09p/91U9Y+bd8JJ++
+ y3fs+t0nYtnYQ==
+Date: Thu, 21 Oct 2021 16:24:26 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH 2/4] KVM: arm64: Introduce flag shadowing
+ TIF_FOREIGN_FPSTATE
+Message-ID: <YXGGKkQw27YiMBeP@sirena.org.uk>
 References: <20211021151124.3098113-1-maz@kernel.org>
+ <20211021151124.3098113-3-maz@kernel.org>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, james.morse@arm.com,
- suzuki.poulose@arm.com, alexandru.elisei@arm.com, qperret@google.com,
- will@kernel.org, broonie@kernel.org, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com, Will Deacon <will@kernel.org>, broonie@kernel.org
+In-Reply-To: <20211021151124.3098113-3-maz@kernel.org>
+X-Cookie: I program, therefore I am.
+Cc: kernel-team@android.com, kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -72,41 +69,57 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============5445180050178714997=="
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The bit of documentation that talks about TIF_FOREIGN_FPSTATE
-does not mention the ungodly tricks that KVM plays with this flag.
 
-Try and document this for the posterity.
+--===============5445180050178714997==
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="L8Wd2CqiPfVWhZp9"
+Content-Disposition: inline
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/kernel/fpsimd.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kernel/fpsimd.c b/arch/arm64/kernel/fpsimd.c
-index ff4962750b3d..65af2ed64c6a 100644
---- a/arch/arm64/kernel/fpsimd.c
-+++ b/arch/arm64/kernel/fpsimd.c
-@@ -78,7 +78,10 @@
-  * indicate whether or not the userland FPSIMD state of the current task is
-  * present in the registers. The flag is set unless the FPSIMD registers of this
-  * CPU currently contain the most recent userland FPSIMD state of the current
-- * task.
-+ * task *or* the state of the corresponding KVM vcpu if userspace is behaving
-+ * as a VMM and that the vcpu has used FP during its last run. In the latter
-+ * case, KVM will set TIF_FOREIGN_FPSTATE on kvm_vcpu_put(). For all intents
-+ * and purposes, the vcpu FP state is treated identically to userspace's.
-  *
-  * In order to allow softirq handlers to use FPSIMD, kernel_neon_begin() may
-  * save the task's FPSIMD context back to task_struct from softirq context.
--- 
-2.30.2
+--L8Wd2CqiPfVWhZp9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Oct 21, 2021 at 04:11:22PM +0100, Marc Zyngier wrote:
+> We currently have to maintain a mapping the thread_info structure
+> at EL2 in order to be able to check the TIF_FOREIGN_FPSTATE flag.
+>=20
+> In order to eventually get rid of this, start with a vcpu flag that
+> shadows the thread flag on each entry into the hypervisor.
+
+Reviewed-by: Mark Brown <broonie@kernel.org>
+
+--L8Wd2CqiPfVWhZp9
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmFxhikACgkQJNaLcl1U
+h9BEwQf/esARvjGvexFVvEy7ZJkEtcEGWDwcI7fFBSYm35mVfsJxUU/14LDIPmci
+EOzcELKvXBXccR+fJ+DdxtOkJJV/rB6vl1Iyg4ikNaNYbFENyYkkz0gyOtlXSkoH
+nc9fUiPu4/i1+re6CB+n1Fam4qzuavZ71WK7fXwo5hNwB+vc0GAKRKwD8fCyMlcQ
+7f/0JC25VkFkxpdY82tSo2RRRC/m5E6CXJtj0WnSM/q1yfKI/w75j4lDiO78w8+x
+S3IRKg0aZSyiW/Kv05IfRFcO/xNXiOuLwRQ/+7+VuL34njdcA+UmASrJWmTBwV+T
+wPCL4eMWVSK3O8SD6oohjJ/I3LOrRA==
+=z7rI
+-----END PGP SIGNATURE-----
+
+--L8Wd2CqiPfVWhZp9--
+
+--===============5445180050178714997==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
 https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+
+--===============5445180050178714997==--
