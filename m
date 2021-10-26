@@ -2,126 +2,71 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DFDD543B999
-	for <lists+kvmarm@lfdr.de>; Tue, 26 Oct 2021 20:30:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4473243C46D
+	for <lists+kvmarm@lfdr.de>; Wed, 27 Oct 2021 09:54:37 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 41F0E40068;
-	Tue, 26 Oct 2021 14:30:17 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B79BD4B120;
+	Wed, 27 Oct 2021 03:54:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: -1.391
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.391 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@ibm.com
+	(fail, message has been altered) header.i=@quicinc.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cKtNIavM7-zQ; Tue, 26 Oct 2021 14:30:17 -0400 (EDT)
+	with ESMTP id Cii8otGL0M7H; Wed, 27 Oct 2021 03:54:36 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A42C14B0F7;
-	Tue, 26 Oct 2021 14:30:15 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 830924B12E;
+	Wed, 27 Oct 2021 03:54:35 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3AC5C4B0D0
- for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Oct 2021 14:30:14 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6237B4B0B9
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Oct 2021 17:09:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id o0-g+ME8+KRM for <kvmarm@lists.cs.columbia.edu>;
- Tue, 26 Oct 2021 14:30:12 -0400 (EDT)
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6CAE640068
- for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Oct 2021 14:30:12 -0400 (EDT)
-Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 19QG1oc7035894; 
- Tue, 26 Oct 2021 18:30:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=kHQsUpw1VFu+TXvR3qH68hSJpP0tEJmquXEf/hWANuE=;
- b=CPpIaKBG5Tl8Nl3RLSocczn2e8RIBD3cyDKfpQKhgmH3lYN567yvuqbL3znAzcpdm4ti
- +sI2leQ/S1XFZfyR+1sYEKoec8tqsk19fXLH6BPQXoH+ldOrcrHkmaAZnr+JApFBwYRp
- 4sjv/kz5ZsR18O/340unhMQKEZN4OkrBfeJPG5JSs5pALT1+muGdPkwwMcdDY6E4SGPm
- YLpI7hwmH2WU7b1/5zY9Qeou3Mq+oGfct+1/1hv6Bsw7L8lO4x4xDZikTzHTcabU31Cx
- SC4DHiMuIgtNdCgOl3wDEHJykcXDGttiQ8w+GW1b+HFudewIMM29Nhg9Qke/YVSLCgj3 xA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3bx4kbhr58-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 26 Oct 2021 18:30:05 +0000
-Received: from m0127361.ppops.net (m0127361.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 19QIBbd0034899;
- Tue, 26 Oct 2021 18:30:05 GMT
-Received: from ppma04fra.de.ibm.com (6a.4a.5195.ip4.static.sl-reverse.com
- [149.81.74.106])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3bx4kbhr3x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 26 Oct 2021 18:30:04 +0000
-Received: from pps.filterd (ppma04fra.de.ibm.com [127.0.0.1])
- by ppma04fra.de.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 19QIHPAD028495;
- Tue, 26 Oct 2021 18:30:02 GMT
-Received: from b06cxnps3075.portsmouth.uk.ibm.com
- (d06relay10.portsmouth.uk.ibm.com [9.149.109.195])
- by ppma04fra.de.ibm.com with ESMTP id 3bx4f7fm39-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 26 Oct 2021 18:30:02 +0000
-Received: from d06av25.portsmouth.uk.ibm.com (d06av25.portsmouth.uk.ibm.com
- [9.149.105.61])
- by b06cxnps3075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 19QITxnK51249440
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 26 Oct 2021 18:29:59 GMT
-Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 360B811C052;
- Tue, 26 Oct 2021 18:29:59 +0000 (GMT)
-Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DC53C11C050;
- Tue, 26 Oct 2021 18:29:57 +0000 (GMT)
-Received: from li-43c5434c-23b8-11b2-a85c-c4958fb47a68.ibm.com (unknown
- [9.171.78.157])
- by d06av25.portsmouth.uk.ibm.com (Postfix) with ESMTP;
- Tue, 26 Oct 2021 18:29:57 +0000 (GMT)
-Subject: Re: [PATCH v2 00/43] KVM: Halt-polling and x86 APICv overhaul
-To: Sean Christopherson <seanjc@google.com>
-References: <20211009021236.4122790-1-seanjc@google.com>
- <04b1a72e-47b4-4bde-eb9e-ba36c156ff0d@de.ibm.com>
- <YXgVIvYhABnrP2Jo@google.com>
-From: Christian Borntraeger <borntraeger@de.ibm.com>
-Message-ID: <a9c1e6ca-0257-4b69-84dd-49d3485f9565@de.ibm.com>
-Date: Tue, 26 Oct 2021 20:29:57 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+ with ESMTP id 9hOyVxGL7qms for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 26 Oct 2021 17:09:39 -0400 (EDT)
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1E1A54A19A
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Oct 2021 17:09:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+ t=1635282579; x=1666818579;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=3ypMBrk+3j6FxYmtaFh1XZoPQs9JHaCVhfPDEWck3j4=;
+ b=UYOWfUxaokMs5THo/5N2U9L5UDhQ9/kDp6frgCwDUkQBnFVZyPke1UN/
+ uHtrIgX469S7bIlgwTcfGeVCGNbpaYv2D7DC510umiMws7lwVgvIfVIHQ
+ 1Dn2mIKksW/XLORlJ83ggULHlGUJlTfEcVA1vJoEeQP9TXSpNlC16tt0J 4=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+ by alexa-out.qualcomm.com with ESMTP; 26 Oct 2021 14:09:38 -0700
+X-QCInternal: smtphost
+Received: from nalasex01a.na.qualcomm.com ([10.47.209.196])
+ by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Oct 2021 14:09:37 -0700
+Received: from qian-HP-Z2-SFF-G5-Workstation.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7; 
+ Tue, 26 Oct 2021 14:09:36 -0700
+From: Qian Cai <quic_qiancai@quicinc.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: [PATCH] KVM: arm64: Remove unused TRNG_NO_ENTROPY
+Date: Tue, 26 Oct 2021 17:09:13 -0400
+Message-ID: <20211026210913.57006-1-quic_qiancai@quicinc.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-In-Reply-To: <YXgVIvYhABnrP2Jo@google.com>
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: JmDEkCgcD3-ZRJi2Qd_r_hCC449htTWY
-X-Proofpoint-GUID: 02zJ-KDhJ3N2JI7UDwO_ZOcNKnXzVG1F
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
- definitions=2021-10-26_05,2021-10-26_01,2020-04-07_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0
- spamscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0 mlxscore=0
- clxscore=1015 suspectscore=0 priorityscore=1501 bulkscore=0
- mlxlogscore=966 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2110150000 definitions=main-2110260100
-Cc: Cornelia Huck <cohuck@redhat.com>, Wanpeng Li <wanpengli@tencent.com>,
- kvm@vger.kernel.org, David Hildenbrand <david@redhat.com>,
- linux-kernel@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
- Atish Patra <atish.patra@wdc.com>, linux-riscv@lists.infradead.org,
- Claudio Imbrenda <imbrenda@linux.ibm.com>, kvmarm@lists.cs.columbia.edu,
- Janosch Frank <frankja@linux.ibm.com>, Marc Zyngier <maz@kernel.org>,
- Joerg Roedel <joro@8bytes.org>, Huacai Chen <chenhuacai@kernel.org>,
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
- Albert Ou <aou@eecs.berkeley.edu>, kvm-ppc@vger.kernel.org,
- Paul Walmsley <paul.walmsley@sifive.com>, David Matlack <dmatlack@google.com>,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
- Anup Patel <anup.patel@wdc.com>, linux-mips@vger.kernel.org,
- Palmer Dabbelt <palmer@dabbelt.com>, kvm-riscv@lists.infradead.org,
- Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Mailman-Approved-At: Wed, 27 Oct 2021 03:54:34 -0400
+Cc: Will Deacon <will@kernel.org>, Qian Cai <quic_qiancai@quicinc.com>,
+ linux-kernel@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -133,55 +78,36 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+TRNG_NO_ENTROPY was unused when introduced and now. This is also caught by
+GCC (W=2):
 
+arch/arm64/kvm/trng.c:17: warning: macro "TRNG_NO_ENTROPY" is not used [-Wunused-macros]
+   17 | #define TRNG_NO_ENTROPY   ((unsigned long)-3)
 
-Am 26.10.21 um 16:48 schrieb Sean Christopherson:
-> On Tue, Oct 26, 2021, Christian Borntraeger wrote:
->> Am 09.10.21 um 04:11 schrieb Sean Christopherson:
->>> This is basically two series smushed into one.  The first "half" aims
->>> to differentiate between "halt" and a more generic "block", where "halt"
->>> aligns with x86's HLT instruction, the halt-polling mechanisms, and
->>> associated stats, and "block" means any guest action that causes the vCPU
->>> to block/wait.
->>>
->>> The second "half" overhauls x86's APIC virtualization code (Posted
->>> Interrupts on Intel VMX, AVIC on AMD SVM) to do their updates in response
->>> to vCPU (un)blocking in the vcpu_load/put() paths, keying off of the
->>> vCPU's rcuwait status to determine when a blocking vCPU is being put and
->>> reloaded.  This idea comes from arm64's kvm_timer_vcpu_put(), which I
->>> stumbled across when diving into the history of arm64's (un)blocking hooks.
->>>
->>> The x86 APICv overhaul allows for killing off several sets of hooks in
->>> common KVM and in x86 KVM (to the vendor code).  Moving everything to
->>> vcpu_put/load() also realizes nice cleanups, especially for the Posted
->>> Interrupt code, which required some impressive mental gymnastics to
->>> understand how vCPU task migration interacted with vCPU blocking.
->>>
->>> Non-x86 folks, sorry for the noise.  I'm hoping the common parts can get
->>> applied without much fuss so that future versions can be x86-only.
->>>
->>> v2:
->>>    - Collect reviews. [Christian, David]
->>>    - Add patch to move arm64 WFI functionality out of hooks. [Marc]
->>>    - Add RISC-V to the fun.
->>>    - Add all the APICv fun.
->>
->> Have we actually followed up on the regression regarding halt_poll_ns=0 no longer disabling
->> polling for running systems?
-> 
-> No, I have that conversation flagged but haven't gotten back to it.  I still like
-> the idea of special casing halt_poll_ns=0 to override the capability.  I can send
-> a proper patch for that unless there's a different/better idea?
+Signed-off-by: Qian Cai <quic_qiancai@quicinc.com>
+---
+ arch/arm64/kvm/trng.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-I think I would prefer a variant that uses the halt_poll_ns value AS IS for all
-guests that have not opted in the per guest feature.
-And then MAYBE have 0 as a special case to disable that also for the opted in
-VMs.
+diff --git a/arch/arm64/kvm/trng.c b/arch/arm64/kvm/trng.c
+index 99bdd7103c9c..6a46b3ac3970 100644
+--- a/arch/arm64/kvm/trng.c
++++ b/arch/arm64/kvm/trng.c
+@@ -14,7 +14,6 @@
+ #define TRNG_SUCCESS			0UL
+ #define TRNG_NOT_SUPPORTED		((unsigned long)-1)
+ #define TRNG_INVALID_PARAMETER		((unsigned long)-2)
+-#define TRNG_NO_ENTROPY			((unsigned long)-3)
+ 
+ #define TRNG_MAX_BITS64			192
+ 
+-- 
+2.30.2
 
 _______________________________________________
 kvmarm mailing list
