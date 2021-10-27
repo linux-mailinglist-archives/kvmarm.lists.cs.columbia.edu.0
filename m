@@ -2,88 +2,99 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E697E43CF03
-	for <lists+kvmarm@lfdr.de>; Wed, 27 Oct 2021 18:50:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B791F43CE39
+	for <lists+kvmarm@lfdr.de>; Wed, 27 Oct 2021 18:04:49 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9634A4B19A;
-	Wed, 27 Oct 2021 12:50:06 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3F3524B190;
+	Wed, 27 Oct 2021 12:04:49 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.209
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id egcjfTMvIjAa; Wed, 27 Oct 2021 12:50:06 -0400 (EDT)
+	with ESMTP id 9OOfV4OtqHJh; Wed, 27 Oct 2021 12:04:49 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 85A2F4B1D4;
-	Wed, 27 Oct 2021 12:49:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D7FE94B11C;
+	Wed, 27 Oct 2021 12:04:47 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id BD5CB4B159
- for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Oct 2021 11:18:36 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A47434A193
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Oct 2021 12:04:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id TG2DuxBu1Lau for <kvmarm@lists.cs.columbia.edu>;
- Wed, 27 Oct 2021 11:18:35 -0400 (EDT)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.129.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 379F64B136
- for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Oct 2021 11:18:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1635347915;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Mqfkyc1h1IacAYuqVX+51EaEIUB4H7XAD3a00wXW0uo=;
- b=SntEYb0jgUUY4gljWgTTZDnsfXPpVWtXaLl+3M9lXaew6h4Rv1PM9NAW4a9inCqfDLuhHw
- loZn7TBlRAIHsO++GEw4i1C4/2F9a6bbpgVpCatC45pwfeLiwBqem6/Drdes8i8XBos0sA
- f6QEWq+7JGHX9Y7pGhgAKkB6jwCyAL0=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-129-NivpEGWfOKW2rqXDN2Iarw-1; Wed, 27 Oct 2021 11:18:33 -0400
-X-MC-Unique: NivpEGWfOKW2rqXDN2Iarw-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com
- [10.5.11.14])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 090521023F57;
- Wed, 27 Oct 2021 15:18:26 +0000 (UTC)
-Received: from starship (unknown [10.40.194.243])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 37C0260C48;
- Wed, 27 Oct 2021 15:18:14 +0000 (UTC)
-Message-ID: <796f9a7d553a0e13da5c44597666962620c64303.camel@redhat.com>
-Subject: Re: [PATCH v2 18/43] KVM: x86: Invoke kvm_vcpu_block() directly for
- non-HALTED wait states
-From: Maxim Levitsky <mlevitsk@redhat.com>
-To: Sean Christopherson <seanjc@google.com>, Marc Zyngier <maz@kernel.org>, 
- Huacai Chen <chenhuacai@kernel.org>, Aleksandar Markovic
- <aleksandar.qemu.devel@gmail.com>, Paul Mackerras <paulus@ozlabs.org>, Anup
- Patel <anup.patel@wdc.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Christian Borntraeger <borntraeger@de.ibm.com>, Janosch Frank
- <frankja@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 27 Oct 2021 18:18:13 +0300
-In-Reply-To: <20211009021236.4122790-19-seanjc@google.com>
+ with ESMTP id tZe2xHgQVPGL for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 27 Oct 2021 12:04:45 -0400 (EDT)
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com
+ [209.85.214.176])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6D08F406E7
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Oct 2021 12:04:45 -0400 (EDT)
+Received: by mail-pl1-f176.google.com with SMTP id n11so2329611plf.4
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Oct 2021 09:04:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=dcpH/p742iSNJ4bZTW0zt1TGCcBsOCFOjXwA1nHOArQ=;
+ b=Tm86IoMHOyj+zpaOtCSE4VFzqAdP+9ruKNcRadlOsFvChh7ill13kZR5jWD9NHE65h
+ 64jvZDMu9kIVfatwV9NqtMoLtCasfA5hteZXUvebb1KfemQP+3PqYeGQAgGx9M3p7bU8
+ qNPAFnYhitn+E30o4EXNDe5pTB+zWAuxmiSCE4KEPuXZlCuroSJybkJylXO0PsvVFrn8
+ WHatzxWVbSvDonjRBU4GlRNXf74WN3TzY8Vqi6OJ+Ctj4jxWd/Ui1c+kFiATf0mtE0jn
+ ZZyVyj8OcnNeewioZwWE0jsQa9pZSUdW+6oR7be9c4lXCDaENvCYDfdnIza70+cJL6Io
+ dmAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=dcpH/p742iSNJ4bZTW0zt1TGCcBsOCFOjXwA1nHOArQ=;
+ b=Ygyu5qJ1qH3zlyfTLKRzOT0/CbckBv0NMWAo/DbXJ48eDQkn2/WvTZMDawS5PpbH1t
+ 9yRWen+8nj9QpFMnoIhGDJULTlZhEs5L88dcTxfNG+5dFMQ0eb8Fsw7ZFpfVvgrhpw7R
+ WpQF5JNomcZkzm0KrZIgG/rd4CvbFv2b5sgaCmYcR/j6fo9JSWXAYjkydj3bIyF0C9NH
+ Oyp/KsBQepivKRt9FHs+V1WGDXN1hpxqwQMqZ393NRPshVmlcmOmtRTY5rgJmCKpzvZA
+ EiznkBbyYPISVejlcFdud+oPnTQs+ZoYEatLzRp3Ul1ZiCKkwTZXBimOpO5pz3rGkMYu
+ APMQ==
+X-Gm-Message-State: AOAM531Wl3Vdod9F8hfMu8MQwnS7asBUoHiECmDTsqcHa61MZQq5xIPA
+ EghGfdTd8rEBa4z8Fu7tr5+NtA==
+X-Google-Smtp-Source: ABdhPJywTswkNFY7FXvXu6HG//R1t5yx+yTwPulg5ieqikJtUBQKOiC63rBPbvuvCOKHk/yZoLtKWg==
+X-Received: by 2002:a17:90b:1b46:: with SMTP id
+ nv6mr6766883pjb.162.1635350684192; 
+ Wed, 27 Oct 2021 09:04:44 -0700 (PDT)
+Received: from google.com (157.214.185.35.bc.googleusercontent.com.
+ [35.185.214.157])
+ by smtp.gmail.com with ESMTPSA id z15sm242123pga.16.2021.10.27.09.04.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 27 Oct 2021 09:04:43 -0700 (PDT)
+Date: Wed, 27 Oct 2021 16:04:40 +0000
+From: Sean Christopherson <seanjc@google.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 39/43] KVM: VMX: Don't do full kick when triggering
+ posted interrupt "fails"
+Message-ID: <YXl4mK7CyUBnPaQV@google.com>
 References: <20211009021236.4122790-1-seanjc@google.com>
- <20211009021236.4122790-19-seanjc@google.com>
-User-Agent: Evolution 3.36.5 (3.36.5-2.fc32) 
+ <20211009021236.4122790-40-seanjc@google.com>
+ <335822ac-b98b-1eec-4911-34e4d0e99907@redhat.com>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-X-Mailman-Approved-At: Wed, 27 Oct 2021 12:49:56 -0400
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org,
+Content-Disposition: inline
+In-Reply-To: <335822ac-b98b-1eec-4911-34e4d0e99907@redhat.com>
+Cc: Cornelia Huck <cohuck@redhat.com>, Wanpeng Li <wanpengli@tencent.com>,
+ kvm@vger.kernel.org, David Hildenbrand <david@redhat.com>,
+ linux-kernel@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
  Atish Patra <atish.patra@wdc.com>, linux-riscv@lists.infradead.org,
  Claudio Imbrenda <imbrenda@linux.ibm.com>, kvmarm@lists.cs.columbia.edu,
- Joerg Roedel <joro@8bytes.org>, kvm-ppc@vger.kernel.org,
- David Matlack <dmatlack@google.com>, linux-arm-kernel@lists.infradead.org,
- Jim Mattson <jmattson@google.com>, Cornelia Huck <cohuck@redhat.com>,
- linux-mips@vger.kernel.org, kvm-riscv@lists.infradead.org,
+ Janosch Frank <frankja@linux.ibm.com>, Marc Zyngier <maz@kernel.org>,
+ Joerg Roedel <joro@8bytes.org>, Huacai Chen <chenhuacai@kernel.org>,
+ Christian Borntraeger <borntraeger@de.ibm.com>,
+ Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, kvm-ppc@vger.kernel.org,
+ Paul Walmsley <paul.walmsley@sifive.com>, David Matlack <dmatlack@google.com>,
+ linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
+ Anup Patel <anup.patel@wdc.com>, linux-mips@vger.kernel.org,
+ Palmer Dabbelt <palmer@dabbelt.com>, kvm-riscv@lists.infradead.org,
  Vitaly Kuznetsov <vkuznets@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -101,49 +112,81 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, 2021-10-08 at 19:12 -0700, Sean Christopherson wrote:
-> Call kvm_vcpu_block() directly for all wait states except HALTED so that
-> kvm_vcpu_halt() is no longer a misnomer on x86.
+On Mon, Oct 25, 2021, Paolo Bonzini wrote:
+> On 09/10/21 04:12, Sean Christopherson wrote:
+> > +		/*
+> > +		 * The smp_wmb() in kvm_make_request() pairs with the smp_mb_*()
+> > +		 * after setting vcpu->mode in vcpu_enter_guest(), thus the vCPU
+> > +		 * is guaranteed to see the event request if triggering a posted
+> > +		 * interrupt "fails" because vcpu->mode != IN_GUEST_MODE.
 > 
-> Functionally, this means KVM will never attempt halt-polling or adjust
-> vcpu->halt_poll_ns for INIT_RECEIVED (a.k.a. Wait-For-SIPI (WFS)) or
-> AP_RESET_HOLD; UNINITIALIZED is handled in kvm_arch_vcpu_ioctl_run(),
-> and x86 doesn't use any other "wait" states.
+> This explanation doesn't make much sense to me.  This is just the usual
+> request/kick pattern explained in Documentation/virt/kvm/vcpu-requests.rst;
+> except that we don't bother with a "kick" out of guest mode because the
+> entry always goes through kvm_check_request (in the nVMX case) or
+> sync_pir_to_irr (if non-nested) and completes the delivery itself.
 > 
-> As mentioned above, the motivation of this is purely so that "halt" isn't
-> overloaded on x86, e.g. in KVM's stats.  Skipping halt-polling for WFS
-> (and RESET_HOLD) has no meaningful effect on guest performance as there
-> are typically single-digit numbers of INIT-SIPI sequences per AP vCPU,
-> per boot, versus thousands of HLTs just to boot to console.
+> In other word, it is a similar idea as patch 43/43.
 > 
-> Reviewed-by: David Matlack <dmatlack@google.com>
-> Signed-off-by: Sean Christopherson <seanjc@google.com>
-> ---
->  arch/x86/kvm/x86.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-> index cd51f100e906..e0219acfd9cf 100644
-> --- a/arch/x86/kvm/x86.c
-> +++ b/arch/x86/kvm/x86.c
-> @@ -9899,7 +9899,10 @@ static inline int vcpu_block(struct kvm *kvm, struct kvm_vcpu *vcpu)
->  	if (!kvm_arch_vcpu_runnable(vcpu) &&
->  	    (!kvm_x86_ops.pre_block || static_call(kvm_x86_pre_block)(vcpu) == 0)) {
->  		srcu_read_unlock(&kvm->srcu, vcpu->srcu_idx);
-> -		kvm_vcpu_halt(vcpu);
-> +		if (vcpu->arch.mp_state == KVM_MP_STATE_HALTED)
-> +			kvm_vcpu_halt(vcpu);
-> +		else
-> +			kvm_vcpu_block(vcpu);
->  		vcpu->srcu_idx = srcu_read_lock(&kvm->srcu);
->  
->  		if (kvm_x86_ops.post_block)
+> What this smp_wmb() pair with, is the smp_mb__after_atomic in
+> kvm_check_request(KVM_REQ_EVENT, vcpu).
 
-Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
+I don't think that's correct.  There is no kvm_check_request() in the relevant path.
+kvm_vcpu_exit_request() uses kvm_request_pending(), which is just a READ_ONCE()
+without a barrier.  The smp_mb__after_atomic ensures that any assets that were
+modified prior to making the request are seen by the vCPU handling the request.
+It does not provide any guarantees for a different vCPU/task making a request
+and checking vcpu->mode versus the target vCPU setting vcpu->mode and checking
+for a pending request.
 
-Best regards,
-	Maxim Levitsky
+> Setting the interrupt in the PIR orders before kvm_make_request in this
+> thread, and orders after kvm_make_request in the vCPU thread.
+>
+> Here, instead:
+> 
+> > +	/*
+> > +	 * The implied barrier in pi_test_and_set_on() pairs with the smp_mb_*()
+> > +	 * after setting vcpu->mode in vcpu_enter_guest(), thus the vCPU is
+> > +	 * guaranteed to see PID.ON=1 and sync the PIR to IRR if triggering a
+> > +	 * posted interrupt "fails" because vcpu->mode != IN_GUEST_MODE.
+> > +	 */
+> >  	if (vcpu != kvm_get_running_vcpu() &&
+> >  	    !kvm_vcpu_trigger_posted_interrupt(vcpu, false))
+> > -		kvm_vcpu_kick(vcpu);
+> > +		kvm_vcpu_wake_up(vcpu);
+> 
+> it pairs with the smp_mb__after_atomic in vmx_sync_pir_to_irr().  As
+> explained again in vcpu-requests.rst, the ON bit has the same function as
+> vcpu->request in the previous case.
 
+Same as above, I don't think that's correct.  The smp_mb__after_atomic() ensures
+that there's no race between the IOMMU writing vIRR and setting ON, and KVM
+clearing ON and processing the vIRR.
+
+pi_test_on() is not an atomic operation, and there's no memory barrier if ON=0.
+It's the same behavior as kvm_check_request(), but again the ordering with respect
+to vcpu->mode isn't being handled by PID.ON/kvm_check_request().
+
+AIUI, this is the barrier that's paired with the PI barriers.  This is even called
+out in (2).
+
+	vcpu->mode = IN_GUEST_MODE;
+
+	srcu_read_unlock(&vcpu->kvm->srcu, vcpu->srcu_idx);
+
+	/*
+	 * 1) We should set ->mode before checking ->requests.  Please see
+	 * the comment in kvm_vcpu_exiting_guest_mode().
+	 *
+	 * 2) For APICv, we should set ->mode before checking PID.ON. This
+	 * pairs with the memory barrier implicit in pi_test_and_set_on
+	 * (see vmx_deliver_posted_interrupt).
+	 *
+	 * 3) This also orders the write to mode from any reads to the page
+	 * tables done while the VCPU is running.  Please see the comment
+	 * in kvm_flush_remote_tlbs.
+	 */
+	smp_mb__after_srcu_read_unlock();
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
