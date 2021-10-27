@@ -2,66 +2,89 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5448543C44B
-	for <lists+kvmarm@lfdr.de>; Wed, 27 Oct 2021 09:46:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28AB743C80B
+	for <lists+kvmarm@lfdr.de>; Wed, 27 Oct 2021 12:49:44 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D547D4B125;
-	Wed, 27 Oct 2021 03:46:51 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A5C804B178;
+	Wed, 27 Oct 2021 06:49:43 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Rln-Xr0UJN2l; Wed, 27 Oct 2021 03:46:51 -0400 (EDT)
+	with ESMTP id IslTdgF1S6jz; Wed, 27 Oct 2021 06:49:43 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 64F3C4B0D7;
-	Wed, 27 Oct 2021 03:46:50 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6893F4B159;
+	Wed, 27 Oct 2021 06:49:42 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 82FCF4B0B9
- for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Oct 2021 03:46:48 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 157BB4A534
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Oct 2021 05:51:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 3obpcddqozs2 for <kvmarm@lists.cs.columbia.edu>;
- Wed, 27 Oct 2021 03:46:47 -0400 (EDT)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4EDAE4B08B
- for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Oct 2021 03:46:47 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ with ESMTP id o67L-Bx9wsAT for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 27 Oct 2021 05:51:23 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 11281406E7
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Oct 2021 05:51:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1635328282;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OLKZI82hmPisWACp/QMd/03BQs+RHKrDBliqptWWYzE=;
+ b=JlGCLXib6mP67nqrMVKEdro08E7es/nLdFS9D05/GNFiNHY9ph7aXU44AK/fU+Dc/IGRMP
+ s1/6NQ0khHHN6yWVIGN7Mar4ykVEAYFpyoZICsyvfOTvkwAwHCz3AOpA2RuUuWUi00+Ck7
+ WdpGR1IytQ8EAYqoQ3leHhSI7Y9SORs=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-468-4gOjCQ60OwesHHSXcF-XSQ-1; Wed, 27 Oct 2021 05:51:19 -0400
+X-MC-Unique: 4gOjCQ60OwesHHSXcF-XSQ-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com
+ [10.5.11.23])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 50601610A4;
- Wed, 27 Oct 2021 07:46:46 +0000 (UTC)
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1mfde0-001qv7-6d; Wed, 27 Oct 2021 08:46:44 +0100
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id AD15980A5C0;
+ Wed, 27 Oct 2021 09:51:15 +0000 (UTC)
+Received: from starship (unknown [10.40.194.243])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 401B019D9F;
+ Wed, 27 Oct 2021 09:50:31 +0000 (UTC)
+Message-ID: <aa1656c01ea5d46dd22c66da4a5eaa27f58810a2.camel@redhat.com>
+Subject: Re: [PATCH v2 02/43] KVM: SVM: Ensure target pCPU is read once when
+ signalling AVIC doorbell
+From: Maxim Levitsky <mlevitsk@redhat.com>
+To: Sean Christopherson <seanjc@google.com>, Marc Zyngier <maz@kernel.org>, 
+ Huacai Chen <chenhuacai@kernel.org>, Aleksandar Markovic
+ <aleksandar.qemu.devel@gmail.com>, Paul Mackerras <paulus@ozlabs.org>, Anup
+ Patel <anup.patel@wdc.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Christian Borntraeger <borntraeger@de.ibm.com>, Janosch Frank
+ <frankja@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 27 Oct 2021 12:50:30 +0300
+In-Reply-To: <20211009021236.4122790-3-seanjc@google.com>
+References: <20211009021236.4122790-1-seanjc@google.com>
+ <20211009021236.4122790-3-seanjc@google.com>
+User-Agent: Evolution 3.36.5 (3.36.5-2.fc32) 
 MIME-Version: 1.0
-Date: Wed, 27 Oct 2021 08:46:44 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: Qian Cai <quic_qiancai@quicinc.com>
-Subject: Re: [PATCH] KVM: arm64: Remove unused TRNG_NO_ENTROPY
-In-Reply-To: <20211026210913.57006-1-quic_qiancai@quicinc.com>
-References: <20211026210913.57006-1-quic_qiancai@quicinc.com>
-User-Agent: Roundcube Webmail/1.4.11
-Message-ID: <3fac8ddb626205286f79adde96ea527b@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: quic_qiancai@quicinc.com, james.morse@arm.com,
- ardb@kernel.org, alexandru.elisei@arm.com, suzuki.poulose@arm.com,
- catalin.marinas@arm.com, will@kernel.org, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: Will Deacon <will@kernel.org>, linux-kernel@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, Catalin Marinas <catalin.marinas@arm.com>,
- linux-arm-kernel@lists.infradead.org
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
+X-Mailman-Approved-At: Wed, 27 Oct 2021 06:49:40 -0400
+Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
+ David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org,
+ Atish Patra <atish.patra@wdc.com>, linux-riscv@lists.infradead.org,
+ Claudio Imbrenda <imbrenda@linux.ibm.com>, kvmarm@lists.cs.columbia.edu,
+ Joerg Roedel <joro@8bytes.org>, kvm-ppc@vger.kernel.org,
+ David Matlack <dmatlack@google.com>, linux-arm-kernel@lists.infradead.org,
+ Jim Mattson <jmattson@google.com>, Cornelia Huck <cohuck@redhat.com>,
+ linux-mips@vger.kernel.org, kvm-riscv@lists.infradead.org,
+ Vitaly Kuznetsov <vkuznets@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -73,46 +96,65 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2021-10-26 22:09, Qian Cai wrote:
-> TRNG_NO_ENTROPY was unused when introduced and now. This is also caught 
-> by
-> GCC (W=2):
+On Fri, 2021-10-08 at 19:11 -0700, Sean Christopherson wrote:
+> Ensure vcpu->cpu is read once when signalling the AVIC doorbell.  If the
+> compiler rereads the field and the vCPU is migrated between the check and
+> writing the doorbell, KVM would signal the wrong physical CPU.
+
+Since vcpu->cpu can change any moment anyway, adding READ_ONCE I think can't really fix anything
+but I do agree that it makes this more readable.
+
+Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
+
+
+
 > 
-> arch/arm64/kvm/trng.c:17: warning: macro "TRNG_NO_ENTROPY" is not used
-> [-Wunused-macros]
->    17 | #define TRNG_NO_ENTROPY   ((unsigned long)-3)
+> Functionally, signalling the wrong CPU in this case is not an issue as
+> task migration means the vCPU has exited and will pick up any pending
+> interrupts on the next VMRUN.  Add the READ_ONCE() purely to clean up the
+> code.
 > 
-> Signed-off-by: Qian Cai <quic_qiancai@quicinc.com>
+> Opportunistically add a comment explaining the task migration behavior,
+> and rename cpuid=>cpu to avoid conflating the CPU number with KVM's more
+> common usage of CPUID.
+> 
+> Signed-off-by: Sean Christopherson <seanjc@google.com>
 > ---
->  arch/arm64/kvm/trng.c | 1 -
->  1 file changed, 1 deletion(-)
+>  arch/x86/kvm/svm/avic.c | 13 ++++++++++---
+>  1 file changed, 10 insertions(+), 3 deletions(-)
 > 
-> diff --git a/arch/arm64/kvm/trng.c b/arch/arm64/kvm/trng.c
-> index 99bdd7103c9c..6a46b3ac3970 100644
-> --- a/arch/arm64/kvm/trng.c
-> +++ b/arch/arm64/kvm/trng.c
-> @@ -14,7 +14,6 @@
->  #define TRNG_SUCCESS			0UL
->  #define TRNG_NOT_SUPPORTED		((unsigned long)-1)
->  #define TRNG_INVALID_PARAMETER		((unsigned long)-2)
-> -#define TRNG_NO_ENTROPY			((unsigned long)-3)
-> 
->  #define TRNG_MAX_BITS64			192
+> diff --git a/arch/x86/kvm/svm/avic.c b/arch/x86/kvm/svm/avic.c
+> index 8052d92069e0..208c5c71e827 100644
+> --- a/arch/x86/kvm/svm/avic.c
+> +++ b/arch/x86/kvm/svm/avic.c
+> @@ -675,10 +675,17 @@ int svm_deliver_avic_intr(struct kvm_vcpu *vcpu, int vec)
+>  	smp_mb__after_atomic();
+>  
+>  	if (avic_vcpu_is_running(vcpu)) {
+> -		int cpuid = vcpu->cpu;
+> +		int cpu = READ_ONCE(vcpu->cpu);
+>  
+> -		if (cpuid != get_cpu())
+> -			wrmsrl(SVM_AVIC_DOORBELL, kvm_cpu_get_apicid(cpuid));
+> +		/*
+> +		 * Note, the vCPU could get migrated to a different pCPU at any
+> +		 * point, which could result in signalling the wrong/previous
+> +		 * pCPU.  But if that happens the vCPU is guaranteed to do a
+> +		 * VMRUN (after being migrated) and thus will process pending
+> +		 * interrupts, i.e. a doorbell is not needed (and the spurious)
+> +		 */
+> +		if (cpu != get_cpu())
+> +			wrmsrl(SVM_AVIC_DOORBELL, kvm_cpu_get_apicid(cpu));
+>  		put_cpu();
+>  	} else
+>  		kvm_vcpu_wake_up(vcpu);
 
-That's an architectural definition that doesn't cause any problem.
-If anything, that's documentation.
 
-We have *tons* of other definitions with no user all over the
-arm64 code. They save the exact same purpose.
-
-         M.
--- 
-Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
