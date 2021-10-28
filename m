@@ -2,65 +2,61 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 874B643DFDA
-	for <lists+kvmarm@lfdr.de>; Thu, 28 Oct 2021 13:16:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EF9C43E18E
+	for <lists+kvmarm@lfdr.de>; Thu, 28 Oct 2021 15:03:01 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 35A584B1CB;
-	Thu, 28 Oct 2021 07:16:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E24544B1C8;
+	Thu, 28 Oct 2021 09:03:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: -4.091
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=-4.091 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0LRjgmYruMxC; Thu, 28 Oct 2021 07:16:58 -0400 (EDT)
+	with ESMTP id XsOCK7JeRQyJ; Thu, 28 Oct 2021 09:03:00 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4029D4B1E0;
-	Thu, 28 Oct 2021 07:16:52 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 41EE44B175;
+	Thu, 28 Oct 2021 09:02:59 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 809E44B1AB
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 07:16:50 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 084E14B10D
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 09:02:58 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id gAgoc4iiHznj for <kvmarm@lists.cs.columbia.edu>;
- Thu, 28 Oct 2021 07:16:49 -0400 (EDT)
+ with ESMTP id CZvVQV5D59yS for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 28 Oct 2021 09:02:56 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4EA524B1BA
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 07:16:49 -0400 (EDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 1089E6112E;
- Thu, 28 Oct 2021 11:16:47 +0000 (UTC)
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1mg3On-002BtD-6b; Thu, 28 Oct 2021 12:16:45 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2 5/5] arm64/fpsimd: Document the use of TIF_FOREIGN_FPSTATE
- by KVM
-Date: Thu, 28 Oct 2021 12:16:40 +0100
-Message-Id: <20211028111640.3663631-6-maz@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20211028111640.3663631-1-maz@kernel.org>
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 451444B104
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 09:02:56 -0400 (EDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 3F34960F02;
+ Thu, 28 Oct 2021 13:02:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1635426175;
+ bh=HS3bqWpOjF2gD6b9ws2zfTWy7XJxCId1PuTDK2PG8SQ=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=AAQ/6Gy8cTjxo00NXScYPV7aekKaW9wpGTKrOhUxLOyWoNk5aj4Ou3/1XYJ4aSkWz
+ pV5U+1HsFarcxnzjYdZQTuEGgJ5uSG3tRR+B9jEEZDYBte3o7EydK7oTwrtMXtxxsv
+ qUUcMPuvP36l6pkJY2Kj/0hFbhtE0NUtMebbnz6aVZAuJkAV9nzF7H5yGxrernMuXw
+ sPLUkf6g/v0WDvaNTLqfhqsqyIOoFn9PE6OWASWLyeGq0z5s/FwLF/khqeBKr7eyiw
+ Db3TxEmGH6es3BvbblqT5lAZa7Ml06xNZ7xUNQyKhnSluzHKcXgJcxUoZrIJrZX87y
+ 25LvV03aLK5bQ==
+Date: Thu, 28 Oct 2021 14:02:50 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH v2 2/5] KVM: arm64: Get rid of host SVE tracking/saving
+Message-ID: <YXqfegqTu80ruUPP@sirena.org.uk>
 References: <20211028111640.3663631-1-maz@kernel.org>
+ <20211028111640.3663631-3-maz@kernel.org>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, james.morse@arm.com,
- suzuki.poulose@arm.com, alexandru.elisei@arm.com, qperret@google.com,
- will@kernel.org, broonie@kernel.org, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com, Will Deacon <will@kernel.org>, broonie@kernel.org
+In-Reply-To: <20211028111640.3663631-3-maz@kernel.org>
+X-Cookie: try again
+Cc: kernel-team@android.com, kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -72,42 +68,80 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============6426438814811146574=="
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The bit of documentation that talks about TIF_FOREIGN_FPSTATE
-does not mention the ungodly tricks that KVM plays with this flag.
 
-Try and document this for the posterity.
+--===============6426438814811146574==
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="iTgLDb21f45sENgM"
+Content-Disposition: inline
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/kernel/fpsimd.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kernel/fpsimd.c b/arch/arm64/kernel/fpsimd.c
-index ff4962750b3d..1fbd6ba7dbac 100644
---- a/arch/arm64/kernel/fpsimd.c
-+++ b/arch/arm64/kernel/fpsimd.c
-@@ -78,7 +78,11 @@
-  * indicate whether or not the userland FPSIMD state of the current task is
-  * present in the registers. The flag is set unless the FPSIMD registers of this
-  * CPU currently contain the most recent userland FPSIMD state of the current
-- * task.
-+ * task. If the task is behaving as a VMM, then this is will be managed by
-+ * KVM which will clear it to indicate that the vcpu FPSIMD state is currently
-+ * loaded on the CPU, allowing the state to be saved if a FPSIMD-aware
-+ * softirq kicks in. Upon vcpu_put(), KVM will save the vcpu FP state and
-+ * flag the register state as invalid.
-  *
-  * In order to allow softirq handlers to use FPSIMD, kernel_neon_begin() may
-  * save the task's FPSIMD context back to task_struct from softirq context.
--- 
-2.30.2
+--iTgLDb21f45sENgM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Thu, Oct 28, 2021 at 12:16:37PM +0100, Marc Zyngier wrote:
+> The SVE host tracking in KVM is pretty involved. It relies on a
+> set of flags tracking the ownership of the SVE register, as well
+> as that of the EL0 access.
+
+> It is also pretty scary: __hyp_sve_save_host() computes
+> a thread_struct pointer and obtains a sve_state which gets directly
+> accessed without further ado, even on nVHE. How can this even work?
+
+> The answer to that is that it doesn't, and that this is mostly dead
+> code. Closer examination shows that on executing a syscall, userspace
+> loses its SVE state entirely. This is part of the ABI. Another
+> thing to notice is that although the kernel provides helpers such as
+> kernel_neon_begin()/end(), they only deal with the FP/NEON state,
+> and not SVE.
+
+> Given that you can only execute a guest as the result of a syscall,
+> and that the kernel cannot use SVE by itself, it becomes pretty
+> obvious that there is never any host SVE state to save, and that
+> this code is only there to increase confusion.
+
+Ah, this explains a lot and does in fact make life a lot easier, though
+we're going to get some of the fun back for SME since the ABI does not
+invalidate ZA on syscall.  That said there we have a register we can
+check to see if the state is live rather than having to track what's
+going on with TIF.  I've also currently got changes in the SME patch set
+which do mean that we won't clear TIF_SVE on syscall entry while SME is
+active, however I can rework that to fit in with this change easily
+enough which given the simplifications introduced seems like it is
+clearly the right thing to do so:
+
+Reviewed-by: Mark Brown <broonie@kernel.org>
+
+--iTgLDb21f45sENgM
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmF6n3kACgkQJNaLcl1U
+h9DsCQf9EFvV/AS5kqg1XCjZtSOxwVpUegl7BRhkzM0GAp+XZVvQhhe3+1WZ923E
+7GFNl6LlJST3Ey6ZwpwpR956TJPk20on7q/v31194sRtikdoZhFsgRq55hDnD9vi
+591aPeInRI5K61V83HJExubBHm24HHlE1t2nk7sJylWKfSP0qjeLeOvA6IABskJf
+bsRDvysWc7KiuQKJUQ1BFW9RWGn4ItD0eawIQfG+iEFMjdr3rA0U500eFc+5DBa3
+v31nrJA4a9aRnl2TgWozh+t7wzqkMcDZb06QvxhXDiNYKAqtcgVOq6Nkn10vbQYc
+Zm2aPpB82LAyPzfPFjHgRb2cjuxL4w==
+=Bf9h
+-----END PGP SIGNATURE-----
+
+--iTgLDb21f45sENgM--
+
+--===============6426438814811146574==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
 https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+
+--===============6426438814811146574==--
