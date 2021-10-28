@@ -2,100 +2,89 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C060C43E58A
-	for <lists+kvmarm@lfdr.de>; Thu, 28 Oct 2021 17:55:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C196A43E6FB
+	for <lists+kvmarm@lfdr.de>; Thu, 28 Oct 2021 19:16:02 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3CA674B1B6;
-	Thu, 28 Oct 2021 11:55:51 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 517C64B1D2;
+	Thu, 28 Oct 2021 13:16:02 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id fwnpN-02E1tA; Thu, 28 Oct 2021 11:55:51 -0400 (EDT)
+	with ESMTP id 5xFJGi78-MXC; Thu, 28 Oct 2021 13:16:02 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D78674B1A0;
-	Thu, 28 Oct 2021 11:55:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6381A4B1C7;
+	Thu, 28 Oct 2021 13:16:00 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 920684A524
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 11:55:48 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 370F34B1D7
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 11:14:47 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 0yudJ93wyBRo for <kvmarm@lists.cs.columbia.edu>;
- Thu, 28 Oct 2021 11:55:47 -0400 (EDT)
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com
- [209.85.214.180])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 401874A49C
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 11:55:47 -0400 (EDT)
-Received: by mail-pl1-f180.google.com with SMTP id t11so4715713plq.11
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 08:55:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=m0tHnHlQJDBdfArgGfCXfVMbH9LdSSnDL35miUYeLjs=;
- b=QQmaJ8nXN2KbyIG5k1JyBoSquPg6yk3b/FNSx1V8PjEEIwsY4bZfol7aYj6Ws7u8lu
- AL3QNRVPk8G4o1zbT2wS3T+0q2unqIYIGvpD4X4hbS+GWLCfdCjK1582SOfCPxgbXaj6
- rp1/zAb/gxsig9wW4x8Hmz3hVUCDwIHJtvbG8WTJj+OyXJ9Qbywk0hsQ9i5L1juwa1hs
- n78Jiehn21G0dcgi1vzqMRfnUHdXLWIscCjEk3VHPYnbJSs6c8My2YAhN/ZegigH9hDg
- LWqS5PZjO6n0Z4WJ0z7BuPmceVWRsCdNKwW5JM9MnEgXi3tzkHrjJO1A1KNXmTOVd/Xz
- cMxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=m0tHnHlQJDBdfArgGfCXfVMbH9LdSSnDL35miUYeLjs=;
- b=YRhgCm+j8WhzTJN0EWFYXmyM/J5VQbfyhfRj98ZKyHYj47WXxQdReyTJ0SzJvKFq6+
- S43TFGTKuJndezjNCuEIqAeJgzImUxBX7Nj9R3Z2DNDXWsgmvDPFpVU9vLkxRt4TzSZQ
- qALQ7zf8wxvJjO7vTnDb9i8PtPSSuAQWRdNQraYg4XiXJfDFSRgG8bGLYJznoqwZCZED
- Lnr2Oo8z8LVbe+8fXaOGd2b+09nDgWJ5ifFRcRko+5NtTvWyOZxIUUD10oeOQ2oUttnL
- S6B8G9N0DtomKiJHBwPSztUkH3DyPe4iR4tYgYb0I5yWj3Ac8KM0jnz9GVCau7bXEylm
- 5KhA==
-X-Gm-Message-State: AOAM5319NpXGBpB90n80J7001Zyn/BZMGMgxrRSxIav+VLPd84zUn2C8
- G0fyuA38N+YeEdTGerS9pK2dTQ==
-X-Google-Smtp-Source: ABdhPJwGUzCGTG+bFEKCx4HxRTPn7WtM79GFmjO7irPTWNvcrtXMPEuDRtNZ53pGeMNDkz8HGfA6sw==
-X-Received: by 2002:a17:90b:17d0:: with SMTP id
- me16mr13884280pjb.152.1635436545938; 
- Thu, 28 Oct 2021 08:55:45 -0700 (PDT)
-Received: from google.com (157.214.185.35.bc.googleusercontent.com.
- [35.185.214.157])
- by smtp.gmail.com with ESMTPSA id s12sm3788591pfg.70.2021.10.28.08.55.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Oct 2021 08:55:45 -0700 (PDT)
-Date: Thu, 28 Oct 2021 15:55:41 +0000
-From: Sean Christopherson <seanjc@google.com>
-To: Maxim Levitsky <mlevitsk@redhat.com>
-Subject: Re: [PATCH v2 26/43] KVM: VMX: Read Posted Interrupt "control"
- exactly once per loop iteration
-Message-ID: <YXrH/ZZBOHrWHz4j@google.com>
+ with ESMTP id oceP8879wOvp for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 28 Oct 2021 11:14:45 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D74FA4B1A3
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 11:14:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1635434085;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CgLB+hml0Y7q7/T5mul1oJ9iyJp6xHKyNVaPuOUZPD4=;
+ b=gqcPBRxuZcHjcrJaPS/NnAKtDH/GKzfZJXJF/3deCx030mqwrQSVdGAw+Nx6b8ao27Lb+W
+ V9Eb+YKv6bBept8UbWujVhpV6x/VAv9DMVEW7r+56xpFw18/LbodIhqU9wyO5QG44IStbF
+ Jyiyi2ioEH8VI0fj1LeDKdPbG/QWOK4=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-562-7i2Vkjg3NLG5kTq--XeVvA-1; Thu, 28 Oct 2021 11:14:42 -0400
+X-MC-Unique: 7i2Vkjg3NLG5kTq--XeVvA-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com
+ [10.5.11.12])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 0B87E100F95D;
+ Thu, 28 Oct 2021 15:14:37 +0000 (UTC)
+Received: from starship (unknown [10.40.194.243])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 3E0E960FB8;
+ Thu, 28 Oct 2021 15:14:06 +0000 (UTC)
+Message-ID: <2e1f7a9c83f38f3262febf05b4d2acd5efc753b3.camel@redhat.com>
+Subject: Re: [PATCH v2 29/43] KVM: VMX: Handle PI wakeup shenanigans during
+ vcpu_put/load
+From: Maxim Levitsky <mlevitsk@redhat.com>
+To: Sean Christopherson <seanjc@google.com>, Marc Zyngier <maz@kernel.org>, 
+ Huacai Chen <chenhuacai@kernel.org>, Aleksandar Markovic
+ <aleksandar.qemu.devel@gmail.com>, Paul Mackerras <paulus@ozlabs.org>, Anup
+ Patel <anup.patel@wdc.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Christian Borntraeger <borntraeger@de.ibm.com>, Janosch Frank
+ <frankja@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 28 Oct 2021 18:14:04 +0300
+In-Reply-To: <20211009021236.4122790-30-seanjc@google.com>
 References: <20211009021236.4122790-1-seanjc@google.com>
- <20211009021236.4122790-27-seanjc@google.com>
- <b078cce30f86672d7d8f8eaa0adc47d24def24e2.camel@redhat.com>
+ <20211009021236.4122790-30-seanjc@google.com>
+User-Agent: Evolution 3.36.5 (3.36.5-2.fc32) 
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <b078cce30f86672d7d8f8eaa0adc47d24def24e2.camel@redhat.com>
-Cc: Cornelia Huck <cohuck@redhat.com>, Wanpeng Li <wanpengli@tencent.com>,
- kvm@vger.kernel.org, David Hildenbrand <david@redhat.com>,
- linux-kernel@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
+X-Mailman-Approved-At: Thu, 28 Oct 2021 13:15:59 -0400
+Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
+ David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org,
  Atish Patra <atish.patra@wdc.com>, linux-riscv@lists.infradead.org,
  Claudio Imbrenda <imbrenda@linux.ibm.com>, kvmarm@lists.cs.columbia.edu,
- Janosch Frank <frankja@linux.ibm.com>, Marc Zyngier <maz@kernel.org>,
- Joerg Roedel <joro@8bytes.org>, Huacai Chen <chenhuacai@kernel.org>,
- Christian Borntraeger <borntraeger@de.ibm.com>,
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
- Albert Ou <aou@eecs.berkeley.edu>, kvm-ppc@vger.kernel.org,
- Paul Walmsley <paul.walmsley@sifive.com>, David Matlack <dmatlack@google.com>,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
- Anup Patel <anup.patel@wdc.com>, linux-mips@vger.kernel.org,
- Palmer Dabbelt <palmer@dabbelt.com>, kvm-riscv@lists.infradead.org,
- Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>
+ Joerg Roedel <joro@8bytes.org>, kvm-ppc@vger.kernel.org,
+ David Matlack <dmatlack@google.com>, linux-arm-kernel@lists.infradead.org,
+ Jim Mattson <jmattson@google.com>, Cornelia Huck <cohuck@redhat.com>,
+ linux-mips@vger.kernel.org, kvm-riscv@lists.infradead.org,
+ Vitaly Kuznetsov <vkuznets@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -112,95 +101,341 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Oct 28, 2021, Maxim Levitsky wrote:
-> On Fri, 2021-10-08 at 19:12 -0700, Sean Christopherson wrote:
-> > Use READ_ONCE() when loading the posted interrupt descriptor control
-> > field to ensure "old" and "new" have the same base value.  If the
-> > compiler emits separate loads, and loads into "new" before "old", KVM
-> > could theoretically drop the ON bit if it were set between the loads.
-> > 
-> > Fixes: 28b835d60fcc ("KVM: Update Posted-Interrupts Descriptor when vCPU is preempted")
-> > Signed-off-by: Sean Christopherson <seanjc@google.com>
-> > ---
-> >  arch/x86/kvm/vmx/posted_intr.c | 6 +++---
-> >  1 file changed, 3 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/arch/x86/kvm/vmx/posted_intr.c b/arch/x86/kvm/vmx/posted_intr.c
-> > index 414ea6972b5c..fea343dcc011 100644
-> > --- a/arch/x86/kvm/vmx/posted_intr.c
-> > +++ b/arch/x86/kvm/vmx/posted_intr.c
-> > @@ -53,7 +53,7 @@ void vmx_vcpu_pi_load(struct kvm_vcpu *vcpu, int cpu)
-> >  
-> >  	/* The full case.  */
-> >  	do {
-> > -		old.control = new.control = pi_desc->control;
-> > +		old.control = new.control = READ_ONCE(pi_desc->control);
-> >  
-> >  		dest = cpu_physical_id(cpu);
-> >  
-> > @@ -104,7 +104,7 @@ static void __pi_post_block(struct kvm_vcpu *vcpu)
-> >  	     "Wakeup handler not enabled while the vCPU was blocking");
-> >  
-> >  	do {
-> > -		old.control = new.control = pi_desc->control;
-> > +		old.control = new.control = READ_ONCE(pi_desc->control);
-> >  
-> >  		dest = cpu_physical_id(vcpu->cpu);
-> >  
-> > @@ -160,7 +160,7 @@ int pi_pre_block(struct kvm_vcpu *vcpu)
-> >  	     "Posted Interrupt Suppress Notification set before blocking");
-> >  
-> >  	do {
-> > -		old.control = new.control = pi_desc->control;
-> > +		old.control = new.control = READ_ONCE(pi_desc->control);
-> >  
-> >  		/* set 'NV' to 'wakeup vector' */
-> >  		new.nv = POSTED_INTR_WAKEUP_VECTOR;
+On Fri, 2021-10-08 at 19:12 -0700, Sean Christopherson wrote:
+> Move the posted interrupt pre/post_block logic into vcpu_put/load
+> respectively, using the kvm_vcpu_is_blocking() to determining whether or
+> not the wakeup handler needs to be set (and unset).  This avoids updating
+> the PI descriptor if halt-polling is successful, reduces the number of
+> touchpoints for updating the descriptor, and eliminates the confusing
+> behavior of intentionally leaving a "stale" PI.NDST when a blocking vCPU
+> is scheduled back in after preemption.
 > 
-> I wish there was a way to mark fields in a struct, as requiring 'READ_ONCE' on them
-> so that compiler would complain if this isn't done, or automatically use 'READ_ONCE'
-> logic.
+> The downside is that KVM will do the PID update twice if the vCPU is
+> preempted after prepare_to_rcuwait() but before schedule(), but that's a
+> rare case (and non-existent on !PREEMPT kernels).
+> 
+> The notable wart is the need to send a self-IPI on the wakeup vector if
+> an outstanding notification is pending after configuring the wakeup
+> vector.  Ideally, KVM would just do a kvm_vcpu_wake_up() in this case,
+> but the scheduler doesn't support waking a task from its preemption
+> notifier callback, i.e. while the task is smack dab in the middle of
+> being scheduled out.
+> 
+> Note, setting the wakeup vector before halt-polling is not necessary as
+> the pending IRQ will be recorded in the PIR and detected as a blocking-
+> breaking condition by kvm_vcpu_has_events() -> vmx_sync_pir_to_irr().
+> 
+> Signed-off-by: Sean Christopherson <seanjc@google.com>
+> ---
+>  arch/x86/kvm/vmx/posted_intr.c | 162 ++++++++++++++-------------------
+>  arch/x86/kvm/vmx/posted_intr.h |   8 +-
+>  arch/x86/kvm/vmx/vmx.c         |   5 -
+>  3 files changed, 75 insertions(+), 100 deletions(-)
+> 
+> diff --git a/arch/x86/kvm/vmx/posted_intr.c b/arch/x86/kvm/vmx/posted_intr.c
+> index 901b7a5f7777..d2b3d75c57d1 100644
+> --- a/arch/x86/kvm/vmx/posted_intr.c
+> +++ b/arch/x86/kvm/vmx/posted_intr.c
+> @@ -37,33 +37,45 @@ void vmx_vcpu_pi_load(struct kvm_vcpu *vcpu, int cpu)
+>  {
+>  	struct pi_desc *pi_desc = vcpu_to_pi_desc(vcpu);
+>  	struct pi_desc old, new;
+> +	unsigned long flags;
+>  	unsigned int dest;
+>  
+>  	/*
+> -	 * To simplify hot-plug and dynamic toggling of APICv, keep PI.NDST and
+> -	 * PI.SN up-to-date even if there is no assigned device or if APICv is
+> +	 * To simplify hot-plug and dynamic toggling of APICv, keep PI.NDST
+> +	 * up-to-date even if there is no assigned device or if APICv is
+>  	 * deactivated due to a dynamic inhibit bit, e.g. for Hyper-V's SyncIC.
+>  	 */
+>  	if (!enable_apicv || !lapic_in_kernel(vcpu))
+>  		return;
+>  
+> -	/* Nothing to do if PI.SN==0 and the vCPU isn't being migrated. */
+> -	if (!pi_test_sn(pi_desc) && vcpu->cpu == cpu)
+> +	/*
+> +	 * If the vCPU wasn't on the wakeup list and wasn't migrated, then the
+> +	 * full update can be skipped as neither the vector nor the destination
+> +	 * needs to be changed.
+> +	 */
+> +	if (pi_desc->nv != POSTED_INTR_WAKEUP_VECTOR && vcpu->cpu == cpu) {
+> +		/*
+> +		 * Clear SN if it was set due to being preempted.  Again, do
+> +		 * this even if there is no assigned device for simplicity.
+> +		 */
+> +		if (pi_test_and_clear_sn(pi_desc))
+> +			goto after_clear_sn;
+>  		return;
+> +	}
+> +
+> +	local_irq_save(flags);
+>  
+>  	/*
+> -	 * If the 'nv' field is POSTED_INTR_WAKEUP_VECTOR, do not change
+> -	 * PI.NDST: pi_post_block is the one expected to change PID.NDST and the
+> -	 * wakeup handler expects the vCPU to be on the blocked_vcpu_list that
+> -	 * matches PI.NDST. Otherwise, a vcpu may not be able to be woken up
+> -	 * correctly.
+> +	 * If the vCPU was waiting for wakeup, remove the vCPU from the wakeup
+> +	 * list of the _previous_ pCPU, which will not be the same as the
+> +	 * current pCPU if the task was migrated.
+>  	 */
+> -	if (pi_desc->nv == POSTED_INTR_WAKEUP_VECTOR || vcpu->cpu == cpu) {
+> -		pi_clear_sn(pi_desc);
+> -		goto after_clear_sn;
+> +	if (pi_desc->nv == POSTED_INTR_WAKEUP_VECTOR) {
+> +		spin_lock(&per_cpu(blocked_vcpu_on_cpu_lock, vcpu->cpu));
+> +		list_del(&vcpu->blocked_vcpu_list);
+> +		spin_unlock(&per_cpu(blocked_vcpu_on_cpu_lock, vcpu->cpu));
+>  	}
+>  
+> -	/* The full case.  Set the new destination and clear SN. */
+>  	dest = cpu_physical_id(cpu);
+>  	if (!x2apic_mode)
+>  		dest = (dest << 8) & 0xFF00;
+> @@ -71,11 +83,23 @@ void vmx_vcpu_pi_load(struct kvm_vcpu *vcpu, int cpu)
+>  	do {
+>  		old.control = new.control = READ_ONCE(pi_desc->control);
+>  
+> +		/*
+> +		 * Clear SN (as above) and refresh the destination APIC ID to
+> +		 * handle task migration (@cpu != vcpu->cpu).
+> +		 */
+>  		new.ndst = dest;
+>  		new.sn = 0;
+> +
+> +		/*
+> +		 * Restore the notification vector; in the blocking case, the
+> +		 * descriptor was modified on "put" to use the wakeup vector.
+> +		 */
+> +		new.nv = POSTED_INTR_VECTOR;
+>  	} while (cmpxchg64(&pi_desc->control, old.control,
+>  			   new.control) != old.control);
+>  
+> +	local_irq_restore(flags);
+> +
+>  after_clear_sn:
+>  
+>  	/*
+> @@ -90,88 +114,24 @@ void vmx_vcpu_pi_load(struct kvm_vcpu *vcpu, int cpu)
+>  		pi_set_on(pi_desc);
+>  }
+>  
+> -void vmx_vcpu_pi_put(struct kvm_vcpu *vcpu)
+> -{
+> -	struct pi_desc *pi_desc = vcpu_to_pi_desc(vcpu);
+> -
+> -	if (!kvm_arch_has_assigned_device(vcpu->kvm) ||
+> -		!irq_remapping_cap(IRQ_POSTING_CAP)  ||
+> -		!kvm_vcpu_apicv_active(vcpu))
+> -		return;
+> -
+> -	/* Set SN when the vCPU is preempted */
+> -	if (vcpu->preempted)
+> -		pi_set_sn(pi_desc);
+> -}
+> -
+> -static void __pi_post_block(struct kvm_vcpu *vcpu)
+> -{
+> -	struct pi_desc *pi_desc = vcpu_to_pi_desc(vcpu);
+> -	struct pi_desc old, new;
+> -	unsigned int dest;
+> -
+> -	WARN(pi_desc->nv != POSTED_INTR_WAKEUP_VECTOR,
+> -	     "Wakeup handler not enabled while the vCPU was blocking");
+> -
+> -	/*
+> -	 * Remove the vCPU from the wakeup list of the _previous_ pCPU, which
+> -	 * will not be the same as the current pCPU if the task was migrated.
+> -	 */
+> -	spin_lock(&per_cpu(blocked_vcpu_on_cpu_lock, vcpu->pre_pcpu));
+> -	list_del(&vcpu->blocked_vcpu_list);
+> -	spin_unlock(&per_cpu(blocked_vcpu_on_cpu_lock, vcpu->pre_pcpu));
+> -
+> -	dest = cpu_physical_id(vcpu->cpu);
+> -	if (!x2apic_mode)
+> -		dest = (dest << 8) & 0xFF00;
+> -
+> -	do {
+> -		old.control = new.control = READ_ONCE(pi_desc->control);
+> -
+> -		new.ndst = dest;
+> -
+> -		/* set 'NV' to 'notification vector' */
+> -		new.nv = POSTED_INTR_VECTOR;
+> -	} while (cmpxchg64(&pi_desc->control, old.control,
+> -			   new.control) != old.control);
+> -
+> -	vcpu->pre_pcpu = -1;
+> -}
+> -
+>  /*
+> - * This routine does the following things for vCPU which is going
+> - * to be blocked if VT-d PI is enabled.
+> - * - Store the vCPU to the wakeup list, so when interrupts happen
+> - *   we can find the right vCPU to wake up.
+> - * - Change the Posted-interrupt descriptor as below:
+> - *      'NV' <-- POSTED_INTR_WAKEUP_VECTOR
+> - * - If 'ON' is set during this process, which means at least one
+> - *   interrupt is posted for this vCPU, we cannot block it, in
+> - *   this case, return 1, otherwise, return 0.
+> - *
+> + * Put the vCPU on this pCPU's list of vCPUs that needs to be awakened and set
+> + * WAKEUP as the notification vector in the PI descriptor.
+>   */
+> -int pi_pre_block(struct kvm_vcpu *vcpu)
+> +static void pi_enable_wakeup_handler(struct kvm_vcpu *vcpu)
+>  {
+> -	struct pi_desc old, new;
+>  	struct pi_desc *pi_desc = vcpu_to_pi_desc(vcpu);
+> +	struct pi_desc old, new;
+>  	unsigned long flags;
+>  
+> -	if (!kvm_arch_has_assigned_device(vcpu->kvm) ||
+> -	    !irq_remapping_cap(IRQ_POSTING_CAP) ||
+> -	    !kvm_vcpu_apicv_active(vcpu) ||
+> -	    vmx_interrupt_blocked(vcpu))
+> -		return 0;
+> -
+>  	local_irq_save(flags);
+>  
+> -	vcpu->pre_pcpu = vcpu->cpu;
+>  	spin_lock(&per_cpu(blocked_vcpu_on_cpu_lock, vcpu->cpu));
+>  	list_add_tail(&vcpu->blocked_vcpu_list,
+>  		      &per_cpu(blocked_vcpu_on_cpu, vcpu->cpu));
+>  	spin_unlock(&per_cpu(blocked_vcpu_on_cpu_lock, vcpu->cpu));
+>  
+> -	WARN(pi_desc->sn == 1,
+> -	     "Posted Interrupt Suppress Notification set before blocking");
+> +	WARN(pi_desc->sn, "PI descriptor SN field set before blocking");
+>  
+>  	do {
+>  		old.control = new.control = READ_ONCE(pi_desc->control);
+> @@ -181,24 +141,40 @@ int pi_pre_block(struct kvm_vcpu *vcpu)
+>  	} while (cmpxchg64(&pi_desc->control, old.control,
+>  			   new.control) != old.control);
+>  
+> -	/* We should not block the vCPU if an interrupt is posted for it.  */
+> -	if (pi_test_on(pi_desc))
+> -		__pi_post_block(vcpu);
+> +	/*
+> +	 * Send a wakeup IPI to this CPU if an interrupt may have been posted
+> +	 * before the notification vector was updated, in which case the IRQ
+> +	 * will arrive on the non-wakeup vector.  An IPI is needed as calling
+> +	 * try_to_wake_up() from ->sched_out() isn't allowed (IRQs are not
+> +	 * enabled until it is safe to call try_to_wake_up() on the task being
+> +	 * scheduled out).
+> +	 */
+> +	if (pi_test_on(&new))
+> +		apic->send_IPI_self(POSTED_INTR_WAKEUP_VECTOR);
+>  
+>  	local_irq_restore(flags);
+> -	return (vcpu->pre_pcpu == -1);
+>  }
+>  
+> -void pi_post_block(struct kvm_vcpu *vcpu)
+> +void vmx_vcpu_pi_put(struct kvm_vcpu *vcpu)
+>  {
+> -	unsigned long flags;
+> +	struct pi_desc *pi_desc = vcpu_to_pi_desc(vcpu);
+>  
+> -	if (vcpu->pre_pcpu == -1)
+> +	if (!kvm_arch_has_assigned_device(vcpu->kvm) ||
+> +	    !irq_remapping_cap(IRQ_POSTING_CAP)  ||
+> +	    !kvm_vcpu_apicv_active(vcpu))
+>  		return;
+>  
+> -	local_irq_save(flags);
+> -	__pi_post_block(vcpu);
+> -	local_irq_restore(flags);
+> +	if (kvm_vcpu_is_blocking(vcpu) && !vmx_interrupt_blocked(vcpu))
+> +		pi_enable_wakeup_handler(vcpu);
+> +
+> +	/*
+> +	 * Set SN when the vCPU is preempted.  Note, the vCPU can both be seen
+> +	 * as blocking and preempted, e.g. if it's preempted between setting
+> +	 * its wait state and manually scheduling out.  In that case, KVM will
+> +	 * update
+> +	 */
+> +	if (vcpu->preempted)
+> +		pi_set_sn(pi_desc);
+>  }
+>  
+>  /*
+> @@ -239,7 +215,7 @@ bool pi_has_pending_interrupt(struct kvm_vcpu *vcpu)
+>   * Bail out of the block loop if the VM has an assigned
+>   * device, but the blocking vCPU didn't reconfigure the
+>   * PI.NV to the wakeup vector, i.e. the assigned device
+> - * came along after the initial check in pi_pre_block().
+> + * came along after the initial check in vmx_vcpu_pi_put().
+>   */
+>  void vmx_pi_start_assignment(struct kvm *kvm)
+>  {
+> diff --git a/arch/x86/kvm/vmx/posted_intr.h b/arch/x86/kvm/vmx/posted_intr.h
+> index 36ae035f14aa..eb14e76b84ef 100644
+> --- a/arch/x86/kvm/vmx/posted_intr.h
+> +++ b/arch/x86/kvm/vmx/posted_intr.h
+> @@ -40,6 +40,12 @@ static inline bool pi_test_and_clear_on(struct pi_desc *pi_desc)
+>  			(unsigned long *)&pi_desc->control);
+>  }
+>  
+> +static inline bool pi_test_and_clear_sn(struct pi_desc *pi_desc)
+> +{
+> +	return test_and_clear_bit(POSTED_INTR_SN,
+> +			(unsigned long *)&pi_desc->control);
+> +}
+> +
+>  static inline bool pi_test_and_set_pir(int vector, struct pi_desc *pi_desc)
+>  {
+>  	return test_and_set_bit(vector, (unsigned long *)pi_desc->pir);
+> @@ -88,8 +94,6 @@ static inline bool pi_test_sn(struct pi_desc *pi_desc)
+>  
+>  void vmx_vcpu_pi_load(struct kvm_vcpu *vcpu, int cpu);
+>  void vmx_vcpu_pi_put(struct kvm_vcpu *vcpu);
+> -int pi_pre_block(struct kvm_vcpu *vcpu);
+> -void pi_post_block(struct kvm_vcpu *vcpu);
+>  void pi_wakeup_handler(void);
+>  void __init pi_init_cpu(int cpu);
+>  bool pi_has_pending_interrupt(struct kvm_vcpu *vcpu);
+> diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+> index 5517893f12fc..26ed8cd1a1f2 100644
+> --- a/arch/x86/kvm/vmx/vmx.c
+> +++ b/arch/x86/kvm/vmx/vmx.c
+> @@ -7462,9 +7462,6 @@ void vmx_update_cpu_dirty_logging(struct kvm_vcpu *vcpu)
+>  
+>  static int vmx_pre_block(struct kvm_vcpu *vcpu)
+>  {
+> -	if (pi_pre_block(vcpu))
+> -		return 1;
+> -
+>  	if (kvm_lapic_hv_timer_in_use(vcpu))
+>  		kvm_lapic_switch_to_sw_timer(vcpu);
+>  
+> @@ -7475,8 +7472,6 @@ static void vmx_post_block(struct kvm_vcpu *vcpu)
+>  {
+>  	if (kvm_x86_ops.set_hv_timer)
+>  		kvm_lapic_switch_to_hv_timer(vcpu);
+> -
+> -	pi_post_block(vcpu);
+>  }
+>  
+>  static void vmx_setup_mce(struct kvm_vcpu *vcpu)
 
-Hmm, I think you could make an argument that ON and thus the whole "control"
-word should be volatile.  AFAICT, tagging just "on" as volatile actually works.
-There's even in a clause in Documentation/process/volatile-considered-harmful.rst
-that calls this out as a (potentially) legitimate use case.
 
-  - Pointers to data structures in coherent memory which might be modified
-    by I/O devices can, sometimes, legitimately be volatile.
+Looks OK to me, and IMHO is a very good step in direction to simplify that code,
+but the logic is far from beeing simple so I might have missed something.
 
-That said, I think I actually prefer forcing the use of READ_ONCE.  The descriptor
-requires more protections than what volatile provides, namely that all writes need
-to be atomic.  So given that volatile alone isn't sufficient, I'd prefer to have
-the code itself be more self-documenting.
+Especially, this should be tested with nested APICv, which I don't yet know well
+enough to know if this can break it or not.
 
-E.g. this compiles and does mess up the expected size.
 
-diff --git a/arch/x86/kvm/vmx/posted_intr.h b/arch/x86/kvm/vmx/posted_intr.h
-index 7f7b2326caf5..149df3b18789 100644
---- a/arch/x86/kvm/vmx/posted_intr.h
-+++ b/arch/x86/kvm/vmx/posted_intr.h
-@@ -11,9 +11,9 @@ struct pi_desc {
-        union {
-                struct {
-                                /* bit 256 - Outstanding Notification */
--                       u16     on      : 1,
-+                       volatile u16    on      : 1;
-                                /* bit 257 - Suppress Notification */
--                               sn      : 1,
-+                       u16     sn      : 1,
-                                /* bit 271:258 - Reserved */
-                                rsvd_1  : 14;
-                                /* bit 279:272 - Notification Vector */
-@@ -23,7 +23,7 @@ struct pi_desc {
-                                /* bit 319:288 - Notification Destination */
-                        u32     ndst;
-                };
--               u64 control;
-+               volatile u64 control;
-        };
-        u32 rsvd[6];
- } __aligned(64);
+Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
+
+Best regards,
+	Maxim Levitsky
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
