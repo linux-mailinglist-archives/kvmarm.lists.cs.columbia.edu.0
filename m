@@ -2,10 +2,10 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 463E443E31C
+	by mail.lfdr.de (Postfix) with ESMTP id 5316443E31D
 	for <lists+kvmarm@lfdr.de>; Thu, 28 Oct 2021 16:09:18 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 940F64B1CC;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E26614B1C8;
 	Thu, 28 Oct 2021 10:09:17 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
@@ -13,53 +13,53 @@ X-Spam-Score: 0.209
 X-Spam-Level: 
 X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
-	T_DKIM_INVALID=0.01] autolearn=no
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3hyD9G17jq0K; Thu, 28 Oct 2021 10:09:16 -0400 (EDT)
+	with ESMTP id kGrdsPIr5UOv; Thu, 28 Oct 2021 10:09:17 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 354294B1E0;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4AF644B1E7;
 	Thu, 28 Oct 2021 10:09:15 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 255114B1AB
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 06:53:50 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2250B4B1AB
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 06:55:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id aLyXgT9-YuvT for <kvmarm@lists.cs.columbia.edu>;
- Thu, 28 Oct 2021 06:53:49 -0400 (EDT)
+ with ESMTP id yEJyYefpxXOI for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 28 Oct 2021 06:55:06 -0400 (EDT)
 Received: from us-smtp-delivery-124.mimecast.com
  (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2FDD34B150
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 06:53:49 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9A0844B150
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 06:55:06 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1635418428;
+ s=mimecast20190719; t=1635418506;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3Wt6hQz793bEAWB8qvBHsZDv2D0O8mIxXIVFLmn+riQ=;
- b=OpExUOFNwSiqkV5V2hcHeonpVvnGz56auQ79W5/hKo09kFpWz6eHC6SfEHF3CKpmOwuPto
- iFF0Oyl/INjXfMV0WxsJVr/bQ0D8BFpZanX2U+Ng85RSPKRiDQxWAJwV223V6kPWOUwjUM
- ng34/S9RktR9kebIx3vXZJ6/TQEBGRk=
+ bh=rVBM4WS2LhpDG29Lqha3fLHlxhnITE0Ru8HhYa7oBTo=;
+ b=Ut3c3Cbnc3K+t4v3A8GmwvUctdHBSE5oYbeCC7BL843mo28xPQaAw4uNIAuZEbpwXpFVnN
+ A2sa8/E/8yk7HhqSO9WzCzIm72i67BO49BU9+EnQgPODs8XbjwydYBAJvOMPRJnDiVgIY6
+ zKT4ZO9NGz/18Fh4NBPtQ7KwYNbKjJE=
 Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
  [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-346-jwGpmWEnPaGeb-7ShF0kxw-1; Thu, 28 Oct 2021 06:53:45 -0400
-X-MC-Unique: jwGpmWEnPaGeb-7ShF0kxw-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com
- [10.5.11.14])
+ us-mta-376-rG3SRiItNtexXrDC84-blA-1; Thu, 28 Oct 2021 06:55:03 -0400
+X-MC-Unique: rG3SRiItNtexXrDC84-blA-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.phx2.redhat.com
+ [10.5.11.13])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 52A2A1006AA2;
- Thu, 28 Oct 2021 10:53:42 +0000 (UTC)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id D0F8D18D6A2C;
+ Thu, 28 Oct 2021 10:54:59 +0000 (UTC)
 Received: from starship (unknown [10.40.194.243])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 3BBCF5DA61;
- Thu, 28 Oct 2021 10:53:28 +0000 (UTC)
-Message-ID: <fcd7739536029260a340247e2528de12293d8ebe.camel@redhat.com>
-Subject: Re: [PATCH v2 24/43] KVM: VMX: Drop pointless PI.NDST update when
- blocking
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 6D81760D30;
+ Thu, 28 Oct 2021 10:54:41 +0000 (UTC)
+Message-ID: <72804198c24493c95e4a28bcd670bff32b945278.camel@redhat.com>
+Subject: Re: [PATCH v2 25/43] KVM: VMX: Save/restore IRQs (instead of
+ CLI/STI) during PI pre/post block
 From: Maxim Levitsky <mlevitsk@redhat.com>
 To: Sean Christopherson <seanjc@google.com>, Marc Zyngier <maz@kernel.org>, 
  Huacai Chen <chenhuacai@kernel.org>, Aleksandar Markovic
@@ -68,13 +68,13 @@ To: Sean Christopherson <seanjc@google.com>, Marc Zyngier <maz@kernel.org>,
  Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
  Christian Borntraeger <borntraeger@de.ibm.com>, Janosch Frank
  <frankja@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 28 Oct 2021 13:53:27 +0300
-In-Reply-To: <20211009021236.4122790-25-seanjc@google.com>
+Date: Thu, 28 Oct 2021 13:54:40 +0300
+In-Reply-To: <20211009021236.4122790-26-seanjc@google.com>
 References: <20211009021236.4122790-1-seanjc@google.com>
- <20211009021236.4122790-25-seanjc@google.com>
+ <20211009021236.4122790-26-seanjc@google.com>
 User-Agent: Evolution 3.36.5 (3.36.5-2.fc32) 
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
 X-Mailman-Approved-At: Thu, 28 Oct 2021 10:09:13 -0400
 Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
  David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org,
@@ -102,84 +102,65 @@ Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 On Fri, 2021-10-08 at 19:12 -0700, Sean Christopherson wrote:
-> Don't update Posted Interrupt's NDST, a.k.a. the target pCPU, in the
-> pre-block path, as NDST is guaranteed to be up-to-date.  The comment
-> about the vCPU being preempted during the update is simply wrong, as the
-> update path runs with IRQs disabled (from before snapshotting vcpu->cpu,
-> until after the update completes).
+> Save/restore IRQs when disabling IRQs in posted interrupt pre/post block
+> in preparation for moving the code into vcpu_put/load(), and thus may be
+> called with IRQs already disabled.
 > 
-> The vCPU can get preempted _before_ the update starts, but not during.
-> And if the vCPU is preempted before, vmx_vcpu_pi_load() is responsible
-> for updating NDST when the vCPU is scheduled back in.  In that case, the
-> check against the wakeup vector in vmx_vcpu_pi_load() cannot be true as
-> that would require the notification vector to have been set to the wakeup
-> vector _before_ blocking.
-> 
-> Opportunistically switch to using vcpu->cpu for the list/lock lookups,
-> which presumably used pre_pcpu only for some phantom preemption logic.
+> No functional changed intended.
 > 
 > Signed-off-by: Sean Christopherson <seanjc@google.com>
 > ---
->  arch/x86/kvm/vmx/posted_intr.c | 23 +++--------------------
->  1 file changed, 3 insertions(+), 20 deletions(-)
+>  arch/x86/kvm/vmx/posted_intr.c | 13 +++++++------
+>  1 file changed, 7 insertions(+), 6 deletions(-)
 > 
 > diff --git a/arch/x86/kvm/vmx/posted_intr.c b/arch/x86/kvm/vmx/posted_intr.c
-> index 1688f8dc535a..239e0e72a0dd 100644
+> index 239e0e72a0dd..414ea6972b5c 100644
 > --- a/arch/x86/kvm/vmx/posted_intr.c
 > +++ b/arch/x86/kvm/vmx/posted_intr.c
-> @@ -130,7 +130,6 @@ static void __pi_post_block(struct kvm_vcpu *vcpu)
->   * - Store the vCPU to the wakeup list, so when interrupts happen
->   *   we can find the right vCPU to wake up.
->   * - Change the Posted-interrupt descriptor as below:
-> - *      'NDST' <-- vcpu->pre_pcpu
->   *      'NV' <-- POSTED_INTR_WAKEUP_VECTOR
->   * - If 'ON' is set during this process, which means at least one
->   *   interrupt is posted for this vCPU, we cannot block it, in
-> @@ -139,7 +138,6 @@ static void __pi_post_block(struct kvm_vcpu *vcpu)
->   */
->  int pi_pre_block(struct kvm_vcpu *vcpu)
+> @@ -140,6 +140,7 @@ int pi_pre_block(struct kvm_vcpu *vcpu)
 >  {
-> -	unsigned int dest;
 >  	struct pi_desc old, new;
 >  	struct pi_desc *pi_desc = vcpu_to_pi_desc(vcpu);
+> +	unsigned long flags;
 >  
-> @@ -153,10 +151,10 @@ int pi_pre_block(struct kvm_vcpu *vcpu)
->  	local_irq_disable();
+>  	if (!kvm_arch_has_assigned_device(vcpu->kvm) ||
+>  	    !irq_remapping_cap(IRQ_POSTING_CAP) ||
+> @@ -147,8 +148,7 @@ int pi_pre_block(struct kvm_vcpu *vcpu)
+>  	    vmx_interrupt_blocked(vcpu))
+>  		return 0;
+>  
+> -	WARN_ON(irqs_disabled());
+> -	local_irq_disable();
+> +	local_irq_save(flags);
 >  
 >  	vcpu->pre_pcpu = vcpu->cpu;
-> -	spin_lock(&per_cpu(blocked_vcpu_on_cpu_lock, vcpu->pre_pcpu));
-> +	spin_lock(&per_cpu(blocked_vcpu_on_cpu_lock, vcpu->cpu));
->  	list_add_tail(&vcpu->blocked_vcpu_list,
-> -		      &per_cpu(blocked_vcpu_on_cpu, vcpu->pre_pcpu));
-> -	spin_unlock(&per_cpu(blocked_vcpu_on_cpu_lock, vcpu->pre_pcpu));
-> +		      &per_cpu(blocked_vcpu_on_cpu, vcpu->cpu));
-> +	spin_unlock(&per_cpu(blocked_vcpu_on_cpu_lock, vcpu->cpu));
+>  	spin_lock(&per_cpu(blocked_vcpu_on_cpu_lock, vcpu->cpu));
+> @@ -171,19 +171,20 @@ int pi_pre_block(struct kvm_vcpu *vcpu)
+>  	if (pi_test_on(pi_desc))
+>  		__pi_post_block(vcpu);
 >  
->  	WARN(pi_desc->sn == 1,
->  	     "Posted Interrupt Suppress Notification set before blocking");
-> @@ -164,21 +162,6 @@ int pi_pre_block(struct kvm_vcpu *vcpu)
->  	do {
->  		old.control = new.control = pi_desc->control;
+> -	local_irq_enable();
+> +	local_irq_restore(flags);
+>  	return (vcpu->pre_pcpu == -1);
+>  }
 >  
-> -		/*
-> -		 * Since vCPU can be preempted during this process,
-> -		 * vcpu->cpu could be different with pre_pcpu, we
-> -		 * need to set pre_pcpu as the destination of wakeup
-> -		 * notification event, then we can find the right vCPU
-> -		 * to wakeup in wakeup handler if interrupts happen
-> -		 * when the vCPU is in blocked state.
-> -		 */
-> -		dest = cpu_physical_id(vcpu->pre_pcpu);
-> -
-> -		if (x2apic_mode)
-> -			new.ndst = dest;
-> -		else
-> -			new.ndst = (dest << 8) & 0xFF00;
-> -
->  		/* set 'NV' to 'wakeup vector' */
->  		new.nv = POSTED_INTR_WAKEUP_VECTOR;
->  	} while (cmpxchg64(&pi_desc->control, old.control,
-Reviewed-by : Maxim Levitsky <mlevitsk@redhat.com>
+>  void pi_post_block(struct kvm_vcpu *vcpu)
+>  {
+> +	unsigned long flags;
+> +
+>  	if (vcpu->pre_pcpu == -1)
+>  		return;
+>  
+> -	WARN_ON(irqs_disabled());
+> -	local_irq_disable();
+> +	local_irq_save(flags);
+>  	__pi_post_block(vcpu);
+> -	local_irq_enable();
+> +	local_irq_restore(flags);
+>  }
+>  
+>  /*
+Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
 
 Best regards,
 	Maxim Levitsky
