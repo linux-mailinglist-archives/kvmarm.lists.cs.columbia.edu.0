@@ -2,89 +2,62 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4976E43DE41
-	for <lists+kvmarm@lfdr.de>; Thu, 28 Oct 2021 11:59:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9ABBC43DFDB
+	for <lists+kvmarm@lfdr.de>; Thu, 28 Oct 2021 13:16:58 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D889C4B1E2;
-	Thu, 28 Oct 2021 05:58:59 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4918B4B1CC;
+	Thu, 28 Oct 2021 07:16:58 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.209
+X-Spam-Score: -4.201
 X-Spam-Level: 
-X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zeeHxoCss0bm; Thu, 28 Oct 2021 05:58:59 -0400 (EDT)
+	with ESMTP id 0V3OM0LsWHuN; Thu, 28 Oct 2021 07:16:56 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 205094B1CA;
-	Thu, 28 Oct 2021 05:58:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2AC354B1B4;
+	Thu, 28 Oct 2021 07:16:52 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 29F3A4B15E
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 05:12:46 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 04D6E4B1AB
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 07:16:50 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id q5DFbihNd2MD for <kvmarm@lists.cs.columbia.edu>;
- Thu, 28 Oct 2021 05:12:44 -0400 (EDT)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 53E3E4B126
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 05:12:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1635412363;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=l1MWdjra8eZcIIlx8zcoZvMR0jtyOa/xjrbhOVDWvpc=;
- b=WywqvnrFTYkLtUSeQ/iRa9W2PIlFGAfjP9Gf/493Ftda1l/I7ySjwth1XQ/nnoqAa9IRsC
- meiefUgcCyasnehZWpFq5q/cpcxyXMNoAfua03PSEBnPyTAN3aOcZKIWQhWfUoXORs6YyX
- aTJjddpiwf+xhUKRw3bde8X47WRd5Fk=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-547-sp4eSFtgN52tnt6kECXjIQ-1; Thu, 28 Oct 2021 05:12:40 -0400
-X-MC-Unique: sp4eSFtgN52tnt6kECXjIQ-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.phx2.redhat.com
- [10.5.11.16])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ with ESMTP id 4MJ7MBYPOILu for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 28 Oct 2021 07:16:48 -0400 (EDT)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 755A84B1B0
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 07:16:48 -0400 (EDT)
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
+ [51.254.78.96])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id EE71D1966321;
- Thu, 28 Oct 2021 09:12:36 +0000 (UTC)
-Received: from starship (unknown [10.40.194.243])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 4625A5F707;
- Thu, 28 Oct 2021 09:12:15 +0000 (UTC)
-Message-ID: <c6c19d79bc8c7747d91a9dba1c1e671e9d138761.camel@redhat.com>
-Subject: Re: [PATCH v2 20/43] KVM: VMX: Skip Posted Interrupt updates if
- APICv is hard disabled
-From: Maxim Levitsky <mlevitsk@redhat.com>
-To: Sean Christopherson <seanjc@google.com>, Marc Zyngier <maz@kernel.org>, 
- Huacai Chen <chenhuacai@kernel.org>, Aleksandar Markovic
- <aleksandar.qemu.devel@gmail.com>, Paul Mackerras <paulus@ozlabs.org>, Anup
- Patel <anup.patel@wdc.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Christian Borntraeger <borntraeger@de.ibm.com>, Janosch Frank
- <frankja@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 28 Oct 2021 12:12:13 +0300
-In-Reply-To: <20211009021236.4122790-21-seanjc@google.com>
-References: <20211009021236.4122790-1-seanjc@google.com>
- <20211009021236.4122790-21-seanjc@google.com>
-User-Agent: Evolution 3.36.5 (3.36.5-2.fc32) 
+ by mail.kernel.org (Postfix) with ESMTPSA id D07FB610F8;
+ Thu, 28 Oct 2021 11:16:45 +0000 (UTC)
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1mg3Ol-002BtD-I6; Thu, 28 Oct 2021 12:16:43 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
+Subject: [PATCH v2 0/5] KVM: arm64: Rework FPSIMD/SVE tracking
+Date: Thu, 28 Oct 2021 12:16:35 +0100
+Message-Id: <20211028111640.3663631-1-maz@kernel.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-Mailman-Approved-At: Thu, 28 Oct 2021 05:58:55 -0400
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- David Hildenbrand <david@redhat.com>, linux-kernel@vger.kernel.org,
- Atish Patra <atish.patra@wdc.com>, linux-riscv@lists.infradead.org,
- Claudio Imbrenda <imbrenda@linux.ibm.com>, kvmarm@lists.cs.columbia.edu,
- Joerg Roedel <joro@8bytes.org>, kvm-ppc@vger.kernel.org,
- David Matlack <dmatlack@google.com>, linux-arm-kernel@lists.infradead.org,
- Jim Mattson <jmattson@google.com>, Cornelia Huck <cohuck@redhat.com>,
- linux-mips@vger.kernel.org, kvm-riscv@lists.infradead.org,
- Vitaly Kuznetsov <vkuznets@redhat.com>
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, james.morse@arm.com,
+ suzuki.poulose@arm.com, alexandru.elisei@arm.com, qperret@google.com,
+ will@kernel.org, broonie@kernel.org, kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com, Will Deacon <will@kernel.org>, broonie@kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -101,45 +74,55 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, 2021-10-08 at 19:12 -0700, Sean Christopherson wrote:
-> Explicitly skip posted interrupt updates if APICv is disabled in all of
-> KVM, or if the guest doesn't have an in-kernel APIC.  The PI descriptor
-> is kept up-to-date if APICv is inhibited, e.g. so that re-enabling APICv
-> doesn't require a bunch of updates, but neither the module param nor the
-> APIC type can be changed on-the-fly.
-> 
-> Signed-off-by: Sean Christopherson <seanjc@google.com>
-> ---
->  arch/x86/kvm/vmx/posted_intr.c | 11 +++++++----
->  1 file changed, 7 insertions(+), 4 deletions(-)
-> 
-> diff --git a/arch/x86/kvm/vmx/posted_intr.c b/arch/x86/kvm/vmx/posted_intr.c
-> index 3263056784f5..351666c41bbc 100644
-> --- a/arch/x86/kvm/vmx/posted_intr.c
-> +++ b/arch/x86/kvm/vmx/posted_intr.c
-> @@ -28,11 +28,14 @@ void vmx_vcpu_pi_load(struct kvm_vcpu *vcpu, int cpu)
->  	unsigned int dest;
->  
->  	/*
-> -	 * In case of hot-plug or hot-unplug, we may have to undo
-> -	 * vmx_vcpu_pi_put even if there is no assigned device.  And we
-> -	 * always keep PI.NDST up to date for simplicity: it makes the
-> -	 * code easier, and CPU migration is not a fast path.
-> +	 * To simplify hot-plug and dynamic toggling of APICv, keep PI.NDST and
-> +	 * PI.SN up-to-date even if there is no assigned device or if APICv is
-> +	 * deactivated due to a dynamic inhibit bit, e.g. for Hyper-V's SyncIC.
->  	 */
-> +	if (!enable_apicv || !lapic_in_kernel(vcpu))
-> +		return;
-> +
-> +	/* Nothing to do if PI.SN==0 and the vCPU isn't being migrated. */
->  	if (!pi_test_sn(pi_desc) && vcpu->cpu == cpu)
->  		return;
->  
-Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
+This is v2 of this series aiming at simplifying the FP handling.
 
-Best regards,
-	Maxim Levitsky
+It recently became apparent that we are mapping each vcpu thread's
+thread_info structure at EL2 for the sole purpose of checking on the
+TIF_FOREIGN_FPSTATE flag.
+
+Given that this looks like a slightly over-engineered way of sharing a
+single bit of information, let's move to a slightly more obvious
+implementation by maintaining a vcpu-private shadow flag that
+represents the same state.
+
+In the same vein, it appears that the code that deals with saving the
+host SVE state when used by the guest can never run, and that's by
+construction. This is actually a good thing, because it be guaranteed
+to explode on nVHE. Let's get rid of it.
+
+I also take this opportunity to add what looks like a missing, and
+nonetheless crucial piece of information to the FPSIMD code regarding
+the way KVM (ab)uses the TIF_FOREIGN_FPSTATE.
+
+Lightly tested on an A53 box with a bunch of paranoia instances
+running in both host and guests, and more heavily on a FVP to check
+the SVE behaviour (using the sve-test selftest running in both host
+and guest at the same time).
+
+* From v1 [1]:
+  - New patch getting rid of the host SVE save code
+  - Reworded the documentation update patch
+
+[1] https://lore.kernel.org/r/20211021151124.3098113-1-maz@kernel.org
+
+Marc Zyngier (5):
+  KVM: arm64: Reorder vcpu flag definitions
+  KVM: arm64: Get rid of host SVE tracking/saving
+  KVM: arm64: Introduce flag shadowing TIF_FOREIGN_FPSTATE
+  KVM: arm64: Stop mapping current thread_info at EL2
+  arm64/fpsimd: Document the use of TIF_FOREIGN_FPSTATE by KVM
+
+ arch/arm64/include/asm/kvm_host.h       | 29 ++++++++++---------
+ arch/arm64/kernel/fpsimd.c              |  6 +++-
+ arch/arm64/kvm/arm.c                    |  1 +
+ arch/arm64/kvm/fpsimd.c                 | 37 ++++++++++---------------
+ arch/arm64/kvm/hyp/include/hyp/switch.h | 30 +++-----------------
+ arch/arm64/kvm/hyp/nvhe/switch.c        |  1 -
+ arch/arm64/kvm/hyp/vhe/switch.c         |  1 -
+ 7 files changed, 38 insertions(+), 67 deletions(-)
+
+-- 
+2.30.2
 
 _______________________________________________
 kvmarm mailing list
