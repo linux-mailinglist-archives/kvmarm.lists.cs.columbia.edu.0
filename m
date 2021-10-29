@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 58BCE43F3F5
-	for <lists+kvmarm@lfdr.de>; Fri, 29 Oct 2021 02:32:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE50343F3F7
+	for <lists+kvmarm@lfdr.de>; Fri, 29 Oct 2021 02:32:52 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EE2814B160;
-	Thu, 28 Oct 2021 20:32:47 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5F2E74B17B;
+	Thu, 28 Oct 2021 20:32:52 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,59 +19,60 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YJz+pMUmzD0k; Thu, 28 Oct 2021 20:32:45 -0400 (EDT)
+	with ESMTP id FqM32j71c0FJ; Thu, 28 Oct 2021 20:32:51 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D68774B162;
-	Thu, 28 Oct 2021 20:32:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1BF624B1A3;
+	Thu, 28 Oct 2021 20:32:49 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6F5BD4B192
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 20:32:44 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4356E4B172
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 20:32:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Ojd6BedaFfsO for <kvmarm@lists.cs.columbia.edu>;
- Thu, 28 Oct 2021 20:32:42 -0400 (EDT)
-Received: from mail-ot1-f74.google.com (mail-ot1-f74.google.com
- [209.85.210.74])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D68874B15B
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 20:32:42 -0400 (EDT)
-Received: by mail-ot1-f74.google.com with SMTP id
- l17-20020a9d7351000000b0054e7cd8a64dso4397223otk.4
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 17:32:42 -0700 (PDT)
+ with ESMTP id Z0fb84wYTcZQ for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 28 Oct 2021 20:32:44 -0400 (EDT)
+Received: from mail-ot1-f73.google.com (mail-ot1-f73.google.com
+ [209.85.210.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D6D3F4B160
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 20:32:43 -0400 (EDT)
+Received: by mail-ot1-f73.google.com with SMTP id
+ r3-20020a056830236300b0054d43b72ba5so4348916oth.17
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Oct 2021 17:32:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=/sJBbEboFqrI/MxFIGHyMR9wTr4lxmpL5NLpkV9j8hQ=;
- b=CS2JS7vwBb0zhIoVa/v/R9TXNAMyxaDHa0+R30BfqVftv8Ib04TdU50zJzA+/zP95r
- LVY/dLq68XY1xApshEteH2mXaeynz6bRdH8aOhxFWwVQq86cfvuFfYEuLJcCDXYHorQQ
- MBdvOweKuyeYEOk2XfpMSh9hjycA1O037blIDV4CbL2jP9YGYfyQ0Hksc9zg3IRdEWR+
- OkR4YO4AK+9nmA8SLd2rhR9AZRlmkUkQX/ZliV8doGjv6mAtlv6wrG0JZJMVvIUYHXIP
- uwOtf00tTbn/yxsHw7L6jgh0PYBAuz8JofNLLKjix4GWKWTuPPCxWWXzMtaX9BEjLxr+
- 3Sbw==
+ :cc; bh=8jHkcukOGs60Vh8sqIk5PEDCEkQaDcCSTeMEW1ZoThU=;
+ b=JdhR5KgizbNUUTAjmlYRxJx0EtRpzClBjN8sNGCA4JJO4HHHb6OXPbkGWVWsexwurl
+ kRU/OrYOvFTWusWVmdojV2LmmS3eksr37DnFEYydJYDaWiHjFtnAErqEYg97xPlTHxHn
+ nLUvfSd9uIXXDeEqhI/d07olbwebG44JjMzSvnmAiFv9ny7vqeJmJcMZCzv9Txyee4A1
+ AH50A4MUa8rJlxoiWXiA/FNFIrwGua22jIX3diDsCegQ2R353dFwc0iVF1Ubi2YZ4UDY
+ m1tQpzc7VBbKbCWLZcVd52Qs91rPh+JGCvqvxhTGc6bQlM+BZoafUHzt0/wQE/NVWNBr
+ 1N3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=/sJBbEboFqrI/MxFIGHyMR9wTr4lxmpL5NLpkV9j8hQ=;
- b=VKX6jPuM3FygRuL0PULCgQ28aLUhHq2WCeDfaMIZHPpZUfvyPHu46W2dXlgegtHM6w
- t1CgibLEFD1DdyxwYewNcvGT6NjcfimtYp2mR/VN8sGX0s3x1CNGCptHxKy+YgICg9EH
- NW8QvDEdDuW9OsCb8lr63MUC1DOBVy8yiMxC5d00+mU9w3VNrjPoXiYtqCWh1g41tCml
- gHf8dPcsB1cQ17mTwOLfqXfOQXBgFd9ovQCrYXjMSS4agYU3vl6Rw7pPwleOp/ry6ICp
- EdKXI9maKf0DhnF4hEhSPfyk3JkjXnUDT7DqC+CNbrkRR8P3IXYf05ZsU/rHnsFfb02I
- h4+A==
-X-Gm-Message-State: AOAM530nODWDekU7fy/Jn40Rj+wU1bpTestoVUF6dgnzFQggZhehNDdy
- HbwtZxGtxRaQfW+Q49hGMooN+QLd1eC7cx5inkpSda3dMMlTlOofJq23I4OXt08NLJMjNKXPcxo
- mvMZKtmOEoERyslMhUJy2AeyT0m+NZk5aXplP/OfXyy9G7PJ9dqBGAph1aGpduQHd7yjVYQ==
-X-Google-Smtp-Source: ABdhPJy9nXHALTXt4MgBaSGvD9mD2E3itk627BvZ8WCtIIPahARJ3cpAv7JLd0lNeNrT9GzDK78pS6NEvAI=
+ bh=8jHkcukOGs60Vh8sqIk5PEDCEkQaDcCSTeMEW1ZoThU=;
+ b=temF4CuwD1wUIaPCRbU2PBc5gGdX8TVt3xEFKbHAU0lRV+vRc/4AdCB3JGYlFBaePw
+ QRlLeh6zdWuPzVVu7Gp4xvWL1HtSdcfGLPsMkWdgTTnkLwdxznEMVdNamMY39EwXMGsQ
+ +noabz9MBX+dTK09jTojCmQZUooBM/aywTWJo2VlZ4NIzCLZs3Y8Ef4/DOH1bFlK3kRL
+ TssPccLNM0U/i7WI4xA2aGpnhwmNV7uRO7Bj9Ek9dISaypdcap0ACT32Fu3wfKUejrb8
+ BznZ7QVDSFZFDSIKSJsETbhNSmmV6qBEihRbuqlWJOKTJsTdDd5cYQ3JlRq56DZCtCP6
+ aTbQ==
+X-Gm-Message-State: AOAM531m73bQsSbVBKPYrui8W4pdVb/4GOee7eN6jhq0mqvklqz79xaV
+ z4/GYiU+JiS9j/CiORNf+Ee1jKBEIEUDE7RBEcrnBrCByBOGPqk2Ta8seQ+GiK5ls/dCSiQ1ujD
+ w+ivYZeW/IX8wzarj14HSc20OcQSrQ0rb9O7Yxc0s0EDecUhSXfFgHlY4Z4UUTazRdrFhBw==
+X-Google-Smtp-Source: ABdhPJyaxDFxxmg122WEeWbg/RrVAHJJLIJnz/MlGJ2fjJIs/pCIhzGPDOjoXFCCGLJwb76Yre8ULKN1ULY=
 X-Received: from oupton.c.googlers.com ([fda3:e722:ac3:cc00:2b:ff92:c0a8:404])
- (user=oupton job=sendgmr) by 2002:a05:6808:6ce:: with SMTP id
- m14mr5671351oih.134.1635467562084; Thu, 28 Oct 2021 17:32:42 -0700 (PDT)
-Date: Fri, 29 Oct 2021 00:32:00 +0000
+ (user=oupton job=sendgmr) by 2002:aca:3e86:: with SMTP id
+ l128mr11380539oia.120.1635467563254; 
+ Thu, 28 Oct 2021 17:32:43 -0700 (PDT)
+Date: Fri, 29 Oct 2021 00:32:01 +0000
 In-Reply-To: <20211029003202.158161-1-oupton@google.com>
-Message-Id: <20211029003202.158161-2-oupton@google.com>
+Message-Id: <20211029003202.158161-3-oupton@google.com>
 Mime-Version: 1.0
 References: <20211029003202.158161-1-oupton@google.com>
 X-Mailer: git-send-email 2.33.1.1089.g2158813163f-goog
-Subject: [PATCH 1/3] KVM: arm64: Stash OSLSR_EL1 in the cpu context
+Subject: [PATCH 2/3] KVM: arm64: Allow the guest to change the OS Lock status
 From: Oliver Upton <oupton@google.com>
 To: kvmarm@lists.cs.columbia.edu
 Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
@@ -92,67 +93,93 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-An upcoming change to KVM will context switch the OS Lock status between
-guest/host. Add OSLSR_EL1 to the cpu context and handle guest reads
-using the stored value.
+KVM diverges from the architecture in the way it handles the OSLAR_EL1
+register. While the architecture requires that the register be WO and
+that the OSLK bit is 1 out of reset, KVM implements the register as
+RAZ/WI.
 
+Align KVM with the architecture by permitting writes to OSLAR_EL1. Since
+the register is WO, stash the OS Lock status bit in OSLSR_EL1 and
+context switch the status between host/guest. Additionally, change the
+reset value of the OSLK bit to 1.
+
+Suggested-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Oliver Upton <oupton@google.com>
 ---
- arch/arm64/include/asm/kvm_host.h |  1 +
- arch/arm64/kvm/sys_regs.c         | 13 ++++++-------
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h |  5 +++++
+ arch/arm64/kvm/sys_regs.c                  | 22 +++++++++++++++++++---
+ 2 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index f8be56d5342b..c98f65c4a1f7 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -172,6 +172,7 @@ enum vcpu_sysreg {
- 	MDSCR_EL1,	/* Monitor Debug System Control Register */
- 	MDCCINT_EL1,	/* Monitor Debug Comms Channel Interrupt Enable Reg */
- 	DISR_EL1,	/* Deferred Interrupt Status Register */
-+	OSLSR_EL1,	/* OS Lock Status Register */
- 
- 	/* Performance Monitors Registers */
- 	PMCR_EL0,	/* Control Register */
-diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index 1d46e185f31e..0eb03e7508fe 100644
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -291,12 +291,11 @@ static bool trap_oslsr_el1(struct kvm_vcpu *vcpu,
- 			   struct sys_reg_params *p,
- 			   const struct sys_reg_desc *r)
- {
--	if (p->is_write) {
-+	if (p->is_write)
- 		return ignore_write(vcpu, p);
--	} else {
--		p->regval = (1 << 3);
--		return true;
--	}
+diff --git a/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h b/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h
+index de7e14c862e6..a65dab34f85b 100644
+--- a/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h
++++ b/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h
+@@ -65,6 +65,8 @@ static inline void __sysreg_save_el1_state(struct kvm_cpu_context *ctxt)
+ 	ctxt_sys_reg(ctxt, SP_EL1)	= read_sysreg(sp_el1);
+ 	ctxt_sys_reg(ctxt, ELR_EL1)	= read_sysreg_el1(SYS_ELR);
+ 	ctxt_sys_reg(ctxt, SPSR_EL1)	= read_sysreg_el1(SYS_SPSR);
 +
-+	p->regval = vcpu_read_sys_reg(vcpu, r->reg);
-+	return true;
++	ctxt_sys_reg(ctxt, OSLSR_EL1)	= read_sysreg(oslsr_el1);
  }
  
+ static inline void __sysreg_save_el2_return_state(struct kvm_cpu_context *ctxt)
+@@ -149,6 +151,9 @@ static inline void __sysreg_restore_el1_state(struct kvm_cpu_context *ctxt)
+ 	write_sysreg(ctxt_sys_reg(ctxt, SP_EL1),	sp_el1);
+ 	write_sysreg_el1(ctxt_sys_reg(ctxt, ELR_EL1),	SYS_ELR);
+ 	write_sysreg_el1(ctxt_sys_reg(ctxt, SPSR_EL1),	SYS_SPSR);
++
++	/* restore OSLSR_EL1 by writing the OSLK bit to OSLAR_EL1 */
++	write_sysreg((ctxt_sys_reg(ctxt, OSLSR_EL1) >> 1) & 1, oslar_el1);
+ }
+ 
+ static inline void __sysreg_restore_el2_return_state(struct kvm_cpu_context *ctxt)
+diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+index 0eb03e7508fe..0840ae081290 100644
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -298,6 +298,22 @@ static bool trap_oslsr_el1(struct kvm_vcpu *vcpu,
+ 	return true;
+ }
+ 
++static bool trap_oslar_el1(struct kvm_vcpu *vcpu,
++			   struct sys_reg_params *p,
++			   const struct sys_reg_desc *r)
++{
++	u64 oslsr;
++
++	if (!p->is_write)
++		return read_zero(vcpu, p);
++
++	/* preserve all but the OSLK bit */
++	oslsr = vcpu_read_sys_reg(vcpu, OSLSR_EL1) & ~0x2ull;
++	vcpu_write_sys_reg(vcpu, OSLSR_EL1, oslsr | ((p->regval & 1) << 1));
++	return true;
++}
++
++
  static bool trap_dbgauthstatus_el1(struct kvm_vcpu *vcpu,
-@@ -1441,7 +1440,7 @@ static const struct sys_reg_desc sys_reg_descs[] = {
+ 				   struct sys_reg_params *p,
+ 				   const struct sys_reg_desc *r)
+@@ -1439,8 +1455,8 @@ static const struct sys_reg_desc sys_reg_descs[] = {
+ 	DBG_BCR_BVR_WCR_WVR_EL1(15),
  
  	{ SYS_DESC(SYS_MDRAR_EL1), trap_raz_wi },
- 	{ SYS_DESC(SYS_OSLAR_EL1), trap_raz_wi },
--	{ SYS_DESC(SYS_OSLSR_EL1), trap_oslsr_el1 },
-+	{ SYS_DESC(SYS_OSLSR_EL1), trap_oslsr_el1, reset_val, OSLSR_EL1, 0x00000008 },
+-	{ SYS_DESC(SYS_OSLAR_EL1), trap_raz_wi },
+-	{ SYS_DESC(SYS_OSLSR_EL1), trap_oslsr_el1, reset_val, OSLSR_EL1, 0x00000008 },
++	{ SYS_DESC(SYS_OSLAR_EL1), trap_oslar_el1 },
++	{ SYS_DESC(SYS_OSLSR_EL1), trap_oslsr_el1, reset_val, OSLSR_EL1, 0x0000000A },
  	{ SYS_DESC(SYS_OSDLR_EL1), trap_raz_wi },
  	{ SYS_DESC(SYS_DBGPRCR_EL1), trap_raz_wi },
  	{ SYS_DESC(SYS_DBGCLAIMSET_EL1), trap_raz_wi },
-@@ -1916,7 +1915,7 @@ static const struct sys_reg_desc cp14_regs[] = {
- 	{ Op1( 0), CRn( 1), CRm( 0), Op2( 4), trap_raz_wi },
+@@ -1912,7 +1928,7 @@ static const struct sys_reg_desc cp14_regs[] = {
+ 
+ 	DBGBXVR(0),
+ 	/* DBGOSLAR */
+-	{ Op1( 0), CRn( 1), CRm( 0), Op2( 4), trap_raz_wi },
++	{ Op1( 0), CRn( 1), CRm( 0), Op2( 4), trap_oslar_el1 },
  	DBGBXVR(1),
  	/* DBGOSLSR */
--	{ Op1( 0), CRn( 1), CRm( 1), Op2( 4), trap_oslsr_el1 },
-+	{ Op1( 0), CRn( 1), CRm( 1), Op2( 4), trap_oslsr_el1, NULL, OSLSR_EL1 },
- 	DBGBXVR(2),
- 	DBGBXVR(3),
- 	/* DBGOSDLR */
+ 	{ Op1( 0), CRn( 1), CRm( 1), Op2( 4), trap_oslsr_el1, NULL, OSLSR_EL1 },
 -- 
 2.33.0.1079.g6e70778dc9-goog
 
