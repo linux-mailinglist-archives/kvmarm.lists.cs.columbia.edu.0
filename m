@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E7C75442AAC
-	for <lists+kvmarm@lfdr.de>; Tue,  2 Nov 2021 10:47:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 27DA1442AF8
+	for <lists+kvmarm@lfdr.de>; Tue,  2 Nov 2021 10:51:40 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9629C4B1A9;
-	Tue,  2 Nov 2021 05:47:11 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A7C1D4B176;
+	Tue,  2 Nov 2021 05:51:39 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -14,65 +14,63 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=no
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 11939FwOKPAk; Tue,  2 Nov 2021 05:47:10 -0400 (EDT)
+	with ESMTP id pIGeIoZYp3Ho; Tue,  2 Nov 2021 05:51:39 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C61D84B1CF;
-	Tue,  2 Nov 2021 05:47:09 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 75CAF4B154;
+	Tue,  2 Nov 2021 05:51:38 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6289C4B15E
- for <kvmarm@lists.cs.columbia.edu>; Tue,  2 Nov 2021 05:47:08 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1CD624B11C
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  2 Nov 2021 05:51:37 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id pakFyt+rrv5l for <kvmarm@lists.cs.columbia.edu>;
- Tue,  2 Nov 2021 05:47:07 -0400 (EDT)
-Received: from mail-io1-f73.google.com (mail-io1-f73.google.com
- [209.85.166.73])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5FC984B191
- for <kvmarm@lists.cs.columbia.edu>; Tue,  2 Nov 2021 05:47:06 -0400 (EDT)
-Received: by mail-io1-f73.google.com with SMTP id
- w5-20020a6bf005000000b005e1513b2680so12800788ioc.13
- for <kvmarm@lists.cs.columbia.edu>; Tue, 02 Nov 2021 02:47:06 -0700 (PDT)
+ with ESMTP id x0vATYDc-Nzb for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  2 Nov 2021 05:51:35 -0400 (EDT)
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com
+ [209.85.208.177])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0E8ED4B104
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  2 Nov 2021 05:51:34 -0400 (EDT)
+Received: by mail-lj1-f177.google.com with SMTP id 1so28021643ljv.2
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 02 Nov 2021 02:51:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=USRcUlx130z7l5DHjEbTqn2FW1uy9zzoAmm3OXXaQBk=;
- b=PQLfk3CFu1uKl92twaW6wnU35UbAHgLOFn7zYoU4COpmRQifsFd/zeIm5FCi0v4o0x
- /v+0h1A/ULEUdztocwTSe0oiqESiYPZ/hpeXLA64lpfwIpqqp3XUJM4CuRE952oFQWKu
- fLsSf++kgTReC9IHoLJuRBY8v8C14jwONDDLb5Mrm+gyaSe1TgfI6eHqcwEEOTofSHTN
- wS8Q0W7bHGRZ1baATKX5JSPRjxdR+oHD9mhS6xgGZ/jA4t+A0uFxy4S4x4p3lceEFZuM
- UJ1ALejVWJAhv1+rtYQZldacua675hfSzOOsdxq9odNYyfkD74lpUoSqCivx93Z0wd+e
- JySg==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=ltDk5JK6z+dHqY8fdueOIJnXFQ9epuN/VTXpT5MWcbo=;
+ b=dB1O/eAqNcHN1R5TtXUb4Ium887EbOkxo37AnK/8BMd9z/JGifaE1xNVkrSWa5LMMh
+ 07YxdoVTS/OIMoHQHPutCkgiq9L1DjLVN+3aiQGnfasgaMJZT2JkrdBiej0auqMzj4Zq
+ SeM4ASzdOt0EEDJw+/4W7DextFsZHaW0Y9fWezHvThGjnSv7/G41wW+7dEqC1oG/ACET
+ 9Xzc6fMqSJpq/raOpG4T5jn7IdAUg68R+0iuy8UNcVa7NUOJWFTXwhVdThdLVwusOjhS
+ D85uaZLFHrfRqn23fuXjUwJw7svEl6TUbgIJCuE0CD5xCubi44JJLNS7JXRWSf49glWD
+ xPUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:date:in-reply-to:message-id:mime-version
- :references:subject:from:to:cc;
- bh=USRcUlx130z7l5DHjEbTqn2FW1uy9zzoAmm3OXXaQBk=;
- b=oU6c+DRpfSgHexN/qwr6V/JhF5xH5Ch+Qybi3vN5HttDQRfeuN/yWL2rkH9Hu1DW75
- uWRxwtBCMVfNjNsePMGC+X6+C2hs2ER5yNMH6oO4txlLfgs3gIltD10wt1IFcSQBbhX3
- l1VxjTYcKnJmsXPJGOpcqBs8E5JVxut4IX7ft2WqWZG3isub19PvoVg9dMfkBofF512a
- bsG5M16itC+lMgEqB440uVBk3qTITD9Mmgie9ebw6ohui9WJb0KJPbXsb7HdnWtVIOPH
- HsR3e9avR02Q4GpJe+tPPLd3RCxeLs6KtmiKmbnQXLCtXFE86hyUPF1x+xdYs+BrD3fw
- A2ng==
-X-Gm-Message-State: AOAM533OAfbwSm3wgAiUXHH5fxOUskIv5bhdBYY4bZMjKKPokB8XjiUR
- FBZ+sGiMGs8UN8wBdiRQdSLCUkav3zhduhOgZ7cHEuL3X2VtQZvOHwkkmyvZlcql/Gb071XiibK
- 7IiRgBt9Z6igwmdiUu/6Fu8FgoGhONRppCtb+k1XwM57bay6+mkW4CD/BfhY2LTQ8ClTp9A==
-X-Google-Smtp-Source: ABdhPJy6wt5RMowO8zj/XK0tDxqF5oCDvoTx8hC/w3ofvmgfuVtqYfu0icCviFdBDTxdv6AyYpCRfHOVcWc=
-X-Received: from oupton.c.googlers.com ([fda3:e722:ac3:cc00:2b:ff92:c0a8:404])
- (user=oupton job=sendgmr) by 2002:a05:6638:1502:: with SMTP id
- b2mr27109379jat.131.1635846425861; Tue, 02 Nov 2021 02:47:05 -0700 (PDT)
-Date: Tue,  2 Nov 2021 09:46:51 +0000
-In-Reply-To: <20211102094651.2071532-1-oupton@google.com>
-Message-Id: <20211102094651.2071532-7-oupton@google.com>
-Mime-Version: 1.0
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=ltDk5JK6z+dHqY8fdueOIJnXFQ9epuN/VTXpT5MWcbo=;
+ b=ewtlc0fwipT4tkpCD5CfSTjdBkjJTNSRF4ufL3Pet8l62zGUzz8nRbm7GWRTeeVJlK
+ jt9/FPReErmN/jygw0/Y2P2+/xkISSVMwWLIgUKMK6EB5/1RoPXRRik3j0XccP0yY6vy
+ V6NtPnh1VWXk/07JDTw4T4bhOACiiDq2QrTcqjG1SIFrkVDDWHqUNlp0HCppLIKpT8b0
+ AFtIIR1BHJ7/3gwNUDRLJvh0nzjcF7SimHxudUrgEewi1wk6UooplVamQf+mLz6P3/Pp
+ J/X36IY+DE3fpeqgN9hUJrzEWfT/xYfsM4fd+WOdT7WTitGxPh81XPyKwxOd2QA3mJzs
+ o/vw==
+X-Gm-Message-State: AOAM532zbDfRIqsozzFS6tTZdRvm/Bdvwq7VaxYWXToRV+N3bX8GSYvg
+ KQY9fE78jKuTmIGZna7K8biO6U0CAV9S2UPQ0n3JzH6MKZy1Qw==
+X-Google-Smtp-Source: ABdhPJzlG6VNtE7PqaH0TRioe9leU6UmH/EsyksQvloUt4hUzw+AxRflWPdOgJuKeeHnODlRb4wS9kPqVoBnzRwawEU=
+X-Received: by 2002:a05:651c:556:: with SMTP id
+ q22mr24142315ljp.374.1635846692565; 
+ Tue, 02 Nov 2021 02:51:32 -0700 (PDT)
+MIME-Version: 1.0
 References: <20211102094651.2071532-1-oupton@google.com>
-X-Mailer: git-send-email 2.33.1.1089.g2158813163f-goog
-Subject: [PATCH v2 6/6] selftests: KVM: Test OS lock behavior
+ <20211102094651.2071532-3-oupton@google.com>
+In-Reply-To: <20211102094651.2071532-3-oupton@google.com>
 From: Oliver Upton <oupton@google.com>
+Date: Tue, 2 Nov 2021 02:51:21 -0700
+Message-ID: <CAOQ_QsgqLVVwzOhC5QeRm4qvWA-OXPB+bA=JJk4ffAavO5KMqQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/6] KVM: arm64: Stash OSLSR_EL1 in the cpu context
 To: kvmarm@lists.cs.columbia.edu
 Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
  Peter Shier <pshier@google.com>, linux-arm-kernel@lists.infradead.org
@@ -92,117 +90,36 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-KVM now correctly handles the OS Lock for its guests. When set, KVM
-blocks all debug exceptions originating from the guest. Add test cases
-to the debug-exceptions test to assert that software breakpoint,
-hardware breakpoint, watchpoint, and single-step exceptions are in fact
-blocked.
+On Tue, Nov 2, 2021 at 2:47 AM Oliver Upton <oupton@google.com> wrote:
+>
+> An upcoming change to KVM will context switch the OS Lock status between
+> guest/host. Add OSLSR_EL1 to the cpu context and handle guest reads
+> using the stored value.
+>
+> Wire up a custom handler for writes from userspace and prevent any of
+> the invariant bits from changing.
+>
+> Signed-off-by: Oliver Upton <oupton@google.com>
+> ---
+>  arch/arm64/include/asm/kvm_host.h |  1 +
+>  arch/arm64/kvm/sys_regs.c         | 31 ++++++++++++++++++++++++-------
+>  2 files changed, 25 insertions(+), 7 deletions(-)
+>
+> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+> index f8be56d5342b..c98f65c4a1f7 100644
+> --- a/arch/arm64/include/asm/kvm_host.h
+> +++ b/arch/arm64/include/asm/kvm_host.h
+> @@ -172,6 +172,7 @@ enum vcpu_sysreg {
+>         MDSCR_EL1,      /* Monitor Debug System Control Register */
+>         MDCCINT_EL1,    /* Monitor Debug Comms Channel Interrupt Enable Reg */
+>         DISR_EL1,       /* Deferred Interrupt Status Register */
+> +       OSLSR_EL1,      /* OS Lock Status Register */
 
-Signed-off-by: Oliver Upton <oupton@google.com>
----
- .../selftests/kvm/aarch64/debug-exceptions.c  | 58 ++++++++++++++++++-
- 1 file changed, 56 insertions(+), 2 deletions(-)
+Sorry Marc, forgot to move this up per your suggestion on the last
+series. Only caught it once the patch went out the door.
 
-diff --git a/tools/testing/selftests/kvm/aarch64/debug-exceptions.c b/tools/testing/selftests/kvm/aarch64/debug-exceptions.c
-index e5e6c92b60da..6b6ff81cdd23 100644
---- a/tools/testing/selftests/kvm/aarch64/debug-exceptions.c
-+++ b/tools/testing/selftests/kvm/aarch64/debug-exceptions.c
-@@ -23,7 +23,7 @@
- #define SPSR_D		(1 << 9)
- #define SPSR_SS		(1 << 21)
- 
--extern unsigned char sw_bp, hw_bp, bp_svc, bp_brk, hw_wp, ss_start;
-+extern unsigned char sw_bp, hw_bp, hw_bp2, bp_svc, bp_brk, hw_wp, ss_start;
- static volatile uint64_t sw_bp_addr, hw_bp_addr;
- static volatile uint64_t wp_addr, wp_data_addr;
- static volatile uint64_t svc_addr;
-@@ -47,6 +47,14 @@ static void reset_debug_state(void)
- 	isb();
- }
- 
-+static void enable_os_lock(void)
-+{
-+	write_sysreg(oslar_el1, 1);
-+	isb();
-+
-+	GUEST_ASSERT(read_sysreg(oslsr_el1) & 2);
-+}
-+
- static void install_wp(uint64_t addr)
- {
- 	uint32_t wcr;
-@@ -99,6 +107,7 @@ static void guest_code(void)
- 	GUEST_SYNC(0);
- 
- 	/* Software-breakpoint */
-+	reset_debug_state();
- 	asm volatile("sw_bp: brk #0");
- 	GUEST_ASSERT_EQ(sw_bp_addr, PC(sw_bp));
- 
-@@ -152,6 +161,51 @@ static void guest_code(void)
- 	GUEST_ASSERT_EQ(ss_addr[1], PC(ss_start) + 4);
- 	GUEST_ASSERT_EQ(ss_addr[2], PC(ss_start) + 8);
- 
-+	GUEST_SYNC(6);
-+
-+	/* OS Lock blocking software-breakpoint */
-+	reset_debug_state();
-+	enable_os_lock();
-+	sw_bp_addr = 0;
-+	asm volatile("brk #0");
-+	GUEST_ASSERT_EQ(sw_bp_addr, 0);
-+
-+	GUEST_SYNC(7);
-+
-+	/* OS Lock blocking hardware-breakpoint */
-+	reset_debug_state();
-+	enable_os_lock();
-+	install_hw_bp(PC(hw_bp2));
-+	hw_bp_addr = 0;
-+	asm volatile("hw_bp2: nop");
-+	GUEST_ASSERT_EQ(hw_bp_addr, 0);
-+
-+	GUEST_SYNC(8);
-+
-+	/* OS Lock blocking watchpoint */
-+	reset_debug_state();
-+	enable_os_lock();
-+	write_data = '\0';
-+	wp_data_addr = 0;
-+	install_wp(PC(write_data));
-+	write_data = 'x';
-+	GUEST_ASSERT_EQ(write_data, 'x');
-+	GUEST_ASSERT_EQ(wp_data_addr, 0);
-+
-+	GUEST_SYNC(9);
-+
-+	/* OS Lock blocking single-step */
-+	reset_debug_state();
-+	enable_os_lock();
-+	ss_addr[0] = 0;
-+	install_ss();
-+	ss_idx = 0;
-+	asm volatile("mrs x0, esr_el1\n\t"
-+		     "add x0, x0, #1\n\t"
-+		     "msr daifset, #8\n\t"
-+		     : : : "x0");
-+	GUEST_ASSERT_EQ(ss_addr[0], 0);
-+
- 	GUEST_DONE();
- }
- 
-@@ -223,7 +277,7 @@ int main(int argc, char *argv[])
- 	vm_install_sync_handler(vm, VECTOR_SYNC_CURRENT,
- 				ESR_EC_SVC64, guest_svc_handler);
- 
--	for (stage = 0; stage < 7; stage++) {
-+	for (stage = 0; stage < 11; stage++) {
- 		vcpu_run(vm, VCPU_ID);
- 
- 		switch (get_ucall(vm, VCPU_ID, &uc)) {
--- 
-2.33.1.1089.g2158813163f-goog
-
+--
+Oliver
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
