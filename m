@@ -2,88 +2,87 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 99D13444DFB
-	for <lists+kvmarm@lfdr.de>; Thu,  4 Nov 2021 05:40:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EBD644554F
+	for <lists+kvmarm@lfdr.de>; Thu,  4 Nov 2021 15:29:16 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 27A244B199;
-	Thu,  4 Nov 2021 00:40:09 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B3EB74B19A;
+	Thu,  4 Nov 2021 10:29:15 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@chromium.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QGOGEfAyA+ru; Thu,  4 Nov 2021 00:40:09 -0400 (EDT)
+	with ESMTP id qsU5cAg3C9am; Thu,  4 Nov 2021 10:29:15 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 991694B104;
-	Thu,  4 Nov 2021 00:40:07 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0F36A4B19D;
+	Thu,  4 Nov 2021 10:29:14 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E06204B166
- for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Nov 2021 00:40:06 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 855E04B168
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Nov 2021 05:11:09 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id SZ79P4erTDrX for <kvmarm@lists.cs.columbia.edu>;
- Thu,  4 Nov 2021 00:40:05 -0400 (EDT)
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com
- [209.85.166.43])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2AB704B104
- for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Nov 2021 00:40:05 -0400 (EDT)
-Received: by mail-io1-f43.google.com with SMTP id f9so5459383ioo.11
- for <kvmarm@lists.cs.columbia.edu>; Wed, 03 Nov 2021 21:40:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=/oGGVsH6I+hmezpdEDegUETDQ+R1R/jvng1+rGxahVU=;
- b=UfBtRo2UAkdmuwv88wWtWcGtlY4DwPnt2gDrF+jpR6H3t4HA7BidOVoSkqM2OP0kHQ
- m0ZtyxSE90dUFHCkTY5AfZ+s1ClccHSZWdY8R4ehbu8zvXwlSdbOwqjmp5bKGMRwPgsr
- y+2y+4ZUIufgxYFEZYstF99lf8ECwIlHB0fwSndJlV9KvTWolJw5Bd90AQKFonzXt8qi
- jdx5u9Ho1ZkPw/9EDZEaaGAq/zGm8t+T4jJzsBer1kULU/RN22Os5Agg7AUgIfgGMsIp
- xqLeEYPaxeQC9ldtO+B/AI8W7ondlEqHQKJj1kNpFLNbBMnHgROepWanUw3Iy3saqB8/
- htuA==
+ with ESMTP id ZsV+jolPzme8 for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  4 Nov 2021 05:11:08 -0400 (EDT)
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com
+ [209.85.208.176])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D3DD94B135
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Nov 2021 05:11:07 -0400 (EDT)
+Received: by mail-lj1-f176.google.com with SMTP id g3so8352915ljm.8
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 04 Nov 2021 02:11:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chromium.org; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=ip4jIKzplcPRjOqExcXRBQqPqAPXrq235jk6EqfK8sA=;
+ b=Ajj9xGu0eMeaOm/pl+F3O4w34Y56ucIS1YivaQBUsztCkIODJSzEomzA8LyYwWDhIv
+ gL4GafSII/OrRNlmeVnclC/zVYk+T//wrPlyD/ksgrxvgeA82um0lcBr8G4qDc3xCJsQ
+ HpK4IiT/8yrDHY95CZO0fe4r0yALgFqeTpFBQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=/oGGVsH6I+hmezpdEDegUETDQ+R1R/jvng1+rGxahVU=;
- b=jjIlaziwB0hS0REZ7AVr3VKkxD4K1IsEKguCSpNj1EV60ihgl1mXctgvgv0zuigI4s
- Ph8X/j2TBIGQgsVbVJ9YLN814tboB2mkC3doUALVjlOq6H3Zvw+gc0nKDkvGUdfATfSN
- HEpWmLMEEaU9ptSCKCvQZ1tzeA2C6Z2zvTwpGxfZCbpwjQ21kcrzs32ddMxEAINBz9Jn
- 7nebTOAr9ZvpcuCa6bbpJ5VI0VW70SNV0JCDN/bjq+d10HCW99LsbmIgfUEgVzIFxryh
- R4d3P0XROtxl3ZgHXZoixU8sB+dFqn64IVdHZMLg52mh3I2hORUaMqx4DXazxEGUhppH
- P4hA==
-X-Gm-Message-State: AOAM5323/FXSZA+5iJ44kjMide4cxNGN87Czmrv2kntlBManFMAjP6RU
- cWWX84w4Cqz8G5O4UxgbAZKBtA==
-X-Google-Smtp-Source: ABdhPJxtlH2O9yzm/lh52rnKHYjjgSm8POcEdPjDV8Q5ZoEaT3pwpKKWrr9lu0ghY3vBz8oNOYqgNQ==
-X-Received: by 2002:a05:6602:2b89:: with SMTP id
- r9mr34527695iov.32.1636000804317; 
- Wed, 03 Nov 2021 21:40:04 -0700 (PDT)
-Received: from google.com (194.225.68.34.bc.googleusercontent.com.
- [34.68.225.194])
- by smtp.gmail.com with ESMTPSA id r14sm2513810iov.14.2021.11.03.21.40.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Nov 2021 21:40:03 -0700 (PDT)
-Date: Thu, 4 Nov 2021 04:40:00 +0000
-From: Oliver Upton <oupton@google.com>
-To: Ricardo Koller <ricarkol@google.com>
-Subject: Re: [PATCH v2 3/6] KVM: arm64: Allow guest to set the OSLK bit
-Message-ID: <YYNkIFx5jhnIYaxA@google.com>
-References: <20211102094651.2071532-1-oupton@google.com>
- <20211102094651.2071532-4-oupton@google.com>
- <CAAeT=FxdXX77kkANAgLX-xbsvjdeRtCZQ25dZQ1Rqw+-jU=_dg@mail.gmail.com>
- <YYNX3t3yOL9LKKdP@google.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=ip4jIKzplcPRjOqExcXRBQqPqAPXrq235jk6EqfK8sA=;
+ b=wsevPuIGE4YkqBwRGsKvIp/oPfhxfEdkF6h6WkAYAeQOI62bFwk940AV/2WC1zVjQe
+ UiRagJXA9vVeFJoKdOU/ULGZ5onyVCKUat3hK1NS/o6aKQaf35cr9KTR+sPvVvUVKjm+
+ rZXkEDr4SeM+WCbdmDiLkOZ2kO6sKKX9h2UJ7RyDWKfyzd6g/AgoxqComrPJ+LAE+p86
+ uPbaN/AbQyBI0SFTxhJmnVx6t7TB4kLQczNVOeSqjZgKvABRD8bQ2yaSVq5ZzDmSr1fP
+ 4nqwXv523YVAwjqDzc37ojyVYI7LlgakTWbO5/uTQdqbGV9lUToEL5UP6xdpN2ItGLK8
+ AZyw==
+X-Gm-Message-State: AOAM530hDsLKja9fKv4DCLl7TjOowOXebDg/7yWQbjMuT3OHgC0qGfCz
+ cZ/XezV+dxU4KVcVuCNuRvLYfIOlrSZ63mus1JWHlA==
+X-Google-Smtp-Source: ABdhPJy8fhKodASuD5SKo5rDH8OmLdPRdEwIa15ljtPKQs6a7cExLx0VBmUmWvEB+7WHB09t29utQs4L5T2n+YQsf8E=
+X-Received: by 2002:a2e:b5d2:: with SMTP id g18mr18870481ljn.282.1636017066544; 
+ Thu, 04 Nov 2021 02:11:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <YYNX3t3yOL9LKKdP@google.com>
-Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
- Peter Shier <pshier@google.com>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+References: <20211020120431.776494-1-hikalium@chromium.org>
+ <874k9bdcrk.wl-maz@kernel.org>
+In-Reply-To: <874k9bdcrk.wl-maz@kernel.org>
+From: Hikaru Nishida <hikalium@chromium.org>
+Date: Thu, 4 Nov 2021 18:10:55 +0900
+Message-ID: <CACTzKb+vVU0Ymh2Nx5B6kSydBsJ6AgrbQMF39RFvqoHpvL_riw@mail.gmail.com>
+Subject: Re: [RFC PATCH v3 0/5] x86/kvm: Virtual suspend time injection support
+To: Marc Zyngier <maz@kernel.org>
+X-Mailman-Approved-At: Thu, 04 Nov 2021 10:29:12 -0400
+Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
+ linux-doc@vger.kernel.org, Peter Zijlstra <peterz@infradead.org>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Dave Hansen <dave.hansen@linux.intel.com>, "H. Peter Anvin" <hpa@zytor.com>,
+ senozhatsky@google.com, will@kernel.org, Ingo Molnar <mingo@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, Jonathan Corbet <corbet@lwn.net>,
+ Joerg Roedel <joro@8bytes.org>, x86@kernel.org, mlevitsk@redhat.com,
+ Ingo Molnar <mingo@redhat.com>, Geert Uytterhoeven <geert@linux-m68k.org>,
+ suleiman@google.com, linux@roeck-us.net, John Stultz <john.stultz@linaro.org>,
+ Kees Cook <keescook@chromium.org>, Arnd Bergmann <arnd@arndb.de>, dme@dme.org,
+ Lai Jiangshan <laijs@linux.alibaba.com>, Borislav Petkov <bp@alien8.de>,
+ Andy Lutomirski <luto@kernel.org>, tglx@linutronix.de,
+ linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
+ Juergen Gross <jgross@suse.com>, Stephen Boyd <sboyd@kernel.org>,
+ linux-kernel@vger.kernel.org, pbonzini@redhat.com, vkuznets@redhat.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -100,134 +99,121 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Nov 03, 2021 at 08:47:42PM -0700, Ricardo Koller wrote:
-> On Wed, Nov 03, 2021 at 08:31:35PM -0700, Reiji Watanabe wrote:
-> > On Tue, Nov 2, 2021 at 2:47 AM Oliver Upton <oupton@google.com> wrote:
-> > >
-> > > Allow writes to OSLAR and forward the OSLK bit to OSLSR. Change the
-> > > reset value of the OSLK bit to 1. Allow the value to be migrated by
-> > > making OSLSR_EL1.OSLK writable from userspace.
-> > >
-> > > Signed-off-by: Oliver Upton <oupton@google.com>
-> > > ---
-> > >  arch/arm64/include/asm/sysreg.h |  6 ++++++
-> > >  arch/arm64/kvm/sys_regs.c       | 35 +++++++++++++++++++++++++--------
-> > >  2 files changed, 33 insertions(+), 8 deletions(-)
-> > >
-> > > diff --git a/arch/arm64/include/asm/sysreg.h b/arch/arm64/include/asm/sysreg.h
-> > > index b268082d67ed..6ba4dc97b69d 100644
-> > > --- a/arch/arm64/include/asm/sysreg.h
-> > > +++ b/arch/arm64/include/asm/sysreg.h
-> > > @@ -127,7 +127,13 @@
-> > >  #define SYS_DBGWCRn_EL1(n)             sys_reg(2, 0, 0, n, 7)
-> > >  #define SYS_MDRAR_EL1                  sys_reg(2, 0, 1, 0, 0)
-> > >  #define SYS_OSLAR_EL1                  sys_reg(2, 0, 1, 0, 4)
-> > > +
-> > > +#define SYS_OSLAR_OSLK                 BIT(0)
-> > > +
-> > >  #define SYS_OSLSR_EL1                  sys_reg(2, 0, 1, 1, 4)
-> > > +
-> > > +#define SYS_OSLSR_OSLK                 BIT(1)
-> > > +
-> > >  #define SYS_OSDLR_EL1                  sys_reg(2, 0, 1, 3, 4)
-> > >  #define SYS_DBGPRCR_EL1                        sys_reg(2, 0, 1, 4, 4)
-> > >  #define SYS_DBGCLAIMSET_EL1            sys_reg(2, 0, 7, 8, 6)
-> > > diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-> > > index 0326b3df0736..acd8aa2e5a44 100644
-> > > --- a/arch/arm64/kvm/sys_regs.c
-> > > +++ b/arch/arm64/kvm/sys_regs.c
-> > > @@ -44,6 +44,10 @@
-> > >   * 64bit interface.
-> > >   */
-> > >
-> > > +static int reg_from_user(u64 *val, const void __user *uaddr, u64 id);
-> > > +static int reg_to_user(void __user *uaddr, const u64 *val, u64 id);
-> > > +static u64 sys_reg_to_index(const struct sys_reg_desc *reg);
-> > > +
-> > >  static bool read_from_write_only(struct kvm_vcpu *vcpu,
-> > >                                  struct sys_reg_params *params,
-> > >                                  const struct sys_reg_desc *r)
-> > > @@ -287,6 +291,24 @@ static bool trap_loregion(struct kvm_vcpu *vcpu,
-> > >         return trap_raz_wi(vcpu, p, r);
-> > >  }
-> > >
-> > > +static bool trap_oslar_el1(struct kvm_vcpu *vcpu,
-> > > +                          struct sys_reg_params *p,
-> > > +                          const struct sys_reg_desc *r)
-> > > +{
-> > > +       u64 oslsr;
-> > > +
-> > > +       if (!p->is_write)
-> > > +               return read_from_write_only(vcpu, p, r);
-> > > +
-> > > +       /* Forward the OSLK bit to OSLSR */
-> > > +       oslsr = __vcpu_sys_reg(vcpu, OSLSR_EL1) & ~SYS_OSLSR_OSLK;
-> > > +       if (p->regval & SYS_OSLAR_OSLK)
-> > > +               oslsr |= SYS_OSLSR_OSLK;
-> > > +
-> > > +       __vcpu_sys_reg(vcpu, OSLSR_EL1) = oslsr;
-> > > +       return true;
-> > > +}
-> > > +
-> > >  static bool trap_oslsr_el1(struct kvm_vcpu *vcpu,
-> > >                            struct sys_reg_params *p,
-> > >                            const struct sys_reg_desc *r)
-> > > @@ -309,9 +331,10 @@ static int set_oslsr_el1(struct kvm_vcpu *vcpu, const struct sys_reg_desc *rd,
-> > >         if (err)
-> > >                 return err;
-> > >
-> > > -       if (val != rd->val)
-> > > +       if ((val | SYS_OSLSR_OSLK) != rd->val)
-> > >                 return -EINVAL;
-> > >
-> > > +       __vcpu_sys_reg(vcpu, rd->reg) = val;
-> > >         return 0;
-> > >  }
-> > >
-> > > @@ -1176,10 +1199,6 @@ static bool access_raz_id_reg(struct kvm_vcpu *vcpu,
-> > >         return __access_id_reg(vcpu, p, r, true);
-> > >  }
-> > >
-> > > -static int reg_from_user(u64 *val, const void __user *uaddr, u64 id);
-> > > -static int reg_to_user(void __user *uaddr, const u64 *val, u64 id);
-> > > -static u64 sys_reg_to_index(const struct sys_reg_desc *reg);
-> > > -
-> > >  /* Visibility overrides for SVE-specific control registers */
-> > >  static unsigned int sve_visibility(const struct kvm_vcpu *vcpu,
-> > >                                    const struct sys_reg_desc *rd)
-> > > @@ -1456,8 +1475,8 @@ static const struct sys_reg_desc sys_reg_descs[] = {
-> > >         DBG_BCR_BVR_WCR_WVR_EL1(15),
-> > >
-> > >         { SYS_DESC(SYS_MDRAR_EL1), trap_raz_wi },
-> > > -       { SYS_DESC(SYS_OSLAR_EL1), trap_raz_wi },
-> > > -       { SYS_DESC(SYS_OSLSR_EL1), trap_oslsr_el1, reset_val, OSLSR_EL1, 0x00000008,
-> > > +       { SYS_DESC(SYS_OSLAR_EL1), trap_oslar_el1 },
-> > > +       { SYS_DESC(SYS_OSLSR_EL1), trap_oslsr_el1, reset_val, OSLSR_EL1, 0x0000000A,
-> > >                 .set_user = set_oslsr_el1, },
-> > 
-> > Reviewed-by: Reiji Watanabe <reijiw@google.com>
-> > 
-> > I assume the reason why you changed the reset value for the
-> > register is because Arm ARM says "the On a Cold reset,
-> > this field resets to 1".
-> > 
-> > "4.82 KVM_ARM_VCPU_INIT" in Documentation/virt/kvm/api.rst says:
-> > -------------------------------------------------------------
-> >   - System registers: Reset to their architecturally defined
-> >     values as for a warm reset to EL1 (resp. SVC)
-> > -------------------------------------------------------------
-> > 
-> > Since Arm ARM doesn't say anything about a warm reset for the field,
-> > I would guess the bit doesn't necessarily need to be set.
-> 
-> That would be great, because it would avoid the migration issue that
-> Oliver described in [PATCH v2 4/6]:
+Hi Marc,
 
-Yeah, awesome! Means I can be even lazier and things will "Just Work"
-:-)
+Thanks for the comments! (Sorry for the late reply)
 
---
-Oliver
+On Wed, Oct 20, 2021 at 10:52 PM Marc Zyngier <maz@kernel.org> wrote:
+>
+> Hi Hikaru,
+>
+> On Wed, 20 Oct 2021 13:04:25 +0100,
+> Hikaru Nishida <hikalium@chromium.org> wrote:
+> >
+> >
+> > Hi,
+> >
+> > This patch series adds virtual suspend time injection support to KVM.
+> > It is an updated version of the following series:
+> > v2:
+> > https://lore.kernel.org/kvm/20210806100710.2425336-1-hikalium@chromium.org/
+> > v1:
+> > https://lore.kernel.org/kvm/20210426090644.2218834-1-hikalium@chromium.org/
+> >
+> > Please take a look again.
+> >
+> > To kvm/arm64 folks:
+> > I'm going to implement this mechanism to ARM64 as well but not
+> > sure which function should be used to make an IRQ (like kvm_apic_set_irq
+> > in x86) and if it is okay to use kvm_gfn_to_hva_cache /
+> > kvm_write_guest_cached for sharing the suspend duration.
+>
+> Before we discuss interrupt injection, I want to understand what this
+> is doing, and how this is doing it. And more precisely, I want to find
+> out how you solve the various problems described by Thomas here [1].
+
+The problems described by Thomas in the thread was:
+- User space or kernel space can observe the stale timestamp before
+the adjustment
+  - Moving CLOCK_MONOTONIC forward will trigger all sorts of timeouts,
+watchdogs, etc...
+- The last attempt to make CLOCK_MONOTONIC behave like CLOCK_BOOTTIME
+was reverted within 3 weeks. a3ed0e4393d6 ("Revert: Unify
+CLOCK_MONOTONIC and CLOCK_BOOTTIME")
+  - CLOCK_MONOTONIC correctness (stops during the suspend) should be maintained.
+
+I agree with the points above. And, the current CLOCK_MONOTONIC
+behavior in the KVM guest is not aligned with the statements above.
+(it advances during the host's suspension.)
+This causes the problems described above (triggering watchdog
+timeouts, etc...) so my patches are going to fix this by 2 steps
+roughly:
+1. Stopping the guest's clocks during the host's suspension
+2. Adjusting CLOCK_BOOTTIME later
+This will make the clocks behave like the host does, not making
+CLOCK_MONOTONIC behave like CLOCK_BOOTTIME.
+
+First one is a bit tricky since the guest can use a timestamp counter
+in each CPUs (TSC in x86) and we need to adjust it without stale
+values are observed by the guest kernel to prevent rewinding of
+CLOCK_MONOTONIC (which is our top priority to make the kernel happy).
+To achieve this, my patch adjusts TSCs (and a kvm-clock) before the
+first vcpu runs of each vcpus after the resume.
+
+Second one is relatively safe: since jumping CLOCK_BOOTTIME forward
+can happen even before my patches when suspend/resume happens, and
+that will not break the monotonicity of the clocks, we can do that
+through IRQ.
+
+[1] shows the flow of the adjustment logic, and [2] shows how the
+clocks behave in the guest and the host before/after my patches.
+The numbers on each step in [1] corresponds to the timing shown in [2].
+The left side of [2] is showing the behavior of the clocks before the
+patches, and the right side shows after the patches. Also, upper
+charts show the guest clocks, and bottom charts are host clocks.
+
+Before the patches(left side), CLOCK_MONOTONIC seems to be jumped from
+the guest's perspective after the host's suspension. As Thomas says,
+large jumps of CLOCK_MONOTONIC may lead to watchdog timeouts and other
+bad things that we want to avoid.
+With the patches(right side), both clocks will be adjusted (t=4,5) as
+if they are stopped during the suspension. This adjustment is done by
+the host side and invisible to the guest since it is done before the
+first vcpu run after the resume. After that, CLOCK_BOOTTIME will be
+adjusted from the guest side, triggered by the IRQ sent from the host.
+
+[1]: https://hikalium.com/files/kvm_virt_suspend_time_seq.png
+[2]: https://hikalium.com/files/kvm_virt_suspend_time_clocks.png
+
+
+>
+> Assuming you solve these, you should model the guest memory access
+> similarly to what we do for stolen time. As for injecting an
+> interrupt, why can't this be a userspace thing?
+
+Since CLOCK_BOOTTIME is calculated by adding a gap
+(tk->monotonic_to_boot) to CLOCK_MONOTONIC, and there are no way to
+change the value from the outside of the guest kernel, we should
+implement some mechanism in the kernel to adjust it.
+(Actually, I tried to add a sysfs interface to modify the gap [3], but
+I learned that that is not a good idea...)
+
+[3]: https://lore.kernel.org/lkml/87eehoax14.fsf@nanos.tec.linutronix.de/
+
+Thank you,
+
+Hikaru Nishida
+
+>
+> Thanks,
+>
+>         M.
+>
+> [1] https://lore.kernel.org/all/871r557jls.ffs@tglx
+>
+>
+> --
+> Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
