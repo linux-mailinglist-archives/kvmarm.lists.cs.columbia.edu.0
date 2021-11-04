@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 018C644552A
-	for <lists+kvmarm@lfdr.de>; Thu,  4 Nov 2021 15:18:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B1E94456E8
+	for <lists+kvmarm@lfdr.de>; Thu,  4 Nov 2021 17:10:26 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 53AFD4B1CC;
-	Thu,  4 Nov 2021 10:18:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 737014B10C;
+	Thu,  4 Nov 2021 12:10:25 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -19,85 +19,70 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id kqSvUDXjOeg5; Thu,  4 Nov 2021 10:18:36 -0400 (EDT)
+	with ESMTP id pDu9elEMXyuz; Thu,  4 Nov 2021 12:10:25 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BC4804B1A3;
-	Thu,  4 Nov 2021 10:18:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 27E564B089;
+	Thu,  4 Nov 2021 12:10:24 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A03244B19A
- for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Nov 2021 10:18:33 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9823549F5D
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Nov 2021 12:10:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id DVCF4JNvH3YV for <kvmarm@lists.cs.columbia.edu>;
- Thu,  4 Nov 2021 10:18:32 -0400 (EDT)
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com
- [209.85.215.177])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0BD634B199
- for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Nov 2021 10:18:32 -0400 (EDT)
-Received: by mail-pg1-f177.google.com with SMTP id e65so5537291pgc.5
- for <kvmarm@lists.cs.columbia.edu>; Thu, 04 Nov 2021 07:18:31 -0700 (PDT)
+ with ESMTP id TfCO6HlRzVyi for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  4 Nov 2021 12:10:21 -0400 (EDT)
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com
+ [209.85.166.45])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1B5A849E5F
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  4 Nov 2021 12:10:21 -0400 (EDT)
+Received: by mail-io1-f45.google.com with SMTP id p193so7486395iod.8
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 04 Nov 2021 09:10:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:from:to:cc:subject:message-id:references:mime-version
  :content-disposition:in-reply-to;
- bh=GgU1oUsck/kv7V8rA9YPXtLGsU5UGF/lzeg6fggjKVY=;
- b=RTR1r+Ui0w7nUSHbbKl234uth/uzF1T7qF0sliOvvfsRTTb+Ux1LBt/ffQdTAY+/ec
- E1O0cYaxUcP9JJO91gsHWRMciPl/F1cyjYk822jBCR9TBPiuByHH3wQyg8CO0RsG69s3
- xxzxbxhqtVhFtR1IL3PwpUwYtMOSHDPFnwjUBiz3EACBzoEuXHLTOpHAkW6OfrqPvopQ
- XlcXyGEUw7b6wzkLr4K8OvDzbhOksbBNbi3EmpkiMJmFBXoGv87f+9auU+g0UJJslfkq
- YHd6yOra6jxs1gpwYkmD3+RM+zmhPNdO2qhY5Blp/Ql4/z42+YEAbgjAkELLYFLa2Wdb
- 1tBw==
+ bh=tUqoCGNnbxt+oywUiqReWRW9/LoLH193vc9R2cKGEpc=;
+ b=oUHtN5yvmtuLU7Rt+p4AHRDksWqkQE+q3NqxcycZqtF9qmtzdBQ2tL5D+HqyyO/6T6
+ 6RAH0Gm9enHnLZalZqd5vPhRiGo2BfuVG1/UtiQ5AlwtVyQxemDr2UAwLCeojaWJY//d
+ HNaQIvQ9Z/HOjrGtUSDqmFuin9f0hb4Y5NwlAWG/Qb2plZ0RdYYhu1GhofX6SKx3Fcec
+ jwV3+ZgpfWp9BUkGER+zSl8pSOY4QNbMW2htCUrZqDu7/lMD/Gm1y3hTLz0Q76u2LZ7Z
+ UzOJSTuv5DMxl/thqh42/QR39gXTNNEE4XRxPV9P0rl7usFCGjCvM9eOZ5QGb5QuEpX8
+ Umtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to;
- bh=GgU1oUsck/kv7V8rA9YPXtLGsU5UGF/lzeg6fggjKVY=;
- b=Ju0ezugTwzbSzopxnJfMjxWKrUaf3pug6xEHFL1Uf/NE11IOQNrdz3MV7B8UQMNDT5
- OmnIuaY9jSZeSMKMCFe1aH8zZ2yIzd0+3iF9H753YlP2rJqrH+o+UyYi5l1659pg6iK7
- pNZuzBYD79q9gOdcfkwK1dDigFCPUHiR4qjIB2vP1hDEx+3QxbIGIrOd+uOTInKCgT3A
- uDW1mR8/ty9oZF5+Un7dRWfz1Qnt9OeHYrmY0L6JHtry7pgeY970gX1T350VCx/c7OSt
- 3pYLV3cmaBL9qPMsPdgSQUP7PvTEMasIZ8XWObQJSLfYQN0tt9UXrRN34PR/b89c0/S2
- tOXw==
-X-Gm-Message-State: AOAM533MS9qJtYnh9Z9Wj6rmHU13XxbbF1dkVDxIFZlgg+TwKddodC4n
- OETTv8B1HmfNIjwY+StJgfpXaQ==
-X-Google-Smtp-Source: ABdhPJxdt1yraCn5ATAvpc1jCPrfM/2fIu0pWDknNbK+x2XDbxsbKhM1gzBOeaAuduFP4pk+NDgWGQ==
-X-Received: by 2002:a65:5b01:: with SMTP id y1mr22260090pgq.451.1636035510920; 
- Thu, 04 Nov 2021 07:18:30 -0700 (PDT)
-Received: from google.com (157.214.185.35.bc.googleusercontent.com.
- [35.185.214.157])
- by smtp.gmail.com with ESMTPSA id c9sm4061004pgq.58.2021.11.04.07.18.30
+ bh=tUqoCGNnbxt+oywUiqReWRW9/LoLH193vc9R2cKGEpc=;
+ b=VD/CBOctCTUkfwDN36mT709+1nBHTKC52na3vx1bxF/YBrERlJomVVTFqzPRwZlgYI
+ XLdpPLNTrViWAMEAzAtEn4jHJwO6gmE05yj/Abegv3r7Ol1wEHlD5oLAQMdPFf8wGcy8
+ zKxPxvNYuOVfDdEUSd+x3DGdeXGMjlOZTuMwTeVpuI7zCvW4DdIVc/s6lOFZK8dvuE8e
+ +m4EaNUJqMUZJ3uFlrrR7FOoxCWlOMpDe03Vm5FV444z6NjQcpYRIrzKQ0tgMYTsSIAh
+ AQimBWHoJXBePqP/90GJhjsLKUkBNeh3mirBU4kAKtql4TzU0/KmVD5QW79De+gUoCzV
+ OJdQ==
+X-Gm-Message-State: AOAM531iKwBTwE+mRPdcyJOF4elttYbi5/ETv7g3GDHQK6p8gvctEfvE
+ 2A9W68wOj8mS/3iUi7v/GjoF6w==
+X-Google-Smtp-Source: ABdhPJysdsBusunjAyJwyQgc6/PueGiLqEhbeMUOLxDa87sm4If+utgQP/RXb6DCfoSyUOfBj47T8g==
+X-Received: by 2002:a05:6638:d84:: with SMTP id
+ l4mr4682907jaj.30.1636042220331; 
+ Thu, 04 Nov 2021 09:10:20 -0700 (PDT)
+Received: from google.com (194.225.68.34.bc.googleusercontent.com.
+ [34.68.225.194])
+ by smtp.gmail.com with ESMTPSA id w11sm2661526ior.40.2021.11.04.09.10.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Nov 2021 07:18:30 -0700 (PDT)
-Date: Thu, 4 Nov 2021 14:18:26 +0000
-From: Sean Christopherson <seanjc@google.com>
-To: Like Xu <like.xu.linux@gmail.com>
-Subject: Re: [PATCH v3 01/16] perf: Ensure perf_guest_cbs aren't reloaded
- between !NULL check and deref
-Message-ID: <YYPrst2CUBXLYc9h@google.com>
-References: <20210922000533.713300-1-seanjc@google.com>
- <20210922000533.713300-2-seanjc@google.com>
- <77e3a76a-016b-8945-a1d5-aae4075e2147@gmail.com>
+ Thu, 04 Nov 2021 09:10:19 -0700 (PDT)
+Date: Thu, 4 Nov 2021 16:10:16 +0000
+From: Oliver Upton <oupton@google.com>
+To: Reiji Watanabe <reijiw@google.com>
+Subject: Re: [RFC PATCH v2 01/28] KVM: arm64: Add has_reset_once flag for vcpu
+Message-ID: <YYQF6HSMYDww1Gk7@google.com>
+References: <20211103062520.1445832-1-reijiw@google.com>
+ <20211103062520.1445832-2-reijiw@google.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <77e3a76a-016b-8945-a1d5-aae4075e2147@gmail.com>
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- Peter Zijlstra <peterz@infradead.org>, Guo Ren <guoren@kernel.org>,
- linux-riscv@lists.infradead.org, Vincent Chen <deanbo422@gmail.com>,
- Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
- Stefano Stabellini <sstabellini@kernel.org>, Jiri Olsa <jolsa@redhat.com>,
- Joerg Roedel <joro@8bytes.org>, linux-csky@vger.kernel.org,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Ingo Molnar <mingo@redhat.com>, xen-devel@lists.xenproject.org,
- Albert Ou <aou@eecs.berkeley.edu>, Zhu Lingshan <lingshan.zhu@intel.com>,
- Arnaldo Carvalho de Melo <acme@kernel.org>, Greentime Hu <green.hu@gmail.com>,
- Paul Walmsley <paul.walmsley@sifive.com>, Namhyung Kim <namhyung@kernel.org>,
- Boris Ostrovsky <boris.ostrovsky@oracle.com>,
- Artem Kashkanov <artem.kashkanov@intel.com>,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
- Juergen Gross <jgross@suse.com>, Nick Hu <nickhu@andestech.com>,
- linux-kernel@vger.kernel.org, linux-perf-users@vger.kernel.org,
- Palmer Dabbelt <palmer@dabbelt.com>, Marc Zyngier <maz@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>
+In-Reply-To: <20211103062520.1445832-2-reijiw@google.com>
+Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+ Peter Shier <pshier@google.com>, Will Deacon <will@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -114,53 +99,57 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Nov 04, 2021, Like Xu wrote:
-> On 22/9/2021 8:05 am, Sean Christopherson wrote:
-> > diff --git a/kernel/events/core.c b/kernel/events/core.c
-> > index 464917096e73..80ff050a7b55 100644
-> > --- a/kernel/events/core.c
-> > +++ b/kernel/events/core.c
-> > @@ -6491,14 +6491,21 @@ struct perf_guest_info_callbacks *perf_guest_cbs;
-> >   int perf_register_guest_info_callbacks(struct perf_guest_info_callbacks *cbs)
-> >   {
-> > -	perf_guest_cbs = cbs;
-> > +	if (WARN_ON_ONCE(perf_guest_cbs))
-> > +		return -EBUSY;
-> > +
-> > +	WRITE_ONCE(perf_guest_cbs, cbs);
+On Tue, Nov 02, 2021 at 11:24:53PM -0700, Reiji Watanabe wrote:
+> Introduce 'has_reset_once' flag in kvm_vcpu_arch, which indicates
+> if the vCPU reset has been done once, for later use.
 > 
-> So per Paolo's comment [1], does it help to use
-> 	smp_store_release(perf_guest_cbs, cbs)
-> or
-> 	rcu_assign_pointer(perf_guest_cbs, cbs)
-> here?
+> Signed-off-by: Reiji Watanabe <reijiw@google.com>
 
-Heh, if by "help" you mean "required to prevent bad things on weakly ordered
-architectures", then yes, it helps :-)  If I'm interpeting Paolo's suggestion
-correctly, he's pointing out that oustanding stores to the function pointers in
-@cbs need to complete before assigning a non-NULL pointer to perf_guest_cbs,
-otherwise a perf event handler may see a valid pointer with half-baked callbacks.
+Reviewed-by: Oliver Upton <oupton@google.com>
 
-I think smp_store_release() with a comment would be appropriate, assuming my
-above interpretation is correct.
-
-> [1] https://lore.kernel.org/kvm/37afc465-c12f-01b9-f3b6-c2573e112d76@redhat.com/
+> ---
+>  arch/arm64/include/asm/kvm_host.h | 2 ++
+>  arch/arm64/kvm/reset.c            | 4 ++++
+>  2 files changed, 6 insertions(+)
 > 
-> >   	return 0;
-> >   }
-> >   EXPORT_SYMBOL_GPL(perf_register_guest_info_callbacks);
-> >   int perf_unregister_guest_info_callbacks(struct perf_guest_info_callbacks *cbs)
-> >   {
-> > -	perf_guest_cbs = NULL;
-> > +	if (WARN_ON_ONCE(perf_guest_cbs != cbs))
-> > +		return -EINVAL;
-> > +
-> > +	WRITE_ONCE(perf_guest_cbs, NULL);
-> > +	synchronize_rcu();
-> >   	return 0;
-> >   }
-> >   EXPORT_SYMBOL_GPL(perf_unregister_guest_info_callbacks);
-> > 
+> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+> index f8be56d5342b..9b5e7a3b6011 100644
+> --- a/arch/arm64/include/asm/kvm_host.h
+> +++ b/arch/arm64/include/asm/kvm_host.h
+> @@ -384,6 +384,7 @@ struct kvm_vcpu_arch {
+>  		u64 last_steal;
+>  		gpa_t base;
+>  	} steal;
+> +	bool has_reset_once;
+>  };
+>  
+>  /* Pointer to the vcpu's SVE FFR for sve_{save,load}_state() */
+> @@ -449,6 +450,7 @@ struct kvm_vcpu_arch {
+>  
+>  #define vcpu_has_sve(vcpu) (system_supports_sve() &&			\
+>  			    ((vcpu)->arch.flags & KVM_ARM64_GUEST_HAS_SVE))
+> +#define	vcpu_has_reset_once(vcpu) ((vcpu)->arch.has_reset_once)
+>  
+>  #ifdef CONFIG_ARM64_PTR_AUTH
+>  #define vcpu_has_ptrauth(vcpu)						\
+> diff --git a/arch/arm64/kvm/reset.c b/arch/arm64/kvm/reset.c
+> index 5ce36b0a3343..4d34e5c1586c 100644
+> --- a/arch/arm64/kvm/reset.c
+> +++ b/arch/arm64/kvm/reset.c
+> @@ -305,6 +305,10 @@ int kvm_reset_vcpu(struct kvm_vcpu *vcpu)
+>  	if (loaded)
+>  		kvm_arch_vcpu_load(vcpu, smp_processor_id());
+>  	preempt_enable();
+> +
+> +	if (!ret && !vcpu->arch.has_reset_once)
+> +		vcpu->arch.has_reset_once = true;
+> +
+>  	return ret;
+>  }
+>  
+> -- 
+> 2.33.1.1089.g2158813163f-goog
+> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
