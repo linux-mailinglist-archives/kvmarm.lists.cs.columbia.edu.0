@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2879B4468DD
-	for <lists+kvmarm@lfdr.de>; Fri,  5 Nov 2021 20:21:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E2344468E3
+	for <lists+kvmarm@lfdr.de>; Fri,  5 Nov 2021 20:21:42 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C42A04B1AD;
-	Fri,  5 Nov 2021 15:21:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A853A4B191;
+	Fri,  5 Nov 2021 15:21:41 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,38 +15,38 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id t6fPSWqWvJN9; Fri,  5 Nov 2021 15:21:36 -0400 (EDT)
+	with ESMTP id HlSkZaYerQO0; Fri,  5 Nov 2021 15:21:39 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 54D8F4B1B2;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8AA654B177;
 	Fri,  5 Nov 2021 15:21:34 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0068A4B13D
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4F2E14B16F
  for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Nov 2021 15:21:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id D2GVkcXeKkvh for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id iQlmO8zBZB+z for <kvmarm@lists.cs.columbia.edu>;
  Fri,  5 Nov 2021 15:21:31 -0400 (EDT)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 619774B0C3
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id AC4944B0F7
  for <kvmarm@lists.cs.columbia.edu>; Fri,  5 Nov 2021 15:21:31 -0400 (EDT)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 70C516125F;
+ by mail.kernel.org (Postfix) with ESMTPSA id DE4286124F;
  Fri,  5 Nov 2021 19:21:30 +0000 (UTC)
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1mj4mG-003ig2-Jz; Fri, 05 Nov 2021 19:21:28 +0000
+ id 1mj4mH-003ig2-3U; Fri, 05 Nov 2021 19:21:29 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: kvm@vger.kernel.org, linux-mips@vger.kernel.org,
  kvmarm@lists.cs.columbia.edu, linuxppc-dev@lists.ozlabs.org
-Subject: [PATCH 2/5] KVM: mips: Use kvm_get_vcpu() instead of open-coded access
-Date: Fri,  5 Nov 2021 19:20:58 +0000
-Message-Id: <20211105192101.3862492-3-maz@kernel.org>
+Subject: [PATCH 3/5] KVM: s390: Use kvm_get_vcpu() instead of open-coded access
+Date: Fri,  5 Nov 2021 19:20:59 +0000
+Message-Id: <20211105192101.3862492-4-maz@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20211105192101.3862492-1-maz@kernel.org>
 References: <20211105192101.3862492-1-maz@kernel.org>
@@ -93,45 +93,36 @@ the use of kvm_get_vcpu() instead of open-coding the access.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/mips/kvm/loongson_ipi.c | 4 ++--
- arch/mips/kvm/mips.c         | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ arch/s390/kvm/kvm-s390.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/mips/kvm/loongson_ipi.c b/arch/mips/kvm/loongson_ipi.c
-index 3681fc8fba38..5d53f32d837c 100644
---- a/arch/mips/kvm/loongson_ipi.c
-+++ b/arch/mips/kvm/loongson_ipi.c
-@@ -120,7 +120,7 @@ static int loongson_vipi_write(struct loongson_kvm_ipi *ipi,
- 		s->status |= data;
- 		irq.cpu = id;
- 		irq.irq = 6;
--		kvm_vcpu_ioctl_interrupt(kvm->vcpus[id], &irq);
-+		kvm_vcpu_ioctl_interrupt(kvm_get_vcpu(kvm, id), &irq);
- 		break;
+diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
+index 7af53b8788fa..4a0f62b03964 100644
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -4572,7 +4572,7 @@ int kvm_s390_vcpu_start(struct kvm_vcpu *vcpu)
+ 	}
  
- 	case CORE0_CLEAR_OFF:
-@@ -128,7 +128,7 @@ static int loongson_vipi_write(struct loongson_kvm_ipi *ipi,
- 		if (!s->status) {
- 			irq.cpu = id;
- 			irq.irq = -6;
--			kvm_vcpu_ioctl_interrupt(kvm->vcpus[id], &irq);
-+			kvm_vcpu_ioctl_interrupt(kvm_get_vcpu(kvm, id), &irq);
+ 	for (i = 0; i < online_vcpus; i++) {
+-		if (!is_vcpu_stopped(vcpu->kvm->vcpus[i]))
++		if (!is_vcpu_stopped(kvm_get_vcpu(vcpu->kvm, i)))
+ 			started_vcpus++;
+ 	}
+ 
+@@ -4634,9 +4634,11 @@ int kvm_s390_vcpu_stop(struct kvm_vcpu *vcpu)
+ 	__disable_ibs_on_vcpu(vcpu);
+ 
+ 	for (i = 0; i < online_vcpus; i++) {
+-		if (!is_vcpu_stopped(vcpu->kvm->vcpus[i])) {
++		struct kvm_vcpu *tmp = kvm_get_vcpu(vcpu->kvm, i);
++
++		if (!is_vcpu_stopped(tmp)) {
+ 			started_vcpus++;
+-			started_vcpu = vcpu->kvm->vcpus[i];
++			started_vcpu = tmp;
  		}
- 		break;
+ 	}
  
-diff --git a/arch/mips/kvm/mips.c b/arch/mips/kvm/mips.c
-index ceacca74f808..6228bf396d63 100644
---- a/arch/mips/kvm/mips.c
-+++ b/arch/mips/kvm/mips.c
-@@ -479,7 +479,7 @@ int kvm_vcpu_ioctl_interrupt(struct kvm_vcpu *vcpu,
- 	if (irq->cpu == -1)
- 		dvcpu = vcpu;
- 	else
--		dvcpu = vcpu->kvm->vcpus[irq->cpu];
-+		dvcpu = kvm_get_vcpu(vcpu->kvm, irq->cpu);
- 
- 	if (intr == 2 || intr == 3 || intr == 4 || intr == 6) {
- 		kvm_mips_callbacks->queue_io_int(dvcpu, irq);
 -- 
 2.30.2
 
