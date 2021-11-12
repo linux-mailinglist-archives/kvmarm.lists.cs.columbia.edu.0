@@ -2,122 +2,82 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 107B044E2B3
-	for <lists+kvmarm@lfdr.de>; Fri, 12 Nov 2021 08:55:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BF3B844E5B3
+	for <lists+kvmarm@lfdr.de>; Fri, 12 Nov 2021 12:47:42 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 61BF94B20E;
-	Fri, 12 Nov 2021 02:55:46 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 37C394B293;
+	Fri, 12 Nov 2021 06:47:42 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.209
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@linaro.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Hm4lWWEopRae; Fri, 12 Nov 2021 02:55:46 -0500 (EST)
+	with ESMTP id J7WFEGKPV0HE; Fri, 12 Nov 2021 06:47:42 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E35C94B210;
-	Fri, 12 Nov 2021 02:55:44 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2FDE24B299;
+	Fri, 12 Nov 2021 06:47:41 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 36C794B210
- for <kvmarm@lists.cs.columbia.edu>; Fri, 12 Nov 2021 02:55:43 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A68AE4B28B
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 12 Nov 2021 06:47:39 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id UwXBHHBv8piA for <kvmarm@lists.cs.columbia.edu>;
- Fri, 12 Nov 2021 02:55:42 -0500 (EST)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 25DE94B20E
- for <kvmarm@lists.cs.columbia.edu>; Fri, 12 Nov 2021 02:55:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1636703741;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lF7lzRoeZrlEIt3gHEFyVsRoWpbej1ntDFwYNAiQdJI=;
- b=S6A/GlnSpDzjNW679UfW03taT2ANpf1+QVkTv90xFzlXyD9qhmp3Bfq1yt6m12HW5vT5so
- XEJZTEkL889uu4T4jUYgKh/o5vHn1J4MhFfJvlgy3haalKiVWWCD20dn4Azf1myGmzHoAw
- 4lshvNz3yoegOCHCCtEsHvsVg+IrS3w=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-32-oBYC2gNROlyxnSteoyQrDw-1; Fri, 12 Nov 2021 02:55:38 -0500
-X-MC-Unique: oBYC2gNROlyxnSteoyQrDw-1
-Received: by mail-ed1-f72.google.com with SMTP id
- l15-20020a056402124f00b003e57269ab87so930656edw.6
- for <kvmarm@lists.cs.columbia.edu>; Thu, 11 Nov 2021 23:55:38 -0800 (PST)
+ with ESMTP id 8tldtf9S+DMW for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 12 Nov 2021 06:47:37 -0500 (EST)
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com
+ [209.85.221.49])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8A0014B289
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 12 Nov 2021 06:47:37 -0500 (EST)
+Received: by mail-wr1-f49.google.com with SMTP id u18so15016879wrg.5
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 12 Nov 2021 03:47:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=y/FU8+bwf7DMlYAmB7NLQtYUyzsQrJXGMArM+f/WGbQ=;
+ b=oIA3R5dQ8KPpSky2EHZb76G9smza8Up8hdy9YTLR/rN80He4si4N7T3hLw11/rUrND
+ RDV7+4YZds9cFkEnxKHSAFfp5DSxwYa14HbCwQDYAdrEDER+XWxp3uhBtx8Iiu1W3/Vj
+ Jyo+r/ob1dYpI0p0UZc+24JKo3yYlYk2kmNyQw0zJU2pM76AP1GvTATQcHn3vn9tgu00
+ +W546e8e6D07Z1CUFzTuiGEKVhxTZcs6KvU5kFWKtxffq+qm31gjCGxlOwv4OhTfaRbL
+ lU7p1XQkhVFqQ6xfBReh5rx+R6PouLMJroulc1ZE/BIM6KfGtzEIKGzjxl/OcpyZYAfK
+ cSRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
- :content-language:to:cc:references:from:in-reply-to
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
  :content-transfer-encoding;
- bh=lF7lzRoeZrlEIt3gHEFyVsRoWpbej1ntDFwYNAiQdJI=;
- b=UFAMNDzg8RwxcGGEODrkdFvbikhuC0Jmb1QJgHK9VhIoVwC/fgSheSGf8PID7frhkV
- VwWx5iROozNVTBAfTVL8P3HcJugRmfRgfIFe6d5q1W6IyXnqoKKm1jPgTbcyjep0M1iR
- CPoNKAnsfr7F5CJVk7WCfQfyxUnWLIrdZjOndxa8vrWXlMPPHMvLIiy0AgOY+fYuZ2bz
- jn7n/S0E5IkVrfduOGM1v6Md7I9XW8NRJ1XRx+EaJMMK3MLqCPG99LmC9+eIdokmuWMn
- lfjaly5sYt0zYLpUM34l33metnECujPFkZOE06BNAK/3hCw9BassCk/knNxiyEo2TXK+
- V3xQ==
-X-Gm-Message-State: AOAM532KdCwc1xXm/71x8kit4YXrLzDi6YLn4BNidj0yq79sBPNwWZbT
- MccmZAiWjW5/amPPp6dDE1grx373bWuVQVZmI4BXMtMZ8ys43aWXfaln/9LE9J/JFjdGp1sSmqD
- Xauy0YC1BQjkdoiL4vVpp39Kr
-X-Received: by 2002:a17:907:6e10:: with SMTP id
- sd16mr17768033ejc.158.1636703737517; 
- Thu, 11 Nov 2021 23:55:37 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJzVTSyaI9bwf+cK3HRTYkkEGrfXsl4Cvt+Fkmz/7JDyaorMKEA4Mec75P9Nt6V8a8edl3Ld8g==
-X-Received: by 2002:a17:907:6e10:: with SMTP id
- sd16mr17767982ejc.158.1636703737318; 
- Thu, 11 Nov 2021 23:55:37 -0800 (PST)
-Received: from ?IPV6:2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e?
- ([2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e])
- by smtp.gmail.com with ESMTPSA id n1sm2700678edf.45.2021.11.11.23.55.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Nov 2021 23:55:36 -0800 (PST)
-Message-ID: <016d5b91-6910-2aca-0db1-a65079449454@redhat.com>
-Date: Fri, 12 Nov 2021 08:55:31 +0100
+ bh=y/FU8+bwf7DMlYAmB7NLQtYUyzsQrJXGMArM+f/WGbQ=;
+ b=Nlf2pPvyNaWRgOAmAk+Mu/tc4yBEhU8ORveLyNl6xNgbrutQAuuBHSyEacAMRZNlLp
+ M/1W6AeqbLv125xJZQ3p+uidE4iAhZdPTmadJ0knAfaOLZ5CVYSGeQwGu1FJaWeIjEgv
+ KvIbYGZ+Vj3ZsJ+4JlxGAcsyxoCpOexIfwUN5CFD90PRrYxYYhHisLysXUMEQUMzwXk/
+ pdtIlTHf2Xqg/Ep9skYbqC6BNYVUXiB2o68jTt3AFhNbC+INrJiz/JAb+aw+J19oiuAx
+ nD724t6mTmAfBXOgP+DJ9HHQ7xTWP0bUpzjZAzeJiiV0xseBr8d2RGhu/DMAz9G782TB
+ mbhg==
+X-Gm-Message-State: AOAM531MCJNGWFy4UsXT64ABbXJLd8s5YfHS01QGpSmph+Z8dEK622Ug
+ k7omokuPmbCSCPS3vIlmaTTxmA==
+X-Google-Smtp-Source: ABdhPJzW5BOflAYjrD9sAe1tHGRVbSLAvpIz35Bl4aw9fwu8ZT75ZP2FyPRAIGfrez5XVflGq+GsOw==
+X-Received: by 2002:a5d:6c6b:: with SMTP id r11mr17814784wrz.231.1636717656571; 
+ Fri, 12 Nov 2021 03:47:36 -0800 (PST)
+Received: from zen.linaroharston ([51.148.130.216])
+ by smtp.gmail.com with ESMTPSA id h15sm5565709wml.9.2021.11.12.03.47.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 12 Nov 2021 03:47:34 -0800 (PST)
+Received: from zen.lan (localhost [127.0.0.1])
+ by zen.linaroharston (Postfix) with ESMTP id 4C9FC1FF96;
+ Fri, 12 Nov 2021 11:47:34 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: kvm@vger.kernel.org
+Subject: [kvm-unit-tests PATCH v3 0/3] GIC ITS tests
+Date: Fri, 12 Nov 2021 11:47:31 +0000
+Message-Id: <20211112114734.3058678-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.0
-Subject: Re: [PATCH v4 01/17] perf: Protect perf_guest_cbs with RCU
-To: Peter Zijlstra <peterz@infradead.org>
-References: <20211111020738.2512932-1-seanjc@google.com>
- <20211111020738.2512932-2-seanjc@google.com>
- <d784dc27-72d0-d64f-e1f4-a2b9a5f86dd4@redhat.com>
- <YYz03fcDRV9NZnyA@hirez.programming.kicks-ass.net>
-From: Paolo Bonzini <pbonzini@redhat.com>
-In-Reply-To: <YYz03fcDRV9NZnyA@hirez.programming.kicks-ass.net>
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pbonzini@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Dave Hansen <dave.hansen@linux.intel.com>, Guo Ren <guoren@kernel.org>,
- "H. Peter Anvin" <hpa@zytor.com>, linux-riscv@lists.infradead.org,
- Vincent Chen <deanbo422@gmail.com>, Will Deacon <will@kernel.org>,
- Boris Ostrovsky <boris.ostrovsky@oracle.com>,
- Stefano Stabellini <sstabellini@kernel.org>, xen-devel@lists.xenproject.org,
- Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>, x86@kernel.org,
- Russell King <linux@armlinux.org.uk>, linux-csky@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, Ingo Molnar <mingo@redhat.com>,
- Like Xu <like.xu.linux@gmail.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Zhu Lingshan <lingshan.zhu@intel.com>, Jiri Olsa <jolsa@redhat.com>,
- Arnaldo Carvalho de Melo <acme@kernel.org>, Borislav Petkov <bp@alien8.de>,
- Greentime Hu <green.hu@gmail.com>, Paul Walmsley <paul.walmsley@sifive.com>,
- Namhyung Kim <namhyung@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
- Artem Kashkanov <artem.kashkanov@intel.com>,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
- Juergen Gross <jgross@suse.com>, Like Xu <like.xu@linux.intel.com>,
- Nick Hu <nickhu@andestech.com>, linux-kernel@vger.kernel.org,
- linux-perf-users@vger.kernel.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>
+Cc: maz@kernel.org, shashi.mallela@linaro.org, qemu-arm@nongnu.org,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -129,28 +89,21 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 11/11/21 11:47, Peter Zijlstra wrote:
->> This technically could be RCU_INIT_POINTER but it's not worth a respin.
->> There are dozens of other occurrences, and if somebody wanted they
->> could use Coccinelle to fix all of them.
-> I've been pushing the other way, trying to get rid of RCU_INIT_POINTER()
-> since rcu_assign_pointer(, NULL) actualy DTRT per __builtin_constant_p()
-> etc.
-
-Oh, that's pretty cool to know, thanks!
-
-Paolo
-
-> There's a very few sites where we use RCU_INIT_POINTER() with a !NULL
-> argument, and those are 'special'.
-> 
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+SGksCgpTb3JyeSB0aGlzIGhhcyBiZWVuIHNpdHRpbmcgaW4gbXkgdHJlZSBzbyBsb25nLiBUaGUg
+Y2hhbmdlcyBhcmUgZmFpcmx5Cm1pbm9yIGZyb20gdjIuIEkgbm8gbG9uZ2VyIHNwbGl0IHRoZSB0
+ZXN0cyB1cCBpbnRvIFRDRyBhbmQgS1ZNCnZlcnNpb25zIGFuZCBpbnN0ZWFkIGp1c3QgZW5zdXJl
+IHRoYXQgRVJSQVRBX0ZPUkNFIGlzIGFsd2F5cyBzZXQgd2hlbgpydW4gdW5kZXIgVENHLgoKQWxl
+eCBCZW5uw6llICgzKToKICBhcm02NDogcmVtb3ZlIGludmFsaWQgY2hlY2sgZnJvbSBpdHMtdHJp
+Z2dlciB0ZXN0CiAgYXJtNjQ6IGVuYWJsZSBpdHMtbWlncmF0aW9uIHRlc3RzIGZvciBUQ0cKICBh
+cmNoLXJ1bjogZG8gbm90IHByb2Nlc3MgRVJSQVRBIHdoZW4gcnVubmluZyB1bmRlciBUQ0cKCiBz
+Y3JpcHRzL2FyY2gtcnVuLmJhc2ggfCAgNCArKystCiBhcm0vZ2ljLmMgICAgICAgICAgICAgfCAx
+NiArKysrKystLS0tLS0tLS0tCiBhcm0vdW5pdHRlc3RzLmNmZyAgICAgfCAgMyAtLS0KIDMgZmls
+ZXMgY2hhbmdlZCwgOSBpbnNlcnRpb25zKCspLCAxNCBkZWxldGlvbnMoLSkKCi0tIAoyLjMwLjIK
+Cl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCmt2bWFybSBt
+YWlsaW5nIGxpc3QKa3ZtYXJtQGxpc3RzLmNzLmNvbHVtYmlhLmVkdQpodHRwczovL2xpc3RzLmNz
+LmNvbHVtYmlhLmVkdS9tYWlsbWFuL2xpc3RpbmZvL2t2bWFybQo=
