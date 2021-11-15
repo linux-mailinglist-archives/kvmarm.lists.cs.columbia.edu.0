@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C11A450A0E
-	for <lists+kvmarm@lfdr.de>; Mon, 15 Nov 2021 17:49:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7C1A450A0F
+	for <lists+kvmarm@lfdr.de>; Mon, 15 Nov 2021 17:49:26 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6C7C94B183;
-	Mon, 15 Nov 2021 11:49:24 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4C3404B199;
+	Mon, 15 Nov 2021 11:49:26 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,36 +15,40 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id k-A8pQNwgKNR; Mon, 15 Nov 2021 11:49:22 -0500 (EST)
+	with ESMTP id iKslWyV0-Lzj; Mon, 15 Nov 2021 11:49:24 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7D43E4B19D;
-	Mon, 15 Nov 2021 11:49:22 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 942454B17D;
+	Mon, 15 Nov 2021 11:49:23 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 082164B183
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Nov 2021 11:49:21 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1E9C24B187
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Nov 2021 11:49:22 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id a0bYlrFhstfh for <kvmarm@lists.cs.columbia.edu>;
- Mon, 15 Nov 2021 11:49:19 -0500 (EST)
+ with ESMTP id AkJCS37vnl5S for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 15 Nov 2021 11:49:20 -0500 (EST)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 087784B17D
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Nov 2021 11:49:19 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CE3924B18A
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Nov 2021 11:49:20 -0500 (EST)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5752C1FB;
- Mon, 15 Nov 2021 08:49:18 -0800 (PST)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5762311B3;
+ Mon, 15 Nov 2021 08:49:20 -0800 (PST)
 Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DA0C63F766;
- Mon, 15 Nov 2021 08:49:16 -0800 (PST)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 97FF43F766;
+ Mon, 15 Nov 2021 08:49:18 -0800 (PST)
 From: Alexandru Elisei <alexandru.elisei@arm.com>
 To: maz@kernel.org, james.morse@arm.com, suzuki.poulose@arm.com,
  will@kernel.org, mark.rutland@arm.com,
  linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu
-Subject: [PATCH 0/4] KVM: arm64: Improve PMU support on heterogeneous systems
-Date: Mon, 15 Nov 2021 16:50:37 +0000
-Message-Id: <20211115165041.194884-1-alexandru.elisei@arm.com>
+Subject: [PATCH 1/4] perf: Fix wrong name in comment for struct
+ perf_cpu_context
+Date: Mon, 15 Nov 2021 16:50:38 +0000
+Message-Id: <20211115165041.194884-2-alexandru.elisei@arm.com>
 X-Mailer: git-send-email 2.33.1
+In-Reply-To: <20211115165041.194884-1-alexandru.elisei@arm.com>
+References: <20211115165041.194884-1-alexandru.elisei@arm.com>
 MIME-Version: 1.0
+Cc: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -61,122 +65,37 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-(CC'ing Peter Maydell in case this might be of interest to qemu)
+Commit 0793a61d4df8 ("performance counters: core code") added the perf
+subsystem (then called Performance Counters) to Linux, creating the struct
+perf_cpu_context. The comment for the struct referred to it as a "struct
+perf_counter_cpu_context".
 
-The series can be found at [x], and the kvmtool support at [2].
+Commit cdd6c482c9ff ("perf: Do the big rename: Performance Counters ->
+Performance Events") changed the comment to refer to a "struct
+perf_event_cpu_context", which was still the wrong name for the struct.
 
-At the moment, the experience of running a virtual machine with a PMU on a
-heterogeneous systems (where there are different PMUs), varies from just
-works, if the VCPUs run only on the correct physical CPUs, to doesn't work
-at all, if the VCPUs run only on the incorrect physical CPUs, to something
-doesn't look right, if the VCPUs run some of the time on the correct
-physical CPUs, and some of the time on the incorrect physical CPUs. The
-reason for this behaviour is that KVM creates perf events to emulate a
-guest PMU, and the choice of PMU that is used to create these events is
-left entirely up to the perf core system, based on the hardware probe
-order. The first PMU to register with perf (via perf_pmu_register()) is the
-PMU that will always be chosen when creating the events (in
-perf_event_create_kernel_counter() -> perf_event_alloc() ->
-perf_event_init()).
+Change the comment to say "struct perf_cpu_context".
 
-Let's take the example of a rockpro64 board, CPUs 0-3 are Cortex-A53 (the
-little cores), CPUs 4-5 are Cortex-A72 (the big cores), and each group has
-their own PMU. When running the pmu-cycle-counter test from kvm-unit-tests
-on the little cores, everything is working as expected:
+CC: Thomas Gleixner <tglx@linutronix.de>
+CC: Ingo Molnar <mingo@redhat.com>
+Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
+---
+ include/linux/perf_event.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-taskset -c 0-3 ./vm run -c1 -m64 --nodefaults -k arm/pmu.flat -p "cycle-counter 0" --pmu
-[..]
-PASS: pmu: cycle-counter: Monotonically increasing cycle count
-[..]
-PASS: pmu: cycle-counter: Cycle/instruction ratio
-SUMMARY: 2 tests
-
-But when running the same test on the big cores:
-
-$ taskset -c 4-5 ./vm run -c1 -m64 --nodefaults -k arm/pmu.flat -p "cycle-counter 0" --pmu
-[..]
-FAIL: pmu: cycle-counter: Monotonically increasing cycle count
-[..]
-FAIL: pmu: cycle-counter: Cycle/instruction ratio
-SUMMARY: 2 tests, 2 unexpected failures
-
-The same behaviour is exhibited when running under qemu.
-
-The test passes on the little cores in that particular setup because the
-little cores are the "correct" cores: the PMU that perf chooses to create
-the events on is the PMU associated with the little cores. The test fails
-on the big cores because the events cannot be scheduled in, as the PMU is
-associated with a different set of cores (merge_sched_in() exits early
-because event_filter_match() returns false).
-
-It gets even more impredicatable, as the order in which the PMUs are probed
-during boot dictates which PMU is chosen for creating the events, and the
-probe order can change if, for example, the order of the PMU nodes in the
-DTB changes, or if the kernel is booted with asynchronous driver probing
-for the armv8-pmu driver. A user can end up in a situation where pinning
-the VM on a set of CPUs works just fine, and after a reboot doesn't work
-anymore, without any kind of explanation or hints of why it stopped
-working.
-
-All of this is not ideal from the user perspective and this series aims to
-improve that by adding a new PMU attribute which can be used to tell KVM
-exactly on which PMU events for the VCPU should be created. The contract is
-that user is still responsible for pinning the VCPUs on the corresponding
-CPUs, and KVM will refuse to run the VCPU on a CPU with a different PMU.
-
-With this series on top of kvmtool support for KVM_ARM_VCPU_PMU_V3_SET_PMU
-attribute [2], running the same test as above on the little cores, then on
-the big cores:
-
-$ taskset -c 0-3 ./vm run -c1 -m64 --nodefaults -k arm/pmu.flat -p "cycle-counter 0" --pmu
-[..]
-PASS: pmu: cycle-counter: Monotonically increasing cycle count
-[..]
-PASS: pmu: cycle-counter: Cycle/instruction ratio
-SUMMARY: 2 tests
-
-$ taskset -c 4-5 ./vm run -c1 -m64 --nodefaults -k arm/pmu.flat -p "cycle-counter 0" --pmu
-[..]
-PASS: pmu: cycle-counter: Monotonically increasing cycle count
-[..]
-PASS: pmu: cycle-counter: Cycle/instruction ratio
-SUMMARY: 2 tests
-
-We get a saner behaviour, which is reproducible across reboots, regardless
-of the probe order.
-
-And this is what happens if the VCPU is run on a physical PMU with a
-different PMU than what was set by userspace:
-
-$ taskset -c 3-4 ./vm run -c1 -m64 --nodefaults -k arm/pmu.flat -p "cycle-counter 0" --pmu
-KVM_RUN failed: Exec format error
-
-kvmtool sets the PMU for all VCPUs from the main thread; the main thread
-runs on the little core (CPU3), but the VCPU is scheduled on the big core
-(CPU4); there is a mismatch between the VCPU PMU and the physical CPU PMU,
-and KVM returns -ENOEXEC from KVM_RUN.
-
-[1] https://gitlab.arm.com/linux-arm/linux-ae/-/tree/pmu-big-little-fix-v1
-[2] https://gitlab.arm.com/linux-arm/kvmtool-ae/-/tree/pmu-big-little-fix-v1
-
-Alexandru Elisei (4):
-  perf: Fix wrong name in comment for struct perf_cpu_context
-  KVM: arm64: Keep a list of probed PMUs
-  KVM: arm64: Add KVM_ARM_VCPU_PMU_V3_SET_PMU attribute
-  KVM: arm64: Refuse to run VCPU if the PMU doesn't match the physical
-    CPU
-
- Documentation/virt/kvm/api.rst          |  5 ++-
- Documentation/virt/kvm/devices/vcpu.rst | 26 +++++++++++
- arch/arm64/include/asm/kvm_host.h       |  3 ++
- arch/arm64/include/uapi/asm/kvm.h       |  1 +
- arch/arm64/kvm/arm.c                    | 15 +++++++
- arch/arm64/kvm/pmu-emul.c               | 58 +++++++++++++++++++++++--
- include/kvm/arm_pmu.h                   |  6 +++
- include/linux/perf_event.h              |  2 +-
- tools/arch/arm64/include/uapi/asm/kvm.h |  1 +
- 9 files changed, 110 insertions(+), 7 deletions(-)
-
+diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
+index 0dcfd265beed..14132570ea5d 100644
+--- a/include/linux/perf_event.h
++++ b/include/linux/perf_event.h
+@@ -862,7 +862,7 @@ struct perf_event_context {
+ #define PERF_NR_CONTEXTS	4
+ 
+ /**
+- * struct perf_event_cpu_context - per cpu event context structure
++ * struct perf_cpu_context - per cpu event context structure
+  */
+ struct perf_cpu_context {
+ 	struct perf_event_context	ctx;
 -- 
 2.33.1
 
