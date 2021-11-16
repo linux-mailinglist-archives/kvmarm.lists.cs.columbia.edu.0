@@ -2,81 +2,102 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B56F453939
-	for <lists+kvmarm@lfdr.de>; Tue, 16 Nov 2021 19:13:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 26C2B45398C
+	for <lists+kvmarm@lfdr.de>; Tue, 16 Nov 2021 19:44:03 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AFB6D4B1A4;
-	Tue, 16 Nov 2021 13:13:08 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9E1AD4B0CE;
+	Tue, 16 Nov 2021 13:44:02 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@infradead.org
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id lB0NavxpsjWR; Tue, 16 Nov 2021 13:13:08 -0500 (EST)
+	with ESMTP id Ow0c7b6sh2dU; Tue, 16 Nov 2021 13:44:02 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3B1024B1A5;
-	Tue, 16 Nov 2021 13:13:03 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 180854B104;
+	Tue, 16 Nov 2021 13:44:01 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8957B4B10B
- for <kvmarm@lists.cs.columbia.edu>; Tue, 16 Nov 2021 06:51:38 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 649FD4B0BD
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 16 Nov 2021 13:44:00 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id PL1BUW+7rbbo for <kvmarm@lists.cs.columbia.edu>;
- Tue, 16 Nov 2021 06:51:37 -0500 (EST)
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 22D6D4B0AC
- for <kvmarm@lists.cs.columbia.edu>; Tue, 16 Nov 2021 06:51:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
- Reply-To:Content-Type:Content-ID:Content-Description;
- bh=/evKXqcw/8FGr8TmFi1F9Nz8K19EsCZyfN23kozBzuY=; b=MdfCKEq3R/fyvlhIwsvp4njmRf
- i81ltpmARvvyO/0Ks8i/lP2LOPa/6JAXOEXRdTAoTgo1vGLb0kwhoFpf6nHCanhHz4b3c0WMvULsj
- 8bpD7LXRZq0qsJnBuOhA3hGw61uteqxhmCfjjIDaGwgXmXOMQfc+jWbY7uVdZlRSxxlPgDvrmf9eV
- TnclAYZL3Arr/hR6kcuELw6ipgu1FokwwoaMd22HbnRO/u84YFJexMRGcclaxqWmge5xpzoq5xMSR
- A7jAFvog+TShp3wAJDy9IhtZG6Ad6DmhYZTAGUxHfe0TLKJX0MUncrZcFJS6UCePCbRaQiiXS424p
- kmH18k2Q==;
-Received: from i7.infradead.org ([2001:8b0:10b:1:21e:67ff:fecb:7a92])
- by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
- id 1mmwzD-006iYm-CS; Tue, 16 Nov 2021 11:50:52 +0000
-Received: from dwoodhou by i7.infradead.org with local (Exim 4.94.2 #2 (Red
- Hat Linux)) id 1mmwzD-000VDu-Jd; Tue, 16 Nov 2021 11:50:51 +0000
-From: David Woodhouse <dwmw2@infradead.org>
-To: Paolo Bonzini <pbonzini@redhat.com>,
-	kvm <kvm@vger.kernel.org>
-Subject: [PATCH 7/7] KVM: arm64: Use Makefile.kvm for common files
-Date: Tue, 16 Nov 2021 11:50:51 +0000
-Message-Id: <20211116115051.119956-7-dwmw2@infradead.org>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20211116115051.119956-1-dwmw2@infradead.org>
+ with ESMTP id Wowuu3Zi7ieU for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 16 Nov 2021 13:43:58 -0500 (EST)
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com
+ [209.85.216.44])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A4BFC4A19A
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 16 Nov 2021 13:43:58 -0500 (EST)
+Received: by mail-pj1-f44.google.com with SMTP id
+ nh10-20020a17090b364a00b001a69adad5ebso231486pjb.2
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 16 Nov 2021 10:43:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:content-transfer-encoding:in-reply-to;
+ bh=GcGOJgSWz7oEIbfl5QNUvPpuAyaNetXEQN0oWs9ap2w=;
+ b=NfWEHKgpp9hvAVj4IrdvyWcutj+oRm5oA4DhrzE5j01yRw6SEr+OqI8zdgqPehlHuc
+ lvLy/whsET41Ju6UmVvOInCo7Ww6t6yLH5qUrncwy6VAmxauCnt99O3r1yirLCVccCfN
+ 0Gay6uTBhe2zfp68q3FXHdSVfO1Z/lBlR6uw3b9mZM9XbPEBfKBoCa/a9sEvB1P9oZqk
+ 5YTcHvsnOOA5rsa3JP9041e/6BOvKA/Xr3X/sbaLIuC63lGrovFZ7b1eudI5InxTZkUr
+ CdOzfVuUVUCDHbMPcWrZAb1YNJexcHENRayQEJiryVfwYQQPdJtpV9LDoK9LoF2MR12X
+ 8enQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:content-transfer-encoding
+ :in-reply-to;
+ bh=GcGOJgSWz7oEIbfl5QNUvPpuAyaNetXEQN0oWs9ap2w=;
+ b=nt764L3lP31tAb2cfYxr5eVZ35uMRu5aWLxpnZHPH+DPS6pUKJyXxtFfMiWy0VWnue
+ VgCW1Oj5+7hfIjmsBYIc9rJ9raHTLP23hUgLSn8jWRC9nspzpKVo3DHsans9Rj7YgVWm
+ 1NZUmP4BwKQA1UGDHvYulr+6Kndj+NtwRTSrqPaGUi4tGfFPipdEBwBqXrgBs8+f6CBR
+ owB4ArN/tb2psmtMLcRgYAtM8CcGo/vcL2YwViX9kJJYPM1WX18w8MB10SNS611LLdBY
+ kkM90VLkHgJaUJ1o7HUymj3hLeeyzRsjU1qEH0SK9OH35UOPO902Of9LJMIh1O6ab0/f
+ RCig==
+X-Gm-Message-State: AOAM533zZQGrBg5AF4mSqsfp5cjzA5TPh6sDS+sahd9LlbXGA8mBBi4k
+ ejkSmh5ibgHL4GJPDwBR25e6vQ==
+X-Google-Smtp-Source: ABdhPJy95F12FbARJJuG3RP+KItNypekR2/l+xifaD1kKSsYtJFW/+wQ/332xG0BY0Bxhx2ISOUtlQ==
+X-Received: by 2002:a17:90b:4b46:: with SMTP id
+ mi6mr1449604pjb.188.1637088237573; 
+ Tue, 16 Nov 2021 10:43:57 -0800 (PST)
+Received: from google.com (157.214.185.35.bc.googleusercontent.com.
+ [35.185.214.157])
+ by smtp.gmail.com with ESMTPSA id r8sm15237754pgp.30.2021.11.16.10.43.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Nov 2021 10:43:56 -0800 (PST)
+Date: Tue, 16 Nov 2021 18:43:53 +0000
+From: Sean Christopherson <seanjc@google.com>
+To: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: [PATCH 6/7] KVM: powerpc: Use Makefile.kvm for common files
+Message-ID: <YZP76Un0mip17E1K@google.com>
 References: <5047c2591310e503491850ef683f251395247d50.camel@infradead.org>
  <20211116115051.119956-1-dwmw2@infradead.org>
+ <20211116115051.119956-6-dwmw2@infradead.org>
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-X-Mailman-Approved-At: Tue, 16 Nov 2021 13:13:01 -0500
+Content-Disposition: inline
+In-Reply-To: <20211116115051.119956-6-dwmw2@infradead.org>
 Cc: Anup Patel <anup.patel@wdc.com>,
- "wanpengli @ tencent . com" <wanpengli@tencent.com>,
- Catalin Marinas <catalin.marinas@arm.com>,
+ "wanpengli @ tencent . com" <wanpengli@tencent.com>, kvm <kvm@vger.kernel.org>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
  Joao Martins <joao.m.martins@oracle.com>, Will Deacon <will@kernel.org>,
  kvmarm@lists.cs.columbia.edu, linux-s390@vger.kernel.org,
  Michael Ellerman <mpe@ellerman.id.au>, "joro @ 8bytes . org" <joro@8bytes.org>,
  Huacai Chen <chenhuacai@kernel.org>,
  Christian Borntraeger <borntraeger@de.ibm.com>,
  Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>, karahmed@amazon.com,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Catalin Marinas <catalin.marinas@arm.com>,
  Boris Ostrovsky <boris.ostrovsky@oracle.com>,
  linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
  "jmattson @ google . com" <jmattson@google.com>,
  "mtosatti @ redhat . com" <mtosatti@redhat.com>, linux-mips@vger.kernel.org,
  kvm-riscv@lists.infradead.org, Marc Zyngier <maz@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  "vkuznets @ redhat . com" <vkuznets@redhat.com>, linuxppc-dev@lists.ozlabs.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -89,43 +110,37 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: David Woodhouse <dwmw@amazon.co.uk>
-
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
----
- arch/arm64/kvm/Makefile | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/arch/arm64/kvm/Makefile b/arch/arm64/kvm/Makefile
-index 989bb5dad2c8..04a53f71a6b6 100644
---- a/arch/arm64/kvm/Makefile
-+++ b/arch/arm64/kvm/Makefile
-@@ -5,14 +5,12 @@
- 
- ccflags-y += -I $(srctree)/$(src)
- 
--KVM=../../../virt/kvm
-+include $(srctree)/virt/kvm/Makefile.kvm
- 
- obj-$(CONFIG_KVM) += kvm.o
- obj-$(CONFIG_KVM) += hyp/
- 
--kvm-y := $(KVM)/kvm_main.o $(KVM)/coalesced_mmio.o $(KVM)/eventfd.o \
--	 $(KVM)/vfio.o $(KVM)/irqchip.o $(KVM)/binary_stats.o \
--	 arm.o mmu.o mmio.o psci.o perf.o hypercalls.o pvtime.o \
-+kvm-y += arm.o mmu.o mmio.o psci.o perf.o hypercalls.o pvtime.o \
- 	 inject_fault.o va_layout.o handle_exit.o \
- 	 guest.o debug.o reset.o sys_regs.o \
- 	 vgic-sys-reg-v3.o fpsimd.o pmu.o \
--- 
-2.31.1
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+T24gVHVlLCBOb3YgMTYsIDIwMjEsIERhdmlkIFdvb2Rob3VzZSB3cm90ZToKPiBGcm9tOiBEYXZp
+ZCBXb29kaG91c2UgPGR3bXdAYW1hem9uLmNvLnVrPgo+IAo+IEl0J3MgYWxsIGZhaXJseSBiYXJv
+cXVlIGJ1dCBpbiB0aGUgZW5kLCBJIGRvbid0IHRoaW5rIHRoZXJlJ3MgYW55IHJlYXNvbgo+IGZv
+ciAkKEtWTSkvaXJxY2hpcC5vIHRvIGhhdmUgYmVlbiBoYW5kbGVkIGRpZmZlcmVudGx5LCBhcyB0
+aGV5IGFsbCBlbmQKPiB1cCBpbiAkKGt2bS15KSBpbiB0aGUgZW5kIGFueXdheSwgcmVnYXJkbGVz
+cyBvZiB3aGV0aGVyIHRoZXkgZ2V0IHRoZXJlCj4gdmlhICQoY29tbW9uLW9ianMteSkgYW5kIHRo
+ZSBDUFUtc3BlY2lmaWMgb2JqZWN0IGxpc3RzLgo+IAo+IFRoZSBnZW5lcmljIE1ha2VmaWxlLmt2
+bSB1c2VzIEhBVkVfS1ZNX0lSUUNISVAgZm9yIGlycWNoaXAubyBpbnN0ZWFkIG9mCj4gSEFWRV9L
+Vk1fSVJRX1JPVVRJTkcuIFRoYXQgY2hhbmdlIGlzIGZpbmUgKGFuZCBhcmd1YWJseSBjb3JyZWN0
+KSBiZWNhdXNlCj4gdGhleSBhcmUgYm90aCBzZXQgdG9nZXRoZXIgZm9yIEtWTV9NUElDLCBvciBu
+ZWl0aGVyIGlzIHNldC4KCk5vcGUuCgogIFN5bWJvbDogSEFWRV9LVk1fSVJRQ0hJUCBbPXldCiAg
+VHlwZSAgOiBib29sCiAgRGVmaW5lZCBhdCB2aXJ0L2t2bS9LY29uZmlnOjcKICBTZWxlY3RlZCBi
+eSBbbV06CiAgICAtIEtWTV9YSUNTIFs9eV0gJiYgVklSVFVBTElaQVRJT04gWz15XSAmJiBLVk1f
+Qk9PSzNTXzY0IFs9bV0gJiYgIUtWTV9NUElDIFs9bl0KICBTZWxlY3RlZCBieSBbbl06CiAgICAt
+IEtWTV9NUElDIFs9bl0gJiYgVklSVFVBTElaQVRJT04gWz15XSAmJiBLVk0gWz15XSAmJiBFNTAw
+IFs9bl0KCmxlYWRzIHRvIHRoaXMgYW5kIGEgd2hvbGUgcGlsZSBvZiBvdGhlciBlcnJvcnMKCmFy
+Y2gvcG93ZXJwYy9rdm0vLi4vLi4vLi4vdmlydC9rdm0vaXJxY2hpcC5jOiBJbiBmdW5jdGlvbiDi
+gJhrdm1faXJxX21hcF9nc2nigJk6CmFyY2gvcG93ZXJwYy9rdm0vLi4vLi4vLi4vdmlydC9rdm0v
+aXJxY2hpcC5jOjMxOjM1OiBlcnJvcjogaW52YWxpZCB1c2Ugb2YgdW5kZWZpbmVkIHR5cGUg4oCY
+c3RydWN0IGt2bV9pcnFfcm91dGluZ190YWJsZeKAmQogICAzMSB8ICAgICAgICAgaWYgKGlycV9y
+dCAmJiBnc2kgPCBpcnFfcnQtPm5yX3J0X2VudHJpZXMpIHsKICAgICAgfCAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgXn4KCgpTaWRlIHRvcGljLCBwbGVhc2UgZG9uJ3QgcG9zdCBh
+IG5ldyB2ZXJzaW9uL3NlcmllcyBpbi1yZXBseS10byBhIGRpZmZlcmVudCBzZXJpZXMuCmI0IGFs
+c28gZ2V0cyBjb25mdXNlZCBpbiB0aGlzIGNhc2UsIGUuZy4gaXQgdHJpZWQgdG8gZ3JhYiB0aGUg
+b3JpZ2luYWwgcGF0Y2guICBiNApoYXMgYWxzbyBtYWRlIG1lIHJlYWxseSBsYXp5LCBoZWF2ZW4g
+Zm9yYmlkIEkgYWN0dWFsbHkgaGFkIHRvIG1hbnVhbGx5IGdyYWIgdGhlc2UKZnJvbSBtdXR0IDot
+KQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwprdm1hcm0g
+bWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1bWJpYS5lZHUKaHR0cHM6Ly9saXN0cy5j
+cy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9rdm1hcm0K
