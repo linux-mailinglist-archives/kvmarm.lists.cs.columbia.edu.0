@@ -2,52 +2,86 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FC75450A43
-	for <lists+kvmarm@lfdr.de>; Mon, 15 Nov 2021 17:55:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DF58453332
+	for <lists+kvmarm@lfdr.de>; Tue, 16 Nov 2021 14:49:40 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 529CC4B1E2;
-	Mon, 15 Nov 2021 11:55:47 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6580D4B0DF;
+	Tue, 16 Nov 2021 08:49:39 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LI98e9spMhQR; Mon, 15 Nov 2021 11:55:47 -0500 (EST)
+	with ESMTP id 7UW-kHRvmvbU; Tue, 16 Nov 2021 08:49:39 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D94054B154;
-	Mon, 15 Nov 2021 11:55:45 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0EC934B154;
+	Tue, 16 Nov 2021 08:49:38 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DD6714B1CF
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Nov 2021 11:55:43 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 432B74B13E
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 16 Nov 2021 08:49:37 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id C7XFkd+YJeZi for <kvmarm@lists.cs.columbia.edu>;
- Mon, 15 Nov 2021 11:55:42 -0500 (EST)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E31D14B1DF
- for <kvmarm@lists.cs.columbia.edu>; Mon, 15 Nov 2021 11:55:41 -0500 (EST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6EB131FB;
- Mon, 15 Nov 2021 08:55:41 -0800 (PST)
-Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id F15593F766;
- Mon, 15 Nov 2021 08:55:39 -0800 (PST)
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-To: will@kernel.org, julien.thierry.kdev@gmail.com,
- linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- maz@kernel.org, james.morse@arm.com, suzuki.poulose@arm.com,
- mark.rutland@arm.com
-Subject: [PATCH kvmtool 9/9] arm64: Add support for KVM_ARM_VCPU_PMU_V3_SET_PMU
-Date: Mon, 15 Nov 2021 16:57:05 +0000
-Message-Id: <20211115165705.195736-10-alexandru.elisei@arm.com>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20211115165705.195736-1-alexandru.elisei@arm.com>
-References: <20211115165705.195736-1-alexandru.elisei@arm.com>
+ with ESMTP id 2ZuD05X+Ax9s for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 16 Nov 2021 08:49:35 -0500 (EST)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B3A2F4B137
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 16 Nov 2021 08:49:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1637070575;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=w00cP//oO+88K/Y2lFYbKr4Ng9e/d98pV+/20CZ3Uq4=;
+ b=cKknsgUkGmJe8SzauPe2Wp6ZDEs4bHPvHP5OQVYGMWv8FlpIm2BoE795vVZYPpz1FcSdoG
+ FdrChkh4UR4Xd0Sd8iIKGYAKTmhDgK89C1PO8KQ0kxxz693Z2W63dNOgSULjkT39/3kijH
+ +EpHCPCdOZG/f2YPKjyV82oO+8yKCX4=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-542-CYdHIWN-MYyQSKOSjn05jw-1; Tue, 16 Nov 2021 08:49:29 -0500
+X-MC-Unique: CYdHIWN-MYyQSKOSjn05jw-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com
+ [10.5.11.23])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 36C7B1922038;
+ Tue, 16 Nov 2021 13:49:27 +0000 (UTC)
+Received: from [10.39.192.245] (unknown [10.39.192.245])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 711601970E;
+ Tue, 16 Nov 2021 13:49:09 +0000 (UTC)
+Message-ID: <02c44f36-5467-4dce-b0f9-af96d6286e20@redhat.com>
+Date: Tue, 16 Nov 2021 14:49:08 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Subject: Re: [PATCH 1/5] KVM: Move wiping of the kvm->vcpus array to common
+ code
+Content-Language: en-US
+To: Marc Zyngier <maz@kernel.org>, Sean Christopherson <seanjc@google.com>
+References: <20211105192101.3862492-1-maz@kernel.org>
+ <20211105192101.3862492-2-maz@kernel.org> <YYWQHBwD4nBLo9qi@google.com>
+ <87o86xednu.wl-maz@kernel.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+In-Reply-To: <87o86xednu.wl-maz@kernel.org>
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
+Cc: Juergen Gross <jgross@suse.com>, Anup Patel <anup.patel@wdc.com>,
+ Janosch Frank <frankja@linux.ibm.com>, kvm@vger.kernel.org,
+ Christian Borntraeger <borntraeger@de.ibm.com>,
+ Michael Ellerman <mpe@ellerman.id.au>, Huacai Chen <chenhuacai@kernel.org>,
+ David Hildenbrand <david@redhat.com>, linux-mips@vger.kernel.org,
+ Nicholas Piggin <npiggin@gmail.com>, Atish Patra <atish.patra@wdc.com>,
+ Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
+ Paul Mackerras <paulus@samba.org>, kernel-team@android.com,
+ Claudio Imbrenda <imbrenda@linux.ibm.com>, linuxppc-dev@lists.ozlabs.org,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -59,220 +93,22 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The KVM_ARM_VCPU_PMU_V3_CTRL(KVM_ARM_VCPU_PMU_V3_SET_PMU) VCPU ioctl is
-used to assign a physical PMU to the events that KVM creates when emulating
-the PMU for that VCPU. This is useful on heterogeneous systems, when there
-is more than one hardware PMU present.
+On 11/6/21 12:17, Marc Zyngier wrote:
+> 
+> If you too believe that this is just wrong, I'm happy to drop the
+> locking altogether. If that breaks someone's flow, they'll shout soon
+> enough.
 
-The assumption that is made in the implementation is that the user will
-pin the kvmtool process on a set of CPUs that share the same PMU. This
-allows kvmtool to set the same PMU for all VCPUs from the main thread,
-instead of in the individual VCPU threads.
+Yes, it's not necessary.  It was added in 2009 (commit 988a2cae6a3c, 
+"KVM: Use macro to iterate over vcpus.") and it was unnecessary back 
+then too.
 
-Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
----
- arm/aarch64/pmu.c | 148 +++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 146 insertions(+), 2 deletions(-)
-
-diff --git a/arm/aarch64/pmu.c b/arm/aarch64/pmu.c
-index ac5b7bcd6ca9..c0fc95ca01c4 100644
---- a/arm/aarch64/pmu.c
-+++ b/arm/aarch64/pmu.c
-@@ -1,3 +1,9 @@
-+#include <dirent.h>
-+#include <sched.h>
-+
-+#include "linux/cpumask.h"
-+#include "linux/err.h"
-+
- #include "kvm/fdt.h"
- #include "kvm/kvm.h"
- #include "kvm/kvm-cpu.h"
-@@ -7,6 +13,18 @@
- 
- #include "asm/pmu.h"
- 
-+static bool pmu_has_attr(struct kvm_cpu *vcpu, u64 attr)
-+{
-+	struct kvm_device_attr pmu_attr = {
-+		.group	= KVM_ARM_VCPU_PMU_V3_CTRL,
-+		.attr	= attr,
-+	};
-+	int ret;
-+
-+	ret = ioctl(vcpu->vcpu_fd, KVM_HAS_DEVICE_ATTR, &pmu_attr);
-+	return ret == 0;
-+}
-+
- static void set_pmu_attr(struct kvm_cpu *vcpu, void *addr, u64 attr)
- {
- 	struct kvm_device_attr pmu_attr = {
-@@ -16,8 +34,7 @@ static void set_pmu_attr(struct kvm_cpu *vcpu, void *addr, u64 attr)
- 	};
- 	int ret;
- 
--	ret = ioctl(vcpu->vcpu_fd, KVM_HAS_DEVICE_ATTR, &pmu_attr);
--	if (!ret) {
-+	if (pmu_has_attr(vcpu, attr)) {
- 		ret = ioctl(vcpu->vcpu_fd, KVM_SET_DEVICE_ATTR, &pmu_attr);
- 		if (ret)
- 			die_perror("PMU KVM_SET_DEVICE_ATTR");
-@@ -26,11 +43,126 @@ static void set_pmu_attr(struct kvm_cpu *vcpu, void *addr, u64 attr)
- 	}
- }
- 
-+#define SYS_EVENT_SOURCE	"/sys/bus/event_source/devices/"
-+/*
-+ * int is 32 bits and INT_MAX translates in decimal to 2 * 10^9.
-+ * Make room for newline and NUL.
-+ */
-+#define PMU_ID_MAXLEN		12
-+
-+/*
-+ * In the case of homogeneous systems, there only one hardware PMU, and all
-+ * VCPUs will use the same PMU, regardless of where the attribute gets set.
-+ *
-+ * For heterogeneous systems, the assumption is that the user has pinned the VM
-+ * (via taskset or similar) to a set of CPUs that share the same hardware PMU.
-+ * This simplifies things for kvmtool, as correctness is not affected by setting
-+ * the PMU for each VCPU from the main thread, instead of setting it from each
-+ * individual VCPU thread.
-+ */
-+static int find_pmu(void)
-+{
-+	char buf[PMU_ID_MAXLEN];
-+	struct dirent *dirent;
-+	char *cpulist, *path;
-+	int pmu_id = -ENXIO;
-+	unsigned long val;
-+	cpumask_t cpumask;
-+	ssize_t fd_sz;
-+	int this_cpu;
-+	int fd, ret;
-+	DIR *dir;
-+
-+	memset(buf, 0, PMU_ID_MAXLEN);
-+
-+	this_cpu = sched_getcpu();
-+	if (this_cpu < 0)
-+		return -errno;
-+
-+	cpulist = calloc(1, PAGE_SIZE);
-+	if (!cpulist)
-+		return -ENOMEM;
-+
-+	path = calloc(1, PAGE_SIZE);
-+	if (!path) {
-+		pmu_id = -ENOMEM;
-+		goto out_free_cpulist;
-+	}
-+	/* Make the compiler happy by copying the NULL terminating byte. */
-+	strncpy(path, SYS_EVENT_SOURCE, strlen(SYS_EVENT_SOURCE) + 1);
-+
-+	dir = opendir(SYS_EVENT_SOURCE);
-+	if (!dir) {
-+		pmu_id = -errno;
-+		goto out_free;
-+	}
-+
-+	while ((dirent = readdir(dir))) {
-+		if (dirent->d_type != DT_LNK)
-+			continue;
-+
-+		strcat(path, dirent->d_name);
-+		strcat(path, "/cpus");
-+		fd = open(path, O_RDONLY);
-+		if (fd < 0)
-+			goto next_dir;
-+
-+		fd_sz = read_file(fd, cpulist, PAGE_SIZE);
-+		if (fd_sz < 0) {
-+			pmu_id = -errno;
-+			goto out_free;
-+		}
-+		close(fd);
-+
-+		ret = cpulist_parse(cpulist, &cpumask);
-+		if (ret) {
-+			pmu_id = ret;
-+			goto out_free;
-+		}
-+
-+		if (!cpumask_test_cpu(this_cpu, &cpumask))
-+			goto next_dir;
-+
-+		strcpy(&path[strlen(path) - 4], "type");
-+		fd = open(path, O_RDONLY);
-+		if (fd < 0)
-+			goto next_dir;
-+
-+		fd_sz = read_file(fd, buf, PMU_ID_MAXLEN - 1);
-+		if (fd_sz < 0) {
-+			pmu_id = -errno;
-+			goto out_free;
-+		}
-+		close(fd);
-+
-+		val = strtoul(buf, NULL, 10);
-+		if (val > INT_MAX) {
-+			pmu_id = -EOVERFLOW;
-+			goto out_free;
-+		}
-+		pmu_id = (int)val;
-+		pr_debug("Using PMU: %s (id: %d)", dirent->d_name, pmu_id);
-+		break;
-+
-+next_dir:
-+		/* Reset path. */
-+		memset(&path[strlen(SYS_EVENT_SOURCE)], '\0',
-+		       strlen(path) - strlen(SYS_EVENT_SOURCE));
-+	}
-+
-+out_free:
-+	free(path);
-+out_free_cpulist:
-+	free(cpulist);
-+	return pmu_id;
-+}
-+
- void pmu__generate_fdt_nodes(void *fdt, struct kvm *kvm)
- {
- 	const char compatible[] = "arm,armv8-pmuv3";
- 	int irq = KVM_ARM_PMUv3_PPI;
- 	struct kvm_cpu *vcpu;
-+	int pmu_id = -ENXIO;
- 	int i;
- 
- 	u32 cpu_mask = (((1 << kvm->nrcpus) - 1) << GIC_FDT_IRQ_PPI_CPU_SHIFT) \
-@@ -44,9 +176,21 @@ void pmu__generate_fdt_nodes(void *fdt, struct kvm *kvm)
- 	if (!kvm->cfg.arch.has_pmuv3)
- 		return;
- 
-+	if (pmu_has_attr(kvm->cpus[0], KVM_ARM_VCPU_PMU_V3_SET_PMU)) {
-+		pmu_id = find_pmu();
-+		if (pmu_id < 0)
-+			pr_debug("Failed to find a PMU (errno = %d)", -pmu_id);
-+	}
-+
- 	for (i = 0; i < kvm->nrcpus; i++) {
- 		vcpu = kvm->cpus[i];
- 		set_pmu_attr(vcpu, &irq, KVM_ARM_VCPU_PMU_V3_IRQ);
-+		/*
-+		 * PMU IDs 0-5 are reserved; a positive value means a PMU was
-+		 * found.
-+		 */
-+		if (pmu_id > 0)
-+			set_pmu_attr(vcpu, &pmu_id, KVM_ARM_VCPU_PMU_V3_SET_PMU);
- 		set_pmu_attr(vcpu, NULL, KVM_ARM_VCPU_PMU_V3_INIT);
- 	}
- 
--- 
-2.31.1
+Paolo
 
 _______________________________________________
 kvmarm mailing list
