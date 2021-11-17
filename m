@@ -2,63 +2,64 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id BFF11455C33
-	for <lists+kvmarm@lfdr.de>; Thu, 18 Nov 2021 14:05:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5581B455C2A
+	for <lists+kvmarm@lfdr.de>; Thu, 18 Nov 2021 14:05:24 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 712D94B1E6;
-	Thu, 18 Nov 2021 08:05:36 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C1F294B21E;
+	Thu, 18 Nov 2021 08:05:23 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.391
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.391 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	T_DKIM_INVALID=0.01] autolearn=no
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@infradead.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1V91gpZc5bkH; Thu, 18 Nov 2021 08:05:34 -0500 (EST)
+	with ESMTP id oneGH+HL7pgq; Thu, 18 Nov 2021 08:05:23 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 008674B201;
-	Thu, 18 Nov 2021 08:05:21 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 25DF14B1DC;
+	Thu, 18 Nov 2021 08:05:20 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 94C724B14C
- for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 12:41:07 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6D73C4B199
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 12:40:57 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 2jBL+hJaivVE for <kvmarm@lists.cs.columbia.edu>;
- Wed, 17 Nov 2021 12:41:05 -0500 (EST)
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7D95D4B154
- for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 12:41:04 -0500 (EST)
+ with ESMTP id CWbAkrismZ2S for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 17 Nov 2021 12:40:54 -0500 (EST)
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 470914B18F
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 12:40:54 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
- Content-Type:MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:
- Content-ID:Content-Description:In-Reply-To:References;
- bh=1uTmVWceFyeFzFF12Kb1AEwgWDvyhf/Bhrlut32WigU=; b=FA7jlDlOgsISqwIPXDH2Ot6bQj
- wU8RQi496K1TElvPccyBBkKObng9I/ztfWUm9if2d0ZlgxdzXERI2F2w16p/G1N+LGJK5gQ55Imt3
- 2LYwOYo2ej6ez/YUwJUICBTPIlDyM00AjzcfyJECnVvr8A3VHa5mfauKjfLPgQ8XmaOqXVST4VkC9
- r7vEjmROPKF5D0aOb28MqmMJbqbNCReEZmjntJIXE3Y/yclHKPpzWp0maRBd4xwuDjPqeRN3G0j8j
- ua317PE4jft5Ek/d1EkWWz/6UQpufMevbcHTjYgB9ErEGup9Yv1zpvhbF1t4S1ODBCKh/vuqTwoAr
- Apx47PCA==;
+ d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
+ Reply-To:Content-Type:Content-ID:Content-Description;
+ bh=id4+CfZtnL/QjddOoQEepaECtbfRrMg7fMnhjq44t3E=; b=B7DZ5P936VGMmDYPvwZqYQEt+q
+ K4w+KMswJ6dq188KxPEsVRxaibLE4NPN2Xx+v8V3IBFP+zuxGZbJ7wd1w1BJJ5y1i/Yxh7J8clJFZ
+ fHDLblhFCVx6Wiw6JDYCHAL4Jf84pFnPMGP+UZTmU+EiRgiythr4t+pikt0a4EqJHYy+tjJuNGEyp
+ 3YPioRxoDZASTxCyiLLx8dc/u3WvwiMhPK1DB1JOuV9EYyr9OQ1bhqhPcIk8nZyMSdeQMJd+r3/14
+ gvSVFZZIzjpOY9NdX43244+i0js3RWlBSojMweQn5FLSGuVtHEBj5yPwo/OIGhE9h1xuGLoUkTQ8f
+ QosCZ+eA==;
 Received: from i7.infradead.org ([2001:8b0:10b:1:21e:67ff:fecb:7a92])
- by desiato.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
- id 1mnOum-00GXWZ-Cq; Wed, 17 Nov 2021 17:40:08 +0000
+ by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+ id 1mnOul-007nmq-Rt; Wed, 17 Nov 2021 17:40:08 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.94.2 #2 (Red
- Hat Linux)) id 1mnOum-001GxB-2V; Wed, 17 Nov 2021 17:40:08 +0000
+ Hat Linux)) id 1mnOum-001GxF-4S; Wed, 17 Nov 2021 17:40:08 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: Paolo Bonzini <pbonzini@redhat.com>,
 	kvm <kvm@vger.kernel.org>
-Subject: [PATCH v3 00/12] KVM: x86/xen: Add in-kernel Xen event channel
- delivery
-Date: Wed, 17 Nov 2021 17:39:51 +0000
-Message-Id: <20211117174003.297096-1-dwmw2@infradead.org>
+Subject: [PATCH v3 01/12] KVM: Introduce CONFIG_HAVE_KVM_DIRTY_RING
+Date: Wed, 17 Nov 2021 17:39:52 +0000
+Message-Id: <20211117174003.297096-2-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20211117174003.297096-1-dwmw2@infradead.org>
+References: <20211117174003.297096-1-dwmw2@infradead.org>
 MIME-Version: 1.0
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- desiato.infradead.org. See http://www.infradead.org/rpr.html
+ casper.infradead.org. See http://www.infradead.org/rpr.html
 X-Mailman-Approved-At: Thu, 18 Nov 2021 08:05:18 -0500
 Cc: Anup Patel <anup.patel@wdc.com>,
  "wanpengli @ tencent . com" <wanpengli@tencent.com>,
@@ -87,85 +88,111 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-RXZlbnQgY2hhbm5lbHMsIHllYWguIFRoYXQgcmVhbGx5IGlzIHdoZXJlIEkgc3RhcnRlZC4KCkl0
-IHdhcyBhbGwgc28gc2ltcGxlIGluIEpvYW8gYW5kIEFua3VyJ3Mgb3JpZ2luYWwgdmVyc2lvbiBh
-dCAKaHR0cHM6Ly93d3cuc3Bpbmljcy5uZXQvbGlzdHMva3ZtL21zZzE4MjU1Ni5odG1sIOKAlCBq
-dXN0IGEgaGFuZGZ1bApvZiBzaW1wbGUgdGVzdF9hbmRfc2V0X2JpdCgpIGNhbGxzIG9uIHRoZSBt
-YXBwZWQgcGFnZS4KCldoZW4gSSBwb3N0ZWQgdjEgSSBkaWRuJ3QgcXVpdGUgdW5kZXJzdGFuZCBo
-b3cgc3RlYWwgdGltZSBhbmQgbmVzdGluZwp3ZXJlIHNhZmVseSB1c2luZyB0aGUga3ZtX21hcF9n
-Zm4oKSBmdW5jdGlvbiwgYW5kIEkgcG9zdGVkIHRoZSBYZW4KcGFydCBkZWNsYXJpbmcgdGhhdCBJ
-IGhhZCAicmVkdWNlZCBpdCB0byBhIHByZXZpb3VzbHkgc29sdmVkIHByb2JsZW0iLgoKVGhlbiBJ
-IGZyb3duZWQgYXQga3ZtX21hcF9nZm4oKSBmb3IgYSBiaXQgbG9uZ2VyLCBjb25jbHVkZWQgaXQg
-d2FzCmJhc2ljYWxseSBpbXBvc3NpYmxlIHRvIHVzZSBpdCBzYWZlbHkgb24gaXRzIG93biBiZWNh
-dXNlIHRoZSBwYWdlIGl0Cm1hcHMgbWlnaHQgYmVsb25nIHRvIGFub3RoZXIgZ3Vlc3QgYnkgdGhl
-IHRpbWUgaXQgZXZlbiByZXR1cm5zIHRvIGl0cwpjYWxsZXIsIGFuZCBwb3N0ZWQgYSB2MiBpbiB3
-aGljaCBJIGRpZCBzb21ldGhpbmcgc2FmZXIgZm9yIG15c2VsZiBieQpob29raW5nIGludG8gdGhl
-IE1NVSBub3RpZmllcnMuCgpJIHRoZW4gZml4ZWQgdGhlIHN0ZWFsIHRpbWUgcmVwb3J0aW5nLCBh
-bmQga2lsbGVkIGdmbl90b19wZm5fY2FjaGUsCnVuZGVyIHNlcGFyYXRlIGNvdmVyLgoKSW4gdjMg
-b2YgdGhpcyBzZXJpZXMgSSByZS1pbnRyb2R1Y2UgYSBzYW5lciBnZm5fdG9fcGZuX2NhY2hlIHdp
-dGggTU1VIApub3RpZmllciBzdXBwb3J0IHRvIGdpdmUgaXQgcHJvcGVyIGludmFsaWRhdGlvbiBz
-ZW1hbnRpY3MuIFRoaXMgY2FuIG5vdyAKYmUgdXNlZCBmb3IgdGhlIFhlbiBldmVudCBjaGFubmVs
-IHN1cHBvcnQgYW5kIHNob3VsZCBhbHNvIGJlIHVzYWJsZSBmb3IgCmZpeGluZyB0aGUgdmFyaW91
-cyB1c2UtYWZ0ZXItZnJlZSByYWNlcyBpbiB0aGUgbmVzdGluZyBjb2RlIHRvbyDigJQgdGhlIAps
-YXN0IHBhdGNoIGluIHRoaXMgc2VyaWVzIGJlaW5nIGFuIHVudGVzdGVkIHByb29mIG9mIGNvbmNl
-cHQgYXR0ZW1wdCBhdCAKZml4aW5nIG9uZSBzdWNoLgoKU2luY2UgYWRkaW5nIGEgQyBmaWxlIGlu
-IHZpcnQva3ZtLyB3YXMgc29tZXdoYXQgbW9yZSBwYWluZnVsIHRoYW4gaXQKcmVhbGx5IHNob3Vs
-ZCBoYXZlIGJlZW4sIHRoZXJlIGlzIGEgc21hbGwgZGV0b3VyIGludG8gYWxsIHRoZSBhcmNoCnNw
-ZWNpZmljIE1ha2VmaWxlcyB0byBtYWtlIHRoZW0gaW5jbHVkZSBhIGNvbW1vbiBvbmUuCgpJbnRl
-bmRlZCBmb3IgbWVyZ2luZyB1cCB0byBwYXRjaCAxMS4gUGF0Y2ggMTIgaXMgZm9yIGlsbHVzdHJh
-dGlvbi4KCkRhdmlkIFdvb2Rob3VzZSAoMTIpOgogICAgICBLVk06IEludHJvZHVjZSBDT05GSUdf
-SEFWRV9LVk1fRElSVFlfUklORwogICAgICBLVk06IEFkZCBNYWtlZmlsZS5rdm0gZm9yIGNvbW1v
-biBmaWxlcywgdXNlIGl0IGZvciB4ODYKICAgICAgS1ZNOiBzMzkwOiBVc2UgTWFrZWZpbGUua3Zt
-IGZvciBjb21tb24gZmlsZXMKICAgICAgS1ZNOiBtaXBzOiBVc2UgTWFrZWZpbGUua3ZtIGZvciBj
-b21tb24gZmlsZXMKICAgICAgS1ZNOiBSSVNDLVY6IFVzZSBNYWtlZmlsZS5rdm0gZm9yIGNvbW1v
-biBmaWxlcwogICAgICBLVk06IHBvd2VycGM6IFVzZSBNYWtlZmlsZS5rdm0gZm9yIGNvbW1vbiBm
-aWxlcwogICAgICBLVk06IGFybTY0OiBVc2UgTWFrZWZpbGUua3ZtIGZvciBjb21tb24gZmlsZXMK
-ICAgICAgS1ZNOiBQcm9wYWdhdGUgdmNwdSBleHBsaWNpdGx5IHRvIG1hcmtfcGFnZV9kaXJ0eV9p
-bl9zbG90KCkKICAgICAgS1ZNOiBSZWluc3RhdGUgZ2ZuX3RvX3Bmbl9jYWNoZSB3aXRoIGludmFs
-aWRhdGlvbiBzdXBwb3J0CiAgICAgIEtWTTogeDg2L3hlbjogTWFpbnRhaW4gdmFsaWQgbWFwcGlu
-ZyBvZiBYZW4gc2hhcmVkX2luZm8gcGFnZQogICAgICBLVk06IHg4Ni94ZW46IEFkZCBLVk1fSVJR
-X1JPVVRJTkdfWEVOX0VWVENITiBhbmQgZXZlbnQgY2hhbm5lbCBkZWxpdmVyeQogICAgICBLVk06
-IHg4NjogRmlyc3QgYXR0ZW1wdCBhdCBjb252ZXJ0aW5nIG5lc3RlZCB2aXJ0dWFsIEFQSUMgcGFn
-ZSB0byBncGMKCiBEb2N1bWVudGF0aW9uL3ZpcnQva3ZtL2FwaS5yc3QgICAgICAgICAgICAgICAg
-ICAgICB8ICAyMSArKwogYXJjaC9hcm02NC9rdm0vTWFrZWZpbGUgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgfCAgIDYgKy0KIGFyY2gvYXJtNjQva3ZtL21tdS5jICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgIHwgICAyICstCiBhcmNoL21pcHMva3ZtL01ha2VmaWxlICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICB8ICAgMyArLQogYXJjaC9wb3dlcnBjL2t2bS9NYWtlZmlsZSAgICAg
-ICAgICAgICAgICAgICAgICAgICAgfCAgIDYgKy0KIGFyY2gvcmlzY3Yva3ZtL01ha2VmaWxlICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIHwgICA2ICstCiBhcmNoL3MzOTAva3ZtL01ha2VmaWxl
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8ICAgNiArLQogYXJjaC94ODYvaW5jbHVkZS9h
-c20va3ZtX2hvc3QuaCAgICAgICAgICAgICAgICAgICAgfCAgIDQgKy0KIGFyY2gveDg2L2t2bS9L
-Y29uZmlnICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgICAyICsKIGFyY2gveDg2L2t2
-bS9NYWtlZmlsZSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgICA3ICstCiBhcmNoL3g4
-Ni9rdm0vaXJxX2NvbW0uYyAgICAgICAgICAgICAgICAgICAgICAgICAgICB8ICAxMiArCiBhcmNo
-L3g4Ni9rdm0vbW11L21tdS5jICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8ICAgMiArLQog
-YXJjaC94ODYva3ZtL21tdS9zcHRlLmMgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgIDIg
-Ky0KIGFyY2gveDg2L2t2bS9tbXUvdGRwX21tdS5jICAgICAgICAgICAgICAgICAgICAgICAgIHwg
-ICAyICstCiBhcmNoL3g4Ni9rdm0vdm14L25lc3RlZC5jICAgICAgICAgICAgICAgICAgICAgICAg
-ICB8ICA1MCArKystCiBhcmNoL3g4Ni9rdm0vdm14L3ZteC5jICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICB8ICAxMiArLQogYXJjaC94ODYva3ZtL3ZteC92bXguaCAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgfCAgIDIgKy0KIGFyY2gveDg2L2t2bS94ODYuYyAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgIHwgIDE3ICstCiBhcmNoL3g4Ni9rdm0veGVuLmMgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICB8IDI4NyArKysrKysrKysrKysrKysrKysrLS0KIGFyY2gveDg2
-L2t2bS94ZW4uaCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgICA5ICsKIGluY2x1
-ZGUvbGludXgva3ZtX2RpcnR5X3JpbmcuaCAgICAgICAgICAgICAgICAgICAgIHwgIDE0ICstCiBp
-bmNsdWRlL2xpbnV4L2t2bV9ob3N0LmggICAgICAgICAgICAgICAgICAgICAgICAgICB8IDEwMCAr
-KysrKystCiBpbmNsdWRlL2xpbnV4L2t2bV90eXBlcy5oICAgICAgICAgICAgICAgICAgICAgICAg
-ICB8ICAxOCArKwogaW5jbHVkZS91YXBpL2xpbnV4L2t2bS5oICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgfCAgMTEgKwogLi4uL3Rlc3Rpbmcvc2VsZnRlc3RzL2t2bS94ODZfNjQveGVuX3NoaW5m
-b190ZXN0LmMgfCAxMTIgKysrKysrKy0KIHZpcnQva3ZtL0tjb25maWcgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgIHwgICA2ICsKIHZpcnQva3ZtL01ha2VmaWxlLmt2bSAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIHwgIDE0ICsKIHZpcnQva3ZtL2RpcnR5X3JpbmcuYyAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIHwgIDEwICstCiB2aXJ0L2t2bS9rdm1fbWFpbi5jICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8ICAzNCArKy0KIHZpcnQva3ZtL3ttbXVfbG9j
-ay5oID0+IGt2bV9tbS5ofSAgICAgICAgICAgICAgICAgIHwgIDIzICstCiB2aXJ0L2t2bS9wZm5j
-YWNoZS5jICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8IDI4MSArKysrKysrKysrKysr
-KysrKysrKwogMzEgZmlsZXMgY2hhbmdlZCwgOTkyIGluc2VydGlvbnMoKyksIDg5IGRlbGV0aW9u
-cygtKQoKCgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwpr
-dm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1bWJpYS5lZHUKaHR0cHM6Ly9s
-aXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9rdm1hcm0K
+From: David Woodhouse <dwmw@amazon.co.uk>
+
+I'd like to make the build include dirty_ring.c based on whether the
+arch wants it or not. That's a whole lot simpler if there's a config
+symbol instead of doing it implicitly on KVM_DIRTY_LOG_PAGE_OFFSET
+being set to something non-zero.
+
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+---
+ arch/x86/kvm/Kconfig           | 1 +
+ include/linux/kvm_dirty_ring.h | 8 ++++----
+ virt/kvm/Kconfig               | 3 +++
+ virt/kvm/kvm_main.c            | 4 ++--
+ 4 files changed, 10 insertions(+), 6 deletions(-)
+
+diff --git a/arch/x86/kvm/Kconfig b/arch/x86/kvm/Kconfig
+index 619186138176..d7fa0a42ac25 100644
+--- a/arch/x86/kvm/Kconfig
++++ b/arch/x86/kvm/Kconfig
+@@ -27,6 +27,7 @@ config KVM
+ 	select MMU_NOTIFIER
+ 	select HAVE_KVM_IRQCHIP
+ 	select HAVE_KVM_IRQFD
++	select HAVE_KVM_DIRTY_RING
+ 	select IRQ_BYPASS_MANAGER
+ 	select HAVE_KVM_IRQ_BYPASS
+ 	select HAVE_KVM_IRQ_ROUTING
+diff --git a/include/linux/kvm_dirty_ring.h b/include/linux/kvm_dirty_ring.h
+index 120e5e90fa1d..4da8d4a4140b 100644
+--- a/include/linux/kvm_dirty_ring.h
++++ b/include/linux/kvm_dirty_ring.h
+@@ -27,9 +27,9 @@ struct kvm_dirty_ring {
+ 	int index;
+ };
+ 
+-#if (KVM_DIRTY_LOG_PAGE_OFFSET == 0)
++#ifndef CONFIG_HAVE_KVM_DIRTY_RING
+ /*
+- * If KVM_DIRTY_LOG_PAGE_OFFSET not defined, kvm_dirty_ring.o should
++ * If CONFIG_HAVE_HVM_DIRTY_RING not defined, kvm_dirty_ring.o should
+  * not be included as well, so define these nop functions for the arch.
+  */
+ static inline u32 kvm_dirty_ring_get_rsvd_entries(void)
+@@ -74,7 +74,7 @@ static inline bool kvm_dirty_ring_soft_full(struct kvm_dirty_ring *ring)
+ 	return true;
+ }
+ 
+-#else /* KVM_DIRTY_LOG_PAGE_OFFSET == 0 */
++#else /* CONFIG_HAVE_KVM_DIRTY_RING */
+ 
+ u32 kvm_dirty_ring_get_rsvd_entries(void);
+ int kvm_dirty_ring_alloc(struct kvm_dirty_ring *ring, int index, u32 size);
+@@ -98,6 +98,6 @@ struct page *kvm_dirty_ring_get_page(struct kvm_dirty_ring *ring, u32 offset);
+ void kvm_dirty_ring_free(struct kvm_dirty_ring *ring);
+ bool kvm_dirty_ring_soft_full(struct kvm_dirty_ring *ring);
+ 
+-#endif /* KVM_DIRTY_LOG_PAGE_OFFSET == 0 */
++#endif /* CONFIG_HAVE_KVM_DIRTY_RING */
+ 
+ #endif	/* KVM_DIRTY_RING_H */
+diff --git a/virt/kvm/Kconfig b/virt/kvm/Kconfig
+index 62b39149b8c8..97cf5413ac25 100644
+--- a/virt/kvm/Kconfig
++++ b/virt/kvm/Kconfig
+@@ -13,6 +13,9 @@ config HAVE_KVM_IRQFD
+ config HAVE_KVM_IRQ_ROUTING
+        bool
+ 
++config HAVE_KVM_DIRTY_RING
++       bool
++
+ config HAVE_KVM_EVENTFD
+        bool
+        select EVENTFD
+diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+index 9646bb9112c1..356d636e037d 100644
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -3411,7 +3411,7 @@ EXPORT_SYMBOL_GPL(kvm_vcpu_on_spin);
+ 
+ static bool kvm_page_in_dirty_ring(struct kvm *kvm, unsigned long pgoff)
+ {
+-#if KVM_DIRTY_LOG_PAGE_OFFSET > 0
++#ifdef CONFIG_HAVE_KVM_DIRTY_RING
+ 	return (pgoff >= KVM_DIRTY_LOG_PAGE_OFFSET) &&
+ 	    (pgoff < KVM_DIRTY_LOG_PAGE_OFFSET +
+ 	     kvm->dirty_ring_size / PAGE_SIZE);
+@@ -4114,7 +4114,7 @@ static long kvm_vm_ioctl_check_extension_generic(struct kvm *kvm, long arg)
+ 	case KVM_CAP_NR_MEMSLOTS:
+ 		return KVM_USER_MEM_SLOTS;
+ 	case KVM_CAP_DIRTY_LOG_RING:
+-#if KVM_DIRTY_LOG_PAGE_OFFSET > 0
++#ifdef KVM_HAVE_KVM_DIRTY_RING
+ 		return KVM_DIRTY_RING_MAX_ENTRIES * sizeof(struct kvm_dirty_gfn);
+ #else
+ 		return 0;
+-- 
+2.31.1
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
