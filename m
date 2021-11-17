@@ -2,64 +2,64 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 28295455C31
-	for <lists+kvmarm@lfdr.de>; Thu, 18 Nov 2021 14:05:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A302455C28
+	for <lists+kvmarm@lfdr.de>; Thu, 18 Nov 2021 14:05:22 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CFF754B228;
-	Thu, 18 Nov 2021 08:05:33 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E07C74B1DB;
+	Thu, 18 Nov 2021 08:05:21 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.391
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.391 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@infradead.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ghhTG2IVW8rW; Thu, 18 Nov 2021 08:05:33 -0500 (EST)
+	with ESMTP id 1oMjbKi-A8A2; Thu, 18 Nov 2021 08:05:21 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E0AC44B1FD;
-	Thu, 18 Nov 2021 08:05:20 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D0EF44B1D3;
+	Thu, 18 Nov 2021 08:05:19 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 007434B090
- for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 12:41:06 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D38B34B1AB
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 12:40:56 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id rglWT4T7yLZ3 for <kvmarm@lists.cs.columbia.edu>;
- Wed, 17 Nov 2021 12:41:04 -0500 (EST)
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E30214B173
- for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 12:41:03 -0500 (EST)
+ with ESMTP id xbzRCvOprpa1 for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 17 Nov 2021 12:40:54 -0500 (EST)
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 45C264B173
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 12:40:54 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
+ d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
  Reply-To:Content-Type:Content-ID:Content-Description;
- bh=iV/c2XVgMhEj0ZhoFj3F05pdjTjXAYKD2dhk6bn92rk=; b=ffx29lf2DoChLwxzAu1XsOIsCt
- CzSAztos84Ba1MUGFSzdq+FVUTtbjlJv69OAf8Cum4YdS5W6UFqrwj1ybUlUeKIQ6DwyOlQPUoTgY
- DoE7YyZRkmJfpuQOOu30zH2u3LPJRtbqNrcbtrjgVbFcO+nMwMAgFyTXjcOsFvd55gtxMomxFWEWu
- q4EbH5CIZTnHfS3feRhmyIhjkk43zt1cV1Ct3js6a/KSvVMmWxYkCVXIQygj5NMrdc3QhpPASEIHO
- eofEhz3221S5cHwyJFVnIM6OClaJmAD/ORn33qZ0zoBve1qaiChAAPyGgqulGMgvKMua3t042e2R4
- M6YWYgJw==;
+ bh=yWZTSFEcMQzXm3g2QNc13LIwZBP4vIj1OJKIB2I3CoQ=; b=eOij4v056sLg+TmrJtK+H1QnIP
+ o0IluJd3M54tHFxO10D0Lx+J4TJ8JBUS6B6QxHreFUaViqlARS8nklZoawYNiMfq7WjPM+tGCAqpT
+ QvA+F+g8KE9qRSEZrEfWrfOjU8AMHk3MBPRk8sef0YZYhD+ybhGEpojKNj2NojmoPKTW6/i2xt0U9
+ KgK5plSQ4wjQmab0F+OlZQgaovGqhzz994yMtbEgf52QbLSbOSU1YuTooV9cQcTDzHpID5dENEhSg
+ /cSWBqRZCj3UWmmghvssNFdqlXZt+Y4gLCrK19W6BSRvm93FE8tl/ZzrpgBD0TT1GMuIFUbwVusBk
+ PceTL/SA==;
 Received: from i7.infradead.org ([2001:8b0:10b:1:21e:67ff:fecb:7a92])
- by desiato.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
- id 1mnOum-00GXWa-H5; Wed, 17 Nov 2021 17:40:08 +0000
+ by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+ id 1mnOum-007nmv-1J; Wed, 17 Nov 2021 17:40:08 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.94.2 #2 (Red
- Hat Linux)) id 1mnOum-001GxQ-7p; Wed, 17 Nov 2021 17:40:08 +0000
+ Hat Linux)) id 1mnOum-001GxU-8q; Wed, 17 Nov 2021 17:40:08 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: Paolo Bonzini <pbonzini@redhat.com>,
 	kvm <kvm@vger.kernel.org>
-Subject: [PATCH v3 04/12] KVM: mips: Use Makefile.kvm for common files
-Date: Wed, 17 Nov 2021 17:39:55 +0000
-Message-Id: <20211117174003.297096-5-dwmw2@infradead.org>
+Subject: [PATCH v3 05/12] KVM: RISC-V: Use Makefile.kvm for common files
+Date: Wed, 17 Nov 2021 17:39:56 +0000
+Message-Id: <20211117174003.297096-6-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20211117174003.297096-1-dwmw2@infradead.org>
 References: <20211117174003.297096-1-dwmw2@infradead.org>
 MIME-Version: 1.0
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- desiato.infradead.org. See http://www.infradead.org/rpr.html
+ casper.infradead.org. See http://www.infradead.org/rpr.html
 X-Mailman-Approved-At: Thu, 18 Nov 2021 08:05:18 -0500
 Cc: Anup Patel <anup.patel@wdc.com>,
  "wanpengli @ tencent . com" <wanpengli@tencent.com>,
@@ -97,25 +97,29 @@ From: David Woodhouse <dwmw@amazon.co.uk>
 
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 ---
- arch/mips/kvm/Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/riscv/kvm/Makefile | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/arch/mips/kvm/Makefile b/arch/mips/kvm/Makefile
-index d3710959da55..21ff75bcdbc4 100644
---- a/arch/mips/kvm/Makefile
-+++ b/arch/mips/kvm/Makefile
-@@ -2,9 +2,10 @@
- # Makefile for KVM support for MIPS
- #
+diff --git a/arch/riscv/kvm/Makefile b/arch/riscv/kvm/Makefile
+index 30cdd1df0098..300590225348 100644
+--- a/arch/riscv/kvm/Makefile
++++ b/arch/riscv/kvm/Makefile
+@@ -5,14 +5,10 @@
  
+ ccflags-y += -I $(srctree)/$(src)
+ 
+-KVM := ../../../virt/kvm
 +include $(srctree)/virt/kvm/Makefile.kvm
-+
- ccflags-y += -Ivirt/kvm -Iarch/mips/kvm
  
--kvm-y := $(addprefix ../../../virt/kvm/, kvm_main.o coalesced_mmio.o eventfd.o binary_stats.o)
- kvm-$(CONFIG_CPU_HAS_MSA) += msa.o
+ obj-$(CONFIG_KVM) += kvm.o
  
- kvm-y +=    mips.o emulate.o entry.o \
+-kvm-y += $(KVM)/kvm_main.o
+-kvm-y += $(KVM)/coalesced_mmio.o
+-kvm-y += $(KVM)/binary_stats.o
+-kvm-y += $(KVM)/eventfd.o
+ kvm-y += main.o
+ kvm-y += vm.o
+ kvm-y += vmid.o
 -- 
 2.31.1
 
