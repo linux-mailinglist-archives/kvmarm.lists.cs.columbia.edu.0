@@ -2,58 +2,58 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A302455C28
-	for <lists+kvmarm@lfdr.de>; Thu, 18 Nov 2021 14:05:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F0F6455C2F
+	for <lists+kvmarm@lfdr.de>; Thu, 18 Nov 2021 14:05:31 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E07C74B1DB;
-	Thu, 18 Nov 2021 08:05:21 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B79EF4B1EC;
+	Thu, 18 Nov 2021 08:05:30 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
-	autolearn=unavailable
+	autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@infradead.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1oMjbKi-A8A2; Thu, 18 Nov 2021 08:05:21 -0500 (EST)
+	with ESMTP id KfIm2qbHQwO1; Thu, 18 Nov 2021 08:05:29 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D0EF44B1D3;
-	Thu, 18 Nov 2021 08:05:19 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A100A4B1F4;
+	Thu, 18 Nov 2021 08:05:20 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D38B34B1AB
- for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 12:40:56 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2F4044B199
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 12:41:01 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id xbzRCvOprpa1 for <kvmarm@lists.cs.columbia.edu>;
- Wed, 17 Nov 2021 12:40:54 -0500 (EST)
+ with ESMTP id WWNAVV-nnv0c for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 17 Nov 2021 12:41:00 -0500 (EST)
 Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 45C264B173
- for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 12:40:54 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 175D34B19F
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 12:41:00 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
  Reply-To:Content-Type:Content-ID:Content-Description;
- bh=yWZTSFEcMQzXm3g2QNc13LIwZBP4vIj1OJKIB2I3CoQ=; b=eOij4v056sLg+TmrJtK+H1QnIP
- o0IluJd3M54tHFxO10D0Lx+J4TJ8JBUS6B6QxHreFUaViqlARS8nklZoawYNiMfq7WjPM+tGCAqpT
- QvA+F+g8KE9qRSEZrEfWrfOjU8AMHk3MBPRk8sef0YZYhD+ybhGEpojKNj2NojmoPKTW6/i2xt0U9
- KgK5plSQ4wjQmab0F+OlZQgaovGqhzz994yMtbEgf52QbLSbOSU1YuTooV9cQcTDzHpID5dENEhSg
- /cSWBqRZCj3UWmmghvssNFdqlXZt+Y4gLCrK19W6BSRvm93FE8tl/ZzrpgBD0TT1GMuIFUbwVusBk
- PceTL/SA==;
+ bh=0LO7ikwPn4MiuvEmWytYMe/U2ki0Fde2RSpgaEBEo2Y=; b=VWKUd1PvUzY9BtkQH1/1RK9ZpR
+ RXLs+x6qzN6yxc8jVJyGlUGju+JAB3w0fAuLnT1KzcU5d9cTfL8AM9V2GqMJJ8vKrdadO7/M/BuA1
+ odXftd4Y/hOWt2N76yJGOF//km/j/IIrteGhGoTELUgu8c3De6VISAM4//ZTHnXGWlEGwb63UlC3r
+ zD0PzUZ30DUSfQd0ZDkC9pT2E3i9qvzAwJ3O/xlj4PB8uppBTGymggvBfjj640GcSRosjubkAWzPs
+ 4xNMOyUDi/tNZmgQPstErc3Ntxji/jUar6BdGRZ4d/SkQrMMrme03QSsUAOHDVW3aJQu+nOXEsfjt
+ y0VtG8Dg==;
 Received: from i7.infradead.org ([2001:8b0:10b:1:21e:67ff:fecb:7a92])
  by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
- id 1mnOum-007nmv-1J; Wed, 17 Nov 2021 17:40:08 +0000
+ id 1mnOum-007nmw-26; Wed, 17 Nov 2021 17:40:08 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.94.2 #2 (Red
- Hat Linux)) id 1mnOum-001GxU-8q; Wed, 17 Nov 2021 17:40:08 +0000
+ Hat Linux)) id 1mnOum-001GxZ-BF; Wed, 17 Nov 2021 17:40:08 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: Paolo Bonzini <pbonzini@redhat.com>,
 	kvm <kvm@vger.kernel.org>
-Subject: [PATCH v3 05/12] KVM: RISC-V: Use Makefile.kvm for common files
-Date: Wed, 17 Nov 2021 17:39:56 +0000
-Message-Id: <20211117174003.297096-6-dwmw2@infradead.org>
+Subject: [PATCH v3 06/12] KVM: powerpc: Use Makefile.kvm for common files
+Date: Wed, 17 Nov 2021 17:39:57 +0000
+Message-Id: <20211117174003.297096-7-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20211117174003.297096-1-dwmw2@infradead.org>
 References: <20211117174003.297096-1-dwmw2@infradead.org>
@@ -95,31 +95,41 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
+It's all fairly baroque but in the end, I don't think there's any reason
+for $(KVM)/irqchip.o to have been handled differently, as they all end
+up in $(kvm-y) in the end anyway, regardless of whether they get there
+via $(common-objs-y) and the CPU-specific object lists.
+
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 ---
- arch/riscv/kvm/Makefile | 6 +-----
+ arch/powerpc/kvm/Makefile | 6 +-----
  1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/arch/riscv/kvm/Makefile b/arch/riscv/kvm/Makefile
-index 30cdd1df0098..300590225348 100644
---- a/arch/riscv/kvm/Makefile
-+++ b/arch/riscv/kvm/Makefile
-@@ -5,14 +5,10 @@
+diff --git a/arch/powerpc/kvm/Makefile b/arch/powerpc/kvm/Makefile
+index 583c14ef596e..245f59118413 100644
+--- a/arch/powerpc/kvm/Makefile
++++ b/arch/powerpc/kvm/Makefile
+@@ -4,11 +4,8 @@
+ #
  
- ccflags-y += -I $(srctree)/$(src)
- 
+ ccflags-y := -Ivirt/kvm -Iarch/powerpc/kvm
 -KVM := ../../../virt/kvm
+ 
+-common-objs-y = $(KVM)/kvm_main.o $(KVM)/eventfd.o $(KVM)/binary_stats.o
+-common-objs-$(CONFIG_KVM_VFIO) += $(KVM)/vfio.o
+-common-objs-$(CONFIG_KVM_MMIO) += $(KVM)/coalesced_mmio.o
 +include $(srctree)/virt/kvm/Makefile.kvm
  
- obj-$(CONFIG_KVM) += kvm.o
+ common-objs-y += powerpc.o emulate_loadstore.o
+ obj-$(CONFIG_KVM_EXIT_TIMING) += timing.o
+@@ -125,7 +122,6 @@ kvm-book3s_32-objs := \
+ kvm-objs-$(CONFIG_KVM_BOOK3S_32) := $(kvm-book3s_32-objs)
  
--kvm-y += $(KVM)/kvm_main.o
--kvm-y += $(KVM)/coalesced_mmio.o
--kvm-y += $(KVM)/binary_stats.o
--kvm-y += $(KVM)/eventfd.o
- kvm-y += main.o
- kvm-y += vm.o
- kvm-y += vmid.o
+ kvm-objs-$(CONFIG_KVM_MPIC) += mpic.o
+-kvm-objs-$(CONFIG_HAVE_KVM_IRQ_ROUTING) += $(KVM)/irqchip.o
+ 
+ kvm-objs := $(kvm-objs-m) $(kvm-objs-y)
+ 
 -- 
 2.31.1
 
