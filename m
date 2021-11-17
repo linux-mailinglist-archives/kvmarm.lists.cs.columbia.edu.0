@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 97B8B454A16
-	for <lists+kvmarm@lfdr.de>; Wed, 17 Nov 2021 16:38:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BB373454A17
+	for <lists+kvmarm@lfdr.de>; Wed, 17 Nov 2021 16:38:10 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2E0DA4B1D5;
-	Wed, 17 Nov 2021 10:38:08 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3AAD14B1B6;
+	Wed, 17 Nov 2021 10:38:10 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,35 +15,35 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UkwGVmJRpYTH; Wed, 17 Nov 2021 10:38:06 -0500 (EST)
+	with ESMTP id cUZSucXW-b-1; Wed, 17 Nov 2021 10:38:08 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 293FE4B1D3;
-	Wed, 17 Nov 2021 10:38:04 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3FA3F4B1D7;
+	Wed, 17 Nov 2021 10:38:05 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 421714B1A4
- for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 10:38:02 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B1EEF4B160
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 10:38:04 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id TeYyNxSoQOp6 for <kvmarm@lists.cs.columbia.edu>;
- Wed, 17 Nov 2021 10:38:00 -0500 (EST)
+ with ESMTP id 1hxvEKwSf5Q6 for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 17 Nov 2021 10:38:02 -0500 (EST)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9206D4B1BA
- for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 10:38:00 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 94FF74B1C7
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 10:38:02 -0500 (EST)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 543651FB;
- Wed, 17 Nov 2021 07:38:00 -0800 (PST)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 62723106F;
+ Wed, 17 Nov 2021 07:38:02 -0800 (PST)
 Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B90833F5A1;
- Wed, 17 Nov 2021 07:37:58 -0800 (PST)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 969553F5A1;
+ Wed, 17 Nov 2021 07:38:00 -0800 (PST)
 From: Alexandru Elisei <alexandru.elisei@arm.com>
 To: maz@kernel.org, james.morse@arm.com, suzuki.poulose@arm.com,
  linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  will@kernel.org, mark.rutland@arm.com
-Subject: [RFC PATCH v5 32/38] KVM: arm64: Allow guest to use physical
- timestamps if perfmon_capable()
-Date: Wed, 17 Nov 2021 15:38:36 +0000
-Message-Id: <20211117153842.302159-33-alexandru.elisei@arm.com>
+Subject: [RFC PATCH v5 33/38] KVM: arm64: Emulate SPE buffer management
+ interrupt
+Date: Wed, 17 Nov 2021 15:38:37 +0000
+Message-Id: <20211117153842.302159-34-alexandru.elisei@arm.com>
 X-Mailer: git-send-email 2.33.1
 In-Reply-To: <20211117153842.302159-1-alexandru.elisei@arm.com>
 References: <20211117153842.302159-1-alexandru.elisei@arm.com>
@@ -64,138 +64,251 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The SPE driver allows userspace to use physical timestamps for records only
-if the process if perfmon_capable(). Do the same for a virtual machine with
-the SPE feature.
+A profiling buffer management interrupt is asserted when the buffer fills,
+on a fault or on an external abort. The service bit, PMBSR_EL1.S, is set as
+long as SPE asserts this interrupt. The interrupt can also be asserted
+following a direct write to PMBSR_EL1 that sets the bit. The SPE hardware
+stops asserting the interrupt only when the service bit is cleared.
+
+KVM emulates the interrupt by reading the value of the service bit on
+each guest exit to determine if the SPE hardware asserted the interrupt
+(for example, if the buffer was full). Writes to the buffer registers are
+trapped, to determine when the interrupt should be cleared or when the
+guest wants to explicitely assert the interrupt by setting the service bit.
 
 Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
 ---
- arch/arm64/include/asm/kvm_host.h |  2 ++
- arch/arm64/include/asm/kvm_spe.h  |  9 +++++++++
- arch/arm64/kvm/arm.c              |  1 +
- arch/arm64/kvm/hyp/nvhe/spe-sr.c  |  2 +-
- arch/arm64/kvm/hyp/vhe/spe-sr.c   |  2 +-
- arch/arm64/kvm/spe.c              | 17 +++++++++++++++++
- 6 files changed, 31 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/kvm_spe.h |  4 ++
+ arch/arm64/kvm/arm.c             |  3 ++
+ arch/arm64/kvm/hyp/nvhe/spe-sr.c | 28 +++++++++++--
+ arch/arm64/kvm/hyp/vhe/spe-sr.c  | 17 ++++++--
+ arch/arm64/kvm/spe.c             | 72 ++++++++++++++++++++++++++++++++
+ 5 files changed, 117 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 3eef642d7bba..102e1c087798 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -158,6 +158,8 @@ struct kvm_arch {
- 
- 	/* Memory Tagging Extension enabled for the guest */
- 	bool mte_enabled;
-+
-+	struct kvm_spe spe;
- };
- 
- struct kvm_vcpu_fault_info {
 diff --git a/arch/arm64/include/asm/kvm_spe.h b/arch/arm64/include/asm/kvm_spe.h
-index ce92d5f1db19..7b87cf1eed37 100644
+index 7b87cf1eed37..7a7b1c2149a1 100644
 --- a/arch/arm64/include/asm/kvm_spe.h
 +++ b/arch/arm64/include/asm/kvm_spe.h
-@@ -21,6 +21,11 @@ struct kvm_vcpu_spe {
+@@ -19,6 +19,8 @@ static __always_inline bool kvm_supports_spe(void)
+ struct kvm_vcpu_spe {
+ 	bool initialized;	/* SPE initialized for the VCPU */
  	int irq_num;		/* Buffer management interrut number */
++	bool virq_level;	/* 'true' if the interrupt is asserted at the VGIC */
++	bool hwirq_level;	/* 'true' if the SPE hardware is asserting the interrupt */
  };
  
-+struct kvm_spe {
-+	bool perfmon_capable;	/* Is the VM perfmon_capable()? */
-+};
-+
-+void kvm_spe_init_vm(struct kvm *kvm);
+ struct kvm_spe {
+@@ -28,6 +30,7 @@ struct kvm_spe {
+ void kvm_spe_init_vm(struct kvm *kvm);
  int kvm_spe_vcpu_enable_spe(struct kvm_vcpu *vcpu);
  int kvm_spe_vcpu_first_run_init(struct kvm_vcpu *vcpu);
++void kvm_spe_sync_hwstate(struct kvm_vcpu *vcpu);
  
-@@ -40,6 +45,10 @@ int kvm_spe_has_attr(struct kvm_vcpu *vcpu, struct kvm_device_attr *attr);
- struct kvm_vcpu_spe {
- };
- 
-+struct kvm_spe {
-+};
-+
-+static inline void kvm_spe_init_vm(struct kvm *kvm) {}
- static inline int kvm_spe_vcpu_enable_spe(struct kvm_vcpu *vcpu)
+ void kvm_spe_write_sysreg(struct kvm_vcpu *vcpu, int reg, u64 val);
+ u64 kvm_spe_read_sysreg(struct kvm_vcpu *vcpu, int reg);
+@@ -58,6 +61,7 @@ static inline int kvm_spe_vcpu_first_run_init(struct kvm_vcpu *vcpu)
  {
  	return 0;
+ }
++static inline void kvm_spe_sync_hwstate(struct kvm_vcpu *vcpu) {}
+ 
+ static inline void kvm_spe_write_sysreg(struct kvm_vcpu *vcpu, int reg, u64 val) {}
+ static inline u64 kvm_spe_read_sysreg(struct kvm_vcpu *vcpu, int reg) { return 0; }
 diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index a4f17f7bf943..5e166ffc6067 100644
+index 5e166ffc6067..49b629e7e1aa 100644
 --- a/arch/arm64/kvm/arm.c
 +++ b/arch/arm64/kvm/arm.c
-@@ -177,6 +177,7 @@ int kvm_arch_init_vm(struct kvm *kvm, unsigned long type)
- 		goto out_free_stage2_pgd;
+@@ -966,6 +966,9 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
+ 		 */
+ 		kvm_pmu_sync_hwstate(vcpu);
  
- 	kvm_vgic_early_init(kvm);
-+	kvm_spe_init_vm(kvm);
- 
- 	/* The maximum number of VCPUs is limited by the host's GIC model */
- 	kvm->arch.max_vcpus = kvm_arm_default_max_vcpus();
++		if (kvm_supports_spe() && kvm_vcpu_has_spe(vcpu))
++			kvm_spe_sync_hwstate(vcpu);
++
+ 		/*
+ 		 * Sync the vgic state before syncing the timer state because
+ 		 * the timer code needs to know if the virtual timer
 diff --git a/arch/arm64/kvm/hyp/nvhe/spe-sr.c b/arch/arm64/kvm/hyp/nvhe/spe-sr.c
-index 46e47c9fd08f..4f6579daddb5 100644
+index 4f6579daddb5..4ef84c400d4f 100644
 --- a/arch/arm64/kvm/hyp/nvhe/spe-sr.c
 +++ b/arch/arm64/kvm/hyp/nvhe/spe-sr.c
-@@ -83,5 +83,5 @@ void __spe_restore_guest_state_nvhe(struct kvm_vcpu *vcpu,
- 	write_sysreg_s(ctxt_sys_reg(guest_ctxt, PMBSR_EL1), SYS_PMBSR_EL1);
- 	write_sysreg_s(ctxt_sys_reg(guest_ctxt, PMBLIMITR_EL1), SYS_PMBLIMITR_EL1);
+@@ -47,6 +47,8 @@ void __spe_save_host_state_nvhe(struct kvm_vcpu *vcpu,
+ void __spe_save_guest_state_nvhe(struct kvm_vcpu *vcpu,
+ 				 struct kvm_cpu_context *guest_ctxt)
+ {
++	u64 pmbsr;
++
+ 	if (read_sysreg_s(SYS_PMBLIMITR_EL1) & BIT(SYS_PMBLIMITR_EL1_E_SHIFT)) {
+ 		psb_csync();
+ 		dsb(nsh);
+@@ -55,7 +57,22 @@ void __spe_save_guest_state_nvhe(struct kvm_vcpu *vcpu,
+ 	}
+ 
+ 	ctxt_sys_reg(guest_ctxt, PMBPTR_EL1) = read_sysreg_s(SYS_PMBPTR_EL1);
+-	ctxt_sys_reg(guest_ctxt, PMBSR_EL1) = read_sysreg_s(SYS_PMBSR_EL1);
++	/*
++	 * We need to differentiate between the hardware asserting the interrupt
++	 * and the guest setting the service bit as a result of a direct
++	 * register write, hence the extra field in the spe struct.
++	 *
++	 * The PMBSR_EL1 register is not directly accessed by the guest, KVM
++	 * needs to update the in-memory copy when the hardware asserts the
++	 * interrupt as that's the only case when KVM will show the guest a
++	 * value which is different from what the guest last wrote to the
++	 * register.
++	 */
++	pmbsr = read_sysreg_s(SYS_PMBSR_EL1);
++	if (pmbsr & BIT(SYS_PMBSR_EL1_S_SHIFT)) {
++		ctxt_sys_reg(guest_ctxt, PMBSR_EL1) = pmbsr;
++		vcpu->arch.spe.hwirq_level = true;
++	}
+ 	/* PMBLIMITR_EL1 is updated only on a trapped write. */
+ 	ctxt_sys_reg(guest_ctxt, PMSCR_EL1) = read_sysreg_s(SYS_PMSCR_EL1);
+ 
+@@ -80,8 +97,13 @@ void __spe_restore_guest_state_nvhe(struct kvm_vcpu *vcpu,
+ 	__spe_restore_common_state(guest_ctxt);
+ 
+ 	write_sysreg_s(ctxt_sys_reg(guest_ctxt, PMBPTR_EL1), SYS_PMBPTR_EL1);
+-	write_sysreg_s(ctxt_sys_reg(guest_ctxt, PMBSR_EL1), SYS_PMBSR_EL1);
+-	write_sysreg_s(ctxt_sys_reg(guest_ctxt, PMBLIMITR_EL1), SYS_PMBLIMITR_EL1);
++	/* The buffer management interrupt is virtual. */
++	write_sysreg_s(0, SYS_PMBSR_EL1);
++	/* The buffer is disabled when the interrupt is asserted. */
++	if (vcpu->arch.spe.virq_level)
++		write_sysreg_s(0, SYS_PMBLIMITR_EL1);
++	else
++		write_sysreg_s(ctxt_sys_reg(guest_ctxt, PMBLIMITR_EL1), SYS_PMBLIMITR_EL1);
  	write_sysreg_s(ctxt_sys_reg(guest_ctxt, PMSCR_EL1), SYS_PMSCR_EL1);
--	write_sysreg_el2(0, SYS_PMSCR);
-+	write_sysreg_el2(ctxt_sys_reg(guest_ctxt, PMSCR_EL2), SYS_PMSCR);
+ 	write_sysreg_el2(ctxt_sys_reg(guest_ctxt, PMSCR_EL2), SYS_PMSCR);
  }
 diff --git a/arch/arm64/kvm/hyp/vhe/spe-sr.c b/arch/arm64/kvm/hyp/vhe/spe-sr.c
-index 00eab9e2ec60..f557ac64a1cc 100644
+index f557ac64a1cc..3821807b3ec8 100644
 --- a/arch/arm64/kvm/hyp/vhe/spe-sr.c
 +++ b/arch/arm64/kvm/hyp/vhe/spe-sr.c
-@@ -21,7 +21,7 @@ void __spe_save_host_state_vhe(struct kvm_vcpu *vcpu,
+@@ -48,7 +48,7 @@ NOKPROBE_SYMBOL(__spe_save_host_state_vhe);
+ void __spe_save_guest_state_vhe(struct kvm_vcpu *vcpu,
+ 				struct kvm_cpu_context *guest_ctxt)
+ {
+-	u64 pmblimitr;
++	u64 pmblimitr, pmbsr;
  
- 	/* Disable profiling while the SPE context is being switched. */
- 	pmscr_el2 = read_sysreg_el2(SYS_PMSCR);
--	write_sysreg_el2(0, SYS_PMSCR);
-+	write_sysreg_el2(__vcpu_sys_reg(vcpu, PMSCR_EL2), SYS_PMSCR);
- 	isb();
+ 	/*
+ 	 * We're at EL2 and the buffer owning regime is EL1, which means that
+@@ -66,7 +66,11 @@ void __spe_save_guest_state_vhe(struct kvm_vcpu *vcpu,
+ 	}
  
- 	pmblimitr = read_sysreg_s(SYS_PMBLIMITR_EL1);
+ 	ctxt_sys_reg(guest_ctxt, PMBPTR_EL1) = read_sysreg_s(SYS_PMBPTR_EL1);
+-	ctxt_sys_reg(guest_ctxt, PMBSR_EL1) = read_sysreg_s(SYS_PMBSR_EL1);
++	pmbsr = read_sysreg_s(SYS_PMBSR_EL1);
++	if (pmbsr & BIT(SYS_PMBSR_EL1_S_SHIFT)) {
++		ctxt_sys_reg(guest_ctxt, PMBSR_EL1) = pmbsr;
++		vcpu->arch.spe.hwirq_level = true;
++	}
+ 	/* PMBLIMITR_EL1 is updated only on a trapped write. */
+ 	ctxt_sys_reg(guest_ctxt, PMSCR_EL1) = read_sysreg_el1(SYS_PMSCR);
+ 
+@@ -120,8 +124,13 @@ void __spe_restore_guest_state_vhe(struct kvm_vcpu *vcpu,
+ 	 */
+ 
+ 	write_sysreg_s(ctxt_sys_reg(guest_ctxt, PMBPTR_EL1), SYS_PMBPTR_EL1);
+-	write_sysreg_s(ctxt_sys_reg(guest_ctxt, PMBSR_EL1), SYS_PMBSR_EL1);
+-	write_sysreg_s(ctxt_sys_reg(guest_ctxt, PMBLIMITR_EL1), SYS_PMBLIMITR_EL1);
++	/* The buffer management interrupt is virtual. */
++	write_sysreg_s(0, SYS_PMBSR_EL1);
++	/* The buffer is disabled when the interrupt is asserted. */
++	if (vcpu->arch.spe.virq_level)
++		write_sysreg_s(0, SYS_PMBLIMITR_EL1);
++	else
++		write_sysreg_s(ctxt_sys_reg(guest_ctxt, PMBLIMITR_EL1), SYS_PMBLIMITR_EL1);
+ 	write_sysreg_el1(ctxt_sys_reg(guest_ctxt, PMSCR_EL1), SYS_PMSCR);
+ 	/* PMSCR_EL2 has been cleared when saving the host state. */
+ }
 diff --git a/arch/arm64/kvm/spe.c b/arch/arm64/kvm/spe.c
-index 9c0567dadff1..f5e9dc249e9a 100644
+index f5e9dc249e9a..e856554039a1 100644
 --- a/arch/arm64/kvm/spe.c
 +++ b/arch/arm64/kvm/spe.c
-@@ -3,6 +3,7 @@
-  * Copyright (C) 2021 - ARM Ltd
-  */
- 
-+#include <linux/capability.h>
- #include <linux/cpumask.h>
- #include <linux/kvm_host.h>
- #include <linux/perf/arm_spe_pmu.h>
-@@ -28,6 +29,19 @@ void kvm_host_spe_init(struct arm_spe_pmu *spe_pmu)
- 	mutex_unlock(&supported_cpus_lock);
- }
- 
-+void kvm_spe_init_vm(struct kvm *kvm)
-+{
-+	/*
-+	 * Allow the guest to use the physical timer for timestamps only if the
-+	 * VMM is perfmon_capable(), similar to what the SPE driver allows.
-+	 *
-+	 * CAP_PERFMON can be changed during the lifetime of the VM, so record
-+	 * its value when the VM is created to avoid situations where only some
-+	 * VCPUs allow physical timer timestamps, while others don't.
-+	 */
-+	kvm->arch.spe.perfmon_capable = perfmon_capable();
-+}
-+
- int kvm_spe_vcpu_enable_spe(struct kvm_vcpu *vcpu)
- {
- 	if (!kvm_supports_spe())
-@@ -53,6 +67,9 @@ int kvm_spe_vcpu_first_run_init(struct kvm_vcpu *vcpu)
- 	if (!vcpu->arch.spe.initialized)
- 		return -EINVAL;
- 
-+	if (vcpu->kvm->arch.spe.perfmon_capable)
-+		__vcpu_sys_reg(vcpu, PMSCR_EL2) = BIT(SYS_PMSCR_EL1_PCT_SHIFT);
-+
+@@ -73,9 +73,81 @@ int kvm_spe_vcpu_first_run_init(struct kvm_vcpu *vcpu)
  	return 0;
  }
  
++static void kvm_spe_update_irq(struct kvm_vcpu *vcpu, bool level)
++{
++	struct kvm_vcpu_spe *spe = &vcpu->arch.spe;
++	int ret;
++
++	if (spe->virq_level == level)
++		return;
++
++	spe->virq_level = level;
++	ret = kvm_vgic_inject_irq(vcpu->kvm, vcpu->vcpu_id, spe->irq_num,
++				  level, spe);
++	WARN_ON(ret);
++}
++
++static __printf(2, 3)
++void print_buf_warn(struct kvm_vcpu *vcpu, char *fmt, ...)
++{
++	va_list va;
++
++	va_start(va, fmt);
++	kvm_warn_ratelimited("%pV [PMBSR=0x%016llx, PMBPTR=0x%016llx, PMBLIMITR=0x%016llx]\n",
++			    &(struct va_format){ fmt, &va },
++			    __vcpu_sys_reg(vcpu, PMBSR_EL1),
++			    __vcpu_sys_reg(vcpu, PMBPTR_EL1),
++			    __vcpu_sys_reg(vcpu, PMBLIMITR_EL1));
++	va_end(va);
++}
++
++static void kvm_spe_inject_ext_abt(struct kvm_vcpu *vcpu)
++{
++	__vcpu_sys_reg(vcpu, PMBSR_EL1) = BIT(SYS_PMBSR_EL1_EA_SHIFT) |
++					  BIT(SYS_PMBSR_EL1_S_SHIFT);
++	__vcpu_sys_reg(vcpu, PMBSR_EL1) |= SYS_PMBSR_EL1_EC_FAULT_S1;
++	/* Synchronous External Abort, not on translation table walk. */
++	__vcpu_sys_reg(vcpu, PMBSR_EL1) |= 0x10 << SYS_PMBSR_EL1_FAULT_FSC_SHIFT;
++}
++
++void kvm_spe_sync_hwstate(struct kvm_vcpu *vcpu)
++{
++	struct kvm_vcpu_spe *spe = &vcpu->arch.spe;
++	u64 pmbsr, pmbsr_ec;
++
++	if (!spe->hwirq_level)
++		return;
++	spe->hwirq_level = false;
++
++	pmbsr = __vcpu_sys_reg(vcpu, PMBSR_EL1);
++	pmbsr_ec = pmbsr & (SYS_PMBSR_EL1_EC_MASK << SYS_PMBSR_EL1_EC_SHIFT);
++
++	switch (pmbsr_ec) {
++	case SYS_PMBSR_EL1_EC_FAULT_S2:
++		print_buf_warn(vcpu, "SPE stage 2 data abort");
++		kvm_spe_inject_ext_abt(vcpu);
++		break;
++	case SYS_PMBSR_EL1_EC_FAULT_S1:
++	case SYS_PMBSR_EL1_EC_BUF:
++		/*
++		 * These two exception syndromes are entirely up to the guest to
++		 * figure out, leave PMBSR_EL1 unchanged.
++		 */
++		break;
++	default:
++		print_buf_warn(vcpu, "SPE unknown buffer syndrome");
++		kvm_spe_inject_ext_abt(vcpu);
++	}
++
++	kvm_spe_update_irq(vcpu, true);
++}
++
+ void kvm_spe_write_sysreg(struct kvm_vcpu *vcpu, int reg, u64 val)
+ {
+ 	__vcpu_sys_reg(vcpu, reg) = val;
++
++	if (reg == PMBSR_EL1)
++		kvm_spe_update_irq(vcpu, val & BIT(SYS_PMBSR_EL1_S_SHIFT));
+ }
+ 
+ u64 kvm_spe_read_sysreg(struct kvm_vcpu *vcpu, int reg)
 -- 
 2.33.1
 
