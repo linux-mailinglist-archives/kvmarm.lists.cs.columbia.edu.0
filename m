@@ -2,69 +2,88 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3732C455C37
-	for <lists+kvmarm@lfdr.de>; Thu, 18 Nov 2021 14:05:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 868EC45629E
+	for <lists+kvmarm@lfdr.de>; Thu, 18 Nov 2021 19:40:58 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D9AD04B229;
-	Thu, 18 Nov 2021 08:05:42 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F119A4B1F0;
+	Thu, 18 Nov 2021 13:40:56 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
-	autolearn=no
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@infradead.org
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BWpHItBlViYA; Thu, 18 Nov 2021 08:05:41 -0500 (EST)
+	with ESMTP id TdG3kMGB7nA8; Thu, 18 Nov 2021 13:40:56 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 63E274B20D;
-	Thu, 18 Nov 2021 08:05:21 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C2CA64B1D7;
+	Thu, 18 Nov 2021 13:40:55 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EDF4C4B0ED
- for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 16:10:50 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EB6864ACC9
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 18 Nov 2021 13:40:53 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id iE+aNXZdNqlY for <kvmarm@lists.cs.columbia.edu>;
- Wed, 17 Nov 2021 16:10:48 -0500 (EST)
-Received: from twosheds.infradead.org (twosheds.infradead.org [90.155.92.209])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6DDE74A534
- for <kvmarm@lists.cs.columbia.edu>; Wed, 17 Nov 2021 16:10:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=twosheds.20170209; h=Content-Transfer-Encoding:
- Content-Type:MIME-Version:Cc:To:From:Subject:Date:References:In-Reply-To:
- Message-ID:Sender:Reply-To:Content-ID:Content-Description;
- bh=PY24mY1Y2geRmk7LjuGhOiKBHR3iZW7SC/NuUGtVeMM=; b=fInAvRfbXmsj2mRaAOMhBYLcLy
- rNV3j1Ejy+5tp8+gefj0Ci1K8wUw/TqCwo4phGfDDq1OEX+zE3T5+9J+WUu8XZ68WvfujlJMgRUdq
- fxcgLANbQ0bA5uHCFb8tfnVZy19nrvr3qujLNM1CEy+eRbFuppcsu+2Gu1haaPtMH2OZeBT48dIJ+
- MgZ7cnFoCPvFUVHKjy+wj1KRDU0pwv46XKxGiQF5msM9UIjM+UBm/pQusxMLzB2JKBaHEMNFaf1cY
- EwEp9WOb3Jf2IfUCshGJH9Upz2d6mUreD3M3e/7okHzoEyb/daAOFczuRJZBRtYk6sazwxlVM7FPi
- Qu9mdBIA==;
-Received: from localhost ([127.0.0.1] helo=twosheds.infradead.org)
- by twosheds.infradead.org with esmtp (Exim 4.94.2 #2 (Red Hat Linux))
- id 1mnSBT-00FV0l-BJ; Wed, 17 Nov 2021 21:09:35 +0000
-Received: from 2001:8b0:10b:1:d129:67c1:5868:c3aa
- (SquirrelMail authenticated user dwmw2)
- by twosheds.infradead.org with HTTP; Wed, 17 Nov 2021 21:09:35 -0000
-Message-ID: <85d9fec17f32c3eb9e100e56b91af050.squirrel@twosheds.infradead.org>
-In-Reply-To: <20211117174003.297096-9-dwmw2@infradead.org>
-References: <20211117174003.297096-1-dwmw2@infradead.org>
- <20211117174003.297096-9-dwmw2@infradead.org>
-Date: Wed, 17 Nov 2021 21:09:35 -0000
+ with ESMTP id 6RykxuhN-Yxk for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 18 Nov 2021 13:40:52 -0500 (EST)
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com
+ [209.85.214.175])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 99DEA4A4BE
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 18 Nov 2021 13:40:52 -0500 (EST)
+Received: by mail-pl1-f175.google.com with SMTP id q17so6004361plr.11
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 18 Nov 2021 10:40:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:content-transfer-encoding:in-reply-to;
+ bh=grrMnij3a2kLK2nD9/+zi8H0lxQV5j7EQVRD7AIwS2E=;
+ b=DnjI9osT+moWRQdwwunhhgYe2YGuzWKrQy5JwjvEJNUqQcpvnb0WoX5Pei6uXI5OdC
+ 7eGLhv3YIzk62P6sC5D7JBPnUohj6O7s664U/+jqNIv857J2ijyYc9lxkutY0si+1Jso
+ ztfH/9rMsVdRRal+62dCEzvALKr3rtl5XahGBeHA8m4ynGczBHkUGlN7RYWuUfQGcFke
+ WSfMnan0Kg6M9yWEVCFKWFu1Oy/he0ioyfZD1myK/YDRWIUpBN/5hc73yoNPRxPOyT9C
+ VLzYMyPNfdN9orn15Wn6MlOWGc4Qs8aD/O0pRMiPP4mF4KE17PRSHz5sCFRZguQ3AWZA
+ KcTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:content-transfer-encoding
+ :in-reply-to;
+ bh=grrMnij3a2kLK2nD9/+zi8H0lxQV5j7EQVRD7AIwS2E=;
+ b=rhpB6k1LEjUfiOGjb/5Ur5xt7rqE1nKTxrLAEVIo5/bnjN7YqQIZyEQG29RvHZbWba
+ p8WqVF71Qs82mL+O8dUmrUH58Mzd9g3AZ41iBR6YKsZOhYAKJ7Ph6OSFu5Cudzxx3qJd
+ igpKV6JgfDe9eXepRlTqJ0irq5vpuzgOfMEB0rwCsiwytAvG9alWZh9ksMbeq6UhfdYo
+ CNo6TTvoGKDU5sLcR0gdWnPx9e6G1cIsj/kZzh97l88T+dAZ76ULyTBYiwggdkWi5aou
+ HoYHCMX6rvY9ynwXrvJRwT8P16LkC//xNvWs8wiC8nCJ6vo9brwn5UrZPqq/UPrNHeTn
+ 2bBA==
+X-Gm-Message-State: AOAM533RD+nYdC602JY/xmemh2uQdMHeiZH3829jLAMXDZg1+fXzviqr
+ O0yFHhYcvlSI6YKL07EvvA5pbQ==
+X-Google-Smtp-Source: ABdhPJxTT+sS2hBA2CisuiyQO1bWgOM4L3odX2TF09Y4yJcQHjhUg5+FNsR41T/1dQnqfraxxzIiPQ==
+X-Received: by 2002:a17:90a:af94:: with SMTP id
+ w20mr12506911pjq.223.1637260851435; 
+ Thu, 18 Nov 2021 10:40:51 -0800 (PST)
+Received: from google.com (157.214.185.35.bc.googleusercontent.com.
+ [35.185.214.157])
+ by smtp.gmail.com with ESMTPSA id a12sm8600266pjq.16.2021.11.18.10.40.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Nov 2021 10:40:50 -0800 (PST)
+Date: Thu, 18 Nov 2021 18:40:47 +0000
+From: Sean Christopherson <seanjc@google.com>
+To: David Woodhouse <dwmw2@infradead.org>
 Subject: Re: [PATCH v3 08/12] KVM: Propagate vcpu explicitly to
  mark_page_dirty_in_slot()
-From: "David Woodhouse" <dwmw2@infradead.org>
-To: "David Woodhouse" <dwmw2@infradead.org>
-User-Agent: SquirrelMail/1.4.23 [SVN]-5.fc33.20190710
+Message-ID: <YZaeL5YztL3p1nLM@google.com>
+References: <20211117174003.297096-1-dwmw2@infradead.org>
+ <20211117174003.297096-9-dwmw2@infradead.org>
+ <85d9fec17f32c3eb9e100e56b91af050.squirrel@twosheds.infradead.org>
+ <4c48546b-eb4a-dff7-cc38-5df54f73f5d4@redhat.com>
+ <20b5952e76c54a3a5dfe5a898e3b835404ac6fb1.camel@infradead.org>
 MIME-Version: 1.0
-X-Priority: 3 (Normal)
-Importance: Normal
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- twosheds.infradead.org. See http://www.infradead.org/rpr.html
-X-Mailman-Approved-At: Thu, 18 Nov 2021 08:05:18 -0500
+Content-Disposition: inline
+In-Reply-To: <20b5952e76c54a3a5dfe5a898e3b835404ac6fb1.camel@infradead.org>
 Cc: Anup Patel <anup.patel@wdc.com>,
  "wanpengli @ tencent . com" <wanpengli@tencent.com>, kvm <kvm@vger.kernel.org>,
  Benjamin Herrenschmidt <benh@kernel.crashing.org>,
@@ -93,73 +112,30 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-
-
-> From: David Woodhouse <dwmw@amazon.co.uk>
->
-> The kvm_dirty_ring_get() function uses kvm_get_running_vcpu() to work out
-> which dirty ring to use, but there are some use cases where that doesn't
-> work.
->
-> There's one in setting the Xen shared info page, introduced in commit
-> 629b5348841a ("KVM: x86/xen: update wallclock region") and reported by
-> "butt3rflyh4ck" <butterflyhuangxx@gmail.com> in
-> https://lore.kernel.org/kvm/CAFcO6XOmoS7EacN_n6v4Txk7xL7iqRa2gABg3F7E3Naf5uG94g@mail.gmail.com/
->
-> There's also about to be another one when the newly-reintroduced
-> gfn_to_pfn_cache needs to mark a page as dirty from the MMU notifier
-> which invalidates the mapping. In that case, we will *know* the vcpu
-> that can be 'blamed' for dirtying the page, and we just need to be
-> able to pass it in as an explicit argument when doing so.
->
-> This patch preemptively resolves the second issue, and paves the way
-> for resolving the first. A complete fix for the first issue will need
-> us to switch the Xen shinfo to be owned by a particular vCPU, which
-> will happen in a separate patch.
->
-> Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-
-
-
-> --- a/virt/kvm/dirty_ring.c
-> +++ b/virt/kvm/dirty_ring.c
-> @@ -36,12 +36,16 @@ static bool kvm_dirty_ring_full(struct kvm_dirty_ring
-> *ring)
->  	return kvm_dirty_ring_used(ring) >= ring->size;
->  }
->
-> -struct kvm_dirty_ring *kvm_dirty_ring_get(struct kvm *kvm)
-> +struct kvm_dirty_ring *kvm_dirty_ring_get(struct kvm *kvm, struct
-> kvm_vcpu *vcpu)
->  {
-> -	struct kvm_vcpu *vcpu = kvm_get_running_vcpu();
-> +	struct kvm_vcpu *running_vcpu = kvm_get_running_vcpu();
->
-> +	WARN_ON_ONCE(vcpu && vcpu != running_vcpu);
->  	WARN_ON_ONCE(vcpu->kvm != kvm);
-
-Ah, that one needs to be changed to check running_vcpu instead. Or this
-needs to go first:
-
-I think I prefer making the vCPU a required argument. If anyone's going to
-pull a vCPU pointer out of their posterior, let the caller do it.
-
-> +	if (!vcpu)
-> +		vcpu = running_vcpu;
-> +
->  	return &vcpu->dirty_ring;
->  }
->
-
--- 
-dwmw2
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+T24gVGh1LCBOb3YgMTgsIDIwMjEsIERhdmlkIFdvb2Rob3VzZSB3cm90ZToKPiBUaGF0IGxlYXZl
+cyB0aGUgb25lIGluIFREUCBNTVUgaGFuZGxlX2NoYW5nZWRfc3B0ZV9kaXJ0eV9sb2coKSB3aGlj
+aAo+IEFGQUlDVCBjYW4gdHJpZ2dlciB0aGUgc2FtZSBjcmFzaCBzZWVuIGJ5IGJ1dHQzcmZseWg0
+Y2sg4oCUIGNhbid0IHRoYXQKPiBoYXBwZW4gZnJvbSBhIHRocmVhZCB3aGVyZSBrdm1fZ2V0X3J1
+bm5pbmdfdmNwdSgpIGlzIE5VTEwgdG9vPyBGb3IgdGhhdAo+IG9uZSBJJ20gbm90IHN1cmUuCgpJ
+IHRoaW5rIGNvdWxkIGJlIHRyaWdnZXIgaW4gdGhlIFREUCBNTVUgdmlhIGt2bV9tbXVfbm90aWZp
+ZXJfcmVsZWFzZSgpCi0+IGt2bV9tbXVfemFwX2FsbCgpLCBlLmcuIGlmIHRoZSB1c2Vyc3BhY2Ug
+Vk1NIGV4aXRzIHdoaWxlIGRpcnR5IGxvZ2dpbmcgaXMKZW5hYmxlZC4gIFRoYXQgc2hvdWxkIGJl
+IGVhc3kgdG8gKGRpcylwcm92ZSB2aWEgYSBzZWxmdGVzdC4KCkFuZCBmb3IgdGhlIHJlY29yZCA6
+LSkKCk9uIE1vbiwgRGVjIDAyLCAyMDE5IGF0IDEyOjEwOjM2UE0gLTA4MDAsIFNlYW4gQ2hyaXN0
+b3BoZXJzb24gd3JvdGU6Cj4gSU1PLCBhZGRpbmcga3ZtX2dldF9ydW5uaW5nX3ZjcHUoKSBpcyBh
+IGhhY2sgdGhhdCBpcyBqdXN0IGFza2luZyBmb3IgZnV0dXJlCj4gYWJ1c2UgYW5kIHRoZSB2Y3B1
+L3ZtL2FzX2lkIGludGVyYWN0aW9ucyBpbiBtYXJrX3BhZ2VfZGlydHlfaW5fcmluZygpCj4gbG9v
+ayBleHRyZW1lbHkgZnJhZ2lsZS4KCk9uIDAzLzEyLzE5IDIwOjAxLCBTZWFuIENocmlzdG9waGVy
+c29uIHdyb3RlOgo+IEluIGNhc2UgaXQgd2FzIGNsZWFyLCBJIHN0cm9uZ2x5IGRpc2xpa2UgYWRk
+aW5nIGt2bV9nZXRfcnVubmluZ192Y3B1KCkuCj4gSU1PLCBpdCdzIGEgdW5uZWNlc3NhcnkgaGFj
+ay4gIFRoZSBwcm9wZXIgY2hhbmdlIHRvIGVuc3VyZSBhIHZhbGlkIHZDUFUgaXMKPiBzZWVuIGJ5
+IG1hcmtfcGFnZV9kaXJ0eV9pbl9yaW5nKCkgd2hlbiB0aGVyZSBpcyBhIGN1cnJlbnQgdkNQVSBp
+cyB0bwo+IHBsdW1iIHRoZSB2Q1BVIGRvd24gdGhyb3VnaCB0aGUgdmFyaW91cyBjYWxsIHN0YWNr
+cy4KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18Ka3ZtYXJt
+IG1haWxpbmcgbGlzdAprdm1hcm1AbGlzdHMuY3MuY29sdW1iaWEuZWR1Cmh0dHBzOi8vbGlzdHMu
+Y3MuY29sdW1iaWEuZWR1L21haWxtYW4vbGlzdGluZm8va3ZtYXJtCg==
