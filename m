@@ -2,70 +2,80 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id AB14E456EBD
-	for <lists+kvmarm@lfdr.de>; Fri, 19 Nov 2021 13:17:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A640B456F31
+	for <lists+kvmarm@lfdr.de>; Fri, 19 Nov 2021 14:00:00 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 405C44B172;
-	Fri, 19 Nov 2021 07:17:09 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3418A4B165;
+	Fri, 19 Nov 2021 08:00:00 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.201
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
-	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rpepYkharF50; Fri, 19 Nov 2021 07:17:09 -0500 (EST)
+	with ESMTP id fnPY2MHpQPU8; Fri, 19 Nov 2021 08:00:00 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A567B4B10D;
-	Fri, 19 Nov 2021 07:17:07 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CC20C4B149;
+	Fri, 19 Nov 2021 07:59:58 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 889464B0EF
- for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Nov 2021 07:17:06 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D19264B0CB
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Nov 2021 07:59:57 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id v9PC1QjnsF6j for <kvmarm@lists.cs.columbia.edu>;
- Fri, 19 Nov 2021 07:17:05 -0500 (EST)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5312B4B0ED
- for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Nov 2021 07:17:05 -0500 (EST)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ with ESMTP id FJIzEHcOyD51 for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 19 Nov 2021 07:59:56 -0500 (EST)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BFE2C4B0C2
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Nov 2021 07:59:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1637326796;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nGjEoGfSIB/BQ0tfbin1wzwYv7vDPPU6oTjvPfD/ErE=;
+ b=boKwOoqTkFC7eSGpu0pDYSrR2wiDw6yFzFf+aaHmJfSHTEDgCZ1CXw+xXkVM/9VQL3SkYY
+ gURl3ZJIj8p+/hCD9CoU8X2MV7T/c9ZePvjQw+wIrrdcHyA9VAMfe8a7mKm+k+NKWWAT4r
+ XhXNjiQEYiSxGhl/beoYBRfLoh8AzJs=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-450-LpzY-ur4PS6QJz9b_MnkeA-1; Fri, 19 Nov 2021 07:59:53 -0500
+X-MC-Unique: LpzY-ur4PS6QJz9b_MnkeA-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com
+ [10.5.11.23])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 8BA7F61A7D;
- Fri, 19 Nov 2021 12:17:03 +0000 (UTC)
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1mo2pB-006XWO-CB; Fri, 19 Nov 2021 12:17:01 +0000
-Date: Fri, 19 Nov 2021 12:17:00 +0000
-Message-ID: <87fsrs732b.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Nicolas Saenz Julienne <nsaenzju@redhat.com>
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id C8239E744;
+ Fri, 19 Nov 2021 12:59:51 +0000 (UTC)
+Received: from fuller.cnet (ovpn-112-3.gru2.redhat.com [10.97.112.3])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 6CEC6196E5;
+ Fri, 19 Nov 2021 12:59:50 +0000 (UTC)
+Received: by fuller.cnet (Postfix, from userid 1000)
+ id 585934172ED4; Fri, 19 Nov 2021 09:59:46 -0300 (-03)
+Date: Fri, 19 Nov 2021 09:59:46 -0300
+From: Marcelo Tosatti <mtosatti@redhat.com>
+To: Marc Zyngier <maz@kernel.org>
 Subject: Re: [RFC PATCH 2/2] KVM: arm64: export cntvoff in debugfs
-In-Reply-To: <20211119102117.22304-3-nsaenzju@redhat.com>
+Message-ID: <20211119125946.GA57544@fuller.cnet>
 References: <20211119102117.22304-1-nsaenzju@redhat.com>
  <20211119102117.22304-3-nsaenzju@redhat.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
- (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: nsaenzju@redhat.com, linux-arm-kernel@lists.infradead.org,
- rostedt@goodmis.org, james.morse@arm.com, alexandru.elisei@arm.com,
- suzuki.poulose@arm.com, catalin.marinas@arm.com, will@kernel.org,
- linux-kernel@vger.kernel.org, kvmarm@lists.cs.columbia.edu, mingo@redhat.com,
- mtosatti@redhat.com, nilal@redhat.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: will@kernel.org, catalin.marinas@arm.com, mtosatti@redhat.com,
- linux-kernel@vger.kernel.org, rostedt@goodmis.org, mingo@redhat.com,
- nilal@redhat.com, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+ <87fsrs732b.wl-maz@kernel.org>
+MIME-Version: 1.0
+Content-Disposition: inline
+In-Reply-To: <87fsrs732b.wl-maz@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
+Cc: will@kernel.org, catalin.marinas@arm.com, linux-kernel@vger.kernel.org,
+ rostedt@goodmis.org, mingo@redhat.com,
+ Nicolas Saenz Julienne <nsaenzju@redhat.com>, nilal@redhat.com,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -82,118 +92,73 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, 19 Nov 2021 10:21:18 +0000,
-Nicolas Saenz Julienne <nsaenzju@redhat.com> wrote:
+On Fri, Nov 19, 2021 at 12:17:00PM +0000, Marc Zyngier wrote:
+> On Fri, 19 Nov 2021 10:21:18 +0000,
+> Nicolas Saenz Julienne <nsaenzju@redhat.com> wrote:
+> > 
+> > While using cntvct as the raw clock for tracing, it's possible to
+> > synchronize host/guest traces just by knowing the virtual offset applied
+> > to the guest's virtual counter.
+> > 
+> > This is also the case on x86 when TSC is available. The offset is
+> > exposed in debugfs as 'tsc-offset' on a per vcpu basis. So let's
+> > implement the same for arm64.
 > 
-> While using cntvct as the raw clock for tracing, it's possible to
-> synchronize host/guest traces just by knowing the virtual offset applied
-> to the guest's virtual counter.
-> 
-> This is also the case on x86 when TSC is available. The offset is
-> exposed in debugfs as 'tsc-offset' on a per vcpu basis. So let's
-> implement the same for arm64.
+> How does this work with NV, where the guest hypervisor is in control
+> of the virtual offset? How does userspace knows which vcpu to pick so
+> that it gets the right offset?
 
-How does this work with NV, where the guest hypervisor is in control
-of the virtual offset? How does userspace knows which vcpu to pick so
+On x86, the offsets for different vcpus are the same due to the logic at
+kvm_synchronize_tsc function:
+
+During guest vcpu creation, when the TSC-clock values are written
+in a short window of time (or the clock value is zero), the code uses
+the same TSC.
+
+This logic is problematic (since "short window of time" is a heuristic 
+which can fail), and is being replaced by writing the same offset
+for each vCPU:
+
+commit 828ca89628bfcb1b8f27535025f69dd00eb55207
+Author: Oliver Upton <oupton@google.com>
+Date:   Thu Sep 16 18:15:38 2021 +0000
+
+    KVM: x86: Expose TSC offset controls to userspace
+    
+    To date, VMM-directed TSC synchronization and migration has been a bit
+    messy. KVM has some baked-in heuristics around TSC writes to infer if
+    the VMM is attempting to synchronize. This is problematic, as it depends
+    on host userspace writing to the guest's TSC within 1 second of the last
+    write.
+    
+    A much cleaner approach to configuring the guest's views of the TSC is to
+    simply migrate the TSC offset for every vCPU. Offsets are idempotent,
+    and thus not subject to change depending on when the VMM actually
+    reads/writes values from/to KVM. The VMM can then read the TSC once with
+    KVM_GET_CLOCK to capture a (realtime, host_tsc) pair at the instant when
+    the guest is paused.
+
+So with that in place, the answer to 
+
+How does userspace knows which vcpu to pick so
 that it gets the right offset?
 
-I also wonder why we need this when userspace already has direct
-access to that information without any extra kernel support (read the
-CNTVCT view of the vcpu using the ONEREG API, subtract it from the
-host view of the counter, job done).
+is any vcpu, since the offsets are the same.
 
-> 
-> Signed-off-by: Nicolas Saenz Julienne <nsaenzju@redhat.com>
-> ---
->  arch/arm64/include/asm/kvm_host.h |  1 +
->  arch/arm64/kvm/Makefile           |  2 +-
->  arch/arm64/kvm/arch_timer.c       |  2 +-
->  arch/arm64/kvm/debugfs.c          | 25 +++++++++++++++++++++++++
->  include/kvm/arm_arch_timer.h      |  3 +++
->  5 files changed, 31 insertions(+), 2 deletions(-)
->  create mode 100644 arch/arm64/kvm/debugfs.c
-> 
-> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-> index 2a5f7f38006f..130534c9079e 100644
-> --- a/arch/arm64/include/asm/kvm_host.h
-> +++ b/arch/arm64/include/asm/kvm_host.h
-> @@ -29,6 +29,7 @@
->  #include <asm/thread_info.h>
->  
->  #define __KVM_HAVE_ARCH_INTC_INITIALIZED
-> +#define __KVM_HAVE_ARCH_VCPU_DEBUGFS
->  
->  #define KVM_HALT_POLL_NS_DEFAULT 500000
->  
-> diff --git a/arch/arm64/kvm/Makefile b/arch/arm64/kvm/Makefile
-> index 989bb5dad2c8..17be7cf770f2 100644
-> --- a/arch/arm64/kvm/Makefile
-> +++ b/arch/arm64/kvm/Makefile
-> @@ -14,7 +14,7 @@ kvm-y := $(KVM)/kvm_main.o $(KVM)/coalesced_mmio.o $(KVM)/eventfd.o \
->  	 $(KVM)/vfio.o $(KVM)/irqchip.o $(KVM)/binary_stats.o \
->  	 arm.o mmu.o mmio.o psci.o perf.o hypercalls.o pvtime.o \
->  	 inject_fault.o va_layout.o handle_exit.o \
-> -	 guest.o debug.o reset.o sys_regs.o \
-> +	 guest.o debug.o debugfs.o reset.o sys_regs.o \
->  	 vgic-sys-reg-v3.o fpsimd.o pmu.o \
->  	 arch_timer.o trng.o\
->  	 vgic/vgic.o vgic/vgic-init.o \
-> diff --git a/arch/arm64/kvm/arch_timer.c b/arch/arm64/kvm/arch_timer.c
-> index 3df67c127489..ee69387f7fb6 100644
-> --- a/arch/arm64/kvm/arch_timer.c
-> +++ b/arch/arm64/kvm/arch_timer.c
-> @@ -82,7 +82,7 @@ u64 timer_get_cval(struct arch_timer_context *ctxt)
->  	}
->  }
->  
-> -static u64 timer_get_offset(struct arch_timer_context *ctxt)
-> +u64 timer_get_offset(struct arch_timer_context *ctxt)
->  {
->  	struct kvm_vcpu *vcpu = ctxt->vcpu;
->  
-> diff --git a/arch/arm64/kvm/debugfs.c b/arch/arm64/kvm/debugfs.c
-> new file mode 100644
-> index 000000000000..f0f5083ea8d4
-> --- /dev/null
-> +++ b/arch/arm64/kvm/debugfs.c
-> @@ -0,0 +1,25 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (C) 2021 Red Hat Inc.
-> + */
-> +
-> +#include <linux/kvm_host.h>
-> +#include <linux/debugfs.h>
-> +
-> +#include <kvm/arm_arch_timer.h>
-> +
-> +static int vcpu_get_cntv_offset(void *data, u64 *val)
-> +{
-> +	struct kvm_vcpu *vcpu = (struct kvm_vcpu *)data;
-> +
-> +	*val = timer_get_offset(vcpu_vtimer(vcpu));
-> +
-> +	return 0;
-> +}
-> +
-> +DEFINE_SIMPLE_ATTRIBUTE(vcpu_cntvoff_fops, vcpu_get_cntv_offset, NULL, "%lld\n");
-> +
-> +void kvm_arch_create_vcpu_debugfs(struct kvm_vcpu *vcpu, struct dentry *debugfs_dentry)
-> +{
-> +	debugfs_create_file("cntvoff", 0444, debugfs_dentry, vcpu, &vcpu_cntvoff_fops);
-> +}
+> I also wonder why we need this when userspace already has direct
+> access to that information without any extra kernel support (read the
+> CNTVCT view of the vcpu using the ONEREG API, subtract it from the
+> host view of the counter, job done).
 
-This should be left in arch_timer.c until we actually need it for
-multiple subsystems. When (and if) that happens, we will expose
-per-subsystem debugfs initialisers instead of exposing the guts of the
-timer code.
+If guest has access to the clock offset (between guest and host), then
+in the guest:
 
-Thanks,
+	clockval = hostclockval - clockoffset
 
-	M.
+Adding "clockoffset" to that will retrieve the host clock.
 
--- 
-Without deviation from the norm, progress is not possible.
+Is that what you mean?
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
