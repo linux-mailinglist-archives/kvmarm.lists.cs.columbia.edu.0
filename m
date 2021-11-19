@@ -2,89 +2,93 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D75A456D14
-	for <lists+kvmarm@lfdr.de>; Fri, 19 Nov 2021 11:16:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 20A81456ED2
+	for <lists+kvmarm@lfdr.de>; Fri, 19 Nov 2021 13:29:35 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CBC6F4B149;
-	Fri, 19 Nov 2021 05:16:13 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 84BDB4B15E;
+	Fri, 19 Nov 2021 07:29:34 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.391
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.391 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
 	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@infradead.org
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1AZmJJPNUVSY; Fri, 19 Nov 2021 05:16:13 -0500 (EST)
+	with ESMTP id XHtl+Qhxz+Zi; Fri, 19 Nov 2021 07:29:34 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5EC774B08D;
-	Fri, 19 Nov 2021 05:16:12 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3B2DB4B099;
+	Fri, 19 Nov 2021 07:29:33 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9C4414B116
- for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Nov 2021 04:24:24 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8E9674B130
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Nov 2021 05:21:47 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id BtdhrFEkdrJ7 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 19 Nov 2021 04:24:22 -0500 (EST)
-Received: from bombadil.infradead.org (bombadil.infradead.org
- [198.137.202.133])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 31DF24B0FC
- for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Nov 2021 04:24:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=bombadil.20210309; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=s69dtZTPtWdn4nuXhO5u8qh8vqOiDAUWW2VvLvwoldU=; b=wNvYamDoPaQC8pMtQwoV7gojWQ
- suDorKgPjTpvmHWDm7SHcr3n74C4FV7ACFp3L0p1jYwLc+3f24tcVugZzVrols+ZR3t/8DsMGIKlf
- IKzoprKdVpWE8uhGnvCTrRhQcxc/xnV4nmufR1j916s+egIWWDdtPxBVkqJg1rcNsZ5b4YKj5+ARf
- T4RACuqeGJWqt0LqzR+S6xyS8pR7311g6WBVdOBCnHBwUcuSxiwnn93PNrp9Y73cxDnY60z7/ZvM+
- +S1RzC5LJe1B8MmbOzszDpl/ZRGaxUk44TjGIa1hxBmZlxkyAj5IqUwujOISgKuh3i0xSHQ7nVWtp
- iEsLbg4Q==;
-Received: from [2001:8b0:10b:1:4a2a:e3ff:fe14:8625]
- (helo=u3832b3a9db3152.ant.amazon.com)
- by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
- id 1mo07L-009xIr-Us; Fri, 19 Nov 2021 09:23:36 +0000
-Message-ID: <0d8cd126fb15488ae1b523f799fe749f02c4cc8c.camel@infradead.org>
-Subject: Re: [PATCH v3 08/12] KVM: Propagate vcpu explicitly to
- mark_page_dirty_in_slot()
-From: David Woodhouse <dwmw2@infradead.org>
-To: Sean Christopherson <seanjc@google.com>
-Date: Fri, 19 Nov 2021 09:23:29 +0000
-In-Reply-To: <YZatsB3oadj6dgb8@google.com>
-References: <20211117174003.297096-1-dwmw2@infradead.org>
- <20211117174003.297096-9-dwmw2@infradead.org>
- <85d9fec17f32c3eb9e100e56b91af050.squirrel@twosheds.infradead.org>
- <4c48546b-eb4a-dff7-cc38-5df54f73f5d4@redhat.com>
- <20b5952e76c54a3a5dfe5a898e3b835404ac6fb1.camel@infradead.org>
- <YZaeL5YztL3p1nLM@google.com> <YZagjzYUsixbFre9@google.com>
- <35AEC3FD-B46A-451D-B7D5-4B1BDD5407BD@infradead.org>
- <YZatsB3oadj6dgb8@google.com>
-User-Agent: Evolution 3.36.5-0ubuntu1 
+ with ESMTP id sqWtrzvU5JRp for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 19 Nov 2021 05:21:46 -0500 (EST)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1FA6D49E5F
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Nov 2021 05:21:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1637317305;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=yoOG1diMi0E/SvfVXv5alhyBNgdiAvTA9EtQDMJObdw=;
+ b=SDVhLq68NSwH6f0zG6J06jcycbXs1CaQzUpPgizH0x+JxE2Q3wrNeQS9Hst1lBC0csvGku
+ CBvvvivR9MF2ZMcEdeJNpjD0kI0x4Q1qxJomlJZv/tNm2a5rLRBloePC44oSzS9SSTpdWy
+ qH1JOSTQ9OmJeRHzsWrZESbGnieMYHQ=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-248-dRClEdKlOI2BsFTc6lxoBg-1; Fri, 19 Nov 2021 05:21:44 -0500
+X-MC-Unique: dRClEdKlOI2BsFTc6lxoBg-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 187-20020a1c02c4000000b003335872db8dso3353208wmc.2
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 19 Nov 2021 02:21:44 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=yoOG1diMi0E/SvfVXv5alhyBNgdiAvTA9EtQDMJObdw=;
+ b=t+AFqYeVqEm3MFuVTiHI4WEuIB1h+vKZ8kzzsJzt1twxQWmkVvdOidjuTTu8XbyKr+
+ unp24bPTiIfCnw00wEoiSawf0L9vuX8CxJtowTl2qGtVLK2Q2feI4zMBdEqShDhzRkuB
+ cvwbX9mLKrAhewUnZyKQEspIaoUR48ixT727ZaXqmpf3dMP2TPd5mktnsUKLphH9dflF
+ G643Wjs7dhxWpUoAg9Js7DUWD8pwnj1vxEENs4KFp9FLY5ZpDNZBmxukK4kAx+dZ1yhY
+ XAx4MPaxXHJei4iLg+bMi3w0Im4SsVkjC3+G7GWYQDVlcop/D1jOL6H2VeXfCY/OtI4x
+ JAhw==
+X-Gm-Message-State: AOAM5318dTq2nSoIuuLtcUrLUvQbWYG6PoQGTHCOdxdGdTuRsQKBp8Bq
+ ylgnqNwbU9q2LYPR1nNfp9n3V7x3jRnqS4M49D5F6iNz6hlek20SmLvpM+CByTHi6mduzAo6oA/
+ no+lGkayUi+Wqbv9+XUVpl69C
+X-Received: by 2002:a5d:63ca:: with SMTP id c10mr5840325wrw.124.1637317303377; 
+ Fri, 19 Nov 2021 02:21:43 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJwihTxczM5jqGJYFo9iUlthuKo/r0hHx/63+SRDngLpAOgUraQ7o+CZyQaRivyiAucHPrBPCQ==
+X-Received: by 2002:a5d:63ca:: with SMTP id c10mr5840286wrw.124.1637317303163; 
+ Fri, 19 Nov 2021 02:21:43 -0800 (PST)
+Received: from vian.redhat.com ([2a0c:5a80:3c10:3400:3c70:6643:6e71:7eae])
+ by smtp.gmail.com with ESMTPSA id k27sm14336026wms.41.2021.11.19.02.21.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 19 Nov 2021 02:21:42 -0800 (PST)
+From: Nicolas Saenz Julienne <nsaenzju@redhat.com>
+To: linux-arm-kernel@lists.infradead.org, maz@kernel.org, rostedt@goodmis.org
+Subject: [RFC PATCH 0/2] KVM: arm64: Host/Guest trace syncronization
+Date: Fri, 19 Nov 2021 11:21:16 +0100
+Message-Id: <20211119102117.22304-1-nsaenzju@redhat.com>
+X-Mailer: git-send-email 2.33.1
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- bombadil.infradead.org. See http://www.infradead.org/rpr.html
-X-Mailman-Approved-At: Fri, 19 Nov 2021 05:16:11 -0500
-Cc: Anup Patel <anup.patel@wdc.com>,
- "wanpengli @ tencent . com" <wanpengli@tencent.com>, kvm <kvm@vger.kernel.org>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- Joao Martins <joao.m.martins@oracle.com>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, linux-s390@vger.kernel.org,
- Michael Ellerman <mpe@ellerman.id.au>, "joro @ 8bytes . org" <joro@8bytes.org>,
- Huacai Chen <chenhuacai@kernel.org>,
- Christian Borntraeger <borntraeger@de.ibm.com>,
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>, karahmed@amazon.com,
- Catalin Marinas <catalin.marinas@arm.com>,
- Boris Ostrovsky <boris.ostrovsky@oracle.com>,
- linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
- "jmattson @ google . com" <jmattson@google.com>,
- "mtosatti @ redhat . com" <mtosatti@redhat.com>, linux-mips@vger.kernel.org,
- kvm-riscv@lists.infradead.org, Marc Zyngier <maz@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "vkuznets @ redhat . com" <vkuznets@redhat.com>, linuxppc-dev@lists.ozlabs.org
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=nsaenzju@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+X-Mailman-Approved-At: Fri, 19 Nov 2021 07:29:31 -0500
+Cc: will@kernel.org, catalin.marinas@arm.com, mtosatti@redhat.com,
+ linux-kernel@vger.kernel.org, mingo@redhat.com, nsaenzju@redhat.com,
+ nilal@redhat.com, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -96,191 +100,41 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============7325338821498618665=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+This small series introduces the necessary infrastructure to be able to
+syncronize host and guest traces. The approach I'm following is a bit
+biased since I tried to replicate the methods I've been using in the
+past with x86.
 
---===============7325338821498618665==
-Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
-	boundary="=-xmDH/MHbX/vObHZ+w1qZ"
+This was tested on an Ampere Mt. Jade based machine.
 
+---
 
---=-xmDH/MHbX/vObHZ+w1qZ
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Nicolas Saenz Julienne (2):
+  arm64/tracing: add cntvct based trace clock
+  KVM: arm64: export cntvoff in debugfs
 
-On Thu, 2021-11-18 at 19:46 +0000, Sean Christopherson wrote:
-> It is sufficient for the current physical CPU to have an active vCPU, whi=
-ch is
-> generally guaranteed in the MMU code because, with a few exceptions, popu=
-lating
-> SPTEs is done in vCPU context.
->=20
-> mmap() will never directly trigger SPTE creation, KVM first requires a vC=
-PU to
-> fault on the new address.  munmap() is a pure zap flow, i.e. won't create=
- a
-> present SPTE and trigger the writeback of the dirty bit.
+ arch/arm64/include/asm/kvm_host.h    |  1 +
+ arch/arm64/include/asm/trace_clock.h | 12 ++++++++++++
+ arch/arm64/kernel/Makefile           |  2 +-
+ arch/arm64/kernel/trace_clock.c      | 12 ++++++++++++
+ arch/arm64/kvm/Makefile              |  2 +-
+ arch/arm64/kvm/arch_timer.c          |  2 +-
+ arch/arm64/kvm/debugfs.c             | 25 +++++++++++++++++++++++++
+ include/kvm/arm_arch_timer.h         |  3 +++
+ 8 files changed, 56 insertions(+), 3 deletions(-)
+ create mode 100644 arch/arm64/include/asm/trace_clock.h
+ create mode 100644 arch/arm64/kernel/trace_clock.c
+ create mode 100644 arch/arm64/kvm/debugfs.c
 
-OK, thanks.
-
-> That's also why I dislike using kvm_get_running_vcpu(); when it's needed,=
- there's
-> a valid vCPU from the caller, but it deliberately gets dropped and indire=
-ctly
-> picked back up.
-
-Yeah. So as things stand we have a kvm_write_guest() function which
-takes a 'struct kvm *', as well as a kvm_vcpu_write_guest() function
-which takes a 'struct kvm_vcpu *'.
-
-But it is verboten to *use* the kvm_write_guest() or mark_page_dirty()
-functions unless you actually *do* have an active vCPU. Do so, and the
-kernel might just crash; not even a graceful failure mode.
-
-That's a fairly awful bear trap that has now caught me *twice*. I'm
-kind of amused that in all my hairy inline asm and pinning and crap for
-guest memory access, the thing that's been *broken* is where I just
-used the *existing* kvm_write_wall_clock() which does the simple
-kvm_write_guest() thing.
-
-I think at the very least perhaps we should do something like this in
-mark_page_dirty_in_slot():
-
- WARN_ON_ONCE(!kvm_get_running_vcpu() || kvm_get_running_vcpu()->kvm !=3D k=
-vm);
-
-(For illustration only; I'd actually use a local vcpu variable *and*
-pass that vcpu to kvm_dirty_ring_get())
-
-On propagating the caller's vcpu through and killing off the non-vCPU
-versions of the functions, I'm torn... because even if we insist on *a*
-vCPU being passed, it might be *the* vCPU, and that's just setting a
-more subtle trap (which would have bitten my GPC invalidate code, for
-example).
-
-There are other more complex approaches like adding an extra ring, with
-spinlocks, for the 'not from a vCPU' cases. But I think that's
-overkill.
-
-
-
-
-
-
-
---=-xmDH/MHbX/vObHZ+w1qZ
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCECow
-ggUcMIIEBKADAgECAhEA4rtJSHkq7AnpxKUY8ZlYZjANBgkqhkiG9w0BAQsFADCBlzELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgG
-A1UEChMRQ09NT0RPIENBIExpbWl0ZWQxPTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhl
-bnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0EwHhcNMTkwMTAyMDAwMDAwWhcNMjIwMTAxMjM1
-OTU5WjAkMSIwIAYJKoZIhvcNAQkBFhNkd213MkBpbmZyYWRlYWQub3JnMIIBIjANBgkqhkiG9w0B
-AQEFAAOCAQ8AMIIBCgKCAQEAsv3wObLTCbUA7GJqKj9vHGf+Fa+tpkO+ZRVve9EpNsMsfXhvFpb8
-RgL8vD+L133wK6csYoDU7zKiAo92FMUWaY1Hy6HqvVr9oevfTV3xhB5rQO1RHJoAfkvhy+wpjo7Q
-cXuzkOpibq2YurVStHAiGqAOMGMXhcVGqPuGhcVcVzVUjsvEzAV9Po9K2rpZ52FE4rDkpDK1pBK+
-uOAyOkgIg/cD8Kugav5tyapydeWMZRJQH1vMQ6OVT24CyAn2yXm2NgTQMS1mpzStP2ioPtTnszIQ
-Ih7ASVzhV6csHb8Yrkx8mgllOyrt9Y2kWRRJFm/FPRNEurOeNV6lnYAXOymVJwIDAQABo4IB0zCC
-Ac8wHwYDVR0jBBgwFoAUgq9sjPjF/pZhfOgfPStxSF7Ei8AwHQYDVR0OBBYEFLfuNf820LvaT4AK
-xrGK3EKx1DE7MA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMB0GA1UdJQQWMBQGCCsGAQUF
-BwMEBggrBgEFBQcDAjBGBgNVHSAEPzA9MDsGDCsGAQQBsjEBAgEDBTArMCkGCCsGAQUFBwIBFh1o
-dHRwczovL3NlY3VyZS5jb21vZG8ubmV0L0NQUzBaBgNVHR8EUzBRME+gTaBLhklodHRwOi8vY3Js
-LmNvbW9kb2NhLmNvbS9DT01PRE9SU0FDbGllbnRBdXRoZW50aWNhdGlvbmFuZFNlY3VyZUVtYWls
-Q0EuY3JsMIGLBggrBgEFBQcBAQR/MH0wVQYIKwYBBQUHMAKGSWh0dHA6Ly9jcnQuY29tb2RvY2Eu
-Y29tL0NPTU9ET1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcnQwJAYI
-KwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmNvbW9kb2NhLmNvbTAeBgNVHREEFzAVgRNkd213MkBpbmZy
-YWRlYWQub3JnMA0GCSqGSIb3DQEBCwUAA4IBAQALbSykFusvvVkSIWttcEeifOGGKs7Wx2f5f45b
-nv2ghcxK5URjUvCnJhg+soxOMoQLG6+nbhzzb2rLTdRVGbvjZH0fOOzq0LShq0EXsqnJbbuwJhK+
-PnBtqX5O23PMHutP1l88AtVN+Rb72oSvnD+dK6708JqqUx2MAFLMevrhJRXLjKb2Mm+/8XBpEw+B
-7DisN4TMlLB/d55WnT9UPNHmQ+3KFL7QrTO8hYExkU849g58Dn3Nw3oCbMUgny81ocrLlB2Z5fFG
-Qu1AdNiBA+kg/UxzyJZpFbKfCITd5yX49bOriL692aMVDyqUvh8fP+T99PqorH4cIJP6OxSTdxKM
-MIIFHDCCBASgAwIBAgIRAOK7SUh5KuwJ6cSlGPGZWGYwDQYJKoZIhvcNAQELBQAwgZcxCzAJBgNV
-BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAY
-BgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRo
-ZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTE5MDEwMjAwMDAwMFoXDTIyMDEwMTIz
-NTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCASIwDQYJKoZIhvcN
-AQEBBQADggEPADCCAQoCggEBALL98Dmy0wm1AOxiaio/bxxn/hWvraZDvmUVb3vRKTbDLH14bxaW
-/EYC/Lw/i9d98CunLGKA1O8yogKPdhTFFmmNR8uh6r1a/aHr301d8YQea0DtURyaAH5L4cvsKY6O
-0HF7s5DqYm6tmLq1UrRwIhqgDjBjF4XFRqj7hoXFXFc1VI7LxMwFfT6PStq6WedhROKw5KQytaQS
-vrjgMjpICIP3A/CroGr+bcmqcnXljGUSUB9bzEOjlU9uAsgJ9sl5tjYE0DEtZqc0rT9oqD7U57My
-ECIewElc4VenLB2/GK5MfJoJZTsq7fWNpFkUSRZvxT0TRLqznjVepZ2AFzsplScCAwEAAaOCAdMw
-ggHPMB8GA1UdIwQYMBaAFIKvbIz4xf6WYXzoHz0rcUhexIvAMB0GA1UdDgQWBBS37jX/NtC72k+A
-CsaxitxCsdQxOzAOBgNVHQ8BAf8EBAMCBaAwDAYDVR0TAQH/BAIwADAdBgNVHSUEFjAUBggrBgEF
-BQcDBAYIKwYBBQUHAwIwRgYDVR0gBD8wPTA7BgwrBgEEAbIxAQIBAwUwKzApBggrBgEFBQcCARYd
-aHR0cHM6Ly9zZWN1cmUuY29tb2RvLm5ldC9DUFMwWgYDVR0fBFMwUTBPoE2gS4ZJaHR0cDovL2Ny
-bC5jb21vZG9jYS5jb20vQ09NT0RPUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFp
-bENBLmNybDCBiwYIKwYBBQUHAQEEfzB9MFUGCCsGAQUFBzAChklodHRwOi8vY3J0LmNvbW9kb2Nh
-LmNvbS9DT01PRE9SU0FDbGllbnRBdXRoZW50aWNhdGlvbmFuZFNlY3VyZUVtYWlsQ0EuY3J0MCQG
-CCsGAQUFBzABhhhodHRwOi8vb2NzcC5jb21vZG9jYS5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
-cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAC20spBbrL71ZEiFrbXBHonzhhirO1sdn+X+O
-W579oIXMSuVEY1LwpyYYPrKMTjKECxuvp24c829qy03UVRm742R9Hzjs6tC0oatBF7KpyW27sCYS
-vj5wbal+TttzzB7rT9ZfPALVTfkW+9qEr5w/nSuu9PCaqlMdjABSzHr64SUVy4ym9jJvv/FwaRMP
-gew4rDeEzJSwf3eeVp0/VDzR5kPtyhS+0K0zvIWBMZFPOPYOfA59zcN6AmzFIJ8vNaHKy5QdmeXx
-RkLtQHTYgQPpIP1Mc8iWaRWynwiE3ecl+PWzq4i+vdmjFQ8qlL4fHz/k/fT6qKx+HCCT+jsUk3cS
-jDCCBeYwggPOoAMCAQICEGqb4Tg7/ytrnwHV2binUlYwDQYJKoZIhvcNAQEMBQAwgYUxCzAJBgNV
-BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAY
-BgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMSswKQYDVQQDEyJDT01PRE8gUlNBIENlcnRpZmljYXRp
-b24gQXV0aG9yaXR5MB4XDTEzMDExMDAwMDAwMFoXDTI4MDEwOTIzNTk1OVowgZcxCzAJBgNVBAYT
-AkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAYBgNV
-BAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRoZW50
-aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAvrOeV6wodnVAFsc4A5jTxhh2IVDzJXkLTLWg0X06WD6cpzEup/Y0dtmEatrQPTRI5Or1u6zf
-+bGBSyD9aH95dDSmeny1nxdlYCeXIoymMv6pQHJGNcIDpFDIMypVpVSRsivlJTRENf+RKwrB6vcf
-WlP8dSsE3Rfywq09N0ZfxcBa39V0wsGtkGWC+eQKiz4pBZYKjrc5NOpG9qrxpZxyb4o4yNNwTqza
-aPpGRqXB7IMjtf7tTmU2jqPMLxFNe1VXj9XB1rHvbRikw8lBoNoSWY66nJN/VCJv5ym6Q0mdCbDK
-CMPybTjoNCQuelc0IAaO4nLUXk0BOSxSxt8kCvsUtQIDAQABo4IBPDCCATgwHwYDVR0jBBgwFoAU
-u69+Aj36pvE8hI6t7jiY7NkyMtQwHQYDVR0OBBYEFIKvbIz4xf6WYXzoHz0rcUhexIvAMA4GA1Ud
-DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMBEGA1UdIAQKMAgwBgYEVR0gADBMBgNVHR8E
-RTBDMEGgP6A9hjtodHRwOi8vY3JsLmNvbW9kb2NhLmNvbS9DT01PRE9SU0FDZXJ0aWZpY2F0aW9u
-QXV0aG9yaXR5LmNybDBxBggrBgEFBQcBAQRlMGMwOwYIKwYBBQUHMAKGL2h0dHA6Ly9jcnQuY29t
-b2RvY2EuY29tL0NPTU9ET1JTQUFkZFRydXN0Q0EuY3J0MCQGCCsGAQUFBzABhhhodHRwOi8vb2Nz
-cC5jb21vZG9jYS5jb20wDQYJKoZIhvcNAQEMBQADggIBAHhcsoEoNE887l9Wzp+XVuyPomsX9vP2
-SQgG1NgvNc3fQP7TcePo7EIMERoh42awGGsma65u/ITse2hKZHzT0CBxhuhb6txM1n/y78e/4ZOs
-0j8CGpfb+SJA3GaBQ+394k+z3ZByWPQedXLL1OdK8aRINTsjk/H5Ns77zwbjOKkDamxlpZ4TKSDM
-KVmU/PUWNMKSTvtlenlxBhh7ETrN543j/Q6qqgCWgWuMAXijnRglp9fyadqGOncjZjaaSOGTTFB+
-E2pvOUtY+hPebuPtTbq7vODqzCM6ryEhNhzf+enm0zlpXK7q332nXttNtjv7VFNYG+I31gnMrwfH
-M5tdhYF/8v5UY5g2xANPECTQdu9vWPoqNSGDt87b3gXb1AiGGaI06vzgkejL580ul+9hz9D0S0U4
-jkhJiA7EuTecP/CFtR72uYRBcunwwH3fciPjviDDAI9SnC/2aPY8ydehzuZutLbZdRJ5PDEJM/1t
-yZR2niOYihZ+FCbtf3D9mB12D4ln9icgc7CwaxpNSCPt8i/GqK2HsOgkL3VYnwtx7cJUmpvVdZ4o
-gnzgXtgtdk3ShrtOS1iAN2ZBXFiRmjVzmehoMof06r1xub+85hFQzVxZx5/bRaTKTlL8YXLI8nAb
-R9HWdFqzcOoB/hxfEyIQpx9/s81rgzdEZOofSlZHynoSMYIDyjCCA8YCAQEwga0wgZcxCzAJBgNV
-BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAY
-BgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRo
-ZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA4rtJSHkq7AnpxKUY8ZlYZjANBglghkgB
-ZQMEAgEFAKCCAe0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjEx
-MTE5MDkyMzI5WjAvBgkqhkiG9w0BCQQxIgQgYBPnOfezXAI1Dz5ZIzzHmzK6Tix24bzqjA6w6fcr
-80Qwgb4GCSsGAQQBgjcQBDGBsDCBrTCBlzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIg
-TWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQx
-PTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1h
-aWwgQ0ECEQDiu0lIeSrsCenEpRjxmVhmMIHABgsqhkiG9w0BCRACCzGBsKCBrTCBlzELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgG
-A1UEChMRQ09NT0RPIENBIExpbWl0ZWQxPTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhl
-bnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0ECEQDiu0lIeSrsCenEpRjxmVhmMA0GCSqGSIb3
-DQEBAQUABIIBAJkAuuqmZfjnN/z7/Qz5/AZcufBNujk/j0m6tIbcYwlAehdBCuQoYVIqOdYqbyz1
-j6fr1kqYb8L/RbwbgbkGiaQYVr1zCihUxCRhod1IrxwSFxuzE5ZscqSey9Pe+hj2FLdpzmWGisZI
-ask6dQLyY3fuDrojgJlZ3eExbuKAOyfNPpfI6hH8VU5LpGnLpy/w+17wiIAmKKMpmbmDtlDbf5mc
-dS6b3vAEoIxJcxHNUK/1rUzA6/4QmzBo8ZgzbbTEgfV+/1X4QUTPQwYshqMjEF9wf0U5a7DDXjjo
-+60jAPWFapK41pjV4W5WnC1FUB/3N0An+J85h5+5dEgqx4dNyRsAAAAAAAA=
-
-
---=-xmDH/MHbX/vObHZ+w1qZ--
-
-
---===============7325338821498618665==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+-- 
+2.33.1
 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
 https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
-
---===============7325338821498618665==--
-
