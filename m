@@ -2,64 +2,64 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E163B45867F
-	for <lists+kvmarm@lfdr.de>; Sun, 21 Nov 2021 22:13:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C2F4C458676
+	for <lists+kvmarm@lfdr.de>; Sun, 21 Nov 2021 22:13:41 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 934084B12E;
-	Sun, 21 Nov 2021 16:13:54 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 75D3B4B177;
+	Sun, 21 Nov 2021 16:13:41 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.391
+X-Spam-Score: 0.909
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.391 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_MED=-2.3,
-	T_DKIM_INVALID=0.01] autolearn=no
+X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
+	autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@infradead.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bpNq06zNtGq3; Sun, 21 Nov 2021 16:13:53 -0500 (EST)
+	with ESMTP id LwSTlKh83NZG; Sun, 21 Nov 2021 16:13:40 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B55264B1FB;
-	Sun, 21 Nov 2021 16:13:33 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EF0D14B1D8;
+	Sun, 21 Nov 2021 16:13:32 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CBC244B1B2
- for <kvmarm@lists.cs.columbia.edu>; Sun, 21 Nov 2021 07:55:55 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 52E834B1B6
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 21 Nov 2021 07:55:50 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id TBF9NsnXUuc1 for <kvmarm@lists.cs.columbia.edu>;
- Sun, 21 Nov 2021 07:55:54 -0500 (EST)
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B35194B1B4
- for <kvmarm@lists.cs.columbia.edu>; Sun, 21 Nov 2021 07:55:54 -0500 (EST)
+ with ESMTP id lKLYQcsUEvcy for <kvmarm@lists.cs.columbia.edu>;
+ Sun, 21 Nov 2021 07:55:49 -0500 (EST)
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 27B0A4B1AC
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 21 Nov 2021 07:55:49 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=desiato.20200630; h=Sender:Content-Transfer-Encoding:
+ d=infradead.org; s=casper.20170209; h=Sender:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
  Reply-To:Content-Type:Content-ID:Content-Description;
- bh=yWZTSFEcMQzXm3g2QNc13LIwZBP4vIj1OJKIB2I3CoQ=; b=cF5yuK3JSmREux8bcBvTCBAtdT
- b6/K4wogm/fmKRD731P3fQzK6lj1CO7ZMuzGPzbJUCqQEtn/gjQ/NFM4hm5gV+/Zu+5S2SkeV2vab
- Pw8UcZRfO6WseB/3qUTbK518kIRxca68ANvkPu36D7WzWuP3VLNdh7CQvY+rp9rxWSCyX3YqcM2KI
- Bn3jPG02rOZoqv2xz2cR7z2pXcakCpQrDURT/Krslg0mve1HsImOqSKS6A+aCKGKD+XS8D2Kmca6o
- 8eXaXH0P4tXXAL8Y2UInAJkNltmloMhhwB3RU7FmxOacESgBcF8C3Ci+FUUZDhALuy5hbIVWYdVzF
- XeMfO5xw==;
+ bh=KJPYZZ7YbxCF8e4lw5Q63h+vhx2Z6IkGAc4ioCPd1zc=; b=cnsJ33e/M7n9LGUfChGbHmhPXq
+ NvP9rAJBfMd6kiU/M2u5xxdIvzwLSE9aq8TbPSoZuYLVnNtMKwD7jKuB8uQ6uoT6bTzvQVqmUPFjz
+ rY4Il0fBkQ4uEAEnqfd+eGoNE8PeqCgIclYY2YutLJdTXyupVE/MaMxMh+6WNvbExPlA8kV9UH6d6
+ bhjTzq2Vajx8OnXyYvEtkYg9YIh57VKVeHAZCMVxEpPD+6S1V1WaTKY+i1QtxYykmegEwC0TZT855
+ 1ixN0NXtA0lfk1idhqZiDNiraCl1skk4F9vxuybALZEjNnwSzJ88QjCbgDVNuxDrpahOvmjnKpYuj
+ QxIlC3Rw==;
 Received: from i7.infradead.org ([2001:8b0:10b:1:21e:67ff:fecb:7a92])
- by desiato.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
- id 1momMw-00HIgD-MH; Sun, 21 Nov 2021 12:54:54 +0000
+ by casper.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+ id 1momMw-00C3xx-7P; Sun, 21 Nov 2021 12:54:55 +0000
 Received: from dwoodhou by i7.infradead.org with local (Exim 4.94.2 #2 (Red
- Hat Linux)) id 1momMw-0002WE-8h; Sun, 21 Nov 2021 12:54:54 +0000
+ Hat Linux)) id 1momMw-0002WI-CY; Sun, 21 Nov 2021 12:54:54 +0000
 From: David Woodhouse <dwmw2@infradead.org>
 To: Paolo Bonzini <pbonzini@redhat.com>,
 	kvm <kvm@vger.kernel.org>
-Subject: [PATCH v5 05/12] KVM: RISC-V: Use Makefile.kvm for common files
-Date: Sun, 21 Nov 2021 12:54:44 +0000
-Message-Id: <20211121125451.9489-6-dwmw2@infradead.org>
+Subject: [PATCH v5 06/12] KVM: powerpc: Use Makefile.kvm for common files
+Date: Sun, 21 Nov 2021 12:54:45 +0000
+Message-Id: <20211121125451.9489-7-dwmw2@infradead.org>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20211121125451.9489-1-dwmw2@infradead.org>
 References: <20211121125451.9489-1-dwmw2@infradead.org>
 MIME-Version: 1.0
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- desiato.infradead.org. See http://www.infradead.org/rpr.html
+ casper.infradead.org. See http://www.infradead.org/rpr.html
 X-Mailman-Approved-At: Sun, 21 Nov 2021 16:13:30 -0500
 Cc: Anup Patel <anup.patel@wdc.com>,
  "wanpengli @ tencent . com" <wanpengli@tencent.com>,
@@ -96,31 +96,42 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
+It's all fairly baroque but in the end, I don't think there's any reason
+for $(KVM)/irqchip.o to have been handled differently, as they all end
+up in $(kvm-y) in the end anyway, regardless of whether they get there
+via $(common-objs-y) and the CPU-specific object lists.
+
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Acked-by: Michael Ellerman <mpe@ellerman.id.au> (powerpc)
 ---
- arch/riscv/kvm/Makefile | 6 +-----
+ arch/powerpc/kvm/Makefile | 6 +-----
  1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/arch/riscv/kvm/Makefile b/arch/riscv/kvm/Makefile
-index 30cdd1df0098..300590225348 100644
---- a/arch/riscv/kvm/Makefile
-+++ b/arch/riscv/kvm/Makefile
-@@ -5,14 +5,10 @@
+diff --git a/arch/powerpc/kvm/Makefile b/arch/powerpc/kvm/Makefile
+index 583c14ef596e..245f59118413 100644
+--- a/arch/powerpc/kvm/Makefile
++++ b/arch/powerpc/kvm/Makefile
+@@ -4,11 +4,8 @@
+ #
  
- ccflags-y += -I $(srctree)/$(src)
- 
+ ccflags-y := -Ivirt/kvm -Iarch/powerpc/kvm
 -KVM := ../../../virt/kvm
+ 
+-common-objs-y = $(KVM)/kvm_main.o $(KVM)/eventfd.o $(KVM)/binary_stats.o
+-common-objs-$(CONFIG_KVM_VFIO) += $(KVM)/vfio.o
+-common-objs-$(CONFIG_KVM_MMIO) += $(KVM)/coalesced_mmio.o
 +include $(srctree)/virt/kvm/Makefile.kvm
  
- obj-$(CONFIG_KVM) += kvm.o
+ common-objs-y += powerpc.o emulate_loadstore.o
+ obj-$(CONFIG_KVM_EXIT_TIMING) += timing.o
+@@ -125,7 +122,6 @@ kvm-book3s_32-objs := \
+ kvm-objs-$(CONFIG_KVM_BOOK3S_32) := $(kvm-book3s_32-objs)
  
--kvm-y += $(KVM)/kvm_main.o
--kvm-y += $(KVM)/coalesced_mmio.o
--kvm-y += $(KVM)/binary_stats.o
--kvm-y += $(KVM)/eventfd.o
- kvm-y += main.o
- kvm-y += vm.o
- kvm-y += vmid.o
+ kvm-objs-$(CONFIG_KVM_MPIC) += mpic.o
+-kvm-objs-$(CONFIG_HAVE_KVM_IRQ_ROUTING) += $(KVM)/irqchip.o
+ 
+ kvm-objs := $(kvm-objs-m) $(kvm-objs-y)
+ 
 -- 
 2.31.1
 
