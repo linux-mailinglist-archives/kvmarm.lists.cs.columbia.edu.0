@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3664D45A581
-	for <lists+kvmarm@lfdr.de>; Tue, 23 Nov 2021 15:23:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 44E0245A582
+	for <lists+kvmarm@lfdr.de>; Tue, 23 Nov 2021 15:23:05 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 642864B0E2;
-	Tue, 23 Nov 2021 09:23:03 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E8FA44B1E1;
+	Tue, 23 Nov 2021 09:23:04 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -4.201
@@ -15,39 +15,41 @@ X-Spam-Status: No, score=-4.201 required=6.1 tests=[BAYES_00=-1.9,
 	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YgTrftfejjPi; Tue, 23 Nov 2021 09:23:03 -0500 (EST)
+	with ESMTP id og9RWQFiTRd7; Tue, 23 Nov 2021 09:23:03 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DEA0E4B1DA;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F37B44B1E9;
 	Tue, 23 Nov 2021 09:23:01 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4821E4B1DD
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 85C4C4B08E
  for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Nov 2021 09:23:00 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id UPFI9vP76mtG for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id Wy5m852+A--C for <kvmarm@lists.cs.columbia.edu>;
  Tue, 23 Nov 2021 09:22:59 -0500 (EST)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5565F4B18F
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5646C4B1D1
  for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Nov 2021 09:22:59 -0500 (EST)
 Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
  [51.254.78.96])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 67E976052B;
+ by mail.kernel.org (Postfix) with ESMTPSA id 6D47960E95;
  Tue, 23 Nov 2021 14:22:58 +0000 (UTC)
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1mpWhE-007Ijf-9C; Tue, 23 Nov 2021 14:22:56 +0000
+ id 1mpWhE-007Ijf-ID; Tue, 23 Nov 2021 14:22:56 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 0/2] KVM/arm64: Early PSTATE evaluation fixes
-Date: Tue, 23 Nov 2021 14:22:45 +0000
-Message-Id: <20211123142247.62532-1-maz@kernel.org>
+Subject: [PATCH 1/2] KVM: arm64: Save PSTATE early on exit
+Date: Tue, 23 Nov 2021 14:22:46 +0000
+Message-Id: <20211123142247.62532-2-maz@kernel.org>
 X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20211123142247.62532-1-maz@kernel.org>
+References: <20211123142247.62532-1-maz@kernel.org>
 MIME-Version: 1.0
 X-SA-Exim-Connect-IP: 185.219.108.64
 X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
@@ -74,32 +76,56 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-There are a number of cases where we evaluate PSTATE early on guest
-exit. Nothing wrong with that. Except that we actually synchronise
-KVM's view of PSTATE pretty late, way after we needed it. Oopsie boo.
+In order to be able to use promitives such as vcpu_mode_is_32bit(),
+we need to synchronize the guest PSTATE. However, this is currently
+done deep imto the bowels of the world-switch code, and we do have
+helpers evaluating this much earlier (__vgic_v3_perform_cpuif_access
+and handle_aarch32_guest, for example).
 
-Thankfully, there are only two paths that require it: GICv3 emulation
-for 32bit guests, and trap handling of 32bit guests in protected
-mode. There is no known need of the former (though you could enable it
-on the command line), and the latter is still a work in progress. In
-any case, this needs fixing.
+Move the saving of the guest pstate into the early fixups, which
+cures the first issue. The second one will be addressed separately.
 
-Funnily enough, this is something that I had already solved on NV, so
-the solution isn't that different from what I have there.
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+---
+ arch/arm64/kvm/hyp/include/hyp/switch.h    | 6 ++++++
+ arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h | 7 ++++++-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-Unless someone shouts, I intend to merge these as fixes.
-
-Marc Zyngier (2):
-  KVM: arm64: Save PSTATE early on exit
-  KVM: arm64: Move pkvm's special 32bit handling into a generic
-    infrastructure
-
- arch/arm64/kvm/hyp/include/hyp/switch.h    | 14 ++++++++++++++
- arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h |  7 ++++++-
- arch/arm64/kvm/hyp/nvhe/switch.c           |  8 +-------
- arch/arm64/kvm/hyp/vhe/switch.c            |  4 ++++
- 4 files changed, 25 insertions(+), 8 deletions(-)
-
+diff --git a/arch/arm64/kvm/hyp/include/hyp/switch.h b/arch/arm64/kvm/hyp/include/hyp/switch.h
+index 7a0af1d39303..d79fd101615f 100644
+--- a/arch/arm64/kvm/hyp/include/hyp/switch.h
++++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
+@@ -429,6 +429,12 @@ static inline bool kvm_hyp_handle_exit(struct kvm_vcpu *vcpu, u64 *exit_code)
+  */
+ static inline bool fixup_guest_exit(struct kvm_vcpu *vcpu, u64 *exit_code)
+ {
++	/*
++	 * Save PSTATE early so that we can evaluate the vcpu mode
++	 * early on.
++	 */
++	vcpu->arch.ctxt.regs.pstate = read_sysreg_el2(SYS_SPSR);
++
+ 	if (ARM_EXCEPTION_CODE(*exit_code) != ARM_EXCEPTION_IRQ)
+ 		vcpu->arch.fault.esr_el2 = read_sysreg_el2(SYS_ESR);
+ 
+diff --git a/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h b/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h
+index de7e14c862e6..7ecca8b07851 100644
+--- a/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h
++++ b/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h
+@@ -70,7 +70,12 @@ static inline void __sysreg_save_el1_state(struct kvm_cpu_context *ctxt)
+ static inline void __sysreg_save_el2_return_state(struct kvm_cpu_context *ctxt)
+ {
+ 	ctxt->regs.pc			= read_sysreg_el2(SYS_ELR);
+-	ctxt->regs.pstate		= read_sysreg_el2(SYS_SPSR);
++	/*
++	 * Guest PSTATE gets saved at guest fixup time in all
++	 * cases. We still need to handle the nVHE host side here.
++	 */
++	if (!has_vhe() && ctxt->__hyp_running_vcpu)
++		ctxt->regs.pstate	= read_sysreg_el2(SYS_SPSR);
+ 
+ 	if (cpus_have_final_cap(ARM64_HAS_RAS_EXTN))
+ 		ctxt_sys_reg(ctxt, DISR_EL1) = read_sysreg_s(SYS_VDISR_EL2);
 -- 
 2.30.2
 
