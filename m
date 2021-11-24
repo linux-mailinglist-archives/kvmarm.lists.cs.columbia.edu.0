@@ -2,153 +2,106 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 09E4845CB49
-	for <lists+kvmarm@lfdr.de>; Wed, 24 Nov 2021 18:41:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 935FA45CBD9
+	for <lists+kvmarm@lfdr.de>; Wed, 24 Nov 2021 19:09:02 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AACA24B20B;
-	Wed, 24 Nov 2021 12:41:35 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0B74B4B1DF;
+	Wed, 24 Nov 2021 13:09:02 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: 0.209
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	MSGID_FROM_MTA_HEADER=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
-	SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@os.amperecomputing.com
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3NASqrr0NUAC; Wed, 24 Nov 2021 12:41:35 -0500 (EST)
+	with ESMTP id i93arcpHaQPt; Wed, 24 Nov 2021 13:09:01 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 47DB34B1F2;
-	Wed, 24 Nov 2021 12:41:32 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 53F0E4B1D2;
+	Wed, 24 Nov 2021 13:09:00 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 217F94B1AF
- for <kvmarm@lists.cs.columbia.edu>; Wed, 24 Nov 2021 12:07:44 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2EAB44B0F1
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 24 Nov 2021 13:08:59 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id TRoXgq38qeQc for <kvmarm@lists.cs.columbia.edu>;
- Wed, 24 Nov 2021 12:07:43 -0500 (EST)
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com
- (mail-bn8nam11on2109.outbound.protection.outlook.com [40.107.236.109])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id EBB1A4B1BF
- for <kvmarm@lists.cs.columbia.edu>; Wed, 24 Nov 2021 12:07:42 -0500 (EST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Nq50gnd2po+tQXFWzq3ochY1LmCgjynmeZRjIn+is97XP8ts1UFktAAL9E79CRkLo2CEnTeiKZ0OAfOdLA+417yHywZbkKyhfWkhtnJB3Bt8h1DUBlidJPnCaeDAM0/tC+7adtY9QhOJEriBFy9XbZd1a/RV7eq4MD+uWs5rsC73urzsOd74E9ct7ZzrJHorABbmNy51pLQftxJb2EPB6DlbdjiEape+DZGGraZ2IiFeJok2hdmC1Gw5+tVaY3qZJF6J+miVQJyc9E4PVO+2Gffjj+eiDqYnaIpaa+PKahEC96Z07+ie1i3zQJCtQ3uCJJpQ0NZnKay4hoTgsnESxQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6YCVELxkKYYFXEFdWfYu2TIPOub5t6l3xA3DgPdBk6Q=;
- b=aIPoShhbA1HabeCzwIsC9jiXJfWDjhMkkkvJrQJuvCbZsI57cWDQxq/LVgYvEDs+POmIc30REPclFeEFLgoETrHomUwqEnEradyRABAM6tvUaGPKpKNACTLnMIkVv6JHRXc23dayvrMtZqsXRbm8kyaKJn89cQ7bazdwY18SZNC3qxAHGcMo6GjO1o1NBUfYHGbLktbXO1q+3KlbVLRJJQkMef0ngHb24ZLZ+tFl57JsuGSB1mRzn/Apb0ffGUZ2OXhyZkSlyPlj0uBcfK19nadAivQbKiOtnk1MMkUX9suVNvUCzRIB733ZgjRsS1YtNCeLcdz6tbnuL6chSmpiwg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6YCVELxkKYYFXEFdWfYu2TIPOub5t6l3xA3DgPdBk6Q=;
- b=Jfz7G5Jz0fsoYihisaKa+z5LnhXIi+c1IS4mkeVFueRwhkzAf5aDXZl9TYyu0MckGF1JXcUm8ouV9qmZzm2310H8kB9EROGPGB7m0p8xmdda8ZEp17vrbr6W1P9EOdDk++5U1kGmhye3FzV4jt0WNQgP7TRUYk/F6PToSSKchNo=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
-Received: from CH0PR01MB7033.prod.exchangelabs.com (2603:10b6:610:107::16) by
- CH2PR01MB5654.prod.exchangelabs.com (2603:10b6:610:2f::20) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4713.22; Wed, 24 Nov 2021 17:07:41 +0000
-Received: from CH0PR01MB7033.prod.exchangelabs.com
- ([fe80::1dc1:27e5:9fb6:f13d]) by CH0PR01MB7033.prod.exchangelabs.com
- ([fe80::1dc1:27e5:9fb6:f13d%9]) with mapi id 15.20.4734.022; Wed, 24 Nov 2021
- 17:07:41 +0000
-From: Tyler Baicar <baicar@os.amperecomputing.com>
-To: patches@amperecomputing.com, abdulhamid@os.amperecomputing.com,
- darren@os.amperecomputing.com, catalin.marinas@arm.com, will@kernel.org,
- maz@kernel.org, james.morse@arm.com, alexandru.elisei@arm.com,
- suzuki.poulose@arm.com, lorenzo.pieralisi@arm.com, guohanjun@huawei.com,
- sudeep.holla@arm.com, rafael@kernel.org, lenb@kernel.org,
- tony.luck@intel.com, bp@alien8.de, mark.rutland@arm.com,
- anshuman.khandual@arm.com, vincenzo.frascino@arm.com, tabba@google.com,
- marcan@marcan.st, keescook@chromium.org, jthierry@redhat.com,
- masahiroy@kernel.org, samitolvanen@google.com, john.garry@huawei.com,
- daniel.lezcano@linaro.org, gor@linux.ibm.com, zhangshaokun@hisilicon.com,
- tmricht@linux.ibm.com, dchinner@redhat.com, tglx@linutronix.de,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, linux-acpi@vger.kernel.org,
- linux-edac@vger.kernel.org, ishii.shuuichir@fujitsu.com,
- Vineeth.Pillai@microsoft.com
-Subject: [PATCH 2/2] trace, ras: add ARM RAS extension trace event
-Date: Wed, 24 Nov 2021 12:07:08 -0500
-Message-Id: <20211124170708.3874-3-baicar@os.amperecomputing.com>
-X-Mailer: git-send-email 2.33.1
-In-Reply-To: <20211124170708.3874-1-baicar@os.amperecomputing.com>
-References: <20211124170708.3874-1-baicar@os.amperecomputing.com>
-X-ClientProxiedBy: CH2PR05CA0059.namprd05.prod.outlook.com
- (2603:10b6:610:38::36) To CH0PR01MB7033.prod.exchangelabs.com
- (2603:10b6:610:107::16)
+ with ESMTP id Q9Y+71kH0Ujt for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 24 Nov 2021 13:08:57 -0500 (EST)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BA7424B0B9
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 24 Nov 2021 13:08:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1637777337;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1U6pHOdjTzqLr+UPekAI7w6u+A8bWKUlBWhhw9r2+iQ=;
+ b=Ciu7vUavN9G1q7CslnHSjC6ydW0Ytnf5qodN2Z61CedXtqKL2NE17ad6B40v+8RKYq2Q1M
+ YPsAZ2l1L1kizWecjy23O98NNNZlN7rOvl5RBsfisKSMi24Pj7dNCqA9rNvsK/pRJ5VPHl
+ HOg63ThqBlH/OrP725U4iqvXWVRiVeg=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-80-6z4r63puP6ecPs8R6fRMmQ-1; Wed, 24 Nov 2021 13:08:56 -0500
+X-MC-Unique: 6z4r63puP6ecPs8R6fRMmQ-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ k25-20020a05600c1c9900b00332f798ba1dso3409075wms.4
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 24 Nov 2021 10:08:56 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=1U6pHOdjTzqLr+UPekAI7w6u+A8bWKUlBWhhw9r2+iQ=;
+ b=wQXpugnmXxNuGePTFd5R3u859oBcACAAeNJtDEPn6WN9C/+T44cle7pV19AGew7D5t
+ vYdg74qxBEZUk1cIDHQMRroz+zTNOGOQLDwu9tWSiKM+efWWsYJGvd6mG5ryUtqOgJ6L
+ gbDUQHtP+O9f8IQnqFxLQu78kGHcEDoV0a2R1RC6EmgHu8mZIqFK37iTyxD+FNe0GiG5
+ uJOsWeSqMB5WgWwnBhnV1furjYIMlHlv68HgL9EAmjzCOYNfFsiDXRGK54ye3jKt5Zz5
+ Gr6mSRNqM+X5p5mBHfNcc8/V9+DgR9Pxh6rMA1ww2G1JpZ6/xN3jf1vsShkP5Bn2Y5Zh
+ L6JQ==
+X-Gm-Message-State: AOAM531gI2yu42eOu64TC46Rcf2B5G1AohbX8do5aXo6xuCJLfpP2JVD
+ zsAm3/p1AaZ/PlnTztrT8MtjCLcCht/xD+zcDsegms79LJCqD8E9CW4TKW44fvJfWHlsSJ1lIRY
+ wHeEhiKoVOtahxCPeo82jqw2m
+X-Received: by 2002:a05:6000:1141:: with SMTP id
+ d1mr21415765wrx.342.1637777335101; 
+ Wed, 24 Nov 2021 10:08:55 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJx26wuW9BzebF4e9Wvpg/UOAPXdq55mOMjSx/2pn674sZDA0jSUK6O9ANjx+8U8K2xw1sK2ag==
+X-Received: by 2002:a05:6000:1141:: with SMTP id
+ d1mr21415709wrx.342.1637777334754; 
+ Wed, 24 Nov 2021 10:08:54 -0800 (PST)
+Received: from ?IPv6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id p2sm6221778wmq.23.2021.11.24.10.08.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Nov 2021 10:08:53 -0800 (PST)
+Subject: Re: [RFC PATCH v3 02/29] KVM: arm64: Save ID registers' sanitized
+ value per vCPU
+To: Reiji Watanabe <reijiw@google.com>
+References: <20211117064359.2362060-1-reijiw@google.com>
+ <20211117064359.2362060-3-reijiw@google.com>
+ <dad16d0f-a0fa-cd8e-fdd0-0bbdf38af791@redhat.com>
+ <CAAeT=FyUjwJDLw=6u_ocgQ_974+vD4w0n2=WCYXLsH4cf+dxOw@mail.gmail.com>
+From: Eric Auger <eauger@redhat.com>
+Message-ID: <4193e1b3-3cc2-7e9a-e249-75ef71495398@redhat.com>
+Date: Wed, 24 Nov 2021 19:08:51 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-Received: from sut04sys-r242-0330002bj0sa.scc-lab.amperecomputing.com
- (4.28.12.214) by CH2PR05CA0059.namprd05.prod.outlook.com
- (2603:10b6:610:38::36) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4755.6 via Frontend
- Transport; Wed, 24 Nov 2021 17:07:38 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 1b534dea-95d7-47db-fbdb-08d9af6cecc0
-X-MS-TrafficTypeDiagnostic: CH2PR01MB5654:
-X-Microsoft-Antispam-PRVS: <CH2PR01MB5654FA3FAA3CC50F0476C1DEE3619@CH2PR01MB5654.prod.exchangelabs.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:4125;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: CHI0uLFSQ84aJLH6YELxyIrsWCfZ5iffWbWJZowSgVPeCGq0sJg49n7UqoXT2wFxFpMe+B9a5NOBUJx0P9i4sAZvZ3HX1iRdnEQDtuiIUCA9F1y3Ohc+PuISh9vVSH1Y/E/eGtWeg0TE7ZW9tpax/QeXul9fiiuQetgEsDDzM5yDOLyfIa+nKmcY4iLgytjr6HXfP/0aCeWlB4yR39NP2NfvkT5WzYiGGG/kUJD4JqkrkIf/CplMeylYNxmDjiefcxhpUmgBxT64XYVHtJ+G2kUg4Pnlrd7X3NccDziM6/SC3z0GQr5oSTJRibgwFSMUrJEFQfRaZX9DSMwEERxJeUwcPWIcIFQzRue3zISYDlGsd+FyghPLXoY+3cH3EnmDSsFj/rwr2x2wj/FnHDOysCkm/OrPTmZeT74UEDzafdQsIFuNN/LzNNzypV+h15dZOa9fhr9DiaRYZn0F8PIAoLjK1+9julT+PKJFX6ANIKxjwAgymu46bTMlww1fCLgKFqxOdSNzq42T4NiBXe1sxlHEdzm9W5mm5ACKjnS5VnhPqN1k95ObHlcK9PbuF9ZLfrhyR6qTaGD19aJtFAVDSIgp4Jz9pwtblxI9NktMpMsvfbRTQsNz9wGnq/IVHn01NCDg3xMMxWCmxkjORR5dJqsuPlxbsRQDjiL2ndocJnzM7Y0HEUkfV2TYzCOVOFoImDCX/vtPoEw1kuZmwJTgG233YUnjqrOPlJUE3xx7EnM=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH0PR01MB7033.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(366004)(8936002)(186003)(38100700002)(1076003)(38350700002)(5660300002)(316002)(66476007)(83380400001)(66556008)(921005)(52116002)(4326008)(7406005)(508600001)(86362001)(66946007)(26005)(6486002)(6666004)(956004)(7416002)(2906002)(107886003)(2616005)(6512007)(6506007)(8676002);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?PBDN04zL2AMGX2PtCwjO0W0xqqBcnICjMJsiP2G3XDzCA/93YQmFmrNCGaxI?=
- =?us-ascii?Q?U6jVt/mujP0YPHIN34aeOUou9tm0vGH4W16FSB/I5ABG2f+cjOMj98nIJAbD?=
- =?us-ascii?Q?9gSaPeLNLnT1m7qPXVlhylOyMAoHQckMGCmLg5i+MhW0h9h2eSwP9HcwxpOi?=
- =?us-ascii?Q?kQYCkqavq1vAguhTjF8p4Xu05n3JkdGiRIzO0elT86yfyC1VRRQI1zzzd5qW?=
- =?us-ascii?Q?OX3+WMVAg6J6g1FQCzTRcdWRjLkDSwvlxlHTRPQxEOSW2k/qHl6fv3HCfpo6?=
- =?us-ascii?Q?xNfXRVuKStuShZyTYJLG0sGQxLNrJvG447Cy9tNWlPjsxUJO0yZkzvzf9EVV?=
- =?us-ascii?Q?KYIigZGybksZTFHkibi9mBXfKTOEnJP/xMX/YILv5RkP84PC7d/iUy3+omur?=
- =?us-ascii?Q?4+Gq6Q1hjltN5wCo446+NAnI3B6kZNyHzSSDy85mCmhuNSsY3ALl2ihvGA0C?=
- =?us-ascii?Q?pbbqXFPI6xjcOOUZLhSargKHUmyEZ6TV1JPYHU/V/mOUkGXkgpTYrI2PVlQs?=
- =?us-ascii?Q?ytgM6fkYKC7muT2k8mfjk79wyifF/+XR8LBowaPdgm+fUi3MyIfCO2t2X5Nx?=
- =?us-ascii?Q?N4ScsLTujhqxt17JdS5TuKgX4ZHAWFsClb6+rnf81AIJzX//Yy+JN16kKkaA?=
- =?us-ascii?Q?4AHgPGbzDu61yczjvC1GDbxskPjhO3jFTjxC9WRrA18xP+WptOYgJj/UkwvA?=
- =?us-ascii?Q?/wR8zkjMO2vXqOSYZfETqcE1DDT9n0lMzFhgizjlcKEP/sfOxD8FvhH8APv+?=
- =?us-ascii?Q?QUaD4uLb2vnyNv6M4tp6cWmpKBJR6DvZdCOGTM1T0ozHyvRz9KNnwyuDu1qn?=
- =?us-ascii?Q?tgjYRws08bkYMZqblf2Lu99AiOqydil16ovUkLd9N3S1Q1fSJhu9nT73KVyc?=
- =?us-ascii?Q?J1Z3VUYYNCE729P/2Jqxt1+YnccZ3yPQ6OAQrgl5UY7k3gL1zIEJlAhtyORV?=
- =?us-ascii?Q?V611n3YVjHZH19R5PECjbdwMoofGYIf4P1Rx7GR7EVgsefL/49dMf4EGrL3C?=
- =?us-ascii?Q?DAX7kVjfyJ6si0QzZW1VXT6Nl5yGFhE/z/zSOFkwXB/Zbb/xzGEvcqe3JB3U?=
- =?us-ascii?Q?UYAEiEcVEjpssX2dovQb54H9AgVfMjrX4U72ESaC9+8A4WVi4qC0Uqf3Le8l?=
- =?us-ascii?Q?PNsIvLfvL/wtZ+wnbSVGNzVOkG88J4fH1oDmf5eYaRMfwYfmcltE9hh2KEhq?=
- =?us-ascii?Q?/fYnCoQSSUpncRJdWJThOZP8cXmFPDvEI8avJEfXCh/hbCJ+4EoyUo5ijatg?=
- =?us-ascii?Q?uSImtIcd4dgiTk0jRcugskHPoq+/kn0J/Knq1Q4LLGpNUyd4arEeFd00Xu1O?=
- =?us-ascii?Q?VGLEhJ58wbtc3URBRV04n67GCNJLsokW7egmjWQXCs7NWzc2A0ypN6uJQiSl?=
- =?us-ascii?Q?sO/tdUNY50ymHmthghQleksKg4+rY/Wcx+AGcNHrO6i5fA6RxeG/cCOmsWg6?=
- =?us-ascii?Q?B/xjkZlvLwYhhNozyMvZ2o6Ri7EicvrjzN4MIpqwYzDsT6jMUhlCVoN3RzlS?=
- =?us-ascii?Q?WD4lDhdM3OdHE30KwyWoUdWoQfpVOwIYfvrNUltOnbZ5mmxGr6BrxmrZieOm?=
- =?us-ascii?Q?YGveRWIaNmJv1F3z3Enq8K6MZiktaomtUcJFe34e3xwxq0i936CnIo7kMCr2?=
- =?us-ascii?Q?UsSoIkjWoW88DvQpHK6fBhoMACYnZ6TKzxs9KzkRqjVXKYlavjKSdBiL0s0i?=
- =?us-ascii?Q?U0TuHvnHznQBrpjezupIGkGl26NavO7EEWq6od26ZlzTmT8dxRVZuyehgYnJ?=
- =?us-ascii?Q?E+gAqHnlSQ=3D=3D?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1b534dea-95d7-47db-fbdb-08d9af6cecc0
-X-MS-Exchange-CrossTenant-AuthSource: CH0PR01MB7033.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Nov 2021 17:07:41.5972 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: RWLYZ76EDX2/qzbiNZRc1rRVzOkjd81GousT+NeRY6p+NTSenwAzsEuenqcESNkM1mp6JiWKzPwhK6X8jSswAWMjmqkvdEEhfZt1rGxMDUyVrsA3ymAA9H8EQXNie8zc
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR01MB5654
-X-Mailman-Approved-At: Wed, 24 Nov 2021 12:41:30 -0500
-Cc: Tyler Baicar <baicar@os.amperecomputing.com>
+In-Reply-To: <CAAeT=FyUjwJDLw=6u_ocgQ_974+vD4w0n2=WCYXLsH4cf+dxOw@mail.gmail.com>
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=eauger@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+ Peter Shier <pshier@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -165,129 +118,191 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add a trace event for hardware errors reported by the ARMv8
-RAS extension registers.
+Hi Reiji,
 
-Signed-off-by: Tyler Baicar <baicar@os.amperecomputing.com>
----
- arch/arm64/kernel/ras.c   |  4 +++
- drivers/acpi/arm64/aest.c |  5 ++++
- include/ras/ras_event.h   | 55 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 64 insertions(+)
+On 11/18/21 11:00 PM, Reiji Watanabe wrote:
+> Hi Eric,
+> 
+> On Thu, Nov 18, 2021 at 12:37 PM Eric Auger <eauger@redhat.com> wrote:
+>>
+>> Hi Reiji,
+>>
+>> On 11/17/21 7:43 AM, Reiji Watanabe wrote:
+>>> Extend sys_regs[] of kvm_cpu_context for ID registers and save ID
+>>> registers' sanitized value in the array for the vCPU at the first
+>>> vCPU reset. Use the saved ones when ID registers are read by
+>>> userspace (via KVM_GET_ONE_REG) or the guest.
+>>>
+>>> Signed-off-by: Reiji Watanabe <reijiw@google.com>
+>>> ---
+>>>  arch/arm64/include/asm/kvm_host.h | 10 +++++++
+>>>  arch/arm64/kvm/sys_regs.c         | 43 +++++++++++++++++++------------
+>>>  2 files changed, 37 insertions(+), 16 deletions(-)
+>>>
+>>> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+>>> index edbe2cb21947..72db73c79403 100644
+>>> --- a/arch/arm64/include/asm/kvm_host.h
+>>> +++ b/arch/arm64/include/asm/kvm_host.h
+>>> @@ -146,6 +146,14 @@ struct kvm_vcpu_fault_info {
+>>>       u64 disr_el1;           /* Deferred [SError] Status Register */
+>>>  };
+>>>
+>>> +/*
+>>> + * (Op0, Op1, CRn, CRm, Op2) of ID registers is (3, 0, 0, crm, op2),
+>>> + * where 0<=crm<8, 0<=op2<8.
+>>> + */
+>>> +#define KVM_ARM_ID_REG_MAX_NUM 64
+>>> +#define IDREG_IDX(id)                ((sys_reg_CRm(id) << 3) | sys_reg_Op2(id))
+>>> +#define IDREG_SYS_IDX(id)    (ID_REG_BASE + IDREG_IDX(id))
+>>> +
+>>>  enum vcpu_sysreg {
+>>>       __INVALID_SYSREG__,   /* 0 is reserved as an invalid value */
+>>>       MPIDR_EL1,      /* MultiProcessor Affinity Register */
+>>> @@ -210,6 +218,8 @@ enum vcpu_sysreg {
+>>>       CNTP_CVAL_EL0,
+>>>       CNTP_CTL_EL0,
+>>>
+>>> +     ID_REG_BASE,
+>>> +     ID_REG_END = ID_REG_BASE + KVM_ARM_ID_REG_MAX_NUM - 1,
+>>>       /* Memory Tagging Extension registers */
+>>>       RGSR_EL1,       /* Random Allocation Tag Seed Register */
+>>>       GCR_EL1,        /* Tag Control Register */
+>>> diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+>>> index e3ec1a44f94d..5608d3410660 100644
+>>> --- a/arch/arm64/kvm/sys_regs.c
+>>> +++ b/arch/arm64/kvm/sys_regs.c
+>>> @@ -33,6 +33,8 @@
+>>>
+>>>  #include "trace.h"
+>>>
+>>> +static u64 __read_id_reg(const struct kvm_vcpu *vcpu, u32 id);
+>>> +
+>>>  /*
+>>>   * All of this file is extremely similar to the ARM coproc.c, but the
+>>>   * types are different. My gut feeling is that it should be pretty
+>>> @@ -273,7 +275,7 @@ static bool trap_loregion(struct kvm_vcpu *vcpu,
+>>>                         struct sys_reg_params *p,
+>>>                         const struct sys_reg_desc *r)
+>>>  {
+>>> -     u64 val = read_sanitised_ftr_reg(SYS_ID_AA64MMFR1_EL1);
+>>> +     u64 val = __read_id_reg(vcpu, SYS_ID_AA64MMFR1_EL1);
+>>>       u32 sr = reg_to_encoding(r);
+>>>
+>>>       if (!(val & (0xfUL << ID_AA64MMFR1_LOR_SHIFT))) {
+>>> @@ -1059,17 +1061,9 @@ static bool access_arch_timer(struct kvm_vcpu *vcpu,
+>>>       return true;
+>>>  }
+>>>
+>>> -/* Read a sanitised cpufeature ID register by sys_reg_desc */
+>>> -static u64 read_id_reg(const struct kvm_vcpu *vcpu,
+>>> -             struct sys_reg_desc const *r, bool raz)
+>>> +static u64 __read_id_reg(const struct kvm_vcpu *vcpu, u32 id)
+>>>  {
+>>> -     u32 id = reg_to_encoding(r);
+>>> -     u64 val;
+>>> -
+>>> -     if (raz)
+>>> -             return 0;
+>>> -
+>>> -     val = read_sanitised_ftr_reg(id);
+>>> +     u64 val = __vcpu_sys_reg(vcpu, IDREG_SYS_IDX(id));
+>>>
+>>>       switch (id) {
+>>>       case SYS_ID_AA64PFR0_EL1:
+>>> @@ -1119,6 +1113,14 @@ static u64 read_id_reg(const struct kvm_vcpu *vcpu,
+>>>       return val;
+>>>  }
+>>>
+>>> +static u64 read_id_reg(const struct kvm_vcpu *vcpu,
+>>> +                    struct sys_reg_desc const *r, bool raz)
+>>> +{
+>>> +     u32 id = reg_to_encoding(r);
+>>> +
+>>> +     return raz ? 0 : __read_id_reg(vcpu, id);
+>>> +}
+>>> +
+>>>  static unsigned int id_visibility(const struct kvm_vcpu *vcpu,
+>>>                                 const struct sys_reg_desc *r)
+>>>  {
+>>> @@ -1178,6 +1180,16 @@ static unsigned int sve_visibility(const struct kvm_vcpu *vcpu,
+>>>       return REG_HIDDEN;
+>>>  }
+>>>
+>>> +static void reset_id_reg(struct kvm_vcpu *vcpu, const struct sys_reg_desc *rd)
+>>> +{
+>>> +     u32 id = reg_to_encoding(rd);
+>>> +
+>>> +     if (vcpu_has_reset_once(vcpu))
+>>> +             return;
+>>> +
+>>> +     __vcpu_sys_reg(vcpu, IDREG_SYS_IDX(id)) = read_sanitised_ftr_reg(id);
+>>> +}
+>>> +
+>>>  static int set_id_aa64pfr0_el1(struct kvm_vcpu *vcpu,
+>>>                              const struct sys_reg_desc *rd,
+>>>                              const struct kvm_one_reg *reg, void __user *uaddr)
+>>> @@ -1223,9 +1235,7 @@ static int set_id_aa64pfr0_el1(struct kvm_vcpu *vcpu,
+>>>  /*
+>>>   * cpufeature ID register user accessors
+>>>   *
+>>> - * For now, these registers are immutable for userspace, so no values
+>>> - * are stored, and for set_id_reg() we don't allow the effective value
+>>> - * to be changed.
+>>> + * We don't allow the effective value to be changed.
+>> This change may be moved to a subsequent patch as this patch does not
+>> change the behavior yet.
+> 
+> Thank you for the review.
+> 
+> There are three main parts in the original comments.
+> 
+>  (A) these registers are immutable for userspace
+>  (B) no values are stored
+>  (C) we don't allow the effective value to be changed
+> 
+> This patch stores ID register values in sys_regs[].
+> So, I don't think (B) should be there, and I removed (B).
+> Since (A) is essentially the same as (C), I removed (A)
+> (and left (C)).
+> 
+> Do you think it is better to leave (A) in this patch, too ?
+yes I think I would leave 'for now,  these registers are immutable for
+userspace'
 
-diff --git a/arch/arm64/kernel/ras.c b/arch/arm64/kernel/ras.c
-index 31e2036a4c70..18071790b2a3 100644
---- a/arch/arm64/kernel/ras.c
-+++ b/arch/arm64/kernel/ras.c
-@@ -6,6 +6,8 @@
- #include <asm/cpufeature.h>
- #include <asm/ras.h>
- 
-+#include <ras/ras_event.h>
-+
- static bool ras_extn_v1p1(void)
- {
- 	unsigned long fld, reg = read_sanitised_ftr_reg(SYS_ID_AA64PFR0_EL1);
-@@ -95,6 +97,8 @@ void arch_arm_ras_report_error(u64 implemented, bool clear_misc)
- 
- 		arch_arm_ras_print_error(&regs, i, misc23_present);
- 
-+		trace_arm_ras_ext_event(0, cpu_num, 0, i, &regs);
-+
- 		/*
- 		 * In the future, we will treat UER conditions as potentially
- 		 * recoverable.
-diff --git a/drivers/acpi/arm64/aest.c b/drivers/acpi/arm64/aest.c
-index 2df4f2377e51..7ef1750f91b3 100644
---- a/drivers/acpi/arm64/aest.c
-+++ b/drivers/acpi/arm64/aest.c
-@@ -14,6 +14,8 @@
- 
- #include <asm/ras.h>
- 
-+#include <ras/ras_event.h>
-+
- #undef pr_fmt
- #define pr_fmt(fmt) "ACPI AEST: " fmt
- 
-@@ -126,6 +128,9 @@ static void aest_proc(struct aest_node_data *data)
- 
- 		aest_print(data, regs, i, misc23_present);
- 
-+		trace_arm_ras_ext_event(data->node_type, data->data.vendor.acpi_hid,
-+					data->data.vendor.acpi_uid, i, &regs);
-+
- 		if (regs.err_status & ERR_STATUS_UE)
- 			fatal = true;
- 
-diff --git a/include/ras/ras_event.h b/include/ras/ras_event.h
-index 0bdbc0d17d2f..27b2be9f950d 100644
---- a/include/ras/ras_event.h
-+++ b/include/ras/ras_event.h
-@@ -338,6 +338,61 @@ TRACE_EVENT(aer_event,
- 			"Not available")
- );
- 
-+/*
-+ * ARM RAS Extension Events Report
-+ *
-+ * This event is generated when an error reported by the ARM RAS extension
-+ * hardware is detected.
-+ */
-+
-+#ifdef CONFIG_ARM64_RAS_EXTN
-+#include <asm/ras.h>
-+TRACE_EVENT(arm_ras_ext_event,
-+
-+	TP_PROTO(u8 type, u32 id0, u32 id1, u32 index, struct ras_ext_regs *regs),
-+
-+	TP_ARGS(type, id0, id1, index, regs),
-+
-+	TP_STRUCT__entry(
-+		__field(u8,  type)
-+		__field(u32, id0)
-+		__field(u32, id1)
-+		__field(u32, index)
-+		__field(u64, err_fr)
-+		__field(u64, err_ctlr)
-+		__field(u64, err_status)
-+		__field(u64, err_addr)
-+		__field(u64, err_misc0)
-+		__field(u64, err_misc1)
-+		__field(u64, err_misc2)
-+		__field(u64, err_misc3)
-+	),
-+
-+	TP_fast_assign(
-+		__entry->type = type;
-+		__entry->id0 = id0;
-+		__entry->id1 = id1;
-+		__entry->index = index;
-+		__entry->err_fr = regs->err_fr;
-+		__entry->err_ctlr = regs->err_ctlr;
-+		__entry->err_status = regs->err_status;
-+		__entry->err_addr = regs->err_addr;
-+		__entry->err_misc0 = regs->err_misc0;
-+		__entry->err_misc1 = regs->err_misc1;
-+		__entry->err_misc2 = regs->err_misc2;
-+		__entry->err_misc3 = regs->err_misc3;
-+	),
-+
-+	TP_printk("type: %d; id0: %d; id1: %d; index: %d; ERR_FR: %llx; ERR_CTLR: %llx; "
-+		  "ERR_STATUS: %llx; ERR_ADDR: %llx; ERR_MISC0: %llx; ERR_MISC1: %llx; "
-+		  "ERR_MISC2: %llx; ERR_MISC3: %llx",
-+		  __entry->type, __entry->id0, __entry->id1, __entry->index, __entry->err_fr,
-+		  __entry->err_ctlr, __entry->err_status, __entry->err_addr,
-+		  __entry->err_misc0, __entry->err_misc1, __entry->err_misc2,
-+		  __entry->err_misc3)
-+);
-+#endif
-+
- /*
-  * memory-failure recovery action result event
-  *
--- 
-2.33.1
+Eric
+> 
+> Thanks,
+> Reiji
+> 
+> 
+>>>   */
+>>>  static int __get_id_reg(const struct kvm_vcpu *vcpu,
+>>>                       const struct sys_reg_desc *rd, void __user *uaddr,
+>>> @@ -1382,6 +1392,7 @@ static unsigned int mte_visibility(const struct kvm_vcpu *vcpu,
+>>>  #define ID_SANITISED(name) {                 \
+>>>       SYS_DESC(SYS_##name),                   \
+>>>       .access = access_id_reg,                \
+>>> +     .reset  = reset_id_reg,                 \
+>>>       .get_user = get_id_reg,                 \
+>>>       .set_user = set_id_reg,                 \
+>>>       .visibility = id_visibility,            \
+>>> @@ -1837,8 +1848,8 @@ static bool trap_dbgdidr(struct kvm_vcpu *vcpu,
+>>>       if (p->is_write) {
+>>>               return ignore_write(vcpu, p);
+>>>       } else {
+>>> -             u64 dfr = read_sanitised_ftr_reg(SYS_ID_AA64DFR0_EL1);
+>>> -             u64 pfr = read_sanitised_ftr_reg(SYS_ID_AA64PFR0_EL1);
+>>> +             u64 dfr = __read_id_reg(vcpu, SYS_ID_AA64DFR0_EL1);
+>>> +             u64 pfr = __read_id_reg(vcpu, SYS_ID_AA64PFR0_EL1);
+>>>               u32 el3 = !!cpuid_feature_extract_unsigned_field(pfr, ID_AA64PFR0_EL3_SHIFT);
+>>>
+>>>               p->regval = ((((dfr >> ID_AA64DFR0_WRPS_SHIFT) & 0xf) << 28) |
+>>>
+>> Thanks
+>>
+>> Eric
+>>
+> 
 
 _______________________________________________
 kvmarm mailing list
