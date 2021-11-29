@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 424BF462167
-	for <lists+kvmarm@lfdr.de>; Mon, 29 Nov 2021 21:05:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FF46462180
+	for <lists+kvmarm@lfdr.de>; Mon, 29 Nov 2021 21:06:36 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DE7714B104;
-	Mon, 29 Nov 2021 15:05:38 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 220BE4B16F;
+	Mon, 29 Nov 2021 15:06:36 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
@@ -18,50 +18,49 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zmnQQehmcUNE; Mon, 29 Nov 2021 15:05:37 -0500 (EST)
+	with ESMTP id HW-ICZ-eC5qY; Mon, 29 Nov 2021 15:06:34 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A37854B092;
-	Mon, 29 Nov 2021 15:05:37 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6D5554B188;
+	Mon, 29 Nov 2021 15:06:34 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3A6044B0DD
- for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 15:05:36 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B72004B139
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 15:06:31 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id EwD7zK--+miT for <kvmarm@lists.cs.columbia.edu>;
- Mon, 29 Nov 2021 15:05:35 -0500 (EST)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E0E7F4B090
- for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 15:05:34 -0500 (EST)
+ with ESMTP id dXRqpC43LoSE for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 29 Nov 2021 15:06:30 -0500 (EST)
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 587464B105
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 15:06:28 -0500 (EST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id E55DDB815EC;
- Mon, 29 Nov 2021 20:05:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C86F7C53FD1;
- Mon, 29 Nov 2021 20:05:31 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTPS id 4CF56CE140D;
+ Mon, 29 Nov 2021 20:06:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96F66C53FC7;
+ Mon, 29 Nov 2021 20:06:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1638216331;
- bh=tTxcULXoo3QMlH9nFuTANsqJJDvpHaZXohlcPR2wbWA=;
+ s=k20201202; t=1638216384;
+ bh=hQjYY7dIibxjv8EfQGlPyiMMiLP5soaWxDM3zMZFfu0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=q3YpLz8+uJ97q1qgocMm/qBME7Or4leBztDeHl8LLfcYLQwYdiEJ/8K9Vb83elpLS
- mFO249KYbRxRrYifgBfI5Nvv7LmfU4phIFVF7Ye9Ag8Sj/b6phUu9/IStJqnZ5y4Um
- sDvsEQ4gkFhh9GyNvalpFl0MQGdhpbBCCIq1n4KZZlsJereKlXEeG5+KIKkKnR8g9/
- zF7RF0iJRzkkLLgNxnmJDgmJdAat2KUflypGZqxwkZU4OiIlsXHQ2ot9PSDIBAYgb0
- xSesnCXlh9OHCvSAnmx+9V/TOlFItkKjBsuDlc0as9QyqpcJpLkfE2ObRRZ8tm79GS
- DPic66p0ICqXA==
+ b=l0bJ9mYp6fYzJKROrE4sSorG38/awt0U0m6AbwzlhTWJtCUU2Rfk5FChhFUdjbXk7
+ avdT1DPfCz7WUEvDfxesmId9WC14pE786gCVfiYJAIFYPBO4zRvyAgWV8s00rk6ZsI
+ DIpT9EYHSpoWCg55W9kSVmZAj5qUgQSoZuuJ9tXkQHNtc5Kgdg/XfL82V4JpsV598z
+ omT0GzedG9Woibkdebcz3WNGbpXX2RZjyceGhOKk9/m8/i8ka/+cNu4mln5JqyunAc
+ EY8FcdY2qOCrzs7GLZDmRT78CCXDjVSuStcZvJyu7RsFNL9r7PpTsUPom2GfBZioeg
+ zTDOAcxzL3W+g==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1mrmrB-008gvR-64; Mon, 29 Nov 2021 20:02:33 +0000
+ id 1mrmrB-008gvR-FG; Mon, 29 Nov 2021 20:02:33 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH v5 52/69] KVM: arm64: nv: Don't load the GICv4 context on
- entering a nested guest
-Date: Mon, 29 Nov 2021 20:01:33 +0000
-Message-Id: <20211129200150.351436-53-maz@kernel.org>
+Subject: [PATCH v5 53/69] KVM: arm64: nv: vgic: Emulate the HW bit in software
+Date: Mon, 29 Nov 2021 20:01:34 +0000
+Message-Id: <20211129200150.351436-54-maz@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20211129200150.351436-1-maz@kernel.org>
 References: <20211129200150.351436-1-maz@kernel.org>
@@ -94,48 +93,123 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-When entering a nested guest (vgic_state_is_nested() == true),
-special care must be taken *not* to make the vPE resident, as
-these are interrupts targetting the L1 guest, and not any
-nested guest.
+From: Christoffer Dall <christoffer.dall@arm.com>
 
-By not making the vPE resident, we guarantee that the delivery
-of an vLPI will result in a doorbell, forcing an exit from the
-nested guest and a switch to the L1 guest to handle the interrupt.
+Should the guest hypervisor use the HW bit in the LRs, we need to
+emulate the deactivation from the L2 guest into the L1 distributor
+emulation, which is handled by L0.
 
+It's all good fun.
+
+Signed-off-by: Christoffer Dall <christoffer.dall@arm.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic-v3.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/kvm_hyp.h     |  2 ++
+ arch/arm64/kvm/hyp/vgic-v3-sr.c      |  2 +-
+ arch/arm64/kvm/vgic/vgic-v3-nested.c | 32 ++++++++++++++++++++++++++++
+ arch/arm64/kvm/vgic/vgic.c           |  6 ++++--
+ include/kvm/arm_vgic.h               |  1 +
+ 5 files changed, 40 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/kvm/vgic/vgic-v3.c b/arch/arm64/kvm/vgic/vgic-v3.c
-index ae4d6489373d..7b575df62fa9 100644
---- a/arch/arm64/kvm/vgic/vgic-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-v3.c
-@@ -736,8 +736,8 @@ void vgic_v3_load(struct kvm_vcpu *vcpu)
+diff --git a/arch/arm64/include/asm/kvm_hyp.h b/arch/arm64/include/asm/kvm_hyp.h
+index 5afd14ab15b9..0d1bd78c2179 100644
+--- a/arch/arm64/include/asm/kvm_hyp.h
++++ b/arch/arm64/include/asm/kvm_hyp.h
+@@ -57,6 +57,8 @@ DECLARE_PER_CPU(struct kvm_nvhe_init_params, kvm_init_params);
  
- 	if (vgic_state_is_nested(vcpu))
- 		vgic_v3_load_nested(vcpu);
--
--	WARN_ON(vgic_v4_load(vcpu));
-+	else
-+		WARN_ON(vgic_v4_load(vcpu));
+ int __vgic_v2_perform_cpuif_access(struct kvm_vcpu *vcpu);
+ 
++u64 __gic_v3_get_lr(unsigned int lr);
++
+ void __vgic_v3_save_state(struct vgic_v3_cpu_if *cpu_if);
+ void __vgic_v3_restore_state(struct vgic_v3_cpu_if *cpu_if);
+ void __vgic_v3_activate_traps(struct vgic_v3_cpu_if *cpu_if);
+diff --git a/arch/arm64/kvm/hyp/vgic-v3-sr.c b/arch/arm64/kvm/hyp/vgic-v3-sr.c
+index 20db2f281cf2..0601d73de11b 100644
+--- a/arch/arm64/kvm/hyp/vgic-v3-sr.c
++++ b/arch/arm64/kvm/hyp/vgic-v3-sr.c
+@@ -18,7 +18,7 @@
+ #define vtr_to_nr_pre_bits(v)		((((u32)(v) >> 26) & 7) + 1)
+ #define vtr_to_nr_apr_regs(v)		(1 << (vtr_to_nr_pre_bits(v) - 5))
+ 
+-static u64 __gic_v3_get_lr(unsigned int lr)
++u64 __gic_v3_get_lr(unsigned int lr)
+ {
+ 	switch (lr & 0xf) {
+ 	case 0:
+diff --git a/arch/arm64/kvm/vgic/vgic-v3-nested.c b/arch/arm64/kvm/vgic/vgic-v3-nested.c
+index bfe0ccde514f..3ee3438b5e22 100644
+--- a/arch/arm64/kvm/vgic/vgic-v3-nested.c
++++ b/arch/arm64/kvm/vgic/vgic-v3-nested.c
+@@ -138,6 +138,38 @@ static void vgic_v3_fixup_shadow_lr_state(struct kvm_vcpu *vcpu)
+ 	}
  }
  
- void vgic_v3_vmcr_sync(struct kvm_vcpu *vcpu)
-@@ -755,6 +755,12 @@ void vgic_v3_put(struct kvm_vcpu *vcpu)
++void vgic_v3_sync_nested(struct kvm_vcpu *vcpu)
++{
++	struct vgic_v3_cpu_if *cpu_if = vcpu_nested_if(vcpu);
++	struct vgic_v3_cpu_if *s_cpu_if = vcpu_shadow_if(vcpu);
++	struct vgic_irq *irq;
++	int i;
++
++	for (i = 0; i < s_cpu_if->used_lrs; i++) {
++		u64 lr = cpu_if->vgic_lr[i];
++		int l1_irq;
++
++		if (!(lr & ICH_LR_HW) || !(lr & ICH_LR_STATE))
++			continue;
++
++		/*
++		 * If we had a HW lr programmed by the guest hypervisor, we
++		 * need to emulate the HW effect between the guest hypervisor
++		 * and the nested guest.
++		 */
++		l1_irq = (lr & ICH_LR_PHYS_ID_MASK) >> ICH_LR_PHYS_ID_SHIFT;
++		irq = vgic_get_irq(vcpu->kvm, vcpu, l1_irq);
++		if (!irq)
++			continue; /* oh well, the guest hyp is broken */
++
++		lr = __gic_v3_get_lr(i);
++		if (!(lr & ICH_LR_STATE))
++			irq->active = false;
++
++		vgic_put_irq(vcpu->kvm, irq);
++	}
++}
++
+ void vgic_v3_load_nested(struct kvm_vcpu *vcpu)
  {
- 	struct vgic_v3_cpu_if *cpu_if = &vcpu->arch.vgic_cpu.vgic_v3;
+ 	struct vgic_cpu *vgic_cpu = &vcpu->arch.vgic_cpu;
+diff --git a/arch/arm64/kvm/vgic/vgic.c b/arch/arm64/kvm/vgic/vgic.c
+index 6503aa208c9f..afe415b5f8a0 100644
+--- a/arch/arm64/kvm/vgic/vgic.c
++++ b/arch/arm64/kvm/vgic/vgic.c
+@@ -876,9 +876,11 @@ void kvm_vgic_sync_hwstate(struct kvm_vcpu *vcpu)
+ {
+ 	int used_lrs;
  
-+	/*
-+	 * vgic_v4_put will do nothing if we were not resident. This
-+	 * covers both the cases where we've blocked (we already have
-+	 * done a vgic_v4_put) and when running a nested guest (the
-+	 * vPE was never resident in order to generate a doorbell).
-+	 */
- 	WARN_ON(vgic_v4_put(vcpu, false));
+-	/* If nesting, this is a load/put affair, not flush/sync. */
+-	if (vgic_state_is_nested(vcpu))
++	/* If nesting, emulate the HW effect from L0 to L1 */
++	if (vgic_state_is_nested(vcpu)) {
++		vgic_v3_sync_nested(vcpu);
+ 		return;
++	}
  
- 	vgic_v3_vmcr_sync(vcpu);
+ 	/* An empty ap_list_head implies used_lrs == 0 */
+ 	if (list_empty(&vcpu->arch.vgic_cpu.ap_list_head))
+diff --git a/include/kvm/arm_vgic.h b/include/kvm/arm_vgic.h
+index a0db49e6c781..a3fc08988a5b 100644
+--- a/include/kvm/arm_vgic.h
++++ b/include/kvm/arm_vgic.h
+@@ -391,6 +391,7 @@ void kvm_vgic_load(struct kvm_vcpu *vcpu);
+ void kvm_vgic_put(struct kvm_vcpu *vcpu);
+ void kvm_vgic_vmcr_sync(struct kvm_vcpu *vcpu);
+ 
++void vgic_v3_sync_nested(struct kvm_vcpu *vcpu);
+ void vgic_v3_load_nested(struct kvm_vcpu *vcpu);
+ void vgic_v3_put_nested(struct kvm_vcpu *vcpu);
+ void vgic_v3_handle_nested_maint_irq(struct kvm_vcpu *vcpu);
 -- 
 2.30.2
 
