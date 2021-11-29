@@ -2,66 +2,66 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 27F1D462182
-	for <lists+kvmarm@lfdr.de>; Mon, 29 Nov 2021 21:06:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 30D5B462195
+	for <lists+kvmarm@lfdr.de>; Mon, 29 Nov 2021 21:07:16 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CB1C54B195;
-	Mon, 29 Nov 2021 15:06:39 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D6DAF4B192;
+	Mon, 29 Nov 2021 15:07:15 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
-	autolearn=unavailable
+	autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IWnyx9dT7SrE; Mon, 29 Nov 2021 15:06:39 -0500 (EST)
+	with ESMTP id 5VRmM1oQb1yr; Mon, 29 Nov 2021 15:07:14 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A5E6D4B10B;
-	Mon, 29 Nov 2021 15:06:38 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 878894B106;
+	Mon, 29 Nov 2021 15:07:12 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id BF53C4B149
- for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 15:06:36 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BDCC44B17B
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 15:07:10 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Fh16KDwcAh4G for <kvmarm@lists.cs.columbia.edu>;
- Mon, 29 Nov 2021 15:06:35 -0500 (EST)
+ with ESMTP id 4dqeCwMIlnV0 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 29 Nov 2021 15:07:09 -0500 (EST)
 Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4CCB04B15A
- for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 15:06:34 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id EC66F4B177
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 15:07:08 -0500 (EST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 1A8D5B815E6;
- Mon, 29 Nov 2021 20:06:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE28BC53FCD;
- Mon, 29 Nov 2021 20:06:31 +0000 (UTC)
+ by ams.source.kernel.org (Postfix) with ESMTPS id A4302B815D4;
+ Mon, 29 Nov 2021 20:07:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA76C53FD1;
+ Mon, 29 Nov 2021 20:07:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1638216391;
- bh=HOZdzEjZoeKGETrJPFOERpPygAZITG+WMe69qICsnxY=;
+ s=k20201202; t=1638216426;
+ bh=cJeHssu6W6tbH2sGWKdERubXg5G7pf2q9AVmfzXNOeU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Ava+keXKw6IIMzpQUO+tL1qONJ2H21WVoLC4+orWHICkvY+0kswSXgLyDPzkNeN6t
- yTeJqq3pCyICyTur1hzTP/Bk8TmcCC0wUuUKW6DahMdPzgQaFWifPDt0a4ft/+k5VO
- k77rKHZBJH8NPMVtp0paNX3W73Su5YoO4SMnQTPOJ3N1KEsJ9GYZXWBvuM3zZtFN4X
- 65fnN+EoXxVPgXyKzMqrgce87NqIw7r1B8hEI9dwb9zA5Tu+8EnR75ztwJmdnTziAp
- VINw0fzo/NkineRWz9ZprgZmgCUdVj84Tcbd5g+TDEa6/soWD8csP1n+UMc56wQQ3f
- 530ctogYlo39A==
+ b=iH5Ls/9sv96MP0xvUNz8SkNdcxHqbG7BxO4FafXsNJxPmSTbocopJ82UiwN3F5eaN
+ 4SZVH6nomQkVcIJ+y2XCUxjxzm999MLme+wbfZ/py5bvreC+m+SR2V0SpFm5K8zrlN
+ GAAtqkUXPU+VTlXq28wmfK5Ll5GDD7Hh0tVfXX0pcCi9fSacKbFBSi3OC9OLMOHVWI
+ nD4Gr41GypD+6Z289lrQGYhDx8nuK5Bl5koqfL+j2vZ+kySHhAaBdM437KtAXupuBs
+ mrl+kEX3CIL5hIgGljkEhB60taK6geIYxbo7vl4OcmH7ZlJzp5aQbJSAXXL/9v0rWC
+ Hu1Y4forKNFPg==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1mrmqy-008gvR-I8; Mon, 29 Nov 2021 20:02:20 +0000
+ id 1mrmqy-008gvR-Qx; Mon, 29 Nov 2021 20:02:20 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH v5 35/69] KVM: arm64: nv: Only toggle cache for virtual EL2
- when SCTLR_EL2 changes
-Date: Mon, 29 Nov 2021 20:01:16 +0000
-Message-Id: <20211129200150.351436-36-maz@kernel.org>
+Subject: [PATCH v5 36/69] KVM: arm64: nv: Filter out unsupported features from
+ ID regs
+Date: Mon, 29 Nov 2021 20:01:17 +0000
+Message-Id: <20211129200150.351436-37-maz@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20211129200150.351436-1-maz@kernel.org>
 References: <20211129200150.351436-1-maz@kernel.org>
@@ -94,49 +94,230 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Christoffer Dall <christoffer.dall@linaro.org>
+As there is a number of features that we either can't support,
+or don't want to support right away with NV, let's add some
+basic filtering so that we don't advertize silly things to the
+EL2 guest.
 
-So far we were flushing almost the entire universe whenever a VM would
-load/unload the SCTLR_EL1 and the two versions of that register had
-different MMU enabled settings.  This turned out to be so slow that it
-prevented forward progress for a nested VM, because a scheduler timer
-tick interrupt would always be pending when we reached the nested VM.
+Whilst we are at it, avertize ARMv8.4-TTL as well as ARMv8.5-GTG.
 
-To avoid this problem, we consider the SCTLR_EL2 when evaluating if
-caches are on or off when entering virtual EL2 (because this is the
-value that we end up shadowing onto the hardware EL1 register).
-
-Signed-off-by: Christoffer Dall <christoffer.dall@linaro.org>
-Signed-off-by: Jintack Lim <jintack.lim@linaro.org>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/kvm_mmu.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/kvm_nested.h |   6 ++
+ arch/arm64/kvm/nested.c             | 152 ++++++++++++++++++++++++++++
+ arch/arm64/kvm/sys_regs.c           |   4 +-
+ arch/arm64/kvm/sys_regs.h           |   2 +
+ 4 files changed, 163 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/kvm_mmu.h b/arch/arm64/include/asm/kvm_mmu.h
-index 02d378887743..c018c7b40761 100644
---- a/arch/arm64/include/asm/kvm_mmu.h
-+++ b/arch/arm64/include/asm/kvm_mmu.h
-@@ -115,6 +115,7 @@ alternative_cb_end
- #include <asm/cache.h>
- #include <asm/cacheflush.h>
- #include <asm/mmu_context.h>
-+#include <asm/kvm_emulate.h>
+diff --git a/arch/arm64/include/asm/kvm_nested.h b/arch/arm64/include/asm/kvm_nested.h
+index 07c15f51cf86..026ddaad972c 100644
+--- a/arch/arm64/include/asm/kvm_nested.h
++++ b/arch/arm64/include/asm/kvm_nested.h
+@@ -67,4 +67,10 @@ extern bool __forward_traps(struct kvm_vcpu *vcpu, unsigned int reg,
+ extern bool forward_traps(struct kvm_vcpu *vcpu, u64 control_bit);
+ extern bool forward_nv_traps(struct kvm_vcpu *vcpu);
  
- void kvm_update_va_mask(struct alt_instr *alt,
- 			__le32 *origptr, __le32 *updptr, int nr_inst);
-@@ -185,7 +186,10 @@ struct kvm;
++struct sys_reg_params;
++struct sys_reg_desc;
++
++void access_nested_id_reg(struct kvm_vcpu *v, struct sys_reg_params *p,
++			  const struct sys_reg_desc *r);
++
+ #endif /* __ARM64_KVM_NESTED_H */
+diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
+index 42a96c8d2adc..19b674983e13 100644
+--- a/arch/arm64/kvm/nested.c
++++ b/arch/arm64/kvm/nested.c
+@@ -20,6 +20,10 @@
+ #include <linux/kvm_host.h>
  
- static inline bool vcpu_has_cache_enabled(struct kvm_vcpu *vcpu)
+ #include <asm/kvm_emulate.h>
++#include <asm/kvm_nested.h>
++#include <asm/sysreg.h>
++
++#include "sys_regs.h"
+ 
+ /*
+  * Inject wfx to the virtual EL2 if this is not from the virtual EL2 and
+@@ -38,3 +42,151 @@ int handle_wfx_nested(struct kvm_vcpu *vcpu, bool is_wfe)
+ 
+ 	return -EINVAL;
+ }
++
++/*
++ * Our emulated CPU doesn't support all the possible features. For the
++ * sake of simplicity (and probably mental sanity), wipe out a number
++ * of feature bits we don't intend to support for the time being.
++ * This list should get updated as new features get added to the NV
++ * support, and new extension to the architecture.
++ */
++void access_nested_id_reg(struct kvm_vcpu *v, struct sys_reg_params *p,
++			  const struct sys_reg_desc *r)
++{
++	u32 id = sys_reg((u32)r->Op0, (u32)r->Op1,
++			 (u32)r->CRn, (u32)r->CRm, (u32)r->Op2);
++	u64 val, tmp;
++
++	if (!nested_virt_in_use(v))
++		return;
++
++	val = p->regval;
++
++	switch (id) {
++	case SYS_ID_AA64ISAR0_EL1:
++		/* Support everything but O.S. and Range TLBIs */
++		val &= ~(FEATURE(ID_AA64ISAR0_TLB)	|
++			 GENMASK_ULL(27, 24)		|
++			 GENMASK_ULL(3, 0));
++		break;
++
++	case SYS_ID_AA64ISAR1_EL1:
++		/* Support everything but PtrAuth and Spec Invalidation */
++		val &= ~(GENMASK_ULL(63, 56)		|
++			 FEATURE(ID_AA64ISAR1_SPECRES)	|
++			 FEATURE(ID_AA64ISAR1_GPI)	|
++			 FEATURE(ID_AA64ISAR1_GPA)	|
++			 FEATURE(ID_AA64ISAR1_API)	|
++			 FEATURE(ID_AA64ISAR1_APA));
++		break;
++
++	case SYS_ID_AA64PFR0_EL1:
++		/* No AMU, MPAM, S-EL2, RAS or SVE */
++		val &= ~(GENMASK_ULL(55, 52)		|
++			 FEATURE(ID_AA64PFR0_AMU)	|
++			 FEATURE(ID_AA64PFR0_MPAM)	|
++			 FEATURE(ID_AA64PFR0_SEL2)	|
++			 FEATURE(ID_AA64PFR0_RAS)	|
++			 FEATURE(ID_AA64PFR0_SVE)	|
++			 FEATURE(ID_AA64PFR0_EL3)	|
++			 FEATURE(ID_AA64PFR0_EL2));
++		/* 64bit EL2/EL3 only */
++		val |= FIELD_PREP(FEATURE(ID_AA64PFR0_EL2), 0b0001);
++		val |= FIELD_PREP(FEATURE(ID_AA64PFR0_EL3), 0b0001);
++		break;
++
++	case SYS_ID_AA64PFR1_EL1:
++		/* Only support SSBS */
++		val &= FEATURE(ID_AA64PFR1_SSBS);
++		break;
++
++	case SYS_ID_AA64MMFR0_EL1:
++		/* Hide ECV, FGT, ExS, Secure Memory */
++		val &= ~(GENMASK_ULL(63, 43)			|
++			 FEATURE(ID_AA64MMFR0_TGRAN4_2)		|
++			 FEATURE(ID_AA64MMFR0_TGRAN16_2)	|
++			 FEATURE(ID_AA64MMFR0_TGRAN64_2)	|
++			 FEATURE(ID_AA64MMFR0_SNSMEM));
++
++		/* Disallow unsupported S2 page sizes */
++		switch (PAGE_SIZE) {
++		case SZ_64K:
++			val |= FIELD_PREP(FEATURE(ID_AA64MMFR0_TGRAN16_2), 0b0001);
++			fallthrough;
++		case SZ_16K:
++			val |= FIELD_PREP(FEATURE(ID_AA64MMFR0_TGRAN4_2), 0b0001);
++			fallthrough;
++		case SZ_4K:
++			/* Support everything */
++			break;
++		}
++		/* Advertize supported S2 page sizes */
++		switch (PAGE_SIZE) {
++		case SZ_4K:
++			val |= FIELD_PREP(FEATURE(ID_AA64MMFR0_TGRAN4_2), 0b0010);
++			fallthrough;
++		case SZ_16K:
++			val |= FIELD_PREP(FEATURE(ID_AA64MMFR0_TGRAN16_2), 0b0010);
++			fallthrough;
++		case SZ_64K:
++			val |= FIELD_PREP(FEATURE(ID_AA64MMFR0_TGRAN64_2), 0b0010);
++			break;
++		}
++		/* Cap PARange to 40bits */
++		tmp = FIELD_GET(FEATURE(ID_AA64MMFR0_PARANGE), val);
++		if (tmp > 0b0010) {
++			val &= ~FEATURE(ID_AA64MMFR0_PARANGE);
++			val |= FIELD_PREP(FEATURE(ID_AA64MMFR0_PARANGE), 0b0010);
++		}
++		break;
++
++	case SYS_ID_AA64MMFR1_EL1:
++		val &= (FEATURE(ID_AA64MMFR1_PAN)	|
++			FEATURE(ID_AA64MMFR1_LOR)	|
++			FEATURE(ID_AA64MMFR1_HPD)	|
++			FEATURE(ID_AA64MMFR1_VHE)	|
++			FEATURE(ID_AA64MMFR1_VMIDBITS));
++		break;
++
++	case SYS_ID_AA64MMFR2_EL1:
++		val &= ~(FEATURE(ID_AA64MMFR2_EVT)	|
++			 FEATURE(ID_AA64MMFR2_BBM)	|
++			 FEATURE(ID_AA64MMFR2_TTL)	|
++			 GENMASK_ULL(47, 44)		|
++			 FEATURE(ID_AA64MMFR2_ST)	|
++			 FEATURE(ID_AA64MMFR2_CCIDX)	|
++			 FEATURE(ID_AA64MMFR2_LVA));
++
++		/* Force TTL support */
++		val |= FIELD_PREP(FEATURE(ID_AA64MMFR2_TTL), 0b0001);
++		break;
++
++	case SYS_ID_AA64DFR0_EL1:
++		/* Only limited support for PMU, Debug, BPs and WPs */
++		val &= (FEATURE(ID_AA64DFR0_PMSVER)	|
++			FEATURE(ID_AA64DFR0_WRPS)	|
++			FEATURE(ID_AA64DFR0_BRPS)	|
++			FEATURE(ID_AA64DFR0_DEBUGVER));
++
++		/* Cap PMU to ARMv8.1 */
++		tmp = FIELD_GET(FEATURE(ID_AA64DFR0_PMUVER), val);
++		if (tmp > 0b0100) {
++			val &= ~FEATURE(ID_AA64DFR0_PMUVER);
++			val |= FIELD_PREP(FEATURE(ID_AA64DFR0_PMUVER), 0b0100);
++		}
++		/* Cap Debug to ARMv8.1 */
++		tmp = FIELD_GET(FEATURE(ID_AA64DFR0_DEBUGVER), val);
++		if (tmp > 0b0111) {
++			val &= ~FEATURE(ID_AA64DFR0_DEBUGVER);
++			val |= FIELD_PREP(FEATURE(ID_AA64DFR0_DEBUGVER), 0b0111);
++		}
++		break;
++
++	default:
++		/* Unknown register, just wipe it clean */
++		val = 0;
++		break;
++	}
++
++	p->regval = val;
++}
+diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+index 9deedd5a058f..19b33ccb61b8 100644
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -1431,8 +1431,10 @@ static bool access_id_reg(struct kvm_vcpu *vcpu,
+ 			  const struct sys_reg_desc *r)
  {
--	return (vcpu_read_sys_reg(vcpu, SCTLR_EL1) & 0b101) == 0b101;
-+	if (vcpu_mode_el2(vcpu))
-+		return (__vcpu_sys_reg(vcpu, SCTLR_EL2) & 0b101) == 0b101;
-+	else
-+		return (vcpu_read_sys_reg(vcpu, SCTLR_EL1) & 0b101) == 0b101;
+ 	bool raz = sysreg_visible_as_raz(vcpu, r);
++	bool ret = __access_id_reg(vcpu, p, r, raz);
+ 
+-	return __access_id_reg(vcpu, p, r, raz);
++	access_nested_id_reg(vcpu, p, r);
++	return ret;
  }
  
- static inline void __clean_dcache_guest_page(void *va, size_t size)
+ static bool access_raz_id_reg(struct kvm_vcpu *vcpu,
+diff --git a/arch/arm64/kvm/sys_regs.h b/arch/arm64/kvm/sys_regs.h
+index cc0cc95a0280..d260c26b1834 100644
+--- a/arch/arm64/kvm/sys_regs.h
++++ b/arch/arm64/kvm/sys_regs.h
+@@ -201,4 +201,6 @@ const struct sys_reg_desc *find_reg_by_id(u64 id,
+ 	CRn(sys_reg_CRn(reg)), CRm(sys_reg_CRm(reg)),	\
+ 	Op2(sys_reg_Op2(reg))
+ 
++#define FEATURE(x)	(GENMASK_ULL(x##_SHIFT + 3, x##_SHIFT))
++
+ #endif /* __ARM64_KVM_SYS_REGS_LOCAL_H__ */
 -- 
 2.30.2
 
