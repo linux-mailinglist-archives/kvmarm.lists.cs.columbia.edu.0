@@ -2,75 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 39CE2461055
-	for <lists+kvmarm@lfdr.de>; Mon, 29 Nov 2021 09:41:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E1A31461057
+	for <lists+kvmarm@lfdr.de>; Mon, 29 Nov 2021 09:41:57 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DD6894B21A;
-	Mon, 29 Nov 2021 03:41:55 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9506E4B1CF;
+	Mon, 29 Nov 2021 03:41:57 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@chromium.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id apMDz3wfV0G9; Mon, 29 Nov 2021 03:41:55 -0500 (EST)
+	with ESMTP id nBAyEaxbchEK; Mon, 29 Nov 2021 03:41:56 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0828A4B249;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1B9214B251;
 	Mon, 29 Nov 2021 03:41:51 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 43DED4B1FE
- for <kvmarm@lists.cs.columbia.edu>; Sun, 28 Nov 2021 22:43:51 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C1D6B4B208
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 28 Nov 2021 22:43:55 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 8wdDmhwlP+B3 for <kvmarm@lists.cs.columbia.edu>;
- Sun, 28 Nov 2021 22:43:49 -0500 (EST)
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com
- [209.85.216.53])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 976694B1FD
- for <kvmarm@lists.cs.columbia.edu>; Sun, 28 Nov 2021 22:43:49 -0500 (EST)
-Received: by mail-pj1-f53.google.com with SMTP id v23so11554471pjr.5
- for <kvmarm@lists.cs.columbia.edu>; Sun, 28 Nov 2021 19:43:49 -0800 (PST)
+ with ESMTP id jzsce8G-7m-R for <kvmarm@lists.cs.columbia.edu>;
+ Sun, 28 Nov 2021 22:43:54 -0500 (EST)
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com
+ [209.85.216.50])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 39B7A4B1FD
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 28 Nov 2021 22:43:54 -0500 (EST)
+Received: by mail-pj1-f50.google.com with SMTP id
+ n15-20020a17090a160f00b001a75089daa3so14421931pja.1
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 28 Nov 2021 19:43:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chromium.org; s=google;
  h=from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=WMYRrbcse/N7Z6kty0CX8mwv84TiaTtEgSRBD9icxeo=;
- b=l5BRuDFG8QUnDUfK0C4OQZ7pI/xscGyHXmrsmUVpB0homEFKpzaHd7GPALVmtCCjla
- x/NrMEM9Ls/X+/4lShvIyG4x5vdA5kGh93aou3U/cBCOR8dxuHHuR2gZsPtfbd6ouW+9
- jLl2SQxzemkKFhr8XTfasLphpSKL4EgcWJ3Ic=
+ bh=1E5J112/KKe5nzfIjRapghLBkhpzMa3/YxcaryPQAAY=;
+ b=CPZyN1kOZxK9jC2nDgnbHL1qPOcAxvPYZ4/Ldp15ZFP8LQUMl5fThYRqCxYekmI+Ti
+ jaGDXmQRNigPBEiMxuYtVffQzOSXSTMZfCgxkkTeXS6mHjhsZzo3h+r10/68GkCXPnC9
+ CxPtfq+6DPfEA6ybJRpLeLHrmjDI7ysst1V7c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=WMYRrbcse/N7Z6kty0CX8mwv84TiaTtEgSRBD9icxeo=;
- b=fjsC7I4HeLldxg97hvlzrNpLMllJWqDRdhPqSfOSIvhDKgqGLRu0ua2DSqP3qCkLrZ
- Fry5eMzaJATi/fQnKj/M58GimqrImq/uzca+bub4bL8cTXD8odoJnNVrCKK3goR06KIE
- ckXtQJxG8FaZ0pjtjuDrOicb0cC1aVIgqxMMDtBBi7kuZZn5kgZ1tcsWT18la9QKd4kt
- w9b2E8+znHLN3zaQ1ujcCrCogtIOE3KssK2cyDOcs//jgynC1YFeehgxbXHzQ8PBm4Qd
- H6FHvYQgxYb2jfmP7V+Vm/gyVVudFNkoy/86Lj0LIVP2ve2xgvtJw4FGaisaByh8sczR
- W5eA==
-X-Gm-Message-State: AOAM5339gC4ypm7imWdUc4/zE1sMmB+lQeLzwnezXJb/riPZHCS37xnC
- kzmwUtqYnEvVLKdeLhlQkhXhDQ==
-X-Google-Smtp-Source: ABdhPJyDEsZsotgmp6fBOwk9oYujXo2fN06uKmxeZ+XjnZYzPGTRUcyJvb12Rt+m6tqKzhAuh+1n+Q==
-X-Received: by 2002:a17:90b:4d0c:: with SMTP id
- mw12mr35136514pjb.209.1638157428872; 
- Sun, 28 Nov 2021 19:43:48 -0800 (PST)
+ bh=1E5J112/KKe5nzfIjRapghLBkhpzMa3/YxcaryPQAAY=;
+ b=lDp6zNw9XzbqeH2pVj3qqwbwOOJaMA4LZrehsbIBRwhu78GVO18WrG2xGQN7fOAKPq
+ 4/zmgjgxZg9xFMhGjr1+AJwxJzF9MjO+Z6veltbSKqaw9UT7vUazxw1lABLMO+AVi2gq
+ qilfonPpgoIUt7yzObEq0a46kMF4f68YSpl8DsO6S9pWMI3EU0fKkEju14Q8pRtbzHsS
+ PM4tsKFSxkSIk+a3Iemy7jKZjgk9QA7GXHuYEZGE8Joemnjdu2r6srl1BESx5SI73KTA
+ +UE4PgI07NOVCwWmX6O4/MImLPYkrsOsjmVtvz0cOz12QppdyfRg7EUa0aOwNjDH6MxR
+ dPRg==
+X-Gm-Message-State: AOAM530PLsAa5b9nDvZrb3rVxhaWgxI5JKMJbS+79KOexzI73AU3h/sl
+ atpMvUvnEgk2PXaR8zfv2z+4PA==
+X-Google-Smtp-Source: ABdhPJzR1mYlqKwgxgr65ZpLjYIw4Q3tENBbFuvuJ6S4uxpSlpvxqFbVGGaQXv+7du9DJSv52f6+mQ==
+X-Received: by 2002:a17:90a:e506:: with SMTP id
+ t6mr34337394pjy.9.1638157433470; 
+ Sun, 28 Nov 2021 19:43:53 -0800 (PST)
 Received: from localhost ([2401:fa00:8f:203:72d1:80f6:e1c9:ed0a])
- by smtp.gmail.com with UTF8SMTPSA id c21sm15497042pfl.138.2021.11.28.19.43.45
+ by smtp.gmail.com with UTF8SMTPSA id h13sm14337804pfv.84.2021.11.28.19.43.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 28 Nov 2021 19:43:48 -0800 (PST)
+ Sun, 28 Nov 2021 19:43:53 -0800 (PST)
 From: David Stevens <stevensd@chromium.org>
 X-Google-Original-From: David Stevens <stevensd@google.com>
 To: Marc Zyngier <maz@kernel.org>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v5 2/4] KVM: x86/mmu: use gfn_to_pfn_page
-Date: Mon, 29 Nov 2021 12:43:15 +0900
-Message-Id: <20211129034317.2964790-3-stevensd@google.com>
+Subject: [PATCH v5 3/4] KVM: arm64/mmu: use gfn_to_pfn_page
+Date: Mon, 29 Nov 2021 12:43:16 +0900
+Message-Id: <20211129034317.2964790-4-stevensd@google.com>
 X-Mailer: git-send-email 2.34.0.rc2.393.gf8c9666880-goog
 In-Reply-To: <20211129034317.2964790-1-stevensd@google.com>
 References: <20211129034317.2964790-1-stevensd@google.com>
@@ -104,143 +105,96 @@ gfn_to_pfn_page functions.
 
 Signed-off-by: David Stevens <stevensd@chromium.org>
 ---
- arch/x86/kvm/mmu.h             |  1 +
- arch/x86/kvm/mmu/mmu.c         | 18 +++++++++++-------
- arch/x86/kvm/mmu/paging_tmpl.h |  9 ++++++---
- arch/x86/kvm/x86.c             |  6 ++++--
- 4 files changed, 22 insertions(+), 12 deletions(-)
+ arch/arm64/kvm/mmu.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/arch/x86/kvm/mmu.h b/arch/x86/kvm/mmu.h
-index 9ae6168d381e..97d94a9612b6 100644
---- a/arch/x86/kvm/mmu.h
-+++ b/arch/x86/kvm/mmu.h
-@@ -164,6 +164,7 @@ struct kvm_page_fault {
- 	/* Outputs of kvm_faultin_pfn.  */
- 	kvm_pfn_t pfn;
- 	hva_t hva;
-+	struct page *page;
- 	bool map_writable;
- };
+diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+index 326cdfec74a1..197fb8afbb94 100644
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -829,7 +829,7 @@ static bool fault_supports_stage2_huge_mapping(struct kvm_memory_slot *memslot,
+ static unsigned long
+ transparent_hugepage_adjust(struct kvm *kvm, struct kvm_memory_slot *memslot,
+ 			    unsigned long hva, kvm_pfn_t *pfnp,
+-			    phys_addr_t *ipap)
++			    struct page **page, phys_addr_t *ipap)
+ {
+ 	kvm_pfn_t pfn = *pfnp;
  
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 04c00c34517e..0626395ff1d9 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -2891,6 +2891,9 @@ void kvm_mmu_hugepage_adjust(struct kvm_vcpu *vcpu, struct kvm_page_fault *fault
- 	if (unlikely(fault->max_level == PG_LEVEL_4K))
- 		return;
+@@ -838,7 +838,8 @@ transparent_hugepage_adjust(struct kvm *kvm, struct kvm_memory_slot *memslot,
+ 	 * sure that the HVA and IPA are sufficiently aligned and that the
+ 	 * block map is contained within the memslot.
+ 	 */
+-	if (fault_supports_stage2_huge_mapping(memslot, hva, PMD_SIZE) &&
++	if (*page &&
++	    fault_supports_stage2_huge_mapping(memslot, hva, PMD_SIZE) &&
+ 	    get_user_mapping_size(kvm, hva) >= PMD_SIZE) {
+ 		/*
+ 		 * The address we faulted on is backed by a transparent huge
+@@ -859,10 +860,11 @@ transparent_hugepage_adjust(struct kvm *kvm, struct kvm_memory_slot *memslot,
+ 		 * page accordingly.
+ 		 */
+ 		*ipap &= PMD_MASK;
+-		kvm_release_pfn_clean(pfn);
++		put_page(*page);
+ 		pfn &= ~(PTRS_PER_PMD - 1);
+-		get_page(pfn_to_page(pfn));
+ 		*pfnp = pfn;
++		*page = pfn_to_page(pfn);
++		get_page(*page);
  
-+	if (!fault->page)
-+		return;
-+
- 	if (is_error_noslot_pfn(fault->pfn) || kvm_is_reserved_pfn(fault->pfn))
- 		return;
- 
-@@ -3950,9 +3953,9 @@ static bool kvm_faultin_pfn(struct kvm_vcpu *vcpu, struct kvm_page_fault *fault,
+ 		return PMD_SIZE;
  	}
- 
- 	async = false;
--	fault->pfn = __gfn_to_pfn_memslot(slot, fault->gfn, false, &async,
--					  fault->write, &fault->map_writable,
--					  &fault->hva);
-+	fault->pfn = __gfn_to_pfn_page_memslot(slot, fault->gfn, false, &async,
-+					       fault->write, &fault->map_writable,
-+					       &fault->hva, &fault->page);
- 	if (!async)
- 		return false; /* *pfn has correct page already */
- 
-@@ -3966,9 +3969,9 @@ static bool kvm_faultin_pfn(struct kvm_vcpu *vcpu, struct kvm_page_fault *fault,
- 			goto out_retry;
- 	}
- 
--	fault->pfn = __gfn_to_pfn_memslot(slot, fault->gfn, false, NULL,
--					  fault->write, &fault->map_writable,
--					  &fault->hva);
-+	fault->pfn = __gfn_to_pfn_page_memslot(slot, fault->gfn, false, NULL,
-+					       fault->write, &fault->map_writable,
-+					       &fault->hva, &fault->page);
- 	return false;
- 
- out_retry:
-@@ -4029,7 +4032,8 @@ static int direct_page_fault(struct kvm_vcpu *vcpu, struct kvm_page_fault *fault
- 		read_unlock(&vcpu->kvm->mmu_lock);
- 	else
- 		write_unlock(&vcpu->kvm->mmu_lock);
--	kvm_release_pfn_clean(fault->pfn);
-+	if (fault->page)
-+		put_page(fault->page);
- 	return r;
- }
- 
-diff --git a/arch/x86/kvm/mmu/paging_tmpl.h b/arch/x86/kvm/mmu/paging_tmpl.h
-index f87d36898c44..370d52f252a8 100644
---- a/arch/x86/kvm/mmu/paging_tmpl.h
-+++ b/arch/x86/kvm/mmu/paging_tmpl.h
-@@ -565,6 +565,7 @@ FNAME(prefetch_gpte)(struct kvm_vcpu *vcpu, struct kvm_mmu_page *sp,
- 	unsigned pte_access;
+@@ -955,6 +957,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 	short vma_shift;
  	gfn_t gfn;
  	kvm_pfn_t pfn;
 +	struct page *page;
+ 	bool logging_active = memslot_is_logging(memslot);
+ 	unsigned long fault_level = kvm_vcpu_trap_get_fault_level(vcpu);
+ 	unsigned long vma_pagesize, fault_granule;
+@@ -1056,8 +1059,8 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 	 */
+ 	smp_rmb();
  
- 	if (FNAME(prefetch_invalid_gpte)(vcpu, sp, spte, gpte))
- 		return false;
-@@ -580,12 +581,13 @@ FNAME(prefetch_gpte)(struct kvm_vcpu *vcpu, struct kvm_mmu_page *sp,
- 	if (!slot)
- 		return false;
+-	pfn = __gfn_to_pfn_memslot(memslot, gfn, false, NULL,
+-				   write_fault, &writable, NULL);
++	pfn = __gfn_to_pfn_page_memslot(memslot, gfn, false, NULL,
++					write_fault, &writable, NULL, &page);
+ 	if (pfn == KVM_PFN_ERR_HWPOISON) {
+ 		kvm_send_hwpoison_signal(hva, vma_shift);
+ 		return 0;
+@@ -1102,7 +1105,8 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
+ 			vma_pagesize = fault_granule;
+ 		else
+ 			vma_pagesize = transparent_hugepage_adjust(kvm, memslot,
+-								   hva, &pfn,
++								   hva,
++								   &pfn, &page,
+ 								   &fault_ipa);
+ 	}
  
--	pfn = gfn_to_pfn_memslot_atomic(slot, gfn);
-+	pfn = gfn_to_pfn_page_memslot_atomic(slot, gfn, &page);
- 	if (is_error_pfn(pfn))
- 		return false;
+@@ -1142,14 +1146,17 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
  
- 	mmu_set_spte(vcpu, slot, spte, pte_access, gfn, pfn, NULL);
--	kvm_release_pfn_clean(pfn);
-+	if (page)
-+		put_page(page);
- 	return true;
- }
- 
-@@ -923,7 +925,8 @@ static int FNAME(page_fault)(struct kvm_vcpu *vcpu, struct kvm_page_fault *fault
+ 	/* Mark the page dirty only if the fault is handled successfully */
+ 	if (writable && !ret) {
+-		kvm_set_pfn_dirty(pfn);
++		if (page)
++			kvm_set_pfn_dirty(pfn);
+ 		mark_page_dirty_in_slot(kvm, memslot, gfn);
+ 	}
  
  out_unlock:
- 	write_unlock(&vcpu->kvm->mmu_lock);
--	kvm_release_pfn_clean(fault->pfn);
-+	if (fault->page)
-+		put_page(fault->page);
- 	return r;
+ 	spin_unlock(&kvm->mmu_lock);
+-	kvm_set_pfn_accessed(pfn);
+-	kvm_release_pfn_clean(pfn);
++	if (page) {
++		kvm_set_pfn_accessed(pfn);
++		put_page(page);
++	}
+ 	return ret != -EAGAIN ? ret : 0;
  }
  
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 5c479ae57693..95f56ec43e0b 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -7820,6 +7820,7 @@ static bool reexecute_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
- {
- 	gpa_t gpa = cr2_or_gpa;
- 	kvm_pfn_t pfn;
-+	struct page *page;
- 
- 	if (!(emulation_type & EMULTYPE_ALLOW_RETRY_PF))
- 		return false;
-@@ -7849,7 +7850,7 @@ static bool reexecute_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
- 	 * retry instruction -> write #PF -> emulation fail -> retry
- 	 * instruction -> ...
- 	 */
--	pfn = gfn_to_pfn(vcpu->kvm, gpa_to_gfn(gpa));
-+	pfn = gfn_to_pfn_page(vcpu->kvm, gpa_to_gfn(gpa), &page);
- 
- 	/*
- 	 * If the instruction failed on the error pfn, it can not be fixed,
-@@ -7858,7 +7859,8 @@ static bool reexecute_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
- 	if (is_error_noslot_pfn(pfn))
- 		return false;
- 
--	kvm_release_pfn_clean(pfn);
-+	if (page)
-+		put_page(page);
- 
- 	/* The instructions are well-emulated on direct mmu. */
- 	if (vcpu->arch.mmu->direct_map) {
 -- 
 2.34.0.rc2.393.gf8c9666880-goog
 
