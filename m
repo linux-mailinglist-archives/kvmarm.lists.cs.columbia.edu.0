@@ -2,106 +2,84 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 61B72461D21
-	for <lists+kvmarm@lfdr.de>; Mon, 29 Nov 2021 18:55:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 57942461D64
+	for <lists+kvmarm@lfdr.de>; Mon, 29 Nov 2021 19:12:53 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F41FD4B1CF;
-	Mon, 29 Nov 2021 12:55:26 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D7E3B4B1D0;
+	Mon, 29 Nov 2021 13:12:52 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@gmail.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YYCVUo+utlLe; Mon, 29 Nov 2021 12:55:26 -0500 (EST)
+	with ESMTP id aMfiWAOzkmjM; Mon, 29 Nov 2021 13:12:52 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B054E4B1BD;
-	Mon, 29 Nov 2021 12:55:25 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9F9C44B1BA;
+	Mon, 29 Nov 2021 13:12:51 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E48EE4B1AC
- for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 12:55:24 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 293344B1A9
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 13:12:50 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id VHvYu1T50BRS for <kvmarm@lists.cs.columbia.edu>;
- Mon, 29 Nov 2021 12:55:23 -0500 (EST)
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com
- [209.85.208.41])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1931D4B1A3
- for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 12:55:23 -0500 (EST)
-Received: by mail-ed1-f41.google.com with SMTP id o20so75053621eds.10
- for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 09:55:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=sender:message-id:date:mime-version:user-agent:subject
- :content-language:to:cc:references:from:in-reply-to
- :content-transfer-encoding;
- bh=Jo8G3WIFnCXJv/Wl58UbY8LXKhGKq56nydp8ornyGvw=;
- b=AjLExKPDvZxJIAf93isJIQG5owoNwi20rpmLOoVH2+s0ZWunJFmYMjECqAXAa31ExM
- qP4APhy58+cgNzSgs7CZp9bi9ZLfh1Um4f0T4CPKtFMqEQtoIPcbCG5ECCW+4/RpN3qP
- 1k3CIsFPt6dBLkWzV5yOedKG0phAVvwwuaHgAci5hCbOZz8Yy6GMFp/NPR+R+K6sin3x
- 5VGYrAKTVs66DntrIpjFBpn/bDtGwX2tdoIaZvud6hNaP1K0MD3EhI9p5XlWWUFTNrfc
- xT0cVpHPnGNOA0p342OPsO0F8T5HlLM3fktULYfIDujE1Zx4qHlH1POPSzpbzwUrncLW
- GVzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:sender:message-id:date:mime-version:user-agent
- :subject:content-language:to:cc:references:from:in-reply-to
- :content-transfer-encoding;
- bh=Jo8G3WIFnCXJv/Wl58UbY8LXKhGKq56nydp8ornyGvw=;
- b=GxWC6/msgbZeB8HVJUCZhyVBUs2ZBTLZZaGbUKdYo+8VKwzRdG5VnUZX+C1FKmfbPC
- GlvJ2OSHeQR6l1NF2CjpYFpaEEigtYhtrrETWLaDrJzoysOYNdbwhQJFDdXpeHOesdgD
- jeZMhKDGllpWgC4VM1N71QOXFNZw28N2DRBXCvt0GyBXgbwYDct2Q4ZmFNtWKt1rMrxF
- zUBuYmfOmZsplLBx7FaetC0ZAY7Ruzg3phqbF7l6qt1c2vb66/BAoB0W7lzSnKIslZpS
- BZSHjsBJOYDard58iL+LT4Yd9RvR6xeVenrUXlnDQzVKCWsOy2SuDjd2EM5lC9qNgg5j
- zOKw==
-X-Gm-Message-State: AOAM530oy9oLs243IAUo+DCjMbK1iCsbrgjMoin4nnT1okQIV31brN5f
- LrEl5mj31OA+IM+TII1wgzw=
-X-Google-Smtp-Source: ABdhPJzV0Hp7Xr2kSqyy1FejCYUnhDh4xLCC02qQtKZ+cbHbGKkW71ueP1pw91X6C27D1KEW8+5Gvw==
-X-Received: by 2002:a17:907:68e:: with SMTP id
- wn14mr62415481ejb.258.1638208522107; 
- Mon, 29 Nov 2021 09:55:22 -0800 (PST)
-Received: from ?IPV6:2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e?
- ([2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e])
- by smtp.googlemail.com with ESMTPSA id og38sm7559529ejc.5.2021.11.29.09.55.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Nov 2021 09:55:21 -0800 (PST)
-Message-ID: <ba8341d6-7ee7-1af1-1385-0a9226bbf952@redhat.com>
-Date: Mon, 29 Nov 2021 18:55:19 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.0
-Subject: Re: [PATCH v2 11/43] KVM: Don't block+unblock when halt-polling is
- successful
-Content-Language: en-US
-To: Sean Christopherson <seanjc@google.com>,
- Maxim Levitsky <mlevitsk@redhat.com>
-References: <20211009021236.4122790-1-seanjc@google.com>
- <20211009021236.4122790-12-seanjc@google.com>
- <cceb33be9e2a6ac504bb95a7b2b8cf5fe0b1ff26.camel@redhat.com>
- <4e883728e3e5201a94eb46b56315afca5e95ad9c.camel@redhat.com>
- <YaUNBfJh35WXMV0M@google.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-In-Reply-To: <YaUNBfJh35WXMV0M@google.com>
-Cc: Cornelia Huck <cohuck@redhat.com>, Wanpeng Li <wanpengli@tencent.com>,
- kvm@vger.kernel.org, David Hildenbrand <david@redhat.com>,
- linux-kernel@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
- Atish Patra <atish.patra@wdc.com>, linux-riscv@lists.infradead.org,
- Claudio Imbrenda <imbrenda@linux.ibm.com>, kvmarm@lists.cs.columbia.edu,
- Janosch Frank <frankja@linux.ibm.com>, Marc Zyngier <maz@kernel.org>,
- Joerg Roedel <joro@8bytes.org>, Huacai Chen <chenhuacai@kernel.org>,
- Christian Borntraeger <borntraeger@de.ibm.com>,
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
- Albert Ou <aou@eecs.berkeley.edu>, kvm-ppc@vger.kernel.org,
- Paul Walmsley <paul.walmsley@sifive.com>, David Matlack <dmatlack@google.com>,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
- Anup Patel <anup.patel@wdc.com>, linux-mips@vger.kernel.org,
- Palmer Dabbelt <palmer@dabbelt.com>, kvm-riscv@lists.infradead.org,
- Vitaly Kuznetsov <vkuznets@redhat.com>
+ with ESMTP id bavB9+nTaQqo for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 29 Nov 2021 13:12:49 -0500 (EST)
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A86FB4B0E1
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 13:12:48 -0500 (EST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by sin.source.kernel.org (Postfix) with ESMTPS id 393D2CE13C7;
+ Mon, 29 Nov 2021 18:12:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68732C53FC7;
+ Mon, 29 Nov 2021 18:12:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1638209563;
+ bh=vt+bCjT54jnhEeJkuJHIggsLka/2q/tr/Bf8TSjbSSw=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=MPWv1s2hDNbos+VP+oWbMhK59eGz/ddvi5GXTo2nvaO7h4MvAmJXAJzB766RKNsbl
+ 5+Bt7NTPIW2esg9KESWbl0r/U9+ZxElKbrgViZ8hJjz2vuLZhno1uZmxvrGZuMRPIM
+ cWLx90DPxkWR3xFqc/IHqgUKAnP5Tm7jSG9FMBjH8FurrtU+DXrAJ3FI8jcm2QaTMm
+ AjdCMTSW5rd6oLCflNCkgkZUheU6YnikuxQnOZHwEPgX4uhlkzJJYrfeSbCCHFeH2h
+ te9gbNt+pcUoVAOaQvL7yn6fqCzJFhKpP5940v1AjUbNYeVHWrjx1CF+aSf9QOefSc
+ 0zYIAtQvgYHWg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1mrl8r-008ewb-69; Mon, 29 Nov 2021 18:12:41 +0000
+Date: Mon, 29 Nov 2021 18:12:40 +0000
+Message-ID: <87o862n84n.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Chase Conklin <chase.conklin@arm.com>
+Subject: Re: [PATCH v4 41/66] KVM: arm64: nv: Trap and emulate TLBI
+ instructions from virtual EL2
+In-Reply-To: <20210714164002.84527-1-chase.conklin@arm.com>
+References: <20210510165920.1913477-42-maz@kernel.org>
+ <20210714164002.84527-1-chase.conklin@arm.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: chase.conklin@arm.com, alexandru.elisei@arm.com,
+ andre.przywara@arm.com, christoffer.dall@arm.com, haibo.xu@linaro.org,
+ james.morse@arm.com, jintack.lim@linaro.org, jintack@cs.columbia.edu,
+ kernel-team@android.com, kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, suzuki.poulose@arm.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com, kvm@vger.kernel.org, andre.przywara@arm.com,
+ christoffer.dall@arm.com, kvmarm@lists.cs.columbia.edu, jintack.lim@linaro.org,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -113,22 +91,51 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 11/29/21 18:25, Sean Christopherson wrote:
->> If I apply though only the patch series up to this patch, my fedora VM seems
->> to work fine, but my windows VM still locks up hard when I run 'LatencyTop'
->> in it, which doesn't happen without this patch.
+Hi Chase,
+
+Yes, it took that long for me to get back to the NV series. Sorry
+about that.
+
+On Wed, 14 Jul 2021 17:40:03 +0100,
+Chase Conklin <chase.conklin@arm.com> wrote:
+
+> I'm noticing a hang while an L2 is booting. From what I can tell, the
+> L0 is issuing TLBIs to the wrong VMID, so the L2 is getting stuck
+> taking the same abort repeatedly.
 > 
-> Buy "run 'LatencyTop' in it", do you mean running something in the Windows guest?
-> The only search results I can find for LatencyTop are Linux specific.
+> It seems that kvm_unmap_stage2_range doesn't perform the invalidations
+> using the mmu passed to it here. Instead, it uses the passed mmu to
+> get back the kvm before passing that to stage2_apply_range which gets
+> its mmu from kvm->arch.mmu. This has the effect of applying
+> invalidations intended for the nested stage-2 of the L2 onto the
+> stage-2 for the L1.
+> 
+> It also turns out that for the L2, the mmu != mmu->pgt->mmu. This is
+> because pgt->mmu is always set to &kvm->arch.mmu by
+> kvm_pgtable_stage2_init_flags. This too will cause the VMID for the
+> TLBI to be incorrect because the stage2_unmap_walker gets its mmu from
+> the pgt passed to it.
 
-I think it's LatencyMon, https://www.resplendence.com/latencymon.
+Yup, and Ganapatrao noticed the same thing[1] (I obviously botched the
+conversion to the new pgtable code). I *think* this is now fixed in my
+nv-5.16 branch, but I'd really appreciate if you could have a look.
 
-Paolo
+Bonus points if you have access to actual HW (even in emulation), as
+doing this on the model is majorly frustrating.
+
+Thanks,
+
+	M.
+
+[1] https://lore.kernel.org/r/20211122095803.28943-1-gankulkarni@os.amperecomputing.com
+
+-- 
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
