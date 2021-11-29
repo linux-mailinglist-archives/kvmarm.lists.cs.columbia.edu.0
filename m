@@ -2,108 +2,79 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 41B7846203F
-	for <lists+kvmarm@lfdr.de>; Mon, 29 Nov 2021 20:18:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E0E3462152
+	for <lists+kvmarm@lfdr.de>; Mon, 29 Nov 2021 21:02:26 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A975A4B08F;
-	Mon, 29 Nov 2021 14:18:57 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F305E4B105;
+	Mon, 29 Nov 2021 15:02:25 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01] autolearn=unavailable
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
+	autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@gmail.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id h+Gt3L--OS6p; Mon, 29 Nov 2021 14:18:57 -0500 (EST)
+	with ESMTP id Y93BzissqRQZ; Mon, 29 Nov 2021 15:02:24 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6AA864B0C2;
-	Mon, 29 Nov 2021 14:18:56 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9932B4B0B3;
+	Mon, 29 Nov 2021 15:02:19 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D9B834B08F
- for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 14:18:55 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 78CEC4B0E2
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 15:02:18 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id rRaW+MWMz2+N for <kvmarm@lists.cs.columbia.edu>;
- Mon, 29 Nov 2021 14:18:54 -0500 (EST)
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com
- [209.85.208.46])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A84514B08E
- for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 14:18:54 -0500 (EST)
-Received: by mail-ed1-f46.google.com with SMTP id x6so76050701edr.5
- for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 11:18:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=sender:message-id:date:mime-version:user-agent:subject
- :content-language:to:cc:references:from:in-reply-to
- :content-transfer-encoding;
- bh=b6e11+CJLAryPIw/7DDSWmANxwHaOEFVgPmI0eD1ehw=;
- b=Yv9EDK6h14i2Dbj+iAIYK0HlvK2JERVyMLo4AC4eEaaM5uGAacc8HtxG8w/Y/N1eKa
- zoqVyYrJgoymLJ79VszdPFvZOcROHF7XsZML04k5ATYUCAQQQYdmRFM1zliBw5sA+fUR
- rGCOh7Dkwc25orqYcXeHYn5++zj+NoIkUF+txgA7cbkgTIdSaLJPMhb1GiDwryyn0Wfc
- MU5Gbh+ysqRcMgmq6XO0rBfKo/INnGwUPA9nBrqjSM7nJ1s+plFGQd3Vr5vlky9IMZdn
- wkdyjWJAJzkiJ+6yukZdQ5xwMk5wTjTGyWuy1lXhP9nJ6WRZVyGbloAAqLRFAE+sHa2m
- tnMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:sender:message-id:date:mime-version:user-agent
- :subject:content-language:to:cc:references:from:in-reply-to
- :content-transfer-encoding;
- bh=b6e11+CJLAryPIw/7DDSWmANxwHaOEFVgPmI0eD1ehw=;
- b=JX2xTc51cLxAx73uv7WU77rNDulYsCHihPZzi3zlClf7jHol6g7oZghhDHxcHmcFtw
- iXuFj3EO59YRpIGD2JaeHu95Kp8p6l6lYvsaVbNO5HENFB8eQ+DBTuZEiKWzD6HT/5xa
- MAByI0iUtHWXFxSPKDuZTph/wOU1aOxFmRj4CuCVKMAW8pFLENCA0wpDRP5gsFL2Axzy
- zdJcAunUHMN/mA4ze2XG+jlu1+RhnpjCD/QIKDOHfwkWe1LkhbtyW187XS2I07tSyott
- QM3xdguzUhSEAaa9G43Pn8X007VdqMgAPwDYdNHA5tot6Rxl5wrx3fpRyrW0rNdbKE9D
- GDeQ==
-X-Gm-Message-State: AOAM5326zXuwB45jaUS6LnxX0eNgLztroF0BB2dAmgG6lgOrM7lo1n9Z
- ut7bo08HX4WM6Li6ck62A3dRkr4SMII=
-X-Google-Smtp-Source: ABdhPJx2YJ0juUfs4Yk6vuSEcojrZsOKQtVYCvzwUVoRUJT0twH/9lzRN0MjKMCkmooXwTOepr8KsQ==
-X-Received: by 2002:a17:906:c9d2:: with SMTP id
- hk18mr4315253ejb.523.1638213533689; 
- Mon, 29 Nov 2021 11:18:53 -0800 (PST)
-Received: from ?IPV6:2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e?
- ([2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e])
- by smtp.googlemail.com with ESMTPSA id ch28sm9615535edb.72.2021.11.29.11.18.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Nov 2021 11:18:53 -0800 (PST)
-Message-ID: <880a5727-69d1-72a1-b129-b053781625ad@redhat.com>
-Date: Mon, 29 Nov 2021 20:18:50 +0100
+ with ESMTP id mm448yXft+YS for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 29 Nov 2021 15:02:16 -0500 (EST)
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 626AE4B0A3
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 15:02:16 -0500 (EST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by sin.source.kernel.org (Postfix) with ESMTPS id 0D218CE12FD;
+ Mon, 29 Nov 2021 20:02:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183FAC53FC7;
+ Mon, 29 Nov 2021 20:02:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1638216131;
+ bh=E57fwUAn7dhFlq0k7rbnpzZ9o3Q/5kkZDl6gFXo5Vjw=;
+ h=From:To:Cc:Subject:Date:From;
+ b=QomiU2CEs57VZ1YhAlP4St8dmkOZOmC5IYkulRoE9+dJqNiicDf7DMfkLg6D6/cml
+ 14qRCW0qtzS9rNQLFmM9xxUaT08nA8W/25mxrnsF6bp3GdE7PbR6qVe8BGLxgK9zjq
+ x9UMCgEoQTdYa3Z/V6f198N0cZM++a8jDOfdvtoPkUNNKWrt5rR5kt6TKs0goosty1
+ AYQnAJEBv6qr36Hu7QoZLSdTUSV7okonBVN72MOL4QgoVXLk+KQPtDgOh3VyiRcRwh
+ 0xrRDe1yf4GW44WuERcWbm+TXUd0J8s3TfJ/uBmza8QBoJl2SDGOBQXekyB/td4cv9
+ Y/yJa8oLCyD9Q==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1mrmqn-008gvR-2Q; Mon, 29 Nov 2021 20:02:09 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
+Subject: [PATCH v5 00/69] KVM: arm64: ARMv8.3/8.4 Nested Virtualization support
+Date: Mon, 29 Nov 2021 20:00:41 +0000
+Message-Id: <20211129200150.351436-1-maz@kernel.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.0
-Subject: Re: [PATCH v2 11/43] KVM: Don't block+unblock when halt-polling is
- successful
-Content-Language: en-US
-To: Sean Christopherson <seanjc@google.com>
-References: <20211009021236.4122790-1-seanjc@google.com>
- <20211009021236.4122790-12-seanjc@google.com>
- <cceb33be9e2a6ac504bb95a7b2b8cf5fe0b1ff26.camel@redhat.com>
- <4e883728e3e5201a94eb46b56315afca5e95ad9c.camel@redhat.com>
- <YaUNBfJh35WXMV0M@google.com>
- <496c2fc6-26b0-9b5d-32f4-2f9e9dd6a064@redhat.com>
- <YaUiEquKYi5eqWC0@google.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-In-Reply-To: <YaUiEquKYi5eqWC0@google.com>
-Cc: Cornelia Huck <cohuck@redhat.com>, Wanpeng Li <wanpengli@tencent.com>,
- kvm@vger.kernel.org, David Hildenbrand <david@redhat.com>,
- linux-kernel@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
- Atish Patra <atish.patra@wdc.com>, linux-riscv@lists.infradead.org,
- Claudio Imbrenda <imbrenda@linux.ibm.com>, kvmarm@lists.cs.columbia.edu,
- Janosch Frank <frankja@linux.ibm.com>, Marc Zyngier <maz@kernel.org>,
- Joerg Roedel <joro@8bytes.org>, Huacai Chen <chenhuacai@kernel.org>,
- Maxim Levitsky <mlevitsk@redhat.com>,
- Christian Borntraeger <borntraeger@de.ibm.com>,
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
- Albert Ou <aou@eecs.berkeley.edu>, kvm-ppc@vger.kernel.org,
- Paul Walmsley <paul.walmsley@sifive.com>, David Matlack <dmatlack@google.com>,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
- Anup Patel <anup.patel@wdc.com>, linux-mips@vger.kernel.org,
- Palmer Dabbelt <palmer@dabbelt.com>, kvm-riscv@lists.infradead.org,
- Vitaly Kuznetsov <vkuznets@redhat.com>
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, andre.przywara@arm.com,
+ christoffer.dall@arm.com, jintack@cs.columbia.edu, haibo.xu@linaro.org,
+ gankulkarni@os.amperecomputing.com, james.morse@arm.com,
+ suzuki.poulose@arm.com, alexandru.elisei@arm.com, kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com, Andre Przywara <andre.przywara@arm.com>,
+ Christoffer Dall <christoffer.dall@arm.com>,
+ Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -115,33 +86,184 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 11/29/21 19:55, Sean Christopherson wrote:
->> Still it does seem to be a race that happens when IS_RUNNING=true but
->> vcpu->mode == OUTSIDE_GUEST_MODE.  This patch makes the race easier to
->> trigger because it moves IS_RUNNING=false later.
-> 
-> Oh!  Any chance the bug only repros with preemption enabled?  That would explain
-> why I don't see problems, I'm pretty sure I've only run AVIC with a PREEMPT=n.
+Here the bi-annual drop of the KVM/arm64 NV support code, the least
+loved series in the history of KVM!
 
-Me too.
+Not a lot has changed since [1]: a number of bug fixes (wrong MMU
+context being selected leading to failing TLB invalidations, fixes
+around the handling of nested faults), a complete rewrite of the early
+exit handling, a change in the way the NV support is enabled
+("kvm-arm.mode=nested"), and a rebase on top of 5.16-rc1.
 
-> svm_vcpu_{un}blocking() are called with preemption enabled, and avic_set_running()
-> passes in vcpu->cpu.  If the vCPU is preempted and scheduled in on a different CPU,
-> avic_vcpu_load() will overwrite the vCPU's entry with the wrong CPU info.
+The first 2 patches are already on their way upstream as fixes, and
+the third is a likely candidate too.
 
-That would make a lot of sense.  avic_vcpu_load() can handle 
-svm->avic_is_running = false, but avic_set_running still needs its body 
-wrapped by preempt_disable/preempt_enable.
+As usual, blame me for any bug, and nobody else. It has been tested on
+my usual zoo, and nothing caught fire. Which means nothing, of course.
+Obviously, it isn't feature complete, and it is quite easy to write a
+guest that will not behave as intended. The current goal is to make
+sure that non-NV KVM is unaffected by the NV stuff.
 
-Fedora's kernel is CONFIG_PREEMPT_VOLUNTARY, but I know Maxim uses his 
-own build so it would not surprise me if he used CONFIG_PREEMPT=y.
+It is massively painful to run on the FVP, but if you have a Neoverse
+V1 or N2 system (or anything else with ARMv8.4-NV) that is collecting
+dust, I have the right stuff to keep it busy.
 
-Paolo
+	M.
+
+[1] https://lore.kernel.org/r/20210510165920.1913477-1-maz@kernel.org
+
+Andre Przywara (1):
+  KVM: arm64: nv: vgic: Allow userland to set VGIC maintenance IRQ
+
+Christoffer Dall (15):
+  KVM: arm64: nv: Introduce nested virtualization VCPU feature
+  KVM: arm64: nv: Reset VCPU to EL2 registers if VCPU nested virt is set
+  KVM: arm64: nv: Allow userspace to set PSR_MODE_EL2x
+  KVM: arm64: nv: Add nested virt VCPU primitives for vEL2 VCPU state
+  KVM: arm64: nv: Reset VMPIDR_EL2 and VPIDR_EL2 to sane values
+  KVM: arm64: nv: Handle trapped ERET from virtual EL2
+  KVM: arm64: nv: Emulate PSTATE.M for a guest hypervisor
+  KVM: arm64: nv: Trap EL1 VM register accesses in virtual EL2
+  KVM: arm64: nv: Only toggle cache for virtual EL2 when SCTLR_EL2
+    changes
+  KVM: arm64: nv: Implement nested Stage-2 page table walk logic
+  KVM: arm64: nv: Unmap/flush shadow stage 2 page tables
+  KVM: arm64: nv: arch_timer: Support hyp timer emulation
+  KVM: arm64: nv: vgic: Emulate the HW bit in software
+  KVM: arm64: nv: Add nested GICv3 tracepoints
+  KVM: arm64: nv: Sync nested timer state with ARMv8.4
+
+Jintack Lim (18):
+  arm64: Add ARM64_HAS_NESTED_VIRT cpufeature
+  KVM: arm64: nv: Handle HCR_EL2.NV system register traps
+  KVM: arm64: nv: Support virtual EL2 exceptions
+  KVM: arm64: nv: Inject HVC exceptions to the virtual EL2
+  KVM: arm64: nv: Trap SPSR_EL1, ELR_EL1 and VBAR_EL1 from virtual EL2
+  KVM: arm64: nv: Trap CPACR_EL1 access in virtual EL2
+  KVM: arm64: nv: Handle PSCI call via smc from the guest
+  KVM: arm64: nv: Respect virtual HCR_EL2.TWX setting
+  KVM: arm64: nv: Respect virtual CPTR_EL2.{TFP,FPEN} settings
+  KVM: arm64: nv: Respect the virtual HCR_EL2.NV bit setting
+  KVM: arm64: nv: Respect virtual HCR_EL2.TVM and TRVM settings
+  KVM: arm64: nv: Respect the virtual HCR_EL2.NV1 bit setting
+  KVM: arm64: nv: Emulate EL12 register accesses from the virtual EL2
+  KVM: arm64: nv: Configure HCR_EL2 for nested virtualization
+  KVM: arm64: nv: Introduce sys_reg_desc.forward_trap
+  KVM: arm64: nv: Set a handler for the system instruction traps
+  KVM: arm64: nv: Trap and emulate AT instructions from virtual EL2
+  KVM: arm64: nv: Nested GICv3 Support
+
+Marc Zyngier (35):
+  KVM: arm64: Save PSTATE early on exit
+  KVM: arm64: Move pkvm's special 32bit handling into a generic
+    infrastructure
+  KVM: arm64: Add minimal handling for the ARMv8.7 PMU
+  KVM: arm64: Rework kvm_pgtable initialisation
+  KVM: arm64: Allow preservation of the S2 SW bits
+  KVM: arm64: nv: Add EL2 system registers to vcpu context
+  KVM: arm64: nv: Add non-VHE-EL2->EL1 translation helpers
+  KVM: arm64: nv: Handle virtual EL2 registers in
+    vcpu_read/write_sys_reg()
+  KVM: arm64: nv: Handle SPSR_EL2 specially
+  KVM: arm64: nv: Handle HCR_EL2.E2H specially
+  KVM: arm64: nv: Save/Restore vEL2 sysregs
+  KVM: arm64: nv: Forward debug traps to the nested guest
+  KVM: arm64: nv: Filter out unsupported features from ID regs
+  KVM: arm64: nv: Hide RAS from nested guests
+  KVM: arm64: nv: Support multiple nested Stage-2 mmu structures
+  KVM: arm64: nv: Handle shadow stage 2 page faults
+  KVM: arm64: nv: Restrict S2 RD/WR permissions to match the guest's
+  KVM: arm64: nv: Trap and emulate TLBI instructions from virtual EL2
+  KVM: arm64: nv: Fold guest's HCR_EL2 configuration into the host's
+  KVM: arm64: nv: Add handling of EL2-specific timer registers
+  KVM: arm64: nv: Load timer before the GIC
+  KVM: arm64: nv: Don't load the GICv4 context on entering a nested
+    guest
+  KVM: arm64: nv: Implement maintenance interrupt forwarding
+  KVM: arm64: nv: Allow userspace to request KVM_ARM_VCPU_NESTED_VIRT
+  KVM: arm64: nv: Add handling of ARMv8.4-TTL TLB invalidation
+  KVM: arm64: nv: Invalidate TLBs based on shadow S2 TTL-like
+    information
+  KVM: arm64: nv: Tag shadow S2 entries with nested level
+  KVM: arm64: nv: Add include containing the VNCR_EL2 offsets
+  KVM: arm64: nv: Map VNCR-capable registers to a separate page
+  KVM: arm64: nv: Move nested vgic state into the sysreg file
+  KVM: arm64: Add ARMv8.4 Enhanced Nested Virt cpufeature
+  KVM: arm64: nv: Allocate VNCR page when required
+  KVM: arm64: nv: Enable ARMv8.4-NV support
+  KVM: arm64: nv: Fast-track 'InHost' exception returns
+  KVM: arm64: nv: Fast-track EL1 TLBIs for VHE guests
+
+ .../admin-guide/kernel-parameters.txt         |    7 +-
+ .../virt/kvm/devices/arm-vgic-v3.rst          |   12 +-
+ arch/arm64/include/asm/esr.h                  |    6 +
+ arch/arm64/include/asm/kvm_arm.h              |   29 +-
+ arch/arm64/include/asm/kvm_asm.h              |    4 +
+ arch/arm64/include/asm/kvm_emulate.h          |  145 +-
+ arch/arm64/include/asm/kvm_host.h             |  185 ++-
+ arch/arm64/include/asm/kvm_hyp.h              |    2 +
+ arch/arm64/include/asm/kvm_mmu.h              |   18 +-
+ arch/arm64/include/asm/kvm_nested.h           |  152 +++
+ arch/arm64/include/asm/kvm_pgtable.h          |    9 +-
+ arch/arm64/include/asm/sysreg.h               |  102 +-
+ arch/arm64/include/asm/vncr_mapping.h         |   74 +
+ arch/arm64/include/uapi/asm/kvm.h             |    2 +
+ arch/arm64/kernel/cpufeature.c                |   34 +
+ arch/arm64/kvm/Makefile                       |    4 +-
+ arch/arm64/kvm/arch_timer.c                   |  202 ++-
+ arch/arm64/kvm/arm.c                          |   42 +-
+ arch/arm64/kvm/at.c                           |  231 ++++
+ arch/arm64/kvm/emulate-nested.c               |  186 +++
+ arch/arm64/kvm/guest.c                        |    6 +
+ arch/arm64/kvm/handle_exit.c                  |   81 +-
+ arch/arm64/kvm/hyp/exception.c                |   45 +-
+ arch/arm64/kvm/hyp/include/hyp/switch.h       |   26 +-
+ arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h    |   31 +-
+ arch/arm64/kvm/hyp/nvhe/mem_protect.c         |    4 +-
+ arch/arm64/kvm/hyp/nvhe/switch.c              |   10 +-
+ arch/arm64/kvm/hyp/nvhe/sysreg-sr.c           |    2 +-
+ arch/arm64/kvm/hyp/pgtable.c                  |   13 +-
+ arch/arm64/kvm/hyp/vgic-v3-sr.c               |    2 +-
+ arch/arm64/kvm/hyp/vhe/switch.c               |  185 ++-
+ arch/arm64/kvm/hyp/vhe/sysreg-sr.c            |  125 +-
+ arch/arm64/kvm/hyp/vhe/tlb.c                  |   83 ++
+ arch/arm64/kvm/inject_fault.c                 |   68 +-
+ arch/arm64/kvm/mmu.c                          |  205 ++-
+ arch/arm64/kvm/nested.c                       |  922 +++++++++++++
+ arch/arm64/kvm/pmu-emul.c                     |    1 +
+ arch/arm64/kvm/reset.c                        |   11 +-
+ arch/arm64/kvm/sys_regs.c                     | 1213 ++++++++++++++++-
+ arch/arm64/kvm/sys_regs.h                     |    8 +
+ arch/arm64/kvm/trace_arm.h                    |   65 +-
+ arch/arm64/kvm/vgic/vgic-init.c               |   30 +
+ arch/arm64/kvm/vgic/vgic-kvm-device.c         |   22 +
+ arch/arm64/kvm/vgic/vgic-nested-trace.h       |  137 ++
+ arch/arm64/kvm/vgic/vgic-v3-nested.c          |  240 ++++
+ arch/arm64/kvm/vgic/vgic-v3.c                 |   39 +-
+ arch/arm64/kvm/vgic/vgic.c                    |   44 +
+ arch/arm64/kvm/vgic/vgic.h                    |   10 +
+ arch/arm64/tools/cpucaps                      |    2 +
+ include/kvm/arm_arch_timer.h                  |    9 +-
+ include/kvm/arm_vgic.h                        |   16 +
+ include/uapi/linux/kvm.h                      |    1 +
+ tools/arch/arm/include/uapi/asm/kvm.h         |    1 +
+ 53 files changed, 4918 insertions(+), 185 deletions(-)
+ create mode 100644 arch/arm64/include/asm/kvm_nested.h
+ create mode 100644 arch/arm64/include/asm/vncr_mapping.h
+ create mode 100644 arch/arm64/kvm/at.c
+ create mode 100644 arch/arm64/kvm/emulate-nested.c
+ create mode 100644 arch/arm64/kvm/nested.c
+ create mode 100644 arch/arm64/kvm/vgic/vgic-nested-trace.h
+ create mode 100644 arch/arm64/kvm/vgic/vgic-v3-nested.c
+
+-- 
+2.30.2
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
