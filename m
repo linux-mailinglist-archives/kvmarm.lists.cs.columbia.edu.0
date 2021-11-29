@@ -2,66 +2,66 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id ACB84462173
-	for <lists+kvmarm@lfdr.de>; Mon, 29 Nov 2021 21:05:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7199446219E
+	for <lists+kvmarm@lfdr.de>; Mon, 29 Nov 2021 21:07:34 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5E33A4B104;
-	Mon, 29 Nov 2021 15:05:56 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 22C5E4B125;
+	Mon, 29 Nov 2021 15:07:34 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.909
 X-Spam-Level: 
 X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
-	autolearn=no
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cSYoeOHOjjEf; Mon, 29 Nov 2021 15:05:54 -0500 (EST)
+	with ESMTP id EBJppFuxF0Uq; Mon, 29 Nov 2021 15:07:34 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AB12A4B139;
-	Mon, 29 Nov 2021 15:05:54 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 830674B203;
+	Mon, 29 Nov 2021 15:07:32 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D35CD4B0E1
- for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 15:05:52 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 942CA4B1FD
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 15:07:29 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id wduu1rU90ElK for <kvmarm@lists.cs.columbia.edu>;
- Mon, 29 Nov 2021 15:05:51 -0500 (EST)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 686994B11F
- for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 15:05:51 -0500 (EST)
+ with ESMTP id 3c2+5JHASjLf for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 29 Nov 2021 15:07:28 -0500 (EST)
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8FFE84B0B3
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 15:07:27 -0500 (EST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 93602B815EC;
- Mon, 29 Nov 2021 20:05:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401A3C53FCF;
- Mon, 29 Nov 2021 20:05:49 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTPS id 26843CE13D8;
+ Mon, 29 Nov 2021 20:07:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7E0C53FCF;
+ Mon, 29 Nov 2021 20:07:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1638216349;
- bh=7k18Z+x3oCj8uRXPCQOA9rwRPaRgEpzPws/JgwdeSx0=;
+ s=k20201202; t=1638216443;
+ bh=cSLyIVV3jyyOi65ucV97mpaNj+BNKs5gCIo0BmVWpyg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Xe/TL8h/UsLgyA3rkGLGcvBkSsrDe6dXeDSLzrEYhwhLUmMW4Uc918FMRMj/Ogb71
- idghjVuj6pjBpZW5kfQudV3ZhF+OYL7EHaTz0eR1oxMQ53wrCkM8UsVqbwHV/c0KLb
- QcgT+7WxhNdspyUq37JRUQj7epU/WWZEarlbD0KNZbC7EGshIQlxxXsiSC8ncEa4fZ
- 6/qDi6uZ+LCr/FM8tnS0j/M6skvqXEryCUWcV9vpp1kVbMqv9mna0Xm4rZKhjUBmNm
- cLQLymX2QuWIYdZAGjf6NgvsMrK7J+CGxO/EabYFzvXwlN9okNAZMB2hiATUzknWAP
- 3rf+SKGQwpoKw==
+ b=hb+2Jv7Bkg8+uKEWqwdveMtpGIrCoF43d9keDNo7xsBlSB8tVyr6qBv14xTcetbBs
+ 1M8UmCkA1fldyfkckM/ERmM29z711PPhQ4Qdaxm6XRIh2fBBpOjneEEZzjyfMj1lXr
+ K3Tf2OMAluER5ifnhfT4k0WjnqSU15wT/3CMMi3qlzZJLkGPtWa4tmRakLut4V+Qed
+ sXfkEOGaHEdbu5kJIIHfAkXragIV4zPjP/xcxGc+ksD2EFAHcSkq2AXuOtTXxF4C8o
+ rVUiUl8Bo3/N/8Tz1ERI6qGj4hXpSWnOuoUaRfKeWpR13lVdAUjc5f5WxPZEdlHW0l
+ qvoxXLfjkMH1g==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1mrmrF-008gvR-G4; Mon, 29 Nov 2021 20:02:37 +0000
+ id 1mrmrF-008gvR-Qk; Mon, 29 Nov 2021 20:02:37 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH v5 57/69] KVM: arm64: nv: Allow userspace to request
- KVM_ARM_VCPU_NESTED_VIRT
-Date: Mon, 29 Nov 2021 20:01:38 +0000
-Message-Id: <20211129200150.351436-58-maz@kernel.org>
+Subject: [PATCH v5 58/69] KVM: arm64: nv: Add handling of ARMv8.4-TTL TLB
+ invalidation
+Date: Mon, 29 Nov 2021 20:01:39 +0000
+Message-Id: <20211129200150.351436-59-maz@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20211129200150.351436-1-maz@kernel.org>
 References: <20211129200150.351436-1-maz@kernel.org>
@@ -94,57 +94,209 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Since we're (almost) feature complete, let's allow userspace to
-request KVM_ARM_VCPU_NESTED_VIRT by bumping the KVM_VCPU_MAX_FEATURES
-up. We also now advertise the feature to userspace with a new capability.
-
-It's going to be great...
+Support guest-provided information information to find out about
+the range of required invalidation.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/kvm_host.h | 2 +-
- arch/arm64/kvm/arm.c              | 3 +++
- include/uapi/linux/kvm.h          | 1 +
- 3 files changed, 5 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/kvm_nested.h |  1 +
+ arch/arm64/kvm/nested.c             | 57 +++++++++++++++++++++
+ arch/arm64/kvm/sys_regs.c           | 78 ++++++++++++++++++-----------
+ 3 files changed, 108 insertions(+), 28 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 323215873388..911dd25dba8e 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -38,7 +38,7 @@
+diff --git a/arch/arm64/include/asm/kvm_nested.h b/arch/arm64/include/asm/kvm_nested.h
+index 5fa3c634c8e1..7c47ad655e2e 100644
+--- a/arch/arm64/include/asm/kvm_nested.h
++++ b/arch/arm64/include/asm/kvm_nested.h
+@@ -123,6 +123,7 @@ extern bool __forward_traps(struct kvm_vcpu *vcpu, unsigned int reg,
+ 			    u64 control_bit);
+ extern bool forward_traps(struct kvm_vcpu *vcpu, u64 control_bit);
+ extern bool forward_nv_traps(struct kvm_vcpu *vcpu);
++unsigned int ttl_to_size(u8 ttl);
  
- #define KVM_MAX_VCPUS VGIC_V3_MAX_CPUS
+ struct sys_reg_params;
+ struct sys_reg_desc;
+diff --git a/arch/arm64/kvm/nested.c b/arch/arm64/kvm/nested.c
+index 198169648c3c..6f738b5f57dd 100644
+--- a/arch/arm64/kvm/nested.c
++++ b/arch/arm64/kvm/nested.c
+@@ -363,6 +363,63 @@ int kvm_walk_nested_s2(struct kvm_vcpu *vcpu, phys_addr_t gipa,
+ 	return ret;
+ }
  
--#define KVM_VCPU_MAX_FEATURES 7
-+#define KVM_VCPU_MAX_FEATURES 8
- 
- #define KVM_REQ_SLEEP \
- 	KVM_ARCH_REQ_FLAGS(0, KVM_REQUEST_WAIT | KVM_REQUEST_NO_WAKEUP)
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 0bb46bce5ffb..dc1fda709cf5 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -257,6 +257,9 @@ int kvm_vm_ioctl_check_extension(struct kvm *kvm, long ext)
- 	case KVM_CAP_ARM_EL1_32BIT:
- 		r = cpus_have_const_cap(ARM64_HAS_32BIT_EL1);
- 		break;
-+	case KVM_CAP_ARM_EL2:
-+		r = cpus_have_const_cap(ARM64_HAS_NESTED_VIRT);
++
++unsigned int ttl_to_size(u8 ttl)
++{
++	int level = ttl & 3;
++	int gran = (ttl >> 2) & 3;
++	unsigned int max_size = 0;
++
++	switch (gran) {
++	case TLBI_TTL_TG_4K:
++		switch (level) {
++		case 0:
++			break;
++		case 1:
++			max_size = SZ_1G;
++			break;
++		case 2:
++			max_size = SZ_2M;
++			break;
++		case 3:
++			max_size = SZ_4K;
++			break;
++		}
 +		break;
- 	case KVM_CAP_GUEST_DEBUG_HW_BPS:
- 		r = get_num_brps();
- 		break;
-diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
-index 1daa45268de2..65d1862ab093 100644
---- a/include/uapi/linux/kvm.h
-+++ b/include/uapi/linux/kvm.h
-@@ -1131,6 +1131,7 @@ struct kvm_ppc_resize_hpt {
- #define KVM_CAP_EXIT_ON_EMULATION_FAILURE 204
- #define KVM_CAP_ARM_MTE 205
- #define KVM_CAP_VM_MOVE_ENC_CONTEXT_FROM 206
-+#define KVM_CAP_ARM_EL2 207
++	case TLBI_TTL_TG_16K:
++		switch (level) {
++		case 0:
++		case 1:
++			break;
++		case 2:
++			max_size = SZ_32M;
++			break;
++		case 3:
++			max_size = SZ_16K;
++			break;
++		}
++		break;
++	case TLBI_TTL_TG_64K:
++		switch (level) {
++		case 0:
++		case 1:
++			/* No 52bit IPA support */
++			break;
++		case 2:
++			max_size = SZ_512M;
++			break;
++		case 3:
++			max_size = SZ_64K;
++			break;
++		}
++		break;
++	default:			/* No size information */
++		break;
++	}
++
++	return max_size;
++}
++
+ /* Must be called with kvm->lock held */
+ struct kvm_s2_mmu *lookup_s2_mmu(struct kvm *kvm, u64 vttbr, u64 hcr)
+ {
+diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+index 55f3e94c24f1..e0f088de2cad 100644
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -2699,59 +2699,81 @@ static bool handle_vmalls12e1is(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
+ 	return true;
+ }
  
- #ifdef KVM_CAP_IRQ_ROUTING
++static unsigned long compute_tlb_inval_range(struct kvm_vcpu *vcpu,
++					     struct kvm_s2_mmu *mmu,
++					     u64 val)
++{
++	unsigned long max_size;
++	u8 ttl = 0;
++
++	if (cpus_have_const_cap(ARM64_HAS_ARMv8_4_TTL)) {
++		ttl = FIELD_GET(GENMASK_ULL(47, 44), val);
++	}
++
++	max_size = ttl_to_size(ttl);
++
++	if (!max_size) {
++		u64 vtcr = vcpu_read_sys_reg(vcpu, VTCR_EL2);
++
++		/* Compute the maximum extent of the invalidation */
++		switch ((vtcr & VTCR_EL2_TG0_MASK)) {
++		case VTCR_EL2_TG0_4K:
++			max_size = SZ_1G;
++			break;
++		case VTCR_EL2_TG0_16K:
++			max_size = SZ_32M;
++			break;
++		case VTCR_EL2_TG0_64K:
++			/*
++			 * No, we do not support 52bit IPA in nested yet. Once
++			 * we do, this should be 4TB.
++			 */
++			/* FIXME: remove the 52bit PA support from the IDregs */
++			max_size = SZ_512M;
++			break;
++		default:
++			BUG();
++		}
++	}
++
++	WARN_ON(!max_size);
++	return max_size;
++}
++
+ static bool handle_ipas2e1is(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
+ 			     const struct sys_reg_desc *r)
+ {
+ 	u64 vttbr = vcpu_read_sys_reg(vcpu, VTTBR_EL2);
+-	u64 vtcr = vcpu_read_sys_reg(vcpu, VTCR_EL2);
+ 	struct kvm_s2_mmu *mmu;
+ 	u64 base_addr;
+-	int max_size;
++	unsigned long max_size;
+ 
+ 	/*
+ 	 * We drop a number of things from the supplied value:
+ 	 *
+ 	 * - NS bit: we're non-secure only.
+ 	 *
+-	 * - TTL field: We already have the granule size from the
+-	 *   VTCR_EL2.TG0 field, and the level is only relevant to the
+-	 *   guest's S2PT.
+-	 *
+ 	 * - IPA[51:48]: We don't support 52bit IPA just yet...
+ 	 *
+ 	 * And of course, adjust the IPA to be on an actual address.
+ 	 */
+ 	base_addr = (p->regval & GENMASK_ULL(35, 0)) << 12;
+ 
+-	/* Compute the maximum extent of the invalidation */
+-	switch ((vtcr & VTCR_EL2_TG0_MASK)) {
+-	case VTCR_EL2_TG0_4K:
+-		max_size = SZ_1G;
+-		break;
+-	case VTCR_EL2_TG0_16K:
+-		max_size = SZ_32M;
+-		break;
+-	case VTCR_EL2_TG0_64K:
+-		/*
+-		 * No, we do not support 52bit IPA in nested yet. Once
+-		 * we do, this should be 4TB.
+-		 */
+-		/* FIXME: remove the 52bit PA support from the IDregs */
+-		max_size = SZ_512M;
+-		break;
+-	default:
+-		BUG();
+-	}
+-
+ 	spin_lock(&vcpu->kvm->mmu_lock);
+ 
+ 	mmu = lookup_s2_mmu(vcpu->kvm, vttbr, HCR_VM);
+-	if (mmu)
++	if (mmu) {
++		max_size = compute_tlb_inval_range(vcpu, mmu, p->regval);
++		base_addr &= ~(max_size - 1);
+ 		kvm_unmap_stage2_range(mmu, base_addr, max_size);
++	}
+ 
+ 	mmu = lookup_s2_mmu(vcpu->kvm, vttbr, 0);
+-	if (mmu)
++	if (mmu) {
++		max_size = compute_tlb_inval_range(vcpu, mmu, p->regval);
++		base_addr &= ~(max_size - 1);
+ 		kvm_unmap_stage2_range(mmu, base_addr, max_size);
++	}
+ 
+ 	spin_unlock(&vcpu->kvm->mmu_lock);
  
 -- 
 2.30.2
