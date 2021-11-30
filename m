@@ -2,81 +2,84 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2494C46218D
-	for <lists+kvmarm@lfdr.de>; Mon, 29 Nov 2021 21:07:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A437A462959
+	for <lists+kvmarm@lfdr.de>; Tue, 30 Nov 2021 01:56:38 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CA9C84B1BC;
-	Mon, 29 Nov 2021 15:06:59 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1AC474B1E9;
+	Mon, 29 Nov 2021 19:56:38 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.909
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=0.909 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01]
-	autolearn=no
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id iE1lYmkJnNd7; Mon, 29 Nov 2021 15:06:58 -0500 (EST)
+	with ESMTP id V-Ld+w3dua6T; Mon, 29 Nov 2021 19:56:37 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BFC724B1D1;
-	Mon, 29 Nov 2021 15:06:55 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 849BF4B1D8;
+	Mon, 29 Nov 2021 19:56:36 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CBC544B13E
- for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 15:06:54 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8252A4B1D2
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 19:56:34 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id kFqYy+JJgHaG for <kvmarm@lists.cs.columbia.edu>;
- Mon, 29 Nov 2021 15:06:53 -0500 (EST)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4DA244B1CB
- for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 15:06:53 -0500 (EST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 81623B8159E;
- Mon, 29 Nov 2021 20:06:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCC1C53FD1;
- Mon, 29 Nov 2021 20:06:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1638216411;
- bh=revNVqtiu+mMGd8sw9pvXnutQlvPit8tuWd9vnCjHW8=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=QCxa71LfezMgLgmBMXiE/8tW8ZyOqpuOFAImsYj7oQ8aSeIBg7Llz8SYtp1kJ3LGo
- 8NNmmMGliwSDDedPeZpy7xklUJkK6vOhXNH0C94SVrQf4YmxKAA6kQ7KHTKLDdZmOO
- +fJzWJqJVLWoVWJPd0Rm3mQDLV4Ipfdei1eY0pbytTIoxofriRyDpi0+To4bElFr2M
- pnoXW4qxd9UTlBp3y8vtSHMyY9LEf7ZDTuYo5ubF7QZJuQ7L0aCW2Z+cydNtB1/Lxl
- KgpGkAwWr7XW8nZJrtI04rAWMfgyriWgFi936ly09eCNdfsu8sqKi2E1gOJ1EwzUJL
- VUZFUh7hNekgg==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1mrmrJ-008gvR-CC; Mon, 29 Nov 2021 20:02:41 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- kvm@vger.kernel.org
-Subject: [PATCH v5 69/69] KVM: arm64: nv: Fast-track EL1 TLBIs for VHE guests
-Date: Mon, 29 Nov 2021 20:01:50 +0000
-Message-Id: <20211129200150.351436-70-maz@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20211129200150.351436-1-maz@kernel.org>
-References: <20211129200150.351436-1-maz@kernel.org>
+ with ESMTP id r7Kf8jej6vFj for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 29 Nov 2021 19:56:31 -0500 (EST)
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com
+ [209.85.219.176])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D2E0E4B1B0
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 19:56:31 -0500 (EST)
+Received: by mail-yb1-f176.google.com with SMTP id d10so14589881ybn.0
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 29 Nov 2021 16:56:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=UOe8xLQUrobMoVj2LWKph442G97MrEyMo1+66bK4AnQ=;
+ b=FT/MMfw3Z54vvePSuoBM82z5aYziyJ/hw+1SBgZU0yVtGaJTzrybhgYZmrNnzFLo3S
+ h1ZNfSAv80YX1nI8h2BzJ48K6jO1aRltwcZ11HlMyGTcRag/Z9NBeVIq0daLl0K4riY/
+ 73HMHtbeHN/Vi5qzYZaqp/YJ0aEYH1BiJ5ZF1yfQMhS9jY98+TmbeawNL5wWIDsBnWKH
+ Kna9CLaKtQzBWsoNu+J1/qLfzlwM3mD7rlWp2yguoQm56fd/Y3jDBWDlsTjjxoLmdYfa
+ ilfHm9gsyDYyzPYKguEaD6464dliwN9f8XdpIrxK/gp9bH27kGvA89yQATDVWbYTrAeD
+ IBTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=UOe8xLQUrobMoVj2LWKph442G97MrEyMo1+66bK4AnQ=;
+ b=1qdYlUW4ZB8tPG/hZZy4kEFgO/82XzvlC7LNtW9kcD20F/yzuTzDFJFKqiFAMYRLaS
+ 0Uo9Ni19CWry/Ze6B2Iyy3g86YfB2j172w1F/iytb9TflYEEiZt7R2NVGBHsfku1aRyL
+ 5wr71j8757dSj5UQZQxOAvnXJWmn0ncP6//u2LMK6sFz6gnYqozx70o85oHoOtnOrqJA
+ cKUYUiybrQGwKTx/7JQOeGloLJmE/RpEwadG6l7EL8kwBwXAv95ly4WE9PuwqwFQiIQW
+ O81BANWJykU8pPDkTcHIuUJfX928EvE0h1eDInnYQOPZkcVpTy6F0qHa8G2y0moU5f/m
+ NwKg==
+X-Gm-Message-State: AOAM5339+1458bKj+VRuHXY5pDLIIR3TNZHWGYOlOCzHZrxhQYb3Z9C3
+ unTD5NFxu9meZIvCEgEP6C2Zl+OU7k5gEThYHTkQ5g==
+X-Google-Smtp-Source: ABdhPJzuNwYyFAs0/QDKiUFukkaFiCuy93y83TOBorW284YUYtixvHwu36tKkxWMLJVFO1mfNh44B4UeZy/NUZD8/V4=
+X-Received: by 2002:a25:86c4:: with SMTP id y4mr39744643ybm.144.1638233790998; 
+ Mon, 29 Nov 2021 16:56:30 -0800 (PST)
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, andre.przywara@arm.com,
- christoffer.dall@arm.com, jintack@cs.columbia.edu, haibo.xu@linaro.org,
- gankulkarni@os.amperecomputing.com, james.morse@arm.com,
- suzuki.poulose@arm.com, alexandru.elisei@arm.com, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com, Andre Przywara <andre.przywara@arm.com>,
- Christoffer Dall <christoffer.dall@arm.com>,
- Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
+References: <20211113012234.1443009-1-rananta@google.com>
+ <20211113012234.1443009-5-rananta@google.com>
+ <87wnl0cdfn.wl-maz@kernel.org>
+ <CAJHc60ydffBkqqb6xyObiK-66psaPODsOo0DpLFv7thx=zHjZw@mail.gmail.com>
+ <20211127172720.zte6wfdguoyi3gd6@gator.home>
+In-Reply-To: <20211127172720.zte6wfdguoyi3gd6@gator.home>
+From: Raghavendra Rao Ananta <rananta@google.com>
+Date: Mon, 29 Nov 2021 16:56:19 -0800
+Message-ID: <CAJHc60x=Egb=vRu1JHNK6f1ep+t+gDSKxJyfH88-w=v9pwsRsQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 04/11] KVM: arm64: Setup a framework for hypercall
+ bitmap firmware registers
+To: Andrew Jones <drjones@redhat.com>
+Cc: kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
+ Marc Zyngier <maz@kernel.org>, Peter Shier <pshier@google.com>,
+ linux-kernel@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -93,158 +96,119 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Due to the way ARMv8.4-NV suppresses traps when accessing EL2
-system registers, we can't track when the guest changes its
-HCR_EL2.TGE setting. This means we always trap EL1 TLBIs,
-even if they don't affect any guest.
+On Sat, Nov 27, 2021 at 9:27 AM Andrew Jones <drjones@redhat.com> wrote:
+>
+> On Tue, Nov 23, 2021 at 10:34:23AM -0800, Raghavendra Rao Ananta wrote:
+> > On Mon, Nov 22, 2021 at 9:23 AM Marc Zyngier <maz@kernel.org> wrote:
+> > > I keep being baffled by this. Why should we track the VMM accesses or
+> > > the VMM writeback? This logic doesn't seem to bring anything useful as
+> > > far as I can tell. All we need to ensure is that what is written to
+> > > the pseudo-register is an acceptable subset of the previous value, and
+> > > I cannot see why this can't be done at write-time.
+> > >
+> > > If you want to hide this behind a capability, fine (although my guts
+> > > feeling is that we don't need that either). But I really want to be
+> > > convinced about all this tracking.
+> > >
+> > The tracking of each owner register is necessary here to safe-guard
+> > the possibility that the user-space may not be aware of a newly
+> > introduced register, and hence, hasn't accessed it. If it had at least
+> > read the register, but not write-back, we assume that the user-space
+> > is happy with the configuration. But the fact that the register has
+> > not even been read would state that user-space is unaware of the
+> > existence of this new register. In such a case, if we don't sanitize
+> > (clear all the bits) this register, the features will be exposed
+> > unconditionally to the guest.
+> >
+> > The capability is introduced here to make sure that this new
+> > infrastructure is backward compatible with old VMMs. If the VMMs don't
+> > enable this capability, they are probably unaware of this, and this
+> > will work as it always has- expose new services to the guest
+> > unconditionally as and when they are introduced.
+>
+> Hi Raghavendra,
+>
+> I don't think we need a CAP that has to be enabled or to make any
+> assumptions or policy decisions in the kernel. I think we just need to
+> provide a bit more information to the VMM when it checks if KVM has the
+> CAP. If KVM would tell the VMM how may pseudo registers there are, which
+> can be done with the return value of the CAP, then the VMM code could be
+> something like this
+>
+>   r = check_cap(KVM_CAP_ARM_HVC_FW_REG_BMAP);
+>   if (r) {
+>     num_regs = r;
+>
+>     for (idx = 0; idx < num_regs; ++idx) {
+>       reg = hvc_fw_reg(idx);
+>
+>       if (idx > vmm_last_known_idx) {
+>         ...
+>       } else {
+>         ...
+>       }
+>     }
+>   }
+>
+> With this, the VMM is free to decide if it wants to clear all registers
+> greater than the last index it was aware of or if it wants to let those
+> registers just get exposed to the guest without knowing what's getting
+> exposed. Along with documenting that by default everything gets exposed
+> by KVM, which is the backwards compatible thing to do, then the VMM has
+> been warned and given everything it needs to manage its guests.
+>
+Hi Andrew,
 
-This obviously has a huge impact on performance, as we handle
-TLBI traps as a normal exit, and a normal VHE host issues
-thousands of TLBIs when booting (and quite a few when running
-userspace).
+Thanks for your comments and suggestions!
 
-A cheap way to reduce the overhead is to handle the limited
-case of {E2H,TGE}=={1,1} as a guest fixup, as we already have
-the right mmu configuration in place. Just execute the decoded
-instruction right away and return to the guest.
+I like the idea of sharing info via a read of the CAP, and not having
+to explicitly sanitize/clear the registers before the guest begins to
+run.
+However the handshake is done over an API doc, which is a little
+concerning. The user-space must remember and explicitly clear any new
+register that it doesn't want to expose to the guest, while the
+current approach does this automatically.
+Any bug in VMM's implementation could be risky and unintentionally
+expose features to the guest. What do you think?
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/kvm/hyp/vhe/switch.c | 43 ++++++++++++++++++++++++++++++++-
- arch/arm64/kvm/hyp/vhe/tlb.c    |  6 +++--
- arch/arm64/kvm/sys_regs.c       | 25 ++++++-------------
- 3 files changed, 54 insertions(+), 20 deletions(-)
+> Another thing that might be nice is giving userspace control of how many
+> pseudo registers show up in get-reg-list. In order to migrate from a host
+> with a more recent KVM to a host with an older KVM[*] we should only
+> expose the number of pseudo registers that the older host is aware of.
+> The VMM would zero these registers out anyway, in order to be compatible
+> for migration, but that's not enough when they also show up in the list
+> (at least not with QEMU that aborts migration when the destination
+> expects less registers than what get-reg-list provides)
+>
+> [*] This isn't a great idea, but it'd be nice if we can make it work,
+> because users may want to rollback upgrades or, after migrating to a
+> host with a newer kernel, they may want to migrate back to where they
+> started.
+>
+Good point. But IIUC, if the user-space is able to communicate the
+info that it's expecting a certain get-reg-list, do you think it can
+handle it at its end too, rather than relying on the kernel to send a
+list back?
 
-diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
-index 6cbe6a89dbdb..fa2fd7e911b2 100644
---- a/arch/arm64/kvm/hyp/vhe/switch.c
-+++ b/arch/arm64/kvm/hyp/vhe/switch.c
-@@ -162,6 +162,47 @@ void deactivate_traps_vhe_put(struct kvm_vcpu *vcpu)
- 	__deactivate_traps_common(vcpu);
- }
- 
-+static bool kvm_hyp_handle_tlbi_el1(struct kvm_vcpu *vcpu, u64 *exit_code)
-+{
-+	u32 instr;
-+	u64 val;
-+
-+	/*
-+	 * Ideally, we would never trap on EL1 TLB invalidations when the
-+	 * guest's HCR_EL2.{E2H,TGE} == {1,1}. But "thanks" to ARMv8.4, we
-+	 * don't trap writes to HCR_EL2, meaning that we can't track
-+	 * changes to the virtual TGE bit. So we leave HCR_EL2.TTLB set on
-+	 * the host. Oopsie...
-+	 *
-+	 * In order to speed-up EL1 TLBIs from the vEL2 guest when TGE is
-+	 * set, try and handle these invalidation as quickly as possible,
-+	 * without fully exiting (unless this needs forwarding).
-+	 */
-+	if (!enhanced_nested_virt_in_use(vcpu) ||
-+	    !vcpu_mode_el2(vcpu) ||
-+	    (__vcpu_sys_reg(vcpu, HCR_EL2) & (HCR_E2H | HCR_TGE)) != (HCR_E2H | HCR_TGE))
-+		return false;
-+
-+	instr = esr_sys64_to_sysreg(kvm_vcpu_get_esr(vcpu));
-+	if (sys_reg_Op0(instr) != TLBI_Op0 ||
-+	    sys_reg_Op1(instr) != TLBI_Op1_EL1)
-+		return false;
-+
-+	val = vcpu_get_reg(vcpu, kvm_vcpu_sys_get_rt(vcpu));
-+	__kvm_tlb_el1_instr(NULL, val, instr);
-+	__kvm_skip_instr(vcpu);
-+
-+	return true;
-+}
-+
-+static bool kvm_hyp_handle_sysreg_vhe(struct kvm_vcpu *vcpu, u64 *exit_code)
-+{
-+	if (kvm_hyp_handle_tlbi_el1(vcpu, exit_code))
-+		return true;
-+
-+	return kvm_hyp_handle_sysreg(vcpu, exit_code);
-+}
-+
- static bool kvm_hyp_handle_eret(struct kvm_vcpu *vcpu, u64 *exit_code)
- {
- 	struct kvm_cpu_context *ctxt = &vcpu->arch.ctxt;
-@@ -210,7 +251,7 @@ static bool kvm_hyp_handle_eret(struct kvm_vcpu *vcpu, u64 *exit_code)
- static const exit_handler_fn hyp_exit_handlers[] = {
- 	[0 ... ESR_ELx_EC_MAX]		= NULL,
- 	[ESR_ELx_EC_CP15_32]		= kvm_hyp_handle_cp15_32,
--	[ESR_ELx_EC_SYS64]		= kvm_hyp_handle_sysreg,
-+	[ESR_ELx_EC_SYS64]		= kvm_hyp_handle_sysreg_vhe,
- 	[ESR_ELx_EC_SVE]		= kvm_hyp_handle_fpsimd,
- 	[ESR_ELx_EC_FP_ASIMD]		= kvm_hyp_handle_fpsimd,
- 	[ESR_ELx_EC_IABT_LOW]		= kvm_hyp_handle_iabt_low,
-diff --git a/arch/arm64/kvm/hyp/vhe/tlb.c b/arch/arm64/kvm/hyp/vhe/tlb.c
-index c4389db4cc22..beb162468c0b 100644
---- a/arch/arm64/kvm/hyp/vhe/tlb.c
-+++ b/arch/arm64/kvm/hyp/vhe/tlb.c
-@@ -201,7 +201,8 @@ void __kvm_tlb_el1_instr(struct kvm_s2_mmu *mmu, u64 val, u64 sys_encoding)
- 	dsb(ishst);
- 
- 	/* Switch to requested VMID */
--	__tlb_switch_to_guest(mmu, &cxt);
-+	if (mmu)
-+		__tlb_switch_to_guest(mmu, &cxt);
- 
- 	/*
- 	 * Execute the same instruction as the guest hypervisor did,
-@@ -240,5 +241,6 @@ void __kvm_tlb_el1_instr(struct kvm_s2_mmu *mmu, u64 val, u64 sys_encoding)
- 	dsb(ish);
- 	isb();
- 
--	__tlb_switch_to_host(&cxt);
-+	if (mmu)
-+		__tlb_switch_to_host(&cxt);
- }
-diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index e8ab052be122..acfd3c72faf6 100644
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -2804,6 +2804,8 @@ static bool handle_tlbi_el1(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
- 			    const struct sys_reg_desc *r)
- {
- 	u32 sys_encoding = sys_insn(p->Op0, p->Op1, p->CRn, p->CRm, p->Op2);
-+	u64 virtual_vttbr = vcpu_read_sys_reg(vcpu, VTTBR_EL2);
-+	struct kvm_s2_mmu *mmu;
- 
- 	/*
- 	 * If we're here, this is because we've trapped on a EL1 TLBI
-@@ -2822,24 +2824,13 @@ static bool handle_tlbi_el1(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
- 
- 	mutex_lock(&vcpu->kvm->lock);
- 
--	if ((__vcpu_sys_reg(vcpu, HCR_EL2) & (HCR_E2H | HCR_TGE)) != (HCR_E2H | HCR_TGE)) {
--		u64 virtual_vttbr = vcpu_read_sys_reg(vcpu, VTTBR_EL2);
--		struct kvm_s2_mmu *mmu;
--
--		mmu = lookup_s2_mmu(vcpu->kvm, virtual_vttbr, HCR_VM);
--		if (mmu)
--			__kvm_tlb_el1_instr(mmu, p->regval, sys_encoding);
-+	mmu = lookup_s2_mmu(vcpu->kvm, virtual_vttbr, HCR_VM);
-+	if (mmu)
-+		__kvm_tlb_el1_instr(mmu, p->regval, sys_encoding);
- 
--		mmu = lookup_s2_mmu(vcpu->kvm, virtual_vttbr, 0);
--		if (mmu)
--			__kvm_tlb_el1_instr(mmu, p->regval, sys_encoding);
--	} else {
--		/*
--		 * ARMv8.4-NV allows the guest to change TGE behind
--		 * our back, so we always trap EL1 TLBIs from vEL2...
--		 */
--		__kvm_tlb_el1_instr(&vcpu->kvm->arch.mmu, p->regval, sys_encoding);
--	}
-+	mmu = lookup_s2_mmu(vcpu->kvm, virtual_vttbr, 0);
-+	if (mmu)
-+		__kvm_tlb_el1_instr(mmu, p->regval, sys_encoding);
- 
- 	mutex_unlock(&vcpu->kvm->lock);
- 
--- 
-2.30.2
+My assumption was that VMM would statically maintain a known set of
+registers that it wants to work with and are to be modified by hand,
+rather than relying on get-reg-list. This could be the least common
+set of registers that are present in all the host kernels (higher or
+lower versions) of the migration fleet. This config doesn't change
+even with get-reg-list declaring a new register as the features
+exposed by it could still be untested. Although, migrating to a host
+with a missing register shouldn't be possible in this setting, but if
+it encounters the scenario, it should be able to avoid migration to
+the host (similar to QEMU).
 
+Please correct me if you think it's a false assumption to proceed with.
+
+Regards,
+Raghavendra
+
+> Thanks,
+> drew
+>
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
