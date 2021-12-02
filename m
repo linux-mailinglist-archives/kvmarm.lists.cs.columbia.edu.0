@@ -2,102 +2,86 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E1174661D7
-	for <lists+kvmarm@lfdr.de>; Thu,  2 Dec 2021 11:58:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AABA44662D4
+	for <lists+kvmarm@lfdr.de>; Thu,  2 Dec 2021 12:54:07 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2A6924B176;
-	Thu,  2 Dec 2021 05:58:58 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4ED9F4B177;
+	Thu,  2 Dec 2021 06:54:07 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.209
+X-Spam-Score: 0.919
 X-Spam-Level: 
-X-Spam-Status: No, score=0.209 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_LOW=-0.7,
-	T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=0.919 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01, T_FRT_BELOW2=0.01]
+	autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@linaro.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XhVEX6XZgyyg; Thu,  2 Dec 2021 05:58:58 -0500 (EST)
+	with ESMTP id 3dxQqh2YJn-m; Thu,  2 Dec 2021 06:54:06 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A443C4B17D;
-	Thu,  2 Dec 2021 05:58:56 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 41C2B4B128;
+	Thu,  2 Dec 2021 06:54:03 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C5A234B121
- for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Dec 2021 05:58:55 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CC37A4B156
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Dec 2021 06:54:01 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Zyno0eRCm7B4 for <kvmarm@lists.cs.columbia.edu>;
- Thu,  2 Dec 2021 05:58:54 -0500 (EST)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.129.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6B2A64B11E
- for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Dec 2021 05:58:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1638442734;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wRIl4oD7Y5fkUN5tfay4kekz4HgS1IifoWLggGlVW1I=;
- b=PqTU0J2QvLYOTWuMuXOYgSfWcNEfElkSvQjzdV82ylVbk8FmneTiTArWGLGE0m+kcC1fMT
- YrT4lthFlI0Dqh+XGdtq2825o+Jl3uu4KifjIxmCljcey+QeFpyF51om+eB7ffSBgx3EeW
- YbA/0PpDC/X7Z97g5vTl6nrvqv5z/hI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-431-86ivAji2Oty_q7f2spxyEA-1; Thu, 02 Dec 2021 05:58:53 -0500
-X-MC-Unique: 86ivAji2Oty_q7f2spxyEA-1
-Received: by mail-wm1-f71.google.com with SMTP id
- z138-20020a1c7e90000000b003319c5f9164so1489079wmc.7
- for <kvmarm@lists.cs.columbia.edu>; Thu, 02 Dec 2021 02:58:53 -0800 (PST)
+ with ESMTP id SGqir+bUBigC for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  2 Dec 2021 06:53:55 -0500 (EST)
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com
+ [209.85.221.53])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6C5604B08F
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Dec 2021 06:53:55 -0500 (EST)
+Received: by mail-wr1-f53.google.com with SMTP id a9so59099968wrr.8
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 02 Dec 2021 03:53:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=assPRJZISp/N09x/XwLMYXECdxd+01DO7D0xsbG5ltw=;
+ b=KOJZVynTFuG/6NOJXr2C4Vazs7n8HHWiJb78KKi6YLrt5Wi9b+schevcHXrG1rf73V
+ RuHhI8pWw6nXqzZhTefRIjJSu5dcW/GT8BvyQhviuQHchvtniR+E9QqSQuYmy6RTYgPI
+ lnNAb9VcYKBMBun9WuGm0pA8+rovBl0E5QL7CF3y68JGjie/63fYnCv/QcNJn1dma8aK
+ BWvxRtwONYGuByLqp9txeW7NEJk4y32/6yFSPlQd6GefkczXizFNh0R4DaHPJQBx1XlH
+ x5jBVrONLOn6RzTTlPvajcFVK/nw+ORyhx5S+QLv91Y6xfmYcoEc5kiWGXlPt3eq7S35
+ k4OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
  :content-transfer-encoding;
- bh=wRIl4oD7Y5fkUN5tfay4kekz4HgS1IifoWLggGlVW1I=;
- b=treXuJdtw91ervZDABmNWbnlRJlDdBS/YA6TQiTwk7TxnMtdUGjsvHxYKDwFWbQQD7
- IsThayKkoGPVe1TAXGy6K8Y6RFrfyanAmx4oQsd4dH2S//yc6OICa4LEnkSXRfBWkmve
- QRXriAkMKd2ZJXs4kdS4L67cMV4dzIUB4LHVJ9DZOpUEn+66jqu5CGeMptdDMezJbEFt
- YineHiz7Iu54tD2JEiKS3QVwO0uYGM2r1SRdXsbGI17Qg7jAmGFGr2VApT7l643v7tMI
- U1cJHbT3Bn57yBIYij8LpJmDs+vJhj0OMy7twtSay0bN6sVQiSPTwY6eBMiVlhEiOOH2
- Vv5w==
-X-Gm-Message-State: AOAM532S33VB6IVQ8qpyWJ3vMSD/QXunWDKBv7PDawj1n2IcwluRY5N2
- qU8djYS4IUu6wDZ3XgngVXs3E/H3ExGzBTreM2/bBDQXXuH3jS0LfRueKeGf2zNXSHxuuZJmbSK
- KyTCAi9vpmno2iYjAvTN74tYQ
-X-Received: by 2002:a5d:59ae:: with SMTP id p14mr13407448wrr.365.1638442732171; 
- Thu, 02 Dec 2021 02:58:52 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJwdyKWGj2oyPnzq4Mdj75inkETU6TFWFE6xL8kZngxharwOb3Jh07jKn6KFiajYEjau2R9aEw==
-X-Received: by 2002:a5d:59ae:: with SMTP id p14mr13407422wrr.365.1638442731933; 
- Thu, 02 Dec 2021 02:58:51 -0800 (PST)
-Received: from ?IPv6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id c1sm2247743wrt.14.2021.12.02.02.58.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 02 Dec 2021 02:58:51 -0800 (PST)
-Subject: Re: [RFC PATCH v3 02/29] KVM: arm64: Save ID registers' sanitized
- value per vCPU
-To: Reiji Watanabe <reijiw@google.com>, Marc Zyngier <maz@kernel.org>,
- kvmarm@lists.cs.columbia.edu
-References: <20211117064359.2362060-1-reijiw@google.com>
- <20211117064359.2362060-3-reijiw@google.com>
-From: Eric Auger <eauger@redhat.com>
-Message-ID: <9f6e8b7e-c2b3-5883-f934-5b537c4ce19b@redhat.com>
-Date: Thu, 2 Dec 2021 11:58:50 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.1
+ bh=assPRJZISp/N09x/XwLMYXECdxd+01DO7D0xsbG5ltw=;
+ b=b3Og+/IJbYoEnIax1BjZOLjE+M0z6EdUP5Wcq5itqju3VD53rrHCFaciP6gqHH47/g
+ g5yTuH0+v4uDHZoKhNJMopSdj2sSIF6KPWbOnPIcHCqsTq5vtOpTVQaYA1lzw+5WtZOs
+ dRmz9+qVne80ZegnK9d97lBha+AkAVBkuS/v6IsjoKBDrvFMHGxI/sp/HPwvPp/DbTsv
+ hg/lFVaLt75xhxu8ROGoxPBcqAAUbQ+nGWhRkT000gGVCNf6iuqQjZiOoWukHWigYGCE
+ vcXwhJxRP/NOZZWjNBihLXv3GMdtAj3nGrAsSfRGjh/nqckqZITgbbze/rrDHuo79fvC
+ jRfg==
+X-Gm-Message-State: AOAM531wQT1GuIjtBYDb5j9FUMkU7FAB8i6aAXWTCRMyxk3XHzd314lR
+ Jr0qgO9EKMOFZThbA3S2dHuW2Q==
+X-Google-Smtp-Source: ABdhPJwwW+FHTijTO4l+Zd2NHkZo+99Xp3nRtXN0H2oqzfplC6cix6takcu1+C2dOWtuBhiGvbvR4g==
+X-Received: by 2002:adf:97c2:: with SMTP id t2mr14007936wrb.577.1638446034298; 
+ Thu, 02 Dec 2021 03:53:54 -0800 (PST)
+Received: from zen.linaroharston ([51.148.130.216])
+ by smtp.gmail.com with ESMTPSA id f15sm2448073wmg.30.2021.12.02.03.53.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Dec 2021 03:53:53 -0800 (PST)
+Received: from zen.lan (localhost [127.0.0.1])
+ by zen.linaroharston (Postfix) with ESMTP id 72A0C1FF96;
+ Thu,  2 Dec 2021 11:53:52 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: pbonzini@redhat.com,
+	drjones@redhat.com,
+	thuth@redhat.com
+Subject: [kvm-unit-tests PATCH v9 0/9] MTTCG sanity tests for ARM
+Date: Thu,  2 Dec 2021 11:53:43 +0000
+Message-Id: <20211202115352.951548-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-In-Reply-To: <20211117064359.2362060-3-reijiw@google.com>
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=eauger@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Cc: Peter Shier <pshier@google.com>, Will Deacon <will@kernel.org>,
- linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
- Paolo Bonzini <pbonzini@redhat.com>
+Cc: kvm@vger.kernel.org, maz@kernel.org, christoffer.dall@arm.com,
+ qemu-arm@nongnu.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -109,169 +93,48 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Reiji,
-
-On 11/17/21 7:43 AM, Reiji Watanabe wrote:
-> Extend sys_regs[] of kvm_cpu_context for ID registers and save ID
-> registers' sanitized value in the array for the vCPU at the first
-> vCPU reset. Use the saved ones when ID registers are read by
-> userspace (via KVM_GET_ONE_REG) or the guest.
-> 
-> Signed-off-by: Reiji Watanabe <reijiw@google.com>
-> ---
->  arch/arm64/include/asm/kvm_host.h | 10 +++++++
->  arch/arm64/kvm/sys_regs.c         | 43 +++++++++++++++++++------------
->  2 files changed, 37 insertions(+), 16 deletions(-)
-> 
-> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-> index edbe2cb21947..72db73c79403 100644
-> --- a/arch/arm64/include/asm/kvm_host.h
-> +++ b/arch/arm64/include/asm/kvm_host.h
-> @@ -146,6 +146,14 @@ struct kvm_vcpu_fault_info {
->  	u64 disr_el1;		/* Deferred [SError] Status Register */
->  };
->  
-> +/*
-> + * (Op0, Op1, CRn, CRm, Op2) of ID registers is (3, 0, 0, crm, op2),
-> + * where 0<=crm<8, 0<=op2<8.
-> + */
-> +#define KVM_ARM_ID_REG_MAX_NUM 64
-> +#define IDREG_IDX(id)		((sys_reg_CRm(id) << 3) | sys_reg_Op2(id))
-> +#define IDREG_SYS_IDX(id)	(ID_REG_BASE + IDREG_IDX(id))
-> +
->  enum vcpu_sysreg {
->  	__INVALID_SYSREG__,   /* 0 is reserved as an invalid value */
->  	MPIDR_EL1,	/* MultiProcessor Affinity Register */
-> @@ -210,6 +218,8 @@ enum vcpu_sysreg {
->  	CNTP_CVAL_EL0,
->  	CNTP_CTL_EL0,
->  
-> +	ID_REG_BASE,
-> +	ID_REG_END = ID_REG_BASE + KVM_ARM_ID_REG_MAX_NUM - 1,
->  	/* Memory Tagging Extension registers */
->  	RGSR_EL1,	/* Random Allocation Tag Seed Register */
->  	GCR_EL1,	/* Tag Control Register */
-> diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-> index e3ec1a44f94d..5608d3410660 100644
-> --- a/arch/arm64/kvm/sys_regs.c
-> +++ b/arch/arm64/kvm/sys_regs.c
-> @@ -33,6 +33,8 @@
->  
->  #include "trace.h"
->  
-> +static u64 __read_id_reg(const struct kvm_vcpu *vcpu, u32 id);
-> +
->  /*
->   * All of this file is extremely similar to the ARM coproc.c, but the
->   * types are different. My gut feeling is that it should be pretty
-> @@ -273,7 +275,7 @@ static bool trap_loregion(struct kvm_vcpu *vcpu,
->  			  struct sys_reg_params *p,
->  			  const struct sys_reg_desc *r)
->  {
-> -	u64 val = read_sanitised_ftr_reg(SYS_ID_AA64MMFR1_EL1);
-> +	u64 val = __read_id_reg(vcpu, SYS_ID_AA64MMFR1_EL1);
->  	u32 sr = reg_to_encoding(r);
->  
->  	if (!(val & (0xfUL << ID_AA64MMFR1_LOR_SHIFT))) {
-> @@ -1059,17 +1061,9 @@ static bool access_arch_timer(struct kvm_vcpu *vcpu,
->  	return true;
->  }
->  
-> -/* Read a sanitised cpufeature ID register by sys_reg_desc */
-> -static u64 read_id_reg(const struct kvm_vcpu *vcpu,
-> -		struct sys_reg_desc const *r, bool raz)
-> +static u64 __read_id_reg(const struct kvm_vcpu *vcpu, u32 id)
->  {
-> -	u32 id = reg_to_encoding(r);
-> -	u64 val;
-> -
-> -	if (raz)
-> -		return 0;
-> -
-> -	val = read_sanitised_ftr_reg(id);
-> +	u64 val = __vcpu_sys_reg(vcpu, IDREG_SYS_IDX(id));
->  
->  	switch (id) {
->  	case SYS_ID_AA64PFR0_EL1:
-> @@ -1119,6 +1113,14 @@ static u64 read_id_reg(const struct kvm_vcpu *vcpu,
->  	return val;
->  }
->  
-> +static u64 read_id_reg(const struct kvm_vcpu *vcpu,
-> +		       struct sys_reg_desc const *r, bool raz)
-> +{
-> +	u32 id = reg_to_encoding(r);
-> +
-> +	return raz ? 0 : __read_id_reg(vcpu, id);
-> +}
-> +
->  static unsigned int id_visibility(const struct kvm_vcpu *vcpu,
->  				  const struct sys_reg_desc *r)
->  {
-> @@ -1178,6 +1180,16 @@ static unsigned int sve_visibility(const struct kvm_vcpu *vcpu,
->  	return REG_HIDDEN;
->  }
->  
-> +static void reset_id_reg(struct kvm_vcpu *vcpu, const struct sys_reg_desc *rd)
-> +{
-> +	u32 id = reg_to_encoding(rd);
-> +
-> +	if (vcpu_has_reset_once(vcpu))
-> +		return;
-The KVM API allows to call VCPU_INIT several times (with same
-target/feature). With above check on the second call the ID_REGS won't
-be reset. Somehow this is aligned with target/feature behavior. However
-if this is what we want, I think we would need to document it in the KVM
-API doc.
-
-Thanks
-
-Eric
-> +
-> +	__vcpu_sys_reg(vcpu, IDREG_SYS_IDX(id)) = read_sanitised_ftr_reg(id);
-> +}
-> +
->  static int set_id_aa64pfr0_el1(struct kvm_vcpu *vcpu,
->  			       const struct sys_reg_desc *rd,
->  			       const struct kvm_one_reg *reg, void __user *uaddr)
-> @@ -1223,9 +1235,7 @@ static int set_id_aa64pfr0_el1(struct kvm_vcpu *vcpu,
->  /*
->   * cpufeature ID register user accessors
->   *
-> - * For now, these registers are immutable for userspace, so no values
-> - * are stored, and for set_id_reg() we don't allow the effective value
-> - * to be changed.
-> + * We don't allow the effective value to be changed.
->   */
->  static int __get_id_reg(const struct kvm_vcpu *vcpu,
->  			const struct sys_reg_desc *rd, void __user *uaddr,
-> @@ -1382,6 +1392,7 @@ static unsigned int mte_visibility(const struct kvm_vcpu *vcpu,
->  #define ID_SANITISED(name) {			\
->  	SYS_DESC(SYS_##name),			\
->  	.access	= access_id_reg,		\
-> +	.reset	= reset_id_reg,			\
->  	.get_user = get_id_reg,			\
->  	.set_user = set_id_reg,			\
->  	.visibility = id_visibility,		\
-> @@ -1837,8 +1848,8 @@ static bool trap_dbgdidr(struct kvm_vcpu *vcpu,
->  	if (p->is_write) {
->  		return ignore_write(vcpu, p);
->  	} else {
-> -		u64 dfr = read_sanitised_ftr_reg(SYS_ID_AA64DFR0_EL1);
-> -		u64 pfr = read_sanitised_ftr_reg(SYS_ID_AA64PFR0_EL1);
-> +		u64 dfr = __read_id_reg(vcpu, SYS_ID_AA64DFR0_EL1);
-> +		u64 pfr = __read_id_reg(vcpu, SYS_ID_AA64PFR0_EL1);
->  		u32 el3 = !!cpuid_feature_extract_unsigned_field(pfr, ID_AA64PFR0_EL3_SHIFT);
->  
->  		p->regval = ((((dfr >> ID_AA64DFR0_WRPS_SHIFT) & 0xf) << 28) |
-> 
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+SGksCgpOb3QgYSBncmVhdCBkZWFsIGhhcyBjaGFuZ2VkIGZyb20gdGhlIGxhc3QgcG9zdGluZyBh
+bHRob3VnaCBJIGhhdmUKZHJvcHBlZCB0aGUgYWRkaXRpb25hbCB1bml0dGVzdHMuY2ZnIGluIGZh
+dm91ciBvZiBzZXR0aW5nICJub2RlZmF1bHQiCmZvciB0aGUgdGVzdHMuIE90aGVyd2lzZSB0aGUg
+Y2xlYW4tdXBzIGFyZSBtYWlubHkgdGV4dHVhbCAocmVtb3ZpbmcKcHJpbnRmcywgcmFuZG9tIG5l
+d2xpbmVzIGFuZCBjbGVhbmluZyB1cCBjb21tZW50cykuIEFzIHVzdWFsIHRoZQpkZXRhaWxzIGFy
+ZSBpbiB0aGUgY29tbWl0cyBiZWxsb3cgdGhlIC0tLS4KCkkndmUgYWxzbyB0d2Vha2VkIC5naXQv
+Y29uZmlnIHNvIGdldF9tYWludGFpbmVyLnBsIHNob3VsZCBlbnN1cmUKZGlyZWN0IGRlbGl2ZXJ5
+IG9mIHRoZSBwYXRjaGVzIDstKQoKQWxleCBCZW5uw6llICg5KToKICBkb2NzOiBtZW50aW9uIGNo
+ZWNrcGF0Y2ggaW4gdGhlIFJFQURNRQogIGFybS9mbGF0LmxkczogZG9uJ3QgZHJvcCBkZWJ1ZyBk
+dXJpbmcgbGluawogIE1ha2VmaWxlOiBhZGQgR05VIGdsb2JhbCB0YWdzIHN1cHBvcnQKICBsaWI6
+IGFkZCBpc2FhYyBwcm5nIGxpYnJhcnkgZnJvbSBDQ0FOCiAgYXJtL3RsYmZsdXNoLWNvZGU6IFRM
+QiBmbHVzaCBkdXJpbmcgY29kZSBleGVjdXRpb24KICBhcm0vbG9ja2luZy10ZXN0czogYWRkIGNv
+bXByZWhlbnNpdmUgbG9ja2luZyB0ZXN0CiAgYXJtL2JhcnJpZXItbGl0bXVzLXRlc3RzOiBhZGQg
+c2ltcGxlIG1wIGFuZCBzYWwgbGl0bXVzIHRlc3RzCiAgYXJtL3J1bjogdXNlIHNlcGFyYXRlIC0t
+YWNjZWwgZm9ybQogIGFybS90Y2ctdGVzdDogc29tZSBiYXNpYyBUQ0cgZXhlcmNpc2luZyB0ZXN0
+cwoKIGFybS9ydW4gICAgICAgICAgICAgICAgICAgfCAgIDQgKy0KIE1ha2VmaWxlICAgICAgICAg
+ICAgICAgICAgfCAgIDUgKy0KIGFybS9NYWtlZmlsZS5hcm0gICAgICAgICAgfCAgIDIgKwogYXJt
+L01ha2VmaWxlLmFybTY0ICAgICAgICB8ICAgMiArCiBhcm0vTWFrZWZpbGUuY29tbW9uICAgICAg
+IHwgICA2ICstCiBsaWIvYXJtL2FzbS9iYXJyaWVyLmggICAgIHwgIDE5ICsrCiBsaWIvYXJtNjQv
+YXNtL2JhcnJpZXIuaCAgIHwgIDUwICsrKysrCiBsaWIvcHJuZy5oICAgICAgICAgICAgICAgIHwg
+IDgyICsrKysrKysKIGxpYi9wcm5nLmMgICAgICAgICAgICAgICAgfCAxNjIgKysrKysrKysrKysr
+KysKIGFybS9mbGF0LmxkcyAgICAgICAgICAgICAgfCAgIDEgLQogYXJtL3RjZy10ZXN0LWFzbS5T
+ICAgICAgICB8IDE3MSArKysrKysrKysrKysrKysKIGFybS90Y2ctdGVzdC1hc202NC5TICAgICAg
+fCAxNzAgKysrKysrKysrKysrKysKIGFybS9iYXJyaWVyLWxpdG11cy10ZXN0LmMgfCA0NTAgKysr
+KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysKIGFybS9sb2NraW5nLXRlc3QuYyAg
+ICAgICAgfCAzMjIgKysrKysrKysrKysrKysrKysrKysrKysrKysrCiBhcm0vc3BpbmxvY2stdGVz
+dC5jICAgICAgIHwgIDg3IC0tLS0tLS0tCiBhcm0vdGNnLXRlc3QuYyAgICAgICAgICAgIHwgMzM4
+ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysKIGFybS90bGJmbHVzaC1jb2RlLmMgICAgICAg
+fCAyMDkgKysrKysrKysrKysrKysrKysrCiBhcm0vdW5pdHRlc3RzLmNmZyAgICAgICAgIHwgMTcw
+ICsrKysrKysrKysrKysrCiBSRUFETUUubWQgICAgICAgICAgICAgICAgIHwgICAzICsKIDE5IGZp
+bGVzIGNoYW5nZWQsIDIxNjEgaW5zZXJ0aW9ucygrKSwgOTIgZGVsZXRpb25zKC0pCiBjcmVhdGUg
+bW9kZSAxMDA2NDQgbGliL3BybmcuaAogY3JlYXRlIG1vZGUgMTAwNjQ0IGxpYi9wcm5nLmMKIGNy
+ZWF0ZSBtb2RlIDEwMDY0NCBhcm0vdGNnLXRlc3QtYXNtLlMKIGNyZWF0ZSBtb2RlIDEwMDY0NCBh
+cm0vdGNnLXRlc3QtYXNtNjQuUwogY3JlYXRlIG1vZGUgMTAwNjQ0IGFybS9iYXJyaWVyLWxpdG11
+cy10ZXN0LmMKIGNyZWF0ZSBtb2RlIDEwMDY0NCBhcm0vbG9ja2luZy10ZXN0LmMKIGRlbGV0ZSBt
+b2RlIDEwMDY0NCBhcm0vc3BpbmxvY2stdGVzdC5jCiBjcmVhdGUgbW9kZSAxMDA2NDQgYXJtL3Rj
+Zy10ZXN0LmMKIGNyZWF0ZSBtb2RlIDEwMDY0NCBhcm0vdGxiZmx1c2gtY29kZS5jCgotLSAKMi4z
+MC4yCgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwprdm1h
+cm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1bWJpYS5lZHUKaHR0cHM6Ly9saXN0
+cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9rdm1hcm0K
