@@ -2,87 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FC2D470406
-	for <lists+kvmarm@lfdr.de>; Fri, 10 Dec 2021 16:39:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5137D470688
+	for <lists+kvmarm@lfdr.de>; Fri, 10 Dec 2021 17:58:13 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 88AC54B20E;
-	Fri, 10 Dec 2021 10:39:16 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BA6654B174;
+	Fri, 10 Dec 2021 11:58:12 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.919
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=0.919 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01, T_FRT_BELOW2=0.01]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@linaro.org
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LwplcDPB1qTD; Fri, 10 Dec 2021 10:39:16 -0500 (EST)
+	with ESMTP id L8AdTyB7zFNO; Fri, 10 Dec 2021 11:58:12 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5016D4B1F6;
-	Fri, 10 Dec 2021 10:39:15 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8ECBE4B1C1;
+	Fri, 10 Dec 2021 11:58:11 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 597224B1F0
- for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Dec 2021 10:39:14 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 767104B126
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Dec 2021 11:58:10 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id obMUt6ZLje-5 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 10 Dec 2021 10:39:13 -0500 (EST)
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com
- [209.85.208.49])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6986D4B1EC
- for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Dec 2021 10:39:13 -0500 (EST)
-Received: by mail-ed1-f49.google.com with SMTP id t5so30847387edd.0
- for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Dec 2021 07:39:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
- h=references:user-agent:from:to:cc:subject:date:in-reply-to
- :message-id:mime-version:content-transfer-encoding;
- bh=AOZkdRC+CJ+PlUEpOZm9T90sfKp+i/oDgrKmJYRkPhU=;
- b=ZizVwEZkAydiLEQYWBYNODOEWr60QjsjBINddQJTkw8FL+DX0c13Vg1WVtpKq9U+Aq
- e++XdnJH6ohxVIJhSgvgnsU69yn/Iq2aj3Y2t5jz+WLja+jmVNGdBADfTjIIZutTS/xB
- 8A8Cz4DLo1E5lBQLm+LsssVKMVZsgJKC4irQ4GnCPwB95S2c59sXVFnSNEt+836wGSjE
- QgNC0CnAPP/qLcCZ5iwDFCqY8x1wUirAfqvEn2hnUMBrggmSRQvWkQbSpCLcl/KI3tJG
- xQJFT8ci6Xzigg1yDJ8qN3KUCqSma/7pD0RNGs4OlwFjoXAeuxrag6QsOIrRWcEQFGTg
- U0ow==
+ with ESMTP id c1jVOM5Cl4zK for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 10 Dec 2021 11:58:09 -0500 (EST)
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com
+ [209.85.216.74])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 188D64B11F
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Dec 2021 11:58:09 -0500 (EST)
+Received: by mail-pj1-f74.google.com with SMTP id
+ b11-20020a17090acc0b00b001a9179dc89fso8563322pju.6
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Dec 2021 08:58:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=fSK6uHWpIJtKlImgMjXDQsAlhLi/T4fDrdTrYPdabAk=;
+ b=gmoRl0JH3HLkq9IL2jXGgIdQqdHGIeAGwBt+zx0S/xteTkOC1hfbnn6ff+JIlgbAoh
+ O/I593FGaV5VSWeswt0lLn1YRwvhjnN43y/RHE+tbBtrFXzzi5cJ16TZ5+QmPqljIxcV
+ dCwF7OoROFOL1Q4z/AuWHgxdeGMWyf/T7lngi1HjEaItOXrqxN7s9acLAyqlxEP/f9eI
+ QRlzC5VrcypA/suqvn+whHN0KndQHjAWpveakO+R0IsNDsADFbfqtH5nPfqLdRiRbW73
+ LR45QEm3Oazr60IaY0Jm6a/Hu+aYvMDQjtC/ixdkWIV8pLtqt1u+rioUqHt0gpgiAlED
+ 2SKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:references:user-agent:from:to:cc:subject:date
- :in-reply-to:message-id:mime-version:content-transfer-encoding;
- bh=AOZkdRC+CJ+PlUEpOZm9T90sfKp+i/oDgrKmJYRkPhU=;
- b=JQoi+eOKlsTbjlzMzjyOxXDfnQgrVzXj0j7Rwaf+TkdAN5NSVZdVP64FE1OOvgUekO
- Zse+ewzct3tzB6u/2G0oEpzWYiZ0doaNgzDalajwrm5udLJgKoLn63yoNd7WWwYDIVuP
- zlUi5VskfS8DQ02KNccoa58/0qxaMgyLhLHK3D5iqgu288nB/iN516Jicy0ZeYgTnMtq
- kZvbRADHINdI9aPCvMqmstH9pucbbOstn9gF/PSdPfUK7WHXe8yoPNvteB9ZI0xp04dh
- 0qs5K7GAJ1f7ZEPI0RHaLLx/cck7W9XoEMDOp5n3SAYS/szY/WCaGoK1HrBWYsnrjBpp
- fiGg==
-X-Gm-Message-State: AOAM531pxCO8eCbJZ+fZJlBUvfAVc2WVJSNQdZfM5nRkk0hYMNP8hmCK
- J1ZqgdSoLOxHwadbB0ZAKrqDcA==
-X-Google-Smtp-Source: ABdhPJyKLs05FJwfh3elkrf4n1AKWwU1t1JPNYqG6PNSzNOg39JnN4HBPm/pFLc0ebZKOsKOqT0VOQ==
-X-Received: by 2002:a17:906:e115:: with SMTP id
- gj21mr24985353ejb.348.1639150751866; 
- Fri, 10 Dec 2021 07:39:11 -0800 (PST)
-Received: from zen.linaroharston ([51.148.130.216])
- by smtp.gmail.com with ESMTPSA id ne33sm1770325ejc.6.2021.12.10.07.39.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 10 Dec 2021 07:39:10 -0800 (PST)
-Received: from zen (localhost [127.0.0.1])
- by zen.linaroharston (Postfix) with ESMTP id B07661FF96;
- Fri, 10 Dec 2021 15:39:09 +0000 (GMT)
-References: <20211202115352.951548-1-alex.bennee@linaro.org>
-User-agent: mu4e 1.7.5; emacs 28.0.90
-From: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: pbonzini@redhat.com, drjones@redhat.com, thuth@redhat.com
-Subject: Re: [kvm-unit-tests PATCH v9 0/9] MTTCG sanity tests for ARM
-Date: Fri, 10 Dec 2021 15:38:56 +0000
-In-reply-to: <20211202115352.951548-1-alex.bennee@linaro.org>
-Message-ID: <87czm4jwpu.fsf@linaro.org>
-MIME-Version: 1.0
-Cc: kvm@vger.kernel.org, maz@kernel.org, christoffer.dall@arm.com,
- qemu-arm@nongnu.org, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=fSK6uHWpIJtKlImgMjXDQsAlhLi/T4fDrdTrYPdabAk=;
+ b=CC1/W//mOPmUBM6fob2bicE+hMbCjT3MwR97LxqN72ubXT81N3RT5Yjb0QgwDdtr+u
+ pN/LbNtskfuX6F7czNTbyq4vizzedS5eShm1e0HQan0YmI0sGbCxWbvYUBc9oGcNf804
+ eP5gHDKLyAYOJ8sHt2ediVc+DxWY2PjW3+hDJNMx+c0z1+sSw1U1Vc5xM8SIEXAmaolS
+ oiPbEUWDPguRc24TXQ/ZhnCpf6WKFI8Teq7AoBGnqMYF6i5au5TZT3e6EjWQEA9xQW1a
+ Jg38Us6nADbS2FDe079srrnWAMuYmLBeUdB9lMBSU74VDLqmWK8gyHT1ieldikhfILoS
+ 9opQ==
+X-Gm-Message-State: AOAM530zsZscZhimgL8gJR7zKQLocnrvqgIy/GzLs6/PZrCG2d+oeTNi
+ Pyp+QRNq8Y+jjOhFO0BITIiuIOo8dG86sg==
+X-Google-Smtp-Source: ABdhPJw9a4fTHT/klzsxj+qfZk9tqXdFz3Y92zbP0NFlSiAPFcP7FkkuxV6XyfkLNiDuI4EvRD6YfEfxyb/mow==
+X-Received: from ricarkol2.c.googlers.com
+ ([fda3:e722:ac3:cc00:24:72f4:c0a8:62fe])
+ (user=ricarkol job=sendgmr) by 2002:a63:6342:: with SMTP id
+ x63mr40205115pgb.295.1639155487878; Fri, 10 Dec 2021 08:58:07 -0800 (PST)
+Date: Fri, 10 Dec 2021 08:58:01 -0800
+Message-Id: <20211210165804.1623253-1-ricarkol@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.34.1.173.g76aa8bc2d0-goog
+Subject: [kvm-unit-tests PATCH 0/3] arm64: debug: add migration tests for
+ debug state
+From: Ricardo Koller <ricarkol@google.com>
+To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
+Cc: maz@kernel.org, pshier@google.com, Paolo Bonzini <pbonzini@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -94,20 +84,37 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-CkFsZXggQmVubsOpZSA8YWxleC5iZW5uZWVAbGluYXJvLm9yZz4gd3JpdGVzOgoKPiBIaSwKPgo+
-IE5vdCBhIGdyZWF0IGRlYWwgaGFzIGNoYW5nZWQgZnJvbSB0aGUgbGFzdCBwb3N0aW5nIGFsdGhv
-dWdoIEkgaGF2ZQo+IGRyb3BwZWQgdGhlIGFkZGl0aW9uYWwgdW5pdHRlc3RzLmNmZyBpbiBmYXZv
-dXIgb2Ygc2V0dGluZyAibm9kZWZhdWx0Igo+IGZvciB0aGUgdGVzdHMuIE90aGVyd2lzZSB0aGUg
-Y2xlYW4tdXBzIGFyZSBtYWlubHkgdGV4dHVhbCAocmVtb3ZpbmcKPiBwcmludGZzLCByYW5kb20g
-bmV3bGluZXMgYW5kIGNsZWFuaW5nIHVwIGNvbW1lbnRzKS4gQXMgdXN1YWwgdGhlCj4gZGV0YWls
-cyBhcmUgaW4gdGhlIGNvbW1pdHMgYmVsbG93IHRoZSAtLS0uCj4KPiBJJ3ZlIGFsc28gdHdlYWtl
-ZCAuZ2l0L2NvbmZpZyBzbyBnZXRfbWFpbnRhaW5lci5wbCBzaG91bGQgZW5zdXJlCj4gZGlyZWN0
-IGRlbGl2ZXJ5IG9mIHRoZSBwYXRjaGVzIDstKQoKR2VudGxlIHBpbmcuLi4KCi0tIApBbGV4IEJl
-bm7DqWUKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18Ka3Zt
-YXJtIG1haWxpbmcgbGlzdAprdm1hcm1AbGlzdHMuY3MuY29sdW1iaWEuZWR1Cmh0dHBzOi8vbGlz
-dHMuY3MuY29sdW1iaWEuZWR1L21haWxtYW4vbGlzdGluZm8va3ZtYXJtCg==
+Add some tests for checking that we can migrate debug state correctly: setup
+some breakpoints/watchpoints/single-stepping, migrate, and then check that we
+get the expected exceptions.
+
+The 3 patches in this series add tests for breakpoints, watchpoints, and
+single-stepping one patch at a time.  Each patch adds a migration test and a
+sanity test (to test that debugging works with no migration).
+
+Note that this is limited to 64-bits and a single vcpu. Also note that some of
+the code, like reset_debug_state, is borrowed from kvm selftests.
+
+Ricardo Koller (3):
+  arm64: debug: add a migration test for breakpoint state
+  arm64: debug: add a migration test for watchpoint state
+  arm64: debug: add a migration test for single-step state
+
+ arm/Makefile.arm64 |   1 +
+ arm/debug.c        | 420 +++++++++++++++++++++++++++++++++++++++++++++
+ arm/unittests.cfg  |  37 ++++
+ 3 files changed, 458 insertions(+)
+ create mode 100644 arm/debug.c
+
+-- 
+2.34.1.173.g76aa8bc2d0-goog
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
