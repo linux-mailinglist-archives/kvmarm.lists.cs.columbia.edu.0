@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E70F947AB04
-	for <lists+kvmarm@lfdr.de>; Mon, 20 Dec 2021 15:05:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FAE047AB4A
+	for <lists+kvmarm@lfdr.de>; Mon, 20 Dec 2021 15:28:39 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2D5704B4C8;
-	Mon, 20 Dec 2021 09:05:36 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 54A6E4B480;
+	Mon, 20 Dec 2021 09:28:38 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -18,61 +18,69 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KkUPmSxIYd8Y; Mon, 20 Dec 2021 09:05:36 -0500 (EST)
+	with ESMTP id XS91Ukyo2iXH; Mon, 20 Dec 2021 09:28:38 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DBF8D4B4B6;
-	Mon, 20 Dec 2021 09:05:34 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0FC7E4B375;
+	Mon, 20 Dec 2021 09:28:37 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8DB4C4B4B2
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Dec 2021 09:05:33 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id AC4144B42B
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Dec 2021 09:28:35 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id QvBpSfHvA37M for <kvmarm@lists.cs.columbia.edu>;
- Mon, 20 Dec 2021 09:05:32 -0500 (EST)
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 470CB4B4A5
- for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Dec 2021 09:05:32 -0500 (EST)
+ with ESMTP id wQAjgpuX9q5b for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 20 Dec 2021 09:28:34 -0500 (EST)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8A0474B448
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 20 Dec 2021 09:28:34 -0500 (EST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by sin.source.kernel.org (Postfix) with ESMTPS id 1FD62CE10DB;
- Mon, 20 Dec 2021 14:05:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D577C36AEA;
- Mon, 20 Dec 2021 14:05:27 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 7529661185;
+ Mon, 20 Dec 2021 14:28:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AF9C36AE8;
+ Mon, 20 Dec 2021 14:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1640009127;
- bh=vB8KcdNfjcnpEkzVQLqvdZ/M+EZxqGO0H04VqIuatEY=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=nlGtV5AydQWpOAh5PjHlggT27o0YWSkMuqsFOC7UfaBt2ShrqTY33cfXSV8MkPkGF
- KqOkgUQgsdM0jTd21RZaqfkYiFQDv5dJFfLmDlg1X/Er7jSQBQlcICUcoqIQgwJay1
- 3CHF9yVoSOHPzIzcJs88jpkoIwim979ezOzRsX3gMvSUxLEtOWdaurVujjeRLtk9fc
- qB3k1YFqT6kzwWRsTAnOOwYvQPLbOfg1m0XFDAerZJq5WGEVk3Ygfx8kt/1cDfCaMg
- fDmc5ShIonsca4vtkvHKb0e3nevFrUkbsqumyeEyW5mjIzktaq9Q7covlFD8kl2R4V
- CzRNG3gOv2prw==
+ s=k20201202; t=1640010512;
+ bh=1eIe8Rm8nXRPWnknyt0IFILgScA81zHkg8rD11G9fF8=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=p9zS+D9+lM9BGBVlOOR7BEGaTWRoP5RvU6xcAPjrrRXKF51uBZ/B+/gpZKV0njXk8
+ pRVnc1fLji+Rz2I+yGK3muR3ShtgOg79+EUlLKOdT007Y9vuEpxyHkTuVcIkkn4J2d
+ 8WpundwdMKXb5vMUNIfkkJMKfuB7sM01Zj86B/otdfMzfbB/bv+pGEib6hSU8zllDR
+ ihqBT/zyAC4vVgjCyvZtIdgRBkOAAZg3/Kw6VhD+b0KGT5W2av0w3x1AztV5xxY5zE
+ +GoMmoHcveprG/gKQAtTKJz4KaAnDx6gNIDMp19XQVLIlbVnW9dfPva5sPz7LGuOyz
+ CdjfY5mGXGdFw==
 Received: from cfbb000407.r.cam.camfibre.uk ([185.219.108.64]
- helo=hot-poop.lan)
+ helo=why.misterjones.org)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1mzJI5-00DId5-Je; Mon, 20 Dec 2021 14:05:25 +0000
+ id 1mzJeQ-00DIsl-SU; Mon, 20 Dec 2021 14:28:30 +0000
+Date: Mon, 20 Dec 2021 14:28:30 +0000
+Message-ID: <875yrjwdtd.wl-maz@kernel.org>
 From: Marc Zyngier <maz@kernel.org>
-To: Fuad Tabba <tabba@google.com>,
-	kvmarm@lists.cs.columbia.edu
-Subject: Re: [PATCH] KVM: arm64: Use defined value for SCTLR_ELx_EE
-Date: Mon, 20 Dec 2021 14:05:22 +0000
-Message-Id: <164000911220.1759644.14598110992335540231.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20211208192810.657360-1-tabba@google.com>
-References: <20211208192810.657360-1-tabba@google.com>
-MIME-Version: 1.0
+To: Mark Rutland <mark.rutland@arm.com>
+Subject: Re: Possible nohz-full/RCU issue in arm64 KVM
+In-Reply-To: <YbyO40zDW/kvUHEE@FVFF77S0Q05N>
+References: <d80e440375896f75d45e227d40af60ca7ba24ceb.camel@redhat.com>
+ <YbyO40zDW/kvUHEE@FVFF77S0Q05N>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
 X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: tabba@google.com, kvmarm@lists.cs.columbia.edu,
- kernel-team@android.com, will@kernel.org
+X-SA-Exim-Rcpt-To: mark.rutland@arm.com, nsaenzju@redhat.com, will@kernel.org,
+ paulmck@kernel.org, linux-arm-kernel@lists.infradead.org, rcu@vger.kernel.org,
+ tglx@linutronix.de, frederic@kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-kernel@vger.kernel.org
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
-Cc: will@kernel.org, kernel-team@android.com
+Cc: paulmck <paulmck@kernel.org>, frederic <frederic@kernel.org>,
+ linux-kernel <linux-kernel@vger.kernel.org>, kvmarm@lists.cs.columbia.edu,
+ rcu <rcu@vger.kernel.org>, Nicolas Saenz Julienne <nsaenzju@redhat.com>,
+ Will Deacon <will@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+ linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -89,23 +97,80 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, 8 Dec 2021 19:28:10 +0000, Fuad Tabba wrote:
-> Replace the hardcoded value with the existing definition.
+On Fri, 17 Dec 2021 13:21:39 +0000,
+Mark Rutland <mark.rutland@arm.com> wrote:
 > 
-> No functional change intended.
+> On Fri, Dec 17, 2021 at 12:51:57PM +0100, Nicolas Saenz Julienne wrote:
+> > Hi All,
+> 
+> Hi,
+> 
+> > arm64's guest entry code does the following:
+> > 
+> > int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
+> > {
+> > 	[...]
+> > 
+> > 	guest_enter_irqoff();
+> > 
+> > 	ret = kvm_call_hyp_ret(__kvm_vcpu_run, vcpu);
+> > 
+> > 	[...]
+> > 
+> > 	local_irq_enable();
+> > 
+> > 	/*
+> > 	 * We do local_irq_enable() before calling guest_exit() so
+> > 	 * that if a timer interrupt hits while running the guest we
+> > 	 * account that tick as being spent in the guest.  We enable
+> > 	 * preemption after calling guest_exit() so that if we get
+> > 	 * preempted we make sure ticks after that is not counted as
+> > 	 * guest time.
+> > 	 */
+> > 	guest_exit();
+> > 	[...]
+> > }
+> > 
+> > 
+> > On a nohz-full CPU, guest_{enter,exit}() delimit an RCU extended quiescent
+> > state (EQS). Any interrupt happening between local_irq_enable() and
+> > guest_exit() should disable that EQS. Now, AFAICT all el0 interrupt handlers
+> > do the right thing if trggered in this context, but el1's won't. Is it
+> > possible to hit an el1 handler (for example __el1_irq()) there?
+> 
+> I think you're right that the EL1 handlers can trigger here and
+> won't exit the EQS.
+> 
+> I'm not immediately sure what we *should* do here. What does x86 do
+> for an IRQ taken from a guest mode? I couldn't spot any handling of
+> that case, but I'm not familiar enough with the x86 exception model
+> to know if I'm looking in the right place.
+> 
+> Note that the EL0 handlers *cannot* trigger for an exception taken
+> from a guest. We use separate vectors while running a guest (for
+> both VHE and nVHE modes), and from the main kernel's PoV we return
+> from kvm_call_hyp_ret(). We can ony take IRQ from EL1 *after* that
+> returns.
+> 
+> We *might* need to audit the KVM vector handlers to make sure they're not
+> dependent on RCU protection (I assume they're not, but it's possible something
+> has leaked into the VHE code).
 
-Applied to next, thanks!
+The *intent* certainly is that whatever is used in the VHE code to
+handle exceptions arising whilst running in guest context must be
+independent from RCU, if only because we share a bunch with the !VHE
+code, and RCU is, unfortunately, not a thing there.
 
-[1/1] KVM: arm64: Use defined value for SCTLR_ELx_EE
-      commit: 500ca5241bf8054c8a973e54cb28629614f43178
+My most immediate concern is that the VHE/nVHE split now allows all
+sort of instrumentation in VHE, which may rely on RCU. At the very
+least, we should make most of the VHE switch code noinstr.
 
-Cheers,
+Thanks,
 
 	M.
+
 -- 
 Without deviation from the norm, progress is not possible.
-
-
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
