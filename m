@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 950F648047E
-	for <lists+kvmarm@lfdr.de>; Mon, 27 Dec 2021 21:13:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F31F4804D2
+	for <lists+kvmarm@lfdr.de>; Mon, 27 Dec 2021 22:17:12 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A63ED49E45;
-	Mon, 27 Dec 2021 15:13:35 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A97F949EFA;
+	Mon, 27 Dec 2021 16:17:11 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.911
@@ -14,72 +14,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
 	RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+	autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id STpeFF0-DxIq; Mon, 27 Dec 2021 15:13:35 -0500 (EST)
+	with ESMTP id IBG61pstle03; Mon, 27 Dec 2021 16:17:10 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2CEEF49E3F;
-	Mon, 27 Dec 2021 15:13:34 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F2C9849EEE;
+	Mon, 27 Dec 2021 16:17:08 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1BF1F49E36
- for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Dec 2021 15:13:33 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D922D49EDE
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Dec 2021 16:17:07 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id U6W58Iq+Ntnz for <kvmarm@lists.cs.columbia.edu>;
- Mon, 27 Dec 2021 15:13:31 -0500 (EST)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B439749E39
- for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Dec 2021 15:13:31 -0500 (EST)
+ with ESMTP id fXeDTQhEAotb for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 27 Dec 2021 16:17:06 -0500 (EST)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B0CCE40C10
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 27 Dec 2021 16:17:06 -0500 (EST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id F1DAFB81142;
- Mon, 27 Dec 2021 20:13:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE192C36AE7;
- Mon, 27 Dec 2021 20:13:28 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id AEA3161073;
+ Mon, 27 Dec 2021 21:17:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229E9C36AEA;
+ Mon, 27 Dec 2021 21:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1640636008;
- bh=uwbPNY5tEL2J9KworijcI/BzXuaiHuUEjSWMvWKe3MM=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=G080XVmiH+EjNpkz80n9k88wC37Rl3tmAfbtR7tGsAcT0+til4usH4SA9E3NpBTOx
- oPzYccOpS04ej7Pol7x5adC6FidLRUFrU7uAa2olJpbl4Bo4r2qgCKD0ujlJySiNYz
- xHes4kVFrxhqOEmAFtcjrqY+ohEPM2eQzUcvNxQ+MkL2MhV8WluFrzgBeWTiSzrMsE
- CXEs23JjGM0QaPoG5UVELhc3pTu+bv7TqcCVMgEXDyxVBh3srTdRE7hwIH17N9k1fd
- Nl8VbcVt7tDHj41/WMqQq4beShmxzTr1A2SLosIMleyggn7aN+7sZkbIlnd4hpEHLr
- eiRaFwxh28rrA==
+ s=k20201202; t=1640639825;
+ bh=iVCmmeeO13JoomogqvcGNrgq4nDJ+FZNDPXN9KsDdHw=;
+ h=From:To:Cc:Subject:Date:From;
+ b=alQ3nfWkYPPngjyPmoIaTwKsZk/INt338gLXMlUHNVbYetsfpmNrq1bZH1zoJ/Z95
+ 7/2GRDPAt8PSk1PRuLI0u0m2KXvTkgguVSCosihvZ83HpC2838ZPwe1zI7OfdYKvvA
+ VuBdzPLkIaE392EqljeOdh5XDP6eNNa3Po2Sey1NwnpUMN2woMYBr1HzVX0sDNKgIu
+ gw1GT8V8eDlzppzrllvlDAjWMXdqqJ1Et5K1MuDdPBT424Wo83pJkEu8TK2O75oXk6
+ A+EMBHnhRNgerydZDa+85HmLuK3AZgpqvpBtFoSQPQdtGOPKbrPp5l+WWYLhHnHXUZ
+ wHFKEuIdyKERw==
 Received: from cfbb000407.r.cam.camfibre.uk ([185.219.108.64]
- helo=wait-a-minute.misterjones.org)
+ helo=hot-poop.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1n1wN4-00EcmG-Ic; Mon, 27 Dec 2021 20:13:26 +0000
-Date: Mon, 27 Dec 2021 20:13:25 +0000
-Message-ID: <87mtklztzu.wl-maz@kernel.org>
+ id 1n1xMd-00Ed4b-6N; Mon, 27 Dec 2021 21:17:03 +0000
 From: Marc Zyngier <maz@kernel.org>
-To: Andrew Jones <drjones@redhat.com>
-Subject: Re: [PATCH v2 4/5] hw/arm/virt: Use the PA range to compute the
- memory map
-In-Reply-To: <20211004101110.imtfcufnrdwhneev@gator>
-References: <20211003164605.3116450-1-maz@kernel.org>
- <20211003164605.3116450-5-maz@kernel.org>
- <20211004101110.imtfcufnrdwhneev@gator>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
- (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+To: qemu-devel@nongnu.org
+Subject: [PATCH v3 0/5] target/arm: Reduced-IPA space and highmem=off fixes
+Date: Mon, 27 Dec 2021 21:16:37 +0000
+Message-Id: <20211227211642.994461-1-maz@kernel.org>
+X-Mailer: git-send-email 2.30.2
+MIME-Version: 1.0
 X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: drjones@redhat.com, qemu-devel@nongnu.org,
+X-SA-Exim-Rcpt-To: qemu-devel@nongnu.org, drjones@redhat.com,
  eric.auger@redhat.com, peter.maydell@linaro.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org, kernel-team@android.com
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
-Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org, kernel-team@android.com,
- kvmarm@lists.cs.columbia.edu
+Cc: kvm@vger.kernel.org, kernel-team@android.com, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -96,137 +88,47 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, 04 Oct 2021 11:11:10 +0100,
-Andrew Jones <drjones@redhat.com> wrote:
-> 
-> On Sun, Oct 03, 2021 at 05:46:04PM +0100, Marc Zyngier wrote:
-> > The highmem attribute is nothing but another way to express the
-> > PA range of a VM. To support HW that has a smaller PA range then
-> > what QEMU assumes, pass this PA range to the virt_set_memmap()
-> > function, allowing it to correctly exclude highmem devices
-> > if they are outside of the PA range.
-> > 
-> > Signed-off-by: Marc Zyngier <maz@kernel.org>
-> > ---
-> >  hw/arm/virt.c | 46 +++++++++++++++++++++++++++++++++++-----------
-> >  1 file changed, 35 insertions(+), 11 deletions(-)
-> > 
-> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> > index 9d2abdbd5f..a572e0c9d9 100644
-> > --- a/hw/arm/virt.c
-> > +++ b/hw/arm/virt.c
-> > @@ -1610,10 +1610,10 @@ static uint64_t virt_cpu_mp_affinity(VirtMachineState *vms, int idx)
-> >      return arm_cpu_mp_affinity(idx, clustersz);
-> >  }
-> >  
-> > -static void virt_set_memmap(VirtMachineState *vms)
-> > +static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
-> >  {
-> >      MachineState *ms = MACHINE(vms);
-> > -    hwaddr base, device_memory_base, device_memory_size;
-> > +    hwaddr base, device_memory_base, device_memory_size, memtop;
-> >      int i;
-> >  
-> >      vms->memmap = extended_memmap;
-> > @@ -1628,9 +1628,12 @@ static void virt_set_memmap(VirtMachineState *vms)
-> >          exit(EXIT_FAILURE);
-> >      }
-> >  
-> > -    if (!vms->highmem &&
-> > -        vms->memmap[VIRT_MEM].base + ms->maxram_size > 4 * GiB) {
-> > -        error_report("highmem=off, but memory crosses the 4GiB limit\n");
-> > +    if (!vms->highmem)
-> > +	    pa_bits = 32;
-> > +
-> > +    if (vms->memmap[VIRT_MEM].base + ms->maxram_size > BIT_ULL(pa_bits)) {
-> > +	    error_report("Addressing limited to %d bits, but memory exceeds it by %llu bytes\n",
-> > +			 pa_bits, vms->memmap[VIRT_MEM].base + ms->maxram_size - BIT_ULL(pa_bits));
-> >          exit(EXIT_FAILURE);
-> >      }
-> >      /*
-> > @@ -1645,7 +1648,7 @@ static void virt_set_memmap(VirtMachineState *vms)
-> >      device_memory_size = ms->maxram_size - ms->ram_size + ms->ram_slots * GiB;
-> >  
-> >      /* Base address of the high IO region */
-> > -    base = device_memory_base + ROUND_UP(device_memory_size, GiB);
-> > +    memtop = base = device_memory_base + ROUND_UP(device_memory_size, GiB);
-> >      if (base < device_memory_base) {
-> >          error_report("maxmem/slots too huge");
-> >          exit(EXIT_FAILURE);
-> > @@ -1662,9 +1665,17 @@ static void virt_set_memmap(VirtMachineState *vms)
-> >          vms->memmap[i].size = size;
-> >          base += size;
-> >      }
-> > -    vms->highest_gpa = (vms->highmem ?
-> > -                        base :
-> > -                        vms->memmap[VIRT_MEM].base + ms->maxram_size) - 1;
-> > +
-> > +    /*
-> > +     * If base fits within pa_bits, all good. If it doesn't, limit it
-> > +     * to the end of RAM, which is guaranteed to fit within pa_bits.
-> 
-> We tested that
-> 
->   vms->memmap[VIRT_MEM].base + ms->maxram_size
-> 
-> fits within pa_bits, but here we're setting highest_gpa to
-> 
->   ROUND_UP(vms->memmap[VIRT_MEM].base + ms->ram_size, GiB) +
->   ROUND_UP(ms->maxram_size - ms->ram_size + ms->ram_slots * GiB, GiB)
-> 
-> which will be larger. Shouldn't we test memtop instead to make this
-> guarantee?
+Here's another stab at enabling QEMU on systems with pathologically
+reduced IPA ranges such as the Apple M1 (previous version at [1]).
+Eventually, we're able to run a KVM guest with more than just 3GB of
+RAM on a system with a 36bit IPA space, and at most 123 vCPUs.
 
-Yes, well spotted.
+This series does a few things:
+- decouple the enabling of the highmem PCIe region from the highmem
+  attribute
+- introduce a new attribute to control the enabling of the highmem
+  GICv3 redistributors
+- correctly cap the PA range with highmem is off
+- generalise the highmem behaviour to any PA range
+- disable both highmem PCIe and GICv3 RDs when they are outside of the
+  PA range
 
-> 
-> 
-> > +     */
-> > +    if (base <= BIT_ULL(pa_bits)) {
-> > +        vms->highest_gpa = base -1;
-> > +    } else {
-> > +        vms->highest_gpa = memtop - 1;
-> > +    }
-> > +
-> >      if (device_memory_size > 0) {
-> >          ms->device_memory = g_malloc0(sizeof(*ms->device_memory));
-> >          ms->device_memory->base = device_memory_base;
-> > @@ -1860,7 +1871,20 @@ static void machvirt_init(MachineState *machine)
-> >       * to create a VM with the right number of IPA bits.
-> >       */
-> >      if (!vms->memmap) {
-> > -        virt_set_memmap(vms);
-> > +        ARMCPU *armcpu = ARM_CPU(first_cpu);
-> 
-> 
-> I think it's too early to use first_cpu here (although, I'll admit I'm
-> always confused as to what gets initialized when...) Assuming we need to
-> realize the cpus first, then we don't do that until a bit further down
-> in this function. I wonder if it's possible to delay this memmap setup
-> until after cpu realization. I see the memmap getting used prior when
-> calculating virt_max_cpus, but that looks like it needs to be updated
-> anyway to take highmem into account as to whether or not we should
-> consider the high gicv3 redist region in the calculation.
+This has been tested on an M1-based Mac-mini running Linux v5.16-rc6
+with both KVM and TCG.
 
-OK, this is nothing short of total hell. You can't create the memory
-map later, as MTE and the secure world both get in the way (they
-really want a valid memory map). And as you pointed out, using
-first_cpu is not appropriate here (obviously, I didn't test this
-nearly enough). I could split the creation of the CPUs in two
-sequences with the memory map creation in between, but this quickly
-becomes quite invasive.
+* From v2:
+  - Fixed checking of the maximum memory against the IPA space
+  - Fixed TCG memory map creation
+  - Rebased on top of QEMU's 89f3bfa326
+  - Collected Andrew's RBs, with thanks
 
-My current approach is to keep the current flow, but to create a
-temporary CPU, find whatever I need to know about it, and free
-it. Yes, this is a bit overkill, but it solves the chicken and egg
-issue simply enough.
+[1] https://lore.kernel.org/r/20211003164605.3116450-1-maz@kernel.org
 
-Thanks,
+Marc Zyngier (5):
+  hw/arm/virt: Key enablement of highmem PCIe on highmem_ecam
+  hw/arm/virt: Add a control for the the highmem redistributors
+  hw/arm/virt: Honor highmem setting when computing the memory map
+  hw/arm/virt: Use the PA range to compute the memory map
+  hw/arm/virt: Disable highmem devices that don't fit in the PA range
 
-	M.
+ hw/arm/virt-acpi-build.c | 12 +++----
+ hw/arm/virt.c            | 67 ++++++++++++++++++++++++++++++++++------
+ include/hw/arm/virt.h    |  4 ++-
+ 3 files changed, 67 insertions(+), 16 deletions(-)
 
 -- 
-Without deviation from the norm, progress is not possible.
+2.30.2
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
