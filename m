@@ -2,74 +2,110 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 90CF1484623
-	for <lists+kvmarm@lfdr.de>; Tue,  4 Jan 2022 17:45:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7857F4844A0
+	for <lists+kvmarm@lfdr.de>; Tue,  4 Jan 2022 16:31:46 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A180F49F53;
-	Tue,  4 Jan 2022 11:45:02 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B8E6E49F39;
+	Tue,  4 Jan 2022 10:31:44 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: 0.911
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@intel.com
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Ye-c3t+gN-b7; Tue,  4 Jan 2022 11:45:02 -0500 (EST)
+	with ESMTP id U2nTUSQPO-Hb; Tue,  4 Jan 2022 10:31:44 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1F64949F1B;
-	Tue,  4 Jan 2022 11:45:01 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4FB4749F2C;
+	Tue,  4 Jan 2022 10:31:43 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 763A349E18
- for <kvmarm@lists.cs.columbia.edu>; Tue,  4 Jan 2022 10:19:37 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 703BB49F12
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  4 Jan 2022 10:31:42 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id jKkTL4Cd99gs for <kvmarm@lists.cs.columbia.edu>;
- Tue,  4 Jan 2022 10:19:35 -0500 (EST)
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 95BA640EE7
- for <kvmarm@lists.cs.columbia.edu>; Tue,  4 Jan 2022 10:19:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1641309575; x=1672845575;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=3VPnlsuCUvPLaUETzLQLxoEOT+xx0yEw/SG76Pt1U58=;
- b=iOlfuMOq86LN9nkVfxakLrwVK1gK7dSmVQKc9hXrj/oqAmZb/M25VFcN
- fgHbLT6xXSu5OOPGVRzI+Kosb6Mb9EtCN+cnJaMKt+ptTQ+6QoF1taWpZ
- XjGe/q+mMXP54l7O2x2IxvZ+eBw/DDMI1NY5YxDqxhXFw2ug2vGCh2jW9
- AqaD75BO2TCteR3HKLL7TjlsTuLcu2COS8t1KsiC+X21rihVAzZP/JF6x
- WRzo3MIi7VFzRjxNUJ+756LojEEVbqjrTpI+LJvx1CWlQKIJ3groRi620
- IT12flxrBCrvfs0IlNcEmQaotoUPlgMU8G4uznt93hxxBxDnsJq6d3HCV Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10216"; a="229058144"
-X-IronPort-AV: E=Sophos;i="5.88,261,1635231600"; d="scan'208";a="229058144"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Jan 2022 07:19:34 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,261,1635231600"; d="scan'208";a="526081114"
-Received: from black.fi.intel.com ([10.237.72.28])
- by orsmga008.jf.intel.com with ESMTP; 04 Jan 2022 07:19:32 -0800
-Received: by black.fi.intel.com (Postfix, from userid 1003)
- id 84D64120; Tue,  4 Jan 2022 17:19:42 +0200 (EET)
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Marc Zyngier <maz@kernel.org>, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 1/1] KVM: arm64: vgic: Replace kernel.h with the necessary
- inclusions
-Date: Tue,  4 Jan 2022 17:19:40 +0200
-Message-Id: <20220104151940.55399-1-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.34.1
+ with ESMTP id zKkfOMY+1HvP for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  4 Jan 2022 10:31:41 -0500 (EST)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 522B449F11
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  4 Jan 2022 10:31:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1641310299;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dHb1Dlc/ItOolPMR+Jc0/qUYSK2KoiTzttrdRcxrJcE=;
+ b=dXAapQKnSB7RiCtEBXIKVSPwSlMTNVoP8Kz56hXZ8ZyuuVdZoD1BE/lYozmL0ndK3SuVB6
+ iRnshMrjgZfwJGQa7mG4bVeiW7GbYb/87fRj0Fh6LabwXqLn8QYNOGzLBHWGWyWtP0RqaN
+ E/aCX/1vWxIWWreJT1PUDBQnHUs5mug=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-597-illx7BQCNA-gmY-3BMQtOQ-1; Tue, 04 Jan 2022 10:31:37 -0500
+X-MC-Unique: illx7BQCNA-gmY-3BMQtOQ-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ j19-20020adfa553000000b001a375e473d8so3367848wrb.4
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 04 Jan 2022 07:31:36 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:reply-to:subject:to:cc:references:from
+ :message-id:date:user-agent:mime-version:in-reply-to
+ :content-transfer-encoding:content-language;
+ bh=dHb1Dlc/ItOolPMR+Jc0/qUYSK2KoiTzttrdRcxrJcE=;
+ b=PNYFB398tKcUDMM7FIKDBbRUeELYiQfHsHbVXJW4HonKtNE8Zwk+IoRsAeesPSnaiq
+ O8tRy2jZtGqoFVXTGDV6a+MgBIcBYa8s16c8Zoik8vjhhNcdJbzVxhIKu8z+s1bu899/
+ vHRHmMhTA8suNOpQQA32P3L18hQue73Du4nDoWN2+GtlvmEhkvhbLi3u+WDYGaHh43xS
+ /fFvxrcUhCjZCmaXmsT+xlDxU0yMal4/pJ1qK77DjhapLrbAfZmUGbj7T68Tmoz28lts
+ CsRiDW1EqE31KYjeaMIs0aS/MHmGmB6c+hmsf5ROylkUEg9AxVHc/WNZGY/FmI7kCOHk
+ PfAw==
+X-Gm-Message-State: AOAM530z9RDOPZumLnVHWefaoCpiNx4fQi6PZunCa4kp+YMdQoSaBhRN
+ gJGLzEBiU4N0rlM7ooOPBiAB9NcBQohwtNKx27ah09vxe8EEA42BnW1b+hDs0MQfbnjruie0W67
+ +Au5nqUzbot2qxpEh2iEH4cub
+X-Received: by 2002:a05:600c:4f83:: with SMTP id
+ n3mr41830317wmq.129.1641310295485; 
+ Tue, 04 Jan 2022 07:31:35 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJwV9IRJ1sEs6RhagLAEfvJinAJ1OWUzplrbq8dl6cI1k7STj6fGh3vl7cyX2z/tYQ7+BP7Pxw==
+X-Received: by 2002:a05:600c:4f83:: with SMTP id
+ n3mr41830296wmq.129.1641310295252; 
+ Tue, 04 Jan 2022 07:31:35 -0800 (PST)
+Received: from ?IPv6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id ay29sm39635325wmb.13.2022.01.04.07.31.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Jan 2022 07:31:34 -0800 (PST)
+Subject: Re: [PATCH v2 1/5] hw/arm/virt: Key enablement of highmem PCIe on
+ highmem_ecam
+To: Marc Zyngier <maz@kernel.org>
+References: <20211003164605.3116450-1-maz@kernel.org>
+ <20211003164605.3116450-2-maz@kernel.org>
+ <dbe883ca-880e-7f2b-1de7-4b2d3361545d@redhat.com>
+ <87pmpiyrfw.wl-maz@kernel.org>
+From: Eric Auger <eric.auger@redhat.com>
+Message-ID: <b9031d40-897e-b8c5-4240-fc2936dcbcb9@redhat.com>
+Date: Tue, 4 Jan 2022 16:31:33 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-X-Mailman-Approved-At: Tue, 04 Jan 2022 11:45:00 -0500
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+In-Reply-To: <87pmpiyrfw.wl-maz@kernel.org>
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=eric.auger@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org, kernel-team@android.com,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
+Reply-To: eric.auger@redhat.com
 List-Id: Where KVM/ARM decisions are made <kvmarm.lists.cs.columbia.edu>
 List-Unsubscribe: <https://lists.cs.columbia.edu/mailman/options/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=unsubscribe>
@@ -83,34 +119,88 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The arm_vgic.h does not require all the stuff the kernel.h provides.
-Replace kernel.h inclusion with the list of what is really being used.
+Hi Marc,
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
-v2: updated commit message by dropping unrelated paragraph (Marc)
- include/kvm/arm_vgic.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+On 12/27/21 4:53 PM, Marc Zyngier wrote:
+> Hi Eric,
+>
+> Picking this up again after a stupidly long time...
+>
+> On Mon, 04 Oct 2021 13:00:21 +0100,
+> Eric Auger <eric.auger@redhat.com> wrote:
+>> Hi Marc,
+>>
+>> On 10/3/21 6:46 PM, Marc Zyngier wrote:
+>>> Currently, the highmem PCIe region is oddly keyed on the highmem
+>>> attribute instead of highmem_ecam. Move the enablement of this PCIe
+>>> region over to highmem_ecam.
+>>>
+>>> Signed-off-by: Marc Zyngier <maz@kernel.org>
+>>> ---
+>>>  hw/arm/virt-acpi-build.c | 10 ++++------
+>>>  hw/arm/virt.c            |  4 ++--
+>>>  2 files changed, 6 insertions(+), 8 deletions(-)
+>>>
+>>> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+>>> index 037cc1fd82..d7bef0e627 100644
+>>> --- a/hw/arm/virt-acpi-build.c
+>>> +++ b/hw/arm/virt-acpi-build.c
+>>> @@ -157,10 +157,9 @@ static void acpi_dsdt_add_virtio(Aml *scope,
+>>>  }
+>>>  
+>>>  static void acpi_dsdt_add_pci(Aml *scope, const MemMapEntry *memmap,
+>>> -                              uint32_t irq, bool use_highmem, bool highmem_ecam,
+>>> -                              VirtMachineState *vms)
+>>> +                              uint32_t irq, VirtMachineState *vms)
+>>>  {
+>>> -    int ecam_id = VIRT_ECAM_ID(highmem_ecam);
+>>> +    int ecam_id = VIRT_ECAM_ID(vms->highmem_ecam);
+>>>      struct GPEXConfig cfg = {
+>>>          .mmio32 = memmap[VIRT_PCIE_MMIO],
+>>>          .pio    = memmap[VIRT_PCIE_PIO],
+>>> @@ -169,7 +168,7 @@ static void acpi_dsdt_add_pci(Aml *scope, const MemMapEntry *memmap,
+>>>          .bus    = vms->bus,
+>>>      };
+>>>  
+>>> -    if (use_highmem) {
+>>> +    if (vms->highmem_ecam) {
+>> highmem_ecam is more restrictive than use_highmem:
+>> vms->highmem_ecam &= vms->highmem && (!firmware_loaded || aarch64);
+>>
+>> If I remember correctly there was a problem using highmem ECAM with 32b
+>> AAVMF FW.
+>>
+>> However 5125f9cd2532 ("hw/arm/virt: Add high MMIO PCI region, 512G in
+>> size") introduced high MMIO PCI region without this constraint.
+> Then I really don't understand the point of this highmem_ecam. We only
+> register the highmem version if highmem_ecam is set (see the use of
+> VIRT_ECAM_ID() to pick the right ECAM window).
 
-diff --git a/include/kvm/arm_vgic.h b/include/kvm/arm_vgic.h
-index e602d848fc1a..bb30a6803d9f 100644
---- a/include/kvm/arm_vgic.h
-+++ b/include/kvm/arm_vgic.h
-@@ -5,9 +5,11 @@
- #ifndef __KVM_ARM_VGIC_H
- #define __KVM_ARM_VGIC_H
- 
--#include <linux/kernel.h>
-+#include <linux/bits.h>
- #include <linux/kvm.h>
- #include <linux/irqreturn.h>
-+#include <linux/kref.h>
-+#include <linux/mutex.h>
- #include <linux/spinlock.h>
- #include <linux/static_key.h>
- #include <linux/types.h>
--- 
-2.34.1
+but aren't we talking about different regions? On one hand the [high]
+MMIO region (512GB wide) and the [high] ECAM region (256MB large).
+To me you can enable either independently. High MMIO region is used by
+some devices likes ivshmem/video cards while high ECAM was introduced to
+extend the number of supported buses: 601d626d148a (hw/arm/virt: Add a
+new 256MB ECAM region).
+
+with the above change the high MMIO region won't be set with 32b
+FW+kernel and LPAE whereas it is currently.
+
+high ECAM was not supported by 32b FW, hence the highmem_ecam.
+
+but maybe I miss your point?
+
+Eric
+>
+> So keying this on highmem makes it expose a device that may not be
+> there the first place since, as you pointed out that highmem_ecam can
+> be false in cases where highmem is true.
+>
+>> So to me we should keep vms->highmem here
+> I really must be missing how this is supposed to work.
+>
+> 	M.
+>
 
 _______________________________________________
 kvmarm mailing list
