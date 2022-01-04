@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 46AB5484303
-	for <lists+kvmarm@lfdr.de>; Tue,  4 Jan 2022 15:05:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AF1BA484388
+	for <lists+kvmarm@lfdr.de>; Tue,  4 Jan 2022 15:40:08 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 87DC84B0DB;
-	Tue,  4 Jan 2022 09:05:31 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E2CB649ED0;
+	Tue,  4 Jan 2022 09:40:07 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -18,61 +18,66 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tQk-DGiNXBk6; Tue,  4 Jan 2022 09:05:31 -0500 (EST)
+	with ESMTP id ZU4SqYhsGh+e; Tue,  4 Jan 2022 09:40:07 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6914E4A0FD;
-	Tue,  4 Jan 2022 09:05:30 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BC5FF49ECE;
+	Tue,  4 Jan 2022 09:40:06 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 17C7749F14
- for <kvmarm@lists.cs.columbia.edu>; Tue,  4 Jan 2022 09:05:29 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DC3D249EBF
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  4 Jan 2022 09:40:04 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id XS6t3JFOfcY9 for <kvmarm@lists.cs.columbia.edu>;
- Tue,  4 Jan 2022 09:05:27 -0500 (EST)
+ with ESMTP id TE6tc9t7COwP for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  4 Jan 2022 09:40:03 -0500 (EST)
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B9DDF49EFD
- for <kvmarm@lists.cs.columbia.edu>; Tue,  4 Jan 2022 09:05:27 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D6F4949EBB
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  4 Jan 2022 09:40:03 -0500 (EST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 9F1E6613EF;
- Tue,  4 Jan 2022 14:05:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F2BC36AE9;
- Tue,  4 Jan 2022 14:05:26 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id C00046144A;
+ Tue,  4 Jan 2022 14:40:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35811C36AED;
+ Tue,  4 Jan 2022 14:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1641305126;
- bh=bhl5UyJyteuv6QbsNSocnsvA1DaSc46ypy3s1vY6NFM=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=RDBJE1ochkvUckxJi/f4xkX89R0d6oE+kmNu/v+9+qzOcv0gmZt5tXts7x3xsujoW
- ED9cm29Iww8YZxAuJCRvDFZsjGu+e2dYwg0XzfYlvlPTRdRmbuVdTIdE/CVmPg7cvL
- xCbvMaMXMoTRutSqSs/DBuK433vqo85CZUtfekAl7af7d1TlaHG4HhvZQZeiSOwfhV
- PfFcnFpgdEMnxXa0aDW71xtwYD28qHc/vBY/elsbYvdSfCh4Kgv2WpewcAcfjxdCSF
- 4ivPQL3ilUfaiXu1hzG+kmmozmJ3YCfdpZdQS8EYd92o0AvhpBinpT/WcAbA9kx60Z
- BOQJt2rkvj6Ww==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=hot-poop.lan)
+ s=k20201202; t=1641307202;
+ bh=hNauZWxTvH4RpsnhBPPrHP5HNl6Fd4EBlLcYJIrT7x0=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=DnlI2PXSWWbV1mGMih6JiUlmLIoa9IYefEEG+Dk1Yrp/x8J/oH8hoYj6TfF0+S/9B
+ gV93wdNiN3NdlBxynDntY9ZE3G0mCu+jq9aRvxo3wdLzgEFiWBe786T0QQvvK9oNJn
+ qg9ibaPLSHqn4oUeeHGcOp17n202wSMAr2ljvGQDrM6HsHulNStCTgoHGJHak7VrwL
+ TIxUlchJq7pVyonrWDbGobibWueUNnlxWqWO3IHWwUHffJa7TerYUvlapqksGMWU6V
+ KPEiuCPSuHReynaPxk+UtgH1BVOmsyP2eApLr980jA4XAzlNnwgtXaUiMiUE5GW8yX
+ gL+JFvvHV5VJA==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1n4kRI-00FvXP-5q; Tue, 04 Jan 2022 14:05:24 +0000
+ id 1n4kym-00Fvxk-7I; Tue, 04 Jan 2022 14:40:00 +0000
+Date: Tue, 04 Jan 2022 14:39:59 +0000
+Message-ID: <87h7ajva2o.wl-maz@kernel.org>
 From: Marc Zyngier <maz@kernel.org>
-To: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, Zenghui Yu <yuzenghui@huawei.com>
-Subject: Re: [PATCH] KVM: arm64: Fix comment typo in kvm_vcpu_finalize_sve()
-Date: Tue,  4 Jan 2022 14:05:19 +0000
-Message-Id: <164130511055.3362481.10306211546953262745.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20211230141535.1389-1-yuzenghui@huawei.com>
-References: <20211230141535.1389-1-yuzenghui@huawei.com>
-MIME-Version: 1.0
+To: Alexandru Elisei <alexandru.elisei@arm.com>
+Subject: Re: [PATCH kvmtool 9/9] arm64: Add support for
+ KVM_ARM_VCPU_PMU_V3_SET_PMU
+In-Reply-To: <20211115165705.195736-10-alexandru.elisei@arm.com>
+References: <20211115165705.195736-1-alexandru.elisei@arm.com>
+ <20211115165705.195736-10-alexandru.elisei@arm.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
 X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- yuzenghui@huawei.com, kernel.yuz@gmail.com, suzuki.poulose@arm.com,
- james.morse@arm.com, alexandru.elisei@arm.com, wanghaibin.wang@huawei.com
+X-SA-Exim-Rcpt-To: alexandru.elisei@arm.com, will@kernel.org,
+ julien.thierry.kdev@gmail.com, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, james.morse@arm.com, suzuki.poulose@arm.com,
+ mark.rutland@arm.com
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
+Cc: will@kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -89,24 +94,32 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, 30 Dec 2021 22:15:35 +0800, Zenghui Yu wrote:
-> kvm_arm_init_arch_resources() was renamed to kvm_arm_init_sve() in
-> commit a3be836df7cb ("KVM: arm/arm64: Demote
-> kvm_arm_init_arch_resources() to just set up SVE"). Fix the function
-> name in comment of kvm_vcpu_finalize_sve().
+On Mon, 15 Nov 2021 16:57:05 +0000,
+Alexandru Elisei <alexandru.elisei@arm.com> wrote:
+> 
+> The KVM_ARM_VCPU_PMU_V3_CTRL(KVM_ARM_VCPU_PMU_V3_SET_PMU) VCPU ioctl is
+> used to assign a physical PMU to the events that KVM creates when emulating
+> the PMU for that VCPU. This is useful on heterogeneous systems, when there
+> is more than one hardware PMU present.
+> 
+> The assumption that is made in the implementation is that the user will
+> pin the kvmtool process on a set of CPUs that share the same PMU. This
+> allows kvmtool to set the same PMU for all VCPUs from the main thread,
+> instead of in the individual VCPU threads.
 
-Applied to next, thanks!
+May I suggest a slightly different use model? Ideally, you'd be able
+to run the vcpu threads on the CPUs matching the PMU affinity, and
+leave all the other threads to roam on other CPUs.
 
-[1/1] KVM: arm64: Fix comment typo in kvm_vcpu_finalize_sve()
-      commit: e938eddbeb85f4c0c47e56cd9e09ee196ea1bc1a
+With your implementation, the whole of kvmtool gets stuck to a given
+CPU type, which can be problematic.
 
-Cheers,
+Thanks,
 
 	M.
+
 -- 
 Without deviation from the norm, progress is not possible.
-
-
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
