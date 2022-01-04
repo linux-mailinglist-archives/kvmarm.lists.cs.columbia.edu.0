@@ -2,185 +2,148 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 54322483AA4
-	for <lists+kvmarm@lfdr.de>; Tue,  4 Jan 2022 03:42:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D42A8483F4C
+	for <lists+kvmarm@lfdr.de>; Tue,  4 Jan 2022 10:41:44 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 71D664A531;
-	Mon,  3 Jan 2022 21:42:50 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 411AC4B11E;
+	Tue,  4 Jan 2022 04:41:44 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
 X-Spam-Level: 
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
+	RCVD_IN_DNSWL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+	T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@intel.com
+	(fail, message has been altered) header.i=@os.amperecomputing.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id T0KcSa-26Apj; Mon,  3 Jan 2022 21:42:50 -0500 (EST)
+	with ESMTP id s7izoQrYqGR7; Tue,  4 Jan 2022 04:41:44 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DEC7E4AC78;
-	Mon,  3 Jan 2022 21:42:48 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D1D1C4B103;
+	Tue,  4 Jan 2022 04:41:42 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 636374A193
- for <kvmarm@lists.cs.columbia.edu>; Mon,  3 Jan 2022 21:42:47 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C54B049F5B
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  4 Jan 2022 03:53:56 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Q6nau9IGz3Ku for <kvmarm@lists.cs.columbia.edu>;
- Mon,  3 Jan 2022 21:42:45 -0500 (EST)
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A5DC54A10E
- for <kvmarm@lists.cs.columbia.edu>; Mon,  3 Jan 2022 21:42:45 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1641264165; x=1672800165;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=vBtYSwCg56aWiZ7B75Ont9c3/7mFCp9Qx0BepG1wTCw=;
- b=fND96EcyEVZ4mGSKX1+daiL99gyIWDaYnkeCBA04DIXLFKSBRBpB4D96
- R8eeYBAF83OQsM1OtaEZpk1EJG3KMJ7AvLU/I9cbuh6QmY6zY8ogC+vcW
- vgbG9PsAHvUxjGAuPLjHjblwnyUk2lDM73YB8LuQhqsY8R2JG+g+s0KVq
- cv+OzCn9K9KjRUO43ycP3ASO33Tcd9w94nHGM1dioSz7oS+MPVjnmpk4U
- gkCOTVrDAwR8uVLPxDRC8BaiLRyPu0xLPvUc/bOZqNPCnbCR0SP5AAXnK
- yPGouzw1QmEPa64uNfX/lcfTpbFIHZC+NUDcpRE5cVmlq0hkwWsVXwrPP Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10216"; a="222817630"
-X-IronPort-AV: E=Sophos;i="5.88,258,1635231600"; d="scan'208";a="222817630"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
- by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jan 2022 18:42:44 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,258,1635231600"; d="scan'208";a="573879030"
-Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
- by fmsmga008.fm.intel.com with ESMTP; 03 Jan 2022 18:42:43 -0800
-Received: from orsmsx608.amr.corp.intel.com (10.22.229.21) by
- ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.20; Mon, 3 Jan 2022 18:42:43 -0800
-Received: from orsmsx606.amr.corp.intel.com (10.22.229.19) by
- ORSMSX608.amr.corp.intel.com (10.22.229.21) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.20; Mon, 3 Jan 2022 18:42:42 -0800
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- orsmsx606.amr.corp.intel.com (10.22.229.19) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.20 via Frontend Transport; Mon, 3 Jan 2022 18:42:42 -0800
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (104.47.59.175)
- by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2308.20; Mon, 3 Jan 2022 18:42:42 -0800
+ with ESMTP id O9nFef1RKukO for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  4 Jan 2022 03:53:55 -0500 (EST)
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com
+ (mail-dm6nam11on2095.outbound.protection.outlook.com [40.107.223.95])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 556F849F44
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  4 Jan 2022 03:53:55 -0500 (EST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=E2NxM0/A/XAbB6EOe3NnrnYhxZbfq9BHqgYAVQa6FMSSS1eXYl3DcFcmjmUwY0fQlpzXaso+3qLOsv0Knk3WFszeZz+zjwRmhrmrF52VmkA0/V4QzLBtYajW53SewXAa3+Jbtvs/G1drf8fM0D8g/qNLbjWR1xjBYx5GICRA4h0u13UHWN5rhf226pd2VT5dE9QdX9TnvbkXA53aLDl9Ds29WBO1Oy3+NlUmKOy4mHxeSJsa6NG/ji4Y44TgpHMxDAOhvkjUJhc44e5NstdzZJM/ZrIFP7nZrDVfVNWTQxiL7RhChOsiWT/1dXSyLC5HoUir0SyAJcICMgBBLpX+DA==
+ b=hCBxN0PoQeoPbPq6vBRDPp4E1hVBauMa/cHOD9B+/qz//G97N9vG01eQI5cmgcV0een6x+UtwUbrafB4pBxG5e0i9Xoml2j9p1NGv7Ry+/fa8N3yyeglbkXOJrMa6ktHDqOhrUaEUi/afRXGi4zW6o2K7Qn1NBnxiXmh5+dtLH/8KGneVBhiVsvYKs+dnLLpr6BF/lAhS9tylVwpVx0spTKFHWRk5yjAopquWm4tlk0jW0xdJcxUDBNsO9n768l1jU2ppEJWD/KEW60s5v+Vtmjo4BQs95ui61UtjlGXhftOGi3zGceyXQZsfqLdOiSzy+vKJsbm1vwdyNYPSZTyFw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vBtYSwCg56aWiZ7B75Ont9c3/7mFCp9Qx0BepG1wTCw=;
- b=mMy3dg5FHbWANK/NGHJXE7Ld4LH31nsZiavI5rbHhfJkayJWGtpqu06yA9CG2JVQsYY6qBpECZqTzOAdD5aeihrrcDV6oOJykxsuSy2rwc9zdAaIcexSqSJILxI7i26t4qT9XzCSePp6qfAAm5kEhw3BmjC7IgNRV1/av7jEOp8R/glkz4QYm0jFSYWzcup1yLGGs0HOtUHyGL3c6fHMZQn34ayjYWQZNuduHm9X0SBb6wQTvbiYLJfqvzTpxMZhHVToIN3/LvG9czZ17/hqxisHehHeLhYYbyTV7weNRR1FMSnt35hV3E2CKStnaX5wP7ux707xD6cohm6ZYn+Xmw==
+ bh=Q0OfTO4wAjVQ5r4PeLYAtxC7j1RWC/dWcZZcBQr6wZI=;
+ b=Z2+ZsVJWhT4xFjib1DyqiyvtceEjOhKYFSzj34Hnp8j1wEOTY3Mm1xoqc5/nu4VnLyod3LNPk3xshp8aesmEOBBPlQlS15Nj026c5FwRE3a1gsWDEMNr1O079OeyIcYYVt44qVEmxzf60QUvKNEcGFdZdEFrwY+kGN2wpEt4oqks+Br6H6eBDXqD2Fl4stxrmZGr1ZMyBxlGHxtpsH7X/+gY2BF9cNWslMysiMGMzY3iWrfnnAM9/9SEhTvWbdV7NsSa0WqXxqdntsXcAmPbgx3vu1oAYpcAqGAj28O8OcoMhi7aMBLvVrL7pvVs0qIO+hbd01VWNBC7HwHcX5vtTQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
- by BN6PR11MB3937.namprd11.prod.outlook.com (2603:10b6:405:77::28)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4844.14; Tue, 4 Jan
- 2022 02:42:39 +0000
-Received: from BN9PR11MB5276.namprd11.prod.outlook.com
- ([fe80::5c8a:9266:d416:3e04]) by BN9PR11MB5276.namprd11.prod.outlook.com
- ([fe80::5c8a:9266:d416:3e04%2]) with mapi id 15.20.4844.016; Tue, 4 Jan 2022
- 02:42:39 +0000
-From: "Tian, Kevin" <kevin.tian@intel.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Subject: RE: [RFC v16 1/9] iommu: Introduce attach/detach_pasid_table API
-Thread-Topic: [RFC v16 1/9] iommu: Introduce attach/detach_pasid_table API
-Thread-Index: AQHXyx+9zoVf6ec36EaoAw6mFm2RjKwlh1WAgAGLFwCAARJNAIAAUNaAgABaKgCAAEnegIAAE6oAgACHsjCAABVZoIAAzVeAgAED4rCAAGBlgIAA7M0AgAj9m4CAHKu0oA==
-Date: Tue, 4 Jan 2022 02:42:39 +0000
-Message-ID: <BN9PR11MB52765F70759C3905177588768C4A9@BN9PR11MB5276.namprd11.prod.outlook.com>
-References: <fbeabcff-a6d4-dcc5-6687-7b32d6358fe3@redhat.com>
- <20211208125616.GN6385@nvidia.com> <YbDpZ0pf7XeZcc7z@myrica>
- <20211208183102.GD6385@nvidia.com>
- <BN9PR11MB527624080CB9302481B74C7A8C709@BN9PR11MB5276.namprd11.prod.outlook.com>
- <BN9PR11MB5276D3B4B181F73A1D62361C8C709@BN9PR11MB5276.namprd11.prod.outlook.com>
- <20211209160803.GR6385@nvidia.com>
- <BN9PR11MB527612D1B4E0DC85A442D87D8C719@BN9PR11MB5276.namprd11.prod.outlook.com>
- <20211210132313.GG6385@nvidia.com>
- <BN9PR11MB527694446B401EF9761529738C729@BN9PR11MB5276.namprd11.prod.outlook.com>
- <20211216204831.GD6385@nvidia.com>
-In-Reply-To: <20211216204831.GD6385@nvidia.com>
-Accept-Language: en-US
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=os.amperecomputing.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Q0OfTO4wAjVQ5r4PeLYAtxC7j1RWC/dWcZZcBQr6wZI=;
+ b=ZvOPXtp07THHHcPjawAAcHraptPymI35U3PHC/WVeJBxqA9gB0beYoHt6J7pLXNQGbsynuJVWlisgScU5GAuwgmfU6JpHYnPRtF4s+f1xjyuQj2pCHANUCw7wspoAQ4k8k8kK1B3g/BUapzHFjpRkgnhKU3FMp8Y4UhZKjK7jU4=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
+Received: from CH0PR01MB6826.prod.exchangelabs.com (2603:10b6:610:ed::18) by
+ CH2PR01MB5717.prod.exchangelabs.com (2603:10b6:610:40::26) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4844.14; Tue, 4 Jan 2022 08:53:51 +0000
+Received: from CH0PR01MB6826.prod.exchangelabs.com
+ ([fe80::c878:6ac:8f42:1c68]) by CH0PR01MB6826.prod.exchangelabs.com
+ ([fe80::c878:6ac:8f42:1c68%5]) with mapi id 15.20.4844.015; Tue, 4 Jan 2022
+ 08:53:50 +0000
+Message-ID: <bbf31da5-ca1b-7499-e23c-9b5281ca7901@os.amperecomputing.com>
+Date: Tue, 4 Jan 2022 14:23:42 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: [PATCH v5 34/69] KVM: arm64: nv: Configure HCR_EL2 for nested
+ virtualization
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 1c996295-63c1-44d7-f6ba-08d9cf2bdff2
-x-ms-traffictypediagnostic: BN6PR11MB3937:EE_
-x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-x-microsoft-antispam-prvs: <BN6PR11MB39372FC45AC9EE936CA6C9998C4A9@BN6PR11MB3937.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: omkoJ0foRPpFwMQ0WX7UcjFYafYJ+gcLWkmaCB2cYMfsJajKL4DiTPx5nRIRY6Slgma1oET+/HW5ogFne4k66bs9Hg1zCUkff1QtuX1OH9W5ZAUCUqt/rfvpL3HOVR9G0LKhxIfP8IRf+18vSyIwBcjxk0thr1cDELywO5dOpurlrTKC+KN6I6sLlAVqXa1z7PjgqltWMBJ05LoMP/5O9uKNbwvOnqWvWdzMlu4AkYT/DCyzTUlOx9d3xMypvrmVKjNFHWVSzS2rTdJ1BXqWQP3wq3m69nABtlMWXqRV2G6D+Vg6Ka3DQrq0g/czRMj2QwkMZET1gQteksYiPCNwQgCTW2hL3Hjw2stiyfUlI5dRJ3LX1WCh+L7UWjh4iWYjYR8mL+Hs7frdrQJiLrz6MqTcbAjC0oqjF0oNX/DAdYYREjbCPk69KkKEjH5QkJvSrA0uP+zDQ5ZkzpzxzIdj4LHsM4vh+TyMOALXmCpXguWgJJU6ntC89xacTnCDnJpoqfZMLZmnPHTYB7hLFN8h39FuzaxcQR4AGlwqDWEzZqaaTGNcxT8RxddAedqgqNiTelrV4p4UHkRjifqIjQ2oxrWm0pZr9Upo+Om6MyqttnqarNUYsYhA9wI+y85IkbnQC6p8hZ4v//ncdtKEnGg7+65/BB36UbXt2BgUUIQwEXalSbAfXAh4lv/nqRCBTEatgPL22d1PyLBcZ4e5WBWBeQ==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BN9PR11MB5276.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(366004)(4326008)(5660300002)(316002)(26005)(186003)(38070700005)(55016003)(33656002)(508600001)(86362001)(52536014)(71200400001)(7696005)(82960400001)(122000001)(6506007)(9686003)(38100700002)(54906003)(66446008)(64756008)(76116006)(66556008)(8936002)(6916009)(2906002)(7416002)(66946007)(8676002)(66476007);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?dGlUp7vLVMoS/st0FA52PzS+mp+szmnYAo2EoBW4OWCUKIbf2yQse+PGQ8jW?=
- =?us-ascii?Q?4/jNCbT4W5z7HG/+4DddVVbbxJwazue1g0p0i7Kl+pQXujy54QeOsmapA34Z?=
- =?us-ascii?Q?x6uIeeDO5AP1M2L8M0MlqYjumpay2+lMBF5XSlnSS+R9K/ZDWA/cQAtp+veF?=
- =?us-ascii?Q?1XDb7VTusL8XKcQet6grhQZcTIduoIAF/sDPVTCy2TGf+ia3vZ2KEw6n0D2f?=
- =?us-ascii?Q?6O4PjUtcZJ4GUFLvWVNo8zzuGpjlLEmNjtzqXZnHxCaphP8OrQPe/fuWrMme?=
- =?us-ascii?Q?QPvDv5Ui+GmxFCNkLIjc/AA9aut+Ys0SRwUg3ZgIcu63pnSHwnzJfKQSbZPA?=
- =?us-ascii?Q?EoFSQBrMJCEoPGik06CpOsY/8OdZAI6R0QKR55MfQm0cdT5qBwzemaHws+7S?=
- =?us-ascii?Q?jq89uIiWJHZvUPJ8kMlpZi3spti4zH5laaKLmaTomJFUXmr1dbVEeN9pIH51?=
- =?us-ascii?Q?xLmbikMs2+yjR3GCPiRvyi6Qcfyx1dUyXTzV2w3u8pvphuVNXwyDq1x+X4SX?=
- =?us-ascii?Q?Gb5hcq6cAUNq/bsvmNn20EbEa0qYHVkkqfstuF5Fz250HT12bxMSLgixvpzg?=
- =?us-ascii?Q?VPYJ39IHppLsy9IZ28W/r7JnF5f/fa5rQvZ4aW3jEIgZzngSy6Pk2ZWqi9+7?=
- =?us-ascii?Q?VyfFILkrVoraM+VDAI+tIE+I8IdTnO/3g7o1vhQdZkmGMarQqKrNL/TGW0mY?=
- =?us-ascii?Q?lEunW0z63wzxmrSfy/0J4rJBJBvveFsUq7T+qJgqTCEPzSoSbeu2WbOsSw20?=
- =?us-ascii?Q?i9pfL7lySVOnpgVQsfNEMZRmA4Nw82PYSjw3KvI2vmSgCJKC3My9bRBIEZtg?=
- =?us-ascii?Q?uK+x3qoQuhKpnNM3zRjouJPot+2LAgNJ16YNBaJmLXABiBxLRWAnCM2xHA6o?=
- =?us-ascii?Q?EhO+90+qEGlVf/HIVTh1JszeuPypPc3k/iXLuSdiIkP4KGpg6SxuCaBLKr+U?=
- =?us-ascii?Q?75trXkvVJqT6+1Qk37750cC0fMwiTSVtQ/4jfrH76LDDvWaFnY/8A+ZLkwCu?=
- =?us-ascii?Q?SAb65gszG25SmpTs4e3Zx4UWir20fBRKxgK1BHAv3auMXx1a1g66F7aweqlN?=
- =?us-ascii?Q?qRPYlYuaj0MjFHrqevmbnQSGQq4KfdfDOYvo2Y06kBx5fi1wzwprbIOE4uyi?=
- =?us-ascii?Q?m+LTRwHhpRSvLvp+NN6rWosxImfa5ZtrVJ5Jq3IVHEgV0qAshtRFMGmhNRY4?=
- =?us-ascii?Q?16PJmwyW9+i8CcsE/B0qSy4occYksalOSnsrEXRYCxyu9ie5uyZe07pNKhlt?=
- =?us-ascii?Q?L/GsmVhXiGVszVHGyU+A0dOT+8rY1L18hAzNpjFPANGm5zwZc979DFC9NqV8?=
- =?us-ascii?Q?61aDBpJl/dwO1lNe88hbcVIjKwYaA24O0euHn4q6IT74tQ6PpOOWVeQpHyNg?=
- =?us-ascii?Q?LuBaZF9LG/N8Nq5+I1pPvhew4tln3UGvQp8qHqaMdSgBhP9ghuyliMmtVR/8?=
- =?us-ascii?Q?7gqg9R+BNGvbi9hsO6Xa8Kp6UvtWGtG1ccEKlOD4Luq6p3RonfSovfEPQrw0?=
- =?us-ascii?Q?4yMBXcB7nzdpgcBIhVuyeP5F8N7hC0rB0VYk0GVKrZ1iasZNb75sdfjl2sCf?=
- =?us-ascii?Q?TngMzi3sq4blDR9yxYDbhFDeUlwpSxNNphjcUriKsoGmKvv+7jwoJ1H32dsr?=
- =?us-ascii?Q?1PYBp+MzjnTjf7biJxa28so=3D?=
+To: Marc Zyngier <maz@kernel.org>, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
+References: <20211129200150.351436-1-maz@kernel.org>
+ <20211129200150.351436-35-maz@kernel.org>
+From: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
+In-Reply-To: <20211129200150.351436-35-maz@kernel.org>
+X-ClientProxiedBy: CY4PR18CA0035.namprd18.prod.outlook.com
+ (2603:10b6:903:9a::21) To CH0PR01MB6826.prod.exchangelabs.com
+ (2603:10b6:610:ed::18)
 MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 3a6566fb-424b-4c6b-210c-08d9cf5fba67
+X-MS-TrafficTypeDiagnostic: CH2PR01MB5717:EE_
+X-Microsoft-Antispam-PRVS: <CH2PR01MB57178BC49A775AD29A4F550A9C4A9@CH2PR01MB5717.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:9508;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: /Ae8BRk2SbWSsa8LorN9GChzm7q0u/10opdqrqP3uzohSsLwmr5etjoqMJYiXzWq2BJ6iLv/kxvbKY/fgsPDN7CJL/PcnFiZR1EKmRchTeg9l/8MP2l8oFk30+W4LLuR8pSISGJ+lrHkUbapU3NIXiQLXVNtFL0SvtYaEnQb+SM95TIhyChC//m/UkReX1E5CupAVWjPuVa+kWJPcTMBIIHeZWnZdVUu9+1nHIkmMGfybH6jXlli3y64UcJ2o9QJF22ad3kpsnAwXob/lYLNb9UPXYH2q6y/Yncf+08G9Yj7lGN5meFUxBoZs9SUbtEgAu7NOs+xZcZWgMFIe2txUgdB0bnejisFCZLDthRPqJsa/FMO1RfTJ5wsqDDRGDPlpIEKN4ZxHRVv4z47yJeHjwlZaUG+hA5Plo+YkkFkzHVMa6pDlkZZLyA6Ik/O3zidKE83yosdt2PpG6HIiCju+0kRx+6nxb0poaqT8Jg/hY73g0CRa/FGZvMgCRagWNWjUIc+0oGXjjauNepcLOx1B2Zzg3gTeGyZhaiwmr6+NedFukwIpg3G8OIXCg+CgOOBZJaxYJiVE/TdelHt8yvMyckcUltnnbrvFnu3ya9PQA9o5NqxTQ8gXDay253xvMQP0dtSzDjhxWbInYt+sSiXNtdxdv5tQV0aDipiKKwffK37ksQbbuJyIs5D/eLb/i1ypN3qNDWKgFhZoc0KPKS359UsPjcpsh/zvgugFz4s8Mw=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH0PR01MB6826.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(366004)(86362001)(53546011)(508600001)(54906003)(6666004)(52116002)(26005)(5660300002)(66946007)(8676002)(8936002)(6486002)(31686004)(66556008)(6506007)(186003)(66476007)(7416002)(4326008)(2906002)(6512007)(31696002)(2616005)(38350700002)(38100700002)(316002)(83380400001)(43740500002);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Z1k4Tmtvait3MTJUbGs5NGRpSlJQNW5YUndPZDJDYVNYc1BOYlRDdWVlN3k2?=
+ =?utf-8?B?VkhFMzFnSUJtL2ZBR3ZwZGVEWXpLT3pFeVNZNEhjd0pVRGxnUExoMEpzUHQ5?=
+ =?utf-8?B?SDlhRkw0Y21TODJCMThUWWpBaE1Gam14K0pHRTdyeHFZbDlWWnNHbFNaZ2p0?=
+ =?utf-8?B?L2IwWXo3TW45WS9KanZ3L0NwdWZJb2VVMGlHNGZsaUluMEV5bm9xcFk0MHdM?=
+ =?utf-8?B?N28rcmlPTkwvMk9hTzJNYWJ4ajBVL0l4TVc5YzhDaUNXczFMMW91SVV1SlVH?=
+ =?utf-8?B?Y1plaXhFenZSNWh4MHkwd0pmdXZhdkFYVlFVbFd1dXZMMkFqaFJOc25VcldD?=
+ =?utf-8?B?a2dvMVlEdGFrejFsNVhKcHZGbFU0VVpvMERwZDJZWEJtUUJBVVhYajJLV3Bw?=
+ =?utf-8?B?T1kyU3lCZHBNRmtMY2h2OFJBZlJFY01TN0FRYkYya09wdUpKaUNiS1BVY0NB?=
+ =?utf-8?B?KzhQbk9ubGl6enJCRWpLQVMvVUxoS3NxdlI2aVpreHNINUdVbzNSQUpWTmZu?=
+ =?utf-8?B?SFQvc3Q0YWNIRmMzN1BncERKRzFHTWRlTGdaNmFpeWoyUndFNmgybERCZVNX?=
+ =?utf-8?B?SzJYWXVSZitMbUYxMWRWRFNacllrM3BuVHlxR2xnVTFSTFNLMG5Jc3YrRXhp?=
+ =?utf-8?B?L2U0NVQ4VDBoOStHUTdpZFV4UTlWMk44ajVNSStKUXY5enVaeGxBV1NWWkJz?=
+ =?utf-8?B?VW9EN3J3TFlzeDJJRmwwc1Q1RlJOdFd3V1pKa1FYWk5yT2dDVkQ1T1laYitR?=
+ =?utf-8?B?V0pvOVM3K1RodHltRXpUVGt2Mk8ybmRLNUNHV2ZWdDhrc01WRk56QjhINXFz?=
+ =?utf-8?B?YmV5OHE4cm5xWWN4WEJEZ2FNcm1WVE9QeHJjZ3c4L2xmaWhjYTFEbFVFQmM5?=
+ =?utf-8?B?UE8yWS96d1VTOXFqTDdtczRVUktnYm1lVFVlZkhjWVFPOFhIcnZRZUhqeTA2?=
+ =?utf-8?B?WjM3dENRUWFQNlNpL3lDeFU1aTU2UzVxUHRFV0QrY0pGRmRmd09Ldm1CWnYz?=
+ =?utf-8?B?d2ZrSktzLzVpZGJUMVF0dHR2TCthcVRQOUdrMUt2VDZSZnlzUTFxMTlHaXNJ?=
+ =?utf-8?B?RDQwTDM4a3ZTUzRDYy9LSTJtbzIrZlV5VkFHZHBoSGlZSjA4dFZYVkd1TTNL?=
+ =?utf-8?B?OU1UbldrTkdxNGpwd3gzNDJSSFVpOGVOYk9CY28xb2dqZHJadmRYK0FqTGpY?=
+ =?utf-8?B?clZXSkl4MWpFbmVydXl3ZG1uNVd3MXNXODgrSWxiaUxnREVRcWhsRTNRNFJ2?=
+ =?utf-8?B?RWx5VUxNZGNOdDZDUmlnSlFPbjRTQ3dTRGl4dW5vSnhjWno1YlNyTE42TzE1?=
+ =?utf-8?B?UGFIdEFJK3Qyc01PZkxIbllPWkRnOCtwOFpQYU9pWGNQNUVPcUQyTkNyblpQ?=
+ =?utf-8?B?WHBkTWRYeXcxUEF5czNpWkw3VnU5UlRyYkREWmk4TGIrV3NzdFIxOE5WaER5?=
+ =?utf-8?B?S1VhSlo0YUtiblZwYVdXNTdmdTRvcGExRWVRTmVEY2tTMHViZURoa053dkM4?=
+ =?utf-8?B?M2pkQkVUeWM3RzNUNEdMWjN1TngvbzRlTGM3Z3NsZHlLUkc1U2pEYkpsNVRa?=
+ =?utf-8?B?dU8xM1NjVmhhQWdIZXdBS1Fsb2J5K25oMkpwOXgvc2lPSURlVUNuQzlNV3ZL?=
+ =?utf-8?B?U2Fvd0RrM0hnRWVtcXlUckdUQVloQzVUeTNMM3prZDNBUnYzWUJTSnFCUVMv?=
+ =?utf-8?B?TGVOdlgyOUwxODZVV0VLM2FaWUcrenhNSHBPYTMyQ0RmSEc2YTI5OGg0bzVm?=
+ =?utf-8?B?ekRSTi9UN2V5L1d6d1hoeE5KdXpRNTUrZDFLQVdRNXg0Y1pKR1NOQnAwYVVq?=
+ =?utf-8?B?TG1INWFsenpQclA3THAyTVkwWktCWFlnZ3pkOWR0aVRHcjBMbTFyV2FKVUZ0?=
+ =?utf-8?B?NGlRQ0ZIOG94UUdEVjdITHhOYkI1dkpiYWFJVGpDS1hwNkhmQWxVUUpmWWo5?=
+ =?utf-8?B?ZjBWUzNqRThFYXlHbHZjanV3SmJxODdEVzFtcksxVmw1dU51ZE1waU1INk81?=
+ =?utf-8?B?T0RyOWlESldvb2grRlM1ODRnSmlsT3c3SHNoZnVtTStjTnpFZXA3Nnl0bkpv?=
+ =?utf-8?B?ZGdQbWNCaGFIYVNKcGlwNlQ1djl6Z3JsbmVOT3VmVmZRMEM0eE9uNWVyQzJ1?=
+ =?utf-8?B?b2l4cmpWS3h2NUEvNjc0VHlPcW1UNXhkTVJvalpnRTJyUFdFcFI3cVlaMmVN?=
+ =?utf-8?B?a2EwdG5tbFZHclQrUXdJYmtCNUh2OFRmV0FkQ1djeUdEM3VnaHgvWVo3bmtD?=
+ =?utf-8?B?WGNQbkd1Q0xSYWMvQjcwY2N3QUsxUE5Sc3h3SVBMTUdGNmJsSW94ZWtkRkJI?=
+ =?utf-8?B?eDlLVGgvVWMzZmhwOUM4MGc3N2wyVjN5TmlvdWVvQWc3dmFSbUdOQT09?=
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3a6566fb-424b-4c6b-210c-08d9cf5fba67
+X-MS-Exchange-CrossTenant-AuthSource: CH0PR01MB6826.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1c996295-63c1-44d7-f6ba-08d9cf2bdff2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Jan 2022 02:42:39.6823 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: F807j9kmC+t0SZJtwEOKbwfMnHMN75iGDubU4pTawlmORIyoHj19ieq8d1sF7+gNRxQqsrEF+Jv3KJ+w49dMKg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR11MB3937
-X-OriginatorOrg: intel.com
-Cc: "Raj, Ashok" <ashok.raj@intel.com>,
- "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- "maz@kernel.org" <maz@kernel.org>, "will@kernel.org" <will@kernel.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "vsethi@nvidia.com" <vsethi@nvidia.com>,
- "lushenming@huawei.com" <lushenming@huawei.com>,
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "vivek.gautam@arm.com" <vivek.gautam@arm.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "robin.murphy@arm.com" <robin.murphy@arm.com>,
- "kvmarm@lists.cs.columbia.edu" <kvmarm@lists.cs.columbia.edu>,
- "wangxingang5@huawei.com" <wangxingang5@huawei.com>
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jan 2022 08:53:50.8298 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: uR1tRfxv39n2RXJK+ZAWb1u04LT1rbo7akNvLmGS1Q8vxQr+UyK0zT8E5cPMBCvi75yGfNIf4ces8LL20oB6UrA1ReMvlZGF1gD3D88mwjD/1pJeJtSvsacm8cvUwzMr
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR01MB5717
+X-Mailman-Approved-At: Tue, 04 Jan 2022 04:41:41 -0500
+Cc: kernel-team@android.com, Andre Przywara <andre.przywara@arm.com>,
+ Christoffer Dall <christoffer.dall@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -192,46 +155,99 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-> From: Jason Gunthorpe <jgg@nvidia.com>
-> Sent: Friday, December 17, 2021 4:49 AM
-> 
-> On Sat, Dec 11, 2021 at 03:57:45AM +0000, Tian, Kevin wrote:
-> 
-> > This might be the only open as I still didn't see why we need an
-> > explicit flag to claim a 'full device' thing. From kernel p.o.v the
-> > ARM case is no different from Intel that both allows an user
-> > page table attached to vRID, just with different format and
-> > addr width (Intel is 64bit, ARM is 84bit where PASID can be
-> > considered a sub-handle in the 84bit address space and not
-> > the kernel's business).
-> 
-> I think the difference is intention.
-> 
-> In one case the kernel is saying 'attach a RID and I intend to use
-> PASID' in which case the kernel user can call the PASID APIs.
-> 
-> The second case is saying 'I will not use PASID'.
-> 
-> They are different things and I think it is a surprising API if the
-> kernel user attaches a domain, intends to use PASID and then finds out
-> it can't, eg because an ARM user page table was hooked up.
-> 
-> If you imagine the flag as 'I intend to use PASID' I think it makes a
-> fair amount of sense from an API design too.
-> 
-> We could probably do without it, at least for VFIO and qemu cases, but
-> it seems a little bit peculiar to me.
-> 
 
-ok, combining the kernel user makes the flag more sensible.
 
-Thanks
-Kevin
+On 30-11-2021 01:31 am, Marc Zyngier wrote:
+> From: Jintack Lim <jintack.lim@linaro.org>
+> 
+> We enable nested virtualization by setting the HCR NV and NV1 bit.
+> 
+> When the virtual E2H bit is set, we can support EL2 register accesses
+> via EL1 registers from the virtual EL2 by doing trap-and-emulate. A
+> better alternative, however, is to allow the virtual EL2 to access EL2
+> register states without trap. This can be easily achieved by not traping
+> EL1 registers since those registers already have EL2 register states.
+> 
+> Signed-off-by: Jintack Lim <jintack.lim@linaro.org>
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
+> ---
+>   arch/arm64/include/asm/kvm_arm.h |  1 +
+>   arch/arm64/kvm/hyp/vhe/switch.c  | 38 +++++++++++++++++++++++++++++---
+>   2 files changed, 36 insertions(+), 3 deletions(-)
+> 
+> diff --git a/arch/arm64/include/asm/kvm_arm.h b/arch/arm64/include/asm/kvm_arm.h
+> index 68af5509e4b0..b8a0d410035b 100644
+> --- a/arch/arm64/include/asm/kvm_arm.h
+> +++ b/arch/arm64/include/asm/kvm_arm.h
+> @@ -87,6 +87,7 @@
+>   			 HCR_BSU_IS | HCR_FB | HCR_TACR | \
+>   			 HCR_AMO | HCR_SWIO | HCR_TIDCP | HCR_RW | HCR_TLOR | \
+>   			 HCR_FMO | HCR_IMO | HCR_PTW )
+> +#define HCR_GUEST_NV_FILTER_FLAGS (HCR_ATA | HCR_API | HCR_APK | HCR_RW)
+>   #define HCR_VIRT_EXCP_MASK (HCR_VSE | HCR_VI | HCR_VF)
+>   #define HCR_HOST_NVHE_FLAGS (HCR_RW | HCR_API | HCR_APK | HCR_ATA)
+>   #define HCR_HOST_NVHE_PROTECTED_FLAGS (HCR_HOST_NVHE_FLAGS | HCR_TSC)
+> diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
+> index 57f43e607819..da80c969e623 100644
+> --- a/arch/arm64/kvm/hyp/vhe/switch.c
+> +++ b/arch/arm64/kvm/hyp/vhe/switch.c
+> @@ -36,9 +36,41 @@ static void __activate_traps(struct kvm_vcpu *vcpu)
+>   	u64 hcr = vcpu->arch.hcr_el2;
+>   	u64 val;
+>   
+> -	/* Trap VM sysreg accesses if an EL2 guest is not using VHE. */
+> -	if (vcpu_mode_el2(vcpu) && !vcpu_el2_e2h_is_set(vcpu))
+> -		hcr |= HCR_TVM | HCR_TRVM;
+> +	if (is_hyp_ctxt(vcpu)) {
+> +		hcr |= HCR_NV;
+> +
+> +		if (!vcpu_el2_e2h_is_set(vcpu)) {
+> +			/*
+> +			 * For a guest hypervisor on v8.0, trap and emulate
+> +			 * the EL1 virtual memory control register accesses.
+> +			 */
+> +			hcr |= HCR_TVM | HCR_TRVM | HCR_NV1;
+> +		} else {
+> +			/*
+> +			 * For a guest hypervisor on v8.1 (VHE), allow to
+> +			 * access the EL1 virtual memory control registers
+> +			 * natively. These accesses are to access EL2 register
+> +			 * states.
+> +			 * Note that we still need to respect the virtual
+> +			 * HCR_EL2 state.
+> +			 */
+> +			u64 vhcr_el2 = __vcpu_sys_reg(vcpu, HCR_EL2);
+> +
+> +			vhcr_el2 &= ~HCR_GUEST_NV_FILTER_FLAGS;
+
+Why HCR_RW is cleared here, May I know please?
+
+> +
+> +			/*
+> +			 * We already set TVM to handle set/way cache maint
+> +			 * ops traps, this somewhat collides with the nested
+> +			 * virt trapping for nVHE. So turn this off for now
+> +			 * here, in the hope that VHE guests won't ever do this.
+> +			 * TODO: find out whether it's worth to support both
+> +			 * cases at the same time.
+> +			 */
+> +			hcr &= ~HCR_TVM;
+> +
+> +			hcr |= vhcr_el2 & (HCR_TVM | HCR_TRVM);
+> +		}
+> +	}
+>   
+>   	___activate_traps(vcpu, hcr);
+>   
+
+Thanks,
+Ganapat
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
