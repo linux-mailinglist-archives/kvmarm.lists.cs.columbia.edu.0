@@ -2,83 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 875AE4842B7
-	for <lists+kvmarm@lfdr.de>; Tue,  4 Jan 2022 14:44:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A7356484307
+	for <lists+kvmarm@lfdr.de>; Tue,  4 Jan 2022 15:05:58 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C765F411BA;
-	Tue,  4 Jan 2022 08:44:40 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5575149F44;
+	Tue,  4 Jan 2022 09:05:58 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.911
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699,
-	RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@intel.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Gs0xB5X26QCn; Tue,  4 Jan 2022 08:44:40 -0500 (EST)
+	with ESMTP id hNCnm9p4fakI; Tue,  4 Jan 2022 09:05:58 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 769AD49ED8;
-	Tue,  4 Jan 2022 08:44:39 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A7E6149F4B;
+	Tue,  4 Jan 2022 09:05:56 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B810240BC2
- for <kvmarm@lists.cs.columbia.edu>; Tue,  4 Jan 2022 08:44:37 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7275949F5B
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  4 Jan 2022 08:47:13 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id SzJ6UABMUvLN for <kvmarm@lists.cs.columbia.edu>;
- Tue,  4 Jan 2022 08:44:36 -0500 (EST)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9322C4078F
- for <kvmarm@lists.cs.columbia.edu>; Tue,  4 Jan 2022 08:44:36 -0500 (EST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id E2321B815B3;
- Tue,  4 Jan 2022 13:44:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E1DC36AE9;
- Tue,  4 Jan 2022 13:44:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1641303873;
- bh=meSSg/YmNbksR9ORav1v/bOv0Oo6+Koppmo78YLMnIQ=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=mXJopMPoRAwqub3ro5VAA6/y7RCrAGRKjh3JRwztH91E50zE67fnYuiI95IwLjxYM
- XzoR9b/DSZZtj85pabIlt28CO5xsdckUTKKPr2Rrhhm6UAPztxTqYz/bXhfrnvQJHX
- MDOMIv1O9/RFWz+wd4sUz4SzVOJ5f0yRfehaaZuEbiYx/upt/x0SnC0SLk0/P0IqsC
- vl3UhkBq3XM+fKk+8iCO8SK6Gb4O7COY3TZPpT0f2xoGIRG6jzWAnWTwZJipZb2kBk
- cJLC9AEOVtISZrE53II4HTwmXQLzelEsfxx+qHKU/XOfKoBD+/rChWfaB9h1FJ85s1
- Ni7Y+6z2JpwDA==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1n4k75-00FvHK-Ih; Tue, 04 Jan 2022 13:44:31 +0000
-Date: Tue, 04 Jan 2022 13:44:31 +0000
-Message-ID: <87iluzvcn4.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+ with ESMTP id 5gD-g-m6bot3 for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  4 Jan 2022 08:47:11 -0500 (EST)
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9E0C549F2C
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  4 Jan 2022 08:47:11 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1641304031; x=1672840031;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=giCDfeerhSB/M4N2G4n+FT62UWoiMv/yX0S2mawmUU4=;
+ b=E2BRNlszywgGZW0jk5D9nctEtiIqyzdgnhUpdrd9RIOoxwBlxo2n1cPu
+ UbWERkvdjdNezGjj4LeMhn0phDJhCC0OnGdq0KI10NA3i2Vk7YXARrHjf
+ gjT3pZh5pUBNj9y+bHWunWsCAJaVl4uMmk50O4m5IMdAp+r1e6787Oux+
+ 59VaoFpTl/w1QxSfKZNnwLMi7YJeC7lLqX+ndMzQD1IvSDRRMwWAmVhRo
+ x/XHySo4TSjlyP7XbOGhRRGMrqtS456Q+wLyUjZV4saqS5D10IwWqKrSx
+ jbF+p7bR1CPppuyV9cOEaTR3RI8RVCDQpAysWQq7QI34hQr/mHJLJS976 w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10216"; a="305577088"
+X-IronPort-AV: E=Sophos;i="5.88,261,1635231600"; d="scan'208";a="305577088"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Jan 2022 05:47:07 -0800
+X-IronPort-AV: E=Sophos;i="5.88,261,1635231600"; d="scan'208";a="488198643"
+Received: from smile.fi.intel.com ([10.237.72.61])
+ by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Jan 2022 05:47:05 -0800
+Received: from andy by smile.fi.intel.com with local (Exim 4.95)
+ (envelope-from <andriy.shevchenko@linux.intel.com>)
+ id 1n4k8J-006DjC-Hk; Tue, 04 Jan 2022 15:45:47 +0200
+Date: Tue, 4 Jan 2022 15:45:47 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Marc Zyngier <maz@kernel.org>
 Subject: Re: [PATCH v1 1/1] KVM: arm64: vgic: Replace kernel.h with the
  necessary inclusions
-In-Reply-To: <YcN5FKnbT9BHLn9f@smile.fi.intel.com>
+Message-ID: <YdRPi65NyiigKPPG@smile.fi.intel.com>
 References: <20211222165552.69288-1-andriy.shevchenko@linux.intel.com>
  <8735mk1pgt.wl-maz@kernel.org>
  <YcNtpnxbyDA/CGgc@smile.fi.intel.com>
  <YcN5FKnbT9BHLn9f@smile.fi.intel.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
- (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: andriy.shevchenko@linux.intel.com,
- linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- linux-kernel@vger.kernel.org, james.morse@arm.com, alexandru.elisei@arm.com,
- suzuki.poulose@arm.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
+ <87iluzvcn4.wl-maz@kernel.org>
+MIME-Version: 1.0
+Content-Disposition: inline
+In-Reply-To: <87iluzvcn4.wl-maz@kernel.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+X-Mailman-Approved-At: Tue, 04 Jan 2022 09:05:56 -0500
 Cc: linux-kernel@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
  linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
@@ -97,39 +91,40 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, 22 Dec 2021 19:14:28 +0000,
-Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
-> 
-> On Wed, Dec 22, 2021 at 08:25:43PM +0200, Andy Shevchenko wrote:
-> > On Wed, Dec 22, 2021 at 06:09:22PM +0000, Marc Zyngier wrote:
-> > > On Wed, 22 Dec 2021 16:55:52 +0000,
-> > > Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
+On Tue, Jan 04, 2022 at 01:44:31PM +0000, Marc Zyngier wrote:
+> On Wed, 22 Dec 2021 19:14:28 +0000,
+> Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
+> > On Wed, Dec 22, 2021 at 08:25:43PM +0200, Andy Shevchenko wrote:
+> > > On Wed, Dec 22, 2021 at 06:09:22PM +0000, Marc Zyngier wrote:
+> > > > On Wed, 22 Dec 2021 16:55:52 +0000,
+> > > > Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
+> > > > > 
+> > > > > When kernel.h is used in the headers it adds a lot into dependency hell,
+> > > > > especially when there are circular dependencies are involved.
 > > > > 
-> > > > When kernel.h is used in the headers it adds a lot into dependency hell,
-> > > > especially when there are circular dependencies are involved.
+> > > > Which circular dependencies? What problem are you solving?
 > > > 
-> > > Which circular dependencies? What problem are you solving?
+> > > In particular moving bitmap_*alloc() APIs to the headers.
+> > > 
+> > > But this may be a side effect of what I realized during the attempts
+> > > of solving that issue. In any case there is no need to take entire
+> > > mess of kernel.h in another header.
 > > 
-> > In particular moving bitmap_*alloc() APIs to the headers.
-> > 
-> > But this may be a side effect of what I realized during the attempts
-> > of solving that issue. In any case there is no need to take entire
-> > mess of kernel.h in another header.
+> > For the record  `make headerdep` doesn't make any difference with
+> > or without this patch. But I consider it's better not to use kernel.h
+> > in the headers due to a full mess behind it.
 > 
-> For the record  `make headerdep` doesn't make any difference with
-> or without this patch. But I consider it's better not to use kernel.h
-> in the headers due to a full mess behind it.
+> Can you then please write a commit message that matches what this is
+> actually doing instead of mentioning a problem that doesn't seem to
+> exist?
 
-Can you then please write a commit message that matches what this is
-actually doing instead of mentioning a problem that doesn't seem to
-exist?
-
-Thanks,
-
-	M.
+Sure, thanks for review!
 
 -- 
-Without deviation from the norm, progress is not possible.
+With Best Regards,
+Andy Shevchenko
+
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
