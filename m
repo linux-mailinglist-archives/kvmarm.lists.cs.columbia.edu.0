@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 67EC0485FC9
-	for <lists+kvmarm@lfdr.de>; Thu,  6 Jan 2022 05:29:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 023F0485FCD
+	for <lists+kvmarm@lfdr.de>; Thu,  6 Jan 2022 05:29:08 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 177FD40BBF;
-	Wed,  5 Jan 2022 23:29:03 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 959214A105;
+	Wed,  5 Jan 2022 23:29:07 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.911
@@ -14,65 +14,66 @@ X-Spam-Level:
 X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=no
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id C7KMA4nVQNbO; Wed,  5 Jan 2022 23:29:01 -0500 (EST)
+	with ESMTP id Bdo+-PpuDelZ; Wed,  5 Jan 2022 23:29:07 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 69E954A534;
-	Wed,  5 Jan 2022 23:29:00 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C2A7B49F44;
+	Wed,  5 Jan 2022 23:29:02 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B300540BDB
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Jan 2022 23:28:58 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 96CF249E3F
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Jan 2022 23:29:01 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ds9thLbXaOKc for <kvmarm@lists.cs.columbia.edu>;
- Wed,  5 Jan 2022 23:28:57 -0500 (EST)
-Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com
- [209.85.210.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9874149F21
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Jan 2022 23:28:57 -0500 (EST)
-Received: by mail-pf1-f201.google.com with SMTP id
- n4-20020aa79044000000b004bcd447b6easo912943pfo.22
- for <kvmarm@lists.cs.columbia.edu>; Wed, 05 Jan 2022 20:28:57 -0800 (PST)
+ with ESMTP id dlb9irtroHhl for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  5 Jan 2022 23:29:00 -0500 (EST)
+Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com
+ [209.85.215.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4F31C49F3A
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Jan 2022 23:28:59 -0500 (EST)
+Received: by mail-pg1-f202.google.com with SMTP id
+ d31-20020a631d5f000000b0034152d47c81so868350pgm.3
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 05 Jan 2022 20:28:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=EGJja/ymAhtLHtvvRLOC1lFWB7N0+NNq14gOQPVCBoY=;
- b=U8dPbL5+VRaoaUtwDZ6uTgc1nPLB/8//gTKpXkfRcQ9ST8h77NGBdZH61gFXfKJVL0
- 2IArY0rPXtS1BSYLZVGNvDpBBlwRDcBIjUPPDm+WxVsmpKiNiXlu9+OB4VypJnvh62U3
- qTck0WuNLy46JAFFw+sgCaq64Vi8isAqAUjqgGm9eaJq/GyehvVNe7/CRv0I38EfcfiI
- q6K85+PlNxRzA9x6h8oKhOzSRXQci5//b0lorbEb+uCMfjwiCoHMmuX4YezohY/hf5RG
- Yl8a2bgkFlro9kO402gR6tFEZCBlsxNKBZsiTbzT1aFYx7u7jp0w8nPpNauVVn7eSVVP
- Vh6A==
+ :cc; bh=rEdrya4R7EAWDAJjebSC+VC2qaS3eoJJ5/ZClrOWefo=;
+ b=mFVVx+f4D8/SFXD42xl4WFRSzKndQhwe5T+bCNe7iETFmIQn5fr7f7G7fKGHugveiC
+ MdVVowrwqM63GzGSQYZa3rWwOiVqBjT9gDscjILRhZHm1a37JYYboqhcNqZPSqi7w1x4
+ fwcjRkZKJgJ8xKoHQrGwpfTdyDcd6P2IX0+++N1N7a9/MXNaFNEjVsa8CyOQAEwjZOFF
+ k8p4v1QhZxthLsnqd4+DHqCP66/r2j5KcL72F9UOMXfxx4aGWzXMLs7IFLjuP9Dp/p4P
+ WpFGm2Gh80WwYofsJNAjUh1CaXXDgDAUXtNkPiyvUCB3R45iIfMTtKZ2djwYPXD9b5QI
+ ZtPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=EGJja/ymAhtLHtvvRLOC1lFWB7N0+NNq14gOQPVCBoY=;
- b=fM/jbSZUZtdyOl4lHqv2bNo8v8mwY9arkZfXpLmeYyVpzKSV9oHlb0J2Bd/X5evJak
- iqrUt7ENsigS4DLdmrDZOK7D/FCS1+w9W7xWqfIPtTeriuygS5OQDk9Dtpvovgy2V/Tj
- WdIrioktzN6z5UELu5tPQmrEC0Xvn3Jm4Rmngk+5obogm5t3g2DJkkKTf6Pf/Ua+bRIx
- 9H8MVebRKgMzhCS1/jASEODTEaosDBslH5LiRG6EMpEllSWoolbiv6+MwRa1oDViOgjX
- kfSTA8DBFPTgKEXjV8N7SfM3ulR4NZGCX/hGNzJjFx/R3s9Bxbx7gYm2sXHqBSllymts
- dAzw==
-X-Gm-Message-State: AOAM533q/IYgYV2vGxI6dBS8GCQ4d6gjfC5Au+Oh075dcaA9jesqX4JT
- X1sJ9YAhS3pOAZ0WVq9oO0UIjFpBgCw=
-X-Google-Smtp-Source: ABdhPJxXm6cnv6nS4yNgTtpfhAcc690SNurPWoqjqp0nFe6woplmAY4NA2mKdQKBMMNQcUziEraIxJ/rRNk=
+ bh=rEdrya4R7EAWDAJjebSC+VC2qaS3eoJJ5/ZClrOWefo=;
+ b=SE3y4TvXbPkxlgkupELkdhEZngM3sizj3s08ou9Q9XCvoEqow4ehfgm+6snu78U6bz
+ adxtO9yIOp98IG2jhimMhnUFiE+IM17ZJNh+FLy5ck4ZITm7Cqjtb01IUQSc9J7MVzv0
+ fsIndAy0Q6PbpYT7JzmHqhEecDHkR1RA20AF1VXgWFVdZlIocwVlFwGOCjuH4+0dnR9B
+ ss80wypM/t5bZ5DNELiSsdZxFrc+X0Rk1XiZAxgD6+6rQ1YNjy3beV2a1DSlUkF9ZYQc
+ rxpT/J46fbd0z6AGXbbcHGqhYHicP14gv711EnuzXWLQC5GTP7PjZNE4hmRiD+dhGiJG
+ L6Kg==
+X-Gm-Message-State: AOAM533AgwcKIOgEjueK4XsPUmWJ+7VC3RrfF2XPi9TEbAigjOp50LbZ
+ 1E6awLuT10URJQme5wm/1+EMbD1nlNM=
+X-Google-Smtp-Source: ABdhPJy2AzJ4dXEYZ6TOEhCN6GYfJcBpYNrBA+Xp2aeKLrzJFv/jwXhDdu631QeNioUI91ztAnrO1AQuGVg=
 X-Received: from reiji-vws-sp.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:3d59])
- (user=reijiw job=sendgmr) by 2002:a17:90a:c587:: with SMTP id
- l7mr7891541pjt.21.1641443336826; Wed, 05 Jan 2022 20:28:56 -0800 (PST)
-Date: Wed,  5 Jan 2022 20:26:59 -0800
+ (user=reijiw job=sendgmr) by 2002:a63:80c7:: with SMTP id
+ j190mr51661864pgd.41.1641443338434; 
+ Wed, 05 Jan 2022 20:28:58 -0800 (PST)
+Date: Wed,  5 Jan 2022 20:27:00 -0800
 In-Reply-To: <20220106042708.2869332-1-reijiw@google.com>
-Message-Id: <20220106042708.2869332-18-reijiw@google.com>
+Message-Id: <20220106042708.2869332-19-reijiw@google.com>
 Mime-Version: 1.0
 References: <20220106042708.2869332-1-reijiw@google.com>
 X-Mailer: git-send-email 2.34.1.448.ga2b2bfdf31-goog
-Subject: [RFC PATCH v4 17/26] KVM: arm64: Use vcpu->arch cptr_el2 to track
- value of cptr_el2 for VHE
+Subject: [RFC PATCH v4 18/26] KVM: arm64: Use vcpu->arch.mdcr_el2 to track
+ value of mdcr_el2
 From: Reiji Watanabe <reijiw@google.com>
 To: Marc Zyngier <maz@kernel.org>, kvmarm@lists.cs.columbia.edu
 Cc: kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
@@ -94,8 +95,8 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Track the baseline guest value for cptr_el2 in struct kvm_vcpu_arch
-for VHE.  Use this value when setting cptr_el2 for the guest.
+Track the baseline guest value for mdcr_el2 in struct kvm_vcpu_arch.
+Use this value when setting mdcr_el2 for the guest.
 
 Currently this value is unchanged, but the following patches will set
 trapping bits based on features supported for the guest.
@@ -105,80 +106,74 @@ No functional change intended.
 Signed-off-by: Reiji Watanabe <reijiw@google.com>
 ---
  arch/arm64/include/asm/kvm_arm.h | 16 ++++++++++++++++
- arch/arm64/kvm/arm.c             |  5 ++++-
- arch/arm64/kvm/hyp/vhe/switch.c  | 14 ++------------
- 3 files changed, 22 insertions(+), 13 deletions(-)
+ arch/arm64/kvm/arm.c             |  1 +
+ arch/arm64/kvm/debug.c           | 13 ++++---------
+ 3 files changed, 21 insertions(+), 9 deletions(-)
 
 diff --git a/arch/arm64/include/asm/kvm_arm.h b/arch/arm64/include/asm/kvm_arm.h
-index 01d47c5886dc..8ab6ea038721 100644
+index 8ab6ea038721..4b2ac9e32a36 100644
 --- a/arch/arm64/include/asm/kvm_arm.h
 +++ b/arch/arm64/include/asm/kvm_arm.h
-@@ -288,6 +288,22 @@
- 				 GENMASK(19, 14) |	\
- 				 BIT(11))
+@@ -333,6 +333,22 @@
+ 				 BIT(18) |		\
+ 				 GENMASK(16, 15))
  
 +/*
-+ * With VHE (HCR.E2H == 1), accesses to CPACR_EL1 are routed to
-+ * CPTR_EL2. In general, CPACR_EL1 has the same layout as CPTR_EL2,
-+ * except for some missing controls, such as TAM.
-+ * In this case, CPTR_EL2.TAM has the same position with or without
-+ * VHE (HCR.E2H == 1) which allows us to use here the CPTR_EL2.TAM
-+ * shift value for trapping the AMU accesses.
++ * The default value for the guest below also clears MDCR_EL2_E2PB_MASK
++ * and MDCR_EL2_E2TB_MASK to disable guest access to the profiling and
++ * trace buffers.
 + */
-+#define CPTR_EL2_VHE_GUEST_DEFAULT	(CPACR_EL1_TTA | CPTR_EL2_TAM)
++#define MDCR_GUEST_FLAGS_DEFAULT				\
++	(MDCR_EL2_TPM  | MDCR_EL2_TPMS | MDCR_EL2_TTRF |	\
++	 MDCR_EL2_TPMCR | MDCR_EL2_TDRA | MDCR_EL2_TDOSA)
 +
-+/*
-+ * Bits that are copied from vcpu->arch.cptr_el2 to set cptr_el2 for
-+ * guest with VHE.
-+ */
-+#define CPTR_EL2_VHE_GUEST_TRACKED_MASK	(CPACR_EL1_TTA | CPTR_EL2_TAM)
++/* Bits that are copied from vcpu->arch.mdcr_el2 to set mdcr_el2 for guest. */
++#define MDCR_GUEST_FLAGS_TRACKED_MASK				\
++	(MDCR_EL2_TPM  | MDCR_EL2_TPMS | MDCR_EL2_TTRF |	\
++	 MDCR_EL2_TPMCR | MDCR_EL2_TDRA | MDCR_EL2_TDOSA |	\
++	 (MDCR_EL2_E2PB_MASK << MDCR_EL2_E2PB_SHIFT))
 +
- /* Hyp Debug Configuration Register bits */
- #define MDCR_EL2_E2TB_MASK	(UL(0x3))
- #define MDCR_EL2_E2TB_SHIFT	(UL(24))
++
+ /* For compatibility with fault code shared with 32-bit */
+ #define FSC_FAULT	ESR_ELx_FSC_FAULT
+ #define FSC_ACCESS	ESR_ELx_FSC_ACCESS
 diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 876f2777acf2..3700144f6271 100644
+index 3700144f6271..33acbae7a7ed 100644
 --- a/arch/arm64/kvm/arm.c
 +++ b/arch/arm64/kvm/arm.c
-@@ -1136,7 +1136,10 @@ static int kvm_arch_vcpu_ioctl_vcpu_init(struct kvm_vcpu *vcpu,
+@@ -1136,6 +1136,7 @@ static int kvm_arch_vcpu_ioctl_vcpu_init(struct kvm_vcpu *vcpu,
  	}
  
  	vcpu_reset_hcr(vcpu);
--	vcpu->arch.cptr_el2 = CPTR_EL2_DEFAULT;
-+	if (has_vhe())
-+		vcpu->arch.cptr_el2 = CPTR_EL2_VHE_GUEST_DEFAULT;
-+	else
-+		vcpu->arch.cptr_el2 = CPTR_EL2_DEFAULT;
- 
++	vcpu->arch.mdcr_el2 = MDCR_GUEST_FLAGS_DEFAULT;
+ 	if (has_vhe())
+ 		vcpu->arch.cptr_el2 = CPTR_EL2_VHE_GUEST_DEFAULT;
+ 	else
+diff --git a/arch/arm64/kvm/debug.c b/arch/arm64/kvm/debug.c
+index db9361338b2a..83330968a411 100644
+--- a/arch/arm64/kvm/debug.c
++++ b/arch/arm64/kvm/debug.c
+@@ -84,16 +84,11 @@ void kvm_arm_init_debug(void)
+ static void kvm_arm_setup_mdcr_el2(struct kvm_vcpu *vcpu)
+ {
  	/*
- 	 * Handle the "start in power-off" case.
-diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
-index fbb26b93c347..572b2669ae84 100644
---- a/arch/arm64/kvm/hyp/vhe/switch.c
-+++ b/arch/arm64/kvm/hyp/vhe/switch.c
-@@ -38,20 +38,10 @@ static void __activate_traps(struct kvm_vcpu *vcpu)
- 	___activate_traps(vcpu);
+-	 * This also clears MDCR_EL2_E2PB_MASK and MDCR_EL2_E2TB_MASK
+-	 * to disable guest access to the profiling and trace buffers
++	 * Keep the vcpu->arch.mdcr_el2 bits that are specified by
++	 * MDCR_GUEST_FLAGS_TRACKED_MASK.
+ 	 */
+-	vcpu->arch.mdcr_el2 = __this_cpu_read(mdcr_el2) & MDCR_EL2_HPMN_MASK;
+-	vcpu->arch.mdcr_el2 |= (MDCR_EL2_TPM |
+-				MDCR_EL2_TPMS |
+-				MDCR_EL2_TTRF |
+-				MDCR_EL2_TPMCR |
+-				MDCR_EL2_TDRA |
+-				MDCR_EL2_TDOSA);
++	vcpu->arch.mdcr_el2 &= MDCR_GUEST_FLAGS_TRACKED_MASK;
++	vcpu->arch.mdcr_el2 |= __this_cpu_read(mdcr_el2) & MDCR_EL2_HPMN_MASK;
  
- 	val = read_sysreg(cpacr_el1);
--	val |= CPACR_EL1_TTA;
-+	val &= ~CPTR_EL2_VHE_GUEST_TRACKED_MASK;
-+	val |= (vcpu->arch.cptr_el2 & CPTR_EL2_VHE_GUEST_TRACKED_MASK);
- 	val &= ~CPACR_EL1_ZEN;
- 
--	/*
--	 * With VHE (HCR.E2H == 1), accesses to CPACR_EL1 are routed to
--	 * CPTR_EL2. In general, CPACR_EL1 has the same layout as CPTR_EL2,
--	 * except for some missing controls, such as TAM.
--	 * In this case, CPTR_EL2.TAM has the same position with or without
--	 * VHE (HCR.E2H == 1) which allows us to use here the CPTR_EL2.TAM
--	 * shift value for trapping the AMU accesses.
--	 */
--
--	val |= CPTR_EL2_TAM;
--
- 	if (update_fp_enabled(vcpu)) {
- 		if (vcpu_has_sve(vcpu))
- 			val |= CPACR_EL1_ZEN;
+ 	/* Is the VM being debugged by userspace? */
+ 	if (vcpu->guest_debug)
 -- 
 2.34.1.448.ga2b2bfdf31-goog
 
