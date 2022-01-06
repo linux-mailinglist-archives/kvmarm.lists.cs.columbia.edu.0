@@ -2,81 +2,81 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CA624861FF
-	for <lists+kvmarm@lfdr.de>; Thu,  6 Jan 2022 10:20:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B59D04861F1
+	for <lists+kvmarm@lfdr.de>; Thu,  6 Jan 2022 10:16:22 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CF6814B1D1;
-	Thu,  6 Jan 2022 04:19:59 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DC67F4B1AD;
+	Thu,  6 Jan 2022 04:16:21 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
 X-Spam-Level: 
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@chromium.org
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6PsKTNYjlYs7; Thu,  6 Jan 2022 04:19:58 -0500 (EST)
+	with ESMTP id 1EtoFqFC1D1Q; Thu,  6 Jan 2022 04:16:21 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9946A4B1D4;
-	Thu,  6 Jan 2022 04:19:55 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A8AA34B15E;
+	Thu,  6 Jan 2022 04:16:20 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C8C5C408D5
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Jan 2022 21:42:52 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9B5154B14D
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  6 Jan 2022 04:16:18 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 5GF2Q9LfOWa5 for <kvmarm@lists.cs.columbia.edu>;
- Wed,  5 Jan 2022 21:42:51 -0500 (EST)
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com
- [209.85.219.180])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B8E1F408C1
- for <kvmarm@lists.cs.columbia.edu>; Wed,  5 Jan 2022 21:42:51 -0500 (EST)
-Received: by mail-yb1-f180.google.com with SMTP id p15so3336622ybk.10
- for <kvmarm@lists.cs.columbia.edu>; Wed, 05 Jan 2022 18:42:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chromium.org; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=VUrh3Npgeap/8EiEtwRjncA+1oSJVR1QQxVGHBNvM04=;
- b=f6EQYO79bUXprc7mhn+5kkGk7QaNhdm6TSnLti6itS7mqSCQT6sQjiGOBku7WoX188
- vPdqu9VcHqayR/unWn8Q1ICELVnmKRotk6JQfhShEKTlwYXcQmP7i4wWQTx3chDRDI7A
- 4kBgcl+GK+bigbshUapujhp4+UlbLV1/GOkiY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=VUrh3Npgeap/8EiEtwRjncA+1oSJVR1QQxVGHBNvM04=;
- b=6+qFiE6BeaaierM2+e95sRCWEbgSzDP5yR4jSpHy6G2PIlKTPgrTw+NzZo/2k+1dhJ
- ToNCWuH0WUiRfbuuOS5/qC6rnVmCK0VQAQHhuOnqkKBdr97eRyA2axblzwc6EFjvDNx0
- Ir/GoZrZ6Rox9fQGjzBH37n0N+XUM4vn6Trv4vLQmjuT/e+cnlWPLsenmlPeeVLNfbNg
- nrf3FYUkWqHd5lC81Yy1eEIVsHmJ0avF3RDhrro8S8vxEIhIkflXrg/0XKnahRy9BEl/
- 3EzmQt2MYvm0YSEkQoNISxEk4W0KDOw3Iqyw+hEfnAmG0TnUiavsqnfB+wGr4Y+ESZax
- GlVw==
-X-Gm-Message-State: AOAM530uMy0FeDjLCtw+AJSpVmS2COZgxnVoxP1q8Q6yPx0Pfu1qa/Io
- fQM0Pto5nxYhOoZJP1GPVwBC+ScwIspquFu8GEgGvg==
-X-Google-Smtp-Source: ABdhPJySN8UQBiLK5ZELedz9aMDOihftjIfvLaugncGmaT2wHj67/GId/mm7KBCgharYeRmCbxfpR9IivB+Tgad8EI0=
-X-Received: by 2002:a25:5ca:: with SMTP id 193mr64959101ybf.406.1641436971074; 
- Wed, 05 Jan 2022 18:42:51 -0800 (PST)
-MIME-Version: 1.0
-References: <20211129034317.2964790-1-stevensd@google.com>
- <20211129034317.2964790-5-stevensd@google.com>
- <Yc4G23rrSxS59br5@google.com>
- <CAD=HUj5Q6rW8UyxAXUa3o93T0LBqGQb7ScPj07kvuM3txHMMrQ@mail.gmail.com>
- <YdXrURHO/R82puD4@google.com> <YdXvUaBUvaRPsv6m@google.com>
-In-Reply-To: <YdXvUaBUvaRPsv6m@google.com>
-From: David Stevens <stevensd@chromium.org>
-Date: Thu, 6 Jan 2022 11:42:39 +0900
-Message-ID: <CAD=HUj736L5oxkzeL2JoPV8g1S6Rugy_TquW=PRt73YmFzP6Jw@mail.gmail.com>
-Subject: Re: [PATCH v5 4/4] KVM: mmu: remove over-aggressive warnings
-To: Sean Christopherson <seanjc@google.com>
-X-Mailman-Approved-At: Thu, 06 Jan 2022 04:19:54 -0500
-Cc: Chia-I Wu <olv@chromium.org>, Wanpeng Li <wanpengli@tencent.com>,
- kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
- Joerg Roedel <joro@8bytes.org>, linux-kernel@vger.kernel.org,
- Paolo Bonzini <pbonzini@redhat.com>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
- Jim Mattson <jmattson@google.com>
+ with ESMTP id 7+H29XkEmkWt for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  6 Jan 2022 04:16:17 -0500 (EST)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 642024A7FD
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  6 Jan 2022 04:16:17 -0500 (EST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id D187161AD8;
+ Thu,  6 Jan 2022 09:16:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 468B4C36AE5;
+ Thu,  6 Jan 2022 09:16:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1641460575;
+ bh=mdH8wLVZw9IC0axvrDBOf6u/F9++nH65H2Vt9jCeYSw=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=SQjF2ZDmhHDLNU8PSy++u2GW+aV5bYBZIvBxoyy64NK/p1qEKEZS/h+XSTUIQc+6f
+ o/NRsYCnzIAA5VFr6oPA4RVEI7Gfl1n2uoVb8ttjuFAyVRZFVm3kR9/v+Ryl4UPY77
+ nfRqyeUuULHcuDdR7uq2AcSfTIHhLoSQeKmaWw24CtOnMPBxd57odRQ6U78/P+oLFP
+ E3uDVxRESpx4SIBCr1z96gI8+upvhVGQeuQZw2+jWxdciYe2ilxWBfapj5quTT1qqS
+ cafpQWWJln0aRWs+G/qJgURciNlHE2w6owB7qYAG0LEy0IfOmGSZycO96G5Jym9Je0
+ K50GjjtSua87w==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1n5OsW-00GJrc-Rh; Thu, 06 Jan 2022 09:16:12 +0000
+Date: Thu, 06 Jan 2022 09:16:08 +0000
+Message-ID: <87czl5usvb.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v2] hw/arm/virt: KVM: Enable PAuth when supported by the
+ host
+In-Reply-To: <c5bedb8e-55e3-877f-31aa-92d59e5aba34@linaro.org>
+References: <20220103180507.2190429-1-maz@kernel.org>
+ <c5bedb8e-55e3-877f-31aa-92d59e5aba34@linaro.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: richard.henderson@linaro.org, qemu-devel@nongnu.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, kernel-team@android.com,
+ eric.auger@redhat.com, drjones@redhat.com, peter.maydell@linaro.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org, kernel-team@android.com,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -93,48 +93,107 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Jan 6, 2022 at 4:19 AM Sean Christopherson <seanjc@google.com> wrote:
->
-> On Wed, Jan 05, 2022, Sean Christopherson wrote:
-> > Ah, I got royally confused by ensure_pfn_ref()'s comment
-> >
-> >   * Certain IO or PFNMAP mappings can be backed with valid
-> >   * struct pages, but be allocated without refcounting e.g.,
-> >   * tail pages of non-compound higher order allocations, which
-> >   * would then underflow the refcount when the caller does the
-> >   * required put_page. Don't allow those pages here.
-> >                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> > that doesn't apply here because kvm_faultin_pfn() uses the low level
-> > __gfn_to_pfn_page_memslot().
->
-> On fifth thought, I think this is wrong and doomed to fail.  By mapping these pages
-> into the guest, KVM is effectively saying it supports these pages.  But if the guest
-> uses the corresponding gfns for an action that requires KVM to access the page,
-> e.g. via kvm_vcpu_map(), ensure_pfn_ref() will reject the access and all sorts of
-> bad things will happen to the guest.
->
-> So, why not fully reject these types of pages?  If someone is relying on KVM to
-> support these types of pages, then we'll fail fast and get a bug report letting us
-> know we need to properly support these types of pages.  And if not, then we reduce
-> KVM's complexity and I get to keep my precious WARN :-)
+Hi Richard,
 
-Our current use case here is virtio-gpu blob resources [1]. Blob
-resources are useful because they avoid a guest shadow buffer and the
-associated memcpys, and as I understand it they are also required for
-virtualized vulkan.
+On Wed, 05 Jan 2022 21:36:55 +0000,
+Richard Henderson <richard.henderson@linaro.org> wrote:
+> 
+> On 1/3/22 10:05 AM, Marc Zyngier wrote:
+> > -        /*
+> > -         * KVM does not support modifications to this feature.
+> > -         * We have not registered the cpu properties when KVM
+> > -         * is in use, so the user will not be able to set them.
+> > -         */
+> > -        if (!kvm_enabled()) {
+> > -            arm_cpu_pauth_finalize(cpu, &local_err);
+> > -            if (local_err != NULL) {
+> > +	arm_cpu_pauth_finalize(cpu, &local_err);
+> > +	if (local_err != NULL) {
+> >                   error_propagate(errp, local_err);
+> >                   return;
+> > -            }
+> > -        }
+> > +	}
+> 
+> Looks like the indentation is off?
 
-One type of blob resources requires mapping dma-bufs allocated by the
-host directly into the guest. This works on Intel platforms and the
-ARM platforms I've tested. However, the amdgpu driver sometimes
-allocates higher order, non-compound pages via ttm_pool_alloc_page.
-These are the type of pages which KVM is currently rejecting. Is this
-something that KVM can support?
+Most probably. I only just discovered how to use the QEMU style for
+Emacs, and was indenting things by hand before that (yes, pretty
+painful and likely to lead to issues (there is a TAB instead of a set
+of spaces there...).
 
-+olv, who has done some of the blob resource work.
+> 
+> > +static bool kvm_arm_pauth_supported(void)
+> > +{
+> > +    return (kvm_check_extension(kvm_state, KVM_CAP_ARM_PTRAUTH_ADDRESS) &&
+> > +            kvm_check_extension(kvm_state, KVM_CAP_ARM_PTRAUTH_GENERIC));
+> > +}
+> 
+> Do we really need to have them both set to play the game?  Given that
+> the only thing that happens is that we disable whatever host support
+> exists, can we have "pauth enabled" mean whatever subset the host has?
 
-[1] https://patchwork.kernel.org/project/dri-devel/cover/20200814024000.2485-1-gurchetansingh@chromium.org/
+The host will always expose either both features or none, and that's
+part of the ABI. From the bit of kernel documentation located in
+Documentation/virt/kvm/api.rst:
 
--David
+<quote>
+4.82 KVM_ARM_VCPU_INIT
+----------------------
+[...]
+        - KVM_ARM_VCPU_PTRAUTH_ADDRESS: Enables Address Pointer authentication
+          for arm64 only.
+          Depends on KVM_CAP_ARM_PTRAUTH_ADDRESS.
+          If KVM_CAP_ARM_PTRAUTH_ADDRESS and KVM_CAP_ARM_PTRAUTH_GENERIC are
+          both present, then both KVM_ARM_VCPU_PTRAUTH_ADDRESS and
+          KVM_ARM_VCPU_PTRAUTH_GENERIC must be requested or neither must be
+          requested.
+
+        - KVM_ARM_VCPU_PTRAUTH_GENERIC: Enables Generic Pointer authentication
+          for arm64 only.
+          Depends on KVM_CAP_ARM_PTRAUTH_GENERIC.
+          If KVM_CAP_ARM_PTRAUTH_ADDRESS and KVM_CAP_ARM_PTRAUTH_GENERIC are
+          both present, then both KVM_ARM_VCPU_PTRAUTH_ADDRESS and
+          KVM_ARM_VCPU_PTRAUTH_GENERIC must be requested or neither must be
+          requested.
+</quote>
+
+KVM will reject the initialisation if only one of the features is
+requested, so checking and enabling both makes sense to me.
+
+> 
+> > @@ -521,6 +527,17 @@ bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+> >        */
+> >       struct kvm_vcpu_init init = { .target = -1, };
+> >   +    /*
+> > +     * Ask for Pointer Authentication if supported. We can't play the
+> > +     * SVE trick of synthetising the ID reg as KVM won't tell us
+> 
+> synthesizing
+
+Yup.
+
+> 
+> > +     * whether we have the architected or IMPDEF version of PAuth, so
+> > +     * we have to use the actual ID regs.
+> > +     */
+> > +    if (kvm_arm_pauth_supported()) {
+> > +        init.features[0] |= (1 << KVM_ARM_VCPU_PTRAUTH_ADDRESS |
+> > +			     1 << KVM_ARM_VCPU_PTRAUTH_GENERIC);
+> 
+> Align the two 1's.
+
+Gah, another of these... Will fix.
+
+> 
+> Otherwise, it looks good.
+
+Thanks,
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
