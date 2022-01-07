@@ -2,86 +2,54 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 81CB24876B6
-	for <lists+kvmarm@lfdr.de>; Fri,  7 Jan 2022 12:46:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FCAC487775
+	for <lists+kvmarm@lfdr.de>; Fri,  7 Jan 2022 13:10:05 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8E68F4B14C;
-	Fri,  7 Jan 2022 06:46:06 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CD8084B1EF;
+	Fri,  7 Jan 2022 07:10:04 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: 0.8
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=0.8 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id U7J7DcoEfeVz; Fri,  7 Jan 2022 06:46:06 -0500 (EST)
+	with ESMTP id 0LuitOQJd3DZ; Fri,  7 Jan 2022 07:10:04 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D4FE64B188;
-	Fri,  7 Jan 2022 06:46:04 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 52C544B164;
+	Fri,  7 Jan 2022 07:10:03 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0225D4B105
- for <kvmarm@lists.cs.columbia.edu>; Fri,  7 Jan 2022 06:46:04 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 427E149F3D
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  7 Jan 2022 07:10:02 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id JQsfI77ebZWY for <kvmarm@lists.cs.columbia.edu>;
- Fri,  7 Jan 2022 06:46:02 -0500 (EST)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6CAF94B0DB
- for <kvmarm@lists.cs.columbia.edu>; Fri,  7 Jan 2022 06:46:02 -0500 (EST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 2136261356;
- Fri,  7 Jan 2022 11:46:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C807C36AED;
- Fri,  7 Jan 2022 11:46:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1641555960;
- bh=vz3VQViK5ml7AV6ckusreRI3MEkT4p+GB02SXEo50CE=;
- h=From:To:Cc:Subject:Date:From;
- b=NZyIeuu9N1qP4b16yQJgh1eItgig4i6Ue/X/9LAJbF56ZQ6Br99HzaOLlGYcmNYjF
- WX5hLQeKLbyMgCStnq498yNShUhiF8OHxyFnl5Shdyu5BBdG5U5vNPwr63wwUUOdVe
- cFqBaU740dleFE7PTj2ZMMQi5Kh/vHiqZQk0WNGgEy+uNRLC58vandvFUfRuuHZr0N
- 2tnsCmnsLFFEtwNWYMSTCxOl+u+fY7xtnDttP/8Z60qzEcCQzIx+Y2+sNGNNhWcSOX
- ZqliIfvir44PMjBJhj8RVBKMO/RaEaJVx/3PW708WfPJZ7+oCRqq4nTzj+BqTmbQ14
- olmQFCpLEvEaw==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1n5nh0-00GZ2S-FT; Fri, 07 Jan 2022 11:45:58 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [GIT PULL] KVM/arm64 updates for 5.17
-Date: Fri,  7 Jan 2022 11:45:48 +0000
-Message-Id: <20220107114548.4069893-1-maz@kernel.org>
-X-Mailer: git-send-email 2.30.2
+ with ESMTP id rNhxZY6rJknL for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  7 Jan 2022 07:10:00 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0D82749F05
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  7 Jan 2022 07:10:00 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 461B613D5;
+ Fri,  7 Jan 2022 04:09:59 -0800 (PST)
+Received: from monolith.localdoman (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7B1D63F774;
+ Fri,  7 Jan 2022 04:09:57 -0800 (PST)
+Date: Fri, 7 Jan 2022 12:10:05 +0000
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH kvmtool 9/9] arm64: Add support for
+ KVM_ARM_VCPU_PMU_V3_SET_PMU
+Message-ID: <YdgtnQPAsy1hSOWj@monolith.localdoman>
+References: <20211115165705.195736-1-alexandru.elisei@arm.com>
+ <20211115165705.195736-10-alexandru.elisei@arm.com>
+ <87h7ajva2o.wl-maz@kernel.org>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: pbonzini@redhat.com, alexandru.elisei@arm.com,
- drjones@redhat.com, qwandor@google.com, andriy.shevchenko@linux.intel.com,
- tabba@google.com, gankulkarni@os.amperecomputing.com, broonie@kernel.org,
- qperret@google.com, ricarkol@google.com, rikard.falkeborn@gmail.com,
- vkuznets@redhat.com, will@kernel.org, yuzenghui@huawei.com,
- james.morse@arm.com, suzuki.poulose@arm.com,
- linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- kvm@vger.kernel.org, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com, kvm@vger.kernel.org,
- Andrew Walbran <qwandor@google.com>, Will Deacon <will@kernel.org>,
- Rikard Falkeborn <rikard.falkeborn@gmail.com>, Mark Brown <broonie@kernel.org>,
- linux-arm-kernel@lists.infradead.org,
- Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- kvmarm@lists.cs.columbia.edu
+Content-Disposition: inline
+In-Reply-To: <87h7ajva2o.wl-maz@kernel.org>
+Cc: will@kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -98,232 +66,46 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Paolo,
+Hi Marc,
 
-Here's the bulk of the KVM/arm64 updates for 5.17. No real new feature
-this time around, but a bunch of changes that will make the merging of
-upcoming features easier (pKVM is reaching a point where it will
-finally be usable, and NV isn't too far off... fingers crossed). This
-comes with the usual set of bug fixes and cleanups all over the shop.
+On Tue, Jan 04, 2022 at 02:39:59PM +0000, Marc Zyngier wrote:
+> On Mon, 15 Nov 2021 16:57:05 +0000,
+> Alexandru Elisei <alexandru.elisei@arm.com> wrote:
+> > 
+> > The KVM_ARM_VCPU_PMU_V3_CTRL(KVM_ARM_VCPU_PMU_V3_SET_PMU) VCPU ioctl is
+> > used to assign a physical PMU to the events that KVM creates when emulating
+> > the PMU for that VCPU. This is useful on heterogeneous systems, when there
+> > is more than one hardware PMU present.
+> > 
+> > The assumption that is made in the implementation is that the user will
+> > pin the kvmtool process on a set of CPUs that share the same PMU. This
+> > allows kvmtool to set the same PMU for all VCPUs from the main thread,
+> > instead of in the individual VCPU threads.
+> 
+> May I suggest a slightly different use model? Ideally, you'd be able
+> to run the vcpu threads on the CPUs matching the PMU affinity, and
+> leave all the other threads to roam on other CPUs.
 
-We also have a sizeable chunks of selftest updates which probably
-account for half of the changes.
+Right now, the only way for userspace to make kvmtool run on a particular
+set of CPUs in a heterogeneous configuration is to use taskset, which means
+the entire kvmtool process ends up being pinned on a subset of CPUs which
+have the same PMU. I would like to keep this approach, as it's simple and
+straightforward to implement in kvmtool, and it's easy to change in the
+future if there's an incentive to do so.
 
-Please pull,
+It's also not clear to me how your suggestion would work. Add a command
+line argument to pin all the VCPUs to the specified cpumask?
 
-	M.
+> 
+> With your implementation, the whole of kvmtool gets stuck to a given
+> CPU type, which can be problematic.
 
-The following changes since commit d58071a8a76d779eedab38033ae4c821c30295a5:
+Do you have a specific use case in mind? Or is it more like a general
+concern regarding, for example, the virtio-blk-io or virtio-net-* threads
+competing with the VCPU threads if the VM is doing lots of I/O?
 
-  Linux 5.16-rc3 (2021-11-28 14:09:19 -0800)
-
-are available in the Git repository at:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git tags/kvmarm-5.17
-
-for you to fetch changes up to 1c53a1ae36120997a82f936d044c71075852e521:
-
-  Merge branch kvm-arm64/misc-5.17 into kvmarm-master/next (2022-01-04 17:16:15 +0000)
-
-----------------------------------------------------------------
-KVM/arm64 updates for Linux 5.16
-
-- Simplification of the 'vcpu first run' by integrating it into
-  KVM's 'pid change' flow
-
-- Refactoring of the FP and SVE state tracking, also leading to
-  a simpler state and less shared data between EL1 and EL2 in
-  the nVHE case
-
-- Tidy up the header file usage for the nvhe hyp object
-
-- New HYP unsharing mechanism, finally allowing pages to be
-  unmapped from the Stage-1 EL2 page-tables
-
-- Various pKVM cleanups around refcounting and sharing
-
-- A couple of vgic fixes for bugs that would trigger once
-  the vcpu xarray rework is merged, but not sooner
-
-- Add minimal support for ARMv8.7's PMU extension
-
-- Rework kvm_pgtable initialisation ahead of the NV work
-
-- New selftest for IRQ injection
-
-- Teach selftests about the lack of default IPA space and
-  page sizes
-
-- Expand sysreg selftest to deal with Pointer Authentication
-
-- The usual bunch of cleanups and doc update
-
-----------------------------------------------------------------
-Andy Shevchenko (1):
-      KVM: arm64: vgic: Replace kernel.h with the necessary inclusions
-
-Fuad Tabba (3):
-      KVM: arm64: Use defined value for SCTLR_ELx_EE
-      KVM: arm64: Fix comment for kvm_reset_vcpu()
-      KVM: arm64: Fix comment on barrier in kvm_psci_vcpu_on()
-
-Marc Zyngier (33):
-      KVM: arm64: Reorder vcpu flag definitions
-      KVM: arm64: Get rid of host SVE tracking/saving
-      KVM: arm64: Remove unused __sve_save_state
-      KVM: arm64: Introduce flag shadowing TIF_FOREIGN_FPSTATE
-      KVM: arm64: Stop mapping current thread_info at EL2
-      arm64/fpsimd: Document the use of TIF_FOREIGN_FPSTATE by KVM
-      KVM: arm64: Move SVE state mapping at HYP to finalize-time
-      KVM: arm64: Move kvm_arch_vcpu_run_pid_change() out of line
-      KVM: arm64: Restructure the point where has_run_once is advertised
-      KVM: arm64: Merge kvm_arch_vcpu_run_pid_change() and kvm_vcpu_first_run_init()
-      KVM: arm64: Drop vcpu->arch.has_run_once for vcpu->pid
-      Merge branch kvm-arm64/vcpu-first-run into kvmarm-master/next
-      Merge branch kvm-arm64/fpsimd-tracking into kvmarm-master/next
-      KVM: arm64: Add minimal handling for the ARMv8.7 PMU
-      Merge branch kvm-arm64/hyp-header-split into kvmarm-master/next
-      Merge branch kvm-arm64/misc-5.17 into kvmarm-master/next
-      KVM: arm64: Drop unused workaround_flags vcpu field
-      Merge branch kvm-arm64/pkvm-cleanups-5.17 into kvmarm-master/next
-      KVM: arm64: vgic-v3: Fix vcpu index comparison
-      KVM: arm64: vgic: Demote userspace-triggered console prints to kvm_debug()
-      Merge branch kvm-arm64/vgic-fixes-5.17 into kvmarm-master/next
-      Merge branch kvm-arm64/pkvm-hyp-sharing into kvmarm-master/next
-      KVM: arm64: Rework kvm_pgtable initialisation
-      KVM: selftests: arm64: Initialise default guest mode at test startup time
-      KVM: selftests: arm64: Introduce a variable default IPA size
-      KVM: selftests: arm64: Check for supported page sizes
-      KVM: selftests: arm64: Rework TCR_EL1 configuration
-      KVM: selftests: arm64: Add support for VM_MODE_P36V48_{4K,64K}
-      KVM: selftests: arm64: Add support for various modes with 16kB page size
-      KVM: arm64: selftests: get-reg-list: Add pauth configuration
-      Merge branch kvm-arm64/selftest/ipa into kvmarm-master/next
-      Merge branch kvm-arm64/selftest/irq-injection into kvmarm-master/next
-      Merge branch kvm-arm64/misc-5.17 into kvmarm-master/next
-
-Quentin Perret (12):
-      KVM: arm64: pkvm: Fix hyp_pool max order
-      KVM: arm64: pkvm: Disable GICv2 support
-      KVM: arm64: Make the hyp memory pool static
-      KVM: arm64: Make __io_map_base static
-      KVM: arm64: pkvm: Stub io map functions
-      KVM: arm64: pkvm: Make kvm_host_owns_hyp_mappings() robust to VHE
-      KVM: arm64: Provide {get,put}_page() stubs for early hyp allocator
-      KVM: arm64: Refcount hyp stage-1 pgtable pages
-      KVM: arm64: Fixup hyp stage-1 refcount
-      KVM: arm64: Introduce kvm_share_hyp()
-      KVM: arm64: pkvm: Refcount the pages shared with EL2
-      KVM: arm64: pkvm: Unshare guest structs during teardown
-
-Ricardo Koller (17):
-      KVM: selftests: aarch64: Move gic_v3.h to shared headers
-      KVM: selftests: aarch64: Add function for accessing GICv3 dist and redist registers
-      KVM: selftests: aarch64: Add GICv3 register accessor library functions
-      KVM: selftests: Add kvm_irq_line library function
-      KVM: selftests: aarch64: Add vGIC library functions to deal with vIRQ state
-      KVM: selftests: aarch64: Add vgic_irq to test userspace IRQ injection
-      KVM: selftests: aarch64: Abstract the injection functions in vgic_irq
-      KVM: selftests: aarch64: Cmdline arg to set number of IRQs in vgic_irq test
-      KVM: selftests: aarch64: Cmdline arg to set EOI mode in vgic_irq
-      KVM: selftests: aarch64: Add preemption tests in vgic_irq
-      KVM: selftests: aarch64: Level-sensitive interrupts tests in vgic_irq
-      KVM: selftests: aarch64: Add tests for LEVEL_INFO in vgic_irq
-      KVM: selftests: aarch64: Add test_inject_fail to vgic_irq
-      KVM: selftests: Add IRQ GSI routing library functions
-      KVM: selftests: aarch64: Add tests for IRQFD in vgic_irq
-      KVM: selftests: aarch64: Add ISPENDR write tests in vgic_irq
-      KVM: selftests: aarch64: Add test for restoring active IRQs
-
-Rikard Falkeborn (1):
-      KVM: arm64: Constify kvm_io_gic_ops
-
-Vitaly Kuznetsov (1):
-      KVM: Drop stale kvm_is_transparent_hugepage() declaration
-
-Will Deacon (11):
-      arm64: Add missing include of asm/cpufeature.h to asm/mmu.h
-      KVM: arm64: Generate hyp_constants.h for the host
-      KVM: arm64: Move host EL1 code out of hyp/ directory
-      KVM: arm64: Hook up ->page_count() for hypervisor stage-1 page-table
-      KVM: arm64: Implement kvm_pgtable_hyp_unmap() at EL2
-      KVM: arm64: Extend pkvm_page_state enumeration to handle absent pages
-      KVM: arm64: Introduce wrappers for host and hyp spin lock accessors
-      KVM: arm64: Implement do_share() helper for sharing memory
-      KVM: arm64: Implement __pkvm_host_share_hyp() using do_share()
-      KVM: arm64: Implement do_unshare() helper for unsharing memory
-      KVM: arm64: Expose unshare hypercall to the host
-
-Zenghui Yu (1):
-      KVM: arm64: Fix comment typo in kvm_vcpu_finalize_sve()
-
- arch/arm64/include/asm/kvm_asm.h                   |   1 +
- arch/arm64/include/asm/kvm_emulate.h               |   2 +-
- arch/arm64/include/asm/kvm_host.h                  |  46 +-
- arch/arm64/include/asm/kvm_hyp.h                   |   1 -
- arch/arm64/include/asm/kvm_mmu.h                   |   2 +
- arch/arm64/include/asm/kvm_pgtable.h               |  30 +-
- arch/arm64/include/asm/kvm_pkvm.h                  |  71 ++
- arch/arm64/include/asm/mmu.h                       |   1 +
- arch/arm64/include/asm/sysreg.h                    |   1 +
- arch/arm64/kernel/asm-offsets.c                    |   1 -
- arch/arm64/kernel/fpsimd.c                         |   6 +-
- arch/arm64/kvm/.gitignore                          |   2 +
- arch/arm64/kvm/Makefile                            |  18 +-
- arch/arm64/kvm/arm.c                               |  64 +-
- arch/arm64/kvm/fpsimd.c                            |  79 +-
- arch/arm64/kvm/hyp/Makefile                        |   2 +-
- arch/arm64/kvm/hyp/fpsimd.S                        |   6 -
- arch/arm64/kvm/hyp/hyp-constants.c                 |  10 +
- arch/arm64/kvm/hyp/include/hyp/switch.h            |  30 +-
- arch/arm64/kvm/hyp/include/nvhe/mem_protect.h      |   6 +
- arch/arm64/kvm/hyp/include/nvhe/mm.h               |  59 --
- arch/arm64/kvm/hyp/nvhe/early_alloc.c              |   5 +
- arch/arm64/kvm/hyp/nvhe/hyp-main.c                 |   8 +
- arch/arm64/kvm/hyp/nvhe/mem_protect.c              | 505 ++++++++++--
- arch/arm64/kvm/hyp/nvhe/mm.c                       |   4 +-
- arch/arm64/kvm/hyp/nvhe/page_alloc.c               |   2 +-
- arch/arm64/kvm/hyp/nvhe/setup.c                    |  25 +-
- arch/arm64/kvm/hyp/nvhe/switch.c                   |   1 -
- arch/arm64/kvm/hyp/pgtable.c                       | 108 ++-
- arch/arm64/kvm/hyp/vhe/switch.c                    |   1 -
- arch/arm64/kvm/mmu.c                               | 150 +++-
- arch/arm64/kvm/{hyp/reserved_mem.c => pkvm.c}      |   8 +-
- arch/arm64/kvm/pmu-emul.c                          |   1 +
- arch/arm64/kvm/psci.c                              |   2 +-
- arch/arm64/kvm/reset.c                             |  28 +-
- arch/arm64/kvm/vgic/vgic-init.c                    |   2 +-
- arch/arm64/kvm/vgic/vgic-mmio-v3.c                 |   8 +-
- arch/arm64/kvm/vgic/vgic-mmio.c                    |   2 +-
- arch/arm64/kvm/vgic/vgic-mmio.h                    |   2 +-
- arch/arm64/kvm/vgic/vgic-v2.c                      |   9 +-
- arch/arm64/kvm/vgic/vgic-v3.c                      |   6 +-
- include/kvm/arm_vgic.h                             |   4 +-
- include/linux/kvm_host.h                           |   1 -
- tools/testing/selftests/kvm/.gitignore             |   1 +
- tools/testing/selftests/kvm/Makefile               |   1 +
- tools/testing/selftests/kvm/aarch64/arch_timer.c   |   2 +-
- tools/testing/selftests/kvm/aarch64/get-reg-list.c |  50 ++
- tools/testing/selftests/kvm/aarch64/vgic_irq.c     | 853 +++++++++++++++++++++
- tools/testing/selftests/kvm/include/aarch64/gic.h  |  26 +
- .../kvm/{lib => include}/aarch64/gic_v3.h          |  12 +
- .../selftests/kvm/include/aarch64/processor.h      |   3 +
- tools/testing/selftests/kvm/include/aarch64/vgic.h |  18 +-
- tools/testing/selftests/kvm/include/kvm_util.h     |  20 +-
- tools/testing/selftests/kvm/lib/aarch64/gic.c      |  66 ++
- .../selftests/kvm/lib/aarch64/gic_private.h        |  11 +
- tools/testing/selftests/kvm/lib/aarch64/gic_v3.c   | 206 ++++-
- .../testing/selftests/kvm/lib/aarch64/processor.c  |  82 +-
- tools/testing/selftests/kvm/lib/aarch64/vgic.c     | 103 ++-
- tools/testing/selftests/kvm/lib/guest_modes.c      |  49 +-
- tools/testing/selftests/kvm/lib/kvm_util.c         |  94 +++
- 60 files changed, 2532 insertions(+), 385 deletions(-)
- create mode 100644 arch/arm64/include/asm/kvm_pkvm.h
- create mode 100644 arch/arm64/kvm/.gitignore
- create mode 100644 arch/arm64/kvm/hyp/hyp-constants.c
- rename arch/arm64/kvm/{hyp/reserved_mem.c => pkvm.c} (94%)
- create mode 100644 tools/testing/selftests/kvm/aarch64/vgic_irq.c
- rename tools/testing/selftests/kvm/{lib => include}/aarch64/gic_v3.h (80%)
+Thanks,
+Alex
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
