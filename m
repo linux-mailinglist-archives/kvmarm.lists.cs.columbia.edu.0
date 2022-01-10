@@ -2,82 +2,115 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 75EEE48A6D4
-	for <lists+kvmarm@lfdr.de>; Tue, 11 Jan 2022 05:34:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5766048AA09
+	for <lists+kvmarm@lfdr.de>; Tue, 11 Jan 2022 10:00:47 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CB0F04B1B6;
-	Mon, 10 Jan 2022 23:34:09 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9F5204B274;
+	Tue, 11 Jan 2022 04:00:45 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.911
 X-Spam-Level: 
 X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_NONE=-0.0001,
+	T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tdGIOieuW74c; Mon, 10 Jan 2022 23:34:09 -0500 (EST)
+	with ESMTP id jhpld-bzdsA2; Tue, 11 Jan 2022 04:00:45 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 769B14B183;
-	Mon, 10 Jan 2022 23:34:08 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 47ED74B228;
+	Tue, 11 Jan 2022 04:00:44 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 098124A98B
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Jan 2022 23:34:07 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9014D4B0E6
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Jan 2022 18:06:51 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id wV0sc+A3nkPe for <kvmarm@lists.cs.columbia.edu>;
- Mon, 10 Jan 2022 23:34:05 -0500 (EST)
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com
- [209.85.216.44])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id BF7C149F4D
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Jan 2022 23:34:05 -0500 (EST)
-Received: by mail-pj1-f44.google.com with SMTP id pj2so15197503pjb.2
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Jan 2022 20:34:05 -0800 (PST)
+ with ESMTP id VEWw3LrjwGA9 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 10 Jan 2022 18:06:50 -0500 (EST)
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com
+ [209.85.216.48])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4A8F04A0FF
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Jan 2022 18:06:50 -0500 (EST)
+Received: by mail-pj1-f48.google.com with SMTP id
+ 59-20020a17090a09c100b001b34a13745eso1357854pjo.5
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Jan 2022 15:06:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=uMyFE4hG9HNVlJfPf9YKH//FQ4xNSq0cqHXKoYVzLtY=;
- b=IoUVuvrgWKhoC6sytqSfwIJI7gkn4fO0B8ADTV3aEgX+knQcJsv0VAQaj1kuLBeNoI
- O6xnzUblcUsaWiU/Z4wBCsMYs8FnGy+kKltX5jlY/Z5bpv7VT+iDEIl4N5HphnVSPoKc
- yCPnpKrZyKuNI9FN/+bAZAeyLqf69A96/TysbBvFonI3FqDvEBEBbYX9wpHhrFv1ZrqM
- dqOYgpXY9ky0C/oAQHLMOCPUXteUxxndCpdzANKI3hQUQxZVPAGAUyi4rSwXbtDp2ABn
- L+DKYW4o2UtYL9YEHda31pyHov40Rr1EwQ8mQ9Prkrr6+CDQjQO0rFzakHfnfcSZSS1V
- UWaA==
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=y+VBsHBfwIdG2OzWHPdI/WIqfhyYeKNFkPIFzGKgGjs=;
+ b=X/BYePGBzH1Y0U06VN7h0LTAx5XkiSMJkjX4bzEruFI1kwOUOCZ/UQD5Hz1I4ruAQl
+ PKrgHenyxeASQaRZZvzIOgMnuzQdonH1VvyAbdvdjbchbZ2+uMZc22CuQapKF6//7uez
+ U7SEtzQCYOhll5kuSGrRuD3424eXtMM1K2q20cLcgofjiBKZpwYAGGu/G+SgPu+Ah0Ai
+ cMXFe7zrtF2HSeLvPaMRp85OO6XQzOWT5yW68a8WQ+brErvfPeLpyOXHT8jSayE1ssES
+ B/xCP4larnCmFQsqFp3LTl28pqvPRHXZOcO2unNP2YugKO4xbE5RD1x5r36xyKuMboWr
+ viJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=uMyFE4hG9HNVlJfPf9YKH//FQ4xNSq0cqHXKoYVzLtY=;
- b=50yGondWUiMpb3bZh5qlQLUCBh3vkw3kyHl811k3IanvGQl4ZhzgXVKfdHMEhp7DDw
- CvcCAY30DGk4zic+g4iQ5Yrz7zG/lgsTICeB1/h+Ydp0h2JdLfEoHeqzeUp8+8bG2tFi
- 4YEvaoEuKKw/0RGdUCc0HXSs5V6jYq+BgTLiBmraTuxDvcuC2ChQkKbuPQsj09FPafG3
- h/Zsgkq3Fe9Fyr8KxicHj5dzff18CMNtPRXUKFh98NBcvh6zFKoo9yjC7KQS7vpk/P2O
- SX4V/SZKKdjiZdaL6FNt30XQRUMXa3Q6DE+RO1dQah6BOELJeQWnMw1QRARfHCCN01WL
- 5EJg==
-X-Gm-Message-State: AOAM531aO+bYw3cHaoxkv/jqzQITo3SrR5EjNtGDfKgdHyU+evN6cMh9
- S+9BCiLEcAIV09JmIpOGoDgWRE7gHEl6V/mit+hLlA==
-X-Google-Smtp-Source: ABdhPJxDACYVZNSOXRWjP5GTJ3EFQevPl911BeBWcnIlhN78MJFunWDZRUfpIPX1foVzWaUHnTgRqvlXUGm4SWZ6HUg=
-X-Received: by 2002:a63:6c85:: with SMTP id h127mr2530846pgc.491.1641875644641; 
- Mon, 10 Jan 2022 20:34:04 -0800 (PST)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=y+VBsHBfwIdG2OzWHPdI/WIqfhyYeKNFkPIFzGKgGjs=;
+ b=kFGn5LB0hbTzvO5hIAy45ppa3fwde4AsEbPHWt50Wg+xX4euw64FafyD9uhc0nyYhm
+ SkYbl7tcnbStkc1JGrXl4rb8S/OB6JJlmVvUIJIAv63su9cU4sTuiaAyVcqrggDfkWuF
+ s+sQ+UT+EXuLsz8A5nE7jnENCSZzwHBqQN8iPnVQhRFNzsdgHECqzC9LUX86kyLMiO4Z
+ Y/POcNXX28yvokXlSIhqI1tcuxwIqUI6VSuOlWSHkfQy0N16ejZ/Zgu2AqzPVRjhQa51
+ jyOd1x6RH7cARiq2NHEC4cEd0IjELeUurs11xZVjui+0x0qfs/6i/H/QyOVEkaFcATFC
+ 7hfw==
+X-Gm-Message-State: AOAM531mrZJB3+imn6FKYVLo8y5xSgXXJM4Y3oLehJb6zYjp9zcP/oDD
+ cblUPoYsHNdcFO0vr3VjdFQ1xg==
+X-Google-Smtp-Source: ABdhPJwuqul2WTZrr6xhkm1p+58Y11+q37mOxYmOZK51ca5s/4q/F/MIfrRIm+VTh9ySZMN7V9F+qQ==
+X-Received: by 2002:a17:90a:d90b:: with SMTP id
+ c11mr37450pjv.211.1641856009160; 
+ Mon, 10 Jan 2022 15:06:49 -0800 (PST)
+Received: from google.com (157.214.185.35.bc.googleusercontent.com.
+ [35.185.214.157])
+ by smtp.gmail.com with ESMTPSA id d1sm4554170pgd.66.2022.01.10.15.06.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 10 Jan 2022 15:06:48 -0800 (PST)
+Date: Mon, 10 Jan 2022 23:06:44 +0000
+From: Sean Christopherson <seanjc@google.com>
+To: Chao Gao <chao.gao@intel.com>
+Subject: Re: [PATCH 3/6] KVM: Remove opaque from
+ kvm_arch_check_processor_compat
+Message-ID: <Ydy8BCfE0jhJd5uE@google.com>
+References: <20211227081515.2088920-1-chao.gao@intel.com>
+ <20211227081515.2088920-4-chao.gao@intel.com>
 MIME-Version: 1.0
-References: <20220104194918.373612-1-rananta@google.com>
- <20220104194918.373612-4-rananta@google.com>
- <CAAeT=FxCCD+H1z8+gfyBZNeibfAUqUenZZe56Vj_3fCghJjy=Q@mail.gmail.com>
- <CAJHc60yY9qH5_r09Tz2fhWr+tT+i7RnKhchBuEePCKnos52kwA@mail.gmail.com>
-In-Reply-To: <CAJHc60yY9qH5_r09Tz2fhWr+tT+i7RnKhchBuEePCKnos52kwA@mail.gmail.com>
-From: Reiji Watanabe <reijiw@google.com>
-Date: Mon, 10 Jan 2022 20:33:48 -0800
-Message-ID: <CAAeT=FyJcUKP4ZGuMQh-AFExj9X=cXKUf0RueqqqhRwUHL2+sw@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 03/11] KVM: Introduce KVM_CAP_ARM_HVC_FW_REG_BMAP
-To: Raghavendra Rao Ananta <rananta@google.com>
-Cc: kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
- Marc Zyngier <maz@kernel.org>, Peter Shier <pshier@google.com>,
- linux-kernel@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+Content-Disposition: inline
+In-Reply-To: <20211227081515.2088920-4-chao.gao@intel.com>
+X-Mailman-Approved-At: Tue, 11 Jan 2022 04:00:43 -0500
+Cc: x86@kernel.org, Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
+ David Hildenbrand <david@redhat.com>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Dave Hansen <dave.hansen@linux.intel.com>, linux-mips@vger.kernel.org,
+ Atish Patra <atish.patra@wdc.com>, Paul Mackerras <paulus@samba.org>,
+ "H. Peter Anvin" <hpa@zytor.com>, Alexander Gordeev <agordeev@linux.ibm.com>,
+ Claudio Imbrenda <imbrenda@linux.ibm.com>, Will Deacon <will@kernel.org>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ linux-s390@vger.kernel.org, Janosch Frank <frankja@linux.ibm.com>,
+ Marc Zyngier <maz@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+ Huacai Chen <chenhuacai@kernel.org>, linux-riscv@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu,
+ Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
+ Ingo Molnar <mingo@redhat.com>, Catalin Marinas <catalin.marinas@arm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Ravi Bangoria <ravi.bangoria@linux.ibm.com>, kevin.tian@intel.com,
+ Albert Ou <aou@eecs.berkeley.edu>, Vasily Gorbik <gor@linux.ibm.com>,
+ Heiko Carstens <hca@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Borislav Petkov <bp@alien8.de>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>,
+ Paul Walmsley <paul.walmsley@sifive.com>, tglx@linutronix.de,
+ linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+ Fabiano Rosas <farosas@linux.ibm.com>, Anup Patel <anup.patel@wdc.com>,
+ linux-kernel@vger.kernel.org, Bharata B Rao <bharata@linux.ibm.com>,
+ kvm-riscv@lists.infradead.org, Michael Ellerman <mpe@ellerman.id.au>,
+ pbonzini@redhat.com, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ linuxppc-dev@lists.ozlabs.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -94,120 +127,13 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Jan 10, 2022 at 3:40 PM Raghavendra Rao Ananta
-<rananta@google.com> wrote:
->
-> On Fri, Jan 7, 2022 at 9:40 PM Reiji Watanabe <reijiw@google.com> wrote:
-> >
-> > Hi Raghu,
-> >
-> > On Tue, Jan 4, 2022 at 11:49 AM Raghavendra Rao Ananta
-> > <rananta@google.com> wrote:
-> > >
-> > > Introduce the KVM ARM64 capability, KVM_CAP_ARM_HVC_FW_REG_BMAP,
-> > > to indicate the support for psuedo-firmware bitmap extension.
-> > > Each of these registers holds a feature-set exposed to the guest
-> > > in the form of a bitmap. If supported, a simple 'read' of the
-> > > capability should return the number of psuedo-firmware registers
-> > > supported. User-space can utilize this to discover the registers.
-> > > It can further explore or modify the features using the classical
-> > > GET/SET_ONE_REG interface.
-> > >
-> > > Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
-> > > ---
-> > >  Documentation/virt/kvm/api.rst | 21 +++++++++++++++++++++
-> > >  include/uapi/linux/kvm.h       |  1 +
-> > >  2 files changed, 22 insertions(+)
-> > >
-> > > diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
-> > > index aeeb071c7688..646176537f2c 100644
-> > > --- a/Documentation/virt/kvm/api.rst
-> > > +++ b/Documentation/virt/kvm/api.rst
-> > > @@ -6925,6 +6925,27 @@ indicated by the fd to the VM this is called on.
-> > >  This is intended to support intra-host migration of VMs between userspace VMMs,
-> > >  upgrading the VMM process without interrupting the guest.
-> > >
-> > > +7.30 KVM_CAP_ARM_HVC_FW_REG_BMAP
-> >
-> > IMHO, instead of including its format of the register in the name,
-> > including its purpose/function in the name might be better.
-> > e.g. KVM_CAP_ARM_HVC_FEATURE_REG ?
-> > (Feature fields don't necessarily have to be in a bitmap format
-> >  if they don't fit well although I'm not sure if we have such fields.)
-> >
-> Well we do have registers, KVM_REG_ARM_PSCI_VERSION for instance,
-> that's not covered by this CAP. But sure, I can explicitly add
-> 'FEATURES' to the name. I also wanted to explicitly convey that we are
-> covering the *bitmapped* firmware registers here. But not sure if
-> appending 'BMAP' might give an impression that the CAP itself is
-> bitmapped.
-> Do you think KVM_CAP_ARM_HVC_BMAP_FEAT_REG is better?
+On Mon, Dec 27, 2021, Chao Gao wrote:
+> No arch implementation uses this opaque now.
 
-Thank you for the explanation! That sounds better to me.
-
-Regards,
-Reiji
-
-
-> > > +
-> > > +:Architectures: arm64
-> > > +:Parameters: None
-> > > +:Returns: Number of psuedo-firmware registers supported
-> >
-> > Looking at patch-4, the return value of this would be the number of
-> > pseudo-firmware *bitmap* registers supported.
-> > BTW, "4.68 KVM_SET_ONE_REG" in the doc uses the word "arm64 firmware
-> > pseudo-registers".  It would be nicer to use the same term.
-> >
-> Nice catch. I'll fix it here in apr.rst.
-> > > +
-> > > +This capability indicates that KVM for arm64 supports the psuedo-firmware
-> > > +register bitmap extension. Each of these registers represent the features
-> > > +supported by a particular type in the form of a bitmap. By default, these
-> > > +registers are set with the upper limit of the features that are supported.
-> > > +
-> > > +The registers can be accessed via the standard SET_ONE_REG and KVM_GET_ONE_REG
-> > > +interfaces. The user-space is expected to read the number of these registers
-> > > +available by reading KVM_CAP_ARM_HVC_FW_REG_BMAP, read the current bitmap
-> > > +configuration via GET_ONE_REG for each register, and then write back the
-> > > +desired bitmap of features that it wishes the guest to see via SET_ONE_REG.
-> > > +
-> > > +Note that KVM doesn't allow the user-space to modify these registers after
-> > > +the VM (any of the vCPUs) has started running.
-> >
-> > Since even if KVM_RUN fails, and the VM hasn't started yet,
-> > it will get immutable. So, "after any of the vCPUs run KVM_RUN."
-> > might be more clear ?
-> >
-> Sure, that's probably more clear. I'll fix it.
->
-> Regards,
-> Raghavendra
->
-> > Thanks,
-> > Reiji
-> >
-> >
-> >
-> > > +
-> > >  8. Other capabilities.
-> > >  ======================
-> > >
-> > > diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
-> > > index 1daa45268de2..209b43dbbc3c 100644
-> > > --- a/include/uapi/linux/kvm.h
-> > > +++ b/include/uapi/linux/kvm.h
-> > > @@ -1131,6 +1131,7 @@ struct kvm_ppc_resize_hpt {
-> > >  #define KVM_CAP_EXIT_ON_EMULATION_FAILURE 204
-> > >  #define KVM_CAP_ARM_MTE 205
-> > >  #define KVM_CAP_VM_MOVE_ENC_CONTEXT_FROM 206
-> > > +#define KVM_CAP_ARM_HVC_FW_REG_BMAP 207
-> > >
-> > >  #ifdef KVM_CAP_IRQ_ROUTING
-> > >
-> > > --
-> > > 2.34.1.448.ga2b2bfdf31-goog
-> > >
+Except for the RISC-V part, this can be a pure revert of commit b99040853738 ("KVM:
+Pass kvm_init()'s opaque param to additional arch funcs").  I think it makes sense
+to process it as a revert, with a short blurb in the changelog to note that RISC-V
+is manually modified as RISC-V support came along in the interim.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
