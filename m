@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BAE348EB3F
-	for <lists+kvmarm@lfdr.de>; Fri, 14 Jan 2022 15:08:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 44CCE48EB3B
+	for <lists+kvmarm@lfdr.de>; Fri, 14 Jan 2022 15:08:11 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 062CD49E34;
-	Fri, 14 Jan 2022 09:08:13 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7E17849F44;
+	Fri, 14 Jan 2022 09:08:10 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -18,49 +18,49 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Qkfwud7g1rcJ; Fri, 14 Jan 2022 09:08:11 -0500 (EST)
+	with ESMTP id brf28UvtOZZd; Fri, 14 Jan 2022 09:08:09 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CEF8E49F2A;
-	Fri, 14 Jan 2022 09:08:09 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 899DD49EEA;
+	Fri, 14 Jan 2022 09:08:08 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DEDB549ED8
- for <kvmarm@lists.cs.columbia.edu>; Fri, 14 Jan 2022 09:08:08 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8C6A949ECA
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 14 Jan 2022 09:08:07 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id rhsPfMO0tVI6 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 14 Jan 2022 09:08:07 -0500 (EST)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8AD0349EB3
- for <kvmarm@lists.cs.columbia.edu>; Fri, 14 Jan 2022 09:08:07 -0500 (EST)
+ with ESMTP id qk1NUdJBhTf5 for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 14 Jan 2022 09:08:06 -0500 (EST)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3983549E34
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 14 Jan 2022 09:08:06 -0500 (EST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 63DE4B825F0;
- Fri, 14 Jan 2022 14:08:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE03FC36AEB;
- Fri, 14 Jan 2022 14:08:04 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id AA51C61C7A;
+ Fri, 14 Jan 2022 14:08:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A00C36AEF;
+ Fri, 14 Jan 2022 14:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1642169285;
- bh=J8p1oxs0nGeqlmSeGlBKYJ/X1YzIZyUNxK+ulWeNgNQ=;
+ bh=nAblTk6IMLqx5QlaZTT3XwmgPRTylGTb8UUfnkLW9S8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=uzZVZG9r6kp9C6WrM852w7CrdnR6PIprAum1ZCKr0ha8doJG/DgXpTaYYZ0ZtnZW3
- 41xEFtpcFW1krQaIQbsnj1NAKlXC1WQWY4x+CYGp9g3DyhBrOZNpoHgrc3FkN3MDM4
- UUYcZgX0GrXnyqNqx5gqO7Cim7kxJBfflirfHXE2SAZHfjz37bSizl4vafFsBP9Un+
- 5UtOWZaZbIK/EWChdDNwauT2H1trmipqL76O0exnWk49lhTEhOxaq09xe+T/+rWKDR
- e94FsetCYNweu5D01zuU+AG5oOcZoUWKq2kFvSQj1rFHyMfg5KS/BB/N/NxYNLBGnb
- JOhLLzyvpDe7A==
+ b=nmLLmF7g6b3bmG9mVpYoGxv3DQZXs99KYqXN1LZPtgkYkCdBy4J9LjTrARHX/ckmS
+ pzglD1YgV406lpRMltInTPK0+g6n0ORZRoGArps3XjHF77DznIe0NtYUxGBu+9C99q
+ UInDn12rX3AvUj/TRicDmWv+Us2huu2Rw/bVob1GuNviccjWfQwkzR68dxt5n94Jo5
+ 9kmGBxNAAbeiD3cj7n6kaarADfx8sqUj0zkUJywIg8GibH3+CFmtETO/WuWzXN+q3r
+ vQZr6kFxAOjWIX4XKgFrIFRXzQAOzPwbemnaS1QrtS5B4Z9AIH2JKhmac12QZ9qvYu
+ P/NQJBGZj6yhA==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=hot-poop.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1n8NFL-000V8K-4r; Fri, 14 Jan 2022 14:08:03 +0000
+ id 1n8NFL-000V8K-9z; Fri, 14 Jan 2022 14:08:03 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v5 2/6] hw/arm/virt: Add a control for the the highmem
- redistributors
-Date: Fri, 14 Jan 2022 14:07:37 +0000
-Message-Id: <20220114140741.1358263-3-maz@kernel.org>
+Subject: [PATCH v5 3/6] hw/arm/virt: Honor highmem setting when computing the
+ memory map
+Date: Fri, 14 Jan 2022 14:07:38 +0000
+Message-Id: <20220114140741.1358263-4-maz@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220114140741.1358263-1-maz@kernel.org>
 References: <20220114140741.1358263-1-maz@kernel.org>
@@ -89,76 +89,61 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Just like we can control the enablement of the highmem PCIe region
-using highmem_ecam, let's add a control for the highmem GICv3
-redistributor region.
+Even when the VM is configured with highmem=off, the highest_gpa
+field includes devices that are above the 4GiB limit.
+Similarily, nothing seem to check that the memory is within
+the limit set by the highmem=off option.
 
-Similarily to highmem_ecam, these redistributors are disabled when
-highmem is off.
+This leads to failures in virt_kvm_type() on systems that have
+a crippled IPA range, as the reported IPA space is larger than
+what it should be.
+
+Instead, honor the user-specified limit to only use the devices
+at the lowest end of the spectrum, and fail if we have memory
+crossing the 4GiB limit.
 
 Reviewed-by: Andrew Jones <drjones@redhat.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- hw/arm/virt-acpi-build.c | 2 ++
- hw/arm/virt.c            | 2 ++
- include/hw/arm/virt.h    | 4 +++-
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ hw/arm/virt.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 449fab0080..0757c28f69 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -947,6 +947,8 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
-     acpi_add_table(table_offsets, tables_blob);
-     build_fadt_rev5(tables_blob, tables->linker, vms, dsdt);
- 
-+    vms->highmem_redists &= vms->highmem;
-+
-     acpi_add_table(table_offsets, tables_blob);
-     build_madt(tables_blob, tables->linker, vms);
- 
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index ed8ea96acc..e734a75850 100644
+index e734a75850..ecc3e3e5b0 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -2106,6 +2106,7 @@ static void machvirt_init(MachineState *machine)
-     virt_flash_fdt(vms, sysmem, secure_sysmem ?: sysmem);
+@@ -1663,7 +1663,7 @@ static uint64_t virt_cpu_mp_affinity(VirtMachineState *vms, int idx)
+ static void virt_set_memmap(VirtMachineState *vms)
+ {
+     MachineState *ms = MACHINE(vms);
+-    hwaddr base, device_memory_base, device_memory_size;
++    hwaddr base, device_memory_base, device_memory_size, memtop;
+     int i;
  
-     vms->highmem_mmio &= vms->highmem;
-+    vms->highmem_redists &= vms->highmem;
+     vms->memmap = extended_memmap;
+@@ -1690,7 +1690,11 @@ static void virt_set_memmap(VirtMachineState *vms)
+     device_memory_size = ms->maxram_size - ms->ram_size + ms->ram_slots * GiB;
  
-     create_gic(vms, sysmem);
- 
-@@ -2805,6 +2806,7 @@ static void virt_instance_init(Object *obj)
- 
-     vms->highmem_ecam = !vmc->no_highmem_ecam;
-     vms->highmem_mmio = true;
-+    vms->highmem_redists = true;
- 
-     if (vmc->no_its) {
-         vms->its = false;
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index 9c54acd10d..dc9fa26faa 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -144,6 +144,7 @@ struct VirtMachineState {
-     bool highmem;
-     bool highmem_ecam;
-     bool highmem_mmio;
-+    bool highmem_redists;
-     bool its;
-     bool tcg_its;
-     bool virt;
-@@ -190,7 +191,8 @@ static inline int virt_gicv3_redist_region_count(VirtMachineState *vms)
- 
-     assert(vms->gic_version == VIRT_GIC_VERSION_3);
- 
--    return MACHINE(vms)->smp.cpus > redist0_capacity ? 2 : 1;
-+    return (MACHINE(vms)->smp.cpus > redist0_capacity &&
-+            vms->highmem_redists) ? 2 : 1;
- }
- 
- #endif /* QEMU_ARM_VIRT_H */
+     /* Base address of the high IO region */
+-    base = device_memory_base + ROUND_UP(device_memory_size, GiB);
++    memtop = base = device_memory_base + ROUND_UP(device_memory_size, GiB);
++    if (!vms->highmem && memtop > 4 * GiB) {
++        error_report("highmem=off, but memory crosses the 4GiB limit\n");
++        exit(EXIT_FAILURE);
++    }
+     if (base < device_memory_base) {
+         error_report("maxmem/slots too huge");
+         exit(EXIT_FAILURE);
+@@ -1707,7 +1711,7 @@ static void virt_set_memmap(VirtMachineState *vms)
+         vms->memmap[i].size = size;
+         base += size;
+     }
+-    vms->highest_gpa = base - 1;
++    vms->highest_gpa = (vms->highmem ? base : memtop) - 1;
+     if (device_memory_size > 0) {
+         ms->device_memory = g_malloc0(sizeof(*ms->device_memory));
+         ms->device_memory->base = device_memory_base;
 -- 
 2.30.2
 
