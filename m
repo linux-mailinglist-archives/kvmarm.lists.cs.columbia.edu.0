@@ -2,90 +2,108 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B93BB4935C6
-	for <lists+kvmarm@lfdr.de>; Wed, 19 Jan 2022 08:47:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 57EFB493813
+	for <lists+kvmarm@lfdr.de>; Wed, 19 Jan 2022 11:16:53 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E90024A534;
-	Wed, 19 Jan 2022 02:47:34 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A8FE54B0DD;
+	Wed, 19 Jan 2022 05:16:52 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.911
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id G645jLCx4ZDO; Wed, 19 Jan 2022 02:47:34 -0500 (EST)
+	with ESMTP id Z+6BRC+mOIIC; Wed, 19 Jan 2022 05:16:52 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D7574A500;
-	Wed, 19 Jan 2022 02:47:33 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 627EA4B0C2;
+	Wed, 19 Jan 2022 05:16:51 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6CA3F4A119
- for <kvmarm@lists.cs.columbia.edu>; Wed, 19 Jan 2022 02:47:32 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3216C49F2F
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 19 Jan 2022 01:42:28 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id iJkfA5kfyosH for <kvmarm@lists.cs.columbia.edu>;
- Wed, 19 Jan 2022 02:47:31 -0500 (EST)
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com
- [209.85.210.169])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 373A149F40
- for <kvmarm@lists.cs.columbia.edu>; Wed, 19 Jan 2022 02:47:31 -0500 (EST)
-Received: by mail-pf1-f169.google.com with SMTP id i65so1784013pfc.9
- for <kvmarm@lists.cs.columbia.edu>; Tue, 18 Jan 2022 23:47:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=qbiJb2UVtirrAHsd/tlBtET4SjB9SQTlHXui+2izr3s=;
- b=bP8mpKrUKYYcA4KRpX/Iab6PVeCaEBou0Rle0wK4u0oCxHKHJNxK3XOy8B6lcxgvXY
- FOco+CP1Zd+i3br6c9kACIwlpelrznWTBYQUgGtAv7CIL5/Vnzro9VaR+3UOWqaq8BVB
- xO6cf+i5UOhU4GoneriU5p5ARzP2ioFnBe4GfgF/C+JvyNABeyjbtY0rfzzo/ABYY++3
- iJR1Xxp98BG1ihJUwNmD+zPbT8XFXRlCn6TXC5AqGaP9hKk35oUB0BaIZ9HYjhj8NlBp
- FAWsGfVPMfQ2g6v6WkTOQ8wNCoRN/d9yFYycIOipiN0vhIS7vAg3sF7aPCVLXrVqbIL7
- RxNw==
+ with ESMTP id fbA+zusOaDkq for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 19 Jan 2022 01:42:26 -0500 (EST)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E55F649F28
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 19 Jan 2022 01:42:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1642574546;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MF1FuGFJdpOohIJ1ssXp+qAxwbB16v8stQCdey9tRcg=;
+ b=QZBh/S5obycedEYcYaocchDNEmgUeR43nEDnaNyTj+97rjCscl+6hH8qBqmrtIrZGvS/Xa
+ IENGxSyS1ox7p3VrJlpChoMs3i9h4aselNMMUw+gxFTCf4B4Ulf56hBDGbJzMDml1eDe7x
+ eLWC168nji/3dRoveVxYmSXaNGqRJWs=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-592-BzFEkVKWMaW2ea9eIxsn4Q-1; Wed, 19 Jan 2022 01:42:24 -0500
+X-MC-Unique: BzFEkVKWMaW2ea9eIxsn4Q-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ v8-20020a17090a778800b001b2e6d08cd1so1143772pjk.8
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 18 Jan 2022 22:42:24 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=qbiJb2UVtirrAHsd/tlBtET4SjB9SQTlHXui+2izr3s=;
- b=01yFYDbPoSBikMm+lonbuUHeWHRo4yWCKSDAHc54DKEMgsAzL0qHZVJslH9/H19ma6
- STCYNwV0ffbuhQUXwYPmgB7hXEb4te2kSMHC322j4MpuSyEfEseYDvbHHdrI+sLNUqOp
- 2iT/eFbeu/Iy2ERXO6w+LMr+/Xc2H2WlMyMQCO+hlBkRNzQdbVgFlwyNidCFCw+KSaOX
- /jIAlnFHokoK0k/4hQELBJusxFeJgP+OXiZHZFrPK3jr2LVjNTsXsNE4rJ3GOtH8D97O
- GNdMNN0wwYT2sDuBcgXNMDo6KcZCVFJqKv0fqFK9pWy0HhNbNxhF9ClH6ns7ThRRslhG
- 8jPA==
-X-Gm-Message-State: AOAM532tFQtPfBgujRL2wI4DghchY+5A3C9RDp7rePNwi5T44sbg7nsh
- 4dht5KsBMees7NG5HwLvO+P4cBsL0FuLz7UwtIs6Bg==
-X-Google-Smtp-Source: ABdhPJynjuL5EJyIFAzAyBjd8DX1zCihK90pwXV5JoP1UY92TV4OnkyTmudcqtrcfRqYDdlvxWABUiftzGEKe/ZrgUE=
-X-Received: by 2002:a63:7d42:: with SMTP id m2mr26257918pgn.491.1642578450084; 
- Tue, 18 Jan 2022 23:47:30 -0800 (PST)
+ h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+ :content-language:to:cc:references:from:in-reply-to
+ :content-transfer-encoding;
+ bh=MF1FuGFJdpOohIJ1ssXp+qAxwbB16v8stQCdey9tRcg=;
+ b=Y+xy/Q1uiXoiSz0JbUR6bbkBOJbD7NxGJS7W6tYs2LZQJxUZRANEY5O7/jOmTbZeQD
+ sxf6psY1ClymNUde5Tie8WaYXw3AJSot6d2seJv3cNJXcXQ3X+DHijjvgcGPmvc+VNJm
+ RVUW2fKtd4QShPcOUao/UYKoBqEhyHJSFSkWQEajUWaR03Rn5E3oHDkn2f+MNPYRr3is
+ l+4NrF+HGoKKr7OBSKJcEPf2yrMdyfMA0iL00fgBhJ90R0WWqRIa/HrtOUlmHLOWjH9y
+ TNg/8zIbgw+njtDd4FYn7Vx+CUio0ZdS+WVBsQGbQL1gxEmFQrP77ahY4wPJ/i/N/9o6
+ 4kQA==
+X-Gm-Message-State: AOAM533wx+QZod3/ZWa4uLUgTLLdX7mP1JKO52ErCGYYoLYyXXgR+fXw
+ vo64NImc/S/LlUdewYt4+QgEq3kygdV4UY6adzFFSNCPKuvSZhrDA8oSCNBQf9kfcANitn0XCZm
+ VXMAlLX1EupXALVx9UlxgIwPU
+X-Received: by 2002:a17:902:ac8f:b0:14a:ac30:47d7 with SMTP id
+ h15-20020a170902ac8f00b0014aac3047d7mr16543335plr.168.1642574543716; 
+ Tue, 18 Jan 2022 22:42:23 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJzfLyBSLuUdFeXn+Bg5WDLz7nFtnsc2uixZcGKG5XSs6BPtw5MhYNQsaP8UjQVY658RSwJjgQ==
+X-Received: by 2002:a17:902:ac8f:b0:14a:ac30:47d7 with SMTP id
+ h15-20020a170902ac8f00b0014aac3047d7mr16543301plr.168.1642574543414; 
+ Tue, 18 Jan 2022 22:42:23 -0800 (PST)
+Received: from [10.72.13.227] ([209.132.188.80])
+ by smtp.gmail.com with ESMTPSA id x4sm4821921pjn.56.2022.01.18.22.42.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Jan 2022 22:42:22 -0800 (PST)
+Message-ID: <960d4166-1718-55ef-d324-507a8add7e3e@redhat.com>
+Date: Wed, 19 Jan 2022 14:42:15 +0800
 MIME-Version: 1.0
-References: <CAAeT=Fxyct=WLUvfbpROKwB9huyt+QdJnKTaj8c5NKk+UY51WQ@mail.gmail.com>
- <CAJHc60za+E-zEO5v2QeKuifoXznPnt5n--g1dAN5jgsuq+SxrA@mail.gmail.com>
- <CALMp9eQDzqoJMck=_agEZNU9FJY9LB=iW-8hkrRc20NtqN=gDA@mail.gmail.com>
- <CAJHc60xZ9emY9Rs9ZbV+AH-Mjmkyg4JZU7V16TF48C-HJn+n4A@mail.gmail.com>
- <CALMp9eTPJZDtMiHZ5XRiYw2NR9EBKSfcP5CYddzyd2cgWsJ9hw@mail.gmail.com>
- <CAJHc60xD2U36pM4+Dq3yZw6Cokk-16X83JHMPXj4aFnxOJ3BUQ@mail.gmail.com>
- <CALMp9eR+evJ+w9VTSvR2KHciQDgTsnS=bh=1OUL4yy8gG6O51A@mail.gmail.com>
- <CAJHc60zw1o=JdUJ+sNNtv3mc_JTRMKG3kPp=-cchWkHm74hUYA@mail.gmail.com>
- <YeBfj89mIf8SezfD@google.com>
- <CAAeT=Fz2q4PfJMXes3A9f+c01NnyORbvUrzJZO=ew-LsjPq2jQ@mail.gmail.com>
- <YedWUJNnQK3HFrWC@google.com>
-In-Reply-To: <YedWUJNnQK3HFrWC@google.com>
-From: Reiji Watanabe <reijiw@google.com>
-Date: Tue, 18 Jan 2022 23:47:13 -0800
-Message-ID: <CAAeT=FyJAG1dEFLvrQ4UXrwUqBUhY0AKkjzFpyi74zCJZUEYVg@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 01/11] KVM: Capture VM start
-To: Sean Christopherson <seanjc@google.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.5.0
+Subject: Re: [RFC PATCH v3 04/11] KVM: arm64: Setup a framework for hypercall
+ bitmap firmware registers
+To: Raghavendra Rao Ananta <rananta@google.com>, Marc Zyngier
+ <maz@kernel.org>, Andrew Jones <drjones@redhat.com>,
+ James Morse <james.morse@arm.com>,
+ Alexandru Elisei <alexandru.elisei@arm.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>
+References: <20220104194918.373612-1-rananta@google.com>
+ <20220104194918.373612-5-rananta@google.com>
+From: Jason Wang <jasowang@redhat.com>
+In-Reply-To: <20220104194918.373612-5-rananta@google.com>
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=jasowang@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+X-Mailman-Approved-At: Wed, 19 Jan 2022 05:16:50 -0500
 Cc: kvm@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
  Peter Shier <pshier@google.com>, linux-kernel@vger.kernel.org,
- Marc Zyngier <maz@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
- Linux ARM <linux-arm-kernel@lists.infradead.org>,
- Jim Mattson <jmattson@google.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -97,48 +115,52 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, Jan 18, 2022 at 4:07 PM Sean Christopherson <seanjc@google.com> wrote:
->
-> On Fri, Jan 14, 2022, Reiji Watanabe wrote:
-> > The restriction, with which KVM doesn't need to worry about the changes
-> > in the registers after KVM_RUN, could potentially protect or be useful
-> > to protect KVM and simplify future changes/maintenance of the KVM codes
-> > that consumes the values.
->
-> That sort of protection is definitely welcome, the previously mentioned CPUID mess
-> on x86 would have benefit greatly by KVM being restrictive in the past.  That said,
-> hooking KVM_RUN is likely the wrong way to go about implementing any restrictions.
-> Running a vCPU is where much of the vCPU's state is explicitly consumed, but it's
-> all too easy for KVM to implicity/indirectly consume state via a different ioctl(),
-> e.g. if there are side effects that are visible in other registers, than an update
-> can also be visible to userspace via KVM_{G,S}ET_{S,}REGS, at which point disallowing
-> modifying state after KVM_RUN but not after reading/writing regs is arbitrary and
-> inconsitent.
-
-Thank you for your comments !
-I think I understand your concern, and that's a great point.
-That's not the case for those pseudo registers though at least for now :)
-BTW, is this concern specific to hooking KVM_RUN ? (Wouldn't it be the
-same for the option with "if kvm->created_vcpus > 0" ?)
-
-
-> If possible, preventing modification if kvm->created_vcpus > 0 is ideal as it's
-> a relatively common pattern in KVM, and provides a clear boundary to userpace
-> regarding what is/isn't allowed.
-
-Yes, I agree that would be better in general.  For (pseudo) registers,
-I would think preventing modification if kvm->created_vcpus > 0 might
-not be a very good option for KVM/ARM though considering usage of
-KVM_GET_REG_LIST and KVM_{G,S}ET_ONE_REG.
-
-Thanks,
-Reiji
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+CuWcqCAyMDIyLzEvNSDkuIrljYgzOjQ5LCBSYWdoYXZlbmRyYSBSYW8gQW5hbnRhIOWGmemBkzoK
+PiBLVk0gcmVndWxhcmx5IGludHJvZHVjZXMgbmV3IGh5cGVyY2FsbCBzZXJ2aWNlcyB0byB0aGUg
+Z3Vlc3RzIHdpdGhvdXQKPiBhbnkgY29uc2VudCBmcm9tIHRoZSBWaXJ0dWFsIE1hY2hpbmUgTWFu
+YWdlciAoVk1NKS4gVGhpcyBtZWFucywgdGhlCj4gZ3Vlc3RzIGNhbiBvYnNlcnZlIGh5cGVyY2Fs
+bCBzZXJ2aWNlcyBpbiBhbmQgb3V0IGFzIHRoZXkgbWlncmF0ZQo+IGFjcm9zcyB2YXJpb3VzIGhv
+c3Qga2VybmVsIHZlcnNpb25zLiBUaGlzIGNvdWxkIGJlIGEgbWFqb3IgcHJvYmxlbQo+IGlmIHRo
+ZSBndWVzdCBkaXNjb3ZlcmVkIGEgaHlwZXJjYWxsLCBzdGFydGVkIHVzaW5nIGl0LCBhbmQgYWZ0
+ZXIKPiBnZXR0aW5nIG1pZ3JhdGVkIHRvIGFuIG9sZGVyIGtlcm5lbCByZWFsaXplcyB0aGF0IGl0
+J3Mgbm8gbG9uZ2VyCj4gYXZhaWxhYmxlLiBEZXBlbmRpbmcgb24gaG93IHRoZSBndWVzdCBoYW5k
+bGVzIHRoZSBjaGFuZ2UsIHRoZXJlJ3MKPiBhIHBvdGVudGlhbCBjaGFuY2UgdGhhdCB0aGUgZ3Vl
+c3Qgd291bGQganVzdCBwYW5pYy4KPgo+IEFzIGEgcmVzdWx0LCB0aGVyZSdzIGEgbmVlZCBmb3Ig
+dGhlIFZNTSB0byBlbGVjdCB0aGUgc2VydmljZXMgdGhhdAo+IGl0IHdpc2hlcyB0aGUgZ3Vlc3Qg
+dG8gZGlzY292ZXIuIFZNTSBjYW4gZWxlY3QgdGhlc2Ugc2VydmljZXMgYmFzZWQKPiBvbiB0aGUg
+a2VybmVscyBzcHJlYWQgYWNyb3NzIGl0cyAobWlncmF0aW9uKSBmbGVldC4gVG8gcmVtZWR5IHRo
+aXMsCj4gZXh0ZW5kIHRoZSBleGlzdGluZyBmaXJtd2FyZSBwc3VlZG8tcmVnaXN0ZXJzLCBzdWNo
+IGFzCj4gS1ZNX1JFR19BUk1fUFNDSV9WRVJTSU9OLCBmb3IgYWxsIHRoZSBoeXBlcmNhbGwgc2Vy
+dmljZXMgYXZhaWxhYmxlLgoKCgpIYXZlbid0IGdvbmUgdGhyb3VnaCB0aGUgc2VyaWVzIGJ1dCBJ
+IHdvbmRlciB3aGV0aGVyIGl0J3MgYmV0dGVyIHRvIGhhdmUgCmEgKGUpQlBGIGZpbHRlciBmb3Ig
+dGhpcyBsaWtlIHNlY2NvbXAuCgpUaGFua3MKCgo+Cj4gVGhlc2UgZmlybXdhcmUgcmVnaXN0ZXJz
+IGFyZSBjYXRlZ29yaXplZCBiYXNlZCBvbiB0aGUgc2VydmljZSBjYWxsCj4gb3duZXJzLCBhbmQg
+dW5saWtlIHRoZSBleGlzdGluZyBmaXJtd2FyZSBwc3VlZG8tcmVnaXN0ZXJzLCB0aGV5IGhvbGQK
+PiB0aGUgZmVhdHVyZXMgc3VwcG9ydGVkIGluIHRoZSBmb3JtIG9mIGEgYml0bWFwLgo+Cj4gVGhl
+IGNhcGFiaWxpdHksIEtWTV9DQVBfQVJNX0hWQ19GV19SRUdfQk1BUCwgaXMgdXNlZCB0byBhbm5v
+dW5jZQo+IHRoaXMgZXh0ZW5zaW9uLCB3aGljaCByZXR1cm5zIHRoZSBudW1iZXIgb2YgcHN1ZWRv
+LWZpcm13YXJlCj4gcmVnaXN0ZXJzIHN1cHBvcnRlZC4gRHVyaW5nIHRoZSBWTSBpbml0aWFsaXph
+dGlvbiwgdGhlIHJlZ2lzdGVycwo+IGhvbGRzIGFuIHVwcGVyLWxpbWl0IG9mIHRoZSBmZWF0dXJl
+cyBzdXBwb3J0ZWQgYnkgdGhlIGNvcnJlc3BvbmRpbmcKPiByZWdpc3RlcnMuIEl0J3MgZXhwZWN0
+ZWQgdGhhdCB0aGUgVk1NcyBkaXNjb3ZlciB0aGUgZmVhdHVyZXMKPiBwcm92aWRlZCBieSBlYWNo
+IHJlZ2lzdGVyIHZpYSBHRVRfT05FX1JFRywgYW5kIHdyaXRlYmFjayB0aGUKPiBkZXNpcmVkIHZh
+bHVlcyB1c2luZyBTRVRfT05FX1JFRy4gS1ZNIGFsbG93cyB0aGlzIG1vZGlmaWNhdGlvbgo+IG9u
+bHkgdW50aWwgdGhlIFZNIGhhcyBzdGFydGVkLgo+Cj4gT2xkZXIgVk1NcyBjYW4gc2ltcGx5IGln
+bm9yZSB0aGUgY2FwYWJpbGl0eSBhbmQgdGhlIGh5cGVyY2FsbCBzZXJ2aWNlcwo+IHdpbGwgYmUg
+ZXhwb3NlZCB1bmNvbmRpdGlvbmFsbHkgdG8gdGhlIGd1ZXN0cywgdGh1cyBlbnN1cmluZyBiYWNr
+d2FyZAo+IGNvbXBhdGliaWxpdHkuCj4KPiBJbiB0aGlzIHBhdGNoLCB0aGUgZnJhbWV3b3JrIGFk
+ZHMgdGhlIHJlZ2lzdGVyIG9ubHkgZm9yIEFSTSdzIHN0YW5kYXJkCj4gc2VjdXJlIHNlcnZpY2Vz
+IChvd25lciB2YWx1ZSA0KS4gQ3VycmVudGx5LCB0aGlzIGluY2x1ZGVzIHN1cHBvcnQgb25seQo+
+IGZvciBBUk0gVHJ1ZSBSYW5kb20gTnVtYmVyIEdlbmVyYXRvciAoVFJORykgc2VydmljZSwgd2l0
+aCBiaXQtMCBvZiB0aGUKPiByZWdpc3RlciByZXByZXNlbnRpbmcgbWFuZGF0b3J5IGZlYXR1cmVz
+IG9mIHYxLjAuIE90aGVyIHNlcnZpY2VzIGFyZQo+IG1vbWVudGFyaWx5IGFkZGVkIGluIHRoZSB1
+cGNvbWluZyBwYXRjaGVzLgo+Cj4gU2lnbmVkLW9mZi1ieTogUmFnaGF2ZW5kcmEgUmFvIEFuYW50
+YTxyYW5hbnRhQGdvb2dsZS5jb20+CgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1bWJp
+YS5lZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9rdm1h
+cm0K
