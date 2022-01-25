@@ -2,74 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CD8949B44D
-	for <lists+kvmarm@lfdr.de>; Tue, 25 Jan 2022 13:52:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 86E7749B4E3
+	for <lists+kvmarm@lfdr.de>; Tue, 25 Jan 2022 14:22:16 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9030349E1F;
-	Tue, 25 Jan 2022 07:52:30 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 083F449ED7;
+	Tue, 25 Jan 2022 08:22:15 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: 0.911
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TGV3gpUydweh; Tue, 25 Jan 2022 07:52:30 -0500 (EST)
+	with ESMTP id 0FG7MGz4LbBH; Tue, 25 Jan 2022 08:22:14 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5DA7741173;
-	Tue, 25 Jan 2022 07:52:29 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A565649E21;
+	Tue, 25 Jan 2022 08:22:13 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C7FA440FD3
- for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Jan 2022 07:52:27 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EEDEF41173
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Jan 2022 08:22:11 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id lXED9G7VcaIF for <kvmarm@lists.cs.columbia.edu>;
- Tue, 25 Jan 2022 07:52:26 -0500 (EST)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A1D9840C02
- for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Jan 2022 07:52:26 -0500 (EST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 8010761354;
- Tue, 25 Jan 2022 12:52:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C87C340E8;
- Tue, 25 Jan 2022 12:52:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1643115144;
- bh=v0FpQ2FqcGsRyWxNTDzGDDdUHBpQFuTqv/W9HGKRr/E=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=MAUsOJDG7jv8KWz7/qbyX9tPKq29KB8ajYN+T6vd0AzxvyMlhZObgNQLmo0fBORbt
- 8/W9UcLtNg3lJ5/vuFjE5K+JS24ytUuHBkmKikam6SJQDQ7PjjPOTu2Epui6eRZKId
- yds1FqJ6rx6iKE3nIzphE6iGlP/D2lsWwPfmjaJKQYLPLxqUNWPUUdeoifMzR11+Lx
- +OxEku+cBS78xkynrWuLjcGq9xYkH/eglXwS26dS0aclHRNE3/IWCe56YHfl6+x4UE
- ZpELsAeltyMVf7P1IhhZbJeAJgK3TmyPjGjy3SyhUdSPIoMo754sqtccNQoHlVkobT
- Zm15izsNhSsSA==
-Date: Tue, 25 Jan 2022 12:52:18 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v8 26/38] KVM: arm64: Handle SME host state when running
- guests
-Message-ID: <Ye/ygvnlzPKYT2z6@sirena.org.uk>
-References: <20220125001114.193425-1-broonie@kernel.org>
- <20220125001114.193425-27-broonie@kernel.org>
- <87wnio6n7d.wl-maz@kernel.org>
+ with ESMTP id Tcvq8Ls5QspC for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 25 Jan 2022 08:22:10 -0500 (EST)
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com
+ [209.85.167.170])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A0ED341003
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Jan 2022 08:22:10 -0500 (EST)
+Received: by mail-oi1-f170.google.com with SMTP id m9so16458813oia.12
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Jan 2022 05:22:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=DIZdKOVntrHNivrgeyNyjrvEE5HK8nFj+9d8ue+W9UI=;
+ b=Y8Rq3AfgPDqXzFKT7ddTRyU3YPSy+h8XqrGJVpIaWPALow7SF1NYUjY9OzsmGch//Y
+ oOlYR2gcgwWuUH/J3Mm37QUN5A0d7SHbtsFlkZJ1cxHfqqZ2zc8QHdfI8L1KAuBpOQlN
+ HGtHhzJ/RSxDpc6qZ/4VP+TujTfXVGP1fni/NggDIugN/6PySpK/anof7BQRjhc4u6Z9
+ HAKlBi0phRG5pB+B/wIu/TFuBnOX9nYoUlBFFdMNaRayJjG7tG6zZs5osg6j4Zj/IT+r
+ jR5Q5JNGq9r8cHlO+sejl6Cw5h0oV1fcXLrSgNMR4eR70khNQA3U1v/Gns2h/lNpzJ2u
+ RLDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=DIZdKOVntrHNivrgeyNyjrvEE5HK8nFj+9d8ue+W9UI=;
+ b=l9BmuZlq3NDjIqw3xJVqqSkaMG2CTA9Z3YCN6QixBhPBZj88ODXWool3aEc8smXmsh
+ gemcrTMXoiPPlEWeXf8MPPEoAhDqZv2A4NRZtieeOPmjz+eAE4GlW3+zm5nniei2xFiW
+ IX+bRru0wh8yoJdrPTzAsCq6E56BEYR6U84JJGUXco3Eqi/Cp75liZHL3SGcO6hlwK1y
+ HlIO8BuYXE9AtihYkcGPbWsJD7cVpizd+M6+Y4SSTxRlicMGb6jxnpBNqMWVvrYtJA3M
+ Yg9uidsvM6yL8i0ao1t/3WNC/xXOY1CF5/WamSZkyh/0JaiWqjYH9EerlijT2F0JHUHE
+ eMGQ==
+X-Gm-Message-State: AOAM531sfoAMQeZYi48Bl9NyaLdsnnLLu+ok1RAwxLxcontNcsHWP1Kd
+ JFtqVSAshTZbircV+tMMmpcaSU2ySEPcNHfjwJwdig==
+X-Google-Smtp-Source: ABdhPJw73QNU1SoK95Ga6itnQQ5mRnTtANbJ4sNAfP3dixa4cg59oUV25yyAMk97f7TmM34Lljgsh/GSCQvcW58Qnds=
+X-Received: by 2002:a05:6808:ec2:: with SMTP id
+ q2mr618595oiv.124.1643116929640; 
+ Tue, 25 Jan 2022 05:22:09 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <87wnio6n7d.wl-maz@kernel.org>
-X-Cookie: The second best policy is dishonesty.
-Cc: Basant Kumar Dwivedi <Basant.KumarDwivedi@arm.com>,
- Will Deacon <will@kernel.org>, Luis Machado <luis.machado@arm.com>,
- Szabolcs Nagy <szabolcs.nagy@arm.com>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Shuah Khan <skhan@linuxfoundation.org>, linux-arm-kernel@lists.infradead.org,
- linux-kselftest@vger.kernel.org, Alan Hayward <alan.hayward@arm.com>,
- Shuah Khan <shuah@kernel.org>, kvmarm@lists.cs.columbia.edu,
- Salil Akerkar <Salil.Akerkar@arm.com>
+References: <20220118015703.3630552-1-jingzhangos@google.com>
+In-Reply-To: <20220118015703.3630552-1-jingzhangos@google.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Tue, 25 Jan 2022 13:21:33 +0000
+Message-ID: <CA+EHjTwZsODk4pY9sYsUeyETUXQTLNDViPKjD_KbuaPF4sBu=A@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] ARM64: Guest performance improvement during dirty
+To: Jing Zhang <jingzhangos@google.com>
+Cc: KVM <kvm@vger.kernel.org>, Marc Zyngier <maz@kernel.org>,
+ David Matlack <dmatlack@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Will Deacon <will@kernel.org>, KVMARM <kvmarm@lists.cs.columbia.edu>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -81,80 +85,168 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============7512132537346091300=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+Hi Jing,
 
---===============7512132537346091300==
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="g/kTMzpZSB0D4ujj"
-Content-Disposition: inline
+On Tue, Jan 18, 2022 at 1:57 AM Jing Zhang <jingzhangos@google.com> wrote:
+>
+> This patch is to reduce the performance degradation of guest workload during
+> dirty logging on ARM64. A fast path is added to handle permission relaxation
+> during dirty logging. The MMU lock is replaced with rwlock, by which all
+> permision relaxations on leaf pte can be performed under the read lock. This
+> greatly reduces the MMU lock contention during dirty logging. With this
+> solution, the source guest workload performance degradation can be improved
+> by more than 60%.
+>
+> Problem:
+>   * A Google internal live migration test shows that the source guest workload
+>   performance has >99% degradation for about 105 seconds, >50% degradation
+>   for about 112 seconds, >10% degradation for about 112 seconds on ARM64.
+>   This shows that most of the time, the guest workload degradtion is above
+>   99%, which obviously needs some improvement compared to the test result
+>   on x86 (>99% for 6s, >50% for 9s, >10% for 27s).
+>   * Tested H/W: Ampere Altra 3GHz, #CPU: 64, #Mem: 256GB, PageSize: 4K
+>   * VM spec: #vCPU: 48, #Mem/vCPU: 4GB, PageSize: 4K, 2M hugepage backed
+>
+> Analysis:
+>   * We enabled CONFIG_LOCK_STAT in kernel and used dirty_log_perf_test to get
+>     the number of contentions of MMU lock and the "dirty memory time" on
+>     various VM spec. The "dirty memory time" is the time vCPU threads spent
+>     in KVM after fault. Higher "dirty memory time" means higher degradation
+>     to guest workload.
+>     '-m 2' specifies the mode "PA-bits:48,  VA-bits:48,  4K pages".
+>     By using test command
+>     ./dirty_log_perf_test -b 2G -m 2 -i 2 -s anonymous_hugetlb_2mb -v [#vCPU]
+>     Below are the results:
+>     +-------+------------------------+-----------------------+
+>     | #vCPU | dirty memory time (ms) | number of contentions |
+>     +-------+------------------------+-----------------------+
+>     | 1     | 926                    | 0                     |
+>     +-------+------------------------+-----------------------+
+>     | 2     | 1189                   | 4732558               |
+>     +-------+------------------------+-----------------------+
+>     | 4     | 2503                   | 11527185              |
+>     +-------+------------------------+-----------------------+
+>     | 8     | 5069                   | 24881677              |
+>     +-------+------------------------+-----------------------+
+>     | 16    | 10340                  | 50347956              |
+>     +-------+------------------------+-----------------------+
+>     | 32    | 20351                  | 100605720             |
+>     +-------+------------------------+-----------------------+
+>     | 64    | 40994                  | 201442478             |
+>     +-------+------------------------+-----------------------+
+>
+>   * From the test results above, the "dirty memory time" and the number of
+>     MMU lock contention scale with the number of vCPUs. That means all the
+>     dirty memory operations from all vCPU threads have been serialized by
+>     the MMU lock. Further analysis also shows that the permission relaxation
+>     during dirty logging is where vCPU threads get serialized.
+
+I am curious about any changes to performance for this case (the base
+case) with the changes in patch 3.
+
+Thanks,
+/fuad
 
 
---g/kTMzpZSB0D4ujj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-On Tue, Jan 25, 2022 at 11:59:02AM +0000, Marc Zyngier wrote:
-> Mark Brown <broonie@kernel.org> wrote:
-
-> > +	if (has_vhe()) {
-> > +		if (system_supports_sme()) {
-
-> nit:	if (has_vhe() && system_supports_sme()) {
-
-> saves you one level of indentation.
-
-Yes, for now.  IIRC there was some other stuff there when I had some of
-the code for doing the register switching properly.
-
-> > +			/* Also restore EL0 state seen on entry */
-> > +			if (vcpu->arch.flags & KVM_ARM64_HOST_SME_ENABLED)
-> > +				sysreg_clear_set(CPACR_EL1, 0,
-> > +						 CPACR_EL1_SMEN_EL0EN |
-> > +						 CPACR_EL1_SMEN_EL1EN);
-> > +			else
-> > +				sysreg_clear_set(CPACR_EL1,
-> > +						 CPACR_EL1_SMEN_EL0EN,
-> > +						 CPACR_EL1_SMEN_EL1EN);
-
-> I find the use of CPACR_EL1_SMEN in some cases and its individual bits
-> in some others pretty confusing. I understand that you have modelled
-> it after the SVE code, but maybe this is a mistake we don't need to
-> repeat. I'd be in favour of directly exposing the individual bits in
-> all cases.
-
-OK, it is just the KVM code that uses the plain ZEN.  I'll add a cleanup
-patch for that at the start of the series for ZEN I guess otherwise it
-looks worse, though that will inflate the size of the series a bit.
-
---g/kTMzpZSB0D4ujj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmHv8oEACgkQJNaLcl1U
-h9AbDgf7BGgVAuzrvNsIsDdC5IPALhwPBZ4yHOUqqUx68sa/YCRWjKn/HIIzHQb7
-ZpmK+BCPHMwsaq9L1U0pKc2R9fv1Tysq718RzbjkakHjDTjX/myMdOURVGo+PvJc
-cRwvN7J67L7uphIGBs9Zw7eFe7hZ/UhaXqUA2DcR8wEGxM3INgLzi8mlGpUPBCMN
-4d+glYNXhy4CA+GOqBbAhi99Ap29zBBi7a2+97eUviYrUWuSIylEKJYnt7mEvqRd
-PncYFUlT+3VTIKGZxj+xqK+c70dJ7vvLm6kLWx/KMOexeJ9uJcCXkyeo4UVfBneh
-ShqSHbhaHl1BeVT5rFN8GMCOKu0ckA==
-=EO4F
------END PGP SIGNATURE-----
-
---g/kTMzpZSB0D4ujj--
-
---===============7512132537346091300==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+>
+> Solution:
+>   * On ARM64, there is no mechanism as PML (Page Modification Logging) and
+>     the dirty-bit solution for dirty logging is much complicated compared to
+>     the write-protection solution. The straight way to reduce the guest
+>     performance degradation is to enhance the concurrency for the permission
+>     fault path during dirty logging.
+>   * In this patch, we only put leaf PTE permission relaxation for dirty
+>     logging under read lock, all others would go under write lock.
+>     Below are the results based on the fast path solution:
+>     +-------+------------------------+
+>     | #vCPU | dirty memory time (ms) |
+>     +-------+------------------------+
+>     | 1     | 965                    |
+>     +-------+------------------------+
+>     | 2     | 1006                   |
+>     +-------+------------------------+
+>     | 4     | 1128                   |
+>     +-------+------------------------+
+>     | 8     | 2005                   |
+>     +-------+------------------------+
+>     | 16    | 3903                   |
+>     +-------+------------------------+
+>     | 32    | 7595                   |
+>     +-------+------------------------+
+>     | 64    | 15783                  |
+>     +-------+------------------------+
+>
+>   * Furtuer analysis shows that there is another bottleneck caused by the
+>     setup of the test code itself. The 3rd commit is meant to fix that by
+>     setting up vgic in the test code. With the test code fix, below are
+>     the results which show better improvement.
+>     +-------+------------------------+
+>     | #vCPU | dirty memory time (ms) |
+>     +-------+------------------------+
+>     | 1     | 803                    |
+>     +-------+------------------------+
+>     | 2     | 843                    |
+>     +-------+------------------------+
+>     | 4     | 942                    |
+>     +-------+------------------------+
+>     | 8     | 1458                   |
+>     +-------+------------------------+
+>     | 16    | 2853                   |
+>     +-------+------------------------+
+>     | 32    | 5886                   |
+>     +-------+------------------------+
+>     | 64    | 12190                  |
+>     +-------+------------------------+
+>     All "dirty memory time" has been reduced by more than 60% when the
+>     number of vCPU grows.
+>   * Based on the solution, the test results from the Google internal live
+>     migration test also shows more than 60% improvement with >99% for 30s,
+>     >50% for 58s and >10% for 76s.
+>
+> ---
+>
+> * v1 -> v2
+>   - Renamed flag name from use_mmu_readlock to logging_perm_fault.
+>   - Removed unnecessary check for fault_granule to use readlock.
+> * RFC -> v1
+>   - Rebase to kvm/queue, commit fea31d169094
+>     (KVM: x86/pmu: Fix available_event_types check for REF_CPU_CYCLES event)
+>   - Moved the fast path in user_mem_abort, as suggested by Marc.
+>   - Addressed other comments from Marc.
+>
+> [v1] https://lore.kernel.org/all/20220113221829.2785604-1-jingzhangos@google.com
+> [RFC] https://lore.kernel.org/all/20220110210441.2074798-1-jingzhangos@google.com
+>
+> ---
+>
+> Jing Zhang (3):
+>   KVM: arm64: Use read/write spin lock for MMU protection
+>   KVM: arm64: Add fast path to handle permission relaxation during dirty
+>     logging
+>   KVM: selftests: Add vgic initialization for dirty log perf test for
+>     ARM
+>
+>  arch/arm64/include/asm/kvm_host.h             |  2 +
+>  arch/arm64/kvm/mmu.c                          | 49 ++++++++++++-------
+>  .../selftests/kvm/dirty_log_perf_test.c       | 10 ++++
+>  3 files changed, 43 insertions(+), 18 deletions(-)
+>
+>
+> base-commit: fea31d1690945e6dd6c3e89ec5591490857bc3d4
+> --
+> 2.34.1.703.g22d0c6ccf7-goog
+>
+> _______________________________________________
+> kvmarm mailing list
+> kvmarm@lists.cs.columbia.edu
+> https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
 https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
-
---===============7512132537346091300==--
