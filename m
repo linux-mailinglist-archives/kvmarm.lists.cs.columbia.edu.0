@@ -2,80 +2,91 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FC4A49B4E8
-	for <lists+kvmarm@lfdr.de>; Tue, 25 Jan 2022 14:23:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D05CF49B4E6
+	for <lists+kvmarm@lfdr.de>; Tue, 25 Jan 2022 14:22:58 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A31C249EC2;
-	Tue, 25 Jan 2022 08:23:24 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 426F64083E;
+	Tue, 25 Jan 2022 08:22:58 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.911
+X-Spam-Score: 0.91
 X-Spam-Level: 
-X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Sx8-3fNIgzPQ; Tue, 25 Jan 2022 08:23:24 -0500 (EST)
+	with ESMTP id ced1197KMH48; Tue, 25 Jan 2022 08:22:58 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 55B0B49EBA;
-	Tue, 25 Jan 2022 08:23:23 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 101A649E44;
+	Tue, 25 Jan 2022 08:22:57 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D77E340E00
- for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Jan 2022 08:23:21 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id F0C1F49E1A
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Jan 2022 08:22:55 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id KzeAP-0+-MDJ for <kvmarm@lists.cs.columbia.edu>;
- Tue, 25 Jan 2022 08:23:20 -0500 (EST)
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com
- [209.85.167.174])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B99704083E
- for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Jan 2022 08:23:20 -0500 (EST)
-Received: by mail-oi1-f174.google.com with SMTP id s127so30953974oig.2
- for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Jan 2022 05:23:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=QmffA1fbeAbx/qMfx78H51dt2gVeXfmIyiPPBL6SKTQ=;
- b=G/gdmh3WdhdjeY9vF1/SCa1s+oJjrvWa4A+zMWHzWB1BMUFrNit6/xrXAgdyPFVbGh
- ja6vutkqjtUKZTZC8woSZcQ+lTIbgHJadM45P4bBEhI8gqko4/daeLBxgyvhPemguDOs
- Mr8uMALqIlHQFu+jNsccypX3FvKn2z7x5VIENtJTH5j2AB2uc/kEYKzQqUJRcRP0OmiV
- lehQiIbSSuqTp+ujyhxicUs+cg1Cm9+lkbsxi/HOMxUylJBx5cPhIxo+0NHEZ3qLrs+4
- gj18GHbZHEw0TPfTCw7Q0isTynNiXypAWNPRRXKPwxMChFS523eJOuv7X68DViKBJrcJ
- NdxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=QmffA1fbeAbx/qMfx78H51dt2gVeXfmIyiPPBL6SKTQ=;
- b=1ZDCCO313w4+boVR/BUlN0BqGYyvciqaGphGlzWVG03zH5j486OZurhHKxihPYIuOy
- 50MZ/WlgCL6XFTp9S6oT4uWpvUEvHJynUet9zYH4/iySkkYbK/+zFk3cGwz4PBTnWWJ/
- Oq/RlqkiHbR7gq9U4ZFKKLY8h7RMX+jGVwyZFZWAL4hkWQ9HU06JpFT4z38Gj98LDoOY
- Z+dDXH76ZivORgIYngDyLOLbHkAl7Iceio5Sqn1S2OJXoWQYTS9mG5B75vLrV4hsfDQw
- FPURPL83kxqlitJ8rRhxfrQyOD9Dm+74gGFjkPeQBQWF7ZIaOXjw8UW5xED0eQ88tyIG
- 6HUA==
-X-Gm-Message-State: AOAM530KcS3lnJibGxOf0/Yq+QXvcyF8QX1DYTlUAR1xt6xFMWTxvtiG
- oUDdNE7vbwf3y62ku2d9SQ9N4xeCDET8T5azOge/Jg==
-X-Google-Smtp-Source: ABdhPJy5EDCOUygXVL1MR05NfKr1mCxSmEry6ObNNVYcmqV5BWVopmYamb6bVVpdjEkQDkhQEBhfYj6vFaTPhWjf0ZU=
-X-Received: by 2002:a05:6808:1785:: with SMTP id
- bg5mr579957oib.171.1643116999914; 
- Tue, 25 Jan 2022 05:23:19 -0800 (PST)
-MIME-Version: 1.0
-References: <20220118015703.3630552-1-jingzhangos@google.com>
- <20220118015703.3630552-4-jingzhangos@google.com>
-In-Reply-To: <20220118015703.3630552-4-jingzhangos@google.com>
-From: Fuad Tabba <tabba@google.com>
-Date: Tue, 25 Jan 2022 13:22:44 +0000
-Message-ID: <CA+EHjTz+76bD1Lcr8bmdo9W71yaqLpfEKf1jt=2m2DMqwTd=ag@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] KVM: selftests: Add vgic initialization for dirty
- log perf test for ARM
-To: Jing Zhang <jingzhangos@google.com>
-Cc: KVM <kvm@vger.kernel.org>, Marc Zyngier <maz@kernel.org>,
- David Matlack <dmatlack@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Will Deacon <will@kernel.org>, KVMARM <kvmarm@lists.cs.columbia.edu>
+ with ESMTP id 3RG8VP4Oe8ta for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 25 Jan 2022 08:22:54 -0500 (EST)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C39AD4083E
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 25 Jan 2022 08:22:54 -0500 (EST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 1DC6661496;
+ Tue, 25 Jan 2022 13:22:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81985C340E0;
+ Tue, 25 Jan 2022 13:22:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1643116973;
+ bh=dNsSh+nbek24LHzPtQ2vR4sDkfPRZ8rLrT05Kvxr+O0=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=tXJOw07i0kYCGhxDK+raTLRGqqmTHjSxtHCen4PMVpxWYSAkIiF+OVZerP21Cw5Ot
+ YPoso29oqpdaqvJ7zguk+IO+MKsXd7v1V7E8Exgh/h8WnovQcKdk2tl1WCQDSFBcxN
+ 5qCgMNTQmeTAXd/lL+ecwA4KTvHjiDwisXOpWQaL48JyMa8dMfnNixnGnMM9krbPER
+ NAgmOWhMRCDUmSKMeRPvC6pNsn/NUA9sGHIt/nUO46YQERj6TedyK1UpWTZ9m6qJj6
+ Yg4mUyY26mrsPAahCUkE2XCfwIYsQC/2q6mrl6iKwk/2bjlBzKXkd3BboejDVK/kT2
+ gipsR4vxebwlQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1nCLmd-002uen-LS; Tue, 25 Jan 2022 13:22:51 +0000
+Date: Tue, 25 Jan 2022 13:22:51 +0000
+Message-ID: <87tuds6jbo.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Mark Brown <broonie@kernel.org>
+Subject: Re: [PATCH v8 26/38] KVM: arm64: Handle SME host state when running
+ guests
+In-Reply-To: <Ye/ygvnlzPKYT2z6@sirena.org.uk>
+References: <20220125001114.193425-1-broonie@kernel.org>
+ <20220125001114.193425-27-broonie@kernel.org>
+ <87wnio6n7d.wl-maz@kernel.org> <Ye/ygvnlzPKYT2z6@sirena.org.uk>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: broonie@kernel.org, catalin.marinas@arm.com, will@kernel.org,
+ skhan@linuxfoundation.org, shuah@kernel.org, alan.hayward@arm.com,
+ luis.machado@arm.com, Salil.Akerkar@arm.com, Basant.KumarDwivedi@arm.com,
+ szabolcs.nagy@arm.com, james.morse@arm.com, alexandru.elisei@arm.com,
+ suzuki.poulose@arm.com, linux-arm-kernel@lists.infradead.org,
+ linux-kselftest@vger.kernel.org, kvmarm@lists.cs.columbia.edu
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Basant Kumar Dwivedi <Basant.KumarDwivedi@arm.com>,
+ Will Deacon <will@kernel.org>, Luis Machado <luis.machado@arm.com>,
+ Szabolcs Nagy <szabolcs.nagy@arm.com>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ Shuah Khan <skhan@linuxfoundation.org>, linux-arm-kernel@lists.infradead.org,
+ linux-kselftest@vger.kernel.org, Alan Hayward <alan.hayward@arm.com>,
+ Shuah Khan <shuah@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ Salil Akerkar <Salil.Akerkar@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -92,66 +103,49 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Jing,
+On Tue, 25 Jan 2022 12:52:18 +0000,
+Mark Brown <broonie@kernel.org> wrote:
+> 
+> [1  <text/plain; us-ascii (7bit)>]
+> On Tue, Jan 25, 2022 at 11:59:02AM +0000, Marc Zyngier wrote:
+> > Mark Brown <broonie@kernel.org> wrote:
+> 
+> > > +	if (has_vhe()) {
+> > > +		if (system_supports_sme()) {
+> 
+> > nit:	if (has_vhe() && system_supports_sme()) {
+> 
+> > saves you one level of indentation.
+> 
+> Yes, for now.  IIRC there was some other stuff there when I had some of
+> the code for doing the register switching properly.
+> 
+> > > +			/* Also restore EL0 state seen on entry */
+> > > +			if (vcpu->arch.flags & KVM_ARM64_HOST_SME_ENABLED)
+> > > +				sysreg_clear_set(CPACR_EL1, 0,
+> > > +						 CPACR_EL1_SMEN_EL0EN |
+> > > +						 CPACR_EL1_SMEN_EL1EN);
+> > > +			else
+> > > +				sysreg_clear_set(CPACR_EL1,
+> > > +						 CPACR_EL1_SMEN_EL0EN,
+> > > +						 CPACR_EL1_SMEN_EL1EN);
+> 
+> > I find the use of CPACR_EL1_SMEN in some cases and its individual bits
+> > in some others pretty confusing. I understand that you have modelled
+> > it after the SVE code, but maybe this is a mistake we don't need to
+> > repeat. I'd be in favour of directly exposing the individual bits in
+> > all cases.
+> 
+> OK, it is just the KVM code that uses the plain ZEN.  I'll add a cleanup
+> patch for that at the start of the series for ZEN I guess otherwise it
+> looks worse, though that will inflate the size of the series a bit.
 
-On Tue, Jan 18, 2022 at 1:57 AM Jing Zhang <jingzhangos@google.com> wrote:
->
-> For ARM64, if no vgic is setup before the dirty log perf test, the
-> userspace irqchip would be used, which would affect the dirty log perf
-> test result.
->
-> Signed-off-by: Jing Zhang <jingzhangos@google.com>
-> ---
->  tools/testing/selftests/kvm/dirty_log_perf_test.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/tools/testing/selftests/kvm/dirty_log_perf_test.c b/tools/testing/selftests/kvm/dirty_log_perf_test.c
-> index 1954b964d1cf..b501338d9430 100644
-> --- a/tools/testing/selftests/kvm/dirty_log_perf_test.c
-> +++ b/tools/testing/selftests/kvm/dirty_log_perf_test.c
-> @@ -18,6 +18,12 @@
->  #include "test_util.h"
->  #include "perf_test_util.h"
->  #include "guest_modes.h"
-> +#ifdef __aarch64__
-> +#include "aarch64/vgic.h"
-> +
-> +#define GICD_BASE_GPA                  0x8000000ULL
-> +#define GICR_BASE_GPA                  0x80A0000ULL
-> +#endif
+I'm happy to merge such a patch early if that helps.
 
-As you'd mentioned in a previous email, these values are used by other
-tests as well as QEMU.
+	M.
 
-Tested-by: Fuad Tabba <tabba@google.com>
-Reviewed-by: Fuad Tabba <tabba@google.com>
-
-Thanks,
-/fuad
-
-
-
-
->  /* How many host loops to run by default (one KVM_GET_DIRTY_LOG for each loop)*/
->  #define TEST_HOST_LOOP_N               2UL
-> @@ -200,6 +206,10 @@ static void run_test(enum vm_guest_mode mode, void *arg)
->                 vm_enable_cap(vm, &cap);
->         }
->
-> +#ifdef __aarch64__
-> +       vgic_v3_setup(vm, nr_vcpus, 64, GICD_BASE_GPA, GICR_BASE_GPA);
-> +#endif
-> +
->         /* Start the iterations */
->         iteration = 0;
->         host_quit = false;
-> --
-> 2.34.1.703.g22d0c6ccf7-goog
->
-> _______________________________________________
-> kvmarm mailing list
-> kvmarm@lists.cs.columbia.edu
-> https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+-- 
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
