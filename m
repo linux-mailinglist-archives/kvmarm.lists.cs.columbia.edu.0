@@ -2,76 +2,80 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B627449CCC3
-	for <lists+kvmarm@lfdr.de>; Wed, 26 Jan 2022 15:52:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8630A49CD5E
+	for <lists+kvmarm@lfdr.de>; Wed, 26 Jan 2022 16:11:43 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 118E349DED;
-	Wed, 26 Jan 2022 09:52:56 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B2BDD40D26;
+	Wed, 26 Jan 2022 10:11:42 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
 X-Spam-Level: 
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+	URIBL_BLOCKED=0.001] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id AY-wC0uOCpdl; Wed, 26 Jan 2022 09:52:55 -0500 (EST)
+	with ESMTP id O0IpmwafPHwV; Wed, 26 Jan 2022 10:11:41 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D25540B80;
-	Wed, 26 Jan 2022 09:52:54 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DB1C140FAB;
+	Wed, 26 Jan 2022 10:11:40 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0249D408F4
- for <kvmarm@lists.cs.columbia.edu>; Wed, 26 Jan 2022 09:52:53 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D074840DF3
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 26 Jan 2022 10:11:39 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id fCDLy6kaT2UP for <kvmarm@lists.cs.columbia.edu>;
- Wed, 26 Jan 2022 09:52:51 -0500 (EST)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D0F9540B41
- for <kvmarm@lists.cs.columbia.edu>; Wed, 26 Jan 2022 09:52:51 -0500 (EST)
+ with ESMTP id DYDI6d04LSbF for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 26 Jan 2022 10:11:38 -0500 (EST)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E348C40D26
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 26 Jan 2022 10:11:37 -0500 (EST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id F26F9617CC;
- Wed, 26 Jan 2022 14:52:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58EBBC340E3;
- Wed, 26 Jan 2022 14:52:48 +0000 (UTC)
+ by ams.source.kernel.org (Postfix) with ESMTPS id B0D7EB81C0F;
+ Wed, 26 Jan 2022 15:11:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F24C340E3;
+ Wed, 26 Jan 2022 15:11:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1643208770;
- bh=jm4UyXrKg8K/tVEMOvInmlJVENOimmSLeYrRFZ3iAhE=;
+ s=k20201202; t=1643209894;
+ bh=1mxe/d7ksh8CJWVY+XFGcqDl0a4IcIqA/AHy2vOGxs4=;
  h=From:To:Cc:Subject:Date:From;
- b=Ct7qB/ZAGMxyNqXRG5A9kCT09NEZ3jSt5gRRvrD5WPAeCAP7Ht1/9Kb4YXZ0ioABC
- 1mUvtkpMZ5F+ErEYve2etOfyiQCtPRTgKobkRgRm0CsXyfwO6mTKReroCii81W28WE
- DCPfcwYlFdillSzeKUpo/AnjSBxQVGHKok6SGuwImxnDl+baMWEtdZJ2UJPNSjiBuw
- F7n/gZySkP9wPLElD9Bx1JWgsUOAsYVDvSC2BfvtTXlZyqtoi2dDXHMIo2neBtQ7Gl
- 9yuIT2DLTB+/pjuzde2hJwpwQTJq1jZubLm5pMcFKguOjarfsPY7g6q9QcOqBsMR9J
- zp2y2+L/0dWDQ==
+ b=gcG5AJHwcG3NPnWiPGfQxaH97yhBrEObK3ioZyR9uvDoHR3kh4o3CdekwZgH6rnN0
+ YacyMgB7I6VGwDaMeh9/5XcdYpHDg2gV1E6DH/2ST9A5VYj2YPmt2blP7JQzjkhmHt
+ wmdlPid4FhXIb9xPQfnACF0p82ysUTDlc/q7LbvE6qWA6IJH2I0tks/d1ZCPJ5VTZf
+ +sxIZyNWQ9wm/FGNgls85qCkSb2/5junbP9vIrh3XUu/idyNSC4oaWXKjgbsKzv8MJ
+ GHZr3hvbXGb+lrcQO5MheFMCQxxDYb35KOWa7H9EWHQQqTKfB7bDDyRhcCf34iM/Xm
+ pKn72OxWVyxhg==
 From: Mark Brown <broonie@kernel.org>
-To: Marc Zyngier <maz@kernel.org>,
-	Shuah Khan <shuah@kernel.org>
-Subject: [PATCH v3] kselftest: kvm/arm64: Skip tests if we can't create a
- vgic-v3
-Date: Wed, 26 Jan 2022 14:52:42 +0000
-Message-Id: <20220126145242.3473836-1-broonie@kernel.org>
+To: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Marc Zyngier <maz@kernel.org>, Shuah Khan <skhan@linuxfoundation.org>,
+ Shuah Khan <shuah@kernel.org>
+Subject: [PATCH v9 00/40] arm64/sme: Initial support for the Scalable Matrix
+ Extension
+Date: Wed, 26 Jan 2022 15:10:40 +0000
+Message-Id: <20220126151120.3811248-1-broonie@kernel.org>
 X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3473; h=from:subject;
- bh=jm4UyXrKg8K/tVEMOvInmlJVENOimmSLeYrRFZ3iAhE=;
- b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBh8V/S6QVgi5cZ6m4uINQ0R+IA6o/Pp0GxJxgH2V3E
- xbqPOk+JATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCYfFf0gAKCRAk1otyXVSH0Ae2B/
- 0cD5U10nc39f3kDDOT/XI0PcJ6n6+O+Wc+lW1Mvs8Pj+qd4x7AbZPV4WZ1YL+x2l6I9FsJpEcMLnz1
- rrkOnaCc1SJMDQ15wqRrLXVEXAgIW2w88TjGfTBnpgHxVX4CVmuxkpZUrXK/kD2xJORtfO8gae5ilD
- eX4+iMqFnu+VIirw5oCuwQPpkQR6CNYkJE7rQ8rosa2RZvZjWcQ3s59GxVayil+06kOM7urphERRuI
- bjIJ0f7QRkGebZ7gsvWKCIbU+zXqtQNu3ifb9ZEVU7Rje9XUr9hoeFzv7aYgKJlQ1gp1HzSIlLPo/9
- N8Tu08HBMIvpai5MVPE6zE92vTnuDN
+X-Developer-Signature: v=1; a=openpgp-sha256; l=14830; h=from:subject;
+ bh=1mxe/d7ksh8CJWVY+XFGcqDl0a4IcIqA/AHy2vOGxs4=;
+ b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBh8WR224BpUOSA/ihIheAy6feiWGTWAKiqsfyyx/m2
+ UoCZ32eJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCYfFkdgAKCRAk1otyXVSH0GYZB/
+ 9xDD5+COQO1PSW1qKCF5/b5OGO+nfLZwsZehxisFhFTknV/Zhae4HkFUX7KTKuAxeiTpBzRFVWNZAA
+ aQjRJbrW3yGvqbm9UCpmzVsjnI+9QT65Au57y5L9crWv+LMfofkdJzhAUoNxlzYsTDPw9RyKsdQxX3
+ xnfYHsjv3PKMHQQuqwmAw/vxm9pI7dKgjeiP6XcJtbumoVE9uzDwiFf04bIJGRD428DX9t19dkWJfA
+ jnNS2qfpmF3gN7ApnBgid/rS34/PE92phk6Hi7XVtkNKhKUVL99B7cKuzbmhTOx6NIbUZY/DbqUfrl
+ U0+dpiSvoVL9co56b2sn7R2ugLwKeo
 X-Developer-Key: i=broonie@kernel.org; a=openpgp;
  fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
-Cc: Mark Brown <broonie@kernel.org>, linux-kselftest@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Cc: Basant Kumar Dwivedi <Basant.KumarDwivedi@arm.com>,
+ Luis Machado <luis.machado@arm.com>, Szabolcs Nagy <szabolcs.nagy@arm.com>,
+ Mark Brown <broonie@kernel.org>, linux-arm-kernel@lists.infradead.org,
+ linux-kselftest@vger.kernel.org, Alan Hayward <alan.hayward@arm.com>,
+ kvmarm@lists.cs.columbia.edu, Salil Akerkar <Salil.Akerkar@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -88,88 +92,281 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The arch_timer and vgic_irq kselftests assume that they can create a
-vgic-v3, using the library function vgic_v3_setup() which aborts with a
-test failure if it is not possible to do so. Since vgic-v3 can only be
-instantiated on systems where the host has GICv3 this leads to false
-positives on older systems where that is not the case.
+This series provides initial support for the ARMv9 Scalable Matrix
+Extension (SME).  SME takes the approach used for vectors in SVE and
+extends this to provide architectural support for matrix operations.  A
+more detailed overview can be found in [1].
 
-Fix this by changing vgic_v3_setup() to return an error if the vgic can't
-be instantiated and have the callers skip if this happens. We could also
-exit flagging a skip in vgic_v3_setup() but this would prevent future test
-cases conditionally deciding which GIC to use or generally doing more
-complex output.
+For the kernel SME can be thought of as a series of features which are
+intended to be used together by applications but operate mostly
+orthogonally:
 
-Signed-off-by: Mark Brown <broonie@kernel.org>
----
+ - The ZA matrix register.
+ - Streaming mode, in which ZA can be accessed and a subset of SVE
+   features are available.
+ - A second vector length, used for streaming mode SVE and ZA and
+   controlled using a similar interface to that for SVE.
+ - TPIDR2, a new userspace controllable system register intended for use
+   by the C library for storing context related to the ZA ABI.
 
+A substantial part of the series is dedicated to refactoring the
+existing SVE support so that we don't need to duplicate code for
+handling vector lengths and the SVE registers, this involves creating an
+array of vector types and making the users take the vector type as a
+parameter.  I'm not 100% happy with this but wasn't able to come up with
+anything better, duplicating code definitely felt like a bad idea so
+this felt like the least bad thing.  If this approach makes sense to
+people it might make sense to split this off into a separate series
+and/or merge it while the rest is pending review to try to make things a
+little more digestable, the series is very large so it'd probably make
+things easier to digest if some of the preparatory refactoring could be
+merged before the rest is ready.
+
+One feature of the architecture of particular note is that switching
+to and from streaming mode may change the size of and invalidate the
+contents of the SVE registers, and when in streaming mode the FFR is not
+accessible.  This complicates aspects of the ABI like signal handling
+and ptrace.
+
+This initial implementation is mainly intended to get the ABI in place,
+there are several areas which will be worked on going forwards - some of
+these will be blockers, others could be handled in followup serieses:
+
+ - SME is currently not supported for KVM guests, this will be done as a
+   followup series.  A host system can use SME and run KVM guests but
+   SME is not available in the guests.
+ - The KVM host support is done in a very simplistic way, were anyone to
+   attempt to use it in production there would be performance impacts on
+   hosts with SME support. As part of this we also add enumeration of
+   fine grained traps.
+ - There is not currently ptrace or signal support TPIDR2, this will be
+   done as a followup series.
+ - No support is currently provided for scheduler control of SME or SME
+   applications, given the size of the SME register state the context
+   switch overhead may be noticable so this may be needed especially for
+   real time applications.  Similar concerns already exist for larger
+   SVE vector lengths but are amplified for SME, particularly as the
+   vector length increases.
+ - There has been no work on optimising the performance of anything the
+   kernel does.
+
+It is not expected that any systems will be encountered that support SME
+but not SVE, SME is an ARMv9 feature and SVE is mandatory for ARMv9.
+The code attempts to handle any such systems that are encountered but
+this hasn't been tested extensively.
+
+v9:
+ - Remove defensive programming around IS_ENABLED() and FGT in KVM code.
+ - Fix naming of TPIDR2 FGT register bit.
+ - Add patches making handling of floating point register bits more
+   consistent (also sent as separate series).
+ - Drop now unused enumeration of fine grained traps.
+v8:
+ - Rebase onto v5.17-rc1.
+ - Support interoperation with KVM, SME is disabled for KVM guests with
+   minimal handling for cleaning up SME state when entering and leaving
+   the guest.
+ - Document and implement that signal handlers are invoked with ZA and
+   streaming mode disabled.
+ - Use the RDSVL instruction introduced in EAC2 of the architecture to
+   obtain the streaming mode vector length during enumeration, ZA state
+   loading/saving and in test programs.
+ - Store a pointer to SVCR in fpsimd_last_state and use it in fpsimd_save()
+   for interoperation with KVM.
+ - Add a test case sme_trap_no_sm checking that we generate a SIGILL
+   when using an instruction that requires streaming mode without
+   enabling it.
+ - Add basic ZA context form validation to testcases helper library.
+ - Move signal tests over to validating streaming VL from ZA information.
+ - Pulled in patch removing ARRAY_SIZE() so that kselftest builds
+   cleanly and to avoid trivial conflicts.
+v7:
+ - Rebase onto v5.16-rc3.
+ - Reduce indentation when supporting custom triggers for signal tests
+   as suggested by Catalin.
+ - Change to specifying a width for all CPU features rather than adding
+   single bit specific infrastructure.
+ - Don't require zeroing of non-shared SVE state during syscalls.
+v6:
+ - Rebase onto v5.16-rc1.
+ - Return to disabling TIF_SVE on kernel entry even if we have SME
+   state, this avoids the need for KVM to handle the case where TIF_SVE
+   is set on guest entry.
+ - Add syscall-abi.h to SME updates to syscall-abi, mistakenly omitted
+   from commit.
+v5:
+ - Rebase onto currently merged SVE and kselftest patches.
+ - Add support for the FA64 option, introduced in the recently published
+   EAC1 update to the specification.
+ - Pull in test program for the syscall ABI previously sent separately
+   with some revisions and add coverage for the SME ABI.
+ - Fix checking for options with 1 bit fields in ID_AA64SMFR0_EL1.
+ - Minor fixes and clarifications to the ABI documentation.
+v4:
+ - Rebase onto merged patches.
+ - Remove an uneeded NULL check in vec_proc_do_default_vl().
+ - Include patch to factor out utility routines in kselftests written in
+   assembler.
+ - Specify -ffreestanding when building TPIDR2 test.
 v3:
- - Use custom print_skip() helper.
- - Use internal version of _kvm_create_device.
+ - Skip FFR rather than predicate registers in sve_flush_live().
+ - Don't assume a bool is all zeros in sve_flush_live() as per AAPCS.
+ - Don't redundantly specify a zero index when clearing FFR.
 v2:
- - The test for being able to create the GIC doesn't actually
-   instantiate it, add a call doing so in that case.
+ - Fix several issues with !SME and !SVE configurations.
+ - Preserve TPIDR2 when creating a new thread/process unless
+   CLONE_SETTLS is set.
+ - Report traps due to using features in an invalid mode as SIGILL.
+ - Spell out streaming mode behaviour in SVE ABI documentation more
+   directly.
+ - Document TPIDR2 in the ABI document.
+ - Use SMSTART and SMSTOP rather than read/modify/write sequences.
+ - Rework logic for exiting streaming mode on syscall.
+ - Don't needlessly initialise SVCR on access trap.
+ - Always restore SME VL for userspace if SME traps are disabled.
+ - Only yield to encourage preemption every 128 iterations in za-test,
+   otherwise do a getpid(), and validate SVCR after syscall.
+ - Leave streaming mode disabled except when reading the vector length
+   in za-test, and disable ZA after detecting a mismatch.
+ - Add SME support to vlset.
+ - Clarifications and typo fixes in comments.
+ - Move sme_alloc() forward declaration back a patch.
 
- tools/testing/selftests/kvm/aarch64/arch_timer.c | 7 ++++++-
- tools/testing/selftests/kvm/aarch64/vgic_irq.c   | 4 ++++
- tools/testing/selftests/kvm/lib/aarch64/vgic.c   | 4 +++-
- 3 files changed, 13 insertions(+), 2 deletions(-)
+[1] https://community.arm.com/developer/ip-products/processors/b/processors-ip-blog/posts/scalable-matrix-extension-armv9-a-architecture
 
-diff --git a/tools/testing/selftests/kvm/aarch64/arch_timer.c b/tools/testing/selftests/kvm/aarch64/arch_timer.c
-index 9ad38bd360a4..b08d30bf71c5 100644
---- a/tools/testing/selftests/kvm/aarch64/arch_timer.c
-+++ b/tools/testing/selftests/kvm/aarch64/arch_timer.c
-@@ -366,6 +366,7 @@ static struct kvm_vm *test_vm_create(void)
- {
- 	struct kvm_vm *vm;
- 	unsigned int i;
-+	int ret;
- 	int nr_vcpus = test_args.nr_vcpus;
- 
- 	vm = vm_create_default_with_vcpus(nr_vcpus, 0, 0, guest_code, NULL);
-@@ -382,7 +383,11 @@ static struct kvm_vm *test_vm_create(void)
- 
- 	ucall_init(vm, NULL);
- 	test_init_timer_irq(vm);
--	vgic_v3_setup(vm, nr_vcpus, 64, GICD_BASE_GPA, GICR_BASE_GPA);
-+	ret = vgic_v3_setup(vm, nr_vcpus, 64, GICD_BASE_GPA, GICR_BASE_GPA);
-+	if (ret < 0) {
-+		print_skip("Failed to create vgic-v3");
-+		exit(KSFT_SKIP);
-+	}
- 
- 	/* Make all the test's cmdline args visible to the guest */
- 	sync_global_to_guest(vm, test_args);
-diff --git a/tools/testing/selftests/kvm/aarch64/vgic_irq.c b/tools/testing/selftests/kvm/aarch64/vgic_irq.c
-index e6c7d7f8fbd1..7eca97799917 100644
---- a/tools/testing/selftests/kvm/aarch64/vgic_irq.c
-+++ b/tools/testing/selftests/kvm/aarch64/vgic_irq.c
-@@ -761,6 +761,10 @@ static void test_vgic(uint32_t nr_irqs, bool level_sensitive, bool eoi_split)
- 
- 	gic_fd = vgic_v3_setup(vm, 1, nr_irqs,
- 			GICD_BASE_GPA, GICR_BASE_GPA);
-+	if (gic_fd < 0) {
-+		print_skip("Failed to create vgic-v3, skipping");
-+		exit(KSFT_SKIP);
-+	}
- 
- 	vm_install_exception_handler(vm, VECTOR_IRQ_CURRENT,
- 		guest_irq_handlers[args.eoi_split][args.level_sensitive]);
-diff --git a/tools/testing/selftests/kvm/lib/aarch64/vgic.c b/tools/testing/selftests/kvm/lib/aarch64/vgic.c
-index b3a0fca0d780..f5cd0c536d85 100644
---- a/tools/testing/selftests/kvm/lib/aarch64/vgic.c
-+++ b/tools/testing/selftests/kvm/lib/aarch64/vgic.c
-@@ -52,7 +52,9 @@ int vgic_v3_setup(struct kvm_vm *vm, unsigned int nr_vcpus, uint32_t nr_irqs,
- 			nr_vcpus, nr_vcpus_created);
- 
- 	/* Distributor setup */
--	gic_fd = kvm_create_device(vm, KVM_DEV_TYPE_ARM_VGIC_V3, false);
-+	if (_kvm_create_device(vm, KVM_DEV_TYPE_ARM_VGIC_V3,
-+			       false, &gic_fd) != 0)
-+		return -1;
- 
- 	kvm_device_access(gic_fd, KVM_DEV_ARM_VGIC_GRP_NR_IRQS,
- 			0, &nr_irqs, true);
+Mark Brown (40):
+  arm64: Define CPACR_EL1_FPEN similarly to other floating point
+    controls
+  arm64: Always use individual bits in CPACR floating point enables
+  arm64: cpufeature: Always specify and use a field width for
+    capabilities
+  kselftest/arm64: Remove local ARRAY_SIZE() definitions
+  arm64/sme: Provide ABI documentation for SME
+  arm64/sme: System register and exception syndrome definitions
+  arm64/sme: Manually encode SME instructions
+  arm64/sme: Early CPU setup for SME
+  arm64/sme: Basic enumeration support
+  arm64/sme: Identify supported SME vector lengths at boot
+  arm64/sme: Implement sysctl to set the default vector length
+  arm64/sme: Implement vector length configuration prctl()s
+  arm64/sme: Implement support for TPIDR2
+  arm64/sme: Implement SVCR context switching
+  arm64/sme: Implement streaming SVE context switching
+  arm64/sme: Implement ZA context switching
+  arm64/sme: Implement traps and syscall handling for SME
+  arm64/sme: Disable ZA and streaming mode when handling signals
+  arm64/sme: Implement streaming SVE signal handling
+  arm64/sme: Implement ZA signal handling
+  arm64/sme: Implement ptrace support for streaming mode SVE registers
+  arm64/sme: Add ptrace support for ZA
+  arm64/sme: Disable streaming mode and ZA when flushing CPU state
+  arm64/sme: Save and restore streaming mode over EFI runtime calls
+  KVM: arm64: Hide SME system registers from guests
+  KVM: arm64: Trap SME usage in guest
+  KVM: arm64: Handle SME host state when running guests
+  arm64/sme: Provide Kconfig for SME
+  kselftest/arm64: sme: Add streaming SME support to vlset
+  kselftest/arm64: Add tests for TPIDR2
+  kselftest/arm64: Extend vector configuration API tests to cover SME
+  kselftest/arm64: sme: Provide streaming mode SVE stress test
+  kselftest/arm64: signal: Allow tests to be incompatible with features
+  kselftest/arm64: signal: Handle ZA signal context in core code
+  kselftest/arm64: Add stress test for SME ZA context switching
+  kselftest/arm64: signal: Add SME signal handling tests
+  kselftest/arm64: Add streaming SVE to SVE ptrace tests
+  kselftest/arm64: Add coverage for the ZA ptrace interface
+  kselftest/arm64: Add SME support to syscall ABI test
+  squqsh traps
+
+ Documentation/arm64/elf_hwcaps.rst            |  33 +
+ Documentation/arm64/index.rst                 |   1 +
+ Documentation/arm64/sme.rst                   | 432 +++++++++++++
+ Documentation/arm64/sve.rst                   |  70 ++-
+ arch/arm64/Kconfig                            |  11 +
+ arch/arm64/include/asm/cpu.h                  |   4 +
+ arch/arm64/include/asm/cpufeature.h           |  25 +
+ arch/arm64/include/asm/el2_setup.h            |  64 +-
+ arch/arm64/include/asm/esr.h                  |  13 +-
+ arch/arm64/include/asm/exception.h            |   1 +
+ arch/arm64/include/asm/fpsimd.h               | 110 +++-
+ arch/arm64/include/asm/fpsimdmacros.h         |  86 +++
+ arch/arm64/include/asm/hwcap.h                |   8 +
+ arch/arm64/include/asm/kvm_arm.h              |   5 +-
+ arch/arm64/include/asm/kvm_host.h             |   4 +
+ arch/arm64/include/asm/processor.h            |  18 +-
+ arch/arm64/include/asm/sysreg.h               |  67 +-
+ arch/arm64/include/asm/thread_info.h          |   2 +
+ arch/arm64/include/uapi/asm/hwcap.h           |   8 +
+ arch/arm64/include/uapi/asm/ptrace.h          |  69 ++-
+ arch/arm64/include/uapi/asm/sigcontext.h      |  55 +-
+ arch/arm64/kernel/cpufeature.c                | 273 ++++++--
+ arch/arm64/kernel/cpuinfo.c                   |  13 +
+ arch/arm64/kernel/entry-common.c              |  11 +
+ arch/arm64/kernel/entry-fpsimd.S              |  36 ++
+ arch/arm64/kernel/fpsimd.c                    | 585 ++++++++++++++++--
+ arch/arm64/kernel/process.c                   |  28 +-
+ arch/arm64/kernel/ptrace.c                    | 356 +++++++++--
+ arch/arm64/kernel/signal.c                    | 194 +++++-
+ arch/arm64/kernel/syscall.c                   |  34 +-
+ arch/arm64/kernel/traps.c                     |   1 +
+ arch/arm64/kvm/fpsimd.c                       |  43 +-
+ arch/arm64/kvm/hyp/include/hyp/switch.h       |   4 +-
+ arch/arm64/kvm/hyp/nvhe/switch.c              |  30 +
+ arch/arm64/kvm/hyp/vhe/switch.c               |  15 +-
+ arch/arm64/kvm/sys_regs.c                     |   9 +-
+ arch/arm64/tools/cpucaps                      |   2 +
+ include/uapi/linux/elf.h                      |   2 +
+ include/uapi/linux/prctl.h                    |   9 +
+ kernel/sys.c                                  |  12 +
+ tools/testing/selftests/arm64/abi/.gitignore  |   1 +
+ tools/testing/selftests/arm64/abi/Makefile    |   9 +-
+ .../selftests/arm64/abi/syscall-abi-asm.S     |  69 ++-
+ .../testing/selftests/arm64/abi/syscall-abi.c | 205 +++++-
+ .../testing/selftests/arm64/abi/syscall-abi.h |  15 +
+ tools/testing/selftests/arm64/abi/tpidr2.c    | 298 +++++++++
+ tools/testing/selftests/arm64/fp/.gitignore   |   4 +
+ tools/testing/selftests/arm64/fp/Makefile     |  12 +-
+ tools/testing/selftests/arm64/fp/rdvl-sme.c   |  14 +
+ tools/testing/selftests/arm64/fp/rdvl.S       |   8 +
+ tools/testing/selftests/arm64/fp/rdvl.h       |   1 +
+ tools/testing/selftests/arm64/fp/ssve-stress  |  59 ++
+ tools/testing/selftests/arm64/fp/sve-ptrace.c |  13 +-
+ tools/testing/selftests/arm64/fp/sve-test.S   |  30 +
+ tools/testing/selftests/arm64/fp/vec-syscfg.c |  10 +
+ tools/testing/selftests/arm64/fp/vlset.c      |  10 +-
+ tools/testing/selftests/arm64/fp/za-ptrace.c  | 354 +++++++++++
+ tools/testing/selftests/arm64/fp/za-stress    |  59 ++
+ tools/testing/selftests/arm64/fp/za-test.S    | 426 +++++++++++++
+ .../testing/selftests/arm64/signal/.gitignore |   2 +
+ .../selftests/arm64/signal/test_signals.h     |   5 +
+ .../arm64/signal/test_signals_utils.c         |  40 +-
+ .../arm64/signal/test_signals_utils.h         |   2 +
+ .../testcases/fake_sigreturn_sme_change_vl.c  |  92 +++
+ .../arm64/signal/testcases/sme_trap_no_sm.c   |  38 ++
+ .../signal/testcases/sme_trap_non_streaming.c |  45 ++
+ .../arm64/signal/testcases/sme_trap_za.c      |  36 ++
+ .../selftests/arm64/signal/testcases/sme_vl.c |  68 ++
+ .../arm64/signal/testcases/ssve_regs.c        | 129 ++++
+ .../arm64/signal/testcases/testcases.c        |  36 ++
+ .../arm64/signal/testcases/testcases.h        |   3 +-
+ 71 files changed, 4585 insertions(+), 251 deletions(-)
+ create mode 100644 Documentation/arm64/sme.rst
+ create mode 100644 tools/testing/selftests/arm64/abi/syscall-abi.h
+ create mode 100644 tools/testing/selftests/arm64/abi/tpidr2.c
+ create mode 100644 tools/testing/selftests/arm64/fp/rdvl-sme.c
+ create mode 100644 tools/testing/selftests/arm64/fp/ssve-stress
+ create mode 100644 tools/testing/selftests/arm64/fp/za-ptrace.c
+ create mode 100644 tools/testing/selftests/arm64/fp/za-stress
+ create mode 100644 tools/testing/selftests/arm64/fp/za-test.S
+ create mode 100644 tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c
+ create mode 100644 tools/testing/selftests/arm64/signal/testcases/sme_trap_no_sm.c
+ create mode 100644 tools/testing/selftests/arm64/signal/testcases/sme_trap_non_streaming.c
+ create mode 100644 tools/testing/selftests/arm64/signal/testcases/sme_trap_za.c
+ create mode 100644 tools/testing/selftests/arm64/signal/testcases/sme_vl.c
+ create mode 100644 tools/testing/selftests/arm64/signal/testcases/ssve_regs.c
+
+
+base-commit: e783362eb54cd99b2cac8b3a9aeac942e6f6ac07
 -- 
 2.30.2
 
