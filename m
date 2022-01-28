@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8807C49F9FE
-	for <lists+kvmarm@lfdr.de>; Fri, 28 Jan 2022 13:50:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A5DAB49F9D6
+	for <lists+kvmarm@lfdr.de>; Fri, 28 Jan 2022 13:49:55 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2F2954B1C6;
-	Fri, 28 Jan 2022 07:50:49 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0510D4B119;
+	Fri, 28 Jan 2022 07:49:55 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -18,50 +18,50 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yT+Iuehgp+3U; Fri, 28 Jan 2022 07:50:49 -0500 (EST)
+	with ESMTP id 0eQW4ZPnd+ic; Fri, 28 Jan 2022 07:49:54 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 642D34B1F3;
-	Fri, 28 Jan 2022 07:50:47 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6415F4B13D;
+	Fri, 28 Jan 2022 07:49:53 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 32AED4B1E1
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Jan 2022 07:50:46 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7DEC14B0E6
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Jan 2022 07:49:51 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 6hZ4n3a7G9Fg for <kvmarm@lists.cs.columbia.edu>;
- Fri, 28 Jan 2022 07:50:45 -0500 (EST)
+ with ESMTP id S9zJt7Ly-Sbp for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 28 Jan 2022 07:49:49 -0500 (EST)
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id DEE8E4B11E
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Jan 2022 07:50:44 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A9C754045D
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Jan 2022 07:49:49 -0500 (EST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 6452761C55;
- Fri, 28 Jan 2022 12:50:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEEE6C340E0;
- Fri, 28 Jan 2022 12:50:43 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 835E061B47;
+ Fri, 28 Jan 2022 12:49:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9728C340E0;
+ Fri, 28 Jan 2022 12:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1643374243;
- bh=DODeF9o8Sl2vkui25obN2Ct4mXtkcYS1+9H7aC1HxUc=;
+ s=k20201202; t=1643374187;
+ bh=hhTJdWtO25zjba35X6o9zqmc3uDEJNt1xKYK/S6Y2o0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=fCTWqJCfwI202ExJ0XgYw6eqmW9biV0iPa4FPbQId4aKlzLcLWEvoOBbpuH1Brn+r
- t+7hyp4BUSNS7dQkITGMXmjArsRl5Mw7espg7ORu8hPdqqwPObzv0mGJcv6jMBA+j/
- t2s0dvo5qAWWyhO+j3NmMYeQeaboZGMqyzL4CJu1Avsx1j2otxglzu4R3DhXjMKg3B
- 4JQxXQyaB784u/3rGJiIMC8/EAFhdKjBC9fxCfdEyNEdNR/l8Q3rDam+sY95Er5uBN
- 3nM6lWU7U42FvYwgGDq/xIUnV2f+jjOrtTzfzHW6PNwvFipInmlv8ik5XP2aFhc165
- MvQ3CThhCnDgw==
+ b=dHCTtSEmVBjWxJWusOmcvoi/3BYmGITiMcWUT5SbUpL/xDwSOAg7au6q7rYEbbqxh
+ Fe/DodBsopDhnZepcP5BATiXJ7mS+Z3QgMPkByhwba3c8UQaEDYZzwOjbN7qUHS3x4
+ b9Q6XFFWpubnTGPaNnXXO+6cPIKRQcP8JAhZrdt3No5kVHufh4Ov9cpzi7edYfzzbX
+ cPVp67dwfFFO7ZORT5r1kPLFc6KCv4DViwX/fvsMRO2Lln1muLrP3znZu5LODL3E5h
+ rpTYsvChbUovcdlHUwqzfLb3cw+8k+r7KvX0sSbJecR1dlY+QqosnGtzIBtf6arxLl
+ 80MyxDbayXYjA==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1nDQEY-003njR-Uf; Fri, 28 Jan 2022 12:20:07 +0000
+ id 1nDQEZ-003njR-Ay; Fri, 28 Jan 2022 12:20:07 +0000
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH v6 56/64] KVM: arm64: nv: Add include containing the VNCR_EL2
- offsets
-Date: Fri, 28 Jan 2022 12:19:04 +0000
-Message-Id: <20220128121912.509006-57-maz@kernel.org>
+Subject: [PATCH v6 57/64] KVM: arm64: nv: Map VNCR-capable registers to a
+ separate page
+Date: Fri, 28 Jan 2022 12:19:05 +0000
+Message-Id: <20220128121912.509006-58-maz@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20220128121912.509006-1-maz@kernel.org>
 References: <20220128121912.509006-1-maz@kernel.org>
@@ -98,98 +98,203 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-VNCR_EL2 points to a page containing a number of system registers
-accessed by a guest hypervisor when ARMv8.4-NV is enabled.
+With ARMv8.4-NV, registers that can be directly accessed in memory
+by the guest have to live at architected offsets in a special page.
 
-Let's document the offsets in that page, as we are going to use
-this layout.
+Let's annotate the sysreg enum to reflect the offset at which they
+are in this page, whith a little twist:
+
+If running on HW that doesn't have the ARMv8.4-NV feature, or even
+a VM that doesn't use NV, we store all the system registers in the
+usual sys_regs array. The only difference with the pre-8.4
+situation is that VNCR-capable registers are at a "similar" offset
+as in the VNCR page (we can compute the actual offset at compile
+time), and that the sys_regs array is both bigger and sparse.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/vncr_mapping.h | 74 +++++++++++++++++++++++++++
- 1 file changed, 74 insertions(+)
- create mode 100644 arch/arm64/include/asm/vncr_mapping.h
+ arch/arm64/include/asm/kvm_host.h | 99 ++++++++++++++++++++-----------
+ 1 file changed, 64 insertions(+), 35 deletions(-)
 
-diff --git a/arch/arm64/include/asm/vncr_mapping.h b/arch/arm64/include/asm/vncr_mapping.h
-new file mode 100644
-index 000000000000..c0a2acd5045c
---- /dev/null
-+++ b/arch/arm64/include/asm/vncr_mapping.h
-@@ -0,0 +1,74 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
+diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+index 0ea8cf0eeca7..3f6ddccae310 100644
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -26,6 +26,7 @@
+ #include <asm/fpsimd.h>
+ #include <asm/kvm.h>
+ #include <asm/kvm_asm.h>
++#include <asm/vncr_mapping.h>
+ 
+ #define __KVM_HAVE_ARCH_INTC_INITIALIZED
+ 
+@@ -180,31 +181,32 @@ struct kvm_vcpu_fault_info {
+ 	u64 disr_el1;		/* Deferred [SError] Status Register */
+ };
+ 
 +/*
-+ * System register offsets in the VNCR page
-+ * All offsets are *byte* displacements!
++ * VNCR() just places the VNCR_capable registers in the enum after
++ * __VNCR_START__, and the value (after correction) to be an 8-byte offset
++ * from the VNCR base. As we don't require the enum to be otherwise ordered,
++ * we need the terrible hack below to ensure that we correctly size the
++ * sys_regs array, no matter what.
++ *
++ * The __MAX__ macro has been lifted from Sean Eron Anderson's wonderful
++ * treasure trove of bit hacks:
++ * https://graphics.stanford.edu/~seander/bithacks.html#IntegerMinOrMax
 + */
++#define __MAX__(x,y)	((x) ^ (((x) ^ (y)) & -((x) < (y))))
++#define VNCR(r)						\
++	__before_##r,					\
++	r = __VNCR_START__ + ((VNCR_ ## r) / 8),	\
++	__after_##r = __MAX__(__before_##r - 1, r)
 +
-+#ifndef __ARM64_VNCR_MAPPING_H__
-+#define __ARM64_VNCR_MAPPING_H__
+ enum vcpu_sysreg {
+ 	__INVALID_SYSREG__,   /* 0 is reserved as an invalid value */
+ 	MPIDR_EL1,	/* MultiProcessor Affinity Register */
+ 	CSSELR_EL1,	/* Cache Size Selection Register */
+-	SCTLR_EL1,	/* System Control Register */
+-	ACTLR_EL1,	/* Auxiliary Control Register */
+-	CPACR_EL1,	/* Coprocessor Access Control */
+-	ZCR_EL1,	/* SVE Control */
+-	TTBR0_EL1,	/* Translation Table Base Register 0 */
+-	TTBR1_EL1,	/* Translation Table Base Register 1 */
+-	TCR_EL1,	/* Translation Control Register */
+-	ESR_EL1,	/* Exception Syndrome Register */
+-	AFSR0_EL1,	/* Auxiliary Fault Status Register 0 */
+-	AFSR1_EL1,	/* Auxiliary Fault Status Register 1 */
+-	FAR_EL1,	/* Fault Address Register */
+-	MAIR_EL1,	/* Memory Attribute Indirection Register */
+-	VBAR_EL1,	/* Vector Base Address Register */
+-	CONTEXTIDR_EL1,	/* Context ID Register */
+ 	TPIDR_EL0,	/* Thread ID, User R/W */
+ 	TPIDRRO_EL0,	/* Thread ID, User R/O */
+ 	TPIDR_EL1,	/* Thread ID, Privileged */
+-	AMAIR_EL1,	/* Aux Memory Attribute Indirection Register */
+ 	CNTKCTL_EL1,	/* Timer Control Register (EL1) */
+ 	PAR_EL1,	/* Physical Address Register */
+-	MDSCR_EL1,	/* Monitor Debug System Control Register */
+ 	MDCCINT_EL1,	/* Monitor Debug Comms Channel Interrupt Enable Reg */
+ 	DISR_EL1,	/* Deferred Interrupt Status Register */
+ 
+@@ -234,20 +236,9 @@ enum vcpu_sysreg {
+ 	APGAKEYLO_EL1,
+ 	APGAKEYHI_EL1,
+ 
+-	ELR_EL1,
+-	SP_EL1,
+-	SPSR_EL1,
+-
+-	CNTVOFF_EL2,
+-	CNTV_CVAL_EL0,
+-	CNTV_CTL_EL0,
+-	CNTP_CVAL_EL0,
+-	CNTP_CTL_EL0,
+-
+ 	/* Memory Tagging Extension registers */
+ 	RGSR_EL1,	/* Random Allocation Tag Seed Register */
+ 	GCR_EL1,	/* Tag Control Register */
+-	TFSR_EL1,	/* Tag Fault Status Register (EL1) */
+ 	TFSRE0_EL1,	/* Tag Fault Status Register (EL0) */
+ 
+ 	/* 32bit specific registers. */
+@@ -257,20 +248,14 @@ enum vcpu_sysreg {
+ 	DBGVCR32_EL2,	/* Debug Vector Catch Register */
+ 
+ 	/* EL2 registers */
+-	VPIDR_EL2,	/* Virtualization Processor ID Register */
+-	VMPIDR_EL2,	/* Virtualization Multiprocessor ID Register */
+ 	SCTLR_EL2,	/* System Control Register (EL2) */
+ 	ACTLR_EL2,	/* Auxiliary Control Register (EL2) */
+-	HCR_EL2,	/* Hypervisor Configuration Register */
+ 	MDCR_EL2,	/* Monitor Debug Configuration Register (EL2) */
+ 	CPTR_EL2,	/* Architectural Feature Trap Register (EL2) */
+-	HSTR_EL2,	/* Hypervisor System Trap Register */
+ 	HACR_EL2,	/* Hypervisor Auxiliary Control Register */
+ 	TTBR0_EL2,	/* Translation Table Base Register 0 (EL2) */
+ 	TTBR1_EL2,	/* Translation Table Base Register 1 (EL2) */
+ 	TCR_EL2,	/* Translation Control Register (EL2) */
+-	VTTBR_EL2,	/* Virtualization Translation Table Base Register */
+-	VTCR_EL2,	/* Virtualization Translation Control Register */
+ 	SPSR_EL2,	/* EL2 saved program status register */
+ 	ELR_EL2,	/* EL2 exception link register */
+ 	AFSR0_EL2,	/* Auxiliary Fault Status Register 0 (EL2) */
+@@ -283,7 +268,6 @@ enum vcpu_sysreg {
+ 	VBAR_EL2,	/* Vector Base Address Register (EL2) */
+ 	RVBAR_EL2,	/* Reset Vector Base Address Register */
+ 	CONTEXTIDR_EL2,	/* Context ID Register (EL2) */
+-	TPIDR_EL2,	/* EL2 Software Thread ID Register */
+ 	CNTHCTL_EL2,	/* Counter-timer Hypervisor Control register */
+ 	SP_EL2,		/* EL2 Stack Pointer */
+ 	CNTHP_CTL_EL2,
+@@ -291,6 +275,42 @@ enum vcpu_sysreg {
+ 	CNTHV_CTL_EL2,
+ 	CNTHV_CVAL_EL2,
+ 
++	__VNCR_START__,	/* Any VNCR-capable reg goes after this point */
 +
-+#define VNCR_VTTBR_EL2          0x020
-+#define VNCR_VTCR_EL2           0x040
-+#define VNCR_VMPIDR_EL2         0x050
-+#define VNCR_CNTVOFF_EL2        0x060
-+#define VNCR_HCR_EL2            0x078
-+#define VNCR_HSTR_EL2           0x080
-+#define VNCR_VPIDR_EL2          0x088
-+#define VNCR_TPIDR_EL2          0x090
-+#define VNCR_VNCR_EL2           0x0B0
-+#define VNCR_CPACR_EL1          0x100
-+#define VNCR_CONTEXTIDR_EL1     0x108
-+#define VNCR_SCTLR_EL1          0x110
-+#define VNCR_ACTLR_EL1          0x118
-+#define VNCR_TCR_EL1            0x120
-+#define VNCR_AFSR0_EL1          0x128
-+#define VNCR_AFSR1_EL1          0x130
-+#define VNCR_ESR_EL1            0x138
-+#define VNCR_MAIR_EL1           0x140
-+#define VNCR_AMAIR_EL1          0x148
-+#define VNCR_MDSCR_EL1          0x158
-+#define VNCR_SPSR_EL1           0x160
-+#define VNCR_CNTV_CVAL_EL0      0x168
-+#define VNCR_CNTV_CTL_EL0       0x170
-+#define VNCR_CNTP_CVAL_EL0      0x178
-+#define VNCR_CNTP_CTL_EL0       0x180
-+#define VNCR_SCXTNUM_EL1        0x188
-+#define VNCR_TFSR_EL1		0x190
-+#define VNCR_ZCR_EL1            0x1E0
-+#define VNCR_TTBR0_EL1          0x200
-+#define VNCR_TTBR1_EL1          0x210
-+#define VNCR_FAR_EL1            0x220
-+#define VNCR_ELR_EL1            0x230
-+#define VNCR_SP_EL1             0x240
-+#define VNCR_VBAR_EL1           0x250
-+#define VNCR_ICH_LR0_EL2        0x400
-+//      VNCR_ICH_LRN_EL2(n)     VNCR_ICH_LR0_EL2+8*((n) & 7)
-+#define VNCR_ICH_AP0R0_EL2      0x480
-+//      VNCR_ICH_AP0RN_EL2(n)   VNCR_ICH_AP0R0_EL2+8*((n) & 3)
-+#define VNCR_ICH_AP1R0_EL2      0x4A0
-+//      VNCR_ICH_AP1RN_EL2(n)   VNCR_ICH_AP1R0_EL2+8*((n) & 3)
-+#define VNCR_ICH_HCR_EL2        0x4C0
-+#define VNCR_ICH_VMCR_EL2       0x4C8
-+#define VNCR_VDISR_EL2          0x500
-+#define VNCR_PMBLIMITR_EL1      0x800
-+#define VNCR_PMBPTR_EL1         0x810
-+#define VNCR_PMBSR_EL1          0x820
-+#define VNCR_PMSCR_EL1          0x828
-+#define VNCR_PMSEVFR_EL1        0x830
-+#define VNCR_PMSICR_EL1         0x838
-+#define VNCR_PMSIRR_EL1         0x840
-+#define VNCR_PMSLATFR_EL1       0x848
-+#define VNCR_TRFCR_EL1          0x880
-+#define VNCR_MPAM1_EL1          0x900
-+#define VNCR_MPAMHCR_EL2        0x930
-+#define VNCR_MPAMVPMV_EL2       0x938
-+#define VNCR_MPAMVPM0_EL2       0x940
-+#define VNCR_MPAMVPM1_EL2       0x948
-+#define VNCR_MPAMVPM2_EL2       0x950
-+#define VNCR_MPAMVPM3_EL2       0x958
-+#define VNCR_MPAMVPM4_EL2       0x960
-+#define VNCR_MPAMVPM5_EL2       0x968
-+#define VNCR_MPAMVPM6_EL2       0x970
-+#define VNCR_MPAMVPM7_EL2       0x978
++	VNCR(SCTLR_EL1),/* System Control Register */
++	VNCR(ACTLR_EL1),/* Auxiliary Control Register */
++	VNCR(CPACR_EL1),/* Coprocessor Access Control */
++	VNCR(ZCR_EL1),	/* SVE Control */
++	VNCR(TTBR0_EL1),/* Translation Table Base Register 0 */
++	VNCR(TTBR1_EL1),/* Translation Table Base Register 1 */
++	VNCR(TCR_EL1),	/* Translation Control Register */
++	VNCR(ESR_EL1),	/* Exception Syndrome Register */
++	VNCR(AFSR0_EL1),/* Auxiliary Fault Status Register 0 */
++	VNCR(AFSR1_EL1),/* Auxiliary Fault Status Register 1 */
++	VNCR(FAR_EL1),	/* Fault Address Register */
++	VNCR(MAIR_EL1),	/* Memory Attribute Indirection Register */
++	VNCR(VBAR_EL1),	/* Vector Base Address Register */
++	VNCR(CONTEXTIDR_EL1),	/* Context ID Register */
++	VNCR(AMAIR_EL1),/* Aux Memory Attribute Indirection Register */
++	VNCR(MDSCR_EL1),/* Monitor Debug System Control Register */
++	VNCR(ELR_EL1),
++	VNCR(SP_EL1),
++	VNCR(SPSR_EL1),
++	VNCR(TFSR_EL1),	/* Tag Fault Status Register (EL1) */
++	VNCR(VPIDR_EL2),/* Virtualization Processor ID Register */
++	VNCR(VMPIDR_EL2),/* Virtualization Multiprocessor ID Register */
++	VNCR(HCR_EL2),	/* Hypervisor Configuration Register */
++	VNCR(HSTR_EL2),	/* Hypervisor System Trap Register */
++	VNCR(VTTBR_EL2),/* Virtualization Translation Table Base Register */
++	VNCR(VTCR_EL2),	/* Virtualization Translation Control Register */
++	VNCR(TPIDR_EL2),/* EL2 Software Thread ID Register */
 +
-+#endif /* __ARM64_VNCR_MAPPING_H__ */
++	VNCR(CNTVOFF_EL2),
++	VNCR(CNTV_CVAL_EL0),
++	VNCR(CNTV_CTL_EL0),
++	VNCR(CNTP_CVAL_EL0),
++	VNCR(CNTP_CTL_EL0),
++
+ 	NR_SYS_REGS	/* Nothing after this line! */
+ };
+ 
+@@ -307,6 +327,9 @@ struct kvm_cpu_context {
+ 	u64 sys_regs[NR_SYS_REGS];
+ 
+ 	struct kvm_vcpu *__hyp_running_vcpu;
++
++	/* This pointer has to be 4kB aligned. */
++	u64 *vncr_array;
+ };
+ 
+ struct kvm_pmu_events {
+@@ -534,7 +557,13 @@ struct kvm_vcpu_arch {
+  * for system registers that are never context switched, but only
+  * emulated.
+  */
+-#define __ctxt_sys_reg(c,r)	(&(c)->sys_regs[(r)])
++static inline u64 *__ctxt_sys_reg(const struct kvm_cpu_context *ctxt, int r)
++{
++	if (unlikely(r >= __VNCR_START__ && ctxt->vncr_array))
++		return &ctxt->vncr_array[r - __VNCR_START__];
++
++	return (u64 *)&ctxt->sys_regs[r];
++}
+ 
+ #define ctxt_sys_reg(c,r)	(*__ctxt_sys_reg(c,r))
+ 
 -- 
 2.30.2
 
