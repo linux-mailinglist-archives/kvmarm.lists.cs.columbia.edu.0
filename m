@@ -2,76 +2,83 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F34C49F6E8
-	for <lists+kvmarm@lfdr.de>; Fri, 28 Jan 2022 11:12:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D50849F922
+	for <lists+kvmarm@lfdr.de>; Fri, 28 Jan 2022 13:19:43 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 55D2F4B0FB;
-	Fri, 28 Jan 2022 05:12:57 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B37E74B0C2;
+	Fri, 28 Jan 2022 07:19:42 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
 X-Spam-Level: 
 X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+	URIBL_BLOCKED=0.001] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Ei6eulMhJD59; Fri, 28 Jan 2022 05:12:57 -0500 (EST)
+	with ESMTP id HdZFdXbthKRT; Fri, 28 Jan 2022 07:19:41 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 06D774A1D9;
-	Fri, 28 Jan 2022 05:12:56 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6BA1B4B11B;
+	Fri, 28 Jan 2022 07:19:37 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6A8DA49F24
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Jan 2022 05:12:54 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CEB6E49F54
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Jan 2022 07:19:31 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id FIwEDcNy5Nmf for <kvmarm@lists.cs.columbia.edu>;
- Fri, 28 Jan 2022 05:12:53 -0500 (EST)
+ with ESMTP id lz5NU-zKq0Ml for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 28 Jan 2022 07:19:29 -0500 (EST)
 Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1FC9749F13
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Jan 2022 05:12:53 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D9E6549F0E
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Jan 2022 07:19:28 -0500 (EST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 68DA4B82510;
- Fri, 28 Jan 2022 10:12:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C7AC340E0;
- Fri, 28 Jan 2022 10:12:50 +0000 (UTC)
+ by ams.source.kernel.org (Postfix) with ESMTPS id 427ADB82568;
+ Fri, 28 Jan 2022 12:19:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6349C340E6;
+ Fri, 28 Jan 2022 12:19:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1643364770;
- bh=T5i4/kQaBQydnAWtJs7opQEEBq6cdMWHwVtmuP6KstY=;
+ s=k20201202; t=1643372366;
+ bh=hsG3ROQDWq32IhFhvaa0G4T355RjVp+ePhiZfPfoVUk=;
  h=From:To:Cc:Subject:Date:From;
- b=kM7yLy8TwVxIh6xqn8sZrqpFr8k0o/hldx+H3eUQW0DWgiEjcdgibkfgor1x/SvmS
- ol0kYJ90x3TtZeOQ6YuyfIwN1ld1HFPzIpIDPh+NM5LwUL523mNJUR3f8eYKXt7RWA
- sjjOQs6ErhCyaB98dR8urr9H1A91sx1ZKJ6uh2hAGJuFXa3JOaHICRQ2C/7mvdbyLk
- ujcW7aGNfdizlliYiGW+YYWtbzWL7WNFkT5XBAO6BhLcWqQ/jcE/lwsVXUG8pSXF66
- XUh6KXN88kgZhk6gyT+Numj5Ez7BDgBR/kM7s2KVCJcYJiblg6pz42iDT5eqPxrkAx
- YAoG9mX5NxD8Q==
+ b=oJusbHPx++gfx9M9z0bDuy92tZsjSEfsnefJvRDGFR3dk7jHsPiWYvv51Q6/MErj8
+ 8C2pIUgKUEvg4xQDzcsJfZjzskNH8Jm/fA+iGtAui9SNJTI3Pn0TI75HgbwwiYkcKL
+ ZGld2oIYcsDq9alvbq9200ArvqD/Iyx4rPqn3lPQ3WLSjEN9ytRNTswOz/DS/2HX8s
+ AaCmx38qxuRPH4RSRj0MfHynlfJSlz9FTqmfLFDEKu9ZyQiboVlWNO14v9OJ1GpqG+
+ dODf/O9Sd+VzLXjsKA7RavjJBzPFYeXfgyZQfudww8Z0a9+ACUow/MqHvJcXZYDwBf
+ zT+GpNWhjVpcQ==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1nDOFM-003m9Q-6U; Fri, 28 Jan 2022 10:12:48 +0000
+ id 1nDQDr-003njR-M5; Fri, 28 Jan 2022 12:19:23 +0000
 From: Marc Zyngier <maz@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [GIT PULL] KVM/arm64 fixes for 5.17, take #1
-Date: Fri, 28 Jan 2022 10:12:45 +0000
-Message-Id: <20220128101245.506715-1-maz@kernel.org>
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
+Subject: [PATCH v6 00/64] KVM: arm64: ARMv8.3/8.4 Nested Virtualization support
+Date: Fri, 28 Jan 2022 12:18:08 +0000
+Message-Id: <20220128121912.509006-1-maz@kernel.org>
 X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: pbonzini@redhat.com, ardb@kernel.org, tabba@google.com,
- qperret@google.com, james.morse@arm.com, suzuki.poulose@arm.com,
- alexandru.elisei@arm.com, linux-arm-kernel@lists.infradead.org,
- kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu, kernel-team@android.com
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, andre.przywara@arm.com,
+ christoffer.dall@arm.com, jintack@cs.columbia.edu, haibo.xu@linaro.org,
+ gankulkarni@os.amperecomputing.com, chase.conklin@arm.com,
+ linux@armlinux.org.uk, james.morse@arm.com, suzuki.poulose@arm.com,
+ alexandru.elisei@arm.com, karl.heubaum@oracle.com, mihai.carabas@oracle.com,
+ miguel.luis@oracle.com, kernel-team@android.com
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
-Cc: kvm@vger.kernel.org, kernel-team@android.com, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+Cc: kernel-team@android.com, Andre Przywara <andre.przywara@arm.com>,
+ Christoffer Dall <christoffer.dall@arm.com>,
+ Chase Conklin <chase.conklin@arm.com>,
+ "Russell King \(Oracle\)" <linux@armlinux.org.uk>, mihai.carabas@oracle.com,
+ Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -88,51 +95,190 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Paolo,
+Here the first drop of the KVM/arm64 NV support code for 2022. Nothing
+to worry about, it certainly isn't going to be the last!
 
-Here's a small set of fixes for 5.17. Nothing stands out, just the
-usual set of bug fixes. There will be another series next week, but
-these patches need a bit of soak time.
+A number of changes since [1]:
 
-Please pull,
+- The exposure of the EL2 sysregs to userspace is now gated by NV
+  being enabled, as you'd expect. Which means we shouldn't break live
+  migration anymore (yay!).
+
+- We now correctly detect and handle an Illegal Exception Return from
+  vEL2. Don't try this at home, kids!
+
+- Non-nested exception injection when executing at EL0 has been fixed.
+
+- We forbid NV+SVE for now. This is a change in ABI, and I hope to
+  remove this requirement at some point. I've pushed out a kvmtool
+  change that enforces this [2], and QEMU will need similar surgery
+  for now.
+
+- nested_virt_in_use() is now renamed to vcpu_has_nv() (resp
+  vcpu_has_nv2() for the v8.4 support).
+
+- A bunch of small nits being tidied up, thanks to our eagle eyed
+  reviewers.
+
+Many thanks to Alexandru, Chase, Ganapatrao and Russell for spending a
+lot of time reviewing this and actively spotting issues. There is a
+pending issue that Ganapatrao mentioned when running L0 with 4kB and
+L1 with 64kB, resulting in no forward progress. I haven't investigated
+this yet, but I strongly suspect that something is amiss in the S2 PTW
+at the point where we combine the L2 IPA with the L1 IPA.
+
+As usual, blame me for any bug, and nobody else. It has been tested on
+my usual zoo, and nothing caught fire. Which means nothing, of course.
+Obviously, it isn't feature complete, and it is quite easy to write a
+guest that will not behave as intended. The current goal is to make
+sure that non-NV KVM is unaffected by the NV stuff.
+
+It is massively painful to run on the FVP, but if you have a Neoverse
+V1 or N2 system (or anything else with ARMv8.4-NV) that is collecting
+dust, I have the right stuff to keep it busy.
 
 	M.
 
-The following changes since commit 1c53a1ae36120997a82f936d044c71075852e521:
+[1] https://lore.kernel.org/r/20211129200150.351436-1-maz@kernel.org
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/maz/kvmtool.git/log/?h=arm64/nv-5.16
 
-  Merge branch kvm-arm64/misc-5.17 into kvmarm-master/next (2022-01-04 17:16:15 +0000)
+Andre Przywara (1):
+  KVM: arm64: nv: vgic: Allow userland to set VGIC maintenance IRQ
 
-are available in the Git repository at:
+Christoffer Dall (15):
+  KVM: arm64: nv: Introduce nested virtualization VCPU feature
+  KVM: arm64: nv: Reset VCPU to EL2 registers if VCPU nested virt is set
+  KVM: arm64: nv: Allow userspace to set PSR_MODE_EL2x
+  KVM: arm64: nv: Add nested virt VCPU primitives for vEL2 VCPU state
+  KVM: arm64: nv: Reset VMPIDR_EL2 and VPIDR_EL2 to sane values
+  KVM: arm64: nv: Handle trapped ERET from virtual EL2
+  KVM: arm64: nv: Emulate PSTATE.M for a guest hypervisor
+  KVM: arm64: nv: Trap EL1 VM register accesses in virtual EL2
+  KVM: arm64: nv: Only toggle cache for virtual EL2 when SCTLR_EL2
+    changes
+  KVM: arm64: nv: Implement nested Stage-2 page table walk logic
+  KVM: arm64: nv: Unmap/flush shadow stage 2 page tables
+  KVM: arm64: nv: arch_timer: Support hyp timer emulation
+  KVM: arm64: nv: vgic: Emulate the HW bit in software
+  KVM: arm64: nv: Add nested GICv3 tracepoints
+  KVM: arm64: nv: Sync nested timer state with ARMv8.4
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git tags/kvmarm-fixes-5.17-1
+Jintack Lim (18):
+  arm64: Add ARM64_HAS_NESTED_VIRT cpufeature
+  KVM: arm64: nv: Handle HCR_EL2.NV system register traps
+  KVM: arm64: nv: Support virtual EL2 exceptions
+  KVM: arm64: nv: Inject HVC exceptions to the virtual EL2
+  KVM: arm64: nv: Trap SPSR_EL1, ELR_EL1 and VBAR_EL1 from virtual EL2
+  KVM: arm64: nv: Trap CPACR_EL1 access in virtual EL2
+  KVM: arm64: nv: Handle PSCI call via smc from the guest
+  KVM: arm64: nv: Respect virtual HCR_EL2.TWX setting
+  KVM: arm64: nv: Respect virtual CPTR_EL2.{TFP,FPEN} settings
+  KVM: arm64: nv: Respect the virtual HCR_EL2.NV bit setting
+  KVM: arm64: nv: Respect virtual HCR_EL2.TVM and TRVM settings
+  KVM: arm64: nv: Respect the virtual HCR_EL2.NV1 bit setting
+  KVM: arm64: nv: Emulate EL12 register accesses from the virtual EL2
+  KVM: arm64: nv: Configure HCR_EL2 for nested virtualization
+  KVM: arm64: nv: Set a handler for the system instruction traps
+  KVM: arm64: nv: Trap and emulate AT instructions from virtual EL2
+  KVM: arm64: nv: Trap and emulate TLBI instructions from virtual EL2
+  KVM: arm64: nv: Nested GICv3 Support
 
-for you to fetch changes up to 278583055a237270fac70518275ba877bf9e4013:
+Marc Zyngier (30):
+  KVM: arm64: nv: Add EL2 system registers to vcpu context
+  KVM: arm64: nv: Add non-VHE-EL2->EL1 translation helpers
+  KVM: arm64: nv: Handle virtual EL2 registers in
+    vcpu_read/write_sys_reg()
+  KVM: arm64: nv: Handle SPSR_EL2 specially
+  KVM: arm64: nv: Handle HCR_EL2.E2H specially
+  KVM: arm64: nv: Save/Restore vEL2 sysregs
+  KVM: arm64: nv: Allow a sysreg to be hidden from userspace only
+  KVM: arm64: nv: Forward debug traps to the nested guest
+  KVM: arm64: nv: Filter out unsupported features from ID regs
+  KVM: arm64: nv: Hide RAS from nested guests
+  KVM: arm64: nv: Support multiple nested Stage-2 mmu structures
+  KVM: arm64: nv: Handle shadow stage 2 page faults
+  KVM: arm64: nv: Restrict S2 RD/WR permissions to match the guest's
+  KVM: arm64: nv: Fold guest's HCR_EL2 configuration into the host's
+  KVM: arm64: nv: Add handling of EL2-specific timer registers
+  KVM: arm64: nv: Load timer before the GIC
+  KVM: arm64: nv: Don't load the GICv4 context on entering a nested
+    guest
+  KVM: arm64: nv: Implement maintenance interrupt forwarding
+  KVM: arm64: nv: Allow userspace to request KVM_ARM_VCPU_NESTED_VIRT
+  KVM: arm64: nv: Add handling of ARMv8.4-TTL TLB invalidation
+  KVM: arm64: nv: Invalidate TLBs based on shadow S2 TTL-like
+    information
+  KVM: arm64: nv: Tag shadow S2 entries with nested level
+  KVM: arm64: nv: Add include containing the VNCR_EL2 offsets
+  KVM: arm64: nv: Map VNCR-capable registers to a separate page
+  KVM: arm64: nv: Move nested vgic state into the sysreg file
+  KVM: arm64: Add ARMv8.4 Enhanced Nested Virt cpufeature
+  KVM: arm64: nv: Allocate VNCR page when required
+  KVM: arm64: nv: Enable ARMv8.4-NV support
+  KVM: arm64: nv: Fast-track 'InHost' exception returns
+  KVM: arm64: nv: Fast-track EL1 TLBIs for VHE guests
 
-  KVM: arm64: Use shadow SPSR_EL1 when injecting exceptions on !VHE (2022-01-24 09:39:03 +0000)
+ .../admin-guide/kernel-parameters.txt         |    7 +-
+ .../virt/kvm/devices/arm-vgic-v3.rst          |   12 +-
+ arch/arm64/include/asm/esr.h                  |    5 +
+ arch/arm64/include/asm/kvm_arm.h              |   27 +-
+ arch/arm64/include/asm/kvm_asm.h              |    4 +
+ arch/arm64/include/asm/kvm_emulate.h          |  143 +-
+ arch/arm64/include/asm/kvm_host.h             |  185 ++-
+ arch/arm64/include/asm/kvm_hyp.h              |    2 +
+ arch/arm64/include/asm/kvm_mmu.h              |   18 +-
+ arch/arm64/include/asm/kvm_nested.h           |  156 ++
+ arch/arm64/include/asm/sysreg.h               |  101 +-
+ arch/arm64/include/asm/vncr_mapping.h         |   74 +
+ arch/arm64/include/uapi/asm/kvm.h             |    2 +
+ arch/arm64/kernel/cpufeature.c                |   34 +
+ arch/arm64/kvm/Makefile                       |    4 +-
+ arch/arm64/kvm/arch_timer.c                   |  202 ++-
+ arch/arm64/kvm/arm.c                          |   42 +-
+ arch/arm64/kvm/at.c                           |  219 +++
+ arch/arm64/kvm/emulate-nested.c               |  211 +++
+ arch/arm64/kvm/guest.c                        |    6 +
+ arch/arm64/kvm/handle_exit.c                  |   81 +-
+ arch/arm64/kvm/hyp/exception.c                |   49 +-
+ arch/arm64/kvm/hyp/include/hyp/switch.h       |   12 +-
+ arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h    |   24 +-
+ arch/arm64/kvm/hyp/nvhe/switch.c              |    2 +-
+ arch/arm64/kvm/hyp/nvhe/sysreg-sr.c           |    2 +-
+ arch/arm64/kvm/hyp/vgic-v3-sr.c               |    2 +-
+ arch/arm64/kvm/hyp/vhe/switch.c               |  181 ++-
+ arch/arm64/kvm/hyp/vhe/sysreg-sr.c            |  125 +-
+ arch/arm64/kvm/hyp/vhe/tlb.c                  |   83 ++
+ arch/arm64/kvm/inject_fault.c                 |   68 +-
+ arch/arm64/kvm/mmu.c                          |  206 ++-
+ arch/arm64/kvm/nested.c                       |  915 ++++++++++++
+ arch/arm64/kvm/reset.c                        |   30 +-
+ arch/arm64/kvm/sys_regs.c                     | 1252 ++++++++++++++++-
+ arch/arm64/kvm/sys_regs.h                     |   14 +-
+ arch/arm64/kvm/trace_arm.h                    |   65 +-
+ arch/arm64/kvm/vgic/vgic-init.c               |   30 +
+ arch/arm64/kvm/vgic/vgic-kvm-device.c         |   22 +
+ arch/arm64/kvm/vgic/vgic-nested-trace.h       |  137 ++
+ arch/arm64/kvm/vgic/vgic-v3-nested.c          |  242 ++++
+ arch/arm64/kvm/vgic/vgic-v3.c                 |   39 +-
+ arch/arm64/kvm/vgic/vgic.c                    |   44 +
+ arch/arm64/kvm/vgic/vgic.h                    |   10 +
+ arch/arm64/tools/cpucaps                      |    2 +
+ include/kvm/arm_arch_timer.h                  |    9 +-
+ include/kvm/arm_vgic.h                        |   16 +
+ include/uapi/linux/kvm.h                      |    1 +
+ tools/arch/arm/include/uapi/asm/kvm.h         |    1 +
+ 49 files changed, 4947 insertions(+), 171 deletions(-)
+ create mode 100644 arch/arm64/include/asm/kvm_nested.h
+ create mode 100644 arch/arm64/include/asm/vncr_mapping.h
+ create mode 100644 arch/arm64/kvm/at.c
+ create mode 100644 arch/arm64/kvm/emulate-nested.c
+ create mode 100644 arch/arm64/kvm/nested.c
+ create mode 100644 arch/arm64/kvm/vgic/vgic-nested-trace.h
+ create mode 100644 arch/arm64/kvm/vgic/vgic-v3-nested.c
 
-----------------------------------------------------------------
-KVM/arm64 fixes for 5.17, take #1
+-- 
+2.30.2
 
-- Correctly update the shadow register on exception injection when
-  running in nVHE mode
-
-- Correctly use the mm_ops indirection when performing cache invalidation
-  from the page-table walker
-
-- Restrict the vgic-v3 workaround for SEIS to the two known broken
-  implementations
-
-----------------------------------------------------------------
-Marc Zyngier (3):
-      KVM: arm64: pkvm: Use the mm_ops indirection for cache maintenance
-      KVM: arm64: vgic-v3: Restrict SEIS workaround to known broken systems
-      KVM: arm64: Use shadow SPSR_EL1 when injecting exceptions on !VHE
-
- arch/arm64/kvm/hyp/exception.c  |  5 ++++-
- arch/arm64/kvm/hyp/pgtable.c    | 18 ++++++------------
- arch/arm64/kvm/hyp/vgic-v3-sr.c |  3 +++
- arch/arm64/kvm/vgic/vgic-v3.c   | 17 +++++++++++++++--
- 4 files changed, 28 insertions(+), 15 deletions(-)
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
