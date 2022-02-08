@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A3F8F4ADA89
-	for <lists+kvmarm@lfdr.de>; Tue,  8 Feb 2022 14:58:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A78F4ADA8A
+	for <lists+kvmarm@lfdr.de>; Tue,  8 Feb 2022 14:58:36 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2190C4B1AD;
-	Tue,  8 Feb 2022 08:58:35 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2E7FA4B1AA;
+	Tue,  8 Feb 2022 08:58:36 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -18,66 +18,66 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@linuxfoundation.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TWla6mdATETF; Tue,  8 Feb 2022 08:58:33 -0500 (EST)
+	with ESMTP id lFv4UHnK0NMB; Tue,  8 Feb 2022 08:58:34 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CB97D4B162;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F14084B1BA;
 	Tue,  8 Feb 2022 08:58:28 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8276749F55
- for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Feb 2022 19:15:42 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9BDE34A369
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Feb 2022 19:23:18 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ZAMHPTN87yOY for <kvmarm@lists.cs.columbia.edu>;
- Mon,  7 Feb 2022 19:15:41 -0500 (EST)
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com
- [209.85.166.177])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4DA8049F18
- for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Feb 2022 19:15:41 -0500 (EST)
-Received: by mail-il1-f177.google.com with SMTP id z18so12596176ilp.3
- for <kvmarm@lists.cs.columbia.edu>; Mon, 07 Feb 2022 16:15:41 -0800 (PST)
+ with ESMTP id x9XZOQoCApsN for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  7 Feb 2022 19:23:17 -0500 (EST)
+Received: from mail-io1-f54.google.com (mail-io1-f54.google.com
+ [209.85.166.54])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 349CE49F55
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Feb 2022 19:23:17 -0500 (EST)
+Received: by mail-io1-f54.google.com with SMTP id d188so19157400iof.7
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 07 Feb 2022 16:23:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linuxfoundation.org; s=google;
  h=subject:to:cc:references:from:message-id:date:user-agent
  :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=BgvLO9hr2V7CyEad4Q9zhVhiiHX9h0qd8phe6mg68zg=;
- b=diok9UMph6A2H5uNb/Z6KYHIB6dvzX6ttLpuifYYoA6h5s8mSmC/WfCD6n5H1XDOEn
- lVguHrxhUHRz3IzbcJCaTLPuuRh4WxEZn3yRP09ANS/ytIPq0BzeEYQ6DDLsyP9NqqTx
- FgBluq9mgpMb5bE/0flXsb4pi3bJwMHofETjk=
+ bh=UH8TTlZtdHU9hR5j1dqwl9ALQq10XFCDiBTi5RqX1c8=;
+ b=g6Dh2iJc4xhQ5QUXM3RIwFCepnYrrcXYwgJjxQwaGCpAzZApiIz5cYMgrpUt2MxVmP
+ C6p4ZqV56muyss08V7ysJHiOgYhM4AmjYtLCHr+LFQN2YucIBj2WH6ONyUAfeoVqxbzX
+ kFVUyO7TDcJowmMnWdKqxaj10IJe7NwNrLPmE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:subject:to:cc:references:from:message-id:date
  :user-agent:mime-version:in-reply-to:content-language
  :content-transfer-encoding;
- bh=BgvLO9hr2V7CyEad4Q9zhVhiiHX9h0qd8phe6mg68zg=;
- b=0s46NHDXRfbV/1a67irO6DPoMVG22MRpPHuSLNLofwG6kiZPbwbeXzc5O9qwzIJwef
- hbFHWAsQvRKufEFTLF3xzMjP7DaMnh1V+ZU5uyR8x95Q9BT+ez+aNdk7RsasBqjlVxow
- 3ptvGSTZrzcZR5wiNu1/ARQkNVMa185+qg/RLL0ZWSemkN5RrxyfLvaj6DnYKfC2Eho/
- wVeflQaMUZat9Q8ONF9xIBQCdYjfT8LdJs54xk2lcNMh1Cdh8meByWp3HktULewWlnj3
- 6rPd3ilDjHOAH5ytdwTeIABxERbMpSitjb5phjV3hGFzajDqip/X4PtbQTKzTXOjJH0v
- Mz6w==
-X-Gm-Message-State: AOAM532PpJ0wE+x6S2GTz/krEay8Ae4osQZarq9wBeUK7dzrODfz2v/0
- 2+qOhgAlT+AkC0TPSD5+wTFl5w==
-X-Google-Smtp-Source: ABdhPJxVvgElyB8fUYMMP/TOaUOJybzRRArhutl3SBXSxLmUM8fI5K7z6iWl6nKzUSAe8HoSX1giEQ==
-X-Received: by 2002:a92:d24b:: with SMTP id v11mr928645ilg.1.1644279340709;
- Mon, 07 Feb 2022 16:15:40 -0800 (PST)
+ bh=UH8TTlZtdHU9hR5j1dqwl9ALQq10XFCDiBTi5RqX1c8=;
+ b=k0IIsbZ7qtAFBBBuIHzPmUaxt195naRZGPrY4NkpUjDE0zBL8B1Qy7zu6IRdM3QgRf
+ M3CkEueXUwHMIz+5ekpLi60TsjK7wZX4j5sf/eyfvxlwM1TAXUI3gXsBsKmP+TZb6h/9
+ 7VefXpHL/Xk09RsojM7fJcVzGtjVATpkHdx/mbluuNf5lALMcAOA3l+LAaThnh7Cwqcr
+ j8TvHmjrGzNY6DjADMdjmeb21mSg1kndZHZ616nK0mgAe9Y0TH3NPq6TNHS0FcHQrKtc
+ LeulJ6Jr6Ev1Z0Xrfxgif57diSu2JqhZ4cT3coZi7E/wq6vhZduGPZMGbYq6MG0uoFAW
+ VUPg==
+X-Gm-Message-State: AOAM532I9KM9jdAwzUzNNrcMHNxEEXNA+BG8gincuG2H5ziEYSbBbT4Z
+ lVVcpUlWFooWqqDSEkEVbXWgeA==
+X-Google-Smtp-Source: ABdhPJwN5ALMcRd5AUptbs+L7Oy82xGgQ9E1wuWR+EuGvaictbSKagsy6lWgthJkTLbShyxqI6RIuA==
+X-Received: by 2002:a6b:e60d:: with SMTP id g13mr940588ioh.39.1644279796551;
+ Mon, 07 Feb 2022 16:23:16 -0800 (PST)
 Received: from [192.168.1.128] ([71.205.29.0])
- by smtp.gmail.com with ESMTPSA id b5sm1883555ilr.0.2022.02.07.16.15.39
+ by smtp.gmail.com with ESMTPSA id c9sm6401156ile.38.2022.02.07.16.23.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Feb 2022 16:15:40 -0800 (PST)
-Subject: Re: [PATCH v11 31/40] kselftest/arm64: sme: Add SME support to vlset
+ Mon, 07 Feb 2022 16:23:16 -0800 (PST)
+Subject: Re: [PATCH v11 32/40] kselftest/arm64: Add tests for TPIDR2
 To: Mark Brown <broonie@kernel.org>, Catalin Marinas
  <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
  Marc Zyngier <maz@kernel.org>, Shuah Khan <shuah@kernel.org>
 References: <20220207152109.197566-1-broonie@kernel.org>
- <20220207152109.197566-32-broonie@kernel.org>
+ <20220207152109.197566-33-broonie@kernel.org>
 From: Shuah Khan <skhan@linuxfoundation.org>
-Message-ID: <fc0d4407-8124-2040-41f5-5de091de588f@linuxfoundation.org>
-Date: Mon, 7 Feb 2022 17:15:39 -0700
+Message-ID: <14e08c27-289d-8c39-15ef-220e0a7949f0@linuxfoundation.org>
+Date: Mon, 7 Feb 2022 17:23:15 -0700
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.8.1
 MIME-Version: 1.0
-In-Reply-To: <20220207152109.197566-32-broonie@kernel.org>
+In-Reply-To: <20220207152109.197566-33-broonie@kernel.org>
 Content-Language: en-US
 X-Mailman-Approved-At: Tue, 08 Feb 2022 08:58:27 -0500
 Cc: Basant Kumar Dwivedi <Basant.KumarDwivedi@arm.com>,
@@ -102,70 +102,379 @@ Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 On 2/7/22 8:21 AM, Mark Brown wrote:
-> The Scalable Matrix Extenions (SME) introduces additional register state
-> with configurable vector lengths, similar to SVE but configured separately.
-> Extend vlset to support configuring this state with a --sme or -s command
-> line option.
-
-It would be useful to add a -g command to get the current value.
--g would just do PR_SVE_GET_VL and print the value perhaps?
-
+> The Scalable Matrix Extension adds a new system register TPIDR2 intended to
+> be used by libc for its own thread specific use, add some kselftests which
+> exercise the ABI for it.
+> 
+> Since this test should with some adjustment work for TPIDR and any other
+> similar registers added in future add tests for it in a separate
+> directory rather than placing it with the other floating point tests,
+> nothing existing looked suitable so I created a new test directory
+> called "abi".
+> 
+> Since this feature is intended to be used by libc the test is built as
+> freestanding code using nolibc so we don't end up with the test program
+> and libc both trying to manage the register simultaneously and
+> distrupting each other. As a result of being written using nolibc rather
+> than using hwcaps to identify if SME is available in the system we check
+> for the default SME vector length configuration in proc, adding hwcap
+> support to nolibc seems like disproportionate effort and didn't feel
+> entirely idiomatic for what nolibc is trying to do.
 > 
 > Signed-off-by: Mark Brown <broonie@kernel.org>
 > ---
->   tools/testing/selftests/arm64/fp/vlset.c | 10 ++++++++--
->   1 file changed, 8 insertions(+), 2 deletions(-)
+>   tools/testing/selftests/arm64/abi/.gitignore |   1 +
+>   tools/testing/selftests/arm64/abi/Makefile   |   9 +-
+>   tools/testing/selftests/arm64/abi/tpidr2.c   | 298 +++++++++++++++++++
+>   3 files changed, 307 insertions(+), 1 deletion(-)
+>   create mode 100644 tools/testing/selftests/arm64/abi/tpidr2.c
 > 
-> diff --git a/tools/testing/selftests/arm64/fp/vlset.c b/tools/testing/selftests/arm64/fp/vlset.c
-> index 308d27a68226..76912a581a95 100644
-> --- a/tools/testing/selftests/arm64/fp/vlset.c
-> +++ b/tools/testing/selftests/arm64/fp/vlset.c
-> @@ -22,12 +22,15 @@ static int inherit = 0;
->   static int no_inherit = 0;
->   static int force = 0;
->   static unsigned long vl;
-> +static int set_ctl = PR_SVE_SET_VL;
-> +static int get_ctl = PR_SVE_GET_VL;
+> diff --git a/tools/testing/selftests/arm64/abi/.gitignore b/tools/testing/selftests/arm64/abi/.gitignore
+> index b79cf5814c23..b9e54417250d 100644
+> --- a/tools/testing/selftests/arm64/abi/.gitignore
+> +++ b/tools/testing/selftests/arm64/abi/.gitignore
+> @@ -1 +1,2 @@
+>   syscall-abi
+> +tpidr2
+> diff --git a/tools/testing/selftests/arm64/abi/Makefile b/tools/testing/selftests/arm64/abi/Makefile
+> index 96eba974ac8d..c8d7f2495eb2 100644
+> --- a/tools/testing/selftests/arm64/abi/Makefile
+> +++ b/tools/testing/selftests/arm64/abi/Makefile
+> @@ -1,8 +1,15 @@
+>   # SPDX-License-Identifier: GPL-2.0
+>   # Copyright (C) 2021 ARM Limited
 >   
->   static const struct option options[] = {
->   	{ "force",	no_argument, NULL, 'f' },
->   	{ "inherit",	no_argument, NULL, 'i' },
->   	{ "max",	no_argument, NULL, 'M' },
->   	{ "no-inherit",	no_argument, &no_inherit, 1 },
-> +	{ "sme",	no_argument, NULL, 's' },
->   	{ "help",	no_argument, NULL, '?' },
->   	{}
->   };
-> @@ -50,6 +53,9 @@ static int parse_options(int argc, char **argv)
->   		case 'M':	vl = SVE_VL_MAX; break;
->   		case 'f':	force = 1; break;
->   		case 'i':	inherit = 1; break;
-> +		case 's':	set_ctl = PR_SME_SET_VL;
-> +				get_ctl = PR_SME_GET_VL;
-> +				break;
->   		case 0:		break;
->   		default:	goto error;
->   		}
-> @@ -125,14 +131,14 @@ int main(int argc, char **argv)
->   	if (inherit)
->   		flags |= PR_SVE_VL_INHERIT;
+> -TEST_GEN_PROGS := syscall-abi
+> +TEST_GEN_PROGS := syscall-abi tpidr2
 >   
-> -	t = prctl(PR_SVE_SET_VL, vl | flags);
-> +	t = prctl(set_ctl, vl | flags);
->   	if (t < 0) {
->   		fprintf(stderr, "%s: PR_SVE_SET_VL: %s\n",
->   			program_name, strerror(errno));
->   		goto error;
->   	}
+>   include ../../lib.mk
 >   
-> -	t = prctl(PR_SVE_GET_VL);
-> +	t = prctl(get_ctl);
->   	if (t == -1) {
->   		fprintf(stderr, "%s: PR_SVE_GET_VL: %s\n",
->   			program_name, strerror(errno));
+>   $(OUTPUT)/syscall-abi: syscall-abi.c syscall-abi-asm.S
+> +
+> +# Build with nolibc since TPIDR2 is intended to be actively managed by
+> +# libc and we're trying to test the functionality that it depends on here.
+> +$(OUTPUT)/tpidr2: tpidr2.c
+> +	$(CC) -fno-asynchronous-unwind-tables -fno-ident -s -Os -nostdlib \
+> +		-static -include ../../../../include/nolibc/nolibc.h \
+> +		-ffreestanding -Wall $^ -o $@ -lgcc
+> diff --git a/tools/testing/selftests/arm64/abi/tpidr2.c b/tools/testing/selftests/arm64/abi/tpidr2.c
+> new file mode 100644
+> index 000000000000..351a098b503a
+> --- /dev/null
+> +++ b/tools/testing/selftests/arm64/abi/tpidr2.c
+> @@ -0,0 +1,298 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +
+> +#include <linux/sched.h>
+> +#include <linux/wait.h>
+> +
+> +#define SYS_TPIDR2 "S3_3_C13_C0_5"
+> +
+> +#define EXPECTED_TESTS 5
+> +
+> +static void putstr(const char *str)
+> +{
+> +	write(1, str, strlen(str));
+> +}
+> +
+> +static void putnum(unsigned int num)
+> +{
+> +	char c;
+> +
+> +	if (num / 10)
+> +		putnum(num / 10);
+> +
+> +	c = '0' + (num % 10);
+> +	write(1, &c, 1);
+> +}
+> +
+> +static int tests_run;
+> +static int tests_passed;
+> +static int tests_failed;
+> +static int tests_skipped;
+> +
+> +static void set_tpidr2(uint64_t val)
+> +{
+> +	asm volatile (
+> +		"msr	" SYS_TPIDR2 ", %0\n"
+> +		:
+> +		: "r"(val)
+> +		: "cc");
+> +}
+> +
+> +static uint64_t get_tpidr2(void)
+> +{
+> +	uint64_t val;
+> +
+> +	asm volatile (
+> +		"mrs	%0, " SYS_TPIDR2 "\n"
+> +		: "=r"(val)
+> +		:
+> +		: "cc");
+> +
+> +	return val;
+> +}
+> +
+> +static void print_summary(void)
+> +{
+> +	if (tests_passed + tests_failed + tests_skipped != EXPECTED_TESTS)
+> +		putstr("# UNEXPECTED TEST COUNT: ");
+> +
+> +	putstr("# Totals: pass:");
+> +	putnum(tests_passed);
+> +	putstr(" fail:");
+> +	putnum(tests_failed);
+> +	putstr(" xfail:0 xpass:0 skip:");
+> +	putnum(tests_skipped);
+> +	putstr(" error:0\n");
+> +}
+> +
+> +/* Processes should start with TPIDR2 == 0 */
+> +static int default_value(void)
+> +{
+> +	return get_tpidr2() == 0;
+> +}
+> +
+> +/* If we set TPIDR2 we should read that value */
+> +static int write_read(void)
+> +{
+> +	set_tpidr2(getpid());
+> +
+> +	return getpid() == get_tpidr2();
+> +}
+> +
+> +/* If we set a value we should read the same value after scheduling out */
+> +static int write_sleep_read(void)
+> +{
+> +	set_tpidr2(getpid());
+> +
+> +	msleep(100);
+> +
+> +	return getpid() == get_tpidr2();
+> +}
+> +
+> +/*
+> + * If we fork the value in the parent should be unchanged and the
+> + * child should start with the same value and be able to set its own
+> + * value.
+> + */
+> +static int write_fork_read(void)
+> +{
+> +	pid_t newpid, waiting, oldpid;
+> +	int status;
+> +
+> +	set_tpidr2(getpid());
+> +
+> +	oldpid = getpid();
+> +	newpid = fork();
+> +	if (newpid == 0) {
+> +		/* In child */
+> +		if (get_tpidr2() != oldpid) {
+> +			putstr("# TPIDR2 changed in child: ");
+> +			putnum(get_tpidr2());
+> +			putstr("\n");
+> +			exit(0);
+> +		}
+> +
+> +		set_tpidr2(getpid());
+> +		if (get_tpidr2() == getpid()) {
+> +			exit(1);
+> +		} else {
+> +			putstr("# Failed to set TPIDR2 in child\n");
+> +			exit(0);
+
+Is this test expected to fail? Is that why it exits with 0 status?
+
+
+> +		}
+> +	}
+> +	if (newpid < 0) {
+> +		putstr("# fork() failed: -");
+> +		putnum(-newpid);
+> +		putstr("\n");
+> +		return 0;
+
+Same here - returning 0 indicates test passing which could mean a false
+positive.
+
+> +	}
+> +
+> +	for (;;) {
+> +		waiting = waitpid(newpid, &status, 0);
+> +
+> +		if (waiting < 0) {
+> +			if (errno == EINTR)
+> +				continue;
+> +			putstr("# waitpid() failed: ");
+> +			putnum(errno);
+> +			putstr("\n");
+> +			return 0;
+> +		}
+> +		if (waiting != newpid) {
+> +			putstr("# waitpid() returned wrong PID\n");
+> +			return 0;
+> +		}
+> +
+> +		if (!WIFEXITED(status)) {
+> +			putstr("# child did not exit\n");
+> +			return 0;
+> +		}
+> +
+> +		if (getpid() != get_tpidr2()) {
+> +			putstr("# TPIDR2 corrupted in parent\n");
+> +			return 0;
+> +		}
+> +
+> +		return WEXITSTATUS(status);
+> +	}
+> +}
+> +
+> +/*
+> + * sys_clone() has a lot of per architecture variation so just define
+> + * it here rather than adding it to nolibc, plus the raw API is a
+> + * little more convenient for this test.
+> + */
+> +static int sys_clone(unsigned long clone_flags, unsigned long newsp,
+> +		     int *parent_tidptr, unsigned long tls,
+> +		     int *child_tidptr)
+> +{
+> +	return my_syscall5(__NR_clone, clone_flags, newsp, parent_tidptr, tls,
+> +			   child_tidptr);
+> +}
+> +
+> +/*
+> + * If we clone with CLONE_SETTLS then the value in the parent should
+> + * be unchanged and the child should start with zero and be able to
+> + * set its own value.
+> + */
+> +static int write_clone_read(void)
+> +{
+> +	int parent_tid, child_tid;
+> +	pid_t parent, waiting;
+> +	int ret, status;
+> +
+> +	parent = getpid();
+> +	set_tpidr2(parent);
+> +
+> +	ret = sys_clone(CLONE_SETTLS, 0, &parent_tid, 0, &child_tid);
+> +	if (ret == -1) {
+> +		putstr("# clone() failed\n");
+> +		putnum(errno);
+> +		putstr("\n");
+> +		return 0;
+
+Same commnet here - just making sure there are no false positives
+
+> +	}
+> +
+> +	if (ret == 0) {
+> +		/* In child */
+> +		if (get_tpidr2() != 0) {
+> +			putstr("# TPIDR2 non-zero in child: ");
+> +			putnum(get_tpidr2());
+> +			putstr("\n");
+> +			exit(0);
+> +		}
+> +
+> +		if (gettid() == 0)
+> +			putstr("# Child TID==0\n");
+> +		set_tpidr2(gettid());
+> +		if (get_tpidr2() == gettid()) {
+> +			exit(1);
+> +		} else {
+> +			putstr("# Failed to set TPIDR2 in child\n");
+> +			exit(0);
+> +		}
+> +	}
+> +
+> +	for (;;) {
+> +		waiting = wait4(ret, &status, __WCLONE, NULL);
+> +
+> +		if (waiting < 0) {
+> +			if (errno == EINTR)
+> +				continue;
+> +			putstr("# wait4() failed: ");
+> +			putnum(errno);
+> +			putstr("\n");
+> +			return 0;
+> +		}
+> +		if (waiting != ret) {
+> +			putstr("# wait4() returned wrong PID ");
+> +			putnum(waiting);
+> +			putstr("\n");
+> +			return 0;
+> +		}
+> +
+> +		if (!WIFEXITED(status)) {
+> +			putstr("# child did not exit\n");
+> +			return 0;
+> +		}
+> +
+> +		if (parent != get_tpidr2()) {
+> +			putstr("# TPIDR2 corrupted in parent\n");
+> +			return 0;
+> +		}
+> +
+> +		return WEXITSTATUS(status);
+> +	}
+> +}
+> +
+> +#define run_test(name)			     \
+> +	if (name()) {			     \
+> +		tests_passed++;		     \
+> +	} else {			     \
+> +		tests_failed++;		     \
+> +		putstr("not ");		     \
+> +	}				     \
+> +	putstr("ok ");			     \
+> +	putnum(++tests_run);		     \
+> +	putstr(" " #name "\n");
+> +
+> +int main(int argc, char **argv)
+> +{
+> +	int ret, i;
+> +
+> +	putstr("TAP version 13\n");
+> +	putstr("1..");
+> +	putnum(EXPECTED_TESTS);
+> +	putstr("\n");
+> +
+> +	putstr("# PID: ");
+> +	putnum(getpid());
+> +	putstr("\n");
+> +
+> +	/*
+> +	 * This test is run with nolibc which doesn't support hwcap and
+> +	 * it's probably disproportionate to implement so instead check
+> +	 * for the default vector length configuration in /proc.
+> +	 */
+> +	ret = open("/proc/sys/abi/sme_default_vector_length", O_RDONLY, 0);
+> +	if (ret >= 0) {
+> +		run_test(default_value);
+> +		run_test(write_read);
+> +		run_test(write_sleep_read);
+> +		run_test(write_fork_read);
+> +		run_test(write_clone_read);
+> +
+> +	} else {
+> +		putstr("# SME support not present\n");
+> +
+> +		for (i = 0; i < EXPECTED_TESTS; i++) {
+> +			putstr("ok ");
+> +			putnum(i);
+> +			putstr(" skipped, TPIDR2 not supported\n");
+> +		}
+> +
+> +		tests_skipped += EXPECTED_TESTS;
+> +	}
+> +
+> +	print_summary();
+> +
+> +	return 0;
+> +}
 > 
 
-With the above comment addressed or explained:
+With the comments explained or addressed:
 
 Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
 
