@@ -2,98 +2,85 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 902D24B159B
-	for <lists+kvmarm@lfdr.de>; Thu, 10 Feb 2022 19:55:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8DB8D4B1425
+	for <lists+kvmarm@lfdr.de>; Thu, 10 Feb 2022 18:25:56 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E55DB49F37;
-	Thu, 10 Feb 2022 13:55:29 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BF41749F4A;
+	Thu, 10 Feb 2022 12:25:55 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
+X-Spam-Score: 0.911
 X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=0.911 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@linuxfoundation.org
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id I3oHr6fbB3dH; Thu, 10 Feb 2022 13:55:29 -0500 (EST)
+	with ESMTP id SZbfjrrBHV7q; Thu, 10 Feb 2022 12:25:55 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F50F49F31;
-	Thu, 10 Feb 2022 13:55:28 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 62B7F49F33;
+	Thu, 10 Feb 2022 12:25:54 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1D27649F0C
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Feb 2022 11:46:05 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C6F249F0B
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Feb 2022 12:25:53 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id nV24w0IlI5eb for <kvmarm@lists.cs.columbia.edu>;
- Thu, 10 Feb 2022 11:46:04 -0500 (EST)
-Received: from mail-il1-f182.google.com (mail-il1-f182.google.com
- [209.85.166.182])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id F22D14086D
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Feb 2022 11:46:03 -0500 (EST)
-Received: by mail-il1-f182.google.com with SMTP id n5so4792225ilk.12
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Feb 2022 08:46:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linuxfoundation.org; s=google;
- h=subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=DDtHBrYV020bBGjtIYRFzMtZ1rUWWBBixnBxzXJeFHg=;
- b=b6JQx2r2RiP/MMxSjrD6RoqNR1f8sgY/J8ogD1k5zuepBjN9K4EpBTF4U3DnkeWghn
- OiqY/c+ldn1HMMXxr57ZqhnHntCkvLwMwdaoBNgntrz9ZtxNLhNEmUo3JG7R+L6XMQxb
- 0v7lJ4uHDLla/82flidGVeDfm9T2y7xdlc+iY=
+ with ESMTP id JlGJPDmxEB9o for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 10 Feb 2022 12:25:51 -0500 (EST)
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com
+ [209.85.214.182])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 95EB449EF3
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Feb 2022 12:25:51 -0500 (EST)
+Received: by mail-pl1-f182.google.com with SMTP id y7so2418649plp.2
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Feb 2022 09:25:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=RpI/Pc77MpSRjpUPrJOrramDZi3SB+e1ryNxx/yPgHo=;
+ b=YXn1/quEkEPJgPghKbNEXhPloXCwF+kn0GrB0c72VWDmu5+C+iufjiqJX/Zr7tVpW0
+ 8tLNF97X6qmvnQBaBY8UiMvsEdFogDhcq51cd3xJnjlHtp10MEyoS6K8wvvsjfuoZ6GL
+ t+mcZcxRnOedetqu/7SyA2Pwqhgh0s1LcWI7ECfu79Vim90OsZtmrhyYuap4IxhilZ2E
+ sX/t8sg5u3YmXdN5ZDW9yazi1ftIZNy+CwmnPouwTvr3AdttbsByYH12cY8v0T+AtNuS
+ kjC4ReI5peTud5+z+aE8jKm8jkKB3ooVnAM9lZixP/HtGqMLYuY2ge7zwlAeV07PF5Gq
+ oMXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=DDtHBrYV020bBGjtIYRFzMtZ1rUWWBBixnBxzXJeFHg=;
- b=pMZuLzQ/L7tJ2WJDZz+6HJsjyUUyWIwULpFzVQp8QigT3U9DZ/4vk15xacyhEYb6Sj
- t5Cxzmo5nOpAqN3CRwaThMuokIlIeMkBZExd07B3iuIQ3ZuKwTwxQaeR/OvlT21o1C9D
- pzD8zq8XU/x18ISxiBvRowSQHFj1PI0vQOOmoHzgYUZmR/C57COflJab4/AxQJw13wBI
- fpZu/EnFxIBBkJZAs3v8qzovpcXpdwN0XQKpeaZZ0NvA45OUk5YSvWXCoJT6TRhRzV3w
- 2wRdHnO47LJI1ZWqhEY7vxiqRYZyNoNLjXAaoekgIqhDzSM94A4/5h9vNkUgcHnWc6Dv
- O9VQ==
-X-Gm-Message-State: AOAM530Gf3cg4pEwP4t2gsyZfMUvdFgtZO9ver4lq3QaspvymWGlfkxm
- rw7x26fUaZ6Yt/h7Sp13kh+SCw==
-X-Google-Smtp-Source: ABdhPJwBlZn/97+3CiBD8ZcFr5rKXnOkyTzDg+cp7L6qXTI403VmIgvZfUlQKv423UjT5i7Ow2M58Q==
-X-Received: by 2002:a05:6e02:1544:: with SMTP id
- j4mr4346609ilu.77.1644511563158; 
- Thu, 10 Feb 2022 08:46:03 -0800 (PST)
-Received: from [192.168.1.128] ([71.205.29.0])
- by smtp.gmail.com with ESMTPSA id d2sm4037645iog.42.2022.02.10.08.46.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Feb 2022 08:46:02 -0800 (PST)
-Subject: Re: [PATCH v11 06/40] arm64/sme: Provide ABI documentation for SME
-To: Mark Brown <broonie@kernel.org>
-References: <20220207152109.197566-1-broonie@kernel.org>
- <20220207152109.197566-7-broonie@kernel.org>
- <49da0f58-7a20-e557-54c3-34bd7074f711@linuxfoundation.org>
- <YgKQTLwW+ha5XNx8@sirena.org.uk> <YgK4kKrSs6e9seG8@sirena.org.uk>
- <e6d76104-b7f6-1588-d734-1a09c2990299@linuxfoundation.org>
- <YgK9v7u+FcBTB1ur@sirena.org.uk>
- <d41ec776-5bd0-438f-0ab3-6eb1891e7fdc@linuxfoundation.org>
- <YgU66pT3efqwwn7U@sirena.org.uk>
-From: Shuah Khan <skhan@linuxfoundation.org>
-Message-ID: <fb795b74-e44e-9b18-fb37-505b18d129fc@linuxfoundation.org>
-Date: Thu, 10 Feb 2022 09:46:00 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=RpI/Pc77MpSRjpUPrJOrramDZi3SB+e1ryNxx/yPgHo=;
+ b=bmxRJPPFF3GSWTIRMogqAiTipkNqTZh2XR4LArXL6SemOTLDCn/q2827x6alA5gWkT
+ VahMLtShVn3OaWjrJQ1LP8UXDhIzYMrK59yLgzofw/lS7/xmHLc/LFvwi3H8xEcDvkyz
+ nPueaxD+T4j0uUrwrvpmdBgqp4zRPOfixdr+KqDUzRlYpZ1byyI5BTcGNrOtcZhASvDC
+ 0QQazMz9IgzZsMCPGoVA88ynm7YF1iciwyLEHs2Oyvr/Rle0Bs+ClMCz3C6Q+O6ssqx2
+ y5+l1wMvTfkDpC3UKOmFeQB7Om07e7M5UJtU0P0VBN7nEwy34CNQbOOugXOWfT4p0Doq
+ 8Tsg==
+X-Gm-Message-State: AOAM5336nJpLOP0YFsw38c6HgeBOqEvMbIeH98qfkgZNz+LifLX24Q8V
+ gigN9UYjVZZZLK6kA5Yu7qvo8w==
+X-Google-Smtp-Source: ABdhPJwGUlWFmBPzh0GMITsa52rZCyLCgNTJR2YZipN8WICLLLDonkxqL5M8Iq/HWVX+SCN8uZE1xA==
+X-Received: by 2002:a17:903:2410:: with SMTP id
+ e16mr8503196plo.19.1644513950416; 
+ Thu, 10 Feb 2022 09:25:50 -0800 (PST)
+Received: from google.com (157.214.185.35.bc.googleusercontent.com.
+ [35.185.214.157])
+ by smtp.gmail.com with ESMTPSA id k16sm24344783pfu.140.2022.02.10.09.25.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 10 Feb 2022 09:25:49 -0800 (PST)
+Date: Thu, 10 Feb 2022 17:25:46 +0000
+From: Sean Christopherson <seanjc@google.com>
+To: Alexandru Elisei <alexandru.elisei@arm.com>
+Subject: Re: [kvm-unit-tests PATCH 0/4] configure changes and rename
+ --target-efi
+Message-ID: <YgVKmjBnAjITQcm+@google.com>
+References: <20220210150943.1280146-1-alexandru.elisei@arm.com>
 MIME-Version: 1.0
-In-Reply-To: <YgU66pT3efqwwn7U@sirena.org.uk>
-Content-Language: en-US
-X-Mailman-Approved-At: Thu, 10 Feb 2022 13:55:27 -0500
-Cc: Marc Zyngier <maz@kernel.org>,
- Basant Kumar Dwivedi <Basant.KumarDwivedi@arm.com>,
- Will Deacon <will@kernel.org>, Luis Machado <luis.machado@arm.com>,
- Szabolcs Nagy <szabolcs.nagy@arm.com>,
- Catalin Marinas <catalin.marinas@arm.com>,
- linux-arm-kernel@lists.infradead.org, linux-kselftest@vger.kernel.org,
- Alan Hayward <alan.hayward@arm.com>, Shuah Khan <skhan@linuxfoundation.org>,
- Shuah Khan <shuah@kernel.org>, kvmarm@lists.cs.columbia.edu,
- Salil Akerkar <Salil.Akerkar@arm.com>
+Content-Disposition: inline
+In-Reply-To: <20220210150943.1280146-1-alexandru.elisei@arm.com>
+Cc: thuth@redhat.com, kvm@vger.kernel.org, zixuanwang@google.com,
+ kvmarm@lists.cs.columbia.edu, pbonzini@redhat.com, varad.gautam@suse.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -105,36 +92,39 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2/10/22 9:18 AM, Mark Brown wrote:
-> On Thu, Feb 10, 2022 at 08:12:44AM -0700, Shuah Khan wrote:
->> On 2/8/22 12:00 PM, Mark Brown wrote:
-> 
->>> Sure, there are lots of structured files in there like .rst ones which
->>> have SPDX headers but this is just a free format text file so it's not
->>> clear what if any format to use.
-> 
->> I think SPDX is applicable to all files free format or not. Are you seeing
->> any build warns during doc build on this?
-> 
-> No, but I'm not exactly going out of my way to do anything with them.
-> As far as I know these files don't get touched during builds, they just
-> exist in the kernel tree.  If there is some way of generating warnings
-> from them there are quite a lot of other such files already there and
-> doing so.  Like I say I can't find any evidence that anyone has looked
-> at adding SPDX to these files, as far as I know the long term plan such
-> as it is is to convert to other formats and I can't immediately think
-> how one would do it otherwise in a way that works well.
-> 
+On Thu, Feb 10, 2022, Alexandru Elisei wrote:
+> I renamed --target-efi to --efi-payload in the last patch because I felt it
+> looked rather confusing to do ./configure --target=qemu --target-efi when
+> configuring the tests. If the rename is not acceptable, I can think of a
+> few other options:
 
-If build isn't saying anything, we can move on from SPDX comment. :)
+I find --target-efi to be odd irrespective of this new conflict.  A simple --efi
+seems like it would be sufficient.
 
-thanks,
--- Shuah
+> 1. Rename --target to --vmm. That was actually the original name for the
+> option, but I changed it because I thought --target was more generic and
+> that --target=efi would be the way going forward to compile kvm-unit-tests
+> to run as an EFI payload. I realize now that separating the VMM from
+> compiling kvm-unit-tests to run as an EFI payload is better, as there can
+> be multiple VMMs that can run UEFI in a VM. Not many people use kvmtool as
+> a test runner, so I think the impact on users should be minimal.
+
+Again irrespective of --target-efi, I think --target for the VMM is a potentially
+confusing name.  Target Triplet[*] and --target have specific meaning for the
+compiler, usurping that for something similar but slightly different is odd.
+
+But why is the VMM specified at ./configure time?  Why can't it be an option to
+run_tests.sh?  E.g. --target-efi in configure makes sense because it currently
+requires different compilation options, but even that I hope we can someday change
+so that x86-64 always builds EFI-friendly tests.  I really don't want to get to a
+point where tests themselves have to be recompiled to run under different VMMs.
+
+[*] https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.69/html_node/Specifying-Target-Triplets.html
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
