@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 50F664B128B
-	for <lists+kvmarm@lfdr.de>; Thu, 10 Feb 2022 17:19:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 902D24B159B
+	for <lists+kvmarm@lfdr.de>; Thu, 10 Feb 2022 19:55:30 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 79E9D4A0FC;
-	Thu, 10 Feb 2022 11:19:08 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E55DB49F37;
+	Thu, 10 Feb 2022 13:55:29 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: 0.91
@@ -15,46 +15,59 @@ X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@linuxfoundation.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YIF1VpE3Qa1U; Thu, 10 Feb 2022 11:19:08 -0500 (EST)
+	with ESMTP id I3oHr6fbB3dH; Thu, 10 Feb 2022 13:55:29 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E35B949EEF;
-	Thu, 10 Feb 2022 11:19:06 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F50F49F31;
+	Thu, 10 Feb 2022 13:55:28 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DA0A949EEF
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Feb 2022 11:19:05 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1D27649F0C
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Feb 2022 11:46:05 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id mL-G+iHFzbCh for <kvmarm@lists.cs.columbia.edu>;
- Thu, 10 Feb 2022 11:19:00 -0500 (EST)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 76C8540F9C
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Feb 2022 11:19:00 -0500 (EST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id B2955B806A0;
- Thu, 10 Feb 2022 16:18:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E9EFC004E1;
- Thu, 10 Feb 2022 16:18:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1644509937;
- bh=mE84CfkELN0c9QW331zz8GqcAyg9pAb8AMkwuNJ/wAo=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=kBzfe+whiU8VkD4nnORvwXkJN8aVak97dv2TTsubkTsnNIVCNC/uzO1fIGIaoeQvp
- 7dG6zzaZ5tBMf7/WFGwormiSNi5N8C6pa+WdE2ZNNUek3CibRw7WDKQWyRgw6UOrnA
- LIEjwM0WF2rVJOpf7kz8DwkQTKLpj591RU9ZKhnsd1aUJPPEIQUo8uGy5+qf/9fSIu
- DWsoOLKMks7BYOFTJ/xF4asIUwLuiWkmxjoNVsfMc6kn8omtqzWuckOs51E5Tvvsdl
- tvNbYEbcx4IprVlXrVSzphSQHcQdCOePTm8B6O1WgQ4d5HVYyyTlAq5lHtWzhqwXDl
- 9DWLNIrz1Ad9A==
-Date: Thu, 10 Feb 2022 16:18:50 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Shuah Khan <skhan@linuxfoundation.org>
+ with ESMTP id nV24w0IlI5eb for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 10 Feb 2022 11:46:04 -0500 (EST)
+Received: from mail-il1-f182.google.com (mail-il1-f182.google.com
+ [209.85.166.182])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id F22D14086D
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Feb 2022 11:46:03 -0500 (EST)
+Received: by mail-il1-f182.google.com with SMTP id n5so4792225ilk.12
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Feb 2022 08:46:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linuxfoundation.org; s=google;
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=DDtHBrYV020bBGjtIYRFzMtZ1rUWWBBixnBxzXJeFHg=;
+ b=b6JQx2r2RiP/MMxSjrD6RoqNR1f8sgY/J8ogD1k5zuepBjN9K4EpBTF4U3DnkeWghn
+ OiqY/c+ldn1HMMXxr57ZqhnHntCkvLwMwdaoBNgntrz9ZtxNLhNEmUo3JG7R+L6XMQxb
+ 0v7lJ4uHDLla/82flidGVeDfm9T2y7xdlc+iY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=DDtHBrYV020bBGjtIYRFzMtZ1rUWWBBixnBxzXJeFHg=;
+ b=pMZuLzQ/L7tJ2WJDZz+6HJsjyUUyWIwULpFzVQp8QigT3U9DZ/4vk15xacyhEYb6Sj
+ t5Cxzmo5nOpAqN3CRwaThMuokIlIeMkBZExd07B3iuIQ3ZuKwTwxQaeR/OvlT21o1C9D
+ pzD8zq8XU/x18ISxiBvRowSQHFj1PI0vQOOmoHzgYUZmR/C57COflJab4/AxQJw13wBI
+ fpZu/EnFxIBBkJZAs3v8qzovpcXpdwN0XQKpeaZZ0NvA45OUk5YSvWXCoJT6TRhRzV3w
+ 2wRdHnO47LJI1ZWqhEY7vxiqRYZyNoNLjXAaoekgIqhDzSM94A4/5h9vNkUgcHnWc6Dv
+ O9VQ==
+X-Gm-Message-State: AOAM530Gf3cg4pEwP4t2gsyZfMUvdFgtZO9ver4lq3QaspvymWGlfkxm
+ rw7x26fUaZ6Yt/h7Sp13kh+SCw==
+X-Google-Smtp-Source: ABdhPJwBlZn/97+3CiBD8ZcFr5rKXnOkyTzDg+cp7L6qXTI403VmIgvZfUlQKv423UjT5i7Ow2M58Q==
+X-Received: by 2002:a05:6e02:1544:: with SMTP id
+ j4mr4346609ilu.77.1644511563158; 
+ Thu, 10 Feb 2022 08:46:03 -0800 (PST)
+Received: from [192.168.1.128] ([71.205.29.0])
+ by smtp.gmail.com with ESMTPSA id d2sm4037645iog.42.2022.02.10.08.46.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 10 Feb 2022 08:46:02 -0800 (PST)
 Subject: Re: [PATCH v11 06/40] arm64/sme: Provide ABI documentation for SME
-Message-ID: <YgU66pT3efqwwn7U@sirena.org.uk>
+To: Mark Brown <broonie@kernel.org>
 References: <20220207152109.197566-1-broonie@kernel.org>
  <20220207152109.197566-7-broonie@kernel.org>
  <49da0f58-7a20-e557-54c3-34bd7074f711@linuxfoundation.org>
@@ -62,17 +75,25 @@ References: <20220207152109.197566-1-broonie@kernel.org>
  <e6d76104-b7f6-1588-d734-1a09c2990299@linuxfoundation.org>
  <YgK9v7u+FcBTB1ur@sirena.org.uk>
  <d41ec776-5bd0-438f-0ab3-6eb1891e7fdc@linuxfoundation.org>
+ <YgU66pT3efqwwn7U@sirena.org.uk>
+From: Shuah Khan <skhan@linuxfoundation.org>
+Message-ID: <fb795b74-e44e-9b18-fb37-505b18d129fc@linuxfoundation.org>
+Date: Thu, 10 Feb 2022 09:46:00 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-In-Reply-To: <d41ec776-5bd0-438f-0ab3-6eb1891e7fdc@linuxfoundation.org>
-X-Cookie: Only God can make random selections.
+In-Reply-To: <YgU66pT3efqwwn7U@sirena.org.uk>
+Content-Language: en-US
+X-Mailman-Approved-At: Thu, 10 Feb 2022 13:55:27 -0500
 Cc: Marc Zyngier <maz@kernel.org>,
  Basant Kumar Dwivedi <Basant.KumarDwivedi@arm.com>,
  Will Deacon <will@kernel.org>, Luis Machado <luis.machado@arm.com>,
  Szabolcs Nagy <szabolcs.nagy@arm.com>,
  Catalin Marinas <catalin.marinas@arm.com>,
  linux-arm-kernel@lists.infradead.org, linux-kselftest@vger.kernel.org,
- Alan Hayward <alan.hayward@arm.com>, Shuah Khan <shuah@kernel.org>,
- kvmarm@lists.cs.columbia.edu, Salil Akerkar <Salil.Akerkar@arm.com>
+ Alan Hayward <alan.hayward@arm.com>, Shuah Khan <skhan@linuxfoundation.org>,
+ Shuah Khan <shuah@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ Salil Akerkar <Salil.Akerkar@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -84,71 +105,37 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============6648562463102305009=="
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+On 2/10/22 9:18 AM, Mark Brown wrote:
+> On Thu, Feb 10, 2022 at 08:12:44AM -0700, Shuah Khan wrote:
+>> On 2/8/22 12:00 PM, Mark Brown wrote:
+> 
+>>> Sure, there are lots of structured files in there like .rst ones which
+>>> have SPDX headers but this is just a free format text file so it's not
+>>> clear what if any format to use.
+> 
+>> I think SPDX is applicable to all files free format or not. Are you seeing
+>> any build warns during doc build on this?
+> 
+> No, but I'm not exactly going out of my way to do anything with them.
+> As far as I know these files don't get touched during builds, they just
+> exist in the kernel tree.  If there is some way of generating warnings
+> from them there are quite a lot of other such files already there and
+> doing so.  Like I say I can't find any evidence that anyone has looked
+> at adding SPDX to these files, as far as I know the long term plan such
+> as it is is to convert to other formats and I can't immediately think
+> how one would do it otherwise in a way that works well.
+> 
 
---===============6648562463102305009==
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="E6HfXQqv4dHcMRh/"
-Content-Disposition: inline
+If build isn't saying anything, we can move on from SPDX comment. :)
 
-
---E6HfXQqv4dHcMRh/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Feb 10, 2022 at 08:12:44AM -0700, Shuah Khan wrote:
-> On 2/8/22 12:00 PM, Mark Brown wrote:
-
-> > Sure, there are lots of structured files in there like .rst ones which
-> > have SPDX headers but this is just a free format text file so it's not
-> > clear what if any format to use.
-
-> I think SPDX is applicable to all files free format or not. Are you seeing
-> any build warns during doc build on this?
-
-No, but I'm not exactly going out of my way to do anything with them.
-As far as I know these files don't get touched during builds, they just
-exist in the kernel tree.  If there is some way of generating warnings
-=66rom them there are quite a lot of other such files already there and
-doing so.  Like I say I can't find any evidence that anyone has looked
-at adding SPDX to these files, as far as I know the long term plan such
-as it is is to convert to other formats and I can't immediately think
-how one would do it otherwise in a way that works well.
-
-I'm sure the license compliance people would find adding annotations
-useful but working out how to do that sensibly for these files seems
-beyond the scope of this series.
-
---E6HfXQqv4dHcMRh/
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmIFOuoACgkQJNaLcl1U
-h9A10Af9HttlrltFQQbCvNVwAOt31oIw1I7NKyD4F2QPCnbjirxGPF9FhoQCKxlh
-/4VLdkvuPNogggtjy9M2yHjmRN4rix4RlhVTd2L4gyPaixsNDSyn8Qu77x4jq6iP
-d2qsu+w8J8Fzg4bq7oRPMHPa/kEJXwq02NiVZMzcxHU0kuBue5qJEpU8HRGnRwDV
-3ZaWQOYl0zRojYCYWz4a/FGdPVGyhvA0Giet2iYRFJ4c4UHOReS65y7w49dzDsqZ
-sgK2ZbwLIpZGqiiCjC+hdYqbRHebJpMsJSQekJLKEYeI5Az1VktNXPnAzTOGiqYY
-34BmoPSY/6gjss5tsCgqNbkF8N/D9Q==
-=kc0B
------END PGP SIGNATURE-----
-
---E6HfXQqv4dHcMRh/--
-
---===============6648562463102305009==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+thanks,
+-- Shuah
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
 https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
-
---===============6648562463102305009==--
