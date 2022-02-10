@@ -2,105 +2,82 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 973A64B1FF3
-	for <lists+kvmarm@lfdr.de>; Fri, 11 Feb 2022 09:13:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AB9D64B21E0
+	for <lists+kvmarm@lfdr.de>; Fri, 11 Feb 2022 10:28:13 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DBC1E49F5F;
-	Fri, 11 Feb 2022 03:13:55 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E679F4A19F;
+	Fri, 11 Feb 2022 04:28:12 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 0.91
-X-Spam-Level: 
-X-Spam-Status: No, score=0.91 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, DNS_FROM_AHBL_RHSBL=2.699, T_DKIM_INVALID=0.01,
+X-Spam-Score: 1.932
+X-Spam-Level: *
+X-Spam-Status: No, score=1.932 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	DNS_FROM_AHBL_RHSBL=2.699, MISSING_HEADERS=1.021, T_DKIM_INVALID=0.01,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UyIu+KhA17ht; Fri, 11 Feb 2022 03:13:55 -0500 (EST)
+	with ESMTP id zffm6QPWLxKy; Fri, 11 Feb 2022 04:28:12 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 51EB649F3E;
-	Fri, 11 Feb 2022 03:13:54 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8E9BC4A19A;
+	Fri, 11 Feb 2022 04:28:11 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DDEB149F32
- for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Feb 2022 03:13:52 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 07E4749F53
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Feb 2022 17:42:46 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ZeRpUxs+rZJN for <kvmarm@lists.cs.columbia.edu>;
- Fri, 11 Feb 2022 03:13:51 -0500 (EST)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.129.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CE71349F09
- for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Feb 2022 03:13:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1644567231;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OUVR/zoupdoX6+ubOzd6knBoEGVnkn4cOQdoBMCfCbw=;
- b=UKSxmPRqGMN2HQsjtYFNB8/C7uWKe7rx/wkh11bGUWQIVI7lXVvdWdUScnncF6oy180yRd
- ubB9H1mjMgVRGCh8fCerEKUrjPl8YNinVRWGEKpumslgGavW8iXPq3laMla3QWaIscZAQ2
- jnPvDb77Sapd3fyD89kED/NU+E+YXVY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-441-P8E9wMuqPIeJ4V8XJFRSBw-1; Fri, 11 Feb 2022 03:13:50 -0500
-X-MC-Unique: P8E9wMuqPIeJ4V8XJFRSBw-1
-Received: by mail-wm1-f71.google.com with SMTP id
- c7-20020a1c3507000000b0034a0dfc86aaso5546044wma.6
- for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Feb 2022 00:13:49 -0800 (PST)
+ with ESMTP id rHeBf8pl8xRq for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 10 Feb 2022 17:42:44 -0500 (EST)
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com
+ [209.85.219.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id DEC1D49F4B
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Feb 2022 17:42:44 -0500 (EST)
+Received: by mail-yb1-f202.google.com with SMTP id
+ 3-20020a250103000000b0061d99b7d0b8so15074035ybb.13
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Feb 2022 14:42:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=date:message-id:mime-version:subject:from:cc;
+ bh=KKogoV3I1Ztwi08cWi/kskl7f13dMqHnW1NYHFKZhQY=;
+ b=MSpmQCaLUVfuj+jaf2QClix5p6yRH8yzpyXKVnUK70zmSq5C6/qdwILNdwUhcYMF8c
+ u2hO+qWimnqb+XJXum2CyHU9kaCpP4gkRh47JMce1cQUyDNmevlnXSk/v4J+ibagMpdi
+ 6SyBC+677sSNAQTgfwfnsoK9hG38S7tJZegaoLmq/yU+PY5VBbjSvEWD5BQFkjDn541W
+ 0JSNQrorMDSfKK5rlmgt+EWI1MHti2dN4PrYJBbrILg+UvVfff878dBp5MtI/4qmAOqW
+ Nc7XlL61zC/1JLJf8Tf3E1Keb7HV2kSiSgcuaOFlOR7BDfv+pCD6q+wH9wLq+bDThuMT
+ cAVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
- :content-language:to:cc:references:from:in-reply-to
- :content-transfer-encoding;
- bh=OUVR/zoupdoX6+ubOzd6knBoEGVnkn4cOQdoBMCfCbw=;
- b=qUSTug9fZpg0arf9C6x73OcDCd6OJONi1cOsTXCFZRuOFNGCIROuwTEL89Jc1gXIZf
- inIRVCj0MMGdF5qMVkSmfSvVX2MTVHnYt0XmDJ6iMGotBWoZoOYdxkXp8b2wKDmwUyGX
- kM7rCE7TX13kU75a1kwQqlsgBjksmlT+mXAJFNZKbMyFdWyhQNr3s8ZsNKUkLZ+3apto
- EYpRQ+tKIXn678oBIgBj2vtu7URZ5DTPll1/liYo7+0glnTzsEDZB+vIkIZBP3iCqDmm
- O/w4YFfwGy4VSMHWbFRQ3kc8YwJxSqwwIiVJNthucof/SfuXbt/G0OR2L1VynJgp1osa
- o46A==
-X-Gm-Message-State: AOAM53169WJxqlWQ6jAPuvt0tdvDwQweii/qIAs75o9R5rO/JsDPKq7v
- 0iGTJHHKnvhATfmDh6maHHLXjzUiqAYgYCAP5MWj9KDG/E7gXuhoyW0naz8bdImvN6TKN8uFOx6
- krqdq4jGLNipEx9/RxazH2/pc
-X-Received: by 2002:a05:600c:4295:: with SMTP id
- v21mr1158172wmc.19.1644567229080; 
- Fri, 11 Feb 2022 00:13:49 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJzFDwMOqNhdLMmzCS9As9GMXonsgOfpQhipriYO985eA+t9E1y7/H8f0Oa+d3sbWGyRVAQfEA==
-X-Received: by 2002:a05:600c:4295:: with SMTP id
- v21mr1158150wmc.19.1644567228874; 
- Fri, 11 Feb 2022 00:13:48 -0800 (PST)
-Received: from [192.168.8.104] (tmo-098-218.customers.d1-online.com.
- [80.187.98.218])
- by smtp.gmail.com with ESMTPSA id l28sm19947430wrz.90.2022.02.11.00.13.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Feb 2022 00:13:48 -0800 (PST)
-Message-ID: <f326daff-8384-4666-fc5e-6b7b509f6fe8@redhat.com>
-Date: Fri, 11 Feb 2022 09:13:45 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [kvm-unit-tests PATCH 0/4] configure changes and rename
- --target-efi
-To: Zixuan Wang <zxwang42@gmail.com>, Sean Christopherson <seanjc@google.com>
-References: <20220210150943.1280146-1-alexandru.elisei@arm.com>
- <YgVKmjBnAjITQcm+@google.com> <YgVPPCTJG7UFRkhQ@monolith.localdoman>
- <CAEDJ5ZSR=rw_ALjBcLgeVz9H6TS67eWvZW2SvGTJV468WjgyKw@mail.gmail.com>
- <YgVpJDIfUVzVvFdx@google.com>
- <CAEDJ5ZRkuCbmPzZXz0x2XUXqjKoi+O+Uq_SNkNW_We2mSv4aRg@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-In-Reply-To: <CAEDJ5ZRkuCbmPzZXz0x2XUXqjKoi+O+Uq_SNkNW_We2mSv4aRg@mail.gmail.com>
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=thuth@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Cc: kvm list <kvm@vger.kernel.org>, kvmarm@lists.cs.columbia.edu,
- Paolo Bonzini <pbonzini@redhat.com>, Varad Gautam <varad.gautam@suse.com>
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:cc;
+ bh=KKogoV3I1Ztwi08cWi/kskl7f13dMqHnW1NYHFKZhQY=;
+ b=JLqkp0SW1UdhtBNxpUmh/+qdLE25SSMkIP+q+9iLGJTufq4Ev0CltCAjyRCNYafrxR
+ X6w9fV+Q5WIYg99/ewp8+5cDlTMMPic4c2DvVYTqcEyeiYdAChFCAtB9+ZhXVAzGgG1D
+ EpQqXo3jCKprbRZrR0JFaPLg5nHv0MoRlmK/hu+GAxMe6MRXzXaas34vD7Aa5L36zFZG
+ N1r+LeTf7k5XUhfeDZ6pmxZzmcpL0PtBiWpzqUDirRq58TlD8xi8TWd2dwu+X3B6eToI
+ xYcpvqSlBV3tsa7LgSHh5LP94ASbGlf2aKEe/AcMdsDkGJz8eZgEfde6JyNP3jUw7inr
+ bDbQ==
+X-Gm-Message-State: AOAM531dLU7Gv+D25ZMWEOoGvKwCfp4VgNvhF9zC7wU504NLa5lJvjRx
+ w5/SnLNd7bJXiIvHVa6Cfrn+M4BP2iR9OkjS9Q==
+X-Google-Smtp-Source: ABdhPJyp/KdgRlhbqVTv9Y4bfoAHsHmpgIk8uWR57nT9DX2u71VlcwaE1ajfiRh3Ozy8DknZf9zAjVroiBACXQvDfw==
+X-Received: from kaleshsingh.mtv.corp.google.com
+ ([2620:15c:211:200:8f02:232:ad86:2ab2])
+ (user=kaleshsingh job=sendgmr) by 2002:a25:5802:: with SMTP id
+ m2mr9400424ybb.681.1644532964348; Thu, 10 Feb 2022 14:42:44 -0800 (PST)
+Date: Thu, 10 Feb 2022 14:41:41 -0800
+Message-Id: <20220210224220.4076151-1-kaleshsingh@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.35.1.265.g69c8d7142f-goog
+Subject: [PATCH 0/7] KVM: arm64: Hypervisor stack enhancements
+From: Kalesh Singh <kaleshsingh@google.com>
+X-Mailman-Approved-At: Fri, 11 Feb 2022 04:28:10 -0500
+Cc: Catalin Marinas <catalin.marinas@arm.com>, Joey Gouly <joey.gouly@arm.com>,
+ Kalesh Singh <kaleshsingh@google.com>, will@kernel.org,
+ kvmarm@lists.cs.columbia.edu, Andrew Walbran <qwandor@google.com>,
+ maz@kernel.org, linux-arm-kernel@lists.infradead.org, kernel-team@android.com,
+ Pasha Tatashin <pasha.tatashin@soleen.com>, surenb@google.com,
+ Peter Collingbourne <pcc@google.com>, linux-kernel@vger.kernel.org,
+ Paolo Bonzini <pbonzini@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -112,63 +89,82 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 10/02/2022 20.48, Zixuan Wang wrote:
-> On Thu, Feb 10, 2022 at 11:36 AM Sean Christopherson <seanjc@google.com> wrote:
->>
->> On Thu, Feb 10, 2022, Zixuan Wang wrote:
->>> On Thu, Feb 10, 2022 at 11:05 AM Alexandru Elisei
->>> <alexandru.elisei@arm.com> wrote:
->>>>
->>>> Hi,
->>>>
->>>> On Thu, Feb 10, 2022 at 05:25:46PM +0000, Sean Christopherson wrote:
->>>>> On Thu, Feb 10, 2022, Alexandru Elisei wrote:
->>>>>> I renamed --target-efi to --efi-payload in the last patch because I felt it
->>>>>> looked rather confusing to do ./configure --target=qemu --target-efi when
->>>>>> configuring the tests. If the rename is not acceptable, I can think of a
->>>>>> few other options:
->>>>>
->>>>> I find --target-efi to be odd irrespective of this new conflict.  A simple --efi
->>>>> seems like it would be sufficient.
->>>>>
->>>>>> 1. Rename --target to --vmm. That was actually the original name for the
->>>>>> option, but I changed it because I thought --target was more generic and
->>>>>> that --target=efi would be the way going forward to compile kvm-unit-tests
->>>>>> to run as an EFI payload. I realize now that separating the VMM from
->>>>>> compiling kvm-unit-tests to run as an EFI payload is better, as there can
->>>>>> be multiple VMMs that can run UEFI in a VM. Not many people use kvmtool as
->>>>>> a test runner, so I think the impact on users should be minimal.
->>>>>
->>>>> Again irrespective of --target-efi, I think --target for the VMM is a potentially
->>>>> confusing name.  Target Triplet[*] and --target have specific meaning for the
->>>>> compiler, usurping that for something similar but slightly different is odd.
->>>>
->>>> Wouldn't that mean that --target-efi is equally confusing? Do you have
->>>> suggestions for other names?
->>>
->>> How about --config-efi for configure, and CONFIG_EFI for source code?
->>> I thought about this name when I was developing the initial patch, and
->>> Varad also proposed similar names in his initial patch series [1]:
->>> --efi and CONFIG_EFI.
->>
->> I don't mind CONFIG_EFI for the source, that provides a nice hint that it's a
->> configure option and is familiar for kernel developers.  But for the actually
->> option, why require more typing?  I really don't see any benefit of --config-efi
->> over --efi.
-> 
-> I agree, --efi looks better than --target-efi or --config-efi.
+This series is based on v5.17-rc3 and adds the following stack features to
+the KVM nVHE hypervisor:
 
-<bikeshedding>
-Or maybe --enable-efi ... since configure scripts normally take 
-"--enable-..." or "--disable-..." parameters for stuff like this?
-</bikeshedding>
+== Hyp Stack Guard Pages ==
 
-  Thomas
+Based on the technique used by arm64 VMAP_STACK to detect overflow.
+i.e. the stack is aligned to twice its size which ensure that the 
+'stack shift' bit of any valid SP is 0. The 'stack shift' bit can be
+tested in the exception entry to detect overflow without corrupting GPRs.
+
+== Hyp Stack Unwinder ==
+
+Based on the arm64 kernel stack unwinder
+(See: arch/arm64/kernel/stacktrace.c)
+
+The unwinding and dumping of the hyp stack is not enabled by default and
+depends on CONFIG_NVHE_EL2_DEBUG to avoid potential information leaks.
+
+When CONFIG_NVHE_EL2_DEBUG is enabled the host stage 2 protection is
+disabled, allowing the host to read the hypervisor stack pages and unwind
+the stack from EL1. This allows us to print the hypervisor stacktrace
+before panicking the host; as shown below:
+
+kvm [408]: nVHE hyp panic at: \
+           [<ffffffc01161460c>] __kvm_nvhe_overflow_stack+0x10/0x34!
+kvm [408]: nVHE HYP call trace:
+kvm [408]: [<ffffffc011614974>] __kvm_nvhe_hyp_panic_bad_stack+0xc/0x10
+kvm [408]: [<ffffffc01160fa48>] __kvm_nvhe___kvm_hyp_host_vector+0x248/0x794
+kvm [408]: [<ffffffc01161461c>] __kvm_nvhe_overflow_stack+0x20/0x34
+. . .
+kvm [408]: [<ffffffc01161461c>] __kvm_nvhe_overflow_stack+0x20/0x34
+kvm [408]: [<ffffffc01161421c>] __kvm_nvhe___kvm_vcpu_run+0x2c/0x40c
+kvm [408]: [<ffffffc011615e14>] __kvm_nvhe_handle___kvm_vcpu_run+0x1c8/0x36c
+kvm [408]: [<ffffffc0116157c4>] __kvm_nvhe_handle_trap+0xa4/0x124
+kvm [408]: [<ffffffc01160f060>] __kvm_nvhe___host_exit+0x60/0x64
+kvm [408]: ---- end of nVHE HYP call trace ----
+
+
+Kalesh Singh (3):
+  KVM: arm64: Add Hyp overflow stack
+  KVM: arm64: Unwind and dump nVHE HYP stacktrace
+  KVM: arm64: Symbolize the nVHE HYP backtrace
+
+Quentin Perret (4):
+  KVM: arm64: Map the stack pages in the 'private' range
+  KVM: arm64: Factor out private range VA allocation
+  arm64: asm: Introduce test_sp_overflow macro
+  KVM: arm64: Allocate guard pages near hyp stacks
+
+ arch/arm64/include/asm/assembler.h   |  11 +
+ arch/arm64/include/asm/kvm_asm.h     |  17 ++
+ arch/arm64/kernel/entry.S            |   9 +-
+ arch/arm64/kvm/Makefile              |   1 +
+ arch/arm64/kvm/arm.c                 |   2 +-
+ arch/arm64/kvm/handle_exit.c         |  14 +-
+ arch/arm64/kvm/hyp/include/nvhe/mm.h |   1 +
+ arch/arm64/kvm/hyp/nvhe/host.S       |  21 ++
+ arch/arm64/kvm/hyp/nvhe/mm.c         |  28 ++-
+ arch/arm64/kvm/hyp/nvhe/setup.c      |  63 +++++-
+ arch/arm64/kvm/hyp/nvhe/switch.c     |  22 ++
+ arch/arm64/kvm/stacktrace.c          | 290 +++++++++++++++++++++++++++
+ arch/arm64/kvm/stacktrace.h          |  17 ++
+ scripts/kallsyms.c                   |   2 +-
+ 14 files changed, 468 insertions(+), 30 deletions(-)
+ create mode 100644 arch/arm64/kvm/stacktrace.c
+ create mode 100644 arch/arm64/kvm/stacktrace.h
+
+
+base-commit: dfd42facf1e4ada021b939b4e19c935dcdd55566
+-- 
+2.35.1.265.g69c8d7142f-goog
 
 _______________________________________________
 kvmarm mailing list
