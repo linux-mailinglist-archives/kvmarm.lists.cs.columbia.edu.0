@@ -2,87 +2,59 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CCA224BD0CD
-	for <lists+kvmarm@lfdr.de>; Sun, 20 Feb 2022 20:04:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E0B424BD985
+	for <lists+kvmarm@lfdr.de>; Mon, 21 Feb 2022 12:54:45 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4C30349F00;
-	Sun, 20 Feb 2022 14:04:12 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 02D364B0ED;
+	Mon, 21 Feb 2022 06:54:45 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: 1.911
-X-Spam-Level: *
-X-Spam-Status: No, score=1.911 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	DNS_FROM_AHBL_RHSBL=2.699, HK_RANDOM_FROM=1, T_DKIM_INVALID=0.01,
+X-Spam-Score: 0.801
+X-Spam-Level: 
+X-Spam-Status: No, score=0.801 required=6.1 tests=[BAYES_00=-1.9,
+	DNS_FROM_AHBL_RHSBL=2.699, RCVD_IN_DNSWL_BLOCKED=0.001,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id U6gOyy7Lxl5o; Sun, 20 Feb 2022 14:04:12 -0500 (EST)
+	with ESMTP id 6vSiD+55G1PH; Mon, 21 Feb 2022 06:54:44 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 204D34B1BF;
-	Sun, 20 Feb 2022 14:04:08 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 766A74B1BF;
+	Mon, 21 Feb 2022 06:54:43 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7B92949EE1
- for <kvmarm@lists.cs.columbia.edu>; Fri, 18 Feb 2022 17:36:05 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9E66140BED
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 21 Feb 2022 06:54:42 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id rKOQLh4nGc4L for <kvmarm@lists.cs.columbia.edu>;
- Fri, 18 Feb 2022 17:36:04 -0500 (EST)
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com
- [209.85.218.42])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 09B7049EDE
- for <kvmarm@lists.cs.columbia.edu>; Fri, 18 Feb 2022 17:36:03 -0500 (EST)
-Received: by mail-ej1-f42.google.com with SMTP id p15so18082246ejc.7
- for <kvmarm@lists.cs.columbia.edu>; Fri, 18 Feb 2022 14:36:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=u+sFcg1Jrzd7RdQxBiVyHyjcrIIMdAB2S95NaiORBYQ=;
- b=cGWMjVauB1J5Kz60+ee5aWzyXC1AM3YWk9YtVYIpDse5G74x18lvIyFkPja0Abo2BE
- x35vQ/IgynKUwIAXySKdR7gESn/FCFxB+0QwV5+MYdhS+G+r+74C3G2GEbQ/KuACKSPg
- FGOM54bwhNMTJiu59gOKFKakEbIm3IhB8DdsdONoBkbNGLPhaDpiI23vY1/A4LizwOr+
- GU08VQDrmHuVY4hMkqkbJYpHgIH3shY7nppq7yL8Dj1EXvF8eFWdALTYd9V78sQra+cQ
- a8jdHCxrpmXpRDydmzrnQYWMNvTubkLbi0lCjjinCA3Iw9u8kWX9ZB6pvn5soobO7Dtz
- bFbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=u+sFcg1Jrzd7RdQxBiVyHyjcrIIMdAB2S95NaiORBYQ=;
- b=KgAn38A+a7yxWNIHfMIs6Co57ywOXKAzjV2M/UXmra9LHt53tdYsrU211eoPvYj836
- +423udUQd/5dSFBoFn8neXm1A4dOSwExv03zzgResaPjVB07h113edJZnYFu/QgDVHJ9
- 4gR8pApwRATHugVbfCEasrp6vlQ9I5FdyAkIB0wrPGTR8qMYv75bkdLfaWu66eZ7DfOL
- J01vjyd8LZZM4NOQL9VNV9c5nx7wwsepK0KWQmRc9cn1f/Qr2s+z3bd3uRJnrmVdn1/C
- SxFN5G9xU6ib6+g2wtu0IQipLATSLBROqfnF1O5KOt4xkyOIGhs8It6jzYFx8u739CQf
- wzXA==
-X-Gm-Message-State: AOAM533qSTD8nxZIQCaeAMXv/Iaiz9/qgxL4oGNsHR/rrcLcdgaaORde
- bH7q/8xAb2fKAFprsjdLPtTbElp8qWyDYH8z7oRD5w==
-X-Google-Smtp-Source: ABdhPJxCAq71uudZo1yeq2i43zfSBGdz40+2gbUVJ11hY+5K5ovbv3z9+MmVE7/NFhdhZ2/awk1paWaMMa6UYaynntU=
-X-Received: by 2002:a17:906:7751:b0:6ce:e3c:81a6 with SMTP id
- o17-20020a170906775100b006ce0e3c81a6mr7806909ejn.278.1645223762896; Fri, 18
- Feb 2022 14:36:02 -0800 (PST)
+ with ESMTP id y-nli8PK50y3 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 21 Feb 2022 06:54:41 -0500 (EST)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 880664038C
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 21 Feb 2022 06:54:41 -0500 (EST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id ED1A0B810F5;
+ Mon, 21 Feb 2022 11:54:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F63C340EC;
+ Mon, 21 Feb 2022 11:54:35 +0000 (UTC)
+Date: Mon, 21 Feb 2022 11:54:32 +0000
+From: Catalin Marinas <catalin.marinas@arm.com>
+To: Mark Brown <broonie@kernel.org>
+Subject: Re: [PATCH v11 09/40] arm64/sme: Early CPU setup for SME
+Message-ID: <YhN9eAb7hpYzYYqI@arm.com>
+References: <20220207152109.197566-1-broonie@kernel.org>
+ <20220207152109.197566-10-broonie@kernel.org>
 MIME-Version: 1.0
-References: <20211111020738.2512932-1-seanjc@google.com>
- <20211111020738.2512932-10-seanjc@google.com>
- <YfrQzoIWyv9lNljh@google.com>
- <CABCJKufg=ONNOvF8+BRXfLoTUfeiZZsdd8TnpV-GaNK_o-HuaA@mail.gmail.com>
- <202202061011.A255DE55B@keescook>
- <YgAvhG4wvnslbTqP@hirez.programming.kicks-ass.net>
- <202202061854.B5B11282@keescook>
-In-Reply-To: <202202061854.B5B11282@keescook>
-From: Will McVicker <willmcvicker@google.com>
-Date: Fri, 18 Feb 2022 14:35:47 -0800
-Message-ID: <CABYd82ZmDbgmEGhdWOJ5Um8tiFd4TeQ-QZ2+xwxwqqQs6oi0xg@mail.gmail.com>
-Subject: Re: [PATCH v4 09/17] perf/core: Use static_call to optimize
- perf_guest_info_callbacks
-To: Kees Cook <keescook@chromium.org>
-X-Mailman-Approved-At: Sun, 20 Feb 2022 14:04:07 -0500
-Cc: kvm@vger.kernel.org, Peter Zijlstra <peterz@infradead.org>,
- LKML <linux-kernel@vger.kernel.org>, Sami Tolvanen <samitolvanen@google.com>,
- kvmarm <kvmarm@lists.cs.columbia.edu>,
- linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
+Content-Disposition: inline
+In-Reply-To: <20220207152109.197566-10-broonie@kernel.org>
+Cc: Basant Kumar Dwivedi <Basant.KumarDwivedi@arm.com>,
+ Will Deacon <will@kernel.org>, Luis Machado <luis.machado@arm.com>,
+ Szabolcs Nagy <szabolcs.nagy@arm.com>, Marc Zyngier <maz@kernel.org>,
+ Shuah Khan <skhan@linuxfoundation.org>, linux-arm-kernel@lists.infradead.org,
+ linux-kselftest@vger.kernel.org, Alan Hayward <alan.hayward@arm.com>,
+ Shuah Khan <shuah@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ Salil Akerkar <Salil.Akerkar@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -99,56 +71,21 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Sun, Feb 6, 2022 at 6:56 PM Kees Cook <keescook@chromium.org> wrote:
->
-> On Sun, Feb 06, 2022 at 09:28:52PM +0100, Peter Zijlstra wrote:
-> > On Sun, Feb 06, 2022 at 10:45:15AM -0800, Kees Cook wrote:
-> >
-> > > I'm digging through the macros to sort this out, but IIUC, an example of
-> > > the problem is:
-> > >
-> >
-> > > so the caller is expecting "unsigned int (*)(void)" but the prototype
-> > > of __static_call_return0 is "long (*)(void)":
-> > >
-> > > long __static_call_return0(void);
-> > >
-> > > Could we simply declare a type-matched ret0 trampoline too?
-> >
-> > That'll work for this case, but the next case the function will have
-> > arguments we'll need even more nonsense...
->
-> Shouldn't the typeof() work there too, though? I.e. as long as the
-> return value can hold a "0", it'd work.
->
-> > And as stated in that other email, there's tb_stub_func() having the
-> > exact same problem as well.
->
-> Yeah, I'd need to go look at that again.
->
-> > The x86_64 CFI patches had a work-around for this, that could trivially
-> > be lifted I suppose.
->
-> Yeah, I think it'd be similar. I haven't had a chance to go look at that
-> again...
->
-> --
-> Kees Cook
+On Mon, Feb 07, 2022 at 03:20:38PM +0000, Mark Brown wrote:
+> SME requires similar setup to that for SVE: disable traps to EL2 and
+> make sure that the maximum vector length is available to EL1, for SME we
+> have two traps - one for SME itself and one for TPIDR2.
+> 
+> In addition since we currently make no active use of priority control
+> for SCMUs we map all SME priorities lower ELs may configure to 0, the
+> architecture specified minimum priority, to ensure that nothing we
+> manage is able to configure itself to consume excessive resources.  This
+> will need to be revisited should there be a need to manage SME
+> priorities at runtime.
+> 
+> Signed-off-by: Mark Brown <broonie@kernel.org>
 
-
-Hi All,
-
-I noticed that this thread kind of died out. Does anyone have any
-action items that need to be followed up to help resolve this issue?
-The offending patch is breaking the ARM64 Android Common Kernels
-(Pixel 6 in particular) and I imagine it might also have an impact on
-other ARM64 platforms upstream that just haven't hit this perf_trace
-case yet.
-
-If anyone needs help verifying any fixes, I'm happy to test it out.
-
-Thanks,
-Will
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
