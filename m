@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E41F4C135B
-	for <lists+kvmarm@lfdr.de>; Wed, 23 Feb 2022 13:57:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 636384C13D9
+	for <lists+kvmarm@lfdr.de>; Wed, 23 Feb 2022 14:16:36 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E86034C4FB;
-	Wed, 23 Feb 2022 07:57:17 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A84D84C4F9;
+	Wed, 23 Feb 2022 08:16:35 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
@@ -18,68 +18,63 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4qKhTEpMUXUt; Wed, 23 Feb 2022 07:57:17 -0500 (EST)
+	with ESMTP id 4VhJR2-RQmAk; Wed, 23 Feb 2022 08:16:35 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7E3C54C48F;
-	Wed, 23 Feb 2022 07:57:16 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4A1B44C4F3;
+	Wed, 23 Feb 2022 08:16:34 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D29814C3CD
- for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 07:57:14 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 84A544C4E5
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 08:16:33 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id MLqmp+9Q0Z7p for <kvmarm@lists.cs.columbia.edu>;
- Wed, 23 Feb 2022 07:57:13 -0500 (EST)
+ with ESMTP id N9OzXcFn7lji for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 23 Feb 2022 08:16:32 -0500 (EST)
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 30E924C256
- for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 07:57:13 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 56EF54C4C6
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 08:16:32 -0500 (EST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 077DD6148F
- for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 12:57:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BDE0C340F1
- for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 12:57:11 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id CEE1F61538;
+ Wed, 23 Feb 2022 13:16:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7F2C340F0;
+ Wed, 23 Feb 2022 13:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1645621031;
- bh=T3RPLphnpfjwjFji7iWJDHhlKcmc/lW8LSE7GNk2LKQ=;
- h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=oRYCnN+JtWTk+ZS+CT7d6jaqcSPRpUuFonbOK9xP0xB7QUUTpeIRYil0Z6yC0IrpP
- +STyaafk7/Yc//R5yR3Na6Wq8JTsYEQhJulAeoMOY2cxmshWudggYn9SYfYhvPbjqz
- S1XqLyRVOh1UX3uZwyDM/14Yi7HSPfG4EpA2kazhE8+xmwWUoOWTd1WMI99ANMWTg5
- oUulsYyUXWW2XP5os7plGfrs4dIepLnvkI1ZUGsK82KQIbU31vVFcj+qNNgPrdztYc
- n9a+b11/5Pe1Vquy+iQtBZEfvkVQqFxTCFvave+ELkO89WpT/CSxx1FVOJ2uZ5FkkF
- B3pJD/7n4mIIQ==
-Received: by mail-yb1-f179.google.com with SMTP id y6so47773558ybc.5
- for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 04:57:11 -0800 (PST)
-X-Gm-Message-State: AOAM532zglF9D4KrGwVH9ZEPv+apxZq8822LCXlr1trnFHfzcg1KbVGP
- dDVHunAJW5o+1rPJeCLBzOaeEIDbLZx84gEYNKM=
-X-Google-Smtp-Source: ABdhPJwEL3v2n7dXLiGGSxBUDiI1buHwdZ4ctEc1Ksn2/qthjXJ6pwsBtWyB0/G9MaH4qLrswEBFghsg5dkZhl8K2zI=
-X-Received: by 2002:a25:e014:0:b0:619:a368:c3b5 with SMTP id
- x20-20020a25e014000000b00619a368c3b5mr27062454ybg.383.1645621030432; Wed, 23
- Feb 2022 04:57:10 -0800 (PST)
+ s=k20201202; t=1645622190;
+ bh=7giPPViJQLW4TJDXyefdXReC4DqhaghKKKLPGlhBsrM=;
+ h=From:To:Cc:Subject:Date:From;
+ b=ECzbP1wI/3YSJF6MmUe3UGA2D7WBtJ3vRxfRg88Q+FKVPGZKv8lK24ZdgcLDIy/2C
+ 9IajtJyZDAzvL2YNZBuCredpFMYEp1EZMW7JuP1XT7Pz6RxGv9Rujc69qg5Jpvh60F
+ JjgnVUQIwn8/8/yVAYg9fXCR3qccSI2s/IpaJqExeOb/Zs1Emk1yck7Z3IAuKek2p0
+ nXiVzc+1Cy6gQkYAJNhVdnsToga17j9ybhYu/5lf0s+Q7uWHfrf/9DMcf4yR8FcnnA
+ 1j6trUyrV6TM55aLLNQGZzfo+b+/QJZ8sMX3Q7O0agycTXQeS4fzUllCz98YQpOQ7B
+ W7SdsG1yCSPVQ==
+From: Mark Brown <broonie@kernel.org>
+To: Marc Zyngier <maz@kernel.org>, James Morse <james.morse@arm.com>,
+ Alexandru Elisei <alexandru.elisei@arm.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>
+Subject: [PATCH RESEND] kselftest: kvm/arm64: Skip tests if we can't create a
+ vgic-v3
+Date: Wed, 23 Feb 2022 13:16:24 +0000
+Message-Id: <20220223131624.1830351-1-broonie@kernel.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-References: <20220222165212.2005066-7-kaleshsingh@google.com>
- <202202231727.L621fVgD-lkp@intel.com> <875yp63ptg.wl-maz@kernel.org>
- <YhYpvfZaSjrAtkZp@rli9-dbox> <cb750267af0636c49d2f8aa354f086a5@kernel.org>
-In-Reply-To: <cb750267af0636c49d2f8aa354f086a5@kernel.org>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Wed, 23 Feb 2022 13:56:59 +0100
-X-Gmail-Original-Message-ID: <CAMj1kXHsNsQXbeeS1zcy+xYA7kSE5apbLpChohfvkABS7Z6jKg@mail.gmail.com>
-Message-ID: <CAMj1kXHsNsQXbeeS1zcy+xYA7kSE5apbLpChohfvkABS7Z6jKg@mail.gmail.com>
-Subject: Re: [kbuild-all] Re: [PATCH v2 6/9] KVM: arm64: Detect and handle
- hypervisor stack overflows
-To: Marc Zyngier <maz@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>, llvm@lists.linux.dev,
- Joey Gouly <joey.gouly@arm.com>, Kalesh Singh <kaleshsingh@google.com>,
- Will Deacon <will@kernel.org>, kvmarm <kvmarm@lists.cs.columbia.edu>,
- kernel test robot <lkp@intel.com>, surenb@google.com,
- Android Kernel Team <kernel-team@android.com>,
- Pasha Tatashin <pasha.tatashin@soleen.com>,
- Peter Collingbourne <pcc@google.com>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>, kbuild-all@lists.01.org,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Philip Li <philip.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3355; h=from:subject;
+ bh=7giPPViJQLW4TJDXyefdXReC4DqhaghKKKLPGlhBsrM=;
+ b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBiFZLefp46KmCJ8r9QtbSIALLb0ccj+w6zViEcLhue
+ sBAr1k+JATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCYhWS3gAKCRAk1otyXVSH0EU8B/
+ 9Qhx6OjS/ldbA5e8/RMxNzZDT0Lq3o0mI53Mxb2jmZX0b0aw4XLbem1Bc/GSbcF3VHjgwCl7+deMwK
+ hvXOwgDkOrjLn208Eomqq1cnul7Iedh9F2xjrzVv+rOU3QsDEi0VO7DXG5T90dC5Wpm8sfmYh0ajNO
+ KZ3uwZIzh5qoFyPb5s1e0QPA5k+UOuqpkml5lvzCZ+YFDJggwXDUlWi65gf/tIFPgPhNJQvMNpsAHr
+ jnDHgV02r5Wg4njFqONqyYn4aOpkgwcQnCRSZpjbdM0dDt3MpOvVA30Z4AgNzfiKrkl7TfLksK54h2
+ VoGU/aRXQ/OHICnpuzUhtetun61gzi
+X-Developer-Key: i=broonie@kernel.org; a=openpgp;
+ fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+Cc: kvm@vger.kernel.org, Mark Brown <broonie@kernel.org>,
+ linux-kselftest@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Shuah Khan <shuah@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -96,76 +91,85 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, 23 Feb 2022 at 13:54, Marc Zyngier <maz@kernel.org> wrote:
->
-> On 2022-02-23 12:34, Philip Li wrote:
-> > On Wed, Feb 23, 2022 at 09:16:59AM +0000, Marc Zyngier wrote:
-> >> On Wed, 23 Feb 2022 09:05:18 +0000,
-> >> kernel test robot <lkp@intel.com> wrote:
-> >> >
-> >> > Hi Kalesh,
-> >> >
-> >> > Thank you for the patch! Perhaps something to improve:
-> >> >
-> >> > [auto build test WARNING on cfb92440ee71adcc2105b0890bb01ac3cddb8507]
-> >> >
-> >> > url:    https://github.com/0day-ci/linux/commits/Kalesh-Singh/KVM-arm64-Hypervisor-stack-enhancements/20220223-010522
-> >> > base:   cfb92440ee71adcc2105b0890bb01ac3cddb8507
-> >> > config: arm64-randconfig-r011-20220221 (https://download.01.org/0day-ci/archive/20220223/202202231727.L621fVgD-lkp@intel.com/config)
-> >> > compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project d271fc04d5b97b12e6b797c6067d3c96a8d7470e)
-> >> > reproduce (this is a W=1 build):
-> >> >         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-> >> >         chmod +x ~/bin/make.cross
-> >> >         # install arm64 cross compiling tool for clang build
-> >> >         # apt-get install binutils-aarch64-linux-gnu
-> >> >         # https://github.com/0day-ci/linux/commit/7fe99fd40f7c4b2973218045ca5b9c9160524db1
-> >> >         git remote add linux-review https://github.com/0day-ci/linux
-> >> >         git fetch --no-tags linux-review Kalesh-Singh/KVM-arm64-Hypervisor-stack-enhancements/20220223-010522
-> >> >         git checkout 7fe99fd40f7c4b2973218045ca5b9c9160524db1
-> >> >         # save the config file to linux build tree
-> >> >         mkdir build_dir
-> >> >         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash arch/arm64/
-> >> >
-> >> > If you fix the issue, kindly add following tag as appropriate
-> >> > Reported-by: kernel test robot <lkp@intel.com>
-> >> >
-> >> > All warnings (new ones prefixed by >>):
-> >> >
-> >> >    include/linux/stddef.h:8:14: note: expanded from macro 'NULL'
-> >> >    #define NULL ((void *)0)
-> >> >                 ^~~~~~~~~~~
-> >> >    arch/arm64/kvm/hyp/nvhe/switch.c:200:27: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
-> >> >            [ESR_ELx_EC_FP_ASIMD]           = kvm_hyp_handle_fpsimd,
-> >> >                                              ^~~~~~~~~~~~~~~~~~~~~
-> >> >    arch/arm64/kvm/hyp/nvhe/switch.c:196:28: note: previous initialization is here
-> >> >            [0 ... ESR_ELx_EC_MAX]          = NULL,
-> >> >                                              ^~~~
-> >> >    include/linux/stddef.h:8:14: note: expanded from macro 'NULL'
-> >> >    #define NULL ((void *)0)
-> >> >                 ^~~~~~~~~~~
-> >>
-> >> Kalesh, please ignore this nonsense. There may be things to improve,
-> >> but this is *NOT* one of them.
-> >>
-> >> These reports are pretty useless, and just lead people to ignore real
-> >> bug reports.
-> >
-> > Hi Kalesh, sorry there're some irrelevant issues mixed in the report,
-> > kindly ignore them. And the valuable ones are the new ones that
-> > prefixed by >>, as the below one in original report.
-> >
-> >>> arch/arm64/kvm/hyp/nvhe/switch.c:372:17: warning: no previous
-> >>> prototype for function 'hyp_panic_bad_stack' [-Wmissing-prototypes]
-> >    void __noreturn hyp_panic_bad_stack(void)
-> >                    ^
->
-> This is only called from assembly code, so a prototype wouldn't bring
-> much.
->
+The arch_timer and vgic_irq kselftests assume that they can create a
+vgic-v3, using the library function vgic_v3_setup() which aborts with a
+test failure if it is not possible to do so. Since vgic-v3 can only be
+instantiated on systems where the host has GICv3 this leads to false
+positives on older systems where that is not the case.
 
-Should probably be marked as 'asmlinkage' then. I've suggested many
-times already that this bogus diagnostic should either be disabled, or
-disregard 'asmlinkage' symbols.
+Fix this by changing vgic_v3_setup() to return an error if the vgic can't
+be instantiated and have the callers skip if this happens. We could also
+exit flagging a skip in vgic_v3_setup() but this would prevent future test
+cases conditionally deciding which GIC to use or generally doing more
+complex output.
+
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Andrew Jones <drjones@redhat.com>
+Tested-by: Ricardo Koller <ricarkol@google.com>
+---
+ tools/testing/selftests/kvm/aarch64/arch_timer.c | 7 ++++++-
+ tools/testing/selftests/kvm/aarch64/vgic_irq.c   | 4 ++++
+ tools/testing/selftests/kvm/lib/aarch64/vgic.c   | 4 +++-
+ 3 files changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/tools/testing/selftests/kvm/aarch64/arch_timer.c b/tools/testing/selftests/kvm/aarch64/arch_timer.c
+index 9ad38bd360a4..b08d30bf71c5 100644
+--- a/tools/testing/selftests/kvm/aarch64/arch_timer.c
++++ b/tools/testing/selftests/kvm/aarch64/arch_timer.c
+@@ -366,6 +366,7 @@ static struct kvm_vm *test_vm_create(void)
+ {
+ 	struct kvm_vm *vm;
+ 	unsigned int i;
++	int ret;
+ 	int nr_vcpus = test_args.nr_vcpus;
+ 
+ 	vm = vm_create_default_with_vcpus(nr_vcpus, 0, 0, guest_code, NULL);
+@@ -382,7 +383,11 @@ static struct kvm_vm *test_vm_create(void)
+ 
+ 	ucall_init(vm, NULL);
+ 	test_init_timer_irq(vm);
+-	vgic_v3_setup(vm, nr_vcpus, 64, GICD_BASE_GPA, GICR_BASE_GPA);
++	ret = vgic_v3_setup(vm, nr_vcpus, 64, GICD_BASE_GPA, GICR_BASE_GPA);
++	if (ret < 0) {
++		print_skip("Failed to create vgic-v3");
++		exit(KSFT_SKIP);
++	}
+ 
+ 	/* Make all the test's cmdline args visible to the guest */
+ 	sync_global_to_guest(vm, test_args);
+diff --git a/tools/testing/selftests/kvm/aarch64/vgic_irq.c b/tools/testing/selftests/kvm/aarch64/vgic_irq.c
+index f0230711fbe9..554ca649d470 100644
+--- a/tools/testing/selftests/kvm/aarch64/vgic_irq.c
++++ b/tools/testing/selftests/kvm/aarch64/vgic_irq.c
+@@ -767,6 +767,10 @@ static void test_vgic(uint32_t nr_irqs, bool level_sensitive, bool eoi_split)
+ 
+ 	gic_fd = vgic_v3_setup(vm, 1, nr_irqs,
+ 			GICD_BASE_GPA, GICR_BASE_GPA);
++	if (gic_fd < 0) {
++		print_skip("Failed to create vgic-v3, skipping");
++		exit(KSFT_SKIP);
++	}
+ 
+ 	vm_install_exception_handler(vm, VECTOR_IRQ_CURRENT,
+ 		guest_irq_handlers[args.eoi_split][args.level_sensitive]);
+diff --git a/tools/testing/selftests/kvm/lib/aarch64/vgic.c b/tools/testing/selftests/kvm/lib/aarch64/vgic.c
+index f365c32a7296..5d45046c1b80 100644
+--- a/tools/testing/selftests/kvm/lib/aarch64/vgic.c
++++ b/tools/testing/selftests/kvm/lib/aarch64/vgic.c
+@@ -52,7 +52,9 @@ int vgic_v3_setup(struct kvm_vm *vm, unsigned int nr_vcpus, uint32_t nr_irqs,
+ 			nr_vcpus, nr_vcpus_created);
+ 
+ 	/* Distributor setup */
+-	gic_fd = kvm_create_device(vm, KVM_DEV_TYPE_ARM_VGIC_V3, false);
++	if (_kvm_create_device(vm, KVM_DEV_TYPE_ARM_VGIC_V3,
++			       false, &gic_fd) != 0)
++		return -1;
+ 
+ 	kvm_device_access(gic_fd, KVM_DEV_ARM_VGIC_GRP_NR_IRQS,
+ 			0, &nr_irqs, true);
+-- 
+2.30.2
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
