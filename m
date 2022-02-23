@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A52894C1668
-	for <lists+kvmarm@lfdr.de>; Wed, 23 Feb 2022 16:20:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 742DE4C1690
+	for <lists+kvmarm@lfdr.de>; Wed, 23 Feb 2022 16:22:54 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 005474C5E7;
-	Wed, 23 Feb 2022 10:20:11 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id ABDE14C5DF;
+	Wed, 23 Feb 2022 10:22:53 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.899
@@ -15,38 +15,39 @@ X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id OXz2IFvOLkeP; Wed, 23 Feb 2022 10:20:10 -0500 (EST)
+	with ESMTP id BypUYGoI1QK9; Wed, 23 Feb 2022 10:22:53 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6D4DF4C5CF;
-	Wed, 23 Feb 2022 10:20:09 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 32CA24C5E1;
+	Wed, 23 Feb 2022 10:22:52 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6E37D4C5C6
- for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 10:20:07 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DEEA74C5DC
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 10:22:50 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 1MVK3Hg3M0CL for <kvmarm@lists.cs.columbia.edu>;
- Wed, 23 Feb 2022 10:20:06 -0500 (EST)
+ with ESMTP id g6bHCzqRcO-b for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 23 Feb 2022 10:22:49 -0500 (EST)
 Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 17FC74C5C4
- for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 10:20:06 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 423144C5DB
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 10:22:49 -0500 (EST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 340FFB82036;
- Wed, 23 Feb 2022 15:20:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11248C340E7;
- Wed, 23 Feb 2022 15:19:59 +0000 (UTC)
-Date: Wed, 23 Feb 2022 15:19:56 +0000
+ by ams.source.kernel.org (Postfix) with ESMTPS id E49CFB82079;
+ Wed, 23 Feb 2022 15:22:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC8B7C340E7;
+ Wed, 23 Feb 2022 15:22:43 +0000 (UTC)
+Date: Wed, 23 Feb 2022 15:22:40 +0000
 From: Catalin Marinas <catalin.marinas@arm.com>
 To: Mark Brown <broonie@kernel.org>
-Subject: Re: [PATCH v11 21/40] arm64/sme: Implement ZA signal handling
-Message-ID: <YhZQnKhZsa4U/Ut8@arm.com>
+Subject: Re: [PATCH v11 22/40] arm64/sme: Implement ptrace support for
+ streaming mode SVE registers
+Message-ID: <YhZRQH+C4RzrSdn5@arm.com>
 References: <20220207152109.197566-1-broonie@kernel.org>
- <20220207152109.197566-22-broonie@kernel.org>
+ <20220207152109.197566-23-broonie@kernel.org>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20220207152109.197566-22-broonie@kernel.org>
+In-Reply-To: <20220207152109.197566-23-broonie@kernel.org>
 Cc: Basant Kumar Dwivedi <Basant.KumarDwivedi@arm.com>,
  Will Deacon <will@kernel.org>, Luis Machado <luis.machado@arm.com>,
  Szabolcs Nagy <szabolcs.nagy@arm.com>, Marc Zyngier <maz@kernel.org>,
@@ -70,19 +71,33 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Feb 07, 2022 at 03:20:50PM +0000, Mark Brown wrote:
-> Implement support for ZA in signal handling in a very similar way to how
-> we implement support for SVE registers, using a signal context structure
-> with optional register state after it. Where present this register state
-> stores the ZA matrix as a series of horizontal vectors numbered from 0 to
-> VL/8 in the endinanness independent format used for vectors.
-> 
-> As with SVE we do not allow changes in the vector length during signal
-> return but we do allow ZA to be enabled or disabled.
-> 
-> Signed-off-by: Mark Brown <broonie@kernel.org>
+On Mon, Feb 07, 2022 at 03:20:51PM +0000, Mark Brown wrote:
+> diff --git a/arch/arm64/kernel/fpsimd.c b/arch/arm64/kernel/fpsimd.c
+> index 2242c14a5a05..8b111b7f2006 100644
+> --- a/arch/arm64/kernel/fpsimd.c
+> +++ b/arch/arm64/kernel/fpsimd.c
+> @@ -645,14 +645,19 @@ static void __fpsimd_to_sve(void *sst, struct user_fpsimd_state const *fst,
+>   */
+>  static void fpsimd_to_sve(struct task_struct *task)
+>  {
+> -	unsigned int vq;
+> +	unsigned int vq, vl;
+>  	void *sst = task->thread.sve_state;
+>  	struct user_fpsimd_state const *fst = &task->thread.uw.fpsimd_state;
+>  
+>  	if (!system_supports_sve())
+>  		return;
+>  
+> -	vq = sve_vq_from_vl(task_get_sve_vl(task));
+> +	if (thread_sm_enabled(&task->thread))
+> +		vl = task_get_sme_vl(task);
+> +	else
+> +		vl = task_get_sve_vl(task);
 
-This follows the SVE implementation closely. It looks fine to me:
+I saw this construct in the signal patches as well. Can we have a
+function/macro that checks the SM enabled and returns the proper vl?
+
+Otherwise,
 
 Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
 _______________________________________________
