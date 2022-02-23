@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 856D64C16C8
-	for <lists+kvmarm@lfdr.de>; Wed, 23 Feb 2022 16:28:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A3C6C4C16D4
+	for <lists+kvmarm@lfdr.de>; Wed, 23 Feb 2022 16:31:52 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F3B924C5EC;
-	Wed, 23 Feb 2022 10:28:49 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 071544C585;
+	Wed, 23 Feb 2022 10:31:51 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.899
@@ -15,39 +15,39 @@ X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ukBBo0jB2rep; Wed, 23 Feb 2022 10:28:49 -0500 (EST)
+	with ESMTP id 0bMTyrFPlDMM; Wed, 23 Feb 2022 10:31:50 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8DB634C5E5;
-	Wed, 23 Feb 2022 10:28:48 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6CB9C4C5D9;
+	Wed, 23 Feb 2022 10:31:49 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1D57C4C5E5
- for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 10:28:47 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9688E4C5F5
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 10:31:48 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id wx1474A8vWFB for <kvmarm@lists.cs.columbia.edu>;
- Wed, 23 Feb 2022 10:28:45 -0500 (EST)
+ with ESMTP id 3-8ExT1vpH4M for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 23 Feb 2022 10:31:47 -0500 (EST)
 Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B43144C5E4
- for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 10:28:45 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0A5104C5F0
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 10:31:47 -0500 (EST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id DCD77B82036;
- Wed, 23 Feb 2022 15:28:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B21BC340E7;
- Wed, 23 Feb 2022 15:28:39 +0000 (UTC)
-Date: Wed, 23 Feb 2022 15:28:35 +0000
+ by ams.source.kernel.org (Postfix) with ESMTPS id 68E0EB8207A;
+ Wed, 23 Feb 2022 15:31:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0248DC340EB;
+ Wed, 23 Feb 2022 15:31:40 +0000 (UTC)
+Date: Wed, 23 Feb 2022 15:31:37 +0000
 From: Catalin Marinas <catalin.marinas@arm.com>
 To: Mark Brown <broonie@kernel.org>
-Subject: Re: [PATCH v11 24/40] arm64/sme: Disable streaming mode and ZA when
- flushing CPU state
-Message-ID: <YhZSo32WuURnQslQ@arm.com>
+Subject: Re: [PATCH v11 25/40] arm64/sme: Save and restore streaming mode
+ over EFI runtime calls
+Message-ID: <YhZTWYSrIU2zI5EK@arm.com>
 References: <20220207152109.197566-1-broonie@kernel.org>
- <20220207152109.197566-25-broonie@kernel.org>
+ <20220207152109.197566-26-broonie@kernel.org>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20220207152109.197566-25-broonie@kernel.org>
+In-Reply-To: <20220207152109.197566-26-broonie@kernel.org>
 Cc: Basant Kumar Dwivedi <Basant.KumarDwivedi@arm.com>,
  Will Deacon <will@kernel.org>, Luis Machado <luis.machado@arm.com>,
  Szabolcs Nagy <szabolcs.nagy@arm.com>, Marc Zyngier <maz@kernel.org>,
@@ -71,12 +71,15 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, Feb 07, 2022 at 03:20:53PM +0000, Mark Brown wrote:
-> Both streaming mode and ZA may increase power consumption when they are
-> enabled and streaming mode makes many FPSIMD and SVE instructions undefined
-> which will cause problems for any kernel mode floating point so disable
-> both when we flush the CPU state. This covers both kernel_neon_begin() and
-> idle and after flushing the state a reload is always required anyway.
+On Mon, Feb 07, 2022 at 03:20:54PM +0000, Mark Brown wrote:
+> When saving and restoring the floating point state over an EFI runtime
+> call ensure that we handle streaming mode, only handling FFR if we are not
+> in streaming mode and ensuring that we are in normal mode over the call
+> into runtime services.
+> 
+> We currently assume that ZA will not be modified by runtime services, the
+> specification is not yet finalised so this may need updating if that
+> changes.
 > 
 > Signed-off-by: Mark Brown <broonie@kernel.org>
 
