@@ -2,52 +2,84 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A0E5C4C135F
-	for <lists+kvmarm@lfdr.de>; Wed, 23 Feb 2022 13:57:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E41F4C135B
+	for <lists+kvmarm@lfdr.de>; Wed, 23 Feb 2022 13:57:18 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2BDC34C4F5;
-	Wed, 23 Feb 2022 07:57:27 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E86034C4FB;
+	Wed, 23 Feb 2022 07:57:17 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.899
+X-Spam-Score: -1.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id H1LVApEe99RJ; Wed, 23 Feb 2022 07:57:25 -0500 (EST)
+	with ESMTP id 4qKhTEpMUXUt; Wed, 23 Feb 2022 07:57:17 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2EB754C507;
-	Wed, 23 Feb 2022 07:57:25 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7E3C54C48F;
+	Wed, 23 Feb 2022 07:57:16 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 563744C490
- for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 07:57:24 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D29814C3CD
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 07:57:14 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id nhUJx+wt13nn for <kvmarm@lists.cs.columbia.edu>;
- Wed, 23 Feb 2022 07:57:22 -0500 (EST)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E5F894C4EE
- for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 07:57:20 -0500 (EST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 80B61139F;
- Wed, 23 Feb 2022 04:57:20 -0800 (PST)
-Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 536F93F70D;
- Wed, 23 Feb 2022 04:57:18 -0800 (PST)
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-To: pbonzini@redhat.com, thuth@redhat.com, drjones@redhat.com,
- varad.gautam@suse.com, zixuanwang@google.com, kvm@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu
-Subject: [kvm-unit-tests PATCH v2 3/3] Rename --target-efi to
- --[enable|disable]-efi
-Date: Wed, 23 Feb 2022 12:55:37 +0000
-Message-Id: <20220223125537.41529-4-alexandru.elisei@arm.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220223125537.41529-1-alexandru.elisei@arm.com>
-References: <20220223125537.41529-1-alexandru.elisei@arm.com>
+ with ESMTP id MLqmp+9Q0Z7p for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 23 Feb 2022 07:57:13 -0500 (EST)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 30E924C256
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 07:57:13 -0500 (EST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 077DD6148F
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 12:57:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BDE0C340F1
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 12:57:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1645621031;
+ bh=T3RPLphnpfjwjFji7iWJDHhlKcmc/lW8LSE7GNk2LKQ=;
+ h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+ b=oRYCnN+JtWTk+ZS+CT7d6jaqcSPRpUuFonbOK9xP0xB7QUUTpeIRYil0Z6yC0IrpP
+ +STyaafk7/Yc//R5yR3Na6Wq8JTsYEQhJulAeoMOY2cxmshWudggYn9SYfYhvPbjqz
+ S1XqLyRVOh1UX3uZwyDM/14Yi7HSPfG4EpA2kazhE8+xmwWUoOWTd1WMI99ANMWTg5
+ oUulsYyUXWW2XP5os7plGfrs4dIepLnvkI1ZUGsK82KQIbU31vVFcj+qNNgPrdztYc
+ n9a+b11/5Pe1Vquy+iQtBZEfvkVQqFxTCFvave+ELkO89WpT/CSxx1FVOJ2uZ5FkkF
+ B3pJD/7n4mIIQ==
+Received: by mail-yb1-f179.google.com with SMTP id y6so47773558ybc.5
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Feb 2022 04:57:11 -0800 (PST)
+X-Gm-Message-State: AOAM532zglF9D4KrGwVH9ZEPv+apxZq8822LCXlr1trnFHfzcg1KbVGP
+ dDVHunAJW5o+1rPJeCLBzOaeEIDbLZx84gEYNKM=
+X-Google-Smtp-Source: ABdhPJwEL3v2n7dXLiGGSxBUDiI1buHwdZ4ctEc1Ksn2/qthjXJ6pwsBtWyB0/G9MaH4qLrswEBFghsg5dkZhl8K2zI=
+X-Received: by 2002:a25:e014:0:b0:619:a368:c3b5 with SMTP id
+ x20-20020a25e014000000b00619a368c3b5mr27062454ybg.383.1645621030432; Wed, 23
+ Feb 2022 04:57:10 -0800 (PST)
 MIME-Version: 1.0
+References: <20220222165212.2005066-7-kaleshsingh@google.com>
+ <202202231727.L621fVgD-lkp@intel.com> <875yp63ptg.wl-maz@kernel.org>
+ <YhYpvfZaSjrAtkZp@rli9-dbox> <cb750267af0636c49d2f8aa354f086a5@kernel.org>
+In-Reply-To: <cb750267af0636c49d2f8aa354f086a5@kernel.org>
+From: Ard Biesheuvel <ardb@kernel.org>
+Date: Wed, 23 Feb 2022 13:56:59 +0100
+X-Gmail-Original-Message-ID: <CAMj1kXHsNsQXbeeS1zcy+xYA7kSE5apbLpChohfvkABS7Z6jKg@mail.gmail.com>
+Message-ID: <CAMj1kXHsNsQXbeeS1zcy+xYA7kSE5apbLpChohfvkABS7Z6jKg@mail.gmail.com>
+Subject: Re: [kbuild-all] Re: [PATCH v2 6/9] KVM: arm64: Detect and handle
+ hypervisor stack overflows
+To: Marc Zyngier <maz@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>, llvm@lists.linux.dev,
+ Joey Gouly <joey.gouly@arm.com>, Kalesh Singh <kaleshsingh@google.com>,
+ Will Deacon <will@kernel.org>, kvmarm <kvmarm@lists.cs.columbia.edu>,
+ kernel test robot <lkp@intel.com>, surenb@google.com,
+ Android Kernel Team <kernel-team@android.com>,
+ Pasha Tatashin <pasha.tatashin@soleen.com>,
+ Peter Collingbourne <pcc@google.com>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>, kbuild-all@lists.01.org,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Philip Li <philip.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -64,422 +96,76 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Rename --target-efi to --enable-efi to make it similar to autoconf's
-configure script options. Add the --disable-efi option for symmetry and to
-make it easy for the option to change from disabled by default to enabled
-by default in the future.
+On Wed, 23 Feb 2022 at 13:54, Marc Zyngier <maz@kernel.org> wrote:
+>
+> On 2022-02-23 12:34, Philip Li wrote:
+> > On Wed, Feb 23, 2022 at 09:16:59AM +0000, Marc Zyngier wrote:
+> >> On Wed, 23 Feb 2022 09:05:18 +0000,
+> >> kernel test robot <lkp@intel.com> wrote:
+> >> >
+> >> > Hi Kalesh,
+> >> >
+> >> > Thank you for the patch! Perhaps something to improve:
+> >> >
+> >> > [auto build test WARNING on cfb92440ee71adcc2105b0890bb01ac3cddb8507]
+> >> >
+> >> > url:    https://github.com/0day-ci/linux/commits/Kalesh-Singh/KVM-arm64-Hypervisor-stack-enhancements/20220223-010522
+> >> > base:   cfb92440ee71adcc2105b0890bb01ac3cddb8507
+> >> > config: arm64-randconfig-r011-20220221 (https://download.01.org/0day-ci/archive/20220223/202202231727.L621fVgD-lkp@intel.com/config)
+> >> > compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project d271fc04d5b97b12e6b797c6067d3c96a8d7470e)
+> >> > reproduce (this is a W=1 build):
+> >> >         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+> >> >         chmod +x ~/bin/make.cross
+> >> >         # install arm64 cross compiling tool for clang build
+> >> >         # apt-get install binutils-aarch64-linux-gnu
+> >> >         # https://github.com/0day-ci/linux/commit/7fe99fd40f7c4b2973218045ca5b9c9160524db1
+> >> >         git remote add linux-review https://github.com/0day-ci/linux
+> >> >         git fetch --no-tags linux-review Kalesh-Singh/KVM-arm64-Hypervisor-stack-enhancements/20220223-010522
+> >> >         git checkout 7fe99fd40f7c4b2973218045ca5b9c9160524db1
+> >> >         # save the config file to linux build tree
+> >> >         mkdir build_dir
+> >> >         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash arch/arm64/
+> >> >
+> >> > If you fix the issue, kindly add following tag as appropriate
+> >> > Reported-by: kernel test robot <lkp@intel.com>
+> >> >
+> >> > All warnings (new ones prefixed by >>):
+> >> >
+> >> >    include/linux/stddef.h:8:14: note: expanded from macro 'NULL'
+> >> >    #define NULL ((void *)0)
+> >> >                 ^~~~~~~~~~~
+> >> >    arch/arm64/kvm/hyp/nvhe/switch.c:200:27: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+> >> >            [ESR_ELx_EC_FP_ASIMD]           = kvm_hyp_handle_fpsimd,
+> >> >                                              ^~~~~~~~~~~~~~~~~~~~~
+> >> >    arch/arm64/kvm/hyp/nvhe/switch.c:196:28: note: previous initialization is here
+> >> >            [0 ... ESR_ELx_EC_MAX]          = NULL,
+> >> >                                              ^~~~
+> >> >    include/linux/stddef.h:8:14: note: expanded from macro 'NULL'
+> >> >    #define NULL ((void *)0)
+> >> >                 ^~~~~~~~~~~
+> >>
+> >> Kalesh, please ignore this nonsense. There may be things to improve,
+> >> but this is *NOT* one of them.
+> >>
+> >> These reports are pretty useless, and just lead people to ignore real
+> >> bug reports.
+> >
+> > Hi Kalesh, sorry there're some irrelevant issues mixed in the report,
+> > kindly ignore them. And the valuable ones are the new ones that
+> > prefixed by >>, as the below one in original report.
+> >
+> >>> arch/arm64/kvm/hyp/nvhe/switch.c:372:17: warning: no previous
+> >>> prototype for function 'hyp_panic_bad_stack' [-Wmissing-prototypes]
+> >    void __noreturn hyp_panic_bad_stack(void)
+> >                    ^
+>
+> This is only called from assembly code, so a prototype wouldn't bring
+> much.
+>
 
-Suggested-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
----
- Makefile             |  6 +++---
- configure            | 19 +++++++++++--------
- lib/x86/acpi.c       |  4 ++--
- lib/x86/amd_sev.h    |  4 ++--
- lib/x86/asm/page.h   |  8 ++++----
- lib/x86/asm/setup.h  |  4 ++--
- lib/x86/setup.c      |  4 ++--
- lib/x86/vm.c         | 12 ++++++------
- scripts/runtime.bash |  4 ++--
- x86/Makefile.common  |  6 +++---
- x86/Makefile.x86_64  |  6 +++---
- x86/access_test.c    |  2 +-
- x86/efi/README.md    |  2 +-
- x86/efi/run          |  2 +-
- x86/run              |  4 ++--
- 15 files changed, 45 insertions(+), 42 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 5af17f129ced..24686dddb4fd 100644
---- a/Makefile
-+++ b/Makefile
-@@ -39,9 +39,9 @@ LIBFDT_archive = $(LIBFDT_objdir)/libfdt.a
- OBJDIRS += $(LIBFDT_objdir)
- 
- # EFI App
--ifeq ($(TARGET_EFI),y)
-+ifeq ($(CONFIG_EFI),y)
- EFI_ARCH = x86_64
--EFI_CFLAGS := -DTARGET_EFI
-+EFI_CFLAGS := -DCONFIG_EFI
- # The following CFLAGS and LDFLAGS come from:
- #   - GNU-EFI/Makefile.defaults
- #   - GNU-EFI/apps/Makefile
-@@ -81,7 +81,7 @@ COMMON_CFLAGS += $(fno_stack_protector)
- COMMON_CFLAGS += $(fno_stack_protector_all)
- COMMON_CFLAGS += $(wno_frame_address)
- COMMON_CFLAGS += $(if $(U32_LONG_FMT),-D__U32_LONG_FMT__,)
--ifeq ($(TARGET_EFI),y)
-+ifeq ($(CONFIG_EFI),y)
- COMMON_CFLAGS += $(EFI_CFLAGS)
- else
- COMMON_CFLAGS += $(fno_pic) $(no_pie)
-diff --git a/configure b/configure
-index 6620e78ec09c..6b5229b91cbb 100755
---- a/configure
-+++ b/configure
-@@ -29,7 +29,7 @@ host_key_document=
- gen_se_header=
- page_size=
- earlycon=
--target_efi=
-+efi=
- 
- usage() {
-     cat <<-EOF
-@@ -74,7 +74,7 @@ usage() {
- 	               pl011,mmio32,ADDR
- 	                           Specify a PL011 compatible UART at address ADDR. Supported
- 	                           register stride is 32 bit only.
--	    --target-efi           Boot and run from UEFI (x86_64 only)
-+	    --[enable|disable]-efi Boot and run from UEFI (disabled by default, x86_64 only)
- EOF
-     exit 1
- }
-@@ -142,8 +142,11 @@ while [[ "$1" = -* ]]; do
- 	--earlycon)
- 	    earlycon="$arg"
- 	    ;;
--	--target-efi)
--	    target_efi=y
-+	--enable-efi)
-+	    efi=y
-+	    ;;
-+	--disable-efi)
-+	    efi=n
- 	    ;;
- 	--help)
- 	    usage
-@@ -177,8 +180,8 @@ else
-     fi
- fi
- 
--if [ "$target_efi" ] && [ "$arch" != "x86_64" ]; then
--    echo "--target-efi is not supported for $arch"
-+if [ "$efi" ] && [ "$arch" != "x86_64" ]; then
-+    echo "--[enable|disable]-efi is not supported for $arch"
-     usage
- fi
- 
-@@ -278,7 +281,7 @@ if [ -f "$srcdir/$testdir/run" ]; then
- fi
- 
- testsubdir=$testdir
--if [ -n "$target_efi" ]; then
-+if [ "$efi" = "y" ]; then
-     testsubdir=$testdir/efi
- fi
- 
-@@ -367,7 +370,7 @@ U32_LONG_FMT=$u32_long
- WA_DIVIDE=$wa_divide
- GENPROTIMG=${GENPROTIMG-genprotimg}
- HOST_KEY_DOCUMENT=$host_key_document
--TARGET_EFI=$target_efi
-+CONFIG_EFI=$efi
- GEN_SE_HEADER=$gen_se_header
- EOF
- if [ "$arch" = "arm" ] || [ "$arch" = "arm64" ]; then
-diff --git a/lib/x86/acpi.c b/lib/x86/acpi.c
-index 1a82ced0b90f..de275caf3146 100644
---- a/lib/x86/acpi.c
-+++ b/lib/x86/acpi.c
-@@ -1,7 +1,7 @@
- #include "libcflat.h"
- #include "acpi.h"
- 
--#ifdef TARGET_EFI
-+#ifdef CONFIG_EFI
- struct rsdp_descriptor *efi_rsdp = NULL;
- 
- void set_efi_rsdp(struct rsdp_descriptor *rsdp)
-@@ -34,7 +34,7 @@ static struct rsdp_descriptor *get_rsdp(void)
- 
- 	return rsdp;
- }
--#endif /* TARGET_EFI */
-+#endif /* CONFIG_EFI */
- 
- void* find_acpi_table_addr(u32 sig)
- {
-diff --git a/lib/x86/amd_sev.h b/lib/x86/amd_sev.h
-index 6a10f845daba..ed6e3385340c 100644
---- a/lib/x86/amd_sev.h
-+++ b/lib/x86/amd_sev.h
-@@ -12,7 +12,7 @@
- #ifndef _X86_AMD_SEV_H_
- #define _X86_AMD_SEV_H_
- 
--#ifdef TARGET_EFI
-+#ifdef CONFIG_EFI
- 
- #include "libcflat.h"
- #include "desc.h"
-@@ -58,6 +58,6 @@ void setup_ghcb_pte(pgd_t *page_table);
- unsigned long long get_amd_sev_c_bit_mask(void);
- unsigned long long get_amd_sev_addr_upperbound(void);
- 
--#endif /* TARGET_EFI */
-+#endif /* CONFIG_EFI */
- 
- #endif /* _X86_AMD_SEV_H_ */
-diff --git a/lib/x86/asm/page.h b/lib/x86/asm/page.h
-index c25bc66b7aa4..298e7e8efb57 100644
---- a/lib/x86/asm/page.h
-+++ b/lib/x86/asm/page.h
-@@ -25,11 +25,11 @@ typedef unsigned long pgd_t;
- #define LARGE_PAGE_SIZE	(1024 * PAGE_SIZE)
- #endif
- 
--#ifdef TARGET_EFI
-+#ifdef CONFIG_EFI
- /* lib/x86/amd_sev.c */
- extern unsigned long long get_amd_sev_c_bit_mask(void);
- extern unsigned long long get_amd_sev_addr_upperbound(void);
--#endif /* TARGET_EFI */
-+#endif /* CONFIG_EFI */
- 
- #define PT_PRESENT_MASK		(1ull << 0)
- #define PT_WRITABLE_MASK	(1ull << 1)
-@@ -47,11 +47,11 @@ extern unsigned long long get_amd_sev_addr_upperbound(void);
-  */
- #define PT_ADDR_UPPER_BOUND_DEFAULT	(51)
- 
--#ifdef TARGET_EFI
-+#ifdef CONFIG_EFI
- #define PT_ADDR_UPPER_BOUND	(get_amd_sev_addr_upperbound())
- #else
- #define PT_ADDR_UPPER_BOUND	(PT_ADDR_UPPER_BOUND_DEFAULT)
--#endif /* TARGET_EFI */
-+#endif /* CONFIG_EFI */
- 
- #define PT_ADDR_LOWER_BOUND	(PAGE_SHIFT)
- #define PT_ADDR_MASK		GENMASK_ULL(PT_ADDR_UPPER_BOUND, PT_ADDR_LOWER_BOUND)
-diff --git a/lib/x86/asm/setup.h b/lib/x86/asm/setup.h
-index dbfb2a22bc1b..24d4fa9dc76a 100644
---- a/lib/x86/asm/setup.h
-+++ b/lib/x86/asm/setup.h
-@@ -3,7 +3,7 @@
- 
- unsigned long setup_tss(u8 *stacktop);
- 
--#ifdef TARGET_EFI
-+#ifdef CONFIG_EFI
- #include "x86/acpi.h"
- #include "x86/apic.h"
- #include "x86/processor.h"
-@@ -14,6 +14,6 @@ unsigned long setup_tss(u8 *stacktop);
- 
- efi_status_t setup_efi(efi_bootinfo_t *efi_bootinfo);
- void setup_5level_page_table(void);
--#endif /* TARGET_EFI */
-+#endif /* CONFIG_EFI */
- 
- #endif /* _X86_ASM_SETUP_H_ */
-diff --git a/lib/x86/setup.c b/lib/x86/setup.c
-index bbd34682b79e..38893eddef96 100644
---- a/lib/x86/setup.c
-+++ b/lib/x86/setup.c
-@@ -167,7 +167,7 @@ void setup_multiboot(struct mbi_bootinfo *bi)
- 	initrd_size = mods->end - mods->start;
- }
- 
--#ifdef TARGET_EFI
-+#ifdef CONFIG_EFI
- 
- /* From x86/efi/efistart64.S */
- extern void load_idt(void);
-@@ -330,7 +330,7 @@ efi_status_t setup_efi(efi_bootinfo_t *efi_bootinfo)
- 	return EFI_SUCCESS;
- }
- 
--#endif /* TARGET_EFI */
-+#endif /* CONFIG_EFI */
- 
- void setup_libcflat(void)
- {
-diff --git a/lib/x86/vm.c b/lib/x86/vm.c
-index 56be57be673a..25a4f5fbfe17 100644
---- a/lib/x86/vm.c
-+++ b/lib/x86/vm.c
-@@ -26,9 +26,9 @@ pteval_t *install_pte(pgd_t *cr3,
-                 pt_page = 0;
- 	    memset(new_pt, 0, PAGE_SIZE);
- 	    pt[offset] = virt_to_phys(new_pt) | PT_PRESENT_MASK | PT_WRITABLE_MASK | pte_opt_mask;
--#ifdef TARGET_EFI
-+#ifdef CONFIG_EFI
- 	    pt[offset] |= get_amd_sev_c_bit_mask();
--#endif /* TARGET_EFI */
-+#endif /* CONFIG_EFI */
- 	}
- 	pt = phys_to_virt(pt[offset] & PT_ADDR_MASK);
-     }
-@@ -98,18 +98,18 @@ pteval_t *get_pte_level(pgd_t *cr3, void *virt, int pte_level)
- pteval_t *install_large_page(pgd_t *cr3, phys_addr_t phys, void *virt)
- {
-     phys_addr_t flags = PT_PRESENT_MASK | PT_WRITABLE_MASK | pte_opt_mask | PT_PAGE_SIZE_MASK;
--#ifdef TARGET_EFI
-+#ifdef CONFIG_EFI
-     flags |= get_amd_sev_c_bit_mask();
--#endif /* TARGET_EFI */
-+#endif /* CONFIG_EFI */
-     return install_pte(cr3, 2, virt, phys | flags, 0);
- }
- 
- pteval_t *install_page(pgd_t *cr3, phys_addr_t phys, void *virt)
- {
-     phys_addr_t flags = PT_PRESENT_MASK | PT_WRITABLE_MASK | pte_opt_mask;
--#ifdef TARGET_EFI
-+#ifdef CONFIG_EFI
-     flags |= get_amd_sev_c_bit_mask();
--#endif /* TARGET_EFI */
-+#endif /* CONFIG_EFI */
-     return install_pte(cr3, 1, virt, phys | flags, 0);
- }
- 
-diff --git a/scripts/runtime.bash b/scripts/runtime.bash
-index 6d5fced94246..b4771f9c0e28 100644
---- a/scripts/runtime.bash
-+++ b/scripts/runtime.bash
-@@ -82,7 +82,7 @@ function run()
-     local accel="$8"
-     local timeout="${9:-$TIMEOUT}" # unittests.cfg overrides the default
- 
--    if [ "${TARGET_EFI}" == "y" ]; then
-+    if [ "${CONFIG_EFI}" == "y" ]; then
-         kernel=$(basename $kernel .flat)
-     fi
- 
-@@ -132,7 +132,7 @@ function run()
- 
-     last_line=$(premature_failure > >(tail -1)) && {
-         skip=true
--        if [ "${TARGET_EFI}" == "y" ] && [[ "${last_line}" =~ "enabling apic" ]]; then
-+        if [ "${CONFIG_EFI}" == "y" ] && [[ "${last_line}" =~ "enabling apic" ]]; then
-             skip=false
-         fi
-         if [ ${skip} == true ]; then
-diff --git a/x86/Makefile.common b/x86/Makefile.common
-index ff02d9822321..b90398829e7b 100644
---- a/x86/Makefile.common
-+++ b/x86/Makefile.common
-@@ -22,7 +22,7 @@ cflatobjs += lib/x86/acpi.o
- cflatobjs += lib/x86/stack.o
- cflatobjs += lib/x86/fault_test.o
- cflatobjs += lib/x86/delay.o
--ifeq ($(TARGET_EFI),y)
-+ifeq ($(CONFIG_EFI),y)
- cflatobjs += lib/x86/amd_sev.o
- cflatobjs += lib/efi.o
- cflatobjs += x86/efi/reloc_x86_64.o
-@@ -44,7 +44,7 @@ KEEP_FRAME_POINTER := y
- 
- FLATLIBS = lib/libcflat.a
- 
--ifeq ($(TARGET_EFI),y)
-+ifeq ($(CONFIG_EFI),y)
- .PRECIOUS: %.efi %.so
- 
- %.so: %.o $(FLATLIBS) $(SRCDIR)/x86/efi/elf_x86_64_efi.lds $(cstart.o)
-@@ -89,7 +89,7 @@ tests-common = $(TEST_DIR)/vmexit.$(exe) $(TEST_DIR)/tsc.$(exe) \
- # The following test cases are disabled when building EFI tests because they
- # use absolute addresses in their inline assembly code, which cannot compile
- # with the '-fPIC' flag
--ifneq ($(TARGET_EFI),y)
-+ifneq ($(CONFIG_EFI),y)
- tests-common += $(TEST_DIR)/realmode.$(exe)
- endif
- 
-diff --git a/x86/Makefile.x86_64 b/x86/Makefile.x86_64
-index a3cb75ae5868..f18c1e20fd27 100644
---- a/x86/Makefile.x86_64
-+++ b/x86/Makefile.x86_64
-@@ -1,7 +1,7 @@
- cstart.o = $(TEST_DIR)/cstart64.o
- bits = 64
- ldarch = elf64-x86-64
--ifeq ($(TARGET_EFI),y)
-+ifeq ($(CONFIG_EFI),y)
- exe = efi
- bin = so
- FORMAT = efi-app-x86_64
-@@ -32,14 +32,14 @@ tests += $(TEST_DIR)/rdpru.$(exe)
- tests += $(TEST_DIR)/pks.$(exe)
- tests += $(TEST_DIR)/pmu_lbr.$(exe)
- 
--ifeq ($(TARGET_EFI),y)
-+ifeq ($(CONFIG_EFI),y)
- tests += $(TEST_DIR)/amd_sev.$(exe)
- endif
- 
- # The following test cases are disabled when building EFI tests because they
- # use absolute addresses in their inline assembly code, which cannot compile
- # with the '-fPIC' flag
--ifneq ($(TARGET_EFI),y)
-+ifneq ($(CONFIG_EFI),y)
- tests += $(TEST_DIR)/access_test.$(exe)
- tests += $(TEST_DIR)/svm.$(exe)
- tests += $(TEST_DIR)/vmx.$(exe)
-diff --git a/x86/access_test.c b/x86/access_test.c
-index ef1243f0c151..67e9a08081c9 100644
---- a/x86/access_test.c
-+++ b/x86/access_test.c
-@@ -10,7 +10,7 @@ int main(void)
-     printf("starting test\n\n");
-     r = ac_test_run(PT_LEVEL_PML4);
- 
--#ifndef TARGET_EFI
-+#ifndef CONFIG_EFI
-     /*
-      * Not supported yet for UEFI, because setting up 5
-      * level page table requires entering real mode.
-diff --git a/x86/efi/README.md b/x86/efi/README.md
-index a39f509cd9aa..aa1dbcdd405f 100644
---- a/x86/efi/README.md
-+++ b/x86/efi/README.md
-@@ -15,7 +15,7 @@ The following dependencies should be installed:
- 
- To build:
- 
--    ./configure --target-efi
-+    ./configure --enable-efi
-     make
- 
- ### Run test cases with UEFI
-diff --git a/x86/efi/run b/x86/efi/run
-index ac368a59ba9f..322cb7567fdc 100755
---- a/x86/efi/run
-+++ b/x86/efi/run
-@@ -8,7 +8,7 @@ if [ $# -eq 0 ]; then
- fi
- 
- if [ ! -f config.mak ]; then
--	echo "run './configure --target-efi && make' first. See ./configure -h"
-+	echo "run './configure --enable-efi && make' first. See ./configure -h"
- 	exit 2
- fi
- source config.mak
-diff --git a/x86/run b/x86/run
-index 582d1eda0fd9..4d53b72e8358 100755
---- a/x86/run
-+++ b/x86/run
-@@ -39,12 +39,12 @@ fi
- 
- command="${qemu} --no-reboot -nodefaults $pc_testdev -vnc none -serial stdio $pci_testdev"
- command+=" -machine accel=$ACCEL"
--if [ "${TARGET_EFI}" != y ]; then
-+if [ "${CONFIG_EFI}" != y ]; then
- 	command+=" -kernel"
- fi
- command="$(timeout_cmd) $command"
- 
--if [ "${TARGET_EFI}" = y ]; then
-+if [ "${CONFIG_EFI}" = y ]; then
- 	# Set ENVIRON_DEFAULT=n to remove '-initrd' flag for QEMU (see
- 	# 'scripts/arch-run.bash' for more details). This is because when using
- 	# UEFI, the test case binaries are passed to QEMU through the disk
--- 
-2.35.1
-
+Should probably be marked as 'asmlinkage' then. I've suggested many
+times already that this bogus diagnostic should either be disabled, or
+disregard 'asmlinkage' symbols.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
