@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 212644C47E2
-	for <lists+kvmarm@lfdr.de>; Fri, 25 Feb 2022 15:50:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E42CF4C48FA
+	for <lists+kvmarm@lfdr.de>; Fri, 25 Feb 2022 16:31:56 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5BDD64B9B2;
-	Fri, 25 Feb 2022 09:49:59 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 44CDF4B9C7;
+	Fri, 25 Feb 2022 10:31:56 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
@@ -15,89 +15,87 @@ X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
 	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LMBnFlqFhfPL; Fri, 25 Feb 2022 09:49:59 -0500 (EST)
+	with ESMTP id cb3gTuWL5F+7; Fri, 25 Feb 2022 10:31:56 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 033554B907;
-	Fri, 25 Feb 2022 09:49:58 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 02DD64B9B9;
+	Fri, 25 Feb 2022 10:31:55 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6ED984B92B
- for <kvmarm@lists.cs.columbia.edu>; Fri, 25 Feb 2022 09:49:56 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 235154B9A8
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 25 Feb 2022 10:31:54 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id cKQQpUBIjak4 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 25 Feb 2022 09:49:55 -0500 (EST)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.129.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2D4694B900
- for <kvmarm@lists.cs.columbia.edu>; Fri, 25 Feb 2022 09:49:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1645800594;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oG46p9ApnGlILl1ZLvkfxhnD10O2+FDP9Z7Tm2fwr+c=;
- b=Q4FannQMidh+cKStF5mM7UjA0ru81slTT9xfeYeW91GYut47wLCpMAoLj1KSUWLCoYuGui
- imRHQWoFvv7g+bmt7ILnLHzqu4jYU0bKIepF7D45Kto85la9TYHHjLcwhdb+pfOuK3UEqb
- L5wERKOD7za39oi4iIMz1OTdRcD95vY=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-427-ApsMbUurNy-X0m96RwkmIA-1; Fri, 25 Feb 2022 09:49:53 -0500
-X-MC-Unique: ApsMbUurNy-X0m96RwkmIA-1
-Received: by mail-wm1-f70.google.com with SMTP id
- h19-20020a05600c351300b0038141cf26deso43462wmq.8
- for <kvmarm@lists.cs.columbia.edu>; Fri, 25 Feb 2022 06:49:53 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
- :content-language:to:cc:references:from:in-reply-to
- :content-transfer-encoding;
- bh=oG46p9ApnGlILl1ZLvkfxhnD10O2+FDP9Z7Tm2fwr+c=;
- b=Re0YTl5EzS2/s+QXJBxqnPsV5Zm0lh3DLg4BzfJNcj/nsQUFDLhr7dgCvKjL+iMB4C
- u/OeTNrHwi2z9BPLAbZv3MNTMykBT0z0440Um6u4fqZqKSJy7EMmNZMrFEC64F1KpZBZ
- sQxbJfuuyYZr5LE5VUHscb4o/m1d1oKarvvkSFPgrxuojlkh4xkP+B5z+jO2o5oFr9nQ
- 2Lpm/sfnENMBrDa1sAjPi7kYTP2W3N4hus2mBamCLBhnMTbUWwR8YYWig91jlfM1jBMJ
- XZPoRMIzOKiOYGwUkbIYMJkAqUtHD3IMZMLTnrLQ8vvoJUXAsj0gbEtqBqP6ShL13Rsi
- J0zw==
-X-Gm-Message-State: AOAM53046SU8aD9rNpkXcCOAi0hHBRGvnUcfgpTgh8KzZUj6s2h4jTvT
- 9xDxRne8s0lP6yJGla+xWzozsPQv950xdqgU3m1C8Ov2tuTkHzpagD56bodhw32gmRSt1taA3ZV
- BxrD9BcFlh+uougTl6yrkAbXY
-X-Received: by 2002:a05:6000:3c6:b0:1e4:a380:bb53 with SMTP id
- b6-20020a05600003c600b001e4a380bb53mr6213171wrg.559.1645800591923; 
- Fri, 25 Feb 2022 06:49:51 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJyPvZpYeV1cMChykbmMIlrqZ62jXUzNXFVvdiNhkV7FTQ/vQZtP351aVYLRANF8AJomAWs86Q==
-X-Received: by 2002:a05:6000:3c6:b0:1e4:a380:bb53 with SMTP id
- b6-20020a05600003c600b001e4a380bb53mr6213154wrg.559.1645800591650; 
- Fri, 25 Feb 2022 06:49:51 -0800 (PST)
-Received: from ?IPV6:2001:b07:6468:f312:c8dd:75d4:99ab:290a?
- ([2001:b07:6468:f312:c8dd:75d4:99ab:290a])
- by smtp.googlemail.com with ESMTPSA id
- l26-20020a05600c1d1a00b00380def7d3desm2672667wms.17.2022.02.25.06.49.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Feb 2022 06:49:51 -0800 (PST)
-Message-ID: <b03f6e27-bd55-e06b-af8d-a4e6bdf5d778@redhat.com>
-Date: Fri, 25 Feb 2022 15:49:49 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [GIT PULL] KVM/arm64 fixes for 5.17, take #4
-To: Marc Zyngier <maz@kernel.org>
-References: <20220225131302.107215-1-maz@kernel.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-In-Reply-To: <20220225131302.107215-1-maz@kernel.org>
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pbonzini@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Cc: kvm@vger.kernel.org, kernel-team@android.com,
- Mark Brown <broonie@kernel.org>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+ with ESMTP id 4uTau9VvjEn1 for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 25 Feb 2022 10:31:50 -0500 (EST)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0E4C54B9A7
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 25 Feb 2022 10:31:49 -0500 (EST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id BDE19617A0;
+ Fri, 25 Feb 2022 15:31:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21370C340E7;
+ Fri, 25 Feb 2022 15:31:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1645803106;
+ bh=OJP6GJj98Sjx4FzgK763MteoSg9awmetSsvPt3dPPiM=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=fVAKE6aS8+cJYj2hySBtQB2qZ8cLka3qwUkqw3LxzyKxsmSxUuDIZAuQ7NAFKzWFO
+ UGjCcDO9+rWnS6gMvyx74BZrR/HuZ1lahD1rSC5tQbF6CEWdqigh9mIwF3vMtn39W5
+ nzQ1H0Kgq3PhwEsaxeIgF6J46kTleltGmAlu61xOFifFRUMoTiUY8l+5JFsOAdhBMU
+ S/GlpIWQJdQaGsIYkzGM242nG7XTZGFBEofpnUeHz2sLqSQ2ZPrFf2lsOf0ba7ua+F
+ QcUNvTI3WogFDF2OYsRwRAF4xXVPv0QQ/IsMO+wWo0GrdMJvSHB1EsYqgVeaidn3f2
+ OzCspGiVEQm3w==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1nNcZL-00AYvf-Ro; Fri, 25 Feb 2022 15:31:43 +0000
+Date: Fri, 25 Feb 2022 15:31:43 +0000
+Message-ID: <87k0dj2c9s.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: "Chen, Rong A" <rong.a.chen@intel.com>
+Subject: Re: [kbuild-all] Re: [PATCH v2 6/9] KVM: arm64: Detect and handle
+ hypervisor stack overflows
+In-Reply-To: <16f47fa9-90b4-0b5c-33cb-cb004fc39266@intel.com>
+References: <20220222165212.2005066-7-kaleshsingh@google.com>
+ <202202231727.L621fVgD-lkp@intel.com>
+ <875yp63ptg.wl-maz@kernel.org> <YhYpvfZaSjrAtkZp@rli9-dbox>
+ <cb750267af0636c49d2f8aa354f086a5@kernel.org>
+ <CAMj1kXHsNsQXbeeS1zcy+xYA7kSE5apbLpChohfvkABS7Z6jKg@mail.gmail.com>
+ <89c48bd2a9b32b4607d1515714fa3c1b@kernel.org>
+ <16f47fa9-90b4-0b5c-33cb-cb004fc39266@intel.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: rong.a.chen@intel.com, ardb@kernel.org,
+ kaleshsingh@google.com, lkp@intel.com, llvm@lists.linux.dev,
+ kbuild-all@lists.01.org, will@kernel.org, qperret@google.com, tabba@google.com,
+ surenb@google.com, kernel-team@android.com, catalin.marinas@arm.com,
+ james.morse@arm.com, alexandru.elisei@arm.com, suzuki.poulose@arm.com,
+ mark.rutland@arm.com, pasha.tatashin@soleen.com, joey.gouly@arm.com,
+ pcc@google.com, ascull@google.com, pbonzini@redhat.com, yuzenghui@huawei.com,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Catalin Marinas <catalin.marinas@arm.com>, llvm@lists.linux.dev,
+ Joey Gouly <joey.gouly@arm.com>, Kalesh Singh <kaleshsingh@google.com>,
+ Will Deacon <will@kernel.org>, kernel test robot <lkp@intel.com>,
+ surenb@google.com, kvmarm <kvmarm@lists.cs.columbia.edu>,
+ Android Kernel Team <kernel-team@android.com>,
+ Pasha Tatashin <pasha.tatashin@soleen.com>,
+ Peter Collingbourne <pcc@google.com>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>, kbuild-all@lists.01.org,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -109,59 +107,33 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2/25/22 14:13, Marc Zyngier wrote:
-> Hi Paolo,
+On Fri, 25 Feb 2022 02:12:32 +0000,
+"Chen, Rong A" <rong.a.chen@intel.com> wrote:
 > 
-> Only a couple of fixes this time around: one for the long standing
-> PSCI CPU_SUSPEND issue, and a selftest fix for systems that don't have
-> a GICv3.
+> Hi Marc, Ard,
 > 
-> Please pull,
+> We have ignored the warning related to asmlinkage according to the
+> below advice:
 > 
-> 	M.
-> 
-> The following changes since commit 5bfa685e62e9ba93c303a9a8db646c7228b9b570:
-> 
->    KVM: arm64: vgic: Read HW interrupt pending state from the HW (2022-02-11 11:01:12 +0000)
-> 
-> are available in the Git repository at:
-> 
->    git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git tags/kvmarm-fixes-5.17-4
-> 
-> for you to fetch changes up to 456f89e0928ab938122a40e9f094a6524cc158b4:
-> 
->    KVM: selftests: aarch64: Skip tests if we can't create a vgic-v3 (2022-02-25 13:02:28 +0000)
-> 
-> ----------------------------------------------------------------
-> KVM/arm64 fixes for 5.17, take #4
-> 
-> - Correctly synchronise PMR and co on PSCI CPU_SUSPEND
-> 
-> - Skip tests that depend on GICv3 when the HW isn't available
-> 
-> ----------------------------------------------------------------
-> Mark Brown (1):
->        KVM: selftests: aarch64: Skip tests if we can't create a vgic-v3
-> 
-> Oliver Upton (1):
->        KVM: arm64: Don't miss pending interrupts for suspended vCPU
-> 
->   arch/arm64/kvm/psci.c                            | 3 +--
->   tools/testing/selftests/kvm/aarch64/arch_timer.c | 7 ++++++-
->   tools/testing/selftests/kvm/aarch64/vgic_irq.c   | 4 ++++
->   tools/testing/selftests/kvm/lib/aarch64/vgic.c   | 4 +++-
->   4 files changed, 14 insertions(+), 4 deletions(-)
-> 
+> https://lore.kernel.org/lkml/CAMj1kXHrRYagSVniSetHdG15rkQS+fm4zVOtN=Zda3W0QaEoJA@mail.gmail.com/
 
-Pulled, thanks.
+Ah, I didn't realise it had been updated. Apologies for the shouting!
 
-Paolo
+> do you want the bot ignore such warning if asmlinkage not specified?
 
+No, there is some value in warning about this particular case.
+
+Thanks,
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
