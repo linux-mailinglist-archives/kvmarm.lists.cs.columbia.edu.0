@@ -2,85 +2,75 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D9D54C78D8
-	for <lists+kvmarm@lfdr.de>; Mon, 28 Feb 2022 20:46:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 51C0D4C7B3A
+	for <lists+kvmarm@lfdr.de>; Mon, 28 Feb 2022 22:02:56 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2EA0649E17;
-	Mon, 28 Feb 2022 14:46:18 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6B43049E1E;
+	Mon, 28 Feb 2022 16:02:55 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
+	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, body has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jgBG1Vi5EGrO; Mon, 28 Feb 2022 14:46:18 -0500 (EST)
+	with ESMTP id ZElwPcJ3y7Ev; Mon, 28 Feb 2022 16:02:55 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9AB9149DE3;
-	Mon, 28 Feb 2022 14:46:16 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 11AB34120D;
+	Mon, 28 Feb 2022 16:02:54 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id F0A8849B07
- for <kvmarm@lists.cs.columbia.edu>; Mon, 28 Feb 2022 14:46:14 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2CA6E411D2
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 28 Feb 2022 16:02:53 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id dZiwdk6u05fh for <kvmarm@lists.cs.columbia.edu>;
- Mon, 28 Feb 2022 14:46:13 -0500 (EST)
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com
- [209.85.128.171])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 54FC740B64
- for <kvmarm@lists.cs.columbia.edu>; Mon, 28 Feb 2022 14:46:13 -0500 (EST)
-Received: by mail-yw1-f171.google.com with SMTP id
- 00721157ae682-2db2add4516so88404867b3.1
- for <kvmarm@lists.cs.columbia.edu>; Mon, 28 Feb 2022 11:46:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=BOWJAIOGIH0ymZT9zq+uY7hdzLkaNDyjtAxVqVFFj2w=;
- b=Wg9c7J0r1y1fhIg98DzrgIzLwAwxdvq8uND7NaTnjSrLRme5cW3gfqTZDoCvYly0ZF
- +npreilNQ45gdPYFmYgrZx4opwSJZ3zEgzrY14Tce8jF8b+N6T6+MhyYCqov0s3UCBdx
- cMBq1y5VPRRHIQ50w0k0yC5g5NslhzGoTZJZ8whsT+9R6zU8m8bWuFE8d7epgFZnAtt2
- p4engUaKwtsosUXzBFEGCDp5eaIwNPQQjW07dgFoZLbVYEheyVqp/sVQG4OgpDRCx3s3
- JRjJmxY8Fnqxt99mm6+qK34sU2wo1BvQBn2skVxpfVruf47TFWJTJzS2QG3DRRdFc0MB
- o5Jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=BOWJAIOGIH0ymZT9zq+uY7hdzLkaNDyjtAxVqVFFj2w=;
- b=7WZIWNgnJLk8ux7uBBbyhVSEA8/PrBhsVV/VpV1hHYrv4qp2yvwdpoRNQB33gYcK8z
- nRaYc4UrHAGRLc5rpXAlIQrn3H8iLVFRhNweq7FbWyTFVlmPd+OAmi1cfRhoq6oLB8rm
- /xIk5pUndPWJjkh7SsXhGA0bBD+mxlrqhZ1N9Jahpm6oPTHiWRsFlSdgSeaHLY6lqhuo
- cK9DiMqcg03aZA1desVCQELAKAYkQPzd4qaSJSlQ70IfhzlTy9XwzQ2L8te3S/NV+QWH
- zXPhQEux1IIGF4uWdPd5nWfVLBBNpPYNOfN+YArnEsGTD3PZ06F0MF7h0lbHR9WX85Kp
- srZA==
-X-Gm-Message-State: AOAM5318dSKgXu1icuIgzpU5Qr8+wOP8HuwQBXA7gMivoRvAkurUYXFR
- 7IzARCj6wFQ7c4muZ3So3+cRBIvTxVVg6pWS0aVZkg==
-X-Google-Smtp-Source: ABdhPJyEEJLZKxr+GIRaaClTqY0OlHtvicUSDZifLcY+kQQkwsi3Lq9EqECkLjPLoTWZ209QsnDxrVIYifXR81+jjN8=
-X-Received: by 2002:a81:c47:0:b0:2d6:beec:b381 with SMTP id
- 68-20020a810c47000000b002d6beecb381mr21743070ywm.148.1646077572416; Mon, 28
- Feb 2022 11:46:12 -0800 (PST)
+ with ESMTP id gC5Hu2ZR8iJj for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 28 Feb 2022 16:02:51 -0500 (EST)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BB6FC40BDF
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 28 Feb 2022 16:02:51 -0500 (EST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id A73E460F8F;
+ Mon, 28 Feb 2022 21:02:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13226C340F1;
+ Mon, 28 Feb 2022 21:02:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1646082170;
+ bh=+zlq/azdEB2IZFXwfoDXE+34FTi9I+0yDoZ4dH2KaeM=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=YDg6JCRYOWeQB8L2pYvuzm/cFb3K10jXaYyOXaWI742LnQrKGIK7EYCqA0vaWyEei
+ 2lPR71kfN9m4cO9y2EhvgIOiYvTI3u7h1l62qpMTqG45flalCYPF4NKQMQCEXla/jN
+ ulQ3UghtG8gUNgisRZD/OHZ92balORDEm3UMW5bQbuIEIx2Pu+44gBGQsSIfDzdBo9
+ lev+PyZtC7Wb2vZd9l2gyoSI9NQiM1T5bVJDCkC4AXL4/TTZsYyqTLUHH96/7iL+o2
+ HmsAJP3NS/XJs4PamNJLABFi6+DJ3taEEDKvsygzzEblN94gHBtHyP88/2mDl5Lc25
+ xQ7UDbawC0Egg==
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1nOnAN-00BEbx-Me; Mon, 28 Feb 2022 21:02:47 +0000
 MIME-Version: 1.0
-References: <20220224172559.4170192-1-rananta@google.com>
- <20220224172559.4170192-3-rananta@google.com>
- <Yhh6cI4P5VEMitkg@google.com>
- <CAJHc60zn0df4e-TXaeKEgkej4G34VzbFdQUpX_6ii_XwTNY2tg@mail.gmail.com>
- <YhkfW76Rit6DYs9T@google.com>
-In-Reply-To: <YhkfW76Rit6DYs9T@google.com>
-From: Raghavendra Rao Ananta <rananta@google.com>
-Date: Mon, 28 Feb 2022 11:46:01 -0800
-Message-ID: <CAJHc60z=qmz_s1G+LkNRWGumZOrtgzYmRM78j=3VpMi08Ox4Zg@mail.gmail.com>
-Subject: Re: [PATCH v4 02/13] KVM: arm64: Introduce KVM_CAP_ARM_REG_SCOPE
-To: Oliver Upton <oupton@google.com>
-Cc: kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
- kvm-ia64@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
- Peter Shier <pshier@google.com>, linux-kernel@vger.kernel.org,
- kvm-ppc@vger.kernel.org, kvm-riscv@lists.infradead.org,
- Catalin Marinas <catalin.marinas@arm.com>, Paolo Bonzini <pbonzini@redhat.com>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Date: Mon, 28 Feb 2022 21:02:47 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: Eugene Huang <eugeneh@nvidia.com>
+Subject: Re: Timer delays in VM
+In-Reply-To: <BYAPR12MB31927AEB9D0A4068ED12826DD9019@BYAPR12MB3192.namprd12.prod.outlook.com>
+References: <BYAPR12MB31927AEB9D0A4068ED12826DD9019@BYAPR12MB3192.namprd12.prod.outlook.com>
+User-Agent: Roundcube Webmail/1.4.13
+Message-ID: <667c9f084b2d38725369de60daef6d58@misterjones.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: eugeneh@nvidia.com, kvmarm@lists.cs.columbia.edu
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -92,226 +82,57 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Feb 25, 2022 at 10:26 AM Oliver Upton <oupton@google.com> wrote:
->
-> On Fri, Feb 25, 2022 at 09:34:35AM -0800, Raghavendra Rao Ananta wrote:
-> > Hey Oliver,
-> >
-> > On Thu, Feb 24, 2022 at 10:43 PM Oliver Upton <oupton@google.com> wrote:
-> > >
-> > > On Thu, Feb 24, 2022 at 05:25:48PM +0000, Raghavendra Rao Ananta wrote:
-> > > > KVM_[GET|SET]_ONE_REG act on per-vCPU basis. Currently certain
-> > > > ARM64 registers, such as KVM_REG_ARM_SMCCC_ARCH_WORKAROUND_[1|2],
-> > > > are accessed via this interface even though the effect that
-> > > > they have are really per-VM. As a result, userspace could just
-> > > > waste cycles to read/write the same information for every vCPU
-> > > > that it spawns, only to realize that there's absolutely no change
-> > > > in the VM's state. The problem gets worse in proportion to the
-> > > > number of vCPUs created.
-> > > >
-> > > > As a result, to avoid this redundancy, introduce the capability
-> > > > KVM_CAP_ARM_REG_SCOPE. If enabled, KVM_GET_REG_LIST will advertise
-> > > > the registers that are VM-scoped by dynamically modifying the
-> > > > register encoding. KVM_REG_ARM_SCOPE_* helper macros are introduced
-> > > > to decode the same. By learning this, userspace can access such
-> > > > registers only once.
-> > > >
-> > > > Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
-> > > > ---
-> > > >  Documentation/virt/kvm/api.rst    | 16 ++++++++++++++++
-> > > >  arch/arm64/include/asm/kvm_host.h |  3 +++
-> > > >  arch/arm64/include/uapi/asm/kvm.h |  6 ++++++
-> > > >  arch/arm64/kvm/arm.c              | 13 +++++++------
-> > > >  include/uapi/linux/kvm.h          |  1 +
-> > > >  5 files changed, 33 insertions(+), 6 deletions(-)
-> > > >
-> > > > diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
-> > > > index a4267104db50..7e7b3439f540 100644
-> > > > --- a/Documentation/virt/kvm/api.rst
-> > > > +++ b/Documentation/virt/kvm/api.rst
-> > > > @@ -7561,3 +7561,19 @@ The argument to KVM_ENABLE_CAP is also a bitmask, and must be a subset
-> > > >  of the result of KVM_CHECK_EXTENSION.  KVM will forward to userspace
-> > > >  the hypercalls whose corresponding bit is in the argument, and return
-> > > >  ENOSYS for the others.
-> > > > +
-> > > > +8.34 KVM_CAP_ARM_REG_SCOPE
-> > > > +--------------------------
-> > > > +
-> > > > +:Architectures: arm64
-> > > > +
-> > > > +The capability, if enabled, amends the existing register encoding
-> > > > +with additional information to the userspace if a particular register
-> > > > +is scoped per-vCPU or per-VM via KVM_GET_REG_LIST. KVM provides
-> > > > +KVM_REG_ARM_SCOPE_* helper macros to decode the same. Userspace can
-> > > > +use this information from the register encoding to access a VM-scopped
-> > > > +regiser only once, as opposed to accessing it for every vCPU for the
-> > > > +same effect.
-> > > > +
-> > >
-> > > Could you describe the encoding changes in 4.68 'KVM_SET_ONE_REG', along
-> > > with the other ARM encoding details?
-> > >
-> > > > +On the other hand, if the capability is disabled, all the registers
-> > > > +remain vCPU-scopped by default, retaining backward compatibility.
-> > >
-> > > typo: vCPU-scoped
-> > >
-> > > That said, I don't believe we need to document behavior if the CAP is
-> > > disabled, as the implicated ioctls should continue to work the same.
-> > >
-> > Sure, I'll address the above two Doc comments.
-> > > > diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-> > > > index 5bc01e62c08a..8132de6bd718 100644
-> > > > --- a/arch/arm64/include/asm/kvm_host.h
-> > > > +++ b/arch/arm64/include/asm/kvm_host.h
-> > > > @@ -136,6 +136,9 @@ struct kvm_arch {
-> > > >
-> > > >       /* Memory Tagging Extension enabled for the guest */
-> > > >       bool mte_enabled;
-> > > > +
-> > > > +     /* Register scoping enabled for KVM registers */
-> > > > +     bool reg_scope_enabled;
-> > > >  };
-> > > >
-> > > >  struct kvm_vcpu_fault_info {
-> > > > diff --git a/arch/arm64/include/uapi/asm/kvm.h b/arch/arm64/include/uapi/asm/kvm.h
-> > > > index b3edde68bc3e..c35447cc0e0c 100644
-> > > > --- a/arch/arm64/include/uapi/asm/kvm.h
-> > > > +++ b/arch/arm64/include/uapi/asm/kvm.h
-> > > > @@ -199,6 +199,12 @@ struct kvm_arm_copy_mte_tags {
-> > > >  #define KVM_REG_ARM_COPROC_MASK              0x000000000FFF0000
-> > > >  #define KVM_REG_ARM_COPROC_SHIFT     16
-> > > >
-> > > > +/* Defines if a KVM register is one per-vCPU or one per-VM */
-> > > > +#define KVM_REG_ARM_SCOPE_MASK               0x0000000010000000
-> > > > +#define KVM_REG_ARM_SCOPE_SHIFT              28
-> > >
-> > > Thinking about the advertisement of VM- and vCPU-scoped registers, this
-> > > could be generally useful. Might it make sense to add such an encoding
-> > > to the arch-generic register definitions?
-> > >
-> > > If that is the case, we may want to snap up a few more bits (a nybble)
-> > > for future expansion.
-> > >
-> > That's a great idea! But I wonder if we'll get a push-back since there
-> > are no users of it in other arch(s) yet. Not sure if there was any
-> > need/discussion regarding the same, but I'm happy to share a patch for
-> > the same if you sense that there's a strong potential for the patch.
-> >
->
-> I'm unsure if this is actually of interest to other architectures, it
-> just doesn't seem ARM-specific so we should probably raise the question
-> so we only grab these bits once.
->
-I've CC'ed a few more arch-specific kvm lists for
-comments/concerns/suggestions on the idea (feel free to add any other
-relevant groups/persons). Based on the response, I can start an
-independent RFC series for the same.
-
-> > > > +#define KVM_REG_ARM_SCOPE_VCPU               0
-> > > > +#define KVM_REG_ARM_SCOPE_VM         1
-> > > > +
-> > > >  /* Normal registers are mapped as coprocessor 16. */
-> > > >  #define KVM_REG_ARM_CORE             (0x0010 << KVM_REG_ARM_COPROC_SHIFT)
-> > > >  #define KVM_REG_ARM_CORE_REG(name)   (offsetof(struct kvm_regs, name) / sizeof(__u32))
-> > > > diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-> > > > index ecc5958e27fe..107977c82c6c 100644
-> > > > --- a/arch/arm64/kvm/arm.c
-> > > > +++ b/arch/arm64/kvm/arm.c
-> > > > @@ -81,26 +81,26 @@ int kvm_arch_check_processor_compat(void *opaque)
-> > > >  int kvm_vm_ioctl_enable_cap(struct kvm *kvm,
-> > > >                           struct kvm_enable_cap *cap)
-> > > >  {
-> > > > -     int r;
-> > > > +     int r = 0;
-> > > >
-> > > >       if (cap->flags)
-> > > >               return -EINVAL;
-> > > >
-> > > >       switch (cap->cap) {
-> > > >       case KVM_CAP_ARM_NISV_TO_USER:
-> > > > -             r = 0;
-> > > >               kvm->arch.return_nisv_io_abort_to_user = true;
-> > > >               break;
-> > > >       case KVM_CAP_ARM_MTE:
-> > > >               mutex_lock(&kvm->lock);
-> > > > -             if (!system_supports_mte() || kvm->created_vcpus) {
-> > > > +             if (!system_supports_mte() || kvm->created_vcpus)
-> > > >                       r = -EINVAL;
-> > > > -             } else {
-> > > > -                     r = 0;
-> > > > +             else
-> > > >                       kvm->arch.mte_enabled = true;
-> > > > -             }
-> > > >               mutex_unlock(&kvm->lock);
-> > > >               break;
-> > >
-> > > Hmm.. these all look like cleanups. If you want to propose these, could
-> > > you do it in a separate patch?
-> > >
-> > Ahh, I thought I could squeeze it in. But sure, I can separate it out.
-> > > > +     case KVM_CAP_ARM_REG_SCOPE:
-> > > > +             WRITE_ONCE(kvm->arch.reg_scope_enabled, true);
-> > > > +             break;
-> > > >       default:
-> > > >               r = -EINVAL;
-> > > >               break;
-> > > > @@ -209,6 +209,7 @@ int kvm_vm_ioctl_check_extension(struct kvm *kvm, long ext)
-> > > >       case KVM_CAP_SET_GUEST_DEBUG:
-> > > >       case KVM_CAP_VCPU_ATTRIBUTES:
-> > > >       case KVM_CAP_PTP_KVM:
-> > > > +     case KVM_CAP_ARM_REG_SCOPE:
-> > >
-> > > It is a bit odd to advertise a capability (and allow userspace to enable
-> > > it), despite the fact that the feature itself hasn't yet been
-> > > implemented.
-> > >
-> > > Is it possible to fold the feature in to the patch that exposes it to
-> > > userspace? Otherwise, you could punt advertisement of the CAP until it
-> > > is actually implemented in kernel.
-> > >
-> > Well, I didn't want to complicate the patch, but technically the
-> > feature is available with this patch, including all the CAP and macro
-> > definitions. Userspace can still decode the scope information, only
-> > that no registers are added yet, which is done in the next patch. So,
-> > the userspace can still remain the same between this and the next
-> > patch.
->
-> But the series isn't cleanly bisectable. There will exist commits in
-> history that report KVM_CAP_ARM_REG_SCOPE as implemented even though
-> that is not actually the case. You should really only advertise support
-> to userspace when the feature is implemented.
->
-> Defining kvm->arch.reg_scope_enabled can be done earlier so you have a
-> bit to test and guard all of the new code, and only expose the CAP in
-> the last patch of the series.
->
-Got it. I'll arrange that in the next spin.
-> Also, as an FYI Marc has a patch that I'll be picking up in my own
-> series which uses bits instead of bools to keep track of certain
-> VM-wide features:
->
-> https://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git/commit/?h=kvm-arm64/mmu/guest-MMIO-guard&id=7dd0a13a4217b870f2e83cdc6045e5ce482a5340
->
-Thanks. This is great. I can steal a couple of bits and implement the
-flags introduced in the series here.
-> Marc, if neither of our series land in 5.18 could you at least submit
-> this patch in preparation? Should keep conflicts minimal that way.
->
-> Thanks!
->
-> --
-> Oliver
-
-Thank you.
-
-Raghavendra
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+W1BsZWFzZSBkb24ndCBzZW5kIEhUTUwgZW1haWwgYW5kIHN0aWNrIHRvIHBsYWluIHRleHRdCgpP
+biAyMDIyLTAyLTI4IDE4OjAyLCBFdWdlbmUgSHVhbmcgd3JvdGU6Cj4gSGksCj4gCj4gSSBhbSBy
+dW5uaW5nIHFlbXUgb24gYW4gYXJtNjQgQ2VudE9TIGhvc3QuIEluc2lkZSBhIHVidW50dSBWTSwg
+YQoKSSBhc3N1bWUgdGhhdCBieSB0aGlzIHlvdSBtZWFuIFFFTVUgYXMgdGhlIFZNTSBmb3IgYSBL
+Vk0gZ3Vlc3QsIHJpZ2h0PwoKPiBwcm9jZXNzIHJ1bnMgYSB0aW1lciBjcmVhdGVkIHVzaW5nIHRp
+bWVyX3Q6Cj4gCj4gZXYuc2lnZXZfbm90aWZ5X2Z1bmN0aW9uID0gbV9jYWxsYmFjazsKPiAKPiDi
+gKYKPiAKPiB0aW1lcl9jcmVhdGUoQ0xPQ0tfTU9OT1RPTklDLCAmZXYsICZtX3RpbWVyX3QpOwo+
+IAo+IFRoaXMgdGltZXIgc29tZXRpbWVzIGhhcyBzaWduaWZpY2FudCBkZWxheXMuIEZvciBleGFt
+cGxlLCB0aGUgNTAgbXMKPiB0aW1lciBjYW4gaGF2ZSBhIGNhbGxiYWNrIGRlbGF5IG9mIDEwMG1z
+Lgo+IAo+IEkgZGlkIGEgaG9zdCBrZXJuZWwgdHJhY2UgYW5kIHNlZSBhIGxvdCBvZiBXRngga3Zt
+X2V4aXRzLCBhbmQgIHRoZQo+IGZvbGxvd2luZyBldmVudHMgYmV0d2VlbiBrdm1fZXhpdCBhbmQg
+a3ZtX2VudHJ5Ogo+IAo+IGt2bV9leGl0Cj4gCj4ga3ZtX3dmeF9hcm02NAo+IAo+IGt2bV9nZXRf
+dGltZXJfbWFwCj4gCj4gc2NoZWRfc3dpdGNoCj4gCj4ga3ZtX3RpbWVyX3NhdmVfc3RhdGUKPiAK
+PiBrdm1fdGltZXJfdXBkYXRlX2lycQo+IAo+IHZnaWNfdXBkYXRlX2lycV9wZW5kaW5nCj4gCj4g
+a3ZtX3RpbWVyX3Jlc3RvcmVfc3RhdGUKPiAKPiBrdm1fdmNwdV93YWtldXAKPiAKPiBrdm1fYXJt
+X3NldHVwX2RlYnVnCj4gCj4ga3ZtX2FybV9zZXRfZHJlZzMyCj4gCj4ga3ZtX2VudHJ5CgpBbGwg
+b2YgdGhpcyBpcyBwZXJmZWN0bHkgbm9ybWFsIChndWVzdCBoaXRzIFdGSSBmcm9tIGl0cyBpZGxl
+Cmxvb3AsIG5vIGludGVycnVwdCBpcyBwZW5kaW5nLCB0cmFwIHRvIEVMMiwgc2NoZWR1bGUgb3V0
+LApzY2hlZHVsZSBiYWNrIGluLCByZWVudGVyIHRoZSBndWVzdCkuCgo+IAo+IEkgaGF2ZSB0aGUg
+Zm9sbG93aW5nIHF1ZXN0aW9uczoKPiAKPiAgCSogV2h5IHRoZXJlIGFyZSBhIGxvdCBXRnggZXhp
+dHM/IElzIHRoZSB0aW1lciBkZXBlbmRlbnQgb24gaXQ/CgpUaGF0J3MgbW9zdCBwcm9iYWJseSBi
+ZWNhdXNlIHlvdXIgdmNwdSBnb2VzIGlkbGUgYW5kIGV4ZWN1dGUgV0ZJIHRvCldhaXQgRm9yIGFu
+IEludGVycnVwdC4gQXMgbm8gaW50ZXJydXB0IGlzIHBlbmRpbmcsIHRoZSB2Y3B1IGV4aXRzCnNv
+IHRoYXQgdGhlIGhvc3QgY2FuIGRvIHNvbWV0aGluZyB1c2VmdWwgdW50aWwgaXQgZ2V0cyBhbiBp
+bnRlcnJ1cHQKdGhhdCBpcyB0YXJnZXRlZCBhdCB0aGUgdmNwdS4gT24gYW4gaWRsZSBWTSwgdGhp
+cyBwcm9iYWJseSBoYXBwZW5zCjEwMHMgb2YgdGltZXMgYSBzZWNvbmQuCgo+IAkqIERvZXMgdGhp
+cyB0aW1lciByZWx5IG9uIGt2bSB0aW1lciBpcnEgaW5qZWN0aW9uPwoKWWVzLiBBIHRpbWVyIGlu
+dGVycnVwdCBpcyBhbHdheXMgaW5qZWN0ZWQgaW4gU1cuIEJ1dCB0aGUgdGltZXIKaW50ZXJydXB0
+IGNhbiBlaXRoZXIgY29tZSBmcm9tIHRoZSBIVyB0aW1lciBpdHNlbGYgKHRoZSBWTQp3YXMgcnVu
+bmluZyB3aGlsZSB0aGUgdGltZXIgZXhwaXJlZCksIG9yIGZyb20gYSBTVyB0aW1lciB0aGF0CktW
+TSBhcyBzZXR1cCBpZiB0aGUgZ3Vlc3Qgd2FzIGJsb2NrZWQgb24gV0ZJLgoKPiAJKiBXaGF0IGNh
+biBiZSBhbnkgcG9zc2libGUgY2F1c2VzIGZvciB0aGUgdGltZXIgZGVsYXk/IEFyZSB0aGVyZSBz
+b21lCj4gbG9ja2luZyBtZWNoYW5pc21zIHdoaWNoIGNhbiBjYXVzZSB0aGUgZGVsYXk/CgpUaGlz
+IGNvbXBsZXRlbHkgZGVwZW5kIG9uIGhvdyBsb2FkZWQgeW91ciBob3N0IGlzLCB0aGUgcmVzcGVj
+dGl2ZQpwcmlvcml0aWVzIG9mIHRoZSB2YXJpb3VzIHByb2Nlc3NlcywgYW5kIGEgbWlsbGlvbiBv
+ZiBvdGhlciB0aGluZ3MuClRoaXMgaXMgbm8gZGlmZmVyZW50IGZyb20gdGhlIHNhbWUgdXNlcnNw
+YWNlIHJ1bm5pbmcgb24gdGhlIGhvc3QuCkl0IGFsc28gZGVwZW5kcyBvbiB0aGUgKmd1ZXN0KiBr
+ZXJuZWwsIGJ5IHRoZSB3YXkuCgpUaGVyZSBhcmUgb2YgY291cnNlIGxvY2tzIGFsbCBvdmVyIHRo
+ZSBwbGFjZSwgYnV0IHRoYXQncyB0aGUgdmVyeQpuYXR1cmUgb2YgdGhlIGJlYXN0LgoKPiAJKiBX
+aGF0IHBhcmFtZXRlcnMgY2FuIHR1bmUgdGhpcyB0aW1lcj8KCk5vbmUuIFlvdSBtYXkgd2FudCB0
+byBjaGVjayB3aGV0aGVyIHRoZSBkZWxheSBpcyBvYnNlcnZlZCB3aGVuIHRoZQpWTSBoYXMgaGl0
+IFdGSSBvciBub3QuCgpZb3UgYWxzbyBkb24ndCBtZW50aW9uIHdoYXQgaG9zdCBrZXJuZWwgdmVy
+c2lvbiB5b3UgYXJlIHJ1bm5pbmcuCkluIGdlbmVyYWwsIHBsZWFzZSB0cnkgYW5kIHJlcHJvZHVj
+ZSB0aGUgaXNzdWUgdXNpbmcgdGhlIGxhdGVzdAprZXJuZWwgdmVyc2lvbiAoNS4xNiBhdCB0aGUg
+bW9tZW50KS4gUGxlYXNlIGFsc28gaW5kaWNhdGUgd2hhdApIVyB5b3UgYXJlIHVzaW5nLgoKVGhh
+bmtzLAoKICAgICAgICAgTS4KLS0gCkphenogaXMgbm90IGRlYWQuIEl0IGp1c3Qgc21lbGxzIGZ1
+bm55Li4uCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCmt2
+bWFybSBtYWlsaW5nIGxpc3QKa3ZtYXJtQGxpc3RzLmNzLmNvbHVtYmlhLmVkdQpodHRwczovL2xp
+c3RzLmNzLmNvbHVtYmlhLmVkdS9tYWlsbWFuL2xpc3RpbmZvL2t2bWFybQo=
