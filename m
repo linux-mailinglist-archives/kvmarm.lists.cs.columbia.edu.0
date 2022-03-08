@@ -2,85 +2,85 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AA004D249E
-	for <lists+kvmarm@lfdr.de>; Wed,  9 Mar 2022 00:09:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BFE034D2E74
+	for <lists+kvmarm@lfdr.de>; Wed,  9 Mar 2022 12:52:34 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 574DB49EBE;
-	Tue,  8 Mar 2022 18:09:35 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E590849EF0;
+	Wed,  9 Mar 2022 06:52:33 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, UNPARSEABLE_RELAY=0.001,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@chromium.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JpITFLUplkMI; Tue,  8 Mar 2022 18:09:35 -0500 (EST)
+	with ESMTP id QEOWmTwe9pf0; Wed,  9 Mar 2022 06:52:33 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EE2F649ECF;
-	Tue,  8 Mar 2022 18:09:33 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 94C4A49EE6;
+	Wed,  9 Mar 2022 06:52:32 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5939549EBE
- for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Mar 2022 18:09:32 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id ECE7340597
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Mar 2022 15:21:42 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id MtufiNdRiAAd for <kvmarm@lists.cs.columbia.edu>;
- Tue,  8 Mar 2022 18:09:31 -0500 (EST)
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com
- [209.85.221.47])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 23FC549EBD
- for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Mar 2022 18:09:31 -0500 (EST)
-Received: by mail-wr1-f47.google.com with SMTP id j26so434621wrb.1
- for <kvmarm@lists.cs.columbia.edu>; Tue, 08 Mar 2022 15:09:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=1f5gPcrqfy750U/J52Wg+Mj+0/UcxsK3pfUKBKWLDR0=;
- b=rY724zyNQvt0W7k77uJ6mdsljpHhmPedp6A01Ybgi4ape+kd29m4bzWSt+PlFv6VGk
- 5F64VH7NbTfh9lbiAtg/QqctdXYwNeto4qq8ILBsk1UjKlgBgsCMQeBPoPLONRLpHghE
- cWdsR0etuAIMnRL3KlwUvfLr789Koi+WEO7RwGW0jHeOJ70GUKcFjnSzplqBRUYBRhT6
- QP8IEuX2CtkcOTNnpXBR5MGZ0IWr8YG+CglWc/j5+G1oi8Hir+ky5riHmAiBgpzzzCL3
- WDmeIljWzrU1rFQ9e3oINeWI9gqLxDH39hU6jNdl97UeioJbJwXvtYXCCKepzEEDLGHC
- BVFQ==
+ with ESMTP id S9aMOX9cDffU for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  8 Mar 2022 15:21:41 -0500 (EST)
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com
+ [209.85.161.52])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B855D40453
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  8 Mar 2022 15:21:41 -0500 (EST)
+Received: by mail-oo1-f52.google.com with SMTP id
+ h16-20020a4a6f10000000b00320507b9ccfso350504ooc.7
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 08 Mar 2022 12:21:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chromium.org; s=google;
+ h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+ :subject:to:cc;
+ bh=BVV59R1x/3zhBVnVWK6j4y0iat0LkIDDXlTtlhGa9CY=;
+ b=lczPPxNy5R21bIe/J5VnIJ82n/HdZ51itN67PDK3dFFcZNEcl/9RrkIuEYhsC36C3g
+ qQk2NsFOqKIGWMY1eCMWE6sJZpxOWyJCWCvi/k7rbaHNsf9EE9MzW4opqLPCCDtyexdd
+ fwr+NlWKn7wteWokK2Sh7UnE4ODwU+UJmsiNE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=1f5gPcrqfy750U/J52Wg+Mj+0/UcxsK3pfUKBKWLDR0=;
- b=2QXRjuaT8pIAFnhLw/EpRJyoEnKjAruzyyW7AurJlPdy9psqNAlu4Xx7oK6O+46SOg
- qc3oKjaKsxeaJmTAHsQsE0NZhYqURHSJuslHV+xI8CoqP+A49sYJz+wWPqqvl4qcemJb
- KJ9qDlflKnG3kggt/sWCideWivk7OMh65VQG6oLtVzKi0s1GkRfgNTEYOIyPguBrMR+j
- PLxumwHHIY2+TY5bjRWe2oPAQTCuYZy37nTgWEvJ5KZEMVYSVqX1keLH/RDkpzIkaqby
- et4iL6y+v3kTurNu5uKbjHZ713Q6PjAycy1hhfiQJCT+eCFkqkndXkCN3KAIq1wBk9Qb
- VN4g==
-X-Gm-Message-State: AOAM531aR5e5e0eYrjEn7YUVAgjOXc+jBQ22o+RmOq2PnvGQteEVIgGB
- tpLT9ghUzHaac7hCQHOnimb7XmqBWSbgi9SzYWFLwA==
-X-Google-Smtp-Source: ABdhPJwNHy+VN+JXLWCDADBmqbJunnYlm8shlOKM3wtyDi3l0Nvo++c+lLHsCuWeoJlsi7IJiccAZFbP2qFwzcnxW0Q=
-X-Received: by 2002:adf:eb86:0:b0:1e6:8c92:af6b with SMTP id
- t6-20020adfeb86000000b001e68c92af6bmr13872277wrn.116.1646780969857; Tue, 08
- Mar 2022 15:09:29 -0800 (PST)
+ h=x-gm-message-state:mime-version:in-reply-to:references:from
+ :user-agent:date:message-id:subject:to:cc;
+ bh=BVV59R1x/3zhBVnVWK6j4y0iat0LkIDDXlTtlhGa9CY=;
+ b=q5TQBOl6xm/6OgoEAlQdMN8z7CoUujEI5pNgc1gXlYFNCyMVDJq/Yb74YCwand8mdo
+ QnDyzjk/OcEqnV/JgKTCn86zM0oVkQGYtAWgFNy3gtC+OoeuKwTmHXUNJAh7qTS1VNnd
+ 3KEEf9Nt2rvfFU+E6Q6hRsLW7TTTEzIFi0BoeRUWKMUl57LOo97VEYt+Ii1JogGu3Tjc
+ hyKrXkTzClmUI0l1z/fFEUZAFKzHNcgd8gH5PL2I/ndHa7XdqZnWnVKmZomsG14RFXDV
+ 42bb0MRWNDyahzdyn4PhroLF4L+xIM5Dy4G2x/rcmTkpLatEimKI05QBvaXjLoPN8Ldw
+ tahA==
+X-Gm-Message-State: AOAM531+nmvssUQee6kVeeFk1wLj93vYoBJON5A5se4sTDbzs7XY8uwh
+ C4sJJorl8XLjZAFByx/j4+/wmmUuDwlIbP4u1WpFlw==
+X-Google-Smtp-Source: ABdhPJxYmuzkDSk5/9wnEE3vKsXmU2qpGFnLanLvP0kVx44q4gaJgGHUxdsVe+bSUC49eFC3IKpOiY0Mkly8Ik45/Ss=
+X-Received: by 2002:a05:6870:d250:b0:da:b3f:3211 with SMTP id
+ h16-20020a056870d25000b000da0b3f3211mr3461463oac.193.1646770901112; Tue, 08
+ Mar 2022 12:21:41 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 8 Mar 2022 12:21:40 -0800
 MIME-Version: 1.0
+In-Reply-To: <20220307184935.1704614-2-kaleshsingh@google.com>
 References: <20220307184935.1704614-1-kaleshsingh@google.com>
  <20220307184935.1704614-2-kaleshsingh@google.com>
- <CAE-0n52LmVRkrSNN=eJf+TYYnmesVjFv99nnetYvRWshm82rOg@mail.gmail.com>
-In-Reply-To: <CAE-0n52LmVRkrSNN=eJf+TYYnmesVjFv99nnetYvRWshm82rOg@mail.gmail.com>
-From: Kalesh Singh <kaleshsingh@google.com>
-Date: Tue, 8 Mar 2022 15:09:18 -0800
-Message-ID: <CAC_TJvc6LYp95BXQc0DSBBBAZpYpixa+NyHKMLFWsBADD5Ubhg@mail.gmail.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Tue, 8 Mar 2022 12:21:40 -0800
+Message-ID: <CAE-0n52LmVRkrSNN=eJf+TYYnmesVjFv99nnetYvRWshm82rOg@mail.gmail.com>
 Subject: Re: [PATCH v5 1/8] KVM: arm64: Introduce hyp_alloc_private_va_range()
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: "Cc: Android Kernel" <kernel-team@android.com>,
- "moderated list:ARM64 PORT \(AARCH64 ARCHITECTURE\)"
- <linux-arm-kernel@lists.infradead.org>, Will Deacon <will@kernel.org>,
- Peter Collingbourne <pcc@google.com>, Marc Zyngier <maz@kernel.org>,
- LKML <linux-kernel@vger.kernel.org>,
+To: Kalesh Singh <kaleshsingh@google.com>
+X-Mailman-Approved-At: Wed, 09 Mar 2022 06:52:31 -0500
+Cc: kernel-team@android.com, linux-arm-kernel@lists.infradead.org,
+ will@kernel.org, Peter Collingbourne <pcc@google.com>, maz@kernel.org,
+ linux-kernel@vger.kernel.org,
  "Madhavan T. Venkataraman" <madvenka@linux.microsoft.com>,
  Mark Brown <broonie@kernel.org>, Masami Hiramatsu <mhiramat@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>,
- Suren Baghdasaryan <surenb@google.com>, kvmarm <kvmarm@lists.cs.columbia.edu>
+ Catalin Marinas <catalin.marinas@arm.com>, surenb@google.com,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -97,165 +97,138 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, Mar 8, 2022 at 12:21 PM Stephen Boyd <swboyd@chromium.org> wrote:
+Quoting Kalesh Singh (2022-03-07 10:48:59)
+> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> index bc2aba953299..ccb2847ee2f4 100644
+> --- a/arch/arm64/kvm/mmu.c
+> +++ b/arch/arm64/kvm/mmu.c
+> @@ -457,22 +457,17 @@ int create_hyp_mappings(void *from, void *to, enum kvm_pgtable_prot prot)
+>         return 0;
+>  }
 >
-HI Stephen. Thanks for the review.
+> -static int __create_hyp_private_mapping(phys_addr_t phys_addr, size_t size,
+> -                                       unsigned long *haddr,
+> -                                       enum kvm_pgtable_prot prot)
+> +
+> +/**
+> + * hyp_alloc_private_va_range - Allocates a private VA range.
+> + * @size:      The size of the VA range to reserve.
+> + *
+> + * The private VA range is allocated below io_map_base and
+> + * aligned based on the order of @size.
 
-> Quoting Kalesh Singh (2022-03-07 10:48:59)
-> > diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> > index bc2aba953299..ccb2847ee2f4 100644
-> > --- a/arch/arm64/kvm/mmu.c
-> > +++ b/arch/arm64/kvm/mmu.c
-> > @@ -457,22 +457,17 @@ int create_hyp_mappings(void *from, void *to, enum kvm_pgtable_prot prot)
-> >         return 0;
-> >  }
-> >
-> > -static int __create_hyp_private_mapping(phys_addr_t phys_addr, size_t size,
-> > -                                       unsigned long *haddr,
-> > -                                       enum kvm_pgtable_prot prot)
-> > +
-> > +/**
-> > + * hyp_alloc_private_va_range - Allocates a private VA range.
-> > + * @size:      The size of the VA range to reserve.
-> > + *
-> > + * The private VA range is allocated below io_map_base and
-> > + * aligned based on the order of @size.
->
-> Add what it returns?
->
-> Return: Start address of allocated VA range or some error value... (I don't
-> understand this part).
->
-> It may also be a good idea to write out what VA is in the description:
->
-> The private virtual address (VA) range is allocated below io_map_base
->
+Add what it returns?
 
-Ack
+Return: Start address of allocated VA range or some error value... (I don't
+understand this part).
 
-> > + */
-> > +unsigned long hyp_alloc_private_va_range(size_t size)
-> >  {
-> >         unsigned long base;
-> > -       int ret = 0;
-> > -
-> > -       if (!kvm_host_owns_hyp_mappings()) {
-> > -               base = kvm_call_hyp_nvhe(__pkvm_create_private_mapping,
-> > -                                        phys_addr, size, prot);
-> > -               if (IS_ERR_OR_NULL((void *)base))
-> > -                       return PTR_ERR((void *)base);
-> > -               *haddr = base;
-> > -
-> > -               return 0;
-> > -       }
-> >
-> >         mutex_lock(&kvm_hyp_pgd_mutex);
-> >
-> > @@ -484,29 +479,53 @@ static int __create_hyp_private_mapping(phys_addr_t phys_addr, size_t size,
-> >          *
-> >          * The allocated size is always a multiple of PAGE_SIZE.
-> >          */
-> > -       size = PAGE_ALIGN(size + offset_in_page(phys_addr));
-> > -       base = io_map_base - size;
-> > +       base = io_map_base - PAGE_ALIGN(size);
-> > +
-> > +       /* Align the allocation based on the order of its size */
-> > +       base = ALIGN_DOWN(base, PAGE_SIZE << get_order(size));
-> >
-> >         /*
-> >          * Verify that BIT(VA_BITS - 1) hasn't been flipped by
-> >          * allocating the new area, as it would indicate we've
-> >          * overflowed the idmap/IO address range.
-> >          */
-> > -       if ((base ^ io_map_base) & BIT(VA_BITS - 1))
-> > -               ret = -ENOMEM;
-> > +       if (!base || (base ^ io_map_base) & BIT(VA_BITS - 1))
-> > +               base = (unsigned long)ERR_PTR(-ENOMEM);
->
-> It looks odd to use an error pointer casted to unsigned long to return
-> from an address allocation function. Why not pass a pointer for base
-> like the function was written before and return an int from this
-> function with 0 for success and negative error value?Otherwise some
-> sort of define should made like DMA_MAPPING_ERROR and that can be used
-> to indicate to the caller that the allocation failed, or a simple zero
-> may work?
+It may also be a good idea to write out what VA is in the description:
 
-I wanted to keep consistent between the pkvm and traditional nvhe
-code. I will refactor both *alloc_private_va_range() functions to take
-a pointer and return an int error if that's preferred. There would
-still be a case of this kind of cast in
-__pkvm_create_private_mapping() which does return an unsigned long
-address or ERR_PTR(...). It looks like it was made to return the
-address to facilitate use as a hypercall (@Quentin CMIW).
+The private virtual address (VA) range is allocated below io_map_base
 
+> + */
+> +unsigned long hyp_alloc_private_va_range(size_t size)
+>  {
+>         unsigned long base;
+> -       int ret = 0;
+> -
+> -       if (!kvm_host_owns_hyp_mappings()) {
+> -               base = kvm_call_hyp_nvhe(__pkvm_create_private_mapping,
+> -                                        phys_addr, size, prot);
+> -               if (IS_ERR_OR_NULL((void *)base))
+> -                       return PTR_ERR((void *)base);
+> -               *haddr = base;
+> -
+> -               return 0;
+> -       }
 >
-> >         else
-> >                 io_map_base = base;
-> >
-> >         mutex_unlock(&kvm_hyp_pgd_mutex);
-> >
-> > -       if (ret)
-> > -               goto out;
-> > +       return base;
-> > +}
-> > +
-> > +static int __create_hyp_private_mapping(phys_addr_t phys_addr, size_t size,
-> > +                                       unsigned long *haddr,
-> > +                                       enum kvm_pgtable_prot prot)
-> > +{
-> > +       unsigned long addr;
-> > +       int ret = 0;
-> > +
-> > +       if (!kvm_host_owns_hyp_mappings()) {
-> > +               addr = kvm_call_hyp_nvhe(__pkvm_create_private_mapping,
-> > +                                        phys_addr, size, prot);
-> > +               if (IS_ERR((void *)addr))
+>         mutex_lock(&kvm_hyp_pgd_mutex);
 >
-> IS_ERR_VALUE()?
+> @@ -484,29 +479,53 @@ static int __create_hyp_private_mapping(phys_addr_t phys_addr, size_t size,
+>          *
+>          * The allocated size is always a multiple of PAGE_SIZE.
+>          */
+> -       size = PAGE_ALIGN(size + offset_in_page(phys_addr));
+> -       base = io_map_base - size;
+> +       base = io_map_base - PAGE_ALIGN(size);
+> +
+> +       /* Align the allocation based on the order of its size */
+> +       base = ALIGN_DOWN(base, PAGE_SIZE << get_order(size));
+>
+>         /*
+>          * Verify that BIT(VA_BITS - 1) hasn't been flipped by
+>          * allocating the new area, as it would indicate we've
+>          * overflowed the idmap/IO address range.
+>          */
+> -       if ((base ^ io_map_base) & BIT(VA_BITS - 1))
+> -               ret = -ENOMEM;
+> +       if (!base || (base ^ io_map_base) & BIT(VA_BITS - 1))
+> +               base = (unsigned long)ERR_PTR(-ENOMEM);
 
-Good idea, will remove the extra cast.
+It looks odd to use an error pointer casted to unsigned long to return
+from an address allocation function. Why not pass a pointer for base
+like the function was written before and return an int from this
+function with 0 for success and negative error value? Otherwise some
+sort of define should made like DMA_MAPPING_ERROR and that can be used
+to indicate to the caller that the allocation failed, or a simple zero
+may work?
 
+>         else
+>                 io_map_base = base;
 >
-> > +                       return PTR_ERR((void *)addr);
-> > +               *haddr = addr;
-> > +
-> > +               return 0;
-> > +       }
-> > +
-> > +       size += offset_in_page(phys_addr);
-> > +       addr = hyp_alloc_private_va_range(size);
-> > +       if (IS_ERR((void *)addr))
+>         mutex_unlock(&kvm_hyp_pgd_mutex);
 >
-> IS_ERR_VALUE()?
+> -       if (ret)
+> -               goto out;
+> +       return base;
+> +}
+> +
+> +static int __create_hyp_private_mapping(phys_addr_t phys_addr, size_t size,
+> +                                       unsigned long *haddr,
+> +                                       enum kvm_pgtable_prot prot)
+> +{
+> +       unsigned long addr;
+> +       int ret = 0;
+> +
+> +       if (!kvm_host_owns_hyp_mappings()) {
+> +               addr = kvm_call_hyp_nvhe(__pkvm_create_private_mapping,
+> +                                        phys_addr, size, prot);
+> +               if (IS_ERR((void *)addr))
 
-Ack
+IS_ERR_VALUE()?
 
+> +                       return PTR_ERR((void *)addr);
+> +               *haddr = addr;
+> +
+> +               return 0;
+> +       }
+> +
+> +       size += offset_in_page(phys_addr);
+> +       addr = hyp_alloc_private_va_range(size);
+> +       if (IS_ERR((void *)addr))
+
+IS_ERR_VALUE()?
+
+> +               return PTR_ERR((void *)addr);
 >
-> > +               return PTR_ERR((void *)addr);
-> >
-> > -       ret = __create_hyp_mappings(base, size, phys_addr, prot);
-> > +       ret = __create_hyp_mappings(addr, size, phys_addr, prot);
-> >         if (ret)
-> >                 goto out;
-> >
-> > -       *haddr = base + offset_in_page(phys_addr);
-> > +       *haddr = addr + offset_in_page(phys_addr);
-> >  out:
-> >         return ret;
+> -       ret = __create_hyp_mappings(base, size, phys_addr, prot);
+> +       ret = __create_hyp_mappings(addr, size, phys_addr, prot);
+>         if (ret)
+>                 goto out;
 >
-> Would be simpler to remove the goto, or return early.
->
->         if (!ret)
->                 *haddr = addr + offset_in_page(phys_addr);
->
+> -       *haddr = base + offset_in_page(phys_addr);
+> +       *haddr = addr + offset_in_page(phys_addr);
+>  out:
 >         return ret;
 
-Agreed, I'll remove the goto in the next version.
+Would be simpler to remove the goto, or return early.
 
-Thanks,
-Kalesh
->
-> >  }
+	if (!ret)
+		*haddr = addr + offset_in_page(phys_addr);
+
+	return ret;
+
+>  }
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
