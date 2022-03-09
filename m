@@ -2,80 +2,52 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BB044D2DCB
-	for <lists+kvmarm@lfdr.de>; Wed,  9 Mar 2022 12:17:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 718A54D2FA0
+	for <lists+kvmarm@lfdr.de>; Wed,  9 Mar 2022 14:02:39 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CD7C649ED3;
-	Wed,  9 Mar 2022 06:17:49 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A6B6749F21;
+	Wed,  9 Mar 2022 08:02:38 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -1.899
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JW-Baoj8klMs; Wed,  9 Mar 2022 06:17:49 -0500 (EST)
+	with ESMTP id cX84TNvhtB7m; Wed,  9 Mar 2022 08:02:38 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BFD7549EDE;
-	Wed,  9 Mar 2022 06:17:48 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 15FF949F16;
+	Wed,  9 Mar 2022 08:02:37 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9975149ED3
- for <kvmarm@lists.cs.columbia.edu>; Wed,  9 Mar 2022 06:17:47 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 86A7B49F0F
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  9 Mar 2022 08:02:36 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id GJDGWiX1TLLM for <kvmarm@lists.cs.columbia.edu>;
- Wed,  9 Mar 2022 06:17:46 -0500 (EST)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8400349EB2
- for <kvmarm@lists.cs.columbia.edu>; Wed,  9 Mar 2022 06:17:46 -0500 (EST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id E5283B81FCB;
- Wed,  9 Mar 2022 11:17:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE5F5C340E8;
- Wed,  9 Mar 2022 11:17:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1646824663;
- bh=JlkIqCPe8EccB301HGf03mUUxO/iuY/OiZe+7CVnF2s=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=nWKcIX1WtcJWMTI3tqI2/IaDK7VQ+5erDN46fkvy68oBIyx2lNZcCSCW/wGoMd1fJ
- qBnqjW50tbhc57u+DxKm6lj7tgzKCKnH9Ki5KMrJMyCI5QQEe8KdoD/HnIfePk+1fW
- nFOIui2aLCxc5gpoMUqhyY0v086Bs+Y+RWi+hx+0PSEXeXdGyg2smYH5zc7taBbE3T
- rvzitDDefdRBmnPpvykjg/JmnNepJgIfpRj5c3Mrp2n0OUQyUfTS95x9YVuKrZDVSF
- Orxywajd/wTklVPvgMgZQyo9cjA6oW9AHo1inb9Txsn/nNfTdzFH8tkj7gNdx7ldfJ
- z5bXYW2ZXItqA==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=hot-poop.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1nRuK5-00DIeD-G7; Wed, 09 Mar 2022 11:17:41 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: kvmarm@lists.cs.columbia.edu,
-	Oliver Upton <oupton@google.com>
-Subject: Re: [PATCH v2] Documentation: KVM: Update documentation to indicate
- KVM is arm64-only
-Date: Wed,  9 Mar 2022 11:17:34 +0000
-Message-Id: <164682464677.3740483.6091628911446790457.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220308172856.2997250-1-oupton@google.com>
-References: <20220308172856.2997250-1-oupton@google.com>
+ with ESMTP id lG3TOolBp8Hf for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  9 Mar 2022 08:02:34 -0500 (EST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CED3A49F0B
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  9 Mar 2022 08:02:34 -0500 (EST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0C2CD1688;
+ Wed,  9 Mar 2022 05:02:34 -0800 (PST)
+Received: from monolith.localdoman (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8705A3FA4D;
+ Wed,  9 Mar 2022 05:02:32 -0800 (PST)
+Date: Wed, 9 Mar 2022 13:02:54 +0000
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+To: Sebastian Ene <sebastianene@google.com>
+Subject: Re: [PATCH kvmtool v9 2/3] aarch64: Add stolen time support
+Message-ID: <YiilEbM1wVPsH7vB@monolith.localdoman>
+References: <20220308153227.2238533-1-sebastianene@google.com>
+ <20220308153227.2238533-3-sebastianene@google.com>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, oupton@google.com,
- ricarkol@google.com, alexandru.elisei@arm.com, kvm@vger.kernel.org,
- james.morse@arm.com, pbonzini@redhat.com, suzuki.poulose@arm.com,
- reijiw@google.com, linux-arm-kernel@lists.infradead.org, pshier@google.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kvm@vger.kernel.org, Peter Shier <pshier@google.com>,
- Paolo Bonzini <pbonzini@redhat.com>, linux-arm-kernel@lists.infradead.org
+Content-Disposition: inline
+In-Reply-To: <20220308153227.2238533-3-sebastianene@google.com>
+Cc: maz@kernel.org, will@kernel.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -92,27 +64,244 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, 8 Mar 2022 17:28:57 +0000, Oliver Upton wrote:
-> KVM support for 32-bit ARM hosts (KVM/arm) has been removed from the
-> kernel since commit 541ad0150ca4 ("arm: Remove 32bit KVM host
-> support"). There still exists some remnants of the old architecture in
-> the KVM documentation.
+Hi,
+
+On Tue, Mar 08, 2022 at 03:32:29PM +0000, Sebastian Ene wrote:
+> This patch adds support for stolen time by sharing a memory region
+> with the guest which will be used by the hypervisor to store the stolen
+> time information. Reserve a 64kb MMIO memory region after the RTC peripheral
+> to be used by pvtime. The exact format of the structure stored by the
+> hypervisor is described in the ARM DEN0057A document.
 > 
-> Remove all traces of 32-bit host support from the documentation. Note
-> that AArch32 guests are still supported.
+> Signed-off-by: Sebastian Ene <sebastianene@google.com>
+> ---
+>  Makefile                               |  1 +
+>  arm/aarch32/include/kvm/kvm-cpu-arch.h |  5 ++
+>  arm/aarch64/arm-cpu.c                  |  2 +-
+>  arm/aarch64/include/kvm/kvm-cpu-arch.h |  2 +
+>  arm/aarch64/pvtime.c                   | 96 ++++++++++++++++++++++++++
+>  arm/include/arm-common/kvm-arch.h      |  6 +-
+>  arm/kvm-cpu.c                          |  1 +
+>  include/kvm/kvm-config.h               |  1 +
+>  8 files changed, 112 insertions(+), 2 deletions(-)
+>  create mode 100644 arm/aarch64/pvtime.c
+> 
+> diff --git a/Makefile b/Makefile
+> index f251147..e9121dc 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -182,6 +182,7 @@ ifeq ($(ARCH), arm64)
+>  	OBJS		+= arm/aarch64/arm-cpu.o
+>  	OBJS		+= arm/aarch64/kvm-cpu.o
+>  	OBJS		+= arm/aarch64/kvm.o
+> +	OBJS		+= arm/aarch64/pvtime.o
+>  	ARCH_INCLUDE	:= $(HDRS_ARM_COMMON)
+>  	ARCH_INCLUDE	+= -Iarm/aarch64/include
+>  
+> diff --git a/arm/aarch32/include/kvm/kvm-cpu-arch.h b/arm/aarch32/include/kvm/kvm-cpu-arch.h
+> index 780e0e2..6fe0206 100644
+> --- a/arm/aarch32/include/kvm/kvm-cpu-arch.h
+> +++ b/arm/aarch32/include/kvm/kvm-cpu-arch.h
+> @@ -20,4 +20,9 @@ static inline int kvm_cpu__configure_features(struct kvm_cpu *vcpu)
+>  	return 0;
+>  }
+>  
+> +static inline int kvm_cpu__teardown_pvtime(struct kvm *kvm)
+> +{
+> +	return 0;
+> +}
+> +
+>  #endif /* KVM__KVM_CPU_ARCH_H */
+> diff --git a/arm/aarch64/arm-cpu.c b/arm/aarch64/arm-cpu.c
+> index d7572b7..7e4a3c1 100644
+> --- a/arm/aarch64/arm-cpu.c
+> +++ b/arm/aarch64/arm-cpu.c
+> @@ -22,7 +22,7 @@ static void generate_fdt_nodes(void *fdt, struct kvm *kvm)
+>  static int arm_cpu__vcpu_init(struct kvm_cpu *vcpu)
+>  {
+>  	vcpu->generate_fdt_nodes = generate_fdt_nodes;
+> -	return 0;
+> +	return kvm_cpu__setup_pvtime(vcpu);
+>  }
+>  
+>  static struct kvm_arm_target target_generic_v8 = {
+> diff --git a/arm/aarch64/include/kvm/kvm-cpu-arch.h b/arm/aarch64/include/kvm/kvm-cpu-arch.h
+> index 8dfb82e..35996dc 100644
+> --- a/arm/aarch64/include/kvm/kvm-cpu-arch.h
+> +++ b/arm/aarch64/include/kvm/kvm-cpu-arch.h
+> @@ -19,5 +19,7 @@
+>  
+>  void kvm_cpu__select_features(struct kvm *kvm, struct kvm_vcpu_init *init);
+>  int kvm_cpu__configure_features(struct kvm_cpu *vcpu);
+> +int kvm_cpu__setup_pvtime(struct kvm_cpu *vcpu);
+> +int kvm_cpu__teardown_pvtime(struct kvm *kvm);
+>  
+>  #endif /* KVM__KVM_CPU_ARCH_H */
+> diff --git a/arm/aarch64/pvtime.c b/arm/aarch64/pvtime.c
+> new file mode 100644
+> index 0000000..a45f0ea
+> --- /dev/null
+> +++ b/arm/aarch64/pvtime.c
+> @@ -0,0 +1,96 @@
+> +#include "kvm/kvm.h"
+> +#include "kvm/kvm-cpu.h"
+> +#include "kvm/util.h"
+> +
+> +#include <linux/byteorder.h>
+> +#include <linux/types.h>
+> +
+> +#define ARM_PVTIME_STRUCT_SIZE		(64)
+> +
+> +static void *usr_mem;
+> +
+> +static int pvtime__alloc_region(struct kvm *kvm)
+> +{
+> +	char *mem;
+> +	int ret = 0;
+> +
+> +	mem = mmap(NULL, ARM_PVTIME_BASE, PROT_RW,
+> +		   MAP_ANON_NORESERVE, -1, 0);
+> +	if (mem == MAP_FAILED)
+> +		return -errno;
+> +
+> +	ret = kvm__register_ram(kvm, ARM_PVTIME_BASE,
+> +				ARM_PVTIME_BASE, mem);
+> +	if (ret) {
+> +		munmap(mem, ARM_PVTIME_BASE);
+> +		return ret;
+> +	}
+> +
+> +	usr_mem = mem;
+> +	return ret;
+> +}
+> +
+> +static int pvtime__teardown_region(struct kvm *kvm)
+> +{
+> +	if (usr_mem == NULL)
+> +		return 0;
+> +
+> +	kvm__destroy_mem(kvm, ARM_PVTIME_BASE,
+> +			 ARM_PVTIME_BASE, usr_mem);
+> +	munmap(usr_mem, ARM_PVTIME_BASE);
+> +	usr_mem = NULL;
+> +	return 0;
+> +}
+> +
+> +int kvm_cpu__setup_pvtime(struct kvm_cpu *vcpu)
+> +{
+> +	int ret;
+> +	bool has_stolen_time;
+> +	u64 pvtime_guest_addr = ARM_PVTIME_BASE + vcpu->cpu_id *
+> +		ARM_PVTIME_STRUCT_SIZE;
+> +	struct kvm_config *kvm_cfg = NULL;
+> +	struct kvm_device_attr pvtime_attr = (struct kvm_device_attr) {
+> +		.group	= KVM_ARM_VCPU_PVTIME_CTRL,
+> +		.addr	= KVM_ARM_VCPU_PVTIME_IPA
 
-Applied to next, thanks!
+As far as I can tell, that should be the attr field, not addr. It has been
+been working so far because attr will be set to 0 by the initializer and
+KVM_ARM_VCPU_PVTIME_IPA is defined as 0 by the kernel API.
 
-[1/1] Documentation: KVM: Update documentation to indicate KVM is arm64-only
-      commit: 3fbf4207dc6807bf98e3d32558753cfa5eac2fa1
+Thanks,
+Alex
 
-Cheers,
-
-	M.
--- 
-Without deviation from the norm, progress is not possible.
-
-
+> +	};
+> +
+> +	kvm_cfg = &vcpu->kvm->cfg;
+> +	if (kvm_cfg->no_pvtime)
+> +		return 0;
+> +
+> +	has_stolen_time = kvm__supports_extension(vcpu->kvm,
+> +						  KVM_CAP_STEAL_TIME);
+> +	if (!has_stolen_time) {
+> +		kvm_cfg->no_pvtime = true;
+> +		return 0;
+> +	}
+> +
+> +	ret = ioctl(vcpu->vcpu_fd, KVM_HAS_DEVICE_ATTR, &pvtime_attr);
+> +	if (ret) {
+> +		perror("KVM_HAS_DEVICE_ATTR failed\n");
+> +		goto out_err;
+> +	}
+> +
+> +	if (!usr_mem) {
+> +		ret = pvtime__alloc_region(vcpu->kvm);
+> +		if (ret) {
+> +			perror("Failed allocating pvtime region\n");
+> +			goto out_err;
+> +		}
+> +	}
+> +
+> +	pvtime_attr.addr = (u64)&pvtime_guest_addr;
+> +	ret = ioctl(vcpu->vcpu_fd, KVM_SET_DEVICE_ATTR, &pvtime_attr);
+> +	if (!ret)
+> +		return 0;
+> +
+> +	perror("KVM_SET_DEVICE_ATTR failed\n");
+> +	pvtime__teardown_region(vcpu->kvm);
+> +out_err:
+> +	return ret;
+> +}
+> +
+> +int kvm_cpu__teardown_pvtime(struct kvm *kvm)
+> +{
+> +	return pvtime__teardown_region(kvm);
+> +}
+> diff --git a/arm/include/arm-common/kvm-arch.h b/arm/include/arm-common/kvm-arch.h
+> index c645ac0..43b1f77 100644
+> --- a/arm/include/arm-common/kvm-arch.h
+> +++ b/arm/include/arm-common/kvm-arch.h
+> @@ -15,7 +15,8 @@
+>   * |  PCI  |////| plat  |       |        |     |         |
+>   * |  I/O  |////| MMIO: | Flash | virtio | GIC |   PCI   |  DRAM
+>   * | space |////| UART, |       |  MMIO  |     |  (AXI)  |
+> - * |       |////| RTC   |       |        |     |         |
+> + * |       |////| RTC,  |       |        |     |         |
+> + * |       |////| PVTIME|       |        |     |         |
+>   * +-------+----+-------+-------+--------+-----+---------+---......
+>   */
+>  
+> @@ -34,6 +35,9 @@
+>  #define ARM_RTC_MMIO_BASE	(ARM_UART_MMIO_BASE + ARM_UART_MMIO_SIZE)
+>  #define ARM_RTC_MMIO_SIZE	0x10000
+>  
+> +#define ARM_PVTIME_BASE		(ARM_RTC_MMIO_BASE + ARM_RTC_MMIO_SIZE)
+> +#define ARM_PVTIME_SIZE		SZ_64K
+> +
+>  #define KVM_FLASH_MMIO_BASE	(ARM_MMIO_AREA + 0x1000000)
+>  #define KVM_FLASH_MAX_SIZE	0x1000000
+>  
+> diff --git a/arm/kvm-cpu.c b/arm/kvm-cpu.c
+> index 84ac1e9..00660d6 100644
+> --- a/arm/kvm-cpu.c
+> +++ b/arm/kvm-cpu.c
+> @@ -144,6 +144,7 @@ void kvm_cpu__arch_nmi(struct kvm_cpu *cpu)
+>  
+>  void kvm_cpu__delete(struct kvm_cpu *vcpu)
+>  {
+> +	kvm_cpu__teardown_pvtime(vcpu->kvm);
+>  	free(vcpu);
+>  }
+>  
+> diff --git a/include/kvm/kvm-config.h b/include/kvm/kvm-config.h
+> index 6a5720c..48adf27 100644
+> --- a/include/kvm/kvm-config.h
+> +++ b/include/kvm/kvm-config.h
+> @@ -62,6 +62,7 @@ struct kvm_config {
+>  	bool no_dhcp;
+>  	bool ioport_debug;
+>  	bool mmio_debug;
+> +	bool no_pvtime;
+>  };
+>  
+>  #endif
+> -- 
+> 2.35.1.616.g0bdcbb4464-goog
+> 
+> _______________________________________________
+> kvmarm mailing list
+> kvmarm@lists.cs.columbia.edu
+> https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
