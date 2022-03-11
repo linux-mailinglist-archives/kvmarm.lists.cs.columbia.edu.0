@@ -2,78 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 75DB34D67CD
-	for <lists+kvmarm@lfdr.de>; Fri, 11 Mar 2022 18:41:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E055F4D67D0
+	for <lists+kvmarm@lfdr.de>; Fri, 11 Mar 2022 18:41:15 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 24C0343479;
-	Fri, 11 Mar 2022 12:41:13 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 733CC49E48;
+	Fri, 11 Mar 2022 12:41:15 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.787
+X-Spam-Score: -1.788
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.787 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=no
+X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id FbQcz8ibSRYC; Fri, 11 Mar 2022 12:41:12 -0500 (EST)
+	with ESMTP id aVu1dXaQCF6S; Fri, 11 Mar 2022 12:41:14 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3AD4349ED9;
-	Fri, 11 Mar 2022 12:41:10 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 71ED9408B3;
+	Fri, 11 Mar 2022 12:41:12 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CC692408B3
- for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Mar 2022 12:41:08 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B081C40B91
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Mar 2022 12:41:10 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id AsdxcW-ww3v0 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 11 Mar 2022 12:41:07 -0500 (EST)
-Received: from mail-il1-f201.google.com (mail-il1-f201.google.com
- [209.85.166.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9E9F749EBE
- for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Mar 2022 12:41:07 -0500 (EST)
-Received: by mail-il1-f201.google.com with SMTP id
- m17-20020a923f11000000b002c10e8f4c44so5990078ila.1
- for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Mar 2022 09:41:07 -0800 (PST)
+ with ESMTP id mmTM+IJuJBsE for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 11 Mar 2022 12:41:09 -0500 (EST)
+Received: from mail-io1-f73.google.com (mail-io1-f73.google.com
+ [209.85.166.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BE18540C10
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Mar 2022 12:41:08 -0500 (EST)
+Received: by mail-io1-f73.google.com with SMTP id
+ k10-20020a5d91ca000000b006414a00b160so6719203ior.18
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Mar 2022 09:41:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=7ZRBkS4U0RFhMHj2rsuxMbzaij5n0dyzv68dBdi/1V4=;
- b=agb3tdzKqOaqoSpS5U/p593tiHNWqqZJpCJfTx6gflLYyYPaiUx9HO1yB+3F8H6FmE
- cVmT3Q3SIyKv2ALdwrHb71MbMAovi69YILYjVnI8iH2bT94dX9eYTXj922gCmpI9Bz4G
- 0ICO77FbsL3yb1LVQra6lGmL0ybIgUa5vLxMGVJUJGMWGQplz1gVTXf7+h9teAs/s7ly
- 6VS2GxT/OsB7vGqrMOHEmHMZq2e9MRHJ64j7+VwGzT9A3Ct64Kb6KQFimn57Jg1ISLuX
- 3I07mWDcVavQz4BZFLNYaY4e67ThPDC2U7U3teJaD5KtlB/2Wu3f/3S8JFbaA0GrCvh3
- sLQQ==
+ :cc; bh=9XdJKUFytcHkfxO8A0zHHdaSq5C6RUOo0dHsNroWzi4=;
+ b=iBYHZZIu4+glns+DBM+1sLjFX7LQFA3zP0tDyNnFwpnRI/lNEol8HGFtx6Y2+Mi7ZK
+ bQtPSTWOAKYg0fLgu1VqZ6kbC9RU/AJW6FF/ihA6uwiYBOHi1mk8SMwigIy/2ixjySNR
+ tPuIxyMPycs0AUgDQulOYiG6DlF4YTQTc3sq37NMQn+Ohtd7drMQyK77PNolcn2BeeOV
+ qzyTOTnZmWjZ6VaMTWv36WU9dPNOA1B5S+XBQqnCsDEK/FRqSBALFbxs5m91dBcFGMae
+ y4S1v/2F5Sil92fkkuNmvMeX1cSkC8BFJL67AirOBoNyu1OH5kEKaDoVbtFCenBSFAzW
+ w4uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=7ZRBkS4U0RFhMHj2rsuxMbzaij5n0dyzv68dBdi/1V4=;
- b=BBSz+IapA8tP/Rx+QsDmhLeup9gHnOkD7gsETVBjuuAhay40RZuARxZyctt2hCMojk
- o4YSv4FYMH/ZIv4DetyosQnKRqW80JnGaA+/YPmS8akuwTxMr9x8iT5D3mMPNXY437lF
- maGOvEdov7twahyhpCH5P0dYQa2/7gej9iZxdxjyVndHZU7kyOwxmI2yZwnEXqyXCCHp
- 1BkCcAnOZ1p5GCz5Ut9+0I94TQ4es/kSXOmOS0UuRaMHrH/PO64xsH3LGL6aTpIPuBhk
- +UYK/3OmobWkF6+zqCbmL+Aj6t+T64dHSa5EEqWQJZAcsUY/FKITj7+OtGscFiLHZH7y
- Aa5g==
-X-Gm-Message-State: AOAM531YlPD53pck5lLRATHHTKZdjXwvH8FVkx4ebEnFnDyOv9NDK/26
- qVZdJXEOlyUo6weJXyuDS3vk1a5mBmlSreuG3wcTU0NvGH0K2tlq3pPHAZFOFuOO8aCohcMKJlT
- q8Vd6eBpg7YabyUAMNpxfUlKndf0e/XRgYBWt2RKiXtFXHNbgcFyPlFILYZoZVcnYN861GQ==
-X-Google-Smtp-Source: ABdhPJw9BiYukm5oFkfLFDSfcoF0YG+SBFyjRPDOEtEfu56g5hciDXgPevhVFTjypFLBz3WPqlZZ86y7cJg=
+ bh=9XdJKUFytcHkfxO8A0zHHdaSq5C6RUOo0dHsNroWzi4=;
+ b=SPkPvLkpgZOvO6W67SKa+VuxJzA4JKWTkTHUsRU8KAlaNNOUQyyFX34+a5K1pvfGi/
+ cweiG5ARitE/ExA45ZVmCZDPFc+yoneV+msbprQyxz2LPInA7hMX2MCXksw+fyTVbKqi
+ DTsChV3WUB4tHEotl063q17+AmTt+vrW+SG7QWsYieArGrO/8UFMueDPa1NwHbwCIAFH
+ 3n077YR33JKoo+Yeql4TRQ2QfBscMs8dlYSFElu/9SoGy31O5OmYGEBfsLA86RnD1Mnf
+ 4EPm4lJi+8eCCE9lXUn8HjttoJ2LMlz7Uw6fuW1zTXQ89yGH/ljOQEX4aEIhK82qmWcX
+ iL/w==
+X-Gm-Message-State: AOAM5338mCi4siZaQEsSCZ2iPkuzC74tXxadNkvuNzPMKCA8V63l9IUS
+ 6TxDu3hCAX12Z/hRPkWnZsuRMG9cKb7EZF8Gp4GH32smTb4hPaBpS2koJRe5bXyfbnqLzBtX15k
+ ry9gIG+2m/XCPQrDcjnjxK+bKBGkzY4Qwv8uJ60njTGG3FeQ59KcWzOPXgmX41nxRKIJf1w==
+X-Google-Smtp-Source: ABdhPJy0gVFdG3BgjTaM6i8MVhqzhgFYYyl2pWvpkR0CNXcn7tlc65SXQKYNv9FC9ebaoIoCLgIk9P8Y8yM=
 X-Received: from oupton.c.googlers.com ([fda3:e722:ac3:cc00:2b:ff92:c0a8:404])
- (user=oupton job=sendgmr) by 2002:a5e:a80a:0:b0:645:b477:bc23 with
- SMTP id
- c10-20020a5ea80a000000b00645b477bc23mr8739969ioa.191.1647020467117; Fri, 11
- Mar 2022 09:41:07 -0800 (PST)
-Date: Fri, 11 Mar 2022 17:39:52 +0000
+ (user=oupton job=sendgmr) by 2002:a05:6e02:1569:b0:2be:ffc9:8bb4
+ with SMTP id
+ k9-20020a056e02156900b002beffc98bb4mr9168928ilu.229.1647020468144; Fri, 11
+ Mar 2022 09:41:08 -0800 (PST)
+Date: Fri, 11 Mar 2022 17:39:53 +0000
 In-Reply-To: <20220311174001.605719-1-oupton@google.com>
-Message-Id: <20220311174001.605719-7-oupton@google.com>
+Message-Id: <20220311174001.605719-8-oupton@google.com>
 Mime-Version: 1.0
 References: <20220311174001.605719-1-oupton@google.com>
 X-Mailer: git-send-email 2.35.1.723.g4982287a31-goog
-Subject: [PATCH v4 06/15] KVM: arm64: Rename the KVM_REQ_SLEEP handler
+Subject: [PATCH v4 07/15] KVM: Create helper for setting a system event exit
 From: Oliver Upton <oupton@google.com>
 To: kvmarm@lists.cs.columbia.edu
 Cc: maz@kernel.org, wanpengli@tencent.com, kvm@vger.kernel.org, joro@8bytes.org,
@@ -95,40 +94,106 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The naming of the kvm_req_sleep function is confusing: the function
-itself sleeps the vCPU, it does not request such an event. Rename the
-function to make its purpose more clear.
+Create a helper that appropriately configures kvm_run for a system event
+exit.
 
 No functional change intended.
 
+Suggested-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Oliver Upton <oupton@google.com>
-Reviewed-by: Andrew Jones <drjones@redhat.com>
+Acked-by: Anup Patel <anup@brainfault.org>
 ---
- arch/arm64/kvm/arm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/psci.c         | 5 +----
+ arch/riscv/kvm/vcpu_sbi_v01.c | 4 +---
+ arch/x86/kvm/x86.c            | 6 ++----
+ include/linux/kvm_host.h      | 2 ++
+ virt/kvm/kvm_main.c           | 8 ++++++++
+ 5 files changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 3918d078fc4d..7c297ddc8177 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -594,7 +594,7 @@ void kvm_arm_resume_guest(struct kvm *kvm)
- 	}
+diff --git a/arch/arm64/kvm/psci.c b/arch/arm64/kvm/psci.c
+index efd4428fda1c..78266716165e 100644
+--- a/arch/arm64/kvm/psci.c
++++ b/arch/arm64/kvm/psci.c
+@@ -173,10 +173,7 @@ static void kvm_prepare_system_event(struct kvm_vcpu *vcpu, u32 type, u64 flags)
+ 		tmp->arch.mp_state.mp_state = KVM_MP_STATE_STOPPED;
+ 	kvm_make_all_cpus_request(vcpu->kvm, KVM_REQ_SLEEP);
+ 
+-	memset(&vcpu->run->system_event, 0, sizeof(vcpu->run->system_event));
+-	vcpu->run->system_event.type = type;
+-	vcpu->run->system_event.flags = flags;
+-	vcpu->run->exit_reason = KVM_EXIT_SYSTEM_EVENT;
++	kvm_vcpu_set_system_event_exit(vcpu, type, flags);
  }
  
--static void vcpu_req_sleep(struct kvm_vcpu *vcpu)
-+static void kvm_vcpu_sleep(struct kvm_vcpu *vcpu)
- {
- 	struct rcuwait *wait = kvm_arch_vcpu_get_wait(vcpu);
+ static void kvm_psci_system_off(struct kvm_vcpu *vcpu)
+diff --git a/arch/riscv/kvm/vcpu_sbi_v01.c b/arch/riscv/kvm/vcpu_sbi_v01.c
+index 07e2de14433a..c5581008dd88 100644
+--- a/arch/riscv/kvm/vcpu_sbi_v01.c
++++ b/arch/riscv/kvm/vcpu_sbi_v01.c
+@@ -24,9 +24,7 @@ static void kvm_sbi_system_shutdown(struct kvm_vcpu *vcpu,
+ 		tmp->arch.power_off = true;
+ 	kvm_make_all_cpus_request(vcpu->kvm, KVM_REQ_SLEEP);
  
-@@ -652,7 +652,7 @@ static void check_vcpu_requests(struct kvm_vcpu *vcpu)
- {
- 	if (kvm_request_pending(vcpu)) {
- 		if (kvm_check_request(KVM_REQ_SLEEP, vcpu))
--			vcpu_req_sleep(vcpu);
-+			kvm_vcpu_sleep(vcpu);
+-	memset(&run->system_event, 0, sizeof(run->system_event));
+-	run->system_event.type = type;
+-	run->exit_reason = KVM_EXIT_SYSTEM_EVENT;
++	kvm_vcpu_set_system_event_exit(vcpu, type, 0);
+ }
  
- 		if (kvm_check_request(KVM_REQ_VCPU_RESET, vcpu))
- 			kvm_reset_vcpu(vcpu);
+ static int kvm_sbi_ext_v01_handler(struct kvm_vcpu *vcpu, struct kvm_run *run,
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 7131d735b1ef..b3b94408cc61 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -9903,14 +9903,12 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
+ 		if (kvm_check_request(KVM_REQ_APIC_PAGE_RELOAD, vcpu))
+ 			kvm_vcpu_reload_apic_access_page(vcpu);
+ 		if (kvm_check_request(KVM_REQ_HV_CRASH, vcpu)) {
+-			vcpu->run->exit_reason = KVM_EXIT_SYSTEM_EVENT;
+-			vcpu->run->system_event.type = KVM_SYSTEM_EVENT_CRASH;
++			kvm_vcpu_set_system_event_exit(vcpu, KVM_SYSTEM_EVENT_CRASH, 0);
+ 			r = 0;
+ 			goto out;
+ 		}
+ 		if (kvm_check_request(KVM_REQ_HV_RESET, vcpu)) {
+-			vcpu->run->exit_reason = KVM_EXIT_SYSTEM_EVENT;
+-			vcpu->run->system_event.type = KVM_SYSTEM_EVENT_RESET;
++			kvm_vcpu_set_system_event_exit(vcpu, KVM_SYSTEM_EVENT_RESET, 0);
+ 			r = 0;
+ 			goto out;
+ 		}
+diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+index f11039944c08..c2a4fd2382e2 100644
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -2202,6 +2202,8 @@ static inline void kvm_handle_signal_exit(struct kvm_vcpu *vcpu)
+ }
+ #endif /* CONFIG_KVM_XFER_TO_GUEST_WORK */
+ 
++void kvm_vcpu_set_system_event_exit(struct kvm_vcpu *vcpu, u32 type, u64 flags);
++
+ /*
+  * This defines how many reserved entries we want to keep before we
+  * kick the vcpu to the userspace to avoid dirty ring full.  This
+diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+index 58d31da8a2f7..197bae04ca34 100644
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -3194,6 +3194,14 @@ void kvm_vcpu_mark_page_dirty(struct kvm_vcpu *vcpu, gfn_t gfn)
+ }
+ EXPORT_SYMBOL_GPL(kvm_vcpu_mark_page_dirty);
+ 
++void kvm_vcpu_set_system_event_exit(struct kvm_vcpu *vcpu, u32 type, u64 flags)
++{
++	memset(&vcpu->run->system_event, 0, sizeof(vcpu->run->system_event));
++	vcpu->run->system_event.type = type;
++	vcpu->run->system_event.flags = flags;
++	vcpu->run->exit_reason = KVM_EXIT_SYSTEM_EVENT;
++}
++
+ void kvm_sigset_activate(struct kvm_vcpu *vcpu)
+ {
+ 	if (!vcpu->sigset_active)
 -- 
 2.35.1.723.g4982287a31-goog
 
