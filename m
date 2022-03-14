@@ -2,71 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 075F44D879C
-	for <lists+kvmarm@lfdr.de>; Mon, 14 Mar 2022 16:00:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 978344D8983
+	for <lists+kvmarm@lfdr.de>; Mon, 14 Mar 2022 17:41:01 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2ACC949EED;
-	Mon, 14 Mar 2022 11:00:53 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CAD4D49EF0;
+	Mon, 14 Mar 2022 12:41:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -1.788
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@linuxfoundation.org
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jCSJmDUg8XGi; Mon, 14 Mar 2022 11:00:53 -0400 (EDT)
+	with ESMTP id Y4OhgBKyvc1T; Mon, 14 Mar 2022 12:41:00 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D42A449EEE;
-	Mon, 14 Mar 2022 11:00:51 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A21CF49F04;
+	Mon, 14 Mar 2022 12:40:59 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id BB36C49ED5
- for <kvmarm@lists.cs.columbia.edu>; Mon, 14 Mar 2022 11:00:49 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6CD4749EC0
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 14 Mar 2022 12:40:58 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 3n4i5Zo8tvz9 for <kvmarm@lists.cs.columbia.edu>;
- Mon, 14 Mar 2022 11:00:48 -0400 (EDT)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6A72B49EC1
- for <kvmarm@lists.cs.columbia.edu>; Mon, 14 Mar 2022 11:00:48 -0400 (EDT)
+ with ESMTP id faKghCJrDUBx for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 14 Mar 2022 12:40:57 -0400 (EDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 617F549EC1
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 14 Mar 2022 12:40:57 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id BA367B80E28;
- Mon, 14 Mar 2022 15:00:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2011C340EC;
- Mon, 14 Mar 2022 15:00:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1647270045;
- bh=TYhiBrC14m4Ad4E1iYepcEh5UqxKOLKQ/jszH2k2vNU=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=IfI5NEUHZ9MnYcv/aEYl2ohIRe3rJ8o1opGh29GdmnNyJerbeHFejBuaM/s0mk1fK
- 6N5fHBqHv/hwJIiX/DCOrO803EJ2Gv/8KEb1g0MTvrgMyIRvwteMPOZJ19Vf9ApVAH
- JMRbeKTDaC4CvfpbQzAOymFdX8v0fFphRYbZoR9k=
-Date: Mon, 14 Mar 2022 16:00:42 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Subject: Re: [PATCH 4.19 00/30] 4.19.235-rc1 review
-Message-ID: <Yi9Ymvmu09seXAD5@kroah.com>
-References: <20220314112731.785042288@linuxfoundation.org>
- <0ac87017-362d-33e2-eace-3407e0891a94@nvidia.com>
- <Yi9LlP+x2swdsrbE@kroah.com>
- <CA+G9fYuwyUPMBRuBL10Z0r1MRt0sZ-MqvC6ySHBtpqdSp8UcDQ@mail.gmail.com>
+ by dfw.source.kernel.org (Postfix) with ESMTPS id AF2BE60AF6;
+ Mon, 14 Mar 2022 16:40:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80008C340EE;
+ Mon, 14 Mar 2022 16:40:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1647276056;
+ bh=uxi3l7XD1dsCHWv/V+37GxYxDWy+/GagQ9LpcOEAld8=;
+ h=From:To:Cc:Subject:Date:From;
+ b=b3vju7KpuxWzL0Th0rFVIMLGLVXfrMn1gh6R1Pj0ixRO1tGY+nPicps9FSyfvANQv
+ 16mvkgpfof8s5XJEjSpnkhr/xnHeP5yvKqFUpQUAaGXUG8jWNoUlmXhjbxO6b+phFo
+ n7bQvKCwaYNyfX1otXWgwbQCkpUK9cB8qYr5HSJT5357Z7w/obIrvYhSx7EYFvgFZ2
+ Ox4WCruGxd97TldBZ333a5tSlPKcngAO5TgSuTajGlPMpYyjOWeFNPKC8KFbcjiB76
+ gLutIMup/bRuovq+HgsrOAyycIFC3sT93I5CR1e4dHqz6wNT7lAsvbSCsgp9Muo8Ax
+ jT6fpX78oUWMQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1nTnkb-00EPS0-6D; Mon, 14 Mar 2022 16:40:54 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu
+Subject: [PATCH 0/4] KVM: arm64: vgic-v3: MMIO-based LPI invalidation and co
+Date: Mon, 14 Mar 2022 16:40:40 +0000
+Message-Id: <20220314164044.772709-1-maz@kernel.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <CA+G9fYuwyUPMBRuBL10Z0r1MRt0sZ-MqvC6ySHBtpqdSp8UcDQ@mail.gmail.com>
-Cc: kvmarm@lists.cs.columbia.edu, f.fainelli@gmail.com,
- Catalin Marinas <catalin.marinas@arm.com>, pavel@denx.de, shuah@kernel.org,
- slade@sladewatkins.com, linux-kernel@vger.kernel.org, stable@vger.kernel.org,
- Jon Hunter <jonathanh@nvidia.com>, lkft-triage@lists.linaro.org,
- patches@kernelci.org,
- "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
- Marc Zyngier <maz@kernel.org>, akpm@linux-foundation.org,
- torvalds@linux-foundation.org, sudipm.mukherjee@gmail.com, linux@roeck-us.net
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu, james.morse@arm.com, suzuki.poulose@arm.com,
+ alexandru.elisei@arm.com, andre.przywara@arm.com, eric.auger@redhat.com,
+ kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com, Andre Przywara <andre.przywara@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -78,32 +83,55 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-T24gTW9uLCBNYXIgMTQsIDIwMjIgYXQgMDg6MDI6MjFQTSArMDUzMCwgTmFyZXNoIEthbWJvanUg
-d3JvdGU6Cj4gPiA+ID4gb3IgaW4gdGhlIGdpdCB0cmVlIGFuZCBicmFuY2ggYXQ6Cj4gPiA+ID4g
-ICAgIGdpdDovL2dpdC5rZXJuZWwub3JnL3B1Yi9zY20vbGludXgva2VybmVsL2dpdC9zdGFibGUv
-bGludXgtc3RhYmxlLXJjLmdpdCBsaW51eC00LjE5LnkKPiA+ID4gPiBhbmQgdGhlIGRpZmZzdGF0
-IGNhbiBiZSBmb3VuZCBiZWxvdy4KPiA+ID4gPgo+ID4gPiA+IHRoYW5rcywKPiA+ID4gPgo+ID4g
-PiA+IGdyZWcgay1oCj4gPiA+ID4KPiA+ID4gPiAtLS0tLS0tLS0tLS0tCj4gPiA+ID4gUHNldWRv
-LVNob3J0bG9nIG9mIGNvbW1pdHM6Cj4gPiA+Cj4gPiA+IC4uLgo+ID4gPgo+ID4gPiA+IEphbWVz
-IE1vcnNlIDxqYW1lcy5tb3JzZUBhcm0uY29tPgo+ID4gPiA+ICAgICAgS1ZNOiBhcm02NDogUmVz
-ZXQgUE1DX0VMMCB0byBhdm9pZCBhIHBhbmljKCkgb24gc3lzdGVtcyB3aXRoIG5vIFBNVQo+ID4g
-Pgo+ID4gPgo+ID4gPiBUaGUgYWJvdmUgaXMgY2F1c2luZyB0aGUgZm9sbG93aW5nIGJ1aWxkIGVy
-cm9yIGZvciBBUk02NCAuLi4KPiA+ID4KPiA+ID4gYXJjaC9hcm02NC9rdm0vc3lzX3JlZ3MuYzog
-SW4gZnVuY3Rpb24g4oCYcmVzZXRfcG1jcuKAmToKPiA+ID4gYXJjaC9hcm02NC9rdm0vc3lzX3Jl
-Z3MuYzo2MjQ6MzogZXJyb3I6IGltcGxpY2l0IGRlY2xhcmF0aW9uIG9mIGZ1bmN0aW9uIOKAmHZj
-cHVfc3lzX3JlZ+KAmSBbLVdlcnJvcj1pbXBsaWNpdC1mdW5jdGlvbi1kZWNsYXJhdGlvbl0KPiA+
-ID4gICAgdmNwdV9zeXNfcmVnKHZjcHUsIFBNQ1JfRUwwKSA9IDA7Cj4gPiA+ICAgIF5+fn5+fn5+
-fn5+fgo+ID4gPiBhcmNoL2FybTY0L2t2bS9zeXNfcmVncy5jOjYyNDozMjogZXJyb3I6IGx2YWx1
-ZSByZXF1aXJlZCBhcyBsZWZ0IG9wZXJhbmQgb2YgYXNzaWdubWVudAo+ID4gPiAgICB2Y3B1X3N5
-c19yZWcodmNwdSwgUE1DUl9FTDApID0gMDsKPiA+ID4KPiA+Cj4gPiBJcyB0aGlzIGFsc28gYnJv
-a2VuIGluIExpbnVzJ3MgdHJlZT8KPiAKPiBub3BlLgo+IEl0IGlzIGFsc28gb25seSBvbiA0LjE5
-LgoKVGhhbmtzLiAgSSd2ZSBwdXNoZWQgb3V0IC1yYzIgcmVsZWFzZXMgd2l0aCB0aGlzIGNvbW1p
-dCBkcm9wcGVkLgoKZ3JlZyBrLWgKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX18Ka3ZtYXJtIG1haWxpbmcgbGlzdAprdm1hcm1AbGlzdHMuY3MuY29sdW1iaWEu
-ZWR1Cmh0dHBzOi8vbGlzdHMuY3MuY29sdW1iaWEuZWR1L21haWxtYW4vbGlzdGluZm8va3ZtYXJt
-Cg==
+Since revision IHI0069G of the GICv3 spec, an implementation is
+allowed to implement MMIO-based LPI invalidation, without having to
+support RVPEI (which is essentially a GICv4.1 feature).
+
+This has the potential to make workloads using heavy LPI invalidation
+fare a bit better, as they don't need to lock the access to the
+command queue.
+
+Similarly, an implementation can now expose that it allows LPIs to be
+turned off, something that we always supported.
+
+This series implements both these features, exposing the new
+GICR_{INVLPIR,INVALLR,SYNCR} registers, transitions of the
+GICR_CTLR.RWP bit on LPI disabling, and finally exposes these to
+userspace and the guest with a new GICD_IIDR revision (and the ability
+to save/restore it).
+
+This series has been extremely useful to debug related GIC features,
+and will be complemented by a few GIC patches.
+
+Patches on top of 5.17-rc3.
+
+	M.
+
+Marc Zyngier (4):
+  irqchip/gic-v3: Exposes bit values for GICR_CTLR.{IR,CES}
+  KVM: arm64: vgic-v3: Implement MMIO-based LPI invalidation
+  KVM: arm64: vgic-v3: Expose GICR_CTLR.RWP when disabling LPIs
+  KVM: arm64: vgic-v3: Advertise GICR_CTLR.{IR,CES} as a new GICD_IIDR
+    revision
+
+ arch/arm64/kvm/vgic/vgic-init.c    |   7 +-
+ arch/arm64/kvm/vgic/vgic-its.c     |  64 ++++++++++------
+ arch/arm64/kvm/vgic/vgic-mmio-v2.c |  18 ++++-
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c | 119 ++++++++++++++++++++++++++---
+ arch/arm64/kvm/vgic/vgic.h         |   5 ++
+ include/kvm/arm_vgic.h             |   8 +-
+ include/linux/irqchip/arm-gic-v3.h |   2 +
+ 7 files changed, 184 insertions(+), 39 deletions(-)
+
+-- 
+2.34.1
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
