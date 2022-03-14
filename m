@@ -2,79 +2,87 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D7D04D8984
-	for <lists+kvmarm@lfdr.de>; Mon, 14 Mar 2022 17:41:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C90A14D8B41
+	for <lists+kvmarm@lfdr.de>; Mon, 14 Mar 2022 19:03:00 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1967F49EFF;
-	Mon, 14 Mar 2022 12:41:04 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 137CB49EF4;
+	Mon, 14 Mar 2022 14:03:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id nxUNpzHRVqXE; Mon, 14 Mar 2022 12:41:03 -0400 (EDT)
+	with ESMTP id wB8Av+8FdyhB; Mon, 14 Mar 2022 14:02:59 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C73DA49ED5;
-	Mon, 14 Mar 2022 12:41:02 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DAEE049EF0;
+	Mon, 14 Mar 2022 14:02:58 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7546F49EC0
- for <kvmarm@lists.cs.columbia.edu>; Mon, 14 Mar 2022 12:40:59 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 70A0240BC0
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 14 Mar 2022 14:02:57 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id VgJhI-HWkW1k for <kvmarm@lists.cs.columbia.edu>;
- Mon, 14 Mar 2022 12:40:58 -0400 (EDT)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3437149ED5
- for <kvmarm@lists.cs.columbia.edu>; Mon, 14 Mar 2022 12:40:58 -0400 (EDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id BAE2C60AF5;
- Mon, 14 Mar 2022 16:40:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2830EC36AE2;
- Mon, 14 Mar 2022 16:40:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1647276057;
- bh=ZWtAY23Xb95QLutpD0WIyDlallLPbNinEqh3WUhRRGg=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=MqenvIp2dF3mLhIyesuCWlFwlloYTv9oK2TkHcW5S9lbgQI7jMRYGD5RCrADyTMax
- hV+c8K5oIsUp/c6GOqm/zucp9yd1rq/Fv8w6clMenrHRG3s9ZibVCWC29bKUOLWf9/
- FLrj6P5uZLJC/0HR+k6AyS2qT0w9gGp8qqUx1FzBGGHMbDAXTgo0HUzmxjmZxX391y
- +L7MOTVpvUDEprb9Pr9DP2bn/A2K3TiuN5b5H3acHQqPGMcuDU/MH3/CC4ocDTj1bT
- si2ofGSvrCBzTWCt7zGTgGCmOhk0LxCBugUmcyWtHJlzYH47CDRUDGOcvn4ISgzz/+
- 6+dMRDlx2GDKQ==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1nTnkd-00EPS0-59; Mon, 14 Mar 2022 16:40:55 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu
-Subject: [PATCH 4/4] KVM: arm64: vgic-v3: Advertise GICR_CTLR.{IR,
- CES} as a new GICD_IIDR revision
-Date: Mon, 14 Mar 2022 16:40:44 +0000
-Message-Id: <20220314164044.772709-5-maz@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220314164044.772709-1-maz@kernel.org>
-References: <20220314164044.772709-1-maz@kernel.org>
+ with ESMTP id NubfeyvzWHk4 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 14 Mar 2022 14:02:56 -0400 (EDT)
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com
+ [209.85.166.173])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 779F040B6C
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 14 Mar 2022 14:02:56 -0400 (EDT)
+Received: by mail-il1-f173.google.com with SMTP id d3so11596556ilr.10
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 14 Mar 2022 11:02:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=8536zTCC0nz+jAiN1Qoj3oXH4YMV4n9ZnMmaeo4Xicg=;
+ b=WtLSR3KJ8u9JQkI9+QSWyYPtWKcjlMAKFvYeejWljSWKsJQGM59y9i1IdxqS3+2+pg
+ w7Ji25CC9oXxA5xeRbkm6/QQUdvkOssJAgNQ9l/KXY2CjLMYMuqTjnl+ox+Ia37oNvYN
+ G6eJ7DAuBLnjB2YBIomjBNXkB68JMFnpv2puOs9pWJFixYXHMRAphvT0lR6lN9huIha4
+ CykHm8Z0nm3EpY24SvluveXCt3nTtLVrOvqQ4Ffvv3ZO9ZZ+ggXhI9ElbUuudaRFOvcI
+ DPQx65e2r0DDfqlmJxws/Vxl+IvEBJvpzEoYeuKEyzG2C9EWwNi0OvTomBJaENH5rULI
+ LQQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=8536zTCC0nz+jAiN1Qoj3oXH4YMV4n9ZnMmaeo4Xicg=;
+ b=3igaPzI6ufbuSgawUjUJ9UnZPH0QBE5bkKf6QP0PVhyidwqTypIFFtXtQ7+Kqgozu6
+ rohpibsGmVqL6d3EQyaKWOUAnMkLjf09sab5nrcUn5WiyHNQ9N3DBmjms1B7Pdx6nfLl
+ dYRYK4b63yoEWrAcFQ5KP/jrrslD44FQ3iuZ9z9M/AMfctetPruIBbitnmmkdechIMJP
+ 20PLVq9oXm4bwTN9kKEUeTgmaM3aUxaIrcxhyLLHR12hkiWyZLr/wnSinsBKC2y7CGJN
+ 30CUnJuYKaXxIVBaP91kQpsx5MRSpJ5IN4TFJEHUWZi/eKM5j7md/ItKt3bwwaDkvt/5
+ D1zA==
+X-Gm-Message-State: AOAM533FUY42oAqKLshKiRcDG2ZNDdE/jbbWgqH4mZdXk/BGtU9wzYB6
+ /AnvWG38b/YuR2NVkjIsZwnxmQ==
+X-Google-Smtp-Source: ABdhPJyudojN0tne3cl946mlYkSIDAiVPxLHDvbjzXb1BXUOPQ05BUW/BUAvbjwMoHoqH4g/6ZzqbA==
+X-Received: by 2002:a92:8e06:0:b0:2c7:a8f8:3c5d with SMTP id
+ c6-20020a928e06000000b002c7a8f83c5dmr3107778ild.107.1647280975428; 
+ Mon, 14 Mar 2022 11:02:55 -0700 (PDT)
+Received: from google.com (194.225.68.34.bc.googleusercontent.com.
+ [34.68.225.194]) by smtp.gmail.com with ESMTPSA id
+ e8-20020a056602158800b0064683f99191sm8050365iow.39.2022.03.14.11.02.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Mar 2022 11:02:54 -0700 (PDT)
+Date: Mon, 14 Mar 2022 18:02:51 +0000
+From: Oliver Upton <oupton@google.com>
+To: Raghavendra Rao Ananta <rananta@google.com>
+Subject: Re: [PATCH v4 04/13] KVM: arm64: Capture VM's first run
+Message-ID: <Yi+DS/BUPMiB+B0a@google.com>
+References: <20220224172559.4170192-1-rananta@google.com>
+ <20220224172559.4170192-5-rananta@google.com>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, james.morse@arm.com, suzuki.poulose@arm.com,
- alexandru.elisei@arm.com, andre.przywara@arm.com, eric.auger@redhat.com,
- kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com, Andre Przywara <andre.przywara@arm.com>
+Content-Disposition: inline
+In-Reply-To: <20220224172559.4170192-5-rananta@google.com>
+Cc: kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
+ Marc Zyngier <maz@kernel.org>, Peter Shier <pshier@google.com>,
+ linux-kernel@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -91,142 +99,27 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Since adversising GICR_CTLR.{IC,CES} is directly observable from
-a guest, we need to make it selectable from userspace.
+Hi Raghavendra,
 
-For that, bump the default GICD_IIDR revision and let userspace
-downgrade it to the previous default. For GICv2, the two distributor
-revisions are strictly equivalent.
+On Thu, Feb 24, 2022 at 05:25:50PM +0000, Raghavendra Rao Ananta wrote:
+> Capture the first run of the KVM VM, which is basically the
+> first KVM_RUN issued for any vCPU. This state of the VM is
+> helpful in the upcoming patches to prevent user-space from
+> configuring certain VM features, such as the feature bitmap
+> exposed by the psuedo-firmware registers, after the VM has
+> started running.
+> 
+> Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/kvm/vgic/vgic-init.c    |  7 ++++++-
- arch/arm64/kvm/vgic/vgic-mmio-v2.c | 18 +++++++++++++++---
- arch/arm64/kvm/vgic/vgic-mmio-v3.c | 23 +++++++++++++++++++++--
- include/kvm/arm_vgic.h             |  3 +++
- 4 files changed, 45 insertions(+), 6 deletions(-)
+I believe this patch is superseded by commit:
 
-diff --git a/arch/arm64/kvm/vgic/vgic-init.c b/arch/arm64/kvm/vgic/vgic-init.c
-index fc00304fe7d8..f84e04f334c6 100644
---- a/arch/arm64/kvm/vgic/vgic-init.c
-+++ b/arch/arm64/kvm/vgic/vgic-init.c
-@@ -319,7 +319,12 @@ int vgic_init(struct kvm *kvm)
- 
- 	vgic_debug_init(kvm);
- 
--	dist->implementation_rev = 2;
-+	/*
-+	 * If userspace didn't set the GIC implementation revision,
-+	 * default to the latest and greatest. You know want it.
-+	 */
-+	if (!dist->implementation_rev)
-+		dist->implementation_rev = KVM_VGIC_IMP_REV_LATEST;
- 	dist->initialized = true;
- 
- out:
-diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v2.c b/arch/arm64/kvm/vgic/vgic-mmio-v2.c
-index 12e4c223e6b8..f2246c4ca812 100644
---- a/arch/arm64/kvm/vgic/vgic-mmio-v2.c
-+++ b/arch/arm64/kvm/vgic/vgic-mmio-v2.c
-@@ -73,9 +73,13 @@ static int vgic_mmio_uaccess_write_v2_misc(struct kvm_vcpu *vcpu,
- 					   gpa_t addr, unsigned int len,
- 					   unsigned long val)
- {
-+	struct vgic_dist *dist = &vcpu->kvm->arch.vgic;
-+	u32 reg;
-+
- 	switch (addr & 0x0c) {
- 	case GIC_DIST_IIDR:
--		if (val != vgic_mmio_read_v2_misc(vcpu, addr, len))
-+		reg = vgic_mmio_read_v2_misc(vcpu, addr, len);
-+		if ((reg ^ val) & ~GICD_IIDR_REVISION_MASK)
- 			return -EINVAL;
- 
- 		/*
-@@ -87,8 +91,16 @@ static int vgic_mmio_uaccess_write_v2_misc(struct kvm_vcpu *vcpu,
- 		 * migration from old kernels to new kernels with legacy
- 		 * userspace.
- 		 */
--		vcpu->kvm->arch.vgic.v2_groups_user_writable = true;
--		return 0;
-+		reg = FIELD_GET(GICD_IIDR_REVISION_MASK, reg);
-+		switch (reg) {
-+		case KVM_VGIC_IMP_REV_2:
-+		case KVM_VGIC_IMP_REV_3:
-+			dist->v2_groups_user_writable = true;
-+			dist->implementation_rev = reg;
-+			return 0;
-+		default:
-+			return -EINVAL;
-+		}
- 	}
- 
- 	vgic_mmio_write_v2_misc(vcpu, addr, len, val);
-diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-index a6be403996c6..4c8e4f83e3d1 100644
---- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-@@ -155,13 +155,27 @@ static int vgic_mmio_uaccess_write_v3_misc(struct kvm_vcpu *vcpu,
- 					   unsigned long val)
- {
- 	struct vgic_dist *dist = &vcpu->kvm->arch.vgic;
-+	u32 reg;
- 
- 	switch (addr & 0x0c) {
- 	case GICD_TYPER2:
--	case GICD_IIDR:
- 		if (val != vgic_mmio_read_v3_misc(vcpu, addr, len))
- 			return -EINVAL;
- 		return 0;
-+	case GICD_IIDR:
-+		reg = vgic_mmio_read_v3_misc(vcpu, addr, len);
-+		if ((reg ^ val) & ~GICD_IIDR_REVISION_MASK)
-+			return -EINVAL;
-+
-+		reg = FIELD_GET(GICD_IIDR_REVISION_MASK, reg);
-+		switch (reg) {
-+		case KVM_VGIC_IMP_REV_2:
-+		case KVM_VGIC_IMP_REV_3:
-+			dist->implementation_rev = reg;
-+			return 0;
-+		default:
-+			return -EINVAL;
-+		}
- 	case GICD_CTLR:
- 		/* Not a GICv4.1? No HW SGIs */
- 		if (!kvm_vgic_global_state.has_gicv4_1)
-@@ -232,8 +246,13 @@ static unsigned long vgic_mmio_read_v3r_ctlr(struct kvm_vcpu *vcpu,
- 					     gpa_t addr, unsigned int len)
- {
- 	struct vgic_cpu *vgic_cpu = &vcpu->arch.vgic_cpu;
-+	unsigned long val;
-+
-+	val = atomic_read(&vgic_cpu->ctlr);
-+	if (vcpu->kvm->arch.vgic.implementation_rev >= KVM_VGIC_IMP_REV_3)
-+		val |= GICR_CTLR_IR | GICR_CTLR_CES;
- 
--	return vgic_cpu->lpis_enabled ? GICR_CTLR_ENABLE_LPIS : 0;
-+	return val;
- }
- 
- static void vgic_mmio_write_v3r_ctlr(struct kvm_vcpu *vcpu,
-diff --git a/include/kvm/arm_vgic.h b/include/kvm/arm_vgic.h
-index 401236f97cf2..2d8f2e90edc2 100644
---- a/include/kvm/arm_vgic.h
-+++ b/include/kvm/arm_vgic.h
-@@ -231,6 +231,9 @@ struct vgic_dist {
- 
- 	/* Implementation revision as reported in the GICD_IIDR */
- 	u32			implementation_rev;
-+#define KVM_VGIC_IMP_REV_2	2 /* GICv2 restorable groups */
-+#define KVM_VGIC_IMP_REV_3	3 /* GICv3 GICR_CTLR.{IW,CES,RWP} */
-+#define KVM_VGIC_IMP_REV_LATEST	KVM_VGIC_IMP_REV_3
- 
- 	/* Userspace can write to GICv2 IGROUPR */
- 	bool			v2_groups_user_writable;
--- 
-2.34.1
+  5177fe91e4cf ("KVM: arm64: Do not change the PMU event filter after a VCPU has run")
 
+on kvmarm/next.
+
+--
+Thanks,
+Oliver
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
