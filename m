@@ -2,84 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 801B74DBBEE
-	for <lists+kvmarm@lfdr.de>; Thu, 17 Mar 2022 01:56:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D74B4DBDCD
+	for <lists+kvmarm@lfdr.de>; Thu, 17 Mar 2022 05:51:42 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2AA9049F03;
-	Wed, 16 Mar 2022 20:56:47 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9255249F4E;
+	Thu, 17 Mar 2022 00:51:41 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -1.787
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
+X-Spam-Status: No, score=-1.787 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bfKfgQCYXlxg; Wed, 16 Mar 2022 20:56:46 -0400 (EDT)
+	with ESMTP id EwfpuwZCMGJL; Thu, 17 Mar 2022 00:51:41 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5D15349F2E;
-	Wed, 16 Mar 2022 20:56:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1951F4A10E;
+	Thu, 17 Mar 2022 00:51:39 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2E1EE49F0F
- for <kvmarm@lists.cs.columbia.edu>; Wed, 16 Mar 2022 20:56:44 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3115649F26
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Mar 2022 00:51:37 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id FpYDb9l+d5-v for <kvmarm@lists.cs.columbia.edu>;
- Wed, 16 Mar 2022 20:56:43 -0400 (EDT)
-Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com
- [209.85.214.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id DB22B49F1C
- for <kvmarm@lists.cs.columbia.edu>; Wed, 16 Mar 2022 20:56:42 -0400 (EDT)
-Received: by mail-pl1-f201.google.com with SMTP id
- n17-20020a170902f61100b001538c882549so1938349plg.18
- for <kvmarm@lists.cs.columbia.edu>; Wed, 16 Mar 2022 17:56:42 -0700 (PDT)
+ with ESMTP id s95E7JY2qUoz for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 17 Mar 2022 00:51:32 -0400 (EDT)
+Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com
+ [209.85.216.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id DBC6149EAE
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 17 Mar 2022 00:51:31 -0400 (EDT)
+Received: by mail-pj1-f73.google.com with SMTP id
+ s20-20020a17090ad49400b001bf481fae01so3625297pju.1
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 16 Mar 2022 21:51:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=Jg9GQhk+MrZN5dXhW+X4cf0jKpd+avRpNX7anKj5Jrc=;
- b=m89l2hQAmUEdjNqV8OSCTfysZ/zOOwEFynaTXmVlR6Yzoo1Tx/dZoxyW6lOexx8+fq
- QUzXN6cI+cdNXN/EtWPD+f16r6B89XHPNUsNz4fxE70ESglpMWEl6bUWyJCBhYEsbYQb
- zxe9PXL1GLkt1QJJ4VG3Ie8JbNi3IGFnlkc9yRNI//242WCP8SA6wjBDbrK8gWrpduTZ
- OgvfmcZOxe567V08fuXZiraQk4SlFSiORjD6r1LqMp6mzhggpxoeD7hT2Yyyvo9M0k6l
- sMc8dnS9btYLpIWRh7ECmbtm7cyooPtA7nCYio+MoLGW2LDuWd26q4maprX8HLyqA1fe
- Ne/w==
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=gsRfKzq4vGn1YNn7YUeVAb6qtw1e/e04FOs1fz7BrH8=;
+ b=JQG63yoRkgZtQa+AY5jQ61gQ21UrAkBQTDwjcqE2wayF+Aw4AE7+soI3KijdVqUYth
+ PA+hEiVlLfeDxUnpYSSfvZYqpWIzC/cD7KxxMRRaidxbHfUUpjfNO++vp23aI8SxFNXQ
+ VNz91cyBoLSLN/u8cEo327J4nZPFO4XQN6SUi8pt//hAX8OFAQtYftmQtWHYqMfE+Oh/
+ 3To00VP/WmW2h9NWj9TJ3SI4+LNL3gUxfXG60r9DWvtkrVBmfYJqVcS27uYuDIbO/qES
+ XixXnDXWQ751hX8ejbeNt6RayBdIbk+kZshHHKYU/RrxBMcLdnI2MmN96lBOjX7ldQpI
+ +YSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:date:in-reply-to:message-id:mime-version
- :references:subject:from:to:cc;
- bh=Jg9GQhk+MrZN5dXhW+X4cf0jKpd+avRpNX7anKj5Jrc=;
- b=oDC+NLGQ8B6oAxL9kQfHc1JLIHofWcxoT8mmaZ9A9IJR0FcQjWgdsXIWETgOvTFIdJ
- MP9wFP49dvcPb0/oMUVnYXugfp2XohOccZLeyYDaOyB6z8bB7TcgwZe/RpDGSIjFF+Vv
- U/JAC6SAMHPw6m5vgN7ru06dtP8v2xXWTUQc6cv3pj8CDsyqAHIyvf/WSdtHuabu6IDL
- NFZI9AIV0OhUz6WPC8rBawt76EArJB5Bp3+s/eQwSBuPSNQRYwPySa+II6m/ezEU7gWe
- 52DmN1WEe39d1n5LuZWYQ6dzvntl9wLtdMUEXBQqVtp+MFh4jZL68eaB15ho25ny6SJK
- P8Ug==
-X-Gm-Message-State: AOAM532VU49/A6TajX/k1XG4yugvCZokbYeImsytu9Z/1OD/18BcagJF
- u5VL50pQzvO5Oh+CfG1v5aojfRGDhp+LABrePQ==
-X-Google-Smtp-Source: ABdhPJwHRN519VOfnvRnJr+eDRdY4WPxlBAdx8ibhHEmrVvzFG7w2BsmEup87mQKjxpdevwHPl3T4yZQyEjnfWSjTw==
-X-Received: from jgzg.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:1acf])
- (user=jingzhangos job=sendgmr) by
- 2002:a17:903:124a:b0:153:47d7:de49 with
- SMTP id u10-20020a170903124a00b0015347d7de49mr2556590plh.81.1647478602084;
- Wed, 16 Mar 2022 17:56:42 -0700 (PDT)
-Date: Thu, 17 Mar 2022 00:56:30 +0000
-In-Reply-To: <20220317005630.3666572-1-jingzhangos@google.com>
-Message-Id: <20220317005630.3666572-3-jingzhangos@google.com>
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=gsRfKzq4vGn1YNn7YUeVAb6qtw1e/e04FOs1fz7BrH8=;
+ b=pSi2B7ZBETzohc6qzzM8E++U2p59vaLD+QTf8ki/t2JBeHDfVpXsAoOObt9+OKuj+M
+ WtDape7DQpPojFEeWANT5uX3zSw1fnz15Qjr7QLjNA/fGSpJYPwrb7ZnfsDEBXlPgjur
+ Byw/bESAxYISrsbAHUb/vUOcP10Tn/IjWugPImmgcc7anWcHQeOtiyav1gFTjpeEO6y9
+ aJvjgQU2jWrF5pyiIWyiZ2NwUE2ByvsR8QGWsT9lOK0ZSTqKaA51/RxmUEhbhJntxx80
+ PeepxLSmgL8D+jB0L8iG1NeZABpZ0gq5iWnBxa4PeUKZ8cbzEqiKl1NvEqwKMYkqQuot
+ TKvQ==
+X-Gm-Message-State: AOAM533U2Iqh/fNcIii3HPSGTZJJ9+Po6rbk3nhHKjMXJUdtg7owNqHx
+ aq1RQLXKLJB5/OE0yRawO3VX1HD5KORKjA==
+X-Google-Smtp-Source: ABdhPJzy+EnjPuXkGb+ndtKs1lIVtKRwKk8qD6YEJzvqK1mx3sZTRli0/Bkp7MZ6poB8q45nifTmZHT0ufFTpQ==
+X-Received: from ricarkol2.c.googlers.com
+ ([fda3:e722:ac3:cc00:24:72f4:c0a8:62fe])
+ (user=ricarkol job=sendgmr) by 2002:a17:90a:e541:b0:1c6:55e5:ae4b with SMTP
+ id ei1-20020a17090ae54100b001c655e5ae4bmr9070079pjb.62.1647492690738; Wed, 16
+ Mar 2022 21:51:30 -0700 (PDT)
+Date: Wed, 16 Mar 2022 21:51:24 -0700
+Message-Id: <20220317045127.124602-1-ricarkol@google.com>
 Mime-Version: 1.0
-References: <20220317005630.3666572-1-jingzhangos@google.com>
 X-Mailer: git-send-email 2.35.1.723.g4982287a31-goog
-Subject: [PATCH v1 2/2] KVM: arm64: Add debug tracepoint for vcpu exits
-From: Jing Zhang <jingzhangos@google.com>
-To: KVM <kvm@vger.kernel.org>, KVMARM <kvmarm@lists.cs.columbia.edu>, 
- Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- David Matlack <dmatlack@google.com>, Sean Christopherson <seanjc@google.com>, 
- Oliver Upton <oupton@google.com>, Reiji Watanabe <reijiw@google.com>, 
- Ricardo Koller <ricarkol@google.com>,
- Raghavendra Rao Ananta <rananta@google.com>
+Subject: [PATCH v2 0/3] KVM: arm64: selftests: Add edge cases tests for the
+ arch timer
+From: Ricardo Koller <ricarkol@google.com>
+To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu, drjones@redhat.com
+Cc: maz@kernel.org, pbonzini@redhat.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -96,71 +90,52 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-This tracepoint only provides a hook for poking vcpu exits information,
-not exported to tracefs.
-A timestamp is added for the last vcpu exit, which would be useful for
-analysis for vcpu exits.
+Add a new selftests that validates some edge cases related to the virtual
+arch-timer, for example:
+- timers across counter roll-overs.
+- moving counters ahead and behind pending timers.
+- having the same timer condition firing multiple times.
 
-Signed-off-by: Jing Zhang <jingzhangos@google.com>
----
- arch/arm64/include/asm/kvm_host.h | 3 +++
- arch/arm64/kvm/arm.c              | 2 ++
- arch/arm64/kvm/trace_arm.h        | 8 ++++++++
- 3 files changed, 13 insertions(+)
+The tests run while checking the state of the IRQs (e.g., pending when they
+are supposed to be) and stressing things a bit by waiting for interrupts
+while: re-scheduling the vcpu (with sched_yield()), by migrating the vcpu
+between cores, or by sleeping in userspace (with usleep()).
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index daa68b053bdc..576f2c18d008 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -415,6 +415,9 @@ struct kvm_vcpu_arch {
- 
- 	/* Arch specific exit reason */
- 	enum arm_exit_reason exit_reason;
-+
-+	/* Timestamp for the last vcpu exit */
-+	u64 last_exit_time;
- };
- 
- /* Pointer to the vcpu's SVE FFR for sve_{save,load}_state() */
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index f49ebdd9c990..98631f79c182 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -783,6 +783,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
- 	ret = 1;
- 	run->exit_reason = KVM_EXIT_UNKNOWN;
- 	while (ret > 0) {
-+		trace_kvm_vcpu_exits(vcpu);
- 		/*
- 		 * Check conditions before entering the guest
- 		 */
-@@ -898,6 +899,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
- 		local_irq_enable();
- 
- 		trace_kvm_exit(ret, kvm_vcpu_trap_get_class(vcpu), *vcpu_pc(vcpu));
-+		vcpu->arch.last_exit_time = ktime_to_ns(ktime_get());
- 
- 		/* Exit types that need handling before we can be preempted */
- 		handle_exit_early(vcpu, ret);
-diff --git a/arch/arm64/kvm/trace_arm.h b/arch/arm64/kvm/trace_arm.h
-index 33e4e7dd2719..3e7dfd640e23 100644
---- a/arch/arm64/kvm/trace_arm.h
-+++ b/arch/arm64/kvm/trace_arm.h
-@@ -301,6 +301,14 @@ TRACE_EVENT(kvm_timer_emulate,
- 		  __entry->timer_idx, __entry->should_fire)
- );
- 
-+/*
-+ * Following tracepoints are not exported in tracefs and provide hooking
-+ * mechanisms only for testing and debugging purposes.
-+ */
-+DECLARE_TRACE(kvm_vcpu_exits,
-+	TP_PROTO(struct kvm_vcpu *vcpu),
-+	TP_ARGS(vcpu));
-+
- #endif /* _TRACE_ARM_ARM64_KVM_H */
- 
- #undef TRACE_INCLUDE_PATH
+The first commit adds a timer utility function.  The second commit adds
+some sanity checks and basic tests for the timer. The third commit adds
+the actual edge case tests (like forcing rollovers).
+
+v1 -> v2:
+- Remove the checks for timers firing within some margin; only leave the
+  checks for timers not firing ahead of time. Also remove the tests that
+  depend on timers firing within some margin. [Oliver, Marc]
+- Collect R-b tag from Oliver (first commit). [Oliver]
+- Multiple nits: replace wfi_ functions with wait_, reduce use of macros,
+  drop typedefs, use IAR_SPURIOUS from header, move some comments functions
+  to top. [Oliver]
+- Don't fail if the test has a single cpu available. [Oliver]
+- Don't fail if there's no GICv3 available. [Oliver]
+
+v1: https://lore.kernel.org/kvmarm/20220302172144.2734258-1-ricarkol@google.com/
+
+There is a slight complication with where this series applies.  The test added
+here fails without commit cc94d47ce16d ("kvm: selftests: aarch64: fix assert in
+gicv3_access_reg") which lives in kvmarm/next.  However, it can't be built on
+top of kvmarm/next as it depends on commit 456f89e0928a ("KVM: selftests:
+aarch64: Skip tests if we can't create a vgic-v3") which is not in kvmarm/next.
+
+Ricardo Koller (3):
+  KVM: arm64: selftests: add timer_get_tval() lib function
+  KVM: arm64: selftests: add arch_timer_edge_cases
+  KVM: arm64: selftests: add edge cases tests into arch_timer_edge_cases
+
+ tools/testing/selftests/kvm/.gitignore        |   1 +
+ tools/testing/selftests/kvm/Makefile          |   1 +
+ .../kvm/aarch64/arch_timer_edge_cases.c       | 891 ++++++++++++++++++
+ .../kvm/include/aarch64/arch_timer.h          |  18 +-
+ 4 files changed, 910 insertions(+), 1 deletion(-)
+ create mode 100644 tools/testing/selftests/kvm/aarch64/arch_timer_edge_cases.c
+
 -- 
 2.35.1.723.g4982287a31-goog
 
