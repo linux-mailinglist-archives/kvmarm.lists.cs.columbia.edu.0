@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EECF4E44F8
-	for <lists+kvmarm@lfdr.de>; Tue, 22 Mar 2022 18:23:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C90DE4E44F9
+	for <lists+kvmarm@lfdr.de>; Tue, 22 Mar 2022 18:23:31 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6FC1A49EFD;
-	Tue, 22 Mar 2022 13:23:29 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D36540B8D;
+	Tue, 22 Mar 2022 13:23:31 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
@@ -18,61 +18,60 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id twLhGr+bTFrx; Tue, 22 Mar 2022 13:23:28 -0400 (EDT)
+	with ESMTP id l6bni5vvmFDP; Tue, 22 Mar 2022 13:23:30 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 20091410FF;
-	Tue, 22 Mar 2022 13:23:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 417AD49F1C;
+	Tue, 22 Mar 2022 13:23:30 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 320A249EEA
- for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Mar 2022 13:23:26 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 753D549F18
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Mar 2022 13:23:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 3RgHaSHqI5U7 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 22 Mar 2022 13:23:25 -0400 (EDT)
-Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com
- [209.85.215.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 24F3249EEF
- for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Mar 2022 13:23:25 -0400 (EDT)
-Received: by mail-pg1-f201.google.com with SMTP id
- z10-20020a634c0a000000b0036c5eb39076so9045983pga.18
- for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Mar 2022 10:23:25 -0700 (PDT)
+ with ESMTP id evskbqOTd5uM for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 22 Mar 2022 13:23:28 -0400 (EDT)
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com
+ [209.85.216.74])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1BA9040B8D
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Mar 2022 13:23:27 -0400 (EDT)
+Received: by mail-pj1-f74.google.com with SMTP id
+ mw8-20020a17090b4d0800b001c717bb058eso2513746pjb.0
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Mar 2022 10:23:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=7ggpAtHNiDJ+NnsLo7ScZ5icbm1fKGUxqGcBJCAEY6Y=;
- b=mqg3pc+6i6V/WC/2nUh0x/0RXtMDSlRE8rCEA2QSpbd1/19ON/Ef3H/Q8YD6UH990U
- m5SSErCS/i5EZsNXySHNv0yPxAr6sKj6Id5hTc7JjuTIkR7k354RVJ20WCuPNIP8Dsii
- z3pujgswQD40fhtW31IvyoXmCvfKEP8wlB/HWBP5bWl2cO2YiRaeAVCry5w+6q4qmysy
- 6wED+XCVQ1UVCxtFf9om1e+mzHzxzR92DpatXmSRRuUDR46jm38sUkojVr9OxBILR2QD
- 4OclWsiNpSxfBpE2qlcj7w7lHF0etmhBlMBUjYdfD+juEHJbC/PpMSWGjBvg6JX+7e1/
- CtoQ==
+ :cc; bh=A2OVfh4jna2fjjys5QzYhnEURgOUCehkINqKA/XnhEE=;
+ b=KK7kUh3po8iC/Gm8apsdZvHGwC1JoIeebfUmsd/3SXEXyatzCijqZAmSwSo6wwadQH
+ JUKCVydqn3ltAAGTyC80LbVyLW1FzvlGwyIlxEf6cCtgoTXMZIWqAvGZEt/PWFG05BDV
+ 6N59RPQ2Q4dFqq6szU3GV7VdmcqvLQP/2TW+f8JXDd6D4U4H2kLMbutw3kgNL6jTyUTf
+ 4UOiHjqC8Qo/CiH3tTGaxh4UcmX6VbQ4gf9SS23L0BRckdawkCrzGuk2Xfy5FTsg9Zz/
+ v4a5McWHyEyw3XQFNDidhoJ4MG36QM+fzberYvyLcayIyCdHWe51dJ7Iu1XuF3EpPI9I
+ 8Hgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=7ggpAtHNiDJ+NnsLo7ScZ5icbm1fKGUxqGcBJCAEY6Y=;
- b=J0SPnuS1RUMqhbmkjZ0E+McQBUcar+kBpzGT3JwECc7y5HYwwXCuIRCBOZJoBRBZoc
- TjrPLl1sadyzbJf6iRfogXcly/zaRyaXA6bIt1jGG0gjS68BWqetaoxqIz/97DQnCigD
- jDlk2pXUSez5FMZ9/UXYvTo3MMZ+GEi48o1K4NkxLiiFnwsBlGTHmYOT+bq4oRJTe7lb
- reZU0k4lOw+PK9u+qkWYa3qkFHw3k0eZksJ9PHhzRKRub9Wk+xE4UiXEa9TVCJ1Gwdz/
- BoipY7uo9UbOtX9ITEL8WHOdBRUcnU4ruDETJQsKeoz/w6JtVJhgkZutmJMcSif945CK
- PZAw==
-X-Gm-Message-State: AOAM5336oTb1AHSlVpvwAq9op4j4tw8WtwWHKH4zpRT2/RwJgPIL8HRU
- FD+zSEwKUcyCBpGVpKJeIkC4caUwPGy/fw==
-X-Google-Smtp-Source: ABdhPJyhU7hmeOiqa0P0D3pB5tvCb/IIOpleA1rmE8VxLD5P5L6UlLlxLsc3gmLGCUOoq3qoZytbYSHsU4UJ7Q==
+ bh=A2OVfh4jna2fjjys5QzYhnEURgOUCehkINqKA/XnhEE=;
+ b=ZzQcioknrA310YDUe1LCY6nyznWKI8gvuq2sbzeAVjvQ4PKRCrXMT0M/4eKlHzVk8C
+ D2rGQYGZHhrCgENfBzqXhEQVu4hDvkmhA3dIe6DAJOEyst/xpUDnVmi4uZCJQQ5DyYsa
+ xyIajxORWGJTo9IkI0w8PcMb9nIcpb2mOOiSbTlZ/AfJxpEi1tQQiF7g/rBR+y9MksaL
+ f/56V3Byn7+GLp623PjgaY0LEhNTw3lFoUnO0CfTjb9GLIfEJzuD+JfVfPZk+hooihmL
+ kFrNj8DsDI5p/pMadtyKJMSLH/fLJosKTfzrjPTAfCcQ+eR9xLvuDThIKegbJ6LNlq70
+ QbUA==
+X-Gm-Message-State: AOAM532tdk7rEDYv/mJSDL2Y2SS8x8hK3W0s2KyLvYQqRkMBXUvtJgKI
+ MIIDAl3kiA2ddZIU54mTkmMwfAtPiDMdHg==
+X-Google-Smtp-Source: ABdhPJxPCzEWdiZmf1k/k9aSVDd11Orxgxmcb/v81+3NychWWnJaU5A7hAIzcW0g2gazih+FM+9T5Lwo3MaotA==
 X-Received: from ricarkol2.c.googlers.com
  ([fda3:e722:ac3:cc00:24:72f4:c0a8:62fe])
- (user=ricarkol job=sendgmr) by 2002:a17:903:2288:b0:154:50ba:2e31 with SMTP
- id b8-20020a170903228800b0015450ba2e31mr12250063plh.132.1647969804148; Tue,
- 22 Mar 2022 10:23:24 -0700 (PDT)
-Date: Tue, 22 Mar 2022 10:23:16 -0700
+ (user=ricarkol job=sendgmr) by 2002:a17:90b:e81:b0:1c6:5a9c:5afa with SMTP id
+ fv1-20020a17090b0e8100b001c65a9c5afamr102565pjb.1.1647969805974; Tue, 22 Mar
+ 2022 10:23:25 -0700 (PDT)
+Date: Tue, 22 Mar 2022 10:23:17 -0700
 In-Reply-To: <20220322172319.2943101-1-ricarkol@google.com>
-Message-Id: <20220322172319.2943101-2-ricarkol@google.com>
+Message-Id: <20220322172319.2943101-3-ricarkol@google.com>
 Mime-Version: 1.0
 References: <20220322172319.2943101-1-ricarkol@google.com>
 X-Mailer: git-send-email 2.35.1.894.gb6a874cedc-goog
-Subject: [PATCH v3 1/4] KVM: arm64: selftests: add timer_get_tval() lib
- function
+Subject: [PATCH v3 2/4] KVM: selftests: add is_cpu_online() utility function
 From: Ricardo Koller <ricarkol@google.com>
 To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu, drjones@redhat.com
 Cc: maz@kernel.org, pbonzini@redhat.com
@@ -92,53 +91,50 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add timer_get_tval() into the arch timer library functions in
-selftests/kvm. Bonus: change the set_tval function to get an int32_t
-(tval is signed).
+Add is_cpu_online() utility function: a wrapper for
+"/sys/devices/system/cpu/cpu%d/online".
 
-Reviewed-by: Oliver Upton <oupton@google.com>
-Reviewed-by: Reiji Watanabe <reijiw@google.com>
 Signed-off-by: Ricardo Koller <ricarkol@google.com>
 ---
- .../selftests/kvm/include/aarch64/arch_timer.h | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ tools/testing/selftests/kvm/include/test_util.h |  2 ++
+ tools/testing/selftests/kvm/lib/test_util.c     | 16 ++++++++++++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/tools/testing/selftests/kvm/include/aarch64/arch_timer.h b/tools/testing/selftests/kvm/include/aarch64/arch_timer.h
-index cb7c03de3a21..93f35a4fc1aa 100644
---- a/tools/testing/selftests/kvm/include/aarch64/arch_timer.h
-+++ b/tools/testing/selftests/kvm/include/aarch64/arch_timer.h
-@@ -79,7 +79,7 @@ static inline uint64_t timer_get_cval(enum arch_timer timer)
- 	return 0;
+diff --git a/tools/testing/selftests/kvm/include/test_util.h b/tools/testing/selftests/kvm/include/test_util.h
+index 99e0dcdc923f..14084dc4e152 100644
+--- a/tools/testing/selftests/kvm/include/test_util.h
++++ b/tools/testing/selftests/kvm/include/test_util.h
+@@ -143,4 +143,6 @@ static inline void *align_ptr_up(void *x, size_t size)
+ 	return (void *)align_up((unsigned long)x, size);
  }
  
--static inline void timer_set_tval(enum arch_timer timer, uint32_t tval)
-+static inline void timer_set_tval(enum arch_timer timer, int32_t tval)
- {
- 	switch (timer) {
- 	case VIRTUAL:
-@@ -95,6 +95,22 @@ static inline void timer_set_tval(enum arch_timer timer, uint32_t tval)
- 	isb();
- }
++bool is_cpu_online(int pcpu);
++
+ #endif /* SELFTEST_KVM_TEST_UTIL_H */
+diff --git a/tools/testing/selftests/kvm/lib/test_util.c b/tools/testing/selftests/kvm/lib/test_util.c
+index 6d23878bbfe1..81950e6b6d10 100644
+--- a/tools/testing/selftests/kvm/lib/test_util.c
++++ b/tools/testing/selftests/kvm/lib/test_util.c
+@@ -334,3 +334,19 @@ long get_run_delay(void)
  
-+static inline int32_t timer_get_tval(enum arch_timer timer)
+ 	return val[1];
+ }
++
++bool is_cpu_online(int pcpu)
 +{
-+	isb();
-+	switch (timer) {
-+	case VIRTUAL:
-+		return (int32_t)read_sysreg(cntv_tval_el0);
-+	case PHYSICAL:
-+		return (int32_t)read_sysreg(cntp_tval_el0);
-+	default:
-+		GUEST_ASSERT_1(0, timer);
-+	}
++	char p[128];
++	FILE *fp;
++	int ret;
 +
-+	/* We should not reach here */
-+	return 0;
++	snprintf(p, sizeof(p), "/sys/devices/system/cpu/cpu%d/online", pcpu);
++	fp = fopen(p, "r");
++	if (!fp)
++		return false;
++	assert(fscanf(fp, "%d ", &ret) == 1);
++	fclose(fp);
++
++	return !!ret;
 +}
-+
- static inline void timer_set_ctl(enum arch_timer timer, uint32_t ctl)
- {
- 	switch (timer) {
 -- 
 2.35.1.894.gb6a874cedc-goog
 
