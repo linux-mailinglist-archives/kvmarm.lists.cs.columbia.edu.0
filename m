@@ -2,104 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 009A04E3FC8
-	for <lists+kvmarm@lfdr.de>; Tue, 22 Mar 2022 14:45:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1351B4E44F7
+	for <lists+kvmarm@lfdr.de>; Tue, 22 Mar 2022 18:23:29 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2851549F3E;
-	Tue, 22 Mar 2022 09:45:06 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3D90E40C95;
+	Tue, 22 Mar 2022 13:23:28 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LrLlhBqXk3kl; Tue, 22 Mar 2022 09:45:06 -0400 (EDT)
+	with ESMTP id PJ5p-TLiIhJu; Tue, 22 Mar 2022 13:23:28 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BA99A49F44;
-	Tue, 22 Mar 2022 09:45:04 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 000A349F18;
+	Tue, 22 Mar 2022 13:23:26 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4230549F2F
- for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Mar 2022 09:45:03 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D1E4249EEF
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Mar 2022 13:23:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id jlZ1C328q46r for <kvmarm@lists.cs.columbia.edu>;
- Tue, 22 Mar 2022 09:45:02 -0400 (EDT)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EF6B449F2E
- for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Mar 2022 09:45:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1647956701;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ANKRQzRELaWdzD2QZS9qzovKRV7eroomvX7D4M7GefI=;
- b=ffIGVL4PPnnMxIdJivdHpxsXnt4Vzs3oMXtKYANY+VTrECz/HIgDFKboTzEkse2oSmZLXX
- vk1y21EBiZquugxa2ekHNbsLIDb8EDO7I2v+i9zZcN3DLrN0MPapmuFPbyTuTsINdPrr88
- Q3ifd07zSJejTXs9qYj63ZfdfMyxEZM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-592-ovwsJZXMMmmA35BvFYWvoA-1; Tue, 22 Mar 2022 09:44:40 -0400
-X-MC-Unique: ovwsJZXMMmmA35BvFYWvoA-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 2-20020a1c0202000000b0038c71e8c49cso1318153wmc.1
- for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Mar 2022 06:44:39 -0700 (PDT)
+ with ESMTP id xphrwmuQDIqo for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 22 Mar 2022 13:23:23 -0400 (EDT)
+Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com
+ [209.85.214.201])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 930EE49EEA
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Mar 2022 13:23:23 -0400 (EDT)
+Received: by mail-pl1-f201.google.com with SMTP id
+ n12-20020a1709026a8c00b001538f557d52so7447022plk.2
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Mar 2022 10:23:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=UeIt97cm1BRk6/PsYhB1LZn33tpqzrs0+uoJF47O1VA=;
+ b=h9KxQnjhkxAfeU5hS3Bb2LHL5TmRVM1hLrf/f828/4dpBa0R1bpbOUBDaw62jbWOVm
+ MrmGHyiDNEq2lqWab+oonCHuy1DD4q6J5ltQurZ3QOyJnPRah0ZTZq5DUW9M1dQuHfFv
+ txl1OLK1476sSMKGofvd1ECM5eovOFHVw8l4iOIBE08e2gWyDr3tSEAVxDuikIF3HbvL
+ 0JPD3PkqKnJy67BR/FGhZgBqdZTq6I8hxP4okdS4E0jWbX8NLTZ/IhwG5mCletRIuxiU
+ Q7P7TDLbrEpbcqPnV0o5N3DALwqHjsQZ3pb/wxlF1ahzePyG5BPRoYp74izk3zUPlNjR
+ xe3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
- :content-language:to:cc:references:from:in-reply-to
- :content-transfer-encoding;
- bh=ANKRQzRELaWdzD2QZS9qzovKRV7eroomvX7D4M7GefI=;
- b=6dUJHrYEaZ71+zAHoiwixMdAJuKRkbzf50cFEezB7O6iVAeKZDG/becGJGrcf0HEbN
- eQMkP1T9tJbspvSrm7agbMC50VYN+hOjJyUlU3q/s61GrKZaOly2Xh2dD6RJrhpnToVC
- 2JYFUO+kazamDJh3cGSnAh/1V+uOg5LQelztoDxWMGAsnp4Pjks0MgS4WF2g4Zdzopi2
- w01RmuBD44hY1TYOpy6keWDaAvw/9hfKtwjRkD7nCB1N4H586Ivwz2FGe04quhucJw2/
- R+b/GmHmm6rwSzTcIt1yDPq6jJyUWMDwEpNzgJinp1GyroYWX+tkFEvOrwZYG5xu2OPs
- VAYQ==
-X-Gm-Message-State: AOAM530EoKqLn8iagQOaoqeDBgiDUlHcq8mkbnfTQb4yVqqU+qciJaVa
- pmnrpdTCNoVGJlzwqsTejUQgAagnIXb7PCRmVsF0HS+IDmKxGDWwq1G+w7Pksdt2lb8TAEpo+Zc
- 7fhlDNULeGF8INIueeVS6NHfe
-X-Received: by 2002:a05:600c:190e:b0:38c:b1ea:f4ac with SMTP id
- j14-20020a05600c190e00b0038cb1eaf4acmr3938607wmq.70.1647956678927; 
- Tue, 22 Mar 2022 06:44:38 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJzKzYLnUW0xmdSIOPKaXoGHiETfm21cVrTbD3uRC5iXSe1fa2PPvEzTtyV8TFh7MPCRVt9NLQ==
-X-Received: by 2002:a05:600c:190e:b0:38c:b1ea:f4ac with SMTP id
- j14-20020a05600c190e00b0038cb1eaf4acmr3938572wmq.70.1647956678543; 
- Tue, 22 Mar 2022 06:44:38 -0700 (PDT)
-Received: from [10.33.192.183] (nat-pool-str-t.redhat.com. [149.14.88.106])
- by smtp.gmail.com with ESMTPSA id
- e8-20020a056000178800b00203da3bb4d2sm16782777wrg.41.2022.03.22.06.44.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Mar 2022 06:44:37 -0700 (PDT)
-Message-ID: <da339883-fc3a-da42-a071-d6e6c9f88b3e@redhat.com>
-Date: Tue, 22 Mar 2022 14:44:36 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [kvm-unit-tests PATCH] libfdt: use logical "or" instead of
- bitwise "or" with boolean operands
-To: Andrew Jones <drjones@redhat.com>, Bill Wendling <morbo@google.com>
-References: <20220316060214.2200695-1-morbo@google.com>
- <20220318093601.zqhuzrp2ujgswsiw@gator>
-From: Thomas Huth <thuth@redhat.com>
-In-Reply-To: <20220318093601.zqhuzrp2ujgswsiw@gator>
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=thuth@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Cc: lvivier@redhat.com, linux-s390@vger.kernel.org, frankja@linux.ibm.com,
- kvm@vger.kernel.org, david@redhat.com, kvm-ppc@vger.kernel.org,
- Nikos Nikoleris <nikos.nikoleris@arm.com>, pbonzini@redhat.com,
- imbrenda@linux.ibm.com, kvmarm@lists.cs.columbia.edu
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=UeIt97cm1BRk6/PsYhB1LZn33tpqzrs0+uoJF47O1VA=;
+ b=UwvG+Aqkb7SVnP1nQZ6phCmYyJwY+YgsL1KvDRF7ArVUvO8GIgn9xa2Sx9jNad9IDE
+ 9byfcloaQWkTz69+JQpl4+Dww3AY0QmtHNtXpM6xPf+2w4fxcVpOT2/FKxgjee70610Y
+ 7bf4WuvrDghbJotEgzN0ZMPkNeTa2zWq5fmpxMz00/tbI0P0jnGED6t/XCS73OuHYQUo
+ kRx+uWRhGjDfCnapZ9gIL8/UlGYt4Ja97oiS0Z6+JqwFyfEpmiqVGqPCy9e2OL31lTwf
+ wsY31PJTN5vTALZOfZgVlFotu1Xk3rJygujFPkI+ngupcDR/PI1odg2+/C5OWqmodL1H
+ 9tiw==
+X-Gm-Message-State: AOAM5305bxQ4BIYdCakkC+nhUbR2LxDrJOqK5nLxLpxmx9eakwpiO4kG
+ Mr2z6UG0u7XkYWf5eFOxXC8Mu9wVLRwnUA==
+X-Google-Smtp-Source: ABdhPJwR2LEhQxUGrhAGf+33uw31jUQRxS9+Gf1ipPFzFOQGFcAaO0HtkQJ9SAD981hJNcbkoBCeMCztgTXsWQ==
+X-Received: from ricarkol2.c.googlers.com
+ ([fda3:e722:ac3:cc00:24:72f4:c0a8:62fe])
+ (user=ricarkol job=sendgmr) by 2002:a17:902:f682:b0:154:8500:80bf with SMTP
+ id l2-20020a170902f68200b00154850080bfmr4553264plg.112.1647969802560; Tue, 22
+ Mar 2022 10:23:22 -0700 (PDT)
+Date: Tue, 22 Mar 2022 10:23:15 -0700
+Message-Id: <20220322172319.2943101-1-ricarkol@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.35.1.894.gb6a874cedc-goog
+Subject: [PATCH v3 0/4] KVM: arm64: selftests: Add edge cases tests for the
+ arch timer
+From: Ricardo Koller <ricarkol@google.com>
+To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu, drjones@redhat.com
+Cc: maz@kernel.org, pbonzini@redhat.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -111,61 +84,65 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 18/03/2022 10.36, Andrew Jones wrote:
-> On Tue, Mar 15, 2022 at 11:02:14PM -0700, Bill Wendling wrote:
->> Clang warns about using a bitwise '|' with boolean operands. This seems
->> to be due to a small typo.
->>
->>    lib/libfdt/fdt_rw.c:438:6: warning: use of bitwise '|' with boolean operands [-Werror,-Wbitwise-instead-of-logical]
->>            if (can_assume(LIBFDT_ORDER) |
->>
->> Using '||' removes this warnings.
->>
->> Signed-off-by: Bill Wendling <morbo@google.com>
->> ---
->>   lib/libfdt/fdt_rw.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/lib/libfdt/fdt_rw.c b/lib/libfdt/fdt_rw.c
->> index 13854253ff86..3320e5559cac 100644
->> --- a/lib/libfdt/fdt_rw.c
->> +++ b/lib/libfdt/fdt_rw.c
->> @@ -435,7 +435,7 @@ int fdt_open_into(const void *fdt, void *buf, int bufsize)
->>   			return struct_size;
->>   	}
->>   
->> -	if (can_assume(LIBFDT_ORDER) |
->> +	if (can_assume(LIBFDT_ORDER) ||
->>   	    !fdt_blocks_misordered_(fdt, mem_rsv_size, struct_size)) {
->>   		/* no further work necessary */
->>   		err = fdt_move(fdt, buf, bufsize);
->> -- 
->> 2.35.1.723.g4982287a31-goog
->>
-> 
-> We're not getting as much interest in the submodule discussion as I hoped.
-> I see one vote against on this thread and one vote for on a different
-> thread[1]. For now I'll just commit a big rebase patch for libfdt. We can
-> revisit it again after we decide what to do for QCBOR.
+Add a new selftests that validates some edge cases related to the virtual
+arch-timer, for example:
+- timers across counter roll-overs.
+- moving counters ahead and behind pending timers.
+- having the same timer condition firing multiple times.
 
-I recently learnt that there are indeed people who ship kvm-unit-tests with 
-their distro - at least buildroot has a package:
-https://git.busybox.net/buildroot/tree/package/kvm-unit-tests
+The tests run while checking the state of the IRQs (e.g., pending when they
+are supposed to be) and stressing things a bit by waiting for interrupts
+while: re-scheduling the vcpu (with sched_yield()), by migrating the vcpu
+between cores, or by sleeping in userspace (with usleep()).
 
-So one more argument for copying the files over instead of using submodules: 
-The tarballs for tags will be self-contained, e.g.:
+The first commit adds a timer utility function.  The second commit adds
+some sanity checks and basic tests for the timer. The third commit adds
+the actual edge case tests (like forcing rollovers).
 
-https://gitlab.com/kvm-unit-tests/kvm-unit-tests/-/archive/v2022-03-08/kvm-unit-tests-v2022-03-08.tar.gz
+v2 -> v3:
+- Add missing isb when polling for IRQ being handled. [Oliver, Marc]
+- Wait for a counter pass by polling on it (instead of the previous isb).
+  [Oliver, Marc]
+- Edits in some comments. [Oliver]
+- Dropping the msecs_to_usecs macro. [Oliver]
+- Skipping test if desired pcpus are not online. This needed adding a
+  library function (is_cpu_online). [Oliver]
 
-If we use submodules, I guess the content of the submodule content will be 
-missing in there?
+v1 -> v2: https://lore.kernel.org/kvmarm/20220317045127.124602-1-ricarkol@google.com/
+- Remove the checks for timers firing within some margin; only leave the
+  checks for timers not firing ahead of time. Also remove the tests that
+  depend on timers firing within some margin. [Oliver, Marc]
+- Collect R-b tag from Oliver (first commit). [Oliver]
+- Multiple nits: replace wfi_ functions with wait_, reduce use of macros,
+  drop typedefs, use IAR_SPURIOUS from header, move some comments functions
+  to top. [Oliver]
+- Don't fail if the test has a single cpu available. [Oliver]
+- Don't fail if there's no GICv3 available. [Oliver]
 
-  Thomas
+v1: https://lore.kernel.org/kvmarm/20220302172144.2734258-1-ricarkol@google.com/
+
+Ricardo Koller (4):
+  KVM: arm64: selftests: add timer_get_tval() lib function
+  KVM: selftests: add is_cpu_online() utility function
+  KVM: arm64: selftests: add arch_timer_edge_cases
+  KVM: arm64: selftests: add edge cases tests into arch_timer_edge_cases
+
+ tools/testing/selftests/kvm/.gitignore        |   1 +
+ tools/testing/selftests/kvm/Makefile          |   1 +
+ .../kvm/aarch64/arch_timer_edge_cases.c       | 904 ++++++++++++++++++
+ .../kvm/include/aarch64/arch_timer.h          |  18 +-
+ .../testing/selftests/kvm/include/test_util.h |   2 +
+ tools/testing/selftests/kvm/lib/test_util.c   |  16 +
+ 6 files changed, 941 insertions(+), 1 deletion(-)
+ create mode 100644 tools/testing/selftests/kvm/aarch64/arch_timer_edge_cases.c
+
+-- 
+2.35.1.894.gb6a874cedc-goog
 
 _______________________________________________
 kvmarm mailing list
