@@ -2,54 +2,81 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FB5A4E4FE3
-	for <lists+kvmarm@lfdr.de>; Wed, 23 Mar 2022 10:57:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AB0C4E4F57
+	for <lists+kvmarm@lfdr.de>; Wed, 23 Mar 2022 10:26:14 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 11BE44B0B4;
-	Wed, 23 Mar 2022 05:57:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 82DC249F07;
+	Wed, 23 Mar 2022 05:26:13 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.898
+X-Spam-Score: -1.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.898 required=6.1 tests=[BAYES_00=-1.9,
-	UNPARSEABLE_RELAY=0.001, URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qWlJi5s1Ezcz; Wed, 23 Mar 2022 05:57:29 -0400 (EDT)
+	with ESMTP id pBYtWGfLjrMv; Wed, 23 Mar 2022 05:26:13 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2AB5F4B0ED;
-	Wed, 23 Mar 2022 05:57:17 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 416C749F00;
+	Wed, 23 Mar 2022 05:26:12 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B649E49F2A
- for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Mar 2022 21:25:55 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C2D5649EEF
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Mar 2022 05:26:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id CwPNvuQ8b3aK for <kvmarm@lists.cs.columbia.edu>;
- Tue, 22 Mar 2022 21:25:46 -0400 (EDT)
-Received: from nksmu.kylinos.cn (mailgw.kylinos.cn [123.150.8.42])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 62A0849EED
- for <kvmarm@lists.cs.columbia.edu>; Tue, 22 Mar 2022 21:25:44 -0400 (EDT)
-X-UUID: d4584398dece4b498383da4c3e9861c1-20220323
-X-UUID: d4584398dece4b498383da4c3e9861c1-20220323
-Received: from cs2c.com.cn [(172.17.111.24)] by nksmu.kylinos.cn
- (envelope-from <xieming@kylinos.cn>) (Generic MTA)
- with ESMTP id 1789687103; Wed, 23 Mar 2022 09:24:49 +0800
-X-ns-mid: postfix-623A770C-942667795
-Received: from localhost.localdomain (unknown [172.20.12.223])
- by cs2c.com.cn (NSMail) with ESMTPA id C287C383C640;
- Wed, 23 Mar 2022 01:25:32 +0000 (UTC)
-From: xieming <xieming@kylinos.cn>
-To: christoffer.dall@arm.com,
-	marc.zyngier@arm.com
-Subject: [PATCH] kvm: fix gpu passthrough into vm on arm64
-Date: Wed, 23 Mar 2022 09:25:19 +0800
-Message-Id: <20220323012519.521058-1-xieming@kylinos.cn>
-X-Mailer: git-send-email 2.27.0
+ with ESMTP id x-GwHS+jwKyF for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 23 Mar 2022 05:26:09 -0400 (EDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B37F749E49
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 23 Mar 2022 05:26:09 -0400 (EDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 82067617AC;
+ Wed, 23 Mar 2022 09:26:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8EEC340E8;
+ Wed, 23 Mar 2022 09:26:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1648027567;
+ bh=6o8eSL9XfXN3YyWF8WOf0UgeocTfb9Qxb/lKmNgQD3k=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=TFK9YzhcOSM+7+DW03OfGZ6iv4ZXu8m+2lyggptU4cD5cN+dAqP54VpzFohtjD2W3
+ Jk8zJZaf7iP8YyfFpWU9jNzxFJsZHNOobxbqodw6pTt7XD7e7P2EWskhbvt41TvLR4
+ kdOd7fNlSKnHaBjLkJPY+SZf2nyneZpk/QR/FgChqDC5ugUODivxijDFUpBdxl9sow
+ JfC6jtEkuyWzUYBROPdFF0fkVcPe6tFk+6mxuzlWYJpeG0uICd6TknefMz70rdHrjm
+ W0HK/R3Y3cgCp5gYT7bkpcrSX5i8IUu3Fpeh5F1lfi7ir18s2bZj8XdjDh5y2jXT1U
+ GqPxjryM9Nm2Q==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=hot-poop.lan)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1nWxFl-00GSfx-Eq; Wed, 23 Mar 2022 09:26:05 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: kvmarm@lists.cs.columbia.edu,
+	Oliver Upton <oupton@google.com>
+Subject: Re: [PATCH v2 0/3] KVM: arm64: Fixes for SMC64 SYSTEM_RESET2 calls
+Date: Wed, 23 Mar 2022 09:26:02 +0000
+Message-Id: <164802753806.768438.14771552683123752395.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220322183538.2757758-1-oupton@google.com>
+References: <20220322183538.2757758-1-oupton@google.com>
 MIME-Version: 1.0
-X-Mailman-Approved-At: Wed, 23 Mar 2022 05:57:13 -0400
-Cc: xieming@kylinos.cn, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, oupton@google.com,
+ ricarkol@google.com, pshier@google.com, reijiw@google.com,
+ suzuki.poulose@arm.com, kvm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, will@kernel.org, pbonzini@redhat.com,
+ alexandru.elisei@arm.com, james.morse@arm.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvm@vger.kernel.org, Peter Shier <pshier@google.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Will Deacon <will@kernel.org>,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -66,53 +93,35 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-1) when passthrough some pcie device, such as AMD gpus,
-        kvm will report:"Unsupported FSC:" err.
+On Tue, 22 Mar 2022 18:35:35 +0000, Oliver Upton wrote:
+> This series addresses a couple of issues with how KVM exposes SMC64
+> calls to its guest. It is currently possible for an AArch32 guest to
+> discover the SMC64 SYSTEM_RESET2 function (via
+> PSCI_1_0_FN_PSCI_FEATURES) and even make a call to it. SMCCC does not
+> allow for 64 bit calls to be made from a 32 bit state.
+> 
+> Patch 1 cleans up the way we filter SMC64 calls in PSCI. Using a switch
+> with case statements for each possibly-filtered function is asking for
+> trouble. Instead, pivot off of the bit that indicates the desired
+> calling convention. This plugs the PSCI_FEATURES hole for SYSTEM_RESET2.
+> 
+> [...]
 
-2) the main reason is kvm setting memory type to
-   PAGE_S2_DEVICE(DEVICE_nGnRE), but in guestos, all of device io memory
-   type when ioremapping (including gpu driver TTM memory type) is
-   setting to MT_NORMAL_NC.
+Applied to fixes, thanks!
 
-3) according to ARM64 stage1&stage2 conbining rules.
-   memory type attributes combining rules:
-   Normal-WB < Normal-WT <  NormalNC <  Device-GRE <  Device-nGRE <
-   DevicenGnRE < Device-nGnRnE
-   Normal-WB is weakest,Device-nGnRnE is strongest.
+[1/3] KVM: arm64: Generally disallow SMC64 for AArch32 guests
+      commit: 905ec3226f8150f73838a36cb79ba79e1d789e8e
+[2/3] KVM: arm64: Actually prevent SMC64 SYSTEM_RESET2 from AArch32
+      commit: 3e1b3dbad320e1532fdf09e5b80e35d62a0fd82b
+[3/3] KVM: arm64: Drop unneeded minor version check from PSCI v1.x handler
+      commit: 8872d9b3e35a0ecb80d6413bba403d4aaf49af63
 
-   refferring to 'Arm Architecture Reference Manual Armv8,
-   for Armv8-A architecture profile' pdf, chapter B2.8
-   refferring to 'ARM System Memory Management Unit Architecture
-   Specification SMMU architecture version 3.0 and version 3.1' pdf,
-   chapter 13.1.5
+Cheers,
 
-4) therefore, the I/O memory attribute of the VM is setting to
-   DevicenGnRE is a big mistake. it causes all device memory accessing in
-   the virtual machine must be aligned.
-
-   To summarize: stage2 memory type cannot be stronger than stage1 in
-   arm64 archtechture.
-
-Signed-off-by: xieming <xieming@kylinos.cn>
----
- virt/kvm/arm/mmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
-index 11103b75c596..9b7fb13f4546 100644
---- a/virt/kvm/arm/mmu.c
-+++ b/virt/kvm/arm/mmu.c
-@@ -1209,7 +1209,7 @@ int kvm_phys_addr_ioremap(struct kvm *kvm, phys_addr_t guest_ipa,
- 	pfn = __phys_to_pfn(pa);
- 
- 	for (addr = guest_ipa; addr < end; addr += PAGE_SIZE) {
--		pte_t pte = pfn_pte(pfn, PAGE_S2_DEVICE);
-+		pte_t pte = pfn_pte(pfn, PAGE_S2);
- 
- 		if (writable)
- 			pte = kvm_s2pte_mkwrite(pte);
+	M.
 -- 
-2.27.0
+Without deviation from the norm, progress is not possible.
+
 
 _______________________________________________
 kvmarm mailing list
