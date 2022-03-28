@@ -2,85 +2,59 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E773A4E8B28
-	for <lists+kvmarm@lfdr.de>; Mon, 28 Mar 2022 02:05:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBBF54E986F
+	for <lists+kvmarm@lfdr.de>; Mon, 28 Mar 2022 15:39:44 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 27C2B4B172;
-	Sun, 27 Mar 2022 20:05:21 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 43FE64B1FD;
+	Mon, 28 Mar 2022 09:39:44 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -0.449
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
+X-Spam-Status: No, score=-0.449 required=6.1 tests=[BAYES_00=-1.9,
+	RCVD_IN_BRBL_LASTEXT=1.449, RCVD_IN_DNSWL_BLOCKED=0.001,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id W3Yw22cJF0ed; Sun, 27 Mar 2022 20:05:21 -0400 (EDT)
+	with ESMTP id 2GC1j-kIKPrV; Mon, 28 Mar 2022 09:39:44 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C41534B1CA;
-	Sun, 27 Mar 2022 20:05:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BA3FE4B205;
+	Mon, 28 Mar 2022 09:39:41 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A051B4B1C4
- for <kvmarm@lists.cs.columbia.edu>; Sun, 27 Mar 2022 20:05:18 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6759A40C52
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 28 Mar 2022 06:38:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id GAolZfT2juJk for <kvmarm@lists.cs.columbia.edu>;
- Sun, 27 Mar 2022 20:05:15 -0400 (EDT)
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com
- [209.85.210.180])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 39B474B1C3
- for <kvmarm@lists.cs.columbia.edu>; Sun, 27 Mar 2022 20:05:15 -0400 (EDT)
-Received: by mail-pf1-f180.google.com with SMTP id s8so11059730pfk.12
- for <kvmarm@lists.cs.columbia.edu>; Sun, 27 Mar 2022 17:05:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=GYMVP9OcKppCPlsPpjFdXuvj9GQOHfrmZVMxuBWQMzk=;
- b=UOxWHJfBVxArY0VLUCwJyQc28fwR60rMZ4S+d0rgbgXS8D5RnDbQxQifCxLtrWaUZL
- LPsY+nIUBjj1pwA4aT1IfEo0kpUTAV71v6UD7tyqMfI2mdSP430LpN0Mdg8q1MmjLXZm
- PT9iJZ97vc3dSx+sPU4oiMZM9puvMkPNisQlEXPIdWT/Md56HM/GMkWSgrodvzVABY4P
- //zREGepFUdm6gc8H7E/4hy3AALqUb0ODCSwTDuSI4nxpOhtbh1ZvqoFmXc57z1/yHSr
- Izsg88jeaspt87mMJHfYs6PgQHuC2XcH4Iq/6/CN47YfXCteVZW5jFi3zzeS1TfjiUwh
- 58Dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=GYMVP9OcKppCPlsPpjFdXuvj9GQOHfrmZVMxuBWQMzk=;
- b=y6XdZxfVNsKF+MAYXom5f+iSWYMiu3Metod9SIYtG6YqGQ4+JiNWNWTlK2/9gU1UMG
- X553+HBn50E1HJ6KiBRXqCvZkRF/VsBIK8son+UNInctSs8tHQzHpmorXKoAc6Qy4rAC
- jouLYt1yW8UOSBB0m67AFwCqc9j0LQyhiKShiqTyuhrQKOhFqqACqY3a5LPeDW76aj40
- EFl7CLa8cltnQNwwTS+CKuUKUKTHXuBXQt0eoV6iEBGzYxLDtI1K062zQtnsGn8Ita0y
- HVyHnsVDrp+tL88G20tHr48Z/Oll8Ceo01ak++0liIPCXhm+7JoENt0aidg+W5RLAPt0
- o5zA==
-X-Gm-Message-State: AOAM533O/XltIFr1pqARzHIyG4Gcd91NtnMBj5Mk5od75xMTtD8vRTg5
- BPKgCFRa5tkkiEpPim+lMZ/yMLLAOF2fKxliFrNq6qoD1QlJpw0O
-X-Google-Smtp-Source: ABdhPJyBQuYuCqeNZAOxA+BktTbh+7vcK4unm4ItMQkMKvp6ipwld2A4FhAXXvvhUrz3D9PIsaWPX7c9ospx8G7/m9M=
-X-Received: by 2002:a05:6a00:26cf:b0:4f6:fc52:7b6a with SMTP id
- p15-20020a056a0026cf00b004f6fc527b6amr20736309pfw.39.1648425914133; Sun, 27
- Mar 2022 17:05:14 -0700 (PDT)
+ with ESMTP id 46LRuRgE+HWm for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 28 Mar 2022 06:38:44 -0400 (EDT)
+Received: from ha.nfschina.com (mail.nfschina.com [124.16.136.209])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0487340BD6
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 28 Mar 2022 06:38:43 -0400 (EDT)
+Received: from localhost (unknown [127.0.0.1])
+ by ha.nfschina.com (Postfix) with ESMTP id B2AE01E80D6F;
+ Mon, 28 Mar 2022 18:38:04 +0800 (CST)
+X-Virus-Scanned: amavisd-new at test.com
+Received: from ha.nfschina.com ([127.0.0.1])
+ by localhost (ha.nfschina.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id hTti3BhPV8W4; Mon, 28 Mar 2022 18:38:02 +0800 (CST)
+Received: from ubuntu.localdomain (unknown [101.228.248.165])
+ (Authenticated sender: yuzhe@nfschina.com)
+ by ha.nfschina.com (Postfix) with ESMTPA id 7D08B1E80D6E;
+ Mon, 28 Mar 2022 18:38:01 +0800 (CST)
+From: yuzhe <yuzhe@nfschina.com>
+To: maz@kernel.org, james.morse@arm.com, alexandru.elisei@arm.com,
+ suzuki.poulose@arm.com
+Subject: [PATCH] KVM: arm64: vgic-debug: remove unnecessary type castings
+Date: Mon, 28 Mar 2022 03:38:36 -0700
+Message-Id: <20220328103836.2829-1-yuzhe@nfschina.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20220311044811.1980336-1-reijiw@google.com>
- <20220311044811.1980336-3-reijiw@google.com>
- <YjtzZI8Lw2uzjm90@google.com>
- <8adf6145-085e-9868-b2f8-65dfbdb5d88f@google.com>
- <YjywaFuHp8DL7Q9T@google.com>
- <CAAeT=FwkSUb59Uc35CJgerJdBM5ZCUExNnz2Zs2oHFLn0Jjbsg@mail.gmail.com>
- <YkDrv2JdZhVFnGMk@google.com>
-In-Reply-To: <YkDrv2JdZhVFnGMk@google.com>
-From: Reiji Watanabe <reijiw@google.com>
-Date: Sun, 27 Mar 2022 17:04:58 -0700
-Message-ID: <CAAeT=Fx8d9aWr1DFJ2N0n9KUs3z3PaGmFVbkcYRSkt7=H19hog@mail.gmail.com>
-Subject: Re: [PATCH v6 02/25] KVM: arm64: Save ID registers' sanitized value
- per guest
-To: Oliver Upton <oupton@google.com>
-Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
- Peter Shier <pshier@google.com>, Will Deacon <will@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+X-Mailman-Approved-At: Mon, 28 Mar 2022 09:39:41 -0400
+Cc: yuzhe <yuzhe@nfschina.com>, catalin.marinas@arm.com,
+ kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org,
+ liqiong@nfschina.com, will@kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -97,74 +71,56 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Oliver,
+remove unnecessary castings, from "void *" to "struct kvm *"
 
-On Sun, Mar 27, 2022 at 3:57 PM Oliver Upton <oupton@google.com> wrote:
->
-> On Fri, Mar 25, 2022 at 07:35:39PM -0700, Reiji Watanabe wrote:
-> > Hi Oliver,
-> >
-> > > > > > + */
-> > > > > > +#define KVM_ARM_ID_REG_MAX_NUM   64
-> > > > > > +#define IDREG_IDX(id)            ((sys_reg_CRm(id) << 3) | sys_reg_Op2(id))
-> > > > > > +
-> > > > > >   struct kvm_arch {
-> > > > > >           struct kvm_s2_mmu mmu;
-> > > > > > @@ -137,6 +144,9 @@ struct kvm_arch {
-> > > > > >           /* Memory Tagging Extension enabled for the guest */
-> > > > > >           bool mte_enabled;
-> > > > > >           bool ran_once;
-> > > > > > +
-> > > > > > + /* ID registers for the guest. */
-> > > > > > + u64 id_regs[KVM_ARM_ID_REG_MAX_NUM];
-> > > > >
-> > > > > This is a decently large array. Should we embed it in kvm_arch or
-> > > > > allocate at init?
-> > > >
-> > > >
-> > > > What is the reason why you think you might want to allocate it at init ?
-> > >
-> > > Well, its a 512 byte array of mostly cold data. We're probably
-> > > convinced that the guest is going to access these registers at most once
-> > > per vCPU at boot.
-> > >
-> > > For the vCPU context at least, we only allocate space for registers we
-> > > actually care about (enum vcpu_sysreg). My impression of the feature
-> > > register ranges is that there are a lot of registers which are RAZ, so I
-> > > don't believe we need to make room for uninteresting values.
-> > >
-> > > Additionally, struct kvm is visible to EL2 if running nVHE. I
-> > > don't believe hyp will ever need to look at these register values.
-> >
-> > As saving/restoring breakpoint/watchpoint registers for guests
-> > might need a special handling when AA64DFR0_EL1.BRPs get changed,
-> > next version of the series will use the data in the array at
-> > EL2 nVHE.  They are cold data, and almost half of the entries
-> > will be RAZ at the moment though:)
->
-> Shouldn't we always be doing a full context switch based on what
-> registers are present in hardware? We probably don't want to leave host
-> watchpoints/breakpoints visible to the guest.
+Signed-off-by: yuzhe <yuzhe@nfschina.com>
+---
+ arch/arm64/kvm/vgic/vgic-debug.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Correct, any host breakpoints/watchpoints won't be exposed to the guest.
-(When restoring breakpoints/watchpoints for the guest, physical
- breakpoints that are not mapped to any virtual ones will be cleared)
+diff --git a/arch/arm64/kvm/vgic/vgic-debug.c b/arch/arm64/kvm/vgic/vgic-debug.c
+index f38c40a76251..927e5c1f650d 100644
+--- a/arch/arm64/kvm/vgic/vgic-debug.c
++++ b/arch/arm64/kvm/vgic/vgic-debug.c
+@@ -82,7 +82,7 @@ static bool end_of_vgic(struct vgic_state_iter *iter)
+ 
+ static void *vgic_debug_start(struct seq_file *s, loff_t *pos)
+ {
+-	struct kvm *kvm = (struct kvm *)s->private;
++	struct kvm *kvm = s->private;
+ 	struct vgic_state_iter *iter;
+ 
+ 	mutex_lock(&kvm->lock);
+@@ -110,7 +110,7 @@ static void *vgic_debug_start(struct seq_file *s, loff_t *pos)
+ 
+ static void *vgic_debug_next(struct seq_file *s, void *v, loff_t *pos)
+ {
+-	struct kvm *kvm = (struct kvm *)s->private;
++	struct kvm *kvm = s->private;
+ 	struct vgic_state_iter *iter = kvm->arch.vgic.iter;
+ 
+ 	++*pos;
+@@ -122,7 +122,7 @@ static void *vgic_debug_next(struct seq_file *s, void *v, loff_t *pos)
+ 
+ static void vgic_debug_stop(struct seq_file *s, void *v)
+ {
+-	struct kvm *kvm = (struct kvm *)s->private;
++	struct kvm *kvm = s->private;
+ 	struct vgic_state_iter *iter;
+ 
+ 	/*
+@@ -229,7 +229,7 @@ static void print_irq_state(struct seq_file *s, struct vgic_irq *irq,
+ 
+ static int vgic_debug_show(struct seq_file *s, void *v)
+ {
+-	struct kvm *kvm = (struct kvm *)s->private;
++	struct kvm *kvm = s->private;
+ 	struct vgic_state_iter *iter = (struct vgic_state_iter *)v;
+ 	struct vgic_irq *irq;
+ 	struct kvm_vcpu *vcpu = NULL;
+-- 
+2.25.1
 
-
-> Additionally, if we are narrowing the guest's view of the debug
-> hardware, are we going to need to start trapping debug register
-> accesses? Unexposed breakpoint registers are supposed to UNDEF if we
-> obey the Arm ARM to the letter. Even if we decide to not care about
-> unexposed regs, I believe certain combinations of ID_AA64DF0_EL1.{BRPs,
-> CTX_CMPs} might require that we emulate.
-
-Exactly, we will need to start trapping debug registers when the special
-handling is needed, and yes, we will need a special handling when the
-guest accesses to invalid virtual breakpoints/watchpoints or use the
-invalid virtual breakpoints as linked breakpoints.
-
-Thanks,
-Reiji
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
