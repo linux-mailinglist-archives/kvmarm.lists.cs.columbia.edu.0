@@ -2,81 +2,60 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A5D064EA5EB
-	for <lists+kvmarm@lfdr.de>; Tue, 29 Mar 2022 05:22:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CB8F4EA850
+	for <lists+kvmarm@lfdr.de>; Tue, 29 Mar 2022 09:08:06 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0A2A54B1AF;
-	Mon, 28 Mar 2022 23:22:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A2E664B130;
+	Tue, 29 Mar 2022 03:08:05 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -0.45
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=-0.45 required=6.1 tests=[BAYES_00=-1.9,
+	RCVD_IN_BRBL_LASTEXT=1.449, URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id srvuJDq2ybGU; Mon, 28 Mar 2022 23:21:59 -0400 (EDT)
+	with ESMTP id 58mHQkwC9LQ0; Tue, 29 Mar 2022 03:08:05 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9901E4B1A2;
-	Mon, 28 Mar 2022 23:21:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4984C4B0C0;
+	Tue, 29 Mar 2022 03:08:03 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D483B40D0B
- for <kvmarm@lists.cs.columbia.edu>; Mon, 28 Mar 2022 23:21:57 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9E51749F14
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 29 Mar 2022 02:14:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id eYC3qZv8SUpS for <kvmarm@lists.cs.columbia.edu>;
- Mon, 28 Mar 2022 23:21:56 -0400 (EDT)
-Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com
- [209.85.128.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 911974120D
- for <kvmarm@lists.cs.columbia.edu>; Mon, 28 Mar 2022 23:21:56 -0400 (EDT)
-Received: by mail-yw1-f201.google.com with SMTP id
- 00721157ae682-2e9ae7bd8deso84612437b3.9
- for <kvmarm@lists.cs.columbia.edu>; Mon, 28 Mar 2022 20:21:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=7iMUePCdm48RwGI5QpprEBWmHvkOkE/Zq9CohlSdcbk=;
- b=QkJcDHwJyhURTxTUFsi16+avdBoFXNI12eZ6wczhcQrFCymIWWU+jQ5QVXcBJs6jiW
- jnU3t8qA58tAaUlnvILo3aHsjsWptm5+y295qLEna4IsoIroFzZVPhjZ+L2wlTyZ1f0t
- X1bDbupjs+GiokEVEG/awPbvpyN3hJcS64AbcNFpJ99wU9YtwlsIUMU8n6hMGTlvNvPb
- 28l4aoCHpPBbGLVMrkRuZqcq4vs5tRwd6W+SFaWpicM0RDYvcUr2cTU7GgyYYTO8zlvE
- lp4hoeMaLf6aR2Mr2iRjS4pB+zj6+2EtjWc4MRpbrL26KCa7BG+/+8fCIyu5F7TmXAAT
- i2oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:date:in-reply-to:message-id:mime-version
- :references:subject:from:to:cc;
- bh=7iMUePCdm48RwGI5QpprEBWmHvkOkE/Zq9CohlSdcbk=;
- b=lu2h6n4cugBTsJQTuP98sdAimkeN+wQ9Sw8fjjRIK8U8Bm9oYlVV3iXF0Luq48c29Z
- uGCeOPVzivbZSFprhodBy61YKfkWH6dc9LAKtoyKofPBXTnHprQa6QVCqH/rNRuCLeHd
- nn1U5qO13xze+AmEmXGppri73sWlGLsFfL8kGuUHHHrwjolTzBFZ/V46u+eeKHxin01J
- 31glXcezwfRkrdgK5JB/DV/0B8DG2bZ+ved1EWf0I3x10AJurQBF6aRD8ir1IpvaAyGw
- YXeqHgI6HZEgaatuIG101+zGym1qoahGlmdxLcKNMycHaoCP+Bs4hIYTkwsAytALHVCR
- 1fWQ==
-X-Gm-Message-State: AOAM532yyy44FzSIPOBQeARV5cr1aFUhSz0nMb7Pw/GJsd5EY71gubdR
- 5HXYno3Bd7c+SdH7w2npMz0vxdHcxdw=
-X-Google-Smtp-Source: ABdhPJxFsAU62XiTogfF9PaZsbu/nfGu6WWhivIcQYgbqiCjn/RjOeffXjytLV4Gi6o7okfa6fKzIw/q1yc=
-X-Received: from reiji-vws-sp.c.googlers.com
- ([fda3:e722:ac3:cc00:7f:e700:c0a8:3d59])
- (user=reijiw job=sendgmr) by 2002:a25:a0c5:0:b0:633:63da:5ead with SMTP id
- i5-20020a25a0c5000000b0063363da5eadmr26964307ybm.412.1648524116006; Mon, 28
- Mar 2022 20:21:56 -0700 (PDT)
-Date: Mon, 28 Mar 2022 20:19:24 -0700
-In-Reply-To: <20220329031924.619453-1-reijiw@google.com>
-Message-Id: <20220329031924.619453-3-reijiw@google.com>
-Mime-Version: 1.0
-References: <20220329031924.619453-1-reijiw@google.com>
-X-Mailer: git-send-email 2.35.1.1021.g381101b075-goog
-Subject: [PATCH v6 2/2] KVM: arm64: selftests: Introduce vcpu_width_config
-From: Reiji Watanabe <reijiw@google.com>
-To: Marc Zyngier <maz@kernel.org>, kvmarm@lists.cs.columbia.edu
-Cc: kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
- Peter Shier <pshier@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
- linux-arm-kernel@lists.infradead.org
+ with ESMTP id 0PE2DGKHnBTk for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 29 Mar 2022 02:14:24 -0400 (EDT)
+Received: from ha.nfschina.com (mail.nfschina.com [124.16.136.209])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A2A2343C72
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 29 Mar 2022 02:14:24 -0400 (EDT)
+Received: from localhost (unknown [127.0.0.1])
+ by ha.nfschina.com (Postfix) with ESMTP id 6261E1E80D78;
+ Tue, 29 Mar 2022 14:13:47 +0800 (CST)
+X-Virus-Scanned: amavisd-new at test.com
+Received: from ha.nfschina.com ([127.0.0.1])
+ by localhost (ha.nfschina.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id BrCJMHfyAm77; Tue, 29 Mar 2022 14:13:44 +0800 (CST)
+Received: from [18.165.124.108] (unknown [101.228.248.165])
+ (Authenticated sender: yuzhe@nfschina.com)
+ by ha.nfschina.com (Postfix) with ESMTPA id EB7331E80D75;
+ Tue, 29 Mar 2022 14:13:43 +0800 (CST)
+Message-ID: <0f4cf955-ca2b-626f-867e-5a0ecfe68ca1@nfschina.com>
+Date: Tue, 29 Mar 2022 14:14:16 +0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH] KVM: arm64: vgic-debug: remove unnecessary type castings
+To: Marc Zyngier <maz@kernel.org>
+References: <20220328103836.2829-1-yuzhe@nfschina.com>
+ <87h77ifbbd.wl-maz@kernel.org>
+From: yuzhe <yuzhe@nfschina.com>
+In-Reply-To: <87h77ifbbd.wl-maz@kernel.org>
+X-Mailman-Approved-At: Tue, 29 Mar 2022 03:08:01 -0400
+Cc: will@kernel.org, catalin.marinas@arm.com, kernel-janitors@vger.kernel.org,
+ linux-kernel@vger.kernel.org, liqiong@nfschina.com,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -88,181 +67,48 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Introduce a test for aarch64 that ensures non-mixed-width vCPUs
-(all 64bit vCPUs or all 32bit vcPUs) can be configured, and
-mixed-width vCPUs cannot be configured.
-
-Reviewed-by: Andrew Jones <drjones@redhat.com>
-Signed-off-by: Reiji Watanabe <reijiw@google.com>
-Reviewed-by: Oliver Upton <oupton@google.com>
----
- tools/testing/selftests/kvm/.gitignore        |   1 +
- tools/testing/selftests/kvm/Makefile          |   1 +
- .../selftests/kvm/aarch64/vcpu_width_config.c | 122 ++++++++++++++++++
- 3 files changed, 124 insertions(+)
- create mode 100644 tools/testing/selftests/kvm/aarch64/vcpu_width_config.c
-
-diff --git a/tools/testing/selftests/kvm/.gitignore b/tools/testing/selftests/kvm/.gitignore
-index dce7de7755e6..4e884e29b2a8 100644
---- a/tools/testing/selftests/kvm/.gitignore
-+++ b/tools/testing/selftests/kvm/.gitignore
-@@ -3,6 +3,7 @@
- /aarch64/debug-exceptions
- /aarch64/get-reg-list
- /aarch64/psci_cpu_on_test
-+/aarch64/vcpu_width_config
- /aarch64/vgic_init
- /aarch64/vgic_irq
- /s390x/memop
-diff --git a/tools/testing/selftests/kvm/Makefile b/tools/testing/selftests/kvm/Makefile
-index 0e4926bc9a58..06a5a982123e 100644
---- a/tools/testing/selftests/kvm/Makefile
-+++ b/tools/testing/selftests/kvm/Makefile
-@@ -104,6 +104,7 @@ TEST_GEN_PROGS_aarch64 += aarch64/arch_timer
- TEST_GEN_PROGS_aarch64 += aarch64/debug-exceptions
- TEST_GEN_PROGS_aarch64 += aarch64/get-reg-list
- TEST_GEN_PROGS_aarch64 += aarch64/psci_cpu_on_test
-+TEST_GEN_PROGS_aarch64 += aarch64/vcpu_width_config
- TEST_GEN_PROGS_aarch64 += aarch64/vgic_init
- TEST_GEN_PROGS_aarch64 += aarch64/vgic_irq
- TEST_GEN_PROGS_aarch64 += demand_paging_test
-diff --git a/tools/testing/selftests/kvm/aarch64/vcpu_width_config.c b/tools/testing/selftests/kvm/aarch64/vcpu_width_config.c
-new file mode 100644
-index 000000000000..6e9402679229
---- /dev/null
-+++ b/tools/testing/selftests/kvm/aarch64/vcpu_width_config.c
-@@ -0,0 +1,122 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * vcpu_width_config - Test KVM_ARM_VCPU_INIT() with KVM_ARM_VCPU_EL1_32BIT.
-+ *
-+ * Copyright (c) 2022 Google LLC.
-+ *
-+ * This is a test that ensures that non-mixed-width vCPUs (all 64bit vCPUs
-+ * or all 32bit vcPUs) can be configured and mixed-width vCPUs cannot be
-+ * configured.
-+ */
-+
-+#include "kvm_util.h"
-+#include "processor.h"
-+#include "test_util.h"
-+
-+
-+/*
-+ * Add a vCPU, run KVM_ARM_VCPU_INIT with @init1, and then
-+ * add another vCPU, and run KVM_ARM_VCPU_INIT with @init2.
-+ */
-+static int add_init_2vcpus(struct kvm_vcpu_init *init1,
-+			   struct kvm_vcpu_init *init2)
-+{
-+	struct kvm_vm *vm;
-+	int ret;
-+
-+	vm = vm_create(VM_MODE_DEFAULT, DEFAULT_GUEST_PHY_PAGES, O_RDWR);
-+
-+	vm_vcpu_add(vm, 0);
-+	ret = _vcpu_ioctl(vm, 0, KVM_ARM_VCPU_INIT, init1);
-+	if (ret)
-+		goto free_exit;
-+
-+	vm_vcpu_add(vm, 1);
-+	ret = _vcpu_ioctl(vm, 1, KVM_ARM_VCPU_INIT, init2);
-+
-+free_exit:
-+	kvm_vm_free(vm);
-+	return ret;
-+}
-+
-+/*
-+ * Add two vCPUs, then run KVM_ARM_VCPU_INIT for one vCPU with @init1,
-+ * and run KVM_ARM_VCPU_INIT for another vCPU with @init2.
-+ */
-+static int add_2vcpus_init_2vcpus(struct kvm_vcpu_init *init1,
-+				  struct kvm_vcpu_init *init2)
-+{
-+	struct kvm_vm *vm;
-+	int ret;
-+
-+	vm = vm_create(VM_MODE_DEFAULT, DEFAULT_GUEST_PHY_PAGES, O_RDWR);
-+
-+	vm_vcpu_add(vm, 0);
-+	vm_vcpu_add(vm, 1);
-+
-+	ret = _vcpu_ioctl(vm, 0, KVM_ARM_VCPU_INIT, init1);
-+	if (ret)
-+		goto free_exit;
-+
-+	ret = _vcpu_ioctl(vm, 1, KVM_ARM_VCPU_INIT, init2);
-+
-+free_exit:
-+	kvm_vm_free(vm);
-+	return ret;
-+}
-+
-+/*
-+ * Tests that two 64bit vCPUs can be configured, two 32bit vCPUs can be
-+ * configured, and two mixed-width vCPUs cannot be configured.
-+ * Each of those three cases, configure vCPUs in two different orders.
-+ * The one is running KVM_CREATE_VCPU for 2 vCPUs, and then running
-+ * KVM_ARM_VCPU_INIT for them.
-+ * The other is running KVM_CREATE_VCPU and KVM_ARM_VCPU_INIT for a vCPU,
-+ * and then run those commands for another vCPU.
-+ */
-+int main(void)
-+{
-+	struct kvm_vcpu_init init1, init2;
-+	struct kvm_vm *vm;
-+	int ret;
-+
-+	if (!kvm_check_cap(KVM_CAP_ARM_EL1_32BIT)) {
-+		print_skip("KVM_CAP_ARM_EL1_32BIT is not supported");
-+		exit(KSFT_SKIP);
-+	}
-+
-+	/* Get the preferred target type and copy that to init2 for later use */
-+	vm = vm_create(VM_MODE_DEFAULT, DEFAULT_GUEST_PHY_PAGES, O_RDWR);
-+	vm_ioctl(vm, KVM_ARM_PREFERRED_TARGET, &init1);
-+	kvm_vm_free(vm);
-+	init2 = init1;
-+
-+	/* Test with 64bit vCPUs */
-+	ret = add_init_2vcpus(&init1, &init1);
-+	TEST_ASSERT(ret == 0,
-+		    "Configuring 64bit EL1 vCPUs failed unexpectedly");
-+	ret = add_2vcpus_init_2vcpus(&init1, &init1);
-+	TEST_ASSERT(ret == 0,
-+		    "Configuring 64bit EL1 vCPUs failed unexpectedly");
-+
-+	/* Test with 32bit vCPUs */
-+	init1.features[0] = (1 << KVM_ARM_VCPU_EL1_32BIT);
-+	ret = add_init_2vcpus(&init1, &init1);
-+	TEST_ASSERT(ret == 0,
-+		    "Configuring 32bit EL1 vCPUs failed unexpectedly");
-+	ret = add_2vcpus_init_2vcpus(&init1, &init1);
-+	TEST_ASSERT(ret == 0,
-+		    "Configuring 32bit EL1 vCPUs failed unexpectedly");
-+
-+	/* Test with mixed-width vCPUs  */
-+	init1.features[0] = 0;
-+	init2.features[0] = (1 << KVM_ARM_VCPU_EL1_32BIT);
-+	ret = add_init_2vcpus(&init1, &init2);
-+	TEST_ASSERT(ret != 0,
-+		    "Configuring mixed-width vCPUs worked unexpectedly");
-+	ret = add_2vcpus_init_2vcpus(&init1, &init2);
-+	TEST_ASSERT(ret != 0,
-+		    "Configuring mixed-width vCPUs worked unexpectedly");
-+
-+	return 0;
-+}
--- 
-2.35.1.1021.g381101b075-goog
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+5ZyoIDIwMjIvMy8yOCAyMTozNiwgTWFyYyBaeW5naWVyIOWGmemBkzoKCj4gT24gTW9uLCAyOCBN
+YXIgMjAyMiAxMTozODozNiArMDEwMCwKPiB5dXpoZSA8eXV6aGVAbmZzY2hpbmEuY29tPiB3cm90
+ZToKPj4gcmVtb3ZlIHVubmVjZXNzYXJ5IGNhc3RpbmdzLCBmcm9tICJ2b2lkICoiIHRvICJzdHJ1
+Y3Qga3ZtICoiCj4+Cj4+IFNpZ25lZC1vZmYtYnk6IHl1emhlIDx5dXpoZUBuZnNjaGluYS5jb20+
+Cj4+IC0tLQo+PiAgIGFyY2gvYXJtNjQva3ZtL3ZnaWMvdmdpYy1kZWJ1Zy5jIHwgOCArKysrLS0t
+LQo+PiAgIDEgZmlsZSBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKyksIDQgZGVsZXRpb25zKC0pCj4+
+Cj4+IGRpZmYgLS1naXQgYS9hcmNoL2FybTY0L2t2bS92Z2ljL3ZnaWMtZGVidWcuYyBiL2FyY2gv
+YXJtNjQva3ZtL3ZnaWMvdmdpYy1kZWJ1Zy5jCj4+IGluZGV4IGYzOGM0MGE3NjI1MS4uOTI3ZTVj
+MWY2NTBkIDEwMDY0NAo+PiAtLS0gYS9hcmNoL2FybTY0L2t2bS92Z2ljL3ZnaWMtZGVidWcuYwo+
+PiArKysgYi9hcmNoL2FybTY0L2t2bS92Z2ljL3ZnaWMtZGVidWcuYwo+PiBAQCAtODIsNyArODIs
+NyBAQCBzdGF0aWMgYm9vbCBlbmRfb2ZfdmdpYyhzdHJ1Y3QgdmdpY19zdGF0ZV9pdGVyICppdGVy
+KQo+PiAgIAo+PiAgIHN0YXRpYyB2b2lkICp2Z2ljX2RlYnVnX3N0YXJ0KHN0cnVjdCBzZXFfZmls
+ZSAqcywgbG9mZl90ICpwb3MpCj4+ICAgewo+PiAtCXN0cnVjdCBrdm0gKmt2bSA9IChzdHJ1Y3Qg
+a3ZtICopcy0+cHJpdmF0ZTsKPj4gKwlzdHJ1Y3Qga3ZtICprdm0gPSBzLT5wcml2YXRlOwo+PiAg
+IAlzdHJ1Y3QgdmdpY19zdGF0ZV9pdGVyICppdGVyOwo+PiAgIAo+PiAgIAltdXRleF9sb2NrKCZr
+dm0tPmxvY2spOwo+PiBAQCAtMTEwLDcgKzExMCw3IEBAIHN0YXRpYyB2b2lkICp2Z2ljX2RlYnVn
+X3N0YXJ0KHN0cnVjdCBzZXFfZmlsZSAqcywgbG9mZl90ICpwb3MpCj4+ICAgCj4+ICAgc3RhdGlj
+IHZvaWQgKnZnaWNfZGVidWdfbmV4dChzdHJ1Y3Qgc2VxX2ZpbGUgKnMsIHZvaWQgKnYsIGxvZmZf
+dCAqcG9zKQo+PiAgIHsKPj4gLQlzdHJ1Y3Qga3ZtICprdm0gPSAoc3RydWN0IGt2bSAqKXMtPnBy
+aXZhdGU7Cj4+ICsJc3RydWN0IGt2bSAqa3ZtID0gcy0+cHJpdmF0ZTsKPj4gICAJc3RydWN0IHZn
+aWNfc3RhdGVfaXRlciAqaXRlciA9IGt2bS0+YXJjaC52Z2ljLml0ZXI7Cj4+ICAgCj4+ICAgCSsr
+KnBvczsKPj4gQEAgLTEyMiw3ICsxMjIsNyBAQCBzdGF0aWMgdm9pZCAqdmdpY19kZWJ1Z19uZXh0
+KHN0cnVjdCBzZXFfZmlsZSAqcywgdm9pZCAqdiwgbG9mZl90ICpwb3MpCj4+ICAgCj4+ICAgc3Rh
+dGljIHZvaWQgdmdpY19kZWJ1Z19zdG9wKHN0cnVjdCBzZXFfZmlsZSAqcywgdm9pZCAqdikKPj4g
+ICB7Cj4+IC0Jc3RydWN0IGt2bSAqa3ZtID0gKHN0cnVjdCBrdm0gKilzLT5wcml2YXRlOwo+PiAr
+CXN0cnVjdCBrdm0gKmt2bSA9IHMtPnByaXZhdGU7Cj4+ICAgCXN0cnVjdCB2Z2ljX3N0YXRlX2l0
+ZXIgKml0ZXI7Cj4+ICAgCj4+ICAgCS8qCj4+IEBAIC0yMjksNyArMjI5LDcgQEAgc3RhdGljIHZv
+aWQgcHJpbnRfaXJxX3N0YXRlKHN0cnVjdCBzZXFfZmlsZSAqcywgc3RydWN0IHZnaWNfaXJxICpp
+cnEsCj4+ICAgCj4+ICAgc3RhdGljIGludCB2Z2ljX2RlYnVnX3Nob3coc3RydWN0IHNlcV9maWxl
+ICpzLCB2b2lkICp2KQo+PiAgIHsKPj4gLQlzdHJ1Y3Qga3ZtICprdm0gPSAoc3RydWN0IGt2bSAq
+KXMtPnByaXZhdGU7Cj4+ICsJc3RydWN0IGt2bSAqa3ZtID0gcy0+cHJpdmF0ZTsKPj4gICAJc3Ry
+dWN0IHZnaWNfc3RhdGVfaXRlciAqaXRlciA9IChzdHJ1Y3QgdmdpY19zdGF0ZV9pdGVyICopdjsK
+PiBIb3cgYWJvdXQgeW91IGZ1bGx5IGdldCByaWQgb2YgdGhlIHVubmVjZXNzYXJ5IGNhc3RzIHRo
+ZW4/Cj4KPiAJTS4KCkkgZG9uJ3Qga25vdyB3aGF0IHlvdSBleGFjdGx5IG1lYW4uIEkgZm9sbG93
+IHRoZSBrZXJuZWwtamFuaXRvcnMvVE9ETyBMaXN0IHRvIGdldCByaWQgb2YgdGhlIHVubmVjZXNz
+YXJ5IGNhc3RzLgpBbmQgSSBjaGVja2VkIGFsbCB0aGUgY29kZSBpbiB0aGUgYXJjaCBkaXJlY3Rv
+cnkgYW5kIGZvdW5kIHRoZXNlIGlzc3Vlcy4KCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fCmt2bWFybSBtYWlsaW5nIGxpc3QKa3ZtYXJtQGxpc3RzLmNzLmNv
+bHVtYmlhLmVkdQpodHRwczovL2xpc3RzLmNzLmNvbHVtYmlhLmVkdS9tYWlsbWFuL2xpc3RpbmZv
+L2t2bWFybQo=
