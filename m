@@ -2,93 +2,58 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CD43F4EF7D4
-	for <lists+kvmarm@lfdr.de>; Fri,  1 Apr 2022 18:24:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6FCF4EF7D7
+	for <lists+kvmarm@lfdr.de>; Fri,  1 Apr 2022 18:24:20 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 454234B216;
-	Fri,  1 Apr 2022 12:24:15 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3003243399;
+	Fri,  1 Apr 2022 12:24:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -1.898
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+X-Spam-Status: No, score=-1.898 required=6.1 tests=[BAYES_00=-1.9,
+	UNPARSEABLE_RELAY=0.001, URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tVjn8Az4AZmb; Fri,  1 Apr 2022 12:24:14 -0400 (EDT)
+	with ESMTP id eO93E9xyV2lF; Fri,  1 Apr 2022 12:24:15 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CE9B54B166;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E72434B1F1;
 	Fri,  1 Apr 2022 12:24:12 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5585B4B22A
- for <kvmarm@lists.cs.columbia.edu>; Thu, 31 Mar 2022 17:41:05 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 218094B282
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Apr 2022 06:14:55 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Yh5Gqv7WS7Uj for <kvmarm@lists.cs.columbia.edu>;
- Thu, 31 Mar 2022 17:41:04 -0400 (EDT)
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com
- [209.85.208.182])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D49E94B1D4
- for <kvmarm@lists.cs.columbia.edu>; Thu, 31 Mar 2022 17:41:03 -0400 (EDT)
-Received: by mail-lj1-f182.google.com with SMTP id g24so1501747lja.7
- for <kvmarm@lists.cs.columbia.edu>; Thu, 31 Mar 2022 14:41:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Rw60a4C/1buvlADobHgeyPYE1W+JkvNYCFomhSX9C/o=;
- b=e8LF8Ze6zOwPt6FFnClACWV3Jo+f6do+thni5aGwt3k2enqe+nuyyjgZR38Yppr/YT
- chMY6K4HfZZogZnG0SNby5Xd3KPWJtaiKDME29/XISJdc/xM37L/LXINl0tOn8ftgf0a
- 8p/G0yOxS/uqQaue2tGvoYPNzXGg0Xg1vsAiM+Y7V7qZTqVwgwqU8DmaceQfIIKHE6ZK
- XYaw6qF/PswMla7HX7+k6mhIQkzuEyopPjxaCTxrXYbHadlmh4RXPZlq7Wpup4y3IDy+
- CO46Pqn2+l1c379SxtQtpcvUEVWa1Z3A2K7K8dwzPnLwb8ZOCYuN3uQXgEe7k+hvbm0J
- C1FA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=Rw60a4C/1buvlADobHgeyPYE1W+JkvNYCFomhSX9C/o=;
- b=cik9ua8f1TWyLUf7gSOzDCYLDIaQZm2+g9SKG3dilL2rR3SNpxw6u+nkSaNrrxpZLS
- 3sWa01ZDj2Jj8JqaqVSZr2GOXIuJ6V+cPaOwiU8Z/kRvd35jXMhgP/aFRvpSo55o+pNI
- qE81N7G2ZCEw5Un/j1e1aB+qMzELtCaH9lfi3TFrPTWIWlP+GKBrHlzHM/wyoitSJzm4
- XEI8x0hu50HeevKl5yv87+8pqAUWgmnAphPQPVXcwaf1uwk/Cke9yNZ9LyByNMz1stDb
- aeF/OhIKhdIDypE2L10/M1ygx4VzIV8qeaTfFAMx69Cu8N3dyc1/r3PjLU3GkxRmUVre
- fKVg==
-X-Gm-Message-State: AOAM531G85L5QbCBW0xnXTfhGhLi/CkrnAgOzfOvHWjqepjAZgQz0L6t
- t5J/2EndgOnzmM3fHtSghQUnIFlvOpHPlkiEdi5ovg==
-X-Google-Smtp-Source: ABdhPJy1FVLnw5Ep7uY/xe1k2URbIcy58oenF966+ZOMopXj2kVs4i0JqYBjG3cke0TiYjLEYAK4qaG8FpyHQsm1lvQ=
-X-Received: by 2002:a2e:8913:0:b0:24a:fe47:36b with SMTP id
- d19-20020a2e8913000000b0024afe47036bmr1531024lji.361.1648762862151; Thu, 31
- Mar 2022 14:41:02 -0700 (PDT)
+ with ESMTP id FFlr-xAXtbhm for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  1 Apr 2022 06:14:46 -0400 (EDT)
+Received: from nksmu.kylinos.cn (mailgw.kylinos.cn [123.150.8.42])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id EC3B24B24D
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Apr 2022 06:14:44 -0400 (EDT)
+X-UUID: 2b37edf3aa0d4de39f017586e300f8ec-20220401
+X-Spam-Fingerprint: 0
+X-GW-Reason: 11101
+X-Policy-Incident: 5pS25Lu25Lq66LaF6L+HNeS6uumcgOimgeWuoeaguA==
+X-Content-Feature: ica/max.line-size 118 audit/email.address 1 meta/cnt.alert 1
+X-UUID: 2b37edf3aa0d4de39f017586e300f8ec-20220401
+Received: from cs2c.com.cn [(172.17.111.24)] by nksmu.kylinos.cn
+ (envelope-from <xieming@kylinos.cn>) (Generic MTA)
+ with ESMTP id 1694784454; Fri, 01 Apr 2022 17:07:47 +0800
+X-ns-mid: postfix-6246C11A-3080797115
+Received: from localhost.localdomain (unknown [172.20.12.223])
+ by cs2c.com.cn (NSMail) with ESMTPA id 0F2E8383C640;
+ Fri,  1 Apr 2022 09:08:42 +0000 (UTC)
+From: xieming <xieming@kylinos.cn>
+To: marc.zyngier@arm.com, linux@armlinux.org.uk, catalin.marinas@arm.com,
+ will.deacon@arm.com, alex.williamson@redhat.com, sashal@kernel.org
+Subject: [PATCH v2] kvm/arm64: fixed passthrough gpu into vm on arm64
+Date: Fri,  1 Apr 2022 17:08:28 +0800
+Message-Id: <20220401090828.614167-1-xieming@kylinos.cn>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-References: <20220311002528.2230172-1-dmatlack@google.com>
- <20220311002528.2230172-17-dmatlack@google.com>
- <YjGgjTnP/9sG8L+2@xz-m1.local>
- <CALzav=fZQYC7YyTbZqbkYTYVUXCq4skc6pkQ2S59BoSxbkKUhw@mail.gmail.com>
- <YkShwFaRqlQpyL87@xz-m1.local>
-In-Reply-To: <YkShwFaRqlQpyL87@xz-m1.local>
-From: David Matlack <dmatlack@google.com>
-Date: Thu, 31 Mar 2022 14:40:35 -0700
-Message-ID: <CALzav=cxm=A31PJOMes3eWpCV8s0zQGgaGZhYiQFJyxY2dNDXg@mail.gmail.com>
-Subject: Re: [PATCH v2 16/26] KVM: x86/mmu: Cache the access bits of shadowed
- translations
-To: Peter Xu <peterx@redhat.com>
 X-Mailman-Approved-At: Fri, 01 Apr 2022 12:24:11 -0400
-Cc: Marc Zyngier <maz@kernel.org>, Albert Ou <aou@eecs.berkeley.edu>,
- "open list:KERNEL VIRTUAL MACHINE FOR MIPS \(KVM/mips\)"
- <kvm@vger.kernel.org>, Huacai Chen <chenhuacai@kernel.org>,
- "open list:KERNEL VIRTUAL MACHINE FOR MIPS \(KVM/mips\)"
- <linux-mips@vger.kernel.org>,
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- "open list:KERNEL VIRTUAL MACHINE FOR RISC-V \(KVM/riscv\)"
- <kvm-riscv@lists.infradead.org>, Paul Walmsley <paul.walmsley@sifive.com>,
- Ben Gardon <bgardon@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- "moderated list:KERNEL VIRTUAL MACHINE FOR ARM64 \(KVM/arm64\)"
- <kvmarm@lists.cs.columbia.edu>, Peter Feiner <pfeiner@google.com>
+Cc: xieming@kylinos.cn, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -105,117 +70,193 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Mar 30, 2022 at 11:30 AM Peter Xu <peterx@redhat.com> wrote:
->
-> On Tue, Mar 22, 2022 at 03:51:54PM -0700, David Matlack wrote:
-> > On Wed, Mar 16, 2022 at 1:32 AM Peter Xu <peterx@redhat.com> wrote:
-> > >
-> > > On Fri, Mar 11, 2022 at 12:25:18AM +0000, David Matlack wrote:
-> > > > In order to split a huge page we need to know what access bits to assign
-> > > > to the role of the new child page table. This can't be easily derived
-> > > > from the huge page SPTE itself since KVM applies its own access policies
-> > > > on top, such as for HugePage NX.
-> > > >
-> > > > We could walk the guest page tables to determine the correct access
-> > > > bits, but that is difficult to plumb outside of a vCPU fault context.
-> > > > Instead, we can store the original access bits for each leaf SPTE
-> > > > alongside the GFN in the gfns array. The access bits only take up 3
-> > > > bits, which leaves 61 bits left over for gfns, which is more than
-> > > > enough. So this change does not require any additional memory.
-> > >
-> > > I have a pure question on why eager page split needs to worry on hugepage
-> > > nx..
-> > >
-> > > IIUC that was about forbidden huge page being mapped as executable.  So
-> > > afaiu the only missing bit that could happen if we copy over the huge page
-> > > ptes is the executable bit.
-> > >
-> > > But then?  I think we could get a page fault on fault->exec==true on the
-> > > split small page (because when we copy over it's cleared, even though the
-> > > page can actually be executable), but it should be well resolved right
-> > > after that small page fault.
-> > >
-> > > The thing is IIUC this is a very rare case, IOW, it should mostly not
-> > > happen in 99% of the use case?  And there's a slight penalty when it
-> > > happens, but only perf-wise.
-> > >
-> > > As I'm not really fluent with the code base, perhaps I missed something?
-> >
-> > You're right that we could get away with not knowing the shadowed
-> > access permissions to assign to the child SPTEs when splitting a huge
-> > SPTE. We could just copy the huge SPTE access permissions and then let
-> > the execute bit be repaired on fault (although those faults would be a
-> > performance cost).
-> >
-> > But the access permissions are also needed to lookup an existing
-> > shadow page (or create a new shadow page) to use to split the huge
-> > page. For example, let's say we are going to split a huge page that
-> > does not have execute permissions enabled. That could be because NX
-> > HugePages are enabled or because we are shadowing a guest translation
-> > that does not allow execution (or both). We wouldn't want to propagate
-> > the no-execute permission into the child SP role.access if the
-> > shadowed translation really does allow execution (and vice versa).
->
-> Then the follow up (pure) question is what will happen if we simply
-> propagate the no-exec permission into the child SP?
->
-> I think that only happens with direct sptes where guest used huge pages
-> because that's where the shadow page will be huge, so IIUC that's checked
-> here when the small page fault triggers:
->
-> static void validate_direct_spte(struct kvm_vcpu *vcpu, u64 *sptep,
->                                    unsigned direct_access)
-> {
->         if (is_shadow_present_pte(*sptep) && !is_large_pte(*sptep)) {
->                 struct kvm_mmu_page *child;
->
->                 /*
->                  * For the direct sp, if the guest pte's dirty bit
->                  * changed form clean to dirty, it will corrupt the
->                  * sp's access: allow writable in the read-only sp,
->                  * so we should update the spte at this point to get
->                  * a new sp with the correct access.
->                  */
->                 child = to_shadow_page(*sptep & PT64_BASE_ADDR_MASK);
->                 if (child->role.access == direct_access)
->                         return;
->
->                 drop_parent_pte(child, sptep);
->                 kvm_flush_remote_tlbs_with_address(vcpu->kvm, child->gfn, 1);
->         }
-> }
->
-> Due to missing EXEC the role.access check will not match with direct
-> access, which is the guest pgtable value which has EXEC set.  Then IIUC
-> we'll simply drop the no-exec SP and replace it with a new one with exec
-> perm.  The question is, would that untimately work too?
->
-> Even if that works, I agree this sounds tricky because we're potentially
-> caching fake sp.role conditionally and it seems we never do that before.
-> It's just that the other option that you proposed here seems to add other
-> way of complexity on caching spte permission information while kvm doesn't
-> do either before.  IMHO we need to see which is the best trade off.
+when passthrough some pcie device, such as gpus(including
+Nvidia and AMD),kvm will report:"Unsupported FSC: EC=0x24
+xFSC=0x21 ESR_EL2=0x92000061" err.the main reason is vfio
+ioremap vga memory type by DEVICE_nGnRnE, and kvm setting
+memory type to PAGE_S2_DEVICE(DEVICE_nGnRE), but in guestos,
+all of device io memory type when ioremapping (including gpu
+driver TTM memory type) is setting to MT_NORMAL_NC.
 
-Clever! I think you're right that it would work correctly.
+according to ARM64 stage1&stage2 conbining rules.
+memory type attributes combining rules:
+Normal-WB<Normal-WT<NormalNC<Device-GRE<Device-nGRE<
+DevicenGnRE<Device-nGnRnE
+Normal-WB is weakest,Device-nGnRnE is strongest.
 
-This approach avoids the need for caching access bits, but comes with downsides:
- - Performance impact from the extra faults needed to drop the SP and
-repair the execute permission bit.
- - Some amount of memory overhead from KVM allocating new SPs when it
-could re-use existing SPs.
+refferring to 'Arm Architecture Reference Manual Armv8,
+for Armv8-A architecture profile' pdf, chapter B2.8
+refferring to 'ARM System Memory Management Unit Architecture
+Specification SMMU architecture version 3.0 and version 3.1' pdf,
+chapter 13.1.5
 
-Given the relative simplicity of access caching (and the fact that it
-requires no additional memory), I'm inclined to stick with it rather
-than taking the access permissions from the huge page.
+therefore, the I/O memory attribute of the VM is setting to
+DevicenGnRE maybe is a mistake. it causes all device memory
+accessing in the virtual machine must be aligned.
 
->
-> I could have missed something else, though.
->
-> Thanks,
->
-> --
-> Peter Xu
->
+To summarize: stage2 memory type cannot be stronger than stage1
+in arm64 archtechture.
+
+Signed-off-by: xieming <xieming@kylinos.cn>
+---
+ arch/arm/include/asm/kvm_mmu.h        |  3 ++-
+ arch/arm64/include/asm/kvm_mmu.h      |  3 ++-
+ arch/arm64/include/asm/memory.h       |  4 +++-
+ arch/arm64/include/asm/pgtable-prot.h |  2 +-
+ drivers/vfio/pci/vfio_pci.c           |  7 +++++++
+ virt/kvm/arm/mmu.c                    | 19 ++++++++++++++++---
+ virt/kvm/arm/vgic/vgic-v2.c           |  2 +-
+ 7 files changed, 32 insertions(+), 8 deletions(-)
+
+diff --git a/arch/arm/include/asm/kvm_mmu.h b/arch/arm/include/asm/kvm_mmu.h
+index 523c499e42db..5c7869d25b62 100644
+--- a/arch/arm/include/asm/kvm_mmu.h
++++ b/arch/arm/include/asm/kvm_mmu.h
+@@ -64,7 +64,8 @@ void stage2_unmap_vm(struct kvm *kvm);
+ int kvm_alloc_stage2_pgd(struct kvm *kvm);
+ void kvm_free_stage2_pgd(struct kvm *kvm);
+ int kvm_phys_addr_ioremap(struct kvm *kvm, phys_addr_t guest_ipa,
+-			  phys_addr_t pa, unsigned long size, bool writable);
++			  phys_addr_t pa, unsigned long size,
++			  bool writable, bool writecombine);
+ 
+ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu, struct kvm_run *run);
+ 
+diff --git a/arch/arm64/include/asm/kvm_mmu.h b/arch/arm64/include/asm/kvm_mmu.h
+index b2558447c67d..3f98286c7498 100644
+--- a/arch/arm64/include/asm/kvm_mmu.h
++++ b/arch/arm64/include/asm/kvm_mmu.h
+@@ -158,7 +158,8 @@ void stage2_unmap_vm(struct kvm *kvm);
+ int kvm_alloc_stage2_pgd(struct kvm *kvm);
+ void kvm_free_stage2_pgd(struct kvm *kvm);
+ int kvm_phys_addr_ioremap(struct kvm *kvm, phys_addr_t guest_ipa,
+-			  phys_addr_t pa, unsigned long size, bool writable);
++			  phys_addr_t pa, unsigned long size,
++			  bool writable, bool writecombine);
+ 
+ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu, struct kvm_run *run);
+ 
+diff --git a/arch/arm64/include/asm/memory.h b/arch/arm64/include/asm/memory.h
+index 56562ff01076..22565cc8ec20 100644
+--- a/arch/arm64/include/asm/memory.h
++++ b/arch/arm64/include/asm/memory.h
+@@ -158,13 +158,15 @@
+  * Memory types for Stage-2 translation
+  */
+ #define MT_S2_NORMAL		0xf
++#define MT_S2_NORMAL_NC		0x5
+ #define MT_S2_DEVICE_nGnRE	0x1
+ 
+ /*
+  * Memory types for Stage-2 translation when ID_AA64MMFR2_EL1.FWB is 0001
+- * Stage-2 enforces Normal-WB and Device-nGnRE
++ * Stage-2 enforces Normal-WB and Device-nGnRE and Normal-NC
+  */
+ #define MT_S2_FWB_NORMAL	6
++#define MT_S2_FWB_NORMAL_NC	5
+ #define MT_S2_FWB_DEVICE_nGnRE	1
+ 
+ #ifdef CONFIG_ARM64_4K_PAGES
+diff --git a/arch/arm64/include/asm/pgtable-prot.h b/arch/arm64/include/asm/pgtable-prot.h
+index af547be1779b..b94e93135fea 100644
+--- a/arch/arm64/include/asm/pgtable-prot.h
++++ b/arch/arm64/include/asm/pgtable-prot.h
+@@ -88,8 +88,8 @@
+ 	})
+ 
+ #define PAGE_S2			__pgprot(_PROT_DEFAULT | PAGE_S2_MEMATTR(NORMAL) | PTE_S2_RDONLY | PAGE_S2_XN)
++#define PAGE_S2_NC		__pgprot(_PROT_DEFAULT | PAGE_S2_MEMATTR(NORMAL_NC) | PTE_S2_RDONLY | PAGE_S2_XN)
+ #define PAGE_S2_DEVICE		__pgprot(_PROT_DEFAULT | PAGE_S2_MEMATTR(DEVICE_nGnRE) | PTE_S2_RDONLY | PAGE_S2_XN)
+-
+ #define PAGE_NONE		__pgprot(((_PAGE_DEFAULT) & ~PTE_VALID) | PTE_PROT_NONE | PTE_RDONLY | PTE_NG | PTE_PXN | PTE_UXN)
+ /* shared+writable pages are clean by default, hence PTE_RDONLY|PTE_WRITE */
+ #define PAGE_SHARED		__pgprot(_PAGE_DEFAULT | PTE_USER | PTE_RDONLY | PTE_NG | PTE_PXN | PTE_UXN | PTE_WRITE)
+diff --git a/drivers/vfio/pci/vfio_pci.c b/drivers/vfio/pci/vfio_pci.c
+index 51b791c750f1..6f66efb71743 100644
+--- a/drivers/vfio/pci/vfio_pci.c
++++ b/drivers/vfio/pci/vfio_pci.c
+@@ -1452,7 +1452,14 @@ static int vfio_pci_mmap(void *device_data, struct vm_area_struct *vma)
+ 	}
+ 
+ 	vma->vm_private_data = vdev;
++#ifdef CONFIG_ARM64
++	if (vfio_pci_is_vga(pdev))
++		vma->vm_page_prot = pgprot_writecombine(vma->vm_page_prot);
++	else
++		vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
++#else
+ 	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
++#endif
+ 	vma->vm_pgoff = (pci_resource_start(pdev, index) >> PAGE_SHIFT) + pgoff;
+ 
+ 	/*
+diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
+index 11103b75c596..a46a58696834 100644
+--- a/virt/kvm/arm/mmu.c
++++ b/virt/kvm/arm/mmu.c
+@@ -206,6 +206,17 @@ static inline void kvm_pgd_populate(pgd_t *pgdp, pud_t *pudp)
+ 	dsb(ishst);
+ }
+ 
++/**
++ * is_vma_write_combine - check if VMA is mapped with writecombine or not
++ * Return true if VMA mapped with MT_NORMAL_NC otherwise fasle
++ */
++static inline bool is_vma_write_combine(struct vm_area_struct *vma)
++{
++	pteval_t pteval = pgprot_val(vma->vm_page_prot);
++
++	return ((pteval & PTE_ATTRINDX_MASK) == PTE_ATTRINDX(MT_NORMAL_NC));
++}
++
+ /*
+  * Unmapping vs dcache management:
+  *
+@@ -1198,7 +1209,8 @@ static int stage2_pmdp_test_and_clear_young(pmd_t *pmd)
+  * @size:	The size of the mapping
+  */
+ int kvm_phys_addr_ioremap(struct kvm *kvm, phys_addr_t guest_ipa,
+-			  phys_addr_t pa, unsigned long size, bool writable)
++			  phys_addr_t pa, unsigned long size,
++			  bool writable, bool writecombine)
+ {
+ 	phys_addr_t addr, end;
+ 	int ret = 0;
+@@ -1209,7 +1221,7 @@ int kvm_phys_addr_ioremap(struct kvm *kvm, phys_addr_t guest_ipa,
+ 	pfn = __phys_to_pfn(pa);
+ 
+ 	for (addr = guest_ipa; addr < end; addr += PAGE_SIZE) {
+-		pte_t pte = pfn_pte(pfn, PAGE_S2_DEVICE);
++		pte_t pte = pfn_pte(pfn, writecombine ? PAGE_S2_NC : PAGE_S2_DEVICE);
+ 
+ 		if (writable)
+ 			pte = kvm_s2pte_mkwrite(pte);
+@@ -2135,7 +2147,8 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
+ 
+ 			ret = kvm_phys_addr_ioremap(kvm, gpa, pa,
+ 						    vm_end - vm_start,
+-						    writable);
++						    writable,
++						    is_vma_write_combine(vma));
+ 			if (ret)
+ 				break;
+ 		}
+diff --git a/virt/kvm/arm/vgic/vgic-v2.c b/virt/kvm/arm/vgic/vgic-v2.c
+index 91b14dfacd1d..bc9f5a9a1fd9 100644
+--- a/virt/kvm/arm/vgic/vgic-v2.c
++++ b/virt/kvm/arm/vgic/vgic-v2.c
+@@ -352,7 +352,7 @@ int vgic_v2_map_resources(struct kvm *kvm)
+ 	if (!static_branch_unlikely(&vgic_v2_cpuif_trap)) {
+ 		ret = kvm_phys_addr_ioremap(kvm, dist->vgic_cpu_base,
+ 					    kvm_vgic_global_state.vcpu_base,
+-					    KVM_VGIC_V2_CPU_SIZE, true);
++					    KVM_VGIC_V2_CPU_SIZE, true, false);
+ 		if (ret) {
+ 			kvm_err("Unable to remap VGIC CPU to VCPU\n");
+ 			goto out;
+-- 
+2.27.0
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
