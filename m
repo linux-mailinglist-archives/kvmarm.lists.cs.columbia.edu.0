@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 084124EF7D5
-	for <lists+kvmarm@lfdr.de>; Fri,  1 Apr 2022 18:24:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D61A24EF857
+	for <lists+kvmarm@lfdr.de>; Fri,  1 Apr 2022 18:49:09 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9279540BDC;
-	Fri,  1 Apr 2022 12:24:17 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 33E9940C23;
+	Fri,  1 Apr 2022 12:49:09 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
@@ -15,76 +15,68 @@ X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
 	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@ziepe.ca
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id mbDdTL8Izhkm; Fri,  1 Apr 2022 12:24:17 -0400 (EDT)
+	with ESMTP id MbNIIxVELTFt; Fri,  1 Apr 2022 12:49:09 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 080414B208;
-	Fri,  1 Apr 2022 12:24:13 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 927BB4A10E;
+	Fri,  1 Apr 2022 12:49:07 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0D9EE49EE3
- for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Apr 2022 10:19:55 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 86C3D40C95
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Apr 2022 12:49:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id uSaz+m+1TUsj for <kvmarm@lists.cs.columbia.edu>;
- Fri,  1 Apr 2022 10:19:53 -0400 (EDT)
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com
- [209.85.222.182])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E144F49EC0
- for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Apr 2022 10:19:53 -0400 (EDT)
-Received: by mail-qk1-f182.google.com with SMTP id q200so2188908qke.7
- for <kvmarm@lists.cs.columbia.edu>; Fri, 01 Apr 2022 07:19:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ziepe.ca; s=google;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=ACCW8/bZraS0ZT4HrvKJE4Pim6an9ErxJI12ETZ6D8I=;
- b=etQwil6Hu1/NkwZEZI+ruAJC/+UQAuF2gjvBW+a4Ih820ydCI9emF5h5zgBE+pBPJV
- cuMaeIl8o+BQ30fEKqE0/wlfYBp+snjQpdzrj5JN4TG+yiRvP/oPCU3+kp6Cf01O5tJo
- KJcVxHHO3W1AuJK9ejBbe5awuERLWJNVwHF8oktiI38J+1x67GYhGWNV1N5WXpQ3C5Kh
- GR7suSkXiXE8inO+YigNntJAtBSWcDWuAzQkZl0vPVu0Og95P59hGBr8dfBPbAow2QFE
- cWslkhRfXsp/OPJK7IxYXWnENGPOs5PXsiHNQyXdEMHd+IDjV2DdPQ8IqIh9RCHDfOOC
- RCrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=ACCW8/bZraS0ZT4HrvKJE4Pim6an9ErxJI12ETZ6D8I=;
- b=vgT2Ufe0R4QJUQ/QIfGVelSXjdF6ANTUBHXPtQCiBWlYjn2rOAq84cSpiVSqxuGmga
- xpmc4ZW7+Z1hXwpzaFbtgZ2r57fSyUrJdvVi4zWQObnNAOpZ8HYzk6Q0SmTKj9sTxxLd
- bcWu80I2PaRCjTjh9X9mfPMfC73gErJPc3PmB+F3YsuRhYyaE76F0nbY76jifro05AHN
- UR+CQKil9/pBmconDePyTNQgoynODwTLHLXLcgidBEFAnHQxBjXY+pcEgkTUHYmp1ckm
- VrybFaNjhLwpI+4RUaA2hjLLmc5d3ALajism6WQHSF+3pDJxFi3DqNNcj5KObCrd/kdR
- EySQ==
-X-Gm-Message-State: AOAM530QD6+Av43oXkdQgEK0PML8jFG9KdX4Fjfd8xvXC4HnKkYbcRD7
- WbeXfGD0NsV0tl0To6jXO2T4uQ==
-X-Google-Smtp-Source: ABdhPJwUx/m0xIPLwWyjukTkeRO9Ht5F0EMHxDa8njMh8pspLckalcH4xcSuiH46I/amIZ6JQPChYA==
-X-Received: by 2002:a05:620a:4486:b0:67e:ccd4:990c with SMTP id
- x6-20020a05620a448600b0067eccd4990cmr6785363qkp.643.1648822793423; 
- Fri, 01 Apr 2022 07:19:53 -0700 (PDT)
-Received: from ziepe.ca
- (hlfxns017vw-142-162-113-129.dhcp-dynamic.fibreop.ns.bellaliant.net.
- [142.162.113.129]) by smtp.gmail.com with ESMTPSA id
- y11-20020ac85f4b000000b002e1e038a8fdsm1843780qta.13.2022.04.01.07.19.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Apr 2022 07:19:52 -0700 (PDT)
-Received: from jgg by mlx with local (Exim 4.94) (envelope-from <jgg@ziepe.ca>)
- id 1naI7z-00ATnc-C8; Fri, 01 Apr 2022 11:19:51 -0300
-Date: Fri, 1 Apr 2022 11:19:51 -0300
-From: Jason Gunthorpe <jgg@ziepe.ca>
+ with ESMTP id ubu41RNRrKti for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  1 Apr 2022 12:49:04 -0400 (EDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 23D9D40C23
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Apr 2022 12:49:04 -0400 (EDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 98FC361CBB;
+ Fri,  1 Apr 2022 16:49:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02540C340EC;
+ Fri,  1 Apr 2022 16:49:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1648831742;
+ bh=Q7xkMN9lfi4IJffUuB8VvpeF+YJTc1OHOUWtd3UE+EA=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=BIg+XwPKwBJbVY4YLTI3r0FnmtKbcZjwuGN5zjQ+w7aRWZU+y9nJ1FBzOwut1QclT
+ 42G0nHKl8/cADyAQ6NYg3KIm5ZGu88jc2hGcI8E1bRrIFsFq3Y+OOZt+STQ+948mRZ
+ 2BogPHc3j/YJQL9Gy4HNYWOC6bkVEZ7FP07HXdKo4TqNKwmbRxgYxWUjbMWLK3zzSf
+ G7G1TjiFtVqx1ZGQRRET5V3f1Sq8Uu8BKh/ev9N2FkI0R+gW3YKB1YnLBh1lSM4d3W
+ mfT5FoD1QJ1oM80YXhTuEjpefucg1Y/1pajNBSdFudokT6F2mHtVDLfMrrxUyrRkOL
+ phJCu+ul8Zhaw==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1naKSJ-000rxZ-J8; Fri, 01 Apr 2022 17:48:59 +0100
+Date: Fri, 01 Apr 2022 17:48:59 +0100
+Message-ID: <87tubcbvgk.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
 To: xieming <xieming@kylinos.cn>
 Subject: Re: [PATCH v2] kvm/arm64: fixed passthrough gpu into vm on arm64
-Message-ID: <20220401141951.GP64706@ziepe.ca>
-References: <20220401090828.614167-1-xieming@kylinos.cn>
-MIME-Version: 1.0
-Content-Disposition: inline
 In-Reply-To: <20220401090828.614167-1-xieming@kylinos.cn>
-X-Mailman-Approved-At: Fri, 01 Apr 2022 12:24:11 -0400
-Cc: sashal@kernel.org, marc.zyngier@arm.com, catalin.marinas@arm.com,
- will.deacon@arm.com, linux@armlinux.org.uk, linux-kernel@vger.kernel.org,
- alex.williamson@redhat.com, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+References: <20220401090828.614167-1-xieming@kylinos.cn>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: xieming@kylinos.cn, linux@armlinux.org.uk,
+ catalin.marinas@arm.com, will@kernel.org, alex.williamson@redhat.com,
+ sashal@kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: sashal@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
+ linux-kernel@vger.kernel.org, alex.williamson@redhat.com, will@kernel.org,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -101,9 +93,99 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Apr 01, 2022 at 05:08:28PM +0800, xieming wrote:
+Xieming,
+
+This is the second time I fix email addresses for you. Next time, I
+simply won't bother replying.
+
+On Fri, 01 Apr 2022 10:08:28 +0100,
+xieming <xieming@kylinos.cn> wrote:
+> 
+> when passthrough some pcie device, such as gpus(including
+> Nvidia and AMD),kvm will report:"Unsupported FSC: EC=0x24
+> xFSC=0x21 ESR_EL2=0x92000061" err.the main reason is vfio
+
+I have asked you to describe how you get there, and you still haven't
+bothered replying.
+
+> ioremap vga memory type by DEVICE_nGnRnE, and kvm setting
+> memory type to PAGE_S2_DEVICE(DEVICE_nGnRE), but in guestos,
+> all of device io memory type when ioremapping (including gpu
+> driver TTM memory type) is setting to MT_NORMAL_NC.
+> 
+> according to ARM64 stage1&stage2 conbining rules.
+> memory type attributes combining rules:
+> Normal-WB<Normal-WT<NormalNC<Device-GRE<Device-nGRE<
+> DevicenGnRE<Device-nGnRnE
+> Normal-WB is weakest,Device-nGnRnE is strongest.
+> 
+> refferring to 'Arm Architecture Reference Manual Armv8,
+> for Armv8-A architecture profile' pdf, chapter B2.8
+> refferring to 'ARM System Memory Management Unit Architecture
+> Specification SMMU architecture version 3.0 and version 3.1' pdf,
+> chapter 13.1.5
+> 
+> therefore, the I/O memory attribute of the VM is setting to
+> DevicenGnRE maybe is a mistake. it causes all device memory
+> accessing in the virtual machine must be aligned.
+> 
+> To summarize: stage2 memory type cannot be stronger than stage1
+> in arm64 archtechture.
+
+You are plain wrong. It can, and most of the time, it *must*.
+
+> 
+> Signed-off-by: xieming <xieming@kylinos.cn>
+> ---
+>  arch/arm/include/asm/kvm_mmu.h        |  3 ++-
+>  arch/arm64/include/asm/kvm_mmu.h      |  3 ++-
+>  arch/arm64/include/asm/memory.h       |  4 +++-
+>  arch/arm64/include/asm/pgtable-prot.h |  2 +-
+>  drivers/vfio/pci/vfio_pci.c           |  7 +++++++
+>  virt/kvm/arm/mmu.c                    | 19 ++++++++++++++++---
+>  virt/kvm/arm/vgic/vgic-v2.c           |  2 +-
+>  7 files changed, 32 insertions(+), 8 deletions(-)
+> 
+> diff --git a/arch/arm/include/asm/kvm_mmu.h b/arch/arm/include/asm/kvm_mmu.h
+> index 523c499e42db..5c7869d25b62 100644
+> --- a/arch/arm/include/asm/kvm_mmu.h
+> +++ b/arch/arm/include/asm/kvm_mmu.h
+
+This file has been removed from the tree *over two years ago*.
+
+> @@ -64,7 +64,8 @@ void stage2_unmap_vm(struct kvm *kvm);
+>  int kvm_alloc_stage2_pgd(struct kvm *kvm);
+>  void kvm_free_stage2_pgd(struct kvm *kvm);
+>  int kvm_phys_addr_ioremap(struct kvm *kvm, phys_addr_t guest_ipa,
+> -			  phys_addr_t pa, unsigned long size, bool writable);
+> +			  phys_addr_t pa, unsigned long size,
+> +			  bool writable, bool writecombine);
+>  
+>  int kvm_handle_guest_abort(struct kvm_vcpu *vcpu, struct kvm_run *run);
+>  
+> diff --git a/arch/arm64/include/asm/kvm_mmu.h b/arch/arm64/include/asm/kvm_mmu.h
+> index b2558447c67d..3f98286c7498 100644
+> --- a/arch/arm64/include/asm/kvm_mmu.h
+> +++ b/arch/arm64/include/asm/kvm_mmu.h
+> @@ -158,7 +158,8 @@ void stage2_unmap_vm(struct kvm *kvm);
+>  int kvm_alloc_stage2_pgd(struct kvm *kvm);
+>  void kvm_free_stage2_pgd(struct kvm *kvm);
+>  int kvm_phys_addr_ioremap(struct kvm *kvm, phys_addr_t guest_ipa,
+> -			  phys_addr_t pa, unsigned long size, bool writable);
+> +			  phys_addr_t pa, unsigned long size,
+> +			  bool writable, bool writecombine);
+
+NAK. For a start, there is no such thing as 'write-combine' in the ARM
+architecture, and I'm not convinced you can equate WC to Normal-NC.
+See the previous discussion at [1].
+
+[1] https://lore.kernel.org/r/20210429162906.32742-1-sdonthineni@nvidia.com
+
+[...]
+
 > diff --git a/drivers/vfio/pci/vfio_pci.c b/drivers/vfio/pci/vfio_pci.c
 > index 51b791c750f1..6f66efb71743 100644
+> --- a/drivers/vfio/pci/vfio_pci.c
 > +++ b/drivers/vfio/pci/vfio_pci.c
 > @@ -1452,7 +1452,14 @@ static int vfio_pci_mmap(void *device_data, struct vm_area_struct *vma)
 >  	}
@@ -114,22 +196,28 @@ On Fri, Apr 01, 2022 at 05:08:28PM +0800, xieming wrote:
 > +		vma->vm_page_prot = pgprot_writecombine(vma->vm_page_prot);
 > +	else
 > +		vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
+
+No. That's completely unacceptable. Who says that some VGA (who the
+hell implements VGA these days?) implies any sort of attribute other
+than device memory? This may work for your particular device under
+your own circumstances. Can it be generalised? No.
+
+And as Jason pointed out, this is likely to break userspace.
+
 > +#else
 >  	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
 > +#endif
-
-This is a user visible change if VFIO starts making things write
-combining then userspace has to have different barriers around MMIO.
-
-Also this problem is bigger than just GPUs, lots of devices use write
-combining memory for their BARs and will do so inside VMs as well - so
-testing for 'pci_is_vga' is also not right.
-
-I think you need to solve this by having userspace somehow request the
-cachability type for the mmap (though I'm not sure how KVM will know
-what to do with that), or by having kvm always force write combining
-for all ioremaps..
-
+>  	vma->vm_pgoff = (pci_resource_start(pdev, index) >> PAGE_SHIFT) + pgoff;
+>  
+>  	/*
+> diff --git a/virt/kvm/arm/mmu.c b/virt/kvm/arm/mmu.c
+> index 11103b75c596..a46a58696834 100644
+> --- a/virt/kvm/arm/mmu.c
+> +++ b/virt/kvm/arm/mmu.c
+> @@ -206,6 +206,17 @@ static inline void kvm_pgd_populate(pgd_t *pgdp, pud_t *pudp)
+>  	dsb(ishst);
+>  }
+>  
 > +/**
 > + * is_vma_write_combine - check if VMA is mapped with writecombine or not
 > + * Return true if VMA mapped with MT_NORMAL_NC otherwise fasle
@@ -141,21 +229,13 @@ for all ioremaps..
 > +	return ((pteval & PTE_ATTRINDX_MASK) == PTE_ATTRINDX(MT_NORMAL_NC));
 > +}
 
-Shouldn't KVM be copying the exact pgprot bits from the VMA to the
-KVM PTEs when it is mirroring them? eg the difference between
-pgprot_device and pgprot_noncached() seems relevant to preserve as well.
+Again, you are making tons of assumptions here, none of which are
+acceptable as is.
 
-> @@ -1209,7 +1221,7 @@ int kvm_phys_addr_ioremap(struct kvm *kvm, phys_addr_t guest_ipa,
->  	pfn = __phys_to_pfn(pa);
->  
->  	for (addr = guest_ipa; addr < end; addr += PAGE_SIZE) {
-> -		pte_t pte = pfn_pte(pfn, PAGE_S2_DEVICE);
-> +		pte_t pte = pfn_pte(pfn, writecombine ? PAGE_S2_NC : PAGE_S2_DEVICE);
+	M.
 
-Please don't send patches to the mailing list that are against such
-old kernels, this code was deleted in 2020.
-
-Jason
+-- 
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
