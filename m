@@ -2,77 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6213F4EF9A6
-	for <lists+kvmarm@lfdr.de>; Fri,  1 Apr 2022 20:20:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57F6F4EF9A8
+	for <lists+kvmarm@lfdr.de>; Fri,  1 Apr 2022 20:20:51 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D53134B2BC;
-	Fri,  1 Apr 2022 14:20:46 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E6E354B2BE;
+	Fri,  1 Apr 2022 14:20:50 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+	URIBL_BLOCKED=0.001] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id AL-eYPEJRUJ8; Fri,  1 Apr 2022 14:20:46 -0400 (EDT)
+	with ESMTP id ZdtgbtTT4pkv; Fri,  1 Apr 2022 14:20:47 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8A5224B2C5;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9FD8B4B25B;
 	Fri,  1 Apr 2022 14:20:43 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7BC604B20F
- for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Apr 2022 13:56:04 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1C2554B219
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Apr 2022 13:56:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 3UWnXA4fzRmF for <kvmarm@lists.cs.columbia.edu>;
- Fri,  1 Apr 2022 13:56:03 -0400 (EDT)
-Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com
- [209.85.215.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4E5194B216
- for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Apr 2022 13:56:03 -0400 (EDT)
-Received: by mail-pg1-f201.google.com with SMTP id
- e12-20020a63544c000000b003985d5888a8so2000544pgm.15
- for <kvmarm@lists.cs.columbia.edu>; Fri, 01 Apr 2022 10:56:03 -0700 (PDT)
+ with ESMTP id VpVwBCRtfddI for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  1 Apr 2022 13:56:05 -0400 (EDT)
+Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com
+ [209.85.216.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 084144B216
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Apr 2022 13:56:05 -0400 (EDT)
+Received: by mail-pj1-f73.google.com with SMTP id
+ m24-20020a17090b069800b001c7de0243a2so1628196pjz.9
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 01 Apr 2022 10:56:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=IZRim+LrWsbKLhWGtCJAPIUqsiasbKStOmO5lLjRFP8=;
- b=OZ/CKz/kS7tsC+5ET9TAryRE1kCwgOMM6JGu+otu2+fefVt4XEH8bXii6Cm3AUtLCN
- Gw9osJsofH3J6mv+Pa2qF4AgPyuVpqfC38Nn1tKiG+M3EKrlbdGH2QPh3j9eewzu59lx
- ICuKCxkiGaO+YeoyVNcW7Nro8EgWUt56TC8bmJ6E3nLjN6WPFH2wT9SX/X9xZP2ZiF17
- FJmRQTr/BPkOe9FVzGO8FNFlXg4UfuMC8jzLYVLEELEQwUE4jThW/O/paupXC7lWuxy1
- jJcoNEaCMLN9riLuRhRPnUtblhKer7FLcbWvKt2OPcW3oc7aFw2S1ONaKDFn48FfppNp
- IR4Q==
+ :cc; bh=jbEbkPKHHe1JjNjX3H5iG4xlTs9fnMsds5ok0hlcBBc=;
+ b=VV57lG6jUHDDUIO2Lve/uFa7PUGIIl+l6vrjKQogFkiWK8u49u3fcY3FaY1VnX4SWU
+ lAhHv82539GUIUhq5aY9Du6ih9DNPH3fkNleGNlcSEwXfPzGL+uipqnqtPitwZgwY1En
+ 57IYSOhVR6QY6lWhxuALbHeIrXgCjKYELkI6V4Xg8HggG1c7xMCmklb0Ukj4j2O9z6nQ
+ YHOCnhTZhVGdpOaQG3eacojXN34VLFVPbQS8nVMFlhHg4igvU1YVx1PAf6nhmFbJBGl2
+ y61oE1GKqMOOrtIH+uzY9fU55CkheYZRQEPwA//BTrqovqruJ4S0W1hVj+wMXZn/uESV
+ wioA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=IZRim+LrWsbKLhWGtCJAPIUqsiasbKStOmO5lLjRFP8=;
- b=cjluRMz6N9hiBImeyf8PbgOfnymQ8BRfCoRNkmzZeRVzoHnL86f7hdrWP2hGZxT/mN
- sKE5UiDfXqIci7gWKkZer+UbuA4SrOdO3EupaA2zXJoncA2I3fs/zh2sEZHtElx2ZBGU
- BEGS/0Zk/Jsstcg1pqO22jX24+Wg3FVeRpoFsmBVclgjIfdaNSzdekMon3ZgFZQrSQDb
- Er6jeVzcV9GQED3vwGiO4sfotfoq+JBxakvg93Umv/xsp+Qy/FeXONOrJc/HSPCFs1eL
- CX4kGyhwrWm6SPuPF38dOWiRhvHJQ7I5KcrzUb4vddVaweCeAeebPEBrleKqMiiS5aHP
- uCXA==
-X-Gm-Message-State: AOAM530E5ltCDCfJOdK/kQuuYKOq0XHTfJPFvcQ1rNaTIW/FQf1GPQFD
- H3HGUi9Hfod8GgnguI67viUZ0/peTFCoUA==
-X-Google-Smtp-Source: ABdhPJw5vwbBPjHYSVeggYwsZsRSNlx5RqVJMTrxoIjsNKWoBtog3ECYJyqS377WsBTJdAeMsxOsjt/Joc7/Ug==
+ bh=jbEbkPKHHe1JjNjX3H5iG4xlTs9fnMsds5ok0hlcBBc=;
+ b=iSZPlg7XBovCmPIscZTWFKvbSDFW3X9dvxN1SOkOkinvQUcLbjYwI1lipRub9mlH+5
+ lR8sA88rLqQk4IC+d0Fo9Kbk0MlepmBs0BzF+y67ea7IRB8KLrFAoXLMKFahTKR764/3
+ VLTKxEtR3S080xkPaqpiEUnMx9hJJG7H3dmvZNUY+XdHo6ZcgUH1V22cu9cB7cQFQfAS
+ 2ITYqIr1uORNFxzP0zJYjqaG3RDqBP6HHvZlTnt8eXjOlKJcusLz8WjP/gh9QVO3xJ1g
+ e+VbISQrAv1F/JItMuAfmMaSzbZXHMGmgdA5A5raNTLkCRxXZALEo8ITitxHC/JYit5m
+ cAHg==
+X-Gm-Message-State: AOAM530W6NNPDWfzRiEKsEq8KW4yTG1EiinE7f7UYqTwLU9D+Y1lgm9J
+ NA0EKR3HcCZzRTABQSLUiMNiIN78R1domQ==
+X-Google-Smtp-Source: ABdhPJyXx7LaJtvQMH0HZ9aVW4MOJlG+noLjDvNAF17gJHNyl1HpSw9eMVXCjPkuG58rcMsky7HoJ7Kj5bLngA==
 X-Received: from dmatlack-heavy.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:19cd])
- (user=dmatlack job=sendgmr) by 2002:a62:6403:0:b0:4fa:c74c:83c5 with SMTP id
- y3-20020a626403000000b004fac74c83c5mr11997208pfb.30.1648835762419; Fri, 01
- Apr 2022 10:56:02 -0700 (PDT)
-Date: Fri,  1 Apr 2022 17:55:32 +0000
+ (user=dmatlack job=sendgmr) by 2002:a17:902:ccc4:b0:156:5d37:b42f with SMTP
+ id z4-20020a170902ccc400b001565d37b42fmr7667666ple.157.1648835764076; Fri, 01
+ Apr 2022 10:56:04 -0700 (PDT)
+Date: Fri,  1 Apr 2022 17:55:33 +0000
 In-Reply-To: <20220401175554.1931568-1-dmatlack@google.com>
-Message-Id: <20220401175554.1931568-2-dmatlack@google.com>
+Message-Id: <20220401175554.1931568-3-dmatlack@google.com>
 Mime-Version: 1.0
 References: <20220401175554.1931568-1-dmatlack@google.com>
 X-Mailer: git-send-email 2.35.1.1094.g7c7d902a7c-goog
-Subject: [PATCH v3 01/23] KVM: x86/mmu: Optimize MMU page cache lookup for all
- direct SPs
+Subject: [PATCH v3 02/23] KVM: x86/mmu: Use a bool for direct
 From: David Matlack <dmatlack@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 X-Mailman-Approved-At: Fri, 01 Apr 2022 14:20:42 -0400
@@ -105,49 +104,39 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Commit fb58a9c345f6 ("KVM: x86/mmu: Optimize MMU page cache lookup for
-fully direct MMUs") skipped the unsync checks and write flood clearing
-for full direct MMUs. We can extend this further to skip the checks for
-all direct shadow pages. Direct shadow pages in indirect MMUs (i.e.
-shadow paging) are used when shadowing a guest huge page with smaller
-pages. Such direct shadow pages, like their counterparts in fully direct
-MMUs, are never marked unsynced or have a non-zero write-flooding count.
-
-Checking sp->role.direct also generates better code than checking
-direct_map because, due to register pressure, direct_map has to get
-shoved onto the stack and then pulled back off.
+The parameter "direct" can either be true or false, and all of the
+callers pass in a bool variable or true/false literal, so just use the
+type bool.
 
 No functional change intended.
 
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: David Matlack <dmatlack@google.com>
 ---
  arch/x86/kvm/mmu/mmu.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 1361eb4599b4..dbfda133adbe 100644
+index dbfda133adbe..1c8d157c097b 100644
 --- a/arch/x86/kvm/mmu/mmu.c
 +++ b/arch/x86/kvm/mmu/mmu.c
-@@ -2034,7 +2034,6 @@ static struct kvm_mmu_page *kvm_mmu_get_page(struct kvm_vcpu *vcpu,
- 					     int direct,
+@@ -1706,7 +1706,7 @@ static void drop_parent_pte(struct kvm_mmu_page *sp,
+ 	mmu_spte_clear_no_track(parent_pte);
+ }
+ 
+-static struct kvm_mmu_page *kvm_mmu_alloc_page(struct kvm_vcpu *vcpu, int direct)
++static struct kvm_mmu_page *kvm_mmu_alloc_page(struct kvm_vcpu *vcpu, bool direct)
+ {
+ 	struct kvm_mmu_page *sp;
+ 
+@@ -2031,7 +2031,7 @@ static struct kvm_mmu_page *kvm_mmu_get_page(struct kvm_vcpu *vcpu,
+ 					     gfn_t gfn,
+ 					     gva_t gaddr,
+ 					     unsigned level,
+-					     int direct,
++					     bool direct,
  					     unsigned int access)
  {
--	bool direct_mmu = vcpu->arch.mmu->direct_map;
  	union kvm_mmu_page_role role;
- 	struct hlist_head *sp_list;
- 	unsigned quadrant;
-@@ -2075,7 +2074,8 @@ static struct kvm_mmu_page *kvm_mmu_get_page(struct kvm_vcpu *vcpu,
- 			continue;
- 		}
- 
--		if (direct_mmu)
-+		/* unsync and write-flooding only apply to indirect SPs. */
-+		if (sp->role.direct)
- 			goto trace_get_page;
- 
- 		if (sp->unsync) {
 -- 
 2.35.1.1094.g7c7d902a7c-goog
 
