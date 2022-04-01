@@ -2,76 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 274294EF9B7
-	for <lists+kvmarm@lfdr.de>; Fri,  1 Apr 2022 20:21:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 581154EF9B8
+	for <lists+kvmarm@lfdr.de>; Fri,  1 Apr 2022 20:21:11 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CCF8E4B2CC;
-	Fri,  1 Apr 2022 14:21:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E07634B2BC;
+	Fri,  1 Apr 2022 14:21:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7XEMR0zLX6kc; Fri,  1 Apr 2022 14:21:07 -0400 (EDT)
+	with ESMTP id rY+Hh1TSfY2a; Fri,  1 Apr 2022 14:21:10 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1D6684B2C2;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5CEC049EFB;
 	Fri,  1 Apr 2022 14:20:45 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3CEDF4B216
- for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Apr 2022 13:56:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B32514B265
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Apr 2022 13:56:31 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id A93XZ042b2Tz for <kvmarm@lists.cs.columbia.edu>;
- Fri,  1 Apr 2022 13:56:29 -0400 (EDT)
-Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com
- [209.85.216.73])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id EB9FF4B27C
- for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Apr 2022 13:56:28 -0400 (EDT)
-Received: by mail-pj1-f73.google.com with SMTP id
- o15-20020a17090aac0f00b001c6595a43dbso1931995pjq.4
- for <kvmarm@lists.cs.columbia.edu>; Fri, 01 Apr 2022 10:56:28 -0700 (PDT)
+ with ESMTP id O71uYgjPTtyl for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  1 Apr 2022 13:56:30 -0400 (EDT)
+Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com
+ [209.85.214.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8FEB44B216
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Apr 2022 13:56:30 -0400 (EDT)
+Received: by mail-pl1-f202.google.com with SMTP id
+ z8-20020a170903018800b001566875e0f5so1229755plg.21
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 01 Apr 2022 10:56:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=N+Yt2vLgKrZHcuNVUsOj9eJGBLy1X2SsKXkQhye+WRI=;
- b=Qr6kriferOcm7AIY4k/KBQ72DaTvRRltjRQh/5ECnhmB7SaEkrHaUEXakckg6PNkRI
- UqnATSklWc+8zALzY6JKcjXGFe1SfBq6T8EoKDzLpY6jLE2QLs0t53yQ/skVLxXtxGPc
- SbCNotOgDY1raopFMdahKZ5R9WaFB1/m5rObgP9wTILsP2yEOkos0mtBOC4YzivxawyR
- A6HVPHEPfUothLkegc9HrO+kBmoz4HMGCFgxA1bBAmyGBat3PADxzlV+wjdNE3FggTSW
- FImW+j6GQKwF5ZJexZpan7VjGim/N71Uhn5jXmS5VsRXU7NBV1T63G8bmnjgkl+Uvk8D
- elaw==
+ :cc; bh=bPjRdwbrgeaGoRO6D9pIVUv9XL1QVrE/jZ7frr9Y9sk=;
+ b=HKXVYj5bLgLQDNl0Yp3f3Cxk0xEfw/WwCidCusFgYIXZPgwnivI6+Ih1CXvlNY8wv+
+ 0SB7IO2lfWqyxHZXsqnHLnT0QBt4/Kn5lk5EW8K9iW1NthwnnpRVMkumhd4k1OQE77wT
+ S2O1Z7AitpIGEox5Qh5FKe0zYHXrRWVT9NJBODMGEgo+t6A06dO9q/xdIDofE1nFLYnl
+ tWGum6qGeGVSd65XaJizCavBESlaKNmwmbP75qcI6R+2txzDbk0mbonxSd1y21Sie2vy
+ W5UgLGjdxmVDqUWGtPF5QIJMbd5Gcb1De7NMCzJgjAuAzu6A7T0xAsFyXc5SNRC5Sf5R
+ j+lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=N+Yt2vLgKrZHcuNVUsOj9eJGBLy1X2SsKXkQhye+WRI=;
- b=GmSjZo5rsgE1XHJZ+bk9OFs0M7sOldAqAnJFapjB9vnTLg+LdM0EMtmLPGEeUC5k0S
- qk5/rQgqDRi5I1sUEty7SdiUzuMWu52TyQLuGMcm5RnlQsNB9m9yBhbGyy5Dx9Jxq+pp
- lyccm1ZwQ0IWdU5LqqnZpZNtyGVXbywZVXYRFluM0SiEfNH5gRdeF1lgxaZ3Nk+Do4FP
- QTJLGG1SV1YxuoN63OAgHE2uRGUdUUCbsxHmtu4yXL/n74RixzI2XBSO80B84go2D+hi
- cX+oDdMBLmpBv/jmCBHu4dXXQ89askvjvsD7j1UeAn5bZcF3zE4tzoZR0jfNN25Cmssj
- ex+Q==
-X-Gm-Message-State: AOAM531p/Ud+QIo3JabTPTg6su4ApW6L1Qay41BtBE7WBCZLNvxoJ/w6
- umbtIYp84R+RPcm2DeY2DzkyOt2UBUe7ng==
-X-Google-Smtp-Source: ABdhPJwplQwfsWEVcDA4UHiGwuSL/A4oELiqXDjC0LjFD0RE2g1bBGBlZDUBl9Lc3mLD3IwFfsHZo9b9soqNMw==
+ bh=bPjRdwbrgeaGoRO6D9pIVUv9XL1QVrE/jZ7frr9Y9sk=;
+ b=eG9UHftadKq2QUJLP5yaNti0F+YNoWeMpgfujh4caawJ4O8KV4a6z/JFjkgdPnckDG
+ dLbf09ch4BBy27Y7nHIuQWpqthZ3U3OL1v9u6CQI9B9O5oqN1hY/vn82+EGPYB/F/enx
+ XpjwKP3mhI2VDi8LH+XFIe4WDn+6jCFTYTyPLsnSyrfM5UQXLy7eyzCEUhmLwTD7KJIy
+ hDOI1yG3zjhRyHNaWip1gErnWr3m5Xmv7ogCYufqS52XqVXU2SnEZwUTr1n/L2LjencS
+ BQOmvR21zxGiAEyQtDOfwhbEwi91JmM4EWo00KIYY7OAMVv2xPiou8YQIQO7wmHL/N80
+ 8IFQ==
+X-Gm-Message-State: AOAM531vC/sDFLcqUaio6gIlDcR9/ZR/Sq+TTF9cSZeY3f7CX+K7MPr8
+ Ps7Ekk4bxY0A282dmhCqKQHw5H5jEayYQA==
+X-Google-Smtp-Source: ABdhPJwAwneAua3CK3hqlxT6AVdmOtu9SNJP0PRrgeiWzgw657lKsS+2gpSEl29HSjZknUEHAGP38CQTV81Y8Q==
 X-Received: from dmatlack-heavy.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:19cd])
- (user=dmatlack job=sendgmr) by 2002:a17:90a:3e44:b0:1c9:8365:5753 with SMTP
- id t4-20020a17090a3e4400b001c983655753mr13236316pjm.60.1648835788080; Fri, 01
- Apr 2022 10:56:28 -0700 (PDT)
-Date: Fri,  1 Apr 2022 17:55:48 +0000
+ (user=dmatlack job=sendgmr) by 2002:a17:902:d888:b0:151:6fe8:6e68 with SMTP
+ id b8-20020a170902d88800b001516fe86e68mr11236930plz.158.1648835789747; Fri,
+ 01 Apr 2022 10:56:29 -0700 (PDT)
+Date: Fri,  1 Apr 2022 17:55:49 +0000
 In-Reply-To: <20220401175554.1931568-1-dmatlack@google.com>
-Message-Id: <20220401175554.1931568-18-dmatlack@google.com>
+Message-Id: <20220401175554.1931568-19-dmatlack@google.com>
 Mime-Version: 1.0
 References: <20220401175554.1931568-1-dmatlack@google.com>
 X-Mailer: git-send-email 2.35.1.1094.g7c7d902a7c-goog
-Subject: [PATCH v3 17/23] KVM: x86/mmu: Extend make_huge_page_split_spte() for
+Subject: [PATCH v3 18/23] KVM: x86/mmu: Zap collapsible SPTEs at all levels in
  the shadow MMU
 From: David Matlack <dmatlack@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
@@ -105,93 +105,61 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Currently make_huge_page_split_spte() assumes execute permissions can be
-granted to any 4K SPTE when splitting huge pages. This is true for the
-TDP MMU but is not necessarily true for the shadow MMU, since we may be
-splitting a huge page that shadows a non-executable guest huge page.
+Currently KVM only zaps collapsible 4KiB SPTEs in the shadow MMU (i.e.
+in the rmap). This is fine for now KVM never creates intermediate huge
+pages during dirty logging, i.e. a 1GiB page is never partially split to
+a 2MiB page.
 
-To fix this, pass in the child shadow page where the huge page will be
-split and derive the execution permission from the shadow page's role.
-This is correct because huge pages are always split with direct shadow
-page and thus the shadow page role contains the correct access
-permissions.
+However, this will stop being true once the shadow MMU participates in
+eager page splitting, which can in fact leave behind partially split
+huge pages. In preparation for that change, change the shadow MMU to
+iterate over all necessary levels when zapping collapsible SPTEs.
 
 No functional change intended.
 
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: David Matlack <dmatlack@google.com>
 ---
- arch/x86/kvm/mmu/spte.c    | 13 +++++++------
- arch/x86/kvm/mmu/spte.h    |  2 +-
- arch/x86/kvm/mmu/tdp_mmu.c |  2 +-
- 3 files changed, 9 insertions(+), 8 deletions(-)
+ arch/x86/kvm/mmu/mmu.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/kvm/mmu/spte.c b/arch/x86/kvm/mmu/spte.c
-index d10189d9c877..ef6537c6f5ef 100644
---- a/arch/x86/kvm/mmu/spte.c
-+++ b/arch/x86/kvm/mmu/spte.c
-@@ -216,10 +216,11 @@ static u64 make_spte_executable(u64 spte)
-  * This is used during huge page splitting to build the SPTEs that make up the
-  * new page table.
-  */
--u64 make_huge_page_split_spte(u64 huge_spte, int huge_level, int index)
-+u64 make_huge_page_split_spte(u64 huge_spte, struct kvm_mmu_page *sp, int index)
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index 3a425ed80e23..6390b23d286a 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -6172,18 +6172,25 @@ static bool kvm_mmu_zap_collapsible_spte(struct kvm *kvm,
+ 	return need_tlb_flush;
+ }
+ 
++static void kvm_rmap_zap_collapsible_sptes(struct kvm *kvm,
++					   const struct kvm_memory_slot *slot)
++{
++	/*
++	 * Note, use KVM_MAX_HUGEPAGE_LEVEL - 1 since there's no need to zap
++	 * pages that are already mapped at the maximum possible level.
++	 */
++	if (slot_handle_level(kvm, slot, kvm_mmu_zap_collapsible_spte,
++			      PG_LEVEL_4K, KVM_MAX_HUGEPAGE_LEVEL - 1,
++			      true))
++		kvm_arch_flush_remote_tlbs_memslot(kvm, slot);
++}
++
+ void kvm_mmu_zap_collapsible_sptes(struct kvm *kvm,
+ 				   const struct kvm_memory_slot *slot)
  {
-+	bool exec_allowed = sp->role.access & ACC_EXEC_MASK;
-+	int child_level = sp->role.level;
- 	u64 child_spte;
--	int child_level;
- 
- 	if (WARN_ON_ONCE(!is_shadow_present_pte(huge_spte)))
- 		return 0;
-@@ -228,7 +229,6 @@ u64 make_huge_page_split_spte(u64 huge_spte, int huge_level, int index)
- 		return 0;
- 
- 	child_spte = huge_spte;
--	child_level = huge_level - 1;
- 
- 	/*
- 	 * The child_spte already has the base address of the huge page being
-@@ -241,10 +241,11 @@ u64 make_huge_page_split_spte(u64 huge_spte, int huge_level, int index)
- 		child_spte &= ~PT_PAGE_SIZE_MASK;
- 
- 		/*
--		 * When splitting to a 4K page, mark the page executable as the
--		 * NX hugepage mitigation no longer applies.
-+		 * When splitting to a 4K page where execution is allowed, mark
-+		 * the page executable as the NX hugepage mitigation no longer
-+		 * applies.
- 		 */
--		if (is_nx_huge_page_enabled())
-+		if (exec_allowed && is_nx_huge_page_enabled())
- 			child_spte = make_spte_executable(child_spte);
+ 	if (kvm_memslots_have_rmaps(kvm)) {
+ 		write_lock(&kvm->mmu_lock);
+-		/*
+-		 * Zap only 4k SPTEs since the legacy MMU only supports dirty
+-		 * logging at a 4k granularity and never creates collapsible
+-		 * 2m SPTEs during dirty logging.
+-		 */
+-		if (slot_handle_level_4k(kvm, slot, kvm_mmu_zap_collapsible_spte, true))
+-			kvm_arch_flush_remote_tlbs_memslot(kvm, slot);
++		kvm_rmap_zap_collapsible_sptes(kvm, slot);
+ 		write_unlock(&kvm->mmu_lock);
  	}
  
-diff --git a/arch/x86/kvm/mmu/spte.h b/arch/x86/kvm/mmu/spte.h
-index 73f12615416f..921ea77f1b5e 100644
---- a/arch/x86/kvm/mmu/spte.h
-+++ b/arch/x86/kvm/mmu/spte.h
-@@ -415,7 +415,7 @@ bool make_spte(struct kvm_vcpu *vcpu, struct kvm_mmu_page *sp,
- 	       unsigned int pte_access, gfn_t gfn, kvm_pfn_t pfn,
- 	       u64 old_spte, bool prefetch, bool can_unsync,
- 	       bool host_writable, u64 *new_spte);
--u64 make_huge_page_split_spte(u64 huge_spte, int huge_level, int index);
-+u64 make_huge_page_split_spte(u64 huge_spte, struct kvm_mmu_page *sp, int index);
- u64 make_nonleaf_spte(u64 *child_pt, bool ad_disabled);
- u64 make_mmio_spte(struct kvm_vcpu *vcpu, u64 gfn, unsigned int access);
- u64 mark_spte_for_access_track(u64 spte);
-diff --git a/arch/x86/kvm/mmu/tdp_mmu.c b/arch/x86/kvm/mmu/tdp_mmu.c
-index a04262bc34e2..36d241405ecc 100644
---- a/arch/x86/kvm/mmu/tdp_mmu.c
-+++ b/arch/x86/kvm/mmu/tdp_mmu.c
-@@ -1455,7 +1455,7 @@ static int tdp_mmu_split_huge_page(struct kvm *kvm, struct tdp_iter *iter,
- 	 * not been linked in yet and thus is not reachable from any other CPU.
- 	 */
- 	for (i = 0; i < PT64_ENT_PER_PAGE; i++)
--		sp->spt[i] = make_huge_page_split_spte(huge_spte, level, i);
-+		sp->spt[i] = make_huge_page_split_spte(huge_spte, sp, i);
- 
- 	/*
- 	 * Replace the huge spte with a pointer to the populated lower level
 -- 
 2.35.1.1094.g7c7d902a7c-goog
 
