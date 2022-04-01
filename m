@@ -2,78 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1827F4EF9B2
-	for <lists+kvmarm@lfdr.de>; Fri,  1 Apr 2022 20:21:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AF9A4EF9B3
+	for <lists+kvmarm@lfdr.de>; Fri,  1 Apr 2022 20:21:03 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B5FEE4B291;
-	Fri,  1 Apr 2022 14:21:01 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CAB134B2B7;
+	Fri,  1 Apr 2022 14:21:02 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.787
+X-Spam-Score: -1.788
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.787 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9pCu53OKskZ8; Fri,  1 Apr 2022 14:21:01 -0400 (EDT)
+	with ESMTP id in57V+XefKdZ; Fri,  1 Apr 2022 14:21:02 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 82B874B2DF;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9B1744B2E2;
 	Fri,  1 Apr 2022 14:20:44 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2AF1A4B25B
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9C1F9410DA
  for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Apr 2022 13:56:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id jRQsBy4UAeeX for <kvmarm@lists.cs.columbia.edu>;
- Fri,  1 Apr 2022 13:56:20 -0400 (EDT)
-Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com
- [209.85.215.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E9F0A410DA
- for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Apr 2022 13:56:19 -0400 (EDT)
-Received: by mail-pg1-f202.google.com with SMTP id
- b7-20020a633407000000b0038413d39ca9so2019032pga.4
- for <kvmarm@lists.cs.columbia.edu>; Fri, 01 Apr 2022 10:56:19 -0700 (PDT)
+ with ESMTP id vXs9ocfXsvNI for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  1 Apr 2022 13:56:21 -0400 (EDT)
+Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com
+ [209.85.216.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8798B4B216
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Apr 2022 13:56:21 -0400 (EDT)
+Received: by mail-pj1-f73.google.com with SMTP id
+ oo16-20020a17090b1c9000b001c6d21e8c04so4354921pjb.4
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 01 Apr 2022 10:56:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=W+wK5vxPR/QvP8f06+LL6qG83douEveyqaG4cfdgLaY=;
- b=UlIX32ER5ckYEDHWAIcjYr1jnfgt+txi+GTB7aQ575YuSQEhVBgxyCUID6hNAgokFE
- i76MKrGhcCti1IAqqtc8kmHq8LqNd7RHGUdhQj5N55jui7o41Er8H+t8k78BKld1GGlF
- 1VOlV5WFmwGA6KgQUp2Zp1tMkKdYXozagaTpFsbpYSaFotNIcx7eaEFtAXC+ZnpCROYq
- ABsmzYy5wYQds//B5QF75M7rFYH+fy/3noPiqdzNNeN7P/vT017vKaxWsaHrKZktu0mv
- qnRJyh8yDxMicnr56dYAjntxpQ2hWjBPYb0U8saUvcnyua7EEZ2oOdLzLWIpXm5jfysP
- Is+w==
+ :cc; bh=zKDQj9FrafQ+86iVPP3K51OIfRdmfs50RkYPmE+oxOQ=;
+ b=jwJrV9wgSOZhOdo64taCxPoODAC6XGsgJuKkwc48uKLDwCehUF0oYRs0fx/6iUYJsN
+ bDU8lVrfYvdUg3f5cyhCck37cCyLL5/oocbLVeX/2RMocHB7whP9YgJV1BPU0FInpT8M
+ Jey3QTtqfjXizgqaTWKrOuc0XTGX8k9DlHlIvbHGsjO2yN1YnnybWB4lTqrMuaaxskHT
+ tzBNngTy7KVEqbn10arUq+QvHMRdcdxlBk6ThObz7bZ8fYOmHleUEQKDX3znsHn2k++f
+ k/IMtVSXnTPiSX4RDt6Ql8Je3nitAyb3Jw6XHuF5ueww4Kk/F0qDai4j5R/xhVPgfIGK
+ wEzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=W+wK5vxPR/QvP8f06+LL6qG83douEveyqaG4cfdgLaY=;
- b=Jy+4n3WtoW/bhjhzqkzwFyFAGJ7rx8ncguEY5d+veEmZrvXF7z3P3QioGLz/gjMZyS
- tiiHzFiEA0NR6ywHTbtljsX12pDUm346nE7LiFC/6kJukksDeTdrl2llCUu+3trB1ZcJ
- Q4NQv/ziD8yFCR9vriivCoKjaeLgJGZdeq8+F7IdexAErJaes8iirUCf6O9/LhbddkWq
- 56PxGIulP1H9gauJOqhqEqH8DFeeBwmsCWbkS5lZUJ6cv2Z+a9/VXwDtf8WRRugnpHrR
- wcYHPeRZJrV6nFwFKFJAXghJ1UlxMgysBJba6lHBZSv2VNmECGdQOMl/XIP8CoKRyPvh
- NWcQ==
-X-Gm-Message-State: AOAM531QpghVJSXwlTWIHElq89/aqDSgKJdymwuiNeB0CanD+adHFS+M
- sIGibfWYuIvlDm1PkPLdo4EMpfEUQPV0PQ==
-X-Google-Smtp-Source: ABdhPJxYuSmgflitVWDuHEX61iCJV7QQcSTVJ1SS0S3w86E/w3yONDjqYny6QBsz2LrR6va1k+Ws4RIi9FnL+w==
+ bh=zKDQj9FrafQ+86iVPP3K51OIfRdmfs50RkYPmE+oxOQ=;
+ b=Wax57cbPG8dqEVv9ADtKqV3PwsHV/Rpm5BN/yUKCyVM3gvAXmLlEcxyF7kt9z7l63N
+ Q7Hlg9NmD9Vm4Vuygr0XJka18Jr1D2E79gqWGwu4bzk/Zj3pEmQJJiII89A42m4nmc+7
+ hd3dNkytlNVrxSmf3Ifso6TuXQjH28zK/sbV8pX6nWHKxVJULO0dXjxpQXnxg2KRuxUp
+ Od7cp5SIX+Fy6hlptxq5W5GlQKAtfHGwiZ5txXp2JZxBlpC8QLlW4B6I9zR6rNe7FVgg
+ BY4VoTffIxQ01Pwkz6DYxtvjLPu6QuOmNSZL1lQEtKWFAt2lgJvE/ja6A+lDEqsQ8rVL
+ g7Lg==
+X-Gm-Message-State: AOAM533rNzgbbQfBct7Z4YtKCud3WLQW/ONlejNuXHDGjgFLrNFQFmYX
+ aqwlASmUl48eQRyqXeRh/t3MmhbWvlKVPA==
+X-Google-Smtp-Source: ABdhPJxYcEKA7pbWp7jjIlDB7Ac6r83BwprafTTSyvULHdi4YCW6thoQ1uhQkF3OnBLrsgJpdsF5d76dQHZQHA==
 X-Received: from dmatlack-heavy.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:19cd])
- (user=dmatlack job=sendgmr) by 2002:a17:90b:4c84:b0:1c7:7769:3cc7 with SMTP
- id my4-20020a17090b4c8400b001c777693cc7mr13054532pjb.73.1648835779185; Fri,
- 01 Apr 2022 10:56:19 -0700 (PDT)
-Date: Fri,  1 Apr 2022 17:55:42 +0000
+ (user=dmatlack job=sendgmr) by 2002:a17:90a:7304:b0:1c6:aadc:90e5 with SMTP
+ id m4-20020a17090a730400b001c6aadc90e5mr13237879pjk.164.1648835780708; Fri,
+ 01 Apr 2022 10:56:20 -0700 (PDT)
+Date: Fri,  1 Apr 2022 17:55:43 +0000
 In-Reply-To: <20220401175554.1931568-1-dmatlack@google.com>
-Message-Id: <20220401175554.1931568-12-dmatlack@google.com>
+Message-Id: <20220401175554.1931568-13-dmatlack@google.com>
 Mime-Version: 1.0
 References: <20220401175554.1931568-1-dmatlack@google.com>
 X-Mailer: git-send-email 2.35.1.1094.g7c7d902a7c-goog
-Subject: [PATCH v3 11/23] KVM: x86/mmu: Use common code to allocate shadow
- pages from vCPU caches
+Subject: [PATCH v3 12/23] KVM: x86/mmu: Pass const memslot to rmap_add()
 From: David Matlack <dmatlack@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 X-Mailman-Approved-At: Fri, 01 Apr 2022 14:20:42 -0400
@@ -106,65 +104,30 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Now that allocating shadow pages is isolated to a helper function, use
-it in the TDP MMU as well. Keep tdp_mmu_alloc_sp() to avoid hard-coding
-direct=true in multiple places.
+rmap_add() only uses the slot to call gfn_to_rmap() which takes a const
+memslot.
 
 No functional change intended.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Ben Gardon <bgardon@google.com>
 Signed-off-by: David Matlack <dmatlack@google.com>
 ---
- arch/x86/kvm/mmu/mmu.c          | 3 +--
- arch/x86/kvm/mmu/mmu_internal.h | 1 +
- arch/x86/kvm/mmu/tdp_mmu.c      | 8 +-------
- 3 files changed, 3 insertions(+), 9 deletions(-)
+ arch/x86/kvm/mmu/mmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 27996fdb0e7e..37385835c399 100644
+index 37385835c399..1efe161f9c02 100644
 --- a/arch/x86/kvm/mmu/mmu.c
 +++ b/arch/x86/kvm/mmu/mmu.c
-@@ -1704,8 +1704,7 @@ static void drop_parent_pte(struct kvm_mmu_page *sp,
- 	mmu_spte_clear_no_track(parent_pte);
- }
+@@ -1596,7 +1596,7 @@ static bool kvm_test_age_rmapp(struct kvm *kvm, struct kvm_rmap_head *rmap_head,
  
--static struct kvm_mmu_page *kvm_mmu_alloc_shadow_page(struct kvm_vcpu *vcpu,
--						      bool direct)
-+struct kvm_mmu_page *kvm_mmu_alloc_shadow_page(struct kvm_vcpu *vcpu, bool direct)
+ #define RMAP_RECYCLE_THRESHOLD 1000
+ 
+-static void rmap_add(struct kvm_vcpu *vcpu, struct kvm_memory_slot *slot,
++static void rmap_add(struct kvm_vcpu *vcpu, const struct kvm_memory_slot *slot,
+ 		     u64 *spte, gfn_t gfn)
  {
  	struct kvm_mmu_page *sp;
- 
-diff --git a/arch/x86/kvm/mmu/mmu_internal.h b/arch/x86/kvm/mmu/mmu_internal.h
-index 5f91e4d07a95..d4e2de5f2a6d 100644
---- a/arch/x86/kvm/mmu/mmu_internal.h
-+++ b/arch/x86/kvm/mmu/mmu_internal.h
-@@ -173,6 +173,7 @@ void unaccount_huge_nx_page(struct kvm *kvm, struct kvm_mmu_page *sp);
- 
- struct kvm_mmu_page *kvm_mmu_alloc_direct_sp_for_split(bool locked);
- 
-+struct kvm_mmu_page *kvm_mmu_alloc_shadow_page(struct kvm_vcpu *vcpu, bool direct);
- void kvm_mmu_free_shadow_page(struct kvm_mmu_page *sp);
- 
- #endif /* __KVM_X86_MMU_INTERNAL_H */
-diff --git a/arch/x86/kvm/mmu/tdp_mmu.c b/arch/x86/kvm/mmu/tdp_mmu.c
-index 8b00c868405b..f6201b89045b 100644
---- a/arch/x86/kvm/mmu/tdp_mmu.c
-+++ b/arch/x86/kvm/mmu/tdp_mmu.c
-@@ -269,13 +269,7 @@ static struct kvm_mmu_page *tdp_mmu_next_root(struct kvm *kvm,
- 
- static struct kvm_mmu_page *tdp_mmu_alloc_sp(struct kvm_vcpu *vcpu)
- {
--	struct kvm_mmu_page *sp;
--
--	sp = kvm_mmu_memory_cache_alloc(&vcpu->arch.mmu_page_header_cache);
--	sp->spt = kvm_mmu_memory_cache_alloc(&vcpu->arch.mmu_shadow_page_cache);
--	set_page_private(virt_to_page(sp->spt), (unsigned long)sp);
--
--	return sp;
-+	return kvm_mmu_alloc_shadow_page(vcpu, true);
- }
- 
- static void tdp_mmu_init_sp(struct kvm_mmu_page *sp, tdp_ptep_t sptep,
 -- 
 2.35.1.1094.g7c7d902a7c-goog
 
