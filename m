@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 659AE4F0E31
-	for <lists+kvmarm@lfdr.de>; Mon,  4 Apr 2022 06:45:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 224984F0F0D
+	for <lists+kvmarm@lfdr.de>; Mon,  4 Apr 2022 07:28:43 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id ACAB34B105;
-	Mon,  4 Apr 2022 00:45:35 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 397424B103;
+	Mon,  4 Apr 2022 01:28:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
@@ -18,61 +18,68 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id GEzEL8iY+tYD; Mon,  4 Apr 2022 00:45:35 -0400 (EDT)
+	with ESMTP id 8kRRO8rQifVJ; Mon,  4 Apr 2022 01:28:42 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8DFAB4B0B3;
-	Mon,  4 Apr 2022 00:45:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 01BDE4B0DB;
+	Mon,  4 Apr 2022 01:28:41 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 07C0849F4A
- for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Apr 2022 00:45:33 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A31CA4B0B9
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Apr 2022 01:28:39 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id kjqeJhIMABpL for <kvmarm@lists.cs.columbia.edu>;
- Mon,  4 Apr 2022 00:45:32 -0400 (EDT)
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com
- [209.85.216.48])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id EFEA349F2A
- for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Apr 2022 00:45:31 -0400 (EDT)
-Received: by mail-pj1-f48.google.com with SMTP id
- ku13-20020a17090b218d00b001ca8fcd3adeso1975493pjb.2
- for <kvmarm@lists.cs.columbia.edu>; Sun, 03 Apr 2022 21:45:31 -0700 (PDT)
+ with ESMTP id 24PSfSCS4Br7 for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  4 Apr 2022 01:28:38 -0400 (EDT)
+Received: from mail-io1-f47.google.com (mail-io1-f47.google.com
+ [209.85.166.47])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A2DE74B0B8
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  4 Apr 2022 01:28:38 -0400 (EDT)
+Received: by mail-io1-f47.google.com with SMTP id g21so9914426iom.13
+ for <kvmarm@lists.cs.columbia.edu>; Sun, 03 Apr 2022 22:28:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=EEBN46zG2gvj2WY3lcxbVjrOksL0c/6WsjgZKCCzd/I=;
- b=kO4FdgYOebV/t2yzqBUOJ9hdCnVOAE3BWF9Xy8r7hy5NcvqQG9Q59fB2bGDz3+c94d
- tzqJw1ebi1BVASe6U2F6kGGXnf8lsXzK3vuEkvTHitRwLEPwoilxOyk3Vk07cBPVgcbF
- ue4XLYc4quOAF2XEnzJm7J0Gv/svvXxIfc2fSdexbpx2QcdTBwR5rcljcYhLapjF/0Pf
- t44yEaWd3T89rgPU9PQCuCtS7eGl7rqKj5LfFqG4ovsi3qcjmGPiktdZU9tq6DqSzj7i
- 7hcDvWP9+15F67X9PrYumh8bQaJy1B2Kx7moJbcJNCEk4aR6eaJnViNcNQmPbLuepjRS
- 8iYA==
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=4vQFrjglrchZfWnBhpFno0OG8+JYEPYgRfkxp+2Eq7o=;
+ b=LiOBtM7e9EsGoXdzZHjt3VAlfi+P8jggYvXUvinv1GwvKXhD/C1MVwLT0WYFC4rAGp
+ jmol3SXOFoa4Z4ooFSn6wsQKtk8C3Lub7I7baeX4E74lH/ovookztTEfvijFA4NvE4yk
+ Wjt7jhgVAkfRGf4TYEeICMrubHLMEH3B+edLHVG3HJr27PFedThMd11inj5vbzFOhq96
+ vBZU9QHgDlLdKkJugc7xPxBG/N9cSEvyLt5EBYWMKySVdKf7U4oUVmzo38Mv4CikzJr+
+ w1TfMl2QfEk6pVs4s09A2AqAYL6GMRWZoMh4P8xfkPK2EgaK2cujVFdvqxTkGY1/5ON9
+ rMiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=EEBN46zG2gvj2WY3lcxbVjrOksL0c/6WsjgZKCCzd/I=;
- b=SA+st294zWeCKmlimhVhXEWIxiRmuBJLr5NXWYgVgPYomK+PRAiZcdbluMPOQIZdi/
- by1fU/c4OBnpPixJ9zsKWlmQ6WEW9Y/IQ4WrmMSb+XHh4iy2sY9KNJcuHak6pX4+BiSy
- zWRHYfCTDlT8ZIoQdtDQq3/zcb2H3Cn9YZn8sGq/DBsh9l7nRU2Zz5fCmDIfmaMWEiXr
- f4kX7KWRAR9wv9l0kR30f2wbOFI0pwFlM5MIa8KBS5YDqOMpFiNz8ARgNzZHA+tt5/Qv
- uur0WnS4x0i/ASFS8M9yFllr7DzNMEwMgA6F+rIr51TyBvwGKqrJiaOdB+DCO2n6o7vX
- PXdQ==
-X-Gm-Message-State: AOAM531cjRo3m0h+/Jvim+OuKhUF/cqKr9DG1O8EIpAQQVb895RnAgEk
- 6H7N2FCmRSYcurgejPoxbc+Na6DPUtRBC32OZge9bg==
-X-Google-Smtp-Source: ABdhPJzDVFMCClRUsK6gQWVxwlJiuN5q5hN2bBgrZWH+gsR5sokMSlYJUr9RMO+e4xu5pPL/2GX8kvOJQQ01h2wlkk8=
-X-Received: by 2002:a17:90b:2350:b0:1ca:23b5:69a6 with SMTP id
- ms16-20020a17090b235000b001ca23b569a6mr20934316pjb.9.1649047530910; Sun, 03
- Apr 2022 21:45:30 -0700 (PDT)
-MIME-Version: 1.0
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=4vQFrjglrchZfWnBhpFno0OG8+JYEPYgRfkxp+2Eq7o=;
+ b=BWhtG+ltdlD2SIsvpAigmMhO14cJd0f2gFGYE7npxp+YQj26AoT/G5zP3uzs1Ut2fC
+ kvJZMb9GejXbiIuyl/VFbLSTGvaToK01VGSKFd0GLueAUsYPs3VYMqYU3dy9DaXW89oi
+ NP+ngCiDTjz8ceMUUri3j09RkpQYpePbAOIX/dyLQ+6Wtr58S3/EcvmawkzYHmK2ztOc
+ Zi1Fs4cEtwhAV3vnnRU+VdSCFOCWGRzsRmHVXqyWaA5L8kGUC1zwB2LUxdGixH3DazT+
+ Sq9aBRPiX7ewN/xgr9Vmi7pDS6NS9zOpD9ePfQujzGqj7X1es+Ly3JhKmp/jta92ER6H
+ lWoA==
+X-Gm-Message-State: AOAM530cDtYnV03TckGq1JTOYAmPtBHQDnTqgE+l7sRH9GyROfjO4Cf2
+ DCtH4YcwzfavMJKppmo7ExpunQ==
+X-Google-Smtp-Source: ABdhPJwnrz63bQuIY0Qz/p4MN+rMjCvcRj6uMmNM+SGy8AWlCr6QKV0I4658w5YLbDhl2gu2ASyxBg==
+X-Received: by 2002:a02:224d:0:b0:321:370b:6d59 with SMTP id
+ o74-20020a02224d000000b00321370b6d59mr11248053jao.104.1649050117857; 
+ Sun, 03 Apr 2022 22:28:37 -0700 (PDT)
+Received: from google.com (194.225.68.34.bc.googleusercontent.com.
+ [34.68.225.194]) by smtp.gmail.com with ESMTPSA id
+ u10-20020a92da8a000000b002ca48fff4c7sm435056iln.13.2022.04.03.22.28.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 03 Apr 2022 22:28:36 -0700 (PDT)
+Date: Mon, 4 Apr 2022 05:28:33 +0000
+From: Oliver Upton <oupton@google.com>
+To: Reiji Watanabe <reijiw@google.com>
+Subject: Re: [PATCH v2 2/3] KVM: arm64: Plumb cp10 ID traps through the
+ AArch64 sysreg handler
+Message-ID: <YkqCAcPCnqYofspa@google.com>
 References: <20220401010832.3425787-1-oupton@google.com>
- <20220401010832.3425787-4-oupton@google.com>
-In-Reply-To: <20220401010832.3425787-4-oupton@google.com>
-From: Reiji Watanabe <reijiw@google.com>
-Date: Sun, 3 Apr 2022 21:45:15 -0700
-Message-ID: <CAAeT=Fz4cB_SoZCMkOp9cEuMbY+M+ieQ6PTBcvCOQRwGkGv9pA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] KVM: arm64: Start trapping ID registers for 32 bit
- guests
-To: Oliver Upton <oupton@google.com>
+ <20220401010832.3425787-3-oupton@google.com>
+ <CAAeT=FxSTL2MEBP-_vcUxJ57+F1X0EshU4R2+kNNEf5k1jJXig@mail.gmail.com>
+MIME-Version: 1.0
+Content-Disposition: inline
+In-Reply-To: <CAAeT=FxSTL2MEBP-_vcUxJ57+F1X0EshU4R2+kNNEf5k1jJXig@mail.gmail.com>
 Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
  Peter Shier <pshier@google.com>, kvmarm@lists.cs.columbia.edu,
  Linux ARM <linux-arm-kernel@lists.infradead.org>
@@ -92,31 +99,39 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Mar 31, 2022 at 6:08 PM Oliver Upton <oupton@google.com> wrote:
->
-> To date KVM has not trapped ID register accesses from AArch32, meaning
-> that guests get an unconstrained view of what hardware supports. This
-> can be a serious problem because we try to base the guest's feature
-> registers on values that are safe system-wide. Furthermore, KVM does not
-> implement the latest ISA in the PMU and Debug architecture, so we
-> constrain these fields to supported values.
->
-> Since KVM now correctly handles CP15 and CP10 register traps, we no
-> longer need to clear HCR_EL2.TID3 for 32 bit guests and will instead
-> emulate reads with their safe values.
->
-> Signed-off-by: Oliver Upton <oupton@google.com>
+Hi Reiji,
 
-Reviewed-by: Reiji Watanabe <reijiw@google.com>
+On Sun, Apr 03, 2022 at 08:57:47PM -0700, Reiji Watanabe wrote:
+> > +int kvm_handle_cp10_id(struct kvm_vcpu *vcpu)
+> > +{
+> > +       int Rt = kvm_vcpu_sys_get_rt(vcpu);
+> > +       u32 esr = kvm_vcpu_get_esr(vcpu);
+> > +       struct sys_reg_params params;
+> > +       int ret;
+> > +
+> > +       /* UNDEF on any unhandled register or an attempted write */
+> > +       if (!kvm_esr_cp10_id_to_sys64(esr, &params) || params.is_write) {
+> > +               kvm_inject_undefined(vcpu);
+> 
+> Nit: For debugging, it might be more useful to use unhandled_cp_access()
+> (, which needs to be changed to support ESR_ELx_EC_CP10_ID though)
+> rather than directly calling kvm_inject_undefined().
 
-BTW, due to this, on a system that supports PMUv3, ID_DFR0_E1 value will
-become 0 for the aarch32 guest without PMUv3. This is the correct behavior,
-but it affects migration.  I'm not sure how much we should care about
-migration of the aarch32 guest though (and it will be resolved once ID
-registers become configurable anyway).
+A very worthy nit, you spotted my laziness in shunting straight to
+kvm_inject_undefined() :)
 
+Thinking about this a bit more deeply, this code should be dead. The
+only time either of these conditions would happen is on a broken
+implementation. Probably should still handle it gracefully in case the
+CP10 handling in KVM becomes (or is in my own patch!) busted.
+
+> Reviewed-by: Reiji Watanabe <reijiw@google.com>
+
+Appreciated!
+
+--
 Thanks,
-Reiji
+Oliver
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
