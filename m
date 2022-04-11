@@ -2,82 +2,89 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 596FF4FAA5D
-	for <lists+kvmarm@lfdr.de>; Sat,  9 Apr 2022 20:46:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 138A14FB405
+	for <lists+kvmarm@lfdr.de>; Mon, 11 Apr 2022 08:52:33 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 060584B230;
-	Sat,  9 Apr 2022 14:46:21 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 25D924B201;
+	Mon, 11 Apr 2022 02:52:32 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -1.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cAW3s7vYqhb1; Sat,  9 Apr 2022 14:46:20 -0400 (EDT)
+	with ESMTP id rNp27tFCRf4t; Mon, 11 Apr 2022 02:52:32 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C80AD4B23C;
-	Sat,  9 Apr 2022 14:46:15 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BFC464B1E0;
+	Mon, 11 Apr 2022 02:52:30 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 33B5049E44
- for <kvmarm@lists.cs.columbia.edu>; Sat,  9 Apr 2022 14:46:14 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7C22F4B08F
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 11 Apr 2022 02:52:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id m7axz1BkSKm8 for <kvmarm@lists.cs.columbia.edu>;
- Sat,  9 Apr 2022 14:46:12 -0400 (EDT)
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com
- [209.85.219.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D6C234B1B5
- for <kvmarm@lists.cs.columbia.edu>; Sat,  9 Apr 2022 14:46:12 -0400 (EDT)
-Received: by mail-yb1-f202.google.com with SMTP id
- b12-20020a056902030c00b0061d720e274aso9153963ybs.20
- for <kvmarm@lists.cs.columbia.edu>; Sat, 09 Apr 2022 11:46:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=OjrumNZxEEC9JuFBLDox+92YZe3EIOWUkCcQ/nIRGPY=;
- b=LZ5+m4r1/6YLipI0gN+Pv5e4GfhlOD5144KXetxI+6WILM1ibWOL2bzGYh7eJYM7v4
- UsaMw2u6MW9ZKH1GRs8LfqU3rL6RMKc0Vcs1s+72v1b1qLvDaoKkk7p2lF7v4ZbN81nd
- p9qjopZgxbw+8wXyDx7jIvDTTvHWuduflu0Z9qYn2lWeEqoUoPcs2cFDLKCYyYvIzVmZ
- V+Dr6045ojYb2r4D2rI4Tsr1rJ3MEwznClc9hwZrI8ILxidC0oDstuE92NUlNrHGgsy9
- Kr0dJQPWbPWgIvtwKwbSsFQ6RE6jiZ9ofc7J0dOWqyNVcFMnbJIYZEVyGrdJSVOOO4Hy
- Cg8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:date:in-reply-to:message-id:mime-version
- :references:subject:from:to:cc;
- bh=OjrumNZxEEC9JuFBLDox+92YZe3EIOWUkCcQ/nIRGPY=;
- b=hmf7R/LPxcl+TmVMHdOAXQV9XKA920l42L3XELmeeUlmO7/1oRy2Ir0KBeraXx1FAa
- M5aNrXIi0A5Oov09qHTRv7DJlNJpxGhCvlgb+R2oyicBQMPQrLY5zBF9mSEHxwIBo+mp
- M1HHWlS9j4yLRoXQY32jHHmzBEi6+Pn2Nn9nMQi/XE/8E6U5KX1NH8mu84no0yaqTpoy
- h5L2rP4thajHueyTwRpEgJb2ftRppuFhTBehj3LcwRtdk2pttRjpYLlNu3NgicJRFwvD
- zTjBVztmniiW8hNWE516zhrBZCrPPa4uQsB4kcnHR67uZP6x4nCtcch3Elp4hYgW7Vsd
- RphA==
-X-Gm-Message-State: AOAM531DaBH3EaIfY3Y89jEZG2V5g5USA9uGw5sMB6wxeRhltC9dToTX
- w7S00dEJ0OGB0qobt6xR/ISpk/W3HZMaLHb+aiHEMYJfkH4vasRvHTi5531/NoK3OFVdjSmNwyi
- 9Hk58I/1b1OPNMsg+qWv5CG2uhygNNsUpkDN7BRNYSiIyySYthbsCa/+CFVz8wIbe2UDTBA==
-X-Google-Smtp-Source: ABdhPJw23470taeCjhyd7oxRIw+PzjKhZH13DOsSObKCyPE5FciaKTT52JBHfWKqYlSKc4u1Dt/oLSuJNCc=
-X-Received: from oupton.c.googlers.com ([fda3:e722:ac3:cc00:2b:ff92:c0a8:404])
- (user=oupton job=sendgmr) by 2002:a5b:e8e:0:b0:63d:cbfc:36e9 with
- SMTP id
- z14-20020a5b0e8e000000b0063dcbfc36e9mr16905813ybr.362.1649529972291; Sat, 09
- Apr 2022 11:46:12 -0700 (PDT)
-Date: Sat,  9 Apr 2022 18:45:49 +0000
-In-Reply-To: <20220409184549.1681189-1-oupton@google.com>
-Message-Id: <20220409184549.1681189-14-oupton@google.com>
-Mime-Version: 1.0
-References: <20220409184549.1681189-1-oupton@google.com>
-X-Mailer: git-send-email 2.35.1.1178.g4f1659d476-goog
-Subject: [PATCH v5 13/13] selftests: KVM: Test SYSTEM_SUSPEND PSCI call
-From: Oliver Upton <oupton@google.com>
-To: kvmarm@lists.cs.columbia.edu
-Cc: maz@kernel.org, wanpengli@tencent.com, kvm@vger.kernel.org, joro@8bytes.org,
- pshier@google.com, kvm-riscv@lists.infradead.org, atishp@atishpatra.org,
- pbonzini@redhat.com, vkuznets@redhat.com, jmattson@google.com
+ with ESMTP id IMrHGoNuX4j0 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 11 Apr 2022 02:52:28 -0400 (EDT)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1987F4A10E
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 11 Apr 2022 02:52:28 -0400 (EDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id B6819B810FD;
+ Mon, 11 Apr 2022 06:52:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D403C385A4;
+ Mon, 11 Apr 2022 06:52:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1649659945;
+ bh=yx+UeJ53L3lrvtA6p4tTHO/FMgJTGtQyiFwwhfFKWNQ=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=gDIXmFyXrkR/rHm8QEzS45Ezv6GyBt67dtUAkfRbVWrZ49RFcn1v69Nk/5nx7jk/p
+ AkNx7mNb9CEtEZD8E7jtKspLrW20g1lCL7kJrpYAEFHSYbQgFtHBHF55B6DWxYqJge
+ bZ9ZysQZ3XB0YIDd5+emhql2nfe2mY4PL3R4YA0F0XVL9LOtG+z84z10kcKCV2FTI4
+ GSSnugljbqUt32dfKl+1ucBUj+9JSHK4AtRmCZouswsmPwg5gq3IyKq/C3uk5umTAI
+ 8rUvGMTj82q00kBEXQvvqeTQycnDw8Re6pX2BJR2fn0I5xHG692ko9sCY15VUNN7UU
+ a09spn+vX4c6A==
+Received: from ip-185-104-136-29.ptr.icomera.net ([185.104.136.29]
+ helo=billy-the-mountain.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1ndnuP-003FOL-JJ; Mon, 11 Apr 2022 07:52:22 +0100
+Date: Mon, 11 Apr 2022 07:52:07 +0100
+Message-ID: <87bkx8cdt4.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Kalesh Singh <kaleshsingh@google.com>
+Subject: Re: [PATCH v7 1/6] KVM: arm64: Introduce hyp_alloc_private_va_range()
+In-Reply-To: <20220408200349.1529080-2-kaleshsingh@google.com>
+References: <20220408200349.1529080-1-kaleshsingh@google.com>
+ <20220408200349.1529080-2-kaleshsingh@google.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 185.104.136.29
+X-SA-Exim-Rcpt-To: kaleshsingh@google.com, will@kernel.org, qperret@google.com,
+ tabba@google.com, surenb@google.com, kernel-team@android.com,
+ james.morse@arm.com, alexandru.elisei@arm.com, suzuki.poulose@arm.com,
+ catalin.marinas@arm.com, mark.rutland@arm.com, yuzenghui@huawei.com,
+ masahiroy@kernel.org, ndesaulniers@google.com, changbin.du@intel.com,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Nick Desaulniers <ndesaulniers@google.com>, will@kernel.org,
+ kernel-team@android.com, Masahiro Yamada <masahiroy@kernel.org>,
+ linux-kernel@vger.kernel.org, Changbin Du <changbin.du@intel.com>,
+ linux-arm-kernel@lists.infradead.org,
+ Catalin Marinas <catalin.marinas@arm.com>, surenb@google.com,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -94,108 +101,180 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Assert that the vCPU exits to userspace with KVM_SYSTEM_EVENT_SUSPEND if
-the guest calls PSCI SYSTEM_SUSPEND. Additionally, guarantee that the
-SMC32 and SMC64 flavors of this call are discoverable with the
-PSCI_FEATURES call.
+On Fri, 08 Apr 2022 21:03:24 +0100,
+Kalesh Singh <kaleshsingh@google.com> wrote:
+> 
+> hyp_alloc_private_va_range() can be used to reserve private VA ranges
+> in the nVHE hypervisor. Allocations are aligned based on the order of
+> the requested size.
+> 
+> This will be used to implement stack guard pages for KVM nVHE hypervisor
+> (nVHE Hyp mode / not pKVM), in a subsequent patch in the series.
+> 
+> Signed-off-by: Kalesh Singh <kaleshsingh@google.com>
+> Tested-by: Fuad Tabba <tabba@google.com>
+> Reviewed-by: Fuad Tabba <tabba@google.com>
+> ---
+> 
+> Changes in v7:
+>   - Add Fuad's Reviewed-by and Tested-by tags.
+> 
+> Changes in v6:
+>   - Update kernel-doc for hyp_alloc_private_va_range()
+>     and add return description, per Stephen
+>   - Update hyp_alloc_private_va_range() to return an int error code,
+>     per Stephen
+>   - Replace IS_ERR() checks with IS_ERR_VALUE() check, per Stephen
+>   - Clean up goto, per Stephen
+> 
+> Changes in v5:
+>   - Align private allocations based on the order of their size, per Marc
+> 
+> Changes in v4:
+>   - Handle null ptr in hyp_alloc_private_va_range() and replace
+>     IS_ERR_OR_NULL checks in callers with IS_ERR checks, per Fuad
+>   - Fix kernel-doc comments format, per Fuad
+> 
+> Changes in v3:
+>   - Handle null ptr in IS_ERR_OR_NULL checks, per Mark
+> 
+> 
+>  arch/arm64/include/asm/kvm_mmu.h |  1 +
+>  arch/arm64/kvm/mmu.c             | 66 +++++++++++++++++++++-----------
+>  2 files changed, 45 insertions(+), 22 deletions(-)
+> 
+> diff --git a/arch/arm64/include/asm/kvm_mmu.h b/arch/arm64/include/asm/kvm_mmu.h
+> index 74735a864eee..a50cbb5ba402 100644
+> --- a/arch/arm64/include/asm/kvm_mmu.h
+> +++ b/arch/arm64/include/asm/kvm_mmu.h
+> @@ -154,6 +154,7 @@ static __always_inline unsigned long __kern_hyp_va(unsigned long v)
+>  int kvm_share_hyp(void *from, void *to);
+>  void kvm_unshare_hyp(void *from, void *to);
+>  int create_hyp_mappings(void *from, void *to, enum kvm_pgtable_prot prot);
+> +int hyp_alloc_private_va_range(size_t size, unsigned long *haddr);
+>  int create_hyp_io_mappings(phys_addr_t phys_addr, size_t size,
+>  			   void __iomem **kaddr,
+>  			   void __iomem **haddr);
+> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> index 0d19259454d8..3d3efea4e991 100644
+> --- a/arch/arm64/kvm/mmu.c
+> +++ b/arch/arm64/kvm/mmu.c
+> @@ -457,23 +457,22 @@ int create_hyp_mappings(void *from, void *to, enum kvm_pgtable_prot prot)
+>  	return 0;
+>  }
+>  
+> -static int __create_hyp_private_mapping(phys_addr_t phys_addr, size_t size,
+> -					unsigned long *haddr,
+> -					enum kvm_pgtable_prot prot)
+> +
+> +/**
+> + * hyp_alloc_private_va_range - Allocates a private VA range.
+> + * @size:	The size of the VA range to reserve.
+> + * @haddr:	The hypervisor virtual start address of the allocation.
+> + *
+> + * The private virtual address (VA) range is allocated below io_map_base
+> + * and aligned based on the order of @size.
+> + *
+> + * Return: 0 on success or negative error code on failure.
+> + */
+> +int hyp_alloc_private_va_range(size_t size, unsigned long *haddr)
+>  {
+>  	unsigned long base;
+>  	int ret = 0;
+>  
+> -	if (!kvm_host_owns_hyp_mappings()) {
+> -		base = kvm_call_hyp_nvhe(__pkvm_create_private_mapping,
+> -					 phys_addr, size, prot);
+> -		if (IS_ERR_OR_NULL((void *)base))
+> -			return PTR_ERR((void *)base);
+> -		*haddr = base;
+> -
+> -		return 0;
+> -	}
+> -
+>  	mutex_lock(&kvm_hyp_pgd_mutex);
+>  
+>  	/*
+> @@ -484,30 +483,53 @@ static int __create_hyp_private_mapping(phys_addr_t phys_addr, size_t size,
+>  	 *
+>  	 * The allocated size is always a multiple of PAGE_SIZE.
+>  	 */
+> -	size = PAGE_ALIGN(size + offset_in_page(phys_addr));
+> -	base = io_map_base - size;
+> +	base = io_map_base - PAGE_ALIGN(size);
+> +
+> +	/* Align the allocation based on the order of its size */
+> +	base = ALIGN_DOWN(base, PAGE_SIZE << get_order(size));
+>  
+>  	/*
+>  	 * Verify that BIT(VA_BITS - 1) hasn't been flipped by
+>  	 * allocating the new area, as it would indicate we've
+>  	 * overflowed the idmap/IO address range.
+>  	 */
+> -	if ((base ^ io_map_base) & BIT(VA_BITS - 1))
+> +	if (!base || (base ^ io_map_base) & BIT(VA_BITS - 1))
 
-Signed-off-by: Oliver Upton <oupton@google.com>
----
- .../testing/selftests/kvm/aarch64/psci_test.c | 69 +++++++++++++++++++
- 1 file changed, 69 insertions(+)
+I don't get this '!base' check. Why isn't it encompassed by the
+'VA_BITS - 1' flip check?
 
-diff --git a/tools/testing/selftests/kvm/aarch64/psci_test.c b/tools/testing/selftests/kvm/aarch64/psci_test.c
-index 535130d5e97f..88541de21c41 100644
---- a/tools/testing/selftests/kvm/aarch64/psci_test.c
-+++ b/tools/testing/selftests/kvm/aarch64/psci_test.c
-@@ -45,6 +45,25 @@ static uint64_t psci_affinity_info(uint64_t target_affinity,
- 	return res.a0;
- }
- 
-+static uint64_t psci_system_suspend(uint64_t entry_addr, uint64_t context_id)
-+{
-+	struct arm_smccc_res res;
-+
-+	smccc_hvc(PSCI_1_0_FN64_SYSTEM_SUSPEND, entry_addr, context_id,
-+		  0, 0, 0, 0, 0, &res);
-+
-+	return res.a0;
-+}
-+
-+static uint64_t psci_features(uint32_t func_id)
-+{
-+	struct arm_smccc_res res;
-+
-+	smccc_hvc(PSCI_1_0_FN_PSCI_FEATURES, func_id, 0, 0, 0, 0, 0, 0, &res);
-+
-+	return res.a0;
-+}
-+
- static void vcpu_power_off(struct kvm_vm *vm, uint32_t vcpuid)
- {
- 	struct kvm_mp_state mp_state = {
-@@ -137,8 +156,58 @@ static void host_test_cpu_on(void)
- 	kvm_vm_free(vm);
- }
- 
-+static void enable_system_suspend(struct kvm_vm *vm)
-+{
-+	struct kvm_enable_cap cap = {
-+		.cap = KVM_CAP_ARM_SYSTEM_SUSPEND,
-+	};
-+
-+	vm_enable_cap(vm, &cap);
-+}
-+
-+static void guest_test_system_suspend(void)
-+{
-+	uint64_t ret;
-+
-+	/* assert that SYSTEM_SUSPEND is discoverable */
-+	GUEST_ASSERT(!psci_features(PSCI_1_0_FN_SYSTEM_SUSPEND));
-+	GUEST_ASSERT(!psci_features(PSCI_1_0_FN64_SYSTEM_SUSPEND));
-+
-+	ret = psci_system_suspend(CPU_ON_ENTRY_ADDR, CPU_ON_CONTEXT_ID);
-+	GUEST_SYNC(ret);
-+}
-+
-+static void host_test_system_suspend(void)
-+{
-+	struct kvm_run *run;
-+	struct kvm_vm *vm;
-+
-+	vm = setup_vm(guest_test_system_suspend);
-+	enable_system_suspend(vm);
-+
-+	vcpu_power_off(vm, VCPU_ID_TARGET);
-+	run = vcpu_state(vm, VCPU_ID_SOURCE);
-+
-+	enter_guest(vm, VCPU_ID_SOURCE);
-+
-+	TEST_ASSERT(run->exit_reason == KVM_EXIT_SYSTEM_EVENT,
-+		    "Unhandled exit reason: %u (%s)",
-+		    run->exit_reason, exit_reason_str(run->exit_reason));
-+	TEST_ASSERT(run->system_event.type == KVM_SYSTEM_EVENT_SUSPEND,
-+		    "Unhandled system event: %u (expected: %u)",
-+		    run->system_event.type, KVM_SYSTEM_EVENT_SUSPEND);
-+
-+	kvm_vm_free(vm);
-+}
-+
- int main(void)
- {
-+	if (!kvm_check_cap(KVM_CAP_ARM_SYSTEM_SUSPEND)) {
-+		print_skip("KVM_CAP_ARM_SYSTEM_SUSPEND not supported");
-+		exit(KSFT_SKIP);
-+	}
-+
- 	host_test_cpu_on();
-+	host_test_system_suspend();
- 	return 0;
- }
+>  		ret = -ENOMEM;
+>  	else
+> -		io_map_base = base;
+> +		*haddr = io_map_base = base;
+>  
+>  	mutex_unlock(&kvm_hyp_pgd_mutex);
+>  
+> +	return ret;
+> +}
+> +
+> +static int __create_hyp_private_mapping(phys_addr_t phys_addr, size_t size,
+> +					unsigned long *haddr,
+> +					enum kvm_pgtable_prot prot)
+> +{
+> +	unsigned long addr;
+> +	int ret = 0;
+> +
+> +	if (!kvm_host_owns_hyp_mappings()) {
+> +		addr = kvm_call_hyp_nvhe(__pkvm_create_private_mapping,
+> +					 phys_addr, size, prot);
+> +		if (IS_ERR_VALUE(addr))
+> +			return addr;
+> +		*haddr = addr;
+> +
+> +		return 0;
+> +	}
+> +
+> +	size += offset_in_page(phys_addr);
+
+This hardly makes any sense on its own. I get it that it is still
+doing the right thing as hyp_alloc_private_va_range() will fix it up,
+but I'd rather you keep the PAGE_ALIGN() here, even if it ends up
+being duplicated.
+
+> +	ret = hyp_alloc_private_va_range(size, &addr);
+>  	if (ret)
+> -		goto out;
+> +		return ret;
+>  
+> -	ret = __create_hyp_mappings(base, size, phys_addr, prot);
+> +	ret = __create_hyp_mappings(addr, size, phys_addr, prot);
+>  	if (ret)
+> -		goto out;
+> +		return ret;
+>  
+> -	*haddr = base + offset_in_page(phys_addr);
+> -out:
+> +	*haddr = addr + offset_in_page(phys_addr);
+>  	return ret;
+>  }
+>  
+
+Thanks,
+
+	M.
+
 -- 
-2.35.1.1178.g4f1659d476-goog
-
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
