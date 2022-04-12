@@ -2,82 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 342BA4FDDA6
-	for <lists+kvmarm@lfdr.de>; Tue, 12 Apr 2022 13:30:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78D264FE1DC
+	for <lists+kvmarm@lfdr.de>; Tue, 12 Apr 2022 15:14:04 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 87A574B2C3;
-	Tue, 12 Apr 2022 07:30:56 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EF6324A369;
+	Tue, 12 Apr 2022 09:14:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -1.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id AJ4jiBZ3TYnT; Tue, 12 Apr 2022 07:30:56 -0400 (EDT)
+	with ESMTP id S97lrXCoY7Rb; Tue, 12 Apr 2022 09:14:02 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 21F8F4B2B0;
-	Tue, 12 Apr 2022 07:30:55 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A83584B2C8;
+	Tue, 12 Apr 2022 09:14:00 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B740A4B2A8
- for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Apr 2022 07:30:53 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 44D334B285
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Apr 2022 09:13:57 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id q6FC39-DR9Wr for <kvmarm@lists.cs.columbia.edu>;
- Tue, 12 Apr 2022 07:30:52 -0400 (EDT)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6794E4B2A0
- for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Apr 2022 07:30:52 -0400 (EDT)
+ with ESMTP id f9ZadW6mWOoG for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 12 Apr 2022 09:13:56 -0400 (EDT)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0D7404B284
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Apr 2022 09:13:56 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id F0544619D2;
- Tue, 12 Apr 2022 11:30:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C66C385A5;
- Tue, 12 Apr 2022 11:30:50 +0000 (UTC)
+ by ams.source.kernel.org (Postfix) with ESMTPS id D4354B81D75;
+ Tue, 12 Apr 2022 13:13:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766A5C385A5;
+ Tue, 12 Apr 2022 13:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1649763050;
- bh=uK7N36K2e4+xCv93RcufURlLVYNraBsK39xdEe7/GeA=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=ND5kNCf7TIkZreRHnS4vubaMurYaENmc1qkFxoCH1WOFPiqg3rzOwE1IQmyLb5KnT
- pA9bW2ZEnuU6U8B9y39V3c02FR2O+IJW/Nf0unjV5oppC2j8i+81vK9f3KdD5kHn6f
- yovd35lPYxFYaKV1f5+aX/nSZwsADsYnXeHU57RudRXdAHJEerpMaszrBRfvPLYVUu
- zK/3SWTM7TlDlcDva/xWI3K2MdrRsGCEu/Fx1RJwwfJpCVhd1/ktvkyYI6GNGcuze8
- 1oP9aZ9CFlp7o/tB+OaOWkLr2Wad8768jGmQ8zFFObeAop9aY0i2JTm+dI0CloKZkC
- 3PHWQeFt/21Pg==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+ s=k20201202; t=1649769233;
+ bh=3RoMGxcoj6ldO5clo4J4GuibpjgvSYGpjgzHSrg9Xfk=;
+ h=From:To:Cc:Subject:Date:From;
+ b=Lnh5aQWvNYQHxAKP1r6WsxA9f0WBWqBHazaF1W6rRIuIKGqYgcIICYIYL8DDoKjJA
+ tOFmaVpsmHxoPYni3VCox96Dt7wkieKyGMPHIlFyUZRaSEwyfctKMYctbj3DNreZmL
+ 32b7YzLZtNhPGSo67xt6vkAvsHhjYJtqw5MY2bNUeDjrWaUvVzV2V5YKjFSaoYX7fm
+ IW2lgRUEXiuPBILRE74o9VjafLEx24//QrNoUDbpZHP3vQnG80d/A01WHIY1qHZiNO
+ +lRC2M5Bnd3cD0d660fqs/lgTChMhxikEV4tbVlwGhrFcNZuWgqsjaDNVzfgyo1PLb
+ 3HFj9UoNktOzw==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1neEjP-003kda-Q0; Tue, 12 Apr 2022 12:30:47 +0100
-Date: Tue, 12 Apr 2022 12:30:47 +0100
-Message-ID: <87bkx6bkt4.wl-maz@kernel.org>
+ id 1neGL9-003mvX-2I; Tue, 12 Apr 2022 14:13:51 +0100
 From: Marc Zyngier <maz@kernel.org>
-To: Alexandru Elisei <alexandru.elisei@arm.com>
-Subject: Re: [PATCH 5/5] KVM: arm64: uapi: Add kvm_debug_exit_arch.hsr_high
-In-Reply-To: <YlQGh6Ky2oqrS89y@e121798.cambridge.arm.com>
-References: <20220407162327.396183-1-alexandru.elisei@arm.com>
- <20220407162327.396183-6-alexandru.elisei@arm.com>
- <87ee28auff.wl-maz@kernel.org>
- <YlQGh6Ky2oqrS89y@e121798.cambridge.arm.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
- (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
+Subject: [PATCH 00/10] arm64: Add initial support for FEAT_WFxT
+Date: Tue, 12 Apr 2022 14:12:53 +0100
+Message-Id: <20220412131303.504690-1-maz@kernel.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
 X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: alexandru.elisei@arm.com, catalin.marinas@arm.com,
- will@kernel.org, linux-arm-kernel@lists.infradead.org, james.morse@arm.com,
- suzuki.poulose@arm.com, kvmarm@lists.cs.columbia.edu, mark.rutland@arm.com
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, catalin.marinas@arm.com,
+ will@kernel.org, mark.rutland@arm.com, james.morse@arm.com,
+ suzuki.poulose@arm.com, alexandru.elisei@arm.com, kernel-team@android.com
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
-Cc: catalin.marinas@arm.com, will@kernel.org, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+Cc: kernel-team@android.com, Catalin Marinas <catalin.marinas@arm.com>,
+ Will Deacon <will@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -94,121 +89,52 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, 11 Apr 2022 11:46:09 +0100,
-Alexandru Elisei <alexandru.elisei@arm.com> wrote:
-> 
-> Hi Marc,
-> 
-> On Fri, Apr 08, 2022 at 08:47:00AM +0100, Marc Zyngier wrote:
-> > Hi Alex,
-> > 
-> > On Thu, 07 Apr 2022 17:23:27 +0100,
-> > Alexandru Elisei <alexandru.elisei@arm.com> wrote:
-> > > 
-> > > When userspace is debugging a VM, the kvm_debug_exit_arch part of the
-> > > kvm_run struct contains arm64 specific debug information: the ESR_EL2
-> > > value, encoded in the field "hsr", and the address of the instruction
-> > > that caused the exception, encoded in the field "far".
-> > > 
-> > > Linux has moved to treating ESR_EL2 as a 64-bit register, but unfortunately
-> > > kvm_debug_exit_arch.hsr cannot be changed to match because that would
-> > > change the memory layout of the struct on big endian machines:
-> > > 
-> > > Current layout:			| Layout with "hsr" extended to 64 bits:
-> > > 				|
-> > > offset 0: ESR_EL2[31:0] (hsr)   | offset 0: ESR_EL2[61:32] (hsr[61:32])
-> > > offset 4: padding		| offset 4: ESR_EL2[31:0]  (hsr[31:0])
-> > > offset 8: FAR_EL2[61:0] (far)	| offset 8: FAR_EL2[61:0]  (far)
-> > > 
-> > > which breaks existing code.
-> > > 
-> > > The padding is inserted by the compiler because the "far" field must be
-> > > aligned to 8 bytes (each field must be naturally aligned - aapcs64 [1],
-> > > page 18) and the struct itself must be aligned to 8 bytes (the struct must
-> > > be aligned to the maximum alignment of its fields - aapcs64, page 18),
-> > > which means that "hsr" must be aligned to 8 bytes as it is the first field
-> > > in the struct.
-> > > 
-> > > To avoid changing the struct size and layout for the existing fields, add a
-> > > new field, "hsr_high", which replaces the existing padding. "hsr_high" will
-> > > be used to hold the ESR_EL2[61:32] bits of the register. The memory layout,
-> > > both on big and little endian machine, becomes:
-> > > 
-> > > Layout with "hsr_high" added:
-> > > 
-> > > offset 0: ESR_EL2[31:0]  (hsr)
-> > > offset 4: ESR_EL2[61:32] (hsr_high)
-> > > offset 8: FAR_EL2[61:0]  (far)
-> > 
-> > My concern with this change is that it isn't clear what the padding is
-> > currently initialised to, and I don't think there is any guarantee
-> > that it is zeroed. With that, a new userspace on an old kernel would
-> > interpret hsr_high, and potentially observe stuff that wasn't supposed
-> > to be interpreted.
-> 
-> You are right, I didn't think about this scenario. Did some digging, and
-> C99 explicitely states that padding is uninitialized (September 7, 2007,
-> draft, page 38), so I assume that it's the same for C89 (couldn't find a
-> free source for the standard).
-> 
-> > 
-> > That's yet another mistake in our userspace ABI (where is the time
-> > machine when you need it?).
-> 
-> To avoid this sort of thing happening in the future, KVM/arm64 could
-> mandate that all structs that are part of the userspace API have the
-> padding explicitly declared as a struct field and that padding must always
-> be set to zero by userspace before a syscall.
+The ARMv8.7 WFxT feature is a new take on the good old WFI/WFE
+instructions as they behave the same way, only taking an extra timeout
+parameter.
 
-That's what we were aiming for for most structures, but clearly missed
-some. Debug is obviously an unloved part of the architecture.
+This small series aims at adding the minimal support for this feature,
+enabling it for both the kernel and KVM.
 
-> KVM would then check that the
-> padding is zero and return -EINVAL if userspace didn't clear it correctly,
-> to enforce this convention. I think that should be forward compatible with
-> repurposing the padding to add another field, unless 0 has a special
-> meaning for the field that is added, which I believe to be highly unlikely.
-> 
-> > 
-> > In order to do this, we must advertise to userspace that we provide
-> > more information. This probably means adding a flag of some sort to
-> > kvm_run (there are at least 128 bits of x86 stuff that can be readily
-> > reclaimed).
-> 
-> We could add a flag to kvm_run.flags that is set only when
-> kvm_run.exit_reason == KVM_EXIT_DEBUG, something like
-> KVM_DEBUG_ARM_HSR_HIGH_SET (or PRESENT). flags has 16 bits which are unused
-> today, so I don't think it's too costly to use one bit for this.
+A potential addition to this series would be to remove the event
+generation from the counters, and rely on the timeout where it
+matters (spinlocks?). Feedback welcome.
 
-That'd be a sensible approach. We use any for KVM/arm64 yet, and this
-is all arch-specific anyway.
+Patches on top of 5.18-rc2, tested of the FVP AEM.
 
-> 
-> One other option would be to wait to expose the upper 32 bits until KVM
-> supports a hardware feature that makes use of those bits. That means
-> advertising the feature to userspace, which KVM might or might not want to
-> do. And KVM today doesn't do any sanitisation/masking on the hsr value that
-> is reported to userspace, and tying hsr_high to a particular feature might
-> mean that KVM will have to sanitise the upper bits if said feature is
-> opt-in by userspace.
-> 
-> My preference is for the first approach because the second approach looks
-> more complicated.
+Marc Zyngier (10):
+  arm64: Expand ESR_ELx_WFx_ISS_TI to match its ARMv8.7 definition
+  arm64: Add RV and RN fields for ESR_ELx_WFx_ISS
+  KVM: arm64: Simplify kvm_cpu_has_pending_timer()
+  KVM: arm64: Introduce kvm_counter_compute_delta() helper
+  KVM: arm64: Handle blocking WFIT instruction
+  KVM: arm64: Offer early resume for non-blocking WFxT instructions
+  KVM: arm64: Expose the WFXT feature to guests
+  arm64: Add HWCAP advertising FEAT_WFXT
+  arm64: Add wfet()/wfit() helpers
+  arm64: Use WFxT for __delay() when possible
 
-+1.
-
-> There's always the option to wait until KVM makes use of the upper 32 bits
-> and decide then, when we have more information.
-
-The sooner, the better. Updating userspace takes *years*, so let's do
-it ASAP.
-
-Thanks,
-
-	M.
+ Documentation/arm64/cpu-feature-registers.rst |  2 +
+ Documentation/arm64/elf_hwcaps.rst            |  4 ++
+ arch/arm64/include/asm/barrier.h              |  4 ++
+ arch/arm64/include/asm/esr.h                  |  8 +++-
+ arch/arm64/include/asm/hwcap.h                |  1 +
+ arch/arm64/include/asm/kvm_host.h             |  1 +
+ arch/arm64/include/uapi/asm/hwcap.h           |  1 +
+ arch/arm64/kernel/cpufeature.c                | 13 +++++
+ arch/arm64/kernel/cpuinfo.c                   |  1 +
+ arch/arm64/kvm/arch_timer.c                   | 47 ++++++++++++-------
+ arch/arm64/kvm/arm.c                          |  6 +--
+ arch/arm64/kvm/handle_exit.c                  | 30 ++++++++++--
+ arch/arm64/kvm/sys_regs.c                     |  2 +
+ arch/arm64/lib/delay.c                        | 12 ++++-
+ arch/arm64/tools/cpucaps                      |  1 +
+ include/kvm/arm_arch_timer.h                  |  2 -
+ 16 files changed, 106 insertions(+), 29 deletions(-)
 
 -- 
-Without deviation from the norm, progress is not possible.
+2.34.1
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
