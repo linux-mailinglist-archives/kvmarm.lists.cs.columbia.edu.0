@@ -2,50 +2,52 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C2B24FE2B0
-	for <lists+kvmarm@lfdr.de>; Tue, 12 Apr 2022 15:32:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 058844FE2B1
+	for <lists+kvmarm@lfdr.de>; Tue, 12 Apr 2022 15:32:45 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7FB054088C;
-	Tue, 12 Apr 2022 09:32:42 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 941024B24B;
+	Tue, 12 Apr 2022 09:32:44 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.899
+X-Spam-Score: -1.898
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.898 required=6.1 tests=[BAYES_00=-1.9,
+	RCVD_IN_DNSWL_BLOCKED=0.001, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TviZ9lDB7GTv; Tue, 12 Apr 2022 09:32:42 -0400 (EDT)
+	with ESMTP id edeckvWuhwSg; Tue, 12 Apr 2022 09:32:43 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id ECC0F4B256;
-	Tue, 12 Apr 2022 09:32:40 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 180CC4B2A0;
+	Tue, 12 Apr 2022 09:32:42 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 26A3F4B1AA
- for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Apr 2022 09:32:39 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 845AC4088C
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Apr 2022 09:32:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id REQO7mu2zEAe for <kvmarm@lists.cs.columbia.edu>;
- Tue, 12 Apr 2022 09:32:37 -0400 (EDT)
+ with ESMTP id 8teufQvY9l3p for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 12 Apr 2022 09:32:39 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8CB314088C
- for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Apr 2022 09:32:37 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4B0BB4B1AA
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Apr 2022 09:32:39 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E29D6150C;
- Tue, 12 Apr 2022 06:32:36 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8F9FF1516;
+ Tue, 12 Apr 2022 06:32:38 -0700 (PDT)
 Received: from e121798.arm.com (unknown [10.57.11.98])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 78B233F70D;
- Tue, 12 Apr 2022 06:32:35 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 2AA0A3F70D;
+ Tue, 12 Apr 2022 06:32:37 -0700 (PDT)
 From: Alexandru Elisei <alexandru.elisei@arm.com>
 To: will@kernel.org, julien.thierry.kdev@gmail.com,
  linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  maz@kernel.org, james.morse@arm.com, suzuki.poulose@arm.com,
  mark.rutland@arm.com, andre.przywara@arm.com
-Subject: [PATCH v3 kvmtool 00/11] arm64: Improve PMU support on heterogeneous
- systems
-Date: Tue, 12 Apr 2022 14:32:20 +0100
-Message-Id: <20220412133231.35355-1-alexandru.elisei@arm.com>
+Subject: [PATCH v3 kvmtool 01/11] linux/err.h: Add missing stdbool.h include
+Date: Tue, 12 Apr 2022 14:32:21 +0100
+Message-Id: <20220412133231.35355-2-alexandru.elisei@arm.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20220412133231.35355-1-alexandru.elisei@arm.com>
+References: <20220412133231.35355-1-alexandru.elisei@arm.com>
 MIME-Version: 1.0
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -58,166 +60,59 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The series can be found at [1].
-
-The series adds support for the KVM_ARM_VCPU_PMU_V3_SET_PMU PMU attribute,
-which allows userspace to set a PMU for a VCPU. This PMU is used by KVM
-when creating perf events to emulate the guest PMU.
-
-Without settings this attribute, the PMU used when creating events is the
-first one that successfully probed when booting, but this is unreliable as
-the probe order can change (if the order of the PMUs is changed in the DTB
-or if asynchronous driver probing is enabled on the host's command line),
-and furthermore it requires the user to have intimate knowledge of how the
-PMU was chosen in order to pin the VM on the correct physical CPUs.
-
-With KVM_ARM_VCPU_PMU_V3_SET_PMU, the user is still expected to pin the
-VCPUs on a particular set of CPUs, but now it can be any CPUs as long as
-they share the same PMU. The set does not depend anymore on the driver
-probe order and all that is necessary for the user to know is which CPUs
-share the same PMU, which I believe is a more reasonable expectation for
-the average user. Pinning the VCPU threads on the desired CPUs can be done
-using two methods:
-
-1. By pinning the kvmtool process using taskset.
-
-2. By pinning only the VCPU threads using the kvmtool command line argument
---vcpu-affinity, which this series introduces.
-
-Regarding method #1, the series has the potential to break users of kvmtool
-on heterogeneous systems. For example, launching kvmtool like this:
-
-./lkvm run -c2 -m512 -k <kernel> -d <disk> --pmu
-
-will exit with an error when Linux migrates a VCPU thread to a physical CPU
-which has a different PMU than the PMU associated with the main thread when
-the emulated PMU has been set for the entire VM. I believe this is an
-improvement over the current behaviour for two reasons:
-
-* PMU events would have stopped working anyway when the thread migration
-  happens, but now KVM kills the VM instead of events silently stopping.
-  This can save someone a lot of time and pain debugging the VM.
-
-* Using taskset to pin kvmtool to a set of CPUs which have a particular PMU
-  now works.
-
-However, I understand that breaking existing scripts/use cases might not be
-desirable, and if requested I can change the series to set the PMU only
-when --vcpu-affinity is specified and preserve the current behaviour.
-
-Patches #1-#3 are fixes and can be taken independently of this series.
-
-Patches #4-#7 move the PMU code to aarch64, where it belongs, because the
-PMU has never been supported on KVM for arm. This also paves the way for
-pulling in the KVM_ARM_VCPU_PMU_V3_SET_PMU attribute, which was not defined
-for KVM for arm (when KVM supported arm). This also can be merged right
-now, independently of the other patches.
-
-Patch #8 adds the cpumask_* functions which are necessary for subsequent
-patches.
-
-Patch #10 adds basic support for KVM_ARM_VCPU_PMU_V3_SET_PMU; the user is
-still expected to use taskset to pin the entire VM to the correct CPUs.
-
-Patch #11 expands on #10 by adding the --vcpu-affinity command line
-argument to pin VCPUs to the correct CPUs without pinning the rest of the
-kvmtool threads.
-
-Changes from v2:
-
-* Patch #3 (" arm/arm64: pmu.h: Add missing header guards") is new.
-* Use __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__ as per C preprocessor
-  common predefined macros [2].
-* Do not die if kvmtool is not able to find a PMU associated with the CPUs
-  specified by the user with --vcpu-affinity. There are valid reasons for
-  someone to do this (like testing what happens with the default PMU, or
-  what happens to a guest when PMU events are not working, etc).
-* Updated --pmu help text to explain how the PMU is chosen.
-* Minor cosmetic fixes.
-
-Changes from v1:
-
-* Patch #2 ("bitops.h: Include wordsize.h to provide the __WORDSIZE
-  define") is new.
-* Added for_each_cpu(), cpumask_and() and cpumask_subset() functions and
-  all the cpumask_* functions are added in one patch.
-* Bumped NR_CPUS fro arm64 to 4096 to match the Linux Kconfig option.
-* Reworked the way kvmtool specific header files were included to use
-  quotes to clearly differentiate them from the system level headers and to
-  keep the style consistent with the current code (for example, #include
-  <linux/bitops.h> is now "linux/bitops.h").
-* Patch #10 ("arm64: Add --vcpu-affinity command line argument") is new.
-
-[1] https://gitlab.arm.com/linux-arm/kvmtool-ae/-/tree/pmu-big-little-fix-v3
-[2] https://gcc.gnu.org/onlinedocs/cpp/Common-Predefined-Macros.html
-
-Alexandru Elisei (11):
-  linux/err.h: Add missing stdbool.h include
-  linux/bitops.h: Include wordsize.h to provide the __WORDSIZE define
-  arm/arm64: pmu.h: Add missing header guards
-  arm: Move arch specific VCPU features to the arch specific function
-  arm: Get rid of the ARM_VCPU_FEATURE_FLAGS() macro
-  arm: Make the PMUv3 emulation code arm64 specific
-  arm64: Rework set_pmu_attr()
-  Add cpumask functions
-  update_headers.sh: Sync ABI headers with Linux v5.18-rc2
-  arm64: Add support for KVM_ARM_VCPU_PMU_V3_SET_PMU
-  arm64: Add --vcpu-affinity command line argument
-
- Makefile                                      |   8 +-
- arm/aarch32/include/asm/kernel.h              |   8 +
- arm/aarch32/include/kvm/kvm-cpu-arch.h        |   4 -
- arm/aarch64/arm-cpu.c                         |   3 +-
- arm/aarch64/include/asm/kernel.h              |   8 +
- arm/aarch64/include/asm/kvm.h                 |  11 +
- .../arm-common => aarch64/include/asm}/pmu.h  |   4 +
- arm/aarch64/include/kvm/kvm-config-arch.h     |   9 +-
- arm/aarch64/include/kvm/kvm-cpu-arch.h        |   6 -
- arm/aarch64/kvm-cpu.c                         |  21 ++
- arm/aarch64/kvm.c                             |  32 +++
- arm/aarch64/pmu.c                             | 237 ++++++++++++++++
- arm/include/arm-common/kvm-arch.h             |   7 +
- arm/include/arm-common/kvm-config-arch.h      |   1 +
- arm/kvm-cpu.c                                 |  14 +-
- arm/pmu.c                                     |  76 ------
- include/linux/bitmap.h                        |  71 +++++
- include/linux/bitops.h                        |   4 +
- include/linux/bits.h                          |   8 +
- include/linux/cpumask.h                       |  67 +++++
- include/linux/err.h                           |   2 +
- include/linux/find.h                          |  30 ++
- include/linux/kernel.h                        |   6 +
- include/linux/kvm.h                           |  15 +-
- mips/include/asm/kernel.h                     |   8 +
- powerpc/include/asm/kernel.h                  |   8 +
- util/bitmap.c                                 | 256 ++++++++++++++++++
- util/find.c                                   |  40 +++
- x86/include/asm/kernel.h                      |   8 +
- 29 files changed, 870 insertions(+), 102 deletions(-)
- create mode 100644 arm/aarch32/include/asm/kernel.h
- create mode 100644 arm/aarch64/include/asm/kernel.h
- rename arm/{include/arm-common => aarch64/include/asm}/pmu.h (55%)
- create mode 100644 arm/aarch64/pmu.c
- delete mode 100644 arm/pmu.c
- create mode 100644 include/linux/bitmap.h
- create mode 100644 include/linux/bits.h
- create mode 100644 include/linux/cpumask.h
- create mode 100644 include/linux/find.h
- create mode 100644 mips/include/asm/kernel.h
- create mode 100644 powerpc/include/asm/kernel.h
- create mode 100644 util/bitmap.c
- create mode 100644 util/find.c
- create mode 100644 x86/include/asm/kernel.h
-
--- 
-2.25.1
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+QWRkIG1pc3NpbmcgaGVhZGVyIHN0ZGJvb2wuaCB0byBhdm9pZCBlcnJvcnMgbGlrZSB0aGlzIG9u
+ZSwgd2hpY2ggY2FuCmhhcHBlbiBpZiB0aGUgaW5jbHVkaW5nIGZpbGUgZG9lc24ndCBpbmNsdWRl
+IHN0ZGJvb2wuaDoKCmluY2x1ZGUvbGludXgvZXJyLmg6MzM6MTU6IGVycm9yOiB0eXBlIGRlZmF1
+bHRzIHRvIOKAmGludOKAmSBpbiBkZWNsYXJhdGlvbiBvZiDigJhib29s4oCZIFstV2Vycm9yPWlt
+cGxpY2l0LWludF0KICAgMzMgfCBzdGF0aWMgaW5saW5lIGJvb2wgX19tdXN0X2NoZWNrIElTX0VS
+UihfX2ZvcmNlIGNvbnN0IHZvaWQgKnB0cikKICAgICAgfCAgICAgICAgICAgICAgIF5+fn4KaW5j
+bHVkZS9saW51eC9lcnIuaDozMzoxNTogZXJyb3I6IHZhcmlhYmxlIOKAmGJvb2zigJkgZGVjbGFy
+ZWQg4oCYaW5saW5l4oCZIFstV2Vycm9yXQppbmNsdWRlL2xpbnV4L2Vyci5oOjMzOjE6IGVycm9y
+OiDigJh3YXJuX3VudXNlZF9yZXN1bHTigJkgYXR0cmlidXRlIG9ubHkgYXBwbGllcyB0byBmdW5j
+dGlvbiB0eXBlcyBbLVdlcnJvcj1hdHRyaWJ1dGVzXQogICAzMyB8IHN0YXRpYyBpbmxpbmUgYm9v
+bCBfX211c3RfY2hlY2sgSVNfRVJSKF9fZm9yY2UgY29uc3Qgdm9pZCAqcHRyKQogICAgICB8IF5+
+fn5+fgppbmNsdWRlL2xpbnV4L2Vyci5oOjMzOjMzOiBlcnJvcjogZXhwZWN0ZWQg4oCYLOKAmSBv
+ciDigJg74oCZIGJlZm9yZSDigJhJU19FUlLigJkKICAgMzMgfCBzdGF0aWMgaW5saW5lIGJvb2wg
+X19tdXN0X2NoZWNrIElTX0VSUihfX2ZvcmNlIGNvbnN0IHZvaWQgKnB0cikKICAgICAgfCAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIF5+fn5+fgppbmNsdWRlL2xpbnV4L2Vyci5oOjM4
+OjE1OiBlcnJvcjogdHlwZSBkZWZhdWx0cyB0byDigJhpbnTigJkgaW4gZGVjbGFyYXRpb24gb2Yg
+4oCYYm9vbOKAmSBbLVdlcnJvcj1pbXBsaWNpdC1pbnRdCiAgIDM4IHwgc3RhdGljIGlubGluZSBi
+b29sIF9fbXVzdF9jaGVjayBJU19FUlJfT1JfTlVMTChfX2ZvcmNlIGNvbnN0IHZvaWQgKnB0cikK
+ICAgICAgfCAgICAgICAgICAgICAgIF5+fn4KaW5jbHVkZS9saW51eC9lcnIuaDozODoxNTogZXJy
+b3I6IHZhcmlhYmxlIOKAmGJvb2zigJkgZGVjbGFyZWQg4oCYaW5saW5l4oCZIFstV2Vycm9yXQpp
+bmNsdWRlL2xpbnV4L2Vyci5oOjM4OjE6IGVycm9yOiDigJh3YXJuX3VudXNlZF9yZXN1bHTigJkg
+YXR0cmlidXRlIG9ubHkgYXBwbGllcyB0byBmdW5jdGlvbiB0eXBlcyBbLVdlcnJvcj1hdHRyaWJ1
+dGVzXQogICAzOCB8IHN0YXRpYyBpbmxpbmUgYm9vbCBfX211c3RfY2hlY2sgSVNfRVJSX09SX05V
+TEwoX19mb3JjZSBjb25zdCB2b2lkICpwdHIpCiAgICAgIHwgXn5+fn5+CmluY2x1ZGUvbGludXgv
+ZXJyLmg6Mzg6MTU6IGVycm9yOiByZWR1bmRhbnQgcmVkZWNsYXJhdGlvbiBvZiDigJhib29s4oCZ
+IFstV2Vycm9yPXJlZHVuZGFudC1kZWNsc10KICAgMzggfCBzdGF0aWMgaW5saW5lIGJvb2wgX19t
+dXN0X2NoZWNrIElTX0VSUl9PUl9OVUxMKF9fZm9yY2UgY29uc3Qgdm9pZCAqcHRyKQogICAgICB8
+ICAgICAgICAgICAgICAgXn5+fgppbmNsdWRlL2xpbnV4L2Vyci5oOjMzOjE1OiBub3RlOiBwcmV2
+aW91cyBkZWNsYXJhdGlvbiBvZiDigJhib29s4oCZIHdhcyBoZXJlCiAgIDMzIHwgc3RhdGljIGlu
+bGluZSBib29sIF9fbXVzdF9jaGVjayBJU19FUlIoX19mb3JjZSBjb25zdCB2b2lkICpwdHIpCiAg
+ICAgIHwgICAgICAgICAgICAgICBefn5+CmluY2x1ZGUvbGludXgvZXJyLmg6Mzg6MzM6IGVycm9y
+OiBleHBlY3RlZCDigJgs4oCZIG9yIOKAmDvigJkgYmVmb3JlIOKAmElTX0VSUl9PUl9OVUxM4oCZ
+CiAgIDM4IHwgc3RhdGljIGlubGluZSBib29sIF9fbXVzdF9jaGVjayBJU19FUlJfT1JfTlVMTChf
+X2ZvcmNlIGNvbnN0IHZvaWQgKnB0cikKICAgICAgfCAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIF5+fn5+fn5+fn5+fn5+CmluY2x1ZGUvbGludXgvZXJyLmg6IEluIGZ1bmN0aW9uIOKA
+mFBUUl9FUlJfT1JfWkVST+KAmToKaW5jbHVkZS9saW51eC9lcnIuaDo1ODo2OiBlcnJvcjogaW1w
+bGljaXQgZGVjbGFyYXRpb24gb2YgZnVuY3Rpb24g4oCYSVNfRVJS4oCZIFstV2Vycm9yPWltcGxp
+Y2l0LWZ1bmN0aW9uLWRlY2xhcmF0aW9uXQogICA1OCB8ICBpZiAoSVNfRVJSKHB0cikpCiAgICAg
+IHwgICAgICBefn5+fn4KaW5jbHVkZS9saW51eC9lcnIuaDo1ODo2OiBlcnJvcjogbmVzdGVkIGV4
+dGVybiBkZWNsYXJhdGlvbiBvZiDigJhJU19FUlLigJkgWy1XZXJyb3I9bmVzdGVkLWV4dGVybnNd
+CgpTaWduZWQtb2ZmLWJ5OiBBbGV4YW5kcnUgRWxpc2VpIDxhbGV4YW5kcnUuZWxpc2VpQGFybS5j
+b20+Ci0tLQogaW5jbHVkZS9saW51eC9lcnIuaCB8IDIgKysKIDEgZmlsZSBjaGFuZ2VkLCAyIGlu
+c2VydGlvbnMoKykKCmRpZmYgLS1naXQgYS9pbmNsdWRlL2xpbnV4L2Vyci5oIGIvaW5jbHVkZS9s
+aW51eC9lcnIuaAppbmRleCBhNzI5MTIwNjQ0ZDUuLjEyNTZjN2FiZmVmYSAxMDA2NDQKLS0tIGEv
+aW5jbHVkZS9saW51eC9lcnIuaAorKysgYi9pbmNsdWRlL2xpbnV4L2Vyci5oCkBAIC0xLDYgKzEs
+OCBAQAogI2lmbmRlZiBfTElOVVhfRVJSX0gKICNkZWZpbmUgX0xJTlVYX0VSUl9ICiAKKyNpbmNs
+dWRlIDxzdGRib29sLmg+CisKICNpbmNsdWRlIDxsaW51eC9jb21waWxlci5oPgogI2luY2x1ZGUg
+PGxpbnV4L3R5cGVzLmg+CiAKLS0gCjIuMjUuMQoKX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX18Ka3ZtYXJtIG1haWxpbmcgbGlzdAprdm1hcm1AbGlzdHMuY3Mu
+Y29sdW1iaWEuZWR1Cmh0dHBzOi8vbGlzdHMuY3MuY29sdW1iaWEuZWR1L21haWxtYW4vbGlzdGlu
+Zm8va3ZtYXJtCg==
