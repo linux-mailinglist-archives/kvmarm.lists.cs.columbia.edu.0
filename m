@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D0524FE1DD
-	for <lists+kvmarm@lfdr.de>; Tue, 12 Apr 2022 15:14:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B478F4FE1DF
+	for <lists+kvmarm@lfdr.de>; Tue, 12 Apr 2022 15:14:06 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id ED83A4B25A;
-	Tue, 12 Apr 2022 09:14:04 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D0AE24B0B8;
+	Tue, 12 Apr 2022 09:14:05 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
@@ -18,50 +18,49 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vCI0c8qAte+7; Tue, 12 Apr 2022 09:14:04 -0400 (EDT)
+	with ESMTP id jLZ61+PLFM-j; Tue, 12 Apr 2022 09:14:04 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BC4A84B2CF;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DAC574B27F;
 	Tue, 12 Apr 2022 09:14:00 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 675444B25A
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A37934B25A
  for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Apr 2022 09:13:57 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id cN7CoXp1fuO2 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 12 Apr 2022 09:13:56 -0400 (EDT)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1DC044B287
- for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Apr 2022 09:13:56 -0400 (EDT)
+ with ESMTP id mIfgHn1S-aPp for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 12 Apr 2022 09:13:55 -0400 (EDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 50BE74A369
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Apr 2022 09:13:55 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id CC599B81B5D;
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 52EE7618E3;
  Tue, 12 Apr 2022 13:13:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8139FC385A6;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B08A8C385AC;
  Tue, 12 Apr 2022 13:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1649769233;
- bh=SpKp3TCBsOBkzmGD30AlbWzu/c5WczQQXE0rta2jfmY=;
+ bh=ZbncnZ32bg/pWl5i1LBdjIUJlWirb6o/1JxeMS9My4s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=pDDrQf7AiYZQslPFKSED5wqcAyN1pNVPNYZl6UrznnRPS1460iecM9izlYi39L1wB
- s5B9ZRWHuoKmcPYqZnV2TYXpPU0qxRAa+2IvkXSfJOtZuN8aLXQBPXW+1xe9MYY5r/
- 5byiBblzk0/Bjj8W3hydnihzaD2/bSucsq19gYaAO7svPQ9NX5ikflPbP0aQ3s1XLs
- HGaLiJ+EZqJjL2HWCxzGVsapq1zGmMF7YifJ4aZSxBWmmQXKg5OzP5X/lJLMr7LDXb
- q08NQP49c4NuQLGg8yJbZaT9Vll/a/ebXlmMsadnNFQz+OxeqTtrhXsoUs8FxJEBoQ
- wpflEv4CtI8FQ==
+ b=GSCNpxfr9zV9PtuTNKURArEQ+F7+KJsFo5eDU6+TnLy9RcDYnC/MHb01HduzEBkdV
+ 78eNCNh0HBaiWsWepEjyJH0VcdPuxXw1PvhqkhJwayNR/jAEwwV/bkxKxJDGKoza4l
+ Sd7rl910megsYGrDHMR1SlbLuB+TdnVwPLfimmN7GgA6kEelO1atY4TEaKMR37zwrx
+ 1RY/bsZui1+ZOEtQSXHdVC112a2HBTh/pSbILDmbkduKq3CiLubHO+bwBXTGSloIjI
+ RZsyM9qYFUevOq267XXVv6HfOSutlBMN/rcm7GCEyRneLOPz+4OgvdvXdCgdJbpYYi
+ mDkrRI8oX0Ttg==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1neGL9-003mvX-DR; Tue, 12 Apr 2022 14:13:51 +0100
+ id 1neGL9-003mvX-Jl; Tue, 12 Apr 2022 14:13:51 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  kvm@vger.kernel.org
-Subject: [PATCH 01/10] arm64: Expand ESR_ELx_WFx_ISS_TI to match its ARMv8.7
- definition
-Date: Tue, 12 Apr 2022 14:12:54 +0100
-Message-Id: <20220412131303.504690-2-maz@kernel.org>
+Subject: [PATCH 02/10] arm64: Add RV and RN fields for ESR_ELx_WFx_ISS
+Date: Tue, 12 Apr 2022 14:12:55 +0100
+Message-Id: <20220412131303.504690-3-maz@kernel.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220412131303.504690-1-maz@kernel.org>
 References: <20220412131303.504690-1-maz@kernel.org>
@@ -92,43 +91,34 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Starting with FEAT_WFXT in ARMv8.7, the TI field in the ISS
-that is reported on a WFx trap is expanded by one bit to
-allow the description of WFET and WFIT.
+The ISS field exposed by ESR_ELx contain two additional subfields
+with FEAT_WFxT:
 
-Special care is taken to exclude the WFxT bit from the mask
-used to match WFI so that it also matches WFIT when trapped from
-EL0.
+- RN, the register number containing the timeout
+- RV, indicating if the register number is valid
+
+Describe these two fields according to the arch spec.
+
+No functional change.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/esr.h | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/esr.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/arch/arm64/include/asm/esr.h b/arch/arm64/include/asm/esr.h
-index d52a0b269ee8..65c2201b11b2 100644
+index 65c2201b11b2..15156c478054 100644
 --- a/arch/arm64/include/asm/esr.h
 +++ b/arch/arm64/include/asm/esr.h
-@@ -133,7 +133,8 @@
+@@ -133,6 +133,8 @@
  #define ESR_ELx_CV		(UL(1) << 24)
  #define ESR_ELx_COND_SHIFT	(20)
  #define ESR_ELx_COND_MASK	(UL(0xF) << ESR_ELx_COND_SHIFT)
--#define ESR_ELx_WFx_ISS_TI	(UL(1) << 0)
-+#define ESR_ELx_WFx_ISS_TI	(UL(3) << 0)
-+#define ESR_ELx_WFx_ISS_WFxT	(UL(2) << 0)
++#define ESR_ELx_WFx_ISS_RN	(UL(0x1F) << 5)
++#define ESR_ELx_WFx_ISS_RV	(UL(1) << 2)
+ #define ESR_ELx_WFx_ISS_TI	(UL(3) << 0)
+ #define ESR_ELx_WFx_ISS_WFxT	(UL(2) << 0)
  #define ESR_ELx_WFx_ISS_WFI	(UL(0) << 0)
- #define ESR_ELx_WFx_ISS_WFE	(UL(1) << 0)
- #define ESR_ELx_xVC_IMM_MASK	((1UL << 16) - 1)
-@@ -146,7 +147,8 @@
- #define DISR_EL1_ESR_MASK	(ESR_ELx_AET | ESR_ELx_EA | ESR_ELx_FSC)
- 
- /* ESR value templates for specific events */
--#define ESR_ELx_WFx_MASK	(ESR_ELx_EC_MASK | ESR_ELx_WFx_ISS_TI)
-+#define ESR_ELx_WFx_MASK	(ESR_ELx_EC_MASK |			\
-+				 (ESR_ELx_WFx_ISS_TI & ~ESR_ELx_WFx_ISS_WFxT))
- #define ESR_ELx_WFx_WFI_VAL	((ESR_ELx_EC_WFx << ESR_ELx_EC_SHIFT) |	\
- 				 ESR_ELx_WFx_ISS_WFI)
- 
 -- 
 2.34.1
 
