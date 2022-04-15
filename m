@@ -2,77 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 197F9503034
-	for <lists+kvmarm@lfdr.de>; Fri, 15 Apr 2022 23:59:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7CFD8503035
+	for <lists+kvmarm@lfdr.de>; Fri, 15 Apr 2022 23:59:34 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8BF6C4B13E;
-	Fri, 15 Apr 2022 17:59:32 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0F8234B11A;
+	Fri, 15 Apr 2022 17:59:34 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6E9-J5RAhEZg; Fri, 15 Apr 2022 17:59:31 -0400 (EDT)
+	with ESMTP id UhvXMBfXz3nF; Fri, 15 Apr 2022 17:59:33 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AF33349F2C;
-	Fri, 15 Apr 2022 17:59:25 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EC2A74B12C;
+	Fri, 15 Apr 2022 17:59:29 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DC23B4A4BE
- for <kvmarm@lists.cs.columbia.edu>; Fri, 15 Apr 2022 17:59:24 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A11764B089
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 15 Apr 2022 17:59:28 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id pZSiYQd1JET9 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 15 Apr 2022 17:59:23 -0400 (EDT)
+ with ESMTP id bb5OZz-uejwQ for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 15 Apr 2022 17:59:27 -0400 (EDT)
 Received: from mail-io1-f73.google.com (mail-io1-f73.google.com
  [209.85.166.73])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2FF8D49F55
- for <kvmarm@lists.cs.columbia.edu>; Fri, 15 Apr 2022 17:59:21 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 60C154B119
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 15 Apr 2022 17:59:22 -0400 (EDT)
 Received: by mail-io1-f73.google.com with SMTP id
- y13-20020a5e834d000000b0064fc8cd0bf1so3626773iom.14
- for <kvmarm@lists.cs.columbia.edu>; Fri, 15 Apr 2022 14:59:21 -0700 (PDT)
+ u18-20020a5d8712000000b0064c7a7c497aso5414152iom.18
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 15 Apr 2022 14:59:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=+7THeEZjrQkI4cL8qs69/ZVQNerdV4AViBcRVZLLx0E=;
- b=sgJWtGYVInFd1drSIPRRI4aezVykNPn0h3TZjKKiErpQM7sAIHOOKNGcQ0jWe9x2J3
- 4uorM5vPe/np9qjkIYA4dfw4gtmkWWOabaU8tGatq8w8LsDoUg9+FMK0LVF1fX+QFyw6
- i9msKz6hKpt7r66C+xns81BxvuHbanyJZ610bbwgkWkEmS6Xl9AcIZ1z+pnbftljqbuV
- TZJnMR1dtR7pvNgtOgZtS1KwcCNK2XXzdflPkGu6sg9JhoQgHweTSx9tVIIm2620GETp
- v/lovjRa15qTioUPiP/HsnkVKkyBFJUAm8nxrDqS7jgG1Smlaj2NKciPmkptKeLE+kdI
- nEKA==
+ :cc; bh=Mb/OefWBn9RCKNoTmiaaE/VUMk03Unut8vex1/PGQS0=;
+ b=fsNxIh3BEH+XlmSMjPVMtJeBZUk0FQpQlK3w9p+lwpUBGbcSk9U8YLOg1rOBKVY1uR
+ viQStsQ0f4HjS7zw60Z7a9eHBjDc6y8KRSAjfz92x1WW108wRFezoo18fGyW9sSXBFjN
+ 2njPnnWl4Sr2o3BvCsi7QBaMPCEPmdo7c66TYpshJHac92EsLJ7nryQaBB4BbzWGOmGE
+ IYHOMX5S+Fo9qzysE1iP/+8Q31pXvGIBFwOUa9Uu4JmQUu3iidG5OczCVUkqWrYk1BLJ
+ vJIDxqvp/F8fIVIgSNja8wv/C6uygQfysG5mpeJRy6sVuameHckrI6H2LQ9ArdcD5nwl
+ 2BBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=+7THeEZjrQkI4cL8qs69/ZVQNerdV4AViBcRVZLLx0E=;
- b=fFwmWWoxnkSOIvWP+TV6Foj6SJ+NJT1EHje8AJwrFKCTDVAEJ4ZIoIuIX7h4Tdlsqz
- 2DVkWrUWQLSq70qaHJ1Y9/12sIiTT756RjZYKTnirk039vgaxrqtbU9HO8hujLGbRHkp
- HBemGT3UOgPXqjAkkWYvDWtEB9G+XxQhXoRoicitBVjuZNNfsahwkPAx4pr3nYzralnM
- Ug0rW7DWF8oBDgBkdCzUqEkOGKpHKsV+IIPwZh2xWEmm9+6r2Ryl+e4xCZzyJSCWuZWC
- 0+kktWVdhAKtxOYORDAeGzP/2sHrLpZ0fF01KZNrjhNpYFFFqqNdqrF6gdq4an6cEwI1
- DT1g==
-X-Gm-Message-State: AOAM532BcKbSiEmN1ZZgbkda/g7MrawSxB6vl9URfWw4AfVXyu7u6tai
- JwSReiVuaXMnRibsxauHOzxxGLBA7C9x1TEuIk9KPT2VjgKJk5IWplWOhYsVuCEhbWZLQVk7vDJ
- 6R6Q1UYTHFzFYi2nIO8f7M7ReWYgWwuVFKKNX2MUEPWZ+Nq7pj61hJmyeOL6bbhEArbGQGA==
-X-Google-Smtp-Source: ABdhPJyV71KyX7wIk4SdepWHYsPDO7JEsMOtpP8Ew2zkdCBFEtHJx6sDDgdROjEilaiKBOX2bMTgAgDq5z4=
+ bh=Mb/OefWBn9RCKNoTmiaaE/VUMk03Unut8vex1/PGQS0=;
+ b=HzkuFe7TuDN1VyqcT3Fb9fmWujRnFcO9JbvUCn+3kOyQ7nJAPUYmhARmwWBE0u3jOX
+ xSgFZ+QFt1ycpfxCa5E53pRpf8w/zsusbv7Sx3a3H0aKRx3g3AJNMmw7tXRq1DmuYWDk
+ qqgBi/o+0b3PJyixdm5EUxrJaJCCA9DaO+Vk/qowaoo1C+wryeu+tdVAADBdvKwyu5ZB
+ 0ajbZIz8NVoCS4JAUUGxLeJoHfbK7uU07cH67fC8xJsL7dZHc2InG4IIw7/zgpsXBKq/
+ F2TNdeK+43FgSEctjwUK/8udB7E10vtuzash0VJB3qZp1/igv/qC3PggrbK1fJ5JXFmD
+ l8Yw==
+X-Gm-Message-State: AOAM531CkLJgsM4LXvuslrTKuu5310rHp+6RscSINK9D3XfCBXUTSton
+ y5YUr8F0R+I7tckI/aJzNzCGlJlpmgl9huqioQ20KY+eooOA2F5jv0KYqgh8QEeiK6bb5nMaf5M
+ NZ7o7eLZO5lKQhNBspbUvEsR5/C2OfkJtdgz+Abr8kSElMyKzeJdKeHghqjDvaiA2UCHDPA==
+X-Google-Smtp-Source: ABdhPJzuFSrhWKcatk7b24EN0VEAajIWqNloCuQY+463KUJzIaWadPCnXDRKjBU8YzbqADXAgMTcRMSd1kw=
 X-Received: from oupton.c.googlers.com ([fda3:e722:ac3:cc00:2b:ff92:c0a8:404])
- (user=oupton job=sendgmr) by 2002:a5e:8a07:0:b0:64c:8b33:6d19 with
- SMTP id
- d7-20020a5e8a07000000b0064c8b336d19mr315910iok.170.1650059960675; Fri, 15 Apr
- 2022 14:59:20 -0700 (PDT)
-Date: Fri, 15 Apr 2022 21:58:57 +0000
+ (user=oupton job=sendgmr) by 2002:a05:6602:14cb:b0:646:3b7d:6aee
+ with SMTP id
+ b11-20020a05660214cb00b006463b7d6aeemr346421iow.178.1650059961830; Fri, 15
+ Apr 2022 14:59:21 -0700 (PDT)
+Date: Fri, 15 Apr 2022 21:58:58 +0000
 In-Reply-To: <20220415215901.1737897-1-oupton@google.com>
-Message-Id: <20220415215901.1737897-14-oupton@google.com>
+Message-Id: <20220415215901.1737897-15-oupton@google.com>
 Mime-Version: 1.0
 References: <20220415215901.1737897-1-oupton@google.com>
 X-Mailer: git-send-email 2.36.0.rc0.470.gd361397f0d-goog
-Subject: [RFC PATCH 13/17] KVM: arm64: Setup cache for stage2 page headers
+Subject: [RFC PATCH 14/17] KVM: arm64: Punt last page reference to rcu
+ callback for parallel walk
 From: Oliver Upton <oupton@google.com>
 To: kvmarm@lists.cs.columbia.edu
 Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
@@ -95,89 +96,173 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-In order to punt the last reference drop on a page to an RCU
-synchronization we need to get a pointer to the page to handle the
-callback.
+It is possible that a table page remains visible to another thread until
+the next rcu synchronization event. To that end, we cannot drop the last
+page reference synchronous with post-order traversal for a parallel
+table walk.
 
-Set up a memcache for stage2 page headers, but do nothing with it for
-now. Note that the kmem_cache is never destoyed as it is currently not
-possible to build KVM/arm64 as a module.
+Schedule an rcu callback to clean up the child table page for parallel
+walks.
 
 Signed-off-by: Oliver Upton <oupton@google.com>
 ---
- arch/arm64/include/asm/kvm_host.h |  1 +
- arch/arm64/kvm/mmu.c              | 20 ++++++++++++++++++++
- 2 files changed, 21 insertions(+)
+ arch/arm64/include/asm/kvm_pgtable.h |  3 ++
+ arch/arm64/kvm/hyp/pgtable.c         | 24 +++++++++++++--
+ arch/arm64/kvm/mmu.c                 | 44 +++++++++++++++++++++++++++-
+ 3 files changed, 67 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index c8947597a619..a640d015790e 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -374,6 +374,7 @@ struct kvm_vcpu_arch {
- 	/* Cache some mmu pages needed inside spinlock regions */
- 	struct kvm_mmu_caches {
- 		struct kvm_mmu_memory_cache page_cache;
-+		struct kvm_mmu_memory_cache header_cache;
- 	} mmu_caches;
+diff --git a/arch/arm64/include/asm/kvm_pgtable.h b/arch/arm64/include/asm/kvm_pgtable.h
+index 74955aba5918..52e55e00f0ca 100644
+--- a/arch/arm64/include/asm/kvm_pgtable.h
++++ b/arch/arm64/include/asm/kvm_pgtable.h
+@@ -81,6 +81,8 @@ static inline bool kvm_level_supports_block_mapping(u32 level)
+  * @put_page:			Decrement the refcount on a page. When the
+  *				refcount reaches 0 the page is automatically
+  *				freed.
++ * @free_table:			Drop the last page reference, possibly in the
++ *				next RCU sync if doing a shared walk.
+  * @page_count:			Return the refcount of a page.
+  * @phys_to_virt:		Convert a physical address into a virtual
+  *				address	mapped in the current context.
+@@ -98,6 +100,7 @@ struct kvm_pgtable_mm_ops {
+ 	void		(*get_page)(void *addr);
+ 	void		(*put_page)(void *addr);
+ 	int		(*page_count)(void *addr);
++	void		(*free_table)(void *addr, bool shared);
+ 	void*		(*phys_to_virt)(phys_addr_t phys);
+ 	phys_addr_t	(*virt_to_phys)(void *addr);
+ 	void		(*dcache_clean_inval_poc)(void *addr, size_t size);
+diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
+index 121818d4c33e..a9a48edba63b 100644
+--- a/arch/arm64/kvm/hyp/pgtable.c
++++ b/arch/arm64/kvm/hyp/pgtable.c
+@@ -147,12 +147,19 @@ static inline void kvm_pgtable_walk_end(void)
+ {}
  
- 	/* Target CPU and feature flags */
-diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 7a588928740a..cc6ed6b06ec2 100644
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -31,6 +31,12 @@ static phys_addr_t hyp_idmap_vector;
- 
- static unsigned long io_map_base;
- 
-+static struct kmem_cache *stage2_page_header_cache;
+ #define kvm_dereference_ptep	rcu_dereference_raw
 +
-+struct stage2_page_header {
-+	struct rcu_head rcu_head;
-+	struct page *page;
-+};
- 
- /*
-  * Release kvm_mmu_lock periodically if the memory region is large. Otherwise,
-@@ -1164,6 +1170,11 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 						 kvm_mmu_cache_min_pages(kvm));
- 		if (ret)
- 			return ret;
++static inline void kvm_pgtable_destroy_barrier(void)
++{}
 +
-+		ret = kvm_mmu_topup_memory_cache(&mmu_caches->header_cache,
-+						 kvm_mmu_cache_min_pages(kvm));
-+		if (ret)
-+			return ret;
+ #else
+ #define kvm_pgtable_walk_begin	rcu_read_lock
+ 
+ #define kvm_pgtable_walk_end	rcu_read_unlock
+ 
+ #define kvm_dereference_ptep	rcu_dereference
++
++#define kvm_pgtable_destroy_barrier	rcu_barrier
++
+ #endif
+ 
+ static kvm_pte_t *kvm_pte_follow(kvm_pte_t pte, struct kvm_pgtable_mm_ops *mm_ops)
+@@ -1063,7 +1070,12 @@ static int stage2_map_walk_table_post(u64 addr, u64 end, u32 level,
+ 		childp = kvm_pte_follow(*old, mm_ops);
  	}
  
- 	mmu_seq = vcpu->kvm->mmu_notifier_seq;
-@@ -1589,6 +1600,13 @@ int kvm_mmu_init(u32 *hyp_va_bits)
- 	if (err)
- 		goto out_destroy_pgtable;
+-	mm_ops->put_page(childp);
++	/*
++	 * If we do not have exclusive access to the page tables it is possible
++	 * the unlinked table remains visible to another thread until the next
++	 * rcu synchronization.
++	 */
++	mm_ops->free_table(childp, shared);
+ 	mm_ops->put_page(ptep);
  
-+	stage2_page_header_cache = kmem_cache_create("stage2_page_header",
-+						     sizeof(struct stage2_page_header),
-+						     0, SLAB_ACCOUNT, NULL);
-+
-+	if (!stage2_page_header_cache)
-+		goto out_destroy_pgtable;
-+
- 	io_map_base = hyp_idmap_start;
+ 	return ret;
+@@ -1203,7 +1215,7 @@ static int stage2_unmap_walker(u64 addr, u64 end, u32 level, kvm_pte_t *ptep,
+ 					       kvm_granule_size(level));
+ 
+ 	if (childp)
+-		mm_ops->put_page(childp);
++		mm_ops->free_table(childp, shared);
+ 
  	return 0;
+ }
+@@ -1433,7 +1445,7 @@ static int stage2_free_walker(u64 addr, u64 end, u32 level, kvm_pte_t *ptep,
+ 	mm_ops->put_page(ptep);
  
-@@ -1604,11 +1622,13 @@ int kvm_mmu_init(u32 *hyp_va_bits)
- void kvm_mmu_vcpu_init(struct kvm_vcpu *vcpu)
+ 	if (kvm_pte_table(*old, level))
+-		mm_ops->put_page(kvm_pte_follow(*old, mm_ops));
++		mm_ops->free_table(kvm_pte_follow(*old, mm_ops), shared);
+ 
+ 	return 0;
+ }
+@@ -1452,4 +1464,10 @@ void kvm_pgtable_stage2_destroy(struct kvm_pgtable *pgt)
+ 	pgd_sz = kvm_pgd_pages(pgt->ia_bits, pgt->start_level) * PAGE_SIZE;
+ 	pgt->mm_ops->free_pages_exact(pgt->pgd, pgd_sz);
+ 	pgt->pgd = NULL;
++
++	/*
++	 * Guarantee that all unlinked subtrees associated with the stage2 page
++	 * table have also been freed before returning.
++	 */
++	kvm_pgtable_destroy_barrier();
+ }
+diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+index cc6ed6b06ec2..6ecf37009c21 100644
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -98,9 +98,50 @@ static bool kvm_is_device_pfn(unsigned long pfn)
+ static void *stage2_memcache_zalloc_page(void *arg)
  {
- 	vcpu->arch.mmu_caches.page_cache.gfp_zero = __GFP_ZERO;
-+	vcpu->arch.mmu_caches.header_cache.kmem_cache = stage2_page_header_cache;
+ 	struct kvm_mmu_caches *mmu_caches = arg;
++	struct stage2_page_header *hdr;
++	void *addr;
+ 
+ 	/* Allocated with __GFP_ZERO, so no need to zero */
+-	return kvm_mmu_memory_cache_alloc(&mmu_caches->page_cache);
++	addr = kvm_mmu_memory_cache_alloc(&mmu_caches->page_cache);
++	if (!addr)
++		return NULL;
++
++	hdr = kvm_mmu_memory_cache_alloc(&mmu_caches->header_cache);
++	if (!hdr) {
++		free_page((unsigned long)addr);
++		return NULL;
++	}
++
++	hdr->page = virt_to_page(addr);
++	set_page_private(hdr->page, (unsigned long)hdr);
++	return addr;
++}
++
++static void stage2_free_page_now(struct stage2_page_header *hdr)
++{
++	WARN_ON(page_ref_count(hdr->page) != 1);
++
++	__free_page(hdr->page);
++	kmem_cache_free(stage2_page_header_cache, hdr);
++}
++
++static void stage2_free_page_rcu_cb(struct rcu_head *head)
++{
++	struct stage2_page_header *hdr = container_of(head, struct stage2_page_header,
++						      rcu_head);
++
++	stage2_free_page_now(hdr);
++}
++
++static void stage2_free_table(void *addr, bool shared)
++{
++	struct page *page = virt_to_page(addr);
++	struct stage2_page_header *hdr = (struct stage2_page_header *)page_private(page);
++
++	if (shared)
++		call_rcu(&hdr->rcu_head, stage2_free_page_rcu_cb);
++	else
++		stage2_free_page_now(hdr);
  }
  
- void kvm_mmu_vcpu_destroy(struct kvm_vcpu *vcpu)
- {
- 	kvm_mmu_free_memory_cache(&vcpu->arch.mmu_caches.page_cache);
-+	kvm_mmu_free_memory_cache(&vcpu->arch.mmu_caches.header_cache);
- }
- 
- void kvm_arch_commit_memory_region(struct kvm *kvm,
+ static void *kvm_host_zalloc_pages_exact(size_t size)
+@@ -613,6 +654,7 @@ static struct kvm_pgtable_mm_ops kvm_s2_mm_ops = {
+ 	.free_pages_exact	= free_pages_exact,
+ 	.get_page		= kvm_host_get_page,
+ 	.put_page		= kvm_host_put_page,
++	.free_table		= stage2_free_table,
+ 	.page_count		= kvm_host_page_count,
+ 	.phys_to_virt		= kvm_host_va,
+ 	.virt_to_phys		= kvm_host_pa,
 -- 
 2.36.0.rc0.470.gd361397f0d-goog
 
