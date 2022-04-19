@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B300C507727
-	for <lists+kvmarm@lfdr.de>; Tue, 19 Apr 2022 20:11:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 830545078E7
+	for <lists+kvmarm@lfdr.de>; Tue, 19 Apr 2022 20:28:16 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0AC4B4B1FD;
-	Tue, 19 Apr 2022 14:11:40 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2F21E4B23F;
+	Tue, 19 Apr 2022 14:28:16 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
@@ -18,55 +18,62 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WK81IuWs+OkC; Tue, 19 Apr 2022 14:11:39 -0400 (EDT)
+	with ESMTP id xP9RGPJCbtI9; Tue, 19 Apr 2022 14:28:16 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DB0A54B206;
-	Tue, 19 Apr 2022 14:11:38 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C38F24B240;
+	Tue, 19 Apr 2022 14:28:13 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 336D94B1E9
- for <kvmarm@lists.cs.columbia.edu>; Tue, 19 Apr 2022 14:11:37 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D030E4B248
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 19 Apr 2022 14:28:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id YZysFDBoBWij for <kvmarm@lists.cs.columbia.edu>;
- Tue, 19 Apr 2022 14:11:36 -0400 (EDT)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 04C484B18A
- for <kvmarm@lists.cs.columbia.edu>; Tue, 19 Apr 2022 14:11:35 -0400 (EDT)
+ with ESMTP id q5Eg-bZpr+pr for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 19 Apr 2022 14:28:09 -0400 (EDT)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 55BB84B246
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 19 Apr 2022 14:28:09 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 11A8E60C51;
- Tue, 19 Apr 2022 18:11:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E1DC385AD;
- Tue, 19 Apr 2022 18:11:33 +0000 (UTC)
+ by ams.source.kernel.org (Postfix) with ESMTPS id 23BB2B819B1;
+ Tue, 19 Apr 2022 18:28:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D31FAC385A7;
+ Tue, 19 Apr 2022 18:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1650391894;
- bh=zqYE2dBiFpRl4OeuEjvjF+2WlsvVq3M+PLNfL0rUOW0=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=TorB5OBPUgcOVi3jj4o8HgIaGBnh39cNXDnTNge5Vkj1g9qa8dsZzV9trrSkamsrE
- rEIrEgESP7WHupC35SfUl1qBCa/94UD9Wslpt94tui8oNVPb0SAaTNHN4jsdjVtDRE
- d124rg/beZWrQZofKRrh/SDubg4anNOvbSSuE/xJcd+bVt+QumED2X9OKPFRf2Da7H
- BrQNHo8UxVitBYtbiszxo3gmntzkEphTpklE5w0YlC/4ZF6BlZkDzKargCd8aOOOWm
- iOJ60cwvXq0P8O8Mym3CF9h2s55Xpz444zABmdvxAPB6DCfiX1sOI9Z0ep0jlDiAnE
- saGCZ7CWXiM4Q==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.17 09/34] selftests: KVM: Free the GIC FD when
- cleaning up in arch_timer
-Date: Tue, 19 Apr 2022 14:10:36 -0400
-Message-Id: <20220419181104.484667-9-sashal@kernel.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220419181104.484667-1-sashal@kernel.org>
-References: <20220419181104.484667-1-sashal@kernel.org>
+ s=k20201202; t=1650392886;
+ bh=dYKlvZ5LenzpdmPTCAB4AqiqMLiJhQAEeink3mrOudc=;
+ h=From:To:Cc:Subject:Date:From;
+ b=D5yK2eAW+WCxe6hxEqlwqas1NnHs3Z4mj5+fwFxCuovMsBpfQps90/jOaphK9v9VC
+ yip+AbNxlUhtdcLh5H/Asxnxp1XR/Hwj3s8CcfJ0udFUh2b563sSbhgzofH951D53y
+ 5FH+5CGfU/fTp05qMjdEQRQw/ALJkkE9PUT2djS8qRvuYSc6jhzADjcs1uNOSiMM9O
+ E13etbgi1g80n7yBrlb07CnBt3fYekkw3RdX/isfvkOg2WH1EdV31bBG3PqheNJVMN
+ DVfNNnZwbn+6ITfT20I3W2+ychLBaD+tVq7ykYucAiAwqEeD/BS+d9U8pHB8HfPOrv
+ swQQcVgTO+DcA==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1ngsa4-005QYF-7X; Tue, 19 Apr 2022 19:28:04 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
+Subject: [PATCH v2 00/10] arm64: Add initial support for FEAT_WFxT
+Date: Tue, 19 Apr 2022 19:27:45 +0100
+Message-Id: <20220419182755.601427-1-maz@kernel.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Cc: Sasha Levin <sashal@kernel.org>, kvm@vger.kernel.org,
- Marc Zyngier <maz@kernel.org>, linux-kselftest@vger.kernel.org,
- pbonzini@redhat.com, shuah@kernel.org, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, catalin.marinas@arm.com,
+ will@kernel.org, mark.rutland@arm.com, james.morse@arm.com,
+ suzuki.poulose@arm.com, alexandru.elisei@arm.com, joey.gouly@arm.com,
+ kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com, Catalin Marinas <catalin.marinas@arm.com>,
+ Joey Gouly <joey.gouly@arm.com>, Will Deacon <will@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -83,77 +90,57 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Oliver Upton <oupton@google.com>
+The ARMv8.7 WFxT feature is a new take on the good old WFI/WFE
+instructions as they behave the same way, only taking an extra timeout
+parameter.
 
-[ Upstream commit 21db83846683d3987666505a3ec38f367708199a ]
+This small series aims at adding the minimal support for this feature,
+enabling it for both the kernel and KVM.
 
-In order to correctly destroy a VM, all references to the VM must be
-freed. The arch_timer selftest creates a VGIC for the guest, which
-itself holds a reference to the VM.
+A potential addition to this series would be to remove the event
+generation from the counters, and rely on the timeout where it
+matters (spinlocks?). Feedback welcome.
 
-Close the GIC FD when cleaning up a VM.
+Patches on top of 5.18-rc2, tested of the FVP AEM.
 
-Signed-off-by: Oliver Upton <oupton@google.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20220406235615.1447180-4-oupton@google.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- tools/testing/selftests/kvm/aarch64/arch_timer.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+* From v1 [1]:
+  - Properly generate traces even if the deadline has already expired
+  - Collect RBs, with thanks.
 
-diff --git a/tools/testing/selftests/kvm/aarch64/arch_timer.c b/tools/testing/selftests/kvm/aarch64/arch_timer.c
-index b08d30bf71c5..3b940a101bc0 100644
---- a/tools/testing/selftests/kvm/aarch64/arch_timer.c
-+++ b/tools/testing/selftests/kvm/aarch64/arch_timer.c
-@@ -362,11 +362,12 @@ static void test_init_timer_irq(struct kvm_vm *vm)
- 	pr_debug("ptimer_irq: %d; vtimer_irq: %d\n", ptimer_irq, vtimer_irq);
- }
- 
-+static int gic_fd;
-+
- static struct kvm_vm *test_vm_create(void)
- {
- 	struct kvm_vm *vm;
- 	unsigned int i;
--	int ret;
- 	int nr_vcpus = test_args.nr_vcpus;
- 
- 	vm = vm_create_default_with_vcpus(nr_vcpus, 0, 0, guest_code, NULL);
-@@ -383,8 +384,8 @@ static struct kvm_vm *test_vm_create(void)
- 
- 	ucall_init(vm, NULL);
- 	test_init_timer_irq(vm);
--	ret = vgic_v3_setup(vm, nr_vcpus, 64, GICD_BASE_GPA, GICR_BASE_GPA);
--	if (ret < 0) {
-+	gic_fd = vgic_v3_setup(vm, nr_vcpus, 64, GICD_BASE_GPA, GICR_BASE_GPA);
-+	if (gic_fd < 0) {
- 		print_skip("Failed to create vgic-v3");
- 		exit(KSFT_SKIP);
- 	}
-@@ -395,6 +396,12 @@ static struct kvm_vm *test_vm_create(void)
- 	return vm;
- }
- 
-+static void test_vm_cleanup(struct kvm_vm *vm)
-+{
-+	close(gic_fd);
-+	kvm_vm_free(vm);
-+}
-+
- static void test_print_help(char *name)
- {
- 	pr_info("Usage: %s [-h] [-n nr_vcpus] [-i iterations] [-p timer_period_ms]\n",
-@@ -478,7 +485,7 @@ int main(int argc, char *argv[])
- 
- 	vm = test_vm_create();
- 	test_run(vm);
--	kvm_vm_free(vm);
-+	test_vm_cleanup(vm);
- 
- 	return 0;
- }
+[1] https://lore.kernel.org/r/20220412131303.504690-1-maz@kernel.org
+
+Marc Zyngier (10):
+  arm64: Expand ESR_ELx_WFx_ISS_TI to match its ARMv8.7 definition
+  arm64: Add RV and RN fields for ESR_ELx_WFx_ISS
+  KVM: arm64: Simplify kvm_cpu_has_pending_timer()
+  KVM: arm64: Introduce kvm_counter_compute_delta() helper
+  KVM: arm64: Handle blocking WFIT instruction
+  KVM: arm64: Offer early resume for non-blocking WFxT instructions
+  KVM: arm64: Expose the WFXT feature to guests
+  arm64: Add HWCAP advertising FEAT_WFXT
+  arm64: Add wfet()/wfit() helpers
+  arm64: Use WFxT for __delay() when possible
+
+ Documentation/arm64/cpu-feature-registers.rst |  2 +
+ Documentation/arm64/elf_hwcaps.rst            |  4 ++
+ arch/arm64/include/asm/barrier.h              |  4 ++
+ arch/arm64/include/asm/esr.h                  |  8 +++-
+ arch/arm64/include/asm/hwcap.h                |  1 +
+ arch/arm64/include/asm/kvm_host.h             |  1 +
+ arch/arm64/include/uapi/asm/hwcap.h           |  1 +
+ arch/arm64/kernel/cpufeature.c                | 13 +++++
+ arch/arm64/kernel/cpuinfo.c                   |  1 +
+ arch/arm64/kvm/arch_timer.c                   | 47 ++++++++++++-------
+ arch/arm64/kvm/arm.c                          |  6 +--
+ arch/arm64/kvm/handle_exit.c                  | 35 ++++++++++++--
+ arch/arm64/kvm/sys_regs.c                     |  2 +
+ arch/arm64/lib/delay.c                        | 12 ++++-
+ arch/arm64/tools/cpucaps                      |  1 +
+ include/kvm/arm_arch_timer.h                  |  2 -
+ 16 files changed, 110 insertions(+), 30 deletions(-)
+
 -- 
-2.35.1
+2.34.1
 
 _______________________________________________
 kvmarm mailing list
