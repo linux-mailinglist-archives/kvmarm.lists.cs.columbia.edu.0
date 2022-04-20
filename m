@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C1BD508E6D
-	for <lists+kvmarm@lfdr.de>; Wed, 20 Apr 2022 19:28:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 690B5508EC0
+	for <lists+kvmarm@lfdr.de>; Wed, 20 Apr 2022 19:44:13 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 159524B203;
-	Wed, 20 Apr 2022 13:28:25 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BBB634B1FE;
+	Wed, 20 Apr 2022 13:44:12 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.899
@@ -15,38 +15,38 @@ X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LrRNV5RGVpiG; Wed, 20 Apr 2022 13:28:24 -0400 (EDT)
+	with ESMTP id k7Dhh4D8fpP9; Wed, 20 Apr 2022 13:44:12 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C39894B1CB;
-	Wed, 20 Apr 2022 13:28:23 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9321A4B1DD;
+	Wed, 20 Apr 2022 13:44:11 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8246A4A193
- for <kvmarm@lists.cs.columbia.edu>; Wed, 20 Apr 2022 13:28:22 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B51E84B10C
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 20 Apr 2022 13:44:09 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id OXdFCKe9jjO2 for <kvmarm@lists.cs.columbia.edu>;
- Wed, 20 Apr 2022 13:28:21 -0400 (EDT)
+ with ESMTP id yzOoEW4rgqgY for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 20 Apr 2022 13:44:08 -0400 (EDT)
 Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6FE8D49F10
- for <kvmarm@lists.cs.columbia.edu>; Wed, 20 Apr 2022 13:28:21 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 77DA34B0FB
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 20 Apr 2022 13:44:08 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 8C56CB82123;
- Wed, 20 Apr 2022 17:28:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17F9EC385A0;
- Wed, 20 Apr 2022 17:28:16 +0000 (UTC)
-Date: Wed, 20 Apr 2022 18:28:13 +0100
+ by ams.source.kernel.org (Postfix) with ESMTPS id CC6FAB81EB6;
+ Wed, 20 Apr 2022 17:44:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 797EBC385A0;
+ Wed, 20 Apr 2022 17:44:03 +0000 (UTC)
+Date: Wed, 20 Apr 2022 18:44:00 +0100
 From: Catalin Marinas <catalin.marinas@arm.com>
 To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v2 09/10] arm64: Add wfet()/wfit() helpers
-Message-ID: <YmBCrbWRFcTgeBDg@arm.com>
+Subject: Re: [PATCH v2 10/10] arm64: Use WFxT for __delay() when possible
+Message-ID: <YmBGYLpaJJ3OZMQV@arm.com>
 References: <20220419182755.601427-1-maz@kernel.org>
- <20220419182755.601427-10-maz@kernel.org>
+ <20220419182755.601427-11-maz@kernel.org>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20220419182755.601427-10-maz@kernel.org>
+In-Reply-To: <20220419182755.601427-11-maz@kernel.org>
 Cc: kernel-team@android.com, kvm@vger.kernel.org,
  Joey Gouly <joey.gouly@arm.com>, Will Deacon <will@kernel.org>,
  kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
@@ -66,12 +66,41 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, Apr 19, 2022 at 07:27:54PM +0100, Marc Zyngier wrote:
-> Just like we have helpers for WFI and WFE, add the WFxT versions.
-> Note that the encoding is that reported by objdump, as no currrent
-> toolchain knows about these instructions yet.
+On Tue, Apr 19, 2022 at 07:27:55PM +0100, Marc Zyngier wrote:
+> Marginally optimise __delay() by using a WFIT/WFET sequence.
+> It probably is a win if no interrupt fires during the delay.
 > 
 > Signed-off-by: Marc Zyngier <maz@kernel.org>
+> ---
+>  arch/arm64/lib/delay.c | 12 +++++++++++-
+>  1 file changed, 11 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/lib/delay.c b/arch/arm64/lib/delay.c
+> index 1688af0a4c97..5b7890139bc2 100644
+> --- a/arch/arm64/lib/delay.c
+> +++ b/arch/arm64/lib/delay.c
+> @@ -27,7 +27,17 @@ void __delay(unsigned long cycles)
+>  {
+>  	cycles_t start = get_cycles();
+>  
+> -	if (arch_timer_evtstrm_available()) {
+> +	if (cpus_have_const_cap(ARM64_HAS_WFXT)) {
+> +		u64 end = start + cycles;
+> +
+> +		/*
+> +		 * Start with WFIT. If an interrupt makes us resume
+> +		 * early, use a WFET loop to complete the delay.
+> +		 */
+> +		wfit(end);
+> +		while ((get_cycles() - start) < cycles)
+> +			wfet(end);
+
+Do you use WFET here as a pending interrupt would cause WFIT to complete
+immediately?
+
+> +	} else 	if (arch_timer_evtstrm_available()) {
+
+Nit: two spaces between else and if ;).
 
 Acked-by: Catalin Marinas <catalin.marinas@arm.com>
 _______________________________________________
