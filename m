@@ -2,81 +2,81 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B499250BF0C
+	by mail.lfdr.de (Postfix) with ESMTP id A6D4850BF0B
 	for <lists+kvmarm@lfdr.de>; Fri, 22 Apr 2022 19:50:54 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 09C364B21A;
-	Fri, 22 Apr 2022 13:50:53 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 392074B1D0;
+	Fri, 22 Apr 2022 13:50:54 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+	URIBL_BLOCKED=0.001] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id flxHV6t+Nq+T; Fri, 22 Apr 2022 13:50:52 -0400 (EDT)
+	with ESMTP id OhyvAllnUV7l; Fri, 22 Apr 2022 13:50:53 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CADF24B2A3;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E52AF4B280;
 	Fri, 22 Apr 2022 13:50:48 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 857FD49F02
- for <kvmarm@lists.cs.columbia.edu>; Thu, 21 Apr 2022 12:35:39 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7DD884B26A
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 21 Apr 2022 12:43:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id C9Ffa4KMzH6q for <kvmarm@lists.cs.columbia.edu>;
- Thu, 21 Apr 2022 12:35:38 -0400 (EDT)
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com
- [209.85.219.178])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6DF7D49F00
- for <kvmarm@lists.cs.columbia.edu>; Thu, 21 Apr 2022 12:35:38 -0400 (EDT)
-Received: by mail-yb1-f178.google.com with SMTP id w187so352282ybe.2
- for <kvmarm@lists.cs.columbia.edu>; Thu, 21 Apr 2022 09:35:38 -0700 (PDT)
+ with ESMTP id zX6QlP53G5U6 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 21 Apr 2022 12:43:41 -0400 (EDT)
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com
+ [209.85.208.175])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 13E6C4B268
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 21 Apr 2022 12:43:41 -0400 (EDT)
+Received: by mail-lj1-f175.google.com with SMTP id bn33so6468517ljb.6
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 21 Apr 2022 09:43:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=2o+bfoCrm9ENS05/J4NbbBTAqkMpAlAf6csqUjQGcTQ=;
- b=m/ShF2lo3xbNaf8VAl5+Uia+xkKXoGYXilGMMPwqyh4OC1sg7+KDOMh6T+lZnC0GyF
- DzuRd+Q9l56n1anfHL3gafeiHNO9sqQFiwhwYqgFnyZD1d44XVjWjPeJReCzH6pf/7nk
- OkhzFnLO5KjRVIk+br7E9CWH0wsyQPfn+Qu35KvWTakz78FDeUTIA1x4Zf2NTGqhzIEU
- 4cM2K7uY+ftNRBqv9Ws0GFb2BjQ4IQb/si+kZwf4AmjOp4iFOS+BIVNEWsdAXZv42qQY
- zCynBapR/RnINkNzeB4scrWsZoWDO/jSR7bGrk8hKVaJmERoTVg9RpO0RY7IjjCisuoU
- N0Zg==
+ :cc; bh=86+E8N74tWcxl4OkHzKdfe2B+ol1qinsJ3i5kq4weyE=;
+ b=a1dstvI3nz0xC9V2iEbO4mMe5jZ2oRMNhgkxJcw7TvRja8cD2HOxZiYNWufSrt9SGA
+ QMh1V1vX1vRzQM5hZeAL1YURCc4bs8xoKqg3iyPeLYstklgJn3sGsxN0PS8qNyBuq5Cb
+ fCV3rKD/e102wY82J1HLSHc3kz9Kn0RPPwPpo0xm+4077aTtzBTvmcNAOWXaLAqppWAt
+ g8+UA8J0ej52+TXcdv6W0UUI7ypJOBzI66Dh5xFKYXYogABeN82excKo3y1XoMJCsxWK
+ 2Lho041K3nj1gXeUggyWCnxx1ugQDE7Z4iTBHt+fWGKdfCpRmZ7vSqZADl5Fj+vGYvl8
+ oGLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=2o+bfoCrm9ENS05/J4NbbBTAqkMpAlAf6csqUjQGcTQ=;
- b=pkR1DVoFimKI+Za1dV1h8GZp0KT+pNBY82NUvxBsXJ0sHtwP19S4G3DLkpzHea0YkZ
- QNC34qfS+HWAsEP7PbT9V+1ZA4j5AmvJb8B6h4NPeDAKw6+ZfE+DHJqXZBxyiQWzoJV2
- IEU8lnDGDPN76B8xnD5e9xIRVjxHANMC2SZZFbyZv1BNAXFuhwXJNV2Dj4dp9YdMrYUF
- KOC2biVs7JSbP16dNS/ehTaQlbK3Kpp5leUmMC9AmMOgLkOE2WMtib/+h6NlLmmEE+Y2
- MZQ/3Rrv1y5O4x6wsQiK7o1zcl8Y3hRbNTUdsJeKfo58ubcfY2Dk/W/0/8py+0TUNIo6
- AqVQ==
-X-Gm-Message-State: AOAM53271cGeF8JAaX/LZXLTl2l+Kl+1ZLGsjg8zraGCnJAZ9R0g1gZJ
- rebgsweWoAJN9CxJ8OE1D6KBUXPCrJoM5cj1w0W8CnZX0U+HkA==
-X-Google-Smtp-Source: ABdhPJwQjb989eibb7OonB7D8gVNlF36degE7seajBqNLXdn06AMKJRHpNLrwXdZytOXmLLJ77afmYHmHe7MXZNMyss=
-X-Received: by 2002:a25:4094:0:b0:641:2b90:3b1a with SMTP id
- n142-20020a254094000000b006412b903b1amr568265yba.8.1650558937838; Thu, 21 Apr
- 2022 09:35:37 -0700 (PDT)
+ bh=86+E8N74tWcxl4OkHzKdfe2B+ol1qinsJ3i5kq4weyE=;
+ b=HnVg6FzJK/ueSEZtzNhF6EwEEEsBshIRhk0YAyIixy0I3AMglboCPKLhHljDs9ivp5
+ 8qAEhwFDaztbUEKuqzUeEamCIXvbH3XWL+azZImHeIQcJ7zkNUQ2tF9/v3nCSy2vUavO
+ M0ceuxM3gbJIcm5ow0xNbMxy2rqkb4jUxzgvhlqsGpXfGZWF3m0Hzn3ZTeC2JKOOzEKf
+ JWmBt7v+ZQKZzGTmvBG7VTYynd1NfBSeUFWnDFd7MrPxE+M2oi4s/ygsEMrgprdBtjIg
+ JgJJm8WzbZyGPxnfwsza/O3cHgH4FJWYm5jQQtIMdxHN0s3b83R04wldMxvUBCItHiXh
+ OzKQ==
+X-Gm-Message-State: AOAM532WkahP+31T3aqoUg9+eWqGuIQ14ChdYwew+1owvbxpbbh26tpS
+ 5XNBgtoU6tB1tFTtrexPCuXGkkR4m3M2pFcQfa+2WQ==
+X-Google-Smtp-Source: ABdhPJxme7++mtYHiLB8A8sMAhxUEQ/TToGRr6G0ay3IKZ1/RbT2BsFMkUyKGRXbo7cKuJBLBODJSoFzCpUT4nR3vZE=
+X-Received: by 2002:a05:651c:b0d:b0:24d:a008:46f1 with SMTP id
+ b13-20020a05651c0b0d00b0024da00846f1mr334936ljr.198.1650559419407; Thu, 21
+ Apr 2022 09:43:39 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220415215901.1737897-1-oupton@google.com>
- <20220415215901.1737897-17-oupton@google.com>
-In-Reply-To: <20220415215901.1737897-17-oupton@google.com>
-From: Ben Gardon <bgardon@google.com>
-Date: Thu, 21 Apr 2022 09:35:27 -0700
-Message-ID: <CANgfPd9bb213hsdKTMW9K0EsVLuKEKCF8V0pb6xM1qfnRj1qfw@mail.gmail.com>
-Subject: Re: [RFC PATCH 16/17] KVM: arm64: Enable parallel stage 2 MMU faults
+ <CALzav=c6jQ53G-2gEZYasH_b4_hLYtNAD5pW1TXSfPWxLf3_qw@mail.gmail.com>
+ <YloIEfCjWyQKJMxI@google.com>
+In-Reply-To: <YloIEfCjWyQKJMxI@google.com>
+From: David Matlack <dmatlack@google.com>
+Date: Thu, 21 Apr 2022 09:43:12 -0700
+Message-ID: <CALzav=fk1obOQcYvguvcLww+q4yu5JLEvJkfKZt50dD9iScGKA@mail.gmail.com>
+Subject: Re: [RFC PATCH 00/17] KVM: arm64: Parallelize stage 2 fault handling
 To: Oliver Upton <oupton@google.com>
 X-Mailman-Approved-At: Fri, 22 Apr 2022 13:50:47 -0400
-Cc: kvm <kvm@vger.kernel.org>, Marc Zyngier <maz@kernel.org>,
- Peter Shier <pshier@google.com>, David Matlack <dmatlack@google.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "moderated list:KERNEL VIRTUAL MACHINE FOR ARM64 \(KVM/arm64\)"
- <kvmarm@lists.cs.columbia.edu>, linux-arm-kernel@lists.infradead.org
+Cc: kvm list <kvm@vger.kernel.org>, Marc Zyngier <maz@kernel.org>,
+ Ben Gardon <bgardon@google.com>, Peter Shier <pshier@google.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, KVMARM <kvmarm@lists.cs.columbia.edu>,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -93,88 +93,111 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Apr 15, 2022 at 2:59 PM Oliver Upton <oupton@google.com> wrote:
+On Fri, Apr 15, 2022 at 5:04 PM Oliver Upton <oupton@google.com> wrote:
 >
-> Voila! Since the map walkers are able to work in parallel there is no
-> need to take the write lock on a stage 2 memory abort. Relax locking
-> on map operations and cross fingers we got it right.
+> On Fri, Apr 15, 2022 at 04:35:24PM -0700, David Matlack wrote:
+> > On Fri, Apr 15, 2022 at 2:59 PM Oliver Upton <oupton@google.com> wrote:
+> > >
+> > > Presently KVM only takes a read lock for stage 2 faults if it believes
+> > > the fault can be fixed by relaxing permissions on a PTE (write unprotect
+> > > for dirty logging). Otherwise, stage 2 faults grab the write lock, which
+> > > predictably can pile up all the vCPUs in a sufficiently large VM.
+> > >
+> > > The x86 port of KVM has what it calls the TDP MMU. Basically, it is an
+> > > MMU protected by the combination of a read-write lock and RCU, allowing
+> > > page walkers to traverse in parallel.
+> > >
+> > > This series is strongly inspired by the mechanics of the TDP MMU,
+> > > making use of RCU to protect parallel walks. Note that the TLB
+> > > invalidation mechanics are a bit different between x86 and ARM, so we
+> > > need to use the 'break-before-make' sequence to split/collapse a
+> > > block/table mapping, respectively.
+> >
+> > An alternative (or perhaps "v2" [1]) is to make x86's TDP MMU
+> > arch-neutral and port it to support ARM's stage-2 MMU. This is based
+> > on a few observations:
+> >
+> > - The problems that motivated the development of the TDP MMU are not
+> > x86-specific (e.g. parallelizing faults during the post-copy phase of
+> > Live Migration).
+> > - The synchronization in the TDP MMU (read/write lock, RCU for PT
+> > freeing, atomic compare-exchanges for modifying PTEs) is complex, but
+> > would be equivalent across architectures.
+> > - Eventually RISC-V is going to want similar performance (my
+> > understanding is RISC-V MMU is already a copy-paste of the ARM MMU),
+> > and it'd be a shame to re-implement TDP MMU synchronization a third
+> > time.
+> > - The TDP MMU includes support for various performance features that
+> > would benefit other architectures, such as eager page splitting,
+> > deferred zapping, lockless write-protection resolution, and (coming
+> > soon) in-place huge page promotion.
+> > - And then there's the obvious wins from less code duplication in KVM
+> > (e.g. get rid of the RISC-V MMU copy, increased code test coverage,
+> > ...).
+>
+> I definitely agree with the observation -- we're all trying to solve the
+> same set of issues. And I completely agree that a good long term goal
+> would be to create some common parts for all architectures. Less work
+> for us ARM folks it would seem ;-)
+>
+> What's top of mind is how we paper over the architectural differences
+> between all of the architectures, especially when we need to do entirely
+> different things because of the arch.
+>
+> For example, I whine about break-before-make a lot throughout this
+> series which is somewhat unique to ARM. I don't think we can do eager
+> page splitting on the base architecture w/o doing the TLBI for every
+> block. Not only that, we can't do a direct valid->valid change without
+> first making an invalid PTE visible to hardware. Things get even more
+> exciting when hardware revisions relax break-before-make requirements.
 
-Might be worth a healthy sprinkle of lockdep on the functions taking
-"shared" as an argument, just to make sure the wrong value isn't going
-down a callstack you didn't expect.
+Gotcha, so porting the TDP MMU to ARM would require adding
+break-before-make support. That seems feasible and we could guard it
+behind a e.g. static_key so there is no runtime overhead for
+architectures (or ARM hardware revisions) that do not require it.
+Anything else come to mind as major architectural differences?
+
+ >
+> There's also significant architectural differences between KVM on x86
+> and KVM for ARM. Our paging code runs both in the host kernel and the
+> hyp/lowvisor, and does:
+>
+>  - VM two dimensional paging (stage 2 MMU)
+>  - Hyp's own MMU (stage 1 MMU)
+>  - Host kernel isolation (stage 2 MMU)
+>
+> each with its own quirks. The 'not exactly in the kernel' part will make
+> instrumentation a bit of a hassle too.
+
+Ah, interesting. It'd probably make sense to start with the VM
+2-dimensional paging use-case and leave the other use-cases using the
+existing MMU, and then investigate transitioning the other use-cases.
+Similarly in x86 we still have the legacy MMU for shadow paging (e.g.
+hosts with no stage-2 hardware, and nested virtualization).
 
 >
-> Signed-off-by: Oliver Upton <oupton@google.com>
-> ---
->  arch/arm64/kvm/mmu.c | 21 +++------------------
->  1 file changed, 3 insertions(+), 18 deletions(-)
+> None of this is meant to disagree with you in the slightest. I firmly
+> agree we need to share as many parts between the architectures as
+> possible. I'm just trying to call out a few of the things relating to
+> ARM that will make this annoying so that way whoever embarks on the
+> adventure will see it.
 >
-> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> index 63cf18cdb978..2881051c3743 100644
-> --- a/arch/arm64/kvm/mmu.c
-> +++ b/arch/arm64/kvm/mmu.c
-> @@ -1127,7 +1127,6 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
->         gfn_t gfn;
->         kvm_pfn_t pfn;
->         bool logging_active = memslot_is_logging(memslot);
-> -       bool use_read_lock = false;
->         unsigned long fault_level = kvm_vcpu_trap_get_fault_level(vcpu);
->         unsigned long vma_pagesize, fault_granule;
->         enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
-> @@ -1162,8 +1161,6 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
->         if (logging_active) {
->                 force_pte = true;
->                 vma_shift = PAGE_SHIFT;
-> -               use_read_lock = (fault_status == FSC_PERM && write_fault &&
-> -                                fault_granule == PAGE_SIZE);
->         } else {
->                 vma_shift = get_vma_page_shift(vma, hva);
->         }
-> @@ -1267,15 +1264,8 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
->         if (exec_fault && device)
->                 return -ENOEXEC;
+> > The side of this I haven't really looked into yet is ARM's stage-2
+> > MMU, and how amenable it would be to being managed by the TDP MMU. But
+> > I assume it's a conventional page table structure mapping GPAs to
+> > HPAs, which is the most important overlap.
+> >
+> > That all being said, an arch-neutral TDP MMU would be a larger, more
+> > complex code change than something like this series (hence my "v2"
+> > caveat above). But I wanted to get this idea out there since the
+> > rubber is starting to hit the road on improving ARM MMU scalability.
 >
-> -       /*
-> -        * To reduce MMU contentions and enhance concurrency during dirty
-> -        * logging dirty logging, only acquire read lock for permission
-> -        * relaxation.
-> -        */
-> -       if (use_read_lock)
-> -               read_lock(&kvm->mmu_lock);
-> -       else
-> -               write_lock(&kvm->mmu_lock);
-> +       read_lock(&kvm->mmu_lock);
-> +
-
-Ugh, I which we could get rid of the analogous ugly block on x86.
-
->         pgt = vcpu->arch.hw_mmu->pgt;
->         if (mmu_notifier_retry(kvm, mmu_seq))
->                 goto out_unlock;
-> @@ -1322,8 +1312,6 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
->         if (fault_status == FSC_PERM && vma_pagesize == fault_granule) {
->                 ret = kvm_pgtable_stage2_relax_perms(pgt, fault_ipa, prot);
->         } else {
-> -               WARN_ONCE(use_read_lock, "Attempted stage-2 map outside of write lock\n");
-> -
->                 ret = kvm_pgtable_stage2_map(pgt, fault_ipa, vma_pagesize,
->                                              __pfn_to_phys(pfn), prot,
->                                              mmu_caches, true);
-> @@ -1336,10 +1324,7 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
->         }
+> All for it. I cc'ed you on the series for this exact reason, I wanted to
+> grab your attention to spark the conversation :)
 >
->  out_unlock:
-> -       if (use_read_lock)
-> -               read_unlock(&kvm->mmu_lock);
-> -       else
-> -               write_unlock(&kvm->mmu_lock);
-> +       read_unlock(&kvm->mmu_lock);
->         kvm_set_pfn_accessed(pfn);
->         kvm_release_pfn_clean(pfn);
->         return ret != -EAGAIN ? ret : 0;
 > --
-> 2.36.0.rc0.470.gd361397f0d-goog
->
+> Thanks,
+> Oliver
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
