@@ -2,88 +2,87 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DBAE50BE30
-	for <lists+kvmarm@lfdr.de>; Fri, 22 Apr 2022 19:10:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D77250BF1D
+	for <lists+kvmarm@lfdr.de>; Fri, 22 Apr 2022 19:59:20 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 463734B285;
-	Fri, 22 Apr 2022 13:10:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7A1A049F3D;
+	Fri, 22 Apr 2022 13:59:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -1.788
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id U-rKW6uEj-Us; Fri, 22 Apr 2022 13:10:34 -0400 (EDT)
+	with ESMTP id SDHHvUZVgpeA; Fri, 22 Apr 2022 13:59:19 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 293DA4B274;
-	Fri, 22 Apr 2022 13:10:33 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 397724B27D;
+	Fri, 22 Apr 2022 13:59:18 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D83549EE6
- for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Apr 2022 13:10:32 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 365944B24E
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Apr 2022 13:59:16 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ieEIw8f4a6Xc for <kvmarm@lists.cs.columbia.edu>;
- Fri, 22 Apr 2022 13:10:31 -0400 (EDT)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8A68D49EC3
- for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Apr 2022 13:10:31 -0400 (EDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 79D5A62173;
- Fri, 22 Apr 2022 17:10:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CABCAC385A0;
- Fri, 22 Apr 2022 17:10:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1650647429;
- bh=Tfj8nbxLW/+CjRCUEie3vjlP1L/DEQVuXe32j0yQLNE=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=jm4EE8qFWyeLHTFHK/6Bd8CJthF89PKLDKTJ15+dn/fJQVrQW6KoDBl1qHSJSGKSJ
- BnIFusNX0tQ4usi1IA1cyinwk3RJcLWSwjorCWCm14dUJfKItAcaizn7R04aqWJUIu
- 1fmXAYoKLayuMQ56QSJbAVPAh6u3beAMAHLDSBg6eU/bIWT4eWsTbnx86/C6xEdrja
- RplqP7gFfDTsulM7vxPaP2clDBsYsnEK56ImoWsQe9pQ9gJaK5AOU1+yQz6gcFWyEa
- 0OaV+4Z7vNErNCvNZlJKTijSkcxCAl3xBCS8tth8p8KiS1U4JapArStTbu27oQqgo8
- o1riTvGYPOA3g==
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1nhwnb-006ES4-7z; Fri, 22 Apr 2022 18:10:27 +0100
+ with ESMTP id Zyxv2rVHVvT7 for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 22 Apr 2022 13:59:14 -0400 (EDT)
+Received: from mail-io1-f53.google.com (mail-io1-f53.google.com
+ [209.85.166.53])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BF4554B23C
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Apr 2022 13:59:14 -0400 (EDT)
+Received: by mail-io1-f53.google.com with SMTP id q22so9419360iod.2
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Apr 2022 10:59:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=PvYO7bo8SW1Y4ZSBFDfeF93l7A3erH7xTOKbq6F1GXw=;
+ b=DvuwE7lFq4nlwhDZJKEgwLV17hmwV7Skel1e4+I34Cth3Krw4NZ61wmOvoCCnRReZC
+ l2rV8MSmu9YodSSz1sMXtrHdz0CPmSuN9x7O1iuHt/sJpKpos+oeQCGtMEiLUeIqk0AV
+ C9A1w2lQ7zSCd/5X7sqmI4iqBM0gPv5UlWPrd8o4WUrmBlydJkAZcxOjjND5ma4uXPRJ
+ A5YoyGMZW4lmeclSiha1SeF6c+wUXK9/3NxD072mKsH+Ncp29cXL6Oxia9ObDhHGk10I
+ I5DqTIWIimUTaWzzDpXvg4wsXIT+4Ftb6KLRRggges3bmjjZyxcXjdteoE+OKHCkYw5g
+ 7P2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=PvYO7bo8SW1Y4ZSBFDfeF93l7A3erH7xTOKbq6F1GXw=;
+ b=dbRM+HoJbscm7noUjrOMvkyPu5GuQIH6SoaU3LxYxEe0Sl1WBcbtY+1DMPdAGjueI/
+ fuQLi/E87LTuxLbS3cTcWGGEzvkJx7QmICwDavjF76VChBwwLsfW6BSQAFdUc4iHaiDe
+ is79g1YUVEiAhyXVQeayFfQMvoMqMSeqkUUHdAOcmjI5lYwg+c2DPXvX/5AVIdzPe5/2
+ r8CpTO8Tlf7Jxti2rBosTn/frZwDTk1gCUqdgxicJHsahQMPLIKA7ia1qOHMUC0RK6Kp
+ NBabK7bSbGa5amR461qsK5go27L9gO/3yGkQrpYc6eVIhtFXx6AI715aKRriWQNicr19
+ lWXg==
+X-Gm-Message-State: AOAM530yFwaNhdEQt8zq3Q3Hiwkzyar6iqVPdiZ4F9PdDfDExplUme/D
+ N2n2W2XKHs8usK1npQwM6Qp4Pw==
+X-Google-Smtp-Source: ABdhPJz8wfhINFssvIsT0Zvy7AA5wPuZkh2tzpWPxtGot8eLDBt3NrS/v8VN+/Kyj1Mis3VNtO1hEA==
+X-Received: by 2002:a6b:f405:0:b0:640:a963:2c24 with SMTP id
+ i5-20020a6bf405000000b00640a9632c24mr2574692iog.110.1650650353924; 
+ Fri, 22 Apr 2022 10:59:13 -0700 (PDT)
+Received: from google.com (194.225.68.34.bc.googleusercontent.com.
+ [34.68.225.194]) by smtp.gmail.com with ESMTPSA id
+ q13-20020a056e020c2d00b002caa365b43bsm1771133ilg.76.2022.04.22.10.59.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 22 Apr 2022 10:59:11 -0700 (PDT)
+Date: Fri, 22 Apr 2022 17:59:06 +0000
+From: Oliver Upton <oupton@google.com>
+To: Gavin Shan <gshan@redhat.com>
+Subject: Re: [PATCH v6 02/18] KVM: arm64: Route hypercalls based on their owner
+Message-ID: <YmLs6t8iUn+BH6mo@google.com>
+References: <20220403153911.12332-1-gshan@redhat.com>
+ <20220403153911.12332-3-gshan@redhat.com>
+ <YmETmWvPPQvHpQwP@google.com>
+ <2519e2fa-4d6a-a5f8-1057-6b1820853036@redhat.com>
 MIME-Version: 1.0
-Date: Fri, 22 Apr 2022 18:10:27 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: Catalin Marinas <catalin.marinas@arm.com>, Mark Brown <broonie@kernel.org>
-Subject: Re: [PATCH v14 00/39] arm64/sme: Initial support for the Scalable
- Matrix Extension
-In-Reply-To: <20220419112247.711548-1-broonie@kernel.org>
-References: <20220419112247.711548-1-broonie@kernel.org>
-User-Agent: Roundcube Webmail/1.4.13
-Message-ID: <65c761cedb3b6e56f4a03fd196a3a767@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: catalin.marinas@arm.com, broonie@kernel.org, will@kernel.org,
- skhan@linuxfoundation.org, shuah@kernel.org, alan.hayward@arm.com,
- luis.machado@arm.com, Salil.Akerkar@arm.com, Basant.KumarDwivedi@arm.com,
- szabolcs.nagy@arm.com, james.morse@arm.com, alexandru.elisei@arm.com,
- suzuki.poulose@arm.com, luca.scalabrino@arm.com,
- linux-arm-kernel@lists.infradead.org, linux-kselftest@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: Basant Kumar Dwivedi <Basant.KumarDwivedi@arm.com>,
- Luis Machado <luis.machado@arm.com>, Szabolcs Nagy <szabolcs.nagy@arm.com>,
- Will Deacon <will@kernel.org>, Shuah Khan <skhan@linuxfoundation.org>,
- linux-arm-kernel@lists.infradead.org, linux-kselftest@vger.kernel.org,
- Alan Hayward <alan.hayward@arm.com>, Shuah Khan <shuah@kernel.org>,
- kvmarm@lists.cs.columbia.edu, Salil Akerkar <Salil.Akerkar@arm.com>,
- Luca Salabrino <luca.scalabrino@arm.com>
+Content-Disposition: inline
+In-Reply-To: <2519e2fa-4d6a-a5f8-1057-6b1820853036@redhat.com>
+Cc: maz@kernel.org, linux-kernel@vger.kernel.org, eauger@redhat.com,
+ shan.gavin@gmail.com, Jonathan.Cameron@huawei.com, pbonzini@redhat.com,
+ vkuznets@redhat.com, will@kernel.org, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -95,29 +94,144 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 2022-04-19 12:22, Mark Brown wrote:
-> This series provides initial support for the ARMv9 Scalable Matrix
-> Extension (SME).  SME takes the approach used for vectors in SVE and
-> extends this to provide architectural support for matrix operations.  A
-> more detailed overview can be found in [1].
+On Fri, Apr 22, 2022 at 08:20:50PM +0800, Gavin Shan wrote:
+> Hi Oliver,
+> 
+> On 4/21/22 4:19 PM, Oliver Upton wrote:
+> > On Sun, Apr 03, 2022 at 11:38:55PM +0800, Gavin Shan wrote:
+> > > kvm_hvc_call_handler() directly handles the incoming hypercall, or
+> > > and routes it based on its (function) ID. kvm_psci_call() becomes
+> > > the gate keeper to handle the hypercall that can't be handled by
+> > > any one else. It makes kvm_hvc_call_handler() a bit messy.
+> > > 
+> > > This reorgnizes the code to route the hypercall to the corresponding
+> > > handler based on its owner.
+> > 
+> > nit: write changelogs in the imperative:
+> > 
+> > Reorganize the code to ...
+> > 
+> 
+> Thanks again for your review. It will be corrected in next respin.
+> By the way, could you help to review the rest when you have free
+> cycles? :)
 
-For the KVM patches:
+Yup, I've been thinking on the rest of the series just to make sure the
+feedback I give is sane.
 
-Reviewed-by: Marc Zyngier <maz@kernel.org>
+> > > The hypercall may be handled directly
+> > > in the handler or routed further to the corresponding functionality.
+> > > The (function) ID is always verified before it's routed to the
+> > > corresponding functionality. By the way, @func_id is repalced by
+> > > @func, to be consistent with by smccc_get_function().
+> > > 
+> > > PSCI is the only exception, those hypercalls defined by 0.2 or
+> > > beyond are routed to the handler for Standard Secure Service, but
+> > > those defined in 0.1 are routed to the handler for Standard
+> > > Hypervisor Service.
+> > > 
+> > > Suggested-by: Oliver Upton <oupton@google.com>
+> > > Signed-off-by: Gavin Shan <gshan@redhat.com>
+> > > ---
+> > >   arch/arm64/kvm/hypercalls.c | 199 +++++++++++++++++++++++-------------
+> > >   1 file changed, 127 insertions(+), 72 deletions(-)
+> > > 
+> > > diff --git a/arch/arm64/kvm/hypercalls.c b/arch/arm64/kvm/hypercalls.c
+> > > index 8438fd79e3f0..b659387d8919 100644
+> > > --- a/arch/arm64/kvm/hypercalls.c
+> > > +++ b/arch/arm64/kvm/hypercalls.c
+> > 
+> > [...]
+> > 
+> > > +static int kvm_hvc_standard(struct kvm_vcpu *vcpu, u32 func)
+> > > +{
+> > > +	u64 val = SMCCC_RET_NOT_SUPPORTED;
+> > > +
+> > > +	switch (func) {
+> > > +	case ARM_SMCCC_TRNG_VERSION ... ARM_SMCCC_TRNG_RND32:
+> > > +	case ARM_SMCCC_TRNG_RND64:
+> > > +		return kvm_trng_call(vcpu);
+> > > +	case PSCI_0_2_FN_PSCI_VERSION ... PSCI_0_2_FN_SYSTEM_RESET:
+> > > +	case PSCI_0_2_FN64_CPU_SUSPEND ... PSCI_0_2_FN64_MIGRATE_INFO_UP_CPU:
+> > > +	case PSCI_1_0_FN_PSCI_FEATURES ... PSCI_1_0_FN_SET_SUSPEND_MODE:
+> > > +	case PSCI_1_0_FN64_SYSTEM_SUSPEND:
+> > > +	case PSCI_1_1_FN_SYSTEM_RESET2:
+> > > +	case PSCI_1_1_FN64_SYSTEM_RESET2:
+> > 
+> > Isn't it known from the SMCCC what range of hypercall numbers PSCI and
+> > TRNG fall under, respectively?
+> > 
+> > https://developer.arm.com/documentation/den0028/e/
+> > 
+> > See sections 6.3 and 6.4.
+> > 
+> 
+> Bit#30 of the function ID is the call convention indication, which is
+> either 32 or 64-bits. For TRNG's function IDs, its 32-bits and 64-bits
+> variants are discrete. Besides, the spec reserves more functions IDs
+> than what range we're using. It means we don't have symbols to match
+> the reserved ranges. So it looks good to me for TRNG cases.
+> 
+> For PSCI, it can be simplified as below, according to the defination
+> in include/uapi/linux/psci.h:
+> 
+>     case PSCI_0_2_FN_PSCI_VERSION ...
+>          PSCI_1_1_FN_SYSTEM_RESET2:     /* 32-bits */
+>     case PSCI_0_2_FN64_CPU_SUSPEND ...
+>          PSCI_1_1_FN64_SYSTEM_RESET2:   /* 64-bits */
 
-Catalin: the KVM patches are likely to slash a bit with the
-WFxT stuff as well. It'd be good to swap stable branches!
+Right, but this still requires that we go back and update this switch
+statement every time we add a new PSCI call, which is exactly what I was
+hoping we could avoid. Doing this based exactly on the spec reduces the
+burden for future changes, and keeps all relevant context in a single
+spot.
 
+  #define SMCCC_STD_PSCI_RANGE_START	0x0000
+  #define SMCCC_STD_PSCI_RANGE_END	0x001f
+  #define SMCCC_STD_TRNG_RANGE_START	0x0050
+  #define SMCCC_STD_TRNG_RANGE_END	0x005f
+
+  switch (ARM_SMCCC_FUNC_NUM(function_id)) {
+          case SMCCC_STD_PSCI_RANGE_START ... SMCCC_STD_PSCI_RANGE_END:
+	          return kvm_psci_call(vcpu);
+          case SMCCC_STD_TRNG_RANGE_START ... SMCCC_STD_TRNG_RANGE_END:
+	  	  return kvm_trng_call(vcpu);
+
+	 ...
+  }
+
+[...]
+
+> > > +	case KVM_PSCI_FN_CPU_SUSPEND ... KVM_PSCI_FN_MIGRATE:
+> > > +		return kvm_psci_call(vcpu);
+> > 
+> > You might want to handle these from the main call handler with a giant
+> > disclaimer that these values predate SMCCC and therefore collide with
+> > the standard hypervisor service range.
+> > 
+> > [...]
+> > 
+> 
+> I probably just keep it as it is to follow the rule: to route
+> based on the owner strictly. Besides, there are 3 levels to
+> handle SMCCCs after this patch is applied, which corresponds
+> to 3 handlers as main/owner/function. It sounds more natural
+> for reader to follow the implementation in this way.
+
+I think this makes it much more confusing for the reader, as you'd be
+hard pressed to find these function IDs in the SMCCC spec. Since their
+values are outside of the specification, it is confusing to only address
+them after these switch statements have decided that they belong to a
+particular service owner as they do not.
+
+--
 Thanks,
-
-         M.
--- 
-Jazz is not dead. It just smells funny...
+Oliver
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
