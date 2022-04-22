@@ -2,83 +2,60 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C0DBB50BF0E
-	for <lists+kvmarm@lfdr.de>; Fri, 22 Apr 2022 19:50:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9ACC50BCFA
+	for <lists+kvmarm@lfdr.de>; Fri, 22 Apr 2022 18:28:15 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 143EA4B2BF;
-	Fri, 22 Apr 2022 13:50:56 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 09E804B274;
+	Fri, 22 Apr 2022 12:28:15 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -1.899
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
+X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id s6MosgIpaVxh; Fri, 22 Apr 2022 13:50:55 -0400 (EDT)
+	with ESMTP id 8t6eNOnNCV8t; Fri, 22 Apr 2022 12:28:14 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1B5944B2AC;
-	Fri, 22 Apr 2022 13:50:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C296E4B20E;
+	Fri, 22 Apr 2022 12:28:13 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5C80F4B26D
- for <kvmarm@lists.cs.columbia.edu>; Thu, 21 Apr 2022 13:04:08 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D03A449ED8
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Apr 2022 12:28:12 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id uyIFy6YBSi-Y for <kvmarm@lists.cs.columbia.edu>;
- Thu, 21 Apr 2022 13:04:07 -0400 (EDT)
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com
- [209.85.219.174])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4A7914B231
- for <kvmarm@lists.cs.columbia.edu>; Thu, 21 Apr 2022 13:04:07 -0400 (EDT)
-Received: by mail-yb1-f174.google.com with SMTP id f38so9889716ybi.3
- for <kvmarm@lists.cs.columbia.edu>; Thu, 21 Apr 2022 10:04:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Mt5d94ouBNRgK4aft9t5vNr0uFkR55z3XwWAQdD5FUc=;
- b=HrQ6SnoElb85r6De0Gyb6QYtmGW0UZZHoRqYniWGXxhbAJxdJBxxDoGjWfFzlyLHCa
- iS6FEOJghE+gwwbiFuO/qzE+v0/xWyacDc/dig/lj0OLYAFuIqjszn6bBifsCmbCzGIr
- ZlEiv9/ngqKNSNChcABhKOqkpYvRxWU6mu2hEvjbWIdvs8nbFLsj6ub4GEwaRL1dxgib
- GQJBc2PA+Rsc0hrZUet+I8zxDXI7xr1LxSnpddJMeRCy6DAIJcYqCV9Dw81JA9zuNR8F
- b6jtRfyhxgw76JMs9k0bR9BotnAZkTT7vy8KrdVPkKxBKDPwT/PbrInF9l6bNSyIIZE8
- hL2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=Mt5d94ouBNRgK4aft9t5vNr0uFkR55z3XwWAQdD5FUc=;
- b=b9/Gc6Cn//yjWJqQ9t9trS9F+gtUeISxcHy9lXCRv7QnrxzT4CbG3ycCYeaYG9BZmf
- Gf6lBWBX0V/GVQ/ED17t/omjY+c/5gEKC7ZcYoRrJFHQihawHaH2VIbmLf1sUNl2T81j
- KAT8GvywF70/7iqEt8qJyp5Ia9RAY/fZRGjSRnGemABxBLef8OtpC/eMKMZCgz/cAv/0
- Hp0LnbVHcDXStaqn5Zk3AZUcDlpYYc6yTJoRWMtnAECzRzfW6XcTeVSzKyfEUrjJIEQ0
- j77GCzPH7zPQW8c24gUzIncZRKFUEwVgzUKi6KHzX8MjGG443lBWxtR2aZdXAxLGvOFf
- VriQ==
-X-Gm-Message-State: AOAM530cmvxAF/rntLfnC2BQzexkjBAPuQah2JTMe8XuHt4Ei9FNo5D8
- SyOuFAYltSTe0Csd7e8tYBW3YdEnE2vcputCxpxLIg==
-X-Google-Smtp-Source: ABdhPJwGlxPxobbr+AhQQh2O9DUBl0dl6jeVvCmp3KF1DE8dxE/HTfIURpAV8tgSrH2T97uM8B8yRKMtO3mXmGlYNio=
-X-Received: by 2002:a25:84c6:0:b0:641:5a21:90bc with SMTP id
- x6-20020a2584c6000000b006415a2190bcmr699446ybm.26.1650560646522; Thu, 21 Apr
- 2022 10:04:06 -0700 (PDT)
+ with ESMTP id 4u2Fjpg7F0fn for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 22 Apr 2022 12:28:11 -0400 (EDT)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8672D49EB1
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 22 Apr 2022 12:28:11 -0400 (EDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id 1AED4B831AD;
+ Fri, 22 Apr 2022 16:28:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57AEC385A4;
+ Fri, 22 Apr 2022 16:28:05 +0000 (UTC)
+Date: Fri, 22 Apr 2022 17:28:02 +0100
+From: Catalin Marinas <catalin.marinas@arm.com>
+To: Mark Brown <broonie@kernel.org>
+Subject: Re: [PATCH v14 16/39] arm64/sme: Implement traps and syscall
+ handling for SME
+Message-ID: <YmLXkgwNv3n/zl9T@arm.com>
+References: <20220419112247.711548-1-broonie@kernel.org>
+ <20220419112247.711548-17-broonie@kernel.org>
 MIME-Version: 1.0
-References: <20220415215901.1737897-1-oupton@google.com>
- <20220415215901.1737897-17-oupton@google.com>
- <CANgfPd9bb213hsdKTMW9K0EsVLuKEKCF8V0pb6xM1qfnRj1qfw@mail.gmail.com>
- <YmGKaoStt9Lf9xOP@google.com>
-In-Reply-To: <YmGKaoStt9Lf9xOP@google.com>
-From: Ben Gardon <bgardon@google.com>
-Date: Thu, 21 Apr 2022 10:03:55 -0700
-Message-ID: <CANgfPd-ebvPq5eqgHz0ED1eSqk0Z-+utoBE8w67uo=GSS+UrpQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 16/17] KVM: arm64: Enable parallel stage 2 MMU faults
-To: Oliver Upton <oupton@google.com>
-X-Mailman-Approved-At: Fri, 22 Apr 2022 13:50:47 -0400
-Cc: kvm <kvm@vger.kernel.org>, Marc Zyngier <maz@kernel.org>,
- Peter Shier <pshier@google.com>, David Matlack <dmatlack@google.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "moderated list:KERNEL VIRTUAL MACHINE FOR ARM64 \(KVM/arm64\)"
- <kvmarm@lists.cs.columbia.edu>, linux-arm-kernel@lists.infradead.org
+Content-Disposition: inline
+In-Reply-To: <20220419112247.711548-17-broonie@kernel.org>
+Cc: Basant Kumar Dwivedi <Basant.KumarDwivedi@arm.com>,
+ Will Deacon <will@kernel.org>, Luis Machado <luis.machado@arm.com>,
+ Szabolcs Nagy <szabolcs.nagy@arm.com>, Marc Zyngier <maz@kernel.org>,
+ Shuah Khan <skhan@linuxfoundation.org>, linux-arm-kernel@lists.infradead.org,
+ linux-kselftest@vger.kernel.org, Alan Hayward <alan.hayward@arm.com>,
+ Shuah Khan <shuah@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ Salil Akerkar <Salil.Akerkar@arm.com>,
+ Luca Salabrino <luca.scalabrino@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -95,84 +72,28 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Apr 21, 2022 at 9:46 AM Oliver Upton <oupton@google.com> wrote:
->
-> On Thu, Apr 21, 2022 at 09:35:27AM -0700, Ben Gardon wrote:
-> > On Fri, Apr 15, 2022 at 2:59 PM Oliver Upton <oupton@google.com> wrote:
-> > >
-> > > Voila! Since the map walkers are able to work in parallel there is no
-> > > need to take the write lock on a stage 2 memory abort. Relax locking
-> > > on map operations and cross fingers we got it right.
-> >
-> > Might be worth a healthy sprinkle of lockdep on the functions taking
-> > "shared" as an argument, just to make sure the wrong value isn't going
-> > down a callstack you didn't expect.
->
-> If we're going to go this route we might need to just punch a pointer
-> to the vCPU through to the stage 2 table walker. All of this plumbing is
-> built around the idea that there are multiple tables to manage and
-> needn't be in the context of a vCPU/VM, which is why I went the WARN()
-> route instead of better lockdep assertions.
+On Tue, Apr 19, 2022 at 12:22:24PM +0100, Mark Brown wrote:
+> By default all SME operations in userspace will trap.  When this happens
+> we allocate storage space for the SME register state, set up the SVE
+> registers and disable traps.  We do not need to initialize ZA since the
+> architecture guarantees that it will be zeroed when enabled and when we
+> trap ZA is disabled.
+> 
+> On syscall we exit streaming mode if we were previously in it and ensure
+> that all but the lower 128 bits of the registers are zeroed while
+> preserving the state of ZA. This follows the aarch64 PCS for SME, ZA
+> state is preserved over a function call and streaming mode is exited.
+> Since the traps for SME do not distinguish between streaming mode SVE
+> and ZA usage if ZA is in use rather than reenabling traps we instead
+> zero the parts of the SVE registers not shared with FPSIMD and leave SME
+> enabled, this simplifies handling SME traps. If ZA is not in use then we
+> reenable SME traps and fall through to normal handling of SVE.
+> 
+> Signed-off-by: Mark Brown <broonie@kernel.org>
 
-Oh right, it didn't even occur to me that those functions wouldn't
-have a vCPU / KVM pointer.
+Re-adding my reviewed-by following the update.
 
->
-> > >
-> > > Signed-off-by: Oliver Upton <oupton@google.com>
-> > > ---
-> > >  arch/arm64/kvm/mmu.c | 21 +++------------------
-> > >  1 file changed, 3 insertions(+), 18 deletions(-)
-> > >
-> > > diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-> > > index 63cf18cdb978..2881051c3743 100644
-> > > --- a/arch/arm64/kvm/mmu.c
-> > > +++ b/arch/arm64/kvm/mmu.c
-> > > @@ -1127,7 +1127,6 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> > >         gfn_t gfn;
-> > >         kvm_pfn_t pfn;
-> > >         bool logging_active = memslot_is_logging(memslot);
-> > > -       bool use_read_lock = false;
-> > >         unsigned long fault_level = kvm_vcpu_trap_get_fault_level(vcpu);
-> > >         unsigned long vma_pagesize, fault_granule;
-> > >         enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R;
-> > > @@ -1162,8 +1161,6 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> > >         if (logging_active) {
-> > >                 force_pte = true;
-> > >                 vma_shift = PAGE_SHIFT;
-> > > -               use_read_lock = (fault_status == FSC_PERM && write_fault &&
-> > > -                                fault_granule == PAGE_SIZE);
-> > >         } else {
-> > >                 vma_shift = get_vma_page_shift(vma, hva);
-> > >         }
-> > > @@ -1267,15 +1264,8 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
-> > >         if (exec_fault && device)
-> > >                 return -ENOEXEC;
-> > >
-> > > -       /*
-> > > -        * To reduce MMU contentions and enhance concurrency during dirty
-> > > -        * logging dirty logging, only acquire read lock for permission
-> > > -        * relaxation.
-> > > -        */
-> > > -       if (use_read_lock)
-> > > -               read_lock(&kvm->mmu_lock);
-> > > -       else
-> > > -               write_lock(&kvm->mmu_lock);
-> > > +       read_lock(&kvm->mmu_lock);
-> > > +
-> >
-> > Ugh, I which we could get rid of the analogous ugly block on x86.
->
-> Maybe we could fold it in to a MMU macro in the arch-generic scope?
-> Conditional locking is smelly, I was very pleased to delete these lines :)
-
-Smelly indeed. I don't think hiding it behind a macro would really
-help. It's just something we'll have to live with in x86.
-
->
-> --
-> Thanks,
-> Oliver
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
