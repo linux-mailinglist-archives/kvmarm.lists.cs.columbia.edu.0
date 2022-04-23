@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DCFEE50C831
-	for <lists+kvmarm@lfdr.de>; Sat, 23 Apr 2022 10:09:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B935750CA0D
+	for <lists+kvmarm@lfdr.de>; Sat, 23 Apr 2022 14:48:24 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 026014B108;
-	Sat, 23 Apr 2022 04:09:21 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F26EF4B0B9;
+	Sat, 23 Apr 2022 08:48:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
@@ -15,73 +15,72 @@ X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
 	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@intel.com
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id fvz9YC89Bbko; Sat, 23 Apr 2022 04:09:20 -0400 (EDT)
+	with ESMTP id FOnvUf4Lw6mH; Sat, 23 Apr 2022 08:48:23 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D45349B12;
-	Sat, 23 Apr 2022 04:09:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6FC184B099;
+	Sat, 23 Apr 2022 08:48:22 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 418CC49F55
- for <kvmarm@lists.cs.columbia.edu>; Sat, 23 Apr 2022 04:09:18 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C018D4B093
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 23 Apr 2022 08:48:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id F4jdB2MjwpLB for <kvmarm@lists.cs.columbia.edu>;
- Sat, 23 Apr 2022 04:09:16 -0400 (EDT)
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 41F6749F4A
- for <kvmarm@lists.cs.columbia.edu>; Sat, 23 Apr 2022 04:09:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1650701356; x=1682237356;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=FFxlNihVEolpriYnsSloMndObmA0fWh9gsMeNYrdUkg=;
- b=CQ+EMOVovg9+/qONL3XfRhHD8txYdCfHi+f2JhLlGzxG+HMiMC9TT2zn
- K6daw6v3z0RwKYuHK1tqQcwnr99I65JujL7DzlKfwscVIxCZiJAMEhLEN
- yCdpzDbABgWt03Pl2+GuCC+gTiqL9hTCP1Wdc+7x2uZAIYGREpLsuYpoi
- aQYSfrDFFT6CiFtPEX7Yi5gFNVOLHmh+vDwBWXsByivNEIZOXA9r6pMk3
- vEouaFO5woH5/SN6eoLOCfc2KZZFIFEVAeRqhgsi5GDCbYvCvQJw06iRe
- ccT317foyV+PmTWy7FAqcLxiaL24ZpqCFnx9kmGkjz27dk1BkLHLcxybs Q==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10324"; a="351315746"
-X-IronPort-AV: E=Sophos;i="5.90,284,1643702400"; d="scan'208";a="351315746"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
- by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Apr 2022 01:09:15 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,284,1643702400"; d="scan'208";a="648956790"
-Received: from lkp-server01.sh.intel.com (HELO dd58949a6e39) ([10.239.97.150])
- by FMSMGA003.fm.intel.com with ESMTP; 23 Apr 2022 01:09:10 -0700
-Received: from kbuild by dd58949a6e39 with local (Exim 4.95)
- (envelope-from <lkp@intel.com>) id 1niApJ-00003n-TL;
- Sat, 23 Apr 2022 08:09:10 +0000
-Date: Sat, 23 Apr 2022 16:08:10 +0800
-From: kernel test robot <lkp@intel.com>
-To: David Matlack <dmatlack@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v4 19/20] KVM: Allow for different capacities in
- kvm_mmu_memory_cache structs
-Message-ID: <202204231516.bclimUe4-lkp@intel.com>
-References: <20220422210546.458943-20-dmatlack@google.com>
+ with ESMTP id quJNYFu7f7RY for <kvmarm@lists.cs.columbia.edu>;
+ Sat, 23 Apr 2022 08:48:20 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4D2CC4B08F
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 23 Apr 2022 08:48:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1650718100;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pRhbv36CFIo8Yp1QE2JYd5jVp+PVRgKRLXPKJ8jb5rI=;
+ b=HcY7/dhkxmGenR8tWpaLaO7fCBvDc8HA9TIDXixvax9rlEXzG5kNNjyrW1ax7htSWDq23g
+ 9mIdlIaU69/pAt9eByXY241u7BbJWhuXmp+zCq9BInIJCMOtHSB7mMcHaBs5ps0veOMyNy
+ IDlnbV+AkE+DlPtar7ks1KYdEItLfN8=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-204-wKYpcH_IP8K7sDJQ2Qz6VA-1; Sat, 23 Apr 2022 08:48:16 -0400
+X-MC-Unique: wKYpcH_IP8K7sDJQ2Qz6VA-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id ED4F1101AA45;
+ Sat, 23 Apr 2022 12:48:15 +0000 (UTC)
+Received: from [10.72.13.230] (ovpn-13-230.pek2.redhat.com [10.72.13.230])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 67BB940F4940;
+ Sat, 23 Apr 2022 12:48:09 +0000 (UTC)
+Subject: Re: [PATCH v6 02/18] KVM: arm64: Route hypercalls based on their owner
+To: Oliver Upton <oupton@google.com>
+References: <20220403153911.12332-1-gshan@redhat.com>
+ <20220403153911.12332-3-gshan@redhat.com> <YmETmWvPPQvHpQwP@google.com>
+ <2519e2fa-4d6a-a5f8-1057-6b1820853036@redhat.com>
+ <YmLs6t8iUn+BH6mo@google.com>
+From: Gavin Shan <gshan@redhat.com>
+Message-ID: <6d66823e-a6b0-f52a-efe3-0fbf1538597a@redhat.com>
+Date: Sat, 23 Apr 2022 20:48:06 +0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20220422210546.458943-20-dmatlack@google.com>
-Cc: Albert Ou <aou@eecs.berkeley.edu>, kbuild-all@lists.01.org,
- Marc Zyngier <maz@kernel.org>, Huacai Chen <chenhuacai@kernel.org>,
- "open list:KERNEL VIRTUAL MACHINE FOR MIPS \(KVM/mips\)"
- <linux-mips@vger.kernel.org>, David Matlack <dmatlack@google.com>,
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- "open list:KERNEL VIRTUAL MACHINE FOR RISC-V \(KVM/riscv\)"
- <kvm-riscv@lists.infradead.org>, Paul Walmsley <paul.walmsley@sifive.com>,
- Ben Gardon <bgardon@google.com>, maciej.szmigiero@oracle.com,
- "moderated list:KERNEL VIRTUAL MACHINE FOR ARM64 \(KVM/arm64\)"
- <kvmarm@lists.cs.columbia.edu>, Peter Feiner <pfeiner@google.com>
+In-Reply-To: <YmLs6t8iUn+BH6mo@google.com>
+Content-Language: en-US
+X-Scanned-By: MIMEDefang 2.84 on 10.11.54.2
+Cc: maz@kernel.org, linux-kernel@vger.kernel.org, eauger@redhat.com,
+ shan.gavin@gmail.com, Jonathan.Cameron@huawei.com, pbonzini@redhat.com,
+ vkuznets@redhat.com, will@kernel.org, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
+Reply-To: Gavin Shan <gshan@redhat.com>
 List-Id: Where KVM/ARM decisions are made <kvmarm.lists.cs.columbia.edu>
 List-Unsubscribe: <https://lists.cs.columbia.edu/mailman/options/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=unsubscribe>
@@ -90,98 +89,164 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi David,
+Hi Oliver,
 
-Thank you for the patch! Yet something to improve:
+On 4/23/22 1:59 AM, Oliver Upton wrote:
+> On Fri, Apr 22, 2022 at 08:20:50PM +0800, Gavin Shan wrote:
+>> On 4/21/22 4:19 PM, Oliver Upton wrote:
+>>> On Sun, Apr 03, 2022 at 11:38:55PM +0800, Gavin Shan wrote:
+>>>> kvm_hvc_call_handler() directly handles the incoming hypercall, or
+>>>> and routes it based on its (function) ID. kvm_psci_call() becomes
+>>>> the gate keeper to handle the hypercall that can't be handled by
+>>>> any one else. It makes kvm_hvc_call_handler() a bit messy.
+>>>>
+>>>> This reorgnizes the code to route the hypercall to the corresponding
+>>>> handler based on its owner.
+>>>
+>>> nit: write changelogs in the imperative:
+>>>
+>>> Reorganize the code to ...
+>>>
+>>
+>> Thanks again for your review. It will be corrected in next respin.
+>> By the way, could you help to review the rest when you have free
+>> cycles? :)
+> 
+> Yup, I've been thinking on the rest of the series just to make sure the
+> feedback I give is sane.
+> 
 
-[auto build test ERROR on 150866cd0ec871c765181d145aa0912628289c8a]
+Sure.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/David-Matlack/KVM-Extend-Eager-Page-Splitting-to-the-shadow-MMU/20220423-062108
-base:   150866cd0ec871c765181d145aa0912628289c8a
-config: riscv-randconfig-r005-20220422 (https://download.01.org/0day-ci/archive/20220423/202204231516.bclimUe4-lkp@intel.com/config)
-compiler: riscv64-linux-gcc (GCC) 11.2.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/871c5afc76a6f414c03f433d06bacfd928910b1b
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review David-Matlack/KVM-Extend-Eager-Page-Splitting-to-the-shadow-MMU/20220423-062108
-        git checkout 871c5afc76a6f414c03f433d06bacfd928910b1b
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.2.0 make.cross W=1 O=build_dir ARCH=riscv SHELL=/bin/bash
+>>>> The hypercall may be handled directly
+>>>> in the handler or routed further to the corresponding functionality.
+>>>> The (function) ID is always verified before it's routed to the
+>>>> corresponding functionality. By the way, @func_id is repalced by
+>>>> @func, to be consistent with by smccc_get_function().
+>>>>
+>>>> PSCI is the only exception, those hypercalls defined by 0.2 or
+>>>> beyond are routed to the handler for Standard Secure Service, but
+>>>> those defined in 0.1 are routed to the handler for Standard
+>>>> Hypervisor Service.
+>>>>
+>>>> Suggested-by: Oliver Upton <oupton@google.com>
+>>>> Signed-off-by: Gavin Shan <gshan@redhat.com>
+>>>> ---
+>>>>    arch/arm64/kvm/hypercalls.c | 199 +++++++++++++++++++++++-------------
+>>>>    1 file changed, 127 insertions(+), 72 deletions(-)
+>>>>
+>>>> diff --git a/arch/arm64/kvm/hypercalls.c b/arch/arm64/kvm/hypercalls.c
+>>>> index 8438fd79e3f0..b659387d8919 100644
+>>>> --- a/arch/arm64/kvm/hypercalls.c
+>>>> +++ b/arch/arm64/kvm/hypercalls.c
+>>>
+>>> [...]
+>>>
+>>>> +static int kvm_hvc_standard(struct kvm_vcpu *vcpu, u32 func)
+>>>> +{
+>>>> +	u64 val = SMCCC_RET_NOT_SUPPORTED;
+>>>> +
+>>>> +	switch (func) {
+>>>> +	case ARM_SMCCC_TRNG_VERSION ... ARM_SMCCC_TRNG_RND32:
+>>>> +	case ARM_SMCCC_TRNG_RND64:
+>>>> +		return kvm_trng_call(vcpu);
+>>>> +	case PSCI_0_2_FN_PSCI_VERSION ... PSCI_0_2_FN_SYSTEM_RESET:
+>>>> +	case PSCI_0_2_FN64_CPU_SUSPEND ... PSCI_0_2_FN64_MIGRATE_INFO_UP_CPU:
+>>>> +	case PSCI_1_0_FN_PSCI_FEATURES ... PSCI_1_0_FN_SET_SUSPEND_MODE:
+>>>> +	case PSCI_1_0_FN64_SYSTEM_SUSPEND:
+>>>> +	case PSCI_1_1_FN_SYSTEM_RESET2:
+>>>> +	case PSCI_1_1_FN64_SYSTEM_RESET2:
+>>>
+>>> Isn't it known from the SMCCC what range of hypercall numbers PSCI and
+>>> TRNG fall under, respectively?
+>>>
+>>> https://developer.arm.com/documentation/den0028/e/
+>>>
+>>> See sections 6.3 and 6.4.
+>>>
+>>
+>> Bit#30 of the function ID is the call convention indication, which is
+>> either 32 or 64-bits. For TRNG's function IDs, its 32-bits and 64-bits
+>> variants are discrete. Besides, the spec reserves more functions IDs
+>> than what range we're using. It means we don't have symbols to match
+>> the reserved ranges. So it looks good to me for TRNG cases.
+>>
+>> For PSCI, it can be simplified as below, according to the defination
+>> in include/uapi/linux/psci.h:
+>>
+>>      case PSCI_0_2_FN_PSCI_VERSION ...
+>>           PSCI_1_1_FN_SYSTEM_RESET2:     /* 32-bits */
+>>      case PSCI_0_2_FN64_CPU_SUSPEND ...
+>>           PSCI_1_1_FN64_SYSTEM_RESET2:   /* 64-bits */
+> 
+> Right, but this still requires that we go back and update this switch
+> statement every time we add a new PSCI call, which is exactly what I was
+> hoping we could avoid. Doing this based exactly on the spec reduces the
+> burden for future changes, and keeps all relevant context in a single
+> spot.
+> 
+>    #define SMCCC_STD_PSCI_RANGE_START	0x0000
+>    #define SMCCC_STD_PSCI_RANGE_END	0x001f
+>    #define SMCCC_STD_TRNG_RANGE_START	0x0050
+>    #define SMCCC_STD_TRNG_RANGE_END	0x005f
+> 
+>    switch (ARM_SMCCC_FUNC_NUM(function_id)) {
+>            case SMCCC_STD_PSCI_RANGE_START ... SMCCC_STD_PSCI_RANGE_END:
+> 	          return kvm_psci_call(vcpu);
+>            case SMCCC_STD_TRNG_RANGE_START ... SMCCC_STD_TRNG_RANGE_END:
+> 	  	  return kvm_trng_call(vcpu);
+> 
+> 	 ...
+>    }
+> 
 
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
+Yep, we should avoid to visit and modify this function when a new PSCI call
+is added. I intended not to introduce new macros, especially in the header
+file (include/linux/arm-smccc.h), which is out of kvm/arm64 scope to some
+degree. However, these newly added macros will have life much easier. I will
+include the changes in next respin.
 
-All error/warnings (new ones prefixed by >>):
+>>>> +	case KVM_PSCI_FN_CPU_SUSPEND ... KVM_PSCI_FN_MIGRATE:
+>>>> +		return kvm_psci_call(vcpu);
+>>>
+>>> You might want to handle these from the main call handler with a giant
+>>> disclaimer that these values predate SMCCC and therefore collide with
+>>> the standard hypervisor service range.
+>>>
+>>> [...]
+>>>
+>>
+>> I probably just keep it as it is to follow the rule: to route
+>> based on the owner strictly. Besides, there are 3 levels to
+>> handle SMCCCs after this patch is applied, which corresponds
+>> to 3 handlers as main/owner/function. It sounds more natural
+>> for reader to follow the implementation in this way.
+> 
+> I think this makes it much more confusing for the reader, as you'd be
+> hard pressed to find these function IDs in the SMCCC spec. Since their
+> values are outside of the specification, it is confusing to only address
+> them after these switch statements have decided that they belong to a
+> particular service owner as they do not.
+> 
 
-   arch/riscv/kvm/mmu.c: In function 'stage2_ioremap':
->> arch/riscv/kvm/mmu.c:364:56: error: 'struct kvm_mmu_memory_cache' has no member named 'cache'
-     364 |                 ret = kvm_mmu_topup_memory_cache(&cache.cache, stage2_pgd_levels);
-         |                                                        ^
-   arch/riscv/kvm/mmu.c:369:52: error: 'struct kvm_mmu_memory_cache' has no member named 'cache'
-     369 |                 ret = stage2_set_pte(kvm, 0, &cache.cache, addr, &pte);
-         |                                                    ^
-   arch/riscv/kvm/mmu.c:378:41: error: 'struct kvm_mmu_memory_cache' has no member named 'cache'
-     378 |         kvm_mmu_free_memory_cache(&cache.cache);
-         |                                         ^
->> arch/riscv/kvm/mmu.c:350:37: warning: variable 'cache' set but not used [-Wunused-but-set-variable]
-     350 |         struct kvm_mmu_memory_cache cache = {
-         |                                     ^~~~~
+Ok. Lets filter these SMCCC PSCI numbers in kvm_hvc_call_handler():
 
+     /* Filter these calls that aren't documented in the specification */
+     if (func >= KVM_PSCI_FN_CPU_SUSPEND && func <= KVM_PSCI_FN_MIGRATE)
+         return kvm_psci_call(vcpu);
 
-vim +364 arch/riscv/kvm/mmu.c
+     switch (ARM_SMCCC_OWNER_NUM(func)) {
+         :
+     }
 
-   342	
-   343	static int stage2_ioremap(struct kvm *kvm, gpa_t gpa, phys_addr_t hpa,
-   344				  unsigned long size, bool writable)
-   345	{
-   346		pte_t pte;
-   347		int ret = 0;
-   348		unsigned long pfn;
-   349		phys_addr_t addr, end;
- > 350		struct kvm_mmu_memory_cache cache = {
-   351			.capacity = KVM_ARCH_NR_OBJS_PER_MEMORY_CACHE,
-   352			.gfp_zero = __GFP_ZERO,
-   353		};
-   354	
-   355		end = (gpa + size + PAGE_SIZE - 1) & PAGE_MASK;
-   356		pfn = __phys_to_pfn(hpa);
-   357	
-   358		for (addr = gpa; addr < end; addr += PAGE_SIZE) {
-   359			pte = pfn_pte(pfn, PAGE_KERNEL);
-   360	
-   361			if (!writable)
-   362				pte = pte_wrprotect(pte);
-   363	
- > 364			ret = kvm_mmu_topup_memory_cache(&cache.cache, stage2_pgd_levels);
-   365			if (ret)
-   366				goto out;
-   367	
-   368			spin_lock(&kvm->mmu_lock);
-   369			ret = stage2_set_pte(kvm, 0, &cache.cache, addr, &pte);
-   370			spin_unlock(&kvm->mmu_lock);
-   371			if (ret)
-   372				goto out;
-   373	
-   374			pfn++;
-   375		}
-   376	
-   377	out:
-   378		kvm_mmu_free_memory_cache(&cache.cache);
-   379		return ret;
-   380	}
-   381	
+Thanks,
+Gavin
 
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
