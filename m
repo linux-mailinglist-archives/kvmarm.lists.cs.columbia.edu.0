@@ -2,10 +2,10 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A54DB50E5FB
-	for <lists+kvmarm@lfdr.de>; Mon, 25 Apr 2022 18:39:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0EAA650E5FC
+	for <lists+kvmarm@lfdr.de>; Mon, 25 Apr 2022 18:39:21 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 29E5F4B29F;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 762C74B2B7;
 	Mon, 25 Apr 2022 12:39:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
@@ -15,34 +15,34 @@ X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Iqn28RhbJpKq; Mon, 25 Apr 2022 12:39:19 -0400 (EDT)
+	with ESMTP id OIfN9+Cgbzcu; Mon, 25 Apr 2022 12:39:20 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 08EA34B2A7;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 27FDC4B2AC;
 	Mon, 25 Apr 2022 12:39:19 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0F1064B29E
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 305ED4B2A3
  for <kvmarm@lists.cs.columbia.edu>; Mon, 25 Apr 2022 12:39:18 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id S+Rm42dX8XYu for <kvmarm@lists.cs.columbia.edu>;
- Mon, 25 Apr 2022 12:39:15 -0400 (EDT)
+ with ESMTP id NVxCWSwrDUGb for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 25 Apr 2022 12:39:16 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A91C24B2B0
- for <kvmarm@lists.cs.columbia.edu>; Mon, 25 Apr 2022 12:39:15 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DFEB44B2A0
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 25 Apr 2022 12:39:16 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 01C20ED1;
- Mon, 25 Apr 2022 09:39:15 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 71F8411FB;
+ Mon, 25 Apr 2022 09:39:16 -0700 (PDT)
 Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A20513F774;
- Mon, 25 Apr 2022 09:39:13 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 446D93F774;
+ Mon, 25 Apr 2022 09:39:15 -0700 (PDT)
 From: Alexandru Elisei <alexandru.elisei@arm.com>
 To: maz@kernel.org, james.morse@arm.com, suzuki.poulose@arm.com,
  linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu
-Subject: [PATCH 2/2] KVM/arm64: Print emulated register table name when it is
- unsorted
-Date: Mon, 25 Apr 2022 17:39:03 +0100
-Message-Id: <20220425163904.859195-3-alexandru.elisei@arm.com>
+Subject: [PATCH 2/2] KVM/arm64: Print sysreg table name when table is not
+ sorted
+Date: Mon, 25 Apr 2022 17:39:04 +0100
+Message-Id: <20220425163904.859195-4-alexandru.elisei@arm.com>
 X-Mailer: git-send-email 2.36.0
 In-Reply-To: <20220425163904.859195-1-alexandru.elisei@arm.com>
 References: <20220425163904.859195-1-alexandru.elisei@arm.com>
