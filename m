@@ -2,81 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B548850E8E3
-	for <lists+kvmarm@lfdr.de>; Mon, 25 Apr 2022 20:55:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1534950ECE4
+	for <lists+kvmarm@lfdr.de>; Tue, 26 Apr 2022 01:53:51 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5173D49F21;
-	Mon, 25 Apr 2022 14:55:52 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4B7FD4B1A2;
+	Mon, 25 Apr 2022 19:53:50 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.787
+X-Spam-Score: -1.788
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.787 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=no
+X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id oXc4QuXcvnFE; Mon, 25 Apr 2022 14:55:51 -0400 (EDT)
+	with ESMTP id VzCGMWHwKe7N; Mon, 25 Apr 2022 19:53:50 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AEB844B1F4;
-	Mon, 25 Apr 2022 14:55:50 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F03614B0EC;
+	Mon, 25 Apr 2022 19:53:48 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8271349F21
- for <kvmarm@lists.cs.columbia.edu>; Mon, 25 Apr 2022 14:55:49 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3C2EA49EC3
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 25 Apr 2022 19:53:47 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id KhEt-FOmkchK for <kvmarm@lists.cs.columbia.edu>;
- Mon, 25 Apr 2022 14:55:44 -0400 (EDT)
-Received: from mail-pf1-f202.google.com (mail-pf1-f202.google.com
- [209.85.210.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 59C1F4B1D3
- for <kvmarm@lists.cs.columbia.edu>; Mon, 25 Apr 2022 14:55:44 -0400 (EDT)
-Received: by mail-pf1-f202.google.com with SMTP id
- j17-20020a62b611000000b004fa6338bd77so10854677pff.10
- for <kvmarm@lists.cs.columbia.edu>; Mon, 25 Apr 2022 11:55:44 -0700 (PDT)
+ with ESMTP id hhmRzwgs6y3u for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 25 Apr 2022 19:53:45 -0400 (EDT)
+Received: from mail-oo1-f73.google.com (mail-oo1-f73.google.com
+ [209.85.161.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id AACAA49EC0
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 25 Apr 2022 19:53:45 -0400 (EDT)
+Received: by mail-oo1-f73.google.com with SMTP id
+ j15-20020a4a888f000000b00321764d8f14so9334022ooa.14
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 25 Apr 2022 16:53:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=0RIUNhOPqpB+HcP2HwzsrrOFF3qCqP329tLBYuBd67E=;
- b=YUTYT09C4kUYu097db2oy0wYcB4QiZZpF+ibqTmsgCmrs0tnYAEmD1oyhU6xNPpSDW
- 5YP/UqRtFcrWZXnePhoDgo+2HnniJew9a7i7T30m1yV0NMqnuLNiQ9vOauLFB5MiMirh
- 2M9cMFb6XYUpCbI+DyDG516WwrYEjHRD8UtKr9lwcOW2CpKWgaeuKrsmihegBL5WKTwm
- hG8uGNdRabATH4vdvi0yblgUk/RpebKYOCC0r56jGyO7vGyjRBJMa0diVvqm0Je7VZO9
- D9IEooRyyehKCATo7KIqh++6HsJk6p2ay6lItJX+Lo0wiKpjgrrhAyyt08AqdISWX9aE
- YwUw==
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=DcihtRyhxZSASrAxWYvG+vbHikEXUCwgp718CSC9bMo=;
+ b=bxDlTykMwr9Eii5P0vs5td20RwMYWDrdaNaR3kKZ6vFMPHfRLG5jmjORyoP4POGF60
+ nA8phR2ww4MgrzN+LMPxGJbnSEDso7tQL9wckviWO+/d1JIoTst1Xwa/dk58wvUeVjls
+ PfcbUhZVCEdviaAFb8SOKwHJ7v6guuTIGUAVf3AEF149Tx//Fq0j1mkofEIskSRN7/Ih
+ z7aYDioOgYuIA6euhcoVCkZ5TjsZwpOFdAhJSWXOr/3YvLiOJrWoc/qrnP/fJIQIBCcE
+ bL7ORzw1GtMnmr0yYEPa5SD1uwfXD7rURiQfC4d/AHIsn70korOgZqUm5PLbqXq0rZwk
+ 7n5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:date:in-reply-to:message-id:mime-version
- :references:subject:from:to:cc;
- bh=0RIUNhOPqpB+HcP2HwzsrrOFF3qCqP329tLBYuBd67E=;
- b=thZrS/vfYLRnor7EVj22JHWipHLkA4nHypux2FGpa85wVr3r4aidFRj2FvCLBaBND6
- kdgqIhYRrQ2yRvCiW9L4Vj8RLK5kOWCXqeA8duL379TV1z2/HABXqpRQHVQBbtTT+qQe
- 8mfyBy5vv4Vts5ZF7mLoSp49zV3gfq/Rqd72ZQfMgASVZXYR15ogvIu1gRZjrAvXLvri
- uLE1PJ34TUeZI7fCZvScCrSi+0H/OdvzMtfkNMwT+WlAaK3ep7Hh1YHb0ypcuXdPoFwz
- NIq3eoYccviQKomXaWKI3w8QZkq7sh969p+BmNfFRueoyiKA3w5CYiH6XqQ8WjruJFkI
- J0XQ==
-X-Gm-Message-State: AOAM530p9JRXN0WcHy97j/Np3vhfpS1UOHXUnziMfi3BVECrilNCQwPw
- Uiyo22uruXUfplXvRHGsvR4n5AB51KCv2g==
-X-Google-Smtp-Source: ABdhPJx8DPrpG0gMUTloJ8fmF2POFuQ8JOkOuYjgYs6Rc/ZB8KM3MbtQp2ca0WZCFkoAaDYMHM6jfYkmP+v+1A==
-X-Received: from ricarkol2.c.googlers.com
- ([fda3:e722:ac3:cc00:24:72f4:c0a8:62fe])
- (user=ricarkol job=sendgmr) by 2002:a17:902:d509:b0:15c:fd46:8db with SMTP id
- b9-20020a170902d50900b0015cfd4608dbmr9292897plg.52.1650912943558; Mon, 25 Apr
- 2022 11:55:43 -0700 (PDT)
-Date: Mon, 25 Apr 2022 11:55:34 -0700
-In-Reply-To: <20220425185534.57011-1-ricarkol@google.com>
-Message-Id: <20220425185534.57011-5-ricarkol@google.com>
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=DcihtRyhxZSASrAxWYvG+vbHikEXUCwgp718CSC9bMo=;
+ b=MXMjyc8H38fXMLt+86leeQVjcIhP/gNAeuSdpnONRAcajeuE6XSJEyrU4ZqNtzgKe4
+ MenxoFjlgKwAFcXsF0x+Ebc5o3t29mJu4l4CoxcJFxUyR2OPtZlwNZLwKsFJFilhjA3H
+ J9xaUb7v0KnqQxLNo1ngm21gtgsqwJCVjCnAZWBSLJUx0r9FwGwm+LqP3O8b7qheM2vl
+ OwwZChbPUKaPflQFiHXe7ayZeOKB+mgOKVbeaiHtMwPFfhUhXtWbCtmtVEJAYNKf0IZJ
+ wn+Yw1k8CLl+xXAT8AcRIOR5nLNMfF1pID9+jAmZErvv7ycNAXFmEFgxFGkXVClzXfJI
+ bPzA==
+X-Gm-Message-State: AOAM533dOCuaBNj/4ns3SHcAvCy01G7qXDUl9hL074hdhiVDfFV4X/dA
+ 68KLkW9Imb05iuxPAm8OkzsSm6R+/MEFFvdZfQkNU791B5a4SNovRB+plV1jeREEV51EK+B9XKa
+ tNBeHdyF/eAG2aW+XD26dKDlnbS5gFz2Qo4hny3v/rOVDepPaFCuATm2NHPRAi/GtmbgrnA==
+X-Google-Smtp-Source: ABdhPJxKsgOjwnsQHHwzUCN10OQb3jAAYyq3y/pis69T7DTdEuFTR2EpQXnDB6jMJ7K6ExgV6uUQsRgVmh0=
+X-Received: from oupton3.c.googlers.com
+ ([fda3:e722:ac3:cc00:24:72f4:c0a8:21eb])
+ (user=oupton job=sendgmr) by 2002:a05:6870:1481:b0:d7:30a3:1f39 with SMTP id
+ k1-20020a056870148100b000d730a31f39mr12496597oab.14.1650930824850; Mon, 25
+ Apr 2022 16:53:44 -0700 (PDT)
+Date: Mon, 25 Apr 2022 23:53:37 +0000
+Message-Id: <20220425235342.3210912-1-oupton@google.com>
 Mime-Version: 1.0
-References: <20220425185534.57011-1-ricarkol@google.com>
 X-Mailer: git-send-email 2.36.0.rc2.479.g8af0fa9b8e-goog
-Subject: [PATCH 4/4] KVM: arm64: vgic: Undo work in failed ITS restores
-From: Ricardo Koller <ricarkol@google.com>
-To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
-Cc: andre.przywara@arm.com, pshier@google.com, maz@kernel.org,
- pbonzini@redhat.com
+Subject: [PATCH v3 0/5] KVM: arm64: Limit feature register reads from AArch32
+From: Oliver Upton <oupton@google.com>
+To: kvmarm@lists.cs.columbia.edu
+Cc: kvm@vger.kernel.org, maz@kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -93,63 +90,83 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Failed ITS restores should clean up all state restored until the
-failure. There is some cleanup present for this situation, but it's not
-complete. Add the missing free's.
+KVM/arm64 does not restrict the guest's view of the AArch32 feature
+registers when read from AArch32. HCR_EL2.TID3 is cleared for AArch32
+guests, meaning that register reads come straight from hardware. This is
+problematic as KVM relies on read_sanitised_ftr_reg() to expose a set of
+features consistent for a particular system.
 
-Signed-off-by: Ricardo Koller <ricarkol@google.com>
----
- arch/arm64/kvm/vgic/vgic-its.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+Appropriate handlers must first be put in place for CP10 and CP15 ID
+register accesses before setting TID3. Rather than exhaustively
+enumerating each of the encodings for CP10 and CP15 registers, take the
+lazy route and aim the register accesses at the AArch64 system register
+table.
 
-diff --git a/arch/arm64/kvm/vgic/vgic-its.c b/arch/arm64/kvm/vgic/vgic-its.c
-index 4ece649e2493..200ac59edaf9 100644
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -2229,8 +2229,10 @@ static int vgic_its_restore_ite(struct vgic_its *its, u32 event_id,
- 		vcpu = kvm_get_vcpu(kvm, collection->target_addr);
- 
- 	irq = vgic_add_lpi(kvm, lpi_id, vcpu);
--	if (IS_ERR(irq))
-+	if (IS_ERR(irq)) {
-+		its_free_ite(kvm, ite);
- 		return PTR_ERR(irq);
-+	}
- 	ite->irq = irq;
- 
- 	return offset;
-@@ -2498,6 +2500,9 @@ static int vgic_its_restore_device_tables(struct vgic_its *its)
- 	if (ret > 0)
- 		ret = 0;
- 
-+	if (ret < 0)
-+		vgic_its_free_device_list(its->dev->kvm, its);
-+
- 	return ret;
- }
- 
-@@ -2624,6 +2629,9 @@ static int vgic_its_restore_collection_table(struct vgic_its *its)
- 		read += cte_esz;
- 	}
- 
-+	if (ret < 0)
-+		vgic_its_free_collection_list(its->dev->kvm, its);
-+
- 	return ret;
- }
- 
-@@ -2655,7 +2663,10 @@ static int vgic_its_restore_tables_v0(struct vgic_its *its)
- 	if (ret)
- 		return ret;
- 
--	return vgic_its_restore_device_tables(its);
-+	ret = vgic_its_restore_device_tables(its);
-+	if (ret)
-+		vgic_its_free_collection_list(its->dev->kvm, its);
-+	return ret;
- }
- 
- static int vgic_its_commit_v0(struct vgic_its *its)
+Patches 1-2 are small cleanups to how we handle register emulation
+failure. No functional change for current KVM, but required to do
+register emulation correctly in this series.
+
+Patch 3 reroutes the CP15 registers into the AArch64 table, taking care
+to immediately RAZ undefined ranges of registers. This is done to avoid
+possibly conflicting with encodings for future AArch64 registers.
+
+Patch 4 installs an exit handler for the CP10 ID registers and also
+relies on the general AArch64 register handler to implement reads.
+
+Finally, patch 5 actually sets TID3 for AArch32 guests, providing
+known-safe values for feature register accesses.
+
+There is an argument that the series is in fact a bug fix for running
+AArch32 VMs on heterogeneous systems. To that end, it could be
+blamed/backported to when we first knew better:
+
+  93390c0a1b20 ("arm64: KVM: Hide unsupported AArch64 CPU features from guests")
+
+But I left that tag off as in the aforementioned change skipping
+AArch32 was intentional. Up to you, Marc, if you want to call it a
+bugfix ;-)
+
+Applies cleanly to 5.18-rc4.
+
+Tested with AArch32 kvm-unit-tests and booting an AArch32 debian guest
+on a Raspberry Pi 4. Additionally, I tested AArch32 kvm-unit-tests w/
+pmu={on,off} and saw no splat, as Alex had discovered [1]. The test
+correctly skips with the PMU feature bit disabled now.
+
+[1]: https://lore.kernel.org/r/20220425145530.723858-1-alexandru.elisei@arm.com
+
+v1: https://lore.kernel.org/kvmarm/20220329011301.1166265-1-oupton@google.com/
+v2: https://lore.kernel.org/r/20220401010832.3425787-1-oupton@google.com
+
+v2 -> v3:
+ - Collect R-b from Reiji (thanks!)
+ - Adopt Marc's suggestion for CP15 register handling
+ - Avoid writing to Rt when emulation fails (Marc)
+ - Print some debug info on an unexpected CP10 register access (Reiji)
+
+v1 -> v2:
+ - Actually set TID3! Oops.
+ - Refactor kvm_emulate_cp15_id_reg() to check preconditions before
+   proceeding to emulation (Reiji)
+ - Tighten up comment on kvm_is_cp15_id_reg() to indicate that the only
+   other trapped ID register (CTR) is already handled in the cp15
+
+Oliver Upton (5):
+  KVM: arm64: Return a bool from emulate_cp()
+  KVM: arm64: Don't write to Rt unless sys_reg emulation succeeds
+  KVM: arm64: Wire up CP15 feature registers to their AArch64
+    equivalents
+  KVM: arm64: Plumb cp10 ID traps through the AArch64 sysreg handler
+  KVM: arm64: Start trapping ID registers for 32 bit guests
+
+ arch/arm64/include/asm/kvm_arm.h     |   3 +-
+ arch/arm64/include/asm/kvm_emulate.h |   7 -
+ arch/arm64/include/asm/kvm_host.h    |   1 +
+ arch/arm64/kvm/handle_exit.c         |   1 +
+ arch/arm64/kvm/sys_regs.c            | 197 +++++++++++++++++++++++----
+ arch/arm64/kvm/sys_regs.h            |   7 +
+ 6 files changed, 178 insertions(+), 38 deletions(-)
+
 -- 
 2.36.0.rc2.479.g8af0fa9b8e-goog
 
