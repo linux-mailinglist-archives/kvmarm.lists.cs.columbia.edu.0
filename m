@@ -2,73 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6149A5101D0
-	for <lists+kvmarm@lfdr.de>; Tue, 26 Apr 2022 17:23:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73E195101D1
+	for <lists+kvmarm@lfdr.de>; Tue, 26 Apr 2022 17:23:31 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9AF2A4B1FB;
-	Tue, 26 Apr 2022 11:23:29 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E8C4449F5D;
+	Tue, 26 Apr 2022 11:23:30 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+	URIBL_BLOCKED=0.001] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id BpgBGONrlPNZ; Tue, 26 Apr 2022 11:23:29 -0400 (EDT)
+	with ESMTP id kcB6S3SoAVtT; Tue, 26 Apr 2022 11:23:29 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5530F4B183;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 73E714B1B0;
 	Tue, 26 Apr 2022 11:23:28 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 781FF4B1C4
- for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Apr 2022 01:39:20 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DEB814B1CA
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Apr 2022 01:39:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id yt1St-udItx3 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 26 Apr 2022 01:39:19 -0400 (EDT)
-Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com
- [209.85.210.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 22F624B1BD
- for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Apr 2022 01:39:19 -0400 (EDT)
-Received: by mail-pf1-f201.google.com with SMTP id
- m8-20020a62a208000000b0050593296139so11616780pff.1
- for <kvmarm@lists.cs.columbia.edu>; Mon, 25 Apr 2022 22:39:19 -0700 (PDT)
+ with ESMTP id s2VZnTvaNsV8 for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 26 Apr 2022 01:39:20 -0400 (EDT)
+Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com
+ [209.85.216.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 589994B1C9
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 26 Apr 2022 01:39:20 -0400 (EDT)
+Received: by mail-pj1-f73.google.com with SMTP id
+ q91-20020a17090a756400b001d951f4846cso884632pjk.8
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 25 Apr 2022 22:39:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:message-id:mime-version:subject:from:to:cc;
- bh=wiy4ZFErG6M19mqQHUKpS1yTWJiAAlT4dR/xLvJk6Hw=;
- b=FnVqBEYT/x+/otkeQ3+MGU8nRgioALOZEJyWRms+DoU60vLvG4knvZ85+k1mr3tVc0
- vqArKWu7LcXihZYZOL7dZijR1qW/fUI1ogYdryU7KR30je7tEjpL7SWeqEnnd/Z0l+6p
- oQzkcbfWngpMAliZPhAsfXTSWCnwz8fWFa74DRSIzlIoZx+NC9CPJeMNUZ3R63A72PJf
- QZcKxPUm3H1SOIAqby7P9meP48e3oR4Bh8C/ma3u+fJEHhbZdFo9brPFPEbwbLiTho1C
- Qvh2BmXNRXBqnJccxzxqqdYZqemamQonwCzTKOX5d0cQHIkgbJ7rHfmHl0679wZSmYIx
- AFng==
+ h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+ :cc; bh=pqJIcFO1YbM2kMD/7P/nIKLZQYZcxdFTC0Vu8kenpz8=;
+ b=hMgaPC2CMNA38BUc/4Z6knwfUpImRGhDmly5NSUZyOtnP8B4CuknojlkCLYqYS4Xx1
+ Mhi5lC5QrZ7YRgbk+KhF1jxO4da//wil1kv0DtVbRdO8F+TyX8sogYFIfc6A4c6xm3ms
+ lYBbLBA0PvfaZECq+R+oZTMXzoWCVObiN+831v/ZE7dPqbNMSBmVDHDznmgQjIaZcF80
+ DbgNwnHh+LuA3EHgAweI6pmmir7P1NHgymNtVNBQQWlypnpCZ27UdD5h4YOFmIpgGjKJ
+ bshFBhtMcvXmKyOL1UgI8bURuYaux5ZQU9gUxnGIys2/Uzfi1iE84Wa9YQO783bR8pr0
+ 4w0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
- bh=wiy4ZFErG6M19mqQHUKpS1yTWJiAAlT4dR/xLvJk6Hw=;
- b=F0py3sy1EEmEq8i2+B9LXF7GK2LGw9ApMWuYc+AkaBFk1l/IFH3QQwDPc0r4aXzY0H
- DXYTckoSxLy5C1lUUdc4RFXmAGqGp5vL6dxjeMriDbx9hbUkax/kN4gNTQB/ZXiccGXZ
- uY5LAtDQJ/lah+3/OKKSs7uk+X7PckQWp2tVx3rxmzvIfhgVekZvf2vG6/33F+Dp1F7/
- T9s1NOLuY/V9X0LpPY61hmD0uAZe/PduPC03G9m6+1EH+/g0J6ZKb8VTB05HNan6ZsuV
- yvlqdfMQxCKMaoxWeZ2xEHc+lm+JqfkxEZejPtg4MEJWiMo4//UZduPZQWNftxITARvR
- mkuw==
-X-Gm-Message-State: AOAM5327GJT10CA0s7j+Mk+aBig2/kx8RfWtx+Cmm6x+rIec7nQDKYLD
- 7yfwff47u8FceZw0ttyPcUKjst3gf0Kiv8DU
-X-Google-Smtp-Source: ABdhPJxvg8pZpaAGbW2v0JTDOhNhWaI7b9G2UFmwsQAHLCDtYBjVtAQ+AyjheoLnE1s4SzV5HxUjB6H2aYquwIV1
+ h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+ :references:subject:from:to:cc;
+ bh=pqJIcFO1YbM2kMD/7P/nIKLZQYZcxdFTC0Vu8kenpz8=;
+ b=0Kuy5AykdTXL12bemMBv5nvV4tMDaQpSljxOwpVXu957hMCw9d35fOSsC34D1FOqdA
+ w6V/Ue08dE6O/Z6N0mji5bpPbReLMndckWh2vj6HPAo3IcfdmdNYmJIz+wCzwk7Gj+5H
+ +/U2ejaZduFbldDjwx7+ycFUfEQl6nikyYTumJW8vjXR7IJUljqvnl5C1GA2GnMXUUNS
+ oCsEalw/h96yF8kPjUh3xeD5kS6udi3WtdfRx6EAzpvsLZQ4u2y1i8eHeqwCA8ABFTQp
+ 7fMVfiSbratmlLE/UGkt/pf9LgJz6qaqUV9jajTl7WoEeeQ1jdLkrGk1jI6MRNN674Xq
+ aJRg==
+X-Gm-Message-State: AOAM532+LiGovvWjElnaB1Jo9xwEqSFVlHo+f9Bx+XhI1gKFcHypragr
+ TkT1hgFIGfLywRd55iEX44p3rxC0qtw0a3PZ
+X-Google-Smtp-Source: ABdhPJxejvTv5A7Rpc8BPLWrIBFEPFhn9b9ix6mcFYNGcgcKtqjBfcMW7mNudjijKMPTfwkilfD5EMyQa5cknhMO
 X-Received: from yosry.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2327])
- (user=yosryahmed job=sendgmr) by 2002:a05:6a00:8c8:b0:4fe:ecb:9b8f
+ (user=yosryahmed job=sendgmr) by 2002:a63:82c2:0:b0:3ab:5747:8837
  with SMTP
- id s8-20020a056a0008c800b004fe0ecb9b8fmr22623121pfu.55.1650951557634; Mon, 25
- Apr 2022 22:39:17 -0700 (PDT)
-Date: Tue, 26 Apr 2022 05:38:58 +0000
-Message-Id: <20220426053904.3684293-1-yosryahmed@google.com>
+ id w185-20020a6382c2000000b003ab57478837mr6091278pgd.297.1650951559185; Mon,
+ 25 Apr 2022 22:39:19 -0700 (PDT)
+Date: Tue, 26 Apr 2022 05:38:59 +0000
+In-Reply-To: <20220426053904.3684293-1-yosryahmed@google.com>
+Message-Id: <20220426053904.3684293-2-yosryahmed@google.com>
 Mime-Version: 1.0
+References: <20220426053904.3684293-1-yosryahmed@google.com>
 X-Mailer: git-send-email 2.36.0.rc2.479.g8af0fa9b8e-goog
-Subject: [PATCH v3 0/6] KVM: mm: count KVM page table pages in memory stats
+Subject: [PATCH v3 1/6] mm: add NR_SECONDARY_PAGETABLE stat
 From: Yosry Ahmed <yosryahmed@google.com>
 To: Sean Christopherson <seanjc@google.com>,
  Huacai Chen <chenhuacai@kernel.org>, 
@@ -107,53 +110,130 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-We keep track of several kernel memory stats (total kernel memory, page
-tables, stack, vmalloc, etc) on multiple levels (global, per-node,
-per-memcg, etc). These stats give insights to users to how much memory
-is used by the kernel and for what purposes.
+Add NR_SECONDARY_PAGETABLE stat to count secondary page table uses, e.g.
+KVM shadow page tables. This provides more insights on the kernel memory
+used by a workload.
 
-Currently, memory used by kvm for its page tables is not accounted in
-any of those kernel memory stats. This patch series accounts the memory
-pages used by KVM for page tables in those stats in a new
-NR_SECONDARY_PAGETABLE stat.
+This stat will be used by subsequent patches to count KVM pagetable
+pages usage.
 
-The riscv and mips patches are not tested due to lack of
-resources. Feel free to test or drop them.
+Signed-off-by: Yosry Ahmed <yosryahmed@google.com>
+---
+ drivers/base/node.c    | 2 ++
+ fs/proc/meminfo.c      | 2 ++
+ include/linux/mmzone.h | 1 +
+ mm/memcontrol.c        | 1 +
+ mm/page_alloc.c        | 6 +++++-
+ mm/vmstat.c            | 1 +
+ 6 files changed, 12 insertions(+), 1 deletion(-)
 
-Changes in V3:
-- Added NR_SECONDARY_PAGETABLE instead of piggybacking on NR_PAGETABLE
-  stats.
-
-Changes in V2:
-- Added accounting stats for other archs than x86.
-- Changed locations in the code where x86 KVM page table stats were
-  accounted based on suggestions from Sean Christopherson.
-
-
-Yosry Ahmed (6):
-  mm: add NR_SECONDARY_PAGETABLE stat
-  KVM: mmu: add a helper to account page table pages used by KVM.
-  KVM: x86/mmu: count KVM page table pages in pagetable stats
-  KVM: arm64/mmu: count KVM page table pages in pagetable stats
-  KVM: riscv/mmu: count KVM page table pages in pagetable stats
-  KVM: mips/mmu: count KVM page table pages in pagetable stats
-
- arch/arm64/kernel/image-vars.h |  3 ++
- arch/arm64/kvm/hyp/pgtable.c   | 50 +++++++++++++++++++++-------------
- arch/mips/kvm/mips.c           |  1 +
- arch/mips/kvm/mmu.c            |  9 +++++-
- arch/riscv/kvm/mmu.c           | 26 +++++++++++++-----
- arch/x86/kvm/mmu/mmu.c         | 16 +++++++++--
- arch/x86/kvm/mmu/tdp_mmu.c     | 16 +++++++++--
- drivers/base/node.c            |  2 ++
- fs/proc/meminfo.c              |  2 ++
- include/linux/kvm_host.h       |  9 ++++++
- include/linux/mmzone.h         |  1 +
- mm/memcontrol.c                |  1 +
- mm/page_alloc.c                |  6 +++-
- mm/vmstat.c                    |  1 +
- 14 files changed, 111 insertions(+), 32 deletions(-)
-
+diff --git a/drivers/base/node.c b/drivers/base/node.c
+index ec8bb24a5a22..9fe716832546 100644
+--- a/drivers/base/node.c
++++ b/drivers/base/node.c
+@@ -433,6 +433,7 @@ static ssize_t node_read_meminfo(struct device *dev,
+ 			     "Node %d ShadowCallStack:%8lu kB\n"
+ #endif
+ 			     "Node %d PageTables:     %8lu kB\n"
++			     "Node %d SecPageTables:  %8lu kB\n"
+ 			     "Node %d NFS_Unstable:   %8lu kB\n"
+ 			     "Node %d Bounce:         %8lu kB\n"
+ 			     "Node %d WritebackTmp:   %8lu kB\n"
+@@ -459,6 +460,7 @@ static ssize_t node_read_meminfo(struct device *dev,
+ 			     nid, node_page_state(pgdat, NR_KERNEL_SCS_KB),
+ #endif
+ 			     nid, K(node_page_state(pgdat, NR_PAGETABLE)),
++			     nid, K(node_page_state(pgdat, NR_SECONDARY_PAGETABLE)),
+ 			     nid, 0UL,
+ 			     nid, K(sum_zone_node_page_state(nid, NR_BOUNCE)),
+ 			     nid, K(node_page_state(pgdat, NR_WRITEBACK_TEMP)),
+diff --git a/fs/proc/meminfo.c b/fs/proc/meminfo.c
+index 6fa761c9cc78..fad29024eb2e 100644
+--- a/fs/proc/meminfo.c
++++ b/fs/proc/meminfo.c
+@@ -108,6 +108,8 @@ static int meminfo_proc_show(struct seq_file *m, void *v)
+ #endif
+ 	show_val_kb(m, "PageTables:     ",
+ 		    global_node_page_state(NR_PAGETABLE));
++	show_val_kb(m, "SecPageTables:	",
++		    global_node_page_state(NR_SECONDARY_PAGETABLE));
+ 
+ 	show_val_kb(m, "NFS_Unstable:   ", 0);
+ 	show_val_kb(m, "Bounce:         ",
+diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
+index 962b14d403e8..35f57f2578c0 100644
+--- a/include/linux/mmzone.h
++++ b/include/linux/mmzone.h
+@@ -219,6 +219,7 @@ enum node_stat_item {
+ 	NR_KERNEL_SCS_KB,	/* measured in KiB */
+ #endif
+ 	NR_PAGETABLE,		/* used for pagetables */
++	NR_SECONDARY_PAGETABLE, /* secondary pagetables, e.g. kvm shadow pagetables */
+ #ifdef CONFIG_SWAP
+ 	NR_SWAPCACHE,
+ #endif
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index 725f76723220..89fbd1793960 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -1388,6 +1388,7 @@ static const struct memory_stat memory_stats[] = {
+ 	{ "kernel",			MEMCG_KMEM			},
+ 	{ "kernel_stack",		NR_KERNEL_STACK_KB		},
+ 	{ "pagetables",			NR_PAGETABLE			},
++	{ "secondary_pagetables",	NR_SECONDARY_PAGETABLE		},
+ 	{ "percpu",			MEMCG_PERCPU_B			},
+ 	{ "sock",			MEMCG_SOCK			},
+ 	{ "vmalloc",			MEMCG_VMALLOC			},
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index 2db95780e003..96d00ae9d5c1 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -5932,7 +5932,8 @@ void show_free_areas(unsigned int filter, nodemask_t *nodemask)
+ 		" active_file:%lu inactive_file:%lu isolated_file:%lu\n"
+ 		" unevictable:%lu dirty:%lu writeback:%lu\n"
+ 		" slab_reclaimable:%lu slab_unreclaimable:%lu\n"
+-		" mapped:%lu shmem:%lu pagetables:%lu bounce:%lu\n"
++		" mapped:%lu shmem:%lu pagetables:%lu\n"
++		" secondary_pagetables:%lu bounce:%lu\n"
+ 		" kernel_misc_reclaimable:%lu\n"
+ 		" free:%lu free_pcp:%lu free_cma:%lu\n",
+ 		global_node_page_state(NR_ACTIVE_ANON),
+@@ -5949,6 +5950,7 @@ void show_free_areas(unsigned int filter, nodemask_t *nodemask)
+ 		global_node_page_state(NR_FILE_MAPPED),
+ 		global_node_page_state(NR_SHMEM),
+ 		global_node_page_state(NR_PAGETABLE),
++		global_node_page_state(NR_SECONDARY_PAGETABLE),
+ 		global_zone_page_state(NR_BOUNCE),
+ 		global_node_page_state(NR_KERNEL_MISC_RECLAIMABLE),
+ 		global_zone_page_state(NR_FREE_PAGES),
+@@ -5982,6 +5984,7 @@ void show_free_areas(unsigned int filter, nodemask_t *nodemask)
+ 			" shadow_call_stack:%lukB"
+ #endif
+ 			" pagetables:%lukB"
++			" secondary_pagetables:%lukB"
+ 			" all_unreclaimable? %s"
+ 			"\n",
+ 			pgdat->node_id,
+@@ -6007,6 +6010,7 @@ void show_free_areas(unsigned int filter, nodemask_t *nodemask)
+ 			node_page_state(pgdat, NR_KERNEL_SCS_KB),
+ #endif
+ 			K(node_page_state(pgdat, NR_PAGETABLE)),
++			K(node_page_state(pgdat, NR_SECONDARY_PAGETABLE)),
+ 			pgdat->kswapd_failures >= MAX_RECLAIM_RETRIES ?
+ 				"yes" : "no");
+ 	}
+diff --git a/mm/vmstat.c b/mm/vmstat.c
+index b75b1a64b54c..50bbec73809b 100644
+--- a/mm/vmstat.c
++++ b/mm/vmstat.c
+@@ -1240,6 +1240,7 @@ const char * const vmstat_text[] = {
+ 	"nr_shadow_call_stack",
+ #endif
+ 	"nr_page_table_pages",
++	"nr_secondary_page_table_pages",
+ #ifdef CONFIG_SWAP
+ 	"nr_swapcached",
+ #endif
 -- 
 2.36.0.rc2.479.g8af0fa9b8e-goog
 
