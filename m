@@ -2,80 +2,81 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7ADE0512189
-	for <lists+kvmarm@lfdr.de>; Wed, 27 Apr 2022 20:48:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 058F1512194
+	for <lists+kvmarm@lfdr.de>; Wed, 27 Apr 2022 20:48:36 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C8784B1D5;
-	Wed, 27 Apr 2022 14:48:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 87D704B219;
+	Wed, 27 Apr 2022 14:48:35 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -0.767
+X-Spam-Score: -0.766
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.767 required=6.1 tests=[BAYES_00=-1.9,
+X-Spam-Status: No, score=-0.766 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, MISSING_HEADERS=1.021,
-	T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001] autolearn=unavailable
+	RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id W-jxqrhLly9R; Wed, 27 Apr 2022 14:47:59 -0400 (EDT)
+	with ESMTP id xwQSxkSTTArK; Wed, 27 Apr 2022 14:48:35 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 722504B1CB;
-	Wed, 27 Apr 2022 14:47:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 467DC4B1F2;
+	Wed, 27 Apr 2022 14:48:34 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6A7BA408F4
- for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Apr 2022 14:47:57 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 297114B1CB
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Apr 2022 14:48:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id CN+h0vz-hiPJ for <kvmarm@lists.cs.columbia.edu>;
- Wed, 27 Apr 2022 14:47:56 -0400 (EDT)
+ with ESMTP id dk5YHvzGivOT for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 27 Apr 2022 14:48:32 -0400 (EDT)
 Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com
  [209.85.128.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0E88A4089E
- for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Apr 2022 14:47:56 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 211024B17C
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Apr 2022 14:48:32 -0400 (EDT)
 Received: by mail-yw1-f201.google.com with SMTP id
- 00721157ae682-2f825f8c944so24268467b3.15
- for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Apr 2022 11:47:56 -0700 (PDT)
+ 00721157ae682-2f825f8c944so24282927b3.15
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Apr 2022 11:48:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:cc;
- bh=fd6rMU9yqWWeAt9OZ2FqZhtlChWn8Za3hhMR5JrXjl8=;
- b=g/8e3IN0KagfolpJ4ruEAWQvaAufar6vLj47xotGnSf8mMZjVOlNIEEiZSYg/TyXli
- y1cTgzqP1K6Pdoe+qSvha0OKdiUMQpWYTcmuiOKOP3mu4F3LxJYx/xXtG/TGYioaaUQz
- GZzpV+hBQT6uppGReMBCQnIjFqVZS5a+FuC5ZhuuteRQ31C9I1Pp4d3dqvgjOaXst0Lf
- NY2LD9CeD57+6skYrVb5cJRCoZr8AzISEIPPfFUIwP5b4nCpqxsIkRbXegw4YzfDSgan
- PIE637wzT91aGH/VdAk/EhJSxBY1c4k4WJICtOwh4RBJbTly7BRw4GB72vCvovLouaDo
- JKUg==
+ bh=Ukl4ZPUY8nPN3AM2d1WxIlfrlMTerAUV8TUpQy4uNBg=;
+ b=MwumuTMcrRhIVZ9j7swb6gFPtCMubn8HLn1QrjGmsWx6TDamUjamppzeC7+Fpo2zsC
+ Hn4bx3jBlAkmNArZrSe6MdpVTjEJg354zjO4FkLXTKbIoUVQPlCUBjO2SZCJxc5IkFM8
+ cDuvx4Cjo2Ct4xWbHuhsaSXdjyU9NRnacoQoThUDFhnn0R1qKldXoHqIdeFSuyIQg2pC
+ chNYgFV6zRM7TOLluFi18wIvk6VKlbVk1NgR+RDLPm9CxC6YqCUydpbanBRewfexSaQv
+ 7fpo7I+PJ8U4nSeyCdXBluXkIB1PCAe1DvM/MnApanh4SLKGov6OQPuc3nE3UJpm+UME
+ sagA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:cc;
- bh=fd6rMU9yqWWeAt9OZ2FqZhtlChWn8Za3hhMR5JrXjl8=;
- b=XxAY2HRTtyvAQJaDAVNWirw4pGIBQ12mmG7oQeRORNhsuXlEOUeQfg9zY1vgNfhXNs
- m3sxs5FS3oBdxXruExUCRifiw0iniIqZCMKVSHcZVW60YQozD8k2celF6VJu9VHRFh6A
- 3LKYJZpryyozSi6iDPD8tPPYBSnDmtNI3eLrwLh+sFTdNymMqLj06Zt4gq+7B2CnRY96
- rguBaC/mdfpuFej92tLx15nG8/7EYMpiOfQO7qqFSZMcN0B2O63yT0UtzI54WoFyR5kR
- IwDbmEgTC6+7dfcVqP2k2Zqm+MrmsOFTT54kQWDfGbquf3et1SHL0k/IDB8FfUz7ZtcG
- M8qg==
-X-Gm-Message-State: AOAM532W5iYfDYeenxXGEjlw9cE1cdY9jtIerocb3ICu0WpFB89jYHOQ
- YkD1AIiRnypR8jNlCgu+IUbnYqa2LQWctAZRpA==
-X-Google-Smtp-Source: ABdhPJyOdBmB4vZPfSZNHktzrjvSV3WgelUopqbYoPUTMVI8+cnDshbn+jqXWwUIw/SzQtu2NNUcE7qT5WdN23ottA==
+ bh=Ukl4ZPUY8nPN3AM2d1WxIlfrlMTerAUV8TUpQy4uNBg=;
+ b=IidOk9A3WNI5vlGw/1USoYZeg9eo+z7xE7dhCroHMBl0aBBtwJ+DdUEGANvlAOIEN1
+ PTxRfBhCfciMhCyGfru3dbcgyjwTxUch38pzrV4B5dbnalf3baT+FbbkcnrO0jQSC8k4
+ FW9upnoeaQDX1zgRRH9w2j+AoGlOqzuoLE41CXJwGdYH3ImKeYHqQS2HdVVGiSIWtd9m
+ TxE4LQsTdTYKoo0PowfpBqICDtUVYp0V0rcE9tM9ACqekeGzI09g2Ret0Ofs6tYVNTq4
+ 6pGN64A2ctTtey8Gan98UqMJVtSlqPREsddNx0qG6slVbSFK3vB2X6Xig4d363sDdwcs
+ oBFA==
+X-Gm-Message-State: AOAM532hc75aquP27ISnESBurgPEnZT/u6MlUnFcdKiDq62+ih3kQZ0D
+ qUee9Zxlwr+en/Tb+ILzGjaSs+PSE2b9ie7Rlg==
+X-Google-Smtp-Source: ABdhPJxdWYMm4hIQLef81VH/XkscxGsflUx325g8OpMWgt9ADdwq/DhwrfHi07KPyxCIExLBSzRF/kaTl78lvVXnTw==
 X-Received: from kaleshsingh.mtv.corp.google.com
  ([2620:15c:211:200:16ec:6da0:8cc5:5f24])
- (user=kaleshsingh job=sendgmr) by 2002:a25:6652:0:b0:645:d4c1:eb7 with SMTP
- id z18-20020a256652000000b00645d4c10eb7mr25152746ybm.412.1651085275548; Wed,
- 27 Apr 2022 11:47:55 -0700 (PDT)
-Date: Wed, 27 Apr 2022 11:46:56 -0700
+ (user=kaleshsingh job=sendgmr) by 2002:a5b:44:0:b0:645:d798:590f with SMTP id
+ e4-20020a5b0044000000b00645d798590fmr23864940ybp.228.1651085311643; Wed, 27
+ Apr 2022 11:48:31 -0700 (PDT)
+Date: Wed, 27 Apr 2022 11:46:57 -0700
 In-Reply-To: <20220427184716.1949239-1-kaleshsingh@google.com>
-Message-Id: <20220427184716.1949239-2-kaleshsingh@google.com>
+Message-Id: <20220427184716.1949239-3-kaleshsingh@google.com>
 Mime-Version: 1.0
 References: <20220427184716.1949239-1-kaleshsingh@google.com>
 X-Mailer: git-send-email 2.36.0.rc2.479.g8af0fa9b8e-goog
-Subject: [PATCH 1/4] KVM: arm64: Compile stacktrace.nvhe.o
+Subject: [PATCH 2/4] KVM: arm64: Add hypervisor overflow stack
 From: Kalesh Singh <kaleshsingh@google.com>
 Cc: Kefeng Wang <wangkefeng.wang@huawei.com>,
  Catalin Marinas <catalin.marinas@arm.com>, Alexei Starovoitov <ast@kernel.org>,
- will@kernel.org, kvmarm@lists.cs.columbia.edu, maz@kernel.org,
+ will@kernel.org, maz@kernel.org, kvmarm@lists.cs.columbia.edu,
  "Madhavan T. Venkataraman" <madvenka@linux.microsoft.com>,
  linux-arm-kernel@lists.infradead.org, kernel-team@android.com,
  surenb@google.com, Mark Brown <broonie@kernel.org>,
@@ -97,218 +98,48 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Recompile stack unwinding code for use with the nVHE hypervisor. This is
-a preparatory patch that will allow reusing most of the kernel unwinding
-logic in the nVHE hypervisor.
+Allocate and switch to 16-byte aligned secondary stack on overflow. This
+provides us stack space to better handle overflows; and is used in
+a subsequent patch to dump the hypervisor stacktrace.
 
-Suggested-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Kalesh Singh <kaleshsingh@google.com>
 ---
- arch/arm64/include/asm/stacktrace.h | 18 ++++---
- arch/arm64/kernel/stacktrace.c      | 73 ++++++++++++++++++-----------
- arch/arm64/kvm/hyp/nvhe/Makefile    |  3 +-
- 3 files changed, 60 insertions(+), 34 deletions(-)
+ arch/arm64/kernel/stacktrace.c | 3 +++
+ arch/arm64/kvm/hyp/nvhe/host.S | 9 ++-------
+ 2 files changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/include/asm/stacktrace.h b/arch/arm64/include/asm/stacktrace.h
-index aec9315bf156..f5af9a94c5a6 100644
---- a/arch/arm64/include/asm/stacktrace.h
-+++ b/arch/arm64/include/asm/stacktrace.h
-@@ -16,12 +16,14 @@
- #include <asm/sdei.h>
- 
- enum stack_type {
--	STACK_TYPE_UNKNOWN,
-+#ifndef __KVM_NVHE_HYPERVISOR__
- 	STACK_TYPE_TASK,
- 	STACK_TYPE_IRQ,
- 	STACK_TYPE_OVERFLOW,
- 	STACK_TYPE_SDEI_NORMAL,
- 	STACK_TYPE_SDEI_CRITICAL,
-+#endif /* !__KVM_NVHE_HYPERVISOR__ */
-+	STACK_TYPE_UNKNOWN,
- 	__NR_STACK_TYPES
- };
- 
-@@ -31,11 +33,6 @@ struct stack_info {
- 	enum stack_type type;
- };
- 
--extern void dump_backtrace(struct pt_regs *regs, struct task_struct *tsk,
--			   const char *loglvl);
--
--DECLARE_PER_CPU(unsigned long *, irq_stack_ptr);
--
- static inline bool on_stack(unsigned long sp, unsigned long size,
- 			    unsigned long low, unsigned long high,
- 			    enum stack_type type, struct stack_info *info)
-@@ -54,6 +51,12 @@ static inline bool on_stack(unsigned long sp, unsigned long size,
- 	return true;
- }
- 
-+#ifndef __KVM_NVHE_HYPERVISOR__
-+extern void dump_backtrace(struct pt_regs *regs, struct task_struct *tsk,
-+			   const char *loglvl);
-+
-+DECLARE_PER_CPU(unsigned long *, irq_stack_ptr);
-+
- static inline bool on_irq_stack(unsigned long sp, unsigned long size,
- 				struct stack_info *info)
- {
-@@ -88,6 +91,7 @@ static inline bool on_overflow_stack(unsigned long sp, unsigned long size,
- static inline bool on_overflow_stack(unsigned long sp, unsigned long size,
- 			struct stack_info *info) { return false; }
- #endif
-+#endif /* !__KVM_NVHE_HYPERVISOR__ */
- 
- 
- /*
-@@ -101,6 +105,7 @@ static inline bool on_accessible_stack(const struct task_struct *tsk,
- 	if (info)
- 		info->type = STACK_TYPE_UNKNOWN;
- 
-+#ifndef __KVM_NVHE_HYPERVISOR__
- 	if (on_task_stack(tsk, sp, size, info))
- 		return true;
- 	if (tsk != current || preemptible())
-@@ -111,6 +116,7 @@ static inline bool on_accessible_stack(const struct task_struct *tsk,
- 		return true;
- 	if (on_sdei_stack(sp, size, info))
- 		return true;
-+#endif /* !__KVM_NVHE_HYPERVISOR__ */
- 
- 	return false;
- }
 diff --git a/arch/arm64/kernel/stacktrace.c b/arch/arm64/kernel/stacktrace.c
-index 0467cb79f080..a84e38d41d38 100644
+index a84e38d41d38..f346b4c66f1c 100644
 --- a/arch/arm64/kernel/stacktrace.c
 +++ b/arch/arm64/kernel/stacktrace.c
-@@ -81,23 +81,19 @@ NOKPROBE_SYMBOL(unwind_init);
-  * records (e.g. a cycle), determined based on the location and fp value of A
-  * and the location (but not the fp value) of B.
-  */
--static int notrace unwind_next(struct task_struct *tsk,
--			       struct unwind_state *state)
-+static int notrace __unwind_next(struct task_struct *tsk,
-+				 struct unwind_state *state,
-+				 struct stack_info *info)
- {
- 	unsigned long fp = state->fp;
--	struct stack_info info;
--
--	/* Final frame; nothing to unwind */
--	if (fp == (unsigned long)task_pt_regs(tsk)->stackframe)
--		return -ENOENT;
- 
- 	if (fp & 0x7)
- 		return -EINVAL;
- 
--	if (!on_accessible_stack(tsk, fp, 16, &info))
-+	if (!on_accessible_stack(tsk, fp, 16, info))
- 		return -EINVAL;
- 
--	if (test_bit(info.type, state->stacks_done))
-+	if (test_bit(info->type, state->stacks_done))
- 		return -EINVAL;
- 
- 	/*
-@@ -113,7 +109,7 @@ static int notrace unwind_next(struct task_struct *tsk,
- 	 * stack to another, it's never valid to unwind back to that first
- 	 * stack.
- 	 */
--	if (info.type == state->prev_type) {
-+	if (info->type == state->prev_type) {
- 		if (fp <= state->prev_fp)
- 			return -EINVAL;
- 	} else {
-@@ -127,7 +123,45 @@ static int notrace unwind_next(struct task_struct *tsk,
- 	state->fp = READ_ONCE_NOCHECK(*(unsigned long *)(fp));
- 	state->pc = READ_ONCE_NOCHECK(*(unsigned long *)(fp + 8));
- 	state->prev_fp = fp;
--	state->prev_type = info.type;
-+	state->prev_type = info->type;
-+
-+	return 0;
-+}
-+NOKPROBE_SYMBOL(__unwind_next);
-+
-+static int notrace unwind_next(struct task_struct *tsk,
-+			       struct unwind_state *state);
-+
-+static void notrace unwind(struct task_struct *tsk,
-+			   struct unwind_state *state,
-+			   stack_trace_consume_fn consume_entry, void *cookie)
-+{
-+	while (1) {
-+		int ret;
-+
-+		if (!consume_entry(cookie, state->pc))
-+			break;
-+		ret = unwind_next(tsk, state);
-+		if (ret < 0)
-+			break;
-+	}
-+}
-+NOKPROBE_SYMBOL(unwind);
-+
-+#ifndef __KVM_NVHE_HYPERVISOR__
-+static int notrace unwind_next(struct task_struct *tsk,
-+			       struct unwind_state *state)
-+{
-+	struct stack_info info;
-+	int err;
-+
-+	/* Final frame; nothing to unwind */
-+	if (state->fp == (unsigned long)task_pt_regs(tsk)->stackframe)
-+		return -ENOENT;
-+
-+	err = __unwind_next(tsk, state, &info);
-+	if (err)
-+		return err;
- 
- 	state->pc = ptrauth_strip_insn_pac(state->pc);
- 
-@@ -157,22 +191,6 @@ static int notrace unwind_next(struct task_struct *tsk,
- }
- NOKPROBE_SYMBOL(unwind_next);
- 
--static void notrace unwind(struct task_struct *tsk,
--			   struct unwind_state *state,
--			   stack_trace_consume_fn consume_entry, void *cookie)
--{
--	while (1) {
--		int ret;
--
--		if (!consume_entry(cookie, state->pc))
--			break;
--		ret = unwind_next(tsk, state);
--		if (ret < 0)
--			break;
--	}
--}
--NOKPROBE_SYMBOL(unwind);
--
- static bool dump_backtrace_entry(void *arg, unsigned long where)
- {
- 	char *loglvl = arg;
-@@ -224,3 +242,4 @@ noinline notrace void arch_stack_walk(stack_trace_consume_fn consume_entry,
+@@ -242,4 +242,7 @@ noinline notrace void arch_stack_walk(stack_trace_consume_fn consume_entry,
  
  	unwind(task, &state, consume_entry, cookie);
  }
-+#endif /* !__KVM_NVHE_HYPERVISOR__ */
-diff --git a/arch/arm64/kvm/hyp/nvhe/Makefile b/arch/arm64/kvm/hyp/nvhe/Makefile
-index f9fe4dc21b1f..c0ff0d6fc403 100644
---- a/arch/arm64/kvm/hyp/nvhe/Makefile
-+++ b/arch/arm64/kvm/hyp/nvhe/Makefile
-@@ -14,7 +14,8 @@ lib-objs := $(addprefix ../../../lib/, $(lib-objs))
++#else /* __KVM_NVHE_HYPERVISOR__ */
++DEFINE_PER_CPU(unsigned long [PAGE_SIZE/sizeof(long)], overflow_stack)
++	__aligned(16);
+ #endif /* !__KVM_NVHE_HYPERVISOR__ */
+diff --git a/arch/arm64/kvm/hyp/nvhe/host.S b/arch/arm64/kvm/hyp/nvhe/host.S
+index 09b5254fb497..1cd2de4f039e 100644
+--- a/arch/arm64/kvm/hyp/nvhe/host.S
++++ b/arch/arm64/kvm/hyp/nvhe/host.S
+@@ -179,13 +179,8 @@ SYM_FUNC_END(__host_hvc)
+ 	b	hyp_panic
  
- obj-y := timer-sr.o sysreg-sr.o debug-sr.o switch.o tlb.o hyp-init.o host.o \
- 	 hyp-main.o hyp-smp.o psci-relay.o early_alloc.o page_alloc.o \
--	 cache.o setup.o mm.o mem_protect.o sys_regs.o pkvm.o
-+	 cache.o setup.o mm.o mem_protect.o sys_regs.o pkvm.o \
-+	 ../../../kernel/stacktrace.o
- obj-y += ../vgic-v3-sr.o ../aarch32.o ../vgic-v2-cpuif-proxy.o ../entry.o \
- 	 ../fpsimd.o ../hyp-entry.o ../exception.o ../pgtable.o
- obj-$(CONFIG_DEBUG_LIST) += list_debug.o
+ .L__hyp_sp_overflow\@:
+-	/*
+-	 * Reset SP to the top of the stack, to allow handling the hyp_panic.
+-	 * This corrupts the stack but is ok, since we won't be attempting
+-	 * any unwinding here.
+-	 */
+-	ldr_this_cpu	x0, kvm_init_params + NVHE_INIT_STACK_HYP_VA, x1
+-	mov	sp, x0
++	/* Switch to the overflow stack */
++	adr_this_cpu sp, overflow_stack + PAGE_SIZE, x0
+ 
+ 	b	hyp_panic_bad_stack
+ 	ASM_BUG()
 -- 
 2.36.0.rc2.479.g8af0fa9b8e-goog
 
