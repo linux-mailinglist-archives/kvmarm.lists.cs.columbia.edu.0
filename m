@@ -2,80 +2,82 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2196C512192
-	for <lists+kvmarm@lfdr.de>; Wed, 27 Apr 2022 20:48:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E75951242D
+	for <lists+kvmarm@lfdr.de>; Wed, 27 Apr 2022 22:56:37 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 951944B21A;
-	Wed, 27 Apr 2022 14:48:28 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 84DDD4B1B7;
+	Wed, 27 Apr 2022 16:56:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -1.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cbmcqM-PsIJV; Wed, 27 Apr 2022 14:48:28 -0400 (EDT)
+	with ESMTP id a01o4Wswl+M0; Wed, 27 Apr 2022 16:56:36 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 25F084B230;
-	Wed, 27 Apr 2022 14:48:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4BBCE4B1BF;
+	Wed, 27 Apr 2022 16:56:35 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4873B4B17C
- for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Apr 2022 14:48:26 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 892684B1B0
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Apr 2022 16:56:34 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 8PlLVD1xJ4Ok for <kvmarm@lists.cs.columbia.edu>;
- Wed, 27 Apr 2022 14:48:25 -0400 (EDT)
-Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com
- [209.85.215.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0C6194B22C
- for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Apr 2022 14:48:23 -0400 (EDT)
-Received: by mail-pg1-f201.google.com with SMTP id
- 64-20020a630843000000b0039d909676d5so1304935pgi.16
- for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Apr 2022 11:48:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=h6i932oX/jFZxDeCgPoTJkzP+yH7aYfI+DgBzirxODs=;
- b=QIZgIEqufTlsX6ImsR51+hEPqbxHx3Yf30qGjXgSYPJCBVtJj4VFyxlmGt4GLy2fme
- O8v20Qbl7rUGzQVhQvtgICDH36pYKZjiSHCDic9hjSujDY59PrB6N3ef3LAwDSvgCCgY
- LoDThBX9JNQmVC4vz9ZOE3BzD8QhP9UVJnKsnh3PPZE0I9Q+BVwlhA+BW/nCI7HMuwKI
- QMvn2o5vyv7eFxrsRZ1DJlK1ewKninzZ2J5mX9C86VZFH4ZQW5rVGEOiB8xlMJiDT3YO
- Yjj/Ska9kuvKyxC9bgoavvCxoPprqgGd1e3PNCk21QMX6meNtLRxdo9IOkIDrzCiubzM
- v50A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:date:in-reply-to:message-id:mime-version
- :references:subject:from:to:cc;
- bh=h6i932oX/jFZxDeCgPoTJkzP+yH7aYfI+DgBzirxODs=;
- b=vwUCSE6MoZMSEFEgYoRSJsqz0wY/tsF5w5WElUUi5e3P3TRhFXA1W7+O21aBlBwxLN
- EZnaui8TxxhDBJR5/DNLVlwzQe5MRotKzlzoDGEHrH1uwjVd02I5zrLtaRWHUhJ/9cGf
- dXwCB/up74VqWVC/gAE6uzpaqjq4RtLQ4UOuBfgR9Wn2FdvjBSNtY/oV9Ikwu9oPNj8K
- xmJ2zTxY6IS6sbEbfvsyLmWvuef3EdSJ+Er4aRiNr2lBBY4wt8jxPjLGn4LBJ4v0aKOI
- yEHUmr8oj8ryNx6LrUbpo8afyqdxQ9Ja+dvC+g8cTAyOnWGxJLmK7c6lxFJr69m0zw6T
- gR5Q==
-X-Gm-Message-State: AOAM532T0ziGpjhujxmnqsu0Gtwvc7t1ipb8yvPy3D7B3Kj5ykOvT7HR
- W1y3qycpMXh4qIsw8WsRyziUG9xr0u478A==
-X-Google-Smtp-Source: ABdhPJzNqPfb/x+YKrEsZ3li+cQ0pLyAnvLP4bZGKCHDHyL9eXtfLjRh5cZ+nMHDNIO+Th6alnvjKnACtR2EJA==
-X-Received: from ricarkol2.c.googlers.com
- ([fda3:e722:ac3:cc00:24:72f4:c0a8:62fe])
- (user=ricarkol job=sendgmr) by 2002:a62:1e03:0:b0:505:64c1:3e19 with SMTP id
- e3-20020a621e03000000b0050564c13e19mr31675138pfe.32.1651085303160; Wed, 27
- Apr 2022 11:48:23 -0700 (PDT)
-Date: Wed, 27 Apr 2022 11:48:14 -0700
-In-Reply-To: <20220427184814.2204513-1-ricarkol@google.com>
-Message-Id: <20220427184814.2204513-5-ricarkol@google.com>
-Mime-Version: 1.0
-References: <20220427184814.2204513-1-ricarkol@google.com>
-X-Mailer: git-send-email 2.36.0.464.gb9c8b46e94-goog
-Subject: [PATCH v2 4/4] KVM: arm64: vgic: Undo work in failed ITS restores
-From: Ricardo Koller <ricarkol@google.com>
-To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu
-Cc: andre.przywara@arm.com, pshier@google.com, maz@kernel.org,
- pbonzini@redhat.com
+ with ESMTP id t5cgjDhIfEl1 for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 27 Apr 2022 16:56:33 -0400 (EDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 58DBB4B10B
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Apr 2022 16:56:33 -0400 (EDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 614C161D89;
+ Wed, 27 Apr 2022 20:56:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93A8C385A7;
+ Wed, 27 Apr 2022 20:56:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1651092991;
+ bh=rLVcyN3m1o4NBQ4KXZfmGW3JJipI7i1iyBhD/MVLcvc=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=C+ooMPfMJ8MnwAzCV5RuGFZgzvOndjjKYoXSdNlkc/evxuVSjYfuHsWO77lCSOmuD
+ J+p7zpnVqPJ4/F1/uiTH2jMioMZ27NQ//Ekw0BsQATr5YFMKbOFrj0DwUtAuc0Hduf
+ ljlb3OHuP68m/CKJ9c2N5ZE+l2D4+POQCz1dtRtnR57dFADijhMeNOlRErpbVM9410
+ zhAXzf9bvBIul9/aEbl1wdcNLoUwHALhW0wDm6L+Pkm1MmpXp+3x321BTB/yM+ysqy
+ r4Gl+lrlDNoua00527hX7MXPQp/FltbDBXsyJ+bvmFH1yHlAK/Em1g0SPeC7v4CU37
+ Q+74g+AYxRoAw==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1njoi5-007TR7-7R; Wed, 27 Apr 2022 21:56:29 +0100
+Date: Wed, 27 Apr 2022 21:56:29 +0100
+Message-ID: <87zgk68cua.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Alexandru Elisei <alexandru.elisei@arm.com>
+Subject: Re: [PATCH 2/2] KVM/arm64: Print emulated register table name when it
+ is unsorted
+In-Reply-To: <YmkZQE1dUR2ajMeJ@monolith.localdoman>
+References: <20220425163904.859195-1-alexandru.elisei@arm.com>
+ <20220425163904.859195-3-alexandru.elisei@arm.com>
+ <871qxja6ho.wl-maz@kernel.org>
+ <YmkZQE1dUR2ajMeJ@monolith.localdoman>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: alexandru.elisei@arm.com, james.morse@arm.com,
+ suzuki.poulose@arm.com, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -92,76 +94,76 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Failed ITS restores should clean up all state restored until the
-failure. There is some cleanup already present when failing to restore
-some tables, but it's not complete. Add the missing cleanup.
+On Wed, 27 Apr 2022 11:21:52 +0100,
+Alexandru Elisei <alexandru.elisei@arm.com> wrote:
+> 
+> Hi,
+> 
+> On Tue, Apr 26, 2022 at 10:18:27PM +0100, Marc Zyngier wrote:
+> > On Mon, 25 Apr 2022 17:39:03 +0100,
+> > Alexandru Elisei <alexandru.elisei@arm.com> wrote:
+> > > 
+> > > When a sysreg table entry is out-of-order, KVM attempts to print the
+> > > address of the table:
+> > > 
+> > > [    0.143881] kvm [1]: sys_reg table (____ptrval____) out of order (0)
+> > > 
+> > > Printing the name of the table instead of a pointer is more helpful in this
+> > > case:
+> > > 
+> > > [    0.143881] kvm [1]: sys_reg table sys_reg_descs out of order (0)
+> > > 
+> > > Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
+> > > ---
+> > >  arch/arm64/kvm/sys_regs.c | 20 +++++++++++---------
+> > >  1 file changed, 11 insertions(+), 9 deletions(-)
+> > > 
+> > > diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+> > > index 57302048afd0..7b62a2daf056 100644
+> > > --- a/arch/arm64/kvm/sys_regs.c
+> > > +++ b/arch/arm64/kvm/sys_regs.c
+> > > @@ -2188,18 +2188,18 @@ static const struct sys_reg_desc cp15_64_regs[] = {
+> > >  };
+> > >  
+> > >  static bool check_sysreg_table(const struct sys_reg_desc *table, unsigned int n,
+> > > -			       bool is_32)
+> > > +			       const char *table_name, bool is_32)
+> > >  {
+> > >  	unsigned int i;
+> > >  
+> > >  	for (i = 0; i < n; i++) {
+> > >  		if (!is_32 && table[i].reg && !table[i].reset) {
+> > > -			kvm_err("sys_reg table %p entry %d lacks reset\n", table, i);
+> > > +			kvm_err("sys_reg table %s entry %d lacks reset\n", table_name, i);
+> > 
+> > Instead of passing a table name, could we simply use something like
+> > %pS? If this works, it would be a good indication of both what table
+> > and what entry in that table is at fault.
+> 
+> With the change:
+> 
+> -                       kvm_err("sys_reg table %s out of order (%d)\n", table_name, i - 1);
+> +                       kvm_err("sys_reg table %pS out of order (%d)\n", &table[i - 1], i - 1);
+> 
+> 
+> this is what KVM prints with %pS if the second entry is out-of-order:
+> 
+> [    0.143698] kvm [1]: sys_reg table sys_reg_descs+0x50/0x7490 out of order (1)
+> 
+> There's redundant information now, the entry can be calculated from the
+> table offset, but printing the offset directly is certainly convenient.
+> 
+> I like it more than passing the table name, if you agree I'll send a v2
+> with this change.
 
-Note that this changes the behavior in case of a failed restore of the
-device tables.
+Yup, seems like a valuable change.
 
-	restore ioctl:
-	1. restore collection tables
-	2. restore device tables
+Thanks,
 
-With this commit, failures in 2. clean up everything created so far,
-including state created by 1.
+	M.
 
-Signed-off-by: Ricardo Koller <ricarkol@google.com>
----
- arch/arm64/kvm/vgic/vgic-its.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/kvm/vgic/vgic-its.c b/arch/arm64/kvm/vgic/vgic-its.c
-index 86c26aaa8275..c35534d7393a 100644
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -2222,8 +2222,10 @@ static int vgic_its_restore_ite(struct vgic_its *its, u32 event_id,
- 		vcpu = kvm_get_vcpu(kvm, collection->target_addr);
- 
- 	irq = vgic_add_lpi(kvm, lpi_id, vcpu);
--	if (IS_ERR(irq))
-+	if (IS_ERR(irq)) {
-+		its_free_ite(kvm, ite);
- 		return PTR_ERR(irq);
-+	}
- 	ite->irq = irq;
- 
- 	return offset;
-@@ -2491,6 +2493,9 @@ static int vgic_its_restore_device_tables(struct vgic_its *its)
- 	if (ret > 0)
- 		ret = 0;
- 
-+	if (ret < 0)
-+		vgic_its_free_device_list(its->dev->kvm, its);
-+
- 	return ret;
- }
- 
-@@ -2617,6 +2622,9 @@ static int vgic_its_restore_collection_table(struct vgic_its *its)
- 		read += cte_esz;
- 	}
- 
-+	if (ret < 0)
-+		vgic_its_free_collection_list(its->dev->kvm, its);
-+
- 	return ret;
- }
- 
-@@ -2648,7 +2656,10 @@ static int vgic_its_restore_tables_v0(struct vgic_its *its)
- 	if (ret)
- 		return ret;
- 
--	return vgic_its_restore_device_tables(its);
-+	ret = vgic_its_restore_device_tables(its);
-+	if (ret)
-+		vgic_its_free_collection_list(its->dev->kvm, its);
-+	return ret;
- }
- 
- static int vgic_its_commit_v0(struct vgic_its *its)
 -- 
-2.36.0.464.gb9c8b46e94-goog
-
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
