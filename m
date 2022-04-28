@@ -2,49 +2,48 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id BA4EE513928
-	for <lists+kvmarm@lfdr.de>; Thu, 28 Apr 2022 17:56:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FC71513929
+	for <lists+kvmarm@lfdr.de>; Thu, 28 Apr 2022 17:56:24 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3799C4B27F;
-	Thu, 28 Apr 2022 11:56:23 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2AF444B25C;
+	Thu, 28 Apr 2022 11:56:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -6.899
+X-Spam-Score: -1.899
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.899 required=6.1 tests=[BAYES_00=-1.9,
-	RCVD_IN_DNSWL_HI=-5, URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id mTP3O0jFOqlm; Thu, 28 Apr 2022 11:56:21 -0400 (EDT)
+	with ESMTP id lbFAVmMXdgW6; Thu, 28 Apr 2022 11:56:23 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B3C864B2AC;
-	Thu, 28 Apr 2022 11:56:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D380E4B274;
+	Thu, 28 Apr 2022 11:56:22 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 73A524B28A
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Apr 2022 11:56:18 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 104934B27F
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Apr 2022 11:56:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id O6InfzwjDfjq for <kvmarm@lists.cs.columbia.edu>;
- Thu, 28 Apr 2022 11:56:17 -0400 (EDT)
+ with ESMTP id x0FoQaQ-C8h1 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 28 Apr 2022 11:56:18 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 14A544B26F
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Apr 2022 11:56:17 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C727F4B268
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Apr 2022 11:56:18 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BABD91474;
- Thu, 28 Apr 2022 08:56:16 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 657781477;
+ Thu, 28 Apr 2022 08:56:18 -0700 (PDT)
 Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 583EC3F774;
- Thu, 28 Apr 2022 08:56:15 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0438D3F774;
+ Thu, 28 Apr 2022 08:56:16 -0700 (PDT)
 From: Alexandru Elisei <alexandru.elisei@arm.com>
 To: julien.thierry.kdev@gmail.com, will@kernel.org, maz@kernel.org,
  suzuki.poulose@arm.com, julien@xen.org,
  linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  james.morse@arm.com
-Subject: [PATCH kvmtool 06/15] builtin_run: Allow standard size specifiers for
- memory
-Date: Thu, 28 Apr 2022 16:55:53 +0100
-Message-Id: <20220428155602.29445-7-alexandru.elisei@arm.com>
+Subject: [PATCH kvmtool 07/15] arm/arm64: Kill the ARM_MAX_MEMORY() macro
+Date: Thu, 28 Apr 2022 16:55:54 +0100
+Message-Id: <20220428155602.29445-8-alexandru.elisei@arm.com>
 X-Mailer: git-send-email 2.36.0
 In-Reply-To: <20220428155602.29445-1-alexandru.elisei@arm.com>
 References: <20220428155602.29445-1-alexandru.elisei@arm.com>
@@ -65,121 +64,60 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
+For 32-bit guests, the maximum memory size is represented by the define
+ARM_LOMAP_MAX_MEMORY, which ARM_MAX_MEMORY() returns.
 
-Allow the user to use the standard B (bytes), K (kilobytes), M (megabytes),
-G (gigabytes), T (terabytes) and P (petabytes) suffixes for memory size.
-When none are specified, the default is megabytes.
+For 64-bit guests, the RAM size is checked against the maximum allowed
+by KVM in kvm__get_vm_type().
 
-Also raise an error if the guest specifies 0 as the memory size, instead
-of treating it as uninitialized, as kvmtool has done so far.
+There are no users left for the ARM_MAX_MEMORY() macro, remove it.
 
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
 Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
 ---
- builtin-run.c | 66 +++++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 61 insertions(+), 5 deletions(-)
+ arm/aarch32/include/kvm/kvm-arch.h |  2 --
+ arm/aarch64/include/kvm/kvm-arch.h | 16 ----------------
+ 2 files changed, 18 deletions(-)
 
-diff --git a/builtin-run.c b/builtin-run.c
-index 2c37b91b6574..0632a0c393a0 100644
---- a/builtin-run.c
-+++ b/builtin-run.c
-@@ -49,9 +49,11 @@
- #include <ctype.h>
- #include <stdio.h>
+diff --git a/arm/aarch32/include/kvm/kvm-arch.h b/arm/aarch32/include/kvm/kvm-arch.h
+index 5616b27e257e..467fb09175b8 100644
+--- a/arm/aarch32/include/kvm/kvm-arch.h
++++ b/arm/aarch32/include/kvm/kvm-arch.h
+@@ -8,8 +8,6 @@
+ struct kvm;
+ static inline void kvm__arch_enable_mte(struct kvm *kvm) {}
  
--#define MB_SHIFT		(20)
- #define KB_SHIFT		(10)
-+#define MB_SHIFT		(20)
- #define GB_SHIFT		(30)
-+#define TB_SHIFT		(40)
-+#define PB_SHIFT		(50)
+-#define ARM_MAX_MEMORY(...)	ARM_LOMAP_MAX_MEMORY
+-
+ #define MAX_PAGE_SIZE	SZ_4K
  
- __thread struct kvm_cpu *current_kvm_cpu;
+ #include "arm-common/kvm-arch.h"
+diff --git a/arm/aarch64/include/kvm/kvm-arch.h b/arm/aarch64/include/kvm/kvm-arch.h
+index 9124f6919d0f..ff857ca6e7b4 100644
+--- a/arm/aarch64/include/kvm/kvm-arch.h
++++ b/arm/aarch64/include/kvm/kvm-arch.h
+@@ -8,22 +8,6 @@ unsigned long long kvm__arch_get_kern_offset(struct kvm *kvm, int fd);
+ int kvm__arch_get_ipa_limit(struct kvm *kvm);
+ void kvm__arch_enable_mte(struct kvm *kvm);
  
-@@ -87,6 +89,60 @@ void kvm_run_set_wrapper_sandbox(void)
- 	kvm_run_wrapper = KVM_RUN_SANDBOX;
- }
+-#define ARM_MAX_MEMORY(kvm)	({					\
+-	u64 max_ram;							\
+-									\
+-	if ((kvm)->cfg.arch.aarch32_guest) {				\
+-		max_ram = ARM_LOMAP_MAX_MEMORY;				\
+-	} else {							\
+-		int ipabits = kvm__arch_get_ipa_limit(kvm);		\
+-		if (ipabits <= 0)					\
+-			max_ram = ARM_HIMAP_MAX_MEMORY;			\
+-		else							\
+-			max_ram = (1ULL << ipabits) - ARM_MEMORY_AREA;	\
+-	}								\
+-									\
+-	max_ram;							\
+-})
+-
+ #define MAX_PAGE_SIZE	SZ_64K
  
-+static int parse_mem_unit(char **next)
-+{
-+	int shift = -1;
-+
-+	switch (**next) {
-+	case 'B': case 'b': shift = 0; break;
-+	case 'K': case 'k': shift = KB_SHIFT; break;
-+	case 'M': case 'm': shift = MB_SHIFT; break;
-+	case 'G': case 'g': shift = GB_SHIFT; break;
-+	case 'T': case 't': shift = TB_SHIFT; break;
-+	case 'P': case 'p': shift = PB_SHIFT; break;
-+	}
-+
-+	if (shift == -1) {
-+		/* The default is megabytes. */
-+		shift = MB_SHIFT;
-+	} else {
-+		(*next)++;
-+	}
-+
-+	return shift;
-+}
-+
-+static u64 parse_mem_option(const char *nptr, char **next)
-+{
-+	u64 shift;
-+	u64 val;
-+
-+	val = strtoull(nptr, next, 10);
-+	if (errno == ERANGE)
-+		die("Memory too large: %s", nptr);
-+	shift = parse_mem_unit(next);
-+
-+	if ((val << shift) < val)
-+		die("Memory too large: %s", nptr);
-+
-+	return val << shift;
-+}
-+
-+static int mem_parser(const struct option *opt, const char *arg, int unset)
-+{
-+	struct kvm *kvm = opt->ptr;
-+	char *next;
-+
-+	kvm->cfg.ram_size = parse_mem_option(arg, &next);
-+	if (kvm->cfg.ram_size == 0)
-+		die("Invalid RAM size: %s", arg);
-+
-+	if (*next != '\0')
-+		die("Invalid memory specifier: %s", arg);
-+
-+	return 0;
-+}
-+
- #ifndef OPT_ARCH_RUN
- #define OPT_ARCH_RUN(...)
- #endif
-@@ -97,8 +153,10 @@ void kvm_run_set_wrapper_sandbox(void)
- 	OPT_STRING('\0', "name", &(cfg)->guest_name, "guest name",	\
- 			"A name for the guest"),			\
- 	OPT_INTEGER('c', "cpus", &(cfg)->nrcpus, "Number of CPUs"),	\
--	OPT_U64('m', "mem", &(cfg)->ram_size, "Virtual machine memory"	\
--		" size in MB."),					\
-+	OPT_CALLBACK('m', "mem", NULL, "size[BKMGTP]",			\
-+		     "Virtual machine memory size. The default unit"	\
-+		     " of measurement is megabytes (M)",		\
-+		     mem_parser, kvm),					\
- 	OPT_CALLBACK('d', "disk", kvm, "image or rootfs_dir", "Disk "	\
- 			" image or rootfs directory", img_name_parser,	\
- 			kvm),						\
-@@ -522,8 +580,6 @@ static void kvm_run_validate_cfg(struct kvm *kvm)
- 		pr_warning("Ignoring initrd file when loading a firmware image");
- 
- 	if (kvm->cfg.ram_size) {
--		/* User specifies RAM size in megabytes. */
--		kvm->cfg.ram_size <<= MB_SHIFT;
- 		available_ram = host_ram_size();
- 		if (available_ram && kvm->cfg.ram_size > available_ram) {
- 			pr_warning("Guest memory size %lluMB exceeds host physical RAM size %lluMB",
+ #include "arm-common/kvm-arch.h"
 -- 
 2.36.0
 
