@@ -2,75 +2,83 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id EC38C513605
-	for <lists+kvmarm@lfdr.de>; Thu, 28 Apr 2022 16:04:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80B38513834
+	for <lists+kvmarm@lfdr.de>; Thu, 28 Apr 2022 17:23:12 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 241FC4B2B3;
-	Thu, 28 Apr 2022 10:04:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A7A164B26C;
+	Thu, 28 Apr 2022 11:23:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -6.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-6.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_HI=-5, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9gj0vAZwBceL; Thu, 28 Apr 2022 10:04:20 -0400 (EDT)
+	with ESMTP id V+LllQKSuXID; Thu, 28 Apr 2022 11:23:11 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 066B94B287;
-	Thu, 28 Apr 2022 10:04:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 570B84B265;
+	Thu, 28 Apr 2022 11:23:10 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AAEC04B285
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Apr 2022 10:04:17 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C90904B256
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Apr 2022 11:23:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id WIPIooIEMzjU for <kvmarm@lists.cs.columbia.edu>;
- Thu, 28 Apr 2022 10:04:12 -0400 (EDT)
+ with ESMTP id bPM-7+48iKAS for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 28 Apr 2022 11:23:07 -0400 (EDT)
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id BA06649F3E
- for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Apr 2022 10:04:12 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 614224B24D
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 28 Apr 2022 11:23:07 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 9C9E461000;
- Thu, 28 Apr 2022 14:04:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71A6C385AA;
- Thu, 28 Apr 2022 14:04:09 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id B6C7161F71;
+ Thu, 28 Apr 2022 15:23:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89E8CC385AA;
+ Thu, 28 Apr 2022 15:23:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1651154651;
- bh=vLx33q87eXGXQ2LRwNhK6vgYZeRec9h1RejRTtSSgD8=;
- h=From:To:Cc:Subject:Date:From;
- b=N72b2lJPxhRlrxKzbNYsbfwbd5W7FKUb/HbySA1PIHa3vHMaV1fbU37oET5qQRLGM
- Sp2FYyYYSpG/PXnAlSU85EaV5Jxy8yj8taY8QkigcbDCtBII1LVlOgxkwEWDD5FItN
- usZK0MKdHHqg0rXCV9ukWYFRTwDsFMqYekyFRQXFB84VOsJzQXSwO8PL19Kms1vIFh
- plKZBJk6nr5tiDG7Xd3m5tmx4GutBzEBJSNr2kqume+cFOAfSSYt8xmNvplQybsKHr
- XAXCSJ2uolgVz7RVfgVf3HVRSM7VbsoMZ7Ez0I13XQZ/vRTiFVdefVQrd9Z729fTBf
- LtLqsfuy0410g==
-From: Ard Biesheuvel <ardb@kernel.org>
-To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- maz@kernel.org, dbrazdil@google.com
-Subject: [PATCH] arm64: kvm: avoid unnecessary absolute addressing via literals
-Date: Thu, 28 Apr 2022 16:03:50 +0200
-Message-Id: <20220428140350.3303481-1-ardb@kernel.org>
-X-Mailer: git-send-email 2.30.2
-MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1625; h=from:subject;
- bh=vLx33q87eXGXQ2LRwNhK6vgYZeRec9h1RejRTtSSgD8=;
- b=owEB7QES/pANAwAKAcNPIjmS2Y8kAcsmYgBiap7FPmVR8RjP3uOW9iGq4+cTaDa9BMjP/SZ7DXRS
- uMvp5CaJAbMEAAEKAB0WIQT72WJ8QGnJQhU3VynDTyI5ktmPJAUCYmqexQAKCRDDTyI5ktmPJFnKC/
- 9mwnUocnM4ue8AKxpnruQWg7tCiJEfaqjRfmzpUHdbfKYwH+ouJeI0iezPLzev41SSkQaYKPaRzGaj
- kOrv1H5QjL7fbSgoKy4+UTO4aZb1LGF+hNQP1csXr0iK3Y9X3RM0xRnuWDMfJ3QE8EymD92dwjWNg+
- 8V9Xjfl9wwx2VTUv3zKF19ZhjIihl0wkV8p0D6mbzSCYTg/rQN/V18dWhVgFHqaIjyZqnY+p1oG6kv
- 6CvP70RFl5tnWV8R1bXC4JWrcUqAHLeRTVegtM7zjPjECKhpAv+YCijafP8etEeoQx00fcCYeYETGP
- xGaOObOdTOj7FE+vvaAe6GltF8Rw4D/oTYd2xMLWDNib8dGzLuzRXpL8Y2m7V78KGp98+r5sVa278n
- p6LAmFrM3//g/qZjPsQwfVlexg1aaQzmyUcWuyzcRY3C1Rf9pFu3p4hJ60iqgfVEF8HvTRsxfpQ8lH
- v+xlIOzEUcgZ4cmfVGvEgZr5i/bSVZFR8ITVcOSjpgaAA=
-X-Developer-Key: i=ardb@kernel.org; a=openpgp;
- fpr=F43D03328115A198C90016883D200E9CA6329909
+ s=k20201202; t=1651159385;
+ bh=a+g7kB1z4KoOUj5wf8DAfU3CDt6Jxq6eIpCUJLbn5n4=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=PbSACN0rbItX49rjK7eSne4lvayB2pyOPyuARhcjXZK/g1FU3CCGTF9Kee2tVT8H4
+ Y9NUNSqkKqVNgiCj3tXSa9Rhg16RqouOXyJIvSHlDRdwIZXQSwYWijMCfDNTP8HOH6
+ YglNhEQTFGx/43Hh6LNu4bzv7c2Q3bl010WiE4djB6fFpCloYBh0xhkGBp1SJTyDqi
+ BITDyDBZqbkGv+c8EDnobZGUE3AN6mWCukrk0pUM7UidGff0oFNVuv57Lpydouz+Xg
+ 5ZgBypNRBZpcnxZnqv+Q4bvMBGqFCSHdY0cpg1+8GzNQ7XnJ+vtZMOEQcTsey0cNOi
+ lCQp2O1ew26eQ==
+Received: from [104.133.9.104] (helo=billy-the-mountain.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1nk5yw-007huq-MB; Thu, 28 Apr 2022 16:23:03 +0100
+Date: Thu, 28 Apr 2022 16:22:58 +0100
+Message-ID: <87zgk5b5bh.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Alexandru Elisei <alexandru.elisei@arm.com>
+Subject: Re: [PATCH v2] KVM: arm64: Inject exception on out-of-IPA-range
+ translation fault
+In-Reply-To: <YmpUXWRJc3Kq3wGE@monolith.localdoman>
+References: <20220427220434.3097449-1-maz@kernel.org>
+ <YmpUXWRJc3Kq3wGE@monolith.localdoman>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 104.133.9.104
+X-SA-Exim-Rcpt-To: alexandru.elisei@arm.com, kvm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ james.morse@arm.com, suzuki.poulose@arm.com, kernel-team@android.com,
+ qperret@google.com, will@kernel.org, christoffer.dall@arm.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
+ Christoffer Dall <christoffer.dall@arm.com>, kernel-team@android.com,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -87,51 +95,132 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-There are a few cases in the nVHE code where we take the absolute
-address of a symbol via a literal pool entry, and subsequently translate
-it to another address space (PA, kimg VA, kernel linear VA, etc).
-Originally, this literal was needed because we relied on a different
-translation for absolute references, but this is no longer the case, so
-we can simply use relative addressing instead. This removes a couple of
-RELA entries pointing into the .text segment.
+On Thu, 28 Apr 2022 09:46:21 +0100,
+Alexandru Elisei <alexandru.elisei@arm.com> wrote:
+> 
+> Hi,
+> 
+> On Wed, Apr 27, 2022 at 11:04:34PM +0100, Marc Zyngier wrote:
+> > When taking a translation fault for an IPA that is outside of
+> > the range defined by the hypervisor (between the HW PARange and
+> > the IPA range), we stupidly treat it as an IO and forward the access
+> > to userspace. Of course, userspace can't do much with it, and things
+> > end badly.
+> > 
+> > Arguably, the guest is braindead, but we should at least catch the
+> > case and inject an exception.
+> > 
+> > Check the faulting IPA against:
+> > - the sanitised PARange: inject an address size fault
+> > - the IPA size: inject an abort
+> > 
+> > Reported-by: Christoffer Dall <christoffer.dall@arm.com>
+> > Signed-off-by: Marc Zyngier <maz@kernel.org>
+> > ---
+> >  arch/arm64/include/asm/kvm_emulate.h |  1 +
+> >  arch/arm64/kvm/inject_fault.c        | 28 ++++++++++++++++++++++++++++
+> >  arch/arm64/kvm/mmu.c                 | 19 +++++++++++++++++++
+> >  3 files changed, 48 insertions(+)
+> > 
+> > diff --git a/arch/arm64/include/asm/kvm_emulate.h b/arch/arm64/include/asm/kvm_emulate.h
+> > index 7496deab025a..f71358271b71 100644
+> > --- a/arch/arm64/include/asm/kvm_emulate.h
+> > +++ b/arch/arm64/include/asm/kvm_emulate.h
+> > @@ -40,6 +40,7 @@ void kvm_inject_undefined(struct kvm_vcpu *vcpu);
+> >  void kvm_inject_vabt(struct kvm_vcpu *vcpu);
+> >  void kvm_inject_dabt(struct kvm_vcpu *vcpu, unsigned long addr);
+> >  void kvm_inject_pabt(struct kvm_vcpu *vcpu, unsigned long addr);
+> > +void kvm_inject_size_fault(struct kvm_vcpu *vcpu);
+> >  
+> >  void kvm_vcpu_wfi(struct kvm_vcpu *vcpu);
+> >  
+> > diff --git a/arch/arm64/kvm/inject_fault.c b/arch/arm64/kvm/inject_fault.c
+> > index b47df73e98d7..ba20405d2dc2 100644
+> > --- a/arch/arm64/kvm/inject_fault.c
+> > +++ b/arch/arm64/kvm/inject_fault.c
+> > @@ -145,6 +145,34 @@ void kvm_inject_pabt(struct kvm_vcpu *vcpu, unsigned long addr)
+> >  		inject_abt64(vcpu, true, addr);
+> >  }
+> >  
+> > +void kvm_inject_size_fault(struct kvm_vcpu *vcpu)
+> > +{
+> > +	unsigned long addr, esr;
+> > +
+> > +	addr  = kvm_vcpu_get_fault_ipa(vcpu);
+> > +	addr |= kvm_vcpu_get_hfar(vcpu) & GENMASK(11, 0);
+> > +
+> > +	if (kvm_vcpu_trap_is_iabt(vcpu))
+> > +		kvm_inject_pabt(vcpu, addr);
+> > +	else
+> > +		kvm_inject_dabt(vcpu, addr);
+> > +
+> > +	/*
+> > +	 * If AArch64 or LPAE, set FSC to 0 to indicate an Address
+> > +	 * Size Fault at level 0, as if exceeding PARange.
+> > +	 *
+> > +	 * Non-LPAE guests will only get the external abort, as there
+> > +	 * is no way to to describe the ASF.
+> > +	 */
+> > +	if (vcpu_el1_is_32bit(vcpu) &&
+> > +	    !(vcpu_read_sys_reg(vcpu, TCR_EL1) & TTBCR_EAE))
+> > +		return;
+> > +
+> > +	esr = vcpu_read_sys_reg(vcpu, ESR_EL1);
+> > +	esr &= ~GENMASK_ULL(5, 0);
+> > +	vcpu_write_sys_reg(vcpu, esr, ESR_EL1);
+> > +}
+> > +
+> >  /**
+> >   * kvm_inject_undefined - inject an undefined instruction into the guest
+> >   * @vcpu: The vCPU in which to inject the exception
+> > diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> > index 53ae2c0640bc..5400fc020164 100644
+> > --- a/arch/arm64/kvm/mmu.c
+> > +++ b/arch/arm64/kvm/mmu.c
+> > @@ -1337,6 +1337,25 @@ int kvm_handle_guest_abort(struct kvm_vcpu *vcpu)
+> >  	fault_ipa = kvm_vcpu_get_fault_ipa(vcpu);
+> >  	is_iabt = kvm_vcpu_trap_is_iabt(vcpu);
+> >  
+> > +	if (fault_status == FSC_FAULT) {
+> > +		/* Beyond sanitised PARange (which is the IPA limit) */
+> > +		if (fault_ipa >= BIT_ULL(get_kvm_ipa_limit())) {
+> > +			kvm_inject_size_fault(vcpu);
+> > +			return 1;
+> > +		}
+> > +
+> > +		/* Falls between the IPA range and the PARange? */
+> > +		if (fault_ipa >= BIT_ULL(vcpu->arch.hw_mmu->pgt->ia_bits)) {
+> > +			fault_ipa |= kvm_vcpu_get_hfar(vcpu) & GENMASK(11, 0);
+> > +
+> > +			if (is_iabt)
+> > +				kvm_inject_pabt(vcpu, fault_ipa);
+> > +			else
+> > +				kvm_inject_dabt(vcpu, fault_ipa);
+> > +			return 1;
+> > +		}
+> 
+> Doesn't KVM treat faults outside a valid memslot (aka guest RAM) as MMIO
+> aborts? From the guest's point of view, the IPA is valid because it's
+> inside the HW PARange, so it's not entirely impossible that the VMM put a
+> device there.
 
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
----
- arch/arm64/kvm/hyp/nvhe/host.S | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+Sure. But the generated IPA is outside of the range the VMM has asked
+to handle. The IPA space describes the whole of the guest address
+space, and there shouldn't be anything outside of it.
 
-diff --git a/arch/arm64/kvm/hyp/nvhe/host.S b/arch/arm64/kvm/hyp/nvhe/host.S
-index 3d613e721a75..366551594417 100644
---- a/arch/arm64/kvm/hyp/nvhe/host.S
-+++ b/arch/arm64/kvm/hyp/nvhe/host.S
-@@ -80,7 +80,7 @@ SYM_FUNC_START(__hyp_do_panic)
- 	mov	lr, #(PSR_F_BIT | PSR_I_BIT | PSR_A_BIT | PSR_D_BIT |\
- 		      PSR_MODE_EL1h)
- 	msr	spsr_el2, lr
--	ldr	lr, =nvhe_hyp_panic_handler
-+	adr_l	lr, nvhe_hyp_panic_handler
- 	hyp_kimg_va lr, x6
- 	msr	elr_el2, lr
- 
-@@ -125,13 +125,11 @@ alternative_else_nop_endif
- 	add	sp, sp, #16
- 	/*
- 	 * Compute the idmap address of __kvm_handle_stub_hvc and
--	 * jump there. Since we use kimage_voffset, do not use the
--	 * HYP VA for __kvm_handle_stub_hvc, but the kernel VA instead
--	 * (by loading it from the constant pool).
-+	 * jump there.
- 	 *
- 	 * Preserve x0-x4, which may contain stub parameters.
- 	 */
--	ldr	x5, =__kvm_handle_stub_hvc
-+	adr_l	x5, __kvm_handle_stub_hvc
- 	hyp_pa	x5, x6
- 	br	x5
- SYM_FUNC_END(__host_hvc)
+We actually state in the documentation that the IPA Size limit *is*
+the physical address size for the VM. If the VMM places something
+outside if the IPA space and still expect something to be reported to
+it, we have a problem (in some cases, we may want to actually put page
+tables in place even for MMIO that traps to userspace -- see my
+earlier work on MMIO guard).
+
+Does it make sense to you?
+
+	M.
+
 -- 
-2.30.2
-
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
