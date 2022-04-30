@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DD29A515E89
-	for <lists+kvmarm@lfdr.de>; Sat, 30 Apr 2022 17:03:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CD105160A2
+	for <lists+kvmarm@lfdr.de>; Sat, 30 Apr 2022 23:32:18 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1E8FE4B220;
-	Sat, 30 Apr 2022 11:03:44 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AF37D4B268;
+	Sat, 30 Apr 2022 17:32:17 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
@@ -18,66 +18,66 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hmA-7ABFJI21; Sat, 30 Apr 2022 11:03:43 -0400 (EDT)
+	with ESMTP id lwU2-AkNQfeC; Sat, 30 Apr 2022 17:32:17 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DD72F4B223;
-	Sat, 30 Apr 2022 11:03:42 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 88C734B265;
+	Sat, 30 Apr 2022 17:32:16 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2B80E4B214
- for <kvmarm@lists.cs.columbia.edu>; Sat, 30 Apr 2022 11:03:42 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0D1154B25F
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 30 Apr 2022 17:32:16 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id AbT7i2B0zQ7J for <kvmarm@lists.cs.columbia.edu>;
- Sat, 30 Apr 2022 11:03:41 -0400 (EDT)
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com
- [209.85.166.173])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 21CBB4B1D4
- for <kvmarm@lists.cs.columbia.edu>; Sat, 30 Apr 2022 11:03:41 -0400 (EDT)
-Received: by mail-il1-f173.google.com with SMTP id h11so1015668ila.5
- for <kvmarm@lists.cs.columbia.edu>; Sat, 30 Apr 2022 08:03:41 -0700 (PDT)
+ with ESMTP id VOPQyfb0cV4X for <kvmarm@lists.cs.columbia.edu>;
+ Sat, 30 Apr 2022 17:32:14 -0400 (EDT)
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com
+ [209.85.166.48])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id DA5A84B10C
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 30 Apr 2022 17:32:14 -0400 (EDT)
+Received: by mail-io1-f48.google.com with SMTP id g21so12950493iom.13
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 30 Apr 2022 14:32:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:from:to:cc:subject:message-id:references:mime-version
  :content-disposition:in-reply-to;
- bh=bN+KlP95Qh+8AzcCi+O6jrxnnkr4fpqjrAoo7JZUIrQ=;
- b=C6qrrrvEsqgjFf0tfTBiY7jTg89Sp2IS2uml7YJ6VowC8dsRhzZ/tCkleGdXdpmIe3
- bnwPgwQNjENrtPZ+7b77dZqd6+tThC3P4fVZc7B+gG9dSkZIv0rBGRfJgO39Xmrcyy0X
- U7D3aHufAIRj9Xe1NhyE+wd9bufDs7KsHRWXlEx8riPpWoXgPpwu3ICs/mpaZQCYcf4q
- F4jGI0lEmsprK9a2i2AaFf6V+6v8iVaXZISI5JOHrNAC2MV1L2K/v9Ej1j4l2ltdPOIu
- H4UPlfwV7dXiQJUyYdmOcjn0xXBpoUZmFnsUoVT35QINXgGsUDpe8P9LRIQquIhICFq2
- iwHQ==
+ bh=6Dc326+1xtPNu80ribLvmOWmJsI+u5HwW/pN6DNiLdg=;
+ b=BMDhYIWfw3HduEt7j5KU1o8O/B+WmLWME9DRVXpw+9VJzVQia/f2kl0Qz4UzNcEVh8
+ fCk7Y7oogFoG8YokWaFmI30bM8f788SXMTbJu+jL/Lu1bajJ4ygKxPXpxS3INhE8lpI9
+ qECtrk/Po6tesEuXtchgDVws9WJcG6sMwt1nyG2plOWi3DoKY7wBQoWzls/tTYeOTMaH
+ 7hHtRfjB7KGv1yxFV9PwCMxjC0abCIfYKUj2LmVtSHvyqx9q58dBUGxOiJ2LQQxSzIdF
+ X/inLnmn2Havn1WIC0xlWVAJ7Z6P51rB+mDImAxVn9i8TX1lCgKqTcpa/YGMe1flxR6A
+ 9org==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to;
- bh=bN+KlP95Qh+8AzcCi+O6jrxnnkr4fpqjrAoo7JZUIrQ=;
- b=lihKzNlFDyxbxizbhcaVrS84by/o3m1zbEVtql1BD8ka95iHJtC0/8N2oqLaO8EjVh
- rbCxXeEwginJ5WwlQzdvwREz12jko1qqAOOckwVpcrR3hu167TuTYfT5SzUlcNO2XGlM
- /3ZIBRD64LKnd1+mPIsiw4vQ8ysy072ERrYkl3a5TjCZ60JXqdZlG1ld6P3aerYxnCWS
- /7vrInMWqGj+4hHMiCLYO0tb+ceKzF3MAKK1DtLVPKjLOpta+h66wy9vfeCgcbVqNBXQ
- 2ofZKErdxjsjuJK3jNbGvYPkTas6Vdmvovye1dzkD2T0ay1YGasesotsqv/K7Cys664t
- XvCg==
-X-Gm-Message-State: AOAM530LC1j3AZ5DQ2NpB7Q3QYt0gYnTvs5wcRhi+G3fBIcYem2rIrtq
- 5ySPjYQ/rW1Eu5vA487/ceugaA==
-X-Google-Smtp-Source: ABdhPJyM5TByhnNMF+jWGfM3cRLjNBIHWo0ESp/jYAqpetPFRpUFDymt8/tMOtck9wvrr7VrV9KjLQ==
-X-Received: by 2002:a05:6e02:1748:b0:2cd:a0ea:8ff4 with SMTP id
- y8-20020a056e02174800b002cda0ea8ff4mr1694967ill.269.1651331020330; 
- Sat, 30 Apr 2022 08:03:40 -0700 (PDT)
+ bh=6Dc326+1xtPNu80ribLvmOWmJsI+u5HwW/pN6DNiLdg=;
+ b=RpkD4GMjArT/jHpf0kqffZNfyb139ZNtvF7AXAWaK+KfaNx9MLF2l+B1vSudtJrZbK
+ 1OZISdo2vi4PSLD36L0tnsF3cft6vAKEQvqwUl8gTy/8K+a9/ezBaU/B9iHseuXBbSIj
+ BUJLhNOTtYexjj6XuTdhQlLSoeB3Dtk29Nxl9r7nNsg5ANyTUwpUcSdwQj97dxsvAX24
+ BEwsUT4Dt/XwMpVVBoRr6IQSybwE/PO2SWqWxkU39H/Mf7kwFdey1EDhnnU12OWvynfr
+ z4yADpRW1ImTVIZ9tZxwcYLVNMlgozd8l5+Ly0kSg4OZuNWY2ye8M1va06pTD0mdvnkK
+ vdvQ==
+X-Gm-Message-State: AOAM533x0rS2MANrB3MZJa0ljPZC6kqPeDF2CJJGSw9+eNkLskfFFfP7
+ 75YFsP6lQ9V9r843DRKCJ6WDFQ==
+X-Google-Smtp-Source: ABdhPJwBjP+hA4Oy4Q6UzY3bpDakQPq3HCE59R2PRNvu86H6zjx4Y1dXSMTznllxBSVIarfUAr9JCQ==
+X-Received: by 2002:a5d:9249:0:b0:64c:8a57:b7ec with SMTP id
+ e9-20020a5d9249000000b0064c8a57b7ecmr2038499iol.65.1651354333946; 
+ Sat, 30 Apr 2022 14:32:13 -0700 (PDT)
 Received: from google.com (194.225.68.34.bc.googleusercontent.com.
  [34.68.225.194]) by smtp.gmail.com with ESMTPSA id
- x18-20020a056602211200b0065a47e16f36sm679878iox.8.2022.04.30.08.03.39
+ 188-20020a021dc5000000b0032b52f27d73sm883572jaj.57.2022.04.30.14.32.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 30 Apr 2022 08:03:39 -0700 (PDT)
-Date: Sat, 30 Apr 2022 15:03:36 +0000
+ Sat, 30 Apr 2022 14:32:12 -0700 (PDT)
+Date: Sat, 30 Apr 2022 21:32:09 +0000
 From: Oliver Upton <oupton@google.com>
 To: Gavin Shan <gshan@redhat.com>
-Subject: Re: [PATCH v6 06/18] KVM: arm64: Support SDEI_EVENT_CONTEXT hypercall
-Message-ID: <Ym1PyIQY4m4/9IVi@google.com>
+Subject: Re: [PATCH v6 14/18] KVM: arm64: Support SDEI_EVENT_SIGNAL hypercall
+Message-ID: <Ym2q2fUwPXNDcMjQ@google.com>
 References: <20220403153911.12332-1-gshan@redhat.com>
- <20220403153911.12332-7-gshan@redhat.com>
+ <20220403153911.12332-15-gshan@redhat.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20220403153911.12332-7-gshan@redhat.com>
+In-Reply-To: <20220403153911.12332-15-gshan@redhat.com>
 Cc: maz@kernel.org, linux-kernel@vger.kernel.org, eauger@redhat.com,
  shan.gavin@gmail.com, Jonathan.Cameron@huawei.com, pbonzini@redhat.com,
  vkuznets@redhat.com, will@kernel.org, kvmarm@lists.cs.columbia.edu
@@ -97,47 +97,53 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Sun, Apr 03, 2022 at 11:38:59PM +0800, Gavin Shan wrote:
-> This supports SDEI_EVENT_CONTEXT hypercall. It's used by the guest
-> to retrieve the registers (x0 - x17) from the interrupted or preempted
-> context in the event handler. The interrupted or preempted context
-> is saved prior to handling the event by executing its handler and
-> restored after that.
+Hi Gavin,
+
+On Sun, Apr 03, 2022 at 11:39:07PM +0800, Gavin Shan wrote:
+> This supports SDEI_EVENT_SIGNAL hypercall. It's used by guest
+> to inject event, whose number must be zero to the specified
+> vCPU. As the shared event isn't supported, calling vCPU is
+> assumed to be the target.
 > 
 > Signed-off-by: Gavin Shan <gshan@redhat.com>
 > ---
->  arch/arm64/kvm/sdei.c | 34 ++++++++++++++++++++++++++++++++++
->  1 file changed, 34 insertions(+)
+>  arch/arm64/kvm/sdei.c | 45 +++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 45 insertions(+)
 > 
 > diff --git a/arch/arm64/kvm/sdei.c b/arch/arm64/kvm/sdei.c
-> index 941263578b30..af5d11b8eb2f 100644
+> index ebdbe7810cf0..e1f6ab9800ee 100644
 > --- a/arch/arm64/kvm/sdei.c
 > +++ b/arch/arm64/kvm/sdei.c
-> @@ -140,6 +140,37 @@ static unsigned long hypercall_enable(struct kvm_vcpu *vcpu, bool enable)
+> @@ -455,6 +455,48 @@ static unsigned long hypercall_mask(struct kvm_vcpu *vcpu, bool mask)
 >  	return ret;
 >  }
 >  
-> +static unsigned long hypercall_context(struct kvm_vcpu *vcpu)
+> +static unsigned long hypercall_signal(struct kvm_vcpu *vcpu)
 > +{
 > +	struct kvm_sdei_vcpu *vsdei = vcpu->arch.sdei;
-> +	struct kvm_sdei_vcpu_context *context;
-> +	unsigned long param_id = smccc_get_arg(vcpu, 1);
+> +	struct kvm_sdei_event *event;
+> +	unsigned int num = smccc_get_arg(vcpu, 1);
 > +	unsigned long ret = SDEI_SUCCESS;
+> +
+> +	/*
+> +	 * The event must be the software signaled one, whose number
+> +	 * is zero.
+> +	 */
+> +	if (!kvm_sdei_is_sw_signaled(num)) {
+> +		ret = SDEI_INVALID_PARAMETERS;
+> +		goto out;
+> +	}
 > +
 > +	spin_lock(&vsdei->lock);
 > +
-> +	/* Check if we have events are being handled */
-> +	context = &vsdei->context[SDEI_EVENT_PRIORITY_CRITICAL];
-> +	context = context->event ? context : NULL;
-> +	context = context ? : &vsdei->context[SDEI_EVENT_PRIORITY_NORMAL];
-> +	context = context->event ? context : NULL;
-> +	if (!context) {
-> +		ret = SDEI_DENIED;
+> +	/* Check if the vcpu has been masked */
+> +	if (vsdei->masked) {
+> +		ret = SDEI_INVALID_PARAMETERS;
 > +		goto unlock;
 > +	}
 
-Eek! You'll probably be able to drop all of this and just check the SDEI
-active flag.
+You should still be able to signal an event if the vCPU is masked. Just
+means the bit will rot in the pending bitmap until the vCPU is unmasked.
 
 --
 Thanks,
