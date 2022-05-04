@@ -2,77 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id AE8665195DB
-	for <lists+kvmarm@lfdr.de>; Wed,  4 May 2022 05:25:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF3AF5195DC
+	for <lists+kvmarm@lfdr.de>; Wed,  4 May 2022 05:25:08 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4F6D04B236;
-	Tue,  3 May 2022 23:25:07 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4F8054B1A9;
+	Tue,  3 May 2022 23:25:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -1.787
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
+X-Spam-Status: No, score=-1.787 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3ZM+1HAQHpK4; Tue,  3 May 2022 23:25:06 -0400 (EDT)
+	with ESMTP id O5XWGOrKenhx; Tue,  3 May 2022 23:25:07 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0B4674B132;
-	Tue,  3 May 2022 23:25:05 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 29C644B17C;
+	Tue,  3 May 2022 23:25:07 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 55EA64B0DE
- for <kvmarm@lists.cs.columbia.edu>; Tue,  3 May 2022 23:25:03 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0FEC249EE1
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  3 May 2022 23:25:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id OeTaETz2T4LA for <kvmarm@lists.cs.columbia.edu>;
- Tue,  3 May 2022 23:25:02 -0400 (EDT)
-Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com
- [209.85.215.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 75DC24B216
- for <kvmarm@lists.cs.columbia.edu>; Tue,  3 May 2022 23:25:01 -0400 (EDT)
-Received: by mail-pg1-f202.google.com with SMTP id
- 16-20020a630010000000b003c5e4be54b2so107874pga.2
- for <kvmarm@lists.cs.columbia.edu>; Tue, 03 May 2022 20:25:01 -0700 (PDT)
+ with ESMTP id 0bvjCGWD1KQj for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  3 May 2022 23:25:03 -0400 (EDT)
+Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com
+ [209.85.216.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 193914B1C9
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  3 May 2022 23:25:03 -0400 (EDT)
+Received: by mail-pj1-f73.google.com with SMTP id
+ s18-20020a17090aa11200b001d92f7609e8so54140pjp.3
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 03 May 2022 20:25:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=zKCKCgAwM5oT8CgO5VNyRlj8I6pySWAhtN3tpf4n6dA=;
- b=ZM4FeKDUCZJiRyb6P789sMyqQSdZxP9XlE+XolrTRJung6jURrvaZ4TkCOnYGXplWq
- pivLdmaf4E5Z3zW+JY2SABmk/EOjm8hMWmuvKJVfiiGdB7KLHJDAJtHrlmN86QnZTqaz
- l0GNTroDwFS/uemQ9HeUoMAESGig2H42S+rLP9tOzEabemDBnqW9mEDfxrIqb6gDCu4Z
- 0P0BsGmF0zmkiOpJVOM8fR6uaDViEBbGGd7tcr/zne9m8oLreGewDVc/ADcEmTvP3EO5
- hSXxOqRot+NCfGhNbQk0PT1eMb8gEXcXn1nt7AWnFAzDhdTznxulALBdDtim9UytX31t
- 6YQQ==
+ :cc; bh=+AoiNQohcEBqsbFrIdWlY/jTmle8ckchXi1SWA9QWT4=;
+ b=kav6fAe1UysMDmLFspwmQhdq94eATQWRRD1D9FV5BfsaCSNOmOrjNgw6Ih/qFB2hFP
+ KkA0WphPrzKlAu7jLnUAmQlX9FxYxSL5XR/uR+7vhqMeF14/CJ1Lt7Kk8/RxOE8/HMsv
+ 9JA82R2w68LQCsjI+e2gky3CzbW1HNlOH5uc/fpUkHWRQJ9nbE4Edyxw55yDZ4+3d6AW
+ 5DowfDS5+gFo08tAcOKj+dsadR4mQG1ftNfhXsKGd4iAq4zK/Abw/PW3qZYMuB5D+YT7
+ AtmKcQmParWgFNt2qlDPmkDx4K/08wQcTSDWA15Oj5c4uttCowpHBr0chaueffn/vOC1
+ S9fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=zKCKCgAwM5oT8CgO5VNyRlj8I6pySWAhtN3tpf4n6dA=;
- b=M3P//ilfifyFjbIQPMAPQFBZ+q3RFyFwdaVShQeITWXj82OklR9Wec9FFFHamdvS1B
- +GmzG8U64Sf+GDUoXM2ATU8emkcDmNMg9OsGdu6GXbu1Ov0NYS59V41IA1cUL7KYpgGb
- garjzPBR9zsH+dcEpLrrDZn4/NBKocc9lAdI1OabHPfEziuFJGEO7j/euA2VoGm7i8Dy
- 6q0ks1uMlofjcl9Ys5C++FycStqq84R31gqQB+xVYRI60ZnqniUoEA9glO7Y4n9ZRMW5
- j8+ldvhUzxTg7Wc13o37xqpZQsEcG80eKl3jiWVQ9lqeDyymlw+VlYVmC8sRVEkTwo55
- nqnQ==
-X-Gm-Message-State: AOAM531z+aFe6VRf92rz0Dg0kPuKh+cZ6ORaZX2xvkRJFPhdgSXhApQA
- 5ntJBB/6jecFx3PlRZmt7eCXdjmeqNlQBxUvbXyrdAsbC9UMzkJA9fMUUAZg0l1mtIRH5szRJd0
- HvPs8RUTCd2sGg3x3FQRv090Gb6DZMGdUMsF+vGfOT3ua2lQBN/IUC4NwQtfsHx2YU5xeRQ==
-X-Google-Smtp-Source: ABdhPJzP/+HQx4zfHUjvoSoNur8GO2K6JD7rMAYer4k1x860wsfHvr/21vl0vtL9uuPVV77+Bqvb3zMQemE=
+ bh=+AoiNQohcEBqsbFrIdWlY/jTmle8ckchXi1SWA9QWT4=;
+ b=ooEIcxjnmsl9/sECjUImGhETMjr6jO4Br1MPtRzFQj919nx3oq+qy9PwWYbDjwHppg
+ vn/JH9KptLQke2F80BEWMCHQn9x3YvbDSIUhBmIrzZbHzXweZ8sRUrNatlCdg2pGjNPT
+ WNPmk2do2ZkLYhgi/4kqSx5ceVoqbr/sS4v/As6m3ZmnOXgOeoJBHxkkjC46kZfbWzna
+ +iKM0yQ054FMrvni9QGKsxVlz2rEGiOFjOrH7t7OYksppZRkxbP9i/JDigPuHF77zH15
+ ocB4FTXzBKWjx+O69hVoT1F1InxAjMEONLjsyf/Rq5SFAxtq9eTVqF+q9kZ5+JGk7LkJ
+ JfuA==
+X-Gm-Message-State: AOAM532mxQkxAeJgPtNGFIT/LkL2yelwKCR+MiK35mQ5N4O0AIazwdj3
+ Z/5FAjUMPgZhzDOQ5Tdnj+kuG+YHbMf5OWDtCP9Vu90Rot5a0ig5knDaY6E7lUoWa6xMmuOfDFt
+ qlvO/TgWWwNnDvSBR6BAuUUFJNgA3CeewdhsE8QhAzzKowE/+KEQkooRncF2RE7IQW2UqzQ==
+X-Google-Smtp-Source: ABdhPJw5sIvY/+awP297IVop+k4KJmX4BmEL6dH1itNwUhQj0x3knFEX3fPK00huIqDZftTudy2YPYs+Wk8=
 X-Received: from oupton3.c.googlers.com
  ([fda3:e722:ac3:cc00:24:72f4:c0a8:21eb])
- (user=oupton job=sendgmr) by 2002:a05:6a00:1312:b0:4e1:58c4:ddfd with SMTP id
- j18-20020a056a00131200b004e158c4ddfdmr19149872pfu.65.1651634700423; Tue, 03
- May 2022 20:25:00 -0700 (PDT)
-Date: Wed,  4 May 2022 03:24:38 +0000
+ (user=oupton job=sendgmr) by 2002:a05:6a02:197:b0:382:a4b0:b9a8 with SMTP id
+ bj23-20020a056a02019700b00382a4b0b9a8mr16376625pgb.325.1651634702101; Tue, 03
+ May 2022 20:25:02 -0700 (PDT)
+Date: Wed,  4 May 2022 03:24:39 +0000
 In-Reply-To: <20220504032446.4133305-1-oupton@google.com>
-Message-Id: <20220504032446.4133305-5-oupton@google.com>
+Message-Id: <20220504032446.4133305-6-oupton@google.com>
 Mime-Version: 1.0
 References: <20220504032446.4133305-1-oupton@google.com>
 X-Mailer: git-send-email 2.36.0.464.gb9c8b46e94-goog
-Subject: [PATCH v6 04/12] KVM: arm64: Rename the KVM_REQ_SLEEP handler
+Subject: [PATCH v6 05/12] KVM: arm64: Return a value from check_vcpu_requests()
 From: Oliver Upton <oupton@google.com>
 To: kvmarm@lists.cs.columbia.edu
 Cc: kvm@vger.kernel.org, maz@kernel.org, linux-kernel@vger.kernel.org,
@@ -93,40 +94,56 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The naming of the kvm_req_sleep function is confusing: the function
-itself sleeps the vCPU, it does not request such an event. Rename the
-function to make its purpose more clear.
-
-No functional change intended.
+A subsequent change to KVM will introduce a vCPU request that could
+result in an exit to userspace. Change check_vcpu_requests() to return a
+value and document the function. Unconditionally return 1 for now.
 
 Signed-off-by: Oliver Upton <oupton@google.com>
-Reviewed-by: Andrew Jones <drjones@redhat.com>
 ---
- arch/arm64/kvm/arm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/arm.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 29e107457c4d..77b8b870c0fc 100644
+index 77b8b870c0fc..efe54aba5cce 100644
 --- a/arch/arm64/kvm/arm.c
 +++ b/arch/arm64/kvm/arm.c
-@@ -594,7 +594,7 @@ void kvm_arm_resume_guest(struct kvm *kvm)
- 	}
+@@ -648,7 +648,16 @@ void kvm_vcpu_wfi(struct kvm_vcpu *vcpu)
+ 	preempt_enable();
  }
  
--static void vcpu_req_sleep(struct kvm_vcpu *vcpu)
-+static void kvm_vcpu_sleep(struct kvm_vcpu *vcpu)
- {
- 	struct rcuwait *wait = kvm_arch_vcpu_get_wait(vcpu);
- 
-@@ -652,7 +652,7 @@ static void check_vcpu_requests(struct kvm_vcpu *vcpu)
+-static void check_vcpu_requests(struct kvm_vcpu *vcpu)
++/**
++ * check_vcpu_requests - check and handle pending vCPU requests
++ * @vcpu:	the VCPU pointer
++ *
++ * Return: 1 if we should enter the guest
++ *	   0 if we should exit to userspace
++ *	   < 0 if we should exit to userspace, where the return value indicates
++ *	   an error
++ */
++static int check_vcpu_requests(struct kvm_vcpu *vcpu)
  {
  	if (kvm_request_pending(vcpu)) {
  		if (kvm_check_request(KVM_REQ_SLEEP, vcpu))
--			vcpu_req_sleep(vcpu);
-+			kvm_vcpu_sleep(vcpu);
+@@ -678,6 +687,8 @@ static void check_vcpu_requests(struct kvm_vcpu *vcpu)
+ 			kvm_pmu_handle_pmcr(vcpu,
+ 					    __vcpu_sys_reg(vcpu, PMCR_EL0));
+ 	}
++
++	return 1;
+ }
  
- 		if (kvm_check_request(KVM_REQ_VCPU_RESET, vcpu))
- 			kvm_reset_vcpu(vcpu);
+ static bool vcpu_mode_is_bad_32bit(struct kvm_vcpu *vcpu)
+@@ -793,7 +804,8 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
+ 		if (!ret)
+ 			ret = 1;
+ 
+-		check_vcpu_requests(vcpu);
++		if (ret > 0)
++			ret = check_vcpu_requests(vcpu);
+ 
+ 		/*
+ 		 * Preparing the interrupts to be injected also
 -- 
 2.36.0.464.gb9c8b46e94-goog
 
