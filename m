@@ -2,77 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5580F5195DF
-	for <lists+kvmarm@lfdr.de>; Wed,  4 May 2022 05:25:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 232405195E1
+	for <lists+kvmarm@lfdr.de>; Wed,  4 May 2022 05:25:17 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id EA82B4B1F8;
-	Tue,  3 May 2022 23:25:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A15B84B26D;
+	Tue,  3 May 2022 23:25:16 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -1.787
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
+X-Spam-Status: No, score=-1.787 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hm4qYrmVT5fc; Tue,  3 May 2022 23:25:12 -0400 (EDT)
+	with ESMTP id Yz-Znb9gj-SW; Tue,  3 May 2022 23:25:15 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 994674B22C;
-	Tue,  3 May 2022 23:25:11 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DEA4C4B23A;
+	Tue,  3 May 2022 23:25:14 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7376849F38
- for <kvmarm@lists.cs.columbia.edu>; Tue,  3 May 2022 23:25:10 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F4264B0F7
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  3 May 2022 23:25:13 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 39O3BC0ch1FD for <kvmarm@lists.cs.columbia.edu>;
- Tue,  3 May 2022 23:25:09 -0400 (EDT)
-Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com
- [209.85.216.73])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id CAE994B1BD
- for <kvmarm@lists.cs.columbia.edu>; Tue,  3 May 2022 23:25:07 -0400 (EDT)
-Received: by mail-pj1-f73.google.com with SMTP id
- a23-20020a17090a6d9700b001d60327d73aso2257500pjk.7
- for <kvmarm@lists.cs.columbia.edu>; Tue, 03 May 2022 20:25:07 -0700 (PDT)
+ with ESMTP id hcTJRJFDLeuF for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  3 May 2022 23:25:10 -0400 (EDT)
+Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com
+ [209.85.214.201])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7A1C94B216
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  3 May 2022 23:25:09 -0400 (EDT)
+Received: by mail-pl1-f201.google.com with SMTP id
+ t14-20020a1709028c8e00b0015cf7e541feso145488plo.1
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 03 May 2022 20:25:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=NIhRSvo0alW8fiKrqDE7euXam9U1frIcI+HOhIjC5O8=;
- b=V9xzQvDqrgHvUdtlyGb5v/iPWp9z+JbG22BBtUhVm7fyagF2xY6KyS3lsxNnwitDhr
- z3fPMqY+Hxgp3n3KJ6/NkeTVfPNk0jANvZ+RzwjqD1Yjm6mqbmeK6ea8btwbNh3x/FxU
- fzr7bD1CZLXo1/bHQsWZMCV7PxcCr04fSzHG/ShHKKjvhOVDOXe5TroOr0vLdlJS7pVU
- 6VjnjfXssAZQztQooG4OSmqBsMVWCXFSylsqJtMfXAbQpkA4YAOX3RDwAuSAZShXxoyR
- 4PFdqBp1rUgoZhGaRwS4c6dHRV6luP7fXCGVhPvYI0uqcFYk9tcxSpWJFEjnJIqjkYdL
- 5kTw==
+ :cc; bh=QEqWR8OKdUM2DdgBqD6OFYZ64t35sJlXXS4QuEZbCRM=;
+ b=Fa7BPZq5pmfBzaOlrfx5XwVeQW/aHZvcmKSXrMDnNtCwcLwz+4Qtvy+Ii28OICIF0I
+ ylx7fYAdxwiuACZCycioQsxIoaZKjozC/uPLaXBhgYNVFwC1Z66dC1e727JX6HndLjlZ
+ 8cKxit+ttxUL9Z4GVWGqyFCL6puQzFm89odKtZ7n1cHIQd/WZjJH3phlRUJAB8el7sts
+ tmoUK64dW4VfN556vZMqOx5tRkRNbp8N7qGH5GuzmmzbS0djyspfNUIMRDaFDGaU39xI
+ hViVo3ma6jAVuljuz0tkm67jO7ZLd0X8vHLNUFarAlfRilHtBuxZXii4n3ImsnEYEahp
+ unSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=NIhRSvo0alW8fiKrqDE7euXam9U1frIcI+HOhIjC5O8=;
- b=mOguc69F/F+9AzjNuRFKJ2Msk0uiEC2NXyvXmT6m5kj9s4opQanfuSi/NU9h2Ayl84
- NMFYPEmQhec4t44VlqDAqWMdv5NgaTGXBsAwfij4UDfelUJkDoh7vVcJZMsgV6GPG9gL
- qQfbyxOu9YLVkstT/gt7Z4mu0yUEji/2ffmlMumAaWnThUxEA8kj8Mql3az+UCbbV7Fs
- gbbTGirYLcBgD3DA1qGmZDtHxcZ6eghGrVntYoP/LeUdWWSaIve3nI1ZTjcReDqid456
- HMRvTrnycXU93rCereGlmLQWKzCDfg5bvAdmQQeGeCO5MItf9OuaFWhrxleuTFUQSRIy
- LLMw==
-X-Gm-Message-State: AOAM531Z61lnQozUtk/2/ymo+46iv23yOh23rFeIk+mn/La8aAtdqLXk
- stQRpqUPW2YF6P+DRYkuw2pKuZgr+vB19BtPZaVpW6z4MLkRutAQaHuuSfNCHrKYMOg3ZAh7IgF
- nMSrJowQXatAgWdUJZCSTn0fEXrZ/sSZIXyc7dXo3oQocr4YksST8nrAhP2TxtSV3L1/ZxA==
-X-Google-Smtp-Source: ABdhPJx6qcRBndYRKLByoCKibt8KPKYbnYrz0DVxKSNCmNZ79ySqr5+Cv2YGUkJVJo++YbHWCUuOmNESmbU=
+ bh=QEqWR8OKdUM2DdgBqD6OFYZ64t35sJlXXS4QuEZbCRM=;
+ b=2uFS1lrGisz6DBI2rfCu6F163aHIe8PdpuduZQLi9JjH1qPetibCjvnWXMnzfBxM2B
+ 17wH3bU4nxAlYgCsJV0jvwb8PE3vDZxTVZk4vd0L86trbfaF7HXMqruqOQbeQdjnurah
+ CwsBeqTgcSPdPDfB1HcL+iJr7rc1K/STY8J84N+Sa1QJBwtlqswygsB1B7O+REF22iFN
+ M2oLBI59D/2sFJAtB5s1w9i8GcK+i/U7HuthxjUprkAxbN6LpnDabExw4ZxayJdGZq47
+ 1gTJuZtOkfTRd9+86HWg1iymkQyEDFUrT+4bsSHcNuglKgbQ/UouD8x0mRtJn6B4aRsf
+ PCjA==
+X-Gm-Message-State: AOAM5325bt4WpqGIDxhDLm88sO1isbiZDmzwc0/c2osR1y6dGuPKWtIe
+ BOnXFd4vwJfxI7yNuL7A+BHzCAdpGtNyozjWxC0S9IOAW8YeLhcKaPiYBHsZ7YrJGRzkfP5k/wJ
+ uJMjoIVlu/FKnlla00WHS6CBGjnpqWEXKuArUm9OBTHesCjfQJr4boSNf0NYbLLEiH/I6fw==
+X-Google-Smtp-Source: ABdhPJzVxal57eFE0hqSN2pEmR/JPezB6ZtDfnKnpAjSKSaYy8GklWhtq929HlbdL6L1Um3kd8K5mUpyylA=
 X-Received: from oupton3.c.googlers.com
  ([fda3:e722:ac3:cc00:24:72f4:c0a8:21eb])
- (user=oupton job=sendgmr) by 2002:a05:6a00:1995:b0:50e:610b:5e53 with SMTP id
- d21-20020a056a00199500b0050e610b5e53mr3997389pfl.37.1651634706895; Tue, 03
- May 2022 20:25:06 -0700 (PDT)
-Date: Wed,  4 May 2022 03:24:42 +0000
+ (user=oupton job=sendgmr) by 2002:a17:90a:e510:b0:1d8:39b3:280b with SMTP id
+ t16-20020a17090ae51000b001d839b3280bmr8310639pjy.142.1651634708442; Tue, 03
+ May 2022 20:25:08 -0700 (PDT)
+Date: Wed,  4 May 2022 03:24:43 +0000
 In-Reply-To: <20220504032446.4133305-1-oupton@google.com>
-Message-Id: <20220504032446.4133305-9-oupton@google.com>
+Message-Id: <20220504032446.4133305-10-oupton@google.com>
 Mime-Version: 1.0
 References: <20220504032446.4133305-1-oupton@google.com>
 X-Mailer: git-send-email 2.36.0.464.gb9c8b46e94-goog
-Subject: [PATCH v6 08/12] selftests: KVM: Rename psci_cpu_on_test to psci_test
+Subject: [PATCH v6 09/12] selftests: KVM: Create helper for making SMCCC calls
 From: Oliver Upton <oupton@google.com>
 To: kvmarm@lists.cs.columbia.edu
 Cc: kvm@vger.kernel.org, maz@kernel.org, linux-kernel@vger.kernel.org,
@@ -93,50 +94,153 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-There are other interactions with PSCI worth testing; rename the PSCI
-test to make it more generic.
-
-No functional change intended.
+The PSCI and PV stolen time tests both need to make SMCCC calls within
+the guest. Create a helper for making SMCCC calls and rework the
+existing tests to use the library function.
 
 Signed-off-by: Oliver Upton <oupton@google.com>
 Reviewed-by: Andrew Jones <drjones@redhat.com>
 ---
- tools/testing/selftests/kvm/.gitignore                          | 2 +-
- tools/testing/selftests/kvm/Makefile                            | 2 +-
- .../selftests/kvm/aarch64/{psci_cpu_on_test.c => psci_test.c}   | 0
- 3 files changed, 2 insertions(+), 2 deletions(-)
- rename tools/testing/selftests/kvm/aarch64/{psci_cpu_on_test.c => psci_test.c} (100%)
+ .../testing/selftests/kvm/aarch64/psci_test.c | 25 ++++++-------------
+ .../selftests/kvm/include/aarch64/processor.h | 22 ++++++++++++++++
+ .../selftests/kvm/lib/aarch64/processor.c     | 25 +++++++++++++++++++
+ tools/testing/selftests/kvm/steal_time.c      | 13 +++-------
+ 4 files changed, 58 insertions(+), 27 deletions(-)
 
-diff --git a/tools/testing/selftests/kvm/.gitignore b/tools/testing/selftests/kvm/.gitignore
-index 0b0e4402bba6..1bb575dfc42e 100644
---- a/tools/testing/selftests/kvm/.gitignore
-+++ b/tools/testing/selftests/kvm/.gitignore
-@@ -2,7 +2,7 @@
- /aarch64/arch_timer
- /aarch64/debug-exceptions
- /aarch64/get-reg-list
--/aarch64/psci_cpu_on_test
-+/aarch64/psci_test
- /aarch64/vcpu_width_config
- /aarch64/vgic_init
- /aarch64/vgic_irq
-diff --git a/tools/testing/selftests/kvm/Makefile b/tools/testing/selftests/kvm/Makefile
-index 681b173aa87c..c2cf4d318296 100644
---- a/tools/testing/selftests/kvm/Makefile
-+++ b/tools/testing/selftests/kvm/Makefile
-@@ -105,7 +105,7 @@ TEST_GEN_PROGS_x86_64 += system_counter_offset_test
- TEST_GEN_PROGS_aarch64 += aarch64/arch_timer
- TEST_GEN_PROGS_aarch64 += aarch64/debug-exceptions
- TEST_GEN_PROGS_aarch64 += aarch64/get-reg-list
--TEST_GEN_PROGS_aarch64 += aarch64/psci_cpu_on_test
-+TEST_GEN_PROGS_aarch64 += aarch64/psci_test
- TEST_GEN_PROGS_aarch64 += aarch64/vcpu_width_config
- TEST_GEN_PROGS_aarch64 += aarch64/vgic_init
- TEST_GEN_PROGS_aarch64 += aarch64/vgic_irq
-diff --git a/tools/testing/selftests/kvm/aarch64/psci_cpu_on_test.c b/tools/testing/selftests/kvm/aarch64/psci_test.c
-similarity index 100%
-rename from tools/testing/selftests/kvm/aarch64/psci_cpu_on_test.c
-rename to tools/testing/selftests/kvm/aarch64/psci_test.c
+diff --git a/tools/testing/selftests/kvm/aarch64/psci_test.c b/tools/testing/selftests/kvm/aarch64/psci_test.c
+index 4c5f6814030f..8c998f0b802c 100644
+--- a/tools/testing/selftests/kvm/aarch64/psci_test.c
++++ b/tools/testing/selftests/kvm/aarch64/psci_test.c
+@@ -26,32 +26,23 @@
+ static uint64_t psci_cpu_on(uint64_t target_cpu, uint64_t entry_addr,
+ 			    uint64_t context_id)
+ {
+-	register uint64_t x0 asm("x0") = PSCI_0_2_FN64_CPU_ON;
+-	register uint64_t x1 asm("x1") = target_cpu;
+-	register uint64_t x2 asm("x2") = entry_addr;
+-	register uint64_t x3 asm("x3") = context_id;
++	struct arm_smccc_res res;
+ 
+-	asm("hvc #0"
+-	    : "=r"(x0)
+-	    : "r"(x0), "r"(x1), "r"(x2), "r"(x3)
+-	    : "memory");
++	smccc_hvc(PSCI_0_2_FN64_CPU_ON, target_cpu, entry_addr, context_id,
++		  0, 0, 0, 0, &res);
+ 
+-	return x0;
++	return res.a0;
+ }
+ 
+ static uint64_t psci_affinity_info(uint64_t target_affinity,
+ 				   uint64_t lowest_affinity_level)
+ {
+-	register uint64_t x0 asm("x0") = PSCI_0_2_FN64_AFFINITY_INFO;
+-	register uint64_t x1 asm("x1") = target_affinity;
+-	register uint64_t x2 asm("x2") = lowest_affinity_level;
++	struct arm_smccc_res res;
+ 
+-	asm("hvc #0"
+-	    : "=r"(x0)
+-	    : "r"(x0), "r"(x1), "r"(x2)
+-	    : "memory");
++	smccc_hvc(PSCI_0_2_FN64_AFFINITY_INFO, target_affinity, lowest_affinity_level,
++		  0, 0, 0, 0, 0, &res);
+ 
+-	return x0;
++	return res.a0;
+ }
+ 
+ static void guest_main(uint64_t target_cpu)
+diff --git a/tools/testing/selftests/kvm/include/aarch64/processor.h b/tools/testing/selftests/kvm/include/aarch64/processor.h
+index 8f9f46979a00..59ece9d4e0d1 100644
+--- a/tools/testing/selftests/kvm/include/aarch64/processor.h
++++ b/tools/testing/selftests/kvm/include/aarch64/processor.h
+@@ -185,4 +185,26 @@ static inline void local_irq_disable(void)
+ 	asm volatile("msr daifset, #3" : : : "memory");
+ }
+ 
++/**
++ * struct arm_smccc_res - Result from SMC/HVC call
++ * @a0-a3 result values from registers 0 to 3
++ */
++struct arm_smccc_res {
++	unsigned long a0;
++	unsigned long a1;
++	unsigned long a2;
++	unsigned long a3;
++};
++
++/**
++ * smccc_hvc - Invoke a SMCCC function using the hvc conduit
++ * @function_id: the SMCCC function to be called
++ * @arg0-arg6: SMCCC function arguments, corresponding to registers x1-x7
++ * @res: pointer to write the return values from registers x0-x3
++ *
++ */
++void smccc_hvc(uint32_t function_id, uint64_t arg0, uint64_t arg1,
++	       uint64_t arg2, uint64_t arg3, uint64_t arg4, uint64_t arg5,
++	       uint64_t arg6, struct arm_smccc_res *res);
++
+ #endif /* SELFTEST_KVM_PROCESSOR_H */
+diff --git a/tools/testing/selftests/kvm/lib/aarch64/processor.c b/tools/testing/selftests/kvm/lib/aarch64/processor.c
+index 9343d82519b4..6a041289fa80 100644
+--- a/tools/testing/selftests/kvm/lib/aarch64/processor.c
++++ b/tools/testing/selftests/kvm/lib/aarch64/processor.c
+@@ -500,3 +500,28 @@ void __attribute__((constructor)) init_guest_modes(void)
+ {
+        guest_modes_append_default();
+ }
++
++void smccc_hvc(uint32_t function_id, uint64_t arg0, uint64_t arg1,
++	       uint64_t arg2, uint64_t arg3, uint64_t arg4, uint64_t arg5,
++	       uint64_t arg6, struct arm_smccc_res *res)
++{
++	asm volatile("mov   w0, %w[function_id]\n"
++		     "mov   x1, %[arg0]\n"
++		     "mov   x2, %[arg1]\n"
++		     "mov   x3, %[arg2]\n"
++		     "mov   x4, %[arg3]\n"
++		     "mov   x5, %[arg4]\n"
++		     "mov   x6, %[arg5]\n"
++		     "mov   x7, %[arg6]\n"
++		     "hvc   #0\n"
++		     "mov   %[res0], x0\n"
++		     "mov   %[res1], x1\n"
++		     "mov   %[res2], x2\n"
++		     "mov   %[res3], x3\n"
++		     : [res0] "=r"(res->a0), [res1] "=r"(res->a1),
++		       [res2] "=r"(res->a2), [res3] "=r"(res->a3)
++		     : [function_id] "r"(function_id), [arg0] "r"(arg0),
++		       [arg1] "r"(arg1), [arg2] "r"(arg2), [arg3] "r"(arg3),
++		       [arg4] "r"(arg4), [arg5] "r"(arg5), [arg6] "r"(arg6)
++		     : "x0", "x1", "x2", "x3", "x4", "x5", "x6", "x7");
++}
+diff --git a/tools/testing/selftests/kvm/steal_time.c b/tools/testing/selftests/kvm/steal_time.c
+index 62f2eb9ee3d5..8c4e811bd586 100644
+--- a/tools/testing/selftests/kvm/steal_time.c
++++ b/tools/testing/selftests/kvm/steal_time.c
+@@ -118,17 +118,10 @@ struct st_time {
+ 
+ static int64_t smccc(uint32_t func, uint64_t arg)
+ {
+-	unsigned long ret;
++	struct arm_smccc_res res;
+ 
+-	asm volatile(
+-		"mov	w0, %w1\n"
+-		"mov	x1, %2\n"
+-		"hvc	#0\n"
+-		"mov	%0, x0\n"
+-	: "=r" (ret) : "r" (func), "r" (arg) :
+-	  "x0", "x1", "x2", "x3");
+-
+-	return ret;
++	smccc_hvc(func, arg, 0, 0, 0, 0, 0, 0, &res);
++	return res.a0;
+ }
+ 
+ static void check_status(struct st_time *st)
 -- 
 2.36.0.464.gb9c8b46e94-goog
 
