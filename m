@@ -2,77 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 24DA35195D9
-	for <lists+kvmarm@lfdr.de>; Wed,  4 May 2022 05:25:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D27BC5195DA
+	for <lists+kvmarm@lfdr.de>; Wed,  4 May 2022 05:25:06 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8CF984B1D2;
-	Tue,  3 May 2022 23:25:02 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5A0244B1B7;
+	Tue,  3 May 2022 23:25:06 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+	URIBL_BLOCKED=0.001] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Au3ggj9ePIrm; Tue,  3 May 2022 23:25:02 -0400 (EDT)
+	with ESMTP id E4vSg-MKTc8G; Tue,  3 May 2022 23:25:04 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BBDFB4B17D;
-	Tue,  3 May 2022 23:25:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E0D8B4B1BD;
+	Tue,  3 May 2022 23:25:04 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C76849F38
- for <kvmarm@lists.cs.columbia.edu>; Tue,  3 May 2022 23:24:59 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EA3294B132
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  3 May 2022 23:25:02 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id YFt1WF8iKGvb for <kvmarm@lists.cs.columbia.edu>;
- Tue,  3 May 2022 23:24:57 -0400 (EDT)
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com
- [209.85.219.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id CDA6549EE3
- for <kvmarm@lists.cs.columbia.edu>; Tue,  3 May 2022 23:24:57 -0400 (EDT)
-Received: by mail-yb1-f202.google.com with SMTP id
- b33-20020a25aea1000000b0064588c45fbaso182374ybj.16
- for <kvmarm@lists.cs.columbia.edu>; Tue, 03 May 2022 20:24:57 -0700 (PDT)
+ with ESMTP id 99CqYHAOyC4d for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  3 May 2022 23:25:01 -0400 (EDT)
+Received: from mail-pf1-f202.google.com (mail-pf1-f202.google.com
+ [209.85.210.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BB7C34B0DE
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  3 May 2022 23:24:59 -0400 (EDT)
+Received: by mail-pf1-f202.google.com with SMTP id
+ i127-20020a625485000000b0050d3d1cab5fso27635pfb.5
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 03 May 2022 20:24:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=KpwL4QzbPyZbm+YVQpL9URPH0DGdCbuS02mP/hlbKlg=;
- b=jeKwpzihPzBI5DFNNTg8f9KTEk3wvyGcOz8iRa574qHehsCy7bxP2Oma0wA9aFy25r
- h1STXWOMy4gsGxF8l4TfrGR0UoxrcCdOZyJi60Hd0Tf85XzKVIozH/fzsrQB1lqhO0qm
- gP5B1DhbRhcQ+jUpsnqXllGbYtq8rNc8m8C1Z+2LJ/m1rOBq7GfL0x5p0OvqJ1UoW96U
- vYUO6uSQvES/r/ouEzcivg2/UGs+Tyj1a2VMJRSrJlNcXS187IX2utVRIRKPlmHW5Tlh
- BZdli+17//PdmR1+gjXpAR4odhnvuH2pEvKa3KED3ScCcX9zlBvBR/PNgK4+YvE5lsws
- wWRw==
+ :cc; bh=EIziyV713c9Gy7N8pI1PaC9upsDWwJjlqgfEvo9nqeE=;
+ b=ZPKEu8L2nh3LgddlnvnOclfE8A4DcgXiW2eTUjHjxVu1MnOPBfQTkjUFcz3kUDLmbE
+ IDEhi43K3RPvBdOnJ+brA+wlxUHtrapRfayJzLb/iMRul23LGEBxJ5F7M+AbRCP3Zs+4
+ cJax+mXxqETi5oIUa0d6sAyEM/AO5QqR+tiYUWf8uH6mZj/VLJ3Lzp6YIxNs3ci5dhT0
+ YMs3Gx2ruYx5nFjrJ18fdKUG8mDvRehcIzXibBAc1iA+hWFhVe45WNdijVsogBmyL1Qk
+ D3VE3Gg0BTVa0ZVLU+kidwm2WsZfciyke7b+Dl9JyFXY7INMIIesAXKAXJGxCoiuXC0P
+ lwig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=KpwL4QzbPyZbm+YVQpL9URPH0DGdCbuS02mP/hlbKlg=;
- b=q6tFs/98cI6TXXBx87lCR0Igx2VYse5JbpzrdEdPESBrA1r9/BmrUh44Qicl8hora/
- R9Ct6OpEYhLIiCDKSKO+EB2kYEMa/amKlBgFkQg0tOqYGKvLTKIEpA2DnlSkimZW24b2
- N0kQcp+GoG5QKCHqw70XlKMC3rh0Km3BVRog3/hwhpf/wFL37QyMMiZ8FZDdc6XHgCIZ
- 1lxSuuCrMheRTwisCt5Rs5SRh3g/D9BiUxa/u/bUzgKn2OmZZ+nGFgcIAVJCWDcPq5oK
- zEO5OrEv+KgDkdZHKBFoLCezj/b+rVx1u3CUYnSDyps9M0zY7YlbpMvmqmTIzLsIsdIh
- Hy3g==
-X-Gm-Message-State: AOAM5316ClvYTYTskZ/V76gQazYdrCx9Q3WLmPLgI/pnpdlLfg55kvB5
- bwiG8U9ycKlWeq96djiT06Ox8DjO4+4Iu26wYh0G2EDOxe6eHdIi0gQ9haoKfONgJFPHPLlr08n
- l3wVq18ad8gDj+HhQ1BGqsWn1lVpwrhpw3mQI75vEAsS0lNr46c9gNCSVeHds3zuF7iYsIA==
-X-Google-Smtp-Source: ABdhPJzZQ3AfNj3AGGTywFxgbadz+UrA7rVq5R/AGOh6+/FRVPv53w9pNiynRMxviJd1G3noU3oC08UvNJQ=
+ bh=EIziyV713c9Gy7N8pI1PaC9upsDWwJjlqgfEvo9nqeE=;
+ b=SeSJAC+4Oev+G8qq7888X07LzhCQxkC6d0sT8YKohQDXHpA89fvCciLPbl95u/RCw2
+ dIt7zpwO80XldwSm7+jKy+shXwPkyOxatkQ5aml3uzul7ZVluwI7s6uq7pGZOzlQgP+3
+ Kh48LEnOBegnbxHqdKr29zKNumR+RX2GGa/OGSaxzA6A8FKfJ59EzyfwN93Yhgn581Jn
+ HYi1XGHRBv8Gg7vEdSVtOn+PpXLsrD2aAbHWpXYPGfFlgm9dH4XvospBXG/B3JAnEdeq
+ 2p00Nw9Ot/Nu6xJ0hDAdmlcTIUoSmZnTRcoC/GoxPQKXfsgjRXt7XMSx8zLc7UMnPiB5
+ +QmA==
+X-Gm-Message-State: AOAM530NBz5ZSogjfYKDUztN2n6Aik+pJyy98wKVyvN7ihFHBPDTxXuK
+ KEf60hcemNjKB7nPhJU+FrCyyjpItS9F6bnuoA212CJFYkJj2rfjHiam+6rmjiA9tkNKNBlsyUN
+ bLu/JDjeKKBXKklzNVXpG0qlQ0h8Z0c8Z5FumgDcxJMMeN4k4u42AuK6AmiurWEQOAF6PAA==
+X-Google-Smtp-Source: ABdhPJxI0BTdhjgimjAkiuzVocoWP2C0Axd2vDhxllpUDEld/gAcfN5MTikLaK6SDPL3cM2XOBrF84TBSXk=
 X-Received: from oupton3.c.googlers.com
  ([fda3:e722:ac3:cc00:24:72f4:c0a8:21eb])
- (user=oupton job=sendgmr) by 2002:a25:bfca:0:b0:648:6d10:99ac with SMTP id
- q10-20020a25bfca000000b006486d1099acmr15486439ybm.176.1651634697177; Tue, 03
- May 2022 20:24:57 -0700 (PDT)
-Date: Wed,  4 May 2022 03:24:36 +0000
+ (user=oupton job=sendgmr) by 2002:a17:902:b698:b0:158:faee:442f with SMTP id
+ c24-20020a170902b69800b00158faee442fmr20205719pls.75.1651634698846; Tue, 03
+ May 2022 20:24:58 -0700 (PDT)
+Date: Wed,  4 May 2022 03:24:37 +0000
 In-Reply-To: <20220504032446.4133305-1-oupton@google.com>
-Message-Id: <20220504032446.4133305-3-oupton@google.com>
+Message-Id: <20220504032446.4133305-4-oupton@google.com>
 Mime-Version: 1.0
 References: <20220504032446.4133305-1-oupton@google.com>
 X-Mailer: git-send-email 2.36.0.464.gb9c8b46e94-goog
-Subject: [PATCH v6 02/12] KVM: arm64: Dedupe vCPU power off helpers
+Subject: [PATCH v6 03/12] KVM: arm64: Track vCPU power state using MP state
+ values
 From: Oliver Upton <oupton@google.com>
 To: kvmarm@lists.cs.columbia.edu
 Cc: kvm@vger.kernel.org, maz@kernel.org, linux-kernel@vger.kernel.org,
@@ -93,97 +94,159 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-vcpu_power_off() and kvm_psci_vcpu_off() are equivalent; rename the
-former and replace all callsites to the latter.
+A subsequent change to KVM will add support for additional power states.
+Store the MP state by value rather than keeping track of it as a
+boolean.
 
 No functional change intended.
 
 Signed-off-by: Oliver Upton <oupton@google.com>
 Reviewed-by: Reiji Watanabe <reijiw@google.com>
 ---
- arch/arm64/include/asm/kvm_host.h |  2 ++
- arch/arm64/kvm/arm.c              |  6 +++---
- arch/arm64/kvm/psci.c             | 11 ++---------
- 3 files changed, 7 insertions(+), 12 deletions(-)
+ arch/arm64/include/asm/kvm_host.h |  5 +++--
+ arch/arm64/kvm/arm.c              | 22 ++++++++++++----------
+ arch/arm64/kvm/psci.c             | 12 ++++++------
+ 3 files changed, 21 insertions(+), 18 deletions(-)
 
 diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 94a27a7520f4..490cd7f3a905 100644
+index 490cd7f3a905..f3f93d48e21a 100644
 --- a/arch/arm64/include/asm/kvm_host.h
 +++ b/arch/arm64/include/asm/kvm_host.h
-@@ -841,4 +841,6 @@ void __init kvm_hyp_reserve(void);
- static inline void kvm_hyp_reserve(void) { }
+@@ -365,8 +365,8 @@ struct kvm_vcpu_arch {
+ 		u32	mdscr_el1;
+ 	} guest_debug_preserved;
+ 
+-	/* vcpu power-off state */
+-	bool power_off;
++	/* vcpu power state */
++	struct kvm_mp_state mp_state;
+ 
+ 	/* Don't run the guest (internal implementation need) */
+ 	bool pause;
+@@ -842,5 +842,6 @@ static inline void kvm_hyp_reserve(void) { }
  #endif
  
-+void kvm_arm_vcpu_power_off(struct kvm_vcpu *vcpu);
-+
+ void kvm_arm_vcpu_power_off(struct kvm_vcpu *vcpu);
++bool kvm_arm_vcpu_stopped(struct kvm_vcpu *vcpu);
+ 
  #endif /* __ARM64_KVM_HOST_H__ */
 diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 523bc934fe2f..28c83c6ddbae 100644
+index 28c83c6ddbae..29e107457c4d 100644
 --- a/arch/arm64/kvm/arm.c
 +++ b/arch/arm64/kvm/arm.c
-@@ -432,7 +432,7 @@ void kvm_arch_vcpu_put(struct kvm_vcpu *vcpu)
- 	vcpu->cpu = -1;
+@@ -434,18 +434,20 @@ void kvm_arch_vcpu_put(struct kvm_vcpu *vcpu)
+ 
+ void kvm_arm_vcpu_power_off(struct kvm_vcpu *vcpu)
+ {
+-	vcpu->arch.power_off = true;
++	vcpu->arch.mp_state.mp_state = KVM_MP_STATE_STOPPED;
+ 	kvm_make_request(KVM_REQ_SLEEP, vcpu);
+ 	kvm_vcpu_kick(vcpu);
  }
  
--static void vcpu_power_off(struct kvm_vcpu *vcpu)
-+void kvm_arm_vcpu_power_off(struct kvm_vcpu *vcpu)
++bool kvm_arm_vcpu_stopped(struct kvm_vcpu *vcpu)
++{
++	return vcpu->arch.mp_state.mp_state == KVM_MP_STATE_STOPPED;
++}
++
+ int kvm_arch_vcpu_ioctl_get_mpstate(struct kvm_vcpu *vcpu,
+ 				    struct kvm_mp_state *mp_state)
  {
- 	vcpu->arch.power_off = true;
- 	kvm_make_request(KVM_REQ_SLEEP, vcpu);
-@@ -460,7 +460,7 @@ int kvm_arch_vcpu_ioctl_set_mpstate(struct kvm_vcpu *vcpu,
- 		vcpu->arch.power_off = false;
+-	if (vcpu->arch.power_off)
+-		mp_state->mp_state = KVM_MP_STATE_STOPPED;
+-	else
+-		mp_state->mp_state = KVM_MP_STATE_RUNNABLE;
++	*mp_state = vcpu->arch.mp_state;
+ 
+ 	return 0;
+ }
+@@ -457,7 +459,7 @@ int kvm_arch_vcpu_ioctl_set_mpstate(struct kvm_vcpu *vcpu,
+ 
+ 	switch (mp_state->mp_state) {
+ 	case KVM_MP_STATE_RUNNABLE:
+-		vcpu->arch.power_off = false;
++		vcpu->arch.mp_state = *mp_state;
  		break;
  	case KVM_MP_STATE_STOPPED:
--		vcpu_power_off(vcpu);
-+		kvm_arm_vcpu_power_off(vcpu);
- 		break;
- 	default:
- 		ret = -EINVAL;
-@@ -1124,7 +1124,7 @@ static int kvm_arch_vcpu_ioctl_vcpu_init(struct kvm_vcpu *vcpu,
- 	 * Handle the "start in power-off" case.
- 	 */
- 	if (test_bit(KVM_ARM_VCPU_POWER_OFF, vcpu->arch.features))
--		vcpu_power_off(vcpu);
-+		kvm_arm_vcpu_power_off(vcpu);
- 	else
- 		vcpu->arch.power_off = false;
- 
-diff --git a/arch/arm64/kvm/psci.c b/arch/arm64/kvm/psci.c
-index 67fbd6ef022c..9b1f3acae155 100644
---- a/arch/arm64/kvm/psci.c
-+++ b/arch/arm64/kvm/psci.c
-@@ -51,13 +51,6 @@ static unsigned long kvm_psci_vcpu_suspend(struct kvm_vcpu *vcpu)
- 	return PSCI_RET_SUCCESS;
+ 		kvm_arm_vcpu_power_off(vcpu);
+@@ -480,7 +482,7 @@ int kvm_arch_vcpu_runnable(struct kvm_vcpu *v)
+ {
+ 	bool irq_lines = *vcpu_hcr(v) & (HCR_VI | HCR_VF);
+ 	return ((irq_lines || kvm_vgic_vcpu_pending_irq(v))
+-		&& !v->arch.power_off && !v->arch.pause);
++		&& !kvm_arm_vcpu_stopped(v) && !v->arch.pause);
  }
  
--static void kvm_psci_vcpu_off(struct kvm_vcpu *vcpu)
--{
--	vcpu->arch.power_off = true;
--	kvm_make_request(KVM_REQ_SLEEP, vcpu);
--	kvm_vcpu_kick(vcpu);
--}
--
- static inline bool kvm_psci_valid_affinity(struct kvm_vcpu *vcpu,
- 					   unsigned long affinity)
- {
-@@ -245,7 +238,7 @@ static int kvm_psci_0_2_call(struct kvm_vcpu *vcpu)
- 		val = kvm_psci_vcpu_suspend(vcpu);
- 		break;
- 	case PSCI_0_2_FN_CPU_OFF:
--		kvm_psci_vcpu_off(vcpu);
-+		kvm_arm_vcpu_power_off(vcpu);
- 		val = PSCI_RET_SUCCESS;
- 		break;
- 	case PSCI_0_2_FN_CPU_ON:
-@@ -379,7 +372,7 @@ static int kvm_psci_0_1_call(struct kvm_vcpu *vcpu)
+ bool kvm_arch_vcpu_in_kernel(struct kvm_vcpu *vcpu)
+@@ -597,10 +599,10 @@ static void vcpu_req_sleep(struct kvm_vcpu *vcpu)
+ 	struct rcuwait *wait = kvm_arch_vcpu_get_wait(vcpu);
  
- 	switch (psci_fn) {
- 	case KVM_PSCI_FN_CPU_OFF:
--		kvm_psci_vcpu_off(vcpu);
-+		kvm_arm_vcpu_power_off(vcpu);
- 		val = PSCI_RET_SUCCESS;
- 		break;
- 	case KVM_PSCI_FN_CPU_ON:
+ 	rcuwait_wait_event(wait,
+-			   (!vcpu->arch.power_off) &&(!vcpu->arch.pause),
++			   (!kvm_arm_vcpu_stopped(vcpu)) && (!vcpu->arch.pause),
+ 			   TASK_INTERRUPTIBLE);
+ 
+-	if (vcpu->arch.power_off || vcpu->arch.pause) {
++	if (kvm_arm_vcpu_stopped(vcpu) || vcpu->arch.pause) {
+ 		/* Awaken to handle a signal, request we sleep again later. */
+ 		kvm_make_request(KVM_REQ_SLEEP, vcpu);
+ 	}
+@@ -1126,7 +1128,7 @@ static int kvm_arch_vcpu_ioctl_vcpu_init(struct kvm_vcpu *vcpu,
+ 	if (test_bit(KVM_ARM_VCPU_POWER_OFF, vcpu->arch.features))
+ 		kvm_arm_vcpu_power_off(vcpu);
+ 	else
+-		vcpu->arch.power_off = false;
++		vcpu->arch.mp_state.mp_state = KVM_MP_STATE_RUNNABLE;
+ 
+ 	return 0;
+ }
+diff --git a/arch/arm64/kvm/psci.c b/arch/arm64/kvm/psci.c
+index 9b1f3acae155..2e6f060214a7 100644
+--- a/arch/arm64/kvm/psci.c
++++ b/arch/arm64/kvm/psci.c
+@@ -76,7 +76,7 @@ static unsigned long kvm_psci_vcpu_on(struct kvm_vcpu *source_vcpu)
+ 	 */
+ 	if (!vcpu)
+ 		return PSCI_RET_INVALID_PARAMS;
+-	if (!vcpu->arch.power_off) {
++	if (!kvm_arm_vcpu_stopped(vcpu)) {
+ 		if (kvm_psci_version(source_vcpu) != KVM_ARM_PSCI_0_1)
+ 			return PSCI_RET_ALREADY_ON;
+ 		else
+@@ -100,12 +100,12 @@ static unsigned long kvm_psci_vcpu_on(struct kvm_vcpu *source_vcpu)
+ 	kvm_make_request(KVM_REQ_VCPU_RESET, vcpu);
+ 
+ 	/*
+-	 * Make sure the reset request is observed if the change to
+-	 * power_off is observed.
++	 * Make sure the reset request is observed if the RUNNABLE mp_state is
++	 * observed.
+ 	 */
+ 	smp_wmb();
+ 
+-	vcpu->arch.power_off = false;
++	vcpu->arch.mp_state.mp_state = KVM_MP_STATE_RUNNABLE;
+ 	kvm_vcpu_wake_up(vcpu);
+ 
+ 	return PSCI_RET_SUCCESS;
+@@ -143,7 +143,7 @@ static unsigned long kvm_psci_vcpu_affinity_info(struct kvm_vcpu *vcpu)
+ 		mpidr = kvm_vcpu_get_mpidr_aff(tmp);
+ 		if ((mpidr & target_affinity_mask) == target_affinity) {
+ 			matching_cpus++;
+-			if (!tmp->arch.power_off)
++			if (!kvm_arm_vcpu_stopped(tmp))
+ 				return PSCI_0_2_AFFINITY_LEVEL_ON;
+ 		}
+ 	}
+@@ -169,7 +169,7 @@ static void kvm_prepare_system_event(struct kvm_vcpu *vcpu, u32 type, u64 flags)
+ 	 * re-initialized.
+ 	 */
+ 	kvm_for_each_vcpu(i, tmp, vcpu->kvm)
+-		tmp->arch.power_off = true;
++		tmp->arch.mp_state.mp_state = KVM_MP_STATE_STOPPED;
+ 	kvm_make_all_cpus_request(vcpu->kvm, KVM_REQ_SLEEP);
+ 
+ 	memset(&vcpu->run->system_event, 0, sizeof(vcpu->run->system_event));
 -- 
 2.36.0.464.gb9c8b46e94-goog
 
