@@ -2,88 +2,105 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id EC5F151BEC9
-	for <lists+kvmarm@lfdr.de>; Thu,  5 May 2022 14:04:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C27A51C0D1
+	for <lists+kvmarm@lfdr.de>; Thu,  5 May 2022 15:32:35 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2F0C54B2B4;
-	Thu,  5 May 2022 08:04:16 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 77FF24B24D;
+	Thu,  5 May 2022 09:32:34 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -1.788
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SSMmMIE2iGZN; Thu,  5 May 2022 08:04:16 -0400 (EDT)
+	with ESMTP id b3iQ5E-jWM6y; Thu,  5 May 2022 09:32:34 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E8CF14B297;
-	Thu,  5 May 2022 08:04:14 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 384464B2A4;
+	Thu,  5 May 2022 09:32:33 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B69354B23B
- for <kvmarm@lists.cs.columbia.edu>; Thu,  5 May 2022 08:04:13 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id ED20E4B1CB
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  5 May 2022 09:32:31 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id WvYCbezZEBAn for <kvmarm@lists.cs.columbia.edu>;
- Thu,  5 May 2022 08:04:12 -0400 (EDT)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 82B1A4B206
- for <kvmarm@lists.cs.columbia.edu>; Thu,  5 May 2022 08:04:12 -0400 (EDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id EB97061CEB;
- Thu,  5 May 2022 12:04:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC45C385A4;
- Thu,  5 May 2022 12:04:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1651752250;
- bh=bkJvphN7syBYWRsUJY+LC4KlT+zXODM0ziWUwHCjA/0=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=td/Txg+E2NK7U7QAjor3Z4L0qanKjWzlFWAGi8ipOLZ3Z10aa883FcQJL0K8w5RtT
- j90NRbECApWwgMI097QJ5gDdRY5C2N6nOFLOPxbUPd3LXquIa0qM2dLXFkNOo0crAr
- l08byEWOYbQamUUdh3FBGhHiyO9dNYPlyHlBy2UFhqkYdgVpMkMOoq/rG+fMccrIIa
- WqM8yxtwsi8y6LfyPsseXcSlHCpHvxhYeIdqFCzXOE1cP2KPXAhbPRVVd7KqSxCjYa
- J4Xm3pRGWPwW6p9PVmJbmOnqY8Nse8pls6fs0mNCwKhLTWMJF52M8/emhjuiPvN37B
- z2ATW/zVAf+iw==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1nmaDH-009CAb-M4; Thu, 05 May 2022 13:04:07 +0100
-Date: Thu, 05 May 2022 13:04:07 +0100
-Message-ID: <87zgjw6v9k.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Oliver Upton <oupton@google.com>
+ with ESMTP id O5C0ms9pBJVs for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  5 May 2022 09:32:27 -0400 (EDT)
+Received: from us-smtp-delivery-74.mimecast.com
+ (us-smtp-delivery-74.mimecast.com [170.10.133.74])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 134504B128
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  5 May 2022 09:32:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1651757546;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+kiADHH0OTUEekRfTTqboMY0mUFLqzmSHiGBuu3QXQA=;
+ b=UTMoBhW4SoONg1+zanmHNFXftfBWlFuobTeaCDOz/J1CgZJR2zF9qJaN5cLiGxwnojQ09P
+ XJCUMKnZdNWW8JuXQZU5P1R6o/GKodqunViH10vBltMaQCShVIWjlv+huAXO/OsE6yVxqw
+ PWjwak1p/BB4gtaqWRM+pTLoxFIQ3ME=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-668-OxszxYnZPMC7XIPK7oSxiA-1; Thu, 05 May 2022 09:32:25 -0400
+X-MC-Unique: OxszxYnZPMC7XIPK7oSxiA-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ z20-20020a50f154000000b0042815e3008cso2278157edl.15
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 05 May 2022 06:32:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+ :content-language:to:cc:references:from:in-reply-to
+ :content-transfer-encoding;
+ bh=+kiADHH0OTUEekRfTTqboMY0mUFLqzmSHiGBuu3QXQA=;
+ b=VotqpiZhSEfWpm422xkxthf28MAWAfjQjdAONxba+XDdLmIEuh0hLbggQ7ToY8fhoc
+ X/jUX2GevCGfujvmCc2wcSffAG5V+158LtgjaLahhOMdB6KeC/yjEZeKTNDhckkicUCq
+ XHl7tiTXa/rX3sdIAyGYTbdfpo5QIFRZFl8t0OmrgQ0CgNGLZleQb0pnm4cNdjHFAdgc
+ vmEzO+I78Of7rMg2M+/hC/IYW3rxjCbL4ySZKroswFcpSa58EtKbmQf8LVKKGkxGBjBd
+ Qy6USALjs44XPMLn6rPFr0hlVMsZJNIJUqct6HeKznqUNJCP2W8f3x8G92Mcw1IQpA8d
+ rxrA==
+X-Gm-Message-State: AOAM532SOGWkyMuLGD5hmAy3ZmLa9CGIcQDzNQkUPKKegtmluU/zV8dk
+ wVecpt8ge3zSlSSrbDKwsi5j3quw8qUsvZ9/lgPbjfTncELZmhck6rtwQpNOA4tLs+Mhly4dVQl
+ ne5p2Sz6NSU5B2QQrx15RK447
+X-Received: by 2002:a17:907:9053:b0:6f3:9f7e:5325 with SMTP id
+ az19-20020a170907905300b006f39f7e5325mr26645008ejc.455.1651757544395; 
+ Thu, 05 May 2022 06:32:24 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJy52UhctkwW9yt5QGwSz6n+bp/2FcbovNN8FC8hnhQ4d8qEEUMnISxAnpY/IrKzXNsv5I+1WQ==
+X-Received: by 2002:a17:907:9053:b0:6f3:9f7e:5325 with SMTP id
+ az19-20020a170907905300b006f39f7e5325mr26644966ejc.455.1651757544125; 
+ Thu, 05 May 2022 06:32:24 -0700 (PDT)
+Received: from ?IPV6:2001:b07:6468:f312:c8dd:75d4:99ab:290a?
+ ([2001:b07:6468:f312:c8dd:75d4:99ab:290a])
+ by smtp.googlemail.com with ESMTPSA id
+ bc20-20020a056402205400b0042617ba63cesm812545edb.88.2022.05.05.06.32.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 May 2022 06:32:23 -0700 (PDT)
+Message-ID: <688a817f-b2e2-4620-ef4b-f3c5f73ae34d@redhat.com>
+Date: Thu, 5 May 2022 15:32:19 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
 Subject: Re: [PATCH] selftests: KVM: aarch64: Let hypercalls use UAPI
  *_BIT_COUNT
-In-Reply-To: <YnLa8uH55/epyjlS@google.com>
+To: Marc Zyngier <maz@kernel.org>, Oliver Upton <oupton@google.com>
 References: <20220504184415.1905224-1-rananta@google.com>
- <YnLa8uH55/epyjlS@google.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
- (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: oupton@google.com, rananta@google.com, drjones@redhat.com,
- james.morse@arm.com, alexandru.elisei@arm.com, suzuki.poulose@arm.com,
- pbonzini@redhat.com, catalin.marinas@arm.com, will@kernel.org,
- pshier@google.com, ricarkol@google.com, reijiw@google.com,
- jingzhangos@google.com, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org,
- kvm@vger.kernel.org, linux-kselftest@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
+ <YnLa8uH55/epyjlS@google.com> <87zgjw6v9k.wl-maz@kernel.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+In-Reply-To: <87zgjw6v9k.wl-maz@kernel.org>
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pbonzini@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
 Cc: kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
  Catalin Marinas <catalin.marinas@arm.com>, Peter Shier <pshier@google.com>,
  linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org,
- Paolo Bonzini <pbonzini@redhat.com>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -95,81 +112,32 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, 04 May 2022 20:58:42 +0100,
-Oliver Upton <oupton@google.com> wrote:
-> 
-> Hi Raghavendra,
-> 
-> On Wed, May 04, 2022 at 06:44:15PM +0000, Raghavendra Rao Ananta wrote:
-> > The hypercalls test currently defines its own *_BMAP_BIT_MAX macros to
-> > define the last valid feature bit for each bitmap firmware register.
-> > However, since these definitions are already present in the uapi header,
-> > kvm.h, as *_BMAP_BIT_COUNT, and would help to keep the test updated as
-> > features grow, use these instead.
-> 
-> LOL, looks like I lost that one in the end! Still, the fact that you're
-> patching the selftest highlights the fact that there is a nonzero chance
-> of userspace using this value incorrectly expecting it to hold true
-> across all kernels.
-> 
-> Since this is the route going forward can we please consider documenting
-> the fact that _BIT_COUNT *will* change and is not stable between kernel
-> versions. Bad UAPI expectations could throw a wrench into this entire
-> plan we've hatched for preserving hypercall ABI.
-> 
-> Just a warning at the end of the register documentation would suffice.
+On 5/5/22 14:04, Marc Zyngier wrote:
+> diff --git a/arch/arm64/include/uapi/asm/kvm.h b/arch/arm64/include/uapi/asm/kvm.h
+> index e523bb6eac67..3cde9f958eee 100644
+> --- a/arch/arm64/include/uapi/asm/kvm.h
+> +++ b/arch/arm64/include/uapi/asm/kvm.h
+> @@ -342,6 +342,10 @@ struct kvm_arm_copy_mte_tags {
+>   
+>   enum {
+>   	KVM_REG_ARM_STD_BIT_TRNG_V1_0	= 0,
+> +	/*
+> +	 * KVM_REG_ARM_STD_BMAP_BIT_COUNT will vary as new services
+> +	 * are added, and is explicitely not part of the ABI.
+> +	 */
+>   	KVM_REG_ARM_STD_BMAP_BIT_COUNT,
+>   };
 
-Maybe something in the kvm.h file as well, as the includes are often
-distributed without the kernel documentation. Something like:
+That seems like a bad idea.  Perhaps you can wrap it in #ifdef 
+__KERNEL_OR_SELFTESTS__?  I can't find any prior art.
 
-diff --git a/arch/arm64/include/uapi/asm/kvm.h b/arch/arm64/include/uapi/asm/kvm.h
-index e523bb6eac67..3cde9f958eee 100644
---- a/arch/arm64/include/uapi/asm/kvm.h
-+++ b/arch/arm64/include/uapi/asm/kvm.h
-@@ -342,6 +342,10 @@ struct kvm_arm_copy_mte_tags {
- 
- enum {
- 	KVM_REG_ARM_STD_BIT_TRNG_V1_0	= 0,
-+	/*
-+	 * KVM_REG_ARM_STD_BMAP_BIT_COUNT will vary as new services
-+	 * are added, and is explicitely not part of the ABI.
-+	 */
- 	KVM_REG_ARM_STD_BMAP_BIT_COUNT,
- };
- 
-@@ -349,6 +353,10 @@ enum {
- 
- enum {
- 	KVM_REG_ARM_STD_HYP_BIT_PV_TIME	= 0,
-+	/*
-+	 * KVM_REG_ARM_STD_HYP_BMAP_BIT_COUNT will vary as new
-+	 * services are added, and is explicitely not part of the ABI.
-+	 */
- 	KVM_REG_ARM_STD_HYP_BMAP_BIT_COUNT,
- };
- 
-@@ -357,6 +365,10 @@ enum {
- enum {
- 	KVM_REG_ARM_VENDOR_HYP_BIT_FUNC_FEAT	= 0,
- 	KVM_REG_ARM_VENDOR_HYP_BIT_PTP		= 1,
-+	/*
-+	 * KVM_REG_ARM_VENDOR_HYP_BMAP_BIT_COUNT will vary as new
-+	 * services are added, and is explicitely not part of the ABI.
-+	 */
- 	KVM_REG_ARM_VENDOR_HYP_BMAP_BIT_COUNT,
- };
+Paolo
 
-Thanks,
-
-	M.
-
--- 
-Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
