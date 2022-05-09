@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B5DFB520292
-	for <lists+kvmarm@lfdr.de>; Mon,  9 May 2022 18:36:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F7435202DE
+	for <lists+kvmarm@lfdr.de>; Mon,  9 May 2022 18:48:35 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 14DFA4B305;
-	Mon,  9 May 2022 12:36:52 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A677D4B318;
+	Mon,  9 May 2022 12:48:34 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
@@ -18,79 +18,73 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QoN9UWnYhf9d; Mon,  9 May 2022 12:36:51 -0400 (EDT)
+	with ESMTP id 59BoN9R3z5yG; Mon,  9 May 2022 12:48:34 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E94B64B2EF;
-	Mon,  9 May 2022 12:36:50 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4A4D74B306;
+	Mon,  9 May 2022 12:48:33 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C95C4B2E2
- for <kvmarm@lists.cs.columbia.edu>; Mon,  9 May 2022 12:36:50 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 791E94B2E4
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  9 May 2022 12:38:56 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Mj0BricY+Bfc for <kvmarm@lists.cs.columbia.edu>;
- Mon,  9 May 2022 12:36:49 -0400 (EDT)
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com
- [209.85.216.52])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E81214B150
- for <kvmarm@lists.cs.columbia.edu>; Mon,  9 May 2022 12:36:48 -0400 (EDT)
-Received: by mail-pj1-f52.google.com with SMTP id e24so13640890pjt.2
- for <kvmarm@lists.cs.columbia.edu>; Mon, 09 May 2022 09:36:48 -0700 (PDT)
+ with ESMTP id O-mAym6z2Mur for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  9 May 2022 12:38:55 -0400 (EDT)
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com
+ [209.85.221.43])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 44C614B150
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  9 May 2022 12:38:55 -0400 (EDT)
+Received: by mail-wr1-f43.google.com with SMTP id d5so20271775wrb.6
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 09 May 2022 09:38:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=vcWBrXUV0qsOw9lQLNi+OhiEHQuaLCtwTh7HA5F6tIs=;
- b=GQuDadAMhf8b7Fy/I8JaGOgRQOsWHOMhy0hcMvriphuVIDCLpL0PdaLuMbF3n56Nke
- dZiKU5Jef5j11YpXBiBq70I2jRtKHo1vmB1cAh8/4Ff8ldw79/NB/gHKnpjQvMceq5+H
- 3qgkrnh9KKmaw7DH9R9uQgmGpUN1bWPoVqDKK8soMOBL/CE7D+C0wzwPs6cO+5D2o7i9
- BUxS3PijLvpY1XWcQQ5OOyPIkC+UrL32CQw4fU5VdLpUvBKmussISGRTBF6qAwdnpemg
- ji09qdkVslMmiKaiQZghkH/uEpByZli/lutMtfurjdn+YHWI2FuLLfHnwrACscaUBN8e
- ydmw==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=zHCy33IfC5TyILOeQkmukBylQEbte8TBRw0A+aY3Nnw=;
+ b=H6nlUcikiCWMQ0NyQpEOvAX9YWAzxJVOMo8TCOD+MTF5x++KFtykM38ezcNgkrqf/k
+ HsEf3EJd5U1zetXK4vcQ2qXVxKjVLLmxk64eVHzC1lhLd+csiUOWanUBOMc0ehk+lL8Z
+ 8kMOXwBH5hATNTPogQUXQIImHkrg03NEi/77hdTa1677HBxwaUfkv/QQ7yLseBE1HcJE
+ YPtPpea4ak7+T4Dqx7q3oWEasv5JJswYYW1+IlWiL+SM1CpjXzbyzq9KKAOv4Z51ZAoC
+ p4WvvEjdiEI05l2ZOHE80zU68Yi/ftR+9e3AoP2yMz5PBJyRJ0fD1vQ47PM6C0czbLOE
+ 9nDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=vcWBrXUV0qsOw9lQLNi+OhiEHQuaLCtwTh7HA5F6tIs=;
- b=O4o8lF+olBr7Y5M7/53yNh4NxbFLhjiOZYnKXFmoSM+tVAB0pAFRfxsB/oRYY+xQez
- IEfsZq07mj2mst7VU4HAkI2p8c5C9VcKWtQ6JNRJHWwVYvPna4Nx+lsv0P94aQ5Z9Hh0
- j0dUxqq4bhs9cAzZURHVYsu7q1czXZ2QK3dVS85MeC6xYeZ5+qtByrKtDJ7d0mkfgth6
- R2bkF+nGYQo+cBH+pr8C3oUBE0El9MvQLhQcBfWsQkwJjB5B5wF+VKpsU8n1s7nAd5c2
- IqA2a3dmUZiBX0I5Nnl5W9G3p15E7xVwTZrD26HARJZdaT6t393rdr0Z3IW/9enOf3jc
- Q76g==
-X-Gm-Message-State: AOAM531Ae/DmBu7qzK0ybhSmJAu7nRGDT0MBQdPwmo3mLJ6bq/CguZCA
- faXPP8+bEfdiOTKpgvCzEebMWA==
-X-Google-Smtp-Source: ABdhPJwEmR4hWs02XZuuAcqgDnjovgeoKc9HZE29HI/cH7wXAaf0/EHn99rc8bnyOXL0A+d9B+qwog==
-X-Received: by 2002:a17:902:9044:b0:15d:1c51:5bef with SMTP id
- w4-20020a170902904400b0015d1c515befmr16764065plz.170.1652114207747; 
- Mon, 09 May 2022 09:36:47 -0700 (PDT)
-Received: from google.com (157.214.185.35.bc.googleusercontent.com.
- [35.185.214.157]) by smtp.gmail.com with ESMTPSA id
- x71-20020a63864a000000b003c15f7f2914sm8650496pgd.24.2022.05.09.09.36.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 May 2022 09:36:47 -0700 (PDT)
-Date: Mon, 9 May 2022 16:36:43 +0000
-From: Sean Christopherson <seanjc@google.com>
-To: David Matlack <dmatlack@google.com>
-Subject: Re: [PATCH v4 18/20] KVM: x86/mmu: Refactor drop_large_spte()
-Message-ID: <YnlDG/aRMB7js2Lc@google.com>
-References: <20220422210546.458943-1-dmatlack@google.com>
- <20220422210546.458943-19-dmatlack@google.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=zHCy33IfC5TyILOeQkmukBylQEbte8TBRw0A+aY3Nnw=;
+ b=UhQaPGM+ewdT59uEgS+mfah4vQHBE7ndNS9DN1sbj2/2UnsooziGQ9VzgrK9vGk3aD
+ DUR4MxHccEdZdtaYQ2b3P8ZdrlgZBwtsolIZIEek4Ijhz+nSgtrHhE2zQFp1VvzhmGGi
+ IDYXrq6QYaEbqIs0eNh22M5x8g897W1polWaxqrJDIM2cG7zox4i/U1mgWG3RcqU7d71
+ wK309+JxGa9jZeP2Ohl5vv/Cuo50k6NenNmfrmo1aL38NETSl/LeCOoF63i9N0gSf5tR
+ G50zlptW4uHx/hBQS+rYkcRnod6snhwj/SvdEcwbXlAfw1sYYZoKLDLsPeAxWOdlKQbl
+ 2uyw==
+X-Gm-Message-State: AOAM531XigGP4EsY/EEASeIv6Ov497d27+uJZbEie3Xgeg+FMS1K0TwD
+ bbGWnzcKXmk9aQAbeTFT+RXhDh5YENM6pDcXgcBw7Q==
+X-Google-Smtp-Source: ABdhPJzFCb2Pw91KP2O7w1MuAK0a7BY2JKborW82eGXzK/VRCy5OZV3s+PnflU0xod+JItQXe5EJnWI4vMeydL7hgKY=
+X-Received: by 2002:a05:6000:230:b0:209:87ac:4cf5 with SMTP id
+ l16-20020a056000023000b0020987ac4cf5mr14646217wrz.80.1652114333976; Mon, 09
+ May 2022 09:38:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20220422210546.458943-19-dmatlack@google.com>
-Cc: Marc Zyngier <maz@kernel.org>, Albert Ou <aou@eecs.berkeley.edu>,
- "open list:KERNEL VIRTUAL MACHINE FOR MIPS \(KVM/mips\)"
- <kvm@vger.kernel.org>, Huacai Chen <chenhuacai@kernel.org>,
- "open list:KERNEL VIRTUAL MACHINE FOR MIPS \(KVM/mips\)"
- <linux-mips@vger.kernel.org>,
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- "open list:KERNEL VIRTUAL MACHINE FOR RISC-V \(KVM/riscv\)"
- <kvm-riscv@lists.infradead.org>, Paul Walmsley <paul.walmsley@sifive.com>,
- Ben Gardon <bgardon@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
- maciej.szmigiero@oracle.com,
- "moderated list:KERNEL VIRTUAL MACHINE FOR ARM64 \(KVM/arm64\)"
- <kvmarm@lists.cs.columbia.edu>, Peter Feiner <pfeiner@google.com>
+References: <20220429201131.3397875-1-yosryahmed@google.com>
+ <20220429201131.3397875-2-yosryahmed@google.com>
+ <87ilqoi77b.wl-maz@kernel.org>
+ <CAJD7tkY7JF25XXUFq2mGroetMkfo-2zGOaQC94pjZE3D42+oaw@mail.gmail.com>
+In-Reply-To: <CAJD7tkY7JF25XXUFq2mGroetMkfo-2zGOaQC94pjZE3D42+oaw@mail.gmail.com>
+From: Yosry Ahmed <yosryahmed@google.com>
+Date: Mon, 9 May 2022 09:38:17 -0700
+Message-ID: <CAJD7tkbfT-FRs3LE2GPddqrQSWw_eC1R6k3z04x=z9Zvt5yLpg@mail.gmail.com>
+Subject: Re: [PATCH v4 1/4] mm: add NR_SECONDARY_PAGETABLE to count secondary
+ page table uses.
+To: Marc Zyngier <maz@kernel.org>
+X-Mailman-Approved-At: Mon, 09 May 2022 12:48:32 -0400
+Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
+ Roman Gushchin <roman.gushchin@linux.dev>, Michal Hocko <mhocko@kernel.org>,
+ Linux-MM <linux-mm@kvack.org>, Zefan Li <lizefan.x@bytedance.com>,
+ kvmarm@lists.cs.columbia.edu, Joerg Roedel <joro@8bytes.org>,
+ Shakeel Butt <shakeelb@google.com>, cgroups@vger.kernel.org,
+ Andrew Morton <akpm@linux-foundation.org>,
+ linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Johannes Weiner <hannes@cmpxchg.org>, Tejun Heo <tj@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -107,78 +101,80 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Apr 22, 2022, David Matlack wrote:
-> drop_large_spte() drops a large SPTE if it exists and then flushes TLBs.
-> Its helper function, __drop_large_spte(), does the drop without the
-> flush.
-> 
-> In preparation for eager page splitting, which will need to sometimes
-> flush when dropping large SPTEs (and sometimes not), push the flushing
-> logic down into __drop_large_spte() and add a bool parameter to control
-> it.
-> 
-> No functional change intended.
-> 
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> Signed-off-by: David Matlack <dmatlack@google.com>
-> ---
->  arch/x86/kvm/mmu/mmu.c | 29 +++++++++++++++--------------
->  1 file changed, 15 insertions(+), 14 deletions(-)
-> 
-> diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-> index 479c581e8a96..a5961c17eb36 100644
-> --- a/arch/x86/kvm/mmu/mmu.c
-> +++ b/arch/x86/kvm/mmu/mmu.c
-> @@ -1183,28 +1183,29 @@ static void drop_spte(struct kvm *kvm, u64 *sptep)
->  		rmap_remove(kvm, sptep);
->  }
->  
-> -
-> -static bool __drop_large_spte(struct kvm *kvm, u64 *sptep)
-> +static void __drop_large_spte(struct kvm *kvm, u64 *sptep, bool flush)
->  {
-> -	if (is_large_pte(*sptep)) {
-> -		WARN_ON(sptep_to_sp(sptep)->role.level == PG_LEVEL_4K);
-> -		drop_spte(kvm, sptep);
-> -		return true;
-> -	}
-> +	struct kvm_mmu_page *sp;
->  
-> -	return false;
-> -}
-> +	if (!is_large_pte(*sptep))
-> +		return;
->  
-> -static void drop_large_spte(struct kvm_vcpu *vcpu, u64 *sptep)
-> -{
-> -	if (__drop_large_spte(vcpu->kvm, sptep)) {
-> -		struct kvm_mmu_page *sp = sptep_to_sp(sptep);
-> +	sp = sptep_to_sp(sptep);
-> +	WARN_ON(sp->role.level == PG_LEVEL_4K);
->  
-> -		kvm_flush_remote_tlbs_with_address(vcpu->kvm, sp->gfn,
-> +	drop_spte(kvm, sptep);
-> +
-> +	if (flush) {
+On Mon, May 2, 2022 at 11:46 AM Yosry Ahmed <yosryahmed@google.com> wrote:
+>
+> On Mon, May 2, 2022 at 3:01 AM Marc Zyngier <maz@kernel.org> wrote:
+> >
+> > On Fri, 29 Apr 2022 21:11:28 +0100,
+> > Yosry Ahmed <yosryahmed@google.com> wrote:
+> > >
+> > > Add NR_SECONDARY_PAGETABLE stat to count secondary page table uses, e.g.
+> > > KVM mmu. This provides more insights on the kernel memory used
+> > > by a workload.
+> > >
+> > > This stat will be used by subsequent patches to count KVM mmu
+> > > memory usage.
+> > >
+> > > Signed-off-by: Yosry Ahmed <yosryahmed@google.com>
+> > > ---
+> > >  Documentation/admin-guide/cgroup-v2.rst | 5 +++++
+> > >  Documentation/filesystems/proc.rst      | 4 ++++
+> > >  drivers/base/node.c                     | 2 ++
+> > >  fs/proc/meminfo.c                       | 2 ++
+> > >  include/linux/mmzone.h                  | 1 +
+> > >  mm/memcontrol.c                         | 1 +
+> > >  mm/page_alloc.c                         | 6 +++++-
+> > >  mm/vmstat.c                             | 1 +
+> > >  8 files changed, 21 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/Documentation/admin-guide/cgroup-v2.rst b/Documentation/admin-guide/cgroup-v2.rst
+> > > index 69d7a6983f78..828cb6b6f918 100644
+> > > --- a/Documentation/admin-guide/cgroup-v2.rst
+> > > +++ b/Documentation/admin-guide/cgroup-v2.rst
+> > > @@ -1312,6 +1312,11 @@ PAGE_SIZE multiple when read back.
+> > >         pagetables
+> > >                  Amount of memory allocated for page tables.
+> > >
+> > > +       secondary_pagetables
+> > > +             Amount of memory allocated for secondary page tables,
+> > > +             this currently includes KVM mmu allocations on x86
+> > > +             and arm64.
+> >
+> > Can you please explain what the rationale is for this? We already
+> > account for the (arm64) S2 PTs as a userspace allocation (see
+>
+> This can be considered as continuation for that work. The mentioned
+> commit accounts S2 PTs to the VM process cgroup kernel memory. We have
+> stats for the total kernel memory, and some fine-grained categories of
+> that, like (pagetables, stack, slab, etc.).
+>
+> This patch just adds another category to give further insights into
+> what exactly is using kernel memory.
+>
+> > 115bae923ac8bb29ee635). You are saying that this is related to a
+> > 'workload', but given that the accounting is global, I fail to see how
+> > you can attribute these allocations on a particular VM.
+>
+> The main motivation is having the memcg stats, which give attribution
+> to workloads. If you think it's more appropriate, we can add it as a
+> memcg-only stat, like MEMCG_VMALLOC (see 4e5aa1f4c2b4 ("memcg: add
+> per-memcg vmalloc stat")). The only reason I made this as a global
+> stat too is to be consistent with NR_PAGETABLE.
+>
+> >
+> > What do you plan to do for IOMMU page tables? After all, they serve
+> > the exact same purpose, and I'd expect these to be handled the same
+> > way (i.e. why is this KVM specific?).
+>
+> The reason this was named NR_SECONDARY_PAGTABLE instead of
+> NR_KVM_PAGETABLE is exactly that. To leave room to incrementally
+> account other types of secondary page tables to this stat. It is just
+> that we are currently interested in the KVM MMU usage.
+>
 
-Unnecessary curly braces.
 
-> +		kvm_flush_remote_tlbs_with_address(kvm, sp->gfn,
->  			KVM_PAGES_PER_HPAGE(sp->role.level));
->  	}
->  }
->  
-> +static void drop_large_spte(struct kvm_vcpu *vcpu, u64 *sptep)
-> +{
-> +	return __drop_large_spte(vcpu->kvm, sptep, true);
-> +}
-> +
->  /*
->   * Write-protect on the specified @sptep, @pt_protect indicates whether
->   * spte write-protection is caused by protecting shadow page table.
-> -- 
-> 2.36.0.rc2.479.g8af0fa9b8e-goog
-> 
+Any thoughts on this? Do you think MEMCG_SECONDARY_PAGETABLE would be
+more appropriate here?
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
