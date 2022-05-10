@@ -2,93 +2,81 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DB138520D8B
-	for <lists+kvmarm@lfdr.de>; Tue, 10 May 2022 08:04:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC980520DEE
+	for <lists+kvmarm@lfdr.de>; Tue, 10 May 2022 08:39:14 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8075049EF0;
-	Tue, 10 May 2022 02:04:59 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D61A34B1A9;
+	Tue, 10 May 2022 02:39:13 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.786
+X-Spam-Score: -1.787
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.786 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001,
+X-Spam-Status: No, score=-1.787 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
 	RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=no
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@gmail.com
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cYRQS86OV0Ex; Tue, 10 May 2022 02:04:58 -0400 (EDT)
+	with ESMTP id EkYh-YGJxaw9; Tue, 10 May 2022 02:39:13 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 16DAD4B307;
-	Tue, 10 May 2022 02:04:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6FAC34B150;
+	Tue, 10 May 2022 02:39:12 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 124D24B12C
- for <kvmarm@lists.cs.columbia.edu>; Mon,  9 May 2022 22:58:35 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D19D44B11F
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 10 May 2022 02:39:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 6ZzHNIB3OCpc for <kvmarm@lists.cs.columbia.edu>;
- Mon,  9 May 2022 22:58:33 -0400 (EDT)
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com
- [209.85.219.170])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 86CBB49F5F
- for <kvmarm@lists.cs.columbia.edu>; Mon,  9 May 2022 22:58:33 -0400 (EDT)
-Received: by mail-yb1-f170.google.com with SMTP id j2so28401826ybu.0
- for <kvmarm@lists.cs.columbia.edu>; Mon, 09 May 2022 19:58:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ with ESMTP id U1S5bIknHOJT for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 10 May 2022 02:39:09 -0400 (EDT)
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com
+ [209.85.160.52])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 85D9E4B11E
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 10 May 2022 02:39:09 -0400 (EDT)
+Received: by mail-oa1-f52.google.com with SMTP id
+ 586e51a60fabf-ed9a75c453so17179579fac.11
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 09 May 2022 23:39:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=H8vraaQ5DcI+D+0VuVsldMnCsgIP6A3AxiIuSgPst5A=;
- b=JOPZlXRgydWmpz8uA0xOm6wWnl9Z7zRiSI0SVu2npoaABUbsdaXM+wylhI7nYW7Jeo
- 57tp6eb0kioeoSnR1ZtAZKPQkvR6S0wR2iInhkH2sQ/janeJmmc1swUVLQGX7VquVkSR
- UXQ0TrhDT6nL1Rf4hL37fMI4cFvZpimbDkTLcO695MZojQ/NjmZpMs2THG4gNeKuxIKg
- T2QD5oTBr/3M6oXr06jdo2BrUWfZdVMxkG2uQnPQ5Gq9XoXr54rKccgp0BIG/qEUkQWZ
- S5gue3ZYJAucMw1UNFtI8IxxV2oCBKWisTMPPquxzR5cL859C9Yw/aoWu5D2PII1H4mE
- RmLw==
+ :cc; bh=UVMdzQ6jg8yR3HOs2R5eFoPReyvRoYAaYEFQBrwmbjo=;
+ b=E8hj5rakz3+DwGtDVMQ5zaXey+1JCRL/qO1WIljqhko9ppH67gMmOS9ar/jVoibcHl
+ XqQeuEhJnlOhI3z5jtpTppXnVYizBYGKcy8biMNm+PYBFwIu/Y3FDRkFWB+GyoUWdrcW
+ 9ZJWy80xhrLsRxHj/LtdSZB+AC9ZvgPNMxoswmtgyL/r+4GNNeuHTH4MyUgM6itvFi7A
+ hn/wEF1AIZA2ZNbIgVhhT88O5Nv0P6Ve7Zc778oWZTv5mo5A6H3XK6OxSuN7+j8Mkghk
+ 3UJ1pX5erkzKz9GworsdgArTPUA+ZUL5oqm6aYSQ+PItcUhXpzlw8r6tjQlEkQyL6JIW
+ PzgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=H8vraaQ5DcI+D+0VuVsldMnCsgIP6A3AxiIuSgPst5A=;
- b=3PPGVk8KcNRCdIt5bS/eO2ks26ZZgiDi6OKqXtDE3sTzEgosbaFhiPv4sLYWsO65iF
- 8xco4fxT9LsY8EmUjz9afwf5OjZRgglNA2nNIhYHvY8SkBfstppzdvUpKSYwB/XamtKy
- Oc9Vxrh5IT/kc1IZvhKmmR5uMBah7+hgRVpSAHiK77sZ94FUPflTD37EDC7ChouK6iMS
- iJ7i4ZbURb7m1PiTMht18Eh2suz7t1kwB5Tz++qPHFw+oBX1X9qGKyEr8LKtbz1uqsgA
- koBb1acCxO+O3pjPX+ENJcvYoW2T5pmUCmKHztvqANqhwI3ryj+oQcCInWA7K4fVMuBe
- JX8w==
-X-Gm-Message-State: AOAM531v4U5eiVkVnvHlRFET7CH02K7sDMnVZ/eoGn+SzDYkLA7izNHC
- Xxfv99ODzndj+te9XpWkhhAGCLHukz1zl38RAvw=
-X-Google-Smtp-Source: ABdhPJydqtRDCx7YVD91pCtY2A1j8buOSkHSwNAiYxv+11DpIiZ1RPo0iEDLLhyzzPzAxWfqFKDtVaJ1lPhnNJMV2bc=
-X-Received: by 2002:a25:2082:0:b0:649:f60b:112a with SMTP id
- g124-20020a252082000000b00649f60b112amr14983003ybg.428.1652151512922; Mon, 09
- May 2022 19:58:32 -0700 (PDT)
+ bh=UVMdzQ6jg8yR3HOs2R5eFoPReyvRoYAaYEFQBrwmbjo=;
+ b=KCPv9pVo17vx8+e6FNPMyNv3YaUDT5HHdIdXkuwTg/j71FuSDXXDJmhsQDQr+X04c8
+ 6EzXGmrc4b7T4Rdo0KJDVZQhn5DgSlgCCvIgfxHOmn6nO+C0Yd5nJgAIqE5ETFB5i5vI
+ aw/bzI3zFP0UnquiRhomwYLLe78Y/EzT0gCdiXuFksOrF3HjT8X6nP06bL376RI/YnnB
+ VknzZWc3kljrUILCe2sgIXC5kADIrpUJ4kc/ri77FYzkeZRDP0bwgE5azfoHUbJzQ3VI
+ J6Setp4Vqc7knxgFGNlwoadOQ0J9JUZKMULDsebON8FH1QByxv00dDfgmfVt+0LExQ+0
+ TBUw==
+X-Gm-Message-State: AOAM532cJ5CXICnVNZV69vE6gPLq20vTMKrA39Tk3dl9Lr9c2ZdHGFvL
+ Kw3SsAvz6Ua+w3En4z/Ehbp6CaDl1ZAgsgH6CGY95w==
+X-Google-Smtp-Source: ABdhPJxI0yeUpJNrhakXSuJFKJ3p5Tl50RIx12BNdcF2fxPF/gT50hVIPxmZrfJOypKbi+nNUZCMdZ8O28EX0YLxK10=
+X-Received: by 2002:a05:6870:961b:b0:e2:ffb9:f526 with SMTP id
+ d27-20020a056870961b00b000e2ffb9f526mr12585661oaq.146.1652164747452; Mon, 09
+ May 2022 23:39:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220422210546.458943-1-dmatlack@google.com>
- <20220422210546.458943-4-dmatlack@google.com>
- <75fbbcb6-d9bb-3d30-0bf4-fbf925517d09@gmail.com>
- <CALzav=dmseUw6khErkiSV7T5K88QvaRvWvBpvrb6VNOQTE3bQQ@mail.gmail.com>
-In-Reply-To: <CALzav=dmseUw6khErkiSV7T5K88QvaRvWvBpvrb6VNOQTE3bQQ@mail.gmail.com>
-From: Lai Jiangshan <jiangshanlai@gmail.com>
-Date: Tue, 10 May 2022 10:58:21 +0800
-Message-ID: <CAJhGHyDQn=atFmn5o2TREW9cSY5Tv1F1vsSekzor6uYQxDgcfQ@mail.gmail.com>
-Subject: Re: [PATCH v4 03/20] KVM: x86/mmu: Derive shadow MMU page role from
- parent
-To: David Matlack <dmatlack@google.com>
-X-Mailman-Approved-At: Tue, 10 May 2022 02:04:42 -0400
-Cc: Marc Zyngier <maz@kernel.org>, Albert Ou <aou@eecs.berkeley.edu>,
- "open list:KERNEL VIRTUAL MACHINE FOR MIPS \(KVM/mips\)"
- <kvm@vger.kernel.org>, Huacai Chen <chenhuacai@kernel.org>,
- "open list:KERNEL VIRTUAL MACHINE FOR MIPS \(KVM/mips\)"
- <linux-mips@vger.kernel.org>,
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- "open list:KERNEL VIRTUAL MACHINE FOR RISC-V \(KVM/riscv\)"
- <kvm-riscv@lists.infradead.org>, Paul Walmsley <paul.walmsley@sifive.com>,
- Ben Gardon <bgardon@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- "moderated list:KERNEL VIRTUAL MACHINE FOR ARM64 \(KVM/arm64\)"
- <kvmarm@lists.cs.columbia.edu>, Peter Feiner <pfeiner@google.com>
+References: <20220509120330.3043773-1-tabba@google.com>
+ <20220509120330.3043773-3-tabba@google.com>
+ <YnlyNPnwuxRcVlP8@google.com>
+In-Reply-To: <YnlyNPnwuxRcVlP8@google.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Tue, 10 May 2022 07:38:31 +0100
+Message-ID: <CA+EHjTyZfJJqJM1agOZVt07TjdrpP7JTa58KxzvgqFBCG4sNCg@mail.gmail.com>
+Subject: Re: [PATCH v3 2/4] KVM: arm64: Repack struct kvm_pmu to reduce size
+To: Oliver Upton <oupton@google.com>
+Cc: will@kernel.org, maz@kernel.org, catalin.marinas@arm.com,
+ kernel-team@android.com, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -105,199 +93,63 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-()
+Hi Oliver,
 
-On Tue, May 10, 2022 at 5:04 AM David Matlack <dmatlack@google.com> wrote:
->
-> On Sat, May 7, 2022 at 1:28 AM Lai Jiangshan <jiangshanlai@gmail.com> wrote:
-> >
-> >
-> >
-> > On 2022/4/23 05:05, David Matlack wrote:
-> > > Instead of computing the shadow page role from scratch for every new
-> > > page, derive most of the information from the parent shadow page.  This
-> > > avoids redundant calculations and reduces the number of parameters to
-> > > kvm_mmu_get_page().
-> > >
-> > > Preemptively split out the role calculation to a separate function for
-> > > use in a following commit.
-> > >
-> > > No functional change intended.
-> > >
-> > > Reviewed-by: Peter Xu <peterx@redhat.com>
-> > > Signed-off-by: David Matlack <dmatlack@google.com>
-> > > ---
-> > >   arch/x86/kvm/mmu/mmu.c         | 96 +++++++++++++++++++++++-----------
-> > >   arch/x86/kvm/mmu/paging_tmpl.h |  9 ++--
-> > >   2 files changed, 71 insertions(+), 34 deletions(-)
-> > >
-> > > diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-> > > index dc20eccd6a77..4249a771818b 100644
-> > > --- a/arch/x86/kvm/mmu/mmu.c
-> > > +++ b/arch/x86/kvm/mmu/mmu.c
-> > > @@ -2021,31 +2021,15 @@ static void clear_sp_write_flooding_count(u64 *spte)
-> > >       __clear_sp_write_flooding_count(sptep_to_sp(spte));
-> > >   }
-> > >
-> > > -static struct kvm_mmu_page *kvm_mmu_get_page(struct kvm_vcpu *vcpu,
-> > > -                                          gfn_t gfn,
-> > > -                                          gva_t gaddr,
-> > > -                                          unsigned level,
-> > > -                                          bool direct,
-> > > -                                          unsigned int access)
-> > > +static struct kvm_mmu_page *kvm_mmu_get_page(struct kvm_vcpu *vcpu, gfn_t gfn,
-> > > +                                          union kvm_mmu_page_role role)
-> > >   {
-> > > -     union kvm_mmu_page_role role;
-> > >       struct hlist_head *sp_list;
-> > > -     unsigned quadrant;
-> > >       struct kvm_mmu_page *sp;
-> > >       int ret;
-> > >       int collisions = 0;
-> > >       LIST_HEAD(invalid_list);
-> > >
-> > > -     role = vcpu->arch.mmu->root_role;
-> > > -     role.level = level;
-> > > -     role.direct = direct;
-> > > -     role.access = access;
-> > > -     if (role.has_4_byte_gpte) {
-> > > -             quadrant = gaddr >> (PAGE_SHIFT + (PT64_PT_BITS * level));
-> > > -             quadrant &= (1 << ((PT32_PT_BITS - PT64_PT_BITS) * level)) - 1;
-> > > -             role.quadrant = quadrant;
-> > > -     }
-> >
-> >
-> > I don't think replacing it with kvm_mmu_child_role() can reduce any calculations.
-> >
-> > role.level, role.direct, role.access and role.quadrant still need to be
-> > calculated.  And the old code is still in mmu_alloc_root().
->
-> You are correct. Instead of saying "less calculations" I should have
-> said "eliminates the dependency on vcpu->arch.mmu->root_role".
->
-> >
-> > I think kvm_mmu_get_shadow_page() can keep the those parameters and
-> > kvm_mmu_child_role() is only introduced for nested_mmu_get_sp_for_split().
-> >
-> > Both kvm_mmu_get_shadow_page() and nested_mmu_get_sp_for_split() call
-> > __kvm_mmu_get_shadow_page() which uses role as a parameter.
->
-> I agree this would work, but I think the end result would be more
-> difficult to read.
->
-> The way I've implemented it there are two ways the SP roles are calculated:
->
-> 1. For root SPs: Derive the role from vCPU root_role and caller-provided inputs.
-> 2. For child SPs: Derive the role from parent SP and caller-provided inputs.
->
-> Your proposal would still have two ways to calculate the SP role, but
-> split along a different dimension:
->
-> 1. For vCPUs creating SPs: Derive the role from vCPU root_role and
-> caller-provided inputs.
-> 2. For Eager Page Splitting creating SPs: Derive the role from parent
-> SP and caller-provided inputs.
->
-> With your proposal, it is less obvious that eager page splitting is
-> going to end up with the correct role. Whereas if we use the same
-> calculation for all child SPs, it is immediately obvious.
+Thanks for your reviews.
 
+On Mon, May 9, 2022 at 8:57 PM Oliver Upton <oupton@google.com> wrote:
+>
+> On Mon, May 09, 2022 at 12:03:28PM +0000, Fuad Tabba wrote:
+> > struct kvm_pmu has 2 holes using 10 bytes. This is instantiated
+> > in all vcpus, so it adds up. This repacking removes all holes.
+>
+> nit: commit messages should be written in the imperative. So maybe
+> 'Repack the structure to remove all holes'.
 
-In this patchset, there are still two ways to calculate the SP role
-including the one in mmu_alloc_root() which I dislike.
+Will fix that when I respin this.
 
-The old code is just moved into mmu_alloc_root() even kvm_mmu_child_role()
-is introduced.
+Cheers,
+/fuad
 
 >
+> > No functional change intended.
 > >
-> >
-> >
-> > > -
-> > >       sp_list = &vcpu->kvm->arch.mmu_page_hash[kvm_page_table_hashfn(gfn)];
-> > >       for_each_valid_sp(vcpu->kvm, sp, sp_list) {
-> > >               if (sp->gfn != gfn) {
-> > > @@ -2063,7 +2047,7 @@ static struct kvm_mmu_page *kvm_mmu_get_page(struct kvm_vcpu *vcpu,
-> > >                        * Unsync pages must not be left as is, because the new
-> > >                        * upper-level page will be write-protected.
-> > >                        */
-> > > -                     if (level > PG_LEVEL_4K && sp->unsync)
-> > > +                     if (role.level > PG_LEVEL_4K && sp->unsync)
-> > >                               kvm_mmu_prepare_zap_page(vcpu->kvm, sp,
-> > >                                                        &invalid_list);
-> > >                       continue;
-> > > @@ -2104,14 +2088,14 @@ static struct kvm_mmu_page *kvm_mmu_get_page(struct kvm_vcpu *vcpu,
-> > >
-> > >       ++vcpu->kvm->stat.mmu_cache_miss;
-> > >
-> > > -     sp = kvm_mmu_alloc_page(vcpu, direct);
-> > > +     sp = kvm_mmu_alloc_page(vcpu, role.direct);
-> > >
-> > >       sp->gfn = gfn;
-> > >       sp->role = role;
-> > >       hlist_add_head(&sp->hash_link, sp_list);
-> > > -     if (!direct) {
-> > > +     if (!role.direct) {
-> > >               account_shadowed(vcpu->kvm, sp);
-> > > -             if (level == PG_LEVEL_4K && kvm_vcpu_write_protect_gfn(vcpu, gfn))
-> > > +             if (role.level == PG_LEVEL_4K && kvm_vcpu_write_protect_gfn(vcpu, gfn))
-> > >                       kvm_flush_remote_tlbs_with_address(vcpu->kvm, gfn, 1);
-> > >       }
-> > >       trace_kvm_mmu_get_page(sp, true);
-> > > @@ -2123,6 +2107,51 @@ static struct kvm_mmu_page *kvm_mmu_get_page(struct kvm_vcpu *vcpu,
-> > >       return sp;
-> > >   }
-> > >
-> > > +static union kvm_mmu_page_role kvm_mmu_child_role(u64 *sptep, bool direct, u32 access)
-> > > +{
-> > > +     struct kvm_mmu_page *parent_sp = sptep_to_sp(sptep);
-> > > +     union kvm_mmu_page_role role;
-> > > +
-> > > +     role = parent_sp->role;
-> > > +     role.level--;
-> > > +     role.access = access;
-> > > +     role.direct = direct;
-> > > +
-> > > +     /*
-> > > +      * If the guest has 4-byte PTEs then that means it's using 32-bit,
-> > > +      * 2-level, non-PAE paging. KVM shadows such guests using 4 PAE page
-> > > +      * directories, each mapping 1/4 of the guest's linear address space
-> > > +      * (1GiB). The shadow pages for those 4 page directories are
-> > > +      * pre-allocated and assigned a separate quadrant in their role.
-> >
-> >
-> > It is not going to be true in patchset:
-> > [PATCH V2 0/7] KVM: X86/MMU: Use one-off special shadow page for special roots
-> >
-> > https://lore.kernel.org/lkml/20220503150735.32723-1-jiangshanlai@gmail.com/
-> >
-> > The shadow pages for those 4 page directories are also allocated on demand.
+> > Signed-off-by: Fuad Tabba <tabba@google.com>
 >
-> Ack. I can even just drop this sentence in v5, it's just background information.
-
-No, if one-off special shadow pages are used.
-
-kvm_mmu_child_role() should be:
-
-+       if (role.has_4_byte_gpte) {
-+               if (role.level == PG_LEVEL_4K)
-+                       role.quadrant = (sptep - parent_sp->spt) % 2;
-+               if (role.level == PG_LEVEL_2M)
-+                       role.quadrant = (sptep - parent_sp->spt) % 4;
-+       }
-
-
-And if one-off special shadow pages are merged first.  You don't
-need any calculation in mmu_alloc_root(), you can just directly use
-    sp = kvm_mmu_get_page(vcpu, gfn, vcpu->arch.mmu->root_role);
-because vcpu->arch.mmu->root_role is always the real role of the root
-sp no matter if it is a normall root sp or an one-off special sp.
-
-I hope you will pardon me for my touting my patchset and asking
-people to review them in your threads.
-
-Thanks
-Lai
+> Otherwise:
+>
+> Reviewed-by: Oliver Upton <oupton@google.com>
+>
+> > ---
+> >  include/kvm/arm_pmu.h | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/include/kvm/arm_pmu.h b/include/kvm/arm_pmu.h
+> > index 20193416d214..eaa8290b116f 100644
+> > --- a/include/kvm/arm_pmu.h
+> > +++ b/include/kvm/arm_pmu.h
+> > @@ -21,12 +21,12 @@ struct kvm_pmc {
+> >  };
+> >
+> >  struct kvm_pmu {
+> > -     int irq_num;
+> > +     struct irq_work overflow_work;
+> >       struct kvm_pmc pmc[ARMV8_PMU_MAX_COUNTERS];
+> >       DECLARE_BITMAP(chained, ARMV8_PMU_MAX_COUNTER_PAIRS);
+> > +     int irq_num;
+> >       bool created;
+> >       bool irq_level;
+> > -     struct irq_work overflow_work;
+> >  };
+> >
+> >  struct arm_pmu_entry {
+> > --
+> > 2.36.0.512.ge40c2bad7a-goog
+> >
+> > _______________________________________________
+> > kvmarm mailing list
+> > kvmarm@lists.cs.columbia.edu
+> > https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
