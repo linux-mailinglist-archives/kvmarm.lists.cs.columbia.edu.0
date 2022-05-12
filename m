@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 77F8E52351D
-	for <lists+kvmarm@lfdr.de>; Wed, 11 May 2022 16:12:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 674B9524F56
+	for <lists+kvmarm@lfdr.de>; Thu, 12 May 2022 16:04:31 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CFF124B1B5;
-	Wed, 11 May 2022 10:12:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 890564B1FA;
+	Thu, 12 May 2022 10:04:30 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
@@ -15,78 +15,91 @@ X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
 	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered)
-	header.i=@brainfault-org.20210112.gappssmtp.com
+	(fail, message has been altered) header.i=@gmail.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id eU4j+s5YLG4H; Wed, 11 May 2022 10:12:45 -0400 (EDT)
+	with ESMTP id yXD1mzdi8w+P; Thu, 12 May 2022 10:04:30 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6EEAA4B137;
-	Wed, 11 May 2022 10:12:44 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EC75C4B1F3;
+	Thu, 12 May 2022 10:04:28 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D51B349EDF
- for <kvmarm@lists.cs.columbia.edu>; Wed, 11 May 2022 10:12:42 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B6F534B177
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 12 May 2022 10:04:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 74hovBm229Wz for <kvmarm@lists.cs.columbia.edu>;
- Wed, 11 May 2022 10:12:40 -0400 (EDT)
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com
- [209.85.128.49])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 700FC49EB2
- for <kvmarm@lists.cs.columbia.edu>; Wed, 11 May 2022 10:12:40 -0400 (EDT)
-Received: by mail-wm1-f49.google.com with SMTP id
- m2-20020a1ca302000000b003943bc63f98so1310839wme.4
- for <kvmarm@lists.cs.columbia.edu>; Wed, 11 May 2022 07:12:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=brainfault-org.20210112.gappssmtp.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=RSGHn1F0BncOfTcKYhrKyIk0Nc9jRJLzLB3ecNcIZy4=;
- b=jW12ZwQnnCztcNwkigLKzLeyKxuLaypSdNh5RLphYPfrxCmn7JNKcAFQyhsDExQ715
- wJwjtZki4XfUaxqAYliizclV7JqcbjMJZH3O294nmneM4g9jdOzsk+Y7dwWTdMhJNmFr
- luTgFG70VKGd5rBsQuYZFTUjRfEcJ0/y7nPhAyW1ERcls1P51FqhBYBEYo8vF1V2mXNd
- 8SRsu7Z8MrurgPTYpBt1TQjav+1DEREjLXAbJ0D6pm6Q+pDArYfJ2vpNCWaWnM02wpn/
- 0SNSQoIcK+vj+GrpRIllI9L4jtsan3nrlQwi8mHwvPTLx1sPHdv/4t0fc5sKaLD/XZ2s
- 9LPA==
+ with ESMTP id 4Xpa7rNZlJip for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 12 May 2022 10:04:26 -0400 (EDT)
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com
+ [209.85.218.52])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5A20F4B1BD
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 12 May 2022 10:04:26 -0400 (EDT)
+Received: by mail-ej1-f52.google.com with SMTP id dk23so10450023ejb.8
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 12 May 2022 07:04:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=sender:message-id:date:mime-version:user-agent:subject
+ :content-language:to:cc:references:from:in-reply-to
+ :content-transfer-encoding;
+ bh=fs8s4x4j/+asSW1i8f2Pukqgr0Ir/tJgvdWyY3yoq3U=;
+ b=SUG5R4mvQVZygGuRddCDO8dZQacyk07/cAZawwDbBHFiIcz+Eh01oOdFt+8NMsiteQ
+ s8AlWxu2/skdBIc9am1jSyRtORyb1BuvlFo2plpzUHEsxv9da1HNExENjJ/0t+nOi9bO
+ k6oU2HkXL/cV0mXaW/mfigdUplLND8VcIPAZZRcd10cHVVgLxpSC20yq2GqMhOEn4o3v
+ BX8j64LjIRumUuIVBipI3tL8S6DVa+sbn4U3DSEKiGesq+9Htf13sK9idkEcXbPWJtoW
+ pmum4BbxGst/QvpAJs+YLlKzd9hKoO2n+ygfnHiEf87Cm4zp15vme9Bvbc6JHtHUcLB8
+ yScg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=RSGHn1F0BncOfTcKYhrKyIk0Nc9jRJLzLB3ecNcIZy4=;
- b=5DVs6YB6LqxDpZyxMidawDuc2oeKDU8/+6R6m6PbEFbTtqPTBpXk7lwyfjAR6IDVhZ
- ODJTiMJ/1WNQRE6UCF9Ln1iYC3UUkhKVel4AvEjwwkRmRrGrEmOf/etHLVj3y4mJWlQB
- in2AgdQkR20DDCNFvFoCVQkbrcr2SywgYbp/ndtB4NLc8nIHC98/Jlp5js8L7PPOy31K
- s3UOQef3KoilWNb/ZiefCpX8+r7P4mvJmk3Saua7d9XoCiaKnVw9XH9c0rg/kkzRHLXw
- +apJv7gwt8NBS1sZVMAKH1V+F+QfTvnRWPYJU95dpJBRnIMTwDVENyP1yGuEdIWebT4G
- yIQw==
-X-Gm-Message-State: AOAM5323Xa8qKdsnARiYKdr8n8rTUNrHADk1BTDvazL0caUKLBFCQJIo
- tI+0yNcm0tV0UJ4sTLUmFL6DuzuFujqZBEnrPDjFeA==
-X-Google-Smtp-Source: ABdhPJx0EgilpXqO9xhDBZma49ZiZYBQW1CYQalIbu7JvciYQUGx6pSOeqXv1MQtlngcxiEp7hb87+4QPXM1UtmgtzY=
-X-Received: by 2002:a05:600c:1d08:b0:394:54ee:c994 with SMTP id
- l8-20020a05600c1d0800b0039454eec994mr5072481wms.137.1652278359083; Wed, 11
- May 2022 07:12:39 -0700 (PDT)
+ h=x-gm-message-state:sender:message-id:date:mime-version:user-agent
+ :subject:content-language:to:cc:references:from:in-reply-to
+ :content-transfer-encoding;
+ bh=fs8s4x4j/+asSW1i8f2Pukqgr0Ir/tJgvdWyY3yoq3U=;
+ b=T5jnxBBRk71nc2GHg0d4kj+kNUz/PjRgIGEWNAZXCM6Djy3iTz/BODMNmbEqNxWaB4
+ j8UMwNisnuu9UY/Qhc58i6aom5OhPduPhSpU7fEbwbd6pLbUTjrhXAgXPVpcttA0rqan
+ DYFuo7DY/cTpCdD1heqyKkJBdkHPNzzcilXOAhpiMIeMmFkkDJwQssv/rn0b5aweg5bg
+ cG0ONDWlJTs3hCnPDg59DmDouohmUuFpFy9/tk1D2rXDbwO18KLXOmWnblRZEQIibTBn
+ X3G5a8ivFAylZuJeF0EsX+gK88DuFfNWKQHMC+phxS+Z+GIQcKAYosc7+TBLwnm5KYKw
+ QSWQ==
+X-Gm-Message-State: AOAM531hxLG5vSUpUiNQb1dgXLDx/6xl+XSWvwbTvdJ3JgXCpkYibu8I
+ jhk1HHRKzNA2GLcERm1aiDU=
+X-Google-Smtp-Source: ABdhPJyt50qyYPCyD03r3/AJ3OUGuB2lb9Kyp65SglIgNSyfP293qaN/xBFVKFZfLgIbEagAjedBOw==
+X-Received: by 2002:a17:907:3e86:b0:6f5:917:10cc with SMTP id
+ hs6-20020a1709073e8600b006f5091710ccmr63430ejc.53.1652364264897; 
+ Thu, 12 May 2022 07:04:24 -0700 (PDT)
+Received: from ?IPV6:2001:b07:6468:f312:c8dd:75d4:99ab:290a?
+ ([2001:b07:6468:f312:c8dd:75d4:99ab:290a])
+ by smtp.googlemail.com with ESMTPSA id
+ r10-20020a508d8a000000b00428bb4c952bsm2609603edh.31.2022.05.12.07.04.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 May 2022 07:04:24 -0700 (PDT)
+Message-ID: <0d4e0b40-a2b3-789f-3adb-9da30c61403f@redhat.com>
+Date: Thu, 12 May 2022 16:04:20 +0200
 MIME-Version: 1.0
-References: <20220511120621.36956-1-guozhengkui@vivo.com>
-In-Reply-To: <20220511120621.36956-1-guozhengkui@vivo.com>
-From: Anup Patel <anup@brainfault.org>
-Date: Wed, 11 May 2022 19:42:27 +0530
-Message-ID: <CAAhSdy3Ynx-8DgDEE6huye2nA_21CV6cN=keopaCJOK2b00k5g@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
 Subject: Re: [PATCH] selftests: kvm: replace ternary operator with min()
-To: Guo Zhengkui <guozhengkui@vivo.com>
-Cc: zhengkui_guo@outlook.com, Albert Ou <aou@eecs.berkeley.edu>,
- Janosch Frank <frankja@linux.ibm.com>,
- "open list:KERNEL VIRTUAL MACHINE \(KVM\)" <kvm@vger.kernel.org>,
- Claudio Imbrenda <imbrenda@linux.ibm.com>, Marc Zyngier <maz@kernel.org>,
- David Hildenbrand <david@redhat.com>, open list <linux-kernel@vger.kernel.org>,
- "moderated list:KERNEL VIRTUAL MACHINE FOR ARM64 \(KVM/arm64\)"
- <kvmarm@lists.cs.columbia.edu>,
- "open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>,
- Paul Walmsley <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>,
+Content-Language: en-US
+To: Guo Zhengkui <guozhengkui@vivo.com>, Marc Zyngier <maz@kernel.org>,
+ James Morse <james.morse@arm.com>,
+ Alexandru Elisei <alexandru.elisei@arm.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>, Shuah Khan <shuah@kernel.org>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
- Shuah Khan <shuah@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- "moderated list:KERNEL VIRTUAL MACHINE FOR ARM64 \(KVM/arm64\)"
- <linux-arm-kernel@lists.infradead.org>
+ Janosch Frank <frankja@linux.ibm.com>,
+ Claudio Imbrenda <imbrenda@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>, Anup Patel <anup@brainfault.org>,
+ "moderated list:KERNEL VIRTUAL MACHINE FOR ARM64 (KVM/arm64)"
+ <linux-arm-kernel@lists.infradead.org>,
+ "moderated list:KERNEL VIRTUAL MACHINE FOR ARM64 (KVM/arm64)"
+ <kvmarm@lists.cs.columbia.edu>,
+ "open list:KERNEL VIRTUAL MACHINE (KVM)" <kvm@vger.kernel.org>,
+ "open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>,
+ open list <linux-kernel@vger.kernel.org>,
+ "open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>
+References: <20220511120621.36956-1-guozhengkui@vivo.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+In-Reply-To: <20220511120621.36956-1-guozhengkui@vivo.com>
+Cc: zhengkui_guo@outlook.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -98,15 +111,14 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, May 11, 2022 at 5:38 PM Guo Zhengkui <guozhengkui@vivo.com> wrote:
->
+On 5/11/22 14:05, Guo Zhengkui wrote:
 > Fix the following coccicheck warnings:
->
+> 
 > tools/testing/selftests/kvm/lib/s390x/ucall.c:25:15-17: WARNING
 > opportunity for min()
 > tools/testing/selftests/kvm/lib/x86_64/ucall.c:27:15-17: WARNING
@@ -117,88 +129,82 @@ On Wed, May 11, 2022 at 5:38 PM Guo Zhengkui <guozhengkui@vivo.com> wrote:
 > opportunity for min()
 > tools/testing/selftests/kvm/lib/aarch64/ucall.c:55:20-21: WARNING
 > opportunity for min()
->
+> 
 > min() is defined in tools/include/linux/kernel.h.
->
+> 
 > Signed-off-by: Guo Zhengkui <guozhengkui@vivo.com>
-
-For KVM RISC-V:
-Acked-by: Anup Patel <anup@brainfault.org>
-
-Thanks,
-Anup
-
 > ---
->  tools/testing/selftests/kvm/lib/aarch64/ucall.c | 4 ++--
->  tools/testing/selftests/kvm/lib/riscv/ucall.c   | 2 +-
->  tools/testing/selftests/kvm/lib/s390x/ucall.c   | 2 +-
->  tools/testing/selftests/kvm/lib/x86_64/ucall.c  | 2 +-
->  4 files changed, 5 insertions(+), 5 deletions(-)
->
+>   tools/testing/selftests/kvm/lib/aarch64/ucall.c | 4 ++--
+>   tools/testing/selftests/kvm/lib/riscv/ucall.c   | 2 +-
+>   tools/testing/selftests/kvm/lib/s390x/ucall.c   | 2 +-
+>   tools/testing/selftests/kvm/lib/x86_64/ucall.c  | 2 +-
+>   4 files changed, 5 insertions(+), 5 deletions(-)
+> 
 > diff --git a/tools/testing/selftests/kvm/lib/aarch64/ucall.c b/tools/testing/selftests/kvm/lib/aarch64/ucall.c
 > index e0b0164e9af8..00be3ef195ca 100644
 > --- a/tools/testing/selftests/kvm/lib/aarch64/ucall.c
 > +++ b/tools/testing/selftests/kvm/lib/aarch64/ucall.c
 > @@ -52,7 +52,7 @@ void ucall_init(struct kvm_vm *vm, void *arg)
->          * lower and won't match physical addresses.
->          */
->         bits = vm->va_bits - 1;
-> -       bits = vm->pa_bits < bits ? vm->pa_bits : bits;
-> +       bits = min(vm->pa_bits, bits);
->         end = 1ul << bits;
->         start = end * 5 / 8;
->         step = end / 16;
+>   	 * lower and won't match physical addresses.
+>   	 */
+>   	bits = vm->va_bits - 1;
+> -	bits = vm->pa_bits < bits ? vm->pa_bits : bits;
+> +	bits = min(vm->pa_bits, bits);
+>   	end = 1ul << bits;
+>   	start = end * 5 / 8;
+>   	step = end / 16;
 > @@ -79,7 +79,7 @@ void ucall(uint64_t cmd, int nargs, ...)
->         va_list va;
->         int i;
->
-> -       nargs = nargs <= UCALL_MAX_ARGS ? nargs : UCALL_MAX_ARGS;
-> +       nargs = min(nargs, UCALL_MAX_ARGS);
->
->         va_start(va, nargs);
->         for (i = 0; i < nargs; ++i)
+>   	va_list va;
+>   	int i;
+>   
+> -	nargs = nargs <= UCALL_MAX_ARGS ? nargs : UCALL_MAX_ARGS;
+> +	nargs = min(nargs, UCALL_MAX_ARGS);
+>   
+>   	va_start(va, nargs);
+>   	for (i = 0; i < nargs; ++i)
 > diff --git a/tools/testing/selftests/kvm/lib/riscv/ucall.c b/tools/testing/selftests/kvm/lib/riscv/ucall.c
 > index 9e42d8248fa6..34f16fe70ce8 100644
 > --- a/tools/testing/selftests/kvm/lib/riscv/ucall.c
 > +++ b/tools/testing/selftests/kvm/lib/riscv/ucall.c
 > @@ -53,7 +53,7 @@ void ucall(uint64_t cmd, int nargs, ...)
->         va_list va;
->         int i;
->
-> -       nargs = nargs <= UCALL_MAX_ARGS ? nargs : UCALL_MAX_ARGS;
-> +       nargs = min(nargs, UCALL_MAX_ARGS);
->
->         va_start(va, nargs);
->         for (i = 0; i < nargs; ++i)
+>   	va_list va;
+>   	int i;
+>   
+> -	nargs = nargs <= UCALL_MAX_ARGS ? nargs : UCALL_MAX_ARGS;
+> +	nargs = min(nargs, UCALL_MAX_ARGS);
+>   
+>   	va_start(va, nargs);
+>   	for (i = 0; i < nargs; ++i)
 > diff --git a/tools/testing/selftests/kvm/lib/s390x/ucall.c b/tools/testing/selftests/kvm/lib/s390x/ucall.c
 > index 9d3b0f15249a..665267c1135d 100644
 > --- a/tools/testing/selftests/kvm/lib/s390x/ucall.c
 > +++ b/tools/testing/selftests/kvm/lib/s390x/ucall.c
 > @@ -22,7 +22,7 @@ void ucall(uint64_t cmd, int nargs, ...)
->         va_list va;
->         int i;
->
-> -       nargs = nargs <= UCALL_MAX_ARGS ? nargs : UCALL_MAX_ARGS;
-> +       nargs = min(nargs, UCALL_MAX_ARGS);
->
->         va_start(va, nargs);
->         for (i = 0; i < nargs; ++i)
+>   	va_list va;
+>   	int i;
+>   
+> -	nargs = nargs <= UCALL_MAX_ARGS ? nargs : UCALL_MAX_ARGS;
+> +	nargs = min(nargs, UCALL_MAX_ARGS);
+>   
+>   	va_start(va, nargs);
+>   	for (i = 0; i < nargs; ++i)
 > diff --git a/tools/testing/selftests/kvm/lib/x86_64/ucall.c b/tools/testing/selftests/kvm/lib/x86_64/ucall.c
 > index a3489973e290..2ea31a0ebe30 100644
 > --- a/tools/testing/selftests/kvm/lib/x86_64/ucall.c
 > +++ b/tools/testing/selftests/kvm/lib/x86_64/ucall.c
 > @@ -24,7 +24,7 @@ void ucall(uint64_t cmd, int nargs, ...)
->         va_list va;
->         int i;
->
-> -       nargs = nargs <= UCALL_MAX_ARGS ? nargs : UCALL_MAX_ARGS;
-> +       nargs = min(nargs, UCALL_MAX_ARGS);
->
->         va_start(va, nargs);
->         for (i = 0; i < nargs; ++i)
-> --
-> 2.20.1
->
+>   	va_list va;
+>   	int i;
+>   
+> -	nargs = nargs <= UCALL_MAX_ARGS ? nargs : UCALL_MAX_ARGS;
+> +	nargs = min(nargs, UCALL_MAX_ARGS);
+>   
+>   	va_start(va, nargs);
+>   	for (i = 0; i < nargs; ++i)
+
+Queued, thanks.
+
+Paolo
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
