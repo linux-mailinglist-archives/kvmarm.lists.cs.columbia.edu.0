@@ -2,73 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A021F52C1AF
-	for <lists+kvmarm@lfdr.de>; Wed, 18 May 2022 19:59:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DFBB52C1B2
+	for <lists+kvmarm@lfdr.de>; Wed, 18 May 2022 19:59:20 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B6A864B328;
-	Wed, 18 May 2022 13:59:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E99734B332;
+	Wed, 18 May 2022 13:59:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+	URIBL_BLOCKED=0.001] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id FBZTcp78zbZ0; Wed, 18 May 2022 13:59:12 -0400 (EDT)
+	with ESMTP id LycTe6xmx8lZ; Wed, 18 May 2022 13:59:19 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 67DE24B322;
-	Wed, 18 May 2022 13:59:11 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C93E74B276;
+	Wed, 18 May 2022 13:59:18 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F0D54B309
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 May 2022 13:59:10 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B5B3F4B32A
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 May 2022 13:59:17 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id T7wxOtqpQ61t for <kvmarm@lists.cs.columbia.edu>;
- Wed, 18 May 2022 13:59:09 -0400 (EDT)
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com
- [209.85.128.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4BD024B2B7
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 May 2022 13:59:09 -0400 (EDT)
-Received: by mail-yw1-f202.google.com with SMTP id
- 00721157ae682-2ff40ee8109so23181587b3.14
- for <kvmarm@lists.cs.columbia.edu>; Wed, 18 May 2022 10:59:09 -0700 (PDT)
+ with ESMTP id ROPTVr2r5V3u for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 18 May 2022 13:59:12 -0400 (EDT)
+Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com
+ [209.85.216.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6EAD54B31A
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 May 2022 13:59:11 -0400 (EDT)
+Received: by mail-pj1-f73.google.com with SMTP id
+ nl9-20020a17090b384900b001df338b4b72so3540809pjb.6
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 18 May 2022 10:59:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:message-id:mime-version:subject:from:to:cc;
- bh=6El377MID7rCecykOPvAUGyvktASztEGQkNHsDo4H6Q=;
- b=JTvJ+pKPh0OV0kWy/CMIAehzpxr1kPLAluvEkkiTGTqb1w3iky98vPxfy4JpyAv15m
- hpxjGgsQiB3GvVjAm2TgBwam4CVhDSrwQ83XeJZEsIaezBOop/ufsUEHi3MUstSEowXA
- nlIp6Q9DzIKMYFWsUvAHwXZAVSfh4ZSyiSCf0SO774QCnOv3HzA+hprAWYzNDIRkl2VI
- LDJIZS2zYibH6SEjLL+5kqd2ZlG+yUswJ9ouj3uz5Vhn8rDaGN1bUgUyr84KmL3tVD1s
- Wu4qOkO54Wa27tIlq61/c86VJrQ83vfObBXPz/M2gfi+URn+b/Uaj/Mss7uq9WlLTpS4
- tJaQ==
+ h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+ :cc; bh=fMGKhekV0sa/YRSHAxxD4jBJX+Cxj4sGMKO6wGVMLLU=;
+ b=rDo4lZZNt9Jya8MiZXgjYNXvz5J37fb6AuEUs8DN3vWndBXOI1tlgJDwCnvUKvBPc6
+ TnxRUc2etnh7q3vcNtEJshhc10uQivQXWKv6a8RKBrOUXLNW3i9tz5EGrsvAcVoADMiL
+ PvNIKKOQMpui5nbSexy36l2tOwTHjFolG+IARW9zKt9E0WsklNY44NvY7EeSIM1LAImr
+ Qdh1TwS91bwJhJQCqcCHxjySJSl0uXy2thSsDiVRnnjlIcxwEEC5/N6c0tEtDCClsxFr
+ WAgaQSTqdu1IYn2f/p7uzC4BPyx+3E9A3cU+HE2HUs8/0d37lyEl4oXbbkNUg4GBWFXk
+ XEXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
- bh=6El377MID7rCecykOPvAUGyvktASztEGQkNHsDo4H6Q=;
- b=hH2S1hULcZ6kQmSseQodQSS5o3f0fyuUTBy6nihma6bmS4rLtTxgqncB3hnHgH2oXN
- uW+JAL0BOaLGfuY5vSn5Mq+rNIaoWkYMmhVyBOMVqyJqoMAS4qBZuf2bamXmRjKk4buT
- wfPWFER2l+AGWgCOYfjjxEdcBzJ7bUDbRgrgPLV5q6ARsGcZllLTWg5KqWEGytV7KkWc
- Ryq2IaKEiHVdYB/DB+6Fhw/4nvueFL6mGB8IHRPWYCLoVuHQqnIPEBOOnRhguXVf/+0S
- /yUF91DkB584TJa8DCJJQ+HQ+IOhqIBtGn6PF8a6swrnH+UK+mB+D9q8xvLAykdHwsEG
- ptbg==
-X-Gm-Message-State: AOAM5326Tvq6UZDswD15Evv1zOO6Ki1dFEoUYZp/xeRnkzX9fCmwjBnW
- 1M0WzFaBhBZ8uLN9u6nQEvxmVzK/3Ws=
-X-Google-Smtp-Source: ABdhPJzd/VIgYtDzCdo352e3DSjBzZ/3yJ+2/AXyM2iOJppq/zMlcRJgTF3VMNpFU0YSI03GqRoyktT5vNs=
+ h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+ :references:subject:from:to:cc;
+ bh=fMGKhekV0sa/YRSHAxxD4jBJX+Cxj4sGMKO6wGVMLLU=;
+ b=p7gkM6xG/WhR0aUHRkcVymaYqYOlV8zCexGxQ/xBVsnznRDLIBq0mOYtWL2FlJpKwb
+ 5GYfZIWPZ0dAvIL6aoA3Gs+rD4hp0LEpoBMP0NhGqdEQ+VqFfSf1iYg7Ac092sUYs5ba
+ FkB130IAljzmo4IkfUMuN+V30Z7SEZsZtJ6VS4ugwJ+wrcdIXB3+c2H/tghakOH06u0M
+ B4g5VJjyQ8BeppQJ2rpotPlKSpkJyv8jc3Pt4o9zyf0ZeHKpCGLfMUSWFAd9SM0U93Pk
+ JWNbd3Q//3hAJuEaqvAXcLJaaRQWF44rUee0T5zPQda4He/rCdkFlQHf38cBZgjf8Rvg
+ 1I/g==
+X-Gm-Message-State: AOAM532mVqlJQQHgYzktqA3yJNxMP+vSuYtxsjwLT6pPs0FvDPHzmfVQ
+ hgWMsBaygoYqil+cY4zDahC6ubA18Dg=
+X-Google-Smtp-Source: ABdhPJyZ+5KTCDASJ2VzQHVK+2cDZhp3NrE9g00eRb9QNAZGfGNos3Q7HEHF07BETonFHNlM4Zm3P3D3UZ0=
 X-Received: from oupton3.c.googlers.com
  ([fda3:e722:ac3:cc00:24:72f4:c0a8:21eb])
- (user=oupton job=sendgmr) by 2002:a25:8387:0:b0:64d:ddc8:b481 with SMTP id
- t7-20020a258387000000b0064dddc8b481mr847547ybk.644.1652896748601; Wed, 18 May
- 2022 10:59:08 -0700 (PDT)
-Date: Wed, 18 May 2022 17:58:06 +0000
-Message-Id: <20220518175811.2758661-1-oupton@google.com>
+ (user=oupton job=sendgmr) by 2002:a05:6a00:24c1:b0:50d:33cf:811f with SMTP id
+ d1-20020a056a0024c100b0050d33cf811fmr827317pfv.78.1652896749987; Wed, 18 May
+ 2022 10:59:09 -0700 (PDT)
+Date: Wed, 18 May 2022 17:58:07 +0000
+In-Reply-To: <20220518175811.2758661-1-oupton@google.com>
+Message-Id: <20220518175811.2758661-2-oupton@google.com>
 Mime-Version: 1.0
+References: <20220518175811.2758661-1-oupton@google.com>
 X-Mailer: git-send-email 2.36.1.124.g0e6072fb45-goog
-Subject: [PATCH v2 0/5] KVM: Clean up debugfs+stats init/destroy
+Subject: [PATCH v2 1/5] KVM: Shove vm stats_id init into kvm_create_vm()
 From: Oliver Upton <oupton@google.com>
 To: kvm@vger.kernel.org
 Cc: pbonzini@redhat.com, maz@kernel.org, kvmarm@lists.cs.columbia.edu
@@ -88,49 +91,38 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The way that KVM handles debugfs init/destroy is somewhat sloppy. Even
-though debugfs is stood up after kvm_create_vm(), it is torn down from
-kvm_destroy_vm(). There exists a window where we need to tear down a VM
-before debugfs is created, requiring delicate handling.
+Initialize the field alongside the other struct kvm fields. No
+functional change intended.
 
-This series cleans up the debugfs lifecycle by fully tying it to the
-VM's init/destroy pattern.
+Signed-off-by: Oliver Upton <oupton@google.com>
+---
+ virt/kvm/kvm_main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-First two patches hoist some unrelated stats initialization to a more
-appropriate place for kvm and kvm_vcpu.
-
-Second two patches are the meat of the series, changing around the
-initialization order to get an FD early and wiring in debugfs
-initialization to kvm_create_vm().
-
-Lastly, patch 5 is essentially a revert of Sean's fix [1] for a NULL deref
-in debugfs, though I stopped short of an outright revert since that one
-went to stable and is still entirely correct.
-
-Applies cleanly to v5.18-rc5, since [1] is currently missing from
-kvm/queue or kvm/next. Tested with KVM selftests and the reproducer
-mentioned in [1] on an Intel Skylake machine.
-
-[1] 5c697c367a66 ("KVM: Initialize debugfs_dentry when a VM is created to avoid NULL deref")
-
-v1: http://lore.kernel.org/r/20220415201542.1496582-1-oupton@google.com
-
-v1 -> v2:
- - Don't conflate debugfs+stats. Initialize stats_id outside of the
-   context of debugfs (Sean)
- - Pass around the FD as a string to avoid subsequent KVM changes
-   inappropriately using the FD (Sean)
-
-Oliver Upton (5):
-  KVM: Shove vm stats_id init into kvm_create_vm()
-  KVM: Shove vcpu stats_id init into kvm_vcpu_init()
-  KVM: Get an fd before creating the VM
-  KVM: Actually create debugfs in kvm_create_vm()
-  KVM: Hoist debugfs_dentry init to kvm_create_vm_debugfs() (again)
-
- virt/kvm/kvm_main.c | 96 +++++++++++++++++++++++----------------------
- 1 file changed, 49 insertions(+), 47 deletions(-)
-
+diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+index 6d971fb1b08d..36dc9271d039 100644
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -1101,6 +1101,9 @@ static struct kvm *kvm_create_vm(unsigned long type)
+ 	 */
+ 	kvm->debugfs_dentry = ERR_PTR(-ENOENT);
+ 
++	snprintf(kvm->stats_id, sizeof(kvm->stats_id),
++			"kvm-%d", task_pid_nr(current));
++
+ 	if (init_srcu_struct(&kvm->srcu))
+ 		goto out_err_no_srcu;
+ 	if (init_srcu_struct(&kvm->irq_srcu))
+@@ -4787,9 +4790,6 @@ static int kvm_dev_ioctl_create_vm(unsigned long type)
+ 	if (r < 0)
+ 		goto put_kvm;
+ 
+-	snprintf(kvm->stats_id, sizeof(kvm->stats_id),
+-			"kvm-%d", task_pid_nr(current));
+-
+ 	file = anon_inode_getfile("kvm-vm", &kvm_vm_fops, kvm, O_RDWR);
+ 	if (IS_ERR(file)) {
+ 		put_unused_fd(r);
 -- 
 2.36.1.124.g0e6072fb45-goog
 
