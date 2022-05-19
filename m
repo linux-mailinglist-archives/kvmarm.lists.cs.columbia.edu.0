@@ -2,86 +2,65 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D006C52CF5E
-	for <lists+kvmarm@lfdr.de>; Thu, 19 May 2022 11:28:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98DF452D43B
+	for <lists+kvmarm@lfdr.de>; Thu, 19 May 2022 15:42:38 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1362A4B39E;
-	Thu, 19 May 2022 05:28:16 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 25FA84B36D;
+	Thu, 19 May 2022 09:42:38 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.79
+X-Spam-Score: -1.788
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.79 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01] autolearn=unavailable
+X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DXd-SPj4D65s; Thu, 19 May 2022 05:28:15 -0400 (EDT)
+	with ESMTP id ZFW1osZg9GcM; Thu, 19 May 2022 09:42:36 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1EA8E4B391;
-	Thu, 19 May 2022 05:28:14 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 311944B353;
+	Thu, 19 May 2022 09:42:36 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A23BC4B390
- for <kvmarm@lists.cs.columbia.edu>; Thu, 19 May 2022 05:28:12 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id AA4BF4B356
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 19 May 2022 09:42:34 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id dJc+DdpTgoYb for <kvmarm@lists.cs.columbia.edu>;
- Thu, 19 May 2022 05:28:07 -0400 (EDT)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id F10AE4B38F
- for <kvmarm@lists.cs.columbia.edu>; Thu, 19 May 2022 05:28:06 -0400 (EDT)
+ with ESMTP id A5b56-dxskTM for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 19 May 2022 09:42:32 -0400 (EDT)
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 50C4D4B33F
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 19 May 2022 09:42:32 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id EB5D2618C4;
- Thu, 19 May 2022 09:28:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1451CC385AA;
- Thu, 19 May 2022 09:28:05 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTPS id 70FB7CE2440;
+ Thu, 19 May 2022 13:42:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C3C3C34100;
+ Thu, 19 May 2022 13:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1652952485;
- bh=Hsm84cvLLw0UdUjVNA4x0W0aGp3tiMGFkB/3CKSB3gs=;
+ s=k20201202; t=1652967744;
+ bh=tRBfSiYXEQcDgtQZM+v57r8nmGaT0ygF9nae7i8MiIo=;
  h=From:To:Cc:Subject:Date:From;
- b=XO3YqNbSxvaYS3Qjm/dntOZQNom0456jFv4cSZ4pmJdnAOLc5i1lMJ3tXB9Ht+kt4
- MPYhaTED5QV63D59mi6F19VTkO56O8hd1kByMSuKbC+VG2mPUHYbDvy5NX3JLbEsis
- WJp1YRgLq5HImFRSi41Dwh1kJpVhyl6BXwj0yaXFuXazG3qcD5RvAIL0iNA50V1Y+8
- MDZaA4Yrg+Bn0Y47OFNKVopWj+iB8cTXYXmFj5GoE034sFk7ANmb4fjOJb1VF1fhr7
- 4SpqQwmbSQG0Oyjhm4s7eM7uaXMMLTZZ/Za3joh+Vls9MSuVgDFSvQ2X1hAubnTWy+
- sx8c48ARXeJtQ==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1nrcRu-00CNF4-TP; Thu, 19 May 2022 10:28:03 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [GIT PULL] KVM/arm64 updates for 5.19
-Date: Thu, 19 May 2022 10:27:44 +0100
-Message-Id: <20220519092744.992742-1-maz@kernel.org>
-X-Mailer: git-send-email 2.34.1
+ b=RgAMQe3uYZtwZsMYyeQlORfloASH/IzMrWotTa6eVhW2fszVYH30GDFzAbCFZFGyx
+ ohcaBeeaDh9/9jzuenD3l0yDKK3UZHQ07UNhrrUooJHgYKacVqj77K9ymvbuIM2cof
+ EJgXW0/wDXozgIaiLWvanNV+TaCANco2uwn5qhn3NYWAtZgZY/J+hLCsUWh31dqMg/
+ hWG3P4VnPR40jkeQlqxNXjd23TVpzgXE75HyIlEXHrZlxVOY4UdC0oFqVhsnW8S7YC
+ KUXdfq1nX96j+gM0hA0KDYLFfVELNuW4llAyWlsGRUz0x7l5o1MesJW/D5aIK5qQKo
+ SB9vNlU6+PdHg==
+From: Will Deacon <will@kernel.org>
+To: kvmarm@lists.cs.columbia.edu
+Subject: [PATCH 00/89] KVM: arm64: Base support for the pKVM hypervisor at EL2
+Date: Thu, 19 May 2022 14:40:35 +0100
+Message-Id: <20220519134204.5379-1-will@kernel.org>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: pbonzini@redhat.com, alexandru.elisei@arm.com,
- drjones@redhat.com, ardb@kernel.org, catalin.marinas@arm.com,
- dbrazdil@google.com, eric.auger@redhat.com, tabba@google.com, gshan@redhat.com,
- james.morse@arm.com, joey.gouly@arm.com, kaleshsingh@google.com,
- m.szyprowski@samsung.com, broonie@kernel.org, oupton@google.com,
- rananta@google.com, rdunlap@infradead.org, reijiw@google.com,
- ricarkol@google.com, sfr@canb.auug.org.au, suzuki.poulose@arm.com,
- szabolcs.nagy@arm.com, wanjiabing@vivo.com, kvm@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
- kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kvm@vger.kernel.org, Szabolcs Nagy <szabolcs.nagy@arm.com>,
- Catalin Marinas <catalin.marinas@arm.com>, Joey Gouly <joey.gouly@arm.com>,
- Marek Szyprowski <m.szyprowski@samsung.com>,
- Stephen Rothwell <sfr@canb.auug.org.au>, Wan Jiabing <wanjiabing@vivo.com>,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
- kernel-team@android.com, Mark Brown <broonie@kernel.org>,
- Randy Dunlap <rdunlap@infradead.org>
+Cc: Marc Zyngier <maz@kernel.org>, kernel-team@android.com, kvm@vger.kernel.org,
+ Andy Lutomirski <luto@amacapital.net>, linux-arm-kernel@lists.infradead.org,
+ Michael Roth <michael.roth@amd.com>, Catalin Marinas <catalin.marinas@arm.com>,
+ Chao Peng <chao.p.peng@linux.intel.com>, Will Deacon <will@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -98,286 +77,298 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Paolo,
+Hi all,
 
-Here's the bulk of the KVM/arm64 updates for 5.19. Major features are
-guard pages for the EL2 stacks, save/restore of the guest-visible
-hypercall configuration and PSCI suspend support. Further details in
-the tag description.
+This rather large series (based on -rc2) builds on top of the limited
+pKVM support available upstream and gets us to a point where the
+hypervisor code at EL2 is capable of running guests in both
+non-protected and protected mode on the same system. For more background
+information about pKVM, the following (slightly dated) LWN article may
+be informative:
 
-Note that this PR contains a shared branch with the arm64 tree
-containing the SME patches to resolve conflicts with the WFxT support
-branch.
+  https://lwn.net/Articles/836693/
 
-Please pull,
+The structure of this series is roughly as follows:
 
-	M.
+  * Patches 01-06 :
+    - Some small cleanups and minor fixes.
 
-The following changes since commit 672c0c5173427e6b3e2a9bbb7be51ceeec78093a:
+  * Patches 07-12 :
+    - Memory management changes at EL2 to allow the donation of memory
+      from the host to the hypervisor and the "pinning" of shared memory
+      at EL2.
 
-  Linux 5.18-rc5 (2022-05-01 13:57:58 -0700)
+  * Patches 13-16 :
+    - Introduction of shadow VM and vCPU state at EL2 so that the
+      hypervisor can manage guest state using its own private data
+      structures, initially populated from the host structures.
 
-are available in the Git repository at:
+  * Patches 17-33 :
+    - Further memory management changes at EL2 to allow the allocation
+      and reclaim of guest memory by the host. This then allows us to
+      manage guest stage-2 page-tables entirely at EL2, with the host
+      issuing hypercalls to map guest pages in response to faults.
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/kvmarm/kvmarm.git tags/kvmarm-5.19
+  * Patches 34-78 :
+    - Gradual reduction of EL2 trust in host data; rather than copy
+      blindly between the host and shadow structures, we instead
+      selectively sync/flush between them and reduce the amount of host
+      data that is accessed directly by EL2.
 
-for you to fetch changes up to 5c0ad551e9aa6188f2bda0977c1cb6768a2b74ef:
+  * Patches 79-81 :
+    - Inject an abort into the host if it tries to access a guest page
+      for which it does not have permission. This will then deliver a
+      SEGV if the access originated from userspace.
 
-  Merge branch kvm-arm64/its-save-restore-fixes-5.19 into kvmarm-master/next (2022-05-16 17:48:36 +0100)
+  * Patches 82-87 :
+    - Expose hypercalls to protected guests for sharing memory back with
+      the host
 
-----------------------------------------------------------------
-KVM/arm64 updates for 5.19
+  * Patches 88-89 :
+    - Introduce the new machine type and add some documentation.
 
-- Add support for the ARMv8.6 WFxT extension
+We considered splitting this into multiple series, but decided to keep
+everything together initially so that reviewers can more easily get an
+idea of what we're trying to do and also take it for a spin. The patches
+are also available in our git tree here:
 
-- Guard pages for the EL2 stacks
+  https://android-kvm.googlesource.com/linux/+/refs/heads/for-upstream/pkvm-base-v1
 
-- Trap and emulate AArch32 ID registers to hide unsupported features
+It's worth pointing out that, although we've been tracking the fd-based
+proposal around KVM private memory [1], for now the approach taken here
+interacts directly with anonymous pages using a longterm GUP pin. We're
+expecting to prototype an fd-based implementation once the discussion at
+[2] has converged. In the meantime, we hope to progress the non-protected
+VM support.
 
-- Ability to select and save/restore the set of hypercalls exposed
-  to the guest
+Finally, there are still some features that we have not included in this
+posting and will come later on:
 
-- Support for PSCI-initiated suspend in collaboration with userspace
+  - Support for read-only memslots and dirty logging for non-protected
+    VMs. We currently document that this doesn't work (setting the
+    memslot flags will fail), but we're working to enable this.
 
-- GICv3 register-based LPI invalidation support
+  - Support for IOMMU configuration to protect guest memory from DMA
+    attacks by the host.
 
-- Move host PMU event merging into the vcpu data structure
+  - Support for optional loading of the guest's initial firmware by the
+    hypervisor.
 
-- GICv3 ITS save/restore fixes
+  - Proxying of host interactions with Trustzone, intercepting and
+    validating FF-A [3] calls at EL2.
 
-- The usual set of small-scale cleanups and fixes
+  - Support for restricted MMIO exits to only regions designated as
+    MMIO by the guest. An earlier version of this work was previously
+    posted at [4].
 
-----------------------------------------------------------------
-Alexandru Elisei (3):
-      KVM: arm64: Hide AArch32 PMU registers when not available
-      KVM: arm64: Don't BUG_ON() if emulated register table is unsorted
-      KVM: arm64: Print emulated register table name when it is unsorted
+  - Hardware debug and PMU support for non-protected guests -- this
+    builds on the separate series posted at [5] and which is now queued
+    for 5.19.
 
-Ard Biesheuvel (1):
-      KVM: arm64: Avoid unnecessary absolute addressing via literals
+  - Guest-side changes to issue the new pKVM hypercalls, for example
+    sharing back the SWIOTLB buffer with the host for virtio traffic.
 
-Fuad Tabba (4):
-      KVM: arm64: Wrapper for getting pmu_events
-      KVM: arm64: Repack struct kvm_pmu to reduce size
-      KVM: arm64: Pass pmu events to hyp via vcpu
-      KVM: arm64: Reenable pmu in Protected Mode
+Please enjoy,
 
-Kalesh Singh (6):
-      KVM: arm64: Introduce hyp_alloc_private_va_range()
-      KVM: arm64: Introduce pkvm_alloc_private_va_range()
-      KVM: arm64: Add guard pages for KVM nVHE hypervisor stack
-      KVM: arm64: Add guard pages for pKVM (protected nVHE) hypervisor stack
-      KVM: arm64: Detect and handle hypervisor stack overflows
-      KVM: arm64: Symbolize the nVHE HYP addresses
+Will, Quentin, Fuad and Marc
 
-Marc Zyngier (30):
-      arm64: Expand ESR_ELx_WFx_ISS_TI to match its ARMv8.7 definition
-      arm64: Add RV and RN fields for ESR_ELx_WFx_ISS
-      arm64: Add HWCAP advertising FEAT_WFXT
-      arm64: Add wfet()/wfit() helpers
-      arm64: Use WFxT for __delay() when possible
-      KVM: arm64: Simplify kvm_cpu_has_pending_timer()
-      KVM: arm64: Introduce kvm_counter_compute_delta() helper
-      KVM: arm64: Handle blocking WFIT instruction
-      KVM: arm64: Offer early resume for non-blocking WFxT instructions
-      KVM: arm64: Expose the WFXT feature to guests
-      KVM: arm64: Fix new instances of 32bit ESRs
-      Merge remote-tracking branch 'arm64/for-next/sme' into kvmarm-master/next
-      Merge branch kvm-arm64/wfxt into kvmarm-master/next
-      Merge branch kvm-arm64/hyp-stack-guard into kvmarm-master/next
-      Merge branch kvm-arm64/aarch32-idreg-trap into kvmarm-master/next
-      Documentation: Fix index.rst after psci.rst renaming
-      irqchip/gic-v3: Exposes bit values for GICR_CTLR.{IR, CES}
-      KVM: arm64: vgic-v3: Expose GICR_CTLR.RWP when disabling LPIs
-      KVM: arm64: vgic-v3: Implement MMIO-based LPI invalidation
-      KVM: arm64: vgic-v3: Advertise GICR_CTLR.{IR, CES} as a new GICD_IIDR revision
-      KVM: arm64: vgic-v3: List M1 Pro/Max as requiring the SEIS workaround
-      KVM: arm64: Hide KVM_REG_ARM_*_BMAP_BIT_COUNT from userspace
-      KVM: arm64: pmu: Restore compilation when HW_PERF_EVENTS isn't selected
-      KVM: arm64: Fix hypercall bitmap writeback when vcpus have already run
-      Merge branch kvm-arm64/hcall-selection into kvmarm-master/next
-      Merge branch kvm-arm64/psci-suspend into kvmarm-master/next
-      Merge branch kvm-arm64/vgic-invlpir into kvmarm-master/next
-      Merge branch kvm-arm64/per-vcpu-host-pmu-data into kvmarm-master/next
-      Merge branch kvm-arm64/misc-5.19 into kvmarm-master/next
-      Merge branch kvm-arm64/its-save-restore-fixes-5.19 into kvmarm-master/next
+[1] https://lore.kernel.org/all/20220310140911.50924-1-chao.p.peng@linux.intel.com/
+[2] https://lore.kernel.org/r/20220422105612.GB61987@chaop.bj.intel.com
+[3] https://developer.arm.com/documentation/den0077/latest
+[4] https://lore.kernel.org/all/20211004174849.2831548-1-maz@kernel.org/
+[5] https://lore.kernel.org/all/20220510095710.148178-1-tabba@google.com/
 
-Mark Brown (25):
-      arm64/sme: Provide ABI documentation for SME
-      arm64/sme: System register and exception syndrome definitions
-      arm64/sme: Manually encode SME instructions
-      arm64/sme: Early CPU setup for SME
-      arm64/sme: Basic enumeration support
-      arm64/sme: Identify supported SME vector lengths at boot
-      arm64/sme: Implement sysctl to set the default vector length
-      arm64/sme: Implement vector length configuration prctl()s
-      arm64/sme: Implement support for TPIDR2
-      arm64/sme: Implement SVCR context switching
-      arm64/sme: Implement streaming SVE context switching
-      arm64/sme: Implement ZA context switching
-      arm64/sme: Implement traps and syscall handling for SME
-      arm64/sme: Disable ZA and streaming mode when handling signals
-      arm64/sme: Implement streaming SVE signal handling
-      arm64/sme: Implement ZA signal handling
-      arm64/sme: Implement ptrace support for streaming mode SVE registers
-      arm64/sme: Add ptrace support for ZA
-      arm64/sme: Disable streaming mode and ZA when flushing CPU state
-      arm64/sme: Save and restore streaming mode over EFI runtime calls
-      KVM: arm64: Hide SME system registers from guests
-      KVM: arm64: Trap SME usage in guest
-      KVM: arm64: Handle SME host state when running guests
-      arm64/sme: Provide Kconfig for SME
-      arm64/sme: Add ID_AA64SMFR0_EL1 to __read_sysreg_by_encoding()
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Alexandru Elisei <alexandru.elisei@arm.com>
+Cc: Andy Lutomirski <luto@amacapital.net>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Chao Peng <chao.p.peng@linux.intel.com>
+Cc: Quentin Perret <qperret@google.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: Michael Roth <michael.roth@amd.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Fuad Tabba <tabba@google.com>
+Cc: Oliver Upton <oupton@google.com>
+Cc: Marc Zyngier <maz@kernel.org>
 
-Oliver Upton (21):
-      KVM: arm64: Return a bool from emulate_cp()
-      KVM: arm64: Don't write to Rt unless sys_reg emulation succeeds
-      KVM: arm64: Wire up CP15 feature registers to their AArch64 equivalents
-      KVM: arm64: Plumb cp10 ID traps through the AArch64 sysreg handler
-      KVM: arm64: Start trapping ID registers for 32 bit guests
-      selftests: KVM: Rename psci_cpu_on_test to psci_test
-      selftests: KVM: Create helper for making SMCCC calls
-      KVM: arm64: Don't depend on fallthrough to hide SYSTEM_RESET2
-      KVM: arm64: Dedupe vCPU power off helpers
-      KVM: arm64: Track vCPU power state using MP state values
-      KVM: arm64: Rename the KVM_REQ_SLEEP handler
-      KVM: arm64: Return a value from check_vcpu_requests()
-      KVM: arm64: Add support for userspace to suspend a vCPU
-      KVM: arm64: Implement PSCI SYSTEM_SUSPEND
-      selftests: KVM: Rename psci_cpu_on_test to psci_test
-      selftests: KVM: Create helper for making SMCCC calls
-      selftests: KVM: Use KVM_SET_MP_STATE to power off vCPU in psci_test
-      selftests: KVM: Refactor psci_test to make it amenable to new tests
-      selftests: KVM: Test SYSTEM_SUSPEND PSCI call
-      KVM: arm64: pkvm: Drop unnecessary FP/SIMD trap handler
-      KVM: arm64: pkvm: Don't mask already zeroed FEAT_SVE
+Cc: kernel-team@android.com
+Cc: kvm@vger.kernel.org
+Cc: kvmarm@lists.cs.columbia.edu
+Cc: linux-arm-kernel@lists.infradead.org
 
-Raghavendra Rao Ananta (9):
-      KVM: arm64: Factor out firmware register handling from psci.c
-      KVM: arm64: Setup a framework for hypercall bitmap firmware registers
-      KVM: arm64: Add standard hypervisor firmware register
-      KVM: arm64: Add vendor hypervisor firmware register
-      Docs: KVM: Rename psci.rst to hypercalls.rst
-      Docs: KVM: Add doc for the bitmap firmware registers
-      tools: Import ARM SMCCC definitions
-      selftests: KVM: aarch64: Introduce hypercall ABI test
-      selftests: KVM: aarch64: Add the bitmap firmware registers to get-reg-list
+--->8
 
-Randy Dunlap (1):
-      KVM: arm64: nvhe: Eliminate kernel-doc warnings
+Fuad Tabba (23):
+  KVM: arm64: Add hyp_spinlock_t static initializer
+  KVM: arm64: Introduce shadow VM state at EL2
+  KVM: arm64: Instantiate VM shadow data from EL1
+  KVM: arm64: Do not allow memslot changes after first VM run under pKVM
+  KVM: arm64: Add hyp per_cpu variable to track current physical cpu
+    number
+  KVM: arm64: Ensure that TLBs and I-cache are private to each vcpu
+  KVM: arm64: Do not pass the vcpu to __pkvm_host_map_guest()
+  KVM: arm64: Check directly whether the vcpu is protected
+  KVM: arm64: Trap debug break and watch from guest
+  KVM: arm64: Restrict protected VM capabilities
+  KVM: arm64: Do not support MTE for protected VMs
+  KVM: arm64: Refactor reset_mpidr to extract its computation
+  KVM: arm64: Reset sysregs for protected VMs
+  KVM: arm64: Move pkvm_vcpu_init_traps to shadow vcpu init
+  KVM: arm64: Fix initializing traps in protected mode
+  KVM: arm64: Add EL2 entry/exit handlers for pKVM guests
+  KVM: arm64: Refactor kvm_vcpu_enable_ptrauth() for hyp use
+  KVM: arm64: Initialize shadow vm state at hyp
+  KVM: arm64: Add HVC handling for protected guests at EL2
+  KVM: arm64: Move pstate reset values to kvm_arm.h
+  KVM: arm64: Move some kvm_psci functions to a shared header
+  KVM: arm64: Factor out vcpu_reset code for core registers and PSCI
+  KVM: arm64: Handle PSCI for protected VMs in EL2
 
-Ricardo Koller (4):
-      KVM: arm64: vgic: Check that new ITEs could be saved in guest memory
-      KVM: arm64: vgic: Add more checks when restoring ITS tables
-      KVM: arm64: vgic: Do not ignore vgic_its_restore_cte failures
-      KVM: arm64: vgic: Undo work in failed ITS restores
+Marc Zyngier (20):
+  KVM: arm64: Handle all ID registers trapped for a protected VM
+  KVM: arm64: Drop stale comment
+  KVM: arm64: Check for PTE validity when checking for
+    executable/cacheable
+  KVM: arm64: Make vcpu_{read,write}_sys_reg available to HYP code
+  KVM: arm64: Simplify vgic-v3 hypercalls
+  KVM: arm64: Add the {flush,sync}_vgic_state() primitives
+  KVM: arm64: Introduce predicates to check for protected state
+  KVM: arm64: Add the {flush,sync}_timer_state() primitives
+  KVM: arm64: Introduce the pkvm_vcpu_{load,put} hypercalls
+  KVM: arm64: Add current vcpu and shadow_state lookup primitive
+  KVM: arm64: Skip __kvm_adjust_pc() for protected vcpus
+  KVM: arm64: Introduce per-EC entry/exit handlers
+  KVM: arm64: Introduce lazy-ish state sync for non-protected VMs
+  KVM: arm64: Lazy host FP save/restore
+  KVM: arm64: Reduce host/shadow vcpu state copying
+  KVM: arm64: Force injection of a data abort on NISV MMIO exit
+  KVM: arm64: Donate memory to protected guests
+  KVM: arm64: Move vgic state between host and shadow vcpu structures
+  KVM: arm64: Do not update virtual timer state for protected VMs
+  KVM: arm64: Track the SVE state in the shadow vcpu
 
-Stephen Rothwell (1):
-      Documentation: KVM: Fix title level for PSCI_SUSPEND
+Quentin Perret (22):
+  KVM: arm64: Move hyp refcount manipulation helpers
+  KVM: arm64: Back hyp_vmemmap for all of memory
+  KVM: arm64: Implement do_donate() helper for donating memory
+  KVM: arm64: Prevent the donation of no-map pages
+  KVM: arm64: Add helpers to pin memory shared with hyp
+  KVM: arm64: Make hyp stage-1 refcnt correct on the whole range
+  KVM: arm64: Factor out private range VA allocation
+  KVM: arm64: Add pcpu fixmap infrastructure at EL2
+  KVM: arm64: Allow non-coallescable pages in a hyp_pool
+  KVM: arm64: Add generic hyp_memcache helpers
+  KVM: arm64: Instantiate guest stage-2 page-tables at EL2
+  KVM: arm64: Return guest memory from EL2 via dedicated teardown
+    memcache
+  KVM: arm64: Add flags to struct hyp_page
+  KVM: arm64: Consolidate stage-2 init in one function
+  KVM: arm64: Disallow dirty logging and RO memslots with pKVM
+  KVM: arm64: Don't access kvm_arm_hyp_percpu_base at EL1
+  KVM: arm64: Unmap kvm_arm_hyp_percpu_base from the host
+  KVM: arm64: Explicitly map kvm_vgic_global_state at EL2
+  KVM: arm64: Don't map host sections in pkvm
+  KVM: arm64: Add is_pkvm_initialized() helper
+  KVM: arm64: Refactor enter_exception64()
+  KVM: arm64: Inject SIGSEGV on illegal accesses
 
-Wan Jiabing (1):
-      arm64/sme: Fix NULL check after kzalloc
+Will Deacon (24):
+  KVM: arm64: Remove redundant hyp_assert_lock_held() assertions
+  KVM: arm64: Return error from kvm_arch_init_vm() on allocation failure
+  KVM: arm64: Ignore 'kvm-arm.mode=protected' when using VHE
+  KVM: arm64: Extend comment in has_vhe()
+  KVM: arm64: Unify identifiers used to distinguish host and hypervisor
+  KVM: arm64: Include asm/kvm_mmu.h in nvhe/mem_protect.h
+  KVM: arm64: Provide I-cache invalidation by VA at EL2
+  KVM: arm64: Provide a hypercall for the host to reclaim guest memory
+  KVM: arm64: Extend memory sharing to allow host-to-guest transitions
+  KVM: arm64: Use the shadow vCPU structure in handle___kvm_vcpu_run()
+  KVM: arm64: Handle guest stage-2 page-tables entirely at EL2
+  KVM: arm64: Maintain a copy of 'kvm_arm_vmid_bits' at EL2
+  KVM: arm64: Extend memory donation to allow host-to-guest transitions
+  KVM: arm64: Split up nvhe/fixed_config.h
+  KVM: arm64: Advertise GICv3 sysreg interface to protected guests
+  KVM: arm64: Don't expose TLBI hypercalls after de-privilege
+  KVM: arm64: Support TLB invalidation in guest context
+  KVM: arm64: Avoid BBM when changing only s/w bits in Stage-2 PTE
+  KVM: arm64: Extend memory sharing to allow guest-to-host transitions
+  KVM: arm64: Document the KVM/arm64-specific calls in hypercalls.rst
+  KVM: arm64: Reformat/beautify PTP hypercall documentation
+  KVM: arm64: Expose memory sharing hypercalls to protected guests
+  KVM: arm64: Introduce KVM_VM_TYPE_ARM_PROTECTED machine type for PVMs
+  Documentation: KVM: Add some documentation for Protected KVM on arm64
 
- Documentation/arm64/cpu-feature-registers.rst      |   2 +
- Documentation/arm64/elf_hwcaps.rst                 |  37 ++
- Documentation/arm64/index.rst                      |   1 +
- Documentation/arm64/sme.rst                        | 428 +++++++++++++++
- Documentation/arm64/sve.rst                        |  70 ++-
- Documentation/virt/kvm/api.rst                     |  94 +++-
- Documentation/virt/kvm/arm/hypercalls.rst          | 138 +++++
- Documentation/virt/kvm/arm/index.rst               |   2 +-
- Documentation/virt/kvm/arm/psci.rst                |  77 ---
- arch/arm64/Kconfig                                 |  11 +
- arch/arm64/include/asm/barrier.h                   |   4 +
- arch/arm64/include/asm/cpu.h                       |   4 +
- arch/arm64/include/asm/cpufeature.h                |  24 +
- arch/arm64/include/asm/cputype.h                   |   8 +
- arch/arm64/include/asm/el2_setup.h                 |  64 ++-
- arch/arm64/include/asm/esr.h                       |  21 +-
- arch/arm64/include/asm/exception.h                 |   1 +
- arch/arm64/include/asm/fpsimd.h                    | 123 ++++-
- arch/arm64/include/asm/fpsimdmacros.h              |  87 +++
- arch/arm64/include/asm/hwcap.h                     |   9 +
- arch/arm64/include/asm/kvm_arm.h                   |   4 +-
- arch/arm64/include/asm/kvm_asm.h                   |   1 +
- arch/arm64/include/asm/kvm_emulate.h               |   7 -
- arch/arm64/include/asm/kvm_host.h                  |  45 +-
- arch/arm64/include/asm/kvm_mmu.h                   |   3 +
- arch/arm64/include/asm/processor.h                 |  26 +-
- arch/arm64/include/asm/sysreg.h                    |  67 +++
- arch/arm64/include/asm/thread_info.h               |   2 +
- arch/arm64/include/uapi/asm/hwcap.h                |   9 +
- arch/arm64/include/uapi/asm/kvm.h                  |  34 ++
- arch/arm64/include/uapi/asm/ptrace.h               |  69 ++-
- arch/arm64/include/uapi/asm/sigcontext.h           |  55 +-
- arch/arm64/kernel/cpufeature.c                     | 120 +++++
- arch/arm64/kernel/cpuinfo.c                        |  14 +
- arch/arm64/kernel/entry-common.c                   |  11 +
- arch/arm64/kernel/entry-fpsimd.S                   |  36 ++
- arch/arm64/kernel/fpsimd.c                         | 585 +++++++++++++++++++--
- arch/arm64/kernel/process.c                        |  44 +-
- arch/arm64/kernel/ptrace.c                         | 358 +++++++++++--
- arch/arm64/kernel/signal.c                         | 188 ++++++-
- arch/arm64/kernel/syscall.c                        |  29 +-
- arch/arm64/kernel/traps.c                          |   1 +
- arch/arm64/kvm/Makefile                            |   4 +-
- arch/arm64/kvm/arch_timer.c                        |  47 +-
- arch/arm64/kvm/arm.c                               | 158 +++++-
- arch/arm64/kvm/fpsimd.c                            |  43 +-
- arch/arm64/kvm/guest.c                             |  10 +-
- arch/arm64/kvm/handle_exit.c                       |  49 +-
- arch/arm64/kvm/hyp/include/nvhe/mm.h               |   6 +-
- arch/arm64/kvm/hyp/nvhe/host.S                     |  32 +-
- arch/arm64/kvm/hyp/nvhe/hyp-main.c                 |  18 +-
- arch/arm64/kvm/hyp/nvhe/mm.c                       |  78 ++-
- arch/arm64/kvm/hyp/nvhe/setup.c                    |  31 +-
- arch/arm64/kvm/hyp/nvhe/switch.c                   |  87 +--
- arch/arm64/kvm/hyp/nvhe/sys_regs.c                 |   3 -
- arch/arm64/kvm/hyp/vhe/switch.c                    |  11 +-
- arch/arm64/kvm/hypercalls.c                        | 327 +++++++++++-
- arch/arm64/kvm/mmu.c                               |  68 ++-
- arch/arm64/kvm/pmu-emul.c                          |   3 +-
- arch/arm64/kvm/pmu.c                               |  40 +-
- arch/arm64/kvm/psci.c                              | 248 ++-------
- arch/arm64/kvm/sys_regs.c                          | 305 ++++++++---
- arch/arm64/kvm/sys_regs.h                          |   9 +-
- arch/arm64/kvm/vgic/vgic-init.c                    |   7 +-
- arch/arm64/kvm/vgic/vgic-its.c                     | 160 ++++--
- arch/arm64/kvm/vgic/vgic-mmio-v2.c                 |  18 +-
- arch/arm64/kvm/vgic/vgic-mmio-v3.c                 | 125 ++++-
- arch/arm64/kvm/vgic/vgic-v3.c                      |   4 +
- arch/arm64/kvm/vgic/vgic.h                         |  10 +
- arch/arm64/lib/delay.c                             |  12 +-
- arch/arm64/tools/cpucaps                           |   3 +
- include/kvm/arm_arch_timer.h                       |   2 -
- include/kvm/arm_hypercalls.h                       |   8 +
- include/kvm/arm_pmu.h                              |  34 +-
- include/kvm/arm_psci.h                             |   7 -
- include/kvm/arm_vgic.h                             |   8 +-
- include/linux/irqchip/arm-gic-v3.h                 |   2 +
- include/uapi/linux/elf.h                           |   2 +
- include/uapi/linux/kvm.h                           |   4 +
- include/uapi/linux/prctl.h                         |   9 +
- kernel/sys.c                                       |  12 +
- scripts/kallsyms.c                                 |   3 +-
- tools/include/linux/arm-smccc.h                    | 193 +++++++
- tools/testing/selftests/kvm/.gitignore             |   3 +-
- tools/testing/selftests/kvm/Makefile               |   3 +-
- tools/testing/selftests/kvm/aarch64/get-reg-list.c |   8 +
- tools/testing/selftests/kvm/aarch64/hypercalls.c   | 336 ++++++++++++
- .../selftests/kvm/aarch64/psci_cpu_on_test.c       | 121 -----
- tools/testing/selftests/kvm/aarch64/psci_test.c    | 213 ++++++++
- .../selftests/kvm/include/aarch64/processor.h      |  22 +
- .../testing/selftests/kvm/lib/aarch64/processor.c  |  25 +
- tools/testing/selftests/kvm/steal_time.c           |  13 +-
- 92 files changed, 4949 insertions(+), 908 deletions(-)
- create mode 100644 Documentation/arm64/sme.rst
+ .../admin-guide/kernel-parameters.txt         |    5 +-
+ Documentation/virt/kvm/api.rst                |    7 +
+ Documentation/virt/kvm/arm/hypercalls.rst     |  118 ++
+ Documentation/virt/kvm/arm/index.rst          |    2 +
+ Documentation/virt/kvm/arm/pkvm.rst           |   96 ++
+ Documentation/virt/kvm/arm/ptp_kvm.rst        |   38 +-
+ arch/arm64/include/asm/kvm_arm.h              |   11 +-
+ arch/arm64/include/asm/kvm_asm.h              |   28 +-
+ arch/arm64/include/asm/kvm_emulate.h          |   92 ++
+ arch/arm64/include/asm/kvm_host.h             |  123 +-
+ arch/arm64/include/asm/kvm_hyp.h              |   10 +-
+ arch/arm64/include/asm/kvm_mmu.h              |    2 +-
+ arch/arm64/include/asm/kvm_pgtable.h          |    8 +
+ arch/arm64/include/asm/kvm_pkvm.h             |  257 ++++
+ arch/arm64/include/asm/virt.h                 |   15 +-
+ arch/arm64/kernel/cpufeature.c                |   10 +-
+ arch/arm64/kernel/image-vars.h                |   15 -
+ arch/arm64/kvm/arch_timer.c                   |    7 +-
+ arch/arm64/kvm/arm.c                          |  194 ++-
+ arch/arm64/kvm/handle_exit.c                  |   22 +
+ arch/arm64/kvm/hyp/exception.c                |   89 +-
+ arch/arm64/kvm/hyp/hyp-constants.c            |    3 +
+ .../arm64/kvm/hyp/include/nvhe/fixed_config.h |  205 ---
+ arch/arm64/kvm/hyp/include/nvhe/gfp.h         |    6 +-
+ arch/arm64/kvm/hyp/include/nvhe/mem_protect.h |   25 +-
+ arch/arm64/kvm/hyp/include/nvhe/memory.h      |   33 +-
+ arch/arm64/kvm/hyp/include/nvhe/mm.h          |   18 +-
+ arch/arm64/kvm/hyp/include/nvhe/pkvm.h        |  119 ++
+ arch/arm64/kvm/hyp/include/nvhe/spinlock.h    |   10 +-
+ .../arm64/kvm/hyp/include/nvhe/trap_handler.h |    2 -
+ arch/arm64/kvm/hyp/nvhe/cache.S               |   11 +
+ arch/arm64/kvm/hyp/nvhe/hyp-main.c            |  937 +++++++++++++-
+ arch/arm64/kvm/hyp/nvhe/hyp-smp.c             |    4 +
+ arch/arm64/kvm/hyp/nvhe/mem_protect.c         | 1035 +++++++++++++++-
+ arch/arm64/kvm/hyp/nvhe/mm.c                  |  177 ++-
+ arch/arm64/kvm/hyp/nvhe/page_alloc.c          |   42 +-
+ arch/arm64/kvm/hyp/nvhe/pkvm.c                | 1095 ++++++++++++++++-
+ arch/arm64/kvm/hyp/nvhe/setup.c               |   97 +-
+ arch/arm64/kvm/hyp/nvhe/switch.c              |    9 +-
+ arch/arm64/kvm/hyp/nvhe/sys_regs.c            |  139 ++-
+ arch/arm64/kvm/hyp/nvhe/tlb.c                 |   96 +-
+ arch/arm64/kvm/hyp/pgtable.c                  |   31 +-
+ arch/arm64/kvm/hyp/vgic-v3-sr.c               |   27 +-
+ arch/arm64/kvm/mmio.c                         |    9 +
+ arch/arm64/kvm/mmu.c                          |  202 ++-
+ arch/arm64/kvm/pkvm.c                         |  156 ++-
+ arch/arm64/kvm/pmu.c                          |   16 +-
+ arch/arm64/kvm/psci.c                         |   28 -
+ arch/arm64/kvm/reset.c                        |   99 +-
+ arch/arm64/kvm/sys_regs.c                     |   34 +-
+ arch/arm64/kvm/sys_regs.h                     |   19 +
+ arch/arm64/kvm/vgic/vgic-v2.c                 |    9 +-
+ arch/arm64/kvm/vgic/vgic-v3.c                 |   28 +-
+ arch/arm64/kvm/vgic/vgic.c                    |   17 +-
+ arch/arm64/kvm/vgic/vgic.h                    |    6 +-
+ arch/arm64/mm/fault.c                         |   22 +
+ include/kvm/arm_vgic.h                        |    3 +-
+ include/linux/arm-smccc.h                     |   21 +
+ include/uapi/linux/kvm.h                      |    6 +
+ 59 files changed, 5128 insertions(+), 817 deletions(-)
  create mode 100644 Documentation/virt/kvm/arm/hypercalls.rst
- delete mode 100644 Documentation/virt/kvm/arm/psci.rst
- create mode 100644 tools/include/linux/arm-smccc.h
- create mode 100644 tools/testing/selftests/kvm/aarch64/hypercalls.c
- delete mode 100644 tools/testing/selftests/kvm/aarch64/psci_cpu_on_test.c
- create mode 100644 tools/testing/selftests/kvm/aarch64/psci_test.c
+ create mode 100644 Documentation/virt/kvm/arm/pkvm.rst
+ delete mode 100644 arch/arm64/kvm/hyp/include/nvhe/fixed_config.h
+ create mode 100644 arch/arm64/kvm/hyp/include/nvhe/pkvm.h
+
+-- 
+2.36.1.124.g0e6072fb45-goog
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
