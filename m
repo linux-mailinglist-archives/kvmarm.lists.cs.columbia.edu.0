@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C667531554
-	for <lists+kvmarm@lfdr.de>; Mon, 23 May 2022 19:37:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EF16532F4E
+	for <lists+kvmarm@lfdr.de>; Tue, 24 May 2022 18:58:20 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E5EAF4B208;
-	Mon, 23 May 2022 13:37:28 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9A75F4B205;
+	Tue, 24 May 2022 12:58:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
@@ -18,81 +18,78 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id NxnRxZZ8PGPH; Mon, 23 May 2022 13:37:28 -0400 (EDT)
+	with ESMTP id 3Jt9sxXMaHHr; Tue, 24 May 2022 12:58:19 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B68BC4B218;
-	Mon, 23 May 2022 13:37:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5DF184B20F;
+	Tue, 24 May 2022 12:58:18 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 9F4214B1FC
- for <kvmarm@lists.cs.columbia.edu>; Mon, 23 May 2022 13:37:26 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 790B84B11F
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 23 May 2022 13:44:35 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id w9nOfsODrAku for <kvmarm@lists.cs.columbia.edu>;
- Mon, 23 May 2022 13:37:25 -0400 (EDT)
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com
- [209.85.216.53])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 739134B1B0
- for <kvmarm@lists.cs.columbia.edu>; Mon, 23 May 2022 13:37:25 -0400 (EDT)
-Received: by mail-pj1-f53.google.com with SMTP id z11so4856352pjc.3
- for <kvmarm@lists.cs.columbia.edu>; Mon, 23 May 2022 10:37:25 -0700 (PDT)
+ with ESMTP id DLzVW2KV5WaI for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 23 May 2022 13:44:34 -0400 (EDT)
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com
+ [209.85.208.169])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3960849ED5
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 23 May 2022 13:44:34 -0400 (EDT)
+Received: by mail-lj1-f169.google.com with SMTP id r3so11212508ljd.7
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 23 May 2022 10:44:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=uPvB4xKkZsbv/NQuw+LVF1ZeOmndZIablC0q46ZFciY=;
- b=XvH+fP7b6A7IaMFFBQF7IkZCZBYDCe5tYb80MfrbM2f0FYzFokK+x6mgbkPTeOgoUg
- LclNFKJEWXiNeIZWkIZLNbNNePqmTZSw88j10EPFP/TCd88RX+QFgo+8KXnJ7ZFWEqw8
- e258spbjBdsYFehtuKv0B7wbQEdEuoZG2QfXIkOIkFlhdL9EvniL6ve+PR8g87Ue1Ipd
- qlKgwGG9OiDFl7+72jz8mhlBqYjKbIOUmNWAcLmyrAe5QY5hfjJUdhA+UHLy5+ZIOXNQ
- y5rtJrUIwrCDHAi+YfCoOzCaRCeBurqBgL7bm+aoHAkTBJ7vzfBVMAs7LZYNqcNRbsWw
- xF8Q==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=Lt+QmLRlAmSG7nATNb3de1rpq1KDptBx8X9RCMbUflw=;
+ b=Rr3FTbZSH6OEOK11OGjw8VhElwCyNuOyvzb6UGiQa0VN2z4nznXexLQevuNvWvmzge
+ CTYxbMdQDt/ABY+5MJUs3UQ9cjgZB5HpfDYKoRS1NjSjEXU07Em23YCDUfUVa0uX8nb/
+ 9z73CqVXPwVsA8Daek73ky1cd2penETPszXb/oyC1JTxYrs3iF1+pny/UHRiTwvpdI8k
+ g8tK6SALO5ySpktT2RjFFNN6TQsPT7nll0EKnmQlStwKvKJ60ZHIYNM+jC9XU/fKERYw
+ C53AE92+J6jh3ctfSI6kiJseh3KT/sVgJBhffuZkOWwWVE+RPT6LvCRHczR7+R0zJEmT
+ JfYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=uPvB4xKkZsbv/NQuw+LVF1ZeOmndZIablC0q46ZFciY=;
- b=urwlK3PZNW4SuVtWubiHTwx0xQue0sO/793uFnd/JuiZN7g6SOjNY7z5t3G0KQkp1l
- qquqLJ4D0DY9IrBR0A2ztnAG8nghwxgI3uir73p9jQBC7iZmHUI1pTRCu7w7IBhzyBy7
- 1qpijfjgDd599iQYV3PR+ll+vA1STRs9KAfwIzZn67hqkR8ChIzlfa4SnZBF6ygrq1ec
- g4QTTs/FePlq0fzo49jhuDrs7Kih4bd7rG3aX4yujFIYA7JThla3IEWnFBecYb1ipyIe
- 5wa7DMWdRXJ33rrJwx7inpeBTabO4slY8kHU/pNnT8cz2Oy4fXfQc0p/h2cHsJ4X6Xbk
- ruig==
-X-Gm-Message-State: AOAM5300fo8mfAjWh9bjPZhKPPmEc0KAZEMmx8YH3eFMJkL1oe/cPNv3
- +DbK0xzGkeBQXsoJWwDqOhrG6A==
-X-Google-Smtp-Source: ABdhPJw4AGNGxsFqbqwZIS+BFk/8egtH9UXiumvmBRxLQ0/47sCH59HMfF1NiH7idboGwFW37lheDQ==
-X-Received: by 2002:a17:90b:4b90:b0:1e0:1b0:1a1 with SMTP id
- lr16-20020a17090b4b9000b001e001b001a1mr146255pjb.70.1653327444125; 
- Mon, 23 May 2022 10:37:24 -0700 (PDT)
-Received: from google.com (157.214.185.35.bc.googleusercontent.com.
- [35.185.214.157]) by smtp.gmail.com with ESMTPSA id
- j13-20020a170902da8d00b0015e8d4eb260sm5388000plx.170.2022.05.23.10.37.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 May 2022 10:37:23 -0700 (PDT)
-Date: Mon, 23 May 2022 17:37:20 +0000
-From: Sean Christopherson <seanjc@google.com>
-To: Mingwei Zhang <mizhang@google.com>
-Subject: Re: [PATCH v6 21/22] KVM: Allow for different capacities in
- kvm_mmu_memory_cache structs
-Message-ID: <YovGUDrYZMZ7PXeY@google.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=Lt+QmLRlAmSG7nATNb3de1rpq1KDptBx8X9RCMbUflw=;
+ b=6zKXaVtN6WYIbS6zJPs7xHld5jJNxQV+AtwmV01EQooW6Ohlg2A9gYk25HMWQ4AkL6
+ zy8ixJTNa0/LV+wUvoH5UdjkQj9V3Ml/wc1Hq2S6BSk3NiP4HHPh69Th3cEbjcGWF2ux
+ LygPC3XKAd48tYgTLLfsxAyqOppXzXz8RZ2JtMdk2JE2Valwgg5r6bb6ri+mw1tHg5uf
+ q/IaChwM04ySIAslTzgIDdv6j05Ko57LneeM4sUJZ6guFOrEoryZ92PA2TyMbsiQ9YZF
+ aRQznBhti8YgwuHR1vI8pTUjb5zkgU6TmvOM+v1q4BzZojpLZ8Akn+DQhc3XFshcrxOQ
+ DJ2A==
+X-Gm-Message-State: AOAM5330oIvGYpsf6rx3Hhg3Fcum7/5HOBVarFlrPt/b2hnp0Wmu6AOd
+ pkrGLR6gLn/2QQBsViGqV8LFMcABmtzm0cElLfsI2Q==
+X-Google-Smtp-Source: ABdhPJzDb1QQeQPt37UpqWbTLpFmjnccbcNhzyRtox2/Lhza8BwHrGwgro263+zixdfWhTwF6P7oNs645WQMXX3iLvE=
+X-Received: by 2002:a05:651c:b20:b0:253:f4ec:b7d0 with SMTP id
+ b32-20020a05651c0b2000b00253f4ecb7d0mr159601ljr.198.1653327872507; Mon, 23
+ May 2022 10:44:32 -0700 (PDT)
+MIME-Version: 1.0
 References: <20220516232138.1783324-1-dmatlack@google.com>
  <20220516232138.1783324-22-dmatlack@google.com>
  <CAL715WJ5DVM-A8EFND0iQ-MH9nAhE3rvWdYWaEgRTCJEVeegRg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <CAL715WJ5DVM-A8EFND0iQ-MH9nAhE3rvWdYWaEgRTCJEVeegRg@mail.gmail.com>
+ <YovGUDrYZMZ7PXeY@google.com>
+In-Reply-To: <YovGUDrYZMZ7PXeY@google.com>
+From: David Matlack <dmatlack@google.com>
+Date: Mon, 23 May 2022 10:44:05 -0700
+Message-ID: <CALzav=fUTYGjDuWQxJusH4CzkEwGja-4xAmpqEOZdUfBftYwYw@mail.gmail.com>
+Subject: Re: [PATCH v6 21/22] KVM: Allow for different capacities in
+ kvm_mmu_memory_cache structs
+To: Sean Christopherson <seanjc@google.com>
+X-Mailman-Approved-At: Tue, 24 May 2022 12:58:17 -0400
 Cc: Albert Ou <aou@eecs.berkeley.edu>,
  "open list:KERNEL VIRTUAL MACHINE FOR RISC-V \(KVM/riscv\)"
  <kvm-riscv@lists.infradead.org>,
  "open list:KERNEL VIRTUAL MACHINE FOR MIPS \(KVM/mips\)" <kvm@vger.kernel.org>,
  Huacai Chen <chenhuacai@kernel.org>, Lai Jiangshan <jiangshanlai@gmail.com>,
  "open list:KERNEL VIRTUAL MACHINE FOR MIPS \(KVM/mips\)"
- <linux-mips@vger.kernel.org>, Ben Gardon <bgardon@google.com>,
+ <linux-mips@vger.kernel.org>,
+ "moderated list:KERNEL VIRTUAL MACHINE FOR ARM64 \(KVM/arm64\)"
+ <kvmarm@lists.cs.columbia.edu>,
  Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
  Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <paul.walmsley@sifive.com>,
- Marc Zyngier <maz@kernel.org>, David Matlack <dmatlack@google.com>,
- Paolo Bonzini <pbonzini@redhat.com>, maciej.szmigiero@oracle.com,
- "moderated list:KERNEL VIRTUAL MACHINE FOR ARM64 \(KVM/arm64\)"
- <kvmarm@lists.cs.columbia.edu>, Peter Feiner <pfeiner@google.com>
+ Marc Zyngier <maz@kernel.org>, Ben Gardon <bgardon@google.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Mingwei Zhang <mizhang@google.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Peter Feiner <pfeiner@google.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -109,45 +106,54 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, May 20, 2022, Mingwei Zhang wrote:
-> On Mon, May 16, 2022 at 4:24 PM David Matlack <dmatlack@google.com> wrote:
-> > diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-> > index e089db822c12..5e2e75014256 100644
-> > --- a/virt/kvm/kvm_main.c
-> > +++ b/virt/kvm/kvm_main.c
-> > @@ -369,14 +369,31 @@ static inline void *mmu_memory_cache_alloc_obj(struct kvm_mmu_memory_cache *mc,
-> >                 return (void *)__get_free_page(gfp_flags);
-> >  }
+On Mon, May 23, 2022 at 10:37 AM Sean Christopherson <seanjc@google.com> wrote:
+>
+> On Fri, May 20, 2022, Mingwei Zhang wrote:
+> > On Mon, May 16, 2022 at 4:24 PM David Matlack <dmatlack@google.com> wrote:
+> > > diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+> > > index e089db822c12..5e2e75014256 100644
+> > > --- a/virt/kvm/kvm_main.c
+> > > +++ b/virt/kvm/kvm_main.c
+> > > @@ -369,14 +369,31 @@ static inline void *mmu_memory_cache_alloc_obj(struct kvm_mmu_memory_cache *mc,
+> > >                 return (void *)__get_free_page(gfp_flags);
+> > >  }
+> > >
+> > > -int kvm_mmu_topup_memory_cache(struct kvm_mmu_memory_cache *mc, int min)
+> > > +static int __kvm_mmu_topup_memory_cache(struct kvm_mmu_memory_cache *mc, int capacity, int min)
+> > >  {
+> > > +       gfp_t gfp = GFP_KERNEL_ACCOUNT;
+> > >         void *obj;
+> > >
+> > >         if (mc->nobjs >= min)
+> > >                 return 0;
+> > > -       while (mc->nobjs < ARRAY_SIZE(mc->objects)) {
+> > > -               obj = mmu_memory_cache_alloc_obj(mc, GFP_KERNEL_ACCOUNT);
+> > > +
+> > > +       if (unlikely(!mc->objects)) {
+> > > +               if (WARN_ON_ONCE(!capacity))
+> > > +                       return -EIO;
+> > > +
+> > > +               mc->objects = kvmalloc_array(sizeof(void *), capacity, gfp);
+> > > +               if (!mc->objects)
+> > > +                       return -ENOMEM;
+> > > +
+> > > +               mc->capacity = capacity;
 > >
-> > -int kvm_mmu_topup_memory_cache(struct kvm_mmu_memory_cache *mc, int min)
-> > +static int __kvm_mmu_topup_memory_cache(struct kvm_mmu_memory_cache *mc, int capacity, int min)
-> >  {
-> > +       gfp_t gfp = GFP_KERNEL_ACCOUNT;
-> >         void *obj;
-> >
-> >         if (mc->nobjs >= min)
-> >                 return 0;
-> > -       while (mc->nobjs < ARRAY_SIZE(mc->objects)) {
-> > -               obj = mmu_memory_cache_alloc_obj(mc, GFP_KERNEL_ACCOUNT);
-> > +
-> > +       if (unlikely(!mc->objects)) {
-> > +               if (WARN_ON_ONCE(!capacity))
-> > +                       return -EIO;
-> > +
-> > +               mc->objects = kvmalloc_array(sizeof(void *), capacity, gfp);
-> > +               if (!mc->objects)
-> > +                       return -ENOMEM;
-> > +
-> > +               mc->capacity = capacity;
-> 
-> Do we want to ensure the minimum value of the capacity? I think
-> otherwise, we may more likely start using memory from GFP_ATOMIC if
-> the capacity is less than, say 5? But the minimum value seems related
-> to each cache type.
+> > Do we want to ensure the minimum value of the capacity? I think
+> > otherwise, we may more likely start using memory from GFP_ATOMIC if
+> > the capacity is less than, say 5? But the minimum value seems related
+> > to each cache type.
+>
+> Eh, if we specify a minimum, just make the arch default the minimum.  That way we
+> avoid adding even more magic/arbitrary numbers.  E.g. for whatever reason, MIPS's
+> default is '4'.
 
-Eh, if we specify a minimum, just make the arch default the minimum.  That way we
-avoid adding even more magic/arbitrary numbers.  E.g. for whatever reason, MIPS's
-default is '4'.
+I'm not exactly sure what you had in mind Mingwei. But there is a bug
+in this code if min > capacity. This function will happily return 0
+after filling up the cache, even though it did not allocate min
+objects. The same bug existed before this patch if min >
+ARRAY_SIZE(mc->objects). I can include a separate patch to fix this
+bug (e.g. WARN and return -ENOMEM if min > capacity).
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
