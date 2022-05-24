@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 60DCF532CE2
-	for <lists+kvmarm@lfdr.de>; Tue, 24 May 2022 17:06:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C08AA532CE3
+	for <lists+kvmarm@lfdr.de>; Tue, 24 May 2022 17:06:27 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AF55E4B1C4;
-	Tue, 24 May 2022 11:06:25 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 688924B1CB;
+	Tue, 24 May 2022 11:06:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.899
@@ -15,33 +15,33 @@ X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8c-jfu22AYgY; Tue, 24 May 2022 11:06:24 -0400 (EDT)
+	with ESMTP id Bv+jKFQQ1AwM; Tue, 24 May 2022 11:06:26 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B2FE84B1D1;
-	Tue, 24 May 2022 11:06:23 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D2E964B227;
+	Tue, 24 May 2022 11:06:25 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2FFD74B11E
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C1A564B210
  for <kvmarm@lists.cs.columbia.edu>; Tue, 24 May 2022 11:06:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 3IsnovdMvHVe for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id Wt6l0vOLewIZ for <kvmarm@lists.cs.columbia.edu>;
  Tue, 24 May 2022 11:06:21 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 750224B0CB
- for <kvmarm@lists.cs.columbia.edu>; Tue, 24 May 2022 11:06:20 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C63534B20B
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 24 May 2022 11:06:21 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A0014ED1;
- Tue, 24 May 2022 08:06:19 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 692571042;
+ Tue, 24 May 2022 08:06:21 -0700 (PDT)
 Received: from donnerap.arm.com (donnerap.cambridge.arm.com [10.1.197.42])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3E1B83F70D;
- Tue, 24 May 2022 08:06:18 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 047B23F70D;
+ Tue, 24 May 2022 08:06:19 -0700 (PDT)
 From: Andre Przywara <andre.przywara@arm.com>
 To: Will Deacon <will@kernel.org>,
  Julien Thierry <julien.thierry.kdev@gmail.com>
-Subject: [PATCH kvmtool 1/4] update virtio_mmio.h
-Date: Tue, 24 May 2022 16:06:08 +0100
-Message-Id: <20220524150611.523910-2-andre.przywara@arm.com>
+Subject: [PATCH kvmtool 2/4] util: include virtio UAPI headers in sync
+Date: Tue, 24 May 2022 16:06:09 +0100
+Message-Id: <20220524150611.523910-3-andre.przywara@arm.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20220524150611.523910-1-andre.przywara@arm.com>
 References: <20220524150611.523910-1-andre.przywara@arm.com>
@@ -63,152 +63,50 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-At the time we pulled in virtio_mmio.h from the kernel tree (commit
-a08bb43a0c37c "kvmtool: Copy Linux' up-to-date virtio headers"), this was
-not an official UAPI header file, so wasn't stable and was not shipped
-with distributions.
-This has changed with Linux commit 51be7a9a261c ("virtio_mmio: expose
-header to userspace"), so we can now use that file officially.
-However before that the name of some symbols have changed, so we have to
-adjust their usage in our source.
-
-This pulls in virtio_mmio.h from Linux v5.18.0.
+We already have an update_headers.sh sync script, where we occasionally
+update the KVM interface UAPI kernel headers into our tree.
+So far this covered only the generic kvm.h, plus each architecture's
+version of that file.
+Commit  bc77bf49df6e ("stat: Add descriptions for new virtio_balloon
+stat types") used newer virtio symbols, which some older distros do not
+include in their kernel headers package. To help fixing this and to
+avoid similar problems in the future, add the virtio headers to our sync
+script, so that we can get the same, up-to-date versions of the headers
+easily.
 
 Signed-off-by: Andre Przywara <andre.przywara@arm.com>
 ---
- include/linux/virtio_mmio.h | 55 ++++++++++++++++++++++++++++++++-----
- virtio/mmio.c               |  8 +++---
- 2 files changed, 52 insertions(+), 11 deletions(-)
+ util/update_headers.sh | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/include/linux/virtio_mmio.h b/include/linux/virtio_mmio.h
-index 5c7b6f0d..0650f91b 100644
---- a/include/linux/virtio_mmio.h
-+++ b/include/linux/virtio_mmio.h
-@@ -51,23 +51,29 @@
- /* Virtio vendor ID - Read Only */
- #define VIRTIO_MMIO_VENDOR_ID		0x00c
+diff --git a/util/update_headers.sh b/util/update_headers.sh
+index 5f9cd32d..789e2a42 100755
+--- a/util/update_headers.sh
++++ b/util/update_headers.sh
+@@ -9,6 +9,11 @@
  
--/* Bitmask of the features supported by the host
-+/* Bitmask of the features supported by the device (host)
-  * (32 bits per set) - Read Only */
--#define VIRTIO_MMIO_HOST_FEATURES	0x010
-+#define VIRTIO_MMIO_DEVICE_FEATURES	0x010
+ set -ue
  
--/* Host features set selector - Write Only */
--#define VIRTIO_MMIO_HOST_FEATURES_SEL	0x014
-+/* Device (host) features set selector - Write Only */
-+#define VIRTIO_MMIO_DEVICE_FEATURES_SEL	0x014
++VIRTIO_LIST="virtio_9p.h virtio_balloon.h virtio_blk.h virtio_config.h \
++	     virtio_console.h virtio_ids.h virtio_mmio.h virtio_net.h \
++	     virtio_pci.h virtio_ring.h virtio_rng.h virtio_scsi.h \
++	     virtio_vsock.h"
++
+ if [ "$#" -ge 1 ]
+ then
+ 	LINUX_ROOT="$1"
+@@ -25,6 +30,11 @@ fi
  
--/* Bitmask of features activated by the guest
-+/* Bitmask of features activated by the driver (guest)
-  * (32 bits per set) - Write Only */
--#define VIRTIO_MMIO_GUEST_FEATURES	0x020
-+#define VIRTIO_MMIO_DRIVER_FEATURES	0x020
+ cp -- "$LINUX_ROOT/include/uapi/linux/kvm.h" include/linux
  
- /* Activated features set selector - Write Only */
--#define VIRTIO_MMIO_GUEST_FEATURES_SEL	0x024
-+#define VIRTIO_MMIO_DRIVER_FEATURES_SEL	0x024
++for header in $VIRTIO_LIST
++do
++	cp -- "$LINUX_ROOT/include/uapi/linux/$header" include/linux
++done
 +
-+
-+#ifndef VIRTIO_MMIO_NO_LEGACY /* LEGACY DEVICES ONLY! */
+ unset KVMTOOL_PATH
  
- /* Guest's memory page size in bytes - Write Only */
- #define VIRTIO_MMIO_GUEST_PAGE_SIZE	0x028
- 
-+#endif
-+
-+
- /* Queue selector - Write Only */
- #define VIRTIO_MMIO_QUEUE_SEL		0x030
- 
-@@ -77,12 +83,21 @@
- /* Queue size for the currently selected queue - Write Only */
- #define VIRTIO_MMIO_QUEUE_NUM		0x038
- 
-+
-+#ifndef VIRTIO_MMIO_NO_LEGACY /* LEGACY DEVICES ONLY! */
-+
- /* Used Ring alignment for the currently selected queue - Write Only */
- #define VIRTIO_MMIO_QUEUE_ALIGN		0x03c
- 
- /* Guest's PFN for the currently selected queue - Read Write */
- #define VIRTIO_MMIO_QUEUE_PFN		0x040
- 
-+#endif
-+
-+
-+/* Ready bit for the currently selected queue - Read Write */
-+#define VIRTIO_MMIO_QUEUE_READY		0x044
-+
- /* Queue notifier - Write Only */
- #define VIRTIO_MMIO_QUEUE_NOTIFY	0x050
- 
-@@ -95,6 +110,32 @@
- /* Device status register - Read Write */
- #define VIRTIO_MMIO_STATUS		0x070
- 
-+/* Selected queue's Descriptor Table address, 64 bits in two halves */
-+#define VIRTIO_MMIO_QUEUE_DESC_LOW	0x080
-+#define VIRTIO_MMIO_QUEUE_DESC_HIGH	0x084
-+
-+/* Selected queue's Available Ring address, 64 bits in two halves */
-+#define VIRTIO_MMIO_QUEUE_AVAIL_LOW	0x090
-+#define VIRTIO_MMIO_QUEUE_AVAIL_HIGH	0x094
-+
-+/* Selected queue's Used Ring address, 64 bits in two halves */
-+#define VIRTIO_MMIO_QUEUE_USED_LOW	0x0a0
-+#define VIRTIO_MMIO_QUEUE_USED_HIGH	0x0a4
-+
-+/* Shared memory region id */
-+#define VIRTIO_MMIO_SHM_SEL             0x0ac
-+
-+/* Shared memory region length, 64 bits in two halves */
-+#define VIRTIO_MMIO_SHM_LEN_LOW         0x0b0
-+#define VIRTIO_MMIO_SHM_LEN_HIGH        0x0b4
-+
-+/* Shared memory region base address, 64 bits in two halves */
-+#define VIRTIO_MMIO_SHM_BASE_LOW        0x0b8
-+#define VIRTIO_MMIO_SHM_BASE_HIGH       0x0bc
-+
-+/* Configuration atomicity value */
-+#define VIRTIO_MMIO_CONFIG_GENERATION	0x0fc
-+
- /* The config space is defined by each driver as
-  * the per-driver configuration space - Read Write */
- #define VIRTIO_MMIO_CONFIG		0x100
-diff --git a/virtio/mmio.c b/virtio/mmio.c
-index d08da1eb..3782d55a 100644
---- a/virtio/mmio.c
-+++ b/virtio/mmio.c
-@@ -142,7 +142,7 @@ static void virtio_mmio_config_in(struct kvm_cpu *vcpu,
- 	case VIRTIO_MMIO_INTERRUPT_STATUS:
- 		ioport__write32(data, *(u32 *)(((void *)&vmmio->hdr) + addr));
- 		break;
--	case VIRTIO_MMIO_HOST_FEATURES:
-+	case VIRTIO_MMIO_DEVICE_FEATURES:
- 		if (vmmio->hdr.host_features_sel == 0)
- 			val = vdev->ops->get_host_features(vmmio->kvm,
- 							   vmmio->dev);
-@@ -173,8 +173,8 @@ static void virtio_mmio_config_out(struct kvm_cpu *vcpu,
- 	u32 val = 0;
- 
- 	switch (addr) {
--	case VIRTIO_MMIO_HOST_FEATURES_SEL:
--	case VIRTIO_MMIO_GUEST_FEATURES_SEL:
-+	case VIRTIO_MMIO_DEVICE_FEATURES_SEL:
-+	case VIRTIO_MMIO_DRIVER_FEATURES_SEL:
- 		val = ioport__read32(data);
- 		*(u32 *)(((void *)&vmmio->hdr) + addr) = val;
- 		break;
-@@ -193,7 +193,7 @@ static void virtio_mmio_config_out(struct kvm_cpu *vcpu,
- 			vdev->endian = kvm_cpu__get_endianness(vcpu);
- 		virtio_notify_status(kvm, vdev, vmmio->dev, vmmio->hdr.status);
- 		break;
--	case VIRTIO_MMIO_GUEST_FEATURES:
-+	case VIRTIO_MMIO_DRIVER_FEATURES:
- 		if (vmmio->hdr.guest_features_sel == 0) {
- 			val = ioport__read32(data);
- 			virtio_set_guest_features(vmmio->kvm, vdev,
+ copy_optional_arch () {
 -- 
 2.25.1
 
