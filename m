@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C0A4533BA3
-	for <lists+kvmarm@lfdr.de>; Wed, 25 May 2022 13:23:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABF21533BA4
+	for <lists+kvmarm@lfdr.de>; Wed, 25 May 2022 13:23:47 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9580F4B2E7;
-	Wed, 25 May 2022 07:23:44 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 41A524B2E7;
+	Wed, 25 May 2022 07:23:47 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.899
@@ -15,35 +15,35 @@ X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id OieZJwxiFfAP; Wed, 25 May 2022 07:23:43 -0400 (EDT)
+	with ESMTP id qGmmFK6FV5Xq; Wed, 25 May 2022 07:23:45 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1568F4B2EF;
-	Wed, 25 May 2022 07:23:43 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2FB354B2FB;
+	Wed, 25 May 2022 07:23:45 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id AC8624B2E6
- for <kvmarm@lists.cs.columbia.edu>; Wed, 25 May 2022 07:23:41 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 756294B2EB
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 25 May 2022 07:23:43 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id UgT8OLMI7DJd for <kvmarm@lists.cs.columbia.edu>;
- Wed, 25 May 2022 07:23:40 -0400 (EDT)
+ with ESMTP id kCSTD0a3As9V for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 25 May 2022 07:23:42 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6557F4B2E3
- for <kvmarm@lists.cs.columbia.edu>; Wed, 25 May 2022 07:23:40 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DECBC4B2E6
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 25 May 2022 07:23:41 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 83DC01042;
- Wed, 25 May 2022 04:23:39 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 629401FB;
+ Wed, 25 May 2022 04:23:41 -0700 (PDT)
 Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 84B823F800;
- Wed, 25 May 2022 04:23:37 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D1EF23F70D;
+ Wed, 25 May 2022 04:23:39 -0700 (PDT)
 From: Alexandru Elisei <alexandru.elisei@arm.com>
 To: will@kernel.org, julien.thierry.kdev@gmail.com, maz@kernel.org,
  suzuki.poulose@arm.com, julien@xen.org,
  linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
  james.morse@arm.com, andre.przywara@arm.com
-Subject: [PATCH v3 kvmtool 01/13] Use MB for megabytes consistently
-Date: Wed, 25 May 2022 12:23:33 +0100
-Message-Id: <20220525112345.121321-2-alexandru.elisei@arm.com>
+Subject: [PATCH v3 kvmtool 02/13] sizes.h: Make all sizes 64bit
+Date: Wed, 25 May 2022 12:23:34 +0100
+Message-Id: <20220525112345.121321-3-alexandru.elisei@arm.com>
 X-Mailer: git-send-email 2.36.1
 In-Reply-To: <20220525112345.121321-1-alexandru.elisei@arm.com>
 References: <20220525112345.121321-1-alexandru.elisei@arm.com>
@@ -64,54 +64,92 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The help text for the -m/--mem argument states that the guest memory size
-is in MiB (mebibyte). MiB is the same thing as MB (megabyte), and indeed
-this is how MB is used throughout kvmtool.
+Append ULL to all of the size definitions to make them 64bit and avoid
+overflows.
 
-Replace MiB with MB, so people don't get the wrong idea and start
-believing that for kvmtool a MB is 10^6 bytes instead of 2^20.
-
+Reported-by: Andre Przywara <andre.przywara@arm.com>
 Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
 ---
- Documentation/kvmtool.1 | 4 ++--
- builtin-run.c           | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ include/linux/sizes.h | 64 +++++++++++++++++++++----------------------
+ 1 file changed, 32 insertions(+), 32 deletions(-)
 
-diff --git a/Documentation/kvmtool.1 b/Documentation/kvmtool.1
-index 2b8c274dc3ff..25d46f8f51f9 100644
---- a/Documentation/kvmtool.1
-+++ b/Documentation/kvmtool.1
-@@ -10,7 +10,7 @@ kvmtool is a userland tool for creating and controlling KVM guests.
- .SH "KVMTOOL COMMANDS"
- .sp
- .PP
--.B run -k <kernel\-image> [\-c <cores>] [\-m <MiB>] [\-p <command line>]
-+.B run -k <kernel\-image> [\-c <cores>] [\-m <MB>] [\-p <command line>]
- .br
- .B [\-i <initrd>] [\-d <image file>] [\-\-console serial|virtio|hv]
- .br
-@@ -30,7 +30,7 @@ The number of virtual CPUs to run.
- .sp
- .B \-m, \-\-mem <n>
- .RS 4
--Virtual machine memory size in MiB.
-+Virtual machine memory size in MB.
- .RE
- .sp
- .B \-p, \-\-params <parameters>
-diff --git a/builtin-run.c b/builtin-run.c
-index 9a1a0c1fa6fb..0126c9fbcba6 100644
---- a/builtin-run.c
-+++ b/builtin-run.c
-@@ -97,7 +97,7 @@ void kvm_run_set_wrapper_sandbox(void)
- 			"A name for the guest"),			\
- 	OPT_INTEGER('c', "cpus", &(cfg)->nrcpus, "Number of CPUs"),	\
- 	OPT_U64('m', "mem", &(cfg)->ram_size, "Virtual machine memory"	\
--		" size in MiB."),					\
-+		" size in MB."),					\
- 	OPT_CALLBACK('d', "disk", kvm, "image or rootfs_dir", "Disk "	\
- 			" image or rootfs directory", img_name_parser,	\
- 			kvm),						\
+diff --git a/include/linux/sizes.h b/include/linux/sizes.h
+index ce3e8150c174..b2b5c457cf1c 100644
+--- a/include/linux/sizes.h
++++ b/include/linux/sizes.h
+@@ -8,40 +8,40 @@
+ #ifndef __LINUX_SIZES_H__
+ #define __LINUX_SIZES_H__
+ 
+-#define SZ_1				0x00000001
+-#define SZ_2				0x00000002
+-#define SZ_4				0x00000004
+-#define SZ_8				0x00000008
+-#define SZ_16				0x00000010
+-#define SZ_32				0x00000020
+-#define SZ_64				0x00000040
+-#define SZ_128				0x00000080
+-#define SZ_256				0x00000100
+-#define SZ_512				0x00000200
++#define SZ_1				0x00000001ULL
++#define SZ_2				0x00000002ULL
++#define SZ_4				0x00000004ULL
++#define SZ_8				0x00000008ULL
++#define SZ_16				0x00000010ULL
++#define SZ_32				0x00000020ULL
++#define SZ_64				0x00000040ULL
++#define SZ_128				0x00000080ULL
++#define SZ_256				0x00000100ULL
++#define SZ_512				0x00000200ULL
+ 
+-#define SZ_1K				0x00000400
+-#define SZ_2K				0x00000800
+-#define SZ_4K				0x00001000
+-#define SZ_8K				0x00002000
+-#define SZ_16K				0x00004000
+-#define SZ_32K				0x00008000
+-#define SZ_64K				0x00010000
+-#define SZ_128K				0x00020000
+-#define SZ_256K				0x00040000
+-#define SZ_512K				0x00080000
++#define SZ_1K				0x00000400ULL
++#define SZ_2K				0x00000800ULL
++#define SZ_4K				0x00001000ULL
++#define SZ_8K				0x00002000ULL
++#define SZ_16K				0x00004000ULL
++#define SZ_32K				0x00008000ULL
++#define SZ_64K				0x00010000ULL
++#define SZ_128K				0x00020000ULL
++#define SZ_256K				0x00040000ULL
++#define SZ_512K				0x00080000ULL
+ 
+-#define SZ_1M				0x00100000
+-#define SZ_2M				0x00200000
+-#define SZ_4M				0x00400000
+-#define SZ_8M				0x00800000
+-#define SZ_16M				0x01000000
+-#define SZ_32M				0x02000000
+-#define SZ_64M				0x04000000
+-#define SZ_128M				0x08000000
+-#define SZ_256M				0x10000000
+-#define SZ_512M				0x20000000
++#define SZ_1M				0x00100000ULL
++#define SZ_2M				0x00200000ULL
++#define SZ_4M				0x00400000ULL
++#define SZ_8M				0x00800000ULL
++#define SZ_16M				0x01000000ULL
++#define SZ_32M				0x02000000ULL
++#define SZ_64M				0x04000000ULL
++#define SZ_128M				0x08000000ULL
++#define SZ_256M				0x10000000ULL
++#define SZ_512M				0x20000000ULL
+ 
+-#define SZ_1G				0x40000000
+-#define SZ_2G				0x80000000
++#define SZ_1G				0x40000000ULL
++#define SZ_2G				0x80000000ULL
+ 
+ #endif /* __LINUX_SIZES_H__ */
 -- 
 2.36.1
 
