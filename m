@@ -2,52 +2,81 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 008AC535279
-	for <lists+kvmarm@lfdr.de>; Thu, 26 May 2022 19:19:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E0BB535A72
+	for <lists+kvmarm@lfdr.de>; Fri, 27 May 2022 09:33:02 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 61E454B2F0;
-	Thu, 26 May 2022 13:19:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 210614B359;
+	Fri, 27 May 2022 03:33:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -6.899
+X-Spam-Score: -1.788
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.899 required=6.1 tests=[BAYES_00=-1.9,
-	RCVD_IN_DNSWL_HI=-5, URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id u8TBOlPeVlWC; Thu, 26 May 2022 13:19:57 -0400 (EDT)
+	with ESMTP id 1wqeXYvKfkc5; Fri, 27 May 2022 03:33:01 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 23F2D4B292;
-	Thu, 26 May 2022 13:19:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D7C754B353;
+	Fri, 27 May 2022 03:32:59 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6941B4B1A9
- for <kvmarm@lists.cs.columbia.edu>; Thu, 26 May 2022 13:19:56 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 50EEB4B29C
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 May 2022 16:08:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Y8yvI4kpcEiU for <kvmarm@lists.cs.columbia.edu>;
- Thu, 26 May 2022 13:19:55 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1C0B64B24B
- for <kvmarm@lists.cs.columbia.edu>; Thu, 26 May 2022 13:19:55 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 829EF150C;
- Thu, 26 May 2022 10:19:54 -0700 (PDT)
-Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B54E03F66F;
- Thu, 26 May 2022 10:19:52 -0700 (PDT)
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-To: will@kernel.org, julien.thierry.kdev@gmail.com, maz@kernel.org,
- andre.przywara@arm.com, suzuki.poulose@arm.com, james.morse@arm.com,
- vladimir.murzin@arm.com, anup@brainfault.org,
- linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v2 kvmtool 2/2] INSTALL: Remove all mentions of libfdt
-Date: Thu, 26 May 2022 18:19:55 +0100
-Message-Id: <20220526171955.145563-3-alexandru.elisei@arm.com>
-X-Mailer: git-send-email 2.36.1
-In-Reply-To: <20220526171955.145563-1-alexandru.elisei@arm.com>
-References: <20220526171955.145563-1-alexandru.elisei@arm.com>
+ with ESMTP id 9RRFYniIFY6b for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 26 May 2022 16:08:58 -0400 (EDT)
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com
+ [209.85.221.42])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5286C4B28F
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 May 2022 16:08:58 -0400 (EDT)
+Received: by mail-wr1-f42.google.com with SMTP id e2so3438459wrc.1
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 26 May 2022 13:08:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=KDEmYOOyoOP2tQlMyYbksUoCrMBj3K7WkocsVGt/GNE=;
+ b=dHMXbu81V1p8lsCx1fltXdZyN0c2mVuAOYAI/LTIgHtinTY1YkSKHhFH4K2z/xFp1q
+ Od+v2kkgf56CZj5kGs5hhJRFzvA2IOBEnN72WDljkbHjvlMu0T5gSmSUDDlOpwjY7OUT
+ gmqz1bVuRdoBngs55rnyoQAvFbKvodBpG4gl8vr3VFsjc4Yuexub+noaUD4/v8h1P1/4
+ m8YI2qINRKRJsGyzkEocy7INhgZoojFpQHo+VPqKEZE+Je/tdGzWng1W/gBoVxF0iJRE
+ C3CNT5yEUHq4gy5B4AEkyvT/1xDJVkTEvR0BoisEuiJq4nPgztUPLDqvenCgNrU9Uejk
+ /jwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=KDEmYOOyoOP2tQlMyYbksUoCrMBj3K7WkocsVGt/GNE=;
+ b=XoZ+B6Oh5SfEnwWdUkTpfNqoGOaR61h1uRBqeiqcWTXT+AXYteXHKZYq9OjVM9Eej7
+ bV+H2X1UpvNh/KkeVP1jKFVMmbywcKpP1mzEu7Dxac0ISt7Erbg/4RP1Nr8iX8w7bQZ3
+ +3khCTfUvfEW4TtFpNauUGMNXU39bgfPWHlw/SgOBSMhOEmP3drobqfGT6J7a7A2oX2Y
+ 2m/9O3vUtSIc2AkzpFsdp5z1jnHoo8hPB3l2vBuV6T30vkSxfVE3l7sZM7oqr9CnEG/2
+ EPyU2wqBah5bZUun6u2XB8RNQZ4NIHe9yEvK2RQhPkdCHfi+mAwEGhaPcjowNpuXaNem
+ Aabg==
+X-Gm-Message-State: AOAM530l2z+ljUC/kto+Mjvg4cKLKlFyrqn+VJtGR8az1sCG/0JfS9h2
+ zgFcf7B9xtc3Gm4tz8vh7OPRLGHdw6hIwRDVEeYnTg==
+X-Google-Smtp-Source: ABdhPJyaxPLGqTMtr/VToX80lhngruza82vVEBGRO0bKZQpIdREr22K3VR4QqvnYJmC04nw+CeHbap8M7tbV1tQuP/0=
+X-Received: by 2002:adf:d1ee:0:b0:210:d63:6570 with SMTP id
+ g14-20020adfd1ee000000b002100d636570mr3269809wrd.673.1653595737089; Thu, 26
+ May 2022 13:08:57 -0700 (PDT)
 MIME-Version: 1.0
+References: <20220519134204.5379-1-will@kernel.org>
+ <20220519134204.5379-60-will@kernel.org>
+In-Reply-To: <20220519134204.5379-60-will@kernel.org>
+From: Peter Collingbourne <pcc@google.com>
+Date: Thu, 26 May 2022 13:08:45 -0700
+Message-ID: <CAMn1gO4_d75_88fg5hcnBqx+tdu-9pG7atzt-qUD1nhUNs5TyQ@mail.gmail.com>
+Subject: Re: [PATCH 59/89] KVM: arm64: Do not support MTE for protected VMs
+To: Will Deacon <will@kernel.org>
+X-Mailman-Approved-At: Fri, 27 May 2022 03:32:58 -0400
+Cc: Marc Zyngier <maz@kernel.org>, kernel-team@android.com, kvm@vger.kernel.org,
+ Andy Lutomirski <luto@amacapital.net>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>,
+ Michael Roth <michael.roth@amd.com>, Catalin Marinas <catalin.marinas@arm.com>,
+ Chao Peng <chao.p.peng@linux.intel.com>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -64,59 +93,17 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-kvmtool doesn't have a dependency on the external libfdt library anymore,
-remove the instructions to compile and install it.
+On Thu, May 19, 2022 at 7:40 AM Will Deacon <will@kernel.org> wrote:
+>
+> From: Fuad Tabba <tabba@google.com>
+>
+> Return an error (-EINVAL) if trying to enable MTE on a protected
+> vm.
 
-Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
----
- INSTALL | 27 +--------------------------
- 1 file changed, 1 insertion(+), 26 deletions(-)
+I think this commit message needs more explanation as to why MTE is
+not currently supported in protected VMs.
 
-diff --git a/INSTALL b/INSTALL
-index 951b12339887..db51c0fa8db6 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -26,11 +26,6 @@ For Fedora based systems:
- For OpenSUSE based systems:
- 	# zypper install glibc-devel-static
- 
--Architectures which require device tree (PowerPC, ARM, ARM64, RISC-V) also
--require libfdt.
--	deb: $ sudo apt-get install libfdt-dev
--	Fedora: # yum install libfdt-devel
--	OpenSUSE: # zypper install libfdt1-devel
- Also see "Cross compiling" below.
- 
- Optional libraries
-@@ -77,24 +72,4 @@ Missing libraries when cross-compiling
- The cross-compiler will look for target libraries in its SYSROOT directory,
- so you need to put the header and library files (.so) there.
- While most cross compiler packages come with the target's glibc already
--installed, optional libraries (or libfdt) maybe not.
--On multiarch system you should be able to install those be appending
--the architecture name after the package (example for ARM64):
--$ sudo apt-get install libfdt-dev:arm64
--
--PowerPC, ARM/ARM64 and RISC-V require libfdt to be installed. If you cannot use
--precompiled mulitarch packages, you could either copy the required header and
--library files from an installed target system into the SYSROOT (you will need
--/usr/include/*fdt*.h and /usr/lib64/libfdt-v.v.v.so and its symlinks), or you
--can cross-compile the libfdt library yourself:
--
--$ git clone git://git.kernel.org/pub/scm/utils/dtc/dtc.git
--$ cd dtc
--$ export CC=${CROSS_COMPILE}gcc
--$ TRIPLET=$($CC -dumpmachine)
--$ SYSROOT=$($CC -print-sysroot)
--$ make libfdt
--$ sudo make DESTDIR=$SYSROOT PREFIX=/usr LIBDIR=/usr/lib/$TRIPLET install-lib install-includes
--
--This assumes a multiarch-enabled system, if there is no per-arch directory for
--libraries, replace the LIBDIR paths above with LIBDIR=/usr/lib or /usr/lib64.
-+installed, optional libraries may not be present.
--- 
-2.36.1
-
+Peter
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
