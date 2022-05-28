@@ -2,93 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A27C6536BB3
-	for <lists+kvmarm@lfdr.de>; Sat, 28 May 2022 10:41:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A260C536C82
+	for <lists+kvmarm@lfdr.de>; Sat, 28 May 2022 13:38:43 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 906364B2FA;
-	Sat, 28 May 2022 04:41:05 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 17E9B4B2B5;
+	Sat, 28 May 2022 07:38:43 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -1.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id O0tQZDlF-65h; Sat, 28 May 2022 04:41:05 -0400 (EDT)
+	with ESMTP id t+Dg2qEiaVUB; Sat, 28 May 2022 07:38:41 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 423184B2F9;
-	Sat, 28 May 2022 04:41:04 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 00F5E4B2F2;
+	Sat, 28 May 2022 07:38:40 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id D43824B1BF
- for <kvmarm@lists.cs.columbia.edu>; Fri, 27 May 2022 14:34:06 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EEC114B2DC
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 28 May 2022 07:38:38 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id zMR8q4Xqs2zH for <kvmarm@lists.cs.columbia.edu>;
- Fri, 27 May 2022 14:34:05 -0400 (EDT)
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com
- [209.85.221.45])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6787249ED2
- for <kvmarm@lists.cs.columbia.edu>; Fri, 27 May 2022 14:34:05 -0400 (EDT)
-Received: by mail-wr1-f45.google.com with SMTP id u3so6893368wrg.3
- for <kvmarm@lists.cs.columbia.edu>; Fri, 27 May 2022 11:34:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=ZMRaR78nxxjwROTv5Xv0uCrlGpUNKsmrgGJVBdvr8Ow=;
- b=MkzqrGgvYlJnACcMhuImZMacQWLHV1sfIdXNuvsTHnrOm/OtJW/K9hyD3QxlczsLoT
- y8wk264wphMEIWY/RDJ7JWPjvXefBQcB7eVBOUBhZ+RsMwz/xaX7hq5oPUFVoNm6gk+9
- ECC8TXoBKcjMQzd/Lx+VaeiZUjV0ikBmp5ZprAw/qhOBi6WaPZolyclGk7kbaG4wUmNU
- +mIFZCiGrm+cA09ar5e2i9xVloL7GuFnwLMsoJoJXN3aAZ1DbrqnVYdqcioLJkScP577
- ZEsHAj7/WcJolt2zrK/cc8Q5BlFMYbDm2Oga3A+8NHOYgCiMkGz8pf41smTE0Irti5Jf
- eM3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=ZMRaR78nxxjwROTv5Xv0uCrlGpUNKsmrgGJVBdvr8Ow=;
- b=bUDlymClrCmx1/oLGf/FVPcuv5rhOmkiZDjD2wQByaUrDtUQqVhgnlIJDo6FKmyTvs
- UCLabJYMeoD+rcOk5CG20FXsRoi/ldPuAuHsFiKJaeEwnqbG0aGmlR688OPkP6/7Noxg
- zHIKZ/QbFGnogTGte0i4FmtViE8Zwu2cS3Ql1xFDGPUI0FGr5j5idOrt27FOID+Wc9OP
- C5n/jGi5TvnK8b2bls4i1V4tA6N9bv/ALxSkya0H8VukQIn23B1aJPxqtt9qnBimIk4V
- 3Kuacdrk28qxujMz9bQVhrtAek8kOARnuee26hhgB/cUBXp0cwbHfhg+bpN/f/dQ4t6J
- 3qWg==
-X-Gm-Message-State: AOAM532EdnSKGl42pOogT75eKS+4fe1LgnwX8uTQ9sAWOB+whCAwGaEa
- H04sGeXCereKfJh1DZHAh9E59EgFBGRyKZ6XMLmnEw==
-X-Google-Smtp-Source: ABdhPJxUkKLq8UKhcdaeqCHY4EBxsrPSLnU5/L22u7NUw4uGgA00AplmrdnobCWk7FoVQrgXmXTGsKhVFFO9PCXmQT8=
-X-Received: by 2002:a05:6000:544:b0:20f:ca41:cc4c with SMTP id
- b4-20020a056000054400b0020fca41cc4cmr26548956wrf.582.1653676444165; Fri, 27
- May 2022 11:34:04 -0700 (PDT)
+ with ESMTP id r-HkTI3Z6-VN for <kvmarm@lists.cs.columbia.edu>;
+ Sat, 28 May 2022 07:38:37 -0400 (EDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 855844B20B
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 28 May 2022 07:38:37 -0400 (EDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 6B73660E0B;
+ Sat, 28 May 2022 11:38:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD711C34100;
+ Sat, 28 May 2022 11:38:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1653737915;
+ bh=ilVaGNUY2ZXHsoxp/MAtbHmtD44iJjr2rbSSEdp1W3k=;
+ h=From:To:Cc:Subject:Date:From;
+ b=hpr+TjUEEquAuRd1JaDDu38Z3bVPRNU+bLoeL9BUsQcFvOsjC2wQjx1CFTE9jH/N4
+ 6JjO2GwwsUb70DzroJjNoilZg42B5IB5eO/Kx+/h3gMEIa96oyyWyGEg0MSlh2mKZr
+ bf9D6iNe/xSw1dVtd8xbBks5dCOYnQBC9lhL6Vj7SlHiAyFgrmHFRGQIGVlq29X1vF
+ Hn7zT8UXX6GJ7jyKTeeg/1hsOPAsq0nttoPkfEYdx7EVPhurwmFjAhCeWLsLeNFlzD
+ Z/WbcCDdhL1qkznvbSAfTK4TltKNCdXvc72H0r6jAsYPJPJTxRt2tDJHKNromnOdlD
+ HeSB/ZriMR6XQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1nuum9-00EEGh-AZ; Sat, 28 May 2022 12:38:33 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
+Subject: [PATCH 00/18] KVM/arm64: Refactoring the vcpu flags
+Date: Sat, 28 May 2022 12:38:10 +0100
+Message-Id: <20220528113829.1043361-1-maz@kernel.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <CAJD7tkY7JF25XXUFq2mGroetMkfo-2zGOaQC94pjZE3D42+oaw@mail.gmail.com>
- <Yn2TGJ4vZ/fst+CY@cmpxchg.org> <Yn2YYl98Vhh/UL0w@google.com>
- <Yn5+OtZSSUZZgTQj@cmpxchg.org> <Yn6DeEGLyR4Q0cDp@google.com>
- <CALvZod6nERq4j=L0V+pc-rd5+QKi4yb_23tWV-1MF53xL5KE6Q@mail.gmail.com>
- <CAJD7tka-5+XRkthNV4qCg8woPCpjcwynQoRBame-3GP1L8y+WQ@mail.gmail.com>
- <YoeoLJNQTam5fJSu@cmpxchg.org>
- <CAJD7tkYjcmwBeUx-=MTQeUf78uqFDvfpy7OuKy4OvoS7HiVO1Q@mail.gmail.com>
- <Yo4Ze+DZrLqn0PeU@cmpxchg.org> <Yo7MHA2aUaprvgl8@google.com>
-In-Reply-To: <Yo7MHA2aUaprvgl8@google.com>
-From: Yosry Ahmed <yosryahmed@google.com>
-Date: Fri, 27 May 2022 11:33:27 -0700
-Message-ID: <CAJD7tkYoz=rYvBV3tcp4aLgiyEtr-sBwbncFduZsOq+c8wk5sA@mail.gmail.com>
-Subject: Re: [PATCH v4 1/4] mm: add NR_SECONDARY_PAGETABLE to count secondary
- page table uses.
-To: Sean Christopherson <seanjc@google.com>
-X-Mailman-Approved-At: Sat, 28 May 2022 04:41:03 -0400
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- Roman Gushchin <roman.gushchin@linux.dev>, Michal Hocko <mhocko@kernel.org>,
- Linux-MM <linux-mm@kvack.org>, Zefan Li <lizefan.x@bytedance.com>,
- kvmarm@lists.cs.columbia.edu, Marc Zyngier <maz@kernel.org>,
- Joerg Roedel <joro@8bytes.org>, Shakeel Butt <shakeelb@google.com>,
- Cgroups <cgroups@vger.kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Johannes Weiner <hannes@cmpxchg.org>, Tejun Heo <tj@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, james.morse@arm.com,
+ suzuki.poulose@arm.com, alexandru.elisei@arm.com, oupton@google.com,
+ will@kernel.org, tabba@google.com, qperret@google.com, broonie@kernel.org,
+ kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com, Will Deacon <will@kernel.org>,
+ Mark Brown <broonie@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -105,62 +90,97 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, May 25, 2022 at 5:39 PM Sean Christopherson <seanjc@google.com> wrote:
->
-> On Wed, May 25, 2022, Johannes Weiner wrote:
-> > On Tue, May 24, 2022 at 03:31:52PM -0700, Yosry Ahmed wrote:
-> > > I don't have enough context to say whether we should piggyback KVM MMU
-> > > pages to the existing NR_PAGETABLE item, but from a high level it
-> > > seems like it would be more helpful if they are a separate stat.
-> > > Anyway, I am willing to go with whatever Sean thinks is best.
-> >
-> > Somebody should work this out and put it into a changelog. It's
-> > permanent ABI.
->
-> After a lot of waffling, my vote is to add a dedicated NR_SECONDARY_PAGETABLE.
->
-> It's somewhat redundant from a KVM perspective, as NR_SECONDARY_PAGETABLE will
-> scale with KVM's per-VM pages_{4k,2m,1g} stats unless the guest is doing something
-> bizarre, e.g. accessing only 4kb chunks of 2mb pages so that KVM is forced to
-> allocate a large number of page tables even though the guest isn't accessing that
-> much memory.
->
-> But, someone would need to either understand how KVM works to make that connection,
-> or know (or be told) to go look at KVM's stats if they're running VMs to better
-> decipher the stats.
->
-> And even in the little bit of time I played with this, I found having
-> nr_page_table_pages side-by-side with nr_secondary_page_table_pages to be very
-> informative.  E.g. when backing a VM with THP versus HugeTLB,
-> nr_secondary_page_table_pages is roughly the same, but nr_page_table_pages is an
-> order of a magnitude higher with THP.  I'm guessing the THP behavior is due to
-> something triggering DoubleMap, but now I want to find out why that's happening.
->
-> So while I'm pretty sure a clever user could glean the same info by cross-referencing
-> NR_PAGETABLE stats with KVM stats, I think having NR_SECONDARY_PAGETABLE will at the
-> very least prove to be helpful for understanding tradeoffs between VM backing types,
-> and likely even steer folks towards potential optimizations.
->
-> Baseline:
->   # grep page_table /proc/vmstat
->   nr_page_table_pages 2830
->   nr_secondary_page_table_pages 0
->
-> THP:
->   # grep page_table /proc/vmstat
->   nr_page_table_pages 7584
->   nr_secondary_page_table_pages 140
->
-> HugeTLB:
->   # grep page_table /proc/vmstat
->   nr_page_table_pages 3153
->   nr_secondary_page_table_pages 153
->
+While working on pKVM, it slowly became apparent that dealing with the
+flags was a pain, as they serve multiple purposes:
 
-Interesting findings! Thanks for taking the time to look into this, Sean!
-I will refresh this patchset and summarize the discussion in the
-commit message, and also fix some nits on the KVM side. Does this
-sound good to everyone?
+- some flags are purely a configuration artefact,
+
+- some are an input from the host kernel to the world switch,
+
+- a bunch of them are bookkeeping information for the kernel itself,
+
+- and finally some form a state machine between the host and the world
+  switch.
+
+Given that, it became pretty hard to clearly delineate what needed to
+be conveyed between the host view of a vcpu and the shadow copy the
+world switch deals with, both on entry and exit. This has led to a
+flurry of bad bugs when developing the feature, and it is time to put
+some order in this mess.
+
+This series is roughly split in four parts:
+
+- patch 1 addresses an embarrassing bug that would leave SVE enabled
+  for host EL0 once the vcpu had the flag set (it was never cleared),
+  and patch 2 fix the same bug for SME, as it copied the bad
+  behaviour (both patches are fix candidates for -rc1, and the first
+  one carries a Cc stable).
+
+- patches 3 and 4 rid us of the FP flags altogether, as they really
+  form a state machine that is better represented with an enum instead
+  of dubious bit fiddling in both directions.
+
+- patch 5 through to 14 split all the flags into three distinct
+  categories: configuration, input to the world switch, and host
+  state, using some ugly^Wbeautiful^Wquestionable cpp tricks.
+
+- finally, the last patches add some cheap hardening and size
+  optimisation to the new flags.
+
+With that in place, it should be much easier to reason about which
+flags need to be synchronised at runtime, and in which direction (for
+pKVM, this is only a subset of the input flags, and nothing else).
+
+This has been lightly tested on both VHE and nVHE systems, but not
+with pKVM itself (there is a bit of work to rebase it on top of this
+infrastructure). Patches on top of kvmarm-4.19 (there is a minor
+conflict with Linus' current tree).
+
+Marc Zyngier (18):
+  KVM: arm64: Always start with clearing SVE flag on load
+  KVM: arm64: Always start with clearing SME flag on load
+  KVM: arm64: Drop FP_FOREIGN_STATE from the hypervisor code
+  KVM: arm64: Move FP state ownership from flag to a tristate
+  KVM: arm64: Add helpers to manipulate vcpu flags among a set
+  KVM: arm64: Add three sets of flags to the vcpu state
+  KVM: arm64: Move vcpu configuration flags into their own set
+  KVM: arm64: Move vcpu PC/Exception flags to the input flag set
+  KVM: arm64: Move vcpu debug/SPE/TRBE flags to the input flag set
+  KVM: arm64: Move vcpu SVE/SME flags to the state flag set
+  KVM: arm64: Move vcpu ON_UNSUPPORTED_CPU flag to the state flag set
+  KVM: arm64: Move vcpu WFIT flag to the state flag set
+  KVM: arm64: Kill unused vcpu flags field
+  KVM: arm64: Convert vcpu sysregs_loaded_on_cpu to a state flag
+  KVM: arm64: Warn when PENDING_EXCEPTION and INCREMENT_PC are set
+    together
+  KVM: arm64: Add build-time sanity checks for flags
+  KVM: arm64: Reduce the size of the vcpu flag members
+  KVM: arm64: Document why pause cannot be turned into a flag
+
+ arch/arm64/include/asm/kvm_emulate.h       |   3 +-
+ arch/arm64/include/asm/kvm_host.h          | 192 +++++++++++++++------
+ arch/arm64/kvm/arch_timer.c                |   2 +-
+ arch/arm64/kvm/arm.c                       |   6 +-
+ arch/arm64/kvm/debug.c                     |  22 +--
+ arch/arm64/kvm/fpsimd.c                    |  36 ++--
+ arch/arm64/kvm/handle_exit.c               |   2 +-
+ arch/arm64/kvm/hyp/exception.c             |  23 ++-
+ arch/arm64/kvm/hyp/include/hyp/debug-sr.h  |   6 +-
+ arch/arm64/kvm/hyp/include/hyp/switch.h    |  24 +--
+ arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h |   4 +-
+ arch/arm64/kvm/hyp/nvhe/debug-sr.c         |   8 +-
+ arch/arm64/kvm/hyp/nvhe/switch.c           |   6 +-
+ arch/arm64/kvm/hyp/nvhe/sys_regs.c         |   7 +-
+ arch/arm64/kvm/hyp/vhe/switch.c            |   4 +-
+ arch/arm64/kvm/hyp/vhe/sysreg-sr.c         |   4 +-
+ arch/arm64/kvm/inject_fault.c              |  30 ++--
+ arch/arm64/kvm/reset.c                     |   6 +-
+ arch/arm64/kvm/sys_regs.c                  |  12 +-
+ 19 files changed, 238 insertions(+), 159 deletions(-)
+
+-- 
+2.34.1
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
