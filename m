@@ -2,65 +2,66 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C72ED536CA2
-	for <lists+kvmarm@lfdr.de>; Sat, 28 May 2022 13:49:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C03BE536CB0
+	for <lists+kvmarm@lfdr.de>; Sat, 28 May 2022 13:50:14 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 33E1F4B335;
-	Sat, 28 May 2022 07:49:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6B7414B116;
+	Sat, 28 May 2022 07:50:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -6.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01,
+X-Spam-Status: No, score=-6.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_HI=-5, T_DKIM_INVALID=0.01,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9yi3GxsGMqeH; Sat, 28 May 2022 07:49:58 -0400 (EDT)
+	with ESMTP id SKaOSrE9+4vF; Sat, 28 May 2022 07:50:12 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C1944B32E;
-	Sat, 28 May 2022 07:49:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EAEAF4B33E;
+	Sat, 28 May 2022 07:50:11 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2CBE44B2AA
- for <kvmarm@lists.cs.columbia.edu>; Sat, 28 May 2022 07:49:56 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 768E94B28F
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 28 May 2022 07:50:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id FpLACmDmkikf for <kvmarm@lists.cs.columbia.edu>;
- Sat, 28 May 2022 07:49:55 -0400 (EDT)
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C99774B108
- for <kvmarm@lists.cs.columbia.edu>; Sat, 28 May 2022 07:49:54 -0400 (EDT)
+ with ESMTP id 34zDK-VeDda7 for <kvmarm@lists.cs.columbia.edu>;
+ Sat, 28 May 2022 07:50:07 -0400 (EDT)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 791FF4B320
+ for <kvmarm@lists.cs.columbia.edu>; Sat, 28 May 2022 07:50:06 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by sin.source.kernel.org (Postfix) with ESMTPS id 7EA91CE191E;
- Sat, 28 May 2022 11:49:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC160C34100;
- Sat, 28 May 2022 11:49:49 +0000 (UTC)
+ by ams.source.kernel.org (Postfix) with ESMTPS id 6BBFFB816FE;
+ Sat, 28 May 2022 11:50:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2088AC34118;
+ Sat, 28 May 2022 11:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1653738589;
- bh=OvbuqjCsYRsACHJmFHA5RtdLvj3YPOeVzGbn+ZzrKrQ=;
+ s=k20201202; t=1653738604;
+ bh=KMwi+oCF55/vO8plIgUNFSEzhuYgMbACCUE98soIwB8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=eu3l4UaY7mnC7O9DPaOKnbpHQYefi9Fjlv+v3XUB5+VGlJmIAJ/35hbiqkPtfQCbS
- Z61gRVAPd+I8n3H5IKXZcVYU1s58VdwEDqCcgviY2jy4YyIPcUZ+RmvlTN7iCocT/8
- qOoaAaof17sAZ9HubdVKWW1JiviiF+B41nb88IQZzRTUFMG6YwbGYgnAOnFzg20PC5
- 2RsCsIkw/vzCvoGEFHpbyOKKhpKzvX3fyvgBvESEfOuUcXM2a51+GoPULhE3mJxJlL
- uhMhbl9dOPNsxFA8mVFkzM86fcGkjX9Pn0yCwrebkf54jUFW5yxa/8pRIWzwzoTq+9
- Z9nAx1FEpdgkw==
+ b=T3hI8rfuQBsgLszaqhqU15iR8sD+Z2zDQM27dvaj32XX2yhaZztqlT4xRjLMiJ8Qa
+ 3/6YpzAeXwhtl2a7vx6Q/effM1FskrKMbYFpP1CCmjTbHWY8oQ1yKl8+WhYBFhcq8L
+ +MJWCI7UweKTJ4bQ+IX3quF1bNxiP43mfy+SsgZpEiZvHnEmW4yJL625/VtTBwVJc3
+ 9aU/UfBkibE18T1Z0v/DjcM8Hb9j+wJLqw+gfD/voc4fZmIIeU9pcPRKLeYd9VwVkd
+ B4fEX2XBEiSqwQ/PsgUwmSXy7O/+8rAn33kK6J/s10cmr6ZRH3hmtqEaC5Uqw2ZhyN
+ BpIMfC7v0kTsQ==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1nuumD-00EEGh-LB; Sat, 28 May 2022 12:38:37 +0100
+ id 1nuumD-00EEGh-Tr; Sat, 28 May 2022 12:38:37 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 17/18] KVM: arm64: Reduce the size of the vcpu flag members
-Date: Sat, 28 May 2022 12:38:27 +0100
-Message-Id: <20220528113829.1043361-18-maz@kernel.org>
+Subject: [PATCH 18/18] KVM: arm64: Document why pause cannot be turned into a
+ flag
+Date: Sat, 28 May 2022 12:38:28 +0100
+Message-Id: <20220528113829.1043361-19-maz@kernel.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220528113829.1043361-1-maz@kernel.org>
 References: <20220528113829.1043361-1-maz@kernel.org>
@@ -92,39 +93,51 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Now that we can detect flags overflowing their container, reduce
-the size of all flag set members in the vcpu struct, turning them
-into 8bit quantities.
+It would be tempting to turn the 'pause' state into a flag.
 
-Even with the FP state enum occupying 32bit, the whole of the state
-that was represented by flags is smaller by one byte. Profit!
+However, this cannot easily be done as it is updated out of context,
+while all the flags expect to only be updated from the vcpu thread.
+Turning it into a flag would require to make all flag updates
+atomic, which isn't necessary desireable.
+
+Document this, and take this opportunity to move the field next
+to the flag sets, filling a hole in the vcpu structure.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/kvm_host.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/include/asm/kvm_host.h | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 70931231f0cb..83f3dae4333a 100644
+index 83f3dae4333a..8c47b7f8ef92 100644
 --- a/arch/arm64/include/asm/kvm_host.h
 +++ b/arch/arm64/include/asm/kvm_host.h
-@@ -336,13 +336,13 @@ struct kvm_vcpu_arch {
- 	} fp_state;
- 
- 	/* Configuration flags */
--	u64 cflags;
-+	u8 cflags;
- 
- 	/* Input flags to the hypervisor code */
--	u64 iflags;
-+	u8 iflags;
- 
+@@ -344,6 +344,15 @@ struct kvm_vcpu_arch {
  	/* State flags, unused by the hypervisor code */
--	u64 sflags;
-+	u8 sflags;
+ 	u8 sflags;
  
++	/*
++	 * Don't run the guest (internal implementation need).
++	 *
++	 * Contrary to the flags above, this is set/cleared outside of
++	 * a vcpu context, and thus cannot be mixed with the flags
++	 * themselves (or the flag accesses need to be made atomic).
++	 */
++	bool pause;
++
  	/*
  	 * We maintain more than a single set of debug registers to support
+ 	 * debugging the guest from the host and to maintain separate host and
+@@ -397,9 +406,6 @@ struct kvm_vcpu_arch {
+ 	/* vcpu power state */
+ 	struct kvm_mp_state mp_state;
+ 
+-	/* Don't run the guest (internal implementation need) */
+-	bool pause;
+-
+ 	/* Cache some mmu pages needed inside spinlock regions */
+ 	struct kvm_mmu_memory_cache mmu_page_cache;
+ 
 -- 
 2.34.1
 
