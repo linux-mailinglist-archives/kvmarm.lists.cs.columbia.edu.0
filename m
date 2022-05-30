@@ -2,66 +2,53 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DF6335383C2
-	for <lists+kvmarm@lfdr.de>; Mon, 30 May 2022 16:51:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DF1453A60B
+	for <lists+kvmarm@lfdr.de>; Wed,  1 Jun 2022 15:40:31 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0F3FE4B24F;
-	Mon, 30 May 2022 10:51:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 147AF4B38F;
+	Wed,  1 Jun 2022 09:40:30 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -0.559
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-0.559 required=6.1 tests=[BAYES_00=-1.9,
+	DATE_IN_PAST_24_48=1.34, URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 20M9sWZDBcsG; Mon, 30 May 2022 10:51:33 -0400 (EDT)
+	with ESMTP id t3a-d2ilW2W5; Wed,  1 Jun 2022 09:40:29 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CEB974B27F;
-	Mon, 30 May 2022 10:51:32 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D35A49EC5;
+	Wed,  1 Jun 2022 09:40:28 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EF6B94B178
- for <kvmarm@lists.cs.columbia.edu>; Mon, 30 May 2022 10:51:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 68E534B382
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Jun 2022 09:40:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id JxQRLzWCXbZX for <kvmarm@lists.cs.columbia.edu>;
- Mon, 30 May 2022 10:51:29 -0400 (EDT)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E3C554B19F
- for <kvmarm@lists.cs.columbia.edu>; Mon, 30 May 2022 10:51:29 -0400 (EDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id D7B9C60F47;
- Mon, 30 May 2022 14:51:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE87DC3411E;
- Mon, 30 May 2022 14:51:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1653922288;
- bh=zIS303ND/ipmUxzUl0cjT6WILUpauYfW4NIWc/vz/oo=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=d96MfobovSzVRjGjNOhCLFB3kwhwzT9duEtP6BfpsqNOx6Dlsw7TL9p8OynqPl1xx
- tZKJt5XBiPYT7FhnT15yJHRl+crOFznGvfjbA5bV168fGTK6O9R0fR0oV9o84wOZFK
- RL7W/9N7rGmrgYPw1m8mM0DiBLrHw045eorTvRl2uKfaa6+pe5aoDFVZwGkhMvCU6U
- rtG+RwDDUd8fjuUHP3oP3mnXmYwYM1Pc2C4ROTu4rxRrPMS+pQBqcJtynGnkBSMxo+
- L1InQ8FcyYzr3egtS/KL6QGm7PZMpG8mb9UEbo6Vb2IQxP8sBke6IVpuoSsDc638WT
- NW+1mUzJwx7dQ==
-Date: Mon, 30 May 2022 16:51:25 +0200
-From: Mark Brown <broonie@kernel.org>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH 02/18] KVM: arm64: Always start with clearing SME flag on
- load
-Message-ID: <YpTZ7btyYNOidHmO@sirena.org.uk>
-References: <20220528113829.1043361-1-maz@kernel.org>
- <20220528113829.1043361-3-maz@kernel.org>
+ with ESMTP id QUO90fImy6Zn for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  1 Jun 2022 09:40:26 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id ECD204B166
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Jun 2022 09:40:25 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5DF65ED1;
+ Wed,  1 Jun 2022 06:40:25 -0700 (PDT)
+Received: from donnerap.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com
+ [10.121.207.14])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1BD893F73D;
+ Wed,  1 Jun 2022 06:40:24 -0700 (PDT)
+Date: Mon, 30 May 2022 16:05:17 +0100
+From: Andre Przywara <andre.przywara@arm.com>
+To: Alexandru Elisei <alexandru.elisei@arm.com>
+Subject: Re: [PATCH v3 kvmtool 02/13] sizes.h: Make all sizes 64bit
+Message-ID: <20220530160517.657115f8@donnerap.cambridge.arm.com>
+In-Reply-To: <20220525112345.121321-3-alexandru.elisei@arm.com>
+References: <20220525112345.121321-1-alexandru.elisei@arm.com>
+ <20220525112345.121321-3-alexandru.elisei@arm.com>
+Organization: ARM
+X-Mailer: Claws Mail 3.18.0 (GTK+ 2.24.32; aarch64-unknown-linux-gnu)
 MIME-Version: 1.0
-In-Reply-To: <20220528113829.1043361-3-maz@kernel.org>
-X-Cookie: May your camel be as swift as the wind.
-Cc: kernel-team@android.com, kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
+Cc: julien@xen.org, maz@kernel.org, will@kernel.org,
  kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -74,58 +61,113 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============6380787444174705675=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+On Wed, 25 May 2022 12:23:34 +0100
+Alexandru Elisei <alexandru.elisei@arm.com> wrote:
 
---===============6380787444174705675==
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="09dlo0gX1RQg6igT"
-Content-Disposition: inline
+Hi,
 
+> Append ULL to all of the size definitions to make them 64bit and avoid
+> overflows.
 
---09dlo0gX1RQg6igT
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I am not fully convinced this is the best solution, as it deviates from
+the kernel file, and just papers over issues at the call sites. I
+acknowledge the pragmatic approach of trying to fix multiple problems at
+once, but am wondering if we should use -fsanitize=undefined to identify
+problematic code and fix it (I started doing this, actually).
 
-On Sat, May 28, 2022 at 12:38:12PM +0100, Marc Zyngier wrote:
-> On each vcpu load, we set the KVM_ARM64_HOST_SME_ENABLED
-> flag if SVE is enabled for EL0 on the host. This is used to
-> restore the correct state on vpcu put.
+Cheers,
+Andre
 
-s/SVE/SME/
-
-but otherwise
-
-Reviwed-by: Mark Brown <broonie@kernel.org>
-
---09dlo0gX1RQg6igT
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmKU2ewACgkQJNaLcl1U
-h9CsOAf/ch7hbdVBEYHqj9l2Bu7hPD45KvDptN/N2xZb8fzBVzmvvY+hO36KHUUJ
-Wpdw3LosZwyeVxuDAKFeJRPZm/KeiNTS8eD51W6ZjeL4gDXLY1i0WFpDIr4Ue74b
-mrElUFTjjrxgBQDSL2nwY9+dgwYxrKAM7697ortKfcU1aUUg9NfoOTagFwzFy0pn
-P4ylovcmwFO9OWVhk9gXJwcaAi/4NttFQHrgMUkXyn9CTPLP3XzMeRxn6v+KBHCK
-sbdXlECu/fK7NEkHylhE5IPKfZRqAgn4TydtOM5LseTeiLbasOPqWWF0sRRnfOjC
-+o+/WxGkZCXXwQR8mhH/TR9JEOdfDA==
-=SNHP
------END PGP SIGNATURE-----
-
---09dlo0gX1RQg6igT--
-
---===============6380787444174705675==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+> Reported-by: Andre Przywara <andre.przywara@arm.com>
+> Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
+> ---
+>  include/linux/sizes.h | 64 +++++++++++++++++++++----------------------
+>  1 file changed, 32 insertions(+), 32 deletions(-)
+> 
+> diff --git a/include/linux/sizes.h b/include/linux/sizes.h
+> index ce3e8150c174..b2b5c457cf1c 100644
+> --- a/include/linux/sizes.h
+> +++ b/include/linux/sizes.h
+> @@ -8,40 +8,40 @@
+>  #ifndef __LINUX_SIZES_H__
+>  #define __LINUX_SIZES_H__
+>  
+> -#define SZ_1				0x00000001
+> -#define SZ_2				0x00000002
+> -#define SZ_4				0x00000004
+> -#define SZ_8				0x00000008
+> -#define SZ_16				0x00000010
+> -#define SZ_32				0x00000020
+> -#define SZ_64				0x00000040
+> -#define SZ_128				0x00000080
+> -#define SZ_256				0x00000100
+> -#define SZ_512				0x00000200
+> +#define SZ_1				0x00000001ULL
+> +#define SZ_2				0x00000002ULL
+> +#define SZ_4				0x00000004ULL
+> +#define SZ_8				0x00000008ULL
+> +#define SZ_16				0x00000010ULL
+> +#define SZ_32				0x00000020ULL
+> +#define SZ_64				0x00000040ULL
+> +#define SZ_128				0x00000080ULL
+> +#define SZ_256				0x00000100ULL
+> +#define SZ_512				0x00000200ULL
+>  
+> -#define SZ_1K				0x00000400
+> -#define SZ_2K				0x00000800
+> -#define SZ_4K				0x00001000
+> -#define SZ_8K				0x00002000
+> -#define SZ_16K				0x00004000
+> -#define SZ_32K				0x00008000
+> -#define SZ_64K				0x00010000
+> -#define SZ_128K				0x00020000
+> -#define SZ_256K				0x00040000
+> -#define SZ_512K				0x00080000
+> +#define SZ_1K				0x00000400ULL
+> +#define SZ_2K				0x00000800ULL
+> +#define SZ_4K				0x00001000ULL
+> +#define SZ_8K				0x00002000ULL
+> +#define SZ_16K				0x00004000ULL
+> +#define SZ_32K				0x00008000ULL
+> +#define SZ_64K				0x00010000ULL
+> +#define SZ_128K				0x00020000ULL
+> +#define SZ_256K				0x00040000ULL
+> +#define SZ_512K				0x00080000ULL
+>  
+> -#define SZ_1M				0x00100000
+> -#define SZ_2M				0x00200000
+> -#define SZ_4M				0x00400000
+> -#define SZ_8M				0x00800000
+> -#define SZ_16M				0x01000000
+> -#define SZ_32M				0x02000000
+> -#define SZ_64M				0x04000000
+> -#define SZ_128M				0x08000000
+> -#define SZ_256M				0x10000000
+> -#define SZ_512M				0x20000000
+> +#define SZ_1M				0x00100000ULL
+> +#define SZ_2M				0x00200000ULL
+> +#define SZ_4M				0x00400000ULL
+> +#define SZ_8M				0x00800000ULL
+> +#define SZ_16M				0x01000000ULL
+> +#define SZ_32M				0x02000000ULL
+> +#define SZ_64M				0x04000000ULL
+> +#define SZ_128M				0x08000000ULL
+> +#define SZ_256M				0x10000000ULL
+> +#define SZ_512M				0x20000000ULL
+>  
+> -#define SZ_1G				0x40000000
+> -#define SZ_2G				0x80000000
+> +#define SZ_1G				0x40000000ULL
+> +#define SZ_2G				0x80000000ULL
+>  
+>  #endif /* __LINUX_SIZES_H__ */
 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
 https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
-
---===============6380787444174705675==--
