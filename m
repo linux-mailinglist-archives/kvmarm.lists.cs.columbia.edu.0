@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 33124539529
-	for <lists+kvmarm@lfdr.de>; Tue, 31 May 2022 19:02:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A26B53AB78
+	for <lists+kvmarm@lfdr.de>; Wed,  1 Jun 2022 19:02:34 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4A20B4B41E;
-	Tue, 31 May 2022 13:02:09 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A758A4B399;
+	Wed,  1 Jun 2022 13:02:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
@@ -15,52 +15,62 @@ X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
 	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@quicinc.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cFYvy3vZ4EaO; Tue, 31 May 2022 13:02:09 -0400 (EDT)
+	with ESMTP id 9K-mFu6b5QNW; Wed,  1 Jun 2022 13:02:33 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1A3C04B3D8;
-	Tue, 31 May 2022 13:02:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 35E264B395;
+	Wed,  1 Jun 2022 13:02:32 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 43B1C4B208
- for <kvmarm@lists.cs.columbia.edu>; Tue, 31 May 2022 13:02:06 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 673764B427
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 31 May 2022 13:23:38 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Svg1mpAuiME0 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 31 May 2022 13:02:04 -0400 (EDT)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D08334B205
- for <kvmarm@lists.cs.columbia.edu>; Tue, 31 May 2022 13:02:04 -0400 (EDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id BE60F60DDE;
- Tue, 31 May 2022 17:02:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB68C385A9;
- Tue, 31 May 2022 17:02:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1654016523;
- bh=djguEZZRDPP3prGCOje7q6bgq4eAd52mgC9VJE+UvZo=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=u8LXi8TrTLqG5iEZu55P2t2fyZ7OD8tsnQ5PXBbTHF/LgZ7Gi/yTmdTg35xoBS1iF
- kPWVMEi0YCNM3eiemsEVp4EWCKCcBMPir39ZJGsRQAiXvhi47LZTtJIz5CnwwL+BCC
- itAMIVSohp4iS+gL8uhbPTelu0YU8Tmf5gErzxEd7PqW/ikfvH/Nd1XUPACMS3Imf9
- KytTjEIc588n91CXJVh98FTVqVQQZ2/k/hHrC/O9VTR0YgOVWOc6xBnSEYwTmVv49V
- L3TY/sY3bxouJIpPcwL6yYLVMiIsCRS3RfMNniPc4lETv9a6GNBVMmERdniNJycG7o
- FnXOpjXSYq6BQ==
-Date: Tue, 31 May 2022 18:01:58 +0100
-From: Will Deacon <will@kernel.org>
-To: Qian Cai <quic_qiancai@quicinc.com>
+ with ESMTP id 0eeUAt6zItya for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 31 May 2022 13:23:37 -0400 (EDT)
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com
+ [199.106.114.39])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C4D4A4B421
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 31 May 2022 13:23:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+ t=1654017816; x=1685553816;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=SS4f2RJO4J6Dl+skZQyymBm8JwW6+FCYen5Pp0Bb79k=;
+ b=ov9pWJ9T6SfHSRx3T7OaCjn0K0xVeXJGYU7q0GR8wAaIRA4ulesq+7x3
+ 2kJoLuA4ABt3nue9i5CSlTlXmZNHK3OstWmddCacAFI2Z4QZINGaVrJhC
+ /FroAPsILfMamONhkU+u7X8iJevhRJ41zzRsRzRQJfyd6ZQngVtKVY7iw M=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+ by alexa-out-sd-02.qualcomm.com with ESMTP; 31 May 2022 10:23:33 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+ by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 May 2022 10:23:32 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 31 May 2022 10:23:32 -0700
+Received: from qian (10.80.80.8) by nalasex01a.na.qualcomm.com (10.47.209.196)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 31 May
+ 2022 10:23:31 -0700
+Date: Tue, 31 May 2022 13:23:29 -0400
+From: Qian Cai <quic_qiancai@quicinc.com>
+To: Will Deacon <will@kernel.org>
 Subject: Re: [PATCH] KVM: arm64: Fix memory leaks from stage2 pagetable
-Message-ID: <20220531170157.GC25631@willie-the-truck>
+Message-ID: <YpZPEStUD02jJ8C6@qian>
 References: <20220526203956.143873-1-quic_qiancai@quicinc.com>
  <20220531165710.GB25631@willie-the-truck>
 MIME-Version: 1.0
 Content-Disposition: inline
 In-Reply-To: <20220531165710.GB25631@willie-the-truck>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Mailman-Approved-At: Wed, 01 Jun 2022 13:02:31 -0400
 Cc: Marc Zyngier <maz@kernel.org>, linux-kernel@vger.kernel.org,
  Catalin Marinas <catalin.marinas@arm.com>, kvmarm@lists.cs.columbia.edu,
  linux-arm-kernel@lists.infradead.org
@@ -98,14 +108,9 @@ On Tue, May 31, 2022 at 05:57:11PM +0100, Will Deacon wrote:
 > I don't really like the idea of papering over the report; we'd be better off
 > trying to reproduce it.
 
-... although the hexdump does look like {u32; u32; ptr; ptr; ptr}, which
-would match 'struct kvm_pgtable'. I guess the allocation is aligned to
-ARCH_DMA_MINALIGN, which could explain the size?
-
-Have you spotted any pattern for when the leak occurs? How are you
-terminating the guest?
-
-Will
+As far as I would like to reproduce, I have tried it in the last a few
+weeks without luck. It still happens from time to time though from our
+daily CI, so I was thinking to plug the knowns leaks first.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
