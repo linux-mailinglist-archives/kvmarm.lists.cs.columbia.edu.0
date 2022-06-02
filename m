@@ -2,71 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id BDE0953B57E
-	for <lists+kvmarm@lfdr.de>; Thu,  2 Jun 2022 10:56:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A1AF53B524
+	for <lists+kvmarm@lfdr.de>; Thu,  2 Jun 2022 10:30:41 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1A59F4B349;
-	Thu,  2 Jun 2022 04:56:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6B8844B28A;
+	Thu,  2 Jun 2022 04:30:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.899
+X-Spam-Score: -1.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Z3dS9yYdr4Z7; Thu,  2 Jun 2022 04:56:56 -0400 (EDT)
+	with ESMTP id AP7Sq72wZo6i; Thu,  2 Jun 2022 04:30:40 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 89EC84B2D9;
-	Thu,  2 Jun 2022 04:56:55 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3701149E57;
+	Thu,  2 Jun 2022 04:30:39 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id BB7814B26A
- for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Jun 2022 22:48:15 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C1E83411BD
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jun 2022 04:30:37 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 6MKgPXVKdl4s for <kvmarm@lists.cs.columbia.edu>;
- Wed,  1 Jun 2022 22:48:14 -0400 (EDT)
-Received: from mail-pg1-f193.google.com (mail-pg1-f193.google.com
- [209.85.215.193])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4ECD74B239
- for <kvmarm@lists.cs.columbia.edu>; Wed,  1 Jun 2022 22:48:14 -0400 (EDT)
-Received: by mail-pg1-f193.google.com with SMTP id x12so3563066pgj.7
- for <kvmarm@lists.cs.columbia.edu>; Wed, 01 Jun 2022 19:48:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=3Qfj25vgUy2vlco/zeYZvtjrkAOyeuWII5kfYsnOot4=;
- b=iyT3s4vc8TEPLRG7y0CG4QqFHA9bY7CIXg0cfL8UfJUL6xAj+EGtJwpVvqbvmWikip
- z1OL9HMXJ5f48LULyuSEmWzlDz64+2ZCWPKqVKlWS2ePApCFvbfUR19ZG/2aZpa3q70W
- Qhwpod3IUASWTZ6M4ns9VmX0CSs8jmJfTIFkn82srWvWtWfNcZqD8ZphHCszrJb9foj0
- Bux1Tf45K457djBsKMci3pvPo8OIJNbSToChxd1xucHyv32NVN2NEEUJjuqhNesdoIt0
- w8tnGznFoiljnnD4/P5/kiz3Y6N3Idk9ZZ4wvMFUUyHdEOffYYV6ooCutS0Lu75Ow1e4
- 0iTw==
-X-Gm-Message-State: AOAM531OittIRiEzD7xxOeGGzM3pazOmVk2s+tQmm9/LzY7/eClML+64
- TaJ/F5sVGM9hap1bE5cYnw==
-X-Google-Smtp-Source: ABdhPJwj97f92+oKYJX3/nM4SU6Juy4SkU5cImZOTxgJnaFU3BKykF87LgnQ1Evw/0j5RBZ2qtDh1A==
-X-Received: by 2002:a63:6a84:0:b0:3fa:e914:79b5 with SMTP id
- f126-20020a636a84000000b003fae91479b5mr2234833pgc.365.1654138093288; 
- Wed, 01 Jun 2022 19:48:13 -0700 (PDT)
-Received: from localhost.localdomain (ns1003916.ip-51-81-154.us.
- [51.81.154.37]) by smtp.gmail.com with ESMTPSA id
- i3-20020a170902eb4300b00161ccdc172dsm2159645pli.300.2022.06.01.19.48.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 01 Jun 2022 19:48:12 -0700 (PDT)
-From: sunliming <sunliming@kylinos.cn>
-To: maz@kernel.org, julien.grall@arm.com, james.morse@arm.com, will@kernel.org,
- catalin.marinas@arm.com, suzuki.poulose@arm.com
-Subject: [PATCH] KVM: arm64: fix the inconsistent indenting
-Date: Thu,  2 Jun 2022 10:48:05 +0800
-Message-Id: <20220602024805.511457-1-sunliming@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
+ with ESMTP id ceVtDcuunkkZ for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  2 Jun 2022 04:30:36 -0400 (EDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9CD7C40BEF
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jun 2022 04:30:36 -0400 (EDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 8EC3660F30;
+ Thu,  2 Jun 2022 08:30:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1B74C3411C;
+ Thu,  2 Jun 2022 08:30:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1654158635;
+ bh=vzY+G8+ASqCckXvQ6YmgGfQtJZDGIWLvqqnwao/JorY=;
+ h=From:To:Cc:Subject:Date:From;
+ b=FKrKjZIJXf8NSwXpdMQplv+lflcmI/vGdP15boyX6V9G8I3IBsENIov1YcxVs4rmG
+ 15ij0D6YDHrxvT22FpmGegYXwGYFNGvYP8Rq/K1dOBuufxKXuTbGc8HiGuHHaVegWg
+ qQZsJ5Kf5gExnHzrNRNJGqF+IBiHBmVb/H2AZnSeTJEBuUr8dVaHDn+IzI+/pcOTS1
+ 1yhQ7blxRs/OXdDADdtwUP5sFj/9MfnCzSXEmHwRF9bUYfFePoqb1UCpStwhfktcyX
+ 22Ottjkzq2nguarEhDjHKG6YsEj7C6KVuSFZi4MBJTdJS/sDN35ftP+H8dCb+k6oro
+ eHIaCw/vDv62A==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <maz@kernel.org>)
+ id 1nwgDw-00F9Sj-Op; Thu, 02 Jun 2022 09:30:32 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
+ kvm@vger.kernel.org
+Subject: [PATCH 0/3] KVM: arm64: Fix userspace access to HW pending state
+Date: Thu,  2 Jun 2022 09:30:22 +0100
+Message-Id: <20220602083025.1110433-1-maz@kernel.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-Mailman-Approved-At: Thu, 02 Jun 2022 04:56:53 -0400
-Cc: kernel test robot <lkp@intel.com>, kelulanainsley@gmail.com,
- linux-kernel@vger.kernel.org, sunliming@kylinos.cn,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org, eauger@redhat.com,
+ ricarkol@google.com, james.morse@arm.com, suzuki.poulose@arm.com,
+ alexandru.elisei@arm.com, oupton@google.com, kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kernel-team@android.com, Eric Auger <eauger@redhat.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -83,34 +88,41 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Fix the inconsistent indenting in function flush_context.
+Eric reported that a Seattle system was pretty unhappy about VM
+migration, and the trace pointed to a glaring bug in the way the GICv2
+emulation code reported the interrupt pending state to userspace for
+HW interrupts, specially if the interrupt state is per-CPU, as this is
+the case for the timer...
 
-Fix the following smatch warnings:
+Fixing this actually results in a minor cleanup, followed by a bit of
+extra hardening so that we can catch further issues in this area
+without completely taking the system down.
 
-arch/arm64/kvm/vmid.c:62 flush_context() warn: inconsistent indenting
+Unless someone screams, I plan to take these in as fixes as quickly as
+possible, with the first patch being an obvious stable candidate. I'd
+appreciate it if people could verify that VM migration still works
+correctly for both GICv2 and GICv3.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: sunliming <sunliming@kylinos.cn>
----
- arch/arm64/kvm/vmid.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks,
 
-diff --git a/arch/arm64/kvm/vmid.c b/arch/arm64/kvm/vmid.c
-index 8d5f0506fd87..d78ae63d7c15 100644
---- a/arch/arm64/kvm/vmid.c
-+++ b/arch/arm64/kvm/vmid.c
-@@ -66,7 +66,7 @@ static void flush_context(void)
- 	 * the next context-switch, we broadcast TLB flush + I-cache
- 	 * invalidation over the inner shareable domain on rollover.
- 	 */
--	 kvm_call_hyp(__kvm_flush_vm_context);
-+	kvm_call_hyp(__kvm_flush_vm_context);
- }
- 
- static bool check_update_reserved_vmid(u64 vmid, u64 newvmid)
+	M.
+
+Marc Zyngier (3):
+  KVM: arm64: Don't read a HW interrupt pending state in user context
+  KVM: arm64: Replace vgic_v3_uaccess_read_pending with
+    vgic_uaccess_read_pending
+  KVM: arm64: Warn if accessing timer pending state outside of vcpu
+    context
+
+ arch/arm64/kvm/arch_timer.c        |  3 +++
+ arch/arm64/kvm/vgic/vgic-mmio-v2.c |  4 +--
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c | 40 ++----------------------------
+ arch/arm64/kvm/vgic/vgic-mmio.c    | 19 +++++++++++---
+ arch/arm64/kvm/vgic/vgic-mmio.h    |  3 +++
+ 5 files changed, 26 insertions(+), 43 deletions(-)
+
 -- 
-2.25.1
-
+2.34.1
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
