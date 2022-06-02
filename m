@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C5FA853B526
-	for <lists+kvmarm@lfdr.de>; Thu,  2 Jun 2022 10:30:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A24E53BEF4
+	for <lists+kvmarm@lfdr.de>; Thu,  2 Jun 2022 21:39:38 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E46174B356;
-	Thu,  2 Jun 2022 04:30:41 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A8A424B21A;
+	Thu,  2 Jun 2022 15:39:37 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
@@ -15,66 +15,90 @@ X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
 	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QMTEnBJwcdDS; Thu,  2 Jun 2022 04:30:41 -0400 (EDT)
+	with ESMTP id skwjMJ-JgyE5; Thu,  2 Jun 2022 15:39:37 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6E1DC4B34A;
-	Thu,  2 Jun 2022 04:30:39 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4F1CC4B1F1;
+	Thu,  2 Jun 2022 15:39:36 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id F3A6740D26
- for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jun 2022 04:30:37 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 29BBA4B1BD
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jun 2022 15:39:35 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id MAKPJeT7NR1Y for <kvmarm@lists.cs.columbia.edu>;
- Thu,  2 Jun 2022 04:30:37 -0400 (EDT)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E996240FD6
- for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jun 2022 04:30:36 -0400 (EDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 66B4460F6B;
- Thu,  2 Jun 2022 08:30:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE15DC3411D;
- Thu,  2 Jun 2022 08:30:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1654158635;
- bh=haGu+jI7bthU49uBnWUYZDqFo4eo6P3HlxDw/iKv+bg=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=OoyfVgdGWh8QTZLWKeBSKcxkFIirLp5xe3j7V5r2WxMNbDdnhrk/Ko5L48eQhRUoI
- 0V1HnqR6lRKJWYMRPOh28MQ4dArtnypScXYhp+Un6xK33q+E+/3X8NMSZGs6RqFD/b
- 2wcWISq6TwYnTTAAgyLChmLVU1dK9OSYNYfd3gcYPrqe4JBv6IJLxJ1V18Ensi1kcA
- ozBh8bNVFXn61deaBDnRTzNlwh//OnQiJiGwB01W2L65Ek9Lb1TJA9sMR+JPtWSkv/
- fElVFC6PRZW8/evhKrLepQaxNX3w5kp5aRgdPiySH/ha55Pxx25W9YutgjvVJ3S7ej
- TKGROVgwqUmKA==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <maz@kernel.org>)
- id 1nwgDx-00F9Sj-FB; Thu, 02 Jun 2022 09:30:33 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
- kvm@vger.kernel.org
-Subject: [PATCH 3/3] KVM: arm64: Warn if accessing timer pending state outside
- of vcpu context
-Date: Thu,  2 Jun 2022 09:30:25 +0100
-Message-Id: <20220602083025.1110433-4-maz@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220602083025.1110433-1-maz@kernel.org>
-References: <20220602083025.1110433-1-maz@kernel.org>
+ with ESMTP id vQewCQTAHgg3 for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  2 Jun 2022 15:39:34 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0AAFE4B1B0
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  2 Jun 2022 15:39:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1654198773;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=P7DY6xYYaortLAkVD1OrkZ8mE7+5GrGuaQeLtKFchRk=;
+ b=OBbfT40NHUMDkC3nQ8FKuMmo59GZtEl4SHkeHEWf2qRYBEfKPLLHdErZXdZnNs8Pj+ZsQ2
+ S4VTMIanW1QzmxtrNs0NEzrgcOQfDVhuYedhu2LfW2Ee42OQWICLnqGXSZ5exuexLa62wH
+ wmtQFY0Xv+SiqxDlEbt/f6JYAuoznT0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-327-4eTC2C18PVe0QET0WzKN3A-1; Thu, 02 Jun 2022 15:39:30 -0400
+X-MC-Unique: 4eTC2C18PVe0QET0WzKN3A-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ m26-20020a05600c3b1a00b00397220d6329so3288446wms.5
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 02 Jun 2022 12:39:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+ :content-language:to:cc:references:from:in-reply-to
+ :content-transfer-encoding;
+ bh=P7DY6xYYaortLAkVD1OrkZ8mE7+5GrGuaQeLtKFchRk=;
+ b=12tslAU4YEar+9L/mkQYgnhrm8cxaU8v0yT5Hdzf9Y69qkRL3sgsNfb3t90YRIdG6n
+ zLvAf+Wgz6/uTWj4Bz0emMKmvjR3V0sS9sZhGpcNJykrwWtOkaXW/lDOZbrP6CJHG0SU
+ WNuvMqOOOIls/2tDc4tKK30pIuzSlm7dg9Se5Izk4SKl+d4dWqYARZKoL227fiFaUAtD
+ NGoAN/9+ITcPRH025XnamEvxLbIwN4kFj6+OvGWR9JZCuHuWIboUTD+J5Oc0vwx1EfYE
+ OfE03ehNwHegYywFiQmp5OKPJelqRT8e0mGDe1iVBknmGuAJsX2t6OW2K8Sh48sIaqx4
+ KY2g==
+X-Gm-Message-State: AOAM531A8lcadMnKFRREQyAeTjfVN9e13Yy5B0iRWMaOHv54DqqWEwaj
+ XITkkGV7Wl+7AwPYH2oFmY0jJv0e/g8yH2lOg8YIJ9VTPGv+UHPFzx6T/Pc9aAcQiWLlU2AMtPN
+ +dblxIHAnmw92u3df73pRTVWn
+X-Received: by 2002:a1c:f710:0:b0:394:1960:e8a1 with SMTP id
+ v16-20020a1cf710000000b003941960e8a1mr5369357wmh.154.1654198769470; 
+ Thu, 02 Jun 2022 12:39:29 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJyb5NUdRMKDEDqs3OehCuJ3A72dORJRZuj3TUcjk/IR3G+DoIyfVTVdoXGCVMUP1AOlTOWvvg==
+X-Received: by 2002:a1c:f710:0:b0:394:1960:e8a1 with SMTP id
+ v16-20020a1cf710000000b003941960e8a1mr5369332wmh.154.1654198769164; 
+ Thu, 02 Jun 2022 12:39:29 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ h9-20020a5d4309000000b002102af52a2csm6442171wrq.9.2022.06.02.12.39.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 02 Jun 2022 12:39:28 -0700 (PDT)
+Message-ID: <b0c08d90-1bf0-6996-379e-61f0d5724fc0@redhat.com>
+Date: Thu, 2 Jun 2022 21:39:26 +0200
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org, eauger@redhat.com,
- ricarkol@google.com, james.morse@arm.com, suzuki.poulose@arm.com,
- alexandru.elisei@arm.com, oupton@google.com, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kernel-team@android.com, Eric Auger <eauger@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH 3/3] KVM: arm64: Warn if accessing timer pending state
+ outside of vcpu context
+To: Marc Zyngier <maz@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org
+References: <20220602083025.1110433-1-maz@kernel.org>
+ <20220602083025.1110433-4-maz@kernel.org>
+From: Eric Auger <eauger@redhat.com>
+In-Reply-To: <20220602083025.1110433-4-maz@kernel.org>
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=eauger@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Cc: kernel-team@android.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -91,37 +115,41 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-A recurrent bug in the KVM/arm64 code base consists in trying to
-access the timer pending state outside of the vcpu context, which
-makes zero sense (the pending state only exists when the vcpu
-is loaded).
+Hi Marc,
 
-In order to avoid more embarassing crashes and catch the offenders
-red-handed, add a warning to kvm_arch_timer_get_input_level() and
-return the state as non-pending. This avoids taking the system down,
-and still helps tracking down silly bugs.
+On 6/2/22 10:30, Marc Zyngier wrote:
+> A recurrent bug in the KVM/arm64 code base consists in trying to
+> access the timer pending state outside of the vcpu context, which
+> makes zero sense (the pending state only exists when the vcpu
+> is loaded).
+> 
+> In order to avoid more embarassing crashes and catch the offenders
+> red-handed, add a warning to kvm_arch_timer_get_input_level() and
+> return the state as non-pending. This avoids taking the system down,
+> and still helps tracking down silly bugs.
+> 
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/kvm/arch_timer.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/arch/arm64/kvm/arch_timer.c b/arch/arm64/kvm/arch_timer.c
-index 5290ca5db663..bb24a76b4224 100644
---- a/arch/arm64/kvm/arch_timer.c
-+++ b/arch/arm64/kvm/arch_timer.c
-@@ -1230,6 +1230,9 @@ bool kvm_arch_timer_get_input_level(int vintid)
- 	struct kvm_vcpu *vcpu = kvm_get_running_vcpu();
- 	struct arch_timer_context *timer;
- 
-+	if (WARN(!vcpu, "No vcpu context!\n"))
-+		return false;
-+
- 	if (vintid == vcpu_vtimer(vcpu)->irq.irq)
- 		timer = vcpu_vtimer(vcpu);
- 	else if (vintid == vcpu_ptimer(vcpu)->irq.irq)
--- 
-2.34.1
+Eric
+> ---
+>  arch/arm64/kvm/arch_timer.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/arch/arm64/kvm/arch_timer.c b/arch/arm64/kvm/arch_timer.c
+> index 5290ca5db663..bb24a76b4224 100644
+> --- a/arch/arm64/kvm/arch_timer.c
+> +++ b/arch/arm64/kvm/arch_timer.c
+> @@ -1230,6 +1230,9 @@ bool kvm_arch_timer_get_input_level(int vintid)
+>  	struct kvm_vcpu *vcpu = kvm_get_running_vcpu();
+>  	struct arch_timer_context *timer;
+>  
+> +	if (WARN(!vcpu, "No vcpu context!\n"))
+> +		return false;
+> +
+>  	if (vintid == vcpu_vtimer(vcpu)->irq.irq)
+>  		timer = vcpu_vtimer(vcpu);
+>  	else if (vintid == vcpu_ptimer(vcpu)->irq.irq)
 
 _______________________________________________
 kvmarm mailing list
