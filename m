@@ -2,77 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DE7153FD17
+	by mail.lfdr.de (Postfix) with ESMTP id 4C15153FD18
 	for <lists+kvmarm@lfdr.de>; Tue,  7 Jun 2022 13:12:52 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AAC104B33E;
-	Tue,  7 Jun 2022 07:12:51 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CC0F44B385;
+	Tue,  7 Jun 2022 07:12:49 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id n8RJZMOnME2C; Tue,  7 Jun 2022 07:12:47 -0400 (EDT)
+	with ESMTP id IkXSnty4qQXG; Tue,  7 Jun 2022 07:12:49 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 01C704B358;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 191564B35B;
 	Tue,  7 Jun 2022 07:12:45 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DCCE649ECC
- for <kvmarm@lists.cs.columbia.edu>; Mon,  6 Jun 2022 18:21:12 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 94D8149ECC
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  6 Jun 2022 18:21:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id GpZVjyF6goJ2 for <kvmarm@lists.cs.columbia.edu>;
- Mon,  6 Jun 2022 18:21:11 -0400 (EDT)
-Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com
- [209.85.215.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C329249EF3
- for <kvmarm@lists.cs.columbia.edu>; Mon,  6 Jun 2022 18:21:11 -0400 (EDT)
-Received: by mail-pg1-f202.google.com with SMTP id
- n6-20020a654886000000b003fda8768883so2445798pgs.14
- for <kvmarm@lists.cs.columbia.edu>; Mon, 06 Jun 2022 15:21:11 -0700 (PDT)
+ with ESMTP id KcRhFzLSVBPf for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  6 Jun 2022 18:21:13 -0400 (EDT)
+Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com
+ [209.85.214.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 65FC749EF3
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  6 Jun 2022 18:21:13 -0400 (EDT)
+Received: by mail-pl1-f202.google.com with SMTP id
+ o16-20020a170902d4d000b00166d7813226so5565101plg.13
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 06 Jun 2022 15:21:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=ZKvJKacIZPpFbnd53bS1EL2rZ1vkQiMgyn6fonmD758=;
- b=Zr9Q8V4nfUck7UMPiqqnChLoKCpFiU004y5VHpcxyH5mWHlhwIzYxUURvWJBq4dUhI
- PEflFN4+yWiPedkxFNguL6KLVrX7tdllycYtTzVDtLTM5fSldbL5YGtSdvQhicV/VqNC
- W9LyO1FZ89oe3glk7cppYh1QOUL7GWHvzV40mkYxY6Ot8nmOdZ1BmyJNi7r9lWo5/W5N
- bMn6eQ26xiiSsDdv1sGuFTHXiFY4OC6CrIrPysYNh3IdjDsmHyydvK25MNicujeQ5HDt
- CqB1bPPFGYC0qLNs/TbMrK22nRwsnULJfjNvc7HFOqj+269yjI72P9tp9IKYvoEk/5A9
- jikw==
+ :cc; bh=kdA0hdnNlf5Ah+Sdfhrh5/pyHUvKpC5h3K4X0vH9N64=;
+ b=Jy0Nvp6l/SeDINdaapKCgsH604PDzAKJu+q61zsdbqS0WgfTf6DKA9ui8w9NOeKXLB
+ zV3rFx+mWBMFRAgLdnWnjF2l6fpisaOBqhX3AirSHdup3DSyot579H9rHLD+o6fbmQRk
+ FaJKa3uBvvWb/ywHl+G68ob0ojkfCd4KvuSoq0n86mSq7L/FcuboeRh8rpDp78eY8qcZ
+ n6nIYlYmcBUcV7QgzCTmqorAtcvEHjNETFQ+4fEEAn2BTJknB6ddaSu7THbAsyUBl7f8
+ BE7FECym3Mw5OpxGAbMCVb195W/C84+VufxOQUotNgydoUbVy0Ws+K0ug9KPgynMKrtc
+ 1W+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=ZKvJKacIZPpFbnd53bS1EL2rZ1vkQiMgyn6fonmD758=;
- b=hqgGLl6Iye+Yd9m2ZKknudlH1H01hSOlVq8unVX3X1pa6thMn/QMIsQpW4hn0UnMJI
- 41czyRu6dxc/vunUpWuuz78DUCVjqxyC0f4gKd8rlW8iWVXO+vTLFCLmVZSd5MvyxHm/
- EmWl7RJtszPGb0GzRuNanlf8IHdm9CyOgeGZA8wlSZvScbpOM3UTOP65qmgLfHJ+AzUP
- 3Qt12iQow0kP5CWztoPA07SaWffPjTSabydDr9JMR9SSAAmYrAkEr+WHp8KcM2qbl1sE
- Gv69e8vAzTYcple7XrUoiyRzdsOn7OKTrZ9J1GKjvQUW+w4ypE7xaXwSRDtjvTUxVc0I
- O26A==
-X-Gm-Message-State: AOAM531k92ODWy89S7/Z8EzT3Q9Fr+xUGUJ4sEKCDyNm3i/dItZWfhCp
- jMoRjh/g0ttmJUp+DO+BMQS28eWLqGFcL9ck
-X-Google-Smtp-Source: ABdhPJydFOJZXIlcEjQkgSriWABs0ECYT0csN/ZfxbgjEAFbaZOYZU1KL+PBDU3VaJNjamZ58gakzobgmymrjjXn
+ bh=kdA0hdnNlf5Ah+Sdfhrh5/pyHUvKpC5h3K4X0vH9N64=;
+ b=OnkCR9n9Dqdw3SiHtuUCP7CTi0uPVOlez+kGyVKOrNnN6R04utDq/kGZsQGe/F1F5s
+ 1P+j0dLaN20WnGilrN6Ac4sgbz4xGIdUhoDe7IoCqHQ2jbBFxkZQzkiWrCwebaJv0xEt
+ AQPapNJdJVgdNWFeXegL5wDlB7BzTI5WfFOF0ElyTq1puEvzSqJ72r1DQ34vyfsvgQOH
+ UpIs5RpCoz9Qqji35I1qzd2AiQEzinkJUAuQXsG6zWuGiEAzEuV394MMWezo9GGqF1e4
+ cAG5UCsLx11OwRfHpGjQa02+CSiDk2M9Xx3yUw4Fk6AesZqZKh1EWUiXaV4rn+kzeske
+ d1Iw==
+X-Gm-Message-State: AOAM531pNp1PG0r0Q2kc55ty0GPRPMeuyGyhwzVkTE2y0ueJKONc7Ivo
+ fuqP7bKLyaPgX3OUqhnH2t0PTZccmMKD4Vok
+X-Google-Smtp-Source: ABdhPJy/F+KWMgHvnxrFnjnNsWZmlcg4trdZU2aFBDmcWxfCaapFDM+3Zf8+GdGQEkdAdISq1qm0RKV9vDvadP+C
 X-Received: from yosry.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2327])
- (user=yosryahmed job=sendgmr) by
- 2002:a17:90b:1650:b0:1e4:cff1:5a86 with SMTP
- id il16-20020a17090b165000b001e4cff15a86mr28806822pjb.30.1654554070851; Mon,
- 06 Jun 2022 15:21:10 -0700 (PDT)
-Date: Mon,  6 Jun 2022 22:20:56 +0000
+ (user=yosryahmed job=sendgmr) by 2002:a63:dd17:0:b0:3fd:695e:8728
+ with SMTP
+ id t23-20020a63dd17000000b003fd695e8728mr11359137pgg.70.1654554072536; Mon,
+ 06 Jun 2022 15:21:12 -0700 (PDT)
+Date: Mon,  6 Jun 2022 22:20:57 +0000
 In-Reply-To: <20220606222058.86688-1-yosryahmed@google.com>
-Message-Id: <20220606222058.86688-3-yosryahmed@google.com>
+Message-Id: <20220606222058.86688-4-yosryahmed@google.com>
 Mime-Version: 1.0
 References: <20220606222058.86688-1-yosryahmed@google.com>
 X-Mailer: git-send-email 2.36.1.255.ge46751e96f-goog
-Subject: [PATCH v5 2/4] KVM: mmu: add a helper to account memory used by KVM
- MMU.
+Subject: [PATCH v5 3/4] KVM: x86/mmu: count KVM mmu usage in secondary
+ pagetable stats.
 From: Yosry Ahmed <yosryahmed@google.com>
 To: Tejun Heo <tj@kernel.org>, Johannes Weiner <hannes@cmpxchg.org>, 
  Zefan Li <lizefan.x@bytedance.com>, Marc Zyngier <maz@kernel.org>, 
@@ -104,35 +105,92 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add a helper to account pages used by KVM for page tables in secondary
-pagetable stats. This function will be used by subsequent patches in
-different archs.
+Count the pages used by KVM mmu on x86 for in secondary pagetable stats.
 
 Signed-off-by: Yosry Ahmed <yosryahmed@google.com>
 ---
- include/linux/kvm_host.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/x86/kvm/mmu/mmu.c     | 16 ++++++++++++++--
+ arch/x86/kvm/mmu/tdp_mmu.c | 12 ++++++++++++
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-index 883e86ec8e8c4..645585f3a4bed 100644
---- a/include/linux/kvm_host.h
-+++ b/include/linux/kvm_host.h
-@@ -2246,6 +2246,15 @@ static inline void kvm_handle_signal_exit(struct kvm_vcpu *vcpu)
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index efe5a3dca1e09..4090d228e1756 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -1652,6 +1652,18 @@ static inline void kvm_mod_used_mmu_pages(struct kvm *kvm, long nr)
+ 	percpu_counter_add(&kvm_total_used_mmu_pages, nr);
  }
- #endif /* CONFIG_KVM_XFER_TO_GUEST_WORK */
  
-+/*
-+ * If nr > 1, we assume virt is the address of the first page of a block of
-+ * pages that were allocated together (i.e accounted together).
-+ */
-+static inline void kvm_account_pgtable_pages(void *virt, int nr)
++static void kvm_account_mmu_page(struct kvm *kvm, struct kvm_mmu_page *sp)
 +{
-+	mod_lruvec_page_state(virt_to_page(virt), NR_SECONDARY_PAGETABLE, nr);
++	kvm_mod_used_mmu_pages(kvm, +1);
++	kvm_account_pgtable_pages((void *)sp->spt, +1);
 +}
 +
- /*
-  * This defines how many reserved entries we want to keep before we
-  * kick the vcpu to the userspace to avoid dirty ring full.  This
++static void kvm_unaccount_mmu_page(struct kvm *kvm, struct kvm_mmu_page *sp)
++{
++	kvm_mod_used_mmu_pages(kvm, -1);
++	kvm_account_pgtable_pages((void *)sp->spt, -1);
++}
++
+ static void kvm_mmu_free_page(struct kvm_mmu_page *sp)
+ {
+ 	MMU_WARN_ON(!is_empty_shadow_page(sp->spt));
+@@ -1707,7 +1719,7 @@ static struct kvm_mmu_page *kvm_mmu_alloc_page(struct kvm_vcpu *vcpu, int direct
+ 	 */
+ 	sp->mmu_valid_gen = vcpu->kvm->arch.mmu_valid_gen;
+ 	list_add(&sp->link, &vcpu->kvm->arch.active_mmu_pages);
+-	kvm_mod_used_mmu_pages(vcpu->kvm, +1);
++	kvm_account_mmu_page(vcpu->kvm, sp);
+ 	return sp;
+ }
+ 
+@@ -2336,7 +2348,7 @@ static bool __kvm_mmu_prepare_zap_page(struct kvm *kvm,
+ 			list_add(&sp->link, invalid_list);
+ 		else
+ 			list_move(&sp->link, invalid_list);
+-		kvm_mod_used_mmu_pages(kvm, -1);
++		kvm_unaccount_mmu_page(kvm, sp);
+ 	} else {
+ 		/*
+ 		 * Remove the active root from the active page list, the root
+diff --git a/arch/x86/kvm/mmu/tdp_mmu.c b/arch/x86/kvm/mmu/tdp_mmu.c
+index 841feaa48be5e..0b70d1a1a3534 100644
+--- a/arch/x86/kvm/mmu/tdp_mmu.c
++++ b/arch/x86/kvm/mmu/tdp_mmu.c
+@@ -372,6 +372,16 @@ static void handle_changed_spte_dirty_log(struct kvm *kvm, int as_id, gfn_t gfn,
+ 	}
+ }
+ 
++static void tdp_account_mmu_page(struct kvm *kvm, struct kvm_mmu_page *sp)
++{
++	kvm_account_pgtable_pages((void *)sp->spt, +1);
++}
++
++static void tdp_unaccount_mmu_page(struct kvm *kvm, struct kvm_mmu_page *sp)
++{
++	kvm_account_pgtable_pages((void *)sp->spt, -1);
++}
++
+ /**
+  * tdp_mmu_unlink_sp() - Remove a shadow page from the list of used pages
+  *
+@@ -384,6 +394,7 @@ static void handle_changed_spte_dirty_log(struct kvm *kvm, int as_id, gfn_t gfn,
+ static void tdp_mmu_unlink_sp(struct kvm *kvm, struct kvm_mmu_page *sp,
+ 			      bool shared)
+ {
++	tdp_unaccount_mmu_page(kvm, sp);
+ 	if (shared)
+ 		spin_lock(&kvm->arch.tdp_mmu_pages_lock);
+ 	else
+@@ -1146,6 +1157,7 @@ static int tdp_mmu_link_sp(struct kvm *kvm, struct tdp_iter *iter,
+ 	if (account_nx)
+ 		account_huge_nx_page(kvm, sp);
+ 	spin_unlock(&kvm->arch.tdp_mmu_pages_lock);
++	tdp_account_mmu_page(kvm, sp);
+ 
+ 	return 0;
+ }
 -- 
 2.36.1.255.ge46751e96f-goog
 
