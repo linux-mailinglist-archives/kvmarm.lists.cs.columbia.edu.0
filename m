@@ -2,83 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A255753FCF9
-	for <lists+kvmarm@lfdr.de>; Tue,  7 Jun 2022 13:10:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7234E53FFC7
+	for <lists+kvmarm@lfdr.de>; Tue,  7 Jun 2022 15:14:43 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 903514B34C;
-	Tue,  7 Jun 2022 07:10:09 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E8CF74B303;
+	Tue,  7 Jun 2022 09:14:42 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+	autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id S2rvCeVhslpq; Tue,  7 Jun 2022 07:10:09 -0400 (EDT)
+	with ESMTP id YLsJSSHkdmvE; Tue,  7 Jun 2022 09:14:41 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 56E9B4B338;
-	Tue,  7 Jun 2022 07:10:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7F5194B379;
+	Tue,  7 Jun 2022 09:14:38 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8C5614B323
- for <kvmarm@lists.cs.columbia.edu>; Tue,  7 Jun 2022 07:10:06 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 726764B316
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  7 Jun 2022 09:14:37 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id NZsbvM3Jng23 for <kvmarm@lists.cs.columbia.edu>;
- Tue,  7 Jun 2022 07:10:05 -0400 (EDT)
+ with ESMTP id YAXMzdx5lmMk for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  7 Jun 2022 09:14:34 -0400 (EDT)
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 271514A014
- for <kvmarm@lists.cs.columbia.edu>; Tue,  7 Jun 2022 07:10:05 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8D6D24B303
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  7 Jun 2022 09:14:34 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 0F68C61673;
- Tue,  7 Jun 2022 11:10:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D84C3411E;
- Tue,  7 Jun 2022 11:10:03 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 716986136D;
+ Tue,  7 Jun 2022 13:14:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32D9C34114;
+ Tue,  7 Jun 2022 13:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1654600203;
- bh=R2D2hJEP5JgQDMYQbg0Fl0dl1LkzciDzBEY9SRq7c1c=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=THyWb10w1rnF84vWcJNWA1Dbj89EqkODqKBH5FwGgSBcVGxkZA9DP9gJGQT2DKm9m
- JVBbdlObYEMgyo+pINhd4hMOlfngyEQjyH6BF6QVnQL7AA0jmZNShwZoYwYXY9UwzE
- gwEFoGRvjrOanwF6T+NEfmoLnKwB1UD9zWfjg6oZ8qQOrh89wJiw55QzfmHbC2oMqs
- dctHxKq5JxV5AIZChXVDRd+5acZ95VAPYTPSi0oKVHl+FjaAe7XxzycyTN0sPk8vv5
- /RoUMcFE0PmxGhDw28VLVh64w1ZAp9liuNmlfk6LdXCYnuaJB/ZgqTZRgcZZyosLta
- 5YyHr9KkWKMOw==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+ s=k20201202; t=1654607672;
+ bh=z7H4Y0P+n9b+MhwAEfoY2rl2mv+LI01POH5hYvGA0rk=;
+ h=From:To:Cc:Subject:Date:From;
+ b=FGs1NhGM48m9rA3QD0i+KRpyMCfwEI7hQuDa6DzgBJwLDI7WK/F9gjVxRRp+Bu263
+ awAHIVocX9NvvGfo6432+k0wezHX5Xl2utZnTBc2KKZksRid5a9D4Mde4sHiQFarHS
+ 17KYoBmdET8gsxCTuFPeD+fKgfUAbkYPpHwgSDMti/lLvkVGtpww3mhFOaK44XSWUy
+ rKtCT2HMd4iy2oEGd8GxjgwGl/jQQ9VUzWUvd2zQ6BBgpCCOhVME7Q+g32T1Bg/SWD
+ koa9I039SwtKdtpfXbAQNmX+ctbdD+nMTgiLbwBo1cpAOqUiittF5+fMkVC6VzACz6
+ AfeA/ug9nbFbg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1nyX61-00G9dT-3P; Tue, 07 Jun 2022 12:10:01 +0100
-Date: Tue, 07 Jun 2022 12:10:00 +0100
-Message-ID: <87mteo4tmf.wl-maz@kernel.org>
+ id 1nyZ2U-00GBUI-HP; Tue, 07 Jun 2022 14:14:30 +0100
 From: Marc Zyngier <maz@kernel.org>
-To: Eric Auger <eauger@redhat.com>
-Subject: Re: [PATCH 2/3] KVM: arm64: Replace vgic_v3_uaccess_read_pending with
- vgic_uaccess_read_pending
-In-Reply-To: <168da62b-51c0-b883-0912-15139f24d31f@redhat.com>
-References: <20220602083025.1110433-1-maz@kernel.org>
- <20220602083025.1110433-3-maz@kernel.org>
- <168da62b-51c0-b883-0912-15139f24d31f@redhat.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
- (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+To: kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
+ kvm@vger.kernel.org
+Subject: [PATCH v2 0/3] KVM: arm64: Fix userspace access to HW pending state
+Date: Tue,  7 Jun 2022 14:14:24 +0100
+Message-Id: <20220607131427.1164881-1-maz@kernel.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
 X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: eauger@redhat.com, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org, ricarkol@google.com,
- james.morse@arm.com, suzuki.poulose@arm.com, alexandru.elisei@arm.com,
- oupton@google.com, kernel-team@android.com
+X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
+ eric.auger@redhat.com, ricarkol@google.com, james.morse@arm.com,
+ suzuki.poulose@arm.com, alexandru.elisei@arm.com, oupton@google.com,
+ kernel-team@android.com
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
-Cc: kvm@vger.kernel.org, kernel-team@android.com, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+Cc: kernel-team@android.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -95,85 +89,32 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, 02 Jun 2022 21:06:42 +0100,
-Eric Auger <eauger@redhat.com> wrote:
-> 
-> Hi Marc,
-> On 6/2/22 10:30, Marc Zyngier wrote:
-> > Now that GICv2 has a proper userspace accessor for the pending state,
-> > switch GICv3 over to it, dropping the local version.
-> > 
-> > Signed-off-by: Marc Zyngier <maz@kernel.org>
-> > ---
-> >  arch/arm64/kvm/vgic/vgic-mmio-v3.c | 40 ++----------------------------
-> >  1 file changed, 2 insertions(+), 38 deletions(-)
-> > 
-> > diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-> > index f7aa7bcd6fb8..f15e29cc63ce 100644
-> > --- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-> > +++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-> > @@ -353,42 +353,6 @@ static unsigned long vgic_mmio_read_v3_idregs(struct kvm_vcpu *vcpu,
-> >  	return 0;
-> >  }
-> >  
-> > -static unsigned long vgic_v3_uaccess_read_pending(struct kvm_vcpu *vcpu,
-> > -						  gpa_t addr, unsigned int len)
-> > -{
-> > -	u32 intid = VGIC_ADDR_TO_INTID(addr, 1);
-> > -	u32 value = 0;
-> > -	int i;
-> 
-> > -
-> > -	/*
-> > -	 * pending state of interrupt is latched in pending_latch variable.
-> > -	 * Userspace will save and restore pending state and line_level
-> > -	 * separately.
-> > -	 * Refer to Documentation/virt/kvm/devices/arm-vgic-v3.rst
-> > -	 * for handling of ISPENDR and ICPENDR.
-> Don't know if you want a derivative of this comment in
-> vgic_uaccess_read_pending()?
+This is a followup from [1], which aims at fixing userspace access to
+interrupt pending state for HW interrupts.
 
-I don't find it specially helpful, but at the same time, it doesn't
-hurt to move it around.
+* From v1 [1]:
+  - Keep some of the GICv3-specifics around to avoid regressing the
+    line vs latch distinction (Eric).
 
-> > -	 */
-> > -	for (i = 0; i < len * 8; i++) {
-> > -		struct vgic_irq *irq = vgic_get_irq(vcpu->kvm, vcpu, intid + i);
-> > -		bool state = irq->pending_latch;
-> > -
-> > -		if (irq->hw && vgic_irq_is_sgi(irq->intid)) {
-> > -			int err;
-> > -
-> in __read_pending(), irq->irq_lock is hold which looks safer at 1st
-> sight. If potentially fixing something this can be documented in the
-> commit msg.
+[1] https://lore.kernel.org/r/20220602083025.1110433-1-maz@kernel.org
 
-I don't think it fixes anything. The idea is that if you are
-accessing the state from userspace, you already have stopped the VM,
-and thus there is no concurrent modifications if the state.
+Marc Zyngier (3):
+  KVM: arm64: Don't read a HW interrupt pending state in user context
+  KVM: arm64: Replace vgic_v3_uaccess_read_pending with
+    vgic_uaccess_read_pending
+  KVM: arm64: Warn if accessing timer pending state outside of vcpu
+    context
 
-> > -			err = irq_get_irqchip_state(irq->host_irq,
-> > -						    IRQCHIP_STATE_PENDING,
-> > -						    &state);
-> > -			WARN_ON(err);
-> > -		}
-> > -
-> in __read_pending(), irq_is_pending(irq) is used instead of
-> irq->pending_latch. for level sensitive IRQ this is not identical. This
-> may also deserve some comment. The nuance may be related to the above
-> comment.
-
-That is a good point, and we should unify the userspace behaviours
-between GICv2 and v3.
-
-I'll respin the series shortly.
-
-Thanks,
-
-	M.
+ arch/arm64/kvm/arch_timer.c        |  3 +++
+ arch/arm64/kvm/vgic/vgic-mmio-v2.c |  4 +--
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c | 40 ++----------------------------
+ arch/arm64/kvm/vgic/vgic-mmio.c    | 40 +++++++++++++++++++++++++++---
+ arch/arm64/kvm/vgic/vgic-mmio.h    |  3 +++
+ 5 files changed, 46 insertions(+), 44 deletions(-)
 
 -- 
-Without deviation from the norm, progress is not possible.
+2.34.1
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
