@@ -2,78 +2,81 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 15568546212
-	for <lists+kvmarm@lfdr.de>; Fri, 10 Jun 2022 11:29:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7DDE546202
+	for <lists+kvmarm@lfdr.de>; Fri, 10 Jun 2022 11:29:02 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 888CC4B3EF;
-	Fri, 10 Jun 2022 05:29:07 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AF9714B3C8;
+	Fri, 10 Jun 2022 05:29:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+	autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id pb3t++COdSub; Fri, 10 Jun 2022 05:29:07 -0400 (EDT)
+	with ESMTP id LTxpAmo2WH-6; Fri, 10 Jun 2022 05:29:00 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 401F34B3D4;
-	Fri, 10 Jun 2022 05:29:03 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 981E04B3E2;
+	Fri, 10 Jun 2022 05:29:00 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 487974B3BF
- for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Jun 2022 05:29:00 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 09BE24B3BA
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Jun 2022 05:28:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 4-0ONLLapkb4 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 10 Jun 2022 05:28:59 -0400 (EDT)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C2E374B3BD
- for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Jun 2022 05:28:58 -0400 (EDT)
+ with ESMTP id VHJhGOAptohx for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 10 Jun 2022 05:28:57 -0400 (EDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id A8CC24B268
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Jun 2022 05:28:57 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 58E01B8330A;
- Fri, 10 Jun 2022 09:28:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10D61C3411C;
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 977CD61E95;
+ Fri, 10 Jun 2022 09:28:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E83C34114;
  Fri, 10 Jun 2022 09:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1654853336;
- bh=9xlTmpw6VCBquLaHKLCQgiSt5ejkuxi8SpUrfQnqz1Q=;
- h=From:To:Cc:Subject:Date:From;
- b=Yuok9PB4bITWSWXrGjUsnFLgfMUo7ygh8Ir/LxJWiRUpN052A6cxiFV9KoTDx0R/d
- JvpkyZIaLlcu8FA90oL/c1gjpKZ7wghWqshiGVH0M/xt4V5GAqnvRif87mLq5Q8ACg
- HPXOQAfsvZiEt2nSb4qLpnJIKb6ZGbBYk1WNQNYyVA+7UpjFwZPbJXv1PClF/rKOFg
- PK6BPxk+5cNDhOpujYn1d33Io30s4h8DWC4PbZjHGLfjhn9rDsj7Fd4/ZioEuKg4Kp
- xOZ//QGdNC/3ihQX3thCaJmXUBio95JndO4e/+wNosvaLhh3HcCIYqEeQU9tLsk9jE
- 1eLrYb38850Jw==
+ bh=CLCvHvNlhBAnG9nVL5AUdRdQtVsmAEqYEs6yQeTN8vw=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=onLBBvMxCXwVIOKoWgH43B6jefHNhaqmvQc5Ml/FbGjq0hDImoE2QJmDk+W1Drjak
+ pGCESq8FNnP2qlBtkiRQZo6Cg5l7tkJf1K3lawapBTl09BZ+zxp4xiL2WScmBQiqH4
+ 3/R1nUKfU3HE07VSaPhD33QKcfQPJ1JYr8KBIfy4i7Wh0hDhYkfUvFsp7GkgesBzSN
+ uHtT4QagDouqh+tLAFhk4P3uy/klznB68XGsVfVN25IMQXSMnPA+pYS+ooIfNO1qlw
+ NgwlNuprEPVumV54/AYdbYxU7jjTzVHljPyGPs1b2hSZI0hP2QHqXVkJQ/6pDZAs9v
+ dMllYLEm7LsCQ==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1nzawn-00H6Dt-HJ; Fri, 10 Jun 2022 10:28:53 +0100
+ id 1nzawn-00H6Dt-Ud; Fri, 10 Jun 2022 10:28:54 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2 00/19] KVM/arm64: Refactoring the vcpu flags
-Date: Fri, 10 Jun 2022 10:28:19 +0100
-Message-Id: <20220610092838.1205755-1-maz@kernel.org>
+Subject: [PATCH v2 01/19] KVM: arm64: Always start with clearing SVE flag on
+ load
+Date: Fri, 10 Jun 2022 10:28:20 +0100
+Message-Id: <20220610092838.1205755-2-maz@kernel.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220610092838.1205755-1-maz@kernel.org>
+References: <20220610092838.1205755-1-maz@kernel.org>
 MIME-Version: 1.0
 X-SA-Exim-Connect-IP: 185.219.108.64
 X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org, james.morse@arm.com,
  suzuki.poulose@arm.com, alexandru.elisei@arm.com, oupton@google.com,
  will@kernel.org, tabba@google.com, qperret@google.com, broonie@kernel.org,
- reijiw@google.com, kernel-team@android.com
+ reijiw@google.com, kernel-team@android.com, stable@vger.kernel.org
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
 Cc: kernel-team@android.com, Will Deacon <will@kernel.org>,
- Mark Brown <broonie@kernel.org>
+ stable@vger.kernel.org, Mark Brown <broonie@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -90,66 +93,39 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-This is a iteration on [1], which aims at making the vcpu flags suck a
-bit less.
+On each vcpu load, we set the KVM_ARM64_HOST_SVE_ENABLED
+flag if SVE is enabled for EL0 on the host. This is used to restore
+the correct state on vpcu put.
 
-* From v1 [1]:
-  - Rebased onto v5.19-rc1
-  - Took the first two patches into kvmarm-fixes, included here for
-    completeness
-  - Additional patch to move system_supports_fpsimd() outside of
-    the run path (Reiji)
-  - Expanded on comments (Reiji)
-  - New kvm_pend_exception() accessor (Fuad)
-  - Various bracketing fixups (Reiji)
-  - Some renaming (Reiji, Broonie)
-  - Collected RBs, with thanks
+However, it appears that nothing ever clears this flag. Once
+set, it will stick until the vcpu is destroyed, which has the
+potential to spuriously enable SVE for userspace.
 
-[1] https://lore.kernel.org/r/20220528113829.1043361-1-maz@kernel.org
+We probably never saw the issue because no VMM uses SVE, but
+that's still pretty bad. Unconditionally clearing the flag
+on vcpu load addresses the issue.
 
-Marc Zyngier (19):
-  KVM: arm64: Always start with clearing SVE flag on load
-  KVM: arm64: Always start with clearing SME flag on load
-  KVM: arm64: Drop FP_FOREIGN_STATE from the hypervisor code
-  KVM: arm64: Move FP state ownership from flag to a tristate
-  KVM: arm64: Add helpers to manipulate vcpu flags among a set
-  KVM: arm64: Add three sets of flags to the vcpu state
-  KVM: arm64: Move vcpu configuration flags into their own set
-  KVM: arm64: Move vcpu PC/Exception flags to the input flag set
-  KVM: arm64: Move vcpu debug/SPE/TRBE flags to the input flag set
-  KVM: arm64: Move vcpu SVE/SME flags to the state flag set
-  KVM: arm64: Move vcpu ON_UNSUPPORTED_CPU flag to the state flag set
-  KVM: arm64: Move vcpu WFIT flag to the state flag set
-  KVM: arm64: Kill unused vcpu flags field
-  KVM: arm64: Convert vcpu sysregs_loaded_on_cpu to a state flag
-  KVM: arm64: Warn when PENDING_EXCEPTION and INCREMENT_PC are set
-    together
-  KVM: arm64: Add build-time sanity checks for flags
-  KVM: arm64: Reduce the size of the vcpu flag members
-  KVM: arm64: Document why pause cannot be turned into a flag
-  KVM: arm64: Move the handling of !FP outside of the fast path
+Fixes: 8383741ab2e7 ("KVM: arm64: Get rid of host SVE tracking/saving")
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20220528113829.1043361-2-maz@kernel.org
+---
+ arch/arm64/kvm/fpsimd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
- arch/arm64/include/asm/kvm_emulate.h       |  11 +-
- arch/arm64/include/asm/kvm_host.h          | 203 +++++++++++++++------
- arch/arm64/kvm/arch_timer.c                |   2 +-
- arch/arm64/kvm/arm.c                       |  12 +-
- arch/arm64/kvm/debug.c                     |  25 ++-
- arch/arm64/kvm/fpsimd.c                    |  37 ++--
- arch/arm64/kvm/handle_exit.c               |   2 +-
- arch/arm64/kvm/hyp/exception.c             |  23 ++-
- arch/arm64/kvm/hyp/include/hyp/debug-sr.h  |   6 +-
- arch/arm64/kvm/hyp/include/hyp/switch.h    |  24 +--
- arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h |   4 +-
- arch/arm64/kvm/hyp/nvhe/debug-sr.c         |   8 +-
- arch/arm64/kvm/hyp/nvhe/switch.c           |   6 +-
- arch/arm64/kvm/hyp/nvhe/sys_regs.c         |   4 +-
- arch/arm64/kvm/hyp/vhe/switch.c            |   4 +-
- arch/arm64/kvm/hyp/vhe/sysreg-sr.c         |   4 +-
- arch/arm64/kvm/inject_fault.c              |  17 +-
- arch/arm64/kvm/reset.c                     |   6 +-
- arch/arm64/kvm/sys_regs.c                  |  12 +-
- 19 files changed, 248 insertions(+), 162 deletions(-)
-
+diff --git a/arch/arm64/kvm/fpsimd.c b/arch/arm64/kvm/fpsimd.c
+index 3d251a4d2cf7..8267ff4642d3 100644
+--- a/arch/arm64/kvm/fpsimd.c
++++ b/arch/arm64/kvm/fpsimd.c
+@@ -80,6 +80,7 @@ void kvm_arch_vcpu_load_fp(struct kvm_vcpu *vcpu)
+ 	vcpu->arch.flags &= ~KVM_ARM64_FP_ENABLED;
+ 	vcpu->arch.flags |= KVM_ARM64_FP_HOST;
+ 
++	vcpu->arch.flags &= ~KVM_ARM64_HOST_SVE_ENABLED;
+ 	if (read_sysreg(cpacr_el1) & CPACR_EL1_ZEN_EL0EN)
+ 		vcpu->arch.flags |= KVM_ARM64_HOST_SVE_ENABLED;
+ 
 -- 
 2.34.1
 
