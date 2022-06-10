@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 10A92546217
-	for <lists+kvmarm@lfdr.de>; Fri, 10 Jun 2022 11:29:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E42DC546206
+	for <lists+kvmarm@lfdr.de>; Fri, 10 Jun 2022 11:29:04 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 81FF14B3FC;
-	Fri, 10 Jun 2022 05:29:10 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8FF104B3ED;
+	Fri, 10 Jun 2022 05:29:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
@@ -18,49 +18,50 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hOQG9RpptQp4; Fri, 10 Jun 2022 05:29:10 -0400 (EDT)
+	with ESMTP id RvNWK18lP5g5; Fri, 10 Jun 2022 05:29:04 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9038A4B415;
-	Fri, 10 Jun 2022 05:29:03 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F274F4B2D9;
+	Fri, 10 Jun 2022 05:29:00 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 00FA34B3D9
- for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Jun 2022 05:29:01 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7854C4B34C
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Jun 2022 05:28:59 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id uqZDzgxs+WSr for <kvmarm@lists.cs.columbia.edu>;
- Fri, 10 Jun 2022 05:28:59 -0400 (EDT)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 966DF4B335
- for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Jun 2022 05:28:59 -0400 (EDT)
+ with ESMTP id zf3F2vhhEw2o for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 10 Jun 2022 05:28:58 -0400 (EDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 49BEC4B335
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 10 Jun 2022 05:28:58 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 98E66B83354;
- Fri, 10 Jun 2022 09:28:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A3CC341C5;
+ by dfw.source.kernel.org (Postfix) with ESMTPS id C43E861EED;
+ Fri, 10 Jun 2022 09:28:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FCB6C34114;
  Fri, 10 Jun 2022 09:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1654853337;
- bh=VMmecCnQBGsMYvAuZ5HTUn0NbyxZfCqp9Cto7QAyto4=;
+ bh=v9c07ecyT4aT6p/nwSPZyHKH/IhdTtOse2sfgIh6nl4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=TXLZJ8ekvp6EELQzaPCvO3grvmCVQiQQYxVFifksfwBiZ+RVfuPiYysFn/rMh12tE
- BfaZh/Py8Gbms5WLo+rDTVvt+1ErizFGSJGSsnxDIKoIPhvqsovgHIwdSJqMd35QjG
- +wgqqZixFrZFsIEtKjXxr8GO+4PFDY2KsMUzvtGLkFT6c22Rtrm8hFjcv6rFGOlc8b
- lu20MUqcKvzd+/BXERK7J62wbJ5U71G6rQRH6dinO7kqQdCPj4t0qVh0MBcyOuSBBP
- 8DVYu9YY6XHpwRrf7AUkwsSxOgMBvqj2mh2qTmtIJDEhsXYXB56fApBPCTbm8rhNLw
- VN3OsGq7BFp7A==
+ b=IJ/q46kPjeSSTG+cI33q/LurAjFzAS0IxympJWjyaAPwVrw+i6zUdwJMjf3amDDG2
+ XsPmTqTgPQrp3Svc+P4mn1NRdmlJJHyWIETwLLEiTWHLNTM/ms6Q2t8UNrRt/93gg6
+ iJnHmqCn8w33vuPtNZAtXTAprVxT+8iJ0zTwaB85EDUvnMyCK7zfCMxwux0PRpij8S
+ pJOlH1sG0fkD2anJb2k9ppv0NTOt+vlhGj780p/ZWw7PhObrUkfkxevoN9705S+u8U
+ 6jKqoWBb2TI2oP+nUXrNYYvySKpsGAPfLmu6hA95gBDSP5OSna2A5YpTSxAbpyGeUa
+ Q4XFZhM5N3trw==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <maz@kernel.org>)
- id 1nzawp-00H6Dt-5Z; Fri, 10 Jun 2022 10:28:55 +0100
+ id 1nzawp-00H6Dt-D9; Fri, 10 Jun 2022 10:28:55 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v2 06/19] KVM: arm64: Add three sets of flags to the vcpu state
-Date: Fri, 10 Jun 2022 10:28:25 +0100
-Message-Id: <20220610092838.1205755-7-maz@kernel.org>
+Subject: [PATCH v2 07/19] KVM: arm64: Move vcpu configuration flags into their
+ own set
+Date: Fri, 10 Jun 2022 10:28:26 +0100
+Message-Id: <20220610092838.1205755-8-maz@kernel.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220610092838.1205755-1-maz@kernel.org>
 References: <20220610092838.1205755-1-maz@kernel.org>
@@ -92,44 +93,107 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-It so appears that each of the vcpu flags is really belonging to
-one of three categories:
+The KVM_ARM64_{GUEST_HAS_SVE,VCPU_SVE_FINALIZED,GUEST_HAS_PTRAUTH}
+flags are purely configuration flags. Once set, they are never cleared,
+but evaluated all over the code base.
 
-- a configuration flag, set once and for all
-- an input flag generated by the kernel for the hypervisor to use
-- a state flag that is only for the kernel's own bookkeeping
-
-As we are going to split all the existing flags into these three
-sets, introduce all three in one go.
-
-No functional change other than a bit of bloat...
+Move these three flags into the configuration set in one go, using
+the new accessors, and take this opportunity to drop the KVM_ARM64_
+prefix which doesn't provide any help.
 
 Reviewed-by: Fuad Tabba <tabba@google.com>
+Reviewed-by: Reiji Watanabe <reijiw@google.com>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/kvm_host.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm64/include/asm/kvm_host.h | 17 ++++++++++-------
+ arch/arm64/kvm/reset.c            |  6 +++---
+ 2 files changed, 13 insertions(+), 10 deletions(-)
 
 diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 6d30ac7e3164..af45320f247f 100644
+index af45320f247f..66a08b0e12a8 100644
 --- a/arch/arm64/include/asm/kvm_host.h
 +++ b/arch/arm64/include/asm/kvm_host.h
-@@ -335,6 +335,15 @@ struct kvm_vcpu_arch {
- 	/* Miscellaneous vcpu state flags */
- 	u64 flags;
+@@ -467,6 +467,13 @@ struct kvm_vcpu_arch {
+ #define vcpu_set_flag(v, ...)	__vcpu_set_flag((v), __VA_ARGS__)
+ #define vcpu_clear_flag(v, ...)	__vcpu_clear_flag((v), __VA_ARGS__)
  
-+	/* Configuration flags, set once and for all before the vcpu can run */
-+	u64 cflags;
++/* SVE exposed to guest */
++#define GUEST_HAS_SVE		__vcpu_single_flag(cflags, BIT(0))
++/* SVE config completed */
++#define VCPU_SVE_FINALIZED	__vcpu_single_flag(cflags, BIT(1))
++/* PTRAUTH exposed to guest */
++#define GUEST_HAS_PTRAUTH	__vcpu_single_flag(cflags, BIT(2))
 +
-+	/* Input flags to the hypervisor code, potentially cleared after use */
-+	u64 iflags;
-+
-+	/* State flags for kernel bookkeeping, unused by the hypervisor code */
-+	u64 sflags;
-+
- 	/*
- 	 * We maintain more than a single set of debug registers to support
- 	 * debugging the guest from the host and to maintain separate host and
+ 
+ /* Pointer to the vcpu's SVE FFR for sve_{save,load}_state() */
+ #define vcpu_sve_pffr(vcpu) (kern_hyp_va((vcpu)->arch.sve_state) +	\
+@@ -491,9 +498,6 @@ struct kvm_vcpu_arch {
+ /* vcpu_arch flags field values: */
+ #define KVM_ARM64_DEBUG_DIRTY		(1 << 0)
+ #define KVM_ARM64_HOST_SVE_ENABLED	(1 << 4) /* SVE enabled for EL0 */
+-#define KVM_ARM64_GUEST_HAS_SVE		(1 << 5) /* SVE exposed to guest */
+-#define KVM_ARM64_VCPU_SVE_FINALIZED	(1 << 6) /* SVE config completed */
+-#define KVM_ARM64_GUEST_HAS_PTRAUTH	(1 << 7) /* PTRAUTH exposed to guest */
+ #define KVM_ARM64_PENDING_EXCEPTION	(1 << 8) /* Exception pending */
+ /*
+  * Overlaps with KVM_ARM64_EXCEPT_MASK on purpose so that it can't be
+@@ -530,13 +534,13 @@ struct kvm_vcpu_arch {
+ 				 KVM_GUESTDBG_SINGLESTEP)
+ 
+ #define vcpu_has_sve(vcpu) (system_supports_sve() &&			\
+-			    ((vcpu)->arch.flags & KVM_ARM64_GUEST_HAS_SVE))
++			    vcpu_get_flag(vcpu, GUEST_HAS_SVE))
+ 
+ #ifdef CONFIG_ARM64_PTR_AUTH
+ #define vcpu_has_ptrauth(vcpu)						\
+ 	((cpus_have_final_cap(ARM64_HAS_ADDRESS_AUTH) ||		\
+ 	  cpus_have_final_cap(ARM64_HAS_GENERIC_AUTH)) &&		\
+-	 (vcpu)->arch.flags & KVM_ARM64_GUEST_HAS_PTRAUTH)
++	  vcpu_get_flag(vcpu, GUEST_HAS_PTRAUTH))
+ #else
+ #define vcpu_has_ptrauth(vcpu)		false
+ #endif
+@@ -893,8 +897,7 @@ void kvm_init_protected_traps(struct kvm_vcpu *vcpu);
+ int kvm_arm_vcpu_finalize(struct kvm_vcpu *vcpu, int feature);
+ bool kvm_arm_vcpu_is_finalized(struct kvm_vcpu *vcpu);
+ 
+-#define kvm_arm_vcpu_sve_finalized(vcpu) \
+-	((vcpu)->arch.flags & KVM_ARM64_VCPU_SVE_FINALIZED)
++#define kvm_arm_vcpu_sve_finalized(vcpu) vcpu_get_flag(vcpu, VCPU_SVE_FINALIZED)
+ 
+ #define kvm_has_mte(kvm)					\
+ 	(system_supports_mte() &&				\
+diff --git a/arch/arm64/kvm/reset.c b/arch/arm64/kvm/reset.c
+index 6c70c6f61c70..0e08fbe68715 100644
+--- a/arch/arm64/kvm/reset.c
++++ b/arch/arm64/kvm/reset.c
+@@ -81,7 +81,7 @@ static int kvm_vcpu_enable_sve(struct kvm_vcpu *vcpu)
+ 	 * KVM_REG_ARM64_SVE_VLS.  Allocation is deferred until
+ 	 * kvm_arm_vcpu_finalize(), which freezes the configuration.
+ 	 */
+-	vcpu->arch.flags |= KVM_ARM64_GUEST_HAS_SVE;
++	vcpu_set_flag(vcpu, GUEST_HAS_SVE);
+ 
+ 	return 0;
+ }
+@@ -120,7 +120,7 @@ static int kvm_vcpu_finalize_sve(struct kvm_vcpu *vcpu)
+ 	}
+ 	
+ 	vcpu->arch.sve_state = buf;
+-	vcpu->arch.flags |= KVM_ARM64_VCPU_SVE_FINALIZED;
++	vcpu_set_flag(vcpu, VCPU_SVE_FINALIZED);
+ 	return 0;
+ }
+ 
+@@ -177,7 +177,7 @@ static int kvm_vcpu_enable_ptrauth(struct kvm_vcpu *vcpu)
+ 	    !system_has_full_ptr_auth())
+ 		return -EINVAL;
+ 
+-	vcpu->arch.flags |= KVM_ARM64_GUEST_HAS_PTRAUTH;
++	vcpu_set_flag(vcpu, GUEST_HAS_PTRAUTH);
+ 	return 0;
+ }
+ 
 -- 
 2.34.1
 
