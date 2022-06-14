@@ -2,80 +2,80 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CF784547FCD
-	for <lists+kvmarm@lfdr.de>; Mon, 13 Jun 2022 08:50:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5068E54A7C1
+	for <lists+kvmarm@lfdr.de>; Tue, 14 Jun 2022 06:15:55 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C47D04B40A;
-	Mon, 13 Jun 2022 02:50:01 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 40CD7403AD;
+	Tue, 14 Jun 2022 00:15:54 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -1.788
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@intel.com
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ETrtzB1cZZhn; Mon, 13 Jun 2022 02:50:01 -0400 (EDT)
+	with ESMTP id 9U2LKaoT2g0J; Tue, 14 Jun 2022 00:15:54 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5EF554B3DC;
-	Mon, 13 Jun 2022 02:50:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1CFBE4B20A;
+	Tue, 14 Jun 2022 00:15:53 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5A4CB4B2D9
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Jun 2022 02:49:57 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 73AAE4B1FD
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 14 Jun 2022 00:15:51 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Dq4xNEUfcgxz for <kvmarm@lists.cs.columbia.edu>;
- Mon, 13 Jun 2022 02:49:55 -0400 (EDT)
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4227E4B2BC
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Jun 2022 02:49:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1655102995; x=1686638995;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=RGtR00YXznzblbZw6feUnIn4iE2iFhjqHOStGqIumPY=;
- b=V9Ye6o2uMtrRW7SmARjBazCORoyzXnYXjYyr1soJ7tVCl4EqKO2nFd80
- OniKRvg3E/E6F9XYtLacSkqXLt3iHH1ybeDypB7XrWaov9gmyoOSD+BB/
- WGd2mWblziwx1QroQrUnb/NRrmmIjp2hQGspo3e2hFtQjh5ADK5NEtqLd
- ITj+6uNcxvZv56S7SPOqmJRSQnjbY/Ul2N3PQLhZyxPRWWF6IvdCLikhg
- Ufv5y2lK21Wazagr0OczeJbW5NUfhoXN2rwS5fLymPVx0cgFB12kZdbMK
- 0X3L4bAG8p3QnNivnfgnVPbo8BcYrO55JodNN0KQ12L9bb53b7DpxkGII A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10376"; a="303580588"
-X-IronPort-AV: E=Sophos;i="5.91,296,1647327600"; d="scan'208";a="303580588"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Jun 2022 23:49:53 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,296,1647327600"; d="scan'208";a="567782758"
-Received: from lkp-server01.sh.intel.com (HELO 60dabacc1df6) ([10.239.97.150])
- by orsmga002.jf.intel.com with ESMTP; 12 Jun 2022 23:49:47 -0700
-Received: from kbuild by 60dabacc1df6 with local (Exim 4.95)
- (envelope-from <lkp@intel.com>) id 1o0dtS-000Kaj-UI;
- Mon, 13 Jun 2022 06:49:46 +0000
-Date: Mon, 13 Jun 2022 14:49:29 +0800
-From: kernel test robot <lkp@intel.com>
-To: Kalesh Singh <kaleshsingh@google.com>, mark.rutland@arm.com,
- broonie@kernel.org, maz@kernel.org
-Subject: Re: [PATCH v3 5/5] KVM: arm64: Unwind and dump nVHE hypervisor
- stacktrace
-Message-ID: <202206131423.8tjrMBgk-lkp@intel.com>
-References: <20220607165105.639716-6-kaleshsingh@google.com>
+ with ESMTP id 984VemZ5LU8O for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 14 Jun 2022 00:15:50 -0400 (EDT)
+Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com
+ [209.85.161.54])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 5B9984B1FA
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 14 Jun 2022 00:15:50 -0400 (EDT)
+Received: by mail-oo1-f54.google.com with SMTP id
+ v33-20020a4a9764000000b0035f814bb06eso1549945ooi.11
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Jun 2022 21:15:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=c+Rp2RVEpu3MX7WeOUfPLY5BNmqBN8ySZmPahKyFmPk=;
+ b=rwEWc6oeXP3pUzO9Q3sZp88gjVV6FWStAUQOC1b+N2itM3EgGqAcjQo4kdP9KcrnCp
+ pqDV8WqpC6AApOglkZ9Sicp9anig7WyqXStHC6b2TFcw9GPvh3xS/MWlGwytIBDBiD8N
+ 8ZAIWeEXPPsT8yhbGlA8464ObjRwV/87RgaBtpynhwNZBLz/wpXJ3aVhI2w2wFtIaoCH
+ BE55bc6IL4bUjBBiXT6kFZUdExMCHLUh7VsuOMTAjy+Gw28mk1WhwuN/11us7AYFtoaC
+ y/4Y8sC90rlObTFXvlZjCa1yQwWKaUEl2DHhzkXBcS2X5mOUNtvLa1C9K7LSoam8idi7
+ zaNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=c+Rp2RVEpu3MX7WeOUfPLY5BNmqBN8ySZmPahKyFmPk=;
+ b=jj6I3cwPf5asJp0NK4LqzKcu7gsUxez6uc+Pe0uNm7+laCgLh/hsVTZYfZYoMV2ZEf
+ MlZLroILpb2KgQtq+hZaXUTV0jcnwUbfxv49bGVZ7K/3sBCQWWrBGeZZQImqHyzXkwhz
+ 3CrcR/fgzpfDlB8wSZZ6nRVZoDFsmsCcluwO19ngrZMNQufv6h9zH1GxLtahIlS8eSE9
+ K6/s5ehaHlLNtqgBpWB+CBFtSi0JBd/T8hbY/hT/mgiF+89RMqdTTwbdKnthDl/piv1e
+ 79cNQ4/8JrSbBzthF9JRQIUOCU3lCcxAo0tn7u64cvxx+0ip07wMagVwG4GNb+0SdplL
+ p4/A==
+X-Gm-Message-State: AOAM533/6Am79A+i+Pffa14kaxJybyWB0U1S+mYYbEpMvCBzry8ms8C+
+ pFRYa6YMGEqEyMGykJbxjMgakJKs5IprHoyaRZV7mA==
+X-Google-Smtp-Source: ABdhPJypOZtefVLb22hKytzMlPi7WjxrWiezVIH5Yerm2RclFvxbaIinEfvYVAnXqJH/Nlpbh1vodkgn4diJAhYSnjE=
+X-Received: by 2002:a4a:8c48:0:b0:41b:43c3:fa54 with SMTP id
+ v8-20020a4a8c48000000b0041b43c3fa54mr1271721ooj.78.1655180149501; Mon, 13 Jun
+ 2022 21:15:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20220607165105.639716-6-kaleshsingh@google.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>,
- Peter Zijlstra <peterz@infradead.org>,
- Catalin Marinas <catalin.marinas@arm.com>, Alexei Starovoitov <ast@kernel.org>,
- will@kernel.org, surenb@google.com, kvmarm@lists.cs.columbia.edu,
- "Madhavan T. Venkataraman" <madvenka@linux.microsoft.com>,
- linux-arm-kernel@lists.infradead.org, kernel-team@android.com,
- tjmercier@google.com, kbuild-all@lists.01.org, linux-kernel@vger.kernel.org,
- Masami Hiramatsu <mhiramat@kernel.org>
+References: <20220610092838.1205755-1-maz@kernel.org>
+ <20220610092838.1205755-20-maz@kernel.org>
+In-Reply-To: <20220610092838.1205755-20-maz@kernel.org>
+From: Reiji Watanabe <reijiw@google.com>
+Date: Mon, 13 Jun 2022 21:15:33 -0700
+Message-ID: <CAAeT=FwuUsZSgV-tTBEf-V1vjjhvmFHSDzSMyVjWDQd+jdHf7A@mail.gmail.com>
+Subject: Re: [PATCH v2 19/19] KVM: arm64: Move the handling of !FP outside of
+ the fast path
+To: Marc Zyngier <maz@kernel.org>
+Cc: kernel-team@android.com, kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
+ Mark Brown <broonie@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -92,74 +92,27 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Kalesh,
+On Fri, Jun 10, 2022 at 2:35 AM Marc Zyngier <maz@kernel.org> wrote:
+>
+> We currently start by assuming that the host owns the FP unit
+> at load time, then check again whether this is the case as
+> we are about to run. Only at this point do we account for the
+> fact that there is a (vanishingly small) chance that we're running
+> on a system without a FPSIMD unit (yes, this is madness).
+>
+> We can actually move this FPSIMD check as early as load-time,
+> and drop the check at run time.
+>
+> No intended change in behaviour.
+>
+> Suggested-by: Reiji Watanabe <reijiw@google.com>
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
 
-Thank you for the patch! Yet something to improve:
+For patches 9~19 in the series,
+Reviewed-by: Reiji Watanabe <reijiw@google.com>
 
-[auto build test ERROR on f2906aa863381afb0015a9eb7fefad885d4e5a56]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Kalesh-Singh/KVM-nVHE-Hypervisor-stack-unwinder/20220608-011351
-base:   f2906aa863381afb0015a9eb7fefad885d4e5a56
-config: arm64-randconfig-c024-20220612 (https://download.01.org/0day-ci/archive/20220613/202206131423.8tjrMBgk-lkp@intel.com/config)
-compiler: aarch64-linux-gcc (GCC) 11.3.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/ac1ce397ffe5b05df06cdb56a30db4099c7428ec
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Kalesh-Singh/KVM-nVHE-Hypervisor-stack-unwinder/20220608-011351
-        git checkout ac1ce397ffe5b05df06cdb56a30db4099c7428ec
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
-
-If you fix the issue, kindly add following tag where applicable
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
-   aarch64-linux-ld: arch/arm64/kernel/stacktrace.o: in function `hyp_dump_backtrace':
->> arch/arm64/kernel/stacktrace.c:254: undefined reference to `kvm_arm_hyp_stacktrace_page'
-   aarch64-linux-ld: arch/arm64/kernel/stacktrace.o: relocation R_AARCH64_ADR_PREL_PG_HI21 against symbol `kvm_arm_hyp_stacktrace_page' which may bind externally can not be used when making a shared object; recompile with -fPIC
-   arch/arm64/kernel/stacktrace.c:254:(.text+0x634): dangerous relocation: unsupported relocation
->> aarch64-linux-ld: arch/arm64/kernel/stacktrace.c:254: undefined reference to `kvm_arm_hyp_stacktrace_page'
-   pahole: .tmp_vmlinux.btf: No such file or directory
-   .btf.vmlinux.bin.o: file not recognized: file format not recognized
-
-
-vim +254 arch/arm64/kernel/stacktrace.c
-
-   246	
-   247	/**
-   248	 * Symbolizes and dumps the hypervisor backtrace from the shared
-   249	 * stacktrace page.
-   250	 */
-   251	noinline notrace void hyp_dump_backtrace(unsigned long hyp_offset)
-   252	{
-   253		unsigned long *stacktrace_pos =
- > 254			(unsigned long *)*this_cpu_ptr(&kvm_arm_hyp_stacktrace_page);
-   255		unsigned long va_mask = GENMASK_ULL(vabits_actual - 1, 0);
-   256		unsigned long pc = *stacktrace_pos++;
-   257	
-   258		kvm_err("nVHE HYP call trace:\n");
-   259	
-   260		while (pc) {
-   261			pc &= va_mask;		/* Mask tags */
-   262			pc += hyp_offset;	/* Convert to kern addr */
-   263			kvm_err("[<%016lx>] %pB\n", pc, (void *)pc);
-   264			pc = *stacktrace_pos++;
-   265		}
-   266	
-   267		kvm_err("---- end of nVHE HYP call trace ----\n");
-   268	}
-   269	#else /* __KVM_NVHE_HYPERVISOR__ */
-   270	DEFINE_PER_CPU(unsigned long [PAGE_SIZE/sizeof(long)], overflow_stack)
-   271		__aligned(16);
-   272	
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+Thanks,
+Reiji
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
