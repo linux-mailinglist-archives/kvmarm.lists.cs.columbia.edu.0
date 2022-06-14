@@ -2,88 +2,80 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4357854AB81
-	for <lists+kvmarm@lfdr.de>; Tue, 14 Jun 2022 10:16:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4069754BB21
+	for <lists+kvmarm@lfdr.de>; Tue, 14 Jun 2022 22:10:06 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7AA444B259;
-	Tue, 14 Jun 2022 04:16:21 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E03524B2E2;
+	Tue, 14 Jun 2022 16:10:04 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -1.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@intel.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id aM4aZadRtus8; Tue, 14 Jun 2022 04:16:21 -0400 (EDT)
+	with ESMTP id uKPF7kqv34M9; Tue, 14 Jun 2022 16:10:04 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8FE534B220;
-	Tue, 14 Jun 2022 04:16:18 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5446D4B30A;
+	Tue, 14 Jun 2022 16:10:03 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 236824B288
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Jun 2022 13:12:03 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2C0994B2E2
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 14 Jun 2022 16:10:02 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id AMBAV6D-0x6u for <kvmarm@lists.cs.columbia.edu>;
- Mon, 13 Jun 2022 13:12:02 -0400 (EDT)
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com
- [209.85.221.50])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E93484B1BC
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Jun 2022 13:12:01 -0400 (EDT)
-Received: by mail-wr1-f50.google.com with SMTP id h5so8005784wrb.0
- for <kvmarm@lists.cs.columbia.edu>; Mon, 13 Jun 2022 10:12:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=BwfpdGVZuLzhMRO0qDkUrzUSE4uGJ0s4izOa+gswkLc=;
- b=iyoFryyCEMOgC7rXLKu4nOmoJ4Ev3bSJmT6ed09FE5xCAAc5dBkkwtXxpcvvGQ+P+z
- ETT+TDFbc4w3QEtd0CSTtGopVeE/ROGO0WHkEbyE/LYwiv3H3TW3pyxouKMCLv+KqkYZ
- yNXDxA5s4wHBPNNleteRDWB0OVGKRy46fxusIatVg7fbsU3f8NuQHDDwXuooOAhihX5c
- apRzdEm4Qcxw1Vp4x8eHSJ0zk6RBYV1Jvu3JCqD8yM8Yczm4FlFHmh8FmzU3HH+SvYZl
- N0nY66gFj0te0BB1xSoY4rr990nbGbzyauUa8tb8y8DjQzQQuFKjHb8vPu4IK/5VClaZ
- mw/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=BwfpdGVZuLzhMRO0qDkUrzUSE4uGJ0s4izOa+gswkLc=;
- b=Lz83IrCEXvUi45UPL02vQlX8tg8g7EuL9vXywz8yl7YrUKWpt9XoFEldWtzOsVTp4H
- EgFoCYmqm1tR8Pnyum6ggKF9UENZ08ZbbsLQvDArSpogia6T1eOYrbvpZPiNuvCMOUQQ
- 1qlM/gZLo5938JqWApf2TzF66EEvPSHZLvgsEjU3edaiu2+O2rDjPVr1MEow/lRQBPei
- jna5I56/gE80qp68EwxKWf/zelw9p5aVOL/EC8b2DkUEixT4HieGrgUgeL17f7yxHvCM
- vF87TwuOVuhDXbcN8PbOwsigBM0V1VgJBcMCe65ohlw8FiMePgbGyVQ5ICvwUWl3PwLS
- 1X+Q==
-X-Gm-Message-State: AJIora8ELNxKO5MHzDrHS6Ni/bpgMQMwnoekdQ6Wr46EimKXEItz46Bi
- stFHMXLJRkMR7KKOssbLTVqj3sIaPZH2lav9jRq2YA==
-X-Google-Smtp-Source: AGRyM1s6B0qb0T2WacCoWhhkywiiU+ZvFODg5mDtSwgELuEdOO1P7hQRTSX7NI4gasI6mKDBJY57NrqOabVTnciF7VA=
-X-Received: by 2002:adf:f688:0:b0:215:6e4d:4103 with SMTP id
- v8-20020adff688000000b002156e4d4103mr802713wrp.372.1655140320646; Mon, 13 Jun
- 2022 10:12:00 -0700 (PDT)
+ with ESMTP id kLibAiG9GbdB for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 14 Jun 2022 16:10:00 -0400 (EDT)
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3A19A4B2D7
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 14 Jun 2022 16:10:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1655237400; x=1686773400;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=H39qclFsqZbsKF4/6iQ+SjBBp3vw55ZbnY4RJ7gbLBE=;
+ b=XGdH0cpq1qb+QhFSIJTJbfsNV21emAy6deHSqNuHWzeK//mHMksz3cIq
+ fL20uRSnwAGIuNIsxVZyy5SOm5EYeN5BOJ/v34nAzawHTzMXjXf65EnEf
+ 2WvBAiD7k0PA4B3S3o5yDUmVup2SHaYqtpCEdVMeMY9qOTN0I6re/iiyf
+ vhqNJjhFlPWAa+de5r/d/IlHnqbK1+cyvABB/T/Ab9dAfn4z7ERgYbH9F
+ 2VkC9sdx3pUXI8smkp/Tg8lk90PE+J8qMVpLZIKpSr+CDGfJQAT8PrMYa
+ EW6Udl9Xprfd0TIJnQtxr3zhafcph1bCKWviomzcmEgdu+0/bbBLbqQrJ Q==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10378"; a="259186400"
+X-IronPort-AV: E=Sophos;i="5.91,300,1647327600"; d="scan'208";a="259186400"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+ by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jun 2022 13:09:58 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,300,1647327600"; d="scan'208";a="582851874"
+Received: from lkp-server01.sh.intel.com (HELO 60dabacc1df6) ([10.239.97.150])
+ by orsmga007.jf.intel.com with ESMTP; 14 Jun 2022 13:09:50 -0700
+Received: from kbuild by 60dabacc1df6 with local (Exim 4.95)
+ (envelope-from <lkp@intel.com>) id 1o1CrF-000MGT-Cq;
+ Tue, 14 Jun 2022 20:09:49 +0000
+Date: Wed, 15 Jun 2022 04:09:33 +0800
+From: kernel test robot <lkp@intel.com>
+To: Kalesh Singh <kaleshsingh@google.com>, mark.rutland@arm.com,
+ broonie@kernel.org, maz@kernel.org
+Subject: Re: [PATCH v3 5/5] KVM: arm64: Unwind and dump nVHE hypervisor
+ stacktrace
+Message-ID: <202206150420.KMU4kXzZ-lkp@intel.com>
+References: <20220607165105.639716-6-kaleshsingh@google.com>
 MIME-Version: 1.0
-References: <20220606222058.86688-1-yosryahmed@google.com>
- <20220606222058.86688-2-yosryahmed@google.com>
- <bdfea446-623c-d423-673f-496b3725ec2c@intel.com>
-In-Reply-To: <bdfea446-623c-d423-673f-496b3725ec2c@intel.com>
-From: Yosry Ahmed <yosryahmed@google.com>
-Date: Mon, 13 Jun 2022 10:11:23 -0700
-Message-ID: <CAJD7tkbUXb7qBm1GAMDr29DcsC90_bPzwffkdtAu_Na+inVzVg@mail.gmail.com>
-Subject: Re: [PATCH v5 1/4] mm: add NR_SECONDARY_PAGETABLE to count secondary
- page table uses.
-To: "Huang, Shaoqin" <shaoqin.huang@intel.com>
-X-Mailman-Approved-At: Tue, 14 Jun 2022 04:16:17 -0400
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- Roman Gushchin <roman.gushchin@linux.dev>, Michal Hocko <mhocko@kernel.org>,
- Linux-MM <linux-mm@kvack.org>, Zefan Li <lizefan.x@bytedance.com>,
- kvmarm@lists.cs.columbia.edu, Marc Zyngier <maz@kernel.org>,
- Joerg Roedel <joro@8bytes.org>, Shakeel Butt <shakeelb@google.com>,
- Cgroups <cgroups@vger.kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Johannes Weiner <hannes@cmpxchg.org>, Tejun Heo <tj@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>
+Content-Disposition: inline
+In-Reply-To: <20220607165105.639716-6-kaleshsingh@google.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>,
+ Peter Zijlstra <peterz@infradead.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Alexei Starovoitov <ast@kernel.org>,
+ will@kernel.org, surenb@google.com, kvmarm@lists.cs.columbia.edu,
+ "Madhavan T. Venkataraman" <madvenka@linux.microsoft.com>,
+ linux-arm-kernel@lists.infradead.org, kernel-team@android.com,
+ llvm@lists.linux.dev, tjmercier@google.com, kbuild-all@lists.01.org,
+ linux-kernel@vger.kernel.org, Masami Hiramatsu <mhiramat@kernel.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -100,72 +92,43 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Sun, Jun 12, 2022 at 8:18 PM Huang, Shaoqin <shaoqin.huang@intel.com> wrote:
->
->
->
-> On 6/7/2022 6:20 AM, Yosry Ahmed wrote:
-> > Add NR_SECONDARY_PAGETABLE stat to count secondary page table uses, e.g.
-> > KVM mmu. This provides more insights on the kernel memory used
-> > by a workload.
-> >
-> > This stat will be used by subsequent patches to count KVM mmu
-> > memory usage.
-> >
-> > Signed-off-by: Yosry Ahmed <yosryahmed@google.com>
-> > ---
-> >   Documentation/admin-guide/cgroup-v2.rst | 5 +++++
-> >   Documentation/filesystems/proc.rst      | 4 ++++
-> >   drivers/base/node.c                     | 2 ++
-> >   fs/proc/meminfo.c                       | 2 ++
-> >   include/linux/mmzone.h                  | 1 +
-> >   mm/memcontrol.c                         | 1 +
-> >   mm/page_alloc.c                         | 6 +++++-
-> >   mm/vmstat.c                             | 1 +
-> >   8 files changed, 21 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/admin-guide/cgroup-v2.rst b/Documentation/admin-guide/cgroup-v2.rst
-> > index 69d7a6983f781..307a284b99189 100644
-> > --- a/Documentation/admin-guide/cgroup-v2.rst
-> > +++ b/Documentation/admin-guide/cgroup-v2.rst
-> > @@ -1312,6 +1312,11 @@ PAGE_SIZE multiple when read back.
-> >         pagetables
-> >                   Amount of memory allocated for page tables.
-> >
-> > +       sec_pagetables
-> > +             Amount of memory allocated for secondary page tables,
-> > +             this currently includes KVM mmu allocations on x86
-> > +             and arm64.
-> > +
-> >         percpu (npn)
-> >               Amount of memory used for storing per-cpu kernel
-> >               data structures.
-> > diff --git a/Documentation/filesystems/proc.rst b/Documentation/filesystems/proc.rst
-> > index 061744c436d99..894d6317f3bdc 100644
-> > --- a/Documentation/filesystems/proc.rst
-> > +++ b/Documentation/filesystems/proc.rst
-> > @@ -973,6 +973,7 @@ You may not have all of these fields.
-> >       SReclaimable:   159856 kB
-> >       SUnreclaim:     124508 kB
-> >       PageTables:      24448 kB
-> > +    SecPageTables:    0 kB
-> >       NFS_Unstable:        0 kB
-> >       Bounce:              0 kB
-> >       WritebackTmp:        0 kB
-> > @@ -1067,6 +1068,9 @@ SUnreclaim
-> >   PageTables
-> >                 amount of memory dedicated to the lowest level of page
-> >                 tables.
-> > +SecPageTables
-> > +           amount of memory dedicated to secondary page tables, this
-> > +           currently includes KVM mmu allocations on x86 and arm64.
->
-> Just a notice. This patch in the latest 5.19.0-rc2+ have a conflict in
-> Documentation/filesystems/proc.rst file. But that's not a problem.
+Hi Kalesh,
 
-Thanks for pointing this out. Let me know if a rebase and resend is necessary.
+Thank you for the patch! Yet something to improve:
 
-<snip>
+[auto build test ERROR on f2906aa863381afb0015a9eb7fefad885d4e5a56]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Kalesh-Singh/KVM-nVHE-Hypervisor-stack-unwinder/20220608-011351
+base:   f2906aa863381afb0015a9eb7fefad885d4e5a56
+config: arm64-buildonly-randconfig-r003-20220613 (https://download.01.org/0day-ci/archive/20220615/202206150420.KMU4kXzZ-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project c97436f8b6e2718286e8496faf53a2c800e281cf)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install arm64 cross compiling tool for clang build
+        # apt-get install binutils-aarch64-linux-gnu
+        # https://github.com/intel-lab-lkp/linux/commit/ac1ce397ffe5b05df06cdb56a30db4099c7428ec
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Kalesh-Singh/KVM-nVHE-Hypervisor-stack-unwinder/20220608-011351
+        git checkout ac1ce397ffe5b05df06cdb56a30db4099c7428ec
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
+
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
+
+All errors (new ones prefixed by >>):
+
+>> ld.lld: error: undefined symbol: kvm_arm_hyp_stacktrace_page
+   >>> referenced by stacktrace.c:254 (arch/arm64/kernel/stacktrace.c:254)
+   >>>               kernel/stacktrace.o:(hyp_dump_backtrace) in archive arch/arm64/built-in.a
+   >>> referenced by stacktrace.c:254 (arch/arm64/kernel/stacktrace.c:254)
+   >>>               kernel/stacktrace.o:(hyp_dump_backtrace) in archive arch/arm64/built-in.a
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
