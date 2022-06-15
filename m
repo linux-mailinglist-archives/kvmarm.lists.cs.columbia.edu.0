@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A8BC54D1A1
-	for <lists+kvmarm@lfdr.de>; Wed, 15 Jun 2022 21:31:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C02F54D1A3
+	for <lists+kvmarm@lfdr.de>; Wed, 15 Jun 2022 21:31:40 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E96B64B1FC;
-	Wed, 15 Jun 2022 15:31:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F2A364B354;
+	Wed, 15 Jun 2022 15:31:39 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
@@ -18,60 +18,60 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id suXZYmGm+Hq2; Wed, 15 Jun 2022 15:31:36 -0400 (EDT)
+	with ESMTP id pzNgR2xGFt1b; Wed, 15 Jun 2022 15:31:38 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 917CE4B34C;
-	Wed, 15 Jun 2022 15:31:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BF2204B336;
+	Wed, 15 Jun 2022 15:31:38 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 684844B0B8
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jun 2022 15:31:35 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 620A24B32D
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jun 2022 15:31:37 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id qiuj3FONRyqf for <kvmarm@lists.cs.columbia.edu>;
- Wed, 15 Jun 2022 15:31:34 -0400 (EDT)
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com
- [209.85.219.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6D3EC4B1FC
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jun 2022 15:31:34 -0400 (EDT)
-Received: by mail-yb1-f201.google.com with SMTP id
- p143-20020a25d895000000b006648c7235a6so10363074ybg.1
- for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jun 2022 12:31:34 -0700 (PDT)
+ with ESMTP id BQkhe9lM1CYf for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 15 Jun 2022 15:31:36 -0400 (EDT)
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com
+ [209.85.219.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 952614B0B8
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jun 2022 15:31:35 -0400 (EDT)
+Received: by mail-yb1-f202.google.com with SMTP id
+ s23-20020a257717000000b00660719d9f2fso11112767ybc.23
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 15 Jun 2022 12:31:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=0A1qUobQisYFir8bSqnJq36CQ0mNNtlgbs2SvOAwXHc=;
- b=bCrCYBvAVJ0y9knJ7QoMwIeTYXyOw5k/4LkQcVf0DA/Yr8hb3yW/EgVWEv8valPkm8
- U4svsfa3sLOe1UCzmLIXirRpvkijJ4/5AqxlWOdebDyGc/+VUvhKUHom4CroL00WVP1r
- Zt++yo/4GAyKr2NIuzZcWFegc1x2B3sGI1VUIPt1ksp09TutxZREOyldn6VFPZsWCrtR
- l4LGYraLm64GnCpy2fUgxby76+e/rwy8XMNm8bzF/lmnIsyCDU7g2EYFAj7UT+a1CRCm
- FF7nv4Ddtbtcb9kIgHsRN6srMWtxGKYFdXzTsm/cplt1sKcPfDrRuk3CsjRsKbKnWC+w
- lKMg==
+ :cc; bh=p5lI2xiHmpMNi5Qspc8ysgo55K7EWn4WgT9n1L+fZKs=;
+ b=mG6dyBnv2Z1YIhYMMdOhxpmTOlhI6K5F3pqVu7BBfWjuTllDmyHe24BM5YFrSH3k3m
+ k37eaVag1hTqsXm2MRzzXDOHY8me4Bq0JCL74CQUtSUR0vYxJ92PPv59X3Z/tLK9Dn+F
+ zeTFHx0m2edykqQZX28LMgGlhp3UWw1H3teXTxJbhpynPri8OGPfBeq2am/bZgiujx0X
+ RListKVLmXaPRxX72t+rUnfMj64Mkah1i+sXryEK9ouBTNns2t/OmP+IoEmB0+ArGp0B
+ fUYX+EcewLKlIUXdyTsVoKIvawpcNwMHPujF1u2WdawbTnka+vjiHykWjlxZcCf9FAZY
+ 07pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:in-reply-to:message-id:mime-version
  :references:subject:from:to:cc;
- bh=0A1qUobQisYFir8bSqnJq36CQ0mNNtlgbs2SvOAwXHc=;
- b=24kV+b0CUd8iXicJqzUt5+IKbATFLYrF2Q1hN/+032ngykr1+IfX1vpfFoksQcvEaj
- ynQ2Cuaor+6Fq9DgI7/FmYI1GIY1rJ4jBhg0oNG0cTxv6EmcbCVKhyRH5CyRe6lO9FD+
- /Ds7w11nDGJ9mdHCLMgfI+F5U5794m/wvEcjoME+gB9dAvlkFqbOs5fEhTldqeoQrc2J
- jkh8yNkmFgUFzKNFBjGavJdtT11zC4zi7i5ts7mB02RXUgA5vangVXUh36q+pCUaSfzm
- x4+WnFK0oAYaUpeRpxz1mlrsHlipcYxIfOr8HxYQ4R7RtISSASPe5Dyi7C/AbIGVm4Qe
- 0uHg==
-X-Gm-Message-State: AJIora9KXlRZMBBP2pdYrT9e+nvrP4Bj3ePlY8rGUA9mGw9sJRTPLGwh
- U9bum4rr0K5feAFAIY92v858D5w3ensSd5wxFQ==
-X-Google-Smtp-Source: AGRyM1sFpUaVIm0gUXUCuBF8nXSdLidTfcGiqvEhvoTkkRBFVlcKYuhXbB7NYKNV0DsIASsf2o84Kvj0GtDCb8zK2Q==
+ bh=p5lI2xiHmpMNi5Qspc8ysgo55K7EWn4WgT9n1L+fZKs=;
+ b=14M9VlTcVEyLpv3jhz98DkcQR4L797Rgw7GXLnvVxVtRwF1lzRLfuewnK97vY8Hhb2
+ nBWgk3Bph9HWGyWkqpmgk8Xko/Lby849IvDN1wlIvO4Yu26FF+S/ymycq6rutwFKthRI
+ ENUl1Lu1JbjJ0XnCsqFCMpD1lEeUhjDV6DCsMdJwdaqSlFQAjHGcimRKlzGd0ap4k8QK
+ zBODEemZmGWbdWr1Z/xcLsUTWZJpbXr3oEcawFpV5se+kPcG7OHdxO/VitMUAGz+66Hy
+ XsK7hgElp9KM0OQPeUaYa+yndGe/CCXJLmhO/yFk4cknjRJoTExhaEXRRV1aTN2WuACo
+ S9QQ==
+X-Gm-Message-State: AJIora9YJ8glutnpqF55A9xIKiGvtGeZZjqgDzYlwdl9NJ9L2ehA9AHU
+ G+Vf8x21mtliKjRGTUYqvhC64P6p1VTcxlG0Xg==
+X-Google-Smtp-Source: AGRyM1se+2rADeaOeSDd5N6eWtlHqK6a1Gro/vu3VtVQEeTKiC1Lznt62mYgLeGnbzgYXtxxD8SkUuHPd61HawlBMA==
 X-Received: from coltonlewis-kvm.c.googlers.com
  ([fda3:e722:ac3:cc00:2b:ff92:c0a8:14ce])
- (user=coltonlewis job=sendgmr) by 2002:a81:4992:0:b0:30c:1b61:82ac with SMTP
- id w140-20020a814992000000b0030c1b6182acmr1399797ywa.348.1655321494001; Wed,
- 15 Jun 2022 12:31:34 -0700 (PDT)
-Date: Wed, 15 Jun 2022 19:31:13 +0000
+ (user=coltonlewis job=sendgmr) by 2002:a81:803:0:b0:314:17cc:1994 with SMTP
+ id 3-20020a810803000000b0031417cc1994mr1398832ywi.505.1655321495080; Wed, 15
+ Jun 2022 12:31:35 -0700 (PDT)
+Date: Wed, 15 Jun 2022 19:31:14 +0000
 In-Reply-To: <20220615193116.806312-1-coltonlewis@google.com>
-Message-Id: <20220615193116.806312-2-coltonlewis@google.com>
+Message-Id: <20220615193116.806312-3-coltonlewis@google.com>
 Mime-Version: 1.0
 References: <20220615193116.806312-1-coltonlewis@google.com>
 X-Mailer: git-send-email 2.36.1.476.g0c4daa206d-goog
-Subject: [PATCH 1/4] KVM: selftests: enumerate GUEST_ASSERT arguments
+Subject: [PATCH 2/4] KVM: selftests: Increase UCALL_MAX_ARGS to 7
 From: Colton Lewis <coltonlewis@google.com>
 To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu, pbonzini@redhat.com
 Cc: thuth@redhat.com, Colton Lewis <coltonlewis@google.com>, maz@kernel.org,
@@ -92,32 +92,28 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Enumerate GUEST_ASSERT arguments to avoid magic indices to ucall.args.
+Increase UCALL_MAX_ARGS to 7 to allow GUEST_ASSERT_4 to pass 3 builtin
+ucall arguments specified in guest_assert_builtin_args plus 4
+user-specified arguments.
 
 Signed-off-by: Colton Lewis <coltonlewis@google.com>
 ---
- tools/testing/selftests/kvm/include/ucall_common.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tools/testing/selftests/kvm/include/ucall_common.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tools/testing/selftests/kvm/include/ucall_common.h b/tools/testing/selftests/kvm/include/ucall_common.h
-index 98562f685151..dbe872870b83 100644
+index dbe872870b83..568c562f14cd 100644
 --- a/tools/testing/selftests/kvm/include/ucall_common.h
 +++ b/tools/testing/selftests/kvm/include/ucall_common.h
-@@ -32,6 +32,14 @@ uint64_t get_ucall(struct kvm_vcpu *vcpu, struct ucall *uc);
- 				ucall(UCALL_SYNC, 6, "hello", stage, arg1, arg2, arg3, arg4)
- #define GUEST_SYNC(stage)	ucall(UCALL_SYNC, 2, "hello", stage)
- #define GUEST_DONE()		ucall(UCALL_DONE, 0)
-+
-+enum guest_assert_builtin_args {
-+	GUEST_ERROR_STRING,
-+	GUEST_FILE,
-+	GUEST_LINE,
-+	GUEST_ASSERT_BUILTIN_NARGS
-+};
-+
- #define __GUEST_ASSERT(_condition, _condstr, _nargs, _args...) do {    \
- 	if (!(_condition))                                              \
- 		ucall(UCALL_ABORT, 2 + _nargs,                          \
+@@ -16,7 +16,7 @@ enum {
+ 	UCALL_UNHANDLED,
+ };
+ 
+-#define UCALL_MAX_ARGS 6
++#define UCALL_MAX_ARGS 7
+ 
+ struct ucall {
+ 	uint64_t cmd;
 -- 
 2.36.1.476.g0c4daa206d-goog
 
