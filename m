@@ -2,86 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 517535573FC
-	for <lists+kvmarm@lfdr.de>; Thu, 23 Jun 2022 09:30:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B7405572E3
+	for <lists+kvmarm@lfdr.de>; Thu, 23 Jun 2022 08:11:28 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C54544B36B;
-	Thu, 23 Jun 2022 03:30:32 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F33EB4B1B4;
+	Thu, 23 Jun 2022 02:11:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -1.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
+X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8dzPwIpJhUc3; Thu, 23 Jun 2022 03:30:31 -0400 (EDT)
+	with ESMTP id uSSPhMT+u4oU; Thu, 23 Jun 2022 02:11:26 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A49614B3EE;
-	Thu, 23 Jun 2022 03:30:28 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3348D4B19F;
+	Thu, 23 Jun 2022 02:11:25 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5757A4B278
- for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Jun 2022 22:19:44 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 505CE4B19F
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 23 Jun 2022 02:11:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id CpHPA5Hrg1xF for <kvmarm@lists.cs.columbia.edu>;
- Wed, 22 Jun 2022 22:19:42 -0400 (EDT)
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com
- [209.85.219.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id D53AF4B3B5
- for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Jun 2022 22:19:42 -0400 (EDT)
-Received: by mail-yb1-f201.google.com with SMTP id
- b11-20020a5b008b000000b00624ea481d55so16160704ybp.19
- for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Jun 2022 19:19:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=9RRfGBQ63xQ/DdrDFnljmoGGtNK2WWXmVlcIowX+5Eg=;
- b=PV3Ep9cdQbVSaBsuR1M4h4hPUpnJOpS9PDHgZkbjrc1w8cQjLCjkQPCHzOeNgT9q7/
- O+l3GoolI9kSpOJ2B4ayD6iZcOWewtp9fPkzuvtw9ICyv3pE01NHqOO/lRAeT0LGplxr
- AFE0lS0mvWvMkw1JaGQLmYgu82p7rKcbrlZbcWLFzj1EL1yRcd6oKUrS+S3zN+O5xJAb
- 8sGEc2DaI/5Vs/LgaKH784z6icQ86E7tzibHduCF77Cv8AA4gYQQSKTp9EyCP2TTQKaJ
- eiDmWy4/DwF3Lol9Q5avrghJoAy/6G640V2zHlxniozM6/RiXpR+sNyoarfHV1H0gdml
- bdVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:date:in-reply-to:message-id:mime-version
- :references:subject:from:to:cc;
- bh=9RRfGBQ63xQ/DdrDFnljmoGGtNK2WWXmVlcIowX+5Eg=;
- b=E81zpMxl2LK5vT46t0YZmuALdv5GRGpKLiSPyUcpHmnuKtAKwDiJT/H1m00HA23iYn
- ypkrZlLHIcSguECRnMIIEH8u8u6Pj/GrvVm9c7+YgdaivJ8l4HVeYOJv5pyeAPJfszVy
- 2WePaQ5O/+8g7k7+9lP3AAjAc8ZHPOP3uQ4TV1tv6TyAWslvbDfM0TR0zSCksGqso2Dy
- 3fWHic+QPvlDKJNJlHBDwLiWoMtAHjUPMLZqKMUQXM/5zbY27mcCwnsNqy0/ZKvpqRW2
- gqiqQxQrcIwRIHOSWBeZ8exAdSp58sAmCFJO4ZwijIMPZZbS+3mDLIVM3NvmNxRky0bK
- JAwg==
-X-Gm-Message-State: AJIora9TcNMm+WR0CnX5Kc5Ui6yLsIeYg/NRZ6U+g+jpOtMbvz3njYCA
- ZVKSWGRev1fttK0LNRrCHlYU/kVpRry6sCdMseoljlK8geqMje4eAnzAjeFl9INReufEqwwrDlM
- /6NsvT0nTrE/eWSY05TuAnGEIOvmU22wPCWcJp8Hb+0ZtSQf/eDpPGUhf74rihQ==
-X-Google-Smtp-Source: AGRyM1tktBOoS27VjciOGpSivbIhryk+M35R2Pac1IEIC38+L0K8WXfaVlMRjhkCUF6vj4Cunslz+Wg=
-X-Received: from pcc-desktop.svl.corp.google.com
- ([2620:15c:2ce:200:ba6f:123c:d287:a160])
- (user=pcc job=sendgmr) by 2002:a25:6609:0:b0:668:e2b4:f7fd with SMTP id
- a9-20020a256609000000b00668e2b4f7fdmr7353464ybc.226.1655950782391; Wed, 22
- Jun 2022 19:19:42 -0700 (PDT)
-Date: Wed, 22 Jun 2022 19:19:26 -0700
-In-Reply-To: <20220623021926.3443240-1-pcc@google.com>
-Message-Id: <20220623021926.3443240-4-pcc@google.com>
-Mime-Version: 1.0
-References: <20220623021926.3443240-1-pcc@google.com>
-X-Mailer: git-send-email 2.37.0.rc0.104.g0611611a94-goog
-Subject: [PATCH 3/3] KVM: arm64: allow MTE in protected VMs if the tag storage
- is known
-From: Peter Collingbourne <pcc@google.com>
+ with ESMTP id V7JUYjB2HHMl for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 23 Jun 2022 02:11:21 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5CB954B177
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 23 Jun 2022 02:11:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1655964681;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aBbUFZDUxw+fu8KxzqA80LOJaxym4dr93FB6nZfWgBw=;
+ b=ZCFInCdKIG8WqcxsZ6vYoApzHCcwVj5oVhowvFOvku/TmnC5H2+kQ0S+ebnEDahwsc07F4
+ Ic/ZhL1+0YprubK9AiFK8MdbyL6L5xJAi2RAbIvSgKe0+MmFhLu01ZE+JxYmMbljhbReE0
+ 1m5eZgDaGqVoUzTZuL3p6YOFqwvwlEE=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-190-CWQwka7fOe2NfWgwbrkD0A-1; Thu, 23 Jun 2022 02:11:18 -0400
+X-MC-Unique: CWQwka7fOe2NfWgwbrkD0A-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5C7648001EA;
+ Thu, 23 Jun 2022 06:11:18 +0000 (UTC)
+Received: from [10.64.54.63] (vpn2-54-63.bne.redhat.com [10.64.54.63])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 792F41121314;
+ Thu, 23 Jun 2022 06:11:11 +0000 (UTC)
+Subject: Re: [PATCH v7 00/22] Support SDEI Virtualization
+From: Gavin Shan <gshan@redhat.com>
 To: kvmarm@lists.cs.columbia.edu
-X-Mailman-Approved-At: Thu, 23 Jun 2022 03:30:27 -0400
-Cc: Catalin Marinas <catalin.marinas@arm.com>, kvm@vger.kernel.org,
- Marc Zyngier <maz@kernel.org>, Andy Lutomirski <luto@amacapital.net>,
- Will Deacon <will@kernel.org>, Evgenii Stepanov <eugenis@google.com>,
- Michael Roth <michael.roth@amd.com>, Chao Peng <chao.p.peng@linux.intel.com>,
- Peter Collingbourne <pcc@google.com>, linux-arm-kernel@lists.infradead.org
+References: <20220527080253.1562538-1-gshan@redhat.com>
+Message-ID: <6bdb9280-3530-dc1f-d33e-5bc1c5ac927b@redhat.com>
+Date: Thu, 23 Jun 2022 16:11:08 +1000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.0
+MIME-Version: 1.0
+In-Reply-To: <20220527080253.1562538-1-gshan@redhat.com>
+Content-Language: en-US
+X-Scanned-By: MIMEDefang 2.78 on 10.11.54.3
+Cc: will@kernel.org, maz@kernel.org, linux-kernel@vger.kernel.org,
+ eauger@redhat.com, shan.gavin@gmail.com, Jonathan.Cameron@huawei.com,
+ pbonzini@redhat.com, vkuznets@redhat.com, shijie@amperemail.onmicrosoft.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -93,211 +84,268 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Because the host may corrupt a protected guest's tag storage unless
-protected by stage 2 page tables, we can't expose MTE to protected guests
-if the location of the tag storage is not known.
+Hi Oliver,
 
-Therefore, only allow protected VM guests to use MTE if the location of
-the tag storage is described in the device tree, and only after disowning
-any physical memory accessible tag storage regions.
+On 5/27/22 6:02 PM, Gavin Shan wrote:
+> This series intends to virtualize Software Delegated Exception Interface
+> (SDEI), which is defined by DEN0054C (v1.1). It allows the hypervisor to
+> deliver NMI-alike SDEI event to guest and it's needed by Async PF to
+> deliver page-not-present notification from hypervisor to guest. The code
+> and the required qemu changes can be found from:
+> 
+>     https://developer.arm.com/documentation/den0054/c
+>     https://github.com/gwshan/linux    ("kvm/arm64_sdei")
+>     https://github.com/gwshan/qemu     ("kvm/arm64_sdei")
+> 
+> The design is quite strightforward by following the specification. The
+> (SDEI) events are classified into the shared and private ones according
+> to their scope. The shared event is system or VM scoped, but the private
+> event is vcpu scoped. This implementation doesn't support the shared
+> event because all the needed events are private. Besides, the critial
+> events aren't supported by the implementation either. It means all events
+> are normal in terms of priority.
+> 
+> There are several objects (data structures) introduced to help on the
+> event registration, enablement, disablement, unregistration, reset,
+> delivery and handling.
+> 
+>    * kvm_sdei_event_handler
+>      SDEI event handler, which is provided through EVENT_REGISTER
+>      hypercall, is called when the SDEI event is delivered from
+>      host to guest.
+>      
+>    * kvm_sdei_event_context
+>      The saved (preempted) context when SDEI event is delivered
+>      for handling.
+>      
+>    * kvm_sdei_vcpu
+>      SDEI events and their states.
+> 
+> The patches are organized as below:
+> 
+>    PATCH[01-02] Preparatory work to extend smccc_get_argx() and refactor
+>                 hypercall routing mechanism
+>    PATCH[03]    Adds SDEI virtualization infrastructure
+>    PATCH[04-16] Supports various SDEI hypercalls and event handling
+>    PATCH[17]    Exposes SDEI capability
+>    PATCH[18-19] Support SDEI migration
+>    PATCH[20]    Adds document about SDEI
+>    PATCH[21-22] SDEI related selftest cases
+> 
+> The previous revisions can be found:
+> 
+>    v6: https://lore.kernel.org/lkml/20220403153911.12332-4-gshan@redhat.com/T/
+>    v5: https://lore.kernel.org/kvmarm/20220322080710.51727-1-gshan@redhat.com/
+>    v4: https://lore.kernel.org/kvmarm/20210815001352.81927-1-gshan@redhat.com/
+>    v3: https://lore.kernel.org/kvmarm/20210507083124.43347-1-gshan@redhat.com/
+>    v2: https://lore.kernel.org/kvmarm/20210209032733.99996-1-gshan@redhat.com/
+>    v1: https://lore.kernel.org/kvmarm/20200817100531.83045-1-gshan@redhat.com/
+> 
 
-To avoid exposing MTE tags from the host to protected VMs, sanitize
-tags before donating pages.
+Copying Oliver's new email address (oliver.upton@linux.dev).
 
-Signed-off-by: Peter Collingbourne <pcc@google.com>
----
- arch/arm64/include/asm/kvm_host.h |  6 +++++
- arch/arm64/include/asm/kvm_pkvm.h |  4 +++-
- arch/arm64/kernel/image-vars.h    |  3 +++
- arch/arm64/kvm/arm.c              | 37 ++++++++++++++++++++++++++++---
- arch/arm64/kvm/hyp/nvhe/pkvm.c    |  8 ++++---
- arch/arm64/kvm/mmu.c              |  4 +++-
- 6 files changed, 54 insertions(+), 8 deletions(-)
+Please let me know if I need to rebase and repost the series.
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 0fd184b816b3..973ab0378d01 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -930,6 +930,12 @@ bool kvm_arm_vcpu_is_finalized(struct kvm_vcpu *vcpu);
- #define kvm_arm_vcpu_sve_finalized(vcpu) \
- 	((vcpu)->arch.flags & KVM_ARM64_VCPU_SVE_FINALIZED)
- 
-+DECLARE_STATIC_KEY_FALSE(pkvm_mte_supported);
-+
-+#define kvm_supports_mte(kvm)                                                  \
-+	(system_supports_mte() &&                                              \
-+	 (!kvm_vm_is_protected(kvm) ||                                         \
-+	  static_branch_unlikely(&pkvm_mte_supported)))
- #define kvm_has_mte(kvm)					\
- 	(system_supports_mte() &&				\
- 	 test_bit(KVM_ARCH_FLAG_MTE_ENABLED, &(kvm)->arch.flags))
-diff --git a/arch/arm64/include/asm/kvm_pkvm.h b/arch/arm64/include/asm/kvm_pkvm.h
-index cd56438a34be..ef5d4870c043 100644
---- a/arch/arm64/include/asm/kvm_pkvm.h
-+++ b/arch/arm64/include/asm/kvm_pkvm.h
-@@ -73,10 +73,12 @@ void kvm_shadow_destroy(struct kvm *kvm);
-  * Allow for protected VMs:
-  * - Branch Target Identification
-  * - Speculative Store Bypassing
-+ * - Memory Tagging Extension
-  */
- #define PVM_ID_AA64PFR1_ALLOW (\
- 	ARM64_FEATURE_MASK(ID_AA64PFR1_BT) | \
--	ARM64_FEATURE_MASK(ID_AA64PFR1_SSBS) \
-+	ARM64_FEATURE_MASK(ID_AA64PFR1_SSBS) | \
-+	ARM64_FEATURE_MASK(ID_AA64PFR1_MTE) \
- 	)
- 
- /*
-diff --git a/arch/arm64/kernel/image-vars.h b/arch/arm64/kernel/image-vars.h
-index 2d4d6836ff47..26a9b31478aa 100644
---- a/arch/arm64/kernel/image-vars.h
-+++ b/arch/arm64/kernel/image-vars.h
-@@ -84,6 +84,9 @@ KVM_NVHE_ALIAS(__hyp_stub_vectors);
- KVM_NVHE_ALIAS(arm64_const_caps_ready);
- KVM_NVHE_ALIAS(cpu_hwcap_keys);
- 
-+/* Kernel symbol needed for kvm_supports_mte() check. */
-+KVM_NVHE_ALIAS(pkvm_mte_supported);
-+
- /* Static keys which are set if a vGIC trap should be handled in hyp. */
- KVM_NVHE_ALIAS(vgic_v2_cpuif_trap);
- KVM_NVHE_ALIAS(vgic_v3_cpuif_trap);
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 38f0900b7ddb..5a780a0f59e3 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -60,6 +60,7 @@ static bool vgic_present;
- 
- static DEFINE_PER_CPU(unsigned char, kvm_arm_hardware_enabled);
- DEFINE_STATIC_KEY_FALSE(userspace_irqchip_in_use);
-+DEFINE_STATIC_KEY_FALSE(pkvm_mte_supported);
- 
- int kvm_arch_vcpu_should_kick(struct kvm_vcpu *vcpu)
- {
-@@ -96,9 +97,7 @@ int kvm_vm_ioctl_enable_cap(struct kvm *kvm,
- 		break;
- 	case KVM_CAP_ARM_MTE:
- 		mutex_lock(&kvm->lock);
--		if (!system_supports_mte() ||
--		    kvm_vm_is_protected(kvm) ||
--		    kvm->created_vcpus) {
-+		if (!kvm_supports_mte(kvm) || kvm->created_vcpus) {
- 			r = -EINVAL;
- 		} else {
- 			r = 0;
-@@ -334,6 +333,9 @@ static int pkvm_check_extension(struct kvm *kvm, long ext, int kvm_cap)
- 	case KVM_CAP_ARM_VM_IPA_SIZE:
- 		r = kvm_cap;
- 		break;
-+	case KVM_CAP_ARM_MTE:
-+		r = kvm_cap && static_branch_unlikely(&pkvm_mte_supported);
-+		break;
- 	case KVM_CAP_GUEST_DEBUG_HW_BPS:
- 		r = min(kvm_cap, pkvm_get_max_brps());
- 		break;
-@@ -1948,9 +1950,36 @@ static void kvm_reserved_memory_init(void)
- 		if (!of_get_property(node, "compatible", NULL) &&
- 		    of_get_property(node, "no-map", NULL))
- 			disown_reserved_memory(node);
-+
-+		if (of_device_is_compatible(node, "arm,mte-tag-storage"))
-+			disown_reserved_memory(node);
- 	}
- }
- 
-+static void kvm_mte_init(void)
-+{
-+	struct device_node *memory;
-+
-+	if (!system_supports_mte() || !acpi_disabled ||
-+	    !is_protected_kvm_enabled())
-+		return;
-+
-+	/*
-+	 * It is only safe to turn on MTE for protected VMs if we can protect
-+	 * the guests from host accesses to their tag storage. If every memory
-+	 * region has an arm,mte-alloc property we know that all tag storage
-+	 * regions exposed to physical memory, if any, are described by a
-+	 * reserved-memory compatible with arm,mte-tag-storage. We can use these
-+	 * descriptions to unmap these regions from the host's stage 2 page
-+	 * tables (see kvm_reserved_memory_init).
-+	 */
-+	for_each_node_by_type(memory, "memory")
-+		if (!of_get_property(memory, "arm,mte-alloc", NULL))
-+			return;
-+
-+	static_branch_enable(&pkvm_mte_supported);
-+}
-+
- static int init_subsystems(void)
- {
- 	int err = 0;
-@@ -1993,6 +2022,8 @@ static int init_subsystems(void)
- 
- 	kvm_reserved_memory_init();
- 
-+	kvm_mte_init();
-+
- out:
- 	if (err || !is_protected_kvm_enabled())
- 		on_each_cpu(_kvm_arch_hardware_disable, NULL, 1);
-diff --git a/arch/arm64/kvm/hyp/nvhe/pkvm.c b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-index e81a6dd676d0..dcc3084161b3 100644
---- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
-+++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-@@ -88,7 +88,7 @@ static void pvm_init_traps_aa64pfr1(struct kvm_vcpu *vcpu)
- 	/* Memory Tagging: Trap and Treat as Untagged if not supported. */
- 	if (!FIELD_GET(ARM64_FEATURE_MASK(ID_AA64PFR1_MTE), feature_ids)) {
- 		hcr_set |= HCR_TID5;
--		hcr_clear |= HCR_DCT | HCR_ATA;
-+		hcr_clear |= HCR_ATA;
- 	}
- 
- 	vcpu->arch.hcr_el2 |= hcr_set;
-@@ -179,8 +179,8 @@ static void pvm_init_trap_regs(struct kvm_vcpu *vcpu)
- 	 * - Feature id registers: to control features exposed to guests
- 	 * - Implementation-defined features
- 	 */
--	vcpu->arch.hcr_el2 = HCR_GUEST_FLAGS |
--			     HCR_TID3 | HCR_TACR | HCR_TIDCP | HCR_TID1;
-+	vcpu->arch.hcr_el2 = HCR_GUEST_FLAGS | HCR_TID3 | HCR_TACR | HCR_TIDCP |
-+			     HCR_TID1 | HCR_ATA;
- 
- 	if (cpus_have_const_cap(ARM64_HAS_RAS_EXTN)) {
- 		/* route synchronous external abort exceptions to EL2 */
-@@ -459,6 +459,8 @@ static int init_shadow_structs(struct kvm *kvm, struct kvm_shadow_vm *vm,
- 	vm->host_kvm = kvm;
- 	vm->kvm.created_vcpus = nr_vcpus;
- 	vm->kvm.arch.vtcr = host_kvm.arch.vtcr;
-+	if (kvm_supports_mte(kvm) && test_bit(KVM_ARCH_FLAG_MTE_ENABLED, &kvm->arch.flags))
-+		set_bit(KVM_ARCH_FLAG_MTE_ENABLED, &vm->kvm.arch.flags);
- 	vm->kvm.arch.pkvm.enabled = READ_ONCE(kvm->arch.pkvm.enabled);
- 	vm->kvm.arch.mmu.last_vcpu_ran = last_ran;
- 	vm->last_ran_size = last_ran_size;
-diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index bca90b7354b9..5e079daf2d8e 100644
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -1228,8 +1228,10 @@ static int pkvm_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 		goto dec_account;
- 	}
- 
--	write_lock(&kvm->mmu_lock);
- 	pfn = page_to_pfn(page);
-+	sanitise_mte_tags(kvm, pfn, PAGE_SIZE);
-+
-+	write_lock(&kvm->mmu_lock);
- 	ret = pkvm_host_map_guest(pfn, fault_ipa >> PAGE_SHIFT);
- 	if (ret) {
- 		if (ret == -EAGAIN)
--- 
-2.37.0.rc0.104.g0611611a94-goog
+Thanks,
+Gavin
+
+> Testing
+> =======
+> [1] The selftest case included in this series works fine. The default SDEI
+>      event, whose number is zero, can be registered, enabled, raised. The
+>      SDEI event handler can be invoked.
+> 
+>      [host]# pwd
+>      /home/gavin/sandbox/linux.main/tools/testing/selftests/kvm
+>      [root@virtlab-arm01 kvm]# ./aarch64/sdei
+> 
+>          NR_VCPUS: 2    SDEI Event: 0x00000000
+> 
+>      --- VERSION
+>          Version:              1.1 (vendor: 0x4b564d)
+>      --- FEATURES
+>          Shared event slots:   0
+>          Private event slots:  0
+>          Relative mode:        No
+>      --- PRIVATE_RESET
+>      --- SHARED_RESET
+>      --- PE_UNMASK
+>      --- EVENT_GET_INFO
+>          Type:                 Private
+>          Priority:             Normal
+>          Signaled:             Yes
+>      --- EVENT_REGISTER
+>      --- EVENT_ENABLE
+>      --- EVENT_SIGNAL
+>          Handled:              Yes
+>          IRQ:                  No
+>          Status:               Registered-Enabled-Running
+>          PC/PSTATE:            000000000040232c 00000000600003c5
+>          Regs:                 0000000000000000 0000000000000000
+>                                0000000000000000 0000000000000000
+>      --- PE_MASK
+>      --- EVENT_DISABLE
+>      --- EVENT_UNREGISTER
+> 
+>          Result: OK
+> 
+> [2] There are additional patches in the following repositories to create
+>      procfs entries, allowing to inject SDEI event from host side. The
+>      SDEI client in the guest side registers the SDEI default event, whose
+>      number is zero. Also, the QEMU exports SDEI ACPI table and supports
+>      migration for SDEI.
+> 
+>      https://github.com/gwshan/linux    ("kvm/arm64_sdei")
+>      https://github.com/gwshan/qemu     ("kvm/arm64_sdei")
+> 
+>      [2.1] Start the guests and migrate the source VM to the destination
+>            VM.
+> 
+>      [host]# /home/gavin/sandbox/qemu.main/build/qemu-system-aarch64       \
+>              -accel kvm -machine virt,gic-version=host                     \
+>              -cpu host -smp 6,sockets=2,cores=3,threads=1                  \
+>              -m 1024M,slots=16,maxmem=64G                                  \
+>                 :                                                          \
+>              -kernel /home/gavin/sandbox/linux.guest/arch/arm64/boot/Image \
+>              -initrd /home/gavin/sandbox/images/rootfs.cpio.xz             \
+>              -append earlycon=pl011,mmio,0x9000000                         \
+>                 :
+> 
+>      [host]# /home/gavin/sandbox/qemu.main/build/qemu-system-aarch64       \
+>              -accel kvm -machine virt,gic-version=host                     \
+>              -cpu host -smp 6,sockets=2,cores=3,threads=1                  \
+>              -m 1024M,slots=16,maxmem=64G                                  \
+>                 :                                                          \
+>              -kernel /home/gavin/sandbox/linux.guest/arch/arm64/boot/Image \
+>              -initrd /home/gavin/sandbox/images/rootfs.cpio.xz             \
+>              -append earlycon=pl011,mmio,0x9000000                         \
+>              -incoming tcp:0:4444                                          \
+>                 :
+> 
+>      [2.2] Check kernel log on the source VM. The SDEI service is enabled
+>            and the default SDEI event (0x0) is enabled.
+> 
+>       [guest-src]# dmesg | grep -i sdei
+>       ACPI: SDEI 0x000000005BC80000 000024 \
+>                  (v00 BOCHS  BXPC     00000001 BXPC 00000001)
+>       sdei: SDEIv1.1 (0x4b564d) detected in firmware.
+>       SDEI TEST: Version 1.1, Vendor 0x4b564d
+>       sdei_init: SDEI event (0x0) registered
+>       sdei_init: SDEI event (0x0) enabled
+> 
+>   
+>       (qemu) migrate -d tcp:localhost:4444
+> 
+>      [2.3] Migrate the source VM to the destination VM. Inject SDEI event
+>            to the destination VM. The event is raised and handled.
+> 
+>      (qemu) migrate -d tcp:localhost:4444
+> 
+>      [host]# echo 0 > /proc/kvm/kvm-5360/vcpu-1
+> 
+>      [guest-dst]#
+>      =========== SDEI Event (CPU#1) ===========
+>      Event: 0000000000000000  Parameter: 00000000dabfdabf
+>      PC:    ffff800008cbb554  PSTATE: 00000000604000c5  SP: ffff800009c7bde0
+>      Regs:    00000000000016ee ffff00001ffd2e28 00000000000016ed 0000000000000001
+>               ffff800016c28000 0000000000000000 0000000000000000 0000000000000000
+>               0000000000000000 0000000000000000 0000000000000000 0000000000000000
+>               0000000000000000 0000000000000000 0000000000000000 0000000000000000
+>               0000000000000000 0000000000000000 0000000000000000 ffff800009399008
+>               ffff8000097d9af0 ffff8000097d99f8 ffff8000093a8db8 ffff8000097d9b18
+>               0000000000000000 0000000000000000 ffff000000339d00 0000000000000000
+>               0000000000000000 ffff800009c7bde0 ffff800008cbb5c4
+>      Context: 00000000000016ee ffff00001ffd2e28 00000000000016ed 0000000000000001
+>               ffff800016c28000 03ffffffffffffff 000000024325db59 ffff8000097de190
+>               ffff00000033a790 ffff800008cbb814 0000000000000a30 0000000000000000
+> 
+> Changelog
+> =========
+> v7:
+>     * Rebased to v5.19.rc1                                     (Gavin)
+>     * Add hypercall ranges for routing                         (Oliver)
+>     * Remove support to the critical event and redesigned
+>       data structures. Function names are also modified
+>       as Oliver suggested                                      (Oliver)
+>     * Deliver event when it's enabled or the specific PE
+>       is unmasked                                              (Oliver)
+>     * Improve EVENT_COMPLETE_AND_RESUME hypercall to resume
+>       from the specified address                               (Oliver)
+>     * Add patches for SDEI migration and documentation         (Gavin)
+>     * Misc comments from Oliver Upon                           (Oliver)
+> v6:
+>     * Rebased to v5.18.rc1                                     (Gavin)
+>     * Pass additional argument to smccc_get_arg()              (Oliver)
+>     * Add preparatory patch to route hypercalls based on their
+>       owners                                                   (Oliver)
+>     * Remove the support for shared event.                     (Oliver/Gavin)
+>     * Remove the support for migration and add-on patches to
+>       support it in future                                     (Oliver)
+>     * The events are exposed by KVM instead of VMM             (Oliver)
+>     * kvm_sdei_state.h is dropped and all the structures are
+>       folded into the corresponding ones in kvm_sdei.h         (Oliver)
+>     * Rename 'struct kvm_sdei_registered_event' to
+>       'struct kvm_sdei_event'                                  (Oliver)
+>     * Misc comments from Oliver Upon                           (Oliver)
+> v5/v4/v3/v2/v1:
+>     * Skipped here and please visit the history by
+>       https://lore.kernel.org/lkml/20220403153911.12332-4-gshan@redhat.com/T/
+> 
+> Gavin Shan (22):
+>    KVM: arm64: Extend smccc_get_argx()
+>    KVM: arm64: Route hypercalls based on their owner
+>    KVM: arm64: Add SDEI virtualization infrastructure
+>    KVM: arm64: Support EVENT_REGISTER hypercall
+>    KVM: arm64: Support EVENT_{ENABLE, DISABLE} hypercall
+>    KVM: arm64: Support EVENT_CONTEXT hypercall
+>    KVM: arm64: Support EVENT_UNREGISTER hypercall
+>    KVM: arm64: Support EVENT_STATUS hypercall
+>    KVM: arm64: Support EVENT_GET_INFO hypercall
+>    KVM: arm64: Support PE_{MASK, UNMASK} hypercall
+>    KVM: arm64: Support {PRIVATE, SHARED}_RESET hypercall
+>    KVM: arm64: Support event injection and delivery
+>    KVM: arm64: Support EVENT_{COMPLETE, COMPLETE_AND_RESUME} hypercall
+>    KVM: arm64: Support EVENT_SIGNAL hypercall
+>    KVM: arm64: Support SDEI_FEATURES hypercall
+>    KVM: arm64: Support SDEI_VERSION hypercall
+>    KVM: arm64: Expose SDEI capbility and service
+>    KVM: arm64: Allow large sized pseudo firmware registers
+>    KVM: arm64: Support SDEI event migration
+>    KVM: arm64: Add SDEI document
+>    selftests: KVM: aarch64: Add SDEI case in hypercall tests
+>    selftests: KVM: aarch64: Add SDEI test case
+> 
+>   Documentation/virt/kvm/api.rst                |  11 +
+>   Documentation/virt/kvm/arm/hypercalls.rst     |   4 +
+>   Documentation/virt/kvm/arm/sdei.rst           |  64 ++
+>   arch/arm64/include/asm/kvm_host.h             |   3 +
+>   arch/arm64/include/asm/kvm_sdei.h             |  81 +++
+>   arch/arm64/include/uapi/asm/kvm.h             |  18 +
+>   arch/arm64/kvm/Makefile                       |   2 +-
+>   arch/arm64/kvm/arm.c                          |   8 +
+>   arch/arm64/kvm/hypercalls.c                   | 182 +++--
+>   arch/arm64/kvm/psci.c                         |  14 +-
+>   arch/arm64/kvm/pvtime.c                       |   2 +-
+>   arch/arm64/kvm/sdei.c                         | 676 ++++++++++++++++++
+>   arch/arm64/kvm/trng.c                         |   4 +-
+>   include/kvm/arm_hypercalls.h                  |  19 +-
+>   include/linux/arm-smccc.h                     |   7 +
+>   include/uapi/linux/arm_sdei.h                 |   8 +
+>   include/uapi/linux/kvm.h                      |   1 +
+>   tools/testing/selftests/kvm/Makefile          |   1 +
+>   .../selftests/kvm/aarch64/hypercalls.c        |  11 +-
+>   tools/testing/selftests/kvm/aarch64/sdei.c    | 450 ++++++++++++
+>   20 files changed, 1499 insertions(+), 67 deletions(-)
+>   create mode 100644 Documentation/virt/kvm/arm/sdei.rst
+>   create mode 100644 arch/arm64/include/asm/kvm_sdei.h
+>   create mode 100644 arch/arm64/kvm/sdei.c
+>   create mode 100644 tools/testing/selftests/kvm/aarch64/sdei.c
+> 
 
 _______________________________________________
 kvmarm mailing list
