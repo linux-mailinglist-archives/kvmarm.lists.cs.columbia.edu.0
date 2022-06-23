@@ -2,77 +2,82 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 04A52555456
-	for <lists+kvmarm@lfdr.de>; Wed, 22 Jun 2022 21:27:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64EA55573F9
+	for <lists+kvmarm@lfdr.de>; Thu, 23 Jun 2022 09:30:30 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A75E44B52A;
-	Wed, 22 Jun 2022 15:27:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 781E84B40F;
+	Thu, 23 Jun 2022 03:30:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -1.788
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@redhat.com
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id PDXlPeSbxCSt; Wed, 22 Jun 2022 15:27:49 -0400 (EDT)
+	with ESMTP id S4f6gCCfHdT0; Thu, 23 Jun 2022 03:30:29 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1B0504B19D;
-	Wed, 22 Jun 2022 15:27:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4F3E94B332;
+	Thu, 23 Jun 2022 03:30:28 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 13D334B501
- for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Jun 2022 15:27:35 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 06B924B253
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Jun 2022 22:19:38 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id L7tf+Z9TFh74 for <kvmarm@lists.cs.columbia.edu>;
- Wed, 22 Jun 2022 15:27:34 -0400 (EDT)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.129.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7E0854B4C2
- for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Jun 2022 15:27:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1655926046;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PtZNTZPWfsMWYTlAEBsLU5lpYkmjIuplCyLvnN6roN8=;
- b=J/DxGHI6IwmKiPc2dyAI/DooD+/sPl54IdqwUnp5iySMkPyRuPaZYKjbmEtebh5wk51OO1
- sWt/WKx+vZyuamUA0kWnlj3zWjcMg+wMeXfArP1A+e1lnmN5hQS+79aKzHRjLfOGgN8sq8
- OOTsReB0uurxpGRlGZeoHVDUSbruA0A=
-Received: from mimecast-mx02.redhat.com (mx3-rdu2.redhat.com
- [66.187.233.73]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-153-p9sVOKGTNd-Hjl1hFwF5Jw-1; Wed, 22 Jun 2022 15:27:21 -0400
-X-MC-Unique: p9sVOKGTNd-Hjl1hFwF5Jw-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 589571C0518C;
- Wed, 22 Jun 2022 19:27:20 +0000 (UTC)
-Received: from virtlab701.virt.lab.eng.bos.redhat.com
- (virtlab701.virt.lab.eng.bos.redhat.com [10.19.152.228])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 01FD61121314;
- Wed, 22 Jun 2022 19:27:19 +0000 (UTC)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: linux-kernel@vger.kernel.org,
-	kvm@vger.kernel.org
-Subject: [PATCH v7 23/23] KVM: x86/mmu: Avoid unnecessary flush on eager page
- split
-Date: Wed, 22 Jun 2022 15:27:10 -0400
-Message-Id: <20220622192710.2547152-24-pbonzini@redhat.com>
-In-Reply-To: <20220622192710.2547152-1-pbonzini@redhat.com>
-References: <20220622192710.2547152-1-pbonzini@redhat.com>
-MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.78 on 10.11.54.3
-Cc: maz@kernel.org, jiangshanlai@gmail.com, linux-mips@vger.kernel.org,
- kvm-riscv@lists.infradead.org, bgardon@google.com, dmatlack@google.com,
- maciej.szmigiero@oracle.com, kvmarm@lists.cs.columbia.edu, pfeiner@google.com
+ with ESMTP id e8tsYGf0dAv4 for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 22 Jun 2022 22:19:36 -0400 (EDT)
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com
+ [209.85.128.201])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 91AA64B19F
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Jun 2022 22:19:36 -0400 (EDT)
+Received: by mail-yw1-f201.google.com with SMTP id
+ 00721157ae682-31838c41186so36748947b3.23
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 22 Jun 2022 19:19:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=clGwED0aj4iCkpRX962hKSp2BNMhn+u4O4Dfvr+4TFo=;
+ b=QIc7ryIuzZq7OzN7qncavyfDB+dbKXmztSbltzJfaHp1hfv5Y5C7ooLKoq0+zPKBFW
+ Yb0/BwS6ZEfxF45IEKThJ2MueA04/+OqWzX470xd1LnNts5nGxalTSLvPuyQYFShfxVY
+ fr4wYm+DZCv+ppd68WfEA3gHFWzd+l9k/IeA3ejN3UEhM2Mgzid5sCvby/eJdNVuWRpQ
+ T0hYRgEzg4XuwmsYlfvFW+IIAB7fjU1loFiyTbwdYIVKiDrgd9GjTDFXVUeSo350hrx5
+ PUr8oLhkHA9+OABNIyny8ozoHdOiM1g4AmYdxtdgzxsW7Kh9yYaDEBQC7KQPY5UXS7ff
+ SqLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=clGwED0aj4iCkpRX962hKSp2BNMhn+u4O4Dfvr+4TFo=;
+ b=wnlkbwgNISt/2nkFlQghAx6i39b6wDulwUvtTZVThjnhxZWqzf6HjMoFrgrUIt0C2H
+ 2KXD619ynDzbDq98YN8+BqbolFCJdpiJYhbJC/qQX27Dq1zoYameDP3Z8HX/ZzUSbdh7
+ v0e3V9izHlYMWebUUSpfsBWwLBCq3yVFyQsKdZfmODslk8g38tD1nZ2KaYFm1K9OPIrj
+ uhcpT/BLtL3MTd66v7NtmhQgROk9zDtpVFDv/+r93ejyNoufCnI98e3dKRVaMWt6MLMo
+ mPqCBmcbcCpEdH7hnDzKTHtOfwkGmMejYuxOJPbtXrbj4N4j+p2Uz3v0jG5mZt2GM/+I
+ d1Mw==
+X-Gm-Message-State: AJIora8j/oZ3/MuPCrNq6p92/b9uxOIHOABgMRXB1DQcwuEFawg13UcH
+ Srsj8A8m3AhoREd2st0SxGjybJir+lF+kbObEzpW88fcBdvHCrVZdGs8c+tjh13u6MN5zSFh0cP
+ 5koEC2XmtI5VIRzs4uQi3k9AbSMQXOmL97FyNFDB3MAVluaC16dIf4WuvDsth8w==
+X-Google-Smtp-Source: AGRyM1tFAzIf0LizFYNaF+FpbBnP7KTyC21L9xOk3A4wFYiTKAd03Hngi8vpnd587mAKhdzQ+Cp3fcs=
+X-Received: from pcc-desktop.svl.corp.google.com
+ ([2620:15c:2ce:200:ba6f:123c:d287:a160])
+ (user=pcc job=sendgmr) by 2002:a81:9c47:0:b0:313:31e7:dc16 with SMTP id
+ n7-20020a819c47000000b0031331e7dc16mr7974663ywa.227.1655950776012; Wed, 22
+ Jun 2022 19:19:36 -0700 (PDT)
+Date: Wed, 22 Jun 2022 19:19:23 -0700
+Message-Id: <20220623021926.3443240-1-pcc@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.37.0.rc0.104.g0611611a94-goog
+Subject: [PATCH 0/3] KVM: arm64: support MTE in protected VMs
+From: Peter Collingbourne <pcc@google.com>
+To: kvmarm@lists.cs.columbia.edu
+X-Mailman-Approved-At: Thu, 23 Jun 2022 03:30:27 -0400
+Cc: Catalin Marinas <catalin.marinas@arm.com>, kvm@vger.kernel.org,
+ Marc Zyngier <maz@kernel.org>, Andy Lutomirski <luto@amacapital.net>,
+ Will Deacon <will@kernel.org>, Evgenii Stepanov <eugenis@google.com>,
+ Michael Roth <michael.roth@amd.com>, Chao Peng <chao.p.peng@linux.intel.com>,
+ Peter Collingbourne <pcc@google.com>, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -89,116 +94,56 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The TLB flush before installing the newly-populated lower level
-page table is unnecessary if the lower-level page table maps
-the huge page identically.  KVM knows it is if it did not reuse
-an existing shadow page table, tell drop_large_spte() to skip
-the flush in that case.
+Hi,
 
-Extracted from a patch by David Matlack.
+This patch series contains a proposed extension to pKVM that allows MTE
+to be exposed to the protected guests. It is based on the base pKVM
+series previously sent to the list [1] and later rebased to 5.19-rc2
+and uploaded to [2].
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- arch/x86/kvm/mmu/mmu.c | 32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+This series takes precautions against host compromise of the guests
+via direct access to their tag storage, by preventing the host from
+accessing the tag storage via stage 2 page tables. The device tree
+must describe the physical memory address of the tag storage, if any,
+and the memory nodes must declare that the tag storage location is
+described. Otherwise, the MTE feature is disabled in protected guests.
 
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 22681931921f..79c6a821ea0d 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -1135,7 +1135,7 @@ static void drop_spte(struct kvm *kvm, u64 *sptep)
- 		rmap_remove(kvm, sptep);
- }
- 
--static void drop_large_spte(struct kvm *kvm, u64 *sptep)
-+static void drop_large_spte(struct kvm *kvm, u64 *sptep, bool flush)
- {
- 	struct kvm_mmu_page *sp;
- 
-@@ -1143,7 +1143,9 @@ static void drop_large_spte(struct kvm *kvm, u64 *sptep)
- 	WARN_ON(sp->role.level == PG_LEVEL_4K);
- 
- 	drop_spte(kvm, sptep);
--	kvm_flush_remote_tlbs_with_address(kvm, sp->gfn,
-+
-+	if (flush)
-+		kvm_flush_remote_tlbs_with_address(kvm, sp->gfn,
- 			KVM_PAGES_PER_HPAGE(sp->role.level));
- }
- 
-@@ -2283,7 +2285,7 @@ static void shadow_walk_next(struct kvm_shadow_walk_iterator *iterator)
- 
- static void __link_shadow_page(struct kvm *kvm,
- 			       struct kvm_mmu_memory_cache *cache, u64 *sptep,
--			       struct kvm_mmu_page *sp)
-+			       struct kvm_mmu_page *sp, bool flush)
- {
- 	u64 spte;
- 
-@@ -2291,10 +2293,11 @@ static void __link_shadow_page(struct kvm *kvm,
- 
- 	/*
- 	 * If an SPTE is present already, it must be a leaf and therefore
--	 * a large one.  Drop it and flush the TLB before installing sp.
-+	 * a large one.  Drop it, and flush the TLB if needed, before
-+	 * installing sp.
- 	 */
- 	if (is_shadow_present_pte(*sptep))
--		drop_large_spte(kvm, sptep);
-+		drop_large_spte(kvm, sptep, flush);
- 
- 	spte = make_nonleaf_spte(sp->spt, sp_ad_disabled(sp));
- 
-@@ -2309,7 +2312,7 @@ static void __link_shadow_page(struct kvm *kvm,
- static void link_shadow_page(struct kvm_vcpu *vcpu, u64 *sptep,
- 			     struct kvm_mmu_page *sp)
- {
--	__link_shadow_page(vcpu->kvm, &vcpu->arch.mmu_pte_list_desc_cache, sptep, sp);
-+	__link_shadow_page(vcpu->kvm, &vcpu->arch.mmu_pte_list_desc_cache, sptep, sp, true);
- }
- 
- static void validate_direct_spte(struct kvm_vcpu *vcpu, u64 *sptep,
-@@ -6172,6 +6175,7 @@ static void shadow_mmu_split_huge_page(struct kvm *kvm,
- 	struct kvm_mmu_memory_cache *cache = &kvm->arch.split_desc_cache;
- 	u64 huge_spte = READ_ONCE(*huge_sptep);
- 	struct kvm_mmu_page *sp;
-+	bool flush = false;
- 	u64 *sptep, spte;
- 	gfn_t gfn;
- 	int index;
-@@ -6189,20 +6193,24 @@ static void shadow_mmu_split_huge_page(struct kvm *kvm,
- 		 * gfn-to-pfn translation since the SP is direct, so no need to
- 		 * modify them.
- 		 *
--		 * If a given SPTE points to a lower level page table, installing
--		 * such SPTEs would effectively unmap a potion of the huge page.
--		 * This is not an issue because __link_shadow_page() flushes the TLB
--		 * when the passed sp replaces a large SPTE.
-+		 * However, if a given SPTE points to a lower level page table,
-+		 * that lower level page table may only be partially populated.
-+		 * Installing such SPTEs would effectively unmap a potion of the
-+		 * huge page. Unmapping guest memory always requires a TLB flush
-+		 * since a subsequent operation on the unmapped regions would
-+		 * fail to detect the need to flush.
- 		 */
--		if (is_shadow_present_pte(*sptep))
-+		if (is_shadow_present_pte(*sptep)) {
-+			flush |= !is_last_spte(*sptep, sp->role.level);
- 			continue;
-+		}
- 
- 		spte = make_huge_page_split_spte(kvm, huge_spte, sp->role, index);
- 		mmu_spte_set(sptep, spte);
- 		__rmap_add(kvm, cache, slot, sptep, gfn, sp->role.access);
- 	}
- 
--	__link_shadow_page(kvm, cache, huge_sptep, sp);
-+	__link_shadow_page(kvm, cache, huge_sptep, sp, flush);
- }
- 
- static int shadow_mmu_try_split_huge_page(struct kvm *kvm,
+Now that we can easily do so, we also prevent the host from accessing
+any unmapped reserved-memory regions without a driver, as the host
+has no business accessing that memory.
+
+A proposed extension to the devicetree specification is available at
+[3], a patched version of QEMU that produces the required device tree
+nodes is available at [4] and a patched version of the crosvm hypervisor
+that enables MTE is available at [5].
+
+[1] https://lore.kernel.org/all/20220519134204.5379-1-will@kernel.org/
+[2] https://android-kvm.googlesource.com/linux/ for-upstream/pkvm-base-v2
+[3] https://github.com/pcc/devicetree-specification mte-alloc
+[4] https://github.com/pcc/qemu mte-shared-alloc
+[5] https://chromium-review.googlesource.com/c/chromiumos/platform/crosvm/+/3719324
+
+Peter Collingbourne (3):
+  KVM: arm64: add a hypercall for disowning pages
+  KVM: arm64: disown unused reserved-memory regions
+  KVM: arm64: allow MTE in protected VMs if the tag storage is known
+
+ arch/arm64/include/asm/kvm_asm.h              |  1 +
+ arch/arm64/include/asm/kvm_host.h             |  6 ++
+ arch/arm64/include/asm/kvm_pkvm.h             |  4 +-
+ arch/arm64/kernel/image-vars.h                |  3 +
+ arch/arm64/kvm/arm.c                          | 83 ++++++++++++++++++-
+ arch/arm64/kvm/hyp/include/nvhe/mem_protect.h |  1 +
+ arch/arm64/kvm/hyp/include/nvhe/pkvm.h        |  1 +
+ arch/arm64/kvm/hyp/nvhe/hyp-main.c            |  9 ++
+ arch/arm64/kvm/hyp/nvhe/mem_protect.c         | 11 +++
+ arch/arm64/kvm/hyp/nvhe/pkvm.c                |  8 +-
+ arch/arm64/kvm/hyp/pgtable.c                  |  5 +-
+ arch/arm64/kvm/mmu.c                          |  4 +-
+ 12 files changed, 126 insertions(+), 10 deletions(-)
+
 -- 
-2.31.1
+2.37.0.rc0.104.g0611611a94-goog
 
 _______________________________________________
 kvmarm mailing list
