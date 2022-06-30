@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E7802561C12
-	for <lists+kvmarm@lfdr.de>; Thu, 30 Jun 2022 15:58:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 87AFE561C13
+	for <lists+kvmarm@lfdr.de>; Thu, 30 Jun 2022 15:58:26 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8FAFD41175;
-	Thu, 30 Jun 2022 09:58:21 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1FE094B3D9;
+	Thu, 30 Jun 2022 09:58:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
@@ -18,44 +18,44 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id olx5TCt+g1dK; Thu, 30 Jun 2022 09:58:21 -0400 (EDT)
+	with ESMTP id vgNNR02vec26; Thu, 30 Jun 2022 09:58:26 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B0A354B4CB;
-	Thu, 30 Jun 2022 09:58:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C77FF4B178;
+	Thu, 30 Jun 2022 09:58:24 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C8B4A40712
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jun 2022 09:58:18 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 95B72411BD
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jun 2022 09:58:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Yx4uFJ6djo3g for <kvmarm@lists.cs.columbia.edu>;
- Thu, 30 Jun 2022 09:58:17 -0400 (EDT)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6D9084B4AC
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jun 2022 09:58:17 -0400 (EDT)
+ with ESMTP id cpR-UOBk+QyE for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 30 Jun 2022 09:58:22 -0400 (EDT)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3DF5D4B4A2
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jun 2022 09:58:22 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id EDF1F620E4;
+ by ams.source.kernel.org (Postfix) with ESMTPS id 72687B82AF3;
+ Thu, 30 Jun 2022 13:58:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5287C34115;
  Thu, 30 Jun 2022 13:58:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1899CC341CB;
- Thu, 30 Jun 2022 13:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1656597496;
- bh=czGrMKVmcAgfqMuBOqGAxm/Bl1F3qGCKOPa4Z2x4jgM=;
+ s=k20201202; t=1656597500;
+ bh=XvT/NCRTnrJVqvVlVy8yC1jsjzB/S3LNKS9+VwFbCGM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=BEhtAorXncZaZBdv8J+ZmsKppz0vF4m6YFziJGxh6rfOC+rHG2q0EjK7RF30UFvBj
- B3yzmL/mGT9+qpGunIsAJneAFDY3rMhPZQJXPfu4fGvmT0bgtylmuWGmeQOEjt6zmc
- Vx+QyIRwVbCHGCWHuBsnhUDIsA2LtdQX8Lm31m0jKOg7riKYQf8MsnbeEd/oQRfrTh
- QMnlmfimZB3N0Nx3POZyfvCqqD1FOBj6vEdUUCMB4PkjQtTeKSp9WRNzTGXV/GEy7x
- d/0TRxrpONVxPToUcJtzINi0CzeJA5EpL3fpseck+WvsnadRyUishnhnw2zf1o28un
- zP0GXkhB6bwLg==
+ b=sd+BqIIGQ2bJHAOVyxIMzoXgTEavLc4O9w5bkMyu34ru44TI+oll/hr6TDhenZy6b
+ 5/ZKBL8MANJxBe930B21QriautEF7KzHBzF+dcmA1OqOvUjo1Rq9+dfP0N1M/tPNKZ
+ WceV0ZlIgZX75lYEB9iGzOKob/J2gV5OMh0PFGh54DqltXoLuuk7Oidnq7bL0V/Z+j
+ 4qdPAtCtarkC176cVgL2k2DG5ul1VAaDydxMWeEYEoqsRAyR56u5Fx1QcvvORKORUJ
+ ciWnLHr/wcHuZ3GgJL+m8ati3Qr6wEOuZRmL/hqakRZ2CRv+d+TbqHLzH0FK2WY3/G
+ 7ZxK8xa22GAww==
 From: Will Deacon <will@kernel.org>
 To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH v2 05/24] KVM: arm64: Make hyp stage-1 refcnt correct on the
- whole range
-Date: Thu, 30 Jun 2022 14:57:28 +0100
-Message-Id: <20220630135747.26983-6-will@kernel.org>
+Subject: [PATCH v2 06/24] KVM: arm64: Unify identifiers used to distinguish
+ host and hypervisor
+Date: Thu, 30 Jun 2022 14:57:29 +0100
+Message-Id: <20220630135747.26983-7-will@kernel.org>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20220630135747.26983-1-will@kernel.org>
 References: <20220630135747.26983-1-will@kernel.org>
@@ -80,123 +80,77 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Quentin Perret <qperret@google.com>
+The 'pkvm_component_id' enum type provides constants to refer to the
+host and the hypervisor, yet this information is duplicated by the
+'pkvm_hyp_id' constant.
 
-We currently fixup the hypervisor stage-1 refcount only for specific
-portions of the hyp stage-1 VA space. In order to allow unmapping pages
-outside of these ranges, let's fixup the refcount for the entire hyp VA
-space.
+Remove the definition of 'pkvm_hyp_id' and move the 'pkvm_component_id'
+type definition to 'mem_protect.h' so that it can be used outside of
+the memory protection code.
 
-Signed-off-by: Quentin Perret <qperret@google.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 ---
- arch/arm64/kvm/hyp/nvhe/setup.c | 62 +++++++++++++++++++++++----------
- 1 file changed, 43 insertions(+), 19 deletions(-)
+ arch/arm64/kvm/hyp/include/nvhe/mem_protect.h | 6 +++++-
+ arch/arm64/kvm/hyp/nvhe/mem_protect.c         | 8 --------
+ arch/arm64/kvm/hyp/nvhe/setup.c               | 2 +-
+ 3 files changed, 6 insertions(+), 10 deletions(-)
 
+diff --git a/arch/arm64/kvm/hyp/include/nvhe/mem_protect.h b/arch/arm64/kvm/hyp/include/nvhe/mem_protect.h
+index 80e99836eac7..f5705a1e972f 100644
+--- a/arch/arm64/kvm/hyp/include/nvhe/mem_protect.h
++++ b/arch/arm64/kvm/hyp/include/nvhe/mem_protect.h
+@@ -51,7 +51,11 @@ struct host_kvm {
+ };
+ extern struct host_kvm host_kvm;
+ 
+-extern const u8 pkvm_hyp_id;
++/* This corresponds to page-table locking order */
++enum pkvm_component_id {
++	PKVM_ID_HOST,
++	PKVM_ID_HYP,
++};
+ 
+ int __pkvm_prot_finalize(void);
+ int __pkvm_host_share_hyp(u64 pfn);
+diff --git a/arch/arm64/kvm/hyp/nvhe/mem_protect.c b/arch/arm64/kvm/hyp/nvhe/mem_protect.c
+index 78edf077fa3b..10390b8dc841 100644
+--- a/arch/arm64/kvm/hyp/nvhe/mem_protect.c
++++ b/arch/arm64/kvm/hyp/nvhe/mem_protect.c
+@@ -26,8 +26,6 @@ struct host_kvm host_kvm;
+ 
+ static struct hyp_pool host_s2_pool;
+ 
+-const u8 pkvm_hyp_id = 1;
+-
+ static void host_lock_component(void)
+ {
+ 	hyp_spin_lock(&host_kvm.lock);
+@@ -384,12 +382,6 @@ void handle_host_mem_abort(struct kvm_cpu_context *host_ctxt)
+ 	BUG_ON(ret && ret != -EAGAIN);
+ }
+ 
+-/* This corresponds to locking order */
+-enum pkvm_component_id {
+-	PKVM_ID_HOST,
+-	PKVM_ID_HYP,
+-};
+-
+ struct pkvm_mem_transition {
+ 	u64				nr_pages;
+ 
 diff --git a/arch/arm64/kvm/hyp/nvhe/setup.c b/arch/arm64/kvm/hyp/nvhe/setup.c
-index 579eb4f73476..8f2726d7e201 100644
+index 8f2726d7e201..0312c9c74a5a 100644
 --- a/arch/arm64/kvm/hyp/nvhe/setup.c
 +++ b/arch/arm64/kvm/hyp/nvhe/setup.c
-@@ -185,12 +185,11 @@ static void hpool_put_page(void *addr)
- 	hyp_put_page(&hpool, addr);
- }
- 
--static int finalize_host_mappings_walker(u64 addr, u64 end, u32 level,
--					 kvm_pte_t *ptep,
--					 enum kvm_pgtable_walk_flags flag,
--					 void * const arg)
-+static int fix_host_ownership_walker(u64 addr, u64 end, u32 level,
-+				     kvm_pte_t *ptep,
-+				     enum kvm_pgtable_walk_flags flag,
-+				     void * const arg)
- {
--	struct kvm_pgtable_mm_ops *mm_ops = arg;
- 	enum kvm_pgtable_prot prot;
- 	enum pkvm_page_state state;
- 	kvm_pte_t pte = *ptep;
-@@ -199,15 +198,6 @@ static int finalize_host_mappings_walker(u64 addr, u64 end, u32 level,
- 	if (!kvm_pte_valid(pte))
- 		return 0;
- 
--	/*
--	 * Fix-up the refcount for the page-table pages as the early allocator
--	 * was unable to access the hyp_vmemmap and so the buddy allocator has
--	 * initialised the refcount to '1'.
--	 */
--	mm_ops->get_page(ptep);
--	if (flag != KVM_PGTABLE_WALK_LEAF)
--		return 0;
--
- 	if (level != (KVM_PGTABLE_MAX_LEVELS - 1))
- 		return -EINVAL;
- 
-@@ -236,12 +226,30 @@ static int finalize_host_mappings_walker(u64 addr, u64 end, u32 level,
- 	return host_stage2_idmap_locked(phys, PAGE_SIZE, prot);
- }
- 
--static int finalize_host_mappings(void)
-+static int fix_hyp_pgtable_refcnt_walker(u64 addr, u64 end, u32 level,
-+					 kvm_pte_t *ptep,
-+					 enum kvm_pgtable_walk_flags flag,
-+					 void * const arg)
-+{
-+	struct kvm_pgtable_mm_ops *mm_ops = arg;
-+	kvm_pte_t pte = *ptep;
-+
-+	/*
-+	 * Fix-up the refcount for the page-table pages as the early allocator
-+	 * was unable to access the hyp_vmemmap and so the buddy allocator has
-+	 * initialised the refcount to '1'.
-+	 */
-+	if (kvm_pte_valid(pte))
-+		mm_ops->get_page(ptep);
-+
-+	return 0;
-+}
-+
-+static int fix_host_ownership(void)
- {
- 	struct kvm_pgtable_walker walker = {
--		.cb	= finalize_host_mappings_walker,
--		.flags	= KVM_PGTABLE_WALK_LEAF | KVM_PGTABLE_WALK_TABLE_POST,
--		.arg	= pkvm_pgtable.mm_ops,
-+		.cb	= fix_host_ownership_walker,
-+		.flags	= KVM_PGTABLE_WALK_LEAF,
- 	};
- 	int i, ret;
- 
-@@ -257,6 +265,18 @@ static int finalize_host_mappings(void)
- 	return 0;
- }
- 
-+static int fix_hyp_pgtable_refcnt(void)
-+{
-+	struct kvm_pgtable_walker walker = {
-+		.cb	= fix_hyp_pgtable_refcnt_walker,
-+		.flags	= KVM_PGTABLE_WALK_LEAF | KVM_PGTABLE_WALK_TABLE_POST,
-+		.arg	= pkvm_pgtable.mm_ops,
-+	};
-+
-+	return kvm_pgtable_walk(&pkvm_pgtable, 0, BIT(pkvm_pgtable.ia_bits),
-+				&walker);
-+}
-+
- void __noreturn __pkvm_init_finalise(void)
- {
- 	struct kvm_host_data *host_data = this_cpu_ptr(&kvm_host_data);
-@@ -286,7 +306,11 @@ void __noreturn __pkvm_init_finalise(void)
- 	};
- 	pkvm_pgtable.mm_ops = &pkvm_pgtable_mm_ops;
- 
--	ret = finalize_host_mappings();
-+	ret = fix_host_ownership();
-+	if (ret)
-+		goto out;
-+
-+	ret = fix_hyp_pgtable_refcnt();
- 	if (ret)
- 		goto out;
- 
+@@ -212,7 +212,7 @@ static int fix_host_ownership_walker(u64 addr, u64 end, u32 level,
+ 	state = pkvm_getstate(kvm_pgtable_hyp_pte_prot(pte));
+ 	switch (state) {
+ 	case PKVM_PAGE_OWNED:
+-		return host_stage2_set_owner_locked(phys, PAGE_SIZE, pkvm_hyp_id);
++		return host_stage2_set_owner_locked(phys, PAGE_SIZE, PKVM_ID_HYP);
+ 	case PKVM_PAGE_SHARED_OWNED:
+ 		prot = pkvm_mkstate(PKVM_HOST_MEM_PROT, PKVM_PAGE_SHARED_BORROWED);
+ 		break;
 -- 
 2.37.0.rc0.161.g10f37bed90-goog
 
