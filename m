@@ -2,68 +2,83 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 453BD561C27
-	for <lists+kvmarm@lfdr.de>; Thu, 30 Jun 2022 15:59:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90724563541
+	for <lists+kvmarm@lfdr.de>; Fri,  1 Jul 2022 16:25:08 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E624C4B47F;
-	Thu, 30 Jun 2022 09:59:33 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D397C4B5B9;
+	Fri,  1 Jul 2022 10:25:07 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -1.787
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.787 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001,
+	T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@gmail.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id R+9qOUofoHOJ; Thu, 30 Jun 2022 09:59:33 -0400 (EDT)
+	with ESMTP id jDcEoCok5GWJ; Fri,  1 Jul 2022 10:25:07 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 707144B4C6;
-	Thu, 30 Jun 2022 09:59:32 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 912754B5C8;
+	Fri,  1 Jul 2022 10:25:05 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 09F964B4C6
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jun 2022 09:59:31 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 677014B4D4
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jun 2022 12:12:32 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 5aRWDiKLzie5 for <kvmarm@lists.cs.columbia.edu>;
- Thu, 30 Jun 2022 09:59:29 -0400 (EDT)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id AE40A4B47F
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jun 2022 09:59:29 -0400 (EDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 42038621A8;
- Thu, 30 Jun 2022 13:59:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA8BC341CD;
- Thu, 30 Jun 2022 13:59:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1656597568;
- bh=kxCDmTH0o3+9EBgJlfZ5dZqqigAuso9J63UT5faR1Ws=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=H1dlMQYRAejf1JRYiR/6kbT1CFEVnB9mdVTS5qoxUUf9xSNYOCyu9hMxkkgupJwKG
- TeYWVefugAwxQQyWoQRbzvBtAmoHW67txnmGJxEBnOHWLJ9JfajstvgbfVBTDpZ3OB
- nd1+EAv65AVf80y4oFtwV+iR+WlGA7uOoDUyquEFL68HxxIafVCvlBxwoQifMz/nYI
- M4rgplrQo7vW++ahbU1dmOQbD8aGJH0+6b2INBBq8Bas6XozYfZW4cbspMQT2L8RJQ
- BDjoz/Qpc59aA5fL+xwSpWqUDTiiw5J1wW+ftMJmCs1YBw5Wy3G3TCviEiYSfm9NUW
- z8T2Ki5SN20Mg==
-From: Will Deacon <will@kernel.org>
-To: kvmarm@lists.cs.columbia.edu
-Subject: [RFC PATCH v2 24/24] KVM: arm64: Use the shadow vCPU structure in
- handle___kvm_vcpu_run()
-Date: Thu, 30 Jun 2022 14:57:47 +0100
-Message-Id: <20220630135747.26983-25-will@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20220630135747.26983-1-will@kernel.org>
-References: <20220630135747.26983-1-will@kernel.org>
+ with ESMTP id Zp6FgWuAFskR for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 30 Jun 2022 12:12:31 -0400 (EDT)
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com
+ [209.85.219.49])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6854B4B471
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jun 2022 12:12:31 -0400 (EDT)
+Received: by mail-qv1-f49.google.com with SMTP id u7so8024467qvm.4
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jun 2022 09:12:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=HIeZ7ZUFR8uUdavug06JIRw9ETH7oXgy29YJGJmtVOc=;
+ b=b+M1vpvBViKPkT7LE/wlsBdInOEtZXiDskB4CB2QW8+u5WsEPZF0c1RMTs2h9V3xZs
+ pfIZKzeFDEP6J/hbU1K0tq5ZovFpcUV+u9+O56dor8++DCNgfXqQc4mnBtSZkGHlVOqh
+ VR/SMgpXHDLtwHmihcb2288zkxNweUUqu76i4ke3qQmQiZLoSYWT/3waOCXJ975kQNp3
+ G3CDLaQJl45OvtgT5ElISQgnBF3OmbgRogKE2McTxZxpwjXnJHP331Wy5fVKUBr5gVla
+ BADiWcfdnke7tA6xZ3LEGvCAhLh7sb3mtZuJrN+DQ7NMpx5pg3HH8d6AkU+v2ZRj9iHr
+ CSIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=HIeZ7ZUFR8uUdavug06JIRw9ETH7oXgy29YJGJmtVOc=;
+ b=Hgt/VQXGRd2caQ4EJoWycth8Lh5VTWSaW3Af1ZBNQfW0ahHP/reXUMLMqI6egg+Sgf
+ 6IXS6UFHRsGRctBMMTrxZXngfGE18hH5XwngxoHHtJ/0DFUE87PNp/cF8QhL/0Eft6lg
+ d1THPu/imgkvBBWpNalVMRW9OWf2JvayckI5G0fsEjeMaL8TVaJDyQf6vhxghfyqxtMN
+ Gzd9NEEI+t3gUcgosYBdxMEc14sVp5Ulp9oNsac+wvkODY7heLAAZO8b64JEu4pdzkkB
+ hVKSIaeSIsXKb1558d1KzOAE+Bcdi+5wEMzfNoO/lMyiwA/RoK9Lm7peSiW52uqGxabc
+ QSBg==
+X-Gm-Message-State: AJIora9jnX1SmsAKeX+qrCVtgU2CURkyrDU0ga4TCTS8yEkHEIchBJaH
+ 3xyElJ1A2URfiN9kqrc65zA=
+X-Google-Smtp-Source: AGRyM1tAaGFAfiUdUktuJ8iBabBFgwZixm+u5RXS89XZXpvo6BcLDkTfSf7S7wxlSX5pUf+1WfdSsQ==
+X-Received: by 2002:ac8:5c0c:0:b0:31b:b39b:12b0 with SMTP id
+ i12-20020ac85c0c000000b0031bb39b12b0mr8264577qti.4.1656605550844; 
+ Thu, 30 Jun 2022 09:12:30 -0700 (PDT)
+Received: from MBP.hobot.cc (ec2-13-59-0-164.us-east-2.compute.amazonaws.com.
+ [13.59.0.164]) by smtp.gmail.com with ESMTPSA id
+ m14-20020a05620a24ce00b006af59e9ddeasm6623151qkn.18.2022.06.30.09.12.26
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 30 Jun 2022 09:12:30 -0700 (PDT)
+From: Schspa Shi <schspa@gmail.com>
+To: maz@kernel.org, james.morse@arm.com, alexandru.elisei@arm.com,
+ suzuki.poulose@arm.com, catalin.marinas@arm.com, will@kernel.org
+Subject: [PATCH] KVM: arm64: Fix 64 bit mmio handle
+Date: Fri,  1 Jul 2022 00:12:20 +0800
+Message-Id: <20220630161220.53449-1-schspa@gmail.com>
+X-Mailer: git-send-email 2.29.0
 MIME-Version: 1.0
-Cc: Marc Zyngier <maz@kernel.org>, kernel-team@android.com, kvm@vger.kernel.org,
- Andy Lutomirski <luto@amacapital.net>, linux-arm-kernel@lists.infradead.org,
- Michael Roth <michael.roth@amd.com>, Catalin Marinas <catalin.marinas@arm.com>,
- Chao Peng <chao.p.peng@linux.intel.com>, Will Deacon <will@kernel.org>
+X-Mailman-Approved-At: Fri, 01 Jul 2022 10:25:03 -0400
+Cc: Schspa Shi <schspa@gmail.com>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -80,180 +95,41 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-As a stepping stone towards deprivileging the host's access to the
-guest's vCPU structures, introduce some naive flush/sync routines to
-copy most of the host vCPU into the shadow vCPU on vCPU run and back
-again on return to EL1.
+If the len is 8 bytes, we can't get the correct sign extend for
+be system.
 
-This allows us to run using the shadow structure when KVM is initialised
-in protected mode.
+Fix the mask type len and the comparison of length.
 
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Schspa Shi <schspa@gmail.com>
 ---
- arch/arm64/kvm/hyp/include/nvhe/pkvm.h |  4 ++
- arch/arm64/kvm/hyp/nvhe/hyp-main.c     | 84 +++++++++++++++++++++++++-
- arch/arm64/kvm/hyp/nvhe/pkvm.c         | 28 +++++++++
- 3 files changed, 114 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/mmio.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/kvm/hyp/include/nvhe/pkvm.h b/arch/arm64/kvm/hyp/include/nvhe/pkvm.h
-index c0e32a750b6e..0edb3faa4067 100644
---- a/arch/arm64/kvm/hyp/include/nvhe/pkvm.h
-+++ b/arch/arm64/kvm/hyp/include/nvhe/pkvm.h
-@@ -63,4 +63,8 @@ int __pkvm_init_shadow(struct kvm *kvm, unsigned long shadow_hva,
- 		       size_t shadow_size, unsigned long pgd_hva);
- int __pkvm_teardown_shadow(unsigned int shadow_handle);
- 
-+struct kvm_shadow_vcpu_state *
-+pkvm_load_shadow_vcpu_state(unsigned int shadow_handle, unsigned int vcpu_idx);
-+void pkvm_put_shadow_vcpu_state(struct kvm_shadow_vcpu_state *shadow_state);
-+
- #endif /* __ARM64_KVM_NVHE_PKVM_H__ */
-diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-index a1fbd11c8041..39d66c7b0560 100644
---- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-+++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-@@ -22,11 +22,91 @@ DEFINE_PER_CPU(struct kvm_nvhe_init_params, kvm_init_params);
- 
- void __kvm_hyp_host_forward_smc(struct kvm_cpu_context *host_ctxt);
- 
-+static void flush_shadow_state(struct kvm_shadow_vcpu_state *shadow_state)
-+{
-+	struct kvm_vcpu *shadow_vcpu = &shadow_state->shadow_vcpu;
-+	struct kvm_vcpu *host_vcpu = shadow_state->host_vcpu;
-+
-+	shadow_vcpu->arch.ctxt		= host_vcpu->arch.ctxt;
-+
-+	shadow_vcpu->arch.sve_state	= kern_hyp_va(host_vcpu->arch.sve_state);
-+	shadow_vcpu->arch.sve_max_vl	= host_vcpu->arch.sve_max_vl;
-+
-+	shadow_vcpu->arch.hw_mmu	= host_vcpu->arch.hw_mmu;
-+
-+	shadow_vcpu->arch.hcr_el2	= host_vcpu->arch.hcr_el2;
-+	shadow_vcpu->arch.mdcr_el2	= host_vcpu->arch.mdcr_el2;
-+	shadow_vcpu->arch.cptr_el2	= host_vcpu->arch.cptr_el2;
-+
-+	shadow_vcpu->arch.iflags	= host_vcpu->arch.iflags;
-+	shadow_vcpu->arch.fp_state	= host_vcpu->arch.fp_state;
-+
-+	shadow_vcpu->arch.debug_ptr	= kern_hyp_va(host_vcpu->arch.debug_ptr);
-+	shadow_vcpu->arch.host_fpsimd_state = host_vcpu->arch.host_fpsimd_state;
-+
-+	shadow_vcpu->arch.vsesr_el2	= host_vcpu->arch.vsesr_el2;
-+
-+	shadow_vcpu->arch.vgic_cpu.vgic_v3 = host_vcpu->arch.vgic_cpu.vgic_v3;
-+}
-+
-+static void sync_shadow_state(struct kvm_shadow_vcpu_state *shadow_state)
-+{
-+	struct kvm_vcpu *shadow_vcpu = &shadow_state->shadow_vcpu;
-+	struct kvm_vcpu *host_vcpu = shadow_state->host_vcpu;
-+	struct vgic_v3_cpu_if *shadow_cpu_if = &shadow_vcpu->arch.vgic_cpu.vgic_v3;
-+	struct vgic_v3_cpu_if *host_cpu_if = &host_vcpu->arch.vgic_cpu.vgic_v3;
-+	unsigned int i;
-+
-+	host_vcpu->arch.ctxt		= shadow_vcpu->arch.ctxt;
-+
-+	host_vcpu->arch.hcr_el2		= shadow_vcpu->arch.hcr_el2;
-+	host_vcpu->arch.cptr_el2	= shadow_vcpu->arch.cptr_el2;
-+
-+	host_vcpu->arch.fault		= shadow_vcpu->arch.fault;
-+
-+	host_vcpu->arch.iflags		= shadow_vcpu->arch.iflags;
-+	host_vcpu->arch.fp_state	= shadow_vcpu->arch.fp_state;
-+
-+	host_cpu_if->vgic_hcr		= shadow_cpu_if->vgic_hcr;
-+	for (i = 0; i < shadow_cpu_if->used_lrs; ++i)
-+		host_cpu_if->vgic_lr[i] = shadow_cpu_if->vgic_lr[i];
-+}
-+
- static void handle___kvm_vcpu_run(struct kvm_cpu_context *host_ctxt)
+diff --git a/arch/arm64/kvm/mmio.c b/arch/arm64/kvm/mmio.c
+index 3dd38a151d2a6..0692f8b18f35c 100644
+--- a/arch/arm64/kvm/mmio.c
++++ b/arch/arm64/kvm/mmio.c
+@@ -81,8 +81,8 @@ unsigned long kvm_mmio_read_buf(const void *buf, unsigned int len)
+ int kvm_handle_mmio_return(struct kvm_vcpu *vcpu)
  {
--	DECLARE_REG(struct kvm_vcpu *, vcpu, host_ctxt, 1);
-+	DECLARE_REG(struct kvm_vcpu *, host_vcpu, host_ctxt, 1);
-+	int ret;
-+
-+	host_vcpu = kern_hyp_va(host_vcpu);
-+
-+	if (unlikely(is_protected_kvm_enabled())) {
-+		struct kvm_shadow_vcpu_state *shadow_state;
-+		struct kvm_vcpu *shadow_vcpu;
-+		struct kvm *host_kvm;
-+		unsigned int handle;
-+
-+		host_kvm = kern_hyp_va(host_vcpu->kvm);
-+		handle = host_kvm->arch.pkvm.shadow_handle;
-+		shadow_state = pkvm_load_shadow_vcpu_state(handle,
-+							   host_vcpu->vcpu_idx);
-+		if (!shadow_state) {
-+			ret = -EINVAL;
-+			goto out;
-+		}
-+
-+		shadow_vcpu = &shadow_state->shadow_vcpu;
-+		flush_shadow_state(shadow_state);
-+
-+		ret = __kvm_vcpu_run(shadow_vcpu);
-+
-+		sync_shadow_state(shadow_state);
-+		pkvm_put_shadow_vcpu_state(shadow_state);
-+	} else {
-+		ret = __kvm_vcpu_run(host_vcpu);
-+	}
+ 	unsigned long data;
++	unsigned long mask;
+ 	unsigned int len;
+-	int mask;
  
--	cpu_reg(host_ctxt, 1) =  __kvm_vcpu_run(kern_hyp_va(vcpu));
-+out:
-+	cpu_reg(host_ctxt, 1) =  ret;
- }
+ 	/* Detect an already handled MMIO return */
+ 	if (unlikely(!vcpu->mmio_needed))
+@@ -97,7 +97,7 @@ int kvm_handle_mmio_return(struct kvm_vcpu *vcpu)
+ 		data = kvm_mmio_read_buf(run->mmio.data, len);
  
- static void handle___kvm_adjust_pc(struct kvm_cpu_context *host_ctxt)
-diff --git a/arch/arm64/kvm/hyp/nvhe/pkvm.c b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-index 571334fd58ff..bf92f4443c92 100644
---- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
-+++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-@@ -247,6 +247,33 @@ static struct kvm_shadow_vm *find_shadow_by_handle(unsigned int shadow_handle)
- 	return shadow_table[shadow_idx];
- }
- 
-+struct kvm_shadow_vcpu_state *
-+pkvm_load_shadow_vcpu_state(unsigned int shadow_handle, unsigned int vcpu_idx)
-+{
-+	struct kvm_shadow_vcpu_state *shadow_state = NULL;
-+	struct kvm_shadow_vm *vm;
-+
-+	hyp_spin_lock(&shadow_lock);
-+	vm = find_shadow_by_handle(shadow_handle);
-+	if (!vm || vm->kvm.created_vcpus <= vcpu_idx)
-+		goto unlock;
-+
-+	shadow_state = &vm->shadow_vcpu_states[vcpu_idx];
-+	hyp_page_ref_inc(hyp_virt_to_page(vm));
-+unlock:
-+	hyp_spin_unlock(&shadow_lock);
-+	return shadow_state;
-+}
-+
-+void pkvm_put_shadow_vcpu_state(struct kvm_shadow_vcpu_state *shadow_state)
-+{
-+	struct kvm_shadow_vm *vm = shadow_state->shadow_vm;
-+
-+	hyp_spin_lock(&shadow_lock);
-+	hyp_page_ref_dec(hyp_virt_to_page(vm));
-+	hyp_spin_unlock(&shadow_lock);
-+}
-+
- static void unpin_host_vcpus(struct kvm_shadow_vcpu_state *shadow_vcpu_states,
- 			     unsigned int nr_vcpus)
- {
-@@ -304,6 +331,7 @@ static int init_shadow_structs(struct kvm *kvm, struct kvm_shadow_vm *vm,
- 		shadow_vcpu->vcpu_idx = i;
- 
- 		shadow_vcpu->arch.hw_mmu = &vm->kvm.arch.mmu;
-+		shadow_vcpu->arch.cflags = READ_ONCE(host_vcpu->arch.cflags);
- 	}
- 
- 	return 0;
+ 		if (kvm_vcpu_dabt_issext(vcpu) &&
+-		    len < sizeof(unsigned long)) {
++		    len <= sizeof(unsigned long)) {
+ 			mask = 1U << ((len * 8) - 1);
+ 			data = (data ^ mask) - mask;
+ 		}
 -- 
-2.37.0.rc0.161.g10f37bed90-goog
+2.37.0
 
 _______________________________________________
 kvmarm mailing list
