@@ -2,86 +2,80 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CE8DE563544
-	for <lists+kvmarm@lfdr.de>; Fri,  1 Jul 2022 16:25:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EDAF45631E7
+	for <lists+kvmarm@lfdr.de>; Fri,  1 Jul 2022 12:50:12 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 60C4D4B5C8;
-	Fri,  1 Jul 2022 10:25:09 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DCD844B4F7;
+	Fri,  1 Jul 2022 06:50:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -1.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bUDGB4zFSpc0; Fri,  1 Jul 2022 10:25:09 -0400 (EDT)
+	with ESMTP id Izat1GLaNj41; Fri,  1 Jul 2022 06:50:11 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C2A754B5D2;
-	Fri,  1 Jul 2022 10:25:05 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9D2BE4B43F;
+	Fri,  1 Jul 2022 06:50:10 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2DE974B4FD
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jun 2022 17:02:32 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B70824B335
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Jul 2022 06:50:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 802UaHs6EAls for <kvmarm@lists.cs.columbia.edu>;
- Thu, 30 Jun 2022 17:02:30 -0400 (EDT)
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com
- [209.85.221.43])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C57044B49D
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jun 2022 17:02:30 -0400 (EDT)
-Received: by mail-wr1-f43.google.com with SMTP id cl1so341238wrb.4
- for <kvmarm@lists.cs.columbia.edu>; Thu, 30 Jun 2022 14:02:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=VtUlpkuhliUwoUgmaGEH+kEoEeunaS6PJnDK/W1XYz4=;
- b=JfrrtzAQjyLxnw8RtQ5sQiSNUfohoaMNZW2kYvifXlmGWgHr7XJMl/LQ5yWh4ZDLRh
- EIUPHXZDb5Va4mirbCSRVDZCPMlakbWCUXbrVx3s9CYunFEZ1slL1J+n0+lLyBmkjvq6
- dywxS4/phRbyRQsua97BR94hWDn23Q49DbtcSC9+zkt3E5pfCOfz49pW3hhqdvrjGdv+
- pKKf1x3hKQqAQrlbcPos/8s8jUYluEAVcvGGsPGpoOXyv0wrj0LnCa606tZy9ddxQBAt
- cF8lFcME2E999BhE7foEKF9XdpoRPCaTJec6Ks6Sa9LMwb5hg+yO+AGHFhUc1+iXyNs+
- Ct9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=VtUlpkuhliUwoUgmaGEH+kEoEeunaS6PJnDK/W1XYz4=;
- b=e7qZzq0/XbWwL2KXn3MAay+YWtAy7TEi9rNw4FiEWvZThVU305nolalgVSZ2i0P8ns
- ffpe1SJbWtIn3y+Vfj3adVyulePjO0TL4BCgJ0ytCuTK68f+yRy2Ge/CHfuMR2g+EkRT
- vJDWcmD3grTJsxiKw5MNgUdvHeNN+mqB3Jb1UkeJZqovlFKePA18h5vyV9gcLgDFpDH8
- JsuVB6EKZCBkmlkQb1vc7VnaNc03+4tnv0sY+9ryl073Zkc/5ZMG6BUzB2ey8q7gUNlp
- 4EaamLbzG8OymbdtjRNfKMe6WqUnL1mDq6G402IdoviTnDNy6BBU6/0Z6yZ6XptW42lV
- VaxQ==
-X-Gm-Message-State: AJIora8t0vGcOEgqrYXQ1g/zbBVkRMtv0YiomGQiSDcrilEXfYaFH1HW
- 5T4UiUIyHg1eBeE7x9oONxJ4rBm1eHzFURsRfjpliA==
-X-Google-Smtp-Source: AGRyM1tplZDxrLp9WaTGqMe3midVuGQbVARcYH1sMixpR7FPn6Bu0DJJ+rFZvHMXvlCiQJACUGtNy4P+3OS3+ElQNfs=
-X-Received: by 2002:a05:6000:a1e:b0:21b:8c8d:3cb5 with SMTP id
- co30-20020a0560000a1e00b0021b8c8d3cb5mr10358939wrb.372.1656622949489; Thu, 30
- Jun 2022 14:02:29 -0700 (PDT)
+ with ESMTP id BCHGW+-kvRY5 for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  1 Jul 2022 06:50:07 -0400 (EDT)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 403EA4B2AA
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Jul 2022 06:50:07 -0400 (EDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id BCC58B82F45;
+ Fri,  1 Jul 2022 10:50:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47832C3411E;
+ Fri,  1 Jul 2022 10:50:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1656672604;
+ bh=KL3HCbfmIFwpgQxHgKNqdfe68KZEBjGoiTLhKkW04Vc=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=BZ8+LMQYkO8E3V0b8x4/wGg6JBNFWqJgwC4FRyMHck0/WTp19N4v4FQPnclu+j6uR
+ tto47Kdud5bf028XT5T9xTI4e8nCc0FwS2yNCid9JchnCytU5A2DqvMnnV1o6H8AXA
+ ZEZLW9NYPVGbKq/79ooZL4bkpTAoYHmbp3C3xXaCYGp1pSzxy79HHc46bmn4yxF8zr
+ VCl0gB3p81ePFR2Vheu2BXxncQd+PVrwLIO3tivUDNPMDfYiYf0vSgoXhJohV70HtW
+ UbCx/X16K93C/U1017ms10b96VSYr9qHLl1IymA5e1ONQD/z+1HQ16HBR6cxEH+Plz
+ B4+WTj3FrWRmw==
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1o7EDp-004Z3B-EI;
+ Fri, 01 Jul 2022 11:50:01 +0100
 MIME-Version: 1.0
-References: <20220628220938.3657876-1-yosryahmed@google.com>
-In-Reply-To: <20220628220938.3657876-1-yosryahmed@google.com>
-From: Yosry Ahmed <yosryahmed@google.com>
-Date: Thu, 30 Jun 2022 14:01:52 -0700
-Message-ID: <CAJD7tkb3bDwt0gzOhS+3sSiy20Qy=G_AD8jZeY5DYh4=NyX3Bg@mail.gmail.com>
-Subject: Re: [PATCH v6 0/4] KVM: mm: count KVM mmu usage in memory stats
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Andrew Morton <akpm@linux-foundation.org>, Marc Zyngier <maz@kernel.org>
-X-Mailman-Approved-At: Fri, 01 Jul 2022 10:25:03 -0400
-Cc: Wanpeng Li <wanpengli@tencent.com>, kvm@vger.kernel.org,
- Roman Gushchin <roman.gushchin@linux.dev>, Michal Hocko <mhocko@kernel.org>,
- Shaoqin <shaoqin.huang@intel.com>, Linux-MM <linux-mm@kvack.org>,
- Zefan Li <lizefan.x@bytedance.com>, kvmarm@lists.cs.columbia.edu,
- Joerg Roedel <joro@8bytes.org>, Shakeel Butt <shakeelb@google.com>,
- Cgroups <cgroups@vger.kernel.org>, Huang@google.com,
- linux-arm-kernel@lists.infradead.org, Jim Mattson <jmattson@google.com>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Johannes Weiner <hannes@cmpxchg.org>, Tejun Heo <tj@kernel.org>,
- Vitaly Kuznetsov <vkuznets@redhat.com>
+Date: Fri, 01 Jul 2022 11:50:01 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: Schspa Shi <schspa@gmail.com>
+Subject: Re: [PATCH] KVM: arm64: Fix 64 bit mmio handle
+In-Reply-To: <m2bkua148a.fsf@gmail.com>
+References: <20220630161220.53449-1-schspa@gmail.com>
+ <87mtdu15ok.wl-maz@kernel.org> <m2bkua148a.fsf@gmail.com>
+User-Agent: Roundcube Webmail/1.4.13
+Message-ID: <a5ca4db3db9ef101258cab94d6b7e045@kernel.org>
+X-Sender: maz@kernel.org
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: schspa@gmail.com, james.morse@arm.com,
+ alexandru.elisei@arm.com, suzuki.poulose@arm.com, catalin.marinas@arm.com,
+ will@kernel.org, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: will@kernel.org, catalin.marinas@arm.com, linux-kernel@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -93,86 +87,71 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-If/when this patchset gets merged, would it be through the mm tree or
-kvm tree? It is based on the kvm-queue branch so I am guessing it
-could be easier to go through kvm but I am not sure what the policy is
-here. Andrew or Paolo, do you mind clarifying the policy on such
-patchsets? Thanks!
+On 2022-06-30 17:50, Schspa Shi wrote:
+> Marc Zyngier <maz@kernel.org> writes:
+> 
+>> On Thu, 30 Jun 2022 17:12:20 +0100,
+>> Schspa Shi <schspa@gmail.com> wrote:
+>>> 
+>>> If the len is 8 bytes, we can't get the correct sign extend for
+>>> be system.
+>> 
+>> I'm afraid you'll have to give me a bit more details.
+>> 
+>>> 
+>>> Fix the mask type len and the comparison of length.
+>>> 
+>>> Signed-off-by: Schspa Shi <schspa@gmail.com>
+>>> ---
+>>>  arch/arm64/kvm/mmio.c | 4 ++--
+>>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>> 
+>>> diff --git a/arch/arm64/kvm/mmio.c b/arch/arm64/kvm/mmio.c
+>>> index 3dd38a151d2a6..0692f8b18f35c 100644
+>>> --- a/arch/arm64/kvm/mmio.c
+>>> +++ b/arch/arm64/kvm/mmio.c
+>>> @@ -81,8 +81,8 @@ unsigned long kvm_mmio_read_buf(const void *buf, 
+>>> unsigned int len)
+>>>  int kvm_handle_mmio_return(struct kvm_vcpu *vcpu)
+>>>  {
+>>>  	unsigned long data;
+>>> +	unsigned long mask;
+>>>  	unsigned int len;
+>>> -	int mask;
+>>>   	/* Detect an already handled MMIO return */
+>>>  	if (unlikely(!vcpu->mmio_needed))
+>>> @@ -97,7 +97,7 @@ int kvm_handle_mmio_return(struct kvm_vcpu *vcpu)
+>>>  		data = kvm_mmio_read_buf(run->mmio.data, len);
+>>>   		if (kvm_vcpu_dabt_issext(vcpu) &&
+>>> -		    len < sizeof(unsigned long)) {
+>>> +		    len <= sizeof(unsigned long)) {
+>> 
+>> If you're reading an 8 byte quantity, what is there to sign-extend?
+>> Sign extension only makes sense if what you're reading is *smaller*
+>> than the size of the register you are targeting.
+>> 
+> 
+> Yes, you are correct, sorry for my bad patch.
+> Please ignore this patch.
+> 
+>> I must be missing something. And how is that related to running BE? BE
+>> in the host? The guest?
+> 
+> I mean BE is for guest running with BE mode.
 
-On Tue, Jun 28, 2022 at 3:09 PM Yosry Ahmed <yosryahmed@google.com> wrote:
->
-> Add NR_SECONDARY_PAGETABLE memory stat and use it to account KVM mmu
-> usage as the first type of accounted secondary page tables. This stat
-> can be later extended to account for other types of secondary pages
-> tables (e.g. iommu page tables).
->
-> Rationale behind why this is useful and link to extended discussion in
-> the first patch.
->
-> ---
->
-> Changes in V6:
-> - Rebased on top of kvm/queue and fixed conflicts.
-> - Fixed docs spaces and tabs (Sean).
-> - More narrative commit logs (Sean and Oliver).
-> - Updated kvm_account_pgtable_pages() documentation to describe the
->   rules of using it more clearly (Sean).
-> - Collected Acks and Reviewed-by's by Shakeel and Oliver (Thanks!)
->
-> Changes in V5:
-> - Updated cover letter to explain more the rationale behind the change
->   (Thanks to contributions by Sean Christopherson).
-> - Removed extraneous + in arm64 patch (Oliver Upton, Marc Zyngier).
-> - Shortened secondary_pagetables to sec_pagetables (Shakeel Butt).
-> - Removed dependency on other patchsets (applies to queue branch).
->
-> Changes in V4:
-> - Changed accounting hooks in arm64 to only account s2 page tables and
->   refactored them to a much cleaner form, based on recommendations from
->   Oliver Upton and Marc Zyngier.
-> - Dropped patches for mips and riscv. I am not interested in those archs
->   anyway and don't have the resources to test them. I posted them for
->   completeness but it doesn't seem like anyone was interested.
->
-> Changes in V3:
-> - Added NR_SECONDARY_PAGETABLE instead of piggybacking on NR_PAGETABLE
->   stats.
->
-> Changes in V2:
-> - Added accounting stats for other archs than x86.
-> - Changed locations in the code where x86 KVM page table stats were
->   accounted based on suggestions from Sean Christopherson.
->
-> ---
->
-> Yosry Ahmed (4):
->   mm: add NR_SECONDARY_PAGETABLE to count secondary page table uses.
->   KVM: mmu: add a helper to account memory used by KVM MMU.
->   KVM: x86/mmu: count KVM mmu usage in secondary pagetable stats.
->   KVM: arm64/mmu: count KVM s2 mmu usage in secondary pagetable stats
->
->  Documentation/admin-guide/cgroup-v2.rst |  5 ++++
->  Documentation/filesystems/proc.rst      |  4 +++
->  arch/arm64/kvm/mmu.c                    | 36 ++++++++++++++++++++++---
->  arch/x86/kvm/mmu/mmu.c                  | 16 +++++++++--
->  arch/x86/kvm/mmu/tdp_mmu.c              | 12 +++++++++
->  drivers/base/node.c                     |  2 ++
->  fs/proc/meminfo.c                       |  2 ++
->  include/linux/kvm_host.h                | 10 +++++++
->  include/linux/mmzone.h                  |  1 +
->  mm/memcontrol.c                         |  1 +
->  mm/page_alloc.c                         |  6 ++++-
->  mm/vmstat.c                             |  1 +
->  12 files changed, 89 insertions(+), 7 deletions(-)
->
-> --
-> 2.37.0.rc0.161.g10f37bed90-goog
->
+So what problem did you see? If you have noticed something going
+wrong, I'd like to get it fixed.
+
+Thanks,
+
+          M.
+-- 
+Jazz is not dead. It just smells funny...
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
