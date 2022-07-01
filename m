@@ -2,87 +2,79 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A8434567FB5
-	for <lists+kvmarm@lfdr.de>; Wed,  6 Jul 2022 09:21:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54AC456367F
+	for <lists+kvmarm@lfdr.de>; Fri,  1 Jul 2022 17:05:26 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 065284C04B;
-	Wed,  6 Jul 2022 03:21:25 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 495304B5CE;
+	Fri,  1 Jul 2022 11:05:25 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.787
+X-Spam-Score: -1.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.787 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001,
-	T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@gmail.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0HQrbXeuYeAK; Wed,  6 Jul 2022 03:21:24 -0400 (EDT)
+	with ESMTP id 0QG1pZagT-6E; Fri,  1 Jul 2022 11:05:25 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D42704C05D;
-	Wed,  6 Jul 2022 03:21:23 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AB7AF4B554;
+	Fri,  1 Jul 2022 11:05:23 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id DB18F4B5AE
- for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Jul 2022 10:30:00 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 89AAC4B539
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Jul 2022 11:05:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 6PHJmxJvCi23 for <kvmarm@lists.cs.columbia.edu>;
- Fri,  1 Jul 2022 10:29:59 -0400 (EDT)
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com
- [209.85.166.48])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id CF6674B5AD
- for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Jul 2022 10:29:59 -0400 (EDT)
-Received: by mail-io1-f48.google.com with SMTP id d3so2403675ioi.9
- for <kvmarm@lists.cs.columbia.edu>; Fri, 01 Jul 2022 07:29:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=references:user-agent:from:to:cc:subject:date:in-reply-to
- :message-id:mime-version;
- bh=9cF5IqYxYj2InYMRmfggjddnYppc9EzlqbpJtswCFOc=;
- b=HODcUQLIo0DHm2SWxvgselcLa4dqArEO92qCD/gdLMJVimUVw0vou6BSTzhmjWwMYF
- 1E+buAnE4rtwp0FAJX85qZ+3o2LqSI6tChHU9pxyTtzYtmhBpSp7owpv82dDVMtUeoYZ
- sta4ytKhLwiQHRKRr4g0NyOUcuF6AebROFB/JemgbaMZ7IxhFV0eoXHhscnThyXgxm7u
- eWXLEO4OiZIpuOIFJxbs1xuVlE15lZ1DdPobHLI+vafxbu0XsqKQjOZLH7Nl5FIyDwD6
- DvjVXFKvIJpLg/tYtsORHUsApO76DV7qn3AJuU1/7gtrOOQLACHhxYvOhUOXCKWBZtJn
- FOAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:references:user-agent:from:to:cc:subject:date
- :in-reply-to:message-id:mime-version;
- bh=9cF5IqYxYj2InYMRmfggjddnYppc9EzlqbpJtswCFOc=;
- b=a1aZW5axzMTS2L/+LfWRyO7Aa6DL8OqFevYXPERWz4dLjxpgVcdUkX9sRKEDWEMEI0
- CqesPvZVhV0wepdcBbAfjORSFDcMLxdskCBFkuY65OGRFJgeIP497ntGTAzRmV8LLCji
- TmFg3amLGUikAQ9TT+kCGs0WlVL2a3KmKVYlZnUcmhQvcaOiGeJM5GQwTbhCF5FvWvMC
- XGucwYa8XXs7UOj2D5u9yZhQjNMj/TF8J3a4coBVAIpNqVva3NMkYei4KZoS7VVbA4se
- t3O7z6w3hlw3tu7W0SdG1mE1wiDu6vnIs6H1KoKNZ0Fj1eL1uV2vscCHVimyx9rcelSp
- 0STA==
-X-Gm-Message-State: AJIora9Wp+s1GcNcjHQNbU+c0F+GmhD9rdZQYEkJakaNtvYqXRvEBQzh
- WcgohvzlLcvZP+YUUpixZVs=
-X-Google-Smtp-Source: AGRyM1sRv34EaaWYc7DQ/cybSSP4tt+pHpLB0OquCLm3mDR/BmnZSy7nB06i+Pl5+EtSLGZ2Xxh7qA==
-X-Received: by 2002:a05:6638:d86:b0:33c:cb7f:4ecc with SMTP id
- l6-20020a0566380d8600b0033ccb7f4eccmr8907108jaj.28.1656685799208; 
- Fri, 01 Jul 2022 07:29:59 -0700 (PDT)
-Received: from ArchLinux ([240e:390:a20:ece0:3ad5:47ff:feb5:73b2])
- by smtp.gmail.com with ESMTPSA id
- b15-20020a056602218f00b00669b2ffad32sm10288981iob.54.2022.07.01.07.29.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Jul 2022 07:29:58 -0700 (PDT)
-References: <20220630161220.53449-1-schspa@gmail.com>
- <87mtdu15ok.wl-maz@kernel.org> <m2bkua148a.fsf@gmail.com>
- <a5ca4db3db9ef101258cab94d6b7e045@kernel.org> <m2sfnlvwup.fsf@gmail.com>
- <87letd0wqm.wl-maz@kernel.org>
-User-agent: mu4e 1.7.5; emacs 28.1
-From: Schspa Shi <schspa@gmail.com>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH] KVM: arm64: Fix 64 bit mmio handle
-Date: Fri, 01 Jul 2022 22:22:51 +0800
-In-reply-to: <87letd0wqm.wl-maz@kernel.org>
-Message-ID: <m2h740zz1i.fsf@gmail.com>
-MIME-Version: 1.0
-X-Mailman-Approved-At: Wed, 06 Jul 2022 03:21:23 -0400
-Cc: will@kernel.org, catalin.marinas@arm.com, linux-kernel@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+ with ESMTP id xypN7sR9KNxh for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  1 Jul 2022 11:05:17 -0400 (EDT)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 665F74B598
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  1 Jul 2022 11:05:17 -0400 (EDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id 8A5C1B815E0;
+ Fri,  1 Jul 2022 15:05:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54900C341C7;
+ Fri,  1 Jul 2022 15:05:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1656687914;
+ bh=luePMy/Z+vkn4tLOUBGSHwehJjCg/Kb2+oybCvWuF1Q=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=oOg1vwjG3G7T2Wf6Yg0tfnRzbcsGEsL1VRRCS4vw7a9IrVMLCtDqGRRwq5nBE6XJk
+ 1+qrO6BtgN27sFzj6qKIkj1IswexowtASGeDvf/jnR5pTHoWHxfIuIk/ibSwPeW1QP
+ rlB+FThsYCqOP0Rmv+7vNx+YJv+9qANfXtZE3wu8RMMzku5BztMFpzuQ0F02FErU+q
+ /xtikYv7xZc+GjgX/T+VZAkh0vQqpdp58DO7tcGcLoKiSsDCM238HEuAquwx5TqXs4
+ 526sMNwkxOsMLypRu6pFCht0kIF4Jyc5rkv77o5t2fLsiUOReGsTdofZSW8/q1xK1i
+ cfPdMvHFdICQQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1o7ICm-004caJ-0a;
+ Fri, 01 Jul 2022 16:05:12 +0100
+Date: Fri, 01 Jul 2022 16:05:11 +0100
+Message-ID: <87k08w27rs.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Andre Przywara <andre.przywara@arm.com>
+Subject: Re: [PATCH kvmtool] arm: gic: fdt: fix PPI CPU mask calculation
+In-Reply-To: <20220616145526.3337196-1-andre.przywara@arm.com>
+References: <20220616145526.3337196-1-andre.przywara@arm.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: andre.przywara@arm.com, will@kernel.org,
+ julien.thierry.kdev@gmail.com, alexandru.elisei@arm.com,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -94,62 +86,46 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+On Thu, 16 Jun 2022 15:55:26 +0100,
+Andre Przywara <andre.przywara@arm.com> wrote:
+> 
+> The GICv2 DT binding describes the third cell in each interrupt
+> descriptor as holding the trigger type, but also the CPU mask that this
+> IRQ applies to, in bits [15:8]. However this is not the case for GICv3,
+> where we don't use a CPU mask in the third cell: a simple mask wouldn't
+> fit for the many more supported cores anyway.
+> 
+> At the moment we fill this CPU mask field regardless of the GIC type,
+> for the PMU and arch timer DT nodes. This is not only the wrong thing to
+> do in case of a GICv3, but also triggers UBSAN splats when using more
+> than 30 cores, as we do shifting beyond what a u32 can hold:
+> $ lkvm run -k Image -c 31 --pmu
+> arm/timer.c:13:22: runtime error: left shift of 1 by 31 places cannot be represented in type 'int'
+> arm/timer.c:13:38: runtime error: signed integer overflow: -2147483648 - 1 cannot be represented in type 'int'
+> arm/timer.c:13:43: runtime error: left shift of 2147483647 by 8 places cannot be represented in type 'int'
+> arm/aarch64/pmu.c:202:22: runtime error: left shift of 1 by 31 places cannot be represented in type 'int'
+> arm/aarch64/pmu.c:202:38: runtime error: signed integer overflow: -2147483648 - 1 cannot be represented in type 'int'
+> arm/aarch64/pmu.c:202:43: runtime error: left shift of 2147483647 by 8 places cannot be represented in type 'int'
+> 
+> Fix that by adding a function that creates the mask by looking at the
+> GIC type first, and returning zero when a GICv3 is used. Also we
+> explicitly check for the CPU limit again, even though this would be
+> done before already, when we try to create a GICv2 VM with more than 8
+> cores.
+> 
+> Signed-off-by: Andre Przywara <andre.przywara@arm.com>
 
-Marc Zyngier <maz@kernel.org> writes:
+Acked-by: Marc Zyngier <maz@kernel.org>
 
->> 
->> I have running some static code analysis software upon Kernel 
->> code.
->> Seeing there is possible overflow.
->> 
->> maks << 1U << ((len * 8) -1);
->> 
->> The AI don't know, len is only the value of 1, 2, 4, and make 
->> this
->> a warnings
->> 
->> I tring to analysis this, but didn't realize the real scenario 
->> of
->> sign extension, and finally sent this problematic patch.
->> 
->> I do see some uninitialized memory reads (the values are not 
->> used
->> in the end, just as temporary space for API execution),
->> do we need to fix these?
->
-> You need to be more descriptive here. What uninitialised reads? 
-> In
-> general, pointing at the code and providing a full description 
-> of what
-> you think is incorrect would really help...
->
-> 	M.
-One example is
-int vgic_v3_has_attr_regs(struct kvm_device *dev, struct 
-kvm_device_attr *attr)
-{
-	...
-    case KVM_DEV_ARM_VGIC_GRP_CPU_SYSREGS: {
-		u64 reg, id;
-
-		id = (attr->attr & KVM_DEV_ARM_VGIC_SYSREG_INSTR_MASK);
-		return vgic_v3_has_cpu_sysregs_attr(vcpu, 0, id, &reg);
-	}
-
-}
-
-The funcion vgic_v3_has_cpu_sysregs_attr will read reg's value to
-params without initialization. There should have no problems,
-because the register value never used.
+	M.
 
 -- 
-BRs
-Schspa Shi
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
