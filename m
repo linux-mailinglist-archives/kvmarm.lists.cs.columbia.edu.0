@@ -2,81 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C4395670E1
-	for <lists+kvmarm@lfdr.de>; Tue,  5 Jul 2022 16:23:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E78B567FB7
+	for <lists+kvmarm@lfdr.de>; Wed,  6 Jul 2022 09:21:27 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 801A34BEE5;
-	Tue,  5 Jul 2022 10:23:28 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8DD8C4C077;
+	Wed,  6 Jul 2022 03:21:26 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
+	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@quicinc.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yiXD+oZ0+fnS; Tue,  5 Jul 2022 10:23:28 -0400 (EDT)
+	with ESMTP id zEQXKnnSg3qX; Wed,  6 Jul 2022 03:21:26 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 63BFC4BEAA;
-	Tue,  5 Jul 2022 10:23:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 17F304C06F;
+	Wed,  6 Jul 2022 03:21:24 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 634E64BEE1
- for <kvmarm@lists.cs.columbia.edu>; Tue,  5 Jul 2022 10:23:26 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C69804BFA5
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  5 Jul 2022 12:57:27 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id FdyIXnJiCdxB for <kvmarm@lists.cs.columbia.edu>;
- Tue,  5 Jul 2022 10:23:25 -0400 (EDT)
-Received: from mail-ed1-f73.google.com (mail-ed1-f73.google.com
- [209.85.208.73])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id F34954BEAA
- for <kvmarm@lists.cs.columbia.edu>; Tue,  5 Jul 2022 10:23:24 -0400 (EDT)
-Received: by mail-ed1-f73.google.com with SMTP id
- n8-20020a05640205c800b00434fb0c150cso9330666edx.19
- for <kvmarm@lists.cs.columbia.edu>; Tue, 05 Jul 2022 07:23:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:message-id:mime-version:subject:from:to:cc;
- bh=2zQlYc9U3hxiIn86A5QE2kEqLA+X+YH+JZD8cteagW8=;
- b=fqCtfyiWnz/sDbhBL26vUNigBrQZ7zc1r3SbimUnoBkTZIKAL796jt+N0l7Ug0wnn+
- 75Cal62Cu7Fahm0ZR6w8DSiM6GATiDJdvNIUqzFzHnrMR78YCmguqNM6frxwfTRTggqK
- sOFFIN06fK9vVqaLxRvQB9VGFNhHVu7o5octaE1JxZu4S2GtzqeaFhfSyul1iRTL5MG8
- MCbDUtMAqnfI9JBgZFh2FWoQ1tnV/HCzi1nrsw/5xcM4Hyq9wsjtUBZVYlXWrzHhos98
- FHC99aEQ8ZprYBhSGhJGV6WuD9HIzFbbIx+2xsPs8lgThNEgd35vSvR0UwfkaTd0+bxq
- 9sYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
- bh=2zQlYc9U3hxiIn86A5QE2kEqLA+X+YH+JZD8cteagW8=;
- b=rN9N8oc/nLzb6JO1aUXSkLFmWbT69osNVWXBF6tHSfdyqR9UOfxcjmLA0V6fLchTaT
- 7a2aCbWlg4s3kVFXMJXa90IoM2Xl4iiE4b8de4aDxiln3/Ex3cUqjoIDWuxXkM1FSTRO
- 8Vwzfyy8yPMMks8ZtlBqb2KL8y+Nnu/RL3g8vWGccvoByhzcA3iGtLltlNIoXs3Npl7M
- 4x20ERSAnhQbIP/HItHXaKfxo2oIoWiC8M+OGO2SS3hTEfdRKTaDniCp9dpFdTsQFFQ5
- c5yIS9fl7VSq9EIGf4Rukttmuy1mkQXcUaxW5ZOP7a164dz6SS5w802nYWxh2OKnObH8
- 5UWA==
-X-Gm-Message-State: AJIora+lrvpEWHQESr6/gah4ETiz9dMwX8TAzD+eeOuGzcon5G2AqvRa
- zIaClluHdEBOJfFVXzQ3CTnBdMw3XFyc
-X-Google-Smtp-Source: AGRyM1tNS+g/vNh5/iHJY0oJdpY+ypTBmtMZDDMx1nXevSQ85XuXevbZFlKhTyDeX1hSIW57PP5R15KNfRy1
-X-Received: from big-boi.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:129])
- (user=qperret job=sendgmr) by 2002:a17:906:7790:b0:722:e6cf:126 with SMTP id
- s16-20020a170906779000b00722e6cf0126mr33544579ejm.244.1657031003645; Tue, 05
- Jul 2022 07:23:23 -0700 (PDT)
-Date: Tue,  5 Jul 2022 14:23:10 +0000
-Message-Id: <20220705142310.3847918-1-qperret@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.37.0.rc0.161.g10f37bed90-goog
-Subject: [PATCH] KVM: arm64: Don't return from void function
-From: Quentin Perret <qperret@google.com>
-To: Marc Zyngier <maz@kernel.org>, James Morse <james.morse@arm.com>, 
- Alexandru Elisei <alexandru.elisei@arm.com>,
- Suzuki K Poulose <suzuki.poulose@arm.com>, 
- Oliver Upton <oliver.upton@linux.dev>,
- Catalin Marinas <catalin.marinas@arm.com>, 
- Will Deacon <will@kernel.org>, linux-arm-kernel@lists.infradead.org, 
- kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org
-Cc: kernel-team@android.com
+ with ESMTP id nplJKHXku7+u for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  5 Jul 2022 12:57:26 -0400 (EDT)
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com
+ [199.106.114.39])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 860FC4BF97
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  5 Jul 2022 12:57:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+ t=1657040246; x=1688576246;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=gy7zdpSIRmyfnnx+9IyNxg2E2VUlmif7PnWPjxZ65OU=;
+ b=pGzEfJo0wcm6uhukDdamu6P38ySoUO8zwuDnPkv2wTn75PFrXzV8BJR1
+ gjKE5fK3L2vs3k3ov+lIzYufddsJnziFZQpXmYyIG9wJZOPRI9F5dBdZW
+ +ne22clXED32TPnSHHyunR/RjLSmkgOYRlLH8QYWYGbSI4eUq1cXxKyFr k=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+ by alexa-out-sd-02.qualcomm.com with ESMTP; 05 Jul 2022 09:57:25 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+ by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Jul 2022 09:57:25 -0700
+Received: from nalasex01b.na.qualcomm.com (10.47.209.197) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 5 Jul 2022 09:57:24 -0700
+Received: from debian-BULLSEYE-live-builder-AMD64 (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 5 Jul 2022 09:57:24 -0700
+Date: Tue, 5 Jul 2022 09:57:22 -0700
+From: Calvin Owens <quic_calvinow@quicinc.com>
+To: Alexandru Elisei <alexandru.elisei@arm.com>
+Subject: Re: [RFC PATCH v5 15/38] perf: arm_spe_pmu: Move struct arm_spe_pmu
+ to a separate header file
+Message-ID: <YsRtcvxyufSCoIE5@debian-BULLSEYE-live-builder-AMD64>
+References: <20211117153842.302159-1-alexandru.elisei@arm.com>
+ <20211117153842.302159-16-alexandru.elisei@arm.com>
+MIME-Version: 1.0
+Content-Disposition: inline
+In-Reply-To: <20211117153842.302159-16-alexandru.elisei@arm.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-Mailman-Approved-At: Wed, 06 Jul 2022 03:21:23 -0400
+Cc: maz@kernel.org, will@kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -93,48 +90,74 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Although harmless, the return statement in kvm_unexpected_el2_exception
-is rather confusing as the function itself has a void return type. The
-C standard is also pretty clear that "A return statement with an
-expression shall not appear in a function whose return type is void".
-Given that this return statement does not seem to add any actual value,
-let's not pointlessly violate the standard.
+Hi Alexandru,
 
-Build-tested with GCC 10 and CLANG 13 for good measure, the disassembled
-code is identical with or without the return statement.
+I've been taking a look at this series, it needs a little tweak to
+build successfully as a module which I've appended below.
 
-Fixes: e9ee186bb735 ("KVM: arm64: Add kvm_extable for vaxorcism code")
-Signed-off-by: Quentin Perret <qperret@google.com>
+Cheers,
+Calvin
+
+On Wed, Nov 17, 2021 at 03:38:19PM +0000, Alexandru Elisei wrote:
+> KVM will soon want to make use of struct arm_spe_pmu, move it to a separate
+> header where it will be easily accessible. This is a straightforward move
+> and functionality should not be impacted.
+>
+> CC: Will Deacon <will@kernel.org>
+> Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
+> ---
+
+<snip>
+
+> +++ b/include/linux/perf/arm_spe_pmu.h
+> @@ -0,0 +1,49 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Split from from drivers/perf/arm_spe_pmu.c.
+> + *
+> + *  Copyright (C) 2021 ARM Limited
+> + */
+> +
+> +#ifndef __ARM_SPE_PMU_H__
+> +#define __ARM_SPE_PMU_H__
+> +
+> +#include <linux/cpumask.h>
+> +#include <linux/perf_event.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/types.h>
+> +
+> +#ifdef CONFIG_ARM_SPE_PMU
+
+Here, we need to use the IS_ENABLED() macro for the ARM_SPE_PMU=m case.
+
+Signed-off-by: Calvin Owens <calvinow@qti.qualcomm.com>
 ---
- arch/arm64/kvm/hyp/nvhe/switch.c | 2 +-
- arch/arm64/kvm/hyp/vhe/switch.c  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ include/linux/perf/arm_spe_pmu.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/kvm/hyp/nvhe/switch.c b/arch/arm64/kvm/hyp/nvhe/switch.c
-index 6db801db8f27..925b34b7708d 100644
---- a/arch/arm64/kvm/hyp/nvhe/switch.c
-+++ b/arch/arm64/kvm/hyp/nvhe/switch.c
-@@ -386,5 +386,5 @@ asmlinkage void __noreturn hyp_panic_bad_stack(void)
+diff --git a/include/linux/perf/arm_spe_pmu.h b/include/linux/perf/arm_spe_pmu.h
+index 505a8867daad..b643e5e7a766 100644
+--- a/include/linux/perf/arm_spe_pmu.h
++++ b/include/linux/perf/arm_spe_pmu.h
+@@ -13,7 +13,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/types.h>
  
- asmlinkage void kvm_unexpected_el2_exception(void)
- {
--	return __kvm_unexpected_el2_exception();
-+	__kvm_unexpected_el2_exception();
- }
-diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
-index 969f20daf97a..390af1a6a9b4 100644
---- a/arch/arm64/kvm/hyp/vhe/switch.c
-+++ b/arch/arm64/kvm/hyp/vhe/switch.c
-@@ -249,5 +249,5 @@ void __noreturn hyp_panic(void)
+-#ifdef CONFIG_ARM_SPE_PMU
++#if IS_ENABLED(CONFIG_ARM_SPE_PMU)
  
- asmlinkage void kvm_unexpected_el2_exception(void)
- {
--	return __kvm_unexpected_el2_exception();
-+	__kvm_unexpected_el2_exception();
- }
+ struct arm_spe_pmu {
+ 	struct pmu				pmu;
+@@ -50,6 +50,6 @@ void kvm_host_spe_init(struct arm_spe_pmu *spe_pmu);
+ #define kvm_host_spe_init(x)	do { } while(0)
+ #endif
+ 
+-#endif /* CONFIG_ARM_SPE_PMU */
++#endif /* IS_ENABLED(CONFIG_ARM_SPE_PMU) */
+ 
+ #endif /* __ARM_SPE_PMU_H__ */
 -- 
-2.37.0.rc0.161.g10f37bed90-goog
-
+2.30.2
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
