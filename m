@@ -2,78 +2,85 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E78B567FB7
-	for <lists+kvmarm@lfdr.de>; Wed,  6 Jul 2022 09:21:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90CFE567F96
+	for <lists+kvmarm@lfdr.de>; Wed,  6 Jul 2022 09:12:50 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8DD8C4C077;
-	Wed,  6 Jul 2022 03:21:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A76F34C04B;
+	Wed,  6 Jul 2022 03:12:49 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -1.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@quicinc.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zEQXKnnSg3qX; Wed,  6 Jul 2022 03:21:26 -0400 (EDT)
+	with ESMTP id MMvuEXTA9yQF; Wed,  6 Jul 2022 03:12:49 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 17F304C06F;
-	Wed,  6 Jul 2022 03:21:24 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 78ACE4C03C;
+	Wed,  6 Jul 2022 03:12:48 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C69804BFA5
- for <kvmarm@lists.cs.columbia.edu>; Tue,  5 Jul 2022 12:57:27 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4B1B44BFA5
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jul 2022 03:12:47 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id nplJKHXku7+u for <kvmarm@lists.cs.columbia.edu>;
- Tue,  5 Jul 2022 12:57:26 -0400 (EDT)
-Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com
- [199.106.114.39])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 860FC4BF97
- for <kvmarm@lists.cs.columbia.edu>; Tue,  5 Jul 2022 12:57:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
- t=1657040246; x=1688576246;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=gy7zdpSIRmyfnnx+9IyNxg2E2VUlmif7PnWPjxZ65OU=;
- b=pGzEfJo0wcm6uhukDdamu6P38ySoUO8zwuDnPkv2wTn75PFrXzV8BJR1
- gjKE5fK3L2vs3k3ov+lIzYufddsJnziFZQpXmYyIG9wJZOPRI9F5dBdZW
- +ne22clXED32TPnSHHyunR/RjLSmkgOYRlLH8QYWYGbSI4eUq1cXxKyFr k=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
- by alexa-out-sd-02.qualcomm.com with ESMTP; 05 Jul 2022 09:57:25 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
- by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Jul 2022 09:57:25 -0700
-Received: from nalasex01b.na.qualcomm.com (10.47.209.197) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 5 Jul 2022 09:57:24 -0700
-Received: from debian-BULLSEYE-live-builder-AMD64 (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Tue, 5 Jul 2022 09:57:24 -0700
-Date: Tue, 5 Jul 2022 09:57:22 -0700
-From: Calvin Owens <quic_calvinow@quicinc.com>
-To: Alexandru Elisei <alexandru.elisei@arm.com>
-Subject: Re: [RFC PATCH v5 15/38] perf: arm_spe_pmu: Move struct arm_spe_pmu
- to a separate header file
-Message-ID: <YsRtcvxyufSCoIE5@debian-BULLSEYE-live-builder-AMD64>
-References: <20211117153842.302159-1-alexandru.elisei@arm.com>
- <20211117153842.302159-16-alexandru.elisei@arm.com>
-MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20211117153842.302159-16-alexandru.elisei@arm.com>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-Mailman-Approved-At: Wed, 06 Jul 2022 03:21:23 -0400
-Cc: maz@kernel.org, will@kernel.org, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+ with ESMTP id bfqgHCAQCQuO for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  6 Jul 2022 03:12:45 -0400 (EDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id DCF7B4BF9E
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jul 2022 03:12:45 -0400 (EDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id A10DF61DB6;
+ Wed,  6 Jul 2022 07:12:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0252FC3411C;
+ Wed,  6 Jul 2022 07:12:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1657091564;
+ bh=MKCelLRGo19jxP5YyzzSs6MDJt/u2Z/VZUjRwVgwoe4=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=axxVzqO41y4qRoNIUf/mTmfLsicFzHjqLDXncKogvoPMRQOzBYkmYW6mvLSrOsYVQ
+ QpHD9X6+hn5uJgzWaaLyDlkpZvF2gB6Z8QZoDTluWRvlDgv3VeKf/Bgc6fj2DgS9Vp
+ MaoQHhsRQD242OMsoADmgvJdgLDahqMLL0vwjXNbLCCT7DednMdlaXJFSBa4oooAjq
+ YhLEGBZkY6NRdctft1uUNxWvaRkbPMhp/tLzUFpaYqbYo4AeVlM+ESdtYcSIJWsHS3
+ cJCs2ABe9cqlS9ARTJgs+ZOY9Pe7HREj3vElhi5+i/q8KdyYcG6Fmqk4zexqU+yRkg
+ IgmvUPuQ/B2EQ==
+Received: from ip-185-104-136-29.ptr.icomera.net ([185.104.136.29]
+ helo=wait-a-minute.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1o8zDF-005YP1-Pa;
+ Wed, 06 Jul 2022 08:12:41 +0100
+Date: Wed, 06 Jul 2022 08:11:46 +0100
+Message-ID: <87edyyn2a5.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Schspa Shi <schspa@gmail.com>
+Subject: Re: [PATCH] KVM: arm64: Fix 64 bit mmio handle
+In-Reply-To: <m2h740zz1i.fsf@gmail.com>
+References: <20220630161220.53449-1-schspa@gmail.com>
+ <87mtdu15ok.wl-maz@kernel.org> <m2bkua148a.fsf@gmail.com>
+ <a5ca4db3db9ef101258cab94d6b7e045@kernel.org>
+ <m2sfnlvwup.fsf@gmail.com> <87letd0wqm.wl-maz@kernel.org>
+ <m2h740zz1i.fsf@gmail.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 185.104.136.29
+X-SA-Exim-Rcpt-To: schspa@gmail.com, james.morse@arm.com,
+ alexandru.elisei@arm.com, suzuki.poulose@arm.com, catalin.marinas@arm.com,
+ will@kernel.org, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: will@kernel.org, catalin.marinas@arm.com, linux-kernel@vger.kernel.org,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -90,74 +97,68 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Alexandru,
+On Fri, 01 Jul 2022 15:22:51 +0100,
+Schspa Shi <schspa@gmail.com> wrote:
+> 
+> 
+> Marc Zyngier <maz@kernel.org> writes:
+> 
+> >> 
+> >> I have running some static code analysis software upon Kernel code.
+> >> Seeing there is possible overflow.
+> >> 
+> >> maks << 1U << ((len * 8) -1);
+> >> 
+> >> The AI don't know, len is only the value of 1, 2, 4, and make this
+> >> a warnings
+> >> 
+> >> I tring to analysis this, but didn't realize the real scenario of
+> >> sign extension, and finally sent this problematic patch.
+> >> 
+> >> I do see some uninitialized memory reads (the values are not used
+> >> in the end, just as temporary space for API execution),
+> >> do we need to fix these?
+> > 
+> > You need to be more descriptive here. What uninitialised reads? In
+> > general, pointing at the code and providing a full description of
+> > what
+> > you think is incorrect would really help...
+> > 
+> > 	M.
+> One example is
+> int vgic_v3_has_attr_regs(struct kvm_device *dev, struct
+> kvm_device_attr *attr)
+> {
+> 	...
+>    case KVM_DEV_ARM_VGIC_GRP_CPU_SYSREGS: {
+> 		u64 reg, id;
+> 
+> 		id = (attr->attr & KVM_DEV_ARM_VGIC_SYSREG_INSTR_MASK);
+> 		return vgic_v3_has_cpu_sysregs_attr(vcpu, 0, id, &reg);
+> 	}
+> 
+> }
+> 
+> The funcion vgic_v3_has_cpu_sysregs_attr will read reg's value to
+> params without initialization. There should have no problems,
+> because the register value never used.
 
-I've been taking a look at this series, it needs a little tweak to
-build successfully as a module which I've appended below.
+Thanks for pointing this out.
 
-Cheers,
-Calvin
+I spent some time looking at this, and this is only the tip of the
+iceberg. The whole userspace interaction with the GIC sysregs is ugly
+(at best), and needs some love.
 
-On Wed, Nov 17, 2021 at 03:38:19PM +0000, Alexandru Elisei wrote:
-> KVM will soon want to make use of struct arm_spe_pmu, move it to a separate
-> header where it will be easily accessible. This is a straightforward move
-> and functionality should not be impacted.
->
-> CC: Will Deacon <will@kernel.org>
-> Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
-> ---
+I've written a small series[1] cleaning things up, which needs testing
+(I've just checked that it was compiling correctly). I'd appreciate
+you running your tool on it.
 
-<snip>
+	M.
 
-> +++ b/include/linux/perf/arm_spe_pmu.h
-> @@ -0,0 +1,49 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Split from from drivers/perf/arm_spe_pmu.c.
-> + *
-> + *  Copyright (C) 2021 ARM Limited
-> + */
-> +
-> +#ifndef __ARM_SPE_PMU_H__
-> +#define __ARM_SPE_PMU_H__
-> +
-> +#include <linux/cpumask.h>
-> +#include <linux/perf_event.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/types.h>
-> +
-> +#ifdef CONFIG_ARM_SPE_PMU
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git/log/?h=kvm-arm64/sysreg-cleanup-5.20
 
-Here, we need to use the IS_ENABLED() macro for the ARM_SPE_PMU=m case.
-
-Signed-off-by: Calvin Owens <calvinow@qti.qualcomm.com>
----
- include/linux/perf/arm_spe_pmu.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/include/linux/perf/arm_spe_pmu.h b/include/linux/perf/arm_spe_pmu.h
-index 505a8867daad..b643e5e7a766 100644
---- a/include/linux/perf/arm_spe_pmu.h
-+++ b/include/linux/perf/arm_spe_pmu.h
-@@ -13,7 +13,7 @@
- #include <linux/platform_device.h>
- #include <linux/types.h>
- 
--#ifdef CONFIG_ARM_SPE_PMU
-+#if IS_ENABLED(CONFIG_ARM_SPE_PMU)
- 
- struct arm_spe_pmu {
- 	struct pmu				pmu;
-@@ -50,6 +50,6 @@ void kvm_host_spe_init(struct arm_spe_pmu *spe_pmu);
- #define kvm_host_spe_init(x)	do { } while(0)
- #endif
- 
--#endif /* CONFIG_ARM_SPE_PMU */
-+#endif /* IS_ENABLED(CONFIG_ARM_SPE_PMU) */
- 
- #endif /* __ARM_SPE_PMU_H__ */
 -- 
-2.30.2
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
