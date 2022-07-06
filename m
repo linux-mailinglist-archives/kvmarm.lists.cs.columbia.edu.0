@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 90CFE567F96
-	for <lists+kvmarm@lfdr.de>; Wed,  6 Jul 2022 09:12:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F56156824A
+	for <lists+kvmarm@lfdr.de>; Wed,  6 Jul 2022 11:01:13 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A76F34C04B;
-	Wed,  6 Jul 2022 03:12:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 173DC4C034;
+	Wed,  6 Jul 2022 05:01:12 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
@@ -15,72 +15,71 @@ X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
 	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, body has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id MMvuEXTA9yQF; Wed,  6 Jul 2022 03:12:49 -0400 (EDT)
+	with ESMTP id iA9-fQBImoi6; Wed,  6 Jul 2022 05:01:11 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 78ACE4C03C;
-	Wed,  6 Jul 2022 03:12:48 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AF2E04BFFE;
+	Wed,  6 Jul 2022 05:01:10 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4B1B44BFA5
- for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jul 2022 03:12:47 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2921C4BF44
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jul 2022 05:01:09 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id bfqgHCAQCQuO for <kvmarm@lists.cs.columbia.edu>;
- Wed,  6 Jul 2022 03:12:45 -0400 (EDT)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id DCF7B4BF9E
- for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jul 2022 03:12:45 -0400 (EDT)
+ with ESMTP id YmIsFZO4zl3V for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  6 Jul 2022 05:01:07 -0400 (EDT)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BFCA14BEE0
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jul 2022 05:01:07 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id A10DF61DB6;
- Wed,  6 Jul 2022 07:12:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0252FC3411C;
- Wed,  6 Jul 2022 07:12:43 +0000 (UTC)
+ by ams.source.kernel.org (Postfix) with ESMTPS id 4BC07B81B31;
+ Wed,  6 Jul 2022 09:01:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF1BAC3411C;
+ Wed,  6 Jul 2022 09:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1657091564;
- bh=MKCelLRGo19jxP5YyzzSs6MDJt/u2Z/VZUjRwVgwoe4=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=axxVzqO41y4qRoNIUf/mTmfLsicFzHjqLDXncKogvoPMRQOzBYkmYW6mvLSrOsYVQ
- QpHD9X6+hn5uJgzWaaLyDlkpZvF2gB6Z8QZoDTluWRvlDgv3VeKf/Bgc6fj2DgS9Vp
- MaoQHhsRQD242OMsoADmgvJdgLDahqMLL0vwjXNbLCCT7DednMdlaXJFSBa4oooAjq
- YhLEGBZkY6NRdctft1uUNxWvaRkbPMhp/tLzUFpaYqbYo4AeVlM+ESdtYcSIJWsHS3
- cJCs2ABe9cqlS9ARTJgs+ZOY9Pe7HREj3vElhi5+i/q8KdyYcG6Fmqk4zexqU+yRkg
- IgmvUPuQ/B2EQ==
-Received: from ip-185-104-136-29.ptr.icomera.net ([185.104.136.29]
- helo=wait-a-minute.misterjones.org)
+ s=k20201202; t=1657098065;
+ bh=O5vfaJOmY630S2iHMOlIuDMP+z2m4nLFH7uCskj1on4=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=CzA8UfW/I+II685vuTyCAKfooW2Cq099Oh1HZOkqOQtkLW5tIQNnLHzw9Xy+z1S4A
+ nEDOXvzmB4BcQBa3PNv6R7C/jUK7LnT5SvnhQMwHlLmq1A+IFgupp1qOdk1rc99mPu
+ bekuL/Qsqg0lGPbKd2oRufOtJfOfaqeQAor6WXg6qwd8/YunGN+B10LuDcI+0+hn7J
+ XkMsgBeI6gN5RRiQGpdN3vZVCDL/EZVxMPWhcoEbVFKDiTEz6h7M2TdT6WHFP9jvO4
+ Y5LewcW69v7JmWmEl8lDvsD7ltOSnTtol7pTtsjR3TI8UdqUxIKpzQ+2/uTdUyp0V8
+ Xw4XxwiSjVz1g==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=valley-girl.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
- (envelope-from <maz@kernel.org>) id 1o8zDF-005YP1-Pa;
- Wed, 06 Jul 2022 08:12:41 +0100
-Date: Wed, 06 Jul 2022 08:11:46 +0100
-Message-ID: <87edyyn2a5.wl-maz@kernel.org>
+ (envelope-from <maz@kernel.org>) id 1o90u6-005Zti-TJ;
+ Wed, 06 Jul 2022 10:01:02 +0100
 From: Marc Zyngier <maz@kernel.org>
-To: Schspa Shi <schspa@gmail.com>
-Subject: Re: [PATCH] KVM: arm64: Fix 64 bit mmio handle
-In-Reply-To: <m2h740zz1i.fsf@gmail.com>
-References: <20220630161220.53449-1-schspa@gmail.com>
- <87mtdu15ok.wl-maz@kernel.org> <m2bkua148a.fsf@gmail.com>
- <a5ca4db3db9ef101258cab94d6b7e045@kernel.org>
- <m2sfnlvwup.fsf@gmail.com> <87letd0wqm.wl-maz@kernel.org>
- <m2h740zz1i.fsf@gmail.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
- (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-X-SA-Exim-Connect-IP: 185.104.136.29
-X-SA-Exim-Rcpt-To: schspa@gmail.com, james.morse@arm.com,
- alexandru.elisei@arm.com, suzuki.poulose@arm.com, catalin.marinas@arm.com,
- will@kernel.org, linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, linux-kernel@vger.kernel.org
+To: kvmarm@lists.cs.columbia.edu, Will Deacon <will@kernel.org>,
+ Alexandru Elisei <alexandru.elisei@arm.com>,
+ Oliver Upton <oliver.upton@linux.dev>,
+ linux-arm-kernel@lists.infradead.org,
+ Catalin Marinas <catalin.marinas@arm.com>, linux-kernel@vger.kernel.org,
+ Quentin Perret <qperret@google.com>, James Morse <james.morse@arm.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>
+Subject: Re: [PATCH] KVM: arm64: Don't return from void function
+Date: Wed,  6 Jul 2022 10:00:58 +0100
+Message-Id: <165709805020.885966.4815879973915586287.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220705142310.3847918-1-qperret@google.com>
+References: <20220705142310.3847918-1-qperret@google.com>
+MIME-Version: 1.0
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, will@kernel.org,
+ alexandru.elisei@arm.com, oliver.upton@linux.dev,
+ linux-arm-kernel@lists.infradead.org, catalin.marinas@arm.com,
+ linux-kernel@vger.kernel.org, qperret@google.com, james.morse@arm.com,
+ suzuki.poulose@arm.com, kernel-team@android.com
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
-Cc: will@kernel.org, catalin.marinas@arm.com, linux-kernel@vger.kernel.org,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Cc: kernel-team@android.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -97,68 +96,27 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, 01 Jul 2022 15:22:51 +0100,
-Schspa Shi <schspa@gmail.com> wrote:
+On Tue, 5 Jul 2022 14:23:10 +0000, Quentin Perret wrote:
+> Although harmless, the return statement in kvm_unexpected_el2_exception
+> is rather confusing as the function itself has a void return type. The
+> C standard is also pretty clear that "A return statement with an
+> expression shall not appear in a function whose return type is void".
+> Given that this return statement does not seem to add any actual value,
+> let's not pointlessly violate the standard.
 > 
-> 
-> Marc Zyngier <maz@kernel.org> writes:
-> 
-> >> 
-> >> I have running some static code analysis software upon Kernel code.
-> >> Seeing there is possible overflow.
-> >> 
-> >> maks << 1U << ((len * 8) -1);
-> >> 
-> >> The AI don't know, len is only the value of 1, 2, 4, and make this
-> >> a warnings
-> >> 
-> >> I tring to analysis this, but didn't realize the real scenario of
-> >> sign extension, and finally sent this problematic patch.
-> >> 
-> >> I do see some uninitialized memory reads (the values are not used
-> >> in the end, just as temporary space for API execution),
-> >> do we need to fix these?
-> > 
-> > You need to be more descriptive here. What uninitialised reads? In
-> > general, pointing at the code and providing a full description of
-> > what
-> > you think is incorrect would really help...
-> > 
-> > 	M.
-> One example is
-> int vgic_v3_has_attr_regs(struct kvm_device *dev, struct
-> kvm_device_attr *attr)
-> {
-> 	...
->    case KVM_DEV_ARM_VGIC_GRP_CPU_SYSREGS: {
-> 		u64 reg, id;
-> 
-> 		id = (attr->attr & KVM_DEV_ARM_VGIC_SYSREG_INSTR_MASK);
-> 		return vgic_v3_has_cpu_sysregs_attr(vcpu, 0, id, &reg);
-> 	}
-> 
-> }
-> 
-> The funcion vgic_v3_has_cpu_sysregs_attr will read reg's value to
-> params without initialization. There should have no problems,
-> because the register value never used.
+> [...]
 
-Thanks for pointing this out.
+Applied to kvm-arm64/misc-5.20, thanks!
 
-I spent some time looking at this, and this is only the tip of the
-iceberg. The whole userspace interaction with the GIC sysregs is ugly
-(at best), and needs some love.
+[1/1] KVM: arm64: Don't return from void function
+      commit: 1c3ace2b8b3995d3213c5e2d2aca01a0577a3b0f
 
-I've written a small series[1] cleaning things up, which needs testing
-(I've just checked that it was compiling correctly). I'd appreciate
-you running your tool on it.
+Cheers,
 
 	M.
-
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git/log/?h=kvm-arm64/sysreg-cleanup-5.20
-
 -- 
-Without deviation from the norm, progress is not possible.
+Marc Zyngier <maz@kernel.org>
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
