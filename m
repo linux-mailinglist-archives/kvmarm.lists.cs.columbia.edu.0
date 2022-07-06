@@ -2,79 +2,87 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 674D456903B
-	for <lists+kvmarm@lfdr.de>; Wed,  6 Jul 2022 19:05:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34BD156927F
+	for <lists+kvmarm@lfdr.de>; Wed,  6 Jul 2022 21:17:41 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 133ED4BEEE;
-	Wed,  6 Jul 2022 13:05:38 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3EE7B4BEAE;
+	Wed,  6 Jul 2022 15:17:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	RCVD_IN_DNSWL_NONE=-0.0001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WjrKZUg3vu9U; Wed,  6 Jul 2022 13:05:37 -0400 (EDT)
+	with ESMTP id sToEzJBhd4od; Wed,  6 Jul 2022 15:17:40 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0721C4BEAE;
-	Wed,  6 Jul 2022 13:05:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D2F374BE9F;
+	Wed,  6 Jul 2022 15:17:38 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2E6114BE4E
- for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jul 2022 13:05:35 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CA6AC4BE4A
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jul 2022 15:17:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id QeAIExL5Tp0f for <kvmarm@lists.cs.columbia.edu>;
- Wed,  6 Jul 2022 13:05:34 -0400 (EDT)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id F40E94BEAC
- for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jul 2022 13:05:33 -0400 (EDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 081AFB81DA3;
- Wed,  6 Jul 2022 17:05:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2827C341C8;
- Wed,  6 Jul 2022 17:05:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1657127131;
- bh=Eo9E4Nefyu/Kf+UJWebrylD0pKTMwvYjQaj9htsyQe8=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=hRmbHljJgJEVO+HqXEZGu487VsQfX7AGbih8FpxCRrSwrg7J7LdtqXQ12Nj6Bqn5B
- JAgziUhqyGutnTWVUmiO3iabG2VYhs/thU4Y5c2/ygtMPxCLszjYUtuCOc023yyE9W
- uExYCn0F293j4jmXKO6y1GtqOG7IJ8gGC+VDvmRjNbYAOUwwvy6YA4OBURZ9KFDaah
- A6sBEJjjORU6+FdQUnv6IQTNHhokEvC7whp/NN7wZIXO8mtCt6TrmcZZEHZsTKm0Nq
- l6b4HDvElmb9IxjZ2HVCQaKBVhvq5W3dBMFDHafYpg3OnPlr4W3nluL7yG9BxtOBAt
- alINKA+9NKIOw==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
- (envelope-from <maz@kernel.org>) id 1o987O-005h9i-Oa;
- Wed, 06 Jul 2022 17:43:14 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 19/19] KVM: arm64: Get rid or outdated comments
-Date: Wed,  6 Jul 2022 17:43:04 +0100
-Message-Id: <20220706164304.1582687-20-maz@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220706164304.1582687-1-maz@kernel.org>
-References: <20220706164304.1582687-1-maz@kernel.org>
+ with ESMTP id zhnTwIMYxVMy for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  6 Jul 2022 15:17:35 -0400 (EDT)
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com
+ [209.85.214.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 56E9B4BE3B
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jul 2022 15:17:35 -0400 (EDT)
+Received: by mail-pl1-f172.google.com with SMTP id 5so8548068plk.9
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 06 Jul 2022 12:17:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=ZjEGOm6kee36npEJu+b6kQDUwPzHaM9d3/gdsO10A3o=;
+ b=JBmKOjwv6JurVrCp1jbxVixSqXLF0Sb1dFg8JNOdJ+fwNcPBzQlQn3tn4npjxXVIAV
+ SMXfrIYC1s7mVn2dvjhB0eIRyJFsLPDfTeECp8Xoz9OOif2Tbx6LEY3/uV80I/w2EUfp
+ 2PymuDBaHeeyOy65/N0JZu+CiLRMYUtd4Sv9WWbw3CeYIDJwm2kJS68xyNtkvt0wBEJV
+ vbNNi60hCxI9Sc5sH3Wo2sGB4T2Rdw9dv/k+tl95h8UctppFSCBE4DP1IFA/qJ7WWw8W
+ ASrzo6LZ49VRz1A3Vlp+dUXvviM466LA8jFo5XqC13HA8mIP7rD0HR1kq5kwUmKgaAaT
+ AwaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=ZjEGOm6kee36npEJu+b6kQDUwPzHaM9d3/gdsO10A3o=;
+ b=xMyaBA1O7xfySZmIRGBlH3uMbfrZErXDfOwWXWa6Z2ZoKvQ0Zw/aLK236KWDvd2i67
+ 6p7jKo5TgMdljajOclzwCWOoxNjPJ8tgSiRpYME5kZs0CX+Kkyr/MBNqqmuhTZt5LxvR
+ sdDPW185WtWMfWQBn9jzTplnLjI/XG3GLJ9ShQRyKfmQh+A3+57sVOEdxo9i37BfLvbb
+ 6Q6WzSbBh8w9KJUgoWDiOMz/4SsfuXXtFBzXYFZKgohSLcin3vkoAxWZAa2ykKgRjLTK
+ VPgCxpVQJJHSqXxhFfeC5+E8hEEp24Jiy3R1lUK9ZsKKL3Dx5OfpIqJLm0ffJ+qre1nO
+ 2B3w==
+X-Gm-Message-State: AJIora/6cvpWNq+VA7ecNQaws24FVncpeN002QRksJT1GziVuApe0s+q
+ SjBsHrNKuGU3SA2hYSUCOFKMPg==
+X-Google-Smtp-Source: AGRyM1vOOz2sO95rdkMXCWcipyRGk4AXIxqT4D+nvbdPOQ8Tgsc6ZH6eLd494oQu0sAcs8gpAmxTDg==
+X-Received: by 2002:a17:902:d292:b0:16b:e6a4:5768 with SMTP id
+ t18-20020a170902d29200b0016be6a45768mr16270752plc.128.1657135054004; 
+ Wed, 06 Jul 2022 12:17:34 -0700 (PDT)
+Received: from google.com (123.65.230.35.bc.googleusercontent.com.
+ [35.230.65.123]) by smtp.gmail.com with ESMTPSA id
+ mz5-20020a17090b378500b001ef88c30fbbsm7163752pjb.49.2022.07.06.12.17.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Jul 2022 12:17:33 -0700 (PDT)
+Date: Wed, 6 Jul 2022 19:17:29 +0000
+From: Sean Christopherson <seanjc@google.com>
+To: Will Deacon <will@kernel.org>
+Subject: Re: [PATCH v2 00/24] KVM: arm64: Introduce pKVM shadow state at EL2
+Message-ID: <YsXfyVp6sg5XRVAp@google.com>
+References: <20220630135747.26983-1-will@kernel.org>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, james.morse@arm.com,
- suzuki.poulose@arm.com, alexandru.elisei@arm.com, oliver.upton@linux.dev,
- schspa@gmail.com, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: Schspa Shi <schspa@gmail.com>, kernel-team@android.com,
- Oliver Upton <oliver.upton@linux.dev>
+Content-Disposition: inline
+In-Reply-To: <20220630135747.26983-1-will@kernel.org>
+Cc: Marc Zyngier <maz@kernel.org>, kernel-team@android.com, kvm@vger.kernel.org,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ Oliver Upton <oliver.upton@linux.dev>, Andy Lutomirski <luto@amacapital.net>,
+ linux-arm-kernel@lists.infradead.org, Michael Roth <michael.roth@amd.com>,
+ Chao Peng <chao.p.peng@linux.intel.com>, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -91,36 +99,77 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Once apon a time, the 32bit KVM/arm port was the reference, while
-the arm64 version was the new kid on the block, without a clear
-future... This was a long time ago.
+On Thu, Jun 30, 2022, Will Deacon wrote:
+> Hi everyone,
+> 
+> This series has been extracted from the pKVM base support series (aka
+> "pKVM mega-patch") previously posted here:
+> 
+>   https://lore.kernel.org/kvmarm/20220519134204.5379-1-will@kernel.org/
+> 
+> Unlike that more comprehensive series, this one is fairly fundamental
+> and does not introduce any new ABI commitments, leaving questions
+> involving the management of guest private memory and the creation of
+> protected VMs for future work. Instead, this series extends the pKVM EL2
+> code so that it can dynamically instantiate and manage VM shadow
+> structures without the host being able to access them directly. These
+> shadow structures consist of a shadow VM, a set of shadow vCPUs and the
+> stage-2 page-table and the pages used to hold them are returned to the
+> host when the VM is destroyed.
+> 
+> The last patch is marked as RFC because, although it plumbs in the
+> shadow state, it is woefully inefficient and copies to/from the host
+> state on every vCPU run. Without the last patch, the new structures are
+> unused but we move considerably closer to isolating guests from the
+> host.
 
-"The times, they are a-changing."
+...
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/kvm/sys_regs.c | 5 -----
- 1 file changed, 5 deletions(-)
+>  arch/arm64/include/asm/kvm_asm.h              |   6 +-
+>  arch/arm64/include/asm/kvm_host.h             |  65 +++
+>  arch/arm64/include/asm/kvm_hyp.h              |   3 +
+>  arch/arm64/include/asm/kvm_pgtable.h          |   8 +
+>  arch/arm64/include/asm/kvm_pkvm.h             |  38 ++
+>  arch/arm64/kernel/image-vars.h                |  15 -
+>  arch/arm64/kvm/arm.c                          |  40 +-
+>  arch/arm64/kvm/hyp/hyp-constants.c            |   3 +
+>  arch/arm64/kvm/hyp/include/nvhe/gfp.h         |   6 +-
+>  arch/arm64/kvm/hyp/include/nvhe/mem_protect.h |  19 +-
+>  arch/arm64/kvm/hyp/include/nvhe/memory.h      |  26 +-
+>  arch/arm64/kvm/hyp/include/nvhe/mm.h          |  18 +-
+>  arch/arm64/kvm/hyp/include/nvhe/pkvm.h        |  70 +++
+>  arch/arm64/kvm/hyp/include/nvhe/spinlock.h    |  10 +-
+>  arch/arm64/kvm/hyp/nvhe/cache.S               |  11 +
+>  arch/arm64/kvm/hyp/nvhe/hyp-main.c            | 105 +++-
+>  arch/arm64/kvm/hyp/nvhe/hyp-smp.c             |   2 +
+>  arch/arm64/kvm/hyp/nvhe/mem_protect.c         | 456 +++++++++++++++++-
+>  arch/arm64/kvm/hyp/nvhe/mm.c                  | 136 +++++-
+>  arch/arm64/kvm/hyp/nvhe/page_alloc.c          |  42 +-
+>  arch/arm64/kvm/hyp/nvhe/pkvm.c                | 438 +++++++++++++++++
+>  arch/arm64/kvm/hyp/nvhe/setup.c               |  96 ++--
+>  arch/arm64/kvm/hyp/pgtable.c                  |   9 +
+>  arch/arm64/kvm/mmu.c                          |  26 +
+>  arch/arm64/kvm/pkvm.c                         | 121 ++++-
+>  25 files changed, 1625 insertions(+), 144 deletions(-)
+>  create mode 100644 arch/arm64/kvm/hyp/include/nvhe/pkvm.h
 
-diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index d3ac0cd1c2e2..8dc93d372d4f 100644
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -34,11 +34,6 @@
- #include "trace.h"
- 
- /*
-- * All of this file is extremely similar to the ARM coproc.c, but the
-- * types are different. My gut feeling is that it should be pretty
-- * easy to merge, but that would be an ABI breakage -- again. VFP
-- * would also need to be abstracted.
-- *
-  * For AArch32, we only take care of what is being trapped. Anything
-  * that has to do with init and userspace access has to go via the
-  * 64bit interface.
--- 
-2.34.1
+The lack of documentation and the rather terse changelogs make this really hard
+to review for folks that aren't intimately familiar with pKVM.  I have a decent
+idea of the end goal of "shadowing", but that's mostly because of my involvement in
+similar x86 projects.  Nothing in the changelogs ever explains _why_ pKVM uses
+shadows.
 
+I put "shadowing" in quotes because if the unstrusted host is aware that the VM
+and vCPU it is manipulating aren't the "real" VMs/vCPUs, and there is an explicit API
+between the untrusted host and pKVM for creating/destroying VMs/vCPUs, then I would
+argue that it's not truly shadowing, especially if pKVM uses data/values verbatim
+and only verifies correctness/safety.  It's definitely a nit, but for future readers
+I think overloading "shadowing" could be confusing.
+
+And beyond the basics, IMO pKVM needs a more formal definition of exactly what
+guest state is protected/hidden from the untrusted host.  Peeking at the mega series,
+there are a huge pile of patches that result in "gradual reduction of EL2 trust in
+host data", but I couldn't any documentation that defines what that end result is.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
