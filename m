@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 37B85569037
-	for <lists+kvmarm@lfdr.de>; Wed,  6 Jul 2022 19:05:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FCB7569034
+	for <lists+kvmarm@lfdr.de>; Wed,  6 Jul 2022 19:05:23 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B99914BEA1;
-	Wed,  6 Jul 2022 13:05:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6C9134BEAE;
+	Wed,  6 Jul 2022 13:05:22 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
@@ -18,49 +18,49 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QSKw4WdOq-F8; Wed,  6 Jul 2022 13:05:26 -0400 (EDT)
+	with ESMTP id oxMdQEUf4+58; Wed,  6 Jul 2022 13:05:21 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A5B264BE5B;
-	Wed,  6 Jul 2022 13:05:25 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 415A94BEAC;
+	Wed,  6 Jul 2022 13:05:21 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 000144BEA0
- for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jul 2022 13:05:23 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2C5194BE4E
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jul 2022 13:05:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 75q2yin13H0S for <kvmarm@lists.cs.columbia.edu>;
- Wed,  6 Jul 2022 13:05:22 -0400 (EDT)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id DDCB04BEA1
- for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jul 2022 13:05:22 -0400 (EDT)
+ with ESMTP id iUcuSKHo+cgo for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  6 Jul 2022 13:05:19 -0400 (EDT)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D15EF4BC9D
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  6 Jul 2022 13:05:18 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 699A561E7C;
- Wed,  6 Jul 2022 17:05:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9FC3C3411C;
- Wed,  6 Jul 2022 17:05:21 +0000 (UTC)
+ by ams.source.kernel.org (Postfix) with ESMTPS id 0FFB8B81DA3;
+ Wed,  6 Jul 2022 17:05:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6824C3411C;
+ Wed,  6 Jul 2022 17:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1657127121;
- bh=R/yEgMh7z7fdGbMO2kbb8mcFadwBI9nk3leyMdDelqg=;
+ s=k20201202; t=1657127115;
+ bh=zgRDna+JT0ihS8l+P7EzSsz4c34XT3kVcOWf0LX/Eeo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=eQsuGml4GQTZh7nxo9xQMXq7Jv8QdaLqKs//hUvgy3fMd1BFNKaHnLwmQZMskqroO
- ijNPvAaYPGWjgrdgQU2bcHzIdIZalWxLTRr+/beo9/OY/7x9xXSYCDmXOo1tPGJtQt
- 2Fr/h+3NX3AteS28s/XGaS2csfZeBDniE8WksYZGSbe1PNLXBBl3Mt2iIdfhg2l43F
- UCLkgJkahmD8m+15A8h5wJrartCfZl+pEhIct/WytBT/jWCgmOq5mpMhje08V+AJzR
- LTCDJBCbOPwUPHIQ31Ua096wAy4F1X9c6+x3kVMHxR2/XUWVm5Yznq+435FdbEgiyb
- GU4E/9R7EyaVQ==
+ b=NI7Hefb8YGq5b0z46Lkj86OubKFbgqJ5jZd2SEMdcxMFBNkuxU75htUasnJ4fs9cK
+ qsir9nsJNF3M7vy5HMUlYXyt9pE7kg7+RzERmGYAbMLt48JbWavvo9ncMbK/FVIsNB
+ w00puHzjK5r3O8xsFmUaF3krpPOvsQ6aFqpU5OVz2rqeoh0EICKAelK1EBfWVVRSt3
+ FSVIMkOhHJHgPGhsxubXXiLPDt0uvD+YQFpzlII/v384VCE0W8CEZxF9YlUK8SzTfx
+ 4Rs/3e9sxzhH41As3QfpO+UTqnzsSTP3TCsco2DZa9pcg6LSR0GtupIXNSyeumzigh
+ +v9KgseeiYHpw==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
- (envelope-from <maz@kernel.org>) id 1o987O-005h9i-CS;
+ (envelope-from <maz@kernel.org>) id 1o987O-005h9i-IM;
  Wed, 06 Jul 2022 17:43:14 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 17/19] KVM: arm64: Get rid of find_reg_by_id()
-Date: Wed,  6 Jul 2022 17:43:02 +0100
-Message-Id: <20220706164304.1582687-18-maz@kernel.org>
+Subject: [PATCH 18/19] KVM: arm64: Descope kvm_arm_sys_reg_{get,set}_reg()
+Date: Wed,  6 Jul 2022 17:43:03 +0100
+Message-Id: <20220706164304.1582687-19-maz@kernel.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220706164304.1582687-1-maz@kernel.org>
 References: <20220706164304.1582687-1-maz@kernel.org>
@@ -91,52 +91,50 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-This helper doesn't have a user anymore, let's get rid of it.
+Having kvm_arm_sys_reg_get_reg and co in kvm_host.h gives the
+impression that these functions are free to be called from
+anywhere.
+
+Not quite. They really are tied to out internal sysreg handling,
+and they would be better off in the sys_regs.h header, which is
+private. kvm_host.h could also get a bit of a diet, so let's
+just do that.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/sys_regs.c | 11 -----------
- arch/arm64/kvm/sys_regs.h |  5 -----
- 2 files changed, 16 deletions(-)
+ arch/arm64/include/asm/kvm_host.h | 2 --
+ arch/arm64/kvm/sys_regs.h         | 3 ++-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index b66be9df7a02..d3ac0cd1c2e2 100644
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -2577,17 +2577,6 @@ static bool index_to_params(u64 id, struct sys_reg_params *params)
- 	}
- }
+diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+index de32152cea04..0c9c85981a8e 100644
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -620,8 +620,6 @@ int kvm_arm_set_reg(struct kvm_vcpu *vcpu, const struct kvm_one_reg *reg);
  
--const struct sys_reg_desc *find_reg_by_id(u64 id,
--					  struct sys_reg_params *params,
--					  const struct sys_reg_desc table[],
--					  unsigned int num)
--{
--	if (!index_to_params(id, params))
--		return NULL;
--
--	return find_reg(params, table, num);
--}
--
- const struct sys_reg_desc *get_reg_by_id(u64 id,
- 					 const struct sys_reg_desc table[],
- 					 unsigned int num)
+ unsigned long kvm_arm_num_sys_reg_descs(struct kvm_vcpu *vcpu);
+ int kvm_arm_copy_sys_reg_indices(struct kvm_vcpu *vcpu, u64 __user *uindices);
+-int kvm_arm_sys_reg_get_reg(struct kvm_vcpu *vcpu, const struct kvm_one_reg *);
+-int kvm_arm_sys_reg_set_reg(struct kvm_vcpu *vcpu, const struct kvm_one_reg *);
+ 
+ int __kvm_arm_vcpu_get_events(struct kvm_vcpu *vcpu,
+ 			      struct kvm_vcpu_events *events);
 diff --git a/arch/arm64/kvm/sys_regs.h b/arch/arm64/kvm/sys_regs.h
-index b8b576a2af2b..49517f58deb5 100644
+index 49517f58deb5..a8c4cc32eb9a 100644
 --- a/arch/arm64/kvm/sys_regs.h
 +++ b/arch/arm64/kvm/sys_regs.h
-@@ -190,11 +190,6 @@ find_reg(const struct sys_reg_params *params, const struct sys_reg_desc table[],
- 	return __inline_bsearch((void *)pval, table, num, sizeof(table[0]), match_sys_reg);
- }
- 
--const struct sys_reg_desc *find_reg_by_id(u64 id,
--					  struct sys_reg_params *params,
--					  const struct sys_reg_desc table[],
--					  unsigned int num);
--
- const struct sys_reg_desc *get_reg_by_id(u64 id,
+@@ -194,9 +194,10 @@ const struct sys_reg_desc *get_reg_by_id(u64 id,
  					 const struct sys_reg_desc table[],
  					 unsigned int num);
+ 
++int kvm_arm_sys_reg_get_reg(struct kvm_vcpu *vcpu, const struct kvm_one_reg *);
++int kvm_arm_sys_reg_set_reg(struct kvm_vcpu *vcpu, const struct kvm_one_reg *);
+ int kvm_sys_reg_get_user(struct kvm_vcpu *vcpu, const struct kvm_one_reg *reg,
+ 			 const struct sys_reg_desc table[], unsigned int num);
+-
+ int kvm_sys_reg_set_user(struct kvm_vcpu *vcpu, const struct kvm_one_reg *reg,
+ 			 const struct sys_reg_desc table[], unsigned int num);
+ 
 -- 
 2.34.1
 
