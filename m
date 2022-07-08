@@ -2,79 +2,66 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3289856C7A1
-	for <lists+kvmarm@lfdr.de>; Sat,  9 Jul 2022 09:00:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D57F556FC5A
+	for <lists+kvmarm@lfdr.de>; Mon, 11 Jul 2022 11:42:59 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 68ECD4B460;
-	Sat,  9 Jul 2022 03:00:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F17464BB82;
+	Mon, 11 Jul 2022 05:42:58 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -1.79
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
+X-Spam-Status: No, score=-1.79 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@linux.dev
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id A0ujM9CTOCw8; Sat,  9 Jul 2022 03:00:00 -0400 (EDT)
+	with ESMTP id xdINAcGL2ccy; Mon, 11 Jul 2022 05:42:58 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 423B24B440;
-	Sat,  9 Jul 2022 02:59:59 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B28D64BA51;
+	Mon, 11 Jul 2022 05:42:57 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 132314B43F
- for <kvmarm@lists.cs.columbia.edu>; Sat,  9 Jul 2022 02:59:58 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 878904B604
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  8 Jul 2022 14:59:16 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Pd2l57oZgAOI for <kvmarm@lists.cs.columbia.edu>;
- Sat,  9 Jul 2022 02:59:57 -0400 (EDT)
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com
- [209.85.217.54])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 164524B396
- for <kvmarm@lists.cs.columbia.edu>; Sat,  9 Jul 2022 02:59:57 -0400 (EDT)
-Received: by mail-vs1-f54.google.com with SMTP id l190so599684vsc.0
- for <kvmarm@lists.cs.columbia.edu>; Fri, 08 Jul 2022 23:59:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=HaPegW27H93Qf4TuxECcq/yCoVA6MfE/QOnVJszZDqA=;
- b=Lkv82oUqjvx4Bsq9AtLaUds17K8rvpLSqlVTwzEriO+7DAVVH66sFzMkvAUGaWd/kU
- gwVuwFKFD88nJ5O4pZoIxtg1lhPUARBkvmy+v0uiswS2j0T/Xs1cWWFlB/Xwm9gKbMF1
- 9LdwLGg3eYo0Og81xf32dTXWkZtwvExnAmDmqBZAVLlzXmIR00QcirlEByuOKO4S7OBa
- fNGpR3C8b/A4BfNfDeki405qB7XJhjS746SRczj0m3Vl7i7QR3RAbN26P+vjxsUqvm0d
- /UNbQQIYkbDS/RPA40vb+LVvrsrFohjok+eDSgXFmCXuc2ODIyYBBNzjCrPQ6GtJfIXk
- WTsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=HaPegW27H93Qf4TuxECcq/yCoVA6MfE/QOnVJszZDqA=;
- b=jfh5fM9lDY2oFI0in+mp+oAyQFhqjScdRyKzJ4AyJlz0XOa6BwwkPwwOMkW1hEdjLl
- /nOQIKkfnIOcGtOwy4Ot6/c0B7+3tKjPTtK0w7dhLwxs36v04uu86DyaFwSX/m2+417Q
- PUV4Aafyzm/w3Uj5Y6RYW2pparqrtwDv+6I68zNfUCoSkJuZggd/v9RNmBNdDzBMKJsc
- 6kojx3iBXJlkKMO0RX3BuQUhQUtVUfDXwOnJjaeNaJtRq4IIO3EEF0BFSXVN8KDAJIEI
- 89naGTfokv9zs/TczIgJ7tqSx4JPGz8aO37laneBN+smfmALyrk1qTQounXEEksplN1v
- C9Fw==
-X-Gm-Message-State: AJIora/B8x+GOi7i+rzYsJ+7I5aVd/ZmntwD5AyzBBf7+9DXbY+2kGUg
- bnNzy6vfrmvavuT0YGymSOHt5RHRgill8QE760k+qw==
-X-Google-Smtp-Source: AGRyM1siUKjCQ234FL+iWMyc7JxnpRG4THdhKQrLHWHdu6Z5JHZJxU9jxDzxB/Hqk+PLOrefUUydrBpwTKwsKgw61xs=
-X-Received: by 2002:a05:6102:cc6:b0:356:3c5c:beb5 with SMTP id
- g6-20020a0561020cc600b003563c5cbeb5mr3066937vst.80.1657349996519; Fri, 08 Jul
- 2022 23:59:56 -0700 (PDT)
+ with ESMTP id bk-djpNyoY+P for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  8 Jul 2022 14:59:15 -0400 (EDT)
+Received: from out0.migadu.com (out0.migadu.com [94.23.1.103])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 530334B603
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  8 Jul 2022 14:59:15 -0400 (EDT)
 MIME-Version: 1.0
-References: <20220706164304.1582687-1-maz@kernel.org>
- <20220706164304.1582687-4-maz@kernel.org>
-In-Reply-To: <20220706164304.1582687-4-maz@kernel.org>
-From: Reiji Watanabe <reijiw@google.com>
-Date: Fri, 8 Jul 2022 23:59:40 -0700
-Message-ID: <CAAeT=Fx0Xr7cGxO64vMUH0uKg1upeOZ3Tvu-1av7ro_+AbTi+g@mail.gmail.com>
-Subject: Re: [PATCH 03/19] KVM: arm64: Introduce generic get_user/set_user
- helpers for system registers
-To: Marc Zyngier <maz@kernel.org>
-Cc: kvm@vger.kernel.org, Schspa Shi <schspa@gmail.com>,
- Oliver Upton <oliver.upton@linux.dev>, kernel-team@android.com,
- kvmarm@lists.cs.columbia.edu, Linux ARM <linux-arm-kernel@lists.infradead.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1657306753;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wj7N+bil9RLaGeoY6bi4vc0yDBSE8E8Ymrs5hXbP3dY=;
+ b=HhzsD2NgWV3j8Wtf8ZDSilmZWsR+DtLpQ2OtYlu2x65RfE/gLbg0Uy/ztiFaz0YKdc8wf1
+ bLh/h4AihQFihDmoX3wOoTkPxXW+oiUckLGusELd5BSoa/YU0WeeG3izkrfjLPbzt6EaIt
+ TMsovi9sPGKqUl2eRdFCDmZPNXdjaWU=
+Date: Fri, 08 Jul 2022 18:59:12 +0000
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: oliver.upton@linux.dev
+Message-ID: <dd74ef488fc56512b65039329643b72e@linux.dev>
+Subject: Re: [PATCH] KVM: arm64: Use the bitmap API to allocate bitmaps
+To: "Christophe JAILLET" <christophe.jaillet@wanadoo.fr>, "Marc Zyngier"
+ <maz@kernel.org>, "James Morse" <james.morse@arm.com>, "Alexandru Elisei"
+ <alexandru.elisei@arm.com>, "Suzuki K Poulose" <suzuki.poulose@arm.com>,
+ "Catalin Marinas" <catalin.marinas@arm.com>, "Will Deacon"
+ <will@kernel.org>
+In-Reply-To: <a93d3e94be2003922c7e9652b57e96261cc47641.1656961792.git.christophe.jaillet@wanadoo.fr>
+References: <a93d3e94be2003922c7e9652b57e96261cc47641.1656961792.git.christophe.jaillet@wanadoo.fr>
+X-Migadu-Flow: FLOW_OUT
+X-Migadu-Auth-User: linux.dev
+X-Mailman-Approved-At: Mon, 11 Jul 2022 05:42:55 -0400
+Cc: kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -91,16 +78,17 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Jul 6, 2022 at 9:43 AM Marc Zyngier <maz@kernel.org> wrote:
->
-> The userspace access to the system registers is done using helpers
-> that hardcode the table that is looked up. extract some generic
-> helpers from this, moving the handling of hidden sysregs into
-> the core code.
->
-> Signed-off-by: Marc Zyngier <maz@kernel.org>
+July 4, 2022 12:10 PM, "Christophe JAILLET" <christophe.jaillet@wanadoo.fr> wrote:
+> Use bitmap_zalloc()/bitmap_free() instead of hand-writing them.
+> 
+> It is less verbose and it improves the semantic.
+> 
+> While at it, turn a bitmap_clear() into an equivalent bitmap_zero(). It is
+> also less verbose.
+> 
+> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-Reviewed-by: Reiji Watanabe <reijiw@google.com>
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
