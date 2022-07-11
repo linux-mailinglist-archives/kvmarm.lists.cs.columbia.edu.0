@@ -2,82 +2,84 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id C24EF56FC63
-	for <lists+kvmarm@lfdr.de>; Mon, 11 Jul 2022 11:43:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A13256FC38
+	for <lists+kvmarm@lfdr.de>; Mon, 11 Jul 2022 11:41:01 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 526F44BB64;
-	Mon, 11 Jul 2022 05:43:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 42D984B9FB;
+	Mon, 11 Jul 2022 05:41:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.786
+X-Spam-Score: -1.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.786 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001,
-	HTML_MESSAGE=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=no
+X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@gmail.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id evy+Hp+Rf-7W; Mon, 11 Jul 2022 05:43:06 -0400 (EDT)
+	with ESMTP id Ota3wLhthG6A; Mon, 11 Jul 2022 05:41:00 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B2D0D4BB77;
-	Mon, 11 Jul 2022 05:42:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 50DE24B923;
+	Mon, 11 Jul 2022 05:40:58 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0126F4B425
- for <kvmarm@lists.cs.columbia.edu>; Fri,  8 Jul 2022 21:50:48 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5046F4B857
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 11 Jul 2022 05:40:56 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id oxMFb0qb5lih for <kvmarm@lists.cs.columbia.edu>;
- Fri,  8 Jul 2022 21:50:45 -0400 (EDT)
-Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com
- [209.85.160.49])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 307744B31D
- for <kvmarm@lists.cs.columbia.edu>; Fri,  8 Jul 2022 21:50:45 -0400 (EDT)
-Received: by mail-oa1-f49.google.com with SMTP id
- 586e51a60fabf-10c0e6dd55eso757679fac.7
- for <kvmarm@lists.cs.columbia.edu>; Fri, 08 Jul 2022 18:50:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=pLrIXHFzpO5mZB8k2eavL3K7Dil3m2ScwawxeudvKdw=;
- b=BA1+GtDn8BwoXKSiIJaAD8AxgAuh/yNsdUESp/xavAzeSzep8kBNyIXhlQjYWFU/kk
- Aa/kT5h3KFv3GevQSWM76VuCPtPY6Li2JG/JfRsVib2onz5c7FlYDR+U/rrmLZ2RV8Ub
- nHYkbw9Hh82/PJAbcOcprRkfu9LbKBvvzWXPScuKem2O89XFZTV5E8uURizJBNQrbIay
- ZrHmhplPMi56Mz+ah0Sbdx27qSbXJSw8GNZKCUfOrs52bSxCuGp2VOF8uK+yOsIkTIPJ
- NYoZqrBr/ZIOQH6bt2fBRtwwdUlMgZIzluOee2jiHgFvi3h5j5FiTGNHtZeDlr1diV2u
- ycNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=pLrIXHFzpO5mZB8k2eavL3K7Dil3m2ScwawxeudvKdw=;
- b=NFXEg5dsoS0XaCpNBgvAx5+Gr5Ury2fwqWhZxFPMScvL0DmqwKni0LJXTFkCOiIoUb
- tIsr2w/uhL/smJUJcoWzIwFamaSNuHBiNm2leRqPSubMcC314NMnR4ZFbnwHR5ftJhjC
- oaNZi/feFGuz5I2JU/l4EcD9R3DYdSRs05cxIw6pY0A7A3lO8gq5A64B7XpW4KZj/pDv
- T6qaZZQaCIPkeHIVJlsNpZmojmi7blQWyaCIjqMrhbTd3gwqI91y4kCw4rm7WV9vwZNM
- ACv1Gf+UB5U1V+/s8cAXxPgfkXqcjumCUIiD/ku8eGJRPknyPy30+zKp3p7SOVG7ZYQy
- UTvA==
-X-Gm-Message-State: AJIora8Nl6gTydGYfgw29GkqTON5ZtxRwUl3M+NxWsY/m6Uw+aA8sjSW
- wulqiFB/BIZ19EcxmSL3CFjGFK3jA+OMRLIhE/8=
-X-Google-Smtp-Source: AGRyM1tYF65Gndj3Xt/nFn7scwLMXSSDwQXWYXGRmtNZ8FD1W9TMa8mjOc+m344btTB153SXSoeUU/i59ai41G6UZqk=
-X-Received: by 2002:a05:6870:c68a:b0:10b:95e3:3dd3 with SMTP id
- cv10-20020a056870c68a00b0010b95e33dd3mr1659272oab.248.1657331444203; Fri, 08
- Jul 2022 18:50:44 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220708212106.325260-1-pcc@google.com>
-In-Reply-To: <20220708212106.325260-1-pcc@google.com>
-From: Itaru Kitayama <itaru.kitayama@gmail.com>
-Date: Sat, 9 Jul 2022 10:50:33 +0900
-Message-ID: <CANW9uysjpAH726c18aR7A2MxRpR49D_cfXBvsQP0Yj_1yP8bhQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] KVM: arm64: support MTE in protected VMs
-To: Peter Collingbourne <pcc@google.com>
-X-Mailman-Approved-At: Mon, 11 Jul 2022 05:42:55 -0400
-Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
- Andy Lutomirski <luto@amacapital.net>, linux-arm-kernel@lists.infradead.org,
- Michael Roth <michael.roth@amd.com>, Catalin Marinas <catalin.marinas@arm.com>,
- Chao Peng <chao.p.peng@linux.intel.com>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, Evgenii Stepanov <eugenis@google.com>
+ with ESMTP id TNDlP-sCB+DW for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 11 Jul 2022 05:40:54 -0400 (EDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8D6874B856
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 11 Jul 2022 05:40:54 -0400 (EDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 88A8D60F13;
+ Mon, 11 Jul 2022 09:40:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A8BC34115;
+ Mon, 11 Jul 2022 09:40:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1657532453;
+ bh=JiArFBRu09eCdxnEj/hpCwPAGswEzEbHzz0CHgP2+qQ=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=EsqVYHaB4xUDWYyCp3OhJ7yRsU2g76+P0Kd40DY5m3CUWYksDVJSqOZWFIFrawHCs
+ ltKE0ndMyblETSXxRj+dlkx7E4NsruBjg87LKn3wyFF0stbUNjj2wqRHhU4hpeS/fT
+ ZEZGLA+Ku1e4sqqYavy3PT7ZIRsuJrlrrmtLamOTw/Z4VW/Ha/KOtTHHlnnIiYQDQq
+ q6u635/HCnS5KO3GwDnlLlTBUKcCSDuDMkjGG0yVPrL9yHfT47Lqakae1IWBNhf3wl
+ XVhb8+fLRT6n45rGY4YYbmT6kR89wjPp6gjtXX1Pxa/RDN60J1+enNBIlHpUCQ8jmp
+ 2ANsmtDCgx3dQ==
+Received: from [213.208.244.172] (helo=wait-a-minute.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1oApuM-006cap-R7;
+ Mon, 11 Jul 2022 10:40:51 +0100
+Date: Mon, 11 Jul 2022 10:40:50 +0100
+Message-ID: <87ilo4kmvx.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Mark Brown <broonie@kernel.org>
+Subject: Re: [PATCH v2 2/7] arm64/fpsimd: Track the saved FPSIMD state type
+ separately to TIF_SVE
+In-Reply-To: <20220620124158.482039-3-broonie@kernel.org>
+References: <20220620124158.482039-1-broonie@kernel.org>
+ <20220620124158.482039-3-broonie@kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 213.208.244.172
+X-SA-Exim-Rcpt-To: broonie@kernel.org, catalin.marinas@arm.com, will@kernel.org,
+ zhang.lei@jp.fujitsu.com, james.morse@arm.com, alexandru.elisei@arm.com,
+ andre.przywara@arm.com, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Catalin Marinas <catalin.marinas@arm.com>,
+ Zhang Lei <zhang.lei@jp.fujitsu.com>, Andre Przywara <andre.przywara@arm.com>,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -89,189 +91,358 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============7391916226010638025=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
---===============7391916226010638025==
-Content-Type: multipart/alternative; boundary="00000000000001c28805e3558c7d"
+On Mon, 20 Jun 2022 13:41:53 +0100,
+Mark Brown <broonie@kernel.org> wrote:
+> 
+> When we save the state for the floating point registers this can be done
+> in the form visible through either the FPSIMD V registers or the SVE Z and
+> P registers. At present we track which format is currently used based on
+> TIF_SVE and the SME streaming mode state but particularly in the SVE case
+> this limits our options for optimising things, especially around syscalls.
+> Introduce a new enum in thread_struct which explicitly states which format
+> is active and keep it up to date when we change it.
+> 
+> At present we do not use this state except to verify that it has the
+> expected value when loading the state, future patches will introduce
+> functional changes.
+> 
+> Signed-off-by: Mark Brown <broonie@kernel.org>
+> ---
+>  arch/arm64/include/asm/fpsimd.h    |  2 +-
+>  arch/arm64/include/asm/kvm_host.h  |  1 +
+>  arch/arm64/include/asm/processor.h |  6 ++++
+>  arch/arm64/kernel/fpsimd.c         | 57 ++++++++++++++++++++++--------
+>  arch/arm64/kernel/process.c        |  2 ++
+>  arch/arm64/kernel/ptrace.c         |  6 ++--
+>  arch/arm64/kernel/signal.c         |  3 ++
+>  arch/arm64/kvm/fpsimd.c            |  3 +-
+>  8 files changed, 61 insertions(+), 19 deletions(-)
+> 
+> diff --git a/arch/arm64/include/asm/fpsimd.h b/arch/arm64/include/asm/fpsimd.h
+> index 847fd119cdb8..5762419fdcc0 100644
+> --- a/arch/arm64/include/asm/fpsimd.h
+> +++ b/arch/arm64/include/asm/fpsimd.h
+> @@ -61,7 +61,7 @@ extern void fpsimd_kvm_prepare(void);
+>  extern void fpsimd_bind_state_to_cpu(struct user_fpsimd_state *state,
+>  				     void *sve_state, unsigned int sve_vl,
+>  				     void *za_state, unsigned int sme_vl,
+> -				     u64 *svcr);
+> +				     u64 *svcr, enum fp_state *type);
+>  
+>  extern void fpsimd_flush_task_state(struct task_struct *target);
+>  extern void fpsimd_save_and_flush_cpu_state(void);
+> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+> index de32152cea04..250e23f221c4 100644
+> --- a/arch/arm64/include/asm/kvm_host.h
+> +++ b/arch/arm64/include/asm/kvm_host.h
+> @@ -310,6 +310,7 @@ struct kvm_vcpu_arch {
+>  	void *sve_state;
+>  	unsigned int sve_max_vl;
+>  	u64 svcr;
+> +	enum fp_state fp_type;
+>  
+>  	/* Stage 2 paging state used by the hardware on next switch */
+>  	struct kvm_s2_mmu *hw_mmu;
+> diff --git a/arch/arm64/include/asm/processor.h b/arch/arm64/include/asm/processor.h
+> index 9e58749db21d..192986509a8e 100644
+> --- a/arch/arm64/include/asm/processor.h
+> +++ b/arch/arm64/include/asm/processor.h
+> @@ -122,6 +122,11 @@ enum vec_type {
+>  	ARM64_VEC_MAX,
+>  };
+>  
+> +enum fp_state {
+> +	FP_STATE_FPSIMD,
+> +	FP_STATE_SVE,
+> +};
+> +
+>  struct cpu_context {
+>  	unsigned long x19;
+>  	unsigned long x20;
+> @@ -152,6 +157,7 @@ struct thread_struct {
+>  		struct user_fpsimd_state fpsimd_state;
+>  	} uw;
+>  
+> +	enum fp_state		fp_type;	/* registers FPSIMD or SVE? */
+>  	unsigned int		fpsimd_cpu;
+>  	void			*sve_state;	/* SVE registers, if any */
+>  	void			*za_state;	/* ZA register, if any */
+> diff --git a/arch/arm64/kernel/fpsimd.c b/arch/arm64/kernel/fpsimd.c
+> index d67e658f1e24..fdb2925becdf 100644
+> --- a/arch/arm64/kernel/fpsimd.c
+> +++ b/arch/arm64/kernel/fpsimd.c
+> @@ -125,6 +125,7 @@ struct fpsimd_last_state_struct {
+>  	u64 *svcr;
+>  	unsigned int sve_vl;
+>  	unsigned int sme_vl;
+> +	enum fp_state *type;
 
---00000000000001c28805e3558c7d
-Content-Type: text/plain; charset="UTF-8"
+For consistency: s/type/fp_type/ ?
 
-Peter
-Gmail always marks your mail as spam, any ideas?
+>  };
+>  
+>  static DEFINE_PER_CPU(struct fpsimd_last_state_struct, fpsimd_last_state);
+> @@ -330,15 +331,6 @@ void task_set_vl_onexec(struct task_struct *task, enum vec_type type,
+>   *    The task can execute SVE instructions while in userspace without
+>   *    trapping to the kernel.
+>   *
+> - *    When stored, Z0-Z31 (incorporating Vn in bits[127:0] or the
+> - *    corresponding Zn), P0-P15 and FFR are encoded in
+> - *    task->thread.sve_state, formatted appropriately for vector
+> - *    length task->thread.sve_vl or, if SVCR.SM is set,
+> - *    task->thread.sme_vl.
+> - *
+> - *    task->thread.sve_state must point to a valid buffer at least
+> - *    sve_state_size(task) bytes in size.
+> - *
+>   *    During any syscall, the kernel may optionally clear TIF_SVE and
+>   *    discard the vector state except for the FPSIMD subset.
+>   *
+> @@ -348,7 +340,15 @@ void task_set_vl_onexec(struct task_struct *task, enum vec_type type,
+>   *    do_sve_acc() to be called, which does some preparation and then
+>   *    sets TIF_SVE.
+>   *
+> - *    When stored, FPSIMD registers V0-V31 are encoded in
+> + * During any syscall, the kernel may optionally clear TIF_SVE and
+> + * discard the vector state except for the FPSIMD subset.
+> + *
+> + * The data will be stored in one of two formats:
+> + *
+> + *  * FPSIMD only - FP_STATE_FPSIMD:
+> + *
+> + *    When the FPSIMD only state stored task->thread.fp_type is set to
+> + *    FP_STATE_FPSIMD, the FPSIMD registers V0-V31 are encoded in
+>   *    task->thread.uw.fpsimd_state; bits [max : 128] for each of Z0-Z31 are
+>   *    logically zero but not stored anywhere; P0-P15 and FFR are not
+>   *    stored and have unspecified values from userspace's point of
+> @@ -358,6 +358,18 @@ void task_set_vl_onexec(struct task_struct *task, enum vec_type type,
+>   *    task->thread.sve_state does not need to be non-NULL, valid or any
+>   *    particular size: it must not be dereferenced.
+>   *
+> + *  * SVE state - FP_STATE_SVE:
+> + *
+> + *    When the full SVE state is stored task->thread.fp_type is set to
+> + *    FP_STATE_SVE and Z0-Z31 (incorporating Vn in bits[127:0] or the
+> + *    corresponding Zn), P0-P15 and FFR are encoded in in
+> + *    task->thread.sve_state, formatted appropriately for vector
+> + *    length task->thread.sve_vl or, if SVCR.SM is set,
+> + *    task->thread.sme_vl.
 
-Itaru.
+Can you add a commend about the fate of the Vn data in fpsimd_state?
+My understanding is that they are stale data as soon as FP_STATE_SVE
+is set, but I'd really like this being clarified.
 
-On Sat, Jul 9, 2022 at 6:24 Peter Collingbourne <pcc@google.com> wrote:
+> + *
+> + *    task->thread.sve_state must point to a valid buffer at least
+> + *    sve_state_size(task) bytes in size.
+> + *
+>   *  * FPSR and FPCR are always stored in task->thread.uw.fpsimd_state
+>   *    irrespective of whether TIF_SVE is clear or set, since these are
+>   *    not vector length dependent.
+> @@ -404,12 +416,15 @@ static void task_fpsimd_load(void)
+>  		}
+>  	}
+>  
+> -	if (restore_sve_regs)
+> +	if (restore_sve_regs) {
+> +		WARN_ON_ONCE(current->thread.fp_type != FP_STATE_SVE);
+>  		sve_load_state(sve_pffr(&current->thread),
+>  			       &current->thread.uw.fpsimd_state.fpsr,
+>  			       restore_ffr);
+> -	else
+> +	} else {
+> +		WARN_ON_ONCE(current->thread.fp_type != FP_STATE_FPSIMD);
+>  		fpsimd_load_state(&current->thread.uw.fpsimd_state);
+> +	}
+>  }
+>  
+>  /*
+> @@ -475,8 +490,10 @@ static void fpsimd_save(void)
+>  		sve_save_state((char *)last->sve_state +
+>  					sve_ffr_offset(vl),
+>  			       &last->st->fpsr, save_ffr);
+> +		*last->type = FP_STATE_SVE;
+>  	} else {
+>  		fpsimd_save_state(last->st);
+> +		*last->type = FP_STATE_FPSIMD;
+>  	}
+>  }
+>  
+> @@ -847,8 +864,10 @@ int vec_set_vector_length(struct task_struct *task, enum vec_type type,
+>  
+>  	fpsimd_flush_task_state(task);
+>  	if (test_and_clear_tsk_thread_flag(task, TIF_SVE) ||
+> -	    thread_sm_enabled(&task->thread))
+> +	    thread_sm_enabled(&task->thread)) {
+>  		sve_to_fpsimd(task);
+> +		task->thread.fp_type = FP_STATE_FPSIMD;
 
-> Hi,
->
-> This patch series contains a proposed extension to pKVM that allows MTE
-> to be exposed to the protected guests. It is based on the base pKVM
-> series previously sent to the list [1] and later rebased to 5.19-rc3
-> and uploaded to [2].
->
-> This series takes precautions against host compromise of the guests
-> via direct access to their tag storage, by preventing the host from
-> accessing the tag storage via stage 2 page tables. The device tree
-> must describe the physical memory address of the tag storage, if any,
-> and the memory nodes must declare that the tag storage location is
-> described. Otherwise, the MTE feature is disabled in protected guests.
->
-> Now that we can easily do so, we also prevent the host from accessing
-> any unmapped reserved-memory regions without a driver, as the host
-> has no business accessing that memory.
->
-> A proposed extension to the devicetree specification is available at
-> [3], a patched version of QEMU that produces the required device tree
-> nodes is available at [4] and a patched version of the crosvm hypervisor
-> that enables MTE is available at [5].
->
-> v2:
-> - refcount the PTEs owned by NOBODY
->
-> [1] https://lore.kernel.org/all/20220519134204.5379-1-will@kernel.org/
-> [2] https://android-kvm.googlesource.com/linux/ for-upstream/pkvm-base-v2
-> [3] https://github.com/pcc/devicetree-specification mte-alloc
-> [4] https://github.com/pcc/qemu mte-shared-alloc
-> [5]
-> https://chromium-review.googlesource.com/c/chromiumos/platform/crosvm/+/3719324
->
-> Peter Collingbourne (3):
->   KVM: arm64: add a hypercall for disowning pages
->   KVM: arm64: disown unused reserved-memory regions
->   KVM: arm64: allow MTE in protected VMs if the tag storage is known
->
->  arch/arm64/include/asm/kvm_asm.h              |  1 +
->  arch/arm64/include/asm/kvm_host.h             |  6 ++
->  arch/arm64/include/asm/kvm_pkvm.h             |  4 +-
->  arch/arm64/kernel/image-vars.h                |  3 +
->  arch/arm64/kvm/arm.c                          | 83 ++++++++++++++++++-
->  arch/arm64/kvm/hyp/include/nvhe/mem_protect.h |  1 +
->  arch/arm64/kvm/hyp/include/nvhe/pkvm.h        |  1 +
->  arch/arm64/kvm/hyp/nvhe/hyp-main.c            |  9 ++
->  arch/arm64/kvm/hyp/nvhe/mem_protect.c         | 11 +++
->  arch/arm64/kvm/hyp/nvhe/pkvm.c                |  8 +-
->  arch/arm64/kvm/mmu.c                          |  4 +-
->  11 files changed, 123 insertions(+), 8 deletions(-)
->
-> --
-> 2.37.0.144.g8ac04bfd2-goog
->
->
-> _______________________________________________
-> linux-arm-kernel mailing list
-> linux-arm-kernel@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
->
+Can you move this assignment into the sve_to_fpsimd() helper?
 
---00000000000001c28805e3558c7d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> +	}
+>  
+>  	if (system_supports_sme() && type == ARM64_VEC_SME) {
+>  		task->thread.svcr &= ~(SVCR_SM_MASK |
+> @@ -1367,6 +1386,7 @@ static void sve_init_regs(void)
+>  		fpsimd_bind_task_to_cpu();
+>  	} else {
+>  		fpsimd_to_sve(current);
+> +		current->thread.fp_type = FP_STATE_SVE;
 
-<div dir=3D"auto">Peter=C2=A0</div><div dir=3D"auto">Gmail always marks you=
-r mail as spam, any ideas?</div><div dir=3D"auto"><br></div><div dir=3D"aut=
-o">Itaru.</div><div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
-=3D"gmail_attr">On Sat, Jul 9, 2022 at 6:24 Peter Collingbourne &lt;<a href=
-=3D"mailto:pcc@google.com">pcc@google.com</a>&gt; wrote:<br></div><blockquo=
-te class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc so=
-lid;padding-left:1ex">Hi,<br>
-<br>
-This patch series contains a proposed extension to pKVM that allows MTE<br>
-to be exposed to the protected guests. It is based on the base pKVM<br>
-series previously sent to the list [1] and later rebased to 5.19-rc3<br>
-and uploaded to [2].<br>
-<br>
-This series takes precautions against host compromise of the guests<br>
-via direct access to their tag storage, by preventing the host from<br>
-accessing the tag storage via stage 2 page tables. The device tree<br>
-must describe the physical memory address of the tag storage, if any,<br>
-and the memory nodes must declare that the tag storage location is<br>
-described. Otherwise, the MTE feature is disabled in protected guests.<br>
-<br>
-Now that we can easily do so, we also prevent the host from accessing<br>
-any unmapped reserved-memory regions without a driver, as the host<br>
-has no business accessing that memory.<br>
-<br>
-A proposed extension to the devicetree specification is available at<br>
-[3], a patched version of QEMU that produces the required device tree<br>
-nodes is available at [4] and a patched version of the crosvm hypervisor<br=
->
-that enables MTE is available at [5].<br>
-<br>
-v2:<br>
-- refcount the PTEs owned by NOBODY<br>
-<br>
-[1] <a href=3D"https://lore.kernel.org/all/20220519134204.5379-1-will@kerne=
-l.org/" rel=3D"noreferrer" target=3D"_blank">https://lore.kernel.org/all/20=
-220519134204.5379-1-will@kernel.org/</a><br>
-[2] <a href=3D"https://android-kvm.googlesource.com/linux/" rel=3D"noreferr=
-er" target=3D"_blank">https://android-kvm.googlesource.com/linux/</a> for-u=
-pstream/pkvm-base-v2<br>
-[3] <a href=3D"https://github.com/pcc/devicetree-specification" rel=3D"nore=
-ferrer" target=3D"_blank">https://github.com/pcc/devicetree-specification</=
-a> mte-alloc<br>
-[4] <a href=3D"https://github.com/pcc/qemu" rel=3D"noreferrer" target=3D"_b=
-lank">https://github.com/pcc/qemu</a> mte-shared-alloc<br>
-[5] <a href=3D"https://chromium-review.googlesource.com/c/chromiumos/platfo=
-rm/crosvm/+/3719324" rel=3D"noreferrer" target=3D"_blank">https://chromium-=
-review.googlesource.com/c/chromiumos/platform/crosvm/+/3719324</a><br>
-<br>
-Peter Collingbourne (3):<br>
-=C2=A0 KVM: arm64: add a hypercall for disowning pages<br>
-=C2=A0 KVM: arm64: disown unused reserved-memory regions<br>
-=C2=A0 KVM: arm64: allow MTE in protected VMs if the tag storage is known<b=
-r>
-<br>
-=C2=A0arch/arm64/include/asm/kvm_asm.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 |=C2=A0 1 +<br>
-=C2=A0arch/arm64/include/asm/kvm_host.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0|=C2=A0 6 ++<br>
-=C2=A0arch/arm64/include/asm/kvm_pkvm.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0|=C2=A0 4 +-<br>
-=C2=A0arch/arm64/kernel/image-vars.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 |=C2=A0 3 +<br>
-=C2=A0arch/arm64/kvm/arm.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 83 ++++++++++++++++++-<br>
-=C2=A0arch/arm64/kvm/hyp/include/nvhe/mem_protect.h |=C2=A0 1 +<br>
-=C2=A0arch/arm64/kvm/hyp/include/nvhe/pkvm.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=
-=C2=A0 1 +<br>
-=C2=A0arch/arm64/kvm/hyp/nvhe/hyp-main.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 |=C2=A0 9 ++<br>
-=C2=A0arch/arm64/kvm/hyp/nvhe/mem_protect.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0| 11 +++<br>
-=C2=A0arch/arm64/kvm/hyp/nvhe/pkvm.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 |=C2=A0 8 +-<br>
-=C2=A0arch/arm64/kvm/mmu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 4 +-<br>
-=C2=A011 files changed, 123 insertions(+), 8 deletions(-)<br>
-<br>
--- <br>
-2.37.0.144.g8ac04bfd2-goog<br>
-<br>
-<br>
-_______________________________________________<br>
-linux-arm-kernel mailing list<br>
-<a href=3D"mailto:linux-arm-kernel@lists.infradead.org" target=3D"_blank">l=
-inux-arm-kernel@lists.infradead.org</a><br>
-<a href=3D"http://lists.infradead.org/mailman/listinfo/linux-arm-kernel" re=
-l=3D"noreferrer" target=3D"_blank">http://lists.infradead.org/mailman/listi=
-nfo/linux-arm-kernel</a><br>
-</blockquote></div></div>
+Same thing here.
 
---00000000000001c28805e3558c7d--
+>  	}
+>  }
+>  
+> @@ -1606,6 +1626,8 @@ void fpsimd_flush_thread(void)
+>  		current->thread.svcr = 0;
+>  	}
+>  
+> +	current->thread.fp_type = FP_STATE_FPSIMD;
+> +
+>  	put_cpu_fpsimd_context();
+>  	kfree(sve_state);
+>  	kfree(za_state);
+> @@ -1654,8 +1676,10 @@ void fpsimd_kvm_prepare(void)
+>  	 */
+>  	get_cpu_fpsimd_context();
+>  
+> -	if (test_and_clear_thread_flag(TIF_SVE))
+> +	if (test_and_clear_thread_flag(TIF_SVE)) {
+>  		sve_to_fpsimd(current);
+> +		current->thread.fp_type = FP_STATE_FPSIMD;
+> +	}
+>  
+>  	put_cpu_fpsimd_context();
+>  }
+> @@ -1677,6 +1701,7 @@ static void fpsimd_bind_task_to_cpu(void)
+>  	last->sve_vl = task_get_sve_vl(current);
+>  	last->sme_vl = task_get_sme_vl(current);
+>  	last->svcr = &current->thread.svcr;
+> +	last->type = &current->thread.fp_type;
+>  	current->thread.fpsimd_cpu = smp_processor_id();
+>  
+>  	/*
+> @@ -1700,7 +1725,8 @@ static void fpsimd_bind_task_to_cpu(void)
+>  
+>  void fpsimd_bind_state_to_cpu(struct user_fpsimd_state *st, void *sve_state,
+>  			      unsigned int sve_vl, void *za_state,
+> -			      unsigned int sme_vl, u64 *svcr)
+> +			      unsigned int sme_vl, u64 *svcr,
+> +			      enum fp_state *type)
+>  {
+>  	struct fpsimd_last_state_struct *last =
+>  		this_cpu_ptr(&fpsimd_last_state);
+> @@ -1714,6 +1740,7 @@ void fpsimd_bind_state_to_cpu(struct user_fpsimd_state *st, void *sve_state,
+>  	last->za_state = za_state;
+>  	last->sve_vl = sve_vl;
+>  	last->sme_vl = sme_vl;
+> +	last->type = type;
+>  }
+>  
+>  /*
+> diff --git a/arch/arm64/kernel/process.c b/arch/arm64/kernel/process.c
+> index 92bcc1768f0b..944d782d581b 100644
+> --- a/arch/arm64/kernel/process.c
+> +++ b/arch/arm64/kernel/process.c
+> @@ -335,6 +335,8 @@ int arch_dup_task_struct(struct task_struct *dst, struct task_struct *src)
+>  		clear_tsk_thread_flag(dst, TIF_SME);
+>  	}
+>  
+> +	dst->thread.fp_type = FP_STATE_FPSIMD;
+> +
+>  	/* clear any pending asynchronous tag fault raised by the parent */
+>  	clear_tsk_thread_flag(dst, TIF_MTE_ASYNC_FAULT);
+>  
+> diff --git a/arch/arm64/kernel/ptrace.c b/arch/arm64/kernel/ptrace.c
+> index 21da83187a60..e0233f322af3 100644
+> --- a/arch/arm64/kernel/ptrace.c
+> +++ b/arch/arm64/kernel/ptrace.c
+> @@ -892,8 +892,7 @@ static int sve_set_common(struct task_struct *target,
+>  		ret = __fpr_set(target, regset, pos, count, kbuf, ubuf,
+>  				SVE_PT_FPSIMD_OFFSET);
+>  		clear_tsk_thread_flag(target, TIF_SVE);
+> -		if (type == ARM64_VEC_SME)
+> -			fpsimd_force_sync_to_sve(target);
 
---===============7391916226010638025==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+I don't get this particular change. Can you please clarify?
 
+> +		target->thread.fp_type = FP_STATE_FPSIMD;
+>  		goto out;
+>  	}
+>  
+> @@ -916,6 +915,7 @@ static int sve_set_common(struct task_struct *target,
+>  	if (!target->thread.sve_state) {
+>  		ret = -ENOMEM;
+>  		clear_tsk_thread_flag(target, TIF_SVE);
+> +		target->thread.fp_type = FP_STATE_FPSIMD;
+>  		goto out;
+>  	}
+>  
+> @@ -954,6 +954,8 @@ static int sve_set_common(struct task_struct *target,
+>  				 &target->thread.uw.fpsimd_state.fpsr,
+>  				 start, end);
+>  
+> +	target->thread.fp_type = FP_STATE_SVE;
+> +
+>  out:
+>  	fpsimd_flush_task_state(target);
+>  	return ret;
+> diff --git a/arch/arm64/kernel/signal.c b/arch/arm64/kernel/signal.c
+> index b0980fbb6bc7..23dd4c3bcfed 100644
+> --- a/arch/arm64/kernel/signal.c
+> +++ b/arch/arm64/kernel/signal.c
+> @@ -207,6 +207,7 @@ static int restore_fpsimd_context(struct fpsimd_context __user *ctx)
+>  	__get_user_error(fpsimd.fpcr, &ctx->fpcr, err);
+>  
+>  	clear_thread_flag(TIF_SVE);
+> +	current->thread.fp_type = FP_STATE_FPSIMD;
+>  
+>  	/* load the hardware registers from the fpsimd_state structure */
+>  	if (!err)
+> @@ -289,6 +290,7 @@ static int restore_sve_fpsimd_context(struct user_ctxs *user)
+>  	if (sve.head.size <= sizeof(*user->sve)) {
+>  		clear_thread_flag(TIF_SVE);
+>  		current->thread.svcr &= ~SVCR_SM_MASK;
+> +		current->thread.fp_type = FP_STATE_FPSIMD;
+>  		goto fpsimd_only;
+>  	}
+>  
+> @@ -324,6 +326,7 @@ static int restore_sve_fpsimd_context(struct user_ctxs *user)
+>  		current->thread.svcr |= SVCR_SM_MASK;
+>  	else
+>  		set_thread_flag(TIF_SVE);
+> +	current->thread.fp_type = FP_STATE_SVE;
+>  
+>  fpsimd_only:
+>  	/* copy the FP and status/control registers */
+> diff --git a/arch/arm64/kvm/fpsimd.c b/arch/arm64/kvm/fpsimd.c
+> index a433ee8da232..be3ddb214ab1 100644
+> --- a/arch/arm64/kvm/fpsimd.c
+> +++ b/arch/arm64/kvm/fpsimd.c
+> @@ -139,7 +139,8 @@ void kvm_arch_vcpu_ctxsync_fp(struct kvm_vcpu *vcpu)
+>  		fpsimd_bind_state_to_cpu(&vcpu->arch.ctxt.fp_regs,
+>  					 vcpu->arch.sve_state,
+>  					 vcpu->arch.sve_max_vl,
+> -					 NULL, 0, &vcpu->arch.svcr);
+> +					 NULL, 0, &vcpu->arch.svcr,
+> +					 &vcpu->arch.fp_type);
+>  
+>  		clear_thread_flag(TIF_FOREIGN_FPSTATE);
+>  		update_thread_flag(TIF_SVE, vcpu_has_sve(vcpu));
+
+Thanks,
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
 https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
-
---===============7391916226010638025==--
