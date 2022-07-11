@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A13256FC38
-	for <lists+kvmarm@lfdr.de>; Mon, 11 Jul 2022 11:41:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B7465700D3
+	for <lists+kvmarm@lfdr.de>; Mon, 11 Jul 2022 13:40:04 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 42D984B9FB;
-	Mon, 11 Jul 2022 05:41:00 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E79564BB1A;
+	Mon, 11 Jul 2022 07:40:02 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
@@ -18,64 +18,50 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Ota3wLhthG6A; Mon, 11 Jul 2022 05:41:00 -0400 (EDT)
+	with ESMTP id 3v2MlNfLr3pR; Mon, 11 Jul 2022 07:40:02 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 50DE24B923;
-	Mon, 11 Jul 2022 05:40:58 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 58CFB4BAFB;
+	Mon, 11 Jul 2022 07:40:01 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 5046F4B857
- for <kvmarm@lists.cs.columbia.edu>; Mon, 11 Jul 2022 05:40:56 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 24CA24BAF1
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 11 Jul 2022 07:40:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id TNDlP-sCB+DW for <kvmarm@lists.cs.columbia.edu>;
- Mon, 11 Jul 2022 05:40:54 -0400 (EDT)
+ with ESMTP id amZ5Qec1j2VP for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 11 Jul 2022 07:39:59 -0400 (EDT)
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8D6874B856
- for <kvmarm@lists.cs.columbia.edu>; Mon, 11 Jul 2022 05:40:54 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id EF9744BAF0
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 11 Jul 2022 07:39:58 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 88A8D60F13;
- Mon, 11 Jul 2022 09:40:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A8BC34115;
- Mon, 11 Jul 2022 09:40:53 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 986FE60FE0;
+ Mon, 11 Jul 2022 11:39:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D601C34115;
+ Mon, 11 Jul 2022 11:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1657532453;
- bh=JiArFBRu09eCdxnEj/hpCwPAGswEzEbHzz0CHgP2+qQ=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=EsqVYHaB4xUDWYyCp3OhJ7yRsU2g76+P0Kd40DY5m3CUWYksDVJSqOZWFIFrawHCs
- ltKE0ndMyblETSXxRj+dlkx7E4NsruBjg87LKn3wyFF0stbUNjj2wqRHhU4hpeS/fT
- ZEZGLA+Ku1e4sqqYavy3PT7ZIRsuJrlrrmtLamOTw/Z4VW/Ha/KOtTHHlnnIiYQDQq
- q6u635/HCnS5KO3GwDnlLlTBUKcCSDuDMkjGG0yVPrL9yHfT47Lqakae1IWBNhf3wl
- XVhb8+fLRT6n45rGY4YYbmT6kR89wjPp6gjtXX1Pxa/RDN60J1+enNBIlHpUCQ8jmp
- 2ANsmtDCgx3dQ==
-Received: from [213.208.244.172] (helo=wait-a-minute.misterjones.org)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
- (envelope-from <maz@kernel.org>) id 1oApuM-006cap-R7;
- Mon, 11 Jul 2022 10:40:51 +0100
-Date: Mon, 11 Jul 2022 10:40:50 +0100
-Message-ID: <87ilo4kmvx.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Mark Brown <broonie@kernel.org>
+ s=k20201202; t=1657539597;
+ bh=QcFhSO3fDZ8CQR8r/d4xSKbVigxb4JkiwP86JO7BYks=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=Yyt/V9Wyq5kpJzo2SS/VP2ZaKYur6ASdzwiTEJeE2PUGRRBF5Y6j/VNDjbPd/Xd25
+ M4C9IeS70QiVzZh7I+jKkWWzORxEemLq1DfOyL42II4pzUJWYskq4NenfrwPVC5tvF
+ z9kV3ryf8qvIN2GW2QKhlzSshK6kEvVjj3G8Ajy5kEDA1VCT5r9YkCxCRRsB7xJdn6
+ M6DhPfDp1O1bKdYVf4ZzKkuJ9sARzTiN8RSDXRVJNyzuF1OC8etIy0tf5t1VFR1h0N
+ KusO28VGaeEvDxqx3WHe2u9ZllJapdITfcLT5fatQ2R3PI/razyGeNgIpgB6v6K9H8
+ VLREyawt0h6pQ==
+Date: Mon, 11 Jul 2022 12:39:51 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Marc Zyngier <maz@kernel.org>
 Subject: Re: [PATCH v2 2/7] arm64/fpsimd: Track the saved FPSIMD state type
  separately to TIF_SVE
-In-Reply-To: <20220620124158.482039-3-broonie@kernel.org>
+Message-ID: <YswMB2v9TqPJHDM1@sirena.org.uk>
 References: <20220620124158.482039-1-broonie@kernel.org>
  <20220620124158.482039-3-broonie@kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
- (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-X-SA-Exim-Connect-IP: 213.208.244.172
-X-SA-Exim-Rcpt-To: broonie@kernel.org, catalin.marinas@arm.com, will@kernel.org,
- zhang.lei@jp.fujitsu.com, james.morse@arm.com, alexandru.elisei@arm.com,
- andre.przywara@arm.com, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
+ <87ilo4kmvx.wl-maz@kernel.org>
+MIME-Version: 1.0
+In-Reply-To: <87ilo4kmvx.wl-maz@kernel.org>
+X-Cookie: I am NOMAD!
 Cc: Catalin Marinas <catalin.marinas@arm.com>,
  Zhang Lei <zhang.lei@jp.fujitsu.com>, Andre Przywara <andre.przywara@arm.com>,
  Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
@@ -91,358 +77,98 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============6058515328204458932=="
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Mon, 20 Jun 2022 13:41:53 +0100,
-Mark Brown <broonie@kernel.org> wrote:
-> 
-> When we save the state for the floating point registers this can be done
-> in the form visible through either the FPSIMD V registers or the SVE Z and
-> P registers. At present we track which format is currently used based on
-> TIF_SVE and the SME streaming mode state but particularly in the SVE case
-> this limits our options for optimising things, especially around syscalls.
-> Introduce a new enum in thread_struct which explicitly states which format
-> is active and keep it up to date when we change it.
-> 
-> At present we do not use this state except to verify that it has the
-> expected value when loading the state, future patches will introduce
-> functional changes.
-> 
-> Signed-off-by: Mark Brown <broonie@kernel.org>
-> ---
->  arch/arm64/include/asm/fpsimd.h    |  2 +-
->  arch/arm64/include/asm/kvm_host.h  |  1 +
->  arch/arm64/include/asm/processor.h |  6 ++++
->  arch/arm64/kernel/fpsimd.c         | 57 ++++++++++++++++++++++--------
->  arch/arm64/kernel/process.c        |  2 ++
->  arch/arm64/kernel/ptrace.c         |  6 ++--
->  arch/arm64/kernel/signal.c         |  3 ++
->  arch/arm64/kvm/fpsimd.c            |  3 +-
->  8 files changed, 61 insertions(+), 19 deletions(-)
-> 
-> diff --git a/arch/arm64/include/asm/fpsimd.h b/arch/arm64/include/asm/fpsimd.h
-> index 847fd119cdb8..5762419fdcc0 100644
-> --- a/arch/arm64/include/asm/fpsimd.h
-> +++ b/arch/arm64/include/asm/fpsimd.h
-> @@ -61,7 +61,7 @@ extern void fpsimd_kvm_prepare(void);
->  extern void fpsimd_bind_state_to_cpu(struct user_fpsimd_state *state,
->  				     void *sve_state, unsigned int sve_vl,
->  				     void *za_state, unsigned int sme_vl,
-> -				     u64 *svcr);
-> +				     u64 *svcr, enum fp_state *type);
->  
->  extern void fpsimd_flush_task_state(struct task_struct *target);
->  extern void fpsimd_save_and_flush_cpu_state(void);
-> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-> index de32152cea04..250e23f221c4 100644
-> --- a/arch/arm64/include/asm/kvm_host.h
-> +++ b/arch/arm64/include/asm/kvm_host.h
-> @@ -310,6 +310,7 @@ struct kvm_vcpu_arch {
->  	void *sve_state;
->  	unsigned int sve_max_vl;
->  	u64 svcr;
-> +	enum fp_state fp_type;
->  
->  	/* Stage 2 paging state used by the hardware on next switch */
->  	struct kvm_s2_mmu *hw_mmu;
-> diff --git a/arch/arm64/include/asm/processor.h b/arch/arm64/include/asm/processor.h
-> index 9e58749db21d..192986509a8e 100644
-> --- a/arch/arm64/include/asm/processor.h
-> +++ b/arch/arm64/include/asm/processor.h
-> @@ -122,6 +122,11 @@ enum vec_type {
->  	ARM64_VEC_MAX,
->  };
->  
-> +enum fp_state {
-> +	FP_STATE_FPSIMD,
-> +	FP_STATE_SVE,
-> +};
-> +
->  struct cpu_context {
->  	unsigned long x19;
->  	unsigned long x20;
-> @@ -152,6 +157,7 @@ struct thread_struct {
->  		struct user_fpsimd_state fpsimd_state;
->  	} uw;
->  
-> +	enum fp_state		fp_type;	/* registers FPSIMD or SVE? */
->  	unsigned int		fpsimd_cpu;
->  	void			*sve_state;	/* SVE registers, if any */
->  	void			*za_state;	/* ZA register, if any */
-> diff --git a/arch/arm64/kernel/fpsimd.c b/arch/arm64/kernel/fpsimd.c
-> index d67e658f1e24..fdb2925becdf 100644
-> --- a/arch/arm64/kernel/fpsimd.c
-> +++ b/arch/arm64/kernel/fpsimd.c
-> @@ -125,6 +125,7 @@ struct fpsimd_last_state_struct {
->  	u64 *svcr;
->  	unsigned int sve_vl;
->  	unsigned int sme_vl;
-> +	enum fp_state *type;
 
-For consistency: s/type/fp_type/ ?
+--===============6058515328204458932==
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="YVW2UW0qiFmtedHO"
+Content-Disposition: inline
 
->  };
->  
->  static DEFINE_PER_CPU(struct fpsimd_last_state_struct, fpsimd_last_state);
-> @@ -330,15 +331,6 @@ void task_set_vl_onexec(struct task_struct *task, enum vec_type type,
->   *    The task can execute SVE instructions while in userspace without
->   *    trapping to the kernel.
->   *
-> - *    When stored, Z0-Z31 (incorporating Vn in bits[127:0] or the
-> - *    corresponding Zn), P0-P15 and FFR are encoded in
-> - *    task->thread.sve_state, formatted appropriately for vector
-> - *    length task->thread.sve_vl or, if SVCR.SM is set,
-> - *    task->thread.sme_vl.
-> - *
-> - *    task->thread.sve_state must point to a valid buffer at least
-> - *    sve_state_size(task) bytes in size.
-> - *
->   *    During any syscall, the kernel may optionally clear TIF_SVE and
->   *    discard the vector state except for the FPSIMD subset.
->   *
-> @@ -348,7 +340,15 @@ void task_set_vl_onexec(struct task_struct *task, enum vec_type type,
->   *    do_sve_acc() to be called, which does some preparation and then
->   *    sets TIF_SVE.
->   *
-> - *    When stored, FPSIMD registers V0-V31 are encoded in
-> + * During any syscall, the kernel may optionally clear TIF_SVE and
-> + * discard the vector state except for the FPSIMD subset.
-> + *
-> + * The data will be stored in one of two formats:
-> + *
-> + *  * FPSIMD only - FP_STATE_FPSIMD:
-> + *
-> + *    When the FPSIMD only state stored task->thread.fp_type is set to
-> + *    FP_STATE_FPSIMD, the FPSIMD registers V0-V31 are encoded in
->   *    task->thread.uw.fpsimd_state; bits [max : 128] for each of Z0-Z31 are
->   *    logically zero but not stored anywhere; P0-P15 and FFR are not
->   *    stored and have unspecified values from userspace's point of
-> @@ -358,6 +358,18 @@ void task_set_vl_onexec(struct task_struct *task, enum vec_type type,
->   *    task->thread.sve_state does not need to be non-NULL, valid or any
->   *    particular size: it must not be dereferenced.
->   *
-> + *  * SVE state - FP_STATE_SVE:
-> + *
-> + *    When the full SVE state is stored task->thread.fp_type is set to
-> + *    FP_STATE_SVE and Z0-Z31 (incorporating Vn in bits[127:0] or the
-> + *    corresponding Zn), P0-P15 and FFR are encoded in in
-> + *    task->thread.sve_state, formatted appropriately for vector
-> + *    length task->thread.sve_vl or, if SVCR.SM is set,
-> + *    task->thread.sme_vl.
 
-Can you add a commend about the fate of the Vn data in fpsimd_state?
-My understanding is that they are stale data as soon as FP_STATE_SVE
-is set, but I'd really like this being clarified.
+--YVW2UW0qiFmtedHO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> + *
-> + *    task->thread.sve_state must point to a valid buffer at least
-> + *    sve_state_size(task) bytes in size.
-> + *
->   *  * FPSR and FPCR are always stored in task->thread.uw.fpsimd_state
->   *    irrespective of whether TIF_SVE is clear or set, since these are
->   *    not vector length dependent.
-> @@ -404,12 +416,15 @@ static void task_fpsimd_load(void)
->  		}
->  	}
->  
-> -	if (restore_sve_regs)
-> +	if (restore_sve_regs) {
-> +		WARN_ON_ONCE(current->thread.fp_type != FP_STATE_SVE);
->  		sve_load_state(sve_pffr(&current->thread),
->  			       &current->thread.uw.fpsimd_state.fpsr,
->  			       restore_ffr);
-> -	else
-> +	} else {
-> +		WARN_ON_ONCE(current->thread.fp_type != FP_STATE_FPSIMD);
->  		fpsimd_load_state(&current->thread.uw.fpsimd_state);
-> +	}
->  }
->  
->  /*
-> @@ -475,8 +490,10 @@ static void fpsimd_save(void)
->  		sve_save_state((char *)last->sve_state +
->  					sve_ffr_offset(vl),
->  			       &last->st->fpsr, save_ffr);
-> +		*last->type = FP_STATE_SVE;
->  	} else {
->  		fpsimd_save_state(last->st);
-> +		*last->type = FP_STATE_FPSIMD;
->  	}
->  }
->  
-> @@ -847,8 +864,10 @@ int vec_set_vector_length(struct task_struct *task, enum vec_type type,
->  
->  	fpsimd_flush_task_state(task);
->  	if (test_and_clear_tsk_thread_flag(task, TIF_SVE) ||
-> -	    thread_sm_enabled(&task->thread))
-> +	    thread_sm_enabled(&task->thread)) {
->  		sve_to_fpsimd(task);
-> +		task->thread.fp_type = FP_STATE_FPSIMD;
+On Mon, Jul 11, 2022 at 10:40:50AM +0100, Marc Zyngier wrote:
+> Mark Brown <broonie@kernel.org> wrote:
 
-Can you move this assignment into the sve_to_fpsimd() helper?
+> > +	enum fp_state *type;
 
-> +	}
->  
->  	if (system_supports_sme() && type == ARM64_VEC_SME) {
->  		task->thread.svcr &= ~(SVCR_SM_MASK |
-> @@ -1367,6 +1386,7 @@ static void sve_init_regs(void)
->  		fpsimd_bind_task_to_cpu();
->  	} else {
->  		fpsimd_to_sve(current);
-> +		current->thread.fp_type = FP_STATE_SVE;
+> For consistency: s/type/fp_type/ ?
 
-Same thing here.
+Sure if nobody else wants a different bikeshed.  It really needs a
+longer name like fp_state_t or something but that had it's own problems
+with non-idiomaticness.
 
->  	}
->  }
->  
-> @@ -1606,6 +1626,8 @@ void fpsimd_flush_thread(void)
->  		current->thread.svcr = 0;
->  	}
->  
-> +	current->thread.fp_type = FP_STATE_FPSIMD;
-> +
->  	put_cpu_fpsimd_context();
->  	kfree(sve_state);
->  	kfree(za_state);
-> @@ -1654,8 +1676,10 @@ void fpsimd_kvm_prepare(void)
->  	 */
->  	get_cpu_fpsimd_context();
->  
-> -	if (test_and_clear_thread_flag(TIF_SVE))
-> +	if (test_and_clear_thread_flag(TIF_SVE)) {
->  		sve_to_fpsimd(current);
-> +		current->thread.fp_type = FP_STATE_FPSIMD;
-> +	}
->  
->  	put_cpu_fpsimd_context();
->  }
-> @@ -1677,6 +1701,7 @@ static void fpsimd_bind_task_to_cpu(void)
->  	last->sve_vl = task_get_sve_vl(current);
->  	last->sme_vl = task_get_sme_vl(current);
->  	last->svcr = &current->thread.svcr;
-> +	last->type = &current->thread.fp_type;
->  	current->thread.fpsimd_cpu = smp_processor_id();
->  
->  	/*
-> @@ -1700,7 +1725,8 @@ static void fpsimd_bind_task_to_cpu(void)
->  
->  void fpsimd_bind_state_to_cpu(struct user_fpsimd_state *st, void *sve_state,
->  			      unsigned int sve_vl, void *za_state,
-> -			      unsigned int sme_vl, u64 *svcr)
-> +			      unsigned int sme_vl, u64 *svcr,
-> +			      enum fp_state *type)
->  {
->  	struct fpsimd_last_state_struct *last =
->  		this_cpu_ptr(&fpsimd_last_state);
-> @@ -1714,6 +1740,7 @@ void fpsimd_bind_state_to_cpu(struct user_fpsimd_state *st, void *sve_state,
->  	last->za_state = za_state;
->  	last->sve_vl = sve_vl;
->  	last->sme_vl = sme_vl;
-> +	last->type = type;
->  }
->  
->  /*
-> diff --git a/arch/arm64/kernel/process.c b/arch/arm64/kernel/process.c
-> index 92bcc1768f0b..944d782d581b 100644
-> --- a/arch/arm64/kernel/process.c
-> +++ b/arch/arm64/kernel/process.c
-> @@ -335,6 +335,8 @@ int arch_dup_task_struct(struct task_struct *dst, struct task_struct *src)
->  		clear_tsk_thread_flag(dst, TIF_SME);
->  	}
->  
-> +	dst->thread.fp_type = FP_STATE_FPSIMD;
-> +
->  	/* clear any pending asynchronous tag fault raised by the parent */
->  	clear_tsk_thread_flag(dst, TIF_MTE_ASYNC_FAULT);
->  
-> diff --git a/arch/arm64/kernel/ptrace.c b/arch/arm64/kernel/ptrace.c
-> index 21da83187a60..e0233f322af3 100644
-> --- a/arch/arm64/kernel/ptrace.c
-> +++ b/arch/arm64/kernel/ptrace.c
-> @@ -892,8 +892,7 @@ static int sve_set_common(struct task_struct *target,
->  		ret = __fpr_set(target, regset, pos, count, kbuf, ubuf,
->  				SVE_PT_FPSIMD_OFFSET);
->  		clear_tsk_thread_flag(target, TIF_SVE);
-> -		if (type == ARM64_VEC_SME)
-> -			fpsimd_force_sync_to_sve(target);
+> >  	if (test_and_clear_tsk_thread_flag(task, TIF_SVE) ||
+> > -	    thread_sm_enabled(&task->thread))
+> > +	    thread_sm_enabled(&task->thread)) {
+> >  		sve_to_fpsimd(task);
+> > +		task->thread.fp_type = FP_STATE_FPSIMD;
 
-I don't get this particular change. Can you please clarify?
+> Can you move this assignment into the sve_to_fpsimd() helper?
 
-> +		target->thread.fp_type = FP_STATE_FPSIMD;
->  		goto out;
->  	}
->  
-> @@ -916,6 +915,7 @@ static int sve_set_common(struct task_struct *target,
->  	if (!target->thread.sve_state) {
->  		ret = -ENOMEM;
->  		clear_tsk_thread_flag(target, TIF_SVE);
-> +		target->thread.fp_type = FP_STATE_FPSIMD;
->  		goto out;
->  	}
->  
-> @@ -954,6 +954,8 @@ static int sve_set_common(struct task_struct *target,
->  				 &target->thread.uw.fpsimd_state.fpsr,
->  				 start, end);
->  
-> +	target->thread.fp_type = FP_STATE_SVE;
-> +
->  out:
->  	fpsimd_flush_task_state(target);
->  	return ret;
-> diff --git a/arch/arm64/kernel/signal.c b/arch/arm64/kernel/signal.c
-> index b0980fbb6bc7..23dd4c3bcfed 100644
-> --- a/arch/arm64/kernel/signal.c
-> +++ b/arch/arm64/kernel/signal.c
-> @@ -207,6 +207,7 @@ static int restore_fpsimd_context(struct fpsimd_context __user *ctx)
->  	__get_user_error(fpsimd.fpcr, &ctx->fpcr, err);
->  
->  	clear_thread_flag(TIF_SVE);
-> +	current->thread.fp_type = FP_STATE_FPSIMD;
->  
->  	/* load the hardware registers from the fpsimd_state structure */
->  	if (!err)
-> @@ -289,6 +290,7 @@ static int restore_sve_fpsimd_context(struct user_ctxs *user)
->  	if (sve.head.size <= sizeof(*user->sve)) {
->  		clear_thread_flag(TIF_SVE);
->  		current->thread.svcr &= ~SVCR_SM_MASK;
-> +		current->thread.fp_type = FP_STATE_FPSIMD;
->  		goto fpsimd_only;
->  	}
->  
-> @@ -324,6 +326,7 @@ static int restore_sve_fpsimd_context(struct user_ctxs *user)
->  		current->thread.svcr |= SVCR_SM_MASK;
->  	else
->  		set_thread_flag(TIF_SVE);
-> +	current->thread.fp_type = FP_STATE_SVE;
->  
->  fpsimd_only:
->  	/* copy the FP and status/control registers */
-> diff --git a/arch/arm64/kvm/fpsimd.c b/arch/arm64/kvm/fpsimd.c
-> index a433ee8da232..be3ddb214ab1 100644
-> --- a/arch/arm64/kvm/fpsimd.c
-> +++ b/arch/arm64/kvm/fpsimd.c
-> @@ -139,7 +139,8 @@ void kvm_arch_vcpu_ctxsync_fp(struct kvm_vcpu *vcpu)
->  		fpsimd_bind_state_to_cpu(&vcpu->arch.ctxt.fp_regs,
->  					 vcpu->arch.sve_state,
->  					 vcpu->arch.sve_max_vl,
-> -					 NULL, 0, &vcpu->arch.svcr);
-> +					 NULL, 0, &vcpu->arch.svcr,
-> +					 &vcpu->arch.fp_type);
->  
->  		clear_thread_flag(TIF_FOREIGN_FPSTATE);
->  		update_thread_flag(TIF_SVE, vcpu_has_sve(vcpu));
+There are cases where we want a FPSIMD version of the state for reading
+but don't want to affect the actual state of the process (eg, if someone
+reads the FPSIMD registers via ptrace) so we don't want to change the
+active register state just because we converted it.  Adding another API
+that does the convert and update didn't feel like it was helping since
+you then have to remember which API does what and we already have lots
+of similarly named functions for slightly different contexts.
 
-Thanks,
+> >  	} else {
+> >  		fpsimd_to_sve(current);
+> > +		current->thread.fp_type = FP_STATE_SVE;
 
-	M.
+> Same thing here.
 
--- 
-Without deviation from the norm, progress is not possible.
+There's not the same issue with reading FPSIMD state via the SVE APIs
+but for consistency it seems best to always leave these updates in the
+callers.
+
+> > --- a/arch/arm64/kernel/ptrace.c
+> > +++ b/arch/arm64/kernel/ptrace.c
+> > @@ -892,8 +892,7 @@ static int sve_set_common(struct task_struct *target,
+> >  		ret = __fpr_set(target, regset, pos, count, kbuf, ubuf,
+> >  				SVE_PT_FPSIMD_OFFSET);
+> >  		clear_tsk_thread_flag(target, TIF_SVE);
+> > -		if (type == ARM64_VEC_SME)
+> > -			fpsimd_force_sync_to_sve(target);
+
+> I don't get this particular change. Can you please clarify?
+
+That should probably be shifted to a later patch in the series, I think
+I just rebased it to the wrong place.
+
+--YVW2UW0qiFmtedHO
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmLMDAcACgkQJNaLcl1U
+h9ANmwf/QKiXnauXjm6MI0qckKX0gB0dAd3z82l8Z/CXxGBMHmLCx5uHAuLwYbRb
+VMaUfRDQz3mHrW+SBnZMV93Hu8EuCnNwFXgOiWM2Z5/x0PgBaqr9tAjzgGTwP1kR
+PmGtE9t7k0mGf0kTd4dr04bakeSiTAQogfIFPKmZDXHq39BXQj4rou4TjD4yh/3L
+UlVALroKLwFmfA1h+m4TM6jRtQuwQOqzVfrVbIHygPGVYYJLDOdYnmctRJM3GtnT
+PNRtb/athlHcLBlHetXaBcdMKAbwimwtoYS7rgwvNvv2RvQWhnXFO40Mc0yExFfQ
+CabCVdlqOoF/m4caKpNeiamSqP7/Gg==
+=Lk2Y
+-----END PGP SIGNATURE-----
+
+--YVW2UW0qiFmtedHO--
+
+--===============6058515328204458932==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
 https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+
+--===============6058515328204458932==--
