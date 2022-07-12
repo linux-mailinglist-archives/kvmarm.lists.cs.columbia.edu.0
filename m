@@ -2,10 +2,10 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9346B5716A3
+	by mail.lfdr.de (Postfix) with ESMTP id BE5AD5716A4
 	for <lists+kvmarm@lfdr.de>; Tue, 12 Jul 2022 12:09:00 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 093874BE73;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 398A64BE7A;
 	Tue, 12 Jul 2022 06:09:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
@@ -13,53 +13,53 @@ X-Spam-Score: -1.79
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.79 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@linux.dev
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Dx74JIrOND4V; Tue, 12 Jul 2022 06:08:58 -0400 (EDT)
+	with ESMTP id QptFtq04NyL0; Tue, 12 Jul 2022 06:09:00 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7938D4BE79;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 912C34BE7E;
 	Tue, 12 Jul 2022 06:08:57 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0D98B4BD59
- for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Jul 2022 05:13:53 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 657F34BA94
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Jul 2022 05:33:25 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 22i5u6HBlDf8 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 12 Jul 2022 05:13:51 -0400 (EDT)
-Received: from out0.migadu.com (out0.migadu.com [94.23.1.103])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id CE6614BCCA
- for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Jul 2022 05:13:51 -0400 (EDT)
-Date: Tue, 12 Jul 2022 11:13:48 +0200
+ with ESMTP id k47kNiGdRXXT for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 12 Jul 2022 05:33:20 -0400 (EDT)
+Received: from out1.migadu.com (out1.migadu.com [91.121.223.63])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2DFD04BE51
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 12 Jul 2022 05:33:20 -0400 (EDT)
+Date: Tue, 12 Jul 2022 11:33:17 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1657617230;
+ t=1657618399;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=3Zt0Xhd8ddIucQPrOJb3PEM9OfWFEuoA7oRWJOVyzHU=;
- b=Y3+CoTo+csjBr7N8wooQcAhjhzmL1GWrCYpUtpjRLRdD7JnZFZPSkuvf1cpISLlWIceEsu
- cyRltp8DlQo+sEYHHa2iHApdQAq2k8bx/7PNqZ7VQz81f5gc3Lcn6Mqf/IfIxnp1x3+LZ2
- vpRLVNQW0WGFFl+hpxhAUuel6MPfolc=
+ bh=QtyGWX9Gz9azNLT42QqAs9tRlWogPt/scdNZm8zwqnw=;
+ b=S/x4GPRV7jQfxZuhsFSChrANVRnSNO7IEM/NSJu/y6kThr9N2g2KtJXNTlig0qg7cppUpt
+ PaA6K7FE+Ir2aaDhVXlSaOqiwhf46T6hQ0NuMM1gpQB5gzYf9FiJoM7TfvVMnXCTDFjI/b
+ XJYBh3/r1QiJldnKg96GQnPDHPK3WyU=
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
 From: Andrew Jones <andrew.jones@linux.dev>
 To: Ricardo Koller <ricarkol@google.com>
-Subject: Re: [PATCH v4 03/13] KVM: selftests: Add
- vm_alloc_page_table_in_memslot library function
-Message-ID: <20220712091348.66x54s47ali4h2ki@kamzik>
+Subject: Re: [PATCH v4 04/13] KVM: selftests: aarch64: Export _virt_pg_map
+ with a pt_memslot arg
+Message-ID: <20220712093317.jvm436y3noqam76h@kamzik>
 References: <20220624213257.1504783-1-ricarkol@google.com>
- <20220624213257.1504783-4-ricarkol@google.com>
+ <20220624213257.1504783-5-ricarkol@google.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20220624213257.1504783-4-ricarkol@google.com>
+In-Reply-To: <20220624213257.1504783-5-ricarkol@google.com>
 X-Migadu-Flow: FLOW_OUT
 X-Migadu-Auth-User: linux.dev
 X-Mailman-Approved-At: Tue, 12 Jul 2022 06:08:56 -0400
-Cc: drjones@redhat.com, kvm@vger.kernel.org, maz@kernel.org, bgardon@google.com,
- dmatlack@google.com, pbonzini@redhat.com, axelrasmussen@google.com,
+Cc: kvm@vger.kernel.org, maz@kernel.org, axelrasmussen@google.com,
+ bgardon@google.com, dmatlack@google.com, pbonzini@redhat.com,
  kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
@@ -77,54 +77,18 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Fri, Jun 24, 2022 at 02:32:47PM -0700, Ricardo Koller wrote:
-> Add a library function to allocate a page-table physical page in a
-> particular memslot.  The default behavior is to create new page-table
-> pages in memslot 0.
+On Fri, Jun 24, 2022 at 02:32:48PM -0700, Ricardo Koller wrote:
+> Add an argument, pt_memslot, into _virt_pg_map in order to use a
+> specific memslot for the page-table allocations performed when creating
+> a new map. This will be used in a future commit to test having PTEs
+> stored on memslots with different setups (e.g., hugetlb with a hole).
 > 
 > Reviewed-by: Oliver Upton <oupton@google.com>
-> Reviewed-by: Ben Gardon <bgardon@google.com>
 > Signed-off-by: Ricardo Koller <ricarkol@google.com>
 > ---
->  tools/testing/selftests/kvm/include/kvm_util_base.h | 1 +
->  tools/testing/selftests/kvm/lib/kvm_util.c          | 8 +++++++-
->  2 files changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git a/tools/testing/selftests/kvm/include/kvm_util_base.h b/tools/testing/selftests/kvm/include/kvm_util_base.h
-> index 7ebfc8c7de17..54ede9fc923c 100644
-> --- a/tools/testing/selftests/kvm/include/kvm_util_base.h
-> +++ b/tools/testing/selftests/kvm/include/kvm_util_base.h
-> @@ -579,6 +579,7 @@ vm_paddr_t vm_phy_page_alloc(struct kvm_vm *vm, vm_paddr_t paddr_min,
->  vm_paddr_t vm_phy_pages_alloc(struct kvm_vm *vm, size_t num,
->  			      vm_paddr_t paddr_min, uint32_t memslot);
->  vm_paddr_t vm_alloc_page_table(struct kvm_vm *vm);
-> +vm_paddr_t vm_alloc_page_table_in_memslot(struct kvm_vm *vm, uint32_t pt_memslot);
->  
->  /*
->   * ____vm_create() does KVM_CREATE_VM and little else.  __vm_create() also
-> diff --git a/tools/testing/selftests/kvm/lib/kvm_util.c b/tools/testing/selftests/kvm/lib/kvm_util.c
-> index f8c104dba258..5ee20d4da222 100644
-> --- a/tools/testing/selftests/kvm/lib/kvm_util.c
-> +++ b/tools/testing/selftests/kvm/lib/kvm_util.c
-> @@ -1784,9 +1784,15 @@ vm_paddr_t vm_phy_page_alloc(struct kvm_vm *vm, vm_paddr_t paddr_min,
->  /* Arbitrary minimum physical address used for virtual translation tables. */
->  #define KVM_GUEST_PAGE_TABLE_MIN_PADDR 0x180000
->  
-> +vm_paddr_t vm_alloc_page_table_in_memslot(struct kvm_vm *vm, uint32_t pt_memslot)
-> +{
-> +	return vm_phy_page_alloc(vm, KVM_GUEST_PAGE_TABLE_MIN_PADDR,
-> +			pt_memslot);
-> +}
-> +
->  vm_paddr_t vm_alloc_page_table(struct kvm_vm *vm)
->  {
-> -	return vm_phy_page_alloc(vm, KVM_GUEST_PAGE_TABLE_MIN_PADDR, 0);
-> +	return vm_alloc_page_table_in_memslot(vm, 0);
->  }
->  
->  /*
-> -- 
-> 2.37.0.rc0.161.g10f37bed90-goog
+>  .../selftests/kvm/include/aarch64/processor.h        |  3 +++
+>  tools/testing/selftests/kvm/lib/aarch64/processor.c  | 12 ++++++------
+>  2 files changed, 9 insertions(+), 6 deletions(-)
 >
 
 Reviewed-by: Andrew Jones <andrew.jones@linux.dev>
