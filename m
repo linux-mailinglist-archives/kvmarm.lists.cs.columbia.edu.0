@@ -2,88 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 94FCA5751E0
-	for <lists+kvmarm@lfdr.de>; Thu, 14 Jul 2022 17:35:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1243575210
+	for <lists+kvmarm@lfdr.de>; Thu, 14 Jul 2022 17:41:23 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D9B924C5E5;
-	Thu, 14 Jul 2022 11:35:24 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2A0F74B445;
+	Thu, 14 Jul 2022 11:41:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.787
+X-Spam-Score: -1.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.787 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
 	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8m6xF-G0TjBj; Thu, 14 Jul 2022 11:35:24 -0400 (EDT)
+	with ESMTP id Z1wuvlQe-yh1; Thu, 14 Jul 2022 11:41:23 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4BF5B4C596;
-	Thu, 14 Jul 2022 11:35:23 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D230F4C520;
+	Thu, 14 Jul 2022 11:41:21 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C9934C591
- for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jul 2022 11:35:22 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BBA2B4C520
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jul 2022 11:41:20 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ZZd3+a-dL9ZB for <kvmarm@lists.cs.columbia.edu>;
- Thu, 14 Jul 2022 11:35:21 -0400 (EDT)
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com
- [209.85.214.180])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id ED2D74C46F
- for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jul 2022 11:35:20 -0400 (EDT)
-Received: by mail-pl1-f180.google.com with SMTP id k19so729738pll.5
- for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jul 2022 08:35:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to;
- bh=jw1a9NtjnOcexhTaceVUjWOdMbEAyVZWH2rm/Z273eI=;
- b=YHnEONUUADoF25ewKQsfvyaT/jYYsD0ZZqw3dUFMQPFDIqP6QxU1Gpb0D0zhBERlk4
- VKYPTedjmR1o9+0RrFfJrMtLJAhnh2jkFQK7FHEckQH6vNf18NIQmbFu1N+i+GcmKMEt
- awvouvFnp4VVllw+8MZfUeMwz05GBkwWr7fX6y5KGYwKHq/XaaOPCiJOwB4MzUKgrij5
- 2gvb97v1hB5c9mpWrDOHarQOn0UTpIKtgNpN/EwC9h2gVpIJW1UcgrH1N/lH7uZgaaNP
- kwJpnIKnP6HcP+iRMzRfB/NmzYruha9ZqRvaW3/u19SVpoTlenWU6qcMRSmyNA8OobMB
- 8zQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=jw1a9NtjnOcexhTaceVUjWOdMbEAyVZWH2rm/Z273eI=;
- b=v2BBnkQZHf4rqmrQE0OBqpL9RW+fzX1H63FvpMF2Dfpqy2qg7OihzgkLklECg0ddUB
- +NcY2Z9UB7Yx2KFVXFp/BZovRPW+4Og9Lwq75oZ1GnWEQDVrYJuQff/eYROAg4N7EMke
- Lo3ObuWSIrNuKUOAygB0qlju520qYy75Lw2dtcPBtkeNIwaxKeUejkWjgadBg2pvu4Nl
- dhRjm2bqU5iBv24eD0plm4Qbh7FN2oa0A06SzdviHGDXqpw2Wn968JpU9CoIDlQK1ouN
- dPWFZYOsJvyRrUG9DqPGf8ILbnqKt5aV+2Kn6EpXesN8dfAO2IsWvYPz9KPE49TCtpSX
- 0pnA==
-X-Gm-Message-State: AJIora+NoaGu3wsaZriV9Gz1ICz48ntCr4AtcNnFeuNMwwNKURY3lTk+
- kpDVnBel5f9HDZgDsg8Hmi6r0A==
-X-Google-Smtp-Source: AGRyM1vgNMOGyztZqnYxoIF9PKBibGcaOhduSNpBg1CPhgLHMpeyBynnCEbmfS68T5oS+8JWZemjrA==
-X-Received: by 2002:a17:902:a388:b0:16b:d52b:a038 with SMTP id
- x8-20020a170902a38800b0016bd52ba038mr8872152pla.56.1657812919607; 
- Thu, 14 Jul 2022 08:35:19 -0700 (PDT)
-Received: from google.com (123.65.230.35.bc.googleusercontent.com.
- [35.230.65.123]) by smtp.gmail.com with ESMTPSA id
- mm18-20020a17090b359200b001efa35356besm3836222pjb.28.2022.07.14.08.35.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Jul 2022 08:35:19 -0700 (PDT)
-Date: Thu, 14 Jul 2022 15:35:15 +0000
-From: Sean Christopherson <seanjc@google.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] KVM: selftests: Double check on the current CPU in
- rseq_test
-Message-ID: <YtA3s0VRj3x7vO7B@google.com>
-References: <20220714080642.3376618-1-gshan@redhat.com>
- <cd5d029c-b396-45ef-917b-92e054659623@redhat.com>
+ with ESMTP id yxvTigdVZiXj for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 14 Jul 2022 11:41:19 -0400 (EDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9A3C84B445
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jul 2022 11:41:19 -0400 (EDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 6A0EB61F5A;
+ Thu, 14 Jul 2022 15:41:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB38C341C8;
+ Thu, 14 Jul 2022 15:41:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1657813277;
+ bh=KCci7Zc0Qe8DJO0od+8TvidaaIOOcDyEDf6L//1MnIM=;
+ h=From:To:Cc:Subject:Date:From;
+ b=MAWQIz2V3VT7z9NNgf/QdQgKf55qjyCy2Xk8RZ7CQ57P404/TWyNiu/Q4bgK56QR+
+ gQ/WfESMD5VEFTtFPE+HN3VmANQEHtivXI8h0w8jytnMoWi+ygLplB1SzdBdgYYtWH
+ HICyUftjCz2xnsZ1hSEdqC1FqFdMVBbxEjjStQCvm2yKj9B2d3Q/Yn5a0qYZul/pix
+ zzV9n25j3IzlfajpjcTpV7Byq1oYet4duxQb+O5vIGxT/zuovTUH3JjFfjRe9JBWMI
+ 5wiklH9eb7MnE8DNjLALRbMmLb+LiNbFSenFha1PNDUxnWW3SmLE3vz7EhMktsyyLx
+ xH6SSQh7P2Jdg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=valley-girl.lan)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1oC0xn-007V0d-P5;
+ Thu, 14 Jul 2022 16:41:15 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
+Subject: [PATCH] KVM: arm64: selftests: Add support for GICv2 on v3
+Date: Thu, 14 Jul 2022 16:41:08 +0100
+Message-Id: <20220714154108.3531213-1-maz@kernel.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <cd5d029c-b396-45ef-917b-92e054659623@redhat.com>
-Cc: shan.gavin@gmail.com, kvm@vger.kernel.org, maz@kernel.org,
- linux-kernel@vger.kernel.org, oliver.upton@linux.dev,
- mathieu.desnoyers@efficios.com, linux-kselftest@vger.kernel.org,
- shuah@kernel.org, kvmarm@lists.cs.columbia.edu
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, james.morse@arm.com,
+ suzuki.poulose@arm.com, alexandru.elisei@arm.com, oliver.upton@linux.dev,
+ ricarkol@google.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Oliver Upton <oliver.upton@linux.dev>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -100,47 +88,66 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Jul 14, 2022, Paolo Bonzini wrote:
-> On 7/14/22 10:06, Gavin Shan wrote:
-> > In rseq_test, there are two threads created. Those two threads are
-> > 'main' and 'migration_thread' separately. We also have the assumption
-> > that non-migration status on 'migration-worker' thread guarantees the
-> > same non-migration status on 'main' thread. Unfortunately, the assumption
-> > isn't true. The 'main' thread can be migrated from one CPU to another
-> > one between the calls to sched_getcpu() and READ_ONCE(__rseq.cpu_id).
-> > The following assert is raised eventually because of the mismatched
-> > CPU numbers.
-> > 
-> > The issue can be reproduced on arm64 system occasionally.
-> 
-> Hmm, this does not seem a correct patch - the threads are already
-> synchronizing using seq_cnt, like this:
-> 
-> 	migration			main
-> 	----------------------		--------------------------------
-> 	seq_cnt = 1
-> 	smp_wmb()
-> 					snapshot = 0
-> 					smp_rmb()
-> 					cpu = sched_getcpu() reads 23
-> 	sched_setaffinity()
-> 					rseq_cpu = __rseq.cpuid reads 35
-> 					smp_rmb()
-> 					snapshot != seq_cnt -> retry
-> 	smp_wmb()
-> 	seq_cnt = 2
-> 
-> sched_setaffinity() is guaranteed to block until the task is enqueued on an
-> allowed CPU.
+The current vgic_init test wrongly assumes that the host cannot
+multiple versions of the GIC architecture, while v2 emulation
+on v3 has almost always been supported (it was supported before
+the standalone v3 emulation).
 
-Yes, and retrying could suppress detection of kernel bugs that this test is intended
-to catch.
+Tweak the test to support multiple GIC incarnations.
 
-> Can you check that smp_rmb() and smp_wmb() generate correct instructions on
-> arm64?
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+---
+ tools/testing/selftests/kvm/aarch64/vgic_init.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-That seems like the most likely scenario (or a kernel bug), I distinctly remember
-the barriers provided by tools/ being rather bizarre.
+diff --git a/tools/testing/selftests/kvm/aarch64/vgic_init.c b/tools/testing/selftests/kvm/aarch64/vgic_init.c
+index 34379c98d2f4..21ba4002fc18 100644
+--- a/tools/testing/selftests/kvm/aarch64/vgic_init.c
++++ b/tools/testing/selftests/kvm/aarch64/vgic_init.c
+@@ -670,7 +670,7 @@ int test_kvm_device(uint32_t gic_dev_type)
+ 
+ 	if (!_kvm_create_device(v.vm, other, true, &fd)) {
+ 		ret = _kvm_create_device(v.vm, other, false, &fd);
+-		TEST_ASSERT(ret && errno == EINVAL,
++		TEST_ASSERT(ret && (errno == EINVAL || errno == EEXIST),
+ 				"create GIC device while other version exists");
+ 	}
+ 
+@@ -698,6 +698,7 @@ int main(int ac, char **av)
+ {
+ 	int ret;
+ 	int pa_bits;
++	int cnt_impl = 0;
+ 
+ 	pa_bits = vm_guest_mode_params[VM_MODE_DEFAULT].pa_bits;
+ 	max_phys_size = 1ULL << pa_bits;
+@@ -706,17 +707,19 @@ int main(int ac, char **av)
+ 	if (!ret) {
+ 		pr_info("Running GIC_v3 tests.\n");
+ 		run_tests(KVM_DEV_TYPE_ARM_VGIC_V3);
+-		return 0;
++		cnt_impl++;
+ 	}
+ 
+ 	ret = test_kvm_device(KVM_DEV_TYPE_ARM_VGIC_V2);
+ 	if (!ret) {
+ 		pr_info("Running GIC_v2 tests.\n");
+ 		run_tests(KVM_DEV_TYPE_ARM_VGIC_V2);
+-		return 0;
++		cnt_impl++;
+ 	}
+ 
+-	print_skip("No GICv2 nor GICv3 support");
+-	exit(KSFT_SKIP);
++	if (!cnt_impl) {
++		print_skip("No GICv2 nor GICv3 support");
++		exit(KSFT_SKIP);
++	}
+ 	return 0;
+ }
+-- 
+2.34.1
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
