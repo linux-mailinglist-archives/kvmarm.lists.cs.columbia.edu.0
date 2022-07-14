@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5298D57458A
-	for <lists+kvmarm@lfdr.de>; Thu, 14 Jul 2022 09:10:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2F59E5744D4
+	for <lists+kvmarm@lfdr.de>; Thu, 14 Jul 2022 08:07:20 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 43FAF4C59E;
-	Thu, 14 Jul 2022 03:10:33 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3D1704C568;
+	Thu, 14 Jul 2022 02:07:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
@@ -15,71 +15,59 @@ X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
 	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id enAxhf9n-CZj; Thu, 14 Jul 2022 03:10:33 -0400 (EDT)
+	with ESMTP id VLeGnxTSzXXG; Thu, 14 Jul 2022 02:07:19 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D07F84C59A;
-	Thu, 14 Jul 2022 03:10:31 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CEF914C54F;
+	Thu, 14 Jul 2022 02:07:17 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0813A4C594
- for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jul 2022 03:10:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C87A64C52F
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jul 2022 02:07:16 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id wytsuRIcz-ap for <kvmarm@lists.cs.columbia.edu>;
- Thu, 14 Jul 2022 03:10:28 -0400 (EDT)
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3086D4C592
- for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jul 2022 03:10:28 -0400 (EDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ with ESMTP id oRXn7I9RC6jl for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 14 Jul 2022 02:07:15 -0400 (EDT)
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id A5D854C52E
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jul 2022 02:07:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1657778835;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=0Iv/of2lWJhY6Wq6eUx2wF1MOm6COuhI4THcs0fOz4c=;
+ b=fPzFMdNmjwuCC96UL0wdRD9AkBLOSBVSRC2qhVYd4DqeonmMWLVERZY6dkWe7BH/F7VX5M
+ 6LpqHTqTztJRheIPcDrZMdBMSMwxnwVxGzhNaVSN5HlWpUKjQlLpq1sMxo+lT/AfLNF7vl
+ TTgm/L08V7AoQHT4DTJjpNyI9yP1PzM=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-568-xg7vNdqMMFWLrvckPTivMg-1; Thu, 14 Jul 2022 02:07:10 -0400
+X-MC-Unique: xg7vNdqMMFWLrvckPTivMg-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by sin.source.kernel.org (Postfix) with ESMTPS id 390F0CE256B;
- Thu, 14 Jul 2022 07:10:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9947BC34114;
- Thu, 14 Jul 2022 07:10:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1657782621;
- bh=OW93xADmWIzkDjXJ3YhYksqVTv8k3OC+JR+fKsAdSus=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=Ob+epD8tkC8LjXI5bnJBB2af7jTHev4W+29rVw34ICgjtHVm2vjijZFoa+YMUiJUw
- +zX2ztSj9yg5u+xdMgXpRCKhf0t7OIezQfrBc4+qHTFy/tEscUu6u1YMwIpAf9oTek
- BaXAWHLfAYD8oe18fv05E4p+1buIVl5t33aq0vA3qaTslUg+/wTROuMo7Ci7x6CLSw
- mnU+43FS4TpiNS/t3imnQljheGTBS4i7CtSJVNkyzzJy3DSoOUZ2YG+qBNBmZNXwME
- bK6XL4YVnCEtQsDfopdxyfcFS9QYWJKYd11FWiYyEmCcPLiphVzC8zHaL1VJ4jfWSP
- p/RRWdr4vaKJA==
-Received: from ip-185-104-136-29.ptr.icomera.net ([185.104.136.29]
- helo=wait-a-minute.misterjones.org)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
- (envelope-from <maz@kernel.org>) id 1oBszD-007Ndf-LE;
- Thu, 14 Jul 2022 08:10:19 +0100
-Date: Thu, 14 Jul 2022 08:09:32 +0100
-Message-ID: <875yk0yxub.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Reiji Watanabe <reijiw@google.com>
-Subject: Re: [PATCH 13/19] KVM: arm64: vgic-v2: Consolidate userspace access
- for MMIO registers
-In-Reply-To: <CAAeT=Fx9CbiJStMJcQ=-iwoLhAQGcwPbW==b0yHxkd3hmcXjiQ@mail.gmail.com>
-References: <20220706164304.1582687-1-maz@kernel.org>
- <20220706164304.1582687-14-maz@kernel.org>
- <CAAeT=Fx9CbiJStMJcQ=-iwoLhAQGcwPbW==b0yHxkd3hmcXjiQ@mail.gmail.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
- (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-X-SA-Exim-Connect-IP: 185.104.136.29
-X-SA-Exim-Rcpt-To: reijiw@google.com, kvmarm@lists.cs.columbia.edu,
- kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, schspa@gmail.com,
- kernel-team@android.com, oliver.upton@linux.dev
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: kvm@vger.kernel.org, Schspa Shi <schspa@gmail.com>,
- Oliver Upton <oliver.upton@linux.dev>, kernel-team@android.com,
- kvmarm@lists.cs.columbia.edu, Linux ARM <linux-arm-kernel@lists.infradead.org>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B956E802D1C;
+ Thu, 14 Jul 2022 06:07:09 +0000 (UTC)
+Received: from gshan.redhat.com (vpn2-54-37.bne.redhat.com [10.64.54.37])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 6237140E80E0;
+ Thu, 14 Jul 2022 06:07:05 +0000 (UTC)
+From: Gavin Shan <gshan@redhat.com>
+To: kvmarm@lists.cs.columbia.edu
+Subject: [PATCH] KVM: selftests: Double check on the current CPU in rseq_test
+Date: Thu, 14 Jul 2022 16:06:42 +0800
+Message-Id: <20220714080642.3376618-1-gshan@redhat.com>
+MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 2.84 on 10.11.54.2
+Cc: shan.gavin@gmail.com, kvm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ oliver.upton@linux.dev, mathieu.desnoyers@efficios.com,
+ linux-kselftest@vger.kernel.org, maz@kernel.org, pbonzini@redhat.com,
+ shuah@kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -96,136 +84,79 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, 14 Jul 2022 05:43:27 +0100,
-Reiji Watanabe <reijiw@google.com> wrote:
-> 
-> Hi Marc,
-> 
-> On Wed, Jul 6, 2022 at 10:05 AM Marc Zyngier <maz@kernel.org> wrote:
-> >
-> > Align the GICv2 MMIO accesses from userspace with the way the GICv3
-> > code is now structured.
-> >
-> > Signed-off-by: Marc Zyngier <maz@kernel.org>
-> > ---
-> >  arch/arm64/kvm/vgic/vgic-kvm-device.c | 40 ++++++++++++---------------
-> >  1 file changed, 18 insertions(+), 22 deletions(-)
-> >
-> > diff --git a/arch/arm64/kvm/vgic/vgic-kvm-device.c b/arch/arm64/kvm/vgic/vgic-kvm-device.c
-> > index 925875722027..ddead333c232 100644
-> > --- a/arch/arm64/kvm/vgic/vgic-kvm-device.c
-> > +++ b/arch/arm64/kvm/vgic/vgic-kvm-device.c
-> > @@ -348,17 +348,18 @@ bool lock_all_vcpus(struct kvm *kvm)
-> >   *
-> >   * @dev:      kvm device handle
-> >   * @attr:     kvm device attribute
-> > - * @reg:      address the value is read or written
-> >   * @is_write: true if userspace is writing a register
-> >   */
-> >  static int vgic_v2_attr_regs_access(struct kvm_device *dev,
-> >                                     struct kvm_device_attr *attr,
-> > -                                   u32 *reg, bool is_write)
-> > +                                   bool is_write)
-> >  {
-> > +       u32 __user *uaddr = (u32 __user *)(unsigned long)attr->addr;
-> >         struct vgic_reg_attr reg_attr;
-> >         gpa_t addr;
-> >         struct kvm_vcpu *vcpu;
-> >         int ret;
-> > +       u32 val;
-> >
-> >         ret = vgic_v2_parse_attr(dev, attr, &reg_attr);
-> >         if (ret)
-> > @@ -367,6 +368,10 @@ static int vgic_v2_attr_regs_access(struct kvm_device *dev,
-> >         vcpu = reg_attr.vcpu;
-> >         addr = reg_attr.addr;
-> >
-> > +       if (is_write)
-> > +               if (get_user(val, uaddr))
-> > +                       return -EFAULT;
-> > +
-> >         mutex_lock(&dev->kvm->lock);
-> >
-> >         ret = vgic_init(dev->kvm);
-> > @@ -380,10 +385,10 @@ static int vgic_v2_attr_regs_access(struct kvm_device *dev,
-> >
-> >         switch (attr->group) {
-> >         case KVM_DEV_ARM_VGIC_GRP_CPU_REGS:
-> > -               ret = vgic_v2_cpuif_uaccess(vcpu, is_write, addr, reg);
-> > +               ret = vgic_v2_cpuif_uaccess(vcpu, is_write, addr, &val);
-> >                 break;
-> >         case KVM_DEV_ARM_VGIC_GRP_DIST_REGS:
-> > -               ret = vgic_v2_dist_uaccess(vcpu, is_write, addr, reg);
-> > +               ret = vgic_v2_dist_uaccess(vcpu, is_write, addr, &val);
-> >                 break;
-> >         default:
-> >                 ret = -EINVAL;
-> > @@ -393,6 +398,11 @@ static int vgic_v2_attr_regs_access(struct kvm_device *dev,
-> >         unlock_all_vcpus(dev->kvm);
-> >  out:
-> >         mutex_unlock(&dev->kvm->lock);
-> > +
-> > +       if (!ret && !is_write)
-> > +               if (put_user(val, uaddr))
-> > +                       ret = -EFAULT;
-> > +
-> >         return ret;
-> >  }
-> >
-> > @@ -407,15 +417,8 @@ static int vgic_v2_set_attr(struct kvm_device *dev,
-> >
-> >         switch (attr->group) {
-> >         case KVM_DEV_ARM_VGIC_GRP_DIST_REGS:
-> > -       case KVM_DEV_ARM_VGIC_GRP_CPU_REGS: {
-> > -               u32 __user *uaddr = (u32 __user *)(long)attr->addr;
-> > -               u32 reg;
-> > -
-> > -               if (get_user(reg, uaddr))
-> > -                       return -EFAULT;
-> > -
-> > -               return vgic_v2_attr_regs_access(dev, attr, &reg, true);
-> > -       }
-> > +       case KVM_DEV_ARM_VGIC_GRP_CPU_REGS:
-> > +               return vgic_v2_attr_regs_access(dev, attr, true);
-> >         }
-> >
-> >         return -ENXIO;
-> > @@ -432,15 +435,8 @@ static int vgic_v2_get_attr(struct kvm_device *dev,
-> >
-> >         switch (attr->group) {
-> >         case KVM_DEV_ARM_VGIC_GRP_DIST_REGS:
-> > -       case KVM_DEV_ARM_VGIC_GRP_CPU_REGS: {
-> > -               u32 __user *uaddr = (u32 __user *)(long)attr->addr;
-> > -               u32 reg = 0;
-> > -
-> > -               ret = vgic_v2_attr_regs_access(dev, attr, &reg, false);
-> > -               if (ret)
-> > -                       return ret;
-> > -               return put_user(reg, uaddr);
-> > -       }
-> > +       case KVM_DEV_ARM_VGIC_GRP_CPU_REGS:
-> > +               return vgic_v2_attr_regs_access(dev, attr, false);
-> >         }
-> >
-> >         return -ENXIO;
-> 
-> For vgic_v2_{set,get}_attr(), perhaps it might be even simpler
-> to call vgic_{set,get}_common_attr() from the "default" case
-> of "switch (attr->group)".
-> This is not directly related to this patch though:)
+In rseq_test, there are two threads created. Those two threads are
+'main' and 'migration_thread' separately. We also have the assumption
+that non-migration status on 'migration-worker' thread guarantees the
+same non-migration status on 'main' thread. Unfortunately, the assumption
+isn't true. The 'main' thread can be migrated from one CPU to another
+one between the calls to sched_getcpu() and READ_ONCE(__rseq.cpu_id).
+The following assert is raised eventually because of the mismatched
+CPU numbers.
 
-Indeed. This also applies to v3, and there is a couple more cleanups
-that can be added. I'll add that as an extra patch, as the result is
-rather nice.
+The issue can be reproduced on arm64 system occasionally.
 
-> Reviewed-by: Reiji Watanabe <reijiw@google.com>
+  host# uname -r
+  5.19.0-rc6-gavin+
+  host# # cat /proc/cpuinfo | grep processor | tail -n 1
+  processor    : 223
+  host# pwd
+  /home/gavin/sandbox/linux.main/tools/testing/selftests/kvm
+  host# for i in `seq 1 100`;   \
+        do echo "--------> $i"; \
+        ./rseq_test; sleep 3;   \
+        done
+  --------> 1
+  --------> 2
+  --------> 3
+  --------> 4
+  --------> 5
+  --------> 6
+  ==== Test Assertion Failure ====
+    rseq_test.c:265: rseq_cpu == cpu
+    pid=3925 tid=3925 errno=4 - Interrupted system call
+       1  0x0000000000401963: main at rseq_test.c:265 (discriminator 2)
+       2  0x0000ffffb044affb: ?? ??:0
+       3  0x0000ffffb044b0c7: ?? ??:0
+       4  0x0000000000401a6f: _start at ??:?
+    rseq CPU = 4, sched CPU = 27
 
-Thanks,
+This fixes the issue by double-checking on the current CPU after
+call to READ_ONCE(__rseq.cpu_id) and restarting the test if the
+two consecutive CPU numbers aren't euqal.
 
-	M.
+Fixes: 61e52f1630f5 ("KVM: selftests: Add a test for KVM_RUN+rseq to detect task migration bugs")
+Signed-off-by: Gavin Shan <gshan@redhat.com>
+---
+ tools/testing/selftests/kvm/rseq_test.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
+diff --git a/tools/testing/selftests/kvm/rseq_test.c b/tools/testing/selftests/kvm/rseq_test.c
+index 4158da0da2bb..74709dd9f5b2 100644
+--- a/tools/testing/selftests/kvm/rseq_test.c
++++ b/tools/testing/selftests/kvm/rseq_test.c
+@@ -207,7 +207,7 @@ int main(int argc, char *argv[])
+ {
+ 	int r, i, snapshot;
+ 	struct kvm_vm *vm;
+-	u32 cpu, rseq_cpu;
++	u32 cpu, rseq_cpu, last_cpu;
+ 
+ 	/* Tell stdout not to buffer its content */
+ 	setbuf(stdout, NULL);
+@@ -259,8 +259,9 @@ int main(int argc, char *argv[])
+ 			smp_rmb();
+ 			cpu = sched_getcpu();
+ 			rseq_cpu = READ_ONCE(__rseq.cpu_id);
++			last_cpu = sched_getcpu();
+ 			smp_rmb();
+-		} while (snapshot != atomic_read(&seq_cnt));
++		} while (snapshot != atomic_read(&seq_cnt) || cpu != last_cpu);
+ 
+ 		TEST_ASSERT(rseq_cpu == cpu,
+ 			    "rseq CPU = %d, sched CPU = %d\n", rseq_cpu, cpu);
 -- 
-Without deviation from the norm, progress is not possible.
+2.23.0
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
