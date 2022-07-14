@@ -2,72 +2,85 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F59E5744D4
-	for <lists+kvmarm@lfdr.de>; Thu, 14 Jul 2022 08:07:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BE2E574F2B
+	for <lists+kvmarm@lfdr.de>; Thu, 14 Jul 2022 15:31:07 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3D1704C568;
-	Thu, 14 Jul 2022 02:07:19 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7C9934C580;
+	Thu, 14 Jul 2022 09:31:05 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -1.788
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VLeGnxTSzXXG; Thu, 14 Jul 2022 02:07:19 -0400 (EDT)
+	with ESMTP id JMtxzTzDENxU; Thu, 14 Jul 2022 09:31:05 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CEF914C54F;
-	Thu, 14 Jul 2022 02:07:17 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 13C294C4D7;
+	Thu, 14 Jul 2022 09:31:04 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C87A64C52F
- for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jul 2022 02:07:16 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 552E24C4D7
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jul 2022 09:31:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id oRXn7I9RC6jl for <kvmarm@lists.cs.columbia.edu>;
- Thu, 14 Jul 2022 02:07:15 -0400 (EDT)
+ with ESMTP id 7361VSISSzV3 for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 14 Jul 2022 09:31:02 -0400 (EDT)
 Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [170.10.133.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A5D854C52E
- for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jul 2022 02:07:15 -0400 (EDT)
+ (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2DA5F4C4CD
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jul 2022 09:31:02 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1657778835;
+ s=mimecast20190719; t=1657805461;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=0Iv/of2lWJhY6Wq6eUx2wF1MOm6COuhI4THcs0fOz4c=;
- b=fPzFMdNmjwuCC96UL0wdRD9AkBLOSBVSRC2qhVYd4DqeonmMWLVERZY6dkWe7BH/F7VX5M
- 6LpqHTqTztJRheIPcDrZMdBMSMwxnwVxGzhNaVSN5HlWpUKjQlLpq1sMxo+lT/AfLNF7vl
- TTgm/L08V7AoQHT4DTJjpNyI9yP1PzM=
+ in-reply-to:in-reply-to:references:references;
+ bh=3A2MgQ6BI+ZOeh/AAU41/XCV92zAyr9BTrgNi4g6/m4=;
+ b=iMYkYmwXcXXarM/MU09cnLj279qFG57eqyhNe6PFX77cmYFSq6GRLzBpmxi4AdcesZFoY2
+ /KESRfo9r/MLJFkd7HD3r/Q5TArEoMd/TFb7eu1Svo1SJ9t5HlgdFVG0BatWLSc9VbdRkL
+ 9/5KNgaJX7slneUM6OUJGhzvSYmtC9w=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-568-xg7vNdqMMFWLrvckPTivMg-1; Thu, 14 Jul 2022 02:07:10 -0400
-X-MC-Unique: xg7vNdqMMFWLrvckPTivMg-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
+ us-mta-349-E8geG59JNpCXsKJ8_zEn6w-1; Thu, 14 Jul 2022 09:30:57 -0400
+X-MC-Unique: E8geG59JNpCXsKJ8_zEn6w-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B956E802D1C;
- Thu, 14 Jul 2022 06:07:09 +0000 (UTC)
-Received: from gshan.redhat.com (vpn2-54-37.bne.redhat.com [10.64.54.37])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 6237140E80E0;
- Thu, 14 Jul 2022 06:07:05 +0000 (UTC)
-From: Gavin Shan <gshan@redhat.com>
-To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH] KVM: selftests: Double check on the current CPU in rseq_test
-Date: Thu, 14 Jul 2022 16:06:42 +0800
-Message-Id: <20220714080642.3376618-1-gshan@redhat.com>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C4F1F8117B0;
+ Thu, 14 Jul 2022 13:30:56 +0000 (UTC)
+Received: from localhost (unknown [10.39.193.46])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 5F239492C3B;
+ Thu, 14 Jul 2022 13:30:56 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Subject: Re: [PATCH] KVM: arm64: permit MAP_SHARED mappings with MTE enabled
+In-Reply-To: <Ysg38XZSzPk8tYwK@xz-m1.local>
+Organization: Red Hat GmbH
+References: <20220623234944.141869-1-pcc@google.com>
+ <YrXu0Uzi73pUDwye@arm.com> <14f2a69e-4022-e463-1662-30032655e3d1@arm.com>
+ <875ykmcd8q.fsf@redhat.com> <YrwRPh1S6qjzkJMm@arm.com>
+ <7a32fde7-611d-4649-2d74-f5e434497649@arm.com> <871qv12hqj.fsf@redhat.com>
+ <b91ae197-d191-2204-aab5-21a0aabded69@arm.com> <87bktz7o49.fsf@redhat.com>
+ <Ysg38XZSzPk8tYwK@xz-m1.local>
+User-Agent: Notmuch/0.36 (https://notmuchmail.org)
+Date: Thu, 14 Jul 2022 15:30:54 +0200
+Message-ID: <87edynizxt.fsf@redhat.com>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.84 on 10.11.54.2
-Cc: shan.gavin@gmail.com, kvm@vger.kernel.org, linux-kernel@vger.kernel.org,
- oliver.upton@linux.dev, mathieu.desnoyers@efficios.com,
- linux-kselftest@vger.kernel.org, maz@kernel.org, pbonzini@redhat.com,
- shuah@kernel.org
+X-Scanned-By: MIMEDefang 2.85 on 10.11.54.9
+Cc: Jean-Philippe Brucker <jean-philippe@linaro.org>, kvm@vger.kernel.org,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ "Dr. David Alan Gilbert" <dgilbert@redhat.com>,
+ Steven Price <steven.price@arm.com>, Will Deacon <will@kernel.org>,
+ Evgenii Stepanov <eugenis@google.com>, Michael Roth <michael.roth@amd.com>,
+ Marc Zyngier <maz@kernel.org>, Chao Peng <chao.p.peng@linux.intel.com>,
+ Andy Lutomirski <luto@amacapital.net>, Peter Collingbourne <pcc@google.com>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -84,78 +97,33 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-In rseq_test, there are two threads created. Those two threads are
-'main' and 'migration_thread' separately. We also have the assumption
-that non-migration status on 'migration-worker' thread guarantees the
-same non-migration status on 'main' thread. Unfortunately, the assumption
-isn't true. The 'main' thread can be migrated from one CPU to another
-one between the calls to sched_getcpu() and READ_ONCE(__rseq.cpu_id).
-The following assert is raised eventually because of the mismatched
-CPU numbers.
+On Fri, Jul 08 2022, Peter Xu <peterx@redhat.com> wrote:
 
-The issue can be reproduced on arm64 system occasionally.
+> On Fri, Jul 08, 2022 at 03:03:34PM +0200, Cornelia Huck wrote:
 
-  host# uname -r
-  5.19.0-rc6-gavin+
-  host# # cat /proc/cpuinfo | grep processor | tail -n 1
-  processor    : 223
-  host# pwd
-  /home/gavin/sandbox/linux.main/tools/testing/selftests/kvm
-  host# for i in `seq 1 100`;   \
-        do echo "--------> $i"; \
-        ./rseq_test; sleep 3;   \
-        done
-  --------> 1
-  --------> 2
-  --------> 3
-  --------> 4
-  --------> 5
-  --------> 6
-  ==== Test Assertion Failure ====
-    rseq_test.c:265: rseq_cpu == cpu
-    pid=3925 tid=3925 errno=4 - Interrupted system call
-       1  0x0000000000401963: main at rseq_test.c:265 (discriminator 2)
-       2  0x0000ffffb044affb: ?? ??:0
-       3  0x0000ffffb044b0c7: ?? ??:0
-       4  0x0000000000401a6f: _start at ??:?
-    rseq CPU = 4, sched CPU = 27
+>> I was thinking about a new flag that implies "copy metadata"; not sure
+>> how we would get the same atomicity with a separate ioctl. I've only
+>> just started looking at userfaultfd, though, and I might be on a wrong
+>> track... One thing I'd like to avoid is having something that is too
+>> ARM-specific, I think there are other architecture features that might
+>> have similar issues.
+>
+> Agreed, to propose such an interface we'd better make sure it'll be easily
+> applicable to other similar memory protection mechanisms elsewhere.
 
-This fixes the issue by double-checking on the current CPU after
-call to READ_ONCE(__rseq.cpu_id) and restarting the test if the
-two consecutive CPU numbers aren't euqal.
+There's storage keys on s390, although I believe they are considered
+legacy by now. I dimly recall something in x86 land.
 
-Fixes: 61e52f1630f5 ("KVM: selftests: Add a test for KVM_RUN+rseq to detect task migration bugs")
-Signed-off-by: Gavin Shan <gshan@redhat.com>
----
- tools/testing/selftests/kvm/rseq_test.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+>
+>> 
+>> Maybe someone more familiar with uffd and/or postcopy can chime in?
+>
+> Hanving UFFDIO_COPY provide a new flag sounds reasonable to me.  I'm
+> curious what's the maximum possible size of the tags and whether they can
+> be embeded already into struct uffdio_copy somehow.
 
-diff --git a/tools/testing/selftests/kvm/rseq_test.c b/tools/testing/selftests/kvm/rseq_test.c
-index 4158da0da2bb..74709dd9f5b2 100644
---- a/tools/testing/selftests/kvm/rseq_test.c
-+++ b/tools/testing/selftests/kvm/rseq_test.c
-@@ -207,7 +207,7 @@ int main(int argc, char *argv[])
- {
- 	int r, i, snapshot;
- 	struct kvm_vm *vm;
--	u32 cpu, rseq_cpu;
-+	u32 cpu, rseq_cpu, last_cpu;
- 
- 	/* Tell stdout not to buffer its content */
- 	setbuf(stdout, NULL);
-@@ -259,8 +259,9 @@ int main(int argc, char *argv[])
- 			smp_rmb();
- 			cpu = sched_getcpu();
- 			rseq_cpu = READ_ONCE(__rseq.cpu_id);
-+			last_cpu = sched_getcpu();
- 			smp_rmb();
--		} while (snapshot != atomic_read(&seq_cnt));
-+		} while (snapshot != atomic_read(&seq_cnt) || cpu != last_cpu);
- 
- 		TEST_ASSERT(rseq_cpu == cpu,
- 			    "rseq CPU = %d, sched CPU = %d\n", rseq_cpu, cpu);
--- 
-2.23.0
+Each tag is four bits and covers 16 bytes (also see the defs in
+arch/arm64/include/asm/mte-def.h).
 
 _______________________________________________
 kvmarm mailing list
