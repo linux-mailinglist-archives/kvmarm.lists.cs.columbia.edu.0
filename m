@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E204C575B34
-	for <lists+kvmarm@lfdr.de>; Fri, 15 Jul 2022 08:10:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4AB64575B36
+	for <lists+kvmarm@lfdr.de>; Fri, 15 Jul 2022 08:10:46 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CE5E24BC28;
-	Fri, 15 Jul 2022 02:10:40 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B55394BC3B;
+	Fri, 15 Jul 2022 02:10:45 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
@@ -18,57 +18,61 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id MPAmFxFXuH+H; Fri, 15 Jul 2022 02:10:40 -0400 (EDT)
+	with ESMTP id v9aZFxhvmj7r; Fri, 15 Jul 2022 02:10:45 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6245B4BC1E;
-	Fri, 15 Jul 2022 02:10:39 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AD5D14BD08;
+	Fri, 15 Jul 2022 02:10:42 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C8FC24BBB7
- for <kvmarm@lists.cs.columbia.edu>; Fri, 15 Jul 2022 02:10:37 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5047D4BBE6
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 15 Jul 2022 02:10:41 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id jPI5GHNnIuW6 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 15 Jul 2022 02:10:32 -0400 (EDT)
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com
- [209.85.219.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8602B4BB9F
- for <kvmarm@lists.cs.columbia.edu>; Fri, 15 Jul 2022 02:10:32 -0400 (EDT)
-Received: by mail-yb1-f202.google.com with SMTP id
- w15-20020a25ac0f000000b0066e50e4a553so3283462ybi.16
- for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jul 2022 23:10:32 -0700 (PDT)
+ with ESMTP id 254i8H4U7iTm for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 15 Jul 2022 02:10:36 -0400 (EDT)
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com
+ [209.85.219.201])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 182664BBE0
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 15 Jul 2022 02:10:36 -0400 (EDT)
+Received: by mail-yb1-f201.google.com with SMTP id
+ c7-20020a258807000000b0066d6839741eso3298600ybl.23
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jul 2022 23:10:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:message-id:mime-version:subject:from:to:cc;
- bh=jMvgrncDh19VLIxOJYgbY+8u9WVXCjUHgvxdJwgA1hU=;
- b=AU4WA06a1gryKpQZZscV3xyuTAWuOM+1BMyFI07eCKp6M1rjIHwsijdh49eGEWbah7
- uHNFnCQ7PtLlHHa7gv3uPl1OYjdXyhc9IGjYnrFlQZAgemYxQMFWaXc6DXnpysIHLHnF
- BNElBsasUCUo+8kTSCQA0ALDa5zIRDDAlLDElnNTyquxTRqnHcFGYtMrnaFszs55XXFV
- MkjW7pSfYbJdEHWaclwxNgOAtQWJtW2COwyjhsi1U75l+LUe5PYINtBvRDH2qzumYZcy
- vk9vjH40Xcjc+uTxVi4fEaZX8cH8d4imq5uzvZhshER47yCdsZREZvvX7PAhOWkce+OL
- JhPA==
+ h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+ :cc; bh=HwPTm6cmxu9zJXjSHjPz49JaMF8MztZgzIWe/cJ+deE=;
+ b=Z3zQjpPDiRsDOnp5dDl1GRJwMvY87HgUwdl0j3CSd+VpRKjoClSRyeMLjaJep5115R
+ DBeCAIIkFz6OCl7XTKhwsUTqotNv8xGpbXkoldYm0q//4woWStURAOVbCoj+7WJsjXL9
+ /zCQ0od5ZsSU7isO7m3a380zlVBKQ98kJkp1EEubvlQogyBvSds1KHxUuyihgbI4DZFQ
+ 7jg+p0Re5JrfdxV3tD1DwB4Dv/sOdelLp5ZxaZHAqrcn5E2G5jbwzfBbd60SM+e2HKuw
+ MGOWY6pFUCK2GEIWFI1PcqPGK72EinGGpI7hh0LvcIJ4Fn+Gjx4dYM3Jw1HuIlK0JR8r
+ afTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
- bh=jMvgrncDh19VLIxOJYgbY+8u9WVXCjUHgvxdJwgA1hU=;
- b=nVk6DSB1unjHb9afoisFvKtUnEtB02il48PHCDZaY7PUt/5waXyKC8kPKmpJ05aa1H
- e66ZAuQpxh9jn0iENIYDk1yuUv8lMNy2iW+BsoR9DYiSnRnTNEvuTaiM0lu7CSaZ4gYZ
- VHsSVBeqm+47PKBYFyKnoLZbmPefP6G8Kxe48aFFusI8BHOabDglVSljG+10Z5dulAJ5
- aMI6R9gRpY90HjLYizF6+Rf+mU9NZFiKE64nx6Bd6fL4xtKAwRgRBDsjPKftBrRnwNzL
- aswALNd8Ys/bBewsfoKjSeuuiakD6gMubk6pPcxhsWLU7swjOTp1ZIdCMa1ppMIsANDR
- /Qqw==
-X-Gm-Message-State: AJIora+WN9Or9MnwBb1euMhBw2AeXM4Z0m2ur88UBFaUkKyNOmwYLtUa
- Ul8JpkihgjsQ1i2jXVzblQuQ9iaYU5QZ0K3Buw==
-X-Google-Smtp-Source: AGRyM1tElEz+Zdy+T5bPWEvVhzahxJmgjZVoA901DfRk1w0g6Kch4frRfRAQVj/F99KlefyGV3nMDpDuquO5xP0uAA==
+ h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+ :references:subject:from:to:cc;
+ bh=HwPTm6cmxu9zJXjSHjPz49JaMF8MztZgzIWe/cJ+deE=;
+ b=AB3mloSKEr2CxGMMnarCc/azIe18GHMglzhVzD4xpd1Glp3Wb4NQZX06IwvhTkcplI
+ smXbu7FM/ftRukr2Zn5gGfAK2ggucgvdwH94Z1JSjwzs1ZyXrd7o2qdWpVJpbk0OTcb2
+ zbjg4D+T7OgUl7bfATkX2+R+sPMv1H4L2kBDhiHMKwyCAJ3bJRNIPNPd2g6H6xt2HlYK
+ s+0vrFA+ZifaiNjmHMXUx50efDhrrAC6LZGgadHzlkz1SwrhItfhXUZRHuQeePP+x/Om
+ amf+lTN8qx11i8vRZpxR7Esk3nat4fE14CkigqzkdCgNK/n0p8XKVYL9Ja42QoAfqjQM
+ L47A==
+X-Gm-Message-State: AJIora8DsOkJLn+s7nspQyHDygYIv28R6JF4dtKZ/fvzIbCmpH+y+lzW
+ 3OR0Fk1ILJtMNcb+bPMIPNHP9Vj1Mp27dDH14A==
+X-Google-Smtp-Source: AGRyM1uQsnm9sZo0q5d9K7/udtHT67wBvEUrThfObqq+hDgims8clShXazzHT77SMjEPhS9aYSgaY5BdxHGEM8HEWw==
 X-Received: from kaleshsingh.mtv.corp.google.com
  ([2620:15c:211:200:f010:455b:62ce:19e])
- (user=kaleshsingh job=sendgmr) by 2002:a81:187:0:b0:31d:eebe:16f0 with SMTP
- id 129-20020a810187000000b0031deebe16f0mr4433403ywb.378.1657865431985; Thu,
- 14 Jul 2022 23:10:31 -0700 (PDT)
-Date: Thu, 14 Jul 2022 23:10:09 -0700
-Message-Id: <20220715061027.1612149-1-kaleshsingh@google.com>
+ (user=kaleshsingh job=sendgmr) by 2002:a81:b80c:0:b0:31c:8cfc:cbc0 with SMTP
+ id v12-20020a81b80c000000b0031c8cfccbc0mr14308532ywe.157.1657865435586; Thu,
+ 14 Jul 2022 23:10:35 -0700 (PDT)
+Date: Thu, 14 Jul 2022 23:10:10 -0700
+In-Reply-To: <20220715061027.1612149-1-kaleshsingh@google.com>
+Message-Id: <20220715061027.1612149-2-kaleshsingh@google.com>
 Mime-Version: 1.0
+References: <20220715061027.1612149-1-kaleshsingh@google.com>
 X-Mailer: git-send-email 2.37.0.170.g444d1eabd0-goog
-Subject: [PATCH v4 00/18] KVM nVHE Hypervisor stack unwinder
+Subject: [PATCH v4 01/18] arm64: stacktrace: Add shared header for common
+ stack unwinding code
 From: Kalesh Singh <kaleshsingh@google.com>
 To: maz@kernel.org, mark.rutland@arm.com, broonie@kernel.org, 
  madvenka@linux.microsoft.com
@@ -94,145 +98,259 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi all,
+In order to reuse the arm64 stack unwinding logic for the nVHE
+hypervisor stack, move the common code to a shared header
+(arch/arm64/include/asm/stacktrace/common.h).
 
-This is v4 of the series adding support for nVHE hypervisor stacktraces;
-and is based on arm64 for-next/stacktrace.
+The nVHE hypervisor cannot safely link against kernel code, so we
+make use of the shared header to avoid duplicated logic later in
+this series.
 
-Thanks all for your feedback on previous revisions. Mark Brown, I
-appreciate your Reviewed-by on the v3, I have dropped the tags in this
-new verision since I think the series has changed quite a bit.
-
-The previous versions were posted at:
-v3: https://lore.kernel.org/r/20220607165105.639716-1-kaleshsingh@google.com/
-v2: https://lore.kernel.org/r/20220502191222.4192768-1-kaleshsingh@google.com/
-v1: https://lore.kernel.org/r/20220427184716.1949239-1-kaleshsingh@google.com/
-
-The main updates in this version are to address concerens from Marc on the
-memory usage and reusing the common code by refactoring into a shared header.
-
-Thanks,
-Kalesh
-
-============
-
-KVM nVHE Stack unwinding.
-===
-
-nVHE has two modes of operation: protected (pKVM) and unprotected
-(conventional nVHE). Depending on the mode, a slightly different approach
-is used to dump the hyperviosr stacktrace but the core unwinding logic
-remains the same.
-
-Protected nVHE (pKVM) stacktraces
-====
-
-In protected nVHE mode, the host cannot directly access hypervisor memory.
-
-The hypervisor stack unwinding happens in EL2 and is made accessible to
-the host via a shared buffer. Symbolizing and printing the stacktrace
-addresses is delegated to the host and happens in EL1.
-
-Non-protected (Conventional) nVHE stacktraces
-====
-
-In non-protected mode, the host is able to directly access the hypervisor
-stack pages.
-
-The hypervisor stack unwinding and dumping of the stacktrace is performed
-by the host in EL1, as this avoids the memory overhead of setting up
-shared buffers between the host and hypervisor.
-
-Resuing the Core Unwinding Logic
-====
-
-Since the hypervisor cannot link against the kernel code in proteced mode.
-The common stack unwinding code is moved to a shared header to allow reuse
-in the nVHE hypervisor.
-
-Reducing the memory footprint
-====
-
-In this version the below steps were taken to reduce the memory usage of
-nVHE stack unwinding:
-
-    1) The nVHE overflow stack is reduced from PAGE_SIZE to 4KB; benificial
-       for configurations with non 4KB pages (16KB or 64KB pages).
-    2) In protected nVHE mode (pKVM), the shared stacktrace buffers with the
-       host are reduced from PAGE_SIZE to the minimum size required.
-    3) In systems other than Android, conventional nVHE makes up the vast
-       majority of use case. So the pKVM stack tracing is disabled by default
-       (!CONFIG_PROTECTED_NVHE_STACKTRACE), which avoid the memory usage for
-       setting up shared buffers.
-    4) In non-protected nVHE mode (conventional nVHE), the stack unwinding
-       is done directly in EL1 by the host and no shared buffers with the
-       hyperviosr are needed.
-
-Sample Output
-====
-
-The below shows an example output from a simple stack overflow test:
-
-[  126.862960] kvm [371]: nVHE hyp panic at: [<ffff8000090a51d0>] __kvm_nvhe_recursive_death+0x10/0x34!
-[  126.869920] kvm [371]: Protected nVHE HYP call trace:
-[  126.870528] kvm [371]:  [<ffff8000090a5570>] __kvm_nvhe_hyp_panic+0xac/0xf8
-[  126.871342] kvm [371]:  [<ffff8000090a55cc>] __kvm_nvhe_hyp_panic_bad_stack+0x10/0x10
-[  126.872174] kvm [371]:  [<ffff8000090a51e4>] __kvm_nvhe_recursive_death+0x24/0x34
-[  126.872971] kvm [371]:  [<ffff8000090a51e4>] __kvm_nvhe_recursive_death+0x24/0x34
-   . . .
-
-[  126.927314] kvm [371]:  [<ffff8000090a51e4>] __kvm_nvhe_recursive_death+0x24/0x34
-[  126.927727] kvm [371]:  [<ffff8000090a51e4>] __kvm_nvhe_recursive_death+0x24/0x34
-[  126.928137] kvm [371]:  [<ffff8000090a4de4>] __kvm_nvhe___kvm_vcpu_run+0x30/0x40c
-[  126.928561] kvm [371]:  [<ffff8000090a7b64>] __kvm_nvhe_handle___kvm_vcpu_run+0x30/0x48
-[  126.928984] kvm [371]:  [<ffff8000090a78b8>] __kvm_nvhe_handle_trap+0xc4/0x128
-[  126.929385] kvm [371]:  [<ffff8000090a6864>] __kvm_nvhe___host_exit+0x64/0x64
-[  126.929804] kvm [371]: ---- End of Protected nVHE HYP call trace ----
-
-============
-
-
-Kalesh Singh (18):
-  arm64: stacktrace: Add shared header for common stack unwinding code
-  arm64: stacktrace: Factor out on_accessible_stack_common()
-  arm64: stacktrace: Factor out unwind_next_common()
-  arm64: stacktrace: Handle frame pointer from different address spaces
-  arm64: stacktrace: Factor out common unwind()
-  arm64: stacktrace: Add description of stacktrace/common.h
-  KVM: arm64: On stack overflow switch to hyp overflow_stack
-  KVM: arm64: Add PROTECTED_NVHE_STACKTRACE Kconfig
-  KVM: arm64: Allocate shared pKVM hyp stacktrace buffers
-  KVM: arm64: Stub implementation of pKVM HYP stack unwinder
-  KVM: arm64: Stub implementation of non-protected nVHE HYP stack
-    unwinder
-  KVM: arm64: Save protected-nVHE (pKVM) hyp stacktrace
-  KVM: arm64: Prepare non-protected nVHE hypervisor stacktrace
-  KVM: arm64: Implement protected nVHE hyp stack unwinder
-  KVM: arm64: Implement non-protected nVHE hyp stack unwinder
-  KVM: arm64: Introduce pkvm_dump_backtrace()
-  KVM: arm64: Introduce hyp_dump_backtrace()
-  KVM: arm64: Dump nVHE hypervisor stack on panic
-
- arch/arm64/include/asm/kvm_asm.h           |  16 ++
- arch/arm64/include/asm/memory.h            |   7 +
- arch/arm64/include/asm/stacktrace.h        |  92 ++++---
- arch/arm64/include/asm/stacktrace/common.h | 224 ++++++++++++++++
- arch/arm64/include/asm/stacktrace/nvhe.h   | 291 +++++++++++++++++++++
- arch/arm64/kernel/stacktrace.c             | 157 -----------
- arch/arm64/kvm/Kconfig                     |  15 ++
- arch/arm64/kvm/arm.c                       |   2 +-
- arch/arm64/kvm/handle_exit.c               |   4 +
- arch/arm64/kvm/hyp/nvhe/Makefile           |   2 +-
- arch/arm64/kvm/hyp/nvhe/host.S             |   9 +-
- arch/arm64/kvm/hyp/nvhe/stacktrace.c       | 108 ++++++++
- arch/arm64/kvm/hyp/nvhe/switch.c           |   5 +
- 13 files changed, 727 insertions(+), 205 deletions(-)
+Signed-off-by: Kalesh Singh <kaleshsingh@google.com>
+---
+ arch/arm64/include/asm/stacktrace.h        |  35 +------
+ arch/arm64/include/asm/stacktrace/common.h | 105 +++++++++++++++++++++
+ arch/arm64/kernel/stacktrace.c             |  57 -----------
+ 3 files changed, 106 insertions(+), 91 deletions(-)
  create mode 100644 arch/arm64/include/asm/stacktrace/common.h
- create mode 100644 arch/arm64/include/asm/stacktrace/nvhe.h
- create mode 100644 arch/arm64/kvm/hyp/nvhe/stacktrace.c
 
-
-base-commit: 82a592c13b0aeff94d84d54183dae0b26384c95f
+diff --git a/arch/arm64/include/asm/stacktrace.h b/arch/arm64/include/asm/stacktrace.h
+index aec9315bf156..79f455b37c84 100644
+--- a/arch/arm64/include/asm/stacktrace.h
++++ b/arch/arm64/include/asm/stacktrace.h
+@@ -8,52 +8,19 @@
+ #include <linux/percpu.h>
+ #include <linux/sched.h>
+ #include <linux/sched/task_stack.h>
+-#include <linux/types.h>
+ #include <linux/llist.h>
+ 
+ #include <asm/memory.h>
+ #include <asm/ptrace.h>
+ #include <asm/sdei.h>
+ 
+-enum stack_type {
+-	STACK_TYPE_UNKNOWN,
+-	STACK_TYPE_TASK,
+-	STACK_TYPE_IRQ,
+-	STACK_TYPE_OVERFLOW,
+-	STACK_TYPE_SDEI_NORMAL,
+-	STACK_TYPE_SDEI_CRITICAL,
+-	__NR_STACK_TYPES
+-};
+-
+-struct stack_info {
+-	unsigned long low;
+-	unsigned long high;
+-	enum stack_type type;
+-};
++#include <asm/stacktrace/common.h>
+ 
+ extern void dump_backtrace(struct pt_regs *regs, struct task_struct *tsk,
+ 			   const char *loglvl);
+ 
+ DECLARE_PER_CPU(unsigned long *, irq_stack_ptr);
+ 
+-static inline bool on_stack(unsigned long sp, unsigned long size,
+-			    unsigned long low, unsigned long high,
+-			    enum stack_type type, struct stack_info *info)
+-{
+-	if (!low)
+-		return false;
+-
+-	if (sp < low || sp + size < sp || sp + size > high)
+-		return false;
+-
+-	if (info) {
+-		info->low = low;
+-		info->high = high;
+-		info->type = type;
+-	}
+-	return true;
+-}
+-
+ static inline bool on_irq_stack(unsigned long sp, unsigned long size,
+ 				struct stack_info *info)
+ {
+diff --git a/arch/arm64/include/asm/stacktrace/common.h b/arch/arm64/include/asm/stacktrace/common.h
+new file mode 100644
+index 000000000000..64ae4f6b06fe
+--- /dev/null
++++ b/arch/arm64/include/asm/stacktrace/common.h
+@@ -0,0 +1,105 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Common arm64 stack unwinder code.
++ *
++ * Copyright (C) 2012 ARM Ltd.
++ */
++#ifndef __ASM_STACKTRACE_COMMON_H
++#define __ASM_STACKTRACE_COMMON_H
++
++#include <linux/bitmap.h>
++#include <linux/bitops.h>
++#include <linux/types.h>
++
++enum stack_type {
++	STACK_TYPE_UNKNOWN,
++	STACK_TYPE_TASK,
++	STACK_TYPE_IRQ,
++	STACK_TYPE_OVERFLOW,
++	STACK_TYPE_SDEI_NORMAL,
++	STACK_TYPE_SDEI_CRITICAL,
++	__NR_STACK_TYPES
++};
++
++struct stack_info {
++	unsigned long low;
++	unsigned long high;
++	enum stack_type type;
++};
++
++/*
++ * A snapshot of a frame record or fp/lr register values, along with some
++ * accounting information necessary for robust unwinding.
++ *
++ * @fp:          The fp value in the frame record (or the real fp)
++ * @pc:          The lr value in the frame record (or the real lr)
++ *
++ * @stacks_done: Stacks which have been entirely unwound, for which it is no
++ *               longer valid to unwind to.
++ *
++ * @prev_fp:     The fp that pointed to this frame record, or a synthetic value
++ *               of 0. This is used to ensure that within a stack, each
++ *               subsequent frame record is at an increasing address.
++ * @prev_type:   The type of stack this frame record was on, or a synthetic
++ *               value of STACK_TYPE_UNKNOWN. This is used to detect a
++ *               transition from one stack to another.
++ *
++ * @kr_cur:      When KRETPROBES is selected, holds the kretprobe instance
++ *               associated with the most recently encountered replacement lr
++ *               value.
++ *
++ * @task:        The task being unwound.
++ */
++struct unwind_state {
++	unsigned long fp;
++	unsigned long pc;
++	DECLARE_BITMAP(stacks_done, __NR_STACK_TYPES);
++	unsigned long prev_fp;
++	enum stack_type prev_type;
++#ifdef CONFIG_KRETPROBES
++	struct llist_node *kr_cur;
++#endif
++	struct task_struct *task;
++};
++
++static inline bool on_stack(unsigned long sp, unsigned long size,
++			    unsigned long low, unsigned long high,
++			    enum stack_type type, struct stack_info *info)
++{
++	if (!low)
++		return false;
++
++	if (sp < low || sp + size < sp || sp + size > high)
++		return false;
++
++	if (info) {
++		info->low = low;
++		info->high = high;
++		info->type = type;
++	}
++	return true;
++}
++
++static inline void unwind_init_common(struct unwind_state *state,
++				      struct task_struct *task)
++{
++	state->task = task;
++#ifdef CONFIG_KRETPROBES
++	state->kr_cur = NULL;
++#endif
++
++	/*
++	 * Prime the first unwind.
++	 *
++	 * In unwind_next() we'll check that the FP points to a valid stack,
++	 * which can't be STACK_TYPE_UNKNOWN, and the first unwind will be
++	 * treated as a transition to whichever stack that happens to be. The
++	 * prev_fp value won't be used, but we set it to 0 such that it is
++	 * definitely not an accessible stack address.
++	 */
++	bitmap_zero(state->stacks_done, __NR_STACK_TYPES);
++	state->prev_fp = 0;
++	state->prev_type = STACK_TYPE_UNKNOWN;
++}
++
++#endif	/* __ASM_STACKTRACE_COMMON_H */
+diff --git a/arch/arm64/kernel/stacktrace.c b/arch/arm64/kernel/stacktrace.c
+index fcaa151b81f1..94a5dd2ab8fd 100644
+--- a/arch/arm64/kernel/stacktrace.c
++++ b/arch/arm64/kernel/stacktrace.c
+@@ -18,63 +18,6 @@
+ #include <asm/stack_pointer.h>
+ #include <asm/stacktrace.h>
+ 
+-/*
+- * A snapshot of a frame record or fp/lr register values, along with some
+- * accounting information necessary for robust unwinding.
+- *
+- * @fp:          The fp value in the frame record (or the real fp)
+- * @pc:          The lr value in the frame record (or the real lr)
+- *
+- * @stacks_done: Stacks which have been entirely unwound, for which it is no
+- *               longer valid to unwind to.
+- *
+- * @prev_fp:     The fp that pointed to this frame record, or a synthetic value
+- *               of 0. This is used to ensure that within a stack, each
+- *               subsequent frame record is at an increasing address.
+- * @prev_type:   The type of stack this frame record was on, or a synthetic
+- *               value of STACK_TYPE_UNKNOWN. This is used to detect a
+- *               transition from one stack to another.
+- *
+- * @kr_cur:      When KRETPROBES is selected, holds the kretprobe instance
+- *               associated with the most recently encountered replacement lr
+- *               value.
+- *
+- * @task:        The task being unwound.
+- */
+-struct unwind_state {
+-	unsigned long fp;
+-	unsigned long pc;
+-	DECLARE_BITMAP(stacks_done, __NR_STACK_TYPES);
+-	unsigned long prev_fp;
+-	enum stack_type prev_type;
+-#ifdef CONFIG_KRETPROBES
+-	struct llist_node *kr_cur;
+-#endif
+-	struct task_struct *task;
+-};
+-
+-static void unwind_init_common(struct unwind_state *state,
+-			       struct task_struct *task)
+-{
+-	state->task = task;
+-#ifdef CONFIG_KRETPROBES
+-	state->kr_cur = NULL;
+-#endif
+-
+-	/*
+-	 * Prime the first unwind.
+-	 *
+-	 * In unwind_next() we'll check that the FP points to a valid stack,
+-	 * which can't be STACK_TYPE_UNKNOWN, and the first unwind will be
+-	 * treated as a transition to whichever stack that happens to be. The
+-	 * prev_fp value won't be used, but we set it to 0 such that it is
+-	 * definitely not an accessible stack address.
+-	 */
+-	bitmap_zero(state->stacks_done, __NR_STACK_TYPES);
+-	state->prev_fp = 0;
+-	state->prev_type = STACK_TYPE_UNKNOWN;
+-}
+-
+ /*
+  * Start an unwind from a pt_regs.
+  *
 -- 
 2.37.0.170.g444d1eabd0-goog
 
