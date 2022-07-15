@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A788D575B4A
-	for <lists+kvmarm@lfdr.de>; Fri, 15 Jul 2022 08:11:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A1E0575BBB
+	for <lists+kvmarm@lfdr.de>; Fri, 15 Jul 2022 08:44:42 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 50BDD4BE08;
-	Fri, 15 Jul 2022 02:11:54 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 75CA64BD6C;
+	Fri, 15 Jul 2022 02:44:41 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
@@ -18,69 +18,65 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Pk7OybmmLYFR; Fri, 15 Jul 2022 02:11:54 -0400 (EDT)
+	with ESMTP id eRkbs5C15ENu; Fri, 15 Jul 2022 02:44:41 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 003924BAF7;
-	Fri, 15 Jul 2022 02:11:53 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 273F44BD72;
+	Fri, 15 Jul 2022 02:44:40 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2F0494BC20
- for <kvmarm@lists.cs.columbia.edu>; Fri, 15 Jul 2022 02:11:51 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4A1C24BD5A
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 15 Jul 2022 02:44:39 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 12yIkUDHwTNw for <kvmarm@lists.cs.columbia.edu>;
- Fri, 15 Jul 2022 02:11:50 -0400 (EDT)
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com
- [209.85.219.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1300A4BDCA
- for <kvmarm@lists.cs.columbia.edu>; Fri, 15 Jul 2022 02:11:50 -0400 (EDT)
-Received: by mail-yb1-f202.google.com with SMTP id
- z9-20020a258689000000b0066e38ab7122so3263146ybk.9
- for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jul 2022 23:11:50 -0700 (PDT)
+ with ESMTP id NG8OtuOv6hop for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 15 Jul 2022 02:44:38 -0400 (EDT)
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com
+ [209.85.222.50])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 2E5EA4BC8B
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 15 Jul 2022 02:44:38 -0400 (EDT)
+Received: by mail-ua1-f50.google.com with SMTP id v17so167968uam.1
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 14 Jul 2022 23:44:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=date:in-reply-to:message-id:mime-version:references:subject:from:to
- :cc; bh=C+9RN60EOV8842FFgmBAy6PrpfwWqW7C+czhzeS/rR4=;
- b=YBfbYLBhEFURhCK4QKUC8bI/R6G7EXpPYpXv8EgvXFE5JI8iCfdDD/zhxXUPJ1FCj2
- HobAgwdJcz8iCJZ3Nf6qUn5/JFvFqTXwTbxs1Vp8JQ5DiIGMNOmoxWd8ZFtzh4zWdbW2
- UXXqKfjRvUH0FaeGEFgQrLpiSfFzw/8JrEAdOPLimA7QNNMLXVfCXV7aWgjExnRC71PE
- st+L76+Nt2+hlQM0Y7sQ2cwdVY2C1xVk2yx3eg9khBifSFQMmA4ZOR9Djwd7LeLopeWE
- xiMe9XRODecY4NQkbUkZ8/WtMreqsn6dA6vGRjB7aYLob2bWXnsgyxD5ML6TZoiDhcWj
- CuIQ==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=p6aDTSAubguJZg+3J+aZpS+pct8nChj++g4A7S8KF7M=;
+ b=Jnbw9hVnECgNwloAV8Mr84FXTmguVIg5NfAo3mkCvlZ4hKp8wmbAxT8ZXMLH50tbHb
+ 2AtcqfP7CDR/M2LkGerzE4RjbEo3t0+wZ9znySMf0cboWxAHISnGNymaU4u4n+DgDwhw
+ xYDBbeKC7uGCempsmTNjSBbKGkPxxwW3Lqd2C0PTh/i165tqfnkbP9i7mbujFw+EPnEZ
+ 0W1uYTZ92SNd5HFvJYLmeUvWHvtwMq0ad8SjNTIwuNai2ZMDD4PXZt1XZSsnuQ2QBtGi
+ BNiQD6ngvkYHgXMzozebc4+/+kt2uNmiAg7HN/zBnwKI+0QIme1wAPU4861wQ7qFEZXb
+ 9YRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:date:in-reply-to:message-id:mime-version
- :references:subject:from:to:cc;
- bh=C+9RN60EOV8842FFgmBAy6PrpfwWqW7C+czhzeS/rR4=;
- b=kAo86Ph4+V/zDd4Zab9SRXY+fWhSk72XXTy6RNvUvMyQ8I2Dt7OHm7dziQ6I63JpB7
- LJnzkI1H7erjcvSywFT6udK7JBGlr0a03WgPXQT8exvsjloKqdXiFir5bDHcSOD3g+eb
- 6pzPSIr9xLabeXMRhsXwW7JZuGyeMonvMvFkQd3Un49CtLgVLrGkyLBcmyXY37lQZUD/
- aWgfgYazEGBxkkaDfKojRi54QQXnhGJ1O6JKNobpWWyzxJjChmLsYUVYKro7ElunF5/M
- Yv/2LZrNrBLB3NxVc6GMXXPG+W2rsOjjn6uQqS4bCa9riVoON2GunRosV9XAS8GnZVyU
- D/7A==
-X-Gm-Message-State: AJIora+hTvfhvh6hoJmOhmqedxCybYGhemzbv7qMifHD00cVj3GyNja3
- JNhe+N8bAh0GdZrNHOlgOfYOyZ8I8itY9sopiA==
-X-Google-Smtp-Source: AGRyM1vmpZrg9C65GGAVW8i3cJzkzgqCICriOC0RsFfWEe5JJODK8w4KS6U/1MhBLlAvC1UTH/ak2+fLI6MXcu3Qzw==
-X-Received: from kaleshsingh.mtv.corp.google.com
- ([2620:15c:211:200:f010:455b:62ce:19e])
- (user=kaleshsingh job=sendgmr) by 2002:a5b:44d:0:b0:66f:ad5a:9d0b with SMTP
- id s13-20020a5b044d000000b0066fad5a9d0bmr10986561ybp.79.1657865509675; Thu,
- 14 Jul 2022 23:11:49 -0700 (PDT)
-Date: Thu, 14 Jul 2022 23:10:27 -0700
-In-Reply-To: <20220715061027.1612149-1-kaleshsingh@google.com>
-Message-Id: <20220715061027.1612149-19-kaleshsingh@google.com>
-Mime-Version: 1.0
-References: <20220715061027.1612149-1-kaleshsingh@google.com>
-X-Mailer: git-send-email 2.37.0.170.g444d1eabd0-goog
-Subject: [PATCH v4 18/18] KVM: arm64: Dump nVHE hypervisor stack on panic
-From: Kalesh Singh <kaleshsingh@google.com>
-To: maz@kernel.org, mark.rutland@arm.com, broonie@kernel.org, 
- madvenka@linux.microsoft.com
-Cc: wangkefeng.wang@huawei.com, elver@google.com, catalin.marinas@arm.com,
- ast@kernel.org, vincenzo.frascino@arm.com, will@kernel.org,
- kvmarm@lists.cs.columbia.edu, android-mm@google.com, andreyknvl@gmail.com,
- kernel-team@android.com, drjones@redhat.com,
- linux-arm-kernel@lists.infradead.org, russell.king@oracle.com,
- linux-kernel@vger.kernel.org, mhiramat@kernel.org
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=p6aDTSAubguJZg+3J+aZpS+pct8nChj++g4A7S8KF7M=;
+ b=R+k4GnkI/lwzBPJRxAD+ZDVCqBBJpqDLUelcE6Ba+TZs2fRE0uodSW4uax8sVj6k/R
+ OxfZUUQBBel6qEusuZG+NcmqEYBDSDPUlIZ00xMIauJY9yTfBYhmGucw4w0uEP1BWq8g
+ 6A7HVE01ctwDrdvyRGGshBvQdI70rnHXrHQha12yqVLGcLAHYOgya/Ux3v2yazZgvdpn
+ FgmN8ubljNBFNn1IxV0B5YC/Tysq49iVfAFGMHtFThxLAbllb3k+zciqMpE73ghunZzk
+ rjeR/fzXPC6XxIRn7K1iSkITXb83fRaqjfpvZkxrjP+d/mtsXGBHtkuJnOMKrsLCpomA
+ IwXA==
+X-Gm-Message-State: AJIora8gHF0OpDKoIuGdsTbmlJScyYoYgEYkVr1YEUH0MtqRivMlwJ18
+ Hc85Ri5EJFmzA6X1OfOLbevJAVrMnv58aVkWP6uQ3Q==
+X-Google-Smtp-Source: AGRyM1uWE0AM135v8bgmHTfGGyyoJpV55Gqxr8UiXmUhCXS1dGfLbxzAYnRhlP4kgcMpR7lq+JXvgxe6eP5xZy9syp8=
+X-Received: by 2002:a05:6130:90:b0:362:891c:edef with SMTP id
+ x16-20020a056130009000b00362891cedefmr5471902uaf.106.1657867477456; Thu, 14
+ Jul 2022 23:44:37 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220706164304.1582687-1-maz@kernel.org>
+ <20220706164304.1582687-16-maz@kernel.org>
+ <CAAeT=FzgBpwcf7oEGeCLCHO+XadP+i7vyPFWx6VJxmiWC94-7g@mail.gmail.com>
+ <877d4gyy7y.wl-maz@kernel.org>
+In-Reply-To: <877d4gyy7y.wl-maz@kernel.org>
+From: Reiji Watanabe <reijiw@google.com>
+Date: Thu, 14 Jul 2022 23:44:21 -0700
+Message-ID: <CAAeT=FwwO5=v3vLJ0qAw3V0NaPEnPeP1VmgLXXBL4jdm80aeew@mail.gmail.com>
+Subject: Re: [PATCH 15/19] KVM: arm64: vgic-v2: Add helper for legacy
+ dist/cpuif base address setting
+To: Marc Zyngier <maz@kernel.org>
+Cc: kvm@vger.kernel.org, Schspa Shi <schspa@gmail.com>,
+ Oliver Upton <oliver.upton@linux.dev>, kernel-team@android.com,
+ kvmarm@lists.cs.columbia.edu, Linux ARM <linux-arm-kernel@lists.infradead.org>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -97,81 +93,80 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On hyp_panic(), unwind and dump the nVHE hypervisor stack trace.
-In protected nVHE mode, hypervisor stacktraces are only produced
-if CONFIG_PROTECTED_NVHE_STACKTRACE is enabled.
+On Thu, Jul 14, 2022 at 12:01 AM Marc Zyngier <maz@kernel.org> wrote:
+>
+> On Thu, 14 Jul 2022 07:37:25 +0100,
+> Reiji Watanabe <reijiw@google.com> wrote:
+> >
+> > Hi Marc,
+> >
+> > On Wed, Jul 6, 2022 at 10:05 AM Marc Zyngier <maz@kernel.org> wrote:
+> > >
+> > > We carry a legacy interface to set the base addresses for GICv2.
+> > > As this is currently plumbed into the same handling code as
+> > > the modern interface, it limits the evolution we can make there.
+> > >
+> > > Add a helper dedicated to this handling, with a view of maybe
+> > > removing this in the future.
+> > >
+> > > Signed-off-by: Marc Zyngier <maz@kernel.org>
+> > > ---
+> > >  arch/arm64/kvm/arm.c                  | 11 ++-------
+> > >  arch/arm64/kvm/vgic/vgic-kvm-device.c | 32 +++++++++++++++++++++++++++
+> > >  include/kvm/arm_vgic.h                |  1 +
+> > >  3 files changed, 35 insertions(+), 9 deletions(-)
+> > >
+> > > diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+> > > index 83a7f61354d3..bf39570c0aef 100644
+> > > --- a/arch/arm64/kvm/arm.c
+> > > +++ b/arch/arm64/kvm/arm.c
+> > > @@ -1414,18 +1414,11 @@ void kvm_arch_flush_remote_tlbs_memslot(struct kvm *kvm,
+> > >  static int kvm_vm_ioctl_set_device_addr(struct kvm *kvm,
+> > >                                         struct kvm_arm_device_addr *dev_addr)
+> > >  {
+> > > -       unsigned long dev_id, type;
+> > > -
+> > > -       dev_id = (dev_addr->id & KVM_ARM_DEVICE_ID_MASK) >>
+> > > -               KVM_ARM_DEVICE_ID_SHIFT;
+> > > -       type = (dev_addr->id & KVM_ARM_DEVICE_TYPE_MASK) >>
+> > > -               KVM_ARM_DEVICE_TYPE_SHIFT;
+> > > -
+> > > -       switch (dev_id) {
+> > > +       switch (FIELD_GET(KVM_ARM_DEVICE_ID_MASK, dev_addr->id)) {
+> > >         case KVM_ARM_DEVICE_VGIC_V2:
+> > >                 if (!vgic_present)
+> > >                         return -ENXIO;
+> > > -               return kvm_vgic_addr(kvm, type, &dev_addr->addr, true);
+> > > +               return kvm_set_legacy_vgic_v2_addr(kvm, dev_addr);
+> > >         default:
+> > >                 return -ENODEV;
+> > >         }
+> > > diff --git a/arch/arm64/kvm/vgic/vgic-kvm-device.c b/arch/arm64/kvm/vgic/vgic-kvm-device.c
+> > > index fbbd0338c782..0dfd277b9058 100644
+> > > --- a/arch/arm64/kvm/vgic/vgic-kvm-device.c
+> > > +++ b/arch/arm64/kvm/vgic/vgic-kvm-device.c
+> > > @@ -41,6 +41,38 @@ static int vgic_check_type(struct kvm *kvm, int type_needed)
+> > >                 return 0;
+> > >  }
+> > >
+> > > +int kvm_set_legacy_vgic_v2_addr(struct kvm *kvm, struct kvm_arm_device_addr *dev_addr)
+> > > +{
+> > > +       struct vgic_dist *vgic = &kvm->arch.vgic;
+> > > +       int r;
+> > > +
+> > > +       mutex_lock(&kvm->lock);
+> > > +       switch (FIELD_GET(KVM_ARM_DEVICE_ID_MASK, dev_addr->id)) {
+> >
+> > Shouldn't this be KVM_ARM_DEVICE_TYPE_MASK (not KVM_ARM_DEVICE_ID_MASK) ?
+>
+> Damn, you just ruined my attempt at deprecating this API ;-).
 
-Example backtrace:
+Oops, I should have pretended not to notice:)
 
-[  126.862960] kvm [371]: nVHE hyp panic at: [<ffff8000090a51d0>] __kvm_nvhe_recursive_death+0x10/0x34!
-[  126.869920] kvm [371]: Protected nVHE HYP call trace:
-[  126.870528] kvm [371]:  [<ffff8000090a5570>] __kvm_nvhe_hyp_panic+0xac/0xf8
-[  126.871342] kvm [371]:  [<ffff8000090a55cc>] __kvm_nvhe_hyp_panic_bad_stack+0x10/0x10
-[  126.872174] kvm [371]:  [<ffff8000090a51e4>] __kvm_nvhe_recursive_death+0x24/0x34
-[  126.872971] kvm [371]:  [<ffff8000090a51e4>] __kvm_nvhe_recursive_death+0x24/0x34
-. . .
-[  126.927314] kvm [371]:  [<ffff8000090a51e4>] __kvm_nvhe_recursive_death+0x24/0x34
-[  126.927727] kvm [371]:  [<ffff8000090a51e4>] __kvm_nvhe_recursive_death+0x24/0x34
-[  126.928137] kvm [371]:  [<ffff8000090a4de4>] __kvm_nvhe___kvm_vcpu_run+0x30/0x40c
-[  126.928561] kvm [371]:  [<ffff8000090a7b64>] __kvm_nvhe_handle___kvm_vcpu_run+0x30/0x48
-[  126.928984] kvm [371]:  [<ffff8000090a78b8>] __kvm_nvhe_handle_trap+0xc4/0x128
-[  126.929385] kvm [371]:  [<ffff8000090a6864>] __kvm_nvhe___host_exit+0x64/0x64
-[  126.929804] kvm [371]: ---- End of Protected nVHE HYP call trace ----
+> More seriously, thanks for catching this one!
 
-Signed-off-by: Kalesh Singh <kaleshsingh@google.com>
----
- arch/arm64/kvm/handle_exit.c     | 4 ++++
- arch/arm64/kvm/hyp/nvhe/switch.c | 5 +++++
- 2 files changed, 9 insertions(+)
-
-diff --git a/arch/arm64/kvm/handle_exit.c b/arch/arm64/kvm/handle_exit.c
-index f66c0142b335..ef8b57953aa2 100644
---- a/arch/arm64/kvm/handle_exit.c
-+++ b/arch/arm64/kvm/handle_exit.c
-@@ -17,6 +17,7 @@
- #include <asm/kvm_emulate.h>
- #include <asm/kvm_mmu.h>
- #include <asm/debug-monitors.h>
-+#include <asm/stacktrace/nvhe.h>
- #include <asm/traps.h>
- 
- #include <kvm/arm_hypercalls.h>
-@@ -353,6 +354,9 @@ void __noreturn __cold nvhe_hyp_panic_handler(u64 esr, u64 spsr,
- 				(void *)panic_addr);
- 	}
- 
-+	/* Dump the nVHE hypervisor backtrace */
-+	kvm_nvhe_dump_backtrace(hyp_offset);
-+
- 	/*
- 	 * Hyp has panicked and we're going to handle that by panicking the
- 	 * kernel. The kernel offset will be revealed in the panic so we're
-diff --git a/arch/arm64/kvm/hyp/nvhe/switch.c b/arch/arm64/kvm/hyp/nvhe/switch.c
-index 6db801db8f27..a50cfd39dedb 100644
---- a/arch/arm64/kvm/hyp/nvhe/switch.c
-+++ b/arch/arm64/kvm/hyp/nvhe/switch.c
-@@ -25,6 +25,7 @@
- #include <asm/fpsimd.h>
- #include <asm/debug-monitors.h>
- #include <asm/processor.h>
-+#include <asm/stacktrace/nvhe.h>
- 
- #include <nvhe/fixed_config.h>
- #include <nvhe/mem_protect.h>
-@@ -375,6 +376,10 @@ asmlinkage void __noreturn hyp_panic(void)
- 		__sysreg_restore_state_nvhe(host_ctxt);
- 	}
- 
-+	/* Prepare to dump kvm nvhe hyp stacktrace */
-+	kvm_nvhe_prepare_backtrace((unsigned long)__builtin_frame_address(0),
-+				   _THIS_IP_);
-+
- 	__hyp_do_panic(host_ctxt, spsr, elr, par);
- 	unreachable();
- }
--- 
-2.37.0.170.g444d1eabd0-goog
-
+Thank you for cleaning up the code so much!
+Reiji
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
