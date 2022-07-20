@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0688757B41F
-	for <lists+kvmarm@lfdr.de>; Wed, 20 Jul 2022 11:45:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EDB457B317
+	for <lists+kvmarm@lfdr.de>; Wed, 20 Jul 2022 10:40:12 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 920D04D00B;
-	Wed, 20 Jul 2022 05:45:55 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2364E4CECA;
+	Wed, 20 Jul 2022 04:40:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
@@ -18,65 +18,70 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id s1+1sJUH8AJ2; Wed, 20 Jul 2022 05:45:55 -0400 (EDT)
+	with ESMTP id Kw09Mu6L7KV2; Wed, 20 Jul 2022 04:40:11 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3FF1E4CFFD;
-	Wed, 20 Jul 2022 05:45:54 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DF5334CEB1;
+	Wed, 20 Jul 2022 04:40:09 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 56CDA4D749
- for <kvmarm@lists.cs.columbia.edu>; Tue, 19 Jul 2022 21:07:10 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BF2C94CE7F
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 20 Jul 2022 04:40:07 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id mzfdIasFv8A1 for <kvmarm@lists.cs.columbia.edu>;
- Tue, 19 Jul 2022 21:07:08 -0400 (EDT)
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com
- [209.85.221.41])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A6D7E4D745
- for <kvmarm@lists.cs.columbia.edu>; Tue, 19 Jul 2022 21:07:08 -0400 (EDT)
-Received: by mail-wr1-f41.google.com with SMTP id bv24so121724wrb.3
- for <kvmarm@lists.cs.columbia.edu>; Tue, 19 Jul 2022 18:07:08 -0700 (PDT)
+ with ESMTP id DCLAQPtd5EKR for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 20 Jul 2022 04:40:06 -0400 (EDT)
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com
+ [209.85.215.175])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id B6C064CA6F
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 20 Jul 2022 04:40:06 -0400 (EDT)
+Received: by mail-pg1-f175.google.com with SMTP id bf13so15776627pgb.11
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 20 Jul 2022 01:40:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=RnduJRWap81e4hsQGNaqE2KBoYp4jqdU1O2gWYXksrg=;
- b=V3L6saNcxDkw3rVUZoKMT+z27A12bbuMUQUtYUo52WpG05ad/Q3Lae9kO9Ssfq5E+o
- YzXt4abwxGv+dwxD19q182Tuv+jEQ90ytCYm2jfFd5xxWwmkZBRohif67QZtCceM83oi
- NUU4ZOjD12l69pg3MEeq0C/RyCjh9aJsInnixGl/o8nH/XrKnDYI86aiat2qCbQxSf38
- THILLSqte2NlbrOatnLA0liVuydqbpDMtkQWGZdtcz8RmPPLV7Aq4cNotneTAkvZev6r
- y2dWrfTCTjX2uGv83f5rxxPvXeio8xcWjnvuLCng4BNiGhbO0l7uJp80yX01OHGv+h/M
- nrqw==
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=igHcvbbNIBEuhZc+DjfEJd6g7hQ4R/AxL0/SU2gdyWo=;
+ b=roVHS8GqR9tX81QUvNAwTO3rEmwU/Z7n4o3+GbP1WjWEsaxBtQQSABAXlyUcYr6LuJ
+ dtADQYwCslhmuwiu7Z6qn5ktJFp7VTIZMUE/DxCzf4iig8pOVeKnNLDS2Kx6K0IjZnHl
+ ycZs0rKfB0VcoEIJBLrEE0QhjD8Liu+SXs/qFtvOi+w9IxnvuxmCfm1idG5tkjjCFJ9B
+ iXeC/NY8n2efQm1dKqmIgavKVmyde5b+e8uk2DkiAoZk1Os8LnS7RcUAp0gkiKriJ6Pp
+ ohObDwVencwUndBDLqeXXhbAhLxTCR92p0R24+l9coeXdGd6fO93iP48pfLHUTnpqEI1
+ 0C9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=RnduJRWap81e4hsQGNaqE2KBoYp4jqdU1O2gWYXksrg=;
- b=6R0m2Hx1qx+7RdymKiQ8q2xjUcoOFKDeIClVIb4FUA5K1TuKg+MrQOcqBHw0FJ1JyO
- gtxA3B1AvCh2myABPqwZz/mER/uRaNwXBX627hPPLoT5sUg0L9pSA8ry3uSts3AuWNxg
- KiW8alLHVafHsIXsV1mo47mLcc8rDJOOvhGxsEACPr9mZMwHcKPjsnoFoEQLBr+OWvzu
- 1Ar5KITClO0+tUQA8GyJYNujcQ10Pd5bz1IMRNQ0oTe4TP0gn8zBrCu+ab1RILTGVTKh
- l80dJLynOGsy1bWQzkwaVrHCJOQKM/ho/MZFDTBvWQCWXb3ovB+7yZA96s0XN6BQfbRY
- uRZQ==
-X-Gm-Message-State: AJIora/cakBnD8tMj3sxf+U13CHX3Jv054sDcW61VXABMDX4OiZ01h7l
- HhoN+mI3XmLI7TEkVvluawAlhvwsQFu2/F8KaXiNww==
-X-Google-Smtp-Source: AGRyM1tjfS0I06AEG0F/LzOUouITmNkWGASNHqEfxR822WYDad6jgo6sBqyj7LcYSIIG+kLVswqWoffKMtf3O1YoCYM=
-X-Received: by 2002:a05:6000:81d:b0:21d:a495:6e3 with SMTP id
- bt29-20020a056000081d00b0021da49506e3mr28760355wrb.502.1658279227451; Tue, 19
- Jul 2022 18:07:07 -0700 (PDT)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=igHcvbbNIBEuhZc+DjfEJd6g7hQ4R/AxL0/SU2gdyWo=;
+ b=r9yXWfuUMWxmgYWc2uGOClpGtQah4sxz9GTQacq+3vBUTTWpiIT7cuPhLvnA8xkxN4
+ CZugOLVeL0Ah6uDxse0pMtfpvZvcNSnjh/XT4KNxvA6AIBaKg/rFdCB6mS5bq0olgz4i
+ GPC/Uu/JQCUVtjwiOeHsw7kj+HNvI1lHCzR7a4b+pNLhmJfTw00O3onmqBsbIG7Dsz0o
+ iXcjvTRG18hjqWwVsv41ebNPua7jjxGE2T+OpntbBMCW5sfXyvDgTjeOCRtxhib7xLLz
+ LWCM+XeMqOQr9m11Uf5OTZ0E2fkcgN7NSetabUYp+w/22pziIMzAW3A/6XAla6zV/Y4y
+ cnFA==
+X-Gm-Message-State: AJIora+p64xM+9phE31LgaQVpIa2eE266Kd6d75bIytqPIR97qeeCjYb
+ L3h7XPG8elCA7uAi9lmlclkdtw==
+X-Google-Smtp-Source: AGRyM1tzAi1dyHMpn7ivb+IEqLwTeryX+s06VifqPmCo3roiLkBrS3nZgdI466Wl6k5WeyOfSiRpeA==
+X-Received: by 2002:a63:df15:0:b0:411:51f2:cc2a with SMTP id
+ u21-20020a63df15000000b0041151f2cc2amr32751610pgg.533.1658306405477; 
+ Wed, 20 Jul 2022 01:40:05 -0700 (PDT)
+Received: from google.com (150.12.83.34.bc.googleusercontent.com.
+ [34.83.12.150]) by smtp.gmail.com with ESMTPSA id
+ n13-20020a170903110d00b0016c27561454sm13456239plh.283.2022.07.20.01.40.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 20 Jul 2022 01:40:04 -0700 (PDT)
+Date: Wed, 20 Jul 2022 01:40:01 -0700
+From: Ricardo Koller <ricarkol@google.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [kvm-unit-tests PATCH 3/3] arm: pmu: Remove checks for !overflow
+ in chained counters tests
+Message-ID: <Yte/YXWYSikyQcqh@google.com>
+References: <20220718154910.3923412-1-ricarkol@google.com>
+ <20220718154910.3923412-4-ricarkol@google.com>
+ <87edyhz68i.wl-maz@kernel.org>
 MIME-Version: 1.0
-References: <20220708212106.325260-1-pcc@google.com>
- <877d49p36n.fsf@redhat.com>
-In-Reply-To: <877d49p36n.fsf@redhat.com>
-From: Peter Collingbourne <pcc@google.com>
-Date: Tue, 19 Jul 2022 18:06:55 -0700
-Message-ID: <CAMn1gO65DJs8QyMs4YTmq7_b01qjLgBRhM3OLZ7aKaobEGMXDw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] KVM: arm64: support MTE in protected VMs
-To: Cornelia Huck <cohuck@redhat.com>
-X-Mailman-Approved-At: Wed, 20 Jul 2022 05:45:52 -0400
-Cc: Catalin Marinas <catalin.marinas@arm.com>, kvm@vger.kernel.org,
- Marc Zyngier <maz@kernel.org>, Andy Lutomirski <luto@amacapital.net>,
- Evgenii Stepanov <eugenis@google.com>, Michael Roth <michael.roth@amd.com>,
- Chao Peng <chao.p.peng@linux.intel.com>, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu, Linux ARM <linux-arm-kernel@lists.infradead.org>
+Content-Disposition: inline
+In-Reply-To: <87edyhz68i.wl-maz@kernel.org>
+Cc: drjones@redhat.com, kvm@vger.kernel.org, oliver.upton@linux.dev,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -93,60 +98,50 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Tue, Jul 19, 2022 at 7:50 AM Cornelia Huck <cohuck@redhat.com> wrote:
->
-> On Fri, Jul 08 2022, Peter Collingbourne <pcc@google.com> wrote:
->
-> > Hi,
-> >
-> > This patch series contains a proposed extension to pKVM that allows MTE
-> > to be exposed to the protected guests. It is based on the base pKVM
-> > series previously sent to the list [1] and later rebased to 5.19-rc3
-> > and uploaded to [2].
-> >
-> > This series takes precautions against host compromise of the guests
-> > via direct access to their tag storage, by preventing the host from
-> > accessing the tag storage via stage 2 page tables. The device tree
-> > must describe the physical memory address of the tag storage, if any,
-> > and the memory nodes must declare that the tag storage location is
-> > described. Otherwise, the MTE feature is disabled in protected guests.
-> >
-> > Now that we can easily do so, we also prevent the host from accessing
-> > any unmapped reserved-memory regions without a driver, as the host
-> > has no business accessing that memory.
-> >
-> > A proposed extension to the devicetree specification is available at
-> > [3], a patched version of QEMU that produces the required device tree
-> > nodes is available at [4] and a patched version of the crosvm hypervisor
-> > that enables MTE is available at [5].
->
-> I'm unsure how this is supposed to work with QEMU + KVM, as your QEMU
-> patch adds mte-alloc properties to regions that are exposed as a
-> separate address space (which will not work with KVM). Is the magic in
-> that new shared section?
+On Tue, Jul 19, 2022 at 12:34:05PM +0100, Marc Zyngier wrote:
+> On Mon, 18 Jul 2022 16:49:10 +0100,
+> Ricardo Koller <ricarkol@google.com> wrote:
+> > 
+> > A chained event overflowing on the low counter can set the overflow flag
+> > in PMOVS.  KVM does not set it, but real HW and the fast-model seem to.
+> > Moreover, the AArch64.IncrementEventCounter() pseudocode in the ARM ARM
+> > (DDI 0487H.a, J1.1.1 "aarch64/debug") also sets the PMOVS bit on
+> > overflow.
+> 
+> Isn't this indicative of a bug in the KVM emulation? To be honest, the
+> pseudocode looks odd. It says:
+> 
+> <quote>
+> 	if old_value<64:ovflw> != new_value<64:ovflw> then
+> 	    PMOVSSET_EL0<idx> = '1';
+> 	    PMOVSCLR_EL0<idx> = '1';
+> </quote>
+> 
+> which I find remarkably ambiguous. Is this setting and clearing the
+> overflow bit? Or setting it in the single register that backs the two
+> accessors in whatever way it can?
+> 
+> If it is the second interpretation that is correct, then KVM
+> definitely needs fixing
 
-Hi Cornelia,
+I think it's the second, as those two "= '1'" apply to the non-chained
+counters case as well, which should definitely set the bit in PMOVSSET.
 
-The intent is that the mte-alloc property may be set on memory whose
-allocation tag storage is not directly accessible via physical memory,
-since in this case there is no need for the hypervisor to do anything
-to protect allocation tag storage before exposing MTE to guests. In
-the case of QEMU + KVM, I would expect the emulated system to not
-expose the allocation tag storage directly, in which case it would be
-able to set mte-alloc on all memory nodes without further action,
-exactly as my patch implements for TCG. With the interface as
-proposed, QEMU would need to reject the mte-shared-alloc option when
-KVM is enabled, as there is currently no mechanism for KVM-accelerated
-virtualized tag storage.
+> (though this looks pretty involved for
+> anything that isn't a SWINC event).
 
-Note that these properties are only relevant for guest kernels running
-under an emulated EL2 in which pKVM could conceivably run, which means
-that the host would need to implement FEAT_NV2. As far as I know there
-is currently no support for NV2 neither in QEMU TCG nor in the Linux
-kernel, and I'm unaware of any available hardware that supports both
-NV2 and MTE, so it'll be a while before any of this becomes relevant.
+Ah, I see, there's a pretty convenient kvm_pmu_software_increment() for
+SWINC, but a non-SWINC event is implemented as a single 64-bit perf
+event.
 
-Peter
+Thanks,
+Ricardo
+
+> 
+> 	M.
+> 
+> -- 
+> Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
