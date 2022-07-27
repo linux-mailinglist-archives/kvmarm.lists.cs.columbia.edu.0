@@ -2,87 +2,70 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 815075828A7
-	for <lists+kvmarm@lfdr.de>; Wed, 27 Jul 2022 16:29:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8B98582963
+	for <lists+kvmarm@lfdr.de>; Wed, 27 Jul 2022 17:15:33 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0F8954C7F1;
-	Wed, 27 Jul 2022 10:29:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EC4344C87A;
+	Wed, 27 Jul 2022 11:15:32 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -1.79
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.79 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@linux.dev
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id pTpSWUB5XrjZ; Wed, 27 Jul 2022 10:29:36 -0400 (EDT)
+	with ESMTP id n2mNogfjLFeW; Wed, 27 Jul 2022 11:15:32 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D44E44C7F5;
-	Wed, 27 Jul 2022 10:29:32 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9539A4C881;
+	Wed, 27 Jul 2022 11:15:31 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 7CB2D4C6C4
- for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Jul 2022 10:29:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id BCFB94C866
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Jul 2022 11:15:30 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id IzILBvH91HRJ for <kvmarm@lists.cs.columbia.edu>;
- Wed, 27 Jul 2022 10:29:29 -0400 (EDT)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 448084C7A1
- for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Jul 2022 10:29:28 -0400 (EDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 48948B82187;
- Wed, 27 Jul 2022 14:29:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD161C433D6;
- Wed, 27 Jul 2022 14:29:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1658932166;
- bh=ucMNCrws7KhQhf8hTanOu2XwNAuEOvJybE4pmo7FkqE=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=KRVFoWgDA5r5UCORtgyYITfLOPFZaMQZF3Xk/9OoSjY3wnabf/HfXXf9/cblgFm6N
- UCN2PdTn8lG5AQy17JTLY2Dzv85HgvA0QwCBROHwHfeyZcxyzP7S0BbO17Cce/LBtj
- UOIlDBgUsE0F6EPY2xbjz0z5llKTLnsSRwUUiueSXP8MPoCJld3xgg72KQISAMxEMm
- cejTM4GmLc88Tl5Ib/CsBXfUXp8OzPbSB5co/GO7Zs+rlFRpNa6H+XETAjUVlGG0MW
- 8RgNVmnK8xzY1NBcLGeS6W3uFN5APSr2rWzPvok0HbR4nnV5uzJEyt4IE0KZcKw+7A
- sDY3toA8vABrw==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
- (envelope-from <maz@kernel.org>) id 1oGi2O-00APjL-Uc;
- Wed, 27 Jul 2022 15:29:24 +0100
-From: Marc Zyngier <maz@kernel.org>
-To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- kvm@vger.kernel.org
-Subject: [PATCH 6/6] arm64: Update 'unwinder howto'
-Date: Wed, 27 Jul 2022 15:29:06 +0100
-Message-Id: <20220727142906.1856759-7-maz@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220727142906.1856759-1-maz@kernel.org>
-References: <20220726073750.3219117-18-kaleshsingh@google.com>
- <20220727142906.1856759-1-maz@kernel.org>
+ with ESMTP id yq7-how6evAv for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 27 Jul 2022 11:15:29 -0400 (EDT)
+Received: from out2.migadu.com (out2.migadu.com [188.165.223.204])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 429564C86A
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Jul 2022 11:15:29 -0400 (EDT)
+Date: Wed, 27 Jul 2022 15:15:24 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1658934927;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eTFBBzy3zFLMXchXyWWwnL7LL8lRFXc0KZ1uZEaoQdc=;
+ b=tGUEzhzFMPq6h1cj66qOQTSeQe+u8PgEf87LSBG21IVs74u2z6PFZtabf04Ikjc8fCfLDq
+ S+9pYH8afSrzBFnjznkEjG2DBN8PKKaOJC6ZnMbTGdDe1Kyr3RcDNOgV6cOptGxFG3hI0m
+ cUvnHOSNc9tFHlUi+j/qX5/3CUj36EM=
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Oliver Upton <oliver.upton@linux.dev>
+To: Alexandru Elisei <alexandru.elisei@arm.com>
+Subject: Re: KVM/arm64: SPE: Translate VA to IPA on a stage 2 fault instead
+ of pinning VM memory
+Message-ID: <YuFWjH0x+570kd/0@google.com>
+References: <Yl6+JWaP+mq2Nc0b@monolith.localdoman>
+ <20220419141012.GB6143@willie-the-truck>
+ <Yt5nFAscgrRGNGoH@monolith.localdoman>
+ <YuApmZFdZzTi5ROu@google.com>
+ <YuERKEjJh1qsZf8x@monolith.localdoman>
+ <04dea801e298374fb783bf0760b15241@kernel.org>
+ <YuEW/zEjnddcRFad@monolith.localdoman>
+ <2d1f87576ce17b8c72bfac522e2aa101@kernel.org>
+ <YuEoCw/EBceUv2c4@monolith.localdoman>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, mark.rutland@arm.com,
- broonie@kernel.org, madvenka@linux.microsoft.com, tabba@google.com,
- oliver.upton@linux.dev, qperret@google.com, kaleshsingh@google.com,
- james.morse@arm.com, alexandru.elisei@arm.com, suzuki.poulose@arm.com,
- catalin.marinas@arm.com, andreyknvl@gmail.com, vincenzo.frascino@arm.com,
- mhiramat@kernel.org, ast@kernel.org, wangkefeng.wang@huawei.com,
- elver@google.com, keirf@google.com, yuzenghui@huawei.com, ardb@kernel.org,
- oupton@google.com, kernel-team@android.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: wangkefeng.wang@huawei.com, catalin.marinas@arm.com, ast@kernel.org,
- vincenzo.frascino@arm.com, madvenka@linux.microsoft.com,
- kernel-team@android.com, elver@google.com, broonie@kernel.org,
- andreyknvl@gmail.com, mhiramat@kernel.org
+Content-Disposition: inline
+In-Reply-To: <YuEoCw/EBceUv2c4@monolith.localdoman>
+X-Migadu-Flow: FLOW_OUT
+X-Migadu-Auth-User: linux.dev
+Cc: Marc Zyngier <maz@kernel.org>, Will Deacon <will@kernel.org>,
+ kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -99,45 +82,99 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Implementing a new unwinder is a bit more involved than writing
-a couple of helpers, so let's not lure the reader into a false
-sense of comfort. Instead, let's point out what they should
-call into, and what sort of parameter they need to provide.
+On Wed, Jul 27, 2022 at 12:57:16PM +0100, Alexandru Elisei wrote:
+> Hi,
+> 
+> On Wed, Jul 27, 2022 at 12:08:11PM +0100, Marc Zyngier wrote:
+> > On 2022-07-27 11:44, Alexandru Elisei wrote:
+> > > On Wed, Jul 27, 2022 at 11:29:03AM +0100, Marc Zyngier wrote:
+> > > > On 2022-07-27 11:19, Alexandru Elisei wrote:
+> > > > > Hi Oliver,
+> > > > >
+> > > > > Thank you for the help, replies below.
+> > > > >
+> > > > > On Tue, Jul 26, 2022 at 10:51:21AM -0700, Oliver Upton wrote:
+> > > > > > Hi Alex,
+> > > > > >
+> > > > > > On Mon, Jul 25, 2022 at 11:06:24AM +0100, Alexandru Elisei wrote:
+> > > > > >
+> > > > > > [...]
+> > > > > >
+> > > > > > > > A funkier approach might be to defer pinning of the buffer until the SPE is
+> > > > > > > > enabled and avoid pinning all of VM memory that way, although I can't
+> > > > > > > > immediately tell how flexible the architecture is in allowing you to cache
+> > > > > > > > the base/limit values.
+> > > > > > >
+> > > > > > > I was investigating this approach, and Mark raised a concern that I think
+> > > > > > > might be a showstopper.
+> > > > > > >
+> > > > > > > Let's consider this scenario:
+> > > > > > >
+> > > > > > > Initial conditions: guest at EL1, profiling disabled (PMBLIMITR_EL1.E = 0,
+> > > > > > > PMBSR_EL1.S = 0, PMSCR_EL1.{E0SPE,E1SPE} = {0,0}).
+> > > > > > >
+> > > > > > > 1. Guest programs the buffer and enables it (PMBLIMITR_EL1.E = 1).
+> > > > > > > 2. Guest programs SPE to enable profiling at **EL0**
+> > > > > > > (PMSCR_EL1.{E0SPE,E1SPE} = {1,0}).
+> > > > > > > 3. Guest changes the translation table entries for the buffer. The
+> > > > > > > architecture allows this.
+> > > > > > > 4. Guest does an ERET to EL0, thus enabling profiling.
+> > > > > > >
+> > > > > > > Since KVM cannot trap the ERET to EL0, it will be impossible for KVM to pin
+> > > > > > > the buffer at stage 2 when profiling gets enabled at EL0.
+> > > > > >
+> > > > > > Not saying we necessarily should, but this is possible with FGT no?
+> > > > >
+> > > > > It doesn't look to me like FEAT_FGT offers any knobs to trap ERET from
+> > > > > EL1.
+> > > > 
+> > > > See HFGITR.ERET.
+> > > 
+> > > Ah, so that's the register, thanks!
+> > > 
+> > > I stil am not sure that having FEAT_SPE, an Armv8.3 extension, depend on
+> > > FEAT_FGT, an Armv8.6 extension, is the best idea. Do you know of any
+> > > machines
+> > > that have FEAT_SPE and FEAT_FGT?
+> > 
+> > None. Both are pretty niche, and the combination is nowhere
+> > to be seen at the moment.
+> 
+> That was also my impression.
+> 
+> > 
+> > > On the plus side, KVM could enable the trap only in the case above, and
+> > > disable
+> > > it after the ERET is trapped, so it should be relatively cheap to use.
+> > 
+> > This feels pretty horrible. Nothing says *when* will EL1
+> > alter the PTs. It could take tons of EL1->EL1 exceptions
+> > before returning to EL0. And the change could happen after
+> > an EL1->EL0->EL1 transition. At which point do you stop?
+> 
+> ERET trapping is enabled When PMBLIMITR_EL1.E = 1, PMSCR_EL1.{E0SPE,E1SPE}
+> = {1,0}. The first guest ERET from EL1 to EL0 enables profiling, at which
+> point the buffer is pinned and ERET trapping is disabled.
+> 
+> Guest messing with the translation tables while profiling is enabled is the
+> guest's problem because that's not permitted by the architecture. Any stage
+> 2 dabt taken when the buffer is pinned would be injected back into the
+> guest as an SPE external abort (or something equivalent). Stage 1 dabts are
+> entirely the guest's problem to solve and would be injected back regardless
+> of the status of the buffer.
+> 
+> Yes, I agree, there could be a lot of ERETs from EL1 to EL1 before the ERET
+> to EL0; those ERETs would be uselessly trapped.
+> 
+> The above is a moot point anyway, because I believe we both agree that
+> having SPE emulation depend on FEAT_FGT is best to be avoided.
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
----
- arch/arm64/include/asm/stacktrace/common.h | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+LOL, I probably shouldn't have even mentioned it :) Completely agree
+with you both, trapping ERET is bordering on mad.
 
-diff --git a/arch/arm64/include/asm/stacktrace/common.h b/arch/arm64/include/asm/stacktrace/common.h
-index 18046a7248a2..f58eb944c46f 100644
---- a/arch/arm64/include/asm/stacktrace/common.h
-+++ b/arch/arm64/include/asm/stacktrace/common.h
-@@ -5,17 +5,11 @@
-  * To implement a new arm64 stack unwinder:
-  *     1) Include this header
-  *
-- *     2) Provide implementations for the following functions:
-- *          on_overflow_stack():   Returns true if SP is on the overflow
-- *                                 stack.
-- *          on_accessible_stack(): Returns true is SP is on any accessible
-- *                                 stack.
-- *          unwind_next():         Performs validation checks on the frame
-- *                                 pointer, and transitions unwind_state
-- *                                 to the next frame.
-+ *     2) Call into unwind_next_common() from your top level unwind
-+ *        function, passing it the validation and translation callbacks
-+ *        (though the later can be NULL if no translation is required).
-  *
-- *         See: arch/arm64/include/asm/stacktrace.h for reference
-- *              implementations.
-+ * See: arch/arm64/kernel/stacktrace.c for the reference implementation.
-  *
-  * Copyright (C) 2012 ARM Ltd.
-  */
--- 
-2.34.1
-
+--
+Thanks,
+Oliver
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
