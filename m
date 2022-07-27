@@ -2,57 +2,86 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AD0758261E
-	for <lists+kvmarm@lfdr.de>; Wed, 27 Jul 2022 14:09:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09C0A5828A5
+	for <lists+kvmarm@lfdr.de>; Wed, 27 Jul 2022 16:29:37 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AD99B4BFDB;
-	Wed, 27 Jul 2022 08:09:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 919AC4C7B8;
+	Wed, 27 Jul 2022 10:29:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.899
+X-Spam-Score: -1.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=no
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id u0XIWLnnkQX4; Wed, 27 Jul 2022 08:09:36 -0400 (EDT)
+	with ESMTP id s7vd6uvBn1kf; Wed, 27 Jul 2022 10:29:32 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 266324BFBF;
-	Wed, 27 Jul 2022 08:09:35 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9A6EF4C7D9;
+	Wed, 27 Jul 2022 10:29:30 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3626B4C345
- for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Jul 2022 08:09:34 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7CE494C792
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Jul 2022 10:29:29 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id oP0nXcN8MJQV for <kvmarm@lists.cs.columbia.edu>;
- Wed, 27 Jul 2022 08:09:32 -0400 (EDT)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2A1814C331
- for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Jul 2022 08:09:32 -0400 (EDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D046FD6E;
- Wed, 27 Jul 2022 05:09:31 -0700 (PDT)
-Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 429A83F73B;
- Wed, 27 Jul 2022 05:09:30 -0700 (PDT)
-Date: Wed, 27 Jul 2022 13:10:02 +0100
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: KVM/arm64: SPE: Translate VA to IPA on a stage 2 fault instead
- of pinning VM memory
-Message-ID: <YuEqiLbThsrb1pHh@monolith.localdoman>
-References: <Yl6+JWaP+mq2Nc0b@monolith.localdoman>
- <20220419141012.GB6143@willie-the-truck>
- <Yt5nFAscgrRGNGoH@monolith.localdoman>
- <YuApmZFdZzTi5ROu@google.com> <875yjiyka4.wl-maz@kernel.org>
- <YuEZyeW9Hq6poWYL@monolith.localdoman>
- <ca2d505c9099f9a8726dbd95537ad0eb@kernel.org>
+ with ESMTP id TM-pPzCDsUpB for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 27 Jul 2022 10:29:28 -0400 (EDT)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1B6364C795
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 27 Jul 2022 10:29:28 -0400 (EDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id 4391DB82186;
+ Wed, 27 Jul 2022 14:29:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C78C433D6;
+ Wed, 27 Jul 2022 14:29:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1658932164;
+ bh=C0fFCqtOLRJbXlVkkLns9Pw1a9RaVmm9QzhFCj+FTOI=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=CjMTVfWWDiKQSqProKDRbhzNZSm6LlsyYqv7ARDwKr7/LZbDIMooFLHPyv1ZA7k3r
+ s4M1h1mfVni0CwP+xhynwSA/e7dy6UNrWhnuAKdK5x7/OPudgDv4AZL5yIeQewF+C1
+ F3JD5clTB5DWvWtcv2WxVJfRHr2YSUxAGunY7amprAgOw24RLK+N15GkvQ7SRajs2e
+ /wIfUX53jEH70kFecHUEdOQXiEQyBTOz+gJmrl99yAcQFBG5Jn4CMphfQdbBnvUybv
+ p2s3T0P4ENfUkAi16ztbu9C5WVbfWXdO/ZW7B9aKATrpwYf9JM5GxQbIgr7y6YOS2W
+ Z45HYSIJ+DGdg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1oGi2L-00APjL-TD;
+ Wed, 27 Jul 2022 15:29:22 +0100
+From: Marc Zyngier <maz@kernel.org>
+To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
+ kvm@vger.kernel.org
+Subject: [PATCH 0/6] KVM: arm64: nVHE stack unwinder rework
+Date: Wed, 27 Jul 2022 15:29:00 +0100
+Message-Id: <20220727142906.1856759-1-maz@kernel.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220726073750.3219117-18-kaleshsingh@google.com>
+References: <20220726073750.3219117-18-kaleshsingh@google.com>
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <ca2d505c9099f9a8726dbd95537ad0eb@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org, Will Deacon <will@kernel.org>,
- kvmarm@lists.cs.columbia.edu
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org, mark.rutland@arm.com,
+ broonie@kernel.org, madvenka@linux.microsoft.com, tabba@google.com,
+ oliver.upton@linux.dev, qperret@google.com, kaleshsingh@google.com,
+ james.morse@arm.com, alexandru.elisei@arm.com, suzuki.poulose@arm.com,
+ catalin.marinas@arm.com, andreyknvl@gmail.com, vincenzo.frascino@arm.com,
+ mhiramat@kernel.org, ast@kernel.org, wangkefeng.wang@huawei.com,
+ elver@google.com, keirf@google.com, yuzenghui@huawei.com, ardb@kernel.org,
+ oupton@google.com, kernel-team@android.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: wangkefeng.wang@huawei.com, catalin.marinas@arm.com, ast@kernel.org,
+ vincenzo.frascino@arm.com, madvenka@linux.microsoft.com,
+ kernel-team@android.com, elver@google.com, broonie@kernel.org,
+ andreyknvl@gmail.com, mhiramat@kernel.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -69,147 +98,57 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi,
+Hi all,
 
-On Wed, Jul 27, 2022 at 12:18:41PM +0100, Marc Zyngier wrote:
-> On 2022-07-27 11:56, Alexandru Elisei wrote:
-> > Hi Marc,
-> > 
-> > On Wed, Jul 27, 2022 at 10:30:59AM +0100, Marc Zyngier wrote:
-> > > On Tue, 26 Jul 2022 18:51:21 +0100,
-> > > Oliver Upton <oliver.upton@linux.dev> wrote:
-> > > >
-> > > > Hi Alex,
-> > > >
-> > > > On Mon, Jul 25, 2022 at 11:06:24AM +0100, Alexandru Elisei wrote:
-> > > >
-> > > > [...]
-> > > >
-> > > > > > A funkier approach might be to defer pinning of the buffer until the SPE is
-> > > > > > enabled and avoid pinning all of VM memory that way, although I can't
-> > > > > > immediately tell how flexible the architecture is in allowing you to cache
-> > > > > > the base/limit values.
-> > > > >
-> > > > > I was investigating this approach, and Mark raised a concern that I think
-> > > > > might be a showstopper.
-> > > > >
-> > > > > Let's consider this scenario:
-> > > > >
-> > > > > Initial conditions: guest at EL1, profiling disabled (PMBLIMITR_EL1.E = 0,
-> > > > > PMBSR_EL1.S = 0, PMSCR_EL1.{E0SPE,E1SPE} = {0,0}).
-> > > > >
-> > > > > 1. Guest programs the buffer and enables it (PMBLIMITR_EL1.E = 1).
-> > > > > 2. Guest programs SPE to enable profiling at **EL0**
-> > > > > (PMSCR_EL1.{E0SPE,E1SPE} = {1,0}).
-> > > > > 3. Guest changes the translation table entries for the buffer. The
-> > > > > architecture allows this.
-> > > > > 4. Guest does an ERET to EL0, thus enabling profiling.
-> > > > >
-> > > > > Since KVM cannot trap the ERET to EL0, it will be impossible for KVM to pin
-> > > > > the buffer at stage 2 when profiling gets enabled at EL0.
-> > > >
-> > > > Not saying we necessarily should, but this is possible with FGT no?
-> > > 
-> > > Given how often ERET is used at EL1, I'd really refrain from doing
-> > > so. NV uses the same mechanism to multiplex vEL2 and vEL1 on the real
-> > > EL1, and this comes at a serious cost (even an exception return that
-> > > stays at the same EL gets trapped). Once EL1 runs, we disengage this
-> > > trap because it is otherwise way too costly.
-> > > 
-> > > >
-> > > > > I can see two solutions here:
-> > > > >
-> > > > > a. Accept the limitation (and advertise it in the documentation) that if
-> > > > > someone wants to use SPE when running as a Linux guest, the kernel used by
-> > > > > the guest must not change the buffer translation table entries after the
-> > > > > buffer has been enabled (PMBLIMITR_EL1.E = 1). Linux already does that, so
-> > > > > running a Linux guest should not be a problem. I don't know how other OSes
-> > > > > do it (but I can find out). We could also phrase it that the buffer
-> > > > > translation table entries can be changed after enabling the buffer, but
-> > > > > only if profiling happens at EL1. But that sounds very arbitrary.
-> > > > >
-> > > > > b. Pin the buffer after the stage 2 DABT that SPE will report in the
-> > > > > situation above. This means that there is a blackout window, but will
-> > > > > happen only once after each time the guest reprograms the buffer. I don't
-> > > > > know if this is acceptable. We could say that this if this blackout window
-> > > > > is not acceptable, then the guest kernel shouldn't change the translation
-> > > > > table entries after enabling the buffer.
-> > > > >
-> > > > > Or drop the approach of pinning the buffer and go back to pinning the
-> > > > > entire memory of the VM.
-> > > > >
-> > > > > Any thoughts on this? I would very much prefer to try to pin only the
-> > > > > buffer.
-> > > >
-> > > > Doesn't pinning the buffer also imply pinning the stage 1 tables
-> > > > responsible for its translation as well? I agree that pinning the buffer
-> > > > is likely the best way forward as pinning the whole of guest memory is
-> > > > entirely impractical.
-> > > 
-> > > How different is this from device assignment, which also relies on
-> > > full page pinning? The way I look at it, SPE is a device directly
-> > > assigned to the guest, and isn't capable of generating synchronous
-> > > exception. Not that I'm madly in love with the approach, but this is
-> > > at least consistent. There was also some concerns around buggy HW that
-> > > would blow itself up on S2 faults, but I think these implementations
-> > > are confidential enough that we don't need to worry about them.
-> > > 
-> > > > I'm also a bit confused on how we would manage to un-pin memory on the
-> > > > way out with this. The guest is free to muck with the stage 1 and could
-> > > > cause the SPU to spew a bunch of stage 2 aborts if it wanted to be
-> > > > annoying. One way to tackle it would be to only allow a single
-> > > > root-to-target walk to be pinned by a vCPU at a time. Any time a new
-> > > > stage 2 abort comes from the SPU, we un-pin the old walk and pin the new
-> > > > one instead.
-> > > 
-> > > This sounds like a reasonable option. Only one IPA range covering the
-> > > SPE buffer (as described by the translation of PMBPTR_EL1) is pinned
-> > > at any given time. Generate a SPE S2 fault outside of this range, and
-> > > we unpin the region before mapping in the next one. Yes, the guest can
-> > > play tricks on us and exploit the latency of the interrupt. But at the
-> > > end of the day, this is its own problem.
-> > > 
-> > > Of course, this results in larger blind windows. Ideally, we should be
-> > > able to report these to the guest, either as sideband data or in the
-> > > actual profiling buffer (but I have no idea whether this is possible).
-> > 
-> > I believe solution b, pin the buffer when guest enables profiling (where
-> > by
-> > profiling enabled I mean StatisticalProfilingEnabled() returns true),
-> > and
-> > only in the situation that I described pin the buffer as a result of a
-> > stage 2 fault, would reduce the blackouts to a minimum.
-> 
-> In all honesty, I'd rather see everything be done as the result
-> of a S2 fault for now, and only introduce heuristics to reduce the blackout
-> window at a later time. And this includes buffer pinning
-> if that can be avoided.
+As Kalesh's series[1] already went through quite a few rounds and that
+it has proved to be an extremely useful debugging help, I'd like to
+queue it for 5.20.
 
-I believe it's not feasible to do everything as a result of a SPE stage 2
-fault. I've explained where in this reply [1]. Sorry for fragmenting the
-discussion into so many different threads.
+However, there is a couple of nits that I'd like to address:
 
-Having the first write, and only that first write, trigger a stage 2 fault
-that KVM handles by pinning the buffer works because the guest hasn't
-written anything useful to the buffer.
+- the code is extremely hard to follow, due to the include maze and
+  the various levels of inline functions that have forward
+  declarations...
 
-[1] https://lore.kernel.org/all/YuEVq8Au7YsDLOdI@monolith.localdoman/
+- there is a subtle bug in the way the kernel on_accessible_stack()
+  helper has been rewritten
 
-> 
-> My hunch is that people wanting zero blackout will always pin
-> all their memory, one way or another, and that the rest of us
-> will be happy just to get *something* out of SPE in a VM...
+- the config symbol for the protected unwinder is oddly placed
 
-What are you thinking when you are saying "one way or another"? Because
-that would need changes to KVM (mlock() is not enough).
+Instead of going for another round and missing the merge window, I
+propose to stash the following patches on top, which IMHO result in
+something much more readable.
 
-Thanks,
-Alex
+This series directly applies on top of Kalesh's.
 
-> 
->         M.
-> -- 
-> Jazz is not dead. It just smells funny...
+[1] https://lore.kernel.org/r/20220726073750.3219117-1-kaleshsingh@google.com
+
+Marc Zyngier (5):
+  KVM: arm64: Move PROTECTED_NVHE_STACKTRACE around
+  KVM: arm64: Move nVHE stacktrace unwinding into its own compilation
+    unit
+  KVM: arm64: Make unwind()/on_accessible_stack() per-unwinder functions
+  KVM: arm64: Move nVHE-only helpers into kvm/stacktrace.c
+  arm64: Update 'unwinder howto'
+
+Oliver Upton (1):
+  KVM: arm64: Don't open code ARRAY_SIZE()
+
+ arch/arm64/include/asm/stacktrace.h        |  74 -------
+ arch/arm64/include/asm/stacktrace/common.h |  69 ++-----
+ arch/arm64/include/asm/stacktrace/nvhe.h   | 125 +-----------
+ arch/arm64/kernel/stacktrace.c             |  90 +++++++++
+ arch/arm64/kvm/Kconfig                     |  24 ++-
+ arch/arm64/kvm/Makefile                    |   2 +-
+ arch/arm64/kvm/handle_exit.c               |  98 ---------
+ arch/arm64/kvm/hyp/nvhe/stacktrace.c       |  55 +++++-
+ arch/arm64/kvm/stacktrace.c                | 218 +++++++++++++++++++++
+ 9 files changed, 394 insertions(+), 361 deletions(-)
+ create mode 100644 arch/arm64/kvm/stacktrace.c
+
+-- 
+2.34.1
+
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
