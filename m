@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A283C58D61D
-	for <lists+kvmarm@lfdr.de>; Tue,  9 Aug 2022 11:15:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 218A758D61E
+	for <lists+kvmarm@lfdr.de>; Tue,  9 Aug 2022 11:15:47 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 488F04CB61;
-	Tue,  9 Aug 2022 05:15:45 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D33DE4CBBA;
+	Tue,  9 Aug 2022 05:15:46 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.899
@@ -15,34 +15,34 @@ X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id X7laXmy0qeMH; Tue,  9 Aug 2022 05:15:45 -0400 (EDT)
+	with ESMTP id uX-6QkcjkhME; Tue,  9 Aug 2022 05:15:46 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2878D4CAFB;
-	Tue,  9 Aug 2022 05:15:42 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 479794C505;
+	Tue,  9 Aug 2022 05:15:44 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 47A6F4C991
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D644C4C4E2
  for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Aug 2022 05:15:41 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id e4Nt+c3CdbaR for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id lq+2YS5McLiS for <kvmarm@lists.cs.columbia.edu>;
  Tue,  9 Aug 2022 05:15:40 -0400 (EDT)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 732D94C4A0
- for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Aug 2022 05:15:37 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 9CCAE4C53B
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Aug 2022 05:15:38 -0400 (EDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BA09C143D;
- Tue,  9 Aug 2022 02:15:37 -0700 (PDT)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 25EA723A;
+ Tue,  9 Aug 2022 02:15:39 -0700 (PDT)
 Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DA2FF3F67D;
- Tue,  9 Aug 2022 02:15:35 -0700 (PDT)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 460433F67D;
+ Tue,  9 Aug 2022 02:15:37 -0700 (PDT)
 From: Alexandru Elisei <alexandru.elisei@arm.com>
 To: pbonzini@redhat.com, thuth@redhat.com, andrew.jones@linux.dev,
  kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu, nikos.nikoleris@arm.com
-Subject: [kvm-unit-tests RFC PATCH 07/19] arm/arm64: Mark the phys_end
- parameter as unused in setup_mmu()
-Date: Tue,  9 Aug 2022 10:15:46 +0100
-Message-Id: <20220809091558.14379-8-alexandru.elisei@arm.com>
+Subject: [kvm-unit-tests RFC PATCH 08/19] arm/arm64: Use pgd_alloc() to
+ allocate mmu_idmap
+Date: Tue,  9 Aug 2022 10:15:47 +0100
+Message-Id: <20220809091558.14379-9-alexandru.elisei@arm.com>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20220809091558.14379-1-alexandru.elisei@arm.com>
 References: <20220809091558.14379-1-alexandru.elisei@arm.com>
@@ -63,36 +63,81 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-phys_end was used to cap the linearly mapped memory to 3G to allow 1G of
-room for the vmalloc area to grown down. This was made useless in commit
-c1cd1a2bed69 ("arm/arm64: mmu: Remove memory layout assumptions"), when
-setup_mmu() was changed to map all the detected memory regions without
-changing their limits.
+Until commit 031755dbfefb ("arm: enable vmalloc"), the idmap was allocated
+using pgd_alloc(). After that commit, all the page table allocator
+functions were switched to using the page allocator, but pgd_alloc() was
+left unchanged and became unused, with the idmap now being allocated with
+alloc_page().
+
+For arm64, the pgd table size varies based on the page size, which is
+configured by the user. For arm, it will always contain 4 entries (it
+translates bits 31:30 of the input address). To keep things simple and
+consistent with the other functions and across both architectures, modify
+pgd_alloc() to use alloc_page() instead of memalign like the rest of the
+page table allocator functions and use it to allocate the idmap.
+
+Note that when the idmap is created, alloc_ops->memalign is
+memalign_pages() which allocates memory with page granularity. Using
+memalign() as before would still have allocated a full page.
 
 Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
 ---
- lib/arm/mmu.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ lib/arm/asm/pgtable.h   | 4 ++--
+ lib/arm/mmu.c           | 4 ++--
+ lib/arm64/asm/pgtable.h | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/lib/arm/mmu.c b/lib/arm/mmu.c
-index e1a72fe4941f..8f936acafe8b 100644
---- a/lib/arm/mmu.c
-+++ b/lib/arm/mmu.c
-@@ -153,14 +153,10 @@ void mmu_set_range_sect(pgd_t *pgtable, uintptr_t virt_offset,
- 	}
+diff --git a/lib/arm/asm/pgtable.h b/lib/arm/asm/pgtable.h
+index d7c73906ba5e..a35f42965df9 100644
+--- a/lib/arm/asm/pgtable.h
++++ b/lib/arm/asm/pgtable.h
+@@ -43,8 +43,8 @@
+ #define pgd_free(pgd) free(pgd)
+ static inline pgd_t *pgd_alloc(void)
+ {
+-	pgd_t *pgd = memalign(L1_CACHE_BYTES, PTRS_PER_PGD * sizeof(pgd_t));
+-	memset(pgd, 0, PTRS_PER_PGD * sizeof(pgd_t));
++	assert(PTRS_PER_PGD * sizeof(pgd_t) <= PAGE_SIZE);
++	pgd_t *pgd = alloc_page();
+ 	return pgd;
  }
  
--void *setup_mmu(phys_addr_t phys_end, void *unused)
-+void *setup_mmu(phys_addr_t unused0, void *unused1)
- {
- 	struct mem_region *r;
+diff --git a/lib/arm/mmu.c b/lib/arm/mmu.c
+index 8f936acafe8b..2b7405d0274f 100644
+--- a/lib/arm/mmu.c
++++ b/lib/arm/mmu.c
+@@ -165,7 +165,7 @@ void *setup_mmu(phys_addr_t unused0, void *unused1)
+ #endif
  
--	/* 3G-4G region is reserved for vmalloc, cap phys_end at 3G */
--	if (phys_end > (3ul << 30))
--		phys_end = 3ul << 30;
--
- #ifdef __aarch64__
- 	init_alloc_vpage((void*)(4ul << 30));
+ 	if (!mmu_idmap)
+-		mmu_idmap = alloc_page();
++		mmu_idmap = pgd_alloc();
+ 
+ 	for (r = mem_regions; r->end; ++r) {
+ 		if (r->flags & MR_F_IO) {
+@@ -197,7 +197,7 @@ void __iomem *__ioremap(phys_addr_t phys_addr, size_t size)
+ 		pgtable = current_thread_info()->pgtable;
+ 	} else {
+ 		if (!mmu_idmap)
+-			mmu_idmap = alloc_page();
++			mmu_idmap = pgd_alloc();
+ 		pgtable = mmu_idmap;
+ 	}
+ 
+diff --git a/lib/arm64/asm/pgtable.h b/lib/arm64/asm/pgtable.h
+index bfb8a993e112..06357920aa74 100644
+--- a/lib/arm64/asm/pgtable.h
++++ b/lib/arm64/asm/pgtable.h
+@@ -49,8 +49,8 @@
+ #define pgd_free(pgd) free(pgd)
+ static inline pgd_t *pgd_alloc(void)
+ {
+-	pgd_t *pgd = memalign(PAGE_SIZE, PTRS_PER_PGD * sizeof(pgd_t));
+-	memset(pgd, 0, PTRS_PER_PGD * sizeof(pgd_t));
++	assert(PTRS_PER_PGD * sizeof(pgd_t) <= PAGE_SIZE);
++	pgd_t *pgd = alloc_page();
+ 	return pgd;
+ }
  
 -- 
 2.37.1
