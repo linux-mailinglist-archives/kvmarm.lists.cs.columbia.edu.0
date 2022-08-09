@@ -2,79 +2,86 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D32558D29A
-	for <lists+kvmarm@lfdr.de>; Tue,  9 Aug 2022 06:06:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBD4558D3F9
+	for <lists+kvmarm@lfdr.de>; Tue,  9 Aug 2022 08:44:43 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 101D24D012;
-	Tue,  9 Aug 2022 00:06:30 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 173BF4D049;
+	Tue,  9 Aug 2022 02:44:43 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=no
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@redhat.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Eb51UGxEXU0c; Tue,  9 Aug 2022 00:06:28 -0400 (EDT)
+	with ESMTP id oLCr72aLvU9q; Tue,  9 Aug 2022 02:44:42 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B29D34CFB5;
-	Tue,  9 Aug 2022 00:06:28 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A276A4D02D;
+	Tue,  9 Aug 2022 02:44:41 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C5C14CBF1
- for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Aug 2022 00:06:27 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D79BE4CE0B
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Aug 2022 02:44:40 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id EBnb0wnH55wD for <kvmarm@lists.cs.columbia.edu>;
- Tue,  9 Aug 2022 00:06:25 -0400 (EDT)
+ with ESMTP id Ay4unuYOORmu for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  9 Aug 2022 02:44:39 -0400 (EDT)
 Received: from us-smtp-delivery-124.mimecast.com
  (us-smtp-delivery-124.mimecast.com [170.10.129.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 663074C457
- for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Aug 2022 00:06:25 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B3F9A4CF6F
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Aug 2022 02:44:39 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1660017985;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1660027479;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GpMqE31lls01IVsW/AFKiHmLzH6RkUJAa9i/teIiT1c=;
- b=BqZP3567C01JSpTFhWGoL6H0itSST4FSU2yXkY0Um/B3KCEqpLHEa+Bv4DThJp99CKytXH
- bA6u7mDM21RSsUOCs/7NGdbPj7I+7xdRJkruo1WGTfhmFcFg3rq6K5he3Gi1hFP7PB96PA
- V5oGAaIWgPPqE7mLC0rtcnJN5OKp3CU=
+ bh=CR6YkkBfyaob1O/ChtSSoS1BxAeM9gKVCgsFRDj4SAA=;
+ b=RMFr3cKXrwFuwQAHPTGBVn6C2q2wYPFikuLGepft03iB5Z7FaAimHTeg0oZzDVuizH7zh5
+ iQ5uuV8pmCwjkTZSd0YRAdv9fNg2U6ZjBoxC9Wnqa/6pN1S1XHXlZJ+DmdRCIOXbritoAS
+ 6J9Wlg/1wk+7tQtBXITSjxUbKsAazw8=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-135-ahVzwH5mPJ6nYZb0VLyzfg-1; Tue, 09 Aug 2022 00:06:21 -0400
-X-MC-Unique: ahVzwH5mPJ6nYZb0VLyzfg-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
+ us-mta-267-cbov0cI9NWG7_T_0ybwJ4w-1; Tue, 09 Aug 2022 02:44:37 -0400
+X-MC-Unique: cbov0cI9NWG7_T_0ybwJ4w-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BF4D8804191;
- Tue,  9 Aug 2022 04:06:20 +0000 (UTC)
-Received: from gshan.redhat.com (vpn2-54-20.bne.redhat.com [10.64.54.20])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 26FE72166B26;
- Tue,  9 Aug 2022 04:06:15 +0000 (UTC)
-From: Gavin Shan <gshan@redhat.com>
-To: kvmarm@lists.cs.columbia.edu
-Subject: [PATCH 2/2] KVM: selftests: Use getcpu() instead of sched_getcpu() in
- rseq_test
-Date: Tue,  9 Aug 2022 14:06:27 +0800
-Message-Id: <20220809060627.115847-3-gshan@redhat.com>
-In-Reply-To: <20220809060627.115847-1-gshan@redhat.com>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 22A4880391B;
+ Tue,  9 Aug 2022 06:44:37 +0000 (UTC)
+Received: from [10.64.54.189] (vpn2-54-189.bne.redhat.com [10.64.54.189])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 2BAEA1121315;
+ Tue,  9 Aug 2022 06:44:32 +0000 (UTC)
+Subject: Re: [PATCH 1/2] KVM: selftests: Make rseq compatible with glibc-2.35
+To: Florian Weimer <fweimer@redhat.com>
 References: <20220809060627.115847-1-gshan@redhat.com>
+ <20220809060627.115847-2-gshan@redhat.com>
+ <8735e6ncxw.fsf@oldenburg.str.redhat.com>
+From: Gavin Shan <gshan@redhat.com>
+Message-ID: <7844e3fa-e49e-de75-e424-e82d3a023dd6@redhat.com>
+Date: Tue, 9 Aug 2022 18:45:26 +1000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.0
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.78 on 10.11.54.6
-Cc: fweimer@redhat.com, shan.gavin@gmail.com, kvm@vger.kernel.org,
- maz@kernel.org, linux-kernel@vger.kernel.org, andrew.jones@linux.dev,
+In-Reply-To: <8735e6ncxw.fsf@oldenburg.str.redhat.com>
+Content-Language: en-US
+X-Scanned-By: MIMEDefang 2.78 on 10.11.54.3
+Cc: shan.gavin@gmail.com, kvm@vger.kernel.org, maz@kernel.org,
+ linux-kernel@vger.kernel.org, andrew.jones@linux.dev,
  mathieu.desnoyers@efficios.com, yihyu@redhat.com,
- linux-kselftest@vger.kernel.org, pbonzini@redhat.com
+ linux-kselftest@vger.kernel.org, pbonzini@redhat.com,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
+Reply-To: Gavin Shan <gshan@redhat.com>
 List-Id: Where KVM/ARM decisions are made <kvmarm.lists.cs.columbia.edu>
 List-Unsubscribe: <https://lists.cs.columbia.edu/mailman/options/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=unsubscribe>
@@ -83,104 +90,74 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-sched_getcpu() is glibc dependent and it can simply return the CPU
-ID from the registered rseq information, as Florian Weimer pointed.
-In this case, it's pointless to compare the return value from
-sched_getcpu() and that fetched from the registered rseq information.
+Hi Florian,
 
-Fix the issue by replacing sched_getcpu() with getcpu(), as Florian
-suggested. The comments are modified accordingly.
+On 8/9/22 4:33 PM, Florian Weimer wrote:
+>> diff --git a/tools/testing/selftests/kvm/rseq_test.c b/tools/testing/selftests/kvm/rseq_test.c
+>> index a54d4d05a058..acb1bf1f06b3 100644
+>> --- a/tools/testing/selftests/kvm/rseq_test.c
+>> +++ b/tools/testing/selftests/kvm/rseq_test.c
+>> @@ -9,6 +9,7 @@
+>>   #include <string.h>
+>>   #include <signal.h>
+>>   #include <syscall.h>
+>> +#include <dlfcn.h>
+>>   #include <sys/ioctl.h>
+>>   #include <sys/sysinfo.h>
+>>   #include <asm/barrier.h>
+> 
+> I'm surprised that there isn't a Makefile update to link with -ldl
+> (still required for glibc 2.33 and earlier).
+> 
 
-Reported-by: Yihuang Yu <yihyu@redhat.com>
-Suggested-by: Florian Weimer <fweimer@redhat.com>
-Suggested-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Signed-off-by: Gavin Shan <gshan@redhat.com>
----
- tools/testing/selftests/kvm/rseq_test.c | 32 ++++++++++++-------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+In next revision, I will add '-ldl' into tools/testing/selftests/kvm/Makefile.
 
-diff --git a/tools/testing/selftests/kvm/rseq_test.c b/tools/testing/selftests/kvm/rseq_test.c
-index acb1bf1f06b3..621b9b15049b 100644
---- a/tools/testing/selftests/kvm/rseq_test.c
-+++ b/tools/testing/selftests/kvm/rseq_test.c
-@@ -126,7 +126,7 @@ static void *migration_worker(void *__rseq_tid)
- 		atomic_inc(&seq_cnt);
- 
- 		/*
--		 * Ensure the odd count is visible while sched_getcpu() isn't
-+		 * Ensure the odd count is visible while getcpu() isn't
- 		 * stable, i.e. while changing affinity is in-progress.
- 		 */
- 		smp_wmb();
-@@ -167,10 +167,10 @@ static void *migration_worker(void *__rseq_tid)
- 		 *     check completes.
- 		 *
- 		 *  3. To ensure the read-side makes efficient forward progress,
--		 *     e.g. if sched_getcpu() involves a syscall.  Stalling the
--		 *     read-side means the test will spend more time waiting for
--		 *     sched_getcpu() to stabilize and less time trying to hit
--		 *     the timing-dependent bug.
-+		 *     e.g. if getcpu() involves a syscall. Stalling the read-side
-+		 *     means the test will spend more time waiting for getcpu()
-+		 *     to stabilize and less time trying to hit the timing-dependent
-+		 *     bug.
- 		 *
- 		 * Because any bug in this area is likely to be timing-dependent,
- 		 * run with a range of delays at 1us intervals from 1us to 10us
-@@ -264,9 +264,9 @@ int main(int argc, char *argv[])
- 
- 		/*
- 		 * Verify rseq's CPU matches sched's CPU.  Ensure migration
--		 * doesn't occur between sched_getcpu() and reading the rseq
--		 * cpu_id by rereading both if the sequence count changes, or
--		 * if the count is odd (migration in-progress).
-+		 * doesn't occur between getcpu() and reading the rseq cpu_id
-+		 * by rereading both if the sequence count changes, or if the
-+		 * count is odd (migration in-progress).
- 		 */
- 		do {
- 			/*
-@@ -276,15 +276,15 @@ int main(int argc, char *argv[])
- 			snapshot = atomic_read(&seq_cnt) & ~1;
- 
- 			/*
--			 * Ensure reading sched_getcpu() and rseq.cpu_id
--			 * complete in a single "no migration" window, i.e. are
--			 * not reordered across the seq_cnt reads.
-+			 * Ensure reading getcpu() and rseq.cpu_id complete in
-+			 * a single "no migration" window, i.e. are not reordered
-+			 * across the seq_cnt reads.
- 			 */
- 			smp_rmb();
--			cpu = sched_getcpu();
-+			r = getcpu(&cpu, NULL);
- 			rseq_cpu = READ_ONCE(__rseq_info->cpu_id);
- 			smp_rmb();
--		} while (snapshot != atomic_read(&seq_cnt));
-+		} while (r || snapshot != atomic_read(&seq_cnt));
- 
- 		TEST_ASSERT(rseq_cpu == cpu,
- 			    "rseq CPU = %d, sched CPU = %d\n", rseq_cpu, cpu);
-@@ -293,9 +293,9 @@ int main(int argc, char *argv[])
- 	/*
- 	 * Sanity check that the test was able to enter the guest a reasonable
- 	 * number of times, e.g. didn't get stalled too often/long waiting for
--	 * sched_getcpu() to stabilize.  A 2:1 migration:KVM_RUN ratio is a
--	 * fairly conservative ratio on x86-64, which can do _more_ KVM_RUNs
--	 * than migrations given the 1us+ delay in the migration task.
-+	 * getcpu() to stabilize.  A 2:1 migration:KVM_RUN ratio is a fairly
-+	 * conservative ratio on x86-64, which can do _more_ KVM_RUNs than
-+	 * migrations given the 1us+ delay in the migration task.
- 	 */
- 	TEST_ASSERT(i > (NR_TASK_MIGRATIONS / 2),
- 		    "Only performed %d KVM_RUNs, task stalled too much?\n", i);
--- 
-2.23.0
+
+>> @@ -36,6 +37,8 @@ static __thread volatile struct rseq __rseq = {
+>>    */
+>>   #define NR_TASK_MIGRATIONS 100000
+>>   
+>> +static bool __rseq_ownership;
+>> +static volatile struct rseq *__rseq_info;
+>>   static pthread_t migration_thread;
+>>   static cpu_set_t possible_mask;
+>>   static int min_cpu, max_cpu;
+>> @@ -49,11 +52,33 @@ static void guest_code(void)
+>>   		GUEST_SYNC(0);
+>>   }
+>>   
+>> +static void sys_rseq_ownership(void)
+>> +{
+>> +	long *offset;
+>> +	unsigned int *size, *flags;
+>> +
+>> +	offset = dlsym(RTLD_NEXT, "__rseq_offset");
+>> +	size = dlsym(RTLD_NEXT, "__rseq_size");
+>> +	flags = dlsym(RTLD_NEXT, "__rseq_flags");
+>> +
+>> +	if (offset && size && *size && flags) {
+>> +		__rseq_ownership = false;
+>> +		__rseq_info = (struct rseq *)((uintptr_t)__builtin_thread_pointer() +
+>> +					      *offset);
+> 
+> __builtin_thread_pointer doesn't work on all architectures/GCC versions.
+> Is this a problem for selftests?
+> 
+
+It's a problem as the test case is running on all architectures. I think I
+need introduce our own __builtin_thread_pointer() for where it's not
+supported: (1) PowerPC  (2) x86 without GCC 11
+
+Please let me know if I still have missed cases where __buitin_thread_pointer()
+isn't supported?
+
+Thanks,
+Gavin
 
 _______________________________________________
 kvmarm mailing list
