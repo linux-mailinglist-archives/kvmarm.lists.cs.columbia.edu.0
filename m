@@ -2,87 +2,57 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D85958D956
-	for <lists+kvmarm@lfdr.de>; Tue,  9 Aug 2022 15:24:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F88C58D953
+	for <lists+kvmarm@lfdr.de>; Tue,  9 Aug 2022 15:24:02 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E92A24CAEF;
-	Tue,  9 Aug 2022 09:24:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 630BD4C965;
+	Tue,  9 Aug 2022 09:24:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -1.898
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+X-Spam-Status: No, score=-1.898 required=6.1 tests=[BAYES_00=-1.9,
+	RCVD_IN_DNSWL_BLOCKED=0.001, URIBL_BLOCKED=0.001]
 	autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, body has been altered) header.i=@efficios.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Qw9e7c6FevNf; Tue,  9 Aug 2022 09:24:12 -0400 (EDT)
+	with ESMTP id r5emXmdGz9b0; Tue,  9 Aug 2022 09:24:01 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6953B4C975;
-	Tue,  9 Aug 2022 09:24:11 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0D3954C9AF;
+	Tue,  9 Aug 2022 09:24:00 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4C5214CEC3
- for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Aug 2022 08:21:57 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id CB9654CEF8
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Aug 2022 08:36:24 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id oJN2ejUM90z7 for <kvmarm@lists.cs.columbia.edu>;
- Tue,  9 Aug 2022 08:21:55 -0400 (EDT)
-Received: from mail.efficios.com (mail.efficios.com [167.114.26.124])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id DE0664CEC4
- for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Aug 2022 08:21:55 -0400 (EDT)
-Received: from localhost (localhost [127.0.0.1])
- by mail.efficios.com (Postfix) with ESMTP id 88CEC4290E7;
- Tue,  9 Aug 2022 08:21:55 -0400 (EDT)
-Received: from mail.efficios.com ([127.0.0.1])
- by localhost (mail03.efficios.com [127.0.0.1]) (amavisd-new, port 10032)
- with ESMTP id VA4D7GnKn4e5; Tue,  9 Aug 2022 08:21:55 -0400 (EDT)
-Received: from localhost (localhost [127.0.0.1])
- by mail.efficios.com (Postfix) with ESMTP id EAB714290E4;
- Tue,  9 Aug 2022 08:21:54 -0400 (EDT)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.efficios.com EAB714290E4
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
- s=default; t=1660047715;
- bh=yaql+OHmxrSRIFF3ySv247yWXrCOS5bC0G5bebaliwY=;
- h=Date:From:To:Message-ID:MIME-Version;
- b=Cn+kTKgqSdyG27J2H72mf4t7c15Au8g0GzhEvNz82ew6t2XB62VW85zMC0MY4dO66
- bfWxHqgEmSuz2N6fGJxDi2PCxm7zQ5tOxLQrFdbKtfvJgay3+exr5GJPIFoUx4dOUF
- Hs9bv613auRXhX3OOMEIXadBZwbe49mmmU+Z1TGwpUovxvzTXVkI5AspHT2sRMNDeh
- O/Ci0Tn7PSSp5/XAVWk+uhuhg8zJC/E+H3BnLIGYP4Z5OxJMvrh79dKHY4pwvmh+FM
- BPordgJZ9kuWcQ8vRQFX8V6e9EhLgvzLLHWlgKZGhLyvkmnZp93GdAZKn0UfcJdh7x
- xlWuUUYH2AY0Q==
-X-Virus-Scanned: amavisd-new at efficios.com
-Received: from mail.efficios.com ([127.0.0.1])
- by localhost (mail03.efficios.com [127.0.0.1]) (amavisd-new, port 10026)
- with ESMTP id GOweDkJi16HZ; Tue,  9 Aug 2022 08:21:54 -0400 (EDT)
-Received: from mail03.efficios.com (mail03.efficios.com [167.114.26.124])
- by mail.efficios.com (Postfix) with ESMTP id D8B874291F7;
- Tue,  9 Aug 2022 08:21:54 -0400 (EDT)
-Date: Tue, 9 Aug 2022 08:21:54 -0400 (EDT)
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-To: Gavin Shan <gshan@redhat.com>
-Message-ID: <797306043.114963.1660047714774.JavaMail.zimbra@efficios.com>
-In-Reply-To: <616d4de6-81f6-9d14-4e57-4a79fec45690@redhat.com>
-References: <20220809060627.115847-1-gshan@redhat.com>
- <20220809060627.115847-2-gshan@redhat.com>
- <8735e6ncxw.fsf@oldenburg.str.redhat.com>
- <7844e3fa-e49e-de75-e424-e82d3a023dd6@redhat.com>
- <87o7wtnay6.fsf@oldenburg.str.redhat.com>
- <616d4de6-81f6-9d14-4e57-4a79fec45690@redhat.com>
-Subject: Re: [PATCH 1/2] KVM: selftests: Make rseq compatible with glibc-2.35
+ with ESMTP id foKPAN9BQGRW for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  9 Aug 2022 08:36:20 -0400 (EDT)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 790164CEE3
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  9 Aug 2022 08:36:20 -0400 (EDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A97FA23A;
+ Tue,  9 Aug 2022 05:36:20 -0700 (PDT)
+Received: from [192.168.12.23] (unknown [172.31.20.19])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5861A3F5A1;
+ Tue,  9 Aug 2022 05:36:18 -0700 (PDT)
+Message-ID: <6d3498f8-80f7-be78-fbdf-643014828c54@arm.com>
+Date: Tue, 9 Aug 2022 13:36:09 +0100
 MIME-Version: 1.0
-X-Originating-IP: [167.114.26.124]
-X-Mailer: Zimbra 8.8.15_GA_4304 (zclient/8.8.15_GA_4304)
-Thread-Topic: selftests: Make rseq compatible with glibc-2.35
-Thread-Index: oHLHOFY5Vh2uVE5+gR7UtW52F8t44g==
-X-Mailman-Approved-At: Tue, 09 Aug 2022 09:24:11 -0400
-Cc: Florian Weimer <fweimer@redhat.com>, shan gavin <shan.gavin@gmail.com>,
- kvm@vger.kernel.org, maz@kernel.org, linux-kernel@vger.kernel.org,
- andrew jones <andrew.jones@linux.dev>, yihyu@redhat.com,
- linux-kselftest@vger.kernel.org, pbonzini@redhat.com,
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.12.0
+Subject: Re: [kvm-unit-tests RFC PATCH 01/19] Makefile: Define __ASSEMBLY__
+ for assembly files
+Content-Language: en-GB
+To: Alexandru Elisei <alexandru.elisei@arm.com>, pbonzini@redhat.com,
+ thuth@redhat.com, andrew.jones@linux.dev, kvm@vger.kernel.org,
  kvmarm@lists.cs.columbia.edu
+References: <20220809091558.14379-1-alexandru.elisei@arm.com>
+ <20220809091558.14379-2-alexandru.elisei@arm.com>
+From: Nikos Nikoleris <nikos.nikoleris@arm.com>
+In-Reply-To: <20220809091558.14379-2-alexandru.elisei@arm.com>
+X-Mailman-Approved-At: Tue, 09 Aug 2022 09:23:58 -0400
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -94,56 +64,98 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+On 09/08/2022 10:15, Alexandru Elisei wrote:
+> There are 25 header files today (found with grep -r "#ifndef __ASSEMBLY__)
+> with functionality relies on the __ASSEMBLY__ prepocessor constant being
+> correctly defined to work correctly. So far, kvm-unit-tests has relied on
+> the assembly files to define the constant before including any header
+> files which depend on it.
+> 
+> Let's make sure that nobody gets this wrong and define it as a compiler
+> constant when compiling assembly files. __ASSEMBLY__ is now defined for all
+> .S files, even those that didn't set it explicitely before.
+> 
 
------ Gavin Shan <gshan@redhat.com> wrote:
-> Hi Florian,
-> 
-> On 8/9/22 5:16 PM, Florian Weimer wrote:
-> >>> __builtin_thread_pointer doesn't work on all architectures/GCC
-> >>> versions.
-> >>> Is this a problem for selftests?
-> >>>
-> >>
-> >> It's a problem as the test case is running on all architectures. I think I
-> >> need introduce our own __builtin_thread_pointer() for where it's not
-> >> supported: (1) PowerPC  (2) x86 without GCC 11
-> >>
-> >> Please let me know if I still have missed cases where
-> >> __buitin_thread_pointer() isn't supported?
-> > 
-> > As far as I know, these are the two outliers that also have rseq
-> > support.  The list is a bit longer if we also consider non-rseq
-> > architectures (csky, hppa, ia64, m68k, microblaze, sparc, don't know
-> > about the Linux architectures without glibc support).
-> > 
-> 
-> For kvm/selftests, there are 3 architectures involved actually. So we
-> just need consider 4 cases: aarch64, x86, s390 and other. For other
-> case, we just use __builtin_thread_pointer() to maintain code's
-> integrity, but it's not called at all.
-> 
-> I think kvm/selftest is always relying on glibc if I'm correct.
+This is a great idea.
 
-All those are handled in the rseq selftests and in librseq. Why duplicate all that logic again?
+Reviewed-by: Nikos Nikoleris <nikos.nikoleris@arm.com>
 
 Thanks,
 
-Mathieu 
+Nikos
 
+> Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
+> ---
+>   Makefile           | 5 ++++-
+>   arm/cstart.S       | 1 -
+>   arm/cstart64.S     | 1 -
+>   powerpc/cstart64.S | 1 -
+>   4 files changed, 4 insertions(+), 4 deletions(-)
 > 
-> Thanks,
-> Gavin
-> 
-
--- 
-Mathieu Desnoyers
-EfficiOS Inc.
-http://www.efficios.com
+> diff --git a/Makefile b/Makefile
+> index 6ed5deaccb41..42c61aa45d50 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -94,6 +94,9 @@ CFLAGS += $(wmissing_parameter_type)
+>   CFLAGS += $(wold_style_declaration)
+>   CFLAGS += -Woverride-init -Wmissing-prototypes -Wstrict-prototypes
+>   
+> +AFLAGS  = $(CFLAGS)
+> +AFLAGS += -D__ASSEMBLY__
+> +
+>   autodepend-flags = -MMD -MF $(dir $*).$(notdir $*).d
+>   
+>   LDFLAGS += $(CFLAGS)
+> @@ -117,7 +120,7 @@ directories:
+>   	@mkdir -p $(OBJDIRS)
+>   
+>   %.o: %.S
+> -	$(CC) $(CFLAGS) -c -nostdlib -o $@ $<
+> +	$(CC) $(AFLAGS) -c -nostdlib -o $@ $<
+>   
+>   -include */.*.d */*/.*.d
+>   
+> diff --git a/arm/cstart.S b/arm/cstart.S
+> index 7036e67fc0d8..39260e0fa470 100644
+> --- a/arm/cstart.S
+> +++ b/arm/cstart.S
+> @@ -5,7 +5,6 @@
+>    *
+>    * This work is licensed under the terms of the GNU LGPL, version 2.
+>    */
+> -#define __ASSEMBLY__
+>   #include <auxinfo.h>
+>   #include <asm/assembler.h>
+>   #include <asm/thread_info.h>
+> diff --git a/arm/cstart64.S b/arm/cstart64.S
+> index e4ab7d06251e..d62360cf3859 100644
+> --- a/arm/cstart64.S
+> +++ b/arm/cstart64.S
+> @@ -5,7 +5,6 @@
+>    *
+>    * This work is licensed under the terms of the GNU GPL, version 2.
+>    */
+> -#define __ASSEMBLY__
+>   #include <auxinfo.h>
+>   #include <asm/asm-offsets.h>
+>   #include <asm/assembler.h>
+> diff --git a/powerpc/cstart64.S b/powerpc/cstart64.S
+> index 972851f9ed65..1a823385fd0f 100644
+> --- a/powerpc/cstart64.S
+> +++ b/powerpc/cstart64.S
+> @@ -5,7 +5,6 @@
+>    *
+>    * This work is licensed under the terms of the GNU LGPL, version 2.
+>    */
+> -#define __ASSEMBLY__
+>   #include <asm/hcall.h>
+>   #include <asm/ppc_asm.h>
+>   #include <asm/rtas.h>
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
