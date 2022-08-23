@@ -2,75 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 51E2F59EFDB
-	for <lists+kvmarm@lfdr.de>; Wed, 24 Aug 2022 01:47:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C62F959EFDD
+	for <lists+kvmarm@lfdr.de>; Wed, 24 Aug 2022 01:47:41 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 969A14C5F6;
-	Tue, 23 Aug 2022 19:47:34 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 44D634C5E0;
+	Tue, 23 Aug 2022 19:47:41 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.787
+X-Spam-Score: -1.788
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.787 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7dxa73AuIhON; Tue, 23 Aug 2022 19:47:34 -0400 (EDT)
+	with ESMTP id pUbttZVyIH5o; Tue, 23 Aug 2022 19:47:39 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 459404C5D8;
-	Tue, 23 Aug 2022 19:47:33 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 93DF04C612;
+	Tue, 23 Aug 2022 19:47:37 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 991D24C5C5
- for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Aug 2022 19:47:32 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B66824C5DD
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Aug 2022 19:47:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id n-cwVU45-7bI for <kvmarm@lists.cs.columbia.edu>;
- Tue, 23 Aug 2022 19:47:31 -0400 (EDT)
+ with ESMTP id bHOy2NdF-1RZ for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 23 Aug 2022 19:47:34 -0400 (EDT)
 Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com
  [209.85.128.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 351C04C5C6
- for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Aug 2022 19:47:31 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 4183A4C5DC
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Aug 2022 19:47:33 -0400 (EDT)
 Received: by mail-yw1-f202.google.com with SMTP id
- 00721157ae682-33d9f6f4656so18109037b3.21
- for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Aug 2022 16:47:31 -0700 (PDT)
+ 00721157ae682-32a115757b6so266088027b3.13
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Aug 2022 16:47:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=cc:to:from:subject:mime-version:message-id:date:from:to:cc;
- bh=lI8RVWeGiy/V5ixpWNIycXsB5AxR7O8H8gTuNCP1X3Y=;
- b=Z/MYPuRIYLWOvU+H5Y/4TJkXS3p4QothM/xmo7VtKPYYs4Ah+erSdsyShoPZlJyfJN
- toHS+uotvqskkWRJ2OcNF2p/gkUx79zmGf1LZ+1E7RVLE061+4NJmCDVFLHmZix4j6t4
- /7odh6OD7df9R4lo355CzWgtijXfaNiX9b8/EO16by1LXTYbR936gkJPsqaI+40t/qM8
- oVfIOHdf0JLU9K1PZaH8IwxVHlYG6+emhRIjOjHTYKZQ04WfVquri/v+JoJGzDl7j5MJ
- xZPUDO+afV1cFOB6z6DHOTm/p77wBkzXQPW+8kK5Hlotqi1/RKXoMzxV2g+10tQUoYxS
- dJ4g==
+ h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
+ :date:from:to:cc;
+ bh=DHlpwTjsX3gtDejFNCB8BC3ZZa4dy1hfvx6Ymee35Do=;
+ b=PjlF/ENN5r4qsyLV9xHnUoygDCoFuivrad4kH1XRgW04yxNixNMJ52Oa0OgDefBgFC
+ EP01Am1SMOUXyqYj4sm23oZVzOJFcDONVOouHpaHu1D4MAsU9ZjyXnnaouoKE7tNBxIm
+ +HJIo7LJ7llQv9vEyBPVRmadKM1h7S/XzhtP2q9ZlffjiV4iRWCdIUNywmnuA7lIqWVi
+ u0jzvjkpEYDRZD6JbI1v09Fibg83Y28vcq2m2Qc4OTVlonPsUq/pAAivciDFdtbqGyOY
+ BzUwcO3+rrre/+aHxjAkofH1M4PS3GQWxB8chsIYq3GAneR9uADEwqJaTBiEpFKFoZp+
+ TbEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=cc:to:from:subject:mime-version:message-id:date:x-gm-message-state
- :from:to:cc;
- bh=lI8RVWeGiy/V5ixpWNIycXsB5AxR7O8H8gTuNCP1X3Y=;
- b=BAWvAgZyfEwbuojsf4SwojCw20cmI9tbZVb/x5WYFAQ5S2VxlhiAYud2PGVaHEagGz
- yywCURZ7J+bFQOj9WChPmYosPGRrx6r3P2Tz1nHgdgcTZTJ5mBQqheE6PbeM1/6ywN0v
- YLQUKGJ7msUafUPj5wtD/ddPab7HHtM0SNYYHHLVpRR9HBumkgT5iRA9UPIkS7g6bqiB
- /znGfmi4mQufIhYdvCnhEWr5LWnLpflPVMFJN+nMKadInEAXEhZXOTQSgauJlYHgLxaB
- uYFiPpBHa/lsYs/1MdyCyzX8BvLLfvt8FlZj6Cx6SH4bfazv09nIzC81u6acdinVaGRu
- mL4g==
-X-Gm-Message-State: ACgBeo2l3X8Y4BiAVbA0y6d6l4xOG/gYiGBXFfoLZJfQhV9SoELt6I1N
- MH1Tq8Eg87wTOSQAQIPT87Ny5y7iqv+aWQ==
-X-Google-Smtp-Source: AA6agR7FEUM+UiCqKmbZaKSVuJLapiaSgSGc2xyg1kI5PP9P/z6BPcYx3aCDwK5KuIg5SonqG5GdhaofPEYMIg==
+ h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
+ :date:x-gm-message-state:from:to:cc;
+ bh=DHlpwTjsX3gtDejFNCB8BC3ZZa4dy1hfvx6Ymee35Do=;
+ b=vp4YtWqM9SDrjgwzdBURJvVS7YDJ15MJUibrYrUeLackP/YH5dqVHnA+/PQovBzVPu
+ k8R/S+0MHSMIn4cX1ORkZQtmmO5BweQXZHWLDviKV4bhepim3LVEoMtHeTwsfudMf/Dh
+ HcYKyvjuxa4zzDQ3fjdSpeBZdafqu3s+eSVAVYwLY5RkQUExDMbLEcgqld1SUGk9FAbb
+ s+LUxIM+WooGMzaKpHhXZph7ZL2Pu/3kl6hZrQZRcQOWrcXNua2MoVJdIraAlcmrSSwI
+ PuTc+RjcIqB1Z3k9rAdQAYS7/P9RdW7jLxxGJVgSeuckm0WzLaHZygNEJsGvT8jveDLS
+ DAGQ==
+X-Gm-Message-State: ACgBeo3y6gWWnp6ZkU67wyD++g9K6eRoaqA0dv+eCzsxezF3vye0Swar
+ Wc3J3YFiWaTlpYJDu8jUyBgGOFW6279ftw==
+X-Google-Smtp-Source: AA6agR64/QIM82kbgx/DWmBvxHxQhuKOdwwcolsbOozT9oU2AbJbEcSMpfxRlbA4A007phRIWuBD9JuvlWpIoA==
 X-Received: from ricarkol4.c.googlers.com
  ([fda3:e722:ac3:cc00:20:ed76:c0a8:1248])
- (user=ricarkol job=sendgmr) by 2002:a81:7183:0:b0:31f:63f4:1743 with SMTP id
- m125-20020a817183000000b0031f63f41743mr28768685ywc.176.1661298450536; Tue, 23
- Aug 2022 16:47:30 -0700 (PDT)
-Date: Tue, 23 Aug 2022 23:47:14 +0000
-Message-Id: <20220823234727.621535-1-ricarkol@google.com>
+ (user=ricarkol job=sendgmr) by 2002:a25:8c83:0:b0:695:86b0:f5a0 with SMTP id
+ m3-20020a258c83000000b0069586b0f5a0mr15270590ybl.141.1661298452879; Tue, 23
+ Aug 2022 16:47:32 -0700 (PDT)
+Date: Tue, 23 Aug 2022 23:47:15 +0000
+In-Reply-To: <20220823234727.621535-1-ricarkol@google.com>
+Message-Id: <20220823234727.621535-2-ricarkol@google.com>
 Mime-Version: 1.0
+References: <20220823234727.621535-1-ricarkol@google.com>
 X-Mailer: git-send-email 2.37.1.595.g718a3a8f04-goog
-Subject: [PATCH v5 00/13] KVM: selftests: Add aarch64/page_fault_test
+Subject: [PATCH v5 01/13] KVM: selftests: Add a userfaultfd library
 From: Ricardo Koller <ricarkol@google.com>
 To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu, andrew.jones@linux.dev
 Cc: dmatclack@google.com, maz@kernel.org, bgardon@google.com,
@@ -91,119 +93,588 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-This series adds a new aarch64 selftest for testing stage 2 fault handling for
-various combinations of guest accesses (e.g., write, S1PTW), backing sources
-(e.g., anon), and types of faults (e.g., read on hugetlbfs with a hole, write
-on a readonly memslot). Each test tries a different combination and then checks
-that the access results in the right behavior (e.g., uffd faults with the right
-address and write/read flag). Some interesting combinations are:
+Move the generic userfaultfd code out of demand_paging_test.c into a
+common library, userfaultfd_util. This library consists of a setup and a
+stop function. The setup function starts a thread for handling page
+faults using the handler callback function. This setup returns a
+uffd_desc object which is then used in the stop function (to wait and
+destroy the threads).
 
-- loading an instruction leads to a stage 1 page-table-walk that misses on
-  stage 2 because the backing memslot for the page table it not in host memory
-  (a hole was punched right there) and the fault is handled using userfaultfd.
-  The expected behavior is that this leads to a userfaultfd fault marked as a
-  write. See commit c4ad98e4b72c ("KVM: arm64: Assume write fault on S1PTW
-  permission fault on instruction fetch") for why that's a write.
-- a cas (compare-and-swap) on a readonly memslot leads to a failed vcpu run.
-- write-faulting on a memslot that's marked for userfaultfd handling and dirty
-  logging should result in a uffd fault and having the respective bit set in
-  the dirty log.
-
-The first 8 commits of this series add library support. The first one adds a
-new userfaultfd library (out of demand_paging_test.c). The next 3 add some
-library functions to get the GPA of a PTE, and to get the fd of a backing
-source. Commit 6 fixes a leaked fd when using shared backing stores. The last 5
-commits add the new selftest, one type of test at a time. It first adds core
-tests, then uffd, then dirty logging, then readonly memslots tests, and finally
-combinations of the previous ones (like uffd and dirty logging at the same
-time).
-
-v4 -> v5: https://lore.kernel.org/kvmarm/20220624213257.1504783-1-ricarkol@google.com/
-- biggest change: followed suggestion from Sean and Andrew regarding a new
-  arg for vm_create() to specify the guest memory layout. That's taken care
-  of with these two new commits:
-	KVM: selftests: Use the right memslot for code, page-tables, and data allocations
-	KVM: selftests: Change ____vm_create() to take struct kvm_vm_mem_params
-  plus the respective changes in the page_fault_test itself (mostly code reduction).
-- dropped some commits that are not needed after the above change:
-	KVM: selftests: aarch64: Export _virt_pg_map with a pt_memslot arg
-	KVM: selftests: Add vm_alloc_page_table_in_memslot library function
-	KVM: selftests: Add vm_mem_region_get_src_fd library function
-- addressed Oliver comments in commit "KVM: selftests: aarch64: Add
-  aarch64/page_fault_test"
-- collect r-b's from Andrew
-
-v3 -> v4: https://lore.kernel.org/kvmarm/20220408004120.1969099-1-ricarkol@google.com/
-- rebased on top of latest kvm/queue.
-- addressed Oliver comments: vm_get_pte_gpa rename, page_fault_test and
-  other nits.
-- adding MAIR entry for MT_DEVICE_nGnRnE. The value and indices are both
-  0, so the change is really esthetic.
-- allocating less memory for the test (smaller memslots).
-- better comments, including an ascii diagram about how memory is laid out
-  for the test.
-
-v2 -> v3:
-Thank you very much Oliver and Ben
-- collected r-b's from Ben. [Ben]
-- moved some defitions (like TCR_EL1_HA) to common headers. [Oliver]
-- use FIELD_GET and ARM64_FEATURE_MASK. [Oliver]
-- put test data in a macro. [Oliver]
-- check for DCZID_EL1.DZP=0b0 before using "dc zva". [Oliver]
-- various new comments. [Oliver]
-- use 'asm' instead of hand assembly. [Oliver]
-- don't copy test descriptors into the guest. [Oliver]
-- rename large_page_size into backing_page_size. [Oliver]
-- add enumeration for memory types (4 is MT_NORMAL). [Oliver]
-- refactored the test macro definitions.
-
-v1 -> v2: https://lore.kernel.org/kvmarm/20220323225405.267155-1-ricarkol@google.com/
-- collect r-b from Ben for the memslot lib commit. [Ben]
-- move userfaultfd desc struct to header. [Ben]
-- move commit "KVM: selftests: Add vm_mem_region_get_src_fd library function"
-  to right before it's used. [Ben]
-- nit: wrong indentation in patch 6. [Ben]
-
-Ricardo Koller (13):
-  KVM: selftests: Add a userfaultfd library
-  KVM: selftests: aarch64: Add virt_get_pte_hva() library function
-  KVM: selftests: Add missing close and munmap in
-    __vm_mem_region_delete()
-  KVM: selftests: aarch64: Construct DEFAULT_MAIR_EL1 using sysreg.h
-    macros
-  tools: Copy bitfield.h from the kernel sources
-  KVM: selftests: Stash backing_src_type in struct userspace_mem_region
-  KVM: selftests: Change ____vm_create() to take struct
-    kvm_vm_mem_params
-  KVM: selftests: Use the right memslot for code, page-tables, and data
-    allocations
-  KVM: selftests: aarch64: Add aarch64/page_fault_test
-  KVM: selftests: aarch64: Add userfaultfd tests into page_fault_test
-  KVM: selftests: aarch64: Add dirty logging tests into page_fault_test
-  KVM: selftests: aarch64: Add readonly memslot tests into
-    page_fault_test
-  KVM: selftests: aarch64: Add mix of tests into page_fault_test
-
- tools/include/linux/bitfield.h                |  176 +++
- tools/testing/selftests/kvm/Makefile          |    2 +
- .../selftests/kvm/aarch64/page_fault_test.c   | 1132 +++++++++++++++++
- .../selftests/kvm/demand_paging_test.c        |  228 +---
- .../selftests/kvm/include/aarch64/processor.h |   35 +-
- .../selftests/kvm/include/kvm_util_base.h     |   65 +-
- .../selftests/kvm/include/userfaultfd_util.h  |   46 +
- .../selftests/kvm/lib/aarch64/processor.c     |   29 +-
- tools/testing/selftests/kvm/lib/elf.c         |    3 +-
- tools/testing/selftests/kvm/lib/kvm_util.c    |  129 +-
- .../selftests/kvm/lib/riscv/processor.c       |    7 +-
- .../selftests/kvm/lib/s390x/processor.c       |    7 +-
- .../selftests/kvm/lib/userfaultfd_util.c      |  187 +++
- .../selftests/kvm/lib/x86_64/processor.c      |   13 +-
- 14 files changed, 1801 insertions(+), 258 deletions(-)
- create mode 100644 tools/include/linux/bitfield.h
- create mode 100644 tools/testing/selftests/kvm/aarch64/page_fault_test.c
+Reviewed-by: Ben Gardon <bgardon@google.com>
+Signed-off-by: Ricardo Koller <ricarkol@google.com>
+---
+ tools/testing/selftests/kvm/Makefile          |   1 +
+ .../selftests/kvm/demand_paging_test.c        | 228 +++---------------
+ .../selftests/kvm/include/userfaultfd_util.h  |  46 ++++
+ .../selftests/kvm/lib/userfaultfd_util.c      | 187 ++++++++++++++
+ 4 files changed, 264 insertions(+), 198 deletions(-)
  create mode 100644 tools/testing/selftests/kvm/include/userfaultfd_util.h
  create mode 100644 tools/testing/selftests/kvm/lib/userfaultfd_util.c
 
+diff --git a/tools/testing/selftests/kvm/Makefile b/tools/testing/selftests/kvm/Makefile
+index 4c122f1b1737..1bb471aeb103 100644
+--- a/tools/testing/selftests/kvm/Makefile
++++ b/tools/testing/selftests/kvm/Makefile
+@@ -47,6 +47,7 @@ LIBKVM += lib/perf_test_util.c
+ LIBKVM += lib/rbtree.c
+ LIBKVM += lib/sparsebit.c
+ LIBKVM += lib/test_util.c
++LIBKVM += lib/userfaultfd_util.c
+ 
+ LIBKVM_x86_64 += lib/x86_64/apic.c
+ LIBKVM_x86_64 += lib/x86_64/handlers.S
+diff --git a/tools/testing/selftests/kvm/demand_paging_test.c b/tools/testing/selftests/kvm/demand_paging_test.c
+index 779ae54f89c4..8e1fe4ffcccd 100644
+--- a/tools/testing/selftests/kvm/demand_paging_test.c
++++ b/tools/testing/selftests/kvm/demand_paging_test.c
+@@ -22,23 +22,13 @@
+ #include "test_util.h"
+ #include "perf_test_util.h"
+ #include "guest_modes.h"
++#include "userfaultfd_util.h"
+ 
+ #ifdef __NR_userfaultfd
+ 
+-#ifdef PRINT_PER_PAGE_UPDATES
+-#define PER_PAGE_DEBUG(...) printf(__VA_ARGS__)
+-#else
+-#define PER_PAGE_DEBUG(...) _no_printf(__VA_ARGS__)
+-#endif
+-
+-#ifdef PRINT_PER_VCPU_UPDATES
+-#define PER_VCPU_DEBUG(...) printf(__VA_ARGS__)
+-#else
+-#define PER_VCPU_DEBUG(...) _no_printf(__VA_ARGS__)
+-#endif
+-
+ static int nr_vcpus = 1;
+ static uint64_t guest_percpu_mem_size = DEFAULT_PER_VCPU_MEM_SIZE;
++
+ static size_t demand_paging_size;
+ static char *guest_data_prototype;
+ 
+@@ -67,9 +57,11 @@ static void vcpu_worker(struct perf_test_vcpu_args *vcpu_args)
+ 		       ts_diff.tv_sec, ts_diff.tv_nsec);
+ }
+ 
+-static int handle_uffd_page_request(int uffd_mode, int uffd, uint64_t addr)
++static int handle_uffd_page_request(int uffd_mode, int uffd,
++		struct uffd_msg *msg)
+ {
+ 	pid_t tid = syscall(__NR_gettid);
++	uint64_t addr = msg->arg.pagefault.address;
+ 	struct timespec start;
+ 	struct timespec ts_diff;
+ 	int r;
+@@ -116,174 +108,32 @@ static int handle_uffd_page_request(int uffd_mode, int uffd, uint64_t addr)
+ 	return 0;
+ }
+ 
+-bool quit_uffd_thread;
+-
+-struct uffd_handler_args {
++struct test_params {
+ 	int uffd_mode;
+-	int uffd;
+-	int pipefd;
+-	useconds_t delay;
++	useconds_t uffd_delay;
++	enum vm_mem_backing_src_type src_type;
++	bool partition_vcpu_memory_access;
+ };
+ 
+-static void *uffd_handler_thread_fn(void *arg)
+-{
+-	struct uffd_handler_args *uffd_args = (struct uffd_handler_args *)arg;
+-	int uffd = uffd_args->uffd;
+-	int pipefd = uffd_args->pipefd;
+-	useconds_t delay = uffd_args->delay;
+-	int64_t pages = 0;
+-	struct timespec start;
+-	struct timespec ts_diff;
+-
+-	clock_gettime(CLOCK_MONOTONIC, &start);
+-	while (!quit_uffd_thread) {
+-		struct uffd_msg msg;
+-		struct pollfd pollfd[2];
+-		char tmp_chr;
+-		int r;
+-		uint64_t addr;
+-
+-		pollfd[0].fd = uffd;
+-		pollfd[0].events = POLLIN;
+-		pollfd[1].fd = pipefd;
+-		pollfd[1].events = POLLIN;
+-
+-		r = poll(pollfd, 2, -1);
+-		switch (r) {
+-		case -1:
+-			pr_info("poll err");
+-			continue;
+-		case 0:
+-			continue;
+-		case 1:
+-			break;
+-		default:
+-			pr_info("Polling uffd returned %d", r);
+-			return NULL;
+-		}
+-
+-		if (pollfd[0].revents & POLLERR) {
+-			pr_info("uffd revents has POLLERR");
+-			return NULL;
+-		}
+-
+-		if (pollfd[1].revents & POLLIN) {
+-			r = read(pollfd[1].fd, &tmp_chr, 1);
+-			TEST_ASSERT(r == 1,
+-				    "Error reading pipefd in UFFD thread\n");
+-			return NULL;
+-		}
+-
+-		if (!(pollfd[0].revents & POLLIN))
+-			continue;
+-
+-		r = read(uffd, &msg, sizeof(msg));
+-		if (r == -1) {
+-			if (errno == EAGAIN)
+-				continue;
+-			pr_info("Read of uffd got errno %d\n", errno);
+-			return NULL;
+-		}
+-
+-		if (r != sizeof(msg)) {
+-			pr_info("Read on uffd returned unexpected size: %d bytes", r);
+-			return NULL;
+-		}
+-
+-		if (!(msg.event & UFFD_EVENT_PAGEFAULT))
+-			continue;
+-
+-		if (delay)
+-			usleep(delay);
+-		addr =  msg.arg.pagefault.address;
+-		r = handle_uffd_page_request(uffd_args->uffd_mode, uffd, addr);
+-		if (r < 0)
+-			return NULL;
+-		pages++;
+-	}
+-
+-	ts_diff = timespec_elapsed(start);
+-	PER_VCPU_DEBUG("userfaulted %ld pages over %ld.%.9lds. (%f/sec)\n",
+-		       pages, ts_diff.tv_sec, ts_diff.tv_nsec,
+-		       pages / ((double)ts_diff.tv_sec + (double)ts_diff.tv_nsec / 100000000.0));
+-
+-	return NULL;
+-}
+-
+-static void setup_demand_paging(struct kvm_vm *vm,
+-				pthread_t *uffd_handler_thread, int pipefd,
+-				int uffd_mode, useconds_t uffd_delay,
+-				struct uffd_handler_args *uffd_args,
+-				void *hva, void *alias, uint64_t len)
++static void prefault_mem(void *alias, uint64_t len)
+ {
+-	bool is_minor = (uffd_mode == UFFDIO_REGISTER_MODE_MINOR);
+-	int uffd;
+-	struct uffdio_api uffdio_api;
+-	struct uffdio_register uffdio_register;
+-	uint64_t expected_ioctls = ((uint64_t) 1) << _UFFDIO_COPY;
+-	int ret;
++	size_t p;
+ 
+-	PER_PAGE_DEBUG("Userfaultfd %s mode, faults resolved with %s\n",
+-		       is_minor ? "MINOR" : "MISSING",
+-		       is_minor ? "UFFDIO_CONINUE" : "UFFDIO_COPY");
+-
+-	/* In order to get minor faults, prefault via the alias. */
+-	if (is_minor) {
+-		size_t p;
+-
+-		expected_ioctls = ((uint64_t) 1) << _UFFDIO_CONTINUE;
+-
+-		TEST_ASSERT(alias != NULL, "Alias required for minor faults");
+-		for (p = 0; p < (len / demand_paging_size); ++p) {
+-			memcpy(alias + (p * demand_paging_size),
+-			       guest_data_prototype, demand_paging_size);
+-		}
++	TEST_ASSERT(alias != NULL, "Alias required for minor faults");
++	for (p = 0; p < (len / demand_paging_size); ++p) {
++		memcpy(alias + (p * demand_paging_size),
++		       guest_data_prototype, demand_paging_size);
+ 	}
+-
+-	uffd = syscall(__NR_userfaultfd, O_CLOEXEC | O_NONBLOCK);
+-	TEST_ASSERT(uffd >= 0, __KVM_SYSCALL_ERROR("userfaultfd()", uffd));
+-
+-	uffdio_api.api = UFFD_API;
+-	uffdio_api.features = 0;
+-	ret = ioctl(uffd, UFFDIO_API, &uffdio_api);
+-	TEST_ASSERT(ret != -1, __KVM_SYSCALL_ERROR("UFFDIO_API", ret));
+-
+-	uffdio_register.range.start = (uint64_t)hva;
+-	uffdio_register.range.len = len;
+-	uffdio_register.mode = uffd_mode;
+-	ret = ioctl(uffd, UFFDIO_REGISTER, &uffdio_register);
+-	TEST_ASSERT(ret != -1, __KVM_SYSCALL_ERROR("UFFDIO_REGISTER", ret));
+-	TEST_ASSERT((uffdio_register.ioctls & expected_ioctls) ==
+-		    expected_ioctls, "missing userfaultfd ioctls");
+-
+-	uffd_args->uffd_mode = uffd_mode;
+-	uffd_args->uffd = uffd;
+-	uffd_args->pipefd = pipefd;
+-	uffd_args->delay = uffd_delay;
+-	pthread_create(uffd_handler_thread, NULL, uffd_handler_thread_fn,
+-		       uffd_args);
+-
+-	PER_VCPU_DEBUG("Created uffd thread for HVA range [%p, %p)\n",
+-		       hva, hva + len);
+ }
+ 
+-struct test_params {
+-	int uffd_mode;
+-	useconds_t uffd_delay;
+-	enum vm_mem_backing_src_type src_type;
+-	bool partition_vcpu_memory_access;
+-};
+-
+ static void run_test(enum vm_guest_mode mode, void *arg)
+ {
+ 	struct test_params *p = arg;
+-	pthread_t *uffd_handler_threads = NULL;
+-	struct uffd_handler_args *uffd_args = NULL;
++	struct uffd_desc **uffd_descs = NULL;
+ 	struct timespec start;
+ 	struct timespec ts_diff;
+-	int *pipefds = NULL;
+ 	struct kvm_vm *vm;
+-	int r, i;
++	int i;
+ 
+ 	vm = perf_test_create_vm(mode, nr_vcpus, guest_percpu_mem_size, 1,
+ 				 p->src_type, p->partition_vcpu_memory_access);
+@@ -296,15 +146,8 @@ static void run_test(enum vm_guest_mode mode, void *arg)
+ 	memset(guest_data_prototype, 0xAB, demand_paging_size);
+ 
+ 	if (p->uffd_mode) {
+-		uffd_handler_threads =
+-			malloc(nr_vcpus * sizeof(*uffd_handler_threads));
+-		TEST_ASSERT(uffd_handler_threads, "Memory allocation failed");
+-
+-		uffd_args = malloc(nr_vcpus * sizeof(*uffd_args));
+-		TEST_ASSERT(uffd_args, "Memory allocation failed");
+-
+-		pipefds = malloc(sizeof(int) * nr_vcpus * 2);
+-		TEST_ASSERT(pipefds, "Unable to allocate memory for pipefd");
++		uffd_descs = malloc(nr_vcpus * sizeof(struct uffd_desc *));
++		TEST_ASSERT(uffd_descs, "Memory allocation failed");
+ 
+ 		for (i = 0; i < nr_vcpus; i++) {
+ 			struct perf_test_vcpu_args *vcpu_args;
+@@ -317,19 +160,17 @@ static void run_test(enum vm_guest_mode mode, void *arg)
+ 			vcpu_hva = addr_gpa2hva(vm, vcpu_args->gpa);
+ 			vcpu_alias = addr_gpa2alias(vm, vcpu_args->gpa);
+ 
++			prefault_mem(vcpu_alias,
++				vcpu_args->pages * perf_test_args.guest_page_size);
++
+ 			/*
+ 			 * Set up user fault fd to handle demand paging
+ 			 * requests.
+ 			 */
+-			r = pipe2(&pipefds[i * 2],
+-				  O_CLOEXEC | O_NONBLOCK);
+-			TEST_ASSERT(!r, "Failed to set up pipefd");
+-
+-			setup_demand_paging(vm, &uffd_handler_threads[i],
+-					    pipefds[i * 2], p->uffd_mode,
+-					    p->uffd_delay, &uffd_args[i],
+-					    vcpu_hva, vcpu_alias,
+-					    vcpu_args->pages * perf_test_args.guest_page_size);
++			uffd_descs[i] = uffd_setup_demand_paging(
++				p->uffd_mode, p->uffd_delay, vcpu_hva,
++				vcpu_args->pages * perf_test_args.guest_page_size,
++				&handle_uffd_page_request);
+ 		}
+ 	}
+ 
+@@ -344,15 +185,9 @@ static void run_test(enum vm_guest_mode mode, void *arg)
+ 	pr_info("All vCPU threads joined\n");
+ 
+ 	if (p->uffd_mode) {
+-		char c;
+-
+ 		/* Tell the user fault fd handler threads to quit */
+-		for (i = 0; i < nr_vcpus; i++) {
+-			r = write(pipefds[i * 2 + 1], &c, 1);
+-			TEST_ASSERT(r == 1, "Unable to write to pipefd");
+-
+-			pthread_join(uffd_handler_threads[i], NULL);
+-		}
++		for (i = 0; i < nr_vcpus; i++)
++			uffd_stop_demand_paging(uffd_descs[i]);
+ 	}
+ 
+ 	pr_info("Total guest execution time: %ld.%.9lds\n",
+@@ -364,11 +199,8 @@ static void run_test(enum vm_guest_mode mode, void *arg)
+ 	perf_test_destroy_vm(vm);
+ 
+ 	free(guest_data_prototype);
+-	if (p->uffd_mode) {
+-		free(uffd_handler_threads);
+-		free(uffd_args);
+-		free(pipefds);
+-	}
++	if (p->uffd_mode)
++		free(uffd_descs);
+ }
+ 
+ static void help(char *name)
+diff --git a/tools/testing/selftests/kvm/include/userfaultfd_util.h b/tools/testing/selftests/kvm/include/userfaultfd_util.h
+new file mode 100644
+index 000000000000..a1a386c083b0
+--- /dev/null
++++ b/tools/testing/selftests/kvm/include/userfaultfd_util.h
+@@ -0,0 +1,46 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * KVM userfaultfd util
++ * Adapted from demand_paging_test.c
++ *
++ * Copyright (C) 2018, Red Hat, Inc.
++ * Copyright (C) 2019-2022 Google LLC
++ */
++
++#define _GNU_SOURCE /* for pipe2 */
++
++#include <inttypes.h>
++#include <time.h>
++#include <pthread.h>
++#include <linux/userfaultfd.h>
++
++#include "test_util.h"
++
++typedef int (*uffd_handler_t)(int uffd_mode, int uffd, struct uffd_msg *msg);
++
++struct uffd_desc {
++	int uffd_mode;
++	int uffd;
++	int pipefds[2];
++	useconds_t delay;
++	uffd_handler_t handler;
++	pthread_t thread;
++};
++
++struct uffd_desc *uffd_setup_demand_paging(int uffd_mode,
++		useconds_t uffd_delay, void *hva, uint64_t len,
++		uffd_handler_t handler);
++
++void uffd_stop_demand_paging(struct uffd_desc *uffd);
++
++#ifdef PRINT_PER_PAGE_UPDATES
++#define PER_PAGE_DEBUG(...) printf(__VA_ARGS__)
++#else
++#define PER_PAGE_DEBUG(...) _no_printf(__VA_ARGS__)
++#endif
++
++#ifdef PRINT_PER_VCPU_UPDATES
++#define PER_VCPU_DEBUG(...) printf(__VA_ARGS__)
++#else
++#define PER_VCPU_DEBUG(...) _no_printf(__VA_ARGS__)
++#endif
+diff --git a/tools/testing/selftests/kvm/lib/userfaultfd_util.c b/tools/testing/selftests/kvm/lib/userfaultfd_util.c
+new file mode 100644
+index 000000000000..4395032ccbe4
+--- /dev/null
++++ b/tools/testing/selftests/kvm/lib/userfaultfd_util.c
+@@ -0,0 +1,187 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * KVM userfaultfd util
++ * Adapted from demand_paging_test.c
++ *
++ * Copyright (C) 2018, Red Hat, Inc.
++ * Copyright (C) 2019, Google, Inc.
++ * Copyright (C) 2022, Google, Inc.
++ */
++
++#define _GNU_SOURCE /* for pipe2 */
++
++#include <inttypes.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <time.h>
++#include <poll.h>
++#include <pthread.h>
++#include <linux/userfaultfd.h>
++#include <sys/syscall.h>
++
++#include "kvm_util.h"
++#include "test_util.h"
++#include "perf_test_util.h"
++#include "userfaultfd_util.h"
++
++#ifdef __NR_userfaultfd
++
++static void *uffd_handler_thread_fn(void *arg)
++{
++	struct uffd_desc *uffd_desc = (struct uffd_desc *)arg;
++	int uffd = uffd_desc->uffd;
++	int pipefd = uffd_desc->pipefds[0];
++	useconds_t delay = uffd_desc->delay;
++	int64_t pages = 0;
++	struct timespec start;
++	struct timespec ts_diff;
++
++	clock_gettime(CLOCK_MONOTONIC, &start);
++	while (1) {
++		struct uffd_msg msg;
++		struct pollfd pollfd[2];
++		char tmp_chr;
++		int r;
++
++		pollfd[0].fd = uffd;
++		pollfd[0].events = POLLIN;
++		pollfd[1].fd = pipefd;
++		pollfd[1].events = POLLIN;
++
++		r = poll(pollfd, 2, -1);
++		switch (r) {
++		case -1:
++			pr_info("poll err");
++			continue;
++		case 0:
++			continue;
++		case 1:
++			break;
++		default:
++			pr_info("Polling uffd returned %d", r);
++			return NULL;
++		}
++
++		if (pollfd[0].revents & POLLERR) {
++			pr_info("uffd revents has POLLERR");
++			return NULL;
++		}
++
++		if (pollfd[1].revents & POLLIN) {
++			r = read(pollfd[1].fd, &tmp_chr, 1);
++			TEST_ASSERT(r == 1,
++				    "Error reading pipefd in UFFD thread\n");
++			return NULL;
++		}
++
++		if (!(pollfd[0].revents & POLLIN))
++			continue;
++
++		r = read(uffd, &msg, sizeof(msg));
++		if (r == -1) {
++			if (errno == EAGAIN)
++				continue;
++			pr_info("Read of uffd got errno %d\n", errno);
++			return NULL;
++		}
++
++		if (r != sizeof(msg)) {
++			pr_info("Read on uffd returned unexpected size: %d bytes", r);
++			return NULL;
++		}
++
++		if (!(msg.event & UFFD_EVENT_PAGEFAULT))
++			continue;
++
++		if (delay)
++			usleep(delay);
++		r = uffd_desc->handler(uffd_desc->uffd_mode, uffd, &msg);
++		if (r < 0)
++			return NULL;
++		pages++;
++	}
++
++	ts_diff = timespec_elapsed(start);
++	PER_VCPU_DEBUG("userfaulted %ld pages over %ld.%.9lds. (%f/sec)\n",
++		       pages, ts_diff.tv_sec, ts_diff.tv_nsec,
++		       pages / ((double)ts_diff.tv_sec + (double)ts_diff.tv_nsec / 100000000.0));
++
++	return NULL;
++}
++
++struct uffd_desc *uffd_setup_demand_paging(int uffd_mode,
++		useconds_t uffd_delay, void *hva, uint64_t len,
++		uffd_handler_t handler)
++{
++	struct uffd_desc *uffd_desc;
++	bool is_minor = (uffd_mode == UFFDIO_REGISTER_MODE_MINOR);
++	int uffd;
++	struct uffdio_api uffdio_api;
++	struct uffdio_register uffdio_register;
++	uint64_t expected_ioctls = ((uint64_t) 1) << _UFFDIO_COPY;
++	int ret;
++
++	PER_PAGE_DEBUG("Userfaultfd %s mode, faults resolved with %s\n",
++		       is_minor ? "MINOR" : "MISSING",
++		       is_minor ? "UFFDIO_CONINUE" : "UFFDIO_COPY");
++
++	uffd_desc = malloc(sizeof(struct uffd_desc));
++	TEST_ASSERT(uffd_desc, "malloc failed");
++
++	/* In order to get minor faults, prefault via the alias. */
++	if (is_minor)
++		expected_ioctls = ((uint64_t) 1) << _UFFDIO_CONTINUE;
++
++	uffd = syscall(__NR_userfaultfd, O_CLOEXEC | O_NONBLOCK);
++	TEST_ASSERT(uffd >= 0, "uffd creation failed, errno: %d", errno);
++
++	uffdio_api.api = UFFD_API;
++	uffdio_api.features = 0;
++	TEST_ASSERT(ioctl(uffd, UFFDIO_API, &uffdio_api) != -1,
++		    "ioctl UFFDIO_API failed: %" PRIu64,
++		    (uint64_t)uffdio_api.api);
++
++	uffdio_register.range.start = (uint64_t)hva;
++	uffdio_register.range.len = len;
++	uffdio_register.mode = uffd_mode;
++	TEST_ASSERT(ioctl(uffd, UFFDIO_REGISTER, &uffdio_register) != -1,
++		    "ioctl UFFDIO_REGISTER failed");
++	TEST_ASSERT((uffdio_register.ioctls & expected_ioctls) ==
++			expected_ioctls, "missing userfaultfd ioctls");
++
++	ret = pipe2(uffd_desc->pipefds, O_CLOEXEC | O_NONBLOCK);
++	TEST_ASSERT(!ret, "Failed to set up pipefd");
++
++	uffd_desc->uffd_mode = uffd_mode;
++	uffd_desc->uffd = uffd;
++	uffd_desc->delay = uffd_delay;
++	uffd_desc->handler = handler;
++	pthread_create(&uffd_desc->thread, NULL, uffd_handler_thread_fn,
++		       uffd_desc);
++
++	PER_VCPU_DEBUG("Created uffd thread for HVA range [%p, %p)\n",
++		       hva, hva + len);
++
++	return uffd_desc;
++}
++
++void uffd_stop_demand_paging(struct uffd_desc *uffd)
++{
++	char c = 0;
++	int ret;
++
++	ret = write(uffd->pipefds[1], &c, 1);
++	TEST_ASSERT(ret == 1, "Unable to write to pipefd");
++
++	ret = pthread_join(uffd->thread, NULL);
++	TEST_ASSERT(ret == 0, "Pthread_join failed.");
++
++	close(uffd->uffd);
++
++	close(uffd->pipefds[1]);
++	close(uffd->pipefds[0]);
++
++	free(uffd);
++}
++
++#endif /* __NR_userfaultfd */
 -- 
 2.37.1.595.g718a3a8f04-goog
 
