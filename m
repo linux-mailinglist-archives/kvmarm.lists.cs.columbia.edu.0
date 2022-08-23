@@ -2,77 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9318259EFE8
-	for <lists+kvmarm@lfdr.de>; Wed, 24 Aug 2022 01:48:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CAAB059EFE6
+	for <lists+kvmarm@lfdr.de>; Wed, 24 Aug 2022 01:48:03 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2A10D4C577;
-	Tue, 23 Aug 2022 19:48:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 77F0F4C5DE;
+	Tue, 23 Aug 2022 19:48:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -1.787
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
+X-Spam-Status: No, score=-1.787 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZIbDv261z8Go; Tue, 23 Aug 2022 19:48:06 -0400 (EDT)
+	with ESMTP id J4bROfPWJavP; Tue, 23 Aug 2022 19:48:01 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4132C4C60D;
-	Tue, 23 Aug 2022 19:48:04 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id ECCFE4C5DD;
+	Tue, 23 Aug 2022 19:48:01 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0BC774C56D
- for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Aug 2022 19:48:02 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 43C3D4C54A
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Aug 2022 19:48:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 93-5U0-Uq+YY for <kvmarm@lists.cs.columbia.edu>;
- Tue, 23 Aug 2022 19:47:56 -0400 (EDT)
-Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com
- [209.85.128.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id EA4014C5C9
- for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Aug 2022 19:47:54 -0400 (EDT)
-Received: by mail-yw1-f201.google.com with SMTP id
- 00721157ae682-334228502a8so266756527b3.20
- for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Aug 2022 16:47:54 -0700 (PDT)
+ with ESMTP id pKEguo5RsFuc for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 23 Aug 2022 19:47:58 -0400 (EDT)
+Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com
+ [209.85.128.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3D84E4C5ED
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Aug 2022 19:47:57 -0400 (EDT)
+Received: by mail-yw1-f202.google.com with SMTP id
+ 00721157ae682-32a115757b6so266098877b3.13
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 23 Aug 2022 16:47:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
  :date:from:to:cc;
- bh=C3mw9TC4ccUp9ylGFVORw6Xc1IPwCBImXAp0s1FQtvY=;
- b=ptgB4pRaV5V8SPuqWv1fddbrucjPZdH+/qJ/NGfyNpKFi24MsqzzVKhnp9OhTo/SIF
- dQ3eQpEO44nbMTCpPuwNNwGxPV24l20eqt3eROiH+TrCCHh64gxMhOQjZcwOM+702JpH
- JPieDZkYr63mazSwOXWbn288NK1YQrWEF8hKTEChN8oUiO/43tAixHbvO8g2l8Wt6L0n
- OILmLpCkvNZL1ovNb53wLRI7IqeiBnWVcb8NOyCFvDCBgySWeojoIezjAVDHB6Go7rLD
- pFdRCc6qfN+KvHyv/qjwn6595FWrUUUYU+uiJJv2X/r5GqlmrHwDNajC7crsknI39mBP
- bFGQ==
+ bh=Dfi0mJsD0tdhcRAmkrVPkz6XbnwyxoP42hlriK3Z1Vw=;
+ b=ApQAvyESF0BAyecbnSd0S+VU17iuM4uxqa1SrkvSM6ppDeFQdidOWrj2OKJTRo6k+6
+ GI0vTvueTAyxD1Jyt9SEhdk91UO9Xy14ElrflMXcSp+lAVvq3P9AIrkVkhB+eXAhXaUU
+ yj3rIbP56klSfl+fwjySQhwdoI7HTXea+PRSxUeQxQEl8Wh5Ab/RuCmwOp+fTIXhSeWS
+ 8ZAoyC+gtLfv7ZNAeKkpBN4bV1r530QYRC6v3tbsNdYsnvPeHPTR5lzhnbTmYwd7h08m
+ +DasfEXOwM5F/j8jKGvrhBm+/gqi1ShHDA9ITltOSMHRRZamDaESta0m/HmPxfRN6FC8
+ YwEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
  :date:x-gm-message-state:from:to:cc;
- bh=C3mw9TC4ccUp9ylGFVORw6Xc1IPwCBImXAp0s1FQtvY=;
- b=jnOJESseXqqY7YB9tuSTwluWZ8T4F7ak4zZptnFdk+iv3X1K9QkiYjciZ8MTQzN6oV
- O20NE4dfB+300t3b0DXw0dhieUtLmfIVCmu5WNuFJlJ3VpX/dIKocUpAaVk3UYuB4tYz
- lRN6jArVWXE9L7SbVb7ncfhk+pvT5LD0o2g4hFeNXGy5W7SgMgNvrrbxqsLxBnIagKf9
- 4kDUeqPVbuRH3xkY6Z1uaaDq1FcQ3Cy/f8fKqau9bMuTYZ4lBQo1kJ91WtSC6TL/M6mX
- mCHL4tF2pAfvzmc0vwxMo5Cr1tzC7CbyT3szdyc73n84ndD52rjorhdhgiMLKOstjb3J
- q8Fg==
-X-Gm-Message-State: ACgBeo3SBedI3ENn/pXLOHt+TD6Ax5MbIPyUyaMYisB1EOB75GTUEpRD
- ZiPRhLH5QIcJheMQPNOXr2PXATn0prI2+A==
-X-Google-Smtp-Source: AA6agR6G72/926ISlJ/T1Xd3tCIya4UiNSonqcQsOzvgHaEd+gMfDs1/m9zN4VnySbDFGR+cPw/61agxR066zQ==
+ bh=Dfi0mJsD0tdhcRAmkrVPkz6XbnwyxoP42hlriK3Z1Vw=;
+ b=XqjBrhpPoT/e3QM32UBWbXGYvRaNz9dHL5N1fHdtLp5BkAvoEpRrAmPDI7TS0/vWAE
+ GQdErbjcP/8wcHZTUODEWfBtngsB66iYhTDR3fEspCygw5cNvPoPSsKyljgd5F/EQEw/
+ YmwoijTK/zVVndbf6Fly2az1d19On1AQpa0Huvo3O1o+5TYTJ/YQ0q/tFXyKvmTT+5Da
+ jgYuC6FjkK+0WZZGeZDGAXb4KRGZwWSy3LE4G9VOamisqp9Kz/VAsQnq+vvmGY/Xii3f
+ fM104PXHqlzwU336vWr6ClIeD5i+h5C1diW01FlgW8D5Ueqiqx9tLwSQJg9DDgJ1yQDr
+ 54Cw==
+X-Gm-Message-State: ACgBeo05u+Ebxs+yy6fpHabiYKjKyG3FmeLP01oHxilRr3QfhBN0v6fN
+ 9TQvD8pnBotfYVSEgLwYCUzgxgkvOCullQ==
+X-Google-Smtp-Source: AA6agR5uEYim3KsWjLKZ+ek2MN0aQGlLEN0U1pYdwEm8dGiq81LDIZPYhcDw4yTnZoZJp3VLG1wr87V0hSlxfQ==
 X-Received: from ricarkol4.c.googlers.com
  ([fda3:e722:ac3:cc00:20:ed76:c0a8:1248])
- (user=ricarkol job=sendgmr) by 2002:a81:4941:0:b0:33d:778:3bbe with SMTP id
- w62-20020a814941000000b0033d07783bbemr10451318ywa.459.1661298474796; Tue, 23
- Aug 2022 16:47:54 -0700 (PDT)
-Date: Tue, 23 Aug 2022 23:47:25 +0000
+ (user=ricarkol job=sendgmr) by 2002:a81:1608:0:b0:334:7c07:e72d with SMTP id
+ 8-20020a811608000000b003347c07e72dmr28178084yww.265.1661298477063; Tue, 23
+ Aug 2022 16:47:57 -0700 (PDT)
+Date: Tue, 23 Aug 2022 23:47:26 +0000
 In-Reply-To: <20220823234727.621535-1-ricarkol@google.com>
-Message-Id: <20220823234727.621535-12-ricarkol@google.com>
+Message-Id: <20220823234727.621535-13-ricarkol@google.com>
 Mime-Version: 1.0
 References: <20220823234727.621535-1-ricarkol@google.com>
 X-Mailer: git-send-email 2.37.1.595.g718a3a8f04-goog
-Subject: [PATCH v5 11/13] KVM: selftests: aarch64: Add dirty logging tests
+Subject: [PATCH v5 12/13] KVM: selftests: aarch64: Add readonly memslot tests
  into page_fault_test
 From: Ricardo Koller <ricarkol@google.com>
 To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu, andrew.jones@linux.dev
@@ -94,132 +95,190 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add some dirty logging tests into page_fault_test. Mark the data and/or
-page-table memslots for dirty logging, perform some accesses, and check
-that the dirty log bits are set or clean when expected.
+Add some readonly memslot tests into page_fault_test. Mark the data
+and/or page-table memslots as readonly, perform some accesses, and check
+that the right fault is triggered when expected (e.g., a store with no
+write-back should lead to an mmio exit).
 
 Signed-off-by: Ricardo Koller <ricarkol@google.com>
 ---
- .../selftests/kvm/aarch64/page_fault_test.c   | 75 +++++++++++++++++++
- 1 file changed, 75 insertions(+)
+ .../selftests/kvm/aarch64/page_fault_test.c   | 98 ++++++++++++++++++-
+ 1 file changed, 97 insertions(+), 1 deletion(-)
 
 diff --git a/tools/testing/selftests/kvm/aarch64/page_fault_test.c b/tools/testing/selftests/kvm/aarch64/page_fault_test.c
-index 27b8b50fd4c4..50117a070be0 100644
+index 50117a070be0..c7a50d79dcda 100644
 --- a/tools/testing/selftests/kvm/aarch64/page_fault_test.c
 +++ b/tools/testing/selftests/kvm/aarch64/page_fault_test.c
-@@ -31,6 +31,11 @@ static uint64_t *guest_test_memory = (uint64_t *)TEST_GVA;
- #define CMD_SKIP_TEST				(1ULL << 1)
- #define CMD_HOLE_PT				(1ULL << 2)
- #define CMD_HOLE_DATA				(1ULL << 3)
-+#define CMD_CHECK_WRITE_IN_DIRTY_LOG		(1ULL << 4)
-+#define CMD_CHECK_S1PTW_WR_IN_DIRTY_LOG		(1ULL << 5)
-+#define CMD_CHECK_NO_WRITE_IN_DIRTY_LOG		(1ULL << 6)
-+#define CMD_CHECK_NO_S1PTW_WR_IN_DIRTY_LOG	(1ULL << 7)
-+#define CMD_SET_PTE_AF				(1ULL << 8)
- 
- #define PREPARE_FN_NR				10
+@@ -41,6 +41,8 @@ static uint64_t *guest_test_memory = (uint64_t *)TEST_GVA;
  #define CHECK_FN_NR				10
-@@ -213,6 +218,21 @@ static void guest_check_pte_af(void)
- 	GUEST_ASSERT_EQ(*((uint64_t *)TEST_PTE_GVA) & PTE_AF, PTE_AF);
- }
  
-+static void guest_check_write_in_dirty_log(void)
-+{
-+	GUEST_SYNC(CMD_CHECK_WRITE_IN_DIRTY_LOG);
-+}
-+
-+static void guest_check_no_write_in_dirty_log(void)
-+{
-+	GUEST_SYNC(CMD_CHECK_NO_WRITE_IN_DIRTY_LOG);
-+}
-+
-+static void guest_check_s1ptw_wr_in_dirty_log(void)
-+{
-+	GUEST_SYNC(CMD_CHECK_S1PTW_WR_IN_DIRTY_LOG);
-+}
-+
- static void guest_exec(void)
- {
- 	int (*code)(void) = (int (*)(void))TEST_EXEC_GVA;
-@@ -398,6 +418,21 @@ static bool punch_hole_in_memslot(struct kvm_vm *vm,
+ static struct event_cnt {
++	int mmio_exits;
++	int fail_vcpu_runs;
+ 	int uffd_faults;
+ 	/* uffd_faults is incremented from multiple threads. */
+ 	pthread_mutex_t uffd_faults_mutex;
+@@ -57,6 +59,8 @@ struct test_desc {
+ 	uffd_handler_t uffd_data_handler;
+ 	void (*dabt_handler)(struct ex_regs *regs);
+ 	void (*iabt_handler)(struct ex_regs *regs);
++	void (*mmio_handler)(struct kvm_vm *vm, struct kvm_run *run);
++	void (*fail_vcpu_run_handler)(int ret);
+ 	uint32_t pt_memslot_flags;
+ 	uint32_t data_memslot_flags;
+ 	bool skip;
+@@ -418,6 +422,28 @@ static bool punch_hole_in_memslot(struct kvm_vm *vm,
  	return true;
  }
  
-+static bool check_write_in_dirty_log(struct kvm_vm *vm,
-+		struct userspace_mem_region *region, uint64_t host_pg_nr)
++static void mmio_on_test_gpa_handler(struct kvm_vm *vm, struct kvm_run *run)
 +{
-+	unsigned long *bmap;
-+	bool first_page_dirty;
-+	uint64_t size = region->region.memory_size;
++	struct userspace_mem_region *region = vm_get_data_region(vm);
++	void *hva = (void *)region->region.userspace_addr;
 +
-+	/* getpage_size() is not always equal to vm->page_size */
-+	bmap = bitmap_zalloc(size / getpagesize());
-+	kvm_vm_get_dirty_log(vm, region->region.slot, bmap);
-+	first_page_dirty = test_bit(host_pg_nr, bmap);
-+	free(bmap);
-+	return first_page_dirty;
++	ASSERT_EQ(run->mmio.phys_addr, region->region.guest_phys_addr);
++
++	memcpy(hva, run->mmio.data, run->mmio.len);
++	events.mmio_exits += 1;
 +}
 +
- /* Returns true to continue the test, and false if it should be skipped. */
- static bool handle_cmd(struct kvm_vm *vm, int cmd)
++static void mmio_no_handler(struct kvm_vm *vm, struct kvm_run *run)
++{
++	uint64_t data;
++
++	memcpy(&data, run->mmio.data, sizeof(data));
++	pr_debug("addr=%lld len=%d w=%d data=%lx\n",
++			run->mmio.phys_addr, run->mmio.len,
++			run->mmio.is_write, data);
++	TEST_FAIL("There was no MMIO exit expected.");
++}
++
+ static bool check_write_in_dirty_log(struct kvm_vm *vm,
+ 		struct userspace_mem_region *region, uint64_t host_pg_nr)
  {
-@@ -414,6 +449,18 @@ static bool handle_cmd(struct kvm_vm *vm, int cmd)
- 		continue_test = punch_hole_in_memslot(vm, pt_region);
- 	if (cmd & CMD_HOLE_DATA)
- 		continue_test = punch_hole_in_memslot(vm, data_region);
-+	if (cmd & CMD_CHECK_WRITE_IN_DIRTY_LOG)
-+		TEST_ASSERT(check_write_in_dirty_log(vm, data_region, 0),
-+				"Missing write in dirty log");
-+	if (cmd & CMD_CHECK_S1PTW_WR_IN_DIRTY_LOG)
-+		TEST_ASSERT(check_write_in_dirty_log(vm, pt_region, 0),
-+				"Missing s1ptw write in dirty log");
-+	if (cmd & CMD_CHECK_NO_WRITE_IN_DIRTY_LOG)
-+		TEST_ASSERT(!check_write_in_dirty_log(vm, data_region, 0),
-+				"Unexpected write in dirty log");
-+	if (cmd & CMD_CHECK_NO_S1PTW_WR_IN_DIRTY_LOG)
-+		TEST_ASSERT(!check_write_in_dirty_log(vm, pt_region, 0),
-+				"Unexpected s1ptw write in dirty log");
- 
+@@ -465,6 +491,18 @@ static bool handle_cmd(struct kvm_vm *vm, int cmd)
  	return continue_test;
  }
-@@ -700,6 +747,19 @@ static void help(char *name)
- 	.expected_events	= { .uffd_faults = _uffd_faults, },		\
+ 
++void fail_vcpu_run_no_handler(int ret)
++{
++	TEST_FAIL("Unexpected vcpu run failure\n");
++}
++
++void fail_vcpu_run_mmio_no_syndrome_handler(int ret)
++{
++	TEST_ASSERT(errno == ENOSYS,
++		"The mmio handler should have returned not implemented.");
++	events.fail_vcpu_runs += 1;
++}
++
+ extern unsigned char __exec_test;
+ 
+ void noinline __return_0x77(void)
+@@ -588,9 +626,20 @@ static struct kvm_vm_mem_params setup_memslots(enum vm_guest_mode mode,
+ 	return mem_params;
  }
  
-+#define TEST_DIRTY_LOG(_access, _with_af, _test_check)				\
++static void setup_default_handlers(struct test_desc *test)
++{
++	if (!test->mmio_handler)
++		test->mmio_handler = mmio_no_handler;
++
++	if (!test->fail_vcpu_run_handler)
++		test->fail_vcpu_run_handler = fail_vcpu_run_no_handler;
++}
++
+ static void check_event_counts(struct test_desc *test)
+ {
+ 	ASSERT_EQ(test->expected_events.uffd_faults, events.uffd_faults);
++	ASSERT_EQ(test->expected_events.mmio_exits, events.mmio_exits);
++	ASSERT_EQ(test->expected_events.fail_vcpu_runs, events.fail_vcpu_runs);
+ }
+ 
+ static void print_test_banner(enum vm_guest_mode mode, struct test_params *p)
+@@ -615,10 +664,18 @@ static void reset_event_counts(void)
+ static void vcpu_run_loop(struct kvm_vm *vm, struct kvm_vcpu *vcpu,
+ 		struct test_desc *test)
+ {
++	struct kvm_run *run;
+ 	struct ucall uc;
++	int ret;
++
++	run = vcpu->run;
+ 
+ 	for (;;) {
+-		vcpu_run(vcpu);
++		ret = _vcpu_run(vcpu);
++		if (ret) {
++			test->fail_vcpu_run_handler(ret);
++			goto done;
++		}
+ 
+ 		switch (get_ucall(vcpu, &uc)) {
+ 		case UCALL_SYNC:
+@@ -632,6 +689,10 @@ static void vcpu_run_loop(struct kvm_vm *vm, struct kvm_vcpu *vcpu,
+ 			break;
+ 		case UCALL_DONE:
+ 			goto done;
++		case UCALL_NONE:
++			if (run->exit_reason == KVM_EXIT_MMIO)
++				test->mmio_handler(vm, run);
++			break;
+ 		default:
+ 			TEST_FAIL("Unknown ucall %lu", uc.cmd);
+ 		}
+@@ -673,6 +734,7 @@ static void run_test(enum vm_guest_mode mode, void *arg)
+ 	load_exec_code_for_test(vm);
+ 	setup_uffd(vm, p, &pt_uffd, &data_uffd);
+ 	setup_abort_handlers(vm, vcpu, test);
++	setup_default_handlers(test);
+ 	vcpu_args_set(vcpu, 1, test);
+ 
+ 	vcpu_run_loop(vm, vcpu, test);
+@@ -760,6 +822,25 @@ static void help(char *name)
+ 	.expected_events	= { 0 },					\
+ }
+ 
++#define TEST_RO_MEMSLOT(_access, _mmio_handler, _mmio_exits)			\
 +{										\
-+	.name			= SCAT3(dirty_log, _access, _with_af),		\
-+	.data_memslot_flags	= KVM_MEM_LOG_DIRTY_PAGES,			\
-+	.pt_memslot_flags	= KVM_MEM_LOG_DIRTY_PAGES,			\
-+	.guest_prepare		= { _PREPARE(_with_af),				\
-+				    _PREPARE(_access) },			\
++	.name			= SCAT3(ro_memslot, _access, _with_af),		\
++	.data_memslot_flags	= KVM_MEM_READONLY,				\
++	.guest_prepare		= { _PREPARE(_access) },			\
 +	.guest_test		= _access,					\
-+	.guest_test_check	= { _CHECK(_with_af), _test_check,		\
-+				    guest_check_s1ptw_wr_in_dirty_log},		\
-+	.expected_events	= { 0 },					\
++	.mmio_handler		= _mmio_handler,				\
++	.expected_events	= { .mmio_exits = _mmio_exits },		\
++}
++
++#define TEST_RO_MEMSLOT_NO_SYNDROME(_access)					\
++{										\
++	.name			= SCAT2(ro_memslot_no_syndrome, _access),	\
++	.data_memslot_flags	= KVM_MEM_READONLY,				\
++	.guest_test		= _access,					\
++	.fail_vcpu_run_handler	= fail_vcpu_run_mmio_no_syndrome_handler,	\
++	.expected_events	= { .fail_vcpu_runs = 1 },			\
 +}
 +
  static struct test_desc tests[] = {
  
  	/* Check that HW is setting the Access Flag (AF) (sanity checks). */
-@@ -753,6 +813,21 @@ static struct test_desc tests[] = {
- 	TEST_UFFD(guest_exec, with_af, CMD_HOLE_DATA | CMD_HOLE_PT,
- 			uffd_data_read_handler, uffd_pt_write_handler, 2),
+@@ -828,6 +909,21 @@ static struct test_desc tests[] = {
+ 	TEST_DIRTY_LOG(guest_dc_zva, with_af, guest_check_write_in_dirty_log),
+ 	TEST_DIRTY_LOG(guest_st_preidx, with_af, guest_check_write_in_dirty_log),
  
 +	/*
-+	 * Try accesses when the data and PT memslots are both tracked for
-+	 * dirty logging.
++	 * Try accesses when the data memslot is marked read-only (with
++	 * KVM_MEM_READONLY). Writes with a syndrome result in an MMIO exit,
++	 * writes with no syndrome (e.g., CAS) result in a failed vcpu run, and
++	 * reads/execs with and without syndroms do not fault.
 +	 */
-+	TEST_DIRTY_LOG(guest_read64, with_af, guest_check_no_write_in_dirty_log),
-+	/* no_af should also lead to a PT write. */
-+	TEST_DIRTY_LOG(guest_read64, no_af, guest_check_no_write_in_dirty_log),
-+	TEST_DIRTY_LOG(guest_ld_preidx, with_af, guest_check_no_write_in_dirty_log),
-+	TEST_DIRTY_LOG(guest_at, no_af, guest_check_no_write_in_dirty_log),
-+	TEST_DIRTY_LOG(guest_exec, with_af, guest_check_no_write_in_dirty_log),
-+	TEST_DIRTY_LOG(guest_write64, with_af, guest_check_write_in_dirty_log),
-+	TEST_DIRTY_LOG(guest_cas, with_af, guest_check_write_in_dirty_log),
-+	TEST_DIRTY_LOG(guest_dc_zva, with_af, guest_check_write_in_dirty_log),
-+	TEST_DIRTY_LOG(guest_st_preidx, with_af, guest_check_write_in_dirty_log),
++	TEST_RO_MEMSLOT(guest_read64, 0, 0),
++	TEST_RO_MEMSLOT(guest_ld_preidx, 0, 0),
++	TEST_RO_MEMSLOT(guest_at, 0, 0),
++	TEST_RO_MEMSLOT(guest_exec, 0, 0),
++	TEST_RO_MEMSLOT(guest_write64, mmio_on_test_gpa_handler, 1),
++	TEST_RO_MEMSLOT_NO_SYNDROME(guest_dc_zva),
++	TEST_RO_MEMSLOT_NO_SYNDROME(guest_cas),
++	TEST_RO_MEMSLOT_NO_SYNDROME(guest_st_preidx),
 +
  	{ 0 }
  };
