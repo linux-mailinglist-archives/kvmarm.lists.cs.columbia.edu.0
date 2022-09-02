@@ -2,53 +2,52 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D9075AB1CF
-	for <lists+kvmarm@lfdr.de>; Fri,  2 Sep 2022 15:42:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 809B65AB1EA
+	for <lists+kvmarm@lfdr.de>; Fri,  2 Sep 2022 15:45:39 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 17BE44B2C6;
-	Fri,  2 Sep 2022 09:41:59 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BE0A84B2B8;
+	Fri,  2 Sep 2022 09:45:38 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.898
+X-Spam-Score: -1.899
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.898 required=6.1 tests=[BAYES_00=-1.9,
-	RCVD_IN_DNSWL_BLOCKED=0.001, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3WuVl1pfMHza; Fri,  2 Sep 2022 09:41:58 -0400 (EDT)
+	with ESMTP id SKkvguK0g9xz; Fri,  2 Sep 2022 09:45:38 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 926EB4B2A0;
-	Fri,  2 Sep 2022 09:41:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 596E54B2A6;
+	Fri,  2 Sep 2022 09:45:37 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E7B7F4B21C
- for <kvmarm@lists.cs.columbia.edu>; Fri,  2 Sep 2022 09:41:56 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5F8514B231
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  2 Sep 2022 09:45:35 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id uOe6B0MOalJy for <kvmarm@lists.cs.columbia.edu>;
- Fri,  2 Sep 2022 09:41:55 -0400 (EDT)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9A5DB4B19D
- for <kvmarm@lists.cs.columbia.edu>; Fri,  2 Sep 2022 09:41:55 -0400 (EDT)
+ with ESMTP id XrJa7DlPDblQ for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  2 Sep 2022 09:45:34 -0400 (EDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 21CAF4B21C
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  2 Sep 2022 09:45:34 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 4C80DB82A96;
- Fri,  2 Sep 2022 13:41:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C0EC433C1;
- Fri,  2 Sep 2022 13:41:51 +0000 (UTC)
-Date: Fri, 2 Sep 2022 14:41:47 +0100
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 13FD26211B;
+ Fri,  2 Sep 2022 13:45:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1852C433D6;
+ Fri,  2 Sep 2022 13:45:30 +0000 (UTC)
+Date: Fri, 2 Sep 2022 14:45:27 +0100
 From: Catalin Marinas <catalin.marinas@arm.com>
 To: Peter Collingbourne <pcc@google.com>
-Subject: Re: [PATCH v3 5/7] KVM: arm64: unify the tests for VMAs in memslots
- when MTE is enabled
-Message-ID: <YxIIG4SNfiqT38kS@arm.com>
+Subject: Re: [PATCH v3 6/7] KVM: arm64: permit all VM_MTE_ALLOWED mappings
+ with MTE enabled
+Message-ID: <YxII905jjQz0FH4D@arm.com>
 References: <20220810193033.1090251-1-pcc@google.com>
- <20220810193033.1090251-6-pcc@google.com>
+ <20220810193033.1090251-7-pcc@google.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20220810193033.1090251-6-pcc@google.com>
+In-Reply-To: <20220810193033.1090251-7-pcc@google.com>
 Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
  Cornelia Huck <cohuck@redhat.com>, Steven Price <steven.price@arm.com>,
  linux-arm-kernel@lists.infradead.org,
@@ -70,18 +69,38 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Aug 10, 2022 at 12:30:31PM -0700, Peter Collingbourne wrote:
-> Previously we allowed creating a memslot containing a private mapping that
-> was not VM_MTE_ALLOWED, but would later reject KVM_RUN with -EFAULT. Now
-> we reject the memory region at memslot creation time.
+On Wed, Aug 10, 2022 at 12:30:32PM -0700, Peter Collingbourne wrote:
+> Certain VMMs such as crosvm have features (e.g. sandboxing) that depend
+> on being able to map guest memory as MAP_SHARED. The current restriction
+> on sharing MAP_SHARED pages with the guest is preventing the use of
+> those features with MTE. Now that the races between tasks concurrently
+> clearing tags on the same page have been fixed, remove this restriction.
 > 
-> Since this is a minor tweak to the ABI (a VMM that created one of
-> these memslots would fail later anyway), no VMM to my knowledge has
-> MTE support yet, and the hardware with the necessary features is not
-> generally available, we can probably make this ABI change at this point.
+> Signed-off-by: Peter Collingbourne <pcc@google.com>
+> ---
+>  arch/arm64/kvm/mmu.c | 8 --------
+>  1 file changed, 8 deletions(-)
+> 
+> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> index d54be80e31dd..fc65dc20655d 100644
+> --- a/arch/arm64/kvm/mmu.c
+> +++ b/arch/arm64/kvm/mmu.c
+> @@ -1075,14 +1075,6 @@ static void sanitise_mte_tags(struct kvm *kvm, kvm_pfn_t pfn,
+>  
+>  static bool kvm_vma_mte_allowed(struct vm_area_struct *vma)
+>  {
+> -	/*
+> -	 * VM_SHARED mappings are not allowed with MTE to avoid races
+> -	 * when updating the PG_mte_tagged page flag, see
+> -	 * sanitise_mte_tags for more details.
+> -	 */
+> -	if (vma->vm_flags & VM_SHARED)
+> -		return false;
 
-I don't think that's a noticeable ABI change. As you said, such VMs
-would fail later anyway when trying to access such page.
+I think this is fine with the locking in place (BTW, it may be worth
+mentioning in the commit message that it's a relaxation of the ABI). I'd
+like Steven to have a look as well when he gets the time, in case we
+missed anything on the KVM+MTE side.
 
 Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
 _______________________________________________
