@@ -2,79 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A2E95BDB46
-	for <lists+kvmarm@lfdr.de>; Tue, 20 Sep 2022 06:15:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64F5F5BDB49
+	for <lists+kvmarm@lfdr.de>; Tue, 20 Sep 2022 06:15:37 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AB9E94B615;
-	Tue, 20 Sep 2022 00:15:33 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EF63A4B778;
+	Tue, 20 Sep 2022 00:15:36 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.787
+X-Spam-Score: -1.788
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.787 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=no
+X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id weDrHR7arkqt; Tue, 20 Sep 2022 00:15:31 -0400 (EDT)
+	with ESMTP id hJncH0X42zk5; Tue, 20 Sep 2022 00:15:36 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DA68F4B629;
-	Tue, 20 Sep 2022 00:15:31 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 285904B6B9;
+	Tue, 20 Sep 2022 00:15:35 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8068B4B69D
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 00:15:30 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2FE4A4B62F
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 00:15:32 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id zmCtGOPXyI8H for <kvmarm@lists.cs.columbia.edu>;
- Tue, 20 Sep 2022 00:15:29 -0400 (EDT)
-Received: from mail-ot1-f74.google.com (mail-ot1-f74.google.com
- [209.85.210.74])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 81C434B6B2
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 00:15:28 -0400 (EDT)
-Received: by mail-ot1-f74.google.com with SMTP id
- p4-20020a9d4544000000b0065952fed1aeso743143oti.6
- for <kvmarm@lists.cs.columbia.edu>; Mon, 19 Sep 2022 21:15:28 -0700 (PDT)
+ with ESMTP id jFjv56TEzZXA for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 20 Sep 2022 00:15:31 -0400 (EDT)
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com
+ [209.85.210.201])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E663D4B6E2
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 00:15:30 -0400 (EDT)
+Received: by mail-pf1-f201.google.com with SMTP id
+ g15-20020aa7874f000000b0053e8b9630c7so932827pfo.19
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 19 Sep 2022 21:15:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date;
- bh=dPrDEiMrF90+KqH+TnpUvHdKmNrnwclyo7CCTZA5p5g=;
- b=qI6w0zoM3xU+cLFnTY54Ap7hlH92xtA948aGj2D0nS9rOUQXQz+U5i2VMcN0dygEe9
- b2GbNNpu26LdUBOtGYPsdX1dm0PrFjK51swC+JFhKMuwQutx6UHSCLx7rMIOFnLqTyVc
- 9wtsAKJMuMshqak7n8M0pwmJXcl20KDpALPD3IKVIVCXwCxmyew7/SY/Wq2lwEIqkZ9R
- efK0KbdctRP038PIUW54LVzE6VvHwAoiTVSPugDWTckt02o5NFOQfrwj0m419Ri3De60
- pNhhTxNVm/2QoZeq0/wf7yraP79KtgB9x7RbrvcegJm/F9vWgt6PucxWjzQYwrtfPJbB
- XxJQ==
+ bh=FHslgPQ8WCF7d1ofIA/vsgUmVyWIJyQUCeY9VBhXWnw=;
+ b=mEwI8FbM6Izo0eB2/5xzq01PLqPPkDX/mmbL4BeYSsa4x1daJBdjzlKdL2pvxDug6f
+ ahTxzSZN/uObhYdc6S9yYsA7z0ffW2SkyxrZAoyVkEWiQcSm5YQjLyv9KTNd0WdBL63z
+ rMB8aogRT/tOQHT/8Lg0sa03Ve8suG93Detz5fyWcM3B8bnAELXwsquN6T7gvRGlGQta
+ 5eaQWtKJtWQfhW5q8onQayrZErMCojvn14gLg8Pbjx3x6cU9b5YWOXfqAmjj5WyLTLbR
+ Xl+yeZ9xDBUAPwH1P0I9z8x8n5J+8qTbHDak2FEQJC8lttmiDAyBa4QGRrMs5hAdb8CX
+ 7b7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date;
- bh=dPrDEiMrF90+KqH+TnpUvHdKmNrnwclyo7CCTZA5p5g=;
- b=srt7X/eFDw/tLdg02tLDrNLviUHvIZpzl29vA1Cw34V0fg/Lb9I7Nu/bQpX6fv1Xl7
- GD64M5pjFzle4SBsTNT3vOxUcCSvLPWOhWaW+X8Li/ZhN6AVEYNTBNBrC+7jJBRa9rTT
- 5tjzt7GpnMbWUGiYQxyHwsu2YyX0xA5mAL64ZP3Ld7BiKnimo2Wu1T4Ps02eRFr3vPve
- 5DEYtn4nO6PsJNb6TAYDbum/vFxBUzrLEneJq607QvuhSt6dqNLBSmd/zxhqWdDtc8Zh
- qWqK89RyNCWkhS3NljqsapUZhEtTitkn5lE0velEgz7y5xLfpo4c9xXfxFiT6q97U7XY
- LO5w==
-X-Gm-Message-State: ACrzQf2V2mIVDdDafn6vRMdrPMrYkdg5oURw7+yHcFaOXsqZSu405qCa
- HOTkg51PBnCdFqdzHCtsYi7nbIc5k3C11Q==
-X-Google-Smtp-Source: AMsMyM6YrbXd+PdoipZL2YzC9aRyCe2KxcWs8w72uy8bsY8goN8Hsu1lj9GgiXXBYJcQBgOG9ZqsW86DHLDVpA==
+ bh=FHslgPQ8WCF7d1ofIA/vsgUmVyWIJyQUCeY9VBhXWnw=;
+ b=LBCubqn/XbrGerFpvo0Q9MdSHPqyDtq8v891kJGA5xWSl3xYXJiJe94vsZg3BC6pwF
+ DlvaYQXRYAa6Rbc/BYiZPLGvRJ+i6+aHG14IJcM+noHckERW0dtVUM7TuvTSPkuPnbt2
+ q2IBJpb8u0f9KMWpe9Tyk7/I77T2HXiyeuMrF00WyKZ0Z3Q5KjJvaw9bFPIR34uk246L
+ l3XZbOxNGwPlZgNQIGcuXEZGTsFKvIJpo5ImzRtd9qh6aDjplx4XnQvXQr1GHZffnL3/
+ c7ut4VDaawVNx5wk8AiZ1irX2r7KNrRlodlf++rH3ByDN7umCizih8W3CaXkE6vraZYE
+ nEAA==
+X-Gm-Message-State: ACrzQf10aJT2Sy5Tan731apx3VULyBUKk/CSEEAYlaVYA5pEjY6a8SUv
+ jxncbsJ0hE65eSGQJJjeKmeDVDM8hXeTiA==
+X-Google-Smtp-Source: AMsMyM5E4HcvLdoJ+R/pHKGpHvPW3zbsoc0hLtV+GJaoTQE5dm7kXyoVxlfvdUyb9qFQRvLXzv594o9tadGtWg==
 X-Received: from ricarkol4.c.googlers.com
  ([fda3:e722:ac3:cc00:20:ed76:c0a8:1248])
- (user=ricarkol job=sendgmr) by 2002:a05:6871:709:b0:128:3cd:f71b with SMTP id
- f9-20020a056871070900b0012803cdf71bmr903662oap.195.1663647327972; Mon, 19 Sep
- 2022 21:15:27 -0700 (PDT)
-Date: Tue, 20 Sep 2022 04:15:06 +0000
+ (user=ricarkol job=sendgmr) by 2002:a05:6a00:a04:b0:534:d8a6:40ce with SMTP
+ id p4-20020a056a000a0400b00534d8a640cemr21932648pfh.15.1663647329899; Mon, 19
+ Sep 2022 21:15:29 -0700 (PDT)
+Date: Tue, 20 Sep 2022 04:15:07 +0000
 In-Reply-To: <20220920041509.3131141-1-ricarkol@google.com>
 Mime-Version: 1.0
 References: <20220920041509.3131141-1-ricarkol@google.com>
 X-Mailer: git-send-email 2.37.3.968.ga6b4b080e4-goog
-Message-ID: <20220920041509.3131141-11-ricarkol@google.com>
-Subject: [PATCH v6 10/13] KVM: selftests: aarch64: Add userfaultfd tests into
- page_fault_test
+Message-ID: <20220920041509.3131141-12-ricarkol@google.com>
+Subject: [PATCH v6 11/13] KVM: selftests: aarch64: Add dirty logging tests
+ into page_fault_test
 From: Ricardo Koller <ricarkol@google.com>
 To: kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu, andrew.jones@linux.dev
 Cc: maz@kernel.org, bgardon@google.com, pbonzini@redhat.com,
@@ -95,301 +94,132 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add some userfaultfd tests into page_fault_test. Punch holes into the
-data and/or page-table memslots, perform some accesses, and check that
-the faults are taken (or not taken) when expected.
+Add some dirty logging tests into page_fault_test. Mark the data and/or
+page-table memslots for dirty logging, perform some accesses, and check
+that the dirty log bits are set or clean when expected.
 
 Signed-off-by: Ricardo Koller <ricarkol@google.com>
 ---
- .../selftests/kvm/aarch64/page_fault_test.c   | 190 +++++++++++++++++-
- 1 file changed, 188 insertions(+), 2 deletions(-)
+ .../selftests/kvm/aarch64/page_fault_test.c   | 75 +++++++++++++++++++
+ 1 file changed, 75 insertions(+)
 
 diff --git a/tools/testing/selftests/kvm/aarch64/page_fault_test.c b/tools/testing/selftests/kvm/aarch64/page_fault_test.c
-index 98f12e7af14b..f0cdd4e99dd0 100644
+index f0cdd4e99dd0..51b2ac260db5 100644
 --- a/tools/testing/selftests/kvm/aarch64/page_fault_test.c
 +++ b/tools/testing/selftests/kvm/aarch64/page_fault_test.c
-@@ -35,6 +35,12 @@ static uint64_t *guest_test_memory = (uint64_t *)TEST_GVA;
+@@ -31,6 +31,11 @@ static uint64_t *guest_test_memory = (uint64_t *)TEST_GVA;
+ #define CMD_SKIP_TEST				(1ULL << 1)
+ #define CMD_HOLE_PT				(1ULL << 2)
+ #define CMD_HOLE_DATA				(1ULL << 3)
++#define CMD_CHECK_WRITE_IN_DIRTY_LOG		(1ULL << 4)
++#define CMD_CHECK_S1PTW_WR_IN_DIRTY_LOG		(1ULL << 5)
++#define CMD_CHECK_NO_WRITE_IN_DIRTY_LOG		(1ULL << 6)
++#define CMD_CHECK_NO_S1PTW_WR_IN_DIRTY_LOG	(1ULL << 7)
++#define CMD_SET_PTE_AF				(1ULL << 8)
+ 
  #define PREPARE_FN_NR				10
  #define CHECK_FN_NR				10
- 
-+static struct event_cnt {
-+	int uffd_faults;
-+	/* uffd_faults is incremented from multiple threads. */
-+	pthread_mutex_t uffd_faults_mutex;
-+} events;
-+
- struct test_desc {
- 	const char *name;
- 	uint64_t mem_mark_cmd;
-@@ -42,11 +48,14 @@ struct test_desc {
- 	bool (*guest_prepare[PREPARE_FN_NR])(void);
- 	void (*guest_test)(void);
- 	void (*guest_test_check[CHECK_FN_NR])(void);
-+	uffd_handler_t uffd_pt_handler;
-+	uffd_handler_t uffd_data_handler;
- 	void (*dabt_handler)(struct ex_regs *regs);
- 	void (*iabt_handler)(struct ex_regs *regs);
- 	uint32_t pt_memslot_flags;
- 	uint32_t data_memslot_flags;
- 	bool skip;
-+	struct event_cnt expected_events;
- };
- 
- struct test_params {
-@@ -263,7 +272,110 @@ static void no_iabt_handler(struct ex_regs *regs)
- 	GUEST_ASSERT_1(false, regs->pc);
+@@ -213,6 +218,21 @@ static void guest_check_pte_af(void)
+ 	GUEST_ASSERT_EQ(*((uint64_t *)TEST_PTE_GVA) & PTE_AF, PTE_AF);
  }
  
-+static struct uffd_args {
-+	char *copy;
-+	void *hva;
-+	uint64_t paging_size;
-+} pt_args, data_args;
++static void guest_check_write_in_dirty_log(void)
++{
++	GUEST_SYNC(CMD_CHECK_WRITE_IN_DIRTY_LOG);
++}
++
++static void guest_check_no_write_in_dirty_log(void)
++{
++	GUEST_SYNC(CMD_CHECK_NO_WRITE_IN_DIRTY_LOG);
++}
++
++static void guest_check_s1ptw_wr_in_dirty_log(void)
++{
++	GUEST_SYNC(CMD_CHECK_S1PTW_WR_IN_DIRTY_LOG);
++}
++
+ static void guest_exec(void)
+ {
+ 	int (*code)(void) = (int (*)(void))TEST_EXEC_GVA;
+@@ -398,6 +418,21 @@ static bool punch_hole_in_memslot(struct kvm_vm *vm,
+ 	return true;
+ }
+ 
++static bool check_write_in_dirty_log(struct kvm_vm *vm,
++		struct userspace_mem_region *region, uint64_t host_pg_nr)
++{
++	unsigned long *bmap;
++	bool first_page_dirty;
++	uint64_t size = region->region.memory_size;
++
++	/* getpage_size() is not always equal to vm->page_size */
++	bmap = bitmap_zalloc(size / getpagesize());
++	kvm_vm_get_dirty_log(vm, region->region.slot, bmap);
++	first_page_dirty = test_bit(host_pg_nr, bmap);
++	free(bmap);
++	return first_page_dirty;
++}
 +
  /* Returns true to continue the test, and false if it should be skipped. */
-+static int uffd_generic_handler(int uffd_mode, int uffd,
-+		struct uffd_msg *msg, struct uffd_args *args,
-+		bool expect_write)
-+{
-+	uint64_t addr = msg->arg.pagefault.address;
-+	uint64_t flags = msg->arg.pagefault.flags;
-+	struct uffdio_copy copy;
-+	int ret;
-+
-+	TEST_ASSERT(uffd_mode == UFFDIO_REGISTER_MODE_MISSING,
-+			"The only expected UFFD mode is MISSING");
-+	ASSERT_EQ(!!(flags & UFFD_PAGEFAULT_FLAG_WRITE), expect_write);
-+	ASSERT_EQ(addr, (uint64_t)args->hva);
-+
-+	pr_debug("uffd fault: addr=%p write=%d\n",
-+			(void *)addr, !!(flags & UFFD_PAGEFAULT_FLAG_WRITE));
-+
-+	copy.src = (uint64_t)args->copy;
-+	copy.dst = addr;
-+	copy.len = args->paging_size;
-+	copy.mode = 0;
-+
-+	ret = ioctl(uffd, UFFDIO_COPY, &copy);
-+	if (ret == -1) {
-+		pr_info("Failed UFFDIO_COPY in 0x%lx with errno: %d\n",
-+				addr, errno);
-+		return ret;
-+	}
-+
-+	pthread_mutex_lock(&events.uffd_faults_mutex);
-+	events.uffd_faults += 1;
-+	pthread_mutex_unlock(&events.uffd_faults_mutex);
-+	return 0;
-+}
-+
-+static int uffd_pt_write_handler(int mode, int uffd, struct uffd_msg *msg)
-+{
-+	return uffd_generic_handler(mode, uffd, msg, &pt_args, true);
-+}
-+
-+static int uffd_data_write_handler(int mode, int uffd, struct uffd_msg *msg)
-+{
-+	return uffd_generic_handler(mode, uffd, msg, &data_args, true);
-+}
-+
-+static int uffd_data_read_handler(int mode, int uffd, struct uffd_msg *msg)
-+{
-+	return uffd_generic_handler(mode, uffd, msg, &data_args, false);
-+}
-+
-+static void setup_uffd_args(struct userspace_mem_region *region,
-+				struct uffd_args *args)
-+{
-+	args->hva = (void *)region->region.userspace_addr;
-+	args->paging_size = region->region.memory_size;
-+
-+	args->copy = malloc(args->paging_size);
-+	TEST_ASSERT(args->copy, "Failed to allocate data copy.");
-+	memcpy(args->copy, args->hva, args->paging_size);
-+}
-+
-+static void setup_uffd(struct kvm_vm *vm, struct test_params *p,
-+		struct uffd_desc **pt_uffd, struct uffd_desc **data_uffd)
-+{
-+	struct test_desc *test = p->test_desc;
-+
-+	setup_uffd_args(vm_get_mem_region(vm, MEM_REGION_PT), &pt_args);
-+	setup_uffd_args(vm_get_mem_region(vm, MEM_REGION_DATA), &data_args);
-+
-+	*pt_uffd = NULL;
-+	if (test->uffd_pt_handler)
-+		*pt_uffd = uffd_setup_demand_paging(
-+				UFFDIO_REGISTER_MODE_MISSING, 0,
-+				pt_args.hva, pt_args.paging_size,
-+				test->uffd_pt_handler);
-+
-+	*data_uffd = NULL;
-+	if (test->uffd_data_handler)
-+		*data_uffd = uffd_setup_demand_paging(
-+				UFFDIO_REGISTER_MODE_MISSING, 0,
-+				data_args.hva, data_args.paging_size,
-+				test->uffd_data_handler);
-+}
-+
-+static void free_uffd(struct test_desc *test, struct uffd_desc *pt_uffd,
-+			struct uffd_desc *data_uffd)
-+{
-+	if (test->uffd_pt_handler)
-+		uffd_stop_demand_paging(pt_uffd);
-+	if (test->uffd_data_handler)
-+		uffd_stop_demand_paging(data_uffd);
-+
-+	free(pt_args.copy);
-+	free(data_args.copy);
-+}
-+
-+/* Returns false if the test should be skipped. */
- static bool punch_hole_in_memslot(struct kvm_vm *vm,
- 				  struct userspace_mem_region *region)
+ static bool handle_cmd(struct kvm_vm *vm, int cmd)
  {
-@@ -411,6 +523,11 @@ static void setup_memslots(struct kvm_vm *vm, struct test_params *p)
- 	vm->memslots[MEM_REGION_DATA] = DATA_MEMSLOT;
+@@ -414,6 +449,18 @@ static bool handle_cmd(struct kvm_vm *vm, int cmd)
+ 		continue_test = punch_hole_in_memslot(vm, pt_region);
+ 	if (cmd & CMD_HOLE_DATA)
+ 		continue_test = punch_hole_in_memslot(vm, data_region);
++	if (cmd & CMD_CHECK_WRITE_IN_DIRTY_LOG)
++		TEST_ASSERT(check_write_in_dirty_log(vm, data_region, 0),
++				"Missing write in dirty log");
++	if (cmd & CMD_CHECK_S1PTW_WR_IN_DIRTY_LOG)
++		TEST_ASSERT(check_write_in_dirty_log(vm, pt_region, 0),
++				"Missing s1ptw write in dirty log");
++	if (cmd & CMD_CHECK_NO_WRITE_IN_DIRTY_LOG)
++		TEST_ASSERT(!check_write_in_dirty_log(vm, data_region, 0),
++				"Unexpected write in dirty log");
++	if (cmd & CMD_CHECK_NO_S1PTW_WR_IN_DIRTY_LOG)
++		TEST_ASSERT(!check_write_in_dirty_log(vm, pt_region, 0),
++				"Unexpected s1ptw write in dirty log");
+ 
+ 	return continue_test;
+ }
+@@ -681,6 +728,19 @@ static void help(char *name)
+ 	.expected_events	= { .uffd_faults = _uffd_faults, },		\
  }
  
-+static void check_event_counts(struct test_desc *test)
-+{
-+	ASSERT_EQ(test->expected_events.uffd_faults, events.uffd_faults);
-+}
-+
- static void print_test_banner(enum vm_guest_mode mode, struct test_params *p)
- {
- 	struct test_desc *test = p->test_desc;
-@@ -421,12 +538,17 @@ static void print_test_banner(enum vm_guest_mode mode, struct test_params *p)
- 			vm_mem_backing_src_alias(p->src_type)->name);
- }
- 
-+static void reset_event_counts(void)
-+{
-+	memset(&events, 0, sizeof(events));
-+}
-+
- /*
-  * This function either succeeds, skips the test (after setting test->skip), or
-  * fails with a TEST_FAIL that aborts all tests.
-  */
- static void vcpu_run_loop(struct kvm_vm *vm, struct kvm_vcpu *vcpu,
--			  struct test_desc *test)
-+		struct test_desc *test)
- {
- 	struct ucall uc;
- 
-@@ -461,6 +583,7 @@ static void run_test(enum vm_guest_mode mode, void *arg)
- 	struct test_desc *test = p->test_desc;
- 	struct kvm_vm *vm;
- 	struct kvm_vcpu *vcpu;
-+	struct uffd_desc *pt_uffd, *data_uffd;
- 
- 	print_test_banner(mode, p);
- 
-@@ -473,7 +596,16 @@ static void run_test(enum vm_guest_mode mode, void *arg)
- 
- 	ucall_init(vm, NULL);
- 
-+	reset_event_counts();
-+
-+	/*
-+	 * Set some code in the data memslot for the guest to execute (only
-+	 * applicable to the EXEC tests). This has to be done before
-+	 * setup_uffd() as that function copies the memslot data for the uffd
-+	 * handler.
-+	 */
- 	load_exec_code_for_test(vm);
-+	setup_uffd(vm, p, &pt_uffd, &data_uffd);
- 	setup_abort_handlers(vm, vcpu, test);
- 	vcpu_args_set(vcpu, 1, test);
- 
-@@ -481,6 +613,14 @@ static void run_test(enum vm_guest_mode mode, void *arg)
- 
- 	ucall_uninit(vm);
- 	kvm_vm_free(vm);
-+	free_uffd(test, pt_uffd, data_uffd);
-+
-+	/*
-+	 * Make sure we check the events after the uffd threads have exited,
-+	 * which means they updated their respective event counters.
-+	 */
-+	if (!test->skip)
-+		check_event_counts(test);
- }
- 
- static void help(char *name)
-@@ -496,6 +636,7 @@ static void help(char *name)
- #define SNAME(s)			#s
- #define SCAT2(a, b)			SNAME(a ## _ ## b)
- #define SCAT3(a, b, c)			SCAT2(a, SCAT2(b, c))
-+#define SCAT4(a, b, c, d)		SCAT2(a, SCAT3(b, c, d))
- 
- #define _CHECK(_test)			_CHECK_##_test
- #define _PREPARE(_test)			_PREPARE_##_test
-@@ -514,7 +655,7 @@ static void help(char *name)
- #define _CHECK_with_af			guest_check_pte_af
- #define _CHECK_no_af			NULL
- 
--/* Performs an access and checks that no faults were triggered. */
-+/* Performs an access and checks that no faults (no events) were triggered. */
- #define TEST_ACCESS(_access, _with_af, _mark_cmd)				\
- {										\
- 	.name			= SCAT3(_access, _with_af, #_mark_cmd),		\
-@@ -523,6 +664,21 @@ static void help(char *name)
- 	.mem_mark_cmd		= _mark_cmd,					\
- 	.guest_test		= _access,					\
- 	.guest_test_check	= { _CHECK(_with_af) },				\
-+	.expected_events	= { 0 },					\
-+}
-+
-+#define TEST_UFFD(_access, _with_af, _mark_cmd,					\
-+		  _uffd_data_handler, _uffd_pt_handler, _uffd_faults)		\
++#define TEST_DIRTY_LOG(_access, _with_af, _test_check)				\
 +{										\
-+	.name			= SCAT4(uffd, _access, _with_af, #_mark_cmd),	\
++	.name			= SCAT3(dirty_log, _access, _with_af),		\
++	.data_memslot_flags	= KVM_MEM_LOG_DIRTY_PAGES,			\
++	.pt_memslot_flags	= KVM_MEM_LOG_DIRTY_PAGES,			\
 +	.guest_prepare		= { _PREPARE(_with_af),				\
 +				    _PREPARE(_access) },			\
 +	.guest_test		= _access,					\
-+	.mem_mark_cmd		= _mark_cmd,					\
-+	.guest_test_check	= { _CHECK(_with_af) },				\
-+	.uffd_data_handler	= _uffd_data_handler,				\
-+	.uffd_pt_handler	= _uffd_pt_handler,				\
-+	.expected_events	= { .uffd_faults = _uffd_faults, },		\
- }
- 
++	.guest_test_check	= { _CHECK(_with_af), _test_check,		\
++				    guest_check_s1ptw_wr_in_dirty_log},		\
++	.expected_events	= { 0 },					\
++}
++
  static struct test_desc tests[] = {
-@@ -548,6 +704,36 @@ static struct test_desc tests[] = {
- 	TEST_ACCESS(guest_at, no_af, CMD_HOLE_DATA),
- 	TEST_ACCESS(guest_dc_zva, no_af, CMD_HOLE_DATA),
+ 
+ 	/* Check that HW is setting the Access Flag (AF) (sanity checks). */
+@@ -734,6 +794,21 @@ static struct test_desc tests[] = {
+ 	TEST_UFFD(guest_exec, with_af, CMD_HOLE_DATA | CMD_HOLE_PT,
+ 			uffd_data_read_handler, uffd_pt_write_handler, 2),
  
 +	/*
-+	 * Punch holes in the test and PT memslots and mark them for
-+	 * userfaultfd handling. This should result in 2 faults: the test
-+	 * access and its respective S1 page table walk (S1PTW).
++	 * Try accesses when the data and PT memslots are both tracked for
++	 * dirty logging.
 +	 */
-+	TEST_UFFD(guest_read64, with_af, CMD_HOLE_DATA | CMD_HOLE_PT,
-+			uffd_data_read_handler, uffd_pt_write_handler, 2),
++	TEST_DIRTY_LOG(guest_read64, with_af, guest_check_no_write_in_dirty_log),
 +	/* no_af should also lead to a PT write. */
-+	TEST_UFFD(guest_read64, no_af, CMD_HOLE_DATA | CMD_HOLE_PT,
-+			uffd_data_read_handler, uffd_pt_write_handler, 2),
-+	/* Note how that cas invokes the read handler. */
-+	TEST_UFFD(guest_cas, with_af, CMD_HOLE_DATA | CMD_HOLE_PT,
-+			uffd_data_read_handler, uffd_pt_write_handler, 2),
-+	/*
-+	 * Can't test guest_at with_af as it's IMPDEF whether the AF is set.
-+	 * The S1PTW fault should still be marked as a write.
-+	 */
-+	TEST_UFFD(guest_at, no_af, CMD_HOLE_DATA | CMD_HOLE_PT,
-+			uffd_data_read_handler, uffd_pt_write_handler, 1),
-+	TEST_UFFD(guest_ld_preidx, with_af, CMD_HOLE_DATA | CMD_HOLE_PT,
-+			uffd_data_read_handler, uffd_pt_write_handler, 2),
-+	TEST_UFFD(guest_write64, with_af, CMD_HOLE_DATA | CMD_HOLE_PT,
-+			uffd_data_write_handler, uffd_pt_write_handler, 2),
-+	TEST_UFFD(guest_dc_zva, with_af, CMD_HOLE_DATA | CMD_HOLE_PT,
-+			uffd_data_write_handler, uffd_pt_write_handler, 2),
-+	TEST_UFFD(guest_st_preidx, with_af, CMD_HOLE_DATA | CMD_HOLE_PT,
-+			uffd_data_write_handler, uffd_pt_write_handler, 2),
-+	TEST_UFFD(guest_exec, with_af, CMD_HOLE_DATA | CMD_HOLE_PT,
-+			uffd_data_read_handler, uffd_pt_write_handler, 2),
++	TEST_DIRTY_LOG(guest_read64, no_af, guest_check_no_write_in_dirty_log),
++	TEST_DIRTY_LOG(guest_ld_preidx, with_af, guest_check_no_write_in_dirty_log),
++	TEST_DIRTY_LOG(guest_at, no_af, guest_check_no_write_in_dirty_log),
++	TEST_DIRTY_LOG(guest_exec, with_af, guest_check_no_write_in_dirty_log),
++	TEST_DIRTY_LOG(guest_write64, with_af, guest_check_write_in_dirty_log),
++	TEST_DIRTY_LOG(guest_cas, with_af, guest_check_write_in_dirty_log),
++	TEST_DIRTY_LOG(guest_dc_zva, with_af, guest_check_write_in_dirty_log),
++	TEST_DIRTY_LOG(guest_st_preidx, with_af, guest_check_write_in_dirty_log),
 +
  	{ 0 }
  };
