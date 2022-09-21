@@ -2,78 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E59DE5BF50E
-	for <lists+kvmarm@lfdr.de>; Wed, 21 Sep 2022 05:53:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83F175BF50F
+	for <lists+kvmarm@lfdr.de>; Wed, 21 Sep 2022 05:53:13 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8D9E04B803;
-	Tue, 20 Sep 2022 23:53:11 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 294534B7FB;
+	Tue, 20 Sep 2022 23:53:13 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Akz5+lSDbsww; Tue, 20 Sep 2022 23:53:10 -0400 (EDT)
+	with ESMTP id 0igo6EujhvlH; Tue, 20 Sep 2022 23:53:13 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D58944B822;
-	Tue, 20 Sep 2022 23:53:09 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 068C14B822;
+	Tue, 20 Sep 2022 23:53:12 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id BD59C4B7C4
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 23:53:07 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0B8C74B7C4
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 23:53:10 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 6J0zDKHJJ4sb for <kvmarm@lists.cs.columbia.edu>;
- Tue, 20 Sep 2022 23:53:06 -0400 (EDT)
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com
- [209.85.128.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9BD8E4B7DE
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 23:53:06 -0400 (EDT)
-Received: by mail-yw1-f202.google.com with SMTP id
- 00721157ae682-3451e7b0234so41404437b3.23
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 20:53:06 -0700 (PDT)
+ with ESMTP id bi0SdZRfaeIF for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 20 Sep 2022 23:53:09 -0400 (EDT)
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com
+ [209.85.128.201])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id AD4444B81F
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 23:53:08 -0400 (EDT)
+Received: by mail-yw1-f201.google.com with SMTP id
+ 00721157ae682-348c4a1e12dso41442407b3.11
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 20:53:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
  :date:from:to:cc:subject:date;
- bh=gA2O8oSq7e+d9nyvptw2rqsk9DDWzgsNC9HG6nZ9ojk=;
- b=XIO6ctUJSy+0azvt2pjBnryBUWNbF6hif5gqbPYYTgs6hWqcNPUhpEe9lgmOAUb5lK
- FIEztD6adqYqFeEvBypKlXChVdd8QisgiiSfY+985vqxZPImM0ex7t6ynV1Q5O6tezgt
- NDwiBirb38U/1dEirAo7Y3vns06/c4B8HudINdNTwx88KQNxgx1TmYWG0eQQg8lejZAZ
- /bU52MCOnyPXF6tZePuOkxwp5FG/90ihIjaJ57kWjHQ5T3L7z6Q1dLQcob1PqehxKNrc
- 0m9GKeaaZ/knEEBovy0cI9BPTzeBrDuufHMEvKZD7vIi8VDKzbEhuAnwKtKy8Vj4b9pN
- sirw==
+ bh=l32Gj8DFEI8fLqucJeW2Rbzgq3dj8DyhNV3q0+UkQLg=;
+ b=XuosAkkktXXWMgAJHuCQa6UGl0+k/yysrZg8b+tKU72U2p9L/09e0hmFFdbpFORH8V
+ vTILz5cc/H+dABEvWXOa0Q96/hCZZqtcjG6GDq9EnJkg1HRbHUdnGMBvgxgXxkD9eVhg
+ 3mESCk3cMrCrJNyO444O2KjWFvhL+u7B8U8iyrT2z2rQsl/Atk7HTwqj22cvRTddvz5V
+ /9XStQt610oFcuHnUCacx/6zTnRV/jgFzTs0rOpnX2VLj6/BcvNplLLaWguL+DWjExP6
+ E/0WLMczgDZY2C1h/uArgrik8gj1VT8Z5HqD+l0KltnMuzSx9/uO4IE53pibPPLBUHoA
+ GLpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date;
- bh=gA2O8oSq7e+d9nyvptw2rqsk9DDWzgsNC9HG6nZ9ojk=;
- b=UOGyTLaOPcIKO0qNPVqMF8gvCkwxDaXldkMeLYF7c4+bNPbBC7lcioQRUiRH+EinBY
- 8c/lkx0pijzJUAeoRkfgsYqBg7OYRopWcUyKVSWrpgi2wRrmwpnhRNoSIZX3w77ZjWaO
- m69g7q6Z2Z0h9e+OmYIBPzmhuKGvdr6NHrf3g5yB5xwSqFFQ7Ls52hPyIHPwsEDcV1Og
- aL9/M4gYx9+hZJNZKiqeFVfJ/pcyYq2bZq5D3PYJacn+sUUZ7kgW8uDlyoB6IM0oaJcD
- lXZO0y+HbAyfVTZu8pPCWcoDIzHyOVsX5nJaVTCLXfngEjvByJM1ic3eHYjXp+OCuNvy
- TwMA==
-X-Gm-Message-State: ACrzQf3IejlCxbAZuRQI0ayZXFirhDxSFXpA++XbCOpmU01VFV+WlEg8
- t+db1A0s0pJ+FtvNI9662PdHN1k=
-X-Google-Smtp-Source: AMsMyM70KZGF5iTWN4vyFkxGmYL4qy9cjP2UuKMDiQgL9O5HmyDhF0srIJOhVM93rWn1O+AMl83PUqU=
+ bh=l32Gj8DFEI8fLqucJeW2Rbzgq3dj8DyhNV3q0+UkQLg=;
+ b=at6QkEwulmR4EViehvGiIZIcPemxaxbnYSKMTeNYsaVeeq7hdzumBNlImLpo5nIfMM
+ 8RFPRF0vcJwbSEVrfZAb6KP20A6YuskTQWsEoge/z1WFmW95PJIU5DVTzhOoOEHQAOIr
+ gUPjrXyOjCULmqBqv5BdhNhenkF0NaD9IVybLQxEzAjJp1Wp1IIu2IrBOrU9pFP5r/so
+ HChQHRAyZeO+zPXQ7CEWq/yC5xaQJ88k/aJ58pQi4Xq1cyJ3PcNctoJ1kF8a+qIpud2u
+ CWyQbPPWpzJ9bEz2KfwM5JNmR7c0Al3UwXhur/SjnoRvuXiWbmU65NQjQxMF9huMH2NF
+ hqjQ==
+X-Gm-Message-State: ACrzQf2FigPtrRP/VEUd8u+mtYsVqwfF+q6GFG+DLd7SuN5gXdFqgwu/
+ a0v/FG4Dcr4jMq2w8h970y4UbfI=
+X-Google-Smtp-Source: AMsMyM4k2SLq+xH0pc9iLcqj7V+ZPh7OXwHnlc3w1WiBAqn/qKtC40c1YU8Rcz5OMXlTDVVr0U6HpDc=
 X-Received: from pcc-desktop.svl.corp.google.com
  ([2620:15c:2ce:200:1b89:96f1:d30:e3c])
- (user=pcc job=sendgmr) by 2002:a05:690c:823:b0:349:bc6c:630c with SMTP id
- by3-20020a05690c082300b00349bc6c630cmr21877503ywb.223.1663732386243; Tue, 20
- Sep 2022 20:53:06 -0700 (PDT)
-Date: Tue, 20 Sep 2022 20:51:38 -0700
+ (user=pcc job=sendgmr) by 2002:a25:d70b:0:b0:6b4:1ed6:24b2 with SMTP id
+ o11-20020a25d70b000000b006b41ed624b2mr9467270ybg.268.1663732388240; Tue, 20
+ Sep 2022 20:53:08 -0700 (PDT)
+Date: Tue, 20 Sep 2022 20:51:39 -0700
 In-Reply-To: <20220921035140.57513-1-pcc@google.com>
-Message-Id: <20220921035140.57513-7-pcc@google.com>
+Message-Id: <20220921035140.57513-8-pcc@google.com>
 Mime-Version: 1.0
 References: <20220921035140.57513-1-pcc@google.com>
 X-Mailer: git-send-email 2.37.3.968.ga6b4b080e4-goog
-Subject: [PATCH v4 6/8] KVM: arm64: unify the tests for VMAs in memslots when
- MTE is enabled
+Subject: [PATCH v4 7/8] KVM: arm64: permit all VM_MTE_ALLOWED mappings with
+ MTE enabled
 From: Peter Collingbourne <pcc@google.com>
 To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu
 Cc: kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
@@ -97,72 +97,40 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Previously we allowed creating a memslot containing a private mapping that
-was not VM_MTE_ALLOWED, but would later reject KVM_RUN with -EFAULT. Now
-we reject the memory region at memslot creation time.
+Certain VMMs such as crosvm have features (e.g. sandboxing) that depend
+on being able to map guest memory as MAP_SHARED. The current restriction
+on sharing MAP_SHARED pages with the guest is preventing the use of
+those features with MTE. Now that the races between tasks concurrently
+clearing tags on the same page have been fixed, remove this restriction.
 
-Since this is a minor tweak to the ABI (a VMM that created one of
-these memslots would fail later anyway), no VMM to my knowledge has
-MTE support yet, and the hardware with the necessary features is not
-generally available, we can probably make this ABI change at this point.
+Note that this is a relaxation of the ABI.
 
 Signed-off-by: Peter Collingbourne <pcc@google.com>
 Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
 Reviewed-by: Steven Price <steven.price@arm.com>
 ---
- arch/arm64/kvm/mmu.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ arch/arm64/kvm/mmu.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
 diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index bebfd1e0bbf0..e34fbabd8b93 100644
+index e34fbabd8b93..996ea11fb0e5 100644
 --- a/arch/arm64/kvm/mmu.c
 +++ b/arch/arm64/kvm/mmu.c
-@@ -1073,6 +1073,19 @@ static void sanitise_mte_tags(struct kvm *kvm, kvm_pfn_t pfn,
- 	}
+@@ -1075,14 +1075,6 @@ static void sanitise_mte_tags(struct kvm *kvm, kvm_pfn_t pfn,
+ 
+ static bool kvm_vma_mte_allowed(struct vm_area_struct *vma)
+ {
+-	/*
+-	 * VM_SHARED mappings are not allowed with MTE to avoid races
+-	 * when updating the PG_mte_tagged page flag, see
+-	 * sanitise_mte_tags for more details.
+-	 */
+-	if (vma->vm_flags & VM_SHARED)
+-		return false;
+-
+ 	return vma->vm_flags & VM_MTE_ALLOWED;
  }
  
-+static bool kvm_vma_mte_allowed(struct vm_area_struct *vma)
-+{
-+	/*
-+	 * VM_SHARED mappings are not allowed with MTE to avoid races
-+	 * when updating the PG_mte_tagged page flag, see
-+	 * sanitise_mte_tags for more details.
-+	 */
-+	if (vma->vm_flags & VM_SHARED)
-+		return false;
-+
-+	return vma->vm_flags & VM_MTE_ALLOWED;
-+}
-+
- static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 			  struct kvm_memory_slot *memslot, unsigned long hva,
- 			  unsigned long fault_status)
-@@ -1249,9 +1262,8 @@ static int user_mem_abort(struct kvm_vcpu *vcpu, phys_addr_t fault_ipa,
- 	}
- 
- 	if (fault_status != FSC_PERM && !device && kvm_has_mte(kvm)) {
--		/* Check the VMM hasn't introduced a new VM_SHARED VMA */
--		if ((vma->vm_flags & VM_MTE_ALLOWED) &&
--		    !(vma->vm_flags & VM_SHARED)) {
-+		/* Check the VMM hasn't introduced a new disallowed VMA */
-+		if (kvm_vma_mte_allowed(vma)) {
- 			sanitise_mte_tags(kvm, pfn, vma_pagesize);
- 		} else {
- 			ret = -EFAULT;
-@@ -1695,12 +1707,7 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
- 		if (!vma)
- 			break;
- 
--		/*
--		 * VM_SHARED mappings are not allowed with MTE to avoid races
--		 * when updating the PG_mte_tagged page flag, see
--		 * sanitise_mte_tags for more details.
--		 */
--		if (kvm_has_mte(kvm) && vma->vm_flags & VM_SHARED) {
-+		if (kvm_has_mte(kvm) && !kvm_vma_mte_allowed(vma)) {
- 			ret = -EINVAL;
- 			break;
- 		}
 -- 
 2.37.3.968.ga6b4b080e4-goog
 
