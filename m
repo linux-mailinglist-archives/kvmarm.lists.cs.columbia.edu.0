@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id BEE705BF20A
-	for <lists+kvmarm@lfdr.de>; Wed, 21 Sep 2022 02:33:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A89515BF210
+	for <lists+kvmarm@lfdr.de>; Wed, 21 Sep 2022 02:33:21 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5723D4B782;
-	Tue, 20 Sep 2022 20:33:11 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3DDDD4B7A9;
+	Tue, 20 Sep 2022 20:33:21 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
@@ -18,62 +18,61 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7gkjrUUSfhDy; Tue, 20 Sep 2022 20:33:09 -0400 (EDT)
+	with ESMTP id 3m8gHn1MoTil; Tue, 20 Sep 2022 20:33:15 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 05F2F4B7E7;
-	Tue, 20 Sep 2022 20:33:09 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 61A7E4B7E7;
+	Tue, 20 Sep 2022 20:33:11 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B99984B7ED
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 20:33:06 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C89634B0AC
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 20:33:09 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id lL6pMdYh2GzF for <kvmarm@lists.cs.columbia.edu>;
- Tue, 20 Sep 2022 20:33:05 -0400 (EDT)
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com
- [209.85.128.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id EE9BC4B7F8
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 20:33:04 -0400 (EDT)
-Received: by mail-yw1-f202.google.com with SMTP id
- 00721157ae682-34514a7105eso38058877b3.1
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 17:33:04 -0700 (PDT)
+ with ESMTP id UQZX6oatitwJ for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 20 Sep 2022 20:33:08 -0400 (EDT)
+Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com
+ [209.85.215.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id ECB7D4B7ED
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 20:33:06 -0400 (EDT)
+Received: by mail-pg1-f202.google.com with SMTP id
+ 14-20020a63000e000000b00438c0563dc2so2514715pga.9
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 17:33:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:reply-to:from:to:cc:subject:date;
- bh=6n3oC51LepjybeCO/G1gnLj/7i8/kZTfCzCfh49ZsFY=;
- b=W1Ft16I2z4KyotR0zf9JcaxskVjiFIoTSvcCvM9GzqpfMZjOnkUbTlyR/YK2GifRmv
- QrwJq8VMURYEAE2WuDaeBV1lpmfmiUr9qttHXPB25xmfj0zo/Rm8dS6hBczWKfely1To
- iBZYJPxQgEmeTx4V8oSgxXgoc7fmc8jL0B2eJu/Yc6c7NQPqonrY7m5HwsjgveG5t8/q
- DMeMlr+fihRcdrCqNFWVENW4RNE2K4oabECK0hGgUMWhs07ZJGDjNFB5aD/IHo4M7B6i
- xV1aDtVsD/LclbxQq81QXFA9WSGbWt0X054O++Zklv0EWWKP7bGtdKwjb1syoi10fSBt
- trFw==
+ bh=K+eJDVrRDoT/6MhRD9TeI/5Knz9Tn6rS//AmvrkEOco=;
+ b=RumQH9j9B8TemfcYt2a6b2x/yZUXUUkBbA8gdyrJEr38nDZ7RuvyLCRaRk5ZkufEy6
+ p2NCHI5GbrqhMqhjM/+4WM5CnKN5bBsM+xcVusQQyjpPw3Ksepa4epiazoqa1DtUlznH
+ D3jXrYZbhuvR8NS9oP9hxXzcyaKZyMMMzC8Q3AsRqni5HUkhRX+jDr6NPQVgVd+hQMGt
+ 1BKLvJS2NkApQBW4GGR8+r3gbwLtcfbqmtTVZArU0N3RAW9Bb+ckWgOW049H7NaAmkBn
+ CgE9T8i2GbNr42RCENeJzZg+9RVQrzeyxaiopWDNfB1fyskDMaEA2WCUkePT/lJ5TLD+
+ i91w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:reply-to:x-gm-message-state:from:to:cc:subject:date;
- bh=6n3oC51LepjybeCO/G1gnLj/7i8/kZTfCzCfh49ZsFY=;
- b=zmVqzs9SCKQBFnUZm8dT//3KY2MP4oIyoVLD1fA7xLS9181IsHA8TGKRioJCkUha6b
- kssSgBnLEYSmKQ9wrZwiiRTmC19dX4D+/Cbn5r/UuYwPiDzou9l1HCW1yrbtE+9V2qet
- BskxjO8F75n68q4xuYNV0NchHJZWhTpC7quwrZ4Aj7mISYUalUMo+htv28Vd5kmJfLNY
- MSAUwDoUWy5oYmElHBmvfoFil//y5lgcoRo8oN9yNJKeAFWgzzrqmIgI/VhO0q1m/B7X
- CZm7jnrZzEF4DHAYpZAZC68B0Z9wBOHbPIVNi0AlkC5Xuov7NIADdt3vAArBcEigKC9D
- uyPg==
-X-Gm-Message-State: ACrzQf0nufYcZ3bbpJ6D58dIezJ+b/BjX9cikuokV7fUS19MJ/PI6u8P
- QNT8azqecav84C8yFSAENAiRtdlc1h0=
-X-Google-Smtp-Source: AMsMyM6ajbNthck8O3WF1o+1c/8Kt+/LZ69NQ6nvF17LZv5xSYaJvw/YRsOuqwhN87Jz4vl4Gma5UjnRyp0=
+ bh=K+eJDVrRDoT/6MhRD9TeI/5Knz9Tn6rS//AmvrkEOco=;
+ b=lb5qSozamo/jIVT72pxgV9p4ZKen7PEXqzDPmWFfFxdr0ms4jnZNXNfv6ZVniepYUQ
+ 9Zv7NQMZz+jBJb03gnvneIYIKFtnZAspmdwzX6LAM4/wUl2fQOcM+i5tVZdUs3Uv9qCS
+ qQtKwbVs2lHZMFk/Jsy/sEZ0e5YI13DwqPCYkRHW9uqwOKPHOGB410C5LmK49SUf8O3U
+ OhvO9Y+sSFwsE2PgkPzz9K0gcxR92Y25xkWJuZA5vPi5/l/nmpGFZCtuOMYhm06rxs6f
+ Dep1Uqb1RDLAgXIlmJ8GbAjN8TwkEKElt0vz60RsEF0X+dkwD5XPtdGLjKkIw//l5JZz
+ edWQ==
+X-Gm-Message-State: ACrzQf0HFdAW6CB7ys6VIGhxbYu2UpcqafKWepo0+duE2qNUMFbw2nGO
+ RiHnGLJsdV1C/So+/tLN/xf9chrqChg=
+X-Google-Smtp-Source: AMsMyM7p74m7+dmjyK72nsLPYB9lNVLqfhypVno6piUFMo/NwEAnZPXgFzPrJP9ozDKFIC2/tvBZej6i8L4=
 X-Received: from zagreus.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a25:c04f:0:b0:6ae:96ac:ac2d with SMTP id
- c76-20020a25c04f000000b006ae96acac2dmr21142783ybf.227.1663720384571; Tue, 20
- Sep 2022 17:33:04 -0700 (PDT)
-Date: Wed, 21 Sep 2022 00:31:59 +0000
+ (user=seanjc job=sendgmr) by 2002:a05:6a00:134d:b0:545:4d30:eebf with SMTP id
+ k13-20020a056a00134d00b005454d30eebfmr26543768pfu.32.1663720386171; Tue, 20
+ Sep 2022 17:33:06 -0700 (PDT)
+Date: Wed, 21 Sep 2022 00:32:00 +0000
 In-Reply-To: <20220921003201.1441511-1-seanjc@google.com>
 Mime-Version: 1.0
 References: <20220921003201.1441511-1-seanjc@google.com>
 X-Mailer: git-send-email 2.37.3.968.ga6b4b080e4-goog
-Message-ID: <20220921003201.1441511-11-seanjc@google.com>
-Subject: [PATCH v4 10/12] KVM: x86: never write to memory from
- kvm_vcpu_check_block()
+Message-ID: <20220921003201.1441511-12-seanjc@google.com>
+Subject: [PATCH v4 11/12] KVM: mips, x86: do not rely on KVM_REQ_UNHALT
 From: Sean Christopherson <seanjc@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>, 
  Huacai Chen <chenhuacai@kernel.org>, 
@@ -110,65 +109,64 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: Paolo Bonzini <pbonzini@redhat.com>
 
-kvm_vcpu_check_block() is called while not in TASK_RUNNING, and therefore
-it cannot sleep.  Writing to guest memory is therefore forbidden, but it
-can happen on AMD processors if kvm_check_nested_events() causes a vmexit.
+KVM_REQ_UNHALT is a weird request that simply reports the value of
+kvm_arch_vcpu_runnable() on exit from kvm_vcpu_halt().  Only
+MIPS and x86 are looking at it, the others just clear it.  Check
+the state of the vCPU directly so that the request is handled
+as a nop on all architectures.
 
-Fortunately, all events that are caught by kvm_check_nested_events() are
-also recognized by kvm_vcpu_has_events() through vendor callbacks such as
-kvm_x86_interrupt_allowed() or kvm_x86_ops.nested_ops->has_events(), so
-remove the call and postpone the actual processing to vcpu_block().
+No functional change intended, except for corner cases where an
+event arrive immediately after a signal become pending or after
+another similar host-side event.
 
-Opportunistically honor the return of kvm_check_nested_events().  KVM
-punted on the check in kvm_vcpu_running() because the only error path is
-if vmx_complete_nested_posted_interrupt() fails, in which case KVM exits
-to userspace with "internal error" i.e. the VM is likely dead anyways so
-it wasn't worth overloading the return of kvm_vcpu_running().
-
-Add the check mostly so that KVM is consistent with itself; the return of
-the call via kvm_apic_accept_events()=>kvm_check_nested_events() that
-immediately follows  _is_ checked.
-
-Reported-by: Maxim Levitsky <mlevitsk@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-[sean: check and handle return of kvm_check_nested_events()]
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 ---
- arch/x86/kvm/x86.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ arch/mips/kvm/emulate.c | 7 +++----
+ arch/x86/kvm/x86.c      | 9 ++++++++-
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
+diff --git a/arch/mips/kvm/emulate.c b/arch/mips/kvm/emulate.c
+index b494d8d39290..1d7c56defe93 100644
+--- a/arch/mips/kvm/emulate.c
++++ b/arch/mips/kvm/emulate.c
+@@ -955,13 +955,12 @@ enum emulation_result kvm_mips_emul_wait(struct kvm_vcpu *vcpu)
+ 		kvm_vcpu_halt(vcpu);
+ 
+ 		/*
+-		 * We we are runnable, then definitely go off to user space to
++		 * We are runnable, then definitely go off to user space to
+ 		 * check if any I/O interrupts are pending.
+ 		 */
+-		if (kvm_check_request(KVM_REQ_UNHALT, vcpu)) {
+-			kvm_clear_request(KVM_REQ_UNHALT, vcpu);
++		kvm_clear_request(KVM_REQ_UNHALT, vcpu);
++		if (kvm_arch_vcpu_runnable(vcpu))
+ 			vcpu->run->exit_reason = KVM_EXIT_IRQ_WINDOW_OPEN;
+-		}
+ 	}
+ 
+ 	return EMULATE_DONE;
 diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index dcc675d4e44b..8aeacbc2bff9 100644
+index 8aeacbc2bff9..8b1ff7e91ecb 100644
 --- a/arch/x86/kvm/x86.c
 +++ b/arch/x86/kvm/x86.c
-@@ -10815,6 +10815,17 @@ static inline int vcpu_block(struct kvm_vcpu *vcpu)
+@@ -10811,7 +10811,14 @@ static inline int vcpu_block(struct kvm_vcpu *vcpu)
+ 		if (hv_timer)
+ 			kvm_lapic_switch_to_hv_timer(vcpu);
+ 
+-		if (!kvm_check_request(KVM_REQ_UNHALT, vcpu))
++		kvm_clear_request(KVM_REQ_UNHALT, vcpu);
++
++		/*
++		 * If the vCPU is not runnable, a signal or another host event
++		 * of some kind is pending; service it without changing the
++		 * vCPU's activity state.
++		 */
++		if (!kvm_arch_vcpu_runnable(vcpu))
  			return 1;
  	}
  
-+	/*
-+	 * Evaluate nested events before exiting the halted state.  This allows
-+	 * the halt state to be recorded properly in the VMCS12's activity
-+	 * state field (AMD does not have a similar field and a VM-Exit always
-+	 * causes a spurious wakeup from HLT).
-+	 */
-+	if (is_guest_mode(vcpu)) {
-+		if (kvm_check_nested_events(vcpu) < 0)
-+			return 0;
-+	}
-+
- 	if (kvm_apic_accept_events(vcpu) < 0)
- 		return 0;
- 	switch(vcpu->arch.mp_state) {
-@@ -10837,9 +10848,6 @@ static inline int vcpu_block(struct kvm_vcpu *vcpu)
- 
- static inline bool kvm_vcpu_running(struct kvm_vcpu *vcpu)
- {
--	if (is_guest_mode(vcpu))
--		kvm_check_nested_events(vcpu);
--
- 	return (vcpu->arch.mp_state == KVM_MP_STATE_RUNNABLE &&
- 		!vcpu->arch.apf.halted);
- }
 -- 
 2.37.3.968.ga6b4b080e4-goog
 
