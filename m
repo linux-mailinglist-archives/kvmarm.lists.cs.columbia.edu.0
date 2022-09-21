@@ -2,78 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D21C5BF209
-	for <lists+kvmarm@lfdr.de>; Wed, 21 Sep 2022 02:33:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E02A5BF20C
+	for <lists+kvmarm@lfdr.de>; Wed, 21 Sep 2022 02:33:15 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 90C684B7A7;
-	Tue, 20 Sep 2022 20:33:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B7C564B82C;
+	Tue, 20 Sep 2022 20:33:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Qh09pj6ILlgs; Tue, 20 Sep 2022 20:33:06 -0400 (EDT)
+	with ESMTP id DBCIvC4r97GN; Tue, 20 Sep 2022 20:33:14 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id DD8A84B783;
-	Tue, 20 Sep 2022 20:33:06 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 48DBE4B0AC;
+	Tue, 20 Sep 2022 20:33:11 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EAEC64B7E8
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 20:33:04 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3F3E74B0AC
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 20:33:08 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id O89OxdONOl8M for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id CgBxf1KiGFUL for <kvmarm@lists.cs.columbia.edu>;
  Tue, 20 Sep 2022 20:33:02 -0400 (EDT)
-Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com
- [209.85.215.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 37D3E4B712
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 20:33:00 -0400 (EDT)
-Received: by mail-pg1-f202.google.com with SMTP id
- k16-20020a635a50000000b0042986056df6so2519706pgm.2
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 17:33:00 -0700 (PDT)
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com
+ [209.85.128.201])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id AA22F4B80B
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 20:33:01 -0400 (EDT)
+Received: by mail-yw1-f201.google.com with SMTP id
+ 00721157ae682-34d3fbc7cfcso19831027b3.7
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Sep 2022 17:33:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:reply-to:from:to:cc:subject:date;
- bh=qOL17Oc8lfNiT6vI1N2DgBeo2oQr9pvN4OAUhg4HlfA=;
- b=ARUifQn8X722qfUwF91vggFYXNpMmdld6jHGucJn9mYIHgePg3e3ltjHazRJ7WJQIY
- w+6+dDv/mxautN/CuWkRVIzUB4MM0mFVqAUofjmwyaRB9E3nNhDZAx6ZDYK3UkIvlcW3
- K9NzDWtr9CpQ/CIsHl9VDcl9eNecHkOQ3A4eAV1FpyXScQBTQQwiNPVxGPrxUtBQTP6V
- AEpBQWZgYOtijs1937kE9A8HMcoOQ+ZcnStpwMSDNJZXDvCTzuIS4CNbetfFaKrPYBbF
- SNyUEVo0ACy2TKSphVy9cWwOnuMGoqVKl4ZpNYYdwpjQNgZOx/k9BLzDCMUkycF0nN5P
- tZKA==
+ bh=jS6wDbw1pF8Ah0FgPiebKmSPM6cE3vh92J7x5AZxxS8=;
+ b=BXLnvleOcPw2Y/CP9Ur+TUIGjrRNHf90WKKjZAL9Icsc0hEgdcWSuQ+GHVYb1EUn7B
+ sg7UYfZNRpVmJtSJClj570j+DzZOIqw4J10R/J9Yt7QeCVYCKTpKQGufMZPkwcZhkNUl
+ 3vaoURIDkAnxonLZR0kp8E9GOTPxPNNt2Uho8o+B4y7tM55x9dF6kjtMv6AEMiukUUVr
+ 9k2MNMpEmt6zvG+nctg/UgWyL5RXO74DdhR2N9XX4q20RL0XpVSV68ufwiv6eT0kEN2P
+ i58uBMosfJaPWh3cFlR3V9rNs3L5A+Vc+LFEiAaNl1sbw3jHRaKk/mS0dRmTHm93SlWB
+ i4PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:reply-to:x-gm-message-state:from:to:cc:subject:date;
- bh=qOL17Oc8lfNiT6vI1N2DgBeo2oQr9pvN4OAUhg4HlfA=;
- b=J4aNKPy4/DFwKtCWf6EgkGng0hySivE7rheOcS1NFoE6Si8KlMArMdgmVc0RKJPxmA
- hAugOJ3I5VnwGapW7gUQBVd2ry0A9VdCq1/BKGcQhqE3PeMOkdYdA0WNZ2zy6Q4SxuPM
- bpFKHKKbn3PSvo5sK0WH+yv6SR3ecFcY847zj76lcXvTcsx0oyFQIeQZz5mFRzyz/eOZ
- iafqV7uYLufU02e3o78LHUIdmjbw4ex43rg4o9EILMf1FAiXLUZLLGvDEp+9g0ddv2yF
- 2vWC3obmjbt6gcRPwSAT5y3iGk2IE6rJBxqMNEtlhKFI+dSJhVvKf/YGpwDpuSIH5OzS
- l3rA==
-X-Gm-Message-State: ACrzQf1WHT66lcWlYdqeHcGBQ1CLmX3Ic9idQjhM1aU/R5UIcKgShMAc
- fFMnpKnF3vcVRt/8+Pskt2ZA5Y4FpaQ=
-X-Google-Smtp-Source: AMsMyM6CB910qkp43a3cP5VNkh9ZvqTlylmwVUImF03qdsZIEcBH6bFWk0KDb4437+crJl7uEogrf6c2DIk=
+ bh=jS6wDbw1pF8Ah0FgPiebKmSPM6cE3vh92J7x5AZxxS8=;
+ b=3ugQhWT/m5MEDsuTNvf8eDn/g4T1rE/fDH9yhPkNBv/g3jlSXnvTiRcZlU5cVlEcTD
+ cAfPS9z7tawQ8r+4Rjk/8iIklqiHRmiHxWxzNHyqzY7s507PKshseNwsgilQKav1q8E7
+ WDm1p6CO8VZVh8EQAd2NycAGL+pXhljglsXK/7MtbYNgb34Y3SUeCZsLRbHL0fYUnRHg
+ aWsFtD/cDk37YmGiJqzLinVQR1RF6pPioUN1Xlr3fNZ1cW4Ge2PZbqzaGL0pRszmLcin
+ Mnxc8QI8bldPV2PgwwDLMvej9p5ciOYNxgL5tMyRnzizbK9cDVG4VNmh+CSPQxfzffIH
+ HYBw==
+X-Gm-Message-State: ACrzQf2f9FqsrObgd3CSQpgnhCiiMryTRACEepWoLOfIqHoXTQy8+tK2
+ JudzzXwVJuwHcRNNeIiNOWV6BIod3y4=
+X-Google-Smtp-Source: AMsMyM4FwFyakAFj4uLb7acHZDkmCOLDogY8I+5AwDxw4BtkzCD4DzOXBcnEDpQ/JYhzAy9RSZ7GSFvqyP0=
 X-Received: from zagreus.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a17:903:26d4:b0:178:8de:fb5f with SMTP id
- jg20-20020a17090326d400b0017808defb5fmr2230591plb.45.1663720379233; Tue, 20
- Sep 2022 17:32:59 -0700 (PDT)
-Date: Wed, 21 Sep 2022 00:31:56 +0000
+ (user=seanjc job=sendgmr) by 2002:a25:81cf:0:b0:6a9:4d0d:5ee6 with SMTP id
+ n15-20020a2581cf000000b006a94d0d5ee6mr22583489ybm.153.1663720381243; Tue, 20
+ Sep 2022 17:33:01 -0700 (PDT)
+Date: Wed, 21 Sep 2022 00:31:57 +0000
 In-Reply-To: <20220921003201.1441511-1-seanjc@google.com>
 Mime-Version: 1.0
 References: <20220921003201.1441511-1-seanjc@google.com>
 X-Mailer: git-send-email 2.37.3.968.ga6b4b080e4-goog
-Message-ID: <20220921003201.1441511-8-seanjc@google.com>
-Subject: [PATCH v4 07/12] KVM: nVMX: Make an event request if INIT or SIPI is
- pending on VM-Enter
+Message-ID: <20220921003201.1441511-9-seanjc@google.com>
+Subject: [PATCH v4 08/12] KVM: nVMX: Make event request on VMXOFF iff
+ INIT/SIPI is pending
 From: Sean Christopherson <seanjc@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>, 
  Huacai Chen <chenhuacai@kernel.org>, 
@@ -108,53 +108,30 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Evaluate interrupts, i.e. set KVM_REQ_EVENT, if INIT or SIPI is pending
-when emulating nested VM-Enter.  INIT is blocked while the CPU is in VMX
-root mode, but not in VMX non-root, i.e. becomes unblocked on VM-Enter.
-This bug has been masked by KVM calling ->check_nested_events() in the
-core run loop, but that hack will be fixed in the near future.
+Explicitly check for a pending INIT/SIPI event when emulating VMXOFF
+instead of blindly making an event request.  There's obviously no need
+to evaluate events if none are pending.
 
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 ---
- arch/x86/kvm/vmx/nested.c | 18 ++++++------------
- 1 file changed, 6 insertions(+), 12 deletions(-)
+ arch/x86/kvm/vmx/nested.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-index 3a080051a4ec..5922531f6c52 100644
+index 5922531f6c52..8f67a9c4a287 100644
 --- a/arch/x86/kvm/vmx/nested.c
 +++ b/arch/x86/kvm/vmx/nested.c
-@@ -3377,6 +3377,8 @@ enum nvmx_vmentry_status nested_vmx_enter_non_root_mode(struct kvm_vcpu *vcpu,
- 		(CPU_BASED_INTR_WINDOW_EXITING | CPU_BASED_NMI_WINDOW_EXITING);
- 	if (likely(!evaluate_pending_interrupts) && kvm_vcpu_apicv_active(vcpu))
- 		evaluate_pending_interrupts |= vmx_has_apicv_interrupt(vcpu);
-+	if (!evaluate_pending_interrupts)
-+		evaluate_pending_interrupts |= kvm_apic_has_pending_init_or_sipi(vcpu);
+@@ -5193,8 +5193,8 @@ static int handle_vmxoff(struct kvm_vcpu *vcpu)
  
- 	if (!vmx->nested.nested_run_pending ||
- 	    !(vmcs12->vm_entry_controls & VM_ENTRY_LOAD_DEBUG_CONTROLS))
-@@ -3457,18 +3459,10 @@ enum nvmx_vmentry_status nested_vmx_enter_non_root_mode(struct kvm_vcpu *vcpu,
- 	}
+ 	free_nested(vcpu);
  
- 	/*
--	 * If L1 had a pending IRQ/NMI until it executed
--	 * VMLAUNCH/VMRESUME which wasn't delivered because it was
--	 * disallowed (e.g. interrupts disabled), L0 needs to
--	 * evaluate if this pending event should cause an exit from L2
--	 * to L1 or delivered directly to L2 (e.g. In case L1 don't
--	 * intercept EXTERNAL_INTERRUPT).
--	 *
--	 * Usually this would be handled by the processor noticing an
--	 * IRQ/NMI window request, or checking RVI during evaluation of
--	 * pending virtual interrupts.  However, this setting was done
--	 * on VMCS01 and now VMCS02 is active instead. Thus, we force L0
--	 * to perform pending event evaluation by requesting a KVM_REQ_EVENT.
-+	 * Re-evaluate pending events if L1 had a pending IRQ/NMI/INIT/SIPI
-+	 * when it executed VMLAUNCH/VMRESUME, as entering non-root mode can
-+	 * effectively unblock various events, e.g. INIT/SIPI cause VM-Exit
-+	 * unconditionally.
- 	 */
- 	if (unlikely(evaluate_pending_interrupts))
- 		kvm_make_request(KVM_REQ_EVENT, vcpu);
+-	/* Process a latched INIT during time CPU was in VMX operation */
+-	kvm_make_request(KVM_REQ_EVENT, vcpu);
++	if (kvm_apic_has_pending_init_or_sipi(vcpu))
++		kvm_make_request(KVM_REQ_EVENT, vcpu);
+ 
+ 	return nested_vmx_succeed(vcpu);
+ }
 -- 
 2.37.3.968.ga6b4b080e4-goog
 
