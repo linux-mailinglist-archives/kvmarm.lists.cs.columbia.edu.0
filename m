@@ -2,71 +2,79 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 627E75E6227
-	for <lists+kvmarm@lfdr.de>; Thu, 22 Sep 2022 14:18:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D0325E67DD
+	for <lists+kvmarm@lfdr.de>; Thu, 22 Sep 2022 17:59:03 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5AE2349EC2;
-	Thu, 22 Sep 2022 08:18:39 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3428F4B092;
+	Thu, 22 Sep 2022 11:59:02 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -1.898
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+X-Spam-Status: No, score=-1.898 required=6.1 tests=[BAYES_00=-1.9,
+	RCVD_IN_DNSWL_BLOCKED=0.001, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Jm-8buhYOSep; Thu, 22 Sep 2022 08:18:39 -0400 (EDT)
+	with ESMTP id zGQYdjtTAlBi; Thu, 22 Sep 2022 11:59:02 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E587A43479;
-	Thu, 22 Sep 2022 08:18:37 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D369449F49;
+	Thu, 22 Sep 2022 11:59:00 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id ED670404CD
- for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Sep 2022 08:18:36 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 1BACD4120D
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Sep 2022 09:18:11 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Lg1oXVqRKxUx for <kvmarm@lists.cs.columbia.edu>;
- Thu, 22 Sep 2022 08:18:35 -0400 (EDT)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9EC8B402A9
- for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Sep 2022 08:18:35 -0400 (EDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id ED2A260BBE;
- Thu, 22 Sep 2022 12:18:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF931C433D6;
- Thu, 22 Sep 2022 12:18:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1663849114;
- bh=hBJ1HPUqhMSz2ZLzOLvEDQZTDuUwhJ1yHQTFU2MtdkE=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=ey5/yqCA/Obq8UW1iMxX0mTx1fQ1T1i6LQx696s14gNvD4Gh11nAVNOHNSmYdbe0C
- fO28jPXuELpnPy+oJ1UjORnwyS5FNUsLCfoXCGHs7TQUuJijAepSLu0Z/U0NtZl9Pw
- dOWBEOZ83Q72oA82EtRKkQNFdbyWZ6U6SozwMxXfwgu2D8OEolmxPyutjaqS48c/Ls
- Q7ymzVuzWucih5WybLK4ZNhAWxw6w4ete8e5UdXSTGAPGP0CZk1AVh3xM4+SxuKB9n
- vJL0YsPFeI8WHsgsEyEE4LOyplDr/R/NViJKIlHTWaLNAQoLJEGKFWTDKpmrmzlwt8
- rGUIulJwxwRyw==
-Date: Thu, 22 Sep 2022 13:18:30 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v3 3/7] arm64/fpsimd: Have KVM explicitly say which FP
- registers to save
-Message-ID: <YyxSloe6PBV1EuI1@sirena.org.uk>
-References: <20220815225529.930315-1-broonie@kernel.org>
- <20220815225529.930315-4-broonie@kernel.org>
- <87wn9yj5l0.wl-maz@kernel.org> <YyoHUS0ZPQvvjrte@sirena.org.uk>
- <87leqck4ba.wl-maz@kernel.org>
+ with ESMTP id bwCEEUOxnr1p for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 22 Sep 2022 09:18:09 -0400 (EDT)
+Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com
+ [209.85.221.171])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D25D040BC0
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Sep 2022 09:18:09 -0400 (EDT)
+Received: by mail-vk1-f171.google.com with SMTP id k9so4904345vke.4
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Sep 2022 06:18:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date;
+ bh=FmC3Wnd/dYfP2uqwVfxKzutzBThKJES4nPc9HEeo7QQ=;
+ b=Nxe2XdnhzBm22I39ltFpO7PcVhHvILN9vHlt4j5fqdD2cMxlt5zjZsMfE45jfUuLxR
+ nJ+Pn7k6IhsR01gpHCbkfofPJVSiXR1G2T6naU6s650j8ZN3BY27edhGUSH/ARiQXgRQ
+ 1oPTciwgBdPrbmnaWHPv3UEm+NF5ChNqmma4ptCUM2q9vS8jr4BGBjDUVvdSstDJPe9+
+ rqEDWaKLK9ld1u+wLgJ1Oq+7df59XV1CyBCjaoppxumTNrvtN74pe+7ANxpIzPKfcykw
+ n33KFhwGvWqqCoJnTM607RYYO3HBHNta4avh/Jp//D16ES11dJceNnMXeJqpHFlQnNDV
+ K5sQ==
+X-Gm-Message-State: ACrzQf16uLjm/GqmIk3U0KtHW6YZsrULcDb9YgdhdAj5Uzs0nBAMq7GY
+ 8F3ftn1MleADz4aokuRfUEIp/tkJtyvYEFEbVEs=
+X-Google-Smtp-Source: AMsMyM5hAS5sGeCyGhDs3JB8ybhSoe0SBFugJqR9UWsYlOLvGt3tSKkrbx2I2RYfB9/ZOUlHboLppHif1VOrjItnvws=
+X-Received: by 2002:a05:6122:10dc:b0:3a3:4904:2941 with SMTP id
+ l28-20020a05612210dc00b003a349042941mr1265866vko.24.1663852689165; Thu, 22
+ Sep 2022 06:18:09 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <87leqck4ba.wl-maz@kernel.org>
-X-Cookie: One FISHWICH coming up!!
-Cc: Catalin Marinas <catalin.marinas@arm.com>,
- Zhang Lei <zhang.lei@jp.fujitsu.com>, Andre Przywara <andre.przywara@arm.com>,
- Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+References: <20220921003201.1441511-1-seanjc@google.com>
+ <20220921003201.1441511-12-seanjc@google.com>
+In-Reply-To: <20220921003201.1441511-12-seanjc@google.com>
+From: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <f4bug@amsat.org>
+Date: Thu, 22 Sep 2022 15:17:56 +0200
+Message-ID: <CAAdtpL4yFdh3V0Be05OKxUFBTSgFs6oTy9U5FjSRGwOhi=tDMQ@mail.gmail.com>
+Subject: Re: [PATCH v4 11/12] KVM: mips, x86: do not rely on KVM_REQ_UNHALT
+To: Sean Christopherson <seanjc@google.com>
+X-Mailman-Approved-At: Thu, 22 Sep 2022 11:59:00 -0400
+Cc: kvm <kvm@vger.kernel.org>, David Hildenbrand <david@redhat.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ open list <linux-kernel@vger.kernel.org>, linux-riscv@lists.infradead.org,
+ Claudio Imbrenda <imbrenda@linux.ibm.com>, kvmarm@lists.cs.columbia.edu,
+ Janosch Frank <frankja@linux.ibm.com>, Marc Zyngier <maz@kernel.org>,
+ Huacai Chen <chenhuacai@kernel.org>, Maxim Levitsky <mlevitsk@redhat.com>,
+ Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Atish Patra <atishp@atishpatra.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>,
+ "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, kvm-riscv@lists.infradead.org,
+ Paolo Bonzini <pbonzini@redhat.com>, linuxppc-dev@lists.ozlabs.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -78,102 +86,27 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============8267725324392040735=="
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-
---===============8267725324392040735==
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wyErPB4wFLKJM+lG"
-Content-Disposition: inline
-
-
---wyErPB4wFLKJM+lG
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Wed, Sep 21, 2022 at 06:47:21PM +0100, Marc Zyngier wrote:
-> Mark Brown <broonie@kernel.org> wrote:
-
-> > It means that using FP_STATE_TASK as a value for the fp_type
-> > member of the task struck recording what type of state is
-> > currently stored for the task is not valid, one of the other two
-> > values representing what was actually saved must be chosen.
-
-> Then this definitely represents something else, and shouldn't be a
-> state or a type, whatever you decide to call it in the end. There is
-> the state of the FP/SVE unit, and what some piece of SW wants to
-> save. They match in some cases, and differ in other (the TASK
-> value). I'd rather you encode them as them as different types to lift
-> the ambiguity.
-
-I did try the other way as well and found it was creating it's
-own problems - you end up with two almost identical enums which
-need to be separately named in some meaningful yet not
-excessively verbose fashion and have to remember which one to use
-in which context.
-
-> > > OK, how many discrete arguments are we going to pass to this function,
-> > > which most of them are part the vcpu structure? It really feels like
-> > > what you want is a getter for the per-cpu structure, and let the KVM
-> > > code do the actual business. If this function was supposed to provide
-> > > some level of abstraction, well, it's a fail.
-
-> > I agree that this is not an ideal interface, I am merely
-> > following the previously chosen idiom since I haven't been able
-> > to figure out why we were doing it in the first place and with a
-> > lot of these things it turns out that there's some actual reason.
-
-> Huh. If we're changing anything around this code, we'd better
-> understand what we are doing...
-
-I'm confident I understand well enough what it's doing, I'm just
-really unclear on why it's written the way it is.
-
-> > It's not even like fpsimd_bind_task_to_cpu() has ever been
-> > written in terms of this function, there's two parallel
-> > implementations.  My best guess was that it was some combination
-> > of not peering at KVM internals and keeping struct
-> > fpsimd_last_state_struct internal to fpsimd.c (since we're
-> > effectively just passing one of those in in a more verbose form)
-> > but never anything solid enough to be sure.
-
-> Up to you, but adding extra parameters to this function really feels
-> like the wrong thing to do.
-
-Indeed, I'm not a big fan myself.  I also don't want to get this
-and some other work I'm doing tied up on stylistic improvements
-to what's already there which seem likely introduce additional
-iterations - I'd rather loop back on this as a separate thing
-later.
-
---wyErPB4wFLKJM+lG
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmMsUpMACgkQJNaLcl1U
-h9Dn8gf/VXKjeCwKtmtAjAoJnje8QrNnDTHn4XyuLl38b5Lf/pTDzFgxT6GsPJ8j
-OZh+t/1oF/KZ+aPm+wjK7P40Kw8b52KfrFAQuASp7rvjgTm0lqdLEgpcEz0pzeAX
-L4F+vLnvA3e9OCoH+4vUyxEm/1xkY4TECVya3x1Wx9Q04pC9rOKnstUUNkJgpIdP
-Wm3J62WcPYP6gJjgJM+78ylGfTo4c6Vle7MBzmykP4eo7RMpC4rMPP/bqoK+M6KS
-/OXmJm7Ob2j5prCDZt0AQJAqQX/BUHN8z2uqC8+p7m0VOHNXpKwngh5UkIk4k214
-AWZABBMTJSObu1JeBHW8x89OoFiw5Q==
-=VaNg
------END PGP SIGNATURE-----
-
---wyErPB4wFLKJM+lG--
-
---===============8267725324392040735==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
-
---===============8267725324392040735==--
+T24gV2VkLCBTZXAgMjEsIDIwMjIgYXQgMjozNCBBTSBTZWFuIENocmlzdG9waGVyc29uIDxzZWFu
+amNAZ29vZ2xlLmNvbT4gd3JvdGU6Cj4KPiBGcm9tOiBQYW9sbyBCb256aW5pIDxwYm9uemluaUBy
+ZWRoYXQuY29tPgo+Cj4gS1ZNX1JFUV9VTkhBTFQgaXMgYSB3ZWlyZCByZXF1ZXN0IHRoYXQgc2lt
+cGx5IHJlcG9ydHMgdGhlIHZhbHVlIG9mCj4ga3ZtX2FyY2hfdmNwdV9ydW5uYWJsZSgpIG9uIGV4
+aXQgZnJvbSBrdm1fdmNwdV9oYWx0KCkuICBPbmx5Cj4gTUlQUyBhbmQgeDg2IGFyZSBsb29raW5n
+IGF0IGl0LCB0aGUgb3RoZXJzIGp1c3QgY2xlYXIgaXQuICBDaGVjawo+IHRoZSBzdGF0ZSBvZiB0
+aGUgdkNQVSBkaXJlY3RseSBzbyB0aGF0IHRoZSByZXF1ZXN0IGlzIGhhbmRsZWQKPiBhcyBhIG5v
+cCBvbiBhbGwgYXJjaGl0ZWN0dXJlcy4KPgo+IE5vIGZ1bmN0aW9uYWwgY2hhbmdlIGludGVuZGVk
+LCBleGNlcHQgZm9yIGNvcm5lciBjYXNlcyB3aGVyZSBhbgo+IGV2ZW50IGFycml2ZSBpbW1lZGlh
+dGVseSBhZnRlciBhIHNpZ25hbCBiZWNvbWUgcGVuZGluZyBvciBhZnRlcgo+IGFub3RoZXIgc2lt
+aWxhciBob3N0LXNpZGUgZXZlbnQuCj4KPiBTaWduZWQtb2ZmLWJ5OiBQYW9sbyBCb256aW5pIDxw
+Ym9uemluaUByZWRoYXQuY29tPgo+IFNpZ25lZC1vZmYtYnk6IFNlYW4gQ2hyaXN0b3BoZXJzb24g
+PHNlYW5qY0Bnb29nbGUuY29tPgo+IC0tLQo+ICBhcmNoL21pcHMva3ZtL2VtdWxhdGUuYyB8IDcg
+KysrLS0tLQo+ICBhcmNoL3g4Ni9rdm0veDg2LmMgICAgICB8IDkgKysrKysrKystCj4gIDIgZmls
+ZXMgY2hhbmdlZCwgMTEgaW5zZXJ0aW9ucygrKSwgNSBkZWxldGlvbnMoLSkKClJldmlld2VkLWJ5
+OiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8ZjRidWdAYW1zYXQub3JnPgpfX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2
+bWFybUBsaXN0cy5jcy5jb2x1bWJpYS5lZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUv
+bWFpbG1hbi9saXN0aW5mby9rdm1hcm0K
