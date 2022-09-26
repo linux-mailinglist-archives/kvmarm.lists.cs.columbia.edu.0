@@ -2,65 +2,66 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 32DDC5EA900
-	for <lists+kvmarm@lfdr.de>; Mon, 26 Sep 2022 16:51:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F42D5EA8FE
+	for <lists+kvmarm@lfdr.de>; Mon, 26 Sep 2022 16:51:34 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CAA414B837;
-	Mon, 26 Sep 2022 10:51:32 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BC4624B785;
+	Mon, 26 Sep 2022 10:51:31 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -1.788
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ct7L8MLWaX0E; Mon, 26 Sep 2022 10:51:32 -0400 (EDT)
+	with ESMTP id wZuwHGSzuDt7; Mon, 26 Sep 2022 10:51:30 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1EFB64B7AA;
-	Mon, 26 Sep 2022 10:51:31 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EDFDA4B7D7;
+	Mon, 26 Sep 2022 10:51:28 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A9EAE4B638
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5F8F54B177
  for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Sep 2022 10:51:28 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 0mCgN-GXFoss for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id unarDLloL9hz for <kvmarm@lists.cs.columbia.edu>;
  Mon, 26 Sep 2022 10:51:27 -0400 (EDT)
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 905814B600
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 29CCC4B1B4
  for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Sep 2022 10:51:27 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id B312860E55;
+ by dfw.source.kernel.org (Postfix) with ESMTPS id AFFD660E2C;
  Mon, 26 Sep 2022 14:51:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E15C43140;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C87DC43144;
  Mon, 26 Sep 2022 14:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1664203886;
- bh=He8HGJkZpF06VhMfbyXZbmJeL8wBh8buHfZKOVHWAcc=;
+ bh=2nD7W3IQ7HMmPnSDsoc7819nZQUSrYQak/JFb33CcAE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=RgiIlAMxaLiWZsrRUq9pVfKIyXmMfmCxtjUcmnnNaCC2HNOdk7T2jV5wbWdhrNN0M
- XCDN+mW6nJsT+vR7I455WIllUGyFI9x79zUzWLCwuY0sTiXO8FmtBRUb6mB/8xY1ay
- gYeUx+9updUfPdYOKvzNG4VLauPl9US7PuDKTRk3UtYGMAMzVV5teIS/UH3uY7UljQ
- Vh54MsqqEVBOrCFvgMNAh/Sv/pf5xyGoSYFcQLU+UoRjiqa4VCTVL7V6TaiT/BjWfe
- vgluPAyJ9tvd3PJwwcpsX63aiWhv+h4CAKxCaTFLeH3rR7ODaklnWYf+lIlENmEiS+
- vNHKRG6MAVU8g==
+ b=Y6T5ewI1eyvjuHjnq7ZM1V3TfQwnIi+ofkpU5seW+ixOYST/cB9QhzIB+uxvXNgWs
+ lZAxb35piLhBQTabzBYb1rYudbnj3TOV715MNJqL0UeT3GpMJv9AfFns1V495Z8Yms
+ HRiC5PhvEnktckge+jvYtsplCCNfT/5P1hRnpGXnMGe6pf3gfR+ZbxBQznWe3bhxTv
+ GSy7qluQkFDi44QoDUaKXRKAodo+4xbdNR8vrMAF6elf+dMRIKXeJ1nb7qdA7u+ylp
+ Wdqorztojk4Ae6KJLi8ttoorXMs24YOvAq+V56HW82PDdPG/LUU5l5+s1n8Da2J9hG
+ ink/3kmkSBHFg==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=why.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
- (envelope-from <maz@kernel.org>) id 1ocpS7-00Cips-Th;
- Mon, 26 Sep 2022 15:51:23 +0100
+ (envelope-from <maz@kernel.org>) id 1ocpS8-00Cips-6S;
+ Mon, 26 Sep 2022 15:51:24 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: kvmarm@lists.cs.columbia.edu,
 	kvm@vger.kernel.org
-Subject: [PATCH v2 3/6] KVM: x86: Select CONFIG_HAVE_KVM_DIRTY_RING_ACQ_REL
-Date: Mon, 26 Sep 2022 15:51:17 +0100
-Message-Id: <20220926145120.27974-4-maz@kernel.org>
+Subject: [PATCH v2 4/6] KVM: Document weakly ordered architecture requirements
+ for dirty ring
+Date: Mon, 26 Sep 2022 15:51:18 +0100
+Message-Id: <20220926145120.27974-5-maz@kernel.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220926145120.27974-1-maz@kernel.org>
 References: <20220926145120.27974-1-maz@kernel.org>
@@ -94,27 +95,57 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Since x86 is TSO (give or take), allow it to advertise the new
-ACQ_REL version of the dirty ring capability. No other change is
-required for it.
+Now that the kernel can expose to userspace that its dirty ring
+management relies on explicit ordering, document these new requirements
+for VMMs to do the right thing.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/x86/kvm/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/virt/kvm/api.rst | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kvm/Kconfig b/arch/x86/kvm/Kconfig
-index 876748b236ff..67be7f217e37 100644
---- a/arch/x86/kvm/Kconfig
-+++ b/arch/x86/kvm/Kconfig
-@@ -29,6 +29,7 @@ config KVM
- 	select HAVE_KVM_PFNCACHE
- 	select HAVE_KVM_IRQFD
- 	select HAVE_KVM_DIRTY_RING_TSO
-+	select HAVE_KVM_DIRTY_RING_ACQ_REL
- 	select IRQ_BYPASS_MANAGER
- 	select HAVE_KVM_IRQ_BYPASS
- 	select HAVE_KVM_IRQ_ROUTING
+diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
+index abd7c32126ce..32427ea160df 100644
+--- a/Documentation/virt/kvm/api.rst
++++ b/Documentation/virt/kvm/api.rst
+@@ -8019,8 +8019,8 @@ guest according to the bits in the KVM_CPUID_FEATURES CPUID leaf
+ (0x40000001). Otherwise, a guest may use the paravirtual features
+ regardless of what has actually been exposed through the CPUID leaf.
+ 
+-8.29 KVM_CAP_DIRTY_LOG_RING
+----------------------------
++8.29 KVM_CAP_DIRTY_LOG_RING/KVM_CAP_DIRTY_LOG_RING_ACQ_REL
++----------------------------------------------------------
+ 
+ :Architectures: x86
+ :Parameters: args[0] - size of the dirty log ring
+@@ -8078,6 +8078,11 @@ on to the next GFN.  The userspace should continue to do this until the
+ flags of a GFN have the DIRTY bit cleared, meaning that it has harvested
+ all the dirty GFNs that were available.
+ 
++Note that on weakly ordered architectures, userspace accesses to the
++ring buffer (and more specifically the 'flags' field) must be ordered,
++using load-acquire/store-release accessors when available, or any
++other memory barrier that will ensure this ordering.
++
+ It's not necessary for userspace to harvest the all dirty GFNs at once.
+ However it must collect the dirty GFNs in sequence, i.e., the userspace
+ program cannot skip one dirty GFN to collect the one next to it.
+@@ -8106,6 +8111,14 @@ KVM_CAP_DIRTY_LOG_RING with an acceptable dirty ring size, the virtual
+ machine will switch to ring-buffer dirty page tracking and further
+ KVM_GET_DIRTY_LOG or KVM_CLEAR_DIRTY_LOG ioctls will fail.
+ 
++NOTE: KVM_CAP_DIRTY_LOG_RING_ACQ_REL is the only capability that
++should be exposed by weakly ordered architecture, in order to indicate
++the additional memory ordering requirements imposed on userspace when
++reading the state of an entry and mutating it from DIRTY to HARVESTED.
++Architecture with TSO-like ordering (such as x86) are allowed to
++expose both KVM_CAP_DIRTY_LOG_RING and KVM_CAP_DIRTY_LOG_RING_ACQ_REL
++to userspace.
++
+ 8.30 KVM_CAP_XEN_HVM
+ --------------------
+ 
 -- 
 2.34.1
 
