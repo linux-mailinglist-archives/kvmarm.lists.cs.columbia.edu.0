@@ -2,78 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A9CBC5FA9A2
-	for <lists+kvmarm@lfdr.de>; Tue, 11 Oct 2022 03:06:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FCF25FA9A4
+	for <lists+kvmarm@lfdr.de>; Tue, 11 Oct 2022 03:06:49 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3F3F14B633;
-	Mon, 10 Oct 2022 21:06:47 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 081D04B63C;
+	Mon, 10 Oct 2022 21:06:49 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id R21Ib4rgA1c8; Mon, 10 Oct 2022 21:06:46 -0400 (EDT)
+	with ESMTP id VWT6iLRDQS8h; Mon, 10 Oct 2022 21:06:48 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0C33D4B63C;
-	Mon, 10 Oct 2022 21:06:43 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3E4A04B62E;
+	Mon, 10 Oct 2022 21:06:45 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 29B5240B92
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Oct 2022 21:06:41 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id AC06F4B3C0
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Oct 2022 21:06:43 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 68sJqK+tptu7 for <kvmarm@lists.cs.columbia.edu>;
- Mon, 10 Oct 2022 21:06:39 -0400 (EDT)
-Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com
- [209.85.128.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id AB8524B492
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Oct 2022 21:06:39 -0400 (EDT)
-Received: by mail-yw1-f201.google.com with SMTP id
- 00721157ae682-355bdeba45bso119016757b3.0
- for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Oct 2022 18:06:39 -0700 (PDT)
+ with ESMTP id Sb-Q3-o5fspE for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 10 Oct 2022 21:06:42 -0400 (EDT)
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com
+ [209.85.219.201])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0405E4B39B
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Oct 2022 21:06:41 -0400 (EDT)
+Received: by mail-yb1-f201.google.com with SMTP id
+ q17-20020a25f911000000b006bcc33faa7bso12090727ybe.4
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 10 Oct 2022 18:06:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=+2DRG2ktbVgPO8gWevB+QacaOchvfaRovAISZPDw15A=;
- b=Ru9bE6+5i93s4ljKiceTT8ECQbHky9nEIOqC8q7N246aJaSCSRd6yJpd3YA9r1JH3q
- MZNmq1Rh8HknqDV5/Y2ef3KeOA7gbWjKkOJjtZKLNy6CwzObUCvwuJ94MZUdQIdIt3t5
- rld6OQuiY7EwKvi6HlTVjSt8Zzn8vTi/7K8RkPUIaQm+SIfAYNXoQc2gpna93DMy6OhN
- S+TjEJvpHNq292kKLI8g5vsyjiA4WSQ3iBMt7uYFt0nSjVAfsB56XIbr5tgEoyM6Uurs
- Q3Wcm3O2LaM+77RJBgCbdjEBwKVFy++ZvYW3DeyDmySmR7oaC3hawVRK/q2WuRrFpVwc
- h7iA==
+ bh=G5HDQ76XxR6LhG5G7Q04ltrToK8CzPidrVSTTOm2giM=;
+ b=nEWlcyrt0nCFF41on5PLOyPT5ANVJAvY+BjoFq/+7B2SzlritkipQ+XdyBTDhnRHnN
+ x0tFVJ5Udv+ogPw0pEKe1KuwBqESCRATne5McvPB47ZcJhNcYP8QnHySc2EeCBgvgFZf
+ ekGVGVtY/xHmML54ErAJ6FwC9orIeCyxMNEpdEWgdFIC7FHCu5JYWBUMMW4+DEJURrQe
+ pZAFDx9fa92bldqRvCeZHk2pkstoSR5GJ8aLyx3xePRAfm0UxaC8fkj9h1hU7um/oLBf
+ sICdhq5q5xERyorGhSiO1kQwtpbnX5UTKt7HvgQKrIEzCSsXSTIwO3in5vU+VRymHYGY
+ fxww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+2DRG2ktbVgPO8gWevB+QacaOchvfaRovAISZPDw15A=;
- b=nDb8Y38ZglYSFuNp0wzcjdK3tOBwKUvy+ZAK/6+wdzevRE/rJmd6cO+0+U/GkDwhhm
- cYRD24arvs+HBeTKcOgcDkgDK2x5Mb5GEAQ4dxE03wX+cBRZI50JNqoR+hDOkqhPXHcE
- FzVNxntD8484MynrUZWcLf0FKAQyv/KKFYDG9oXBTEJN+5Q3RnKQAEBWDcIH9WuQAk3z
- 6wXUGl7M0jmPo5nxRS3vpPwEYGTQV/8FxzEpyV8HDlFVy6pAxhYaL2geDwS9P2R6GUjT
- E2W+A10ISASWMPHOBh5xrcgoZxgad3Hv8N7DdBIP4fSDMMOE2/iqFA4RFwufY2WVoC9T
- BbGw==
-X-Gm-Message-State: ACrzQf3oIrBRTaWOIYgY7ZtQ2YmMSiPwd2qs58ygX5Ms0ypm2kftQXEc
- Lo4OtgaTRg777qPv3TBd98XDGnSBxfYwVg==
-X-Google-Smtp-Source: AMsMyM519m9aB8GgfmipRWMBbUudlcoeRl8tTANXBJmjT5KugghKlNS7g1jd54VKWTbbPMxzI7dyinv9UFoveA==
+ bh=G5HDQ76XxR6LhG5G7Q04ltrToK8CzPidrVSTTOm2giM=;
+ b=SJUZIyYD+cSd5bMeKVgA6hBfK01vUugam5Lz+xZ2xTKoHOBWPi14v8JiJW2codIGWk
+ ClxKBro4qNwJ6Wno7kR9LtoldRFy7DmHwvppqgJAAqQS1EdgtQsJXoM5woOAlc9vEHe6
+ oLQPYIvb8dSyv1qnjoeh+pLgTO8G/SR9WvTfrdirEuMYQPAloB6lreC/oD5+B9QEFcS1
+ p4q3/JQVukRndDTEHVtG2EtusHyfqLrI1lhxWTgdq7QQylB9tpGZKgnqk4FaGU7lGjpb
+ HcJ3er/zilKrM06mjeYHckug3LpxQmfLwnZkDHiAk1RmkoPe0rya8uV3WyWP4P7A25xw
+ /Y1g==
+X-Gm-Message-State: ACrzQf1kZtG+2ygCHlRpjxEFXoSgVqs5ak1Nzee8IEsm5DPdD+eL7ZM2
+ pACqbyRPO1CGmXxE/z4zlx0Jw88tdbBRxQ==
+X-Google-Smtp-Source: AMsMyM4vh+AzTn/oWIaOk0oo483LBa9Y4ObtOhRbF9XhamGnuxyJwOjF5KJtpTGc8cl+K/YMmG/YwrzL9cF2OQ==
 X-Received: from ricarkol4.c.googlers.com
  ([fda3:e722:ac3:cc00:20:ed76:c0a8:1248])
- (user=ricarkol job=sendgmr) by 2002:a0d:d78c:0:b0:360:bbf0:ef88 with SMTP id
- z134-20020a0dd78c000000b00360bbf0ef88mr8633791ywd.206.1665450399492; Mon, 10
- Oct 2022 18:06:39 -0700 (PDT)
-Date: Tue, 11 Oct 2022 01:06:17 +0000
+ (user=ricarkol job=sendgmr) by 2002:a0d:c285:0:b0:354:deb2:1aaa with SMTP id
+ e127-20020a0dc285000000b00354deb21aaamr19074489ywd.4.1665450401600; Mon, 10
+ Oct 2022 18:06:41 -0700 (PDT)
+Date: Tue, 11 Oct 2022 01:06:18 +0000
 In-Reply-To: <20221011010628.1734342-1-ricarkol@google.com>
 Mime-Version: 1.0
 References: <20221011010628.1734342-1-ricarkol@google.com>
 X-Mailer: git-send-email 2.38.0.rc1.362.ged0d419d3c-goog
-Message-ID: <20221011010628.1734342-4-ricarkol@google.com>
-Subject: [PATCH v9 03/14] KVM: selftests: Add missing close and munmap in
- __vm_mem_region_delete()
+Message-ID: <20221011010628.1734342-5-ricarkol@google.com>
+Subject: [PATCH v9 04/14] KVM: selftests: aarch64: Construct DEFAULT_MAIR_EL1
+ using sysreg.h macros
 From: Ricardo Koller <ricarkol@google.com>
 To: kvm@vger.kernel.org, kvmarm@lists.linux.dev, kvmarm@lists.cs.columbia.edu, 
  andrew.jones@linux.dev
@@ -95,34 +95,66 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Deleting a memslot (when freeing a VM) is not closing the backing fd,
-nor it's unmapping the alias mapping. Fix by adding the missing close
-and munmap.
+Define macros for memory type indexes and construct DEFAULT_MAIR_EL1
+with macros from asm/sysreg.h.  The index macros can then be used when
+constructing PTEs (instead of using raw numbers).
 
 Reviewed-by: Andrew Jones <andrew.jones@linux.dev>
 Reviewed-by: Oliver Upton <oupton@google.com>
-Reviewed-by: Ben Gardon <bgardon@google.com>
 Signed-off-by: Ricardo Koller <ricarkol@google.com>
 ---
- tools/testing/selftests/kvm/lib/kvm_util.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../selftests/kvm/include/aarch64/processor.h | 25 ++++++++++++++-----
+ .../selftests/kvm/lib/aarch64/processor.c     |  2 +-
+ 2 files changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/tools/testing/selftests/kvm/lib/kvm_util.c b/tools/testing/selftests/kvm/lib/kvm_util.c
-index f1cb1627161f..19e37fb7de7c 100644
---- a/tools/testing/selftests/kvm/lib/kvm_util.c
-+++ b/tools/testing/selftests/kvm/lib/kvm_util.c
-@@ -586,6 +586,12 @@ static void __vm_mem_region_delete(struct kvm_vm *vm,
- 	sparsebit_free(&region->unused_phy_pages);
- 	ret = munmap(region->mmap_start, region->mmap_size);
- 	TEST_ASSERT(!ret, __KVM_SYSCALL_ERROR("munmap()", ret));
-+	if (region->fd >= 0) {
-+		/* There's an extra map when using shared memory. */
-+		ret = munmap(region->mmap_alias, region->mmap_size);
-+		TEST_ASSERT(!ret, __KVM_SYSCALL_ERROR("munmap()", ret));
-+		close(region->fd);
-+	}
+diff --git a/tools/testing/selftests/kvm/include/aarch64/processor.h b/tools/testing/selftests/kvm/include/aarch64/processor.h
+index df4bfac69551..c1ddca8db225 100644
+--- a/tools/testing/selftests/kvm/include/aarch64/processor.h
++++ b/tools/testing/selftests/kvm/include/aarch64/processor.h
+@@ -38,12 +38,25 @@
+  * NORMAL             4     1111:1111
+  * NORMAL_WT          5     1011:1011
+  */
+-#define DEFAULT_MAIR_EL1 ((0x00ul << (0 * 8)) | \
+-			  (0x04ul << (1 * 8)) | \
+-			  (0x0cul << (2 * 8)) | \
+-			  (0x44ul << (3 * 8)) | \
+-			  (0xfful << (4 * 8)) | \
+-			  (0xbbul << (5 * 8)))
++
++/* Linux doesn't use these memory types, so let's define them. */
++#define MAIR_ATTR_DEVICE_GRE	UL(0x0c)
++#define MAIR_ATTR_NORMAL_WT	UL(0xbb)
++
++#define MT_DEVICE_nGnRnE	0
++#define MT_DEVICE_nGnRE		1
++#define MT_DEVICE_GRE		2
++#define MT_NORMAL_NC		3
++#define MT_NORMAL		4
++#define MT_NORMAL_WT		5
++
++#define DEFAULT_MAIR_EL1							\
++	(MAIR_ATTRIDX(MAIR_ATTR_DEVICE_nGnRnE, MT_DEVICE_nGnRnE) |		\
++	 MAIR_ATTRIDX(MAIR_ATTR_DEVICE_nGnRE, MT_DEVICE_nGnRE) |		\
++	 MAIR_ATTRIDX(MAIR_ATTR_DEVICE_GRE, MT_DEVICE_GRE) |			\
++	 MAIR_ATTRIDX(MAIR_ATTR_NORMAL_NC, MT_NORMAL_NC) |			\
++	 MAIR_ATTRIDX(MAIR_ATTR_NORMAL, MT_NORMAL) |				\
++	 MAIR_ATTRIDX(MAIR_ATTR_NORMAL_WT, MT_NORMAL_WT))
  
- 	free(region);
+ #define MPIDR_HWID_BITMASK (0xff00fffffful)
+ 
+diff --git a/tools/testing/selftests/kvm/lib/aarch64/processor.c b/tools/testing/selftests/kvm/lib/aarch64/processor.c
+index 63ef3c78e55e..26f0eccff6fe 100644
+--- a/tools/testing/selftests/kvm/lib/aarch64/processor.c
++++ b/tools/testing/selftests/kvm/lib/aarch64/processor.c
+@@ -133,7 +133,7 @@ static void _virt_pg_map(struct kvm_vm *vm, uint64_t vaddr, uint64_t paddr,
+ 
+ void virt_arch_pg_map(struct kvm_vm *vm, uint64_t vaddr, uint64_t paddr)
+ {
+-	uint64_t attr_idx = 4; /* NORMAL (See DEFAULT_MAIR_EL1) */
++	uint64_t attr_idx = MT_NORMAL;
+ 
+ 	_virt_pg_map(vm, vaddr, paddr, attr_idx);
  }
 -- 
 2.38.0.rc1.362.ged0d419d3c-goog
