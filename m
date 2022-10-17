@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A782F6039CB
-	for <lists+kvmarm@lfdr.de>; Wed, 19 Oct 2022 08:31:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D521B6039CC
+	for <lists+kvmarm@lfdr.de>; Wed, 19 Oct 2022 08:31:14 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2F0C94B91A;
-	Wed, 19 Oct 2022 02:31:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 67E454B8FC;
+	Wed, 19 Oct 2022 02:31:14 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.899
@@ -15,38 +15,41 @@ X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZPY7o+v+2Tvr; Wed, 19 Oct 2022 02:31:12 -0400 (EDT)
+	with ESMTP id oXTzzwMJ-edQ; Wed, 19 Oct 2022 02:31:12 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F2B694B91C;
-	Wed, 19 Oct 2022 02:31:08 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 14F004B91F;
+	Wed, 19 Oct 2022 02:31:09 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 675A44B796
- for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Oct 2022 17:36:15 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EA2374B256
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Oct 2022 18:57:07 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id h+KHrhm+zPQ2 for <kvmarm@lists.cs.columbia.edu>;
- Mon, 17 Oct 2022 17:36:13 -0400 (EDT)
+ with ESMTP id M860dkNE7pry for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 17 Oct 2022 18:57:06 -0400 (EDT)
 Received: from vps-vb.mhejs.net (vps-vb.mhejs.net [37.28.154.113])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9293D4B6B9
- for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Oct 2022 17:36:13 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1D0954A105
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 17 Oct 2022 18:57:06 -0400 (EDT)
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1okXmL-0001p3-Ku; Mon, 17 Oct 2022 23:36:09 +0200
-Message-ID: <cebafa0d-a2dc-c3f7-64c8-2637a254e3d0@maciej.szmigiero.name>
-Date: Mon, 17 Oct 2022 23:36:04 +0200
+ id 1okZ2Z-00024i-Nz; Tue, 18 Oct 2022 00:56:59 +0200
+Message-ID: <93529fb7-f558-cc5f-d5bd-7923eb4b492c@maciej.szmigiero.name>
+Date: Tue, 18 Oct 2022 00:56:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.0
-Content-Language: en-US, pl-PL
-To: Gavin Shan <gshan@redhat.com>
-References: <20221014071914.227134-1-gshan@redhat.com>
- <20221014071914.227134-6-gshan@redhat.com>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Subject: Re: [PATCH 5/6] KVM: selftests: memslot_perf_test: Consolidate memory
  sizes
-In-Reply-To: <20221014071914.227134-6-gshan@redhat.com>
+Content-Language: en-US, pl-PL
+To: Gavin Shan <gshan@redhat.com>, Sean Christopherson <seanjc@google.com>
+References: <20221014071914.227134-1-gshan@redhat.com>
+ <20221014071914.227134-6-gshan@redhat.com>
+ <cebafa0d-a2dc-c3f7-64c8-2637a254e3d0@maciej.szmigiero.name>
+ <Y03ScGUUCA1KwlLF@google.com>
+ <9781c88f-06f9-4d17-8fa6-3cd82a739ccb@redhat.com>
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+In-Reply-To: <9781c88f-06f9-4d17-8fa6-3cd82a739ccb@redhat.com>
 X-Mailman-Approved-At: Wed, 19 Oct 2022 02:31:08 -0400
 Cc: kvm@vger.kernel.org, maz@kernel.org, linux-kernel@vger.kernel.org,
  zhenyzha@redhat.com, shan.gavin@gmail.com, kvmarm@lists.linux.dev,
@@ -63,51 +66,39 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On 14.10.2022 09:19, Gavin Shan wrote:
-> The addresses and sizes passed to madvise() and vm_userspace_mem_region_add()
-> should be aligned to host page size, which can be 64KB on aarch64. So it's
-> wrong by passing additional fixed 4KB memory area to various tests.
-> 
-> Fix it by passing additional fixed 64KB memory area to various tests. After
-> it's applied, the following command works fine on 64KB-page-size-host and
-> 4KB-page-size-guest.
-> 
->    # ./memslot_perf_test -v -s 512
-> 
-> Signed-off-by: Gavin Shan <gshan@redhat.com>
-> ---
->   .../testing/selftests/kvm/memslot_perf_test.c  | 18 ++++++++++--------
->   1 file changed, 10 insertions(+), 8 deletions(-)
-> 
-> diff --git a/tools/testing/selftests/kvm/memslot_perf_test.c b/tools/testing/selftests/kvm/memslot_perf_test.c
-> index d587bd952ff9..e6d34744b45d 100644
-> --- a/tools/testing/selftests/kvm/memslot_perf_test.c
-> +++ b/tools/testing/selftests/kvm/memslot_perf_test.c
-> @@ -25,12 +25,14 @@
->   #include <kvm_util.h>
->   #include <processor.h>
->   
-> -#define MEM_SIZE		((512U << 20) + 4096)
-> -#define MEM_GPA		0x10000000UL
-> +#define MEM_EXTRA_SIZE		0x10000
-
-So the biggest page size supported right now is 64 KiB - it would be
-good to have an assert somewhere to explicitly check for this
-(regardless of implicit checks present in other calculations).
-
-Also, an expression like "(64 << 10)" is more readable than a "1"
-with a tail of zeroes (it's easy to add one zero too many or be one
-zero short).
-
-Thanks,
-Maciej
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+T24gMTguMTAuMjAyMiAwMDo1MSwgR2F2aW4gU2hhbiB3cm90ZToKPiBPbiAxMC8xOC8yMiA2OjA4
+IEFNLCBTZWFuIENocmlzdG9waGVyc29uIHdyb3RlOgo+PiBPbiBNb24sIE9jdCAxNywgMjAyMiwg
+TWFjaWVqIFMuIFN6bWlnaWVybyB3cm90ZToKPj4+PiArI2RlZmluZSBNRU1fRVhUUkFfU0laRcKg
+wqDCoMKgwqDCoMKgIDB4MTAwMDAKPj4+Cj4+PiBBbHNvLCBhbiBleHByZXNzaW9uIGxpa2UgIig2
+NCA8PCAxMCkiIGlzIG1vcmUgcmVhZGFibGUgdGhhbiBhICIxIgo+Pj4gd2l0aCBhIHRhaWwgb2Yg
+emVyb2VzIChpdCdzIGVhc3kgdG8gYWRkIG9uZSB6ZXJvIHRvbyBtYW55IG9yIGJlIG9uZQo+Pj4g
+emVybyBzaG9ydCkuCj4+Cj4+ICsxIHRvIG5vdCBvcGVuIGNvZGluZyByYXcgbnVtYmVycy4KPj4K
+Pj4gSSB0aGluayBpdCdzIGhpZ2ggdGltZSBLVk0gc2VsZnRlc3RzIGFkZCAjZGVmaW5lcyBmb3Ig
+dGhlIGNvbW1vbiBzaXplcywgZS5nLiBTSVpFXzRLQiwKPj4gMTZLQiwgNjRLLCAyTUIsIDFHQiwg
+ZXRjLi4uCj4+Cj4+IEFsdGVybmF0aXZlbHkgKG9yIGluIGFkZGl0aW9uKSwganVzdCAjZGVmaW5l
+IDFLQiwgMU1CLCAxR0IsIGFuZCAxVEIsIGFuZCB0aGVuIGRvCj4+IG1hdGggb2ZmIG9mIHRob3Nl
+Lgo+Pgo+IAo+IE9rLiBJIHdpbGwgaGF2ZSBvbmUgc2VwYXJhdGUgcGF0Y2ggdG8gZGVmaW5lIHRo
+b3NlIHNpemVzIGluIGt2bV91dGlsX2Jhc2UuaCwKPiByaWdodCBhZnRlciAnI2RlZmluZSBOU0VD
+X1BFUl9TRUMgMTAwMDAwMDAwMEwnLiBTZWFuLCBjb3VsZCB5b3UgbGV0IG1lIGtub3cKPiBpZiBp
+dCBsb29rcyBnb29kIHRvIHlvdT8KPiAKPiAgwqDCoMKgICNkZWZpbmUgS0LCoMKgwqDCoMKgwqDC
+oMKgICgxVUwgPDwgMTApCj4gIMKgwqDCoCAjZGVmaW5lIE1CwqDCoMKgwqDCoMKgwqDCoCAoMVVM
+IDw8IDIwKQo+ICDCoMKgwqAgI2RlZmluZSBHQsKgwqDCoMKgwqDCoMKgwqAgKDFVTCA8PCAzMCkK
+PiAgwqDCoMKgICNkZWZpbmUgVELCoMKgwqDCoMKgwqDCoMKgICgxVUwgPDwgNDApCj4gCj4gIMKg
+wqDCoCAvKiBCYXNlIHBhZ2UgYW5kIGh1Z2UgcGFnZSBzaXplICovCj4gIMKgwqDCoCAjZGVmaW5l
+IFNJWkVfNEtCwqDCoCAowqAgNCAqIEtCKQo+ICDCoMKgwqAgI2RlZmluZSBTSVpFXzE2S0LCoCAo
+IDE2ICogS0IpCj4gIMKgwqDCoCAjZGVmaW5lIFNJWkVfNjRLQsKgICggNjQgKiBLQikKPiAgwqDC
+oMKgICNkZWZpbmUgU0laRV8yTULCoMKgICjCoCAyICogTUIpCj4gIMKgwqDCoCAjZGVmaW5lIFNJ
+WkVfMzJNQsKgICggMzIgKiBNQikKPiAgwqDCoMKgICNkZWZpbmUgU0laRV81MTJNQiAoNTEyICog
+TUIpCj4gIMKgwqDCoCAjZGVmaW5lIFNJWkVfMUdCwqDCoCAowqAgMSAqIEdCKQo+ICDCoMKgwqAg
+I2RlZmluZSBTSVpFXzE2R0LCoCAoIDE2ICogR0IpCgpGWUksIFFFTVUgdXNlcyBLaUIsIE1pQiwg
+R2lCLCBldGMuLCBzZWUgWzFdLgoKPiBUaGFua3MsCj4gR2F2aW4KPiAKClRoYW5rcywKTWFjaWVq
+CgpbMV06IGh0dHBzOi8vZ2l0LnFlbXUub3JnLz9wPXFlbXUuZ2l0O2E9YmxvYjtmPWluY2x1ZGUv
+cWVtdS91bml0cy5oO2hiPUhFQUQKCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fCmt2bWFybSBtYWlsaW5nIGxpc3QKa3ZtYXJtQGxpc3RzLmNzLmNvbHVtYmlh
+LmVkdQpodHRwczovL2xpc3RzLmNzLmNvbHVtYmlhLmVkdS9tYWlsbWFuL2xpc3RpbmZvL2t2bWFy
+bQo=
