@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id EAAEC60502B
-	for <lists+kvmarm@lfdr.de>; Wed, 19 Oct 2022 21:11:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B74B605029
+	for <lists+kvmarm@lfdr.de>; Wed, 19 Oct 2022 21:11:34 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 685BC4B8D2;
-	Wed, 19 Oct 2022 15:11:38 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AB1684B93F;
+	Wed, 19 Oct 2022 15:11:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.899
@@ -15,55 +15,54 @@ X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SeJV+FiVNlnZ; Wed, 19 Oct 2022 15:11:37 -0400 (EDT)
+	with ESMTP id eQpOV+vP1SeE; Wed, 19 Oct 2022 15:11:33 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 715944B91E;
-	Wed, 19 Oct 2022 15:11:36 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2EC654B91E;
+	Wed, 19 Oct 2022 15:11:31 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 99C054B926
- for <kvmarm@lists.cs.columbia.edu>; Wed, 19 Oct 2022 15:11:34 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 581194B928
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 19 Oct 2022 15:11:30 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id bZmruud4y2Y9 for <kvmarm@lists.cs.columbia.edu>;
- Wed, 19 Oct 2022 15:11:33 -0400 (EDT)
+ with ESMTP id jrT7nSEuPbTo for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 19 Oct 2022 15:11:29 -0400 (EDT)
 Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com
  [209.85.167.178])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E3F1F4B93E
- for <kvmarm@lists.cs.columbia.edu>; Wed, 19 Oct 2022 15:11:31 -0400 (EDT)
-Received: by mail-oi1-f178.google.com with SMTP id w74so20401964oie.0
- for <kvmarm@lists.cs.columbia.edu>; Wed, 19 Oct 2022 12:11:31 -0700 (PDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 687AE4B908
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 19 Oct 2022 15:11:29 -0400 (EDT)
+Received: by mail-oi1-f178.google.com with SMTP id w74so20401863oie.0
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 19 Oct 2022 12:11:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZBd+XTJESJNOGYoq8Sf5QKUv5aLEk2PWt2aI7lcJy1Q=;
- b=DzM9UmDQpDl8R5UHWKhV/bAPbYY0XpirKNQIxW/UzB65L82syCOE6g451QDKwsP+uW
- itxgMWyHH5HqiyNijWoLd4T3KjjVgzP/MqCp1ICuca/Eb9GgJ9efVDVetbIa0mZmeRG6
- 3LKWdeFhgesnTgP9sTEx8eKU6Q7MTQELP6v2m+KyuwCUj5iNJLQm1/48/EXtq5Tr2sBL
- iJk2yblatZPMzoBWc97tXIzdg85dIuqzgAq1NQOoSEPjZOD2lPQDQD9d35cedrGe5iwS
- ONIhesNXA7KMDASjFl7d7e5E+BLRGvYlUBRBI8RLCs15lQWOfKnaH6lZeWCaPrM6KWsh
- 8R7A==
-X-Gm-Message-State: ACrzQf2+JIA2d62ioXibBZWyMs04yOPvZSZdqSoRyQMhr6JDRzKM3Bh9
- EXpBNv0ElX853m1odofpaA==
-X-Google-Smtp-Source: AMsMyM53HC4eCK4NKlfS5OabG/2idCaE/8R5DmuO7iXth8yDJHlcBsw0Hkxwf9ZW/H1vTGzH8KmBcw==
-X-Received: by 2002:a05:6808:1510:b0:354:566c:78e5 with SMTP id
- u16-20020a056808151000b00354566c78e5mr19239918oiw.188.1666206691599; 
- Wed, 19 Oct 2022 12:11:31 -0700 (PDT)
+ bh=4nOSzjJQMiiQFtQCXOfHoj5W8uYrP30fMIHaTAT/kCc=;
+ b=MWs0lCWKcb0NOhmYz28FKfydipraJj/m4beKPa8G8CcWvZfdA5csE8RlCc8sPh2wHW
+ hVVK2CK+g/lzO2NnT6N4ui2dnvEXqNh4N+SB0Dw8PAPizwInNl9OBR6gwF2dFzsEkkvd
+ 9ak/H9O1ymFDK74SKSZPTipXoemT/NDmkdJ8DH478KI3zEyO4YGF+yYeX9rXOD6hokIj
+ C4Oulm9qBTvOVRj0ksJTuRFUEM6k4bAqURgVInwlZFrmZjM27TnesqoNDx7JpOeR30QO
+ +YBjh3S6octBY10oOs9dVStZtArFEODb+oRxE36+9sBRtI/xDmziV5mSXXrSG9/h8sUL
+ 3FJQ==
+X-Gm-Message-State: ACrzQf3lGpGe26YYR8y7j7ggvLha3s2qjTGdPt6sPziFdAYRyP3SxM6W
+ wp6vkTsgXxs129RTVpPdrw==
+X-Google-Smtp-Source: AMsMyM6hBFo6lc3QPPJZLi2rdtLDIwN0Hv6MsBsjwIii7y66xrRf5EteOTh2AxrGHMhQuml0B0j83w==
+X-Received: by 2002:a05:6808:3090:b0:354:e8e2:6512 with SMTP id
+ bl16-20020a056808309000b00354e8e26512mr18775295oib.118.1666206688760; 
+ Wed, 19 Oct 2022 12:11:28 -0700 (PDT)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net.
  [66.90.144.107]) by smtp.gmail.com with ESMTPSA id
- q78-20020a4a3351000000b00480db116926sm2048754ooq.27.2022.10.19.12.11.30
+ z9-20020a056870460900b0013191b00f72sm7878011oao.17.2022.10.19.12.11.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Oct 2022 12:11:31 -0700 (PDT)
-Received: (nullmailer pid 3420906 invoked by uid 1000);
+ Wed, 19 Oct 2022 12:11:28 -0700 (PDT)
+Received: (nullmailer pid 3420908 invoked by uid 1000);
  Wed, 19 Oct 2022 19:11:25 -0000
 From: Rob Herring <robh@kernel.org>
-Date: Wed, 19 Oct 2022 14:11:28 -0500
-Subject: [PATCH v2 5/7] perf: arm_spe: Support new SPEv1.2/v8.7 'not taken'
- event
+Date: Wed, 19 Oct 2022 14:11:29 -0500
+Subject: [PATCH v2 6/7] perf: Add perf_event_attr::config3
 MIME-Version: 1.0
-Message-Id: <20220825-arm-spe-v8-7-v2-5-e37322d68ac0@kernel.org>
+Message-Id: <20220825-arm-spe-v8-7-v2-6-e37322d68ac0@kernel.org>
 References: <20220825-arm-spe-v8-7-v2-0-e37322d68ac0@kernel.org>
 In-Reply-To: <20220825-arm-spe-v8-7-v2-0-e37322d68ac0@kernel.org>
 To: Namhyung Kim <namhyung@kernel.org>, James Morse <james.morse@arm.com>,
@@ -95,49 +94,39 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Arm SPEv1.2 (Armv8.7/v9.2) adds a new event, 'not taken', in bit 6 of
-the PMSEVFR_EL1 register. Update arm_spe_pmsevfr_res0() to support the
-additional event.
+Arm SPEv1.2 adds another 64-bits of event filtering control. As the
+existing perf_event_attr::configN fields are all used up for SPE PMU, an
+additional field is needed. Add a new 'config3' field.
 
 Signed-off-by: Rob Herring <robh@kernel.org>
 ---
 v2:
- - Update for v6.1 sysreg generated header changes
+ - Drop tools/ side update
 ---
- arch/arm64/include/asm/sysreg.h | 2 ++
- drivers/perf/arm_spe_pmu.c      | 4 +++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ include/uapi/linux/perf_event.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/include/asm/sysreg.h b/arch/arm64/include/asm/sysreg.h
-index d002dd00e53e..06231e896832 100644
---- a/arch/arm64/include/asm/sysreg.h
-+++ b/arch/arm64/include/asm/sysreg.h
-@@ -242,6 +242,8 @@
- 	 BIT_ULL(6) | BIT_ULL(4) | BIT_ULL(2) | BIT_ULL(0))
- #define PMSEVFR_EL1_RES0_V1P1	\
- 	(PMSEVFR_EL1_RES0_IMP & ~(BIT_ULL(18) | BIT_ULL(17) | BIT_ULL(11)))
-+#define PMSEVFR_EL1_RES0_V1P2	\
-+	(PMSEVFR_EL1_RES0_V1P1 & ~BIT_ULL(6))
+diff --git a/include/uapi/linux/perf_event.h b/include/uapi/linux/perf_event.h
+index 85be78e0e7f6..b2b1d7b54097 100644
+--- a/include/uapi/linux/perf_event.h
++++ b/include/uapi/linux/perf_event.h
+@@ -374,6 +374,7 @@ enum perf_event_read_format {
+ #define PERF_ATTR_SIZE_VER5	112	/* add: aux_watermark */
+ #define PERF_ATTR_SIZE_VER6	120	/* add: aux_sample_size */
+ #define PERF_ATTR_SIZE_VER7	128	/* add: sig_data */
++#define PERF_ATTR_SIZE_VER8	136	/* add: config3 */
  
- /* Buffer error reporting */
- #define PMBSR_EL1_FAULT_FSC_SHIFT	PMBSR_EL1_MSS_SHIFT
-diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
-index 9b4bd72087ea..0b9b847919d0 100644
---- a/drivers/perf/arm_spe_pmu.c
-+++ b/drivers/perf/arm_spe_pmu.c
-@@ -677,9 +677,11 @@ static u64 arm_spe_pmsevfr_res0(u16 pmsver)
- 	case ID_AA64DFR0_EL1_PMSVer_IMP:
- 		return PMSEVFR_EL1_RES0_IMP;
- 	case ID_AA64DFR0_EL1_PMSVer_V1P1:
-+		return PMSEVFR_EL1_RES0_V1P1;
-+	case ID_AA64DFR0_EL1_PMSVer_V1P2:
- 	/* Return the highest version we support in default */
- 	default:
--		return PMSEVFR_EL1_RES0_V1P1;
-+		return PMSEVFR_EL1_RES0_V1P2;
- 	}
- }
+ /*
+  * Hardware event_id to monitor via a performance monitoring event:
+@@ -515,6 +516,8 @@ struct perf_event_attr {
+ 	 * truncated accordingly on 32 bit architectures.
+ 	 */
+ 	__u64	sig_data;
++
++	__u64	config3; /* extension of config2 */
+ };
  
+ /*
 
 -- 
 b4 0.11.0-dev
