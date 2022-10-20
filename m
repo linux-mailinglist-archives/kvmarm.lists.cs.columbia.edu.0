@@ -2,66 +2,66 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E049B605A97
-	for <lists+kvmarm@lfdr.de>; Thu, 20 Oct 2022 11:07:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BFC36605A9D
+	for <lists+kvmarm@lfdr.de>; Thu, 20 Oct 2022 11:07:48 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 60E604B969;
-	Thu, 20 Oct 2022 05:07:44 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 54B174B981;
+	Thu, 20 Oct 2022 05:07:48 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -6.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-6.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_HI=-5, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=ham
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id s0QwEZqV0skR; Thu, 20 Oct 2022 05:07:44 -0400 (EDT)
+	with ESMTP id xfW+K2mq5h0t; Thu, 20 Oct 2022 05:07:47 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4FDE94B96B;
-	Thu, 20 Oct 2022 05:07:42 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7E0934B96C;
+	Thu, 20 Oct 2022 05:07:45 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CC4454B941
- for <kvmarm@lists.cs.columbia.edu>; Thu, 20 Oct 2022 05:07:40 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C4EC64B940
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 20 Oct 2022 05:07:41 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id MSi+sG0g7eJe for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id TohXqkdeb3nq for <kvmarm@lists.cs.columbia.edu>;
  Thu, 20 Oct 2022 05:07:39 -0400 (EDT)
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8E4684B940
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id ADF154B947
  for <kvmarm@lists.cs.columbia.edu>; Thu, 20 Oct 2022 05:07:39 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 0B86361A90;
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 34DB461A8A;
  Thu, 20 Oct 2022 09:07:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200A5C43143;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53ABFC43470;
  Thu, 20 Oct 2022 09:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1666256858;
- bh=1jQOoC4QeQ5PeHe2BUgnYaoSU2WdJgjc/MaY/L+aAw0=;
+ bh=ibRbpbqyyZwpE8uleN4Hk5+6ZsHndJbfZ6Q1wyW9WnI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=FI0AJzHCwQ27ve49DQJVt3jVb11zYNLOweUKPoM8w0DCWGWLIiS1IVQHn1kGca3Dd
- shNP2A6hLIZDbg4sjJSFcnoEV1YmVaWUNS4dzCZLQeGFlttJ6q0VyOY2mdSSktQqmp
- orBNIAxCwtxUoX5q1yCmYrnnGc4ReCc6IREj9NEvUjHI4BmoqJa3i+cuEiz22udzjM
- NkRp1LycxjwtIUXMkzy33EYGxLdLW+pdwa4TTd9yBtqgFGFagkXzgAWLOjkFAVElTE
- XemSEnThjC9TN7z5ukY3G//88qxl3AP5mgzB8S2Jsg5ymMhqTCSuxoy2rgl5t+CwgM
- wzToEtN6uBXog==
+ b=Y17VeND+16qCwxDJ46fkgBcrXLFRNMO9G4sV7gkCf9etfSn0LCP+gmzInphOk1Ni3
+ 5e2pWVSIVBEkNG0IcF6R/cQFjOPB/Lm7gaxPXQ9VmicfbqAQdF9lxI+qDohW1361T+
+ FZMCDSulK/T0KNVb2EtbzPs6ZzLuOOOjPYIdu4tIBbhDIPG4z0hKwMlSCr/UVrHgvk
+ h5Qsty+A0pA6gkeWncGuJsQyeE22EfoMujB1b/Ogkcg1P118frgLNSXakAlcqE8Frb
+ gjXkD+2QiHDn28y2GvBZY0oZK7HZ2lP8ZC23MiwD/ZIEfZp64qkT2FsqRc6TnC71eJ
+ YCuEwBYCYYAjQ==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=valley-girl.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
- (envelope-from <maz@kernel.org>) id 1olRWa-000Buf-CF;
+ (envelope-from <maz@kernel.org>) id 1olRWa-000Buf-Jc;
  Thu, 20 Oct 2022 10:07:36 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: <kvmarm@lists.cs.columbia.edu>, <kvmarm@lists.linux.dev>,
  kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH 07/17] KVM: arm64: Elide kern_hyp_va() in VHE-specific parts
- of the hypervisor
-Date: Thu, 20 Oct 2022 10:07:17 +0100
-Message-Id: <20221020090727.3669908-8-maz@kernel.org>
+Subject: [PATCH 08/17] KVM: arm64: Remove alternatives from sysreg accessors
+ in VHE hypervisor context
+Date: Thu, 20 Oct 2022 10:07:18 +0100
+Message-Id: <20221020090727.3669908-9-maz@kernel.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221020090727.3669908-1-maz@kernel.org>
 References: <20221020090727.3669908-1-maz@kernel.org>
@@ -91,52 +91,64 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-For VHE-specific hypervisor code, kern_hyp_va() is a NOP.
-
-Actually, it is a whole range of NOPs. It'd be much better if
-this code simply didn't exist. Let's just do that.
+In the VHE hypervisor code, we should be using the remapped VHE
+accessors, no ifs, no buts. No need to generate any alternative.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/include/asm/kvm_mmu.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/include/asm/kvm_hyp.h | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_mmu.h b/arch/arm64/include/asm/kvm_mmu.h
-index 7784081088e7..e32725e90360 100644
---- a/arch/arm64/include/asm/kvm_mmu.h
-+++ b/arch/arm64/include/asm/kvm_mmu.h
-@@ -63,6 +63,7 @@
-  * specific registers encoded in the instructions).
-  */
- .macro kern_hyp_va	reg
-+#ifndef __KVM_VHE_HYPERVISOR__
- alternative_cb ARM64_ALWAYS_SYSTEM, kvm_update_va_mask
- 	and     \reg, \reg, #1		/* mask with va_mask */
- 	ror	\reg, \reg, #1		/* rotate to the first tag bit */
-@@ -70,6 +71,7 @@ alternative_cb ARM64_ALWAYS_SYSTEM, kvm_update_va_mask
- 	add	\reg, \reg, #0, lsl 12	/* insert the top 12 bits of the tag */
- 	ror	\reg, \reg, #63		/* rotate back */
- alternative_cb_end
-+#endif
- .endm
+diff --git a/arch/arm64/include/asm/kvm_hyp.h b/arch/arm64/include/asm/kvm_hyp.h
+index aa7fa2a08f06..461fc0dc4a70 100644
+--- a/arch/arm64/include/asm/kvm_hyp.h
++++ b/arch/arm64/include/asm/kvm_hyp.h
+@@ -16,6 +16,23 @@ DECLARE_PER_CPU(struct kvm_cpu_context, kvm_hyp_ctxt);
+ DECLARE_PER_CPU(unsigned long, kvm_hyp_vector);
+ DECLARE_PER_CPU(struct kvm_nvhe_init_params, kvm_init_params);
  
++/*
++ * Unified accessors for registers that have a different encoding
++ * between VHE and non-VHE. They must be specified without their "ELx"
++ * encoding, but with the SYS_ prefix, as defined in asm/sysreg.h.
++ */
++
++#if defined(__KVM_VHE_HYPERVISOR__)
++
++#define read_sysreg_el0(r)	read_sysreg_s(r##_EL02)
++#define write_sysreg_el0(v,r)	write_sysreg_s(v, r##_EL02)
++#define read_sysreg_el1(r)	read_sysreg_s(r##_EL12)
++#define write_sysreg_el1(v,r)	write_sysreg_s(v, r##_EL12)
++#define read_sysreg_el2(r)	read_sysreg_s(r##_EL1)
++#define write_sysreg_el2(v,r)	write_sysreg_s(v, r##_EL1)
++
++#else // !__KVM_VHE_HYPERVISOR__
++
+ #define read_sysreg_elx(r,nvh,vh)					\
+ 	({								\
+ 		u64 reg;						\
+@@ -35,12 +52,6 @@ DECLARE_PER_CPU(struct kvm_nvhe_init_params, kvm_init_params);
+ 					 : : "rZ" (__val));		\
+ 	} while (0)
+ 
+-/*
+- * Unified accessors for registers that have a different encoding
+- * between VHE and non-VHE. They must be specified without their "ELx"
+- * encoding, but with the SYS_ prefix, as defined in asm/sysreg.h.
+- */
+-
+ #define read_sysreg_el0(r)	read_sysreg_elx(r, _EL0, _EL02)
+ #define write_sysreg_el0(v,r)	write_sysreg_elx(v, r, _EL0, _EL02)
+ #define read_sysreg_el1(r)	read_sysreg_elx(r, _EL1, _EL12)
+@@ -48,6 +59,8 @@ DECLARE_PER_CPU(struct kvm_nvhe_init_params, kvm_init_params);
+ #define read_sysreg_el2(r)	read_sysreg_elx(r, _EL2, _EL1)
+ #define write_sysreg_el2(v,r)	write_sysreg_elx(v, r, _EL2, _EL1)
+ 
++#endif	// __KVM_VHE_HYPERVISOR__
++
  /*
-@@ -126,6 +128,7 @@ void kvm_apply_hyp_relocations(void);
- 
- static __always_inline unsigned long __kern_hyp_va(unsigned long v)
- {
-+#ifndef __KVM_VHE_HYPERVISOR__
- 	asm volatile(ALTERNATIVE_CB("and %0, %0, #1\n"
- 				    "ror %0, %0, #1\n"
- 				    "add %0, %0, #0\n"
-@@ -134,6 +137,7 @@ static __always_inline unsigned long __kern_hyp_va(unsigned long v)
- 				    ARM64_ALWAYS_SYSTEM,
- 				    kvm_update_va_mask)
- 		     : "+r" (v));
-+#endif
- 	return v;
- }
- 
+  * Without an __arch_swab32(), we fall back to ___constant_swab32(), but the
+  * static inline can allow the compiler to out-of-line this. KVM always wants
 -- 
 2.34.1
 
