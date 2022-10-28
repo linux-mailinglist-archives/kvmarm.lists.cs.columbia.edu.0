@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 42EB1610F0B
-	for <lists+kvmarm@lfdr.de>; Fri, 28 Oct 2022 12:53:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5380D610F0C
+	for <lists+kvmarm@lfdr.de>; Fri, 28 Oct 2022 12:54:19 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7BFAC40B65;
-	Fri, 28 Oct 2022 06:53:54 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B37C849F3B;
+	Fri, 28 Oct 2022 06:54:18 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
@@ -18,50 +18,50 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZXgxvpNuEvow; Fri, 28 Oct 2022 06:53:54 -0400 (EDT)
+	with ESMTP id YsGri6f83DB8; Fri, 28 Oct 2022 06:54:18 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 26C8040BFA;
-	Fri, 28 Oct 2022 06:53:53 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6868C49EFA;
+	Fri, 28 Oct 2022 06:54:17 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E470A40403
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Oct 2022 06:53:51 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 57BDE40762
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Oct 2022 06:54:16 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id alurznFSZ506 for <kvmarm@lists.cs.columbia.edu>;
- Fri, 28 Oct 2022 06:53:50 -0400 (EDT)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id AE86040336
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Oct 2022 06:53:50 -0400 (EDT)
+ with ESMTP id J8QpBs8WLHRv for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 28 Oct 2022 06:54:16 -0400 (EDT)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 105B04040B
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Oct 2022 06:54:16 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id A53E962790;
- Fri, 28 Oct 2022 10:53:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD32C433D6;
- Fri, 28 Oct 2022 10:53:49 +0000 (UTC)
+ by ams.source.kernel.org (Postfix) with ESMTPS id C64B9B82954;
+ Fri, 28 Oct 2022 10:54:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76899C433D7;
+ Fri, 28 Oct 2022 10:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1666954429;
+ s=k20201202; t=1666954453;
  bh=53rg7TIHwfEpfmUyy4QvY3u8DYtBH+msqMaPikufBpw=;
  h=From:To:Cc:Subject:Date:From;
- b=sJlNGceAnd9VE8KgnvPrUjB2fMiOOPV5+2NAfECtDZ1o8LaK2WQ/92R97MTVjb+Jh
- zvqG552MgKXqNDsnMwCNsDBDJ5Hw+B2OWjPTfxhbTORM+GXP7WdgEodV/OrdG+mL02
- 2vubFo8qO30ye7ofAYghVjyXmgIwTwttaYg/339ZoxL64Hei34MV4+/vlZ8HuN03G6
- UX3vBHWgE7ZdzfDVT09G/yv8dFiI7cI78Vj75m1gZTETX5sphtf4fQjtSGkgmKrcuV
- U0Iex6/dgv/RrQlTcpmKzPEN+i15o+GKCMv+eYFyz43MPMpdGSPpaUPpx5d0D95hYK
- N+pOCWFg5rQqQ==
+ b=MYnhzRWw+88bwMn7p7hDfdxREMqAMJh7O+b9w1PlZDlalpvipLbQ06ANdzGcFDs+0
+ xYmvMA52ihOxMoJ0asktxWm+gQrfy/lUKp3kjEHgB0VdmbyPK08X7nRrMHtYcgaqch
+ DPWJWe2Qizl9ptTwGGOjOGea+meYi8hD+EavXSYgOLuQcIIbX8YX7ujpMrUiQfXtzJ
+ 8a8QTgVTCuJWdALsK3TjhNDNH8gXOrLHF2hbHh589q2bkFAS6Pm1Hv01RFZ14xNcqe
+ NYFfV9vG7iyz8OQ6MorqIe5RYf3dpiGYMfPyELt37e8kCevroSOzO6Z1zgS+xfJcvq
+ a1LtqaAHf9yKg==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=valley-girl.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
- (envelope-from <maz@kernel.org>) id 1ooMzi-002E3J-PG;
- Fri, 28 Oct 2022 11:53:46 +0100
+ (envelope-from <maz@kernel.org>) id 1ooN07-002E4C-7T;
+ Fri, 28 Oct 2022 11:54:11 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, <kvmarm@lists.cs.columbia.edu>,
  <kvmarm@lists.linux.dev>, kvm@vger.kernel.org
 Subject: [PATCH v2 00/14] KVM: arm64: PMU: Fixing chained events,
  and PMUv3p5 support
-Date: Fri, 28 Oct 2022 11:53:22 +0100
-Message-Id: <20221028105322.2030167-1-maz@kernel.org>
+Date: Fri, 28 Oct 2022 11:53:48 +0100
+Message-Id: <20221028105402.2030192-1-maz@kernel.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 X-SA-Exim-Connect-IP: 185.219.108.64
