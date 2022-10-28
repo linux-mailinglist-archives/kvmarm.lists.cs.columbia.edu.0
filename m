@@ -2,66 +2,66 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 34A9E610F17
-	for <lists+kvmarm@lfdr.de>; Fri, 28 Oct 2022 12:54:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FD85610F0E
+	for <lists+kvmarm@lfdr.de>; Fri, 28 Oct 2022 12:54:20 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C99A74B0BA;
-	Fri, 28 Oct 2022 06:54:23 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EFC6C40B65;
+	Fri, 28 Oct 2022 06:54:19 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+	autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZkXaXnvdPWgF; Fri, 28 Oct 2022 06:54:23 -0400 (EDT)
+	with ESMTP id HkNRHDZE6KMz; Fri, 28 Oct 2022 06:54:18 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1DFFB49F49;
-	Fri, 28 Oct 2022 06:54:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8435C49F55;
+	Fri, 28 Oct 2022 06:54:17 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E108840B92
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Oct 2022 06:54:17 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6B3C440B65
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Oct 2022 06:54:16 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id yznk5HdL+7SQ for <kvmarm@lists.cs.columbia.edu>;
- Fri, 28 Oct 2022 06:54:16 -0400 (EDT)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 91FB640B65
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Oct 2022 06:54:16 -0400 (EDT)
+ with ESMTP id xDco+URfqvVb for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 28 Oct 2022 06:54:15 -0400 (EDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7732C40403
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Oct 2022 06:54:15 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 83405B82957;
- Fri, 28 Oct 2022 10:54:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345DCC43470;
+ by dfw.source.kernel.org (Postfix) with ESMTPS id E703562793;
+ Fri, 28 Oct 2022 10:54:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF58C43140;
  Fri, 28 Oct 2022 10:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1666954454;
- bh=kyG/vnN/1STkAGeNbQR0pQg9Qzvo3ZcZrGBKiEYfahw=;
+ bh=K2X563RbVS1OM58x/YhfoVroBF5xoDrdh5uLOVn7/T0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=AmhHfW7LigcDEcfli/xpGYl2Qk61EZFhicl6ZjYuco7m738OFJ8BiQ4aqoFp8cBz5
- zhjNc74hCIifJhdw15fXWJEpGnz8i1iirsf4mgGFX8Xjfy29hokcSOrJby+viO3n1s
- qLIaN6197hl33aP6IEA6usxLFr72F/uW8tb/ADHquXS/d/WZ6L3less34t2CgHpZpS
- gue9PLpBumAdjQE5Z+/u1i0NgGrk/Dt3oMcTNVOiH0j1wTmHhq5dNi1FIM3flKpcLr
- 9MtJi22uux12HQmLMB1IGQhTvuNy7bvBLo3lIoDEEaCzKMXTjifzJKbjLD6kbuIIbt
- +xvqNI0Q35uMw==
+ b=aSvyu4Xnav/CNn9qCsKdCPtRdQgjPQQgMfKRgMIfBOYnJf9nRZR1T/ThsWNPHqXvT
+ qe2uni7rkZgTQPQXOiCt7bIT/r3u97JtpW6j2q7dcbgbDNu92WPbKh873zuwXn4iZl
+ LK70FJ5uJaDS0YjwofvwOM9xPqlA6SVeUH9Q5XboTINYTzK/HS8FLULLtNFn0aZ6f3
+ cWfq9aTzlC/BT+nTB5WLuFNVynBXCZeYOgFr6iV5NiGge4/6kSv8/MZz8QBLG6+Ywx
+ cf2JnyzkuUIpR3zGyTCcRl/P7tUiECc+a1p0ANG1C6u/thO6+AIPKP5CVhdffXccvL
+ ioLx9FLVZyJ0A==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=valley-girl.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
- (envelope-from <maz@kernel.org>) id 1ooN08-002E4C-5D;
+ (envelope-from <maz@kernel.org>) id 1ooN08-002E4C-C7;
  Fri, 28 Oct 2022 11:54:12 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, <kvmarm@lists.cs.columbia.edu>,
  <kvmarm@lists.linux.dev>, kvm@vger.kernel.org
-Subject: [PATCH v2 04/14] KVM: arm64: PMU: Distinguish between 64bit counter
- and 64bit overflow
-Date: Fri, 28 Oct 2022 11:53:52 +0100
-Message-Id: <20221028105402.2030192-5-maz@kernel.org>
+Subject: [PATCH v2 05/14] KVM: arm64: PMU: Narrow the overflow checking when
+ required
+Date: Fri, 28 Oct 2022 11:53:53 +0100
+Message-Id: <20221028105402.2030192-6-maz@kernel.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221028105402.2030192-1-maz@kernel.org>
 References: <20221028105402.2030192-1-maz@kernel.org>
@@ -90,111 +90,28 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-The PMU architecture makes a subtle difference between a 64bit
-counter and a counter that has a 64bit overflow. This is for example
-the case of the cycle counter, which can generate an overflow on
-a 32bit boundary if PMCR_EL0.LC==0 despite the accumulation being
-done on 64 bits.
-
-Use this distinction in the few cases where it matters in the code,
-as we will reuse this with PMUv3p5 long counters.
+For 64bit counters that overflow on a 32bit boundary, make
+sure we only check the bottom 32bit to generate a CHAIN event.
 
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 ---
- arch/arm64/kvm/pmu-emul.c | 43 ++++++++++++++++++++++++++++-----------
- 1 file changed, 31 insertions(+), 12 deletions(-)
+ arch/arm64/kvm/pmu-emul.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/kvm/pmu-emul.c b/arch/arm64/kvm/pmu-emul.c
-index e63ed0c71a37..3724acefc07b 100644
+index 3724acefc07b..39a04ae424d1 100644
 --- a/arch/arm64/kvm/pmu-emul.c
 +++ b/arch/arm64/kvm/pmu-emul.c
-@@ -50,6 +50,11 @@ static u32 kvm_pmu_event_mask(struct kvm *kvm)
-  * @select_idx: The counter index
-  */
- static bool kvm_pmu_idx_is_64bit(struct kvm_vcpu *vcpu, u64 select_idx)
-+{
-+	return (select_idx == ARMV8_PMU_CYCLE_IDX);
-+}
-+
-+static bool kvm_pmu_idx_has_64bit_overflow(struct kvm_vcpu *vcpu, u64 select_idx)
- {
- 	return (select_idx == ARMV8_PMU_CYCLE_IDX &&
- 		__vcpu_sys_reg(vcpu, PMCR_EL0) & ARMV8_PMU_PMCR_LC);
-@@ -57,7 +62,8 @@ static bool kvm_pmu_idx_is_64bit(struct kvm_vcpu *vcpu, u64 select_idx)
+@@ -419,7 +419,8 @@ static void kvm_pmu_counter_increment(struct kvm_vcpu *vcpu,
+ 		reg = lower_32_bits(reg);
+ 		__vcpu_sys_reg(vcpu, PMEVCNTR0_EL0 + i) = reg;
  
- static bool kvm_pmu_counter_can_chain(struct kvm_vcpu *vcpu, u64 idx)
- {
--	return (!(idx & 1) && (idx + 1) < ARMV8_PMU_CYCLE_IDX);
-+	return (!(idx & 1) && (idx + 1) < ARMV8_PMU_CYCLE_IDX &&
-+		!kvm_pmu_idx_has_64bit_overflow(vcpu, idx));
- }
+-		if (reg) /* No overflow? move on */
++		/* No overflow? move on */
++		if (kvm_pmu_idx_has_64bit_overflow(vcpu, i) ? reg : lower_32_bits(reg))
+ 			continue;
  
- static struct kvm_vcpu *kvm_pmc_to_vcpu(struct kvm_pmc *pmc)
-@@ -97,7 +103,7 @@ u64 kvm_pmu_get_counter_value(struct kvm_vcpu *vcpu, u64 select_idx)
- 		counter += perf_event_read_value(pmc->perf_event, &enabled,
- 						 &running);
- 
--	if (select_idx != ARMV8_PMU_CYCLE_IDX)
-+	if (!kvm_pmu_idx_is_64bit(vcpu, select_idx))
- 		counter = lower_32_bits(counter);
- 
- 	return counter;
-@@ -425,6 +431,23 @@ static void kvm_pmu_counter_increment(struct kvm_vcpu *vcpu,
- 	}
- }
- 
-+/* Compute the sample period for a given counter value */
-+static u64 compute_period(struct kvm_vcpu *vcpu, u64 select_idx, u64 counter)
-+{
-+	u64 val;
-+
-+	if (kvm_pmu_idx_is_64bit(vcpu, select_idx)) {
-+		if (!kvm_pmu_idx_has_64bit_overflow(vcpu, select_idx))
-+			val = -(counter & GENMASK(31, 0));
-+		else
-+			val = (-counter) & GENMASK(63, 0);
-+	} else {
-+		val = (-counter) & GENMASK(31, 0);
-+	}
-+
-+	return val;
-+}
-+
- /**
-  * When the perf event overflows, set the overflow status and inform the vcpu.
-  */
-@@ -444,10 +467,7 @@ static void kvm_pmu_perf_overflow(struct perf_event *perf_event,
- 	 * Reset the sample period to the architectural limit,
- 	 * i.e. the point where the counter overflows.
- 	 */
--	period = -(local64_read(&perf_event->count));
--
--	if (!kvm_pmu_idx_is_64bit(vcpu, pmc->idx))
--		period &= GENMASK(31, 0);
-+	period = compute_period(vcpu, idx, local64_read(&perf_event->count));
- 
- 	local64_set(&perf_event->hw.period_left, 0);
- 	perf_event->attr.sample_period = period;
-@@ -573,14 +593,13 @@ static void kvm_pmu_create_perf_event(struct kvm_vcpu *vcpu, u64 select_idx)
- 
- 	/*
- 	 * If counting with a 64bit counter, advertise it to the perf
--	 * code, carefully dealing with the initial sample period.
-+	 * code, carefully dealing with the initial sample period
-+	 * which also depends on the overflow.
- 	 */
--	if (kvm_pmu_idx_is_64bit(vcpu, select_idx)) {
-+	if (kvm_pmu_idx_is_64bit(vcpu, select_idx))
- 		attr.config1 |= PERF_ATTR_CFG1_COUNTER_64BIT;
--		attr.sample_period = (-counter) & GENMASK(63, 0);
--	} else {
--		attr.sample_period = (-counter) & GENMASK(31, 0);
--	}
-+
-+	attr.sample_period = compute_period(vcpu, select_idx, counter);
- 
- 	event = perf_event_create_kernel_counter(&attr, -1, current,
- 						 kvm_pmu_perf_overflow, pmc);
+ 		/* Mark overflow */
 -- 
 2.34.1
 
