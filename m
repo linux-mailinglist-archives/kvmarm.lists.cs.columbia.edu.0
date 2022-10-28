@@ -2,67 +2,69 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5380D610F0C
-	for <lists+kvmarm@lfdr.de>; Fri, 28 Oct 2022 12:54:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E8CE610F14
+	for <lists+kvmarm@lfdr.de>; Fri, 28 Oct 2022 12:54:23 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B37C849F3B;
-	Fri, 28 Oct 2022 06:54:18 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1348F4040B;
+	Fri, 28 Oct 2022 06:54:23 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+	autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YsGri6f83DB8; Fri, 28 Oct 2022 06:54:18 -0400 (EDT)
+	with ESMTP id YV-nNw+ELMoo; Fri, 28 Oct 2022 06:54:22 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6868C49EFA;
-	Fri, 28 Oct 2022 06:54:17 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DAF1640BFA;
+	Fri, 28 Oct 2022 06:54:19 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 57BDE40762
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Oct 2022 06:54:16 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 2FB9440BD9
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Oct 2022 06:54:17 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id J8QpBs8WLHRv for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id ZhsoAmGM3eF8 for <kvmarm@lists.cs.columbia.edu>;
  Fri, 28 Oct 2022 06:54:16 -0400 (EDT)
 Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 105B04040B
- for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Oct 2022 06:54:16 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 032A340336
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 28 Oct 2022 06:54:15 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id C64B9B82954;
+ by ams.source.kernel.org (Postfix) with ESMTPS id C0BD8B82953;
  Fri, 28 Oct 2022 10:54:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76899C433D7;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7140BC433D6;
  Fri, 28 Oct 2022 10:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1666954453;
- bh=53rg7TIHwfEpfmUyy4QvY3u8DYtBH+msqMaPikufBpw=;
- h=From:To:Cc:Subject:Date:From;
- b=MYnhzRWw+88bwMn7p7hDfdxREMqAMJh7O+b9w1PlZDlalpvipLbQ06ANdzGcFDs+0
- xYmvMA52ihOxMoJ0asktxWm+gQrfy/lUKp3kjEHgB0VdmbyPK08X7nRrMHtYcgaqch
- DPWJWe2Qizl9ptTwGGOjOGea+meYi8hD+EavXSYgOLuQcIIbX8YX7ujpMrUiQfXtzJ
- 8a8QTgVTCuJWdALsK3TjhNDNH8gXOrLHF2hbHh589q2bkFAS6Pm1Hv01RFZ14xNcqe
- NYFfV9vG7iyz8OQ6MorqIe5RYf3dpiGYMfPyELt37e8kCevroSOzO6Z1zgS+xfJcvq
- a1LtqaAHf9yKg==
+ bh=LDpHOoUTLZOBS0Pn/x1kE1SGXF+8M+SGG+sMaN5hl2Y=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=d4EWI+TQq5fmgULaW+sIXpNP+PF4oQ4f/wMoSPvZOhsck9f8lgPDq/mzxGfU4RByN
+ MIBzH3C8hwubTEoWYPkNt0tr3EsvCIlppVrP2T3GCz4z1I/UN/B8svKqZXXfJDt8VT
+ jHR9AhSSIRrm1XwzoCR9f+oezqa05LO4GdrZ+FgPYtRsLZ3hDxmGZQG8+zonoWlkKB
+ 1ZU9MPxsKW8cQ5tvhRw8wIPJ70UxoNku/YTlt/9PMMv7a59g15I/ZwYBYQEE59Mjd0
+ veM9z8PZD+MXZ8oZsMs/1GFoGMaIUzAVh7BB06rXCiC1p2Vu08A5OB/LlWz4tcQEze
+ muZ+bG/ZkRMYQ==
 Received: from sofa.misterjones.org ([185.219.108.64] helo=valley-girl.lan)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
- (envelope-from <maz@kernel.org>) id 1ooN07-002E4C-7T;
+ (envelope-from <maz@kernel.org>) id 1ooN07-002E4C-E3;
  Fri, 28 Oct 2022 11:54:11 +0100
 From: Marc Zyngier <maz@kernel.org>
 To: linux-arm-kernel@lists.infradead.org, <kvmarm@lists.cs.columbia.edu>,
  <kvmarm@lists.linux.dev>, kvm@vger.kernel.org
-Subject: [PATCH v2 00/14] KVM: arm64: PMU: Fixing chained events,
- and PMUv3p5 support
-Date: Fri, 28 Oct 2022 11:53:48 +0100
-Message-Id: <20221028105402.2030192-1-maz@kernel.org>
+Subject: [PATCH v2 01/14] arm64: Add ID_DFR0_EL1.PerfMon values for PMUv3p7
+ and IMP_DEF
+Date: Fri, 28 Oct 2022 11:53:49 +0100
+Message-Id: <20221028105402.2030192-2-maz@kernel.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20221028105402.2030192-1-maz@kernel.org>
+References: <20221028105402.2030192-1-maz@kernel.org>
 MIME-Version: 1.0
 X-SA-Exim-Connect-IP: 185.219.108.64
 X-SA-Exim-Rcpt-To: linux-arm-kernel@lists.infradead.org,
@@ -88,52 +90,26 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Ricardo reported[0] that our PMU emulation was busted when it comes to
-chained events, as we cannot expose the overflow on a 32bit boundary
-(which the architecture requires).
+Align the ID_DFR0_EL1.PerfMon values with ID_AA64DFR0_EL1.PMUver.
 
-This series aims at fixing this (by deleting a lot of code), and as a
-bonus adds support for PMUv3p5, as this requires us to fix a few more
-things.
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+---
+ arch/arm64/include/asm/sysreg.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Tested on A53 (PMUv3) and QEMU (PMUv3p5).
-
-* From v1 [1]:
-  - Rebased on 6.1-rc2
-  - New patch advertising that we always support the CHAIN event
-  - Plenty of bug fixes (idreg handling, AArch32, overflow narrowing)
-  - Tons of cleanups
-  - All kudos to Oliver and Reiji for spending the time to review this
-    mess, and Ricardo for finding more bugs!
-
-[0] https://lore.kernel.org/r/20220805004139.990531-1-ricarkol@google.com
-[1] https://lore.kernel.org/r/20220805135813.2102034-1-maz@kernel.org
-
-Marc Zyngier (14):
-  arm64: Add ID_DFR0_EL1.PerfMon values for PMUv3p7 and IMP_DEF
-  KVM: arm64: PMU: Align chained counter implementation with
-    architecture pseudocode
-  KVM: arm64: PMU: Always advertise the CHAIN event
-  KVM: arm64: PMU: Distinguish between 64bit counter and 64bit overflow
-  KVM: arm64: PMU: Narrow the overflow checking when required
-  KVM: arm64: PMU: Only narrow counters that are not 64bit wide
-  KVM: arm64: PMU: Add counter_index_to_*reg() helpers
-  KVM: arm64: PMU: Simplify setting a counter to a specific value
-  KVM: arm64: PMU: Do not let AArch32 change the counters' top 32 bits
-  KVM: arm64: PMU: Move the ID_AA64DFR0_EL1.PMUver limit to VM creation
-  KVM: arm64: PMU: Allow ID_AA64DFR0_EL1.PMUver to be set from userspace
-  KVM: arm64: PMU: Allow ID_DFR0_EL1.PerfMon to be set from userspace
-  KVM: arm64: PMU: Implement PMUv3p5 long counter support
-  KVM: arm64: PMU: Allow PMUv3p5 to be exposed to the guest
-
- arch/arm64/include/asm/kvm_host.h |   1 +
- arch/arm64/include/asm/sysreg.h   |   2 +
- arch/arm64/kvm/arm.c              |   6 +
- arch/arm64/kvm/pmu-emul.c         | 408 ++++++++++++------------------
- arch/arm64/kvm/sys_regs.c         | 135 +++++++++-
- include/kvm/arm_pmu.h             |  15 +-
- 6 files changed, 307 insertions(+), 260 deletions(-)
-
+diff --git a/arch/arm64/include/asm/sysreg.h b/arch/arm64/include/asm/sysreg.h
+index 7d301700d1a9..84f59ce1dc6d 100644
+--- a/arch/arm64/include/asm/sysreg.h
++++ b/arch/arm64/include/asm/sysreg.h
+@@ -698,6 +698,8 @@
+ #define ID_DFR0_PERFMON_8_1		0x4
+ #define ID_DFR0_PERFMON_8_4		0x5
+ #define ID_DFR0_PERFMON_8_5		0x6
++#define ID_DFR0_PERFMON_8_7		0x7
++#define ID_DFR0_PERFMON_IMP_DEF		0xf
+ 
+ #define ID_ISAR4_SWP_FRAC_SHIFT		28
+ #define ID_ISAR4_PSR_M_SHIFT		24
 -- 
 2.34.1
 
