@@ -2,78 +2,79 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B08A6171CD
-	for <lists+kvmarm@lfdr.de>; Thu,  3 Nov 2022 00:19:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CCD286171D1
+	for <lists+kvmarm@lfdr.de>; Thu,  3 Nov 2022 00:20:03 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 16EE34B831;
-	Wed,  2 Nov 2022 19:19:57 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 79BE64B7B5;
+	Wed,  2 Nov 2022 19:20:03 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id aho7GBYjlIoX; Wed,  2 Nov 2022 19:19:56 -0400 (EDT)
+	with ESMTP id ENxkrHCABw2O; Wed,  2 Nov 2022 19:20:03 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 96DC34B775;
-	Wed,  2 Nov 2022 19:19:54 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 2BC104B7D2;
+	Wed,  2 Nov 2022 19:20:02 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0387E4B7D4
- for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Nov 2022 19:19:54 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 7FF884B7B6
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Nov 2022 19:20:00 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id BedtZxwrZAvo for <kvmarm@lists.cs.columbia.edu>;
- Wed,  2 Nov 2022 19:19:53 -0400 (EDT)
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com
- [209.85.219.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 43A824B82F
- for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Nov 2022 19:19:52 -0400 (EDT)
-Received: by mail-yb1-f202.google.com with SMTP id
- m4-20020a258004000000b006cbf32f7ed8so367373ybk.9
- for <kvmarm@lists.cs.columbia.edu>; Wed, 02 Nov 2022 16:19:52 -0700 (PDT)
+ with ESMTP id 4Hy8cF2Sea3o for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  2 Nov 2022 19:19:55 -0400 (EDT)
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com
+ [209.85.216.74])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E26684B7BE
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Nov 2022 19:19:53 -0400 (EDT)
+Received: by mail-pj1-f74.google.com with SMTP id
+ q1-20020a17090aa00100b002139a592adbso2499834pjp.1
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 02 Nov 2022 16:19:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:reply-to:from:to:cc:subject:date:message-id:reply-to;
- bh=/lqn4M/Too7/hLjEdNjj07wzHVUwU9le6KZacsTk8SY=;
- b=jpZ4+tq6rgM4hZWXweQJqfxuirRlrRpN+o4JwlpzpCNTf2A1sJCTA6DFTlQxCFhgbt
- sLPS4JguQacCAQKGId9cUa8Po003/wEsvkFZ2dOMw9iNk7lA7jWRoh5OFZzRfWNs6e3X
- DneEijHQrn4rLICnTKWJFk513kvZJ3K123XsKZ8FoBZdWOMtOvWDKENXD0/AJPQsCKjG
- rrWvKtMA58cnJHMchHTeytkk5Oc3RF3YtWKf69zqcXqxFh7WlsD0FI+Jf5mEVKngU/vv
- wyh2CqSaqQR9rkwiquK7nfr1sE2Ot7UFYqlBaM19WPnwV+Bbr0Tz+aWWsDk+unGGDNDW
- oUvg==
+ bh=QZsBYUGDC2IkAwbx22iS+bX782/JjRlyYtWOGf9fm5w=;
+ b=gOl3cNoBRYj8Qpc32NlIEZiSXsQpB/DCyQ/znrDYIZGa+s4IthUOkEHZQZ1ojKZDv7
+ pTCluXhDLSbuLtIDsd06JUGzyqeVDBKsjduC6joRT5sGTNYRsVo9p/G6Hqiv2ugKa8LH
+ rdr0QZPkDK278uG4dV/k1t11BIQxvRWGgZaRWsIg0DoysUSAp2Ijq63EEZdxc0KL4gix
+ 0HGUBH8kF/zweMHI/2v4mLjob8+u7zdHCmj600jDg7rYDwZddIyY/q/ZMJIgho4CGwiq
+ Rf68OjR0Rg0ygAgFFNEea3lYykknrXRPiTB8JjAsW5m8iBtmAm27VPmRKJbUJVbPKnmY
+ wuxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:reply-to:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=/lqn4M/Too7/hLjEdNjj07wzHVUwU9le6KZacsTk8SY=;
- b=amG2QSGYeaemKNEa7NznJYqPinr/vse3EADTehFLH1Vc5k4K1GJNKeDOGc0W3GbjKW
- VP2qKQ335lZ7MjV040NC+vxEDCyiEYyFex0XvRkxq8m3RmYcvM1B8PYg8lIxE53y7HG7
- BEEa7zlibLVsjauM1RmBnXXmhI2tiei16rY84nd8ZF2ZRG271lJ1ZzoHoEiYazCVEVGA
- rodWKFqhVHX3Vhl3TCwGrjeBPj2zWIeNdtqcIHlZvJnnADOWL1/aivqtQuHkJRGkrhz0
- qQ/FqKmcjCKicdRmKYxz076tmsHYlVx9oEi+o485qn8ScbmQ1qUmXPShe4c168WofVy/
- X44A==
-X-Gm-Message-State: ACrzQf1SRgKltHuEbh0yjLO4LxdqyZu2vfpYGw9a7d1vV0L9Ty8PBNxS
- gvx9tqmWx9YHOM7vb5zeBQ9+7Tqm97k=
-X-Google-Smtp-Source: AMsMyM7jpwGuIU1urFbOZ+g44WVeQ15lWGU4IrnR1FfXK34lSVgumwGfDAw7vRfyWzKVx0s/7WxU/xcerg8=
+ bh=QZsBYUGDC2IkAwbx22iS+bX782/JjRlyYtWOGf9fm5w=;
+ b=zQKzoR5i8Q6kpRz3QPnpoEJnMQrnJx9IbMhF3PCdJat0bN9Ge0I/f4LObelH1b/ZmL
+ gmDSTGYwesvWkD3ewst8Y62ARUxySZ/nHl1A30ObEkr9c03GYs0y4DZ+ipRBVLFLNkfl
+ SwYO3Wk+8xuiR/6JwhiRXX5vXZ2d9EBpFvDFSK9SbzUjelFwW0N+CAEH14Jb615JLtjh
+ 51FQzqUs/Zl1tv+xEOoMo/eiYiTgdEKpgz+sq4HROAXts9WnyF7h7m/RHn7/SmIXMrkl
+ 5V3wdiulUAX54jNjqL5m+nRL+p65qFAi3SveBDwxoCnHFsBrn/waSyw3n0A/4GNy3V4C
+ 6+mg==
+X-Gm-Message-State: ACrzQf3KaBrgJxsni81gFQP33TxFyCwpevYI/QIoLJCFnHjrf9BHDT0N
+ IXVkUC1MZjjz5ubZ6mCrK9h5lpydPM4=
+X-Google-Smtp-Source: AMsMyM4F5G3DDnuJC2f+gpo6muVhVlP37u9Rx2CD7FgkZCjySGE+h3yA4RelKa6dFXDwgnEtjORGLCa20Ec=
 X-Received: from zagreus.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a25:e694:0:b0:6ca:2610:76fd with SMTP id
- d142-20020a25e694000000b006ca261076fdmr171916ybh.607.1667431191239; Wed, 02
- Nov 2022 16:19:51 -0700 (PDT)
-Date: Wed,  2 Nov 2022 23:18:49 +0000
+ (user=seanjc job=sendgmr) by 2002:a17:90b:384a:b0:213:2907:a528 with SMTP id
+ nl10-20020a17090b384a00b002132907a528mr27758885pjb.183.1667431193502; Wed, 02
+ Nov 2022 16:19:53 -0700 (PDT)
+Date: Wed,  2 Nov 2022 23:18:50 +0000
 In-Reply-To: <20221102231911.3107438-1-seanjc@google.com>
 Mime-Version: 1.0
 References: <20221102231911.3107438-1-seanjc@google.com>
 X-Mailer: git-send-email 2.38.1.431.g37b22c650d-goog
-Message-ID: <20221102231911.3107438-23-seanjc@google.com>
-Subject: [PATCH 22/44] KVM: RISC-V: Do arch init directly in riscv_kvm_init()
+Message-ID: <20221102231911.3107438-24-seanjc@google.com>
+Subject: [PATCH 23/44] KVM: RISC-V: Tag init functions and data with __init,
+ __ro_after_init
 From: Sean Christopherson <seanjc@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>, 
  Huacai Chen <chenhuacai@kernel.org>, 
@@ -113,59 +114,91 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Fold the guts of kvm_arch_init() into riscv_kvm_init() instead of
-bouncing through kvm_init()=>kvm_arch_init().  Functionally, this is a
-glorified nop as invoking kvm_arch_init() is the very first action
-performed by kvm_init().
-
-Moving setup to riscv_kvm_init(), which is tagged __init, will allow
-tagging more functions and data with __init and __ro_after_init.  And
-emptying kvm_arch_init() will allow dropping the hook entirely once all
-architecture implementations are nops.
-
-No functional change intended.
+Now that KVM setup is handled directly in riscv_kvm_init(), tag functions
+and data that are used/set only during init with __init/__ro_after_init.
 
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 ---
- arch/riscv/kvm/main.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ arch/riscv/include/asm/kvm_host.h |  6 +++---
+ arch/riscv/kvm/mmu.c              | 12 ++++++------
+ arch/riscv/kvm/vmid.c             |  4 ++--
+ 3 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/arch/riscv/kvm/main.c b/arch/riscv/kvm/main.c
-index a146fa0ce4d2..cb063b8a9a0f 100644
---- a/arch/riscv/kvm/main.c
-+++ b/arch/riscv/kvm/main.c
-@@ -66,6 +66,15 @@ void kvm_arch_hardware_disable(void)
+diff --git a/arch/riscv/include/asm/kvm_host.h b/arch/riscv/include/asm/kvm_host.h
+index 8c771fc4f5d2..778ff0f282b7 100644
+--- a/arch/riscv/include/asm/kvm_host.h
++++ b/arch/riscv/include/asm/kvm_host.h
+@@ -295,11 +295,11 @@ int kvm_riscv_gstage_map(struct kvm_vcpu *vcpu,
+ int kvm_riscv_gstage_alloc_pgd(struct kvm *kvm);
+ void kvm_riscv_gstage_free_pgd(struct kvm *kvm);
+ void kvm_riscv_gstage_update_hgatp(struct kvm_vcpu *vcpu);
+-void kvm_riscv_gstage_mode_detect(void);
+-unsigned long kvm_riscv_gstage_mode(void);
++void __init kvm_riscv_gstage_mode_detect(void);
++unsigned long __init kvm_riscv_gstage_mode(void);
+ int kvm_riscv_gstage_gpa_bits(void);
+ 
+-void kvm_riscv_gstage_vmid_detect(void);
++void __init kvm_riscv_gstage_vmid_detect(void);
+ unsigned long kvm_riscv_gstage_vmid_bits(void);
+ int kvm_riscv_gstage_vmid_init(struct kvm *kvm);
+ bool kvm_riscv_gstage_vmid_ver_changed(struct kvm_vmid *vmid);
+diff --git a/arch/riscv/kvm/mmu.c b/arch/riscv/kvm/mmu.c
+index 3620ecac2fa1..f42a34c7879a 100644
+--- a/arch/riscv/kvm/mmu.c
++++ b/arch/riscv/kvm/mmu.c
+@@ -20,12 +20,12 @@
+ #include <asm/pgtable.h>
+ 
+ #ifdef CONFIG_64BIT
+-static unsigned long gstage_mode = (HGATP_MODE_SV39X4 << HGATP_MODE_SHIFT);
+-static unsigned long gstage_pgd_levels = 3;
++static unsigned long gstage_mode __ro_after_init = (HGATP_MODE_SV39X4 << HGATP_MODE_SHIFT);
++static unsigned long gstage_pgd_levels __ro_after_init = 3;
+ #define gstage_index_bits	9
+ #else
+-static unsigned long gstage_mode = (HGATP_MODE_SV32X4 << HGATP_MODE_SHIFT);
+-static unsigned long gstage_pgd_levels = 2;
++static unsigned long gstage_mode __ro_after_init = (HGATP_MODE_SV32X4 << HGATP_MODE_SHIFT);
++static unsigned long gstage_pgd_levels __ro_after_init = 2;
+ #define gstage_index_bits	10
+ #endif
+ 
+@@ -760,7 +760,7 @@ void kvm_riscv_gstage_update_hgatp(struct kvm_vcpu *vcpu)
+ 		kvm_riscv_local_hfence_gvma_all();
  }
  
- int kvm_arch_init(void *opaque)
-+{
-+	return 0;
-+}
-+
-+void kvm_arch_exit(void)
-+{
-+}
-+
-+static int __init riscv_kvm_init(void)
+-void kvm_riscv_gstage_mode_detect(void)
++void __init kvm_riscv_gstage_mode_detect(void)
  {
- 	const char *str;
- 
-@@ -110,15 +119,6 @@ int kvm_arch_init(void *opaque)
- 
- 	kvm_info("VMID %ld bits available\n", kvm_riscv_gstage_vmid_bits());
- 
--	return 0;
--}
--
--void kvm_arch_exit(void)
--{
--}
--
--static int __init riscv_kvm_init(void)
--{
- 	return kvm_init(NULL, sizeof(struct kvm_vcpu), 0, THIS_MODULE);
+ #ifdef CONFIG_64BIT
+ 	/* Try Sv57x4 G-stage mode */
+@@ -784,7 +784,7 @@ void kvm_riscv_gstage_mode_detect(void)
+ #endif
  }
- module_init(riscv_kvm_init);
+ 
+-unsigned long kvm_riscv_gstage_mode(void)
++unsigned long __init kvm_riscv_gstage_mode(void)
+ {
+ 	return gstage_mode >> HGATP_MODE_SHIFT;
+ }
+diff --git a/arch/riscv/kvm/vmid.c b/arch/riscv/kvm/vmid.c
+index 6cd93995fb65..5246da1c9167 100644
+--- a/arch/riscv/kvm/vmid.c
++++ b/arch/riscv/kvm/vmid.c
+@@ -17,10 +17,10 @@
+ 
+ static unsigned long vmid_version = 1;
+ static unsigned long vmid_next;
+-static unsigned long vmid_bits;
++static unsigned long vmid_bits __ro_after_init;
+ static DEFINE_SPINLOCK(vmid_lock);
+ 
+-void kvm_riscv_gstage_vmid_detect(void)
++void __init kvm_riscv_gstage_vmid_detect(void)
+ {
+ 	unsigned long old;
+ 
 -- 
 2.38.1.431.g37b22c650d-goog
 
