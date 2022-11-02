@@ -2,79 +2,79 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 05AE86171C6
-	for <lists+kvmarm@lfdr.de>; Thu,  3 Nov 2022 00:19:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 009336171C7
+	for <lists+kvmarm@lfdr.de>; Thu,  3 Nov 2022 00:19:48 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A71474B82D;
-	Wed,  2 Nov 2022 19:19:46 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A07674B7D7;
+	Wed,  2 Nov 2022 19:19:48 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IGYuI67+T+oD; Wed,  2 Nov 2022 19:19:44 -0400 (EDT)
+	with ESMTP id f5ZwnJMioPF3; Wed,  2 Nov 2022 19:19:48 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9300D4B7F8;
-	Wed,  2 Nov 2022 19:19:44 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E3C034B7F8;
+	Wed,  2 Nov 2022 19:19:46 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 4E3F04B7B5
- for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Nov 2022 19:19:43 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 6A6884B78C
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Nov 2022 19:19:44 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id IIMsnAjz7z2S for <kvmarm@lists.cs.columbia.edu>;
- Wed,  2 Nov 2022 19:19:42 -0400 (EDT)
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com
- [209.85.219.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0E5BB4B81F
- for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Nov 2022 19:19:39 -0400 (EDT)
-Received: by mail-yb1-f202.google.com with SMTP id
- t6-20020a25b706000000b006b38040b6f7so380336ybj.6
- for <kvmarm@lists.cs.columbia.edu>; Wed, 02 Nov 2022 16:19:39 -0700 (PDT)
+ with ESMTP id QnVO6CjDGY0A for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  2 Nov 2022 19:19:43 -0400 (EDT)
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com
+ [209.85.216.74])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D8F024B7ED
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Nov 2022 19:19:41 -0400 (EDT)
+Received: by mail-pj1-f74.google.com with SMTP id
+ mj8-20020a17090b368800b002137a506927so17195pjb.1
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 02 Nov 2022 16:19:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:reply-to:from:to:cc:subject:date:message-id:reply-to;
- bh=jjwuYM33wa0dwVWFlLHKwYhVaHzm2FgiCKOfn+QDNQ4=;
- b=Fhq9PEIX8LJQUbJ64jTN1JvSF4aDYgMhxvOWYGX1iAWoV/lvAdG5LOXuNivkfQWmaN
- XoYRELj0iLXTcGUgDHg9R/bhGsJRvY0Qx7IEF0y4w7dFOPQtmSUB+O6PUVY8/MhozQfF
- AX6SYnVZgv9nJGu4JJBc65UftCLAjC1MJHk1aUCf2yILUXt8A+rMwOgyzW8jvMWXgkl0
- LgkleUhB3pCNMAS+BVFzOjuYh6vlw9PADZ2etUZ8fiuYZCiK9hkRPf6dczcVLTjo6nqb
- SNGwaGeIsaxofOZxTFjiZYanOv3dUMmT9VRhi3xCUQ51Z2IYrlwrIcc2Hbem0XHCdIi2
- UM4w==
+ bh=yE/4Y9j/oYhrNnppN3pBbrFR3yZQeQID1rXlzF1UIrs=;
+ b=ay8cPyDCIqaMfo0DK1yGgX9Wb9Bl9/1fVHbdhv2aAy1cj0+xuZ97OrHcZUeV1cFb37
+ 6xEzJJ8+vktqwJnTtuH1USFvq8dlhSmN+zODY90fpIycgDYl660YnoWyBjRJ4shxmyzm
+ eiIMz6ZQ5l1bjRGivO4fA9kceUx/9ETkzTfr9tWJ9HyO6sppdHxDi6fl6UdHy8ptqT6P
+ DK4l+CKIMpqMLCpZJAWwhuO/obSacLjdsxWR0MNI7G5lNuNRlHspSUm1vSdSmF25/DFv
+ q5eNxeOVs/atfRGxPMYHZj9KnffzNZveBs/Mh+BUBe8auRPPWp99Q7jjD7exn9MfTR0m
+ 9eDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:reply-to:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=jjwuYM33wa0dwVWFlLHKwYhVaHzm2FgiCKOfn+QDNQ4=;
- b=lcth9d5B3om9aEedDcvp38lb9K5vJ5gepWCAuSvswIScsF1vTkwnVuWSiFx4MX2zUi
- Bx+PKEZoz4NiAS2+S8A3f9QslPdY68+jDxOsrGwAU7I3r9witbqOiqUL2O1UQ7xiPAu8
- gt8o3fZGd12Eo3qAdBKVfCdg7VjAHxx0zbAG9l9kNrrFxroZ9IRshIbq0RdbbNQoqUyG
- PfC6LpnN7/xQxZ5TG9GoXGPPvmY6Y0IBk8+QTyWEgtSNevVUuIeJ6IMsJ75fQSmVfq3a
- cyaQYok0KtwgIBTFWR+WwFrrJc3KqRNgJVWecp8RQIcjVpLbz6lsiao4jJoVDFJqJDTl
- x2eA==
-X-Gm-Message-State: ACrzQf0kQn50zEVNiQ2Bf3v5rpNTwxgg7txn9wm9/8JFhQvtKzo4Fq4O
- E535Fc775evTY/S8JBa7AubxW0qkye0=
-X-Google-Smtp-Source: AMsMyM6G8+cpsdlQ24WmBjSm0uN0SQ0FUjj6LFQ9PdnISN+9XlJSF9tKC3IM7fcpwDmLrOspg5L0a2rB188=
+ bh=yE/4Y9j/oYhrNnppN3pBbrFR3yZQeQID1rXlzF1UIrs=;
+ b=UspjfFVEh0J/hNKU3kyvXxGOZE6FkpoonuFe2wyPm050E1o7fRU8CxeyWf1YPTbbpp
+ 1eSD7MpNg5rzhhwBXkKJ03zSPORXqVhuK+G5weYNOnKdI6XSOaYD9RAGoP5fG+WF5RSG
+ URfvnIOmiO441t/JMF4IUCNiRDZ0E8waPit9I7jxtRMGnAj1v+HogRFbZDGDYb0gMEnQ
+ SURBocd11tl8AxTVNt3RBw6Jm/RRDM3YkpHlqsO/ZLu+C7ccIWwIy2cFCgbps9tsvbTG
+ GOWAt4JyPEiElDf3dxx7781xtdjzm7Xb/qYtSD3sa9okt1YZ4Pt9KNomYtChsoP0hcRL
+ AtPQ==
+X-Gm-Message-State: ACrzQf15TUbV6cAlYEHMKWqN7hdQ9WFkXTS+61pTw5j7D1duHgn/jZNs
+ 1BZOBOdWL+z8dQ96RYKhdDjyiaJL7ts=
+X-Google-Smtp-Source: AMsMyM5/m9Qv5qe0i9jmB6ZTvP1qiSAaI3rCUeMWt3X4Tz8UOP4pahzgtmW58pUMKKKCCfw0sH3ElrsKh+M=
 X-Received: from zagreus.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a25:e695:0:b0:6cb:895b:5a35 with SMTP id
- d143-20020a25e695000000b006cb895b5a35mr25441755ybh.573.1667431179587; Wed, 02
- Nov 2022 16:19:39 -0700 (PDT)
-Date: Wed,  2 Nov 2022 23:18:42 +0000
+ (user=seanjc job=sendgmr) by 2002:a62:d412:0:b0:56c:6f25:8b12 with SMTP id
+ a18-20020a62d412000000b0056c6f258b12mr27322827pfh.60.1667431181026; Wed, 02
+ Nov 2022 16:19:41 -0700 (PDT)
+Date: Wed,  2 Nov 2022 23:18:43 +0000
 In-Reply-To: <20221102231911.3107438-1-seanjc@google.com>
 Mime-Version: 1.0
 References: <20221102231911.3107438-1-seanjc@google.com>
 X-Mailer: git-send-email 2.38.1.431.g37b22c650d-goog
-Message-ID: <20221102231911.3107438-16-seanjc@google.com>
-Subject: [PATCH 15/44] KVM: arm64: Free hypervisor allocations if vector slot
- init fails
+Message-ID: <20221102231911.3107438-17-seanjc@google.com>
+Subject: [PATCH 16/44] KVM: arm64: Unregister perf callbacks if hypervisor
+ finalization fails
 From: Sean Christopherson <seanjc@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>, 
  Huacai Chen <chenhuacai@kernel.org>, 
@@ -114,55 +114,60 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Teardown hypervisor mode if vector slot setup fails in order to avoid
-leaking any allocations done by init_hyp_mode().
+Undo everything done by init_subsystems() if a later initialization step
+fails, i.e. unregister perf callbacks in addition to unregistering the
+power management notifier.
 
-Fixes: b881cdce77b4 ("KVM: arm64: Allocate hyp vectors statically")
+Fixes: bfa79a805454 ("KVM: arm64: Elevate hypervisor mappings creation at EL2")
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 ---
- arch/arm64/kvm/arm.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ arch/arm64/kvm/arm.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 0c328af064dd..73644def7780 100644
+index 73644def7780..f400a8c029dd 100644
 --- a/arch/arm64/kvm/arm.c
 +++ b/arch/arm64/kvm/arm.c
-@@ -2232,18 +2232,18 @@ int kvm_arch_init(void *opaque)
- 	err = kvm_init_vector_slots();
- 	if (err) {
- 		kvm_err("Cannot initialise vector slots\n");
--		goto out_err;
--	}
--
--	err = init_subsystems();
--	if (err)
- 		goto out_hyp;
-+	}
-+
-+	err = init_subsystems();
+@@ -1839,12 +1839,21 @@ static int init_subsystems(void)
+ 	kvm_register_perf_callbacks(NULL);
+ 
+ out:
 +	if (err)
-+		goto out_subs;
++		hyp_cpu_pm_exit();
++
+ 	if (err || !is_protected_kvm_enabled())
+ 		on_each_cpu(_kvm_arch_hardware_disable, NULL, 1);
+ 
+ 	return err;
+ }
+ 
++static void teardown_subsystems(void)
++{
++	kvm_unregister_perf_callbacks();
++	hyp_cpu_pm_exit();
++}
++
+ static void teardown_hyp_mode(void)
+ {
+ 	int cpu;
+@@ -2237,7 +2246,7 @@ int kvm_arch_init(void *opaque)
+ 
+ 	err = init_subsystems();
+ 	if (err)
+-		goto out_subs;
++		goto out_hyp;
  
  	if (!in_hyp_mode) {
  		err = finalize_hyp_mode();
- 		if (err) {
- 			kvm_err("Failed to finalize Hyp protection\n");
--			goto out_hyp;
-+			goto out_subs;
- 		}
- 	}
- 
-@@ -2257,8 +2257,9 @@ int kvm_arch_init(void *opaque)
- 
+@@ -2258,7 +2267,7 @@ int kvm_arch_init(void *opaque)
  	return 0;
  
--out_hyp:
-+out_subs:
- 	hyp_cpu_pm_exit();
-+out_hyp:
+ out_subs:
+-	hyp_cpu_pm_exit();
++	teardown_subsystems();
+ out_hyp:
  	if (!in_hyp_mode)
  		teardown_hyp_mode();
- out_err:
 -- 
 2.38.1.431.g37b22c650d-goog
 
