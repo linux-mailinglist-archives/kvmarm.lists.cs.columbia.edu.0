@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E2B206169A6
-	for <lists+kvmarm@lfdr.de>; Wed,  2 Nov 2022 17:49:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 382CC616A71
+	for <lists+kvmarm@lfdr.de>; Wed,  2 Nov 2022 18:18:52 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 29C974B963;
-	Wed,  2 Nov 2022 12:49:14 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 53F374B92F;
+	Wed,  2 Nov 2022 13:18:51 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
@@ -18,73 +18,75 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YMMAME6pJogq; Wed,  2 Nov 2022 12:49:14 -0400 (EDT)
+	with ESMTP id klHMxHysJE1L; Wed,  2 Nov 2022 13:18:51 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1A3BE4B918;
-	Wed,  2 Nov 2022 12:49:12 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 1A8264B8D8;
+	Wed,  2 Nov 2022 13:18:50 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2D6D54B88E
- for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Nov 2022 12:49:11 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E23BB4B837
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Nov 2022 13:18:48 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id GUNpXVGGdEO4 for <kvmarm@lists.cs.columbia.edu>;
- Wed,  2 Nov 2022 12:49:06 -0400 (EDT)
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 520354B880
- for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Nov 2022 12:49:06 -0400 (EDT)
+ with ESMTP id k9M0Ye3ijdXC for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  2 Nov 2022 13:18:47 -0400 (EDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D34324B826
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Nov 2022 13:18:47 -0400 (EDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by sin.source.kernel.org (Postfix) with ESMTPS id C60D1CE2275;
- Wed,  2 Nov 2022 16:49:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31E4C4347C;
- Wed,  2 Nov 2022 16:48:58 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id F311361AAC;
+ Wed,  2 Nov 2022 17:18:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D25BC43470;
+ Wed,  2 Nov 2022 17:18:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1667407739;
- bh=tRsjyo8FJNFmccLVQxVnp+9o24jB8i/WgRkJHPFRPwc=;
+ s=k20201202; t=1667409526;
+ bh=t+XSBxtVm4q9uEvwXkO3w2nATlENacHRnZp9Kw64sVY=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=MvpDxsR2jiiQIBMQXKVibQlhUlCcJbHm10uOjW/GhMkD32pAdGVp6UWM8uIoPaz34
- Csa3F2U/HEJBXYzCIivYREnLVIAmcZVybuj4Y+nsYGF32/vwpnOrrWOy/KGrB0EjGZ
- Wav4AajmwtgrU+qIbTEK7lmP7oGLoFkgNk6mCvM+uBW6QO6EIPT6K8eYskPab9voGG
- VA8RItZcs89WGWDhUDrHiqYmw2zg1YIOHSv+83eKK0Ki7a33RYF/SMzPWiNFwTguPi
- qEr6m/4IYsn1YbjSU/V/7Di4ZjVXmULEHlRT6do79Ynocz/+MqwczVo4IeHQvEOk+y
- zgJ2xgOuY20sA==
+ b=SJPUcexlv421RPT+uRVF0crG2rJQiWSpTV1vdBlet0+AtWLXczUGTXKN8LX7Js6cn
+ DPb4xPebyXZ1YeRkNgP9UaxZc3xhJiSATVIlqb1EhuIwjH3H146Ozr5rBlaF849DjU
+ QFJdZL7bcQgl1KelgspQQXuIOTmie2sWx9VysiZCS+KQaRBagHiMafBRpAUB9M2Ncc
+ hUOOmNExwM5PGT68Vsvhs3jKw5fqharoRp/kqMGIDt8X623JPzoewufqUesK185lzx
+ 2TWkDpAQ+IRcWsrcOm8Tji6cur065LjgqbHkDw6VCkRsaSe71BXKKl6NVlH03W4m01
+ kZSMzNHvRyEUw==
 Received: from sofa.misterjones.org ([185.219.108.64]
  helo=wait-a-minute.misterjones.org)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
- (envelope-from <maz@kernel.org>) id 1oqGvA-003GhM-QP;
- Wed, 02 Nov 2022 16:48:56 +0000
-Date: Wed, 02 Nov 2022 16:48:26 +0000
-Message-ID: <87zgd9fgkl.wl-maz@kernel.org>
+ (envelope-from <maz@kernel.org>) id 1oqHO0-003H7v-4L;
+ Wed, 02 Nov 2022 17:18:44 +0000
+Date: Wed, 02 Nov 2022 17:18:13 +0000
+Message-ID: <87y1stff6y.wl-maz@kernel.org>
 From: Marc Zyngier <maz@kernel.org>
-To: Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH v7 1/9] KVM: x86: Introduce KVM_REQ_DIRTY_RING_SOFT_FULL
-In-Reply-To: <Y2KZdDAQN4889W9V@x1n>
+To: Gavin Shan <gshan@redhat.com>
+Subject: Re: [PATCH v7 5/9] KVM: arm64: Improve no-running-vcpu report for
+ dirty ring
+In-Reply-To: <d3a4278a-94e2-7af4-da2d-946c903d8825@redhat.com>
 References: <20221031003621.164306-1-gshan@redhat.com>
- <20221031003621.164306-2-gshan@redhat.com>
- <Y2F17Y7YG5Z9XnOJ@google.com> <Y2J+xhBYhqBI81f7@x1n>
- <867d0de4b0.wl-maz@kernel.org> <Y2KZdDAQN4889W9V@x1n>
+ <20221031003621.164306-6-gshan@redhat.com>
+ <Y1+QiS0S3e6b358Q@google.com>
+ <d3a4278a-94e2-7af4-da2d-946c903d8825@redhat.com>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
  (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
 X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: peterx@redhat.com, seanjc@google.com, gshan@redhat.com,
+X-SA-Exim-Rcpt-To: gshan@redhat.com, oliver.upton@linux.dev,
  kvmarm@lists.linux.dev, kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
  andrew.jones@linux.dev, ajones@ventanamicro.com, bgardon@google.com,
  catalin.marinas@arm.com, dmatlack@google.com, will@kernel.org,
- pbonzini@redhat.com, oliver.upton@linux.dev, james.morse@arm.com,
+ pbonzini@redhat.com, peterx@redhat.com, seanjc@google.com, james.morse@arm.com,
  shuah@kernel.org, suzuki.poulose@arm.com, alexandru.elisei@arm.com,
  zhenyzha@redhat.com, shan.gavin@gmail.com
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
-Cc: shuah@kernel.org, kvm@vger.kernel.org, andrew.jones@linux.dev,
- dmatlack@google.com, will@kernel.org, shan.gavin@gmail.com, bgardon@google.com,
- kvmarm@lists.linux.dev, pbonzini@redhat.com, zhenyzha@redhat.com,
- catalin.marinas@arm.com, kvmarm@lists.cs.columbia.edu, ajones@ventanamicro.com
+Cc: shuah@kernel.org, kvm@vger.kernel.org, catalin.marinas@arm.com,
+ andrew.jones@linux.dev, dmatlack@google.com, shan.gavin@gmail.com,
+ bgardon@google.com, kvmarm@lists.linux.dev, pbonzini@redhat.com,
+ zhenyzha@redhat.com, will@kernel.org, kvmarm@lists.cs.columbia.edu,
+ ajones@ventanamicro.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -101,26 +103,42 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, 02 Nov 2022 16:23:16 +0000,
-Peter Xu <peterx@redhat.com> wrote:
+On Mon, 31 Oct 2022 23:08:32 +0000,
+Gavin Shan <gshan@redhat.com> wrote:
 > 
-> Might be slightly off-topic: I didn't quickly spot how do we guarantee two
-> threads doing KVM_RUN ioctl on the same vcpu fd concurrently.  I know
-> that's insane and could have corrupted things, but I just want to make sure
-> e.g. even a malicious guest app won't be able to trigger host warnings.
+>
+> In order to cover Marc's concern, I would introduce a different helper
+> kvm_vgic_save_its_tables_in_progress(), which simply returns
+> 'bool struct vgic_dist::save_its_tables_in_progress'. The newly added
+> field is set and cleared in vgic_its_ctrl(). All these changes will be
+> folded to PATCH[v7 6/9]. Oliver and Marc, could you please let me know
+> if the changes sounds good?
+> 
+>    static int vgic_its_ctrl(struct kvm *kvm, struct vgic_its *its, u64 attr)
+>    {
+>        const struct vgic_its_abi *abi = vgic_its_get_abi(its);
+>        struct vgic_dist *dist = &kvm->arch.vgic;
+>        int ret = 0;
+>          :
+>        switch (attr) {
+>        case KVM_DEV_ARM_ITS_CTRL_RESET:
+>             vgic_its_reset(kvm, its);
+>             break;
+>        case KVM_DEV_ARM_ITS_SAVE_TABLES:
+>             dist->save_its_tables_in_progress = true;
+>             ret = abi->save_tables(its);
+>             dist->save_its_tables_in_progress = false;
+>             break;
+>        case KVM_DEV_ARM_ITS_RESTORE_TABLES:
+>             ret = abi->restore_tables(its);
+>             break;
+>        }
+>        :
+>     }
 
-In kvm_vcpu_ioctl():
-
-	if (mutex_lock_killable(&vcpu->mutex)) <----- this
-		return -EINTR;
-	switch (ioctl) {
-	case KVM_RUN: {
-		struct pid *oldpid;
-		r = -EINVAL;
-		if (arg)
-
-We simply don't allow two concurrent ioctls to the same vcpu, let
-alone two KVM_RUN.
+Yes, this is the sort of thing I had in mind. This should make the
+whole patch rather trivial, and you could implement
+kvm_arch_allow_write_without_running_vcpu() as returning this flag.
 
 	M.
 
