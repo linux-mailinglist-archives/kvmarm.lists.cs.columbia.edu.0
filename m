@@ -2,60 +2,88 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id DE86F6169AB
-	for <lists+kvmarm@lfdr.de>; Wed,  2 Nov 2022 17:49:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C1BD6166B2
+	for <lists+kvmarm@lfdr.de>; Wed,  2 Nov 2022 16:58:52 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5046D4B9C3;
-	Wed,  2 Nov 2022 12:49:33 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id ACCF94B981;
+	Wed,  2 Nov 2022 11:58:51 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.899
+X-Spam-Score: -1.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
-	FREEMAIL_FROM=0.001, SPF_HELO_PASS=-0.001, URIBL_BLOCKED=0.001]
+X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
 	autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id PIg2mFfIxMDD; Wed,  2 Nov 2022 12:49:33 -0400 (EDT)
+	with ESMTP id lAuc9z3tWlJo; Wed,  2 Nov 2022 11:58:51 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 447804B992;
-	Wed,  2 Nov 2022 12:49:31 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 558664B987;
+	Wed,  2 Nov 2022 11:58:50 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 1A9744BA22
- for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Nov 2022 17:15:32 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3DC1F4B904
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Nov 2022 11:58:49 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id wuBU7w7DwsCn for <kvmarm@lists.cs.columbia.edu>;
- Tue,  1 Nov 2022 17:15:30 -0400 (EDT)
-Received: from smtp.smtpout.orange.fr (smtp-15.smtpout.orange.fr
- [80.12.242.15])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 03AAB4BA05
- for <kvmarm@lists.cs.columbia.edu>; Tue,  1 Nov 2022 17:15:29 -0400 (EDT)
-Received: from pop-os.home ([86.243.100.34]) by smtp.orange.fr with ESMTPA
- id pyanoKD2rsfCIpybYoWfLE; Tue, 01 Nov 2022 22:15:29 +0100
-X-ME-Helo: pop-os.home
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Tue, 01 Nov 2022 22:15:29 +0100
-X-ME-IP: 86.243.100.34
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-To: Marc Zyngier <maz@kernel.org>, James Morse <james.morse@arm.com>,
- Alexandru Elisei <alexandru.elisei@arm.com>,
- Suzuki K Poulose <suzuki.poulose@arm.com>,
- Oliver Upton <oliver.upton@linux.dev>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
-Subject: [PATCH 25/30] KVM: arm64: vgic-v3: Use kstrtobool() instead of
- strtobool()
-Date: Tue,  1 Nov 2022 22:14:13 +0100
-Message-Id: <b10987c659a72c191137b8599f6634d6e61a0bae.1667336095.git.christophe.jaillet@wanadoo.fr>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <cover.1667336095.git.christophe.jaillet@wanadoo.fr>
-References: <cover.1667336095.git.christophe.jaillet@wanadoo.fr>
-MIME-Version: 1.0
-X-Mailman-Approved-At: Wed, 02 Nov 2022 12:49:29 -0400
-Cc: kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org,
- Christophe JAILLET <christophe.jaillet@wanadoo.fr>, kvmarm@lists.linux.dev,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+ with ESMTP id V7+tFV92JrPm for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  2 Nov 2022 11:58:48 -0400 (EDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0EC3540417
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  2 Nov 2022 11:58:48 -0400 (EDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id D830261590;
+ Wed,  2 Nov 2022 15:58:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1416C433D6;
+ Wed,  2 Nov 2022 15:58:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1667404726;
+ bh=HX9zj9GM9OWe4YXhMsVjlp4lVDfOB/zbQjFOQfuR2To=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=Qh07gmOgCeigjcvSBI719bVcZ7HH0lWvCkCGQatFgY/ual/4f6cDOOhVzsLPxzQvy
+ XvsFO0xWQD+E81EXUtgp+9Jehx8H+b7VIreoffjM+hQ4YNvGfMvzWGoABfro9nCQ67
+ A3wOvvcpj9am58IZVvd8ByhttmSTO5t38zowdEZ2Y+bGYKAnsTiGKSNjw40Zll0hnV
+ NVg5OQooEBpYS+JexDlD8pwo6NDfvfbxuye3TmaVWlR6JW5x3kpsgkGRbC39jd0ZUL
+ bqHiRhkI8CHNH3PUyCP9CAhqwgoNDzztJTci00YVy+MqO/CEqb3mYu9/N8PEvxden7
+ 8ywr4QILxnE5g==
+Received: from sofa.misterjones.org ([185.219.108.64]
+ helo=goblin-girl.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1oqG8Z-003FIG-DC;
+ Wed, 02 Nov 2022 15:58:44 +0000
+Date: Wed, 02 Nov 2022 15:58:43 +0000
+Message-ID: <867d0de4b0.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Peter Xu <peterx@redhat.com>
+Subject: Re: [PATCH v7 1/9] KVM: x86: Introduce KVM_REQ_DIRTY_RING_SOFT_FULL
+In-Reply-To: <Y2J+xhBYhqBI81f7@x1n>
+References: <20221031003621.164306-1-gshan@redhat.com>
+ <20221031003621.164306-2-gshan@redhat.com>
+ <Y2F17Y7YG5Z9XnOJ@google.com> <Y2J+xhBYhqBI81f7@x1n>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: peterx@redhat.com, seanjc@google.com, gshan@redhat.com,
+ kvmarm@lists.linux.dev, kvm@vger.kernel.org, kvmarm@lists.cs.columbia.edu,
+ andrew.jones@linux.dev, ajones@ventanamicro.com, bgardon@google.com,
+ catalin.marinas@arm.com, dmatlack@google.com, will@kernel.org,
+ pbonzini@redhat.com, oliver.upton@linux.dev, james.morse@arm.com,
+ shuah@kernel.org, suzuki.poulose@arm.com, alexandru.elisei@arm.com,
+ zhenyzha@redhat.com, shan.gavin@gmail.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: shuah@kernel.org, kvm@vger.kernel.org, andrew.jones@linux.dev,
+ dmatlack@google.com, will@kernel.org, shan.gavin@gmail.com, bgardon@google.com,
+ kvmarm@lists.linux.dev, pbonzini@redhat.com, zhenyzha@redhat.com,
+ catalin.marinas@arm.com, kvmarm@lists.cs.columbia.edu, ajones@ventanamicro.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -72,78 +100,76 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-strtobool() is the same as kstrtobool().
-However, the latter is more used within the kernel.
+On Wed, 02 Nov 2022 14:29:26 +0000,
+Peter Xu <peterx@redhat.com> wrote:
+> 
+> On Tue, Nov 01, 2022 at 07:39:25PM +0000, Sean Christopherson wrote:
+> > > @@ -142,13 +144,17 @@ int kvm_dirty_ring_reset(struct kvm *kvm, struct kvm_dirty_ring *ring)
+> > >  
+> > >  	kvm_reset_dirty_gfn(kvm, cur_slot, cur_offset, mask);
+> > >  
+> > > +	if (!kvm_dirty_ring_soft_full(ring))
+> > > +		kvm_clear_request(KVM_REQ_DIRTY_RING_SOFT_FULL, vcpu);
+> > > +
+> > 
+> > Marc, Peter, and/or Paolo, can you confirm that clearing the
+> > request here won't cause ordering problems?  Logically, this makes
+> > perfect sense (to me, since I suggested it), but I'm mildly
+> > concerned I'm overlooking an edge case where KVM could end up with
+> > a soft-full ring but no pending request.
+> 
+> I don't see an ordering issue here, as long as kvm_clear_request() is using
+> atomic version of bit clear, afaict that's genuine RMW and should always
+> imply a full memory barrier (on any arch?) between the soft full check and
+> the bit clear.  At least for x86 the lock prefix was applied.
 
-In order to remove strtobool() and slightly simplify kstrtox.h, switch to
-the other function name.
+No, clear_bit() is not a full barrier. It only atomic, and thus
+completely unordered (see Documentation/atomic_bitops.txt). If you
+want a full barrier, you need to use test_and_clear_bit().
 
-While at it, include the corresponding header file (<linux/kstrtox.h>)
+> 
+> However I don't see anything stops a simple "race" to trigger like below:
+> 
+>           recycle thread                   vcpu thread
+>           --------------                   -----------
+>       if (!dirty_ring_soft_full)                                   <--- not full
+>                                         dirty_ring_push();
+>                                         if (dirty_ring_soft_full)  <--- full due to the push
+>                                             set_request(SOFT_FULL);
+>           clear_request(SOFT_FULL);                                <--- can wrongly clear the request?
+>
 
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
----
-This patch is part of a serie that axes all usages of strtobool().
-Each patch can be applied independently from the other ones.
+Hmmm, well spotted. That's another ugly effect of the recycle thread
+playing with someone else's toys.
 
-The last patch of the serie removes the definition of strtobool().
+> But I don't think that's a huge matter, as it'll just let the vcpu to have
+> one more chance to do another round of KVM_RUN.  Normally I think it means
+> there can be one more dirty GFN (perhaps there're cases that it can push >1
+> gfns for one KVM_RUN cycle?  I never figured out the details here, but
+> still..) pushed to the ring so closer to the hard limit, but we have had a
+> buffer zone of KVM_DIRTY_RING_RSVD_ENTRIES (64) entries.  So I assume
+> that's still fine, but maybe worth a short comment here?
+> 
+> I never know what's the maximum possible GFNs being dirtied for a KVM_RUN
+> cycle.  It would be good if there's an answer to that from anyone.
 
-You may not be in copy of the cover letter. So, if needed, it is available
-at [1].
+This is dangerous, and I'd rather not go there.
 
+It is starting to look like we need the recycle thread to get out of
+the way. And to be honest:
 
-This patch has NOT been compile tested.
++	if (!kvm_dirty_ring_soft_full(ring))
++		kvm_clear_request(KVM_REQ_DIRTY_RING_SOFT_FULL, vcpu);
 
+seems rather superfluous. Only clearing the flag in the vcpu entry
+path feels much saner, and I can't see anything that would break.
 
-[1]: https://lore.kernel.org/all/cover.1667336095.git.christophe.jaillet@wanadoo.fr/
----
- arch/arm64/kvm/vgic/vgic-v3.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+Thoughts?
 
-diff --git a/arch/arm64/kvm/vgic/vgic-v3.c b/arch/arm64/kvm/vgic/vgic-v3.c
-index 826ff6f2a4e7..efb2726efbb3 100644
---- a/arch/arm64/kvm/vgic/vgic-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-v3.c
-@@ -3,6 +3,7 @@
- #include <linux/irqchip/arm-gic-v3.h>
- #include <linux/irq.h>
- #include <linux/irqdomain.h>
-+#include <linux/kstrtox.h>
- #include <linux/kvm.h>
- #include <linux/kvm_host.h>
- #include <kvm/arm_vgic.h>
-@@ -587,25 +588,25 @@ DEFINE_STATIC_KEY_FALSE(vgic_v3_cpuif_trap);
- 
- static int __init early_group0_trap_cfg(char *buf)
- {
--	return strtobool(buf, &group0_trap);
-+	return kstrtobool(buf, &group0_trap);
- }
- early_param("kvm-arm.vgic_v3_group0_trap", early_group0_trap_cfg);
- 
- static int __init early_group1_trap_cfg(char *buf)
- {
--	return strtobool(buf, &group1_trap);
-+	return kstrtobool(buf, &group1_trap);
- }
- early_param("kvm-arm.vgic_v3_group1_trap", early_group1_trap_cfg);
- 
- static int __init early_common_trap_cfg(char *buf)
- {
--	return strtobool(buf, &common_trap);
-+	return kstrtobool(buf, &common_trap);
- }
- early_param("kvm-arm.vgic_v3_common_trap", early_common_trap_cfg);
- 
- static int __init early_gicv4_enable(char *buf)
- {
--	return strtobool(buf, &gicv4_enable);
-+	return kstrtobool(buf, &gicv4_enable);
- }
- early_param("kvm-arm.vgic_v4_enable", early_gicv4_enable);
- 
+	M.
+
 -- 
-2.34.1
-
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
