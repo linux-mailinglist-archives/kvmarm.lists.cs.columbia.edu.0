@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DEF0618575
-	for <lists+kvmarm@lfdr.de>; Thu,  3 Nov 2022 17:58:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A486618576
+	for <lists+kvmarm@lfdr.de>; Thu,  3 Nov 2022 17:58:51 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CDB2F4B64A;
-	Thu,  3 Nov 2022 12:58:49 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D4C364B2A1;
+	Thu,  3 Nov 2022 12:58:50 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.789
@@ -18,66 +18,66 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@linaro.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SjcqwMgCue8R; Thu,  3 Nov 2022 12:58:48 -0400 (EDT)
+	with ESMTP id tHnrkHxXMYaM; Thu,  3 Nov 2022 12:58:49 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6182A4B6EB;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 80FE54B6FA;
 	Thu,  3 Nov 2022 12:58:46 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 201DB4B653
- for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Nov 2022 03:14:20 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 14BFA4B653
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Nov 2022 03:16:55 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id lX2h-pLRDpGH for <kvmarm@lists.cs.columbia.edu>;
- Thu,  3 Nov 2022 03:14:19 -0400 (EDT)
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com
- [209.85.128.44])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id E52B14B640
- for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Nov 2022 03:14:18 -0400 (EDT)
-Received: by mail-wm1-f44.google.com with SMTP id
- m29-20020a05600c3b1d00b003c6bf423c71so2707403wms.0
- for <kvmarm@lists.cs.columbia.edu>; Thu, 03 Nov 2022 00:14:18 -0700 (PDT)
+ with ESMTP id T52-cJMjrR4S for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  3 Nov 2022 03:16:53 -0400 (EDT)
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com
+ [209.85.128.51])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C8FED4B640
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Nov 2022 03:16:53 -0400 (EDT)
+Received: by mail-wm1-f51.google.com with SMTP id
+ m7-20020a05600c090700b003cf8a105d9eso535877wmp.5
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 03 Nov 2022 00:16:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=6Pdpi+9UoXFmBx6WS1nIzeC5GAA4ErfSd67Sd5AqWcg=;
- b=H1aAZTt5omn1creuvv0ovxmACFg4pOnVWmYHZn4E4lfgT71L/+bkBqMdS2VJqi5qOj
- YmATL6SnR5o+XQBpr5Zki/b3eg+7a33Y6+MAjm8hsgmFIym9xbyYuh0hkg0prpG2xE5F
- PuLR8pBfv6BBbgXz9sU9CedCiJ2OZly1K4pMrBC8+JOwPT599bO9tsyb8SJGk4MzThPL
- 1kCqwm334cbHc7nOfuU0bDlyQDVQIepbwXFRhrNPfzdSZaSvyNIoq33No6jykj/v3m8W
- r8ppiNCB0xs+LOISHZCIqL+1GiXCOzslnZH2Bev57sQnF5H5kmf2+UwyKku2qWO1cQWO
- MoPQ==
+ bh=hhVVFU4gv+0KPdkJhZ6Bsgp0nMXVzSegBp2GVEhxHuI=;
+ b=h9I23FTp6GIOXmio03YkEg/XABkIyK7okfyOacacDCySEptlxLcYcKstMetIpqEjVI
+ AJxxtkE/wdXbgKxacBRTI0vKPMD7Lrwttr/WvlHH6ej0kR33MU05lAqiRuHOXS6eYgUi
+ 5D/WB/7tpxiogfi3huBIVAcoj+aw5jR0iw+raivB9st+zpUrHhjUaefLK8xl1XeXGROT
+ jIYtNJVpBXb1lhi22kZeWS2z2s2scGKIObYA8G99yKRsKrD7Waw2HL3AJk86rNi+kcwk
+ ldYfFW2HEUS0Ngd3K7BW6C8SpUqOYnm44amyRmlRCLpiKmxp0dOvOZKAUgifFtw1/6bS
+ zu8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6Pdpi+9UoXFmBx6WS1nIzeC5GAA4ErfSd67Sd5AqWcg=;
- b=8BbR8l8tGRMhksKIPjN8zAJFYccB8VYiutKUM6WMc68SWOUc77WgIaodiAYXWmL2P4
- wIxKRTJsRzeu7Zz34MFxIthUrpMPMH2Sc3AH6pYC1KP/hJdcstABScTCiezI6kZ7ANsw
- u7zj4Gcj2aQSUrQ0wZnvOo22wS5kd6Tjc2DIOO2lr+wj3Po57+/oiHidSKBn/+iLYkqe
- VRGWXd7+99fBocEmZXtOxRNF+goyt8z2aHDUZjLS+nDTgykBHr/hKN822AIzXVKqMZYR
- Utna98H0Ghqs6FXv1HzSlsMpw9XulszkMtkPAsoI1wBgFbrIjDvWf7ZSoVK9vQiXnmig
- lXkA==
-X-Gm-Message-State: ACrzQf1DKRraVH70xIfMl1L8yiAO6wWqQ+yoSfIm7DcdXLmp1320Y97i
- czc5GjLOsx+RcteogD+wPEXK/w==
-X-Google-Smtp-Source: AMsMyM5MQbAO6gubSSNJTg2fBstLeZi84Spz6yMzRnw+j7KRE9PRabE8XztmxDtlM/M+GTvsQ9gWSw==
-X-Received: by 2002:a05:600c:5127:b0:3c6:47ff:5d33 with SMTP id
- o39-20020a05600c512700b003c647ff5d33mr19212651wms.68.1667459657899; 
- Thu, 03 Nov 2022 00:14:17 -0700 (PDT)
+ bh=hhVVFU4gv+0KPdkJhZ6Bsgp0nMXVzSegBp2GVEhxHuI=;
+ b=SHr3D62YdK9CT2Nl47R8ftfdOT6m/xPcHaGqfIUVAzADOgWL67XFB3jdQNxDEo+FCB
+ /vh9oRZ3U16QHzORAYP+SbNc/QWXC0aM1LAHAzu9uZ89LsHts5fKnzXg4w+0CHa497Tv
+ sRE0fcK2NiYdyKxspc2BFn789YtGXnNMB4Wb1IA3hKB21a8JcjY1o8oQPmQxd/z1Tqb5
+ nI95D9FZJOGmaW/VoWcIp+BxxCYz8WUXjb4lrER5q3oE7sgfu5/m4iQLhaciXW5ueMYb
+ Iu3DAwXNVRjOIVSkgIQGhRM3IdUXLduGKPTo1CP1yQSmNu9jd9rZeZiEeROShw3Sav9Q
+ 8vKA==
+X-Gm-Message-State: ACrzQf2uDxtAlQ9W6IG7vH1/DcmwDuQQRdarghY2hms9HPAB0nMKBs56
+ KsK9C3wxXyckN+3bcSLApIhbMA==
+X-Google-Smtp-Source: AMsMyM5U5tWVDdkP8vx2CGlIc4Tyh8xELM0VfMzpr/hFq4D4kTE8+riEzXzUJzEDmk/itTcMkiPp1A==
+X-Received: by 2002:a05:600c:22c6:b0:3cf:88bb:3a95 with SMTP id
+ 6-20020a05600c22c600b003cf88bb3a95mr4075812wmg.71.1667459812670; 
+ Thu, 03 Nov 2022 00:16:52 -0700 (PDT)
 Received: from [192.168.11.175] (216.red-88-29-181.dynamicip.rima-tde.net.
  [88.29.181.216]) by smtp.gmail.com with ESMTPSA id
- e7-20020a5d5007000000b00236644228besm34910wrt.40.2022.11.03.00.14.14
+ p22-20020a05600c359600b003c6b9749505sm4601041wmq.30.2022.11.03.00.16.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Nov 2022 00:14:17 -0700 (PDT)
-Message-ID: <cb935198-e2f3-bc9e-a13c-2fa2bf8ea46b@linaro.org>
-Date: Thu, 3 Nov 2022 08:14:13 +0100
+ Thu, 03 Nov 2022 00:16:51 -0700 (PDT)
+Message-ID: <5aaa19b8-da75-9a3c-634b-d4c26f77943b@linaro.org>
+Date: Thu, 3 Nov 2022 08:16:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH 22/44] KVM: RISC-V: Do arch init directly in
- riscv_kvm_init()
+Subject: Re: [PATCH 25/44] KVM: s390: Do s390 specific init without bouncing
+ through kvm_init()
 Content-Language: en-US
 To: Sean Christopherson <seanjc@google.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>,
@@ -91,9 +91,9 @@ To: Sean Christopherson <seanjc@google.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
  Vitaly Kuznetsov <vkuznets@redhat.com>
 References: <20221102231911.3107438-1-seanjc@google.com>
- <20221102231911.3107438-23-seanjc@google.com>
+ <20221102231911.3107438-26-seanjc@google.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
-In-Reply-To: <20221102231911.3107438-23-seanjc@google.com>
+In-Reply-To: <20221102231911.3107438-26-seanjc@google.com>
 X-Mailman-Approved-At: Thu, 03 Nov 2022 12:58:44 -0400
 Cc: kvm@vger.kernel.org, David Hildenbrand <david@redhat.com>,
  Atish Patra <atishp@atishpatra.org>, linux-kernel@vger.kernel.org,
@@ -121,20 +121,20 @@ Content-Type: text/plain; charset="utf-8"; Format="flowed"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-T24gMy8xMS8yMiAwMDoxOCwgU2VhbiBDaHJpc3RvcGhlcnNvbiB3cm90ZToKPiBGb2xkIHRoZSBn
-dXRzIG9mIGt2bV9hcmNoX2luaXQoKSBpbnRvIHJpc2N2X2t2bV9pbml0KCkgaW5zdGVhZCBvZgo+
-IGJvdW5jaW5nIHRocm91Z2gga3ZtX2luaXQoKT0+a3ZtX2FyY2hfaW5pdCgpLiAgRnVuY3Rpb25h
-bGx5LCB0aGlzIGlzIGEKPiBnbG9yaWZpZWQgbm9wIGFzIGludm9raW5nIGt2bV9hcmNoX2luaXQo
-KSBpcyB0aGUgdmVyeSBmaXJzdCBhY3Rpb24KPiBwZXJmb3JtZWQgYnkga3ZtX2luaXQoKS4KPiAK
-PiBNb3Zpbmcgc2V0dXAgdG8gcmlzY3Zfa3ZtX2luaXQoKSwgd2hpY2ggaXMgdGFnZ2VkIF9faW5p
-dCwgd2lsbCBhbGxvdwo+IHRhZ2dpbmcgbW9yZSBmdW5jdGlvbnMgYW5kIGRhdGEgd2l0aCBfX2lu
-aXQgYW5kIF9fcm9fYWZ0ZXJfaW5pdC4gIEFuZAo+IGVtcHR5aW5nIGt2bV9hcmNoX2luaXQoKSB3
-aWxsIGFsbG93IGRyb3BwaW5nIHRoZSBob29rIGVudGlyZWx5IG9uY2UgYWxsCj4gYXJjaGl0ZWN0
-dXJlIGltcGxlbWVudGF0aW9ucyBhcmUgbm9wcy4KPiAKPiBObyBmdW5jdGlvbmFsIGNoYW5nZSBp
-bnRlbmRlZC4KPiAKPiBTaWduZWQtb2ZmLWJ5OiBTZWFuIENocmlzdG9waGVyc29uIDxzZWFuamNA
-Z29vZ2xlLmNvbT4KPiAtLS0KPiAgIGFyY2gvcmlzY3Yva3ZtL21haW4uYyB8IDE4ICsrKysrKysr
-Ky0tLS0tLS0tLQo+ICAgMSBmaWxlIGNoYW5nZWQsIDkgaW5zZXJ0aW9ucygrKSwgOSBkZWxldGlv
-bnMoLSkKClJldmlld2VkLWJ5OiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8cGhpbG1kQGxpbmFy
-by5vcmc+CgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwpr
-dm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1bWJpYS5lZHUKaHR0cHM6Ly9s
-aXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9rdm1hcm0K
+T24gMy8xMS8yMiAwMDoxOCwgU2VhbiBDaHJpc3RvcGhlcnNvbiB3cm90ZToKPiBNb3ZlIHRoZSBn
+dXRzIG9mIGt2bV9hcmNoX2luaXQoKSBpbnRvIGEgbmV3IGhlbHBlciwgX19rdm1fczM5MF9pbml0
+KCksCj4gYW5kIGludm9rZSB0aGUgbmV3IGhlbHBlciBkaXJlY3RseSBmcm9tIGt2bV9zMzkwX2lu
+aXQoKSBpbnN0ZWFkIG9mCj4gYm91bmNpbmcgdGhyb3VnaCBrdm1faW5pdCgpLiAgSW52b2tpbmcg
+a3ZtX2FyY2hfaW5pdCgpIGlzIHRoZSB2ZXJ5Cj4gZmlyc3QgYWN0aW9uIHBlcmZvcm1lZCBieSBr
+dm1faW5pdCgpLCBpLmUuIHRoaXMgaXMgYSBnbG9yaWZpZWQgbm9wLgo+IAo+IE1vdmluZyBzZXR1
+cCB0byBfX2t2bV9zMzkwX2luaXQoKSB3aWxsIGFsbG93IHRhZ2dpbmcgbW9yZSBmdW5jdGlvbnMg
+YXMKPiBfX2luaXQsIGFuZCBlbXB0eWluZyBrdm1fYXJjaF9pbml0KCkgd2lsbCBhbGxvdyBkcm9w
+cGluZyB0aGUgaG9vawo+IGVudGlyZWx5IG9uY2UgYWxsIGFyY2hpdGVjdHVyZSBpbXBsZW1lbnRh
+dGlvbnMgYXJlIG5vcHMuCj4gCj4gTm8gZnVuY3Rpb25hbCBjaGFuZ2UgaW50ZW5kZWQuCj4gCj4g
+U2lnbmVkLW9mZi1ieTogU2VhbiBDaHJpc3RvcGhlcnNvbiA8c2VhbmpjQGdvb2dsZS5jb20+Cj4g
+LS0tCj4gICBhcmNoL3MzOTAva3ZtL2t2bS1zMzkwLmMgfCAyOSArKysrKysrKysrKysrKysrKysr
+KysrKysrLS0tLQo+ICAgMSBmaWxlIGNoYW5nZWQsIDI1IGluc2VydGlvbnMoKyksIDQgZGVsZXRp
+b25zKC0pCgpSZXZpZXdlZC1ieTogUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgPHBoaWxtZEBsaW5h
+cm8ub3JnPgoKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18K
+a3ZtYXJtIG1haWxpbmcgbGlzdAprdm1hcm1AbGlzdHMuY3MuY29sdW1iaWEuZWR1Cmh0dHBzOi8v
+bGlzdHMuY3MuY29sdW1iaWEuZWR1L21haWxtYW4vbGlzdGluZm8va3ZtYXJtCg==
