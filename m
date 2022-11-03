@@ -2,85 +2,103 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id A578161833B
-	for <lists+kvmarm@lfdr.de>; Thu,  3 Nov 2022 16:47:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E3E3F61865A
+	for <lists+kvmarm@lfdr.de>; Thu,  3 Nov 2022 18:45:01 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id F0A934B269;
-	Thu,  3 Nov 2022 11:47:27 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 28D244B4D7;
+	Thu,  3 Nov 2022 13:45:01 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -1.787
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+X-Spam-Status: No, score=-1.787 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
+	RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
 	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Do4cvXNlvjyT; Thu,  3 Nov 2022 11:47:27 -0400 (EDT)
+	with ESMTP id IhMJinF3NAge; Thu,  3 Nov 2022 13:45:01 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C00664B62D;
-	Thu,  3 Nov 2022 11:47:26 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id EDACB4B2B7;
+	Thu,  3 Nov 2022 13:44:59 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id BAC0A4B256
- for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Nov 2022 11:47:25 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 929BA4B0D0
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Nov 2022 13:44:58 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id iKEwfCCFc9yy for <kvmarm@lists.cs.columbia.edu>;
- Thu,  3 Nov 2022 11:47:24 -0400 (EDT)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 9CC7A4B0F4
- for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Nov 2022 11:47:24 -0400 (EDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 274AFB82685;
- Thu,  3 Nov 2022 15:47:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB34C433C1;
- Thu,  3 Nov 2022 15:47:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1667490441;
- bh=YyjFEMcRcjqRDNSfbQWiVKeLBUUkpDMT5jdKO6cAdqQ=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=TDr9qyKe/+dTR8gWFGKeBUhaC6zf/8HOy2icfeIp2fkVHh6HFeOyvTa2yirYgH9Uv
- g4p6zC9ZdppboGONR9r7YwziMTpiF2HbXUtg0n8i+Kbk9k6mvoNu4xv3ZaKijU7d6d
- haM3m5tT7hYMlfh7UBfNTT13941UTyCsMsHT3eEQrZuKkF3vhVU7/yKO7UR6K+b6f7
- PgKJmetND26xArGRpkC53q/67oQ63maKXTe7hybvMkyeKQPiqAiOM9KosvFZYi+Lc8
- tWWbtpIOX7OWLWvK1l729EYpyaHJi41yIut+oPFcdNnuQbQk6jHeaLmxoBM4KJY8nk
- wkgc4wFHl4lbA==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=valley-girl.lan)
- by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
- (envelope-from <maz@kernel.org>) id 1oqcR5-003Xxs-PC;
- Thu, 03 Nov 2022 15:47:19 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: yezengruan@huawei.com, steven.price@arm.com, catalin.marinas@arm.com,
- mark.rutland@arm.com, linux@armlinux.org.uk,
- Usama Arif <usama.arif@bytedance.com>, kvmarm@lists.cs.columbia.edu,
- kvm@vger.kernel.org, virtualization@lists.linux-foundation.org,
- will@kernel.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, bagasdotme@gmail.com
-Subject: Re: [PATCH] kvm/arm: Fix pvtime documentation
-Date: Thu,  3 Nov 2022 15:47:16 +0000
-Message-Id: <166749042515.2400683.5463582608696818455.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20221103131210.3603385-1-usama.arif@bytedance.com>
-References: <20221103131210.3603385-1-usama.arif@bytedance.com>
+ with ESMTP id Qasc0ehMxVvK for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  3 Nov 2022 13:44:57 -0400 (EDT)
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com
+ [209.85.216.52])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 728C149F49
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Nov 2022 13:44:57 -0400 (EDT)
+Received: by mail-pj1-f52.google.com with SMTP id
+ v4-20020a17090a088400b00212cb0ed97eso2485484pjc.5
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 03 Nov 2022 10:44:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=cK19xZ8r/JxZ6zrZk59CGRO4XALiFfw/k+DEo690ifc=;
+ b=AMXkMgBJe864E9ylH4eLhcV4DnnmpnUZQciwStcW/fWfVy8vl8xbyLHXqWoh/4n8QF
+ bRAhsfNtOcglKLMhK6Nb/v5AF7HvdYNYuPv80cwXOHPX5E9n4f4rIwmSH2XAdpFIqhuj
+ sSsx/7sAKHM3fmeDS7xyNpoxOPMcbkwOVVWM5XBPQcjHKuBxYoH5JxFh6oDyEgClSLr4
+ VePL27iqi0rk5/s+JivkXFUi7OtMXJLNacJQMnJ3M4obYSjfplMj8jxI5D4RNhWTNCit
+ VmDRgbq4Pt+ph415Zp0hH77zR2JN9eVpsj1xI6CTZrVgir1QKlQnpGg6QTPI6wKdJ0ls
+ 3hyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cK19xZ8r/JxZ6zrZk59CGRO4XALiFfw/k+DEo690ifc=;
+ b=8AGL/PsJDqmkBbWJctJQ5bgh7/DFqzRw/vHpBouVq+OayKYyWsnx2x/E4gWYGvu5NM
+ VuleSbHhj+fv3XwNnuDq8nbjPxCNQGn4AoOXij3M9O4mZEsGWuQ8iSybKM7yZapSIXeA
+ 76Fu0VY3ns/qHr2UjTxcsBnCZm2BmR+A5/gm5eE06RLsObXReQYOudL2pNJ9unT28TCh
+ iRyI7UkHVCrqItIgrmsEWwUJqB3QiEv+87a0whoMjnEU3sk7+apmlBQhwuO91scVozkM
+ 01qHrmXxs8qsmujn5ahzULySkZlu6fToBasMR/WH927YF5K7fwFfGT6YrARhD1eqkcY3
+ +t/g==
+X-Gm-Message-State: ACrzQf3WoAi7z+rYzwBaP5b2uE1TQgwH1mKAv9tlQvZj+StlZV9ZjMU4
+ 4WdgRCibC2gcUVL4TuzIJ04MGQ==
+X-Google-Smtp-Source: AMsMyM7Vi7ErqJmqrzHt1bwsO7Jfw+kVc4w4lCdxf/cK5b8KZHYV39XlOvASF4Eye8GSeC7ZJ2rbFQ==
+X-Received: by 2002:a17:90a:d24d:b0:213:d3e4:677a with SMTP id
+ o13-20020a17090ad24d00b00213d3e4677amr24629292pjw.101.1667497496277; 
+ Thu, 03 Nov 2022 10:44:56 -0700 (PDT)
+Received: from google.com (7.104.168.34.bc.googleusercontent.com.
+ [34.168.104.7]) by smtp.gmail.com with ESMTPSA id
+ i7-20020a17090332c700b00178aaf6247bsm1004862plr.21.2022.11.03.10.44.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 03 Nov 2022 10:44:55 -0700 (PDT)
+Date: Thu, 3 Nov 2022 17:44:51 +0000
+From: Sean Christopherson <seanjc@google.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 36/44] KVM: x86: Do compatibility checks when onlining CPU
+Message-ID: <Y2P+E+631c0TNcK7@google.com>
+References: <20221102231911.3107438-1-seanjc@google.com>
+ <20221102231911.3107438-37-seanjc@google.com>
+ <23bfd709-f99a-5a74-e4b9-1381b88453f1@redhat.com>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: yezengruan@huawei.com, steven.price@arm.com,
- catalin.marinas@arm.com, mark.rutland@arm.com, linux@armlinux.org.uk,
- usama.arif@bytedance.com, kvmarm@lists.cs.columbia.edu, kvm@vger.kernel.org,
- virtualization@lists.linux-foundation.org, will@kernel.org,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, bagasdotme@gmail.com,
- fam.zheng@bytedance.com, liangma@liangbit.com, punit.agrawal@bytedance.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
-Cc: punit.agrawal@bytedance.com, fam.zheng@bytedance.com, liangma@liangbit.com
+Content-Disposition: inline
+In-Reply-To: <23bfd709-f99a-5a74-e4b9-1381b88453f1@redhat.com>
+Cc: Matthew Rosato <mjrosato@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>, Yuan Yao <yuan.yao@intel.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>, linux-kernel@vger.kernel.org,
+ Michael Ellerman <mpe@ellerman.id.au>, linux-riscv@lists.infradead.org,
+ Claudio Imbrenda <imbrenda@linux.ibm.com>, kvmarm@lists.cs.columbia.edu,
+ linux-s390@vger.kernel.org, Janosch Frank <frankja@linux.ibm.com>,
+ Marc Zyngier <maz@kernel.org>, Huacai Chen <chenhuacai@kernel.org>,
+ Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Chao Gao <chao.gao@intel.com>, Eric Farman <farman@linux.ibm.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, kvm@vger.kernel.org,
+ Atish Patra <atishp@atishpatra.org>, kvmarm@lists.linux.dev,
+ Thomas Gleixner <tglx@linutronix.de>, linux-arm-kernel@lists.infradead.org,
+ Isaku Yamahata <isaku.yamahata@intel.com>,
+ Fabiano Rosas <farosas@linux.ibm.com>, linux-mips@vger.kernel.org,
+ Palmer Dabbelt <palmer@dabbelt.com>, kvm-riscv@lists.infradead.org,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, linuxppc-dev@lists.ozlabs.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -97,22 +115,37 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, 3 Nov 2022 13:12:10 +0000, Usama Arif wrote:
-> This includes table format and using reST labels for
-> cross-referencing to vcpu.rst.
+On Thu, Nov 03, 2022, Paolo Bonzini wrote:
+> On 11/3/22 00:19, Sean Christopherson wrote:
+> > From: Chao Gao<chao.gao@intel.com>
+> > 
+> > Do compatibility checks when enabling hardware to effectively add
+> > compatibility checks when onlining a CPU.  Abort enabling, i.e. the
+> > online process, if the (hotplugged) CPU is incompatible with the known
+> > good setup.
+> 
+> This paragraph is not true with this patch being before "KVM: Rename and
+> move CPUHP_AP_KVM_STARTING to ONLINE section".
 
-Applied to kvm-arm64/misc-6.2, thanks!
+Argh, good eyes.  Getting the ordering correct in this series has been quite the
+struggle.  Assuming there are no subtle dependencies between x86 and common KVM,
+the ordering should be something like this:
 
-[1/1] kvm/arm: Fix pvtime documentation
-      commit: e7442ac1da07910f4731cb812c05484e4be2d4de
-
-Cheers,
-
-	M.
--- 
-Without deviation from the norm, progress is not possible.
-
-
+  KVM: Opt out of generic hardware enabling on s390 and PPC
+  KVM: Register syscore (suspend/resume) ops early in kvm_init()
+  KVM: x86: Do compatibility checks when onlining CPU
+  KVM: SVM: Check for SVM support in CPU compatibility checks
+  KVM: VMX: Shuffle support checks and hardware enabling code around
+  KVM: x86: Do VMX/SVM support checks directly in vendor code
+  KVM: x86: Unify pr_fmt to use module name for all KVM modules
+  KVM: x86: Use KBUILD_MODNAME to specify vendor module name
+  KVM: Make hardware_enable_failed a local variable in the "enable all" path
+  KVM: Use a per-CPU variable to track which CPUs have enabled virtualization
+  KVM: Remove on_each_cpu(hardware_disable_nolock) in kvm_exit()
+  KVM: Drop kvm_count_lock and instead protect kvm_usage_count with kvm_lock
+  KVM: Disable CPU hotplug during hardware enabling
+  KVM: Rename and move CPUHP_AP_KVM_STARTING to ONLINE section
+  KVM: Drop kvm_arch_check_processor_compat() hook
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
