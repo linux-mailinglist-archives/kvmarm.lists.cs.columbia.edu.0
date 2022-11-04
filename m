@@ -2,85 +2,94 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 68E32618D81
-	for <lists+kvmarm@lfdr.de>; Fri,  4 Nov 2022 02:11:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C351618DC6
+	for <lists+kvmarm@lfdr.de>; Fri,  4 Nov 2022 02:48:34 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 144AB49EFA;
-	Thu,  3 Nov 2022 21:11:22 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7A9FF49AF7;
+	Thu,  3 Nov 2022 21:48:33 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -1.017
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.017 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001,
+	RCVD_IN_SORBS_WEB=0.77, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@google.com
+	(fail, message has been altered) header.i=@gmail.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DmHIOVgr3zZb; Thu,  3 Nov 2022 21:11:21 -0400 (EDT)
+	with ESMTP id X2VFqZqKCqbZ; Thu,  3 Nov 2022 21:48:33 -0400 (EDT)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9C2854B228;
-	Thu,  3 Nov 2022 21:11:20 -0400 (EDT)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5495743479;
+	Thu,  3 Nov 2022 21:48:32 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E34924965C
- for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Nov 2022 21:11:19 -0400 (EDT)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id EEDCC40D0B
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Nov 2022 21:48:30 -0400 (EDT)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id aJ7YDvzIWbnY for <kvmarm@lists.cs.columbia.edu>;
- Thu,  3 Nov 2022 21:11:18 -0400 (EDT)
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com
- [209.85.219.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id CCA8340D23
- for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Nov 2022 21:11:18 -0400 (EDT)
-Received: by mail-yb1-f201.google.com with SMTP id
- h9-20020a25e209000000b006cbc4084f2eso3602933ybe.23
- for <kvmarm@lists.cs.columbia.edu>; Thu, 03 Nov 2022 18:11:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=DVyQMJ/hVRvvulqgoMW2WeWXC7WT0Qk0m1EuDV5v41A=;
- b=PQ01Z/eWCROdg6wptfL9xDEZzpuwG0L8Xm+zs8jhf8zCDIKQHzgHS2nYXtnxlIotzm
- QK0pJhfhkSTRdHdGFphaXaLW1wNck7vtuv15Cz3sELQBwWxIVmgfSSbPdHUXVm+F1NXE
- VACBoH2MK+PRd3kTd/87J0HS5jB+JpvZeWsto5Z+1PvCcYoxya2SDs7W63OS/SkKAqYk
- e4h+LHQ+zRqw6B5kSDX/xzaRtYzuRalDlXNp5zcoGD+hmpQUwJhImh32C5LnLg34BwTP
- LJ+wnwtZsSakJ7QaJglHzffQdgmQkl/8eLWdd7P/evkLEdw1ajSbxO19hQL9wfyUwZnS
- +e7A==
+ with ESMTP id xkbnkq5klzVv for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  3 Nov 2022 21:48:30 -0400 (EDT)
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com
+ [209.85.214.172])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id D2BE340BED
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  3 Nov 2022 21:48:29 -0400 (EDT)
+Received: by mail-pl1-f172.google.com with SMTP id io19so3593760plb.8
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 03 Nov 2022 18:48:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kI2bio8wmQ0tUqhuEplLTLsBHSGHlrsvdLcA5KYXd1o=;
+ b=okJIUsjhGpoSr7ebbtfgAqH0GYDYyL7dOwFsAvIpPQxaUkfj0UP2ubzMSszKzLoSJN
+ v6PakLQ+XxWm79MGsDUXql9IQEZxdMTWbKG81FTHJSY9kzQGK+YsR1OvwDbkE09D1VlJ
+ 4dw4AZi5O9K8lqfRcZFGFnYrPVqUMUcNoMABhjUk0b4JfdXLO0pshLnVS/0Z74PotUp/
+ mlKcoIwavTTTQ18DLNZ1g2AW+XuW2afaA+rYfxRqMHWRPYZsUyIvJriVnnZSrEQKK6le
+ XI6Un19ShxQI7Ey405lypQalZbGVguAIjN21YMsahXg364hurzORypaF2/fKRwCkV3D2
+ vW7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=cc:to:from:subject:references:mime-version:message-id:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DVyQMJ/hVRvvulqgoMW2WeWXC7WT0Qk0m1EuDV5v41A=;
- b=X4QQTQVkjJSd255npDGA5ZHyzAfxBCMIpSRpzq90ArWYaYYfsN/bAbnj4QZBYQo47M
- vn4NUfPGTihRbu8eYJ19PZAyseMZcHQc0TskSdApunvM9WhWdPRiozcyxPx85mSL4tbB
- syxbGrpuJ0RMsXUpHTbZDAqdz/QQ9yNynlW/+iAqCfoKSktXrSm1H+SOh9qRTir/x12X
- l5pmKy/jJ/xdx3Bx5F7syrgSlkqKPB3gWOZFIpidrTTgLoPOktmGvd6sPqsFTD6+8ALo
- 1P90kW5SDwzjoNn6RBb9voU9VKxVLRKYWF60bhFha6zJ6qa2KVf2/A85vE90HdeB+f3z
- /CsQ==
-X-Gm-Message-State: ACrzQf0mspX41Sdcgou6PNL7C7HiHFHx0yvNCncwVFTNwABGpz9GAjhD
- 1/KG8v9UEjKPSWN2m+LeuQnnLBo=
-X-Google-Smtp-Source: AMsMyM5iy+9LxEdaoz+PBI8tytwaj51kRKgjlikY6ojuKPepInTV3TsN3lEgpA/59HjnDyluctdWXjE=
-X-Received: from pcc-desktop.svl.corp.google.com
- ([2620:15c:2ce:200:2844:b0ec:e556:30d8])
- (user=pcc job=sendgmr) by 2002:a81:7094:0:b0:370:4592:dffe with SMTP id
- l142-20020a817094000000b003704592dffemr219576ywc.345.1667524278368; Thu, 03
- Nov 2022 18:11:18 -0700 (PDT)
-Date: Thu,  3 Nov 2022 18:10:41 -0700
-In-Reply-To: <20221104011041.290951-1-pcc@google.com>
-Message-Id: <20221104011041.290951-9-pcc@google.com>
-Mime-Version: 1.0
-References: <20221104011041.290951-1-pcc@google.com>
-X-Mailer: git-send-email 2.38.1.431.g37b22c650d-goog
-Subject: [PATCH v5 8/8] Documentation: document the ABI changes for
- KVM_CAP_ARM_MTE
-From: Peter Collingbourne <pcc@google.com>
-To: linux-arm-kernel@lists.infradead.org, kvmarm@lists.cs.columbia.edu
-Cc: kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>, Cornelia Huck <cohuck@redhat.com>,
- Steven Price <steven.price@arm.com>, Marc Zyngier <maz@kernel.org>,
- Vincenzo Frascino <vincenzo.frascino@arm.com>,
- Peter Collingbourne <pcc@google.com>, Evgenii Stepanov <eugenis@google.com>
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kI2bio8wmQ0tUqhuEplLTLsBHSGHlrsvdLcA5KYXd1o=;
+ b=t9gV82ytHvZGJnTrGgyCfhUixeG4ShPEw3CwdF2+cCduFuJ2iZW38NCNcxLCa4QS2N
+ NLXNa+dXw9lMj0m63HqKAEwTXTNEb9Aif4G7y7yQINp9dUqbp6q0p6pkExC1gv5Sme2A
+ xqv9Ero+sxIHKxJ+ilj4Xh0utL+cuXAZqkPZn6aa1qVcw64KUP5uiBp2LbHQmuMAxeVp
+ bEuk/L2gTz4Bljr2SYrO9D/4eNMW0W+ZY1nVoCD280MZ9EpkNmZhqnlmJq+fiwUje7b6
+ Mo8+yvOamXE6frEAc3vx6l/VC02ygnlIa5txELzlaARtc9hu/pzV1foGATixC34JqK69
+ +F4w==
+X-Gm-Message-State: ACrzQf3pSPHsVrsCpnGAd+ME6PA4dj+1hMVVuhcYq9j6oTYOL39cX2QI
+ YBQG08Z6LM05WlJwH4ENa60=
+X-Google-Smtp-Source: AMsMyM5IldMoiS3xXBLh2Vh0OIVV2RvQ8KbcaI/UFxFMESQqDNIp1EYyZ1RDviZLejrZpnABGqs7Zg==
+X-Received: by 2002:a17:902:f686:b0:187:16a0:fd2b with SMTP id
+ l6-20020a170902f68600b0018716a0fd2bmr27368685plg.91.1667526508865; 
+ Thu, 03 Nov 2022 18:48:28 -0700 (PDT)
+Received: from [192.168.43.80] (subs02-180-214-232-15.three.co.id.
+ [180.214.232.15]) by smtp.gmail.com with ESMTPSA id
+ m5-20020a17090b068500b002132f3e71c6sm592915pjz.52.2022.11.03.18.48.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Nov 2022 18:48:28 -0700 (PDT)
+Message-ID: <4b2b78c6-9903-1247-9d16-fc6270aa34fc@gmail.com>
+Date: Fri, 4 Nov 2022 08:48:21 +0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: [PATCH] kvm/arm: Fix pvtime documentation
+To: Marc Zyngier <maz@kernel.org>
+References: <20221103131210.3603385-1-usama.arif@bytedance.com>
+ <24d81fe9-7cd1-71eb-8c35-0739f638b3df@gmail.com>
+ <86fsf0qc1w.wl-maz@kernel.org>
+Content-Language: en-US
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <86fsf0qc1w.wl-maz@kernel.org>
+Cc: kvm@vger.kernel.org, linux-doc@vger.kernel.org, catalin.marinas@arm.com,
+ linux-kernel@vger.kernel.org, virtualization@lists.linux-foundation.org,
+ Usama Arif <usama.arif@bytedance.com>, fam.zheng@bytedance.com,
+ punit.agrawal@bytedance.com, linux@armlinux.org.uk, liangma@liangbit.com,
+ steven.price@arm.com, will@kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -97,33 +106,21 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Document both the restriction on VM_MTE_ALLOWED mappings and
-the relaxation for shared mappings.
+On 11/3/22 22:42, Marc Zyngier wrote:
+> No, this is the correct course of action. There isn't any point in
+> having an *unrelated* change in a separate series. This is a
+> standalone change, posted as a standalone patch.
+> 
+>> Please reroll your series [2] with suggestion applied.
+> 
+> Or not.
+> 
 
-Signed-off-by: Peter Collingbourne <pcc@google.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
----
- Documentation/virt/kvm/api.rst | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+You mean the series before this patch have already been applied,
+right?
 
-diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
-index eee9f857a986..b55f80dadcfe 100644
---- a/Documentation/virt/kvm/api.rst
-+++ b/Documentation/virt/kvm/api.rst
-@@ -7385,8 +7385,9 @@ hibernation of the host; however the VMM needs to manually save/restore the
- tags as appropriate if the VM is migrated.
- 
- When this capability is enabled all memory in memslots must be mapped as
--not-shareable (no MAP_SHARED), attempts to create a memslot with a
--MAP_SHARED mmap will result in an -EINVAL return.
-+``MAP_ANONYMOUS`` or with a RAM-based file mapping (``tmpfs``, ``memfd``),
-+attempts to create a memslot with an invalid mmap will result in an
-+-EINVAL return.
- 
- When enabled the VMM may make use of the ``KVM_ARM_MTE_COPY_TAGS`` ioctl to
- perform a bulk copy of tags to/from the guest.
 -- 
-2.38.1.431.g37b22c650d-goog
+An old man doll... just what I always wanted! - Clara
 
 _______________________________________________
 kvmarm mailing list
