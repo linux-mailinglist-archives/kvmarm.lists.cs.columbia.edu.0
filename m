@@ -2,126 +2,75 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id AEB1E6244BF
-	for <lists+kvmarm@lfdr.de>; Thu, 10 Nov 2022 15:52:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C1736244BD
+	for <lists+kvmarm@lfdr.de>; Thu, 10 Nov 2022 15:51:58 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 597AC4BAD5;
-	Thu, 10 Nov 2022 09:52:00 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B5B3B4BAD5;
+	Thu, 10 Nov 2022 09:51:57 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -1.899
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=no
-Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@ibm.com
+X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id rNUbHql6fGVm; Thu, 10 Nov 2022 09:51:56 -0500 (EST)
+	with ESMTP id F62C7UEKB+VA; Thu, 10 Nov 2022 09:51:57 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 02E554BAD3;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 238F54BADA;
 	Thu, 10 Nov 2022 09:51:47 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CA7644B812
- for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Nov 2022 14:09:18 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C1A294B893
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Nov 2022 14:48:36 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id DvFsMGqUMoh8 for <kvmarm@lists.cs.columbia.edu>;
- Mon,  7 Nov 2022 14:09:14 -0500 (EST)
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8CC4E4B845
- for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Nov 2022 14:09:14 -0500 (EST)
-Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2A7IMGET008477;
- Mon, 7 Nov 2022 19:08:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=8yB1T9kkcj6JZp4TFm1A7hnrKTeQoKKGrd8tbPdyOEs=;
- b=mPK9o5wVItAdUCHHrTW+8HPUpMJmXCn685NlXKeVscLMgyHN4njk8bVPEIHZQPcPLZqK
- Ztz8RCrPoADtS/PrmmIEoIPAMygo0OG+ehIy/Xh5qIWr83a/qhrmNPRWHT7LucYzuM6v
- GRY8EZO5Yi9cBmIGqjDcuXfelRLAZTOy12d0YJGmmFC79SKpFsiYDDpFKy4ciSN4pXgq
- ZH3CiU5g+v8IvCRrWHCXajaSzXembp+poMANK9d6PkKxLctLIG6WcGSnTwltbKhrZ/q9
- fu9tqSDViuxcUkN+0hEHKxNVgqwvD3l/8QHsqgCbXQ/CCD24BS1R0u7ACKjl2l8sEdL4 +A== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3kp1vspb26-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 07 Nov 2022 19:08:57 +0000
-Received: from m0127361.ppops.net (m0127361.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2A7IgUpc024059;
- Mon, 7 Nov 2022 19:08:56 GMT
-Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
- [169.55.85.253])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3kp1vspb1g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 07 Nov 2022 19:08:56 +0000
-Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
- by ppma01wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 2A7J6ZLd012249;
- Mon, 7 Nov 2022 19:08:55 GMT
-Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com
- [9.57.198.24]) by ppma01wdc.us.ibm.com with ESMTP id 3kngs3smh7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 07 Nov 2022 19:08:55 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com ([9.208.128.114])
- by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 2A7J8sh916712426
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 7 Nov 2022 19:08:54 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 26BC558068;
- Mon,  7 Nov 2022 19:08:54 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 430D958060;
- Mon,  7 Nov 2022 19:08:50 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.65.225.56]) by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  7 Nov 2022 19:08:50 +0000 (GMT)
-Message-ID: <13c194d02d02a0e2adc006c724809b63c11f1e80.camel@linux.ibm.com>
-Subject: Re: [PATCH 30/44] KVM: Drop kvm_arch_check_processor_compat() hook
-From: Eric Farman <farman@linux.ibm.com>
-To: Sean Christopherson <seanjc@google.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>, Huacai Chen
- <chenhuacai@kernel.org>, Aleksandar Markovic
- <aleksandar.qemu.devel@gmail.com>, Anup Patel <anup@brainfault.org>, Paul
- Walmsley <paul.walmsley@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>,
- Claudio Imbrenda <imbrenda@linux.ibm.com>, Matthew Rosato
- <mjrosato@linux.ibm.com>, Vitaly Kuznetsov <vkuznets@redhat.com>
-Date: Mon, 07 Nov 2022 14:08:47 -0500
-In-Reply-To: <20221102231911.3107438-31-seanjc@google.com>
-References: <20221102231911.3107438-1-seanjc@google.com>
- <20221102231911.3107438-31-seanjc@google.com>
-User-Agent: Evolution 3.44.4 (3.44.4-2.fc36) 
+ with ESMTP id lidyvJqn+679 for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  7 Nov 2022 14:48:35 -0500 (EST)
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com
+ [209.85.167.180])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id AFCA74B838
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Nov 2022 14:48:35 -0500 (EST)
+Received: by mail-oi1-f180.google.com with SMTP id c129so13354730oia.0
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 07 Nov 2022 11:48:35 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pC3VraCs8s6YEvpVTV0I2PtrYdEY09JJSU0EEtgPIig=;
+ b=ZuG1RomTPNC8KablyGHC2oHAnuD4Ze2RGZqAo5wN3ZA8MjBjxcCBZfOdCrLCzj+0R9
+ tmfmfw74dlspfxNvLoRz9qRXMjdpkztkyOlXJYG+BMwHwWBfmDNbCFDIq/mPCUZme58z
+ pSA9Wn91NAL7q7HYVRPkH5DyGYQ8CteGyz9hhCTXje5wbDKqCBWLWuvqeTLKNNPTwMuU
+ zalkAemcQT7efpQfqzs/GE1JhyzE4E7WWM0xFX5xzIgaMrcDIzZyLZkl0RJ0TrRX/rwZ
+ +T5QM+2zrhhvhrUWKVDic+x30TiVMbO42sCYjDMJ3CwXuEdhrTvwQzXpcCPXUcWmidbr
+ pw4Q==
+X-Gm-Message-State: ACrzQf1ESX2/TWKh7q7aodFXU1rogIZOjxxV+ZTYfJ9qp1WyXblg2CZx
+ v1LAMlHCF/717UD3veWVQRtL0ppuZ6CBbWptuQU=
+X-Google-Smtp-Source: AMsMyM4Z/18xRjOjvwABmJlezj2L/eczEI73izOERN6BTvW3w6fEqYeDeoy80slhhl69ZKNf1gn6csGrVR6G4/dsA4Q=
+X-Received: by 2002:aca:2805:0:b0:359:e340:d53 with SMTP id
+ 5-20020aca2805000000b00359e3400d53mr26615294oix.209.1667850515046; Mon, 07
+ Nov 2022 11:48:35 -0800 (PST)
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: RHHp999uHGQe6ZCvMSlBReRcUeSiiV8m
-X-Proofpoint-GUID: DuaePqxTnOnEid3ZLdZuErIqRkSISZr5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-07_09,2022-11-07_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 mlxlogscore=793
- phishscore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0 malwarescore=0
- bulkscore=0 spamscore=0 adultscore=0 suspectscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
- definitions=main-2211070152
+References: <20220825-arm-spe-v8-7-v3-0-87682f78caac@kernel.org>
+ <20220825-arm-spe-v8-7-v3-8-87682f78caac@kernel.org>
+In-Reply-To: <20220825-arm-spe-v8-7-v3-8-87682f78caac@kernel.org>
+From: Namhyung Kim <namhyung@kernel.org>
+Date: Mon, 7 Nov 2022 11:48:23 -0800
+Message-ID: <CAM9d7ciYabTpo0q5Z8h229dZ+RXG7JP1zgOoR1fgdZZCH87vow@mail.gmail.com>
+Subject: Re: [PATCH v3 8/8] perf: arm_spe: Add support for SPEv1.2 inverted
+ event filtering
+To: Rob Herring <robh@kernel.org>
 X-Mailman-Approved-At: Thu, 10 Nov 2022 09:51:44 -0500
-Cc: kvm@vger.kernel.org, David Hildenbrand <david@redhat.com>,
- Atish Patra <atishp@atishpatra.org>, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- linux-s390@vger.kernel.org, Michael Ellerman <mpe@ellerman.id.au>,
- Chao Gao <chao.gao@intel.com>, Yuan Yao <yuan.yao@intel.com>,
- kvmarm@lists.linux.dev, Thomas Gleixner <tglx@linutronix.de>,
- linux-arm-kernel@lists.infradead.org,
- Isaku Yamahata <isaku.yamahata@intel.com>,
- Fabiano Rosas <farosas@linux.ibm.com>, linux-mips@vger.kernel.org,
- kvm-riscv@lists.infradead.org, linuxppc-dev@lists.ozlabs.org
+Cc: Peter Zijlstra <peterz@infradead.org>,
+ Catalin Marinas <catalin.marinas@arm.com>, Mark Brown <broonie@kernel.org>,
+ linux-kernel@vger.kernel.org, Arnaldo Carvalho de Melo <acme@kernel.org>,
+ linux-perf-users@vger.kernel.org,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Ingo Molnar <mingo@redhat.com>, Jiri Olsa <jolsa@kernel.org>,
+ Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, James Clark <james.clark@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -133,28 +82,37 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-T24gV2VkLCAyMDIyLTExLTAyIGF0IDIzOjE4ICswMDAwLCBTZWFuIENocmlzdG9waGVyc29uIHdy
-b3RlOgo+IERyb3Aga3ZtX2FyY2hfY2hlY2tfcHJvY2Vzc29yX2NvbXBhdCgpIGFuZCBpdHMgc3Vw
-cG9ydCBjb2RlIG5vdyB0aGF0Cj4gYWxsCj4gYXJjaGl0ZWN0dXJlIGltcGxlbWVudGF0aW9ucyBh
-cmUgbm9wcy4KPiAKPiBTaWduZWQtb2ZmLWJ5OiBTZWFuIENocmlzdG9waGVyc29uIDxzZWFuamNA
-Z29vZ2xlLmNvbT4KPiAtLS0KPiDCoGFyY2gvYXJtNjQva3ZtL2FybS5jwqDCoMKgwqDCoMKgIHzC
-oCA3ICstLS0tLS0KPiDCoGFyY2gvbWlwcy9rdm0vbWlwcy5jwqDCoMKgwqDCoMKgIHzCoCA3ICst
-LS0tLS0KPiDCoGFyY2gvcG93ZXJwYy9rdm0vYm9vazNzLmPCoCB8wqAgMiArLQo+IMKgYXJjaC9w
-b3dlcnBjL2t2bS9lNTAwLmPCoMKgwqAgfMKgIDIgKy0KPiDCoGFyY2gvcG93ZXJwYy9rdm0vZTUw
-MG1jLmPCoCB8wqAgMiArLQo+IMKgYXJjaC9wb3dlcnBjL2t2bS9wb3dlcnBjLmMgfMKgIDUgLS0t
-LS0KPiDCoGFyY2gvcmlzY3Yva3ZtL21haW4uY8KgwqDCoMKgwqAgfMKgIDcgKy0tLS0tLQo+IMKg
-YXJjaC9zMzkwL2t2bS9rdm0tczM5MC5jwqDCoCB8wqAgNyArLS0tLS0tCj4gwqBhcmNoL3g4Ni9r
-dm0vc3ZtL3N2bS5jwqDCoMKgwqAgfMKgIDQgKystLQo+IMKgYXJjaC94ODYva3ZtL3ZteC92bXgu
-Y8KgwqDCoMKgIHzCoCA0ICsrLS0KPiDCoGFyY2gveDg2L2t2bS94ODYuY8KgwqDCoMKgwqDCoMKg
-wqAgfMKgIDUgLS0tLS0KPiDCoGluY2x1ZGUvbGludXgva3ZtX2hvc3QuaMKgwqAgfMKgIDQgKy0t
-LQo+IMKgdmlydC9rdm0va3ZtX21haW4uY8KgwqDCoMKgwqDCoMKgIHwgMjQgKy0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tCj4gwqAxMyBmaWxlcyBjaGFuZ2VkLCAxMyBpbnNlcnRpb25zKCspLCA2NyBk
-ZWxldGlvbnMoLSkKClJldmlld2VkLWJ5OiBFcmljIEZhcm1hbiA8ZmFybWFuQGxpbnV4LmlibS5j
-b20+CSMgczM5MApfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-Xwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1bWJpYS5lZHUKaHR0cHM6
-Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9rdm1hcm0K
+Hello,
+
+On Fri, Nov 4, 2022 at 8:55 AM Rob Herring <robh@kernel.org> wrote:
+>
+> Arm SPEv1.2 (Arm v8.7/v9.2) adds a new feature called Inverted Event
+> Filter which excludes samples matching the event filter. The feature
+> mirrors the existing event filter in PMSEVFR_EL1 adding a new register,
+> PMSNEVFR_EL1, which has the same event bit assignments.
+
+Just out of curiosity, is it possible to have the event filter and
+inverted filter at the same time?  What if they have the same?
+
+Thanks,
+Namhyung
+
+>
+> Tested-by: James Clark <james.clark@arm.com>
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+> v3:
+>  - No change
+> v2:
+>  - Update for auto generated register defines
+>  - Avoid accessing SYS_PMSNEVFR_EL1 on < v8.7
+> ---
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
