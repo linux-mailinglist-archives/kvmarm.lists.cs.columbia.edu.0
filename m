@@ -2,126 +2,90 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B06946244B6
-	for <lists+kvmarm@lfdr.de>; Thu, 10 Nov 2022 15:51:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C5256244B7
+	for <lists+kvmarm@lfdr.de>; Thu, 10 Nov 2022 15:51:51 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id AE91F4BB18;
-	Thu, 10 Nov 2022 09:51:49 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 07BE94BB32;
+	Thu, 10 Nov 2022 09:51:51 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -6.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-6.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_HI=-5, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@ibm.com
+	(fail, message has been altered)
+	header.i=@bytedance-com.20210112.gappssmtp.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8CgpMedwiA2u; Thu, 10 Nov 2022 09:51:49 -0500 (EST)
+	with ESMTP id X1nhbwrF0aY6; Thu, 10 Nov 2022 09:51:49 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0B19B4BB31;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 30E364BB34;
 	Thu, 10 Nov 2022 09:51:46 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 6C0AC4B87C
- for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Nov 2022 12:58:51 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 853264B895
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Nov 2022 13:02:04 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ZkTyhY4-iqjC for <kvmarm@lists.cs.columbia.edu>;
- Mon,  7 Nov 2022 12:58:50 -0500 (EST)
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 08FC04B868
- for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Nov 2022 12:58:49 -0500 (EST)
-Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2A7GWQkp031956;
- Mon, 7 Nov 2022 17:58:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=OtmPuK3MWiLF586NtC+bldTUVNylNT/bGGgI5w0Fq9c=;
- b=tEaZDi2UHVX11QxU6UoEIMv071RQMm9iqzjbdP5Zkbmm9BqKuFi1RARRCA9nYbgxAoa5
- LOIQNR+SswnfIuNoa1HMjKsNBt4OnLxi0/2E2+VmXRtCqkUygEMq2N+VM+W4r+av+7Qh
- ruaENJhnppcGZdv4eWE7ba9gmRthNw3sMIYRmbVwvdpPZ68qWe9/0lFLjj7uoAhcrS9Z
- nR5VOjceXevf9rwoR1BkKyBTWi1EsjrcE5+7s5By+wPbnA8uKDJdnIaiNUwQBGYVIh18
- LtpZyga9eCegesTY+EHPFLs2v1ho0G1FQXTfewe5Pi2Td4kszHEI0kpl5Ecq9Yr8/VZq yA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3kp1f755gc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 07 Nov 2022 17:58:26 +0000
-Received: from m0098419.ppops.net (m0098419.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 2A7HbWEb003255;
- Mon, 7 Nov 2022 17:58:25 GMT
-Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
- [169.55.85.253])
- by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3kp1f755fr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 07 Nov 2022 17:58:25 +0000
-Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
- by ppma01wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 2A7HoTaR015449;
- Mon, 7 Nov 2022 17:58:24 GMT
-Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
- [9.57.198.27]) by ppma01wdc.us.ibm.com with ESMTP id 3kngs3s8sd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 07 Nov 2022 17:58:24 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com ([9.208.128.114])
- by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 2A7HwMq33277472
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 7 Nov 2022 17:58:23 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7EA165805F;
- Mon,  7 Nov 2022 17:58:22 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E17745805C;
- Mon,  7 Nov 2022 17:58:17 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.65.225.56]) by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  7 Nov 2022 17:58:17 +0000 (GMT)
-Message-ID: <9d5a57634244c268d20ac640e055cc0befd8a881.camel@linux.ibm.com>
-Subject: Re: [PATCH 06/44] KVM: s390: Move hardware setup/unsetup to init/exit
-From: Eric Farman <farman@linux.ibm.com>
-To: Sean Christopherson <seanjc@google.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>, Huacai Chen
- <chenhuacai@kernel.org>, Aleksandar Markovic
- <aleksandar.qemu.devel@gmail.com>, Anup Patel <anup@brainfault.org>, Paul
- Walmsley <paul.walmsley@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>,
- Claudio Imbrenda <imbrenda@linux.ibm.com>, Matthew Rosato
- <mjrosato@linux.ibm.com>, Vitaly Kuznetsov <vkuznets@redhat.com>
-Date: Mon, 07 Nov 2022 12:58:17 -0500
-In-Reply-To: <20221102231911.3107438-7-seanjc@google.com>
-References: <20221102231911.3107438-1-seanjc@google.com>
- <20221102231911.3107438-7-seanjc@google.com>
-User-Agent: Evolution 3.44.4 (3.44.4-2.fc36) 
+ with ESMTP id WncI1Ms7NfZr for <kvmarm@lists.cs.columbia.edu>;
+ Mon,  7 Nov 2022 13:02:03 -0500 (EST)
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com
+ [209.85.128.41])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 47F124B868
+ for <kvmarm@lists.cs.columbia.edu>; Mon,  7 Nov 2022 13:02:03 -0500 (EST)
+Received: by mail-wm1-f41.google.com with SMTP id
+ c3-20020a1c3503000000b003bd21e3dd7aso10172745wma.1
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 07 Nov 2022 10:02:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance-com.20210112.gappssmtp.com; s=20210112;
+ h=mime-version:user-agent:message-id:date:references:subject:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=VuTsw6+GkSRwP58GovhtYe/JYxk+oyo+mlW8nXi3XHk=;
+ b=c9L+/2+mr+pVaf+wpuESBoLqmizXoqXWcAlhmtmu9t6DBk0yMBH8Uk0jEUCbKU9YLV
+ 5oDUYWjLaGbzaTXz8G2w1DM+iE3tFkI+D8wq4Yrz9k4pId5WbgjBNvanKY3J8Q69aQsm
+ YQ/+H+U6bwxOh7QDA1Ntbys5xrUcQFdOE+3uIKnxEWq5TrZ0SAsQo9EHomlmfg6MPbGG
+ EYezTniaGhsm8bPey5aoHm6x2YZmfb5kaKjPrEImej3mAzM3/4JF/9f0FsiDzjwDOVs6
+ ZIFVtGSzxG+1xoFAEJxrHhJLcBqi6FqUpkbjnVeIu/92+M2eXVYBKfscHvgzjiIPc86Q
+ EDuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=mime-version:user-agent:message-id:date:references:subject:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VuTsw6+GkSRwP58GovhtYe/JYxk+oyo+mlW8nXi3XHk=;
+ b=mSYmY60m1/xMLGrYbAtzz29EoWR3sE3qLAUBlkNnwSn3GONWAUa1sPUeW7NC06bhn7
+ 4M9ZcNMLPce28eIJZnhtRMkUXx5JRCenq9UrJP57zlmrOq+Jl5FvPiMpK9NRL84YstIo
+ qclRzSu6nsquT9nHcvKcPb0abPs/fpGr5F1cZthtFGCo54qN7VJZj6Hluz5y065GmCls
+ MxDk6XKDCFSv/JwVY1WaPBDRnHezYJ/yXH4nWazG4ig9uJXAO2OVIGOSqnPk2KiihSHc
+ yepjcwG+VPyWW5SMyp2/mQVMqYxxcZztGNuoo6Ik57zCCW91ULDyTtnXsJ7qfeFCO3HC
+ Pv4Q==
+X-Gm-Message-State: ACrzQf07/h9HVHvg3nA9kmAp64MEjbu9L5jRpozx97yMlV1trl5Rflq/
+ G9MQHeupWpUjhbTvMv3esS4lIA==
+X-Google-Smtp-Source: AMsMyM5nRAXExBmaX/9edNvRducHDs1nArzvmQSX0pCwzRaBpCURrnomLsO/Kxet7CldyN/wPn+q+w==
+X-Received: by 2002:a05:600c:4fd5:b0:3cf:9e9b:68f5 with SMTP id
+ o21-20020a05600c4fd500b003cf9e9b68f5mr9168709wmq.60.1667844122108; 
+ Mon, 07 Nov 2022 10:02:02 -0800 (PST)
+Received: from localhost ([95.148.15.66]) by smtp.gmail.com with ESMTPSA id
+ n1-20020a5d4841000000b002366c3eefccsm7718037wrs.109.2022.11.07.10.02.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 07 Nov 2022 10:02:01 -0800 (PST)
+From: Punit Agrawal <punit.agrawal@bytedance.com>
+To: Usama Arif <usama.arif@bytedance.com>
+Subject: Re: [v2 3/6] KVM: arm64: Support pvlock preempted via shared structure
+References: <20221104062105.4119003-1-usama.arif@bytedance.com>
+ <20221104062105.4119003-4-usama.arif@bytedance.com>
+Date: Mon, 07 Nov 2022 18:02:01 +0000
+Message-ID: <8735au3ap2.fsf@stealth>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: PPn9NNx-sO4I-vjSF70Y0K8sCUEkIPXR
-X-Proofpoint-GUID: xEDs-39vU-yJC_i-RzSPUb6Jd0sKq-pE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-07_08,2022-11-07_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015
- lowpriorityscore=0 phishscore=0 adultscore=0 bulkscore=0 mlxlogscore=999
- impostorscore=0 suspectscore=0 priorityscore=1501 mlxscore=0 spamscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211070140
 X-Mailman-Approved-At: Thu, 10 Nov 2022 09:51:44 -0500
-Cc: kvm@vger.kernel.org, David Hildenbrand <david@redhat.com>,
- Atish Patra <atishp@atishpatra.org>, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- linux-s390@vger.kernel.org, Michael Ellerman <mpe@ellerman.id.au>,
- Chao Gao <chao.gao@intel.com>, Yuan Yao <yuan.yao@intel.com>,
- kvmarm@lists.linux.dev, Thomas Gleixner <tglx@linutronix.de>,
- linux-arm-kernel@lists.infradead.org,
- Isaku Yamahata <isaku.yamahata@intel.com>,
- Fabiano Rosas <farosas@linux.ibm.com>, linux-mips@vger.kernel.org,
- kvm-riscv@lists.infradead.org, linuxppc-dev@lists.ozlabs.org
+Cc: kvm@vger.kernel.org, linux-doc@vger.kernel.org, catalin.marinas@arm.com,
+ linux-kernel@vger.kernel.org, virtualization@lists.linux-foundation.org,
+ fam.zheng@bytedance.com, bagasdotme@gmail.com, maz@kernel.org,
+ punit.agrawal@bytedance.com, linux@armlinux.org.uk, liangma@liangbit.com,
+ steven.price@arm.com, will@kernel.org, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -133,20 +97,68 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-T24gV2VkLCAyMDIyLTExLTAyIGF0IDIzOjE4ICswMDAwLCBTZWFuIENocmlzdG9waGVyc29uIHdy
-b3RlOgo+IE5vdyB0aGF0IGt2bV9hcmNoX2hhcmR3YXJlX3NldHVwKCkgaXMgY2FsbGVkIGltbWVk
-aWF0ZWx5IGFmdGVyCj4ga3ZtX2FyY2hfaW5pdCgpLCBmb2xkIHRoZSBndXRzIG9mIGt2bV9hcmNo
-X2hhcmR3YXJlXyh1bilzZXR1cCgpIGludG8KPiBrdm1fYXJjaF97aW5pdCxleGl0fSgpIGFzIGEg
-c3RlcCB0b3dhcmRzIGRyb3BwaW5nIG9uZSBvZiB0aGUgaG9va3MuCj4gCj4gTm8gZnVuY3Rpb25h
-bCBjaGFuZ2UgaW50ZW5kZWQuCj4gCj4gU2lnbmVkLW9mZi1ieTogU2VhbiBDaHJpc3RvcGhlcnNv
-biA8c2VhbmpjQGdvb2dsZS5jb20+Cj4gLS0tCj4gwqBhcmNoL3MzOTAva3ZtL2t2bS1zMzkwLmMg
-fCAyMyArKysrKysrKysrKysrLS0tLS0tLS0tLQo+IMKgMSBmaWxlIGNoYW5nZWQsIDEzIGluc2Vy
-dGlvbnMoKyksIDEwIGRlbGV0aW9ucygtKQoKUmV2aWV3ZWQtYnk6IEVyaWMgRmFybWFuIDxmYXJt
-YW5AbGludXguaWJtLmNvbT4KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX18Ka3ZtYXJtIG1haWxpbmcgbGlzdAprdm1hcm1AbGlzdHMuY3MuY29sdW1iaWEuZWR1
-Cmh0dHBzOi8vbGlzdHMuY3MuY29sdW1iaWEuZWR1L21haWxtYW4vbGlzdGluZm8va3ZtYXJtCg==
+Usama Arif <usama.arif@bytedance.com> writes:
+
+> Implement the service call for configuring a shared structure between a
+> VCPU and the hypervisor in which the hypervisor can tell whether the
+> VCPU is running or not.
+>
+> The preempted field is zero if the VCPU is not preempted.
+> Any other value means the VCPU has been preempted.
+>
+> Signed-off-by: Zengruan Ye <yezengruan@huawei.com>
+> Signed-off-by: Usama Arif <usama.arif@bytedance.com>
+> ---
+>  Documentation/virt/kvm/arm/hypercalls.rst |  3 ++
+>  arch/arm64/include/asm/kvm_host.h         | 18 ++++++++++
+>  arch/arm64/include/uapi/asm/kvm.h         |  1 +
+>  arch/arm64/kvm/Makefile                   |  2 +-
+>  arch/arm64/kvm/arm.c                      |  8 +++++
+>  arch/arm64/kvm/hypercalls.c               |  8 +++++
+>  arch/arm64/kvm/pvlock.c                   | 43 +++++++++++++++++++++++
+>  tools/arch/arm64/include/uapi/asm/kvm.h   |  1 +
+>  8 files changed, 83 insertions(+), 1 deletion(-)
+>  create mode 100644 arch/arm64/kvm/pvlock.c
+>
+> diff --git a/Documentation/virt/kvm/arm/hypercalls.rst b/Documentation/virt/kvm/arm/hypercalls.rst
+> index 3e23084644ba..872a16226ace 100644
+> --- a/Documentation/virt/kvm/arm/hypercalls.rst
+> +++ b/Documentation/virt/kvm/arm/hypercalls.rst
+> @@ -127,6 +127,9 @@ The pseudo-firmware bitmap register are as follows:
+>      Bit-1: KVM_REG_ARM_VENDOR_HYP_BIT_PTP:
+>        The bit represents the Precision Time Protocol KVM service.
+>  
+> +    Bit-2: KVM_REG_ARM_VENDOR_HYP_BIT_PV_LOCK:
+> +      The bit represents the Paravirtualized lock service.
+> +
+>  Errors:
+>  
+>      =======  =============================================================
+> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+> index 45e2136322ba..18303b30b7e9 100644
+> --- a/arch/arm64/include/asm/kvm_host.h
+> +++ b/arch/arm64/include/asm/kvm_host.h
+> @@ -417,6 +417,11 @@ struct kvm_vcpu_arch {
+>  		u64 last_steal;
+>  		gpa_t base;
+>  	} steal;
+> +
+> +	/* Guest PV lock state */
+> +	struct {
+> +		gpa_t base;
+> +	} pv;
+
+Using "pv" for the structure isn't quite describing the usage well. It'd
+be better to call it "pv_lock" or "pvlock" at the least.
+
+[...]
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
