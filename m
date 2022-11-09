@@ -2,77 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 259556244C7
-	for <lists+kvmarm@lfdr.de>; Thu, 10 Nov 2022 15:52:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 370396244C9
+	for <lists+kvmarm@lfdr.de>; Thu, 10 Nov 2022 15:52:11 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C55A74BB4B;
-	Thu, 10 Nov 2022 09:52:08 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id C16E44BAF3;
+	Thu, 10 Nov 2022 09:52:10 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+	URIBL_BLOCKED=0.001] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id b3P1qE24OisL; Thu, 10 Nov 2022 09:52:08 -0500 (EST)
+	with ESMTP id H4XzQn8xImHf; Thu, 10 Nov 2022 09:52:09 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3E56B4BB29;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 623684BB3D;
 	Thu, 10 Nov 2022 09:51:48 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 596F64BA1D
- for <kvmarm@lists.cs.columbia.edu>; Wed,  9 Nov 2022 17:23:45 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0AC514BA1D
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  9 Nov 2022 17:24:00 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id PQzhS0HvgXDV for <kvmarm@lists.cs.columbia.edu>;
- Wed,  9 Nov 2022 17:23:44 -0500 (EST)
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com
- [209.85.219.47])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 396D64BA20
- for <kvmarm@lists.cs.columbia.edu>; Wed,  9 Nov 2022 17:23:44 -0500 (EST)
-Received: by mail-qv1-f47.google.com with SMTP id e15so242032qvo.4
- for <kvmarm@lists.cs.columbia.edu>; Wed, 09 Nov 2022 14:23:44 -0800 (PST)
+ with ESMTP id pQcSPrr+XIpR for <kvmarm@lists.cs.columbia.edu>;
+ Wed,  9 Nov 2022 17:23:58 -0500 (EST)
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com
+ [209.85.160.179])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id BC40F4BA1C
+ for <kvmarm@lists.cs.columbia.edu>; Wed,  9 Nov 2022 17:23:58 -0500 (EST)
+Received: by mail-qt1-f179.google.com with SMTP id h21so51860qtu.2
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 09 Nov 2022 14:23:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=T4nhT+5+y72roggfQdrm+izhSoBAQsPwGSdMCJ4k+/s=;
- b=ZRk7+7DpcBDPfssndDH0jCsamFZ4YFaIenBG2tIgkAkWQDqVwmqi3fxsDov3PqIR/i
- skbO0PMGHk6vhDr0gZPT0+F6QhsLM/3CNLNtPocc682fg9VP0+lrtztvKipjBgkAa5Qz
- 6yvEY7mPt7wfiEUpxrngFbezvdkNerpDIKyKImWGy0INUfvIyf/zX8UcE62Eexfq+Tms
- dTZb0Ent0XVyDBRC219MOJtGajH9xJJ9n548ytZM26stde3QdXEaWepM/7/cIjGzL8d5
- GhoYEcAjU2lmbn2F6w2G44+XHfcx9H+sem+ZVz8T0qp1xSt7GF3Hf2b3gYHqRUwXFgwc
- 8PRw==
+ bh=w5/EZUdDhtVCH8vTuPdQHSfkRC7SLLFLdcojKP24b3k=;
+ b=p5Cuz9SiXRLDID2KLBRc7xBDhTgKAQtnvu1No40nnQ14HV0/EH9fLPUFxFbuQB8mt9
+ fpC5T+QHlENlj/TVgJYL+wKK219fkUBqaEdGubQWvGUKCEJig0Btqie1vi7NbpDjMuRU
+ jX5ZdiNetYXlROw2fkZB1yAoauQTkHpE+0Jk5LBqTb6EgXr82vNcVK10qAEfdJzHxhba
+ /R9ThS3QNoKHzgaEdkxPxv8zQkrZgVEe9ET2PCToZV3S9Nz6/qxGBQKU66LtpeOUPB6S
+ pq9ZLyNYp0lgULr/8gixPHf08socAIlOpx7Kk8SraN0RzdLtoDs+HZpJXXOY66H/gQVm
+ c5Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=T4nhT+5+y72roggfQdrm+izhSoBAQsPwGSdMCJ4k+/s=;
- b=ZWXc4eXzX2EA7u8AnFTTULVDnpS7cUVqd9HdfZzcxD7F7prFzihHxD6TwkkLu4x5n/
- sT1m4dn1Wxl7Q6PKdyKSTa9M8Ay6Rl8v7YZ+DaWOAUMDBnbAISWYuIM3Rdt2kV3NboMt
- VeLuJCdPCth58GlzKUhrlDT4ZDUihmrOi/kKdyS3a78OxLebSKPYt1tDo+MF3iJWd3nl
- i+48MtBkmdrdM/W5lq7qTTjcHWVQGhO1/HiSwAPF2uW+Tmpz0uZ0D771XwMgkye/lpdO
- KpZzmiArnZtkTm5FiKxEqweyVz0aXiuq/xMcHFShZypk45qfPb2fuGOETGlOYsMmyYb+
- HQQg==
-X-Gm-Message-State: ACrzQf2IqgH1b7MiHdUZzwbLPXbtxfumguPTazYJ4/ivNEpCt2QF5Vsu
- 31N7ELvW8wH6G2XUbHcn/t7rZCvEMbBEYFckwHQHUw==
-X-Google-Smtp-Source: AMsMyM5TapTqPRC0kKImkN6kMspQ3TuK1Gmv3b9wyzlFRHK+SpRPTCXYNOg2RgAbIk324w0L82kK6VOq6bWdOqkcmso=
-X-Received: by 2002:a05:6214:21a6:b0:4bb:85b4:fd96 with SMTP id
- t6-20020a05621421a600b004bb85b4fd96mr56191873qvc.28.1668032623716; Wed, 09
- Nov 2022 14:23:43 -0800 (PST)
+ bh=w5/EZUdDhtVCH8vTuPdQHSfkRC7SLLFLdcojKP24b3k=;
+ b=taMQzscxAHnt9T5CcY+az9wNjoEOf6QLUXq2IRvjUH/UDADqdR0HXmc/KjRuqUfPPD
+ 0EmMPgKYJw30ncF9GRNq8+/1OAtK/CPL5z6G5q9DiDS5ebCNJNPcm/aJzfUWdNdDyPXN
+ KktmnOZvnHIhLBkKIF0WxBlKwJh6r1gQiOLVpF3twWbGi3xyvmvX6hkEqQpaJe0JfPsd
+ 48Yxu0W1in6KOcb0NKiMbyq5owYWj+m3AFcBKTiJKUVON1Ojbk1GJyLyK/MqnS9ZbPXl
+ ddviaAs/y9S5+u1sP4v/3j7+dqwVBCyGGqg2rCaYE7z3jvQmOUN7GVKl79zaXOFgwKkA
+ 3SAw==
+X-Gm-Message-State: ACrzQf338iRwLFRamMtaA6GkOlLRmVAoWDJkcR0wYQO1xk2RxbUradHx
+ 7PTe/QdfF7VNFNtxeGs88UqTYVdYrSNOeLf4gveg2Q==
+X-Google-Smtp-Source: AMsMyM7PvGCnAK5sM25XaFmsHhngdZKUVCNI4eyBriYVD5YZUFXb5dnYYME1f779JG8sEFkUd3Pu1eE6GRqa+981FmU=
+X-Received: by 2002:ac8:7d4d:0:b0:3a5:5987:432b with SMTP id
+ h13-20020ac87d4d000000b003a55987432bmr26352212qtb.566.1668032638369; Wed, 09
+ Nov 2022 14:23:58 -0800 (PST)
 MIME-Version: 1.0
 References: <20221107215644.1895162-1-oliver.upton@linux.dev>
- <20221107215644.1895162-6-oliver.upton@linux.dev>
-In-Reply-To: <20221107215644.1895162-6-oliver.upton@linux.dev>
+ <20221107215644.1895162-7-oliver.upton@linux.dev>
+In-Reply-To: <20221107215644.1895162-7-oliver.upton@linux.dev>
 From: Ben Gardon <bgardon@google.com>
-Date: Wed, 9 Nov 2022 14:23:33 -0800
-Message-ID: <CANgfPd_vAmVR0BTLTFAXuQhS-bP7+B_+2s6cDmTeM5=mf440Gg@mail.gmail.com>
-Subject: Re: [PATCH v5 05/14] KVM: arm64: Add a helper to tear down unlinked
- stage-2 subtrees
+Date: Wed, 9 Nov 2022 14:23:47 -0800
+Message-ID: <CANgfPd-g4fdWEkX8EHWd3PdDQhEMSmsE5ET7PzWMwz5KoAy5Gw@mail.gmail.com>
+Subject: Re: [PATCH v5 06/14] KVM: arm64: Use an opaque type for pteps
 To: Oliver Upton <oliver.upton@linux.dev>
 X-Mailman-Approved-At: Thu, 10 Nov 2022 09:51:44 -0500
 Cc: kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
@@ -97,80 +96,178 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 On Mon, Nov 7, 2022 at 1:57 PM Oliver Upton <oliver.upton@linux.dev> wrote:
 >
-> A subsequent change to KVM will move the tear down of an unlinked
-> stage-2 subtree out of the critical path of the break-before-make
-> sequence.
+> Use an opaque type for pteps and require visitors explicitly dereference
+> the pointer before using. Protecting page table memory with RCU requires
+> that KVM dereferences RCU-annotated pointers before using. However, RCU
+> is not available for use in the nVHE hypervisor and the opaque type can
+> be conditionally annotated with RCU for the stage-2 MMU.
 >
-> Introduce a new helper for tearing down unlinked stage-2 subtrees.
-> Leverage the existing stage-2 free walkers to do so, with a deep call
-> into __kvm_pgtable_walk() as the subtree is no longer reachable from the
-> root.
+> Call the type a 'pteref' to avoid a naming collision with raw pteps. No
+> functional change intended.
 >
 > Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 > ---
->  arch/arm64/include/asm/kvm_pgtable.h | 11 +++++++++++
->  arch/arm64/kvm/hyp/pgtable.c         | 23 +++++++++++++++++++++++
->  2 files changed, 34 insertions(+)
+>  arch/arm64/include/asm/kvm_pgtable.h |  9 ++++++++-
+>  arch/arm64/kvm/hyp/pgtable.c         | 27 ++++++++++++++-------------
+>  arch/arm64/kvm/mmu.c                 |  2 +-
+>  3 files changed, 23 insertions(+), 15 deletions(-)
 >
 > diff --git a/arch/arm64/include/asm/kvm_pgtable.h b/arch/arm64/include/asm/kvm_pgtable.h
-> index a752793482cb..93b1feeaebab 100644
+> index 93b1feeaebab..cbd2851eefc1 100644
 > --- a/arch/arm64/include/asm/kvm_pgtable.h
 > +++ b/arch/arm64/include/asm/kvm_pgtable.h
-> @@ -333,6 +333,17 @@ int __kvm_pgtable_stage2_init(struct kvm_pgtable *pgt, struct kvm_s2_mmu *mmu,
->   */
->  void kvm_pgtable_stage2_destroy(struct kvm_pgtable *pgt);
+> @@ -37,6 +37,13 @@ static inline u64 kvm_get_parange(u64 mmfr0)
 >
-> +/**
-> + * kvm_pgtable_stage2_free_removed() - Free a removed stage-2 paging structure.
-> + * @mm_ops:    Memory management callbacks.
-> + * @pgtable:   Unlinked stage-2 paging structure to be freed.
-> + * @level:     Level of the stage-2 paging structure to be freed.
-> + *
-> + * The page-table is assumed to be unreachable by any hardware walkers prior to
-> + * freeing and therefore no TLB invalidation is performed.
-> + */
-> +void kvm_pgtable_stage2_free_removed(struct kvm_pgtable_mm_ops *mm_ops, void *pgtable, u32 level);
+>  typedef u64 kvm_pte_t;
+>
+> +typedef kvm_pte_t *kvm_pteref_t;
 > +
->  /**
->   * kvm_pgtable_stage2_map() - Install a mapping in a guest stage-2 page-table.
->   * @pgt:       Page-table structure initialised by kvm_pgtable_stage2_init*().
+> +static inline kvm_pte_t *kvm_dereference_pteref(kvm_pteref_t pteref, bool shared)
+
+Since shared is not used and never true as of this commit, it would
+probably be worth explaining what it's for in the change description.
+
+
+> +{
+> +       return pteref;
+> +}
+> +
+>  #define KVM_PTE_VALID                  BIT(0)
+>
+>  #define KVM_PTE_ADDR_MASK              GENMASK(47, PAGE_SHIFT)
+> @@ -175,7 +182,7 @@ typedef bool (*kvm_pgtable_force_pte_cb_t)(u64 addr, u64 end,
+>  struct kvm_pgtable {
+>         u32                                     ia_bits;
+>         u32                                     start_level;
+> -       kvm_pte_t                               *pgd;
+> +       kvm_pteref_t                            pgd;
+>         struct kvm_pgtable_mm_ops               *mm_ops;
+>
+>         /* Stage-2 only */
 > diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
-> index 93989b750a26..363a5cce7e1a 100644
+> index 363a5cce7e1a..7511494537e5 100644
 > --- a/arch/arm64/kvm/hyp/pgtable.c
 > +++ b/arch/arm64/kvm/hyp/pgtable.c
-> @@ -1203,3 +1203,26 @@ void kvm_pgtable_stage2_destroy(struct kvm_pgtable *pgt)
->         pgt->mm_ops->free_pages_exact(pgt->pgd, pgd_sz);
+> @@ -175,13 +175,14 @@ static int kvm_pgtable_visitor_cb(struct kvm_pgtable_walk_data *data,
+>  }
+>
+>  static int __kvm_pgtable_walk(struct kvm_pgtable_walk_data *data,
+> -                             struct kvm_pgtable_mm_ops *mm_ops, kvm_pte_t *pgtable, u32 level);
+> +                             struct kvm_pgtable_mm_ops *mm_ops, kvm_pteref_t pgtable, u32 level);
+>
+>  static inline int __kvm_pgtable_visit(struct kvm_pgtable_walk_data *data,
+>                                       struct kvm_pgtable_mm_ops *mm_ops,
+> -                                     kvm_pte_t *ptep, u32 level)
+> +                                     kvm_pteref_t pteref, u32 level)
+>  {
+>         enum kvm_pgtable_walk_flags flags = data->walker->flags;
+> +       kvm_pte_t *ptep = kvm_dereference_pteref(pteref, false);
+>         struct kvm_pgtable_visit_ctx ctx = {
+>                 .ptep   = ptep,
+>                 .old    = READ_ONCE(*ptep),
+> @@ -193,7 +194,7 @@ static inline int __kvm_pgtable_visit(struct kvm_pgtable_walk_data *data,
+>                 .flags  = flags,
+>         };
+>         int ret = 0;
+> -       kvm_pte_t *childp;
+> +       kvm_pteref_t childp;
+>         bool table = kvm_pte_table(ctx.old, level);
+>
+>         if (table && (ctx.flags & KVM_PGTABLE_WALK_TABLE_PRE))
+> @@ -214,7 +215,7 @@ static inline int __kvm_pgtable_visit(struct kvm_pgtable_walk_data *data,
+>                 goto out;
+>         }
+>
+> -       childp = kvm_pte_follow(ctx.old, mm_ops);
+> +       childp = (kvm_pteref_t)kvm_pte_follow(ctx.old, mm_ops);
+>         ret = __kvm_pgtable_walk(data, mm_ops, childp, level + 1);
+>         if (ret)
+>                 goto out;
+> @@ -227,7 +228,7 @@ static inline int __kvm_pgtable_visit(struct kvm_pgtable_walk_data *data,
+>  }
+>
+>  static int __kvm_pgtable_walk(struct kvm_pgtable_walk_data *data,
+> -                             struct kvm_pgtable_mm_ops *mm_ops, kvm_pte_t *pgtable, u32 level)
+> +                             struct kvm_pgtable_mm_ops *mm_ops, kvm_pteref_t pgtable, u32 level)
+>  {
+>         u32 idx;
+>         int ret = 0;
+> @@ -236,12 +237,12 @@ static int __kvm_pgtable_walk(struct kvm_pgtable_walk_data *data,
+>                 return -EINVAL;
+>
+>         for (idx = kvm_pgtable_idx(data, level); idx < PTRS_PER_PTE; ++idx) {
+> -               kvm_pte_t *ptep = &pgtable[idx];
+> +               kvm_pteref_t pteref = &pgtable[idx];
+>
+>                 if (data->addr >= data->end)
+>                         break;
+>
+> -               ret = __kvm_pgtable_visit(data, mm_ops, ptep, level);
+> +               ret = __kvm_pgtable_visit(data, mm_ops, pteref, level);
+>                 if (ret)
+>                         break;
+>         }
+> @@ -262,9 +263,9 @@ static int _kvm_pgtable_walk(struct kvm_pgtable *pgt, struct kvm_pgtable_walk_da
+>                 return -EINVAL;
+>
+>         for (idx = kvm_pgd_page_idx(pgt, data->addr); data->addr < data->end; ++idx) {
+> -               kvm_pte_t *ptep = &pgt->pgd[idx * PTRS_PER_PTE];
+> +               kvm_pteref_t pteref = &pgt->pgd[idx * PTRS_PER_PTE];
+>
+> -               ret = __kvm_pgtable_walk(data, pgt->mm_ops, ptep, pgt->start_level);
+> +               ret = __kvm_pgtable_walk(data, pgt->mm_ops, pteref, pgt->start_level);
+>                 if (ret)
+>                         break;
+>         }
+> @@ -507,7 +508,7 @@ int kvm_pgtable_hyp_init(struct kvm_pgtable *pgt, u32 va_bits,
+>  {
+>         u64 levels = ARM64_HW_PGTABLE_LEVELS(va_bits);
+>
+> -       pgt->pgd = (kvm_pte_t *)mm_ops->zalloc_page(NULL);
+> +       pgt->pgd = (kvm_pteref_t)mm_ops->zalloc_page(NULL);
+>         if (!pgt->pgd)
+>                 return -ENOMEM;
+>
+> @@ -544,7 +545,7 @@ void kvm_pgtable_hyp_destroy(struct kvm_pgtable *pgt)
+>         };
+>
+>         WARN_ON(kvm_pgtable_walk(pgt, 0, BIT(pgt->ia_bits), &walker));
+> -       pgt->mm_ops->put_page(pgt->pgd);
+> +       pgt->mm_ops->put_page(kvm_dereference_pteref(pgt->pgd, false));
 >         pgt->pgd = NULL;
 >  }
-> +
-> +void kvm_pgtable_stage2_free_removed(struct kvm_pgtable_mm_ops *mm_ops, void *pgtable, u32 level)
-> +{
-> +       kvm_pte_t *ptep = (kvm_pte_t *)pgtable;
-> +       struct kvm_pgtable_walker walker = {
-> +               .cb     = stage2_free_walker,
-> +               .flags  = KVM_PGTABLE_WALK_LEAF |
-> +                         KVM_PGTABLE_WALK_TABLE_POST,
-> +       };
-> +       struct kvm_pgtable_walk_data data = {
-> +               .walker = &walker,
-> +
-> +               /*
-> +                * At this point the IPA really doesn't matter, as the page
-> +                * table being traversed has already been removed from the stage
-> +                * 2. Set an appropriate range to cover the entire page table.
-> +                */
-> +               .addr   = 0,
-> +               .end    = kvm_granule_size(level),
-> +       };
-> +
-> +       WARN_ON(__kvm_pgtable_walk(&data, mm_ops, ptep, level));
-> +}
-
-Will this callback be able to yield? In my experience, if processing a
-large teardown (i.e. level >=3 / maps 512G region) it's possible to
-hit scheduler tick warnings.
-
-
+>
+> @@ -1157,7 +1158,7 @@ int __kvm_pgtable_stage2_init(struct kvm_pgtable *pgt, struct kvm_s2_mmu *mmu,
+>         u32 start_level = VTCR_EL2_TGRAN_SL0_BASE - sl0;
+>
+>         pgd_sz = kvm_pgd_pages(ia_bits, start_level) * PAGE_SIZE;
+> -       pgt->pgd = mm_ops->zalloc_pages_exact(pgd_sz);
+> +       pgt->pgd = (kvm_pteref_t)mm_ops->zalloc_pages_exact(pgd_sz);
+>         if (!pgt->pgd)
+>                 return -ENOMEM;
+>
+> @@ -1200,7 +1201,7 @@ void kvm_pgtable_stage2_destroy(struct kvm_pgtable *pgt)
+>
+>         WARN_ON(kvm_pgtable_walk(pgt, 0, BIT(pgt->ia_bits), &walker));
+>         pgd_sz = kvm_pgd_pages(pgt->ia_bits, pgt->start_level) * PAGE_SIZE;
+> -       pgt->mm_ops->free_pages_exact(pgt->pgd, pgd_sz);
+> +       pgt->mm_ops->free_pages_exact(kvm_dereference_pteref(pgt->pgd, false), pgd_sz);
+>         pgt->pgd = NULL;
+>  }
+>
+> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+> index 60ee3d9f01f8..5e197ae190ef 100644
+> --- a/arch/arm64/kvm/mmu.c
+> +++ b/arch/arm64/kvm/mmu.c
+> @@ -640,7 +640,7 @@ static struct kvm_pgtable_mm_ops kvm_user_mm_ops = {
+>  static int get_user_mapping_size(struct kvm *kvm, u64 addr)
+>  {
+>         struct kvm_pgtable pgt = {
+> -               .pgd            = (kvm_pte_t *)kvm->mm->pgd,
+> +               .pgd            = (kvm_pteref_t)kvm->mm->pgd,
+>                 .ia_bits        = VA_BITS,
+>                 .start_level    = (KVM_PGTABLE_MAX_LEVELS -
+>                                    CONFIG_PGTABLE_LEVELS),
 > --
 > 2.38.1.431.g37b22c650d-goog
 >
