@@ -2,91 +2,82 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id E03066244D6
-	for <lists+kvmarm@lfdr.de>; Thu, 10 Nov 2022 15:52:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B0B9D624319
+	for <lists+kvmarm@lfdr.de>; Thu, 10 Nov 2022 14:21:57 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8BDD54BB32;
-	Thu, 10 Nov 2022 09:52:25 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0A0214BAB8;
+	Thu, 10 Nov 2022 08:21:57 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -1.79
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=no
+X-Spam-Status: No, score=-1.79 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@intel.com
+	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id AgWkan3L6zMf; Thu, 10 Nov 2022 09:52:24 -0500 (EST)
+	with ESMTP id Nl1QTXO+SzYX; Thu, 10 Nov 2022 08:21:56 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 109784BB27;
-	Thu, 10 Nov 2022 09:51:50 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id AC4AF4BAB5;
+	Thu, 10 Nov 2022 08:21:55 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EAE084BA71
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Nov 2022 02:31:55 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id D003D4BAAE
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Nov 2022 08:21:53 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id h9PhNIzIQhao for <kvmarm@lists.cs.columbia.edu>;
- Thu, 10 Nov 2022 02:31:54 -0500 (EST)
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0E7224BA30
- for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Nov 2022 02:31:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1668065514; x=1699601514;
- h=message-id:subject:from:to:cc:date:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=K4DExVACpt2lARFBBsyLRbh7EHo+YwPLCynabZeKIUc=;
- b=TV1rBoPzlJGQZjLP0n4ynasJmdsVtIONEcL8Ctkx1adDy0+2HbfPeifi
- 7d4843iZLNkEPJIa8WGBxUWlRmsCUZYpB3MDn3ge+s7/Y3LYhMJc9671N
- 4paY8t44sxIbtYMqqbwvXzmoKM4FxUyJXJDwkJBuY0edIJ+8eftm72KL3
- 9pu5PfsdrS51LndgDnCe56NBNy+DiQK7rLCk20Eiy4SQSVotoXZOJURqe
- Nz134h8eCdPWw+asWN5Gk0SpwtNJn4LrrhNO74a47Zw2rhEhKKPCw66fi
- nD0SjtNbMa6UNtHe4Ypesq6GsBN0+XA1BUZAM+sQkcM2wTJogJLvATCXl w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10526"; a="312368516"
-X-IronPort-AV: E=Sophos;i="5.96,153,1665471600"; d="scan'208";a="312368516"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
- by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Nov 2022 23:31:53 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10526"; a="631556568"
-X-IronPort-AV: E=Sophos;i="5.96,153,1665471600"; d="scan'208";a="631556568"
-Received: from sqa-gate.sh.intel.com (HELO robert-ivt.tsp.org)
- ([10.239.48.212])
- by orsmga007.jf.intel.com with ESMTP; 09 Nov 2022 23:31:43 -0800
-Message-ID: <ff0e8701d02ee161d064f92c8b742c2cc061bce0.camel@linux.intel.com>
-Subject: Re: [PATCH 32/44] KVM: x86: Unify pr_fmt to use module name for all
- KVM modules
-From: Robert Hoo <robert.hu@linux.intel.com>
-To: Sean Christopherson <seanjc@google.com>, Paolo Bonzini
- <pbonzini@redhat.com>,  Marc Zyngier <maz@kernel.org>, Huacai Chen
- <chenhuacai@kernel.org>, Aleksandar Markovic
- <aleksandar.qemu.devel@gmail.com>, Anup Patel <anup@brainfault.org>, Paul
- Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Christian Borntraeger
- <borntraeger@linux.ibm.com>,  Janosch Frank <frankja@linux.ibm.com>,
- Claudio Imbrenda <imbrenda@linux.ibm.com>, Matthew Rosato
- <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, Vitaly
- Kuznetsov <vkuznets@redhat.com>
-Date: Thu, 10 Nov 2022 15:31:42 +0800
-In-Reply-To: <20221102231911.3107438-33-seanjc@google.com>
-References: <20221102231911.3107438-1-seanjc@google.com>
- <20221102231911.3107438-33-seanjc@google.com>
-X-Mailer: Evolution 3.28.5 (3.28.5-10.el7) 
-Mime-Version: 1.0
-X-Mailman-Approved-At: Thu, 10 Nov 2022 09:51:44 -0500
-Cc: kvm@vger.kernel.org, David Hildenbrand <david@redhat.com>,
- Atish Patra <atishp@atishpatra.org>, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, kvmarm@lists.cs.columbia.edu,
- linux-s390@vger.kernel.org, Michael Ellerman <mpe@ellerman.id.au>,
- Chao Gao <chao.gao@intel.com>, Yuan Yao <yuan.yao@intel.com>,
- kvmarm@lists.linux.dev, Thomas Gleixner <tglx@linutronix.de>,
- linux-arm-kernel@lists.infradead.org,
- Isaku Yamahata <isaku.yamahata@intel.com>,
- Fabiano Rosas <farosas@linux.ibm.com>, linux-mips@vger.kernel.org,
- kvm-riscv@lists.infradead.org, linuxppc-dev@lists.ozlabs.org
+ with ESMTP id THVQEddx-n9i for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 10 Nov 2022 08:21:52 -0500 (EST)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 6ACB24BA9B
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 10 Nov 2022 08:21:52 -0500 (EST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id B99B961759;
+ Thu, 10 Nov 2022 13:21:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B72C433C1;
+ Thu, 10 Nov 2022 13:21:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1668086511;
+ bh=vsKYJwz6b+8G9OYObnAUmHW9XZF2g9Jn8L3VpwTYoLo=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=Cw9PUhvxJOphnbK+yH0weDhtE/IJ9rrAJtFBNWJ2OCUmFFXZ7mxR5nYCBMRtxoVAl
+ SATrNZktcM7DppSFMnU+61XPpGqM0/6Ty6QFUAwHtk8/t6Ibe4bCVN9olBTRvLCJtC
+ 6hhCZUHQT6gadLeUFZDtSjZXyg5wPWgq2/dh2mkrp7jE/98NOr5VXAOTQmfHgRzrVt
+ Q/tT43TCO3pG/dC/0r5B99h6oQ8z8q6yVufZzrRqegOt7mR8erArTIwZjTvvARF2rq
+ U8UKFHHDI+TkjNp84mBDHXNb33v96p5B3eiQ5IBw790HhW6MNyt4gXXas0CME2bqQs
+ bEJKPNpBRBjbQ==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=valley-girl.lan)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1ot7V7-0059yG-00;
+ Thu, 10 Nov 2022 13:21:49 +0000
+From: Marc Zyngier <maz@kernel.org>
+To: kvmarm@lists.linux.dev,
+	Gavin Shan <gshan@redhat.com>
+Subject: Re: [PATCH v10 0/7] KVM: arm64: Enable ring-based dirty memory
+ tracking
+Date: Thu, 10 Nov 2022 13:21:46 +0000
+Message-Id: <166808649563.2653656.5582018167024205345.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20221110104914.31280-1-gshan@redhat.com>
+References: <20221110104914.31280-1-gshan@redhat.com>
+MIME-Version: 1.0
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: kvmarm@lists.linux.dev, gshan@redhat.com,
+ catalin.marinas@arm.com, kvm@vger.kernel.org, ajones@ventanamicro.com,
+ bgardon@google.com, shuah@kernel.org, shan.gavin@gmail.com,
+ kvmarm@lists.cs.columbia.edu, dmatlack@google.com, andrew.jones@linux.dev,
+ zhenyzha@redhat.com, pbonzini@redhat.com, will@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: kvm@vger.kernel.org, catalin.marinas@arm.com, andrew.jones@linux.dev,
+ will@kernel.org, shan.gavin@gmail.com, bgardon@google.com, dmatlack@google.com,
+ pbonzini@redhat.com, zhenyzha@redhat.com, shuah@kernel.org,
+ kvmarm@lists.cs.columbia.edu, ajones@ventanamicro.com
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -103,108 +94,42 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, 2022-11-02 at 23:18 +0000, Sean Christopherson wrote:
-> Define pr_fmt using KBUILD_MODNAME for all KVM x86 code so that
-> printks
-> use consistent formatting across common x86, Intel, and AMD code.  In
-> addition to providing consistent print formatting, using
-> KBUILD_MODNAME,
-> e.g. kvm_amd and kvm_intel, allows referencing SVM and VMX (and SEV
-> and
-> SGX and ...) as technologies without generating weird messages, and
-> without causing naming conflicts with other kernel code, e.g. "SEV:
-> ",
-> "tdx: ", "sgx: " etc.. are all used by the kernel for non-KVM
-> subsystems.
+On Thu, 10 Nov 2022 18:49:07 +0800, Gavin Shan wrote:
+> This series enables the ring-based dirty memory tracking for ARM64.
+> The feature has been available and enabled on x86 for a while. It
+> is beneficial when the number of dirty pages is small in a checkpointing
+> system or live migration scenario. More details can be found from
+> fb04a1eddb1a ("KVM: X86: Implement ring-based dirty memory tracking").
 > 
-> Opportunistically move away from printk() for prints that need to be
-> modified anyways, e.g. to drop a manual "kvm: " prefix.
+> For PATCH[v9 3/7], Peter's ack-by is kept since the recent changes
+> don't fundamentally break what he agreed. However, it would be nice
+> for Peter to double confirm.
 > 
-> Opportunistically convert a few SGX WARNs that are similarly modified
-> to
-> WARN_ONCE; in the very unlikely event that the WARNs fire, odds are
-> good
-> that they would fire repeatedly and spam the kernel log without
-> providing
-> unique information in each print.
-> 
-> Note, defining pr_fmt yields undesirable results for code that uses
-> KVM's
-> printk wrappers, e.g. vcpu_unimpl().  But, that's a pre-existing
-> problem
-> as SVM/kvm_amd already defines a pr_fmt, and thankfully use of KVM's
-> wrappers is relatively limited in KVM x86 code.
-> 
-> Signed-off-by: Sean Christopherson <seanjc@google.com>
-> ---
->  arch/x86/kvm/cpuid.c            |  1 +
->  arch/x86/kvm/debugfs.c          |  2 ++
->  arch/x86/kvm/emulate.c          |  1 +
->  arch/x86/kvm/hyperv.c           |  1 +
->  arch/x86/kvm/i8254.c            |  4 ++--
->  arch/x86/kvm/i8259.c            |  4 +++-
->  arch/x86/kvm/ioapic.c           |  1 +
->  arch/x86/kvm/irq.c              |  1 +
->  arch/x86/kvm/irq_comm.c         |  7 +++---
->  arch/x86/kvm/kvm_onhyperv.c     |  1 +
->  arch/x86/kvm/lapic.c            |  8 +++----
->  arch/x86/kvm/mmu/mmu.c          |  6 ++---
->  arch/x86/kvm/mmu/page_track.c   |  1 +
->  arch/x86/kvm/mmu/spte.c         |  4 ++--
->  arch/x86/kvm/mmu/spte.h         |  4 ++--
->  arch/x86/kvm/mmu/tdp_iter.c     |  1 +
->  arch/x86/kvm/mmu/tdp_mmu.c      |  1 +
->  arch/x86/kvm/mtrr.c             |  1 +
->  arch/x86/kvm/pmu.c              |  1 +
->  arch/x86/kvm/smm.c              |  1 +
->  arch/x86/kvm/svm/avic.c         |  2 +-
->  arch/x86/kvm/svm/nested.c       |  2 +-
->  arch/x86/kvm/svm/pmu.c          |  2 ++
->  arch/x86/kvm/svm/sev.c          |  1 +
->  arch/x86/kvm/svm/svm.c          | 10 ++++-----
->  arch/x86/kvm/svm/svm_onhyperv.c |  1 +
->  arch/x86/kvm/svm/svm_onhyperv.h |  4 ++--
->  arch/x86/kvm/vmx/evmcs.c        |  1 +
->  arch/x86/kvm/vmx/evmcs.h        |  4 +---
->  arch/x86/kvm/vmx/nested.c       |  3 ++-
->  arch/x86/kvm/vmx/pmu_intel.c    |  5 +++--
->  arch/x86/kvm/vmx/posted_intr.c  |  2 ++
->  arch/x86/kvm/vmx/sgx.c          |  5 +++--
->  arch/x86/kvm/vmx/vmcs12.c       |  1 +
->  arch/x86/kvm/vmx/vmx.c          | 40 ++++++++++++++++---------------
-> --
->  arch/x86/kvm/vmx/vmx_ops.h      |  4 ++--
->  arch/x86/kvm/x86.c              | 28 ++++++++++++-----------
->  arch/x86/kvm/xen.c              |  1 +
->  38 files changed, 97 insertions(+), 70 deletions(-)
-> 
-After this patch set, still find some printk()s left in arch/x86/kvm/*,
-consider clean all of them up?
+> [...]
 
-arch/x86/kvm/lapic.c:1215:		printk(KERN_ERR "TODO:
-unsupported delivery mode %x\n",
-arch/x86/kvm/lapic.c:1506:		printk(KERN_ERR "Local APIC
-read with len = %x, "
-arch/x86/kvm/lapic.c:2586:		printk(KERN_ERR "malloc apic
-regs error for vcpu %x\n",
-arch/x86/kvm/ioapic.h:95:		printk(KERN_EMERG "assertion
-failed %s: %d: %s\n",	\
-arch/x86/kvm/ioapic.c:614:		printk(KERN_WARNING "ioapic:
-wrong length %d\n", len);
-arch/x86/kvm/ioapic.c:641:		printk(KERN_WARNING "ioapic:
-Unsupported size %d\n", len);
-arch/x86/kvm/mmu/mmu.c:1652:			printk(KERN_ERR "%s: %p
-%llx\n", __func__,
-arch/x86/kvm/svm/svm.c:3450:		printk(KERN_ERR "%s: unexpected
-exit_int_info 0x%x "
-arch/x86/kvm/vmx/posted_intr.c:322:				printk(
-KERN_INFO
-arch/x86/kvm/vmx/posted_intr.c:343:			printk(KERN_INF
-O "%s: failed to update PI IRTE\n",
-arch/x86/kvm/vmx/vmx.c:6507:			printk(KERN_WARNING
-"%s: Breaking out of NMI-blocked "
-arch/x86/kvm/x86.c:13027:		printk(KERN_INFO "irq bypass
-consumer (token %p) unregistration"
+Applied to next, thanks!
+
+[1/7] KVM: x86: Introduce KVM_REQ_DIRTY_RING_SOFT_FULL
+      commit: cf87ac739e488055a6046a410caa8f4da108948f
+[2/7] KVM: Move declaration of kvm_cpu_dirty_log_size() to kvm_dirty_ring.h
+      commit: e8a18565e59303ac12c626a161d72bd890bd2062
+[3/7] KVM: Support dirty ring in conjunction with bitmap
+      commit: 86bdf3ebcfe1ded055282536fecce13001874740
+[4/7] KVM: arm64: Enable ring-based dirty memory tracking
+      commit: 9cb1096f8590bc590326087bea65db932b53c3b5
+[5/7] KVM: selftests: Use host page size to map ring buffer in dirty_log_test
+      commit: a737f5ffb1e883e580730122be11c9eb832a7749
+[6/7] KVM: selftests: Clear dirty ring states between two modes in dirty_log_test
+      commit: 7167190ddb863bd061c0c6b61f4cec94184b40da
+[7/7] KVM: selftests: Automate choosing dirty ring size in dirty_log_test
+      commit: dc6df7d4d0633e65850d5372ae9f1234bcc6e26e
+
+Cheers,
+
+	M.
+-- 
+Without deviation from the norm, progress is not possible.
+
 
 _______________________________________________
 kvmarm mailing list
