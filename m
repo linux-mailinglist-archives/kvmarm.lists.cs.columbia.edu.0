@@ -2,57 +2,56 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 2739E62655D
-	for <lists+kvmarm@lfdr.de>; Sat, 12 Nov 2022 00:20:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CF687626561
+	for <lists+kvmarm@lfdr.de>; Sat, 12 Nov 2022 00:20:05 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 611774B82D;
-	Fri, 11 Nov 2022 18:20:02 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 65D4D4B859;
+	Fri, 11 Nov 2022 18:20:05 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.79
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.79 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+	URIBL_BLOCKED=0.001] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@linux.dev
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Fkwknm50iI50; Fri, 11 Nov 2022 18:20:02 -0500 (EST)
+	with ESMTP id zMBjrNkrVbiW; Fri, 11 Nov 2022 18:20:04 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0E7CC4B814;
-	Fri, 11 Nov 2022 18:20:01 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4BB724B830;
+	Fri, 11 Nov 2022 18:20:04 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id E6EB04B80B
- for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Nov 2022 18:19:59 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 794834B80B
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Nov 2022 18:20:03 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Q5F2mZilIGFA for <kvmarm@lists.cs.columbia.edu>;
- Fri, 11 Nov 2022 18:19:58 -0500 (EST)
+ with ESMTP id HyFVghujtAoi for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 11 Nov 2022 18:20:02 -0500 (EST)
 Received: from out0.migadu.com (out0.migadu.com [94.23.1.103])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 81CAE4B7FC
- for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Nov 2022 18:19:58 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8BD514B7F9
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 11 Nov 2022 18:20:01 -0500 (EST)
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1668208797;
+ t=1668208800;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=r3Mxkoz9yPxl2ebLuf8V6mN46tSyBQbdzK/qJ9VV9Pc=;
- b=QfGoQIh4mca3HDhHokOJyORl/l2YJZ4ZQgHTFgn3XROh2W7y85pZ/H3INIZgFDGVziDkjy
- 2HoloB9tqNz0+jh9eisokKhpuF0fvgoODgC78kE+xRo314fVIafoOsMfpTIoTCZUW7sumB
- 3/3YQ8glAWj0ck/SQlX/eOLmkRUW2EU=
+ bh=FmNsJgQsGNOtJgVX1p1TSDR/6XSvxYRuK6DmS7w9sD4=;
+ b=LuT2xS0xvyBb4BuQlbPGxoHJsIzKUW15/41hKrCQAKUp+srlIVOqkf/LIWx5jdkSzgxKui
+ YYbIXxGP7YF8SRl/vTQxq/WZWk7OXe7uYnMCYZ4krwEJH4PpfAfpKtTGmlINsyynuXA14r
+ lMV4KJO7dgSyAJXuA2lMl/d9ZDI4FGM=
 From: Oliver Upton <oliver.upton@linux.dev>
 To: Marc Zyngier <maz@kernel.org>, James Morse <james.morse@arm.com>,
  Alexandru Elisei <alexandru.elisei@arm.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Shuah Khan <shuah@kernel.org>
-Subject: [PATCH 1/2] KVM: selftests: Allow >1 guest mode in
- access_tracking_perf_test
-Date: Fri, 11 Nov 2022 23:19:45 +0000
-Message-Id: <20221111231946.944807-2-oliver.upton@linux.dev>
+Subject: [PATCH 2/2] KVM: selftests: Build access_tracking_perf_test for arm64
+Date: Fri, 11 Nov 2022 23:19:46 +0000
+Message-Id: <20221111231946.944807-3-oliver.upton@linux.dev>
 In-Reply-To: <20221111231946.944807-1-oliver.upton@linux.dev>
 References: <20221111231946.944807-1-oliver.upton@linux.dev>
 MIME-Version: 1.0
@@ -76,35 +75,25 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-As the name implies, for_each_guest_mode() will run the test case for
-all supported guest addressing modes. On x86 that doesn't amount to
-anything, but arm64 can handle 4K, 16K, and 64K page sizes on supporting
-hardware.
-
-Blindly attempting to run access_tracking_perf_test on arm64 stalls on
-the second test case, as the 'done' global remains set between test
-iterations. Clear it after VM teardown in anticipation of a subsequent
-test case.
+Does exactly what it says on the tin.
 
 Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 ---
- tools/testing/selftests/kvm/access_tracking_perf_test.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/kvm/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/kvm/access_tracking_perf_test.c b/tools/testing/selftests/kvm/access_tracking_perf_test.c
-index 76c583a07ea2..4da066479e0a 100644
---- a/tools/testing/selftests/kvm/access_tracking_perf_test.c
-+++ b/tools/testing/selftests/kvm/access_tracking_perf_test.c
-@@ -326,6 +326,9 @@ static void run_test(enum vm_guest_mode mode, void *arg)
- 
- 	perf_test_join_vcpu_threads(nr_vcpus);
- 	perf_test_destroy_vm(vm);
-+
-+	/* Clear done in anticipation of testing another guest mode */
-+	done = false;
- }
- 
- static void help(char *name)
+diff --git a/tools/testing/selftests/kvm/Makefile b/tools/testing/selftests/kvm/Makefile
+index 0172eb6cb6ee..4c0ff91a8964 100644
+--- a/tools/testing/selftests/kvm/Makefile
++++ b/tools/testing/selftests/kvm/Makefile
+@@ -156,6 +156,7 @@ TEST_GEN_PROGS_aarch64 += aarch64/psci_test
+ TEST_GEN_PROGS_aarch64 += aarch64/vcpu_width_config
+ TEST_GEN_PROGS_aarch64 += aarch64/vgic_init
+ TEST_GEN_PROGS_aarch64 += aarch64/vgic_irq
++TEST_GEN_PROGS_aarch64 += access_tracking_perf_test
+ TEST_GEN_PROGS_aarch64 += demand_paging_test
+ TEST_GEN_PROGS_aarch64 += dirty_log_test
+ TEST_GEN_PROGS_aarch64 += dirty_log_perf_test
 -- 
 2.38.1.431.g37b22c650d-goog
 
