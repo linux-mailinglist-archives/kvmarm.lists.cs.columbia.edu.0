@@ -2,63 +2,63 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 69A6062B3E2
-	for <lists+kvmarm@lfdr.de>; Wed, 16 Nov 2022 08:27:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B42FE62B4C1
+	for <lists+kvmarm@lfdr.de>; Wed, 16 Nov 2022 09:14:28 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id BC56A4B8D2;
-	Wed, 16 Nov 2022 02:27:37 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0BA7E4B8D5;
+	Wed, 16 Nov 2022 03:14:28 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.79
+X-Spam-Score: -2.49
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.79 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-2.49 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+	T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@linux.dev
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 47q72fyXJpab; Wed, 16 Nov 2022 02:27:37 -0500 (EST)
+	with ESMTP id P5bcRvjynyIU; Wed, 16 Nov 2022 03:14:27 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 933804B8D9;
-	Wed, 16 Nov 2022 02:27:36 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id BB33A4B8D2;
+	Wed, 16 Nov 2022 03:14:26 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id CBB4D4B8B9
- for <kvmarm@lists.cs.columbia.edu>; Wed, 16 Nov 2022 02:27:34 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 59AE64B88B
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 16 Nov 2022 03:14:25 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id SY3lys1inOFg for <kvmarm@lists.cs.columbia.edu>;
- Wed, 16 Nov 2022 02:27:33 -0500 (EST)
+ with ESMTP id 0vhXsf-a4z6G for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 16 Nov 2022 03:14:24 -0500 (EST)
 Received: from out0.migadu.com (out0.migadu.com [94.23.1.103])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 79BA24B8B4
- for <kvmarm@lists.cs.columbia.edu>; Wed, 16 Nov 2022 02:27:33 -0500 (EST)
-Date: Wed, 16 Nov 2022 07:27:27 +0000
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1BAF94B867
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 16 Nov 2022 03:14:24 -0500 (EST)
+Date: Wed, 16 Nov 2022 08:14:19 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1668583652;
+ t=1668586463;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=QTadVoqTlZKm9VTvcDO0wveHBTpSFQKiIG+uKAG+8kM=;
- b=V9pS43higRceJa5AF+9MmdQqVOFLDPCAwKI1AmsPGuPobz+Q0p1LSPwm1Q5+C4DFql5b7T
- MijRBdX22IcazcREY5/9LVAwgx3USgWhVzi5ei6y2tHNSKu4G261ko5CYgb7yp2YwvSH8D
- fEAuY323ZCDbqMrpdyfbPkYtQwA5GCE=
+ bh=SmFKdEdkwEAGGvbba+Uew4TFmYCA4I8/v/XU6v8w0iw=;
+ b=EiQC3QrF9TRB/NYfKenXrf+k5M2yFh3QICvTBjAHp2S2AgBjJTR7+0EESbrJW9MZnTM2ku
+ HalxstlcPjFrhMFiUG6PeC1w/Rn21yzoE6U8m4RxGK2nKHc8gl9WjePXjwLsyGfzBN/HBd
+ WcAO9UckNtb5AMRTHW2N9kDIujgjrjQ=
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
 From: Oliver Upton <oliver.upton@linux.dev>
 To: Marc Zyngier <maz@kernel.org>
 Subject: Re: [PATCH v2] KVM: arm64: Don't acquire RCU read lock for exclusive
  table walks
-Message-ID: <Y3SQ3wogsVUEu1Qe@google.com>
+Message-ID: <Y3Sb20U9rCIuOU3L@google.com>
 References: <20221115225502.2240227-1-oliver.upton@linux.dev>
- <868rkbppdq.wl-maz@kernel.org>
+ <868rkbppdq.wl-maz@kernel.org> <Y3SQ3wogsVUEu1Qe@google.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <868rkbppdq.wl-maz@kernel.org>
+In-Reply-To: <Y3SQ3wogsVUEu1Qe@google.com>
 X-Migadu-Flow: FLOW_OUT
-Cc: kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>, linux-kernel@vger.kernel.org,
- kvmarm@lists.linux.dev, kvmarm@lists.cs.columbia.edu,
+Cc: kvm@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
+ linux-kernel@vger.kernel.org, kvmarm@lists.linux.dev,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
  linux-arm-kernel@lists.infradead.org,
  Marek Szyprowski <m.szyprowski@samsung.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
@@ -77,15 +77,26 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, Nov 16, 2022 at 03:08:49AM +0000, Marc Zyngier wrote:
-> I'm not crazy about this sort of parameters. I think it would make a
-> lot more sense to pass a pointer to the walker structure and do the
-> flag check inside the helper.
+On Wed, Nov 16, 2022 at 07:27:27AM +0000, Oliver Upton wrote:
+> On Wed, Nov 16, 2022 at 03:08:49AM +0000, Marc Zyngier wrote:
+> > I'm not crazy about this sort of parameters. I think it would make a
+> > lot more sense to pass a pointer to the walker structure and do the
+> > flag check inside the helper.
+> > 
+> > That way, we avoid extra churn if/when we need extra state or
+> > bookkeeping around the walk.
 > 
-> That way, we avoid extra churn if/when we need extra state or
-> bookkeeping around the walk.
+> Sure, let's go that way instead. v3 on the way lol :)
 
-Sure, let's go that way instead. v3 on the way lol :)
+Well, going this route is going to require hoisting around a few things.
+
+I'd very much prefer to keep the RCU indirection ifdeffery all in one
+place, but I'll need to haul it all after the definitions of kvm_pgtable_walker
+and kvm_pgtable_walk_flags but before the definition of kvm_pgtable
+(as it needs kvm_pteref_t).
+
+I'm not too bothered by it, but not quite as small of a bandaid this
+time around.
 
 --
 Thanks,
