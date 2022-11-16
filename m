@@ -2,78 +2,76 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id BA5FF62C5CB
-	for <lists+kvmarm@lfdr.de>; Wed, 16 Nov 2022 18:04:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0527862C5D2
+	for <lists+kvmarm@lfdr.de>; Wed, 16 Nov 2022 18:04:17 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4FC5F4B8EE;
-	Wed, 16 Nov 2022 12:04:10 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A62FD4B8B3;
+	Wed, 16 Nov 2022 12:04:16 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.787
+X-Spam-Score: -1.788
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.787 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1,
-	RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=no
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id wyjd0pjT70zK; Wed, 16 Nov 2022 12:04:10 -0500 (EST)
+	with ESMTP id AVF7mAPMUZrB; Wed, 16 Nov 2022 12:04:13 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0B1F14B8B3;
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 48A4D4B8E4;
 	Wed, 16 Nov 2022 12:04:07 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 426204B8D0
- for <kvmarm@lists.cs.columbia.edu>; Wed, 16 Nov 2022 12:04:04 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 61D534B8D5
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 16 Nov 2022 12:04:05 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id nCxmxha4+IE7 for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id o7Xu1oxQfV0H for <kvmarm@lists.cs.columbia.edu>;
  Wed, 16 Nov 2022 12:04:02 -0500 (EST)
-Received: from mail-ed1-f73.google.com (mail-ed1-f73.google.com
- [209.85.208.73])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id B1E8B4B8F2
- for <kvmarm@lists.cs.columbia.edu>; Wed, 16 Nov 2022 12:03:58 -0500 (EST)
-Received: by mail-ed1-f73.google.com with SMTP id
- y18-20020a056402359200b004635f8b1bfbso12964128edc.17
- for <kvmarm@lists.cs.columbia.edu>; Wed, 16 Nov 2022 09:03:58 -0800 (PST)
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com
+ [209.85.219.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E01F94B89C
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 16 Nov 2022 12:04:00 -0500 (EST)
+Received: by mail-yb1-f202.google.com with SMTP id
+ c188-20020a25c0c5000000b006d8eba07513so16810495ybf.17
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 16 Nov 2022 09:04:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=w3CJ9WqAwrI5MWLbxzP4zufoJqf7Sp8iQz9NzGEzNss=;
- b=RRQT8R8I8/484VEB7cZtngMuD3T4Py3IF82wRk+y2FNtS+kUp8hwTPzl3tIwgvoHdW
- OfMMBdCkQOPYoO1cVBvZ+tfGLnLJpB9pDhaN7v7wIhNHpAqrTPXcmcO82vmEUsJDO3F3
- 5bmHSPlxCy1B2rBozvE2SGkdJ+JHBhwWqOz2hbVFkg8YRDSBkH59SdyGZLEMacOQr1y7
- DKsPdZCaBMauYRGyAPLO9IBwCELxblbYZjnARDadXRCVgiPv4KCjnTCn1TbFZXyYkGpt
- E8rmNyCUP73bX9xXIaUa8d0tyHdtHjXMd4nwBYClTcug3wD/sJ2ay8q/jGEx1h2u+Wmf
- 2j0Q==
+ bh=kO5XlRLmK3X8yXuHSC9GCM5rHDlrcfte6dUBAr7snZ0=;
+ b=Y3JgUHSpN2o2TEbLvsP9DwLQXgzSZaz8ke99wrsW6mIKrokYNfHgnkzf0ja40+rIff
+ /bftVCEeJbQFZOCn+ViODY4NOrlOqWLmD0TT6HDlMMgjp9f959RL3FVj4CVQ98bKjhQa
+ tTVU3PWe4CZSYpYkTNetpwgFsYCDtCvK57SXuxzMF6TC0SOOjzatLsRiHrWBrm1baKzz
+ xk3K/OxjTRMiXbgJGcofSKrg/7k3Rv9456GiNmHqZwfxlN+waLnAuClNMcnxMu4QX/0Q
+ UdOHZsILlMcXyGZDE7cclykOjm3nLH9vcUOiK84XqZJmuK4BfQsnSWEv/jGQq5+fEfqW
+ NXZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w3CJ9WqAwrI5MWLbxzP4zufoJqf7Sp8iQz9NzGEzNss=;
- b=HEkHTWKUeeUfxBQ1uwMqWR7E9jx1l1nuXfGJ5A0LLf9a3HCu7oKEX4txRpb/UnCCVL
- WSO8P1+zkBNvqzVpG/dJBhOj6Go0MPL2OIVyeCl7TIZ9j3ijN37EbNclYhcME4bER6SV
- GiZJXtGqFq0NgNZnV7bj0eRN/knRAjvGqof0v0gXZf2TP5zj/zIxNd/DwNG6s6eXMhNY
- XaCC6Pk2EGrpVXCOk6s8844SfP+0rX/BCJGenMO8yFilsFNTb923PH0ptwRAIuFTR/8z
- /SHJeAwKEWjpwM+93uhi1amtUIfPUwGQonJTGgCxE/+rjkT8BzgoS+/PQT7FY89W0GZS
- WCog==
-X-Gm-Message-State: ANoB5pn+wvA0DiRodVyfXPncVK06kSL73Ms4GP67ap5mCZC4CKKYOWSy
- S4PIornNvJG6lvoht2JthShZQZPOQQZY
-X-Google-Smtp-Source: AA0mqf6JS80gQxyHP/kM0kvdlOGbGQY5Uhg5+P6sHPSkH1Zbh79if5Kzo0s/F9hrUkjGecANQVWXuHZIGu3M
+ bh=kO5XlRLmK3X8yXuHSC9GCM5rHDlrcfte6dUBAr7snZ0=;
+ b=4ugiHK7mKW1AMBd3DTzxnz0T12HNPtxHOf0eT3hKkGrPGvgllzKOT0DaSccJlWtG4l
+ 5qHISAPOReUVgCdzJP05TR2hnBaHsELE4okw9mt8jHUIYkAHWrmCA7axAnKoGcme1q5B
+ sEt46BTNRCYC77eqTGRlxG0RmXNq002Zn0CjKMyoK9aKXUdVYR3wklCU5vvL/74VdSEc
+ Pg+OYPfnBxlgo5Hh2MejqWX7tV6MMAR3TOOiwpxSl8DlkISpQEDeukKUy+zSiYxWtEXk
+ 11kLsGQ0hksfTmm4KsvuLwD/9xEZl4EOS+E3EY5hLOd/g09H3MV9uhn3QiM4mMQ8FNIA
+ ermA==
+X-Gm-Message-State: ACrzQf3knEx+JKBXCAcEXutFI+Ibano0vKqMoTkpgrbAmn+ZMbRfZnij
+ o53Qi/xvAk8v+4teJleq3CbooATYouWF
+X-Google-Smtp-Source: AMsMyM7GE8le/jzj4qfxiRqiuoLCuJYhLYOD1uZIoZ1/9pgFDEeEFX2WZV7am/Up/It4weMCnd8Pp8GZR2e6
 X-Received: from big-boi.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:129])
- (user=qperret job=sendgmr) by 2002:a17:907:9142:b0:78d:9c18:7307 with SMTP id
- l2-20020a170907914200b0078d9c187307mr20201932ejs.23.1668618237769; Wed, 16
- Nov 2022 09:03:57 -0800 (PST)
-Date: Wed, 16 Nov 2022 17:03:31 +0000
+ (user=qperret job=sendgmr) by 2002:a81:1dce:0:b0:34c:e500:b95b with SMTP id
+ d197-20020a811dce000000b0034ce500b95bmr63847085ywd.109.1668618240086; Wed, 16
+ Nov 2022 09:04:00 -0800 (PST)
+Date: Wed, 16 Nov 2022 17:03:32 +0000
 In-Reply-To: <20221116170335.2341003-1-qperret@google.com>
 Mime-Version: 1.0
 References: <20221116170335.2341003-1-qperret@google.com>
 X-Mailer: git-send-email 2.38.1.431.g37b22c650d-goog
-Message-ID: <20221116170335.2341003-9-qperret@google.com>
-Subject: [PATCH 08/12] KVM: arm64: Add FF-A helpers to share/unshare memory
- with secure world
+Message-ID: <20221116170335.2341003-10-qperret@google.com>
+Subject: [PATCH 09/12] KVM: arm64: Handle FFA_MEM_SHARE calls from the host
 From: Quentin Perret <qperret@google.com>
 To: Marc Zyngier <maz@kernel.org>, James Morse <james.morse@arm.com>, 
  Alexandru Elisei <alexandru.elisei@arm.com>,
@@ -103,144 +101,196 @@ Sender: kvmarm-bounces@lists.cs.columbia.edu
 
 From: Will Deacon <will@kernel.org>
 
-Extend pKVM's memory protection code so that we can update the host's
-stage-2 page-table to track pages shared with secure world by the host
-using FF-A and prevent those pages from being mapped into a guest.
+Intercept FFA_MEM_SHARE/FFA_FN64_MEM_SHARE calls from the host and
+transition the host stage-2 page-table entries from the OWNED state to
+the SHARED_OWNED state prior to forwarding the call onto EL3.
 
 Co-developed-by: Andrew Walbran <qwandor@google.com>
 Signed-off-by: Andrew Walbran <qwandor@google.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Quentin Perret <qperret@google.com>
 ---
- arch/arm64/kvm/hyp/include/nvhe/mem_protect.h |  3 +
- arch/arm64/kvm/hyp/nvhe/mem_protect.c         | 68 +++++++++++++++++++
- 2 files changed, 71 insertions(+)
+ arch/arm64/kvm/hyp/nvhe/ffa.c | 153 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 153 insertions(+)
 
-diff --git a/arch/arm64/kvm/hyp/include/nvhe/mem_protect.h b/arch/arm64/kvm/hyp/include/nvhe/mem_protect.h
-index b7bdbe63deed..0972faccc2af 100644
---- a/arch/arm64/kvm/hyp/include/nvhe/mem_protect.h
-+++ b/arch/arm64/kvm/hyp/include/nvhe/mem_protect.h
-@@ -57,6 +57,7 @@ extern struct host_mmu host_mmu;
- enum pkvm_component_id {
- 	PKVM_ID_HOST,
- 	PKVM_ID_HYP,
-+	PKVM_ID_FFA,
- };
- 
- extern unsigned long hyp_nr_cpus;
-@@ -66,6 +67,8 @@ int __pkvm_host_share_hyp(u64 pfn);
- int __pkvm_host_unshare_hyp(u64 pfn);
- int __pkvm_host_donate_hyp(u64 pfn, u64 nr_pages);
- int __pkvm_hyp_donate_host(u64 pfn, u64 nr_pages);
-+int __pkvm_host_share_ffa(u64 pfn, u64 nr_pages);
-+int __pkvm_host_unshare_ffa(u64 pfn, u64 nr_pages);
- 
- bool addr_is_memory(phys_addr_t phys);
- int host_stage2_idmap_locked(phys_addr_t addr, u64 size, enum kvm_pgtable_prot prot);
-diff --git a/arch/arm64/kvm/hyp/nvhe/mem_protect.c b/arch/arm64/kvm/hyp/nvhe/mem_protect.c
-index 552653fa18be..e721fba3bb33 100644
---- a/arch/arm64/kvm/hyp/nvhe/mem_protect.c
-+++ b/arch/arm64/kvm/hyp/nvhe/mem_protect.c
-@@ -835,6 +835,13 @@ static int check_share(struct pkvm_mem_share *share)
- 	case PKVM_ID_HYP:
- 		ret = hyp_ack_share(completer_addr, tx, share->completer_prot);
- 		break;
-+	case PKVM_ID_FFA:
-+		/*
-+		 * We only check the host; the secure side will check the other
-+		 * end when we forward the FFA call.
-+		 */
-+		ret = 0;
-+		break;
- 	default:
- 		ret = -EINVAL;
- 	}
-@@ -863,6 +870,13 @@ static int __do_share(struct pkvm_mem_share *share)
- 	case PKVM_ID_HYP:
- 		ret = hyp_complete_share(completer_addr, tx, share->completer_prot);
- 		break;
-+	case PKVM_ID_FFA:
-+		/*
-+		 * We're not responsible for any secure page-tables, so there's
-+		 * nothing to do here.
-+		 */
-+		ret = 0;
-+		break;
- 	default:
- 		ret = -EINVAL;
- 	}
-@@ -911,6 +925,10 @@ static int check_unshare(struct pkvm_mem_share *share)
- 	case PKVM_ID_HYP:
- 		ret = hyp_ack_unshare(completer_addr, tx);
- 		break;
-+	case PKVM_ID_FFA:
-+		/* See check_share() */
-+		ret = 0;
-+		break;
- 	default:
- 		ret = -EINVAL;
- 	}
-@@ -939,6 +957,10 @@ static int __do_unshare(struct pkvm_mem_share *share)
- 	case PKVM_ID_HYP:
- 		ret = hyp_complete_unshare(completer_addr, tx);
- 		break;
-+	case PKVM_ID_FFA:
-+		/* See __do_share() */
-+		ret = 0;
-+		break;
- 	default:
- 		ret = -EINVAL;
- 	}
-@@ -1228,3 +1250,49 @@ void hyp_unpin_shared_mem(void *from, void *to)
- 	hyp_unlock_component();
- 	host_unlock_component();
+diff --git a/arch/arm64/kvm/hyp/nvhe/ffa.c b/arch/arm64/kvm/hyp/nvhe/ffa.c
+index 8388cc901c97..e6d85849c617 100644
+--- a/arch/arm64/kvm/hyp/nvhe/ffa.c
++++ b/arch/arm64/kvm/hyp/nvhe/ffa.c
+@@ -122,6 +122,14 @@ static int spmd_unmap_ffa_buffers(void)
+ 	return res.a0 == FFA_SUCCESS ? FFA_RET_SUCCESS : res.a2;
  }
-+
-+int __pkvm_host_share_ffa(u64 pfn, u64 nr_pages)
+ 
++static void spmd_mem_share(struct arm_smccc_res *res, u32 len, u32 fraglen)
 +{
-+	int ret;
-+	struct pkvm_mem_share share = {
-+		.tx	= {
-+			.nr_pages	= nr_pages,
-+			.initiator	= {
-+				.id	= PKVM_ID_HOST,
-+				.addr	= hyp_pfn_to_phys(pfn),
-+			},
-+			.completer	= {
-+				.id	= PKVM_ID_FFA,
-+			},
-+		},
-+	};
++	arm_smccc_1_1_smc(FFA_FN64_MEM_SHARE,
++			  len, fraglen,
++			  0, 0, 0, 0, 0,
++			  res);
++}
 +
-+	host_lock_component();
-+	ret = do_share(&share);
-+	host_unlock_component();
+ static void do_ffa_rxtx_map(struct arm_smccc_res *res,
+ 			    struct kvm_cpu_context *ctxt)
+ {
+@@ -230,6 +238,149 @@ static void do_ffa_rxtx_unmap(struct arm_smccc_res *res,
+ 	ffa_to_smccc_res(res, ret);
+ }
+ 
++static u32 __ffa_host_share_ranges(struct ffa_mem_region_addr_range *ranges,
++				   u32 nranges)
++{
++	u32 i;
++
++	for (i = 0; i < nranges; ++i) {
++		struct ffa_mem_region_addr_range *range = &ranges[i];
++		u64 sz = (u64)range->pg_cnt * FFA_PAGE_SIZE;
++		u64 pfn = hyp_phys_to_pfn(range->address);
++
++		if (!PAGE_ALIGNED(sz))
++			break;
++
++		if (__pkvm_host_share_ffa(pfn, sz / PAGE_SIZE))
++			break;
++	}
++
++	return i;
++}
++
++static u32 __ffa_host_unshare_ranges(struct ffa_mem_region_addr_range *ranges,
++				     u32 nranges)
++{
++	u32 i;
++
++	for (i = 0; i < nranges; ++i) {
++		struct ffa_mem_region_addr_range *range = &ranges[i];
++		u64 sz = (u64)range->pg_cnt * FFA_PAGE_SIZE;
++		u64 pfn = hyp_phys_to_pfn(range->address);
++
++		if (!PAGE_ALIGNED(sz))
++			break;
++
++		if (__pkvm_host_unshare_ffa(pfn, sz / PAGE_SIZE))
++			break;
++	}
++
++	return i;
++}
++
++static int ffa_host_share_ranges(struct ffa_mem_region_addr_range *ranges,
++				 u32 nranges)
++{
++	u32 nshared = __ffa_host_share_ranges(ranges, nranges);
++	int ret = 0;
++
++	if (nshared != nranges) {
++		WARN_ON(__ffa_host_unshare_ranges(ranges, nshared) != nshared);
++		ret = FFA_RET_DENIED;
++	}
 +
 +	return ret;
 +}
 +
-+int __pkvm_host_unshare_ffa(u64 pfn, u64 nr_pages)
++static int ffa_host_unshare_ranges(struct ffa_mem_region_addr_range *ranges,
++				   u32 nranges)
 +{
-+	int ret;
-+	struct pkvm_mem_share share = {
-+		.tx	= {
-+			.nr_pages	= nr_pages,
-+			.initiator	= {
-+				.id	= PKVM_ID_HOST,
-+				.addr	= hyp_pfn_to_phys(pfn),
-+			},
-+			.completer	= {
-+				.id	= PKVM_ID_FFA,
-+			},
-+		},
-+	};
++	u32 nunshared = __ffa_host_unshare_ranges(ranges, nranges);
++	int ret = 0;
 +
-+	host_lock_component();
-+	ret = do_unshare(&share);
-+	host_unlock_component();
++	if (nunshared != nranges) {
++		WARN_ON(__ffa_host_share_ranges(ranges, nunshared) != nunshared);
++		ret = FFA_RET_DENIED;
++	}
 +
 +	return ret;
 +}
++
++static void do_ffa_mem_share(struct arm_smccc_res *res,
++			     struct kvm_cpu_context *ctxt)
++{
++	DECLARE_REG(u32, len, ctxt, 1);
++	DECLARE_REG(u32, fraglen, ctxt, 2);
++	DECLARE_REG(u64, addr_mbz, ctxt, 3);
++	DECLARE_REG(u32, npages_mbz, ctxt, 4);
++	struct ffa_composite_mem_region *reg;
++	struct ffa_mem_region *buf;
++	int ret = 0;
++	u32 offset;
++
++	if (addr_mbz || npages_mbz || fraglen > len ||
++	    fraglen > KVM_FFA_MBOX_NR_PAGES * PAGE_SIZE) {
++		ret = FFA_RET_INVALID_PARAMETERS;
++		goto out;
++	}
++
++	if (fraglen < len) {
++		ret = FFA_RET_ABORTED;
++		goto out;
++	}
++
++	if (fraglen < sizeof(struct ffa_mem_region) +
++		      sizeof(struct ffa_mem_region_attributes)) {
++		ret = FFA_RET_INVALID_PARAMETERS;
++		goto out;
++	}
++
++	hyp_spin_lock(&host_buffers.lock);
++	if (!host_buffers.tx) {
++		ret = FFA_RET_INVALID_PARAMETERS;
++		goto out_unlock;
++	}
++
++	buf = hyp_buffers.tx;
++	memcpy(buf, host_buffers.tx, fraglen);
++
++	offset = buf->ep_mem_access[0].composite_off;
++	if (!offset || buf->ep_count != 1 || buf->sender_id != HOST_FFA_ID) {
++		ret = FFA_RET_INVALID_PARAMETERS;
++		goto out_unlock;
++	}
++
++	if (fraglen < offset + sizeof(struct ffa_composite_mem_region)) {
++		ret = FFA_RET_INVALID_PARAMETERS;
++		goto out_unlock;
++	}
++
++	reg = (void *)buf + offset;
++	if (fraglen < offset + sizeof(struct ffa_composite_mem_region) +
++		      reg->addr_range_cnt *
++		      sizeof(struct ffa_mem_region_addr_range)) {
++		ret = FFA_RET_INVALID_PARAMETERS;
++		goto out_unlock;
++	}
++
++	ret = ffa_host_share_ranges(reg->constituents, reg->addr_range_cnt);
++	if (ret)
++		goto out_unlock;
++
++	spmd_mem_share(res, len, fraglen);
++	if (res->a0 != FFA_SUCCESS) {
++		WARN_ON(ffa_host_unshare_ranges(reg->constituents,
++						reg->addr_range_cnt));
++	}
++
++out_unlock:
++	hyp_spin_unlock(&host_buffers.lock);
++out:
++	if (ret)
++		ffa_to_smccc_res(res, ret);
++	return;
++}
++
+ static bool ffa_call_unsupported(u64 func_id)
+ {
+ 	switch (func_id) {
+@@ -308,6 +459,8 @@ bool kvm_host_ffa_handler(struct kvm_cpu_context *host_ctxt)
+ 		goto out_handled;
+ 	case FFA_MEM_SHARE:
+ 	case FFA_FN64_MEM_SHARE:
++		do_ffa_mem_share(&res, host_ctxt);
++		goto out_handled;
+ 	case FFA_MEM_LEND:
+ 	case FFA_FN64_MEM_LEND:
+ 	case FFA_MEM_RECLAIM:
 -- 
 2.38.1.431.g37b22c650d-goog
 
