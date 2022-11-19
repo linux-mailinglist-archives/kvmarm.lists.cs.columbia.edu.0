@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DD02630881
-	for <lists+kvmarm@lfdr.de>; Sat, 19 Nov 2022 02:35:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B291630883
+	for <lists+kvmarm@lfdr.de>; Sat, 19 Nov 2022 02:35:08 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 339CC4BB6F;
-	Fri, 18 Nov 2022 20:35:04 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 17E414B63B;
+	Fri, 18 Nov 2022 20:35:08 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
@@ -18,63 +18,63 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id MCMRRLxltWWO; Fri, 18 Nov 2022 20:35:04 -0500 (EST)
+	with ESMTP id JGaybtk1w-ui; Fri, 18 Nov 2022 20:35:07 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E4F2A4BB67;
-	Fri, 18 Nov 2022 20:35:02 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4083A4BB8C;
+	Fri, 18 Nov 2022 20:35:06 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 79DB84BB52
- for <kvmarm@lists.cs.columbia.edu>; Fri, 18 Nov 2022 20:35:00 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id B1A984B64F
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 18 Nov 2022 20:35:04 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id RyEHvmYTC3nK for <kvmarm@lists.cs.columbia.edu>;
- Fri, 18 Nov 2022 20:34:59 -0500 (EST)
-Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com
- [209.85.216.73])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 290774B63B
- for <kvmarm@lists.cs.columbia.edu>; Fri, 18 Nov 2022 20:34:59 -0500 (EST)
-Received: by mail-pj1-f73.google.com with SMTP id
- a23-20020a17090a8c1700b0021890040f7cso1539437pjo.1
- for <kvmarm@lists.cs.columbia.edu>; Fri, 18 Nov 2022 17:34:59 -0800 (PST)
+ with ESMTP id tUV8OoWEOXCK for <kvmarm@lists.cs.columbia.edu>;
+ Fri, 18 Nov 2022 20:35:02 -0500 (EST)
+Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com
+ [209.85.215.201])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id C5F704BB5F
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 18 Nov 2022 20:35:00 -0500 (EST)
+Received: by mail-pg1-f201.google.com with SMTP id
+ k16-20020a635a50000000b0042986056df6so3956705pgm.2
+ for <kvmarm@lists.cs.columbia.edu>; Fri, 18 Nov 2022 17:35:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:reply-to:from:to:cc:subject:date:message-id:reply-to;
- bh=e+ywn9anGlzmBRZYQfNE5JqRUvrYYtM9CuRcHhcOat8=;
- b=bUEChsSWxywmbXEODMnhpTArgpDXm8MaKA/SqgTjg5p+/RcYNX7S04/3xpu9J/Qvhd
- 4bdagwUbiSdDxnx3tS0KF820eXh2iqkgSCqZDfRbzZHyloQR7cNnkjyTKyEuT6f4pI10
- 8tKIXR4fa/bt7sTnMlIgnfjppTnjmh2lzOejjH/eCf9LxOD5caHM7jQPu+J7kwCDF9RB
- ooOOGe2F+sB/yW0Iak7LoRDXFnao07e5dDaQ6BfVTWKYFz8nLtcfxAGPgcnrQw6Wy4Sa
- aeVwQDjy46i3XYIrO35DtjIYTHDet8LPXqZ4MaG6IOPG/C9jabUyQMOrTAnz/MWzY9l1
- R0QQ==
+ bh=TighIegw0FVxEDaBlZjjTMFerelt3ds/i85zL8CdikU=;
+ b=rmXe3VvPa8zVoj+4dcS77sndQg/asQbzYB56Apv5ggGW1UuoVvHp+A5nMUNJLLDfT3
+ 0SofbaNG1mdy2xYr69bYijAVWvASmZ+BqpR/39RMUQ9fkkgAxOfAbbiCLxjhwxFDSnJD
+ CYvPDNSf4OyAJDiay7zq/RREBEcBoCo+j9xnBGDg3cCGMQQFHgk7xqMIHyhqLMB+bCwR
+ NAaB2xI/+noK1nArryRf5o2AI/YWSXe/+BtRdDtBj4KcS5PatRnf6S7gkyW5Yh4ep5o2
+ 9FIQoQ8VkWuppw661uC0FbLCjWmBTrmiieXQzRAdkvaLBoGT3HMeR/wJf7SYLzVFCqzk
+ 4tiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:reply-to:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=e+ywn9anGlzmBRZYQfNE5JqRUvrYYtM9CuRcHhcOat8=;
- b=KPDepHXTLGN2G0kfMREscyJI0ifLaETeGA/Edp1DP4Z6D8ybhTVF/i2ZNRO6fmuZhg
- n8orTa8e9haJdIISYxMRNoQARLfo8t5fCR5bhzYrkLYRITBueLGXM4/YW4FQgP6KvlLF
- 3qzSKJkldDvGR2XCqjnitgJXgHoRcv9DKDsAWnvUp/NIJCwmBvZmhyVrnSeEnObAIn2Z
- BC+ifVHNOP2z8t0Xdy+pO3/PPYZeksVSV/1byRa6Yx7In8b2T1WliLwpSbjoJhdk8DC/
- JEiQvW5M9m5lQnpyvTediIc0ncOJLAKaCIVw13fOsEFYyS6ZSe914j3bfVAp0d17jqBx
- RGjA==
-X-Gm-Message-State: ANoB5pmNVFjgHjKCefrwzljiAt4otqSkAuwg2g2dG72RklNRb6mAaEFW
- z+0hOGrWP9NMkHASWUDKi/KkQEg5Zqg=
-X-Google-Smtp-Source: AA0mqf7PcgvXvqdOghYQniN0zB4c61iyewtOMCoU0bUVvjXFRgEWaXWMy7aEAP06rfFe12MZOAkzfOPPmU4=
+ bh=TighIegw0FVxEDaBlZjjTMFerelt3ds/i85zL8CdikU=;
+ b=553ZCqA/uJMj6j+kaksk1v+6pSJMmZ+QXB8STZZzduZvqkhLSdxO3Y5pLmvRmryZLQ
+ tsRnSCxtBkd/2nVS+V/Ff4hYuRnbyhWi7Y81gr3gNWL9EKsG/vsQoFD2wOxiqWx/wI+G
+ lYx1xAJpm08CWhoQoYSuyQmpdq7Kin/JtgHdubPBsWAgK6gXY97jq3QDabDgLfjjreyg
+ PfkD4MMkIcBwZ15MBJUcwlCKsWXYaeb5rYQJdWcmsBAPLCkezMpQTB4QSqhm6t9FjlGO
+ UbUyQRE2kxZBv7RUEkjx3EUfpLFO1DAiJeA0qEeveSunfoWwct0tXtW2re/H03+aMYjL
+ qoqg==
+X-Gm-Message-State: ANoB5pmkb1urYfLoPPILFruiV/0VU9m1MpXzKYJ6SBU+pzUpt2Re9puX
+ gSAJ58zbPVgAZFTK8+KMdhj1CekiRLM=
+X-Google-Smtp-Source: AA0mqf7npHfQc5LwOz0q7JCYBS7uttfoGJCbriNRIIB73IIE/vGbpLSdnE48DGaUO0X9NP3W41W4iWnhxeQ=
 X-Received: from zagreus.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a62:bd18:0:b0:562:3aed:e40c with SMTP id
- a24-20020a62bd18000000b005623aede40cmr10612946pff.2.1668821698375; Fri, 18
- Nov 2022 17:34:58 -0800 (PST)
-Date: Sat, 19 Nov 2022 01:34:44 +0000
+ (user=seanjc job=sendgmr) by 2002:aa7:8d88:0:b0:562:69d4:f9f3 with SMTP id
+ i8-20020aa78d88000000b0056269d4f9f3mr10570461pfr.5.1668821700033; Fri, 18 Nov
+ 2022 17:35:00 -0800 (PST)
+Date: Sat, 19 Nov 2022 01:34:45 +0000
 In-Reply-To: <20221119013450.2643007-1-seanjc@google.com>
 Mime-Version: 1.0
 References: <20221119013450.2643007-1-seanjc@google.com>
 X-Mailer: git-send-email 2.38.1.584.g0f3c55d4c2-goog
-Message-ID: <20221119013450.2643007-4-seanjc@google.com>
-Subject: [PATCH 3/9] KVM: arm64: selftests: Enable single-step without a
- "full" ucall()
+Message-ID: <20221119013450.2643007-5-seanjc@google.com>
+Subject: [PATCH 4/9] tools: Take @bit as an "unsigned long" in
+ {clear,set}_bit() helpers
 From: Sean Christopherson <seanjc@google.com>
 To: Yury Norov <yury.norov@gmail.com>, Peter Zijlstra <peterz@infradead.org>, 
  Ingo Molnar <mingo@redhat.com>, Arnaldo Carvalho de Melo <acme@kernel.org>,
@@ -103,89 +103,62 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Add a new ucall hook, GUEST_UCALL_NONE(), to allow tests to make ucalls
-without allocating a ucall struct, and use it to enable single-step
-in ARM's debug-exceptions test.  Like the disable single-step path, the
-enabling path also needs to ensure that no exclusive access sequences are
-attempted after enabling single-step, as the exclusive monitor is cleared
-on ERET from the debug exception taken to EL2.
+Take @bit as an unsigned long instead of a signed int in clear_bit() and
+set_bit() so that they match the double-underscore versions, __clear_bit()
+and __set_bit().  This will allow converting users that really don't want
+atomic operations to the double-underscores without introducing a
+functional change, which will in turn allow making {clear,set}_bit()
+atomic (as advertised).
 
-The test currently "works" because clear_bit() isn't actually an atomic
-operation... yet.
+Practically speaking, this _should_ have no functional impact.  KVM's
+selftests usage is either hardcoded (Hyper-V tests) or is artificially
+limited (arch_timer test and dirty_log test).  In KVM, dirty_log test is
+the only mildly interesting case as it's use indirectly restricted to
+unsigned 32-bit values, but in theory it could generate a negative value
+when cast to a signed int.  But in that case, taking an "unsigned long"
+is actually a bug fix.
+
+Perf's usage is more difficult to audit, but any code that is affected
+by the switch is likely already broken.  perf_header__{set,clear}_feat()
+and perf_file_header__read() effectively use only hardcoded enums with
+small, positive values, atom_new() passes an unsigned long, but its value
+is capped at 128 via NR_ATOM_PER_PAGE, etc...
+
+The only real potential for breakage is in the perf flows that take a
+"cpu", but it's unlikely perf is subtly relying on a negative index into
+bitmaps, e.g. "cpu" can be "-1", but only as "not valid" placeholder.
+
+Note, tools/testing/nvdimm/ makes heavy use of set_bit(), but that code
+builds into a kernel module of sorts, i.e. pulls in all of the kernel's
+header and so is getting the kernel's atomic set_bit().  The NVDIMM test
+usage of atomics is likely unnecessary, e.g. ndtest_dimm_register() sets
+bits in a local variable, but that's neither here nor there as far as
+this change is concerned.
 
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 ---
- .../selftests/kvm/aarch64/debug-exceptions.c  | 21 ++++++++++---------
- .../selftests/kvm/include/ucall_common.h      |  8 +++++++
- 2 files changed, 19 insertions(+), 10 deletions(-)
+ tools/include/asm-generic/bitops/atomic.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/kvm/aarch64/debug-exceptions.c b/tools/testing/selftests/kvm/aarch64/debug-exceptions.c
-index d86c4e4d1c82..c62ec4d7f6a3 100644
---- a/tools/testing/selftests/kvm/aarch64/debug-exceptions.c
-+++ b/tools/testing/selftests/kvm/aarch64/debug-exceptions.c
-@@ -239,10 +239,6 @@ static void guest_svc_handler(struct ex_regs *regs)
- 	svc_addr = regs->pc;
+diff --git a/tools/include/asm-generic/bitops/atomic.h b/tools/include/asm-generic/bitops/atomic.h
+index 2f6ea28764a7..f64b049d236c 100644
+--- a/tools/include/asm-generic/bitops/atomic.h
++++ b/tools/include/asm-generic/bitops/atomic.h
+@@ -5,12 +5,12 @@
+ #include <asm/types.h>
+ #include <asm/bitsperlong.h>
+ 
+-static inline void set_bit(int nr, unsigned long *addr)
++static inline void set_bit(unsigned long nr, unsigned long *addr)
+ {
+ 	addr[nr / __BITS_PER_LONG] |= 1UL << (nr % __BITS_PER_LONG);
  }
  
--enum single_step_op {
--	SINGLE_STEP_ENABLE = 0,
--};
--
- static void guest_code_ss(int test_cnt)
+-static inline void clear_bit(int nr, unsigned long *addr)
++static inline void clear_bit(unsigned long nr, unsigned long *addr)
  {
- 	uint64_t i;
-@@ -253,8 +249,16 @@ static void guest_code_ss(int test_cnt)
- 		w_bvr = i << 2;
- 		w_wvr = i << 2;
- 
--		/* Enable Single Step execution */
--		GUEST_SYNC(SINGLE_STEP_ENABLE);
-+		/*
-+		 * Enable Single Step execution.  Note!  This _must_ be a bare
-+		 * ucall as the ucall() path uses atomic operations to manage
-+		 * the ucall structures, and the built-in "atomics" are usually
-+		 * implemented via exclusive access instructions.  The exlusive
-+		 * monitor is cleared on ERET, and so taking debug exceptions
-+		 * during a LDREX=>STREX sequence will prevent forward progress
-+		 * and hang the guest/test.
-+		 */
-+		GUEST_UCALL_NONE();
- 
- 		/*
- 		 * The userspace will verify that the pc is as expected during
-@@ -356,12 +360,9 @@ void test_single_step_from_userspace(int test_cnt)
- 				break;
- 			}
- 
--			TEST_ASSERT(cmd == UCALL_SYNC,
-+			TEST_ASSERT(cmd == UCALL_NONE,
- 				    "Unexpected ucall cmd 0x%lx", cmd);
- 
--			TEST_ASSERT(uc.args[1] == SINGLE_STEP_ENABLE,
--				    "Unexpected ucall action 0x%lx", uc.args[1]);
--
- 			debug.control = KVM_GUESTDBG_ENABLE |
- 					KVM_GUESTDBG_SINGLESTEP;
- 			ss_enable = true;
-diff --git a/tools/testing/selftests/kvm/include/ucall_common.h b/tools/testing/selftests/kvm/include/ucall_common.h
-index bdd373189a77..1a6aaef5ccae 100644
---- a/tools/testing/selftests/kvm/include/ucall_common.h
-+++ b/tools/testing/selftests/kvm/include/ucall_common.h
-@@ -35,6 +35,14 @@ void ucall(uint64_t cmd, int nargs, ...);
- uint64_t get_ucall(struct kvm_vcpu *vcpu, struct ucall *uc);
- void ucall_init(struct kvm_vm *vm, vm_paddr_t mmio_gpa);
- 
-+/*
-+ * Perform userspace call without any associated data.  This bare call avoids
-+ * allocating a ucall struct, which can be useful if the atomic operations in
-+ * the full ucall() are problematic and/or unwanted.  Note, this will come out
-+ * as UCALL_NONE on the backend.
-+ */
-+#define GUEST_UCALL_NONE()	ucall_arch_do_ucall((vm_vaddr_t)NULL)
-+
- #define GUEST_SYNC_ARGS(stage, arg1, arg2, arg3, arg4)	\
- 				ucall(UCALL_SYNC, 6, "hello", stage, arg1, arg2, arg3, arg4)
- #define GUEST_SYNC(stage)	ucall(UCALL_SYNC, 2, "hello", stage)
+ 	addr[nr / __BITS_PER_LONG] &= ~(1UL << (nr % __BITS_PER_LONG));
+ }
 -- 
 2.38.1.584.g0f3c55d4c2-goog
 
