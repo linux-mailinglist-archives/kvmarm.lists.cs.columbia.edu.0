@@ -2,107 +2,94 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A0D763E4A8
-	for <lists+kvmarm@lfdr.de>; Thu,  1 Dec 2022 00:11:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EBC5C63E55E
+	for <lists+kvmarm@lfdr.de>; Thu,  1 Dec 2022 00:21:26 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CE1D84B3EA;
-	Wed, 30 Nov 2022 18:11:20 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 4E7C44B5E7;
+	Wed, 30 Nov 2022 18:21:26 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -6.788
+X-Spam-Score: -1.788
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, RCVD_IN_DNSWL_HI=-5,
-	T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Z49D2NVt7Rtq; Wed, 30 Nov 2022 18:11:20 -0500 (EST)
+	with ESMTP id SBgTGiMj7bPF; Wed, 30 Nov 2022 18:21:26 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7CDE24B775;
-	Wed, 30 Nov 2022 18:11:13 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F29E04B5E8;
+	Wed, 30 Nov 2022 18:21:24 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B0D6C4B3D7
- for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 18:11:11 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id E1B4E4B422
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 18:21:22 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id yYAoBkbX3Wsr for <kvmarm@lists.cs.columbia.edu>;
- Wed, 30 Nov 2022 18:11:09 -0500 (EST)
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com
- [209.85.128.202])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 543324B636
- for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 18:11:05 -0500 (EST)
-Received: by mail-yw1-f202.google.com with SMTP id
- 00721157ae682-3b5da1b3130so68567b3.5
- for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 15:11:05 -0800 (PST)
+ with ESMTP id NrcJE8TVSyML for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 30 Nov 2022 18:21:21 -0500 (EST)
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com
+ [209.85.216.48])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 918F14B3FB
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 18:21:21 -0500 (EST)
+Received: by mail-pj1-f48.google.com with SMTP id
+ e7-20020a17090a77c700b00216928a3917so3483954pjs.4
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 15:21:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:reply-to:from:to:cc:subject:date:message-id:reply-to;
- bh=8x0ZXn3EDc/IXE10wWIHQ6grwXVgVE97mHwl4hbdeQk=;
- b=svX1/fceR089wUbhSQhk/jDIM6Hb1O6OQ2qpyY/bxODwo2l21O/+lF2M/oWYVFopBL
- 9iVSjpUD4ByvxHNMTLm2+Aqi3jkHju8zeyRE0QQ4MXEVtGJlbaZInZtfd0vZlRTxGrzq
- JsifAxPm+HxofD/VWF9T5VpkTs3QrcfDSrRCCx24sbFpCjTOTpcatd79jNfZI53OekTV
- PFymG/ZoNTP1yqeAIkXfkfQrmLz6NqML76C7vkqujoT5hbToc0RUrI+jh/dGR+3upHWw
- Pv5WHPynR7w4dPeVQ7wg5KdVd27yXGQS19WxO6GBAvU3VTI/56EGnkKmcDKvptaKWmKb
- 82JQ==
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=oOrPD6CB7rqzyj1SaEV3kuD/IhDMhOZPI51nCiB/NGg=;
+ b=ZRW2ZUTv1n147KoQiZQIoZW74j4A7EtjIYOcRFO0rF0DPUCmy6VUy2g0JuJ1nS/0PG
+ bPSRbTqLAdAfhndt51DMfOPkb6sHyNfjGeyL8kdbar+k+xIpBX4SiQnfKVs3jxbhY30i
+ fE+0B93J3f1zH3nafXrLqY7rdRuq0maSuVI9QpeW8enceqQk351ZWU6NHH/BazdCHb+E
+ L5o+TvbdnPsX9MioomkdsvtUqYHZQq6KqAvnuPAuThxGPwZ++G4eWoki6stkyg4QcWza
+ 6l0SCQXCBclmuJYQ9VytxAYkOvwHCR0J4TrW1rGbFwPNrD/IzVnCsAgUxIa0vHOndA6A
+ NTuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:reply-to:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8x0ZXn3EDc/IXE10wWIHQ6grwXVgVE97mHwl4hbdeQk=;
- b=LzT4dvPBOfEcz22VVMtdTgK5qaKxeGmsrl4dhowHGsLyDRr5TsRpbL/5Opqb2luxiz
- OoSstgR9OIHiM5aSKL/5S72hXoAXIbSNc3tAx1DZZk67WbpWROZicqlGUFu5z4o+JTqv
- 4Nmxf27Hn4imwz/D6DOgqtiD/UQmSRsxM9aGUrJwwDg6Kfiw6EpKa6Dd2VCiuHXA6pyT
- 09HYAJZtXjSFTQDoYesmzmryPGXlItvYbrKE+7A0cW1GrkkHfK03uK8o4E1ZZB4sLahx
- eDdbuVFIf/fwGRrTbImFo/c91PrJ8s/pEjHiplkyjOQn/aFDsh3kaIA1NQGPPAuOixAH
- a5Tg==
-X-Gm-Message-State: ANoB5pnqjkcy4EOnf624eijyGaNeX7bGEsqLsnl7ZE2BD3Mz3D/oQ68k
- CF/CF7XrJ2DbI5IXw6d/isezoEeIXaM=
-X-Google-Smtp-Source: AA0mqf52TAnX1cWAQ96XDuvwPCxCy8n4wLWV5o+6wUepr4pO9rnWPI1F+BmGpVuyqa0Tukjf36JFuFHSLuw=
-X-Received: from zagreus.c.googlers.com
- ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a25:d40f:0:b0:6fb:a7f8:8b62 with SMTP id
- m15-20020a25d40f000000b006fba7f88b62mr1103250ybf.313.1669849864582; Wed, 30
- Nov 2022 15:11:04 -0800 (PST)
-Date: Wed, 30 Nov 2022 23:09:34 +0000
-In-Reply-To: <20221130230934.1014142-1-seanjc@google.com>
-Mime-Version: 1.0
-References: <20221130230934.1014142-1-seanjc@google.com>
-X-Mailer: git-send-email 2.38.1.584.g0f3c55d4c2-goog
-Message-ID: <20221130230934.1014142-51-seanjc@google.com>
-Subject: [PATCH v2 50/50] KVM: Clean up error labels in kvm_init()
-From: Sean Christopherson <seanjc@google.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>, 
- Huacai Chen <chenhuacai@kernel.org>, 
- Aleksandar Markovic <aleksandar.qemu.devel@gmail.com>,
- Anup Patel <anup@brainfault.org>, 
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>,
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Janosch Frank <frankja@linux.ibm.com>,
- Claudio Imbrenda <imbrenda@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
- Sean Christopherson <seanjc@google.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
- David Woodhouse <dwmw2@infradead.org>, Paul Durrant <paul@xen.org>
-Cc: kvm@vger.kernel.org, David Hildenbrand <david@redhat.com>,
- Atish Patra <atishp@atishpatra.org>, linux-kernel@vger.kernel.org,
- Kai Huang <kai.huang@intel.com>, linux-riscv@lists.infradead.org,
- kvmarm@lists.cs.columbia.edu, linux-s390@vger.kernel.org,
- Michael Ellerman <mpe@ellerman.id.au>, Chao Gao <chao.gao@intel.com>,
- Yuan Yao <yuan.yao@intel.com>, kvmarm@lists.linux.dev,
- Thomas Gleixner <tglx@linutronix.de>, linux-arm-kernel@lists.infradead.org,
- Isaku Yamahata <isaku.yamahata@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
- linux-mips@vger.kernel.org, kvm-riscv@lists.infradead.org,
- linuxppc-dev@lists.ozlabs.org
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oOrPD6CB7rqzyj1SaEV3kuD/IhDMhOZPI51nCiB/NGg=;
+ b=BfuikHWqbB7SUcW3dEFMfJ6AN6HeJD5lQGNsPZU0HUEmLYwGSmCci3WvJPjA3MLppd
+ X3EpSFxHNH6xy7GQJhVRlAFdpc1883CWybcVJel7LViDCcV24fdhKcSJONyOT1taY508
+ dNcqYlYU8efMLboQf1eTgVRp2126oHxNwQt3A6W4OCs9u6Ve8uBJF4vaooSasNZJM6/k
+ SX9bhJTwx6u/LpbogRzDbgz1osTCd+8FWTA5o7X/J5bdQ9KHhJrhkCzqQOdWrKi/l54E
+ dXYAVX7vnStgKCcU4wJYxE6MP8ZgWrRLrrj/zhuRUiN2/Shpk5aEem7bOpuOmZ4l9SQ1
+ GFOw==
+X-Gm-Message-State: ANoB5pkIHmI+6bAM4bUZQ7/n16lMYE8BXgG4G70qIEOvycWmrlSGaNGh
+ t/2GDaWRtn4vM4+iT9cMLQ5Zyg==
+X-Google-Smtp-Source: AA0mqf7MFNPbEgt6osld/lAYA9wa6vF/JYI716/qDYMZhDxdPiOnFjxOBihEjXxstiNyC9WOq9G0Fg==
+X-Received: by 2002:a17:90a:d24e:b0:218:b478:f44f with SMTP id
+ o14-20020a17090ad24e00b00218b478f44fmr46173649pjw.232.1669850480496; 
+ Wed, 30 Nov 2022 15:21:20 -0800 (PST)
+Received: from google.com (220.181.82.34.bc.googleusercontent.com.
+ [34.82.181.220]) by smtp.gmail.com with ESMTPSA id
+ o13-20020a17090a0a0d00b0021896fa945asm3637054pjo.15.2022.11.30.15.21.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 30 Nov 2022 15:21:20 -0800 (PST)
+Date: Wed, 30 Nov 2022 15:21:16 -0800
+From: Ricardo Koller <ricarkol@google.com>
+To: Marc Zyngier <maz@kernel.org>
+Subject: Re: [PATCH 2/4] KVM: arm64: Don't serialize if the access flag isn't
+ set
+Message-ID: <Y4flbAiRyGgpDvnJ@google.com>
+References: <20221129191946.1735662-1-oliver.upton@linux.dev>
+ <20221129191946.1735662-3-oliver.upton@linux.dev>
+ <Y4Zw/J3srTsZ57P7@google.com> <Y4Z2aWVEnluy+d3+@google.com>
+ <Y4awiKLuKORZmU2z@google.com> <87pmd4ua2q.wl-maz@kernel.org>
+MIME-Version: 1.0
+Content-Disposition: inline
+In-Reply-To: <87pmd4ua2q.wl-maz@kernel.org>
+Cc: kvm@vger.kernel.org, Will Deacon <will@kernel.org>,
+ linux-kernel@vger.kernel.org, Catalin Marinas <catalin.marinas@arm.com>,
+ kvmarm@lists.linux.dev, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
-Reply-To: Sean Christopherson <seanjc@google.com>
 List-Id: Where KVM/ARM decisions are made <kvmarm.lists.cs.columbia.edu>
 List-Unsubscribe: <https://lists.cs.columbia.edu/mailman/options/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=unsubscribe>
@@ -116,59 +103,65 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Convert the last two "out" lables to "err" labels now that the dust has
-settled, i.e. now that there are no more planned changes to the order
-of things in kvm_init().
+On Wed, Nov 30, 2022 at 08:21:17AM +0000, Marc Zyngier wrote:
+> On Wed, 30 Nov 2022 01:23:20 +0000,
+> Ricardo Koller <ricarkol@google.com> wrote:
+> > 
+> > On Tue, Nov 29, 2022 at 09:15:21PM +0000, Oliver Upton wrote:
+> > > Hi Ricardo,
+> > > 
+> > > Thanks for having a look.
+> > > 
+> > > On Tue, Nov 29, 2022 at 12:52:12PM -0800, Ricardo Koller wrote:
+> > > > On Tue, Nov 29, 2022 at 07:19:44PM +0000, Oliver Upton wrote:
+> > > 
+> > > [...]
+> > > 
+> > > > > +	ret = stage2_update_leaf_attrs(pgt, addr, 1, KVM_PTE_LEAF_ATTR_LO_S2_AF, 0,
+> > > > > +				       &pte, NULL, 0);
+> > > > > +	if (!ret)
+> > > > > +		dsb(ishst);
+> > > > 
+> > > > At the moment, the only reason for stage2_update_leaf_attrs() to not
+> > > > update the PTE is if it's not valid:
+> > > > 
+> > > > 	if (!kvm_pte_valid(pte))
+> > > > 			return 0;
+> > > > 
+> > > > I guess you could check that as well:
+> > > > 
+> > > > +	if (!ret || kvm_pte_valid(pte))
+> > > > +		dsb(ishst);
+> > > 
+> > > Thanks for catching this.
+> > > 
+> > > Instead of pivoting on the returned PTE value, how about we return
+> > > -EAGAIN from the early return in stage2_attr_walker()? It would better
+> > > match the pattern used elsewhere in the pgtable code.
+> > 
+> > That works, although I would use another return code (e.g., EINVAL)? as
+> > that's not exactly a "try again" type of error.
+> 
+> EINVAL usually is an indication of something that went horribly wrong.
+> 
+> But is that really a failure mode? Here, failing to update the PTE
+> should not be considered a failure, but just a benign race: access
+> fault being taken on a CPU and the page being evicted on another (not
+> unlikely, as the page was marked old before).
 
-Use "err" instead of "out" as it's easier to describe what failed than it
-is to describe what needs to be unwound, e.g. if allocating a per-CPU kick
-mask fails, KVM needs to free any masks that were allocated, and of course
-needs to unwind previous operations.
+I see, I agree, what you describe not look like a failure.
 
-Reported-by: Chao Gao <chao.gao@intel.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
----
- virt/kvm/kvm_main.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-index 6a2be96557c2..b8c6bfb46066 100644
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -5907,14 +5907,14 @@ int kvm_init(unsigned vcpu_size, unsigned vcpu_align, struct module *module)
- 					   NULL);
- 	if (!kvm_vcpu_cache) {
- 		r = -ENOMEM;
--		goto out_free_3;
-+		goto err_vcpu_cache;
- 	}
- 
- 	for_each_possible_cpu(cpu) {
- 		if (!alloc_cpumask_var_node(&per_cpu(cpu_kick_mask, cpu),
- 					    GFP_KERNEL, cpu_to_node(cpu))) {
- 			r = -ENOMEM;
--			goto out_free_4;
-+			goto err_cpu_kick_mask;
- 		}
- 	}
- 
-@@ -5956,11 +5956,11 @@ int kvm_init(unsigned vcpu_size, unsigned vcpu_align, struct module *module)
- err_async_pf:
- 	kvm_irqfd_exit();
- err_irqfd:
--out_free_4:
-+err_cpu_kick_mask:
- 	for_each_possible_cpu(cpu)
- 		free_cpumask_var(per_cpu(cpu_kick_mask, cpu));
- 	kmem_cache_destroy(kvm_vcpu_cache);
--out_free_3:
-+err_vcpu_cache:
- #ifdef CONFIG_KVM_GENERIC_HARDWARE_ENABLING
- 	unregister_syscore_ops(&kvm_syscore_ops);
- 	unregister_reboot_notifier(&kvm_reboot_notifier);
--- 
-2.38.1.584.g0f3c55d4c2-goog
-
+> 
+> And if I'm correct above, this is definitely a "try again" situation:
+> you probably won't take the same type of fault the second time though.
+> 
+> Thanks,
+> 
+> 	M.
+> 
+> -- 
+> Without deviation from the norm, progress is not possible.
+> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
