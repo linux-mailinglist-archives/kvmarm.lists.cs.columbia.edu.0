@@ -2,79 +2,78 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 41AB463E46A
-	for <lists+kvmarm@lfdr.de>; Thu,  1 Dec 2022 00:10:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D07263E465
+	for <lists+kvmarm@lfdr.de>; Thu,  1 Dec 2022 00:10:07 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 98B45403A6;
-	Wed, 30 Nov 2022 18:10:11 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id F3C894B199;
+	Wed, 30 Nov 2022 18:10:06 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id CeTx0GOQ-FJO; Wed, 30 Nov 2022 18:10:10 -0500 (EST)
+	with ESMTP id GtoJR+YR5YKV; Wed, 30 Nov 2022 18:10:06 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D02EE40A93;
-	Wed, 30 Nov 2022 18:10:05 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 9C8374B5E8;
+	Wed, 30 Nov 2022 18:10:03 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 538FD40B8F
- for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 18:10:03 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id DE01040A93
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 18:10:01 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id kYqZIpNRyrbA for <kvmarm@lists.cs.columbia.edu>;
+ with ESMTP id E4cxWJ-vmPAB for <kvmarm@lists.cs.columbia.edu>;
  Wed, 30 Nov 2022 18:09:59 -0500 (EST)
-Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com
- [209.85.215.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 818894B3DD
- for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 18:09:57 -0500 (EST)
-Received: by mail-pg1-f201.google.com with SMTP id
- l186-20020a6388c3000000b00478410026bfso84118pgd.10
- for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 15:09:57 -0800 (PST)
+Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com
+ [209.85.216.73])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id E1F7F4A0DA
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 18:09:58 -0500 (EST)
+Received: by mail-pj1-f73.google.com with SMTP id
+ pa16-20020a17090b265000b0020a71040b4cso161959pjb.6
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 15:09:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:reply-to:from:to:cc:subject:date:message-id:reply-to;
- bh=uhI8yDhdR7lIAaqvku/gdFE7HWy6VU8JNAGQp8QsO6I=;
- b=JGKTwFHTr3zFyFeRyDhx800NTwE8fbKBoChRZ4rCsQDcOc/eGjPbGsVDNkCwWmSHdn
- 4zWsAcy02h7DG9I7KIrR/3G3ynUAl5zHFprvqWawNYq0ujuz0rj9xQPN87hRttEvJWya
- MaZkpYk6hJDhRKiSggxmfSLSCGk6wAycOhmze7v3vnTNsBJM82DsGnT9K7gXXth5q453
- GXnW0gnhFQMQ7rKcFFJUmj9xHXOE1CyUnZYbsfJ9eekI1f6DwJJHgA0YwjDavFZGHgxi
- PIdF3Xw7u6ZSs+rqvW6sJFzKLF1Mn/CCKFnzXLHVYU5aHYTg5a9RqdAAC/8bhq/W34bo
- HRWw==
+ bh=7yWYfpXTDQbZLx47MbNcDj0N66CBaR6qG+PnY/I15CM=;
+ b=bT3dL2RNgcw1MpeUO77l7FsTfdHMpEPlJatekk/DzFXJMm693HavywTCaGv6OqR75P
+ CEGSx4lH9Jtd0fa2semdatuM2+6/GtUmIUJQimOKEXQM8pMgCWT8njsrI/UOhbCPveML
+ q4zrbtboaVnIfVEgvLRQEAam2V+r4+zAGV7lL18Zl2LduEOPaMTpPlFnw/B6EsrXnukj
+ 2pbaAxvJ9zg/7eNsW555x3IFXEMVva/FgAmoY74Di0SuLoDCFLXDc3bBoL6HnnnAq35N
+ reo1l2pMb3FCDaYjA4+6K/LTtV98kIt8jz3I1oCTyDyB/5twL2Ezyrmfizfy7s3Xbw19
+ DN3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:reply-to:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=uhI8yDhdR7lIAaqvku/gdFE7HWy6VU8JNAGQp8QsO6I=;
- b=taOdHKiDFjOGirvKoE2SKA4yjQaCW8ke5ADXSRnVPFor7Jm4n8/on+lLkShvGzl3HV
- iGuubTnLz3Na0z+GSfZ8e7EUMVeAqGoVUoXY5cplQuIXGf+4x5StQUZvKJQTcxQjuD8G
- BdYPm1Q5wHK5wjEz05tjojwwJP8j+Ao2dCDezssvTEe855GNzSZWMHcvckoNXRobHcVs
- HhOm50nc5KnjskfsC9taLZAdXJK4MgYpzTVxMQDxV5RBseHz4TFPX8xSgDifbmcgwrVO
- nqGB8LQ/+YTKbVgN0vGZy63Nyr/btsZ31kHjBm/UBkj8ydrKfLdBsqfChSkXxSDpX/mD
- TuxA==
-X-Gm-Message-State: ANoB5plyAZ58CzbcHV8wBFgx8uUefK07YfbiAzAIRVf9KStmLkvOL52f
- n7eHMS6FmscofdZnRmiquSBvZvk/ckw=
-X-Google-Smtp-Source: AA0mqf4UbHeO/7xp9TeaJC3lcd9wjoTeVcRzR2/roKzeL1N7msdBGBxph7L3Wcu7JbcPwh3sZzXNOI19OJg=
+ bh=7yWYfpXTDQbZLx47MbNcDj0N66CBaR6qG+PnY/I15CM=;
+ b=ugkQ9kUsnokenwoEL+zUEjqN14bGVICYiZ4cWIKgj1LGay803U/jLv6OTvkhLyKbf0
+ L6t/7WD3yvk0yO6Z4+eXcwIzcCwKqs8UOhAP/NzwRRnnVqFEc3b3hyC4v6Bcc+WP6+0O
+ lEEkZ62rlYgIDKgpwjsNgo1Wpbs+XvQEe+JtJ25B32Ax75+MYg0Pifyy7xISCr+QaMRd
+ Wqr8J+OOjBrDRScvRbgVwQupMIwnCqQciSfAX3gu2h6YpdKlfWqvXUP1ZsX0F/EHxhwO
+ tSMmtFFCoxhSwUIKQ+MuZO3Q/QPsVI4RJgs/QllnTMkQDXPbai/kfWZfsEjEt64yIHbl
+ gxcA==
+X-Gm-Message-State: ANoB5pm9FaVeXgYMpE00C+bNuI5tDJNfuhdMpxbOPAD/T9rVlUSogsoP
+ Cr66Ja1z5ZigGjOPBbpwKo7SrYR5oSQ=
+X-Google-Smtp-Source: AA0mqf63J5CYVyPrHNleGtfRjvZIjPjkTqLR79wPGUIq9AORVm0CVLKuvvqzhbFB0T9FDbVeahYix13Gv4o=
 X-Received: from zagreus.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a62:3084:0:b0:56d:dd2a:c494 with SMTP id
- w126-20020a623084000000b0056ddd2ac494mr44472082pfw.76.1669849796263; Wed, 30
- Nov 2022 15:09:56 -0800 (PST)
-Date: Wed, 30 Nov 2022 23:08:55 +0000
+ (user=seanjc job=sendgmr) by 2002:a17:902:ee55:b0:176:a16a:417d with SMTP id
+ 21-20020a170902ee5500b00176a16a417dmr47218439plo.46.1669849797761; Wed, 30
+ Nov 2022 15:09:57 -0800 (PST)
+Date: Wed, 30 Nov 2022 23:08:56 +0000
 In-Reply-To: <20221130230934.1014142-1-seanjc@google.com>
 Mime-Version: 1.0
 References: <20221130230934.1014142-1-seanjc@google.com>
 X-Mailer: git-send-email 2.38.1.584.g0f3c55d4c2-goog
-Message-ID: <20221130230934.1014142-12-seanjc@google.com>
-Subject: [PATCH v2 11/50] KVM: VMX: Don't bother disabling eVMCS static key on
- module exit
+Message-ID: <20221130230934.1014142-13-seanjc@google.com>
+Subject: [PATCH v2 12/50] KVM: VMX: Move Hyper-V eVMCS initialization to helper
 From: Sean Christopherson <seanjc@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>, 
  Huacai Chen <chenhuacai@kernel.org>, 
@@ -117,30 +116,124 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Don't disable the eVMCS static key on module exit, kvm_intel.ko owns the
-key so there can't possibly be users after the kvm_intel.ko is unloaded,
-at least not without much bigger issues.
+Move Hyper-V's eVMCS initialization to a dedicated helper to clean up
+vmx_init(), and add a comment to call out that the Hyper-V init code
+doesn't need to be unwound if vmx_init() ultimately fails.
+
+No functional change intended.
 
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 ---
- arch/x86/kvm/vmx/vmx.c | 4 ----
- 1 file changed, 4 deletions(-)
+ arch/x86/kvm/vmx/vmx.c | 73 +++++++++++++++++++++++++-----------------
+ 1 file changed, 43 insertions(+), 30 deletions(-)
 
 diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index d85d175dca70..c0de7160700b 100644
+index c0de7160700b..b8bf95b9710d 100644
 --- a/arch/x86/kvm/vmx/vmx.c
 +++ b/arch/x86/kvm/vmx/vmx.c
-@@ -8490,10 +8490,6 @@ static void vmx_exit(void)
+@@ -523,6 +523,8 @@ static inline void vmx_segment_cache_clear(struct vcpu_vmx *vmx)
+ static unsigned long host_idt_base;
  
- 	kvm_exit();
+ #if IS_ENABLED(CONFIG_HYPERV)
++static struct kvm_x86_ops vmx_x86_ops __initdata;
++
+ static bool __read_mostly enlightened_vmcs = true;
+ module_param(enlightened_vmcs, bool, 0444);
+ 
+@@ -551,6 +553,43 @@ static int hv_enable_l2_tlb_flush(struct kvm_vcpu *vcpu)
+ 	return 0;
+ }
+ 
++static __init void hv_init_evmcs(void)
++{
++	int cpu;
++
++	if (!enlightened_vmcs)
++		return;
++
++	/*
++	 * Enlightened VMCS usage should be recommended and the host needs
++	 * to support eVMCS v1 or above.
++	 */
++	if (ms_hyperv.hints & HV_X64_ENLIGHTENED_VMCS_RECOMMENDED &&
++	    (ms_hyperv.nested_features & HV_X64_ENLIGHTENED_VMCS_VERSION) >=
++	     KVM_EVMCS_VERSION) {
++
++		/* Check that we have assist pages on all online CPUs */
++		for_each_online_cpu(cpu) {
++			if (!hv_get_vp_assist_page(cpu)) {
++				enlightened_vmcs = false;
++				break;
++			}
++		}
++
++		if (enlightened_vmcs) {
++			pr_info("KVM: vmx: using Hyper-V Enlightened VMCS\n");
++			static_branch_enable(&enable_evmcs);
++		}
++
++		if (ms_hyperv.nested_features & HV_X64_NESTED_DIRECT_FLUSH)
++			vmx_x86_ops.enable_l2_tlb_flush
++				= hv_enable_l2_tlb_flush;
++
++	} else {
++		enlightened_vmcs = false;
++	}
++}
++
+ static void hv_reset_evmcs(void)
+ {
+ 	struct hv_vp_assist_page *vp_ap;
+@@ -577,6 +616,7 @@ static void hv_reset_evmcs(void)
+ }
+ 
+ #else /* IS_ENABLED(CONFIG_HYPERV) */
++static void hv_init_evmcs(void) {}
+ static void hv_reset_evmcs(void) {}
+ #endif /* IS_ENABLED(CONFIG_HYPERV) */
+ 
+@@ -8500,38 +8540,11 @@ static int __init vmx_init(void)
+ {
+ 	int r, cpu;
  
 -#if IS_ENABLED(CONFIG_HYPERV)
--	if (static_branch_unlikely(&enable_evmcs))
--		static_branch_disable(&enable_evmcs);
+ 	/*
+-	 * Enlightened VMCS usage should be recommended and the host needs
+-	 * to support eVMCS v1 or above. We can also disable eVMCS support
+-	 * with module parameter.
++	 * Note, hv_init_evmcs() touches only VMX knobs, i.e. there's nothing
++	 * to unwind if a later step fails.
+ 	 */
+-	if (enlightened_vmcs &&
+-	    ms_hyperv.hints & HV_X64_ENLIGHTENED_VMCS_RECOMMENDED &&
+-	    (ms_hyperv.nested_features & HV_X64_ENLIGHTENED_VMCS_VERSION) >=
+-	    KVM_EVMCS_VERSION) {
+-
+-		/* Check that we have assist pages on all online CPUs */
+-		for_each_online_cpu(cpu) {
+-			if (!hv_get_vp_assist_page(cpu)) {
+-				enlightened_vmcs = false;
+-				break;
+-			}
+-		}
+-
+-		if (enlightened_vmcs) {
+-			pr_info("KVM: vmx: using Hyper-V Enlightened VMCS\n");
+-			static_branch_enable(&enable_evmcs);
+-		}
+-
+-		if (ms_hyperv.nested_features & HV_X64_NESTED_DIRECT_FLUSH)
+-			vmx_x86_ops.enable_l2_tlb_flush
+-				= hv_enable_l2_tlb_flush;
+-
+-	} else {
+-		enlightened_vmcs = false;
+-	}
 -#endif
- 	vmx_cleanup_l1d_flush();
++	hv_init_evmcs();
  
- 	allow_smaller_maxphyaddr = false;
+ 	r = kvm_init(&vmx_init_ops, sizeof(struct vcpu_vmx),
+ 		     __alignof__(struct vcpu_vmx), THIS_MODULE);
 -- 
 2.38.1.584.g0f3c55d4c2-goog
 
