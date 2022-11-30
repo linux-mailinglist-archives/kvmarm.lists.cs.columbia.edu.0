@@ -2,79 +2,80 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F31463E476
-	for <lists+kvmarm@lfdr.de>; Thu,  1 Dec 2022 00:10:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 44FD663E478
+	for <lists+kvmarm@lfdr.de>; Thu,  1 Dec 2022 00:10:27 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 04082403A6;
-	Wed, 30 Nov 2022 18:10:25 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id DF01C4B59D;
+	Wed, 30 Nov 2022 18:10:26 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
 	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=no
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id j8Et2zjs6MqA; Wed, 30 Nov 2022 18:10:23 -0500 (EST)
+	with ESMTP id dRmKLZMilIdo; Wed, 30 Nov 2022 18:10:26 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C77F24B62F;
-	Wed, 30 Nov 2022 18:10:19 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0E71E4B639;
+	Wed, 30 Nov 2022 18:10:22 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 68B0B4B3E3
- for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 18:10:18 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 5EEDE4B3E8
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 18:10:21 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id yeYAyc8U6BJm for <kvmarm@lists.cs.columbia.edu>;
- Wed, 30 Nov 2022 18:10:16 -0500 (EST)
-Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com
- [209.85.214.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id C6CD54B199
- for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 18:10:13 -0500 (EST)
-Received: by mail-pl1-f201.google.com with SMTP id
- j16-20020a170902da9000b001893d5da3acso19289220plx.23
- for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 15:10:13 -0800 (PST)
+ with ESMTP id f2AhXXxwWBhb for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 30 Nov 2022 18:10:20 -0500 (EST)
+Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com
+ [209.85.215.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 0A4BA4B4D7
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 18:10:15 -0500 (EST)
+Received: by mail-pg1-f202.google.com with SMTP id
+ 38-20020a630b26000000b004773803dda1so62817pgl.17
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 15:10:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:reply-to:from:to:cc:subject:date:message-id:reply-to;
- bh=grdSlJzFo0VwdV8xgzvuVpRwKnA9GO3Mob4PH+ot8/0=;
- b=CQKSwij2dM5sxTN5vEM9Pg0UGQR7vXxLholFOCIYMDxZ1/3rA7vH+RqFmN1n0beWlD
- 7+BAU4/MoU1Z2zohEeDLQA2mrNFcLMI1vaNT8JUT+3n3Smxr3wpQu7rVUMeYIUjzYrKM
- QQRXU+fmSvdsXsp/lH1ncccopWZ+njKFlSsnkmBo5RgV0L2uInmLnHD4wZGB2dqPvFNW
- AFZHsbz5az7ZAwj41de9s/UvOppce1LN8jHb5JWdYWBnJ4FReLvafLy5jclWK6UngF05
- cPIBeGpzAB3DL/mtUhAd3V5apiG8/mbBEcTlCsb8iWOJpXlQdaq+hFXcxIhaHoaH5jmv
- rjIg==
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:reply-to:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uj+BMG24gpugAApyuMjfHhGTokqhj/HfOHcPzx/7Ixc=;
+ b=rXveYksPcbHAdLQWx0Se3mgCcQvIusgWV2YBwsk350kO+gwstaEEoshUZTFpuvac++
+ pLds7vX8HQyFV+EXcCsNs4Huph1CvEcQOXAAAxG85uCm3rCCbxscdft2ZxjRveL1foHX
+ Lrax89MRhf3bE1bAwMOLphkpziYLo/XzKTjZtkj0KrWsaZWT2gVodfm1c5joltsrB5eF
+ W0icMxnX0hgljPZjSz6UkymZcq3fcWnGh4feMzJb8fuOAJykHj0A+tcjteTkrK4SYiHc
+ +b7l66OJ0teH4JUbB2xCLD5wxFKLZ8CELPJsM7W7cN4l69kYm6xFX8ZvCrFTJGzWVhEq
+ HM9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:reply-to:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=grdSlJzFo0VwdV8xgzvuVpRwKnA9GO3Mob4PH+ot8/0=;
- b=PDz+9wT1RWdQvLUU08bhjuIrRX3s8F4Uj9YGyl+qBfzxdKtbCgfqjbnnslzfXxW2ke
- FAsSHlThP2OgSiQffjlsUngBjlccF1e9Z43UZtKiFuvyPF+s/Rt06DXvo5+oMHuWDOOF
- VOvPzUIw0Zqz6DhpHU2C79E/OqIVYorDIlXbY63tJfS4nz2fKtv5p0+1PsDdEarQjDQP
- +lszd6qeb0PurBMz6GwX+8zREMlhzyuT+CJ4E8XLEv4QOzmVPZpl3C3biI7hWnwtpW5Y
- 3DR6QYVaOpKl2DpJREAoksX54Q/5raI/W9w1r9I+ErwNdh9OSIEupXBSpoD7AqomvwX+
- uPSQ==
-X-Gm-Message-State: ANoB5pmDsPxGjZSiDaocFA3L6hdkeY/6J4BvleOkGmR6NJVWeVwzg9Oa
- y11EovN9rdB7ElQ5XdZvgq0OSI933EY=
-X-Google-Smtp-Source: AA0mqf5utOkOs36wj8G4rTpG0ELlL4JMVDy82zEmZIH7sIXiucVOps+Q5AZsFyLWVU+C/qKz+GIkdE+8/9Y=
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:reply-to:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=uj+BMG24gpugAApyuMjfHhGTokqhj/HfOHcPzx/7Ixc=;
+ b=bhKGdX/QxiOblSEsqmTo3DUU1xjkxd6y8gyriWcWSEO/5MbZakjlNXTxrexlpQqvSp
+ aYn43ULlIKma0aszIPo/d3+qMDi7QkYY9J/0I3gl0MEIYcX7UkbAcB9bbcp0UY0Ub2mR
+ Zv24Ngel9I3Weq1kGC0eHQFvKyAv0RmEzwUnmNjIg6aZnQK68vR0J4boPero3RsO3tVv
+ JG57OtmpHhYzC//do6UkAsKuuUCywokr+8fTPPHQw6SJjikOdmG1mEyJSyUS+2Ap90DH
+ eynBxEKKieiPIAmZi/cuacEEUvODhswIqKEZhE8Mtf9bx4Y2apXWL4lm1WhYZdfvdTeQ
+ I12g==
+X-Gm-Message-State: ANoB5pmZcFiuHZ8kdeL3NMEWWHTwXQptxixwGtb4KkXXsgOOedCqRn0R
+ D8qq7Sm9mESWuGmk7Fg5JRLc2b89Wmg=
+X-Google-Smtp-Source: AA0mqf4xYnJCkXbWk/N31ZRo5enbQfT7p8hAsoCQiyumsmQYs6alw3yUJytbRmVQwuUcUkB1fPIndjJ7nUc=
 X-Received: from zagreus.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a62:648a:0:b0:572:76dd:3756 with SMTP id
- y132-20020a62648a000000b0057276dd3756mr45058073pfb.9.1669849813287; Wed, 30
- Nov 2022 15:10:13 -0800 (PST)
-Date: Wed, 30 Nov 2022 23:09:05 +0000
+ (user=seanjc job=sendgmr) by 2002:a05:6a00:1624:b0:573:993b:ea6d with SMTP id
+ e4-20020a056a00162400b00573993bea6dmr46050829pfc.10.1669849814934; Wed, 30
+ Nov 2022 15:10:14 -0800 (PST)
+Date: Wed, 30 Nov 2022 23:09:06 +0000
 In-Reply-To: <20221130230934.1014142-1-seanjc@google.com>
 Mime-Version: 1.0
 References: <20221130230934.1014142-1-seanjc@google.com>
 X-Mailer: git-send-email 2.38.1.584.g0f3c55d4c2-goog
-Message-ID: <20221130230934.1014142-22-seanjc@google.com>
-Subject: [PATCH v2 21/50] KVM: MIPS: Hardcode callbacks to hardware
- virtualization extensions
+Message-ID: <20221130230934.1014142-23-seanjc@google.com>
+Subject: [PATCH v2 22/50] KVM: MIPS: Setup VZ emulation? directly from
+ kvm_mips_init()
 From: Sean Christopherson <seanjc@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>, 
  Huacai Chen <chenhuacai@kernel.org>, 
@@ -112,133 +113,32 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Now that KVM no longer supports trap-and-emulate (see commit 45c7e8af4a5e
-"MIPS: Remove KVM_TE support"), hardcode the MIPS callbacks to the
-virtualization callbacks.
-
-Harcoding the callbacks eliminates the technically-unnecessary check on
-non-NULL kvm_mips_callbacks in kvm_arch_init().  MIPS has never supported
-multiple in-tree modules, i.e. barring an out-of-tree module, where
-copying and renaming kvm.ko counts as "out-of-tree", KVM could never
-encounter a non-NULL set of callbacks during module init.
-
-The callback check is also subtly broken, as it is not thread safe,
-i.e. if there were multiple modules, loading both concurrently would
-create a race between checking and setting kvm_mips_callbacks.
-
-Given that out-of-tree shenanigans are not the kernel's responsibility,
-hardcode the callbacks to simplify the code.
-
-Signed-off-by: Sean Christopherson <seanjc@google.com>
----
- arch/mips/include/asm/kvm_host.h |  2 +-
- arch/mips/kvm/Makefile           |  2 +-
- arch/mips/kvm/callback.c         | 14 --------------
- arch/mips/kvm/mips.c             |  9 ++-------
- arch/mips/kvm/vz.c               |  7 ++++---
- 5 files changed, 8 insertions(+), 26 deletions(-)
- delete mode 100644 arch/mips/kvm/callback.c
-
-diff --git a/arch/mips/include/asm/kvm_host.h b/arch/mips/include/asm/kvm_host.h
-index 28f0ba97db71..2803c9c21ef9 100644
---- a/arch/mips/include/asm/kvm_host.h
-+++ b/arch/mips/include/asm/kvm_host.h
-@@ -758,7 +758,7 @@ struct kvm_mips_callbacks {
- 	void (*vcpu_reenter)(struct kvm_vcpu *vcpu);
- };
- extern struct kvm_mips_callbacks *kvm_mips_callbacks;
--int kvm_mips_emulation_init(struct kvm_mips_callbacks **install_callbacks);
-+int kvm_mips_emulation_init(void);
- 
- /* Debug: dump vcpu state */
- int kvm_arch_vcpu_dump_regs(struct kvm_vcpu *vcpu);
-diff --git a/arch/mips/kvm/Makefile b/arch/mips/kvm/Makefile
-index 21ff75bcdbc4..805aeea2166e 100644
---- a/arch/mips/kvm/Makefile
-+++ b/arch/mips/kvm/Makefile
-@@ -17,4 +17,4 @@ kvm-$(CONFIG_CPU_LOONGSON64) += loongson_ipi.o
- 
- kvm-y		+= vz.o
- obj-$(CONFIG_KVM)	+= kvm.o
--obj-y			+= callback.o tlb.o
-+obj-y			+= tlb.o
-diff --git a/arch/mips/kvm/callback.c b/arch/mips/kvm/callback.c
-deleted file mode 100644
-index d88aa2173fb0..000000000000
---- a/arch/mips/kvm/callback.c
-+++ /dev/null
-@@ -1,14 +0,0 @@
--/*
-- * This file is subject to the terms and conditions of the GNU General Public
-- * License.  See the file "COPYING" in the main directory of this archive
-- * for more details.
-- *
-- * Copyright (C) 2012  MIPS Technologies, Inc.  All rights reserved.
-- * Authors: Yann Le Du <ledu@kymasys.com>
-- */
--
--#include <linux/export.h>
--#include <linux/kvm_host.h>
--
--struct kvm_mips_callbacks *kvm_mips_callbacks;
--EXPORT_SYMBOL_GPL(kvm_mips_callbacks);
-diff --git a/arch/mips/kvm/mips.c b/arch/mips/kvm/mips.c
-index af29490d9740..f0a6c245d1ff 100644
---- a/arch/mips/kvm/mips.c
-+++ b/arch/mips/kvm/mips.c
-@@ -1012,17 +1012,12 @@ long kvm_arch_vm_ioctl(struct file *filp, unsigned int ioctl, unsigned long arg)
- 
- int kvm_arch_init(void *opaque)
- {
--	if (kvm_mips_callbacks) {
--		kvm_err("kvm: module already exists\n");
--		return -EEXIST;
--	}
--
--	return kvm_mips_emulation_init(&kvm_mips_callbacks);
-+	return kvm_mips_emulation_init();
- }
- 
- void kvm_arch_exit(void)
- {
--	kvm_mips_callbacks = NULL;
-+
- }
- 
- int kvm_arch_vcpu_ioctl_get_sregs(struct kvm_vcpu *vcpu,
-diff --git a/arch/mips/kvm/vz.c b/arch/mips/kvm/vz.c
-index c706f5890a05..dafab003ea0d 100644
---- a/arch/mips/kvm/vz.c
-+++ b/arch/mips/kvm/vz.c
-@@ -3304,7 +3304,10 @@ static struct kvm_mips_callbacks kvm_vz_callbacks = {
- 	.vcpu_reenter = kvm_vz_vcpu_reenter,
- };
- 
--int kvm_mips_emulation_init(struct kvm_mips_callbacks **install_callbacks)
-+/* FIXME: Get rid of the callbacks now that trap-and-emulate is gone. */
-+struct kvm_mips_callbacks *kvm_mips_callbacks = &kvm_vz_callbacks;
-+
-+int kvm_mips_emulation_init(void)
- {
- 	if (!cpu_has_vz)
- 		return -ENODEV;
-@@ -3318,7 +3321,5 @@ int kvm_mips_emulation_init(struct kvm_mips_callbacks **install_callbacks)
- 		return -ENODEV;
- 
- 	pr_info("Starting KVM with MIPS VZ extensions\n");
--
--	*install_callbacks = &kvm_vz_callbacks;
- 	return 0;
- }
--- 
-2.38.1.584.g0f3c55d4c2-goog
-
-_______________________________________________
-kvmarm mailing list
-kvmarm@lists.cs.columbia.edu
-https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
+SW52b2tlIGt2bV9taXBzX2VtdWxhdGlvbl9pbml0KCkgZGlyZWN0bHkgZnJvbSBrdm1fbWlwc19p
+bml0KCkgaW5zdGVhZApvZiBib3VuY2luZyB0aHJvdWdoIGt2bV9pbml0KCk9Pmt2bV9hcmNoX2lu
+aXQoKS4gIEZ1bmN0aW9uYWxseSwgdGhpcyBpcwphIGdsb3JpZmllZCBub3AgYXMgaW52b2tpbmcg
+a3ZtX2FyY2hfaW5pdCgpIGlzIHRoZSB2ZXJ5IGZpcnN0IGFjdGlvbgpwZXJmb3JtZWQgYnkga3Zt
+X2luaXQoKS4KCkVtcHR5aW5nIGt2bV9hcmNoX2luaXQoKSB3aWxsIGFsbG93IGRyb3BwaW5nIHRo
+ZSBob29rIGVudGlyZWx5IG9uY2UgYWxsCmFyY2hpdGVjdHVyZSBpbXBsZW1lbnRhdGlvbnMgYXJl
+IG5vcHMuCgpObyBmdW5jdGlvbmFsIGNoYW5nZSBpbnRlbmRlZC4KClNpZ25lZC1vZmYtYnk6IFNl
+YW4gQ2hyaXN0b3BoZXJzb24gPHNlYW5qY0Bnb29nbGUuY29tPgpSZXZpZXdlZC1ieTogUGhpbGlw
+cGUgTWF0aGlldS1EYXVkw6kgPHBoaWxtZEBsaW5hcm8ub3JnPgotLS0KIGFyY2gvbWlwcy9rdm0v
+bWlwcy5jIHwgNiArKysrKy0KIDEgZmlsZSBjaGFuZ2VkLCA1IGluc2VydGlvbnMoKyksIDEgZGVs
+ZXRpb24oLSkKCmRpZmYgLS1naXQgYS9hcmNoL21pcHMva3ZtL21pcHMuYyBiL2FyY2gvbWlwcy9r
+dm0vbWlwcy5jCmluZGV4IGYwYTZjMjQ1ZDFmZi4uNzU2ODEyODFlMmRmIDEwMDY0NAotLS0gYS9h
+cmNoL21pcHMva3ZtL21pcHMuYworKysgYi9hcmNoL21pcHMva3ZtL21pcHMuYwpAQCAtMTAxMiw3
+ICsxMDEyLDcgQEAgbG9uZyBrdm1fYXJjaF92bV9pb2N0bChzdHJ1Y3QgZmlsZSAqZmlscCwgdW5z
+aWduZWQgaW50IGlvY3RsLCB1bnNpZ25lZCBsb25nIGFyZykKIAogaW50IGt2bV9hcmNoX2luaXQo
+dm9pZCAqb3BhcXVlKQogewotCXJldHVybiBrdm1fbWlwc19lbXVsYXRpb25faW5pdCgpOworCXJl
+dHVybiAwOwogfQogCiB2b2lkIGt2bV9hcmNoX2V4aXQodm9pZCkKQEAgLTE2MzYsNiArMTYzNiwx
+MCBAQCBzdGF0aWMgaW50IF9faW5pdCBrdm1fbWlwc19pbml0KHZvaWQpCiAJaWYgKHJldCkKIAkJ
+cmV0dXJuIHJldDsKIAorCXJldCA9IGt2bV9taXBzX2VtdWxhdGlvbl9pbml0KCk7CisJaWYgKHJl
+dCkKKwkJcmV0dXJuIHJldDsKKwogCXJldCA9IGt2bV9pbml0KE5VTEwsIHNpemVvZihzdHJ1Y3Qg
+a3ZtX3ZjcHUpLCAwLCBUSElTX01PRFVMRSk7CiAKIAlpZiAocmV0KQotLSAKMi4zOC4xLjU4NC5n
+MGYzYzU1ZDRjMi1nb29nCgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1bWJpYS5lZHUK
+aHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9rdm1hcm0K
