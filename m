@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id CACD663E486
-	for <lists+kvmarm@lfdr.de>; Thu,  1 Dec 2022 00:10:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B09B63E489
+	for <lists+kvmarm@lfdr.de>; Thu,  1 Dec 2022 00:10:41 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 66D104B285;
-	Wed, 30 Nov 2022 18:10:36 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id A64974B646;
+	Wed, 30 Nov 2022 18:10:40 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -6.788
@@ -18,64 +18,63 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Z4k8RJNGMqjF; Wed, 30 Nov 2022 18:10:36 -0500 (EST)
+	with ESMTP id 0clkaSVl0LfR; Wed, 30 Nov 2022 18:10:40 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B67CF4B5F2;
-	Wed, 30 Nov 2022 18:10:32 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 140184B638;
+	Wed, 30 Nov 2022 18:10:36 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 2975340B80
- for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 18:10:31 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id F2B574B5F5
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 18:10:33 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 04-Lahfy2slj for <kvmarm@lists.cs.columbia.edu>;
- Wed, 30 Nov 2022 18:10:29 -0500 (EST)
-Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com
- [209.85.215.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3BBE14B3CA
- for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 18:10:25 -0500 (EST)
-Received: by mail-pg1-f201.google.com with SMTP id
- r126-20020a632b84000000b004393806c06eso100078pgr.4
- for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 15:10:25 -0800 (PST)
+ with ESMTP id UphWHHvyG6zZ for <kvmarm@lists.cs.columbia.edu>;
+ Wed, 30 Nov 2022 18:10:30 -0500 (EST)
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com
+ [209.85.219.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 1BE3B4B5E8
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 18:10:27 -0500 (EST)
+Received: by mail-yb1-f202.google.com with SMTP id
+ d186-20020a25e6c3000000b006f384608ed4so14686027ybh.14
+ for <kvmarm@lists.cs.columbia.edu>; Wed, 30 Nov 2022 15:10:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=content-transfer-encoding:cc:to:from:subject:message-id:references
- :mime-version:in-reply-to:date:reply-to:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oZ/AA3AN9yZfFS+Yz2Hj0GA1Db97x+XE1LjIfmdmS/w=;
- b=luHLl3WdRQNdBhH/vZv/hfYOmt9Q6vwep+qjtUAST73H1MF3LqvzoF2Ukv7UaDUlgb
- fXELwkqnEzgBN1h88nvzTImTYOnZGPEMito85bT2cMG/Dw2lvuyXP8zeBz8U2jGVs5tj
- pSDhoig8xe+6jwKUzsQZ0HNL6W7uKODl2j0YOlmoXogdfyORLlX0GkBhzBuT5EaiKGr7
- PCHzZt497tY3kEsEdxjbaw0LnCs8v3tH39skbarsReDUyuZOdzK6YVSLerydaPGb/0Z5
- eHv7VqvGcSRs3JMgPsz9Bq5kCqCHy9eUbAeqCz5po17CqSrTsXQffsEYVsh38nZQAmal
- lJaA==
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:reply-to:from:to:cc:subject:date:message-id:reply-to;
+ bh=OieTjXt168G/Xjnld4ZlmtAw/6/4OJXm7SHd++1umI0=;
+ b=ZPl5I1zJcqiE0l+4F/p8x6MLz2tSOeT/JZaLfE85w0lTajS4YSXdVr0RiZjkgSEqwa
+ 4ZgU2COJfSsknurs5ma4q7/tOV6Gnl6zIYDu75IjmXc0cmaezZcggCRChMBWOsGfJN3u
+ aG4Vf+GA7ibgun2XkOoNom2MZ7Avlb1XoX9hweZFFf+ZDAOgyYhM5lVfcYQhIkiKBYr6
+ L8+d26lEXIAkz+yw7+S1z80LAtEvQ2PSmnrtxAiADFN6FS/yNg/pKsk42Q/SzOKPkyuh
+ ophht1lsuYKEpGQB+6NLnN2Em3iy4MyMlv0s/808Yh5Ot/5JFY+xj86MEAcGBgxZMese
+ FYEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=content-transfer-encoding:cc:to:from:subject:message-id:references
- :mime-version:in-reply-to:date:reply-to:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=oZ/AA3AN9yZfFS+Yz2Hj0GA1Db97x+XE1LjIfmdmS/w=;
- b=25R9E1JG6Xpr/Of2GVssG6Dze0WPvHNpudvjIK2ew4fpT1t62KICfFiMVYV48sJBQi
- oV3tKkJm1zRT+g91oEHN13AdSvlPXKjB1tu0sBxFzjdgqJzMQUWmTqQ+x1VqL8JWTP16
- raNKh4KVCDzX5TV/+DNDaZ3jiYLVgslTOacYgirPDbGC97I0ltYywDXU6rOVhZIFOv1G
- CxrKmAHH6zKjRcdEKMXHuvwFSGtBy8AnBrFp7xtp4yu55JHN4ZGwWP+FbNaB1ZThy7py
- Ed0ATNydI7SGk1QDs5pan/A3j8j4gptWk8uwiv1nXUwy6dvVLKG3dp1phrXt5wNrpT1o
- s6yQ==
-X-Gm-Message-State: ANoB5pmeiS2hI5ublYj/bxhV2nljrCYbVfKcJjPOfX1BRbtjgt1AZrs2
- nn6yHDxGBQKN/urij/fA7nHNHv+1Lvk=
-X-Google-Smtp-Source: AA0mqf70Xm5b73dwbCTmumj9PiXG1e+aKYb1a7npTh2VM+OaIt1Kg/9NwT12H0mJEQDQr8PRUFC8axppjXM=
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:reply-to:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OieTjXt168G/Xjnld4ZlmtAw/6/4OJXm7SHd++1umI0=;
+ b=Sopg0ij3UqbObtiofG+NUplc5Z1HvC/UCIIBIHTuhFZXUvCT+dS91kfr3+/FjiyO1B
+ x2mXzIqOl30nUyTPxFdhG0UeL3PCu7bICGey+3/7tFiI1fZhVIdakrjc5+cwHG+29T1h
+ a/PwvuKEha1CkqPCKyMELsgXFpyQWhUx+MpdQZtdpULgsozmjXnHJ+4H6pSnHyN1aaFu
+ Ru8xpA6VXv69M9ov6mau7c4Bxx5bIuvywFAcC1RSczi+x4kUhwMBBigzBD0VCwaeZVMu
+ j40Qk/mFuccI99TQo7sZD4hc60E/qRUNyo2uNIcs+8LVpNZiExXKrJ5RKD34Tbn7XmJd
+ zs1g==
+X-Gm-Message-State: ANoB5pn3RqOh7pJU7c6eO/7TI4rZiuZ3YvwLU9D/QL4k9ARXGp2l5exi
+ DjJv+U0gkfHQLUFPQ2Ov0RK7rV9Djec=
+X-Google-Smtp-Source: AA0mqf7doE3KsN0pmH7Rc4o01wWXfMkyHfPIY/F3jF9M2I4m4Ef8qW3AG+neuaJOQfJatrp6XEk3w2N5lcM=
 X-Received: from zagreus.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a17:902:f1c5:b0:189:39e4:c0ed with SMTP id
- e5-20020a170902f1c500b0018939e4c0edmr41790703plc.108.1669849824265; Wed, 30
- Nov 2022 15:10:24 -0800 (PST)
-Date: Wed, 30 Nov 2022 23:09:11 +0000
+ (user=seanjc job=sendgmr) by 2002:a25:2d4d:0:b0:6f2:b3f7:7a44 with SMTP id
+ s13-20020a252d4d000000b006f2b3f77a44mr29050195ybe.370.1669849826261; Wed, 30
+ Nov 2022 15:10:26 -0800 (PST)
+Date: Wed, 30 Nov 2022 23:09:12 +0000
 In-Reply-To: <20221130230934.1014142-1-seanjc@google.com>
 Mime-Version: 1.0
 References: <20221130230934.1014142-1-seanjc@google.com>
 X-Mailer: git-send-email 2.38.1.584.g0f3c55d4c2-goog
-Message-ID: <20221130230934.1014142-28-seanjc@google.com>
-Subject: [PATCH v2 27/50] KVM: s390: Do s390 specific init without bouncing
- through kvm_init()
+Message-ID: <20221130230934.1014142-29-seanjc@google.com>
+Subject: [PATCH v2 28/50] KVM: s390: Mark __kvm_s390_init() and its
+ descendants as __init
 From: Sean Christopherson <seanjc@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>, 
  Huacai Chen <chenhuacai@kernel.org>, 
@@ -113,53 +112,104 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-TW92ZSB0aGUgZ3V0cyBvZiBrdm1fYXJjaF9pbml0KCkgaW50byBhIG5ldyBoZWxwZXIsIF9fa3Zt
-X3MzOTBfaW5pdCgpLAphbmQgaW52b2tlIHRoZSBuZXcgaGVscGVyIGRpcmVjdGx5IGZyb20ga3Zt
-X3MzOTBfaW5pdCgpIGluc3RlYWQgb2YKYm91bmNpbmcgdGhyb3VnaCBrdm1faW5pdCgpLiAgSW52
-b2tpbmcga3ZtX2FyY2hfaW5pdCgpIGlzIHRoZSB2ZXJ5CmZpcnN0IGFjdGlvbiBwZXJmb3JtZWQg
-Ynkga3ZtX2luaXQoKSwgaS5lLiB0aGlzIGlzIGEgZ2xvcmlmaWVkIG5vcC4KCk1vdmluZyBzZXR1
-cCB0byBfX2t2bV9zMzkwX2luaXQoKSB3aWxsIGFsbG93IHRhZ2dpbmcgbW9yZSBmdW5jdGlvbnMg
-YXMKX19pbml0LCBhbmQgZW1wdHlpbmcga3ZtX2FyY2hfaW5pdCgpIHdpbGwgYWxsb3cgZHJvcHBp
-bmcgdGhlIGhvb2sKZW50aXJlbHkgb25jZSBhbGwgYXJjaGl0ZWN0dXJlIGltcGxlbWVudGF0aW9u
-cyBhcmUgbm9wcy4KCk5vIGZ1bmN0aW9uYWwgY2hhbmdlIGludGVuZGVkLgoKU2lnbmVkLW9mZi1i
-eTogU2VhbiBDaHJpc3RvcGhlcnNvbiA8c2VhbmpjQGdvb2dsZS5jb20+ClJldmlld2VkLWJ5OiBF
-cmljIEZhcm1hbiA8ZmFybWFuQGxpbnV4LmlibS5jb20+ClJldmlld2VkLWJ5OiBQaGlsaXBwZSBN
-YXRoaWV1LURhdWTDqSA8cGhpbG1kQGxpbmFyby5vcmc+Ci0tLQogYXJjaC9zMzkwL2t2bS9rdm0t
-czM5MC5jIHwgMjkgKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0KIDEgZmlsZSBjaGFuZ2Vk
-LCAyNSBpbnNlcnRpb25zKCspLCA0IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2FyY2gvczM5
-MC9rdm0va3ZtLXMzOTAuYyBiL2FyY2gvczM5MC9rdm0va3ZtLXMzOTAuYwppbmRleCA4MjllNmUw
-NDYwMDMuLjhjNGZjYWYyYmQzNiAxMDA2NDQKLS0tIGEvYXJjaC9zMzkwL2t2bS9rdm0tczM5MC5j
-CisrKyBiL2FyY2gvczM5MC9rdm0va3ZtLXMzOTAuYwpAQCAtNDY5LDcgKzQ2OSw3IEBAIHN0YXRp
-YyB2b2lkIGt2bV9zMzkwX2NwdV9mZWF0X2luaXQodm9pZCkKIAkgKi8KIH0KIAotaW50IGt2bV9h
-cmNoX2luaXQodm9pZCAqb3BhcXVlKQorc3RhdGljIGludCBfX2t2bV9zMzkwX2luaXQodm9pZCkK
-IHsKIAlpbnQgcmMgPSAtRU5PTUVNOwogCkBAIC01MjcsNyArNTI3LDcgQEAgaW50IGt2bV9hcmNo
-X2luaXQodm9pZCAqb3BhcXVlKQogCXJldHVybiByYzsKIH0KIAotdm9pZCBrdm1fYXJjaF9leGl0
-KHZvaWQpCitzdGF0aWMgdm9pZCBfX2t2bV9zMzkwX2V4aXQodm9pZCkKIHsKIAlnbWFwX3VucmVn
-aXN0ZXJfcHRlX25vdGlmaWVyKCZnbWFwX25vdGlmaWVyKTsKIAlnbWFwX3VucmVnaXN0ZXJfcHRl
-X25vdGlmaWVyKCZ2c2llX2dtYXBfbm90aWZpZXIpOwpAQCAtNTQxLDYgKzU0MSwxNiBAQCB2b2lk
-IGt2bV9hcmNoX2V4aXQodm9pZCkKIAlkZWJ1Z191bnJlZ2lzdGVyKGt2bV9zMzkwX2RiZl91dik7
-CiB9CiAKK2ludCBrdm1fYXJjaF9pbml0KHZvaWQgKm9wYXF1ZSkKK3sKKwlyZXR1cm4gMDsKK30K
-Kwordm9pZCBrdm1fYXJjaF9leGl0KHZvaWQpCit7CisKK30KKwogLyogU2VjdGlvbjogZGV2aWNl
-IHJlbGF0ZWQgKi8KIGxvbmcga3ZtX2FyY2hfZGV2X2lvY3RsKHN0cnVjdCBmaWxlICpmaWxwLAog
-CQkJdW5zaWduZWQgaW50IGlvY3RsLCB1bnNpZ25lZCBsb25nIGFyZykKQEAgLTU2OTYsNyArNTcw
-Niw3IEBAIHN0YXRpYyBpbmxpbmUgdW5zaWduZWQgbG9uZyBub25oeXBfbWFzayhpbnQgaSkKIAog
-c3RhdGljIGludCBfX2luaXQga3ZtX3MzOTBfaW5pdCh2b2lkKQogewotCWludCBpOworCWludCBp
-LCByOwogCiAJaWYgKCFzY2xwLmhhc19zaWVmMikgewogCQlwcl9pbmZvKCJTSUUgaXMgbm90IGF2
-YWlsYWJsZVxuIik7CkBAIC01NzEyLDEyICs1NzIyLDIzIEBAIHN0YXRpYyBpbnQgX19pbml0IGt2
-bV9zMzkwX2luaXQodm9pZCkKIAkJa3ZtX3MzOTBfZmFjX2Jhc2VbaV0gfD0KIAkJCXN0ZmxlX2Zh
-Y19saXN0W2ldICYgbm9uaHlwX21hc2soaSk7CiAKLQlyZXR1cm4ga3ZtX2luaXQoTlVMTCwgc2l6
-ZW9mKHN0cnVjdCBrdm1fdmNwdSksIDAsIFRISVNfTU9EVUxFKTsKKwlyID0gX19rdm1fczM5MF9p
-bml0KCk7CisJaWYgKHIpCisJCXJldHVybiByOworCisJciA9IGt2bV9pbml0KE5VTEwsIHNpemVv
-ZihzdHJ1Y3Qga3ZtX3ZjcHUpLCAwLCBUSElTX01PRFVMRSk7CisJaWYgKHIpIHsKKwkJX19rdm1f
-czM5MF9leGl0KCk7CisJCXJldHVybiByOworCX0KKwlyZXR1cm4gMDsKIH0KIAogc3RhdGljIHZv
-aWQgX19leGl0IGt2bV9zMzkwX2V4aXQodm9pZCkKIHsKIAlrdm1fZXhpdCgpOworCisJX19rdm1f
-czM5MF9leGl0KCk7CiB9CiAKIG1vZHVsZV9pbml0KGt2bV9zMzkwX2luaXQpOwotLSAKMi4zOC4x
-LjU4NC5nMGYzYzU1ZDRjMi1nb29nCgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fXwprdm1hcm0gbWFpbGluZyBsaXN0Cmt2bWFybUBsaXN0cy5jcy5jb2x1bWJp
-YS5lZHUKaHR0cHM6Ly9saXN0cy5jcy5jb2x1bWJpYS5lZHUvbWFpbG1hbi9saXN0aW5mby9rdm1h
-cm0K
+Tag __kvm_s390_init() and its unique helpers as __init.  These functions
+are only ever called during module_init(), but could not be tagged
+accordingly while they were invoked from the common kvm_arch_init(),
+which is not __init because of x86.
+
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+---
+ arch/s390/kvm/interrupt.c | 2 +-
+ arch/s390/kvm/kvm-s390.c  | 4 ++--
+ arch/s390/kvm/kvm-s390.h  | 2 +-
+ arch/s390/kvm/pci.c       | 2 +-
+ arch/s390/kvm/pci.h       | 2 +-
+ 5 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/arch/s390/kvm/interrupt.c b/arch/s390/kvm/interrupt.c
+index 1dae78deddf2..3754d7937530 100644
+--- a/arch/s390/kvm/interrupt.c
++++ b/arch/s390/kvm/interrupt.c
+@@ -3411,7 +3411,7 @@ void kvm_s390_gib_destroy(void)
+ 	gib = NULL;
+ }
+ 
+-int kvm_s390_gib_init(u8 nisc)
++int __init kvm_s390_gib_init(u8 nisc)
+ {
+ 	int rc = 0;
+ 
+diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
+index 8c4fcaf2bd36..66d162723d21 100644
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -366,7 +366,7 @@ static __always_inline void __insn32_query(unsigned int opcode, u8 *query)
+ #define INSN_SORTL 0xb938
+ #define INSN_DFLTCC 0xb939
+ 
+-static void kvm_s390_cpu_feat_init(void)
++static void __init kvm_s390_cpu_feat_init(void)
+ {
+ 	int i;
+ 
+@@ -469,7 +469,7 @@ static void kvm_s390_cpu_feat_init(void)
+ 	 */
+ }
+ 
+-static int __kvm_s390_init(void)
++static int __init __kvm_s390_init(void)
+ {
+ 	int rc = -ENOMEM;
+ 
+diff --git a/arch/s390/kvm/kvm-s390.h b/arch/s390/kvm/kvm-s390.h
+index d48588c207d8..0261d42c7d01 100644
+--- a/arch/s390/kvm/kvm-s390.h
++++ b/arch/s390/kvm/kvm-s390.h
+@@ -470,7 +470,7 @@ void kvm_s390_gisa_clear(struct kvm *kvm);
+ void kvm_s390_gisa_destroy(struct kvm *kvm);
+ void kvm_s390_gisa_disable(struct kvm *kvm);
+ void kvm_s390_gisa_enable(struct kvm *kvm);
+-int kvm_s390_gib_init(u8 nisc);
++int __init kvm_s390_gib_init(u8 nisc);
+ void kvm_s390_gib_destroy(void);
+ 
+ /* implemented in guestdbg.c */
+diff --git a/arch/s390/kvm/pci.c b/arch/s390/kvm/pci.c
+index ded1af2ddae9..39544c92ce3d 100644
+--- a/arch/s390/kvm/pci.c
++++ b/arch/s390/kvm/pci.c
+@@ -670,7 +670,7 @@ int kvm_s390_pci_zpci_op(struct kvm *kvm, struct kvm_s390_zpci_op *args)
+ 	return r;
+ }
+ 
+-int kvm_s390_pci_init(void)
++int __init kvm_s390_pci_init(void)
+ {
+ 	zpci_kvm_hook.kvm_register = kvm_s390_pci_register_kvm;
+ 	zpci_kvm_hook.kvm_unregister = kvm_s390_pci_unregister_kvm;
+diff --git a/arch/s390/kvm/pci.h b/arch/s390/kvm/pci.h
+index 486d06ef563f..ff0972dd5e71 100644
+--- a/arch/s390/kvm/pci.h
++++ b/arch/s390/kvm/pci.h
+@@ -60,7 +60,7 @@ void kvm_s390_pci_clear_list(struct kvm *kvm);
+ 
+ int kvm_s390_pci_zpci_op(struct kvm *kvm, struct kvm_s390_zpci_op *args);
+ 
+-int kvm_s390_pci_init(void);
++int __init kvm_s390_pci_init(void);
+ void kvm_s390_pci_exit(void);
+ 
+ static inline bool kvm_s390_pci_interp_allowed(void)
+-- 
+2.38.1.584.g0f3c55d4c2-goog
+
+_______________________________________________
+kvmarm mailing list
+kvmarm@lists.cs.columbia.edu
+https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
