@@ -2,50 +2,50 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F07864453D
-	for <lists+kvmarm@lfdr.de>; Tue,  6 Dec 2022 15:00:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D31BE64453F
+	for <lists+kvmarm@lfdr.de>; Tue,  6 Dec 2022 15:00:41 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 0B1204B422;
-	Tue,  6 Dec 2022 09:00:37 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3D7C14B3DF;
+	Tue,  6 Dec 2022 09:00:41 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.899
+X-Spam-Score: -6.899
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.899 required=6.1 tests=[BAYES_00=-1.9,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-6.899 required=6.1 tests=[BAYES_00=-1.9,
+	RCVD_IN_DNSWL_HI=-5, URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id kYtm1qTaHIZp; Tue,  6 Dec 2022 09:00:36 -0500 (EST)
+	with ESMTP id 7igeT9PwfqHf; Tue,  6 Dec 2022 09:00:39 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id A4EEE40B6C;
-	Tue,  6 Dec 2022 09:00:30 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D59314B639;
+	Tue,  6 Dec 2022 09:00:32 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id ED2564B3DF
- for <kvmarm@lists.cs.columbia.edu>; Tue,  6 Dec 2022 09:00:29 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0B5D64B3E0
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  6 Dec 2022 09:00:32 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Yn07vISC2jHn for <kvmarm@lists.cs.columbia.edu>;
- Tue,  6 Dec 2022 09:00:28 -0500 (EST)
+ with ESMTP id bWyiB9mk9i5o for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  6 Dec 2022 09:00:30 -0500 (EST)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id C1E244B491
- for <kvmarm@lists.cs.columbia.edu>; Tue,  6 Dec 2022 09:00:23 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 56D614B492
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  6 Dec 2022 09:00:25 -0500 (EST)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EA629139F;
- Tue,  6 Dec 2022 06:00:29 -0800 (PST)
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C8E95D6E;
+ Tue,  6 Dec 2022 06:00:31 -0800 (PST)
 Received: from e125769.cambridge.arm.com (e125769.cambridge.arm.com
  [10.1.196.159])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 91E293F73D;
- Tue,  6 Dec 2022 06:00:21 -0800 (PST)
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 706813F73D;
+ Tue,  6 Dec 2022 06:00:23 -0800 (PST)
 From: Ryan Roberts <ryan.roberts@arm.com>
 To: Marc Zyngier <maz@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
  Will Deacon <will@kernel.org>, Ard Biesheuvel <ardb@kernel.org>,
  Suzuki K Poulose <suzuki.poulose@arm.com>,
  Anshuman Khandual <anshuman.khandual@arm.com>
-Subject: [PATCH v1 11/12] KVM: arm64: Support upto 5 levels of translation in
- kvm_pgtable
-Date: Tue,  6 Dec 2022 13:59:29 +0000
-Message-Id: <20221206135930.3277585-12-ryan.roberts@arm.com>
+Subject: [PATCH v1 12/12] KVM: arm64: Allow guests with >48-bit IPA size on
+ FEAT_LPA2 systems
+Date: Tue,  6 Dec 2022 13:59:30 +0000
+Message-Id: <20221206135930.3277585-13-ryan.roberts@arm.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221206135930.3277585-1-ryan.roberts@arm.com>
 References: <20221206135930.3277585-1-ryan.roberts@arm.com>
@@ -68,66 +68,45 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-FEAT_LPA2 increases the maximum levels of translation from 4 to 5 for
-the 4KB page case, when IA is >48 bits. While we can still use 4 levels
-for stage2 translation in this case (due to stage2 allowing concatenated
-page tables for first level lookup), the same kvm_pgtable library is
-used for the hyp stage1 page tables and stage1 does not support
-concatenation.
-
-Therefore, modify the library to support upto 5 levels. Previous patches
-already laid the groundwork for this by refactoring code to work in
-terms of KVM_PGTABLE_FIRST_LEVEL and KVM_PGTABLE_LAST_LEVEL. So we just
-need to change these macros.
-
-The hardware sometimes encodes the new level differently from the
-others: One such place is when reading the level from the FSC field in
-the ESR_EL2 register. We never expect to see the lowest level (-1) here
-since the stage 2 page tables always use concatenated tables for first
-level lookup and therefore only use 4 levels of lookup. So we get away
-with just adding a comment to explain why we are not being careful about
-decoding level -1.
+With all the page-table infrastructure in place, we can finally increase
+the maximum permisable IPA size to 52-bits on 4KB and 16KB page systems
+that have FEAT_LPA2.
 
 Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
 ---
- arch/arm64/include/asm/kvm_emulate.h | 10 ++++++++++
- arch/arm64/include/asm/kvm_pgtable.h |  2 +-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/reset.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_emulate.h b/arch/arm64/include/asm/kvm_emulate.h
-index 270f49e7f29a..6f68febfb214 100644
---- a/arch/arm64/include/asm/kvm_emulate.h
-+++ b/arch/arm64/include/asm/kvm_emulate.h
-@@ -343,6 +343,16 @@ static __always_inline u8 kvm_vcpu_trap_get_fault_type(const struct kvm_vcpu *vc
+diff --git a/arch/arm64/kvm/reset.c b/arch/arm64/kvm/reset.c
+index 5ae18472205a..548756c3f43c 100644
+--- a/arch/arm64/kvm/reset.c
++++ b/arch/arm64/kvm/reset.c
+@@ -118,7 +118,7 @@ static int kvm_vcpu_finalize_sve(struct kvm_vcpu *vcpu)
+ 		kfree(buf);
+ 		return ret;
+ 	}
+-	
++
+ 	vcpu->arch.sve_state = buf;
+ 	vcpu_set_flag(vcpu, VCPU_SVE_FINALIZED);
+ 	return 0;
+@@ -361,12 +361,11 @@ int kvm_set_ipa_limit(void)
+ 	parange = cpuid_feature_extract_unsigned_field(mmfr0,
+ 				ID_AA64MMFR0_EL1_PARANGE_SHIFT);
+ 	/*
+-	 * IPA size beyond 48 bits could not be supported
+-	 * on either 4K or 16K page size. Hence let's cap
+-	 * it to 48 bits, in case it's reported as larger
+-	 * on the system.
++	 * IPA size beyond 48 bits for 4K and 16K page size is only supported
++	 * when LPA2 is available. So if we have LPA2, enable it, else cap to 48
++	 * bits, in case it's reported as larger on the system.
+ 	 */
+-	if (PAGE_SIZE != SZ_64K)
++	if (!kvm_supports_stage2_lpa2(mmfr0) && PAGE_SIZE != SZ_64K)
+ 		parange = min(parange, (unsigned int)ID_AA64MMFR0_EL1_PARANGE_48);
  
- static __always_inline s8 kvm_vcpu_trap_get_fault_level(const struct kvm_vcpu *vcpu)
- {
-+	/*
-+	 * Note: With the introduction of FEAT_LPA2 an extra level of
-+	 * translation (level -1) is added. This level (obviously) doesn't
-+	 * follow the previous convention of encoding the 4 levels in the 2 LSBs
-+	 * of the FSC so this function breaks if the fault is for level -1.
-+	 *
-+	 * However, stage2 tables always use concatenated tables for first level
-+	 * lookup and therefore it is guaranteed that the level will be between
-+	 * 0 and 3, and this function continues to work.
-+	 */
- 	return kvm_vcpu_get_esr(vcpu) & ESR_ELx_FSC_LEVEL;
- }
- 
-diff --git a/arch/arm64/include/asm/kvm_pgtable.h b/arch/arm64/include/asm/kvm_pgtable.h
-index 3e0b64052c51..3655279e6a7d 100644
---- a/arch/arm64/include/asm/kvm_pgtable.h
-+++ b/arch/arm64/include/asm/kvm_pgtable.h
-@@ -11,7 +11,7 @@
- #include <linux/kvm_host.h>
- #include <linux/types.h>
- 
--#define KVM_PGTABLE_FIRST_LEVEL		0
-+#define KVM_PGTABLE_FIRST_LEVEL		-1
- #define KVM_PGTABLE_LAST_LEVEL		3
- 
- /*
+ 	/*
 -- 
 2.25.1
 
