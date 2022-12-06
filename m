@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id D31BE64453F
-	for <lists+kvmarm@lfdr.de>; Tue,  6 Dec 2022 15:00:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EDDE5644930
+	for <lists+kvmarm@lfdr.de>; Tue,  6 Dec 2022 17:28:52 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3D7C14B3DF;
-	Tue,  6 Dec 2022 09:00:41 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id CD2E4401AF;
+	Tue,  6 Dec 2022 11:28:51 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -6.899
@@ -15,43 +15,50 @@ X-Spam-Status: No, score=-6.899 required=6.1 tests=[BAYES_00=-1.9,
 	RCVD_IN_DNSWL_HI=-5, URIBL_BLOCKED=0.001] autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7igeT9PwfqHf; Tue,  6 Dec 2022 09:00:39 -0500 (EST)
+	with ESMTP id 6PYLiQQrHFge; Tue,  6 Dec 2022 11:28:51 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D59314B639;
-	Tue,  6 Dec 2022 09:00:32 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3657E410F3;
+	Tue,  6 Dec 2022 11:28:50 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 0B5D64B3E0
- for <kvmarm@lists.cs.columbia.edu>; Tue,  6 Dec 2022 09:00:32 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id AEDEC40397
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  6 Dec 2022 11:28:48 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id bWyiB9mk9i5o for <kvmarm@lists.cs.columbia.edu>;
- Tue,  6 Dec 2022 09:00:30 -0500 (EST)
+ with ESMTP id 4ST3FYM3u9Ks for <kvmarm@lists.cs.columbia.edu>;
+ Tue,  6 Dec 2022 11:28:47 -0500 (EST)
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 56D614B492
- for <kvmarm@lists.cs.columbia.edu>; Tue,  6 Dec 2022 09:00:25 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 3036E401AF
+ for <kvmarm@lists.cs.columbia.edu>; Tue,  6 Dec 2022 11:28:47 -0500 (EST)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C8E95D6E;
- Tue,  6 Dec 2022 06:00:31 -0800 (PST)
-Received: from e125769.cambridge.arm.com (e125769.cambridge.arm.com
- [10.1.196.159])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 706813F73D;
- Tue,  6 Dec 2022 06:00:23 -0800 (PST)
-From: Ryan Roberts <ryan.roberts@arm.com>
-To: Marc Zyngier <maz@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
- Will Deacon <will@kernel.org>, Ard Biesheuvel <ardb@kernel.org>,
- Suzuki K Poulose <suzuki.poulose@arm.com>,
- Anshuman Khandual <anshuman.khandual@arm.com>
-Subject: [PATCH v1 12/12] KVM: arm64: Allow guests with >48-bit IPA size on
- FEAT_LPA2 systems
-Date: Tue,  6 Dec 2022 13:59:30 +0000
-Message-Id: <20221206135930.3277585-13-ryan.roberts@arm.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20221206135930.3277585-1-ryan.roberts@arm.com>
-References: <20221206135930.3277585-1-ryan.roberts@arm.com>
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 34C3723A;
+ Tue,  6 Dec 2022 08:28:53 -0800 (PST)
+Received: from FVFF77S0Q05N.cambridge.arm.com (FVFF77S0Q05N.cambridge.arm.com
+ [10.1.39.172])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C787A3F73B;
+ Tue,  6 Dec 2022 08:28:43 -0800 (PST)
+Date: Tue, 6 Dec 2022 16:28:38 +0000
+From: Mark Rutland <mark.rutland@arm.com>
+To: Rob Herring <robh@kernel.org>, Peter Zijlstra <peterz@infradead.org>
+Subject: Re: [PATCH v3 7/8] perf: Add perf_event_attr::config3
+Message-ID: <Y49ttrv6W5k3ZNYw@FVFF77S0Q05N.cambridge.arm.com>
+References: <20220825-arm-spe-v8-7-v3-0-87682f78caac@kernel.org>
+ <20220825-arm-spe-v8-7-v3-7-87682f78caac@kernel.org>
+ <20221118164943.GA4872@willie-the-truck>
+ <CAL_JsqJMxEWhqZV=yqG15zvEHrBTwRVfHA6zptu2TswxRMSR0A@mail.gmail.com>
+ <877czfujdj.fsf@ubik.fi.intel.com>
+ <CAL_JsqKJYrEUzkzNMKMOGvzJN_EqacHZvBR6eVt35bRhhtRo=g@mail.gmail.com>
 MIME-Version: 1.0
-Cc: kvmarm@lists.linux.dev, kvmarm@lists.cs.columbia.edu,
- linux-arm-kernel@lists.infradead.org
+Content-Disposition: inline
+In-Reply-To: <CAL_JsqKJYrEUzkzNMKMOGvzJN_EqacHZvBR6eVt35bRhhtRo=g@mail.gmail.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Mark Brown <broonie@kernel.org>,
+ linux-kernel@vger.kernel.org, Arnaldo Carvalho de Melo <acme@kernel.org>,
+ linux-perf-users@vger.kernel.org, Ingo Molnar <mingo@redhat.com>,
+ Jiri Olsa <jolsa@kernel.org>, Marc Zyngier <maz@kernel.org>,
+ kvmarm@lists.linux.dev, Namhyung Kim <namhyung@kernel.org>,
+ Will Deacon <will@kernel.org>, kvmarm@lists.cs.columbia.edu,
+ linux-arm-kernel@lists.infradead.org, James Clark <james.clark@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -68,48 +75,75 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-With all the page-table infrastructure in place, we can finally increase
-the maximum permisable IPA size to 52-bits on 4KB and 16KB page systems
-that have FEAT_LPA2.
+Peter, it looks like this series is blocked on the below now; what would you
+prefer out of:
 
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
----
- arch/arm64/kvm/reset.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+(a) Take this as is, and look add adding additional validation on top.
 
-diff --git a/arch/arm64/kvm/reset.c b/arch/arm64/kvm/reset.c
-index 5ae18472205a..548756c3f43c 100644
---- a/arch/arm64/kvm/reset.c
-+++ b/arch/arm64/kvm/reset.c
-@@ -118,7 +118,7 @@ static int kvm_vcpu_finalize_sve(struct kvm_vcpu *vcpu)
- 		kfree(buf);
- 		return ret;
- 	}
--	
-+
- 	vcpu->arch.sve_state = buf;
- 	vcpu_set_flag(vcpu, VCPU_SVE_FINALIZED);
- 	return 0;
-@@ -361,12 +361,11 @@ int kvm_set_ipa_limit(void)
- 	parange = cpuid_feature_extract_unsigned_field(mmfr0,
- 				ID_AA64MMFR0_EL1_PARANGE_SHIFT);
- 	/*
--	 * IPA size beyond 48 bits could not be supported
--	 * on either 4K or 16K page size. Hence let's cap
--	 * it to 48 bits, in case it's reported as larger
--	 * on the system.
-+	 * IPA size beyond 48 bits for 4K and 16K page size is only supported
-+	 * when LPA2 is available. So if we have LPA2, enable it, else cap to 48
-+	 * bits, in case it's reported as larger on the system.
- 	 */
--	if (PAGE_SIZE != SZ_64K)
-+	if (!kvm_supports_stage2_lpa2(mmfr0) && PAGE_SIZE != SZ_64K)
- 		parange = min(parange, (unsigned int)ID_AA64MMFR0_EL1_PARANGE_48);
- 
- 	/*
--- 
-2.25.1
+(b) Add some flag to indicate a PMU driver supports config3, and have the core
+    code check that, but leave the existing fields as-is for now (and hopefully
+    follow up with further validation later for the existing fields).
 
+(c) Go audit all the existing drivers, add flags to indicate support for
+    existing fields, and have the core code check that. Atop that, add support
+    for config3 with the same sort of flag check.
+
+    I suspect that'd end up needing to go check more than config1/config2 given
+    all the filter controls and so on that drivers aren't great at checking,
+    and that might being fairly invasive.
+
+(d) Something else?
+
+I think we want to get to a point where drivers indicate what they actually
+support and the core code rejects stuff drivers don't support or recognise, but
+I think it'd be a little unreasonable to delay this series on cleaning up all
+the existing issues.
+
+I'm tempted to say (b) as that shouldn't introduce any regressions, should be a
+relatively simple change to this series, and doesn't precluse making the rest
+stricter as a follow-up. I'm happy to take a look at that (and IIUC Rob is
+too).
+
+What's your preference?
+
+Thanks,
+Mark.
+
+On Mon, Nov 28, 2022 at 11:15:21AM -0600, Rob Herring wrote:
+> On Mon, Nov 28, 2022 at 10:36 AM Alexander Shishkin
+> <alexander.shishkin@linux.intel.com> wrote:
+> >
+> > Rob Herring <robh@kernel.org> writes:
+> >
+> > > On Fri, Nov 18, 2022 at 10:49 AM Will Deacon <will@kernel.org> wrote:
+> > >>
+> > >> On Fri, Nov 04, 2022 at 10:55:07AM -0500, Rob Herring wrote:
+> > >> > @@ -515,6 +516,8 @@ struct perf_event_attr {
+> > >> >        * truncated accordingly on 32 bit architectures.
+> > >> >        */
+> > >> >       __u64   sig_data;
+> > >> > +
+> > >> > +     __u64   config3; /* extension of config2 */
+> > >>
+> > >> I need an ack from the perf core maintainers before I can take this.
+> > >
+> > > Peter, Arnaldo, Ingo,
+> > >
+> > > Can I get an ack on this please.
+> >
+> > It appears that PMUs that don't use config{1,2} and now config3 allow
+> > them to be whatever without any validation, whereas in reality we should
+> > probably -EINVAL in those cases. Should something be done about that?
+> 
+> Always the 3rd occurrence that gets to clean-up things. ;)
+> 
+> I think we'd have to add some capability flags for PMU drivers to set
+> to enable configN usage and then use those to validate configN is 0.
+> Wouldn't be too hard to do for config3 as we know there's exactly 1
+> user, but for 1,2 there's about 80 PMU drivers to check.
+> 
+> Rob
+> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
