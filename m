@@ -2,11 +2,11 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 0257864AC1D
-	for <lists+kvmarm@lfdr.de>; Tue, 13 Dec 2022 01:17:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5643D64AC1F
+	for <lists+kvmarm@lfdr.de>; Tue, 13 Dec 2022 01:17:23 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 8C6524B92A;
-	Mon, 12 Dec 2022 19:17:20 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id E048D4B959;
+	Mon, 12 Dec 2022 19:17:22 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
 X-Spam-Score: -1.788
@@ -18,63 +18,63 @@ Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id EfuLTU-qfjqw; Mon, 12 Dec 2022 19:17:19 -0500 (EST)
+	with ESMTP id bme0dPClim3i; Mon, 12 Dec 2022 19:17:21 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id E8D894B94F;
-	Mon, 12 Dec 2022 19:17:18 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 3E1F84B944;
+	Mon, 12 Dec 2022 19:17:20 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 397B14B955
- for <kvmarm@lists.cs.columbia.edu>; Mon, 12 Dec 2022 19:17:18 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 4213E4B92A
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 12 Dec 2022 19:17:19 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id kRCfpBZsHT-x for <kvmarm@lists.cs.columbia.edu>;
- Mon, 12 Dec 2022 19:17:17 -0500 (EST)
+ with ESMTP id gWdNFXP2y7OE for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 12 Dec 2022 19:17:18 -0500 (EST)
 Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com
  [209.85.214.201])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 346F74B93C
- for <kvmarm@lists.cs.columbia.edu>; Mon, 12 Dec 2022 19:17:16 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 123B54B960
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 12 Dec 2022 19:17:18 -0500 (EST)
 Received: by mail-pl1-f201.google.com with SMTP id
- j18-20020a170902da9200b00189b3b16addso11773624plx.23
- for <kvmarm@lists.cs.columbia.edu>; Mon, 12 Dec 2022 16:17:16 -0800 (PST)
+ m16-20020a170902db1000b0018fa0de6aa6so2674583plx.18
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 12 Dec 2022 16:17:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:reply-to:from:to:cc:subject:date:message-id:reply-to;
- bh=nM41DSVBAJr+S3W93Zis4JAYC8eUvXamzXgPZLD06L8=;
- b=nYe6ZWOHPMJgTGksZPiEisBf6HPHtTh7LwnzxBJxPqoYHxDIXfUXIa80Wv8FT5deaA
- UzHNYFP0DWaotAozDYEqkVOhGC3cJzSjZIrX35uJMvKk0qzEdjbF5qj55iPpjtEz3ipO
- bm8VP2buvMYoUm5bBSsgzK0AvSdBMq0gU3WwNjXiGhrTir7XSUZ3UlUPkv2SzjZJXHyV
- BW7oqPIg9/2WzHp2xjLzs82Y3ewdbcwG+wxaYmUKR44YKrwYEmcWRcUYbv914+1ep3vj
- XM381ihLSB7s6K13WjVWXGmod93EwbDCFi3RC00C/qqJJxPj4hbmeVdBA7F4fDCsvIiB
- q4Jg==
+ bh=xj/6XiZ0FcL9g/cIOTUKNxH2a5zHGMGnhonaffOKQyU=;
+ b=Ynr5HNzm6tcPWug6yfLA7uxzPSFdxsDbFS0g0RKFnUjDpg1KpLtNRGj/Gf5/eVmZS7
+ /E+4Syq2m0k2o5pz9jJkKOO6Sj8cSiSA59XiRJyOIRS4qCG3ooDGOujDsXFak0y3HWEH
+ JVE64IrNpMB7KkNprBOvUTG/cEurYq5To2UJjMVj8f7IjF8u6mpzW6rAt4PhQmyqLhQB
+ 1i18xIcii3lgptRuB9CPP2XNPfFgre8ZBl8B6sbn4hkuTa1njt/nq23+dRz4CjgSzC33
+ AdeV5GwIU5qK4qiw325lbgQvG6tA0I6pTb5gl4H3ZodnnRxzTiH/D2U7oooCiaGH4QZQ
+ TQFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:reply-to:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nM41DSVBAJr+S3W93Zis4JAYC8eUvXamzXgPZLD06L8=;
- b=hQDLlZEG3qXV/7K+NhUwDXVCEjYOmnA37ZrqjsQljo4WqNAWI5e+EpW4QhLVd719+t
- cbXh30Xd4DzUl8a3Bhf3DaIqKlIhzkx5LCeQ3oB3DjeQyEky1U27Ag9s7EFnV5ZJ1IEc
- XcTwrIIcc6pSxjxUrPZe+7jxh86bLipbnSrewQQhYnzOA8WiGVJ5HTiYQQZcvQgjyMH7
- UDT2EPLSLU02ouB90KhhayUkCP545VVeu/cK6ZoyWibN4Cd/2kW1CyQ9eui9rdUspRg5
- rxid5FA99hD/swlD6QxOFKkeLRbxsRCst7rv/qQ8gVlZmSfABCC0TGZEcxAY1n9mI8FR
- ESiQ==
-X-Gm-Message-State: ANoB5pmbylJlyb1MLmvn2I5MusCiEhY3vqCAD+OySM/BlTyh9Z6jJbiY
- cyZ3Q2hSlNKtVrMj8Yw9gTWOAGmGxI4=
-X-Google-Smtp-Source: AA0mqf6ZbJmcYrZNpc/Z0ppwmhrlHhb+cLSNTmH678oSo0UQF9b8LuTc9fdveE6JT7fYmZu7x1S++6s+7UY=
+ bh=xj/6XiZ0FcL9g/cIOTUKNxH2a5zHGMGnhonaffOKQyU=;
+ b=GyQDR347uxrkD131P3WFD4EipLA/EsCzDP1Jhg3BTRiwye/5cVyd35SVai8LhQkxB0
+ rISE4vKP4kBrRfoP8hpLQdd7+MgGF0zaB9wfp1o7I7FNKP4hXebUlPtWORflBz9+bwW/
+ +PjEmpgDj0JuQQwTXtNx+matzcEhtpcMzH6jX6dYLe+FwcJhxa+cC6FHMK/xQPmTdIuj
+ 9iOwshwK0/SzwBuTGzp8tuYHrqACUdb8gU7Yzgn+Uat9xFAAby5SK0s+0EuyjsGVfefi
+ WsbnTxvzAlrg1W4Us2B9MAt/dg+CifyL/6Ax7tP0N6jvpMwEf37jtbPlaVrzHw2imox8
+ xHEQ==
+X-Gm-Message-State: ANoB5pn95INOtnTT4gjFaiYxBdLCGA0vQtaIYkbREEzqb5Js5r4LLO8t
+ ikA/eyZ/QKRGBEXmhsG+G/ujxwQCd5s=
+X-Google-Smtp-Source: AA0mqf7B6mgUqxDLQ3i89LPKmIpCGPzYFo4QfxqabC4YmJpdYxUAVEO/jE0NsIR7MXoyw3EdaxVTTeKRQcw=
 X-Received: from zagreus.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a17:902:c406:b0:189:6df9:4f85 with SMTP id
- k6-20020a170902c40600b001896df94f85mr62591897plk.27.1670890635443; Mon, 12
- Dec 2022 16:17:15 -0800 (PST)
-Date: Tue, 13 Dec 2022 00:16:50 +0000
+ (user=seanjc job=sendgmr) by 2002:a17:90a:1b21:b0:218:e3e8:c024 with SMTP id
+ q30-20020a17090a1b2100b00218e3e8c024mr75063pjq.125.1670890637231; Mon, 12 Dec
+ 2022 16:17:17 -0800 (PST)
+Date: Tue, 13 Dec 2022 00:16:51 +0000
 In-Reply-To: <20221213001653.3852042-1-seanjc@google.com>
 Mime-Version: 1.0
 References: <20221213001653.3852042-1-seanjc@google.com>
 X-Mailer: git-send-email 2.39.0.rc1.256.g54fd8350bd-goog
-Message-ID: <20221213001653.3852042-12-seanjc@google.com>
-Subject: [PATCH 11/14] KVM: selftests: Disable
- "gnu-variable-sized-type-not-at-end" warning
+Message-ID: <20221213001653.3852042-13-seanjc@google.com>
+Subject: [PATCH 12/14] KVM: selftests: Use wildcards to find library source
+ files
 From: Sean Christopherson <seanjc@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marc Zyngier <maz@kernel.org>, 
  Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
@@ -101,57 +101,79 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Disable gnu-variable-sized-type-not-at-end so that tests and libraries
-can create overlays of variable sized arrays at the end of structs when
-using a fixed number of entries, e.g. to get/set a single MSR.
-
-It's possible to fudge around the warning, e.g. by defining a custom
-struct that hardcodes the number of entries, but that is a burden for
-both developers and readers of the code.
-
-lib/x86_64/processor.c:664:19: warning: field 'header' with variable sized type 'struct kvm_msrs'
-not at the end of a struct or class is a GNU extension [-Wgnu-variable-sized-type-not-at-end]
-                struct kvm_msrs header;
-                                ^
-lib/x86_64/processor.c:772:19: warning: field 'header' with variable sized type 'struct kvm_msrs'
-not at the end of a struct or class is a GNU extension [-Wgnu-variable-sized-type-not-at-end]
-                struct kvm_msrs header;
-                                ^
-lib/x86_64/processor.c:787:19: warning: field 'header' with variable sized type 'struct kvm_msrs'
-not at the end of a struct or class is a GNU extension [-Wgnu-variable-sized-type-not-at-end]
-                struct kvm_msrs header;
-                                ^
-3 warnings generated.
-
-x86_64/hyperv_tlb_flush.c:54:18: warning: field 'hv_vp_set' with variable sized type 'struct hv_vpset'
-not at the end of a struct or class is a GNU extension [-Wgnu-variable-sized-type-not-at-end]
-        struct hv_vpset hv_vp_set;
-                        ^
-1 warning generated.
-
-x86_64/xen_shinfo_test.c:137:25: warning: field 'info' with variable sized type 'struct kvm_irq_routing'
-not at the end of a struct or class is a GNU extension [-Wgnu-variable-sized-type-not-at-end]
-        struct kvm_irq_routing info;
-                               ^
-1 warning generated.
+Use $(wildcard ...) to find the library source files instead of manually
+defining the inputs, which is a maintenance burden and error prone.
 
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 ---
- tools/testing/selftests/kvm/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/kvm/Makefile | 45 ++++------------------------
+ 1 file changed, 5 insertions(+), 40 deletions(-)
 
 diff --git a/tools/testing/selftests/kvm/Makefile b/tools/testing/selftests/kvm/Makefile
-index 2487db21b177..9cff99a1cb2e 100644
+index 9cff99a1cb2e..a9930e9197da 100644
 --- a/tools/testing/selftests/kvm/Makefile
 +++ b/tools/testing/selftests/kvm/Makefile
-@@ -196,6 +196,7 @@ else
- LINUX_TOOL_ARCH_INCLUDE = $(top_srcdir)/tools/arch/$(ARCH)/include
+@@ -19,44 +19,6 @@ else
+ $(error Unknown architecture '$(ARCH)')
  endif
- CFLAGS += -Wall -Wstrict-prototypes -Wuninitialized -O2 -g -std=gnu99 \
-+	-Wno-gnu-variable-sized-type-not-at-end \
- 	-fno-builtin-memcmp -fno-builtin-memcpy -fno-builtin-memset \
- 	-fno-stack-protector -fno-PIE -I$(LINUX_TOOL_INCLUDE) \
- 	-I$(LINUX_TOOL_ARCH_INCLUDE) -I$(LINUX_HDR_PATH) -Iinclude \
+ 
+-LIBKVM += lib/assert.c
+-LIBKVM += lib/elf.c
+-LIBKVM += lib/guest_modes.c
+-LIBKVM += lib/io.c
+-LIBKVM += lib/kvm_util.c
+-LIBKVM += lib/memstress.c
+-LIBKVM += lib/rbtree.c
+-LIBKVM += lib/sparsebit.c
+-LIBKVM += lib/test_util.c
+-LIBKVM += lib/ucall_common.c
+-LIBKVM += lib/userfaultfd_util.c
+-
+-LIBKVM_STRING += lib/string_override.c
+-
+-LIBKVM_x86_64 += lib/x86_64/apic.c
+-LIBKVM_x86_64 += lib/x86_64/handlers.S
+-LIBKVM_x86_64 += lib/x86_64/hyperv.c
+-LIBKVM_x86_64 += lib/x86_64/memstress.c
+-LIBKVM_x86_64 += lib/x86_64/processor.c
+-LIBKVM_x86_64 += lib/x86_64/svm.c
+-LIBKVM_x86_64 += lib/x86_64/ucall.c
+-LIBKVM_x86_64 += lib/x86_64/vmx.c
+-
+-LIBKVM_aarch64 += lib/aarch64/gic.c
+-LIBKVM_aarch64 += lib/aarch64/gic_v3.c
+-LIBKVM_aarch64 += lib/aarch64/handlers.S
+-LIBKVM_aarch64 += lib/aarch64/processor.c
+-LIBKVM_aarch64 += lib/aarch64/spinlock.c
+-LIBKVM_aarch64 += lib/aarch64/ucall.c
+-LIBKVM_aarch64 += lib/aarch64/vgic.c
+-
+-LIBKVM_s390x += lib/s390x/diag318_test_handler.c
+-LIBKVM_s390x += lib/s390x/processor.c
+-LIBKVM_s390x += lib/s390x/ucall.c
+-
+-LIBKVM_riscv += lib/riscv/processor.c
+-LIBKVM_riscv += lib/riscv/ucall.c
+-
+ # Non-compiled test targets
+ TEST_PROGS_x86_64 += x86_64/nx_huge_pages_test.sh
+ 
+@@ -213,10 +175,13 @@ pgste-option = $(call try-run, echo 'int main(void) { return 0; }' | \
+ LDLIBS += -ldl
+ LDFLAGS += -pthread $(no-pie-option) $(pgste-option)
+ 
+-LIBKVM_C := $(filter %.c,$(LIBKVM))
+-LIBKVM_S := $(filter %.S,$(LIBKVM))
++LIBKVM_C := $(filter-out lib/string_override.c,$(wildcard lib/*.c))
++LIBKVM_C += $(wildcard lib/$(ARCH_DIR)/*.c)
++LIBKVM_S := $(wildcard lib/*.S)
++LIBKVM_S += $(wildcard lib/$(ARCH_DIR)/*.S)
+ LIBKVM_C_OBJ := $(patsubst %.c, $(OUTPUT)/%.o, $(LIBKVM_C))
+ LIBKVM_S_OBJ := $(patsubst %.S, $(OUTPUT)/%.o, $(LIBKVM_S))
++LIBKVM_STRING := lib/string_override.c
+ LIBKVM_STRING_OBJ := $(patsubst %.c, $(OUTPUT)/%.o, $(LIBKVM_STRING))
+ LIBKVM_OBJS = $(LIBKVM_C_OBJ) $(LIBKVM_S_OBJ) $(LIBKVM_STRING_OBJ)
+ 
 -- 
 2.39.0.rc1.256.g54fd8350bd-goog
 
