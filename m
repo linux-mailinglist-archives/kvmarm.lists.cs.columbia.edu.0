@@ -2,51 +2,57 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 7EA0C651F12
-	for <lists+kvmarm@lfdr.de>; Tue, 20 Dec 2022 11:42:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B473A6540C2
+	for <lists+kvmarm@lfdr.de>; Thu, 22 Dec 2022 13:12:00 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id CF7164B76C;
-	Tue, 20 Dec 2022 05:42:04 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 05E264BA86;
+	Thu, 22 Dec 2022 07:12:00 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -6.9
+X-Spam-Score: -4.952
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=6.1 tests=[BAYES_00=-1.9,
-	RCVD_IN_DNSWL_HI=-5] autolearn=unavailable
+X-Spam-Status: No, score=-4.952 required=6.1 tests=[BAYES_00=-1.9,
+	DATE_IN_FUTURE_06_12=1.947, RCVD_IN_DNSWL_HI=-5, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id woJPnmDnUoMS; Tue, 20 Dec 2022 05:42:04 -0500 (EST)
+	with ESMTP id 2zSb0XUZAHAN; Thu, 22 Dec 2022 07:11:59 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 59A0D4B75B;
-	Tue, 20 Dec 2022 05:42:03 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5F1104BA84;
+	Thu, 22 Dec 2022 07:11:58 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id EC6534B64B
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Dec 2022 05:42:01 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 898154B646
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 19 Dec 2022 21:50:19 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 6fDIrp+QohjQ for <kvmarm@lists.cs.columbia.edu>;
- Tue, 20 Dec 2022 05:42:00 -0500 (EST)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 850E54B640
- for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Dec 2022 05:42:00 -0500 (EST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 046DB2F4;
- Tue, 20 Dec 2022 02:42:41 -0800 (PST)
-Received: from monolith.localdoman (unknown [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7F34D3F71A;
- Tue, 20 Dec 2022 02:41:58 -0800 (PST)
-Date: Tue, 20 Dec 2022 10:41:55 +0000
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-To: Colton Lewis <coltonlewis@google.com>
-Subject: Re: [kvm-unit-tests PATCH] arm: Remove MAX_SMP probe loop
-Message-ID: <Y6GRXreBu56PqCyG@monolith.localdoman>
-References: <20221219185250.631503-1-coltonlewis@google.com>
+ with ESMTP id 4v+EMUqyI0Lq for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 19 Dec 2022 21:50:17 -0500 (EST)
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 072864B63F
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 19 Dec 2022 21:50:16 -0500 (EST)
+Received: from dggpemm500002.china.huawei.com (unknown [172.30.72.57])
+ by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4NbgyC1tz5zmWZg;
+ Tue, 20 Dec 2022 10:49:07 +0800 (CST)
+Received: from localhost.localdomain (10.69.192.246) by
+ dggpemm500002.china.huawei.com (7.185.36.229) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.34; Tue, 20 Dec 2022 10:50:13 +0800
+From: Dong Bo <dongbo4@huawei.com>
+To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <kvmarm@lists.linux.dev>, <kvmarm@lists.cs.columbia.edu>
+Subject: [PATCH] KVM: arm64: Synchronize SMEN on vcpu schedule out
+Date: Tue, 20 Dec 2022 18:50:24 +0800
+Message-ID: <20221220105024.13484-1-dongbo4@huawei.com>
+X-Mailer: git-send-email 2.30.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <20221219185250.631503-1-coltonlewis@google.com>
-Cc: kvm@vger.kernel.org, maz@kernel.org, andrew.jones@linux.dev,
- kvmarm@lists.cs.columbia.edu
+X-Originating-IP: [10.69.192.246]
+X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
+ dggpemm500002.china.huawei.com (7.185.36.229)
+X-CFilter-Loop: Reflected
+X-Mailman-Approved-At: Thu, 22 Dec 2022 07:11:57 -0500
+Cc: Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -63,67 +69,42 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi,
+From: Nianyao Tang <tangnianyao@huawei.com>
 
-On Mon, Dec 19, 2022 at 06:52:50PM +0000, Colton Lewis wrote:
-> This loop logic is broken for machines with a number of CPUs that
-> isn't a power of two. A machine with 8 CPUs will test with MAX_SMP=8
-> but a machine with 12 CPUs will test with MAX_SMP=6 because 12 >> 2 ==
-> 6. This can, in rare circumstances, lead to different test results
-> depending only on the number of CPUs the machine has.
+If we have VHE and need to reenable SME for host in
+kvm_arch_vcpu_put_fp, CPACR.SMEN is modified from 0 to 1. Trap
+control for reading SVCR is modified from enable to disable.
+Synchronization is needed before reading SVCR later in
+fpsimd_save, or it may cause sync exception which can not be
+handled by host.
 
-I do think removing the loop is a good idea. I tested this patch, and when
-running a single test, it makes the run 3 seconds faster on an Cortex-A53
-for me - selftest-smp and selftest-vectors-kernel went from taking 12s to
-9s. Doesn't make much of a difference when running all the tests (those
-take for me 5m10s without the patch, 5m6.5s with the patch), but when
-running a single test the 25% speed improvement is noticeable.
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: James Morse <james.morse@arm.com>
+Cc: Alexandru Elisei <alexandru.elisei@arm.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: Oliver Upton <oliver.upton@linux.dev>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Nianyao Tang <tangnianyao@huawei.com>
+---
+ arch/arm64/kvm/fpsimd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Though I'm not sure how you managed to get MAX_SMP to go down to 6 cores on
-a 12 core machine. MAX_SMP is initialized to $(getconf _NPROCESSORS_ONLN),
-so the body of the loop should never execute. I also tried it on a 6 core
-machine, and MAX_SMP was 6, not 3.
+diff --git a/arch/arm64/kvm/fpsimd.c b/arch/arm64/kvm/fpsimd.c
+index 02dd7e9ebd39..f5799f571317 100644
+--- a/arch/arm64/kvm/fpsimd.c
++++ b/arch/arm64/kvm/fpsimd.c
+@@ -184,6 +184,7 @@ void kvm_arch_vcpu_put_fp(struct kvm_vcpu *vcpu)
+ 			sysreg_clear_set(CPACR_EL1,
+ 					 CPACR_EL1_SMEN_EL0EN,
+ 					 CPACR_EL1_SMEN_EL1EN);
++		isb();
+ 	}
+ 
+ 	if (vcpu->arch.fp_state == FP_STATE_GUEST_OWNED) {
+-- 
+1.8.3.1
 
-Am I missing something?
-
-Thanks,
-Alex
-
-> 
-> The loop is safe to remove with no side effects. It has an explanitory
-> comment explaining that it only applies to kernels <=v4.3 on arm and
-> suggestion deletion when it becomes tiresome to maintain.
-> 
-> Signed-off-by: Colton Lewis <coltonlewis@google.com>
-> ---
->  scripts/runtime.bash | 14 --------------
->  1 file changed, 14 deletions(-)
-> 
-> diff --git a/scripts/runtime.bash b/scripts/runtime.bash
-> index f8794e9..18a8dd7 100644
-> --- a/scripts/runtime.bash
-> +++ b/scripts/runtime.bash
-> @@ -183,17 +183,3 @@ function run()
->  
->      return $ret
->  }
-> -
-> -#
-> -# Probe for MAX_SMP, in case it's less than the number of host cpus.
-> -#
-> -# This probing currently only works for ARM, as x86 bails on another
-> -# error first. Also, this probing isn't necessary for any ARM hosts
-> -# running kernels later than v4.3, i.e. those including ef748917b52
-> -# "arm/arm64: KVM: Remove 'config KVM_ARM_MAX_VCPUS'". So, at some
-> -# point when maintaining the while loop gets too tiresome, we can
-> -# just remove it...
-> -while $RUNTIME_arch_run _NO_FILE_4Uhere_ -smp $MAX_SMP \
-> -		|& grep -qi 'exceeds max CPUs'; do
-> -	MAX_SMP=$((MAX_SMP >> 1))
-> -done
-> -- 
-> 2.39.0.314.g84b9a713c41-goog
-> 
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
