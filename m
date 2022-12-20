@@ -2,57 +2,80 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id B473A6540C2
-	for <lists+kvmarm@lfdr.de>; Thu, 22 Dec 2022 13:12:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DF3576524A5
+	for <lists+kvmarm@lfdr.de>; Tue, 20 Dec 2022 17:32:06 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 05E264BA86;
-	Thu, 22 Dec 2022 07:12:00 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id D53BC4B628;
+	Tue, 20 Dec 2022 11:32:05 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -4.952
+X-Spam-Score: -6.788
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.952 required=6.1 tests=[BAYES_00=-1.9,
-	DATE_IN_FUTURE_06_12=1.947, RCVD_IN_DNSWL_HI=-5, URIBL_BLOCKED=0.001]
-	autolearn=unavailable
+X-Spam-Status: No, score=-6.788 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_ADSP_CUSTOM_MED=0.001, DKIM_SIGNED=0.1, RCVD_IN_DNSWL_HI=-5,
+	T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001] autolearn=unavailable
+Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
+	(fail, message has been altered) header.i=@google.com
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2zSb0XUZAHAN; Thu, 22 Dec 2022 07:11:59 -0500 (EST)
+	with ESMTP id 3tT56KvdtdZB; Tue, 20 Dec 2022 11:32:05 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5F1104BA84;
-	Thu, 22 Dec 2022 07:11:58 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 5B9844B600;
+	Tue, 20 Dec 2022 11:32:04 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 898154B646
- for <kvmarm@lists.cs.columbia.edu>; Mon, 19 Dec 2022 21:50:19 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id C6E4F4B15C
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Dec 2022 11:32:03 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 4v+EMUqyI0Lq for <kvmarm@lists.cs.columbia.edu>;
- Mon, 19 Dec 2022 21:50:17 -0500 (EST)
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 072864B63F
- for <kvmarm@lists.cs.columbia.edu>; Mon, 19 Dec 2022 21:50:16 -0500 (EST)
-Received: from dggpemm500002.china.huawei.com (unknown [172.30.72.57])
- by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4NbgyC1tz5zmWZg;
- Tue, 20 Dec 2022 10:49:07 +0800 (CST)
-Received: from localhost.localdomain (10.69.192.246) by
- dggpemm500002.china.huawei.com (7.185.36.229) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.34; Tue, 20 Dec 2022 10:50:13 +0800
-From: Dong Bo <dongbo4@huawei.com>
-To: <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <kvmarm@lists.linux.dev>, <kvmarm@lists.cs.columbia.edu>
-Subject: [PATCH] KVM: arm64: Synchronize SMEN on vcpu schedule out
-Date: Tue, 20 Dec 2022 18:50:24 +0800
-Message-ID: <20221220105024.13484-1-dongbo4@huawei.com>
-X-Mailer: git-send-email 2.30.0
-MIME-Version: 1.0
-X-Originating-IP: [10.69.192.246]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- dggpemm500002.china.huawei.com (7.185.36.229)
-X-CFilter-Loop: Reflected
-X-Mailman-Approved-At: Thu, 22 Dec 2022 07:11:57 -0500
-Cc: Will Deacon <will@kernel.org>, Marc Zyngier <maz@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>
+ with ESMTP id zsxXAzIaQWP2 for <kvmarm@lists.cs.columbia.edu>;
+ Tue, 20 Dec 2022 11:32:02 -0500 (EST)
+Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com
+ [209.85.128.202])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 7676941021
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Dec 2022 11:32:02 -0500 (EST)
+Received: by mail-yw1-f202.google.com with SMTP id
+ 00721157ae682-437b250c03aso146663967b3.6
+ for <kvmarm@lists.cs.columbia.edu>; Tue, 20 Dec 2022 08:32:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=XrImwGduolMTyoyh8B4xmu2CI/C3wDtB3hW/6WtZSt8=;
+ b=QYMLt5UshIud2hfhO6Xvx67bOysbCE2PlS8smMxii+jnx2XrX+Q5+IBqlnd7fwXZoA
+ Kp5vXgqNGcnhkb6NgI3Y96WHlCoNZPiyxrfvAJK3ix5hWdyKaNP0SGy6bSoTRiUudY3/
+ cY8F4IJYHzK3FaMsuE0wy2C82L1l7YUkonERzGOwSskkEVFJ8sHT7Xxl+7OFLwPIGfkQ
+ pom6CKeqJjSsQq9D3t07sQvT315+iasLL0kSKcGSl+949Lpfvn2DkAGv1knmfnQu3arn
+ sYGxcxyTRTjaCeWiygSq2gJ6PiT7vJWiMhWsaq+ARSKvtB7q9nco7iGW+YU3lhvQbwJk
+ AgAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XrImwGduolMTyoyh8B4xmu2CI/C3wDtB3hW/6WtZSt8=;
+ b=1VqC/ZrkrfQlH2QMe3VGfpOPjyx2frWyLjmf1cY2mXz14xuj0sC5gpL+hbPQe37ZFy
+ /qB6NNFpSgvDBAvFjHZHRg0UXNHBlgbW35VyUNAivkTG/BhYbwBQY8NAzoE0THExMTHU
+ DWEhItFNWAAoD9zHfd3tqVAaV30Pl6UG/pzR0xNcQ9MezP3bugulE6bboRmHh9fcLW5g
+ 3IJpEECouPmO1sBgOn5MoxXvuPHcTFujRwzxT6cJLrjdDuSOe/nTpVKB0VoeDh6KNdjv
+ NfBOaNhBwwG47f3Y8srnME5ca61EK5ae5O6NegnHoboV682sBibnUaYS0ld0nOjjNkoj
+ zxog==
+X-Gm-Message-State: ANoB5pmS5R2vxaY6pwIDD4iqTkqFyxe93Yj2CXxjQBdPUqXcdo/kg9hi
+ /DsGBGy6TedMNe+J9Q2th7+gKKq1yFWU/XLc8g==
+X-Google-Smtp-Source: AA0mqf7oHCF0W41mhDrjdzczDyjNBOgKqzvgVg5lQDJFYRpKE81aajcpRRzlPnT1UDYepvbYCCwBsqs2yOgViGTVFw==
+X-Received: from coltonlewis-kvm.c.googlers.com
+ ([fda3:e722:ac3:cc00:2b:ff92:c0a8:14ce])
+ (user=coltonlewis job=sendgmr) by 2002:a81:f90d:0:b0:404:7030:e1c0 with SMTP
+ id x13-20020a81f90d000000b004047030e1c0mr6793086ywm.53.1671553921890; Tue, 20
+ Dec 2022 08:32:01 -0800 (PST)
+Date: Tue, 20 Dec 2022 16:32:00 +0000
+In-Reply-To: <Y6GRXreBu56PqCyG@monolith.localdoman> (message from Alexandru
+ Elisei on Tue, 20 Dec 2022 10:41:55 +0000)
+Mime-Version: 1.0
+Message-ID: <gsnt8rj2ghof.fsf@coltonlewis-kvm.c.googlers.com>
+Subject: Re: [kvm-unit-tests PATCH] arm: Remove MAX_SMP probe loop
+From: Colton Lewis <coltonlewis@google.com>
+To: Alexandru Elisei <alexandru.elisei@arm.com>
+Cc: kvm@vger.kernel.org, maz@kernel.org, andrew.jones@linux.dev,
+ kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -64,47 +87,27 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"; DelSp="yes"
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-From: Nianyao Tang <tangnianyao@huawei.com>
+Alexandru Elisei <alexandru.elisei@arm.com> writes:
 
-If we have VHE and need to reenable SME for host in
-kvm_arch_vcpu_put_fp, CPACR.SMEN is modified from 0 to 1. Trap
-control for reading SVCR is modified from enable to disable.
-Synchronization is needed before reading SVCR later in
-fpsimd_save, or it may cause sync exception which can not be
-handled by host.
+> Though I'm not sure how you managed to get MAX_SMP to go down to 6 cores  
+> on
+> a 12 core machine. MAX_SMP is initialized to $(getconf _NPROCESSORS_ONLN),
+> so the body of the loop should never execute. I also tried it on a 6 core
+> machine, and MAX_SMP was 6, not 3.
 
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: James Morse <james.morse@arm.com>
-Cc: Alexandru Elisei <alexandru.elisei@arm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc: Oliver Upton <oliver.upton@linux.dev>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Signed-off-by: Nianyao Tang <tangnianyao@huawei.com>
----
- arch/arm64/kvm/fpsimd.c | 1 +
- 1 file changed, 1 insertion(+)
+> Am I missing something?
 
-diff --git a/arch/arm64/kvm/fpsimd.c b/arch/arm64/kvm/fpsimd.c
-index 02dd7e9ebd39..f5799f571317 100644
---- a/arch/arm64/kvm/fpsimd.c
-+++ b/arch/arm64/kvm/fpsimd.c
-@@ -184,6 +184,7 @@ void kvm_arch_vcpu_put_fp(struct kvm_vcpu *vcpu)
- 			sysreg_clear_set(CPACR_EL1,
- 					 CPACR_EL1_SMEN_EL0EN,
- 					 CPACR_EL1_SMEN_EL1EN);
-+		isb();
- 	}
- 
- 	if (vcpu->arch.fp_state == FP_STATE_GUEST_OWNED) {
--- 
-1.8.3.1
-
+To be clear, 12 cores was a simplified example I did not directly
+verify. What happened to me was 152 cores being cut down to 4. I was
+confused why one machine was running a test with 4 cores when my other
+machines were running with 8 and traced it to that loop. In effect the
+loop was doing MAX_SMP=floor(MAX_SMP / 2) until MAX_SMP <= 8. I printed
+the iterations and MAX_SMP followed the sequence 152->76->38->19->9->4.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
