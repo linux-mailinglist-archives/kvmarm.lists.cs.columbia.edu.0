@@ -2,69 +2,82 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A2A8653F33
-	for <lists+kvmarm@lfdr.de>; Thu, 22 Dec 2022 12:45:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A4796540F5
+	for <lists+kvmarm@lfdr.de>; Thu, 22 Dec 2022 13:23:58 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 222454BA96;
-	Thu, 22 Dec 2022 06:45:41 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B69AE4BA25;
+	Thu, 22 Dec 2022 07:23:57 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.788
+X-Spam-Score: -6.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.788 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_BLOCKED=0.001, T_DKIM_INVALID=0.01,
+X-Spam-Status: No, score=-6.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_HI=-5, T_DKIM_INVALID=0.01,
 	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UyOgjvYuSYgm; Thu, 22 Dec 2022 06:45:41 -0500 (EST)
+	with ESMTP id jfrqlrIUPS86; Thu, 22 Dec 2022 07:23:57 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id C69AD4BA89;
-	Thu, 22 Dec 2022 06:45:39 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6C5A44BA87;
+	Thu, 22 Dec 2022 07:23:56 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 3B4354B9EA
- for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Dec 2022 06:45:38 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 0102E4B9EA
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Dec 2022 07:23:55 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ss6+BaCZHf7u for <kvmarm@lists.cs.columbia.edu>;
- Thu, 22 Dec 2022 06:45:37 -0500 (EST)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 33EEE4BA81
- for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Dec 2022 06:45:37 -0500 (EST)
+ with ESMTP id yvKfGZznwQnN for <kvmarm@lists.cs.columbia.edu>;
+ Thu, 22 Dec 2022 07:23:54 -0500 (EST)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id ED3DD4BA25
+ for <kvmarm@lists.cs.columbia.edu>; Thu, 22 Dec 2022 07:23:53 -0500 (EST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id B9295B81B93;
- Thu, 22 Dec 2022 11:45:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB3EC433EF;
- Thu, 22 Dec 2022 11:45:30 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 0904D61AAF;
+ Thu, 22 Dec 2022 12:23:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65329C433D2;
+ Thu, 22 Dec 2022 12:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1671709534;
- bh=Y1cUmhwFo68wOtgbAIPgTlOJqv2cgBsiYek52x4QyLI=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=NhqH8gIh8S0yGDM0PVbhOtJk43xinTwAfGKXCt8ddSLPmt7TbaegxtQ69r2Ninb0G
- H6lLZtScQoHkXCoSnWhj4xCI155ft3FBmzyIp7g0XS2ahTd+Wpe0zxV5QVau5vXc9f
- ErCMQIKyIy5cbddGIYhY0eeKn23yGov6apS7m2sM4yWKx2QwMJZ2ZVIOB2vxSgAGzq
- f7+dj3ldV4IRrBgKKUIt25Bx+PMpfRf28oNs+MzQNFRs6C3h5EyHSPd9SBiwPBFDrk
- YNOV3uMOZRcymr51KlhoTLIXCXfRM6PdRmHACURz5FcjGFLOjTyuRz1ZVWhf3jQTB2
- IVcoNEFhXp6pA==
-Date: Thu, 22 Dec 2022 11:45:27 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: Re: [PATCH v4 2/7] arm64/sysreg: Convert CCSIDR_EL1 to automatic
- generation
-Message-ID: <Y6RDV/mQ2mo+/YFk@sirena.org.uk>
-References: <20221221204016.658874-1-akihiko.odaki@daynix.com>
- <20221221204016.658874-3-akihiko.odaki@daynix.com>
-MIME-Version: 1.0
-In-Reply-To: <20221221204016.658874-3-akihiko.odaki@daynix.com>
-X-Cookie: Yes, but which self do you want to be?
-Cc: Alyssa Rosenzweig <alyssa@rosenzweig.io>, Hector Martin <marcan@marcan.st>,
- Mathieu Poirier <mathieu.poirier@linaro.org>, Marc Zyngier <maz@kernel.org>,
- Sven Peter <sven@svenpeter.dev>, linux-kernel@vger.kernel.org,
- Will Deacon <will@kernel.org>, asahi@lists.linux.dev,
+ s=k20201202; t=1671711832;
+ bh=ub1l/0iM010zyPkMwuC5cprfkrYFEiJ/6duRHQ7gLP0=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=Qsx2KqYbiwDRCgsNrK135M+6sHIp8T78Kj8DOFlnx31F+x00m2sLHpWlj0UB/tn9B
+ 022L4tqz3pCnQJKLbSSeFNuXPDqolzwrsoneP2hOwzgoURbXBHrHRMRiyGsHLJXR81
+ Oqp49gj7fJGvxPQTFfzM3ANigCCBj1lCC1JOdzNUa+97ZjZDVHwiuuwVcoBMZYfWVH
+ pZuEg6Bjge0T0tQVrStohBaM+6BnShgfNg8qN/8VcrBzey3uVQ06HkmbpDABUPaZVq
+ vOgP/iGUILxBrZTCbD802dGA40umqKRTt+L4oum1j99gw2yy0E1eEFhvygfuRQSzqM
+ EzogaH3deVkuQ==
+Received: from sofa.misterjones.org ([185.219.108.64]
+ helo=goblin-girl.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1p8Kc1-00ENKb-TG;
+ Thu, 22 Dec 2022 12:23:49 +0000
+Date: Thu, 22 Dec 2022 12:23:49 +0000
+Message-ID: <86h6xnbp9m.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Mark Brown <broonie@kernel.org>
+Subject: Re: [PATCH 2/2] KVM: arm64: Remove use of ARM64_FEATURE_MASK()
+In-Reply-To: <20221221-kvm-sysreg-cleanup-v1-2-112ddb14fb4e@kernel.org>
+References: <20221221-kvm-sysreg-cleanup-v1-0-112ddb14fb4e@kernel.org>
+ <20221221-kvm-sysreg-cleanup-v1-2-112ddb14fb4e@kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/28.2
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: broonie@kernel.org, james.morse@arm.com,
+ alexandru.elisei@arm.com, suzuki.poulose@arm.com, oliver.upton@linux.dev,
+ catalin.marinas@arm.com, will@kernel.org, linux-arm-kernel@lists.infradead.org,
+ kvmarm@lists.linux.dev, kvmarm@lists.cs.columbia.edu,
+ linux-kernel@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Cc: Will Deacon <will@kernel.org>, linux-kernel@vger.kernel.org,
  Catalin Marinas <catalin.marinas@arm.com>, kvmarm@lists.linux.dev,
  kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
 X-BeenThere: kvmarm@lists.cs.columbia.edu
@@ -78,56 +91,53 @@ List-Post: <mailto:kvmarm@lists.cs.columbia.edu>
 List-Help: <mailto:kvmarm-request@lists.cs.columbia.edu?subject=help>
 List-Subscribe: <https://lists.cs.columbia.edu/mailman/listinfo/kvmarm>,
  <mailto:kvmarm-request@lists.cs.columbia.edu?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============5604558559325281733=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
+On Wed, 21 Dec 2022 18:06:10 +0000,
+Mark Brown <broonie@kernel.org> wrote:
+> 
+> The KVM code makes extensive use of ARM64_FEATURE_MASK() to generate a
+> mask for fields in the ID registers. This macro has the assumption that
+> all feature fields are 4 bits wide but the architecture has evolved to
+> add fields with other widths, such as the 1 bit fields in ID_AA64SMFR0_EL1,
+> so we need to adjust the
+> 
+> We could fix this by making ARM64_FEATURE_MASK() use the generated macros
+> that we have now but since one of these is a direct _MASK constant the
+> result is something that's more verbose and less direct than just updating
+> the users to directly use the generated mask macros, writing
+> 
+> 	#define ARM64_FEATURE_MASK(x)	(x##_MASK)
+> 
+> obviously looks redundant and if we look at the users updating them turns
+> 
+> 	val &= ~ARM64_FEATURE_MASK(ID_AA64PFR0_EL1_CSV3);
+> 
+> into the more direct
+> 
+> 	val &= ~ID_AA64PFR0_EL1_CSV3_MASK;
 
---===============5604558559325281733==
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="8fq1k0An7gXXTJSP"
-Content-Disposition: inline
+If the two are strictly equivalent, then let's use the former as it
+results in a tiny diff.
 
+Constantly repainting these files causes no end of conflicts when
+rebasing large series (pKVM, NV...), and makes backporting of fixes
+much harder than it should be. Specially considering that there is a
+single occcurence of an ID register with non-4bit fields.
 
---8fq1k0An7gXXTJSP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Just put a FIXME in the various files so that people do the repainting
+as they change this code.
 
-On Thu, Dec 22, 2022 at 05:40:11AM +0900, Akihiko Odaki wrote:
-> Convert CCSIDR_EL1 to automatic generation as per DDI0487I.a.
+Thanks,
 
-Might've been worth mentioning the multiple layouts in the commit log
-but not a big deal.  Handling them does seem like something we can defer
-to followup work along with improving the tooling:
+	M.
 
-Reviewed-by: Mark Brown <broonie@kernel.org>
-
---8fq1k0An7gXXTJSP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmOkQ1cACgkQJNaLcl1U
-h9CUewf/XdZaVW2Uv/Z3iqOKHr50VNgD1bhn33H2JxeBdFCuW9DEeqk+UmT9OAn1
-/M6ad30jxa09jOzWoXjzXnYv+0C8j3PbqHq2kSzC3STG+QNbXfBjsvd1tZaOJatS
-RRAB64oajyZnJJ3M8Tz1Nw43kLLOajfnGUBrIuGS0PIncg6MwVHkoL2bLNdaSlIE
-/ExWW/i18Y0Q2ac08HqRWdwxCvlYDz09+2ErTO5Y1tfgpMLFwT+4mzGGgIJj+xTO
-08pzg4SobMMhopkHAeDlaX8WeAOaGqWRbAObM69IhckyHp9Pb0J9cAbPeTfIY/WU
-JtFMeiXboDywUYGBM7B+6pt8N4r5Mg==
-=0KQ7
------END PGP SIGNATURE-----
-
---8fq1k0An7gXXTJSP--
-
---===============5604558559325281733==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+-- 
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
 https://lists.cs.columbia.edu/mailman/listinfo/kvmarm
-
---===============5604558559325281733==--
