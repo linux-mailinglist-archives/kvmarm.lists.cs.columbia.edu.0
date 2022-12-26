@@ -2,89 +2,77 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 885D0655D51
-	for <lists+kvmarm@lfdr.de>; Sun, 25 Dec 2022 14:47:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 31E586561ED
+	for <lists+kvmarm@lfdr.de>; Mon, 26 Dec 2022 11:38:33 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 868014BCD5;
-	Sun, 25 Dec 2022 08:47:13 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 824284BD34;
+	Mon, 26 Dec 2022 05:38:32 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -6.789
+X-Spam-Score: -1.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_HI=-5, T_DKIM_INVALID=0.01,
-	URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001]
+	autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@kernel.org
+	(fail, body has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qnt+yG-1Ib2J; Sun, 25 Dec 2022 08:47:13 -0500 (EST)
+	with ESMTP id rc4xO7QRBgVF; Mon, 26 Dec 2022 05:38:32 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id D4A794BD15;
-	Sun, 25 Dec 2022 08:47:11 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 18E734BD31;
+	Mon, 26 Dec 2022 05:38:31 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id A12F64BCD0
- for <kvmarm@lists.cs.columbia.edu>; Sun, 25 Dec 2022 08:47:10 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 248604BD2A
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Dec 2022 05:38:30 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id k4aJ7Vh3AAXY for <kvmarm@lists.cs.columbia.edu>;
- Sun, 25 Dec 2022 08:47:09 -0500 (EST)
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id A861B4BCCE
- for <kvmarm@lists.cs.columbia.edu>; Sun, 25 Dec 2022 08:47:08 -0500 (EST)
+ with ESMTP id CAm8yNEOh2y9 for <kvmarm@lists.cs.columbia.edu>;
+ Mon, 26 Dec 2022 05:38:25 -0500 (EST)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 8F3D54BD1E
+ for <kvmarm@lists.cs.columbia.edu>; Mon, 26 Dec 2022 05:38:25 -0500 (EST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by sin.source.kernel.org (Postfix) with ESMTPS id 2FFF3CE068A;
- Sun, 25 Dec 2022 13:47:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583DDC433EF;
- Sun, 25 Dec 2022 13:47:02 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 1A88460E73;
+ Mon, 26 Dec 2022 10:38:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C5BBC433EF;
+ Mon, 26 Dec 2022 10:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1671976022;
- bh=PY1bLPnS7e394SC/ISRUmzLJPCq1gI47uGpbqTIctsA=;
+ s=k20201202; t=1672051103;
+ bh=i82OV8o59m6HWtw5M/t8BK2IkyRn6RyXldPiRgczVng=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=Jb4J/Z54ttWtnmW8Sl2PzpqJaHFF0fRPo0rUZsgH+W4bQnrYrA6q+NPUFmuaeeg5/
- lh7xUs/L4q+Wn95e8gdhayUXI6+M+Ikao/w/IxCmnRhU1s4MFimYXfyhbwISg3Gf5q
- UxIhEQKHNNSMCzk9L+78YfeMNfENLDooyY0t4Mb6qSCzBEyAeD5yW+tdXcD65xIJd3
- 50R9HNd5Ckyi9bzuv+/nem2m94Qwz4bTobHyXFCpsfBSl0wb/bWHq5WftaNvpqMJYE
- ixmwxvhaZwhxvJ5+8fOTK0DBy9jYqMpWl8wpZB8+7IrQ60xELVPZwonS2W1Ut/NJTn
- n9C9JRw3RBOXQ==
+ b=Dw18ZCMVP2NKB7XUparWG9xiWoY8DrF2kqRNkoc14uyxPSNGRmca8MkEmovqA/i2i
+ WozH8R5ELKjJ8/XuMesJAfdpBOpjrcKxBureZ5lU+j29u2HIn9aofPKe19uAT2WbvK
+ 0dfNasiz6B53WUARBUvVFW9c8myyYtqrJ4TnJcqAY1MVDgZArxQ2FHReGigwYd0THl
+ Ar2p6nUNS0E9K+xl98BeuzpHCQYpcBHJUydqyPEGU2Pcf00qf4Tw9fyuzyvU04yz6T
+ sHqnLYGBPdmsTrkUZeh566DyFNo7ok3MYSryW3xqP4r10NQmBz02A1LtEihscTKGqa
+ A3aQywyJoN6dA==
 Received: from host81-132-227-111.range81-132.btcentralplus.com
  ([81.132.227.111] helo=wait-a-minute.misterjones.org)
  by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
- (envelope-from <maz@kernel.org>) id 1p9RLA-00F58P-1f;
- Sun, 25 Dec 2022 13:47:00 +0000
-Date: Sun, 25 Dec 2022 13:45:36 +0000
-Message-ID: <875ydzfvgf.wl-maz@kernel.org>
+ (envelope-from <maz@kernel.org>) id 1p9ks9-00FCZw-9A;
+ Mon, 26 Dec 2022 10:38:21 +0000
+Date: Mon, 26 Dec 2022 10:36:59 +0000
+Message-ID: <873592fo38.wl-maz@kernel.org>
 From: Marc Zyngier <maz@kernel.org>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: Re: [PATCH v4 7/7] KVM: arm64: Normalize cache configuration
-In-Reply-To: <20221221204016.658874-8-akihiko.odaki@daynix.com>
-References: <20221221204016.658874-1-akihiko.odaki@daynix.com>
- <20221221204016.658874-8-akihiko.odaki@daynix.com>
+To: Sandeep Gupta <gupta.sandeep@gmail.com>
+Subject: Re: running openbsd on KVM running on fedora over raspberry pi 4
+In-Reply-To: <CAAywg7srFJg6-J0B-ny0xyx8itpbb_MoLC+07Fo56RsyyxdsAQ@mail.gmail.com>
+References: <CAAywg7srFJg6-J0B-ny0xyx8itpbb_MoLC+07Fo56RsyyxdsAQ@mail.gmail.com>
 User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
  FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
  (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
 X-SA-Exim-Connect-IP: 81.132.227.111
-X-SA-Exim-Rcpt-To: akihiko.odaki@daynix.com, broonie@kernel.org,
- linux-kernel@vger.kernel.org, kvmarm@lists.linux.dev,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org,
- mathieu.poirier@linaro.org, oliver.upton@linux.dev, suzuki.poulose@arm.com,
- alexandru.elisei@arm.com, james.morse@arm.com, will@kernel.org,
- catalin.marinas@arm.com, asahi@lists.linux.dev, alyssa@rosenzweig.io,
- sven@svenpeter.dev, marcan@marcan.st
+X-SA-Exim-Rcpt-To: gupta.sandeep@gmail.com, kvmarm@lists.cs.columbia.edu
 X-SA-Exim-Mail-From: maz@kernel.org
 X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
  SAEximRunCond expanded to false
-Cc: Alyssa Rosenzweig <alyssa@rosenzweig.io>, Hector Martin <marcan@marcan.st>,
- Mathieu Poirier <mathieu.poirier@linaro.org>, Will Deacon <will@kernel.org>,
- Sven Peter <sven@svenpeter.dev>, linux-kernel@vger.kernel.org,
- Mark Brown <broonie@kernel.org>, asahi@lists.linux.dev,
- Catalin Marinas <catalin.marinas@arm.com>, kvmarm@lists.linux.dev,
- kvmarm@lists.cs.columbia.edu, linux-arm-kernel@lists.infradead.org
+Cc: kvmarm@lists.cs.columbia.edu
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -101,239 +89,29 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Wed, 21 Dec 2022 20:40:16 +0000,
-Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+On Fri, 23 Dec 2022 11:33:35 +0000,
+Sandeep Gupta <gupta.sandeep@gmail.com> wrote:
 > 
-> Before this change, the cache configuration of the physical CPU was
-> exposed to vcpus. This is problematic because the cache configuration a
-> vcpu sees varies when it migrates between vcpus with different cache
-> configurations.
+> I am trying to run openbsd as guest OS.
+> I am using this command to create the vm
+> ```
 > 
-> Fabricate cache configuration from the sanitized value, which holds the
-> CTR_EL0 value the userspace sees regardless of which physical CPU it
-> resides on.
+> virt-install --name openbsd1 --ram 2048 --vcpus 2 --disk
+> path=/var/lib/libvirt/images/openbsd1.qcow2,format=qcow2,bus=virtio,size=20
+>  --disk path=/tmp/install72.img --import --os-variant openbsd7.0
+> --network=default --noautoconsole
 > 
-> CLIDR_EL1 and CCSIDR_EL1 are now writable from the userspace so that
-> the VMM can restore the values saved with the old kernel.
-> 
-> Suggested-by: Marc Zyngier <maz@kernel.org>
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  arch/arm64/include/asm/cache.h    |   3 +
->  arch/arm64/include/asm/kvm_host.h |   4 +
->  arch/arm64/kvm/reset.c            |   1 +
->  arch/arm64/kvm/sys_regs.c         | 229 +++++++++++++++++-------------
->  4 files changed, 141 insertions(+), 96 deletions(-)
+> ```
+> But, on boot the server is not picking up the openbsd boot sequence.
 
-[...]
+I don't think this is directly related to KVM. I've been pretty
+successful in running OpenBSD 7.0 on a variety of hosts. Not using
+libvirt though, but directly using QEMU.
 
->  /* Which cache CCSIDR represents depends on CSSELR value. */
-> -static u32 get_ccsidr(u32 csselr)
-> +static u32 get_ccsidr(struct kvm_vcpu *vcpu, u32 csselr)
-> +{
-> +	if (vcpu->arch.ccsidr)
-> +		return vcpu->arch.ccsidr[csselr];
-> +
-> +	/*
-> +	 * Fabricate a CCSIDR value as the overriding value does not exist.
-> +	 * The real CCSIDR value will not be used as it can vary by the
-> +	 * physical CPU which the vcpu currently resides in.
-> +	 *
-> +	 * The line size is determined with get_min_cache_line_size(), which
-> +	 * should be valid for all CPUs even if they have different cache
-> +	 * configuration.
-> +	 *
-> +	 * The associativity bits are cleared, meaning the geometry of all data
-> +	 * and unified caches (which are guaranteed to be PIPT and thus
-> +	 * non-aliasing) are 1 set and 1 way.
-> +	 * Guests should not be doing cache operations by set/way at all, and
-> +	 * for this reason, we trap them and attempt to infer the intent, so
-> +	 * that we can flush the entire guest's address space at the appropriate
-> +	 * time. The exposed geometry minimizes the number of the traps.
-> +	 * [If guests should attempt to infer aliasing properties from the
-> +	 * geometry (which is not permitted by the architecture), they would
-> +	 * only do so for virtually indexed caches.]
-> +	 */
-> +	return get_min_cache_line_size(csselr) << CCSIDR_EL1_LineSize_SHIFT;
+One thing you may want to do is to disable ACPI by pasing -no-acpi to
+QEMU.
 
-It'd be nice to have a comment that says this relies on CCSIDR_EL1
-being allowed to return an UNKNOWN value when CSSELR_EL1 does not
-specify an implemented cache level (you always return something with
-the I or D line-size).
-
-> +}
-> +
-> +static int set_ccsidr(struct kvm_vcpu *vcpu, u32 csselr, u32 val)
->  {
-> -	u32 ccsidr;
-> +	u8 line_size = FIELD_GET(CCSIDR_EL1_LineSize, val);
-> +	u32 *ccsidr = vcpu->arch.ccsidr;
-> +	u32 i;
-> +
-> +	if ((val & CCSIDR_EL1_RES0) || line_size < get_min_cache_line_size(csselr))
-> +		return -EINVAL;
-> +
-> +	if (!ccsidr) {
-> +		if (val == get_ccsidr(vcpu, csselr))
-> +			return 0;
-> +
-> +		ccsidr = kmalloc_array(CSSELR_MAX, sizeof(u32), GFP_KERNEL);
-> +		if (!ccsidr)
-> +			return -ENOMEM;
-> +
-> +		for (i = 0; i < CSSELR_MAX; i++)
-> +			ccsidr[i] = get_ccsidr(vcpu, i);
-> +
-> +		vcpu->arch.ccsidr = ccsidr;
-> +	}
->  
-> -	/* Make sure noone else changes CSSELR during this! */
-> -	local_irq_disable();
-> -	write_sysreg(csselr, csselr_el1);
-> -	isb();
-> -	ccsidr = read_sysreg(ccsidr_el1);
-> -	local_irq_enable();
-> +	ccsidr[csselr] = val;
->  
-> -	return ccsidr;
-> +	return 0;
->  }
->  
->  /*
-> @@ -1281,10 +1332,64 @@ static bool access_clidr(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
->  	if (p->is_write)
->  		return write_to_read_only(vcpu, p, r);
->  
-> -	p->regval = read_sysreg(clidr_el1);
-> +	p->regval = __vcpu_sys_reg(vcpu, r->reg);
->  	return true;
->  }
->  
-> +/*
-> + * Fabricate a CLIDR_EL1 value instead of using the real value, which can vary
-> + * by the physical CPU which the vcpu currently resides in.
-> + */
-> +static void reset_clidr(struct kvm_vcpu *vcpu, const struct sys_reg_desc *r)
-> +{
-> +	u64 ctr_el0 = read_sanitised_ftr_reg(SYS_CTR_EL0);
-> +	u64 clidr;
-> +	u8 loc;
-> +
-> +	if ((ctr_el0 & CTR_EL0_IDC) || cpus_have_const_cap(ARM64_HAS_STAGE2_FWB)) {
-
-Having looked into this again, I *think* we can drop the FWB check, as
-the above read_sanitised_ftr_reg() is populated from
-read_cpuid_effective_cachetype(), which factors in the *effects* of
-FWB.
-
-Please check though, as I only had a cursory look.
-
-> +		/*
-> +		 * Data cache clean to the PoU is not required so LoUU and LoUIS
-> +		 * will not be set and a unified cache, which will be marked as
-> +		 * LoC, will be added.
-> +		 *
-> +		 * If not DIC, let the unified cache L2 so that an instruction
-> +		 * cache can be added as L1 later.
-> +		 */
-> +		loc = (ctr_el0 & CTR_EL0_DIC) ? 1 : 2;
-> +		clidr = CACHE_TYPE_UNIFIED << CLIDR_CTYPE_SHIFT(loc);
-> +	} else {
-> +		/*
-> +		 * Data cache clean to the PoU is required so let L1 have a data
-> +		 * cache and mark it as LoUU and LoUIS. As L1 has a data cache,
-> +		 * it can be marked as LoC too.
-> +		 */
-> +		loc = 1;
-> +		clidr = 1 << CLIDR_LOUU_SHIFT;
-> +		clidr |= 1 << CLIDR_LOUIS_SHIFT;
-> +		clidr |= CACHE_TYPE_DATA << CLIDR_CTYPE_SHIFT(1);
-> +	}
-> +
-> +	/*
-> +	 * Instruction cache invalidation to the PoU is required so let L1 have
-> +	 * an instruction cache. If L1 already has a data cache, it will be
-> +	 * CACHE_TYPE_SEPARATE.
-> +	 */
-> +	if (!(ctr_el0 & CTR_EL0_DIC))
-> +		clidr |= CACHE_TYPE_INST << CLIDR_CTYPE_SHIFT(1);
-> +
-> +	clidr |= loc << CLIDR_LOC_SHIFT;
-> +
-> +	/*
-> +	 * Add tag cache unified to data cache. Allocation tags and data are
-> +	 * unified in a cache line so that it looks valid even if there is only
-> +	 * one cache line.
-> +	 */
-> +	if (kvm_has_mte(vcpu->kvm))
-> +		clidr |= 2 << CLIDR_TTYPE_SHIFT(loc);
-> +
-> +	__vcpu_sys_reg(vcpu, r->reg) = clidr;
-> +}
-> +
->  static bool access_csselr(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
->  			  const struct sys_reg_desc *r)
->  {
-> @@ -1306,22 +1411,12 @@ static bool access_ccsidr(struct kvm_vcpu *vcpu, struct sys_reg_params *p,
->  		return write_to_read_only(vcpu, p, r);
->  
->  	csselr = vcpu_read_sys_reg(vcpu, CSSELR_EL1);
-> -	p->regval = get_ccsidr(csselr);
-> +	csselr &= CSSELR_EL1_Level | CSSELR_EL1_InD;
-> +	if (csselr >= CSSELR_MAX)
-> +		return undef_access(vcpu, p, r);
-
-I really dislike this UNDEF injection. Yes, this is allowed, but this
-is also inconsistent, as you can still set random values of TnD and
-not suffer an UNDEF. It also doesn't check for the values that have
-been advertised in CLIDR_EL1. I'd rather you return something without
-creating havoc.
-
-> +
-> +	p->regval = get_ccsidr(vcpu, csselr);
->  
-> -	/*
-> -	 * Guests should not be doing cache operations by set/way at all, and
-> -	 * for this reason, we trap them and attempt to infer the intent, so
-> -	 * that we can flush the entire guest's address space at the appropriate
-> -	 * time.
-> -	 * To prevent this trapping from causing performance problems, let's
-> -	 * expose the geometry of all data and unified caches (which are
-> -	 * guaranteed to be PIPT and thus non-aliasing) as 1 set and 1 way.
-> -	 * [If guests should attempt to infer aliasing properties from the
-> -	 * geometry (which is not permitted by the architecture), they would
-> -	 * only do so for virtually indexed caches.]
-> -	 */
-> -	if (!(csselr & 1)) // data or unified cache
-> -		p->regval &= ~GENMASK(27, 3);
->  	return true;
->  }
->  
-> @@ -1610,7 +1705,7 @@ static const struct sys_reg_desc sys_reg_descs[] = {
->  	{ SYS_DESC(SYS_CNTKCTL_EL1), NULL, reset_val, CNTKCTL_EL1, 0},
->  
->  	{ SYS_DESC(SYS_CCSIDR_EL1), access_ccsidr },
-> -	{ SYS_DESC(SYS_CLIDR_EL1), access_clidr },
-> +	{ SYS_DESC(SYS_CLIDR_EL1), access_clidr, reset_clidr, CLIDR_EL1 },
-
-Maybe I wasn't clear enough in my previous reviews, so allow me to put
-it bluntly: you MUST validate CLIDR_EL1 as it is written from
-userspace, and refuse CLIDR_EL1.{LoUU,LoC,LoUIS} values that cannot be
-safely handled on this host.
-
-For example, restoring CLIDR_EL1.LoC=0, which implies a CTR_EL0.IDC
-behaviour, cannot be restored on a host that cannot offer the IDC
-behaviour. This is a critical aspect, as the guest will otherwise
-observe something that looks like memory corruption.
-
-So these 3 values must be checked across the board, and you must not
-accept a zero value if the HW has a non-zero value for the same
-field.  The main difficultly I can see is that this needs to be
-tracked on all CPUs, probably as some boot-time information, and
-result in a sanitised version of CLIDR_EL1, just like we do for
-CTR_EL0.
-
-Thanks,
+But overall, this is a question better asked on some libvirt forum.
 
 	M.
 
