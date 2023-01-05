@@ -2,58 +2,59 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 66B4B65F561
-	for <lists+kvmarm@lfdr.de>; Thu,  5 Jan 2023 21:48:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 95E2565F69F
+	for <lists+kvmarm@lfdr.de>; Thu,  5 Jan 2023 23:22:15 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id B5EFA4B3DB;
-	Thu,  5 Jan 2023 15:48:34 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id B62E24B2B7;
+	Thu,  5 Jan 2023 17:22:13 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -6.79
+X-Spam-Score: -6.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.79 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_HI=-5, SPF_HELO_PASS=-0.001,
-	T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-6.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_HI=-5, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
 	(fail, message has been altered) header.i=@linux.dev
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id EYeosWIqZ17u; Thu,  5 Jan 2023 15:48:34 -0500 (EST)
+	with ESMTP id fakhLtRe8Hlf; Thu,  5 Jan 2023 17:22:13 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 6AFEE4B3F5;
-	Thu,  5 Jan 2023 15:48:33 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 677D44B39B;
+	Thu,  5 Jan 2023 17:22:12 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id B95B54B3F5
- for <kvmarm@lists.cs.columbia.edu>; Thu,  5 Jan 2023 15:48:31 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 8C6294B2A1
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  5 Jan 2023 17:22:10 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id L-Li2Zv2UMaG for <kvmarm@lists.cs.columbia.edu>;
- Thu,  5 Jan 2023 15:48:30 -0500 (EST)
-Received: from out2.migadu.com (out2.migadu.com [188.165.223.204])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 96BAA4B3F3
- for <kvmarm@lists.cs.columbia.edu>; Thu,  5 Jan 2023 15:48:30 -0500 (EST)
-Date: Thu, 5 Jan 2023 20:48:25 +0000
+ with ESMTP id nmmSZYdSvYrJ for <kvmarm@lists.cs.columbia.edu>;
+ Thu,  5 Jan 2023 17:22:09 -0500 (EST)
+Received: from out-110.mta0.migadu.com (out-110.mta0.migadu.com
+ [91.218.175.110])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 71EBF4B2AE
+ for <kvmarm@lists.cs.columbia.edu>; Thu,  5 Jan 2023 17:22:09 -0500 (EST)
+Date: Thu, 5 Jan 2023 22:22:02 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1672951709;
+ t=1672957328;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=aYVWC4sBVgWrlftRY/Wjwf7HrIxSM4JPLvpreSFfkAc=;
- b=LgjU7AxU13CeHxxXWLLpwOOH5ZSC/3yZk+Yl//JoD5VDml1Sy6Yh3KLVvULVDKlvJXIKb/
- tmKISIzCGNty273PY3SF6qOSJCq9HRNTKXvytFIAPNgHG5U4XiQXojMUv9cwj5/CyyOoN2
- bGdRhh/FGQo/Uo6dCrNYdHW1xt1nOSQ=
+ bh=jUI9TSiA75B4vjGbap/Y0EjPHoVUu/AzEKZE5jFgpHg=;
+ b=QW44AXC4DbOOKrF4eAPSNoVRO42xVcoshBgAnnxFHEhd3hKj0mII5TWxIkNdocZG9Kz7bs
+ JVJXFN1rQ2WxSJ46GXjpk2quWO3M4EWu/UXD2yRhm0nM/WKX4CTJQFwJtxc5+H900NnXpR
+ PN/h8KcFXMfMKaZcQRnR4HyPcLCEpGM=
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
 From: Oliver Upton <oliver.upton@linux.dev>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: Re: [PATCH v4 6/7] KVM: arm64: Mask FEAT_CCIDX
-Message-ID: <Y7c3mQS1zqw0UATF@google.com>
-References: <20221221204016.658874-1-akihiko.odaki@daynix.com>
- <20221221204016.658874-7-akihiko.odaki@daynix.com>
+Subject: Re: [PATCH v5 6/7] KVM: arm64: Mask FEAT_CCIDX
+Message-ID: <Y7dNihZMs4NSSw0v@google.com>
+References: <20221230095452.181764-1-akihiko.odaki@daynix.com>
+ <20221230095452.181764-7-akihiko.odaki@daynix.com>
 MIME-Version: 1.0
 Content-Disposition: inline
-In-Reply-To: <20221221204016.658874-7-akihiko.odaki@daynix.com>
+In-Reply-To: <20221230095452.181764-7-akihiko.odaki@daynix.com>
 X-Migadu-Flow: FLOW_OUT
 Cc: Alyssa Rosenzweig <alyssa@rosenzweig.io>, Hector Martin <marcan@marcan.st>,
  Mathieu Poirier <mathieu.poirier@linaro.org>, Marc Zyngier <maz@kernel.org>,
@@ -78,9 +79,7 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-Hi Akihiko,
-
-On Thu, Dec 22, 2022 at 05:40:15AM +0900, Akihiko Odaki wrote:
+On Fri, Dec 30, 2022 at 06:54:51PM +0900, Akihiko Odaki wrote:
 > The CCSIDR access handler masks the associativity bits according to the
 > bit layout for processors without FEAT_CCIDX. KVM also assumes CCSIDR is
 > 32-bit where it will be 64-bit if FEAT_CCIDX is enabled. Mask FEAT_CCIDX
@@ -88,6 +87,10 @@ On Thu, Dec 22, 2022 at 05:40:15AM +0900, Akihiko Odaki wrote:
 > 
 > Suggested-by: Marc Zyngier <maz@kernel.org>
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+
+FYI, I'm an idiot and replied to v4 of this patch... Forwarding comments
+below:
+
 > ---
 >  arch/arm64/kvm/sys_regs.c | 11 +++++++++++
 >  1 file changed, 11 insertions(+)
