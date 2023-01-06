@@ -2,60 +2,74 @@ Return-Path: <kvmarm-bounces@lists.cs.columbia.edu>
 X-Original-To: lists+kvmarm@lfdr.de
 Delivered-To: lists+kvmarm@lfdr.de
 Received: from mm01.cs.columbia.edu (mm01.cs.columbia.edu [128.59.11.253])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EEE165FBBB
-	for <lists+kvmarm@lfdr.de>; Fri,  6 Jan 2023 08:11:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 99577660016
+	for <lists+kvmarm@lfdr.de>; Fri,  6 Jan 2023 13:16:24 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 74F774107F;
-	Fri,  6 Jan 2023 02:11:31 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 924684B3D7;
+	Fri,  6 Jan 2023 07:16:23 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 X-Spam-Flag: NO
-X-Spam-Score: -1.789
+X-Spam-Score: -6.789
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.789 required=6.1 tests=[BAYES_00=-1.9,
-	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
-	T_DKIM_INVALID=0.01, URIBL_BLOCKED=0.001] autolearn=unavailable
+X-Spam-Status: No, score=-6.789 required=6.1 tests=[BAYES_00=-1.9,
+	DKIM_SIGNED=0.1, RCVD_IN_DNSWL_HI=-5, T_DKIM_INVALID=0.01,
+	URIBL_BLOCKED=0.001] autolearn=unavailable
 Authentication-Results: mm01.cs.columbia.edu (amavisd-new); dkim=softfail
-	(fail, message has been altered) header.i=@linux.dev
+	(fail, body has been altered) header.i=@kernel.org
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
 	by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VKylS-UClJ1V; Fri,  6 Jan 2023 02:11:31 -0500 (EST)
+	with ESMTP id kkizDQo-5uB7; Fri,  6 Jan 2023 07:16:23 -0500 (EST)
 Received: from mm01.cs.columbia.edu (localhost [127.0.0.1])
-	by mm01.cs.columbia.edu (Postfix) with ESMTP id 163E84A0DA;
-	Fri,  6 Jan 2023 02:11:30 -0500 (EST)
+	by mm01.cs.columbia.edu (Postfix) with ESMTP id 7E8EE4B651;
+	Fri,  6 Jan 2023 07:16:22 -0500 (EST)
 Received: from localhost (localhost [127.0.0.1])
- by mm01.cs.columbia.edu (Postfix) with ESMTP id 8EC6140C29
- for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Jan 2023 02:11:28 -0500 (EST)
+ by mm01.cs.columbia.edu (Postfix) with ESMTP id 52CE34B64D
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Jan 2023 07:16:21 -0500 (EST)
 X-Virus-Scanned: at lists.cs.columbia.edu
 Received: from mm01.cs.columbia.edu ([127.0.0.1])
  by localhost (mm01.cs.columbia.edu [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id tktuA1SGVbJo for <kvmarm@lists.cs.columbia.edu>;
- Fri,  6 Jan 2023 02:11:27 -0500 (EST)
-Received: from out2.migadu.com (out2.migadu.com [188.165.223.204])
- by mm01.cs.columbia.edu (Postfix) with ESMTPS id 406BE40BA3
- for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Jan 2023 02:11:27 -0500 (EST)
-Date: Fri, 6 Jan 2023 08:11:24 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1672989085;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fauj+NonVb8iLkKg1RFq1TexduZK1wTOfm20pD1NyCg=;
- b=JroxeUE7yy/Xx9l/Vx7NJIWTUGynOY1CexlSlRBwYdE2tmZNsfhYCMaIemYvwBrp0IkkdN
- TPEbLU0ORvdGdu+09QkEc6TGbxrtwK4LYNuBUIWwk+AOdoQqnI9pmxw2r9PCex2dMJDN67
- yv+o49uVsZHpJoVS3nTW3i2pcKTPUso=
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: Andrew Jones <andrew.jones@linux.dev>
-To: Colton Lewis <coltonlewis@google.com>
-Subject: Re: [kvm-unit-tests PATCH] arm: Remove MAX_SMP probe loop
-Message-ID: <20230106071124.ytv6cmkvmvxhzmoh@orel>
-References: <20221226182158.3azk5zwvl2vsy36h@orel>
- <gsntzgawr321.fsf@coltonlewis-kvm.c.googlers.com>
-MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <gsntzgawr321.fsf@coltonlewis-kvm.c.googlers.com>
-X-Migadu-Flow: FLOW_OUT
-Cc: kvm@vger.kernel.org, maz@kernel.org, kvmarm@lists.cs.columbia.edu
+ with ESMTP id wky8Twat2xMY for <kvmarm@lists.cs.columbia.edu>;
+ Fri,  6 Jan 2023 07:16:20 -0500 (EST)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+ by mm01.cs.columbia.edu (Postfix) with ESMTPS id 3E6154B3D7
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Jan 2023 07:16:20 -0500 (EST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id C2788B81CF3
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Jan 2023 12:16:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A30C433F0
+ for <kvmarm@lists.cs.columbia.edu>; Fri,  6 Jan 2023 12:16:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1673007377;
+ bh=lc6NLlo8XSRFuQrwiUBMoVVhvfkl4j4i6G5Ap1ijGkY=;
+ h=Date:From:To:Subject:From;
+ b=XoGRaeCp+RfAv7tHf6Q/akWT48Dm8r+wv6IdTW1L7M+qOncpUsuihWpelYieASC7C
+ ROvuyns7hzEh9zRiQxLOOF2PQjbEKqi++v/uds1p/I3HsciXP8wGkhye8B0S6nOMWt
+ pzRvRwVpfl7hapSDvohAi0v4G1ZRipXJKpgYBnEVguk26UKfvTpOcgnimgM+F59EeT
+ t6x1FduhJAgw5rRatGZ78O9XJz20U7tvJktjBmhuJ0DoWhW0/g9yyIjzpT5zTaja4y
+ CFGBYiULeYGsY1jcbKocq0W2IGAhkH3V+DdQQzGVHkackSvDQC65KjtFCuDLqPTmsJ
+ v1nLF5iryitCQ==
+Received: from sofa.misterjones.org ([185.219.108.64]
+ helo=goblin-girl.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1pDldv-00HGsP-EV
+ for kvmarm@lists.cs.columbia.edu; Fri, 06 Jan 2023 12:16:15 +0000
+Date: Fri, 06 Jan 2023 12:16:15 +0000
+Message-ID: <86o7rboo34.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: kvmarm <kvmarm@lists.cs.columbia.edu>
+Subject: [FINAL WARNING] kvmarm@lists.cs.columbia.edu going away
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/28.2
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: kvmarm@lists.cs.columbia.edu
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
 X-BeenThere: kvmarm@lists.cs.columbia.edu
 X-Mailman-Version: 2.1.14
 Precedence: list
@@ -72,43 +86,36 @@ Content-Transfer-Encoding: 7bit
 Errors-To: kvmarm-bounces@lists.cs.columbia.edu
 Sender: kvmarm-bounces@lists.cs.columbia.edu
 
-On Thu, Jan 05, 2023 at 11:09:58PM +0000, Colton Lewis wrote:
-> Andrew Jones <andrew.jones@linux.dev> writes:
-> > On Tue, Dec 20, 2022 at 04:32:00PM +0000, Colton Lewis wrote:
-> > > Alexandru Elisei <alexandru.elisei@arm.com> writes:
-> > Ah, I think I understand now. Were you running 32-bit arm tests? If so,
-> > it'd be good to point that out explicitly in the commit message (the
-> > 'arm:' prefix in the summary is ambiguous).
-> 
-> No, this was happening on arm64. Since it had been a while since I noted
-> this issue, I reviewed it and realized the issue was only happening
-> using -accel tcg. That was automatically being used on my problem test
-> machine without me noticing. That's where the limit of 8 seems to be
-> coming from and why the loop is triggered.
-> 
-> qemu-system-aarch64: Number of SMP CPUs requested (152) exceeds max CPUs
-> supported by machine 'mach-virt' (8)
-> 
-> Since this case doesn't directly involve KVM, I doubt anyone cares about
-> a fix.
-> 
-> > Assuming the loop body was running because it needed to reduce MAX_SMP to
-> > 8 or lower for 32-bit arm tests, then we should be replacing the loop with
-> > something that caps MAX_SMP at 8 for 32-bit arm tests instead.
-> 
-> We could cap at 8 for ACCEL=tcg. Even if no one cares, I'm tempted to do
-> it so no one hits the same little landmine as me in the future.
+Hi folks,
 
-TCG supports up to 255 CPUs. The only reason it'd have a max of 8 is if
-you were configuring a GICv2 instead of a GICv3. Using gic-version=3 or
-gic-version=max should allow the 152 CPUs to work. Actually, I should
-have asked about your gic version instead of whether or not the VM was
-AArch32 in the first place. I was incorrectly associating the gicv2
-limits with arm32 since my memories of these things have started to
-blur together...
+After many years of awesome service, the kvmarm mailing list hosted by
+Columbia is being decommissioned. No new email will be archived on
+lore.kernel.org, and I am placing the old list under emergency
+moderation *NOW*.
+
+If you haven't yet subscribed to the new kvmarm list and still want to
+be involved, please read below!
+
+The new list is hosted by the Linux Foundation at
+
+	kvmarm@lists.linux.dev
+
+and can be subscribed to by sending an email to:
+
+	kvmarm+subscribe@lists.linux.dev
+
+More details can be found at:
+
+	https://subspace.kernel.org/lists.linux.dev.html
+
+I'm looking forward to seeing you all on the new list!
 
 Thanks,
-drew
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
 _______________________________________________
 kvmarm mailing list
 kvmarm@lists.cs.columbia.edu
